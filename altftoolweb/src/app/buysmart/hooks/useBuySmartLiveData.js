@@ -33,7 +33,7 @@ const fallbackStoreOffers = fallbackStores.map((store, index) =>
   }),
 );
 
-const fallbackCategoryItems = [
+export const fallbackBuySmartCategoryItems = [
   ...fallbackStoreOffers,
   ...fallbackBuySmartOffers.map(normalizeBuySmartCategory),
 ].filter((item, index, items) => (
@@ -66,8 +66,10 @@ function useLiveSource(source, fallbackItems, normalizeLiveItems) {
         if (!mounted) return;
 
         const normalized = normalizeLiveItems(data);
-        setItems(normalized.length ? normalized : fallbackItems);
-        setIsSynced(true);
+        const hasLiveItems = normalized.length > 0;
+
+        setItems(hasLiveItems ? normalized : fallbackItems);
+        setIsSynced(hasLiveItems);
         setError(null);
       },
       (readError) => {
@@ -97,10 +99,17 @@ function useLiveSource(source, fallbackItems, normalizeLiveItems) {
 }
 
 function normalizeCategoryItems(data) {
-  return (Array.isArray(data) ? data : [])
+  const liveItems = (Array.isArray(data) ? data : [])
     .filter(Boolean)
     .map(normalizeBuySmartCategory)
     .filter((item) => isActiveStatus(item.status));
+
+  if (!liveItems.length) return [];
+
+  return [...liveItems, ...fallbackBuySmartCategoryItems].filter(
+    (item, index, items) =>
+      items.findIndex((candidate) => candidate.storeSlug === item.storeSlug) === index,
+  );
 }
 
 function normalizeStoreItems(data) {
@@ -134,7 +143,7 @@ function normalizeFeatureItems(data) {
 export function useBuySmartCategories() {
   return useLiveSource(
     firebaseBuySmartCategoriesSource,
-    fallbackCategoryItems,
+    fallbackBuySmartCategoryItems,
     normalizeCategoryItems,
   );
 }

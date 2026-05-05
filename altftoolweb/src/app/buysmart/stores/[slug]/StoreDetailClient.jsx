@@ -16,7 +16,10 @@ import {
   WalletCards,
 } from "lucide-react";
 import CouponReveal from "@/app/buysmart/components/CouponReveal";
-import { useBuySmartCategories } from "@/app/buysmart/hooks/useBuySmartLiveData";
+import {
+  fallbackBuySmartCategoryItems,
+  useBuySmartCategories,
+} from "@/app/buysmart/hooks/useBuySmartLiveData";
 import { LoadingBone } from "@/components/ui/route-loading";
 import {
   getBuySmartBrandSlug,
@@ -24,6 +27,7 @@ import {
   getDomainFromUrl,
   getPrimarySavingsText,
   normalizeBuySmartCategory,
+  slugifyBuySmartBrand,
 } from "@altftool/core/buysmart";
 
 const verificationLabels = {
@@ -53,20 +57,42 @@ function formatRate(value) {
   return `${Math.round(rate)}%`;
 }
 
+function getPathSlug(value) {
+  if (!value || typeof value !== "string") return "";
+  return value.split("?")[0].split("#")[0].split("/").filter(Boolean).pop() || "";
+}
+
+function getOfferSlugCandidates(item) {
+  return [
+    getBuySmartBrandSlug(item),
+    item.storeSlug,
+    item.brandSlug,
+    item.slug,
+    getPathSlug(item.storePath),
+    getPathSlug(getBuySmartStorePath(item)),
+  ]
+    .filter(Boolean)
+    .map(slugifyBuySmartBrand);
+}
+
 export default function StoreDetailClient({ slug }) {
   const { isFallback, items: offers } = useBuySmartCategories();
+  const routeSlug = slugifyBuySmartBrand(slug);
 
   const normalizedOffers = useMemo(
-    () => offers.map(normalizeBuySmartCategory),
+    () =>
+      [...offers, ...fallbackBuySmartCategoryItems]
+        .map(normalizeBuySmartCategory)
+        .filter(
+          (item, index, items) =>
+            items.findIndex((candidate) => candidate.storeSlug === item.storeSlug) === index,
+        ),
     [offers],
   );
 
   const offer = useMemo(() => {
-    return normalizedOffers.find((item) => {
-      const itemSlug = getBuySmartBrandSlug(item);
-      return itemSlug === slug || item.storeSlug === slug || item.slug === slug;
-    });
-  }, [normalizedOffers, slug]);
+    return normalizedOffers.find((item) => getOfferSlugCandidates(item).includes(routeSlug));
+  }, [normalizedOffers, routeSlug]);
 
   const similarOffers = useMemo(() => {
     if (!offer) return [];
