@@ -20,12 +20,15 @@
     "dev:admin": "npm --prefix altftoolwebadmin run dev -- -p 3001",
     "start:web": "npm --prefix altftoolweb run start -- -p 3002",
     "start:admin": "npm --prefix altftoolwebadmin run start -- -p 3001",
+    "lint:web": "npm --prefix altftoolweb run lint -- --quiet",
+    "lint:web:budget": "node scripts/check-web-lint-budget.mjs",
     "audit": "npm run audit:web && npm run audit:admin",
     "audit:web": "npm --prefix altftoolweb audit --audit-level=moderate",
     "audit:admin": "npm --prefix altftoolwebadmin audit --audit-level=moderate",
     "routes:check": "node scripts/check-routes.mjs",
+    "firebase:check": "node scripts/check-firebase-contracts.mjs",
     "test:smoke": "playwright test",
-    "validate": "npm run routes:check && npm run audit && npm run build && npm run test:smoke"
+    "validate": "npm run lint:web && npm run lint:web:budget && npm run routes:check && npm run firebase:check && npm run audit && npm run build && npm run test:smoke"
   },
   "devDependencies": {
     "@playwright/test": "^1.59.1",

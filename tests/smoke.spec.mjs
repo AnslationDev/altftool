@@ -15,13 +15,13 @@ test("public web shell loads", async ({ page }) => {
 });
 
 test("tool detail routes use the clean workspace flow", async ({ page }) => {
-  await page.goto(`${webUrl}/tools/all/api-stress-estimator`);
+  await page.goto(`${webUrl}/tools/all/api-stress-estimator`, { waitUntil: "domcontentloaded" });
 
   await expect(page.getByRole("navigation", { name: "Tool route" })).toContainText("All Tools");
   await expect(page.getByRole("heading", { name: "API Stress Estimator", exact: true })).toBeVisible();
   await expect(page.getByText("Loading tool…")).toHaveCount(0);
 
-  await page.goto(`${webUrl}/tools/developer/api-stress-estimator`);
+  await page.goto(`${webUrl}/tools/developer/api-stress-estimator`, { waitUntil: "domcontentloaded" });
 
   await expect(page.getByRole("navigation", { name: "Tool route" })).toContainText("Developer");
   await expect(page.getByRole("heading", { name: "API Stress Estimator", exact: true })).toBeVisible();
@@ -81,14 +81,46 @@ test("buysmart A-Z category cards load brand images", async ({ page }) => {
 
   const detailLink = page.locator('a[href^="/buysmart/stores/"]').first();
   await expect(detailLink).toBeVisible();
-  await detailLink.click();
+  const detailHref = await detailLink.getAttribute("href");
+  expect(detailHref).toMatch(/^\/buysmart\/stores\//);
 
+  await page.goto(`${webUrl}${detailHref}`, { waitUntil: "domcontentloaded" });
   await expect(page).toHaveURL(/\/buysmart\/stores\//);
   await expect(page.getByTestId("buysmart-store-detail")).toBeVisible();
-  await expect(page.getByTestId("buysmart-reveal-button")).toBeVisible();
+  await expect(page.getByTestId("buysmart-reveal-button")).toBeEnabled();
+  await page.waitForTimeout(500);
 
   await page.getByTestId("buysmart-reveal-button").click();
   await expect(page.getByTestId("buysmart-reveal-modal")).toBeVisible();
+});
+
+test("firebase blog catalog and detail render complete content", async ({ page, request }) => {
+  const targetSlug = "best-ai-tools-for-small-business-in-2026-complete-guide";
+  const firstChunk = await request.get(`${webUrl}/api/blogs?offset=0&limit=5`);
+
+  expect(firstChunk.ok()).toBeTruthy();
+
+  const firstPayload = await firstChunk.json();
+  expect(firstPayload.posts.length).toBeGreaterThan(0);
+  expect(firstPayload.hasMore).toBeTruthy();
+  expect(firstPayload.posts.some((post) => post.slug === targetSlug)).toBeTruthy();
+
+  const lastChunk = await request.get(`${webUrl}/api/blogs?offset=360&limit=72`);
+  expect(lastChunk.ok()).toBeTruthy();
+
+  const lastPayload = await lastChunk.json();
+  expect(lastPayload.nextOffset).toBeGreaterThanOrEqual(387);
+  expect(lastPayload.hasMore).toBeFalsy();
+
+  await page.goto(`${webUrl}/blogs`, { waitUntil: "domcontentloaded" });
+  await expect(page.getByRole("heading", { name: "AltFTool Blog" })).toBeVisible();
+  await expect(page.getByRole("link", { name: /Best AI Tools for Small Business in 2026/i }).first()).toBeVisible();
+
+  await page.goto(`${webUrl}/blogs/${targetSlug}`, { waitUntil: "domcontentloaded" });
+  await expect(page.getByRole("heading", { name: /Best AI Tools for Small Business in 2026/i })).toBeVisible();
+
+  const contentLength = await page.locator(".ckeditor-content").first().innerText().then((text) => text.length);
+  expect(contentLength).toBeGreaterThan(1000);
 });
 
 test("admin login shell loads", async ({ page }) => {

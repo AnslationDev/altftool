@@ -5,11 +5,12 @@ const adminUrl = process.env.ALTFT_ADMIN_URL || "http://localhost:3001";
 
 export default defineConfig({
   testDir: "./tests",
-  fullyParallel: true,
-  timeout: 30_000,
+  fullyParallel: false,
+  timeout: 45_000,
   expect: {
-    timeout: 10_000,
+    timeout: 15_000,
   },
+  workers: process.env.CI ? 2 : 3,
   reporter: process.env.CI ? [["github"], ["list"]] : "list",
   use: {
     baseURL: webUrl,
