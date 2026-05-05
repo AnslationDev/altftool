@@ -129,7 +129,7 @@ export default function ViewCards() {
             <h1 className="text-xl font-bold text-gray-900">All Credit Cards</h1>
             <p className="text-sm text-gray-500 mt-0.5">Browse and manage published cards and drafts.</p>
           </div>
-          <button onClick={() => router.push("/leadtree/creditcard")}
+          <button onClick={() => router.push("/leadtree/credit-cards")}
             className="flex items-center gap-1.5 px-4 py-2 text-sm font-semibold bg-gray-900 hover:bg-gray-700 text-white rounded-xl transition shadow-sm">
             <BookOpen className="w-4 h-4" />Manage Table
           </button>
@@ -310,7 +310,7 @@ export default function ViewCards() {
             {filtered.map((cards) => {
               const preview = cards.seoDescription || stripHtml(cards.description).slice(0, 120);
               return (
-                <div key={cards.id} onClick={() => router.push(`/leadtree/creditcard/view-cards/${cards.id}`)}
+                <div key={cards.id} onClick={() => router.push(`/leadtree/credit-cards/view-cards/${cards.id}`)}
                   className="group bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-all cursor-pointer overflow-hidden flex flex-col">
                   {cards.image ? (
                     <div className="h-44 overflow-hidden bg-gray-100 shrink-0">

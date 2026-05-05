@@ -505,7 +505,7 @@ export default function AddCard() {
                 module: "creditcard", action: "CARD_CREATE", entityType: "card", entityId: creditRef.id,
                 summary: `Published card "${formData.heading.trim()}"`,
                 changes: { status: "published", category: formData.category, },
-                route: "/leadtree/creditcard/add-cards",
+                route: "/leadtree/credit-cards/add-cards",
             });
 
             setStep("done");
@@ -555,7 +555,7 @@ export default function AddCard() {
 
             emitAlert({ type: "success", message: "Credit Post published successfully! Redirecting…" });
 
-            setTimeout(() => router.push("/leadtree/creditcard"), 500);
+            setTimeout(() => router.push("/leadtree/credit-cards"), 500);
 
         } catch (err) {
             console.error("Unexpected publish error:", err);
@@ -598,11 +598,11 @@ export default function AddCard() {
                 module: "creditcard", action: "CREDIT_DRAFT_CREATE", entityType: "card", entityId: draftRef.id,
                 summary: `Saved draft "${formData.heading || "Untitled Draft"}"`,
                 changes: { status: "draft", category: formData.category || "" },
-                route: "/leadtree/creditcard/add-cards",
+                route: "/leadtree/credit-cards/add-cards",
             });
             localStorage.removeItem(DRAFT_KEY);
             emitAlert({ type: "success", message: "Draft saved successfully!" });
-            router.push("/leadtree/creditcard");
+            router.push("/leadtree/credit-cards");
         } catch (err) {
             console.error("Draft save failed:", err);
             emitAlert({ type: "error", message: getFriendlyError(err, "draft") });
@@ -720,7 +720,7 @@ export default function AddCard() {
                 {/* Top bar */}
                 <div className="flex items-center justify-between gap-4 flex-wrap">
                     <div className="flex items-center gap-3">
-                        <button onClick={() => router.push("/leadtree/creditcard")} className="p-2 rounded-xl border border-gray-200 bg-white text-gray-500 hover:bg-gray-50 transition">
+                        <button onClick={() => router.push("/leadtree/credit-cards")} className="p-2 rounded-xl border border-gray-200 bg-white text-gray-500 hover:bg-gray-50 transition">
                             <ArrowLeft className="w-4 h-4" />
                         </button>
                         <div>

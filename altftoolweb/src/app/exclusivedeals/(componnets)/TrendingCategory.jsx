@@ -14,7 +14,7 @@ function TrendingCategory() {
 
       <div className="flex flex-wrap justify-center gap-4  md:justify-between">
         {trendingCategory?.map((c , index) => (
-          <Link href={`exclusivedeals/${c.slug}`} key={index} >
+          <Link href={`/exclusivedeals/${c.slug}`} key={index} >
               <div className="w-72  h-64  rounded-xl border-2 border-gray-300 shadow-xl overflow-hidden  hover:shadow-2xl cursor-pointer transition-all duration-200 ease-in-out hover:-translate-y-1.5">
           
               {/* Image Section */}

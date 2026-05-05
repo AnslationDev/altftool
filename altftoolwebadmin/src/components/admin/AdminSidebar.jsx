@@ -3,11 +3,15 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { BarChart3, PanelLeftClose, PanelLeftOpen, UserCircle, Bell, Headset, ShieldAlert } from "lucide-react";
-import { hasModuleAccess, SUPERADMIN_ONLY_GLOBAL_MODULES } from "@/lib/permissionUtils";
+import { PanelLeftClose, PanelLeftOpen } from "lucide-react";
+import { hasModuleAccess } from "@/lib/permissionUtils";
 import { PROJECTS, getProject } from "@/projects";
 import Image from "next/image";
-import { ShieldIcon } from "lucide-react";
+import {
+  getProjectModuleRoute,
+  GLOBAL_ADMIN_MODULES,
+  resolveProjectModule,
+} from "@/config/adminRoutes";
 
 export default function AdminSidebar({ adminData }) {
   if (!adminData) return null;
@@ -31,8 +35,9 @@ export default function AdminSidebar({ adminData }) {
   let project = null;
 
   if (maybeProject) {
+    const resolvedModule = resolveProjectModule(maybeProjectId, pathParts[1]);
     projectId = maybeProjectId;
-    currentModule = pathParts[1];
+    currentModule = resolvedModule?.moduleKey || pathParts[1];
     project = maybeProject;
   } else {
     const savedProjectId =
@@ -45,40 +50,7 @@ export default function AdminSidebar({ adminData }) {
     currentModule = null;
   }
 
-  // ── GLOBAL_MODULES ──────────────────────────────────────────────────────────
-  // Add "notification-broadcast" here alongside the existing entries.
-  const GLOBAL_MODULES = {
-    "admin-management": {
-      label: "Admin Management",
-      icon: ShieldIcon,
-      path: "/admin-management",
-    },
-    analytics: {
-      label: "Analytics",
-      icon: BarChart3,
-      path: "/analytics",
-    },
-    "notification-broadcast": {
-      label: "Broadcasts",
-      icon: Bell,
-      path: "/notification-broadcast",
-    },
-    profile: {
-      label: "My Profile",
-      icon: UserCircle,
-      path: "/profile",
-      // available to all authenticated admins
-      allAdmins: true,
-    },
-    
-tickets: {
-label: "Tickets",
-icon: ShieldAlert,
-path: "/tickets",
-},
-  };
-
-  const globalModules = Object.keys(GLOBAL_MODULES);
+  const globalModules = Object.keys(GLOBAL_ADMIN_MODULES);
 
   useEffect(() => {
     if (maybeProject) {
@@ -93,7 +65,7 @@ path: "/tickets",
     if (!targetModule || !newProject.modules[targetModule]) {
       targetModule = getDefaultModule(newProject);
     }
-    router.push(`/${newProjectId}/${targetModule}`);
+    router.push(getProjectModuleRoute(newProjectId, targetModule));
   };
 
   useEffect(() => {
@@ -212,7 +184,7 @@ path: "/tickets",
           const moduleConfig = project.modules[key];
           if (!moduleConfig) return null;
           const Icon = moduleConfig.icon;
-          const href = `/${projectId}/${key}`;
+          const href = getProjectModuleRoute(projectId, key);
           const isActive = currentModule === key;
           return (
             <Link
@@ -248,12 +220,11 @@ path: "/tickets",
 
           <div className="py-2 px-2 space-y-0.5">
             {globalModules.map((key) => {
-              const moduleConfig = GLOBAL_MODULES[key];
+              const moduleConfig = GLOBAL_ADMIN_MODULES[key];
 
-              // Profile is available to all admins; others follow existing logic
               const hasAccess = moduleConfig.allAdmins
                 ? true
-                : SUPERADMIN_ONLY_GLOBAL_MODULES.has(key)
+                : moduleConfig.superadminOnly
                 ? adminData.roleType === "superadmin"
                 : adminData.roleType === "superadmin" ||
                   adminData.permissions?.[key]?.read;

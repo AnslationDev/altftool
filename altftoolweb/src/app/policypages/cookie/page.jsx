@@ -25,7 +25,7 @@ export default function CookiePolicy() {
   const handleSearch = (query) => {
     setSearchQuery(query);
     if (query) {
-      router.push(`/categories/all?search=${encodeURIComponent(query)}`);
+      router.push(`/search?q=${encodeURIComponent(query)}`);
     }
   };
 

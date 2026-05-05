@@ -136,7 +136,7 @@ export async function fetchCardsCount() {
 }
 /* ─────────────────────────────────────────────
    ✅ Card Reads
-   projects/leadtree/creditcard/{cardId}
+   projects/leadtree/credit-cards/{cardId}
 ───────────────────────────────────────────── */
 
 export async function fetchCardById(id) {

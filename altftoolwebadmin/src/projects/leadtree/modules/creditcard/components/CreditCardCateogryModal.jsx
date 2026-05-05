@@ -45,7 +45,7 @@ export default function CreditCardCateogryModal({ onClose }) {
         entityId: id,
         summary: `Deleted card category ${id}`,
         changes: { id },
-        route: "/leadtree/creditcard",
+        route: "/leadtree/credit-cards",
       });
     } catch (err) {
       console.error(err);
@@ -84,7 +84,7 @@ export default function CreditCardCateogryModal({ onClose }) {
         entityId: null,
         summary: `Created ${added.length} credit card category${added.length === 1 ? "y" : "ies"}`,
         changes: { names: valid },
-        route: "/leadtree/creditcard",
+        route: "/leadtree/credit-cards",
       });
       onClose();
         window.location.reload()

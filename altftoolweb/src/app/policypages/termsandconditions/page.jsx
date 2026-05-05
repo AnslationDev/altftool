@@ -24,7 +24,7 @@ export default function TermsAndConditions() {
   const handleSearch = (query) => {
     setSearchQuery(query);
     if (query) {
-      router.push(`/categories/all?search=${encodeURIComponent(query)}`);
+      router.push(`/search?q=${encodeURIComponent(query)}`);
     }
   };
 

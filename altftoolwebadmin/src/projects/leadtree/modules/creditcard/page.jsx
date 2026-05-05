@@ -168,7 +168,7 @@ export default function CreditCard() {
             Manage your Credit Cards
           </h1>
           <a
-            href="/leadtree/creditcard/add-cards"
+            href="/leadtree/credit-cards/add-cards"
             className="bg-(--primary) text-white px-4 py-2 rounded-md text-sm hover:opacity-90"
           >
             Add New Card

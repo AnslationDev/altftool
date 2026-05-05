@@ -19,7 +19,7 @@ function AllStoreSection() {
             key={item.id}
             className="flex flex-col items-center text-center cursor-pointer group"
           >
-            <Link href={`exclusivedeals/${item.slug}`}>
+            <Link href={`/exclusivedeals/${item.slug}`}>
               <div className="relative w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 lg:w-28 lg:h-28 rounded-full bg-yellow-400 flex items-center justify-center overflow-hidden transition-transform duration-300 group-hover:scale-105">
                 <Image
                   src={item.image}

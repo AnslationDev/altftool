@@ -13,6 +13,36 @@ const nextConfig = {
   serverExternalPackages: ["firebase-admin"],
   allowedDevOrigins: ["localhost", "127.0.0.1"],
 
+  async redirects() {
+    return [
+      {
+        source: "/altftool/consumerrating/:path*",
+        destination: "/altftool/consumer-rating/:path*",
+        permanent: true,
+      },
+      {
+        source: "/altftool/salelocator/:path*",
+        destination: "/altftool/sale-locator/:path*",
+        permanent: true,
+      },
+      {
+        source: "/altftool/trendingVideos/:path*",
+        destination: "/altftool/trending-videos/:path*",
+        permanent: true,
+      },
+      {
+        source: "/leadtree/creditcard/:path*",
+        destination: "/leadtree/credit-cards/:path*",
+        permanent: true,
+      },
+      {
+        source: "/leadtree/expertvideos/:path*",
+        destination: "/leadtree/expert-videos/:path*",
+        permanent: true,
+      },
+    ];
+  },
+
   turbopack: {
     root: workspaceRoot,
   },

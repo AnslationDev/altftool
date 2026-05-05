@@ -1,4 +1,4 @@
-import { Users, Megaphone, FileText, CreditCard, SpeakerIcon, Video } from "lucide-react";
+import { FileText, CreditCard, Video } from "lucide-react";
 import Leadtreelogo from "../../../public/logos/leadlogo.png"
 
 const leadtreeConfig = {
@@ -7,10 +7,9 @@ const leadtreeConfig = {
   logo: Leadtreelogo,
   color: "#10b981",
   modules: {
-  
-    blogs:{ label: "Blogs", icon: FileText,  path: "/leadtree/blogs" },
-    creditcard: { label: "CreditCard", icon: CreditCard, path: "/leadtree/creditcard" },
-    expertvideos: { label: "Expert Video", icon: Video, path: "/leadtree/expertvideos" },
+    blogs: { label: "Blogs", icon: FileText },
+    creditcard: { label: "Credit Cards", icon: CreditCard, routeSegment: "credit-cards" },
+    expertvideos: { label: "Expert Videos", icon: Video, routeSegment: "expert-videos" },
   },
 };
 

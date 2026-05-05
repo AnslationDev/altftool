@@ -12,6 +12,21 @@ const nextConfig = {
   transpilePackages: ["@altftool/ui"],
   allowedDevOrigins: ["localhost", "127.0.0.1"],
 
+  async redirects() {
+    return [
+      {
+        source: "/blog",
+        destination: "/blogs",
+        permanent: true,
+      },
+      {
+        source: "/categories/:path*",
+        destination: "/tools/all",
+        permanent: true,
+      },
+    ];
+  },
+
   turbopack: {
     root: workspaceRoot,
   },

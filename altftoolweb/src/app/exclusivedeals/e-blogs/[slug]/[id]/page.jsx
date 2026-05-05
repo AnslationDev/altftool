@@ -17,17 +17,17 @@ function BlogDetailPage() {
         }
     }, [path])
 
-    const blogDetail = useMemo(() => 
-        blogData.blog?.find((content) => 
-            content.category.toLowerCase() === category.toLowerCase() && 
+    const blogDetail = useMemo(() =>
+        blogData.blog?.find((content) =>
+            content.category.toLowerCase() === category.toLowerCase() &&
             content.slug.toLowerCase() === slug.toLowerCase()
         ), [category, slug]
     )
 
     // Related posts based on category
-    const relatedPosts = useMemo(() => 
-        blogData.blog?.filter((content) => 
-            content.category.toLowerCase() === category.toLowerCase() && 
+    const relatedPosts = useMemo(() =>
+        blogData.blog?.filter((content) =>
+            content.category.toLowerCase() === category.toLowerCase() &&
             content.slug.toLowerCase() !== slug.toLowerCase()
         ).slice(0, 3) || [], [category, slug]
     )
@@ -38,8 +38,8 @@ function BlogDetailPage() {
                 <div className="text-center">
                     <h2 className="text-3xl font-bold text-gray-900 mb-4">Blog Post Not Found</h2>
                     <p className="text-gray-600 mb-6">The article you're looking for doesn't exist.</p>
-                    <Link 
-                        href="/blog" 
+                    <Link
+                        href="/blogs"
                         className="inline-flex items-center gap-2 px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
                     >
                         <ArrowLeft className="w-4 h-4" />
@@ -62,10 +62,10 @@ function BlogDetailPage() {
             <div className='py-2 px-4' >
                     <Link className='' href={"/exclusivedeals"} >Back</Link>
                     </div>
-                
+
                 <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-                   
-                 
+
+
                     {/* Category Badge */}
                     <div className="mb-6">
                         <span className="inline-block px-4 py-1.5 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-full text-sm font-semibold shadow-md">
@@ -125,7 +125,7 @@ function BlogDetailPage() {
                             <ul className="space-y-2">
                                 {blogDetail.content.sections.map((section, index) => (
                                     <li key={index}>
-                                        <a 
+                                        <a
                                             href={`#section-${index}`}
                                             className="text-blue-600 hover:text-blue-800 hover:underline transition-colors"
                                         >
@@ -181,7 +181,7 @@ function BlogDetailPage() {
                     <div className="flex flex-wrap items-center gap-3 mb-8 pb-8 border-b">
                         <Tag className="w-5 h-5 text-gray-600" />
                         {blogDetail.tags.map((tag, index) => (
-                            <span 
+                            <span
                                 key={index}
                                 className="px-4 py-2 bg-gradient-to-r from-gray-100 to-gray-200 text-gray-700 rounded-full text-sm font-medium hover:from-blue-100 hover:to-blue-200 hover:text-blue-700 transition-all cursor-pointer shadow-sm"
                             >
@@ -245,8 +245,8 @@ function BlogDetailPage() {
                                     <p className="text-sm text-gray-600">Content Creator & Industry Expert</p>
                                 </div>
                                 <p className="text-gray-700 leading-relaxed">
-                                    Passionate about exploring trends, sharing insights, and helping readers make informed decisions. 
-                                    With years of experience in {blogDetail.category.toLowerCase()}, I strive to deliver valuable content 
+                                    Passionate about exploring trends, sharing insights, and helping readers make informed decisions.
+                                    With years of experience in {blogDetail.category.toLowerCase()}, I strive to deliver valuable content
                                     that empowers and inspires.
                                 </p>
                             </div>
@@ -254,7 +254,7 @@ function BlogDetailPage() {
                     </div>
 
                     {/* Newsletter Signup */}
-                   
+
                 </div>
             </article>
 
@@ -264,8 +264,8 @@ function BlogDetailPage() {
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                         <div className="flex items-center justify-between mb-8">
                             <h2 className="text-3xl font-bold text-gray-900">Related Articles</h2>
-                            <Link 
-                                href="/blog"
+                            <Link
+                                href="/blogs"
                                 className="text-blue-600 hover:text-blue-700 font-medium flex items-center gap-2 group"
                             >
                                 View All
@@ -274,7 +274,7 @@ function BlogDetailPage() {
                         </div>
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                             {relatedPosts.map((post) => (
-                                <Link 
+                                <Link
                                     key={post.id}
                                     href={post.link}
                                     className="group"

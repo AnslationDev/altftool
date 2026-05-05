@@ -238,7 +238,7 @@ if (loading) return <PopularSalesSkeleton />
                   }}
                   className="px-2 shrink-0 animate-slide-right"
                 >
-                  <Link href={`exclusivedeals/${slugify(item.categoryName)}/${slugify(item.name)}`}>
+                  <Link href={`/exclusivedeals/${slugify(item.categoryName)}/${slugify(item.name)}`}>
                     <div className="shine-card h-48 md:h-56 rounded-2xl overflow-hidden relative cursor-pointer  ${!isMobileOrTablet ? 'shine-card' : ''}`">
                       <Image
                         src={item.bannerImg}

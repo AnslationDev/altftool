@@ -208,7 +208,7 @@ export default function EditCard() {
                 const data = await fetchCardById(id);
                 if (!data) {
                     emitAlert({ type: "error", message: "Card not found." });
-                    router.push("/leadtree/creditcard"); return;
+                    router.push("/leadtree/credit-cards"); return;
                 }
                 setFormData({
                     heading: data.heading || "",
@@ -445,12 +445,12 @@ export default function EditCard() {
                 module: "creditcard", action: "CARD_UPDATE", entityType: "card", entityId: id,
                 summary: `${status === "published" ? "Published" : "Saved draft"} card "${formData.heading.trim()}"`,
                 changes: { status, category: formData.category },
-                route: `/leadtree/creditcard/edit-card/${id}`,
+                route: `/leadtree/credit-cards/edit-card/${id}`,
             });
 
             setUploadStep("done");
             emitAlert({ type: "success", message: status === "published" ? "Card published!" : "Draft saved." });
-            setTimeout(() => router.push("/leadtree/creditcard"), 600);
+            setTimeout(() => router.push("/leadtree/credit-cards"), 600);
         } catch (err) {
             console.error("Unexpected save error:", err);
             const msg = "Something unexpected went wrong. Please try again.";
@@ -517,7 +517,7 @@ export default function EditCard() {
                 {/* Top bar */}
                 <div className="flex items-center justify-between gap-4 flex-wrap">
                     <div className="flex items-center gap-3">
-                        <button onClick={() => router.push("/leadtree/creditcard")} className="p-2 rounded-xl border border-gray-200 bg-white text-gray-500 hover:bg-gray-50 transition">
+                        <button onClick={() => router.push("/leadtree/credit-cards")} className="p-2 rounded-xl border border-gray-200 bg-white text-gray-500 hover:bg-gray-50 transition">
                             <ArrowLeft className="w-4 h-4" />
                         </button>
                         <div>
@@ -870,7 +870,7 @@ export default function EditCard() {
 
                         {/* View live */}
                         {formData.status === "published" && (
-                            <button onClick={() => router.push(`/leadtree/creditcard/view-card/${id}`)}
+                            <button onClick={() => router.push(`/leadtree/credit-cards/view-cards/${id}`)}
                                 className="w-full flex items-center justify-center gap-2 py-2.5 text-sm font-medium border border-gray-200 rounded-xl text-gray-600 bg-white hover:bg-gray-50 transition">
                                 <Eye className="w-4 h-4" />View Live Card
                             </button>

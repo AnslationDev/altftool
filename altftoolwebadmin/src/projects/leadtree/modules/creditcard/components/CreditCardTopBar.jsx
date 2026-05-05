@@ -18,8 +18,8 @@ export default function CreditCardTopBar() {
 
   const menuItems = [
     // { name:"Overview",icon:LayoutDashboard,href:"/altftool/blogs" },
-    { name: "All Cards", icon: LucideCreditCard, href: "/leadtree/creditcard/view-cards" },
-    { name: "Add New Card", icon: PlusCircle, href: "/leadtree/creditcard/add-cards" }
+    { name: "All Cards", icon: LucideCreditCard, href: "/leadtree/credit-cards/view-cards" },
+    { name: "Add New Card", icon: PlusCircle, href: "/leadtree/credit-cards/add-cards" }
   ];
 
   return (
@@ -36,7 +36,7 @@ export default function CreditCardTopBar() {
           {/* Navigation */}
 
           <nav className="flex items-center gap-4 py-3">
-            <Link href="/leadtree/creditcard" className="flex items-center gap-2 text-lg font-bold text-gray-900">
+            <Link href="/leadtree/credit-cards" className="flex items-center gap-2 text-lg font-bold text-gray-900">
 
               Credit Cards
 
@@ -46,8 +46,8 @@ export default function CreditCardTopBar() {
               const Icon = item.icon;
 
               const isActive =
-                item.href === "/leadtree/creditcard"
-                  ? pathname === "/leadtree/creditcard"
+                item.href === "/leadtree/credit-cards"
+                  ? pathname === "/leadtree/credit-cards"
                   : pathname.startsWith(item.href);
 
               return (

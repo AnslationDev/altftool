@@ -18,8 +18,8 @@ export default function ExpertVideoTopBar() {
 
   const menuItems = [
     // { name:"Overview",icon:LayoutDashboard,href:"/altftool/blogs" },
-    { name: "All Uploaded Videos", icon: Video, href: "/leadtree/expertvideos/view-videos" },
-    { name: "Add New Videos", icon: PlusCircle, href: "/leadtree/expertvideos/add-video" }
+    { name: "Videos", icon: Video, href: "/leadtree/expert-videos" },
+    { name: "Add New Videos", icon: PlusCircle, href: "/leadtree/expert-videos/add-video" }
   ];
 
   return (
@@ -36,7 +36,7 @@ export default function ExpertVideoTopBar() {
           {/* Navigation */}
 
           <nav className="flex items-center gap-4 py-3">
-            <Link href="/leadtree/expertvideos" className="flex items-center gap-2 text-lg font-bold text-gray-900">
+            <Link href="/leadtree/expert-videos" className="flex items-center gap-2 text-lg font-bold text-gray-900">
 
               Expert Videos
 
@@ -46,8 +46,8 @@ export default function ExpertVideoTopBar() {
               const Icon = item.icon;
 
               const isActive =
-                item.href === "/leadtree/expertvideos"
-                  ? pathname === "/leadtree/expertvideos"
+                item.href === "/leadtree/expert-videos"
+                  ? pathname === "/leadtree/expert-videos"
                   : pathname.startsWith(item.href);
 
               return (

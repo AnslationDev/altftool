@@ -29,7 +29,7 @@ function SearchBox({ onClose }) {
           <p className="text-xs sm:text-sm font-semibold text-gray-500 uppercase mb-2 sm:mb-3">Stores</p>
           <div className="space-y-1 sm:space-y-2">
             {storedata?.map((store) => (
-              <Link href={`exclusivedeals/${store.slug}`} key={store.id}>
+              <Link href={`/exclusivedeals/${store.slug}`} key={store.id}>
                 <div 
                   className="flex items-center gap-2 sm:gap-3 p-1.5 sm:p-2 rounded-lg hover:bg-gray-50 cursor-pointer transition"
                 >
@@ -56,7 +56,7 @@ function SearchBox({ onClose }) {
           <p className="text-xs sm:text-sm font-semibold text-gray-500 uppercase mb-2 sm:mb-3">Categories</p>
           <div className="space-y-1 sm:space-y-2">
             {categoryData.map((category) => (
-              <Link href={`exclusivedeals/${category.slug}`} key={category.id}>
+              <Link href={`/exclusivedeals/${category.slug}`} key={category.id}>
                 <div 
                   className="p-1.5 sm:p-2 rounded-lg hover:bg-gray-50 cursor-pointer transition"
                 >

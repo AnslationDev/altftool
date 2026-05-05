@@ -91,7 +91,7 @@ export default function CardsView() {
         <div className="text-center space-y-3">
           <div className="w-16 h-16 rounded-2xl bg-gray-100 flex items-center justify-center mx-auto text-3xl">📭</div>
           <p className="font-bold text-gray-800">Card not found</p>
-          <button onClick={() => router.push("/leadtree/creditcard")} className="text-sm text-blue-500 hover:underline">Back to cards</button>
+          <button onClick={() => router.push("/leadtree/credit-cards")} className="text-sm text-blue-500 hover:underline">Back to cards</button>
         </div>
       </div>
     );
@@ -112,7 +112,7 @@ export default function CardsView() {
             <span className={`text-xs font-bold px-2.5 py-1 rounded-full ${isPublished ? "bg-green-100 text-green-700" : "bg-gray-100 text-gray-600"}`}>
               {isPublished ? "● Published" : "○ Draft"}
             </span>
-            <button onClick={() => router.push(`/leadtree/creditcard/edit-card/${cards.id}`)}
+            <button onClick={() => router.push(`/leadtree/credit-cards/edit-card/${cards.id}`)}
               className="flex items-center gap-1.5 px-4 py-2 text-sm font-semibold bg-gray-900 hover:bg-gray-700 text-white rounded-xl transition shadow-sm">
               <Pencil className="w-3.5 h-3.5" />Edit
             </button>
@@ -147,11 +147,11 @@ export default function CardsView() {
           <div className="space-y-4">
             <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5 space-y-3">
               <h3 className="text-xs font-black text-gray-400 uppercase tracking-widest">Actions</h3>
-              <button onClick={() => router.push(`/leadtree/creditcard/edit-card/${cards.id}`)}
+              <button onClick={() => router.push(`/leadtree/credit-cards/edit-card/${cards.id}`)}
                 className="w-full flex items-center justify-center gap-2 py-2.5 text-sm font-semibold bg-gray-900 hover:bg-gray-700 text-white rounded-xl transition shadow-sm">
                 <Pencil className="w-4 h-4" />Edit Card
               </button>
-              <button onClick={() => router.push("/leadtree/creditcard")}
+              <button onClick={() => router.push("/leadtree/credit-cards")}
                 className="w-full flex items-center justify-center gap-2 py-2.5 text-sm font-medium border border-gray-200 rounded-xl text-gray-600 hover:bg-gray-50 transition">
                 <BookOpen className="w-4 h-4" />All Cards
               </button>

@@ -48,7 +48,7 @@
 //         className="flex max-w-[94%] py-2 mx-auto gap-3 sm:gap-4  md:gap-6 lg:gap-8 overflow-x-auto md:overflow-x-hidden scrollbar-hide px-2"
 //       >
 //         {data.recentStores.map((store) => (
-//           <Link key={store.id} href={`exclusivedeals/${store.slug}`} >
+//           <Link key={store.id} href={`/exclusivedeals/${store.slug}`} >
             
 //           <div
 //             key={store.id}
@@ -205,7 +205,7 @@ function RecentlyAddedStore() {
               style={{ minWidth: `${100 / visibleCards}%` }}
               className="md:px-2 px-6"
             >
-              <Link href={`exclusivedeals/${store.slug}`}>
+              <Link href={`/exclusivedeals/${store.slug}`}>
                 <div
                   className="relative bg-(--background)
                              rounded-2xl sm:rounded-3xl

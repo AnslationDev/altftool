@@ -1,10 +1,11 @@
 import { PROJECTS } from "@/projects";
+import { getProjectModuleRoute } from "@/config/adminRoutes";
 
 export const SUPERADMIN_ONLY_GLOBAL_MODULES = new Set([
   "admin-management",
   "analytics",
   "notification-broadcast",
-  "tickets" // ← added
+  "tickets",
 ]);
 
 /**
@@ -44,7 +45,7 @@ export function getFirstAllowedRoute(adminData) {
   for (const [projectId, project] of Object.entries(PROJECTS)) {
     for (const moduleKey of Object.keys(project.modules)) {
       if (hasModuleAccess({ adminData, projectId, moduleKey, action: "read" })) {
-        return `/${projectId}/${moduleKey}`;
+        return getProjectModuleRoute(projectId, moduleKey);
       }
     }
   }

@@ -184,7 +184,7 @@ export default function CreditCardTable({
                 entityId: card.id,
                 summary: `Set Card ${card.id} to ${newStatus}`,
                 changes: { status: newStatus },
-                route: "/leadtree/creditcard",
+                route: "/leadtree/credit-cards",
             });
         } catch (err) {
             console.error(err);
@@ -243,12 +243,12 @@ export default function CreditCardTable({
                 return (
                     <div className="flex items-center gap-0.5" onClick={(e) => e.stopPropagation()}>
                         <Tooltip label="View card">
-                            <button onClick={() => router.push(`/leadtree/creditcard/view-cards/${card.id}`)} className="p-1.5 rounded-md text-blue-500 hover:bg-blue-50 transition">
+                            <button onClick={() => router.push(`/leadtree/credit-cards/view-cards/${card.id}`)} className="p-1.5 rounded-md text-blue-500 hover:bg-blue-50 transition">
                                 <ExternalLink className="w-4 h-4" />
                             </button>
                         </Tooltip>
                         <Tooltip label="Edit Cards">
-                            <button onClick={() => router.push(`/leadtree/creditcard/edit-card/${card.id}`)} className="p-1.5 rounded-md text-amber-500 hover:bg-amber-50 transition">
+                            <button onClick={() => router.push(`/leadtree/credit-cards/edit-card/${card.id}`)} className="p-1.5 rounded-md text-amber-500 hover:bg-amber-50 transition">
                                 <Pencil className="w-4 h-4" />
                             </button>
                         </Tooltip>

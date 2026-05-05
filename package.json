@@ -23,8 +23,9 @@
     "audit": "npm run audit:web && npm run audit:admin",
     "audit:web": "npm --prefix altftoolweb audit --audit-level=moderate",
     "audit:admin": "npm --prefix altftoolwebadmin audit --audit-level=moderate",
+    "routes:check": "node scripts/check-routes.mjs",
     "test:smoke": "playwright test",
-    "validate": "npm run audit && npm run build && npm run test:smoke"
+    "validate": "npm run routes:check && npm run audit && npm run build && npm run test:smoke"
   },
   "devDependencies": {
     "@playwright/test": "^1.59.1",

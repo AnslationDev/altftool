@@ -47,7 +47,7 @@ export default function CreditCardBenefitModal({ onClose }) {
         entityId: id,
         summary: `Deleted benefited card ${id}`,
         changes: { id },
-        route: "/leadtree/creditcard",
+        route: "/leadtree/credit-cards",
       });
     } catch (err) {
       console.error(err);
@@ -87,7 +87,7 @@ export default function CreditCardBenefitModal({ onClose }) {
         entityId: null,
         summary: `Created ${added.length} credit card benefit${added.length === 1 ? "y" : "ies"}`,
         changes: { names: valid },
-        route: "/leadtree/creditcard",
+        route: "/leadtree/credit-cards",
       });
       onClose();
         window.location.reload()

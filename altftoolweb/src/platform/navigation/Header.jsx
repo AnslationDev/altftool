@@ -2,66 +2,15 @@
 
 import { useEffect, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
-import {
-  BookOpen,
-  ChevronDown,
-  GraduationCap,
-  LayoutGrid,
-  MapPin,
-  Menu,
-  Monitor,
-  Moon,
-  Newspaper,
-  Puzzle,
-  Search,
-  ShieldCheck,
-  ShoppingBag,
-  Sparkles,
-  Sun,
-  Tags,
-  Wrench,
-  X,
-} from "lucide-react";
+import { ChevronDown, Menu, Moon, Search, Sun, X } from "lucide-react";
 import Link from "next/link";
 import { IconButton, Input } from "@altftool/ui";
 import { useTheme } from "@/contexts/ThemeContext";
-
-const navItems = [
-  { label: "Tools", href: "/tools/all", icon: Wrench },
-  { label: "Extensions", href: "/extensions", icon: Puzzle },
-  {
-    label: "Deals",
-    icon: Tags,
-    hasDropdown: true,
-    options: [
-      { label: "Exclusive Deals", href: "/exclusivedeals", icon: Tags },
-      { label: "BuySmart", href: "/buysmart", icon: ShoppingBag },
-      { label: "Sale Locator", href: "/sale", icon: MapPin },
-    ],
-  },
-  {
-    label: "Learn",
-    icon: BookOpen,
-    hasDropdown: true,
-    options: [
-      { label: "Academy", href: "/academy", icon: GraduationCap },
-      { label: "Blog", href: "/blogs", icon: BookOpen },
-      { label: "Brand Ratings", href: "/brandrating", icon: ShieldCheck },
-      { label: "Support", href: "/supportsetting", icon: Sparkles },
-    ],
-  },
-  { label: "News", href: "/news", icon: Newspaper },
-  {
-    label: "More",
-    icon: LayoutGrid,
-    hasDropdown: true,
-    options: [
-      { label: "Desktop Software", href: "/desktop", icon: Monitor },
-      { label: "Trending Videos", href: "/trendingvids", icon: Sparkles },
-      { label: "About AltFTool", href: "/policypages/about", icon: ShieldCheck },
-    ],
-  },
-];
+import {
+  isPublicRouteActive,
+  isPublicShellHidden,
+  PUBLIC_NAV_ITEMS,
+} from "./siteRoutes";
 
 const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -72,10 +21,7 @@ const Header = () => {
   const pathname = usePathname();
   const { theme, toggleTheme } = useTheme();
 
-  const isActive = (href) =>
-    pathname === href || pathname.startsWith(href + "/");
-
-  const isBlogSlug = /^\/blogs\/[^/]+/.test(pathname);
+  const isActive = (route) => isPublicRouteActive(pathname, route);
 
   const prefetchRoute = (href) => {
     if (!href?.startsWith("/")) return;
@@ -125,11 +71,7 @@ const Header = () => {
   };
 
   // Hide global header on immersive routes.
-  if (
-    pathname === "/search-eng" ||
-    pathname.startsWith("/search-eng/") ||
-    isBlogSlug
-  ) {
+  if (isPublicShellHidden(pathname)) {
     return null;
   }
 
@@ -153,15 +95,15 @@ const Header = () => {
           </Link>
 
           <nav className="hidden items-center gap-1 lg:flex">
-            {navItems.map((item) => {
+            {PUBLIC_NAV_ITEMS.map((item) => {
               const Icon = item.icon;
-              const isCurrent = item.hasDropdown
-                ? item.options?.some((option) => isActive(option.href))
-                : isActive(item.href);
+              const isCurrent = item.options
+                ? item.options.some((option) => isActive(option))
+                : isActive(item);
 
               return (
                 <div key={item.label} className="group relative">
-                  {item.hasDropdown ? (
+                  {item.options ? (
                     <>
                       <button
                         className={`relative flex items-center gap-2 rounded-[var(--anslation-ds-radius)] px-2.5 py-2 text-sm font-medium transition ${
@@ -185,7 +127,7 @@ const Header = () => {
                                 href={option.href}
                                 {...routePreviewProps(option.href)}
                                 className={`flex items-center gap-3 rounded-[6px] px-2.5 py-2 text-sm transition ${
-                                  isActive(option.href)
+                                  isActive(option)
                                     ? "bg-(--muted) text-(--primary)"
                                     : "text-(--muted-foreground) hover:bg-(--muted) hover:text-(--foreground)"
                                 }`}
@@ -320,15 +262,15 @@ const Header = () => {
             </form>
 
             <div className="flex flex-col gap-1">
-              {navItems.map((item) => {
+              {PUBLIC_NAV_ITEMS.map((item) => {
                 const Icon = item.icon;
-                const isCurrent = item.hasDropdown
-                  ? item.options?.some((option) => isActive(option.href))
-                  : isActive(item.href);
+                const isCurrent = item.options
+                  ? item.options.some((option) => isActive(option))
+                  : isActive(item);
 
                 return (
                   <div key={item.label}>
-                    {item.hasDropdown ? (
+                    {item.options ? (
                       <details className="group">
                         <summary
                           className={`flex cursor-pointer list-none items-center justify-between rounded-[var(--anslation-ds-radius)] px-2.5 py-2.5 text-sm font-medium transition ${
@@ -353,7 +295,7 @@ const Header = () => {
                                 {...routePreviewProps(option.href)}
                                 onClick={() => setMobileMenuOpen(false)}
                                 className={`flex items-center gap-2 rounded-[var(--anslation-ds-radius)] px-2.5 py-2 text-sm font-medium transition ${
-                                  isActive(option.href)
+                                  isActive(option)
                                     ? "bg-(--muted) text-(--primary)"
                                     : "text-(--muted-foreground) hover:bg-(--muted) hover:text-(--foreground)"
                                 }`}

@@ -7,14 +7,12 @@ import AdminHeader from "./AdminHeader";
 import AdminSidebar from "./AdminSidebar";
 import { hasModuleAccess, SUPERADMIN_ONLY_GLOBAL_MODULES } from "@/lib/permissionUtils";
 import { getProject } from "@/projects";
+import { OPEN_GLOBAL_ROUTE_KEYS, resolveProjectModule } from "@/config/adminRoutes";
 import { getAuth } from "firebase/auth";
 import { emitAlert } from "@/lib/alertBus";
 import { usePushNotifications } from "@/lib/usePushNotifications";
 
 const DEV_BYPASS_AUTH = process.env.NEXT_PUBLIC_DEV_BYPASS_AUTH === "true";
-
-// Global routes that every authenticated admin can access without a permission check
-const OPEN_GLOBAL_ROUTES = new Set(["profile", "support"]);
 
 export default function AdminLayout({ children }) {
   const { user, adminData, loading, isSuperAdmin, isPendingUser, isDenied } = useAuth();
@@ -34,8 +32,9 @@ export default function AdminLayout({ children }) {
   const maybeProject = getProject(parts[0]);
 
   if (maybeProject) {
+    const resolvedModule = resolveProjectModule(parts[0], parts[1]);
     projectId = parts[0];
-    moduleKey = parts[1];
+    moduleKey = resolvedModule?.moduleKey || parts[1];
     project = maybeProject;
   } else {
     moduleKey = parts[0];
@@ -86,7 +85,7 @@ export default function AdminLayout({ children }) {
   const isProjectRoute = projectId && moduleKey && project;
   const isGlobalRoute = !projectId && moduleKey;
   // Profile and other open routes skip permission check
-  const isOpenGlobalRoute = isGlobalRoute && OPEN_GLOBAL_ROUTES.has(moduleKey);
+  const isOpenGlobalRoute = isGlobalRoute && OPEN_GLOBAL_ROUTE_KEYS.has(moduleKey);
 
   if (!DEV_BYPASS_AUTH && adminData && !isSuperAdmin && !isOpenGlobalRoute) {
     if (isProjectRoute) {

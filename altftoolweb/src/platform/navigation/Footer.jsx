@@ -3,51 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import SocialLinks from "../SocialLinks";
-
-const footerGroups = [
-  {
-    title: "Explore",
-    links: [
-      { label: "Tools", href: "/tools/all" },
-      { label: "Extensions", href: "/extensions" },
-      { label: "Desktop Software", href: "/desktop" },
-      { label: "Trending Videos", href: "/trendingvids" },
-    ],
-  },
-  {
-    title: "Commerce",
-    links: [
-      { label: "Exclusive Deals", href: "/exclusivedeals" },
-      { label: "BuySmart", href: "/buysmart" },
-      { label: "Sale Locator", href: "/sale" },
-      { label: "Brand Ratings", href: "/brandrating" },
-    ],
-  },
-  {
-    title: "Resources",
-    links: [
-      { label: "Academy", href: "/academy" },
-      { label: "Blog", href: "/blogs" },
-      { label: "News", href: "/news" },
-      { label: "Support", href: "/supportsetting" },
-    ],
-  },
-  {
-    title: "Company",
-    links: [
-      { label: "About", href: "/policypages/about" },
-      { label: "Contact", href: "/policypages/contact" },
-      { label: "Privacy", href: "/policypages/privacy" },
-      { label: "Terms", href: "/policypages/termsandconditions" },
-    ],
-  },
-];
-
-const legalLinks = [
-  { label: "Disclaimer", href: "/policypages/disclaimer" },
-  { label: "Affiliate", href: "/policypages/affiliate" },
-  { label: "Cookie", href: "/policypages/cookie" },
-];
+import { FOOTER_ROUTE_GROUPS, LEGAL_ROUTE_LINKS } from "./siteRoutes";
 
 const Footer = () => {
   return (
@@ -62,7 +18,7 @@ const Footer = () => {
                 width={132}
                 height={40}
                 className="object-contain"
-                style={{ height: "auto" }}
+                style={{ width: "auto", height: "auto" }}
               />
             </Link>
 
@@ -81,7 +37,7 @@ const Footer = () => {
           </div>
 
           <div className="grid grid-cols-2 gap-8 sm:grid-cols-4">
-            {footerGroups.map((group) => (
+            {FOOTER_ROUTE_GROUPS.map((group) => (
               <div key={group.title}>
                 <h3 className="mb-3 text-xs font-semibold uppercase tracking-[0.08em] text-white">
                   {group.title}
@@ -108,7 +64,7 @@ const Footer = () => {
         <div className="section mx-auto flex flex-col gap-3 py-5 text-xs text-[var(--anslation-ds-footer-muted)] sm:flex-row sm:items-center sm:justify-between">
           <p>© {new Date().getFullYear()} AltFTool. All rights reserved.</p>
           <div className="flex flex-wrap gap-x-4 gap-y-2">
-            {legalLinks.map((link) => (
+            {LEGAL_ROUTE_LINKS.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
