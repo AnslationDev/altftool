@@ -1,0 +1,55 @@
+/* 🔥 SECTION SPACING SYSTEM */
+
+/* 🔥 Universal Responsive Section Spacing */
+
+.tv-section {
+  margin-top: clamp(48px, 8vw, 120px);
+}
+
+.tv-section-header {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(12px, 2vw, 20px);
+}
+
+.tv-section-content {
+  margin-top: clamp(20px, 4vw, 40px);
+}
+
+
+
+/* Mobile: full-screen snap (YouTube Shorts behaviour) */
+.reel-slide {
+  padding: 0;
+}
+.reel-card {
+  height: 100dvh !important;
+  border-radius: 0 !important;
+}
+
+/* Tablet & Desktop: add vertical gap between reels */
+@media (min-width: 768px) {
+  .reel-slide {
+    padding: 18px 0;          /* gap between reels */
+  }
+  .reel-card {
+    height: calc(100dvh - 48px) !important;  /* full-h minus padding */
+    border-radius: 12px !important;
+    max-height: 92dvh;
+  }
+}
+
+@media (min-width: 1280px) {
+  .reel-slide {
+    padding: 24px 0;
+  }
+  .reel-card {
+    height: calc(100dvh - 72px) !important;
+    max-height: 88dvh;
+  }
+}
+
+
+
+
+

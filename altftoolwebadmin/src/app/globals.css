@@ -1,0 +1,275 @@
+@import "tailwindcss";
+@import "../styles/cta-buttons.css";
+@import "../styles/faq.css";  
+
+/* =========================================
+   DESIGN TOKENS
+========================================= */
+
+:root {
+  /* Core Colors */
+  --background: #f1f5f9;
+  --surface: #ffffff;
+  --surface-soft: #f8fafc;
+  --border: #e2e8f0;
+
+  --foreground: #0f172a;
+  --muted: #64748b;
+  --muted-soft: #94a3b8;
+
+  --primary: #05080c;
+  --primary-foreground: #ffffff;
+
+  --danger: #dc2626;
+  --success: #16a34a;
+
+  /* Radius */
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 18px;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04);
+  --shadow-md: 0 6px 20px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 20px 40px rgba(0, 0, 0, 0.08);
+}
+
+/* =========================================
+   BASE
+========================================= */
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: ui-sans-serif, system-ui, -apple-system,
+    BlinkMacSystemFont, "Segoe UI", Roboto;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* =========================================
+   COMPONENT LAYER
+========================================= */
+
+@layer components {
+
+  /* ---------- Card ---------- */
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .card-hover {
+    transition: all 0.2s ease;
+  }
+
+  .card-hover:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+  }
+
+  /* ---------- Buttons ---------- */
+
+  .btn {
+    @apply inline-flex items-center justify-center px-4 py-2 text-sm font-medium transition;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+  }
+
+  .btn-primary {
+    background: var(--primary);
+    color: var(--primary-foreground);
+  }
+
+  .btn-primary:hover {
+    opacity: 0.92;
+  }
+
+  .btn-outline {
+    border: 1px solid var(--border);
+    background: var(--surface);
+  }
+
+  .btn-outline:hover {
+    background: var(--surface-soft);
+  }
+
+  .btn-danger {
+    background: var(--danger);
+    color: white;
+  }
+
+  .btn-danger:hover {
+    opacity: 0.9;
+  }
+
+  /* ---------- Inputs ---------- */
+
+  .input {
+    @apply w-full px-3 py-2 text-sm outline-none transition;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border);
+    background: var(--surface);
+  }
+
+  .input:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(5, 8, 12, 0.08);
+  }
+
+  /* ---------- Tables ---------- */
+
+  .table {
+    @apply w-full text-sm border-collapse;
+  }
+
+  .table th {
+    @apply text-left font-medium px-6 py-4 border-b uppercase tracking-wide text-xs;
+    color: var(--muted);
+  }
+
+  .table td {
+    @apply px-6 py-4 border-b;
+  }
+
+  .table-row {
+    transition: background 0.15s ease;
+  }
+
+  .table-row:hover {
+    background: var(--surface-soft);
+  }
+
+  /* ---------- Sidebar ---------- */
+
+  .sidebar-link {
+    @apply flex items-center gap-3 px-3 py-2 text-sm font-medium transition rounded-lg cursor-pointer;
+  }
+
+  .sidebar-link:hover {
+    background: var(--surface-soft);
+  }
+
+  .sidebar-active {
+    background: var(--primary);
+    color: white;
+  }
+
+  /* ---------- Status Badge ---------- */
+
+  .badge {
+    @apply px-2 py-1 text-xs font-medium rounded-full;
+  }
+
+  .badge-success {
+    background: #dcfce7;
+    color: var(--success);
+  }
+
+  .badge-danger {
+    background: #fee2e2;
+    color: var(--danger);
+  }
+
+  .badge-muted {
+    background: #f1f5f9;
+    color: var(--muted);
+  }
+}
+
+/* =========================================
+   UTILITIES
+========================================= */
+
+@layer utilities {
+
+  .text-muted {
+    color: var(--muted);
+  }
+
+  .text-muted-soft {
+    color: var(--muted-soft);
+  }
+
+  .bg-surface {
+    background: var(--surface);
+  }
+
+  .bg-surface-soft {
+    background: var(--surface-soft);
+  }
+
+  .shadow-soft {
+    box-shadow: var(--shadow-md);
+  }
+
+  .glass {
+    background: rgba(255, 255, 255, 0.65);
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.35);
+  }
+}
+
+/* =========================================
+   SCROLLBAR
+========================================= */
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+
+@keyframes slide-in {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.animate-slide-in {
+  animation: slide-in 0.25s ease-out;
+}
+
+
+.ck-editor__editable {
+  min-height: 400px;
+}
+
+.editor-fullscreen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: white;
+  z-index: 9999;
+  padding: 20px;
+  overflow: auto;
+}
+
+.editor-fullscreen .ck-editor__editable {
+  min-height: calc(100vh - 120px);
+}
+

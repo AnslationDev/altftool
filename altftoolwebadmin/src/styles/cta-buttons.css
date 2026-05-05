@@ -1,0 +1,149 @@
+/* ============================================================
+   CTA BUTTON STYLES — cta-buttons.css
+   Load globally in your Next.js app (globals.css @import)
+   AND on public blog pages so copied buttons render correctly.
+
+   Class structure:
+     .CTA_CK_BANNER  → wrapper div (text-align center)
+     .CTA_CK         → base anchor styles shared by all variants
+     .CTA_ICON       → emoji / icon span
+     .CTA_TEXT       → button label span
+     .CTA_CENTER     → optional centering modifier on the anchor
+     .CTA_PRIMARY / .CTA_SECONDARY / .CTA_GRADIENT
+     .CTA_SUCCESS / .CTA_WARNING / .CTA_DANGER / .CTA_GLASS
+   ============================================================ */
+
+/* ── Wrapper ── */
+.CTA_CK_BANNER {
+  margin: 24px 0;
+  text-align: center;
+}
+
+/* ── Base button ── */
+.CTA_CK {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+
+  width: auto;
+  max-width: none;
+  margin: 0;
+
+  padding: 16px 22px;
+  border-radius: 14px;
+
+  font-size: 16px;
+  font-weight: 600;
+  text-decoration: none;
+
+  transition: all 0.25s ease;
+}
+
+/* ── Icon ── */
+.CTA_ICON {
+  font-size: 20px;
+}
+
+/* ── Text ── */
+.CTA_TEXT {
+  flex: 1;
+}
+
+/* ========================= */
+/* 🔵 PRIMARY (Default Blue) */
+/* ========================= */
+.CTA_PRIMARY {
+  background: #2563eb;
+  color: #ffffff;
+}
+
+.CTA_PRIMARY:hover {
+  background: #1d4ed8;
+  transform: translateY(-2px);
+}
+
+/* ========================= */
+/* ⚪ SECONDARY (Outline)    */
+/* ========================= */
+.CTA_SECONDARY {
+  border: 2px solid #2563eb;
+  color: #2563eb;
+  background: transparent;
+}
+
+.CTA_SECONDARY:hover {
+  background: #2563eb;
+  color: #fff;
+}
+
+/* ========================= */
+/* 🔥 GRADIENT (High CTR)    */
+/* ========================= */
+.CTA_GRADIENT {
+  background: linear-gradient(90deg, #ff7a18, #ff3d00);
+  color: #fff;
+}
+
+.CTA_GRADIENT:hover {
+  opacity: 0.9;
+  transform: translateY(-2px);
+}
+
+/* ========================= */
+/* 🟢 SUCCESS (Green)        */
+/* ========================= */
+.CTA_SUCCESS {
+  background: #16a34a;
+  color: #fff;
+}
+
+.CTA_SUCCESS:hover {
+  background: #15803d;
+}
+
+/* ========================= */
+/* 🟡 WARNING (Attention)    */
+/* ========================= */
+.CTA_WARNING {
+  background: #f59e0b;
+  color: #000;
+}
+
+.CTA_WARNING:hover {
+  background: #d97706;
+  color: #fff;
+}
+
+/* ========================= */
+/* 🔴 DANGER (Urgent CTA)    */
+/* ========================= */
+.CTA_DANGER {
+  background: #dc2626;
+  color: #fff;
+}
+
+.CTA_DANGER:hover {
+  background: #b91c1c;
+}
+
+/* ========================= */
+/* 🧊 GLASS (Modern UI)      */
+/* ========================= */
+.CTA_GLASS {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  color: #111;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.CTA_GLASS:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* ========================= */
+/* 🎯 CENTERED STYLE         */
+/* ========================= */
+.CTA_CENTER {
+  justify-content: center;
+  text-align: center;
+}

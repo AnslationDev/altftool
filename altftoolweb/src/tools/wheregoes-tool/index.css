@@ -1,0 +1,309 @@
+/* ============================================================
+   WhereGoes Tool — Scoped Styles
+   Uses platform CSS variables from globals.css:
+   --background, --foreground, --card, --card-foreground,
+   --primary, --primary-foreground, --secondary,
+   --muted, --muted-foreground, --border
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+/* ── Root container ───────────────────────────────────────── */
+.wheregoes-app {
+  min-height: 60vh;
+  background-color: var(--background);
+  color: var(--foreground);
+}
+
+/* ── Tab Bar ──────────────────────────────────────────────── */
+.wheregoes-tabbar {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.5rem 1rem;
+  border-bottom: 1px solid var(--border);
+  background-color: var(--card);
+  overflow-x: auto;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.wheregoes-tabbar::-webkit-scrollbar {
+  display: none;
+}
+
+.wheregoes-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.45rem 0.9rem;
+  border-radius: 0.5rem;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  white-space: nowrap;
+  cursor: pointer;
+  border: none;
+  background: transparent;
+  color: var(--muted-foreground);
+  transition: color 150ms ease, background-color 150ms ease;
+}
+
+.wheregoes-tab:hover {
+  background-color: var(--muted);
+  color: var(--foreground);
+}
+
+.wheregoes-tab--active {
+  background-color: color-mix(in srgb, var(--primary) 10%, transparent);
+  color: var(--primary);
+  font-weight: 600;
+}
+
+/* ── Page content wrapper ─────────────────────────────────── */
+.wheregoes-content {
+  width: 100%;
+}
+
+/* =====================
+   Glass Cards
+   ===================== */
+.wheregoes-app .glass-card {
+  background-color: color-mix(in srgb, var(--card), transparent 40%);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid var(--border);
+  border-radius: 1rem;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+}
+
+.wheregoes-app .glass-card-hover {
+  background-color: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 1rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+  transition: all 300ms ease;
+}
+
+.wheregoes-app .glass-card-hover:hover {
+  border-color: color-mix(in srgb, var(--primary), transparent 60%);
+  box-shadow: 0 0 20px rgba(37, 99, 235, 0.08);
+}
+
+/* =====================
+   Gradient Text
+   ===================== */
+.wheregoes-app .gradient-text {
+  background: linear-gradient(135deg, var(--primary) 0%, #8b5cf6 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* =====================
+   Buttons
+   ===================== */
+.wheregoes-app .btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+  border-radius: 0.75rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  transition: all 300ms ease;
+  outline: none;
+  background-color: var(--primary);
+  color: var(--primary-foreground);
+  height: 3rem;
+  padding: 0 2rem;
+  overflow: hidden;
+  position: relative;
+  border: none;
+  cursor: pointer;
+}
+
+.wheregoes-app .btn-primary:hover {
+  filter: brightness(1.1);
+  box-shadow: 0 0 20px color-mix(in srgb, var(--primary), transparent 60%);
+}
+
+.wheregoes-app .btn-primary:active {
+  transform: scale(0.98);
+}
+
+.wheregoes-app .btn-primary:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+.wheregoes-app .btn-primary:disabled {
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+.wheregoes-app .btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+  border-radius: 0.75rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: all 200ms ease;
+  outline: none;
+  border: 1px solid var(--border);
+  height: 3rem;
+  padding: 0 2rem;
+  cursor: pointer;
+  background-color: var(--card);
+  color: var(--foreground);
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+}
+
+.wheregoes-app .btn-secondary:hover {
+  background-color: var(--muted);
+  border-color: color-mix(in srgb, var(--primary), transparent 70%);
+}
+
+.wheregoes-app .btn-secondary:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+.wheregoes-app .btn-secondary:disabled {
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+.wheregoes-app .btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+  border-radius: 0.75rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: all 200ms ease;
+  outline: none;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  height: 2.5rem;
+  padding: 0 1.25rem;
+  color: var(--foreground);
+}
+
+.wheregoes-app .btn-ghost:hover {
+  background-color: var(--muted);
+}
+
+.wheregoes-app .btn-ghost:disabled {
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+/* =====================
+   Input Field
+   ===================== */
+.wheregoes-app .input-field {
+  display: flex;
+  height: 3.5rem;
+  width: 100%;
+  border-radius: 0.75rem;
+  border: 1px solid var(--border);
+  padding: 0.5rem 1.25rem;
+  font-size: 1rem;
+  background-color: var(--card);
+  color: var(--foreground);
+  transition: all 300ms ease;
+  outline: none;
+}
+
+.wheregoes-app .input-field::placeholder {
+  color: var(--muted-foreground);
+}
+
+.wheregoes-app .input-field:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 0;
+}
+
+.wheregoes-app .input-field:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+/* =====================
+   Status Badges
+   ===================== */
+.wheregoes-app .status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.125rem 0.5rem;
+  border-radius: 0.375rem;
+  font-size: 0.625rem;
+  font-weight: 700;
+  font-family: 'JetBrains Mono', monospace;
+  letter-spacing: 0.025em;
+  text-transform: uppercase;
+  border: 1px solid;
+}
+
+.wheregoes-app .status-2xx {
+  background-color: rgba(16, 185, 129, 0.08);
+  color: rgb(16, 185, 129);
+  border-color: rgba(16, 185, 129, 0.25);
+}
+
+.wheregoes-app .status-3xx {
+  background-color: rgba(245, 158, 11, 0.08);
+  color: rgb(245, 158, 11);
+  border-color: rgba(245, 158, 11, 0.25);
+}
+
+.wheregoes-app .status-4xx {
+  background-color: rgba(244, 63, 94, 0.08);
+  color: rgb(244, 63, 94);
+  border-color: rgba(244, 63, 94, 0.25);
+}
+
+.wheregoes-app .status-5xx {
+  background-color: rgba(239, 68, 68, 0.08);
+  color: rgb(239, 68, 68);
+  border-color: rgba(239, 68, 68, 0.25);
+}
+
+.wheregoes-app .status-err {
+  background-color: color-mix(in srgb, var(--muted), transparent 20%);
+  color: var(--muted-foreground);
+  border-color: var(--border);
+}
+
+/* =====================
+   Scrollbar
+   ===================== */
+.wheregoes-app .scrollbar-thin {
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
+}
+
+.wheregoes-app .scrollbar-thin::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.wheregoes-app .scrollbar-thin::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.wheregoes-app .scrollbar-thin::-webkit-scrollbar-thumb {
+  background-color: var(--border);
+  border-radius: 20px;
+}
+
+.wheregoes-app .scrollbar-thin::-webkit-scrollbar-thumb:hover {
+  background-color: var(--muted-foreground);
+}
+
+

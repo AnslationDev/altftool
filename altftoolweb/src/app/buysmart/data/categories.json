@@ -1,0 +1,67 @@
+[
+    {
+        "name": "adorama.com",
+        "slug": "adorama",
+        "url": "https://www.adorama.com"
+    },
+    {
+        "name": "airalo.com",
+        "slug": "airalo",
+        "url": "https://www.airalo.com"
+    },
+    {
+        "name": "aliexpress.com",
+        "slug": "aliexpress",
+        "url": "https://www.aliexpress.com"
+    },
+    {
+        "name": "antonia.it",
+        "slug": "antonia",
+        "url": "https://www.antonia.it"
+    },
+    {
+        "name": "arket.com",
+        "slug": "arket",
+        "url": "https://www.arket.com"
+    },
+    {
+        "name": "booking.com",
+        "slug": "booking",
+        "url": "https://www.booking.com"
+    },
+    {
+        "name": "berrylook.com",
+        "slug": "berrylook",
+        "url": "https://www.berrylook.com"
+    },
+    {
+        "name": "bitdefender.com",
+        "slug": "bitdefender",
+        "url": "https://www.bitdefender.com"
+    },
+    {
+        "name": "bluehost.in",
+        "slug": "bluehost",
+        "url": "https://www.bluehost.in"
+    },
+    {
+        "name": "corsair.com",
+        "slug": "corsair",
+        "url": "https://www.corsair.com"
+    },
+    {
+        "name": "cleartrip.com",
+        "slug": "cleartrip",
+        "url": "https://www.cleartrip.com"
+    },
+    {
+        "name": "carista.com",
+        "slug": "carista",
+        "url": "https://www.carista.com"
+    },
+    {
+        "name": "canadianaffair.com",
+        "slug": "canadianaffair",
+        "url": "https://www.canadianaffair.com"
+    }
+]

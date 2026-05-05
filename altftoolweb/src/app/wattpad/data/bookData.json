@@ -1,0 +1,124 @@
+{
+"trending":{
+  "title": "Trending Now",
+  "subtitle": "Popular stories people are loving",
+  "products": [
+    {
+      "id": "1",
+      "title": "Behind the Limelight",
+      "author": "Kara Flynn",
+      "image": "/wattpad/trending/Behind-The-Limelight.jpg"
+    },
+    {
+      "id": "2",
+      "title": "Costantino",
+      "author": "Emily Jean",
+      "image": "/wattpad/trending/Costantino.jpg"
+    },
+      {
+      "id": "3",
+      "title": "Bite Me",
+      "author": "Emily Jean",
+      "image": "/wattpad/trending/Bite-Me.jpg"
+    },
+      {
+      "id": "4",
+      "title": "Tempting",
+      "author": "Emily Jean",
+      "image": "/wattpad/trending/Tempting.jpg"
+    },
+      {
+      "id": "5",
+      "title": "Lilah",
+      "author": "Emily Jean",
+      "image": "/wattpad/trending/Lilah.jpg"
+    },
+      {
+      "id": "6",
+      "title": "Sidelined-2",
+      "author": "Emily Jean",
+      "image": "/wattpad/trending/Sidelined-2.jpg"
+    },
+     {
+      "id": "7",
+      "title": "Forgotten-Wolf",
+      "author": "Siberiantiggy",
+      "image": "/wattpad/trending/Forgotten-Wolf.jpg"
+    },
+     {
+      "id": "8",
+      "title": "Tempting",
+      "author": "Emily Jean",
+      "image": "/wattpad/trending/Tempting.jpg"
+    },
+     {
+      "id": "9",
+      "title": "Tempting",
+      "author": "Emily Jean",
+      "image": "/wattpad/trending/Tempting.jpg"
+    }
+
+  ]
+},
+"mustRead":{
+  "title": "Must-read Fanfiction",
+  "subtitle": "Explore fan-favorite stories loved by readers around the world",
+  "items": [
+        {
+      "id": "1",
+      "title": "Behind the Limelight",
+      "author": "Kara Flynn",
+      "image": "/wattpad/trending/Behind-The-Limelight.jpg"
+    },
+    {
+      "id": "2",
+      "title": "Costantino",
+      "author": "Emily Jean",
+      "image": "/wattpad/trending/Costantino.jpg"
+    },
+      {
+      "id": "3",
+      "title": "Bite Me",
+      "author": "Emily Jean",
+      "image": "/wattpad/trending/Bite-Me.jpg"
+    },
+      {
+      "id": "4",
+      "title": "Tempting",
+      "author": "Emily Jean",
+      "image": "/wattpad/trending/Tempting.jpg"
+    },
+      {
+      "id": "5",
+      "title": "Lilah",
+      "author": "Emily Jean",
+      "image": "/wattpad/trending/Lilah.jpg"
+    },
+      {
+      "id": "6",
+      "title": "Sidelined-2",
+      "author": "Emily Jean",
+      "image": "/wattpad/trending/Sidelined-2.jpg"
+    },
+     {
+      "id": "7",
+      "title": "Forgotten-Wolf",
+      "author": "Siberiantiggy",
+      "image": "/wattpad/trending/Forgotten-Wolf.jpg"
+    },
+     {
+      "id": "8",
+      "title": "Tempting",
+      "author": "Emily Jean",
+      "image": "/wattpad/trending/Tempting.jpg"
+    },
+     {
+      "id": "9",
+      "title": "Tempting",
+      "author": "Emily Jean",
+      "image": "/wattpad/trending/Tempting.jpg"
+    }
+
+    ]
+}
+} 

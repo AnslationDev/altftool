@@ -1,0 +1,73 @@
+export const feedbacks = [
+  {
+    name: "Amit Sharma",
+    role: "UI/UX Designer",
+    img: "/academy/feedback/amit.png",
+     rating: 5,
+    text: "Finding the right learning platform can be overwhelming with so many options available. altF simplifies this process by curating and organizing the best platforms based on your goals — whether you’re preparing for competitive exams, building new skills, or advancing your career. Instead of spending hours comparing websites, you get clear, trusted recommendations in one place, helping you make faster and smarter learning decisions",
+  },
+  {
+    name: "Rahul Singh",
+    role: "UI/UX Designer",
+      rating: 3,
+    img: "/academy/feedback/rahul.jpg",
+    text: "I was exploring different platforms to upskill but couldn’t figure out which one actually fit my needs. altF gave me clear direction by breaking down options in a way that was easy to understand. Instead of jumping between multiple websites, everything I needed was in one place.It helped me make a smarter choice without overthinking.The whole experience felt smooth and genuinely useful",
+  },
+
+  {
+    name: "Ankit Mishra",
+    role: "AI/ML Engineer",
+    rating: 2,
+    img: "/academy/feedback/amit.png",
+    text: "Finding the right learning platform can be overwhelming with so many options available. altF simplifies this process by curating and organizing the best platforms based on your goals — whether you’re preparing for competitive exams, building new skills, or advancing your career. Instead of spending hours comparing websites, you get clear, trusted recommendations in one place, helping you make faster and smarter learning decisions",
+  },
+  {
+    name: "Nidhi Maurya",
+    role: "Frontend Developer",
+      rating: 4,
+    img: "/academy/feedback/rahul.jpg",
+    text: "I spent a lot of time searching for the right platform to grow my skills but always felt unsure about my choices. altF made the process much easier by presenting the best options clearly based on my goals. Everything was structured, easy to explore, and saved me from unnecessary confusion. It helped me move forward faster with confidence.",
+  },
+    {
+    name: "Ankit Mishra",
+    role: "AI/ML Engineer",
+    rating: 5,
+    img: "/academy/feedback/amit.png",
+    text: "Finding the right learning platform can be overwhelming with so many options available. altF simplifies this process by curating and organizing the best platforms based on your goals — whether you’re preparing for competitive exams, building new skills, or advancing your career. Instead of spending hours comparing websites, you get clear, trusted recommendations in one place, helping you make faster and smarter learning decisions",
+  },
+  {
+    name: "Nidhi Maurya",
+    role: "Frontend Developer",
+    rating: 4,
+    img: "/academy/feedback/rahul.jpg",
+    text: "I spent a lot of time searching for the right platform to grow my skills but always felt unsure about my choices. altF made the process much easier by presenting the best options clearly based on my goals. Everything was structured, easy to explore, and saved me from unnecessary confusion. It helped me move forward faster with confidence.",
+  },
+    {
+    name: "Ankit Mishra",
+    role: "AI/ML Engineer",
+    rating: 3,
+    img: "/academy/feedback/amit.png",
+    text: "Finding the right learning platform can be overwhelming with so many options available. altF simplifies this process by curating and organizing the best platforms based on your goals — whether you’re preparing for competitive exams, building new skills, or advancing your career. Instead of spending hours comparing websites, you get clear, trusted recommendations in one place, helping you make faster and smarter learning decisions",
+  },
+  {
+    name: "Nidhi Maurya",
+    role: "Frontend Developer",
+       rating: 5,
+    img: "/academy/feedback/rahul.jpg",
+    text: "I spent a lot of time searching for the right platform to grow my skills but always felt unsure about my choices. altF made the process much easier by presenting the best options clearly based on my goals. Everything was structured, easy to explore, and saved me from unnecessary confusion. It helped me move forward faster with confidence.",
+  },
+    {
+    name: "Ankit Mishra",
+    role: "AI/ML Engineer",
+       rating: 4,
+    img: "/academy/feedback/amit.png",
+    text: "Finding the right learning platform can be overwhelming with so many options available. altF simplifies this process by curating and organizing the best platforms based on your goals — whether you’re preparing for competitive exams, building new skills, or advancing your career. Instead of spending hours comparing websites, you get clear, trusted recommendations in one place, helping you make faster and smarter learning decisions",
+  },
+  {
+    name: "Nidhi Maurya",
+    role: "Frontend Developer",
+       rating: 5,
+    img: "/academy/feedback/rahul.jpg",
+    text: "I spent a lot of time searching for the right platform to grow my skills but always felt unsure about my choices. altF made the process much easier by presenting the best options clearly based on my goals. Everything was structured, easy to explore, and saved me from unnecessary confusion. It helped me move forward faster with confidence.",
+  },
+];

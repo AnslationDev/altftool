@@ -1,0 +1,15 @@
+export const vowels = [
+  { letter: "अ", transliteration: "a", pronunciation: "a as in about" },
+  { letter: "आ", transliteration: "aa", pronunciation: "aa as in father" },
+  { letter: "इ", transliteration: "i", pronunciation: "i as in sit" },
+  { letter: "ई", transliteration: "ee", pronunciation: "ee as in see" },
+  { letter: "उ", transliteration: "u", pronunciation: "u as in put" },
+  { letter: "ऊ", transliteration: "oo", pronunciation: "oo as in pool" },
+  { letter: "ऋ", transliteration: "ri", pronunciation: "ri as in risk" },
+  { letter: "ए", transliteration: "e", pronunciation: "e as in bed" },
+  { letter: "ऐ", transliteration: "ai", pronunciation: "ai as in aisle" },
+  { letter: "ओ", transliteration: "o", pronunciation: "o as in go" },
+  { letter: "औ", transliteration: "au", pronunciation: "au as in house" },
+  { letter: "अं", transliteration: "am", pronunciation: "nasalized a" },
+  { letter: "अः", transliteration: "ah", pronunciation: "visarga" },
+];

@@ -1,0 +1,204 @@
+[
+  {
+    "id": 1,
+    "name": "PDF Converter",
+    "subtitle": "Convert files instantly",
+    "description": "Convert PDF files into Word, Excel, PowerPoint, or images with high accuracy and fast processing.",
+    "image": "https://webtechdaily.com/wp-content/uploads/2025/12/jpg-to-pdf-converter-online-3.png",
+    "icon": "📄",
+    "whatYouGet": [
+      "Multiple format support",
+      "Fast & secure conversion",
+      "No quality loss",
+      "Works on all devices"
+    ],
+    "steps": [
+      "Upload your PDF file",
+      "Select output format",
+      "Download converted file"
+    ]
+  },
+  {
+    "id": 2,
+    "name": "Image Compressor",
+    "subtitle": "Reduce image size",
+    "description": "Compress images without losing quality. Perfect for websites, blogs, and social media.",
+    "image": "https://firebasestorage.googleapis.com/v0/b/altftool-bca36.firebasestorage.app/o/images%2FBanners%2F1773826100838-icc2x0hdsar.avif?alt=media&token=3336eae0-3e22-4eb9-b9fe-379d47e5a52e",
+    "icon": "🖼️",
+    "whatYouGet": [
+      "High-quality compression",
+      "Supports JPG, PNG, WebP",
+      "Instant preview",
+      "SEO-friendly images"
+    ],
+    "steps": [
+      "Upload your image",
+      "Adjust compression level",
+      "Download optimized image"
+    ]
+  },
+  {
+    "id": 3,
+    "name": "URL Shortener",
+    "subtitle": "Short links, big impact",
+    "description": "Create clean and trackable short links for marketing and advertisements.",
+    "image": "https://firebasestorage.googleapis.com/v0/b/altftool-bca36.firebasestorage.app/o/images%2FBanners%2F1773826297803-mwva9xafd3e.png?alt=media&token=1a979ceb-5579-43de-9945-bb0fd193e788",
+    "icon": "🔗",
+    "whatYouGet": [
+      "Custom short URLs",
+      "Click tracking",
+      "Fast redirection",
+      "Ad campaign friendly"
+    ],
+    "steps": [
+      "Paste long URL",
+      "Generate short link",
+      "Copy and share"
+    ]
+  },
+  {
+    "id": 4,
+    "name": "Color Picker",
+    "subtitle": "Pick perfect colors",
+    "description": "Select, copy, and manage HEX, RGB, and HSL colors for your designs instantly.",
+    "image": "https://firebasestorage.googleapis.com/v0/b/altftool-bca36.firebasestorage.app/o/images%2FBanners%2F1773826452036-mb4hlsnhs8m.webp?alt=media&token=4c7618cd-2ee0-4f85-94d1-56f8620bdb5d",
+    "icon": "🎨",
+    "whatYouGet": [
+      "HEX, RGB, HSL values",
+      "One-click copy",
+      "Designer friendly",
+      "Fast color detection",
+       "HEX, RGB, HSL values",
+      "One-click copy",
+      "Designer friendly",
+      "Fast color detection", "HEX, RGB, HSL values",
+      "One-click copy",
+      "Designer friendly",
+      "Fast color detection"
+    ],
+    "steps": [
+      "Pick a color",
+      "Copy color code",
+      "Use in your design", "HEX, RGB, HSL values",
+      "One-click copy",
+      "Designer friendly",
+      "Fast color detection", "HEX, RGB, HSL values",
+      "One-click copy",
+      "Designer friendly",
+      "Fast color detection"
+    ]
+  },
+  {
+    "id": 5,
+    "name": "AI Tools Hub",
+    "subtitle": "Smart tools, faster work",
+    "description": "Access multiple AI-powered tools designed to boost productivity and simplify everyday tasks.",
+    "image": "https://firebasestorage.googleapis.com/v0/b/altftool-bca36.firebasestorage.app/o/images%2FBanners%2F1773826582271-8d57cezl4n3.webp?alt=media&token=fb5c5305-3e5d-430a-a521-3dd7134274e1",
+    "icon": "🤖",
+    "whatYouGet": [
+      "AI-powered utilities",
+      "Fast processing",
+      "Simple interface",
+      "All-in-one platform"
+    ],
+    "steps": [
+      "Choose a tool",
+      "Provide input",
+      "Get instant results"
+    ]
+  },{
+    "id": 6,
+    "name": "Event Manager",
+    "subtitle": "Convert files instantly",
+    "description": "Convert PDF files into Word, Excel, PowerPoint, or images with high accuracy and fast processing.",
+    "image": "https://firebasestorage.googleapis.com/v0/b/altftool-bca36.firebasestorage.app/o/images%2FBanners%2F1773826893112-hg4jyv3fer.webp?alt=media&token=33027c7a-84c1-4eda-8f4c-987a043c384c",
+    "icon": "📄",
+    "whatYouGet": [
+      "Multiple format support",
+      "Fast & secure conversion",
+      "No quality loss",
+      "Works on all devices"
+    ],
+    "steps": [
+      "Upload your PDF file",
+      "Select output format",
+      "Download converted file"
+    ]
+  },{
+    "id": 7,
+    "name": "Meme Generator",
+    "subtitle": "Convert files instantly",
+    "description": "Convert PDF files into Word, Excel, PowerPoint, or images with high accuracy and fast processing.",
+    "image": "https://firebasestorage.googleapis.com/v0/b/altftool-bca36.firebasestorage.app/o/images%2FBanners%2F1773827056587-idmck1yqce9.png?alt=media&token=3edb4129-9b48-4995-aa31-360de8d05e0c",
+    "icon": "📄",
+    "whatYouGet": [
+      "Multiple format support",
+      "Fast & secure conversion",
+      "No quality loss",
+      "Works on all devices"
+    ],
+    "steps": [
+      "Upload your PDF file",
+      "Select output format",
+      "Download converted file"
+    ]
+  },{
+    "id": 8,
+    "name": "Text to Voice",
+    "subtitle": "Convert files instantly",
+    "description": "Convert PDF files into Word, Excel, PowerPoint, or images with high accuracy and fast processing.",
+    "image": "https://firebasestorage.googleapis.com/v0/b/altftool-bca36.firebasestorage.app/o/images%2FBanners%2F1773827156085-g7ivt9nin.webp?alt=media&token=2eec8f43-d8d8-4bd8-91d9-dc95ec763eb6",
+    "icon": "📄",
+    "whatYouGet": [
+      "Multiple format support",
+      "Fast & secure conversion",
+      "No quality loss",
+      "Works on all devices"
+    ],
+    "steps": [
+      "Upload your PDF file",
+      "Select output format",
+      "Download converted file"
+    ]
+  },{
+    "id": 9,
+    "name": "Shadow Generator",
+    "subtitle": "Convert files instantly",
+    "description": "Convert PDF files into Word, Excel, PowerPoint, or images with high accuracy and fast processing.",
+    "image": "https://firebasestorage.googleapis.com/v0/b/altftool-bca36.firebasestorage.app/o/images%2FBanners%2F1773827264528-brlmvzmokkq.webp?alt=media&token=14908b1c-7a32-4029-9118-ce18eb20b848",
+    "icon": "📄",
+    "whatYouGet": [
+      "Multiple format support",
+      "Fast & secure conversion",
+      "No quality loss",
+      "Works on all devices"
+    ],
+    "steps": [
+      "Upload your PDF file",
+      "Select output format",
+      "Download converted file"
+    ]
+  }
+  ,{
+    "id": 10,
+    "name": "Caption Generator",
+    "subtitle": "Convert files instantly",
+    "description": "Convert PDF files into Word, Excel, PowerPoint, or images with high accuracy and fast processing.",
+    "image": "https://firebasestorage.googleapis.com/v0/b/altftool-bca36.firebasestorage.app/o/images%2FBanners%2F1773827392321-nvp64hb7j6q.webp?alt=media&token=e4e5645c-b562-4c77-8c1c-c8a1c8d802d1",
+    "icon": "📄",
+    "whatYouGet": [
+      "Multiple format support",
+      "Fast & secure conversion",
+      "No quality loss",
+      "Works on all devices"
+    ],
+    "steps": [
+      "Upload your PDF file",
+      "Select output format",
+      "Download converted file"
+    ]
+  }
+]
+
+
+

@@ -1,0 +1,98 @@
+[
+  {
+    "id": "cat_romance",
+    "name": "Romance",
+    "slug": "romance",
+    "description": "Love stories and relationships",
+    "coverImage": "/images/categories/romance.jpg",
+    "createdAt": "2025-01-01"
+  },
+  {
+    "id": "cat_thriller",
+    "name": "Thriller",
+    "slug": "thriller",
+    "description": "Suspense and high-stakes drama",
+    "coverImage": "/images/categories/thriller.jpg",
+    "createdAt": "2025-01-01"
+  },
+  {
+    "id": "cat_fantasy",
+    "name": "Fantasy",
+    "slug": "fantasy",
+    "description": "Magic, mythical worlds, and adventures",
+    "coverImage": "/images/categories/fantasy.jpg",
+    "createdAt": "2025-01-01"
+  },
+  {
+    "id": "cat_fanfiction",
+    "name": "Fanfiction",
+    "slug": "fanfiction",
+    "description": "Stories inspired by existing characters",
+    "coverImage": "/images/categories/fanfiction.jpg",
+    "createdAt": "2025-01-01"
+  },
+  {
+    "id": "cat_new_adult",
+    "name": "New Adult",
+    "slug": "new-adult",
+    "description": "Young adult stories with mature themes",
+    "coverImage": "/images/categories/new-adult.jpg",
+    "createdAt": "2025-01-01"
+  },
+  {
+    "id": "cat_lgbtq",
+    "name": "LGBTQ+",
+    "slug": "lgbtq",
+    "description": "Stories centered on LGBTQ+ characters",
+    "coverImage": "/images/categories/lgbtq.jpg",
+    "createdAt": "2025-01-01"
+  },
+  {
+    "id": "cat_horror",
+    "name": "Horror",
+    "slug": "horror",
+    "description": "Scary and supernatural stories",
+    "coverImage": "/images/categories/horror.jpg",
+    "createdAt": "2025-01-01"
+  },
+  {
+    "id": "cat_historical_fiction",
+    "name": "Historical Fiction",
+    "slug": "historical-fiction",
+    "description": "Stories set in the past",
+    "coverImage": "/images/categories/historical-fiction.jpg",
+    "createdAt": "2025-01-01"
+  },
+  {
+    "id": "cat_science_fiction",
+    "name": "Science Fiction",
+    "slug": "science-fiction",
+    "description": "Futuristic and science-based stories",
+    "coverImage": "/images/categories/science-fiction.jpg",
+    "createdAt": "2025-01-01"
+  },
+  {
+    "id": "cat_mystery",
+    "name": "Mystery",
+    "slug": "mystery",
+    "description": "Detective and investigation stories",
+    "coverImage": "/images/categories/mystery.jpg",
+    "createdAt": "2025-01-01"
+  },
+  {
+    "id": "cat_poetry",
+    "name": "Poetry",
+    "slug": "poetry",
+    "description": "Creative poems and verses",
+    "coverImage": "/images/categories/poetry.jpg",
+    "createdAt": "2025-01-01"
+  },
+  {
+    "id": "cat_adventure",
+    "name": "Adventure",
+    "slug": "adventure",
+    "description": "Exciting journeys and explorations",
+    "coverImage": "/images/categories/adventure.jpg",
+    "createdAt": "2025-01-01"
+  }
+]

@@ -1,0 +1,33 @@
+.FAQ_WRAPPER {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.FAQ_ITEM {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.FAQ_Q {
+  width: 100%;
+  background: transparent;
+  color: inherit;
+  border: none;
+  padding: 14px;
+  font-weight: 600;
+  display: flex;
+  justify-content: space-between;
+  cursor: pointer;
+}
+
+.FAQ_A {
+  display: none;
+  padding: 0 14px 14px;
+  opacity: 0.8;
+}
+
+.FAQ_ITEM.active .FAQ_A {
+  display: block;
+}

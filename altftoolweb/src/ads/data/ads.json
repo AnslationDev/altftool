@@ -1,0 +1,244 @@
+{
+  "ads": [
+    {
+      "id": "tools_ad_1",
+      "status": "active",
+      "placements": ["tools_listing"],
+      "layout": "tool_card",
+      "interval": 6,
+      "devices": { "desktop": true, "mobile": false },
+      "content": {
+        "bannerUrl": "/banners/rectangle-long.png",
+         "redirect": "https://youtube.com"
+      }
+    },
+    {
+      "id": "tools_ad_2",
+      "status": "active",
+      "placements": ["tools_listing"],
+      "layout": "tool_card",
+      "interval": 6,
+      "devices": { "desktop": true, "mobile": false },
+      "content": {
+        "bannerUrl": "/banners/rectangle-long.png",
+         "redirect": "https://example.com"
+      }
+    },
+    {
+      "id": "tools_ad_3",
+      "status": "active",
+      "placements": ["tools_listing"],
+      "layout": "tool_card",
+      "interval": 6,
+      "devices": { "desktop": true, "mobile": false },
+      "content": {
+        "bannerUrl": "/banners/rectangle-long.png",
+        "redirect": "https://example.com"
+      }
+    },
+    {
+      "id": "tools_ad_4",
+      "status": "active",
+      "placements": ["tools_listing"],
+      "layout": "tool_card",
+      "interval": 6,
+      "devices": { "desktop": true, "mobile": false },
+      "content": {
+        "bannerUrl": "/banners/rectangle-long.png",
+        "redirect": "https://example.com"
+      }
+    },
+    {
+      "id": "tools_ad_5",
+      "status": "active",
+      "placements": ["tools_listing"],
+      "layout": "tool_card",
+      "interval": 6,
+      "devices": { "desktop": true, "mobile": false },
+      "content": {
+        "bannerUrl": "/banners/rectangle-long.png",
+        "redirect": "https://example.com"
+      }
+    },
+    {
+  "id": "games_ad_1",
+  "status": "active",
+  "placements": ["games_listing"],
+  "layout": "game_card",
+  "interval": 12,
+  "devices": { "desktop": true, "mobile": false },
+  "content": {
+    "bannerUrl": "/banners/square.png",
+    "redirect": "https://example.com"
+  }
+},
+    {
+  "id": "games_ad_2",
+  "status": "active",
+  "placements": ["games_listing"],
+  "layout": "game_card",
+  "interval": 12,
+  "devices": { "desktop": true, "mobile": false },
+  "content": {
+    "bannerUrl": "/banners/square.png",
+    "redirect": "https://example.com"
+  }
+},
+    {
+  "id": "games_ad_3",
+  "status": "active",
+  "placements": ["games_listing"],
+  "layout": "game_card",
+  "interval": 12,
+  "devices": { "desktop": true, "mobile": false },
+  "content": {
+    "bannerUrl": "/banners/square.png",
+    "redirect": "https://example.com"
+  }
+},
+{
+  "id": "tool_side_left",
+  "status": "active",
+  "placements": ["tool_detail_left"],
+  "layout": "sidebar",
+  "devices": { "desktop": true, "mobile": false },
+  "content": {
+     "bannerUrl": "/banners/vertical.png",
+    "redirect": "https://example.com"
+  }
+},
+{
+  "id": "tool_side_right",
+  "status": "active",
+  "placements": ["tool_detail_right"],
+  "layout": "sidebar",
+  "devices": { "desktop": true, "mobile": false },
+  "content": {
+    "bannerUrl": "/banners/vertical.png",
+    "redirect": "https://example.com"
+  }
+},
+{
+  "id": "tool_bottom",
+  "status": "active",
+  "placements": ["tool_detail_bottom"],
+  "layout": "banner",
+  "devices": { "desktop": true, "mobile": true },
+  "content": {
+    "bannerUrl": "/banners/rectangle-long.png",
+    "redirect": "https://example.com"
+  }
+},
+{
+  "id": "ext_ad_1",
+  "status": "active",
+  "placements": ["extensions_listing"],
+  "layout": "extension_card",
+  "devices": { "desktop": true, "mobile": true },
+  "content": {
+    "bannerUrl": "/banners/square.png",
+    "redirect": "https://example.com"
+  }
+},
+{
+  "id": "ext_ad_2",
+  "status": "active",
+  "placements": ["extensions_listing"],
+  "layout": "extension_card",
+  "devices": { "desktop": true, "mobile": true },
+  "content": {
+   "bannerUrl": "/banners/square.png",
+    "redirect": "https://example.com"
+  }
+},
+{
+  "id": "ext_ad_3",
+  "status": "active",
+  "placements": ["extensions_listing"],
+  "layout": "extension_card",
+  "devices": { "desktop": true, "mobile": true },
+  "content": {
+    "bannerUrl": "/banners/square.png",
+    "redirect": "https://example.com"
+  }
+},
+{
+  "id": "ext_ad_4",
+  "status": "active",
+  "placements": ["extensions_listing"],
+  "layout": "extension_card",
+  "devices": { "desktop": true, "mobile": true },
+  "content": {
+   "bannerUrl": "/banners/square.png",
+    "redirect": "https://example.com"
+  }
+},
+{
+  "id": "ext_ad_5",
+  "status": "active",
+  "placements": ["extensions_listing"],
+  "layout": "extension_card",
+  "devices": { "desktop": true, "mobile": true },
+  "content": {
+    "bannerUrl": "/banners/square.png",
+    "redirect": "https://example.com"
+  }
+},
+{
+  "id": "ext_ad_6",
+  "status": "active",
+  "placements": ["extensions_listing"],
+  "layout": "extension_card",
+  "devices": { "desktop": true, "mobile": true },
+  "content": {
+   "bannerUrl": "/banners/square.png",
+    "redirect": "https://example.com"
+  }
+},
+{
+  "id": "ext_ad_7",
+  "status": "active",
+  "placements": ["extensions_listing"],
+  "layout": "extension_card",
+  "devices": { "desktop": true, "mobile": true },
+  "content": {
+    "bannerUrl": "/banners/square.png",
+    "redirect": "https://example.com"
+  }
+},
+{
+  "id": "news_ad_1",
+  "status": "active",
+  "placements": ["news_feed"],
+  "layout": "news_card",
+  "devices": { "desktop": true, "mobile": true },
+  "content": {
+    "bannerUrl": "/banners/rectangle1.png",
+    "redirect": "https://example.com"
+  }
+},
+{
+  "id": "news_ad_2",
+  "status": "active",
+  "placements": ["news_feed"],
+  "layout": "news_card",
+  "devices": { "desktop": true, "mobile": true },
+  "content": {
+   "bannerUrl": "/banners/rectangle1.png",
+    "redirect": "https://example.com"
+  }
+},
+{
+  "id": "news_ad_3",
+  "status": "active",
+  "placements": ["news_feed"],
+  "layout": "news_card",
+  "devices": { "desktop": true, "mobile": true },
+  "content": {
+   "bannerUrl": "/banners/rectangle1.png",
+    "redirect": "https://example.com"
+  }
+}
+
+  ]
+}

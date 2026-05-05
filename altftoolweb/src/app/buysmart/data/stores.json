@@ -1,0 +1,37 @@
+[
+  {
+    "name": "Amazon",
+    "slug": "amazon",
+    "logo": "https://i.pinimg.com/originals/01/ec/c7/01ecc7d5692af6a5b132895397357504.gif",
+    "offers": 15,
+    "highlight": "Up to 50% Off"
+  },
+  {
+    "name": "Ajio",
+    "slug": "ajio",
+    "logo": "https://i.pinimg.com/originals/0a/b2/cb/0ab2cb3d634f15ff0142c2fc5b1f9aea.gif",
+    "offers": 10,
+    "highlight": "Save 30%"
+  },
+  {
+    "name": "Savana",
+    "slug": "savana",
+    "logo": "https://marketplace.canva.com/EAGHC5NUD-Q/1/0/1600w/canva-black-and-white-modern-fashion-sale-banner-landscape-n7GVeIDu0Tg.jpg",
+    "offers": 8,
+    "highlight": "Up to ₹1000 Off"
+  },
+  {
+    "name": "Myntra",
+    "slug": "myntra",
+    "logo": "https://hunterae.com/wp-content/uploads/images/valentines-day-sale-download-videohive-32006212-free-hunterae-com.jpg",
+    "offers": 8,
+    "highlight": "Up to ₹1000 Off"
+  },
+  {
+    "name": "Myntra",
+    "slug": "myntra",
+    "logo": "https://janasya.com/cdn/shop/files/valentine_s_day_Banner_c9b24103-d735-4a1f-a11b-46b54a4f55e5.webp?v=1770785259&width=1920",
+    "offers": 8,
+    "highlight": "Up to ₹1000 Off"
+  }
+]

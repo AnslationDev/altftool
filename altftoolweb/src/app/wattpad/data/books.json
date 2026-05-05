@@ -1,0 +1,225 @@
+[
+  {
+    "id": "book_001",
+    "title": "Love Beyond Time",
+    "slug": "love-beyond-time",
+    "categoryId": "cat_romance",
+    "authorId": "user_001",
+    "coverImage": "/images/books/romance1.jpg",
+    "bannerImage": "/images/books/banner1.jpg",
+    "summary": "A love story beyond time",
+    "description": "A timeless romance that defies fate and reality.",
+    "tags": ["love", "drama"],
+    "language": "English",
+    "price": 199,
+    "isFree": false,
+    "stats": {
+      "rating": 4.5,
+      "totalReviews": 1200,
+      "views": 54000,
+      "totalChapters": 25
+    },
+    "meta": {
+      "pages": 320,
+      "readingTime": "5h"
+    },
+    "status": "published",
+    "createdAt": "2025-01-01"
+  },
+
+  {
+    "id": "book_002",
+    "title": "Midnight Desires",
+    "slug": "midnight-desires",
+    "categoryId": "cat_romance",
+    "authorId": "user_002",
+    "coverImage": "/images/books/romance2.jpg",
+    "bannerImage": "/images/books/banner2.jpg",
+    "summary": "A passionate love story",
+    "description": "Two souls collide under forbidden circumstances.",
+    "tags": ["romance", "passion"],
+    "language": "English",
+    "price": 0,
+    "isFree": true,
+    "stats": {
+      "rating": 4.7,
+      "totalReviews": 2100,
+      "views": 88000,
+      "totalChapters": 30
+    },
+    "meta": {
+      "pages": 410,
+      "readingTime": "6h"
+    },
+    "status": "published",
+    "createdAt": "2025-02-10"
+  },
+
+  {
+    "id": "book_003",
+    "title": "The Silent Killer",
+    "slug": "the-silent-killer",
+    "categoryId": "cat_thriller",
+    "authorId": "user_003",
+    "coverImage": "/images/books/thriller1.jpg",
+    "bannerImage": "/images/books/banner3.jpg",
+    "summary": "A deadly game of survival",
+    "description": "A serial killer leaves no trace behind.",
+    "tags": ["crime", "mystery"],
+    "language": "English",
+    "price": 149,
+    "isFree": false,
+    "stats": {
+      "rating": 4.6,
+      "totalReviews": 980,
+      "views": 67000,
+      "totalChapters": 20
+    },
+    "meta": {
+      "pages": 280,
+      "readingTime": "4h"
+    },
+    "status": "published",
+    "createdAt": "2025-03-05"
+  },
+
+  {
+    "id": "book_004",
+    "title": "Realm of Shadows",
+    "slug": "realm-of-shadows",
+    "categoryId": "cat_fantasy",
+    "authorId": "user_004",
+    "coverImage": "/images/books/fantasy1.jpg",
+    "bannerImage": "/images/books/banner4.jpg",
+    "summary": "A magical world awaits",
+    "description": "A young warrior discovers hidden powers.",
+    "tags": ["magic", "adventure"],
+    "language": "English",
+    "price": 0,
+    "isFree": true,
+    "stats": {
+      "rating": 4.8,
+      "totalReviews": 3000,
+      "views": 120000,
+      "totalChapters": 40
+    },
+    "meta": {
+      "pages": 500,
+      "readingTime": "8h"
+    },
+    "status": "published",
+    "createdAt": "2025-01-20"
+  },
+
+  {
+    "id": "book_005",
+    "title": "Dark Academia",
+    "slug": "dark-academia",
+    "categoryId": "cat_mystery",
+    "authorId": "user_005",
+    "coverImage": "/images/books/mystery1.jpg",
+    "bannerImage": "/images/books/banner5.jpg",
+    "summary": "Secrets buried deep",
+    "description": "A university hides dangerous secrets.",
+    "tags": ["mystery", "dark"],
+    "language": "English",
+    "price": 99,
+    "isFree": false,
+    "stats": {
+      "rating": 4.3,
+      "totalReviews": 600,
+      "views": 35000,
+      "totalChapters": 18
+    },
+    "meta": {
+      "pages": 250,
+      "readingTime": "3h"
+    },
+    "status": "published",
+    "createdAt": "2025-04-01"
+  },
+
+  {
+    "id": "book_006",
+    "title": "Haunted Nights",
+    "slug": "haunted-nights",
+    "categoryId": "cat_horror",
+    "authorId": "user_006",
+    "coverImage": "/images/books/horror1.jpg",
+    "bannerImage": "/images/books/banner6.jpg",
+    "summary": "Fear comes alive",
+    "description": "A haunted house reveals its dark past.",
+    "tags": ["ghost", "fear"],
+    "language": "English",
+    "price": 0,
+    "isFree": true,
+    "stats": {
+      "rating": 4.4,
+      "totalReviews": 850,
+      "views": 50000,
+      "totalChapters": 22
+    },
+    "meta": {
+      "pages": 300,
+      "readingTime": "4h"
+    },
+    "status": "published",
+    "createdAt": "2025-02-25"
+  },
+
+  {
+    "id": "book_007",
+    "title": "Future 2099",
+    "slug": "future-2099",
+    "categoryId": "cat_science_fiction",
+    "authorId": "user_007",
+    "coverImage": "/images/books/scifi1.jpg",
+    "bannerImage": "/images/books/banner7.jpg",
+    "summary": "A futuristic journey",
+    "description": "Technology controls human destiny.",
+    "tags": ["future", "ai"],
+    "language": "English",
+    "price": 199,
+    "isFree": false,
+    "stats": {
+      "rating": 4.6,
+      "totalReviews": 1400,
+      "views": 76000,
+      "totalChapters": 28
+    },
+    "meta": {
+      "pages": 360,
+      "readingTime": "5h"
+    },
+    "status": "published",
+    "createdAt": "2025-03-18"
+  },
+
+  {
+    "id": "book_008",
+    "title": "War of Kings",
+    "slug": "war-of-kings",
+    "categoryId": "cat_adventure",
+    "authorId": "user_008",
+    "coverImage": "/images/books/adventure1.jpg",
+    "bannerImage": "/images/books/banner8.jpg",
+    "summary": "Battle for the throne",
+    "description": "Kingdoms clash in a war of power.",
+    "tags": ["war", "action"],
+    "language": "English",
+    "price": 149,
+    "isFree": false,
+    "stats": {
+      "rating": 4.5,
+      "totalReviews": 1100,
+      "views": 64000,
+      "totalChapters": 26
+    },
+    "meta": {
+      "pages": 340,
+      "readingTime": "5h"
+    },
+    "status": "published",
+    "createdAt": "2025-02-12"
+  }
+]

@@ -1,0 +1,18 @@
+[
+  {
+    "id": "chap_001",
+    "bookId": "book_001",
+    "chapterNumber": 1,
+    "title": "The First Encounter",
+    "content": "Full chapter content here...",
+    "isPaid": false,
+    "createdAt": "2025-01-02"
+  },
+  {
+    "id": "chap_002",
+    "bookId": "book_001",
+    "chapterNumber": 2,
+    "title": "A Strange Connection",
+    "content": "Next chapter content..."
+  }
+]

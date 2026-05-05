@@ -1,0 +1,302 @@
+
+// import {
+//   doc,
+//   onSnapshot,
+//   updateDoc,
+//   arrayUnion,
+//   getDoc,
+//   serverTimestamp
+// } from "firebase/firestore";
+// import { db } from "@/lib/firebase";
+// import { dualWrite, getFirestoreRefs } from "@/lib/dualWrite";
+
+
+// export const ROOT = ["projects", "altftool", "buySmart", "categories" ];
+// const CATEGORY_REF = doc(db, ...ROOT);
+// const { newDocRef: CATEGORY_NEW_REF } = getFirestoreRefs(...ROOT);
+
+// export const firebaseBuySmartCategoriesSource = {
+  
+//   // 🔹 GET ALL CATEGORIES (Realtime)
+//   subscribe(callback, onError) {
+//     const unsubNew = onSnapshot(
+//       CATEGORY_NEW_REF,
+//       (snap) => {
+//         if (!snap.exists()) return;
+//         const data = snap.data().banner || [];
+//         callback(data);
+//       },
+//       (error) => {
+//         console.error("Category read error:", error);
+//         onError?.(error);
+//       }
+//     );
+
+//     const unsubOld = onSnapshot(
+//       CATEGORY_REF,
+//       (snap) => {
+//         const data = snap.exists() ? snap.data().banner || [] : [];
+//         callback(data);
+//       },
+//       (error) => {
+//         console.error("Category read error:", error);
+//         onError?.(error);
+//       }
+//     );
+
+//     return () => { try { unsubNew?.(); } catch {} try { unsubOld?.(); } catch {} };
+//   },
+
+//   // 🔹 ADD SINGLE CATEGORY
+//   async add(categories) {
+//     const newCategories = {
+//       id: crypto.randomUUID(),
+//       title: categories.title,
+//       disc:categories.disc,
+//       discount:categories.discount,
+//       img:categories.img,
+//       link: categories.link,
+//       category:categories.category,
+//       status:categories.status || "active",
+//       country : categories.country,
+//       createdAt: serverTimestamp(), 
+//       updatedAt: serverTimestamp(), 
+//     };
+
+//     // updateDoc + arrayUnion must be computed against existing data for dual write
+//     const snap = await getDoc(CATEGORY_REF);
+//     const existing = snap.exists() ? snap.data().banner || [] : [];
+//     await dualWrite.set(MODULE, DOC_ID, { banner: [...existing, newCategories] }, { merge: true });
+//   },
+
+//   // 🔹 UPDATE CATEGORY BY ID
+//   async update(id, updatedCategories) {
+//     const snap = await getDoc(CATEGORY_REF);
+//     const data = snap.data();
+
+//     const updatedList = (data.banner || []).map((h) =>
+//       h.id === id
+//         ? { ...h, ...updatedCategories,
+//           updatedAt: serverTimestamp(),
+//            }
+//         : h
+//     );
+
+//     await dualWrite.update(MODULE, DOC_ID, { banner: updatedList });
+//   },
+
+//   // 🔹 DELETE CATEGORY BY ID
+//   // async remove(id, banner) {
+//   //   const filtered = banner.filter(h => h.id !== id);
+
+//   //   await updateDoc(CATEGORY_REF, {
+//   //     banner: filtered
+//   //   });
+//   // },
+//   async remove(id) {
+//     const snap = await getDoc(CATEGORY_REF);
+//     const data = snap.data();
+  
+//     const currentBanner = data?.banner || [];
+  
+//     const filtered = currentBanner.filter(item => item.id !== id);
+  
+//     await updateDoc(CATEGORY_REF, {
+//       banner: filtered
+//     });
+//     await dualWrite.update(MODULE, DOC_ID, { banner: filtered });
+//   },
+
+//   async bulkDelete(ids = [], banner = []) {
+//     const filtered = banner.filter(item => !ids.includes(item.id));
+  
+//     await dualWrite.update(MODULE, DOC_ID, { banner: filtered });
+//   },
+
+//   // 🔹 CSV BULK UPLOAD (REPLACE ALL)
+//   async bulkUpload(csvData) {
+//     try {
+//       const snap = await getDoc(CATEGORY_REF);
+//       const existingData = snap.exists() ? snap.data().banner || [] : [];
+  
+//       console.log("Existing Data:", existingData);
+//       console.log("CSV Raw Data:", csvData);
+  
+//       const formattedData = csvData
+//         .filter(row => row.title && row.link)
+//         .map(row => ({
+//           id: crypto.randomUUID(),
+//           title: row.title.trim(),
+//           link: row.link.trim(),
+//           category:row.category.trim(),
+//           status:row.status.trim() || "Active",
+//           country:row.country.trim() || "ALL",
+//           img: row.img
+//           ? row.img.toString().trim()
+//           : "",
+//           createdAt: Date.now()
+//         }));
+  
+//       console.log("Formatted CSV Data:", formattedData);
+  
+//       if (formattedData.length === 0) {
+//         alert("CSV parsed but no valid rows found.");
+//         return;
+//       }
+  
+//       const finalData = [...existingData, ...formattedData];
+  
+//       await dualWrite.update(MODULE, DOC_ID, { banner: finalData });
+  
+//       console.log("Final Data Saved:", finalData);
+  
+//     } catch (error) {
+//       console.error("Bulk upload error:", error);
+//     }
+//   }
+// };
+
+
+"use client";
+
+import {
+  doc,
+  onSnapshot,
+  updateDoc,
+  getDoc,
+  setDoc,
+  serverTimestamp
+} from "firebase/firestore";
+import { db } from "@/lib/firebase";
+
+export const ROOT = ["projects", "altftool", "buySmart", "categories"];
+const CATEGORY_REF = doc(db, ...ROOT);
+
+export const firebaseBuySmartCategoriesSource = {
+  
+  // 🔹 GET ALL CATEGORIES (Realtime)
+  subscribe(callback, onError) {
+    const unsub = onSnapshot(
+      CATEGORY_REF,
+      (snap) => {
+        const data = snap.exists() ? snap.data().banner || [] : [];
+        callback(data);
+      },
+      (error) => {
+        console.error("Category read error:", error);
+        onError?.(error);
+      }
+    );
+
+    return () => unsub();
+  },
+
+  // 🔹 ADD SINGLE CATEGORY
+  async add(categories) {
+    const newCategories = {
+      id: crypto.randomUUID(),
+      title: categories.title,
+      disc: categories.disc,
+      discount: categories.discount,
+      img: categories.img,
+      link: categories.link,
+      category: categories.category,
+      status: categories.status || "active",
+      country: categories.country,
+      createdAt: serverTimestamp(),
+      updatedAt: serverTimestamp(),
+    };
+
+    const snap = await getDoc(CATEGORY_REF);
+    const existing = snap.exists() ? snap.data().banner || [] : [];
+
+    const updatedList = [...existing, newCategories];
+
+    if (!snap.exists()) {
+      await setDoc(CATEGORY_REF, { banner: updatedList });
+    } else {
+      await updateDoc(CATEGORY_REF, { banner: updatedList });
+    }
+  },
+
+  // 🔹 UPDATE CATEGORY BY ID
+  async update(id, updatedCategories) {
+    const snap = await getDoc(CATEGORY_REF);
+    if (!snap.exists()) return;
+
+    const data = snap.data();
+
+    const updatedList = (data.banner || []).map((h) =>
+      h.id === id
+        ? {
+            ...h,
+            ...updatedCategories,
+            updatedAt: serverTimestamp(),
+          }
+        : h
+    );
+
+    await updateDoc(CATEGORY_REF, { banner: updatedList });
+  },
+
+  // 🔹 DELETE CATEGORY BY ID
+  async remove(id) {
+    const snap = await getDoc(CATEGORY_REF);
+    if (!snap.exists()) return;
+
+    const data = snap.data();
+    const currentBanner = data?.banner || [];
+
+    const filtered = currentBanner.filter((item) => item.id !== id);
+
+    await updateDoc(CATEGORY_REF, {
+      banner: filtered,
+    });
+  },
+
+  // 🔹 BULK DELETE
+  async bulkDelete(ids = [], banner = []) {
+    const filtered = banner.filter((item) => !ids.includes(item.id));
+
+    await updateDoc(CATEGORY_REF, {
+      banner: filtered,
+    });
+  },
+
+  // 🔹 CSV BULK UPLOAD (APPEND)
+  async bulkUpload(csvData) {
+    try {
+      const snap = await getDoc(CATEGORY_REF);
+      const existingData = snap.exists() ? snap.data().banner || [] : [];
+
+      const formattedData = csvData
+        .filter((row) => row.title && row.link)
+        .map((row) => ({
+          id: crypto.randomUUID(),
+          title: row.title.trim(),
+          link: row.link.trim(),
+          category: row.category?.trim(),
+          status: row.status?.trim() || "Active",
+          country: row.country?.trim() || "ALL",
+          img: row.img ? row.img.toString().trim() : "",
+          createdAt: Date.now(),
+        }));
+
+      if (formattedData.length === 0) {
+        console.warn("No valid CSV rows found");
+        return;
+      }
+
+      const finalData = [...existingData, ...formattedData];
+
+      if (!snap.exists()) {
+        await setDoc(CATEGORY_REF, { banner: finalData });
+      } else {
+        await updateDoc(CATEGORY_REF, { banner: finalData });
+      }
+
+    } catch (error) {
+      console.error("Bulk upload error:", error);
+    }
+  }
+};

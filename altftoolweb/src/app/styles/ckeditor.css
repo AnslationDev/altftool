@@ -1,0 +1,273 @@
+
+/* CKEditor font sizes */
+
+.ckeditor-content{
+  padding-left: 0rem;
+  line-height: 1.8;
+  overflow-x: hidden;
+}
+
+
+.ckeditor-content .text-tiny {
+  font-size: 0.7em;
+}
+
+.ckeditor-content .text-small {
+  font-size: 0.85em;
+}
+
+.ckeditor-content .text-big {
+  font-size: 1.4em;
+}
+
+.ckeditor-content .text-huge {
+  font-size: 1.8em;
+}
+
+.ckeditor-content h1 { font-size: 2rem; font-weight: 700; color: var(--primary); }
+.ckeditor-content h2 { font-size: 1.6rem; font-weight: 700; color: var(--primary); }
+.ckeditor-content h3 { font-size: 1.3rem; font-weight: 600; color: var(--primary); }
+
+.ckeditor-content ul {
+  list-style: disc;
+  padding-left: 1.5rem;
+}
+
+.ckeditor-content ol {
+  list-style: decimal;
+  padding-left: 1.5rem;
+}
+
+.ckeditor-content img {
+  max-width: 100%;
+  height: auto;
+}
+
+.ckeditor-media {
+  display: block;
+  max-width: 100%;
+  margin: 1rem auto;
+}
+
+/* Links */
+/* Only style "normal links", not components */
+.ckeditor-content p a:not(.CTA_CK),
+.ckeditor-content li a:not(.CTA_CK),
+.ckeditor-content span a:not(.CTA_CK) {
+  color: #2563eb;
+  text-decoration: underline;
+}
+
+.ckeditor-content p a:hover,
+.ckeditor-content li a:hover,
+.ckeditor-content span a:hover {
+  color: #1d4ed8;
+}
+
+
+.ckeditor-content a:hover {
+  color: #1d4ed8; /* darker on hover */
+}
+
+
+/* Tables */
+/* Tables */
+
+.ckeditor-content table {
+  width: 100%;
+  /* display: block; */
+  overflow-x: scroll;
+  /* white-space: nowrap; */
+  border-collapse: collapse;
+  margin: 1.5rem 0;
+  font-size: 0.95rem;
+  color: var(--foreground);
+  background-color: var(--background);
+}
+
+.ckeditor-content th,
+.ckeditor-content td {
+  border: 1px solid var(--border);
+  padding: 0.6rem 0.8rem;
+  text-align: left;
+  color: var(--foreground);
+  background-color: var(--background);
+}
+
+.ckeditor-content th {
+  background-color: var(--card);
+  font-weight: 600;
+  color: var(--foreground);
+}
+
+.ckeditor-content tr:nth-child(even) td {
+  background-color: var(--muted);
+}
+
+.ckeditor-content tr:nth-child(odd) td {
+  background-color: var(--background);
+}
+
+.ckeditor-content tr:hover td {
+  background-color: var(--card);
+}
+
+
+/* Wrapper */
+.CTA_CK_BANNER {
+  margin: 24px 0;
+  text-align: center; /* 👈 handles centering now */
+}
+
+/* Base CTA */
+.CTA_CK {
+  display: inline-flex; /* 👈 key change */
+  align-items: center;
+  gap: 12px;
+
+  width: auto;          /* 👈 remove full width */
+  max-width: none;      /* 👈 remove constraint */
+  margin: 0;            /* 👈 no centering hack */
+
+  padding: 16px 22px;
+  border-radius: 14px;
+
+  font-size: 16px;
+  font-weight: 600;
+  text-decoration: none;
+
+  transition: all 0.25s ease;
+}
+
+/* Icon */
+.CTA_ICON {
+  font-size: 20px;
+}
+
+
+
+/* ========================= */
+/* 🔵 PRIMARY (Default Blue) */
+/* ========================= */
+.CTA_PRIMARY {
+  background: #2563eb;
+  color: #ffffff !important;
+}
+
+.CTA_PRIMARY:hover {
+  background: #1d4ed8;
+  transform: translateY(-2px);
+}
+
+/* ========================= */
+/* ⚪ SECONDARY (Outline) */
+/* ========================= */
+.CTA_SECONDARY {
+  border: 2px solid #2563eb;
+  color: #2563eb;
+  background: transparent;
+}
+
+.CTA_SECONDARY:hover {
+  background: #2563eb;
+  color: #fff !important;
+}
+
+
+/* ========================= */
+/* 🔥 GRADIENT (High CTR) */
+/* ========================= */
+.CTA_GRADIENT {
+  background: linear-gradient(90deg, #ff7a18, #ff3d00);
+  color: #ffffff !important;
+}
+
+.CTA_GRADIENT:hover {
+  opacity: 0.9;
+  transform: translateY(-2px);
+}
+
+/* ========================= */
+/* 🟢 SUCCESS (Green) */
+/* ========================= */
+.CTA_SUCCESS {
+  background: #16a34a;
+  color: #ffffff !important;
+}
+
+.CTA_SUCCESS:hover {
+  background: #15803d;
+}
+
+/* ========================= */
+/* 🟡 WARNING (Attention) */
+/* ========================= */
+.CTA_WARNING {
+  background: #f59e0b;
+  color: #ffffff !important;
+}
+
+.CTA_WARNING:hover {
+  background: #d97706;
+}
+
+/* ========================= */
+/* 🔴 DANGER (Urgent CTA) */
+/* ========================= */
+.CTA_DANGER {
+  background: #dc2626;
+  color: #ffffff !important;
+}
+
+.CTA_DANGER:hover {
+  background: #b91c1c;
+}
+
+/* ========================= */
+/* 🧊 GLASS (Modern UI) */
+/* ========================= */
+.CTA_GLASS {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  color: #111 !important;
+  border: 1px solid rgba(0,0,0,0.1);
+}
+
+.CTA_GLASS:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* ========================= */
+/* 🎯 CENTERED STYLE */
+/* ========================= */
+.CTA_CENTER {
+  justify-content: center;
+  text-align: center;
+}
+
+/* ========================= */
+/* 📱 MOBILE OPTIMIZATION */
+/* ========================= */
+@media (max-width: 640px) {
+  .CTA_CK {
+    font-size: 15px;
+    padding: 14px 18px;
+  }
+}
+
+.video-wrapper {
+  position: relative;
+  padding-bottom: 56.25%; /* 16:9 */
+  height: 0;
+  overflow: hidden;
+  margin: 16px 0;
+}
+
+.video-wrapper iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}

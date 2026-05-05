@@ -1,0 +1,123 @@
+{
+  "100": {
+    "short": "Continue",
+    "category": "1xx Informational",
+    "detail": "The server has received the request headers and the client should proceed to send the request body."
+  },
+  "101": {
+    "short": "Switching Protocols",
+    "category": "1xx Informational",
+    "detail": "The requester has asked the server to switch protocols and the server has agreed to do so."
+  },
+  "200": {
+    "short": "OK",
+    "category": "2xx Success",
+    "detail": "The request has succeeded. The content returned depends on the HTTP method used.",
+    "examples": ["GET: Resource fetched", "POST: Resource created"],
+    "fixes": ["No action needed; request was successful."]
+  },
+  "201": {
+    "short": "Created",
+    "category": "2xx Success",
+    "detail": "The request succeeded and a new resource was created on the server.",
+    "examples": ["New user created", "New post created"],
+    "fixes": ["Use the Location header to access the created resource."]
+  },
+  "204": {
+    "short": "No Content",
+    "category": "2xx Success",
+    "detail": "Server successfully processed the request but is not returning any content.",
+    "fixes": ["Nothing to fix; expected behavior."]
+  },
+  "301": {
+    "short": "Moved Permanently",
+    "category": "3xx Redirection",
+    "detail": "The requested resource has been permanently moved to a new URI.",
+    "fixes": ["Update the request URL to the new location."]
+  },
+  "302": {
+    "short": "Found",
+    "category": "3xx Redirection",
+    "detail": "The requested resource resides temporarily under a different URI.",
+    "fixes": ["Follow the Location header for temporary redirect."]
+  },
+  "307": {
+    "short": "Temporary Redirect",
+    "category": "3xx Redirection",
+    "detail": "The request should be repeated with another URI, but future requests should still use the original URI."
+  },
+  "400": {
+    "short": "Bad Request",
+    "category": "4xx Client Error",
+    "detail": "The server could not understand the request due to invalid syntax.",
+    "examples": ["Malformed JSON", "Missing required fields"],
+    "fixes": ["Validate request body.", "Ensure correct Content-Type header."]
+  },
+  "401": {
+    "short": "Unauthorized",
+    "category": "4xx Client Error",
+    "detail": "Authentication is required and has failed or not been provided.",
+    "fixes": ["Provide valid authentication token.", "Check token expiry."]
+  },
+  "403": {
+    "short": "Forbidden",
+    "category": "4xx Client Error",
+    "detail": "The server understood the request but refuses to authorize it.",
+    "fixes": ["Check user permissions.", "Update access control list."]
+  },
+  "404": {
+    "short": "Not Found",
+    "category": "4xx Client Error",
+    "detail": "The requested resource could not be found on the server.",
+    "examples": ["Wrong URL", "Deleted resource"],
+    "fixes": ["Verify the URL.", "Check if resource exists."]
+  },
+  "405": {
+    "short": "Method Not Allowed",
+    "category": "4xx Client Error",
+    "detail": "The request method is known by the server but is not supported by the target resource.",
+    "fixes": ["Use the allowed HTTP methods returned in Allow header."]
+  },
+  "409": {
+    "short": "Conflict",
+    "category": "4xx Client Error",
+    "detail": "A request conflict occurred, commonly due to resource version mismatch.",
+    "fixes": ["Resolve conflicting resource state.", "Retry with correct data."]
+  },
+  "418": {
+    "short": "I'm a Teapot",
+    "category": "4xx Client Error",
+    "detail": "A fun RFC joke indicating the server refuses to brew coffee in a teapot.",
+    "fixes": ["No fix — it's a joke code."]
+  },
+  "429": {
+    "short": "Too Many Requests",
+    "category": "4xx Client Error",
+    "detail": "Client has sent too many requests in a given timeframe.",
+    "fixes": ["Implement exponential backoff.", "Respect Retry-After header."]
+  },
+  "500": {
+    "short": "Internal Server Error",
+    "category": "5xx Server Error",
+    "detail": "Server encountered an unexpected condition that prevented it from fulfilling the request.",
+    "fixes": ["Check server logs.", "Verify database or service dependencies."]
+  },
+  "502": {
+    "short": "Bad Gateway",
+    "category": "5xx Server Error",
+    "detail": "The server received an invalid response from the upstream server.",
+    "fixes": ["Check upstream server availability.", "Fix timeout or proxy issues."]
+  },
+  "503": {
+    "short": "Service Unavailable",
+    "category": "5xx Server Error",
+    "detail": "The server is currently unable to handle the request, usually due to overload or maintenance.",
+    "fixes": ["Scale server resources.", "Wait until maintenance is finished."]
+  },
+  "504": {
+    "short": "Gateway Timeout",
+    "category": "5xx Server Error",
+    "detail": "The upstream server failed to send a response in time.",
+    "fixes": ["Check upstream server health.", "Increase timeout limits."]
+  }
+}

@@ -1,0 +1,51 @@
+[
+  {
+    "name": "Aarav Mehta",
+    "date": "Jan 12, 2026",
+    "rating": 4.9,
+    "avatar": "https://api.dicebear.com/7.x/notionists/svg?seed=Aarav",
+    "text": "Great overall experience. The product quality exceeded expectations. Service was smooth and hassle-free from start to finish."
+  },
+  {
+    "name": "Neha Sharma",
+    "date": "Dec 28, 2025",
+    "rating": 4.8,
+    "avatar": "https://api.dicebear.com/7.x/notionists/svg?seed=Neha",
+    "text": "Very satisfied with my purchase. It feels durable and well-designed. Works well for everyday use."
+  },
+  {
+    "name": "Rohit Verma",
+    "date": "Nov 18, 2025",
+    "rating": 4.7,
+    "avatar": "https://api.dicebear.com/7.x/notionists/svg?seed=Rohit",
+    "text": "Works exactly as expected. Good value for money. Reliable and easy to use in daily life."
+  },
+  {
+    "name": "Priya Kapoor",
+    "date": "Oct 05, 2025",
+    "rating": 4.9,
+    "avatar": "https://api.dicebear.com/7.x/notionists/svg?seed=Priya",
+    "text": "Impressed with the build quality and attention to detail. Feels premium and consistent in performance."
+  },
+  {
+    "name": "Aditya Singh",
+    "date": "Sep 22, 2025",
+    "rating": 4.6,
+    "avatar": "https://api.dicebear.com/7.x/notionists/svg?seed=Aditya",
+    "text": "A solid option in this category. Simple to use and delivers consistent results without issues."
+  },
+  {
+    "name": "Simran Kaur",
+    "date": "Aug 14, 2025",
+    "rating": 4,
+    "avatar": "https://api.dicebear.com/7.x/notionists/svg?seed=Simran",
+    "text": "Good experience overall. It fits well into daily routine and feels dependable over time."
+  },
+  {
+    "name": "Vikram Joshi",
+    "date": "Jul 30, 2025",
+    "rating": 3,
+    "avatar": "https://api.dicebear.com/7.x/notionists/svg?seed=Vikram",
+    "text": "Practical and efficient. Delivers consistent performance and is easy to operate."
+  }
+]

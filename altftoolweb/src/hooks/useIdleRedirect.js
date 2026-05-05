@@ -1,0 +1,82 @@
+"use client";
+
+import { useEffect, useRef } from "react";
+import { doc, onSnapshot } from "firebase/firestore";
+import { db } from "@/lib/firebase";
+
+const RULE_DOC = doc(db, "projects", "altftool", "buySmart", "ruleSet");
+
+export default function useIdleRedirect() {
+  const timerRef = useRef(null);
+  const ruleRef = useRef(null);
+
+  useEffect(() => {
+    const events = [
+      "mousemove",
+      "mousedown",
+      "keydown",
+      "scroll",
+      "touchstart",
+    ];
+
+    const startTimer = () => {
+      const rule = ruleRef.current;
+      if (!rule) return;
+
+      clearTimeout(timerRef.current);
+
+      timerRef.current = setTimeout(() => {
+        window.location.href = rule.redirectUrl;
+      }, rule.idleTimeMs);
+    };
+
+    const resetTimer = () => {
+      startTimer();
+    };
+
+    // ✅ Attach listeners ONCE
+    events.forEach(event =>
+      window.addEventListener(event, resetTimer)
+    );
+
+    // ✅ Firestore listener
+    const unsubscribe = onSnapshot(RULE_DOC, snapshot => {
+      if (!snapshot.exists()) return;
+
+      const data = snapshot.data();
+      const bannerRules = data?.banner;
+
+      if (!Array.isArray(bannerRules) || bannerRules.length === 0) return;
+
+      const latestRule = [...bannerRules].sort(
+        (a, b) => Number(b.createdAt) - Number(a.createdAt)
+      )[0];
+
+      const { active, redirectUrl, idleTime } = latestRule;
+
+      if (!active || !redirectUrl || !idleTime) {
+        ruleRef.current = null;
+        clearTimeout(timerRef.current);
+        return;
+      }
+
+      // ✅ Store parsed rule
+      ruleRef.current = {
+        redirectUrl,
+        idleTimeMs: Number(idleTime) * 1000,
+      };
+
+      // ✅ Restart timer with new rule
+      startTimer();
+    });
+
+    return () => {
+      clearTimeout(timerRef.current);
+      unsubscribe();
+
+      events.forEach(event =>
+        window.removeEventListener(event, resetTimer)
+      );
+    };
+  }, []);
+}

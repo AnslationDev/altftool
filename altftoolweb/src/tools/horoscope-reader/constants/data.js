@@ -1,0 +1,92 @@
+export const zodiacSigns = [
+  {
+    name: "Aries",
+    symbol: "♈",
+    color: "from-red-500 to-orange-500",
+    bgColor: "bg-red-50",
+    icon: "🐏",
+  },
+  {
+    name: "Taurus",
+    symbol: "♉",
+    color: "from-green-600 to-emerald-500",
+    bgColor: "bg-green-50",
+    icon: "🐂",
+  },
+  {
+    name: "Gemini",
+    symbol: "♊",
+    color: "from-yellow-500 to-amber-500",
+    bgColor: "bg-yellow-50",
+    icon: "👯",
+  },
+  {
+    name: "Cancer",
+    symbol: "♋",
+    color: "from-gray-500 to-slate-500",
+    bgColor: "bg-gray-50",
+    icon: "🦀",
+  },
+  {
+    name: "Leo",
+    symbol: "♌",
+    color: "from-orange-500 to-red-500",
+    bgColor: "bg-orange-50",
+    icon: "🦁",
+  },
+  {
+    name: "Virgo",
+    symbol: "♍",
+    color: "from-green-500 to-teal-500",
+    bgColor: "bg-green-50",
+    icon: "👸",
+  },
+  {
+    name: "Libra",
+    symbol: "♎",
+    color: "from-pink-500 to-rose-500",
+    bgColor: "bg-pink-50",
+    icon: "⚖️",
+  },
+  {
+    name: "Scorpio",
+    symbol: "♏",
+    color: "from-red-700 to-rose-700",
+    bgColor: "bg-red-50",
+    icon: "🦂",
+  },
+  {
+    name: "Sagittarius",
+    symbol: "♐",
+    color: "from-purple-500 to-violet-500",
+    bgColor: "bg-purple-50",
+    icon: "🏹",
+  },
+  {
+    name: "Capricorn",
+    symbol: "♑",
+    color: "from-gray-700 to-slate-700",
+    bgColor: "bg-gray-50",
+    icon: "🐐",
+  },
+  {
+    name: "Aquarius",
+    symbol: "♒",
+    color: "from-blue-500 to-cyan-500",
+    bgColor: "bg-blue-50",
+    icon: "🏺",
+  },
+  {
+    name: "Pisces",
+    symbol: "♓",
+    color: "from-teal-500 to-cyan-500",
+    bgColor: "bg-teal-50",
+    icon: "🐟",
+  },
+];
+
+export const timeframes = [
+  { value: "today", label: "Daily", icon: "📅" },
+  { value: "week", label: "Weekly", icon: "📆" },
+  { value: "month", label: "Monthly", icon: "🗓️" },
+];

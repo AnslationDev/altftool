@@ -1,0 +1,346 @@
+{ "blogs": [
+  {
+    "id": 1,
+    "title": "How to Use an Age Calculator Accurately",
+    "slug": "age-calculator-guide",
+    "category": "Tools",
+    "tool": "Age Calculator",
+    "excerpt": "Learn how age calculators work and how to calculate your exact age in seconds.",
+    "image": "/images/featured2.png",
+    "date": "2026-01-10",
+    "content": "Age calculators are tools designed to help you calculate your exact age with precision. They consider leap years, different month lengths, and current time for accurate results. These tools are useful for education, healthcare, legal documentation, and planning important milestones."
+  },
+  {
+    "id": 2,
+    "title": "Play Flappy Game Online: Improve Focus and Reflexes",
+    "slug": "flappy-game-online",
+    "category": "Games",
+    "tool": "Flappy",
+    "excerpt": "Play the classic flappy game online and boost your focus, timing, and reflex skills.",
+    "image": "/games/cover_flappy_bird.png",
+    "date": "2026-01-12",
+    "content": "Flappy is an addictive arcade game that improves hand-eye coordination, focus, and reaction speed through fast-paced obstacle navigation."
+  },
+  {
+    "id": 3,
+    "title": "YouTube Video Downloader Extension: Save Videos Instantly",
+    "slug": "youtube-downloader-extension",
+    "category": "Extensions",
+    "tool": "YouTube Downloader",
+    "excerpt": "Download YouTube videos directly from your browser with one click.",
+    "image": "/images/featured8.png",
+    "date": "2026-01-14",
+    "content": "YouTube downloader extensions allow users to quickly save videos for offline access, supporting multiple formats and resolutions."
+  },
+  {
+    "id": 4,
+    "title": "Best Word Counter Tools for Writers in 2026",
+    "slug": "best-word-counter-tools",
+    "category": "Tools",
+    "tool": "Word Counter",
+    "excerpt": "Discover the best word counter tools for writers, students, and professionals.",
+    "image": "/images/featured1.png",
+    "date": "2026-01-16",
+    "content": "Word counters help writers track word count, readability, sentence structure, and SEO metrics for creating optimized content."
+  },
+  {
+    "id": 5,
+    "title": "Online Chess Game: Master Strategy and Critical Thinking",
+    "slug": "online-chess-game",
+    "category": "Games",
+    "tool": "Chess",
+    "excerpt": "Play chess online to enhance strategic thinking, logic, and problem-solving skills.",
+    "image": "/games/cover_chess.png",
+    "date": "2026-01-18",
+    "content": "Chess improves memory, focus, logical thinking, and planning skills while delivering a competitive and mentally stimulating experience."
+  },
+  {
+    "id": 6,
+    "title": "Grammar Checker Extension: Write Error-Free Content",
+    "slug": "grammar-checker-extension",
+    "category": "Extensions",
+    "tool": "Grammar Checker",
+    "excerpt": "Fix grammar, spelling, and punctuation mistakes instantly while typing.",
+    "image": "/images/featured33.png",
+    "date": "2026-01-20",
+    "content": "Grammar checker extensions offer real-time corrections, tone suggestions, and readability improvements for professional writing."
+  },
+  {
+    "id": 7,
+    "title": "Currency Converter: How Real-Time Exchange Rates Work",
+    "slug": "currency-converter-explained",
+    "category": "Finance",
+    "tool": "Currency Converter",
+    "excerpt": "Understand how currency converters calculate real-time exchange rates.",
+    "image": "/images/featured3.png",
+    "date": "2026-01-22",
+    "content": "Currency converters fetch live market data to ensure accurate conversions, helping travelers, traders, and businesses."
+  },
+  {
+    "id": 8,
+    "title": "Sudoku Master: Train Your Brain with Daily Puzzles",
+    "slug": "sudoku-master-game",
+    "category": "Games",
+    "tool": "Sudoku Master",
+    "excerpt": "Solve daily sudoku puzzles to boost memory, logic, and analytical skills.",
+    "image": "/games/cover_sudoku_master.png",
+    "date": "2026-01-24",
+    "content": "Sudoku improves logical reasoning, memory retention, focus, and problem-solving abilities."
+  },
+  {
+    "id": 9,
+    "title": "PDF Merger Tool: Combine Multiple PDFs Instantly",
+    "slug": "pdf-merger-tool",
+    "category": "Tools",
+    "tool": "PDF Merger",
+    "excerpt": "Merge multiple PDF files into a single document easily and securely.",
+    "image": "/images/featured11.png",
+    "date": "2026-01-26",
+    "content": "PDF merger tools simplify document handling by allowing users to combine, reorder, and optimize PDF files effortlessly."
+  },
+  {
+    "id": 10,
+    "title": "Traffic Dodge 3D: High-Speed Endless Racing Challenge",
+    "slug": "traffic-dodge-3d-game",
+    "category": "Games",
+    "tool": "Traffic Dodge 3D",
+    "excerpt": "Dodge traffic at high speed in this thrilling 3D endless racing game.",
+    "image": "/games/cover_traffic_dodge.png",
+    "date": "2026-01-28",
+    "content": "Traffic Dodge 3D improves reaction speed, focus, and decision-making in a dynamic racing environment."
+  },
+  {
+    "id": 11,
+    "title": "Image Compressor Tool: Reduce File Size Without Quality Loss",
+    "slug": "image-compressor-tool",
+    "category": "Tools",
+    "tool": "Image Compressor",
+    "excerpt": "Compress images online to reduce file size while preserving visual quality.",
+    "image": "/images/featured4.png",
+    "date": "2026-01-30",
+    "content": "Image compression tools help websites load faster while maintaining visual clarity and SEO performance."
+  },
+  {
+    "id": 12,
+    "title": "Classic Snake Game Online: Simple, Fun, and Addictive",
+    "slug": "classic-snake-game",
+    "category": "Games",
+    "tool": "Snake",
+    "excerpt": "Play the classic snake game online and relive timeless arcade fun.",
+    "image": "/games/cover_snake.png",
+    "date": "2026-02-01",
+    "content": "Snake improves hand-eye coordination, focus, and reflex control through simple but addictive gameplay."
+  },
+  {
+    "id": 13,
+    "title": "Online Screen Recorder: Record Your Screen Easily",
+    "slug": "online-screen-recorder",
+    "category": "Tools",
+    "tool": "Screen Recorder",
+    "excerpt": "Learn how online screen recorders help capture screen activity.",
+    "image": "/images/featured22.png",
+    "date": "2026-02-03",
+    "content": "Screen recorders allow users to create tutorials, demos, and presentations quickly without installing heavy software."
+  },
+  {
+    "id": 14,
+    "title": "Fruit Slice Game: Boost Reflexes with Fast-Paced Action",
+    "slug": "fruit-slice-game",
+    "category": "Games",
+    "tool": "Fruit Slice",
+    "excerpt": "Slice fruits at lightning speed to improve reflexes and reaction time.",
+    "image": "/games/cover_samurai_fruit_cutter.png",
+    "date": "2026-02-05",
+    "content": "Fruit slicing games enhance focus, speed, coordination, and reaction timing through fast-paced challenges."
+  },
+  {
+    "id": 15,
+    "title": "Text Translator Tools: Translate Languages Instantly",
+    "slug": "text-translator-tools",
+    "category": "Language",
+    "tool": "Text Translator",
+    "excerpt": "Explore how online text translators break language barriers instantly.",
+    "image": "/images/featured5.png",
+    "date": "2026-02-07",
+    "content": "Text translators use AI-powered language processing to provide instant and accurate translations."
+  },
+  {
+    "id": 16,
+    "title": "Brick Breaker Game Online: Classic Arcade Fun Reimagined",
+    "slug": "brick-breaker-game",
+    "category": "Games",
+    "tool": "Brick Breaker",
+    "excerpt": "Break bricks, score points, and enjoy fast-paced arcade action online.",
+    "image": "/trending/game/Flappy.jpg",
+    "date": "2026-02-09",
+    "content": "Brick breaker games enhance reflexes, timing, and coordination while delivering satisfying arcade gameplay."
+  },
+
+  {
+    "id": 17,
+    "title": "Memory Match Game: Improve Concentration and Recall",
+    "slug": "memory-match-game",
+    "category": "Games",
+    "tool": "Memory Match",
+    "excerpt": "Match cards, boost memory, and enhance concentration with this fun brain game.",
+    "image": "/games/cover_memory_match.png",
+    "date": "2026-02-11",
+    "content": "Memory Match is a brain-training game designed to strengthen recall ability, concentration, and pattern recognition skills. Regular play helps improve cognitive performance and focus."
+  },
+  {
+    "id": 18,
+    "title": "2048 Puzzle Game: Train Logical Thinking and Strategy",
+    "slug": "2048-puzzle-game",
+    "category": "Games",
+    "tool": "2048",
+    "excerpt": "Play 2048 puzzle game to enhance logic, planning, and number strategy.",
+    "image": "/games/cover_2048.png",
+    "date": "2026-02-12",
+    "content": "2048 is a highly addictive number puzzle game that challenges players to merge tiles strategically, improving logical thinking, planning, and patience."
+  },
+  {
+    "id": 19,
+    "title": "Minesweeper Game Online: Logic, Strategy, and Precision",
+    "slug": "minesweeper-game",
+    "category": "Games",
+    "tool": "Minesweeper",
+    "excerpt": "Test your logic and deduction skills by safely clearing the minefield.",
+    "image": "/games/cover_minesweeper.png",
+    "date": "2026-02-13",
+    "content": "Minesweeper is a classic puzzle game that improves logical deduction, strategic thinking, and careful planning while offering mentally stimulating gameplay."
+  },
+  {
+    "id": 20,
+    "title": "Connect Four Game Online: Strategic Thinking for All Ages",
+    "slug": "connect-four-game",
+    "category": "Games",
+    "tool": "Connect Four",
+    "excerpt": "Enjoy classic connect four gameplay while sharpening logical reasoning.",
+    "image": "/games/cover_connect_four.png",
+    "date": "2026-02-14",
+    "content": "Connect Four enhances critical thinking, prediction, and tactical planning skills while offering fast-paced competitive gameplay."
+  },
+  {
+    "id": 21,
+    "title": "Tic Tac Toe Game Online: Quick Logic & Fun Battles",
+    "slug": "tic-tac-toe-game",
+    "category": "Games",
+    "tool": "Tic Tac Toe",
+    "excerpt": "Play Tic Tac Toe online and sharpen logical thinking with fast matches.",
+    "image": "/games/cover_tic_tac_toe.png",
+    "date": "2026-02-15",
+    "content": "Tic Tac Toe strengthens logical reasoning, planning, and quick decision-making while delivering simple and fun gameplay."
+  },
+  {
+    "id": 22,
+    "title": "Breakout Game Online: Smash Bricks and Beat High Scores",
+    "slug": "breakout-game-online",
+    "category": "Games",
+    "tool": "Breakout",
+    "excerpt": "Smash bricks, control the paddle, and enjoy classic arcade fun.",
+    "image": "/games/cover_breakout.png",
+    "date": "2026-02-16",
+    "content": "Breakout enhances reflexes, hand-eye coordination, and timing accuracy through exciting arcade-style gameplay."
+  },
+  {
+    "id": 23,
+    "title": "Neon Racer Game: High-Speed Reflex and Focus Challenge",
+    "slug": "neon-racer-game",
+    "category": "Games",
+    "tool": "Neon Racer",
+    "excerpt": "Race through neon tracks and test your reflex speed and focus.",
+    "image": "/games/cover_neon_racer.png",
+    "date": "2026-02-17",
+    "content": "Neon Racer is a high-speed arcade racing game that enhances reaction time, focus, and decision-making skills."
+  },
+  {
+    "id": 24,
+    "title": "Ludo Online Game: Classic Board Fun with Friends",
+    "slug": "ludo-online-game",
+    "category": "Games",
+    "tool": "Ludo",
+    "excerpt": "Play Ludo online and enjoy timeless multiplayer board game fun.",
+    "image": "/games/cover_ludo.png",
+    "date": "2026-02-18",
+    "content": "Ludo promotes strategic thinking, planning, and social interaction while delivering engaging and fun gameplay."
+  },
+  {
+    "id": 25,
+    "title": "Cricket Game Online: Bat, Bowl, and Score Big",
+    "slug": "cricket-game-online",
+    "category": "Games",
+    "tool": "Cricket",
+    "excerpt": "Enjoy realistic cricket gameplay and test batting and bowling skills.",
+    "image": "/games/cover_cricket.png",
+    "date": "2026-02-19",
+    "content": "Cricket games enhance reflexes, strategic planning, and timing accuracy while delivering immersive sports gameplay."
+  },
+{
+  "id": 26,
+  "title": "Age & Gender Predictor Tool: Smart Face-Based Detection",
+  "slug": "age-gender-predictor-tool",
+  "category": "Tools",
+  "tool": "Age & Gender Predictor",
+  "excerpt": "Predict age and gender instantly using AI-powered facial analysis.",
+  "image": "/trending/tools/agegender.png",
+  "date": "2026-02-27",
+  "content": "Age & Gender Predictor uses AI-based facial recognition models to estimate age and detect gender instantly. It is widely used for analytics, personalization, marketing research, and user demographic insights."
+},
+{
+  "id": 27,
+  "title": "Image Animation Tool: Turn Images into Animated Visuals",
+  "slug": "image-animation-tool",
+  "category": "Tools",
+  "tool": "Image Animator",
+  "excerpt": "Animate images instantly to create dynamic visual effects.",
+  "image": "/trending/tools/annimation.png",
+  "date": "2026-02-28",
+  "content": "Image animation tools convert static images into dynamic animated visuals using motion effects and transitions, ideal for social media, storytelling, and creative marketing."
+},
+{
+  "id": 28,
+  "title": "Background Remover Tool: Remove Image Background Instantly",
+  "slug": "background-remover-tool",
+  "category": "Tools",
+  "tool": "Background Remover",
+  "excerpt": "Remove background from images instantly using AI.",
+  "image": "/trending/tools/bgremove.png",
+  "date": "2026-03-01",
+  "content": "Background remover tools use AI-based segmentation to separate foreground subjects from backgrounds, making image editing fast, clean, and professional."
+},
+{
+  "id": 29,
+  "title": "Facebook Video Downloader: Save FB Videos Easily",
+  "slug": "facebook-video-downloader",
+  "category": "Tools",
+  "tool": "Facebook Downloader",
+  "excerpt": "Download Facebook videos quickly in HD quality.",
+  "image": "/trending/tools/fbadd.png",
+  "date": "2026-03-02",
+  "content": "Facebook video downloader tools allow users to save public Facebook videos in multiple resolutions for offline viewing and sharing."
+},
+{
+  "id": 30,
+  "title": "Image Resizer Tool: Resize Images Without Losing Quality",
+  "slug": "image-resizer-tool",
+  "category": "Tools",
+  "tool": "Image Resizer",
+  "excerpt": "Resize images instantly while maintaining clarity and quality.",
+  "image": "/trending/tools/imagered.png",
+  "date": "2026-03-03",
+  "content": "Image resizer tools adjust image dimensions while preserving sharpness, making them ideal for social media, websites, and document usage."
+},
+{
+  "id": 31,
+  "title": "YouTube Thumbnail Downloader Tool",
+  "slug": "youtube-thumbnail-downloader",
+  "category": "Tools",
+  "tool": "YT Thumbnail Downloader",
+  "excerpt": "Download YouTube video thumbnails instantly in HD quality.",
+  "image": "/trending/tools/ytan.png",
+  "date": "2026-03-04",
+  "content": "YouTube thumbnail downloader tools allow users to extract and save high-quality thumbnails from any public YouTube video for design and marketing use."
+}
+
+
+] }

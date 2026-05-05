@@ -1,0 +1,2140 @@
+{
+  "brandRating": {
+    "categories": [
+      {
+        "id": "1",
+        "category": "Mattresses",
+        "title": "Best Mattress 2026",
+        "desc": "Quality sleep is a necessity, not a luxury. The right mattress supports comfort, reduces aches, and helps you wake up refreshed. To find your perfect night’s sleep, see our top mattress picks below.",
+        "updateDate": "Last Updated Mar 2026",
+        "img": "https://images.unsplash.com/photo-1505693314120-0d443867891c",
+        "what": "What is the Best Mattress to Buy? Mattress Shopping 101",
+        "whatAns": "Fewer things are as important to your health as a good night of sleep. In fact, research suggests that getting enough sleep—about seven to eight hours a night for adults—can reduce your risk for serious health conditions like diabetes and heart disease. Getting sufficient sleep can also help you maintain a healthy weight, reduce stress, improve your mood, and help you think more clearly, which can increase productivity.",
+        "ratingSummary": {
+          "average": 4.8,
+          "totalReviews": 1284,
+          "breakdown": {
+            "comfort": 4.9,
+            "durability": 4.8,
+            "value": 4.7
+          }
+        },
+        "reviews": [
+          {
+            "name": "Aarav Mehta",
+            "date": "Jan 12, 2026",
+            "rating": 4.9,
+            "avatar": "https://api.dicebear.com/7.x/notionists/svg?seed=Aarav",
+            "text": "We noticed a huge improvement within just a few days. The Luxury Firm option helped reduce my back pain significantly, and I wake up feeling much more refreshed. The support is excellent without feeling too hard, and the motion isolation works great even when my partner moves at night."
+          },
+          {
+            "name": "Neha Sharma",
+            "date": "Dec 28, 2025",
+            "rating": 4.9,
+            "avatar": "https://api.dicebear.com/7.x/notionists/svg?seed=Neha",
+            "text": "Even after months of daily use, the mattress still feels brand new. There’s no sagging at all, and the comfort level has remained consistent. I also love how breathable it is — it doesn’t trap heat like my previous mattress."
+          },
+          {
+            "name": "Rohan Verma",
+            "date": "Dec 10, 2025",
+            "rating": 4.8,
+            "avatar": "https://api.dicebear.com/7.x/notionists/svg?seed=Rohan",
+            "text": "This mattress provides excellent spinal alignment and pressure relief. I used to wake up with stiffness in my shoulders, but that’s completely gone now. It’s a great balance between softness and support."
+          }
+        ],
+        "faqs": [
+          {
+            "question": "What is the best mattress to buy in 2026?",
+            "answer": "The best mattress depends on your sleep style, body weight, and comfort preference. Memory foam mattresses are ideal for pressure relief, hybrid mattresses offer balanced support and bounce, while latex mattresses are great for durability and cooling. If you suffer from back pain, a medium-firm orthopedic mattress is usually recommended."
+          },
+          {
+            "question": "How often should I replace my mattress?",
+            "answer": "Most mattresses should be replaced every 7–10 years. However, if you notice sagging, loss of support, or waking up with body pain, it may be time to replace it earlier. High-quality hybrid and latex mattresses often last longer than basic foam models."
+          },
+          {
+            "question": "Which mattress is best for back pain?",
+            "answer": "For back pain, medium-firm mattresses are generally the best option. They help maintain spinal alignment while still providing comfort. Memory foam and hybrid mattresses with zoned support are especially effective for reducing pressure on the lower back and shoulders."
+          },
+          {
+            "question": "Do expensive mattresses last longer?",
+            "answer": "Not always. Price does not guarantee durability. What matters most is material quality, coil system, foam density, and brand construction. Some mid-range mattresses perform just as well as premium ones if they are well designed."
+          },
+          {
+            "question": "How do I choose the right mattress size?",
+            "answer": "Choose based on room space and sleeping needs. Twin and Full are ideal for single sleepers or small rooms. Queen is the most popular size for couples, while King and California King offer maximum space and comfort for larger bedrooms."
+          }
+        ],
+        "brands": [
+          {
+            "id": "1",
+            "name": "Saatva",
+            "weblink": "https://www.saatva.com/mattresses/saatva-classic?utm_source=brandxcr&utm_medium=affiliate&click_id=1110l32TPQod&coupon=vzxrirblvqdxaxbr",
+            "rank": 1,
+            "rating": 9.9,
+            "review": "Outstanding",
+            "feature": "Back Pain",
+            "tag": "Top Pick",
+            "visits": "4,877",
+            "logo": "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9",
+            "offer": "Limited Time Offer! Save $300 Off $1K+ Orders",
+            "features": {
+              "firmness": "Plush Soft, Luxury Firm, Firm",
+              "sizes": "Twin, Twin XL, Full, Queen, King, Cal King",
+              "materials": "Euro pillow top, memory foam & steel coil",
+              "design": "Hybrid innerspring design with spinal support",
+              "trial": "365-night home trial",
+              "warranty": "Lifetime warranty",
+              "shipping": "Free white glove delivery & setup",
+              "official": "Official Mattress of Team USA"
+            },
+            "images": [
+              "https://images.unsplash.com/photo-1505693314120-0d443867891c",
+              "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85",
+              "https://images.unsplash.com/photo-1505693314120-0d443867891c"
+            ],
+            "benefits": [
+              "365-night home trial",
+              "Free delivery & setup",
+              "Free mattress removal"
+            ]
+          },
+          {
+            "id": "2",
+            "name": "Nectar",
+            "weblink": "https://www.nectarsleep.com/mattress?CIDIMP=0FGWx0XKkxycUqlSQm161WIHUkuziw1fsxE40c0&irgwc=1&afsrc=1&utm_campaign=IMPACT&utm_content=BrandX%20-%20Up%20to%20%24499%20of%20Savings_COUPON&utm_source=Bxa&utm_medium=AFF&utm_sharedid=573&utm_account=8338",
+            "feature": "Cooling",
+            "rank": 3,
+            "rating": 9.7,
+            "tag": "Excellent",
+            "logo": "/images/brands/nectar.png",
+            "offer": "Save Up To 50% Off Mattresses",
+            "features": {
+              "firmness": "Plush Soft, Luxury Firm, Firm",
+              "sizes": "Twin, Twin XL, Full, Queen, King, Cal King",
+              "materials": "Euro pillow top, memory foam & steel coil",
+              "design": "Hybrid innerspring design with spinal support",
+              "trial": "365-night home trial",
+              "warranty": "Lifetime warranty",
+              "shipping": "Free white glove delivery & setup",
+              "official": "Official Mattress of Team USA"
+            },
+            "images": [
+              "/images/products/nectar-1.jpg"
+            ],
+            "benefits": [
+              "365-night home trial",
+              "Free delivery & setup",
+              "Free mattress removal"
+            ]
+          },
+          {
+            "id": "3",
+            "name": "DreamCloud",
+            "weblink": "https://www.dreamcloudsleep.com/mattress/queen?CIDIMP=0FGWx0XKkxycUqlSQm161WIHUkuziwzesxE40c0&irgwc=1&afsrc=1&utm_campaign=IMPACT&utm_content=BrandX%20-%20Queen%20Mattress%20Page_TEXT_LINK&utm_source=Bxa&utm_medium=AFF&utm_sharedid=573&utm_account=8339",
+            "feature": "Back Pain",
+            "rank": 2,
+            "rating": 9.8,
+            "tag": "Outstanding",
+            "logo": "/images/brands/dreamcloud.png",
+            "offer": "Save Up To 60% Off Mattresses",
+            "benefits": [
+              "365-night home trial",
+              "Free delivery & setup",
+              "Free mattress removal"
+            ],
+            "features": {
+              "firmness": "Plush Soft, Luxury Firm, Firm",
+              "sizes": "Twin, Twin XL, Full, Queen, King, Cal King",
+              "materials": "Euro pillow top, memory foam & steel coil",
+              "design": "Hybrid innerspring design with spinal support",
+              "trial": "365-night home trial",
+              "warranty": "Lifetime warranty",
+              "shipping": "Free white glove delivery & setup",
+              "official": "Official Mattress of Team USA"
+            },
+            "images": [
+              "/images/products/dreamcloud-1.jpg"
+            ]
+          },
+          {
+            "id": "4",
+            "name": "Glacier",
+            "weblink": "https://glaciersleep.com/products/glacier-original?variant=42834393792566&clickref=1101lCoBSHPA&rel=1101l13986909137&utm_source=brandxcr&utm_medium=affiliate&click_id=1101lCoBSHPA",
+            "feature": "Side Sleepers",
+            "rank": 4,
+            "rating": 9.6,
+            "tag": "Excellent",
+            "logo": "/images/brands/glacier.png",
+            "offer": "Spring Mattress Sale – Up To 65% Off",
+            "features": [
+              "Cooling foam technology",
+              "Hybrid mattress design",
+              "Medium support",
+              "Breathable materials",
+              "Pressure relief comfort"
+            ],
+            "images": [
+              "/images/products/glacier-1.jpg"
+            ],
+            "benefits": [
+              "365-night home trial",
+              "Free delivery & setup",
+              "Free mattress removal"
+            ]
+          },
+          {
+            "id": "5",
+            "name": "Helix",
+            "weblink": "https://consumerrating.org/mattresses/reviews/dream-cloud/",
+            "feature": "Firm",
+            "rank": 5,
+            "rating": 9.5,
+            "tag": "Great Choice",
+            "logo": "/images/brands/helix.png",
+            "offer": "Save Up To 30% Off",
+            "features": {
+              "firmness": "Plush Soft, Luxury Firm, Firm",
+              "sizes": "Twin, Twin XL, Full, Queen, King, Cal King",
+              "materials": "Euro pillow top, memory foam & steel coil",
+              "design": "Hybrid innerspring design with spinal support",
+              "trial": "365-night home trial",
+              "warranty": "Lifetime warranty",
+              "shipping": "Free white glove delivery & setup",
+              "official": "Official Mattress of Team USA"
+            },
+            "images": [
+              "/images/products/helix-1.jpg"
+            ],
+            "benefits": [
+              "365-night home trial",
+              "Free delivery & setup",
+              "Free mattress removal"
+            ]
+          },
+          {
+            "id": "6",
+            "name": "Purple",
+            "weblink": "https://www.saatva.com/mattresses/loom-and-leaf?utm_source=brandxads&utm_medium=affiliate&click_id=1100lC7zNeMq&coupon=vzxrirblvqdxaxbr",
+            "feature": "Side Sleepers",
+            "rank": 6,
+            "rating": 9.4,
+            "tag": "Popular",
+            "logo": "/images/brands/purple.png",
+            "offer": "Up To $400 Off Select Models",
+            "features": {
+              "firmness": "Plush Soft, Luxury Firm, Firm",
+              "sizes": "Twin, Twin XL, Full, Queen, King, Cal King",
+              "materials": "Euro pillow top, memory foam & steel coil",
+              "design": "Hybrid innerspring design with spinal support",
+              "trial": "365-night home trial",
+              "warranty": "Lifetime warranty",
+              "shipping": "Free white glove delivery & setup",
+              "official": "Official Mattress of Team USA"
+            },
+            "images": [
+              "/images/products/purple-1.jpg"
+            ],
+            "benefits": [
+              "365-night home trial",
+              "Free delivery & setup",
+              "Free mattress removal"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "2",
+        "category": "Diet Plans",
+        "title": "Best Diet Plans 2026",
+        "desc": "Healthy eating and balanced nutrition are essential for maintaining weight and improving overall wellness. Explore our top-rated diet plan services designed to help you achieve your health goals.",
+        "updateDate": "Last Updated Mar 2026",
+        "img": "/images/categories/diet-hero.jpg",
+        "ratingSummary": {
+          "average": 4.8,
+          "totalReviews": 5630,
+          "breakdown": {
+            "results": 4.9,
+            "easeOfUse": 4.7,
+            "value": 4.8
+          }
+        },
+        "reviews": [
+          {
+            "name": "Ananya Kapoor",
+            "date": "Jan 15, 2026",
+            "rating": 4.9,
+            "avatar": "https://api.dicebear.com/7.x/notionists/svg?seed=Ananya",
+            "text": "The diet plan helped me lose weight steadily without feeling restricted. I liked how flexible it was, and the meal suggestions were practical for daily life. It never felt like I was starving or missing out."
+          },
+          {
+            "name": "Rahul Mehta",
+            "date": "Dec 20, 2025",
+            "rating": 4.8,
+            "avatar": "https://api.dicebear.com/7.x/notionists/svg?seed=Rahul",
+            "text": "Very easy to follow and fits perfectly into my daily routine. The tracking tools and guidance helped me stay consistent, which made a big difference in my results over time."
+          },
+          {
+            "name": "Sneha Iyer",
+            "date": "Dec 5, 2025",
+            "rating": 4.8,
+            "avatar": "https://api.dicebear.com/7.x/notionists/svg?seed=Sneha",
+            "text": "What I loved most is that it focuses on long-term habits instead of quick fixes. I’ve improved my eating patterns and feel more energetic throughout the day."
+          }
+        ],
+        "faqs": [
+          {
+            "question": "Are diet plans safe for long-term use?",
+            "answer": "Yes, most structured diet plans are safe when they include balanced nutrition with proteins, carbs, fats, and micronutrients. The safest plans are those designed by certified nutritionists and tailored to individual health goals."
+          },
+          {
+            "question": "How fast can I see results from a diet plan?",
+            "answer": "Results vary based on metabolism, activity level, and consistency. Most people start noticing changes within 2–4 weeks, while significant transformation may take 2–3 months of consistent follow-up."
+          },
+          {
+            "question": "Do I need exercise with a diet plan?",
+            "answer": "Exercise is not mandatory but highly recommended. Combining a healthy diet with regular physical activity improves fat loss, muscle tone, metabolism, and overall health results."
+          },
+          {
+            "question": "Can I follow a diet plan while eating outside food?",
+            "answer": "Yes, but it requires mindful choices. You can still eat out occasionally by choosing grilled, baked, or low-oil options, avoiding sugary drinks, and controlling portion sizes."
+          },
+          {
+            "question": "What happens after I stop a diet plan?",
+            "answer": "If you return to old eating habits, weight regain is possible. To maintain results, it’s important to transition into a balanced lifestyle rather than strict dieting."
+          }
+        ],
+        "brands": [
+          {
+            "id": "1",
+            "name": "Nutrisystem",
+            "weblink": "https://www.nutrisystem.com/diet-plans/nutrisystem-program?utm_source=bxa&utm_medium=partner&utm_campaign=bxaprogram50off&utm_content=573&creq=269002145",
+            "rank": 1,
+            "rating": 9.9,
+            "feature": "Weight Loss",
+            "tag": "Top Pick",
+            "visits": "4,210",
+            "logo": "/images/brands/nutrisystem.png",
+            "offer": "Save Up To 50% On First Order",
+            "features": {
+              "meals": "Pre-portioned meals delivered weekly",
+              "dietType": "Balanced calorie-controlled plan",
+              "coaching": "Personal diet coaching available",
+              "app": "Nutrition tracking mobile app",
+              "trial": "30-day money back guarantee",
+              "support": "24/7 nutrition support",
+              "delivery": "Free shipping on select plans",
+              "official": "Trusted by millions of users"
+            },
+            "images": [
+              "/images/products/nutrisystem-1.jpg",
+              "/images/products/nutrisystem-2.jpg",
+              "/images/products/nutrisystem-3.jpg"
+            ],
+            "benefits": [
+              "Easy portion control meals",
+              "Flexible meal plans",
+              "Free delivery on select plans"
+            ]
+          },
+          {
+            "id": "2",
+            "name": "Noom",
+            "weblink": "https://www.noom.com/lp/weightLossGoal?afsrc=1&cid=0FGWx0XKkxycUqlSQm161WIHUkuziyQ-YRDZUY0&gid=573&irgwc=1&lang=en&partner_type=&partner_url=&sp=impact&step=pros&type=mediapartner_TEXT_LINK&upv=3&utm_campaign=8591&utm_content=575872&utm_medium=partnerweb&utm_source=360374&utm_term=Bxa",
+            "rank": 2,
+            "rating": 9.8,
+            "feature": "Behavior Coaching",
+            "tag": "Outstanding",
+            "visits": "3,990",
+            "logo": "/images/brands/noom.png",
+            "offer": "Limited Time 30% Off Subscription",
+            "features": {
+              "program": "Psychology-based weight loss",
+              "tracking": "Food and habit tracking",
+              "coaching": "Personal wellness coach",
+              "community": "Support groups included",
+              "trial": "14-day trial",
+              "app": "Advanced mobile app",
+              "delivery": "Digital program access",
+              "official": "Scientifically backed approach"
+            },
+            "images": [
+              "/images/products/noom-1.jpg",
+              "/images/products/noom-2.jpg"
+            ],
+            "benefits": [
+              "Personal coaching",
+              "Daily habit tracking",
+              "Flexible diet program"
+            ]
+          },
+          {
+            "id": "3",
+            "name": "CookUnity",
+            "weblink": "https://www.cookunity.com/blp/chef-meals-cookie?irclickid=W42VBi0wZxyZUXnXIL2WeTcFUkuziyS2YRDZUY0&utm_source=impact&utm_medium=affiliate&utm_campaign=Bxa&utm_term=360374&utm_content=573&irgwc=1&afsrc=1",
+            "rank": 3,
+            "rating": 9.7,
+            "feature": "Chef Meals",
+            "tag": "Excellent",
+            "visits": "3,650",
+            "logo": "/images/brands/cookunity.png",
+            "offer": "Get 40% Off Your First Week",
+            "features": {
+              "meals": "Chef-crafted meals",
+              "dietType": "Healthy & balanced",
+              "variety": "200+ weekly menu items",
+              "delivery": "Fresh meals delivered",
+              "trial": "Flexible weekly subscription",
+              "support": "Customer support available",
+              "app": "Mobile ordering app",
+              "official": "Chef-designed menu"
+            },
+            "images": [
+              "/images/products/cookunity-1.jpg"
+            ],
+            "benefits": [
+              "Fresh chef meals",
+              "Large menu variety",
+              "Easy weekly delivery"
+            ]
+          },
+          {
+            "id": "4",
+            "name": "Jenny Craig",
+            "weblink": "https://www.jennycraig.com/?utm_source=bxa&utm_medium=partner&utm_campaign=promo-50off&utm_content=573&bcid=269002145",
+            "rank": 4,
+            "rating": 9.6,
+            "feature": "Guided Plans",
+            "tag": "Popular",
+            "visits": "3,410",
+            "logo": "/images/brands/jenny-craig.png",
+            "offer": "Free Diet Consultation",
+            "features": {
+              "coaching": "Personal weight coach",
+              "meals": "Pre-prepared healthy meals",
+              "tracking": "Weight progress tracking",
+              "community": "Member support groups",
+              "trial": "Flexible program",
+              "delivery": "Home delivery available",
+              "app": "Mobile tracking app",
+              "official": "Decades of experience"
+            },
+            "images": [
+              "/images/products/jenny-1.jpg"
+            ],
+            "benefits": [
+              "One-on-one coaching",
+              "Structured meal plan",
+              "Simple diet management"
+            ]
+          },
+          {
+            "id": "5",
+            "name": "Simple",
+            "weblink": "https://simple.life/survey/?irclickid=0FGWx0XKkxycUqlSQm161WIHUkuziUXOYRDZUY0&utm_source=impact&utm_medium=affiliate&utm_campaign=Bxa&campaign_id=15148&utm_term=Coupon%20Partner%20Link&ad_id=1831821&utm_content=TEXT_LINK&adgroup_id=%22Content%22&safe=true&irgwc=1&afsrc=1",
+            "rank": 5,
+            "rating": 9.5,
+            "feature": "Intermittent Fasting",
+            "tag": "Great Choice",
+            "visits": "3,020",
+            "logo": "/images/brands/simple.png",
+            "offer": "Save 35% On Annual Plan",
+            "features": {
+              "method": "Intermittent fasting program",
+              "tracking": "Fasting & meal tracking",
+              "coaching": "AI health coach",
+              "guides": "Nutrition education guides",
+              "trial": "7-day trial",
+              "app": "Mobile fasting tracker",
+              "delivery": "Digital access",
+              "official": "AI-driven health insights"
+            },
+            "images": [
+              "/images/products/simple-1.jpg"
+            ],
+            "benefits": [
+              "AI fasting coach",
+              "Health insights",
+              "Easy habit tracking"
+            ]
+          },
+          {
+            "id": "6",
+            "name": "Factor",
+            "weblink": "https://consumerrating.org/mattresses/reviews/dream-cloud/",
+            "rank": 6,
+            "rating": 9.4,
+            "feature": "Keto Meals",
+            "tag": "Trending",
+            "visits": "2,850",
+            "logo": "/images/brands/factor.png",
+            "offer": "Save $120 On First Boxes",
+            "features": {
+              "meals": "Keto & protein meals",
+              "dietType": "Low-carb nutrition",
+              "delivery": "Fresh weekly delivery",
+              "nutrition": "Dietitian approved",
+              "trial": "Flexible subscription",
+              "support": "Customer support",
+              "app": "Meal selection app",
+              "official": "Fitness focused meals"
+            },
+            "images": [
+              "/images/products/factor-1.jpg"
+            ],
+            "benefits": [
+              "High protein meals",
+              "Dietitian approved",
+              "Fresh weekly delivery"
+            ]
+          },
+          {
+            "id": "7",
+            "name": "HelloFresh",
+            "weblink": "https://www.hellofresh.com/plans?irclickid=W42VBi0wZxyZUXnXIL2WeTcFUkuziRQOYRDZUY0&sharedid=573&irpid=360374&utm_source=affiliate~impact&utm_medium=cpa&c=BXA10ZWILLING&irgwc=1&afsrc=1&mealsize=2-3&discount_comm_id=de77f694-efdf-41c3-b106-a488a252dae4",
+            "rank": 7,
+            "rating": 9.3,
+            "feature": "Meal Kits",
+            "tag": "Best Value",
+            "visits": "2,640",
+            "logo": "/images/brands/hellofresh.png",
+            "offer": "Free Meals + Free Shipping",
+            "features": {
+              "kits": "Recipe based meal kits",
+              "dietType": "Balanced meals",
+              "variety": "100+ recipes weekly",
+              "delivery": "Weekly delivery",
+              "trial": "Flexible subscription",
+              "support": "Customer support",
+              "app": "Recipe & order tracking",
+              "official": "Popular meal kit service"
+            },
+            "images": [
+              "/images/products/hellofresh-1.jpg"
+            ],
+            "benefits": [
+              "Easy cooking recipes",
+              "Fresh ingredients",
+              "Weekly meal kits"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "3",
+        "category": "Dog Food Delivery",
+        "title": "Best Dog Food Delivery 2026",
+        "desc": "Fresh, healthy dog food delivery services help pet owners provide nutritious meals tailored to their pets’ needs.",
+        "updateDate": "Last Updated Mar 2026",
+        "img": "/images/categories/dogfood-hero.jpg",
+        "ratingSummary": {
+          "average": 4.9,
+          "totalReviews": 4210,
+          "breakdown": {
+            "nutrition": 4.9,
+            "freshness": 4.8,
+            "value": 4.7
+          }
+        },
+        "reviews": [
+          {
+            "name": "Simran Kaur",
+            "date": "Jan 10, 2026",
+            "rating": 4.9,
+            "avatar": "https://api.dicebear.com/7.x/notionists/svg?seed=Simran",
+            "text": "My dog absolutely loves the meals. I’ve noticed better digestion and more energy levels. His coat also looks healthier and shinier than before."
+          },
+          {
+            "name": "Karan Malhotra",
+            "date": "Dec 18, 2025",
+            "rating": 4.8,
+            "avatar": "https://api.dicebear.com/7.x/notionists/svg?seed=Karan",
+            "text": "The portion customization is very helpful. It’s tailored perfectly to my dog’s needs, and I don’t have to worry about overfeeding or underfeeding anymore."
+          },
+          {
+            "name": "Priya Nair",
+            "date": "Dec 2, 2025",
+            "rating": 4.9,
+            "avatar": "https://api.dicebear.com/7.x/notionists/svg?seed=Priya",
+            "text": "Switching to fresh dog food was the best decision. My pet is more active, and even picky eating habits have improved significantly."
+          }
+        ],
+        "faqs": [
+          {
+            "question": "Is fresh dog food better than dry kibble?",
+            "answer": "Fresh dog food usually contains higher-quality, minimally processed ingredients. It can improve digestion, coat health, and energy levels compared to heavily processed kibble."
+          },
+          {
+            "question": "Is dog food delivery safe?",
+            "answer": "Yes, reputable dog food delivery brands use vet-approved recipes and follow strict safety and storage standards to ensure meals are fresh and safe for pets."
+          },
+          {
+            "question": "How do I know the right portion size for my dog?",
+            "answer": "Portion size depends on your dog’s breed, age, weight, and activity level. Most delivery services provide customized feeding plans after a short pet profile assessment."
+          },
+          {
+            "question": "Can puppies eat fresh dog food?",
+            "answer": "Yes, many services offer puppy-specific formulas that support growth, bone development, and immune health. Always choose age-appropriate meals."
+          },
+          {
+            "question": "Is subscription required for dog food delivery?",
+            "answer": "Most services operate on a subscription model for convenience, but many also allow flexible plans where you can pause, skip, or cancel anytime."
+          }
+        ],
+        "brands": [
+          {
+            "id": "1",
+            "name": "The Farmer Dog",
+            "weblink": "https://www.hellofresh.com/plans?irclickid=W42VBi0wZxyZUXnXIL2WeTcFUkuziRQOYRDZUY0&sharedid=573&irpid=360374&utm_source=affiliate~impact&utm_medium=cpa&c=BXA10ZWILLING&irgwc=1&afsrc=1&mealsize=2-3&discount_comm_id=de77f694-efdf-41c3-b106-a488a252dae4",
+            "rank": 1,
+            "rating": 9.9,
+            "feature": "Fresh Meals",
+            "tag": "Top Pick",
+            "visits": "4,120",
+            "logo": "/images/brands/farmersdog.png",
+            "offer": "50% Off First Box",
+            "features": {
+              "meals": "Fresh cooked dog meals",
+              "nutrition": "Vet approved recipes",
+              "ingredients": "Human grade ingredients",
+              "plans": "Personalized meal plans",
+              "trial": "Money back guarantee",
+              "support": "24/7 support",
+              "delivery": "Nationwide delivery",
+              "official": "Top rated fresh dog food"
+            },
+            "images": [
+              "/images/products/dog1.jpg"
+            ],
+            "benefits": [
+              "Fresh ingredients",
+              "Customized plans",
+              "Vet approved recipes"
+            ]
+          },
+          {
+            "id": "2",
+            "name": "Ollie",
+            "weblink": "https://www.hellofresh.com/plans?irclickid=W42VBi0wZxyZUXnXIL2WeTcFUkuziRQOYRDZUY0&sharedid=573&irpid=360374&utm_source=affiliate~impact&utm_medium=cpa&c=BXA10ZWILLING&irgwc=1&afsrc=1&mealsize=2-3&discount_comm_id=de77f694-efdf-41c3-b106-a488a252dae4",
+            "rank": 2,
+            "rating": 9.8,
+            "feature": "Healthy",
+            "tag": "Outstanding",
+            "visits": "3,990",
+            "logo": "/images/brands/ollie.png",
+            "offer": "60% Off Starter Box",
+            "features": {
+              "meals": "Fresh dog meals",
+              "nutrition": "Balanced nutrition",
+              "ingredients": "Human grade meat",
+              "plans": "Personalized portions",
+              "trial": "Flexible subscription",
+              "support": "Customer care",
+              "delivery": "Home delivery",
+              "official": "Premium dog food"
+            },
+            "images": [
+              "/images/products/dog2.jpg"
+            ],
+            "benefits": [
+              "Healthy ingredients",
+              "Vet approved",
+              "Flexible plans"
+            ]
+          },
+          {
+            "id": "3",
+            "name": "The Pets Table",
+            "weblink": "https://www.hellofresh.com/plans?irclickid=W42VBi0wZxyZUXnXIL2WeTcFUkuziRQOYRDZUY0&sharedid=573&irpid=360374&utm_source=affiliate~impact&utm_medium=cpa&c=BXA10ZWILLING&irgwc=1&afsrc=1&mealsize=2-3&discount_comm_id=de77f694-efdf-41c3-b106-a488a252dae4",
+            "rank": 3,
+            "rating": 9.7,
+            "feature": "Balanced Meals",
+            "tag": "Excellent",
+            "visits": "3,650",
+            "logo": "/images/brands/petstable.png",
+            "offer": "Save 40%",
+            "features": {
+              "meals": "Fresh & air dried food",
+              "nutrition": "Balanced nutrition",
+              "ingredients": "Premium ingredients",
+              "plans": "Personalized feeding",
+              "trial": "Trial available",
+              "support": "Customer support",
+              "delivery": "Nationwide shipping",
+              "official": "Healthy pet meals"
+            },
+            "images": [
+              "/images/products/dog3.jpg"
+            ],
+            "benefits": [
+              "Healthy meals",
+              "Flexible subscription",
+              "Fresh ingredients"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "4",
+        "category": "Air Purifiers",
+        "title": "Best Air Purifiers 2026",
+        "desc": "Improve indoor air quality with powerful air purifiers that remove dust, allergens, and pollutants.",
+        "updateDate": "Last Updated Mar 2026",
+        "img": "https://images.unsplash.com/photo-1585776245991-cf89dd7fc73a",
+        "ratingSummary": {
+          "average": 4.8,
+          "totalReviews": 3890,
+          "breakdown": {
+            "air_quality": 4.9,
+            "noise": 4.7,
+            "value": 4.8
+          }
+        },
+        "reviews": [
+          {
+            "name": "Arjun Verma",
+            "date": "Feb 2, 2026",
+            "rating": 4.8,
+            "avatar": "https://api.dicebear.com/7.x/notionists/svg?seed=Arjun",
+            "text": "The air feels noticeably cleaner within hours. I have allergies, and this has helped reduce sneezing and irritation significantly."
+          },
+          {
+            "name": "Megha Singh",
+            "date": "Jan 18, 2026",
+            "rating": 4.8,
+            "avatar": "https://api.dicebear.com/7.x/notionists/svg?seed=Megha",
+            "text": "Very quiet even at higher settings, which makes it perfect for bedrooms. The sleep mode is especially useful at night."
+          },
+          {
+            "name": "Ritesh Gupta",
+            "date": "Jan 5, 2026",
+            "rating": 4.7,
+            "avatar": "https://api.dicebear.com/7.x/notionists/svg?seed=Ritesh",
+            "text": "Great performance overall. It handles dust and odors really well, especially in a polluted environment like the city."
+          }
+        ],
+        "faqs": [
+          {
+            "question": "Do air purifiers really improve air quality?",
+            "answer": "Yes, air purifiers effectively remove dust, pollen, smoke, pet dander, and airborne pollutants, improving indoor air quality and reducing allergy symptoms."
+          },
+          {
+            "question": "How long should I run an air purifier?",
+            "answer": "For best results, it is recommended to run air purifiers continuously or at least 12–24 hours a day, especially in polluted or high-allergen environments."
+          },
+          {
+            "question": "Where should I place my air purifier?",
+            "answer": "Place it in the room where you spend the most time, such as the bedroom or living room, ensuring there is enough space around it for proper airflow."
+          },
+          {
+            "question": "Do air purifiers remove odors?",
+            "answer": "Yes, models with activated carbon filters can remove odors from cooking, smoke, pets, and chemicals, making indoor air fresher."
+          },
+          {
+            "question": "How often should filters be replaced?",
+            "answer": "Most HEPA filters should be replaced every 6–12 months depending on usage and air quality. Some models also include filter replacement indicators."
+          }
+        ],
+        "brands": [
+          {
+            "id": "1",
+            "name": "AirDoctor",
+            "weblink": "https://airdoctorpro.com",
+            "rank": 1,
+            "rating": 9.9,
+            "feature": "HEPA Filter",
+            "tag": "Top Pick",
+            "visits": "4,300",
+            "logo": "https://images.unsplash.com/photo-1585776245991-cf89dd7fc73a",
+            "offer": "Save $300 Today",
+            "features": {
+              "filter": "Ultra HEPA filter",
+              "coverage": "Large room coverage",
+              "technology": "Advanced filtration",
+              "noise": "Quiet operation",
+              "trial": "30 day trial",
+              "warranty": "3 year warranty",
+              "shipping": "Free shipping",
+              "official": "Best rated purifier"
+            },
+            "images": [
+              "https://images.unsplash.com/photo-1585776245991-cf89dd7fc73a"
+            ],
+            "benefits": [
+              "Removes allergens",
+              "Quiet operation",
+              "Large coverage"
+            ]
+          },
+          {
+            "id": "2",
+            "name": "Dyson Purifier Cool",
+            "weblink": "https://www.dyson.com",
+            "rank": 2,
+            "rating": 9.8,
+            "feature": "Smart Purifier",
+            "tag": "Premium Pick",
+            "visits": "4,100",
+            "logo": "https://images.unsplash.com/photo-1603712725038-e9334ae8f39f",
+            "offer": "Free Shipping",
+            "features": {
+              "filter": "HEPA + activated carbon",
+              "coverage": "Medium to large rooms",
+              "technology": "Air Multiplier technology",
+              "noise": "Ultra quiet",
+              "trial": "30 day return",
+              "warranty": "2 year warranty",
+              "shipping": "Free delivery",
+              "official": "Premium air purifier"
+            },
+            "images": [
+              "https://images.unsplash.com/photo-1603712725038-e9334ae8f39f"
+            ],
+            "benefits": [
+              "Smart sensors",
+              "Modern design",
+              "Powerful airflow"
+            ]
+          },
+          {
+            "id": "3",
+            "name": "Levoit Core 300",
+            "weblink": "https://levoit.com",
+            "rank": 3,
+            "rating": 9.7,
+            "feature": "Compact Purifier",
+            "tag": "Best Value",
+            "visits": "3,900",
+            "logo": "https://images.unsplash.com/photo-1626434245411-9c8e2cb3e3c1",
+            "offer": "Save 20%",
+            "features": {
+              "filter": "True HEPA filter",
+              "coverage": "Small to medium rooms",
+              "technology": "3 stage filtration",
+              "noise": "Sleep mode quiet",
+              "trial": "30 day return",
+              "warranty": "2 year warranty",
+              "shipping": "Free shipping",
+              "official": "Best value purifier"
+            },
+            "images": [
+              "https://images.unsplash.com/photo-1626434245411-9c8e2cb3e3c1"
+            ],
+            "benefits": [
+              "Affordable price",
+              "Compact size",
+              "Energy efficient"
+            ]
+          },
+          {
+            "id": "4",
+            "name": "Coway Airmega 400",
+            "weblink": "https://cowaymega.com",
+            "rank": 4,
+            "rating": 9.6,
+            "feature": "Large Room Coverage",
+            "tag": "Great Choice",
+            "visits": "3,600",
+            "logo": "https://images.unsplash.com/photo-1582719471384-894fbb16e074",
+            "offer": "Save $100",
+            "features": {
+              "filter": "Max2 filter system",
+              "coverage": "Large room purifier",
+              "technology": "Dual filtration",
+              "noise": "Quiet operation",
+              "trial": "30 day trial",
+              "warranty": "3 year warranty",
+              "shipping": "Free shipping",
+              "official": "Top rated purifier"
+            },
+            "images": [
+              "https://images.unsplash.com/photo-1582719471384-894fbb16e074"
+            ],
+            "benefits": [
+              "Large coverage",
+              "Powerful filtration",
+              "Energy efficient"
+            ]
+          },
+          {
+            "id": "5",
+            "name": "Blueair Blue Pure 211+",
+            "weblink": "https://blueair.com",
+            "rank": 5,
+            "rating": 9.5,
+            "feature": "HEPA + Carbon",
+            "tag": "Popular",
+            "visits": "3,300",
+            "logo": "https://images.unsplash.com/photo-1585776245991-cf89dd7fc73a",
+            "offer": "Save $80",
+            "features": {
+              "filter": "HEPA + carbon filter",
+              "coverage": "Large room purifier",
+              "technology": "Hepasilent technology",
+              "noise": "Ultra quiet",
+              "trial": "30 day return",
+              "warranty": "2 year warranty",
+              "shipping": "Free delivery",
+              "official": "Popular purifier"
+            },
+            "images": [
+              "https://images.unsplash.com/photo-1585776245991-cf89dd7fc73a"
+            ],
+            "benefits": [
+              "Quiet operation",
+              "Great filtration",
+              "Modern design"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "5",
+        "category": "Invisible Braces",
+        "title": "Best Invisible Braces 2026",
+        "desc": "Invisible braces help straighten teeth discreetly using clear aligners designed for comfort and convenience.",
+        "updateDate": "Last Updated Mar 2026",
+        "img": "https://images.unsplash.com/photo-1588776814546-1ffcf47267a5",
+        "ratingSummary": {
+          "average": 4.8,
+          "totalReviews": 3200,
+          "breakdown": {
+            "comfort": 4.9,
+            "effectiveness": 4.8,
+            "value": 4.7
+          }
+        },
+        "reviews": [
+          {
+            "name": "Ritika Sharma",
+            "date": "Jan 5, 2026",
+            "rating": 4.8,
+            "avatar": "https://api.dicebear.com/7.x/notionists/svg?seed=Ritika",
+            "text": "Very comfortable and almost invisible while wearing."
+          }
+        ],
+        "faqs": [
+          {
+            "question": "How long does invisible braces treatment take?",
+            "answer": "Treatment usually takes 6–18 months depending on the complexity of tooth alignment and consistency in wearing aligners."
+          },
+          {
+            "question": "Are invisible braces painful?",
+            "answer": "They may cause mild pressure or discomfort for a few days when switching aligners, but they are generally much more comfortable than metal braces."
+          },
+          {
+            "question": "Can I eat with invisible braces on?",
+            "answer": "No, aligners should be removed while eating or drinking anything other than water to avoid damage and staining."
+          },
+          {
+            "question": "How often should I wear aligners?",
+            "answer": "For best results, aligners should be worn 20–22 hours per day and only removed for eating, drinking, brushing, and flossing."
+          },
+          {
+            "question": "Are invisible braces effective for all cases?",
+            "answer": "They work well for mild to moderate alignment issues. Severe orthodontic cases may require traditional braces or additional dental treatment."
+          }
+        ],
+        "what": "What Are Invisible Braces?",
+        "whatAns": "Invisible braces are clear aligner systems designed to straighten teeth without traditional metal brackets. They are comfortable, removable and nearly invisible.",
+        "brands": [
+          {
+            "id": "1",
+            "name": "2Usmiles",
+            "weblink": "https://2usmiles.com",
+            "rank": 1,
+            "rating": 9.8,
+            "review": "Outstanding",
+            "feature": "Clear Aligners",
+            "tag": "Top Pick",
+            "visits": "3,800",
+            "logo": "https://images.unsplash.com/photo-1588776814546-1ffcf47267a5",
+            "offer": "Free Smile Assessment",
+            "features": {
+              "aligners": "Invisible clear aligners",
+              "treatment": "Remote orthodontist care",
+              "plans": "Flexible payment options",
+              "trial": "Free consultation",
+              "warranty": "Treatment guarantee",
+              "support": "Customer support",
+              "delivery": "Home delivery",
+              "official": "Trusted aligner brand"
+            },
+            "images": [
+              "https://images.unsplash.com/photo-1588776814546-1ffcf47267a5",
+              "https://images.unsplash.com/photo-1606813907291-d86efa9b94db"
+            ],
+            "benefits": [
+              "Invisible treatment",
+              "Affordable plans",
+              "Remote dentist support"
+            ]
+          },
+          {
+            "id": "2",
+            "name": "SmileDirectClub",
+            "rank": 2,
+            "rating": 9.7,
+            "review": "Excellent",
+            "feature": "At-Home Treatment",
+            "tag": "Popular",
+            "visits": "3,200",
+            "logo": "https://images.unsplash.com/photo-1609840114035-3c981b782dfe",
+            "offer": "Save $300 Today",
+            "features": {
+              "aligners": "Clear aligner system",
+              "treatment": "Remote dental monitoring",
+              "plans": "Monthly payment plans",
+              "trial": "Free scan",
+              "warranty": "Smile guarantee",
+              "support": "Online support",
+              "delivery": "Direct home delivery",
+              "official": "Global aligner brand"
+            },
+            "images": [
+              "https://images.unsplash.com/photo-1609840114035-3c981b782dfe"
+            ],
+            "benefits": [
+              "Affordable treatment",
+              "Easy process",
+              "Invisible braces"
+            ]
+          },
+          {
+            "id": "3",
+            "name": "Byte",
+            "rank": 3,
+            "rating": 9.6,
+            "review": "Great",
+            "feature": "Fast Treatment",
+            "tag": "Fast Results",
+            "visits": "2,900",
+            "logo": "https://images.unsplash.com/photo-1588776814546-1ffcf47267a5",
+            "offer": "Up To $200 Off",
+            "features": {
+              "aligners": "HyperByte technology",
+              "treatment": "Fast aligner therapy",
+              "plans": "Flexible payment",
+              "trial": "Free consultation",
+              "warranty": "Lifetime guarantee",
+              "support": "Online support",
+              "delivery": "Home delivery",
+              "official": "Fast aligner brand"
+            },
+            "images": [
+              "https://images.unsplash.com/photo-1588776814546-1ffcf47267a5"
+            ],
+            "benefits": [
+              "Fast results",
+              "Affordable pricing",
+              "Comfortable aligners"
+            ]
+          },
+          {
+            "id": "4",
+            "name": "Candid",
+            "rank": 4,
+            "rating": 9.5,
+            "review": "Very Good",
+            "feature": "Orthodontist Supervised",
+            "tag": "Reliable",
+            "visits": "2,400",
+            "logo": "https://images.unsplash.com/photo-1588776814546-1ffcf47267a5",
+            "offer": "Free Treatment Plan",
+            "features": {
+              "aligners": "Clear aligner trays",
+              "treatment": "Orthodontist monitored",
+              "plans": "Monthly payment",
+              "trial": "Free scan",
+              "warranty": "Smile guarantee",
+              "support": "Customer support",
+              "delivery": "Home delivery",
+              "official": "Orthodontist backed brand"
+            },
+            "images": [
+              "https://images.unsplash.com/photo-1606813907291-d86efa9b94db"
+            ],
+            "benefits": [
+              "Expert monitoring",
+              "Invisible aligners",
+              "Comfortable fit"
+            ]
+          },
+          {
+            "id": "5",
+            "name": "ALIGNERCO",
+            "rank": 5,
+            "rating": 9.4,
+            "review": "Good",
+            "feature": "Budget Friendly",
+            "tag": "Affordable",
+            "visits": "2,100",
+            "logo": "https://images.unsplash.com/photo-1588776814546-1ffcf47267a5",
+            "offer": "Save $150",
+            "features": {
+              "aligners": "Clear aligner treatment",
+              "treatment": "Remote monitoring",
+              "plans": "Budget plans",
+              "trial": "Free assessment",
+              "warranty": "Treatment guarantee",
+              "support": "Customer support",
+              "delivery": "Home shipping",
+              "official": "Budget aligner brand"
+            },
+            "images": [
+              "https://images.unsplash.com/photo-1588776814546-1ffcf47267a5"
+            ],
+            "benefits": [
+              "Affordable aligners",
+              "Easy treatment",
+              "Remote monitoring"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "6",
+        "category": "Home Warranty",
+        "title": "Best Home Warranty 2026",
+        "desc": "Home warranty services protect homeowners from unexpected repair costs for appliances and systems.",
+        "updateDate": "Last Updated Mar 2026",
+        "img": "https://images.unsplash.com/photo-1560518883-ce09059eeffa",
+        "ratingSummary": {
+          "average": 4.7,
+          "totalReviews": 4100,
+          "breakdown": {
+            "coverage": 4.8,
+            "claims": 4.6,
+            "value": 4.7
+          }
+        },
+        "reviews": [
+          {
+            "name": "Vikram Singh",
+            "date": "Feb 18, 2026",
+            "rating": 4.7,
+            "avatar": "https://api.dicebear.com/7.x/notionists/svg?seed=Vikram",
+            "text": "Saved me a lot on appliance repairs."
+          }
+        ],
+        "faqs": [
+          {
+            "question": "What does a home warranty cover?",
+            "answer": "A home warranty covers repair or replacement of major home systems and appliances such as HVAC, plumbing, electrical systems, refrigerators, and washers when they fail due to normal wear and tear."
+          },
+          {
+            "question": "Is a home warranty worth it?",
+            "answer": "Yes, it can save homeowners significant repair costs by covering expensive breakdowns. It is especially useful for older homes with aging appliances."
+          },
+          {
+            "question": "What is not covered in a home warranty?",
+            "answer": "Home warranties typically do not cover pre-existing conditions, cosmetic damage, or items damaged due to improper maintenance or natural disasters."
+          },
+          {
+            "question": "How does a home warranty claim work?",
+            "answer": "You file a claim with the provider, they assign a technician, and if the issue is covered, the repair or replacement is handled after a service fee."
+          },
+          {
+            "question": "Can I choose my own contractor?",
+            "answer": "Usually, the warranty provider assigns approved contractors. However, some companies may allow exceptions depending on the plan."
+          }
+        ],
+        "what": "What Is a Home Warranty?",
+        "whatAns": "A home warranty helps cover the cost of repairing or replacing home systems and appliances when they break due to normal wear and tear.",
+        "brands": [
+          {
+            "id": "1",
+            "name": "American Home Shield",
+            "rank": 1,
+            "rating": 9.9,
+            "review": "Outstanding",
+            "feature": "Comprehensive Coverage",
+            "tag": "Top Pick",
+            "visits": "4,900",
+            "logo": "https://images.unsplash.com/photo-1560518883-ce09059eeffa",
+            "offer": "$150 Off Warranty Plans",
+            "features": {
+              "coverage": "Home systems & appliances",
+              "plans": "Multiple coverage plans",
+              "claims": "Easy claim process",
+              "network": "Large contractor network",
+              "trial": "30 day guarantee",
+              "support": "24/7 service",
+              "delivery": "Digital policy",
+              "official": "Top home warranty provider"
+            },
+            "images": [
+              "https://images.unsplash.com/photo-1560518883-ce09059eeffa",
+              "https://images.unsplash.com/photo-1560185007-cde436f6a4d0"
+            ],
+            "benefits": [
+              "Comprehensive protection",
+              "Easy claims",
+              "Large service network"
+            ]
+          },
+          {
+            "id": "2",
+            "name": "Choice Home Warranty",
+            "rank": 2,
+            "rating": 9.7,
+            "review": "Excellent",
+            "feature": "Affordable Plans",
+            "tag": "Popular",
+            "visits": "4200",
+            "logo": "https://images.unsplash.com/photo-1505691938895-1758d7feb511",
+            "offer": "$100 Off Plans",
+            "features": {
+              "coverage": "Systems and appliances",
+              "plans": "Budget friendly plans",
+              "claims": "Online claim system",
+              "network": "Nationwide technicians",
+              "trial": "30 day policy guarantee",
+              "support": "Customer support",
+              "delivery": "Online policy access",
+              "official": "Trusted warranty provider"
+            },
+            "images": [
+              "https://images.unsplash.com/photo-1505691938895-1758d7feb511"
+            ],
+            "benefits": [
+              "Affordable plans",
+              "Easy claims",
+              "Reliable support"
+            ]
+          },
+          {
+            "id": "3",
+            "name": "Select Home Warranty",
+            "rank": 3,
+            "rating": 9.6,
+            "review": "Great",
+            "feature": "Nationwide Coverage",
+            "tag": "Reliable",
+            "visits": "3900",
+            "logo": "https://images.unsplash.com/photo-1560185127-6ed189bf02f4",
+            "offer": "2 Months Free",
+            "features": {
+              "coverage": "Home systems",
+              "plans": "Flexible coverage",
+              "claims": "Online claim process",
+              "network": "Certified technicians",
+              "trial": "30 day trial",
+              "support": "Customer help",
+              "delivery": "Policy online",
+              "official": "Popular warranty brand"
+            },
+            "images": [
+              "https://images.unsplash.com/photo-1560185127-6ed189bf02f4"
+            ],
+            "benefits": [
+              "Flexible plans",
+              "Reliable technicians",
+              "Affordable pricing"
+            ]
+          },
+          {
+            "id": "4",
+            "name": "Liberty Home Guard",
+            "rank": 4,
+            "rating": 9.5,
+            "review": "Very Good",
+            "feature": "Premium Plans",
+            "tag": "Premium",
+            "visits": "3400",
+            "logo": "https://images.unsplash.com/photo-1560448075-bb485b067938",
+            "offer": "$200 Off Premium Plan",
+            "features": {
+              "coverage": "Appliances and systems",
+              "plans": "Premium plans",
+              "claims": "Fast claims",
+              "network": "Licensed contractors",
+              "trial": "30 day guarantee",
+              "support": "24/7 support",
+              "delivery": "Digital policy",
+              "official": "Premium warranty service"
+            },
+            "images": [
+              "https://images.unsplash.com/photo-1560448075-bb485b067938"
+            ],
+            "benefits": [
+              "Premium coverage",
+              "Fast service",
+              "Reliable contractors"
+            ]
+          },
+          {
+            "id": "5",
+            "name": "Cinch Home Services",
+            "rank": 5,
+            "rating": 9.4,
+            "review": "Good",
+            "feature": "Complete Coverage",
+            "tag": "Trusted",
+            "visits": "3100",
+            "logo": "https://images.unsplash.com/photo-1505691938895-1758d7feb511",
+            "offer": "Free Quote",
+            "features": {
+              "coverage": "Whole home coverage",
+              "plans": "Flexible plans",
+              "claims": "Quick claims",
+              "network": "Certified professionals",
+              "trial": "30 day guarantee",
+              "support": "Customer service",
+              "delivery": "Online policy",
+              "official": "Trusted warranty provider"
+            },
+            "images": [
+              "https://images.unsplash.com/photo-1505691938895-1758d7feb511"
+            ],
+            "benefits": [
+              "Complete protection",
+              "Flexible plans",
+              "Trusted brand"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "7",
+        "category": "Meal Delivery",
+        "title": "Best Meal Delivery 2026",
+        "desc": "Meal delivery services bring fresh and healthy meals directly to your door.",
+        "updateDate": "Last Updated Mar 2026",
+        "img": "/images/categories/mealdelivery-hero.jpg",
+        "brands": [
+          {
+            "id": "1",
+            "name": "Home Chef",
+            "rank": 1,
+            "rating": 9.8,
+            "feature": "Fresh Meals",
+            "tag": "Top Pick",
+            "visits": "4,200",
+            "logo": "/images/brands/homechef.png",
+            "offer": "$90 Off First Orders",
+            "features": {
+              "meals": "Fresh meal kits",
+              "recipes": "Chef designed recipes",
+              "delivery": "Weekly delivery",
+              "trial": "Flexible subscription",
+              "support": "Customer care",
+              "plans": "Multiple meal options",
+              "app": "Mobile ordering",
+              "official": "Popular meal kit"
+            },
+            "images": [
+              "/images/products/meal1.jpg"
+            ],
+            "benefits": [
+              "Easy cooking",
+              "Fresh ingredients",
+              "Flexible menu"
+            ]
+          },
+          {
+            "id": "2",
+            "name": "HelloFresh",
+            "rank": 2,
+            "rating": 9.7,
+            "feature": "Meal Kits",
+            "tag": "Popular",
+            "visits": "4,000",
+            "logo": "/images/brands/hellofresh.png",
+            "offer": "Get 16 Free Meals",
+            "features": {
+              "meals": "Pre-portioned meal kits",
+              "recipes": "Chef curated recipes",
+              "delivery": "Weekly delivery",
+              "trial": "Flexible subscription",
+              "support": "24/7 support",
+              "plans": "Family & vegetarian plans",
+              "app": "Mobile ordering",
+              "official": "Global meal delivery brand"
+            },
+            "images": [
+              "/images/products/meal2.jpg"
+            ],
+            "benefits": [
+              "Large menu variety",
+              "Fresh ingredients",
+              "Flexible plans"
+            ]
+          },
+          {
+            "id": "3",
+            "name": "Blue Apron",
+            "rank": 3,
+            "rating": 9.6,
+            "feature": "Chef Recipes",
+            "tag": "Great Choice",
+            "visits": "3,800",
+            "logo": "/images/brands/blueapron.png",
+            "offer": "$100 Off First 5 Weeks",
+            "features": {
+              "meals": "Meal kit delivery",
+              "recipes": "Chef crafted meals",
+              "delivery": "Weekly shipping",
+              "trial": "Flexible subscription",
+              "support": "Customer support",
+              "plans": "Wellness & vegetarian",
+              "app": "Mobile ordering",
+              "official": "Trusted meal kit brand"
+            },
+            "images": [
+              "/images/products/meal3.jpg"
+            ],
+            "benefits": [
+              "Healthy recipes",
+              "Fresh ingredients",
+              "Flexible menu"
+            ]
+          },
+          {
+            "id": "4",
+            "name": "Factor",
+            "rank": 4,
+            "rating": 9.5,
+            "feature": "Ready Meals",
+            "tag": "Healthy Pick",
+            "visits": "3,500",
+            "logo": "/images/brands/factor.png",
+            "offer": "$120 Off First Orders",
+            "features": {
+              "meals": "Ready-to-eat meals",
+              "recipes": "Chef prepared meals",
+              "delivery": "Weekly delivery",
+              "trial": "Flexible subscription",
+              "support": "Nutritionist support",
+              "plans": "Keto & protein meals",
+              "app": "Mobile ordering",
+              "official": "Healthy meal service"
+            },
+            "images": [
+              "/images/products/meal4.jpg"
+            ],
+            "benefits": [
+              "Healthy meals",
+              "No cooking required",
+              "Diet specific plans"
+            ]
+          },
+          {
+            "id": "5",
+            "name": "EveryPlate",
+            "rank": 5,
+            "rating": 9.4,
+            "feature": "Budget Meals",
+            "tag": "Best Budget",
+            "visits": "3,200",
+            "logo": "/images/brands/everyplate.png",
+            "offer": "$1.49 Per Meal",
+            "features": {
+              "meals": "Budget friendly meal kits",
+              "recipes": "Simple recipes",
+              "delivery": "Weekly delivery",
+              "trial": "Flexible subscription",
+              "support": "Customer support",
+              "plans": "Family meal plans",
+              "app": "Mobile ordering",
+              "official": "Affordable meal kit brand"
+            },
+            "images": [
+              "/images/products/meal5.jpg"
+            ],
+            "benefits": [
+              "Low price meals",
+              "Easy cooking",
+              "Family friendly menu"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "8",
+        "category": "Pet Insurance",
+        "title": "Best Pet Insurance 2026",
+        "desc": "Pet insurance protects your pets from expensive veterinary bills.",
+        "updateDate": "Last Updated Mar 2026",
+        "img": "/images/categories/petinsurance-hero.jpg",
+        "brands": [
+          {
+            "id": "1",
+            "name": "Healthy Paws",
+            "rank": 1,
+            "rating": 9.9,
+            "feature": "Comprehensive Coverage",
+            "tag": "Top Pick",
+            "visits": "4,100",
+            "logo": "/images/brands/healthypaws.png",
+            "offer": "Get Free Quote",
+            "features": {
+              "coverage": "Vet bills coverage",
+              "claims": "Fast claims",
+              "network": "Any vet accepted",
+              "plans": "Flexible plans",
+              "trial": "30 day guarantee",
+              "support": "24/7 help",
+              "delivery": "Digital policy",
+              "official": "Top pet insurer"
+            },
+            "images": [
+              "/images/products/pet1.jpg"
+            ],
+            "benefits": [
+              "Fast reimbursement",
+              "Flexible coverage",
+              "Any vet accepted"
+            ]
+          },
+          {
+            "id": "2",
+            "name": "Trupanion",
+            "rank": 2,
+            "rating": 9.8,
+            "feature": "Direct Vet Payments",
+            "tag": "Excellent",
+            "visits": "3,900",
+            "logo": "/images/brands/trupanion.png",
+            "offer": "Get Instant Quote",
+            "features": {
+              "coverage": "Accident and illness coverage",
+              "claims": "Direct vet payment system",
+              "network": "Large vet network",
+              "plans": "Flexible deductible",
+              "trial": "30 day money back",
+              "support": "24/7 customer support",
+              "delivery": "Digital policy",
+              "official": "Trusted pet insurance brand"
+            },
+            "images": [
+              "/images/products/pet2.jpg"
+            ],
+            "benefits": [
+              "Direct vet payments",
+              "Flexible deductible",
+              "Trusted coverage"
+            ]
+          },
+          {
+            "id": "3",
+            "name": "Embrace",
+            "rank": 3,
+            "rating": 9.7,
+            "feature": "Accident & Illness",
+            "tag": "Great Choice",
+            "visits": "3,700",
+            "logo": "/images/brands/embrace.png",
+            "offer": "Save 10% Online",
+            "features": {
+              "coverage": "Accident and illness plans",
+              "claims": "Fast claim processing",
+              "network": "Any licensed vet",
+              "plans": "Flexible reimbursement",
+              "trial": "30 day guarantee",
+              "support": "Customer support",
+              "delivery": "Online policy",
+              "official": "Popular pet insurer"
+            },
+            "images": [
+              "/images/products/pet3.jpg"
+            ],
+            "benefits": [
+              "Flexible reimbursement",
+              "Nationwide vets",
+              "Fast claims"
+            ]
+          },
+          {
+            "id": "4",
+            "name": "Spot Pet Insurance",
+            "rank": 4,
+            "rating": 9.6,
+            "feature": "Custom Plans",
+            "tag": "Popular",
+            "visits": "3,500",
+            "logo": "/images/brands/spot.png",
+            "offer": "Up To 10% Multi-Pet Discount",
+            "features": {
+              "coverage": "Accident and illness coverage",
+              "claims": "Quick claims process",
+              "network": "All licensed vets",
+              "plans": "Customizable plans",
+              "trial": "30 day guarantee",
+              "support": "Customer service",
+              "delivery": "Online access",
+              "official": "Trusted pet insurance provider"
+            },
+            "images": [
+              "/images/products/pet4.jpg"
+            ],
+            "benefits": [
+              "Custom coverage",
+              "Multi pet discount",
+              "Flexible plans"
+            ]
+          },
+          {
+            "id": "5",
+            "name": "Pets Best",
+            "rank": 5,
+            "rating": 9.5,
+            "feature": "Affordable Plans",
+            "tag": "Budget Pick",
+            "visits": "3,200",
+            "logo": "/images/brands/petsbest.png",
+            "offer": "Get Free Quote",
+            "features": {
+              "coverage": "Accident and illness plans",
+              "claims": "Fast claim reimbursements",
+              "network": "Any vet accepted",
+              "plans": "Affordable options",
+              "trial": "30 day money back",
+              "support": "24/7 customer support",
+              "delivery": "Digital policy",
+              "official": "Affordable pet insurer"
+            },
+            "images": [
+              "/images/products/pet5.jpg"
+            ],
+            "benefits": [
+              "Affordable pricing",
+              "Flexible coverage",
+              "Fast reimbursements"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "9",
+        "category": "Pizza Oven",
+        "title": "Best Pizza Ovens 2026",
+        "desc": "Outdoor pizza ovens deliver restaurant-quality pizza at home.",
+        "updateDate": "Last Updated Mar 2026",
+        "img": "/images/categories/pizzaoven-hero.jpg",
+        "brands": [
+          {
+            "id": "1",
+            "name": "Ooni Koda 16",
+            "rank": 1,
+            "rating": 9.8,
+            "feature": "Gas Powered",
+            "tag": "Top Pick",
+            "visits": "3,500",
+            "logo": "/images/brands/ooni.png",
+            "offer": "Free Cover With Purchase",
+            "features": {
+              "fuel": "Gas powered oven",
+              "temperature": "950°F cooking",
+              "design": "Portable oven",
+              "size": "16 inch pizza capacity",
+              "trial": "Warranty included",
+              "support": "Customer support",
+              "shipping": "Free shipping",
+              "official": "Top rated pizza oven"
+            },
+            "images": [
+              "/images/products/pizza1.jpg"
+            ],
+            "benefits": [
+              "Fast cooking",
+              "Portable design",
+              "High heat performance"
+            ]
+          },
+          {
+            "id": "2",
+            "name": "Roccbox Pizza Oven",
+            "rank": 2,
+            "rating": 9.7,
+            "feature": "Portable Oven",
+            "tag": "Popular",
+            "visits": "3,200",
+            "logo": "/images/brands/roccbox.png",
+            "offer": "Free Pizza Peel",
+            "features": {
+              "fuel": "Gas or wood fuel",
+              "temperature": "950°F cooking",
+              "design": "Portable outdoor oven",
+              "size": "12 inch pizza capacity",
+              "trial": "Warranty included",
+              "support": "Customer support",
+              "shipping": "Free shipping",
+              "official": "Professional portable oven"
+            },
+            "images": [
+              "/images/products/pizza2.jpg"
+            ],
+            "benefits": [
+              "Portable design",
+              "Dual fuel option",
+              "High heat cooking"
+            ]
+          },
+          {
+            "id": "3",
+            "name": "Bertello Outdoor Oven",
+            "rank": 3,
+            "rating": 9.6,
+            "feature": "Wood & Gas",
+            "tag": "Great Choice",
+            "visits": "3,000",
+            "logo": "/images/brands/bertello.png",
+            "offer": "Save $50 Today",
+            "features": {
+              "fuel": "Wood, charcoal or gas",
+              "temperature": "930°F cooking",
+              "design": "Compact outdoor oven",
+              "size": "12 inch pizza capacity",
+              "trial": "Warranty included",
+              "support": "Customer service",
+              "shipping": "Free shipping",
+              "official": "Versatile pizza oven"
+            },
+            "images": [
+              "/images/products/pizza3.jpg"
+            ],
+            "benefits": [
+              "Multiple fuel options",
+              "High heat cooking",
+              "Compact design"
+            ]
+          },
+          {
+            "id": "4",
+            "name": "Solo Stove Pi",
+            "rank": 4,
+            "rating": 9.5,
+            "feature": "Wood Fired",
+            "tag": "Premium Pick",
+            "visits": "2,800",
+            "logo": "/images/brands/solostove.png",
+            "offer": "Free Pizza Stone",
+            "features": {
+              "fuel": "Wood fired oven",
+              "temperature": "900°F cooking",
+              "design": "Outdoor pizza oven",
+              "size": "13 inch pizza capacity",
+              "trial": "Warranty included",
+              "support": "Customer service",
+              "shipping": "Free shipping",
+              "official": "Premium pizza oven"
+            },
+            "images": [
+              "/images/products/pizza4.jpg"
+            ],
+            "benefits": [
+              "Authentic wood flavor",
+              "Durable build",
+              "High temperature cooking"
+            ]
+          },
+          {
+            "id": "5",
+            "name": "Camp Chef Italia",
+            "rank": 5,
+            "rating": 9.4,
+            "feature": "Propane Oven",
+            "tag": "Budget Pick",
+            "visits": "2,500",
+            "logo": "/images/brands/campchef.png",
+            "offer": "Free Pizza Cutter",
+            "features": {
+              "fuel": "Propane powered",
+              "temperature": "700°F cooking",
+              "design": "Countertop oven",
+              "size": "12 inch pizza capacity",
+              "trial": "Warranty included",
+              "support": "Customer support",
+              "shipping": "Free shipping",
+              "official": "Affordable pizza oven"
+            },
+            "images": [
+              "/images/products/pizza5.jpg"
+            ],
+            "benefits": [
+              "Affordable price",
+              "Easy to use",
+              "Great for backyard cooking"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "10",
+        "category": "Gaming Chairs",
+        "title": "Best Gaming Chairs 2026",
+        "desc": "Gaming chairs provide comfort and ergonomic support during long gaming sessions.",
+        "updateDate": "Last Updated Mar 2026",
+        "img": "https://images.unsplash.com/photo-1598550476439-6847785fcea6",
+        "brands": [
+          {
+            "id": "1",
+            "name": "Secretlab TITAN Evo",
+            "rank": 1,
+            "rating": 9.9,
+            "feature": "Ergonomic",
+            "tag": "Top Pick",
+            "visits": "4,500",
+            "logo": "https://images.unsplash.com/photo-1598550476439-6847785fcea6",
+            "offer": "Save $100 Today",
+            "features": {
+              "design": "Ergonomic design",
+              "material": "Premium leatherette",
+              "support": "Lumbar support",
+              "adjustment": "4D armrests",
+              "trial": "Warranty included",
+              "support2": "Customer support",
+              "shipping": "Free shipping",
+              "official": "Pro gamer choice"
+            },
+            "images": [
+              "https://images.unsplash.com/photo-1598550476439-6847785fcea6",
+              "https://images.unsplash.com/photo-1606813902914-2c2c1f7f7d2a"
+            ],
+            "benefits": [
+              "Ergonomic support",
+              "Premium build",
+              "Adjustable features"
+            ]
+          },
+          {
+            "id": "2",
+            "name": "Herman Miller x Logitech Embody",
+            "rank": 2,
+            "rating": 9.8,
+            "feature": "Premium Comfort",
+            "tag": "Premium Pick",
+            "visits": "4,200",
+            "logo": "https://images.unsplash.com/photo-1616627981490-31b0d70a3e8f",
+            "offer": "Free Shipping",
+            "features": {
+              "design": "Advanced ergonomic design",
+              "material": "High quality mesh",
+              "support": "Dynamic spinal support",
+              "adjustment": "Fully adjustable arms",
+              "trial": "Warranty included",
+              "support2": "Customer support",
+              "shipping": "Free shipping",
+              "official": "Professional esports chair"
+            },
+            "images": [
+              "https://images.unsplash.com/photo-1616627981490-31b0d70a3e8f"
+            ],
+            "benefits": [
+              "Exceptional comfort",
+              "Premium materials",
+              "Professional design"
+            ]
+          },
+          {
+            "id": "3",
+            "name": "Razer Iskur",
+            "rank": 3,
+            "rating": 9.7,
+            "feature": "Lumbar Support",
+            "tag": "Popular",
+            "visits": "3,900",
+            "logo": "https://images.unsplash.com/photo-1587202372775-989f1f0c3d5c",
+            "offer": "Save $80 Today",
+            "features": {
+              "design": "Ergonomic gaming chair",
+              "material": "Multi-layer synthetic leather",
+              "support": "Adjustable lumbar support",
+              "adjustment": "4D armrests",
+              "trial": "Warranty included",
+              "support2": "Customer support",
+              "shipping": "Free shipping",
+              "official": "Trusted gaming brand"
+            },
+            "images": [
+              "https://images.unsplash.com/photo-1587202372775-989f1f0c3d5c"
+            ],
+            "benefits": [
+              "Great lumbar support",
+              "Durable design",
+              "Comfortable seating"
+            ]
+          },
+          {
+            "id": "4",
+            "name": "DXRacer Master Series",
+            "rank": 4,
+            "rating": 9.6,
+            "feature": "Adjustable Support",
+            "tag": "Great Choice",
+            "visits": "3,600",
+            "logo": "https://images.unsplash.com/photo-1593642632823-8f785ba67e45",
+            "offer": "Free Headrest Pillow",
+            "features": {
+              "design": "Professional gaming chair",
+              "material": "Microfiber leather",
+              "support": "Adjustable lumbar cushion",
+              "adjustment": "4D armrests",
+              "trial": "Warranty included",
+              "support2": "Customer support",
+              "shipping": "Free shipping",
+              "official": "Esports gaming chair"
+            },
+            "images": [
+              "https://images.unsplash.com/photo-1593642632823-8f785ba67e45"
+            ],
+            "benefits": [
+              "Adjustable comfort",
+              "Durable build",
+              "Professional look"
+            ]
+          },
+          {
+            "id": "5",
+            "name": "RESPAWN 110 Racing Style",
+            "rank": 5,
+            "rating": 9.4,
+            "feature": "Budget Gaming Chair",
+            "tag": "Best Budget",
+            "visits": "3,200",
+            "logo": "https://images.unsplash.com/photo-1587202372775-989f1f0c3d5c",
+            "offer": "Save $50 Today",
+            "features": {
+              "design": "Racing style gaming chair",
+              "material": "Bonded leather",
+              "support": "Integrated headrest",
+              "adjustment": "Adjustable recline",
+              "trial": "Warranty included",
+              "support2": "Customer support",
+              "shipping": "Free shipping",
+              "official": "Affordable gaming chair"
+            },
+            "images": [
+              "https://images.unsplash.com/photo-1587202372775-989f1f0c3d5c"
+            ],
+            "benefits": [
+              "Affordable price",
+              "Comfortable design",
+              "Good build quality"
+            ]
+          }
+        ]
+      },
+      {
+        "category": "Weighted Blankets",
+        "brands": [
+          {
+            "name": "Luxome"
+          },
+          {
+            "name": "Baloo"
+          },
+          {
+            "name": "Let’s Cuddle"
+          },
+          {
+            "name": "Gravity Blankets"
+          },
+          {
+            "name": "Nuzzie"
+          }
+        ]
+      },
+      {
+        "category": "Mattress Toppers",
+        "brands": [
+          {
+            "name": "Saatva"
+          },
+          {
+            "name": "Helix"
+          },
+          {
+            "name": "Brooklyn Bedding"
+          },
+          {
+            "name": "Bear"
+          },
+          {
+            "name": "Birch"
+          }
+        ]
+      },
+      {
+        "category": "Sheets",
+        "brands": [
+          {
+            "name": "Luxome"
+          },
+          {
+            "name": "Nolah"
+          },
+          {
+            "name": "Saatva"
+          },
+          {
+            "name": "Nuzzie"
+          },
+          {
+            "name": "Yaasa"
+          }
+        ]
+      },
+      {
+        "category": "Pillows",
+        "brands": [
+          {
+            "name": "Luxome"
+          },
+          {
+            "name": "Saatva"
+          },
+          {
+            "name": "Nolah"
+          },
+          {
+            "name": "Nectar"
+          },
+          {
+            "name": "Yaasa"
+          }
+        ]
+      },
+      {
+        "category": "Bidets",
+        "brands": [
+          {
+            "name": "Alpha JX Bidet Toilet Seat"
+          },
+          {
+            "name": "Brondell Swash 1400 Luxury"
+          },
+          {
+            "name": "Alpha iX Bidet Toilet Seat"
+          },
+          {
+            "name": "Alpha UX Pearl Bidet"
+          },
+          {
+            "name": "Bio Bidet 2000"
+          }
+        ]
+      },
+      {
+        "category": "VPN",
+        "brands": [
+          {
+            "name": "Express VPN"
+          },
+          {
+            "name": "Private Internet Access"
+          },
+          {
+            "name": "CyberGhost"
+          },
+          {
+            "name": "Norton"
+          },
+          {
+            "name": "Ultra VPN"
+          }
+        ]
+      },
+      {
+        "category": "Hair Loss",
+        "brands": [
+          {
+            "name": "Happy Head"
+          },
+          {
+            "name": "Hims"
+          },
+          {
+            "name": "Nutrafol"
+          },
+          {
+            "name": "Roots by GA"
+          },
+          {
+            "name": "iRestore"
+          }
+        ]
+      },
+      {
+        "category": "Mobile Phone Plans",
+        "brands": [
+          {
+            "name": "Visible"
+          },
+          {
+            "name": "Mint Mobile"
+          },
+          {
+            "name": "Cricket"
+          },
+          {
+            "name": "Boost Mobile"
+          },
+          {
+            "name": "Total Wireless"
+          }
+        ]
+      },
+      {
+        "category": "Internet Providers",
+        "brands": [
+          {
+            "name": "Xfinity"
+          },
+          {
+            "name": "Spectrum"
+          },
+          {
+            "name": "EarthLink"
+          },
+          {
+            "name": "AT&T"
+          },
+          {
+            "name": "Frontier"
+          }
+        ]
+      },
+      {
+        "category": "Password Managers",
+        "brands": [
+          {
+            "name": "1Password"
+          },
+          {
+            "name": "Keeper"
+          },
+          {
+            "name": "RoboForm"
+          },
+          {
+            "name": "NordPass"
+          },
+          {
+            "name": "DashLane"
+          }
+        ]
+      },
+      {
+        "category": "Password Managers",
+        "brands": [
+          {
+            "name": "1Password"
+          },
+          {
+            "name": "Keeper"
+          },
+          {
+            "name": "RoboForm"
+          },
+          {
+            "name": "NordPass"
+          },
+          {
+            "name": "DashLane"
+          }
+        ]
+      }
+    ]
+  }
+}
