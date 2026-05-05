@@ -22,12 +22,12 @@ export const CookieBanner = () => {
     <>
       <div
   className="
-    fixed bottom-4 left-4 z-50
-    w-[360px]
-    rounded-xl
+    fixed bottom-20 left-4 right-4 z-50 sm:bottom-4 sm:left-20
+    w-auto sm:right-auto sm:w-[360px]
+    rounded-[var(--anslation-ds-radius)]
     bg-(--card)
     border border-border
-    shadow-2xl
+    shadow-[var(--anslation-ds-shadow-lg)]
     backdrop-blur
     text-(--foreground)
   "

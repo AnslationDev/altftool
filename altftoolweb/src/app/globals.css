@@ -168,6 +168,7 @@ body {
 
 html {
   background: var(--background);
+  overflow-x: clip;
   text-size-adjust: 100%;
 }
 
@@ -178,6 +179,7 @@ body {
   background: var(--background);
   color: var(--foreground);
   -webkit-font-smoothing: antialiased;
+  overflow-x: clip;
   text-rendering: optimizeLegibility;
 }
 

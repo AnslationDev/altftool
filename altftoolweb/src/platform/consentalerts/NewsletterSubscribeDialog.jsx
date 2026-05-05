@@ -11,13 +11,39 @@ import { Button } from "@/shared/ui/Button";
 import { Mail } from "lucide-react";
 
 const STORAGE_KEY = "NEWSLETTER_SUBSCRIBE_V1";
+const DISMISS_DAYS = 7;
+const TRIGGER_DELAY_MS = 45000;
+const SCROLL_DEPTH = 0.55;
+
+function shouldSuppressPrompt() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return false;
+
+    if (raw === "dismissed" || raw === "subscribed") return true;
+
+    const saved = JSON.parse(raw);
+    if (saved?.status === "subscribed") return true;
+    if (!saved?.at) return false;
+
+    return Date.now() - Number(saved.at) < DISMISS_DAYS * 24 * 60 * 60 * 1000;
+  } catch {
+    return false;
+  }
+}
+
+function remember(status) {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify({ status, at: Date.now() }));
+}
 
 export const NewsletterSubscribeDialog = () => {
   const [open, setOpen] = useState(false);
+  const [email, setEmail] = useState("");
+  const [message, setMessage] = useState("");
   const triggered = useRef(false);
 
   useEffect(() => {
-    if (localStorage.getItem(STORAGE_KEY)) return;
+    if (shouldSuppressPrompt()) return;
 
     const trigger = () => {
       if (triggered.current) return;
@@ -26,35 +52,45 @@ export const NewsletterSubscribeDialog = () => {
       cleanup();
     };
 
-    const timeout = setTimeout(trigger, 4000);
-    const events = ["scroll", "click", "keydown"];
-    events.forEach(e =>
-      window.addEventListener(e, trigger, { once: true })
-    );
+    const onScroll = () => {
+      const scrollable =
+        document.documentElement.scrollHeight - window.innerHeight;
+      if (scrollable <= 0) return;
+
+      if (window.scrollY / scrollable >= SCROLL_DEPTH) {
+        trigger();
+      }
+    };
+
+    const timeout = setTimeout(trigger, TRIGGER_DELAY_MS);
+    window.addEventListener("scroll", onScroll, { passive: true });
 
     const cleanup = () => {
       clearTimeout(timeout);
-      events.forEach(e =>
-        window.removeEventListener(e, trigger)
-      );
+      window.removeEventListener("scroll", onScroll);
     };
 
     return cleanup;
   }, []);
 
   const dismiss = () => {
-    localStorage.setItem(STORAGE_KEY, "dismissed");
+    remember("dismissed");
     setOpen(false);
   };
 
   const subscribe = () => {
-    localStorage.setItem(STORAGE_KEY, "subscribed");
+    const value = email.trim();
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
+      setMessage("Enter a valid email address.");
+      return;
+    }
+
+    remember("subscribed");
     setOpen(false);
-    // call API here
   };
 
   return (
-    <Dialog open={open} onOpenChange={dismiss}>
+    <Dialog open={open} onClose={dismiss}>
       <DialogContent className="sm:max-w-md text-(--foreground)">
         <DialogHeader>
           <DialogTitle className="flex flex-row items-center gap-2">
@@ -70,8 +106,18 @@ export const NewsletterSubscribeDialog = () => {
         <input
           type="email"
           placeholder="you@example.com"
-          className="w-full mt-3 px-3 py-2 rounded-md border border-border bg-background text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+          value={email}
+          onChange={(event) => {
+            setEmail(event.target.value);
+            if (message) setMessage("");
+          }}
+          className="mt-3 h-10 w-full rounded-[var(--anslation-ds-radius)] border border-(--border) bg-(--background) px-3 text-sm focus:border-(--primary) focus:outline-none focus:ring-2 focus:ring-(--primary)"
         />
+        {message ? (
+          <p className="mt-2 text-xs font-medium text-[var(--anslation-ds-danger)]">
+            {message}
+          </p>
+        ) : null}
 
         <div className="flex justify-end gap-2 mt-4">
           <Button variant="outline" onClick={dismiss}>Not now</Button>

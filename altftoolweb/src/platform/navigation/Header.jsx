@@ -11,6 +11,7 @@ const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const router = useRouter();
   const [searchQuery, setSearchQuery] = useState("");
+  const [searchError, setSearchError] = useState("");
   const pathname = usePathname();
   const { theme, toggleTheme } = useTheme();
 
@@ -26,6 +27,7 @@ const Header = () => {
 
   const handleChange = (value) => {
     setSearchQuery(value);
+    if (searchError) setSearchError("");
 
     const trimmed = value.trim();
 
@@ -42,12 +44,14 @@ const Header = () => {
     const trimmed = searchQuery.trim();
 
     if (trimmed.length < 4) {
-      alert("Minimum 4 characters required");
+      setSearchError("Type at least 4 characters.");
       return;
     }
 
     router.push(`/search?q=${encodeURIComponent(trimmed)}`);
     setSearchQuery("");
+    setSearchError("");
+    setMobileMenuOpen(false);
   };
 
   const NAV = {
@@ -236,6 +240,32 @@ const Header = () => {
           </div>
 
           <nav className="mt-8 flex flex-col gap-4">
+            <form
+              className="grid gap-2"
+              onSubmit={(event) => {
+                event.preventDefault();
+                handleSearch();
+              }}
+            >
+              <div className="flex items-center gap-2">
+                <Input
+                  type="text"
+                  placeholder="Search tools..."
+                  value={searchQuery}
+                  onChange={(event) => handleChange(event.target.value)}
+                  className="min-w-0"
+                />
+                <IconButton type="submit" aria-label="Search">
+                  <Search className="h-4 w-4" />
+                </IconButton>
+              </div>
+              {searchError ? (
+                <p className="text-xs font-medium text-[var(--anslation-ds-danger)]">
+                  {searchError}
+                </p>
+              ) : null}
+            </form>
+
             {navItems.map((item) => (
               <div key={item.label}>
                 {item.hasDropdown ? (

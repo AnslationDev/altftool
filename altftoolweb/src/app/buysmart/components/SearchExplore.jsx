@@ -4,6 +4,14 @@ import { Search } from "lucide-react";
 
 import { firebaseBuySmartCategoriesSource } from "../service.js/firebaseBuySmartCategories";
 import { SearchExploreSkeleton } from "@/components/ui/skeleton";
+import fallbackBrands from "@/app/buysmart/data/categories.json";
+
+const fallbackCategories = fallbackBrands.map((brand) => ({
+  category: "Popular",
+  link: brand.url,
+  status: "active",
+  title: brand.name,
+}));
 
 export default function SearchExplore({
   scrollToFilter,
@@ -18,11 +26,20 @@ export default function SearchExplore({
   const [error, setError] = useState("");
 
   useEffect(() => {
+    const fallback = setTimeout(() => {
+      setCategoriesData(fallbackCategories);
+    }, 1800);
+
     const unsub = firebaseBuySmartCategoriesSource.subscribe((data) => {
-      setCategoriesData(data || []);
+      clearTimeout(fallback);
+      const activeData = (data || []).filter((item) => item?.status === "active");
+      setCategoriesData(activeData.length ? activeData : fallbackCategories);
     });
 
-    return () => unsub && unsub();
+    return () => {
+      clearTimeout(fallback);
+      unsub && unsub();
+    };
   }, []);
 
   const handleSearch = () => {
@@ -44,18 +61,16 @@ export default function SearchExplore({
       return category.startsWith(searchBrand) || title.startsWith(searchBrand);
     });
 
-    if (matched) {
+    if (matched.length) {
       setError("");
 
-      onSearchResult(matched.category, matched.title);
-
-      setSearchInput(" ")
+      onSearchResult(matched);
 
       setTimeout(() => {
         scrollToFilter();
       }, 200);
     } else {
-      
+      setError("No matching brands found. Try another keyword.");
 
       onSearchResult(null, null);
     }
@@ -84,8 +99,8 @@ export default function SearchExplore({
         </div>
 
       
-        <div className="flex items-center w-full max-w-full sm:max-w-xl lg:max-w-2xl rounded-full px-4 sm:px-5 md:px-7 py-3 sm:py-4 gap-3 bg-white border border-gray-200 shadow-[0_10px_30px_rgba(0,0,0,0.08)] focus-within:ring-1 focus-within:ring-(--primary) transition duration-300">
-          <Search className="text-[#979FB4] shrink-0" size={20} />
+        <div className="flex items-center w-full max-w-full sm:max-w-xl lg:max-w-2xl rounded-[var(--anslation-ds-radius)] border border-(--border) bg-(--card) px-3 py-2 shadow-[var(--anslation-ds-shadow-sm)] transition duration-300 focus-within:border-(--primary) focus-within:ring-2 focus-within:ring-(--primary)">
+          <Search className="text-(--muted-foreground) shrink-0" size={20} />
 
           <input
             type="text"
@@ -95,12 +110,24 @@ export default function SearchExplore({
               if (error) setError("");
             }}
             onKeyDown={(e) => {
-              if (e.key === "Enter") handleInputString(e);
+              if (e.key === "Enter") handleSearch();
             }}
             placeholder="Search brands by name, category, or keyword..."
-            className="flex-1 min-w-0 text-black outline-none placeholder-[#979FB4] text-sm sm:text-base bg-transparent "
+            className="min-w-0 flex-1 bg-transparent px-3 text-sm text-(--foreground) outline-none placeholder:text-(--input-placeholder) sm:text-base"
           />
+          <button
+            type="button"
+            onClick={handleSearch}
+            className="h-9 rounded-[var(--anslation-ds-radius)] bg-(--primary) px-4 text-sm font-semibold text-(--primary-foreground) transition hover:bg-(--primary-hover)"
+          >
+            Search
+          </button>
         </div>
+        {error ? (
+          <p className="text-sm font-medium text-[var(--anslation-ds-danger)]">
+            {error}
+          </p>
+        ) : null}
       </div>
 
       {/* Right Image */}

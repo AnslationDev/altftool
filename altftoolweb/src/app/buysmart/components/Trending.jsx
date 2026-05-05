@@ -3,7 +3,15 @@
 import { useEffect, useMemo, useState } from "react";
 import { firebaseBuySmartStoreSource } from "@/app/buysmart/service.js/firebaseBuySmartStore";
 import Link from "next/link";
-import { SkeletonBlock, TrendingSkeleton } from "@/components/ui/skeleton";
+import { TrendingSkeleton } from "@/components/ui/skeleton";
+import fallbackStores from "@/app/buysmart/data/stores.json";
+
+const fallbackStoreItems = fallbackStores.map((store) => ({
+  ...store,
+  image: store.logo,
+  link: "#",
+  status: "active",
+}));
 
 export default function StoreGrid({ filter }) {
   const [stores, setStores] = useState(null);
@@ -22,11 +30,20 @@ export default function StoreGrid({ filter }) {
   }, []);
 
   useEffect(() => {
+    const fallback = setTimeout(() => {
+      setStores(fallbackStoreItems);
+    }, 1800);
+
     const unsub = firebaseBuySmartStoreSource.subscribe((data) => {
-      setStores(data || []);
+      clearTimeout(fallback);
+      const activeData = (data || []).filter((item) => item?.status === "active");
+      setStores(activeData.length ? activeData : fallbackStoreItems);
     });
 
-    return () => unsub && unsub();
+    return () => {
+      clearTimeout(fallback);
+      unsub && unsub();
+    };
   }, []);
 
   // console.log("storesd", stores)
@@ -151,7 +168,19 @@ function StoreImageCard({ store }) {
 
   return (
     <>
-      {!loaded ? <SkeletonBlock className="absolute inset-0 rounded-xl" /> : null}
+      <div className="absolute inset-0 flex flex-col items-start justify-end gap-2 bg-(--muted) p-5">
+        <span className="rounded-full border border-(--border) bg-(--card) px-2.5 py-1 text-xs font-semibold text-(--muted-foreground)">
+          Trending
+        </span>
+        <p className="text-xl font-bold text-(--foreground)">
+          {store.name || "Featured store"}
+        </p>
+        {store.highlight ? (
+          <p className="text-sm font-medium text-(--muted-foreground)">
+            {store.highlight}
+          </p>
+        ) : null}
+      </div>
       {!failed && src ? (
         <img
           key={src}

@@ -81,11 +81,19 @@ export default function Page() {
   }, []);
 
   useEffect(() => {
+    const fallback = setTimeout(() => {
+      setCategoryLoading(false);
+    }, 1800);
+
     const unsub = firebaseBuySmartCategoriesSource.subscribe(() => {
+      clearTimeout(fallback);
       setCategoryLoading(false);
     });
 
-    return () => unsub && unsub();
+    return () => {
+      clearTimeout(fallback);
+      unsub && unsub();
+    };
   }, []);
 
   /* ---------------- ALPHABET SCROLL ---------------- */

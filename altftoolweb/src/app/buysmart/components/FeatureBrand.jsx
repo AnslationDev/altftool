@@ -4,6 +4,19 @@ import { useEffect, useRef, useState, useMemo } from "react";
 import { firebaseBuySmartFeatureBrandSource } from "@/app/buysmart/service.js/firebaseBuySmartFeature";
 import Link from "next/link";
 import { FeatureBrandSkeleton, SkeletonBlock } from "@/components/ui/skeleton";
+import fallbackDeals from "@/app/buysmart/data/trending.json";
+
+const fallbackFeatureDeals = fallbackDeals
+  .filter((deal) => deal.image?.trim())
+  .map((deal, index) => ({
+    category: "Top Deals",
+    id: `fallback-${index}`,
+    image: deal.image.trim(),
+    imageType: index === 0 ? "square" : "landscape",
+    link: "#",
+    status: "active",
+    title: deal.title,
+  }));
 
 export default function TrendingDeals() {
   const [trending, setTrending] = useState(null);
@@ -13,6 +26,10 @@ export default function TrendingDeals() {
   const rafRef = useRef(null);
 
   useEffect(() => {
+    const fallback = setTimeout(() => {
+      setTrending(fallbackFeatureDeals);
+    }, 1800);
+
     const unsub = firebaseBuySmartFeatureBrandSource.subscribe((data) => {
       const normalized = (Array.isArray(data) ? data : [])
         .filter((item) => item.status === "active")
@@ -27,9 +44,14 @@ export default function TrendingDeals() {
             status: item.status || "",
           };
         });
-      setTrending(normalized);
+      clearTimeout(fallback);
+      setTrending(normalized.length ? normalized : fallbackFeatureDeals);
     });
-    return () => unsub && unsub();
+
+    return () => {
+      clearTimeout(fallback);
+      unsub && unsub();
+    };
   }, []);
 
   const categoryData = useMemo(
@@ -180,9 +202,14 @@ function DealCard({ deal, aspectClass = "aspect-video" }) {
       <div className={`relative w-full ${aspectClass} rounded-lg shadow-lg overflow-hidden bg-gray-200`}>
 
 
-        {!imgLoaded && (
-          <SkeletonBlock className="absolute inset-0 rounded-lg" />
-        )}
+        <div className="absolute inset-0 flex flex-col justify-end gap-2 bg-(--muted) p-5">
+          <span className="w-fit rounded-full border border-(--border) bg-(--card) px-2.5 py-1 text-xs font-semibold text-(--muted-foreground)">
+            Featured
+          </span>
+          <p className="text-lg font-bold text-(--foreground)">
+            {deal.title || "Featured deal"}
+          </p>
+        </div>
 
      
         {hasImage && (

@@ -11,9 +11,13 @@ import { SkeletonBlock } from "@/components/ui/skeleton";
 function CategoryCard({ cat }) {
   const [imageLoaded, setImageLoaded] = useState(false);
   const [imageError, setImageError] = useState(false);
+  const imageSrc = cat.img || cat.image || cat.logo || "";
+  const title = cat.title || cat.name || "Brand";
+  const href = cat.link || cat.url || "#";
+  const showFallback = !imageSrc || imageError;
 
   return (
-    <Link href={cat.link} target="_blank">
+    <Link href={href} target="_blank">
       <div
         className="group w-full cursor-pointer"
         style={{ perspective: "1200px" }}
@@ -34,28 +38,38 @@ function CategoryCard({ cat }) {
           >
             <div className="relative flex flex-col w-full rounded-[20px] overflow-hidden">
               <div className="relative w-full h-[240px] sm:h-[260px] md:h-[280px] lg:h-[300px] xl:h-[320px] rounded-[16px] overflow-hidden flex items-center justify-center">
-                {!imageLoaded ? (
+                {imageSrc && !imageLoaded && !imageError ? (
                   <SkeletonBlock className="absolute inset-0 rounded-[16px]" />
                 ) : null}
-                {!imageError && cat.img ? (
+                {!imageError && imageSrc ? (
                   <Image
-                    key={cat.img}
-                    src={cat.img}
-                    alt={cat.title}
+                    key={imageSrc}
+                    src={imageSrc}
+                    alt={title}
                     width={300}
                     height={200}
-                    className={`w-full h-full object-fill transition-opacity duration-500 ${
+                    className={`w-full h-full object-cover transition-opacity duration-500 ${
                       imageLoaded ? "opacity-100" : "opacity-0"
                     }`}
                     onLoad={() => setImageLoaded(true)}
                     onError={() => setImageError(true)}
                   />
                 ) : null}
+                {showFallback ? (
+                  <div className="flex h-full w-full flex-col items-center justify-center gap-3 rounded-[16px] border border-(--border) bg-(--muted) px-4 text-center">
+                    <span className="grid h-14 w-14 place-items-center rounded-[var(--anslation-ds-radius)] bg-(--primary) text-xl font-bold text-(--primary-foreground)">
+                      {title.slice(0, 1).toUpperCase()}
+                    </span>
+                    <span className="text-sm font-semibold text-(--muted-foreground)">
+                      Verified brand
+                    </span>
+                  </div>
+                ) : null}
               </div>
 
               <div className="flex flex-col gap-2 flex-1 mt-2">
                 <h3 className="font-bold text-[18px] sm:text-[20px] md:text-[22px] leading-[1.5] text-[#4A5565] text-center line-clamp-2">
-                  {cat.title}
+                  {title}
                 </h3>
               </div>
             </div>
@@ -75,7 +89,7 @@ function CategoryCard({ cat }) {
             }}
           >
             <h3 className="font-bold text-[20px] sm:text-[22px] md:text-[24px] text-white leading-snug">
-              {cat.title}
+              {title}
             </h3>
           </div>
         </div>
