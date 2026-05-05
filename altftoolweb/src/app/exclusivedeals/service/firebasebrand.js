@@ -3,6 +3,7 @@
 import { collection, onSnapshot } from "firebase/firestore";
 
 import { db } from "@/lib/firebase";
+import { snapshotDocs, subscribeCached } from "@/lib/firebaseCache";
 
 const heroCollectionRef = collection(
   db,
@@ -47,43 +48,25 @@ const bestCouponCollectionRef = collection(
 );
 
 export const brandsfirebase = (callback) => {
-  const unsubscribe = onSnapshot(heroCollectionRef, (snapshot) => {
-    const data = snapshot.docs.map((doc) => ({
-      id: doc.id,
-
-      ...doc.data(),
-    }));
-
-    callback(data);
-  });
-
-  return unsubscribe;
+  return subscribeCached(
+    "deals:brands",
+    (emit, fail) => onSnapshot(heroCollectionRef, (snapshot) => emit(snapshotDocs(snapshot)), fail),
+    callback,
+  );
 };
 
 export const upcomingfirebase = (callback) => {
-  const unsubscribe = onSnapshot(upcomingCollectionRef, (snapshot) => {
-    const data = snapshot.docs.map((doc) => ({
-      id: doc.id,
-
-      ...doc.data(),
-    }));
-
-    callback(data);
-  });
-
-  return unsubscribe;
+  return subscribeCached(
+    "deals:upcoming",
+    (emit, fail) => onSnapshot(upcomingCollectionRef, (snapshot) => emit(snapshotDocs(snapshot)), fail),
+    callback,
+  );
 };
 
 export const bestCouponfirebase = (callback) => {
-  const unsubscribe = onSnapshot(bestCouponCollectionRef, (snapshot) => {
-    const data = snapshot.docs.map((doc) => ({
-      id: doc.id,
-
-      ...doc.data(),
-    }));
-
-    callback(data);
-  });
-
-  return unsubscribe;
+  return subscribeCached(
+    "deals:best-coupons",
+    (emit, fail) => onSnapshot(bestCouponCollectionRef, (snapshot) => emit(snapshotDocs(snapshot)), fail),
+    callback,
+  );
 };

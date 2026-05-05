@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { requireServerEnv } from "@altftool/core/env";
-import { routeError } from "@altftool/core/http";
+import { fetchJson, routeError } from "@altftool/core/http";
 import { SERVER_ENV } from "@altftool/core/services";
 
 const MODEL_NAME = "gemini-2.5-flash";
@@ -14,7 +14,7 @@ export async function POST(req) {
       return NextResponse.json({ error: "Missing prompt." }, { status: 400 });
     }
 
-    const res = await fetch(
+    const result = await fetchJson(
       `https://generativelanguage.googleapis.com/v1beta/models/${MODEL_NAME}:generateContent?key=${apiKey}`,
       {
         method: "POST",
@@ -22,14 +22,15 @@ export async function POST(req) {
         body: JSON.stringify({
           contents: [{ parts: [{ text: prompt }] }],
         }),
+        timeoutMs: 20000,
       }
     );
 
-    const data = await res.json();
-    if (!res.ok) {
+    const data = result.data;
+    if (!result.ok) {
       return NextResponse.json(
         { error: data?.error?.message || "Gemini request failed." },
-        { status: res.status }
+        { status: result.status }
       );
     }
 

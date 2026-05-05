@@ -3,6 +3,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { collection, onSnapshot, query, where } from "firebase/firestore";
 import { db } from "@/lib/firebase";
+import { subscribeCached } from "@/lib/firebaseCache";
 import mockAdsData from "./data";
 
 export const AdsContext = createContext([]);
@@ -28,13 +29,21 @@ export function AdsProvider({ children }) {
       where("status", "==", "active")
     );
 
-    const unsubscribe = onSnapshot(q, (snapshot) => {
-      setAds(
-        snapshot.docs.map((doc) =>
-          normalizeAd({ id: doc.id, ...doc.data() })
-        )
-      );
-    });
+    const unsubscribe = subscribeCached(
+      "ads:active",
+      (emit, fail) => onSnapshot(
+        q,
+        (snapshot) => {
+          emit(
+            snapshot.docs.map((doc) =>
+              normalizeAd({ id: doc.id, ...doc.data() })
+            )
+          );
+        },
+        fail,
+      ),
+      setAds,
+    );
 
     return () => unsubscribe();
   }, []);

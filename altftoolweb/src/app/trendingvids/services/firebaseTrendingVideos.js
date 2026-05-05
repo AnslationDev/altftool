@@ -1,4 +1,5 @@
 import { db } from "@/lib/firebase";
+import { getCachedFirebaseRead } from "@/lib/firebaseCache";
 import { collection, getDocs } from "firebase/firestore";
 
 const TRENDING_VIDEOS_COLLECTION = collection(
@@ -192,8 +193,10 @@ function mapShortCard(item) {
 
 export async function getTrendingVideosFromFirebase() {
   try {
-    const snapshot = await getDocs(TRENDING_VIDEOS_COLLECTION);
-    return snapshot.docs.map(mapFirebaseDoc);
+    return await getCachedFirebaseRead("trending-videos:list", async () => {
+      const snapshot = await getDocs(TRENDING_VIDEOS_COLLECTION);
+      return snapshot.docs.map(mapFirebaseDoc);
+    }, 120000);
   } catch (error) {
     console.error("Error fetching trending videos:", error);
     return [];

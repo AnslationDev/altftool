@@ -1,25 +1,23 @@
-import {
-    doc,
-    onSnapshot,
-  } from "firebase/firestore";
-  import { db } from "@/lib/firebase";
-  
-  const CATEGORY_REF = doc(db, "projects", "altftool", "buySmart", "categories");
-  
-  export const firebaseBuySmartCategoriesSource = {
-    // 🔹 GET ALL HEROES (Realtime)
-    subscribe(callback, onError) {
-      return onSnapshot(
+import { doc, onSnapshot } from "firebase/firestore";
+import { db } from "@/lib/firebase";
+import { subscribeCached } from "@/lib/firebaseCache";
+
+const CATEGORY_REF = doc(db, "projects", "altftool", "buySmart", "categories");
+
+export const firebaseBuySmartCategoriesSource = {
+  subscribe(callback, onError) {
+    return subscribeCached(
+      "buysmart:categories",
+      (emit, fail) => onSnapshot(
         CATEGORY_REF,
-        snap => {
-          const data = snap.exists() ? snap.data().banner || [] : [];
-          callback(data);
+        (snap) => emit(snap.exists() ? snap.data().banner || [] : []),
+        (error) => {
+          console.error("BuySmart categories read error:", error);
+          fail?.(error);
         },
-        error => {
-          console.error("Hero read error:", error);
-          onError?.(error);
-        }
-      );
-    },
-  
-  };
+      ),
+      callback,
+      onError,
+    );
+  },
+};

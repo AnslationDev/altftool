@@ -1,4 +1,7 @@
+import { createTtlCache } from "./cache.js";
 import { MissingEnvError } from "./env.js";
+
+const fetchResponseCache = createTtlCache({ ttlMs: 30000, maxEntries: 120 });
 
 export function jsonError(NextResponse, message, status = 500, extra = {}) {
   return NextResponse.json({ error: message, ...extra }, { status });
@@ -46,8 +49,120 @@ export async function readJson(res) {
   return res.json().catch(() => ({}));
 }
 
+function getMethod(options = {}) {
+  return String(options.method || "GET").toUpperCase();
+}
+
+function toUrlString(upstream) {
+  return upstream instanceof URL ? upstream.toString() : String(upstream);
+}
+
+function revalidateSeconds(options = {}) {
+  const value = Number(options?.next?.revalidate);
+  return Number.isFinite(value) && value > 0 ? value : 0;
+}
+
+function ttlFromFetchOptions(options = {}) {
+  return revalidateSeconds(options) * 1000;
+}
+
+export function cacheControlHeader(cache = null) {
+  if (!cache) return "";
+
+  const sMaxage = Number(cache.sMaxage ?? cache.revalidate ?? cache.maxAge);
+  if (!Number.isFinite(sMaxage) || sMaxage <= 0) return "";
+
+  const parts = ["public", `s-maxage=${Math.round(sMaxage)}`];
+  const staleWhileRevalidate = Number(cache.staleWhileRevalidate ?? sMaxage * 2);
+  if (Number.isFinite(staleWhileRevalidate) && staleWhileRevalidate > 0) {
+    parts.push(`stale-while-revalidate=${Math.round(staleWhileRevalidate)}`);
+  }
+
+  return parts.join(", ");
+}
+
+export function cacheControlFromFetchOptions(options = {}) {
+  const sMaxage = revalidateSeconds(options);
+  return sMaxage > 0 ? { sMaxage, staleWhileRevalidate: sMaxage * 2 } : null;
+}
+
+export function jsonResponse(NextResponse, data, options = {}) {
+  const { status = 200, headers = {}, cache = null } = options;
+  const responseHeaders = new Headers(headers);
+  const cacheHeader = cacheControlHeader(cache);
+
+  if (cacheHeader && status >= 200 && status < 300) {
+    responseHeaders.set("Cache-Control", cacheHeader);
+  }
+
+  return NextResponse.json(data, { status, headers: responseHeaders });
+}
+
+export async function fetchJson(upstream, options = {}) {
+  const {
+    cacheKey,
+    cacheTtlMs,
+    timeoutMs = 12000,
+    ...fetchOptions
+  } = options;
+  const method = getMethod(fetchOptions);
+  const ttl = Number(cacheTtlMs ?? ttlFromFetchOptions(fetchOptions));
+  const url = toUrlString(upstream);
+  const key = cacheKey || (method === "GET" && ttl > 0 ? `${method}:${url}` : "");
+
+  async function load() {
+    const controller = !fetchOptions.signal && timeoutMs > 0 ? new AbortController() : null;
+    const timeout = controller
+      ? setTimeout(() => controller.abort(new Error("Request timed out.")), timeoutMs)
+      : null;
+
+    try {
+      const res = await fetch(upstream, {
+        ...fetchOptions,
+        signal: controller?.signal || fetchOptions.signal,
+      });
+      const data = await readJson(res);
+
+      return {
+        data,
+        ok: res.ok,
+        status: res.status,
+      };
+    } finally {
+      if (timeout) clearTimeout(timeout);
+    }
+  }
+
+  if (!key || ttl <= 0) return load();
+
+  const cached = fetchResponseCache.get(key);
+  if (cached !== undefined) return cached;
+
+  const pendingKey = `${key}:pending`;
+  const pending = fetchResponseCache.get(pendingKey);
+  if (pending !== undefined) return pending;
+
+  const pendingRequest = load().then(
+    (result) => {
+      fetchResponseCache.delete(pendingKey);
+      if (result.ok) fetchResponseCache.set(key, result, ttl);
+      return result;
+    },
+    (error) => {
+      fetchResponseCache.delete(pendingKey);
+      throw error;
+    },
+  );
+
+  fetchResponseCache.set(pendingKey, pendingRequest, Math.min(ttl, 30000));
+  return pendingRequest;
+}
+
 export async function proxyJson(NextResponse, upstream, options = {}) {
-  const res = await fetch(upstream, options);
-  const data = await readJson(res);
-  return NextResponse.json(data, { status: res.ok ? 200 : res.status });
+  const result = await fetchJson(upstream, options);
+
+  return jsonResponse(NextResponse, result.data, {
+    status: result.ok ? 200 : result.status,
+    cache: cacheControlFromFetchOptions(options),
+  });
 }

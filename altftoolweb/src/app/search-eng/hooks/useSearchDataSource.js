@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "@/lib/firebase";
+import { getCachedFirebaseRead } from "@/lib/firebaseCache";
 import { searchResultsMapping } from "../data/mockResults";
 
 const PROJECT_ID = "altftool";
@@ -69,11 +70,15 @@ export function useSearchDataSource() {
 
       // ── Layer 3: Extensions from Firebase (same as useFirebaseExtensions) ──
       try {
-        const colRef = collection(db, "projects", PROJECT_ID, "extensions");
-        const snapshot = await getDocs(colRef);
+        const extensions = await getCachedFirebaseRead("extensions:list", async () => {
+          const colRef = collection(db, "projects", PROJECT_ID, "extensions");
+          const snapshot = await getDocs(colRef);
+          const rows = snapshot.docs.map((doc) => ({ slug: doc.id, ...doc.data() }));
+          rows.sort((a, b) => a.name?.localeCompare(b.name));
+          return rows;
+        }, 120000);
 
-        const extResults = snapshot.docs.map((doc) => {
-          const ext = { slug: doc.id, ...doc.data() };
+        const extResults = extensions.map((ext) => {
           return {
             id: `ext__${ext.slug}`,
             title: ext.name || ext.slug,

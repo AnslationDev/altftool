@@ -7,14 +7,16 @@
 
 import { collection, getDocs, doc, getDoc } from "firebase/firestore";
 import { db } from "@/lib/firebase";
+import { getCachedFirebaseRead } from "@/lib/firebaseCache";
 
 // Helper for fetching collections
 const fetchCollection = async (path) => {
     try {
-        const colRef = collection(db, ...path.split('/'));
-        const snap = await getDocs(colRef);
-        const data = snap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-        return data;
+        return await getCachedFirebaseRead(`chatbot:collection:${path}`, async () => {
+            const colRef = collection(db, ...path.split('/'));
+            const snap = await getDocs(colRef);
+            return snap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        }, 120000);
     } catch (e) {
         console.error(`AltFBot: Error fetching collection ${path}:`, e);
         return [];
@@ -24,18 +26,20 @@ const fetchCollection = async (path) => {
 // Helper for fetching documents with arrays
 const fetchDocument = async (path, field) => {
     try {
-        const docRef = doc(db, ...path.split('/'));
-        const snap = await getDoc(docRef);
-        if (!snap.exists()) {
-            console.warn(`[AltFBot] Document ${path} does not exist.`);
-            return [];
-        }
-        const data = snap.data()[field];
-        if (!Array.isArray(data)) {
-            console.warn(`[AltFBot] Field '${field}' in ${path} is not an array or is missing. Value:`, data);
-            return [];
-        }
-        return data;
+        return await getCachedFirebaseRead(`chatbot:doc:${path}:${field}`, async () => {
+            const docRef = doc(db, ...path.split('/'));
+            const snap = await getDoc(docRef);
+            if (!snap.exists()) {
+                console.warn(`[AltFBot] Document ${path} does not exist.`);
+                return [];
+            }
+            const data = snap.data()[field];
+            if (!Array.isArray(data)) {
+                console.warn(`[AltFBot] Field '${field}' in ${path} is not an array or is missing. Value:`, data);
+                return [];
+            }
+            return data;
+        }, 120000);
     } catch (e) {
         console.error(`AltFBot: Error fetching document ${path}:`, e);
         return [];

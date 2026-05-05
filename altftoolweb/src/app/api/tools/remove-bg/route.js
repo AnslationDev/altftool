@@ -16,11 +16,15 @@ export async function POST(req) {
     const upstream = new FormData();
     upstream.append("image_file", image);
 
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(new Error("Remove.bg request timed out.")), 30000);
+
     const res = await fetch("https://api.remove.bg/v1.0/removebg", {
       method: "POST",
       headers: { "X-Api-Key": apiKey },
       body: upstream,
-    });
+      signal: controller.signal,
+    }).finally(() => clearTimeout(timeout));
 
     if (!res.ok) {
       const errorText = await res.text();

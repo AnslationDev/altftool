@@ -1,6 +1,7 @@
 // app/api/news/route.js
 
 import { NextResponse } from "next/server";
+import { jsonResponse } from "@altftool/core/http";
 import { GLOBAL_FEEDS, buildGoogleNewsUrl } from "../lib/sources";
 import { fetchFeeds } from "../lib/fetchFeeds";
 import { normalizeItems } from "../lib/normalize";
@@ -19,7 +20,9 @@ export async function GET(request) {
   // ── Cache hit ──────────────────────────────────────────────────────────
   const cached = cache.get(cacheKey);
   if (cached) {
-    return NextResponse.json({ news: cached, cached: true });
+    return jsonResponse(NextResponse, { news: cached, cached: true }, {
+      cache: { sMaxage: 600, staleWhileRevalidate: 1200 },
+    });
   }
 
   // ── Build feed list ────────────────────────────────────────────────────
@@ -42,5 +45,7 @@ export async function GET(request) {
   // ── Cache & respond ────────────────────────────────────────────────────
   cache.set(cacheKey, ranked);
 
-  return NextResponse.json({ news: ranked, cached: false });
+  return jsonResponse(NextResponse, { news: ranked, cached: false }, {
+    cache: { sMaxage: 600, staleWhileRevalidate: 1200 },
+  });
 }

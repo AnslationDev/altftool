@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { requireServerEnv } from "@altftool/core/env";
-import { routeError, searchParam } from "@altftool/core/http";
+import { fetchJson, jsonResponse, routeError, searchParam } from "@altftool/core/http";
 import { SERVER_ENV } from "@altftool/core/services";
 
 export async function GET(req) {
@@ -19,8 +19,19 @@ export async function GET(req) {
     upstream.searchParams.set("symbol", symbol);
     upstream.searchParams.set("apikey", apiKey);
 
-    const res = await fetch(upstream, { next: { revalidate: 300 } });
-    const json = await res.json();
+    const result = await fetchJson(upstream, {
+      next: { revalidate: 300 },
+      timeoutMs: 10000,
+    });
+    const json = result.data;
+
+    if (!result.ok) {
+      return jsonResponse(
+        NextResponse,
+        { error: "Stock provider is unavailable right now." },
+        { status: result.status || 502 }
+      );
+    }
 
     if (json.Note) {
       return NextResponse.json(
@@ -52,7 +63,9 @@ export async function GET(req) {
         low: Number(value["3. low"]),
       }));
 
-    return NextResponse.json({ points });
+    return jsonResponse(NextResponse, { points }, {
+      cache: { sMaxage: 300, staleWhileRevalidate: 600 },
+    });
   } catch (error) {
     return routeError(NextResponse, error, "Failed to fetch stock data.");
   }

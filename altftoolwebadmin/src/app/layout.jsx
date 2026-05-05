@@ -26,6 +26,9 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" suppressHydrationWarning className={`${geistSans.variable} ${geistMono.variable}`}>
       <head>
+        <link rel="preconnect" href="https://firestore.googleapis.com" />
+        <link rel="preconnect" href="https://cdn.ckeditor.com" />
+        <link rel="preconnect" href="https://cdn.ckbox.io" />
 
         {/* CKEditor Styles */}
         <link

@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { requireServerEnv } from '@altftool/core/env';
-import { routeError } from '@altftool/core/http';
+import { fetchJson, jsonResponse, routeError } from '@altftool/core/http';
 import { SERVER_ENV } from '@altftool/core/services';
 
 export async function GET(req) {
@@ -56,15 +56,22 @@ export async function GET(req) {
       if (fullTime) url.searchParams.append('employment_types', 'FULLTIME');
     }
 
-    const response = await fetch(url.toString(), { method: 'GET', headers });
+    const result = await fetchJson(url, {
+      method: 'GET',
+      headers,
+      next: { revalidate: 300 },
+      timeoutMs: 10000,
+    });
 
-    if (!response.ok) {
-      const errorData = await response.text();
-      throw new Error(`JSearch API responded with ${response.status}: ${errorData}`);
+    if (!result.ok) {
+      const error = new Error(`JSearch API responded with ${result.status}`);
+      error.status = result.status || 502;
+      throw error;
     }
 
-    const data = await response.json();
-    return NextResponse.json(data);
+    return jsonResponse(NextResponse, result.data, {
+      cache: { sMaxage: 300, staleWhileRevalidate: 600 },
+    });
   } catch (error) {
     console.error('JSearch proxy error:', error);
     return routeError(NextResponse, error, 'Internal server error');

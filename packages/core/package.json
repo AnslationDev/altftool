@@ -4,6 +4,7 @@
   "private": true,
   "type": "module",
   "exports": {
+    "./cache": "./src/cache.js",
     "./env": "./src/env.js",
     "./http": "./src/http.js",
     "./next": "./src/next.js",

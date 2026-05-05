@@ -3,6 +3,7 @@
 import { collection, onSnapshot } from "firebase/firestore";
 
 import { db } from "@/lib/firebase";
+import { snapshotDocs, subscribeCached } from "@/lib/firebaseCache";
 
 const heroCollectionRef = collection(
   db,
@@ -19,15 +20,9 @@ const heroCollectionRef = collection(
 );
 
 export const subscribeAll = (callback) => {
-  const unsubscribe = onSnapshot(heroCollectionRef, (snapshot) => {
-    const data = snapshot.docs.map((doc) => ({
-      id: doc.id,
-
-      ...doc.data(),
-    }));
-
-    callback(data);
-  });
-
-  return unsubscribe;
+  return subscribeCached(
+    "deals:smart-saving",
+    (emit, fail) => onSnapshot(heroCollectionRef, (snapshot) => emit(snapshotDocs(snapshot)), fail),
+    callback,
+  );
 };

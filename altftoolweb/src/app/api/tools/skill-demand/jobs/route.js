@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { requireServerEnvGroup } from '@altftool/core/env';
-import { routeError } from '@altftool/core/http';
+import { fetchJson, jsonResponse, routeError } from '@altftool/core/http';
 import { SERVER_ENV } from '@altftool/core/services';
 
 export async function GET(req) {
@@ -28,22 +28,24 @@ export async function GET(req) {
       'content-type': 'application/json'
     });
 
-    const res = await fetch(`${endpoint}?${params.toString()}`);
-    if (!res.ok) {
-      const txt = await res.text();
-      throw new Error(`Adzuna API error: ${res.status} ${txt}`);
+    const result = await fetchJson(`${endpoint}?${params.toString()}`, {
+      next: { revalidate: 300 },
+      timeoutMs: 10000,
+    });
+
+    if (!result.ok) {
+      const error = new Error(`Adzuna API error: ${result.status}`);
+      error.status = result.status || 502;
+      throw error;
     }
 
-    const contentType = res.headers.get('content-type');
-    if (!contentType || !contentType.includes('application/json')) {
-      const txt = await res.text();
-      console.error('Adzuna returned non-JSON response:', txt.slice(0, 100));
+    const data = result.data;
+
+    const results = Array.isArray(data.results) ? data.results : [];
+    if (!Array.isArray(data.results)) {
       return NextResponse.json({ error: 'Adzuna API returned an invalid response format.' }, { status: 502 });
     }
 
-    const data = await res.json();
-
-    const results = Array.isArray(data.results) ? data.results : [];
     const jobCount = Number.isFinite(Number(data.count)) ? Number(data.count) : results.length;
 
     // compute salary stats from available salary_min / salary_max
@@ -62,7 +64,9 @@ export async function GET(req) {
     });
     const topLocations = Object.entries(locCounts).sort((a, b) => b[1] - a[1]).slice(0, 6).map(([loc, count]) => ({ location: loc, count }));
 
-    return NextResponse.json({ jobCount, avgSalary, minSalary, maxSalary, topLocations, raw: data });
+    return jsonResponse(NextResponse, { jobCount, avgSalary, minSalary, maxSalary, topLocations, raw: data }, {
+      cache: { sMaxage: 300, staleWhileRevalidate: 600 },
+    });
   } catch (err) {
     console.error('Adzuna proxy error:', err);
     return routeError(NextResponse, err, 'Failed to fetch Adzuna data');

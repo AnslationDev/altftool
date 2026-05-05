@@ -7,6 +7,7 @@ import {
     deleteDoc,
     writeBatch,
 } from "firebase/firestore";
+import { snapshotDocs, subscribeCached } from "@/lib/firebaseCache";
 import { getCollectionRef, getDocRef } from "./config";
 
 const normalizeString = (v = "") => String(v).trim();
@@ -87,20 +88,18 @@ export function transformCategoryData(firebaseData = []) {
 
 const firestoreService = {
     subscribe(collectionName, callback, onError) {
-        return onSnapshot(
-            getCollectionRef(collectionName),
-            (snap) => {
-                const data = snap.docs.map((doc) => ({
-                    id: doc.id,
-                    ...doc.data(),
-                }));
-
-                callback?.(data);
-            },
-            (error) => {
-                console.error(`Firestore subscribe error for ${collectionName}:`, error);
-                onError?.(error);
-            },
+        return subscribeCached(
+            `brandrating:${collectionName}`,
+            (emit, fail) => onSnapshot(
+                getCollectionRef(collectionName),
+                (snap) => emit(snapshotDocs(snap)),
+                (error) => {
+                    console.error(`Firestore subscribe error for ${collectionName}:`, error);
+                    fail?.(error);
+                },
+            ),
+            callback,
+            onError,
         );
     },
 
@@ -148,107 +147,117 @@ export const heroBannerService = {
 
 export const categoryService = {
     subscribeAll(callback, onError) {
-        return onSnapshot(
-            getCollectionRef("subcategories"),
-            (snap) => {
-                const data = snap.docs.map((d) =>
-                    normalizeSubcategory({ id: d.id, ...d.data() })
-                );
+        return subscribeCached(
+            "brandrating:active-subcategories",
+            (emit, fail) => onSnapshot(
+                getCollectionRef("subcategories"),
+                (snap) => {
+                    const data = snapshotDocs(snap, (d) =>
+                        normalizeSubcategory({ id: d.id, ...d.data() })
+                    );
 
-                const active = data.filter(
-                    (item) => item.status?.toLowerCase() === "active"
-                );
+                    const active = data.filter(
+                        (item) => item.status?.toLowerCase() === "active"
+                    );
 
-                callback?.(active); 
-            },
-            (err) => {
-                console.error("subcategory error:", err);
-                onError?.(err);
-            }
+                    emit(active);
+                },
+                (err) => {
+                    console.error("subcategory error:", err);
+                    fail?.(err);
+                }
+            ),
+            callback,
+            onError,
         );
     },
 subscribeFaqs(callback, onError) {
-    return onSnapshot(
-        getCollectionRef("faqs"),
-        (snap) => {
-            const data = snap.docs.map((doc) =>
-                normalizeFaq({ id: doc.id, ...doc.data() })
-            );
+    return subscribeCached(
+        "brandrating:faqs",
+        (emit, fail) => onSnapshot(
+            getCollectionRef("faqs"),
+            (snap) => {
+                const data = snapshotDocs(snap, (doc) =>
+                    normalizeFaq({ id: doc.id, ...doc.data() })
+                );
 
-            callback?.(data);
-        },
-        (err) => {
-            console.error("faqs subscribe error:", err);
-            onError?.(err);
-        }
+                emit(data);
+            },
+            (err) => {
+                console.error("faqs subscribe error:", err);
+                fail?.(err);
+            }
+        ),
+        callback,
+        onError,
     );
 },
 
     subscribeMerged(callback, onError) {
+        return subscribeCached("brandrating:category-tree", (push, fail) => {
+            let categoriesSnapshot = [];
+            let subcategoriesSnapshot = [];
+            let brandsSnapshot = [];
 
-        let categoriesSnapshot = [];
-        let subcategoriesSnapshot = [];
-        let brandsSnapshot = [];
+            const emit = () => {
+                const activeCategories = categoriesSnapshot
+                    .map((item) => normalizeCategory(item))
+                    .filter((item) => item?.status === "active" && item?.id);
 
-        const emit = () => {
-            const activeCategories = categoriesSnapshot
-                .map((item) => normalizeCategory(item))
-                .filter((item) => item?.status === "active" && item?.id);
+                const activeSubcategories = subcategoriesSnapshot
+                    .map((item) => normalizeSubcategory(item))
+                    .filter(
+                        (item) =>
+                            item?.status === "active" &&
+                            item?.id &&
+                            item?.categoryId,
+                    );
 
-            const activeSubcategories = subcategoriesSnapshot
-                .map((item) => normalizeSubcategory(item))
-                .filter(
-                    (item) =>
-                        item?.status === "active" &&
-                        item?.id &&
-                        item?.categoryId,
+                const activeBrands = brandsSnapshot
+                    .map((item) => normalizeBrand(item))
+                    .filter((item) => item?.name);
+
+                const categoryMap = new Map(
+                    activeCategories.map((category) => [
+                        category.id,
+                        {
+                            ...category,
+                            subcategories: [],
+                            brands: [],
+
+                        },
+                    ]),
                 );
 
-            const activeBrands = brandsSnapshot
-                .map((item) => normalizeBrand(item))
-                .filter((item) => item?.name);
+                activeSubcategories.forEach((subcategory) => {
+                    const targetCategory = categoryMap.get(subcategory.categoryId);
+                    if (!targetCategory) return;
 
-            const categoryMap = new Map(
-                activeCategories.map((category) => [
-                    category.id,
-                    {
-                        ...category,
-                        subcategories: [],
-                        brands: [],
+                    const existing = new Map(
+                        (targetCategory.subcategories || []).map((item) => [item.id || item.name, item]),
+                    );
 
-                    },
-                ]),
-            );
+                    if (!existing.has(subcategory.id || subcategory.name)) {
+                        targetCategory.subcategories.push(subcategory);
+                    }
+                });
+                activeBrands.forEach((brand) => {
+                    const category = categoryMap.get(brand.categoryId);
 
-            activeSubcategories.forEach((subcategory) => {
-                const targetCategory = categoryMap.get(subcategory.categoryId);
-                if (!targetCategory) return;
+                    if (!category) return;
+                    category.brands.push(brand);
+                    const sub = category.subcategories.find(
+                        (s) => s.name.toLowerCase() === brand.subCategory.toLowerCase()
+                    );
 
-                const existing = new Map(
-                    (targetCategory.subcategories || []).map((item) => [item.id || item.name, item]),
-                );
+                    if (sub) {
+                        if (!Array.isArray(sub.brands)) sub.brands = [];
+                        sub.brands.push(brand);
+                    }
+                });
 
-                if (!existing.has(subcategory.id || subcategory.name)) {
-                    targetCategory.subcategories.push(subcategory);
-                }
-            });
-            activeBrands.forEach((brand) => {
-                const category = categoryMap.get(brand.categoryId);
-
-                if (!category) return;
-                category.brands.push(brand);
-                const sub = category.subcategories.find(
-                    (s) => s.name.toLowerCase() === brand.subCategory.toLowerCase()
-                );
-
-                if (sub) {
-                    if (!Array.isArray(sub.brands)) sub.brands = [];
-                    sub.brands.push(brand);
-                }
-            });
-
-            callback?.(Array.from(categoryMap.values()));
-        };
+                push?.(Array.from(categoryMap.values()));
+            };
         
 
 
@@ -263,7 +272,7 @@ subscribeFaqs(callback, onError) {
             },
             (error) => {
                 console.error("categories subscribe error:", error);
-                onError?.(error);
+                fail?.(error);
             },
         );
 
@@ -278,7 +287,7 @@ subscribeFaqs(callback, onError) {
             },
             (error) => {
                 console.error("subcategories subscribe error:", error);
-                onError?.(error);
+                fail?.(error);
             },
         );
         const unsubscribeBrands = onSnapshot(
@@ -292,7 +301,7 @@ subscribeFaqs(callback, onError) {
             },
             (error) => {
                 console.error("brands subscribe error:", error);
-                onError?.(error);
+                fail?.(error);
             }
         );
 
@@ -301,6 +310,7 @@ subscribeFaqs(callback, onError) {
             unsubscribeSubcategories?.();
             unsubscribeBrands?.();
         };
+        }, callback, onError);
     },
 };
 

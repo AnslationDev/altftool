@@ -3,6 +3,7 @@
 import { useEffect, useRef } from "react";
 import { doc, onSnapshot } from "firebase/firestore";
 import { db } from "@/lib/firebase";
+import { subscribeCached } from "@/lib/firebaseCache";
 
 const RULE_DOC = doc(db, "projects", "altftool", "buySmart", "ruleSet");
 
@@ -40,19 +41,29 @@ export default function useIdleRedirect() {
     );
 
     // ✅ Firestore listener
-    const unsubscribe = onSnapshot(RULE_DOC, snapshot => {
-      if (!snapshot.exists()) return;
+    const unsubscribe = subscribeCached("buysmart:idle-rule", (emit, fail) => onSnapshot(
+      RULE_DOC,
+      (snapshot) => {
+        if (!snapshot.exists()) return;
 
-      const data = snapshot.data();
-      const bannerRules = data?.banner;
+        const data = snapshot.data();
+        const bannerRules = data?.banner;
 
-      if (!Array.isArray(bannerRules) || bannerRules.length === 0) return;
+        if (!Array.isArray(bannerRules) || bannerRules.length === 0) return;
 
-      const latestRule = [...bannerRules].sort(
-        (a, b) => Number(b.createdAt) - Number(a.createdAt)
-      )[0];
+        const latestRule = [...bannerRules].sort(
+          (a, b) => Number(b.createdAt) - Number(a.createdAt)
+        )[0];
 
-      const { active, redirectUrl, idleTime } = latestRule;
+        emit({
+          active: latestRule.active,
+          idleTime: latestRule.idleTime,
+          redirectUrl: latestRule.redirectUrl,
+        });
+      },
+      fail,
+    ), (latestRule) => {
+      const { active, redirectUrl, idleTime } = latestRule || {};
 
       if (!active || !redirectUrl || !idleTime) {
         ruleRef.current = null;

@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { getServerEnv, requireServerEnv } from "@altftool/core/env";
-import { routeError } from "@altftool/core/http";
+import { fetchJson, routeError } from "@altftool/core/http";
 import { SERVER_ENV } from "@altftool/core/services";
 
 const DEFAULT_TLDS = [".com", ".net", ".io", ".in", ".org"];
@@ -44,7 +44,7 @@ export async function POST(req) {
       return NextResponse.json({ error: "Missing idea.", suggestions: [] }, { status: 400 });
     }
 
-    const res = await fetch("https://api.openai.com/v1/chat/completions", {
+    const result = await fetchJson("https://api.openai.com/v1/chat/completions", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -60,13 +60,14 @@ export async function POST(req) {
           { role: "user", content: buildPrompt(params) },
         ],
       }),
+      timeoutMs: 20000,
     });
 
-    const data = await res.json().catch(() => ({}));
-    if (!res.ok) {
+    const data = result.data;
+    if (!result.ok) {
       return NextResponse.json(
         { error: data?.error?.message || "OpenAI request failed.", suggestions: [] },
-        { status: res.status }
+        { status: result.status }
       );
     }
 

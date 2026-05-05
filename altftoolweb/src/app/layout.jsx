@@ -11,7 +11,7 @@ import { NewsletterSubscribeDialog } from "@/platform/consentalerts/NewsletterSu
 import GlobalAnimationProvider from "@/contexts/GlobalAnimationProvider";
 import { AdsProvider } from "@/ads/AdsProvider";
 import { Suspense } from "react";
-import ChatBot from "@/platform/chatbot";
+import LazyChatBot from "@/platform/chatbot/LazyChatBot";
 import { AlertProvider } from "@/shared/ui/AlertProvider";
 
 const geistSans = Geist({
@@ -41,6 +41,11 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" suppressHydrationWarning className={`${geistSans.variable} ${geistMono.variable}`}>
       <head>
+        <link rel="preconnect" href="https://firestore.googleapis.com" />
+        <link rel="preconnect" href="https://firebasestorage.googleapis.com" />
+        <link rel="preconnect" href="https://www.googletagmanager.com" />
+        <link rel="preconnect" href="https://www.clarity.ms" />
+
         <Script id="theme-init" strategy="beforeInteractive">
           {`
             try {
@@ -100,7 +105,7 @@ export default function RootLayout({ children }) {
 
         <CookieBanner />
         <NewsletterSubscribeDialog />
-        <ChatBot />
+        <LazyChatBot />
         <Footer />
 
       </AlertProvider>
