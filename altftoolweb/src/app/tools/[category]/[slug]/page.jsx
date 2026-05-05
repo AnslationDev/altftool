@@ -1,55 +1,18 @@
-import { toolMetaMap } from "@/platform/registry/toolMetaMap";
-
 import { notFound } from "next/navigation";
-
 import ToolClient from "./ToolClient";
+import { buildToolMetadata, getTool } from "../../toolRouteUtils";
 
-
-
-export async function generateMetadata ({params}) {
-
-  const {slug} = await params
-
-  const tools = toolMetaMap[slug]
-
-
-
-if (!tools) {
-
-    return {
-
-      title: "Tool Not Found",
-
-      description: "The requested tool does not exist.",
-
-    };
-
-  }
-
-  return {
-
-    title: tools.name,
-
-    description: tools.description,
-
-  };
-
+export async function generateMetadata({ params }) {
+  const { slug } = await params;
+  return buildToolMetadata(slug);
 }
 
 export default async function ToolPage({ params }) {
+  const { category, slug } = await params;
 
-  const { slug } = await params;
-
-
-
-  if (!toolMetaMap[slug]) {
-
+  if (!getTool(slug)) {
     notFound();
-
   }
 
-
-
-  return <ToolClient slug={slug} />;
-
+  return <ToolClient slug={slug} category={category} />;
 }
