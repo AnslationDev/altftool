@@ -1,10 +1,26 @@
 "use client";
 
-import dynamic from "next/dynamic";
+import { useEffect, useState } from "react";
 
-const LazyChatBot = dynamic(() => import("./index"), {
-  loading: () => null,
-  ssr: false,
-});
+export default function LazyChatBot() {
+  const [ChatBot, setChatBot] = useState(null);
 
-export default LazyChatBot;
+  useEffect(() => {
+    let mounted = true;
+
+    import("./index")
+      .then((module) => {
+        if (mounted) setChatBot(() => module.default || module);
+      })
+      .catch((error) => {
+        console.error("LazyChatBot load failed:", error);
+      });
+
+    return () => {
+      mounted = false;
+    };
+  }, []);
+
+  if (!ChatBot) return null;
+  return <ChatBot />;
+}

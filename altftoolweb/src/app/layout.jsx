@@ -106,7 +106,9 @@ export default function RootLayout({ children }) {
 
         <CookieBanner />
         <NewsletterSubscribeDialog />
-        <LazyChatBot />
+        <Suspense fallback={null}>
+          <LazyChatBot />
+        </Suspense>
         <Footer />
 
       </AlertProvider>

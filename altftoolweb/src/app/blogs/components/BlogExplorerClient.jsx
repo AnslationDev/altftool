@@ -254,7 +254,7 @@ function withTimeout(promise, timeoutMs, fallbackValue) {
   ]);
 }
 
-async function fetchRemoteBlogChunk(offset) {
+async function fetchRemoteBlogChunk(offset, signal) {
   const params = new URLSearchParams({
     offset: String(offset),
     limit: String(BLOG_REMOTE_LIMIT),
@@ -262,6 +262,7 @@ async function fetchRemoteBlogChunk(offset) {
 
   const response = await fetch(`/api/blogs?${params.toString()}`, {
     headers: { accept: "application/json" },
+    signal,
   });
 
   if (!response.ok) throw new Error(`Blog chunk failed: ${response.status}`);
@@ -305,6 +306,7 @@ export default function BlogExplorerClient({
 
   useEffect(() => {
     let cancelled = false;
+    const controller = new AbortController();
     const schedule = window.requestIdleCallback || ((callback) => window.setTimeout(callback, 450));
     const cancel = window.cancelIdleCallback || window.clearTimeout;
 
@@ -317,7 +319,7 @@ export default function BlogExplorerClient({
 
         while (!cancelled && hasMore) {
           const isFirstRemotePage = nextOffset === 0;
-          const page = await withTimeout(fetchRemoteBlogChunk(nextOffset), 6500, {
+          const page = await withTimeout(fetchRemoteBlogChunk(nextOffset, controller.signal), 12000, {
             posts: [],
             nextOffset,
             hasMore: false,
@@ -349,8 +351,9 @@ export default function BlogExplorerClient({
           setSyncState(receivedAny ? "fresh" : "local");
         }
       } catch (error) {
+        if (cancelled || error?.name === "AbortError") return;
         if (!cancelled) {
-          console.error("Blog remote hydration failed:", error);
+          console.warn("Blog remote hydration paused:", error);
           setSyncState("local");
         }
       }
@@ -358,6 +361,7 @@ export default function BlogExplorerClient({
 
     return () => {
       cancelled = true;
+      controller.abort();
       cancel(handle);
     };
   }, [initialRemoteOffset, totalCount]);
