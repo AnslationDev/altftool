@@ -17,6 +17,7 @@ AltFTool should feel like a clean Google product with Anslation/Fuse discipline:
 
 - Public app: `altftoolweb/src/app/globals.css`
 - Admin app: `altftoolwebadmin/src/app/globals.css`
+- Shared primitives: `packages/ui/src`
 
 Core tokens:
 
@@ -36,6 +37,7 @@ Core tokens:
 - Avoid heavy gradients, decorative blobs, and unrelated visual themes.
 - Keep route/page typography smaller inside tools and dashboards; reserve large type for public page heroes.
 - Prefer 8px radius. Larger radii need a reusable component reason.
+- Repeated controls should start in `@altftool/ui` so public and admin interfaces do not drift.
 
 ## Verification
 

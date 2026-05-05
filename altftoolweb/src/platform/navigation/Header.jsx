@@ -5,6 +5,7 @@ import { useRouter, usePathname } from "next/navigation";
 import { ChevronDown, Search, Menu, Sun, Moon, X } from "lucide-react";
 import { useTheme } from "@/contexts/ThemeContext";
 import Link from "next/link";
+import { IconButton, Input } from "@altftool/ui";
 
 const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -87,9 +88,6 @@ const Header = () => {
     { label: NAV.sale, hasDropdown: false, href: "/sale" },
   ];
 
-  const buttonClass =
-    "flex h-9 w-9 items-center justify-center rounded-[var(--anslation-ds-radius)] border border-(--border) bg-(--card) text-(--muted-foreground) shadow-[var(--anslation-ds-shadow-sm)] transition hover:bg-(--muted) hover:text-(--foreground)";
-
   // Hide global header on immersive routes.
   if (pathname === "/search-eng" || pathname.startsWith("/search-eng/") || isBlogSlug) {
     return null;
@@ -164,23 +162,23 @@ const Header = () => {
           <div className="flex items-center gap-2">
             {/* SEARCH INPUT */}
             <div className="hidden sm:flex items-center gap-2">
-              <input
+              <Input
                 type="text"
                 placeholder="Search tools, extensions..."
                 value={searchQuery}
                 onChange={(e) => handleChange(e.target.value)}
-                className="h-9 w-64 rounded-[var(--anslation-ds-radius)] border border-(--border) bg-(--background) px-3 text-sm text-(--foreground) shadow-[var(--anslation-ds-shadow-sm)] placeholder:text-(--muted-foreground) focus:border-(--primary) focus:outline-none focus:shadow-[var(--anslation-ds-focus-ring)]"
+                className="w-64"
+                style={{ background: "var(--background)" }}
               />
 
-              <button onClick={handleSearch} className={buttonClass}>
+              <IconButton onClick={handleSearch} aria-label="Search">
                 <Search className="h-4 w-4" />
-              </button>
+              </IconButton>
             </div>
 
             {/* THEME TOGGLE */}
-            <button
+            <IconButton
               onClick={toggleTheme}
-              className={buttonClass}
               aria-label="Toggle Theme"
             >
               {theme === "dark" ? (
@@ -188,15 +186,16 @@ const Header = () => {
               ) : (
                 <Moon className="h-4 w-4" />
               )}
-            </button>
+            </IconButton>
 
             {/* MOBILE MENU BUTTON */}
-            <button
+            <IconButton
               onClick={() => setMobileMenuOpen(true)}
-              className={`${buttonClass} lg:hidden`}
+              className="lg:hidden"
+              aria-label="Open menu"
             >
               <Menu className="h-5 w-5" />
-            </button>
+            </IconButton>
           </div>
         </div>
       </header>
@@ -227,12 +226,13 @@ const Header = () => {
             </Link>
 
             {/* LUCIDE X ICON */}
-            <button
+            <IconButton
               onClick={() => setMobileMenuOpen(false)}
-              className="rounded-[var(--anslation-ds-radius)] p-2 text-(--muted-foreground) hover:bg-(--muted) hover:text-(--foreground)"
+              variant="ghost"
+              aria-label="Close menu"
             >
               <X className="h-5 w-5" />
-            </button>
+            </IconButton>
           </div>
 
           <nav className="mt-8 flex flex-col gap-4">

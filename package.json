@@ -15,9 +15,11 @@
     "dev:admin": "npm --prefix altftoolwebadmin run dev -- -p 3001",
     "audit": "npm run audit:web && npm run audit:admin",
     "audit:web": "npm --prefix altftoolweb audit --audit-level=moderate",
-    "audit:admin": "npm --prefix altftoolwebadmin audit --audit-level=moderate"
+    "audit:admin": "npm --prefix altftoolwebadmin audit --audit-level=moderate",
+    "test:smoke": "playwright test"
   },
   "devDependencies": {
+    "@playwright/test": "^1.59.1",
     "@tailwindcss/postcss": "^4.2.4",
     "autoprefixer": "^10.5.0",
     "postcss": "^8.5.14",

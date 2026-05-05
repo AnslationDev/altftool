@@ -9,6 +9,7 @@ altftool/
   altftoolweb/        Public Next.js app
   altftoolwebadmin/   Admin Next.js app
   packages/core/      Shared runtime helpers and contracts
+  packages/ui/        Shared Anslation/Fuse UI primitives
 ```
 
 ## Core Rule
@@ -24,6 +25,14 @@ Use `@altftool/core` for:
 - shared env-name contracts
 
 Do not copy-paste the same env checks, security headers, or JSON proxy boilerplate into each route.
+
+Use `@altftool/ui` for:
+
+- token-aligned buttons, icon buttons, inputs, labels, cards, badges, and loaders
+- compact 8px controls backed by `--anslation-ds-*`
+- UI primitives that must look identical in the public app and admin app
+
+Do not create a new component style in one app when it belongs in the shared UI layer.
 
 ## App Responsibilities
 
@@ -61,6 +70,7 @@ From repo root:
 ```bash
 npm run build
 npm run audit
+npm run test:smoke
 ```
 
 Individual apps:

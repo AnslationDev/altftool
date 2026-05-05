@@ -1,0 +1,210 @@
+.alt-ui-button {
+  align-items: center;
+  border: 1px solid transparent;
+  border-radius: var(--anslation-ds-radius, 8px);
+  cursor: pointer;
+  display: inline-flex;
+  font-family: var(--anslation-ds-font-sans, ui-sans-serif, system-ui, sans-serif);
+  font-size: 14px;
+  font-weight: 600;
+  gap: 8px;
+  justify-content: center;
+  letter-spacing: 0;
+  line-height: 1;
+  min-width: 0;
+  transition:
+    background-color 160ms ease,
+    border-color 160ms ease,
+    box-shadow 160ms ease,
+    color 160ms ease,
+    opacity 160ms ease;
+  white-space: nowrap;
+}
+
+.alt-ui-button:focus-visible,
+.alt-ui-input:focus-visible {
+  box-shadow: var(--anslation-ds-focus-ring, 0 0 0 3px rgba(26, 115, 232, 0.16));
+  outline: none;
+}
+
+.alt-ui-button:disabled,
+.alt-ui-input:disabled {
+  cursor: not-allowed;
+  opacity: 0.56;
+}
+
+.alt-ui-button--sm {
+  height: 32px;
+  padding: 0 12px;
+}
+
+.alt-ui-button--md {
+  height: 36px;
+  padding: 0 14px;
+}
+
+.alt-ui-button--lg {
+  height: 40px;
+  padding: 0 16px;
+}
+
+.alt-ui-button--icon {
+  height: 36px;
+  padding: 0;
+  width: 36px;
+}
+
+.alt-ui-button--primary {
+  background: var(--anslation-ds-primary, #1a73e8);
+  color: var(--primary-foreground, #ffffff);
+}
+
+.alt-ui-button--primary:hover {
+  background: var(--anslation-ds-primary-hover, #1765cc);
+}
+
+.alt-ui-button--secondary {
+  background: var(--anslation-ds-surface, #ffffff);
+  border-color: var(--anslation-ds-border, #d9e2ef);
+  box-shadow: var(--anslation-ds-shadow-sm, 0 1px 2px rgba(21, 32, 51, 0.06));
+  color: var(--anslation-ds-text-soft, #40516a);
+}
+
+.alt-ui-button--secondary:hover {
+  background: var(--anslation-ds-soft, #f1f5fb);
+  color: var(--anslation-ds-text, #152033);
+}
+
+.alt-ui-button--ghost {
+  background: transparent;
+  color: var(--anslation-ds-text-soft, #40516a);
+}
+
+.alt-ui-button--ghost:hover {
+  background: var(--anslation-ds-soft, #f1f5fb);
+  color: var(--anslation-ds-text, #152033);
+}
+
+.alt-ui-button--danger {
+  background: var(--anslation-ds-danger, #d93025);
+  color: #ffffff;
+}
+
+.alt-ui-button--danger:hover {
+  opacity: 0.92;
+}
+
+.alt-ui-icon-button svg {
+  flex: 0 0 auto;
+}
+
+.alt-ui-input {
+  background: var(--anslation-ds-surface, #ffffff);
+  border: 1px solid var(--anslation-ds-border, #d9e2ef);
+  border-radius: var(--anslation-ds-radius, 8px);
+  color: var(--anslation-ds-text, #152033);
+  font-family: var(--anslation-ds-font-sans, ui-sans-serif, system-ui, sans-serif);
+  font-size: 14px;
+  height: 36px;
+  letter-spacing: 0;
+  line-height: 1.25;
+  padding: 0 12px;
+  transition:
+    background-color 160ms ease,
+    border-color 160ms ease,
+    box-shadow 160ms ease;
+  width: 100%;
+}
+
+.alt-ui-input::placeholder {
+  color: var(--input-placeholder, var(--anslation-ds-muted, #68778d));
+}
+
+.alt-ui-input:focus {
+  border-color: var(--anslation-ds-primary, #1a73e8);
+}
+
+.alt-ui-label {
+  color: var(--anslation-ds-muted, #68778d);
+  display: block;
+  font-size: 12px;
+  font-weight: 650;
+  letter-spacing: 0;
+  line-height: 1.2;
+}
+
+.alt-ui-field {
+  display: grid;
+  gap: 6px;
+}
+
+.alt-ui-help {
+  color: var(--anslation-ds-muted, #68778d);
+  font-size: 12px;
+  line-height: 1.35;
+  margin: 0;
+}
+
+.alt-ui-card {
+  background: var(--anslation-ds-surface, #ffffff);
+  border: 1px solid var(--anslation-ds-border, #d9e2ef);
+  border-radius: var(--anslation-ds-radius, 8px);
+  box-shadow: var(--anslation-ds-shadow-sm, 0 1px 2px rgba(21, 32, 51, 0.06));
+}
+
+.alt-ui-badge {
+  align-items: center;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  display: inline-flex;
+  font-size: 12px;
+  font-weight: 650;
+  height: 24px;
+  letter-spacing: 0;
+  padding: 0 8px;
+}
+
+.alt-ui-badge--neutral {
+  background: var(--anslation-ds-soft, #f1f5fb);
+  color: var(--anslation-ds-text-soft, #40516a);
+}
+
+.alt-ui-badge--primary {
+  background: var(--anslation-ds-primary-soft, #e8f0fe);
+  color: var(--anslation-ds-primary, #1a73e8);
+}
+
+.alt-ui-badge--success {
+  background: color-mix(in srgb, var(--anslation-ds-success, #188038) 12%, transparent);
+  color: var(--anslation-ds-success, #188038);
+}
+
+.alt-ui-badge--danger {
+  background: color-mix(in srgb, var(--anslation-ds-danger, #d93025) 12%, transparent);
+  color: var(--anslation-ds-danger, #d93025);
+}
+
+.alt-ui-spinner {
+  animation: alt-ui-spin 700ms linear infinite;
+  border: 2px solid currentColor;
+  border-radius: 999px;
+  border-top-color: transparent;
+  display: inline-block;
+  opacity: 0.72;
+}
+
+.alt-ui-spinner--sm {
+  height: 14px;
+  width: 14px;
+}
+
+.alt-ui-spinner--md {
+  height: 18px;
+  width: 18px;
+}
+
+@keyframes alt-ui-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

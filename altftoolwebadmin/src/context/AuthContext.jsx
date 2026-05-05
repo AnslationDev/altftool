@@ -5,6 +5,7 @@ import { onAuthStateChanged, signOut } from "firebase/auth";
 import { auth } from "@/lib/firebase";
 
 const AuthContext = createContext(null);
+const AUTH_STATE_TIMEOUT_MS = 3000;
 
 async function fetchAdminMe(currentUser) {
   const token = await currentUser.getIdToken(true);
@@ -107,10 +108,27 @@ export function AuthProvider({ children }) {
   }, [syncUser]);
 
   useEffect(() => {
+    let settled = false;
+    const timeout = setTimeout(() => {
+      if (!settled) {
+        setLoading(false);
+      }
+    }, AUTH_STATE_TIMEOUT_MS);
+
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      settled = true;
+      clearTimeout(timeout);
       syncUser(currentUser);
+    }, (err) => {
+      settled = true;
+      clearTimeout(timeout);
+      console.error("Auth state error:", err);
+      setLoading(false);
     });
-    return () => unsubscribe();
+    return () => {
+      clearTimeout(timeout);
+      unsubscribe();
+    };
   }, [syncUser]);
 
   return (
