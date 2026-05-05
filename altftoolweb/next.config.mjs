@@ -6,13 +6,19 @@ const workspaceRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)),
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  outputFileTracingRoot: workspaceRoot,
+  poweredByHeader: false,
+  compress: true,
   transpilePackages: ["@altftool/ui"],
+  allowedDevOrigins: ["localhost", "127.0.0.1"],
 
   turbopack: {
     root: workspaceRoot,
   },
 
   images: {
+    formats: ["image/avif", "image/webp"],
+    minimumCacheTTL: 86400,
     remotePatterns: [
       {
         protocol: "https",
@@ -36,7 +42,7 @@ const nextConfig = {
     ],
   },
 
-  reactStrictMode: false,
+  reactStrictMode: true,
   reactCompiler: false,
 
   experimental: {

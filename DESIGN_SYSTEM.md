@@ -41,6 +41,6 @@ Core tokens:
 
 ## Verification
 
-- `altftoolweb`: `npm run build`
-- `altftoolwebadmin`: `npm run build`
-- Check `http://localhost:3002` and `http://localhost:3001/login` after theme changes.
+- Runtime: Node `24.15.0` from `.nvmrc` / `.node-version`.
+- Full validation: `npm run validate`.
+- Manual check: `http://localhost:3002` and `http://localhost:3001/login` after theme changes.

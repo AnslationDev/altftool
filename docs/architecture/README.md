@@ -68,8 +68,16 @@ When adding a feature:
 From repo root:
 
 ```bash
-npm run build
+nvm use
+npm ci
+npm run validate
+```
+
+`validate` runs:
+
+```bash
 npm run audit
+npm run build
 npm run test:smoke
 ```
 
