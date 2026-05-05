@@ -58,10 +58,24 @@ export default function SearchExplore({
 
     const matched = categoriesData.filter((item) => {
       const category = (item.category || "").toLowerCase();
-
       const title = (item.title || "").toLowerCase();
+      const dealText = [
+        item.discount,
+        item.cashback,
+        item.points,
+        item.code,
+        item.audience,
+        item.offerType,
+      ]
+        .filter(Boolean)
+        .join(" ")
+        .toLowerCase();
 
-      return category.startsWith(searchBrand) || title.startsWith(searchBrand);
+      return (
+        category.startsWith(searchBrand) ||
+        title.startsWith(searchBrand) ||
+        dealText.includes(searchBrand)
+      );
     });
 
     if (matched.length) {

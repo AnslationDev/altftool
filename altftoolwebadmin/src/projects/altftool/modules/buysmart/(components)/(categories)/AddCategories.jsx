@@ -14,6 +14,17 @@ const defaultForm = {
   disc: "",
   discount: "",
   category: "",
+  offerType: "deal",
+  couponCode: "",
+  cashback: "",
+  points: "",
+  audience: "All shoppers",
+  expiresAt: "",
+  terms: "",
+  verified: true,
+  exclusive: false,
+  featured: false,
+  priority: 0,
   img: "",
   status: "active",
 };
@@ -50,6 +61,17 @@ function AddCategories({ setActive, setEditCategories, editCategories, active })
         country: editCategories.country || "",
         disc: editCategories.disc || "",
         discount: editCategories.discount || "",
+        offerType: editCategories.offerType || "deal",
+        couponCode: editCategories.couponCode || editCategories.code || "",
+        cashback: editCategories.cashback || editCategories.cashBack || "",
+        points: editCategories.points || editCategories.reward || "",
+        audience: editCategories.audience || "All shoppers",
+        expiresAt: editCategories.expiresAt || "",
+        terms: editCategories.terms || "",
+        verified: editCategories.verified ?? true,
+        exclusive: editCategories.exclusive || false,
+        featured: editCategories.featured || false,
+        priority: editCategories.priority || 0,
         img: editCategories.img || editCategories.image || "",
         category: editCategories.category || "",
         status: editCategories.status || "active",
@@ -79,8 +101,8 @@ function AddCategories({ setActive, setEditCategories, editCategories, active })
 
 
   function handleChange(e) {
-    const { name, value } = e.target
-    setForm({ ...form, [name]: value })
+    const { name, value, type, checked } = e.target
+    setForm({ ...form, [name]: type === "checkbox" ? checked : value })
   }
 
   // const handleSubmit = async (e) => {
@@ -165,6 +187,18 @@ function AddCategories({ setActive, setEditCategories, editCategories, active })
       country: form.country,
       disc: form.disc || "",
       discount: form.discount || "",
+      offerType: form.offerType || "deal",
+      couponCode: form.couponCode || "",
+      code: form.couponCode || "",
+      cashback: form.cashback || "",
+      points: form.points || "",
+      audience: form.audience || "All shoppers",
+      expiresAt: form.expiresAt || "",
+      terms: form.terms || "",
+      verified: !!form.verified,
+      exclusive: !!form.exclusive,
+      featured: !!form.featured,
+      priority: Number(form.priority) || 0,
       img: imageUrl || "",
       image: imageUrl || "",
       category: form.category || "",
@@ -256,7 +290,7 @@ function AddCategories({ setActive, setEditCategories, editCategories, active })
               value={form.title}
               onChange={handleChange}
               required
-              maxLength={20}
+              maxLength={80}
               className="w-full pl-10 pr-3 py-2 border rounded-sm focus:ring-2 focus:ring-black focus:outline-none"
             />
 
@@ -367,6 +401,138 @@ function AddCategories({ setActive, setEditCategories, editCategories, active })
 
           </div>
 
+        </div>
+
+        <div className="grid gap-4 md:grid-cols-2">
+          <div>
+            <label className="block text-sm font-semibold text-gray-700">
+              Offer Type
+            </label>
+            <select
+              name="offerType"
+              value={form.offerType}
+              onChange={handleChange}
+              className="mt-2 w-full cursor-pointer rounded-sm border p-3"
+            >
+              <option value="deal">Deal</option>
+              <option value="coupon">Coupon Code</option>
+              <option value="cashback">Cash Back</option>
+              <option value="reward">Reward Points</option>
+              <option value="student">Student Offer</option>
+              <option value="creator">Creator/Affiliate</option>
+            </select>
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium mb-1">
+              Coupon / Promo Code
+            </label>
+            <input
+              name="couponCode"
+              placeholder="SAVE20"
+              value={form.couponCode}
+              onChange={handleChange}
+              className="w-full rounded-sm border p-3 focus:ring-2 focus:ring-black"
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium mb-1">
+              Cash Back
+            </label>
+            <input
+              name="cashback"
+              placeholder="5% cash back"
+              value={form.cashback}
+              onChange={handleChange}
+              className="w-full rounded-sm border p-3 focus:ring-2 focus:ring-black"
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium mb-1">
+              Reward Points
+            </label>
+            <input
+              name="points"
+              placeholder="Earn 500 points"
+              value={form.points}
+              onChange={handleChange}
+              className="w-full rounded-sm border p-3 focus:ring-2 focus:ring-black"
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium mb-1">
+              Audience
+            </label>
+            <input
+              name="audience"
+              placeholder="Students, creators, all shoppers"
+              value={form.audience}
+              onChange={handleChange}
+              className="w-full rounded-sm border p-3 focus:ring-2 focus:ring-black"
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium mb-1">
+              Expires At
+            </label>
+            <input
+              type="date"
+              name="expiresAt"
+              value={form.expiresAt}
+              onChange={handleChange}
+              className="w-full rounded-sm border p-3 focus:ring-2 focus:ring-black"
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium mb-1">
+              Priority
+            </label>
+            <input
+              type="number"
+              min="0"
+              name="priority"
+              value={form.priority}
+              onChange={handleChange}
+              className="w-full rounded-sm border p-3 focus:ring-2 focus:ring-black"
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium mb-1">
+              Terms
+            </label>
+            <input
+              name="terms"
+              placeholder="Minimum order, region, tracking rule"
+              value={form.terms}
+              onChange={handleChange}
+              className="w-full rounded-sm border p-3 focus:ring-2 focus:ring-black"
+            />
+          </div>
+        </div>
+
+        <div className="grid gap-3 rounded-lg border bg-gray-50 p-4 sm:grid-cols-3">
+          {[
+            ["verified", "Verified"],
+            ["exclusive", "Exclusive"],
+            ["featured", "Featured"],
+          ].map(([name, label]) => (
+            <label key={name} className="flex items-center gap-3 text-sm font-semibold text-gray-700">
+              <input
+                type="checkbox"
+                name={name}
+                checked={!!form[name]}
+                onChange={handleChange}
+                className="h-4 w-4"
+              />
+              {label}
+            </label>
+          ))}
         </div>
 
         <div>
@@ -483,7 +649,27 @@ function AddCategories({ setActive, setEditCategories, editCategories, active })
               </p>
 
               <div className="text-sm font-semibold text-green-600 mt-1">
-                {form.discount || "Discount Text"}
+                {form.discount || form.cashback || form.points || "Discount Text"}
+              </div>
+              <div className="mt-2 flex flex-wrap gap-2 text-xs">
+                <span className="rounded bg-blue-50 px-2 py-1 font-semibold text-blue-700">
+                  {form.offerType}
+                </span>
+                {form.couponCode ? (
+                  <span className="rounded bg-gray-200 px-2 py-1 font-semibold text-gray-700">
+                    {form.couponCode}
+                  </span>
+                ) : null}
+                {form.verified ? (
+                  <span className="rounded bg-green-50 px-2 py-1 font-semibold text-green-700">
+                    Verified
+                  </span>
+                ) : null}
+                {form.featured ? (
+                  <span className="rounded bg-indigo-50 px-2 py-1 font-semibold text-indigo-700">
+                    Featured
+                  </span>
+                ) : null}
               </div>
 
               {form.link && (

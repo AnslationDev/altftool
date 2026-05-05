@@ -170,7 +170,9 @@ import {
 import {
   cleanText,
   normalizeBuySmartCategory,
+  normalizeOfferType,
   normalizeStatus,
+  toBoolean,
 } from "@altftool/core/buysmart";
 import { db } from "@/lib/firebase";
 
@@ -184,6 +186,18 @@ function serializeCategory(category = {}) {
     title: normalized.title,
     disc: cleanText(category.disc),
     discount: cleanText(category.discount),
+    offerType: normalizeOfferType(category.offerType),
+    couponCode: normalized.code,
+    code: normalized.code,
+    cashback: normalized.cashback,
+    points: normalized.points,
+    audience: normalized.audience,
+    expiresAt: normalized.expiresAt,
+    terms: normalized.terms,
+    verified: toBoolean(category.verified, false),
+    exclusive: toBoolean(category.exclusive || category.isExclusive, false),
+    featured: toBoolean(category.featured || category.isFeatured, false),
+    priority: normalized.priority,
     img: normalized.img,
     image: normalized.image,
     link: normalized.link === "#" ? "" : normalized.link,
@@ -291,6 +305,8 @@ export const firebaseBuySmartCategoriesSource = {
             ...row,
             image: row.image || row.imageUrl || row.logo,
             img: row.img || row.image || row.imageUrl || row.logo,
+            couponCode: row.couponCode || row.code || row.promoCode,
+            offerType: row.offerType || row.type,
           }),
           createdAt: Date.now(),
           updatedAt: Date.now(),

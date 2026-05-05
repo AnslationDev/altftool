@@ -19,6 +19,47 @@ export function isLoadableImageUrl(value) {
   return /^https?:\/\//i.test(url);
 }
 
+export function toBoolean(value, fallback = false) {
+  if (typeof value === "boolean") return value;
+  if (typeof value === "number") return value > 0;
+
+  const normalized = cleanText(value).toLowerCase();
+  if (["true", "yes", "y", "1", "active", "verified", "featured"].includes(normalized)) {
+    return true;
+  }
+  if (["false", "no", "n", "0", "paused", "inactive"].includes(normalized)) {
+    return false;
+  }
+
+  return fallback;
+}
+
+export function normalizeOfferType(value) {
+  const normalized = cleanText(value).toLowerCase();
+
+  if (["coupon", "code", "promo", "voucher"].includes(normalized)) return "coupon";
+  if (["cashback", "cash back", "cash-back"].includes(normalized)) return "cashback";
+  if (["reward", "points", "loyalty"].includes(normalized)) return "reward";
+  if (["student", "student-discount", "student discount"].includes(normalized)) return "student";
+  if (["creator", "publisher", "affiliate"].includes(normalized)) return "creator";
+  if (["sale", "deal", "offer"].includes(normalized)) return "deal";
+
+  return "deal";
+}
+
+export function getPrimarySavingsText(item = {}) {
+  return (
+    cleanText(item.discount) ||
+    cleanText(item.cashback) ||
+    cleanText(item.cashBack) ||
+    cleanText(item.points) ||
+    cleanText(item.reward) ||
+    cleanText(item.highlight) ||
+    cleanText(item.offer) ||
+    "View deal"
+  );
+}
+
 export function getDomainFromUrl(value) {
   const rawValue = cleanText(value);
   if (!rawValue) return "";
@@ -64,15 +105,41 @@ export function normalizeBuySmartCategory(item = {}) {
     cleanText(item.slug) ||
     "Brand";
   const image = getBuySmartImageUrl({ ...item, link });
+  const code = cleanText(item.code) || cleanText(item.couponCode) || cleanText(item.promoCode);
+  const cashback = cleanText(item.cashback) || cleanText(item.cashBack);
+  const points = cleanText(item.points) || cleanText(item.reward);
+  const discount =
+    cleanText(item.discount) ||
+    cleanText(item.offer) ||
+    cleanText(item.highlight);
+  const offerType = normalizeOfferType(item.offerType || (code ? "coupon" : cashback ? "cashback" : points ? "reward" : ""));
+  const verified = toBoolean(item.verified, false);
+  const featured = toBoolean(item.featured || item.isFeatured, false);
+  const exclusive = toBoolean(item.exclusive || item.isExclusive, false);
+  const priority = Number.parseInt(item.priority, 10);
 
   return {
     ...item,
+    audience: cleanText(item.audience) || "All shoppers",
+    cashback,
     category: cleanText(item.category) || "Popular",
+    code,
+    couponCode: code,
+    disc: cleanText(item.disc) || cleanText(item.description),
+    discount,
+    exclusive,
+    expiresAt: cleanText(item.expiresAt) || cleanText(item.expiry) || cleanText(item.expires),
+    featured,
     image,
     img: image,
     link,
+    offerType,
+    points,
+    priority: Number.isFinite(priority) ? priority : 0,
     status: normalizeStatus(item.status),
+    terms: cleanText(item.terms),
     title,
     url: cleanText(item.url) || link,
+    verified,
   };
 }

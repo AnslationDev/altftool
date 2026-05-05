@@ -19,6 +19,9 @@ import {
 const Trending = dynamic(() => import("./components/Trending"), {
   loading: () => <TrendingSkeleton />,
 });
+const SavingsHub = dynamic(() => import("./components/SavingsHub"), {
+  loading: () => <CategoriesSkeleton cards={6} />,
+});
 const FeatureBrand = dynamic(() => import("./components/FeatureBrand"), {
   loading: () => <FeatureBrandSkeleton />,
 });
@@ -117,6 +120,12 @@ export default function Page() {
       <RouteLazySection fallback={<TrendingSkeleton />} minHeight={360}>
         <section className="section">
           <Trending />
+        </section>
+      </RouteLazySection>
+
+      <RouteLazySection fallback={<CategoriesSkeleton cards={6} />} minHeight={620}>
+        <section className="section">
+          <SavingsHub />
         </section>
       </RouteLazySection>
 

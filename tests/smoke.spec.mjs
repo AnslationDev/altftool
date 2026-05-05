@@ -42,7 +42,16 @@ test("buysmart A-Z category cards load brand images", async ({ page }) => {
     await cookieAccept.click();
   }
 
-  for (let i = 0; i < 8; i += 1) {
+  for (let i = 0; i < 6; i += 1) {
+    if (await page.getByTestId("buysmart-savings-hub").count()) break;
+    await page.mouse.wheel(0, 650);
+    await page.waitForTimeout(600);
+  }
+
+  await expect(page.getByTestId("buysmart-savings-hub")).toBeVisible();
+  await expect(page.getByRole("heading", { name: "AltFTool Savings Hub" })).toBeVisible();
+
+  for (let i = 0; i < 12; i += 1) {
     if (await page.getByText("Choose Your Brand A-Z").count()) break;
     await page.mouse.wheel(0, 750);
     await page.waitForTimeout(700);

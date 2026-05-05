@@ -348,6 +348,42 @@ function GetCategories({ setActive, setEditCategories }) {
         ),
       },
       {
+        accessorKey: "offerType",
+        header: "Type",
+        Cell: ({ cell }) => (
+          <span className="rounded bg-gray-100 px-2 py-1 text-xs font-semibold capitalize text-gray-700">
+            {cell.getValue() || "deal"}
+          </span>
+        ),
+      },
+      {
+        header: "Saving",
+        Cell: ({ row }) => (
+          <div className="w-44 truncate text-sm">
+            {row.original.discount ||
+              row.original.cashback ||
+              row.original.points ||
+              row.original.code ||
+              "-"}
+          </div>
+        ),
+      },
+      {
+        accessorKey: "verified",
+        header: "Verified",
+        Cell: ({ cell }) => (
+          <span
+            className={`rounded px-2 py-1 text-xs font-semibold ${
+              cell.getValue()
+                ? "bg-green-50 text-green-700"
+                : "bg-gray-100 text-gray-600"
+            }`}
+          >
+            {cell.getValue() ? "Yes" : "No"}
+          </span>
+        ),
+      },
+      {
         accessorKey: "status",
         header: "Status",
         type: "status", 
@@ -417,4 +453,3 @@ function GetCategories({ setActive, setEditCategories }) {
 }
 
 export default GetCategories;
-

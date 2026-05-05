@@ -1,6 +1,6 @@
 "use client";
 
-import { TriangleAlert } from "lucide-react";
+import { BadgeCheck, Clock3, Sparkles, TicketPercent, TriangleAlert } from "lucide-react";
 import { firebaseBuySmartCategoriesSource } from "../service.js/firebaseBuySmartCategories";
 import { useMemo, useState, useEffect } from "react";
 import Link from "next/link";
@@ -20,6 +20,7 @@ function CategoryCard({ cat }) {
   const title = normalizedCat.title;
   const href = normalizedCat.link;
   const showFallback = !imageSrc || imageError;
+  const savingsText = normalizedCat.discount || normalizedCat.cashback || normalizedCat.points || "View deal";
 
   useEffect(() => {
     setImageLoaded(false);
@@ -95,6 +96,18 @@ function CategoryCard({ cat }) {
                 <h3 className="font-bold text-[18px] sm:text-[20px] md:text-[22px] leading-[1.5] text-(--foreground) text-center line-clamp-2">
                   {title}
                 </h3>
+                <div className="mx-auto flex max-w-full flex-wrap justify-center gap-1.5">
+                  <span className="inline-flex items-center gap-1 rounded-full border border-(--border) bg-(--muted) px-2 py-1 text-[11px] font-semibold text-(--muted-foreground)">
+                    <TicketPercent className="h-3 w-3 text-(--primary)" />
+                    {savingsText}
+                  </span>
+                  {normalizedCat.verified ? (
+                    <span className="inline-flex items-center gap-1 rounded-full border border-(--border) bg-(--background) px-2 py-1 text-[11px] font-semibold text-(--muted-foreground)">
+                      <BadgeCheck className="h-3 w-3 text-(--primary)" />
+                      Verified
+                    </span>
+                  ) : null}
+                </div>
               </div>
             </div>
           </div>
@@ -112,9 +125,24 @@ function CategoryCard({ cat }) {
               backfaceVisibility: "hidden",
             }}
           >
-            <h3 className="font-bold text-[20px] sm:text-[22px] md:text-[24px] text-white leading-snug">
-              {title}
-            </h3>
+            <div className="space-y-3">
+              <div className="flex justify-center gap-2">
+                {normalizedCat.exclusive ? (
+                  <Sparkles className="h-5 w-5 text-white" />
+                ) : (
+                  <TicketPercent className="h-5 w-5 text-white" />
+                )}
+                {normalizedCat.expiresAt ? (
+                  <Clock3 className="h-5 w-5 text-white" />
+                ) : null}
+              </div>
+              <h3 className="font-bold text-[20px] sm:text-[22px] md:text-[24px] text-white leading-snug">
+                {title}
+              </h3>
+              <p className="text-sm font-semibold text-white/85">
+                {normalizedCat.code || savingsText}
+              </p>
+            </div>
           </div>
         </div>
       </div>
