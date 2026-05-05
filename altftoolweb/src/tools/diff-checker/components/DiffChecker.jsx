@@ -9,7 +9,6 @@ import UnifiedView from "./UnifiedView";
 import SplitView from "./SplitView";
 import { computeDiffLogic } from "../utils/diffUtils";
 import SimilarityIndicator from "./SimilarityIndicator";
-import { div } from "@tensorflow/tfjs-core";
 
 const DiffChecker = () => {
   const [originalText, setOriginalText] = useState("");

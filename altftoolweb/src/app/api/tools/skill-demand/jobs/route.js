@@ -1,4 +1,7 @@
 import { NextResponse } from 'next/server';
+import { requireServerEnvGroup } from '@altftool/core/env';
+import { routeError } from '@altftool/core/http';
+import { SERVER_ENV } from '@altftool/core/services';
 
 export async function GET(req) {
   try {
@@ -8,15 +11,13 @@ export async function GET(req) {
 
     if (!skill) return NextResponse.json({ error: 'Missing skill' }, { status: 400 });
 
-    // const ADZUNA_APP_ID = process.env.VITE_ADZUNA_APP_ID || process.env.ADZUNA_APP_ID;
-    // const ADZUNA_APP_KEY = process.env.VITE_ADZUNA_APP_KEY || process.env.ADZUNA_APP_KEY;
-
-    const ADZUNA_APP_ID = "6303d62b";
-    const ADZUNA_APP_KEY = "272f95515be003c9ad38b58f88fca86c";
-
-    if (!ADZUNA_APP_ID || !ADZUNA_APP_KEY) {
-      return NextResponse.json({ error: 'API keys are missing for Adzuna. Please set ADZUNA_APP_ID and ADZUNA_APP_KEY.' }, { status: 500 });
-    }
+    const {
+      [SERVER_ENV.adzunaAppId]: ADZUNA_APP_ID,
+      [SERVER_ENV.adzunaAppKey]: ADZUNA_APP_KEY,
+    } = requireServerEnvGroup(
+      [SERVER_ENV.adzunaAppId, SERVER_ENV.adzunaAppKey],
+      'Adzuna API keys'
+    );
 
     const endpoint = `https://api.adzuna.com/v1/api/jobs/${encodeURIComponent(country)}/search/1`;
     const params = new URLSearchParams({
@@ -64,6 +65,6 @@ export async function GET(req) {
     return NextResponse.json({ jobCount, avgSalary, minSalary, maxSalary, topLocations, raw: data });
   } catch (err) {
     console.error('Adzuna proxy error:', err);
-    return NextResponse.json({ error: err.message || 'Failed to fetch Adzuna data' }, { status: 500 });
+    return routeError(NextResponse, err, 'Failed to fetch Adzuna data');
   }
 }

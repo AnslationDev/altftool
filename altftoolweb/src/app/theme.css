@@ -1,44 +1,34 @@
 /* LIGHT MODE */
 
 html {
-  background-color: var(--color-bg);
+  background-color: var(--background);
 }
 
 :root {
-  --color-background: #ffffff;
-  --color-background-foreground: #111827;
-
-  --color-primary: #2563eb;
-  --color-primary-foreground: #ffffff;
-
-  --color-secondary: #9ba2ae;
-  --color-secondary-foreground: #ffffff;
-
-  --color-muted: #f3f4f6;
-  --color-muted-foreground: #6b7280;
-
-  --color-border: #e5e7eb;
-
-  --color-card: #ffffff;
-  --color-card-foreground: #111827;
+  --color-background: var(--background);
+  --color-background-foreground: var(--foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-border: var(--border);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
 }
 
 /* DARK MODE */
 [data-theme="dark"] {
-  --color-background: #0b0b0b;
-  --color-background-foreground: #f1f5f9;
-
-  --color-primary: #3b82f6;
-  --color-primary-foreground: #ffffff;
-
-  --color-secondary: #9ba2ae;
-  --color-secondary-foreground: #ffffff;
-
-  --color-muted: #18181b;
-  --color-muted-foreground: #a1a1aa;
-
-  --color-border: #2a2a2e;
-
-  --color-card: #18181b;
-  --color-card-foreground: #ffffff;
+  --color-background: var(--background);
+  --color-background-foreground: var(--foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-border: var(--border);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
 }

@@ -37,8 +37,6 @@ export async function POST(request) {
       }, { status: 400 });
     }
 
-    console.log(`[test-push] sending to uid=${decoded.uid} (${fcmTokens.length} token(s))`);
-
     await sendPushToUsers({
       userIds:  [decoded.uid],
       title:    "🔔 Push is working!",

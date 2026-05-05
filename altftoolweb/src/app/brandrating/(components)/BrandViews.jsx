@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import { getFormattedBrandData } from "../service/getFormattedBrandData";
-import { div } from "@tensorflow/tfjs-core";
 
 
 
@@ -20,7 +19,7 @@ export default function DataView() {
             const formatted = await getFormattedBrandData();
             setData(formatted);
           } catch (err) {
-            console.log(err);
+            console.error(err);
           } finally {
             setLoading(false);
           }
@@ -35,9 +34,6 @@ export default function DataView() {
         }
     ))
     // console.log("nsjd" ,filterSubcategory )
-
-
-console.log(data , "all data")
 
 
   return (

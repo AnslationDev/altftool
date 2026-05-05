@@ -23,7 +23,7 @@ export default function IPChecker() {
   const mapInstanceRef = useRef(null);
 
 
-  const GOOGLE_MAPS_API_KEY = 'AIzaSyDFzrxd0y3hKRneSCw4q_aoD53YQLOomvI'; 
+  const GOOGLE_MAPS_API_KEY = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || "";
 
   useEffect(() => {
     if (domainData && mapRef.current && mapLoaded) {
@@ -56,6 +56,11 @@ export default function IPChecker() {
   }, [domainData, mapLoaded]);
 
   useEffect(() => {
+    if (!GOOGLE_MAPS_API_KEY) {
+      setError('Google Maps key is not configured');
+      return;
+    }
+
     if (!window.google) {
       const script = document.createElement('script');
       script.src = `https://maps.googleapis.com/maps/api/js?key=${GOOGLE_MAPS_API_KEY}`;
@@ -67,7 +72,7 @@ export default function IPChecker() {
     } else {
       setMapLoaded(true);
     }
-  }, []);
+  }, [GOOGLE_MAPS_API_KEY]);
 
   const isValidDomainFormat = (input) => {
     const domainRegex = /^(?!:\/\/)([a-zA-Z0-9-]+\.)?[a-zA-Z0-9][a-zA-Z0-9-]+\.[a-zA-Z]{2,6}$/;

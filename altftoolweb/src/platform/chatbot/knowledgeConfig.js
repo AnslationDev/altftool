@@ -11,11 +11,9 @@ import { db } from "@/lib/firebase";
 // Helper for fetching collections
 const fetchCollection = async (path) => {
     try {
-        console.log(`[AltFBot] Fetching collection: ${path}`);
         const colRef = collection(db, ...path.split('/'));
         const snap = await getDocs(colRef);
         const data = snap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-        console.log(`[AltFBot] Fetched ${data.length} items from ${path}`);
         return data;
     } catch (e) {
         console.error(`AltFBot: Error fetching collection ${path}:`, e);
@@ -26,7 +24,6 @@ const fetchCollection = async (path) => {
 // Helper for fetching documents with arrays
 const fetchDocument = async (path, field) => {
     try {
-        console.log(`[AltFBot] Fetching document: ${path}, field: ${field}`);
         const docRef = doc(db, ...path.split('/'));
         const snap = await getDoc(docRef);
         if (!snap.exists()) {
@@ -38,7 +35,6 @@ const fetchDocument = async (path, field) => {
             console.warn(`[AltFBot] Field '${field}' in ${path} is not an array or is missing. Value:`, data);
             return [];
         }
-        console.log(`[AltFBot] Fetched ${data.length} items from ${path} field '${field}'`);
         return data;
     } catch (e) {
         console.error(`AltFBot: Error fetching document ${path}:`, e);

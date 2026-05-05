@@ -87,7 +87,6 @@ function PopularTopic({ data }) {
         Array.isArray(sub?.brands) ? sub.brands : []
       )
       : [];
-      console.log(directBrands,"subcategory brandss",subcategoryBrands)
 
     const merged = [...directBrands, ...subcategoryBrands].filter(Boolean);
 

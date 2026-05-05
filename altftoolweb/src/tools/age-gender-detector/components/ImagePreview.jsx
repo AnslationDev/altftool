@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { X, Upload } from "lucide-react";
-import * as faceapi from "face-api.js";
+import * as faceapi from "@vladmandic/face-api";
 
 export default function ImagePreview({ mode, preview, onReset }) {
   const canvasRef = useRef(null);

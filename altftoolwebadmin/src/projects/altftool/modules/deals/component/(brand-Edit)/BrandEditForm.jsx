@@ -76,7 +76,7 @@ function BrandEditForm({ editData, setActive, categories }) {
 
       setActive(false);
     } catch (err) {
-      console.log("Update error:", err.message);
+      console.error("Update error:", err.message);
     } finally {
       setLoading(false);
     }

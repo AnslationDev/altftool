@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useRouter, useSearchParams, usePathname } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import { ChevronDown, Search, Menu, Sun, Moon, X } from "lucide-react";
 import { useTheme } from "@/contexts/ThemeContext";
 import Link from "next/link";
@@ -9,9 +9,7 @@ import Link from "next/link";
 const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const router = useRouter();
-  const searchParams = useSearchParams();
-  const existingQuery = searchParams.get("q") || "";
-  const [searchQuery, setSearchQuery] = useState(existingQuery);
+  const [searchQuery, setSearchQuery] = useState("");
   const pathname = usePathname();
   const { theme, toggleTheme } = useTheme();
 
@@ -20,13 +18,10 @@ const Header = () => {
 
   const isBlogSlug = /^\/blogs\/[^/]+/.test(pathname);
 
-  // Hide global header on the search engine page to mimic Google's clean UI
-  if (pathname === "/search-eng" || pathname.startsWith("/search-eng/")) {
-    return null;
-  }
   useEffect(() => {
+    const existingQuery = new URLSearchParams(window.location.search).get("q") || "";
     setSearchQuery(existingQuery);
-  }, [existingQuery]);
+  }, [pathname]);
 
   const handleChange = (value) => {
     setSearchQuery(value);
@@ -93,62 +88,54 @@ const Header = () => {
   ];
 
   const buttonClass =
-    theme === "dark"
-      ? "flex border border-zinc-700 h-9 w-9 items-center justify-center rounded-md hover:bg-zinc-800 text-white"
-      : "flex border border-gray-200 h-9 w-9 items-center justify-center rounded-md hover:bg-gray-100 text-gray-600";
+    "flex h-9 w-9 items-center justify-center rounded-[var(--anslation-ds-radius)] border border-(--border) bg-(--card) text-(--muted-foreground) shadow-[var(--anslation-ds-shadow-sm)] transition hover:bg-(--muted) hover:text-(--foreground)";
 
-  const searchButtonClass =
-    theme === "dark"
-      ? "flex h-9 items-center text-gray-400 gap-2 rounded-md border border-zinc-700 bg-black px-4 text-sm hover:border-blue-500 hover:bg-zinc-900"
-      : "flex h-9 items-center text-[#9BA2AE] gap-2 rounded-md border border-gray-200 bg-white px-4 text-sm hover:border-primary/30 hover:bg-muted/50";
-      if (isBlogSlug) return null
+  // Hide global header on immersive routes.
+  if (pathname === "/search-eng" || pathname.startsWith("/search-eng/") || isBlogSlug) {
+    return null;
+  }
+
   return (
     <>
-      <header id="main-header" className="sticky top-0 z-50 py-2 px-4 sm:px-6 md:px-[8.75rem] max-w-[1840px] mx-auto bg-(--background) border-b border-(--border)">
-        <div className="flex h-16 items-center justify-between gap-10 ">
+      <header id="main-header" className="sticky top-0 z-50 border-b border-(--border) bg-(--card) px-4 py-2 backdrop-blur-xl sm:px-6 lg:px-10">
+        <div className="mx-auto flex h-14 max-w-[1440px] items-center justify-between gap-6">
           {/* LOGO */}
-          <Link href="/" className="flex items-center">
+          <Link href="/" className="flex min-w-fit items-center">
             <img
               src="/assets/logo3.png"
-              className="h-20 w-30 object-contain"
+              className="h-9 w-auto object-contain"
               alt="Logo"
             />
           </Link>
 
 
           {/* DESKTOP NAV */}
-          <nav className="hidden items-center gap-6 lg:flex">
+          <nav className="hidden items-center gap-1 lg:flex">
             {navItems.map((item) => (
               <div key={item.label} className="relative group">
                 {item.hasDropdown ? (
                   <>
                     <button
-                      className={`relative flex items-center gap-1 py-2 text-sm font-medium
+                      className={`relative flex items-center gap-1 rounded-[var(--anslation-ds-radius)] px-3 py-2 text-sm font-medium transition
                         ${item.options?.some((o) => isActive(o.href))
-                          ? "text-(--primary)"
-                          : "text-(--muted-foreground)"
+                          ? "bg-(--muted) text-(--primary)"
+                          : "text-(--muted-foreground) hover:bg-(--muted) hover:text-(--foreground)"
                         }`}
                     >
                       {item.label}
                       <ChevronDown className="h-4 w-4 transition group-hover:rotate-180" />
-
-                      {item.options?.some((o) => isActive(o.href)) && (
-                        <span className="absolute -bottom-1 left-0 h-[2px] w-full bg-(--primary)" />
-                      )}
                     </button>
 
                     <div className="absolute left-0 top-full hidden pt-2 group-hover:block">
-                      <div className="w-48 rounded-md border p-1 shadow-lg bg-(--background) border-(--border)">
+                      <div className="w-56 rounded-[var(--anslation-ds-radius)] border border-(--border) bg-(--card) p-1 shadow-[var(--anslation-ds-shadow-md)]">
                         {item.options?.map((option) => (
                           <Link
                             key={option.label}
                             href={option.href}
-                            className={`block rounded-sm px-3 py-2 text-sm transition
+                            className={`block rounded-[6px] px-3 py-2 text-sm transition
                               ${isActive(option.href)
-                                ? "text-(--primary) bg-(--primary)/10"
-                                : theme === "dark"
-                                  ? "text-gray-300 hover:bg-zinc-900"
-                                  : "text-gray-700 hover:bg-gray-100"
+                                ? "bg-(--muted) text-(--primary)"
+                                : "text-(--muted-foreground) hover:bg-(--muted) hover:text-(--foreground)"
                               }`}
                           >
                             {option.label}
@@ -160,16 +147,13 @@ const Header = () => {
                 ) : (
                   <Link
                     href={item.href}
-                    className={`relative text-sm font-medium transition-colors
+                    className={`relative rounded-[var(--anslation-ds-radius)] px-3 py-2 text-sm font-medium transition
                       ${isActive(item.href)
-                        ? "text-(--primary)"
-                        : "text-(--muted-foreground) hover:text-(--primary)"
+                        ? "bg-(--muted) text-(--primary)"
+                        : "text-(--muted-foreground) hover:bg-(--muted) hover:text-(--foreground)"
                       }`}
                   >
                     {item.label}
-                    {isActive(item.href) && (
-                      <span className="absolute -bottom-1 left-0 h-[2px] w-full bg-(--primary)" />
-                    )}
                   </Link>
                 )}
               </div>
@@ -177,7 +161,7 @@ const Header = () => {
           </nav>
 
           {/* RIGHT SIDE */}
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-2">
             {/* SEARCH INPUT */}
             <div className="hidden sm:flex items-center gap-2">
               <input
@@ -185,7 +169,7 @@ const Header = () => {
                 placeholder="Search tools, extensions..."
                 value={searchQuery}
                 onChange={(e) => handleChange(e.target.value)}
-                className="h-9 w-64 px-3 rounded-md border border-(--border) bg-(--background) text-sm focus:outline-none focus:ring-2 focus:ring-(--primary)"
+                className="h-9 w-64 rounded-[var(--anslation-ds-radius)] border border-(--border) bg-(--background) px-3 text-sm text-(--foreground) shadow-[var(--anslation-ds-shadow-sm)] placeholder:text-(--muted-foreground) focus:border-(--primary) focus:outline-none focus:shadow-[var(--anslation-ds-focus-ring)]"
               />
 
               <button onClick={handleSearch} className={buttonClass}>
@@ -223,13 +207,13 @@ const Header = () => {
           }`}
       >
         <div
-          className={`fixed inset-0 bg-(--background)/80 backdrop-blur-sm transition-opacity duration-300
+          className={`fixed inset-0 bg-(--background) backdrop-blur-sm transition-opacity duration-300
           ${mobileMenuOpen ? "opacity-100" : "opacity-0"}`}
           onClick={() => setMobileMenuOpen(false)}
         />
 
         <div
-          className={`fixed inset-y-0 left-0 w-full max-w-xs border-r p-6 shadow-lg bg-(--background) border-(--border) text-(--foreground) transform transition-transform duration-300 ease-out
+          className={`fixed inset-y-0 left-0 w-full max-w-xs border-r border-(--border) bg-(--card) p-5 text-(--foreground) shadow-[var(--anslation-ds-shadow-lg)] transform transition-transform duration-300 ease-out
           ${mobileMenuOpen ? "translate-x-0" : "-translate-x-full"}`}
         >
           {/* LOGO + CLOSE BUTTON */}
@@ -237,7 +221,7 @@ const Header = () => {
             <Link href="/" onClick={() => setMobileMenuOpen(false)}>
               <img
                 src="/assets/logo3.png"
-                className="h-10 w-20 object-contain"
+                className="h-9 w-auto object-contain"
                 alt="Logo"
               />
             </Link>
@@ -245,7 +229,7 @@ const Header = () => {
             {/* LUCIDE X ICON */}
             <button
               onClick={() => setMobileMenuOpen(false)}
-              className="text-gray-500 hover:text-gray-900"
+              className="rounded-[var(--anslation-ds-radius)] p-2 text-(--muted-foreground) hover:bg-(--muted) hover:text-(--foreground)"
             >
               <X className="h-5 w-5" />
             </button>

@@ -1,15 +1,13 @@
 import { NextResponse } from 'next/server';
+import { requireServerEnv } from '@altftool/core/env';
+import { routeError } from '@altftool/core/http';
+import { SERVER_ENV } from '@altftool/core/services';
 
 export async function GET(req) {
   try {
     const { searchParams } = new URL(req.url);
     const type = searchParams.get('type') || 'search'; // Default to search
-    //const RAPIDAPI_KEY = process.env.RAPIDAPI_KEY || process.env.VITE_RAPIDAPI_KEY;
-    const RAPIDAPI_KEY = "024ec09e80mshd1d6254a1174a76p1d7828jsnaba17b6410c3";
-
-    if (!RAPIDAPI_KEY) {
-      return NextResponse.json({ error: 'RAPIDAPI_KEY is not configured on the server.' }, { status: 500 });
-    }
+    const RAPIDAPI_KEY = requireServerEnv(SERVER_ENV.rapidApi);
 
     let url;
     const headers = {
@@ -69,6 +67,6 @@ export async function GET(req) {
     return NextResponse.json(data);
   } catch (error) {
     console.error('JSearch proxy error:', error);
-    return NextResponse.json({ error: error.message || 'Internal server error' }, { status: 500 });
+    return routeError(NextResponse, error, 'Internal server error');
   }
 }

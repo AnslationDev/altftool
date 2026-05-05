@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useState, useMemo, useEffect } from "react";
+import { Suspense, useState, useMemo, useEffect } from "react";
 import data from "../(data)/db.json";
 import Link from "next/link";
 import { ArrowLeft, DiamondPercent, Handshake } from "lucide-react";
@@ -17,7 +17,7 @@ const TABS = [
   { label: "Newest", value: "newest" },
 ];
 
-export default function AllStoresPage() {
+function AllStoresContent() {
   const [brands, setBrands] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -30,8 +30,6 @@ export default function AllStoresPage() {
 
     return () => unsubscribe();
   }, []);
-
-  console.log(brands, "Brands");
 
   const searchParams = useSearchParams();
   const router = useRouter();
@@ -215,6 +213,14 @@ export default function AllStoresPage() {
 )}
       </div>
     </>
+  );
+}
+
+export default function AllStoresPage() {
+  return (
+    <Suspense fallback={<div className="section-container py-20 text-center text-(--muted-foreground)">Loading stores...</div>}>
+      <AllStoresContent />
+    </Suspense>
   );
 }
 

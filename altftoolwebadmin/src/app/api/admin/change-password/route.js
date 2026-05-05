@@ -1,37 +1,11 @@
-import admin from "firebase-admin";
 import { writeAdminAuditLog } from "@/lib/adminAuditLog";
 import { NextResponse } from "next/server";
-
-/* ===============================
-   Same verifier (reuse or import)
-=============================== */
-async function verifySuperAdmin(req) {
-  const header = req.headers.get("authorization");
-  if (!header) throw new Error("No token");
-
-  const token = header.replace("Bearer ", "");
-  const decoded = await admin.auth().verifyIdToken(token);
-
-  const snap = await admin
-    .firestore()
-    .collection("admins")
-    .doc(decoded.uid)
-    .get();
-
-  if (!snap.exists || snap.data().roleType !== "superadmin") {
-    throw new Error("Unauthorized");
-  }
-
-  if (!snap.data().isActive) {
-    throw new Error("Inactive admin");
-  }
-
-  return decoded;
-}
+import { adminAuth } from "@/lib/firebaseAdmin";
+import { verifySuperAdminRequest } from "@/lib/adminAccess";
 
 export async function POST(req) {
   try {
-    const actor = await verifySuperAdmin(req);
+    const actor = await verifySuperAdminRequest(req);
 
     const { uid, password } = await req.json();
 
@@ -48,7 +22,7 @@ export async function POST(req) {
     /* ===============================
        Update AUTH (NOT Firestore)
     =============================== */
-    await admin.auth().updateUser(uid, {
+    await adminAuth.updateUser(uid, {
       password,
     });
 

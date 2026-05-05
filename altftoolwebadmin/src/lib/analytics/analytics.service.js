@@ -1,4 +1,4 @@
-import admin from "firebase-admin";
+import { Timestamp } from "firebase-admin/firestore";
 import { adminDb } from "@/lib/firebaseAdmin";
 import {
   ANALYTICS_RECENT_LIMIT,
@@ -56,7 +56,7 @@ async function getRecentCollectionCount(ref, field, days) {
   if (!field) return 0;
 
   try {
-    const cutoff = admin.firestore.Timestamp.fromMillis(
+    const cutoff = Timestamp.fromMillis(
       Date.now() - days * 86400000,
     );
     const snap = await ref.where(field, ">=", cutoff).count().get();
@@ -70,7 +70,7 @@ async function getCollectionDocsSince(ref, field, days) {
   if (!field) return [];
 
   try {
-    const cutoff = admin.firestore.Timestamp.fromMillis(
+    const cutoff = Timestamp.fromMillis(
       Date.now() - days * 86400000,
     );
     const snap = await ref.where(field, ">=", cutoff).get();

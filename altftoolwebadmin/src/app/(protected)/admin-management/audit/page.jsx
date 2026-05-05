@@ -52,7 +52,13 @@ let adminCachePromise = null;
 async function getAdmins() {
   if (adminCache) return adminCache;
   if (!adminCachePromise) {
-    adminCachePromise = fetch("/api/admin/list")
+    const user = getAuth().currentUser;
+    if (!user) return [];
+
+    adminCachePromise = user.getIdToken(true)
+      .then((token) => fetch("/api/admin/list", {
+        headers: { Authorization: `Bearer ${token}` },
+      }))
       .then((r) => r.ok ? r.json() : { admins: [] })
       .then((d) => { adminCache = d.admins || []; return adminCache; })
       .catch(() => { adminCachePromise = null; return []; });

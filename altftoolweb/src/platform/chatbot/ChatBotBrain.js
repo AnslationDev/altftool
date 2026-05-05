@@ -16,8 +16,6 @@ class ChatbotSearchEngine {
         if (this.isHydrated) return; // Only hydrate once per session
 
         try {
-            console.log("AltFBot SearchEngine: Hydrating knowledge base from all configured sources...");
-
             // Process all dynamic sources defined in knowledgeConfig
             const loaders = dynamicSources.map(source => 
                 source.load()
@@ -32,7 +30,6 @@ class ChatbotSearchEngine {
             await Promise.allSettled(loaders);
 
             this.isHydrated = true;
-            console.log(`AltFBot SearchEngine: Hydration complete. Registry size: ${this.knowledgeBase.length} items.`);
         } catch (error) {
             console.error("AltFBot SearchEngine Hydration Failed:", error);
             this.isHydrated = true; // Mark as hydrated to prevent infinite retries

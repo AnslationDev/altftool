@@ -1,5 +1,5 @@
 import "./theme.css";
-import { Manrope } from "next/font/google";
+import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/contexts/ThemeContext";
 import Header from "@/platform/navigation/Header";
@@ -14,13 +14,16 @@ import { Suspense } from "react";
 import ChatBot from "@/platform/chatbot";
 import { AlertProvider } from "@/shared/ui/AlertProvider";
 
-// const bricolage = Bricolage_Grotesque({
-//   subsets: ["latin"],
-//   weight: ["200", "300", "400", "500", "600", "700", "800"],
-// });
-const manrope = Manrope({
+const geistSans = Geist({
   subsets: ["latin"],
-  weight: ["200", "300", "400", "500", "600", "700", "800"],
+  variable: "--font-geist-sans",
+  display: "swap",
+});
+
+const geistMono = Geist_Mono({
+  subsets: ["latin"],
+  variable: "--font-geist-mono",
+  display: "swap",
 });
 export const metadata = {
   title: {
@@ -36,8 +39,19 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning className={`${geistSans.variable} ${geistMono.variable}`}>
       <head>
+        <Script id="theme-init" strategy="beforeInteractive">
+          {`
+            try {
+              var manual = localStorage.getItem("themeManual") === "true";
+              var stored = localStorage.getItem("appTheme");
+              var system = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+              document.documentElement.setAttribute("data-theme", manual && stored ? stored : system);
+            } catch (_) {}
+          `}
+        </Script>
+
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-G07GM6LKP1"
           strategy="afterInteractive"
@@ -69,7 +83,7 @@ export default function RootLayout({ children }) {
         </Script>
       </head>
 
-      <body className={manrope.className}>
+      <body className="anslation-ds-public antialiased">
   <ThemeProvider>
     <CookieConsentProvider>
       <AlertProvider> {/* 👈 MOVE HERE */}

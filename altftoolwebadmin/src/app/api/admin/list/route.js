@@ -1,10 +1,12 @@
-import admin from "firebase-admin";
 import { NextResponse } from "next/server";
+import { adminDb } from "@/lib/firebaseAdmin";
+import { verifySuperAdminRequest } from "@/lib/adminAccess";
 
-export async function GET() {
+export async function GET(request) {
   try {
-    const snapshot = await admin
-      .firestore()
+    await verifySuperAdminRequest(request);
+
+    const snapshot = await adminDb
       .collection("admins")
       .get();
 
@@ -24,8 +26,8 @@ export async function GET() {
     console.error("ADMIN LIST ERROR:", err);
 
     return NextResponse.json(
-      { error: err.message },
-      { status: 500 }
+      { error: err.message === "Unauthorized" ? "Unauthorized" : err.message },
+      { status: err.message === "Unauthorized" ? 401 : 500 }
     );
   }
 }

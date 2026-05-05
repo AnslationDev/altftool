@@ -32,18 +32,14 @@ export async function processDueScheduledBroadcasts() {
     .get();
 
   if (snap.empty) {
-    console.log("[scheduler] No due broadcasts.");
     return { processed: 0 };
   }
-
-  console.log(`[scheduler] Found ${snap.docs.length} due broadcast(s).`);
 
   let processed = 0;
   for (const doc of snap.docs) {
     try {
       await deliverBroadcast(doc.id, doc.data());
       processed++;
-      console.log(`[scheduler] Delivered broadcast ${doc.id}`);
     } catch (err) {
       console.error(`[scheduler] Failed to deliver broadcast ${doc.id}:`, err.message);
     }

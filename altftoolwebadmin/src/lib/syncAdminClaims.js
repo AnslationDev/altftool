@@ -1,12 +1,10 @@
-// lib/syncAdminClaims.js
-
-import admin from "firebase-admin";
+import { adminAuth, adminDb } from "@/lib/firebaseAdmin";
 
 export async function syncAdminClaims(uid) {
-  const snap = await admin.firestore().collection("admins").doc(uid).get();
+  const snap = await adminDb.collection("admins").doc(uid).get();
 
   if (!snap.exists || !snap.data().isActive) {
-    await admin.auth().setCustomUserClaims(uid, {});
+    await adminAuth.setCustomUserClaims(uid, {});
     return;
   }
 
@@ -18,7 +16,7 @@ export async function syncAdminClaims(uid) {
     ...flattenLegacyPermissions(data.permissions),
   };
 
-  await admin.auth().setCustomUserClaims(uid, claims);
+  await adminAuth.setCustomUserClaims(uid, claims);
 }
 
 // { altftool: { permissions: { blogs: { read, write, delete } } } }

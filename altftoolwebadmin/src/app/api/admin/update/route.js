@@ -1,41 +1,17 @@
-import admin from "firebase-admin";
 import { syncAdminClaims } from "@/lib/syncAdminClaims";
 import { writeAdminAuditLog } from "@/lib/adminAuditLog";
 import { NextResponse } from "next/server";
-
-async function verifySuperAdmin(req) {
-  const header = req.headers.get("authorization");
-  if (!header) throw new Error("No token");
-
-  const token = header.replace("Bearer ", "");
-  const decoded = await admin.auth().verifyIdToken(token);
-
-  const snap = await admin
-    .firestore()
-    .collection("admins")
-    .doc(decoded.uid)
-    .get();
-
-  if (!snap.exists || snap.data().roleType !== "superadmin") {
-    throw new Error("Unauthorized");
-  }
-
-  if (!snap.data().isActive) {
-    throw new Error("Inactive admin");
-  }
-
-  return decoded;
-}
+import { adminDb } from "@/lib/firebaseAdmin";
+import { verifySuperAdminRequest } from "@/lib/adminAccess";
 
 export async function POST(req) {
   try {
-    const actor = await verifySuperAdmin(req);
+    const actor = await verifySuperAdminRequest(req);
 
     const { uid, updates } = await req.json();
 
     // 1️⃣ Update Firestore (SOURCE OF TRUTH)
-    await admin
-      .firestore()
+    await adminDb
       .collection("admins")
       .doc(uid)
       .update(updates);

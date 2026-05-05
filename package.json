@@ -1,0 +1,26 @@
+{
+  "name": "altftool",
+  "private": true,
+  "type": "module",
+  "workspaces": [
+    "altftoolweb",
+    "altftoolwebadmin",
+    "packages/*"
+  ],
+  "scripts": {
+    "build": "npm run build:web && npm run build:admin",
+    "build:web": "npm --prefix altftoolweb run build",
+    "build:admin": "npm --prefix altftoolwebadmin run build",
+    "dev:web": "npm --prefix altftoolweb run dev -- -p 3002",
+    "dev:admin": "npm --prefix altftoolwebadmin run dev -- -p 3001",
+    "audit": "npm run audit:web && npm run audit:admin",
+    "audit:web": "npm --prefix altftoolweb audit --audit-level=moderate",
+    "audit:admin": "npm --prefix altftoolwebadmin audit --audit-level=moderate"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.2.4",
+    "autoprefixer": "^10.5.0",
+    "postcss": "^8.5.14",
+    "tailwindcss": "^4.2.4"
+  }
+}

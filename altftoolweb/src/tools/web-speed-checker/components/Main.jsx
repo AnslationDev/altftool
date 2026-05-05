@@ -28,14 +28,12 @@ export default function MainComponent() {
     setResult(null);
     setLoading(true);
 
-    const apiKey = "AIzaSyAk6IN1Ocfe3hI03P7qC0Fv6QhsIHSUCKk";
-    const endpoint = `https://www.googleapis.com/pagespeedonline/v5/runPagespeed?url=${encodeURIComponent(
-      url,
-    )}&key=${apiKey}`;
+    const endpoint = `/api/tools/pagespeed?url=${encodeURIComponent(url)}`;
 
     try {
       const res = await fetch(endpoint);
       const data = await res.json();
+      if (!res.ok) throw new Error(data.error || "Error analyzing website");
 
       setResult(data);
 
@@ -57,7 +55,7 @@ export default function MainComponent() {
       setSuggestions(topSuggestions);
     } catch (error) {
       console.error("Error fetching data:", error);
-      alert("Error analyzing website. Please try again.");
+      alert(error.message || "Error analyzing website. Please try again.");
     } finally {
       setLoading(false);
     }

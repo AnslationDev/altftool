@@ -205,7 +205,7 @@ function AddCategory({ setActive , editData , setEditData }) {
     setSelectedCategory(res.id);
       
     } catch (error) {
-      console.log(error)
+      console.error(error)
       
     } finally{
           setCategoryUpload(false)
@@ -232,7 +232,7 @@ function AddCategory({ setActive , editData , setEditData }) {
     setSelectedBrand(res.id);
       
     } catch (error) {
-          console.log(error)
+          console.error(error)
     } finally {
       setBrandUpload(false)
       setActive(false);

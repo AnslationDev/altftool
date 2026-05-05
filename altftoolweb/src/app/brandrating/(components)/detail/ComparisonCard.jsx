@@ -82,11 +82,6 @@ function ComparisonCard({ brand,category }) {
 /* SECTION COMPONENT */
 export default function ComparisonCardsSection({ brands = [] }) {
     const params = useParams();
-
-console.log("🧭 ROUTE PARAMS:", params);
-console.log("🧭 slug:", params?.slug);
-console.log("🧭 category:", params?.category);
-console.log("🧭 pdetail:", params?.pdetail);
 const categorySlug = params?.slug;
     const [mobileIndex, setMobileIndex] = useState(0);
 const [subcategories, setSubcategories] = useState([]);
@@ -111,10 +106,6 @@ const currentCategory = useMemo(() => {
 }, [subcategories, categorySlug]);
 
 
-console.log("🔥 ALL PARAMS:", params);
-console.log("🔥 SLUG CHECK:", params?.slug);
-console.log("🔥 PDETAIL CHECK:", params?.pdetail);
-console.log("🔥 name CHECK:", params?.name);
     const productSlug = params?.pdetail
     const handleScroll = (e) => {
         const el = e.currentTarget;

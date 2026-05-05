@@ -1,35 +1,14 @@
-import admin from "firebase-admin";
 import { syncAdminClaims } from "@/lib/syncAdminClaims";
 import { writeAdminAuditLog } from "@/lib/adminAuditLog";
 import { NextResponse } from "next/server";
-
-async function verifySuperAdmin(req) {
-  const header = req.headers.get("authorization");
-  console.log("AUTH HEADER:", header);
-  if (!header) throw new Error("No token");
-
-  const token = header.split(" ")[1];
-  const decoded = await admin.auth().verifyIdToken(token);
-
-  console.log("DECODED UID:", decoded.uid);
-  console.log("DECODED CLAIMS:", decoded);
-
-  const snap = await admin.firestore().collection("admins").doc(decoded.uid).get();
-
-  console.log("ADMIN DOC EXISTS:", snap.exists);
-  console.log("ADMIN DATA:", snap.data());
-
-  if (!snap.exists || snap.data().roleType !== "superadmin") {
-    throw new Error("Not authorized");
-  }
-
-  return decoded;
-}
+import { adminAuth, adminDb } from "@/lib/firebaseAdmin";
+import { FieldValue } from "firebase-admin/firestore";
+import { verifySuperAdminRequest } from "@/lib/adminAccess";
 
 export async function POST(req) {
   let actor;
   try {
-    actor = await verifySuperAdmin(req);
+    actor = await verifySuperAdminRequest(req);
   } catch (err) {
     console.error("verifySuperAdmin failed:", err.message);
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
@@ -58,10 +37,9 @@ export async function POST(req) {
        NOT call createUser() for them or we get auth/email-in-use.
     ───────────────────────────────────────────────────────────── */
     try {
-      const existingAuthUser = await admin.auth().getUserByEmail(email);
+      const existingAuthUser = await adminAuth.getUserByEmail(email);
       uid = existingAuthUser.uid;
       authUserExisted = true;
-      console.log("Found existing Firebase Auth user:", uid);
     } catch (lookupErr) {
       if (lookupErr.code === "auth/user-not-found") {
         // No Firebase Auth user → must be a new password-based admin
@@ -71,10 +49,9 @@ export async function POST(req) {
             { status: 400 }
           );
         }
-        const newUser = await admin.auth().createUser({ email, password });
+        const newUser = await adminAuth.createUser({ email, password });
         uid = newUser.uid;
         authUserExisted = false;
-        console.log("Created new Firebase Auth user:", uid);
       } else {
         // Unexpected error from Firebase Auth
         console.error("getUserByEmail unexpected error:", lookupErr);
@@ -90,7 +67,7 @@ export async function POST(req) {
        don't silently overwrite it — return a clear error.
     ───────────────────────────────────────────────────────────── */
     if (authUserExisted) {
-      const existingDoc = await admin.firestore().collection("admins").doc(uid).get();
+      const existingDoc = await adminDb.collection("admins").doc(uid).get();
       if (existingDoc.exists) {
         return NextResponse.json(
           { error: `An admin account already exists for ${email}. Use Edit Admin to update it.` },
@@ -102,13 +79,13 @@ export async function POST(req) {
     /* ─────────────────────────────────────────────────────────────
        Write Firestore admin doc (source of truth)
     ───────────────────────────────────────────────────────────── */
-    await admin.firestore().collection("admins").doc(uid).set({
+    await adminDb.collection("admins").doc(uid).set({
       email,
       isActive: true,
       roleType,
       permissions: permissions || {},
       projectAccess: projectAccess || {},
-      createdAt: admin.firestore.FieldValue.serverTimestamp(),
+      createdAt: FieldValue.serverTimestamp(),
     });
 
     /* ─────────────────────────────────────────────────────────────

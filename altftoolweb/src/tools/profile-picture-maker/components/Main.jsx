@@ -15,7 +15,6 @@ import PresetManager from "./PresetManager";
 
 import { apply3DEffect } from "../utils/threeDEffect";
 
-const REMOVE_BG_API_KEY = "YOUR_API_KEY";
 
 export default function MainComponent() {
   const [file, setFile] = useState(null);
@@ -461,10 +460,9 @@ const savePreset = () => {
       form.append("image_file", file);
 
       const res = await axios.post(
-        "https://api.remove.bg/v1.0/removebg",
+        "/api/tools/remove-bg",
         form,
         {
-          headers: { "X-Api-Key": REMOVE_BG_API_KEY },
           responseType: "blob",
         },
       );

@@ -7,8 +7,7 @@
 // and controls what is shown — the browser never intercepts the push first.
 // The title/body live inside the "data" payload instead.
 
-import admin from "firebase-admin";
-import { adminDb } from "@/lib/firebaseAdmin";
+import { adminDb, adminMessaging } from "@/lib/firebaseAdmin";
 
 /**
  * Send a push notification to one or more admin users.
@@ -37,12 +36,10 @@ export async function sendPushToUsers({ userIds, title, body, data = {} }) {
     }
 
     if (tokens.length === 0) {
-      console.log("[push] no FCM tokens found for userIds:", userIds);
       return;
     }
 
     const uniqueTokens = [...new Set(tokens)];
-    console.log(`[push] sending to ${uniqueTokens.length} token(s) for ${userIds.length} user(s)`);
 
     // ── 2. Build DATA-ONLY payload ─────────────────────────────────────────
     // All values in the data map must be strings (FCM requirement).
@@ -54,13 +51,12 @@ export async function sendPushToUsers({ userIds, title, body, data = {} }) {
       ),
     };
 
-    const messaging = admin.messaging();
     const CHUNK = 500; // FCM multicast limit
 
     for (let i = 0; i < uniqueTokens.length; i += CHUNK) {
       const chunk = uniqueTokens.slice(i, i + CHUNK);
 
-      const response = await messaging.sendEachForMulticast({
+      const response = await adminMessaging.sendEachForMulticast({
         tokens: chunk,
 
         // ── DATA-ONLY — no "notification" key at top level ────────────────
@@ -101,10 +97,7 @@ export async function sendPushToUsers({ userIds, title, body, data = {} }) {
         }
       });
 
-      console.log(`[push] batch result: ${successCount}/${chunk.length} succeeded`);
-
       if (staleTokens.length > 0) {
-        console.log(`[push] removing ${staleTokens.length} stale token(s)`);
         await removeStaleTokens(staleTokens);
       }
     }

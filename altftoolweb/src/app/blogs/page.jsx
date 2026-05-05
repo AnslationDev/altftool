@@ -1,7 +1,7 @@
 // app/blogs/page.jsx
 "use client";
 
-import React, { useEffect, useRef, useState, useMemo } from "react";
+import React, { Suspense, useEffect, useRef, useState, useMemo } from "react";
 import BlogCard              from "./components/BlogCard";
 import AdCard                from "./components/AdCard";
 import CategoryFilter        from "./components/CategoryFilter";
@@ -255,7 +255,7 @@ function PageHeader({ title, subtitle, isSearching }) {
 // ─────────────────────────────────────────────
 //  Main Page
 // ─────────────────────────────────────────────
-export default function BlogsPage() {
+function BlogsPageContent() {
   const searchParams = useSearchParams();
   const router       = useRouter();
 
@@ -525,5 +525,13 @@ export default function BlogsPage() {
         </div>
       </div>
     </>
+  );
+}
+
+export default function BlogsPage() {
+  return (
+    <Suspense fallback={<SkeletonBlogGrid count={6} />}>
+      <BlogsPageContent />
+    </Suspense>
   );
 }

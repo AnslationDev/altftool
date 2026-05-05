@@ -1,4 +1,4 @@
-import admin from "firebase-admin";
+import { FieldValue } from "firebase-admin/firestore";
 import { adminDb } from "@/lib/firebaseAdmin";
 
 const COLLECTION = "admin_audit_logs";
@@ -34,7 +34,6 @@ export async function writeAdminAuditLog(entry) {
     summary: summary ?? null,
     changes: changes ?? null,
     metadata: metadata ?? null,
-    createdAt: admin.firestore.FieldValue.serverTimestamp(),
+    createdAt: FieldValue.serverTimestamp(),
   });
 }
-

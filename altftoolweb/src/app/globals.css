@@ -4,141 +4,201 @@
 @import "tailwindcss";
 @custom-variant dark (&:where([data-theme="dark"]));
 
-
-
-/* ================================
-   App defaults
-================================ */
-html,
-body {
-  height: 100%;
-  font-family: var(--font-secondary);
-  background-color: var(--background);
-  color: var(--foreground);
-  /* overflow: hidden; */
+@theme inline {
+  --font-sans: "Geist", "Geist Fallback", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "Geist Mono", "Geist Mono Fallback", ui-monospace, SFMono-Regular, Menlo, monospace;
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-border: var(--border);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --radius-sm: var(--anslation-ds-radius-sm);
+  --radius-md: var(--anslation-ds-radius);
+  --radius-lg: var(--anslation-ds-radius-lg);
 }
+
 
 /* ================================
    Theme + Fonts
 ================================ */
 :root {
-  /* Fonts */
-  --font-primary: "Manrope", sans-serif;
-  --font-secondary: "Manrope", sans-serif;
+  color-scheme: light;
 
-  /* Colors — Light */
-  --background: #ffffff;
+  /* Anslation/Fuse design tokens */
+  --anslation-ds-font-sans: "Geist", "Geist Fallback", ui-sans-serif, system-ui, sans-serif;
+  --anslation-ds-font-mono: "Geist Mono", "Geist Mono Fallback", ui-monospace, SFMono-Regular, Menlo, monospace;
 
+  --anslation-ds-page: #f6f8fc;
+  --anslation-ds-canvas: #ffffff;
+  --anslation-ds-surface: #ffffff;
+  --anslation-ds-soft: #f1f5fb;
+  --anslation-ds-hover: #eaf2ff;
+  --anslation-ds-sidebar: #ffffff;
 
-  --foreground: #111827;
+  --anslation-ds-border: #d9e2ef;
+  --anslation-ds-border-strong: #c3cfdd;
 
+  --anslation-ds-text: #152033;
+  --anslation-ds-text-soft: #40516a;
+  --anslation-ds-muted: #68778d;
+  --anslation-ds-muted-strong: #536174;
 
-  --primary: #2563eb;
+  --anslation-ds-primary: #1a73e8;
+  --anslation-ds-primary-hover: #1765cc;
+  --anslation-ds-primary-active: #1557b0;
+  --anslation-ds-primary-soft: #e8f0fe;
+  --anslation-ds-accent: #0f766e;
+
+  --anslation-ds-success: #188038;
+  --anslation-ds-warning: #f9ab00;
+  --anslation-ds-danger: #d93025;
+  --anslation-ds-info: #1a73e8;
+
+  --anslation-ds-radius-xs: 6px;
+  --anslation-ds-radius-sm: 8px;
+  --anslation-ds-radius: 8px;
+  --anslation-ds-radius-lg: 12px;
+  --anslation-ds-radius-xl: 16px;
+
+  --anslation-ds-shadow-sm: 0 1px 2px rgba(21, 32, 51, 0.06);
+  --anslation-ds-shadow-md: 0 8px 24px rgba(21, 32, 51, 0.08);
+  --anslation-ds-shadow-lg: 0 20px 48px rgba(21, 32, 51, 0.12);
+  --anslation-ds-focus-ring: 0 0 0 3px rgba(26, 115, 232, 0.16);
+
+  /* Existing app aliases */
+  --font-primary: var(--anslation-ds-font-sans);
+  --font-secondary: var(--anslation-ds-font-sans);
+  --font-mono: var(--anslation-ds-font-mono);
+
+  --background: var(--anslation-ds-page);
+  --foreground: var(--anslation-ds-text);
+  --primary: var(--anslation-ds-primary);
   --primary-foreground: #ffffff;
+  --primary-hover: var(--anslation-ds-primary-hover);
+  --primary-active: var(--anslation-ds-primary-active);
 
-  --primary-hover: #1D4ED8;
-  --primary-active: #1E40AF;
-
-  --secondary: #9ba2ae;
-  --secondary-foreground: #6b7280;
-
+  --secondary: #6f7d91;
+  --secondary-foreground: var(--anslation-ds-muted);
   --secondary-bg: transparent;
-  --secondary-border: #d4dae3;
-  --secondary-hover: rgba(0, 0, 0, 0.05);
-  --secondary-active: rgba(0, 0, 0, 0.08);
+  --secondary-border: var(--anslation-ds-border);
+  --secondary-hover: var(--anslation-ds-soft);
+  --secondary-active: #e4ebf6;
 
-  --muted: #f3f4f6;
-  --muted-foreground: #6b7280;
-
-  --muted-gray: #f3f4f6;
-
-  --border: #d4dae3;
-  --card: #f6f8fb;
-  --search-buysmart: #F4F7FF;
-  --badge-bg: #f3f4f6;
-
-  --bg-black: #000000;
-
-
-
-  --input-placeholder: #8493B1;
-
-  --section-highlight: #F4F7FF;
-  --card-hover-bg: #f3f4f6;
-
-
- --flashsale-salelocator: #e6eeff;
-
-
-  --card-foreground: #111827;
-
-  --dealspage-background: #fbfbfb
+  --muted: var(--anslation-ds-soft);
+  --muted-foreground: var(--anslation-ds-muted);
+  --muted-gray: var(--anslation-ds-soft);
+  --border: var(--anslation-ds-border);
+  --card: var(--anslation-ds-surface);
+  --card-foreground: var(--anslation-ds-text);
+  --card-border: var(--anslation-ds-border);
+  --search-buysmart: var(--anslation-ds-soft);
+  --badge-bg: var(--anslation-ds-primary-soft);
+  --bg-black: #111827;
+  --input-placeholder: #7b8aa0;
+  --section-highlight: var(--anslation-ds-soft);
+  --card-hover-bg: var(--anslation-ds-hover);
+  --flashsale-salelocator: var(--anslation-ds-primary-soft);
+  --dealspage-background: var(--anslation-ds-page);
 }
 
 [data-theme="dark"] {
-  /* Colors — Dark */
-  --background: #000A1F;
-  --foreground: #f1f5f9;
+  color-scheme: dark;
 
-  --primary: #2563EB;
-  --primary-foreground: #ffffff;
+  --anslation-ds-page: #0b1220;
+  --anslation-ds-canvas: #0f172a;
+  --anslation-ds-surface: #121b2f;
+  --anslation-ds-soft: #18243a;
+  --anslation-ds-hover: #1d2d4a;
+  --anslation-ds-sidebar: #0f172a;
 
-  --secondary: #9ba2ae;
-  --secondary-foreground: #B8C1D1;
+  --anslation-ds-border: #26364f;
+  --anslation-ds-border-strong: #334662;
 
-  --muted: #18181b;
-  /* --muted-foreground: #a1a1aa; */
-  --muted-foreground: #b8c1d1;
+  --anslation-ds-text: #edf4ff;
+  --anslation-ds-text-soft: #c5d1e3;
+  --anslation-ds-muted: #9aabc1;
+  --anslation-ds-muted-strong: #b5c4d7;
 
-  --muted-gray: #424248;
+  --anslation-ds-primary: #8ab4f8;
+  --anslation-ds-primary-hover: #a8c7fa;
+  --anslation-ds-primary-active: #d2e3fc;
+  --anslation-ds-primary-soft: #19345f;
+  --anslation-ds-accent: #5eead4;
 
-  /* --border: #2a2a2e; */
-  --border: #333C4D;
-  --search-buysmart: #162342;
+  --anslation-ds-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.28);
+  --anslation-ds-shadow-md: 0 10px 28px rgba(0, 0, 0, 0.3);
+  --anslation-ds-shadow-lg: 0 22px 52px rgba(0, 0, 0, 0.38);
+  --anslation-ds-focus-ring: 0 0 0 3px rgba(138, 180, 248, 0.22);
 
-  --flashsale-salelocator: #162342;
-
+  --background: var(--anslation-ds-page);
+  --foreground: var(--anslation-ds-text);
+  --primary: var(--anslation-ds-primary);
+  --primary-foreground: #07111f;
+  --primary-hover: var(--anslation-ds-primary-hover);
+  --primary-active: var(--anslation-ds-primary-active);
+  --secondary: #9aabc1;
+  --secondary-foreground: var(--anslation-ds-muted);
+  --secondary-border: var(--anslation-ds-border);
+  --secondary-hover: var(--anslation-ds-soft);
+  --secondary-active: var(--anslation-ds-hover);
+  --muted: var(--anslation-ds-soft);
+  --muted-foreground: var(--anslation-ds-muted);
+  --muted-gray: var(--anslation-ds-soft);
+  --border: var(--anslation-ds-border);
+  --card: var(--anslation-ds-surface);
+  --card-foreground: var(--anslation-ds-text);
+  --search-buysmart: var(--anslation-ds-soft);
+  --flashsale-salelocator: var(--anslation-ds-primary-soft);
   --bg-black: #ffffff;
+  --section-highlight: var(--anslation-ds-soft);
+  --badge-bg: var(--anslation-ds-primary-soft);
+  --input-placeholder: #8fa1ba;
+  --dealspage-background: var(--anslation-ds-page);
+}
 
-  --section-highlight: #071431;
-  --badge-bg: #2563EB;
+html,
+body {
+  min-height: 100%;
+}
 
-  /* Cards */
-  --card: #1A2130;
+html {
+  background: var(--background);
+  text-size-adjust: 100%;
+}
 
-  /* --card-border: #333C4D; */
+body {
+  min-height: 100vh;
+  margin: 0;
+  font-family: var(--font-primary);
+  background: var(--background);
+  color: var(--foreground);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
 
-  --card-hover-bg: #20283A;
+* {
+  box-sizing: border-box;
+}
 
-  --card-active-bg: #242F45;
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
 
-  /* PRIMARY BUTTON */
+::selection {
+  background: var(--anslation-ds-primary-soft);
+  color: var(--foreground);
+}
 
-  --primary: #2563EB;
-  --primary-foreground: #ffffff;
-
-  --primary-hover: #1D4ED8;
-  --primary-active: #1E40AF;
-
-  /* Secondary action */
-  --secondary-bg: transparent;
-  --secondary-border: #8493B1;
-  --secondary-foreground: #B8C1D1;
-
-  --secondary-hover: rgba(177, 146, 132, 0.12);
-  --secondary-active: rgba(196, 20, 20, 0.18);
-
-
-  /* input  box css */
-
-  /* --input-bg: #1A2130;
-  --input-border: #333C4D; */
-  --input-placeholder: #8493B1;
-  /* --input-focus-border: #2563EB; */
-
-
-  --card-foreground: #ffffff;
-  --dealspage-background: #000A1F
+:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
 }
 
 /* ================================
@@ -146,25 +206,40 @@ body {
 ================================ */
 @layer base {
   .heading {
-    font-size: clamp(2rem, 6vw, 4rem);
-    font-weight: 900;
+    font-size: 3rem;
+    font-weight: 750;
     font-family: var(--font-primary);
-    color: var(--primary);
-    line-height: 1.2;
+    color: var(--foreground);
+    line-height: 1.06;
+    letter-spacing: 0;
   }
 
   .subheading {
-    font-size: clamp(1.25rem, 3vw, 1.5rem);
+    font-size: 1.35rem;
     font-weight: 600;
     font-family: var(--font-primary);
     color: var(--foreground);
+    line-height: 1.25;
+    letter-spacing: 0;
   }
 
   .description {
-    font-size: clamp(1rem, 2.5vw, 1.25rem);
+    font-size: 1rem;
     font-family: var(--font-secondary);
     color: var(--muted-foreground);
-    line-height: 1.6;
+    line-height: 1.65;
+    letter-spacing: 0;
+  }
+
+  @media (max-width: 640px) {
+    .heading {
+      font-size: 2.1rem;
+      line-height: 1.12;
+    }
+
+    .subheading {
+      font-size: 1.2rem;
+    }
   }
 }
 
@@ -176,7 +251,7 @@ body {
     width: 100%;
     max-width: 1840px;
     margin: 0 auto;
-    padding: clamp(3rem, 6vw, 5rem) 1rem;
+    padding: 4rem 1rem;
   }
 
   @media (min-width: 640px) {
@@ -216,11 +291,11 @@ body {
   .section-title {
     font-family: var(--font-primary);
     font-weight: 600;
-    font-size: clamp(1.28rem, 4vw, 2.6rem);
-    letter-spacing: clamp(-0.5px, -0.15vw, -1.5px);
-    line-height: 1.15;
+    font-size: 2rem;
+    letter-spacing: 0;
+    line-height: 1.2;
     text-transform: capitalize;
-    margin-bottom: clamp(6px, 1vw, 16px);
+    margin-bottom: 0.75rem;
     color: var(--foreground);
   }
 
@@ -229,12 +304,12 @@ body {
   .section-subtitle {
     font-family: var(--font-secondary);
     font-weight: 400;
-    font-size: clamp(0.9rem, 1.6vw, 1.25rem);
+    font-size: 1rem;
     line-height: 1.5;
     max-width: 700px;
     margin: 0 auto;
-    letter-spacing: clamp(-0.01em, -0.1vw, -0.02em);
-    margin-bottom: clamp(14px, 2vw, 24px);
+    letter-spacing: 0;
+    margin-bottom: 1.25rem;
     color: var(--secondary-foreground);
   }
 
@@ -252,12 +327,89 @@ body {
 
   /* ---------- Section Wrapper ---------- */
   .section-wrapper {
-    background: #F4FAFE;
-    border-radius: 30px;
-    padding: clamp(1.25rem, 2vw, 2rem);
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--anslation-ds-radius);
+    box-shadow: var(--anslation-ds-shadow-sm);
+    padding: 1.5rem;
     margin-top: 1.5rem;
   }
 
+  .card,
+  .tool-card,
+  .surface-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--anslation-ds-radius);
+    box-shadow: var(--anslation-ds-shadow-sm);
+    color: var(--card-foreground);
+  }
+
+  .btn {
+    display: inline-flex;
+    min-height: 2.25rem;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    border-radius: var(--anslation-ds-radius);
+    padding: 0.5rem 0.875rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    line-height: 1;
+    transition: background-color 160ms ease, border-color 160ms ease, color 160ms ease, box-shadow 160ms ease;
+  }
+
+  .btn-primary {
+    background: var(--primary);
+    color: var(--primary-foreground);
+    border: 1px solid transparent;
+    box-shadow: var(--anslation-ds-shadow-sm);
+  }
+
+  .btn-primary:hover {
+    background: var(--primary-hover);
+  }
+
+  .btn-secondary,
+  .btn-outline {
+    background: var(--secondary-bg);
+    color: var(--foreground);
+    border: 1px solid var(--secondary-border);
+  }
+
+  .btn-secondary:hover,
+  .btn-outline:hover {
+    background: var(--secondary-hover);
+  }
+
+  .input,
+  .select,
+  .textarea {
+    min-height: 2.5rem;
+    border-radius: var(--anslation-ds-radius);
+    border: 1px solid var(--border);
+    background: var(--card);
+    color: var(--foreground);
+    box-shadow: var(--anslation-ds-shadow-sm);
+  }
+
+  .input:focus,
+  .select:focus,
+  .textarea:focus {
+    border-color: var(--primary);
+    box-shadow: var(--anslation-ds-focus-ring);
+    outline: none;
+  }
+
+  .badge,
+  .chip {
+    border-radius: 999px;
+    border: 1px solid var(--border);
+    background: var(--muted);
+    color: var(--muted-foreground);
+    font-size: 0.75rem;
+    font-weight: 600;
+  }
 
 }
 
@@ -296,15 +448,8 @@ body {
   }
 
   .text-gradient-hero {
-    background: linear-gradient(120deg,
-        var(--primary),
-        #06b6d4,
-        var(--primary));
-    background-size: 200% 200%;
-    animation: gradient-shift 8s ease infinite;
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
+    background: none;
+    color: var(--primary);
   }
 
 
@@ -312,7 +457,7 @@ body {
   .btn-primary {
     background: var(--primary);
     color: var(--primary-foreground);
-    border-radius: 10px;
+    border-radius: var(--anslation-ds-radius);
     font-weight: 600;
     transition: all 0.2s ease;
   }
@@ -331,7 +476,7 @@ body {
     background: var(--secondary-bg);
     color: var(--secondary-foreground);
     border: 1px solid var(--secondary-border);
-    border-radius: 10px;
+    border-radius: var(--anslation-ds-radius);
     font-weight: 500;
     transition: all 0.2s ease;
   }
@@ -451,8 +596,7 @@ body {
 .custom-dots li .dot {
   width: 8px;
   height: 8px;
-  background: #1e3a8a;
-  /* blue */
+  background: var(--primary);
   opacity: 0.4;
   border-radius: 50%;
   transition: all 0.5s ease-in-out;
@@ -464,6 +608,57 @@ body {
   height: 8px;
   border-radius: 999px;
   opacity: 1;
-  background: #2563eb;
-  /* bright blue */
+  background: var(--primary);
+}
+
+/* ================================
+   Legacy class compatibility
+================================ */
+.anslation-ds-public .bg-white {
+  background-color: var(--card);
+}
+
+.anslation-ds-public .bg-gray-50,
+.anslation-ds-public .bg-gray-100,
+.anslation-ds-public .bg-slate-50,
+.anslation-ds-public .bg-slate-100 {
+  background-color: var(--muted);
+}
+
+.anslation-ds-public .bg-blue-50 {
+  background-color: var(--anslation-ds-primary-soft);
+}
+
+.anslation-ds-public .text-gray-900,
+.anslation-ds-public .text-slate-900,
+.anslation-ds-public .text-zinc-900 {
+  color: var(--foreground);
+}
+
+.anslation-ds-public .text-gray-800,
+.anslation-ds-public .text-gray-700,
+.anslation-ds-public .text-slate-700,
+.anslation-ds-public .text-zinc-700 {
+  color: var(--anslation-ds-text-soft);
+}
+
+.anslation-ds-public .text-gray-600,
+.anslation-ds-public .text-gray-500,
+.anslation-ds-public .text-slate-500,
+.anslation-ds-public .text-zinc-500 {
+  color: var(--muted-foreground);
+}
+
+.anslation-ds-public .border-gray-100,
+.anslation-ds-public .border-gray-200,
+.anslation-ds-public .border-slate-100,
+.anslation-ds-public .border-slate-200,
+.anslation-ds-public .border-zinc-700 {
+  border-color: var(--border);
+}
+
+.anslation-ds-public .shadow-xl,
+.anslation-ds-public .shadow-lg,
+.anslation-ds-public .shadow-md {
+  box-shadow: var(--anslation-ds-shadow-md);
 }

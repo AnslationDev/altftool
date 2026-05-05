@@ -153,8 +153,6 @@ function AddStore({ setActive, editStore, setEditStore }) {
    
   };
 
-  console.log("samraat store is", form)
-
   return (
     <div className="max-w-6xl mx-auto bg-white rounded-sm shadow-lg border p-10">
     
@@ -353,6 +351,5 @@ function AddStore({ setActive, editStore, setEditStore }) {
 }
 
 export default AddStore;
-
 
 

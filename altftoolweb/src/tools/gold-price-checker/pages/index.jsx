@@ -14,9 +14,8 @@
 //   const [toUnit, setToUnit] = useState("gram");
 //   const [convertResult, setConvertResult] = useState(0);
 //   const autoRefreshInterval = useRef(null);
-//   // f0be87a617d027782e74c385a0e72153
+//   // <redacted-metal-price-key>
 
-//   const API_KEY = "f0be87a617d027782e74c385a0e72153";
 //   const BASE_URL = "https://api.metalpriceapi.com/v1";
 
 //   const metals = [
@@ -506,9 +505,6 @@ export default function ToolHome() {
   const [convertResult, setConvertResult] = useState(0);
   const autoRefreshInterval = useRef(null);
 
-  const API_KEY = "f0be87a617d027782e74c385a0e72153";
-  const BASE_URL = "https://api.metalpriceapi.com/v1";
-
   const metals = [
     {
       symbol: "XAU",
@@ -560,7 +556,7 @@ const fetchPrices = async () => {
 
   try {
     const metalCodes = metals.map((m) => m.symbol).join(",");
-    const url = `${BASE_URL}/latest?api_key=${API_KEY}&base=${currency}&currencies=${metalCodes}`;
+    const url = `/api/tools/metal-prices?currency=${encodeURIComponent(currency)}&metals=${encodeURIComponent(metalCodes)}`;
     
     console.log("Fetching from:", url);
     

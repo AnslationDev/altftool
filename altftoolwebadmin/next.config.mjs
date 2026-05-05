@@ -1,6 +1,15 @@
+import { withSecurityHeaders } from "@altftool/core/next";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
+
+const workspaceRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  /* config options here */
+  turbopack: {
+    root: workspaceRoot,
+  },
+
   images:{
     remotePatterns:[
       {
@@ -11,4 +20,4 @@ const nextConfig = {
   }
 };
 
-export default nextConfig;
+export default withSecurityHeaders(nextConfig, "admin");

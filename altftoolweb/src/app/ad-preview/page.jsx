@@ -1,6 +1,7 @@
 
 "use client";
 
+import { Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import AdToolCard from "@/ads/layouts/tools/AdToolCard";
 import AdSidebar from "@/ads/layouts/shared/AdSidebar";
@@ -9,7 +10,7 @@ import AdGameCard from "@/ads/layouts/games/AdGameCard";
 import AdBottomBanner from "@/ads/layouts/shared/AdBottomBanner";
 import AdExtensionCard from "@/ads/layouts/extension/AdExtensionCard";
 
-export default function AdPreviewPage() {
+function AdPreviewContent() {
   const params = useSearchParams();
   const layout = params.get("layout");
   const banner = params.get("banner");
@@ -35,4 +36,12 @@ export default function AdPreviewPage() {
     default:
       return <div>Unknown layout</div>;
   }
+}
+
+export default function AdPreviewPage() {
+  return (
+    <Suspense fallback={null}>
+      <AdPreviewContent />
+    </Suspense>
+  );
 }

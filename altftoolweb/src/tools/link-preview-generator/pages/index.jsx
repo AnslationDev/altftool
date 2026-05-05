@@ -29,13 +29,12 @@ export default function LinkPreview() {
     setError("");
 
     try {
-      const API_KEY = "dfce90ab55ee1269d5de77b336fcbc1a";
       const res = await fetch(
-        `https://api.linkpreview.net/?key=${API_KEY}&q=${encodeURIComponent(url)}`,
+        `/api/tools/link-preview?url=${encodeURIComponent(url)}`,
       );
       const data = await res.json();
 
-      if (data.error) throw new Error(data.description);
+      if (!res.ok || data.error) throw new Error(data.description || data.error);
 
       setPreview(data);
 

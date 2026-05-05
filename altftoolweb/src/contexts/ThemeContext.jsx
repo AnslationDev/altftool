@@ -8,30 +8,25 @@ const ThemeContext = createContext({
 });
 
 const getSystemTheme = () =>
+  typeof window !== "undefined" &&
   window.matchMedia("(prefers-color-scheme: dark)").matches
     ? "dark"
     : "light";
 
+const getInitialTheme = () => {
+  if (typeof window === "undefined") return "light";
+
+  const storedTheme = localStorage.getItem("appTheme");
+  const storedManual = localStorage.getItem("themeManual") === "true";
+
+  return storedTheme && storedManual ? storedTheme : getSystemTheme();
+};
+
 export const ThemeProvider = ({ children }) => {
-  const [theme, setTheme] = useState("light");
-  const [isManual, setIsManual] = useState(false);
-  const [mounted, setMounted] = useState(false);
-
-
-
-
-  // Initial load: system → stored manual
-  useEffect(() => {
-    const storedTheme = localStorage.getItem("appTheme");
-    const storedManual = localStorage.getItem("themeManual") === "true";
-
-    if (storedTheme && storedManual) {
-      setTheme(storedTheme);
-      setIsManual(true);
-    } else {
-      setTheme(getSystemTheme());
-    }
-  }, []);
+  const [theme, setTheme] = useState(getInitialTheme);
+  const [isManual, setIsManual] = useState(
+    () => typeof window !== "undefined" && localStorage.getItem("themeManual") === "true"
+  );
 
   // Apply theme
   useEffect(() => {
@@ -59,14 +54,6 @@ export const ThemeProvider = ({ children }) => {
       return next;
     });
   };
-
-  useEffect(() => {
-  setMounted(true);
-}, []);
-
-if (!mounted) {
-  return null;
-}
 
   return (
     <ThemeContext.Provider value={{ theme, toggleTheme }}>

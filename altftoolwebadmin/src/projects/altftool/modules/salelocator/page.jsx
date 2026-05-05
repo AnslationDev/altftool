@@ -152,8 +152,6 @@ export default function SaleLocator() {
   }, []);
 
   const confirmDelete = () => {
-    console.log("Deleting:", toDelete);
-
     // TODO: update state when you make data dynamic
 
     setShowDeleteModal(false);
@@ -161,8 +159,6 @@ export default function SaleLocator() {
   };
 
   const handleSave = (newSale) => {
-    console.log("Saved sale:", newSale);
-
     // TODO: update your state / data source
     // Example (if you later store in state):
     // setSales(prev => [...prev, newSale]);

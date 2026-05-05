@@ -1,8 +1,7 @@
 import axios from "axios";
 
 const BASE_URL = "https://www.googleapis.com/youtube/v3";
-// ── FIX 1: removed trailing space that was breaking every API call ────────────
-const API_KEY = "AIzaSyCTAC0pUnN2gg5nSBT528x4BZHQWzdzlaw";
+const API_KEY = process.env.NEXT_PUBLIC_YOUTUBE_API_KEY || "";
 
 const SHORT_QUERIES = [
   "(AI OR Technology OR Coding) #shorts",
@@ -14,6 +13,10 @@ const SHORT_QUERIES = [
 ];
 
 export const fetchApi = async (endpoint, params = {}) => {
+  if (!API_KEY) {
+    throw new Error("NEXT_PUBLIC_YOUTUBE_API_KEY is not configured.");
+  }
+
   const response = await axios.get(`${BASE_URL}/${endpoint}`, {
     params: { ...params, key: API_KEY },
   });

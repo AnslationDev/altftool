@@ -23,7 +23,6 @@ async function registerServiceWorker() {
       { scope: "/" }
     );
     await navigator.serviceWorker.ready;
-    console.log("[push] SW registered:", reg.scope);
     return reg;
   } catch (err) {
     console.warn("[push] SW registration failed:", err.message);
@@ -39,7 +38,6 @@ async function requestPermission() {
     return false;
   }
   const result = await Notification.requestPermission();
-  console.log("[push] permission result:", result);
   return result === "granted";
 }
 
@@ -50,9 +48,7 @@ async function getFcmToken(messaging, swRegistration) {
       vapidKey: VAPID_KEY,
       serviceWorkerRegistration: swRegistration,
     });
-    if (token) {
-      console.log("[push] FCM token obtained:", token.slice(0, 20) + "…");
-    } else {
+    if (!token) {
       console.warn("[push] getToken returned empty — check VAPID key and SW");
     }
     return token;
@@ -73,9 +69,7 @@ async function saveToken(token, getIdToken) {
       },
       body: JSON.stringify({ token }),
     });
-    if (res.ok) {
-      console.log("[push] token saved to Firestore");
-    } else {
+    if (!res.ok) {
       console.warn("[push] save-token responded:", res.status);
     }
   } catch (err) {
@@ -116,8 +110,6 @@ export function usePushNotifications(user) {
       // The SW handles background/closed. When the tab is open we show
       // our own branded card via PushToastHost instead of the OS popup.
       unsubscribeForeground = onMessage(messaging, (payload) => {
-        console.log("[push] foreground message received:", payload);
-
         const d = payload.data ?? {};
 
         emitPushToast({

@@ -9,20 +9,22 @@ import { useAds } from "@/ads/AdsProvider";
 import { injectAds } from "@/ads/adInjector";
 import AdPairRow from "@/ads/layouts/tools/AdToolPairRow";
 import CapabilitySlider from "../tools/CapabilitySlider";
-import { useSearchParams, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { ChevronDown } from "lucide-react";
-import { rotate } from "three/src/nodes/utils/RotateNode";
 
-export default function ToolsClient({ meta }) {
+export default function ToolsClient({ meta, category }) {
+  const slugify = (str) => String(str).toLowerCase().replace(/\s+/g, "-");
+  const formatLabel = (str) =>
+    String(str).replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
+
   const slugs = useMemo(() => Object.keys(meta), [meta]);
   const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(true);
   const [device, setDevice] = useState("desktop");
-  const searchParams = useSearchParams();
   const router = useRouter();
-
-  // Category from URL
-  const categoryname = searchParams.get("category") || "all";
+  const [categoryname, setCategoryname] = useState(
+    () => (category ? slugify(category) : "all")
+  );
 
   // Responsive device check
   useEffect(() => {
@@ -35,8 +37,15 @@ export default function ToolsClient({ meta }) {
   // Ads setup
   const toolAds = useAds({ placement: "tools_listing", layout: "tool_card", device });
 
-  // Slugify utility
-  const slugify = (str) => str.toLowerCase().replace(/\s+/g, "-");
+  useEffect(() => {
+    if (category) {
+      setCategoryname(slugify(category));
+      return;
+    }
+
+    const params = new URLSearchParams(window.location.search);
+    setCategoryname(params.get("category") || "all");
+  }, [category]);
 
   // Categories list
   const categories = useMemo(() => {
@@ -87,16 +96,15 @@ export default function ToolsClient({ meta }) {
     if (meta && Object.keys(meta).length > 0) setLoading(false);
   }, [meta]);
 
-  const formatLabel = (str) =>
-    str.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
-
   // Handle category click (updates URL without reload)
   const handleCategoryClick = (cat) => {
-    const params = new URLSearchParams(searchParams.toString());
-    if (cat === "all") params.delete("category");
-    else params.set("category", slugify(cat));
+    const nextCategory = cat === "all" ? "all" : slugify(cat);
+    const params = new URLSearchParams(window.location.search);
+    if (nextCategory === "all") params.delete("category");
+    else params.set("category", nextCategory);
 
     router.replace(`${location.pathname}?${params.toString()}`, { scroll: false });
+    setCategoryname(nextCategory);
     setVisibleCount(ITEMS_PER_PAGE); // reset pagination
   };
 

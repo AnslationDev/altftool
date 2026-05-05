@@ -5,7 +5,7 @@
 
 import { NextResponse } from "next/server";
 import { adminAuth, adminDb } from "@/lib/firebaseAdmin";
-import admin from "firebase-admin";
+import { FieldValue } from "firebase-admin/firestore";
 
 async function getUid(request) {
   const authHeader = request.headers.get("authorization");
@@ -28,7 +28,7 @@ export async function POST(request) {
       .collection("admins")
       .doc(uid)
       .update({
-        fcmTokens: admin.firestore.FieldValue.arrayUnion(token),
+        fcmTokens: FieldValue.arrayUnion(token),
       });
 
     return NextResponse.json({ success: true });
@@ -54,7 +54,7 @@ export async function DELETE(request) {
       .collection("admins")
       .doc(uid)
       .update({
-        fcmTokens: admin.firestore.FieldValue.arrayRemove(token),
+        fcmTokens: FieldValue.arrayRemove(token),
       });
 
     return NextResponse.json({ success: true });

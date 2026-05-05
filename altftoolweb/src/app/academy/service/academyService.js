@@ -12,7 +12,6 @@ export const getAcademyList = async () => {
       ...doc.data(),
     }));
 
-    console.log(academyList); // move before return
     return academyList;
   } catch (error) {
     console.error("Error fetching academy list:", error);

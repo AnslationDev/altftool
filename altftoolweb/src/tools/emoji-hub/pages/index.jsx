@@ -25,8 +25,6 @@ export default function ToolHome() {
   const [recentEmojis, setRecentEmojis] = useState([]);
   const [showPicker, setShowPicker] = useState(false);
 
-  const GIPHY_API_KEY = "GlVGYHkr3WSBnllca54iNt0yFbjz7L65";
-
   useEffect(() => {
     const savedFavorites = JSON.parse(localStorage.getItem("favorites") || "[]");
     const savedRecent = JSON.parse(localStorage.getItem("recentEmojis") || "[]");
@@ -51,14 +49,11 @@ export default function ToolHome() {
   const fetchGifs = async (query) => {
     setLoading(true);
     try {
-      const endpoint =
-        query === "trending"
-          ? `https://api.giphy.com/v1/gifs/trending?api_key=${GIPHY_API_KEY}&limit=20`
-          : `https://api.giphy.com/v1/gifs/search?api_key=${GIPHY_API_KEY}&q=${query}&limit=20`;
-
-      const response = await fetch(endpoint);
+      const response = await fetch(
+        `/api/tools/giphy?q=${encodeURIComponent(query)}`
+      );
       const data = await response.json();
-      setGifs(data.data);
+      setGifs(Array.isArray(data.data) ? data.data : []);
     } catch (error) {
       console.error("Error fetching GIFs:", error);
     } finally {
