@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useRouter, usePathname } from "next/navigation";
 import { signOut } from "firebase/auth";
-import { LogOut, Shield, ShieldCheck, ChevronRight, User, Bell, ChevronDown, Headset } from "lucide-react";
+import { LogOut, Shield, ShieldCheck, ChevronRight, User, Bell, ChevronDown, Headset, Moon, Sun } from "lucide-react";
 import { auth, db } from "@/lib/firebase";
 import { getAdminRouteInfo, buildAdminBreadcrumbs } from "@/lib/routeUtils";
 import { useRef, useState, useEffect } from "react";
@@ -28,6 +28,8 @@ export default function AdminHeader({ user, adminData }) {
   const [notifOpen, setNotifOpen] = useState(false);
   const [notifications, setNotifications] = useState([]);
   const [markingRead, setMarkingRead] = useState(null);
+  const [theme, setTheme] = useState("light");
+  const [themeReady, setThemeReady] = useState(false);
 
   const dropdownRef = useRef(null);
   const notifRef = useRef(null);
@@ -50,6 +52,23 @@ export default function AdminHeader({ user, adminData }) {
   const logout = async () => {
     await signOut(auth);
     router.replace("/login");
+  };
+
+  useEffect(() => {
+    const current =
+      document.documentElement.getAttribute("data-theme") || "light";
+    setTheme(current);
+    setThemeReady(true);
+  }, []);
+
+  const toggleTheme = () => {
+    setTheme((current) => {
+      const next = current === "dark" ? "light" : "dark";
+      document.documentElement.setAttribute("data-theme", next);
+      localStorage.setItem("appTheme", next);
+      localStorage.setItem("themeManual", "true");
+      return next;
+    });
   };
 
   // ── Real-time unread notifications listener ──
@@ -119,21 +138,21 @@ export default function AdminHeader({ user, adminData }) {
   };
 
   return (
-    <header className="h-14 border-b border-gray-100 bg-white flex items-center justify-between px-6 shrink-0">
+    <header className="h-14 border-b border-[var(--border)] bg-[var(--surface)] flex items-center justify-between px-6 shrink-0">
       {/* Breadcrumbs */}
       <div className="flex items-center gap-2 text-sm">
         {breadcrumbs.map((crumb, i) => (
           <div key={i} className="flex items-center gap-2">
-            {i !== 0 && <ChevronRight className="w-3.5 h-3.5 text-gray-300" />}
+            {i !== 0 && <ChevronRight className="w-3.5 h-3.5 text-[var(--muted)]" />}
             {crumb.href ? (
               <Link
                 href={crumb.href}
-                className="text-gray-400 hover:text-gray-700 transition"
+                className="text-[var(--muted)] hover:text-[var(--foreground)] transition"
               >
                 {crumb.label}
               </Link>
             ) : (
-              <span className="font-semibold text-gray-800">{crumb.label}</span>
+              <span className="font-semibold text-[var(--foreground)]">{crumb.label}</span>
             )}
           </div>
         ))}
@@ -155,6 +174,18 @@ export default function AdminHeader({ user, adminData }) {
           )}
           {isSuperAdmin ? "Super Admin" : "Admin"}
         </span>
+
+        <button
+          onClick={toggleTheme}
+          className="p-2 rounded-xl border border-[var(--border)] bg-[var(--surface)] text-[var(--muted)] hover:bg-[var(--surface-soft)] hover:text-[var(--foreground)] transition"
+          aria-label="Toggle theme"
+        >
+          {themeReady && theme === "dark" ? (
+            <Sun className="w-4 h-4" />
+          ) : (
+            <Moon className="w-4 h-4" />
+          )}
+        </button>
 
         {/* ── Notification Bell ── */}
         <div className="relative" ref={notifRef}>

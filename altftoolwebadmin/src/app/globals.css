@@ -28,25 +28,29 @@
   --anslation-ds-font-sans: "Geist", "Geist Fallback", ui-sans-serif, system-ui, sans-serif;
   --anslation-ds-font-mono: "Geist Mono", "Geist Mono Fallback", ui-monospace, SFMono-Regular, Menlo, monospace;
 
-  --anslation-ds-page: #f6f8fc;
+  --anslation-ds-page: #f6f7f8;
   --anslation-ds-canvas: #ffffff;
   --anslation-ds-surface: #ffffff;
-  --anslation-ds-soft: #f1f5fb;
-  --anslation-ds-hover: #eaf2ff;
+  --anslation-ds-soft: #f1f5f9;
+  --anslation-ds-hover: #eaf1ff;
   --anslation-ds-sidebar: #ffffff;
+  --anslation-ds-footer: #050b18;
+  --anslation-ds-footer-text: #f8fafc;
+  --anslation-ds-footer-muted: #94a3b8;
+  --anslation-ds-footer-border: #1e293b;
 
-  --anslation-ds-border: #d9e2ef;
-  --anslation-ds-border-strong: #c3cfdd;
-  --anslation-ds-text: #152033;
-  --anslation-ds-text-soft: #40516a;
-  --anslation-ds-muted: #68778d;
-  --anslation-ds-muted-strong: #536174;
+  --anslation-ds-border: #e2e8f0;
+  --anslation-ds-border-strong: #cbd5e1;
+  --anslation-ds-text: #111827;
+  --anslation-ds-text-soft: #334155;
+  --anslation-ds-muted: #64748b;
+  --anslation-ds-muted-strong: #475569;
 
-  --anslation-ds-primary: #1a73e8;
-  --anslation-ds-primary-hover: #1765cc;
-  --anslation-ds-primary-active: #1557b0;
-  --anslation-ds-primary-soft: #e8f0fe;
-  --anslation-ds-accent: #0f766e;
+  --anslation-ds-primary: #2563eb;
+  --anslation-ds-primary-hover: #1d4ed8;
+  --anslation-ds-primary-active: #1e3a8a;
+  --anslation-ds-primary-soft: #dbeafe;
+  --anslation-ds-accent: #0f172a;
 
   --anslation-ds-danger: #d93025;
   --anslation-ds-success: #188038;
@@ -74,31 +78,35 @@
   --radius-lg: 12px;
 
   /* Shadows */
-  --shadow-sm: 0 1px 2px rgba(21, 32, 51, 0.06);
-  --shadow-md: 0 8px 24px rgba(21, 32, 51, 0.08);
-  --shadow-lg: 0 20px 48px rgba(21, 32, 51, 0.12);
-  --focus-ring: 0 0 0 3px rgba(26, 115, 232, 0.16);
+  --shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.06);
+  --shadow-md: 0 8px 24px rgba(15, 23, 42, 0.08);
+  --shadow-lg: 0 20px 48px rgba(15, 23, 42, 0.12);
+  --focus-ring: 0 0 0 3px rgba(37, 99, 235, 0.16);
 }
 
 [data-theme="dark"] {
   color-scheme: dark;
 
-  --anslation-ds-page: #0b1220;
-  --anslation-ds-canvas: #0f172a;
-  --anslation-ds-surface: #121b2f;
-  --anslation-ds-soft: #18243a;
-  --anslation-ds-hover: #1d2d4a;
-  --anslation-ds-sidebar: #0f172a;
-  --anslation-ds-border: #26364f;
-  --anslation-ds-border-strong: #334662;
-  --anslation-ds-text: #edf4ff;
-  --anslation-ds-text-soft: #c5d1e3;
-  --anslation-ds-muted: #9aabc1;
-  --anslation-ds-muted-strong: #b5c4d7;
-  --anslation-ds-primary: #8ab4f8;
-  --anslation-ds-primary-hover: #a8c7fa;
-  --anslation-ds-primary-active: #d2e3fc;
-  --anslation-ds-primary-soft: #19345f;
+  --anslation-ds-page: #020617;
+  --anslation-ds-canvas: #0b1120;
+  --anslation-ds-surface: #0f172a;
+  --anslation-ds-soft: #111c31;
+  --anslation-ds-hover: #172554;
+  --anslation-ds-sidebar: #050b18;
+  --anslation-ds-footer: #020617;
+  --anslation-ds-footer-text: #f8fafc;
+  --anslation-ds-footer-muted: #94a3b8;
+  --anslation-ds-footer-border: #1e293b;
+  --anslation-ds-border: #1e293b;
+  --anslation-ds-border-strong: #334155;
+  --anslation-ds-text: #f8fafc;
+  --anslation-ds-text-soft: #dbe5f2;
+  --anslation-ds-muted: #94a3b8;
+  --anslation-ds-muted-strong: #cbd5e1;
+  --anslation-ds-primary: #60a5fa;
+  --anslation-ds-primary-hover: #93c5fd;
+  --anslation-ds-primary-active: #bfdbfe;
+  --anslation-ds-primary-soft: #172554;
 
   --background: var(--anslation-ds-page);
   --surface: var(--anslation-ds-surface);
@@ -109,10 +117,10 @@
   --muted-soft: var(--anslation-ds-muted);
   --primary: var(--anslation-ds-primary);
   --primary-foreground: #07111f;
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.28);
-  --shadow-md: 0 10px 28px rgba(0, 0, 0, 0.3);
-  --shadow-lg: 0 22px 52px rgba(0, 0, 0, 0.38);
-  --focus-ring: 0 0 0 3px rgba(138, 180, 248, 0.22);
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.36);
+  --shadow-md: 0 10px 28px rgba(0, 0, 0, 0.36);
+  --shadow-lg: 0 24px 56px rgba(0, 0, 0, 0.46);
+  --focus-ring: 0 0 0 3px rgba(96, 165, 250, 0.24);
 }
 
 /* =========================================

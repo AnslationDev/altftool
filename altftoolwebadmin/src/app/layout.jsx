@@ -26,6 +26,17 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" suppressHydrationWarning className={`${geistSans.variable} ${geistMono.variable}`}>
       <head>
+        <Script id="admin-theme-init" strategy="beforeInteractive">
+          {`
+            try {
+              var manual = localStorage.getItem("themeManual") === "true";
+              var stored = localStorage.getItem("appTheme");
+              var system = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+              document.documentElement.setAttribute("data-theme", manual && stored ? stored : system);
+            } catch (_) {}
+          `}
+        </Script>
+
         <link rel="preconnect" href="https://firestore.googleapis.com" />
         <link rel="preconnect" href="https://cdn.ckeditor.com" />
         <link rel="preconnect" href="https://cdn.ckbox.io" />

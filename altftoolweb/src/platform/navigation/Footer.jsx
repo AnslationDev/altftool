@@ -1,178 +1,122 @@
 "use client";
 
-import { Facebook, Instagram, Linkedin, Youtube, Mail, Phone, MapPin } from "lucide-react";
-import SocialLinks from "../SocialLinks";
-import Link from "next/link";
 import Image from "next/image";
+import Link from "next/link";
+import SocialLinks from "../SocialLinks";
 
+const footerGroups = [
+  {
+    title: "Explore",
+    links: [
+      { label: "Tools", href: "/tools/all" },
+      { label: "Extensions", href: "/extensions" },
+      { label: "Desktop Software", href: "/desktop" },
+      { label: "Trending Videos", href: "/trendingvids" },
+    ],
+  },
+  {
+    title: "Commerce",
+    links: [
+      { label: "Exclusive Deals", href: "/exclusivedeals" },
+      { label: "BuySmart", href: "/buysmart" },
+      { label: "Sale Locator", href: "/sale" },
+      { label: "Brand Ratings", href: "/brandrating" },
+    ],
+  },
+  {
+    title: "Resources",
+    links: [
+      { label: "Academy", href: "/academy" },
+      { label: "Blog", href: "/blogs" },
+      { label: "News", href: "/news" },
+      { label: "Support", href: "/supportsetting" },
+    ],
+  },
+  {
+    title: "Company",
+    links: [
+      { label: "About", href: "/policypages/about" },
+      { label: "Contact", href: "/policypages/contact" },
+      { label: "Privacy", href: "/policypages/privacy" },
+      { label: "Terms", href: "/policypages/termsandconditions" },
+    ],
+  },
+];
+
+const legalLinks = [
+  { label: "Disclaimer", href: "/policypages/disclaimer" },
+  { label: "Affiliate", href: "/policypages/affiliate" },
+  { label: "Cookie", href: "/policypages/cookie" },
+];
 
 const Footer = () => {
   return (
-    <footer className="bg-zinc-950 text-zinc-100 ">
-      <div className="mx-auto  py-12 lg:py-20 section">
-        <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-[1.5fr_1fr_1fr_1fr] lg:gap-12">
-
-          {/* Brand & Socials */}
-          <div>
-            <a href="/" className="mb-3 inline-block">
+    <footer className="border-t border-[var(--anslation-ds-footer-border)] bg-[var(--anslation-ds-footer)] text-[var(--anslation-ds-footer-text)]">
+      <div className="section mx-auto py-12 lg:py-16">
+        <div className="grid gap-10 lg:grid-cols-[1.4fr_2fr] lg:gap-12">
+          <div className="max-w-md">
+            <Link href="/" className="mb-4 inline-flex">
               <Image
                 src="/assets/altf_white.png"
-                alt="altf"
-                width={120}
-                color="white"
-                height={32}
-                className="h-15 w-auto"
-              >
-              </Image>
-            </a>
+                alt="AltFTool"
+                width={132}
+                height={40}
+                className="h-10 w-auto object-contain"
+              />
+            </Link>
 
-            <p className="mb-6 max-w-sm text-md leading-relaxed text-zinc-400">
-              AltFTool is a lightweight productivity platform that helps you simplify everyday digital work — from quick utilities to smart workflows
+            <p className="max-w-sm text-sm leading-6 text-[var(--anslation-ds-footer-muted)]">
+              A compact productivity platform for tools, extensions, smart
+              shopping workflows, and digital resources.
             </p>
 
-            <SocialLinks
-              variant="ghost"
-              className="justify-start"
-              iconClassName="w-5 h-5"
-            />
-          </div>
-          {/* Sitemap*/}
-          <div className="lg:justify-self-end">
-            <h3 className="font-semibold text-white mb-4 text-lg">
-              Site Map
-            </h3>
-            <ul className="space-y-3">
-              <li>
-                <Link
-                  href="/"
-                  className="text-md text-white hover:text-(--primary) transition-colors"
-                >
-                  Home
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/policypages/about"
-                  className="text-md text-white hover:text-(--primary) transition-colors"
-                >
-                  About Us
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/policypages/contact"
-                  className="text-md text-white hover:text-(--primary) transition-colors"
-                >
-                  Contact Us
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/policypages/disclaimer"
-                  className="text-md text-white hover:text-(--primary) transition-colors"
-                >
-                  Disclaimer
-                </Link>
-              </li>
-
-            </ul>
-          </div>
-          {/* Quick Links */}
-          <div className="lg:justify-self-end">
-            <h3 className="font-semibold text-white mb-4 text-lg">
-              Quick Links
-            </h3>
-            <ul className="space-y-3">
-
-
-              <li>
-                <Link
-                  href="/tools"
-                  className="text-md text-white hover:text-(--primary) transition-colors"
-                >
-                  Productivity Tools
-                </Link>
-
-              </li>
-              <li>
-                <Link
-                  href="/extensions"
-                  className="text-md text-white hover:text-(--primary) transition-colors"
-                >
-                  Browser Extensions
-                </Link>
-
-              </li>
-              <li>
-                <Link
-                  href="/games"
-                  className="text-md text-white hover:text-(--primary) transition-colors"
-                >
-                  Casual Games
-                </Link>
-
-              </li>
-              <li>
-                <Link
-                  href="/exclusivedeals"
-                  className="text-md text-white hover:text-(--primary) transition-colors"
-                >
-                  Flash Deals
-                </Link>
-
-              </li>
-            </ul>
+            <div className="mt-5">
+              <SocialLinks
+                variant="ghost"
+                className="justify-start"
+                iconClassName="h-5 w-5"
+              />
+            </div>
           </div>
 
-
-
-          {/* Legal Pages */}
-          <div className="lg:justify-self-end">
-            <h3 className="font-semibold text-white mb-4 text-lg">
-              Our Policy
-            </h3>
-            <ul className="space-y-3">
-              <li>
-                <Link
-                  href="/policypages/privacy"
-                  className="text-md text-white hover:text-(--primary) transition-colors"
-                >
-                  Privacy Policy
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/policypages/affiliate"
-                  className="text-md text-white hover:text-(--primary) transition-colors"
-                >
-                  Affiliate Policy
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/policypages/cookie"
-                  className="text-md text-white hover:text-(--primary) transition-colors"
-                >
-                  Cookie Policy
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/policypages/termsandconditions"
-                  className="text-md text-white hover:text-(--primary) transition-colors"
-                >
-                  Terms & Conditions
-                </Link>
-              </li>
-            </ul>
+          <div className="grid grid-cols-2 gap-8 sm:grid-cols-4">
+            {footerGroups.map((group) => (
+              <div key={group.title}>
+                <h3 className="mb-3 text-xs font-semibold uppercase tracking-[0.08em] text-white">
+                  {group.title}
+                </h3>
+                <ul className="space-y-2">
+                  {group.links.map((link) => (
+                    <li key={link.href}>
+                      <Link
+                        href={link.href}
+                        className="text-sm text-[var(--anslation-ds-footer-muted)] transition-colors hover:text-[var(--anslation-ds-primary-hover)]"
+                      >
+                        {link.label}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
           </div>
         </div>
       </div>
 
-      {/* Bottom Bar */}
-      <div className="border-t border-zinc-700 bg-zinc-750">
-        <div className="text-center px-4 py-6 text-md text-(--muted)">
-          <p>© {new Date().getFullYear()} AltFTool — All rights reserved.</p>
+      <div className="border-t border-[var(--anslation-ds-footer-border)]">
+        <div className="section mx-auto flex flex-col gap-3 py-5 text-xs text-[var(--anslation-ds-footer-muted)] sm:flex-row sm:items-center sm:justify-between">
+          <p>© {new Date().getFullYear()} AltFTool. All rights reserved.</p>
+          <div className="flex flex-wrap gap-x-4 gap-y-2">
+            {legalLinks.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                className="transition-colors hover:text-[var(--anslation-ds-primary-hover)]"
+              >
+                {link.label}
+              </Link>
+            ))}
+          </div>
         </div>
       </div>
     </footer>

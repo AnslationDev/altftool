@@ -65,9 +65,9 @@ export default function AdminLayout({ children }) {
   /* ── Loading ── */
   if (!DEV_BYPASS_AUTH && loading) {
     return (
-      <div className="h-screen flex items-center justify-center bg-gray-50">
-        <div className="flex flex-col items-center gap-3 text-gray-400">
-          <div className="w-8 h-8 border-2 border-gray-200 border-t-gray-800 rounded-full animate-spin" />
+      <div className="h-screen flex items-center justify-center bg-[var(--background)]">
+        <div className="flex flex-col items-center gap-3 text-[var(--muted)]">
+          <div className="w-8 h-8 border-2 border-[var(--border)] border-t-[var(--foreground)] rounded-full animate-spin" />
           <span className="text-sm font-medium">Loading dashboard…</span>
         </div>
       </div>
@@ -143,7 +143,7 @@ export default function AdminLayout({ children }) {
 
   if (!hasAccess) {
     return (
-      <div className="flex h-screen bg-gray-50 overflow-hidden">
+      <div className="flex h-screen bg-[var(--background)] overflow-hidden">
         {adminData && <AdminSidebar adminData={adminData} />}
         <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
           {adminData && <AdminHeader user={effectiveUser} adminData={adminData} />}
@@ -189,7 +189,7 @@ export default function AdminLayout({ children }) {
   }
 
   return (
-    <div className="flex h-screen bg-gray-50 overflow-hidden">
+    <div className="flex h-screen bg-[var(--background)] overflow-hidden">
       {adminData && <AdminSidebar adminData={adminData} />}
       <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
         {adminData && <AdminHeader user={effectiveUser} adminData={adminData} />}

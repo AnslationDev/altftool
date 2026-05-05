@@ -1,17 +1,74 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { useRouter, usePathname } from "next/navigation";
-import { ChevronDown, Search, Menu, Sun, Moon, X } from "lucide-react";
-import { useTheme } from "@/contexts/ThemeContext";
+import { useEffect, useState } from "react";
+import { usePathname, useRouter } from "next/navigation";
+import {
+  BookOpen,
+  ChevronDown,
+  GraduationCap,
+  LayoutGrid,
+  MapPin,
+  Menu,
+  Monitor,
+  Moon,
+  Newspaper,
+  Puzzle,
+  Search,
+  ShieldCheck,
+  ShoppingBag,
+  Sparkles,
+  Sun,
+  Tags,
+  Wrench,
+  X,
+} from "lucide-react";
 import Link from "next/link";
 import { IconButton, Input } from "@altftool/ui";
+import { useTheme } from "@/contexts/ThemeContext";
+
+const navItems = [
+  { label: "Tools", href: "/tools/all", icon: Wrench },
+  { label: "Extensions", href: "/extensions", icon: Puzzle },
+  {
+    label: "Deals",
+    icon: Tags,
+    hasDropdown: true,
+    options: [
+      { label: "Exclusive Deals", href: "/exclusivedeals", icon: Tags },
+      { label: "BuySmart", href: "/buysmart", icon: ShoppingBag },
+      { label: "Sale Locator", href: "/sale", icon: MapPin },
+    ],
+  },
+  {
+    label: "Learn",
+    icon: BookOpen,
+    hasDropdown: true,
+    options: [
+      { label: "Academy", href: "/academy", icon: GraduationCap },
+      { label: "Blog", href: "/blogs", icon: BookOpen },
+      { label: "Brand Ratings", href: "/brandrating", icon: ShieldCheck },
+      { label: "Support", href: "/supportsetting", icon: Sparkles },
+    ],
+  },
+  { label: "News", href: "/news", icon: Newspaper },
+  {
+    label: "More",
+    icon: LayoutGrid,
+    hasDropdown: true,
+    options: [
+      { label: "Desktop Software", href: "/desktop", icon: Monitor },
+      { label: "Trending Videos", href: "/trendingvids", icon: Sparkles },
+      { label: "About AltFTool", href: "/policypages/about", icon: ShieldCheck },
+    ],
+  },
+];
 
 const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const router = useRouter();
   const [searchQuery, setSearchQuery] = useState("");
   const [searchError, setSearchError] = useState("");
+  const [themeReady, setThemeReady] = useState(false);
+  const router = useRouter();
   const pathname = usePathname();
   const { theme, toggleTheme } = useTheme();
 
@@ -31,9 +88,14 @@ const Header = () => {
   });
 
   useEffect(() => {
-    const existingQuery = new URLSearchParams(window.location.search).get("q") || "";
+    const existingQuery =
+      new URLSearchParams(window.location.search).get("q") || "";
     setSearchQuery(existingQuery);
   }, [pathname]);
+
+  useEffect(() => {
+    setThemeReady(true);
+  }, []);
 
   const handleChange = (value) => {
     setSearchQuery(value);
@@ -62,125 +124,113 @@ const Header = () => {
     setMobileMenuOpen(false);
   };
 
-  const NAV = {
-    explore: "Explore",
-    resources: "Resources",
-    deals: "Deals",
-    news: "News",
-    but: "BuySmart",
-    sale: "Sale Locator",
-  };
-
-  const navItems = [
-    {
-      label: NAV.explore,
-      hasDropdown: true,
-      options: [
-        { label: "Tools", href: "/tools/all" },
-        { label: "Extensions", href: "/extensions" },
-        { label: "Desktop Softwares", href: "/desktop" },
-        { label: "Academy", href: "/academy" },
-
-        { label: "Trending Videos", href: "/trendingvids" },
-      ],
-    },
-    {
-      label: NAV.resources,
-      hasDropdown: true,
-      options: [
-        { label: "Blog", href: "/blogs" },
-        { label: "Setting Support", href: "/supportsetting" },
-        { label: "About", href: "/policypages/about" },
-        { label: "Consumer Ratings", href: "/brandrating" },
-      ],
-    },
-    { label: NAV.deals, hasDropdown: false, href: "/exclusivedeals" },
-    { label: NAV.news, hasDropdown: false, href: "/news" },
-    { label: NAV.but, hasDropdown: false, href: "/buysmart" },
-    { label: NAV.sale, hasDropdown: false, href: "/sale" },
-  ];
-
   // Hide global header on immersive routes.
-  if (pathname === "/search-eng" || pathname.startsWith("/search-eng/") || isBlogSlug) {
+  if (
+    pathname === "/search-eng" ||
+    pathname.startsWith("/search-eng/") ||
+    isBlogSlug
+  ) {
     return null;
   }
 
   return (
     <>
-      <header id="main-header" className="sticky top-0 z-50 border-b border-(--border) bg-(--card) px-4 py-2 backdrop-blur-xl sm:px-6 lg:px-10">
-        <div className="mx-auto flex h-14 max-w-[1440px] items-center justify-between gap-6">
-          {/* LOGO */}
-          <Link href="/" className="flex min-w-fit items-center" {...routePreviewProps("/")}>
+      <header
+        id="main-header"
+        className="sticky top-0 z-50 border-b border-(--border) bg-(--card) px-4 py-2 backdrop-blur-xl sm:px-6 lg:px-10"
+      >
+        <div className="mx-auto flex h-14 max-w-[1440px] items-center justify-between gap-5">
+          <Link
+            href="/"
+            className="flex min-w-fit items-center"
+            {...routePreviewProps("/")}
+          >
             <img
               src="/assets/logo3.png"
               className="h-9 w-auto object-contain"
-              alt="Logo"
+              alt="AltFTool"
             />
           </Link>
 
-
-          {/* DESKTOP NAV */}
           <nav className="hidden items-center gap-1 lg:flex">
-            {navItems.map((item) => (
-              <div key={item.label} className="relative group">
-                {item.hasDropdown ? (
-                  <>
-                    <button
-                      className={`relative flex items-center gap-1 rounded-[var(--anslation-ds-radius)] px-3 py-2 text-sm font-medium transition
-                        ${item.options?.some((o) => isActive(o.href))
-                          ? "bg-(--muted) text-(--primary)"
-                          : "text-(--muted-foreground) hover:bg-(--muted) hover:text-(--foreground)"
-                        }`}
-                    >
-                      {item.label}
-                      <ChevronDown className="h-4 w-4 transition group-hover:rotate-180" />
-                    </button>
+            {navItems.map((item) => {
+              const Icon = item.icon;
+              const isCurrent = item.hasDropdown
+                ? item.options?.some((option) => isActive(option.href))
+                : isActive(item.href);
 
-                    <div className="absolute left-0 top-full hidden pt-2 group-hover:block">
-                      <div className="w-56 rounded-[var(--anslation-ds-radius)] border border-(--border) bg-(--card) p-1 shadow-[var(--anslation-ds-shadow-md)]">
-                        {item.options?.map((option) => (
-                          <Link
-                            key={option.label}
-                            href={option.href}
-                            {...routePreviewProps(option.href)}
-                            className={`block rounded-[6px] px-3 py-2 text-sm transition
-                              ${isActive(option.href)
-                                ? "bg-(--muted) text-(--primary)"
-                                : "text-(--muted-foreground) hover:bg-(--muted) hover:text-(--foreground)"
-                              }`}
-                          >
-                            {option.label}
-                          </Link>
-                        ))}
+              return (
+                <div key={item.label} className="group relative">
+                  {item.hasDropdown ? (
+                    <>
+                      <button
+                        className={`relative flex items-center gap-2 rounded-[var(--anslation-ds-radius)] px-2.5 py-2 text-sm font-medium transition ${
+                          isCurrent
+                            ? "bg-(--primary) text-(--primary-foreground) shadow-[var(--anslation-ds-shadow-sm)]"
+                            : "text-(--muted-foreground) hover:bg-(--muted) hover:text-(--foreground)"
+                        }`}
+                      >
+                        <Icon className="h-4 w-4" />
+                        {item.label}
+                        <ChevronDown className="h-4 w-4 transition group-hover:rotate-180" />
+                      </button>
+
+                      <div className="absolute left-0 top-full hidden pt-2 group-hover:block">
+                        <div className="w-64 rounded-[var(--anslation-ds-radius)] border border-(--border) bg-(--card) p-1.5 shadow-[var(--anslation-ds-shadow-md)]">
+                          {item.options?.map((option) => {
+                            const OptionIcon = option.icon;
+                            return (
+                              <Link
+                                key={option.label}
+                                href={option.href}
+                                {...routePreviewProps(option.href)}
+                                className={`flex items-center gap-3 rounded-[6px] px-2.5 py-2 text-sm transition ${
+                                  isActive(option.href)
+                                    ? "bg-(--muted) text-(--primary)"
+                                    : "text-(--muted-foreground) hover:bg-(--muted) hover:text-(--foreground)"
+                                }`}
+                              >
+                                <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-[6px] bg-(--muted) text-(--primary)">
+                                  <OptionIcon className="h-4 w-4" />
+                                </span>
+                                <span className="font-medium">
+                                  {option.label}
+                                </span>
+                              </Link>
+                            );
+                          })}
+                        </div>
                       </div>
-                    </div>
-                  </>
-                ) : (
-                  <Link
-                    href={item.href}
-                    {...routePreviewProps(item.href)}
-                    className={`relative rounded-[var(--anslation-ds-radius)] px-3 py-2 text-sm font-medium transition
-                      ${isActive(item.href)
-                        ? "bg-(--muted) text-(--primary)"
-                        : "text-(--muted-foreground) hover:bg-(--muted) hover:text-(--foreground)"
+                    </>
+                  ) : (
+                    <Link
+                      href={item.href}
+                      {...routePreviewProps(item.href)}
+                      className={`relative flex items-center gap-2 rounded-[var(--anslation-ds-radius)] px-2.5 py-2 text-sm font-medium transition ${
+                        isCurrent
+                          ? "bg-(--primary) text-(--primary-foreground) shadow-[var(--anslation-ds-shadow-sm)]"
+                          : "text-(--muted-foreground) hover:bg-(--muted) hover:text-(--foreground)"
                       }`}
-                  >
-                    {item.label}
-                  </Link>
-                )}
-              </div>
-            ))}
+                    >
+                      <Icon className="h-4 w-4" />
+                      {item.label}
+                    </Link>
+                  )}
+                </div>
+              );
+            })}
           </nav>
 
-          {/* RIGHT SIDE */}
           <div className="flex items-center gap-2">
-            {/* SEARCH INPUT */}
-            <form className="hidden sm:flex items-center gap-2" onSubmit={handleSearch}>
+            <form
+              className="hidden items-center gap-2 sm:flex"
+              onSubmit={handleSearch}
+            >
               <Input
                 type="text"
                 placeholder="Search tools, extensions..."
                 value={searchQuery}
-                onChange={(e) => handleChange(e.target.value)}
+                onChange={(event) => handleChange(event.target.value)}
                 className="w-64"
                 style={{ background: "var(--background)" }}
               />
@@ -190,19 +240,14 @@ const Header = () => {
               </IconButton>
             </form>
 
-            {/* THEME TOGGLE */}
-            <IconButton
-              onClick={toggleTheme}
-              aria-label="Toggle Theme"
-            >
-              {theme === "dark" ? (
-                <Sun className="h-4 w-4 text-yellow-400" />
+            <IconButton onClick={toggleTheme} aria-label="Toggle Theme">
+              {themeReady && theme === "dark" ? (
+                <Sun className="h-4 w-4 text-(--primary)" />
               ) : (
                 <Moon className="h-4 w-4" />
               )}
             </IconButton>
 
-            {/* MOBILE MENU BUTTON */}
             <IconButton
               onClick={() => setMobileMenuOpen(true)}
               className="lg:hidden"
@@ -214,32 +259,36 @@ const Header = () => {
         </div>
       </header>
 
-      {/* MOBILE MENU */}
       <div
-        className={`fixed inset-0 z-50 lg:hidden ${mobileMenuOpen ? "" : "pointer-events-none"
-          }`}
+        className={`fixed inset-0 z-50 lg:hidden ${
+          mobileMenuOpen ? "" : "pointer-events-none"
+        }`}
       >
         <div
-          className={`fixed inset-0 bg-(--background) backdrop-blur-sm transition-opacity duration-300
-          ${mobileMenuOpen ? "opacity-100" : "opacity-0"}`}
+          className={`fixed inset-0 bg-black/45 backdrop-blur-sm transition-opacity duration-300 ${
+            mobileMenuOpen ? "opacity-100" : "opacity-0"
+          }`}
           onClick={() => setMobileMenuOpen(false)}
         />
 
         <div
-          className={`fixed inset-y-0 left-0 w-full max-w-xs border-r border-(--border) bg-(--card) p-5 text-(--foreground) shadow-[var(--anslation-ds-shadow-lg)] transform transition-transform duration-300 ease-out
-          ${mobileMenuOpen ? "translate-x-0" : "-translate-x-full"}`}
+          className={`fixed inset-y-0 left-0 w-full max-w-xs transform border-r border-(--border) bg-(--card) p-5 text-(--foreground) shadow-[var(--anslation-ds-shadow-lg)] transition-transform duration-300 ease-out ${
+            mobileMenuOpen ? "translate-x-0" : "-translate-x-full"
+          }`}
         >
-          {/* LOGO + CLOSE BUTTON */}
           <div className="flex items-center justify-between">
-            <Link href="/" onClick={() => setMobileMenuOpen(false)} {...routePreviewProps("/")}>
+            <Link
+              href="/"
+              onClick={() => setMobileMenuOpen(false)}
+              {...routePreviewProps("/")}
+            >
               <img
                 src="/assets/logo3.png"
                 className="h-9 w-auto object-contain"
-                alt="Logo"
+                alt="AltFTool"
               />
             </Link>
 
-            {/* LUCIDE X ICON */}
             <IconButton
               onClick={() => setMobileMenuOpen(false)}
               variant="ghost"
@@ -250,10 +299,7 @@ const Header = () => {
           </div>
 
           <nav className="mt-8 flex flex-col gap-4">
-            <form
-              className="grid gap-2"
-              onSubmit={handleSearch}
-            >
+            <form className="grid gap-2" onSubmit={handleSearch}>
               <div className="flex items-center gap-2">
                 <Input
                   type="text"
@@ -273,50 +319,71 @@ const Header = () => {
               ) : null}
             </form>
 
-            {navItems.map((item) => (
-              <div key={item.label}>
-                {item.hasDropdown ? (
-                  <details className="group">
-                    <summary className="flex cursor-pointer items-center justify-between py-2 text-sm font-medium">
-                      {item.label}
-                      <ChevronDown className="h-4 w-4 group-open:rotate-180 transition" />
-                    </summary>
-                    <div className="mt-1 flex flex-col gap-1 pl-4">
-                      {item.options?.map((option) => (
-                        <Link
-                          key={option.label}
-                          href={option.href}
-                          {...routePreviewProps(option.href)}
-                          onClick={() => setMobileMenuOpen(false)}
-                          className={`rounded-lg px-2 py-2 text-sm ${isActive(option.href)
-                            ? "text-(--primary)"
-                            : theme === "dark"
-                              ? "text-gray-400 hover:bg-zinc-900 hover:text-white"
-                              : "text-gray-500 hover:bg-gray-100 hover:text-black"
-                            }`}
+            <div className="flex flex-col gap-1">
+              {navItems.map((item) => {
+                const Icon = item.icon;
+                const isCurrent = item.hasDropdown
+                  ? item.options?.some((option) => isActive(option.href))
+                  : isActive(item.href);
+
+                return (
+                  <div key={item.label}>
+                    {item.hasDropdown ? (
+                      <details className="group">
+                        <summary
+                          className={`flex cursor-pointer list-none items-center justify-between rounded-[var(--anslation-ds-radius)] px-2.5 py-2.5 text-sm font-medium transition ${
+                            isCurrent
+                              ? "bg-(--muted) text-(--primary)"
+                              : "text-(--muted-foreground) hover:bg-(--muted) hover:text-(--foreground)"
+                          }`}
                         >
-                          {option.label}
-                        </Link>
-                      ))}
-                    </div>
-                  </details>
-                ) : (
-                  <Link
-                    href={item.href}
-                    {...routePreviewProps(item.href)}
-                    onClick={()=>setMobileMenuOpen(false)}
-                    className={`block py-2 text-sm font-medium ${isActive(item.href)
-                      ? "text-(--primary)"
-                      : theme === "dark"
-                        ? "text-gray-300"
-                        : "text-gray-700"
-                      }`}
-                  >
-                    {item.label}
-                  </Link>
-                )}
-              </div>
-            ))}
+                          <span className="flex items-center gap-2">
+                            <Icon className="h-4 w-4" />
+                            {item.label}
+                          </span>
+                          <ChevronDown className="h-4 w-4 transition group-open:rotate-180" />
+                        </summary>
+                        <div className="mt-1 flex flex-col gap-1 pl-3">
+                          {item.options?.map((option) => {
+                            const OptionIcon = option.icon;
+                            return (
+                              <Link
+                                key={option.label}
+                                href={option.href}
+                                {...routePreviewProps(option.href)}
+                                onClick={() => setMobileMenuOpen(false)}
+                                className={`flex items-center gap-2 rounded-[var(--anslation-ds-radius)] px-2.5 py-2 text-sm font-medium transition ${
+                                  isActive(option.href)
+                                    ? "bg-(--muted) text-(--primary)"
+                                    : "text-(--muted-foreground) hover:bg-(--muted) hover:text-(--foreground)"
+                                }`}
+                              >
+                                <OptionIcon className="h-4 w-4" />
+                                {option.label}
+                              </Link>
+                            );
+                          })}
+                        </div>
+                      </details>
+                    ) : (
+                      <Link
+                        href={item.href}
+                        {...routePreviewProps(item.href)}
+                        onClick={() => setMobileMenuOpen(false)}
+                        className={`flex items-center gap-2 rounded-[var(--anslation-ds-radius)] px-2.5 py-2.5 text-sm font-medium transition ${
+                          isCurrent
+                            ? "bg-(--muted) text-(--primary)"
+                            : "text-(--muted-foreground) hover:bg-(--muted) hover:text-(--foreground)"
+                        }`}
+                      >
+                        <Icon className="h-4 w-4" />
+                        {item.label}
+                      </Link>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
           </nav>
         </div>
       </div>

@@ -7,7 +7,7 @@ test("public web shell loads", async ({ page }) => {
   await page.goto(`${webUrl}/tools`);
 
   await expect(page.locator("#main-header")).toBeVisible();
-  await expect(page.getByAltText("Logo").first()).toBeVisible();
+  await expect(page.getByAltText("AltFTool").first()).toBeVisible();
   await expect(page.getByPlaceholder("Search tools, extensions...")).toBeVisible();
   await expect(page.getByRole("button", { name: "Toggle Theme" })).toBeVisible();
 });

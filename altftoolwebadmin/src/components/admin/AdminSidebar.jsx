@@ -111,10 +111,10 @@ path: "/tickets",
 
   return (
     <aside
-      className={`bg-white border-r border-gray-100 h-full flex flex-col transition-all duration-200 shrink-0 ${collapsed ? "w-16" : "w-60"}`}
+      className={`bg-[var(--surface)] border-r border-[var(--border)] h-full flex flex-col transition-all duration-200 shrink-0 ${collapsed ? "w-16" : "w-60"}`}
     >
       <div
-        className={`h-14 flex items-center border-b border-gray-100 shrink-0 ${
+        className={`h-14 flex items-center border-b border-[var(--border)] shrink-0 ${
           collapsed ? "justify-center px-0" : "justify-between px-4"
         }`}
       >
@@ -122,7 +122,7 @@ path: "/tickets",
           {!collapsed ? (
             <button
               onClick={() => setOpen((v) => !v)}
-              className="w-full flex items-center justify-between px-2 py-1.5 rounded-lg hover:bg-gray-100 transition"
+              className="w-full flex items-center justify-between px-2 py-1.5 rounded-lg text-[var(--foreground)] hover:bg-[var(--surface-soft)] transition"
             >
               <div className="flex items-center gap-2 truncate">
                 {project?.logo && (
@@ -134,7 +134,7 @@ path: "/tickets",
                     className="rounded-sm object-contain"
                   />
                 )}
-                <span className="font-semibold text-gray-900 text-sm truncate">
+                <span className="font-semibold text-[var(--foreground)] text-sm truncate">
                   {project?.name || "Select Project"}
                 </span>
               </div>
@@ -162,7 +162,7 @@ path: "/tickets",
           )}
 
           {open && (
-            <div className="absolute top-10 left-0 w-full bg-white border border-gray-200 rounded-xl shadow-md z-50 overflow-hidden">
+            <div className="absolute top-10 left-0 w-full bg-[var(--surface)] border border-[var(--border)] rounded-xl shadow-md z-50 overflow-hidden">
               {projects.map((proj) => {
                 const isActive = proj.id === projectId;
                 return (
@@ -172,8 +172,8 @@ path: "/tickets",
                       handleProjectSwitch(proj.id);
                       setOpen(false);
                     }}
-                    className={`w-full text-left px-3 py-2 text-sm hover:bg-gray-100 transition flex items-center justify-between ${
-                      isActive ? "font-semibold text-gray-900" : "text-gray-600"
+                    className={`w-full text-left px-3 py-2 text-sm hover:bg-[var(--surface-soft)] transition flex items-center justify-between ${
+                      isActive ? "font-semibold text-[var(--foreground)]" : "text-[var(--muted)]"
                     }`}
                   >
                     <div className="flex items-center gap-2">
@@ -197,7 +197,7 @@ path: "/tickets",
         </div>
         <button
           onClick={() => setCollapsed((v) => !v)}
-          className="p-1.5 rounded-lg text-gray-400 hover:bg-gray-100 hover:text-gray-600 transition"
+          className="p-1.5 rounded-lg text-[var(--muted)] hover:bg-[var(--surface-soft)] hover:text-[var(--foreground)] transition"
         >
           {collapsed ? (
             <PanelLeftOpen className="w-4 h-4" />
@@ -220,8 +220,8 @@ path: "/tickets",
               href={href}
               className={`relative group flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all ${
                 isActive
-                  ? "bg-gray-900 text-white shadow-sm"
-                  : "text-gray-500 hover:bg-gray-100 hover:text-gray-900"
+                  ? "bg-[var(--primary)] text-[var(--primary-foreground)] shadow-sm"
+                  : "text-[var(--muted)] hover:bg-[var(--surface-soft)] hover:text-[var(--foreground)]"
               } ${collapsed ? "justify-center" : ""}`}
               title={collapsed ? moduleConfig.label : undefined}
             >
@@ -230,7 +230,7 @@ path: "/tickets",
                 <span className="text-sm font-medium truncate">{moduleConfig.label}</span>
               )}
               {collapsed && isActive && (
-                <span className="absolute right-2 w-1 h-1 rounded-full bg-white" />
+                <span className="absolute right-2 w-1 h-1 rounded-full bg-[var(--primary-foreground)]" />
               )}
             </Link>
           );
@@ -241,7 +241,7 @@ path: "/tickets",
       {globalModules.length > 0 && (
         <>
           {!collapsed && (
-            <div className="mt-2 px-3 text-[10px] font-bold text-gray-400 uppercase tracking-wider">
+            <div className="mt-2 px-3 text-[10px] font-bold text-[var(--muted)] uppercase tracking-wider">
               System
             </div>
           )}
@@ -269,8 +269,8 @@ path: "/tickets",
                   href={moduleConfig.path}
                   className={`relative group flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all ${
                     isActive
-                      ? "bg-gray-900 text-white shadow-sm"
-                      : "text-gray-500 hover:bg-gray-100 hover:text-gray-900"
+                      ? "bg-[var(--primary)] text-[var(--primary-foreground)] shadow-sm"
+                      : "text-[var(--muted)] hover:bg-[var(--surface-soft)] hover:text-[var(--foreground)]"
                   } ${collapsed ? "justify-center" : ""}`}
                   title={collapsed ? moduleConfig.label : undefined}
                 >
@@ -279,7 +279,7 @@ path: "/tickets",
                     <span className="text-sm font-medium truncate">{moduleConfig.label}</span>
                   )}
                   {collapsed && isActive && (
-                    <span className="absolute right-2 w-1 h-1 rounded-full bg-white" />
+                    <span className="absolute right-2 w-1 h-1 rounded-full bg-[var(--primary-foreground)]" />
                   )}
                 </Link>
               );
@@ -289,14 +289,14 @@ path: "/tickets",
       )}
 
       {!collapsed && (
-        <div className="px-4 py-3 border-t border-gray-100 shrink-0">
+        <div className="px-4 py-3 border-t border-[var(--border)] shrink-0">
           <div className="flex items-center gap-2">
             <div
               className={`w-2 h-2 rounded-full ${
                 adminData.isActive !== false ? "bg-green-500" : "bg-red-500"
               }`}
             />
-            <span className="text-[10px] font-bold text-gray-400 uppercase tracking-wider capitalize">
+            <span className="text-[10px] font-bold text-[var(--muted)] uppercase tracking-wider capitalize">
               {adminData.roleType === "superadmin" ? "Super Admin" : "Admin"}
             </span>
           </div>
