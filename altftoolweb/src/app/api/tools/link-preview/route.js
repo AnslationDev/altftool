@@ -1,10 +1,17 @@
 import { NextResponse } from "next/server";
 import { requireServerEnv } from "@altftool/core/env";
-import { proxyJson, requireHttpUrl, routeError, searchParam } from "@altftool/core/http";
+import { enforceRateLimit, proxyJson, requireHttpUrl, routeError, searchParam } from "@altftool/core/http";
 import { SERVER_ENV } from "@altftool/core/services";
 
 export async function GET(req) {
   try {
+    const limited = enforceRateLimit(NextResponse, req, {
+      limit: 30,
+      scope: "tools:link-preview",
+      windowMs: 60000,
+    });
+    if (limited) return limited;
+
     const apiKey = requireServerEnv(SERVER_ENV.linkPreview);
     const url = requireHttpUrl(searchParam(req, "url"), "Valid URL is required.");
 

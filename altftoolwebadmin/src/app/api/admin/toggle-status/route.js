@@ -1,6 +1,8 @@
 import { adminDb } from "@/lib/firebaseAdmin";
 import { adminAuth } from "@/lib/firebaseAdmin";
 import { writeAdminAuditLog } from "@/lib/adminAuditLog";
+import { NextResponse } from "next/server";
+import { enforceRateLimit } from "@altftool/core/http";
 
 async function verifySuperAdmin(req) {
   const header = req.headers.get("authorization");
@@ -18,6 +20,13 @@ async function verifySuperAdmin(req) {
 
 export async function POST(req) {
   try {
+    const limited = enforceRateLimit(NextResponse, req, {
+      limit: 20,
+      scope: "admin:toggle-status",
+      windowMs: 60000,
+    });
+    if (limited) return limited;
+
     const actor = await verifySuperAdmin(req);
     const { adminId, isActive } = await req.json();
 

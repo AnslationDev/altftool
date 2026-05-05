@@ -1,10 +1,17 @@
 import { NextResponse } from "next/server";
 import { requireServerEnv } from "@altftool/core/env";
-import { routeError } from "@altftool/core/http";
+import { enforceRateLimit, routeError } from "@altftool/core/http";
 import { SERVER_ENV } from "@altftool/core/services";
 
 export async function POST(req) {
   try {
+    const limited = enforceRateLimit(NextResponse, req, {
+      limit: 5,
+      scope: "tools:remove-bg",
+      windowMs: 60000,
+    });
+    if (limited) return limited;
+
     const apiKey = requireServerEnv(SERVER_ENV.removeBg);
 
     const formData = await req.formData();

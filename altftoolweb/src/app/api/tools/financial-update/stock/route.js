@@ -1,10 +1,17 @@
 import { NextResponse } from "next/server";
 import { requireServerEnv } from "@altftool/core/env";
-import { fetchJson, jsonResponse, routeError, searchParam } from "@altftool/core/http";
+import { enforceRateLimit, fetchJson, jsonResponse, routeError, searchParam } from "@altftool/core/http";
 import { SERVER_ENV } from "@altftool/core/services";
 
 export async function GET(req) {
   try {
+    const limited = enforceRateLimit(NextResponse, req, {
+      limit: 60,
+      scope: "tools:stock",
+      windowMs: 60000,
+    });
+    if (limited) return limited;
+
     const apiKey = requireServerEnv(SERVER_ENV.alphaVantage);
     const symbol = searchParam(req, "symbol").toUpperCase();
     if (!symbol) {

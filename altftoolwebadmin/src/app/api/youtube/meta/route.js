@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { requireServerEnv } from "@altftool/core/env";
-import { fetchJson, jsonResponse, routeError, searchParam } from "@altftool/core/http";
+import { enforceRateLimit, fetchJson, jsonResponse, routeError, searchParam } from "@altftool/core/http";
 import { SERVER_ENV } from "@altftool/core/services";
 
 const VIDEO_ID_PATTERN = /^[a-zA-Z0-9_-]{6,32}$/;
@@ -17,6 +17,13 @@ function formatDuration(iso = "") {
 
 export async function GET(request) {
   try {
+    const limited = enforceRateLimit(NextResponse, request, {
+      limit: 60,
+      scope: "admin:youtube-meta",
+      windowMs: 60000,
+    });
+    if (limited) return limited;
+
     const videoId = searchParam(request, "videoId");
     if (!VIDEO_ID_PATTERN.test(videoId)) {
       return NextResponse.json({ error: "Valid videoId is required." }, { status: 400 });

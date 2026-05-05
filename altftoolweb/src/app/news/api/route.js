@@ -1,7 +1,7 @@
 // app/api/news/route.js
 
 import { NextResponse } from "next/server";
-import { jsonResponse } from "@altftool/core/http";
+import { enforceRateLimit, jsonResponse } from "@altftool/core/http";
 import { GLOBAL_FEEDS, buildGoogleNewsUrl } from "../lib/sources";
 import { fetchFeeds } from "../lib/fetchFeeds";
 import { normalizeItems } from "../lib/normalize";
@@ -12,6 +12,13 @@ import { cache } from "../lib/cache";
 export const runtime = "nodejs"; // rss-parser needs Node APIs
 
 export async function GET(request) {
+  const limited = enforceRateLimit(NextResponse, request, {
+    limit: 120,
+    scope: "news-api",
+    windowMs: 60000,
+  });
+  if (limited) return limited;
+
   const { searchParams } = new URL(request.url);
   const location = searchParams.get("location")?.trim() || null;
 

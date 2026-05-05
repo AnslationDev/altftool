@@ -3,11 +3,19 @@
 import { NextResponse } from "next/server";
 import { adminAuth, adminDb } from "@/lib/firebaseAdmin";
 import { sendPushToUsers } from "@/lib/sendPushNotification";
+import { enforceRateLimit } from "@altftool/core/http";
 
 const VALID_STATUSES = ["open", "in_progress", "resolved", "closed"];
 
 export async function PATCH(request) {
   try {
+    const limited = enforceRateLimit(NextResponse, request, {
+      limit: 30,
+      scope: "support:update-status",
+      windowMs: 60000,
+    });
+    if (limited) return limited;
+
     const authHeader = request.headers.get("authorization");
     if (!authHeader?.startsWith("Bearer ")) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });

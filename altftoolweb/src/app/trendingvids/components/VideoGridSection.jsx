@@ -2,7 +2,7 @@
 
 import { Play, X } from "lucide-react";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 
 const videos = [
@@ -72,12 +72,9 @@ function VideoModal({ video, onClose }) {
   );
 }
 
-const shuffleArray = (array) => [...array].sort(() => Math.random() - 0.5);
-
 export default function VideoGridSection() {
   const [selectedVideo, setSelectedVideo] = useState(null);
-  const randomVideos = useMemo(() => shuffleArray(videos), []);
-  const rowVideos = randomVideos.slice(0, 6);
+  const rowVideos = videos.slice(0, 6);
 
   const rowPattern = [
     { type: "rectangle", index: 0 },

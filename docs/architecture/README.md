@@ -67,12 +67,17 @@ When adding a feature:
 ## Performance Pattern
 
 - API routes that proxy upstream JSON should use `fetchJson`, `proxyJson`, or `jsonResponse` from `@altftool/core/http` so timeouts, request coalescing, and cache headers stay consistent.
+- Expensive public routes and sensitive admin mutations should call `enforceRateLimit` before upstream/API work.
 - Repeated Firebase `getDocs` reads should go through each app's `src/lib/firebaseCache.js` with a short TTL when data is safe to reuse.
 - Realtime Firebase reads that can appear in multiple components should use `subscribeCached` so one `onSnapshot` listener fans out to all subscribers and replays the latest value on navigation.
 - Client Firebase is initialized with persistent multi-tab local cache where the browser supports it. Server/build code falls back to normal Firestore initialization.
 - Admin list caches must be cleared immediately after create/update/delete operations.
 - Admin authorization data may be cached only with a very short TTL. Do not cache permission checks for long-lived windows.
 - Heavy client widgets should be lazy loaded behind a client boundary when they are not part of the first interaction path.
+
+## Firebase Security
+
+Firestore and Storage policy lives in `firestore.rules` and `storage.rules`, with deploy config in `firebase.json`. Keep public client writes narrow: comments, likes/views, and local tool history are constrained, while admin content writes and uploads require an active admin document. Firebase Admin SDK API routes bypass these rules, so route-level auth checks remain mandatory.
 
 ## Verification
 

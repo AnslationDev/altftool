@@ -4,8 +4,16 @@ import { NextResponse } from "next/server";
 import { adminAuth, adminDb } from "@/lib/firebaseAdmin";
 import { FieldValue } from "firebase-admin/firestore";
 import { verifySuperAdminRequest } from "@/lib/adminAccess";
+import { enforceRateLimit } from "@altftool/core/http";
 
 export async function POST(req) {
+  const limited = enforceRateLimit(NextResponse, req, {
+    limit: 10,
+    scope: "admin:create",
+    windowMs: 60000,
+  });
+  if (limited) return limited;
+
   let actor;
   try {
     actor = await verifySuperAdminRequest(req);

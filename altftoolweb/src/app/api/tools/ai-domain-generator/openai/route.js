@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { getServerEnv, requireServerEnv } from "@altftool/core/env";
-import { fetchJson, routeError } from "@altftool/core/http";
+import { enforceRateLimit, fetchJson, routeError } from "@altftool/core/http";
 import { SERVER_ENV } from "@altftool/core/services";
 
 const DEFAULT_TLDS = [".com", ".net", ".io", ".in", ".org"];
@@ -37,6 +37,13 @@ function buildPrompt(params) {
 
 export async function POST(req) {
   try {
+    const limited = enforceRateLimit(NextResponse, req, {
+      limit: 8,
+      scope: "tools:domain-ai",
+      windowMs: 60000,
+    });
+    if (limited) return limited;
+
     const apiKey = requireServerEnv(SERVER_ENV.openai);
 
     const params = normalizeParams(await req.json());

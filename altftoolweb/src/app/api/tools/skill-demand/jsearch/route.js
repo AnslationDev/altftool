@@ -1,10 +1,17 @@
 import { NextResponse } from 'next/server';
 import { requireServerEnv } from '@altftool/core/env';
-import { fetchJson, jsonResponse, routeError } from '@altftool/core/http';
+import { enforceRateLimit, fetchJson, jsonResponse, routeError } from '@altftool/core/http';
 import { SERVER_ENV } from '@altftool/core/services';
 
 export async function GET(req) {
   try {
+    const limited = enforceRateLimit(NextResponse, req, {
+      limit: 30,
+      scope: 'tools:jsearch',
+      windowMs: 60000,
+    });
+    if (limited) return limited;
+
     const { searchParams } = new URL(req.url);
     const type = searchParams.get('type') || 'search'; // Default to search
     const RAPIDAPI_KEY = requireServerEnv(SERVER_ENV.rapidApi);

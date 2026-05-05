@@ -1,10 +1,17 @@
 import { NextResponse } from "next/server";
 import { requireServerEnv } from "@altftool/core/env";
-import { proxyJson, routeError, searchParam } from "@altftool/core/http";
+import { enforceRateLimit, proxyJson, routeError, searchParam } from "@altftool/core/http";
 import { SERVER_ENV } from "@altftool/core/services";
 
 export async function GET(req) {
   try {
+    const limited = enforceRateLimit(NextResponse, req, {
+      limit: 120,
+      scope: "tools:giphy",
+      windowMs: 60000,
+    });
+    if (limited) return limited;
+
     const apiKey = requireServerEnv(SERVER_ENV.giphy);
     const query = searchParam(req, "q", "trending");
     const endpoint =

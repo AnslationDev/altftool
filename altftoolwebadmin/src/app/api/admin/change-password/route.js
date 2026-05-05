@@ -2,9 +2,17 @@ import { writeAdminAuditLog } from "@/lib/adminAuditLog";
 import { NextResponse } from "next/server";
 import { adminAuth } from "@/lib/firebaseAdmin";
 import { verifySuperAdminRequest } from "@/lib/adminAccess";
+import { enforceRateLimit } from "@altftool/core/http";
 
 export async function POST(req) {
   try {
+    const limited = enforceRateLimit(NextResponse, req, {
+      limit: 10,
+      scope: "admin:change-password",
+      windowMs: 60000,
+    });
+    if (limited) return limited;
+
     const actor = await verifySuperAdminRequest(req);
 
     const { uid, password } = await req.json();

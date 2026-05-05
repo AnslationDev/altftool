@@ -1,5 +1,6 @@
 import { adminAuth, adminDb } from "@/lib/firebaseAdmin";
 import { NextResponse } from "next/server";
+import { enforceRateLimit } from "@altftool/core/http";
 
 /**
  * POST /api/admin/google-login
@@ -15,6 +16,13 @@ import { NextResponse } from "next/server";
  */
 export async function POST(req) {
   try {
+    const limited = enforceRateLimit(NextResponse, req, {
+      limit: 20,
+      scope: "admin:google-login",
+      windowMs: 60000,
+    });
+    if (limited) return limited;
+
     const authHeader = req.headers.get("authorization");
     if (!authHeader?.startsWith("Bearer ")) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });

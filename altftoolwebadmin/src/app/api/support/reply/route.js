@@ -3,9 +3,17 @@
 import { NextResponse } from "next/server";
 import { adminAuth, adminDb } from "@/lib/firebaseAdmin";
 import { sendPushToUsers } from "@/lib/sendPushNotification";
+import { enforceRateLimit } from "@altftool/core/http";
 
 export async function POST(request) {
   try {
+    const limited = enforceRateLimit(NextResponse, request, {
+      limit: 30,
+      scope: "support:reply",
+      windowMs: 60000,
+    });
+    if (limited) return limited;
+
     const authHeader = request.headers.get("authorization");
     if (!authHeader?.startsWith("Bearer ")) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });

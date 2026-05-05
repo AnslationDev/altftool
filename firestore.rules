@@ -1,0 +1,117 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function signedIn() {
+      return request.auth != null;
+    }
+
+    function adminDoc() {
+      return /databases/$(database)/documents/admins/$(request.auth.uid);
+    }
+
+    function isActiveAdmin() {
+      return signedIn() &&
+        exists(adminDoc()) &&
+        get(adminDoc()).data.isActive == true;
+    }
+
+    function isSuperAdmin() {
+      return isActiveAdmin() &&
+        get(adminDoc()).data.roleType == "superadmin";
+    }
+
+    function hasOnly(keys) {
+      return request.resource.data.keys().hasOnly(keys);
+    }
+
+    function onlyChanges(keys) {
+      return request.resource.data.diff(resource.data).affectedKeys().hasOnly(keys);
+    }
+
+    function nonEmptyText(value, max) {
+      return value is string && value.size() > 0 && value.size() <= max;
+    }
+
+    match /admins/{uid} {
+      allow read: if isSuperAdmin() || (signedIn() && request.auth.uid == uid);
+      allow create, delete: if isSuperAdmin();
+      allow update: if isSuperAdmin() ||
+        (signedIn() &&
+          request.auth.uid == uid &&
+          onlyChanges(["bio", "designation", "firstName", "fullName", "lastName", "photoURL", "team"]));
+    }
+
+    match /accessRequests/{requestId} {
+      allow read, update, delete: if isSuperAdmin();
+      allow create: if signedIn() &&
+        request.resource.data.uid == request.auth.uid &&
+        request.resource.data.status == "pending";
+    }
+
+    match /projects/altftool/blogs/{blogId} {
+      allow read: if true;
+      allow update: if onlyChanges(["commentsCount", "likesCount", "views", "viewsCount"]);
+      allow create, delete: if isActiveAdmin();
+
+      match /views/{viewId} {
+        allow read: if false;
+        allow create: if hasOnly(["viewedAt"]);
+      }
+    }
+
+    match /projects/altftool/{document=**} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+
+    match /projects/{projectId}/{document=**} {
+      allow read, write: if isActiveAdmin();
+    }
+
+    match /blogs/{blogId} {
+      allow read: if true;
+      allow update: if onlyChanges(["commentsCount", "likesCount", "views", "viewsCount"]);
+
+      match /comments/{commentId} {
+        allow read: if true;
+        allow create: if hasOnly(["createdAt", "text"]) &&
+          nonEmptyText(request.resource.data.text, 2000);
+      }
+
+      match /views/{viewId} {
+        allow read: if false;
+        allow create: if hasOnly(["viewedAt"]);
+      }
+    }
+
+    match /results/{resultId} {
+      allow read, delete: if true;
+      allow create: if hasOnly(["result", "timestamp", "url"]) &&
+        nonEmptyText(request.resource.data.url, 2048);
+    }
+
+    match /support_tickets/{ticketId} {
+      allow read, write: if isActiveAdmin() ||
+        (signedIn() && resource.data.createdBy == request.auth.uid);
+
+      match /messages/{messageId} {
+        allow read, write: if isActiveAdmin() ||
+          (signedIn() && get(/databases/$(database)/documents/support_tickets/$(ticketId)).data.createdBy == request.auth.uid);
+      }
+    }
+
+    match /notifications/{notificationId} {
+      allow read, update, delete: if signedIn() && resource.data.userId == request.auth.uid;
+      allow create: if isActiveAdmin();
+    }
+
+    match /notification_broadcasts/{broadcastId} {
+      allow read, write: if isSuperAdmin();
+    }
+
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

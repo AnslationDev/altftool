@@ -3,9 +3,17 @@ import { writeAdminAuditLog } from "@/lib/adminAuditLog";
 import { NextResponse } from "next/server";
 import { adminDb } from "@/lib/firebaseAdmin";
 import { verifySuperAdminRequest } from "@/lib/adminAccess";
+import { enforceRateLimit } from "@altftool/core/http";
 
 export async function POST(req) {
   try {
+    const limited = enforceRateLimit(NextResponse, req, {
+      limit: 20,
+      scope: "admin:update",
+      windowMs: 60000,
+    });
+    if (limited) return limited;
+
     const actor = await verifySuperAdminRequest(req);
 
     const { uid, updates } = await req.json();

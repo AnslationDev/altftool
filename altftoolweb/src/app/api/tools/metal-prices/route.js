@@ -1,10 +1,17 @@
 import { NextResponse } from "next/server";
 import { requireServerEnv } from "@altftool/core/env";
-import { proxyJson, routeError, searchParam } from "@altftool/core/http";
+import { enforceRateLimit, proxyJson, routeError, searchParam } from "@altftool/core/http";
 import { SERVER_ENV } from "@altftool/core/services";
 
 export async function GET(req) {
   try {
+    const limited = enforceRateLimit(NextResponse, req, {
+      limit: 60,
+      scope: "tools:metal-prices",
+      windowMs: 60000,
+    });
+    if (limited) return limited;
+
     const apiKey = requireServerEnv(SERVER_ENV.metalPrice);
     const currency = searchParam(req, "currency", "USD").toUpperCase();
     const metals = searchParam(req, "metals", "XAU,XAG,XPT,XPD");

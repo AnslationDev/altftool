@@ -1,10 +1,17 @@
 import { NextResponse } from 'next/server';
 import { requireServerEnvGroup } from '@altftool/core/env';
-import { fetchJson, jsonResponse, routeError } from '@altftool/core/http';
+import { enforceRateLimit, fetchJson, jsonResponse, routeError } from '@altftool/core/http';
 import { SERVER_ENV } from '@altftool/core/services';
 
 export async function GET(req) {
   try {
+    const limited = enforceRateLimit(NextResponse, req, {
+      limit: 30,
+      scope: 'tools:skill-jobs',
+      windowMs: 60000,
+    });
+    if (limited) return limited;
+
     const { searchParams } = new URL(req.url);
     const skill = (searchParams.get('skill') || '').trim();
     const country = (searchParams.get('country') || 'in').trim().toLowerCase();

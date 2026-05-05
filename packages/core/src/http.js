@@ -2,6 +2,7 @@ import { createTtlCache } from "./cache.js";
 import { MissingEnvError } from "./env.js";
 
 const fetchResponseCache = createTtlCache({ ttlMs: 30000, maxEntries: 120 });
+const rateLimitBuckets = createTtlCache({ ttlMs: 60000, maxEntries: 5000 });
 
 export function jsonError(NextResponse, message, status = 500, extra = {}) {
   return NextResponse.json({ error: message, ...extra }, { status });
@@ -96,6 +97,69 @@ export function jsonResponse(NextResponse, data, options = {}) {
   }
 
   return NextResponse.json(data, { status, headers: responseHeaders });
+}
+
+export function getClientAddress(req) {
+  const forwardedFor = req.headers.get("x-forwarded-for") || "";
+  const realIp = req.headers.get("x-real-ip") || "";
+  const cfIp = req.headers.get("cf-connecting-ip") || "";
+
+  return (
+    cfIp ||
+    realIp ||
+    forwardedFor.split(",")[0]?.trim() ||
+    "unknown"
+  );
+}
+
+export function checkRateLimit(req, options = {}) {
+  const {
+    key = getClientAddress(req),
+    limit = 60,
+    scope = "global",
+    windowMs = 60000,
+  } = options;
+  const now = Date.now();
+  const bucketKey = `rate:${scope}:${key}`;
+  let bucket = rateLimitBuckets.get(bucketKey);
+
+  if (!bucket || bucket.resetAt <= now) {
+    bucket = { count: 0, resetAt: now + windowMs };
+  }
+
+  bucket.count += 1;
+  rateLimitBuckets.set(bucketKey, bucket, Math.max(bucket.resetAt - now, 1000));
+
+  const retryAfter = Math.max(1, Math.ceil((bucket.resetAt - now) / 1000));
+
+  return {
+    allowed: bucket.count <= limit,
+    limit,
+    remaining: Math.max(0, limit - bucket.count),
+    resetAt: bucket.resetAt,
+    retryAfter,
+  };
+}
+
+export function rateLimitResponse(NextResponse, result) {
+  return NextResponse.json(
+    { error: "Too many requests. Please try again shortly." },
+    {
+      status: 429,
+      headers: {
+        "Cache-Control": "no-store",
+        "Retry-After": String(result.retryAfter),
+        "X-RateLimit-Limit": String(result.limit),
+        "X-RateLimit-Remaining": "0",
+        "X-RateLimit-Reset": String(Math.ceil(result.resetAt / 1000)),
+      },
+    },
+  );
+}
+
+export function enforceRateLimit(NextResponse, req, options = {}) {
+  const result = checkRateLimit(req, options);
+  return result.allowed ? null : rateLimitResponse(NextResponse, result);
 }
 
 export async function fetchJson(upstream, options = {}) {

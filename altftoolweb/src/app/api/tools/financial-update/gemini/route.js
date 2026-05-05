@@ -1,12 +1,19 @@
 import { NextResponse } from "next/server";
 import { requireServerEnv } from "@altftool/core/env";
-import { fetchJson, routeError } from "@altftool/core/http";
+import { enforceRateLimit, fetchJson, routeError } from "@altftool/core/http";
 import { SERVER_ENV } from "@altftool/core/services";
 
 const MODEL_NAME = "gemini-2.5-flash";
 
 export async function POST(req) {
   try {
+    const limited = enforceRateLimit(NextResponse, req, {
+      limit: 10,
+      scope: "tools:financial-gemini",
+      windowMs: 60000,
+    });
+    if (limited) return limited;
+
     const apiKey = requireServerEnv(SERVER_ENV.gemini);
 
     const { prompt } = await req.json();

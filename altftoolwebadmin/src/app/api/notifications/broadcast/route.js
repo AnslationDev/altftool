@@ -3,6 +3,7 @@
 import { NextResponse } from "next/server";
 import { adminAuth, adminDb } from "@/lib/firebaseAdmin";
 import { sendPushToUsers } from "@/lib/sendPushNotification";
+import { enforceRateLimit } from "@altftool/core/http";
 
 async function verifySuperAdmin(request) {
   const authHeader = request.headers.get("authorization");
@@ -74,6 +75,13 @@ export async function deliverBroadcast(broadcastId, broadcastData) {
 
 export async function POST(request) {
   try {
+    const limited = enforceRateLimit(NextResponse, request, {
+      limit: 10,
+      scope: "admin:broadcast-create",
+      windowMs: 60000,
+    });
+    if (limited) return limited;
+
     const decoded = await verifySuperAdmin(request);
     const payload = await request.json();
     const { title, body, type, target, actionUrl = "", sendNow, scheduledAt } = payload;
@@ -133,6 +141,13 @@ export async function POST(request) {
 
 export async function GET(request) {
   try {
+    const limited = enforceRateLimit(NextResponse, request, {
+      limit: 120,
+      scope: "admin:broadcast-list",
+      windowMs: 60000,
+    });
+    if (limited) return limited;
+
     await verifySuperAdmin(request);
     const snap = await adminDb
       .collection("notification_broadcasts")
@@ -168,6 +183,13 @@ export async function GET(request) {
 
 export async function DELETE(request) {
   try {
+    const limited = enforceRateLimit(NextResponse, request, {
+      limit: 20,
+      scope: "admin:broadcast-delete",
+      windowMs: 60000,
+    });
+    if (limited) return limited;
+
     await verifySuperAdmin(request);
     const { searchParams } = new URL(request.url);
     const id = searchParams.get("id");

@@ -1,8 +1,16 @@
 import { NextResponse } from 'next/server';
+import { enforceRateLimit, jsonResponse } from '@altftool/core/http';
 import googleTrends from 'google-trends-api';
 
 export async function GET(req) {
   try {
+    const limited = enforceRateLimit(NextResponse, req, {
+      limit: 30,
+      scope: 'tools:trends',
+      windowMs: 60000,
+    });
+    if (limited) return limited;
+
     const { searchParams } = new URL(req.url);
     const skill = (searchParams.get('skill') || '').trim();
     const country = (searchParams.get('country') || '').trim();
@@ -45,7 +53,7 @@ export async function GET(req) {
     const last = values.length ? Number(values[values.length - 1]) : 0;
     const percentageChange = first ? ((last - first) / Math.max(1, first)) * 100 : 0;
 
-    return NextResponse.json({
+    return jsonResponse(NextResponse, {
       skill,
       country: geo || 'global',
       labels,
@@ -54,6 +62,8 @@ export async function GET(req) {
       percentageChange: Number(percentageChange.toFixed(2)),
       lastUpdated: now.toISOString(),
       averageInterest: values.length ? (values.reduce((a,b)=>a+b,0)/values.length) : 0,
+    }, {
+      cache: { sMaxage: 300, staleWhileRevalidate: 600 },
     });
   } catch (err) {
     console.error('Trends API error:', err);

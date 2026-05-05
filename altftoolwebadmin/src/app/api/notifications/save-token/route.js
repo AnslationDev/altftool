@@ -6,6 +6,7 @@
 import { NextResponse } from "next/server";
 import { adminAuth, adminDb } from "@/lib/firebaseAdmin";
 import { FieldValue } from "firebase-admin/firestore";
+import { enforceRateLimit } from "@altftool/core/http";
 
 async function getUid(request) {
   const authHeader = request.headers.get("authorization");
@@ -16,6 +17,13 @@ async function getUid(request) {
 
 export async function POST(request) {
   try {
+    const limited = enforceRateLimit(NextResponse, request, {
+      limit: 20,
+      scope: "admin:save-token",
+      windowMs: 60000,
+    });
+    if (limited) return limited;
+
     const uid = await getUid(request);
     const { token } = await request.json();
 
@@ -43,6 +51,13 @@ export async function POST(request) {
 
 export async function DELETE(request) {
   try {
+    const limited = enforceRateLimit(NextResponse, request, {
+      limit: 20,
+      scope: "admin:delete-token",
+      windowMs: 60000,
+    });
+    if (limited) return limited;
+
     const uid = await getUid(request);
     const { token } = await request.json();
 
