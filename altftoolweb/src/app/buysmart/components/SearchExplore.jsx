@@ -5,13 +5,14 @@ import { Search } from "lucide-react";
 import { firebaseBuySmartCategoriesSource } from "../service.js/firebaseBuySmartCategories";
 import { SearchExploreSkeleton } from "@/components/ui/skeleton";
 import fallbackBrands from "@/app/buysmart/data/categories.json";
+import { isActiveStatus, normalizeBuySmartCategory } from "@altftool/core/buysmart";
 
 const fallbackCategories = fallbackBrands.map((brand) => ({
   category: "Popular",
   link: brand.url,
   status: "active",
   title: brand.name,
-}));
+})).map(normalizeBuySmartCategory);
 
 export default function SearchExplore({
   scrollToFilter,
@@ -32,7 +33,9 @@ export default function SearchExplore({
 
     const unsub = firebaseBuySmartCategoriesSource.subscribe((data) => {
       clearTimeout(fallback);
-      const activeData = (data || []).filter((item) => item?.status === "active");
+      const activeData = (data || [])
+        .map(normalizeBuySmartCategory)
+        .filter((item) => isActiveStatus(item.status));
       setCategoriesData(activeData.length ? activeData : fallbackCategories);
     });
 

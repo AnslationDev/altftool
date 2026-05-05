@@ -10,6 +10,7 @@ import { useAds } from "@/ads/AdsProvider";
 import useDevice from "@/hooks/useDevice";
 import { CategoriesSkeleton } from "@/components/ui/skeleton";
 import fallbackBrands from "@/app/buysmart/data/categories.json";
+import { isActiveStatus, normalizeBuySmartCategory } from "@altftool/core/buysmart";
 
 // import AdSidebar from "@/ads/layouts/shared/AdSidebar";
 import SideAd from "@/ads/layouts/buy/SideAd";
@@ -20,7 +21,7 @@ const fallbackCategories = fallbackBrands.map((brand) => ({
   link: brand.url,
   status: "active",
   title: brand.name,
-}));
+})).map(normalizeBuySmartCategory);
 
 export default function CategoriesAZ({ selectedLetter = "All" ,filteredCategory , searchInput , SetSearchInput }) {
   //  const containerRef = useRef(null);
@@ -60,9 +61,9 @@ useEffect(() => {
     }, 1800);
 
     const unsub = firebaseBuySmartCategoriesSource.subscribe((data) => {
-      const activeData = (data || []).filter(
-        (item) => item.status === "active"
-      );
+      const activeData = (data || [])
+        .map(normalizeBuySmartCategory)
+        .filter((item) => isActiveStatus(item.status));
   
       clearTimeout(fallback);
       setCategoriesData(activeData.length ? activeData : fallbackCategories);

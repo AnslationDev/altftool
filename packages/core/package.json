@@ -5,6 +5,7 @@
   "type": "module",
   "exports": {
     "./cache": "./src/cache.js",
+    "./buysmart": "./src/buysmart.js",
     "./env": "./src/env.js",
     "./http": "./src/http.js",
     "./next": "./src/next.js",

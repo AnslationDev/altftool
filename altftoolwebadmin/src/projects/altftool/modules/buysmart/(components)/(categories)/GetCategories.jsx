@@ -301,9 +301,19 @@ function GetCategories({ setActive, setEditCategories }) {
       {
         header: "Initial",
         Cell: ({ row }) => (
-          <div className="h-9 w-9 rounded-full bg-black text-white flex items-center justify-center text-sm">
-            {row.original.title?.charAt(0).toUpperCase()}
-          </div>
+          row.original.img || row.original.image ? (
+            <img
+              src={row.original.img || row.original.image}
+              alt={row.original.title || "Brand"}
+              className="h-9 w-9 rounded-full border border-gray-200 object-cover"
+              loading="lazy"
+              referrerPolicy="no-referrer"
+            />
+          ) : (
+            <div className="h-9 w-9 rounded-full bg-black text-white flex items-center justify-center text-sm">
+              {row.original.title?.charAt(0).toUpperCase()}
+            </div>
+          )
         ),
       },
       {
@@ -407,5 +417,4 @@ function GetCategories({ setActive, setEditCategories }) {
 }
 
 export default GetCategories;
-
 

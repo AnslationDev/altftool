@@ -1,4 +1,5 @@
 import { doc, onSnapshot } from "firebase/firestore";
+import { normalizeBuySmartCategory } from "@altftool/core/buysmart";
 import { db } from "@/lib/firebase";
 import { subscribeCached } from "@/lib/firebaseCache";
 
@@ -10,7 +11,10 @@ export const firebaseBuySmartCategoriesSource = {
       "buysmart:categories",
       (emit, fail) => onSnapshot(
         CATEGORY_REF,
-        (snap) => emit(snap.exists() ? snap.data().banner || [] : []),
+        (snap) => {
+          const categories = snap.exists() ? snap.data().banner || [] : [];
+          emit(categories.map(normalizeBuySmartCategory));
+        },
         (error) => {
           console.error("BuySmart categories read error:", error);
           fail?.(error);

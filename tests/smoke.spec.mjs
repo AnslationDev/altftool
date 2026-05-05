@@ -27,6 +27,50 @@ test("tool detail routes use the clean workspace flow", async ({ page }) => {
   await expect(page.getByRole("heading", { name: "API Stress Estimator", exact: true })).toBeVisible();
 });
 
+test("buysmart A-Z category cards load brand images", async ({ page }) => {
+  await page.goto(`${webUrl}/buysmart`, { waitUntil: "domcontentloaded" });
+  await page.waitForLoadState("load");
+  await expect(page.getByRole("heading", { name: "Discover better brands before you buy." })).toBeVisible();
+
+  const newsletterDismiss = page.getByRole("button", { name: "Not now" });
+  if (await newsletterDismiss.count()) {
+    await newsletterDismiss.click();
+  }
+
+  const cookieAccept = page.getByRole("button", { name: "Accept" });
+  if (await cookieAccept.count()) {
+    await cookieAccept.click();
+  }
+
+  for (let i = 0; i < 8; i += 1) {
+    if (await page.getByText("Choose Your Brand A-Z").count()) break;
+    await page.mouse.wheel(0, 750);
+    await page.waitForTimeout(700);
+  }
+
+  await expect(page.getByRole("heading", { name: "Choose Your Brand A-Z" })).toBeVisible();
+
+  const firstCard = page.getByTestId("buysmart-category-card").first();
+  await firstCard.scrollIntoViewIfNeeded();
+  await expect(firstCard).toBeVisible();
+
+  await page.waitForFunction(() =>
+    [...document.querySelectorAll('[data-testid="buysmart-category-image"]')].some(
+      (img) => img.complete && img.naturalWidth > 0,
+    ),
+  );
+
+  const brokenImages = await page
+    .getByTestId("buysmart-category-image")
+    .evaluateAll((images) =>
+      images
+        .filter((img) => img.complete && img.naturalWidth === 0)
+        .map((img) => img.getAttribute("src")),
+    );
+
+  expect(brokenImages).toEqual([]);
+});
+
 test("admin login shell loads", async ({ page }) => {
   await page.goto(`${adminUrl}/login`);
 

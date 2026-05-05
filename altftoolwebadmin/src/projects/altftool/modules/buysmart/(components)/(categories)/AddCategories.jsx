@@ -5,7 +5,7 @@ import { ImageIcon, Link2, Type, Loader2 } from "lucide-react";
 import Select from "react-select";
 import { useCountry } from '../(hookes)/useCountry';
 import { uploadImage } from "@/projects/altftool/modules/buysmart/services/uploadImage";
-import Categories from './Categories';
+import { getBrandLogoUrl } from "@altftool/core/buysmart";
 
 const defaultForm = {
   title: "",
@@ -50,7 +50,7 @@ function AddCategories({ setActive, setEditCategories, editCategories, active })
         country: editCategories.country || "",
         disc: editCategories.disc || "",
         discount: editCategories.discount || "",
-        img: editCategories.img || "",
+        img: editCategories.img || editCategories.image || "",
         category: editCategories.category || "",
         status: editCategories.status || "active",
       });
@@ -140,14 +140,14 @@ function AddCategories({ setActive, setEditCategories, editCategories, active })
     e.preventDefault();
   
     // ❗ Validation (important)
-    if (!imageFile && !form.img) {
-      alert("Please upload image OR provide image URL");
+    if (!imageFile && !form.img && !form.link) {
+      alert("Please upload image, provide image URL, or add a CTA link for auto logo fallback");
       return;
     }
   
     setLoading(true);
   
-    let imageUrl = editCategories?.img || "";
+    let imageUrl = editCategories?.img || editCategories?.image || "";
   
     // ✅ If file uploaded → upload
     if (imageFile) {
@@ -166,6 +166,7 @@ function AddCategories({ setActive, setEditCategories, editCategories, active })
       disc: form.disc || "",
       discount: form.discount || "",
       img: imageUrl || "",
+      image: imageUrl || "",
       category: form.category || "",
       status: form.status || "active",
       updatedAt: Date.now(),
@@ -189,7 +190,7 @@ function AddCategories({ setActive, setEditCategories, editCategories, active })
 
   const previewImage = imageFile
     ? URL.createObjectURL(imageFile)
-    : form.img;
+    : form.img || getBrandLogoUrl(form);
 
 
   const handleImageChange = (e) => {

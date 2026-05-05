@@ -167,10 +167,31 @@ import {
   setDoc,
   serverTimestamp
 } from "firebase/firestore";
+import {
+  cleanText,
+  normalizeBuySmartCategory,
+  normalizeStatus,
+} from "@altftool/core/buysmart";
 import { db } from "@/lib/firebase";
 
 export const ROOT = ["projects", "altftool", "buySmart", "categories"];
 const CATEGORY_REF = doc(db, ...ROOT);
+
+function serializeCategory(category = {}) {
+  const normalized = normalizeBuySmartCategory(category);
+
+  return {
+    title: normalized.title,
+    disc: cleanText(category.disc),
+    discount: cleanText(category.discount),
+    img: normalized.img,
+    image: normalized.image,
+    link: normalized.link === "#" ? "" : normalized.link,
+    category: normalized.category,
+    status: normalizeStatus(category.status),
+    country: cleanText(category.country) || "ALL",
+  };
+}
 
 export const firebaseBuySmartCategoriesSource = {
   
@@ -180,7 +201,7 @@ export const firebaseBuySmartCategoriesSource = {
       CATEGORY_REF,
       (snap) => {
         const data = snap.exists() ? snap.data().banner || [] : [];
-        callback(data);
+        callback(data.map(normalizeBuySmartCategory));
       },
       (error) => {
         console.error("Category read error:", error);
@@ -195,14 +216,7 @@ export const firebaseBuySmartCategoriesSource = {
   async add(categories) {
     const newCategories = {
       id: crypto.randomUUID(),
-      title: categories.title,
-      disc: categories.disc,
-      discount: categories.discount,
-      img: categories.img,
-      link: categories.link,
-      category: categories.category,
-      status: categories.status || "active",
-      country: categories.country,
+      ...serializeCategory(categories),
       createdAt: serverTimestamp(),
       updatedAt: serverTimestamp(),
     };
@@ -226,15 +240,15 @@ export const firebaseBuySmartCategoriesSource = {
 
     const data = snap.data();
 
-    const updatedList = (data.banner || []).map((h) =>
-      h.id === id
-        ? {
-            ...h,
-            ...updatedCategories,
-            updatedAt: serverTimestamp(),
-          }
-        : h
-    );
+    const updatedList = (data.banner || []).map((h) => {
+      if (h.id !== id) return h;
+
+      return {
+        ...h,
+        ...serializeCategory({ ...h, ...updatedCategories }),
+        updatedAt: serverTimestamp(),
+      };
+    });
 
     await updateDoc(CATEGORY_REF, { banner: updatedList });
   },
@@ -273,13 +287,13 @@ export const firebaseBuySmartCategoriesSource = {
         .filter((row) => row.title && row.link)
         .map((row) => ({
           id: crypto.randomUUID(),
-          title: row.title.trim(),
-          link: row.link.trim(),
-          category: row.category?.trim(),
-          status: row.status?.trim() || "Active",
-          country: row.country?.trim() || "ALL",
-          img: row.img ? row.img.toString().trim() : "",
+          ...serializeCategory({
+            ...row,
+            image: row.image || row.imageUrl || row.logo,
+            img: row.img || row.image || row.imageUrl || row.logo,
+          }),
           createdAt: Date.now(),
+          updatedAt: Date.now(),
         }));
 
       if (formattedData.length === 0) {

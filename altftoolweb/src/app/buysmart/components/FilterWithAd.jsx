@@ -1,24 +1,46 @@
 "use client";
 
-import Image from "next/image";
 import { TriangleAlert } from "lucide-react";
 import { firebaseBuySmartCategoriesSource } from "../service.js/firebaseBuySmartCategories";
-import { useState, useEffect } from "react";
+import { useMemo, useState, useEffect } from "react";
 import Link from "next/link";
 import { SkeletonBlock } from "@/components/ui/skeleton";
+import {
+  getBrandLogoUrl,
+  normalizeBuySmartCategory,
+} from "@altftool/core/buysmart";
 
 
 function CategoryCard({ cat }) {
+  const normalizedCat = useMemo(() => normalizeBuySmartCategory(cat), [cat]);
+  const logoFallback = useMemo(() => getBrandLogoUrl(normalizedCat), [normalizedCat]);
   const [imageLoaded, setImageLoaded] = useState(false);
   const [imageError, setImageError] = useState(false);
-  const imageSrc = cat.img || cat.image || cat.logo || "";
-  const title = cat.title || cat.name || "Brand";
-  const href = cat.link || cat.url || "#";
+  const [imageSrc, setImageSrc] = useState(normalizedCat.img);
+  const title = normalizedCat.title;
+  const href = normalizedCat.link;
   const showFallback = !imageSrc || imageError;
+
+  useEffect(() => {
+    setImageLoaded(false);
+    setImageError(false);
+    setImageSrc(normalizedCat.img);
+  }, [normalizedCat.img]);
+
+  const handleImageError = () => {
+    if (logoFallback && imageSrc !== logoFallback) {
+      setImageLoaded(false);
+      setImageSrc(logoFallback);
+      return;
+    }
+
+    setImageError(true);
+  };
 
   return (
     <Link href={href} target="_blank">
       <div
+        data-testid="buysmart-category-card"
         className="group w-full cursor-pointer"
         style={{ perspective: "1200px" }}
       >
@@ -42,17 +64,19 @@ function CategoryCard({ cat }) {
                   <SkeletonBlock className="absolute inset-0 rounded-[16px]" />
                 ) : null}
                 {!imageError && imageSrc ? (
-                  <Image
+                  <img
+                    data-testid="buysmart-category-image"
                     key={imageSrc}
                     src={imageSrc}
                     alt={title}
-                    width={300}
-                    height={200}
-                    className={`w-full h-full object-cover transition-opacity duration-500 ${
+                    loading="lazy"
+                    decoding="async"
+                    referrerPolicy="no-referrer"
+                    className={`h-full w-full bg-(--card) object-contain p-8 transition-opacity duration-500 ${
                       imageLoaded ? "opacity-100" : "opacity-0"
                     }`}
                     onLoad={() => setImageLoaded(true)}
-                    onError={() => setImageError(true)}
+                    onError={handleImageError}
                   />
                 ) : null}
                 {showFallback ? (
@@ -68,7 +92,7 @@ function CategoryCard({ cat }) {
               </div>
 
               <div className="flex flex-col gap-2 flex-1 mt-2">
-                <h3 className="font-bold text-[18px] sm:text-[20px] md:text-[22px] leading-[1.5] text-[#4A5565] text-center line-clamp-2">
+                <h3 className="font-bold text-[18px] sm:text-[20px] md:text-[22px] leading-[1.5] text-(--foreground) text-center line-clamp-2">
                   {title}
                 </h3>
               </div>
@@ -146,9 +170,16 @@ export default function FilterWithAdCard({
         </div>
       ) : (
         <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4 2xl:grid-cols-5 gap-5 flex-1 min-w-[280px]">
-          {finalData.map((cat) => (
-            <CategoryCard key={`${cat.id || cat.title}-${cat.img || ""}`} cat={cat} />
-          ))}
+          {finalData.map((cat) => {
+            const normalizedCat = normalizeBuySmartCategory(cat);
+
+            return (
+              <CategoryCard
+                key={`${normalizedCat.id || normalizedCat.title}-${normalizedCat.img || normalizedCat.link}`}
+                cat={normalizedCat}
+              />
+            );
+          })}
         </div>
       )}
 
