@@ -245,43 +245,6 @@ function EmptyState({ query, onReset }) {
   );
 }
 
-async function fetchRemoteBlogs() {
-  const [
-    firestore,
-    firebaseModule,
-    cacheModule,
-  ] = await Promise.all([
-    import("firebase/firestore"),
-    import("@/lib/firebase"),
-    import("@/lib/firebaseCache"),
-  ]);
-
-  const { collection, getDocs, limit, orderBy, query, where } = firestore;
-  const { db, isFirebaseConfigured } = firebaseModule;
-  const { getCachedFirebaseRead } = cacheModule;
-
-  if (!isFirebaseConfigured) return [];
-
-  return getCachedFirebaseRead(
-    "blogs:published:list:v3",
-    async () => {
-      const snapshot = await getDocs(
-        query(
-          collection(db, "projects", "altftool", "blogs"),
-          where("status", "==", "published"),
-          orderBy("createdAt", "desc"),
-          limit(BLOG_REMOTE_LIMIT)
-        )
-      );
-
-      return snapshot.docs.map((documentSnapshot, index) =>
-        normalizeBlog({ id: documentSnapshot.id, ...documentSnapshot.data() }, index)
-      );
-    },
-    120000
-  );
-}
-
 function withTimeout(promise, timeoutMs, fallbackValue) {
   return Promise.race([
     promise,
@@ -291,7 +254,35 @@ function withTimeout(promise, timeoutMs, fallbackValue) {
   ]);
 }
 
-export default function BlogExplorerClient({ initialPosts, categories: initialCategories }) {
+async function fetchRemoteBlogChunk(offset) {
+  const params = new URLSearchParams({
+    offset: String(offset),
+    limit: String(BLOG_REMOTE_LIMIT),
+  });
+
+  const response = await fetch(`/api/blogs?${params.toString()}`, {
+    headers: { accept: "application/json" },
+  });
+
+  if (!response.ok) throw new Error(`Blog chunk failed: ${response.status}`);
+  return response.json();
+}
+
+function waitForIdle(delay = 120) {
+  return new Promise((resolve) => {
+    const schedule =
+      window.requestIdleCallback ||
+      ((callback) => window.setTimeout(callback, delay));
+    schedule(resolve, { timeout: 1400 });
+  });
+}
+
+export default function BlogExplorerClient({
+  initialPosts,
+  categories: initialCategories,
+  initialRemoteOffset = 0,
+  totalCount = initialPosts.length,
+}) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const sentinelRef = useRef(null);
@@ -306,22 +297,57 @@ export default function BlogExplorerClient({ initialPosts, categories: initialCa
   const [sortMode, setSortMode] = useState(urlSort);
   const [visibleCount, setVisibleCount] = useState(INITIAL_VISIBLE_COUNT);
   const [syncState, setSyncState] = useState("idle");
+  const [remoteOffset, setRemoteOffset] = useState(initialRemoteOffset);
+  const [remoteHasMore, setRemoteHasMore] = useState(totalCount > initialRemoteOffset);
   const [isPending, startTransition] = useTransition();
 
   const deferredQuery = useDeferredValue(query.trim().toLowerCase());
 
   useEffect(() => {
     let cancelled = false;
-    const schedule = window.requestIdleCallback || ((callback) => window.setTimeout(callback, 650));
+    const schedule = window.requestIdleCallback || ((callback) => window.setTimeout(callback, 450));
     const cancel = window.cancelIdleCallback || window.clearTimeout;
 
     const handle = schedule(async () => {
       setSyncState("syncing");
       try {
-        const remotePosts = await withTimeout(fetchRemoteBlogs(), 4500, []);
-        if (cancelled) return;
-        setPosts((currentPosts) => mergeBlogPosts(currentPosts, remotePosts));
-        setSyncState(remotePosts.length ? "fresh" : "local");
+        let nextOffset = initialRemoteOffset;
+        let hasMore = totalCount > nextOffset;
+        let receivedAny = nextOffset > 0;
+
+        while (!cancelled && hasMore) {
+          const isFirstRemotePage = nextOffset === 0;
+          const page = await withTimeout(fetchRemoteBlogChunk(nextOffset), 6500, {
+            posts: [],
+            nextOffset,
+            hasMore: false,
+          });
+
+          if (cancelled) return;
+          if (!page.posts?.length) {
+            hasMore = false;
+            break;
+          }
+
+          receivedAny = true;
+          setPosts((currentPosts) =>
+            isFirstRemotePage
+              ? page.posts.map((post, index) => normalizeBlog(post, index))
+              : mergeBlogPosts(currentPosts, page.posts)
+          );
+          nextOffset = page.nextOffset;
+          hasMore = Boolean(page.hasMore);
+          setRemoteOffset(nextOffset);
+          setRemoteHasMore(hasMore);
+          setSyncState("fresh");
+
+          await waitForIdle();
+        }
+
+        if (!cancelled) {
+          setRemoteHasMore(hasMore);
+          setSyncState(receivedAny ? "fresh" : "local");
+        }
       } catch (error) {
         if (!cancelled) {
           console.error("Blog remote hydration failed:", error);
@@ -334,7 +360,7 @@ export default function BlogExplorerClient({ initialPosts, categories: initialCa
       cancelled = true;
       cancel(handle);
     };
-  }, []);
+  }, [initialRemoteOffset, totalCount]);
 
   const categories = useMemo(() => {
     const fromPosts = Array.from(new Set(posts.map((post) => post.category).filter(Boolean)));
@@ -359,6 +385,7 @@ export default function BlogExplorerClient({ initialPosts, categories: initialCa
   const hasMore = visibleCount < filteredPosts.length;
   const displayedCount = visiblePosts.length;
   const remainingCount = Math.max(0, filteredPosts.length - displayedCount);
+  const loadedCount = posts.length;
 
   useEffect(() => {
     const timeout = window.setTimeout(() => {
@@ -446,9 +473,11 @@ export default function BlogExplorerClient({ initialPosts, categories: initialCa
   };
 
   const syncLabel = syncState === "fresh"
-    ? "Live catalog synced"
+    ? remoteHasMore
+      ? "Loading Firebase catalog"
+      : "Firebase catalog synced"
     : syncState === "syncing"
-      ? "Refreshing quietly"
+      ? "Loading Firebase catalog"
       : "Instant local catalog";
 
   return (
@@ -482,6 +511,9 @@ export default function BlogExplorerClient({ initialPosts, categories: initialCa
           {filteredPosts.length > 0 && (
             <p className="mt-1 text-xs font-medium text-(--muted-foreground)">
               Showing {displayedCount} of {filteredPosts.length}
+              {remoteHasMore && totalCount > loadedCount
+                ? ` · loaded ${loadedCount} of ${totalCount}`
+                : ""}
             </p>
           )}
         </div>

@@ -14,11 +14,13 @@ import {
 import BlogExplorerClient from "./components/BlogExplorerClient";
 import {
   BLOG_CONTENT_LANES,
+  BLOG_REMOTE_LIMIT,
   getAllBlogs,
   getBlogCategories,
   getBlogStats,
   getFeaturedBlogGroups,
 } from "./data";
+import { getFirebaseBlogCatalog } from "./data/firebaseBlogs";
 
 export const revalidate = 3600;
 
@@ -174,11 +176,18 @@ function TrendingRail({ posts }) {
   );
 }
 
-export default function BlogsPage() {
-  const posts = getAllBlogs();
+export default async function BlogsPage() {
+  const localPosts = getAllBlogs();
+  const firebaseCatalog = await getFirebaseBlogCatalog().catch((error) => {
+    console.error("BlogsPage Firebase catalog failed:", error);
+    return { posts: [], count: 0, offset: 0 };
+  });
+  const hasFirebaseCatalog = firebaseCatalog.posts.length > 0;
+  const posts = hasFirebaseCatalog ? firebaseCatalog.posts : localPosts;
   const categories = getBlogCategories(posts);
   const stats = getBlogStats(posts);
   const groups = getFeaturedBlogGroups(posts);
+  const totalCount = Math.max(firebaseCatalog.count, posts.length);
 
   return (
     <main className="bg-(--background) text-(--foreground)">
@@ -230,7 +239,14 @@ export default function BlogsPage() {
           </div>
         </section>
 
-        <BlogExplorerClient initialPosts={posts} categories={categories} />
+        <BlogExplorerClient
+          initialPosts={posts}
+          categories={categories}
+          initialRemoteOffset={
+            hasFirebaseCatalog ? firebaseCatalog.offset : 0
+          }
+          totalCount={totalCount}
+        />
       </div>
     </main>
   );

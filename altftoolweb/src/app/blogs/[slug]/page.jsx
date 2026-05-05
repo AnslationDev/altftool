@@ -1,5 +1,9 @@
 import BlogDetailClient from "./BlogDetailClient";
 import { getAllBlogs, getBlogBySlug, getRelatedBlogs } from "../data";
+import {
+  fetchFirebaseBlogBySlug,
+  fetchFirebaseRelatedBlogs,
+} from "../data/firebaseBlogs";
 
 export const revalidate = 3600;
 
@@ -9,7 +13,7 @@ export function generateStaticParams() {
 
 export async function generateMetadata({ params }) {
   const { slug } = await params;
-  const blog = getBlogBySlug(slug);
+  const blog = (await fetchFirebaseBlogBySlug(slug).catch(() => null)) || getBlogBySlug(slug);
 
   if (!blog) {
     return {
@@ -32,8 +36,15 @@ export async function generateMetadata({ params }) {
 
 export default async function BlogDetailPage({ params }) {
   const { slug } = await params;
-  const initialBlog = getBlogBySlug(slug);
-  const initialRelated = getRelatedBlogs(slug, 6);
+  const initialBlog = (await fetchFirebaseBlogBySlug(slug).catch((error) => {
+    console.error("BlogDetailPage Firebase detail failed:", error);
+    return null;
+  })) || getBlogBySlug(slug);
+  const initialRelated = initialBlog
+    ? await fetchFirebaseRelatedBlogs(initialBlog.category, slug, 6).catch(() =>
+        getRelatedBlogs(slug, 6)
+      )
+    : getRelatedBlogs(slug, 6);
 
   return (
     <BlogDetailClient
