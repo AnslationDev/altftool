@@ -5,6 +5,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "@/lib/firebase";
+import { getCachedFirebaseRead } from "@/lib/firebaseCache";
 
 import {
   ArrowLeft, Check, Camera, FileJson, Chrome, Star, Shield, Zap,
@@ -56,8 +57,10 @@ export default function ExtensionDetailsPage({ params }) {
   useEffect(() => {
     async function fetchExtension() {
       try {
-        const ref = doc(db, "projects", "altftool", "extensions", slug);
-        const snap = await getDoc(ref);
+        const snap = await getCachedFirebaseRead(`extension:${slug}`, async () => {
+          const ref = doc(db, "projects", "altftool", "extensions", slug);
+          return getDoc(ref);
+        }, 120000);
 
         if (!snap.exists()) {
           setNotFoundState(true);

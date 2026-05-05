@@ -11,20 +11,24 @@ import {
 } from "firebase/firestore";
 
 import { db } from "@/lib/firebase";
+import { clearFirebaseCache, getCachedFirebaseRead } from "@/lib/firebaseCache";
 
 const PROJECT_ID = "altftool";
 const extRef = collection(db, "projects", PROJECT_ID, "extensions");
+const CACHE_KEY = "admin:extensions:list";
 
 /* =========================
    READ
 ========================= */
 
 export async function fetchExtensions() {
-  const snap = await getDocs(extRef);
-  return snap.docs.map((d) => ({
-    id: d.id,
-    ...d.data(),
-  }));
+  return getCachedFirebaseRead(CACHE_KEY, async () => {
+    const snap = await getDocs(extRef);
+    return snap.docs.map((d) => ({
+      id: d.id,
+      ...d.data(),
+    }));
+  }, 30000);
 }
 
 /* =========================
@@ -40,6 +44,7 @@ export async function createExtension(id, data) {
     createdAt: serverTimestamp(),
   });
 
+  clearFirebaseCache(CACHE_KEY);
   return id;
 }
 
@@ -49,10 +54,11 @@ export async function createExtension(id, data) {
 
 export async function updateExtension(id, updates) {
   const ref = doc(extRef, id);
-  return updateDoc(ref, {
+  await updateDoc(ref, {
     ...updates,
     updatedAt: serverTimestamp(),
   });
+  clearFirebaseCache(CACHE_KEY);
 }
 
 /* =========================
@@ -61,5 +67,6 @@ export async function updateExtension(id, updates) {
 
 export async function deleteExtension(id) {
   const ref = doc(extRef, id);
-  return deleteDoc(ref);
+  await deleteDoc(ref);
+  clearFirebaseCache(CACHE_KEY);
 }

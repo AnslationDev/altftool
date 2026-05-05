@@ -21,6 +21,7 @@ import {
 } from "firebase/firestore";
 
 import { db } from "@/lib/firebase";
+import { getCachedFirebaseRead } from "@/lib/firebaseCache";
 
 /* ─────────────────────────────────────────────
    CONFIG
@@ -93,20 +94,20 @@ export function BlogsProvider({ children }) {
 
     (async () => {
       try {
-        const snap = await getDocs(
-          query(
-            blogsCol(),
-            where("status", "==", "published"),
-            orderBy("createdAt", "desc"),
-            limit(INITIAL_SIZE)
-          )
-        );
-
-        if (!cancelled) {
-          setInitialBlogs(
-            snap.docs.map((d) => ({ id: d.id, ...d.data() }))
+        const initial = await getCachedFirebaseRead("blogs:initial", async () => {
+          const snap = await getDocs(
+            query(
+              blogsCol(),
+              where("status", "==", "published"),
+              orderBy("createdAt", "desc"),
+              limit(INITIAL_SIZE)
+            )
           );
-        }
+
+          return snap.docs.map((d) => ({ id: d.id, ...d.data() }));
+        }, 120000);
+
+        if (!cancelled) setInitialBlogs(initial);
       } catch (err) {
         console.error("BlogsProvider initialBlogs:", err);
       } finally {

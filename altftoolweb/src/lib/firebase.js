@@ -1,5 +1,10 @@
 import { initializeApp, getApps, getApp } from "firebase/app";
-import { getFirestore } from "firebase/firestore";
+import {
+  getFirestore,
+  initializeFirestore,
+  persistentLocalCache,
+  persistentMultipleTabManager,
+} from "firebase/firestore";
 import { getStorage } from "firebase/storage";
 
 const firebaseConfig = {
@@ -11,5 +16,19 @@ const firebaseConfig = {
 
 const app = getApps().length ? getApp() : initializeApp(firebaseConfig);
 
-export const db = getFirestore(app);
+function createFirestore(appInstance) {
+  if (typeof window === "undefined") return getFirestore(appInstance);
+
+  try {
+    return initializeFirestore(appInstance, {
+      localCache: persistentLocalCache({
+        tabManager: persistentMultipleTabManager(),
+      }),
+    });
+  } catch {
+    return getFirestore(appInstance);
+  }
+}
+
+export const db = createFirestore(app);
 export const storage = getStorage(app);

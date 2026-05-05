@@ -10,6 +10,7 @@ export const SERVER_ENV = {
   pagespeed: "PAGESPEED_API_KEY",
   rapidApi: "RAPIDAPI_KEY",
   removeBg: "REMOVE_BG_API_KEY",
+  youtube: "YOUTUBE_API_KEY",
 };
 
 export const PUBLIC_ENV = {

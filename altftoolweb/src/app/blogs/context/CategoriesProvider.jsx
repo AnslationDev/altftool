@@ -4,6 +4,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { collection, getDocs, orderBy, query } from "firebase/firestore";
 import { db } from "@/lib/firebase";
+import { getCachedFirebaseRead } from "@/lib/firebaseCache";
 
 /* ─────────────────────────────────────────────
    CONFIG
@@ -35,17 +36,19 @@ export function CategoriesProvider({ children }) {
 
     const fetchCategories = async () => {
       try {
-        const snap = await getDocs(
-          query(
-            collection(db, "projects", PROJECT_ID, "categories"),
-            orderBy("name", "asc")
-          )
-        );
+        const list = await getCachedFirebaseRead("blogs:categories", async () => {
+          const snap = await getDocs(
+            query(
+              collection(db, "projects", PROJECT_ID, "categories"),
+              orderBy("name", "asc")
+            )
+          );
 
-        const list = snap.docs.map((d) => ({
-          id: d.id,
-          ...d.data(),
-        }));
+          return snap.docs.map((d) => ({
+            id: d.id,
+            ...d.data(),
+          }));
+        }, 120000);
 
         _cache = list;
         setCategories(list);

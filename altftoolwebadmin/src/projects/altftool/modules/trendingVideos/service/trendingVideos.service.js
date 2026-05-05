@@ -15,6 +15,7 @@ import {
 } from "firebase/firestore";
 
 import { db } from "@/lib/firebase";
+import { clearFirebaseCache, getCachedFirebaseRead } from "@/lib/firebaseCache";
 
 /* =========================
    CONFIG
@@ -22,6 +23,13 @@ import { db } from "@/lib/firebase";
 
 const PROJECT_ID = "altftool";
 const videosRef = () => collection(db, "projects", PROJECT_ID, "trendingvideos");
+const ALL_VIDEOS_CACHE_KEY = "admin:trending-videos:all";
+const VIDEO_COUNT_CACHE_KEY = "admin:trending-videos:count";
+
+function clearVideosCache() {
+  clearFirebaseCache(ALL_VIDEOS_CACHE_KEY);
+  clearFirebaseCache(VIDEO_COUNT_CACHE_KEY);
+}
 
 /* =========================
    READ
@@ -32,9 +40,11 @@ const videosRef = () => collection(db, "projects", PROJECT_ID, "trendingvideos")
  * Returns an array of { id, ...data } objects.
  */
 export async function getAllVideos() {
-  const q = query(videosRef(), orderBy("createdAt", "desc"));
-  const snap = await getDocs(q);
-  return snap.docs.map((d) => ({ id: d.id, ...d.data() }));
+  return getCachedFirebaseRead(ALL_VIDEOS_CACHE_KEY, async () => {
+    const q = query(videosRef(), orderBy("createdAt", "desc"));
+    const snap = await getDocs(q);
+    return snap.docs.map((d) => ({ id: d.id, ...d.data() }));
+  }, 30000);
 }
 
 /**
@@ -57,8 +67,10 @@ export async function getVideosPaginated(pageSize = 20, lastDoc = null) {
  * Get total count of videos in the collection.
  */
 export async function getVideosCount() {
-  const snap = await getCountFromServer(videosRef());
-  return snap.data().count;
+  return getCachedFirebaseRead(VIDEO_COUNT_CACHE_KEY, async () => {
+    const snap = await getCountFromServer(videosRef());
+    return snap.data().count;
+  }, 30000);
 }
 
 /* =========================
@@ -80,6 +92,7 @@ export async function createVideo(payload) {
     updatedAt: serverTimestamp(),
   });
 
+  clearVideosCache();
   return docRef.id;
 }
 
@@ -100,6 +113,7 @@ export async function updateVideo(docId, payload) {
     ...data,
     updatedAt: serverTimestamp(),
   });
+  clearVideosCache();
 }
 
 /* =========================
@@ -113,6 +127,7 @@ export async function updateVideo(docId, payload) {
 export async function deleteVideo(docId) {
   const ref = doc(db, "projects", PROJECT_ID, "trendingvideos", docId);
   await deleteDoc(ref);
+  clearVideosCache();
 }
 
 /**
@@ -132,6 +147,8 @@ export async function deleteVideos(docIds) {
     });
     await batch.commit();
   }
+
+  clearVideosCache();
 }
 
 /* =========================

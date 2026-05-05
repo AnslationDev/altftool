@@ -9,6 +9,7 @@ import {
   addDoc, orderBy, serverTimestamp,
 } from "firebase/firestore";
 import { db } from "@/lib/firebase";
+import { getCachedFirebaseRead } from "@/lib/firebaseCache";
 import { ArrowLeft } from "lucide-react";
 import { incrementUniqueView } from "../context/views.service";
 
@@ -26,33 +27,37 @@ const SIMILAR_LIMIT = 6;
 
 // ── Fetch blog by slug (no global context dependency) ──────────────────────
 async function fetchBlogBySlug(slug) {
-  const snap = await getDocs(
-    query(
-      collection(db, "projects", "altftool", "blogs"),
-      where("slug", "==", slug),
-      where("status", "==", "published"),
-      limit(1)
-    )
-  );
-  if (snap.empty) return null;
-  return { id: snap.docs[0].id, ...snap.docs[0].data() };
+  return getCachedFirebaseRead(`blogs:detail:${slug}`, async () => {
+    const snap = await getDocs(
+      query(
+        collection(db, "projects", "altftool", "blogs"),
+        where("slug", "==", slug),
+        where("status", "==", "published"),
+        limit(1)
+      )
+    );
+    if (snap.empty) return null;
+    return { id: snap.docs[0].id, ...snap.docs[0].data() };
+  }, 120000);
 }
 
 // ── Fetch similar posts by category ────────────────────────────────────────
 async function fetchSimilarPosts(category, excludeSlug) {
-  const snap = await getDocs(
-    query(
-      collection(db, "projects", "altftool", "blogs"),
-      where("status",   "==", "published"),
-      where("category", "==", category),
-      orderBy("createdAt", "desc"),
-      limit(SIMILAR_LIMIT + 1)           // +1 to account for self
-    )
-  );
-  return snap.docs
-    .map((d) => ({ id: d.id, ...d.data() }))
-    .filter((b) => b.slug !== excludeSlug)
-    .slice(0, SIMILAR_LIMIT);
+  return getCachedFirebaseRead(`blogs:similar:${category}:${excludeSlug}`, async () => {
+    const snap = await getDocs(
+      query(
+        collection(db, "projects", "altftool", "blogs"),
+        where("status",   "==", "published"),
+        where("category", "==", category),
+        orderBy("createdAt", "desc"),
+        limit(SIMILAR_LIMIT + 1)
+      )
+    );
+    return snap.docs
+      .map((d) => ({ id: d.id, ...d.data() }))
+      .filter((b) => b.slug !== excludeSlug)
+      .slice(0, SIMILAR_LIMIT);
+  }, 120000);
 }
 
 export default function BlogDetailPage() {
