@@ -2,6 +2,7 @@
 @import "../styles/cta-buttons.css";
 @import "../styles/faq.css";  
 @import "@altftool/ui/styles.css";
+@custom-variant dark (&:where([data-theme="dark"]));
 
 @theme inline {
   --font-sans: "Geist", "Geist Fallback", ui-sans-serif, system-ui, sans-serif;

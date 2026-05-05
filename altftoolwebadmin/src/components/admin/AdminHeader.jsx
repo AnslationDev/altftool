@@ -2,9 +2,8 @@
 
 import Link from "next/link";
 import { useRouter, usePathname } from "next/navigation";
-import { signOut } from "firebase/auth";
 import { LogOut, Shield, ShieldCheck, ChevronRight, User, Bell, ChevronDown, Headset, Moon, Sun } from "lucide-react";
-import { auth, db } from "@/lib/firebase";
+import { db } from "@/lib/firebase";
 import { getAdminRouteInfo, buildAdminBreadcrumbs } from "@/lib/routeUtils";
 import { useRef, useState, useEffect } from "react";
 import {
@@ -19,6 +18,7 @@ import { useAuth } from "@/context/AuthContext";
 
 export default function AdminHeader({ user, adminData }) {
   const router = useRouter();
+  const { logout: logoutAuth } = useAuth();
   const pathname = usePathname();
   const routeInfo = getAdminRouteInfo(pathname);
   const breadcrumbs = buildAdminBreadcrumbs(routeInfo);
@@ -29,7 +29,6 @@ export default function AdminHeader({ user, adminData }) {
   const [notifications, setNotifications] = useState([]);
   const [markingRead, setMarkingRead] = useState(null);
   const [theme, setTheme] = useState("light");
-  const [themeReady, setThemeReady] = useState(false);
 
   const dropdownRef = useRef(null);
   const notifRef = useRef(null);
@@ -50,7 +49,7 @@ export default function AdminHeader({ user, adminData }) {
     : (user?.email?.[0] ?? "A").toUpperCase();
 
   const logout = async () => {
-    await signOut(auth);
+    await logoutAuth();
     router.replace("/login");
   };
 
@@ -58,7 +57,6 @@ export default function AdminHeader({ user, adminData }) {
     const current =
       document.documentElement.getAttribute("data-theme") || "light";
     setTheme(current);
-    setThemeReady(true);
   }, []);
 
   const toggleTheme = () => {
@@ -73,6 +71,7 @@ export default function AdminHeader({ user, adminData }) {
 
   // ── Real-time unread notifications listener ──
   useEffect(() => {
+    if (user?.isLocalAdmin) return;
     if (!user?.uid) return;
 
     const q = query(
@@ -180,11 +179,10 @@ export default function AdminHeader({ user, adminData }) {
           className="p-2 rounded-xl border border-[var(--border)] bg-[var(--surface)] text-[var(--muted)] hover:bg-[var(--surface-soft)] hover:text-[var(--foreground)] transition"
           aria-label="Toggle theme"
         >
-          {themeReady && theme === "dark" ? (
-            <Sun className="w-4 h-4" />
-          ) : (
-            <Moon className="w-4 h-4" />
-          )}
+          <span className="grid h-4 w-4 place-items-center" suppressHydrationWarning>
+            <Sun className="hidden h-4 w-4 dark:block" />
+            <Moon className="h-4 w-4 dark:hidden" />
+          </span>
         </button>
 
         {/* ── Notification Bell ── */}

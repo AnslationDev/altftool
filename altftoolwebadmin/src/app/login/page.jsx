@@ -18,7 +18,14 @@ const googleProvider = new GoogleAuthProvider();
 
 export default function Login() {
   const router = useRouter();
-  const { user, adminData, loading, isPendingUser } = useAuth();
+  const {
+    user,
+    adminData,
+    loading,
+    isPendingUser,
+    localAdminLoginEnabled,
+    signInLocalAdmin,
+  } = useAuth();
 const pathname = usePathname();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -98,6 +105,17 @@ const pathname = usePathname();
     }
   };
 
+  const loginWithLocalAdmin = () => {
+    const started = signInLocalAdmin?.();
+    if (!started) {
+      emitAlert({ type: "error", message: "Local admin access is only available on localhost." });
+      return;
+    }
+
+    emitAlert({ type: "success", message: "Welcome, Local Super Admin" });
+    router.replace("/admin-management");
+  };
+
   if (loading) {
     return (
       <div className="h-screen flex items-center justify-center" style={{ background: "var(--background)" }}>
@@ -172,6 +190,19 @@ const pathname = usePathname();
             ) : null}
             {googleLoading ? "Signing in…" : "Continue with Google"}
           </Button>
+
+          {localAdminLoginEnabled ? (
+            <Button
+              type="button"
+              data-testid="local-admin-login"
+              onClick={loginWithLocalAdmin}
+              disabled={busy}
+              variant="secondary"
+              className="mt-3 w-full"
+            >
+              Continue as Local Admin
+            </Button>
+          ) : null}
 
           {/* ── Divider ── */}
           <div className="flex items-center gap-3 my-6">

@@ -3,6 +3,14 @@
 import { createContext, useContext, useEffect, useState, useCallback } from "react";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { auth } from "@/lib/firebase";
+import {
+  clearLocalAdminSession,
+  createLocalAdminData,
+  createLocalAdminUser,
+  hasLocalAdminSession,
+  isLocalAdminLoginEnabled,
+  startLocalAdminSession,
+} from "@/lib/localAdminSession";
 
 const AuthContext = createContext(null);
 const AUTH_STATE_TIMEOUT_MS = 3000;
@@ -21,6 +29,15 @@ export function AuthProvider({ children }) {
   const [loading, setLoading] = useState(true);
   const [isPendingUser, setIsPendingUser] = useState(false);
   const [isDenied, setIsDenied] = useState(false);
+  const [localAdminLoginEnabled, setLocalAdminLoginEnabled] = useState(false);
+
+  const applyLocalAdminSession = useCallback(() => {
+    setUser(createLocalAdminUser());
+    setAdminData(createLocalAdminData());
+    setIsPendingUser(false);
+    setIsDenied(false);
+    setLoading(false);
+  }, []);
 
   const syncUser = useCallback(async (currentUser) => {
     if (!currentUser) {
@@ -101,13 +118,41 @@ export function AuthProvider({ children }) {
    * or after google-login returns { status: "admin" }).
    */
   const refreshAuth = useCallback(async () => {
+    if (hasLocalAdminSession()) {
+      applyLocalAdminSession();
+      return;
+    }
+
     const currentUser = auth.currentUser;
     if (!currentUser) return;
     setLoading(true);
     await syncUser(currentUser);
-  }, [syncUser]);
+  }, [applyLocalAdminSession, syncUser]);
+
+  const signInLocalAdmin = useCallback(() => {
+    if (!startLocalAdminSession()) return false;
+    applyLocalAdminSession();
+    return true;
+  }, [applyLocalAdminSession]);
+
+  const logout = useCallback(async () => {
+    clearLocalAdminSession();
+    await signOut(auth).catch(() => {});
+    setUser(null);
+    setAdminData(null);
+    setIsPendingUser(false);
+    setIsDenied(false);
+    setLoading(false);
+  }, []);
 
   useEffect(() => {
+    setLocalAdminLoginEnabled(isLocalAdminLoginEnabled());
+
+    if (hasLocalAdminSession()) {
+      applyLocalAdminSession();
+      return undefined;
+    }
+
     let settled = false;
     const timeout = setTimeout(() => {
       if (!settled) {
@@ -129,7 +174,7 @@ export function AuthProvider({ children }) {
       clearTimeout(timeout);
       unsubscribe();
     };
-  }, [syncUser]);
+  }, [applyLocalAdminSession, syncUser]);
 
   return (
     <AuthContext.Provider
@@ -140,6 +185,9 @@ export function AuthProvider({ children }) {
         isPendingUser,
         isDenied,
         isSuperAdmin: adminData?.roleType === "superadmin",
+        localAdminLoginEnabled,
+        signInLocalAdmin,
+        logout,
         refreshAuth,
       }}
     >

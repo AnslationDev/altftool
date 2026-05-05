@@ -83,6 +83,7 @@ export function usePushNotifications(user) {
   const initialised = useRef(false);
 
   useEffect(() => {
+    if (user?.isLocalAdmin) return;
     if (!user || initialised.current) return;
 
     let unsubscribeForeground = null;
