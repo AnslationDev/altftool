@@ -282,7 +282,7 @@
   "category": "Tools",
   "tool": "Age & Gender Predictor",
   "excerpt": "Predict age and gender instantly using AI-powered facial analysis.",
-  "image": "/trending/tools/agegender.png",
+  "image": "/images/featured6.png",
   "date": "2026-02-27",
   "content": "Age & Gender Predictor uses AI-based facial recognition models to estimate age and detect gender instantly. It is widely used for analytics, personalization, marketing research, and user demographic insights."
 },
@@ -293,7 +293,7 @@
   "category": "Tools",
   "tool": "Image Animator",
   "excerpt": "Animate images instantly to create dynamic visual effects.",
-  "image": "/trending/tools/annimation.png",
+  "image": "/images/featured7.png",
   "date": "2026-02-28",
   "content": "Image animation tools convert static images into dynamic animated visuals using motion effects and transitions, ideal for social media, storytelling, and creative marketing."
 },
@@ -304,7 +304,7 @@
   "category": "Tools",
   "tool": "Background Remover",
   "excerpt": "Remove background from images instantly using AI.",
-  "image": "/trending/tools/bgremove.png",
+  "image": "/images/featured5.png",
   "date": "2026-03-01",
   "content": "Background remover tools use AI-based segmentation to separate foreground subjects from backgrounds, making image editing fast, clean, and professional."
 },
@@ -315,7 +315,7 @@
   "category": "Tools",
   "tool": "Facebook Downloader",
   "excerpt": "Download Facebook videos quickly in HD quality.",
-  "image": "/trending/tools/fbadd.png",
+  "image": "/images/featured8.png",
   "date": "2026-03-02",
   "content": "Facebook video downloader tools allow users to save public Facebook videos in multiple resolutions for offline viewing and sharing."
 },
@@ -326,7 +326,7 @@
   "category": "Tools",
   "tool": "Image Resizer",
   "excerpt": "Resize images instantly while maintaining clarity and quality.",
-  "image": "/trending/tools/imagered.png",
+  "image": "/images/featured4.png",
   "date": "2026-03-03",
   "content": "Image resizer tools adjust image dimensions while preserving sharpness, making them ideal for social media, websites, and document usage."
 },
@@ -337,7 +337,7 @@
   "category": "Tools",
   "tool": "YT Thumbnail Downloader",
   "excerpt": "Download YouTube video thumbnails instantly in HD quality.",
-  "image": "/trending/tools/ytan.png",
+  "image": "/images/featured11.png",
   "date": "2026-03-04",
   "content": "YouTube thumbnail downloader tools allow users to extract and save high-quality thumbnails from any public YouTube video for design and marketing use."
 }

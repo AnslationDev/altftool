@@ -3,10 +3,9 @@
 import { useEffect, useState } from "react";
 
 export default function BlogTopBarLoader() {
-  const [width, setWidth] = useState(0);
+  const [width, setWidth] = useState(20);
 
   useEffect(() => {
-    setWidth(20);
     const t1 = setTimeout(() => setWidth(50), 200);
     const t2 = setTimeout(() => setWidth(75), 600);
     const t3 = setTimeout(() => setWidth(90), 1200);

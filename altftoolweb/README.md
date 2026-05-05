@@ -123,6 +123,12 @@ Notes:
 - **Chatbot**: `src/platform/chatbot/`
   - UI components + “brain” that uses registries + dynamic JSON data and calls the server action.
 
+### Blog architecture
+
+- Blog routes use a static-first catalog in `src/app/blogs/data/blogs.js`; this normalizes local JSON and gives `/blogs` and known `/blogs/[slug]` pages immediate content before Firebase responds.
+- `src/app/blogs/page.jsx` is a server-rendered shell for the hero/editorial sections. `src/app/blogs/components/BlogExplorerClient.jsx` owns only search, filters, sort, chunked auto-loading, and idle Firebase hydration.
+- `src/app/blogs/[slug]/page.jsx` passes static article data into `BlogDetailClient.jsx`; the client quietly refreshes from Firestore and only persists likes/comments when a real Firestore document id is available.
+
 ---
 
 ## Styling guide (CSS + Tailwind + theme)

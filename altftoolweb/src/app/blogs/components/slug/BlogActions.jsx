@@ -4,6 +4,8 @@ import { Heart, MessageCircle, Share2 } from "lucide-react";
 import { doc, updateDoc, increment } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 
+const PROJECT_ID = "altftool";
+
 export default function BlogActions({
   blogId,
   likes,
@@ -13,114 +15,72 @@ export default function BlogActions({
   commentsCount,
   showCommentBox,
   setShowCommentBox,
-  newComment,
-  setNewComment,
-  onAddComment,
   author,
   date
 }) {
 
   const handleLike = async () => {
     const newLiked = !liked;
+    const nextLikes = newLiked ? likes + 1 : Math.max(0, likes - 1);
 
     setLiked(newLiked);
-    setLikes(newLiked ? likes + 1 : likes - 1);
+    setLikes(nextLikes);
 
-    await updateDoc(doc(db, "blogs", blogId), {
-      likesCount: increment(newLiked ? 1 : -1)
-    });
-  };
+    if (typeof blogId !== "string") return;
 
-  const handleCommentSubmit = (e) => {
-    e.preventDefault();
-    if (!newComment.trim()) return;
-
-    onAddComment(newComment.trim());
-    setNewComment("");
-    setShowCommentBox(false);
+    try {
+      await updateDoc(doc(db, "projects", PROJECT_ID, "blogs", blogId), {
+        likesCount: increment(newLiked ? 1 : -1),
+      });
+    } catch (error) {
+      console.error("Unable to persist blog like:", error);
+      setLiked(!newLiked);
+      setLikes(likes);
+    }
   };
 
   return (
-    <div className="mt-12 pt-6 border-t border-[var(--border)]">
-
-      {/* ACTION BAR */}
-
+    <div className="mt-8 rounded-[var(--anslation-ds-radius-lg)] border border-[var(--border)] bg-[var(--card)] px-4 py-3 shadow-[var(--anslation-ds-shadow-sm)]">
       <div className="flex flex-wrap items-center justify-between gap-4 text-sm text-[var(--muted-foreground)]">
-
-        {/* LEFT ACTIONS */}
-
-        <div className="flex items-center gap-6">
-
-          {/* LIKE */}
-
+        <div className="flex items-center gap-4">
           <button
+            type="button"
             onClick={handleLike}
-            className={`flex items-center gap-1 transition-colors ${
-              liked ? "text-red-500" : "text-[var(--muted-foreground)]"
+            className={`inline-flex h-9 items-center gap-1.5 rounded-[var(--anslation-ds-radius)] border px-3 transition-colors ${
+              liked
+                ? "border-[var(--primary)] bg-[var(--primary)] text-[var(--primary-foreground)]"
+                : "border-[var(--border)] text-[var(--muted-foreground)] hover:text-[var(--primary)]"
             }`}
           >
             <Heart size={18} fill={liked ? "currentColor" : "none"} />
             <span>{likes}</span>
           </button>
 
-          {/* COMMENT */}
-
           <button
+            type="button"
             onClick={() => setShowCommentBox(!showCommentBox)}
-            className="flex items-center gap-1 transition-colors hover:text-[var(--primary)]"
+            className="inline-flex h-9 items-center gap-1.5 rounded-[var(--anslation-ds-radius)] border border-[var(--border)] px-3 transition-colors hover:text-[var(--primary)]"
           >
             <MessageCircle size={18} />
             <span>{commentsCount}</span>
           </button>
 
-          {/* SHARE */}
-
           <button
-            onClick={() =>
-              navigator.share?.({ url: window.location.href })
-            }
-            className="flex items-center gap-1 transition-colors hover:text-[var(--secondary)]"
+            type="button"
+            onClick={() => navigator.share?.({ url: window.location.href })}
+            className="inline-flex h-9 items-center gap-1.5 rounded-[var(--anslation-ds-radius)] border border-[var(--border)] px-3 transition-colors hover:text-[var(--primary)]"
           >
             <Share2 size={18} />
             <span>Share</span>
           </button>
-
         </div>
 
-        {/* AUTHOR INFO */}
-
-        <div className="flex items-center gap-4 text-sm text-[var(--muted-foreground)]">
+        <div className="flex flex-wrap items-center gap-3 text-xs font-medium text-[var(--muted-foreground)]">
           <span>Author: {author || "Admin"}</span>
-          <span>Published: {date}</span>
+          <span className="h-1 w-1 rounded-full bg-[var(--border)]" />
+          <span>{date}</span>
         </div>
-
       </div>
-
-      {/* COMMENT BOX */}
-
-      {showCommentBox && (
-        <form
-          onSubmit={handleCommentSubmit}
-          className="mt-4 w-full max-w-2xl flex flex-col gap-2"
-        >
-          <textarea
-            value={newComment}
-            onChange={(e) => setNewComment(e.target.value)}
-            rows={4}
-            placeholder="Write your comment..."
-            className="w-full p-3 border rounded-md text-[var(--foreground)] bg-[var(--muted)] border-[var(--border)]"
-          />
-
-          <button
-            type="submit"
-            className="self-end px-4 py-2 rounded transition-colors text-[var(--primary-foreground)] bg-[var(--primary)] hover:brightness-90"
-          >
-            Post
-          </button>
-
-        </form>
-      )}
-
     </div>
   );
 }

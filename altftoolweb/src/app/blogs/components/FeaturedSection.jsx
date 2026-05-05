@@ -12,7 +12,7 @@ export default function FeaturedSection({ featured, sideBlogs }) {
                         text-blue-600 text-[10px] font-bold uppercase tracking-widest
                         px-3 py-1.5 rounded-full">
           <Sparkles size={10} />
-          Editor's Pick
+          Editor&apos;s Pick
         </div>
         <div className="flex-1 h-px bg-gradient-to-r from-blue-100 to-transparent" />
       </div>

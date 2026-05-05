@@ -153,7 +153,7 @@ const FeaturedPostsSection = ({ posts = [], title = "Featured Posts" }) => {
               Trending Now
             </div>
             <h2 className="text-3xl md:text-4xl font-extrabold text-(--foreground) tracking-tight whitespace-nowrap">
-              Posts You'll{" "}
+              Posts You&apos;ll{" "}
               <span className="relative inline-block">
                 <span className="relative z-10 text-blue-600">Love</span>
                 {/* Underline squiggle */}

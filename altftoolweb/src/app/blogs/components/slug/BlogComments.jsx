@@ -19,48 +19,47 @@ export default function BlogComments({
   };
 
   return (
-    <div className="mt-20 border-t border-[var(--border)] pt-12">
+    <div className="mt-8 rounded-[var(--anslation-ds-radius-lg)] border border-[var(--border)] bg-[var(--card)] p-4 shadow-[var(--anslation-ds-shadow-sm)] md:p-5">
 
-      {/* Header */}
-      <div className="flex items-center justify-between mb-8">
-        <h2 className="subheading font-primary">Comments</h2>
+      <div className="mb-5 flex items-center justify-between">
+        <h2 className="text-lg font-semibold tracking-tight text-[var(--foreground)]">Comments</h2>
 
         {!showCommentBox && (
           <button
+            type="button"
             onClick={() => setShowCommentBox(true)}
-            className="px-4 py-2 rounded-lg bg-[var(--primary)] text-[var(--primary-foreground)] text-sm hover:brightness-110 transition"
+            className="h-9 rounded-[var(--anslation-ds-radius)] bg-[var(--primary)] px-4 text-sm font-semibold text-[var(--primary-foreground)] transition hover:opacity-90"
           >
             Add Comment
           </button>
         )}
       </div>
 
-      {/* Comment Box */}
       {showCommentBox && (
         <form
           onSubmit={handleSubmit}
-          className="mb-10 backdrop-blur-xl bg-white/40 dark:bg-white/5 border border-white/20 rounded-xl p-5 shadow-lg"
+          className="mb-6 rounded-[var(--anslation-ds-radius)] border border-[var(--border)] bg-[var(--background)] p-4"
         >
           <textarea
             value={newComment}
             onChange={(e) => setNewComment(e.target.value)}
             rows={4}
             placeholder="Share your thoughts..."
-            className="w-full resize-none rounded-lg border border-[var(--border)] bg-transparent p-3 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--primary)] text-[var(--foreground)]"
+            className="w-full resize-none rounded-[var(--anslation-ds-radius)] border border-[var(--border)] bg-[var(--card)] p-3 text-sm text-[var(--foreground)] outline-none focus:border-[var(--primary)] focus:ring-2 focus:ring-[var(--primary)]/15"
           />
 
           <div className="flex justify-end gap-2 mt-4">
             <button
               type="button"
               onClick={() => setShowCommentBox(false)}
-              className="px-4 py-2 rounded-lg border border-[var(--border)] text-sm text-[var(--muted-foreground)] hover:bg-[var(--muted)] transition"
+              className="h-9 rounded-[var(--anslation-ds-radius)] border border-[var(--border)] px-4 text-sm font-semibold text-[var(--muted-foreground)] transition hover:bg-[var(--muted)]"
             >
               Cancel
             </button>
 
             <button
               type="submit"
-              className="px-5 py-2 rounded-lg bg-[var(--primary)] text-[var(--primary-foreground)] text-sm hover:brightness-110 transition"
+              className="h-9 rounded-[var(--anslation-ds-radius)] bg-[var(--primary)] px-5 text-sm font-semibold text-[var(--primary-foreground)] transition hover:opacity-90"
             >
               Post
             </button>
@@ -68,20 +67,15 @@ export default function BlogComments({
         </form>
       )}
 
-      {/* Comment List */}
       {comments.length > 0 ? (
-        <div className="space-y-6">
+        <div className="space-y-3">
           {comments.map((c, index) => (
             <div key={index} className="flex gap-4">
-
-              {/* Avatar */}
-              <div className="flex-shrink-0 w-10 h-10 rounded-full bg-gradient-to-br from-[var(--primary)] to-cyan-400 flex items-center justify-center text-white text-sm font-semibold shadow-md">
+              <div className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full bg-[var(--primary)] text-sm font-semibold text-[var(--primary-foreground)]">
                 A
               </div>
 
-              {/* Glass Comment Card */}
-              <div className="flex-1 backdrop-blur-xl bg-white/40 dark:bg-white/5 border border-white/20 rounded-xl p-4 shadow-lg hover:shadow-xl transition">
-
+              <div className="flex-1 rounded-[var(--anslation-ds-radius)] border border-[var(--border)] bg-[var(--background)] p-4">
                 <div className="flex items-center justify-between mb-1">
                   <span className="text-sm font-semibold text-[var(--foreground)]">
                     Anonymous User
@@ -98,12 +92,11 @@ export default function BlogComments({
                   {c.text}
                 </p>
               </div>
-
             </div>
           ))}
         </div>
       ) : (
-        <div className="text-center p-10 rounded-xl border border-dashed border-[var(--border)] text-[var(--muted-foreground)]">
+        <div className="rounded-[var(--anslation-ds-radius)] border border-dashed border-[var(--border)] p-8 text-center text-sm text-[var(--muted-foreground)]">
           No comments yet. Be the first to comment.
         </div>
       )}

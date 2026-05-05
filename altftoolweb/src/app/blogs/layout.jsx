@@ -1,6 +1,3 @@
-import { BlogsProvider } from "./context/BlogsProvider";
-import { CategoriesProvider } from "./context/CategoriesProvider";
-
 export async function generateMetadata() {
   return {
     title: "AltFTool Blog – Tips, Guides & Tech Insights",
@@ -10,11 +7,5 @@ export async function generateMetadata() {
 }
 
 export default function BlogsLayout({ children }) {
-  return (
-     <CategoriesProvider>
-      <BlogsProvider>
-        {children}
-      </BlogsProvider>
-    </CategoriesProvider>
-  );
+  return children;
 }

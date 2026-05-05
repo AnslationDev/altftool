@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 function slugify(text) {
   return text
@@ -61,14 +61,12 @@ function injectIds(htmlContent) {
 ───────────────────────────────────────── */
 
 export default function BlogTableOfContents({ content }) {
-  const [headings, setHeadings] = useState([]);
+  const headings = useMemo(() => {
+    if (!content) return [];
+    return extractHeadings(content);
+  }, [content]);
   const [activeId, setActiveId] = useState(null);
   const observerRef = useRef(null);
-
-  useEffect(() => {
-    if (!content) return;
-    setHeadings(extractHeadings(content));
-  }, [content]);
 
   // Observe heading elements in the DOM after render
   useEffect(() => {
