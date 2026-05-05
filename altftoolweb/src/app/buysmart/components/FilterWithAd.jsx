@@ -1,8 +1,7 @@
 "use client";
 
-import { BadgeCheck, Clock3, Sparkles, TicketPercent, TriangleAlert } from "lucide-react";
-import { firebaseBuySmartCategoriesSource } from "../service.js/firebaseBuySmartCategories";
-import { useMemo, useState, useEffect } from "react";
+import { ArrowRight, BadgeCheck, Sparkles, TicketPercent, TriangleAlert } from "lucide-react";
+import { useMemo, useState } from "react";
 import Link from "next/link";
 import { SkeletonBlock } from "@/components/ui/skeleton";
 import {
@@ -18,15 +17,9 @@ function CategoryCard({ cat }) {
   const [imageError, setImageError] = useState(false);
   const [imageSrc, setImageSrc] = useState(normalizedCat.img);
   const title = normalizedCat.title;
-  const href = normalizedCat.storePath;
+  const href = normalizedCat.storePath || normalizedCat.link || "#";
   const showFallback = !imageSrc || imageError;
   const savingsText = normalizedCat.discount || normalizedCat.cashback || normalizedCat.points || "View deal";
-
-  useEffect(() => {
-    setImageLoaded(false);
-    setImageError(false);
-    setImageSrc(normalizedCat.img);
-  }, [normalizedCat.img]);
 
   const handleImageError = () => {
     if (logoFallback && imageSrc !== logoFallback) {
@@ -39,111 +32,78 @@ function CategoryCard({ cat }) {
   };
 
   return (
-    <Link href={href}>
-      <div
-        data-testid="buysmart-category-card"
-        className="group w-full cursor-pointer"
-        style={{ perspective: "1200px" }}
-      >
-        <div
-          className="
-            relative w-full
-            h-[280px] sm:h-[300px] md:h-[320px] lg:h-[340px] xl:h-[360px]
-            transition-transform duration-700 ease-in-out
-            [transform-style:preserve-3d]
-            group-hover:[transform:rotateY(180deg)]
-          "
-        >
-          {/* FRONT SIDE = ORIGINAL CARD UI */}
-          <div
-            className="absolute inset-0"
-            style={{ backfaceVisibility: "hidden" }}
-          >
-            <div className="relative flex flex-col w-full overflow-hidden rounded-[var(--anslation-ds-radius)]">
-              <div className="relative w-full h-[240px] sm:h-[260px] md:h-[280px] lg:h-[300px] xl:h-[320px] overflow-hidden rounded-[var(--anslation-ds-radius)] flex items-center justify-center">
-                {imageSrc && !imageLoaded && !imageError ? (
-                  <SkeletonBlock className="absolute inset-0 rounded-[var(--anslation-ds-radius)]" />
-                ) : null}
-                {!imageError && imageSrc ? (
-                  <img
-                    data-testid="buysmart-category-image"
-                    key={imageSrc}
-                    src={imageSrc}
-                    alt={title}
-                    loading="lazy"
-                    decoding="async"
-                    referrerPolicy="no-referrer"
-                    className={`h-full w-full bg-(--card) object-contain p-8 transition-opacity duration-500 ${
-                      imageLoaded ? "opacity-100" : "opacity-0"
-                    }`}
-                    onLoad={() => setImageLoaded(true)}
-                    onError={handleImageError}
-                  />
-                ) : null}
-                {showFallback ? (
-                  <div className="flex h-full w-full flex-col items-center justify-center gap-3 rounded-[var(--anslation-ds-radius)] border border-(--border) bg-(--muted) px-4 text-center">
-                    <span className="grid h-14 w-14 place-items-center rounded-[var(--anslation-ds-radius)] bg-(--primary) text-xl font-bold text-(--primary-foreground)">
-                      {title.slice(0, 1).toUpperCase()}
-                    </span>
-                    <span className="text-sm font-semibold text-(--muted-foreground)">
-                      Verified brand
-                    </span>
-                  </div>
-                ) : null}
-              </div>
-
-              <div className="flex flex-col gap-2 flex-1 mt-2">
-                <h3 className="font-bold text-[18px] sm:text-[20px] md:text-[22px] leading-[1.5] text-(--foreground) text-center line-clamp-2">
-                  {title}
-                </h3>
-                <div className="mx-auto flex max-w-full flex-wrap justify-center gap-1.5">
-                  <span className="inline-flex items-center gap-1 rounded-full border border-(--border) bg-(--muted) px-2 py-1 text-[11px] font-semibold text-(--muted-foreground)">
-                    <TicketPercent className="h-3 w-3 text-(--primary)" />
-                    {savingsText}
-                  </span>
-                  {normalizedCat.verified ? (
-                    <span className="inline-flex items-center gap-1 rounded-full border border-(--border) bg-(--background) px-2 py-1 text-[11px] font-semibold text-(--muted-foreground)">
-                      <BadgeCheck className="h-3 w-3 text-(--primary)" />
-                      Verified
-                    </span>
-                  ) : null}
-                </div>
-              </div>
-            </div>
+    <Link
+      href={href}
+      data-testid="buysmart-category-card"
+      className="group flex min-h-[282px] flex-col overflow-hidden rounded-[var(--anslation-ds-radius)] border border-(--border) bg-(--card) shadow-[var(--anslation-ds-shadow-sm)] transition hover:-translate-y-0.5 hover:border-(--primary) motion-reduce:transform-none"
+    >
+      <div className="relative aspect-[4/3] overflow-hidden bg-(--muted)">
+        {imageSrc && !imageLoaded && !imageError ? (
+          <SkeletonBlock className="absolute inset-0 rounded-none" />
+        ) : null}
+        {!imageError && imageSrc ? (
+          <img
+            data-testid="buysmart-category-image"
+            key={imageSrc}
+            src={imageSrc}
+            alt={title}
+            loading="lazy"
+            decoding="async"
+            fetchPriority="low"
+            referrerPolicy="no-referrer"
+            className={`h-full w-full bg-(--card) object-contain p-6 transition duration-300 group-hover:scale-[1.02] motion-reduce:transform-none ${
+              imageLoaded ? "opacity-100" : "opacity-0"
+            }`}
+            onLoad={() => setImageLoaded(true)}
+            onError={handleImageError}
+          />
+        ) : null}
+        {showFallback ? (
+          <div className="flex h-full w-full flex-col items-center justify-center gap-3 px-4 text-center">
+            <span className="grid h-12 w-12 place-items-center rounded-[var(--anslation-ds-radius)] bg-(--primary) text-lg font-bold text-(--primary-foreground)">
+              {title.slice(0, 1).toUpperCase()}
+            </span>
+            <span className="text-xs font-semibold text-(--muted-foreground)">
+              Verified brand
+            </span>
           </div>
+        ) : null}
+      </div>
 
-          {/* BACK SIDE = BLUE BG + CENTER WHITE TITLE */}
-          <div
-            className="
-              absolute inset-0 rounded-[var(--anslation-ds-radius)]
-              bg-(--primary)
-              flex items-center justify-center
-              px-4 text-center
-            "
-            style={{
-              transform: "rotateY(180deg)",
-              backfaceVisibility: "hidden",
-            }}
-          >
-            <div className="space-y-3">
-              <div className="flex justify-center gap-2">
-                {normalizedCat.exclusive ? (
-                  <Sparkles className="h-5 w-5 text-white" />
-                ) : (
-                  <TicketPercent className="h-5 w-5 text-white" />
-                )}
-                {normalizedCat.expiresAt ? (
-                  <Clock3 className="h-5 w-5 text-white" />
-                ) : null}
-              </div>
-              <h3 className="font-bold text-[20px] sm:text-[22px] md:text-[24px] text-white leading-snug">
-                {title}
-              </h3>
-              <p className="text-sm font-semibold text-white/85">
-                {normalizedCat.code || savingsText}
-              </p>
-            </div>
-          </div>
+      <div className="flex flex-1 flex-col gap-3 p-3 sm:p-4">
+        <div className="min-h-[48px]">
+          <h3 className="line-clamp-2 text-sm font-bold leading-snug text-(--foreground) sm:text-base">
+            {title}
+          </h3>
+          {normalizedCat.category ? (
+            <p className="mt-1 truncate text-xs font-semibold text-(--primary)">
+              {normalizedCat.category}
+            </p>
+          ) : null}
+        </div>
+
+        <div className="flex flex-wrap gap-1.5">
+          <span className="inline-flex items-center gap-1 rounded-full border border-(--border) bg-(--muted) px-2 py-1 text-[11px] font-semibold text-(--muted-foreground)">
+            <TicketPercent className="h-3 w-3 text-(--primary)" />
+            <span className="max-w-[120px] truncate">{savingsText}</span>
+          </span>
+          {normalizedCat.verified ? (
+            <span className="inline-flex items-center gap-1 rounded-full border border-(--border) bg-(--background) px-2 py-1 text-[11px] font-semibold text-(--muted-foreground)">
+              <BadgeCheck className="h-3 w-3 text-(--primary)" />
+              Verified
+            </span>
+          ) : null}
+          {normalizedCat.exclusive ? (
+            <span className="inline-flex items-center gap-1 rounded-full border border-(--border) bg-(--background) px-2 py-1 text-[11px] font-semibold text-(--muted-foreground)">
+              <Sparkles className="h-3 w-3 text-(--primary)" />
+              Exclusive
+            </span>
+          ) : null}
+        </div>
+
+        <div className="mt-auto flex items-center justify-between rounded-[var(--anslation-ds-radius)] border border-(--border) bg-(--background) px-3 py-2 text-xs font-semibold text-(--muted-foreground)">
+          <span className="truncate">{normalizedCat.code || "Open deal"}</span>
+          <ArrowRight className="h-3.5 w-3.5 shrink-0 text-(--primary) transition group-hover:translate-x-0.5" />
         </div>
       </div>
     </Link>
@@ -151,50 +111,32 @@ function CategoryCard({ cat }) {
 }
 export default function FilterWithAdCard({
   displayedData = [],
-  searchInput,
 }) {
-  const [liftingData, setLiftingData] = useState([]);
-
-  useEffect(() => {
-    const unsub = firebaseBuySmartCategoriesSource.subscribe((data) => {
-      setLiftingData(data || []);
-    });
-    return () => unsub && unsub();
-  }, []);
-  const finalData =
-    searchInput && searchInput.trim() !== ""
-      ? liftingData.filter((item) =>
-          item.title?.toLowerCase().includes(searchInput.toLowerCase()),
-        )
-      : displayedData;
-
-
-
+  const finalData = displayedData;
 
   return (
     <div
       className="
         flex flex-wrap items-start justify-center
         w-full
-        rounded-b-[30px]
+        rounded-[var(--anslation-ds-radius)]
         gap-6
       "
     >
       {/* Left: Cards */}
       {finalData.length === 0 ? (
-        <div className="w-full min-h-[50vh]  flex flex-col items-center justify-center gap-3 flex-shrink-0">
+        <div className="flex min-h-[45vh] w-full flex-shrink-0 flex-col items-center justify-center gap-3 rounded-[var(--anslation-ds-radius)] border border-(--border) bg-(--card) px-4 text-center shadow-[var(--anslation-ds-shadow-sm)]">
           <div className="flex items-center justify-center">
-            <TriangleAlert className="w-11 h-11" />
+            <TriangleAlert className="h-10 w-10 text-(--muted-foreground)" />
           </div>
-          <h3 className="text-center font-manrope font-bold text-[22.755px] leading-[35.397px]">
+          <h3 className="text-lg font-bold leading-snug text-(--foreground)">
             No Brands Available
           </h3>
 
-          {/* Subtitle */}
-          <p className="text-[#6B7280] text-center font-normal text-[22.755px] leading-[35.397px]">
+          <p className="max-w-sm text-sm text-(--muted-foreground)">
             We couldn’t find any brands for this letter
           </p>
-          <p className="text-[#2563EB]"> Try another one</p>
+          <p className="text-sm font-semibold text-(--primary)">Try another one</p>
         </div>
       ) : (
         <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4 2xl:grid-cols-5 gap-5 flex-1 min-w-[280px]">

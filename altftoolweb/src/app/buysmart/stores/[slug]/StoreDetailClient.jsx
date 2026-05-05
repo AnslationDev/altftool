@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useMemo } from "react";
 import Link from "next/link";
 import {
   ArrowLeft,
@@ -16,15 +16,13 @@ import {
   WalletCards,
 } from "lucide-react";
 import CouponReveal from "@/app/buysmart/components/CouponReveal";
-import { fallbackBuySmartOffers } from "@/app/buysmart/data/fallbackOffers";
-import { firebaseBuySmartCategoriesSource } from "@/app/buysmart/service.js/firebaseBuySmartCategories";
+import { useBuySmartCategories } from "@/app/buysmart/hooks/useBuySmartLiveData";
 import { LoadingBone } from "@/components/ui/route-loading";
 import {
   getBuySmartBrandSlug,
   getBuySmartStorePath,
   getDomainFromUrl,
   getPrimarySavingsText,
-  isActiveStatus,
   normalizeBuySmartCategory,
 } from "@altftool/core/buysmart";
 
@@ -56,37 +54,7 @@ function formatRate(value) {
 }
 
 export default function StoreDetailClient({ slug }) {
-  const [offers, setOffers] = useState(fallbackBuySmartOffers);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const fallback = window.setTimeout(() => {
-      setOffers(fallbackBuySmartOffers);
-      setLoading(false);
-    }, 900);
-
-    const unsub = firebaseBuySmartCategoriesSource.subscribe(
-      (data) => {
-        window.clearTimeout(fallback);
-        const activeOffers = (data || [])
-          .map(normalizeBuySmartCategory)
-          .filter((item) => isActiveStatus(item.status));
-
-        setOffers(activeOffers.length ? activeOffers : fallbackBuySmartOffers);
-        setLoading(false);
-      },
-      () => {
-        window.clearTimeout(fallback);
-        setOffers(fallbackBuySmartOffers);
-        setLoading(false);
-      },
-    );
-
-    return () => {
-      window.clearTimeout(fallback);
-      unsub && unsub();
-    };
-  }, []);
+  const { isFallback, items: offers } = useBuySmartCategories();
 
   const normalizedOffers = useMemo(
     () => offers.map(normalizeBuySmartCategory),
@@ -108,7 +76,7 @@ export default function StoreDetailClient({ slug }) {
       .slice(0, 4);
   }, [normalizedOffers, offer]);
 
-  if (loading && !offer) {
+  if (isFallback && !offer) {
     return <StoreDetailSkeleton />;
   }
 
@@ -185,7 +153,7 @@ export default function StoreDetailClient({ slug }) {
                   {offer.title}
                 </h1>
                 <p className="mt-3 max-w-2xl text-sm leading-6 text-(--muted-foreground) sm:text-base">
-                  {offer.disc || `${savings} for ${offer.audience.toLowerCase()} on BuySmart.`}
+                  {offer.disc || `${savings}${offer.audience ? ` for ${offer.audience.toLowerCase()}` : ""} on BuySmart.`}
                 </p>
 
                 <div className="mt-5 flex flex-wrap gap-3">

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import Link from "next/link";
 import {
   ArrowRight,
@@ -15,12 +15,8 @@ import {
   TicketPercent,
   WalletCards,
 } from "lucide-react";
-import { firebaseBuySmartCategoriesSource } from "@/app/buysmart/service.js/firebaseBuySmartCategories";
-import { fallbackBuySmartOffers } from "@/app/buysmart/data/fallbackOffers";
-import { SkeletonBlock } from "@/components/ui/skeleton";
-import { isActiveStatus, normalizeBuySmartCategory } from "@altftool/core/buysmart";
-
-const fallbackOffers = fallbackBuySmartOffers.slice(0, 10);
+import { useBuySmartCategories } from "@/app/buysmart/hooks/useBuySmartLiveData";
+import { normalizeBuySmartCategory } from "@altftool/core/buysmart";
 
 const FILTERS = [
   { icon: Sparkles, label: "All", value: "all" },
@@ -49,29 +45,9 @@ function formatExpiry(value) {
 }
 
 export default function SavingsHub() {
-  const [offers, setOffers] = useState(null);
+  const { isSynced, items: offers } = useBuySmartCategories();
   const [query, setQuery] = useState("");
   const [activeFilter, setActiveFilter] = useState("all");
-
-  useEffect(() => {
-    const fallback = setTimeout(() => {
-      setOffers(fallbackOffers);
-    }, 1400);
-
-    const unsub = firebaseBuySmartCategoriesSource.subscribe((data) => {
-      clearTimeout(fallback);
-      const activeOffers = (data || [])
-        .map(normalizeBuySmartCategory)
-        .filter((item) => isActiveStatus(item.status));
-
-      setOffers(activeOffers.length ? activeOffers : fallbackOffers);
-    });
-
-    return () => {
-      clearTimeout(fallback);
-      unsub && unsub();
-    };
-  }, []);
 
   const normalizedOffers = useMemo(
     () => (offers || []).map(normalizeBuySmartCategory),
@@ -137,16 +113,12 @@ export default function SavingsHub() {
     ];
   }, [categoryRails.length, filteredOffers.length, normalizedOffers]);
 
-  if (offers === null) {
-    return <SavingsHubSkeleton />;
-  }
-
   return (
     <section className="space-y-6 animate-slide-up" data-testid="buysmart-savings-hub">
       <div className="section-header">
         <div className="mx-auto mb-3 inline-flex items-center gap-2 rounded-full border border-(--border) bg-(--muted) px-3 py-1 text-xs font-semibold text-(--muted-foreground)">
           <Sparkles className="h-3.5 w-3.5 text-(--primary)" />
-          Verified savings engine
+          {isSynced ? "Live savings engine" : "Ready savings engine"}
         </div>
         <h2 className="section-title">AltFTool Savings Hub</h2>
         <p className="section-subtitle">
@@ -293,7 +265,7 @@ function SavingsOfferCard({ offer }) {
         </div>
 
         <p className="line-clamp-2 text-sm text-(--muted-foreground)">
-          {offer.disc || `${savings} for ${offer.audience.toLowerCase()}.`}
+          {offer.disc || `${savings}${offer.audience ? ` for ${offer.audience.toLowerCase()}` : ""}.`}
         </p>
 
         <div className="flex flex-wrap gap-2">
@@ -324,25 +296,5 @@ function Chip({ icon: Icon, label }) {
       <Icon className="h-3 w-3 text-(--primary)" />
       {label}
     </span>
-  );
-}
-
-function SavingsHubSkeleton() {
-  return (
-    <section className="space-y-5">
-      <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-        {Array.from({ length: 4 }).map((_, index) => (
-          <SkeletonBlock key={index} className="h-24 rounded-[var(--anslation-ds-radius)]" />
-        ))}
-      </div>
-      <div className="grid gap-4 lg:grid-cols-[0.72fr_1.28fr]">
-        <SkeletonBlock className="h-80 rounded-[var(--anslation-ds-radius)]" />
-        <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
-          {Array.from({ length: 6 }).map((_, index) => (
-            <SkeletonBlock key={index} className="h-64 rounded-[var(--anslation-ds-radius)]" />
-          ))}
-        </div>
-      </div>
-    </section>
   );
 }

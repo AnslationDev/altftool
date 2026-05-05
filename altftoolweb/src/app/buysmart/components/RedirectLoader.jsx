@@ -1,7 +1,11 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import { CheckCircle2 } from "lucide-react";
 import stores from "../data/categories.json";
+
+const REDIRECT_DELAY_MS = 1400;
+const STEP_COUNT = 5;
 
 function getStoreFromUrl(url) {
   try {
@@ -22,12 +26,12 @@ export default function RedirectLoader({ url }) {
 
   useEffect(() => {
     const stepTimer = setInterval(() => {
-      setStep((prev) => (prev < 5 ? prev + 1 : prev));
-    }, 500);
+      setStep((prev) => (prev < STEP_COUNT ? prev + 1 : prev));
+    }, REDIRECT_DELAY_MS / STEP_COUNT);
 
     const redirectTimer = setTimeout(() => {
       window.location.href = url;
-    }, 3000);
+    }, REDIRECT_DELAY_MS);
 
     return () => {
       clearInterval(stepTimer);
@@ -40,51 +44,41 @@ export default function RedirectLoader({ url }) {
     : "Store";
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-white text-center px-4">
-
-      <h2 className="text-2xl font-medium text-gray-900">
+    <div className="flex min-h-screen flex-col items-center justify-center bg-(--background) px-4 text-center text-(--foreground)">
+      <h2 className="text-2xl font-medium text-(--foreground)">
         By signing in, you could have earned
       </h2>
 
-      <h1 className="text-3xl font-bold text-[#3b82f6] mt-2">
-        Upto 7% CD Rewards
+      <h1 className="mt-2 text-3xl font-bold text-(--primary)">
+        Up to 7% CD Rewards
       </h1>
 
-      <p className="text-gray-500 mt-4">
+      <p className="mt-4 text-(--muted-foreground)">
         No Coupon Code Required
       </p>
 
-      <div className="mt-6 px-6 py-4 border border-dashed border-[#3b82f6] rounded-lg bg-blue-50 flex items-center gap-3">
-        <span className="text-green-600 text-xl">✔</span>
-        <span className="text-lg font-semibold text-gray-900">
+      <div className="mt-6 flex items-center gap-3 rounded-[var(--anslation-ds-radius)] border border-dashed border-(--primary) bg-(--muted) px-6 py-4">
+        <CheckCircle2 className="h-5 w-5 text-[var(--anslation-ds-success)]" />
+        <span className="text-lg font-semibold text-(--foreground)">
           Deal Activated
         </span>
       </div>
 
-      <p className="mt-10 text-lg text-gray-800">
+      <p className="mt-10 text-lg text-(--muted-foreground)">
         Please wait while we are redirecting you to{" "}
-        <span className="font-bold">{storeName}</span>
+        <span className="font-bold text-(--foreground)">{storeName}</span>
       </p>
 
-      {/* STEP LOADER */}
       <div className="mt-6 flex gap-2">
-        {[1, 2, 3, 4, 5].map((i) => (
+        {Array.from({ length: STEP_COUNT }, (_, index) => index + 1).map((i) => (
           <span
             key={i}
-            className={`w-6 h-2 rounded-full transition-all duration-300 ${
-              step >= i ? "bg-blue-400 scale-x-100" : "bg-gray-200 scale-x-75"
+            className={`h-2 w-6 origin-left rounded-full transition-all duration-200 ${
+              step >= i ? "scale-x-100 bg-(--primary)" : "scale-x-75 bg-(--muted)"
             }`}
           />
         ))}
       </div>
-
-      {/* Inline CSS (same file) */}
-      <style jsx>{`
-        span {
-          transform-origin: left;
-        }
-      `}</style>
-
     </div>
   );
 }

@@ -1,105 +1,63 @@
 "use client";
 
-import { useMemo, useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import FilterRow from "@/app/buysmart/components/FilterRow";
 import FilterWithAdCard from "@/app/buysmart/components/FilterWithAd";
 
-import { firebaseBuySmartCategoriesSource } from "@/app/buysmart/service.js/firebaseBuySmartCategories";
 import { useAds } from "@/ads/AdsProvider";
 import useDevice from "@/hooks/useDevice";
-import { CategoriesSkeleton } from "@/components/ui/skeleton";
-import fallbackBrands from "@/app/buysmart/data/categories.json";
-import { isActiveStatus, normalizeBuySmartCategory } from "@altftool/core/buysmart";
-
-// import AdSidebar from "@/ads/layouts/shared/AdSidebar";
+import { useBuySmartCategories } from "@/app/buysmart/hooks/useBuySmartLiveData";
+import { normalizeBuySmartCategory } from "@altftool/core/buysmart";
 import SideAd from "@/ads/layouts/buy/SideAd";
 
-const fallbackCategories = fallbackBrands.map((brand) => ({
-  category: "Popular",
-  id: `fallback-${brand.slug}`,
-  link: brand.url,
-  status: "active",
-  title: brand.name,
-})).map(normalizeBuySmartCategory);
-
-export default function CategoriesAZ({ selectedLetter = "All" ,filteredCategory , searchInput , SetSearchInput }) {
-  //  const containerRef = useRef(null);
-  const [categoriesData, setCategoriesData] = useState(null);
+export default function CategoriesAZ({ selectedLetter = "All", filteredCategory }) {
+  const { items: categoriesData } = useBuySmartCategories();
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [sortBy, setSortBy] = useState("newest");
   const [currentPage, setCurrentPage] = useState(1);
-    const device = useDevice();
-    const [itemsPerPage, setItemsPerPage] = useState(4);
-useEffect(() => {
-  const updateItems = () => {
-    const width = window.innerWidth;
-
-    if (width >= 1536) setItemsPerPage(10); 
-    else if (width >= 1024) setItemsPerPage(8); 
-    else if (width >= 768) setItemsPerPage(6); 
-    else setItemsPerPage(4); 
-  };
-
-  updateItems(); 
-  window.addEventListener("resize", updateItems);
-
-  return () => window.removeEventListener("resize", updateItems);
-}, []);
-  
-
-  // useEffect(() => {
-  //   const unsub = firebaseBuySmartCategoriesSource.subscribe((data) => {
-  //     setCategoriesData(data || []);
-  //   });
-  //   return () => unsub && unsub();
-  // }, []);
+  const [itemsPerPage, setItemsPerPage] = useState(4);
+  const device = useDevice();
 
   useEffect(() => {
-    const fallback = setTimeout(() => {
-      setCategoriesData(fallbackCategories);
-    }, 1800);
+    const updateItems = () => {
+      const width = window.innerWidth;
 
-    const unsub = firebaseBuySmartCategoriesSource.subscribe((data) => {
-      const activeData = (data || [])
-        .map(normalizeBuySmartCategory)
-        .filter((item) => isActiveStatus(item.status));
-  
-      clearTimeout(fallback);
-      setCategoriesData(activeData.length ? activeData : fallbackCategories);
-    });
-  
-    return () => {
-      clearTimeout(fallback);
-      unsub && unsub();
+      if (width >= 1536) setItemsPerPage(10);
+      else if (width >= 1024) setItemsPerPage(8);
+      else if (width >= 768) setItemsPerPage(6);
+      else setItemsPerPage(4);
     };
+
+    updateItems();
+    window.addEventListener("resize", updateItems);
+
+    return () => window.removeEventListener("resize", updateItems);
   }, []);
 
+  const categoryDropDown = useMemo(
+    () => (categoriesData || []).map((item) => item.category).filter(Boolean),
+    [categoriesData],
+  );
 
-  const loading = categoriesData === null;
+  const searchResults = useMemo(
+    () =>
+      Array.isArray(filteredCategory)
+        ? filteredCategory.map(normalizeBuySmartCategory)
+        : null,
+    [filteredCategory],
+  );
 
-  let categoryDropDown = (categoriesData || []).map((item) => item.category).filter(Boolean)
   const filteredData = useMemo(() => {
-if (!categoriesData) {
-    return [];
-  }
+    let data = searchResults?.length ? [...searchResults] : [...(categoriesData || [])];
 
-if (filteredCategory && filteredCategory.length > 0) {
-    return filteredCategory;
-  }
-
-  
-
-
-    let data = [...categoriesData];
-
-    
-    if (filteredCategory) {
+    if (!searchResults && typeof filteredCategory === "string" && filteredCategory.trim()) {
+      const categorySearch = filteredCategory.trim().toLowerCase();
       data = data.filter(
         (item) =>
           (item.category || "")
             .toLowerCase()
-            .includes(filteredCategory)
+            .includes(categorySearch),
       );
     }
 
@@ -107,13 +65,16 @@ if (filteredCategory && filteredCategory.length > 0) {
       data = data.filter((item) => item.category === selectedCategory);
     }
 
-
     if (sortBy === "newest") {
-      data.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+      data.sort((a, b) => {
+        const bTime = b.createdAt?.seconds ? b.createdAt.seconds * 1000 : new Date(b.createdAt || 0).getTime();
+        const aTime = a.createdAt?.seconds ? a.createdAt.seconds * 1000 : new Date(a.createdAt || 0).getTime();
+        return bTime - aTime;
+      });
     }
 
     return data;
-  }, [categoriesData, selectedCategory, sortBy, filteredCategory]);
+  }, [categoriesData, filteredCategory, searchResults, selectedCategory, sortBy]);
 
   const flatData = useMemo(() => {
     if (selectedLetter === "All") return filteredData;
@@ -130,8 +91,8 @@ if (filteredCategory && filteredCategory.length > 0) {
   const paginatedData = useMemo(() => {
     const start = (safeCurrentPage - 1) * itemsPerPage;
     return flatData.slice(start, start + itemsPerPage);
-  }, [flatData, safeCurrentPage,itemsPerPage]);
-  const startItem = flatData.length === 0 ? 0 : (safeCurrentPage - 1) * itemsPerPage+ 1;
+  }, [flatData, safeCurrentPage, itemsPerPage]);
+  const startItem = flatData.length === 0 ? 0 : (safeCurrentPage - 1) * itemsPerPage + 1;
   const endItem = Math.min(safeCurrentPage * itemsPerPage, flatData.length);
 
   const rightAd = useAds({
@@ -141,49 +102,40 @@ if (filteredCategory && filteredCategory.length > 0) {
   })[0];
 
   return (
-    loading ? (
-      <CategoriesSkeleton cards={Math.max(4, itemsPerPage)} />
-    ) : (
-    <div className="flex justify-center gap-8  bg-[var(--background)] text-[var(--foreground)] z-1">
-
-      {/* MAIN CONTENT */}
-      <section className="flex-1  py-10 ">
-        <div className="mb-6 ">
+    <div className="z-1 flex justify-center gap-8 bg-[var(--background)] text-[var(--foreground)]">
+      <section className="flex-1 py-10">
+        <div className="mb-6">
           <FilterRow
             selectedCategory={selectedCategory}
-            setSelectedCategory={setSelectedCategory}
+            setSelectedCategory={(category) => {
+              setCurrentPage(1);
+              setSelectedCategory(category);
+            }}
             sortBy={sortBy}
-            setSortBy={setSortBy}
+            setSortBy={(value) => {
+              setCurrentPage(1);
+              setSortBy(value);
+            }}
             categoryDropDown={categoryDropDown}
           />
         </div>
-        <div className="flex gap-6  ">
-          <FilterWithAdCard
-            selectedCategory={selectedCategory}
-            setSelectedCategory={setSelectedCategory}
-            sortBy={sortBy}
-            setSortBy={setSortBy}
-            SetSearchInput={SetSearchInput}
-
-            displayedData={paginatedData}
-            searchInput={searchInput}
-          />
-          <div className="hidden xl:block  flex-shrink-0">
+        <div className="flex gap-6">
+          <FilterWithAdCard displayedData={paginatedData} />
+          <div className="hidden flex-shrink-0 xl:block">
             <SideAd ad={rightAd?.content} />
           </div>
         </div>
 
-
-        <div className="flex flex-col items-center  mt-6 gap-3">
-          <div className="flex items-center justify-center gap-2 sm:gap-[20px] md:gap-[24px] lg:gap-[30px] flex-wrap">
+        <div className="mt-6 flex flex-col items-center gap-3">
+          <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-5 lg:gap-7">
             <button
               disabled={safeCurrentPage === 1}
               onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
-              className="flex items-center justify-center w-auto sm:w-[135px] h-[40px] sm:h-[48px] px-3 sm:px-[20px] gap-[10px] rounded-[63px] border border-[#E5E7EB] bg-white text-gray-800 disabled:opacity-50">
+              className="flex h-10 w-auto items-center justify-center gap-2 rounded-[var(--anslation-ds-radius)] border border-(--border) bg-(--card) px-3 text-(--foreground) shadow-[var(--anslation-ds-shadow-sm)] transition hover:border-(--primary) disabled:opacity-50 sm:h-12 sm:w-[135px] sm:px-5"
+            >
               <ChevronLeft size={16} />
               <span className="hidden sm:inline">Previous</span>
             </button>
-            {/* Page Numbers */}
             <div className="flex items-center gap-3 sm:gap-4">
               {Array.from({ length: totalPages }, (_, index) => index + 1).map(page => {
                 if (page === 1 || page === totalPages || (page >= safeCurrentPage - 2 && page <= safeCurrentPage + 3)) {
@@ -204,25 +156,22 @@ if (filteredCategory && filteredCategory.length > 0) {
               })}
             </div>
             <button
-              disabled={safeCurrentPage === totalPages}
+              disabled={totalPages === 0 || safeCurrentPage >= totalPages}
               onClick={() => setCurrentPage(p => Math.min(totalPages || 1, p + 1))}
-              className="flex items-center justify-center w-auto sm:w-[135px] h-[40px] sm:h-[48px] px-3 sm:px-[20px] gap-[10px] rounded-[63px] border border-[#E5E7EB] bg-white text-gray-800  disabled:opacity-50"
+              className="flex h-10 w-auto items-center justify-center gap-2 rounded-[var(--anslation-ds-radius)] border border-(--border) bg-(--card) px-3 text-(--foreground) shadow-[var(--anslation-ds-shadow-sm)] transition hover:border-(--primary) disabled:opacity-50 sm:h-12 sm:w-[135px] sm:px-5"
             >
               <span className="hidden sm:inline">Next</span>
               <ChevronRight size={16} />
             </button>
           </div>
 
-          <div className="flex justify-center items-center mt-3">
-            <p className=" text-sm sm:text-base leading-tight md:leading-snug lg:leading-[75px] tracking-[0.5px]">
+          <div className="mt-3 flex items-center justify-center">
+            <p className="text-sm leading-tight text-(--muted-foreground) sm:text-base md:leading-snug">
               Showing {startItem}–{endItem} of {flatData.length} brands
             </p>
           </div>
         </div>
-    
-       
       </section>
-    </div >
-    )
+    </div>
   );
 }

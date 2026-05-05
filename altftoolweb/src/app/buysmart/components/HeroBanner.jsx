@@ -8,7 +8,7 @@ import { HeroBannerSkeleton, SkeletonBlock } from "@/components/ui/skeleton";
 import { BadgeCheck, Search, Sparkles } from "lucide-react";
 import useReducedMotion from "@/hooks/useReducedMotion";
 
-const FALLBACK_HERO_WAIT_MS = 900;
+const FALLBACK_HERO_WAIT_MS = 320;
 
 export default function HeroBanner() {
   const [heroes, setHeroes] = useState(null);
@@ -90,7 +90,7 @@ export default function HeroBanner() {
                  ${
                    index === i
                      ? "bg-(--primary) w-8 opacity-100"
-                     : "bg-[#1e3a8a] w-2 opacity-40"
+                     : "bg-(--primary-active) w-2 opacity-40"
                  }`}
           />
         ))}
@@ -163,7 +163,7 @@ function HeroImage({ hero, priority }) {
 
   return (
     <div className="relative h-full w-full">
-      {!loaded ? (
+      {!loaded && !failed ? (
         <SkeletonBlock className="h-full w-full rounded-xl sm:rounded-2xl" />
       ) : null}
 
@@ -180,6 +180,14 @@ function HeroImage({ hero, priority }) {
           onLoad={() => setLoaded(true)}
           onError={() => setFailed(true)}
         />
+      ) : null}
+      {failed ? (
+        <div className="flex h-full w-full flex-col justify-center rounded-xl border border-(--border) bg-(--muted) p-6 text-(--foreground) sm:rounded-2xl">
+          <p className="text-xs font-semibold text-(--muted-foreground)">BuySmart by AltFTool</p>
+          <p className="mt-2 max-w-xl text-2xl font-bold leading-tight sm:text-4xl">
+            Discover better brands before you buy.
+          </p>
+        </div>
       ) : null}
     </div>
   );

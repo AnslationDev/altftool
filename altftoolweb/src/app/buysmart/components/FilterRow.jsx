@@ -1,53 +1,36 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useMemo } from "react";
 import { SORT_OPTIONS } from "@/app/buysmart/constants/categories";
-import { firebaseBuySmartCategoriesSource } from "@/app/buysmart/service.js/firebaseBuySmartCategories";
 import { ChevronDown } from "lucide-react";
 
 export default function FilterRow({
-  popularOnly,
-  setPopularOnly,
   selectedCategory,
   setSelectedCategory,
   sortBy,
   setSortBy,
-  categoryDropDown
-  
-}) 
-{
-  const [categories, setCategories] = useState([]);
-useEffect(() => {
-  const unsubscribe = firebaseBuySmartCategoriesSource.subscribe((data) => {
-    const formatted = data
-    .filter((cat)=> cat && cat.category && cat.title)
-    .map((cat) => ({
-      value: cat.category.trim(),
-      label: cat.category.trim(),
-    }));
+  categoryDropDown = [],
+}) {
+  const categories = useMemo(() => {
+    const formatted = categoryDropDown
+      .map((cat) => (typeof cat === "string" ? cat : cat?.category || cat?.value || ""))
+      .map((cat) => cat.trim())
+      .filter(Boolean);
 
-    const uniqueCategories=Object.values(
-      formatted.reduce((acc,val)=>{
-        acc[val.value]=val; 
-        return acc;
-      },{})
-    );
+    const uniqueCategories = [...new Set(formatted)].sort((a, b) => a.localeCompare(b));
 
-    setCategories([
+    return [
       { value: "All", label: "All Categories" },
-      ...uniqueCategories,
-    ]);
-  });
+      ...uniqueCategories.map((category) => ({
+        value: category,
+        label: category,
+      })),
+    ];
+  }, [categoryDropDown]);
 
-  return () => unsubscribe(); 
-}, []);
   return (
-    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 w-full ">
-      
-      {/* LEFT FILTERS */}
-      <div className="flex flex-wrap items-center gap-3 w-full sm:w-auto">
-
-        {/* Category Filter */}
+    <div className="flex w-full flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+      <div className="flex w-full flex-wrap items-center gap-3 sm:w-auto">
         <div className="relative w-full sm:w-auto">
           <select
             value={selectedCategory}
@@ -55,18 +38,18 @@ useEffect(() => {
             className="
               appearance-none
               px-4 py-2.5 pr-10
-              rounded-full
-              border border-gray-300
+              rounded-[var(--anslation-ds-radius)]
+              border border-(--border)
               bg-(--background)
               text-(--muted-foreground)
               text-sm sm:text-base font-medium
-              shadow-sm
+              shadow-[var(--anslation-ds-shadow-sm)]
               cursor-pointer
               outline-none
               w-full sm:w-auto
+              focus:border-(--primary) focus:ring-2 focus:ring-(--primary)
             "
-          > 
-
+          >
             {categories.map((cat) => (
               <option key={cat.value} value={cat.value}>
                 {cat.label}
@@ -76,15 +59,13 @@ useEffect(() => {
 
           <ChevronDown
             size={16}
-            className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none"
+            className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-(--muted-foreground)"
           />
         </div>
       </div>
 
-      {/* RIGHT SIDE SORT */}
-      <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2 w-full sm:w-auto">
-        
-        <span className="text-sm sm:text-base font-medium text-gray-500 whitespace-nowrap">
+      <div className="flex w-full flex-col gap-1 sm:w-auto sm:flex-row sm:items-center sm:gap-2">
+        <span className="whitespace-nowrap text-sm font-medium text-(--muted-foreground) sm:text-base">
           Sort by:
         </span>
 
@@ -95,15 +76,16 @@ useEffect(() => {
             className="
               appearance-none
               px-4 py-2.5 pr-10
-              rounded-full
-              border border-gray-300
-              bg-white
+              rounded-[var(--anslation-ds-radius)]
+              border border-(--border)
+              bg-(--background)
               text-(--muted-foreground)
               text-sm sm:text-base font-medium
-              shadow-sm
+              shadow-[var(--anslation-ds-shadow-sm)]
               cursor-pointer
               outline-none
               w-full sm:w-auto
+              focus:border-(--primary) focus:ring-2 focus:ring-(--primary)
             "
           >
             {SORT_OPTIONS.map((sort) => (
@@ -115,7 +97,7 @@ useEffect(() => {
 
           <ChevronDown
             size={16}
-            className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none"
+            className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-(--muted-foreground)"
           />
         </div>
       </div>

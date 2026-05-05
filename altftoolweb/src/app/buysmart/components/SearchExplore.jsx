@@ -1,53 +1,25 @@
-import { useState, useEffect } from "react";
+"use client";
 
+import { useState } from "react";
 import { Search } from "lucide-react";
 
-import { firebaseBuySmartCategoriesSource } from "../service.js/firebaseBuySmartCategories";
-import { SearchExploreSkeleton } from "@/components/ui/skeleton";
-import { fallbackBuySmartOffers } from "@/app/buysmart/data/fallbackOffers";
-import { isActiveStatus, normalizeBuySmartCategory } from "@altftool/core/buysmart";
-
-const fallbackCategories = fallbackBuySmartOffers.map(normalizeBuySmartCategory);
+import { useBuySmartCategories } from "@/app/buysmart/hooks/useBuySmartLiveData";
 
 export default function SearchExplore({
   scrollToFilter,
   onSearchResult,
   SetSearchInput,
   searchInput,
-  handleInputString,
-  loading = false,
 }) {
-  const [categoriesData, setCategoriesData] = useState([]);
-
+  const { items: categoriesData } = useBuySmartCategories();
   const [error, setError] = useState("");
-
-  useEffect(() => {
-    const fallback = setTimeout(() => {
-      setCategoriesData(fallbackCategories);
-    }, 1800);
-
-    const unsub = firebaseBuySmartCategoriesSource.subscribe((data) => {
-      clearTimeout(fallback);
-      const activeData = (data || [])
-        .map(normalizeBuySmartCategory)
-        .filter((item) => isActiveStatus(item.status));
-      setCategoriesData(activeData.length ? activeData : fallbackCategories);
-    });
-
-    return () => {
-      clearTimeout(fallback);
-      unsub && unsub();
-    };
-  }, []);
 
   const handleSearch = () => {
     const searchBrand = searchInput.toLowerCase().trim();
 
     if (!searchBrand) {
       setError("Please enter a brand name");
-
-      onSearchResult(null, null);
-
+      onSearchResult(null);
       return;
     }
 
@@ -67,8 +39,8 @@ export default function SearchExplore({
         .toLowerCase();
 
       return (
-        category.startsWith(searchBrand) ||
-        title.startsWith(searchBrand) ||
+        category.includes(searchBrand) ||
+        title.includes(searchBrand) ||
         dealText.includes(searchBrand)
       );
     });
@@ -78,81 +50,72 @@ export default function SearchExplore({
 
       onSearchResult(matched);
 
-      setTimeout(() => {
+      window.requestAnimationFrame(() => {
         scrollToFilter();
-      }, 200);
+      });
     } else {
       setError("No matching brands found. Try another keyword.");
-
-      onSearchResult(null, null);
+      onSearchResult(null);
     }
   };
 
-  if (loading) {
-    return <SearchExploreSkeleton />;
-  }
-
   return (
- <section className="bg-(--search-buysmart) rounded-lg px-4 sm:px-6 lg:px-10 pt-6 pb-0 overflow-hidden animate-slide-up">
-  <div className="max-w-7xl mx-auto section-container">
-    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
-      
-      {/* Left Content */}
-      <div className="flex flex-col justify-center items-center lg:items-start text-center lg:text-left gap-5 w-full animate-slide-right">
-        
-        <div className="space-y-3 w-full">
-          <h2 className="section-title text-(--foreground) font-normal">
-            Find Your Favourite Brand
-          </h2>
+    <section className="overflow-hidden rounded-[var(--anslation-ds-radius)] bg-(--search-buysmart) px-4 pb-0 pt-6 animate-slide-up sm:px-6 lg:px-10">
+      <div className="section-container mx-auto max-w-7xl">
+        <div className="grid grid-cols-1 items-center gap-8 lg:grid-cols-2 lg:gap-16">
+          <div className="flex w-full flex-col items-center justify-center gap-5 text-center animate-slide-right lg:items-start lg:text-left">
+            <div className="w-full space-y-3">
+              <h2 className="section-title font-normal text-(--foreground)">
+                Find Your Favourite Brand
+              </h2>
 
-          <p className="section-subtitle !mx-0 max-w-full">
-            Type the brand name and explore directly.
-          </p>
+              <p className="section-subtitle !mx-0 max-w-full">
+                Type the brand name and explore directly.
+              </p>
+            </div>
+
+            <div className="flex w-full max-w-full items-center rounded-[var(--anslation-ds-radius)] border border-(--border) bg-(--card) px-3 py-2 shadow-[var(--anslation-ds-shadow-sm)] transition duration-200 focus-within:border-(--primary) focus-within:ring-2 focus-within:ring-(--primary) sm:max-w-xl lg:max-w-2xl">
+              <Search className="shrink-0 text-(--muted-foreground)" size={20} />
+
+              <input
+                type="text"
+                value={searchInput}
+                onChange={(e) => {
+                  SetSearchInput(e.target.value);
+                  if (error) setError("");
+                }}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") handleSearch();
+                }}
+                placeholder="Search brands by name, category, or keyword..."
+                className="min-w-0 flex-1 bg-transparent px-3 text-sm text-(--foreground) outline-none placeholder:text-(--input-placeholder) sm:text-base"
+              />
+              <button
+                type="button"
+                onClick={handleSearch}
+                className="h-9 rounded-[var(--anslation-ds-radius)] bg-(--primary) px-4 text-sm font-semibold text-(--primary-foreground) transition hover:bg-(--primary-hover)"
+              >
+                Search
+              </button>
+            </div>
+            {error ? (
+              <p className="text-sm font-medium text-[var(--anslation-ds-danger)]">
+                {error}
+              </p>
+            ) : null}
+          </div>
+
+          <div className="flex h-full items-end justify-center animate-slide-left lg:justify-end">
+            <img
+              src="/searchbrand.png"
+              alt="Search Brands"
+              loading="lazy"
+              decoding="async"
+              className="block w-full max-w-[220px] object-contain sm:max-w-xs md:max-w-md lg:max-w-lg"
+            />
+          </div>
         </div>
-
-      
-        <div className="flex items-center w-full max-w-full sm:max-w-xl lg:max-w-2xl rounded-[var(--anslation-ds-radius)] border border-(--border) bg-(--card) px-3 py-2 shadow-[var(--anslation-ds-shadow-sm)] transition duration-300 focus-within:border-(--primary) focus-within:ring-2 focus-within:ring-(--primary)">
-          <Search className="text-(--muted-foreground) shrink-0" size={20} />
-
-          <input
-            type="text"
-            value={searchInput}
-            onChange={(e) => {
-              SetSearchInput(e.target.value);
-              if (error) setError("");
-            }}
-            onKeyDown={(e) => {
-              if (e.key === "Enter") handleSearch();
-            }}
-            placeholder="Search brands by name, category, or keyword..."
-            className="min-w-0 flex-1 bg-transparent px-3 text-sm text-(--foreground) outline-none placeholder:text-(--input-placeholder) sm:text-base"
-          />
-          <button
-            type="button"
-            onClick={handleSearch}
-            className="h-9 rounded-[var(--anslation-ds-radius)] bg-(--primary) px-4 text-sm font-semibold text-(--primary-foreground) transition hover:bg-(--primary-hover)"
-          >
-            Search
-          </button>
-        </div>
-        {error ? (
-          <p className="text-sm font-medium text-[var(--anslation-ds-danger)]">
-            {error}
-          </p>
-        ) : null}
       </div>
-
-      {/* Right Image */}
-      <div className="flex justify-center lg:justify-end items-end h-full animate-slide-left">
-        <img
-          src="/searchbrand.png"
-          alt="Search Brands"
-          className="block w-full max-w-[220px] sm:max-w-xs md:max-w-md lg:max-w-lg object-contain"
-        />
-      </div>
-
-    </div>
-  </div>
-</section>
+    </section>
   );
 }

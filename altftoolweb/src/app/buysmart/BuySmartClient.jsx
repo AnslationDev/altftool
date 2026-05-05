@@ -1,11 +1,10 @@
 "use client";
 
-import { useRef, useState, useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 import dynamic from "next/dynamic";
 
 import HeroBanner from "./components/HeroBanner";
 import useIdleRedirect from "@/hooks/useIdleRedirect";
-import { firebaseBuySmartCategoriesSource } from "./service.js/firebaseBuySmartCategories";
 import RouteLazySection from "@/components/ui/RouteLazySection";
 import {
   AlphabetFilterSkeleton,
@@ -41,24 +40,9 @@ const Categories = dynamic(() => import("./components/Categories"), {
 export default function Page() {
   const [selectedLetter, setSelectedLetter] = useState("All");
   const [filteredCategory, setFilteredCategory] = useState(null);
-  const [categoryLoading, setCategoryLoading] = useState(true);
   const [searchInput, SetSearchInput] = useState("");
 
-
-  function handleInputString(e) {
-    const value = e.target.value.trim();
-
-    if (!value) return;
-
-    SetSearchInput("");
-
-    setTimeout(() => {
-      scrollToFilter();
-    }, 100);
-  }
-
   useIdleRedirect();
-  const [headerVisible, setHeaderVisible] = useState(true);
 
   const filterRef = useRef(null);
   const scrollToFilter = () => {
@@ -67,115 +51,98 @@ export default function Page() {
     });
   };
 
-  /* ---------------- HEADER VISIBILITY ---------------- */
-  useEffect(() => {
-    const header = document.getElementById("main-header");
-    if (!header) return;
-
-    const observer = new IntersectionObserver(
-      ([entry]) => setHeaderVisible(entry.isIntersecting),
-      { threshold: 0 },
-    );
-
-    observer.observe(header);
-    return () => observer.disconnect();
-  }, []);
-
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: "instant" });
   }, []);
 
-  useEffect(() => {
-    const fallback = setTimeout(() => {
-      setCategoryLoading(false);
-    }, 1800);
-
-    const unsub = firebaseBuySmartCategoriesSource.subscribe(() => {
-      clearTimeout(fallback);
-      setCategoryLoading(false);
-    });
-
-    return () => {
-      clearTimeout(fallback);
-      unsub && unsub();
-    };
-  }, []);
-
-  /* ---------------- ALPHABET SCROLL ---------------- */
   const handleSelect = (char) => {
-    // document
-    //   .getElementById(`alpha-${char}`)
-    //   ?.scrollIntoView({ behavior: "smooth", block: "start" });
-    //   window.dispatchEvent(new CustomEvent("alphabet-change"));
     setSelectedLetter(char);
   };
 
   return (
-    <div className="mx-auto bg-[var(--background)] text-[var(--foreground)]  ">
-
-      <section className="section ">
+    <div className="mx-auto bg-[var(--background)] text-[var(--foreground)]">
+      <section className="section">
         <HeroBanner />
       </section>
 
-      <RouteLazySection fallback={<TrendingSkeleton />} minHeight={360}>
+      <RouteLazySection
+        fallback={<TrendingSkeleton />}
+        idleDelay={700}
+        minHeight={360}
+        rootMargin="900px 0px"
+      >
         <section className="section">
           <Trending />
         </section>
       </RouteLazySection>
 
-      <RouteLazySection fallback={<CategoriesSkeleton cards={6} />} minHeight={620}>
+      <RouteLazySection
+        fallback={<CategoriesSkeleton cards={6} />}
+        idleDelay={800}
+        minHeight={620}
+        rootMargin="900px 0px"
+      >
         <section className="section">
           <SavingsHub />
         </section>
       </RouteLazySection>
 
-      <RouteLazySection fallback={<FeatureBrandSkeleton />} minHeight={520}>
+      <RouteLazySection
+        fallback={<FeatureBrandSkeleton />}
+        idleDelay={900}
+        minHeight={520}
+        rootMargin="900px 0px"
+      >
         <section className="section">
           <FeatureBrand />
         </section>
       </RouteLazySection>
 
-      <RouteLazySection fallback={<DiscoverBrandsSkeleton />} minHeight={260}>
+      <RouteLazySection
+        fallback={<DiscoverBrandsSkeleton />}
+        idleDelay={1000}
+        minHeight={260}
+        rootMargin="900px 0px"
+      >
         <section className="section">
           <DiscoverBrands />
         </section>
       </RouteLazySection>
 
-      <RouteLazySection fallback={<SearchExploreSkeleton />} minHeight={380}>
+      <RouteLazySection
+        fallback={<SearchExploreSkeleton />}
+        idleDelay={1100}
+        minHeight={380}
+        rootMargin="900px 0px"
+      >
         <section className="section">
           <SearchExplore
-            loading={categoryLoading}
             scrollToFilter={scrollToFilter}
             SetSearchInput={SetSearchInput}
             searchInput={searchInput}
-            handleInputString={handleInputString}
-
-            onSearchResult={(category, title) => {
-              setFilteredCategory(category, title);
+            onSearchResult={(category) => {
+              setFilteredCategory(category);
             }}
           />
         </section>
       </RouteLazySection>
 
-      <RouteLazySection fallback={<CategoriesSkeleton />} minHeight={680}>
+      <RouteLazySection
+        fallback={<CategoriesSkeleton />}
+        idleDelay={1200}
+        minHeight={680}
+        rootMargin="900px 0px"
+      >
         <section className="section">
-          {categoryLoading ? (
-            <AlphabetFilterSkeleton />
-          ) : (
-            <AlphabetFilter
-              onSelect={handleSelect}
-              headerVisible={headerVisible}
-              loading={categoryLoading}
-            />
-          )}
+          <AlphabetFilter
+            onSelect={handleSelect}
+            selectedLetter={selectedLetter}
+          />
 
           <div ref={filterRef}>
             <Categories
               selectedLetter={selectedLetter}
               filteredCategory={filteredCategory}
-              searchInput={searchInput}
-              SetSearchInput={SetSearchInput}
-
             />
           </div>
         </section>
