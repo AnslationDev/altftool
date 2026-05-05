@@ -44,10 +44,6 @@ export const FutureLossVisualization = ({ habits }) => {
   const [aiSuggestion, setAiSuggestion] = useState(null);
   const [isGenerating, setIsGenerating] = useState(false);
 
-  if (habits.length === 0) {
-    return null;
-  }
-
   const periods = {
     '1year': { years: 1, label: '1 Year', icon: '📅' },
     '5years': { years: 5, label: '5 Years', icon: '📊' },
@@ -114,6 +110,10 @@ export const FutureLossVisualization = ({ habits }) => {
 
     return () => clearTimeout(timerId);
   }, [investedAmount, period.label]);
+
+  if (habits.length === 0) {
+    return null;
+  }
 
   return (
     <Card variant="glass" className="p-6">

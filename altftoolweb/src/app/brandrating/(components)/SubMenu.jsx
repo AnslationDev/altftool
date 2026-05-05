@@ -66,11 +66,11 @@ function SubMenu({ handleClick , data }) {
 
               <div className="space-y-2">
                 {item.brands.map((brand, i) => (
-                  <Link href={`/brandrating/categories/${getURlLink(item.category)}/${getURlLink(brand.name)}`}  >
-                  <p
-                    key={i}
-                    className="text-gray-700 hover:text-black cursor-pointer transition"
+                  <Link
+                    key={`${item.category}-${brand.name || i}`}
+                    href={`/brandrating/categories/${getURlLink(item.category)}/${getURlLink(brand.name)}`}
                   >
+                  <p className="text-gray-700 hover:text-black cursor-pointer transition">
                     {brand.name}
                   </p>
                   </Link>

@@ -1,5 +1,6 @@
 import fs from "fs/promises";
 import path from "path";
+import { buySmartDocPath } from "@altftool/core/firebasePaths";
 import { PROJECTS } from "@/projects";
 import { type } from "os";
 
@@ -22,7 +23,7 @@ const SPECIAL_SOURCE_OVERRIDES = {
       {
         type: "docArray",
         sourceLabel: "Hero banners",
-        docPath: ["projects", "altftool", "buySmart", "hero"],
+        docPath: buySmartDocPath("hero"),
         arrayField: "banner",
         createdAtField: "createdAt",
         updatedAtField: "updatedAt",
@@ -31,7 +32,7 @@ const SPECIAL_SOURCE_OVERRIDES = {
       {
         type: "docArray",
         sourceLabel: "Categories",
-        docPath: ["projects", "altftool", "buySmart", "categories"],
+        docPath: buySmartDocPath("categories"),
         arrayField: "banner",
         createdAtField: "createdAt",
         updatedAtField: "updatedAt",
@@ -40,7 +41,7 @@ const SPECIAL_SOURCE_OVERRIDES = {
       {
         type: "docArray",
         sourceLabel: "Stores",
-        docPath: ["projects", "altftool", "buySmart", "store"],
+        docPath: buySmartDocPath("store"),
         arrayField: "banner",
         createdAtField: "createdAt",
         updatedAtField: "updatedAt",
@@ -49,7 +50,7 @@ const SPECIAL_SOURCE_OVERRIDES = {
       {
         type: "docArray",
         sourceLabel: "Rule sets",
-        docPath: ["projects", "altftool", "buySmart", "ruleSet"],
+        docPath: buySmartDocPath("ruleSet"),
         arrayField: "banner",
         createdAtField: "createdAt",
         updatedAtField: "updatedAt",
@@ -58,7 +59,7 @@ const SPECIAL_SOURCE_OVERRIDES = {
       {
         type: "docArray",
         sourceLabel: "Trending",
-        docPath: ["projects", "altftool", "buySmart", "trending"],
+        docPath: buySmartDocPath("trending"),
         arrayField: "banner",
         createdAtField: "createdAt",
         updatedAtField: "updatedAt",
@@ -67,7 +68,7 @@ const SPECIAL_SOURCE_OVERRIDES = {
       {
         type: "docArray",
         sourceLabel: "Feature brands",
-        docPath: ["projects", "altftool", "buySmart", "featurebrand"],
+        docPath: buySmartDocPath("featureBrand"),
         arrayField: "features",
         createdAtField: "createdAt",
         updatedAtField: "updatedAt",

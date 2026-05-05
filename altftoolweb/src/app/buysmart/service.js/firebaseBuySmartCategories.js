@@ -1,9 +1,10 @@
 import { doc, onSnapshot } from "firebase/firestore";
 import { normalizeBuySmartCategory } from "@altftool/core/buysmart";
+import { buySmartDocPath } from "@altftool/core/firebasePaths";
 import { db } from "@/lib/firebase";
 import { subscribeCached } from "@/lib/firebaseCache";
 
-const CATEGORY_REF = doc(db, "projects", "altftool", "buySmart", "categories");
+const CATEGORY_REF = doc(db, ...buySmartDocPath("categories"));
 
 export const firebaseBuySmartCategoriesSource = {
   subscribe(callback, onError) {

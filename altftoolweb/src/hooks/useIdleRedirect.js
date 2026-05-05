@@ -2,10 +2,11 @@
 
 import { useEffect, useRef } from "react";
 import { doc, onSnapshot } from "firebase/firestore";
+import { buySmartDocPath } from "@altftool/core/firebasePaths";
 import { db } from "@/lib/firebase";
 import { subscribeCached } from "@/lib/firebaseCache";
 
-const RULE_DOC = doc(db, "projects", "altftool", "buySmart", "ruleSet");
+const RULE_DOC = doc(db, ...buySmartDocPath("ruleSet"));
 
 export default function useIdleRedirect() {
   const timerRef = useRef(null);

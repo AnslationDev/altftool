@@ -7,11 +7,12 @@ import {
   serverTimestamp
 
 } from "firebase/firestore"
+import { buySmartDocPath } from "@altftool/core/firebasePaths"
 import {db} from "@/lib/firebase"
 import { dualWrite, getFirestoreRefs } from "@/lib/dualWrite"
 
 
-export const ROOT = ["projects", "altftool", "buySmart", "ruleSet" ];
+export const ROOT = buySmartDocPath("ruleSet");
 const RULESET_REF = doc(db, ...ROOT);
 const { newDocRef: RULESET_NEW_REF } = getFirestoreRefs(...ROOT);
 
@@ -81,4 +82,3 @@ export const  firebaseBuySmartRuleSetSource = {
                     await dualWrite.update(MODULE, DOC_ID, { banner: filtered });
                   }
 }
-

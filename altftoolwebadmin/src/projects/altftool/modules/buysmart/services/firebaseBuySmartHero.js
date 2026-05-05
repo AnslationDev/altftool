@@ -8,10 +8,11 @@ import {
   setDoc,
   serverTimestamp
 } from "firebase/firestore";
+import { buySmartDocPath } from "@altftool/core/firebasePaths";
 import { db } from "@/lib/firebase";
 
 // 🔹 SINGLE SOURCE PATH
-export const ROOT = ["projects", "altftool", "buySmart", "hero"];
+export const ROOT = buySmartDocPath("hero");
 const HERO_REF = doc(db, ...ROOT);
 
 export const firebaseBuySmartHeroSource = {

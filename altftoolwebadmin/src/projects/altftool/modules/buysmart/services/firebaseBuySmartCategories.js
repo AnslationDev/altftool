@@ -177,9 +177,10 @@ import {
   normalizeVerificationStatus,
   toBoolean,
 } from "@altftool/core/buysmart";
+import { buySmartDocPath } from "@altftool/core/firebasePaths";
 import { db } from "@/lib/firebase";
 
-export const ROOT = ["projects", "altftool", "buySmart", "categories"];
+export const ROOT = buySmartDocPath("categories");
 const CATEGORY_REF = doc(db, ...ROOT);
 
 function serializeCategory(category = {}) {

@@ -251,4 +251,6 @@ const EditorArea = forwardRef(({
   );
 });
 
+EditorArea.displayName = "EditorArea";
+
 export default EditorArea;

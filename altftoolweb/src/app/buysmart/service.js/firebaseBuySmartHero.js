@@ -1,8 +1,9 @@
 import { doc, onSnapshot } from "firebase/firestore";
+import { buySmartDocPath } from "@altftool/core/firebasePaths";
 import { db } from "@/lib/firebase";
 import { subscribeCached } from "@/lib/firebaseCache";
 
-const HERO_REF = doc(db, "projects", "altftool", "buySmart", "hero");
+const HERO_REF = doc(db, ...buySmartDocPath("hero"));
 
 export const firebaseBuySmartHeroSource = {
   subscribe(callback, onError) {

@@ -3,7 +3,7 @@ import { useParams } from 'next/navigation'
 import React from 'react'
 import BrandDetail from './(components)/BrandDetail'
 
-function page() {
+function ExclusiveDealDetailPage() {
    const {id} = useParams()
 
   return (
@@ -13,4 +13,4 @@ function page() {
   )
 }
 
-export default page
+export default ExclusiveDealDetailPage

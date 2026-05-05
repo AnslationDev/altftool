@@ -126,9 +126,10 @@ import {
   serverTimestamp
 } from "firebase/firestore";
 
+import { buySmartDocPath } from "@altftool/core/firebasePaths";
 import { db } from "@/lib/firebase";
 
-export const ROOT = ["projects", "altftool", "buySmart", "store"];
+export const ROOT = buySmartDocPath("store");
 const STORE_REF = doc(db, ...ROOT);
 
 export const firebaseBuySmartStoreSource = {

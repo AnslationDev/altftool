@@ -50,4 +50,6 @@ const GuessWinner = forwardRef(({ options, votes }, ref) => {
   );
 });
 
+GuessWinner.displayName = "GuessWinner";
+
 export default GuessWinner;

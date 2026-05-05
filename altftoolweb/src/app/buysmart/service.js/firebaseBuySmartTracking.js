@@ -6,9 +6,10 @@ import {
   getBuySmartBrandSlug,
   normalizeBuySmartCategory,
 } from "@altftool/core/buysmart";
+import { buySmartDocPath } from "@altftool/core/firebasePaths";
 import { db } from "@/lib/firebase";
 
-const ANALYTICS_REF = doc(db, "projects", "altftool", "buySmart", "analytics");
+const ANALYTICS_REF = doc(db, ...buySmartDocPath("analytics"));
 const MAX_EVENTS = 250;
 
 function safeEventType(value) {

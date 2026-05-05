@@ -28,10 +28,11 @@ ChartJS.register(
 );
 
 export default function PollChart({ options = [], votes = [] }) {
+  const [chartType, setChartType] = useState("bar");
+
   if (!options.length || !votes.length) return null;
 
   const maxVotes = Math.max(...votes);
-  const [chartType, setChartType] = useState("bar");
   const isMobile = typeof window !== "undefined" && window.innerWidth < 640;
 
   const palette = ["#F5F5F0", "#E6D8C3", "#C2A68C", "#5D866C"];

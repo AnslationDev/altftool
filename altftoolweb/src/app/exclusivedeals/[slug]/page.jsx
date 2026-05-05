@@ -3,7 +3,7 @@ import React from 'react'
 import { useParams, usePathname } from 'next/navigation'
 import CategoryBrand from './(component)/CategoryBrand'
 
-function page() {
+function ExclusiveDealsCategoryPage() {
     const{slug} = useParams()
     
   return (
@@ -13,4 +13,4 @@ function page() {
   )
 }
 
-export default page
+export default ExclusiveDealsCategoryPage

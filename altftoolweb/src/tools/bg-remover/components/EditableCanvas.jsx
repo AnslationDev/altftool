@@ -346,4 +346,6 @@ const EditableCanvas = forwardRef(({ resultImage, brushSize = 20 }, ref) => {
   );
 });
 
+EditableCanvas.displayName = "EditableCanvas";
+
 export default EditableCanvas;

@@ -11,72 +11,72 @@ export const ApplianceIconKey = [
   "microwave",
   "geyser",
   "lights",
-  "custom"
+  "custom",
 ];
 
 export const Appliance = {
-  id: string,
-  name: string,
-  wattage: number,
-  quantity: number,
-  hoursPerDay: number,
-  roomCategory: RoomCategory,
-  iconKey: ApplianceIconKey
+  id: "",
+  name: "",
+  wattage: 0,
+  quantity: 1,
+  hoursPerDay: 0,
+  roomCategory: RoomCategory[0],
+  iconKey: ApplianceIconKey.at(-1),
 };
 
 export const ApplianceTemplate = {
-  name: string,
-  wattage: number,
-  quantity: number,
-  hoursPerDay: number,
-  roomCategory: RoomCategory,
-  iconKey: ApplianceIconKey
+  name: "",
+  wattage: 0,
+  quantity: 1,
+  hoursPerDay: 0,
+  roomCategory: RoomCategory[0],
+  iconKey: ApplianceIconKey.at(-1),
 };
 
 export const TariffSlab = {
-  upto: number | null,
-  rate: number
+  upto: null,
+  rate: 0,
 };
 
 export const StateTariff = {
-  state: string,
-  slabs: TariffSlab[],
-  fixedCharge?: number,
-  taxPercent: number
+  state: "",
+  slabs: [],
+  fixedCharge: 0,
+  taxPercent: 0,
 };
 
 export const ApplianceUsage = {
-  id: string,
-  name: string,
-  roomCategory: RoomCategory,
-  wattage: number,
-  optimizedWattage: number,
-  dailyUnits: number,
-  monthlyUnits: number,
-  yearlyUnits: number,
-  monthlyCost: number,
-  sharePercent: number
+  id: "",
+  name: "",
+  roomCategory: RoomCategory[0],
+  wattage: 0,
+  optimizedWattage: 0,
+  dailyUnits: 0,
+  monthlyUnits: 0,
+  yearlyUnits: 0,
+  monthlyCost: 0,
+  sharePercent: 0,
 };
 
 export const EnergySummary = {
-  dailyUnits: number,
-  monthlyUnits: number,
-  yearlyUnits: number,
-  dailyCost: number,
-  monthlyCost: number,
-  yearlyCost: number,
-  effectiveCostPerUnit: number,
-  energyCharge: number,
-  fixedCharge: number,
-  taxAmount: number,
-  applianceBreakdown: ApplianceUsage[],
-  biggestConsumer?: ApplianceUsage,
-  efficientMode: boolean
+  dailyUnits: 0,
+  monthlyUnits: 0,
+  yearlyUnits: 0,
+  dailyCost: 0,
+  monthlyCost: 0,
+  yearlyCost: 0,
+  effectiveCostPerUnit: 0,
+  energyCharge: 0,
+  fixedCharge: 0,
+  taxAmount: 0,
+  applianceBreakdown: [],
+  biggestConsumer: null,
+  efficientMode: false,
 };
 
 export const AppSettings = {
-  appliances: Appliance[],
-  selectedState: string,
-  includeTaxes: boolean,
-  starSavings: boolean
+  appliances: [],
+  selectedState: "",
+  includeTaxes: true,
+  starSavings: true,
 };

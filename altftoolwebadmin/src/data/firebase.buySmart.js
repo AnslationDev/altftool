@@ -1,4 +1,5 @@
 import { collection, onSnapshot } from "firebase/firestore";
+import { ALTFT_BUYSMART_ROOT } from "@altftool/core/firebasePaths";
 import { db } from "@/lib/firebase";
 import { subscribeCached } from "@/lib/firebaseCache";
 
@@ -7,7 +8,7 @@ import { subscribeCached } from "@/lib/firebaseCache";
 
 export const firebaseBuySmartSource = {
   subscribeAll(callback, onError) {
-    const newColRef = collection(db, "projects", "altftool", "buySmart");
+    const newColRef = collection(db, ...ALTFT_BUYSMART_ROOT);
     const oldColRef = collection(db, "buySmart");
 
     return subscribeCached("admin:buysmart:all", (emit, fail) => {
@@ -32,6 +33,5 @@ export const firebaseBuySmartSource = {
     }, callback, onError);
   }
 };
-
 
 

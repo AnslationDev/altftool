@@ -20,7 +20,7 @@ function FeedbackSection() {
          </div>
          <div  className="flex my-6 justify-between" >
             {[1,2].map((item) => (
-                <div>
+                <div key={item}>
                      <FeedbackCard/>
                 </div>
             ))}
@@ -42,7 +42,6 @@ function FeedbackCard(){
         </div>
      )
 }
-
 
 
 

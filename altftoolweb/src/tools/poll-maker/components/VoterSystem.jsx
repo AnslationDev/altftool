@@ -8,11 +8,10 @@ export default function VoterSystem({
   voters,
   isAnonymous,
 }) {
+  const [expandedOptions, setExpandedOptions] = useState({});
+
   // Anonymous ON → kuch show nahi hoga
   if (isAnonymous) return null;
-
-  //  State for expand/collapse
-  const [expandedOptions, setExpandedOptions] = useState({});
 
   const toggleExpand = (index) => {
     setExpandedOptions((prev) => ({
