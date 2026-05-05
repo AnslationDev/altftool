@@ -169,9 +169,12 @@ import {
 } from "firebase/firestore";
 import {
   cleanText,
+  normalizeInteger,
   normalizeBuySmartCategory,
   normalizeOfferType,
+  normalizePercent,
   normalizeStatus,
+  normalizeVerificationStatus,
   toBoolean,
 } from "@altftool/core/buysmart";
 import { db } from "@/lib/firebase";
@@ -181,6 +184,9 @@ const CATEGORY_REF = doc(db, ...ROOT);
 
 function serializeCategory(category = {}) {
   const normalized = normalizeBuySmartCategory(category);
+  const verificationStatus = normalizeVerificationStatus(
+    category.verificationStatus || (category.verified ? "verified" : "pending"),
+  );
 
   return {
     title: normalized.title,
@@ -194,7 +200,13 @@ function serializeCategory(category = {}) {
     audience: normalized.audience,
     expiresAt: normalized.expiresAt,
     terms: normalized.terms,
-    verified: toBoolean(category.verified, false),
+    verificationStatus,
+    verified: verificationStatus === "verified",
+    lastVerifiedAt: cleanText(category.lastVerifiedAt || normalized.lastVerifiedAt),
+    successRate: normalizePercent(category.successRate ?? normalized.successRate, 0),
+    workingVotes: normalizeInteger(category.workingVotes ?? normalized.workingVotes, 0),
+    failedVotes: normalizeInteger(category.failedVotes ?? normalized.failedVotes, 0),
+    reviewNote: cleanText(category.reviewNote || normalized.reviewNote),
     exclusive: toBoolean(category.exclusive || category.isExclusive, false),
     featured: toBoolean(category.featured || category.isFeatured, false),
     priority: normalized.priority,

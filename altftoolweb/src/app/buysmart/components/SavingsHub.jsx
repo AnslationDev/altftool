@@ -3,10 +3,10 @@
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import {
+  ArrowRight,
   BadgeCheck,
   Clock3,
   Coins,
-  ExternalLink,
   Gift,
   GraduationCap,
   Search,
@@ -16,24 +16,11 @@ import {
   WalletCards,
 } from "lucide-react";
 import { firebaseBuySmartCategoriesSource } from "@/app/buysmart/service.js/firebaseBuySmartCategories";
-import fallbackBrands from "@/app/buysmart/data/categories.json";
+import { fallbackBuySmartOffers } from "@/app/buysmart/data/fallbackOffers";
 import { SkeletonBlock } from "@/components/ui/skeleton";
 import { isActiveStatus, normalizeBuySmartCategory } from "@altftool/core/buysmart";
 
-const fallbackOffers = fallbackBrands.slice(0, 10).map((brand, index) =>
-  normalizeBuySmartCategory({
-    audience: index % 3 === 0 ? "Students" : "All shoppers",
-    category: ["Fashion", "Technology", "Travel", "Rewards"][index % 4],
-    discount: index % 2 === 0 ? "Up to 20% off" : "Cash back ready",
-    exclusive: index % 4 === 0,
-    featured: index < 4,
-    link: brand.url,
-    offerType: index % 3 === 0 ? "student" : index % 3 === 1 ? "cashback" : "coupon",
-    status: "active",
-    title: brand.name,
-    verified: index < 8,
-  }),
-);
+const fallbackOffers = fallbackBuySmartOffers.slice(0, 10);
 
 const FILTERS = [
   { icon: Sparkles, label: "All", value: "all" },
@@ -266,13 +253,12 @@ export default function SavingsHub() {
 }
 
 function SavingsOfferCard({ offer }) {
-  const href = offer.link || "#";
+  const href = offer.storePath || "#";
   const savings = offer.discount || offer.cashback || offer.points || "View deal";
 
   return (
     <Link
       href={href}
-      target={href === "#" ? undefined : "_blank"}
       className="group flex min-h-[260px] flex-col rounded-[var(--anslation-ds-radius)] border border-(--border) bg-(--card) p-4 shadow-[var(--anslation-ds-shadow-sm)] transition hover:-translate-y-0.5 hover:border-(--primary)"
     >
       <div className="flex items-start justify-between gap-3">
@@ -326,7 +312,7 @@ function SavingsOfferCard({ offer }) {
             {offer.code || savings}
           </p>
         </div>
-        <ExternalLink className="h-4 w-4 shrink-0 text-(--primary) transition group-hover:translate-x-0.5" />
+        <ArrowRight className="h-4 w-4 shrink-0 text-(--primary) transition group-hover:translate-x-0.5" />
       </div>
     </Link>
   );

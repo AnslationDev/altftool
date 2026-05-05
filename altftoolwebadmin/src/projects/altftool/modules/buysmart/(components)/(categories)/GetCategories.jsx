@@ -252,6 +252,19 @@ import ReusableTable from "../(resuableComponent)/ReusableTable";
 import { firebaseBuySmartCategoriesSource } from "@/projects/altftool/modules/buysmart/services/firebaseBuySmartCategories";
 import { ExternalLink } from "lucide-react";
 
+const verificationStyles = {
+  draft: "bg-slate-100 text-slate-700",
+  pending: "bg-amber-50 text-amber-700",
+  verified: "bg-green-50 text-green-700",
+  expired: "bg-red-50 text-red-700",
+  rejected: "bg-gray-100 text-gray-600",
+};
+
+function formatVerificationStatus(status) {
+  if (!status) return "Pending";
+  return status.replace(/-/g, " ");
+}
+
 function GetCategories({ setActive, setEditCategories }) {
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -380,6 +393,31 @@ function GetCategories({ setActive, setEditCategories }) {
             }`}
           >
             {cell.getValue() ? "Yes" : "No"}
+          </span>
+        ),
+      },
+      {
+        accessorKey: "verificationStatus",
+        header: "QA Status",
+        Cell: ({ cell }) => {
+          const value = cell.getValue() || "pending";
+          return (
+            <span
+              className={`rounded px-2 py-1 text-xs font-semibold capitalize ${
+                verificationStyles[value] || verificationStyles.pending
+              }`}
+            >
+              {formatVerificationStatus(value)}
+            </span>
+          );
+        },
+      },
+      {
+        accessorKey: "successRate",
+        header: "Success",
+        Cell: ({ cell }) => (
+          <span className="text-sm font-semibold text-gray-700">
+            {Math.round(Number(cell.getValue()) || 0)}%
           </span>
         ),
       },

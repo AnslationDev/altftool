@@ -47,6 +47,31 @@ export function normalizeOfferType(value) {
   return "deal";
 }
 
+export function normalizeVerificationStatus(value, fallback = "pending") {
+  const normalized = cleanText(value).toLowerCase().replace(/[\s_]+/g, "-");
+
+  if (["draft", "pending", "verified", "expired", "rejected"].includes(normalized)) {
+    return normalized;
+  }
+
+  return fallback;
+}
+
+export function normalizeNumber(value, fallback = 0) {
+  const parsed = Number(value);
+  return Number.isFinite(parsed) ? parsed : fallback;
+}
+
+export function normalizeInteger(value, fallback = 0) {
+  const parsed = Number.parseInt(value, 10);
+  return Number.isFinite(parsed) ? parsed : fallback;
+}
+
+export function normalizePercent(value, fallback = 0) {
+  const parsed = normalizeNumber(value, fallback);
+  return Math.max(0, Math.min(100, parsed));
+}
+
 export function getPrimarySavingsText(item = {}) {
   return (
     cleanText(item.discount) ||
@@ -83,6 +108,38 @@ export function getBrandLogoUrl(item = {}) {
   return `https://www.google.com/s2/favicons?domain=${encodeURIComponent(domain)}&sz=256`;
 }
 
+export function slugifyBuySmartBrand(value) {
+  const slug = cleanText(value)
+    .toLowerCase()
+    .replace(/^https?:\/\//, "")
+    .replace(/^www\./, "")
+    .replace(/&/g, " and ")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+
+  return slug || "brand";
+}
+
+export function getBuySmartBrandSlug(item = {}) {
+  const domain = getDomainFromUrl(
+    item.link || item.url || item.domain || item.website,
+  );
+
+  return slugifyBuySmartBrand(
+    domain ||
+      item.storeSlug ||
+      item.brandSlug ||
+      item.slug ||
+      item.title ||
+      item.name ||
+      item.brand,
+  );
+}
+
+export function getBuySmartStorePath(item = {}) {
+  return `/buysmart/stores/${getBuySmartBrandSlug(item)}`;
+}
+
 export function getBuySmartImageUrl(item = {}) {
   const directImage = [
     item.img,
@@ -116,7 +173,19 @@ export function normalizeBuySmartCategory(item = {}) {
   const verified = toBoolean(item.verified, false);
   const featured = toBoolean(item.featured || item.isFeatured, false);
   const exclusive = toBoolean(item.exclusive || item.isExclusive, false);
-  const priority = Number.parseInt(item.priority, 10);
+  const hasExplicitVerificationStatus = Boolean(
+    cleanText(item.verificationStatus || item.verificationState || item.verification),
+  );
+  const verificationStatus = normalizeVerificationStatus(
+    item.verificationStatus ||
+      item.verificationState ||
+      item.verification ||
+      (verified ? "verified" : ""),
+  );
+  const activeVerified = verificationStatus === "verified" || (!hasExplicitVerificationStatus && verified);
+  const storeSlug = getBuySmartBrandSlug({ ...item, link, title });
+  const workingVotes = normalizeInteger(item.workingVotes || item.worksVotes || item.upVotes, 0);
+  const failedVotes = normalizeInteger(item.failedVotes || item.failVotes || item.downVotes, 0);
 
   return {
     ...item,
@@ -130,16 +199,24 @@ export function normalizeBuySmartCategory(item = {}) {
     exclusive,
     expiresAt: cleanText(item.expiresAt) || cleanText(item.expiry) || cleanText(item.expires),
     featured,
+    failedVotes,
     image,
     img: image,
+    lastVerifiedAt: cleanText(item.lastVerifiedAt || item.verifiedAt || item.checkedAt),
     link,
     offerType,
     points,
-    priority: Number.isFinite(priority) ? priority : 0,
+    priority: normalizeInteger(item.priority, 0),
+    reviewNote: cleanText(item.reviewNote || item.verificationNote || item.notes),
     status: normalizeStatus(item.status),
+    storePath: getBuySmartStorePath({ ...item, link, title }),
+    storeSlug,
+    successRate: normalizePercent(item.successRate || item.workingRate, activeVerified ? 100 : 0),
     terms: cleanText(item.terms),
     title,
     url: cleanText(item.url) || link,
-    verified,
+    verificationStatus,
+    verified: activeVerified,
+    workingVotes,
   };
 }

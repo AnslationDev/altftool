@@ -266,6 +266,64 @@ function ReusableTable({
                       </div>
                     )}
 
+                    {(selectedRow.offerType || selectedRow.discount || selectedRow.cashback || selectedRow.points || selectedRow.code) && (
+                      <div className="grid gap-3 sm:grid-cols-2">
+                        <div className="rounded-xl border border-gray-200 bg-gray-50 p-4">
+                          <p className="mb-1 text-sm font-medium text-gray-500">Offer Type</p>
+                          <p className="text-base font-semibold capitalize text-gray-800">
+                            {selectedRow.offerType || "deal"}
+                          </p>
+                        </div>
+                        <div className="rounded-xl border border-gray-200 bg-gray-50 p-4">
+                          <p className="mb-1 text-sm font-medium text-gray-500">Saving</p>
+                          <p className="text-base font-semibold text-gray-800">
+                            {selectedRow.discount ||
+                              selectedRow.cashback ||
+                              selectedRow.points ||
+                              selectedRow.code ||
+                              "-"}
+                          </p>
+                        </div>
+                      </div>
+                    )}
+
+                    {(selectedRow.verificationStatus || selectedRow.successRate !== undefined) && (
+                      <div className="grid gap-3 sm:grid-cols-2">
+                        <div className="rounded-xl border border-gray-200 bg-gray-50 p-4">
+                          <p className="mb-1 text-sm font-medium text-gray-500">Verification</p>
+                          <p className="text-base font-semibold capitalize text-gray-800">
+                            {selectedRow.verificationStatus || "pending"}
+                          </p>
+                        </div>
+                        <div className="rounded-xl border border-gray-200 bg-gray-50 p-4">
+                          <p className="mb-1 text-sm font-medium text-gray-500">Success Rate</p>
+                          <p className="text-base font-semibold text-gray-800">
+                            {Math.round(Number(selectedRow.successRate) || 0)}%
+                          </p>
+                        </div>
+                        <div className="rounded-xl border border-gray-200 bg-gray-50 p-4">
+                          <p className="mb-1 text-sm font-medium text-gray-500">Votes</p>
+                          <p className="text-base font-semibold text-gray-800">
+                            {Number(selectedRow.workingVotes) || 0} working / {Number(selectedRow.failedVotes) || 0} failed
+                          </p>
+                        </div>
+                        <div className="rounded-xl border border-gray-200 bg-gray-50 p-4">
+                          <p className="mb-1 text-sm font-medium text-gray-500">Last Verified</p>
+                          <p className="text-base font-semibold text-gray-800">
+                            {selectedRow.lastVerifiedAt || "-"}
+                          </p>
+                        </div>
+                        {selectedRow.reviewNote ? (
+                          <div className="rounded-xl border border-gray-200 bg-gray-50 p-4 sm:col-span-2">
+                            <p className="mb-1 text-sm font-medium text-gray-500">Review Note</p>
+                            <p className="text-base font-semibold text-gray-800">
+                              {selectedRow.reviewNote}
+                            </p>
+                          </div>
+                        ) : null}
+                      </div>
+                    )}
+
                     <div className="rounded-xl border border-gray-200 bg-gray-50 p-4">
                       <p className="mb-1 text-sm font-medium text-gray-500">Country</p>
                       <p className="text-base font-semibold text-gray-800">

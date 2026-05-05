@@ -18,7 +18,7 @@ function CategoryCard({ cat }) {
   const [imageError, setImageError] = useState(false);
   const [imageSrc, setImageSrc] = useState(normalizedCat.img);
   const title = normalizedCat.title;
-  const href = normalizedCat.link;
+  const href = normalizedCat.storePath;
   const showFallback = !imageSrc || imageError;
   const savingsText = normalizedCat.discount || normalizedCat.cashback || normalizedCat.points || "View deal";
 
@@ -39,7 +39,7 @@ function CategoryCard({ cat }) {
   };
 
   return (
-    <Link href={href} target="_blank">
+    <Link href={href}>
       <div
         data-testid="buysmart-category-card"
         className="group w-full cursor-pointer"
@@ -59,10 +59,10 @@ function CategoryCard({ cat }) {
             className="absolute inset-0"
             style={{ backfaceVisibility: "hidden" }}
           >
-            <div className="relative flex flex-col w-full rounded-[20px] overflow-hidden">
-              <div className="relative w-full h-[240px] sm:h-[260px] md:h-[280px] lg:h-[300px] xl:h-[320px] rounded-[16px] overflow-hidden flex items-center justify-center">
+            <div className="relative flex flex-col w-full overflow-hidden rounded-[var(--anslation-ds-radius)]">
+              <div className="relative w-full h-[240px] sm:h-[260px] md:h-[280px] lg:h-[300px] xl:h-[320px] overflow-hidden rounded-[var(--anslation-ds-radius)] flex items-center justify-center">
                 {imageSrc && !imageLoaded && !imageError ? (
-                  <SkeletonBlock className="absolute inset-0 rounded-[16px]" />
+                  <SkeletonBlock className="absolute inset-0 rounded-[var(--anslation-ds-radius)]" />
                 ) : null}
                 {!imageError && imageSrc ? (
                   <img
@@ -81,7 +81,7 @@ function CategoryCard({ cat }) {
                   />
                 ) : null}
                 {showFallback ? (
-                  <div className="flex h-full w-full flex-col items-center justify-center gap-3 rounded-[16px] border border-(--border) bg-(--muted) px-4 text-center">
+                  <div className="flex h-full w-full flex-col items-center justify-center gap-3 rounded-[var(--anslation-ds-radius)] border border-(--border) bg-(--muted) px-4 text-center">
                     <span className="grid h-14 w-14 place-items-center rounded-[var(--anslation-ds-radius)] bg-(--primary) text-xl font-bold text-(--primary-foreground)">
                       {title.slice(0, 1).toUpperCase()}
                     </span>
@@ -115,7 +115,7 @@ function CategoryCard({ cat }) {
           {/* BACK SIDE = BLUE BG + CENTER WHITE TITLE */}
           <div
             className="
-              absolute inset-0 rounded-[20px]
+              absolute inset-0 rounded-[var(--anslation-ds-radius)]
               bg-(--primary)
               flex items-center justify-center
               px-4 text-center

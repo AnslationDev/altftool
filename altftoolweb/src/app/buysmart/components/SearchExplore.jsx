@@ -4,15 +4,10 @@ import { Search } from "lucide-react";
 
 import { firebaseBuySmartCategoriesSource } from "../service.js/firebaseBuySmartCategories";
 import { SearchExploreSkeleton } from "@/components/ui/skeleton";
-import fallbackBrands from "@/app/buysmart/data/categories.json";
+import { fallbackBuySmartOffers } from "@/app/buysmart/data/fallbackOffers";
 import { isActiveStatus, normalizeBuySmartCategory } from "@altftool/core/buysmart";
 
-const fallbackCategories = fallbackBrands.map((brand) => ({
-  category: "Popular",
-  link: brand.url,
-  status: "active",
-  title: brand.name,
-})).map(normalizeBuySmartCategory);
+const fallbackCategories = fallbackBuySmartOffers.map(normalizeBuySmartCategory);
 
 export default function SearchExplore({
   scrollToFilter,

@@ -78,6 +78,17 @@ test("buysmart A-Z category cards load brand images", async ({ page }) => {
     );
 
   expect(brokenImages).toEqual([]);
+
+  const detailLink = page.locator('a[href^="/buysmart/stores/"]').first();
+  await expect(detailLink).toBeVisible();
+  await detailLink.click();
+
+  await expect(page).toHaveURL(/\/buysmart\/stores\//);
+  await expect(page.getByTestId("buysmart-store-detail")).toBeVisible();
+  await expect(page.getByTestId("buysmart-reveal-button")).toBeVisible();
+
+  await page.getByTestId("buysmart-reveal-button").click();
+  await expect(page.getByTestId("buysmart-reveal-modal")).toBeVisible();
 });
 
 test("admin login shell loads", async ({ page }) => {

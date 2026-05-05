@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { usePathname } from "next/navigation";
 import {
   Dialog,
   DialogContent,
@@ -37,12 +38,14 @@ function remember(status) {
 }
 
 export const NewsletterSubscribeDialog = () => {
+  const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
   const triggered = useRef(false);
 
   useEffect(() => {
+    if (pathname?.startsWith("/buysmart")) return;
     if (shouldSuppressPrompt()) return;
 
     const trigger = () => {
@@ -71,7 +74,7 @@ export const NewsletterSubscribeDialog = () => {
     };
 
     return cleanup;
-  }, []);
+  }, [pathname]);
 
   const dismiss = () => {
     remember("dismissed");

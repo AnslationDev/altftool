@@ -16,10 +16,9 @@ const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [searchError, setSearchError] = useState("");
-  const [themeReady, setThemeReady] = useState(false);
   const router = useRouter();
   const pathname = usePathname();
-  const { theme, toggleTheme } = useTheme();
+  const { toggleTheme } = useTheme();
 
   const isActive = (route) => isPublicRouteActive(pathname, route);
 
@@ -38,10 +37,6 @@ const Header = () => {
       new URLSearchParams(window.location.search).get("q") || "";
     setSearchQuery(existingQuery);
   }, [pathname]);
-
-  useEffect(() => {
-    setThemeReady(true);
-  }, []);
 
   const handleChange = (value) => {
     setSearchQuery(value);
@@ -183,11 +178,10 @@ const Header = () => {
             </form>
 
             <IconButton onClick={toggleTheme} aria-label="Toggle Theme">
-              {themeReady && theme === "dark" ? (
-                <Sun className="h-4 w-4 text-(--primary)" />
-              ) : (
-                <Moon className="h-4 w-4" />
-              )}
+              <span className="grid h-4 w-4 place-items-center" suppressHydrationWarning>
+                <Sun className="hidden h-4 w-4 text-(--primary) dark:block" />
+                <Moon className="h-4 w-4 dark:hidden" />
+              </span>
             </IconButton>
 
             <IconButton

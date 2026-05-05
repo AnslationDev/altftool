@@ -22,12 +22,22 @@ const defaultForm = {
   expiresAt: "",
   terms: "",
   verified: true,
+  verificationStatus: "verified",
+  lastVerifiedAt: "",
+  successRate: 100,
+  workingVotes: 0,
+  failedVotes: 0,
+  reviewNote: "",
   exclusive: false,
   featured: false,
   priority: 0,
   img: "",
   status: "active",
 };
+
+function todayInputValue() {
+  return new Date().toISOString().slice(0, 10);
+}
 
 
 function AddCategories({ setActive, setEditCategories, editCategories, active }) {
@@ -68,7 +78,14 @@ function AddCategories({ setActive, setEditCategories, editCategories, active })
         audience: editCategories.audience || "All shoppers",
         expiresAt: editCategories.expiresAt || "",
         terms: editCategories.terms || "",
-        verified: editCategories.verified ?? true,
+        verified: editCategories.verified ?? editCategories.verificationStatus === "verified",
+        verificationStatus:
+          editCategories.verificationStatus || (editCategories.verified ? "verified" : "pending"),
+        lastVerifiedAt: editCategories.lastVerifiedAt || "",
+        successRate: editCategories.successRate ?? (editCategories.verified ? 100 : 0),
+        workingVotes: editCategories.workingVotes || 0,
+        failedVotes: editCategories.failedVotes || 0,
+        reviewNote: editCategories.reviewNote || "",
         exclusive: editCategories.exclusive || false,
         featured: editCategories.featured || false,
         priority: editCategories.priority || 0,
@@ -102,6 +119,30 @@ function AddCategories({ setActive, setEditCategories, editCategories, active })
 
   function handleChange(e) {
     const { name, value, type, checked } = e.target
+
+    if (name === "verificationStatus") {
+      setForm((prev) => ({
+        ...prev,
+        verificationStatus: value,
+        verified: value === "verified",
+        lastVerifiedAt:
+          value === "verified" && !prev.lastVerifiedAt ? todayInputValue() : prev.lastVerifiedAt,
+        successRate: value === "verified" && Number(prev.successRate) === 0 ? 100 : prev.successRate,
+      }));
+      return;
+    }
+
+    if (name === "verified") {
+      setForm((prev) => ({
+        ...prev,
+        verified: checked,
+        verificationStatus: checked ? "verified" : "pending",
+        lastVerifiedAt: checked && !prev.lastVerifiedAt ? todayInputValue() : prev.lastVerifiedAt,
+        successRate: checked && Number(prev.successRate) === 0 ? 100 : prev.successRate,
+      }));
+      return;
+    }
+
     setForm({ ...form, [name]: type === "checkbox" ? checked : value })
   }
 
@@ -195,7 +236,13 @@ function AddCategories({ setActive, setEditCategories, editCategories, active })
       audience: form.audience || "All shoppers",
       expiresAt: form.expiresAt || "",
       terms: form.terms || "",
-      verified: !!form.verified,
+      verificationStatus: form.verificationStatus || (form.verified ? "verified" : "pending"),
+      verified: form.verificationStatus === "verified",
+      lastVerifiedAt: form.lastVerifiedAt || "",
+      successRate: Number(form.successRate) || 0,
+      workingVotes: Number(form.workingVotes) || 0,
+      failedVotes: Number(form.failedVotes) || 0,
+      reviewNote: form.reviewNote || "",
       exclusive: !!form.exclusive,
       featured: !!form.featured,
       priority: Number(form.priority) || 0,
@@ -516,6 +563,101 @@ function AddCategories({ setActive, setEditCategories, editCategories, active })
           </div>
         </div>
 
+        <div className="rounded-lg border bg-gray-50 p-4">
+          <div className="mb-4">
+            <h3 className="text-sm font-semibold text-gray-900">Verification Pipeline</h3>
+          </div>
+
+          <div className="grid gap-4 md:grid-cols-3">
+            <div>
+              <label className="block text-sm font-semibold text-gray-700">
+                Verification Status
+              </label>
+              <select
+                name="verificationStatus"
+                value={form.verificationStatus}
+                onChange={handleChange}
+                className="mt-2 w-full cursor-pointer rounded-sm border bg-white p-3"
+              >
+                <option value="draft">Draft</option>
+                <option value="pending">Pending QA</option>
+                <option value="verified">Verified</option>
+                <option value="expired">Expired</option>
+                <option value="rejected">Rejected</option>
+              </select>
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium mb-1">
+                Success Rate
+              </label>
+              <input
+                type="number"
+                min="0"
+                max="100"
+                name="successRate"
+                value={form.successRate}
+                onChange={handleChange}
+                className="w-full rounded-sm border bg-white p-3 focus:ring-2 focus:ring-black"
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium mb-1">
+                Last Verified At
+              </label>
+              <input
+                type="date"
+                name="lastVerifiedAt"
+                value={form.lastVerifiedAt}
+                onChange={handleChange}
+                className="w-full rounded-sm border bg-white p-3 focus:ring-2 focus:ring-black"
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium mb-1">
+                Working Votes
+              </label>
+              <input
+                type="number"
+                min="0"
+                name="workingVotes"
+                value={form.workingVotes}
+                onChange={handleChange}
+                className="w-full rounded-sm border bg-white p-3 focus:ring-2 focus:ring-black"
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium mb-1">
+                Failed Votes
+              </label>
+              <input
+                type="number"
+                min="0"
+                name="failedVotes"
+                value={form.failedVotes}
+                onChange={handleChange}
+                className="w-full rounded-sm border bg-white p-3 focus:ring-2 focus:ring-black"
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium mb-1">
+                Review Note
+              </label>
+              <input
+                name="reviewNote"
+                placeholder="Checked checkout page, student terms, region..."
+                value={form.reviewNote}
+                onChange={handleChange}
+                className="w-full rounded-sm border bg-white p-3 focus:ring-2 focus:ring-black"
+              />
+            </div>
+          </div>
+        </div>
+
         <div className="grid gap-3 rounded-lg border bg-gray-50 p-4 sm:grid-cols-3">
           {[
             ["verified", "Verified"],
@@ -665,6 +807,12 @@ function AddCategories({ setActive, setEditCategories, editCategories, active })
                     Verified
                   </span>
                 ) : null}
+                <span className="rounded bg-slate-100 px-2 py-1 font-semibold capitalize text-slate-700">
+                  {form.verificationStatus}
+                </span>
+                <span className="rounded bg-slate-100 px-2 py-1 font-semibold text-slate-700">
+                  {Number(form.successRate) || 0}% success
+                </span>
                 {form.featured ? (
                   <span className="rounded bg-indigo-50 px-2 py-1 font-semibold text-indigo-700">
                     Featured
