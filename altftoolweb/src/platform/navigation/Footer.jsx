@@ -61,7 +61,7 @@ const Footer = () => {
                 alt="AltFTool"
                 width={132}
                 height={40}
-                className="h-10 w-auto object-contain"
+                className="object-contain"
               />
             </Link>
 
