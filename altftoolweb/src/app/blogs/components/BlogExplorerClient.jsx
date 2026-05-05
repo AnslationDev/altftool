@@ -346,9 +346,27 @@ export default function BlogExplorerClient({ initialPosts, categories: initialCa
 
   const visiblePosts = filteredPosts.slice(0, visibleCount);
   const hasMore = visibleCount < filteredPosts.length;
+  const displayedCount = visiblePosts.length;
+  const remainingCount = Math.max(0, filteredPosts.length - displayedCount);
+
+  useEffect(() => {
+    const timeout = window.setTimeout(() => {
+      updateSearchParams(router, searchParams, {
+        q: query.trim(),
+        category: activeCategory,
+        sort: sortMode,
+      });
+    }, 180);
+
+    return () => window.clearTimeout(timeout);
+  }, [activeCategory, query, router, searchParams, sortMode]);
 
   const loadNextChunk = useCallback(() => {
     setVisibleCount((current) => Math.min(current + BLOG_CHUNK_SIZE, filteredPosts.length));
+  }, [filteredPosts.length]);
+
+  const loadAllPosts = useCallback(() => {
+    setVisibleCount(filteredPosts.length);
   }, [filteredPosts.length]);
 
   useEffect(() => {
@@ -450,6 +468,11 @@ export default function BlogExplorerClient({ initialPosts, categories: initialCa
           <h2 className="mt-1 text-xl font-semibold tracking-tight text-(--foreground)">
             {filteredPosts.length} curated reads
           </h2>
+          {filteredPosts.length > 0 && (
+            <p className="mt-1 text-xs font-medium text-(--muted-foreground)">
+              Showing {displayedCount} of {filteredPosts.length}
+            </p>
+          )}
         </div>
         <div className="flex flex-wrap items-center gap-2 text-xs font-medium text-(--muted-foreground)">
           <span className="inline-flex h-7 items-center gap-1.5 rounded-[var(--anslation-ds-radius)] border border-(--border) bg-(--background) px-2.5">
@@ -464,6 +487,15 @@ export default function BlogExplorerClient({ initialPosts, categories: initialCa
             <Sparkles className="h-3.5 w-3.5 text-(--primary)" />
             Chunked {BLOG_CHUNK_SIZE} at a time
           </span>
+          {hasMore && (
+            <button
+              type="button"
+              onClick={loadAllPosts}
+              className="inline-flex h-7 items-center rounded-[var(--anslation-ds-radius)] border border-(--primary)/35 bg-(--primary)/10 px-2.5 text-xs font-semibold text-(--primary) transition hover:bg-(--primary) hover:text-(--primary-foreground)"
+            >
+              Show all
+            </button>
+          )}
         </div>
       </div>
 
@@ -484,7 +516,7 @@ export default function BlogExplorerClient({ initialPosts, categories: initialCa
                 onClick={loadNextChunk}
                 className="inline-flex h-10 items-center gap-2 rounded-[var(--anslation-ds-radius)] border border-(--border) bg-(--card) px-4 text-sm font-semibold text-(--foreground) shadow-[var(--anslation-ds-shadow-sm)] transition hover:border-(--primary) hover:text-(--primary)"
               >
-                Load next articles
+                Load next {Math.min(BLOG_CHUNK_SIZE, remainingCount)} articles
                 <ChevronDown className="h-4 w-4" />
               </button>
             ) : (

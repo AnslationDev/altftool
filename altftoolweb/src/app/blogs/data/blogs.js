@@ -1,6 +1,6 @@
 import rawBlogData from "./blogs.json";
 
-export const BLOG_CHUNK_SIZE = 9;
+export const BLOG_CHUNK_SIZE = 12;
 export const BLOG_REMOTE_LIMIT = 72;
 
 const DEFAULT_AUTHOR = "AltFTool Editorial";
