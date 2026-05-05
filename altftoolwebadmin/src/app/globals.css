@@ -412,6 +412,31 @@ select {
   animation: slide-in 0.25s ease-out;
 }
 
+@keyframes skeleton-shimmer {
+  100% {
+    transform: translate3d(220%, 0, 0);
+  }
+}
+
+.animate-skeleton-shimmer {
+  animation: skeleton-shimmer 1.35s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto !important;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
 
 .ck-editor__editable {
   min-height: 400px;

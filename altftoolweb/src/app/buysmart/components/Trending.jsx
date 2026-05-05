@@ -5,6 +5,7 @@ import { firebaseBuySmartStoreSource } from "@/app/buysmart/service.js/firebaseB
 import Link from "next/link";
 import { TrendingSkeleton } from "@/components/ui/skeleton";
 import fallbackStores from "@/app/buysmart/data/stores.json";
+import useReducedMotion from "@/hooks/useReducedMotion";
 
 const fallbackStoreItems = fallbackStores.map((store) => ({
   ...store,
@@ -17,6 +18,7 @@ export default function StoreGrid({ filter }) {
   const [stores, setStores] = useState(null);
   const [index, setIndex] = useState(0);
   const [visibleCards, setVisibleCards] = useState(3);
+  const reducedMotion = useReducedMotion();
   useEffect(() => {
     const update = () => {
       if (window.innerWidth < 640) setVisibleCards(1);      // mobile
@@ -70,7 +72,7 @@ export default function StoreGrid({ filter }) {
 
 
   useEffect(() => {
-    if (!filteredStores.length) return;
+    if (reducedMotion || !filteredStores.length) return;
 
     const id = setInterval(() => {
       setIndex((prev) =>
@@ -80,7 +82,7 @@ export default function StoreGrid({ filter }) {
     }, 3000);
 
     return () => clearInterval(id);
-  }, [filteredStores, visibleCards]);
+  }, [filteredStores, visibleCards, reducedMotion]);
 
 
   if (stores === null) {

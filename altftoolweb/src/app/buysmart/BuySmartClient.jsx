@@ -1,34 +1,45 @@
 "use client";
 
 import { useRef, useState, useEffect } from "react";
+import dynamic from "next/dynamic";
 
 import HeroBanner from "./components/HeroBanner";
-import AlphabetFilter from "./components/AlphabetFilter";
-import Trending from "./components/Trending";
-import FeatureBrand from "./components/FeatureBrand";
-import Categories from "./components/Categories";
-import SearchExplore from "./components/SearchExplore";
 import useIdleRedirect from "@/hooks/useIdleRedirect";
-import DiscoverBrands from "./components/DiscoverBrands";
 import { firebaseBuySmartCategoriesSource } from "./service.js/firebaseBuySmartCategories";
+import RouteLazySection from "@/components/ui/RouteLazySection";
+import {
+  AlphabetFilterSkeleton,
+  CategoriesSkeleton,
+  DiscoverBrandsSkeleton,
+  FeatureBrandSkeleton,
+  SearchExploreSkeleton,
+  TrendingSkeleton,
+} from "@/components/ui/skeleton";
 
-
-const HEADER_HEIGHT = 72;
-
-export async function generateMetadata() {
-  return {
-    title: "Buy Smart – Compare & Save on Best Deals",
-    description:
-      "Find the best prices and deals before you buy smart on AltFTools.",
-  };
-}
+const Trending = dynamic(() => import("./components/Trending"), {
+  loading: () => <TrendingSkeleton />,
+});
+const FeatureBrand = dynamic(() => import("./components/FeatureBrand"), {
+  loading: () => <FeatureBrandSkeleton />,
+});
+const DiscoverBrands = dynamic(() => import("./components/DiscoverBrands"), {
+  loading: () => <DiscoverBrandsSkeleton />,
+});
+const SearchExplore = dynamic(() => import("./components/SearchExplore"), {
+  loading: () => <SearchExploreSkeleton />,
+});
+const AlphabetFilter = dynamic(() => import("./components/AlphabetFilter"), {
+  loading: () => <AlphabetFilterSkeleton />,
+});
+const Categories = dynamic(() => import("./components/Categories"), {
+  loading: () => <CategoriesSkeleton />,
+});
 
 export default function Page() {
   const [selectedLetter, setSelectedLetter] = useState("All");
   const [filteredCategory, setFilteredCategory] = useState(null);
   const [categoryLoading, setCategoryLoading] = useState(true);
-
-  const [searchInput, SetSearchInput] = useState("")
+  const [searchInput, SetSearchInput] = useState("");
 
 
   function handleInputString(e) {
@@ -38,21 +49,12 @@ export default function Page() {
 
     SetSearchInput("");
 
-
-
     setTimeout(() => {
       scrollToFilter();
-
     }, 100);
   }
 
-
-
-
   useIdleRedirect();
-  const alphabetRef = useRef(null);
-  const idleTimerRef = useRef(null);
-
   const [headerVisible, setHeaderVisible] = useState(true);
 
   const filterRef = useRef(null);
@@ -112,52 +114,63 @@ export default function Page() {
         <HeroBanner />
       </section>
 
-      <section className="section">
-        <Trending />
-      </section>
-      <section className="section">
-        <FeatureBrand />
-      </section>
+      <RouteLazySection fallback={<TrendingSkeleton />} minHeight={360}>
+        <section className="section">
+          <Trending />
+        </section>
+      </RouteLazySection>
 
-      <section className="section">
-        <DiscoverBrands />
-      </section>
+      <RouteLazySection fallback={<FeatureBrandSkeleton />} minHeight={520}>
+        <section className="section">
+          <FeatureBrand />
+        </section>
+      </RouteLazySection>
 
-      <section className="section">
+      <RouteLazySection fallback={<DiscoverBrandsSkeleton />} minHeight={260}>
+        <section className="section">
+          <DiscoverBrands />
+        </section>
+      </RouteLazySection>
 
-        <SearchExplore
-          loading={categoryLoading}
-          scrollToFilter={scrollToFilter}
-          SetSearchInput={SetSearchInput}
-          searchInput={searchInput}
-          handleInputString={handleInputString}
-
-          onSearchResult={(category, title) => {
-            setFilteredCategory(category, title);
-          }}
-        />
-      </section>
-
-      <section className="section">
-        <AlphabetFilter
-          ref={alphabetRef}
-          onSelect={handleSelect}
-          headerVisible={headerVisible}
-          loading={categoryLoading}
-        // selectedLetter={selectedLetter}
-
-        />
-
-        <div ref={filterRef}>
-          <Categories
-            selectedLetter={selectedLetter}
-            filteredCategory={filteredCategory}
-            searchInput={searchInput}
+      <RouteLazySection fallback={<SearchExploreSkeleton />} minHeight={380}>
+        <section className="section">
+          <SearchExplore
+            loading={categoryLoading}
+            scrollToFilter={scrollToFilter}
             SetSearchInput={SetSearchInput}
+            searchInput={searchInput}
+            handleInputString={handleInputString}
 
+            onSearchResult={(category, title) => {
+              setFilteredCategory(category, title);
+            }}
           />
-        </div>
-      </section>
+        </section>
+      </RouteLazySection>
+
+      <RouteLazySection fallback={<CategoriesSkeleton />} minHeight={680}>
+        <section className="section">
+          {categoryLoading ? (
+            <AlphabetFilterSkeleton />
+          ) : (
+            <AlphabetFilter
+              onSelect={handleSelect}
+              headerVisible={headerVisible}
+              loading={categoryLoading}
+            />
+          )}
+
+          <div ref={filterRef}>
+            <Categories
+              selectedLetter={selectedLetter}
+              filteredCategory={filteredCategory}
+              searchInput={searchInput}
+              SetSearchInput={SetSearchInput}
+
+            />
+          </div>
+        </section>
+      </RouteLazySection>
     </div>
   );
 }

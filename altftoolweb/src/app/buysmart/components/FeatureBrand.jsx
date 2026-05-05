@@ -5,6 +5,7 @@ import { firebaseBuySmartFeatureBrandSource } from "@/app/buysmart/service.js/fi
 import Link from "next/link";
 import { FeatureBrandSkeleton, SkeletonBlock } from "@/components/ui/skeleton";
 import fallbackDeals from "@/app/buysmart/data/trending.json";
+import useReducedMotion from "@/hooks/useReducedMotion";
 
 const fallbackFeatureDeals = fallbackDeals
   .filter((deal) => deal.image?.trim())
@@ -24,6 +25,7 @@ export default function TrendingDeals() {
   const scrollRef = useRef(null);
   const pauseRef = useRef(false);
   const rafRef = useRef(null);
+  const reducedMotion = useReducedMotion();
 
   useEffect(() => {
     const fallback = setTimeout(() => {
@@ -83,7 +85,7 @@ export default function TrendingDeals() {
     .slice(0, 4);
 
   useEffect(() => {
-    if (!trending || trending.length <= 4) return;
+    if (reducedMotion || !trending || trending.length <= 4) return;
     const el = scrollRef.current;
     if (!el) return;
     const speed = 0.4;
@@ -104,7 +106,7 @@ export default function TrendingDeals() {
       el.removeEventListener("mouseenter", pause);
       el.removeEventListener("mouseleave", resume);
     };
-  }, [trending]);
+  }, [trending, reducedMotion]);
 
   if (trending === null) {
     return <FeatureBrandSkeleton />;

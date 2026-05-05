@@ -4,6 +4,7 @@ import React, { useState, useEffect, useRef, useCallback } from "react";
 import Image from "next/image";
 import SkeletonHero from "./SkeletonHero";
 import {  heroBannerService } from "../service/service";
+import useReducedMotion from "@/hooks/useReducedMotion";
 
 export default function HeroSection() {
      const timeoutRef = useRef(null);
@@ -12,6 +13,7 @@ export default function HeroSection() {
   const [isAnimating, setIsAnimating] = useState(false);
   const timerRef = useRef(null);
   const trackRef = useRef(null);
+  const reducedMotion = useReducedMotion();
 
   const goTo = useCallback(
     (idx) => {
@@ -21,7 +23,7 @@ export default function HeroSection() {
       if (trackRef.current) {
         trackRef.current.scrollTo({
           left: trackRef.current.offsetWidth * idx,
-          behavior: "smooth",
+          behavior: reducedMotion ? "auto" : "smooth",
         });
       }
   
@@ -31,7 +33,7 @@ timeoutRef.current = setTimeout(() => {
   setIsAnimating(false);
 }, 600);
     },
-    [isAnimating, current]
+    [isAnimating, current, reducedMotion]
   );
 
   const next = useCallback(() => {
@@ -40,14 +42,14 @@ timeoutRef.current = setTimeout(() => {
 }, [current, goTo, slides]);
 
 useEffect(() => {
-  if (!slides.length) return;
+  if (reducedMotion || !slides.length) return;
 
   timerRef.current = setInterval(next, 3500);
   return () => clearInterval(timerRef.current);
-}, [next, slides.length]);
+}, [next, slides.length, reducedMotion]);
 
 const resetTimer = () => {
-  if (!slides.length) return;
+  if (reducedMotion || !slides.length) return;
   clearInterval(timerRef.current);
   timerRef.current = setInterval(next, 3500);
 };

@@ -12,7 +12,7 @@ function injectHideStyles(classes) {
   const selector = classes.map((cls) => `.${cls}`).join(", ");
   const style = document.createElement("style");
   style.id = STYLE_ID;
-  style.textContent = `${selector} { opacity: 0; }`;
+  style.textContent = `@media (prefers-reduced-motion: no-preference) { ${selector} { opacity: 0; } }`;
   document.head.appendChild(style);
 }
 
@@ -36,7 +36,8 @@ function getAnimationClass(el) {
 }
 
 function prepareElement(el) {
-  el.style.opacity = "0";
+  // The injected stylesheet handles pre-reveal opacity without mutating
+  // server-rendered DOM attributes during hydration.
 }
 
 function runAnimation(el, observer) {
@@ -46,7 +47,6 @@ function runAnimation(el, observer) {
   const { keyframes, options } = animations[animationClass];
   const resolvedOptions = typeof options === "function" ? options(el) : options;
 
-  el.style.opacity = "";
   el.animate(keyframes, resolvedOptions);
 
   if (!("animateRepeat" in el.dataset)) {
@@ -79,7 +79,6 @@ export default function GlobalAnimationProvider({ children }) {
     if (!el || !animations[className]) return;
     const { keyframes, options } = animations[className];
     const resolvedOptions = typeof options === "function" ? options(el) : options;
-    el.style.opacity = "";
     el.animate(keyframes, resolvedOptions);
   }, []);
 
@@ -90,13 +89,11 @@ export default function GlobalAnimationProvider({ children }) {
 
   useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      document.querySelectorAll(ANIMATION_SELECTOR).forEach((el) => {
-        el.style.opacity = "";
-      });
       return;
     }
 
     const allElements = Array.from(document.querySelectorAll(ANIMATION_SELECTOR));
+    const timeouts = [];
 
     // ── Split elements into two buckets on page load ──────────────────────
     const aboveFold = [];
@@ -112,7 +109,7 @@ export default function GlobalAnimationProvider({ children }) {
     aboveFold.forEach((el, i) => {
       const baseDelay = Number(el.dataset.delay) || 0;
       const staggerDelay = i * 60; // 60ms between each above-fold element
-      setTimeout(() => runAnimation(el, null), baseDelay + staggerDelay);
+      timeouts.push(setTimeout(() => runAnimation(el, null), baseDelay + staggerDelay));
     });
 
     // ── Below-fold: trigger when element reaches center of viewport ────────
@@ -157,6 +154,7 @@ export default function GlobalAnimationProvider({ children }) {
     mutationObserver.observe(document.body, { childList: true, subtree: true });
 
     return () => {
+      timeouts.forEach(clearTimeout);
       observer.disconnect();
       mutationObserver.disconnect();
       observerRef.current = null;

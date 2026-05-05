@@ -6,6 +6,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { HeroBannerSkeleton, SkeletonBlock } from "@/components/ui/skeleton";
 import { BadgeCheck, Search, Sparkles } from "lucide-react";
+import useReducedMotion from "@/hooks/useReducedMotion";
 
 const FALLBACK_HERO_WAIT_MS = 900;
 
@@ -13,6 +14,7 @@ export default function HeroBanner() {
   const [heroes, setHeroes] = useState(null);
   const [index, setIndex] = useState(0);
   const [showFallback, setShowFallback] = useState(false);
+  const reducedMotion = useReducedMotion();
 
   useEffect(() => {
     const unsub = firebaseBuySmartHeroSource.subscribe((data) => {
@@ -34,7 +36,7 @@ export default function HeroBanner() {
   const activeIndex = landscapeHeroes.length ? index % landscapeHeroes.length : 0;
 
   useEffect(() => {
-    if (!landscapeHeroes.length) return;
+    if (reducedMotion || !landscapeHeroes.length) return;
 
     const id = setInterval(() => {
       setIndex((prev) => {
@@ -44,7 +46,7 @@ export default function HeroBanner() {
     }, 2500);
 
     return () => clearInterval(id);
-  }, [landscapeHeroes.length]);
+  }, [landscapeHeroes.length, reducedMotion]);
 
   if (heroes === null && !showFallback) {
     return <HeroBannerSkeleton />;

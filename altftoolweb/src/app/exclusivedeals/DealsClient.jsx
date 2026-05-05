@@ -1,70 +1,82 @@
 "use client";
 
-import React from "react";
-import CouponHeader from "./(componnets)/CouponHeader";
-import Hero from "./(componnets)/Hero";
-import Categories from "./(componnets)/Categories";
-import BestDeal from "./(componnets)/BestDeal";
-import TrendingCategory from "./(componnets)/TrendingCategory";
-import Online from "./(componnets)/Online";
-import TrendingStore from "./(componnets)/TrendingStore";
-import RecentAddStore from "./(componnets)/RecentAddStore";
-import Blog from "./(componnets)/Blog";
-import Feedback from "./(componnets)/Feedback";
-import Brands from "./(componnets)/Brands";
-import StatsSection from "./(componnets)/StatsSection";
-import FAQ from "./(componnets)/FAQ";
-import AboutSection from "./(componnets)/AboutSection";
+import dynamic from "next/dynamic";
 import HeroSection from "./(componnets)/HeroSection";
 import OutletDealsCard from "./(componnets)/OutletDealsCard";
-import SubtractShape from "./(componnets)/autoDesign";
-import BrowserCategory from "./(componnets)/BrowserCategory";
-import TopStore from "./(componnets)/TopStore";
-import UpcomingDeals from "./(componnets)/UpcomingDeals";
-import DealGuides from "./(componnets)/DealGuides";
-import TreindingPrice from "./(componnets)/TreindingPrice";
+import data from "./(data)/db.json";
+import RouteLazySection from "@/components/ui/RouteLazySection";
+import { RouteCardGridSkeleton, RouteSectionSkeleton, RouteStripSkeleton } from "@/components/ui/route-loading";
 
-import data from "./(data)/db.json"
-import FeedbackSection from "./(componnets)/FeedbackSection";
-import HowItWorks from "./(componnets)/HowItWorks";
-import SmartDeals from "./(componnets)/SmartDeals";
-
-
-
+const BrowserCategory = dynamic(() => import("./(componnets)/BrowserCategory"), {
+  loading: () => <RouteStripSkeleton items={6} />,
+});
+const TreindingPrice = dynamic(() => import("./(componnets)/TreindingPrice"), {
+  loading: () => <RouteStripSkeleton items={4} />,
+});
+const Online = dynamic(() => import("./(componnets)/Online"), {
+  loading: () => <RouteCardGridSkeleton cards={6} />,
+});
+const TopStore = dynamic(() => import("./(componnets)/TopStore"), {
+  loading: () => <RouteStripSkeleton items={5} />,
+});
+const HowItWorks = dynamic(() => import("./(componnets)/HowItWorks"), {
+  loading: () => <RouteSectionSkeleton cards={3} />,
+});
+const SmartDeals = dynamic(() => import("./(componnets)/SmartDeals"), {
+  loading: () => <RouteSectionSkeleton cards={3} />,
+});
+const UpcomingDeals = dynamic(() => import("./(componnets)/UpcomingDeals"), {
+  loading: () => <RouteCardGridSkeleton cards={4} />,
+});
+const DealGuides = dynamic(() => import("./(componnets)/DealGuides"), {
+  loading: () => <RouteStripSkeleton items={3} />,
+});
+const Feedback = dynamic(() => import("./(componnets)/Feedback"), {
+  loading: () => <RouteSectionSkeleton cards={3} />,
+});
+const FAQ = dynamic(() => import("./(componnets)/FAQ"), {
+  loading: () => <RouteSectionSkeleton cards={2} />,
+});
 
 export default function DealsPage() {
 
-  const {store , Categories , popularSales }  = data
+  const { store, popularSales } = data;
  
 
   return (
     <div  className="bg-(--dealspage-background) text-(--foreground)">
-          {/* <CouponHeader/> */}
           <HeroSection/>
           <OutletDealsCard/>
-          <BrowserCategory/>
-          <TreindingPrice/>
-          {/* <SubtractShape/>  */}
-          {/* <TrendingCategory/> */}
-          <Online  data={popularSales} />
-          <TopStore  store={store} />
-          <HowItWorks/>
-          <SmartDeals/>
-          <UpcomingDeals/>
-          <DealGuides/>
-          {/* <FeedbackSection/> */}
-          {/* <TrendingStore/> */}
-           {/* <RecentAddStore/> */}
-           {/* <Blog/> */}
-           <Feedback/>
-           {/* <Brands/> */}
-           {/* <StatsSection/> */}
-           <FAQ/>
-           {/* <AboutSection/> */}
-     
-          
-           
-          
+          <RouteLazySection fallback={<RouteStripSkeleton items={6} />} minHeight={260}>
+            <BrowserCategory/>
+          </RouteLazySection>
+          <RouteLazySection fallback={<RouteStripSkeleton items={4} />} minHeight={360}>
+            <TreindingPrice/>
+          </RouteLazySection>
+          <RouteLazySection fallback={<RouteCardGridSkeleton cards={6} />} minHeight={520}>
+            <Online data={popularSales} />
+          </RouteLazySection>
+          <RouteLazySection fallback={<RouteStripSkeleton items={5} />} minHeight={320}>
+            <TopStore store={store} />
+          </RouteLazySection>
+          <RouteLazySection fallback={<RouteSectionSkeleton cards={3} />} minHeight={280}>
+            <HowItWorks/>
+          </RouteLazySection>
+          <RouteLazySection fallback={<RouteSectionSkeleton cards={3} />} minHeight={320}>
+            <SmartDeals/>
+          </RouteLazySection>
+          <RouteLazySection fallback={<RouteCardGridSkeleton cards={4} />} minHeight={420}>
+            <UpcomingDeals/>
+          </RouteLazySection>
+          <RouteLazySection fallback={<RouteStripSkeleton items={3} />} minHeight={320}>
+            <DealGuides/>
+          </RouteLazySection>
+          <RouteLazySection fallback={<RouteSectionSkeleton cards={3} />} minHeight={300}>
+            <Feedback/>
+          </RouteLazySection>
+          <RouteLazySection fallback={<RouteSectionSkeleton cards={2} />} minHeight={260}>
+            <FAQ/>
+          </RouteLazySection>
     </div>
   );
 }

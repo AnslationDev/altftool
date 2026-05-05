@@ -20,6 +20,16 @@ const Header = () => {
 
   const isBlogSlug = /^\/blogs\/[^/]+/.test(pathname);
 
+  const prefetchRoute = (href) => {
+    if (!href?.startsWith("/")) return;
+    router.prefetch(href);
+  };
+
+  const routePreviewProps = (href) => ({
+    onMouseEnter: () => prefetchRoute(href),
+    onFocus: () => prefetchRoute(href),
+  });
+
   useEffect(() => {
     const existingQuery = new URLSearchParams(window.location.search).get("q") || "";
     setSearchQuery(existingQuery);
@@ -100,7 +110,7 @@ const Header = () => {
       <header id="main-header" className="sticky top-0 z-50 border-b border-(--border) bg-(--card) px-4 py-2 backdrop-blur-xl sm:px-6 lg:px-10">
         <div className="mx-auto flex h-14 max-w-[1440px] items-center justify-between gap-6">
           {/* LOGO */}
-          <Link href="/" className="flex min-w-fit items-center">
+          <Link href="/" className="flex min-w-fit items-center" {...routePreviewProps("/")}>
             <img
               src="/assets/logo3.png"
               className="h-9 w-auto object-contain"
@@ -132,6 +142,7 @@ const Header = () => {
                           <Link
                             key={option.label}
                             href={option.href}
+                            {...routePreviewProps(option.href)}
                             className={`block rounded-[6px] px-3 py-2 text-sm transition
                               ${isActive(option.href)
                                 ? "bg-(--muted) text-(--primary)"
@@ -147,6 +158,7 @@ const Header = () => {
                 ) : (
                   <Link
                     href={item.href}
+                    {...routePreviewProps(item.href)}
                     className={`relative rounded-[var(--anslation-ds-radius)] px-3 py-2 text-sm font-medium transition
                       ${isActive(item.href)
                         ? "bg-(--muted) text-(--primary)"
@@ -219,7 +231,7 @@ const Header = () => {
         >
           {/* LOGO + CLOSE BUTTON */}
           <div className="flex items-center justify-between">
-            <Link href="/" onClick={() => setMobileMenuOpen(false)}>
+            <Link href="/" onClick={() => setMobileMenuOpen(false)} {...routePreviewProps("/")}>
               <img
                 src="/assets/logo3.png"
                 className="h-9 w-auto object-contain"
@@ -274,6 +286,7 @@ const Header = () => {
                         <Link
                           key={option.label}
                           href={option.href}
+                          {...routePreviewProps(option.href)}
                           onClick={() => setMobileMenuOpen(false)}
                           className={`rounded-lg px-2 py-2 text-sm ${isActive(option.href)
                             ? "text-(--primary)"
@@ -290,6 +303,7 @@ const Header = () => {
                 ) : (
                   <Link
                     href={item.href}
+                    {...routePreviewProps(item.href)}
                     onClick={()=>setMobileMenuOpen(false)}
                     className={`block py-2 text-sm font-medium ${isActive(item.href)
                       ? "text-(--primary)"

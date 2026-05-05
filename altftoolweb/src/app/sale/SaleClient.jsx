@@ -1,19 +1,34 @@
 "use client";
 
-import { Check, Loader2 } from "lucide-react";
 import { useState, useCallback } from "react";
-import Image from "next/image";
+import dynamic from "next/dynamic";
 import HeroSection from "./components/HeroSection";
 import SalesNearYou from "./components/SalesNearYou";
 import saleData from "./data/saleData";
-import ExploreCategories from "./components/ExploreCategories";
-import FlashSales from "./components/FlashSales";
-import DealOfDay from "./components/DealOfDay";
-import NewsletterSection from "./components/NewsletterSection";
-import UserFeedback from "./components/UserFeedback";
-import FAQsSection from "./components/FAQsSection";
-import TrendingSales from "./components/TrendingSales";
+import RouteLazySection from "@/components/ui/RouteLazySection";
+import { RouteCardGridSkeleton, RouteSectionSkeleton, RouteStripSkeleton } from "@/components/ui/route-loading";
 
+const ExploreCategories = dynamic(() => import("./components/ExploreCategories"), {
+  loading: () => <RouteStripSkeleton items={5} />,
+});
+const TrendingSales = dynamic(() => import("./components/TrendingSales"), {
+  loading: () => <RouteCardGridSkeleton cards={4} columns="lg:grid-cols-4" />,
+});
+const FlashSales = dynamic(() => import("./components/FlashSales"), {
+  loading: () => <RouteSectionSkeleton cards={3} />,
+});
+const DealOfDay = dynamic(() => import("./components/DealOfDay"), {
+  loading: () => <RouteCardGridSkeleton cards={5} />,
+});
+const UserFeedback = dynamic(() => import("./components/UserFeedback"), {
+  loading: () => <RouteSectionSkeleton cards={3} />,
+});
+const FAQsSection = dynamic(() => import("./components/FAQsSection"), {
+  loading: () => <RouteSectionSkeleton cards={2} />,
+});
+const NewsletterSection = dynamic(() => import("./components/NewsletterSection"), {
+  loading: () => <RouteSectionSkeleton cards={2} />,
+});
 
 export default function SaleLocatorPage() {
   // ── 1. Location state — shared between Hero dropdown & SalesNearYou 
@@ -97,24 +112,37 @@ export default function SaleLocatorPage() {
         onSearchChange={setNearbySearch}
       />
 
-      <ExploreCategories />
+      <RouteLazySection fallback={<RouteStripSkeleton items={5} />} minHeight={260}>
+        <ExploreCategories />
+      </RouteLazySection>
 
-      <TrendingSales trendingSales={saleData.trendingSales} />
+      <RouteLazySection fallback={<RouteCardGridSkeleton cards={4} columns="lg:grid-cols-4" />} minHeight={420}>
+        <TrendingSales trendingSales={saleData.trendingSales} />
+      </RouteLazySection>
 
-      <FlashSales flashSales={saleData.flashSales} />
+      <RouteLazySection fallback={<RouteSectionSkeleton cards={3} />} minHeight={360}>
+        <FlashSales flashSales={saleData.flashSales} />
+      </RouteLazySection>
 
-      <DealOfDay dealOfDay={saleData.dealOfDay} />
+      <RouteLazySection fallback={<RouteCardGridSkeleton cards={5} />} minHeight={520}>
+        <DealOfDay dealOfDay={saleData.dealOfDay} />
+      </RouteLazySection>
 
-      <UserFeedback feedback={saleData.feedback} />
+      <RouteLazySection fallback={<RouteSectionSkeleton cards={3} />} minHeight={300}>
+        <UserFeedback feedback={saleData.feedback} />
+      </RouteLazySection>
 
-      <FAQsSection faq={saleData.faq} />
+      <RouteLazySection fallback={<RouteSectionSkeleton cards={2} />} minHeight={260}>
+        <FAQsSection faq={saleData.faq} />
+      </RouteLazySection>
 
       {/* ──  Newsletter  */}
-      <NewsletterSection
-        email={email}
-        setEmail={setEmail}
-        
-      />
+      <RouteLazySection fallback={<RouteSectionSkeleton cards={2} />} minHeight={360}>
+        <NewsletterSection
+          email={email}
+          setEmail={setEmail}
+        />
+      </RouteLazySection>
     </div>
   );
 }

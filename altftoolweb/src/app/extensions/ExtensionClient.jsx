@@ -18,7 +18,7 @@ import {
   Calendar, Code
 } from "lucide-react";
 
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 
 /* ---------------- ICON SLIDER DATA ---------------- */
 const icons = [
@@ -45,29 +45,34 @@ const icons = [
 ];
 
 /* ---------------- ICON SLIDER COMPONENT ---------------- */
-const IconSlider = ({ icons }) => (
-  <div className="overflow-hidden relative py-6">
-    <motion.div
-      className="flex gap-4"
-      animate={{ x: ["0%", "-50%"] }}
-      transition={{ repeat: Infinity, duration: 18, ease: "linear" }}
-    >
-      {icons.concat(icons).map(({ Icon, color }, index) => (
-        <div
-          key={index}
-          className="
-            flex-shrink-0 w-14 h-14 rounded-xl bg-white/5
-            border border-white/10 backdrop-blur
-            flex items-center justify-center
-            hover:scale-105 transition
-          "
-        >
-          <Icon className={`w-10 h-10 ${color}`} />
-        </div>
-      ))}
-    </motion.div>
-  </div>
-);
+const IconSlider = ({ icons }) => {
+  const reducedMotion = useReducedMotion();
+  const renderedIcons = reducedMotion ? icons : icons.concat(icons);
+
+  return (
+    <div className="overflow-hidden relative py-6">
+      <motion.div
+        className="flex gap-4"
+        animate={reducedMotion ? undefined : { x: ["0%", "-50%"] }}
+        transition={reducedMotion ? undefined : { repeat: Infinity, duration: 18, ease: "linear" }}
+      >
+        {renderedIcons.map(({ Icon, color }, index) => (
+          <div
+            key={index}
+            className="
+              flex-shrink-0 w-14 h-14 rounded-xl bg-white/5
+              border border-white/10 backdrop-blur
+              flex items-center justify-center
+              hover:scale-105 transition
+            "
+          >
+            <Icon className={`w-10 h-10 ${color}`} />
+          </div>
+        ))}
+      </motion.div>
+    </div>
+  );
+};
 
 export default function ExtensionsPage() {
   const [selectedCategory, setSelectedCategory] = useState("All");
