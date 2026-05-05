@@ -5,12 +5,12 @@ import {
   Line,
   LineChart,
   ReferenceLine,
-  ResponsiveContainer,
   Tooltip,
   XAxis,
   YAxis,
 } from "recharts";
 import { LineChart as LineChartIcon } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
 import { useTheme } from "../../../contexts/ThemeContext";
 
 const getTooltipStyle = (isDark) => ({
@@ -31,16 +31,50 @@ const tooltipStyle = {
   color: "#0f172a",
 };
 
+function ChartFrame({ children }) {
+  const ref = useRef(null);
+  const [width, setWidth] = useState(0);
+  const height = 176;
+
+  useEffect(() => {
+    const node = ref.current;
+    if (!node) return;
+
+    const updateWidth = () => {
+      setWidth(Math.max(0, Math.floor(node.getBoundingClientRect().width)));
+    };
+
+    updateWidth();
+
+    if (!("ResizeObserver" in window)) {
+      window.addEventListener("resize", updateWidth);
+      return () => window.removeEventListener("resize", updateWidth);
+    }
+
+    const observer = new ResizeObserver(updateWidth);
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, []);
+
+  return (
+    <div ref={ref} className="h-44 min-w-0">
+      {width > 0 ? children({ width, height }) : (
+        <div className="h-full rounded-[var(--anslation-ds-radius)] bg-(--muted)" />
+      )}
+    </div>
+  );
+}
+
 function ChartCard({ title, subtitle, children }) {
   return (
-    <div className="soft-card p-4">
+    <div className="soft-card min-w-0 p-4">
       <div className="mb-2 flex items-center justify-between">
         <div>
           <p className="text-sm font-bold text-foreground">{title}</p>
           <p className="text-[11px] text-muted-foreground">{subtitle}</p>
         </div>
       </div>
-      <div className="h-44">{children}</div>
+      <ChartFrame>{children}</ChartFrame>
     </div>
   );
 }
@@ -75,8 +109,8 @@ export default function PerformanceCharts({ data, safeTrafficLimit }) {
           title="Requests vs Latency"
           subtitle="ms response per req/s"
         >
-          <ResponsiveContainer width="100%" height="100%">
-            <AreaChart data={data} margin={{ top: 6, right: 8, left: -16, bottom: 0 }}>
+          {({ width, height }) => (
+            <AreaChart width={width} height={height} data={data} margin={{ top: 6, right: 8, left: -16, bottom: 0 }}>
               <defs>
                 <linearGradient id="latencyFill" x1="0" y1="0" x2="0" y2="1">
                   <stop offset="0%" stopColor="#3b82f6" stopOpacity={0.45} />
@@ -101,12 +135,12 @@ export default function PerformanceCharts({ data, safeTrafficLimit }) {
                 fill="url(#latencyFill)"
               />
             </AreaChart>
-          </ResponsiveContainer>
+          )}
         </ChartCard>
 
         <ChartCard title="CPU Growth Curve" subtitle="% utilization vs req/s">
-          <ResponsiveContainer width="100%" height="100%">
-            <LineChart data={data} margin={{ top: 6, right: 8, left: -16, bottom: 0 }}>
+          {({ width, height }) => (
+            <LineChart width={width} height={height} data={data} margin={{ top: 6, right: 8, left: -16, bottom: 0 }}>
               <CartesianGrid stroke={gridColor} vertical={false} />
               <XAxis dataKey="rps" stroke={axisColor} fontSize={10} tickLine={false} />
               <YAxis stroke={axisColor} fontSize={10} tickLine={false} axisLine={false} domain={[0, 100]} />
@@ -120,12 +154,12 @@ export default function PerformanceCharts({ data, safeTrafficLimit }) {
                 dot={false}
               />
             </LineChart>
-          </ResponsiveContainer>
+          )}
         </ChartCard>
 
         <ChartCard title="RAM Usage Curve" subtitle="% memory vs req/s">
-          <ResponsiveContainer width="100%" height="100%">
-            <AreaChart data={data} margin={{ top: 6, right: 8, left: -16, bottom: 0 }}>
+          {({ width, height }) => (
+            <AreaChart width={width} height={height} data={data} margin={{ top: 6, right: 8, left: -16, bottom: 0 }}>
               <defs>
                 <linearGradient id="ramFill" x1="0" y1="0" x2="0" y2="1">
                   <stop offset="0%" stopColor="#60a5fa" stopOpacity={0.45} />
@@ -144,12 +178,12 @@ export default function PerformanceCharts({ data, safeTrafficLimit }) {
                 fill="url(#ramFill)"
               />
             </AreaChart>
-          </ResponsiveContainer>
+          )}
         </ChartCard>
 
         <ChartCard title="Error Rate Curve" subtitle="% errors vs req/s">
-          <ResponsiveContainer width="100%" height="100%">
-            <LineChart data={data} margin={{ top: 6, right: 8, left: -16, bottom: 0 }}>
+          {({ width, height }) => (
+            <LineChart width={width} height={height} data={data} margin={{ top: 6, right: 8, left: -16, bottom: 0 }}>
               <CartesianGrid stroke={gridColor} vertical={false} />
               <XAxis dataKey="rps" stroke={axisColor} fontSize={10} tickLine={false} />
               <YAxis stroke={axisColor} fontSize={10} tickLine={false} axisLine={false} />
@@ -163,7 +197,7 @@ export default function PerformanceCharts({ data, safeTrafficLimit }) {
                 dot={false}
               />
             </LineChart>
-          </ResponsiveContainer>
+          )}
         </ChartCard>
       </div>
     </div>

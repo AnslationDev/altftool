@@ -32,10 +32,10 @@ export function ToolModuleSkeleton() {
   return (
     <div
       role="status"
-      aria-label="Loading tool workspace"
+      aria-label="Preparing workspace"
       className="mx-auto w-full max-w-5xl rounded-[var(--anslation-ds-radius-lg)] border border-(--border) bg-(--card) p-5 shadow-[var(--anslation-ds-shadow-sm)]"
     >
-      <span className="sr-only">Loading tool workspace</span>
+      <span className="sr-only">Preparing workspace</span>
       <div className="mb-6 space-y-3 text-center">
         <Bone className="mx-auto h-9 w-72 max-w-full rounded-xl" />
         <Bone className="mx-auto h-4 w-80 max-w-full rounded-full" />
