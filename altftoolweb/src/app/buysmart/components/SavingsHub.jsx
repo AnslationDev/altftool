@@ -16,6 +16,7 @@ import {
   WalletCards,
 } from "lucide-react";
 import { useBuySmartCategories } from "@/app/buysmart/hooks/useBuySmartLiveData";
+import ManagedImage from "@/components/ui/ManagedImage";
 import { normalizeBuySmartCategory } from "@altftool/core/buysmart";
 
 const FILTERS = [
@@ -236,7 +237,7 @@ function SavingsOfferCard({ offer }) {
       <div className="flex items-start justify-between gap-3">
         <span className="grid h-12 w-12 shrink-0 place-items-center rounded-[var(--anslation-ds-radius)] border border-(--border) bg-(--background)">
           {offer.img ? (
-            <img
+            <ManagedImage
               src={offer.img}
               alt={offer.title}
               loading="lazy"

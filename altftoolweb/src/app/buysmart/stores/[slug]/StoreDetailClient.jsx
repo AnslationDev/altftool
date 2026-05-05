@@ -20,6 +20,7 @@ import {
   fallbackBuySmartCategoryItems,
   useBuySmartCategories,
 } from "@/app/buysmart/hooks/useBuySmartLiveData";
+import ManagedImage from "@/components/ui/ManagedImage";
 import { LoadingBone } from "@/components/ui/route-loading";
 import {
   getBuySmartBrandSlug,
@@ -155,7 +156,7 @@ export default function StoreDetailClient({ slug }) {
             <div className="flex flex-col gap-5 sm:flex-row sm:items-start">
               <div className="grid h-20 w-20 shrink-0 place-items-center rounded-[var(--anslation-ds-radius)] border border-(--border) bg-(--background) p-3">
                 {offer.img ? (
-                  <img
+                  <ManagedImage
                     src={offer.img}
                     alt={offer.title}
                     className="h-full w-full object-contain"
@@ -321,7 +322,7 @@ function SimilarOfferCard({ offer }) {
       <div className="flex items-start gap-3">
         <span className="grid h-11 w-11 shrink-0 place-items-center rounded-[var(--anslation-ds-radius)] border border-(--border) bg-(--background) p-2">
           {offer.img ? (
-            <img
+            <ManagedImage
               src={offer.img}
               alt={offer.title}
               className="h-full w-full object-contain"

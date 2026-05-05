@@ -1,4 +1,4 @@
-export default {
+const toolConfig = {
   slug: "readme-generator",
   name: "README Generator",
   category: ["Developer", "Content Creation"],
@@ -7,3 +7,5 @@ export default {
   icon: "file-code",
   iconColor: "text-orange-600",
 };
+
+export default toolConfig;

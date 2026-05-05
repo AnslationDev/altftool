@@ -1,4 +1,4 @@
-export default {
+const toolConfig = {
   slug: "uuid-generator",
   name: "UUID Generator",
   category: ["Developer"],
@@ -6,3 +6,5 @@ export default {
   icon: "fingerprint",
   iconColor: "text-purple-700",
 };
+
+export default toolConfig;

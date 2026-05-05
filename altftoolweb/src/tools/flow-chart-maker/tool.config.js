@@ -1,4 +1,4 @@
-export default{
+const toolConfig = {
   slug:"flow-chart-maker",
   name:"Flow Chart Maker",
   category:"No-code",
@@ -6,3 +6,5 @@ export default{
   icon: "workflow",
   iconColor: "text-gray-500",
 }
+
+export default toolConfig;

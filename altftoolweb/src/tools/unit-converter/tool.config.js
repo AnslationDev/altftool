@@ -1,4 +1,4 @@
-export default {
+const toolConfig = {
   slug: "unit-converter",
   name: "Unit Converter",
   category: ["Web", "Developer", "Lifestyle"],
@@ -7,3 +7,5 @@ export default {
   icon: "scale",
   iconColor: "text-orange-700",
 };
+
+export default toolConfig;

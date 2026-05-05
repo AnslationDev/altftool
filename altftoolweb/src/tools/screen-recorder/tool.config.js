@@ -1,4 +1,4 @@
-export default{
+const toolConfig = {
   slug:"screen-recorder",
   name:"Screen Recorder",
   description:"Record your screen and share it with your friends.",
@@ -6,3 +6,5 @@ export default{
   icon: "video",
   iconColor: "text-blue--500",
 }
+
+export default toolConfig;

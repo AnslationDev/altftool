@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import Link from "next/link";
 import AdCard from "./AdCard";
 import { useAds } from "@/ads/AdsProvider";
+import ManagedImage from "@/components/ui/ManagedImage";
 import { Clock, ArrowRight, TrendingUp, Flame } from "lucide-react";
 
 // ─── Helpers ───────────────────────────────────────────────────────────────────
@@ -48,7 +49,7 @@ function PostCard({ post, index }) {
         {!imgLoaded && (
           <div className="absolute inset-0 animate-pulse bg-gradient-to-r from-blue-50 via-blue-100 to-blue-50 bg-[length:200%_100%]" />
         )}
-        <img
+        <ManagedImage
           src={post.image}
           alt={post.imageAlt || post.heading}
           onLoad={() => setImgLoaded(true)}

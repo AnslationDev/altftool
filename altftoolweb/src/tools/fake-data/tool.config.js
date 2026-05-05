@@ -1,9 +1,5 @@
 import { color } from "chart.js/helpers";
-
-
-
-
-export default{
+const toolConfig = {
   slug:"fake-data",
   name:"Fake Data",
   category:"Developer",
@@ -11,3 +7,5 @@ export default{
   icon: "user",
   iconColor: "text-gray-500",
 }
+
+export default toolConfig;

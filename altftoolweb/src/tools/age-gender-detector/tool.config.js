@@ -1,4 +1,4 @@
-export default{
+const toolConfig = {
   slug:"age-gender-detector",
   name:"Age & Gender Detector",
   category:"AI",
@@ -6,3 +6,5 @@ export default{
   icon: "scan-face",
   iconColor: "text-purple-500",
 }
+
+export default toolConfig;

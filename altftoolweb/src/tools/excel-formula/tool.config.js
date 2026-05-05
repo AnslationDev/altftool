@@ -1,4 +1,4 @@
-export default{
+const toolConfig = {
   slug:'excel-formula',
   name:"Excel Formula",
   category:"EdTech",
@@ -6,3 +6,5 @@ export default{
   icon: "help-circle",
   iconColor: "text-gray-500",
 }
+
+export default toolConfig;

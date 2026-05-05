@@ -1,4 +1,4 @@
-export default {
+const toolConfig = {
     name: "car-cost-analyzer",
     slug: "car-ownership-cost-analyzer",
     title: "Car Ownership Cost Calculator",
@@ -6,3 +6,5 @@ export default {
     icon: "Car",
     iconColor: "green"
 }
+
+export default toolConfig;

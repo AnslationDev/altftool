@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import useReducedMotion from "@/hooks/useReducedMotion";
 import { useBuySmartStores } from "@/app/buysmart/hooks/useBuySmartLiveData";
+import ManagedImage from "@/components/ui/ManagedImage";
 
 export default function StoreGrid({ filter }) {
   const { items: stores } = useBuySmartStores();
@@ -147,7 +148,7 @@ function StoreImageCard({ store }) {
         ) : null}
       </div>
       {!failed && src ? (
-        <img
+        <ManagedImage
           key={src}
           src={src}
           alt={store.name || "store"}

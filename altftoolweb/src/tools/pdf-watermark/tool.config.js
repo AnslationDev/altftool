@@ -1,4 +1,4 @@
-export default {
+const toolConfig = {
   slug: "pdf-watermark",
   name: "PDF Watermark",
   category: ["Web"],
@@ -6,3 +6,5 @@ export default {
   icon: "file-lock",
   iconColor: "text-red-600",
 };
+
+export default toolConfig;

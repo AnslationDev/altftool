@@ -1,4 +1,4 @@
-export default{
+const toolConfig = {
   slug:"encoded-decoded",
   name:"Encoded/Decoded",
     category:"Developer",
@@ -6,3 +6,5 @@ export default{
   icon: "lock",
   iconColor: "text-yellow-500",
 }
+
+export default toolConfig;

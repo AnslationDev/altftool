@@ -1,4 +1,4 @@
-export default {
+const toolConfig = {
   slug: "spam-checker",
   name: "Spam Checker",
   category: ["Job"],
@@ -7,3 +7,5 @@ export default {
   icon: "shield-alert",
   iconColor: "text-red-600",
 };
+
+export default toolConfig;

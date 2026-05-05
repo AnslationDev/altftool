@@ -1,4 +1,4 @@
-export default{
+const toolConfig = {
   slug:"bmi-calculator",
   name:"BMI Calculator",
   category:"Fitness",
@@ -6,3 +6,5 @@ export default{
   icon: "activity",
   iconColor: "text-green-600",
 }
+
+export default toolConfig;

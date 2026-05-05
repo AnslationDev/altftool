@@ -1,4 +1,4 @@
-export default {
+const toolConfig = {
   slug: "text-to-voice",
   name: "Text to Voice Tool",
   category: ["Content Creation"],
@@ -6,3 +6,5 @@ export default {
   icon: "mic",
   iconColor: "text-indigo-700",
 };
+
+export default toolConfig;

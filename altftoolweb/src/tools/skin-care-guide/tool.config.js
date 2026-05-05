@@ -1,4 +1,4 @@
-export default {
+const toolConfig = {
   slug: "skin-care-guide",
   name: "Skin Care Guide",
   category: ["Fitness", "Lifestyle"],
@@ -6,3 +6,5 @@ export default {
   icon: "droplet",
   iconColor: "text-pink-600",
 };
+
+export default toolConfig;

@@ -1,4 +1,4 @@
-export default {
+const toolConfig = {
   slug: "text-extractor",
   name: "Text Extractor",
   category: ["Creators", "No-Code", "Developer", "EdTech"],
@@ -6,3 +6,5 @@ export default {
   icon: "scan-text",
   iconColor: "text-indigo-600",
 };
+
+export default toolConfig;

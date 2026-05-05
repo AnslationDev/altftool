@@ -1,4 +1,4 @@
-export default {
+const toolConfig = {
   slug: "cover-letter",
   name: "Cover Letter",
   category: "Job",
@@ -7,3 +7,5 @@ export default {
   iconColor: "text-blue-400",
 
 }
+
+export default toolConfig;

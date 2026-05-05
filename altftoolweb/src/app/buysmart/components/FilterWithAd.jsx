@@ -4,6 +4,7 @@ import { ArrowRight, BadgeCheck, Sparkles, TicketPercent, TriangleAlert } from "
 import { useMemo, useState } from "react";
 import Link from "next/link";
 import { SkeletonBlock } from "@/components/ui/skeleton";
+import ManagedImage from "@/components/ui/ManagedImage";
 import {
   getBrandLogoUrl,
   normalizeBuySmartCategory,
@@ -42,7 +43,7 @@ function CategoryCard({ cat }) {
           <SkeletonBlock className="absolute inset-0 rounded-none" />
         ) : null}
         {!imageError && imageSrc ? (
-          <img
+          <ManagedImage
             data-testid="buysmart-category-image"
             key={imageSrc}
             src={imageSrc}

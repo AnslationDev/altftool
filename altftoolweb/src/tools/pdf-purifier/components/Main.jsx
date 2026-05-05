@@ -15,6 +15,7 @@ import {
   ChevronRight,
   Maximize2,
 } from "lucide-react";
+import ManagedImage from "@/components/ui/ManagedImage";
 
 const MainComponent = () => {
   const [file, setFile] = useState(null);
@@ -479,7 +480,7 @@ const MainComponent = () => {
                       onClick={() => openPreview(pageNum, index)}
                     >
                       {pagePreviews[pageNum] ? (
-                        <img
+                        <ManagedImage
                           src={pagePreviews[pageNum]}
                           alt={`Page ${pageNum}`}
                           className="w-full h-full object-contain hover:scale-105 transition-transform duration-200"
@@ -546,7 +547,7 @@ const MainComponent = () => {
               {/* Preview Image */}
               <div className="h-full w-full flex items-center justify-center">
                 {highQualityPreviews[selectedPage] ? (
-                  <img
+                  <ManagedImage
                     src={highQualityPreviews[selectedPage]}
                     alt={`Page ${selectedPage}`}
                     className="max-h-full max-w-full object-contain rounded-lg shadow-2xl"
@@ -560,7 +561,7 @@ const MainComponent = () => {
                   </div>
                 ) : (
                   <div className="text-center">
-                    <img
+                    <ManagedImage
                       src={pagePreviews[selectedPage]}
                       alt={`Page ${selectedPage}`}
                       className="max-h-full max-w-full object-contain rounded-lg shadow-2xl"

@@ -1,4 +1,4 @@
-export default {
+const toolConfig = {
   slug: "survey-builder",
   name: "Survey Builder",
   category: ["Business"],
@@ -7,3 +7,5 @@ export default {
   icon: "list-checks",
   iconColor: "text-purple-600",
 };
+
+export default toolConfig;

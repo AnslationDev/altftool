@@ -4,6 +4,7 @@ import { useMemo, useState } from "react";
 import Link from "next/link";
 import { SkeletonBlock } from "@/components/ui/skeleton";
 import { useBuySmartFeaturedDeals } from "@/app/buysmart/hooks/useBuySmartLiveData";
+import ManagedImage from "@/components/ui/ManagedImage";
 
 function getTime(item) {
   if (item.createdAt?.seconds) return item.createdAt.seconds * 1000;
@@ -131,7 +132,7 @@ function DealCard({ deal, aspectClass = "aspect-video" }) {
         </div>
 
         {hasImage && (
-          <img
+          <ManagedImage
             key={deal.image}
             src={deal.image}
             alt={deal.title}

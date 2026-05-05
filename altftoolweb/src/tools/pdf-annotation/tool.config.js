@@ -1,4 +1,4 @@
-export default {
+const toolConfig = {
   slug: "pdf-annotation",
   name: "PDF Annotation Tool",
   category: ["Web"],
@@ -6,3 +6,5 @@ export default {
   icon: "file-pen-line",
   iconColor: "text-blue-600",
 };
+
+export default toolConfig;

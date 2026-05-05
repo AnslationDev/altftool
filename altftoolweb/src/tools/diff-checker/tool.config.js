@@ -1,4 +1,4 @@
-export default {
+const toolConfig = {
   slug: 'diff-checker',
   name: 'Diff Checker',
   category:"Developer",
@@ -7,3 +7,5 @@ export default {
   iconColor: "text-blue-500",
 
 }
+
+export default toolConfig;

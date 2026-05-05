@@ -1,4 +1,4 @@
-export default {
+const toolConfig = {
   slug: "wheregoes-tool",
   name: "WhereGoes Tracer",
   category: ["Web", "Developer", "Network"],
@@ -6,3 +6,5 @@ export default {
   icon: "link",
   iconColor: "text-primary",
 };
+
+export default toolConfig;

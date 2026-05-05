@@ -1,4 +1,4 @@
-export default {
+const toolConfig = {
   slug: "text-summarizer",
   name: "Text Summarizer",
   category: ["AI"],
@@ -6,3 +6,5 @@ export default {
   icon: "file-text",
   iconColor: "text-blue-700",
 };
+
+export default toolConfig;

@@ -1,4 +1,4 @@
-export default {
+const toolConfig = {
   slug: "ultimate-wheel-spin",
   name: "Ultimate Wheel Spin Tool",
   category: ["Games", "Utility"],
@@ -6,3 +6,5 @@ export default {
   icon: "circle-dashed",
   iconColor: "text-pink-700",
 };
+
+export default toolConfig;

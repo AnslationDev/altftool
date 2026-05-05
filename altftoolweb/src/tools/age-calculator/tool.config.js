@@ -1,4 +1,4 @@
-export default {
+const toolConfig = {
   slug: "age-calculator",
   name: "Age Calculator",
   category: "AI",
@@ -6,3 +6,5 @@ export default {
   icon: "file-text",
   iconColor: "text-red-800",
 };
+
+export default toolConfig;

@@ -1,4 +1,4 @@
-export default {
+const toolConfig = {
   slug: "csv-lead-cleaner",
   name: "CSV Lead Cleaner",
   category: ["Business"],
@@ -6,3 +6,5 @@ export default {
   icon: "file-spreadsheet",
   iconColor: "text-green-600",
 };
+
+export default toolConfig;

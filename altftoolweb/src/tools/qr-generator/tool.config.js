@@ -1,4 +1,4 @@
-export default {
+const toolConfig = {
   slug: "qr-generator",
   name: "QR Generator",
   category: ["Web"],
@@ -6,3 +6,5 @@ export default {
   icon: "qr-code",
   iconColor: "text-black-600",
 };
+
+export default toolConfig;

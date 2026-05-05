@@ -1,4 +1,4 @@
-export default {
+const toolConfig = {
   slug: 'json-parser',
   name: 'JSON Parser',
   category:'Developer',
@@ -6,3 +6,5 @@ export default {
   icon: "text",
   iconColor: "text-blue-500",
 }
+
+export default toolConfig;

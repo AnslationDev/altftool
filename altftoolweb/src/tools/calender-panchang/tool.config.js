@@ -1,4 +1,4 @@
-export default {
+const toolConfig = {
   slug: 'calender-panchang',
   name: 'Calender Panchang',
   category: 'Lifestyle',
@@ -7,3 +7,5 @@ export default {
   iconColor: "text-gray-500",
 
 }
+
+export default toolConfig;

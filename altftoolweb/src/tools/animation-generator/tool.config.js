@@ -1,4 +1,4 @@
-export default {
+const toolConfig = {
   slug:"animation-generator",
   name:"Animation Generator",
   category:"Creators",
@@ -6,3 +6,5 @@ export default {
   icon: "sparkle",
   iconColor: "text-teal-500",
 }
+
+export default toolConfig;

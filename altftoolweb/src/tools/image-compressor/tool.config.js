@@ -1,4 +1,4 @@
-export default {
+const toolConfig = {
   slug: "image-compressor",
   name: "Image Compressor",
   category: ["Marketing", "Web", "Content Creation", "Design"],
@@ -6,3 +6,5 @@ export default {
   icon: "image",
   iconColor: "text-indigo-700",
 };
+
+export default toolConfig;

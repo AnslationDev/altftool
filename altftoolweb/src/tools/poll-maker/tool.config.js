@@ -1,4 +1,4 @@
-export default {
+const toolConfig = {
   slug: "poll-maker",
   name: "Poll Maker",
   category: ["Business"],
@@ -7,3 +7,5 @@ export default {
   icon: "bar-chart2",
   iconColor: "text-purple-600",
 };
+
+export default toolConfig;

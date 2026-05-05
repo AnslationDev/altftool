@@ -1,4 +1,4 @@
-export default {
+const toolConfig = {
   slug: "corporate-tool",
   name: "Corporate Tool",
   category: "Business",
@@ -7,3 +7,4 @@ export default {
   iconColor: "text-indigo-600",
 };
 
+export default toolConfig;

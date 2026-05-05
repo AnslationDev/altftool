@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { ExternalLink, MoreHorizontal } from 'lucide-react';
 import { motion } from 'framer-motion';
+import ManagedImage from '@/components/ui/ManagedImage';
 
 // ─── SAFE URL HELPER ──────────────────────────────────────────────────────────
 const safeHostname = (url) => {
@@ -29,11 +30,10 @@ export function ResultCard({ result, index, query, onTagSearch }) {
         <div className="result-source-row" style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px', padding: '4px 8px 4px 4px', borderRadius: '100px', cursor: 'pointer', transition: 'background-color 0.2s' }} className="source-hover-wrap">
             <div style={{ width: '28px', height: '28px', backgroundColor: 'var(--google-light-gray)', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px solid var(--google-border)' }}>
-              <img 
+              <ManagedImage
                 src={result.favicon || `https://www.google.com/s2/favicons?domain=${hostname}&sz=16`} 
                 alt="" 
                 style={{ width: '16px', height: '16px', borderRadius: '50%' }} 
-                onError={(e) => e.target.style.display = 'none'}
               />
             </div>
             <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
@@ -141,16 +141,16 @@ export function SearchResults({ results, query, isLoading, searchTime, onTagSear
             {visible.map((result, idx) => (
               <a key={result.id} href={result.url} target="_blank" rel="noopener noreferrer" className="se-image-card" style={{ textDecoration: 'none', color: 'inherit', display: 'flex', flexDirection: 'column', gap: '8px', transition: 'transform 0.2s', '&:hover': { transform: 'translateY(-2px)' } }}>
                 <div style={{ borderRadius: '12px', overflow: 'hidden', backgroundColor: 'var(--google-light-gray)', border: '1px solid var(--google-border)', aspectRatio: '4/3', position: 'relative' }}>
-                  <img 
+                  <ManagedImage
                     src={result.image || `https://picsum.photos/seed/${result.id}/300/200`} 
+                    fallbackSrc="https://via.placeholder.com/300x200?text=No+Image"
                     alt={result.title} 
                     style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} 
-                    onError={(e) => e.target.src = 'https://via.placeholder.com/300x200?text=No+Image'}
                   />
                 </div>
                 <div style={{ padding: '0 4px' }}>
                   <div style={{ fontSize: '12px', color: 'var(--google-gray)', display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '4px' }}>
-                    <img src={result.favicon || `https://www.google.com/s2/favicons?domain=${safeHostname(result.url)}&sz=16`} alt="" style={{ width: '14px', height: '14px', borderRadius: '50%' }} />
+                    <ManagedImage src={result.favicon || `https://www.google.com/s2/favicons?domain=${safeHostname(result.url)}&sz=16`} alt="" style={{ width: '14px', height: '14px', borderRadius: '50%' }} />
                     <span style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{result.displayUrl}</span>
                   </div>
                   <div style={{ fontSize: '14px', color: 'var(--google-blue)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', fontWeight: '500' }}>
@@ -169,7 +169,7 @@ export function SearchResults({ results, query, isLoading, searchTime, onTagSear
               <div key={result.id} className="se-news-card" style={{ display: 'flex', gap: '20px', padding: '16px 0', borderBottom: '1px solid var(--google-border)' }}>
                 <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
-                    <img src={result.favicon || `https://www.google.com/s2/favicons?domain=${safeHostname(result.url)}&sz=16`} alt="" style={{ width: '16px', height: '16px', borderRadius: '4px' }} />
+                    <ManagedImage src={result.favicon || `https://www.google.com/s2/favicons?domain=${safeHostname(result.url)}&sz=16`} alt="" style={{ width: '16px', height: '16px', borderRadius: '4px' }} />
                     <span style={{ fontSize: '12px', color: 'var(--google-text)', fontWeight: '500' }}>{result.displayUrl}</span>
                     <span style={{ fontSize: '12px', color: 'var(--google-gray)' }}>• 2 hours ago</span>
                   </div>
@@ -181,7 +181,7 @@ export function SearchResults({ results, query, isLoading, searchTime, onTagSear
                   </p>
                 </div>
                 <div style={{ width: '130px', height: '130px', flexShrink: 0, borderRadius: '12px', overflow: 'hidden', backgroundColor: 'var(--google-light-gray)', border: '1px solid var(--google-border)' }}>
-                  <img 
+                  <ManagedImage
                     src={result.image || `https://picsum.photos/seed/${result.id}news/200/200`} 
                     alt="" 
                     style={{ width: '100%', height: '100%', objectFit: 'cover' }}
@@ -198,7 +198,7 @@ export function SearchResults({ results, query, isLoading, searchTime, onTagSear
             {visible.map((result, idx) => (
               <div key={result.id} className="se-video-card" style={{ display: 'flex', gap: '20px' }}>
                 <a href={result.url} target="_blank" rel="noopener noreferrer" style={{ position: 'relative', width: '200px', height: '118px', flexShrink: 0, backgroundColor: '#000', borderRadius: '12px', overflow: 'hidden', display: 'block', border: '1px solid var(--google-border)' }}>
-                  <img src={`https://picsum.photos/seed/${result.id}video/400/225`} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: 0.85, transition: 'opacity 0.2s' }} />
+                  <ManagedImage src={`https://picsum.photos/seed/${result.id}video/400/225`} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: 0.85, transition: 'opacity 0.2s' }} />
                   <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: '36px', height: '36px', backgroundColor: 'rgba(0,0,0,0.7)', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', backdropFilter: 'blur(2px)' }}>
                     <div style={{ width: 0, height: 0, borderTop: '7px solid transparent', borderBottom: '7px solid transparent', borderLeft: '11px solid white', marginLeft: '3px' }}></div>
                   </div>

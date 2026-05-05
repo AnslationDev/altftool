@@ -1,4 +1,4 @@
-export default{
+const toolConfig = {
   slug:"api-tester",
   name:"API TESTER",
   category:"Developer",
@@ -6,3 +6,5 @@ export default{
   icon: "server",
   iconColor: "text-blue-600",
 }
+
+export default toolConfig;

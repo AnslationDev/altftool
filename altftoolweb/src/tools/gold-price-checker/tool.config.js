@@ -1,4 +1,4 @@
-export default{
+const toolConfig = {
   slug:"gold-price-checker",
   name:"Gold Price Checker",
   category:"Business",
@@ -6,3 +6,5 @@ export default{
   icon: "coins",
   iconColor: "text-yellow-500",
 }
+
+export default toolConfig;

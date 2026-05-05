@@ -1,4 +1,4 @@
-export default {
+const toolConfig = {
   slug: 'ip-address-checker',
   name: 'IP Address Checker',
   category:'Web',
@@ -6,3 +6,5 @@ export default {
   icon: "network",
   iconColor: "text-blue-500",
 }
+
+export default toolConfig;

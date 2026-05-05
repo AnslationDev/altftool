@@ -1,4 +1,4 @@
-export default {
+const toolConfig = {
   slug: "gift-finder",
   name: "Gift Finder",
   category: "Lifestyle",
@@ -6,3 +6,5 @@ export default {
   icon: "gift",
   iconColor: "text-indigo-600",
 };
+
+export default toolConfig;

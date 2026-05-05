@@ -1,4 +1,4 @@
-export default {
+const toolConfig = {
   slug: 'markdown-preview',
   name: 'Markdown Preview',
   category:'Developer',
@@ -6,3 +6,5 @@ export default {
   icon: "edit",
   iconColor: "text-blue-500",
 }
+
+export default toolConfig;

@@ -5,6 +5,7 @@ import { Calendar, User, MessageCircle, ArrowRight, Clock, BookOpen, TrendingUp,
 import Link from "next/link";
 import { collection, getDocs, orderBy, query, limit } from "firebase/firestore";
 import { db } from "@/lib/firebase";
+import ManagedImage from "@/components/ui/ManagedImage";
 
 // ─── Utility helpers ───────────────────────────────────────────────────────────
 
@@ -131,7 +132,7 @@ function BlogCard({ blog, index }) {
             {!imageLoaded && (
               <div className="absolute inset-0 bg-gradient-to-br from-gray-100 to-gray-200 animate-pulse" />
             )}
-            <img
+            <ManagedImage
               src={blog.image}
               alt={blog.heading}
               onLoad={() => setImageLoaded(true)}
@@ -223,7 +224,7 @@ function RecentPostsWidget({ posts }) {
               {/* Thumbnail */}
               <div className="relative w-[56px] h-[48px] flex-shrink-0 rounded-xl overflow-hidden bg-(---card)">
                 {post.image ? (
-                  <img src={post.image} alt={post.heading} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+                  <ManagedImage src={post.image} alt={post.heading} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
                 ) : (
                   <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-violet-100 to-indigo-100">
                     <BookOpen size={16} className="text-violet-400" />

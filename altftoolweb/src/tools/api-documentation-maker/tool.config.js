@@ -1,4 +1,4 @@
-export default{
+const toolConfig = {
   slug:"api-documentation-maker",
   name:"API Documentation Maker",
   category:"Developer",
@@ -6,3 +6,5 @@ export default{
   icon: "book-open",
   iconColor: "text-gray-500",
 }
+
+export default toolConfig;

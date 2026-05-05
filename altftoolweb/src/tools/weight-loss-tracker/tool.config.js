@@ -1,4 +1,4 @@
-export default {
+const toolConfig = {
   slug: "weight-loss-tracker",
   name: "Weight Loss Tracker",
   category: ["Fitness"],
@@ -6,3 +6,5 @@ export default {
   icon: "activity",
   iconColor: "text-red-600",
 };
+
+export default toolConfig;

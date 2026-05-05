@@ -18,10 +18,11 @@ export const generateThumbnailUrl = (videoId, quality = "maxresdefault") => {
 export const generateVideoUrl = (videoId) => {
   return `https://www.youtube.com/watch?v=${videoId}`;
 };
-
-export default {
+const youtubeVideoAnalyzerApi = {
   extractVideoId,
   isValidYouTubeUrl,
   generateThumbnailUrl,
   generateVideoUrl,
 };
+
+export default youtubeVideoAnalyzerApi;

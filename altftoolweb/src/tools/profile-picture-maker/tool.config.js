@@ -1,4 +1,4 @@
-export default {
+const toolConfig = {
   slug: "profile-picture-maker",
   name: "Profile Picture Maker",
   category: ["Design"],
@@ -6,3 +6,5 @@ export default {
   icon: "image-plus",
   iconColor: "text-purple-600",
 };
+
+export default toolConfig;

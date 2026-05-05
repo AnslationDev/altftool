@@ -1,4 +1,4 @@
-export default {
+const toolConfig = {
   slug:"app-finder",
   name:"App Finder",
   category:"Startup",
@@ -6,3 +6,5 @@ export default {
   icon: "search-icon",
   iconColor: "text-gray-500",
 }
+
+export default toolConfig;

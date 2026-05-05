@@ -1,4 +1,4 @@
- export default {   
+const toolConfig = {
     slug: "api-stress-estimator",
     name: "API STRESS ESTIMATOR",
     category: "Developer",
@@ -7,3 +7,5 @@
     icon: "chart-bar",
     iconColor: "text-green-600",
   };
+
+export default toolConfig;

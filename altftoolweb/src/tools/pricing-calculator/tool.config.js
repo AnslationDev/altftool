@@ -1,4 +1,4 @@
-export default {
+const toolConfig = {
   slug: "pricing-calculator",
   name: "Pricing Calculator Tool",
   category: ["Business", "Marketing", "Lifestyle"],
@@ -6,3 +6,5 @@ export default {
   icon: "calculator",
   iconColor: "text-green-600",
 };
+
+export default toolConfig;

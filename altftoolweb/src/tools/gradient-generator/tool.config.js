@@ -1,4 +1,4 @@
-export default{
+const toolConfig = {
   slug:"gradient-generator",
   name:"Gradient Generator",
   category:"Design",
@@ -6,3 +6,5 @@ export default{
   icon: "palette",
   iconColor: "text-teal-600",
 }
+
+export default toolConfig;

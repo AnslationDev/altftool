@@ -5,6 +5,7 @@ import { X, Send, ArrowRight, Zap, ShoppingCart, Tag, Gamepad2, Wrench, Search, 
 import { agent } from './ChatBotBrain';
 import Link from 'next/link';
 import ReactMarkdown from 'react-markdown';
+import ManagedImage from '@/components/ui/ManagedImage';
 
 /* ──────────────────────── styles (injected once) ──────────────────────── */
 const glowCSS = `
@@ -197,7 +198,7 @@ const ChatBotUI = () => {
                         {isLoadingData ? (
                             <div className="h-6 w-6 animate-spin rounded-full border-2 border-blue-500 border-t-transparent" />
                         ) : (
-                            <img src="/favicon1.png" alt="AltBot" className="h-9 w-9 object-contain transition-transform duration-300 group-hover:scale-110" />
+                            <ManagedImage src="/favicon1.png" alt="AltBot" loading="eager" className="h-9 w-9 object-contain transition-transform duration-300 group-hover:scale-110" />
                         )}
                     </span>
                 </button>
@@ -219,7 +220,7 @@ const ChatBotUI = () => {
                                 <div className="relative">
                                     <div className="absolute -inset-1 rounded-2xl bg-gradient-to-br from-blue-500/20 via-cyan-500/20 to-purple-500/20 blur-md" />
                                     <div className="relative flex h-12 w-12 items-center justify-center rounded-2xl bg-white dark:bg-zinc-900 border border-zinc-200/60 dark:border-zinc-700/60 shadow-lg overflow-hidden p-1.5">
-                                        <img src="/favicon1.png" alt="AltBot" className="h-full w-full object-contain" />
+                                        <ManagedImage src="/favicon1.png" alt="AltBot" loading="eager" className="h-full w-full object-contain" />
                                     </div>
                                 </div>
                                 <div>
@@ -263,7 +264,7 @@ const ChatBotUI = () => {
                                     {msg.type === 'bot' && (
                                         <div className="flex items-center gap-2 mb-1 pl-0.5">
                                             <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-gradient-to-br from-blue-50 to-cyan-50 dark:from-blue-950/40 dark:to-cyan-950/40 border border-blue-100/60 dark:border-blue-800/40 shadow-sm overflow-hidden p-0.5">
-                                                <img src="/favicon1.png" alt="AltBot" className="h-full w-full object-contain" />
+                                                <ManagedImage src="/favicon1.png" alt="AltBot" loading="eager" className="h-full w-full object-contain" />
                                             </div>
                                             <span className="text-[10px] font-bold tracking-widest uppercase gradient-text">AltF Agent</span>
                                         </div>
@@ -332,7 +333,7 @@ const ChatBotUI = () => {
                                 <div className="flex flex-col gap-1.5">
                                     <div className="flex items-center gap-2 mb-1 pl-0.5">
                                         <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-gradient-to-br from-blue-50 to-cyan-50 dark:from-blue-950/40 dark:to-cyan-950/40 border border-blue-100/60 dark:border-blue-800/40 shadow-sm overflow-hidden p-0.5">
-                                            <img src="/favicon1.png" alt="AltBot" className="h-full w-full object-contain" />
+                                            <ManagedImage src="/favicon1.png" alt="AltBot" loading="eager" className="h-full w-full object-contain" />
                                         </div>
                                         <span className="text-[10px] font-bold tracking-widest uppercase gradient-text">Searching</span>
                                     </div>

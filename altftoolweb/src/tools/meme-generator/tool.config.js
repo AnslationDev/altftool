@@ -1,4 +1,4 @@
-export default {
+const toolConfig = {
   slug:"meme-generator",
   name:"Meme Generator",
   category:"Creators",
@@ -6,3 +6,5 @@ export default {
   icon: "image",
   iconColor: "text-blue-500",
 }
+
+export default toolConfig;

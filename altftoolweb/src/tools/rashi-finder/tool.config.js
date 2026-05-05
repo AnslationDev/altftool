@@ -1,4 +1,4 @@
-export default {
+const toolConfig = {
   slug: "rashi-finder",
   name: "Rashi Finder",
   category: ["Lifestyle"],
@@ -6,3 +6,5 @@ export default {
   icon: "star",
   iconColor: "text-purple-600",
 };
+
+export default toolConfig;

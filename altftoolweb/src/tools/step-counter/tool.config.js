@@ -1,4 +1,4 @@
-export default {
+const toolConfig = {
   slug: "step-counter",
   name: "Step Counter",
   category: ["Fitness"],
@@ -6,3 +6,5 @@ export default {
   icon: "footprints",
   iconColor: "text-green-700",
 };
+
+export default toolConfig;

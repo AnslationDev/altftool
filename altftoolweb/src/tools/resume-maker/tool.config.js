@@ -1,4 +1,4 @@
-export default{
+const toolConfig = {
   slug:"resume-maker",
   name:"Resume Maker",
   category:"Job",
@@ -6,3 +6,5 @@ export default{
   icon: "book-open",
   iconColor: "text-blue-500",
 }
+
+export default toolConfig;

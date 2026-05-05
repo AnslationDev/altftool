@@ -1,4 +1,4 @@
-export default {
+const toolConfig = {
   slug: "horoscope-reader",
   name: "Horoscope Reader",
   category: ["Lifestyle"],
@@ -6,3 +6,5 @@ export default {
   icon: "star",
   iconColor: "text-orange-700",
 };
+
+export default toolConfig;

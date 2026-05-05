@@ -1,4 +1,4 @@
-export default {
+const toolConfig = {
   slug: "multi-country-clock",
   name: "Multi Country Clock Tool",
   category: ["Web"],
@@ -6,3 +6,5 @@ export default {
   icon: "clock",
   iconColor: "text-blue-600",
 };
+
+export default toolConfig;

@@ -1,4 +1,4 @@
-export default {
+const toolConfig = {
   slug: "username-generator",
   name: "Username Generator",
   category: ["Content Creation"],
@@ -7,3 +7,5 @@ export default {
   icon: "user-search",
   iconColor: "text-teal-700",
 };
+
+export default toolConfig;

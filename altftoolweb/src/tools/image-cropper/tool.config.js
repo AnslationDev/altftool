@@ -1,4 +1,4 @@
-export default {
+const toolConfig = {
   slug: "image-cropper",
   name:"Image Cropper",
   category:"Design",
@@ -6,3 +6,5 @@ export default {
   icon: "crop",
   iconColor: "text-gray-400",
 }
+
+export default toolConfig;

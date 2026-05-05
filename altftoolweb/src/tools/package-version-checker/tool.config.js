@@ -1,4 +1,4 @@
-export default {
+const toolConfig = {
   slug: "package-version-checker",
   name: "Package Version Checker",
   category: ["Developer"],
@@ -6,3 +6,5 @@ export default {
   icon: "package-search",
   iconColor: "text-purple-700",
 };
+
+export default toolConfig;

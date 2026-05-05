@@ -1,4 +1,4 @@
-export default {
+const toolConfig = {
   slug: "utm-link-builder",
   name: "UTM Link Builder",
   category: ["Marketing", "Web"],
@@ -6,3 +6,5 @@ export default {
   icon: "link",
   iconColor: "text-blue-600",
 };
+
+export default toolConfig;

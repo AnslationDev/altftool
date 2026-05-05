@@ -1,4 +1,4 @@
-export default {
+const toolConfig = {
     name: 'Household Electricity Bill',
     slug: 'household-electricity-bill',
     description: 'Calculate your household electricity bill',
@@ -6,3 +6,5 @@ export default {
     icon: 'plug',
     iconcolor: 'blue'
 }
+
+export default toolConfig;

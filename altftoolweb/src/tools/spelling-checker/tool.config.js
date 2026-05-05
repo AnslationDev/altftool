@@ -1,4 +1,4 @@
-export default {
+const toolConfig = {
   slug: "spelling-checker",
   name: "Spelling Checker",
   category: ["AI"],
@@ -7,3 +7,5 @@ export default {
   icon: "spell-check",
   iconColor: "text-blue-600",
 };
+
+export default toolConfig;

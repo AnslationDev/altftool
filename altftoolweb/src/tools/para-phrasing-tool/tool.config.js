@@ -1,4 +1,4 @@
-export default {
+const toolConfig = {
   slug: "paraphrasing-tool",
   name: "Paraphrasing Tool",
   category: ["AI"],
@@ -6,3 +6,5 @@ export default {
   icon: "refresh-cw",
   iconColor: "text-blue-600",
 };
+
+export default toolConfig;

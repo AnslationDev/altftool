@@ -1,4 +1,4 @@
-export default {
+const toolConfig = {
   slug:"focus-timer",
   name:"Focus Timer",
   category:"Lifestyle",
@@ -6,3 +6,5 @@ export default {
   icon: "clock",
   iconColor: "text-gray-500",
 }
+
+export default toolConfig;

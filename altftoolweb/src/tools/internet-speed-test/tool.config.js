@@ -1,4 +1,4 @@
-export default {
+const toolConfig = {
   slug: "internet-speed-test",
   name: "Internet Speed Test",
   category: ["Web"],
@@ -6,3 +6,5 @@ export default {
   icon: "gauge",
   iconColor: "text-green-600",
 };
+
+export default toolConfig;

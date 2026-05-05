@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect, useCallback } from "react";
 import html2canvas from "html2canvas";
+import ManagedImage from "@/components/ui/ManagedImage";
 import Features from "../components/Features";
 
 const FONT_OPTIONS = [
@@ -195,7 +196,7 @@ export default function ToolHome() {
               >
                 {meme.image ? (
                   <>
-                    <img 
+                    <ManagedImage
                       src={meme.image} 
                       alt="Base" 
                       className="w-full h-full object-contain pointer-events-none" 
@@ -236,9 +237,10 @@ export default function ToolHome() {
                   <p className="text-ml font-bold uppercase mb-4 px-1 text-center text-(--primary) ">Recent Drafts</p>
                   <div className="flex gap-4 overflow-x-auto pb-3 px-1 scrollbar-hide">
                     {history.map(item => (
-                      <img 
+                      <ManagedImage
                         key={item.id} 
                         src={item.meme.image} 
+                        alt="Saved meme draft"
                         onClick={() => { setMeme(item.meme); setLayers(item.layers); }} 
                         className="h-14 w-14 flex-shrink-0 object-cover rounded-xl border-2 border-(--border) hover:border-(--primary) transition-all cursor-pointer active:scale-90" 
                       />
@@ -273,8 +275,9 @@ export default function ToolHome() {
               <div className="flex gap-4 overflow-x-auto pb-1 scrollbar-hide">
                 {TEMPLATES.map(t => (
                   <div key={t.name} className="flex-shrink-0 text-center space-y-2">
-                    <img 
+                    <ManagedImage
                       src={t.url} 
+                      alt={`${t.name} meme template`}
                       onClick={() => setMeme({...meme, image: t.url})} 
                       className="h-16 w-16 object-cover rounded-xl cursor-pointer border-2 border-transparent hover:border-(--primary) transition-all active:scale-90 shadow-sm" 
                     />

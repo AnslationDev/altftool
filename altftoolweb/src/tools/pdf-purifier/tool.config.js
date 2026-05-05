@@ -1,4 +1,4 @@
-export default {
+const toolConfig = {
   slug: "pdf-purifier",
   name: "PDF Purifier Tool",
   category: ["Web"],
@@ -6,3 +6,5 @@ export default {
   icon: "shield-check",
   iconColor: "text-green-600",
 };
+
+export default toolConfig;

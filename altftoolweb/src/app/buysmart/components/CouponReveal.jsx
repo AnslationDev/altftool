@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo, useState, useSyncExternalStore } from "react";
 import { Check, Copy, ExternalLink, ShieldCheck, TicketPercent, X } from "lucide-react";
 import {
   getPrimarySavingsText,
@@ -8,8 +8,17 @@ import {
 } from "@altftool/core/buysmart";
 import { recordBuySmartEvent } from "@/app/buysmart/service.js/firebaseBuySmartTracking";
 
+const subscribeToHydration = () => () => {};
+const getHydratedSnapshot = () => true;
+const getServerSnapshot = () => false;
+
+function useHydrated() {
+  return useSyncExternalStore(subscribeToHydration, getHydratedSnapshot, getServerSnapshot);
+}
+
 export default function CouponReveal({ offer }) {
   const normalizedOffer = useMemo(() => normalizeBuySmartCategory(offer), [offer]);
+  const isHydrated = useHydrated();
   const [open, setOpen] = useState(false);
   const [copied, setCopied] = useState(false);
   const revealValue = normalizedOffer.code || getPrimarySavingsText(normalizedOffer);
@@ -17,8 +26,10 @@ export default function CouponReveal({ offer }) {
   const hasStoreLink = Boolean(normalizedOffer.link && normalizedOffer.link !== "#");
 
   function handleReveal() {
+    if (!isHydrated) return;
+
     setOpen(true);
-    recordBuySmartEvent(normalizedOffer, "reveal");
+    void recordBuySmartEvent(normalizedOffer, "reveal");
   }
 
   async function handleCopy() {
@@ -44,10 +55,11 @@ export default function CouponReveal({ offer }) {
         type="button"
         data-testid="buysmart-reveal-button"
         onClick={handleReveal}
-        className="inline-flex h-11 items-center justify-center gap-2 rounded-[var(--anslation-ds-radius)] bg-(--primary) px-4 text-sm font-semibold text-(--primary-foreground) shadow-[var(--anslation-ds-shadow-sm)] transition hover:bg-(--primary-hover) focus:outline-none focus:ring-2 focus:ring-(--primary)"
+        disabled={!isHydrated}
+        className="inline-flex h-11 items-center justify-center gap-2 rounded-[var(--anslation-ds-radius)] bg-(--primary) px-4 text-sm font-semibold text-(--primary-foreground) shadow-[var(--anslation-ds-shadow-sm)] transition hover:bg-(--primary-hover) focus:outline-none focus:ring-2 focus:ring-(--primary) disabled:cursor-not-allowed disabled:opacity-70"
       >
         <TicketPercent className="h-4 w-4" />
-        {hasCode ? "Reveal code" : "View deal"}
+        {!isHydrated ? "Preparing deal" : hasCode ? "Reveal code" : "View deal"}
       </button>
 
       {open ? (

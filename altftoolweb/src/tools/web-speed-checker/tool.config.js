@@ -1,4 +1,4 @@
-export default {
+const toolConfig = {
   slug: "web-speed-checker",
   name: "Web Speed Checker",
   category: ["Web"],
@@ -7,3 +7,5 @@ export default {
   icon: "gauge",
   iconColor: "text-blue-600",
 };
+
+export default toolConfig;

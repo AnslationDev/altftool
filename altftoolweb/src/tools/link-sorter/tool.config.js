@@ -1,4 +1,4 @@
-export default {
+const toolConfig = {
   slug:"link-sorter",
   name:"Link Sorter",
   category:"Web",
@@ -6,3 +6,5 @@ export default {
   icon: "link",
   iconColor: "text-blue-500",
 }
+
+export default toolConfig;

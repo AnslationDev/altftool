@@ -1,4 +1,4 @@
-export default {
+const toolConfig = {
   slug:"ai-domain-generator",
   name:"AI Domain Generator",
   category:"AI",
@@ -6,3 +6,5 @@ export default {
   icon: "globe",
   iconColor: "text-gray-500",
 }
+
+export default toolConfig;

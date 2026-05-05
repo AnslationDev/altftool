@@ -1,4 +1,4 @@
-export default {
+const toolConfig = {
   slug:'barcode-generator',
   name:'Barcode Generator',
   category:'Web',
@@ -6,3 +6,5 @@ export default {
   icon: "scan",
   iconColor: "text-blue-500",
 }
+
+export default toolConfig;

@@ -1,4 +1,4 @@
-export default {
+const toolConfig = {
   slug: "text-translator",
   name: "Text Translator",
   category: ["EdTech"],
@@ -7,3 +7,5 @@ export default {
   icon: "languages",
   iconColor: "text-blue-700",
 };
+
+export default toolConfig;

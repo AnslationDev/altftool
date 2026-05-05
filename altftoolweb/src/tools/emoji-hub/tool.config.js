@@ -1,4 +1,4 @@
-export default{
+const toolConfig = {
   slug:"emoji-hub",
   name:"Emoji Hub",
   category:"Creators",
@@ -6,3 +6,5 @@ export default{
   icon: "smile",
   iconColor: "text-yellow-500",
 }
+
+export default toolConfig;

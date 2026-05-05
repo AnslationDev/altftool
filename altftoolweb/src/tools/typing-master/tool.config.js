@@ -1,4 +1,4 @@
-export default {
+const toolConfig = {
   slug: "typing-master",
   name: "Typing Master Tool",
   category: ["EdTech"],
@@ -6,3 +6,5 @@ export default {
   icon: "keyboard",
   iconColor: "text-blue-600",
 };
+
+export default toolConfig;

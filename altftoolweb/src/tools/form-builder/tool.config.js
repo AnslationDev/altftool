@@ -1,4 +1,4 @@
-export default {
+const toolConfig = {
   slug:"form-builder",
   name:"Form Builder",
   category:"No-Code",
@@ -6,3 +6,5 @@ export default {
   icon: "form",
   iconColor: "text-blue-500",
 }
+
+export default toolConfig;

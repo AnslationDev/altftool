@@ -1,4 +1,4 @@
-export default {
+const toolConfig = {
   slug: "url-encoder-decoder",
   name: "URL Encoder Decoder Tool",
   category: ["Developer", "No-Code"],
@@ -6,3 +6,5 @@ export default {
   icon: "code2",
   iconColor: "text-blue-600",
 };
+
+export default toolConfig;

@@ -1,4 +1,4 @@
-export default {
+const toolConfig = {
   slug:"financial-update",
   name:"Financial Update",
   category:"Business",
@@ -6,3 +6,5 @@ export default {
   icon: "bar-chart3icon",
   iconColor: "text-indigo-500",
 }
+
+export default toolConfig;

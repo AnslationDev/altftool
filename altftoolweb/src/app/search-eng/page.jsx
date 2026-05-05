@@ -7,6 +7,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import SearchBar from './components/SearchBar';
 import { SearchResults } from './components/SearchResults';
 import { useSearchDataSource } from './hooks/useSearchDataSource';
+import ManagedImage from '@/components/ui/ManagedImage';
 import {
   performSmartSearch,
   normalizeQueryForURL,
@@ -180,7 +181,7 @@ function SearchEngineContent() {
               transition={{ duration: 0.5, type: 'spring', stiffness: 180 }}
               className="se-hero"
             >
-              <img src="/assets/logo3.png" alt="AltFTool" className="se-hero-logo" />
+              <ManagedImage src="/assets/logo3.png" alt="AltFTool" loading="eager" className="se-hero-logo" />
             </motion.div>
 
             {/* Search bar section */}

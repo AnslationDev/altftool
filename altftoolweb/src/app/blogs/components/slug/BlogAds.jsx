@@ -1,7 +1,7 @@
 "use client";
 
-import { ExternalLink } from "lucide-react";
 import { useAds } from "@/ads/AdsProvider"; // adjust path if needed
+import ManagedImage from "@/components/ui/ManagedImage";
 
 /**
  * BlogAds — right-sidebar ad strip for blog detail pages.
@@ -63,8 +63,7 @@ ads = ads.slice(0, 4);
           className="overflow-hidden border shadow-sm rounded-xl"
           style={{ backgroundColor: "var(--card)", borderColor: "var(--border)" }}
         >
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
+          <ManagedImage
             src="/banners/vertical.png"
             alt="Advertisement"
             className="w-full h-auto object-contain"
@@ -100,7 +99,7 @@ function AdBanner({ ad }) {
     >
       {/* Image */}
       <div className="relative">
-        <img
+        <ManagedImage
           src={bannerUrl}
           alt={ad.title ?? "Advertisement"}
           className="w-full h-auto object-contain"

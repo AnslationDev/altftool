@@ -1,4 +1,4 @@
-export default {
+const toolConfig = {
   slug: "shadow-generator",
   name: "Shadow Generator",
   category: ["Design"],
@@ -6,3 +6,5 @@ export default {
   icon: "layers",
   iconColor: "text-gray-600",
 };
+
+export default toolConfig;

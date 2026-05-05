@@ -1,4 +1,4 @@
-export default {
+const toolConfig = {
   slug: "youtube-video-analyzer",
   name: "YouTube Video Analyzer",
   category: ["Creators", "AI"],
@@ -6,3 +6,5 @@ export default {
   icon: "video",
   iconColor: "text-red-700",
 };
+
+export default toolConfig;

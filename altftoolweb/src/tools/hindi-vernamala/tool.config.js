@@ -1,4 +1,4 @@
-export default {
+const toolConfig = {
   slug: "hindi-vernamala",
   name: "Hindi Varnamala",
   category: ["EdTech"],
@@ -7,3 +7,5 @@ export default {
   icon: "book-open",
   iconColor: "text-rose-700",
 };
+
+export default toolConfig;

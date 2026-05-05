@@ -1,4 +1,4 @@
-export default {
+const toolConfig = {
   slug:"loan-emi-calculator",
   name:"Loan EMI Calculator",
   category:"Business",
@@ -6,3 +6,5 @@ export default {
   icon: "credit-card",
   iconColor: "text-yellow-500",
 }
+
+export default toolConfig;

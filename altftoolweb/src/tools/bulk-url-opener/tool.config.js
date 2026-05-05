@@ -1,4 +1,4 @@
-export default {
+const toolConfig = {
   slug: "bulk-url-opener",
   name: "Bulk URL Opener Tool",
   category: ["Web"],
@@ -6,3 +6,5 @@ export default {
   icon: "external-link",
   iconColor: "text-indigo-600",
 };
+
+export default toolConfig;

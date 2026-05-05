@@ -1,4 +1,4 @@
-export default {
+const toolConfig = {
   slug: "to-do-list",
   name: "To Do List",
   category: ["No-Code"],
@@ -6,3 +6,5 @@ export default {
   icon: "check-square",
   iconColor: "text-green-700",
 };
+
+export default toolConfig;

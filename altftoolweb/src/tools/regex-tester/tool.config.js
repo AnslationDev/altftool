@@ -1,4 +1,4 @@
-export default {
+const toolConfig = {
   slug: "regex-tester",
   name: "Regex Tester",
   category: ["Developer", "AI", "Web"],
@@ -7,3 +7,5 @@ export default {
   icon: "regex",
   iconColor: "text-blue-600",
 };
+
+export default toolConfig;

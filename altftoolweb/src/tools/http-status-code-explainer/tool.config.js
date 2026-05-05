@@ -1,4 +1,4 @@
-export default {
+const toolConfig = {
   slug: "http-status-code-explainer",
   name: "HTTP Status Code Explainer",
   category: ["Web"],
@@ -7,3 +7,5 @@ export default {
   icon: "network",
   iconColor: "text-purple-700",
 };
+
+export default toolConfig;

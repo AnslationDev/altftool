@@ -1,4 +1,4 @@
-export default {
+const toolConfig = {
   slug: "interview-question",
   name: "Interview Question",
    categrory:"",
@@ -6,3 +6,5 @@ export default {
    icon: "book",
   iconColor: "text-blue-500",
 }
+
+export default toolConfig;

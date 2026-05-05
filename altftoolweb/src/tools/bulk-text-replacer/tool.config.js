@@ -1,4 +1,4 @@
-export default {
+const toolConfig = {
   slug: "bulk-text-replacer",
   name: "Bulk Text Replacer",
   category: ["Developer"],
@@ -6,3 +6,5 @@ export default {
   icon: "replace",
   iconColor: "text-indigo-600",
 };
+
+export default toolConfig;

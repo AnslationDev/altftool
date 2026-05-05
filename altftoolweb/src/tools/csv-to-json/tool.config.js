@@ -1,4 +1,4 @@
-export default{
+const toolConfig = {
   name: "CSV to JSON",
   slug: "csv-to-json",
   category:"Developer",
@@ -6,3 +6,5 @@ export default{
   icon: "arrow-left-right",
   iconColor: "text-purple-600",
 }
+
+export default toolConfig;

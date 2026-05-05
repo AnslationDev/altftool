@@ -1,4 +1,4 @@
-export default {
+const toolConfig = {
   slug:"bg-remover",
   name:"Background Remover",
   category:"AI",
@@ -6,3 +6,5 @@ export default {
   icon: "wand2",
   iconColor: "text-indigo-600",
 }
+
+export default toolConfig;

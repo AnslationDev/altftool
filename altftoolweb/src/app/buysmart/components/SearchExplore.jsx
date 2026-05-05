@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Search } from "lucide-react";
 
 import { useBuySmartCategories } from "@/app/buysmart/hooks/useBuySmartLiveData";
+import ManagedImage from "@/components/ui/ManagedImage";
 
 export default function SearchExplore({
   scrollToFilter,
@@ -106,7 +107,7 @@ export default function SearchExplore({
           </div>
 
           <div className="flex h-full items-end justify-center animate-slide-left lg:justify-end">
-            <img
+            <ManagedImage
               src="/searchbrand.png"
               alt="Search Brands"
               loading="lazy"

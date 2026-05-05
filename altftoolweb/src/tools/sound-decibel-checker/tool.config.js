@@ -1,4 +1,4 @@
-export default {
+const toolConfig = {
   slug: "sound-decibel-checker",
   name: "Sound Decibel Checker",
   category: ["Lifestyle"],
@@ -7,3 +7,5 @@ export default {
   icon: "mic",
   iconColor: "text-yellow-700",
 };
+
+export default toolConfig;

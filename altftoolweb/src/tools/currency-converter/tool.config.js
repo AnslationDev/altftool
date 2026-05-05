@@ -1,4 +1,4 @@
-export default {
+const toolConfig = {
   slug: "currency-converter",
   name: "Currency Converter",
   category: ["Business"],
@@ -7,3 +7,5 @@ export default {
   icon: "wallet",
   iconColor: "text-green-700",
 };
+
+export default toolConfig;

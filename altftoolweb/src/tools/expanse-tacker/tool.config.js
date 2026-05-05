@@ -1,4 +1,4 @@
-export default {
+const toolConfig = {
   slug: "expanse-tacker",
   name: "Expanse Tracker",
   category: "Business",
@@ -6,3 +6,5 @@ export default {
   icon: "wallet",
   iconColor: "text-emerald-600",
 };
+
+export default toolConfig;

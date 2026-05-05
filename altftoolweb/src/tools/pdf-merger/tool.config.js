@@ -1,4 +1,4 @@
-export default {
+const toolConfig = {
   slug: "pdf-merger",
   name: "PDF Merger Tool",
   category: ["Web"],
@@ -6,3 +6,5 @@ export default {
   icon: "files",
   iconColor: "text-red-600",
 };
+
+export default toolConfig;

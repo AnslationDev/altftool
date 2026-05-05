@@ -1,4 +1,4 @@
-export default {
+const toolConfig = {
   slug: "vehicle-compare",
   name: "Vehicle Compare",
   category: ["Business", "Marketing", "Lifestyle"],
@@ -6,3 +6,5 @@ export default {
   icon: "car",
   iconColor: "text-indigo-600",
 };
+
+export default toolConfig;
