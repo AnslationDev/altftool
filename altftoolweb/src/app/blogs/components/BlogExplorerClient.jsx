@@ -30,7 +30,7 @@ import {
   normalizeBlog,
 } from "../data";
 
-const INITIAL_VISIBLE_COUNT = BLOG_CHUNK_SIZE;
+const INITIAL_VISIBLE_COUNT = 36;
 const SORT_OPTIONS = [
   { value: "latest", label: "Latest" },
   { value: "quick", label: "Quick reads" },
@@ -257,8 +257,10 @@ async function fetchRemoteBlogs() {
   ]);
 
   const { collection, getDocs, limit, orderBy, query, where } = firestore;
-  const { db } = firebaseModule;
+  const { db, isFirebaseConfigured } = firebaseModule;
   const { getCachedFirebaseRead } = cacheModule;
+
+  if (!isFirebaseConfigured) return [];
 
   return getCachedFirebaseRead(
     "blogs:published:list:v3",
@@ -278,6 +280,15 @@ async function fetchRemoteBlogs() {
     },
     120000
   );
+}
+
+function withTimeout(promise, timeoutMs, fallbackValue) {
+  return Promise.race([
+    promise,
+    new Promise((resolve) => {
+      window.setTimeout(() => resolve(fallbackValue), timeoutMs);
+    }),
+  ]);
 }
 
 export default function BlogExplorerClient({ initialPosts, categories: initialCategories }) {
@@ -307,7 +318,7 @@ export default function BlogExplorerClient({ initialPosts, categories: initialCa
     const handle = schedule(async () => {
       setSyncState("syncing");
       try {
-        const remotePosts = await fetchRemoteBlogs();
+        const remotePosts = await withTimeout(fetchRemoteBlogs(), 4500, []);
         if (cancelled) return;
         setPosts((currentPosts) => mergeBlogPosts(currentPosts, remotePosts));
         setSyncState(remotePosts.length ? "fresh" : "local");

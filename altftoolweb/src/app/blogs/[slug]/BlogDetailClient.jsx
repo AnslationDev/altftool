@@ -16,7 +16,7 @@ import {
   where,
 } from "firebase/firestore";
 import { ArrowLeft, Loader2 } from "lucide-react";
-import { db } from "@/lib/firebase";
+import { db, isFirebaseConfigured } from "@/lib/firebase";
 import { getCachedFirebaseRead } from "@/lib/firebaseCache";
 import { incrementUniqueView } from "../context/views.service";
 import { normalizeBlog } from "../data";
@@ -35,6 +35,15 @@ const SIMILAR_LIMIT = 6;
 
 const blogsCol = () => collection(db, "projects", PROJECT_ID, "blogs");
 const commentsCol = (blogId) => collection(db, "projects", PROJECT_ID, "blogs", blogId, "comments");
+
+function withTimeout(promise, timeoutMs, fallbackValue) {
+  return Promise.race([
+    promise,
+    new Promise((resolve) => {
+      window.setTimeout(() => resolve(fallbackValue), timeoutMs);
+    }),
+  ]);
+}
 
 async function fetchBlogBySlug(slug) {
   return getCachedFirebaseRead(
@@ -110,9 +119,15 @@ export default function BlogDetailClient({ slug, initialBlog, initialRelated }) 
     const cancel = window.cancelIdleCallback || window.clearTimeout;
 
     const handle = schedule(async () => {
+      if (!isFirebaseConfigured) {
+        setRefreshing(false);
+        if (!initialBlog) setNotFound(true);
+        return;
+      }
+
       setRefreshing(true);
       try {
-        const found = await fetchBlogBySlug(slug);
+        const found = await withTimeout(fetchBlogBySlug(slug), 4500, initialBlog);
         if (cancelled) return;
 
         if (!found) {
@@ -122,8 +137,10 @@ export default function BlogDetailClient({ slug, initialBlog, initialRelated }) 
 
         setBlog(found);
         setLikes(found.likesCount || 0);
-        incrementUniqueView(found.id);
-        loadComments(found.id);
+        if (typeof found.id === "string") {
+          incrementUniqueView(found.id);
+          loadComments(found.id);
+        }
 
         fetchSimilarPosts(found.category, slug)
           .then((posts) => {
@@ -223,7 +240,9 @@ export default function BlogDetailClient({ slug, initialBlog, initialRelated }) 
         />
 
         <div className="mt-10 grid grid-cols-1 items-start gap-8 lg:grid-cols-[240px_minmax(0,1fr)_260px] xl:grid-cols-[260px_minmax(0,1fr)_300px]">
-          <BlogTableOfContents content={blog.description} />
+          <div className="hidden lg:block">
+            <BlogTableOfContents content={blog.description} />
+          </div>
           <div className="min-w-0">
             <div className="rounded-[var(--anslation-ds-radius-lg)] border border-(--border) bg-(--card) p-4 shadow-[var(--anslation-ds-shadow-sm)] md:p-7">
               <BlogContent content={blog.description} />
