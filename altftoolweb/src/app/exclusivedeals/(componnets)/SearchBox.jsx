@@ -34,7 +34,13 @@ function SearchBox({ onClose }) {
                   className="flex items-center gap-2 sm:gap-3 p-1.5 sm:p-2 rounded-lg hover:bg-gray-50 cursor-pointer transition"
                 >
                   <div className="w-8 h-8 sm:w-10 sm:h-10 relative border rounded-full flex items-center justify-center bg-gray-100 flex-shrink-0">
-                    <Image src={store.image} alt={store.slug} fill className='object-cover rounded-full' />
+                    <Image
+                      src={store.image}
+                      alt={store.slug}
+                      fill
+                      sizes="(max-width: 640px) 32px, 40px"
+                      className="object-cover rounded-full"
+                    />
                   </div>
                   <span className="text-xs sm:text-sm font-medium text-gray-700 truncate">{store.categoryName}</span>
                 </div>

@@ -71,6 +71,7 @@ const CardWrapper = ({ item, children }) => {
                   src={item.image}
                   alt={item.title}
                   fill
+                  sizes="(max-width: 768px) 100vw, (max-width: 1280px) 58vw, 720px"
                   className="object-fill group-hover:scale-[1.01] transition duration-500"
                 />
               </div>
@@ -99,6 +100,7 @@ const CardWrapper = ({ item, children }) => {
                   src={item.image}
                   alt={item.title}
                   fill
+                  sizes="(max-width: 768px) 100vw, (max-width: 1280px) 33vw, 420px"
                   className="object-fill group-hover:scale-[1.01] transition duration-500"
                 />
               </div>

@@ -36,6 +36,7 @@ function VerticalCard({ blog, height, showExcerpt, className }) {
           src={blog.image}
           alt={blog.imageAlt || blog.heading}
           fill
+          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 360px"
           className="object-cover group-hover:scale-[1.06] transition-transform duration-700 ease-in-out"
         />
 
@@ -105,6 +106,7 @@ function HorizontalCard({ blog, className }) {
             src={blog.image}
             alt={blog.imageAlt || blog.heading}
             fill
+            sizes="(max-width: 640px) 100vw, 208px"
             className="object-cover group-hover:scale-[1.05] transition-transform duration-500"
           />
           {/* Blue overlay on hover */}

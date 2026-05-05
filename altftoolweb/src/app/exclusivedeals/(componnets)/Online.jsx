@@ -244,6 +244,8 @@ if (loading) return <PopularSalesSkeleton />
                         src={item.bannerImg}
                         fill
                         alt="popular-sale" 
+                        sizes="(max-width: 768px) 100vw, 420px"
+                        className="object-cover"
                       />
                     </div>
                   </Link>

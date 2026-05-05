@@ -36,6 +36,7 @@ function HeroSection({ brand, category }) {
               src={brand.images?.[0]}
               alt={brand.name}
               fill
+              sizes="(max-width: 1024px) 100vw, 50vw"
               className="object-cover"
             />
           </div>
@@ -54,6 +55,7 @@ function HeroSection({ brand, category }) {
                     src={img || "/placeholder.jpg"}
                     alt="product"
                     fill
+                    sizes="(max-width: 1024px) 33vw, 180px"
                     className="object-cover"
                   />
                 </div>

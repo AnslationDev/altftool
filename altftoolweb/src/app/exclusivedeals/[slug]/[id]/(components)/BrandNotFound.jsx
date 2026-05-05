@@ -43,6 +43,7 @@ function DealCard({ item, index }) {
               src={item.logo}
               alt={item.brandName || "Brand"}
               fill
+              sizes="(max-width: 640px) 100vw, 500px"
               className="object-contain p-4"
             />
           </div>

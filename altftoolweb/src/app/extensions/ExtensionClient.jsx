@@ -139,6 +139,7 @@ export default function ExtensionsPage() {
               src="/extension/hero.png"
               alt="Hero background"
               fill
+              sizes="(max-width: 1280px) 100vw, 1280px"
               className="object-cover object-center"
               priority
             />

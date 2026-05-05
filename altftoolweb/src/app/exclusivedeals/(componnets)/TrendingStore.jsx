@@ -22,7 +22,8 @@ function TrendingStore() {
                         src={store.img}
                          alt='al'
                          fill
-                         className=''
+                         sizes="288px"
+                         className="object-cover"
                        />
                    </div>
                    <div className='h-[30%] flex justify-center items-center flex-col ' >

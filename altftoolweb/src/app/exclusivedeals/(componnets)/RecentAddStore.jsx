@@ -228,6 +228,7 @@ function RecentlyAddedStore() {
                       src={store.img}
                       alt={store.name}
                       fill
+                      sizes="(max-width: 640px) 64px, (max-width: 1024px) 80px, 96px"
                       className="object-cover"
                     />
                   </div>

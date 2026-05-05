@@ -52,7 +52,13 @@ const SidebarContent = ({
               >
                 <div className="relative w-20 h-20 flex-shrink-0">
                   {b.logo ? (
-                    <Image src={b.logo} alt={b.name} fill className="object-contain" />
+                    <Image
+                      src={b.logo}
+                      alt={b.name}
+                      fill
+                      sizes="80px"
+                      className="object-contain"
+                    />
                   ) : (
                     <div className="w-full h-full flex items-center justify-center bg-gray-200 text-xs font-bold rounded">
                       {b.name?.slice(0, 2).toUpperCase()}

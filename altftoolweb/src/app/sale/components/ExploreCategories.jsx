@@ -91,8 +91,9 @@ export default function ExploreCategories() {
               src={item.image}
               alt={item.alt}
               fill
+              sizes="(max-width: 640px) 116px, (max-width: 768px) 126px, (max-width: 1024px) 136px, (max-width: 1280px) 148px, 100vw"
               priority={index < 3}   
-              className="transition-transform duration-500 group-hover:scale-101 "           
+              className="object-cover transition-transform duration-500 group-hover:scale-101 "
             />
             <div className="absolute inset-0 bg-linear-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-in-out pointer-events-none" />
           </div>

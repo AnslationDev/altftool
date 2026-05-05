@@ -56,8 +56,9 @@ function HeroSection() {
                   src={item.image}
                   alt={item.title}
                   fill
+                  sizes="(max-width: 1280px) 100vw, 1280px"
                   priority={item.id === 1}
-                  className="rounded-xl"
+                  className="rounded-xl object-cover"
                 />
               </div></Link>
   

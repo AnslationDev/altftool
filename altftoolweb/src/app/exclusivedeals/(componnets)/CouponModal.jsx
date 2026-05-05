@@ -88,6 +88,7 @@ return createPortal(
               src={modal} 
               alt="bag"
               fill
+              sizes="(max-width: 640px) 60px, 140px"
               className="w-200 h-60 object-contain sm:scale-220 scale-200"
             />
           </div>

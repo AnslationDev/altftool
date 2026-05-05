@@ -121,6 +121,7 @@ export default function CategoryStrip({
                     src={cat.image}
                     alt={cat.name}
                     fill
+                    sizes="(max-width: 640px) 160px, (max-width: 768px) 180px, 200px"
                     className="
                       object-cover object-center
                       transition-transform duration-500 ease-out

@@ -300,6 +300,7 @@ function AddStore({ setActive, editStore, setEditStore }) {
                      src={previewImage}
                      alt="Preview"
                      fill
+                     sizes="(max-width: 768px) 100vw, 768px"
                      className="object-cover"
                    />
                  ) }
@@ -351,5 +352,4 @@ function AddStore({ setActive, editStore, setEditStore }) {
 }
 
 export default AddStore;
-
 

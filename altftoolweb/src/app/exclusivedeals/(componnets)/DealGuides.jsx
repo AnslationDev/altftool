@@ -62,7 +62,8 @@ function DealCard({item}) {
           src={item.image}
           alt="db"
           fill
-          className="object-center"
+          sizes="(max-width: 640px) 250px, (max-width: 768px) 280px, (max-width: 1024px) 320px, (max-width: 1280px) 400px, 450px"
+          className="object-cover object-center"
         />
       </div>
       <div className="py-2">

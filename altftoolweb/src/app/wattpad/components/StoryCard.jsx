@@ -12,6 +12,7 @@ export default function StoryCard({ item }) {
           src={item.image}
           alt={item.title}
           fill
+          sizes="(max-width: 640px) 120px, (max-width: 768px) 140px, (max-width: 1024px) 160px, 180px"
           className="object-cover hover:scale-103 transition-transform duration-300"
         />
         {/* shimmer */}

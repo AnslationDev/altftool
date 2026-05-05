@@ -24,6 +24,7 @@ export default function BlogHeader({ blog }) {
           src={blog.image}
           alt={blog.imageAlt || blog.heading}
           fill
+          sizes="(max-width: 1280px) 100vw, 1280px"
           className="object-cover rounded-2xl scale-100 hover:scale-105 transition-transform duration-700 ease-in-out"
           priority
         />

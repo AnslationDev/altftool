@@ -118,6 +118,7 @@ export default function BrandCard({ brands, data }) {
                         src={img}
                         fill
                         alt="product"
+                        sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 260px"
                         className="object-cover rounded-lg"
                       />
 

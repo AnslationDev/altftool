@@ -142,7 +142,13 @@ function PriceCard({ item }) {
     <Link href={item.link} target="_blank">
       <div className="sm:w-60 w-44 cursor-pointer">
         <div className="sm:h-60 h-40 relative overflow-hidden sm:rounded-3xl rounded-2xl">
-          <Image src={item.image} alt="deal" fill className="object-cover" />
+          <Image
+            src={item.image}
+            alt="deal"
+            fill
+            sizes="(max-width: 640px) 176px, 240px"
+            className="object-cover"
+          />
         </div>
         <div className="py-1 text-center">
           <div className="text-lg sm:text-xl font-bold">

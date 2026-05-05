@@ -25,6 +25,7 @@ function AllStoreSection() {
                   src={item.image}
                   alt={item.categoryName}
                   fill
+                  sizes="(max-width: 640px) 64px, (max-width: 768px) 80px, (max-width: 1024px) 96px, 112px"
                   className="object-cover rounded-full"
                 />
               </div>

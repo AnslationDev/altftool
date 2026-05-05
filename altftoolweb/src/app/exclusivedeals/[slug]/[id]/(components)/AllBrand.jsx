@@ -60,6 +60,7 @@ function AllBrand({ data }) {
             // width={112}
             // height={112}
             fill
+            sizes="112px"
             className="object-fill"
           />
           <span className="absolute inset-0 flex items-center justify-center text-white font-bold text-sm sm:text-xl text-center leading-tight">
@@ -151,6 +152,7 @@ function AllBrand({ data }) {
               src={badge}
               alt="discount badge"
               fill
+              sizes="80px"
               className="object-fill"
             />
             <span className="absolute inset-0 flex items-center justify-center text-white font-bold text-[12px] text-center leading-tight">

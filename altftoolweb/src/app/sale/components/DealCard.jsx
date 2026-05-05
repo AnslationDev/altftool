@@ -23,6 +23,7 @@ export default function DealCard({ deal, index, isGPS }) {
           src={deal.image}
           alt={deal.title}
           fill
+          sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 380px"
           className="object-cover transition-transform duration-500 group-hover/card:scale-[1.06]"
         />
 

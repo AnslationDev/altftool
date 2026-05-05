@@ -153,6 +153,7 @@ export default function WhyYoullLoveIt({ brand, category }) {
               src={currentImage}
               alt={brand.name}
               fill
+              sizes="(max-width: 1024px) 100vw, 50vw"
               className="object-cover transition-opacity duration-500"
             />
           </div>

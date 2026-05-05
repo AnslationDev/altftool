@@ -98,6 +98,7 @@ useEffect(() => {
              src={slide.image}
               alt={`Banner ${slide.id}`}
               fill
+              sizes="(max-width: 1280px) 100vw, 1280px"
               priority={slide.id === 1}
               className="object-fill "
             />

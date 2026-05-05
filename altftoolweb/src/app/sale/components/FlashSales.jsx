@@ -109,6 +109,7 @@ useEffect(() => {
                 src={flashSales.banner.image}
                 alt="Flash Banner"
                 fill
+                sizes="(max-width: 1024px) 240px, 276px"
                 className="object-cover"
               />
 

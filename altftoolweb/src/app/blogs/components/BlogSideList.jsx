@@ -14,6 +14,7 @@ export default function BlogSideList({ blogs = [] }) {
                   src={blog.image}
                   alt={blog.imageAlt || blog.heading}
                   fill
+                  sizes="(max-width: 640px) 96px, (max-width: 768px) 112px, 128px"
                   className="object-cover"
                 />
               </div>

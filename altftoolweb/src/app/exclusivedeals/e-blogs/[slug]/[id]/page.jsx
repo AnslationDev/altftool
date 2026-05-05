@@ -102,6 +102,7 @@ function BlogDetailPage() {
                             src={blogDetail.image}
                             alt={blogDetail.heading}
                             fill
+                            sizes="(max-width: 1280px) 100vw, 1280px"
                             className="object-cover hover:scale-105 transition-transform duration-700"
                             priority
                         />
@@ -284,6 +285,7 @@ function BlogDetailPage() {
                                                 src={post.image}
                                                 alt={post.heading}
                                                 fill
+                                                sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 380px"
                                                 className="object-cover group-hover:scale-110 transition-transform duration-500"
                                             />
                                             <div className="absolute top-4 left-4">

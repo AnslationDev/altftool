@@ -1,5 +1,4 @@
 import Image from "next/image";
-import { div } from "three/src/nodes/math/OperatorNode";
 
 export default function AdToolCard({ ad }) {
   return (
@@ -26,9 +25,9 @@ export default function AdToolCard({ ad }) {
         src={ad.bannerUrl}
         alt="Sponsored"
         fill
-        unoptimized
+        sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 420px"
         className="
-          object-fit
+          object-cover
         "
       />
     </a>

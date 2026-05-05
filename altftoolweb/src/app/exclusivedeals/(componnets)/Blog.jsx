@@ -92,6 +92,7 @@ const Blog = () => {
                     src={blog.image}
                     alt={blog.heading}
                     fill
+                    sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 420px"
                     className="object-cover"
                   />
                   <div className="absolute bottom-3 left-3 bg-black/80 text-white text-xs px-3 py-1 rounded">
@@ -111,6 +112,7 @@ const Blog = () => {
                         src={blog.authorImg || "/images/avatar.png"}
                         alt={blog.author}
                         fill
+                        sizes="24px"
                         className="object-cover"
                       />
                     </div>

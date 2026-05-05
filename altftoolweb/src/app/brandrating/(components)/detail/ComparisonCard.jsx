@@ -31,6 +31,7 @@ function ComparisonCard({ brand,category }) {
                     src={brand?.images?.[0] || brand?.image}
                     alt={brand?.name || "Brand"}
                     fill
+                    sizes="(max-width: 640px) 85vw, 240px"
                     className="object-cover"
                 />
             </div>

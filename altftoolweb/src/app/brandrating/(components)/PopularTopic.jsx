@@ -241,6 +241,7 @@ function getUrlLink(value) {
                   src={brand?.images?.[0] || satvikImage}
                   alt={brand?.name || "Brand"}
                   fill
+                  sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 520px"
                   className="object-cover transition-all duration-700 group-hover:scale-105"
                 />
 

@@ -157,6 +157,7 @@ function Card({ brand, className = "w-55 sm:w-62 md:w-72 mb-6 md:mb-10", onClick
                 src={brand.brandimage}
                 alt={brand.brandname}
                 fill
+                sizes="(max-width: 768px) 68px, 80px"
                 className="object-cover  "
               />
             </div>
@@ -182,6 +183,7 @@ function Card({ brand, className = "w-55 sm:w-62 md:w-72 mb-6 md:mb-10", onClick
                 src={brand.brandlogo}
                 alt="samraat"
                 fill
+                sizes="(max-width: 640px) 116px, (max-width: 1650px) 120px, 160px"
                 className="object-contain"
               />
             </div>

@@ -123,6 +123,7 @@ function AcademyLogoImage({ academy }) {
           src={academy.image}
           alt={academy?.name || "academy"}
           fill
+          sizes="96px"
           className={`object-contain transition-opacity duration-500 ${
             imageLoaded ? "opacity-100" : "opacity-0"
           }`}

@@ -415,6 +415,7 @@ function AddHeroBanner({ setActive, editHero, setEditHero }) {
                 src={previewImage}
                 alt="Preview"
                 fill
+                sizes={form.imageType === "landscape" ? "750px" : "250px"}
                 className="object-cover"
               />
             ) : (
@@ -477,6 +478,5 @@ function AddHeroBanner({ setActive, editHero, setEditHero }) {
 }
 
 export default AddHeroBanner;
-
 
 

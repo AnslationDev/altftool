@@ -240,6 +240,8 @@ useEffect(() => {
                         src={item.bannerImg}
                         fill
                         alt="popular-sale" // no hover scale — clean
+                        sizes="(max-width: 768px) 100vw, 420px"
+                        className="object-cover"
                       />
                     </div>
                   </Link>

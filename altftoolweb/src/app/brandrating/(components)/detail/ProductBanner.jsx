@@ -15,6 +15,7 @@ export default function ProductBanner({ brand }) {
             }
             alt={`${brand?.name || "product"} banner`}
             fill
+            sizes="(max-width: 1280px) 100vw, 1280px"
             className="object-cover transition-transform duration-500 hover:scale-105"
             priority
           />

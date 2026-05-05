@@ -101,6 +101,7 @@ function Card({ brand }) {
           src={brand.imagedeal}
           alt={brand.brandName}
           fill
+          sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 260px"
           className="object-cover grayscale"
         />
         <div className="absolute right-3 top-8 text-white text-lg font-bold text-right">

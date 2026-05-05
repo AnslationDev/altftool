@@ -25,6 +25,7 @@ export default function BlogCarousel({ blogs }) {
                 src={blog.image}
                 alt={blog.heading}
                 fill
+                sizes="(max-width: 1280px) 100vw, 1280px"
                 className="object-cover group-hover:scale-105 transition duration-300"
                 priority
               />

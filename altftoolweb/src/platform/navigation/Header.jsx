@@ -28,20 +28,18 @@ const Header = () => {
   const handleChange = (value) => {
     setSearchQuery(value);
     if (searchError) setSearchError("");
-
-    const trimmed = value.trim();
-
-    if (trimmed.length >= 2) {
-      router.push(`/search?q=${encodeURIComponent(trimmed)}`);
-    }
-
-    if (trimmed.length === 0 && pathname === "/search") {
-      router.push("/");
-    }
   };
 
-  const handleSearch = () => {
+  const handleSearch = (event) => {
+    event?.preventDefault();
     const trimmed = searchQuery.trim();
+
+    if (!trimmed && pathname === "/search") {
+      router.push("/");
+      setSearchError("");
+      setMobileMenuOpen(false);
+      return;
+    }
 
     if (trimmed.length < 4) {
       setSearchError("Type at least 4 characters.");
@@ -49,7 +47,7 @@ const Header = () => {
     }
 
     router.push(`/search?q=${encodeURIComponent(trimmed)}`);
-    setSearchQuery("");
+    setSearchQuery(trimmed);
     setSearchError("");
     setMobileMenuOpen(false);
   };
@@ -165,7 +163,7 @@ const Header = () => {
           {/* RIGHT SIDE */}
           <div className="flex items-center gap-2">
             {/* SEARCH INPUT */}
-            <div className="hidden sm:flex items-center gap-2">
+            <form className="hidden sm:flex items-center gap-2" onSubmit={handleSearch}>
               <Input
                 type="text"
                 placeholder="Search tools, extensions..."
@@ -175,10 +173,10 @@ const Header = () => {
                 style={{ background: "var(--background)" }}
               />
 
-              <IconButton onClick={handleSearch} aria-label="Search">
+              <IconButton type="submit" aria-label="Search">
                 <Search className="h-4 w-4" />
               </IconButton>
-            </div>
+            </form>
 
             {/* THEME TOGGLE */}
             <IconButton
@@ -242,10 +240,7 @@ const Header = () => {
           <nav className="mt-8 flex flex-col gap-4">
             <form
               className="grid gap-2"
-              onSubmit={(event) => {
-                event.preventDefault();
-                handleSearch();
-              }}
+              onSubmit={handleSearch}
             >
               <div className="flex items-center gap-2">
                 <Input

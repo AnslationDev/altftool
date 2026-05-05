@@ -285,6 +285,7 @@ function AddTrending({ setActive, editTrending, setEditTrending }) {
                 src={previewImage}
                 alt="Preview"
                 fill
+                sizes="(max-width: 768px) 100vw, 768px"
                 className="object-cover"
               />
             )}
@@ -335,6 +336,5 @@ function AddTrending({ setActive, editTrending, setEditTrending }) {
 }
 
 export default AddTrending;
-
 
 

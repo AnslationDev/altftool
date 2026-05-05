@@ -228,6 +228,7 @@ export default function TrendingSection() {
                   src={item.image}
                   alt={item.name}
                   fill
+                  sizes="(max-width: 640px) 342px, (max-width: 1024px) 300px, 320px"
                   className="object-cover transition duration-300 hover:scale-105"
                 />
               </div>

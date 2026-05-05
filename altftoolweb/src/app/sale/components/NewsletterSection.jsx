@@ -26,6 +26,7 @@ export default function NewsletterSection({
               src="/sale-locator/news-letter/newsletter-girlimg.png"
               alt="Deal Alerts"
               fill
+              sizes="(max-width: 1024px) 100vw, 50vw"
               priority
               className="object-contain object-left"
             />

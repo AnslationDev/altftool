@@ -264,6 +264,7 @@ function StoreCard({ data }) {
             src={data.logo}
             alt={data.name}
             fill
+            sizes="(max-width: 640px) 112px, (max-width: 1024px) 160px, 160px"
             // width={200}
             // height={100}
             className="object-contain"

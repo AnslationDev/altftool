@@ -23,7 +23,8 @@ function TrendingCategory() {
                   src={c.img}
                   alt="category"
                   fill
-                  className=""
+                  sizes="288px"
+                  className="object-cover"
                 />
               </div>
     
@@ -52,4 +53,3 @@ function TrendingCategory() {
 }
 
 export default TrendingCategory;
-
