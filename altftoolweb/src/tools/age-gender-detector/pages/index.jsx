@@ -38,7 +38,6 @@ export default function ToolHome() {
   // ✅ FIX: Always trigger camera when switching to camera mode
   useEffect(() => {
     if (mode === "camera" && startCameraRef.current) {
-      setCameraDenied(false); // reset previous error
       startCameraRef.current();
     }
   }, [mode]);

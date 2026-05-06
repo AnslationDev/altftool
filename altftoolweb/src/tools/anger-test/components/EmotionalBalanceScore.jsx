@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useMemo } from "react";
 import { Flame, Brain, Timer, Shield, ActivitySquare } from "lucide-react";
 
 const PATIENCE_QUESTIONS = [1, 4, 10];
@@ -22,18 +22,24 @@ const METRICS = [
 ];
 
 export default function EmotionalBalanceScore({ score, stressCorrelation }) {
-  const [metrics, setMetrics] = useState(null);
+  const metrics = useMemo(() => {
+    if (typeof window === "undefined") return null;
 
-  useEffect(() => {
-    const raw = localStorage.getItem("anger-answers");
-    if (!raw) return;
-    const answers = JSON.parse(raw);
-    setMetrics({
-      anger:    Math.min(Math.round((score / 50) * 100), 100),
-      stress:   stressCorrelation ?? 0,
-      patience: calcPct(answers, PATIENCE_QUESTIONS, true),
-      control:  calcPct(answers, CONTROL_QUESTIONS,  true),
-    });
+    try {
+      const raw = localStorage.getItem("anger-answers");
+      if (!raw) return null;
+      const answers = JSON.parse(raw);
+      if (!Array.isArray(answers)) return null;
+
+      return {
+        anger:    Math.min(Math.round((score / 50) * 100), 100),
+        stress:   stressCorrelation ?? 0,
+        patience: calcPct(answers, PATIENCE_QUESTIONS, true),
+        control:  calcPct(answers, CONTROL_QUESTIONS,  true),
+      };
+    } catch {
+      return null;
+    }
   }, [score, stressCorrelation]);
 
   if (!metrics) return null;

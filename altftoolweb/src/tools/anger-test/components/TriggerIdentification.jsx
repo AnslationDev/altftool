@@ -112,18 +112,17 @@ const intensityLabel = (pct) => {
   return "Low";
 };
 
-export default function TriggerIdentification() {
-  const [triggers, setTriggers] = useState([]);
-  const [visible, setVisible] = useState(false);
-  const [hasData, setHasData] = useState(false);
+const loadTriggerScores = () => {
+  if (typeof window === "undefined") return [];
 
-  useEffect(() => {
+  try {
     const raw = localStorage.getItem("anger-answers");
-    if (!raw) return;
+    if (!raw) return [];
 
     const answers = JSON.parse(raw);
+    if (!Array.isArray(answers)) return [];
 
-    const scored = TRIGGER_MAP.map((trigger) => {
+    return TRIGGER_MAP.map((trigger) => {
       const relevant = answers.filter((a) =>
         trigger.questionIds.includes(a.questionId),
       );
@@ -134,11 +133,22 @@ export default function TriggerIdentification() {
       );
       return { ...trigger, pct };
     }).sort((a, b) => b.pct - a.pct);
+  } catch {
+    return [];
+  }
+};
 
-    setTriggers(scored);
-    setHasData(true);
-    setTimeout(() => setVisible(true), 100);
-  }, []);
+export default function TriggerIdentification() {
+  const [triggers] = useState(loadTriggerScores);
+  const [visible, setVisible] = useState(false);
+  const hasData = triggers.length > 0;
+
+  useEffect(() => {
+    if (!hasData) return;
+
+    const timer = setTimeout(() => setVisible(true), 100);
+    return () => clearTimeout(timer);
+  }, [hasData]);
 
   if (!hasData) return null;
 

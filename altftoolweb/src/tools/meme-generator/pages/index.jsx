@@ -34,24 +34,30 @@ const SUGGESTIONS = [
   "Absolute Cinema", "Lag gaye bhai..."
 ];
 
+const loadMemeHistory = () => {
+  if (typeof window === "undefined") return [];
+
+  try {
+    const saved = localStorage.getItem("meme_history");
+    return saved ? JSON.parse(saved) : [];
+  } catch {
+    return [];
+  }
+};
+
 export default function ToolHome() {
   const [meme, setMeme] = useState({
     image: null, brightness: 100, contrast: 100, blur: 0, aspectRatio: "auto",
   });
 
-  const [layers, setLayers] = useState([]); 
-  const [undoStack, setUndoStack] = useState([]); 
+  const [layers, setLayers] = useState([]);
+  const [undoStack, setUndoStack] = useState([]);
   const [selectedId, setSelectedId] = useState(null);
-  const [history, setHistory] = useState([]); 
+  const [history, setHistory] = useState(loadMemeHistory);
   const memeRef = useRef(null);
   const nextIdRef = useRef(0);
 
   const createId = useCallback((prefix) => `${prefix}-${++nextIdRef.current}`, []);
-
-  useEffect(() => {
-    const saved = localStorage.getItem("meme_history");
-    if (saved) setHistory(JSON.parse(saved));
-  }, []);
 
   const saveSnapshot = useCallback(() => {
     setUndoStack(prev => [...prev, JSON.stringify(layers)].slice(-20));

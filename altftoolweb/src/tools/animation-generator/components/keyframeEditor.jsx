@@ -10,7 +10,7 @@ export default function KeyframeEditor({ onChange }) {
 
   useEffect(() => {
     onChange && onChange(frames);
-  }, [frames]);
+  }, [frames, onChange]);
 
   const updateFrame = (index, key, value) => {
     const updated = [...frames];

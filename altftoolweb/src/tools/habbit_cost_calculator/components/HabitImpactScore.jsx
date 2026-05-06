@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { motion } from 'framer-motion';
 import { useHabits } from '../context/HabitContext';
 import Card from './ui/Card';
@@ -79,12 +79,7 @@ const ImpactCircle = ({ score, size = 200 }) => {
 
 export const HabitImpactScore = ({ habit }) => {
   const { calculateImpactScore } = useHabits();
-  const [score, setScore] = useState(0);
-
-  useEffect(() => {
-    const calculatedScore = calculateImpactScore(habit);
-    setScore(calculatedScore);
-  }, [habit, calculateImpactScore]);
+  const score = calculateImpactScore(habit);
 
   if (score === 0) {
     return (

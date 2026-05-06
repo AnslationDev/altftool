@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useRef, useEffect, useCallback } from "react";
+import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
   Upload, Pen, Highlighter, Type, Download, Trash2, ZoomIn, ZoomOut, FileText,
   Square, Circle, ArrowUpRight, Check, Undo2, Redo2, Eraser
@@ -12,7 +12,6 @@ export default function MainComponent() {
   const [pdfPages, setPdfPages] = useState([]); 
   const [currentPageIdx, setCurrentPageIdx] = useState(0); 
   const [currentTool, setCurrentTool] = useState("pen");
-  const [color, setColor] = useState("#3b82f6");
   const [isDrawing, setIsDrawing] = useState(false);
   const [annotations, setAnnotations] = useState([]);
   
@@ -27,11 +26,9 @@ export default function MainComponent() {
 
   // RGB States (New)
   const [rgb, setRgb] = useState({ r: 59, g: 130, b: 246 });
-
-  // Update Color Hex when RGB sliders move
-  useEffect(() => {
+  const color = useMemo(() => {
     const toHex = (c) => c.toString(16).padStart(2, '0');
-    setColor(`#${toHex(rgb.r)}${toHex(rgb.g)}${toHex(rgb.b)}`);
+    return `#${toHex(rgb.r)}${toHex(rgb.g)}${toHex(rgb.b)}`;
   }, [rgb]);
 
   // Signature States

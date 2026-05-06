@@ -15,14 +15,7 @@ const EditorArea = forwardRef(({
   const [selectedImage, setSelectedImage] = useState(null);
   const [time, setTime] = useState(new Date());
   const [activeSub, setActiveSub] = useState("Time");
-  const [isSizeManuallyChanged, setIsSizeManuallyChanged] = useState(false);
-
-  // Default font size logic
-  useEffect(() => {
-    if (fontSize !== 20) {
-      setIsSizeManuallyChanged(true);
-    }
-  }, [fontSize]);
+  const isSizeManuallyChanged = fontSize !== 20;
 
   const [hourFormat, setHourFormat] = useState("12");
   const [timezone, setTimezone] = useState("Local");

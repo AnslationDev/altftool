@@ -14,9 +14,20 @@ import Description from "../components/Description"; // ✅ Imported Description
 const SURVEYS_KEY = "surveyBuilder_surveys";
 const RESPONSES_KEY = "surveyBuilder_responses";
 
+const loadStoredList = (key) => {
+  if (typeof window === "undefined") return [];
+
+  try {
+    const stored = localStorage.getItem(key);
+    return stored ? JSON.parse(stored) : [];
+  } catch {
+    return [];
+  }
+};
+
 export default function App() {
-  const [surveys, setSurveys] = useState([]);
-  const [responses, setResponses] = useState([]);
+  const [surveys, setSurveys] = useState(() => loadStoredList(SURVEYS_KEY));
+  const [responses, setResponses] = useState(() => loadStoredList(RESPONSES_KEY));
   const [createDialogOpen, setCreateDialogOpen] = useState(false);
   const [viewDialogOpen, setViewDialogOpen] = useState(false);
   const [analyticsDialogOpen, setAnalyticsDialogOpen] = useState(false);
@@ -38,15 +49,6 @@ export default function App() {
   const closeToast = () => {
     setToast((prev) => ({ ...prev, open: false }));
   };
-
-  // Load from localStorage
-  useEffect(() => {
-    const storedSurveys = localStorage.getItem(SURVEYS_KEY);
-    const storedResponses = localStorage.getItem(RESPONSES_KEY);
-
-    if (storedSurveys) setSurveys(JSON.parse(storedSurveys));
-    if (storedResponses) setResponses(JSON.parse(storedResponses));
-  }, []);
 
   // Save to localStorage
   useEffect(() => {

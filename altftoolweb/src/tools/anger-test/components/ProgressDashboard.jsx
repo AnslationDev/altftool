@@ -45,13 +45,11 @@ const barColor = (bar) => {
   return "bg-green-500";
 };
 
-export default function ProgressDashboard() {
-  const [trend, setTrend]     = useState([]);
-  const [visible, setVisible] = useState(false);
+const loadAngerTrend = () => {
+  if (typeof window === "undefined") return [];
 
-  useEffect(() => {
-    const raw = JSON.parse(localStorage.getItem("anger-moods")) || {};
-
+  try {
+    const raw = JSON.parse(localStorage.getItem("anger-moods") || "{}");
     const moods = Object.fromEntries(
       Object.entries(raw).map(([date, val]) => [
         date,
@@ -79,8 +77,19 @@ export default function ProgressDashboard() {
       });
     }
 
-    setTrend(last7);
-    setTimeout(() => setVisible(true), 100);
+    return last7;
+  } catch {
+    return [];
+  }
+};
+
+export default function ProgressDashboard() {
+  const [trend] = useState(loadAngerTrend);
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setVisible(true), 100);
+    return () => clearTimeout(timer);
   }, []);
 
   const hasData = trend.some((t) => t.mood !== "No data");

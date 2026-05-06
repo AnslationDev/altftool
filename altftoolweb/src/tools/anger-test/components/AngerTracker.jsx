@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Smile, Meh, Frown, Angry, FlameKindling, Calendar, TrendingUp, Clock , MinusCircle } from "lucide-react";
 
 // ─── Mood config with Lucide icons ───────────────────────────────────────────
@@ -33,6 +33,62 @@ const averageLabel = (avg) => {
   return "Very Angry";
 };
 
+const emptyTrackerState = {
+  todayMood: null,
+  yesterdayMood: null,
+  weeklyAverage: null,
+};
+
+const getDateKey = (daysOffset = 0) => {
+  const date = new Date();
+  date.setDate(date.getDate() + daysOffset);
+  return date.toISOString().split("T")[0];
+};
+
+const getMoodLabel = (entry) => (
+  typeof entry === "string" ? entry : entry?.level
+);
+
+const loadAngerTrackerState = () => {
+  if (typeof window === "undefined") return emptyTrackerState;
+
+  try {
+    const moods = JSON.parse(localStorage.getItem("anger-moods") || "{}");
+    const today = getDateKey();
+    const yesterday = getDateKey(-1);
+    const raw = localStorage.getItem("anger-score");
+    let todayMood = getMoodLabel(moods[today]) || null;
+
+    if (raw !== null) {
+      const mood = moodFromScore(Number(raw));
+      moods[today] = mood;
+      localStorage.setItem("anger-moods", JSON.stringify(moods));
+      todayMood = mood;
+    }
+
+    let total = 0;
+    let count = 0;
+    for (let i = 1; i <= 7; i++) {
+      const label = getMoodLabel(moods[getDateKey(-i)]);
+      if (label) {
+        const num = moodToNumber(label);
+        if (num > 0) {
+          total += num;
+          count++;
+        }
+      }
+    }
+
+    return {
+      todayMood,
+      yesterdayMood: getMoodLabel(moods[yesterday]) || null,
+      weeklyAverage: count > 0 ? averageLabel(total / count) : null,
+    };
+  } catch {
+    return emptyTrackerState;
+  }
+};
+
 // ─── Mood display chip ────────────────────────────────────────────────────────
 const MoodChip = ({ label }) => {
   if (!label) return <span className="text-(--muted-foreground) text-sm">—</span>;
@@ -48,42 +104,9 @@ const MoodChip = ({ label }) => {
 
 // ─── Main Component ───────────────────────────────────────────────────────────
 export default function AngerTracker() {
-  const [todayMood, setTodayMood]         = useState(null);
-  const [yesterdayMood, setYesterdayMood] = useState(null);
-  const [weeklyAverage, setWeeklyAverage] = useState(null);
-
-  const today = new Date().toISOString().split("T")[0];
-  const yesterdayDate = new Date();
-  yesterdayDate.setDate(yesterdayDate.getDate() - 1);
-  const yesterday = yesterdayDate.toISOString().split("T")[0];
-
-  useEffect(() => {
-    const moods = JSON.parse(localStorage.getItem("anger-moods") || "{}");
-    const raw = localStorage.getItem("anger-score");
-
-    if (raw !== null) {
-      const mood = moodFromScore(Number(raw));
-      moods[today] = mood;
-      localStorage.setItem("anger-moods", JSON.stringify(moods));
-      setTodayMood(mood);
-    } else if (moods[today]) {
-      setTodayMood(moods[today]);
-    }
-
-    if (moods[yesterday]) setYesterdayMood(moods[yesterday]);
-
-    let total = 0, count = 0;
-    for (let i = 1; i <= 7; i++) {
-      const d = new Date();
-      d.setDate(d.getDate() - i);
-      const key = d.toISOString().split("T")[0];
-      if (moods[key]) {
-        const num = moodToNumber(moods[key]);
-        if (num > 0) { total += num; count++; }
-      }
-    }
-    if (count > 0) setWeeklyAverage(averageLabel(total / count));
-  }, []);
+  const [{ todayMood, yesterdayMood, weeklyAverage }] = useState(
+    loadAngerTrackerState,
+  );
 
   const rows = [
     { label: "Today's Mood",      Icon: Calendar,   value: todayMood },

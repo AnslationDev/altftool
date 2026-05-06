@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useTheme } from '@/contexts/ThemeContext';
 import { useDebounce } from '../hooks/useDebounce.js';
 import { useSkillAnalysis } from '../hooks/useSkillAnalysis.js';
@@ -21,11 +21,15 @@ import {
 } from '../components/index.js';
 import { TrendingUp, BarChart3, Sparkles, RefreshCw } from 'lucide-react';
 
+const loadRecentSearches = () => (
+  typeof window === 'undefined' ? [] : getRecentSearches()
+);
+
 function App() {
   const { theme } = useTheme();
   const { data, loading, error, analyzeSkill, clearData, refreshData } = useSkillAnalysis();
   const [searchInput, setSearchInput] = useState('');
-  const [recentSearches, setRecentSearches] = useState([]);
+  const [recentSearches, setRecentSearches] = useState(loadRecentSearches);
   const [selectedCountry, setSelectedCountry] = useState('in');
   const [jobFilters, setJobFilters] = useState({
     remote: false,
@@ -33,12 +37,6 @@ function App() {
     country: 'in'
   });
   // smart suggestions are fetched by the SmartSuggestions component from /api/analyze
-
-  // Load recent searches on mount
-  useEffect(() => {
-    const searches = getRecentSearches();
-    setRecentSearches(searches);
-  }, []);
 
   // Handle search
   const handleSearch = (skill) => {

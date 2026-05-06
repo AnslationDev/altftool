@@ -1,18 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { getRecentSearches } from '../services/cache.js';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 
-export function AnalyticsDashboard({ onClose }) {
-  const [popularSkills, setPopularSkills] = useState([]);
+const loadPopularSkills = () => {
+  if (typeof window === 'undefined') return [];
 
-  useEffect(() => {
-    // In a real app, this would fetch from the DB. 
-    // Here we use the local cache to simulate global analytics.
-    const recent = getRecentSearches();
-    // Sort by score for display
-    const sorted = [...recent].sort((a, b) => b.score - a.score).slice(0, 10);
-    setPopularSkills(sorted);
-  }, []);
+  const recent = getRecentSearches();
+  return [...recent].sort((a, b) => b.score - a.score).slice(0, 10);
+};
+
+export function AnalyticsDashboard({ onClose }) {
+  const [popularSkills] = useState(loadPopularSkills);
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4">

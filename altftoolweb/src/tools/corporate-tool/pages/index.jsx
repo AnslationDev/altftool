@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useMemo, useEffect } from "react";
+import React, { useState, useMemo } from "react";
 import { Search, Filter, ChevronDown } from "lucide-react";
 
 export default function ToolHome() {
@@ -9,7 +9,7 @@ export default function ToolHome() {
   const [currentPage, setCurrentPage] = useState(1);
   const ITEMS_PER_PAGE = 9;
 
-  const tools = [
+  const tools = useMemo(() => [
     {
       name: "Slack",
       category: "Communication",
@@ -245,9 +245,12 @@ export default function ToolHome() {
       description: "Help desk software",
       pricing: "Premium",
     },
-  ];
+  ], []);
 
-  const categories = ["All", ...new Set(tools.map((tool) => tool.category))];
+  const categories = useMemo(
+    () => ["All", ...new Set(tools.map((tool) => tool.category))],
+    [tools],
+  );
 
   const filteredTools = useMemo(() => {
     return tools.filter((tool) => {
@@ -259,18 +262,15 @@ export default function ToolHome() {
         selectedCategory === "All" || tool.category === selectedCategory;
       return matchesSearch && matchesCategory;
     });
-  }, [searchTerm, selectedCategory]);
-
-  useEffect(() => {
-    setCurrentPage(1);
-  }, [searchTerm, selectedCategory]);
+  }, [searchTerm, selectedCategory, tools]);
 
   const totalPages = Math.ceil(filteredTools.length / ITEMS_PER_PAGE);
+  const activePage = Math.min(currentPage, Math.max(totalPages, 1));
 
   const paginatedTools = useMemo(() => {
-    const start = (currentPage - 1) * ITEMS_PER_PAGE;
+    const start = (activePage - 1) * ITEMS_PER_PAGE;
     return filteredTools.slice(start, start + ITEMS_PER_PAGE);
-  }, [filteredTools, currentPage]);
+  }, [filteredTools, activePage]);
 
   return (
     <div className="min-h-screen bg-(--background) text-(--foreground) px-3 sm:px-4 md:px-6 py-4">
@@ -294,7 +294,10 @@ export default function ToolHome() {
                   type="text"
                   placeholder="Search tools..."
                   value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
+                  onChange={(e) => {
+                    setSearchTerm(e.target.value);
+                    setCurrentPage(1);
+                  }}
                   className="w-full pl-10 pr-3 py-2.5 sm:py-2 text-sm sm:text-base bg-transparent text-(--foreground) outline-none"
                 />
               </div>
@@ -309,7 +312,10 @@ export default function ToolHome() {
                 />
                 <select
                   value={selectedCategory}
-                  onChange={(e) => setSelectedCategory(e.target.value)}
+                  onChange={(e) => {
+                    setSelectedCategory(e.target.value);
+                    setCurrentPage(1);
+                  }}
                   className="w-full pl-10 pr-10 py-2.5 sm:py-2 text-sm sm:text-base bg-(--background) cursor-pointer outline-none appearance-none"
                 >
                   {categories.map((category) => (
@@ -362,7 +368,7 @@ export default function ToolHome() {
                 key={index}
                 onClick={() => setCurrentPage(index + 1)}
                 className={`px-3 sm:px-4 py-1.5 text-xs sm:text-sm rounded-md ${
-                  currentPage === index + 1
+                  activePage === index + 1
                     ? "bg-blue-500 text-white"
                     : "bg-blue-300 hover:bg-gray-300"
                 }`}

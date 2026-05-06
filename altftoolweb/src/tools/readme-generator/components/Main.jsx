@@ -1,16 +1,37 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { FileText, Copy, Check, Download, History, Trash2 } from "lucide-react";
 import Hero from "../components/Hero";
 import InputSection from "../components/InputSection";
 import OutputSection from "../components/OutputSection";
 
+const loadReadmeHistory = () => {
+  if (typeof window === "undefined") return [];
+
+  try {
+    const savedHistory = localStorage.getItem("readme_history");
+    return savedHistory ? JSON.parse(savedHistory) : [];
+  } catch {
+    return [];
+  }
+};
+
+const loadSavedReadmeInput = () => {
+  if (typeof window === "undefined") return "";
+
+  try {
+    return localStorage.getItem("readme_data") || "";
+  } catch {
+    return "";
+  }
+};
+
 export default function Main() {
-  const [userInput, setUserInput] = useState("");
+  const [userInput, setUserInput] = useState(loadSavedReadmeInput);
   const [generatedReadme, setGeneratedReadme] = useState("");
   const [copied, setCopied] = useState(false);
-  const [history, setHistory] = useState([]);
+  const [history, setHistory] = useState(loadReadmeHistory);
   const [showHistory, setShowHistory] = useState(false);
   const [isPreviewMode, setIsPreviewMode] = useState(false);
   const [selectedTheme, setSelectedTheme] = useState("github");
@@ -27,31 +48,16 @@ export default function Main() {
   license: true,
 });
 
-  useEffect(() => {
-    const savedHistory = localStorage.getItem("readme_history");
-    if (savedHistory) {
-      // eslint-disable-next-line react-hooks/set-state-in-effect
-      setHistory(JSON.parse(savedHistory));
-    }
+  const saveToHistory = useCallback((input) => {
+    setHistory((previousHistory) => {
+      const newHistory = [
+        { text: input, timestamp: new Date().toISOString() },
+        ...previousHistory,
+      ].slice(0, 5);
+      localStorage.setItem("readme_history", JSON.stringify(newHistory));
+      return newHistory;
+    });
   }, []);
-
-  
-  // Autosave
-  useEffect(() => {
-    const savedData = localStorage.getItem("readme_data");
-    if (savedData) {
-      setUserInput(savedData);
-    }
-  }, []);
-
-  const saveToHistory = (input) => {
-    const newHistory = [
-      { text: input, timestamp: new Date().toISOString() },
-      ...history,
-    ].slice(0, 5);
-    setHistory(newHistory);
-    localStorage.setItem("readme_history", JSON.stringify(newHistory));
-  };
 
   // Clear History
   const clearHistory = () => {
@@ -76,7 +82,7 @@ export default function Main() {
   }, [userInput]);
 
   // generate Readme
-  const generateReadme = () => {
+  const generateReadme = useCallback(() => {
     if (!userInput.trim()) {
       alert("Please enter some text to generate README!");
       return;
@@ -306,10 +312,10 @@ export default function Main() {
 
     setSectionsOrder(available);
     setReorderedReadme("");
-  };
+  }, [saveToHistory, selectedSections, userInput]);
 
 
-   useEffect(() => {
+  const orderedReadme = useMemo(() => {
     if (!sectionsOrder.length || !generatedReadme) return;
 
     const extract = (title) => {
@@ -326,18 +332,18 @@ export default function Main() {
       }
     });
 
-    setReorderedReadme(final);
+    return final;
   }, [sectionsOrder, generatedReadme]);
 
   const copyToClipboard = () => {
-    const finalOutput = reorderedReadme || generatedReadme;
+    const finalOutput = reorderedReadme || orderedReadme || generatedReadme;
     navigator.clipboard.writeText(finalOutput);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
 
   const downloadReadme = () => {
-    const finalOutput = reorderedReadme || generatedReadme;
+    const finalOutput = reorderedReadme || orderedReadme || generatedReadme;
     const blob = new Blob([finalOutput], { type: "text/markdown" });
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
@@ -360,11 +366,11 @@ export default function Main() {
     // Ctrl + C (SAFE + FORCE)
     if (e.ctrlKey && (e.key === "c" || e.code === "KeyC")) {
 
-      if (isPreviewMode && (generatedReadme || reorderedReadme)) {
+      if (isPreviewMode && (generatedReadme || orderedReadme || reorderedReadme)) {
 
         e.preventDefault(); 
 
-        const finalOutput = reorderedReadme || generatedReadme;
+        const finalOutput = reorderedReadme || orderedReadme || generatedReadme;
 
         navigator.clipboard.writeText(finalOutput).then(() => {
           setCopied(true);
@@ -378,11 +384,11 @@ export default function Main() {
   return () => {
     window.removeEventListener("keydown", handleKeyDown);
   };
-}, [generateReadme, isPreviewMode, generatedReadme, reorderedReadme]);
+}, [generateReadme, isPreviewMode, generatedReadme, orderedReadme, reorderedReadme]);
 
   return (
     <main className="flex-1 max-w-7xl mx-auto px-4 sm:px-6 py-8 sm:py-16 text-(--foreground)">
-      <Hero generatedReadme={reorderedReadme || generatedReadme} />
+      <Hero generatedReadme={reorderedReadme || orderedReadme || generatedReadme} />
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         <InputSection
@@ -415,7 +421,7 @@ export default function Main() {
           setSelectedTheme={setSelectedTheme}
           sectionsOrder={sectionsOrder}
           setSectionsOrder={setSectionsOrder}
-          reorderedReadme={reorderedReadme}
+          reorderedReadme={reorderedReadme || orderedReadme || ""}
           setReorderedReadme={setReorderedReadme}
           isSectionMode={isSectionMode}
           setIsSectionMode={setIsSectionMode}

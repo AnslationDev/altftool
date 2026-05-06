@@ -58,7 +58,7 @@ const DiffChecker = () => {
 
   const updated = [newVersion, ...existing].slice(0, 10);
   localStorage.setItem("versions", JSON.stringify(updated));
-}, [diff]); // triggers when diff updates
+}, [diff, modifiedText, originalText]); // triggers when diff updates
 
   const stats = useMemo(() => {
   let added = 0;
