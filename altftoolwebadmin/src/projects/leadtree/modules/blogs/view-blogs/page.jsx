@@ -11,7 +11,7 @@ import {
   Clock3,
   Layers,
 } from "lucide-react";
-import { Cell, Pie, PieChart, ResponsiveContainer, Tooltip } from "recharts";
+import { Cell, Pie, PieChart, Tooltip } from "recharts";
 
 const stripHtml = (h) => (h || "").replace(/<[^>]+>/g, "");
 
@@ -188,9 +188,8 @@ const categoryData = useMemo(() => {
               Blogs Category Distribution
             </h3>
 
-            <div className="h-64">
-              <ResponsiveContainer width="100%" height="100%">
-                <PieChart>
+            <div className="flex h-64 items-center justify-center">
+              <PieChart width={280} height={240}>
 
                   <Pie
                     data={categoryData}
@@ -245,9 +244,8 @@ const categoryData = useMemo(() => {
                     })}
                   </Pie>
 
-                  <Tooltip />
-                </PieChart>
-              </ResponsiveContainer>
+                <Tooltip />
+              </PieChart>
             </div>
           </div>
 
@@ -333,4 +331,3 @@ const categoryData = useMemo(() => {
     </div>
   );
 }
-  

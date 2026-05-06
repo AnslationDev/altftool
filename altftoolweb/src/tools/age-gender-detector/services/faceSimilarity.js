@@ -1,8 +1,21 @@
-import * as faceapi from "@vladmandic/face-api";
 import { loadModels } from "./faceDetection";
+import { getFaceApi } from "./faceApiClient";
+
+function euclideanDistance(descriptor1, descriptor2) {
+  const length = Math.min(descriptor1.length, descriptor2.length);
+  let sum = 0;
+
+  for (let i = 0; i < length; i += 1) {
+    const diff = descriptor1[i] - descriptor2[i];
+    sum += diff * diff;
+  }
+
+  return Math.sqrt(sum);
+}
 
 export async function getFaceDescriptor(imageElement) {
   await loadModels();
+  const faceapi = await getFaceApi();
 
   const detection = await faceapi
     .detectSingleFace(
@@ -23,7 +36,7 @@ export async function getFaceDescriptor(imageElement) {
 export function compareFaces(descriptor1, descriptor2) {
   if (!descriptor1 || !descriptor2) return null;
 
-  const distance = faceapi.euclideanDistance(descriptor1, descriptor2);
+  const distance = euclideanDistance(descriptor1, descriptor2);
 
   const similarity = Math.max(0, (1 - distance)) * 100;
 

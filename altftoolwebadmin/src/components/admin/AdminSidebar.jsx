@@ -6,12 +6,31 @@ import { usePathname, useRouter } from "next/navigation";
 import { PanelLeftClose, PanelLeftOpen } from "lucide-react";
 import { hasModuleAccess } from "@/lib/permissionUtils";
 import { PROJECTS, getProject } from "@/projects";
-import Image from "next/image";
 import {
   getProjectModuleRoute,
   GLOBAL_ADMIN_MODULES,
   resolveProjectModule,
 } from "@/config/adminRoutes";
+
+function getLogoSrc(logo) {
+  return typeof logo === "string" ? logo : logo?.src;
+}
+
+function ProjectLogo({ project, size, className = "" }) {
+  const src = getLogoSrc(project?.logo);
+  if (!src) return null;
+
+  return (
+    <img
+      src={src}
+      alt={project.name}
+      width={size}
+      height={size}
+      className={`rounded-sm object-contain ${className}`}
+      style={{ maxWidth: size, maxHeight: size, width: "auto", height: "auto" }}
+    />
+  );
+}
 
 export default function AdminSidebar({ adminData }) {
   if (!adminData) return null;
@@ -97,15 +116,7 @@ export default function AdminSidebar({ adminData }) {
               className="w-full flex items-center justify-between px-2 py-1.5 rounded-lg text-[var(--foreground)] hover:bg-[var(--surface-soft)] transition"
             >
               <div className="flex items-center gap-2 truncate">
-                {project?.logo && (
-                  <Image
-                    src={project.logo}
-                    alt={project.name}
-                    width={18}
-                    height={18}
-                    className="rounded-sm object-contain"
-                  />
-                )}
+                <ProjectLogo project={project} size={18} />
                 <span className="font-semibold text-[var(--foreground)] text-sm truncate">
                   {project?.name || "Select Project"}
                 </span>
@@ -119,13 +130,7 @@ export default function AdminSidebar({ adminData }) {
             >
               {project?.logo ? (
                 <div className="w-8 h-8 flex items-center justify-center">
-                  <Image
-                    src={project.logo}
-                    alt={project.name}
-                    width={22}
-                    height={22}
-                    className="object-contain"
-                  />
+                  <ProjectLogo project={project} size={22} />
                 </div>
               ) : (
                 <span className="text-sm font-semibold">{project?.name?.[0]}</span>
@@ -149,15 +154,7 @@ export default function AdminSidebar({ adminData }) {
                     }`}
                   >
                     <div className="flex items-center gap-2">
-                      {proj.logo && (
-                        <Image
-                          src={proj.logo}
-                          alt={proj.name}
-                          width={16}
-                          height={16}
-                          className="rounded-sm object-contain"
-                        />
-                      )}
+                      <ProjectLogo project={proj} size={16} />
                       <span>{proj.name}</span>
                     </div>
                     {isActive && <span className="text-xs">✓</span>}

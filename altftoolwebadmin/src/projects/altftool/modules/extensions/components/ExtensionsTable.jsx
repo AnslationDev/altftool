@@ -12,6 +12,7 @@ import {
   ArrowUpDown, LayoutGrid, List, Filter, SlidersHorizontal,
   Clock, Tag, Globe2, BadgeCheck, Eye, EyeOff,
 } from "lucide-react";
+import * as LucideIcons from "lucide-react";
 
 /* ── Portal Tooltip ── */
 function Tooltip({ label, children, direction = "top" }) {
@@ -122,6 +123,12 @@ function StarRating({ value }) {
   );
 }
 
+function ExtensionIcon({ icon, className = "" }) {
+  const Icon = LucideIcons[icon] || LucideIcons.Puzzle;
+
+  return <Icon className={className} aria-hidden="true" />;
+}
+
 /* ── Banner Image ── */
 function BannerCell({ ext }) {
   const [imgError, setImgError] = useState(false);
@@ -141,7 +148,7 @@ function BannerCell({ ext }) {
           />
         ) : hasIcon ? (
           <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-gray-50 to-gray-100">
-            <img src={ext.icon} alt="" className="w-6 h-6 object-contain" />
+            <ExtensionIcon icon={ext.icon} className="h-5 w-5 text-indigo-500" />
           </div>
         ) : (
           <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-indigo-50 to-indigo-100">
@@ -150,8 +157,8 @@ function BannerCell({ ext }) {
         )}
         {/* Overlay icon badge on bottom-right corner */}
         {hasBanner && hasIcon && (
-          <div className="absolute bottom-0.5 right-0.5 w-4 h-4 rounded overflow-hidden border border-white bg-white shadow-sm">
-            <img src={ext.icon} alt="" className="w-full h-full object-contain" />
+          <div className="absolute bottom-0.5 right-0.5 w-4 h-4 rounded border border-white bg-white shadow-sm flex items-center justify-center">
+            <ExtensionIcon icon={ext.icon} className="h-3.5 w-3.5 text-indigo-500" />
           </div>
         )}
       </div>
@@ -632,8 +639,8 @@ export default function ExtensionsTable({
                                     className="w-full h-full object-cover"
                                   />
                                   {ext.icon && (
-                                    <div className="absolute bottom-2 left-2 w-8 h-8 rounded-xl bg-white shadow-md border border-gray-100 overflow-hidden">
-                                      <img src={ext.icon} alt="" className="w-full h-full object-contain p-1" />
+                                    <div className="absolute bottom-2 left-2 w-8 h-8 rounded-xl bg-white shadow-md border border-gray-100 flex items-center justify-center">
+                                      <ExtensionIcon icon={ext.icon} className="h-4 w-4 text-indigo-500" />
                                     </div>
                                   )}
                                 </div>

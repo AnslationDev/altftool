@@ -1,4 +1,4 @@
-import * as faceapi from "@vladmandic/face-api";
+import { getFaceApi } from "./faceApiClient";
 
 let modelsLoaded = false;
 
@@ -102,6 +102,7 @@ export async function loadModels() {
   if (modelsLoaded) return;
 
   const MODEL_URL = "/models";
+  const faceapi = await getFaceApi();
 
   await Promise.all([
     faceapi.nets.tinyFaceDetector.loadFromUri(MODEL_URL),
@@ -116,6 +117,7 @@ export async function loadModels() {
 
 export async function detectFace(imageElement) {
   await loadModels();
+  const faceapi = await getFaceApi();
 
   const detections = await faceapi
     .detectAllFaces(

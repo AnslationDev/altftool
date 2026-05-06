@@ -13,10 +13,12 @@ export default function ManagedImage({
   src,
   fallbackSrc,
   alt = "",
+  fill = false,
   loading = "lazy",
   decoding = "async",
   referrerPolicy = "no-referrer",
   onError,
+  style,
   ...props
 }) {
   const [failedSrcs, setFailedSrcs] = useState([]);
@@ -44,6 +46,7 @@ export default function ManagedImage({
       decoding={decoding}
       referrerPolicy={referrerPolicy}
       onError={handleError}
+      style={fill ? { ...style, position: "absolute", inset: 0, width: "100%", height: "100%" } : style}
     />
   );
 }

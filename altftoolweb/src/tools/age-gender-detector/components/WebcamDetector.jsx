@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import * as faceapi from "@vladmandic/face-api";
+import { getFaceApi } from "../services/faceApiClient";
 
 export default function WebcamDetector({ onResult, onCameraDenied, setStartCamera }) {
   const videoRef = useRef(null);
@@ -14,6 +14,8 @@ export default function WebcamDetector({ onResult, onCameraDenied, setStartCamer
 
   async function loadModels() {
     const MODEL_URL = "/models";
+    const faceapi = await getFaceApi();
+
     await Promise.all([
       faceapi.nets.tinyFaceDetector.loadFromUri(MODEL_URL),
       faceapi.nets.ageGenderNet.loadFromUri(MODEL_URL),
@@ -89,6 +91,8 @@ export default function WebcamDetector({ onResult, onCameraDenied, setStartCamer
     const canvas = canvasRef.current;
     if (!video || !canvas) return;
     if (video.readyState !== 4 || video.videoWidth === 0) return;
+
+    const faceapi = await getFaceApi();
 
     const detections = await faceapi
       .detectAllFaces(video, new faceapi.TinyFaceDetectorOptions())

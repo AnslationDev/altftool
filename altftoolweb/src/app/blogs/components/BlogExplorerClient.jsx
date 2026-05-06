@@ -353,7 +353,6 @@ export default function BlogExplorerClient({
       } catch (error) {
         if (cancelled || error?.name === "AbortError") return;
         if (!cancelled) {
-          console.warn("Blog remote hydration paused:", error);
           setSyncState("local");
         }
       }

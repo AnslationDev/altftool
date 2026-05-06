@@ -1,4 +1,5 @@
 import { expect, test } from "@playwright/test";
+import { createPageQualityGate } from "./helpers/pageQuality.mjs";
 
 const webUrl = process.env.ALTFT_WEB_URL || "http://localhost:3002";
 const adminUrl = process.env.ALTFT_ADMIN_URL || "http://localhost:3001";
@@ -8,6 +9,8 @@ function escapeRegExp(value = "") {
 }
 
 test("public web shell loads", async ({ page }) => {
+  const quality = createPageQualityGate(page);
+
   await page.goto(`${webUrl}/tools`);
 
   await expect(page.locator("#main-header")).toBeVisible();
@@ -16,9 +19,12 @@ test("public web shell loads", async ({ page }) => {
   await expect(page.getByRole("button", { name: "Toggle Theme" })).toBeVisible();
   await expect(page.getByRole("link", { name: "Tools", exact: true }).first()).toHaveAttribute("href", "/tools/all");
   await expect(page.getByRole("link", { name: "Blog", exact: true }).first()).toHaveAttribute("href", "/blogs");
+  await quality.expectClean("public web shell");
 });
 
 test("tool detail routes use the clean workspace flow", async ({ page }) => {
+  const quality = createPageQualityGate(page);
+
   await page.goto(`${webUrl}/tools/all/api-stress-estimator`, { waitUntil: "domcontentloaded" });
 
   await expect(page.getByRole("navigation", { name: "Tool route" })).toContainText("All Tools");
@@ -29,9 +35,12 @@ test("tool detail routes use the clean workspace flow", async ({ page }) => {
 
   await expect(page.getByRole("navigation", { name: "Tool route" })).toContainText("Developer");
   await expect(page.getByRole("heading", { name: "API Stress Estimator", exact: true })).toBeVisible();
+  await quality.expectClean("tool detail routes");
 });
 
 test("buysmart A-Z category cards load brand images", async ({ page }) => {
+  const quality = createPageQualityGate(page);
+
   await page.goto(`${webUrl}/buysmart`, { waitUntil: "domcontentloaded" });
   await page.waitForLoadState("load");
   await expect(page.getByRole("heading", { name: "Discover better brands before you buy." })).toBeVisible();
@@ -96,9 +105,12 @@ test("buysmart A-Z category cards load brand images", async ({ page }) => {
 
   await page.getByTestId("buysmart-reveal-button").click();
   await expect(page.getByTestId("buysmart-reveal-modal")).toBeVisible();
+  await quality.expectClean("buysmart flow");
 });
 
 test("firebase blog catalog and detail render complete content", async ({ page, request }) => {
+  const quality = createPageQualityGate(page);
+
   const firstChunk = await request.get(`${webUrl}/api/blogs?offset=0&limit=5`);
 
   expect(firstChunk.ok()).toBeTruthy();
@@ -128,9 +140,12 @@ test("firebase blog catalog and detail render complete content", async ({ page, 
 
   const contentLength = await page.locator(".ckeditor-content").first().innerText().then((text) => text.length);
   expect(contentLength).toBeGreaterThan(100);
+  await quality.expectClean("blog catalog and detail");
 });
 
 test("admin login shell loads", async ({ page }) => {
+  const quality = createPageQualityGate(page);
+
   await page.goto(`${adminUrl}/login`);
 
   await expect(page.getByRole("heading", { name: /welcome admin/i })).toBeVisible();
@@ -144,6 +159,8 @@ test("admin login shell loads", async ({ page }) => {
     await expect(page).toHaveURL(/\/admin-management/);
     await expect(page.getByText("Super Admin").first()).toBeVisible();
   }
+
+  await quality.expectClean("admin login shell");
 });
 
 test("legacy route names redirect to canonical routes", async ({ request }) => {

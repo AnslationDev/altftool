@@ -1,5 +1,6 @@
 import { expect, test } from "@playwright/test";
 import { readFile } from "node:fs/promises";
+import { createPageQualityGate } from "./helpers/pageQuality.mjs";
 
 const webUrl = process.env.ALTFT_WEB_URL || "http://localhost:3002";
 const adminUrl = process.env.ALTFT_ADMIN_URL || "http://localhost:3001";
@@ -267,6 +268,8 @@ test("public web route surface resolves", async ({ request }) => {
 
 test("admin module route surface resolves for local super admin", async ({ page }) => {
   test.setTimeout(180_000);
+  const quality = createPageQualityGate(page);
+  const failures = [];
 
   await page.goto(`${adminUrl}/login`, { waitUntil: "domcontentloaded" });
 
@@ -276,8 +279,7 @@ test("admin module route surface resolves for local super admin", async ({ page 
 
   await expect(page).toHaveURL(/\/admin-management/);
   await expect(page.getByText("Super Admin").first()).toBeVisible();
-
-  const failures = [];
+  failures.push(...await quality.collect("admin login"));
 
   for (const route of adminRoutes) {
     try {
@@ -293,22 +295,27 @@ test("admin module route surface resolves for local super admin", async ({ page 
 
       if (status >= 400) {
         failures.push(`${route} -> HTTP ${status}`);
+        failures.push(...await quality.collect(route));
         continue;
       }
 
       if (["/login", "/access-denied", "/access-requested"].includes(pathname)) {
         failures.push(`${route} -> redirected to ${pathname}`);
+        failures.push(...await quality.collect(route));
         continue;
       }
 
       if (!bodyText.trim()) {
         failures.push(`${route} -> empty body`);
+        failures.push(...await quality.collect(route));
         continue;
       }
 
       if (hasRouteErrorMarkup(bodyText)) {
         failures.push(`${route} -> rendered route error`);
       }
+
+      failures.push(...await quality.collect(route));
     } catch (error) {
       failures.push(`${route} -> ${error.message}`);
     }
@@ -318,6 +325,8 @@ test("admin module route surface resolves for local super admin", async ({ page 
 });
 
 test("seo endpoints and structured data render", async ({ page, request }) => {
+  const quality = createPageQualityGate(page);
+
   const sitemap = await request.get(`${webUrl}/sitemap.xml`);
   expect(sitemap.ok()).toBeTruthy();
 
@@ -336,10 +345,12 @@ test("seo endpoints and structured data render", async ({ page, request }) => {
     .locator('script[type="application/ld+json"]')
     .evaluateAll((scripts) => scripts.map((script) => script.textContent || ""));
   expect(toolSchemas.some((schema) => schema.includes("SoftwareApplication"))).toBeTruthy();
+  await quality.expectClean("tool structured data route");
 
   await page.goto(`${webUrl}/blogs/age-calculator-guide`, { waitUntil: "domcontentloaded" });
   const blogSchemas = await page
     .locator('script[type="application/ld+json"]')
     .evaluateAll((scripts) => scripts.map((script) => script.textContent || ""));
   expect(blogSchemas.some((schema) => schema.includes("BlogPosting"))).toBeTruthy();
+  await quality.expectClean("blog structured data route");
 });

@@ -2,8 +2,8 @@
 
 import { useEffect, useRef, useState } from "react";
 import { X, Upload } from "lucide-react";
-import * as faceapi from "@vladmandic/face-api";
 import ManagedImage from "@/components/ui/ManagedImage";
+import { getFaceApi } from "../services/faceApiClient";
 
 export default function ImagePreview({ mode, preview, onReset }) {
   const canvasRef = useRef(null);
@@ -24,6 +24,7 @@ export default function ImagePreview({ mode, preview, onReset }) {
       if (!imgRef.current || !canvasRef.current) return;
 
       const MODEL_URL = "/models";
+      const faceapi = await getFaceApi();
 
       await Promise.all([
         faceapi.nets.tinyFaceDetector.loadFromUri(MODEL_URL),

@@ -60,6 +60,18 @@ const nextConfig = {
   reactStrictMode: true,
   reactCompiler: false,
 
+  webpack(config) {
+    config.ignoreWarnings = [
+      ...(config.ignoreWarnings || []),
+      {
+        module: /@vladmandic\/face-api/,
+        message: /Critical dependency: require function is used in a way in which dependencies cannot be statically extracted/,
+      },
+    ];
+
+    return config;
+  },
+
   experimental: {
     workerThreads: false,
     cpus: 2,

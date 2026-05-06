@@ -18,7 +18,6 @@ import {
     Pie,
     Cell,
     Tooltip,
-    ResponsiveContainer,
 } from "recharts";
 
 const stripHtml = (h) => (h || "").replace(/<[^>]+>/g, "");
@@ -199,9 +198,8 @@ export default function ViewCards() {
                           Cards Category Distribution
                       </h3>
 
-                      <div className="h-64">
-                          <ResponsiveContainer width="100%" height="100%">
-                              <PieChart>
+                      <div className="flex h-64 items-center justify-center">
+                          <PieChart width={280} height={240}>
 
                                   <Pie
                                       data={categoryData}
@@ -256,9 +254,8 @@ export default function ViewCards() {
                                       })}
                                   </Pie>
 
-                                  <Tooltip />
-                              </PieChart>
-                          </ResponsiveContainer>
+                              <Tooltip />
+                          </PieChart>
                       </div>
                   </div>
 
