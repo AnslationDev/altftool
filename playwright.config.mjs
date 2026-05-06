@@ -12,6 +12,15 @@ export default defineConfig({
   timeout: 45_000,
   expect: {
     timeout: 15_000,
+    toHaveScreenshot: {
+      animations: "disabled",
+      caret: "hide",
+      maxDiffPixelRatio: 0.01,
+      scale: "css",
+      stylePath: "./tests/styles/visual-stable.css",
+      threshold: 0.22,
+      pathTemplate: "{testDir}/__screenshots__{/projectName}/{testFilePath}/{arg}{ext}",
+    },
   },
   workers: process.env.CI ? 2 : 3,
   reporter: process.env.CI ? [["github"], ["list"]] : "list",

@@ -25,6 +25,7 @@ export default function AdToolCard({ ad }) {
         src={ad.bannerUrl}
         alt="Sponsored"
         fill
+        loading="eager"
         sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 420px"
         className="
           object-cover

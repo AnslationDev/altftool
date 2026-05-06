@@ -29,6 +29,8 @@
     "firebase:check": "node scripts/check-firebase-contracts.mjs",
     "test:smoke": "playwright test tests/smoke.spec.mjs",
     "test:routes": "playwright test tests/route-audit.spec.mjs",
+    "test:visual": "playwright test tests/visual.spec.mjs",
+    "test:visual:update": "playwright test tests/visual.spec.mjs --update-snapshots",
     "validate": "npm run lint:web && npm run lint:web:budget && npm run routes:check && npm run firebase:check && npm run audit && npm run build && npm run test:smoke",
     "validate:full": "npm run validate && npm run test:routes"
   },
