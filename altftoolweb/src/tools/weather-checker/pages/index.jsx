@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import axios from "axios";
 import {
   Cloud,
@@ -55,6 +55,23 @@ const weatherCodeToDescription = (code) => {
   return "Unknown weather";
 };
 
+async function getCoordinates(cityName) {
+  const url = `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(
+    cityName,
+  )}&count=1&language=en&format=json`;
+  const res = await axios.get(url);
+  if (!res.data.results || res.data.results.length === 0)
+    throw new Error("City not found");
+  const { latitude, longitude, name, country } = res.data.results[0];
+  return { latitude, longitude, name, country };
+}
+
+async function getCurrentWeather(lat, lon) {
+  const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true&timezone=auto`;
+  const res = await axios.get(url);
+  return res.data.current_weather;
+}
+
 /* Dummy Forecast */
 const dummyForecast = [
   { day: "Mon", high: 28, low: 20, code: 0 },
@@ -73,42 +90,7 @@ export default function WeatherApp() {
   const [error, setError] = useState("");
   const [detected, setDetected] = useState(false);
 
-  /* Auto detect location on start */
-  useEffect(() => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        async (pos) => {
-          try {
-            setDetected(true);
-            const { latitude, longitude } = pos.coords;
-            await fetchWeatherByCoords(latitude, longitude);
-          } catch {}
-        },
-        () => {},
-        { maximumAge: 60000, timeout: 8000 },
-      );
-    }
-  }, []);
-
-  /* API Helpers */
-  async function getCoordinates(cityName) {
-    const url = `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(
-      cityName,
-    )}&count=1&language=en&format=json`;
-    const res = await axios.get(url);
-    if (!res.data.results || res.data.results.length === 0)
-      throw new Error("City not found");
-    const { latitude, longitude, name, country } = res.data.results[0];
-    return { latitude, longitude, name, country };
-  }
-
-  async function getCurrentWeather(lat, lon) {
-    const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true&timezone=auto`;
-    const res = await axios.get(url);
-    return res.data.current_weather;
-  }
-
-  async function fetchWeatherByCoords(lat, lon) {
+  const fetchWeatherByCoords = useCallback(async (lat, lon) => {
     setLoading(true);
     setError("");
     setWeather(null);
@@ -127,7 +109,24 @@ export default function WeatherApp() {
     } finally {
       setLoading(false);
     }
-  }
+  }, []);
+
+  /* Auto detect location on start */
+  useEffect(() => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        async (pos) => {
+          try {
+            setDetected(true);
+            const { latitude, longitude } = pos.coords;
+            await fetchWeatherByCoords(latitude, longitude);
+          } catch {}
+        },
+        () => {},
+        { maximumAge: 60000, timeout: 8000 },
+      );
+    }
+  }, [fetchWeatherByCoords]);
 
   const searchWeather = async (e) => {
     e.preventDefault();

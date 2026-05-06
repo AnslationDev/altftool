@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
+import React, { useMemo, useState, useEffect } from 'react';
 import { QRCodeCanvas } from 'qrcode.react'; 
 import { 
   Link, Wifi, User, CreditCard, 
@@ -33,6 +33,22 @@ export default function MainComponent() {
   const [vCard, setVCard] = useState({ fn: '', ln: '', tel: '', email: '' });
   const [upi, setUpi] = useState({ vpa: '', name: '', am: '' });
 
+  const computedQrValue = useMemo(() => {
+    if (activeTab === 'WIFI') {
+      return `WIFI:S:${wifi.ssid};T:${wifi.enc};P:${wifi.pass};;`;
+    }
+
+    if (activeTab === 'vCARD') {
+      return `BEGIN:VCARD\nVERSION:3.0\nFN:${vCard.fn} ${vCard.ln}\nTEL:${vCard.tel}\nEMAIL:${vCard.email}\nEND:VCARD`;
+    }
+
+    if (activeTab === 'UPI') {
+      return `upi://pay?pa=${upi.vpa}&pn=${encodeURIComponent(upi.name)}&am=${upi.am}&cu=INR`;
+    }
+
+    return qrValue || 'https://google.com';
+  }, [activeTab, qrValue, upi, vCard, wifi]);
+
   useEffect(() => { 
     setIsClient(true); 
     // Live API for Analytics
@@ -41,20 +57,6 @@ export default function MainComponent() {
       .then(data => setGeoData({ city: data.city, country: data.country, isp: data.isp }))
       .catch(() => setGeoData({ city: 'Local', country: 'India', isp: 'Network' }));
   }, []);
-
-  // --- Logic Engine ---
-  useEffect(() => {
-    if (activeTab === 'BULK') return; 
-    if (activeTab === 'URL') {
-      setQrValue(qrValue || 'https://google.com');
-    } else if (activeTab === 'WIFI') {
-      setQrValue(`WIFI:S:${wifi.ssid};T:${wifi.enc};P:${wifi.pass};;`);
-    } else if (activeTab === 'vCARD') {
-      setQrValue(`BEGIN:VCARD\nVERSION:3.0\nFN:${vCard.fn} ${vCard.ln}\nTEL:${vCard.tel}\nEMAIL:${vCard.email}\nEND:VCARD`);
-    } else if (activeTab === 'UPI') {
-      setQrValue(`upi://pay?pa=${upi.vpa}&pn=${encodeURIComponent(upi.name)}&am=${upi.am}&cu=INR`);
-    }
-  }, [activeTab, wifi, vCard, upi, qrValue]);
 
   // --- Bulk CSV Functions ---
   const handleCSVUpload = (e) => {
@@ -239,7 +241,7 @@ export default function MainComponent() {
                 <div className="bg-white border border-(--border) rounded-2xl p-6 shadow-inner transition-transform hover:scale-[1.02]">
                   <QRCodeCanvas
                     id="qr-code"
-                    value={qrValue || " "}
+                    value={computedQrValue || " "}
                     size={size}
                     bgColor={bgColor}
                     fgColor={fgColor}

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Search, MapPin, Briefcase, DollarSign, Calendar, ExternalLink, Globe, Filter, X } from 'lucide-react';
 import { useJSearch } from '../hooks/useJSearch';
 import ManagedImage from "@/components/ui/ManagedImage";
@@ -112,7 +112,7 @@ export const JobSearchBoard = ({ query, filters, adzunaJobs = [] }) => {
   const [salaryLoading, setSalaryLoading] = useState(false);
   const [visibleCount, setVisibleCount] = useState(15);
 
-  const fetchCompanySalaries = async (skill) => {
+  const fetchCompanySalaries = useCallback(async (skill) => {
     if (!skill) return;
     setSalaryLoading(true);
     const companies = ['Amazon', 'Google', 'Microsoft', 'Meta'];
@@ -133,7 +133,7 @@ export const JobSearchBoard = ({ query, filters, adzunaJobs = [] }) => {
     } finally {
       setSalaryLoading(false);
     }
-  };
+  }, [filters.country]);
 
   useEffect(() => {
     if (query?.trim()) {
@@ -146,7 +146,7 @@ export const JobSearchBoard = ({ query, filters, adzunaJobs = [] }) => {
         searchJobs(query, filters);
       }
     }
-  }, [query, filters.remote, filters.fullTime, filters.country, adzunaJobs.length]);
+  }, [adzunaJobs.length, fetchCompanySalaries, filters, query, searchJobs]);
 
   if (!query) return null;
 

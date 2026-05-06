@@ -1,13 +1,12 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useMemo, useState, useEffect } from "react";
 
 import SettingsContent from "./components/SettingsContent";
 import SettingsSidebar from "./components/SettingsSidebar";
 import { settingsData } from "./data/settingData";
 import { useAds } from "@/ads/AdsProvider";
 import AdCard from "@/ads/layouts/settingsupport/AdCardSupport";
-import { useMemo } from "react";
 
 
 
@@ -21,13 +20,9 @@ const sidebarAds = useMemo(() => {
   return ads.slice(0, 4);
 }, [ads]);
 
-  // Check if the activeId is valid
-  useEffect(() => {
-    const isValidId = settingsData.some(setting => setting.id === activeId);
-    if (!isValidId && settingsData.length > 0) {
-      setActiveId(settingsData[0].id);
-    }
-  }, [activeId]);
+  const resolvedActiveId = settingsData.some((setting) => setting.id === activeId)
+    ? activeId
+    : settingsData[0]?.id;
 
   // Prevent body scroll when sidebar is open on mobile
   useEffect(() => {
@@ -70,7 +65,7 @@ const sidebarAds = useMemo(() => {
         <div className="hidden md:block md:w-72 shrink-0">
           <div className="sticky top-0 h-screen overflow-y-auto">
             <SettingsSidebar
-              activeId={activeId}
+              activeId={resolvedActiveId}
               onSelect={handleSelect}
               onClose={handleCloseSidebar}
             />
@@ -89,7 +84,7 @@ const sidebarAds = useMemo(() => {
           style={{ top: '62', paddingTop: '0' }}
         >
           <SettingsSidebar
-            activeId={activeId}
+            activeId={resolvedActiveId}
             onSelect={handleSelect}
             onClose={handleCloseSidebar}
           />
@@ -110,7 +105,7 @@ const sidebarAds = useMemo(() => {
   {/* Main Content */}
   <main className="flex-1 min-w-0">
     <SettingsContent
-      activeId={activeId}
+      activeId={resolvedActiveId}
       onOpenSidebar={handleOpenSidebar}
     />
   </main>
@@ -133,4 +128,3 @@ const sidebarAds = useMemo(() => {
     </div>
   );
 };
-

@@ -1,6 +1,6 @@
 "use client";
 import { usePathname, useRouter } from "next/navigation";
-import React, { useState, useRef, useEffect } from "react";
+import React, { useCallback, useState, useRef, useEffect } from "react";
 import { createPortal } from "react-dom";
 // import data from "../../../(data)/data.json";
 import Image from "next/image";
@@ -17,8 +17,7 @@ import Faq from "../../../(components)/brandComparison/FAQ";
 import Details from "@/app/brandrating/(components)/detail/Details";
 import { categoryService } from "../../../service/service";
 
-function Page() {
-  function getURlLink(value) {
+function getURlLink(value) {
     if (!value) return "";
 
     const str =
@@ -31,7 +30,9 @@ function Page() {
       .trim()
       .replace(/&/g, "and")
       .replace(/\s+/g, "-");
-  }
+}
+
+function Page() {
   const pathname = usePathname();
   const router = useRouter();
 
@@ -67,14 +68,29 @@ function Page() {
   const categoryName = segments.at(-3) || "";
   const subCategoryName = segments.at(-2) || "";
   const brandName = segments.at(-1) || "";
-  const [categoryData, setCategoryData] = useState(null);
-  const [subCategoryData, setSubCategoryData] = useState(null);
   const [activeCategoryId, setActiveCategoryId] = useState(null);
-  const [mounted, setMounted] = useState(false);
   const [dropdownPos, setDropdownPos] = useState({ top: 0, left: 0 });
   const [faqs, setFaqs] = useState([]);
   const filterRef = useRef(null);
   const buttonRefs = useRef({});
+  const { categoryData, subCategoryData } = React.useMemo(() => {
+    if (!categories.length) {
+      return { categoryData: null, subCategoryData: null };
+    }
+
+    const foundCategory = categories.find(
+      (item) => getURlLink(item.category || item.name) === categoryName
+    );
+
+    const foundSubCategory = foundCategory?.subcategories?.find(
+      (sub) => getURlLink(sub.name) === subCategoryName
+    );
+
+    return {
+      categoryData: foundCategory || null,
+      subCategoryData: foundSubCategory || null,
+    };
+  }, [categories, categoryName, subCategoryName]);
   const activeCategory = filters.find(
     (f) => f.id === activeCategoryId
   );
@@ -153,29 +169,7 @@ useEffect(() => {
     }) || null;
   }, [allBrands, brandName]);
 
-
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-  useEffect(() => {
-    if (!categories.length) return;
-
-    const foundCategory = categories.find(
-      (item) =>
-        getURlLink(item.category || item.name) === categoryName
-    );
-
-    const foundSubCategory = foundCategory?.subcategories?.find(
-      (sub) => getURlLink(sub.name) === subCategoryName
-    );
-
-    setCategoryData(foundCategory || null);
-    setSubCategoryData(foundSubCategory || null);
-
-  }, [categories, categoryName, subCategoryName, pathname]);
-
-  function calcPos(idx) {
+  const calcPos = useCallback((idx) => {
     const btn = buttonRefs.current[idx];
     if (!btn) return;
     const rect = btn.getBoundingClientRect();
@@ -183,7 +177,7 @@ useEffect(() => {
       top: rect.bottom + 8,
       left: Math.min(rect.left, window.innerWidth - 232),
     });
-  }
+  }, []);
 
   function handleFilterClick(catId, idx) {
     if (activeCategoryId === catId) {
@@ -219,7 +213,7 @@ useEffect(() => {
       document.removeEventListener("pointerdown", handleClickOutside);
       window.removeEventListener("scroll", handleScroll, true);
     };
-  }, [activeCategoryId]);
+  }, [activeCategoryId, calcPos, filters]);
 
 
   const featureIcons = {
@@ -300,7 +294,7 @@ useEffect(() => {
           </div>
         </section>
 
-        {mounted &&
+        {typeof document !== "undefined" &&
           activeCategoryId !== null &&
           activeCategory?.subCategories?.length > 0 &&
           createPortal(

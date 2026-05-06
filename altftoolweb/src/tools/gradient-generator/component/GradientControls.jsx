@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import toast from "react-hot-toast";
 import AngleDial from "./AngleDial";
 import { Copy, Download, Share2 } from "lucide-react";
@@ -36,15 +36,6 @@ export default function GradientControls({
     toast.success(`${activeFormat} copied!`);
   };
 
-  const prevGradientRef = useRef("");
-
-  useEffect(() => {
-    if (gradient !== prevGradientRef.current) {
-      prevGradientRef.current = gradient;
-      onGradientChange(gradient);
-    }
-  }, [gradient]);
-
   const [history, setHistory] = useState(() => {
     try {
       return JSON.parse(localStorage.getItem("gradientHistory")) || [];
@@ -63,7 +54,7 @@ export default function GradientControls({
       localStorage.setItem("gradientHistory", JSON.stringify(updated));
       return updated;
     });
-  }, [gradient]);
+  }, [angle, color1, color2, gradient, gradientType, onGradientChange]);
 
   const downloadAsPNG = () => {
     const canvas = document.createElement("canvas");

@@ -1,8 +1,26 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useCallback, useState, useEffect, useRef } from 'react';
 import { AlertCircle, CheckCircle, FileText, Zap, BookOpen, Globe, Code, Sparkles, Mic, MicOff, BarChart3, Trash2 } from 'lucide-react';
 import Features from '../components/Features';
+
+const VALIDATION_RULES = [
+  { name: 'Repeated Words', pattern: /\b(\w+)\s+\1\b/gi, message: 'Repeated word', category: 'grammar', suggestion: (m) => m.split(/\s+/)[0] },
+  { name: 'Extra Spaces', pattern: /\s{2,}/g, message: 'Multiple spaces', category: 'suggestion', suggestion: () => ' ' },
+  { name: 'Capitalization', pattern: /(^|[.!?]\s+)([a-z])/g, message: 'Missing capital', category: 'suggestion', suggestion: (m, p1, p2) => p1 + p2.toUpperCase() }
+];
+
+const calculateInsights = (input) => {
+  if (!input.trim()) return { mostUsedWord: '-', longestSentence: '-', avgWordLength: 0 };
+  const wordsArray = input.toLowerCase().match(/\b(\w+)\b/g) || [];
+  const sentencesArray = input.split(/[.!?]+/).filter(s => s.trim().length > 0);
+  const wordFreq = {};
+  wordsArray.forEach(w => wordFreq[w] = (wordFreq[w] || 0) + 1);
+  const mostUsed = Object.keys(wordFreq).reduce((a, b) => wordFreq[a] > wordFreq[b] ? a : b, '-');
+  const longest = sentencesArray.reduce((a, b) => a.length > b.length ? a : b, '-');
+  const avgLen = wordsArray.length > 0 ? (wordsArray.join('').length / wordsArray.length).toFixed(1) : 0;
+  return { mostUsedWord: mostUsed, longestSentence: longest.length > 30 ? longest.substring(0, 30) + '...' : longest, avgWordLength: avgLen };
+};
 
 export default function ToolHome() {
   const [text, setText] = useState('');
@@ -107,31 +125,13 @@ export default function ToolHome() {
     setText(newText.replace(/\s+/g, ' ').trim());
   };
 
-  const validationRules = [
-    { name: 'Repeated Words', pattern: /\b(\w+)\s+\1\b/gi, message: 'Repeated word', category: 'grammar', suggestion: (m) => m.split(/\s+/)[0] },
-    { name: 'Extra Spaces', pattern: /\s{2,}/g, message: 'Multiple spaces', category: 'suggestion', suggestion: () => ' ' },
-    { name: 'Capitalization', pattern: /(^|[.!?]\s+)([a-z])/g, message: 'Missing capital', category: 'suggestion', suggestion: (m, p1, p2) => p1 + p2.toUpperCase() }
-  ];
-
-  const calculateInsights = (input) => {
-    if (!input.trim()) return { mostUsedWord: '-', longestSentence: '-', avgWordLength: 0 };
-    const wordsArray = input.toLowerCase().match(/\b(\w+)\b/g) || [];
-    const sentencesArray = input.split(/[.!?]+/).filter(s => s.trim().length > 0);
-    const wordFreq = {};
-    wordsArray.forEach(w => wordFreq[w] = (wordFreq[w] || 0) + 1);
-    const mostUsed = Object.keys(wordFreq).reduce((a, b) => wordFreq[a] > wordFreq[b] ? a : b, '-');
-    const longest = sentencesArray.reduce((a, b) => a.length > b.length ? a : b, '-');
-    const avgLen = wordsArray.length > 0 ? (wordsArray.join('').length / wordsArray.length).toFixed(1) : 0;
-    return { mostUsedWord: mostUsed, longestSentence: longest.length > 30 ? longest.substring(0, 30) + '...' : longest, avgWordLength: avgLen };
-  };
-
-  const checkGrammar = async () => {
+  const checkGrammar = useCallback(async () => {
     setIsChecking(true);
     const foundErrors = [];
     const foundSuggestions = [];
 
     // Local rules
-    validationRules.forEach(rule => {
+    VALIDATION_RULES.forEach(rule => {
       let match;
       const regex = new RegExp(rule.pattern.source, rule.pattern.flags);
       while ((match = regex.exec(text)) !== null) {
@@ -162,7 +162,7 @@ export default function ToolHome() {
     const insights = calculateInsights(text);
     setStats({ words: text.trim().split(/\s+/).filter(Boolean).length, characters: text.length, sentences: text.split(/[.!?]+/).filter(s => s.trim()).length, readability: 80, ...insights });
     setIsChecking(false);
-  };
+  }, [text]);
 
   const renderHighlightedText = () => {
     if (errors.length === 0) return <div className="p-4 font-mono text-sm text-gray-700 whitespace-pre-wrap">{text || 'Start typing...'}</div>;
@@ -187,7 +187,7 @@ export default function ToolHome() {
   useEffect(() => {
     const timer = setTimeout(() => { if (text) checkGrammar(); }, 1500);
     return () => clearTimeout(timer);
-  }, [text]);
+  }, [checkGrammar, text]);
 
   return (
     <div className="min-h-screen">

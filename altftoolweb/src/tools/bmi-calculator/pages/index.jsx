@@ -1,4 +1,4 @@
-import React, { useCallback, useState, useEffect } from 'react';
+import React, { useMemo, useState } from 'react';
 import { Activity, Heart, Droplet, Flame, Download, RotateCcw, AlertCircle, Trophy, Zap, CheckCircle2, Target, Utensils, Share2 } from 'lucide-react';
 import Description from '../components/Description';
 
@@ -18,7 +18,41 @@ function BMIGauge({ bmi, category }) {
   );
 }
 
+const loadBmiTracker = () => {
+  if (typeof window === 'undefined') {
+    return { history: [], streak: 0 };
+  }
+
+  const savedStreak = Number.parseInt(localStorage.getItem('bmiStreak') || '0', 10) || 0;
+  const lastDate = localStorage.getItem('lastCheckDate');
+  const today = new Date().toLocaleDateString();
+
+  let history = [];
+  try {
+    const saved = localStorage.getItem('bmiHistory');
+    history = saved ? JSON.parse(saved) : [];
+  } catch {
+    history = [];
+  }
+
+  if (lastDate === today) {
+    return { history, streak: savedStreak };
+  }
+
+  const yesterday = new Date();
+  yesterday.setDate(yesterday.getDate() - 1);
+  const nextStreak = lastDate === yesterday.toLocaleDateString()
+    ? savedStreak + 1
+    : 1;
+
+  localStorage.setItem('bmiStreak', String(nextStreak));
+  localStorage.setItem('lastCheckDate', today);
+
+  return { history, streak: nextStreak };
+};
+
 export default function ToolHome() {
+  const [initialTracker] = useState(loadBmiTracker);
   const [heightUnit, setHeightUnit] = useState('cm');
   const [weightUnit, setWeightUnit] = useState('kg');
   const [heightCm, setHeightCm] = useState('');
@@ -29,45 +63,16 @@ export default function ToolHome() {
   const [gender, setGender] = useState('');
   const [result, setResult] = useState(null);
   const [errors, setErrors] = useState({});
-  const [history, setHistory] = useState([]);
-  const [streak, setStreak] = useState(0);
-  const [badges, setBadges] = useState([]);
+  const [history, setHistory] = useState(initialTracker.history);
+  const [streak] = useState(initialTracker.streak);
 
-  const checkBadges = useCallback((hist, currentStreak) => {
-    let earned = [];
-    if (hist.length > 0) earned.push({ id: 1, name: "First Goal", icon: <CheckCircle2 className="w-3.5 h-3.5" /> });
-    if (currentStreak >= 7) earned.push({ id: 2, name: "7 Day Streak", icon: <Zap className="w-3.5 h-3.5" /> });
-    if (hist.some(h => h.category.name === 'Normal')) earned.push({ id: 3, name: "Elite Health", icon: <Trophy className="w-3.5 h-3.5" /> });
-    setBadges(earned);
-  }, []);
-
-  useEffect(() => {
-    const saved = localStorage.getItem('bmiHistory');
-    const savedStreak = localStorage.getItem('bmiStreak') || 0;
-    const lastDate = localStorage.getItem('lastCheckDate');
-
-    if (saved) {
-      try {
-        const parsedHistory = JSON.parse(saved);
-        setHistory(parsedHistory);
-        checkBadges(parsedHistory, parseInt(savedStreak));
-      } catch (e) {
-        console.error('Failed to load history');
-      }
-    }
-
-    const today = new Date().toLocaleDateString();
-    if (lastDate !== today) {
-      const yesterday = new Date();
-      yesterday.setDate(yesterday.getDate() - 1);
-      const newStreak = (lastDate === yesterday.toLocaleDateString()) ? parseInt(savedStreak) + 1 : 1;
-      setStreak(newStreak);
-      localStorage.setItem('bmiStreak', newStreak);
-      localStorage.setItem('lastCheckDate', today);
-    } else {
-      setStreak(parseInt(savedStreak));
-    }
-  }, [checkBadges]);
+  const badges = useMemo(() => {
+    const earned = [];
+    if (history.length > 0) earned.push({ id: 1, name: "First Goal", icon: <CheckCircle2 className="w-3.5 h-3.5" /> });
+    if (streak >= 7) earned.push({ id: 2, name: "7 Day Streak", icon: <Zap className="w-3.5 h-3.5" /> });
+    if (history.some(h => h.category.name === 'Normal')) earned.push({ id: 3, name: "Elite Health", icon: <Trophy className="w-3.5 h-3.5" /> });
+    return earned;
+  }, [history, streak]);
 
   const getHeightInCm = () => {
     if (heightUnit === 'cm') return parseFloat(heightCm) || 0;
@@ -152,8 +157,11 @@ export default function ToolHome() {
     };
 
     setResult(newResult);
-    setHistory(prev => [newResult, ...prev].slice(0, 10));
-    localStorage.setItem('bmiHistory', JSON.stringify([newResult, ...history].slice(0, 10)));
+    setHistory((prev) => {
+      const nextHistory = [newResult, ...prev].slice(0, 10);
+      localStorage.setItem('bmiHistory', JSON.stringify(nextHistory));
+      return nextHistory;
+    });
   };
 
   const downloadReport = () => {

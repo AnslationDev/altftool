@@ -210,7 +210,7 @@
 
 
 
-import React, { useState, useEffect, useRef } from "react";
+import React, { useCallback, useState, useEffect, useRef } from "react";
 import {
   Mic,
   Square,
@@ -276,14 +276,8 @@ export default function ToolHome() {
     // }
   }, []);
 
-  useEffect(() => {
-    if (!isListening && originalText.trim().length > 0) {
-      handleTranslate(originalText);
-    }
-  }, [isListening]);
-
   // Translation API Function
-  const handleTranslate = async (text) => {
+  const handleTranslate = useCallback(async (text) => {
     setIsTranslating(true);
     try {
       //  Memory Free Translation API
@@ -301,7 +295,13 @@ export default function ToolHome() {
     } finally {
       setIsTranslating(false);
     }
-  };
+  }, [targetLang]);
+
+  useEffect(() => {
+    if (!isListening && originalText.trim().length > 0) {
+      handleTranslate(originalText);
+    }
+  }, [handleTranslate, isListening, originalText]);
 
   const toggleListening = () => {
     if (isListening) {

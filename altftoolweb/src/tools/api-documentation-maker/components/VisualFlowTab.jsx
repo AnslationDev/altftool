@@ -181,7 +181,7 @@ export default function VisualFlowTab({ swaggerSpec }) {
     const { nodes: n, edges: e } = buildNodesAndEdges(swaggerSpec);
     setNodes(n);
     setEdges(e);
-  }, [swaggerSpec]);
+  }, [setEdges, setNodes, swaggerSpec]);
 
   const onConnect = useCallback(
     (params) => setEdges((eds) => addEdge(params, eds)),

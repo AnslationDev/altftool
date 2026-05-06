@@ -46,11 +46,6 @@ const InformativeVideos = ({ data = videos, categoryList = categories }) => {
     return allFilteredVideos.slice(0, visibleCount);
   }, [allFilteredVideos, visibleCount]);
 
-  // 3. Reset visible count when filters change
-  useEffect(() => {
-    setVisibleCount(6);
-  }, [searchQuery, selectedCategory]);
-
   const handleLoadMore = () => {
     setVisibleCount((prev) => prev + 6);
   };
@@ -87,7 +82,10 @@ const InformativeVideos = ({ data = videos, categoryList = categories }) => {
                 placeholder="Search resources..."
                 className="w-full p-4 bg-transparent focus:outline-none font-medium text-sm text-foreground placeholder:text-muted-foreground/70"
                 value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
+                onChange={(e) => {
+                  setSearchQuery(e.target.value);
+                  setVisibleCount(6);
+                }}
               />
             </div>
           </div>
@@ -117,7 +115,10 @@ const InformativeVideos = ({ data = videos, categoryList = categories }) => {
                 return (
                   <button
                     key={category}
-                    onClick={() => setSelectedCategory(category)}
+                    onClick={() => {
+                      setSelectedCategory(category);
+                      setVisibleCount(6);
+                    }}
                     className="relative min-w-fit px-5 py-2 rounded-full transition-all duration-300 isolate"
                   >
                     {isActive && (
