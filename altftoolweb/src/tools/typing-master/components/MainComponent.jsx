@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useCallback, useState, useRef, useEffect } from "react";
 import Header from "./Header";
 
 /* ================= TEXT DATA ================= */
@@ -72,8 +72,39 @@ export default function MainComponent() {
   const boxRef = useRef(null);
   const intervalRef = useRef(null);
   const startTimeRef = useRef(null);
+  const calculateResultRef = useRef(null);
 
   useEffect(() => { boxRef.current?.focus(); }, []);
+
+  /* ================= CALCULATE WPM & ACCURACY ================= */
+  const calculateStats = useCallback(() => {
+    const minutes = timer / 60 || 1 / 60;
+    const correctChars = typed.split("").filter((c, i) => c === TEXT[i]).length;
+    const accuracy = typed.length ? Math.round((correctChars / typed.length) * 100) : 0;
+    const wpm = Math.round((correctChars / 5) / minutes);
+    return { wpm, accuracy };
+  }, [TEXT, timer, typed]);
+
+  const calculateResult = useCallback(() => {
+    const { wpm, accuracy } = calculateStats();
+    let level = "NORMAL";
+    if (timeLimit === 60) {
+      if (wpm >= 50 && accuracy >= 90) level = "WINNER";
+      else if (wpm < 20) level = "LOOSE";
+    } else if (timeLimit === 30) {
+      if (wpm >= 50 && accuracy >= 90) level = "WINNER";
+      else if (wpm < 20) level = "LOOSE";
+    } else if (timeLimit === 15) {
+      if (wpm >= 30 && accuracy >= 85) level = "WINNER";
+      else if (wpm < 10) level = "LOOSE";
+    }
+    setResult({ level, wpm, accuracy, errors, typed: typed.length });
+    setRunning(false);
+  }, [calculateStats, errors, timeLimit, typed.length]);
+
+  useEffect(() => {
+    calculateResultRef.current = calculateResult;
+  }, [calculateResult]);
 
   /* Timer */
   useEffect(() => {
@@ -82,7 +113,7 @@ export default function MainComponent() {
         setTimer(prev => {
           if (prev + 1 >= timeLimit) {
             clearInterval(intervalRef.current);
-            calculateResult();
+            calculateResultRef.current?.();
             return timeLimit;
           }
           return prev + 1;
@@ -116,33 +147,6 @@ export default function MainComponent() {
     setRunning(true);
   }
 };
-
-
-  /* ================= CALCULATE WPM & ACCURACY ================= */
-  const calculateStats = () => {
-    const minutes = timer / 60 || 1 / 60;
-    const correctChars = typed.split("").filter((c, i) => c === TEXT[i]).length;
-    const accuracy = typed.length ? Math.round((correctChars / typed.length) * 100) : 0;
-    const wpm = Math.round((correctChars / 5) / minutes);
-    return { wpm, accuracy };
-  };
-
-  const calculateResult = () => {
-    const { wpm, accuracy } = calculateStats();
-    let level = "NORMAL";
-    if (timeLimit === 60) {
-      if (wpm >= 50 && accuracy >= 90) level = "WINNER";
-      else if (wpm < 20) level = "LOOSE";
-    } else if (timeLimit === 30) {
-      if (wpm >= 50 && accuracy >= 90) level = "WINNER";
-      else if (wpm < 20) level = "LOOSE";
-    } else if (timeLimit === 15) {
-      if (wpm >= 30 && accuracy >= 85) level = "WINNER";
-      else if (wpm < 10) level = "LOOSE";
-    }
-    setResult({ level, wpm, accuracy, errors, typed: typed.length });
-    setRunning(false);
-  };
 
   const resetTest = () => {
     setTyped("");

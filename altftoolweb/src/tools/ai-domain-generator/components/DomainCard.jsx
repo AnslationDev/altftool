@@ -4,6 +4,8 @@ import { Copy, Check, Star } from "lucide-react";
 import { useState, useContext, useMemo } from "react";
 import { DomainContext } from "../context/DomainContext";
 
+const LOGO_COLORS = ["#4F46E5", "#F59E0B", "#10B981", "#EF4444", "#8B5CF6", "#EC4899", "#0EA5E9"];
+
 const DomainCard = ({ domain, onSelect }) => {
   const [copied, setCopied] = useState(false);
   const { savedDomains, saveDomain } = useContext(DomainContext);
@@ -13,13 +15,10 @@ const DomainCard = ({ domain, onSelect }) => {
   const tld = domainName.split(".")[1];
   const isSaved = savedDomains.includes(domainName);
 
-  // Random colors palette for logo
-  const colors = ["#4F46E5", "#F59E0B", "#10B981", "#EF4444", "#8B5CF6", "#EC4899", "#0EA5E9"];
-  
   // Generate logo style variations using useMemo to keep consistent per domain
   const logoStyle = useMemo(() => {
-    const color1 = colors[domainName.length % colors.length];
-    const color2 = colors[(domainName.length + 3) % colors.length];
+    const color1 = LOGO_COLORS[domainName.length % LOGO_COLORS.length];
+    const color2 = LOGO_COLORS[(domainName.length + 3) % LOGO_COLORS.length];
     const rotation = (domainName.length * 7) % 15 - 7; // -7 to +7 degrees
     const fontSizes = [14, 16, 18, 20];
     const fontWeights = ["font-bold", "font-extrabold", "italic"];

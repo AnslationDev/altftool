@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useMemo, useState } from "react";
 import { GitFork } from "lucide-react";
 
 const W = 600;
@@ -26,13 +26,10 @@ function getNodePositions(items) {
 }
 
 export default function SynonymExplorer({ word, synData, antData, onSearch }) {
-  const [nodes, setNodes] = useState([]);
   const [expanded, setExpanded] = useState(false);
   const [hoveredWord, setHoveredWord] = useState(null);
-
-  useEffect(() => {
-    if (!expanded) return;
-
+  const nodes = useMemo(() => {
+    if (!expanded) return [];
     const synNodes = synData
       .slice(0, 6)
       .map((item) => ({ word: item.word, score: item.score || 500, type: "syn" }));
@@ -41,8 +38,7 @@ export default function SynonymExplorer({ word, synData, antData, onSearch }) {
       .slice(0, 4)
       .map((item) => ({ word: item.word, score: item.score || 500, type: "ant" }));
 
-    const allNodes = getNodePositions([...synNodes, ...antNodes]);
-    setNodes(allNodes);
+    return getNodePositions([...synNodes, ...antNodes]);
   }, [expanded, synData, antData]);
 
   if (!synData?.length && !antData?.length) return null;

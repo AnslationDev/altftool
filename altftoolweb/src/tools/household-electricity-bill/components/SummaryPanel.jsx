@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   CalendarDays,
   Gauge,
@@ -14,9 +14,10 @@ import {
 
 function AnimatedCounter({ value, formatter }) {
   const [displayValue, setDisplayValue] = useState(value);
+  const displayValueRef = useRef(value);
 
   useEffect(() => {
-    const start = displayValue;
+    const start = displayValueRef.current;
     const change = value - start;
     const startedAt = performance.now();
     const duration = 650;
@@ -31,7 +32,9 @@ function AnimatedCounter({ value, formatter }) {
       const eased =
         1 - Math.pow(1 - progress, 3);
 
-      setDisplayValue(start + change * eased);
+      const nextValue = start + change * eased;
+      displayValueRef.current = nextValue;
+      setDisplayValue(nextValue);
 
       if (progress < 1) {
         frame = requestAnimationFrame(tick);

@@ -61,7 +61,7 @@ export default function useAIEnhancements({
    setContrast(prev =>
   next ? Math.min(200, prev + 20) : Math.max(50, prev - 20)
 );
-  }, [setEyeSharpen, contrast, setContrast]);
+  }, [setEyeSharpen, setContrast]);
 
   // ─── Lighting Presets ───────────────────────────────────────────────────────
   const applyPreset = useCallback((type) => {

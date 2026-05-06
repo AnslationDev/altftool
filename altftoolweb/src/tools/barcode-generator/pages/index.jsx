@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useCallback, useState, useRef, useEffect } from 'react';
 import JsBarcode from 'jsbarcode';
 
 export default function ToolHome() {
@@ -27,7 +27,7 @@ export default function ToolHome() {
     { value: 'codabar', label: 'Codabar', example: '1234567' }
   ];
 
-  const generateBarcode = () => {
+  const generateBarcode = useCallback(() => {
     setError('');
     try {
       if (canvasRef.current && svgRef.current) {
@@ -51,11 +51,11 @@ export default function ToolHome() {
     } catch (err) {
       setError(err.message || 'Error generating barcode');
     }
-  };
+  }, [backgroundColor, barcodeData, barcodeFormat, displayValue, fontSize, height, lineColor, margin, width]);
 
   useEffect(() => {
     if (barcodeData) generateBarcode();
-  }, [barcodeData, barcodeFormat, width, height, displayValue, backgroundColor, lineColor, fontSize, margin]);
+  }, [barcodeData, generateBarcode]);
 
   const downloadBarcode = (format) => {
     if (format === 'png') {

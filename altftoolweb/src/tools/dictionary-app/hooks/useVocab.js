@@ -2,14 +2,19 @@ import { useState, useEffect } from "react";
 
 const STORAGE_KEY = "vocab_list";
 
-export function useVocab() {
-  const [savedWords, setSavedWords] = useState([]);
+const loadSavedWords = () => {
+  if (typeof window === "undefined") return [];
 
-  // localStorage se load on mount
-  useEffect(() => {
+  try {
     const stored = localStorage.getItem(STORAGE_KEY);
-    if (stored) setSavedWords(JSON.parse(stored));
-  }, []);
+    return stored ? JSON.parse(stored) : [];
+  } catch {
+    return [];
+  }
+};
+
+export function useVocab() {
+  const [savedWords, setSavedWords] = useState(loadSavedWords);
 
   // savedWords badla toh localStorage update karo
   useEffect(() => {

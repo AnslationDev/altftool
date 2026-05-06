@@ -4,30 +4,32 @@ import React, { createContext, useState, useEffect, useMemo } from "react";
 
 export const DomainContext = createContext();
 
+const loadStoredList = (key) => {
+  if (typeof window === "undefined") return [];
+
+  try {
+    return JSON.parse(localStorage.getItem(key) || "[]");
+  } catch (err) {
+    console.error("LocalStorage parse error:", err);
+    return [];
+  }
+};
+
 export const DomainProvider = ({ children }) => {
   const [suggestions, setSuggestions] = useState([]);
-  const [savedDomains, setSavedDomains] = useState([]);
+  const [savedDomains, setSavedDomains] = useState(() =>
+    loadStoredList("savedDomains")
+  );
   const [selectedDomain, setSelectedDomain] = useState(null);
-  const [searchHistory, setSearchHistory] = useState([]);
+  const [searchHistory, setSearchHistory] = useState(() =>
+    loadStoredList("searchHistory")
+  );
   const [filters, setFilters] = useState({
     length: "all",
     category: "all",
     tlds: [],
   });
   const [isLoading, setIsLoading] = useState(false);
-
-  // ✅ Load from localStorage safely (client-side only)
-  useEffect(() => {
-    try {
-      const saved = JSON.parse(localStorage.getItem("savedDomains") || "[]");
-      const history = JSON.parse(localStorage.getItem("searchHistory") || "[]");
-
-      setSavedDomains(saved);
-      setSearchHistory(history);
-    } catch (err) {
-      console.error("LocalStorage parse error:", err);
-    }
-  }, []);
 
   // Sync savedDomains to localStorage
   useEffect(() => {

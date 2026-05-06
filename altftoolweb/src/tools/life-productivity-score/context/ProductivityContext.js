@@ -2,28 +2,44 @@ import React, { useState, useEffect } from 'react';
 
 export const ProductivityContext = React.createContext({});
 
+const DEFAULT_GOALS = [
+    { id: 1, text: 'Finish coding task', completed: false },
+    { id: 2, text: '30 min reading', completed: false },
+    { id: 3, text: 'Gym session', completed: false },
+];
+
+const DEFAULT_TODOS = [
+    { id: 1, text: 'Morning routine', completed: false },
+    { id: 2, text: 'Meditate', completed: false },
+];
+
+const loadProductivityData = () => {
+    if (typeof window === 'undefined') return {};
+
+    try {
+        const saved = localStorage.getItem('productivityData');
+        return saved ? JSON.parse(saved) : {};
+    } catch {
+        return {};
+    }
+};
+
 export const ProductivityProvider = ({ children }) => {
-    const [sleep, setSleep] = useState(7);
-    const [work, setWork] = useState(8);
-    const [exercise, setExercise] = useState(30);
-    const [screenTime, setScreenTime] = useState(3);
-    const [water, setWater] = useState(8);
-    const [energy, setEnergy] = useState(7);
-    const [mood, setMood] = useState('😊');
-    const [habitsCompleted, setHabitsCompleted] = useState(0);
-    const [totalHabits, setTotalHabits] = useState(6);
-    const [goals, setGoals] = useState([
-        { id: 1, text: 'Finish coding task', completed: false },
-        { id: 2, text: '30 min reading', completed: false },
-        { id: 3, text: 'Gym session', completed: false },
-    ]);
-    const [todos, setTodos] = useState([
-        { id: 1, text: 'Morning routine', completed: false },
-        { id: 2, text: 'Meditate', completed: false },
-    ]);
-    const [streak, setStreak] = useState(3);
-    const [history, setHistory] = useState([]);
-    const [darkMode, setDarkMode] = useState(false);
+    const [initialData] = useState(loadProductivityData);
+    const [sleep, setSleep] = useState(() => initialData.sleep || 7);
+    const [work, setWork] = useState(() => initialData.work || 8);
+    const [exercise, setExercise] = useState(() => initialData.exercise || 30);
+    const [screenTime, setScreenTime] = useState(() => initialData.screenTime || 3);
+    const [water, setWater] = useState(() => initialData.water || 8);
+    const [energy, setEnergy] = useState(() => initialData.energy || 7);
+    const [mood, setMood] = useState(() => initialData.mood || '😊');
+    const [habitsCompleted, setHabitsCompleted] = useState(() => initialData.habitsCompleted || 0);
+    const [totalHabits, setTotalHabits] = useState(() => initialData.totalHabits || 6);
+    const [goals, setGoals] = useState(() => initialData.goals || DEFAULT_GOALS);
+    const [todos, setTodos] = useState(() => initialData.todos || DEFAULT_TODOS);
+    const [streak, setStreak] = useState(() => initialData.streak || 3);
+    const [history, setHistory] = useState(() => initialData.history || []);
+    const [darkMode, setDarkMode] = useState(() => initialData.darkMode || false);
     const [isTimerRunning, setIsTimerRunning] = useState(false);
 
     // Goal Helpers
@@ -77,28 +93,6 @@ export const ProductivityProvider = ({ children }) => {
     const handleWorkChange = (val) => validateAndSet(setWork, val, 'work');
     const handleExerciseChange = (val) => validateAndSet(setExercise, val, 'exercise');
     const handleScreenTimeChange = (val) => validateAndSet(setScreenTime, val, 'screenTime');
-
-    // Load data from localStorage on mount
-    useEffect(() => {
-        const saved = localStorage.getItem('productivityData');
-        if (saved) {
-            const data = JSON.parse(saved);
-            setSleep(data.sleep || 7);
-            setWork(data.work || 8);
-            setExercise(data.exercise || 30);
-            setScreenTime(data.screenTime || 3);
-            setWater(data.water || 8);
-            setEnergy(data.energy || 7);
-            setMood(data.mood || '😊');
-            setHabitsCompleted(data.habitsCompleted || 0);
-            setTotalHabits(data.totalHabits || 6);
-            setGoals(data.goals || goals);
-            setTodos(data.todos || todos);
-            setStreak(data.streak || 3);
-            setHistory(data.history || []);
-            setDarkMode(data.darkMode || false);
-        }
-    }, []);
 
     // Save data to localStorage whenever it changes
     useEffect(() => {

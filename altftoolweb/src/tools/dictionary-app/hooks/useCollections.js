@@ -24,17 +24,11 @@ function saveToStorage(data) {
 }
 
 export function useCollections() {
-  const [collections, setCollections] = useState(DEFAULT_COLLECTIONS);
-  const [wordMap, setWordMap] = useState({}); // { "daily-use": ["run", "happy"] }
-
-  // localStorage se load karo
-  useEffect(() => {
-    const stored = getStored();
-    if (stored) {
-      setCollections(stored.collections || DEFAULT_COLLECTIONS);
-      setWordMap(stored.wordMap || {});
-    }
-  }, []);
+  const [storedData] = useState(getStored);
+  const [collections, setCollections] = useState(
+    () => storedData?.collections || DEFAULT_COLLECTIONS
+  );
+  const [wordMap, setWordMap] = useState(() => storedData?.wordMap || {}); // { "daily-use": ["run", "happy"] }
 
   // save karo jab bhi change ho
   const persist = (newCollections, newWordMap) => {

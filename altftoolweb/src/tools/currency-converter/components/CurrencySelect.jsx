@@ -32,19 +32,22 @@ export default function CurrencySelect({
     const handler = (e) => {
       if (ref.current && !ref.current.contains(e.target)) {
         setOpen(false);
+        setSearch("");
       }
     };
     document.addEventListener("mousedown", handler);
     return () => document.removeEventListener("mousedown", handler);
   }, []);
 
-  // Reset search when opening/closing
-  useEffect(() => {
-    if (!open) setSearch("");
-  }, [open]);
-
   const getFlag = (code) =>
     `https://flagcdn.com/w40/${FLAG_MAP[code]?.toLowerCase() || "un"}.png`;
+
+  const toggleOpen = () => {
+    setOpen((current) => {
+      if (current) setSearch("");
+      return !current;
+    });
+  };
 
   return (
     <div ref={ref} className="relative flex w-full min-w-0 flex-1 flex-col space-y-2">
@@ -56,7 +59,7 @@ export default function CurrencySelect({
 
       {/* Select Button */}
       <button
-        onClick={() => setOpen(!open)}
+        onClick={toggleOpen}
         disabled={loading}
         type="button"
         className={`w-full  min-w-0 rounded-2xl border border-(--border) bg-(--card) p-3 sm:p-4 shadow-sm flex items-center justify-between text-(--foreground) transition-all hover:border-(--primary) focus:ring-4 focus:ring-(--primary)/10 ${

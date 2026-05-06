@@ -3,15 +3,20 @@
 import { useState, useEffect } from "react";
 import { ThumbsUp, Heart, Laugh } from "lucide-react";
 
-export default function Comments() {
-  const [comments, setComments] = useState([]);
-  const [input, setInput] = useState("");
+const loadComments = () => {
+  if (typeof window === "undefined") return [];
 
-  //  Load from localStorage
-  useEffect(() => {
+  try {
     const saved = localStorage.getItem("poll_comments");
-    if (saved) setComments(JSON.parse(saved));
-  }, []);
+    return saved ? JSON.parse(saved) : [];
+  } catch {
+    return [];
+  }
+};
+
+export default function Comments() {
+  const [comments, setComments] = useState(loadComments);
+  const [input, setInput] = useState("");
 
   //  Save to localStorage
   useEffect(() => {

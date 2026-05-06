@@ -2,17 +2,20 @@ import React, { createContext, useState, useEffect } from 'react';
 
 export const HabitContext = createContext({});
 
-export const HabitProvider = ({ children }) => {
-    const [habits, setHabits] = useState([]);
-    const [selectedTab, setSelectedTab] = useState('monthly');
+const loadHabits = () => {
+    if (typeof window === 'undefined') return [];
 
-    // Load habits from localStorage on mount
-    useEffect(() => {
+    try {
         const savedHabits = localStorage.getItem('habits');
-        if (savedHabits) {
-            setHabits(JSON.parse(savedHabits));
-        }
-    }, []);
+        return savedHabits ? JSON.parse(savedHabits) : [];
+    } catch {
+        return [];
+    }
+};
+
+export const HabitProvider = ({ children }) => {
+    const [habits, setHabits] = useState(loadHabits);
+    const [selectedTab, setSelectedTab] = useState('monthly');
 
     // Save habits to localStorage whenever they change
     useEffect(() => {

@@ -1,20 +1,13 @@
 "use client";
 
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext } from "react";
 import { DomainContext } from "../context/DomainContext";
 
 export default function FiltersSidebar() {
   const { filters, setFilters } = useContext(DomainContext);
-  const [tldsInput, setTldsInput] = useState(filters.tlds.join(","));
-
-  // Sync tldsInput with filters.tlds if filters change externally
-  useEffect(() => {
-    setTldsInput(filters.tlds.join(","));
-  }, [filters.tlds]);
+  const tldsInput = filters.tlds.join(",");
 
   const handleTldsChange = (value) => {
-    setTldsInput(value);
-
     setFilters((prev) => ({
       ...prev,
       tlds: value

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 const STORAGE_KEY = "user_streak";
 
@@ -22,46 +22,43 @@ function getStored() {
   }
 }
 
-export function useStreak() {
-  const [streak, setStreak] = useState(0);
-  const [bestStreak, setBestStreak] = useState(0);
-  const [lastVisit, setLastVisit] = useState(null);
+function getInitialStreakState() {
+  const today = getTodayDate();
+  const yesterday = getYesterdayDate();
+  const stored = getStored();
 
-  useEffect(() => {
-    const today = getTodayDate();
-    const yesterday = getYesterdayDate();
-    const stored = getStored();
+  let newStreak = 1;
+  let newBest = stored?.bestStreak || 1;
 
-    let newStreak = 1;
-    let newBest = stored?.bestStreak || 1;
-
-    if (stored) {
-      if (stored.lastVisit === today) {
-        // Aaj already visit kiya — same streak
-        newStreak = stored.streak;
-        newBest = stored.bestStreak;
-      } else if (stored.lastVisit === yesterday) {
-        // Kal bhi aaya tha — streak++
-        newStreak = stored.streak + 1;
-        newBest = Math.max(newStreak, stored.bestStreak);
-      } else {
-        // Gap aagya — reset
-        newStreak = 1;
-        newBest = stored.bestStreak;
-      }
+  if (stored) {
+    if (stored.lastVisit === today) {
+      newStreak = stored.streak;
+      newBest = stored.bestStreak;
+    } else if (stored.lastVisit === yesterday) {
+      newStreak = stored.streak + 1;
+      newBest = Math.max(newStreak, stored.bestStreak);
+    } else {
+      newStreak = 1;
+      newBest = stored.bestStreak;
     }
+  }
 
-    const newData = {
-      lastVisit: today,
-      streak: newStreak,
-      bestStreak: newBest,
-    };
+  const newData = {
+    lastVisit: today,
+    streak: newStreak,
+    bestStreak: newBest,
+  };
 
+  if (typeof window !== "undefined") {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(newData));
-    setStreak(newStreak);
-    setBestStreak(newBest);
-    setLastVisit(today);
-  }, []);
+  }
+
+  return newData;
+}
+
+export function useStreak() {
+  const [streakState] = useState(getInitialStreakState);
+  const { streak, bestStreak, lastVisit } = streakState;
 
   return { streak, bestStreak, lastVisit };
 }

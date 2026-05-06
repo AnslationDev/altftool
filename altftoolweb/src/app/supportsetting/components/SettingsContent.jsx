@@ -2,21 +2,23 @@
 
 import { AlertCircle, ExternalLink, Menu } from "lucide-react";
 import { settingsData } from "../data/settingData";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import ManagedImage from "@/components/ui/ManagedImage";
 
 const SettingsContent = ({ activeId, onOpenSidebar }) => {
   const setting = settingsData.find((s) => s.id === activeId);
 
-  const [imageLoaded, setImageLoaded] = useState(false);
-  const [imageError, setImageError] = useState(false);
-
-  useEffect(() => {
-    setImageLoaded(false);
-    setImageError(false);
-  }, [activeId]);
+  const [imageState, setImageState] = useState({
+    src: "",
+    loaded: false,
+    error: false,
+  });
 
   if (!setting) return null;
+  const imageLoaded =
+    imageState.src === setting.imageUrl && imageState.loaded;
+  const imageError =
+    imageState.src === setting.imageUrl && imageState.error;
 
   const handleRedirect = () => {
     const isWindows = navigator.userAgent.includes("Windows");
@@ -194,10 +196,19 @@ const SettingsContent = ({ activeId, onOpenSidebar }) => {
                 transition-opacity duration-300
                 ${imageLoaded ? "opacity-100" : "opacity-0"}
               `}
-              onLoad={() => setImageLoaded(true)}
+              onLoad={() =>
+                setImageState({
+                  src: setting.imageUrl,
+                  loaded: true,
+                  error: false,
+                })
+              }
               onError={() => {
-                setImageError(true);
-                setImageLoaded(true);
+                setImageState({
+                  src: setting.imageUrl,
+                  loaded: true,
+                  error: true,
+                });
               }}
             />
 

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import ScoreMeter from './ScoreMeter';
 import InputSliders from './InputSlider';
@@ -16,15 +16,9 @@ import { Zap, X, RotateCcw } from 'lucide-react';
 
 export default function Dashboard() {
     const { usedHours, resetAllData } = useProductivity();
-    const [showPopup, setShowPopup] = useState(false);
-
-    useEffect(() => {
-        if (usedHours >= 23.9) {
-            setShowPopup(true);
-        } else {
-            setShowPopup(false);
-        }
-    }, [usedHours]);
+    const [dismissedCapacityAt, setDismissedCapacityAt] = useState(null);
+    const showPopup = usedHours >= 23.9 && dismissedCapacityAt !== usedHours;
+    const dismissCapacityPopup = () => setDismissedCapacityAt(usedHours);
 
     const handleReset = () => {
         if (window.confirm("Are you sure you want to reset all data? This will clear your current progress.")) {
@@ -122,7 +116,7 @@ export default function Dashboard() {
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
                             exit={{ opacity: 0 }}
-                            onClick={() => setShowPopup(false)}
+                            onClick={dismissCapacityPopup}
                             className="absolute inset-0 bg-black/40 dark:bg-black/80 backdrop-blur-sm"
                         />
                         <motion.div
@@ -133,7 +127,7 @@ export default function Dashboard() {
                         >
                             <div className="absolute top-0 left-0 w-full h-2 bg-blue-500" />
                             <button
-                                onClick={() => setShowPopup(false)}
+                                onClick={dismissCapacityPopup}
                                 className="absolute top-6 right-6 p-2 rounded-2xl bg-black/5 dark:bg-white/5 text-(--secondary) hover:text-(--foreground) transition-all"
                             >
                                 <X size={20} />
@@ -151,7 +145,7 @@ export default function Dashboard() {
                             </p>
 
                             <button
-                                onClick={() => setShowPopup(false)}
+                                onClick={dismissCapacityPopup}
                                 className="w-full py-5 rounded-[24px] bg-blue-600 text-white font-extrabold uppercase tracking-widest hover:bg-blue-500 transition-all shadow-2xl shadow-blue-600/40"
                             >
                                 Optimize Now

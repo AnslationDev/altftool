@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Shapes, ChevronDown, ChevronUp } from "lucide-react";
 import ExampleSentences from "./ExampleSentences.jsx";
 
@@ -25,13 +25,6 @@ function DefinitionRow({ definition }) {
   const [translations, setTranslations] = useState({}); // { "en|hi": "...", "en|es": "..." }
   const [loadingLang, setLoadingLang] = useState(null);
   const [activeLang, setActiveLang] = useState(null);  // currently shown language
-
-  // Reset when definition changes
-  useEffect(() => {
-    setTranslations({});
-    setActiveLang(null);
-    setLoadingLang(null);
-  }, [definition]);
 
   const handleLangClick = async (langCode) => {
     // same language click — toggle off
@@ -184,7 +177,7 @@ export default function MeaningCard({ entry }) {
               {meaning.partOfSpeech}
             </p>
             {visibleDefs.map((def, i) => (
-              <DefinitionRow key={i} definition={def.definition} />
+              <DefinitionRow key={def.definition || i} definition={def.definition} />
             ))}
           </div>
         );

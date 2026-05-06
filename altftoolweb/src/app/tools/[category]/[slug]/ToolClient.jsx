@@ -1,7 +1,7 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import { useMemo } from "react";
+import { createElement, useMemo } from "react";
 import { loadToolModule } from "../../toolLoaderResolver";
 import ToolDetailChrome from "./ToolDetailChrome";
 import { ToolModuleSkeleton } from "./ToolDetailSkeleton";
@@ -18,7 +18,7 @@ export default function ToolClient({ slug, category = "all" }) {
 
   return (
     <ToolDetailChrome slug={slug} category={category}>
-      <Tool />
+      {createElement(Tool)}
     </ToolDetailChrome>
   );
 }
