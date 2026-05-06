@@ -17,6 +17,7 @@ const Footer = () => {
                 alt="AltFTool"
                 width={132}
                 height={40}
+                loading="eager"
                 className="object-contain"
                 style={{ width: "auto", height: "auto" }}
               />

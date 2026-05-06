@@ -31,6 +31,8 @@
     "test:routes": "playwright test tests/route-audit.spec.mjs",
     "test:visual": "playwright test tests/visual.spec.mjs",
     "test:visual:update": "playwright test tests/visual.spec.mjs --update-snapshots",
+    "test:security": "playwright test tests/security.spec.mjs",
+    "test:lighthouse": "playwright test tests/lighthouse.spec.mjs",
     "validate": "npm run lint:web && npm run lint:web:budget && npm run routes:check && npm run firebase:check && npm run audit && npm run build && npm run test:smoke",
     "validate:full": "npm run validate && npm run test:routes"
   },
@@ -38,6 +40,8 @@
     "@playwright/test": "^1.59.1",
     "@tailwindcss/postcss": "^4.2.4",
     "autoprefixer": "^10.5.0",
+    "chrome-launcher": "^1.2.1",
+    "lighthouse": "^13.2.0",
     "postcss": "^8.5.14",
     "tailwindcss": "^4.2.4"
   }

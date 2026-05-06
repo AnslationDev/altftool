@@ -9,7 +9,7 @@ on:
 jobs:
   verify:
     runs-on: ubuntu-latest
-    timeout-minutes: 35
+    timeout-minutes: 45
 
     steps:
       - name: Checkout
@@ -30,6 +30,12 @@ jobs:
 
       - name: Validate full route surface
         run: npm run validate:full
+
+      - name: Verify security headers
+        run: npm run test:security
+
+      - name: Run Lighthouse quality gate
+        run: npm run test:lighthouse
 
       - name: Upload Playwright artifacts
         if: failure()
