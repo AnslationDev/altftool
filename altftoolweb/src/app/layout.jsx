@@ -13,6 +13,11 @@ import { AdsProvider } from "@/ads/AdsProvider";
 import { Suspense } from "react";
 import LazyChatBot from "@/platform/chatbot/LazyChatBot";
 import { AlertProvider } from "@/shared/ui/AlertProvider";
+import JsonLd from "@/platform/seo/JsonLd";
+import {
+  createOrganizationJsonLd,
+  createWebsiteJsonLd,
+} from "@/platform/seo/generateMetadata";
 
 const geistSans = Geist({
   subsets: ["latin"],
@@ -46,6 +51,10 @@ export default function RootLayout({ children }) {
         <link rel="preconnect" href="https://firebasestorage.googleapis.com" />
         <link rel="preconnect" href="https://www.googletagmanager.com" />
         <link rel="preconnect" href="https://www.clarity.ms" />
+        <JsonLd
+          id="altftool-site-schema"
+          data={[createOrganizationJsonLd(), createWebsiteJsonLd()]}
+        />
 
         <Script id="theme-init" strategy="beforeInteractive">
           {`

@@ -4,6 +4,11 @@ import {
   fetchFirebaseBlogBySlug,
   fetchFirebaseRelatedBlogs,
 } from "../data/firebaseBlogs";
+import JsonLd from "@/platform/seo/JsonLd";
+import {
+  createBlogPostingJsonLd,
+  createBreadcrumbJsonLd,
+} from "@/platform/seo/generateMetadata";
 
 export const revalidate = 3600;
 
@@ -25,9 +30,13 @@ export async function generateMetadata({ params }) {
   return {
     title: blog.seoTitle || `${blog.heading} - AltFTool Blog`,
     description: blog.seoDescription || blog.excerpt,
+    alternates: {
+      canonical: `/blogs/${slug}`,
+    },
     openGraph: {
       title: blog.heading,
       description: blog.excerpt,
+      url: `/blogs/${slug}`,
       images: blog.image ? [{ url: blog.image, alt: blog.imageAlt || blog.heading }] : undefined,
       type: "article",
     },
@@ -47,10 +56,23 @@ export default async function BlogDetailPage({ params }) {
     : getRelatedBlogs(slug, 6);
 
   return (
-    <BlogDetailClient
-      slug={slug}
-      initialBlog={initialBlog}
-      initialRelated={initialRelated}
-    />
+    <>
+      <JsonLd
+        id={`blog-schema-${slug}`}
+        data={[
+          createBlogPostingJsonLd(initialBlog),
+          createBreadcrumbJsonLd([
+            { name: "Home", path: "/" },
+            { name: "Blog", path: "/blogs" },
+            { name: initialBlog?.heading || initialBlog?.title || "Article", path: `/blogs/${slug}` },
+          ]),
+        ]}
+      />
+      <BlogDetailClient
+        slug={slug}
+        initialBlog={initialBlog}
+        initialRelated={initialRelated}
+      />
+    </>
   );
 }

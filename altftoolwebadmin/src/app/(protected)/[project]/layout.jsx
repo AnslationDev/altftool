@@ -1,5 +1,5 @@
 import { getProject } from "@/projects";
-import { ProjectProvider } from "@/context/ProjectContext";
+import { notFound } from "next/navigation";
 
 export default async function ProjectLayout({ children, params }) {
   const { project: projectId } = await params;
@@ -7,10 +7,8 @@ export default async function ProjectLayout({ children, params }) {
   const project = getProject(projectId);
 
   if (!project) {
-    console.error("Project not found:", projectId);
-    return <div>Project not found: {projectId}</div>;
+    notFound();
   }
 
   return children;
 }
-

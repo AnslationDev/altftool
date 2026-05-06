@@ -10,50 +10,64 @@ function slugify(text) {
     .replace(/\s+/g, "-");
 }
 
+function decodeHtmlEntities(text) {
+  return text
+    .replace(/&nbsp;/gi, " ")
+    .replace(/&amp;/gi, "&")
+    .replace(/&lt;/gi, "<")
+    .replace(/&gt;/gi, ">")
+    .replace(/&quot;/gi, '"')
+    .replace(/&#39;/gi, "'");
+}
+
+function getHeadingText(innerHtml) {
+  return decodeHtmlEntities(innerHtml.replace(/<[^>]*>/g, " "))
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function createHeadingId(text, seen) {
+  let base = slugify(text);
+  if (!base) base = "heading";
+
+  seen[base] = (seen[base] || 0) + 1;
+  return seen[base] > 1 ? `${base}-${seen[base]}` : base;
+}
+
 function extractHeadings(htmlContent) {
-  if (typeof window === "undefined") return [];
-
-  const parser = new DOMParser();
-  const doc = parser.parseFromString(htmlContent, "text/html");
-  const headingEls = doc.querySelectorAll("h1, h2, h3, h4");
-
   const seen = {};
-  return Array.from(headingEls).map((el) => {
-    const text = el.textContent.trim();
-    let base = slugify(text);
-    if (!base) base = "heading";
+  const headings = [];
+  const headingPattern = /<h([1-4])\b[^>]*>([\s\S]*?)<\/h\1>/gi;
+  let match;
 
-    // deduplicate slugs
-    seen[base] = (seen[base] || 0) + 1;
-    const id = seen[base] > 1 ? `${base}-${seen[base]}` : base;
+  while ((match = headingPattern.exec(htmlContent))) {
+    const text = getHeadingText(match[2]);
+    if (!text) continue;
 
-    return {
-      id,
+    headings.push({
+      id: createHeadingId(text, seen),
       text,
-      level: parseInt(el.tagName[1], 10), // 1–4
-    };
-  });
+      level: Number(match[1]),
+    });
+  }
+
+  return headings;
 }
 
 function injectIds(htmlContent) {
-  if (typeof window === "undefined") return htmlContent;
-
-  const parser = new DOMParser();
-  const doc = parser.parseFromString(htmlContent, "text/html");
-  const headingEls = doc.querySelectorAll("h1, h2, h3, h4");
-
   const seen = {};
-  headingEls.forEach((el) => {
-    const text = el.textContent.trim();
-    let base = slugify(text);
-    if (!base) base = "heading";
+  return htmlContent.replace(
+    /<h([1-4])\b([^>]*)>([\s\S]*?)<\/h\1>/gi,
+    (match, level, attrs, innerHtml) => {
+      const text = getHeadingText(innerHtml);
+      if (!text) return match;
 
-    seen[base] = (seen[base] || 0) + 1;
-    const id = seen[base] > 1 ? `${base}-${seen[base]}` : base;
-    el.setAttribute("id", id);
-  });
+      const id = createHeadingId(text, seen);
+      const attrsWithoutId = attrs.replace(/\s+id=(?:"[^"]*"|'[^']*'|[^\s>]+)/i, "");
 
-  return doc.body.innerHTML;
+      return `<h${level}${attrsWithoutId} id="${id}">${innerHtml}</h${level}>`;
+    },
+  );
 }
 
 /* ─────────────────────────────────────────

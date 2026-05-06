@@ -1,4 +1,5 @@
 import {
+  Activity,
   BarChart3,
   Bell,
   Headset,
@@ -21,6 +22,12 @@ export const GLOBAL_ADMIN_MODULES = {
     label: "Analytics",
     icon: BarChart3,
     path: "/analytics",
+    superadminOnly: true,
+  },
+  health: {
+    label: "Health",
+    icon: Activity,
+    path: "/health",
     superadminOnly: true,
   },
   "notification-broadcast": {

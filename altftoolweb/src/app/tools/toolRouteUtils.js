@@ -1,4 +1,5 @@
 import { toolMetaMap } from "@/platform/registry/toolMetaMap";
+import { createPageMetadata } from "@/platform/seo/generateMetadata";
 
 export function getTool(slug) {
   return toolMetaMap[slug] ?? null;
@@ -26,8 +27,9 @@ export function buildToolMetadata(slug) {
     };
   }
 
-  return {
+  return createPageMetadata({
     title: tool.name,
     description: tool.description,
-  };
+    path: `/tools/all/${slug}`,
+  });
 }
