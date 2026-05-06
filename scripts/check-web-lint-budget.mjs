@@ -3,7 +3,7 @@ import path from "node:path";
 
 const root = path.resolve(import.meta.dirname, "..");
 const webRoot = path.join(root, "altftoolweb");
-const warningBudget = Number(process.env.ALTFT_WEB_LINT_WARNING_BUDGET || 55);
+const warningBudget = Number(process.env.ALTFT_WEB_LINT_WARNING_BUDGET || 50);
 
 const result = spawnSync(
   "npm",

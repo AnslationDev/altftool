@@ -49,13 +49,27 @@ export default function MainComponent() {
     return qrValue || 'https://google.com';
   }, [activeTab, qrValue, upi, vCard, wifi]);
 
-  useEffect(() => { 
-    setIsClient(true); 
-    // Live API for Analytics
-    fetch('http://ip-api.com/json/')
+  useEffect(() => {
+    const controller = new AbortController();
+
+    setIsClient(true);
+    fetch('https://ipwho.is/', { signal: controller.signal })
       .then(res => res.json())
-      .then(data => setGeoData({ city: data.city, country: data.country, isp: data.isp }))
-      .catch(() => setGeoData({ city: 'Local', country: 'India', isp: 'Network' }));
+      .then(data => {
+        if (data?.success === false) throw new Error('IP lookup failed');
+        setGeoData({
+          city: data.city || 'Local',
+          country: data.country || 'India',
+          isp: data.connection?.isp || 'Network',
+        });
+      })
+      .catch((error) => {
+        if (error.name !== 'AbortError') {
+          setGeoData({ city: 'Local', country: 'India', isp: 'Network' });
+        }
+      });
+
+    return () => controller.abort();
   }, []);
 
   // --- Bulk CSV Functions ---

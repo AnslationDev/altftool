@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useRef, useEffect } from "react";
+import React, { useCallback, useState, useRef, useEffect } from "react";
 import { PDFDocument } from "pdf-lib";
 import {
   FileUp,
@@ -128,7 +128,7 @@ const MainComponent = () => {
   };
 
   // NEW FUNCTION: Generate high-quality preview for a specific page
-  const generateHighQualityPreview = async (pageNum) => {
+  const generateHighQualityPreview = useCallback(async (pageNum) => {
     if (!pdfjsLib || !file || isGeneratingHighQuality[pageNum]) return;
 
     setIsGeneratingHighQuality((prev) => ({ ...prev, [pageNum]: true }));
@@ -160,7 +160,7 @@ const MainComponent = () => {
     } finally {
       setIsGeneratingHighQuality((prev) => ({ ...prev, [pageNum]: false }));
     }
-  };
+  }, [file, isGeneratingHighQuality, pdfjsLib]);
 
   // NEW FUNCTION: Open preview modal
   const openPreview = (pageNum, index) => {
@@ -175,7 +175,7 @@ const MainComponent = () => {
   };
 
   // NEW FUNCTION: Navigate between pages in preview
-  const navigatePreview = (direction) => {
+  const navigatePreview = useCallback((direction) => {
     const currentIndex = selectedPageIndex;
     let newIndex;
 
@@ -193,7 +193,12 @@ const MainComponent = () => {
     if (!highQualityPreviews[newPageNum]) {
       generateHighQualityPreview(newPageNum);
     }
-  };
+  }, [
+    generateHighQualityPreview,
+    highQualityPreviews,
+    pdfPages,
+    selectedPageIndex,
+  ]);
 
   const handleFileChange = async (e) => {
     setError(null);
@@ -335,7 +340,7 @@ const MainComponent = () => {
 
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [isPreviewOpen, selectedPageIndex, pdfPages]);
+  }, [isPreviewOpen, navigatePreview]);
 
   return (
     <div className="space-y-8 p-5">
