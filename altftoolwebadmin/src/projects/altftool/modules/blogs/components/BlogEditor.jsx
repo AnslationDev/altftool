@@ -6,6 +6,18 @@ export default function BlogEditor({ value, onChange }) {
 
   if (typeof window === "undefined") return null;
 
+  const ckeditorLicenseKey = process.env.NEXT_PUBLIC_CKEDITOR_LICENSE_KEY;
+  if (!ckeditorLicenseKey) {
+    return (
+      <textarea
+        value={value || ""}
+        onChange={(event) => onChange(event.target.value)}
+        placeholder="Type or paste your content here..."
+        className="min-h-[360px] w-full rounded-xl border border-gray-200 bg-white p-4 text-sm text-gray-800 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
+      />
+    );
+  }
+
   const CK = window.CKEDITOR;
   const CKP = window.CKEDITOR_PREMIUM_FEATURES;
 
@@ -110,6 +122,33 @@ export default function BlogEditor({ value, onChange }) {
     Template
   } = CKP || {};
 
+  const hasPremiumLicense = Boolean(process.env.NEXT_PUBLIC_CKEDITOR_LICENSE_KEY);
+  const premiumPlugins = hasPremiumLicense
+    ? [
+        ExportInlineStyles,
+        FormatPainter,
+        CaseChange,
+        ImportWord,
+        LineHeight,
+        MultiLevelList,
+        PasteFromOfficeEnhanced,
+        SlashCommand,
+        TableOfContents,
+        Template,
+      ].filter(Boolean)
+    : [];
+  const premiumToolbarItems = hasPremiumLicense
+    ? [
+        "importWord",
+        "formatPainter",
+        "caseChange",
+        "lineHeight",
+        "multiLevelList",
+        "tableOfContents",
+        "insertTemplate",
+      ]
+    : [];
+
   /* ---------------- IMAGE UPLOAD ADAPTER ---------------- */
 
   function uploadAdapter(loader) {
@@ -183,7 +222,7 @@ export default function BlogEditor({ value, onChange }) {
       data={value}
 
       config={{
-        licenseKey: process.env.NEXT_PUBLIC_CKEDITOR_LICENSE_KEY,
+        licenseKey: ckeditorLicenseKey,
 
         extraPlugins: [uploadPlugin],
 
@@ -201,13 +240,11 @@ export default function BlogEditor({ value, onChange }) {
           CodeBlock,
           Emoji,
           Essentials,
-          ExportInlineStyles,
           FindAndReplace,
           FontBackgroundColor,
           FontColor,
           FontFamily,
           FontSize,
-          FormatPainter,
           Fullscreen,
           GeneralHtmlSupport,
           Heading,
@@ -229,23 +266,19 @@ export default function BlogEditor({ value, onChange }) {
           Indent,
           IndentBlock,
           Italic,
-          LineHeight,
           Link,
           LinkImage,
           List,
           ListProperties,
           MediaEmbed,
           Mention,
-          MultiLevelList,
           PageBreak,
           Paragraph,
           PasteFromOffice,
-          PasteFromOfficeEnhanced,
           PictureEditing,
           PlainTableOutput,
           RemoveFormat,
           ShowBlocks,
-          SlashCommand,
           SpecialCharacters,
           SpecialCharactersArrows,
           SpecialCharactersCurrency,
@@ -263,13 +296,12 @@ export default function BlogEditor({ value, onChange }) {
           TableLayout,
           TableProperties,
           TableToolbar,
-          TableOfContents,
-          Template,
           TextPartLanguage,
           TextTransformation,
           TodoList,
           Underline,
-          WordCount
+          WordCount,
+          ...premiumPlugins
         ],
 
         // ── MediaEmbed: register our Firebase provider ──────────────────────
@@ -309,10 +341,9 @@ export default function BlogEditor({ value, onChange }) {
             "undo",
             "redo",
             "|",
-            "importWord",
+            ...premiumToolbarItems.filter((item) => item === "importWord"),
             "showBlocks",
-            "formatPainter",
-            "caseChange",
+            ...premiumToolbarItems.filter((item) => item === "formatPainter" || item === "caseChange"),
             "findAndReplace",
             "fullscreen",
             "|",
@@ -341,19 +372,18 @@ export default function BlogEditor({ value, onChange }) {
             "insertImageViaUrl",
             "mediaEmbed",          // ← this button opens the URL dialog
             "insertTable",
-            "tableOfContents",
-            "insertTemplate",
+            ...premiumToolbarItems.filter((item) => item === "tableOfContents" || item === "insertTemplate"),
             "highlight",
             "blockQuote",
             "codeBlock",
             "htmlEmbed",
             "|",
             "alignment",
-            "lineHeight",
+            ...premiumToolbarItems.filter((item) => item === "lineHeight"),
             "|",
             "bulletedList",
             "numberedList",
-            "multiLevelList",
+            ...premiumToolbarItems.filter((item) => item === "multiLevelList"),
             "todoList",
             "outdent",
             "indent"

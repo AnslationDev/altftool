@@ -1,5 +1,5 @@
 const toolConfig = {
-  slug: "ultimate-wheel-spin",
+  slug: "ultimate-wheel-spinner",
   name: "Ultimate Wheel Spin Tool",
   category: ["Games", "Utility"],
   description: "Spin a customizable wheel to generate random choices easily.",

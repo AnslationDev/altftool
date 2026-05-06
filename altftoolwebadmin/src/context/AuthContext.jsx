@@ -163,6 +163,10 @@ export function AuthProvider({ children }) {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       settled = true;
       clearTimeout(timeout);
+      if (hasLocalAdminSession()) {
+        applyLocalAdminSession();
+        return;
+      }
       syncUser(currentUser);
     }, (err) => {
       settled = true;

@@ -21,13 +21,6 @@ export const toolMetaMap = {
     "icon": "globe",
     "iconColor": "text-gray-500"
   },
-  "api-stress-estimator": {
-    "name": "API STRESS ESTIMATOR",
-    "description": "Estimate the stress on your API under different traffic scenarios and configurations.",
-    "category": "Developer",
-    "icon": "chart-bar",
-    "iconColor": "text-green-600"
-  },
   "anger-test": {
     "name": "Anger Test",
     "description": "Test your anger issues",
@@ -47,7 +40,14 @@ export const toolMetaMap = {
     "description": "API Documentation Maker helps you create documentation for your project.",
     "category": "Developer",
     "icon": "book-open",
-    "iconColor": "text-blue-500"
+    "iconColor": "text-gray-500"
+  },
+  "api-stress-estimator": {
+    "name": "API STRESS ESTIMATOR",
+    "description": "Estimate the stress on your API under different traffic scenarios and configurations.",
+    "category": "Developer",
+    "icon": "chart-bar",
+    "iconColor": "text-green-600"
   },
   "api-tester": {
     "name": "API TESTER",
@@ -60,7 +60,7 @@ export const toolMetaMap = {
     "name": "App Finder",
     "description": "Search for mobile apps by name or category. Find the perfect app for your needs quickly and easily.",
     "category": "Startup",
-    "icon": "search",
+    "icon": "search-icon",
     "iconColor": "text-gray-500"
   },
   "barcode-generator": {
@@ -70,37 +70,33 @@ export const toolMetaMap = {
     "icon": "scan",
     "iconColor": "text-blue-500"
   },
-  // "barcode-scanner": {
-  //   "name": "Barcode Scanner",
-  //   "description": "Scan barcodes and get the data ",
-  //   "category": "Web",
-  //   "icon": "barcode",
-  //   "iconColor": "text-blue-500"
-  // },
+  "barcode-scanner": {
+    "name": "Barcode Scanner",
+    "description": "Scan barcodes and get the data ",
+    "category": "Web",
+    "icon": "barcode",
+    "iconColor": "text-blue-500"
+  },
   "bg-remover": {
     "name": "Background Remover",
     "description": "Remove your Image background in just a one click",
     "category": "AI",
-    "icon": "wand",
+    "icon": "wand2",
     "iconColor": "text-indigo-600"
   },
-
-  "browser-fingerprint-visualizer": {
-    "name": "Browser Fingerprint Visualizer",
-    "description": "Track your browser fingerprint",
-    "category": "Cybersecurity Tool",
-    "icon": "shield-check",
-    "iconColor": "text-red-600"
-  },
-
-
-
   "bmi-calculator": {
     "name": "BMI Calculator",
     "description": "Calculate your Body Mass Index",
     "category": "Fitness",
     "icon": "activity",
     "iconColor": "text-green-600"
+  },
+  "browser-fingerprint-visualizer": {
+    "name": "Browser FingerPrint",
+    "description": "Track your browser fingerprint",
+    "category": "Cybersecurity Tool",
+    "icon": "shield-check",
+    "iconColor": "text-red-800"
   },
   "bulk-text-replacer": {
     "name": "Bulk Text Replacer",
@@ -134,6 +130,13 @@ export const toolMetaMap = {
     "icon": "calendar-range",
     "iconColor": "text-gray-500"
   },
+  "car-ownership-cost-analyzer": {
+    "name": "car-cost-analyzer",
+    "description": "Calculate the total cost of owning a car, including purchase price, running costs, and depreciation.",
+    "category": "Other",
+    "icon": "Car",
+    "iconColor": "green"
+  },
   "corporate-tool": {
     "name": "Corporate Tool",
     "description": "Provides information about companies, products, and services tools",
@@ -147,15 +150,6 @@ export const toolMetaMap = {
     "category": "Job",
     "icon": "mail",
     "iconColor": "text-blue-400"
-  },
-  "car-ownership-cost-analyzer": {
-    "name": "Car Ownership Cost Analyzer",
-    "description": "Calculate the total cost of owning a car, including purchase price, running costs, and depreciation.",
-    "category": [
-      "Business"
-    ],
-    "icon": "Car",
-    "iconColor": "text-green-600"
   },
   "csv-lead-cleaner": {
     "name": "CSV Lead Cleaner",
@@ -234,7 +228,6 @@ export const toolMetaMap = {
     "icon": "wallet",
     "iconColor": "text-emerald-600"
   },
-  
   "fake-data": {
     "name": "Fake Data",
     "description": "Generate fake data for testing",
@@ -242,11 +235,17 @@ export const toolMetaMap = {
     "icon": "user",
     "iconColor": "text-gray-500"
   },
-  
+  "financial-update": {
+    "name": "Financial Update",
+    "description": "Financial Update allows you to track the stock market trends and get Updates on the latest financial news.",
+    "category": "Business",
+    "icon": "bar-chart3icon",
+    "iconColor": "text-indigo-500"
+  },
   "flow-chart-maker": {
     "name": "Flow Chart Maker",
     "description": "Create flowcharts with ease and share them with your team.",
-    "category": "No-Code",
+    "category": "No-code",
     "icon": "workflow",
     "iconColor": "text-gray-500"
   },
@@ -264,7 +263,20 @@ export const toolMetaMap = {
     "icon": "form",
     "iconColor": "text-blue-500"
   },
- 
+  "gift-finder": {
+    "name": "Gift Finder",
+    "description": "find the best gift for your loved one.",
+    "category": "Lifestyle",
+    "icon": "gift",
+    "iconColor": "text-indigo-600"
+  },
+  "gold-price-checker": {
+    "name": "Gold Price Checker",
+    "description": "Check the current price of gold in real-time",
+    "category": "Business",
+    "icon": "coins",
+    "iconColor": "text-yellow-500"
+  },
   "gradient-generator": {
     "name": "Gradient Generator",
     "description": "Generate gradients and use them in your designs",
@@ -286,13 +298,6 @@ export const toolMetaMap = {
     "icon": "calculator",
     "iconColor": "text-green-600"
   },
-  "household-electricity-bill": {
-    "name": "Household Electricity Bill",
-    "description": "Calculate your household electricity bill",
-    "category": "Energy",
-    "icon": "plug",
-    "iconColor": "blue"
-  },
   "hindi-vernamala": {
     "name": "Hindi Varnamala",
     "description": "Learn Hindi Varnamala interactively with visuals and pronunciation.",
@@ -310,6 +315,13 @@ export const toolMetaMap = {
     ],
     "icon": "star",
     "iconColor": "text-orange-700"
+  },
+  "household-electricity-bill": {
+    "name": "Household Electricity Bill",
+    "description": "Calculate your household electricity bill",
+    "category": "Lifestyle",
+    "icon": "plug",
+    "iconColor": "text-muted-foreground"
   },
   "http-status-code-explainer": {
     "name": "HTTP Status Code Explainer",
@@ -381,6 +393,13 @@ export const toolMetaMap = {
     "icon": "text",
     "iconColor": "text-blue-500"
   },
+  "life-productivity-score": {
+    "name": "Life Productivity Score",
+    "description": "Calculate your life productivity score",
+    "category": "lifestyle",
+    "icon": "https://cdn-icons-png.flaticon.com/512/7173/7173466.png",
+    "iconColor": "#062609"
+  },
   "link-preview-generator": {
     "name": "Link Preview Generator",
     "description": "Generate instant rich link previews with detailed metadata.",
@@ -397,13 +416,6 @@ export const toolMetaMap = {
     "icon": "link",
     "iconColor": "text-blue-500"
   },
-  "life-productivity-score": {
-    "name": "Life Productivity Score",
-    "description": "Calculate your life productivity score",
-    "category": "Lifestyle",
-    "icon": "target",
-    "iconColor": "text-green-500"
-  },
   "loan-emi-calculator": {
     "name": "Loan EMI Calculator",
     "description": " Loan EMI Calculator helps you calculate the monthly EMI of a loan.",
@@ -411,8 +423,6 @@ export const toolMetaMap = {
     "icon": "credit-card",
     "iconColor": "text-yellow-500"
   },
-  
-  
   "markdown-preview": {
     "name": "Markdown Preview",
     "description": "Preview Markdown files",
@@ -420,7 +430,6 @@ export const toolMetaMap = {
     "icon": "edit",
     "iconColor": "text-blue-500"
   },
-  
   "meme-generator": {
     "name": "Meme Generator",
     "description": "Create funny memes easily",
@@ -428,7 +437,6 @@ export const toolMetaMap = {
     "icon": "image",
     "iconColor": "text-blue-500"
   },
- 
   "multi-country-clock": {
     "name": "Multi Country Clock Tool",
     "description": "View current time across multiple countries simultaneously.",
@@ -447,7 +455,6 @@ export const toolMetaMap = {
     "icon": "package-search",
     "iconColor": "text-purple-700"
   },
-  
   "para-phrasing-tool": {
     "name": "Paraphrasing Tool",
     "description": "Rewrite text instantly with improved clarity and readability.",
@@ -493,17 +500,15 @@ export const toolMetaMap = {
     "icon": "file-lock",
     "iconColor": "text-red-600"
   },
-  
   "poll-maker": {
     "name": "Poll Maker",
     "description": "Create interactive polls quickly and collect real-time responses.",
     "category": [
       "Business"
     ],
-    "icon": "chart-bar-big",
+    "icon": "bar-chart2",
     "iconColor": "text-purple-600"
   },
-  
   "pricing-calculator": {
     "name": "Pricing Calculator Tool",
     "description": "Calculate product pricing quickly with accurate profit estimates.",
@@ -533,8 +538,6 @@ export const toolMetaMap = {
     "icon": "qr-code",
     "iconColor": "text-black-600"
   },
-  
- 
   "rashi-finder": {
     "name": "Rashi Finder",
     "description": "Find your rashi instantly based on date of birth.",
@@ -554,7 +557,6 @@ export const toolMetaMap = {
     "icon": "file-code",
     "iconColor": "text-orange-600"
   },
-  
   "regex-tester": {
     "name": "Regex Tester",
     "description": "Test and validate regular expressions instantly with live results.",
@@ -566,7 +568,6 @@ export const toolMetaMap = {
     "icon": "regex",
     "iconColor": "text-blue-600"
   },
-  
   "resume-maker": {
     "name": "Resume Maker",
     "description": "Create a professional resume",
@@ -589,6 +590,13 @@ export const toolMetaMap = {
     ],
     "icon": "layers",
     "iconColor": "text-gray-600"
+  },
+  "skill-demand-analyzer": {
+    "name": "Skill Demand Analyzer",
+    "description": "Analyze the demand for various skills in the job market.",
+    "category": "AI",
+    "icon": "graph-up-trend",
+    "iconColor": "text-green-600"
   },
   "skin-care-guide": {
     "name": "Skin Care Guide",
@@ -617,13 +625,6 @@ export const toolMetaMap = {
     ],
     "icon": "shield-alert",
     "iconColor": "text-red-600"
-  },
-  "skill-demand-analyzer": {
-    "name": "Skill Demand Analyzer",
-    "description": "Analyze the demand for various skills in the job market.",
-    "category": "AI",
-    "icon": "graph-up",
-    "iconColor": "text-blue-600"
   },
   "spelling-checker": {
     "name": "Spelling Checker",
@@ -709,7 +710,16 @@ export const toolMetaMap = {
     "icon": "keyboard",
     "iconColor": "text-blue-600"
   },
-  
+  "ultimate-wheel-spinner": {
+    "name": "Ultimate Wheel Spin Tool",
+    "description": "Spin a customizable wheel to generate random choices easily.",
+    "category": [
+      "Games",
+      "Utility"
+    ],
+    "icon": "circle-dashed",
+    "iconColor": "text-pink-700"
+  },
   "unit-converter": {
     "name": "Unit Converter",
     "description": "Convert units instantly across multiple categories with accuracy.",
@@ -728,7 +738,7 @@ export const toolMetaMap = {
       "Developer",
       "No-Code"
     ],
-    "icon": "code",
+    "icon": "code2",
     "iconColor": "text-blue-600"
   },
   "user-info-finder": {
@@ -751,15 +761,6 @@ export const toolMetaMap = {
     ],
     "icon": "user-search",
     "iconColor": "text-teal-700"
-  },
-  "utm-link-builder": {
-    "name": "UTM Link Builder",
-    "description": "Build tracked UTM links easily for marketing campaigns.",
-    "category": [
-      "Marketing", "Web"
-    ],
-    "icon": "link",
-    "iconColor": "text-blue-600",
   },
   "uuid-generator": {
     "name": "UUID Generator",
@@ -815,6 +816,17 @@ export const toolMetaMap = {
     "icon": "activity",
     "iconColor": "text-red-600"
   },
+  "wheregoes-tool": {
+    "name": "WhereGoes Tracer",
+    "description": "Trace the complete redirect chain of any URL, test APIs, and inspect response headers.",
+    "category": [
+      "Web",
+      "Developer",
+      "Network"
+    ],
+    "icon": "link",
+    "iconColor": "text-primary"
+  },
   "youtube-video-analyzer": {
     "name": "YouTube Video Analyzer",
     "description": "Analyze YouTube videos and extract insights instantly.",
@@ -824,16 +836,5 @@ export const toolMetaMap = {
     ],
     "icon": "video",
     "iconColor": "text-red-700"
-  },
-  "wheregoes-tool": {
-    "name": "WhereGoes Tracer",
-    "description": "Trace the complete redirect chain of any URL, test APIs, and inspect response headers.",
-    "category": [
-      "Web",
-      "Developer"
-    ],
-    "icon": "link",
-    "iconColor": "text-blue-600"
   }
 };
-

@@ -1,5 +1,5 @@
 const toolConfig = {
-  slug: "paraphrasing-tool",
+  slug: "para-phrasing-tool",
   name: "Paraphrasing Tool",
   category: ["AI"],
   description: "Rewrite text instantly with improved clarity and readability.",

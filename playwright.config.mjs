@@ -2,6 +2,9 @@ import { defineConfig, devices } from "@playwright/test";
 
 const webUrl = process.env.ALTFT_WEB_URL || "http://localhost:3002";
 const adminUrl = process.env.ALTFT_ADMIN_URL || "http://localhost:3001";
+const webPort = new URL(webUrl).port || "3002";
+const adminPort = new URL(adminUrl).port || "3001";
+const reuseExistingServer = process.env.ALTFT_REUSE_SERVER === "true";
 
 export default defineConfig({
   testDir: "./tests",
@@ -24,15 +27,15 @@ export default defineConfig({
   ],
   webServer: [
     {
-      command: "npm run dev:web",
+      command: `npm --prefix altftoolweb run dev -- -p ${webPort}`,
       url: webUrl,
-      reuseExistingServer: !process.env.CI,
+      reuseExistingServer,
       timeout: 120_000,
     },
     {
-      command: "npm run dev:admin",
+      command: `npm --prefix altftoolwebadmin run dev -- -p ${adminPort}`,
       url: `${adminUrl}/login`,
-      reuseExistingServer: !process.env.CI,
+      reuseExistingServer,
       timeout: 120_000,
     },
   ],

@@ -1,15 +1,15 @@
 // api/notifications/broadcast/route.js
 
 import { NextResponse } from "next/server";
-import { adminAuth, adminDb } from "@/lib/firebaseAdmin";
+import { adminDb } from "@/lib/firebaseAdmin";
 import { sendPushToUsers } from "@/lib/sendPushNotification";
 import { enforceRateLimit } from "@altftool/core/http";
+import { verifySuperAdminRequest } from "@/lib/adminAccess";
 
 async function verifySuperAdmin(request) {
-  const authHeader = request.headers.get("authorization");
-  if (!authHeader?.startsWith("Bearer ")) throw new Error("Unauthorized");
-  const token = authHeader.split("Bearer ")[1];
-  const decoded = await adminAuth.verifyIdToken(token);
+  const decoded = await verifySuperAdminRequest(request);
+  if (decoded.isLocalAdmin) return decoded;
+
   const snap = await adminDb.collection("admins").doc(decoded.uid).get();
   const data = snap.data();
   if (!snap.exists || data?.roleType !== "superadmin" || !data?.isActive) {
@@ -102,6 +102,14 @@ export async function POST(request) {
       return NextResponse.json({ error: "scheduledAt required for scheduled broadcasts" }, { status: 400 });
     }
 
+    if (decoded.isLocalAdmin) {
+      return NextResponse.json({
+        success: true,
+        broadcastId: "local-dev-broadcast",
+        status: sendNow ? "sent" : "scheduled",
+      });
+    }
+
     const now = Date.now();
     const broadcastRef = adminDb.collection("notification_broadcasts").doc();
     const broadcastData = {
@@ -148,7 +156,12 @@ export async function GET(request) {
     });
     if (limited) return limited;
 
-    await verifySuperAdmin(request);
+    const decoded = await verifySuperAdmin(request);
+
+    if (decoded.isLocalAdmin) {
+      return NextResponse.json({ broadcasts: [] });
+    }
+
     const snap = await adminDb
       .collection("notification_broadcasts")
       .orderBy("createdAt", "desc")
@@ -190,7 +203,11 @@ export async function DELETE(request) {
     });
     if (limited) return limited;
 
-    await verifySuperAdmin(request);
+    const decoded = await verifySuperAdmin(request);
+    if (decoded.isLocalAdmin) {
+      return NextResponse.json({ success: true });
+    }
+
     const { searchParams } = new URL(request.url);
     const id = searchParams.get("id");
     if (!id) return NextResponse.json({ error: "id required" }, { status: 400 });
@@ -206,7 +223,11 @@ export async function DELETE(request) {
 
 export async function PATCH(request) {
   try {
-    await verifySuperAdmin(request);
+    const decoded = await verifySuperAdmin(request);
+    if (decoded.isLocalAdmin) {
+      return NextResponse.json({ success: true });
+    }
+
     const { searchParams } = new URL(request.url);
     const id = searchParams.get("id");
     const action = searchParams.get("action");

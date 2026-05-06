@@ -53,10 +53,14 @@ const pathname = usePathname();
 
     emitAlert({
       type: "success",
-      message: adminData.roleType === "superadmin" ? "Welcome, Super Admin" : "Login successful",
+      message: user.isLocalAdmin
+        ? "Welcome, Local Super Admin"
+        : adminData.roleType === "superadmin"
+          ? "Welcome, Super Admin"
+          : "Login successful",
     });
     router.replace(destination);
-  }, [user, adminData, loading, isPendingUser, router]);
+  }, [user, adminData, loading, isPendingUser, googleError, pathname, router]);
 
   /* ── Email / Password login ── */
   const login = async (e) => {
@@ -112,8 +116,6 @@ const pathname = usePathname();
       return;
     }
 
-    emitAlert({ type: "success", message: "Welcome, Local Super Admin" });
-    router.replace("/admin-management");
   };
 
   if (loading) {

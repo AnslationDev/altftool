@@ -7,3 +7,5 @@ export const toolConfig = {
     iconColor: "#062609",
 
 };
+
+export default toolConfig;

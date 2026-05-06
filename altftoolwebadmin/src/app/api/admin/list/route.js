@@ -4,7 +4,23 @@ import { verifySuperAdminRequest } from "@/lib/adminAccess";
 
 export async function GET(request) {
   try {
-    await verifySuperAdminRequest(request);
+    const actor = await verifySuperAdminRequest(request);
+
+    if (actor.isLocalAdmin) {
+      return NextResponse.json({
+        admins: [
+          {
+            id: actor.uid,
+            uid: actor.uid,
+            email: actor.email,
+            fullName: "Local Super Admin",
+            roleType: "superadmin",
+            isActive: true,
+            createdAt: null,
+          },
+        ],
+      });
+    }
 
     const snapshot = await adminDb
       .collection("admins")
