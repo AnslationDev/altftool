@@ -1,5 +1,5 @@
 "use client"
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useMemo, useState } from 'react';
 import DropdownSelector from '../components/DropdownSelector';
 import InputArea from '../components/InputArea';
 import ResultView from '../components/ResultView';
@@ -10,30 +10,17 @@ import Features from '../components/Features';
 
 export default function ToolHome() {
     const [inputText, setInputText] = useState('');
-    const [outputText, setOutputText] = useState('');
     const [encodingType, setEncodingType] = useState('base64-encode');
-    const [error, setError] = useState('');
+    const { outputText, error } = useMemo(() => {
+        if (!inputText) return { outputText: '', error: '' };
 
-    const processText = useCallback((text, type) => {
-        if (!text) {
-            setOutputText('');
-            setError('');
-            return;
-        }
         try {
-            const processor = getEncoderDecoder(type);
-            const result = processor(text);
-            setOutputText(result);
-            setError('');
+            const processor = getEncoderDecoder(encodingType);
+            return { outputText: processor(inputText), error: '' };
         } catch (err) {
-            setError(err.message);
-            setOutputText('');
+            return { outputText: '', error: err.message };
         }
-    }, []);
-
-    useEffect(() => {
-        processText(inputText, encodingType);
-    }, [inputText, encodingType, processText]);
+    }, [inputText, encodingType]);
 
     return (
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-16">

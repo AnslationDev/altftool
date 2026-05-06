@@ -1,6 +1,22 @@
-import React, { useState, useEffect } from 'react';
+import React, { useCallback, useState, useEffect } from 'react';
 import { Activity, Heart, Droplet, Flame, Download, RotateCcw, AlertCircle, Trophy, Zap, CheckCircle2, Target, Utensils, Share2 } from 'lucide-react';
 import Description from '../components/Description';
+
+function BMIGauge({ bmi, category }) {
+  const angle = Math.min(Math.max((parseFloat(bmi) - 10) / 30 * 180, 0), 180);
+  return (
+    <div className="relative w-64 h-40 mx-auto flex items-center justify-center overflow-hidden">
+      <svg viewBox="0 0 200 120" className="w-full h-full">
+        <path d="M 20 100 A 80 80 0 0 1 180 100" fill="none" stroke="var(--muted)" strokeWidth="18" strokeLinecap="round" />
+        <path d="M 20 100 A 80 80 0 0 1 180 100" fill="none" stroke={category.color} strokeWidth="18" strokeLinecap="round" strokeDasharray={`${(angle/180) * 251.3}, 251.3`} className="transition-all duration-1000 ease-out" />
+        <text x="100" y="55" textAnchor="middle" style={{ fill: 'var(--muted-foreground)', fontSize: '20px', fontWeight: '900' }}>{bmi}</text>
+        <text x="100" y="78" textAnchor="middle" className="uppercase tracking-widest" style={{ fill: 'var(--muted-foreground)', fontSize: '10px', fontWeight: '800' }}>{category.name}</text>
+        <line x1="100" y1="100" x2={100 + 40 * Math.cos((180 - angle) * Math.PI / 180)} y2={100 - 40 * Math.sin((180 - angle) * Math.PI / 180)} stroke="var(--muted-foreground)" strokeWidth="5" strokeLinecap="round" />
+        <circle cx="100" cy="100" r="7" fill="var(--muted-foreground)" />
+      </svg>
+    </div>
+  );
+}
 
 export default function ToolHome() {
   const [heightUnit, setHeightUnit] = useState('cm');
@@ -16,6 +32,14 @@ export default function ToolHome() {
   const [history, setHistory] = useState([]);
   const [streak, setStreak] = useState(0);
   const [badges, setBadges] = useState([]);
+
+  const checkBadges = useCallback((hist, currentStreak) => {
+    let earned = [];
+    if (hist.length > 0) earned.push({ id: 1, name: "First Goal", icon: <CheckCircle2 className="w-3.5 h-3.5" /> });
+    if (currentStreak >= 7) earned.push({ id: 2, name: "7 Day Streak", icon: <Zap className="w-3.5 h-3.5" /> });
+    if (hist.some(h => h.category.name === 'Normal')) earned.push({ id: 3, name: "Elite Health", icon: <Trophy className="w-3.5 h-3.5" /> });
+    setBadges(earned);
+  }, []);
 
   useEffect(() => {
     const saved = localStorage.getItem('bmiHistory');
@@ -43,15 +67,7 @@ export default function ToolHome() {
     } else {
       setStreak(parseInt(savedStreak));
     }
-  }, []);
-
-  const checkBadges = (hist, currentStreak) => {
-    let earned = [];
-    if (hist.length > 0) earned.push({ id: 1, name: "First Goal", icon: <CheckCircle2 className="w-3.5 h-3.5" /> });
-    if (currentStreak >= 7) earned.push({ id: 2, name: "7 Day Streak", icon: <Zap className="w-3.5 h-3.5" /> });
-    if (hist.some(h => h.category.name === 'Normal')) earned.push({ id: 3, name: "Elite Health", icon: <Trophy className="w-3.5 h-3.5" /> });
-    setBadges(earned);
-  };
+  }, [checkBadges]);
 
   const getHeightInCm = () => {
     if (heightUnit === 'cm') return parseFloat(heightCm) || 0;
@@ -190,22 +206,6 @@ Stay Healthy, Stay Fit!
     }
   };
 
-  const BMIGauge = ({ bmi, category }) => {
-    const angle = Math.min(Math.max((parseFloat(bmi) - 10) / 30 * 180, 0), 180);
-    return (
-      <div className="relative w-64 h-40 mx-auto flex items-center justify-center overflow-hidden">
-        <svg viewBox="0 0 200 120" className="w-full h-full">
-          <path d="M 20 100 A 80 80 0 0 1 180 100" fill="none" stroke="var(--muted)" strokeWidth="18" strokeLinecap="round" />
-          <path d="M 20 100 A 80 80 0 0 1 180 100" fill="none" stroke={category.color} strokeWidth="18" strokeLinecap="round" strokeDasharray={`${(angle/180) * 251.3}, 251.3`} className="transition-all duration-1000 ease-out" />
-          <text x="100" y="55" textAnchor="middle" style={{ fill: 'var(--muted-foreground)', fontSize: '20px', fontWeight: '900' }}>{bmi}</text>
-          <text x="100" y="78" textAnchor="middle" className="uppercase tracking-widest" style={{ fill: 'var(--muted-foreground)', fontSize: '10px', fontWeight: '800' }}>{category.name}</text>
-          <line x1="100" y1="100" x2={100 + 40 * Math.cos((180 - angle) * Math.PI / 180)} y2={100 - 40 * Math.sin((180 - angle) * Math.PI / 180)} stroke="var(--muted-foreground)" strokeWidth="5" strokeLinecap="round" />
-          <circle cx="100" cy="100" r="7" fill="var(--muted-foreground)" />
-        </svg>
-      </div>
-    );
-  };
-
   return (
     <div className="min-h-screen bg-(--background) p-4 sm:p-6 lg:p-8">
   <div className="max-w-5xl mx-auto">
@@ -320,7 +320,7 @@ Stay Healthy, Stay Fit!
                 </div>
                 <div className="pt-6 border-t border-[var(--border)]">
                   <p className="text-xs font-black mb-2 uppercase tracking-widest text-[var(--foreground)]">Suggested Indian Foods</p>
-                  <p className="text-sm text-[var(--muted-foreground)] italic leading-relaxed">"{result.dietPlan.foods}"</p>
+                  <p className="text-sm text-[var(--muted-foreground)] italic leading-relaxed">&quot;{result.dietPlan.foods}&quot;</p>
                 </div>
             </div>
 

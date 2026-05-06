@@ -43,7 +43,7 @@ const QuoteCard = () => {
                                 animate={{ opacity: 1, y: 0 }}
                                 className="text-xl sm:text-2xl font-black leading-tight text-(--foreground) italic tracking-tight"
                             >
-                                "{quote.text}"
+                                &quot;{quote.text}&quot;
                             </motion.p>
                         </div>
                         

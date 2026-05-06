@@ -277,7 +277,7 @@ export default function UrlOpener() {
         {/* Popup blocked warning */}
         {blocked && (
           <div className="mt-3 px-3 py-2 rounded-lg bg-yellow-500/10 text-yellow-600 text-sm">
-            ⚠️ Some tabs were blocked by your browser's popup blocker. Please
+            ⚠️ Some tabs were blocked by your browser&apos;s popup blocker. Please
             allow popups for this site and try again.
           </div>
         )}

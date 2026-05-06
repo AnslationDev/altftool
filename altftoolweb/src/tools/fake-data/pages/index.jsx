@@ -366,7 +366,7 @@ export default function ToolHome(){
                 <div className="text-8xl mb-6">📊</div>
                 <h3 className="subheading mb-3">No Data Generated Yet</h3>
                 <p className="text-(--muted-foreground) text-lg max-w-md mx-auto mb-6">
-                  Select your desired fields from the left panel, set the number of records, and click the "Generate Data" button to create fake data.
+                  Select your desired fields from the left panel, set the number of records, and click the &quot;Generate Data&quot; button to create fake data.
                 </p>
                 <div className="flex justify-center gap-4">
                   <button 

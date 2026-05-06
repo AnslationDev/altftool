@@ -4,19 +4,24 @@ import { Search, Clock, X, Delete } from "lucide-react";
 const RECENT_KEY = "recent_searches";
 const MAX_RECENT = 8;
 
+const loadRecentSearches = () => {
+  if (typeof window === "undefined") return [];
+
+  try {
+    const stored = localStorage.getItem(RECENT_KEY);
+    return stored ? JSON.parse(stored) : [];
+  } catch {
+    return [];
+  }
+};
+
 export default function SearchBar({ word, setWord, loading, onSearch }) {
   const [suggestions, setSuggestions] = useState([]);
-  const [recentSearches, setRecentSearches] = useState([]);
+  const [recentSearches, setRecentSearches] = useState(loadRecentSearches);
   const [showDropdown, setShowDropdown] = useState(false);
   const [activeSuggestion, setActiveSuggestion] = useState(-1);
   const inputRef = useRef(null);
   const dropdownRef = useRef(null);
-
-  // localStorage se recent searches load karo
-  useEffect(() => {
-    const stored = localStorage.getItem(RECENT_KEY);
-    if (stored) setRecentSearches(JSON.parse(stored));
-  }, []);
 
   // recent search save karo
   const saveRecentSearch = (searchWord) => {
@@ -44,29 +49,39 @@ export default function SearchBar({ word, setWord, loading, onSearch }) {
 
   // type karne pe datamuse se suggestions fetch karo
   useEffect(() => {
-    if (!word.trim() || word.length < 2) {
-      setSuggestions([]);
+    const query = word.trim();
+    if (query.length < 2) {
       return;
     }
+
+    let cancelled = false;
     const timeout = setTimeout(async () => {
       try {
         const res = await fetch(
-          `https://api.datamuse.com/sug?s=${word}`
+          `https://api.datamuse.com/sug?s=${encodeURIComponent(query)}`
         );
         const data = await res.json();
-        setSuggestions(data.slice(0, 6).map((item) => item.word));
+        if (!cancelled) {
+          setSuggestions(data.slice(0, 6).map((item) => item.word));
+        }
       } catch {
-        setSuggestions([]);
+        if (!cancelled) {
+          setSuggestions([]);
+        }
       }
     }, 250); // 250ms debounce
 
-    return () => clearTimeout(timeout);
+    return () => {
+      cancelled = true;
+      clearTimeout(timeout);
+    };
   }, [word]);
 
   // dropdown mein kya dikhana hai
   const showRecents = !word.trim() && recentSearches.length > 0;
-  const showSuggestions = word.trim().length >= 2 && suggestions.length > 0;
-  const dropdownItems = showRecents ? recentSearches : showSuggestions ? suggestions : [];
+  const visibleSuggestions = word.trim().length >= 2 ? suggestions : [];
+  const showSuggestions = visibleSuggestions.length > 0;
+  const dropdownItems = showRecents ? recentSearches : showSuggestions ? visibleSuggestions : [];
   const shouldShowDropdown = showDropdown && dropdownItems.length > 0;
 
   // search handle karo

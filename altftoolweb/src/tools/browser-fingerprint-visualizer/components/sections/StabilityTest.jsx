@@ -99,8 +99,8 @@ export function StabilityTest({ stability, loading }) {
           <div className="p-3 rounded-xl bg-[var(--muted)] border border-[var(--border)]">
             <p className="text-[10px] text-[var(--muted-foreground)] font-secondary leading-relaxed">
               💡 <strong className="text-[var(--foreground)]">How to test:</strong> Reload
-              this page (Ctrl+R / Cmd+R) and come back to this card. We'll compare your
-              fingerprint hash between visits and tell you if you're consistently trackable.
+              this page (Ctrl+R / Cmd+R) and come back to this card. We&apos;ll compare your
+              fingerprint hash between visits and tell you if you&apos;re consistently trackable.
             </p>
           </div>
         </div>

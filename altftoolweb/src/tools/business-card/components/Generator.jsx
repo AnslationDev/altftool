@@ -215,7 +215,7 @@ export default function Generator() {
                 </motion.div>
 
                 <motion.div drag dragConstraints={cardRef} dragMomentum={false} onClick={() => setSelectedElement("tagline")} className={`absolute top-28 left-6 z-20 cursor-move p-1 rounded-sm ${selectedElement === 'tagline' ? 'ring-1 ring-white/50 bg-white/10' : ''}`}>
-                  <p className="italic opacity-70" style={{ fontSize: `${fontSizes.tagline}px` }}>"{formData.tagline}"</p>
+                  <p className="italic opacity-70" style={{ fontSize: `${fontSizes.tagline}px` }}>&quot;{formData.tagline}&quot;</p>
                 </motion.div>
 
                 {/* Contact Block */}

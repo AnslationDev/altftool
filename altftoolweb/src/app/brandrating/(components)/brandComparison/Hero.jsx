@@ -42,7 +42,7 @@ export default function HeroSection({ title }) {
 
         <p className="section-subtitle max-w-4xl mx-auto animate-slide-right" style={{ animationDelay: "200ms" }}>
           Quality sleep is a necessity, not a luxury. The right mattress supports comfort,
-          reduces aches, and helps you wake up refreshed. To find your perfect night's sleep,
+          reduces aches, and helps you wake up refreshed. To find your perfect night&apos;s sleep,
           see our top mattress picks below.
         </p>
 

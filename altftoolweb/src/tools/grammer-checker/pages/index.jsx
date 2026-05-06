@@ -250,7 +250,7 @@ export default function ToolHome() {
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div><p className="text-xl uppercase font-bold text-gray-400">Most Used</p><p className="text-lg font-bold capitalize">{stats.mostUsedWord}</p></div>
                 <div><p className="text-xl uppercase font-bold text-gray-400">Avg Word</p><p className="text-lg font-bold">{stats.avgWordLength} chars</p></div>
-                <div><p className="text-xl uppercase font-bold text-gray-400">Longest Sentence</p><p className="text-lg italic">"{stats.longestSentence}"</p></div>
+                <div><p className="text-xl uppercase font-bold text-gray-400">Longest Sentence</p><p className="text-lg italic">&quot;{stats.longestSentence}&quot;</p></div>
               </div>
             </div>
           </div>

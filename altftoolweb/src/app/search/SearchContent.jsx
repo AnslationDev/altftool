@@ -62,7 +62,7 @@ export default function SearchPage() {
       <div className="mb-16 text-center">
         <h1 className="heading mb-4">Search Results</h1>
         <p className="description">
-          Showing results for <span className="font-semibold text-[var(--foreground)]">"{query}"</span>
+          Showing results for <span className="font-semibold text-[var(--foreground)]">&quot;{query}&quot;</span>
         </p>
       </div>
 

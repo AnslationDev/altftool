@@ -185,7 +185,7 @@ export const BreakThisHabit = ({ habits }) => {
           className="mb-6 p-4 rounded-xl bg-linear-to-r from-blue-500/10 to-blue-600/10 border border-blue-500/30"
         >
           <p className="text-base font-bold italic text-gray-950 dark:text-white leading-relaxed">
-            "{motivationQuotes[currentQuote]}"
+            &quot;{motivationQuotes[currentQuote]}&quot;
           </p>
           <div className="flex gap-1 mt-3">
             {motivationQuotes.map((_, i) => (

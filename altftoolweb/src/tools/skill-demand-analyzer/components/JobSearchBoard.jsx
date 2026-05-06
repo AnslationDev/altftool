@@ -177,7 +177,7 @@ export const JobSearchBoard = ({ query, filters, adzunaJobs = [] }) => {
           <div className="bg-(--card) border border-(--border) rounded-3xl p-8 shadow-sm">
             <h3 className="text-xl font-bold mb-6 flex items-center gap-2">
               <DollarSign className="w-6 h-6 text-emerald-500" />
-              Estimated Salaries at Top Companies for "{query}"
+              Estimated Salaries at Top Companies for &quot;{query}&quot;
             </h3>
             
             {salaryLoading ? (
@@ -241,7 +241,7 @@ export const JobSearchBoard = ({ query, filters, adzunaJobs = [] }) => {
             </div>
             <h3 className="text-2xl font-bold text-(--foreground) mb-3">No jobs found in {filters.country === 'in' ? 'India' : filters.country.toUpperCase()}</h3>
             <p className="text-(--muted-foreground) max-w-md mx-auto leading-relaxed">
-              We couldn't find any active <span className="font-semibold text-blue-600">"{query}"</span> openings in this region right now.
+              We couldn&apos;t find any active <span className="font-semibold text-blue-600">&quot;{query}&quot;</span> openings in this region right now.
             </p>
           </div>
         )}

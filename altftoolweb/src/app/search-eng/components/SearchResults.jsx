@@ -107,7 +107,7 @@ export function SearchResults({ results, query, isLoading, searchTime, onTagSear
       <div className="no-results-container">
         <div className="no-results-message">
           <span>No results for </span>
-          <strong className="no-results-query">"{query}"</strong>
+          <strong className="no-results-query">&quot;{query}&quot;</strong>
         </div>
         <p className="no-results-hint">Try different keywords or check spelling.</p>
         <div className="no-results-suggestions">

@@ -170,7 +170,7 @@ export default function GiftPlanner(){
         {/* Step 1: Select Occasion */}
         {step === 1 && (
           <div className="bg-(--card) border border-(--border) text-(--foreground) rounded-lg p-8">
-            <h3 className="subheading mb-6">What's the occasion?</h3>
+            <h3 className="subheading mb-6">What&apos;s the occasion?</h3>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
               {OCCASIONS.map((occasion) => (
                 <button
@@ -225,7 +225,7 @@ export default function GiftPlanner(){
         {/* Step 3: Select Budget */}
         {step === 3 && (
           <div className="bg-(--card) border border-(--border) rounded-lg p-8">
-            <h3 className="subheading mb-6">What's your budget?</h3>
+            <h3 className="subheading mb-6">What&apos;s your budget?</h3>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
               <button
                 onClick={() => setBudgetRange('low')}

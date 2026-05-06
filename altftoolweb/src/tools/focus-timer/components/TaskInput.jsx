@@ -36,7 +36,7 @@ export default function TaskInput({ isRunning, justCompleted, onTaskChange, lock
           </p>
         </div>
         <p className="text-sm text-(--muted-foreground) font-secondary mb-4 truncate">
-          "{task}"
+          &quot;{task}&quot;
         </p>
         <div className="flex gap-3">
           <button

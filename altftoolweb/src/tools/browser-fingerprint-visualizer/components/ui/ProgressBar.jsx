@@ -13,19 +13,17 @@ export function ProgressBar({
   className = "",
 }) {
   // Animate from 0 to value on mount
-  const [displayValue, setDisplayValue] = useState(0);
+  const [displayValue, setDisplayValue] = useState(() => (animated ? 0 : value));
 
   useEffect(() => {
-    if (!animated) {
-      setDisplayValue(value);
-      return;
-    }
+    if (!animated) return;
     // 
     const timer = setTimeout(() => setDisplayValue(value), 300);
     return () => clearTimeout(timer);
   }, [value, animated]);
 
-  const percent = Math.min(Math.max((displayValue / max) * 100, 0), 100);
+  const currentValue = animated ? displayValue : value;
+  const percent = Math.min(Math.max((currentValue / max) * 100, 0), 100);
 
   // Color changes dynamically based on score
   const getBarColor = (pct) => {
@@ -61,7 +59,7 @@ export function ProgressBar({
           )}
           {showPercent && (
             <span className="text-xs font-semibold text-[(--foreground)] tabular-nums ml-auto">
-              {Math.round(displayValue)}/{max}
+              {Math.round(currentValue)}/{max}
             </span>
           )}
         </div>

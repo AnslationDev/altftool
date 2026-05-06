@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useMemo, useState, useEffect } from "react";
 import { ChevronDown } from "lucide-react";
 import { StatusDot } from "../ui/Badge";
 
@@ -10,27 +10,33 @@ export function TrackingSimulation({ fingerprintId, riskScore, loading }) {
 
   const score = riskScore?.score || 0;
 
-  const simulatedSites = [
-    { name: "News Portal",    domain: "news-daily.com",  icon: "📰", tracked: true },
-    { name: "Shopping Site",  domain: "shop-online.com", icon: "🛒", tracked: true },
-    { name: "Social Network", domain: "social-app.com",  icon: "👥", tracked: score > 20 },
-    { name: "Video Platform", domain: "watch-videos.com",icon: "🎬", tracked: score > 40 },
-    { name: "Finance App",    domain: "my-finance.com",  icon: "💰", tracked: score > 60 },
-    { name: "Travel Booking", domain: "travel-deals.com",icon: "✈️", tracked: score > 75 },
-  ];
+  const simulatedSites = useMemo(
+    () => [
+      { name: "News Portal", domain: "news-daily.com", icon: "📰", tracked: true },
+      { name: "Shopping Site", domain: "shop-online.com", icon: "🛒", tracked: true },
+      { name: "Social Network", domain: "social-app.com", icon: "👥", tracked: score > 20 },
+      { name: "Video Platform", domain: "watch-videos.com", icon: "🎬", tracked: score > 40 },
+      { name: "Finance App", domain: "my-finance.com", icon: "💰", tracked: score > 60 },
+      { name: "Travel Booking", domain: "travel-deals.com", icon: "✈️", tracked: score > 75 },
+    ],
+    [score]
+  );
 
   const trackedCount = simulatedSites.filter((s) => s.tracked).length;
   const shortId = fingerprintId?.slice(0, 24) + "...";
+  const handleToggle = () => {
+    if (!isOpen) setAnimStep(0);
+    setIsOpen((p) => !p);
+  };
 
   // Animate rows only when open
   useEffect(() => {
     if (!isOpen || loading || !fingerprintId) return;
-    setAnimStep(0);
     const timer = setInterval(() => {
       setAnimStep((prev) => (prev < simulatedSites.length ? prev + 1 : prev));
     }, 400);
     return () => clearInterval(timer);
-  }, [isOpen, loading, fingerprintId]);
+  }, [isOpen, loading, fingerprintId, simulatedSites.length]);
 
   return (
     <div className="bg-[var(--card)] border border-[var(--border)] border-l-4
@@ -41,7 +47,7 @@ export function TrackingSimulation({ fingerprintId, riskScore, loading }) {
       <div
         className="flex items-center justify-between px-5 py-4 cursor-pointer select-none
                    hover:bg-[var(--muted)]/40 rounded-2xl transition-colors duration-200"
-        onClick={() => setIsOpen((p) => !p)}
+        onClick={handleToggle}
       >
         <div className="flex items-center gap-3">
           {/* Icon */}

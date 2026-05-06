@@ -23,6 +23,24 @@ const CATEGORY_COLORS = {
   Other: "#64748B", // Slate-500 - Neutral slate
 };
 
+function ExpensePieTooltip({ active, payload, total }) {
+  if (active && payload && payload.length) {
+    const { name, value } = payload[0].payload;
+    const percentage = total > 0 ? ((value / total) * 100).toFixed(0) : 0;
+
+    return (
+      <div className="bg-(--foreground) text-(--foreground) p-4 rounded-md shadow-md border border-gray-100">
+        <p className="font-medium">{name}</p>
+        <p className="text-lg">
+          ₹{value.toFixed(2)}
+          <span className="text-sm text-gray-500 ml-1">({percentage}%)</span>
+        </p>
+      </div>
+    );
+  }
+  return null;
+}
+
 const ExpensePieChart = ({ data }) => {
   if (data.length === 0) {
     return (
@@ -35,25 +53,7 @@ const ExpensePieChart = ({ data }) => {
   const getColor = (name) => {
     return CATEGORY_COLORS[name] || "#8E9196";
   };
-
-  const CustomTooltip = ({ active, payload }) => {
-    if (active && payload && payload.length) {
-      const { name, value } = payload[0].payload;
-      const total = data.reduce((sum, item) => sum + item.value, 0);
-      const percentage = ((value / total) * 100).toFixed(0);
-
-      return (
-        <div className="bg-(--foreground) text-(--foreground) p-4 rounded-md shadow-md border border-gray-100">
-          <p className="font-medium">{name}</p>
-          <p className="text-lg">
-            ₹{value.toFixed(2)}
-            <span className="text-sm text-gray-500 ml-1">({percentage}%)</span>
-          </p>
-        </div>
-      );
-    }
-    return null;
-  };
+  const total = data.reduce((sum, item) => sum + item.value, 0);
 
   return (
     <ResponsiveContainer width="100%" height={300}>
@@ -74,7 +74,7 @@ const ExpensePieChart = ({ data }) => {
             <Cell key={`cell-${index}`} fill={getColor(entry.name)} />
           ))}
         </Pie>
-        <Tooltip content={<CustomTooltip />} />
+        <Tooltip content={<ExpensePieTooltip total={total} />} />
         <Legend
           layout="horizontal"
           verticalAlign="bottom"

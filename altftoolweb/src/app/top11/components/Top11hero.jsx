@@ -32,7 +32,7 @@ export default function CompareSection() {
 
         {/* Subtitle */}
         <p className="mt-5 text-gray-600 max-w-xl mx-auto">
-          Our experts vet, rank, and review the best solutions for your life and business, so you don't have to.
+          Our experts vet, rank, and review the best solutions for your life and business, so you don&apos;t have to.
         </p>
 
         {/* Grid */}

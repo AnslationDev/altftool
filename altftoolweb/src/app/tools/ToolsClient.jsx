@@ -1,51 +1,87 @@
 "use client";
 
 import Link from "next/link";
-import { useMemo, useState, useEffect } from "react";
-import { Wrench } from "lucide-react";
+import { useMemo, useState, useSyncExternalStore } from "react";
+import { ChevronDown, Wrench } from "lucide-react";
 import Icon from "@/shared/ui/Icon";
 import CTAButton from "@/shared/ui/CTAButton";
 import { useAds } from "@/ads/AdsProvider";
 import { injectAds } from "@/ads/adInjector";
 import AdPairRow from "@/ads/layouts/tools/AdToolPairRow";
 import CapabilitySlider from "../tools/CapabilitySlider";
-import { useRouter } from "next/navigation";
-import { ChevronDown } from "lucide-react";
+import { usePathname, useRouter } from "next/navigation";
 
-export default function ToolsClient({ meta, category }) {
-  const slugify = (str) => String(str).toLowerCase().replace(/\s+/g, "-");
-  const formatLabel = (str) =>
-    String(str).replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
+const ITEMS_PER_PAGE = 10;
 
+const slugify = (str) => String(str).toLowerCase().replace(/\s+/g, "-");
+const formatLabel = (str) =>
+  String(str).replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
+
+const getInitialCategory = (category) => {
+  if (category) return slugify(category);
+  if (typeof window === "undefined") return "all";
+
+  return new URLSearchParams(window.location.search).get("category") || "all";
+};
+
+const getDeviceSnapshot = () =>
+  typeof window !== "undefined" && window.innerWidth < 1024
+    ? "mobile"
+    : "desktop";
+
+const subscribeToDevice = (callback) => {
+  if (typeof window === "undefined") return () => {};
+
+  window.addEventListener("resize", callback);
+  return () => window.removeEventListener("resize", callback);
+};
+
+function Skeleton({ className = "" }) {
+  return (
+    <div className={`animate-pulse rounded-md bg-[var(--color-muted)] ${className}`} />
+  );
+}
+
+function ToolCardSkeleton() {
+  return (
+    <div className="rounded-xl border border-[var(--color-border)] p-6 space-y-4">
+      <div className="flex gap-4 items-center">
+        <Skeleton className="h-12 w-12 rounded-xl" />
+        <Skeleton className="h-4 w-40" />
+      </div>
+      <Skeleton className="h-3 w-full" />
+      <Skeleton className="h-3 w-3/4" />
+    </div>
+  );
+}
+
+function ToolsGridSkeleton() {
+  return (
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      {Array.from({ length: 6 }).map((_, i) => (
+        <ToolCardSkeleton key={i} />
+      ))}
+    </div>
+  );
+}
+
+export default function ToolsClient({ meta = {}, category }) {
   const slugs = useMemo(() => Object.keys(meta), [meta]);
   const [search, setSearch] = useState("");
-  const [loading, setLoading] = useState(true);
-  const [device, setDevice] = useState("desktop");
-  const router = useRouter();
-  const [categoryname, setCategoryname] = useState(
-    () => (category ? slugify(category) : "all")
+  const device = useSyncExternalStore(
+    subscribeToDevice,
+    getDeviceSnapshot,
+    () => "desktop"
   );
-
-  // Responsive device check
-  useEffect(() => {
-    const updateDevice = () => setDevice(window.innerWidth < 1024 ? "mobile" : "desktop");
-    updateDevice();
-    window.addEventListener("resize", updateDevice);
-    return () => window.removeEventListener("resize", updateDevice);
-  }, []);
+  const router = useRouter();
+  const pathname = usePathname();
+  const [selectedCategory, setSelectedCategory] = useState(() =>
+    getInitialCategory(category)
+  );
+  const categoryname = category ? slugify(category) : selectedCategory;
 
   // Ads setup
   const toolAds = useAds({ placement: "tools_listing", layout: "tool_card", device });
-
-  useEffect(() => {
-    if (category) {
-      setCategoryname(slugify(category));
-      return;
-    }
-
-    const params = new URLSearchParams(window.location.search);
-    setCategoryname(params.get("category") || "all");
-  }, [category]);
 
   // Categories list
   const categories = useMemo(() => {
@@ -81,7 +117,6 @@ export default function ToolsClient({ meta, category }) {
     });
   }, [slugs, meta, categoryname, search]);
 
-  const ITEMS_PER_PAGE = 10;
   const [visibleCount, setVisibleCount] = useState(ITEMS_PER_PAGE);
 
   const visibleSlugs = injectAds(
@@ -92,55 +127,34 @@ export default function ToolsClient({ meta, category }) {
 
   const hasMore = visibleCount < filteredSlugs.length;
 
-  useEffect(() => {
-    if (meta && Object.keys(meta).length > 0) setLoading(false);
-  }, [meta]);
-
   // Handle category click (updates URL without reload)
   const handleCategoryClick = (cat) => {
     const nextCategory = cat === "all" ? "all" : slugify(cat);
+
+    if (category) {
+      router.replace(nextCategory === "all" ? "/tools" : `/tools/${nextCategory}`, {
+        scroll: false,
+      });
+      setSelectedCategory(nextCategory);
+      setVisibleCount(ITEMS_PER_PAGE);
+      return;
+    }
+
     const params = new URLSearchParams(window.location.search);
     if (nextCategory === "all") params.delete("category");
     else params.set("category", nextCategory);
 
-    router.replace(`${location.pathname}?${params.toString()}`, { scroll: false });
-    setCategoryname(nextCategory);
+    const query = params.toString();
+    router.replace(query ? `${pathname}?${query}` : pathname, { scroll: false });
+    setSelectedCategory(nextCategory);
     setVisibleCount(ITEMS_PER_PAGE); // reset pagination
   };
 
-  // Skeleton Components
-  const Skeleton = ({ className = "" }) => (
-    <div className={`animate-pulse rounded-md bg-[var(--color-muted)] ${className}`} />
-  );
-
-  const ToolCardSkeleton = () => (
-    <div className="rounded-xl border border-[var(--color-border)] p-6 space-y-4">
-      <div className="flex gap-4 items-center">
-        <Skeleton className="h-12 w-12 rounded-xl" />
-        <Skeleton className="h-4 w-40" />
-      </div>
-      <Skeleton className="h-3 w-full" />
-      <Skeleton className="h-3 w-3/4" />
-    </div>
-  );
-
-  const ToolsGridSkeleton = () => (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-      {Array.from({ length: 6 }).map((_, i) => (
-        <ToolCardSkeleton key={i} />
-      ))}
-    </div>
-  );
-
   const [open, setOpen] = useState(false);
-  const [selectedLabel, setSelectedLabel] = useState(
-    categoryname ? formatLabel(categoryname) : "Select Category"
-  );
+  const selectedLabel = categoryname ? formatLabel(categoryname) : "Select Category";
 
   const handleSelect = (cat) => {
-    const slug = slugify(cat);
-    setSelectedLabel(formatLabel(cat));
-    handleCategoryClick(slug);
+    handleCategoryClick(cat);
     setOpen(false);
   };
 
@@ -225,7 +239,7 @@ export default function ToolsClient({ meta, category }) {
             </span>
           </h2>
 
-          {loading ? (
+          {slugs.length === 0 ? (
             <ToolsGridSkeleton />
           ) : filteredSlugs.length === 0 ? (
             <div className="py-24 text-center">

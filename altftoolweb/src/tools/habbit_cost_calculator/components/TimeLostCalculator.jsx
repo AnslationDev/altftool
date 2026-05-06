@@ -315,8 +315,8 @@ export const TimeLostCalculator = ({ habits }) => {
           className="mt-4 p-3 rounded-lg bg-blue-50 dark:bg-blue-900/10 border-l-4 border-blue-500"
         >
           <p className="text-xs font-medium text-gray-900 dark:text-gray-100 leading-relaxed">
-            <span className="font-bold text-blue-700 dark:text-blue-300">💡 Insight:</span> In the next 10 years, you'll lose approximately{' '}
-            <span className="font-black text-blue-800 dark:text-blue-200">{calculations.monthsPer10Years} months</span> to these habits alone. That's{' '}
+            <span className="font-bold text-blue-700 dark:text-blue-300">💡 Insight:</span> In the next 10 years, you&apos;ll lose approximately{' '}
+            <span className="font-black text-blue-800 dark:text-blue-200">{calculations.monthsPer10Years} months</span> to these habits alone. That&apos;s{' '}
             <span className="font-black text-blue-800 dark:text-blue-200">{calculations.percentagePer10Years}%</span> of your waking life!
           </p>
         </motion.div>
@@ -471,7 +471,7 @@ export const TimeLostCalculator = ({ habits }) => {
               💰 Financial Opportunity
             </p>
             <p className="text-xs font-bold text-blue-900 dark:text-blue-50 leading-relaxed">
-              If you invested your {calculations.hoursPerYear} annual hours at even ₹250/hour (freelance rate), you'd earn <span className="font-black">₹{Math.round(calculations.hoursPerYear * 250).toLocaleString('en-IN')}</span> per year, or <span className="font-bold">₹{Math.round(calculations.hoursPerYear * 250 * 10).toLocaleString('en-IN')}</span> in 10 years!
+              If you invested your {calculations.hoursPerYear} annual hours at even ₹250/hour (freelance rate), you&apos;d earn <span className="font-black">₹{Math.round(calculations.hoursPerYear * 250).toLocaleString('en-IN')}</span> per year, or <span className="font-bold">₹{Math.round(calculations.hoursPerYear * 250 * 10).toLocaleString('en-IN')}</span> in 10 years!
             </p>
           </div>
         </motion.div>

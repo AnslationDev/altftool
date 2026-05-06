@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useCallback, useState, useEffect } from "react";
 
 const STORAGE_KEY = "fp_stability_hash";
 const STORAGE_COUNT_KEY = "fp_stability_count";
@@ -15,12 +15,7 @@ export function useStabilityTest(currentFingerprintId) {
     stabilityScore: null,
   });
 
-  useEffect(() => {
-    if (!currentFingerprintId) return;
-    checkStability(currentFingerprintId);
-  }, [currentFingerprintId]);
-
-  function checkStability(currentHash) {
+  const checkStability = useCallback((currentHash) => {
     try {
       const previousHash = sessionStorage.getItem(STORAGE_KEY);
       const countData = sessionStorage.getItem(STORAGE_COUNT_KEY);
@@ -90,7 +85,12 @@ export function useStabilityTest(currentFingerprintId) {
         message: "Session storage is blocked. Cannot test stability.",
       });
     }
-  }
+  }, []);
+
+  useEffect(() => {
+    if (!currentFingerprintId) return;
+    checkStability(currentFingerprintId);
+  }, [checkStability, currentFingerprintId]);
 
   function resetTest() {
     try {

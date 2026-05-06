@@ -4,43 +4,52 @@ import Sidebar from '../components/Sidebar'
 import RequestBuilder from '../components/RequestBuilder'
 import ResponseViewer from '../components/ResponseViewer'
 
-
- export default function ToolHome(){
-  const [collections, setCollections] = useState([])
-  const [selectedRequest, setSelectedRequest] = useState(null)
-  const [response, setResponse] = useState(null)
-  const [environments, setEnvironments] = useState([
-    { id: '1', name: 'Environment 1', variables: {} }
-  ])
-  const [selectedEnvironment, setSelectedEnvironment] = useState('1')
-  const [history, setHistory] = useState([])
-
-  // Load data from localStorage on mount
-  useEffect(() => {
-    const savedCollections = localStorage.getItem('postman-collections')
-    const savedEnvironments = localStorage.getItem('postman-environments')
-    const savedHistory = localStorage.getItem('postman-history')
-
-    if (savedCollections) setCollections(JSON.parse(savedCollections))
-    else {
-      setCollections([{
+const DEFAULT_COLLECTIONS = [
+  {
+    id: '1',
+    name: 'My Collection',
+    requests: [
+      {
         id: '1',
-        name: 'My Collection',
-        requests: [{
-          id: '1',
-          name: 'Sample GET Request',
-          method: 'GET',
-          url: 'https://jsonplaceholder.typicode.com/posts/1',
-          headers: {},
-          body: '',
-          description: 'A sample GET request'
-        }]
-      }])
-    }
+        name: 'Sample GET Request',
+        method: 'GET',
+        url: 'https://jsonplaceholder.typicode.com/posts/1',
+        headers: {},
+        body: '',
+        description: 'A sample GET request'
+      }
+    ]
+  }
+]
 
-    if (savedEnvironments) setEnvironments(JSON.parse(savedEnvironments))
-    if (savedHistory) setHistory(JSON.parse(savedHistory))
-  }, [])
+const DEFAULT_ENVIRONMENTS = [
+  { id: '1', name: 'Environment 1', variables: {} }
+]
+
+const loadStoredJson = (key, fallback) => {
+  if (typeof window === 'undefined') return fallback
+
+  try {
+    const stored = localStorage.getItem(key)
+    return stored ? JSON.parse(stored) : fallback
+  } catch {
+    return fallback
+  }
+}
+
+	 export default function ToolHome(){
+	  const [collections, setCollections] = useState(() =>
+	    loadStoredJson('postman-collections', DEFAULT_COLLECTIONS)
+	  )
+	  const [selectedRequest, setSelectedRequest] = useState(null)
+	  const [response, setResponse] = useState(null)
+	  const [environments, setEnvironments] = useState(() =>
+	    loadStoredJson('postman-environments', DEFAULT_ENVIRONMENTS)
+	  )
+	  const [selectedEnvironment, setSelectedEnvironment] = useState('1')
+	  const [history, setHistory] = useState(() =>
+	    loadStoredJson('postman-history', [])
+	  )
 
   useEffect(() => {
     localStorage.setItem('postman-collections', JSON.stringify(collections))
@@ -178,5 +187,4 @@ import ResponseViewer from '../components/ResponseViewer'
  </div>
   )
 }
-
 

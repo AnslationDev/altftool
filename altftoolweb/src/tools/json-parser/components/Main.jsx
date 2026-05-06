@@ -306,7 +306,7 @@ export default function Main(){
               ) : (
                 <div className="flex flex-col  items-center justify-center h-full text-center rounded-xl">
                   <Code className="w-16 h-16 text-gray-300 mb-4" />
-                  <p className="text-muted-foreground">Enter JSON and click "Parse JSON"</p>
+                  <p className="text-muted-foreground">Enter JSON and click &quot;Parse JSON&quot;</p>
                 </div>
               )}
             </div>

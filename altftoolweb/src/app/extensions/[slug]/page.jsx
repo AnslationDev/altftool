@@ -181,7 +181,7 @@ export default function ExtensionDetailsPage({ params }) {
                                 <div className="p-2 rounded-lg bg-[var(--primary)]/10">
                                     <Zap className="w-5 h-5 text-[var(--primary)]" />
                                 </div>
-                                What's Inside
+                                What&apos;s Inside
                             </h2>
 
                             <div className="grid sm:grid-cols-2 gap-4">

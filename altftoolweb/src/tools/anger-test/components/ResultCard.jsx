@@ -161,7 +161,7 @@ export default function ResultCard({
           </span>
           This assessment is for informational purposes only and is not a
           substitute for professional medical advice, diagnosis, or treatment.
-          If you're experiencing persistent anger issues or thoughts of
+          If you&apos;re experiencing persistent anger issues or thoughts of
           self-harm, please consult a qualified mental health professional.
         </p>
       </div>

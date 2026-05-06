@@ -556,7 +556,7 @@ export default function ToolHome() {
                 <Monitor className="w-5 h-5 text-(--foreground)mt-0.5" />
                 <div className="text-sm text-purple-100">
                   <p className="font-semibold mb-1 text-(--foreground)">Ready to record</p>
-                  <p className="text-(--foreground)">Click "Start Recording" and select which screen or window you want to capture. Your browser will ask for permission.</p>
+                  <p className="text-(--foreground)">Click &quot;Start Recording&quot; and select which screen or window you want to capture. Your browser will ask for permission.</p>
                 </div>
               </div>
             </motion.div>

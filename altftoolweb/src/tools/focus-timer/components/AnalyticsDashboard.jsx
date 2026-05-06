@@ -111,7 +111,7 @@ export default function AnalyticsDashboard({ todayStats, getAllStats, totalSessi
       <div>
         <h2 className="subheading mb-1">Analytics</h2>
         <p className="text-xs text-(--muted-foreground) font-secondary">
-          Today's focus overview
+          Today&apos;s focus overview
         </p>
       </div>
 

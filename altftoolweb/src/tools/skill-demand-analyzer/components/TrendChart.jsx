@@ -38,6 +38,23 @@ const SectionHeader = ({ label, title, subtitle, badge, labelClass = "text-blue-
   </div>
 );
 
+function TrendTooltip({ active, payload, label, source }) {
+  if (!active || !payload || !payload.length) return null;
+
+  return (
+    <div className="rounded-3xl border border-(--border) bg-(--card) p-4 shadow-xl text-sm text-(--foreground)">
+      <p className="font-semibold mb-2">{label}</p>
+      {payload.map((entry, index) => (
+        <div key={index} className="flex items-center gap-2 mb-2">
+          <span className="inline-block h-3 w-3 rounded-full" style={{ backgroundColor: entry.color }} />
+          <span>{entry.name}: <strong>{entry.value}</strong></span>
+        </div>
+      ))}
+      <p className="text-xs text-(--muted-foreground)">Source: {source}</p>
+    </div>
+  );
+}
+
 export function TrendChart({
   trendData = [],
   trendStatus,
@@ -66,22 +83,6 @@ export function TrendChart({
   const cardBg = theme === 'dark' ? 'bg-[#0f172a]' : 'bg-white';
   const highlightColor = trendDirection === 'up' ? 'text-emerald-500' : trendDirection === 'down' ? 'text-rose-500' : 'text-slate-500';
   const gradientId = 'trendGradient';
-
-  const CustomTooltip = ({ active, payload, label }) => {
-    if (!active || !payload || !payload.length) return null;
-    return (
-      <div className="rounded-3xl border border-(--border) bg-(--card) p-4 shadow-xl text-sm text-(--foreground)">
-        <p className="font-semibold mb-2">{label}</p>
-        {payload.map((entry, index) => (
-          <div key={index} className="flex items-center gap-2 mb-2">
-            <span className="inline-block h-3 w-3 rounded-full" style={{ backgroundColor: entry.color }} />
-            <span>{entry.name}: <strong>{entry.value}</strong></span>
-          </div>
-        ))}
-        <p className="text-xs text-(--muted-foreground)">Source: Google Trends</p>
-      </div>
-    );
-  };
 
   const values = sanitizedData.map((item) => item.value);
   const highestPoint = sanitizedData.reduce(
@@ -163,7 +164,7 @@ export function TrendChart({
               <CartesianGrid strokeDasharray="3 3" stroke={gridColor} vertical={false} />
               <XAxis dataKey="date" axisLine={false} tickLine={false} tick={{ fill: textColor, fontSize: 12 }} tickMargin={10} dy={6} />
               <YAxis axisLine={false} tickLine={false} tick={{ fill: textColor, fontSize: 12 }} domain={[0, 100]} ticks={[0, 25, 50, 75, 100]} />
-              <Tooltip content={<CustomTooltip />} />
+              <Tooltip content={<TrendTooltip source={source} />} />
               {!isComparison && <Area type="monotone" dataKey="value" stroke="none" fill={`url(#${gradientId})`} />}
               {!isComparison ? (
                 <Line type="monotone" dataKey="value" stroke="#2563eb" strokeWidth={3} dot={{ fill: '#2563eb', r: 4 }} activeDot={{ r: 6, strokeWidth: 0 }} animationDuration={1200} />

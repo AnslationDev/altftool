@@ -43,7 +43,7 @@ export default function VocabList({ savedWords, onRemove, onStatusChange, onSear
         <div className="flex flex-col items-center justify-center py-10 gap-3 text-(--muted-foreground)">
           <BookX size={36} />
           <p className="text-sm">There is no word saved yet!</p>
-          <p className="text-xs">Search for words and click "Learn this word"</p>
+          <p className="text-xs">Search for words and click &quot;Learn this word&quot;</p>
         </div>
       ) : (
         // Word cards list

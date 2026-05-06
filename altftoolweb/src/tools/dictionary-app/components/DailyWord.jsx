@@ -61,7 +61,7 @@ export default function DailyWord({ onSearch }) {
       {/* Example */}
       {dailyWord.example && (
         <p className="text-sm text-(--muted-foreground) italic leading-relaxed mb-3">
-          "{dailyWord.example}"
+          &quot;{dailyWord.example}&quot;
         </p>
       )}
 

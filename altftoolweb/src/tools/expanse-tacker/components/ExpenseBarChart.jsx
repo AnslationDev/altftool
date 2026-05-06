@@ -12,6 +12,18 @@ import {
   YAxis,
 } from "recharts";
 
+function ExpenseBarTooltip({ active, payload, label }) {
+  if (active && payload && payload.length) {
+    return (
+      <div className="bg-white p-3 rounded-lg shadow-xl border border-gray-100">
+        <p className="font-bold text-gray-900 mb-1">{label}</p>
+        <p className="text-blue-600 font-semibold">{formatCurrency(payload[0].value)}</p>
+      </div>
+    );
+  }
+  return null;
+}
+
 const ExpenseBarChart = ({ data }) => {
   const chartData = Object.entries(data)
     .map(([name, value]) => ({
@@ -27,18 +39,6 @@ const ExpenseBarChart = ({ data }) => {
       </div>
     );
   }
-
-  const CustomTooltip = ({ active, payload, label }) => {
-    if (active && payload && payload.length) {
-      return (
-        <div className="bg-white p-3 rounded-lg shadow-xl border border-gray-100">
-          <p className="font-bold text-gray-900 mb-1">{label}</p>
-          <p className="text-blue-600 font-semibold">{formatCurrency(payload[0].value)}</p>
-        </div>
-      );
-    }
-    return null;
-  };
 
   return (
     <div className="w-full h-[350px] sm:h-[400px] p-2 bg-white rounded-xl shadow-sm border border-gray-50">
@@ -66,7 +66,7 @@ const ExpenseBarChart = ({ data }) => {
             tick={{ fontSize: 10, fill: '#6b7280' }}
             width={60}
           />
-          <Tooltip content={<CustomTooltip />} cursor={{ fill: '#f3f4f6', radius: 4 }} />
+          <Tooltip content={<ExpenseBarTooltip />} cursor={{ fill: '#f3f4f6', radius: 4 }} />
           <Bar
             dataKey="amount"
             fill="#3b82f6" // Vibrant blue

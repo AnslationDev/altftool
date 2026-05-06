@@ -23,7 +23,7 @@ const SettingsContent = ({ activeId, onOpenSidebar }) => {
 
     if (setting.redirectUrl.startsWith("ms-settings:")) {
       if (isWindows) {
-        window.location.href = setting.redirectUrl;
+        window.location.assign(setting.redirectUrl);
       } else {
         alert("This settings page can only be opened on Windows devices.");
       }

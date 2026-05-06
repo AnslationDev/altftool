@@ -147,7 +147,7 @@ export default function Dashboard() {
                                 Capacity <span className="text-blue-500">Full</span>
                             </h2>
                             <p className="text-(--secondary) font-medium mb-10 leading-relaxed opacity-60">
-                                You've fully allocated all 24 hours of your day. To prioritize new activities, please reduce time from another area first.
+                                You&apos;ve fully allocated all 24 hours of your day. To prioritize new activities, please reduce time from another area first.
                             </p>
 
                             <button

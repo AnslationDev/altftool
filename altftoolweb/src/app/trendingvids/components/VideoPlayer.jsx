@@ -71,6 +71,13 @@ export default function VideoPlayer({ videoId, thumbnail, category, title }) {
     metaRef.current = { title, category, thumbnail };
   }, [title, category, thumbnail]);
 
+  const stopAutoSave = useCallback(() => {
+    if (saveTimerRef.current) {
+      clearInterval(saveTimerRef.current);
+      saveTimerRef.current = null;
+    }
+  }, []);
+
   useEffect(() => {
     setPlay(false);
     setShowResumeBar(false);
@@ -82,14 +89,7 @@ export default function VideoPlayer({ videoId, thumbnail, category, title }) {
       setResumeTime(0);
     }
     return () => stopAutoSave();
-  }, [videoId]);
-
-  const stopAutoSave = useCallback(() => {
-    if (saveTimerRef.current) {
-      clearInterval(saveTimerRef.current);
-      saveTimerRef.current = null;
-    }
-  }, []);
+  }, [stopAutoSave, videoId]);
 
   const startAutoSave = useCallback(() => {
     stopAutoSave();

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useMemo, useState } from "react";
 import SearchBar from "../components/SearchBar";
 import CodeGrid from "../components/CodeGrid";
 import ExplanationPanel from "../components/ExplanationPanel";
@@ -12,29 +12,21 @@ import Description from "../components/Description";
 
 export default function HttpStatus() {
   const [selectedCode, setSelectedCode] = useState(200);
-  const [info, setInfo] = useState(null);
-
-  useEffect(() => {
-    load(selectedCode);
-  }, [selectedCode]);
-
-  function load(code) {
-    const num = Number(code);
-    if (info?.code === num) return;
-
+  const info = useMemo(() => {
+    const num = Number(selectedCode);
     const data = codes[num];
 
     if (data) {
-      setInfo({ ...data, code: num });
-    } else {
-      setInfo({
-        code: num,
-        short: "Unknown Status Code",
-        detail: "No detailed explanation available.",
-        category: "Unknown",
-      });
+      return { ...data, code: num };
     }
-  }
+
+    return {
+      code: num,
+      short: "Unknown Status Code",
+      detail: "No detailed explanation available.",
+      category: "Unknown",
+    };
+  }, [selectedCode]);
 
   function getCategory(code) {
     if (code >= 100 && code < 200) return "1xx Informational";

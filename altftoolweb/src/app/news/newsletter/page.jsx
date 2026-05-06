@@ -112,7 +112,7 @@ function SubscribeForm() {
           <Check size={20} />
         </div>
         <div>
-          <p className="font-semibold text-[var(--foreground)]">You're in! 🎉</p>
+          <p className="font-semibold text-[var(--foreground)]">You&apos;re in! 🎉</p>
           <p className="mt-1 text-sm text-[var(--muted-foreground)]">
             Check <span className="font-medium text-[var(--foreground)]">{email}</span> for a confirmation link.
           </p>
@@ -290,7 +290,7 @@ export default function NewsletterPage() {
           {TESTIMONIALS.map(({ name, text, stars }) => (
             <div key={name} className="flex flex-col gap-3 rounded-2xl border border-[var(--border)] bg-[var(--card)] p-5">
               <StarRating count={stars} />
-              <p className="flex-1 text-sm leading-relaxed text-[var(--foreground)]">"{text}"</p>
+              <p className="flex-1 text-sm leading-relaxed text-[var(--foreground)]">&quot;{text}&quot;</p>
               <p className="text-xs font-semibold text-[var(--muted-foreground)]">{name}</p>
             </div>
           ))}

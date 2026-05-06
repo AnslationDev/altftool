@@ -149,7 +149,7 @@ export default function ToolHome() {
                 <div className="mt-4 p-4 bg-(--card) border border-(--border) rounded-xl text-sm text-(--muted-foreground)">
                   <p><strong>Camera access is blocked. Please enable camera from your browser settings.</strong></p>
                   <ol className="list-decimal ml-6 mt-2">
-                    <li>Click the lock icon in the browser's address bar.</li>
+                    <li>Click the lock icon in the browser&apos;s address bar.</li>
                     <li>Allow camera access.</li>
                     <li>Refresh this page.</li>
                   </ol>

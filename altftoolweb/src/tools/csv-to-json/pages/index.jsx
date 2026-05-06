@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useRef, useEffect } from "react";
+import React, { useCallback, useState, useRef, useEffect } from "react";
 import FileUploader from "../components/FileUploader";
 import JSONOutput from "../components/JSONOutput";
 import ActionButtons from "../components/ActionButton";
@@ -216,15 +216,10 @@ export default function ToolHome() {
   
   const fileInputRef = useRef(null);
 
-  useEffect(() => {
-    const handlePaste = (e) => {
-      const pastedText = e.clipboardData.getData("text");
-      if (pastedText && pastedText.includes(",") && pastedText.length > 5) {
-        handleFileUpload(pastedText);
-      }
-    };
-    window.addEventListener("paste", handlePaste);
-    return () => window.removeEventListener("paste", handlePaste);
+  const handleFileUpload = useCallback((fileContent) => {
+    if (!fileContent || !fileContent.trim()) { setCsvData([]); setJsonData(""); return; }
+    setCsvData(parseCSV(fileContent));
+    setJsonData("");
   }, []);
 
   const handleDragOver = (e) => { e.preventDefault(); e.stopPropagation(); setIsDragging(true); };
@@ -239,11 +234,16 @@ export default function ToolHome() {
     }
   };
 
-  const handleFileUpload = (fileContent) => {
-    if (!fileContent || !fileContent.trim()) { setCsvData([]); setJsonData(""); return; }
-    setCsvData(parseCSV(fileContent));
-    setJsonData(""); 
-  };
+  useEffect(() => {
+    const handlePaste = (e) => {
+      const pastedText = e.clipboardData.getData("text");
+      if (pastedText && pastedText.includes(",") && pastedText.length > 5) {
+        handleFileUpload(pastedText);
+      }
+    };
+    window.addEventListener("paste", handlePaste);
+    return () => window.removeEventListener("paste", handlePaste);
+  }, [handleFileUpload]);
 
   const handleConvert = () => {
     if (csvData.length === 0) return;

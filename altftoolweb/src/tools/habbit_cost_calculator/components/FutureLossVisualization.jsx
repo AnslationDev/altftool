@@ -258,7 +258,7 @@ export const FutureLossVisualization = ({ habits }) => {
           className="mt-6 p-4 rounded-xl bg-linear-to-r from-blue-500/10 to-blue-600/10 border border-blue-500/20"
         >
           <p className="text-sm text-gray-600 dark:text-gray-300">
-            <span className="font-semibold text-gray-800">Difference:</span> {formatIndianCurrency(projection.invested - projection.wasted)} gap between what you'd waste vs. what you could have
+            <span className="font-semibold text-gray-800">Difference:</span> {formatIndianCurrency(projection.invested - projection.wasted)} gap between what you&apos;d waste vs. what you could have
           </p>
         </motion.div>
 

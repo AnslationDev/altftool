@@ -1,14 +1,42 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useSyncExternalStore } from "react";
 import { Star } from "lucide-react";
 import ManagedImage from "@/components/ui/ManagedImage";
 
+const REVIEW_VIEWPORTS = {
+  mobile: { visibleCards: 1, wordLimit: 20 },
+  tablet: { visibleCards: 2, wordLimit: 25 },
+  desktop: { visibleCards: 3, wordLimit: 35 },
+};
+
+const getReviewViewportSnapshot = () => {
+  if (typeof window === "undefined") return "desktop";
+
+  const width = window.innerWidth;
+  if (width < 640) return "mobile";
+  if (width < 1024) return "tablet";
+  return "desktop";
+};
+
+const subscribeToReviewViewport = (callback) => {
+  if (typeof window === "undefined") return () => {};
+
+  window.addEventListener("resize", callback);
+  return () => window.removeEventListener("resize", callback);
+};
+
 export default function Reviews({ reviews = [] }) {
   const [index, setIndex] = useState(0);
-  const [visibleCards, setVisibleCards] = useState(3);
   const [scrollRef, setScrollRef] = useState(null);
-  const [wordLimit, setWordLimit] = useState(30);
+  const viewport = useSyncExternalStore(
+    subscribeToReviewViewport,
+    getReviewViewportSnapshot,
+    () => "desktop"
+  );
+  const { visibleCards, wordLimit } = REVIEW_VIEWPORTS[viewport];
+  const maxIndex = Math.max(0, reviews.length - visibleCards);
+  const clampedIndex = Math.min(index, maxIndex);
 
   const truncateText = (text, limit) => {
     if (!text) return "";
@@ -28,37 +56,12 @@ export default function Reviews({ reviews = [] }) {
 
     const interval = setInterval(() => {
       const cardWidth = scrollRef.clientWidth / visibleCards;
-      let nextIndex = index + 1;
+      let nextIndex = clampedIndex + 1;
       if (nextIndex + visibleCards > reviews.length) nextIndex = 0;
       scrollRef.scrollTo({ left: nextIndex * cardWidth, behavior: "smooth" });
     }, 3000);
     return () => clearInterval(interval);
-  }, [index, visibleCards, reviews.length, scrollRef]);
-
-  useEffect(() => {
-    const handleResize = () => {
-      const width = window.innerWidth;
-      if (width < 640) {
-        setVisibleCards(1);
-        setWordLimit(20); // mobile 
-      } else if (width < 1024) {
-        setVisibleCards(2);
-        setWordLimit(25); // tablet
-      } else {
-        setVisibleCards(3);
-        setWordLimit(35); // desktop
-      }
-    };
-    handleResize();
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
-
-  useEffect(() => {
-    if (index + visibleCards > reviews.length) {
-      setIndex(Math.max(0, reviews.length - visibleCards));
-    }
-  }, [visibleCards, reviews.length]);
+  }, [clampedIndex, visibleCards, reviews.length, scrollRef]);
 
   const totalDots = Math.max(0, reviews.length - visibleCards + 1);
   const showControls = reviews.length > visibleCards;
@@ -150,7 +153,7 @@ export default function Reviews({ reviews = [] }) {
                 scrollRef.scrollTo({ left: i * cardWidth, behavior: "smooth" });
               }}
               className={`h-2 rounded-full cursor-pointer transition-all duration-300
-                ${index === i
+                ${clampedIndex === i
                   ? "bg-(--primary) w-8 opacity-100"
                   : "bg-[#1e3a8a] w-2 opacity-40"
                 }`}

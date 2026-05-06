@@ -49,7 +49,7 @@ export default function SpotlightBanner() {
           </span>
 
           <h1 className="heading text-xl sm:text-2xl md:text-3xl lg:text-4xl leading-tight">
-            Watch 'Forever After, Never Again'
+            Watch &apos;Forever After, Never Again&apos;
           </h1>
 
           <p className="text-gray-300 mt-3 text-sm sm:text-base description">

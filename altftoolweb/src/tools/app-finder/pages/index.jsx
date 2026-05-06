@@ -149,7 +149,7 @@ export default function ToolHome() {
         {/* AI MESSAGE */}
         {detectedCategory !== null && query && (
           <p className="text-center text-xs sm:text-sm text-gray-500 mb-4">
-            Showing smart results for "{detectedCategory}"
+            Showing smart results for &quot;{detectedCategory}&quot;
           </p>
         )}
 

@@ -87,7 +87,7 @@ export default function TimerControls({
 
  {/* Subtext */}
   <p className="text-xs font-secondary text-red-400">
-    Stay focused! Don't exit.
+    Stay focused! Don&apos;t exit.
   </p>
 
     {/* Button */}
