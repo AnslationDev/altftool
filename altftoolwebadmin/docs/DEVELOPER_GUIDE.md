@@ -1,6 +1,12 @@
 # Admin AltFTools Developer Guide
 
+Last updated: 2026-05-06
+
 This document is the main onboarding guide for developers working on this admin panel. It explains how the app is structured, how routing and permissions work, how projects/modules are added, and what conventions to follow when extending the system.
+
+For monorepo-level setup, validation, shared packages, Firebase boundaries, and standalone repo sync notes, also read:
+
+- `../../docs/DEVELOPER_GUIDE.md`
 
 ## 1. What This Project Is
 
@@ -854,4 +860,3 @@ Whenever you add or change any of the following, update this guide:
   - permission
   - module page import
   - Firestore path
-
