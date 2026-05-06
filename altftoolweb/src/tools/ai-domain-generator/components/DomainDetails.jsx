@@ -1,21 +1,20 @@
 "use client";
 
-import { useState } from "react";
+const domainMeaningTemplates = [
+  "A platform where {name} products are built and launched.",
+  "An online service dedicated to {name}.",
+  "A hub for {name}-related tools and resources.",
+  "A community for everything about {name}.",
+  "A place to explore and develop {name}-related ideas.",
+];
+
+function generateDomainMeaning(domainName) {
+  const name = domainName.split(".")[0].toLowerCase();
+  const hash = [...name].reduce((total, char) => total + char.charCodeAt(0), 0);
+  return domainMeaningTemplates[hash % domainMeaningTemplates.length].replace("{name}", name);
+}
 
 export function DomainDetailsPanel({ details }) {
-  // Template-based domain meaning generator
-  const generateDomainMeaning = (domainName) => {
-    const name = domainName.split(".")[0].toLowerCase();
-    const templates = [
-      `A platform where ${name} products are built and launched.`,
-      `An online service dedicated to ${name}.`,
-      `A hub for ${name}-related tools and resources.`,
-      `A community for everything about ${name}.`,
-      `A place to explore and develop ${name}-related ideas.`,
-    ];
-    return templates[Math.floor(Math.random() * templates.length)];
-  };
-
   if (!details) {
     return (
       <div className="rounded-2xl border border-(--border) bg-(--background) p-5 shadow-sm ">

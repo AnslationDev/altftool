@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Search, MapPin, Briefcase, DollarSign, Calendar, ExternalLink, Globe, Filter, X } from 'lucide-react';
 import { useJSearch } from '../hooks/useJSearch';
+import ManagedImage from "@/components/ui/ManagedImage";
 
 const JobCard = ({ job, source = 'jsearch' }) => {
   // Normalize data between JSearch and Adzuna
@@ -37,7 +38,7 @@ const JobCard = ({ job, source = 'jsearch' }) => {
           <div className="flex items-center gap-4">
             <div className="w-12 h-12 rounded-xl bg-white flex items-center justify-center p-2 shadow-sm border border-(--border) overflow-hidden">
               {logo ? (
-                <img src={logo} alt={company} className="w-full h-full object-contain" />
+                <ManagedImage src={logo} alt={company} className="w-full h-full object-contain" />
               ) : (
                 <Briefcase className="w-6 h-6 text-blue-600" />
               )}

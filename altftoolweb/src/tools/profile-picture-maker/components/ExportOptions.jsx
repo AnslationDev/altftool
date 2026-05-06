@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { Download, Image } from "lucide-react";
+import { Download, Image as ImageIcon } from "lucide-react";
 
 export default function ExportOptions({
   format,
@@ -14,7 +14,7 @@ export default function ExportOptions({
     <div className="w-full space-y-4 p-4 rounded-2xl border border-(--border) bg-(--card)">
       
       <h3 className="flex items-center gap-2 font-semibold">
-        <Image className="text-blue-500" />
+        <ImageIcon className="text-blue-500" />
         Export Options
       </h3>
 

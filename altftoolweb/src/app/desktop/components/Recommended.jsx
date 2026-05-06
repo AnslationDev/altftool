@@ -1,5 +1,6 @@
 "use client";
 
+import ManagedImage from "@/components/ui/ManagedImage";
 const recommendedApps = [
   {
     name: "Notion",
@@ -68,7 +69,7 @@ export default function RecommendedForYou() {
 
             {/* Icon */}
             <div className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 flex items-center justify-center bg-gray-50 rounded-xl sm:rounded-2xl">
-              <img
+              <ManagedImage
                 src={app.icon}
                 alt={app.name}
                 className="w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 object-contain"

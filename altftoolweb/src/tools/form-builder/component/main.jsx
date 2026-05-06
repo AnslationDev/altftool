@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import {
   Download,
   Eye,
@@ -31,6 +31,7 @@ import { decodeForm } from "../utils/shareForm";
 import FieldSettingsPanel from "./FieldSettingsPanel";
 
 const FormBuilder = () => {
+  const nextIdRef = useRef(0);
   const [formFields, setFormFields] = useState([]);
   const [formTitle, setFormTitle] = useState("");
   const [formDescription, setFormDescription] = useState("");
@@ -90,11 +91,13 @@ const FormBuilder = () => {
   ];
 
   // --- Handlers ---
+  const createId = (prefix) => `${prefix}-${++nextIdRef.current}`;
+
   const addField = (type) => {
     setHistory((prev) => [...prev, formFields]);
     setFuture([]);
     const newField = {
-      id: Date.now(),
+      id: createId("field"),
       type,
       label: `${type.charAt(0).toUpperCase() + type.slice(1)} Field`,
       placeholder:
@@ -151,7 +154,7 @@ const FormBuilder = () => {
 
     const newField = {
       ...fieldToCopy,
-      id: Date.now(), // new unique id
+      id: createId("field"),
       label: fieldToCopy.label + " (Copy)",
     };
 
@@ -250,7 +253,7 @@ const FormBuilder = () => {
 
   const addCondition = (showFieldId) => {
     const newCondition = {
-      id: Date.now(),
+      id: createId("condition"),
       ifFieldId: "",
       ifValue: "",
       showFieldId,

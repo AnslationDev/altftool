@@ -2,6 +2,7 @@
 
 import React, { useState, useRef, useEffect } from "react";
 import { Instagram, Twitter, Linkedin, ChevronDown } from "lucide-react";
+import ManagedImage from "@/components/ui/ManagedImage";
 
 export default function ResultPreview({ image, onReset }) {
   const [showShareModal, setShowShareModal] = useState(false);
@@ -143,7 +144,7 @@ export default function ResultPreview({ image, onReset }) {
         <p className="mb-4 font-semibold">After Background Removal</p>
 
         <div className="rounded-xl overflow-hidden relative">
-          <img
+          <ManagedImage
             src={image}
             alt="Result"
             className="mx-auto max-h-96 object-contain"

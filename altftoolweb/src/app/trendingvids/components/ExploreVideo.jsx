@@ -1,12 +1,13 @@
 "use client";
 import { Play, Plus, Clock, X, ChevronDown } from "lucide-react";
-import React, { useEffect } from "react";
+import React, { useEffect, useMemo } from "react";
 import { useState } from "react";
 import VideoDialogModal from "./VideoDialogModal";
 import { useYoutubeVideos } from "../hooks/useYoutubeVideos";
 import ReelsView from "./ReelsView";
 import { useTheme } from "@/contexts/ThemeContext";
 import { matchesExploreCategory } from "../services/firebaseTrendingVideos";
+import ManagedImage from "@/components/ui/ManagedImage";
 
 export default function ExploreVideos({
   categories = [],
@@ -19,14 +20,21 @@ export default function ExploreVideos({
   const [tab, setTab] = useState("Videos");
   const [sortBy, setSortBy] = useState("Latest");
   const [hoveredVideo, setHoveredVideo] = useState(null);
-  const [visibleVideos, setVisibleVideos] = useState([]);
   const [isLoadingMore, setIsLoadingMore] = useState(false);
   const { theme } = useTheme();
-  const visibleCategories = categories.slice(0, 4);
-  const filters = ["All", ...visibleCategories];
+  const visibleCategories = useMemo(() => categories.slice(0, 4), [categories]);
+  const filters = useMemo(() => ["All", ...visibleCategories], [visibleCategories]);
+  const searchedActiveFilter = useMemo(() => {
+    const firstCategory = searchResults?.[0]?.category;
+    if (!firstCategory) return "";
+    return (
+      filters.find((filter) => filter.toLowerCase() === firstCategory.toLowerCase()) || "All"
+    );
+  }, [filters, searchResults]);
+  const activeFilter = searchedActiveFilter || activeCategory || active;
 
   const { videos, loading, loadMore, hasMore } = useYoutubeVideos(
-    active,
+    activeFilter,
     tab,
     sortBy,
   );
@@ -42,22 +50,6 @@ export default function ExploreVideos({
     };
   }, [tab]);
 
-  useEffect(() => {
-    if (activeCategory) {
-      setActive(activeCategory);
-    }
-  }, [activeCategory]);
-
-  useEffect(() => {
-    if (searchResults && searchResults.length > 0) {
-      const firstCategory = searchResults[0]?.category;
-      const matchedFilter = filters.find(
-        (filter) => filter.toLowerCase() === firstCategory.toLowerCase(),
-      );
-      setActive(matchedFilter || "All");
-    }
-  }, [searchResults]);
-
   const handleCategoryClick = (filterName) => {
     setActive(filterName);
     if (onClearSearch) onClearSearch();
@@ -65,22 +57,13 @@ export default function ExploreVideos({
 
   const videosToShow = (() => {
     if (searchResults && searchResults.length > 0) {
-      if (active === "All") return searchResults;
+      if (activeFilter === "All") return searchResults;
       return searchResults.filter((v) =>
-        matchesExploreCategory({ category: v.category }, active),
+        matchesExploreCategory({ category: v.category }, activeFilter),
       );
     }
     return videos;
   })();
-
-  useEffect(() => {
-    setVisibleVideos([]);
-    videosToShow.forEach((video, index) => {
-      setTimeout(() => {
-        setVisibleVideos((prev) => [...prev, video]);
-      }, index * 80);
-    });
-  }, [videosToShow]);
 
   const handleLoadMore = async () => {
     setIsLoadingMore(true);
@@ -125,7 +108,7 @@ export default function ExploreVideos({
         </div>
 
         <div className="flex-1 overflow-y-auto">
-          <ReelsView active={active} />
+          <ReelsView active={activeFilter} />
         </div>
       </div>
     );
@@ -180,7 +163,7 @@ export default function ExploreVideos({
                     key={filter}
                     onClick={() => handleCategoryClick(filter)}
                     className={`animate-slide-right px-4 sm:px-5 py-2.5 rounded-2xl text-sm font-medium border transition cursor-pointer flex-shrink-0 ${
-                      active === filter
+                      activeFilter === filter
                         ? "bg-[#2563EB] text-white border-[#2563EB] shadow-[0_12px_30px_rgba(37,99,235,0.18)]"
                         : "bg-white text-[#475569] border-[#E2E8F0] hover:border-[#2563EB] hover:text-[#2563EB]"
                     }`}
@@ -217,7 +200,7 @@ export default function ExploreVideos({
             </p>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-              {visibleVideos.map((v, i) => {
+              {videosToShow.map((v, i) => {
                 const hoverKey = getVideoKey(v);
                 const isHovered = hoveredVideo === hoverKey;
 
@@ -251,7 +234,7 @@ export default function ExploreVideos({
                             />
                           )
                         ) : (
-                          <img
+                          <ManagedImage
                             src={v.image || v.thumbnail}
                             alt={v.title}
                             className="w-full aspect-video object-cover"

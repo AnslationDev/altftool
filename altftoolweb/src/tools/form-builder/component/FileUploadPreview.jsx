@@ -1,4 +1,5 @@
 import React from "react";
+import ManagedImage from "@/components/ui/ManagedImage";
 
 const FileUploadPreview = ({ file }) => {
   if (!file) return null;
@@ -19,7 +20,7 @@ const FileUploadPreview = ({ file }) => {
       )}
 
       {isImage && (
-        <img
+        <ManagedImage
           src={URL.createObjectURL(file)}
           alt="preview"
           className="mt-2 w-24 h-24 object-cover rounded-md border border-(--border)"

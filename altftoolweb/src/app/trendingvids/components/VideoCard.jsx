@@ -1,6 +1,7 @@
 "use client";
 import { Play, Clock, ArrowUpRight } from "lucide-react";
 import { motion } from "framer-motion";
+import ManagedImage from "@/components/ui/ManagedImage";
 
 const VideoCard = ({ video, onClick }) => {
   const handleClick = () => {
@@ -20,7 +21,7 @@ const VideoCard = ({ video, onClick }) => {
     >
       {/* Thumbnail */}
       <div className="relative aspect-video overflow-hidden m-2 rounded-[1.5rem] bg-slate-200 dark:bg-slate-800">
-        <img
+        <ManagedImage
           src={video.thumbnail || "/placeholder.jpg"}
           alt={video.title || "Video thumbnail"}
           loading="lazy"

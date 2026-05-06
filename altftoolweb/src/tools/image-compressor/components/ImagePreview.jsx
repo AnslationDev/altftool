@@ -1,6 +1,7 @@
 "use client";
 import React from "react";
 import { ImageProcessor } from "../utils/ImageProcessor";
+import ManagedImage from "@/components/ui/ManagedImage";
 
 export default function ImagePreview({
   originalImage,
@@ -24,7 +25,7 @@ export default function ImagePreview({
 
         <div className="p-4">
           <div className="relative aspect-video mb-4 bg-(--muted) rounded-lg overflow-hidden">
-            <img
+            <ManagedImage
               src={originalImage.preview}
               alt="Original"
               className="w-full h-full object-contain"
@@ -68,7 +69,7 @@ export default function ImagePreview({
           ) : compressedImage ? (
             <>
               <div className="relative aspect-video mb-4 bg-(--muted) rounded-lg overflow-hidden">
-                <img
+                <ManagedImage
                   src={compressedImage.url}
                   alt="Compressed"
                   className="w-full h-full object-contain"

@@ -8,6 +8,7 @@ import { useTheme } from "@/contexts/ThemeContext";
 import { HiOutlineLightBulb } from "react-icons/hi";
 import { IoPlayOutline } from "react-icons/io5";
 import { Play } from "lucide-react";
+import ManagedImage from "@/components/ui/ManagedImage";
 
 export const VIDEO_METADATA = {
   dQw4w9WgXcQ: {
@@ -234,7 +235,7 @@ export default function ContinueWatching() {
   "
           >
             <div className="w-full lg:w-1/2 flex justify-center animate-slide-right">
-              <img
+              <ManagedImage
                 src="/continue.png"
                 alt="No videos"
                 className="
@@ -455,7 +456,7 @@ function VideoCard({ video, isJustUpdated, onResume, onClear }) {
             allow="autoplay"
           />
         ) : (
-          <img
+          <ManagedImage
             src={video.thumbnail}
             alt={video.title}
             className="w-full h-[220px] object-cover group-hover:scale-[1.03] transition-transform duration-300"

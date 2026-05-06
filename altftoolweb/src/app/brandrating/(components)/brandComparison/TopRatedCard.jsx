@@ -5,6 +5,7 @@ import React from "react";
 import { usePathname } from "next/navigation";
 import { ChevronDown, Check, ArrowUpRight, Trophy, Star, StarHalf } from "lucide-react";
 import mattress from "../../(assets)/Hero-2.jpg";
+import ManagedImage from "@/components/ui/ManagedImage";
 
 function getURlLink(str) {
   return str
@@ -160,7 +161,7 @@ export default function TopRated({
                     <div className="flex flex-col xl:flex-row items-center xl:items-stretch gap-5 sm:gap-8 xl:gap-12">
 
                       <div className="w-full xl:w-auto xl:flex-shrink-0 min-w-0">
-                        <img
+                        <ManagedImage
                           src={getImage(brand)}
                           alt={brand.name}
                           className="w-full max-w-full xl:max-w-[480px] 2xl:max-w-[560px] aspect-[4/3] sm:aspect-[16/10] object-cover rounded-[14px] sm:rounded-[20px]"
@@ -237,7 +238,7 @@ export default function TopRated({
                 ) : (
                   <div className="flex flex-col lg:flex-row items-center lg:items-stretch gap-4 sm:gap-6 lg:gap-8 mt-6">
                     <div className="w-full lg:w-[40%] xl:w-[38%] flex-shrink-0 min-w-0">
-                      <img
+                      <ManagedImage
                         src={getImage(brand)}
                         alt={brand.name}
                         className="w-full max-w-full lg:max-w-[420px] xl:max-w-[480px] aspect-[16/10] object-cover rounded-[20px]"

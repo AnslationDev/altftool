@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import ManagedImage from "@/components/ui/ManagedImage";
 
 export default function BuildSection() {
   const [tools, setTools] = useState([]);
@@ -45,7 +46,7 @@ export default function BuildSection() {
           hover:shadow-xl
         "
       >
-        <img
+        <ManagedImage
           src={tool.image}
           alt={tool.name}
           loading="lazy"

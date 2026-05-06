@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { Heart, Share2, MessageCircle, Bookmark, ExternalLink, Clock, MapPin } from "lucide-react";
 import { useState, useRef } from "react";
+import ManagedImage from "@/components/ui/ManagedImage";
 
 // ─── helpers ────────────────────────────────────────────────────────────────
 
@@ -101,7 +102,7 @@ export default function NewsCard({ news }) {
       {news.image_url && (
         <Link href={`/news/${news.slug}`} className="block" tabIndex={-1} aria-hidden>
           <div className="relative h-52 w-full overflow-hidden sm:h-56 md:h-80">
-            <img
+            <ManagedImage
               src={news.image_url}
               alt={news.headline}
               className="
@@ -169,7 +170,7 @@ export default function NewsCard({ news }) {
           <div className="flex items-center gap-2 min-w-0">
             {/* favicon */}
             {news.source_favicon && (
-              <img
+              <ManagedImage
                 src={news.source_favicon}
                 alt=""
                 aria-hidden

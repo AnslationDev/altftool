@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { Star } from "lucide-react";
+import ManagedImage from "@/components/ui/ManagedImage";
 
 export default function Reviews({ reviews = [] }) {
   const [index, setIndex] = useState(0);
@@ -93,7 +94,7 @@ export default function Reviews({ reviews = [] }) {
               <div className="rounded-2xl p-6 sm:p-7 lg:p-8 border border-(--border) shadow-sm hover:shadow-lg transition h-full flex flex-col relative animate-slide-up">
 
                 <div className="absolute -top-7 left-6">
-                  <img
+                  <ManagedImage
                     src={item.avatar}
                     alt={item.name}
                     className="w-14 h-14 rounded-full object-cover border-2 border-(--border)"

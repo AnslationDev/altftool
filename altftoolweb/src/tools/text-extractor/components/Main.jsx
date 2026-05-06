@@ -1,4 +1,5 @@
-"use-client";
+"use client";
+
 import React, { useState, useEffect, useCallback } from "react";
 import {
   ScanText,
@@ -6,12 +7,13 @@ import {
   Copy,
   Check,
   RotateCcw,
-  Image,
+  Image as ImageIcon,
   FileImage,
   Shield,
   Zap,
   AlertCircle,
 } from "lucide-react";
+import ManagedImage from "@/components/ui/ManagedImage";
 import Header from "./Header";
 
 // Tesseract Loader
@@ -136,7 +138,7 @@ export default function MainComponent() {
         {/* LEFT: Image Upload */}
         <div className="rounded-xl bg-(--card) border border-(--border) p-5">
           <h2 className="text-xl font-bold flex items-center gap-2 text-(--foreground)">
-            <Image className="h-5 w-5 text-(--primary)" />
+            <ImageIcon className="h-5 w-5 text-(--primary)" />
             Image Input
           </h2>
           <p className="text-sm text-(--muted-foreground)">
@@ -176,8 +178,9 @@ export default function MainComponent() {
               </div>
             ) : (
               <div className="space-y-4">
-                <img
+                <ManagedImage
                   src={imageUrl}
+                  alt="Uploaded image preview"
                   className="rounded-lg border border-(--border) max-h-64 mx-auto object-contain"
                 />
 

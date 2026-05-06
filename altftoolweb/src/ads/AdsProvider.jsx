@@ -9,17 +9,14 @@ import mockAdsData from "./data";
 export const AdsContext = createContext([]);
 
 const PROJECT_ID = "altftool"; // ✅ added
+const mockAds = (mockAdsData.ads || []).map(normalizeAd);
 
 export function AdsProvider({ children }) {
-  const [ads, setAds] = useState([]);
+  const useMock = process.env.NEXT_PUBLIC_USE_MOCK === "true";
+  const [ads, setAds] = useState(() => (useMock ? mockAds : []));
 
   useEffect(() => {
-    const useMock = process.env.NEXT_PUBLIC_USE_MOCK === "true";
-
-    // ── Mock data ──
     if (useMock) {
-      const mockAds = mockAdsData.ads || [];
-      setAds(mockAds.map(normalizeAd));
       return;
     }
 
@@ -46,7 +43,7 @@ export function AdsProvider({ children }) {
     );
 
     return () => unsubscribe();
-  }, []);
+  }, [useMock]);
 
   return (
     <AdsContext.Provider value={ads}>

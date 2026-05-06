@@ -18,25 +18,27 @@ export default function SearchPage() {
   const trimmedQuery = query.trim().toLowerCase();
   const isValid = trimmedQuery.length >= 2;
 
-  const tools = Object.entries(toolMetaMap).map(([slug, data]) => ({
-    slug,
-    ...data,
-  }));
-
-
-  const matchItem = (item) => {
-    const text = `${item.name} ${item.description || ""}`.toLowerCase();
-    return text.includes(trimmedQuery);
-  };
+  const tools = useMemo(
+    () =>
+      Object.entries(toolMetaMap).map(([slug, data]) => ({
+        slug,
+        ...data,
+      })),
+    [],
+  );
 
   const results = useMemo(() => {
     if (!isValid) return null;
+    const matchItem = (item) => {
+      const text = `${item.name} ${item.description || ""}`.toLowerCase();
+      return text.includes(trimmedQuery);
+    };
 
     return {
       tools: tools.filter(matchItem),
       extensions: dynamicExtensions.filter(matchItem),
     };
-  }, [trimmedQuery, dynamicExtensions]);
+  }, [dynamicExtensions, isValid, tools, trimmedQuery]);
 
   if (!isValid) {
     return (
@@ -121,4 +123,3 @@ function ResultSection({ title, items, base }) {
     </section>
   );
 }
-

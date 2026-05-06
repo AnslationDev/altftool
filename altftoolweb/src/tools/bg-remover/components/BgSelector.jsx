@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
+import ManagedImage from "@/components/ui/ManagedImage";
 
 export default function BackgroundSelector({ backgrounds, onSelect }) {
   const [showColorPicker, setShowColorPicker] = useState(false);
@@ -52,7 +53,7 @@ export default function BackgroundSelector({ backgrounds, onSelect }) {
             >
               {/* square image */}
               <div className="aspect-square w-full">
-                <img
+                <ManagedImage
                   src={bg.src}
                   alt={bg.name}
                   className="h-full w-full object-cover"

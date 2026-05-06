@@ -6,6 +6,7 @@ import cr3 from "../(assets)/cr3.png";
 import cr4 from "../(assets)/cr4.png";
 import cr5 from "../(assets)/cr5.png";
 import { useState, useRef } from "react";
+import ManagedImage from "@/components/ui/ManagedImage";
 
 function ConsumerRating() {
   const cards = [cr1, cr2, cr3, cr4, cr5];
@@ -86,7 +87,7 @@ function ConsumerRating() {
                   {!loadedImages[index] && (
                     <div className="absolute inset-0 animate-pulse bg-[var(--muted)]" />
                   )}
-                  <img
+                  <ManagedImage
                     src={img.src}
                     alt="category"
                     className={`w-full h-full object-cover transition-opacity duration-500 ${

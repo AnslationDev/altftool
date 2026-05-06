@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import { ExternalLink, MoreHorizontal } from 'lucide-react';
 import { motion } from 'framer-motion';
@@ -91,9 +91,8 @@ function SkeletonCard() {
 
 // ─── SEARCH RESULTS CONTAINER ─────────────────────────────────────────────────
 export function SearchResults({ results, query, isLoading, searchTime, onTagSearch, searchType = 'all' }) {
-  const [visibleCount, setVisibleCount] = useState(10); // Show more by default for images/news
-
-  useEffect(() => { setVisibleCount(5); }, [query]);
+  const [pagination, setPagination] = useState({ query, count: 5 });
+  const visibleCount = pagination.query === query ? pagination.count : 5;
 
   if (isLoading) {
     return (
@@ -228,7 +227,7 @@ export function SearchResults({ results, query, isLoading, searchTime, onTagSear
       {/* Pagination */}
       {visibleCount < results.length && (
         <div className="se-pagination">
-          <button onClick={() => setVisibleCount(p => p + 10)} className="se-page-next">
+          <button onClick={() => setPagination({ query, count: visibleCount + 10 })} className="se-page-next">
             Next
           </button>
         </div>

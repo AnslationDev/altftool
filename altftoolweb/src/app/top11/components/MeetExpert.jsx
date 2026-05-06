@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import { Star } from "lucide-react";
 import data from "../../exclusivedeals/(data)/db.json";
+import ManagedImage from "@/components/ui/ManagedImage";
 // import { FeedbackSkeleton } from "../DealsPageSkeleton";
 
 const Meetexpert = () => {
@@ -115,7 +116,7 @@ const Meetexpert = () => {
                             >
                                 {/* Avatar - half outside card */}
                                 <div className="absolute -top-7 left-6">
-                                    <img
+                                    <ManagedImage
                                         src={item.avatar}
                                         alt={item.name}
                                         className="w-15 h-15 rounded-full object-cover border-3 border-(--border)"

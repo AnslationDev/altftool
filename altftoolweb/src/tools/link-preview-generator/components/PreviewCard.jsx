@@ -1,5 +1,6 @@
 "use client";
 
+import ManagedImage from "@/components/ui/ManagedImage";
 export default function PreviewCard({ data }) {
   if (!data) return null;
 
@@ -12,7 +13,7 @@ export default function PreviewCard({ data }) {
       `}
     >
       {data.image && (
-        <img
+        <ManagedImage
           src={data.image}
           alt="Preview"
           className="w-full h-48 object-cover rounded-lg"

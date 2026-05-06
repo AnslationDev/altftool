@@ -19,6 +19,7 @@ import {
   Link,
 } from "lucide-react";
 import VideoPlayer from "./VideoPlayer";
+import ManagedImage from "@/components/ui/ManagedImage";
 // ── NEW: needed to extract YouTube ID from a videoUrl string ──────────────────
 import { extractYouTubeId } from "../services/firebaseTrendingVideos";
 
@@ -73,7 +74,7 @@ function CommentItem({ c, index }) {
         animationDelay: `${index * 40}ms`,
       }}
     >
-      <img
+      <ManagedImage
         src={snippet.authorProfileImageUrl}
         alt={snippet.authorDisplayName}
         className="w-8 h-8 rounded-full flex-shrink-0 object-cover border border-gray-200"
@@ -120,7 +121,7 @@ function SuggestedCard({ s, onClick, active }) {
       title={s.title}
     >
       <div className="relative w-[90px] xl:w-[100px] h-[56px] xl:h-[60px] flex-shrink-0 rounded-lg overflow-hidden bg-gray-100">
-        <img
+        <ManagedImage
           src={s.image}
           alt={s.title}
           className="w-full h-full object-cover"

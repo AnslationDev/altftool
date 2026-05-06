@@ -1,5 +1,6 @@
 "use client";
 import React, { useRef } from "react";
+import ManagedImage from "@/components/ui/ManagedImage";
 
 const events = [
   {
@@ -147,7 +148,7 @@ export default function EventCarousel() {
               key={index}
               className="relative min-w-[240px] sm:min-w-[280px] md:min-w-[320px] lg:min-w-[360px] rounded-xl shadow-lg flex-shrink-0 snap-start bg-[var(--card)]"
             >
-              <img
+              <ManagedImage
                 src={event.image}
                 alt={event.title}
                 className="w-full h-56 sm:h-64 md:h-72 lg:h-80 object-cover rounded-xl"
@@ -172,7 +173,7 @@ export default function EventCarousel() {
                   {/* App info */}
                   <div className="flex items-center gap-2">
                     <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-white flex items-center justify-center overflow-hidden">
-                      <img
+                      <ManagedImage
                         src={appIcon}
                         alt={event.appName}
                         className="w-4 h-4 sm:w-5 sm:h-5 object-contain"

@@ -14,6 +14,7 @@ import {
   FlipHorizontal,
   FlipVertical,
 } from "lucide-react";
+import ManagedImage from "@/components/ui/ManagedImage";
 
 const CropEditor = ({
   imageSrc,
@@ -242,7 +243,7 @@ const CropEditor = ({
         <div className="w-full h-32 sm:h-36 md:h-40 rounded-xl overflow-hidden border border-(--border) bg-(--card) group-hover:scale-105 transition-all duration-200">
           
           {imageSrc && (
-            <img
+            <ManagedImage
               src={imageSrc}
               alt={item.name}
               className="w-full h-full object-cover"

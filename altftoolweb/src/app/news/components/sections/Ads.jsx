@@ -2,6 +2,7 @@
 
 import { useAds } from "@/ads/AdsProvider";
 import { useMemo } from "react";
+import ManagedImage from "@/components/ui/ManagedImage";
 
 export default function Ads() {
   const ads = useAds({ placement: "news_sideads" });
@@ -36,7 +37,7 @@ function AdCard({ ad, }) {
       className="relative block overflow-hidden rounded-sm"
     >
       {/* Image */}
-      <img
+      <ManagedImage
         src={image}
         alt={ad?.title || "Sponsored Ad"}
         className={` w-full object-cover`}

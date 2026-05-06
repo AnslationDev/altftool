@@ -1,5 +1,6 @@
 import React from "react";
 import { Eye, Image as ImageIcon, ChevronDown } from "lucide-react";
+import ManagedImage from "@/components/ui/ManagedImage";
 
 const CropResult = ({
   croppedImage,
@@ -202,7 +203,7 @@ const [showSizeOptions, setShowSizeOptions] = React.useState(false);
       </div>
 
       <div className="border rounded-xl overflow-hidden bg-(--card)">
-        <img
+        <ManagedImage
           src={showBefore ? originalImage : croppedImage}
           alt="preview"
           className="max-w-full h-auto mx-auto block"

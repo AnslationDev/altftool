@@ -4,6 +4,7 @@ import React, { useMemo, useState } from "react";
 import Link from "next/link";
 import data from "../(data)/db.json";
 import { Menu, X } from "lucide-react";
+import ManagedImage from "@/components/ui/ManagedImage";
 
 
 // slug helper
@@ -150,7 +151,7 @@ export default function Page() {
                                   ">
                     <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-full border
                                     flex items-center justify-center bg-gray-50">
-                      <img
+                      <ManagedImage
                         src={brand.brandLogo}
                         alt={brand.brandName}
                         className="object-contain w-8 h-8 sm:w-10 sm:h-10"

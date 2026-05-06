@@ -1,41 +1,37 @@
 import React from "react";
 
+const templates = {
+  contact: [
+    { id: "contact-name", type: "text", label: "Name", placeholder: "Enter your name" },
+    { id: "contact-email", type: "email", label: "Email", placeholder: "Enter your email" },
+    { id: "contact-message", type: "textarea", label: "Message", placeholder: "Enter your message" },
+  ],
+  login: [
+    { id: "login-email", type: "email", label: "Email", placeholder: "Enter your email" },
+    { id: "login-password", type: "password", label: "Password", placeholder: "Enter password" },
+  ],
+  feedback: [
+    { id: "feedback-name", type: "text", label: "Name", placeholder: "Enter your name" },
+    { id: "feedback-rating", type: "range", label: "Rating", min: "1", max: "5" },
+    { id: "feedback-comments", type: "textarea", label: "Comments", placeholder: "Your feedback" },
+  ],
+  survey: [
+    { id: "survey-name", type: "text", label: "Full Name", placeholder: "Enter name" },
+    { id: "survey-age", type: "number", label: "Age", placeholder: "Enter age" },
+    { id: "survey-feedback", type: "textarea", label: "Feedback", placeholder: "Your thoughts" },
+  ],
+  job: [
+    { id: "job-name", type: "text", label: "Full Name", placeholder: "Enter name" },
+    { id: "job-email", type: "email", label: "Email", placeholder: "Enter email" },
+    { id: "job-resume", type: "file", label: "Resume" },
+    { id: "job-experience", type: "textarea", label: "Experience", placeholder: "Describe experience" },
+  ],
+};
+
 const TemplateSelector = ({ setFormFields, setFields }) => {
 
-  const templates = {
-    contact: [
-      { id: Date.now() + 1, type: "text", label: "Name", placeholder: "Enter your name" },
-      { id: Date.now() + 2, type: "email", label: "Email", placeholder: "Enter your email" },
-      { id: Date.now() + 3, type: "textarea", label: "Message", placeholder: "Enter your message" },
-    ],
-
-    login: [
-      { id: Date.now() + 4, type: "email", label: "Email", placeholder: "Enter your email" },
-      { id: Date.now() + 5, type: "password", label: "Password", placeholder: "Enter password" },
-    ],
-
-    feedback: [
-      { id: Date.now() + 6, type: "text", label: "Name", placeholder: "Enter your name" },
-      { id: Date.now() + 7, type: "range", label: "Rating", min: "1", max: "5" },
-      { id: Date.now() + 8, type: "textarea", label: "Comments", placeholder: "Your feedback" },
-    ],
-
-    survey: [
-      { id: Date.now() + 9, type: "text", label: "Full Name", placeholder: "Enter name" },
-      { id: Date.now() + 10, type: "number", label: "Age", placeholder: "Enter age" },
-      { id: Date.now() + 11, type: "textarea", label: "Feedback", placeholder: "Your thoughts" },
-    ],
-
-    job: [
-      { id: Date.now() + 12, type: "text", label: "Full Name", placeholder: "Enter name" },
-      { id: Date.now() + 13, type: "email", label: "Email", placeholder: "Enter email" },
-      { id: Date.now() + 14, type: "file", label: "Resume" },
-      { id: Date.now() + 15, type: "textarea", label: "Experience", placeholder: "Describe experience" },
-    ],
-  };
-
   const handleSelect = (templateKey) => {
-    const selectedTemplate = templates[templateKey];
+    const selectedTemplate = templates[templateKey].map((field) => ({ ...field }));
 
     setFormFields(selectedTemplate);
 

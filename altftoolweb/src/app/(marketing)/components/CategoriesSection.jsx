@@ -4,6 +4,7 @@ import Link from "next/link";
 import { CheckCircle } from "lucide-react";
 import { useTheme } from "@/contexts/ThemeContext";
 import { useEffect, useState } from "react";
+import ManagedImage from "@/components/ui/ManagedImage";
 
 const sections = [
   {
@@ -126,7 +127,7 @@ export default function FeaturedCategories() {
                   className={`relative group ${reverse ? "animate-slide-left" : "animate-slide-right"
                     }`}
                 >
-                  <img
+                  <ManagedImage
                     src={item.image}
                     alt={item.title}
                     className="rounded-2xl w-full object-cover  transition duration-300 group-hover:scale-[1.02]"

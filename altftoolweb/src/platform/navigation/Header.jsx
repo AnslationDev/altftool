@@ -11,6 +11,7 @@ import {
   isPublicShellHidden,
   PUBLIC_NAV_ITEMS,
 } from "./siteRoutes";
+import ManagedImage from "@/components/ui/ManagedImage";
 
 const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -82,7 +83,7 @@ const Header = () => {
             className="flex min-w-fit items-center"
             {...routePreviewProps("/")}
           >
-            <img
+            <ManagedImage
               src="/assets/logo3.png"
               className="h-9 w-auto object-contain"
               alt="AltFTool"
@@ -218,7 +219,7 @@ const Header = () => {
               onClick={() => setMobileMenuOpen(false)}
               {...routePreviewProps("/")}
             >
-              <img
+              <ManagedImage
                 src="/assets/logo3.png"
                 className="h-9 w-auto object-contain"
                 alt="AltFTool"

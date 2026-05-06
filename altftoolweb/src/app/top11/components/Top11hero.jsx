@@ -1,6 +1,7 @@
 "use client";
 import React from "react";
 import { useRouter } from "next/navigation";
+import ManagedImage from "@/components/ui/ManagedImage";
 
 
 const categories = [
@@ -45,7 +46,7 @@ onClick={() => router.push(`/top11/${item.slug}`)}
             >
               {/* Image */}
               <div className="w-52 h-35 mb-3 flex items-center justify-center">
-                <img
+                <ManagedImage
                   src={item.image}
                   alt={item.name}
                   className="w-45 h-45 object-cover"

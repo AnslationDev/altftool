@@ -7,6 +7,7 @@ import {
 } from "lucide-react";
 import { toBlob } from "html-to-image"; 
 import { motion } from "framer-motion";
+import ManagedImage from "@/components/ui/ManagedImage";
 
 export default function Generator() {
   const cardRef = useRef(null);
@@ -235,13 +236,13 @@ export default function Generator() {
 
                 {photo && (
                   <motion.div drag dragConstraints={cardRef} dragMomentum={false} className="absolute top-6 right-6 z-30 cursor-move">
-                    <img src={photo} style={{ width: `${formData.photoSize}px`, height: `${formData.photoSize}px` }} className="rounded-full border-2 border-white/50 object-cover shadow-lg" />
+                    <ManagedImage src={photo} style={{ width: `${formData.photoSize}px`, height: `${formData.photoSize}px` }} className="rounded-full border-2 border-white/50 object-cover shadow-lg" />
                   </motion.div>
                 )}
 
                 {logo && (
                   <motion.div drag dragConstraints={cardRef} dragMomentum={false} className="absolute bottom-6 right-6 z-30 cursor-move">
-                    <img src={logo} style={{ width: `${formData.logoSize}px` }} className="object-contain" />
+                    <ManagedImage src={logo} style={{ width: `${formData.logoSize}px` }} className="object-contain" />
                   </motion.div>
                 )}
               </div>

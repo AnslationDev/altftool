@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Camera, Upload, RotateCcw, Package, Barcode, Info, X, Loader2, CheckCircle, AlertCircle, Scan } from 'lucide-react';
+import ManagedImage from "@/components/ui/ManagedImage";
 
 
 export default function Scanner() {
@@ -416,7 +417,7 @@ export default function Scanner() {
               {/* Product Header */}
               <div className="flex items-start gap-6 mb-8 pb-8 border-b-2 border-gray-200">
                 {productData.image ? (
-                  <img
+                  <ManagedImage
                     src={productData.image}
                     alt={productData.name}
                     className="w-32 h-32 md:w-40 md:h-40 object-cover rounded-2xl shadow-lg border-2 border-gray-200"

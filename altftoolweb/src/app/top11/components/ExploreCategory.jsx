@@ -1,9 +1,8 @@
-
-
 "use client";
 
 import { useState } from "react";
 import { ArrowUpRight } from "lucide-react";
+import ManagedImage from "@/components/ui/ManagedImage";
 
 const categories = [
     "Online Therapy",
@@ -180,7 +179,7 @@ export default function CategorySection() {
 
                         {/* LOGO */}
                         <div className="flex justify-center mb-5">
-                            <img
+                            <ManagedImage
                                 src={item.logo}
                                 alt={item.name}
                                 className="h-10 object-contain"

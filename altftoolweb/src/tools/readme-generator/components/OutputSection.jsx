@@ -17,6 +17,7 @@ import DragSections from "./DragSections";
 import BadgeGenerator from "./BadgeGenerator";
 import SectionRenderer from "./SectionRenderer";
 import ReadStats from "./ReadStats";
+import ManagedImage from "@/components/ui/ManagedImage";
 
 export default function OutputSection({
   generatedReadme,
@@ -273,7 +274,7 @@ export default function OutputSection({
       if (!props.src || props.src.trim() === "") return null;
 
       return (
-        <img
+        <ManagedImage
           {...props}
           style={{
             maxWidth: "100%",

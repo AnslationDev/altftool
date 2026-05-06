@@ -1,5 +1,6 @@
 "use client";
 import React, { useState } from "react";
+import ManagedImage from "@/components/ui/ManagedImage";
 
 
 const slides = [
@@ -75,7 +76,7 @@ export default function HeroSlider() {
             }`}
         >
           {/* Image fills the box */}
-          <img
+          <ManagedImage
             src={slide.image}
             alt={slide.title}
             className="w-full h-full "

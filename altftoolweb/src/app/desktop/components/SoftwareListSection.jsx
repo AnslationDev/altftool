@@ -1,5 +1,6 @@
 "use client";
 import React from "react";
+import ManagedImage from "@/components/ui/ManagedImage";
 
 const softwareList = [
   {
@@ -104,7 +105,7 @@ export default function SoftwareListSection() {
           >
             {/* LEFT */}
             <div className="flex gap-5 w-full md:w-2/3">
-              <img
+              <ManagedImage
                 src={app.image}
                 alt={app.name}
                 className="w-16 h-16 md:w-20 md:h-20 rounded-xl object-contain"

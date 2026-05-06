@@ -22,19 +22,27 @@ const TEXTS = {
   ]
 };
 
+const confettiParticles = Array.from({ length: 50 }, (_, index) => ({
+  id: index,
+  left: (index * 37) % 100,
+  top: -((index * 11) % 20),
+  animationDelay: ((index * 7) % 20) / 10,
+  animationDuration: 2 + ((index * 5) % 20) / 10,
+}));
+
 /* ================= CONFETTI ================= */
 function Confetti() {
   return (
     <div className="pointer-events-none fixed inset-0 z-30">
-      {[...Array(50)].map((_, i) => (
+      {confettiParticles.map((particle) => (
         <span
-          key={i}
+          key={particle.id}
           className="absolute w-2 h-2 bg-yellow-400 rounded-full animate-fall"
           style={{
-            left: `${Math.random() * 100}%`,
-            top: `${Math.random() * -20}vh`,
-            animationDelay: `${Math.random() * 2}s`,
-            animationDuration: `${2 + Math.random() * 2}s`,
+            left: `${particle.left}%`,
+            top: `${particle.top}vh`,
+            animationDelay: `${particle.animationDelay}s`,
+            animationDuration: `${particle.animationDuration}s`,
           }}
         />
       ))}

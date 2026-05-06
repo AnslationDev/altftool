@@ -21,6 +21,7 @@ import ImageUploader from "../components/ImageUploader";
 import RandomPoll from "../components/RandomPoll";
 
 import { ThumbsUp, Heart, Laugh, Angry, Flame, TrendingDown, Zap } from "lucide-react";
+import ManagedImage from "@/components/ui/ManagedImage";
 
 const Confetti = dynamic(() => import("react-confetti"), { ssr: false });
 
@@ -372,7 +373,7 @@ export default function PollMaker() {
                   {/*  ImageUpload + Text */}
                   <div className="flex flex-col items-center gap-2">
                     {optionImages[index] && (
-                      <img
+                      <ManagedImage
                         src={optionImages[index]}
                         alt="option"
                         className="w-20 h-20 object-cover rounded-lg"

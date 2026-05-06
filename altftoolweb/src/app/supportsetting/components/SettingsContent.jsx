@@ -3,6 +3,7 @@
 import { AlertCircle, ExternalLink, Menu } from "lucide-react";
 import { settingsData } from "../data/settingData";
 import { useState, useEffect } from "react";
+import ManagedImage from "@/components/ui/ManagedImage";
 
 const SettingsContent = ({ activeId, onOpenSidebar }) => {
   const setting = settingsData.find((s) => s.id === activeId);
@@ -184,7 +185,7 @@ const SettingsContent = ({ activeId, onOpenSidebar }) => {
               </div>
             )}
 
-            <img
+            <ManagedImage
               key={setting.imageUrl}
               src={setting.imageUrl}
               alt={setting.imageAlt}

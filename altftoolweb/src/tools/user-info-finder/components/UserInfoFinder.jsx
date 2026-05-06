@@ -9,6 +9,7 @@ import {
   User2,
   RefreshCcw,
 } from "lucide-react";
+import ManagedImage from "@/components/ui/ManagedImage";
 
 export default function UserFinder() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -140,7 +141,7 @@ export default function UserFinder() {
             <div className="p-6 -mt-12.5">
               {/* AVATAR */}
               <div className="flex justify-center mb-4">
-                <img
+                <ManagedImage
                   src={userData.avatar}
                   className="
                     w-32 h-32 rounded-full border-4 border-(--card) shadow-xl

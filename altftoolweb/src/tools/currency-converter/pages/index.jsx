@@ -368,8 +368,7 @@ React.useEffect(() => {
             {lastUpdated && (
               <p className="mt-2 text-xs text-(--foreground)">
                 Last updated:{" "}
-                {Math.floor((Date.now() - new Date(lastUpdated)) / 3600000)}{" "}
-                hours ago
+                {new Date(lastUpdated).toLocaleString()}
               </p>
             )}
 

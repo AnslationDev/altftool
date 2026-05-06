@@ -5,6 +5,7 @@ import {
   Upload, Pen, Highlighter, Type, Download, Trash2, ZoomIn, ZoomOut, FileText,
   Square, Circle, ArrowUpRight, Check, Undo2, Redo2, Eraser
 } from "lucide-react";
+import ManagedImage from "@/components/ui/ManagedImage";
 
 export default function MainComponent() {
   const [pdfFile, setPdfFile] = useState(null);
@@ -302,7 +303,7 @@ export default function MainComponent() {
                 <div className="space-y-4">
                   {pdfPages.map((page, idx) => (
                     <div key={idx} onClick={() => setCurrentPageIdx(idx)} className={`cursor-pointer rounded-xl border-2 overflow-hidden transition-all ${currentPageIdx === idx ? 'border-blue-600 shadow-md ring-2 ring-blue-50' : 'border-gray-100 hover:border-gray-300'}`}>
-                      <img src={page.thumb} className="w-full h-auto" />
+                      <ManagedImage src={page.thumb} className="w-full h-auto" />
                       <p className={`text-center text-[10px] py-1 font-bold ${currentPageIdx === idx ? 'bg-blue-600 text-white' : 'bg-gray-100 text-gray-500'}`}>PAGE {idx+1}</p>
                     </div>
                   ))}

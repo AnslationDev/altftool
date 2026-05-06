@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import Quagga from 'quagga';
 import { Camera, Upload, X, CheckCircle, AlertCircle, Scan } from 'lucide-react';
+import ManagedImage from "@/components/ui/ManagedImage";
 
 export default function ToolHome() {
   const [scanMode, setScanMode] = useState(null); // 'camera' or 'image'
@@ -291,7 +292,7 @@ export default function ToolHome() {
 
               {scannedData.image && (
                 <div className="mb-6 rounded-lg overflow-hidden border-2 border-gray-200">
-                  <img
+                  <ManagedImage
                     src={scannedData.image}
                     alt="Scanned barcode"
                     className="w-full h-auto max-h-64 object-contain bg-(--card)"

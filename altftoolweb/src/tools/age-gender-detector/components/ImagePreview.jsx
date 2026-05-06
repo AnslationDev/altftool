@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { X, Upload } from "lucide-react";
 import * as faceapi from "@vladmandic/face-api";
+import ManagedImage from "@/components/ui/ManagedImage";
 
 export default function ImagePreview({ mode, preview, onReset }) {
   const canvasRef = useRef(null);
@@ -92,7 +93,7 @@ export default function ImagePreview({ mode, preview, onReset }) {
         <div className="aspect-square rounded-2xl overflow-hidden bg-gray-100 shadow-xl relative">
           {images[0] && (
             <>
-              <img
+              <ManagedImage
                 ref={imgRef}
                 src={images[0]}
                 alt="Uploaded"
@@ -115,7 +116,7 @@ export default function ImagePreview({ mode, preview, onReset }) {
           <div className="aspect-square rounded-2xl overflow-hidden bg-gray-100 shadow-xl relative flex items-center justify-center">
 
             {images[1] ? (
-              <img
+              <ManagedImage
                 src={images[1]}
                 alt="Second Upload"
                 className="w-full h-full object-cover"

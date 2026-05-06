@@ -13,6 +13,7 @@ import {
   Trash2,
 } from "lucide-react";
 import Description from "../components/Description";
+import ManagedImage from "@/components/ui/ManagedImage";
 
 export default function ToolHome() {
   const [activeTab, setActiveTab] = useState("emoji");
@@ -171,7 +172,7 @@ export default function ToolHome() {
                   key={gif.id}
                   className="rounded-2xl shadow-lg overflow-hidden"
                 >
-                  <img
+                  <ManagedImage
                     src={gif.images.fixed_height.url}
                     alt={gif.title}
                     className="w-full h-full object-cover"

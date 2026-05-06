@@ -1,5 +1,6 @@
 "use client";
 
+import ManagedImage from "@/components/ui/ManagedImage";
 export default function AdGameCard({ ad }) {
   return (
     <a
@@ -19,7 +20,7 @@ export default function AdGameCard({ ad }) {
       </span>
 
       {/* Banner */}
-      <img
+      <ManagedImage
         src={ad.bannerUrl}
         alt="Sponsored"
         className="absolute inset-0 w-full h-full object-fit"

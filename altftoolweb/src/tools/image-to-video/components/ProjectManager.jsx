@@ -11,6 +11,7 @@ import {
   ChevronUp,
   FolderOpen,
 } from "lucide-react";
+import ManagedImage from "@/components/ui/ManagedImage";
 
 export default function ProjectManager({
   onLoad,
@@ -150,7 +151,7 @@ export default function ProjectManager({
                           key={i}
                           className="w-8 h-8 rounded-md overflow-hidden bg-(--muted)"
                         >
-                          <img
+                          <ManagedImage
                             src={slide.url}
                             alt=""
                             className="w-full h-full object-cover"

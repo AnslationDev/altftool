@@ -44,6 +44,9 @@ export default function ToolHome() {
   const [selectedId, setSelectedId] = useState(null);
   const [history, setHistory] = useState([]); 
   const memeRef = useRef(null);
+  const nextIdRef = useRef(0);
+
+  const createId = useCallback((prefix) => `${prefix}-${++nextIdRef.current}`, []);
 
   useEffect(() => {
     const saved = localStorage.getItem("meme_history");
@@ -63,7 +66,7 @@ export default function ToolHome() {
 
   const handleSaveToHistory = () => {
     if (!meme.image) return;
-    const newItem = { id: Date.now(), meme, layers };
+    const newItem = { id: createId("draft"), meme, layers };
     const updatedHistory = [newItem, ...history].slice(0, 10);
     setHistory(updatedHistory);
     localStorage.setItem("meme_history", JSON.stringify(updatedHistory));
@@ -93,7 +96,7 @@ export default function ToolHome() {
   const addLayer = (type, content = "NEW TEXT") => {
     saveSnapshot();
     const newLayer = {
-      id: Date.now(), type, content, x: 50, y: 50,
+      id: createId("layer"), type, content, x: 50, y: 50,
       fontSize: type === 'emoji' ? 64 : 36,
       color: "#ffffff", font: FONT_OPTIONS[0].value,
     };
@@ -144,7 +147,7 @@ export default function ToolHome() {
         backgroundColor: null 
       });
       const link = document.createElement("a");
-      link.download = `memeStudio-${Date.now()}.png`;
+      link.download = `memeStudio-${new Date().toISOString().replace(/[:.]/g, "-")}.png`;
       link.href = canvas.toDataURL("image/png");
       link.click();
     }, 150);

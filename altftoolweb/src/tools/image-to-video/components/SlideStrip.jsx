@@ -1,5 +1,6 @@
 "use client";
 import { ANIMATION_OPTIONS } from "../utils/motionBuilder";
+import ManagedImage from "@/components/ui/ManagedImage";
 
 export default function SlideStrip({ slides, selectedId, onSelect, onRemove, onAnimationChange }) {
   if (!slides.length) return null;
@@ -25,7 +26,7 @@ export default function SlideStrip({ slides, selectedId, onSelect, onRemove, onA
           >
             {/* Thumbnail */}
             <div className="relative">
-              <img
+              <ManagedImage
                 src={slide.url} alt={`Slide ${i + 1}`}
                 className="w-full h-[66px] object-cover"
               />

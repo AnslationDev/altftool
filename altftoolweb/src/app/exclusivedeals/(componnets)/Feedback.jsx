@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { Star } from "lucide-react";
 import data from "../(data)/db.json";
 import { FeedbackSkeleton } from "../DealsPageSkeleton";
+import ManagedImage from "@/components/ui/ManagedImage";
 
 const Feedback = () => {
 
@@ -116,7 +117,7 @@ useEffect(() => {
               >
                 {/* Avatar - half outside card */}
                 <div className="absolute -top-7 left-6">
-                  <img
+                  <ManagedImage
                     src={item.avatar}
                     alt={item.name}
                     className="w-15 h-15 rounded-full object-cover border-3 border-(--border)"

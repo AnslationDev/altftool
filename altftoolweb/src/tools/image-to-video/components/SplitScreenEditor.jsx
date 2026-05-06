@@ -1,5 +1,6 @@
 "use client";
 import { SPLIT_LAYOUTS } from "../utils/splitScreen";
+import ManagedImage from "@/components/ui/ManagedImage";
 
 export default function SplitScreenEditor({
   splitLayout,
@@ -75,7 +76,7 @@ export default function SplitScreenEditor({
 
                 {/* Thumbnail preview */}
                 {assigned ? (
-                  <img
+                  <ManagedImage
                     src={assigned.url}
                     alt=""
                     className="w-10 h-10 rounded-lg object-cover border border-(--border) flex-shrink-0"

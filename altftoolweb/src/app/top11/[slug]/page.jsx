@@ -3,6 +3,7 @@
 import React from "react";
 import { useParams } from "next/navigation";
 import categoryData from "@/app/top11/data/categoryData";
+import ManagedImage from "@/components/ui/ManagedImage";
 
 export default function CategoryPage() {
   const params = useParams();
@@ -24,7 +25,7 @@ export default function CategoryPage() {
       {/* 🔥 HERO BANNER */}
       <div className="relative w-full h-[260px] md:h-[360px] overflow-hidden">
 
-        <img
+        <ManagedImage
           src={data.banner || "/dealImg/deal1.png"}
           alt={data.title}
           className="absolute inset-0 w-full h-full object-cover"

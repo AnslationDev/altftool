@@ -3,6 +3,7 @@
 import { useRef } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { motion } from "framer-motion";
+import ManagedImage from "@/components/ui/ManagedImage";
 
 const FeaturedSection = () => {
   const scrollRef = useRef(null);
@@ -84,7 +85,7 @@ const FeaturedSection = () => {
                   >
                     <div className="group relative w-full overflow-hidden rounded-2xl bg-white/10 border border-white/20 shadow-lg overflow-hidden">
                     <div className="relative w-full aspect-[4/3] bg-white/5 overflow-hidden">
-                      <img
+                      <ManagedImage
                        src={tool.image}
                       alt={tool.name}
                       loading="eager"

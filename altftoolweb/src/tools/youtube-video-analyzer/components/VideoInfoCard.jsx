@@ -10,6 +10,7 @@ import {
   Eye,
   Calendar,
 } from "lucide-react";
+import ManagedImage from "@/components/ui/ManagedImage";
 
 const VideoInfoCard = ({ video, onWatchOnYouTube, onShare }) => {
   const [showVideoPlayer, setShowVideoPlayer] = useState(false);
@@ -31,7 +32,7 @@ const VideoInfoCard = ({ video, onWatchOnYouTube, onShare }) => {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 p-6 md:p-8">
         {/* THUMBNAIL */}
         <div className="relative rounded-xl overflow-hidden group">
-          <img
+          <ManagedImage
             src={video.thumbnail}
             alt={video.title}
             className="w-full h-auto object-cover transition-transform duration-300 group-hover:scale-105"

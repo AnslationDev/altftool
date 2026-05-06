@@ -1,3 +1,4 @@
+import ManagedImage from "@/components/ui/ManagedImage";
 // import React, { useRef, useState, useEffect } from "react";
 // import { Swiper, SwiperSlide } from "swiper/react";
 // import "swiper/css";
@@ -143,7 +144,7 @@
 //                   </>
 //                 ) : (
 //                   <>
-//                     <img
+//                     <ManagedImage
 //                       src={item.image}
 //                       alt=""
 //                       className="w-full h-full object-cover"
@@ -331,7 +332,7 @@
 //                   if (!isPlaying) handlePlay(id);
 //                 }}
 //               >
-//                 <img
+//                 <ManagedImage
 //                   src={item.image}
 //                   alt=""
 //                   className="w-full h-full object-cover"
@@ -567,7 +568,7 @@ export default function WatchPage() {
                   if (!isPlaying) handlePlay(id);
                 }}
               >
-                <img
+                <ManagedImage
                   src={item.image}
                   alt=""
                   className="w-full h-full object-cover  group-hover:scale-105"

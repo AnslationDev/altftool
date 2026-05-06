@@ -10,6 +10,7 @@ import newsData from "../../../../public/data/newsdata.json";
 import NewsCard from "../components/ui/NewsCard";
 import { useMemo, useState, useRef, useEffect } from "react";
 import Link from "next/link";
+import ManagedImage from "@/components/ui/ManagedImage";
 
 // ─── helpers ─────────────────────────────────────────────────────────────────
 
@@ -224,7 +225,7 @@ export default function NewsDetailPage() {
           <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-[var(--muted-foreground)]">
             <span className="flex items-center gap-1.5 font-semibold text-[var(--foreground)]">
               {article.source_favicon && (
-                <img src={article.source_favicon} alt="" className="h-4 w-4 rounded-sm" />
+                <ManagedImage src={article.source_favicon} alt="" className="h-4 w-4 rounded-sm" />
               )}
               {article.source}
             </span>
@@ -250,7 +251,7 @@ export default function NewsDetailPage() {
         {/* ── hero image ───────────────────────────────────────────── */}
         {article.image_url && (
           <figure className="overflow-hidden rounded-2xl">
-            <img
+            <ManagedImage
               src={article.image_url}
               alt={article.headline}
               className="w-full object-cover"

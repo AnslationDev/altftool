@@ -1,6 +1,7 @@
 "use client";
 import { Play } from "lucide-react";
 import { useTheme } from "@/contexts/ThemeContext";
+import ManagedImage from "@/components/ui/ManagedImage";
 
 export default function SpotlightBanner() {
   const theme = useTheme();
@@ -24,7 +25,7 @@ export default function SpotlightBanner() {
           h-[220px] sm:h-[260px] md:h-[320px] lg:h-[380px]
           order-1 md:order-2
         ">
-          <img
+          <ManagedImage
             src="https://images.unsplash.com/photo-1598899134739-24c46f58b8c0?q=80&w=1600&auto=format&fit=crop"
             alt="Drama Banner"
             className="w-full h-full object-cover"
@@ -57,7 +58,7 @@ export default function SpotlightBanner() {
 
           {/* App Info */}
           <div className="flex items-center gap-3 sm:gap-4 mt-6">
-            <img
+            <ManagedImage
               src="https://img.icons8.com/fluency/96/video-playlist.png"
               className="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 rounded-xl"
               alt="app"

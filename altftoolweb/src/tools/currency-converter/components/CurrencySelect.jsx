@@ -3,6 +3,7 @@ import React, { useState, useRef, useEffect, useMemo } from "react";
 import { CURRENCY_NAMES } from "../constants/currencies";
 import { FLAG_MAP } from "../constants/flagMap";
 import { ChevronDown, Search, X } from "lucide-react";
+import ManagedImage from "@/components/ui/ManagedImage";
 
 export default function CurrencySelect({
   label,
@@ -64,7 +65,7 @@ export default function CurrencySelect({
       >
         <div className="flex items-center gap-3 min-w-0">
           <div className="relative h-6 w-8 sm:h-7 sm:w-10 flex-shrink-0 overflow-hidden rounded-md border border-(--border)/50 shadow-sm">
-             <img
+             <ManagedImage
                 src={getFlag(selected)}
                 alt=""
                 className="h-full w-full object-cover"
@@ -129,7 +130,7 @@ export default function CurrencySelect({
                   }`}
                 >
                   <div className={`h-5 w-7 sm:h-6 sm:w-8 flex-shrink-0 overflow-hidden rounded-sm border border-black/10 ${code === value ? "border-white/20" : ""}`}>
-                    <img src={getFlag(code)} alt="" className="h-full w-full object-cover" />
+                    <ManagedImage src={getFlag(code)} alt="" className="h-full w-full object-cover" />
                   </div>
 
                   <div className="flex flex-col min-w-0">

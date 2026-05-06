@@ -3,6 +3,7 @@
 import { Play } from "lucide-react";
 import { useState, useEffect, useRef, useCallback, useMemo } from "react";
 import YouTube from "react-youtube";
+import ManagedImage from "@/components/ui/ManagedImage";
 
 const STORAGE_KEY = "yt_progress";
 
@@ -173,7 +174,7 @@ export default function VideoPlayer({ videoId, thumbnail, category, title }) {
     >
       {!play ? (
         <>
-          <img
+          <ManagedImage
             src={thumbnail}
             alt="thumbnail"
             className="w-full h-full object-cover block"

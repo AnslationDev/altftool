@@ -2,6 +2,7 @@
 
 import { useEffect, useState, useRef } from "react";
 import { Star } from "lucide-react";
+import ManagedImage from "@/components/ui/ManagedImage";
 
 const UserFeedback = ({ feedback = [] }) => {
   const [index, setIndex] = useState(0);
@@ -108,7 +109,7 @@ const UserFeedback = ({ feedback = [] }) => {
                 {/* Avatar */}
                 <div className="absolute -top-7 left-6">
                   <div className="w-18 h-18 rounded-full overflow-hidden border-2 border-(--border)">
-                    <img
+                    <ManagedImage
                       src={item.avatar}
                       alt={item.name}
                       className="object-cover w-full h-full"

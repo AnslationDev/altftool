@@ -1,6 +1,7 @@
 "use client";
 
 import { Upload } from "lucide-react";
+import ManagedImage from "@/components/ui/ManagedImage";
 
 export default function ImageUploader({ index, optionImages, setOptionImages }) {
   const handleImageChange = (e) => {
@@ -29,7 +30,7 @@ export default function ImageUploader({ index, optionImages, setOptionImages }) 
       </label>
 
       {optionImages[index] && (
-        <img
+        <ManagedImage
           src={optionImages[index]}
           alt="preview"
           className="w-10 h-10 rounded object-cover border"

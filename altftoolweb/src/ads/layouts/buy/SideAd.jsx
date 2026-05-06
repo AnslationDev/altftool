@@ -1,5 +1,6 @@
 "use client";
 
+import ManagedImage from "@/components/ui/ManagedImage";
 export default function SideAd({ ad }) {
   if (!ad) return null;
 
@@ -15,7 +16,7 @@ export default function SideAd({ ad }) {
           Sponsored
         </span>
 
-        <img
+        <ManagedImage
           src={ad.bannerUrl}
           alt="Sponsored"
           className="w-full h-full object-fit"

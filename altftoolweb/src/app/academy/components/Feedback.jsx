@@ -5,6 +5,7 @@ import { ArrowLeft, ArrowRight, Quote } from "lucide-react";
 import { feedbacks } from "../data/feedback";
 import { useEffect, useState, useRef } from "react";
 import { Star } from "lucide-react";
+import ManagedImage from "@/components/ui/ManagedImage";
 
 export default function FeedbackSection() {
   const [index, setIndex] = useState(0);
@@ -130,7 +131,7 @@ export default function FeedbackSection() {
                 {/* Avatar */}
                 <div className="absolute -top-7 left-6">
                   <div className="w-14 h-14 relative rounded-full overflow-hidden border-2 border-[#E6E6E6]">
-                    <img
+                    <ManagedImage
                       src={item.img}
                       alt={item.name}
                       className="object-cover w-full h-full"

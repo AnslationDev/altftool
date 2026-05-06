@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useRef, useEffect } from "react";
 import Link from "next/link";
+import ManagedImage from "@/components/ui/ManagedImage";
 
 export default function FeaturedCategories() {
   const trackRef = useRef(null);
@@ -122,7 +123,7 @@ export default function FeaturedCategories() {
              transition-all duration-300"
             >
               <div className="relative w-[120px] h-[40px]">
-                <img
+                <ManagedImage
                   src={item.image}
                   alt={item.name}
                   fill

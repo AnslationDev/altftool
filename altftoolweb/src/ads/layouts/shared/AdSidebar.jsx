@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import ManagedImage from "@/components/ui/ManagedImage";
 
 export default function AdSidebar({ ad }) {
   const [imgError, setImgError] = useState(false);
@@ -22,7 +23,7 @@ export default function AdSidebar({ ad }) {
 
         {/* IMAGE */}
         <div className="bg-(--muted) w-full h-full max-h-screen flex items-center justify-center">
-          <img
+          <ManagedImage
             src={ad.bannerUrl}
             alt="Sponsored Ad"
             onError={() => setImgError(true)}

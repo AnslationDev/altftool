@@ -1,5 +1,6 @@
 "use client";
 
+import ManagedImage from "@/components/ui/ManagedImage";
 export default function AdNewsCard({ ad }) {
   if (!ad) return null;
 
@@ -10,7 +11,7 @@ export default function AdNewsCard({ ad }) {
       rel="noopener noreferrer"
       className="block relative w-full h-[400px] overflow-hidden"
     >
-      <img
+      <ManagedImage
         src={ad.bannerUrl}
         alt="Sponsored"
         className="absolute inset-0 w-full h-full object-fit"

@@ -1,5 +1,6 @@
 import { ExternalLink, Image as ImageIcon } from "lucide-react";
 import { useState } from "react";
+import ManagedImage from "@/components/ui/ManagedImage";
 
 export const AppCard = ({ app, short, onCompare, onTagClick }) => {
   const [imgError, setImgError] = useState(false);
@@ -12,7 +13,7 @@ export const AppCard = ({ app, short, onCompare, onTagClick }) => {
         <div className="flex items-start gap-3 mb-3">
           <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-md overflow-hidden shrink-0">
             {!imgError && app.artworkUrl100 ? (
-              <img
+              <ManagedImage
                 src={app.artworkUrl100}
                 alt={app.title}
                 className="w-full h-full object-cover"

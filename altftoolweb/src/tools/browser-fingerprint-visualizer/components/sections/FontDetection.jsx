@@ -4,6 +4,8 @@ import { useState } from "react";
 import { Card } from "../ui/Card";
 import { Badge } from "../ui/Badge";
 
+const skeletonFontWidths = [48, 72, 64, 90, 58, 82, 52, 76, 68, 96, 60, 86];
+
 export function FontDetection({ fonts, loading }) {
   const [isOpen, setIsOpen] = useState(false);
   const [showAll, setShowAll] = useState(false);
@@ -90,11 +92,11 @@ export function FontDetection({ fonts, loading }) {
           <div className="space-y-3">
             <div className="h-16 bg-[var(--muted)] rounded-xl animate-pulse" />
             <div className="flex flex-wrap gap-2">
-              {Array.from({ length: 12 }).map((_, i) => (
+              {skeletonFontWidths.map((width, i) => (
                 <div
                   key={i}
                   className="h-7 rounded-full bg-[var(--muted)] animate-pulse"
-                  style={{ width: `${45 + Math.random() * 55}px` }}
+                  style={{ width: `${width}px` }}
                 />
               ))}
             </div>

@@ -1,5 +1,6 @@
 "use client";
 import React from "react";
+import ManagedImage from "@/components/ui/ManagedImage";
 
 const topApps = [
   {
@@ -111,7 +112,7 @@ export default function TopFreeApps() {
           >
 
             <div className="w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 flex items-center justify-center bg-gray-50 rounded-2xl">
-              <img
+              <ManagedImage
                 src={app.icon}
                 alt={app.name}
                 className="w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 object-contain"

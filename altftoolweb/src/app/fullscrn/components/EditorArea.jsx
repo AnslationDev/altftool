@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect, useImperativeHandle, forwardRef } from "react";
 import { Upload, X, Play, Pause, RotateCcw } from "lucide-react";
+import ManagedImage from "@/components/ui/ManagedImage";
 
 const EditorArea = forwardRef(({
   activeTab,
@@ -165,7 +166,7 @@ const EditorArea = forwardRef(({
         <div style={containerStyle} className="flex flex-col items-center justify-center border-[1.5px] border-dashed border-slate-200 rounded-[12px] bg-[#F8FAFC]">
           {selectedImage ? (
             <div className="relative w-full h-full p-4 flex items-center justify-center">
-              <img src={selectedImage} className="max-w-full max-h-full object-contain" alt="Preview" />
+              <ManagedImage src={selectedImage} className="max-w-full max-h-full object-contain" alt="Preview" />
               <button onClick={() => setSelectedImage(null)} className="absolute top-2 right-2 p-1 bg-red-500 text-white rounded-full"><X size={14}/></button>
             </div>
           ) : (
@@ -234,7 +235,7 @@ const EditorArea = forwardRef(({
           )}
           
           {activeTab === "Image" && selectedImage && (
-            <img src={selectedImage} className="max-w-[95%] max-h-[95%] object-contain mx-auto" />
+            <ManagedImage src={selectedImage} className="max-w-[95%] max-h-[95%] object-contain mx-auto" />
           )}
           
           {activeTab === "Clock" && (

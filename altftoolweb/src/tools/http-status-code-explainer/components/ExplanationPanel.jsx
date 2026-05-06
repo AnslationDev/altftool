@@ -1,3 +1,4 @@
+import ManagedImage from "@/components/ui/ManagedImage";
 export default function ExplanationPanel({ info }) {
   if (!info) return null;
 
@@ -19,7 +20,7 @@ export default function ExplanationPanel({ info }) {
       </div>
 
       {/* Status Image */}
-      <img
+      <ManagedImage
         src={img}
         onError={(e) => {
           e.currentTarget.src = "https://http.cat/404";

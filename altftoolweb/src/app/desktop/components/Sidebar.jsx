@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import ManagedImage from "@/components/ui/ManagedImage";
 
 const apps = [
   { title: "WhatsApp", image: "https://img.icons8.com/color/240/whatsapp.png", link: "https://www.whatsapp.com/download" },
@@ -130,7 +131,7 @@ export default function SidebarApp() {
             {apps.map((app, i) => (
               <a key={i} href={app.link} target="_blank" rel="noopener noreferrer"
                 className="w-36 p-3 bg-[var(--card)] border border-[var(--border)] rounded-xl shrink-0 flex flex-col items-center">
-                <img src={app.image} className="w-full h-24 object-contain mb-2" />
+                <ManagedImage src={app.image} className="w-full h-24 object-contain mb-2" />
                 <h3 className="text-xs text-center text-(--secondary-foreground) hover:text-(--foreground)">{app.title}</h3>
               </a>
             ))}
@@ -142,7 +143,7 @@ export default function SidebarApp() {
           {apps.map((app, i) => (
             <a key={i} href={app.link} target="_blank" rel="noopener noreferrer "
               className="p-4 animate-slide-left bg-[var(--card)] border border-[var(--border)] rounded-xl hover:shadow-lg hover:bg-[var(--card-hover)] transition flex flex-col items-center hover:text-(--foreground) ">
-              <img src={app.image} className="w-full h-32 object-contain mb-3" />
+              <ManagedImage src={app.image} className="w-full h-32 object-contain mb-3" />
               <h3 className="text-sm text-center text-(--secondary-foreground) ">{app.title}</h3>
             </a>
           ))}

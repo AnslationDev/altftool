@@ -1,6 +1,7 @@
 "use client"
 
 import data from "../(data)/db.json"
+import ManagedImage from "@/components/ui/ManagedImage";
 
 const   Brands = () => {
   const brands = data.brands || []
@@ -109,7 +110,7 @@ const BrandItem = ({ brand }) => (
                transition-transform duration-300
                hover:scale-110 cursor-pointer"
   >
-    <img
+    <ManagedImage
       src={brand.logo}
       alt={brand.name}
       className="h-8 sm:h-10 md:h-14 object-contain"
