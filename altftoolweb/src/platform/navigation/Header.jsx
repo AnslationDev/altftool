@@ -169,8 +169,7 @@ const Header = () => {
                 placeholder="Search tools, extensions..."
                 value={searchQuery}
                 onChange={(event) => handleChange(event.target.value)}
-                className="w-64"
-                style={{ background: "var(--background)" }}
+                className="w-64 bg-[var(--background)]"
               />
 
               <IconButton type="submit" aria-label="Search">

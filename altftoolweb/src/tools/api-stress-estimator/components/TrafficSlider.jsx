@@ -89,6 +89,7 @@ export default function TrafficSlider({
           onChange={(e) => onTrafficChange(Number(e.target.value))}
           className="blue-slider mt-3"
           style={{ "--val": `${pct}%` }}
+          suppressHydrationWarning
         />
         <div className="mt-1 flex justify-between text-[11px] text-slate-400">
           <span>100</span>

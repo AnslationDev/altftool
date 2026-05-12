@@ -1,4 +1,4 @@
-import Image from "next/image";
+import ManagedImage from "@/components/ui/ManagedImage";
 
 export default function AdToolCard({ ad }) {
   return (
@@ -21,12 +21,11 @@ export default function AdToolCard({ ad }) {
       </span>
 
       {/* Banner */}
-      <Image
+      <ManagedImage
         src={ad.bannerUrl}
         alt="Sponsored"
         fill
         loading="eager"
-        sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 420px"
         className="
           object-cover
         "

@@ -1,6 +1,6 @@
 "use client";
 
-import Image from "next/image";
+import ManagedImage from "@/components/ui/ManagedImage";
 
 export default function AdCard({ ad }) {
   if (!ad) return null;
@@ -16,13 +16,11 @@ export default function AdCard({ ad }) {
     >
       {/* Image Container */}
       <div className="relative w-full aspect-[16/9]">
-        <Image
-  src={image}
-  alt="Ad"
-  width={500}
-  height={300}
-  className="w-full h-auto"
-/>
+        <ManagedImage
+          src={image}
+          alt="Ad"
+          className="h-full w-full object-cover"
+        />
       </div>
 
       {/* Sponsored Tag */}

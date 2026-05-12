@@ -1,5 +1,5 @@
 "use client";
-import Image from "next/image";
+import ManagedImage from "@/components/ui/ManagedImage";
 
 export default function BlogAds({ ads = [] }) {
   const defaultAds = [
@@ -36,11 +36,9 @@ export default function BlogAds({ ads = [] }) {
             Sponsored
           </div>
 
-          <Image
+          <ManagedImage
             src={ad}
             alt={`Advertisement ${index + 1}`}
-            width={400}
-            height={300}
             className="w-full h-auto object-cover"
           />
         </div>

@@ -1,9 +1,18 @@
-import AdToolCard from "./AdToolCard";
 import { useMemo } from "react";
 
-export default function AdPairRow({ categoryname, toolAds, pairIndex = 0 }) {
+import AdToolCard from "./AdToolCard";
+
+function getAdContent(ad) {
+  return ad?.content || ad;
+}
+
+export default function AdPairRow({ ads, categoryname, toolAds, pairIndex = 0 }) {
 
   const selectedPair = useMemo(() => {
+    if (Array.isArray(ads) && ads.length) {
+      return ads.map(getAdContent).filter(Boolean);
+    }
+
     if (!toolAds) return [];
 
     const normalizedCategory = categoryname?.toLowerCase();
@@ -50,7 +59,7 @@ export default function AdPairRow({ categoryname, toolAds, pairIndex = 0 }) {
     const pair = pairs[pairIndex % pairs.length];
 
     return pair;
-  }, [toolAds, categoryname, pairIndex]);
+  }, [ads, toolAds, categoryname, pairIndex]);
 
   if (!selectedPair?.length) return null;
 
@@ -58,7 +67,7 @@ export default function AdPairRow({ categoryname, toolAds, pairIndex = 0 }) {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
       {selectedPair.map((item, i) => (
-        <AdToolCard key={i} ad={item?.content} />
+        <AdToolCard key={i} ad={getAdContent(item)} />
       ))}
     </div>
      

@@ -1,6 +1,6 @@
 "use client";
 
-import Image from "next/image";
+import ManagedImage from "@/components/ui/ManagedImage";
 
 export default function AdCard({ ad }) {
   if (!ad) return null;
@@ -22,11 +22,10 @@ export default function AdCard({ ad }) {
     >
       {/* Image */}
       <div className="relative w-full h-full min-h-[180px]">
-        <Image
+        <ManagedImage
           src={image}
           alt={ad.title || "Ad"}
           fill
-          sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 420px"
           className="object-cover group-hover:scale-105 transition-transform duration-300"
         />
       </div>
