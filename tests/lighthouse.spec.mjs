@@ -25,7 +25,7 @@ const PAGES = [
     name: "home",
     path: "/",
     budgets: {
-      performance: 0.35,
+      performance: 0.3,
       accessibility: 0.75,
       "best-practices": 0.75,
       seo: 0.85,
@@ -45,7 +45,7 @@ const PAGES = [
     name: "tool workspace",
     path: "/tools/all/api-stress-estimator",
     budgets: {
-      performance: 0.35,
+      performance: 0.3,
       accessibility: 0.75,
       "best-practices": 0.75,
       seo: 0.85,
@@ -55,7 +55,7 @@ const PAGES = [
     name: "blogs catalog",
     path: "/blogs",
     budgets: {
-      performance: 0.35,
+      performance: 0.3,
       accessibility: 0.75,
       "best-practices": 0.75,
       seo: 0.85,

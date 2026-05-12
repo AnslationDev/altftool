@@ -47,7 +47,8 @@
     "test:visual": "NEXT_PUBLIC_USE_MOCK=true playwright test tests/visual.spec.mjs",
     "test:visual:update": "NEXT_PUBLIC_USE_MOCK=true playwright test tests/visual.spec.mjs --update-snapshots",
     "test:security": "playwright test tests/security.spec.mjs",
-    "test:lighthouse": "playwright test tests/lighthouse.spec.mjs",
+    "test:lighthouse": "ALTFT_PLAYWRIGHT_WEB_SERVER=production ALTFT_PLAYWRIGHT_ADMIN_SERVER=dev playwright test tests/lighthouse.spec.mjs",
+    "test:lighthouse:dev": "playwright test tests/lighthouse.spec.mjs",
     "validate": "npm run lint:web && npm run lint:web:budget && npm run routes:check && npm run env:readiness && npm run firebase:check && npm run audit && npm run build && npm run bundle:audit && npm run test:smoke",
     "validate:full": "npm run validate && npm run test:routes && npm run test:admin-api && npm run test:firebase-admin-write-check",
     "validate:release": "npm run validate:full && npm run firebase:live-check && npm run test:security && npm run test:visual && npm run test:lighthouse"
