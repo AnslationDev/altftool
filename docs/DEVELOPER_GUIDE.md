@@ -74,6 +74,15 @@ npm run validate
 
 `npm run validate` is the full release gate. It currently runs web lint, the web lint budget, route checks, Firebase contract checks, dependency audits, web/admin builds, and Playwright smoke tests.
 
+The Playwright route audit uses the already-built production web server and the dev admin server:
+
+```bash
+npm run build
+npm run test:routes
+```
+
+Use `npm run test:routes:dev` only when you specifically want to audit both apps against local dev servers.
+
 The lint warning budget is intentionally strict. If you reduce warnings, lower the default budget in:
 
 ```text

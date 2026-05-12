@@ -5,6 +5,15 @@ const adminUrl = process.env.ALTFT_ADMIN_URL || "http://localhost:3001";
 const webPort = new URL(webUrl).port || "3002";
 const adminPort = new URL(adminUrl).port || "3001";
 const reuseExistingServer = process.env.ALTFT_REUSE_SERVER === "true";
+const serverMode = process.env.ALTFT_PLAYWRIGHT_SERVER || "dev";
+const webServerMode = process.env.ALTFT_PLAYWRIGHT_WEB_SERVER || serverMode;
+const adminServerMode = process.env.ALTFT_PLAYWRIGHT_ADMIN_SERVER || serverMode;
+const webServerCommand = webServerMode === "production"
+  ? `npm --prefix altftoolweb run start -- -p ${webPort}`
+  : `npm --prefix altftoolweb run dev -- -p ${webPort}`;
+const adminServerCommand = adminServerMode === "production"
+  ? `npm --prefix altftoolwebadmin run start -- -p ${adminPort}`
+  : `npm --prefix altftoolwebadmin run dev -- -p ${adminPort}`;
 
 export default defineConfig({
   testDir: "./tests",
@@ -36,13 +45,13 @@ export default defineConfig({
   ],
   webServer: [
     {
-      command: `npm --prefix altftoolweb run dev -- -p ${webPort}`,
+      command: webServerCommand,
       url: webUrl,
       reuseExistingServer,
       timeout: 120_000,
     },
     {
-      command: `npm --prefix altftoolwebadmin run dev -- -p ${adminPort}`,
+      command: adminServerCommand,
       url: `${adminUrl}/login`,
       reuseExistingServer,
       timeout: 120_000,
