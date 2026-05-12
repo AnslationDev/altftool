@@ -12,7 +12,8 @@
     "start": "next start",
     "firebase:admin-write-check": "node scripts/checkFirebaseAdminWrite.mjs",
     "firebase:admin-write-check:dry-run": "FIREBASE_ADMIN_WRITE_CHECK_MODE=dry-run node scripts/checkFirebaseAdminWrite.mjs",
-    "test:firebase-rules": "node ../tests/firebase-rules.test.mjs"
+    "test:firebase-rules": "node ../tests/firebase-rules.test.mjs",
+    "test:admin-crud": "node ../tests/admin-crud-emulator.test.mjs"
   },
   "dependencies": {
     "@altftool/core": "file:../packages/core",

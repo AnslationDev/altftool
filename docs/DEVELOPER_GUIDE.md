@@ -215,6 +215,12 @@ Run Firebase Security Rules tests with the local emulators:
 npm run test:firebase-rules:emulator
 ```
 
+Run admin CRUD path checks against the Firestore Emulator:
+
+```bash
+npm run test:admin-crud:emulator
+```
+
 Production monitoring is available through:
 
 ```bash
@@ -222,6 +228,14 @@ npm run monitor:production
 ```
 
 Set `ALTFT_MONITOR_WEB_URL`, `ALTFT_MONITOR_ADMIN_URL`, and `ALTFT_MONITOR_ADMIN_TOKEN` to point it at a specific deployment. The GitHub Actions monitoring workflow defaults the public web check to `https://altftool.com` and uses repository variables/secrets for admin health.
+
+Check local deployment readiness without exposing secret values:
+
+```bash
+npm run env:readiness
+```
+
+Use `npm run env:readiness:strict` before a production release. The `Deployment Readiness` GitHub Actions workflow runs the same strict check from repository secrets and variables.
 
 ## 10. Environment Variables
 

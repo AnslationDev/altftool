@@ -36,6 +36,9 @@ jobs:
       - name: Install Playwright browser
         run: npx playwright install --with-deps chromium
 
+      - name: Check deployment environment readiness
+        run: npm run env:readiness
+
       - name: Verify Firebase Admin write checker wiring
         run: npm run firebase:admin-write-check:dry-run
 
@@ -93,6 +96,9 @@ jobs:
 
       - name: Verify Firebase security rules against emulators
         run: npm run test:firebase-rules:emulator
+
+      - name: Verify admin CRUD paths against Firestore Emulator
+        run: npm run test:admin-crud:emulator
 
   visual-regression:
     runs-on: macos-latest
