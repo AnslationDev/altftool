@@ -4,6 +4,7 @@ import { useState } from "react";
 import PermissionMatrix from "./PermissionMatrix";
 import { getAuth } from "firebase/auth";
 import { emitAlert } from "@/lib/alertBus";
+import { readApiJson } from "@/lib/apiClient";
 import { PROJECTS } from "@/projects";
 import {
   X, Mail, Lock, Eye, EyeOff, ShieldCheck, Shield,
@@ -94,7 +95,7 @@ export default function CreateAdminModal({ onClose, refresh }) {
     setStep("saving");
     try {
       const user = getAuth().currentUser;
-      if (!user) { emitAlert({ type: "error", message: "Session expired. Please log in again." }); return; }
+      if (!user) { setStep("idle"); emitAlert({ type: "error", message: "Session expired. Please log in again." }); return; }
       const token = await user.getIdToken(true);
 
       const res = await fetch("/api/admin/create", {
@@ -109,20 +110,15 @@ export default function CreateAdminModal({ onClose, refresh }) {
         }),
       });
 
-      const data = await res.json();
-      if (!res.ok) {
-        setStep("idle");
-        emitAlert({ type: res.status === 401 ? "error" : "warning", message: data.error || "Failed to create admin" });
-        return;
-      }
+      await readApiJson(res, "Failed to create admin");
 
       setStep("done");
       emitAlert({ type: "success", message: "Admin created successfully" });
       refresh();
       setTimeout(onClose, 600);
-    } catch {
+    } catch (error) {
       setStep("idle");
-      emitAlert({ type: "error", message: "Network error. Check your connection." });
+      emitAlert({ type: error?.status === 409 ? "warning" : "error", message: error?.message || "Network error. Check your connection." });
     } finally {
       setLoading(false);
     }

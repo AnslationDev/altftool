@@ -4,6 +4,7 @@ import { useState } from "react";
 import PermissionMatrix from "./PermissionMatrix";
 import { getAuth } from "firebase/auth";
 import { emitAlert } from "@/lib/alertBus";
+import { readApiJson } from "@/lib/apiClient";
 import { PROJECTS } from "@/projects";
 import {
   X, Lock, Eye, EyeOff, Shield, ShieldCheck,
@@ -102,7 +103,7 @@ export default function EditAdminModal({ admin, onClose, refresh }) {
         }),
       });
 
-      if (!updateRes.ok) { emitAlert({ type: "error", message: "Failed to update admin details" }); setStep("idle"); return; }
+      await readApiJson(updateRes, "Failed to update admin details");
 
       if (newPassword) {
         const passRes = await fetch("/api/admin/change-password", {
@@ -110,16 +111,16 @@ export default function EditAdminModal({ admin, onClose, refresh }) {
           headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
           body: JSON.stringify({ uid: admin.id, password: newPassword }),
         });
-        if (!passRes.ok) { emitAlert({ type: "error", message: "Admin updated, but password change failed" }); setStep("idle"); return; }
+        await readApiJson(passRes, "Admin updated, but password change failed");
       }
 
       setStep("done");
       emitAlert({ type: "success", message: newPassword ? "Admin updated and password changed" : "Admin updated successfully" });
       refresh();
       setTimeout(onClose, 600);
-    } catch {
+    } catch (error) {
       setStep("idle");
-      emitAlert({ type: "error", message: "Network error. Try again later." });
+      emitAlert({ type: "error", message: error?.message || "Network error. Try again later." });
     } finally {
       setLoading(false);
     }

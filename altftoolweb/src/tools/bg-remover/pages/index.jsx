@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useCallback, useEffect, useRef } from "react";
-import { removeBackground } from "@imgly/background-removal";
 import Header from "../components/Header";
 import UploadBox from "../components/UploadBox";
 import OriginalPreview from "../components/Original";
@@ -12,6 +11,14 @@ import ShadowControls from "../components/ShadowControls";
 import BatchProcessor from "../components/BatchProcessing";
 // import  {error}  from "console";
 import {useAlert } from "@/shared/ui/AlertProvider";
+
+let backgroundRemovalModulePromise;
+
+async function removeImageBackground(file) {
+  backgroundRemovalModulePromise ||= import("@imgly/background-removal");
+  const { removeBackground } = await backgroundRemovalModulePromise;
+  return removeBackground(file);
+}
 
 export default function ToolHome() {
   const [originalImage, setOriginalImage] = useState(null);
@@ -92,7 +99,7 @@ export default function ToolHome() {
     setOriginalImage(originalUrl);
 
     try {
-      const resultBlob = await removeBackground(file);
+      const resultBlob = await removeImageBackground(file);
       const resultUrl = URL.createObjectURL(resultBlob);
 
       setResultImage(resultUrl);

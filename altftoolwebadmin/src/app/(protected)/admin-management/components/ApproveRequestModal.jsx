@@ -3,6 +3,7 @@ import { useState } from "react";
 import PermissionMatrix from "@/app/(protected)/admin-management/components/PermissionMatrix";
 import { getAuth } from "firebase/auth";
 import { emitAlert } from "@/lib/alertBus";
+import { readApiJson } from "@/lib/apiClient";
 import { PROJECTS } from "@/projects";
 import {
   X, Shield, ShieldCheck, Loader2, CheckCircle2, Info,
@@ -71,13 +72,7 @@ export default function ApproveRequestModal({ request, onClose, refresh }) {
         }),
       });
 
-      const createData = await createRes.json();
-
-      if (!createRes.ok) {
-        emitAlert({ type: "error", message: createData.error ?? "Failed to create admin" });
-        setStep("idle");
-        return;
-      }
+      await readApiJson(createRes, "Failed to create admin");
 
       /* ── Step 2: Mark the access request as approved ── */
       const approveRes = await fetch("/api/admin/access-requests/approve", {
@@ -86,19 +81,20 @@ export default function ApproveRequestModal({ request, onClose, refresh }) {
         body: JSON.stringify({ requestId: request.id }),
       });
 
-      if (!approveRes.ok) {
-        // Non-critical: admin was created but request status update failed
-        console.warn("Admin created but failed to mark request as approved.");
+      try {
+        await readApiJson(approveRes, "Admin created, but request status update failed");
+      } catch (error) {
+        emitAlert({ type: "warning", message: error?.message || "Admin created, but request status update failed" });
       }
 
       setStep("done");
       emitAlert({ type: "success", message: `Admin account created for ${request.email}` });
       refresh();
       setTimeout(onClose, 600);
-    } catch (err) {
-      console.error("ApproveRequestModal error:", err);
+    } catch (error) {
+      console.error("ApproveRequestModal error:", error);
       setStep("idle");
-      emitAlert({ type: "error", message: "Network error. Check your connection." });
+      emitAlert({ type: "error", message: error?.message || "Network error. Check your connection." });
     } finally {
       setLoading(false);
     }

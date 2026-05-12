@@ -64,6 +64,7 @@ npm run lint:web
 npm run lint:web:budget
 npm run routes:check
 npm run firebase:check
+npm run firebase:admin-write-check:dry-run
 npm run audit
 npm run build
 npm run test:smoke
@@ -198,6 +199,14 @@ Run the contract checker after Firebase path, rules, or admin module changes:
 ```bash
 npm run firebase:check
 ```
+
+Validate the Firebase Admin write path before releasing admin mutations:
+
+```bash
+npm run firebase:admin-write-check
+```
+
+Use `npm run firebase:admin-write-check:dry-run` when credentials are not available locally. For emulator validation, set `FIRESTORE_EMULATOR_HOST` before running the live command.
 
 ## 10. Environment Variables
 

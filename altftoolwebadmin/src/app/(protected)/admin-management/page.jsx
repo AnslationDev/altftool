@@ -8,6 +8,7 @@ import EditAdminModal from "@/app/(protected)/admin-management/components/EditAd
 import CreateAdminModal from "@/app/(protected)/admin-management/components/CreateAdminModal";
 import AccessRequestsTab from "@/app/(protected)/admin-management/components/AccessRequestsTab";
 import { emitAlert } from "@/lib/alertBus";
+import { readApiJson } from "@/lib/apiClient";
 import { PROJECTS } from "@/projects";
 import AdminCard from "./components/AdminCard";
 import {
@@ -165,10 +166,9 @@ export default function AdminManagement() {
       const res = await fetch("/api/admin/list", {
         headers: { Authorization: `Bearer ${token}` },
       });
-      if (!res.ok) { emitAlert({ type: "error", message: "Failed to load admins" }); return; }
-      const data = await res.json();
+      const data = await readApiJson(res, "Failed to load admins");
       setAdmins(data.admins || []);
-    } catch { emitAlert({ type: "error", message: "Network error while loading admins" }); }
+    } catch (error) { emitAlert({ type: "error", message: error?.message || "Network error while loading admins" }); }
     finally { setLoading(false); setRefreshing(false); }
   };
 
@@ -189,10 +189,10 @@ export default function AdminManagement() {
         headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
         body: JSON.stringify({ adminId: admin.id, isActive: !admin.isActive }),
       });
-      if (!res.ok) { emitAlert({ type: "error", message: "Failed to update status" }); return; }
+      await readApiJson(res, "Failed to update status");
       emitAlert({ type: "success", message: `Admin ${!admin.isActive ? "activated" : "deactivated"}` });
       fetchAdmins(true);
-    } catch { emitAlert({ type: "error", message: "Network error updating status" }); }
+    } catch (error) { emitAlert({ type: "error", message: error?.message || "Network error updating status" }); }
     finally { setTogglingId(null); }
   };
 

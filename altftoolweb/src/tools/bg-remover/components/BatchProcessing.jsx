@@ -1,9 +1,16 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { removeBackground } from "@imgly/background-removal";
 import JSZip from "jszip";
 import {CircleCheck} from "lucide-react";
+
+let backgroundRemovalModulePromise;
+
+async function removeImageBackground(file) {
+  backgroundRemovalModulePromise ||= import("@imgly/background-removal");
+  const { removeBackground } = await backgroundRemovalModulePromise;
+  return removeBackground(file);
+}
 
 export default function BatchProcessor({ files }) {
   const [results, setResults] = useState([]);
@@ -11,19 +18,27 @@ export default function BatchProcessor({ files }) {
   const [isProcessing, setIsProcessing] = useState(false);
 
   useEffect(() => {
-    if (!files || files.length === 0) return;
+    if (!files || files.length === 0) return undefined;
+
+    let cancelled = false;
+    const tempResults = [];
 
     const processBatch = async () => {
       setIsProcessing(true);
       setResults([]);
       setProgress(0);
 
-      const tempResults = [];
-
       for (let i = 0; i < files.length; i++) {
+        if (cancelled) break;
+
         try {
-          const blob = await removeBackground(files[i]);
+          const blob = await removeImageBackground(files[i]);
           const url = URL.createObjectURL(blob);
+          if (cancelled) {
+            URL.revokeObjectURL(url);
+            break;
+          }
+
           tempResults.push(url);
 
           //update progress
@@ -33,11 +48,18 @@ export default function BatchProcessor({ files }) {
         }
       }
 
-      setResults(tempResults);
-      setIsProcessing(false);
+      if (!cancelled) {
+        setResults(tempResults);
+        setIsProcessing(false);
+      }
     };
 
     processBatch();
+
+    return () => {
+      cancelled = true;
+      tempResults.forEach((url) => URL.revokeObjectURL(url));
+    };
   }, [files]);
 
   // ZIP download
