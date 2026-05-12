@@ -31,6 +31,9 @@ jobs:
       - name: Validate full route surface
         run: npm run validate:full
 
+      - name: Verify live Firebase data
+        run: npm run firebase:live-check
+
       - name: Verify security headers
         run: npm run test:security
 
