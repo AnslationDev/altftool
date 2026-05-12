@@ -14,6 +14,7 @@ const staticWebRoutes = [
   "/tools",
   "/blogs",
   "/buysmart",
+  "/buysmart/redirect?url=https%3A%2F%2Fexample.com",
   "/buysmart/view-all",
   "/desktop",
   "/extensions",
@@ -33,14 +34,18 @@ const staticWebRoutes = [
   "/news/topic/los-angeles-fires",
   "/news/trending",
   "/ad-preview",
+  "/altpintrest",
   "/ancestory",
+  "/ancestory/meaning",
   "/academy",
+  "/personality",
   "/sale",
   "/search",
   "/unsubscribe",
   "/brandrating",
   "/exclusivedeals",
   "/exclusivedeals/all-stores",
+  "/exclusivedeals/e-blogs/fashion/top-fashion-trends-online-shopping",
   "/exclusivedeals/store",
   "/policypages/about",
   "/policypages/affiliate",
@@ -58,7 +63,21 @@ const staticWebRoutes = [
   "/buy-smart",
   "/sales",
   "/trending-videos",
+  "/blogs/view-all/latest-blogs",
+  "/blogs/view-all/tool-guides",
+  "/blogs/view-all/trending-articles",
+  "/wattpad/category/romance",
+  "/wattpad/book/love-beyond-time",
+  "/wattpad/read/love-beyond-time/1",
   "/api/blogs?offset=0&limit=5",
+];
+
+const adminPublicRoutes = [
+  "/",
+  "/login",
+  "/access-denied",
+  "/access-requested",
+  "/admin/profile",
 ];
 
 const adminRoutes = [
@@ -278,6 +297,46 @@ test("public web route surface resolves", async ({ request }) => {
       const error = result.error ? ` (${result.error.split("\n")[0]})` : "";
       return `${result.group} ${result.route} -> ${result.status}${error}`;
     });
+
+  expect(failures).toEqual([]);
+});
+
+test("admin public and fallback routes resolve", async ({ page }) => {
+  const quality = createPageQualityGate(page);
+  const failures = [];
+
+  for (const route of adminPublicRoutes) {
+    try {
+      const response = await page.goto(`${adminUrl}${route}`, {
+        waitUntil: "domcontentloaded",
+        timeout: 30_000,
+      });
+      await page.waitForLoadState("networkidle", { timeout: 5_000 }).catch(() => {});
+
+      const bodyText = await page.locator("body").innerText({ timeout: 10_000 }).catch(() => "");
+      const status = response?.status() ?? 0;
+
+      if (status >= 400) {
+        failures.push(`${route} -> HTTP ${status}`);
+        failures.push(...await quality.collect(route));
+        continue;
+      }
+
+      if (!bodyText.trim()) {
+        failures.push(`${route} -> empty body`);
+        failures.push(...await quality.collect(route));
+        continue;
+      }
+
+      if (hasRouteErrorMarkup(bodyText)) {
+        failures.push(`${route} -> rendered route error`);
+      }
+
+      failures.push(...await quality.collect(route));
+    } catch (error) {
+      failures.push(`${route} -> ${error.message}`);
+    }
+  }
 
   expect(failures).toEqual([]);
 });
