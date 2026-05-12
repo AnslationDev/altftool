@@ -14,6 +14,7 @@ export default function HeroSection() {
   const timerRef = useRef(null);
   const trackRef = useRef(null);
   const reducedMotion = useReducedMotion();
+  const activeIndex = slides.length ? Math.min(current, slides.length - 1) : 0;
 
   const goTo = useCallback(
     (idx) => {
@@ -38,8 +39,8 @@ timeoutRef.current = setTimeout(() => {
 
   const next = useCallback(() => {
   if (!slides.length) return;
-  goTo((current + 1) % slides.length);
-}, [current, goTo, slides]);
+  goTo((activeIndex + 1) % slides.length);
+}, [activeIndex, goTo, slides]);
 
 useEffect(() => {
   if (reducedMotion || !slides.length) return;
@@ -57,11 +58,6 @@ const resetTimer = () => {
 useEffect(() => {
   return () => clearTimeout(timeoutRef.current);
 }, []);
-useEffect(() => {
-  if (current >= slides.length) {
-    setCurrent(0);
-  }
-}, [slides.length, current]);
 const [data, setData] = useState([]);
 
   const [loading, setLoading] = useState(true);
@@ -119,7 +115,7 @@ useEffect(() => {
               resetTimer();
             }}
             className={`h-2 rounded-full cursor-pointer transition-all duration-500 ease-in-out
-              ${current === i
+              ${activeIndex === i
                 ? "bg-(--primary) w-8 opacity-100"
                 : "bg-[#1e3a8a] w-2 opacity-40"
               }`}

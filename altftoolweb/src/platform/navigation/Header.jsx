@@ -34,9 +34,13 @@ const Header = () => {
   });
 
   useEffect(() => {
-    const existingQuery =
-      new URLSearchParams(window.location.search).get("q") || "";
-    setSearchQuery(existingQuery);
+    const syncSearchQuery = setTimeout(() => {
+      const existingQuery =
+        new URLSearchParams(window.location.search).get("q") || "";
+      setSearchQuery(existingQuery);
+    }, 0);
+
+    return () => clearTimeout(syncSearchQuery);
   }, [pathname]);
 
   const handleChange = (value) => {

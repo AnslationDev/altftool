@@ -89,7 +89,11 @@ export function useStabilityTest(currentFingerprintId) {
 
   useEffect(() => {
     if (!currentFingerprintId) return;
-    checkStability(currentFingerprintId);
+    const stabilityCheck = setTimeout(
+      () => checkStability(currentFingerprintId),
+      0,
+    );
+    return () => clearTimeout(stabilityCheck);
   }, [checkStability, currentFingerprintId]);
 
   function resetTest() {

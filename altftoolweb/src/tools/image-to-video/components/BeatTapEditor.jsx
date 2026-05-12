@@ -70,9 +70,12 @@ export default function BeatTapEditor({ slides, onApply }) {
   const [flash, setFlash] = useState(false);
   useEffect(() => {
     if (!lastTap) return;
-    setFlash(true);
+    const startFlash = setTimeout(() => setFlash(true), 0);
     const t = setTimeout(() => setFlash(false), 120);
-    return () => clearTimeout(t);
+    return () => {
+      clearTimeout(startFlash);
+      clearTimeout(t);
+    };
   }, [lastTap]);
 
   return (

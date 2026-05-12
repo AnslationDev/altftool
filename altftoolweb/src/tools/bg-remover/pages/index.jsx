@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useCallback, useEffect, useRef } from "react";
 import { removeBackground } from "@imgly/background-removal";
 import Header from "../components/Header";
 import UploadBox from "../components/UploadBox";
@@ -32,6 +32,7 @@ export default function ToolHome() {
   });
 
   const canvasRef = useRef(null);
+  const imageUrlsRef = useRef({ originalImage: null, resultImage: null, finalImage: null });
 
   const {showAlert} = useAlert();
 
@@ -45,48 +46,17 @@ export default function ToolHome() {
   ];
 
   useEffect(() => {
+    imageUrlsRef.current = { originalImage, resultImage, finalImage };
+  }, [finalImage, originalImage, resultImage]);
+
+  useEffect(() => {
     return () => {
-      if (originalImage) URL.revokeObjectURL(originalImage);
-      if (resultImage) URL.revokeObjectURL(resultImage);
-      if (finalImage) URL.revokeObjectURL(finalImage);
+      const latestImages = imageUrlsRef.current;
+      if (latestImages.originalImage) URL.revokeObjectURL(latestImages.originalImage);
+      if (latestImages.resultImage) URL.revokeObjectURL(latestImages.resultImage);
+      if (latestImages.finalImage) URL.revokeObjectURL(latestImages.finalImage);
     };
   }, []);
-
-  useEffect(() => {
-    if (!resultImage) return;
-
-    const applyBg = async () => {
-      const sourceImage = baseImage || resultImage;
-
-      if (!selectedBg) {
-        setFinalImage(sourceImage);
-        return;
-      }
-
-      const merged = await mergeImages(selectedBg, sourceImage);
-      setFinalImage(merged);
-    };
-
-    applyBg();
-  }, [selectedBg, baseImage, resultImage]);
-
-  useEffect(() => {
-    if (!resultImage || !finalImage) return;
-
-    const applyShadow = async () => {
-      const source = finalImage || resultImage;
-
-      if (!shadowSettings.enabled) {
-        setFinalImage(source);
-        return;
-      }
-
-      const shadowed = await applyShadowOnly(source);
-      setFinalImage(shadowed);
-    };
-
-    applyShadow();
-  }, [shadowSettings]);
 
   const processImage = async (file) => {
     if (!file) return;
@@ -136,7 +106,7 @@ export default function ToolHome() {
     }
   };
 
-  const mergeImages = async (bgSrc, fgSrc) => {
+  const mergeImages = useCallback(async (bgSrc, fgSrc) => {
     return new Promise((resolve) => {
       const canvas = document.createElement("canvas");
       const ctx = canvas.getContext("2d");
@@ -178,9 +148,9 @@ export default function ToolHome() {
         };
       };
     });
-  };
+  }, []);
 
-  const applyShadowOnly = async (imgSrc) => {
+  const applyShadowOnly = useCallback(async (imgSrc, settings) => {
     return new Promise((resolve) => {
       const canvas = document.createElement("canvas");
       const ctx = canvas.getContext("2d");
@@ -192,13 +162,13 @@ export default function ToolHome() {
         canvas.width = img.width;
         canvas.height = img.height;
 
-        const radians = (shadowSettings.angle * Math.PI) / 180;
-        const offsetX = Math.cos(radians) * shadowSettings.distance;
-        const offsetY = Math.sin(radians) * shadowSettings.distance;
+        const radians = (settings.angle * Math.PI) / 180;
+        const offsetX = Math.cos(radians) * settings.distance;
+        const offsetY = Math.sin(radians) * settings.distance;
 
         ctx.save();
-        ctx.filter = `blur(${shadowSettings.blur}px)`;
-        ctx.globalAlpha = shadowSettings.opacity;
+        ctx.filter = `blur(${settings.blur}px)`;
+        ctx.globalAlpha = settings.opacity;
 
         ctx.drawImage(img, offsetX, offsetY);
 
@@ -211,7 +181,33 @@ export default function ToolHome() {
         });
       };
     });
-  };
+  }, []);
+
+  useEffect(() => {
+    if (!resultImage) return;
+    let cancelled = false;
+
+    const composeImage = async () => {
+      const sourceImage = baseImage || resultImage;
+      let nextImage = sourceImage;
+
+      if (selectedBg) {
+        nextImage = await mergeImages(selectedBg, sourceImage);
+      }
+
+      if (shadowSettings.enabled) {
+        nextImage = await applyShadowOnly(nextImage, shadowSettings);
+      }
+
+      if (!cancelled) setFinalImage(nextImage);
+    };
+
+    composeImage();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [applyShadowOnly, baseImage, mergeImages, resultImage, selectedBg, shadowSettings]);
 
   const handleBackgroundSelect = async (bg) => {
     setSelectedBg(bg);

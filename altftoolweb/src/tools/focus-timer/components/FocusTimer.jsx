@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Timer, Coffee, SkipForward } from "lucide-react";
 
 import ProgressRing from "./ProgressRing";
@@ -26,7 +26,7 @@ export default function FocusTimer({
   const [customFocus, setCustomFocus] = useState("");
   const [customBreak, setCustomBreak] = useState("");
   const [skipBreak, setSkipBreak] = useState(false);
-  const [streak, setStreak] = useState(persistedStreak || 0);
+  const streak = persistedStreak || 0;
 
   const [seconds, setSeconds] = useState(25 * 60);
   const [isRunning, setIsRunning] = useState(false);
@@ -46,20 +46,20 @@ export default function FocusTimer({
   const totalSeconds =
     phase === "focus" ? focusMinutes * 60 : breakMinutes * 60;
 
-  const addScore = (points, label) => {
+  const addScore = useCallback((points, label) => {
     setScore((prev) => Math.min(Math.max(prev + points, 0), 100));
     setLastEvent(label);
     setTimeout(() => setLastEvent(""), 3000);
-  };
+  }, []);
 
-  const sendNotification = (title, body) => {
+  const sendNotification = useCallback((title, body) => {
     if ("Notification" in window && Notification.permission === "granted") {
       new Notification(title, {
         body,
         icon: "/favicon.ico",
       });
     }
-  };
+  }, []);
 
   const handlePreset = (preset) => {
     if (isRunning) return;
@@ -84,10 +84,6 @@ export default function FocusTimer({
   };
 
   useEffect(() => {
-    setStreak(persistedStreak || 0);
-  }, [persistedStreak]);
-
-  useEffect(() => {
     if (!isRunning) return;
     const interval = setInterval(() => {
       setSeconds((prev) => {
@@ -103,42 +99,55 @@ export default function FocusTimer({
 
   useEffect(() => {
     if (seconds !== 0 || !isRunning) return;
-    setLockMode(false);
-    setIsRunning(false);
-    if (phase === "focus") {
-      sendNotification("Session Complete!", "Time's up! Take a break.");
-      addScore(20, "+20 Session completed!");
-      setStreak((s) => s + 1);
-      onSessionComplete?.(focusMinutes);
-      setJustCompleted(true);
-      setPhase("break");
-      setSeconds(breakMinutes * 60);
-      if (autoLoop) setAutoCountdown(3);
+    const completeSession = setTimeout(() => {
+      setLockMode(false);
+      setIsRunning(false);
+      if (phase === "focus") {
+        sendNotification("Session Complete!", "Time's up! Take a break.");
+        addScore(20, "+20 Session completed!");
+        onSessionComplete?.(focusMinutes);
+        setJustCompleted(true);
 
-      if (skipBreak || breakMinutes === 0) {
+        if (skipBreak || breakMinutes === 0) {
+          setPhase("focus");
+          setSeconds(focusMinutes * 60);
+        } else {
+          setPhase("break");
+          setSeconds(breakMinutes * 60);
+        }
+
+        if (autoLoop) setAutoCountdown(3);
+      } else {
+        sendNotification("Break Over!", "Time to focus again.");
+        addScore(10, "+10 Break taken properly!");
         setPhase("focus");
         setSeconds(focusMinutes * 60);
-      } else {
-        setPhase("break");
-        setSeconds(breakMinutes * 60);
+        if (autoLoop) setAutoCountdown(3);
       }
+    }, 0);
 
-      if (autoLoop) setAutoCountdown(3);
-    } else {
-      sendNotification("Break Over!", "Time to focus again.");
-      addScore(10, "+10 Break taken properly!");
-      setPhase("focus");
-      setSeconds(focusMinutes * 60);
-      if (autoLoop) setAutoCountdown(3);
-    }
-  }, [seconds]);
+    return () => clearTimeout(completeSession);
+  }, [
+    addScore,
+    autoLoop,
+    breakMinutes,
+    focusMinutes,
+    isRunning,
+    onSessionComplete,
+    phase,
+    seconds,
+    sendNotification,
+    skipBreak,
+  ]);
 
   useEffect(() => {
     if (autoCountdown === null) return;
     if (autoCountdown === 0) {
-      setAutoCountdown(null);
-      setIsRunning(true);
-      return;
+      const startNextSession = setTimeout(() => {
+        setAutoCountdown(null);
+        setIsRunning(true);
+      }, 0);
+      return () => clearTimeout(startNextSession);
     }
     const timer = setTimeout(() => setAutoCountdown((p) => p - 1), 1000);
     return () => clearTimeout(timer);
@@ -156,7 +165,6 @@ export default function FocusTimer({
   const resetTimer = () => {
     if (isRunning && phase === "focus") {
       addScore(-10, "-10 Session skipped");
-      setStreak(0);
       onResetStreak?.();
       setJustCompleted(false);
       setLockMode(false);

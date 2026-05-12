@@ -43,11 +43,11 @@ export default function History({ navigate }) {
   // Real-time listener for the first page
   useEffect(() => {
     if (!isConfigured) {
-      setLoading(false);
-      return;
+      const finishLoading = setTimeout(() => setLoading(false), 0);
+      return () => clearTimeout(finishLoading);
     }
 
-    setLoading(true);
+    const startLoading = setTimeout(() => setLoading(true), 0);
     const unsubscribe = subscribeToHistory(({ items, lastVisible }) => {
       setHistory(items);
       setLastVisible(lastVisible);
@@ -55,7 +55,10 @@ export default function History({ navigate }) {
       setLoading(false);
     }, 10);
 
-    return () => unsubscribe();
+    return () => {
+      clearTimeout(startLoading);
+      unsubscribe();
+    };
   }, []);
 
   const fetchMoreHistory = async () => {

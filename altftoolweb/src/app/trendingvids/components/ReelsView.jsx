@@ -15,6 +15,7 @@ export default function ReelsView() {
   const containerRef = useRef(null);
   const lastVideoRef = useRef(null);
   const iframeRefs = useRef(new Map());
+  const videoRefs = useRef(new Map());
 
   const initialCounts = useMemo(
     () =>
@@ -42,6 +43,7 @@ export default function ReelsView() {
         behavior: "smooth",
       });
       setActiveIndex(target);
+      setPaused(false);
     },
     [videos.length],
   );
@@ -84,14 +86,12 @@ export default function ReelsView() {
     postCommand(activeIndex, muted ? "mute" : "unMute");
     const videoEl = videoRefs.current.get(activeIndex);
     if (videoEl) videoEl.muted = muted;
-  }, [muted, activeIndex]);
+  }, [muted, activeIndex, postCommand]);
 
   const toggleMute = useCallback((e) => {
     e?.stopPropagation();
     setMuted((m) => !m);
   }, []);
-
-  const videoRefs = useRef(new Map());
 
   const togglePause = useCallback(() => {
     setPaused((p) => {
@@ -136,8 +136,7 @@ export default function ReelsView() {
       activeVideo.play().catch(() => {});
     }
 
-    setPaused(false);
-  }, [activeIndex]);
+  }, [activeIndex, muted, postCommand]);
 
   const lastReelObserver = useCallback(
     (node) => {

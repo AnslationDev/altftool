@@ -165,7 +165,7 @@ export function useImageCropper() {
       setZoom(1);
     };
     reader.readAsDataURL(file);
-  }, []);
+  }, [aspect]);
 
   const reset = useCallback(() => {
     setImageSrc(null);
@@ -205,7 +205,7 @@ export function useImageCropper() {
     } finally {
       setIsProcessing(false);
     }
-  }, [croppedAreaPixels, imageSrc]);
+  }, [croppedAreaPixels, filters, flip, imageSrc, rotation]);
 
   // Compress Image using Canvas
   const compressImage = useCallback(async () => {
@@ -264,7 +264,15 @@ export function useImageCropper() {
 
       tryCompress();
     };
-  }, [croppedImage, quality, beforeSize]);
+  }, [
+    beforeSize,
+    croppedImage,
+    filters.brightness,
+    filters.contrast,
+    filters.grayscale,
+    filters.saturation,
+    quality,
+  ]);
 
   const handleQualityChange = (value) => {
     setQuality(value);

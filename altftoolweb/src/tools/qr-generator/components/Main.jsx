@@ -8,6 +8,7 @@ import {
   X, QrCode, Palette, Smartphone, FileSpreadsheet, Layers, Loader2,
   Activity, MapPin, Globe, Clock
 } from 'lucide-react';
+import useHydrated from "@/hooks/useHydrated";
 
 export default function MainComponent() {
   // --- States ---
@@ -18,7 +19,7 @@ export default function MainComponent() {
   const [qrStyle, setQrStyle] = useState('squares'); 
   const [size, setSize] = useState(220);
   const [customLogo, setCustomLogo] = useState(null);
-  const [isClient, setIsClient] = useState(false);
+  const isClient = useHydrated();
 
   // --- Analytics States ---
   const [geoData, setGeoData] = useState({ city: 'Fetching...', country: '...', isp: '...' });
@@ -52,7 +53,6 @@ export default function MainComponent() {
   useEffect(() => {
     const controller = new AbortController();
 
-    setIsClient(true);
     fetch('https://ipwho.is/', { signal: controller.signal })
       .then(res => res.json())
       .then(data => {

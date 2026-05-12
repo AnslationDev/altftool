@@ -46,15 +46,19 @@ export default function GradientControls({
 
   useEffect(() => {
     onGradientChange(gradient);
+  }, [gradient, onGradientChange]);
 
+  useEffect(() => {
     const newEntry = { gradient, color1, color2, angle, type: gradientType };
-    setHistory((prev) => {
+    const updateHistory = setTimeout(() => setHistory((prev) => {
       const filtered = prev.filter((g) => g.gradient !== gradient);
       const updated = [newEntry, ...filtered].slice(0, 10);
       localStorage.setItem("gradientHistory", JSON.stringify(updated));
       return updated;
-    });
-  }, [angle, color1, color2, gradient, gradientType, onGradientChange]);
+    }), 0);
+
+    return () => clearTimeout(updateHistory);
+  }, [angle, color1, color2, gradient, gradientType]);
 
   const downloadAsPNG = () => {
     const canvas = document.createElement("canvas");

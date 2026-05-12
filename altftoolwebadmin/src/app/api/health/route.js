@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import path from "node:path";
 import { promises as fs } from "node:fs";
 import { verifySuperAdminRequest } from "@/lib/adminAccess";
+import { getAdminDb, getFirebaseAdminConfigStatus } from "@/lib/firebaseAdmin";
 
 export const dynamic = "force-dynamic";
 
@@ -273,7 +274,61 @@ async function buildAutomationReadiness(workspaceRoot) {
   };
 }
 
-function buildRecommendations({ tools, seo, content, automation }) {
+async function buildFirebaseAdminReadiness() {
+  const config = getFirebaseAdminConfigStatus();
+  const checks = [
+    {
+      key: "projectId",
+      label: "Project ID",
+      ok: !config.missing.includes("FIREBASE_PROJECT_ID"),
+    },
+    {
+      key: "clientEmail",
+      label: "Service-account email",
+      ok:
+        config.clientEmailConfigured &&
+        !config.invalid.some((message) => message.includes("FIREBASE_CLIENT_EMAIL")),
+    },
+    {
+      key: "privateKey",
+      label: "Private key",
+      ok:
+        config.privateKeyConfigured &&
+        config.privateKeyLooksComplete &&
+        !config.invalid.some((message) => message.includes("FIREBASE_PRIVATE_KEY")),
+    },
+  ];
+  const firestoreProbe = {
+    key: "firestoreRead",
+    label: "Firestore Admin SDK read",
+    ok: false,
+    skipped: !config.ok,
+  };
+
+  if (config.ok) {
+    try {
+      await getAdminDb().collection("admins").limit(1).get();
+      firestoreProbe.ok = true;
+      firestoreProbe.skipped = false;
+    } catch (error) {
+      firestoreProbe.error = error?.message || "Firestore read failed.";
+      firestoreProbe.skipped = false;
+    }
+  }
+
+  const allChecks = [...checks, firestoreProbe];
+
+  return {
+    score: clampScore((allChecks.filter((check) => check.ok).length / allChecks.length) * 100),
+    status: config.ok && firestoreProbe.ok ? "ready" : "needs-config",
+    projectId: config.projectId,
+    missing: config.missing,
+    invalid: config.invalid,
+    checks: allChecks,
+  };
+}
+
+function buildRecommendations({ tools, seo, content, automation, firebaseAdmin }) {
   const recommendations = [];
 
   if (tools.missingEntry || tools.missingConfig) {
@@ -306,6 +361,10 @@ function buildRecommendations({ tools, seo, content, automation }) {
     recommendations.push("Keep smoke and route audits wired into full validation before every release.");
   }
 
+  if (firebaseAdmin.score < 100) {
+    recommendations.push("Configure Firebase Admin service-account env vars before testing admin write actions in production.");
+  }
+
   if (!recommendations.length) {
     recommendations.push("System health is clean. Keep using validate:full before release pushes.");
   }
@@ -321,15 +380,20 @@ export async function GET(request) {
     const workspaceRoot = path.resolve(adminRoot, "..");
     const webRoot = path.join(workspaceRoot, "altftoolweb");
 
-    const [tools, seo, content, automation] = await Promise.all([
+    const [tools, seo, content, automation, firebaseAdmin] = await Promise.all([
       buildToolQuality(webRoot),
       buildSeoReadiness(webRoot),
       buildContentReadiness(webRoot),
       buildAutomationReadiness(workspaceRoot),
+      buildFirebaseAdminReadiness(),
     ]);
 
     const overallScore = clampScore(
-      tools.averageScore * 0.5 + seo.score * 0.2 + content.score * 0.15 + automation.score * 0.15,
+      tools.averageScore * 0.45 +
+        seo.score * 0.2 +
+        content.score * 0.15 +
+        automation.score * 0.1 +
+        firebaseAdmin.score * 0.1,
     );
     const status = overallScore >= 90 ? "healthy" : overallScore >= 75 ? "watch" : "attention";
 
@@ -349,7 +413,8 @@ export async function GET(request) {
       seo,
       content,
       automation,
-      recommendations: buildRecommendations({ tools, seo, content, automation }),
+      firebaseAdmin,
+      recommendations: buildRecommendations({ tools, seo, content, automation, firebaseAdmin }),
     });
   } catch (error) {
     const message = error?.message || "Health audit failed.";

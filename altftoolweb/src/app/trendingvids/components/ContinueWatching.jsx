@@ -147,7 +147,9 @@ function ClearHistoryConfirmPopup({ count, onConfirm, onCancel }) {
 }
 
 export default function ContinueWatching() {
-  const [videos, setVideos] = useState([]);
+  const [videos, setVideos] = useState(() =>
+    typeof window === "undefined" ? [] : buildVideoList(),
+  );
 
   const [activeVideoId, setActiveVideoId] = useState(null);
 
@@ -158,10 +160,6 @@ export default function ContinueWatching() {
 
     setVideos(list);
   }, []);
-
-  useEffect(() => {
-    refresh();
-  }, [refresh]);
 
   useEffect(() => {
     const handler = (e) => {

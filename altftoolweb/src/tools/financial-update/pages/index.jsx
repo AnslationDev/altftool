@@ -1,6 +1,6 @@
 
 
-import React, { useState, useEffect } from 'react';
+import React, { useCallback, useState, useEffect } from 'react';
 import { LineChart, Line, AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from 'recharts';
 import { TrendingUp, TrendingDown, DollarSign, Activity, RefreshCw, Sparkles, AlertCircle, Search } from 'lucide-react';
 import { getGeminiInsight, fetchRealStockData } from '../utils/api';
@@ -76,7 +76,7 @@ const [useRealData, setUseRealData] = useState(false);
   // Generate realistic mock data for demonstration
   
   
-  const generateMockData = () => {
+  const generateMockData = useCallback(() => {
     const basePrice = Math.random() * 200 + 100;
     const data = [];
     for (let i = 0; i < 30; i++) {
@@ -88,7 +88,7 @@ const [useRealData, setUseRealData] = useState(false);
       });
     }
     return data;
-  };
+  }, []);
 
   // const updateStockData = () => {
   //   const data = generateMockData();
@@ -109,10 +109,10 @@ const [useRealData, setUseRealData] = useState(false);
   //   });
   // };
 
-const updateStockData = async (symbol = selectedStock) => {
+const updateStockData = useCallback(async (symbol = selectedStock, realData = useRealData) => {
   let data = [];
 
-  if (useRealData) {
+  if (realData) {
     data = await fetchRealStockData(symbol);
   } else {
     data = generateMockData();
@@ -133,7 +133,7 @@ const updateStockData = async (symbol = selectedStock) => {
     high: Math.max(...data.map(d => d.price)),
     low: Math.min(...data.map(d => d.price)),
   });
-};
+}, [generateMockData, selectedStock, useRealData]);
 
 //   useEffect(() => {   
 //     updateStockData();
@@ -160,7 +160,7 @@ useEffect(() => {
    const interval = setInterval(fetchData, 5000);
 
   return () => clearInterval(interval);
-}, [selectedStock, useRealData]);
+}, [selectedStock, updateStockData, useRealData]);
 
 
 
@@ -181,8 +181,8 @@ const handleSearch = async () => {
     setUseRealData(true);        // 🔥 switch ON
     setSelectedStock(searchQuery);
 
-    await updateStockData(searchQuery);
-    await getAIInsight();
+    await updateStockData(searchQuery, true);
+    setAiInsight(await getGeminiInsight(searchQuery));
 
   } catch (err) {
     setError('Invalid stock symbol or API limit reached');
@@ -638,4 +638,3 @@ const handleSearch = async () => {
 //     </div>
 //   );
 // };
-

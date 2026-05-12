@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import useHydrated from "@/hooks/useHydrated";
 
 const REDIRECT_URL =
   "https://126d3999de4f.sunkissed-morn.com/?p=23600&media_type=mainstream";
@@ -40,36 +41,32 @@ function InfiniteLoader() {
 }
 
 export default function SmartLink() {
-  const [mode, setMode] = useState("");
+  const hydrated = useHydrated();
+  const mode = hydrated
+    ? (new URLSearchParams(window.location.search).get("mode") || "").toLowerCase()
+    : "";
 
   useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-
-    // ✅ normalize (critical for production)
-    const m = (params.get("mode") || "").toLowerCase();
-
-    setMode(m);
-
     // 🚀 direct redirect
-    if (m === "direct") {
+    if (mode === "direct") {
       window.location.replace(REDIRECT_URL);
       return;
     }
 
     // 🚀 redirect (meta equivalent)
-    if (m === "redirect") {
+    if (mode === "redirect") {
       window.location.replace(REDIRECT_URL_WITH_TYPE);
       return;
     }
 
     // ⚡ popunder
-    if (m === "pus") {
+    if (mode === "pus") {
       const script = document.createElement("script");
       script.src = POPUNDER_SCRIPT;
       script.async = true;
       document.body.appendChild(script);
     }
-  }, []);
+  }, [mode]);
 
   // 🔁 No mode → infinite loader
   if (!mode) {

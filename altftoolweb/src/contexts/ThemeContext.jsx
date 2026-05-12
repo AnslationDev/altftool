@@ -19,13 +19,17 @@ export const ThemeProvider = ({ children }) => {
   const [hydrated, setHydrated] = useState(false);
 
   useEffect(() => {
-    const storedTheme = localStorage.getItem("appTheme");
-    const storedManual = localStorage.getItem("themeManual") === "true";
-    const nextTheme = storedTheme && storedManual ? storedTheme : getSystemTheme();
+    const hydrateTheme = setTimeout(() => {
+      const storedTheme = localStorage.getItem("appTheme");
+      const storedManual = localStorage.getItem("themeManual") === "true";
+      const nextTheme = storedTheme && storedManual ? storedTheme : getSystemTheme();
 
-    setIsManual(storedManual);
-    setTheme(nextTheme);
-    setHydrated(true);
+      setIsManual(storedManual);
+      setTheme(nextTheme);
+      setHydrated(true);
+    }, 0);
+
+    return () => clearTimeout(hydrateTheme);
   }, []);
 
   // Apply theme

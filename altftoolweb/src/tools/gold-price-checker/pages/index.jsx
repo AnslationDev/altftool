@@ -488,7 +488,7 @@
 //   );
 // }
 
-import React, { useState, useEffect, useRef } from "react";
+import React, { useCallback, useMemo, useState, useEffect, useRef } from "react";
 
 export default function ToolHome() {
   const [prices, setPrices] = useState({});
@@ -505,7 +505,7 @@ export default function ToolHome() {
   const [convertResult, setConvertResult] = useState(0);
   const autoRefreshInterval = useRef(null);
 
-  const metals = [
+  const metals = useMemo(() => [
     {
       symbol: "XAU",
       name: "Gold",
@@ -534,7 +534,7 @@ export default function ToolHome() {
       color: "from-zinc-100 to-zinc-50",
       border: "border-zinc-400",
     },
-  ];
+  ], []);
 
   const currencies = [
     { code: "USD", name: "US Dollar" },
@@ -549,7 +549,7 @@ export default function ToolHome() {
     { code: "AED", name: "UAE Dirham" },
   ];
 
-const fetchPrices = async () => {
+	const fetchPrices = useCallback(async () => {
   setLoading(true);
   setError(null);
   setSuccess(false);
@@ -605,17 +605,17 @@ const fetchPrices = async () => {
   } finally {
     setLoading(false);
   }
-};
-  useEffect(() => {
-    fetchPrices();
-  }, [currency]); // Remove currency dependency to avoid too many requests
+	}, [currency, metals]);
+	  useEffect(() => {
+	    fetchPrices();
+	  }, [fetchPrices]);
 
-  useEffect(() => {
-    if (autoRefresh) {
-      const id = setInterval(fetchPrices, 60000);
-      return () => clearInterval(id);
-    }
-  }, [autoRefresh]);
+	  useEffect(() => {
+	    if (autoRefresh) {
+	      const id = setInterval(fetchPrices, 60000);
+	      return () => clearInterval(id);
+	    }
+	  }, [autoRefresh, fetchPrices]);
 
   useEffect(() => {
     const conversions = {

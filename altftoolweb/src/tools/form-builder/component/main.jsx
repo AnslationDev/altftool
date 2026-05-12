@@ -30,6 +30,13 @@ import { downloadForm } from "../download/download";
 import { decodeForm } from "../utils/shareForm";
 import FieldSettingsPanel from "./FieldSettingsPanel";
 
+const DEFAULT_FORM_THEME = {
+  primaryColor: "#2563eb",
+  borderRadius: 12,
+  fontFamily: "var(--font-secondary)",
+  buttonStyle: "rounded",
+};
+
 const FormBuilder = () => {
   const nextIdRef = useRef(0);
   const [formFields, setFormFields] = useState([]);
@@ -64,12 +71,7 @@ const FormBuilder = () => {
   const [selectedFieldId, setSelectedFieldId] = useState(null);
 
   // theme customizer
-  const [theme, setTheme] = useState({
-    primaryColor: "#2563eb",
-    borderRadius: 12,
-    fontFamily: "var(--font-secondary)",
-    buttonStyle: "rounded",
-  });
+  const [theme, setTheme] = useState(DEFAULT_FORM_THEME);
 
   const fieldTypes = [
     { type: "text", label: "Text Input", icon: "📝" },
@@ -321,58 +323,62 @@ const FormBuilder = () => {
 
   //  decode forms
   useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    const data = params.get("data");
+    const loadForm = setTimeout(() => {
+      const params = new URLSearchParams(window.location.search);
+      const data = params.get("data");
 
-    console.log("URL DATA:", data);
+      console.log("URL DATA:", data);
 
-    // ✅ Shared URL case
-    if (data) {
-      setIsSharedView(true);
+      // ✅ Shared URL case
+      if (data) {
+        setIsSharedView(true);
 
-      const decoded = decodeForm(decodeURIComponent(data));
+        const decoded = decodeForm(decodeURIComponent(data));
 
-      if (decoded) {
-        setFormFields(decoded.formFields || []);
-        setFormTitle(decoded.formTitle || "");
-        setFormDescription(decoded.formDescription || "");
-        setTheme(decoded.theme || theme);
+        if (decoded) {
+          setFormFields(decoded.formFields || []);
+          setFormTitle(decoded.formTitle || "");
+          setFormDescription(decoded.formDescription || "");
+          setTheme(decoded.theme || DEFAULT_FORM_THEME);
+
+          setFields(
+            (decoded.formFields || []).map((f) => ({
+              id: f.id,
+              value: "",
+            })),
+          );
+        }
+
+        // shared form = always preview mode
+        setShowPreview(true);
+
+        setIsLoaded(true);
+        return;
+      }
+
+      // localStorage (same as before)
+      const savedData = localStorage.getItem("formData");
+
+      if (savedData) {
+        const parsed = JSON.parse(savedData);
+
+        setFormFields(parsed.formFields || []);
+        setFormTitle(parsed.formTitle || "");
+        setFormDescription(parsed.formDescription || "");
+        setTheme(parsed.theme || DEFAULT_FORM_THEME);
 
         setFields(
-          (decoded.formFields || []).map((f) => ({
+          (parsed.formFields || []).map((f) => ({
             id: f.id,
             value: "",
           })),
         );
       }
 
-      // shared form = always preview mode
-      setShowPreview(true);
-
       setIsLoaded(true);
-      return;
-    }
+    }, 0);
 
-    // localStorage (same as before)
-    const savedData = localStorage.getItem("formData");
-
-    if (savedData) {
-      const parsed = JSON.parse(savedData);
-
-      setFormFields(parsed.formFields || []);
-      setFormTitle(parsed.formTitle || "");
-      setFormDescription(parsed.formDescription || "");
-      setTheme(parsed.theme || theme);
-
-      setFields(
-        (parsed.formFields || []).map((f) => ({
-          id: f.id,
-          value: "",
-        })),
-      );
-    }
-
-    setIsLoaded(true);
+    return () => clearTimeout(loadForm);
   }, []);
 
   // Auto Save
@@ -388,14 +394,17 @@ const FormBuilder = () => {
     localStorage.setItem("formData", JSON.stringify(formData));
 
     // UI feedback
-    setAutoSaved(true);
+    const showSaved = setTimeout(() => setAutoSaved(true), 0);
 
     const timer = setTimeout(() => {
       setAutoSaved(false);
     }, 2000);
 
-    return () => clearTimeout(timer);
-  }, [formFields, formTitle, formDescription, theme]);
+    return () => {
+      clearTimeout(showSaved);
+      clearTimeout(timer);
+    };
+  }, [formFields, formTitle, formDescription, isLoaded, theme]);
 
   //  generte form handler
   const handleGenerateAIForm = () => {

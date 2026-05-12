@@ -160,7 +160,7 @@ function ShareModal({ videoTitle, videoId, directUrl, onClose }) {
         .then(onClose)
         .catch(() => { });
     }
-  }, []);
+  }, [onClose, url, videoTitle]);
 
   async function handleCopy() {
     try {

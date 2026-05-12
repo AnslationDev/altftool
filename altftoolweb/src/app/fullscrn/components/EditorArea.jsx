@@ -75,9 +75,15 @@ const EditorArea = forwardRef(({
     }
     let countInterval;
     if (isCountdownRunning && countdownSeconds > 0) {
-      countInterval = setInterval(() => setCountdownSeconds((prev) => prev - 1), 1000);
-    } else if (countdownSeconds === 0) {
-      setIsCountdownRunning(false);
+      countInterval = setInterval(() => {
+        setCountdownSeconds((prev) => {
+          if (prev <= 1) {
+            setIsCountdownRunning(false);
+            return 0;
+          }
+          return prev - 1;
+        });
+      }, 1000);
     }
     return () => {
       clearInterval(clockTimer);

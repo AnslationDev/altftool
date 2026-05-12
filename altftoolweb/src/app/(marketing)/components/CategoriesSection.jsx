@@ -3,8 +3,8 @@
 import Link from "next/link";
 import { CheckCircle } from "lucide-react";
 import { useTheme } from "@/contexts/ThemeContext";
-import { useEffect, useState } from "react";
 import ManagedImage from "@/components/ui/ManagedImage";
+import useHydrated from "@/hooks/useHydrated";
 
 const sections = [
   {
@@ -88,11 +88,7 @@ const sections = [
 
 export default function FeaturedCategories() {
   const { theme } = useTheme();
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
+  const mounted = useHydrated();
 
   if (!mounted) return null;
   return (

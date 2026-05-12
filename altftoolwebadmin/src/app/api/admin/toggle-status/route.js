@@ -1,22 +1,8 @@
 import { adminDb } from "@/lib/firebaseAdmin";
-import { adminAuth } from "@/lib/firebaseAdmin";
 import { writeAdminAuditLog } from "@/lib/adminAuditLog";
 import { NextResponse } from "next/server";
 import { enforceRateLimit } from "@altftool/core/http";
-
-async function verifySuperAdmin(req) {
-  const header = req.headers.get("authorization");
-  if (!header?.startsWith("Bearer ")) throw new Error("No token");
-
-  const token = header.replace("Bearer ", "");
-  const decoded = await adminAuth.verifyIdToken(token);
-
-  const snap = await adminDb.collection("admins").doc(decoded.uid).get();
-  if (!snap.exists || snap.data()?.roleType !== "superadmin" || !snap.data()?.isActive) {
-    throw new Error("Unauthorized");
-  }
-  return decoded;
-}
+import { verifySuperAdminRequest } from "@/lib/adminAccess";
 
 export async function POST(req) {
   try {
@@ -27,8 +13,20 @@ export async function POST(req) {
     });
     if (limited) return limited;
 
-    const actor = await verifySuperAdmin(req);
+    const actor = await verifySuperAdminRequest(req);
     const { adminId, isActive } = await req.json();
+
+    if (!adminId || typeof adminId !== "string") {
+      return NextResponse.json({ error: "Admin id is required" }, { status: 400 });
+    }
+
+    if (typeof isActive !== "boolean") {
+      return NextResponse.json({ error: "isActive must be a boolean" }, { status: 400 });
+    }
+
+    if (actor?.uid === adminId) {
+      return NextResponse.json({ error: "You cannot change your own active status" }, { status: 400 });
+    }
 
     await adminDb
       .collection("admins")
@@ -46,12 +44,13 @@ export async function POST(req) {
       changes: { isActive },
     });
 
-    return Response.json({ success: true });
+    return NextResponse.json({ success: true });
 
   } catch (err) {
-    return Response.json(
-      { error: "Failed to update status" },
-      { status: 500 }
+    const message = err?.message || "Failed to update status";
+    return NextResponse.json(
+      { error: message === "Unauthorized" ? "Unauthorized" : message },
+      { status: message === "Unauthorized" ? 401 : 500 }
     );
 
   }

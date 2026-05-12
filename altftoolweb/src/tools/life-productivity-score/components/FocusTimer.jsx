@@ -19,19 +19,22 @@ const FocusTimer = () => {
                 setTimeLeft((prev) => prev - 1);
             }, 1000);
         } else if (timeLeft === 0) {
-            setIsTimerRunning(false);
-            if (!isBreak) {
-                setSessions(s => s + 1);
-                const nextDuration = 5 * 60;
-                setTimeLeft(nextDuration);
-                setTotalDuration(nextDuration);
-                setIsBreak(true);
-            } else {
-                const nextDuration = 25 * 60;
-                setTimeLeft(nextDuration);
-                setTotalDuration(nextDuration);
-                setIsBreak(false);
-            }
+            const advanceTimer = setTimeout(() => {
+                setIsTimerRunning(false);
+                if (!isBreak) {
+                    setSessions(s => s + 1);
+                    const nextDuration = 5 * 60;
+                    setTimeLeft(nextDuration);
+                    setTotalDuration(nextDuration);
+                    setIsBreak(true);
+                } else {
+                    const nextDuration = 25 * 60;
+                    setTimeLeft(nextDuration);
+                    setTotalDuration(nextDuration);
+                    setIsBreak(false);
+                }
+            }, 0);
+            return () => clearTimeout(advanceTimer);
         }
         return () => clearInterval(interval);
     }, [isTimerRunning, timeLeft, isBreak, setIsTimerRunning]);

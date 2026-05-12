@@ -79,16 +79,22 @@ export default function VideoPlayer({ videoId, thumbnail, category, title }) {
   }, []);
 
   useEffect(() => {
-    setPlay(false);
-    setShowResumeBar(false);
-    const saved = loadProgress(videoId);
-    if (saved && saved.currentTime > 5) {
-      setResumeTime(saved.currentTime);
-      setShowResumeBar(true);
-    } else {
-      setResumeTime(0);
-    }
-    return () => stopAutoSave();
+    const resetForVideo = setTimeout(() => {
+      setPlay(false);
+      setShowResumeBar(false);
+      const saved = loadProgress(videoId);
+      if (saved && saved.currentTime > 5) {
+        setResumeTime(saved.currentTime);
+        setShowResumeBar(true);
+      } else {
+        setResumeTime(0);
+      }
+    }, 0);
+
+    return () => {
+      clearTimeout(resetForVideo);
+      stopAutoSave();
+    };
   }, [stopAutoSave, videoId]);
 
   const startAutoSave = useCallback(() => {

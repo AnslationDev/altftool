@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { getFaceApi } from "../services/faceApiClient";
 
 export default function WebcamDetector({ onResult, onCameraDenied, setStartCamera }) {
@@ -12,7 +12,7 @@ export default function WebcamDetector({ onResult, onCameraDenied, setStartCamer
   const [running, setRunning] = useState(false);
   const [cameraDenied, setCameraDenied] = useState(false);
 
-  async function loadModels() {
+  const loadModels = useCallback(async () => {
     const MODEL_URL = "/models";
     const faceapi = await getFaceApi();
 
@@ -22,9 +22,9 @@ export default function WebcamDetector({ onResult, onCameraDenied, setStartCamer
       faceapi.nets.faceExpressionNet.loadFromUri(MODEL_URL),
       faceapi.nets.faceLandmark68Net.loadFromUri(MODEL_URL),
     ]);
-  }
+  }, []);
 
-  async function startCamera() {
+  const startCamera = useCallback(async () => {
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ video: true });
       streamRef.current = stream;
@@ -49,15 +49,15 @@ export default function WebcamDetector({ onResult, onCameraDenied, setStartCamer
       setCameraDenied(true);
       if (onCameraDenied) onCameraDenied();
     }
-  }
+  }, [onCameraDenied]);
 
   useEffect(() => {
     if (typeof setStartCamera === "function") {
       setStartCamera(() => startCamera); // FIX: ensure stable reference
     }
-  }, [setStartCamera]);
+  }, [setStartCamera, startCamera]);
 
-  function stopCamera() {
+  const stopCamera = useCallback(() => {
     if (intervalRef.current) clearInterval(intervalRef.current);
     if (streamRef.current) {
       streamRef.current.getTracks().forEach((track) => track.stop());
@@ -65,7 +65,7 @@ export default function WebcamDetector({ onResult, onCameraDenied, setStartCamer
     }
     if (videoRef.current) videoRef.current.srcObject = null;
     setRunning(false);
-  }
+  }, []);
 
   function calculateFaceShape(jawPoints) {
     if (!jawPoints || jawPoints.length < 17) return "unknown";
@@ -86,7 +86,7 @@ export default function WebcamDetector({ onResult, onCameraDenied, setStartCamer
     return "heart";
   }
 
-  async function detect() {
+  const detect = useCallback(async () => {
     const video = videoRef.current;
     const canvas = canvasRef.current;
     if (!video || !canvas) return;
@@ -158,7 +158,7 @@ export default function WebcamDetector({ onResult, onCameraDenied, setStartCamer
     });
 
     if (onResult) onResult(results);
-  }
+  }, [onResult]);
 
   useEffect(() => {
     async function init() {
@@ -172,7 +172,7 @@ export default function WebcamDetector({ onResult, onCameraDenied, setStartCamer
       }
     }
     init();
-  }, []);
+  }, [loadModels, onCameraDenied, startCamera]);
 
   useEffect(() => {
     if (!running) return;
@@ -180,11 +180,11 @@ export default function WebcamDetector({ onResult, onCameraDenied, setStartCamer
     return () => {
       if (intervalRef.current) clearInterval(intervalRef.current);
     };
-  }, [running]);
+  }, [detect, running]);
 
   useEffect(() => {
     return () => stopCamera();
-  }, []);
+  }, [stopCamera]);
 
   return (
     <div className="relative w-full ">

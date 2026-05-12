@@ -174,8 +174,10 @@ function BrandDetail() {
   }, [sidebarOpen]);
 
   useEffect(() => {
-    setLoading(true);
-    setBrandNotFound(false);
+    const resetState = setTimeout(() => {
+      setLoading(true);
+      setBrandNotFound(false);
+    }, 0);
     let best = [], brandsData = [];
     let bestLoaded = false, brandsLoaded = false;
 
@@ -196,7 +198,7 @@ function BrandDetail() {
 
     const unsubBest = bestCouponfirebase((data) => { best = data || []; bestLoaded = true; updateAll(); });
     const unsubBrands = brandsfirebase((data) => { brandsData = data || []; brandsLoaded = true; updateAll(); });
-    return () => { unsubBest?.(); unsubBrands?.(); };
+    return () => { clearTimeout(resetState); unsubBest?.(); unsubBrands?.(); };
   }, [urlBrand]);
 
   useEffect(() => {

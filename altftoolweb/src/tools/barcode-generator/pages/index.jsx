@@ -54,7 +54,9 @@ export default function ToolHome() {
   }, [backgroundColor, barcodeData, barcodeFormat, displayValue, fontSize, height, lineColor, margin, width]);
 
   useEffect(() => {
-    if (barcodeData) generateBarcode();
+    if (!barcodeData) return;
+    const renderBarcode = setTimeout(generateBarcode, 0);
+    return () => clearTimeout(renderBarcode);
   }, [barcodeData, generateBarcode]);
 
   const downloadBarcode = (format) => {

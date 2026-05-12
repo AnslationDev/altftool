@@ -2,7 +2,7 @@
 
 "use client";
 
-import { useState, useEffect } from 'react';
+import { useCallback, useState, useEffect } from 'react';
 import moment from 'moment-timezone';
 import Features from '../components/Features';
 
@@ -14,7 +14,7 @@ export default function ToolHome() {
   const [city, setCity] = useState('New Delhi');
   const [error, setError] = useState('');
 
-  const generatePanchangData = (date, lat, lng) => {
+  const generatePanchangData = useCallback((date, lat, lng) => {
     const tithis = [
       'Pratipada','Dwitiya','Tritiya','Chaturthi','Panchami','Shashthi','Saptami',
       'Ashtami','Navami','Dashami','Ekadashi','Dwadashi','Trayodashi','Chaturdashi','Purnima','Amavasya'
@@ -90,9 +90,9 @@ export default function ToolHome() {
       pratahSandhya: '05:30 AM - 06:15 AM',
       sayanSandhya: '06:30 PM - 07:15 PM'
     };
-  };
+  }, []);
 
-  const fetchCityCoordinates = async (cityName) => {
+  const fetchCityCoordinates = useCallback(async (cityName) => {
     try {
       const response = await fetch(
         `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(cityName)}&format=json&limit=1`
@@ -107,18 +107,22 @@ export default function ToolHome() {
       console.error('Error fetching coordinates:', err);
       return null;
     }
-  };
+  }, []);
 
-  const fetchPanchang = async () => {
+  const fetchPanchang = useCallback(async () => {
     setLoading(true);
     setError('');
     try {
+      let targetLocation = location;
       if (city && city !== location.city) {
         const coords = await fetchCityCoordinates(city);
-        if (coords) setLocation(coords);
+        if (coords) {
+          targetLocation = coords;
+          setLocation(coords);
+        }
       }
       await new Promise(resolve => setTimeout(resolve, 500));
-      const data = generatePanchangData(date, location.lat, location.lng);
+      const data = generatePanchangData(date, targetLocation.lat, targetLocation.lng);
       setPanchang(data);
     } catch (err) {
       console.error('Error fetching panchang:', err);
@@ -126,10 +130,11 @@ export default function ToolHome() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [city, date, fetchCityCoordinates, generatePanchangData, location]);
 
-  useEffect(() => { fetchPanchang(); }, []);
-  useEffect(() => { if (panchang) fetchPanchang(); }, [date, location]);
+  useEffect(() => {
+    fetchPanchang();
+  }, [fetchPanchang]);
 
   const formatDate = (dateStr) => moment(dateStr).format('dddd, D MMMM YYYY');
 

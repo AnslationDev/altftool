@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useCallback } from "react";
 import ReactFlow, {
   Background,
   Controls,
@@ -11,6 +11,7 @@ import ReactFlow, {
   MarkerType,
 } from "reactflow";
 import "reactflow/dist/style.css";
+import useHydrated from "@/hooks/useHydrated";
 
 const METHOD_COLORS = {
   get: { bg: "#1d4ed8", border: "#1e40af", light: "#dbeafe" },
@@ -170,11 +171,7 @@ function buildNodesAndEdges(swaggerSpec) {
 export default function VisualFlowTab({ swaggerSpec }) {
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
+  const mounted = useHydrated();
 
   useEffect(() => {
     if (!swaggerSpec) return;

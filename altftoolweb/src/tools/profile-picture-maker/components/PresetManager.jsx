@@ -19,7 +19,7 @@ export default function PresetManager({
       // 👉 load each preset using savePreset
       parsed.forEach((p) => savePreset(p));
     }
-  }, []);
+  }, [savePreset]);
 
   // 💾 Save to localStorage whenever presets change
   useEffect(() => {

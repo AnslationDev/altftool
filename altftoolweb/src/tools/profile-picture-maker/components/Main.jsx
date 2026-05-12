@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef, useState, useEffect } from "react";
+import React, { useCallback, useLayoutEffect, useRef, useState, useEffect } from "react";
 import axios from "axios";
 
 import UploadBox from "./UploadBox";
@@ -45,6 +45,7 @@ export default function MainComponent() {
   const canvasRef = useRef(null);
   const imageRef = useRef(new Image());
   const bgImgRef = useRef(new Image());
+  const drawToCanvasRef = useRef(() => {});
   const colorRef = useRef();
 
   const [offsetX, setOffsetX] = useState(0);
@@ -77,7 +78,7 @@ const [history, setHistory] = useState([]);
     const img = imageRef.current;
     img.crossOrigin = "anonymous";
 
-    img.onload = () => requestAnimationFrame(drawToCanvas);
+    img.onload = () => requestAnimationFrame(() => drawToCanvasRef.current());
     img.src = src;
   }, [previewUrl, bgRemovedUrl]);
 
@@ -89,11 +90,11 @@ const [history, setHistory] = useState([]);
     img.crossOrigin = "anonymous";
     img.src = bgImage;
 
-    img.onload = () => drawToCanvas();
+    img.onload = () => drawToCanvasRef.current();
   }, [bgImage]);
 /* ---------------- Optimized Draw Trigger ---------------- */
   useEffect(() => {
-    const t = setTimeout(drawToCanvas, 30);
+    const t = setTimeout(() => drawToCanvasRef.current(), 30);
     return () => clearTimeout(t);
   }, [
     zoom,
@@ -126,18 +127,31 @@ const [history, setHistory] = useState([]);
     textSize,
     textColor,
   ]);
-  // HISTORY TRACKER
+// HISTORY TRACKER
 useEffect(() => {
-  const state = getCurrentState();
+  const state = {
+    zoom,
+    brightness,
+    contrast,
+    saturation,
+    bgColor,
+    frameType,
+    borderWidth,
+    text,
+    textColor,
+  };
 
-  setHistory((prev) => {
+  const updateHistory = setTimeout(() => setHistory((prev) => {
     const updated = [state, ...prev];
     return updated.slice(0, 5);
-  });
-}, [zoom, brightness, contrast, saturation, bgColor, frameType, text]);
+  }), 0);
+
+  return () => clearTimeout(updateHistory);
+}, [zoom, brightness, contrast, saturation, bgColor, borderWidth, frameType, text, textColor]);
 
   /* ---------------- Canvas Draw ---------------- */
-  function drawToCanvas() {
+  useLayoutEffect(() => {
+    drawToCanvasRef.current = () => {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
@@ -355,8 +369,8 @@ useEffect(() => {
     }
 
     
-  }
-
+    };
+  });
   /* ---------------- Avatar Mode ---------------- */
   function handleAvatarMode(mode) {
     if (!previewUrl && !bgRemovedUrl) return;
@@ -408,7 +422,7 @@ useEffect(() => {
   setTextColor(preset.textColor);
 };
   // ✅ GET CURRENT SETTINGs
-const getCurrentState = () => ({
+const getCurrentState = useCallback(() => ({
   zoom,
   brightness,
   contrast,
@@ -418,16 +432,16 @@ const getCurrentState = () => ({
   borderWidth,
   text,
   textColor,
-});
+}), [borderWidth, bgColor, brightness, contrast, frameType, saturation, text, textColor, zoom]);
 
-const savePreset = () => {
-  const state = getCurrentState();
+const savePreset = useCallback((preset) => {
+  const state = preset || getCurrentState();
 
   setPresets((prev) => {
     const updated = [state, ...prev];
     return updated.slice(0, 10); // max 10 presets
   });
-};
+}, [getCurrentState]);
 
 
   /* ---------------- Upload ---------------- */

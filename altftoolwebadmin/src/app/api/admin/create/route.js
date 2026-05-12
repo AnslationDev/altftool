@@ -6,6 +6,8 @@ import { FieldValue } from "firebase-admin/firestore";
 import { verifySuperAdminRequest } from "@/lib/adminAccess";
 import { enforceRateLimit } from "@altftool/core/http";
 
+const VALID_ROLE_TYPES = new Set(["admin", "superadmin"]);
+
 export async function POST(req) {
   const limited = enforceRateLimit(NextResponse, req, {
     limit: 10,
@@ -31,8 +33,15 @@ export async function POST(req) {
 
   const { email, password, roleType, permissions, projectAccess } = body;
 
-  if (!email) {
+  const normalizedEmail = String(email || "").trim().toLowerCase();
+  const normalizedRoleType = VALID_ROLE_TYPES.has(roleType) ? roleType : "admin";
+
+  if (!normalizedEmail) {
     return NextResponse.json({ error: "Email is required" }, { status: 400 });
+  }
+
+  if (!normalizedEmail.includes("@")) {
+    return NextResponse.json({ error: "A valid email is required" }, { status: 400 });
   }
 
   try {
@@ -45,7 +54,7 @@ export async function POST(req) {
        NOT call createUser() for them or we get auth/email-in-use.
     ───────────────────────────────────────────────────────────── */
     try {
-      const existingAuthUser = await adminAuth.getUserByEmail(email);
+      const existingAuthUser = await adminAuth.getUserByEmail(normalizedEmail);
       uid = existingAuthUser.uid;
       authUserExisted = true;
     } catch (lookupErr) {
@@ -57,7 +66,7 @@ export async function POST(req) {
             { status: 400 }
           );
         }
-        const newUser = await adminAuth.createUser({ email, password });
+        const newUser = await adminAuth.createUser({ email: normalizedEmail, password });
         uid = newUser.uid;
         authUserExisted = false;
       } else {
@@ -78,7 +87,7 @@ export async function POST(req) {
       const existingDoc = await adminDb.collection("admins").doc(uid).get();
       if (existingDoc.exists) {
         return NextResponse.json(
-          { error: `An admin account already exists for ${email}. Use Edit Admin to update it.` },
+          { error: `An admin account already exists for ${normalizedEmail}. Use Edit Admin to update it.` },
           { status: 409 }
         );
       }
@@ -88,11 +97,11 @@ export async function POST(req) {
        Write Firestore admin doc (source of truth)
     ───────────────────────────────────────────────────────────── */
     await adminDb.collection("admins").doc(uid).set({
-      email,
+      email: normalizedEmail,
       isActive: true,
-      roleType,
-      permissions: permissions || {},
-      projectAccess: projectAccess || {},
+      roleType: normalizedRoleType,
+      permissions: normalizedRoleType === "superadmin" ? {} : (permissions || {}),
+      projectAccess: normalizedRoleType === "superadmin" ? {} : (projectAccess || {}),
       createdAt: FieldValue.serverTimestamp(),
     });
 
@@ -106,12 +115,12 @@ export async function POST(req) {
       actorUid: actor?.uid ?? null,
       actorEmail: actor?.email ?? null,
       targetUid: uid,
-      targetEmail: email,
-      summary: `Created admin ${email}`,
+      targetEmail: normalizedEmail,
+      summary: `Created admin ${normalizedEmail}`,
       changes: {
-        roleType,
-        permissions: roleType === "superadmin" ? {} : (permissions || {}),
-        projectAccess: roleType === "superadmin" ? {} : (projectAccess || {}),
+        roleType: normalizedRoleType,
+        permissions: normalizedRoleType === "superadmin" ? {} : (permissions || {}),
+        projectAccess: normalizedRoleType === "superadmin" ? {} : (projectAccess || {}),
         isActive: true,
       },
     });

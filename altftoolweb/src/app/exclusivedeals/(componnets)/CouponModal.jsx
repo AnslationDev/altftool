@@ -23,7 +23,7 @@ const handleCopy = async () => {
 useEffect(() => {
   if (!isOpen) return;
 
-  setProgress(0);
+  const resetProgress = setTimeout(() => setProgress(0), 0);
 
   let interval;
 
@@ -42,6 +42,7 @@ useEffect(() => {
   }, totalTime);
 
   return () => {
+    clearTimeout(resetProgress);
     clearTimeout(delay);
     clearTimeout(redirectTimeout);
     clearInterval(interval);
