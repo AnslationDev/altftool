@@ -17,9 +17,8 @@ for (const dir of toolDirs) {
 
   if (!fs.existsSync(configPath)) continue;
 
-  const config = (await import(
-    path.resolve(configPath)
-  )).default;
+  const configModule = await import(path.resolve(configPath));
+  const config = configModule.default ?? configModule.toolConfig ?? {};
   const slug = dir.toLowerCase();
 
   toolMeta[slug] = {

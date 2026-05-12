@@ -44,5 +44,11 @@
     "lighthouse": "^13.2.0",
     "postcss": "^8.5.14",
     "tailwindcss": "^4.2.4"
+  },
+  "overrides": {
+    "postcss": "^8.5.14",
+    "next": {
+      "postcss": "^8.5.14"
+    }
   }
 }

@@ -1,0 +1,135 @@
+@import "leaflet/dist/leaflet.css";
+
+/* ============================================================
+   ANCESTORY DESIGN SYSTEM
+   ============================================================ */
+:root {
+  --anc-bg: #f7f7f5;
+  --anc-ink: #2f2f2e;
+  --anc-muted: #5f5f5d;
+  --anc-border: #d9d9d6;
+  --anc-green: #1f6a07;
+  --anc-green-soft: #dce9c3;
+  --anc-radius-lg: 28px;
+  --anc-radius-md: 14px;
+  --anc-shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
+}
+
+[data-theme="dark"] {
+  --anc-bg: #000A1F;
+  --anc-ink: #f1f5f9;
+  --anc-muted: #94a3b8;
+  --anc-border: rgba(255, 255, 255, 0.1);
+  --anc-green: #34d399;
+  --anc-green-soft: rgba(52, 211, 153, 0.1);
+}
+
+.ancestory-root {
+  background-color: var(--anc-bg);
+  color: var(--anc-ink);
+}
+
+/* ============================================================
+   ULTRA-AGGRESSIVE DARK MODE FIX
+   ============================================================ */
+
+[data-theme="dark"] .ancestory-root {
+  color: #f1f5f9 !important;
+}
+
+/* Force all text elements to be light in dark mode */
+[data-theme="dark"] .ancestory-root p,
+[data-theme="dark"] .ancestory-root span,
+[data-theme="dark"] .ancestory-root div,
+[data-theme="dark"] .ancestory-root h1,
+[data-theme="dark"] .ancestory-root h2,
+[data-theme="dark"] .ancestory-root h3,
+[data-theme="dark"] .ancestory-root h4,
+[data-theme="dark"] .ancestory-root li,
+[data-theme="dark"] .ancestory-root label {
+  color: #f1f5f9 !important;
+}
+
+/* Background Overrides - Including badge backgrounds */
+[data-theme="dark"] .ancestory-root .bg-white,
+[data-theme="dark"] .ancestory-root .bg-gray-50,
+[data-theme="dark"] .ancestory-root .bg-gray-100,
+[data-theme="dark"] .ancestory-root .bg-gray-200,
+[data-theme="dark"] .ancestory-root .bg-stone-50,
+[data-theme="dark"] .ancestory-root .bg-green-100,
+[data-theme="dark"] .ancestory-root .bg-amber-100,
+[data-theme="dark"] .ancestory-root .bg-slate-100,
+[data-theme="dark"] .ancestory-root [class*="bg-[#f"],
+[data-theme="dark"] .ancestory-root [class*="bg-[#e"],
+[data-theme="dark"] .ancestory-root [class*="bg-[#d"],
+[data-theme="dark"] .ancestory-root [class*="bg-[#c"] {
+  background-color: #0f172a !important;
+}
+
+/* Force dark backgrounds for specific badges to ensure light text is visible */
+[data-theme="dark"] .ancestory-root .text-green-800,
+[data-theme="dark"] .ancestory-root .text-amber-800,
+[data-theme="dark"] .ancestory-root .text-slate-700 {
+  background-color: #0f172a !important;
+}
+
+/* Specific background colors found in components */
+[data-theme="dark"] .ancestory-root [class*="bg-[#e6eee2]"],
+[data-theme="dark"] .ancestory-root [class*="bg-[#e7f3e2]"],
+[data-theme="dark"] .ancestory-root [class*="bg-[#c9d8c5]"],
+[data-theme="dark"] .ancestory-root [class*="bg-[#c6d9e8]"],
+[data-theme="dark"] .ancestory-root [class*="bg-[#d7e0d2]"],
+[data-theme="dark"] .ancestory-root [class*="bg-[#d9e5ed]"],
+[data-theme="dark"] .ancestory-root [class*="bg-[#d8e2d2]"] {
+  background-color: #1e293b !important;
+}
+
+/* Force text visibility for arbitrary color classes */
+[data-theme="dark"] .ancestory-root [class*="text-[#2f2f2e]"],
+[data-theme="dark"] .ancestory-root [class*="text-[#2c2c2b]"],
+[data-theme="dark"] .ancestory-root [class*="text-[#2d2d2c]"],
+[data-theme="dark"] .ancestory-root [class*="text-[#5c5c5a]"],
+[data-theme="dark"] .ancestory-root [class*="text-[#3f3f3e]"],
+[data-theme="dark"] .ancestory-root [class*="text-[#6a6a68]"],
+[data-theme="dark"] .ancestory-root [class*="text-[#5b5b58]"] {
+  color: #f1f5f9 !important;
+}
+
+/* Border Overrides */
+[data-theme="dark"] .ancestory-root .border-gray-100,
+[data-theme="dark"] .ancestory-root .border-gray-200,
+[data-theme="dark"] .ancestory-root .border-gray-300,
+[data-theme="dark"] .ancestory-root .border-green-200,
+[data-theme="dark"] .ancestory-root .border-amber-200,
+[data-theme="dark"] .ancestory-root [class*="border-[#d"],
+[data-theme="dark"] .ancestory-root [class*="border-[#e"] {
+  border-color: rgba(255,255,255,0.1) !important;
+}
+
+/* Leaflet Map Specific */
+[data-theme="dark"] .leaflet-container {
+  background: #0b1120 !important;
+}
+
+[data-theme="dark"] .leaflet-popup-content-wrapper,
+[data-theme="dark"] .leaflet-popup-tip {
+  background: #1e293b !important;
+  color: #f8fafc !important;
+  border: 1px solid rgba(255,255,255,0.1);
+}
+
+[data-theme="dark"] .leaflet-control-attribution {
+  background: rgba(15, 23, 42, 0.8) !important;
+  color: #94a3b8 !important;
+}
+
+[data-theme="dark"] .dark-map-tiles {
+  filter: brightness(1.2) contrast(1.1) saturate(1.2);
+}
+
+@media (max-width: 768px) {
+  .anc-mobile-text {
+    font-size: 2rem;
+    line-height: 1.2;
+  }
+}

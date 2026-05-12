@@ -63,6 +63,13 @@ export const toolMetaMap = {
     "icon": "search-icon",
     "iconColor": "text-gray-500"
   },
+  "aspect-ratio-calculator": {
+    "name": "aspect ratio calculator",
+    "description": "",
+    "category": "Other",
+    "icon": "wrench",
+    "iconColor": "text-muted-foreground"
+  },
   "barcode-generator": {
     "name": "Barcode Generator",
     "description": "Generate barcodes",
@@ -83,6 +90,16 @@ export const toolMetaMap = {
     "category": "AI",
     "icon": "wand2",
     "iconColor": "text-indigo-600"
+  },
+  "binary-hex-decimal-converter": {
+    "name": "Binary / Hex / Decimal Converter",
+    "description": "Convert binary, hexadecimal, decimal, and ASCII values quickly.",
+    "category": [
+      "Developer",
+      "Calculator"
+    ],
+    "icon": "calculator",
+    "iconColor": "text-blue-600"
   },
   "bmi-calculator": {
     "name": "BMI Calculator",
@@ -130,12 +147,49 @@ export const toolMetaMap = {
     "icon": "calendar-range",
     "iconColor": "text-gray-500"
   },
+  "calorie-tdee-calculator": {
+    "name": "Calorie / TDEE Calculator",
+    "description": "Estimate BMR, TDEE, and daily calorie targets from basic body metrics.",
+    "category": [
+      "Fitness",
+      "Lifestyle"
+    ],
+    "icon": "activity",
+    "iconColor": "text-green-600"
+  },
   "car-ownership-cost-analyzer": {
     "name": "car-cost-analyzer",
     "description": "Calculate the total cost of owning a car, including purchase price, running costs, and depreciation.",
     "category": "Other",
     "icon": "Car",
     "iconColor": "green"
+  },
+  "code-complexity-analyzer": {
+    "name": "Code Complexity Analyzer",
+    "description": "Analyze the complexity of your code and get suggestions to improve it.",
+    "category": "education",
+    "icon": "fas fa-code",
+    "iconColor": "blue"
+  },
+  "color-contrast-checker": {
+    "name": "Color Contrast Checker",
+    "description": "Check WCAG contrast ratio for text and background colors.",
+    "category": [
+      "Design",
+      "Developer"
+    ],
+    "icon": "check-square",
+    "iconColor": "text-green-600"
+  },
+  "color-palette-from-image": {
+    "name": "Color Palette from Image",
+    "description": "Extract a practical color palette from uploaded images.",
+    "category": [
+      "Design",
+      "Creators"
+    ],
+    "icon": "palette",
+    "iconColor": "text-teal-600"
   },
   "corporate-tool": {
     "name": "Corporate Tool",
@@ -150,6 +204,15 @@ export const toolMetaMap = {
     "category": "Job",
     "icon": "mail",
     "iconColor": "text-blue-400"
+  },
+  "cron-expression-generator": {
+    "name": "Cron Expression Generator",
+    "description": "Build cron expressions with readable schedule previews.",
+    "category": [
+      "Developer"
+    ],
+    "icon": "calendar-clock",
+    "iconColor": "text-indigo-600"
   },
   "csv-lead-cleaner": {
     "name": "CSV Lead Cleaner",
@@ -176,6 +239,17 @@ export const toolMetaMap = {
     "icon": "wallet",
     "iconColor": "text-green-700"
   },
+  "device-browser-dashboard": {
+    "name": "Device & Browser Dashboard",
+    "description": "Advanced client-side dashboard for device, browser, privacy, permissions, GPU, storage, and API capability analysis.",
+    "category": [
+      "Developer",
+      "Web",
+      "Productivity"
+    ],
+    "icon": "gauge",
+    "iconColor": "text-blue-600"
+  },
   "dictionary-app": {
     "name": "Dictionary App",
     "description": "Provides definitions and translations for words",
@@ -200,6 +274,17 @@ export const toolMetaMap = {
     "icon": "globe",
     "iconColor": "text-gray-500"
   },
+  "email-validator": {
+    "name": "Email Validator",
+    "description": "Validate email syntax, domain DNS, MX records, disposable domains, role accounts, and bulk lists.",
+    "category": [
+      "Developer",
+      "Web",
+      "Business"
+    ],
+    "icon": "mail",
+    "iconColor": "text-blue-600"
+  },
   "emoji-hub": {
     "name": "Emoji Hub",
     "description": "A collection of emoji icons",
@@ -221,6 +306,16 @@ export const toolMetaMap = {
     "icon": "help-circle",
     "iconColor": "text-gray-500"
   },
+  "exif-data-viewer": {
+    "name": "EXIF Data Viewer",
+    "description": "Inspect image metadata including camera, date, and GPS fields.",
+    "category": [
+      "Developer",
+      "Creators"
+    ],
+    "icon": "image",
+    "iconColor": "text-emerald-600"
+  },
   "expanse-tacker": {
     "name": "Expanse Tracker",
     "description": "Provides information about Expanse game",
@@ -234,6 +329,16 @@ export const toolMetaMap = {
     "category": "Developer",
     "icon": "user",
     "iconColor": "text-gray-500"
+  },
+  "fancy-text-generator": {
+    "name": "Fancy Text Generator",
+    "description": "Generate stylish Unicode text variants for bios, posts, and names.",
+    "category": [
+      "Content Creation",
+      "Creators"
+    ],
+    "icon": "sparkle",
+    "iconColor": "text-pink-600"
   },
   "financial-update": {
     "name": "Financial Update",
@@ -291,6 +396,17 @@ export const toolMetaMap = {
     "icon": "spell-check",
     "iconColor": "text-green-600"
   },
+  "gst-calculator": {
+    "name": "GST Calculator",
+    "description": "Calculate inclusive or exclusive GST with CGST, SGST, and IGST breakdowns.",
+    "category": [
+      "Business",
+      "Calculator",
+      "Finance"
+    ],
+    "icon": "file-spreadsheet",
+    "iconColor": "text-green-600"
+  },
   "habbit_cost_calculator": {
     "name": "Habit Cost Calculator",
     "description": "Calculate the cost of your habits and make informed decisions.",
@@ -321,7 +437,18 @@ export const toolMetaMap = {
     "description": "Calculate your household electricity bill",
     "category": "Lifestyle",
     "icon": "plug",
-    "iconColor": "text-muted-foreground"
+    "iconColor": "text-blue-600"
+  },
+  "html-to-markdown-converter": {
+    "name": "HTML to Markdown Converter",
+    "description": "Convert HTML into clean Markdown with GFM tables, links, images, and code blocks.",
+    "category": [
+      "Developer",
+      "Web",
+      "Content Creation"
+    ],
+    "icon": "file-code",
+    "iconColor": "text-orange-600"
   },
   "http-status-code-explainer": {
     "name": "HTTP Status Code Explainer",
@@ -351,6 +478,38 @@ export const toolMetaMap = {
     "icon": "crop",
     "iconColor": "text-gray-400"
   },
+  "image-flip-rotate-tool": {
+    "name": "Image Flip & Rotate Tool",
+    "description": "Flip, mirror, rotate, straighten, preview, and export images in browser with batch ZIP downloads.",
+    "category": [
+      "Design",
+      "Web",
+      "Content Creation"
+    ],
+    "icon": "refresh-cw",
+    "iconColor": "text-blue-600"
+  },
+  "image-resizer": {
+    "name": "Image Resizer",
+    "description": "Resize images with custom dimensions, social media presets, fit/crop modes, batch processing, and format export.",
+    "category": [
+      "Design",
+      "Web",
+      "Content Creation"
+    ],
+    "icon": "image",
+    "iconColor": "text-blue-600"
+  },
+  "image-to-base64": {
+    "name": "Image to Base64",
+    "description": "Convert uploaded images into Base64 data URLs for quick embedding.",
+    "category": [
+      "Developer",
+      "Utility"
+    ],
+    "icon": "image",
+    "iconColor": "text-purple-600"
+  },
   "image-to-video": {
     "name": "Image to Video Tool",
     "description": "Convert images into engaging videos quickly and easily.",
@@ -362,6 +521,17 @@ export const toolMetaMap = {
     ],
     "icon": "film",
     "iconColor": "text-purple-600"
+  },
+  "income-tax-calculator": {
+    "name": "Income Tax Calculator",
+    "description": "Compare India old and new tax regimes with deductions, rebate, surcharge, cess, and slab-wise breakup.",
+    "category": [
+      "Business",
+      "Calculator",
+      "Finance"
+    ],
+    "icon": "calculator",
+    "iconColor": "text-indigo-600"
   },
   "internet-speed-test": {
     "name": "Internet Speed Test",
@@ -379,6 +549,17 @@ export const toolMetaMap = {
     "icon": "book",
     "iconColor": "text-blue-500"
   },
+  "invoice-generator": {
+    "name": "Invoice Generator",
+    "description": "Create clean invoices with line items, tax, discount, totals, and print-ready output.",
+    "category": [
+      "Business",
+      "Finance",
+      "No-Code"
+    ],
+    "icon": "file-spreadsheet",
+    "iconColor": "text-sky-600"
+  },
   "ip-address-checker": {
     "name": "IP Address Checker",
     "description": "Check if an IP address is valid or not",
@@ -386,12 +567,51 @@ export const toolMetaMap = {
     "icon": "network",
     "iconColor": "text-blue-500"
   },
+  "ip-geolocation-lookup": {
+    "name": "IP Geolocation Lookup",
+    "description": "Lookup IP location, ISP, ASN, timezone, map links, and network details.",
+    "category": [
+      "Web",
+      "Developer"
+    ],
+    "icon": "globe",
+    "iconColor": "text-blue-600"
+  },
   "json-parser": {
     "name": "JSON Parser",
     "description": "Parse JSON data and display it in a readable format",
     "category": "Developer",
     "icon": "text",
     "iconColor": "text-blue-500"
+  },
+  "json-to-yaml-converter": {
+    "name": "JSON to YAML Converter",
+    "description": "Convert JSON objects and arrays into readable YAML.",
+    "category": [
+      "Developer",
+      "Utility"
+    ],
+    "icon": "file-code",
+    "iconColor": "text-yellow-600"
+  },
+  "jwt-decoder": {
+    "name": "JWT Decoder",
+    "description": "Decode JWT header and payload claims instantly in the browser.",
+    "category": [
+      "Developer"
+    ],
+    "icon": "lock",
+    "iconColor": "text-amber-600"
+  },
+  "kundli-birth-chart-generator": {
+    "name": "Kundli / Birth Chart Generator",
+    "description": "Generate a Vedic-style birth chart with lagna, planets, houses, nakshatra, tithi, and dasha timeline.",
+    "category": [
+      "Lifestyle",
+      "Astrology"
+    ],
+    "icon": "star",
+    "iconColor": "text-purple-600"
   },
   "life-productivity-score": {
     "name": "Life Productivity Score",
@@ -423,6 +643,16 @@ export const toolMetaMap = {
     "icon": "credit-card",
     "iconColor": "text-yellow-500"
   },
+  "lorem-ipsum-generator": {
+    "name": "Lorem Ipsum Generator",
+    "description": "Generate clean placeholder copy by paragraphs, sentences, or words.",
+    "category": [
+      "Content Creation",
+      "Design"
+    ],
+    "icon": "quote",
+    "iconColor": "text-violet-600"
+  },
   "markdown-preview": {
     "name": "Markdown Preview",
     "description": "Preview Markdown files",
@@ -437,6 +667,26 @@ export const toolMetaMap = {
     "icon": "image",
     "iconColor": "text-blue-500"
   },
+  "meta-tag-generator": {
+    "name": "Meta Tag Generator",
+    "description": "Generate SEO, Open Graph, and Twitter meta tags.",
+    "category": [
+      "Developer",
+      "Marketing"
+    ],
+    "icon": "code",
+    "iconColor": "text-cyan-600"
+  },
+  "mp3-cutter-audio-trimmer": {
+    "name": "MP3 Cutter / Audio Trimmer",
+    "description": "Cut, trim, and export audio clips with browser-side controls.",
+    "category": [
+      "Creators",
+      "Web"
+    ],
+    "icon": "music",
+    "iconColor": "text-rose-600"
+  },
   "multi-country-clock": {
     "name": "Multi Country Clock Tool",
     "description": "View current time across multiple countries simultaneously.",
@@ -445,6 +695,27 @@ export const toolMetaMap = {
     ],
     "icon": "clock",
     "iconColor": "text-blue-600"
+  },
+  "number-to-words-converter": {
+    "name": "Number to Words Converter",
+    "description": "Convert numbers into Indian or international words for cheques, invoices, and documents.",
+    "category": [
+      "Business",
+      "Calculator",
+      "Finance"
+    ],
+    "icon": "file-text",
+    "iconColor": "text-indigo-600"
+  },
+  "online-notepad": {
+    "name": "Online Notepad",
+    "description": "Write, autosave, export, and clear quick notes in your browser.",
+    "category": [
+      "Content Creation",
+      "Utility"
+    ],
+    "icon": "edit",
+    "iconColor": "text-emerald-600"
   },
   "package-version-checker": {
     "name": "Package Version Checker",
@@ -463,6 +734,16 @@ export const toolMetaMap = {
     ],
     "icon": "refresh-cw",
     "iconColor": "text-blue-600"
+  },
+  "password-generator": {
+    "name": "Password Generator",
+    "description": "Generate strong random passwords with flexible character controls.",
+    "category": [
+      "Cybersecurity Tool",
+      "Utility"
+    ],
+    "icon": "shield-check",
+    "iconColor": "text-emerald-600"
   },
   "pdf-annotation": {
     "name": "PDF Annotation Tool",
@@ -491,6 +772,37 @@ export const toolMetaMap = {
     "icon": "shield-check",
     "iconColor": "text-green-600"
   },
+  "pdf-split-tool": {
+    "name": "PDF Split Tool",
+    "description": "Split PDFs by page, fixed batches, custom ranges, extraction, or page removal with browser-side ZIP/PDF export.",
+    "category": [
+      "Web",
+      "Document",
+      "Business"
+    ],
+    "icon": "files",
+    "iconColor": "text-red-600"
+  },
+  "pdf-to-image-converter": {
+    "name": "PDF to Image Converter",
+    "description": "Convert PDF pages into PNG, JPG, or WebP images in your browser.",
+    "category": [
+      "Web"
+    ],
+    "icon": "image",
+    "iconColor": "text-red-600"
+  },
+  "pdf-to-word-converter": {
+    "name": "PDF to Word Converter",
+    "description": "Convert text-based PDFs into editable Word DOCX files with page range, layout, preview, and export controls.",
+    "category": [
+      "Web",
+      "Document",
+      "Business"
+    ],
+    "icon": "file-text",
+    "iconColor": "text-blue-600"
+  },
   "pdf-watermark": {
     "name": "PDF Watermark",
     "description": "Add custom watermarks to PDF files quickly and securely.",
@@ -499,6 +811,17 @@ export const toolMetaMap = {
     ],
     "icon": "file-lock",
     "iconColor": "text-red-600"
+  },
+  "percentage-calculator": {
+    "name": "Percentage Calculator",
+    "description": "Calculate percentages, percentage change, increase, decrease, and ratios instantly.",
+    "category": [
+      "Business",
+      "Calculator",
+      "Finance"
+    ],
+    "icon": "calculator",
+    "iconColor": "text-blue-600"
   },
   "poll-maker": {
     "name": "Poll Maker",
@@ -582,6 +905,17 @@ export const toolMetaMap = {
     "icon": "video",
     "iconColor": "text-blue--500"
   },
+  "secret-message-encoder": {
+    "name": "Secret Message Encoder",
+    "description": "Encode, decode, inspect, copy, share, and export secret-message payloads with classical ciphers, Base64, URL, Morse, binary, and AES-GCM.",
+    "category": [
+      "Developer",
+      "Web",
+      "Productivity"
+    ],
+    "icon": "lock",
+    "iconColor": "text-blue-600"
+  },
   "shadow-generator": {
     "name": "Shadow Generator",
     "description": "Create smooth customizable CSS shadows for modern UI designs.",
@@ -590,6 +924,17 @@ export const toolMetaMap = {
     ],
     "icon": "layers",
     "iconColor": "text-gray-600"
+  },
+  "sip-calculator": {
+    "name": "SIP Calculator",
+    "description": "Estimate SIP maturity value, invested amount, and wealth gain with annual step-up.",
+    "category": [
+      "Business",
+      "Calculator",
+      "Finance"
+    ],
+    "icon": "trending-up",
+    "iconColor": "text-emerald-600"
   },
   "skill-demand-analyzer": {
     "name": "Skill Demand Analyzer",
@@ -607,6 +952,16 @@ export const toolMetaMap = {
     ],
     "icon": "droplet",
     "iconColor": "text-pink-600"
+  },
+  "sleep-calculator": {
+    "name": "Sleep Calculator",
+    "description": "Find ideal bedtime or wake-up options using 90-minute sleep cycles.",
+    "category": [
+      "Lifestyle",
+      "Fitness"
+    ],
+    "icon": "clock",
+    "iconColor": "text-indigo-600"
   },
   "sound-decibel-checker": {
     "name": "Sound Decibel Checker",
@@ -635,6 +990,15 @@ export const toolMetaMap = {
     "icon": "spell-check",
     "iconColor": "text-blue-600"
   },
+  "sql-formatter": {
+    "name": "SQL Formatter",
+    "description": "Format and clean SQL queries for better readability.",
+    "category": [
+      "Developer"
+    ],
+    "icon": "file-code",
+    "iconColor": "text-violet-600"
+  },
   "step-counter": {
     "name": "Step Counter",
     "description": "Track your daily steps and monitor activity progress easily.",
@@ -644,6 +1008,16 @@ export const toolMetaMap = {
     "icon": "footprints",
     "iconColor": "text-green-700"
   },
+  "stroop-effect": {
+    "name": "Stroop Effect Test",
+    "description": "Test your cognitive control — name the color, not the word. Measure your Stroop Effect and reaction time in this classic psychology experiment.",
+    "category": [
+      "Psychology",
+      "Education"
+    ],
+    "icon": "brain",
+    "iconColor": "text-purple-600"
+  },
   "survey-builder": {
     "name": "Survey Builder",
     "description": "Create custom surveys easily with interactive drag-and-drop fields.",
@@ -652,6 +1026,37 @@ export const toolMetaMap = {
     ],
     "icon": "list-checks",
     "iconColor": "text-purple-600"
+  },
+  "swp-calculator": {
+    "name": "SWP Calculator",
+    "description": "Plan systematic withdrawals with corpus life, step-up withdrawals, return scenarios, and tax estimates.",
+    "category": [
+      "Business",
+      "Calculator",
+      "Finance"
+    ],
+    "icon": "calculator",
+    "iconColor": "text-emerald-600"
+  },
+  "text-behind-image": {
+    "name": "Text Behind Image",
+    "description": "Create poster-style image compositions with large editable text layers.",
+    "category": [
+      "Design",
+      "Creators"
+    ],
+    "icon": "image-plus",
+    "iconColor": "text-cyan-600"
+  },
+  "text-case-converter": {
+    "name": "Text Case Converter",
+    "description": "Convert text into sentence, title, upper, lower, camel, snake, and kebab case.",
+    "category": [
+      "Content Creation",
+      "Developer"
+    ],
+    "icon": "languages",
+    "iconColor": "text-indigo-600"
   },
   "text-extractor": {
     "name": "Text Extractor",
@@ -731,6 +1136,15 @@ export const toolMetaMap = {
     "icon": "scale",
     "iconColor": "text-orange-700"
   },
+  "unix-timestamp-converter": {
+    "name": "Unix Timestamp Converter",
+    "description": "Convert Unix timestamps to readable local, UTC, and ISO dates.",
+    "category": [
+      "Developer"
+    ],
+    "icon": "clock",
+    "iconColor": "text-sky-600"
+  },
   "url-encoder-decoder": {
     "name": "URL Encoder Decoder Tool",
     "description": "Encode and decode URLs instantly for safe web usage.",
@@ -762,6 +1176,16 @@ export const toolMetaMap = {
     "icon": "user-search",
     "iconColor": "text-teal-700"
   },
+  "utm-link-builder": {
+    "name": "UTM Link Builder",
+    "description": "Build tracked UTM links easily for marketing campaigns.",
+    "category": [
+      "Marketing",
+      "Web"
+    ],
+    "icon": "link",
+    "iconColor": "text-blue-600"
+  },
   "uuid-generator": {
     "name": "UUID Generator",
     "description": "Generate secure unique UUIDs instantly for any application.",
@@ -782,12 +1206,50 @@ export const toolMetaMap = {
     "icon": "car",
     "iconColor": "text-indigo-600"
   },
+  "video-compressor": {
+    "name": "Video Compressor",
+    "description": "Compress videos in your browser with quality presets, resolution caps, audio control, and preview export.",
+    "category": [
+      "Creators",
+      "Web",
+      "Productivity"
+    ],
+    "icon": "video",
+    "iconColor": "text-blue-600"
+  },
+  "video-trimmer": {
+    "name": "Video Trimmer",
+    "description": "Trim video clips in your browser with precise start and end controls.",
+    "category": [
+      "Creators",
+      "Web"
+    ],
+    "icon": "video",
+    "iconColor": "text-red-600"
+  },
+  "vocabulary-complexity-analyzer": {
+    "name": "Vocabulary Complexity Analyzer",
+    "description": "Analyze the complexity of vocabulary in text",
+    "category": "Education",
+    "icon": "book-open",
+    "iconColor": "text-blue-600"
+  },
   "voice-to-text": {
     "name": "Voice to Text",
     "description": "Convert spoken language into written text. ",
     "category": "AI",
     "icon": "mic",
     "iconColor": "text-rose-500"
+  },
+  "water-intake-calculator": {
+    "name": "Water Intake Calculator",
+    "description": "Estimate daily water intake from weight, activity, and climate.",
+    "category": [
+      "Fitness",
+      "Lifestyle"
+    ],
+    "icon": "droplet",
+    "iconColor": "text-sky-600"
   },
   "weather-checker": {
     "name": "Weather Checker Tool",
@@ -826,6 +1288,37 @@ export const toolMetaMap = {
     ],
     "icon": "link",
     "iconColor": "text-primary"
+  },
+  "word-character-counter": {
+    "name": "Word & Character Counter",
+    "description": "Count words, characters, sentences, paragraphs, and reading time instantly.",
+    "category": [
+      "Content Creation",
+      "Developer"
+    ],
+    "icon": "text",
+    "iconColor": "text-blue-600"
+  },
+  "word-ppt-excel-to-pdf": {
+    "name": "Word / PPT / Excel to PDF",
+    "description": "Convert DOCX, PPTX, XLSX, CSV, and TXT documents into polished PDF files with previews and batch export.",
+    "category": [
+      "Web",
+      "Document",
+      "Business"
+    ],
+    "icon": "files",
+    "iconColor": "text-violet-600"
+  },
+  "youtube-thumbnail-downloader": {
+    "name": "YouTube Thumbnail Downloader",
+    "description": "Preview and download YouTube video thumbnails in available sizes.",
+    "category": [
+      "Creators",
+      "Marketing"
+    ],
+    "icon": "video",
+    "iconColor": "text-red-600"
   },
   "youtube-video-analyzer": {
     "name": "YouTube Video Analyzer",

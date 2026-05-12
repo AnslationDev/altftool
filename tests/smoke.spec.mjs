@@ -122,10 +122,20 @@ test("firebase blog catalog and detail render complete content", async ({ page, 
   const targetPost = firstPayload.posts.find((post) => post.slug);
   expect(targetPost).toBeTruthy();
 
-  const lastChunk = await request.get(`${webUrl}/api/blogs?offset=360&limit=72`);
-  expect(lastChunk.ok()).toBeTruthy();
+  let offset = 360;
+  let lastPayload = null;
 
-  const lastPayload = await lastChunk.json();
+  for (let attempt = 0; attempt < 10; attempt += 1) {
+    const chunk = await request.get(`${webUrl}/api/blogs?offset=${offset}&limit=72`);
+    expect(chunk.ok()).toBeTruthy();
+
+    lastPayload = await chunk.json();
+    expect(lastPayload.nextOffset).toBeGreaterThan(offset);
+
+    if (!lastPayload.hasMore) break;
+    offset = lastPayload.nextOffset;
+  }
+
   expect(lastPayload.nextOffset).toBeGreaterThanOrEqual(387);
   expect(lastPayload.hasMore).toBeFalsy();
 
