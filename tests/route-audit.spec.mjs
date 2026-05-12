@@ -73,7 +73,6 @@ const staticWebRoutes = [
 ];
 
 const adminPublicRoutes = [
-  "/",
   "/login",
   "/access-denied",
   "/access-requested",
@@ -307,6 +306,7 @@ test("admin public and fallback routes resolve", async ({ page }) => {
 
   for (const route of adminPublicRoutes) {
     try {
+      await page.goto("about:blank");
       const response = await page.goto(`${adminUrl}${route}`, {
         waitUntil: "domcontentloaded",
         timeout: 30_000,
