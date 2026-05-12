@@ -1,0 +1,31 @@
+name: Production Monitoring
+
+on:
+  schedule:
+    - cron: "17 * * * *"
+  workflow_dispatch:
+
+concurrency:
+  group: production-monitoring
+  cancel-in-progress: true
+
+jobs:
+  monitor:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+
+      - name: Run production monitor
+        env:
+          ALTFT_MONITOR_WEB_URL: ${{ vars.ALTFT_MONITOR_WEB_URL || 'https://altftool.com' }}
+          ALTFT_MONITOR_ADMIN_URL: ${{ vars.ALTFT_MONITOR_ADMIN_URL }}
+          ALTFT_MONITOR_ADMIN_TOKEN: ${{ secrets.ALTFT_MONITOR_ADMIN_TOKEN }}
+        run: npm run monitor:production

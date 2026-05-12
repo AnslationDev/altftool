@@ -65,6 +65,7 @@ npm run lint:web:budget
 npm run routes:check
 npm run firebase:check
 npm run firebase:admin-write-check:dry-run
+npm run bundle:audit
 npm run audit
 npm run build
 npm run test:smoke
@@ -207,6 +208,20 @@ npm run firebase:admin-write-check
 ```
 
 Use `npm run firebase:admin-write-check:dry-run` when credentials are not available locally. For emulator validation, set `FIRESTORE_EMULATOR_HOST` before running the live command.
+
+Run Firebase Security Rules tests with the local emulators:
+
+```bash
+npm run test:firebase-rules:emulator
+```
+
+Production monitoring is available through:
+
+```bash
+npm run monitor:production
+```
+
+Set `ALTFT_MONITOR_WEB_URL`, `ALTFT_MONITOR_ADMIN_URL`, and `ALTFT_MONITOR_ADMIN_TOKEN` to point it at a specific deployment. The GitHub Actions monitoring workflow defaults the public web check to `https://altftool.com` and uses repository variables/secrets for admin health.
 
 ## 10. Environment Variables
 

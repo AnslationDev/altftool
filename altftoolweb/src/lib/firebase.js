@@ -5,7 +5,6 @@ import {
   persistentLocalCache,
   persistentMultipleTabManager,
 } from "firebase/firestore";
-import { getStorage } from "firebase/storage";
 
 const firebaseConfig = {
   apiKey:
@@ -47,4 +46,15 @@ function createFirestore(appInstance) {
 }
 
 export const db = createFirestore(app);
-export const storage = getStorage(app);
+
+let cachedStorage = null;
+
+export async function getFirebaseStorage() {
+  if (!cachedStorage) {
+    const { getStorage } = await import("firebase/storage");
+    cachedStorage = getStorage(app);
+  }
+  return cachedStorage;
+}
+
+export const storage = null;

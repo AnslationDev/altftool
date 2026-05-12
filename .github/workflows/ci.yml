@@ -85,8 +85,14 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Install admin rules-test dependencies
+        run: npm --prefix altftoolwebadmin ci
+
       - name: Verify Firebase Admin write path against Firestore Emulator
         run: npm run firebase:admin-write-check:emulator
+
+      - name: Verify Firebase security rules against emulators
+        run: npm run test:firebase-rules:emulator
 
   visual-regression:
     runs-on: macos-latest
