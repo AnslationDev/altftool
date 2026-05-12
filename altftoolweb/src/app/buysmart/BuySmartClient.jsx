@@ -60,8 +60,11 @@ export default function Page() {
   };
 
   return (
-    <div className="mx-auto bg-[var(--background)] text-[var(--foreground)]">
-      <section className="section">
+    <div
+      data-testid="buysmart-page"
+      className="mx-auto bg-[var(--background)] text-[var(--foreground)]"
+    >
+      <section data-testid="buysmart-hero-section" className="section">
         <HeroBanner />
       </section>
 

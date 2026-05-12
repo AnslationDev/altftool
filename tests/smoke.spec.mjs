@@ -43,7 +43,8 @@ test("buysmart A-Z category cards load brand images", async ({ page }) => {
 
   await page.goto(`${webUrl}/buysmart`, { waitUntil: "domcontentloaded" });
   await page.waitForLoadState("load");
-  await expect(page.getByRole("heading", { name: "Discover better brands before you buy." })).toBeVisible();
+  await expect(page.getByTestId("buysmart-page")).toBeVisible();
+  await expect(page.getByTestId("buysmart-hero-section")).toBeVisible();
 
   const newsletterDismiss = page.getByRole("button", { name: "Not now" });
   if (await newsletterDismiss.count()) {
