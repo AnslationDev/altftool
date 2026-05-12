@@ -70,6 +70,16 @@ export const toolMetaMap = {
     "icon": "wrench",
     "iconColor": "text-muted-foreground"
   },
+  "audio-to-base64": {
+    "name": "Audio to Base64",
+    "description": "Convert local audio files into Base64 data URLs.",
+    "category": [
+      "Media",
+      "Converter"
+    ],
+    "icon": "music",
+    "iconColor": "text-pink-700"
+  },
   "barcode-generator": {
     "name": "Barcode Generator",
     "description": "Generate barcodes",
@@ -83,6 +93,96 @@ export const toolMetaMap = {
     "category": "Web",
     "icon": "barcode",
     "iconColor": "text-blue-500"
+  },
+  "base-converter": {
+    "name": "Base Converter",
+    "description": "Convert numbers between binary, octal, decimal, hex, and base36.",
+    "category": [
+      "Calculator",
+      "Developer"
+    ],
+    "icon": "binary",
+    "iconColor": "text-blue-700"
+  },
+  "base64-audio-converter": {
+    "name": "Base64 Audio Converter",
+    "description": "Preview and download Base64 audio data URLs.",
+    "category": [
+      "Media",
+      "Converter"
+    ],
+    "icon": "volume2",
+    "iconColor": "text-pink-700"
+  },
+  "base64-to-ascii": {
+    "name": "Base64 to ASCII",
+    "description": "Decode Base64 and inspect ASCII-safe output.",
+    "category": [
+      "Developer",
+      "Converter"
+    ],
+    "icon": "binary",
+    "iconColor": "text-indigo-600"
+  },
+  "base64-to-file": {
+    "name": "Base64 to File",
+    "description": "Turn Base64 strings or data URLs into downloadable files.",
+    "category": [
+      "Converter",
+      "Developer"
+    ],
+    "icon": "download",
+    "iconColor": "text-indigo-700"
+  },
+  "base64-to-image": {
+    "name": "Base64 to Image",
+    "description": "Preview and download Base64 image data.",
+    "category": [
+      "Image",
+      "Converter"
+    ],
+    "icon": "image",
+    "iconColor": "text-purple-600"
+  },
+  "base64-to-pdf": {
+    "name": "Base64 to PDF",
+    "description": "Preview and download Base64 PDF data.",
+    "category": [
+      "PDF",
+      "Converter"
+    ],
+    "icon": "file-down",
+    "iconColor": "text-red-700"
+  },
+  "base64-to-text": {
+    "name": "Base64 to Text",
+    "description": "Decode Base64 strings into readable UTF-8 text.",
+    "category": [
+      "Developer",
+      "Converter"
+    ],
+    "icon": "binary",
+    "iconColor": "text-indigo-600"
+  },
+  "base64-to-video": {
+    "name": "Base64 to Video",
+    "description": "Preview and download Base64 video data URLs.",
+    "category": [
+      "Media",
+      "Converter"
+    ],
+    "icon": "video",
+    "iconColor": "text-blue-700"
+  },
+  "base64-url-converter": {
+    "name": "Base64 URL Converter",
+    "description": "Convert standard Base64, URL-safe Base64, and text payloads.",
+    "category": [
+      "Developer",
+      "Web"
+    ],
+    "icon": "link",
+    "iconColor": "text-blue-600"
   },
   "bg-remover": {
     "name": "Background Remover",
@@ -139,6 +239,16 @@ export const toolMetaMap = {
     "category": "Creators",
     "icon": "id-card",
     "iconColor": "text-blue-500"
+  },
+  "byte-converter": {
+    "name": "Byte Converter",
+    "description": "Convert bytes, bits, KB, MB, GB, and binary units.",
+    "category": [
+      "Calculator",
+      "Developer"
+    ],
+    "icon": "binary",
+    "iconColor": "text-blue-700"
   },
   "calender-panchang": {
     "name": "Calender Panchang",
@@ -214,6 +324,26 @@ export const toolMetaMap = {
     "icon": "calendar-clock",
     "iconColor": "text-indigo-600"
   },
+  "css-tools": {
+    "name": "CSS Tools",
+    "description": "Format and minify CSS quickly in the browser.",
+    "category": [
+      "Developer",
+      "Web"
+    ],
+    "icon": "palette",
+    "iconColor": "text-violet-600"
+  },
+  "csv-converter": {
+    "name": "CSV Converter",
+    "description": "Convert CSV into JSON, HTML, XML, SQL inserts, or Python dictionaries.",
+    "category": [
+      "Developer",
+      "Data"
+    ],
+    "icon": "file-spreadsheet",
+    "iconColor": "text-green-600"
+  },
   "csv-lead-cleaner": {
     "name": "CSV Lead Cleaner",
     "description": "Clean and organize CSV leads quickly with smart filtering.",
@@ -229,6 +359,15 @@ export const toolMetaMap = {
     "category": "Developer",
     "icon": "arrow-left-right",
     "iconColor": "text-purple-600"
+  },
+  "curl-to-code-converter": {
+    "name": "cURL to Code Converter",
+    "description": "Convert simple cURL commands into fetch, Axios, or Python requests.",
+    "category": [
+      "Developer"
+    ],
+    "icon": "terminal",
+    "iconColor": "text-zinc-700"
   },
   "currency-converter": {
     "name": "Currency Converter",
@@ -292,6 +431,16 @@ export const toolMetaMap = {
     "icon": "smile",
     "iconColor": "text-yellow-500"
   },
+  "emoji-remover": {
+    "name": "Emoji Remover",
+    "description": "Remove emoji and symbol noise from text, comments, and captions.",
+    "category": [
+      "Text",
+      "Content Creation"
+    ],
+    "icon": "wand2",
+    "iconColor": "text-pink-600"
+  },
   "encoded-decoded": {
     "name": "Encoded/Decoded",
     "description": "Encode and decode text",
@@ -339,6 +488,16 @@ export const toolMetaMap = {
     ],
     "icon": "sparkle",
     "iconColor": "text-pink-600"
+  },
+  "file-to-base64": {
+    "name": "File to Base64",
+    "description": "Convert local files into Base64 data URLs without uploading.",
+    "category": [
+      "Converter",
+      "Developer"
+    ],
+    "icon": "upload",
+    "iconColor": "text-indigo-700"
   },
   "financial-update": {
     "name": "Financial Update",
@@ -414,6 +573,16 @@ export const toolMetaMap = {
     "icon": "calculator",
     "iconColor": "text-green-600"
   },
+  "hex-to-base64": {
+    "name": "Hex to Base64",
+    "description": "Convert hexadecimal strings into Base64 and back.",
+    "category": [
+      "Developer",
+      "Converter"
+    ],
+    "icon": "hash",
+    "iconColor": "text-sky-600"
+  },
   "hindi-vernamala": {
     "name": "Hindi Varnamala",
     "description": "Learn Hindi Varnamala interactively with visuals and pronunciation.",
@@ -438,6 +607,26 @@ export const toolMetaMap = {
     "category": "Lifestyle",
     "icon": "plug",
     "iconColor": "text-blue-600"
+  },
+  "htaccess-to-nginx": {
+    "name": "HTAccess to NGINX",
+    "description": "Convert common Apache rewrite rules into starter NGINX rewrites.",
+    "category": [
+      "Developer",
+      "Web"
+    ],
+    "icon": "server",
+    "iconColor": "text-gray-700"
+  },
+  "html-editor": {
+    "name": "HTML Editor",
+    "description": "Format, minify, escape, and unescape HTML fragments.",
+    "category": [
+      "Developer",
+      "Web"
+    ],
+    "icon": "file-code",
+    "iconColor": "text-red-600"
   },
   "html-to-markdown-converter": {
     "name": "HTML to Markdown Converter",
@@ -577,6 +766,25 @@ export const toolMetaMap = {
     "icon": "globe",
     "iconColor": "text-blue-600"
   },
+  "javascript-tools": {
+    "name": "JavaScript Tools",
+    "description": "Format, minify, and inspect JavaScript snippets locally.",
+    "category": [
+      "Developer"
+    ],
+    "icon": "code",
+    "iconColor": "text-yellow-600"
+  },
+  "json-editor": {
+    "name": "JSON Editor",
+    "description": "Validate, format, minify, and convert JSON snippets.",
+    "category": [
+      "Developer",
+      "Data"
+    ],
+    "icon": "braces",
+    "iconColor": "text-emerald-600"
+  },
   "json-parser": {
     "name": "JSON Parser",
     "description": "Parse JSON data and display it in a readable format",
@@ -653,6 +861,16 @@ export const toolMetaMap = {
     "icon": "quote",
     "iconColor": "text-violet-600"
   },
+  "markdown-html-converter": {
+    "name": "Markdown / HTML Converter",
+    "description": "Convert Markdown into HTML and strip HTML back to text.",
+    "category": [
+      "Developer",
+      "Content Creation"
+    ],
+    "icon": "file-text",
+    "iconColor": "text-slate-700"
+  },
   "markdown-preview": {
     "name": "Markdown Preview",
     "description": "Preview Markdown files",
@@ -677,6 +895,16 @@ export const toolMetaMap = {
     "icon": "code",
     "iconColor": "text-cyan-600"
   },
+  "morse-code-translator": {
+    "name": "Morse Code Translator",
+    "description": "Translate plain text to Morse code and decode Morse back.",
+    "category": [
+      "Text",
+      "Education"
+    ],
+    "icon": "arrow-left-right",
+    "iconColor": "text-amber-600"
+  },
   "mp3-cutter-audio-trimmer": {
     "name": "MP3 Cutter / Audio Trimmer",
     "description": "Cut, trim, and export audio clips with browser-side controls.",
@@ -686,6 +914,16 @@ export const toolMetaMap = {
     ],
     "icon": "music",
     "iconColor": "text-rose-600"
+  },
+  "mp4-to-base64": {
+    "name": "MP4 to Base64",
+    "description": "Convert local MP4 files into Base64 data URLs.",
+    "category": [
+      "Media",
+      "Converter"
+    ],
+    "icon": "video",
+    "iconColor": "text-blue-700"
   },
   "multi-country-clock": {
     "name": "Multi Country Clock Tool",
@@ -782,6 +1020,16 @@ export const toolMetaMap = {
     ],
     "icon": "files",
     "iconColor": "text-red-600"
+  },
+  "pdf-to-base64": {
+    "name": "PDF to Base64",
+    "description": "Convert local PDF files into Base64 data URLs.",
+    "category": [
+      "PDF",
+      "Converter"
+    ],
+    "icon": "file-up",
+    "iconColor": "text-red-700"
   },
   "pdf-to-image-converter": {
     "name": "PDF to Image Converter",
@@ -999,6 +1247,16 @@ export const toolMetaMap = {
     "icon": "file-code",
     "iconColor": "text-violet-600"
   },
+  "sql-formatter-online": {
+    "name": "SQL Formatter Online",
+    "description": "Format SQL queries with readable line breaks.",
+    "category": [
+      "Developer",
+      "Data"
+    ],
+    "icon": "database",
+    "iconColor": "text-cyan-700"
+  },
   "step-counter": {
     "name": "Step Counter",
     "description": "Track your daily steps and monitor activity progress easily.",
@@ -1025,6 +1283,16 @@ export const toolMetaMap = {
       "Business"
     ],
     "icon": "list-checks",
+    "iconColor": "text-purple-600"
+  },
+  "svg-to-image": {
+    "name": "SVG to Image",
+    "description": "Render SVG markup to a downloadable PNG preview.",
+    "category": [
+      "Design",
+      "Converter"
+    ],
+    "icon": "image",
     "iconColor": "text-purple-600"
   },
   "swp-calculator": {
@@ -1058,6 +1326,16 @@ export const toolMetaMap = {
     "icon": "languages",
     "iconColor": "text-indigo-600"
   },
+  "text-encryptor": {
+    "name": "Text Encryptor",
+    "description": "Hash text and encrypt or decrypt AES-GCM payloads locally.",
+    "category": [
+      "Cybersecurity Tool",
+      "Developer"
+    ],
+    "icon": "key-round",
+    "iconColor": "text-red-700"
+  },
   "text-extractor": {
     "name": "Text Extractor",
     "description": "Extract text accurately from images, files, or pasted content.",
@@ -1078,6 +1356,16 @@ export const toolMetaMap = {
     ],
     "icon": "file-text",
     "iconColor": "text-blue-700"
+  },
+  "text-to-base64": {
+    "name": "Text to Base64",
+    "description": "Encode text into Base64 and decode Base64 locally.",
+    "category": [
+      "Developer",
+      "Converter"
+    ],
+    "icon": "binary",
+    "iconColor": "text-indigo-600"
   },
   "text-to-voice": {
     "name": "Text to Voice Tool",
@@ -1125,6 +1413,16 @@ export const toolMetaMap = {
     "icon": "circle-dashed",
     "iconColor": "text-pink-700"
   },
+  "unicode-ascii-converter": {
+    "name": "Unicode / ASCII Converter",
+    "description": "Convert text into Unicode escapes or ASCII codes and back.",
+    "category": [
+      "Developer",
+      "Text"
+    ],
+    "icon": "file-text",
+    "iconColor": "text-teal-600"
+  },
   "unit-converter": {
     "name": "Unit Converter",
     "description": "Convert units instantly across multiple categories with accuracy.",
@@ -1153,6 +1451,16 @@ export const toolMetaMap = {
       "No-Code"
     ],
     "icon": "code2",
+    "iconColor": "text-blue-600"
+  },
+  "url-escape-unescape": {
+    "name": "URL Escape / Unescape",
+    "description": "Encode and decode URL text for query strings and redirects.",
+    "category": [
+      "Developer",
+      "Web"
+    ],
+    "icon": "link",
     "iconColor": "text-blue-600"
   },
   "user-info-finder": {
@@ -1309,6 +1617,16 @@ export const toolMetaMap = {
     ],
     "icon": "files",
     "iconColor": "text-violet-600"
+  },
+  "xml-editor": {
+    "name": "XML Editor",
+    "description": "Format, minify, and inspect XML documents.",
+    "category": [
+      "Developer",
+      "Data"
+    ],
+    "icon": "code",
+    "iconColor": "text-orange-600"
   },
   "youtube-thumbnail-downloader": {
     "name": "YouTube Thumbnail Downloader",
