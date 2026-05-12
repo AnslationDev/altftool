@@ -33,7 +33,7 @@ useEffect(() => {
     hasRedirectedRef.current = true;
     clearInterval(intervalRef.current);
     const destination = getFirstAllowedRoute(adminData);
-    router.replace(destination ?? "/admin/dashboard");
+    router.replace(destination ?? "/profile");
     return;
   }
 
@@ -69,7 +69,7 @@ useEffect(() => {
   const handleSignOut = async () => {
     clearInterval(intervalRef.current);
     await signOut(auth);
-    router.replace("login");
+    router.replace("/login");
   };
 
   return (

@@ -50,9 +50,13 @@ const expectedPublicPages = [
   "altftoolweb/src/app/blogs/page.jsx",
   "altftoolweb/src/app/brandrating/page.jsx",
   "altftoolweb/src/app/news/page.jsx",
+  "altftoolweb/src/app/news/topics/[topic]/page.jsx",
+  "altftoolweb/src/app/rss.xml/route.js",
   "altftoolweb/src/app/desktop/page.jsx",
   "altftoolweb/src/app/trendingvids/page.jsx",
   "altftoolweb/src/app/supportsetting/page.jsx",
+  "altftoolwebadmin/src/app/(protected)/[project]/page.jsx",
+  "altftoolwebadmin/src/app/not-found.jsx",
 ];
 
 async function pathExists(relativePath) {

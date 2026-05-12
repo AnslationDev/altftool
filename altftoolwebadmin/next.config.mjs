@@ -16,6 +16,11 @@ const nextConfig = {
   async redirects() {
     return [
       {
+        source: "/admin/dashboard",
+        destination: "/profile",
+        permanent: true,
+      },
+      {
         source: "/altftool/consumerrating/:path*",
         destination: "/altftool/consumer-rating/:path*",
         permanent: true,

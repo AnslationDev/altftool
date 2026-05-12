@@ -21,8 +21,9 @@ export async function GET(request) {
 
   const { searchParams } = new URL(request.url);
   const location = searchParams.get("location")?.trim() || null;
+  const topic = searchParams.get("topic")?.trim() || null;
 
-  const cacheKey = `news:${location ?? "global"}`;
+  const cacheKey = `news:${location ?? "global"}:${topic ?? "all"}`;
 
   // ── Cache hit ──────────────────────────────────────────────────────────
   const cached = cache.get(cacheKey);
@@ -39,6 +40,14 @@ export async function GET(request) {
     feeds.push({
       url: buildGoogleNewsUrl(location),
       source: `Google News – ${location}`,
+      category: "world",
+    });
+  }
+
+  if (topic) {
+    feeds.push({
+      url: buildGoogleNewsUrl(topic),
+      source: `Google News – ${topic}`,
       category: "world",
     });
   }

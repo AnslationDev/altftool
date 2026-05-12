@@ -1,6 +1,15 @@
 import Link from "next/link";
 import topicsData from "../../../../public/data/topics.json";
 
+function slugify(value = "") {
+  return String(value)
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/(^-|-$)/g, "");
+}
+
 export default function TopicsPage() {
   return (
     <section>
@@ -10,7 +19,7 @@ export default function TopicsPage() {
         {topicsData.topics.map((topic) => (
           <Link
             key={topic}
-            href={`/news/topics/${topic.toLowerCase().replace(/\s+/g, "-")}`}
+            href={`/news/topics/${slugify(topic)}`}
             className="text-sm text-[var(--primary)] hover:underline"
           >
             {topic}

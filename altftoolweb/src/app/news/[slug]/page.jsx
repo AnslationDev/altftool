@@ -28,6 +28,15 @@ function timeAgo(h) {
   return d === 1 ? "1 day ago" : `${d} days ago`;
 }
 
+function slugify(value = "") {
+  return String(value)
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/(^-|-$)/g, "");
+}
+
 const getCategoryStyle = (cat) => {
   const map = {
     politics: "bg-red-500/10 text-red-500 border-red-500/20",
@@ -136,40 +145,13 @@ function CommentItem({ text, index }) {
   );
 }
 
-// ─── main ─────────────────────────────────────────────────────────────────────
-
-export default function NewsDetailPage() {
-  const { slug } = useParams();
-
-  const article = useMemo(
-    () => newsData.news.find((n) => n.slug === slug),
-    [slug]
-  );
-
+function NewsArticleView({ article, relatedNews }) {
   const [likes, setLikes] = useState(article?.likes ?? 0);
   const [liked, setLiked] = useState(false);
   const [saved, setSaved] = useState(false);
   const [comments, setComments] = useState([]);
   const [commentText, setCommentText] = useState("");
   const commentRef = useRef(null);
-
-  const relatedNews = useMemo(
-    () => newsData.news.filter((n) => n.slug !== slug).slice(0, 4),
-    [slug]
-  );
-
-  if (!article) {
-    return (
-      <div className="flex flex-col items-center justify-center gap-4 py-24 text-center">
-        <div className="text-5xl">📰</div>
-        <h1 className="text-xl font-bold text-[var(--foreground)]">Article not found</h1>
-        <p className="text-sm text-[var(--muted-foreground)]">This story may have been removed or the link is incorrect.</p>
-        <Link href="/news" className="mt-2 flex items-center gap-1.5 rounded-xl bg-[var(--primary)] px-4 py-2 text-sm font-medium text-[var(--primary-foreground)]">
-          <ArrowLeft size={14} /> Back to News
-        </Link>
-      </div>
-    );
-  }
 
   function submitComment() {
     if (!commentText.trim()) return;
@@ -191,7 +173,7 @@ export default function NewsDetailPage() {
           <ChevronRight size={11} className="opacity-40" />
           {article.category && (
             <>
-              <Link href={`/news/${article.category?.toLowerCase()}`} className="hover:text-[var(--foreground)] transition capitalize">
+              <Link href={`/news/topics/${slugify(article.category)}`} className="hover:text-[var(--foreground)] transition capitalize">
                 {article.category}
               </Link>
               <ChevronRight size={11} className="opacity-40" />
@@ -335,7 +317,7 @@ export default function NewsDetailPage() {
             {article.tags.map((t) => (
               <Link
                 key={t}
-                href={`/news/topics/${t}`}
+                href={`/news/topics/${slugify(t)}`}
                 className="rounded-lg border border-[var(--border)] bg-[var(--muted)] px-3 py-1.5 text-xs font-medium text-[var(--muted-foreground)] transition hover:border-[var(--foreground)]/20 hover:text-[var(--foreground)]"
               >
                 #{t}
@@ -427,4 +409,82 @@ export default function NewsDetailPage() {
       </article>
     </>
   );
+}
+
+// ─── main ─────────────────────────────────────────────────────────────────────
+
+export default function NewsDetailPage() {
+  const { slug } = useParams();
+
+  const localArticle = useMemo(
+    () => newsData.news.find((n) => n.slug === slug),
+    [slug]
+  );
+  const [remoteLookup, setRemoteLookup] = useState({
+    status: "idle",
+    slug: null,
+    article: null,
+  });
+  const remoteLookupMatchesSlug = remoteLookup.slug === slug;
+  const article = localArticle || (remoteLookupMatchesSlug ? remoteLookup.article : null);
+  const isResolvingRemoteArticle = !localArticle && Boolean(slug) && (
+    !remoteLookupMatchesSlug || remoteLookup.status !== "done"
+  );
+
+  const relatedNews = useMemo(
+    () => newsData.news.filter((n) => n.slug !== slug).slice(0, 4),
+    [slug]
+  );
+
+  useEffect(() => {
+    if (localArticle || !slug) {
+      return undefined;
+    }
+
+    const controller = new AbortController();
+
+    fetch("/news/api", { signal: controller.signal })
+      .then((response) => response.json())
+      .then(({ news }) => {
+        const remoteArticle = (news || []).find((item) => item.slug === slug) || null;
+        setRemoteLookup({ status: "done", slug, article: remoteArticle });
+      })
+      .catch((error) => {
+        if (error.name !== "AbortError") {
+          setRemoteLookup({ status: "done", slug, article: null });
+        }
+      });
+
+    return () => controller.abort();
+  }, [localArticle, slug]);
+
+  if (!article && isResolvingRemoteArticle) {
+    return (
+      <div className="space-y-6 py-10">
+        <div className="h-5 w-36 animate-pulse rounded-md bg-[var(--muted)]" />
+        <div className="h-10 w-3/4 animate-pulse rounded-md bg-[var(--muted)]" />
+        <div className="h-72 animate-pulse rounded-2xl bg-[var(--muted)]" />
+        <div className="space-y-3">
+          <div className="h-4 animate-pulse rounded-md bg-[var(--muted)]" />
+          <div className="h-4 w-5/6 animate-pulse rounded-md bg-[var(--muted)]" />
+          <div className="h-4 w-2/3 animate-pulse rounded-md bg-[var(--muted)]" />
+        </div>
+      </div>
+    );
+  }
+
+  if (!article) {
+    return (
+      <div className="flex flex-col items-center justify-center gap-4 py-24 text-center">
+        <div className="text-5xl">📰</div>
+        <h1 className="text-xl font-bold text-[var(--foreground)]">Article not found</h1>
+        <p className="text-sm text-[var(--muted-foreground)]">This story may have been removed or the link is incorrect.</p>
+        <Link href="/news" className="mt-2 flex items-center gap-1.5 rounded-xl bg-[var(--primary)] px-4 py-2 text-sm font-medium text-[var(--primary-foreground)]">
+          <ArrowLeft size={14} /> Back to News
+        </Link>
+      </div>
+    );
+  }
+
+  return <NewsArticleView key={article.slug} article={article} relatedNews={relatedNews} />;
 }

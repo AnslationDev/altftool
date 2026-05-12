@@ -5,6 +5,7 @@ import dealData from "@/app/exclusivedeals/(data)/db.json";
 import top11Categories from "@/app/top11/data/categoryData";
 import { getSiteUrl, normalizeSlug } from "@/platform/seo/generateMetadata";
 import newsData from "../../public/data/newsdata.json";
+import topicsData from "../../public/data/topics.json";
 
 export const revalidate = 3600;
 
@@ -54,6 +55,15 @@ function pushUnique(entries, seen, path, options) {
   if (!path || seen.has(path)) return;
   seen.add(path);
   entries.push(sitemapEntry(path, options));
+}
+
+function normalizeTopicSlug(value = "") {
+  return String(value)
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/(^-|-$)/g, "");
 }
 
 export default function sitemap() {
@@ -145,6 +155,16 @@ export default function sitemap() {
     if (article?.slug) {
       pushUnique(entries, seen, `/news/${article.slug}`, {
         priority: 0.55,
+        changeFrequency: "weekly",
+      });
+    }
+  }
+
+  for (const topic of (topicsData.topics || []).slice(0, 200)) {
+    const slug = normalizeTopicSlug(topic);
+    if (slug) {
+      pushUnique(entries, seen, `/news/topics/${slug}`, {
+        priority: 0.42,
         changeFrequency: "weekly",
       });
     }

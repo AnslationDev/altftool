@@ -20,6 +20,66 @@ const nextConfig = {
         permanent: true,
       },
       {
+        source: "/about",
+        destination: "/policypages/about",
+        permanent: true,
+      },
+      {
+        source: "/contact",
+        destination: "/policypages/contact",
+        permanent: true,
+      },
+      {
+        source: "/privacy",
+        destination: "/policypages/privacy",
+        permanent: true,
+      },
+      {
+        source: "/terms",
+        destination: "/policypages/termsandconditions",
+        permanent: true,
+      },
+      {
+        source: "/cookie-policy",
+        destination: "/policypages/cookie",
+        permanent: true,
+      },
+      {
+        source: "/deals",
+        destination: "/exclusivedeals",
+        permanent: true,
+      },
+      {
+        source: "/exclusive-deals",
+        destination: "/exclusivedeals",
+        permanent: true,
+      },
+      {
+        source: "/buy-smart",
+        destination: "/buysmart",
+        permanent: true,
+      },
+      {
+        source: "/sales",
+        destination: "/sale",
+        permanent: true,
+      },
+      {
+        source: "/trending-videos",
+        destination: "/trendingvids",
+        permanent: true,
+      },
+      {
+        source: "/rss",
+        destination: "/rss.xml",
+        permanent: true,
+      },
+      {
+        source: "/news/topic/:topic",
+        destination: "/news/topics/:topic",
+        permanent: true,
+      },
+      {
         source: "/categories/:path*",
         destination: "/tools/all",
         permanent: true,

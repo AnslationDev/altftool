@@ -8,6 +8,8 @@ const adminUrl = process.env.ALTFT_ADMIN_URL || "http://localhost:3001";
 const staticWebRoutes = [
   "/",
   "/robots.txt",
+  "/rss.xml",
+  "/rss",
   "/sitemap.xml",
   "/tools",
   "/blogs",
@@ -27,6 +29,8 @@ const staticWebRoutes = [
   "/news/local",
   "/news/newsletter",
   "/news/topics",
+  "/news/topics/los-angeles-fires",
+  "/news/topic/los-angeles-fires",
   "/news/trending",
   "/ad-preview",
   "/ancestory",
@@ -45,10 +49,20 @@ const staticWebRoutes = [
   "/policypages/disclaimer",
   "/policypages/privacy",
   "/policypages/termsandconditions",
+  "/about",
+  "/contact",
+  "/privacy",
+  "/terms",
+  "/deals",
+  "/exclusive-deals",
+  "/buy-smart",
+  "/sales",
+  "/trending-videos",
   "/api/blogs?offset=0&limit=5",
 ];
 
 const adminRoutes = [
+  "/admin/dashboard",
   "/admin-management",
   "/admin-management/audit",
   "/analytics",
@@ -57,6 +71,7 @@ const adminRoutes = [
   "/tickets",
   "/support",
   "/profile",
+  "/altftool",
   "/altftool/ads",
   "/altftool/buysmart",
   "/altftool/blogs",
@@ -70,6 +85,7 @@ const adminRoutes = [
   "/altftool/trending-videos",
   "/altftool/sale-locator",
   "/altftool/dynamic",
+  "/leadtree",
   "/leadtree/blogs",
   "/leadtree/blogs/add-blogs",
   "/leadtree/blogs/view-blogs",
@@ -339,6 +355,10 @@ test("seo endpoints and structured data render", async ({ page, request }) => {
   expect(robots.ok()).toBeTruthy();
   const robotsText = await robots.text();
   expect(robotsText).toContain("Sitemap:");
+
+  const rss = await request.get(`${webUrl}/rss.xml`);
+  expect(rss.ok()).toBeTruthy();
+  expect(await rss.text()).toContain("<rss");
 
   await page.goto(`${webUrl}/tools/all/api-stress-estimator`, { waitUntil: "domcontentloaded" });
   const toolSchemas = await page
