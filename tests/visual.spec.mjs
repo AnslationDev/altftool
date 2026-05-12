@@ -8,6 +8,7 @@ async function waitForVisualStability(page) {
   await page.waitForLoadState("networkidle", { timeout: 15_000 }).catch(() => {});
   await page.evaluate(async () => {
     await document.fonts?.ready;
+    document.activeElement?.blur?.();
     window.scrollTo(0, 0);
   });
 }

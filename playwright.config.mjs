@@ -23,7 +23,7 @@ export default defineConfig({
     timeout: 15_000,
     toHaveScreenshot: {
       animations: "disabled",
-      caret: "hide",
+      caret: "initial",
       maxDiffPixelRatio: 0.01,
       scale: "css",
       stylePath: "./tests/styles/visual-stable.css",
