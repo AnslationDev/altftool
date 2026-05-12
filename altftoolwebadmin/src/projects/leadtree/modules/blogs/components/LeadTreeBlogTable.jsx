@@ -5,6 +5,7 @@ import { useState, useMemo, useEffect, useRef, useCallback } from "react";
 import { createPortal } from "react-dom";
 import { emitAlert } from "@/lib/alertBus";
 import { logAuditEvent } from "@/lib/auditClient";
+import { getErrorMessage } from "@/lib/apiClient";
 import { updateBlogStatus } from "../lead-blog-services/BlogPostService";
 import {
   useReactTable,
@@ -169,7 +170,7 @@ export default function LeadTreeBlogTable({
     } catch (err) {
       console.error(err);
       setBlogs((prev) => prev.map((b) => b.id === blog.id ? { ...b, status: blog.status } : b));
-      emitAlert({ type: "error", message: "Failed to update status" });
+      emitAlert({ type: "error", message: getErrorMessage(err, "Failed to update status") });
     }
   };
 

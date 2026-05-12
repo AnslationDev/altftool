@@ -6,6 +6,7 @@ import { getAuth } from "firebase/auth";
 import { updateData, deleteData } from "../service/data.service";
 import { emitAlert } from "@/lib/alertBus";
 import { logAuditEvent } from "@/lib/auditClient";
+import { getErrorMessage } from "@/lib/apiClient";
 import {
   useReactTable,
   getCoreRowModel,
@@ -198,7 +199,7 @@ export default function DataTable({ items, onEdit, refresh }) {
         route: "/data",
       });
       refresh?.();
-    } catch { emitAlert({ type: "error", message: "Failed to update status" }); }
+    } catch (error) { emitAlert({ type: "error", message: getErrorMessage(error, "Failed to update status") }); }
     finally { setLoadingId(null); }
   };
 
@@ -219,7 +220,7 @@ export default function DataTable({ items, onEdit, refresh }) {
       });
       setDeleteTarget(null);
       refresh?.();
-    } catch { emitAlert({ type: "error", message: "Failed to delete item" }); }
+    } catch (error) { emitAlert({ type: "error", message: getErrorMessage(error, "Failed to delete item") }); }
     finally { setLoadingId(null); }
   };
 
@@ -240,7 +241,7 @@ export default function DataTable({ items, onEdit, refresh }) {
       });
       setSelected([]);
       refresh?.();
-    } catch { emitAlert({ type: "error", message: "Bulk delete failed" }); }
+    } catch (error) { emitAlert({ type: "error", message: getErrorMessage(error, "Bulk delete failed") }); }
     finally { setLoadingId(null); }
   };
 

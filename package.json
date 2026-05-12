@@ -30,6 +30,8 @@
     "firebase:live-check": "node scripts/check-firebase-live-data.mjs",
     "firebase:admin-write-check": "npm --prefix altftoolwebadmin run firebase:admin-write-check",
     "firebase:admin-write-check:dry-run": "npm --prefix altftoolwebadmin run firebase:admin-write-check:dry-run",
+    "firebase:admin-write-check:emulator": "npx --yes firebase-tools@15.17.0 emulators:exec --only firestore --project altftool-bca36 \"npm --prefix altftoolwebadmin run firebase:admin-write-check\"",
+    "test:firebase-admin-write-check": "node --test tests/firebase-admin-write-check.test.mjs",
     "test:smoke": "playwright test tests/smoke.spec.mjs",
     "test:routes": "playwright test tests/route-audit.spec.mjs",
     "test:admin-api": "playwright test tests/admin-api.spec.mjs",
@@ -38,7 +40,7 @@
     "test:security": "playwright test tests/security.spec.mjs",
     "test:lighthouse": "playwright test tests/lighthouse.spec.mjs",
     "validate": "npm run lint:web && npm run lint:web:budget && npm run routes:check && npm run firebase:check && npm run audit && npm run build && npm run test:smoke",
-    "validate:full": "npm run validate && npm run test:routes && npm run test:admin-api",
+    "validate:full": "npm run validate && npm run test:routes && npm run test:admin-api && npm run test:firebase-admin-write-check",
     "validate:release": "npm run validate:full && npm run firebase:live-check && npm run test:security && npm run test:visual && npm run test:lighthouse"
   },
   "devDependencies": {

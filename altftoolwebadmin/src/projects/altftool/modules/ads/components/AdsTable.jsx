@@ -6,6 +6,7 @@ import { getAuth } from "firebase/auth";
 import { updateAd, deleteAd } from "../services/ads.service";
 import { emitAlert } from "@/lib/alertBus";
 import { logAuditEvent } from "@/lib/auditClient";
+import { getErrorMessage } from "@/lib/apiClient";
 import {
   useReactTable,
   getCoreRowModel,
@@ -215,7 +216,7 @@ export default function AdsTable({ ads }) {
         changes: { status: next },
         route: "/ads",
       });
-    } catch { emitAlert({ type: "error", message: "Failed to update status" }); }
+    } catch (error) { emitAlert({ type: "error", message: getErrorMessage(error, "Failed to update status") }); }
     finally { setLoadingId(null); }
   };
 
@@ -235,7 +236,7 @@ export default function AdsTable({ ads }) {
         route: "/ads",
       });
       setDeleteTarget(null);
-    } catch { emitAlert({ type: "error", message: "Failed to delete ad" }); }
+    } catch (error) { emitAlert({ type: "error", message: getErrorMessage(error, "Failed to delete ad") }); }
     finally { setLoadingId(null); }
   };
 
@@ -255,7 +256,7 @@ export default function AdsTable({ ads }) {
         route: "/ads",
       });
       setSelected([]);
-    } catch { emitAlert({ type: "error", message: "Bulk delete failed" }); }
+    } catch (error) { emitAlert({ type: "error", message: getErrorMessage(error, "Bulk delete failed") }); }
     finally { setLoadingId(null); }
   };
 

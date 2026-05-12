@@ -5,6 +5,7 @@ import { useState, useMemo, useEffect, useRef, useCallback } from "react";
 import { createPortal } from "react-dom";
 import { emitAlert } from "@/lib/alertBus";
 import { logAuditEvent } from "@/lib/auditClient";
+import { getErrorMessage } from "@/lib/apiClient";
 // import { updateBlogStatus } from "../lead-blog-services/BlogPostService";
 import { updateCardStatus } from "../credit-card-services/CreditCardService";
 
@@ -189,14 +190,14 @@ export default function CreditCardTable({
         } catch (err) {
             console.error(err);
             setCards((prev) => prev.map((b) => b.id === card.id ? { ...b, status: card.status } : b));
-            emitAlert({ type: "error", message: "Failed to update status" });
+            emitAlert({ type: "error", message: getErrorMessage(err, "Failed to update status") });
         }
     };
 
     const allSelected = cards.length > 0 && selectedCards.length === cards.length;
     const someSelected = selectedCards.length > 0 && selectedCards.length < cards.length;
     const toggleRow = (id) => setSelectedCards((prev) => prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id]);
-    const toggleAll = () => allSelected ? setSelectedCards([]) : setSelectedCards(blogs.map((b) => b.id));
+    const toggleAll = () => allSelected ? setSelectedCards([]) : setSelectedCards(cards.map((b) => b.id));
 
     const columns = useMemo(() => [
         {
