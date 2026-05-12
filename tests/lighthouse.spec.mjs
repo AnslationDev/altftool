@@ -16,7 +16,7 @@ const DESKTOP_CONFIG = {
       deviceScaleFactor: 1,
       disabled: false,
     },
-    throttlingMethod: "devtools",
+    throttlingMethod: "simulate",
   },
 };
 
