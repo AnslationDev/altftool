@@ -30,7 +30,7 @@ export const toolMetaMap = {
   },
   "animation-generator": {
     "name": "Animation Generator",
-    "description": "Generate  animations for your projects in easy way  ",
+    "description": "Generate animations for your projects in easy way",
     "category": "Creators",
     "icon": "sparkle",
     "iconColor": "text-teal-500"
@@ -51,7 +51,7 @@ export const toolMetaMap = {
   },
   "api-tester": {
     "name": "API TESTER",
-    "description": " Build, send, and test API requests with ease.",
+    "description": "Build, send, and test API requests with ease.",
     "category": "Developer",
     "icon": "server",
     "iconColor": "text-blue-600"
@@ -64,11 +64,14 @@ export const toolMetaMap = {
     "iconColor": "text-gray-500"
   },
   "aspect-ratio-calculator": {
-    "name": "aspect ratio calculator",
-    "description": "",
-    "category": "Other",
-    "icon": "wrench",
-    "iconColor": "text-muted-foreground"
+    "name": "Aspect Ratio Calculator",
+    "description": "Calculate simplified ratios and proportional dimensions for thumbnails, banners, and responsive layouts.",
+    "category": [
+      "Calculator",
+      "Design"
+    ],
+    "icon": "crop",
+    "iconColor": "text-blue-600"
   },
   "audio-to-base64": {
     "name": "Audio to Base64",
@@ -82,14 +85,14 @@ export const toolMetaMap = {
   },
   "barcode-generator": {
     "name": "Barcode Generator",
-    "description": "Generate barcodes",
+    "description": "Generate scannable barcodes from text, product codes, and quick inventory labels.",
     "category": "Web",
     "icon": "scan",
     "iconColor": "text-blue-500"
   },
   "barcode-scanner": {
     "name": "Barcode Scanner",
-    "description": "Scan barcodes and get the data ",
+    "description": "Scan barcodes and get the data",
     "category": "Web",
     "icon": "barcode",
     "iconColor": "text-blue-500"
@@ -273,7 +276,7 @@ export const toolMetaMap = {
   },
   "calender-panchang": {
     "name": "Calender Panchang",
-    "description": "Calender Panchang",
+    "description": "View calendar and panchang details for dates, festivals, and daily planning.",
     "category": "Lifestyle",
     "icon": "calendar-range",
     "iconColor": "text-gray-500"
@@ -386,7 +389,7 @@ export const toolMetaMap = {
   },
   "csv-to-json": {
     "name": "CSV to JSON",
-    "description": "Convert CSV file or text  into JSON format",
+    "description": "Convert CSV file or text into JSON format",
     "category": "Developer",
     "icon": "arrow-left-right",
     "iconColor": "text-purple-600"
@@ -481,7 +484,7 @@ export const toolMetaMap = {
   },
   "excel-formula": {
     "name": "Excel Formula",
-    "description": " Get the Excel formulas Easily",
+    "description": "Get the Excel formulas Easily",
     "category": "EdTech",
     "icon": "help-circle",
     "iconColor": "text-gray-500"
@@ -581,7 +584,7 @@ export const toolMetaMap = {
   },
   "grammer-checker": {
     "name": "Grammer Checker",
-    "description": "Check your Grammer  and spelling mistakes",
+    "description": "Check your Grammer and spelling mistakes",
     "category": "AI",
     "icon": "spell-check",
     "iconColor": "text-green-600"
@@ -764,7 +767,7 @@ export const toolMetaMap = {
   },
   "interview-question": {
     "name": "Interview Question",
-    "description": " Find  interview question for you interview preparation",
+    "description": "Find interview question for you interview preparation",
     "category": "Other",
     "icon": "book",
     "iconColor": "text-blue-500"
@@ -877,7 +880,7 @@ export const toolMetaMap = {
   },
   "loan-emi-calculator": {
     "name": "Loan EMI Calculator",
-    "description": " Loan EMI Calculator helps you calculate the monthly EMI of a loan.",
+    "description": "Loan EMI Calculator helps you calculate the monthly EMI of a loan.",
     "category": "Business",
     "icon": "credit-card",
     "iconColor": "text-yellow-500"
@@ -1169,6 +1172,13 @@ export const toolMetaMap = {
     ],
     "icon": "regex",
     "iconColor": "text-blue-600"
+  },
+  "relationship-adviser": {
+    "name": "Relationship Adviser",
+    "description": "Get practical relationship prompts, communication tips, and supportive advice for common situations.",
+    "category": "Lifestyle",
+    "icon": "heart",
+    "iconColor": "text-rose-600"
   },
   "resume-maker": {
     "name": "Resume Maker",
@@ -1595,7 +1605,7 @@ export const toolMetaMap = {
   },
   "voice-to-text": {
     "name": "Voice to Text",
-    "description": "Convert spoken language into written text. ",
+    "description": "Convert spoken language into written text.",
     "category": "AI",
     "icon": "mic",
     "iconColor": "text-rose-500"

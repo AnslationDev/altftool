@@ -15,6 +15,15 @@ const ICON_ALIASES = {
 };
 
 const toolMeta = {};
+const cleanText = (value) => String(value ?? "").replace(/\s+/g, " ").trim();
+const cleanCategory = (category) => {
+  if (Array.isArray(category)) {
+    const values = category.map(cleanText).filter(Boolean);
+    return values.length ? values : "Other";
+  }
+
+  return cleanText(category) || "Other";
+};
 const normalizeIcon = (icon) => {
   const value = typeof icon === "string" ? icon.trim() : "";
   if (!value) return "wrench";
@@ -38,12 +47,12 @@ for (const dir of toolDirs) {
   const slug = dir.toLowerCase();
 
   toolMeta[slug] = {
-  name: config.name ?? dir.replace(/-/g, " "),
-  description: config.description ?? "",
-  category: config.category ?? "Other",
-  icon: normalizeIcon(config.icon ?? "wrench"),
-  iconColor: config.iconColor ?? "text-muted-foreground",
-};
+    name: cleanText(config.name) || dir.replace(/-/g, " "),
+    description: cleanText(config.description),
+    category: cleanCategory(config.category),
+    icon: normalizeIcon(config.icon ?? "wrench"),
+    iconColor: cleanText(config.iconColor) || "text-muted-foreground",
+  };
 
 }
 

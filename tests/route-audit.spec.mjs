@@ -424,6 +424,9 @@ test("seo endpoints and structured data render", async ({ page, request }) => {
     .locator('script[type="application/ld+json"]')
     .evaluateAll((scripts) => scripts.map((script) => script.textContent || ""));
   expect(toolSchemas.some((schema) => schema.includes("SoftwareApplication"))).toBeTruthy();
+  expect(toolSchemas.some((schema) => schema.includes("FAQPage"))).toBeTruthy();
+  expect(toolSchemas.some((schema) => schema.includes("HowTo"))).toBeTruthy();
+  await expect(page.getByRole("heading", { name: /workflows/i })).toBeVisible();
   await quality.expectClean("tool structured data route");
 
   await page.goto(`${webUrl}/blogs/age-calculator-guide`, { waitUntil: "domcontentloaded" });

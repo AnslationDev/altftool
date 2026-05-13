@@ -4,8 +4,11 @@ import { buildToolMetadata, getTool } from "../../toolRouteUtils";
 import JsonLd from "@/platform/seo/JsonLd";
 import {
   createBreadcrumbJsonLd,
+  createFaqJsonLd,
+  createHowToJsonLd,
   createToolJsonLd,
 } from "@/platform/seo/generateMetadata";
+import { buildToolSeoContent } from "../../toolSeoContent";
 
 export async function generateMetadata({ params }) {
   const { slug } = await params;
@@ -20,17 +23,27 @@ export default async function ToolPage({ params }) {
     notFound();
   }
 
+  const toolPath = `/tools/${category}/${slug}`;
+  const seoContent = buildToolSeoContent(slug, tool);
+
   return (
     <>
       <JsonLd
         id={`tool-schema-${category}-${slug}`}
         data={[
           createToolJsonLd({ slug, tool, category }),
+          createHowToJsonLd({
+            path: toolPath,
+            name: `${tool.name} workflow`,
+            description: seoContent.summary,
+            steps: seoContent.steps,
+          }),
+          createFaqJsonLd({ path: toolPath, questions: seoContent.faqs }),
           createBreadcrumbJsonLd([
             { name: "Home", path: "/" },
             { name: "Tools", path: "/tools" },
             { name: category === "all" ? "All Tools" : category, path: `/tools/${category}` },
-            { name: tool.name, path: `/tools/${category}/${slug}` },
+            { name: tool.name, path: toolPath },
           ]),
         ]}
       />

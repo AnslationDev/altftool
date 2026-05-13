@@ -1,5 +1,6 @@
 import { toolMetaMap } from "@/platform/registry/toolMetaMap";
 import { createPageMetadata } from "@/platform/seo/generateMetadata";
+import { buildToolSeoContent } from "./toolSeoContent";
 
 export function getTool(slug) {
   return toolMetaMap[slug] ?? null;
@@ -27,9 +28,11 @@ export function buildToolMetadata(slug) {
     };
   }
 
+  const seoContent = buildToolSeoContent(slug, tool);
+
   return createPageMetadata({
-    title: tool.name,
-    description: tool.description,
+    title: `${tool.name} - Free Online Tool`,
+    description: seoContent.metaDescription,
     path: `/tools/all/${slug}`,
   });
 }

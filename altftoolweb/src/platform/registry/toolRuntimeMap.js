@@ -134,6 +134,7 @@ export const toolRuntimeMap = {
   "rashi-finder": () => import("@/tools/rashi-finder/entry"),
   "readme-generator": () => import("@/tools/readme-generator/entry"),
   "regex-tester": () => import("@/tools/regex-tester/entry"),
+  "relationship-adviser": () => import("@/tools/relationship-adviser/entry"),
   "resume-maker": () => import("@/tools/resume-maker/entry"),
   "scientific-notation-calculator": () => import("@/tools/scientific-notation-calculator/entry"),
   "screen-recorder": () => import("@/tools/screen-recorder/entry"),

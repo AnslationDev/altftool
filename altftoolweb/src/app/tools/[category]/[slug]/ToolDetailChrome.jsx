@@ -8,6 +8,7 @@ import { useToolAds } from "@/ads/AdsProvider";
 import AdSidebar from "@/ads/layouts/shared/AdSidebar";
 import AdBottomBanner from "@/ads/layouts/shared/AdBottomBanner";
 import Icon from "@/shared/ui/Icon";
+import { buildToolSeoContent } from "../../toolSeoContent";
 
 function getRelatedTools(slug, tool, limit = 6) {
   if (!tool) return [];
@@ -90,6 +91,64 @@ function RelatedTools({ slug, tool }) {
   );
 }
 
+function ToolSeoContent({ slug, tool }) {
+  if (!tool) return null;
+
+  const seoContent = buildToolSeoContent(slug, tool);
+
+  return (
+    <section className="mx-auto mt-8 w-full max-w-6xl border-y border-(--border) py-6">
+      <div className="grid gap-6 lg:grid-cols-[0.9fr_1.1fr]">
+        <div>
+          <p className="text-xs font-bold uppercase tracking-wide text-(--primary)">Workflow guide</p>
+          <h2 className="mt-1 text-xl font-semibold text-(--foreground)">{seoContent.heading}</h2>
+          <p className="mt-3 text-sm leading-6 text-(--muted-foreground)">{seoContent.summary}</p>
+        </div>
+
+        <div className="grid gap-5 md:grid-cols-3">
+          <div>
+            <h3 className="text-sm font-semibold text-(--foreground)">Use cases</h3>
+            <div className="mt-3 space-y-3">
+              {seoContent.examples.map((example) => (
+                <div key={example.title} className="border-l border-(--border) pl-3">
+                  <p className="text-sm font-semibold text-(--foreground)">{example.title}</p>
+                  <p className="mt-1 text-xs leading-5 text-(--muted-foreground)">{example.body}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div>
+            <h3 className="text-sm font-semibold text-(--foreground)">Quick workflow</h3>
+            <ol className="mt-3 space-y-3">
+              {seoContent.steps.map((step, index) => (
+                <li key={step} className="flex gap-3 text-xs leading-5 text-(--muted-foreground)">
+                  <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-[6px] bg-(--muted) text-[11px] font-bold text-(--foreground)">
+                    {index + 1}
+                  </span>
+                  <span>{step}</span>
+                </li>
+              ))}
+            </ol>
+          </div>
+
+          <div>
+            <h3 className="text-sm font-semibold text-(--foreground)">FAQ</h3>
+            <div className="mt-3 space-y-3">
+              {seoContent.faqs.map((faq) => (
+                <div key={faq.question}>
+                  <p className="text-xs font-semibold leading-5 text-(--foreground)">{faq.question}</p>
+                  <p className="mt-1 text-xs leading-5 text-(--muted-foreground)">{faq.answer}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 export default function ToolDetailChrome({ slug, category = "all", children }) {
   const tool = toolMetaMap[slug];
   const toolCategories = getToolCategories(tool);
@@ -139,6 +198,8 @@ export default function ToolDetailChrome({ slug, category = "all", children }) {
           </nav>
 
           <div className="mx-auto w-full">{children}</div>
+
+          <ToolSeoContent slug={slug} tool={tool} />
 
           <RelatedTools slug={slug} tool={tool} />
 

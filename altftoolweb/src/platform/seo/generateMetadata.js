@@ -133,6 +133,49 @@ export function createToolJsonLd({ slug, tool, category = "all" } = {}) {
   };
 }
 
+export function createFaqJsonLd({ path, questions = [] } = {}) {
+  const mainEntity = questions
+    .filter((item) => item?.question && item?.answer)
+    .map((item) => ({
+      "@type": "Question",
+      name: item.question,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: item.answer,
+      },
+    }));
+
+  if (!path || !mainEntity.length) return null;
+
+  return {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "@id": `${absoluteUrl(path)}#faq`,
+    mainEntity,
+  };
+}
+
+export function createHowToJsonLd({ path, name, description, steps = [] } = {}) {
+  const stepItems = steps
+    .filter(Boolean)
+    .map((step, index) => ({
+      "@type": "HowToStep",
+      position: index + 1,
+      text: step,
+    }));
+
+  if (!path || !name || !stepItems.length) return null;
+
+  return {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    "@id": `${absoluteUrl(path)}#how-to`,
+    name,
+    description,
+    step: stepItems,
+  };
+}
+
 export function createBlogPostingJsonLd(blog) {
   if (!blog?.slug) return null;
 
