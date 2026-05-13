@@ -1,12 +1,94 @@
 "use client";
 
 import Link from "next/link";
-import { ChevronRight } from "lucide-react";
+import { ArrowRight, ChevronRight } from "lucide-react";
 import { toolMetaMap } from "@/platform/registry/toolMetaMap";
 import { formatCategoryLabel, getToolCategories } from "../../toolRouteUtils";
 import { useToolAds } from "@/ads/AdsProvider";
 import AdSidebar from "@/ads/layouts/shared/AdSidebar";
 import AdBottomBanner from "@/ads/layouts/shared/AdBottomBanner";
+import Icon from "@/shared/ui/Icon";
+
+function getRelatedTools(slug, tool, limit = 6) {
+  if (!tool) return [];
+
+  const currentCategories = getToolCategories(tool).map((item) => String(item).toLowerCase());
+  const currentWords = new Set(
+    `${slug} ${tool.name || ""} ${tool.description || ""}`
+      .toLowerCase()
+      .split(/[^a-z0-9]+/)
+      .filter((word) => word.length > 2)
+  );
+
+  return Object.entries(toolMetaMap)
+    .filter(([candidateSlug]) => candidateSlug !== slug)
+    .map(([candidateSlug, candidate]) => {
+      const candidateCategories = getToolCategories(candidate).map((item) => String(item).toLowerCase());
+      const categoryScore = candidateCategories.filter((item) => currentCategories.includes(item)).length * 12;
+      const candidateWords = `${candidateSlug} ${candidate.name || ""} ${candidate.description || ""}`
+        .toLowerCase()
+        .split(/[^a-z0-9]+/)
+        .filter((word) => word.length > 2);
+      const wordScore = candidateWords.reduce((score, word) => score + (currentWords.has(word) ? 2 : 0), 0);
+
+      return {
+        slug: candidateSlug,
+        tool: candidate,
+        score: categoryScore + wordScore,
+      };
+    })
+    .filter((item) => item.score > 0)
+    .sort((a, b) => b.score - a.score || String(a.tool.name || a.slug).localeCompare(String(b.tool.name || b.slug)))
+    .slice(0, limit);
+}
+
+function RelatedTools({ slug, tool }) {
+  const relatedTools = getRelatedTools(slug, tool);
+  if (!relatedTools.length) return null;
+
+  return (
+    <section className="mx-auto mt-8 w-full max-w-6xl">
+      <div className="mb-4 flex flex-col gap-1 sm:flex-row sm:items-end sm:justify-between">
+        <div>
+          <p className="text-xs font-bold uppercase tracking-wide text-(--primary)">Continue faster</p>
+          <h2 className="text-lg font-semibold text-(--foreground)">Related tools</h2>
+        </div>
+        <Link href="/tools/all" className="text-sm font-semibold text-(--muted-foreground) hover:text-(--primary)">
+          Explore all tools
+        </Link>
+      </div>
+      <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
+        {relatedTools.map(({ slug: relatedSlug, tool: relatedTool }) => (
+          <Link
+            key={relatedSlug}
+            href={`/tools/all/${relatedSlug}`}
+            className="group flex min-h-[112px] flex-col justify-between rounded-[8px] border border-(--border) bg-(--background) p-3 transition hover:border-(--primary) hover:shadow-sm"
+          >
+            <div className="flex gap-3">
+              <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-[7px] bg-(--muted)">
+                <Icon
+                  name={relatedTool.icon ?? "wrench"}
+                  className={`h-5 w-5 ${relatedTool.iconColor ?? "text-(--muted-foreground)"}`}
+                />
+              </div>
+              <div className="min-w-0">
+                <h3 className="truncate text-sm font-semibold text-(--foreground) group-hover:text-(--primary)">
+                  {relatedTool.name || formatCategoryLabel(relatedSlug)}
+                </h3>
+                <p className="mt-1 line-clamp-2 text-xs leading-5 text-(--muted-foreground)">
+                  {relatedTool.description || "Open a nearby utility for this workflow."}
+                </p>
+              </div>
+            </div>
+            <span className="mt-3 inline-flex items-center gap-1 text-xs font-semibold text-(--muted-foreground) group-hover:text-(--primary)">
+              Open <ArrowRight className="h-3.5 w-3.5" />
+            </span>
+          </Link>
+        ))}
+      </div>
+    </section>
+  );
+}
 
 export default function ToolDetailChrome({ slug, category = "all", children }) {
   const tool = toolMetaMap[slug];
@@ -57,6 +139,8 @@ export default function ToolDetailChrome({ slug, category = "all", children }) {
           </nav>
 
           <div className="mx-auto w-full">{children}</div>
+
+          <RelatedTools slug={slug} tool={tool} />
 
           {bottomAd?.content && (
             <div className="mt-8">

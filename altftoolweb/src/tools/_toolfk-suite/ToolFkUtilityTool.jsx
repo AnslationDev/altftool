@@ -363,6 +363,64 @@ const toolDefinitions = {
   },
 };
 
+const toolPresets = {
+  "text-to-base64": [
+    { label: "Short note", value: "AltFTool microtools are fast.", action: "textToBase64" },
+    { label: "URL token", value: "user=altftool&plan=pro", action: "textToBase64Url" },
+  ],
+  "base64-to-text": [
+    { label: "Plain text", value: "QWx0RlRvb2wgbWljcm90b29scw==", action: "base64ToText" },
+    { label: "Hex inspect", value: "SGVsbG8gQmFzZTY0", action: "base64ToHex" },
+  ],
+  "json-editor": [
+    { label: "API JSON", value: '{"name":"AltFTool","tools":["base64","json","csv"],"active":true}', action: "formatJson" },
+    { label: "JSON list", value: '[{"name":"Ada","role":"Engineer"},{"name":"Grace","role":"Scientist"}]', action: "jsonToCsv" },
+  ],
+  "yaml-formatter": [
+    { label: "Tool config", value: "name: AltFTool\nactive: true\ntools:\n- base64\n- json\n- csv", action: "formatYaml" },
+    { label: "Flat YAML", value: "title: Launch\nstatus: ready\ncount: 12", action: "yamlToJson" },
+  ],
+  "xml-editor": [
+    { label: "XML doc", value: "<root><tool name=\"AltFTool\"><type>utility</type></tool></root>", action: "formatXml" },
+    { label: "RSS item", value: "<item><title>New Tool</title><link>/tools/all</link></item>", action: "xmlTags" },
+  ],
+  "html-editor": [
+    { label: "Section", value: "<section><h1>AltFTool</h1><p>Fast online tools</p></section>", action: "formatHtml" },
+    { label: "Escape sample", value: "<button>Save & Continue</button>", action: "escapeHtml" },
+  ],
+  "css-tools": [
+    { label: "Card CSS", value: ".card{display:flex;color:#111;background:white}.card:hover{transform:translateY(-2px)}", action: "formatCss" },
+    { label: "Button CSS", value: ".btn { padding: 12px 16px; border-radius: 8px; color: white; background: #2563eb; }", action: "minifyCss" },
+  ],
+  "javascript-tools": [
+    { label: "Function", value: "function hello(name){const text='Hello '+name;return text.toUpperCase()}", action: "formatJs" },
+    { label: "Metrics", value: "const tools=['json','csv'];\nconst ready=tools.map((tool)=>tool.toUpperCase());", action: "countJs" },
+  ],
+  "sql-formatter-online": [
+    { label: "Select query", value: "select id,name,email from users where status='active' order by created_at desc", action: "formatSql" },
+    { label: "Join query", value: "select users.name,orders.total from users join orders on users.id=orders.user_id where orders.total>100", action: "formatSql" },
+  ],
+  "csv-converter": [
+    { label: "Users CSV", value: "name,email\nAda,ada@example.com\nGrace,grace@example.com", action: "csvToJson" },
+    { label: "Products CSV", value: "sku,title,price\nALT-1,JSON Tool,0\nALT-2,Base64 Tool,0", action: "csvToHtml" },
+  ],
+  "markdown-html-converter": [
+    { label: "Feature list", value: "# AltFTool\n\n- Fast tools\n- Clean output\n\n**Ready** to use.", action: "markdownToHtml" },
+    { label: "HTML text", value: "<h2>AltFTool</h2><p>Simple utilities for daily work.</p>", action: "htmlToText" },
+  ],
+  "curl-to-code-converter": [
+    { label: "POST JSON", value: "curl -X POST https://api.example.com/users -H 'Content-Type: application/json' -d '{\"name\":\"Ada\"}'", action: "curlToFetch" },
+    { label: "GET API", value: "curl https://api.example.com/tools -H 'Authorization: Bearer token'", action: "curlToPython" },
+  ],
+  "htaccess-to-nginx": [
+    { label: "Redirects", value: "RewriteRule ^old-page$ /new-page [R=301,L]\nRewriteRule ^blog/(.*)$ /posts/$1 [L]", action: "htaccessToNginx" },
+  ],
+  "text-encryptor": [
+    { label: "Private note", value: "Confidential launch note", action: "sha256" },
+    { label: "AES payload", value: "Message to encrypt locally", action: "aesEncrypt" },
+  ],
+};
+
 const actionLabels = {
   textToBase64: "Text -> Base64",
   base64ToText: "Base64 -> Text",
@@ -429,6 +487,12 @@ const morseMap = {
   5: ".....", 6: "-....", 7: "--...", 8: "---..", 9: "----.",
 };
 const reverseMorseMap = Object.fromEntries(Object.entries(morseMap).map(([key, value]) => [value, key]));
+
+function getExamples(slug, definition) {
+  if (toolPresets[slug]) return toolPresets[slug];
+  if (!definition.sample) return [];
+  return [{ label: "Example input", value: definition.sample, action: definition.actions?.[0] }];
+}
 
 function getSlugFromPath(pathname = "") {
   const parts = pathname.split("/").filter(Boolean);
@@ -984,9 +1048,10 @@ function CopyButton({ value }) {
   );
 }
 
-function TextTool({ definition }) {
+function TextTool({ definition, slug }) {
   const [input, setInput] = useState(definition.sample || "");
   const [action, setAction] = useState(definition.actions[0]);
+  const examples = getExamples(slug, definition);
   const result = useMemo(() => {
     try {
       return { output: outputForAction(action, input), error: "" };
@@ -997,17 +1062,29 @@ function TextTool({ definition }) {
 
   return (
     <div className="mt-4 grid gap-4 lg:grid-cols-2">
-      <WorkspaceInput value={input} onChange={setInput} actions={definition.actions} active={action} onAction={setAction} />
+      <WorkspaceInput
+        value={input}
+        onChange={setInput}
+        actions={definition.actions}
+        active={action}
+        onAction={setAction}
+        examples={examples}
+        onExample={(example) => {
+          setInput(example.value);
+          if (example.action) setAction(example.action);
+        }}
+      />
       <WorkspaceOutput value={result.output} error={result.error} />
     </div>
   );
 }
 
-function CryptoTool({ definition }) {
+function CryptoTool({ definition, slug }) {
   const [input, setInput] = useState(definition.sample || "");
   const [secret, setSecret] = useState("altftool-secret");
   const [output, setOutput] = useState("");
   const [error, setError] = useState("");
+  const examples = getExamples(slug, definition);
 
   async function run(action) {
     setError("");
@@ -1044,6 +1121,20 @@ function CryptoTool({ definition }) {
     <div className="mt-4 grid gap-4 lg:grid-cols-2">
       <section className="rounded-[8px] border border-(--border) bg-(--card) p-4">
         <label className="text-xs font-bold uppercase tracking-wide text-(--muted-foreground)">Input</label>
+        {examples.length > 0 && (
+          <div className="mt-3 flex flex-wrap gap-2">
+            {examples.map((example) => (
+              <button
+                key={example.label}
+                type="button"
+                onClick={() => setInput(example.value)}
+                className="rounded-[7px] border border-(--border) bg-(--background) px-2.5 py-1.5 text-xs font-semibold text-(--muted-foreground) hover:border-(--primary) hover:text-(--foreground)"
+              >
+                {example.label}
+              </button>
+            ))}
+          </div>
+        )}
         <textarea value={input} onChange={(e) => setInput(e.target.value)} className="mt-3 min-h-[300px] w-full rounded-[8px] border border-(--border) bg-(--background) p-3 font-mono text-sm outline-none focus:border-(--primary)" />
         <input value={secret} onChange={(e) => setSecret(e.target.value)} className="mt-3 w-full rounded-[8px] border border-(--border) bg-(--background) px-3 py-2 text-sm outline-none focus:border-(--primary)" placeholder="Passphrase for AES" />
         <div className="mt-3 flex flex-wrap gap-2">
@@ -1055,7 +1146,7 @@ function CryptoTool({ definition }) {
   );
 }
 
-function WorkspaceInput({ value, onChange, actions, active, onAction }) {
+function WorkspaceInput({ value, onChange, actions, active, onAction, examples = [], onExample }) {
   return (
     <section className="rounded-[8px] border border-(--border) bg-(--card) p-4">
       <div className="flex items-center justify-between gap-3">
@@ -1064,6 +1155,20 @@ function WorkspaceInput({ value, onChange, actions, active, onAction }) {
           Clear
         </button>
       </div>
+      {examples.length > 0 && (
+        <div className="mt-3 flex flex-wrap gap-2">
+          {examples.map((example) => (
+            <button
+              key={example.label}
+              type="button"
+              onClick={() => onExample?.(example)}
+              className="rounded-[7px] border border-(--border) bg-(--background) px-2.5 py-1.5 text-xs font-semibold text-(--muted-foreground) hover:border-(--primary) hover:text-(--foreground)"
+            >
+              {example.label}
+            </button>
+          ))}
+        </div>
+      )}
       <textarea
         value={value}
         onChange={(e) => onChange(e.target.value)}
@@ -1192,6 +1297,11 @@ function Base64ToFileTool({ definition }) {
 function BaseConverterTool() {
   const [value, setValue] = useState("255");
   const [from, setFrom] = useState(10);
+  const presets = [
+    { label: "Decimal 255", value: "255", base: 10 },
+    { label: "Binary byte", value: "11111111", base: 2 },
+    { label: "Hex color", value: "FF5733", base: 16 },
+  ];
   const number = parseInt(value || "0", Number(from));
   const output = Number.isFinite(number) ? {
     binary: number.toString(2),
@@ -1203,6 +1313,21 @@ function BaseConverterTool() {
 
   return (
     <div className="mt-4 rounded-[8px] border border-(--border) bg-(--card) p-4">
+      <div className="mb-3 flex flex-wrap gap-2">
+        {presets.map((preset) => (
+          <button
+            key={preset.label}
+            type="button"
+            onClick={() => {
+              setValue(preset.value);
+              setFrom(preset.base);
+            }}
+            className="rounded-[7px] border border-(--border) bg-(--background) px-2.5 py-1.5 text-xs font-semibold text-(--muted-foreground) hover:border-(--primary) hover:text-(--foreground)"
+          >
+            {preset.label}
+          </button>
+        ))}
+      </div>
       <div className="grid gap-3 sm:grid-cols-[1fr_160px]">
         <input value={value} onChange={(e) => setValue(e.target.value)} className="rounded-[8px] border border-(--border) bg-(--background) px-3 py-3 font-mono text-sm outline-none focus:border-(--primary)" />
         <select value={from} onChange={(e) => setFrom(Number(e.target.value))} className="rounded-[8px] border border-(--border) bg-(--background) px-3 py-3 text-sm outline-none focus:border-(--primary)">
@@ -1223,6 +1348,11 @@ function BaseConverterTool() {
 
 function ByteConverterTool() {
   const [bytes, setBytes] = useState("1048576");
+  const presets = [
+    { label: "1 MiB", value: "1048576" },
+    { label: "5 MB", value: "5000000" },
+    { label: "1 GB", value: "1000000000" },
+  ];
   const value = Number(bytes) || 0;
   const units = {
     bits: value * 8,
@@ -1237,6 +1367,18 @@ function ByteConverterTool() {
 
   return (
     <div className="mt-4 rounded-[8px] border border-(--border) bg-(--card) p-4">
+      <div className="mb-3 flex flex-wrap gap-2">
+        {presets.map((preset) => (
+          <button
+            key={preset.label}
+            type="button"
+            onClick={() => setBytes(preset.value)}
+            className="rounded-[7px] border border-(--border) bg-(--background) px-2.5 py-1.5 text-xs font-semibold text-(--muted-foreground) hover:border-(--primary) hover:text-(--foreground)"
+          >
+            {preset.label}
+          </button>
+        ))}
+      </div>
       <input value={bytes} onChange={(e) => setBytes(e.target.value)} className="w-full rounded-[8px] border border-(--border) bg-(--background) px-3 py-3 font-mono text-sm outline-none focus:border-(--primary)" />
       <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
         {Object.entries(units).map(([key, item]) => (
@@ -1252,6 +1394,11 @@ function ByteConverterTool() {
 
 function CronEvaluatorTool({ definition }) {
   const [expression, setExpression] = useState(definition.sample);
+  const presets = [
+    { label: "Every 15 min weekdays", value: "*/15 9-17 * * 1-5" },
+    { label: "Daily 9 AM", value: "0 9 * * *" },
+    { label: "Monday report", value: "30 8 * * 1" },
+  ];
   const result = useMemo(() => {
     try {
       return {
@@ -1267,6 +1414,18 @@ function CronEvaluatorTool({ definition }) {
     <div className="mt-4 grid gap-4 lg:grid-cols-[0.45fr_0.55fr]">
       <section className="rounded-[8px] border border-(--border) bg-(--card) p-4">
         <label className="text-xs font-bold uppercase tracking-wide text-(--muted-foreground)">Crontab Expression</label>
+        <div className="mt-3 flex flex-wrap gap-2">
+          {presets.map((preset) => (
+            <button
+              key={preset.label}
+              type="button"
+              onClick={() => setExpression(preset.value)}
+              className="rounded-[7px] border border-(--border) bg-(--background) px-2.5 py-1.5 text-xs font-semibold text-(--muted-foreground) hover:border-(--primary) hover:text-(--foreground)"
+            >
+              {preset.label}
+            </button>
+          ))}
+        </div>
         <input
           value={expression}
           onChange={(e) => setExpression(e.target.value)}
@@ -1287,6 +1446,11 @@ function CronEvaluatorTool({ definition }) {
 
 function ScientificNotationTool() {
   const [value, setValue] = useState("123456789");
+  const presets = [
+    { label: "Large number", value: "123456789" },
+    { label: "Tiny decimal", value: "0.00000042" },
+    { label: "Avogadro", value: "602214076000000000000000" },
+  ];
   const number = Number(value);
   const valid = Number.isFinite(number);
   const exponent = valid && number !== 0 ? Math.floor(Math.log10(Math.abs(number))) : 0;
@@ -1302,6 +1466,18 @@ function ScientificNotationTool() {
 
   return (
     <div className="mt-4 rounded-[8px] border border-(--border) bg-(--card) p-4">
+      <div className="mb-3 flex flex-wrap gap-2">
+        {presets.map((preset) => (
+          <button
+            key={preset.label}
+            type="button"
+            onClick={() => setValue(preset.value)}
+            className="rounded-[7px] border border-(--border) bg-(--background) px-2.5 py-1.5 text-xs font-semibold text-(--muted-foreground) hover:border-(--primary) hover:text-(--foreground)"
+          >
+            {preset.label}
+          </button>
+        ))}
+      </div>
       <input
         value={value}
         onChange={(e) => setValue(e.target.value)}
@@ -1324,6 +1500,18 @@ function ScientificNotationTool() {
 function TextDiffTool() {
   const [left, setLeft] = useState("AltFTool\nJSON Editor\nBase64 Tools");
   const [right, setRight] = useState("AltFTool\nJSON Editor Pro\nBase64 Tools\nYAML Formatter");
+  const presets = [
+    {
+      label: "Tool list",
+      left: "AltFTool\nJSON Editor\nBase64 Tools",
+      right: "AltFTool\nJSON Editor Pro\nBase64 Tools\nYAML Formatter",
+    },
+    {
+      label: "Config change",
+      left: "cache: false\nregion: us\nretries: 1",
+      right: "cache: true\nregion: us\nretries: 3",
+    },
+  ];
   const diff = useMemo(() => {
     const leftLines = left.split("\n");
     const rightLines = right.split("\n");
@@ -1346,6 +1534,21 @@ function TextDiffTool() {
 
   return (
     <div className="mt-4 grid gap-4">
+      <div className="flex flex-wrap gap-2 rounded-[8px] border border-(--border) bg-(--card) p-3">
+        {presets.map((preset) => (
+          <button
+            key={preset.label}
+            type="button"
+            onClick={() => {
+              setLeft(preset.left);
+              setRight(preset.right);
+            }}
+            className="rounded-[7px] border border-(--border) bg-(--background) px-2.5 py-1.5 text-xs font-semibold text-(--muted-foreground) hover:border-(--primary) hover:text-(--foreground)"
+          >
+            {preset.label}
+          </button>
+        ))}
+      </div>
       <div className="grid gap-4 lg:grid-cols-2">
         <section className="rounded-[8px] border border-(--border) bg-(--card) p-4">
           <label className="text-xs font-bold uppercase tracking-wide text-(--muted-foreground)">Original</label>
@@ -1422,8 +1625,8 @@ export default function ToolFkUtilityTool() {
   const definition = toolDefinitions[slug] || toolDefinitions["text-to-base64"];
 
   let content = null;
-  if (["text", "code"].includes(definition.mode)) content = <TextTool definition={definition} />;
-  if (definition.mode === "crypto") content = <CryptoTool definition={definition} />;
+  if (["text", "code"].includes(definition.mode)) content = <TextTool definition={definition} slug={slug} />;
+  if (definition.mode === "crypto") content = <CryptoTool definition={definition} slug={slug} />;
   if (definition.mode === "fileToBase64") content = <FileToBase64Tool definition={definition} />;
   if (definition.mode === "base64ToFile") content = <Base64ToFileTool definition={definition} />;
   if (definition.mode === "base") content = <BaseConverterTool />;
