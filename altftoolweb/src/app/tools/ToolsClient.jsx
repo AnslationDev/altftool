@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useMemo, useState, useSyncExternalStore } from "react";
-import { ChevronDown, Layers3, Search, Sparkles, Wrench } from "lucide-react";
+import { ChevronDown, History, Layers3, Search, Sparkles, Star, Wrench } from "lucide-react";
 import Icon from "@/shared/ui/Icon";
 import CTAButton from "@/shared/ui/CTAButton";
 import { useAds } from "@/ads/AdsProvider";
@@ -11,6 +11,10 @@ import AdPairRow from "@/ads/layouts/tools/AdToolPairRow";
 import { usePathname, useRouter } from "next/navigation";
 
 const ITEMS_PER_PAGE = 24;
+const FAVORITES_STORAGE_KEY = "ALTFT_TOOL_FAVORITES_V1";
+const RECENT_TOOLS_STORAGE_KEY = "ALTFT_RECENT_TOOLS_V1";
+const TOOL_STORAGE_EVENT = "altftool-tools-storage";
+const RECENT_LIMIT = 12;
 const LABEL_OVERRIDES = {
   ai: "AI",
   api: "API",
@@ -40,6 +44,23 @@ const QUICK_TOOL_SLUGS = [
   "crontab-evaluator",
   "text-diff-tool",
 ];
+const SEARCH_ALIASES = {
+  code: ["developer", "json", "html", "css", "javascript", "sql", "regex"],
+  compare: ["diff", "checker", "merge"],
+  convert: ["converter", "encode", "decode", "base64", "format"],
+  decode: ["decoder", "base64", "url", "jwt"],
+  dev: ["developer", "api", "code", "json"],
+  encode: ["encoder", "base64", "url", "escape"],
+  image: ["photo", "png", "jpg", "jpeg", "svg", "compress", "resize"],
+  schedule: ["cron", "crontab", "time"],
+  secure: ["password", "hash", "encrypt", "jwt"],
+  text: ["case", "diff", "markdown", "word", "character"],
+};
+const VIEW_MODES = [
+  { id: "all", label: "All" },
+  { id: "favorites", label: "Saved" },
+  { id: "recent", label: "Recent" },
+];
 
 const slugify = (str) => String(str).toLowerCase().replace(/\s+/g, "-");
 const formatLabel = (str) =>
@@ -54,6 +75,70 @@ const getToolCategories = (tool) =>
   Array.isArray(tool?.category)
     ? tool.category.map((item) => slugify(item))
     : [slugify(tool?.category || "")].filter(Boolean);
+
+const readStoredSlugs = (key) => {
+  if (typeof window === "undefined") return [];
+
+  try {
+    const parsed = JSON.parse(window.localStorage.getItem(key) || "[]");
+    return Array.isArray(parsed) ? parsed.filter((item) => typeof item === "string") : [];
+  } catch {
+    return [];
+  }
+};
+
+const writeStoredSlugs = (key, value) => {
+  if (typeof window === "undefined") return;
+  window.localStorage.setItem(key, JSON.stringify(value));
+  window.dispatchEvent(new Event(TOOL_STORAGE_EVENT));
+};
+
+const subscribeToToolStorage = (callback) => {
+  if (typeof window === "undefined") return () => {};
+
+  window.addEventListener("storage", callback);
+  window.addEventListener(TOOL_STORAGE_EVENT, callback);
+  return () => {
+    window.removeEventListener("storage", callback);
+    window.removeEventListener(TOOL_STORAGE_EVENT, callback);
+  };
+};
+
+const createStorageSnapshot = (key) => () => readStoredSlugs(key).join("\n");
+const getFavoriteStorageSnapshot = createStorageSnapshot(FAVORITES_STORAGE_KEY);
+const getRecentStorageSnapshot = createStorageSnapshot(RECENT_TOOLS_STORAGE_KEY);
+
+const getSearchTokens = (query) => {
+  const base = query.toLowerCase().split(/[^a-z0-9]+/).filter(Boolean);
+  return [...new Set(base.flatMap((token) => [token, ...(SEARCH_ALIASES[token] || [])]))];
+};
+
+const getSearchScore = (slug, tool, tokens, rawQuery) => {
+  if (!tokens.length) return 1;
+
+  const name = tool.name?.toLowerCase() || "";
+  const description = tool.description?.toLowerCase() || "";
+  const categories = getToolCategories(tool);
+  const slugText = slug.replace(/-/g, " ");
+  const haystack = `${slugText} ${name} ${description} ${categories.join(" ")}`;
+  let score = 0;
+
+  if (name === rawQuery || slugText === rawQuery) score += 150;
+  if (name.startsWith(rawQuery) || slugText.startsWith(rawQuery)) score += 80;
+  if (name.includes(rawQuery)) score += 48;
+  if (slugText.includes(rawQuery)) score += 44;
+
+  tokens.forEach((token) => {
+    if (name.split(/\s+/).includes(token)) score += 28;
+    else if (name.includes(token)) score += 20;
+    if (slugText.includes(token)) score += 18;
+    if (categories.some((cat) => cat.includes(token))) score += 14;
+    if (description.includes(token)) score += 6;
+    if (haystack.includes(token)) score += 2;
+  });
+
+  return score;
+};
 
 const getInitialCategory = (category) => {
   if (category) return slugify(category);
@@ -106,6 +191,17 @@ function ToolsGridSkeleton() {
 export default function ToolsClient({ meta = {}, category }) {
   const slugs = useMemo(() => Object.keys(meta), [meta]);
   const [search, setSearch] = useState("");
+  const [viewMode, setViewMode] = useState("all");
+  const favoriteSnapshot = useSyncExternalStore(
+    subscribeToToolStorage,
+    getFavoriteStorageSnapshot,
+    () => ""
+  );
+  const recentSnapshot = useSyncExternalStore(
+    subscribeToToolStorage,
+    getRecentStorageSnapshot,
+    () => ""
+  );
   const device = useSyncExternalStore(
     subscribeToDevice,
     getDeviceSnapshot,
@@ -117,6 +213,16 @@ export default function ToolsClient({ meta = {}, category }) {
     getInitialCategory(category)
   );
   const categoryname = category ? slugify(category) : selectedCategory;
+  const favoriteSlugs = useMemo(
+    () => favoriteSnapshot.split("\n").filter((slug) => meta[slug]),
+    [favoriteSnapshot, meta]
+  );
+  const recentSlugs = useMemo(
+    () => recentSnapshot.split("\n").filter((slug) => meta[slug]),
+    [meta, recentSnapshot]
+  );
+  const favoriteSet = useMemo(() => new Set(favoriteSlugs), [favoriteSlugs]);
+  const recentSet = useMemo(() => new Set(recentSlugs), [recentSlugs]);
 
   // Ads setup
   const toolAds = useAds({ placement: "tools_listing", layout: "tool_card", device });
@@ -152,37 +258,68 @@ export default function ToolsClient({ meta = {}, category }) {
     () => QUICK_TOOL_SLUGS.filter((slug) => meta[slug]).map((slug) => [slug, meta[slug]]),
     [meta]
   );
+  const viewModeStats = useMemo(() => ({
+    all: slugs.length,
+    favorites: favoriteSlugs.filter((slug) => meta[slug]).length,
+    recent: recentSlugs.filter((slug) => meta[slug]).length,
+  }), [favoriteSlugs, meta, recentSlugs, slugs.length]);
 
   // Filter tools based on category and search
   const filteredSlugs = useMemo(() => {
     const query = search.toLowerCase().trim();
-    return slugs.filter((slug) => {
+    const tokens = getSearchTokens(query);
+    const baseSlugs = viewMode === "recent" ? recentSlugs.filter((slug) => meta[slug]) : slugs;
+    const ranked = [];
+
+    baseSlugs.forEach((slug, index) => {
       const tool = meta[slug];
-      if (!tool) return false;
+      if (!tool) return;
 
       const toolCategories = getToolCategories(tool);
-
       const matchesCategory = categoryname === "all" || toolCategories.includes(categoryname);
-      const matchesSearch =
-        !query ||
-        slug.replace(/-/g, " ").toLowerCase().includes(query) ||
-        tool.name?.toLowerCase().includes(query) ||
-        tool.description?.toLowerCase().includes(query) ||
-        toolCategories.some((cat) => cat.includes(query));
+      const matchesCollection =
+        viewMode === "all" ||
+        (viewMode === "favorites" && favoriteSet.has(slug)) ||
+        (viewMode === "recent" && recentSet.has(slug));
+      const score = getSearchScore(slug, tool, tokens, query);
 
-      return matchesCategory && matchesSearch;
+      if (matchesCategory && matchesCollection && (!tokens.length || score > 0)) {
+        ranked.push({ slug, score, index });
+      }
     });
-  }, [slugs, meta, categoryname, search]);
+
+    if (!tokens.length && viewMode === "recent") return ranked.map((item) => item.slug);
+    if (!tokens.length) return ranked.sort((a, b) => a.index - b.index).map((item) => item.slug);
+
+    return ranked.sort((a, b) => b.score - a.score || a.index - b.index).map((item) => item.slug);
+  }, [categoryname, favoriteSet, meta, recentSet, recentSlugs, search, slugs, viewMode]);
 
   const [visibleCount, setVisibleCount] = useState(ITEMS_PER_PAGE);
 
-  const visibleSlugs = injectAds(
-    filteredSlugs.slice(0, visibleCount),
-    toolAds,
-    toolAds[0]?.interval || 6
-  );
+  const visibleSlugs =
+    viewMode === "all" && !search.trim()
+      ? injectAds(
+          filteredSlugs.slice(0, visibleCount),
+          toolAds,
+          toolAds[0]?.interval || 6
+        )
+      : filteredSlugs.slice(0, visibleCount);
 
   const hasMore = visibleCount < filteredSlugs.length;
+
+  const rememberTool = (slug) => {
+    const next = [slug, ...recentSlugs.filter((item) => item !== slug)]
+      .filter((item) => meta[item])
+      .slice(0, RECENT_LIMIT);
+    writeStoredSlugs(RECENT_TOOLS_STORAGE_KEY, next);
+  };
+
+  const toggleFavorite = (slug) => {
+    const next = favoriteSlugs.includes(slug)
+      ? favoriteSlugs.filter((item) => item !== slug)
+      : [slug, ...favoriteSlugs].filter((item) => meta[item]);
+    writeStoredSlugs(FAVORITES_STORAGE_KEY, next);
+  };
 
   // Handle category click (updates URL without reload)
   const handleCategoryClick = (cat) => {
@@ -214,6 +351,8 @@ export default function ToolsClient({ meta = {}, category }) {
     handleCategoryClick(cat);
     setOpen(false);
   };
+  const toolsHeading =
+    viewMode === "favorites" ? "Saved Tools" : viewMode === "recent" ? "Recent Tools" : "Explore Tools";
 
 
 
@@ -257,9 +396,38 @@ export default function ToolsClient({ meta = {}, category }) {
                 type="text"
                 placeholder="Select directly or search tools, converters, code utilities..."
                 value={search}
-                onChange={(e) => setSearch(e.target.value)}
+                onChange={(e) => {
+                  setSearch(e.target.value);
+                  setVisibleCount(ITEMS_PER_PAGE);
+                }}
                 className="h-12 w-full rounded-[8px] border border-[var(--border)] bg-[var(--background)] px-11 text-sm placeholder:text-(--input-placeholder) transition focus:outline-none focus:ring-1 focus:ring-[var(--primary)]"
               />
+            </div>
+            <div className="flex flex-wrap gap-2">
+              {VIEW_MODES.map((mode) => {
+                const IconComponent = mode.id === "favorites" ? Star : mode.id === "recent" ? History : Sparkles;
+                return (
+                  <button
+                    key={mode.id}
+                    type="button"
+                    onClick={() => {
+                      setViewMode(mode.id);
+                      setVisibleCount(ITEMS_PER_PAGE);
+                    }}
+                    className={`inline-flex items-center gap-2 rounded-[7px] border px-3 py-2 text-xs font-semibold transition ${
+                      viewMode === mode.id
+                        ? "border-(--primary) bg-(--primary) text-(--primary-foreground)"
+                        : "border-(--border) bg-(--background) text-(--muted-foreground) hover:border-(--primary) hover:text-(--foreground)"
+                    }`}
+                  >
+                    <IconComponent className="h-3.5 w-3.5" />
+                    {mode.label}
+                    <span className={viewMode === mode.id ? "text-white/80" : "text-(--muted-foreground)"}>
+                      {viewModeStats[mode.id]}
+                    </span>
+                  </button>
+                );
+              })}
             </div>
             <div className="flex flex-wrap gap-2">
               {featuredCategories.map((cat) => (
@@ -285,6 +453,7 @@ export default function ToolsClient({ meta = {}, category }) {
                 <Link
                   key={slug}
                   href={`/tools/all/${slug}`}
+                  onClick={() => rememberTool(slug)}
                   className="rounded-[7px] border border-(--border) bg-(--background) px-3 py-1.5 text-xs font-semibold text-(--muted-foreground) transition hover:border-(--primary) hover:text-(--foreground)"
                 >
                   {tool.name}
@@ -354,7 +523,7 @@ export default function ToolsClient({ meta = {}, category }) {
         <section className="flex flex-col items-center justify-start">
           <div className="mb-4 flex w-full flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
             <h2 className="flex items-center gap-3 text-xl font-semibold">
-              Explore Tools
+              {toolsHeading}
               <span className="rounded-full bg-[var(--card)] px-2.5 py-0.5 text-sm font-semibold text-[var(--color-muted-foreground)]">
                 {filteredSlugs.length}
               </span>
@@ -371,9 +540,15 @@ export default function ToolsClient({ meta = {}, category }) {
               <div className="mx-auto mb-4 h-12 w-12 rounded-full bg-[var(--color-muted)] flex items-center justify-center">
                 <Wrench className="h-6 w-6 text-[var(--color-muted-foreground)]" />
               </div>
-              <h3 className="text-xl font-semibold mb-2">No tools found</h3>
+              <h3 className="text-xl font-semibold mb-2">
+                {viewMode === "favorites" ? "No saved tools yet" : viewMode === "recent" ? "No recent tools yet" : "No tools found"}
+              </h3>
               <p className="text-sm text-[var(--muted-foreground)]">
-                Try a different keyword or category.
+                {viewMode === "favorites"
+                  ? "Save tools from the catalog to build a quick personal toolbox."
+                  : viewMode === "recent"
+                    ? "Open a tool once and it will appear here automatically."
+                    : "Try a different keyword or category."}
               </p>
             </div>
           ) : (
@@ -393,11 +568,12 @@ export default function ToolsClient({ meta = {}, category }) {
                   const name =
                     tool.name ||
                     slug.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
+                  const isFavorite = favoriteSet.has(slug);
+                  const href = `/tools/${categoryname}/${slug}`;
 
                   return (
-                    <Link
+                    <article
                       key={slug}
-                      href={`/tools/${categoryname}/${slug}`}
                       className="group relative flex min-h-[136px] flex-col justify-between rounded-[8px] border border-[var(--border)] bg-[var(--card)] p-3 transition-all duration-200 hover:-translate-y-0.5 hover:border-[var(--color-primary)] hover:bg-[var(--card-hover-bg)] hover:shadow-md focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)/40]"
                     >
                       <div className="flex gap-3">
@@ -408,14 +584,31 @@ export default function ToolsClient({ meta = {}, category }) {
                           />
                         </div>
 
-                        <div className="min-w-0 flex-1">
+                        <Link
+                          href={href}
+                          onClick={() => rememberTool(slug)}
+                          className="min-w-0 flex-1 focus:outline-none"
+                        >
                           <h3 className="truncate text-sm font-semibold leading-tight transition group-hover:text-[var(--color-primary)]">
                             {name}
                           </h3>
                           <p className="mt-1 line-clamp-2 text-xs leading-5 text-[var(--color-muted-foreground)]">
                             {tool.description || "No description available."}
                           </p>
-                        </div>
+                        </Link>
+                        <button
+                          type="button"
+                          aria-pressed={isFavorite}
+                          aria-label={`${isFavorite ? "Remove" : "Save"} ${name}`}
+                          onClick={() => toggleFavorite(slug)}
+                          className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-[7px] border transition ${
+                            isFavorite
+                              ? "border-(--primary) bg-(--primary) text-(--primary-foreground)"
+                              : "border-(--border) bg-(--background) text-(--muted-foreground) hover:border-(--primary) hover:text-(--foreground)"
+                          }`}
+                        >
+                          <Star className={`h-4 w-4 ${isFavorite ? "fill-current" : ""}`} />
+                        </button>
                       </div>
 
                       <div className="mt-4 flex items-center justify-between gap-3">
@@ -434,12 +627,16 @@ export default function ToolsClient({ meta = {}, category }) {
                           </div>
                         )}
 
-                        <span className="inline-flex shrink-0 items-center gap-1 text-xs font-semibold text-[var(--color-muted-foreground)] group-hover:text-[var(--color-primary)]">
+                        <Link
+                          href={href}
+                          onClick={() => rememberTool(slug)}
+                          className="inline-flex shrink-0 items-center gap-1 text-xs font-semibold text-[var(--color-muted-foreground)] group-hover:text-[var(--color-primary)]"
+                        >
                           Open
                           <span className="group-hover:translate-x-1 transition-transform">→</span>
-                        </span>
+                        </Link>
                       </div>
-                    </Link>
+                    </article>
                   );
                 })}
               </div>
