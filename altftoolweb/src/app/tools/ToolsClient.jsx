@@ -8,14 +8,52 @@ import CTAButton from "@/shared/ui/CTAButton";
 import { useAds } from "@/ads/AdsProvider";
 import { injectAds } from "@/ads/adInjector";
 import AdPairRow from "@/ads/layouts/tools/AdToolPairRow";
-import CapabilitySlider from "../tools/CapabilitySlider";
 import { usePathname, useRouter } from "next/navigation";
 
-const ITEMS_PER_PAGE = 16;
+const ITEMS_PER_PAGE = 24;
+const LABEL_OVERRIDES = {
+  ai: "AI",
+  api: "API",
+  css: "CSS",
+  csv: "CSV",
+  devops: "DevOps",
+  html: "HTML",
+  js: "JS",
+  json: "JSON",
+  pdf: "PDF",
+  sql: "SQL",
+  svg: "SVG",
+  url: "URL",
+  yaml: "YAML",
+};
+const QUICK_TOOL_SLUGS = [
+  "json-editor",
+  "text-to-base64",
+  "base64-to-image",
+  "pdf-to-base64",
+  "curl-to-code-converter",
+  "yaml-formatter",
+  "regex-tester",
+  "qr-generator",
+  "password-generator",
+  "image-to-base64",
+  "crontab-evaluator",
+  "text-diff-tool",
+];
 
 const slugify = (str) => String(str).toLowerCase().replace(/\s+/g, "-");
 const formatLabel = (str) =>
-  String(str).replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
+  String(str)
+    .replace(/[_-]/g, " ")
+    .split(/\s+/)
+    .filter(Boolean)
+    .map((part) => LABEL_OVERRIDES[part.toLowerCase()] || part.replace(/\b\w/g, (c) => c.toUpperCase()))
+    .join(" ");
+
+const getToolCategories = (tool) =>
+  Array.isArray(tool?.category)
+    ? tool.category.map((item) => slugify(item))
+    : [slugify(tool?.category || "")].filter(Boolean);
 
 const getInitialCategory = (category) => {
   if (category) return slugify(category);
@@ -95,11 +133,25 @@ export default function ToolsClient({ meta = {}, category }) {
     });
     return Array.from(set);
   }, [meta]);
+  const categoryStats = useMemo(() => {
+    return categories.map((cat) => {
+      const slug = slugify(cat);
+      const count =
+        slug === "all"
+          ? slugs.length
+          : slugs.filter((toolSlug) => getToolCategories(meta[toolSlug]).includes(slug)).length;
+      return { slug, label: formatLabel(cat), count };
+    });
+  }, [categories, meta, slugs]);
   const categoryCount = Math.max(categories.length - 1, 0);
   const featuredCategories = useMemo(() => {
-    const preferred = ["all", "converter", "developer", "pdf", "media", "data", "web", "calculator"];
+    const preferred = ["all", "converter", "developer", "pdf", "media", "data", "web", "calculator", "network", "image"];
     return preferred.filter((item) => categories.includes(item));
   }, [categories]);
+  const quickTools = useMemo(
+    () => QUICK_TOOL_SLUGS.filter((slug) => meta[slug]).map((slug) => [slug, meta[slug]]),
+    [meta]
+  );
 
   // Filter tools based on category and search
   const filteredSlugs = useMemo(() => {
@@ -108,15 +160,15 @@ export default function ToolsClient({ meta = {}, category }) {
       const tool = meta[slug];
       if (!tool) return false;
 
-      const toolCategories = Array.isArray(tool.category)
-        ? tool.category.map((c) => slugify(c))
-        : [slugify(tool.category || "")];
+      const toolCategories = getToolCategories(tool);
 
       const matchesCategory = categoryname === "all" || toolCategories.includes(categoryname);
       const matchesSearch =
         !query ||
         slug.replace(/-/g, " ").toLowerCase().includes(query) ||
-        tool.name?.toLowerCase().includes(query);
+        tool.name?.toLowerCase().includes(query) ||
+        tool.description?.toLowerCase().includes(query) ||
+        toolCategories.some((cat) => cat.includes(query));
 
       return matchesCategory && matchesSearch;
     });
@@ -167,72 +219,87 @@ export default function ToolsClient({ meta = {}, category }) {
 
 
   return (
-    <div className="">
-      {/* HERO */}
-      <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:py-10">
-        <div className="rounded-[8px] border border-(--border) bg-(--card) p-4 shadow-[var(--anslation-ds-shadow-sm)] sm:p-6 lg:p-7">
-          <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_360px] lg:items-end">
+    <div className="bg-(--background)">
+      {/* DIRECTORY HEADER */}
+      <div className="border-b border-(--border) bg-(--card)">
+        <div className="mx-auto max-w-7xl px-4 py-5 sm:px-6 lg:px-8">
+          <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
             <div>
-              <div className="mb-3 inline-flex items-center gap-2 rounded-[6px] border border-(--border) bg-(--background) px-3 py-1.5 text-xs font-semibold uppercase tracking-wide text-(--muted-foreground)">
-                <Sparkles className="h-3.5 w-3.5 text-(--primary)" />
-                Microtool directory
+              <div className="mb-2 inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wide text-(--primary)">
+                <Sparkles className="h-3.5 w-3.5" />
+                ToolFK-style microtool directory
               </div>
-              <h1 className="text-3xl font-semibold tracking-normal text-(--foreground) sm:text-4xl lg:text-5xl">
-                Think Less, Do More
+              <h1 className="text-3xl font-semibold tracking-normal text-(--foreground) sm:text-4xl">
+                All Online Tools
               </h1>
-              <p className="mt-3 max-w-2xl text-sm leading-6 text-(--muted-foreground) sm:text-base">
-                Search a dense ToolFK-inspired catalog of converters, developer utilities,
-                calculators, PDF helpers, media tools, and browser-safe microtools.
+              <p className="mt-2 max-w-2xl text-sm leading-6 text-(--muted-foreground)">
+                Fast converters, developer helpers, PDF tools, media utilities, and browser-safe microtools in one compact workspace.
               </p>
             </div>
-            <div className="grid grid-cols-3 gap-2">
+            <div className="grid grid-cols-3 gap-2 sm:w-[360px]">
               {[
                 ["Tools", slugs.length],
                 ["Categories", categoryCount],
-                ["Per page", ITEMS_PER_PAGE],
+                ["Showing", filteredSlugs.length],
               ].map(([label, value]) => (
-                <div key={label} className="rounded-[8px] border border-(--border) bg-(--background) p-3 text-center">
-                  <p className="text-xl font-semibold text-(--foreground)">{value}</p>
-                  <p className="mt-1 text-[11px] font-bold uppercase tracking-wide text-(--muted-foreground)">{label}</p>
+                <div key={label} className="rounded-[8px] border border-(--border) bg-(--background) px-3 py-2 text-center">
+                  <p className="text-lg font-semibold text-(--foreground)">{value}</p>
+                  <p className="mt-0.5 text-[10px] font-bold uppercase tracking-wide text-(--muted-foreground)">{label}</p>
                 </div>
               ))}
             </div>
           </div>
-        </div>
-        <CapabilitySlider />
-        <div className="relative mt-6 max-w-2xl mx-auto animate-fade-up">
-          <Search className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-(--muted-foreground)" />
-          <input
-            type="text"
-            placeholder="Search tools, converters, code utilities..."
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            className="w-full rounded-[8px] border border-[var(--border)] bg-[var(--card)] px-11 py-3 placeholder:text-(--input-placeholder) focus:outline-none focus:ring-1 focus:ring-[var(--primary)] transition"
-          />
-        </div>
-        <div className="mt-4 flex flex-wrap justify-center gap-2">
-          {featuredCategories.map((cat) => (
-            <button
-              key={cat}
-              type="button"
-              onClick={() => handleCategoryClick(cat)}
-              className={`rounded-[7px] border px-3 py-2 text-xs font-semibold transition ${
-                categoryname === slugify(cat)
-                  ? "border-(--primary) bg-(--primary) text-(--primary-foreground)"
-                  : "border-(--border) bg-(--card) text-(--muted-foreground) hover:border-(--primary) hover:text-(--foreground)"
-              }`}
-            >
-              {formatLabel(cat)}
-            </button>
-          ))}
+
+          <div className="mt-5 space-y-3">
+            <div className="relative">
+              <Search className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-(--muted-foreground)" />
+              <input
+                type="text"
+                placeholder="Select directly or search tools, converters, code utilities..."
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                className="h-12 w-full rounded-[8px] border border-[var(--border)] bg-[var(--background)] px-11 text-sm placeholder:text-(--input-placeholder) transition focus:outline-none focus:ring-1 focus:ring-[var(--primary)]"
+              />
+            </div>
+            <div className="flex flex-wrap gap-2">
+              {featuredCategories.map((cat) => (
+                <button
+                  key={cat}
+                  type="button"
+                  onClick={() => handleCategoryClick(cat)}
+                  className={`rounded-[7px] border px-3 py-2 text-xs font-semibold transition ${
+                    categoryname === slugify(cat)
+                      ? "border-(--primary) bg-(--primary) text-(--primary-foreground)"
+                      : "border-(--border) bg-(--background) text-(--muted-foreground) hover:border-(--primary) hover:text-(--foreground)"
+                  }`}
+                >
+                  {formatLabel(cat)}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {quickTools.length > 0 && (
+            <div className="mt-4 flex flex-wrap gap-2">
+              {quickTools.map(([slug, tool]) => (
+                <Link
+                  key={slug}
+                  href={`/tools/all/${slug}`}
+                  className="rounded-[7px] border border-(--border) bg-(--background) px-3 py-1.5 text-xs font-semibold text-(--muted-foreground) transition hover:border-(--primary) hover:text-(--foreground)"
+                >
+                  {tool.name}
+                </Link>
+              ))}
+            </div>
+          )}
         </div>
       </div>
 
       {/* CONTENT */}
-      <div className="max-w-7xl mx-auto px-6 pb-20 grid grid-cols-1 lg:grid-cols-[260px_1fr] gap-10 min-h-[70vh]">
+      <div className="mx-auto grid max-w-7xl grid-cols-1 gap-6 px-4 py-5 pb-20 sm:px-6 lg:grid-cols-[230px_1fr] lg:px-8">
         {/* SIDEBAR */}
-        <aside className="">
-          <h4 className="mb-4 flex items-center gap-2 text-base font-semibold">
+        <aside className="lg:sticky lg:top-24 lg:max-h-[calc(100vh-7rem)] lg:overflow-auto">
+          <h4 className="mb-3 flex items-center gap-2 text-sm font-semibold">
             <Layers3 className="h-4 w-4 text-(--primary)" />
             Categories
           </h4>
@@ -247,14 +314,15 @@ export default function ToolsClient({ meta = {}, category }) {
             </button>
             {/* Dropdown */}
             {open && (
-              <div className=" w-full  bg-white ">
-                {categories.map((cat) => (
+              <div className="mt-2 w-full rounded-[8px] border border-(--border) bg-(--card) p-2">
+                {categoryStats.map((cat) => (
                   <div
-                    key={cat}
-                    onClick={() => handleSelect(cat)}
-                    className="px-4 py-2 cursor-pointer border mt-2 border-(--border) rounded-[8px] bg-(--card)"
+                    key={cat.slug}
+                    onClick={() => handleSelect(cat.slug)}
+                    className="flex cursor-pointer items-center justify-between rounded-[7px] px-3 py-2 text-sm text-(--muted-foreground) hover:bg-(--background)"
                   >
-                    {formatLabel(cat)}
+                    <span>{cat.label}</span>
+                    <span className="text-xs">{cat.count}</span>
                   </div>
                 ))}
               </div>
@@ -262,17 +330,20 @@ export default function ToolsClient({ meta = {}, category }) {
           </div>
 
 
-          <ul className=" hidden lg:block space-y-2">
-            {categories.map((cat) => (
-              <li key={cat}>
+          <ul className="hidden space-y-1 lg:block">
+            {categoryStats.map((cat) => (
+              <li key={cat.slug}>
                 <button
-                  onClick={() => handleCategoryClick(cat)}
-                  className={`w-full text-left px-4 py-2 cursor-pointer rounded-[7px] text-sm transition ${categoryname === slugify(cat)
+                  onClick={() => handleCategoryClick(cat.slug)}
+                  className={`flex w-full cursor-pointer items-center justify-between rounded-[7px] px-3 py-2 text-left text-sm transition ${categoryname === cat.slug
                     ? "bg-[var(--color-primary)] text-white shadow"
-                    : "hover:bg-[var(--card-hover-bg)] hover:shadow-xl text-[var(--muted-foreground)]"
+                    : "text-[var(--muted-foreground)] hover:bg-[var(--card-hover-bg)] hover:text-(--foreground)"
                     }`}
                 >
-                  {formatLabel(cat)}
+                  <span>{cat.label}</span>
+                  <span className={`text-xs ${categoryname === cat.slug ? "text-white/80" : "text-(--muted-foreground)"}`}>
+                    {cat.count}
+                  </span>
                 </button>
               </li>
             ))}
@@ -281,12 +352,17 @@ export default function ToolsClient({ meta = {}, category }) {
 
         {/* TOOLS */}
         <section className="flex flex-col items-center justify-start">
-          <h2 className="flex items-center gap-3 text-2xl font-semibold mb-6 self-start">
-            Explore Tools
-            <span className="px-2.5 py-0.5 text-sm font-semibold rounded-full bg-[var(--card)] text-[var(--color-muted-foreground)]">
-              {filteredSlugs.length}
-            </span>
-          </h2>
+          <div className="mb-4 flex w-full flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+            <h2 className="flex items-center gap-3 text-xl font-semibold">
+              Explore Tools
+              <span className="rounded-full bg-[var(--card)] px-2.5 py-0.5 text-sm font-semibold text-[var(--color-muted-foreground)]">
+                {filteredSlugs.length}
+              </span>
+            </h2>
+            <p className="text-sm text-(--muted-foreground)">
+              Showing {Math.min(filteredSlugs.length, visibleCount)} of {filteredSlugs.length}
+            </p>
+          </div>
 
           {slugs.length === 0 ? (
             <ToolsGridSkeleton />
@@ -302,11 +378,11 @@ export default function ToolsClient({ meta = {}, category }) {
             </div>
           ) : (
             <>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full">
+              <div className="grid w-full grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-3">
                 {visibleSlugs.map((item) => {
                   if (item?.type === "ad-pair") {
                     return (
-                      <div key={item.id} className="md:col-span-2">
+                      <div key={item.id} className="sm:col-span-2 xl:col-span-3">
                         <AdPairRow ads={item.ads} pairIndex={item.pairIndex} toolAds={toolAds} categoryname={categoryname} />
                       </div>
                     );
@@ -322,34 +398,34 @@ export default function ToolsClient({ meta = {}, category }) {
                     <Link
                       key={slug}
                       href={`/tools/${categoryname}/${slug}`}
-                      className="group relative flex flex-col justify-between rounded-[8px] border border-[var(--border)] bg-[var(--card)] p-4 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl hover:border-[var(--color-primary)] focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)/40] hover:bg-[var(--card-hover-bg)]"
+                      className="group relative flex min-h-[136px] flex-col justify-between rounded-[8px] border border-[var(--border)] bg-[var(--card)] p-3 transition-all duration-200 hover:-translate-y-0.5 hover:border-[var(--color-primary)] hover:bg-[var(--card-hover-bg)] hover:shadow-md focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)/40]"
                     >
-                      <div className="flex gap-4">
-                        <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-[7px] bg-(--muted)">
+                      <div className="flex gap-3">
+                        <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-[7px] bg-(--muted)">
                           <Icon
                             name={tool.icon ?? "wrench"}
-                            className={`h-6 w-6 ${tool.iconColor ?? "text-[var(--muted-foreground)]"}`}
+                            className={`h-5 w-5 ${tool.iconColor ?? "text-[var(--muted-foreground)]"}`}
                           />
                         </div>
 
-                        <div className="flex-1">
-                          <h3 className="text-base font-semibold leading-tight group-hover:text-[var(--color-primary)] transition">
+                        <div className="min-w-0 flex-1">
+                          <h3 className="truncate text-sm font-semibold leading-tight transition group-hover:text-[var(--color-primary)]">
                             {name}
                           </h3>
-                          <p className="mt-1 text-sm text-[var(--color-muted-foreground)] line-clamp-2">
+                          <p className="mt-1 line-clamp-2 text-xs leading-5 text-[var(--color-muted-foreground)]">
                             {tool.description || "No description available."}
                           </p>
                         </div>
                       </div>
 
-                      <div className="mt-5 flex items-center justify-between gap-4">
+                      <div className="mt-4 flex items-center justify-between gap-3">
                         {tool.category && (
-                          <div className="flex flex-wrap gap-1.5 max-h-[52px] overflow-hidden">
+                          <div className="flex max-h-[28px] flex-wrap gap-1 overflow-hidden">
                             {(Array.isArray(tool.category) ? tool.category : [tool.category]).map(
                               (cat) => (
                                 <span
                                   key={cat}
-                                  className="text-[11px] font-medium rounded-full px-2.5 py-1  text-[var(--color-muted-foreground)] "
+                                  className="rounded-full bg-(--background) px-2 py-1 text-[10px] font-medium text-[var(--color-muted-foreground)]"
                                 >
                                   {cat}
                                 </span>
@@ -358,7 +434,7 @@ export default function ToolsClient({ meta = {}, category }) {
                           </div>
                         )}
 
-                        <span className="shrink-0 inline-flex items-center gap-1 text-sm font-medium text-[var(--color-muted-foreground)] group-hover:text-[var(--color-primary)]">
+                        <span className="inline-flex shrink-0 items-center gap-1 text-xs font-semibold text-[var(--color-muted-foreground)] group-hover:text-[var(--color-primary)]">
                           Open
                           <span className="group-hover:translate-x-1 transition-transform">→</span>
                         </span>

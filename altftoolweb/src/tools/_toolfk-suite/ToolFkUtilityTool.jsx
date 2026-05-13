@@ -56,6 +56,15 @@ const toolDefinitions = {
     sample: "SGVsbG8gQVNDSUk=",
     actions: ["base64ToText", "base64ToHex"],
   },
+  "base64-to-hex": {
+    title: "Base64 to Hex",
+    badge: "Encoding",
+    icon: Hash,
+    description: "Decode Base64 and inspect the raw hexadecimal byte output.",
+    mode: "text",
+    sample: "QWx0RlRvb2w=",
+    actions: ["base64ToHex", "base64ToText"],
+  },
   "hex-to-base64": {
     title: "Hex to Base64",
     badge: "Encoding",
@@ -73,6 +82,15 @@ const toolDefinitions = {
     mode: "text",
     sample: "AltFTool+tools/utility?",
     actions: ["textToBase64Url", "base64UrlToBase64", "base64ToBase64Url", "base64ToText"],
+  },
+  "base64-url-encoder": {
+    title: "Base64 URL Encoder",
+    badge: "Encoding",
+    icon: Link2,
+    description: "Encode text into URL-safe Base64 and normalize token payloads.",
+    mode: "text",
+    sample: "https://altftool.com/tools/all",
+    actions: ["textToBase64Url", "base64ToBase64Url", "base64UrlToBase64"],
   },
   "url-escape-unescape": {
     title: "URL Escape / Unescape",
@@ -118,6 +136,15 @@ const toolDefinitions = {
     mode: "code",
     sample: '{"name":"AltFTool","tools":["base64","json","csv"],"active":true}',
     actions: ["formatJson", "minifyJson", "jsonToYaml", "jsonToCsv"],
+  },
+  "yaml-formatter": {
+    title: "YAML Formatter",
+    badge: "Developer",
+    icon: Braces,
+    description: "Clean up simple YAML, inspect keys, and convert flat YAML snippets into JSON.",
+    mode: "code",
+    sample: "name: AltFTool\nactive: true\ntools:\n- base64\n- json\n- csv",
+    actions: ["formatYaml", "yamlToJson", "yamlKeys"],
   },
   "xml-editor": {
     title: "XML Editor",
@@ -208,6 +235,28 @@ const toolDefinitions = {
     mode: "code",
     sample: "RewriteRule ^old-page$ /new-page [R=301,L]\\nRewriteRule ^blog/(.*)$ /posts/$1 [L]",
     actions: ["htaccessToNginx"],
+  },
+  "crontab-evaluator": {
+    title: "Crontab Evaluator",
+    badge: "DevOps",
+    icon: Code2,
+    description: "Preview upcoming run times for standard five-field crontab expressions.",
+    mode: "cron",
+    sample: "*/15 9-17 * * 1-5",
+  },
+  "text-diff-tool": {
+    title: "Text Diff Tool",
+    badge: "Developer",
+    icon: FileText,
+    description: "Compare two text blocks line-by-line and highlight changed lines.",
+    mode: "diff",
+  },
+  "scientific-notation-calculator": {
+    title: "Scientific Notation Calculator",
+    badge: "Calculator",
+    icon: Binary,
+    description: "Convert large or tiny numbers into scientific and engineering notation.",
+    mode: "scientific",
   },
   "base-converter": {
     title: "Base Converter",
@@ -359,6 +408,9 @@ const actionLabels = {
   csvToPython: "CSV -> Python",
   markdownToHtml: "Markdown -> HTML",
   htmlToText: "HTML -> Text",
+  formatYaml: "Format YAML",
+  yamlToJson: "YAML -> JSON",
+  yamlKeys: "List YAML Keys",
   sha256: "SHA-256 Hash",
   sha512: "SHA-512 Hash",
   aesEncrypt: "AES Encrypt",
@@ -444,6 +496,57 @@ function jsonToYamlValue(value, indent = 0) {
       .join("\n");
   }
   return String(value);
+}
+
+function formatYaml(value) {
+  let listDepth = 0;
+  return value
+    .split("\n")
+    .map((line) => line.trim())
+    .filter((line) => line && !line.startsWith("#"))
+    .map((line) => {
+      if (line.startsWith("-")) {
+        return `${" ".repeat(listDepth)}- ${line.replace(/^-\s*/, "")}`;
+      }
+      listDepth = line.endsWith(":") ? 2 : 0;
+      return line.replace(/\s*:\s*/g, ": ");
+    })
+    .join("\n");
+}
+
+function parseYamlScalar(value) {
+  const clean = value.trim();
+  if (clean === "true") return true;
+  if (clean === "false") return false;
+  if (clean === "null" || clean === "~") return null;
+  if (/^-?\d+(\.\d+)?$/.test(clean)) return Number(clean);
+  return clean.replace(/^["']|["']$/g, "");
+}
+
+function simpleYamlToJson(value) {
+  const result = {};
+  let activeListKey = "";
+
+  formatYaml(value).split("\n").forEach((line) => {
+    if (line.startsWith("-") && activeListKey) {
+      result[activeListKey].push(parseYamlScalar(line.replace(/^-\s*/, "")));
+      return;
+    }
+
+    const match = line.match(/^([^:]+):(.*)$/);
+    if (!match) return;
+    const key = match[1].trim();
+    const raw = match[2].trim();
+    if (!raw) {
+      activeListKey = key;
+      result[key] = [];
+      return;
+    }
+    activeListKey = "";
+    result[key] = parseYamlScalar(raw);
+  });
+
+  return result;
 }
 
 function parseCsv(value) {
@@ -597,6 +700,63 @@ function simpleNginxRewrite(value) {
     .join("\n");
 }
 
+function parseCronPart(part, min, max, isWeekday = false) {
+  const values = new Set();
+  const add = (value) => {
+    const normalized = isWeekday && value === 7 ? 0 : value;
+    if (normalized >= min && normalized <= max) values.add(normalized);
+  };
+
+  part.split(",").forEach((segment) => {
+    const [rangePart, stepPart] = segment.split("/");
+    const step = Math.max(Number(stepPart || 1), 1);
+    let start = min;
+    let end = max;
+
+    if (rangePart !== "*") {
+      const [from, to] = rangePart.split("-");
+      start = Number(from);
+      end = Number(to || from);
+    }
+
+    for (let value = start; value <= end; value += step) add(value);
+  });
+
+  return values;
+}
+
+function nextCronRuns(expression, limit = 8) {
+  const parts = expression.trim().split(/\s+/);
+  if (parts.length !== 5) throw new Error("Use a standard five-field cron expression: minute hour day month weekday.");
+
+  const [minute, hour, day, month, weekday] = parts;
+  const minutes = parseCronPart(minute, 0, 59);
+  const hours = parseCronPart(hour, 0, 23);
+  const days = parseCronPart(day, 1, 31);
+  const months = parseCronPart(month, 1, 12);
+  const weekdays = parseCronPart(weekday, 0, 7, true);
+  const runs = [];
+  const cursor = new Date();
+  cursor.setSeconds(0, 0);
+  cursor.setMinutes(cursor.getMinutes() + 1);
+
+  for (let i = 0; i < 525600 && runs.length < limit; i += 1) {
+    if (
+      minutes.has(cursor.getMinutes()) &&
+      hours.has(cursor.getHours()) &&
+      days.has(cursor.getDate()) &&
+      months.has(cursor.getMonth() + 1) &&
+      weekdays.has(cursor.getDay())
+    ) {
+      runs.push(new Date(cursor));
+    }
+    cursor.setMinutes(cursor.getMinutes() + 1);
+  }
+
+  if (!runs.length) throw new Error("No run times found in the next year.");
+  return runs;
+}
+
 async function sha(value, algorithm) {
   const digest = await crypto.subtle.digest(algorithm, encoder.encode(value));
   return Array.from(new Uint8Array(digest)).map((byte) => byte.toString(16).padStart(2, "0")).join("");
@@ -727,6 +887,12 @@ function outputForAction(action, input, secret) {
       return markdownToHtml(input);
     case "htmlToText":
       return input.replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim();
+    case "formatYaml":
+      return formatYaml(input);
+    case "yamlToJson":
+      return JSON.stringify(simpleYamlToJson(input), null, 2);
+    case "yamlKeys":
+      return formatYaml(input).split("\n").map((line) => line.match(/^([^:]+):/)?.[1]?.trim()).filter(Boolean).join("\n");
     case "curlToFetch": {
       const parsed = parseCurl(input);
       const headers = Object.fromEntries(parsed.headers);
@@ -751,35 +917,33 @@ function ToolShell({ definition, children }) {
   const Icon = definition.icon || Sparkles;
   return (
     <main className="mx-auto w-full max-w-6xl px-3 py-4 sm:px-5 lg:px-6">
-      <section className="grid gap-4 lg:grid-cols-[0.78fr_0.22fr]">
-        <div className="rounded-[8px] border border-(--border) bg-(--card) p-5 shadow-[var(--anslation-ds-shadow-sm)] sm:p-6">
-          <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
-            <div className="flex gap-4">
-              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-[8px] bg-(--muted) text-(--primary)">
-                <Icon className="h-6 w-6" />
+      <section className="rounded-[8px] border border-(--border) bg-(--card) p-5 shadow-[var(--anslation-ds-shadow-sm)] sm:p-6">
+        <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
+          <div className="flex gap-4">
+            <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-[8px] bg-(--muted) text-(--primary)">
+              <Icon className="h-6 w-6" />
+            </div>
+            <div>
+              <div className="mb-2 inline-flex rounded-[6px] border border-(--border) bg-(--background) px-2 py-1 text-[11px] font-semibold uppercase tracking-wide text-(--muted-foreground)">
+                {definition.badge}
               </div>
-              <div>
-                <div className="mb-2 inline-flex rounded-[6px] border border-(--border) bg-(--background) px-2 py-1 text-[11px] font-semibold uppercase tracking-wide text-(--muted-foreground)">
-                  {definition.badge}
-                </div>
-                <h1 className="text-2xl font-semibold tracking-normal text-(--foreground) sm:text-3xl">
-                  {definition.title}
-                </h1>
-                <p className="mt-2 max-w-2xl text-sm leading-6 text-(--muted-foreground)">
-                  {definition.description}
-                </p>
-              </div>
+              <h1 className="text-2xl font-semibold tracking-normal text-(--foreground) sm:text-3xl">
+                {definition.title}
+              </h1>
+              <p className="mt-2 max-w-2xl text-sm leading-6 text-(--muted-foreground)">
+                {definition.description}
+              </p>
             </div>
           </div>
-        </div>
-        <aside className="rounded-[8px] border border-(--border) bg-(--card) p-4">
-          <p className="text-xs font-bold uppercase tracking-wide text-(--muted-foreground)">ToolFK-style workflow</p>
-          <div className="mt-3 space-y-2 text-sm text-(--muted-foreground)">
-            <p className="flex gap-2"><CheckCircle2 className="mt-0.5 h-4 w-4 text-(--primary)" /> Runs locally in browser.</p>
-            <p className="flex gap-2"><CheckCircle2 className="mt-0.5 h-4 w-4 text-(--primary)" /> No upload for file tools.</p>
-            <p className="flex gap-2"><CheckCircle2 className="mt-0.5 h-4 w-4 text-(--primary)" /> Copy or download output.</p>
+          <div className="flex flex-wrap gap-2 text-xs font-semibold text-(--muted-foreground)">
+            {["Runs locally", "No upload", "Copy or download"].map((item) => (
+              <span key={item} className="inline-flex items-center gap-1 rounded-[7px] border border-(--border) bg-(--background) px-2.5 py-1.5">
+                <CheckCircle2 className="h-3.5 w-3.5 text-(--primary)" />
+                {item}
+              </span>
+            ))}
           </div>
-        </aside>
+        </div>
       </section>
       {children}
     </main>
@@ -1086,6 +1250,117 @@ function ByteConverterTool() {
   );
 }
 
+function CronEvaluatorTool({ definition }) {
+  const [expression, setExpression] = useState(definition.sample);
+  const result = useMemo(() => {
+    try {
+      return {
+        output: nextCronRuns(expression).map((date) => date.toLocaleString()).join("\n"),
+        error: "",
+      };
+    } catch (err) {
+      return { output: "", error: err.message || "Invalid cron expression." };
+    }
+  }, [expression]);
+
+  return (
+    <div className="mt-4 grid gap-4 lg:grid-cols-[0.45fr_0.55fr]">
+      <section className="rounded-[8px] border border-(--border) bg-(--card) p-4">
+        <label className="text-xs font-bold uppercase tracking-wide text-(--muted-foreground)">Crontab Expression</label>
+        <input
+          value={expression}
+          onChange={(e) => setExpression(e.target.value)}
+          className="mt-3 w-full rounded-[8px] border border-(--border) bg-(--background) px-3 py-3 font-mono text-sm outline-none focus:border-(--primary)"
+        />
+        <div className="mt-4 grid grid-cols-5 gap-2 text-center text-xs text-(--muted-foreground)">
+          {["minute", "hour", "day", "month", "weekday"].map((item) => (
+            <span key={item} className="rounded-[7px] border border-(--border) bg-(--background) px-2 py-2">
+              {item}
+            </span>
+          ))}
+        </div>
+      </section>
+      <WorkspaceOutput value={result.output} error={result.error} />
+    </div>
+  );
+}
+
+function ScientificNotationTool() {
+  const [value, setValue] = useState("123456789");
+  const number = Number(value);
+  const valid = Number.isFinite(number);
+  const exponent = valid && number !== 0 ? Math.floor(Math.log10(Math.abs(number))) : 0;
+  const engineeringExponent = valid && number !== 0 ? Math.floor(exponent / 3) * 3 : 0;
+  const rows = valid
+    ? {
+        "Scientific notation": number.toExponential(8),
+        "Engineering notation": `${(number / 10 ** engineeringExponent).toFixed(6)}e${engineeringExponent}`,
+        Decimal: number.toLocaleString(undefined, { maximumFractionDigits: 12 }),
+        Exponent: exponent,
+      }
+    : {};
+
+  return (
+    <div className="mt-4 rounded-[8px] border border-(--border) bg-(--card) p-4">
+      <input
+        value={value}
+        onChange={(e) => setValue(e.target.value)}
+        className="w-full rounded-[8px] border border-(--border) bg-(--background) px-3 py-3 font-mono text-sm outline-none focus:border-(--primary)"
+      />
+      <div className="mt-4 grid gap-3 md:grid-cols-2">
+        {valid ? Object.entries(rows).map(([key, item]) => (
+          <div key={key} className="rounded-[8px] border border-(--border) bg-(--background) p-4">
+            <p className="text-xs font-bold uppercase tracking-wide text-(--muted-foreground)">{key}</p>
+            <p className="mt-2 break-all font-mono text-sm text-(--foreground)">{item}</p>
+          </div>
+        )) : (
+          <p className="text-sm text-red-500">Enter a valid number.</p>
+        )}
+      </div>
+    </div>
+  );
+}
+
+function TextDiffTool() {
+  const [left, setLeft] = useState("AltFTool\nJSON Editor\nBase64 Tools");
+  const [right, setRight] = useState("AltFTool\nJSON Editor Pro\nBase64 Tools\nYAML Formatter");
+  const diff = useMemo(() => {
+    const leftLines = left.split("\n");
+    const rightLines = right.split("\n");
+    const max = Math.max(leftLines.length, rightLines.length);
+    const lines = [];
+
+    for (let i = 0; i < max; i += 1) {
+      const before = leftLines[i] ?? "";
+      const after = rightLines[i] ?? "";
+      if (before === after) {
+        lines.push(`  ${before}`);
+      } else {
+        if (before) lines.push(`- ${before}`);
+        if (after) lines.push(`+ ${after}`);
+      }
+    }
+
+    return lines.join("\n");
+  }, [left, right]);
+
+  return (
+    <div className="mt-4 grid gap-4">
+      <div className="grid gap-4 lg:grid-cols-2">
+        <section className="rounded-[8px] border border-(--border) bg-(--card) p-4">
+          <label className="text-xs font-bold uppercase tracking-wide text-(--muted-foreground)">Original</label>
+          <textarea value={left} onChange={(e) => setLeft(e.target.value)} className="mt-3 min-h-[240px] w-full rounded-[8px] border border-(--border) bg-(--background) p-3 font-mono text-sm outline-none focus:border-(--primary)" />
+        </section>
+        <section className="rounded-[8px] border border-(--border) bg-(--card) p-4">
+          <label className="text-xs font-bold uppercase tracking-wide text-(--muted-foreground)">Changed</label>
+          <textarea value={right} onChange={(e) => setRight(e.target.value)} className="mt-3 min-h-[240px] w-full rounded-[8px] border border-(--border) bg-(--background) p-3 font-mono text-sm outline-none focus:border-(--primary)" />
+        </section>
+      </div>
+      <WorkspaceOutput value={diff} />
+    </div>
+  );
+}
+
 function SvgTool({ definition }) {
   const [input, setInput] = useState(definition.sample);
   const [preview, setPreview] = useState("");
@@ -1153,6 +1428,9 @@ export default function ToolFkUtilityTool() {
   if (definition.mode === "base64ToFile") content = <Base64ToFileTool definition={definition} />;
   if (definition.mode === "base") content = <BaseConverterTool />;
   if (definition.mode === "bytes") content = <ByteConverterTool />;
+  if (definition.mode === "cron") content = <CronEvaluatorTool definition={definition} />;
+  if (definition.mode === "diff") content = <TextDiffTool />;
+  if (definition.mode === "scientific") content = <ScientificNotationTool />;
   if (definition.mode === "svg") content = <SvgTool definition={definition} />;
 
   return (

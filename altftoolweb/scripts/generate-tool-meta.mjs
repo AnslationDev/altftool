@@ -3,8 +3,24 @@ import path from "path";
 
 const TOOLS_DIR = "src/tools";
 const OUTPUT = "src/platform/registry/toolMetaMap.js";
+const ICON_ALIASES = {
+  "search-icon": "search",
+  volume2: "volume-2",
+  wand2: "wand-2",
+  "fas fa-code": "code",
+  "bar-chart3icon": "bar-chart-3",
+  "bar-chart2": "bar-chart-2",
+  "graph-up-trend": "trending-up",
+  code2: "code-2",
+};
 
 const toolMeta = {};
+const normalizeIcon = (icon) => {
+  const value = typeof icon === "string" ? icon.trim() : "";
+  if (!value) return "wrench";
+  if (ICON_ALIASES[value]) return ICON_ALIASES[value];
+  return /^[a-z0-9-]+$/.test(value) ? value : "wrench";
+};
 
 const toolDirs = fs.readdirSync(TOOLS_DIR);
 
@@ -25,7 +41,7 @@ for (const dir of toolDirs) {
   name: config.name ?? dir.replace(/-/g, " "),
   description: config.description ?? "",
   category: config.category ?? "Other",
-  icon: config.icon ?? "wrench",
+  icon: normalizeIcon(config.icon ?? "wrench"),
   iconColor: config.iconColor ?? "text-muted-foreground",
 };
 

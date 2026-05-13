@@ -60,7 +60,7 @@ export const toolMetaMap = {
     "name": "App Finder",
     "description": "Search for mobile apps by name or category. Find the perfect app for your needs quickly and easily.",
     "category": "Startup",
-    "icon": "search-icon",
+    "icon": "search",
     "iconColor": "text-gray-500"
   },
   "aspect-ratio-calculator": {
@@ -111,7 +111,7 @@ export const toolMetaMap = {
       "Media",
       "Converter"
     ],
-    "icon": "volume2",
+    "icon": "volume-2",
     "iconColor": "text-pink-700"
   },
   "base64-to-ascii": {
@@ -133,6 +133,16 @@ export const toolMetaMap = {
     ],
     "icon": "download",
     "iconColor": "text-indigo-700"
+  },
+  "base64-to-hex": {
+    "name": "Base64 to Hex",
+    "description": "Decode Base64 into hexadecimal byte output locally.",
+    "category": [
+      "Developer",
+      "Converter"
+    ],
+    "icon": "hash",
+    "iconColor": "text-indigo-600"
   },
   "base64-to-image": {
     "name": "Base64 to Image",
@@ -184,11 +194,22 @@ export const toolMetaMap = {
     "icon": "link",
     "iconColor": "text-blue-600"
   },
+  "base64-url-encoder": {
+    "name": "Base64 URL Encoder",
+    "description": "Encode text and Base64 payloads into URL-safe Base64.",
+    "category": [
+      "Developer",
+      "Converter",
+      "Web"
+    ],
+    "icon": "link",
+    "iconColor": "text-sky-600"
+  },
   "bg-remover": {
     "name": "Background Remover",
     "description": "Remove your Image background in just a one click",
     "category": "AI",
-    "icon": "wand2",
+    "icon": "wand-2",
     "iconColor": "text-indigo-600"
   },
   "binary-hex-decimal-converter": {
@@ -271,14 +292,14 @@ export const toolMetaMap = {
     "name": "car-cost-analyzer",
     "description": "Calculate the total cost of owning a car, including purchase price, running costs, and depreciation.",
     "category": "Other",
-    "icon": "Car",
+    "icon": "wrench",
     "iconColor": "green"
   },
   "code-complexity-analyzer": {
     "name": "Code Complexity Analyzer",
     "description": "Analyze the complexity of your code and get suggestions to improve it.",
     "category": "education",
-    "icon": "fas fa-code",
+    "icon": "code",
     "iconColor": "blue"
   },
   "color-contrast-checker": {
@@ -323,6 +344,16 @@ export const toolMetaMap = {
     ],
     "icon": "calendar-clock",
     "iconColor": "text-indigo-600"
+  },
+  "crontab-evaluator": {
+    "name": "Crontab Evaluator",
+    "description": "Preview upcoming run times for standard five-field cron expressions.",
+    "category": [
+      "Developer",
+      "DevOps"
+    ],
+    "icon": "clock",
+    "iconColor": "text-orange-600"
   },
   "css-tools": {
     "name": "CSS Tools",
@@ -438,7 +469,7 @@ export const toolMetaMap = {
       "Text",
       "Content Creation"
     ],
-    "icon": "wand2",
+    "icon": "wand-2",
     "iconColor": "text-pink-600"
   },
   "encoded-decoded": {
@@ -503,7 +534,7 @@ export const toolMetaMap = {
     "name": "Financial Update",
     "description": "Financial Update allows you to track the stock market trends and get Updates on the latest financial news.",
     "category": "Business",
-    "icon": "bar-chart3icon",
+    "icon": "bar-chart-3",
     "iconColor": "text-indigo-500"
   },
   "flow-chart-maker": {
@@ -825,7 +856,7 @@ export const toolMetaMap = {
     "name": "Life Productivity Score",
     "description": "Calculate your life productivity score",
     "category": "lifestyle",
-    "icon": "https://cdn-icons-png.flaticon.com/512/7173/7173466.png",
+    "icon": "wrench",
     "iconColor": "#062609"
   },
   "link-preview-generator": {
@@ -1077,7 +1108,7 @@ export const toolMetaMap = {
     "category": [
       "Business"
     ],
-    "icon": "bar-chart2",
+    "icon": "bar-chart-2",
     "iconColor": "text-purple-600"
   },
   "pricing-calculator": {
@@ -1146,6 +1177,16 @@ export const toolMetaMap = {
     "icon": "book-open",
     "iconColor": "text-blue-500"
   },
+  "scientific-notation-calculator": {
+    "name": "Scientific Notation Calculator",
+    "description": "Convert large or tiny numbers into scientific and engineering notation.",
+    "category": [
+      "Calculator",
+      "Converter"
+    ],
+    "icon": "calculator",
+    "iconColor": "text-violet-600"
+  },
   "screen-recorder": {
     "name": "Screen Recorder",
     "description": "Record your screen and share it with your friends.",
@@ -1188,7 +1229,7 @@ export const toolMetaMap = {
     "name": "Skill Demand Analyzer",
     "description": "Analyze the demand for various skills in the job market.",
     "category": "AI",
-    "icon": "graph-up-trend",
+    "icon": "trending-up",
     "iconColor": "text-green-600"
   },
   "skin-care-guide": {
@@ -1326,6 +1367,16 @@ export const toolMetaMap = {
     "icon": "languages",
     "iconColor": "text-indigo-600"
   },
+  "text-diff-tool": {
+    "name": "Text Diff Tool",
+    "description": "Compare two text blocks line-by-line and highlight differences.",
+    "category": [
+      "Developer",
+      "Text"
+    ],
+    "icon": "file-diff",
+    "iconColor": "text-rose-600"
+  },
   "text-encryptor": {
     "name": "Text Encryptor",
     "description": "Hash text and encrypt or decrypt AES-GCM payloads locally.",
@@ -1450,7 +1501,7 @@ export const toolMetaMap = {
       "Developer",
       "No-Code"
     ],
-    "icon": "code2",
+    "icon": "code-2",
     "iconColor": "text-blue-600"
   },
   "url-escape-unescape": {
@@ -1627,6 +1678,16 @@ export const toolMetaMap = {
     ],
     "icon": "code",
     "iconColor": "text-orange-600"
+  },
+  "yaml-formatter": {
+    "name": "YAML Formatter",
+    "description": "Format simple YAML, list keys, and convert YAML snippets to JSON.",
+    "category": [
+      "Developer",
+      "Data"
+    ],
+    "icon": "braces",
+    "iconColor": "text-emerald-600"
   },
   "youtube-thumbnail-downloader": {
     "name": "YouTube Thumbnail Downloader",
