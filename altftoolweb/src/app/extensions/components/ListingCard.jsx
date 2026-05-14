@@ -1,8 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
 import { Star } from "lucide-react";
+import ManagedImage from "@/components/ui/ManagedImage";
 
 export default function ListingCard({ extension, slug }) {
 
@@ -29,11 +29,10 @@ export default function ListingCard({ extension, slug }) {
         <div className="relative w-full h-[150px] rounded-xl overflow-hidden bg-white  text-center ">
 
           {extension?.image && extension.image.trim() !== "" ? (
-            <Image
+            <ManagedImage
               src={extension.image}
               alt={extension.name || "extension"}
               fill
-              sizes="(max-width: 640px) 100vw, 25vw"
               className="object-cover hover:scale-[1.04] transition-transform duration-300"
             />
           ) : (

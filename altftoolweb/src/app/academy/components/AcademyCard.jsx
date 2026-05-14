@@ -110,10 +110,11 @@ export default function AcademyCard({ academy }) {
 function AcademyLogoImage({ academy }) {
   const [imageLoaded, setImageLoaded] = React.useState(false);
   const [imageError, setImageError] = React.useState(false);
+  const fallbackLabel = String(academy?.name || "A").trim().slice(0, 2).toUpperCase();
 
   return (
     <>
-      {!imageLoaded ? (
+      {!imageLoaded && !imageError ? (
         <SkeletonBlock className="absolute inset-0 rounded-lg" />
       ) : null}
       {!imageError && academy.image ? (
@@ -128,7 +129,11 @@ function AcademyLogoImage({ academy }) {
           onLoad={() => setImageLoaded(true)}
           onError={() => setImageError(true)}
         />
-      ) : null}
+      ) : (
+        <div className="absolute inset-0 flex items-center justify-center rounded-lg border border-(--border) bg-(--muted) text-sm font-extrabold text-(--primary)">
+          {fallbackLabel}
+        </div>
+      )}
     </>
   );
 }

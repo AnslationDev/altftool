@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "@/lib/firebase"; 
 import { getCachedFirebaseRead } from "@/lib/firebaseCache";
@@ -12,29 +12,33 @@ export function useFirebaseExtensions() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  useEffect(() => {
-    async function fetchExtensions() {
-      try {
-        const data = await getCachedFirebaseRead("extensions:list", async () => {
-          const colRef = collection(db, ...ALTFT_EXTENSIONS_COLLECTION_PATH);
-          const snapshot = await getDocs(colRef);
-          const rows = snapshot.docs
-            .map((doc) => normalizeExtension(doc.data(), doc.id))
-            .filter(isDisplayableExtension);
+  const fetchExtensions = useCallback(async ({ silent = false } = {}) => {
+    if (!silent) setLoading(true);
+    setError(null);
 
-          rows.sort((a, b) => a.name?.localeCompare(b.name));
-          return rows;
-        }, 120000);
+    try {
+      const data = await getCachedFirebaseRead("extensions:list", async () => {
+        const colRef = collection(db, ...ALTFT_EXTENSIONS_COLLECTION_PATH);
+        const snapshot = await getDocs(colRef);
+        const rows = snapshot.docs
+          .map((doc) => normalizeExtension(doc.data(), doc.id))
+          .filter(isDisplayableExtension);
 
-        setExtensions(data);
-      } catch (err) {
-        setError(err);
-      } finally {
-        setLoading(false);
-      }
+        rows.sort((a, b) => a.name?.localeCompare(b.name));
+        return rows;
+      }, 120000);
+
+      setExtensions(data);
+    } catch (err) {
+      setError(err);
+    } finally {
+      setLoading(false);
     }
-    fetchExtensions();
   }, []);
 
-  return { extensions, loading, error };
+  useEffect(() => {
+    fetchExtensions();
+  }, [fetchExtensions]);
+
+  return { extensions, loading, error, refresh: fetchExtensions };
 }

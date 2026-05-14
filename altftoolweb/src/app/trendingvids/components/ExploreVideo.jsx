@@ -8,6 +8,7 @@ import ReelsView from "./ReelsView";
 import { useTheme } from "@/contexts/ThemeContext";
 import { matchesExploreCategory } from "../services/firebaseTrendingVideos";
 import ManagedImage from "@/components/ui/ManagedImage";
+import DataStateNotice from "@/components/ui/DataStateNotice";
 
 export default function ExploreVideos({
   categories = [],
@@ -33,7 +34,7 @@ export default function ExploreVideos({
   }, [filters, searchResults]);
   const activeFilter = searchedActiveFilter || activeCategory || active;
 
-  const { videos, loading, loadMore, hasMore } = useYoutubeVideos(
+  const { videos, loading, loadMore, hasMore, error, source } = useYoutubeVideos(
     activeFilter,
     tab,
     sortBy,
@@ -193,6 +194,15 @@ export default function ExploreVideos({
               </div>
             </div>
           </div>
+
+          {source === "fallback" && !loading ? (
+            <DataStateNotice
+              compact
+              className="mb-6 text-left"
+              title={error ? "Live videos could not refresh" : "Live videos are still syncing"}
+              message="Showing a curated local video set so the browsing experience stays usable."
+            />
+          ) : null}
 
           {loading ? (
             <p className="text-center text-(--foreground)">

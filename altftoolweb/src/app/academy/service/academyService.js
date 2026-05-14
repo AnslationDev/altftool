@@ -4,7 +4,7 @@ import { collection, getDocs } from "firebase/firestore";
 import { normalizeAcademy, isDisplayableAcademy } from "@altftool/core/firebaseContent";
 import { ALTFT_ACADEMY_COLLECTION_PATH } from "@altftool/core/firebasePaths";
 
-export const getAcademyList = async () => {
+export const getAcademyList = async ({ throwOnError = false } = {}) => {
   try {
     return await getCachedFirebaseRead("academy:list", async () => {
       const snapshot = await getDocs(
@@ -17,6 +17,7 @@ export const getAcademyList = async () => {
     }, 120000);
   } catch (error) {
     console.error("Error fetching academy list:", error);
+    if (throwOnError) throw error;
     return [];
   }
 };

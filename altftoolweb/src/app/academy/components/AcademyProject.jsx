@@ -5,7 +5,9 @@ import dynamic from "next/dynamic";
 import Hero from "./Hero";
 import "../styles/academy.css";
 import { getAcademyList } from "../service/academyService";
+import { academies as fallbackAcademies } from "../data/academies";
 import RouteLazySection from "@/components/ui/RouteLazySection";
+import DataStateNotice from "@/components/ui/DataStateNotice";
 import {
   AcademyResultsSkeleton,
   ExplorePlatformSkeleton,
@@ -33,19 +35,43 @@ const FaqSection = dynamic(() => import("./FAQs"), {
   loading: () => <RouteSectionSkeleton cards={2} />,
 });
 
+function normalizeFallbackAcademy(item, index) {
+  return {
+    ...item,
+    id: item.id || `fallback-academy-${index}`,
+    academyUrl: item.academyUrl || item.url || "#",
+    url: item.url || item.academyUrl || "#",
+    subCategory: item.subCategory || item.badge || item.category || "Learning",
+    features: item.features || item.specs || [],
+    price: String(item.price || "Free").replace(/^₹\s*/, ""),
+  };
+}
+
+const normalizedFallbackAcademies = fallbackAcademies.map(normalizeFallbackAcademy);
+
 export default function AcademyProject() {
   const [activeCategory, setActiveCategory] = useState("Skills & Career Growth");
   const [academies, setAcademies] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [loadState, setLoadState] = useState("live");
 
-  
-  useEffect(() => {
-    const fetchData = async () => {
-      const data = await getAcademyList();
+  const fetchData = async () => {
+    setLoading(true);
+    setLoadState("live");
+
+    try {
+      const data = await getAcademyList({ throwOnError: true });
       setAcademies(data);
+      setLoadState(data.length ? "live" : "empty");
+    } catch {
+      setAcademies(normalizedFallbackAcademies);
+      setLoadState("fallback");
+    } finally {
       setLoading(false);
-    };
+    }
+  };
 
+  useEffect(() => {
     fetchData();
   }, []);
 
@@ -66,6 +92,25 @@ export default function AcademyProject() {
     <main className="min-h-screen bg-[var(--background)]">
       <div className="">
         <Hero loading={loading} />
+        {loadState === "fallback" ? (
+          <div className="section !py-0">
+            <DataStateNotice
+              title="Academy live data is unavailable"
+              message="Showing a curated local academy catalog while Firebase reconnects."
+              actionLabel="Retry"
+              onAction={fetchData}
+            />
+          </div>
+        ) : null}
+        {loadState === "empty" ? (
+          <div className="section !py-0">
+            <DataStateNotice
+              tone="info"
+              title="Academy catalog is empty"
+              message="Firebase responded successfully, but no public academy records are available yet."
+            />
+          </div>
+        ) : null}
         <RouteLazySection fallback={<FeaturedAcademiesSkeleton />} minHeight={180}>
           <FeaturedAcademies items={featured} loading={loading} />
         </RouteLazySection>

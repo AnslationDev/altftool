@@ -8,6 +8,7 @@ import { useAds } from "@/ads/AdsProvider";
 import useDevice from "@/hooks/useDevice";
 import { injectRandomAds } from "@/ads/adInjector";
 import AdExtensionCard from "@/ads/layouts/extension/AdExtensionCard";
+import DataStateNotice from "@/components/ui/DataStateNotice";
 
 import {
   Image as ImageIcon,
@@ -78,7 +79,12 @@ export default function ExtensionsPage() {
   const device = useDevice();
 
   // 🔥 Firebase — replaces getSortedExtensions()
-  const { extensions: allExtensions, loading } = useFirebaseExtensions();
+  const {
+    extensions: allExtensions,
+    loading,
+    error,
+    refresh,
+  } = useFirebaseExtensions();
 
   /* ---------------- SEARCH DEBOUNCE ---------------- */
   useEffect(() => {
@@ -204,6 +210,16 @@ export default function ExtensionsPage() {
 
         {/* GRID */}
         <div className="section">
+          {error ? (
+            <DataStateNotice
+              className="mb-6"
+              title="Live extensions could not refresh"
+              message="The extension catalog is temporarily using any cached content available on this device. Retry once the connection is stable."
+              actionLabel="Retry"
+              onAction={() => refresh()}
+            />
+          ) : null}
+
           {loading ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
               {[...Array(8)].map((_, i) => (

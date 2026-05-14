@@ -11,7 +11,7 @@ function isValidImageSrc(value) {
 
 export default function ManagedImage({
   src,
-  fallbackSrc,
+  fallbackSrc = "/image-fallback.svg",
   alt = "",
   fill = false,
   loading = "lazy",
@@ -45,6 +45,7 @@ export default function ManagedImage({
       loading={loading}
       decoding={decoding}
       referrerPolicy={referrerPolicy}
+      data-altftool-image-state={imageSrc === fallbackSrc ? "fallback" : "loaded"}
       onError={handleError}
       style={fill ? { ...style, position: "absolute", inset: 0, width: "100%", height: "100%" } : style}
     />
