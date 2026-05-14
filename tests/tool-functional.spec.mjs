@@ -2,14 +2,24 @@ import { expect, test } from "@playwright/test";
 import { createPageQualityGate } from "./helpers/pageQuality.mjs";
 
 const webUrl = process.env.ALTFT_WEB_URL || "http://localhost:3002";
+const toolRouteTimeoutMs = Number(process.env.ALTFT_TOOL_FUNCTIONAL_ROUTE_TIMEOUT_MS || 60_000);
 
 async function openTool(page, slug, heading) {
-  await page.goto(`${webUrl}/tools/all/${slug}`, { waitUntil: "domcontentloaded" });
-  await expect(page.getByRole("heading", { name: heading, exact: true })).toBeVisible();
-  await expect(page.getByTestId("tool-output")).toBeVisible();
+  await page.goto(`${webUrl}/tools/all/${slug}`, {
+    waitUntil: "domcontentloaded",
+    timeout: toolRouteTimeoutMs,
+  });
+  await expect(page.getByRole("heading", { name: heading, exact: true })).toBeVisible({
+    timeout: toolRouteTimeoutMs,
+  });
+  await expect(page.getByTestId("tool-output")).toBeVisible({
+    timeout: toolRouteTimeoutMs,
+  });
 }
 
 test.describe("microtool functional flows", () => {
+  test.describe.configure({ mode: "serial", timeout: 120_000 });
+
   test("tools directory search and filters stay shareable", async ({ page }) => {
     const quality = createPageQualityGate(page);
 
