@@ -476,6 +476,8 @@ const CropEditor = ({
           />
         </div>
         <button
+          type="button"
+          data-testid="image-cropper-crop-button"
           onClick={onCropImage}
           disabled={isProcessing}
           className={`px-6 py-3 text-sm  font-medium rounded-md transition-colors cursor-pointer ${

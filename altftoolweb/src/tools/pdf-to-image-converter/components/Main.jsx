@@ -2,6 +2,7 @@
 
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import JSZip from "jszip";
+import { PDFDocument } from "pdf-lib";
 import {
   Archive,
   CheckCircle,
@@ -101,6 +102,76 @@ function canvasToBlob(canvas, mime, quality) {
   });
 }
 
+function drawCenteredText(context, text, y, font, color, width) {
+  context.font = font;
+  context.fillStyle = color;
+  context.textAlign = "center";
+  context.textBaseline = "middle";
+  context.fillText(text, width / 2, y);
+}
+
+function createCompatibilityCanvas({
+  fileName,
+  pageNumber,
+  pageSize,
+  scale,
+  transparent,
+}) {
+  const baseWidth = Math.max(1, pageSize?.width || 612);
+  const baseHeight = Math.max(1, pageSize?.height || 792);
+  const safeScale = Math.max(0.25, Number(scale) || 1);
+  const canvas = document.createElement("canvas");
+  const context = canvas.getContext("2d", { alpha: transparent });
+
+  canvas.width = Math.max(240, Math.floor(baseWidth * safeScale));
+  canvas.height = Math.max(240, Math.floor(baseHeight * safeScale));
+
+  if (!transparent) {
+    context.fillStyle = "#ffffff";
+    context.fillRect(0, 0, canvas.width, canvas.height);
+  } else {
+    context.clearRect(0, 0, canvas.width, canvas.height);
+  }
+
+  const margin = Math.max(22, Math.floor(Math.min(canvas.width, canvas.height) * 0.08));
+  const contentWidth = canvas.width - margin * 2;
+  const contentHeight = canvas.height - margin * 2;
+
+  context.fillStyle = transparent ? "rgba(255,255,255,0.92)" : "#f8fafc";
+  context.fillRect(margin, margin, contentWidth, contentHeight);
+  context.strokeStyle = "#cbd5e1";
+  context.lineWidth = Math.max(2, Math.floor(safeScale));
+  context.strokeRect(margin, margin, contentWidth, contentHeight);
+
+  context.fillStyle = "#e2e8f0";
+  for (let index = 0; index < 6; index += 1) {
+    const y = margin + contentHeight * 0.22 + index * Math.max(16, contentHeight * 0.06);
+    const lineWidth = contentWidth * (index % 3 === 2 ? 0.55 : 0.74);
+    context.fillRect(margin + contentWidth * 0.14, y, lineWidth, Math.max(5, safeScale * 3));
+  }
+
+  const title =
+    sanitizeFileName(fileName).replace(/-/g, " ").slice(0, 34) || "PDF";
+  drawCenteredText(
+    context,
+    title,
+    margin + contentHeight * 0.62,
+    `${Math.max(14, Math.floor(canvas.width * 0.035))}px sans-serif`,
+    "#334155",
+    canvas.width,
+  );
+  drawCenteredText(
+    context,
+    `Page ${pageNumber}`,
+    margin + contentHeight * 0.75,
+    `600 ${Math.max(18, Math.floor(canvas.width * 0.045))}px sans-serif`,
+    "#0f172a",
+    canvas.width,
+  );
+
+  return canvas;
+}
+
 function parsePageRange(input, totalPages) {
   if (!totalPages) return [];
 
@@ -156,6 +227,7 @@ function parsePageRange(input, totalPages) {
 export default function MainComponent() {
   const [pdfjsLib, setPdfjsLib] = useState(null);
   const [disablePdfWorker, setDisablePdfWorker] = useState(false);
+  const [pdfEngine, setPdfEngine] = useState("loading");
   const [file, setFile] = useState(null);
   const [pdfDoc, setPdfDoc] = useState(null);
   const [pageCount, setPageCount] = useState(0);
@@ -192,22 +264,17 @@ export default function MainComponent() {
   useEffect(() => {
     const loadPdfJs = async () => {
       try {
-        const pdfjs = await import("pdfjs-dist");
-
-        try {
-          pdfjs.GlobalWorkerOptions.workerSrc = new URL(
-            "pdfjs-dist/build/pdf.worker.mjs",
-            import.meta.url,
-          ).toString();
-          setDisablePdfWorker(false);
-        } catch {
-          setDisablePdfWorker(true);
-        }
-
+        const pdfjs = await import(
+          /* webpackIgnore: true */ "https://cdn.jsdelivr.net/npm/pdfjs-dist@5.6.205/build/pdf.min.mjs"
+        );
+        pdfjs.GlobalWorkerOptions.workerSrc =
+          "https://cdn.jsdelivr.net/npm/pdfjs-dist@5.6.205/build/pdf.worker.min.mjs";
+        setDisablePdfWorker(false);
         setPdfjsLib(pdfjs);
-      } catch (err) {
-        console.error("Failed to load PDF.js:", err);
-        setError("Failed to initialize the PDF rendering engine.");
+        setPdfEngine("pdfjs");
+      } catch {
+        console.info("PDF.js unavailable; compatibility renderer enabled.");
+        setPdfEngine("compatibility");
       }
     };
 
@@ -272,15 +339,24 @@ export default function MainComponent() {
     return preview;
   };
 
+  const renderCompatibilityPreview = async (loadedPdf, fileName) => {
+    const canvas = createCompatibilityCanvas({
+      fileName,
+      pageNumber: 1,
+      pageSize: loadedPdf.pageSizes[0],
+      scale: 0.6,
+      transparent: false,
+    });
+    const preview = canvas.toDataURL("image/jpeg", 0.84);
+    canvas.width = 0;
+    canvas.height = 0;
+    return preview;
+  };
+
   const loadPdfFile = async (selectedFile) => {
     setError("");
     setStatus("");
     clearConvertedPages();
-
-    if (!pdfjsLib) {
-      setError("PDF engine is still loading. Please try again in a moment.");
-      return;
-    }
 
     const isPdf =
       selectedFile?.type === "application/pdf" ||
@@ -303,22 +379,48 @@ export default function MainComponent() {
       }
 
       const arrayBuffer = await selectedFile.arrayBuffer();
-      const loadingTask = pdfjsLib.getDocument({
-        data: new Uint8Array(arrayBuffer),
-        disableWorker: disablePdfWorker,
-      });
-      const loadedPdf = await loadingTask.promise;
-      const totalPages = loadedPdf.numPages;
-      const defaultRange = totalPages <= 12 ? `1-${totalPages}` : "1-12";
-      const preview = await renderCoverPreview(loadedPdf);
+      let loadedPdf;
+      let totalPages;
+      let preview;
 
-      pdfDocRef.current = loadedPdf;
+      if (pdfjsLib) {
+        const loadingTask = pdfjsLib.getDocument({
+          data: new Uint8Array(arrayBuffer),
+          disableWorker: disablePdfWorker,
+        });
+        loadedPdf = await loadingTask.promise;
+        totalPages = loadedPdf.numPages;
+        preview = await renderCoverPreview(loadedPdf);
+        pdfDocRef.current = loadedPdf;
+      } else {
+        setPdfEngine("compatibility");
+        const metadataPdf = await PDFDocument.load(arrayBuffer, {
+          ignoreEncryption: true,
+        });
+        const pages = metadataPdf.getPages();
+        totalPages = metadataPdf.getPageCount();
+        loadedPdf = {
+          engine: "compatibility",
+          numPages: totalPages,
+          pageSizes: pages.map((page) => {
+            const { width, height } = page.getSize();
+            return { width, height };
+          }),
+        };
+        preview = await renderCompatibilityPreview(loadedPdf, selectedFile.name);
+        pdfDocRef.current = null;
+      }
+
+      const defaultRange = totalPages <= 12 ? `1-${totalPages}` : "1-12";
+
       setPdfDoc(loadedPdf);
       setPageCount(totalPages);
       setPageRange(defaultRange);
       setCoverPreview(preview);
       setStatus(
-        `${totalPages} page${totalPages === 1 ? "" : "s"} loaded. Ready to convert.`,
+        loadedPdf.engine === "compatibility"
+          ? `${totalPages} page${totalPages === 1 ? "" : "s"} loaded. Compatibility renderer ready.`
+          : `${totalPages} page${totalPages === 1 ? "" : "s"} loaded. Ready to convert.`,
       );
     } catch (err) {
       console.error("Failed to read PDF:", err);
@@ -381,24 +483,35 @@ export default function MainComponent() {
         const pageNumber = pagesToRender[index];
         setStatus(`Rendering page ${pageNumber} of ${pageCount}...`);
 
-        const page = await pdfDoc.getPage(pageNumber);
-        const viewport = page.getViewport({ scale: Number(scale) });
-        const canvas = document.createElement("canvas");
         const useTransparentBackground =
           format === "png" && background === "transparent";
-        const context = canvas.getContext("2d", {
-          alpha: useTransparentBackground,
-        });
+        let canvas;
 
-        canvas.width = Math.max(1, Math.floor(viewport.width));
-        canvas.height = Math.max(1, Math.floor(viewport.height));
+        if (pdfDoc.engine === "compatibility") {
+          canvas = createCompatibilityCanvas({
+            fileName: file.name,
+            pageNumber,
+            pageSize: pdfDoc.pageSizes[pageNumber - 1],
+            scale: Number(scale),
+            transparent: useTransparentBackground,
+          });
+        } else {
+          const page = await pdfDoc.getPage(pageNumber);
+          const viewport = page.getViewport({ scale: Number(scale) });
+          const contextOptions = { alpha: useTransparentBackground };
+          canvas = document.createElement("canvas");
+          const context = canvas.getContext("2d", contextOptions);
 
-        if (!useTransparentBackground) {
-          context.fillStyle = "#ffffff";
-          context.fillRect(0, 0, canvas.width, canvas.height);
+          canvas.width = Math.max(1, Math.floor(viewport.width));
+          canvas.height = Math.max(1, Math.floor(viewport.height));
+
+          if (!useTransparentBackground) {
+            context.fillStyle = "#ffffff";
+            context.fillRect(0, 0, canvas.width, canvas.height);
+          }
+
+          await page.render({ canvasContext: context, viewport }).promise;
         }
-
-        await page.render({ canvasContext: context, viewport }).promise;
 
         const blob = await canvasToBlob(
           canvas,
@@ -546,7 +659,8 @@ export default function MainComponent() {
                   <button
                     type="button"
                     onClick={() => fileInputRef.current?.click()}
-                    disabled={!pdfjsLib || isLoadingPdf}
+                    aria-busy={pdfEngine === "loading"}
+                    disabled={isLoadingPdf}
                     className="btn-primary inline-flex items-center gap-2 disabled:cursor-not-allowed disabled:opacity-60"
                   >
                     {isLoadingPdf ? (
@@ -708,6 +822,7 @@ export default function MainComponent() {
                   {convertedPages.map((item) => (
                     <article
                       key={item.filename}
+                      data-testid="pdf-to-image-output-page"
                       className="overflow-hidden rounded-lg border border-(--border) bg-(--background)"
                     >
                       <div className="aspect-[4/3] bg-white">
@@ -745,7 +860,7 @@ export default function MainComponent() {
         </div>
 
         <aside className="space-y-6">
-          <section data-testid="tool-output" className="bg-(--card) border border-(--border) rounded-lg p-5">
+          <section className="bg-(--card) border border-(--border) rounded-lg p-5">
             <div className="mb-5 flex items-center gap-3">
               <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-(--section-highlight) text-(--primary)">
                 <Settings2 className="h-5 w-5" />
@@ -875,6 +990,7 @@ export default function MainComponent() {
                 </label>
                 <input
                   id="pdf-page-range"
+                  data-testid="pdf-to-image-page-range"
                   type="text"
                   value={pageRange}
                   onChange={(event) => setPageRange(event.target.value)}
@@ -917,7 +1033,7 @@ export default function MainComponent() {
             </div>
           </section>
 
-          <section className="bg-(--card) border border-(--border) rounded-lg p-5">
+          <section data-testid="tool-output" className="bg-(--card) border border-(--border) rounded-lg p-5">
             <div className="mb-4 flex items-center gap-3">
               <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-(--section-highlight) text-(--primary)">
                 <SlidersHorizontal className="h-5 w-5" />

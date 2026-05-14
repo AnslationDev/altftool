@@ -36,6 +36,7 @@ const UploadArea = ({ onFileChange, fileInputRef }) => {
       <input
         type="file"
         accept="image/*"
+        data-testid="image-cropper-file-input"
         onChange={onFileChange}
         ref={fileInputRef}
         className="hidden"

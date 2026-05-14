@@ -158,6 +158,12 @@ export function useImageCropper() {
               : `${Math.round(file.size / 1024)} KB`,
           aspectRatio: `${Math.round(aspect * 100) / 100}:1`,
         });
+        setCroppedAreaPixels({
+          x: 0,
+          y: 0,
+          width: img.width,
+          height: img.height,
+        });
       };
       img.src = event.target.result;
       setCroppedImage(null);
@@ -170,6 +176,8 @@ export function useImageCropper() {
   const reset = useCallback(() => {
     setImageSrc(null);
     setCroppedImage(null);
+    setCroppedAreaPixels(null);
+    setSelectedFile(null);
     if (fileInputRef.current) {
       fileInputRef.current.value = "";
     }
@@ -241,9 +249,6 @@ export function useImageCropper() {
           (blob) => {
             if (!blob) return;
 
-            console.log("Before:", beforeSize);
-            console.log("After:", blob.size);
-
             if (blob.size < beforeSize) {
               const compressedUrl = URL.createObjectURL(blob);
 
@@ -278,94 +283,57 @@ export function useImageCropper() {
     setQuality(value);
   };
 
-// downloadCroppedImage function 
   const downloadCroppedImage = useCallback(() => {
-  if (!croppedImage) return;
+    if (!croppedImage) return;
 
-  const img = new Image();
-  img.src = croppedImage;
+    const img = new Image();
+    img.src = croppedImage;
 
-  img.onload = () => {
-    const canvas = document.createElement("canvas");
-    const ctx = canvas.getContext("2d");
+    img.onload = () => {
+      const canvas = document.createElement("canvas");
+      const ctx = canvas.getContext("2d");
 
-    let width = img.width;
-    let height = img.height;
+      let width = img.width;
+      let height = img.height;
 
-    if (downloadSize === "medium") {
-      width = img.width * 0.75;
-      height = img.height * 0.75;
-    }
+      if (downloadSize === "medium") {
+        width = img.width * 0.75;
+        height = img.height * 0.75;
+      }
 
-    if (downloadSize === "small") {
-      width = img.width * 0.5;
-      height = img.height * 0.5;
-    }
+      if (downloadSize === "small") {
+        width = img.width * 0.5;
+        height = img.height * 0.5;
+      }
 
-    canvas.width = width;
-    canvas.height = height;
+      canvas.width = width;
+      canvas.height = height;
 
-    ctx.drawImage(img, 0, 0, width, height);
+      ctx.drawImage(img, 0, 0, width, height);
 
-    const mimeType =
-      downloadFormat === "png" ? "image/png" : "image/jpeg";
+      const mimeType =
+        downloadFormat === "png" ? "image/png" : "image/jpeg";
 
-    const fileQuality = downloadFormat === "png" ? 1 : quality;
+      const fileQuality = downloadFormat === "png" ? 1 : quality;
 
-    canvas.toBlob(
-      (blob) => {
-        if (!blob) return;
+      canvas.toBlob(
+        (blob) => {
+          if (!blob) return;
 
-        const url = URL.createObjectURL(blob);
+          const url = URL.createObjectURL(blob);
 
-        const link = document.createElement("a");
-        link.download = `cropped-image.${downloadFormat === "png" ? "png" : "jpg"}`;
-        link.href = url;
-        link.click();
+          const link = document.createElement("a");
+          link.download = `cropped-image.${downloadFormat === "png" ? "png" : "jpg"}`;
+          link.href = url;
+          link.click();
 
-        URL.revokeObjectURL(url);
-      },
-      mimeType,
-      fileQuality
-    );
-  };
-}, [croppedImage, downloadFormat, downloadSize, quality]);
-
-// download options
-<div className="flex flex-col sm:flex-row gap-3 mb-4">
-  <select
-    value={downloadFormat}
-    onChange={(e) => setDownloadFormat(e.target.value)}
-    className="px-3 py-2 rounded-md border border-(--border) bg-(--card) text-sm"
-  >
-    <option value="jpeg">JPG</option>
-    <option value="png">PNG</option>
-  </select>
-
-  <select
-    value={downloadSize}
-    onChange={(e) => setDownloadSize(e.target.value)}
-    className="px-3 py-2 rounded-md border border-(--border) bg-(--card) text-sm"
-  >
-    <option value="original">Original Size</option>
-    <option value="medium">Medium</option>
-    <option value="small">Small</option>
-  </select>
-
-  <div className="flex items-center gap-2 px-3 py-2 rounded-md border border-(--border) bg-(--card)">
-    <span className="text-sm text-(--muted-foreground)">Quality</span>
-
-    <input
-      type="range"
-      min="0.3"
-      max="1"
-      step="0.1"
-      value={quality}
-      onChange={(e) => setQuality(Number(e.target.value))}
-      className="w-24"
-    />
-  </div>
-</div>
+          URL.revokeObjectURL(url);
+        },
+        mimeType,
+        fileQuality,
+      );
+    };
+  }, [croppedImage, downloadFormat, downloadSize, quality]);
    
   return {
     // state
@@ -450,14 +418,10 @@ export function useImageCropper() {
     },
     handleUndo,
     handleResetAll,
-    downloadFormat,
-setDownloadFormat,
-downloadSize,
-setDownloadSize,
     history,
     downloadFormat,
-setDownloadFormat,
-downloadSize,
-setDownloadSize,
+    setDownloadFormat,
+    downloadSize,
+    setDownloadSize,
   };
 }

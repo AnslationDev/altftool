@@ -1,23 +1,69 @@
 import { expect, test } from "@playwright/test";
 import { writeFile } from "node:fs/promises";
 import { createRequire } from "node:module";
+import { deflateSync } from "node:zlib";
 import { createPageQualityGate } from "./helpers/pageQuality.mjs";
 
 const webUrl = process.env.ALTFT_WEB_URL || "http://localhost:3002";
 const toolRouteTimeoutMs = Number(process.env.ALTFT_TOOL_FUNCTIONAL_ROUTE_TIMEOUT_MS || 60_000);
 const webRequire = createRequire(new URL("../altftoolweb/package.json", import.meta.url));
 const { PDFDocument, StandardFonts, rgb } = webRequire("pdf-lib");
-const tinyPngBase64 =
-  "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAADElEQVR42mP8z8BQDwAFgwJ/lM1p7wAAAABJRU5ErkJggg==";
+
+function crc32(buffer) {
+  let crc = 0xffffffff;
+  for (const byte of buffer) {
+    crc ^= byte;
+    for (let bit = 0; bit < 8; bit += 1) {
+      crc = (crc >>> 1) ^ (0xedb88320 & -(crc & 1));
+    }
+  }
+  const output = Buffer.alloc(4);
+  output.writeUInt32BE((crc ^ 0xffffffff) >>> 0);
+  return output;
+}
+
+function pngChunk(type, data) {
+  const typeBuffer = Buffer.from(type);
+  const length = Buffer.alloc(4);
+  length.writeUInt32BE(data.length);
+  return Buffer.concat([length, typeBuffer, data, crc32(Buffer.concat([typeBuffer, data]))]);
+}
+
+function createPngBuffer(width = 64, height = 48) {
+  const header = Buffer.alloc(13);
+  header.writeUInt32BE(width, 0);
+  header.writeUInt32BE(height, 4);
+  header[8] = 8;
+  header[9] = 6;
+
+  const rows = [];
+  for (let y = 0; y < height; y += 1) {
+    const row = Buffer.alloc(1 + width * 4);
+    for (let x = 0; x < width; x += 1) {
+      const offset = 1 + x * 4;
+      row[offset] = Math.round((x / width) * 220);
+      row[offset + 1] = Math.round((y / height) * 180);
+      row[offset + 2] = 120;
+      row[offset + 3] = 255;
+    }
+    rows.push(row);
+  }
+
+  return Buffer.concat([
+    Buffer.from([137, 80, 78, 71, 13, 10, 26, 10]),
+    pngChunk("IHDR", header),
+    pngChunk("IDAT", deflateSync(Buffer.concat(rows))),
+    pngChunk("IEND", Buffer.alloc(0)),
+  ]);
+}
 
 async function writePngFixture(testInfo, filename = "sample.png") {
   const fixturePath = testInfo.outputPath(filename);
-  await writeFile(fixturePath, Buffer.from(tinyPngBase64, "base64"));
+  await writeFile(fixturePath, createPngBuffer());
   return fixturePath;
 }
 
-async function writePdfFixture(testInfo, filename, pageCount) {
-  const fixturePath = testInfo.outputPath(filename);
+async function createPdfBytes(pageCount) {
   const pdf = await PDFDocument.create();
   const font = await pdf.embedFont(StandardFonts.Helvetica);
 
@@ -32,7 +78,12 @@ async function writePdfFixture(testInfo, filename, pageCount) {
     });
   }
 
-  await writeFile(fixturePath, Buffer.from(await pdf.save()));
+  return Buffer.from(await pdf.save());
+}
+
+async function writePdfFixture(testInfo, filename, pageCount) {
+  const fixturePath = testInfo.outputPath(filename);
+  await writeFile(fixturePath, await createPdfBytes(pageCount));
   return fixturePath;
 }
 
@@ -178,5 +229,78 @@ test.describe("microtool functional flows", () => {
     });
 
     await quality.expectClean("pdf utility uploads");
+  });
+
+  test("media conversion utilities create real previews", async ({ page }, testInfo) => {
+    const quality = createPageQualityGate(page);
+    const imagePath = await writePngFixture(testInfo, "conversion.png");
+    const pdfPath = await writePdfFixture(testInfo, "conversion.pdf", 1);
+    const pngDataUrl = `data:image/png;base64,${createPngBuffer().toString("base64")}`;
+    const pdfDataUrl = `data:application/pdf;base64,${(await createPdfBytes(1)).toString("base64")}`;
+
+    await openTool(page, "file-to-base64", "File to Base64");
+    await page.getByTestId("file-to-base64-input").setInputFiles(imagePath);
+    await expect(page.getByTestId("tool-output")).toContainText("data:image/png;base64", {
+      timeout: 15_000,
+    });
+
+    await openTool(page, "pdf-to-base64", "PDF to Base64");
+    await page.getByTestId("file-to-base64-input").setInputFiles(pdfPath);
+    await expect(page.getByTestId("tool-output")).toContainText("data:application/pdf;base64", {
+      timeout: 15_000,
+    });
+
+    await openTool(page, "base64-to-image", "Base64 to Image");
+    await page.getByTestId("tool-input").fill(pngDataUrl);
+    await page.getByRole("button", { name: "Preview", exact: true }).click();
+    await expect(page.getByTestId("tool-output")).toContainText("Decoded image/png ready", {
+      timeout: 15_000,
+    });
+
+    await openTool(page, "base64-to-pdf", "Base64 to PDF");
+    await page.getByTestId("tool-input").fill(pdfDataUrl);
+    await page.getByRole("button", { name: "Preview", exact: true }).click();
+    await expect(page.getByTestId("tool-output")).toContainText("Decoded application/pdf ready", {
+      timeout: 15_000,
+    });
+
+    await openTool(page, "svg-to-image", "SVG to Image");
+    await page.getByRole("button", { name: "Render PNG", exact: true }).click();
+    await expect(page.getByTestId("tool-output")).toContainText("Rendered PNG ready", {
+      timeout: 15_000,
+    });
+
+    await quality.expectClean("media conversion previews");
+  });
+
+  test("advanced image and PDF render tools produce output previews", async ({ page }, testInfo) => {
+    const quality = createPageQualityGate(page);
+    const imagePath = await writePngFixture(testInfo, "cropper.png");
+    const pdfPath = await writePdfFixture(testInfo, "render.pdf", 1);
+
+    await openTool(page, "image-cropper", "Image Cropper");
+    await page.getByTestId("image-cropper-file-input").setInputFiles(imagePath);
+    await expect(page.getByTestId("tool-output")).toContainText("Image loaded", {
+      timeout: 15_000,
+    });
+    await page.getByTestId("image-cropper-crop-button").click();
+    await expect(page.getByTestId("tool-output")).toContainText("Cropped image ready", {
+      timeout: 15_000,
+    });
+
+    await openTool(page, "pdf-to-image-converter", "PDF to Image Converter");
+    await page.getByTestId("pdf-to-image-file-input").setInputFiles(pdfPath);
+    await expect(page.getByTestId("pdf-to-image-page-range")).toBeEnabled({
+      timeout: 15_000,
+    });
+    await page.getByTestId("pdf-to-image-page-range").fill("1");
+    await page.getByRole("button", { name: "Convert Pages", exact: true }).click();
+    await expect(page.getByTestId("pdf-to-image-output-page")).toContainText("Page 1", {
+      timeout: 30_000,
+    });
+    await expect(page.getByTestId("tool-output")).toContainText("Ready");
+    await expect(page.getByTestId("tool-output")).toContainText("1");
+
+    await quality.expectClean("advanced media render outputs");
   });
 });

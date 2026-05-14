@@ -17,8 +17,8 @@ const CSP_DIRECTIVES = [
   "font-src 'self' data: https:",
   "media-src 'self' data: blob: https:",
   "connect-src 'self' https: ws: wss:",
-  "frame-src 'self' https:",
-  "worker-src 'self' blob:",
+  "frame-src 'self' https: blob:",
+  "worker-src 'self' blob: https:",
   "manifest-src 'self'",
 ];
 

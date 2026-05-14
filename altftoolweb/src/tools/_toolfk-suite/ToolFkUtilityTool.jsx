@@ -1292,7 +1292,7 @@ function FileToBase64Tool({ definition }) {
           <p className="mt-2 max-w-sm text-sm text-(--muted-foreground)">The file stays in your browser and is converted to a Base64 data URL.</p>
           <label className="mt-5 inline-flex cursor-pointer rounded-[7px] bg-(--primary) px-4 py-2 text-sm font-semibold text-(--primary-foreground)">
             Browse file
-            <input type="file" accept={definition.accept} className="sr-only" onChange={(e) => handleFile(e.target.files?.[0])} />
+            <input data-testid="file-to-base64-input" type="file" accept={definition.accept} className="sr-only" onChange={(e) => handleFile(e.target.files?.[0])} />
           </label>
           {fileName && <p className="mt-3 text-xs text-(--muted-foreground)">{fileName}</p>}
         </div>
@@ -1356,9 +1356,12 @@ function Base64ToFileTool({ definition, slug }) {
       </section>
       <section data-testid="tool-output" className="rounded-[8px] border border-(--border) bg-(--card) p-4">
         <p className="text-xs font-bold uppercase tracking-wide text-(--muted-foreground)">Preview</p>
+        <p className="mt-2 text-sm text-(--muted-foreground)">
+          {error ? "Preview failed." : objectUrl ? `Decoded ${mime} ready as ${filename}.` : "Paste data and click Preview."}
+        </p>
         <div className="mt-3 flex min-h-[330px] items-center justify-center rounded-[8px] border border-(--border) bg-(--background) p-3">
           {error && <p className="text-sm text-red-500">{error}</p>}
-          {!error && !objectUrl && <p className="text-sm text-(--muted-foreground)">Paste data and click Preview.</p>}
+          {!error && !objectUrl && <p className="text-sm text-(--muted-foreground)">Waiting for Base64 input.</p>}
           {objectUrl && definition.preview === "image" && <img src={objectUrl} alt="Decoded preview" className="max-h-[320px] rounded-[7px] object-contain" />}
           {objectUrl && definition.preview === "audio" && <audio controls src={objectUrl} className="w-full" />}
           {objectUrl && definition.preview === "video" && <video controls src={objectUrl} className="max-h-[320px] w-full rounded-[7px]" />}
@@ -1712,8 +1715,11 @@ function SvgTool({ definition, slug }) {
           <ActionButton onClick={download}>Download PNG</ActionButton>
         </div>
       </section>
-      <section className="rounded-[8px] border border-(--border) bg-(--card) p-4">
+      <section data-testid="tool-output" className="rounded-[8px] border border-(--border) bg-(--card) p-4">
         <p className="text-xs font-bold uppercase tracking-wide text-(--muted-foreground)">Preview</p>
+        <p className="mt-2 text-sm text-(--muted-foreground)">
+          {error ? "SVG render failed." : preview ? "Rendered PNG ready." : "Click Render PNG."}
+        </p>
         <div className="mt-3 flex min-h-[340px] items-center justify-center rounded-[8px] border border-(--border) bg-(--background) p-4">
           {error && <p className="text-sm text-red-500">{error}</p>}
           {!error && preview ? <img src={preview} alt="SVG preview" className="max-h-[320px] rounded-[7px]" /> : <p className="text-sm text-(--muted-foreground)">Click Render PNG.</p>}
