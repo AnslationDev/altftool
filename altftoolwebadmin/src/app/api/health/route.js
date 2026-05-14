@@ -25,6 +25,8 @@ const TOOL_CHECKS = [
   },
   { key: "icon", label: "Icon", test: (tool) => Boolean(String(tool?.icon || "").trim()) },
 ];
+const IGNORED_TOOL_DIRS = new Set(["_toolfk-suite"]);
+const VALID_ENTRY_FILES = ["entry.js", "entry.jsx", "entry.ts", "entry.tsx"];
 
 function clampScore(score) {
   if (!Number.isFinite(score)) return 0;
@@ -90,6 +92,13 @@ async function listDirectories(dirPath) {
   }
 }
 
+async function hasToolEntry(toolRoot, slug) {
+  const checks = await Promise.all(
+    VALID_ENTRY_FILES.map((file) => fileExists(path.join(toolRoot, slug, file))),
+  );
+  return checks.some(Boolean);
+}
+
 async function readToolMetaMap(webRoot) {
   const source = await readText(
     path.join(webRoot, "src/platform/registry/toolMetaMap.js"),
@@ -115,7 +124,9 @@ function hasSlugReference(source, slug) {
 async function buildToolQuality(webRoot) {
   const toolMetaMap = await readToolMetaMap(webRoot);
   const toolRoot = path.join(webRoot, "src/tools");
-  const toolDirs = await listDirectories(toolRoot);
+  const toolDirs = (await listDirectories(toolRoot)).filter(
+    (slug) => !IGNORED_TOOL_DIRS.has(slug) && !slug.startsWith("."),
+  );
   const registrySlugs = new Set(Object.keys(toolMetaMap));
   const directorySlugs = new Set(toolDirs);
   const categorySlugs = new Set();
@@ -135,7 +146,7 @@ async function buildToolQuality(webRoot) {
             label: check.label,
             ok: check.test(tool),
           })),
-          fileExists(path.join(toolRoot, slug, "entry.jsx")).then((ok) => ({
+          hasToolEntry(toolRoot, slug).then((ok) => ({
             key: "entry",
             label: "Entry component",
             ok,
