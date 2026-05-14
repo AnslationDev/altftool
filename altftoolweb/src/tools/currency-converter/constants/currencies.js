@@ -188,5 +188,5 @@ export const CURRENCY_NAMES = {
 // Open exchange API
 export const API_URL = "https://open.er-api.com/v6/latest/USD";
 
-export const HISTORICAL_API_BASE = "https://api.frankfurter.app";
+export const HISTORICAL_API_BASE = "/api/tools/currency-converter";
 export const TREND_DAYS = [7, 30, 90];

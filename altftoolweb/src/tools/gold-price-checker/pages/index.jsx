@@ -557,19 +557,14 @@ export default function ToolHome() {
   try {
     const metalCodes = metals.map((m) => m.symbol).join(",");
     const url = `/api/tools/metal-prices?currency=${encodeURIComponent(currency)}&metals=${encodeURIComponent(metalCodes)}`;
-    
-    console.log("Fetching from:", url);
-    
+
     const response = await fetch(url);
 
     if (!response.ok) {
-      const errorText = await response.text();
-      console.error("API Error Response:", errorText);
       throw new Error(`API Error: ${response.status} - ${response.statusText}`);
     }
 
     const data = await response.json();
-    console.log("API Response:", data);
 
     if (!data.success) {
       // Handle error object properly - convert to string if it's an object
@@ -592,7 +587,6 @@ export default function ToolHome() {
     setSuccess(true);
     setTimeout(() => setSuccess(false), 3000);
   } catch (err) {
-    console.error("Fetch error:", err);
     setError(err.message);
     
     // Fallback demo data so UI still works

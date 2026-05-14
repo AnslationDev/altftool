@@ -65,8 +65,8 @@ const Charts = ({ weeklyData = MOCK_WEEKLY, monthlyData = MOCK_MONTHLY }) => {
                 </div>
             </div>
 
-            <div className="h-64 sm:h-80">
-                <ResponsiveContainer width="100%" height="100%">
+            <div className="min-h-[256px] w-full sm:min-h-[320px]">
+                <ResponsiveContainer width="100%" height={320} minWidth={1} minHeight={256}>
                     {tab === 'weekly' ? (
                         <AreaChart data={weeklyData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
                             <defs>

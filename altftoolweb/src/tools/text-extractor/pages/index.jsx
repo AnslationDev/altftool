@@ -1,4 +1,4 @@
-"use-client";
+"use client";
 
 import Features from "../components/Features";
 import MainComponent from "../components/Main";

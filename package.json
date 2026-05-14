@@ -45,6 +45,7 @@
     "test:smoke": "playwright test tests/smoke.spec.mjs",
     "test:tools:functional": "playwright test tests/tool-functional.spec.mjs",
     "test:tools:priority": "playwright test tests/tool-priority.spec.mjs",
+    "test:tools:all": "playwright test tests/tool-all-routes.spec.mjs",
     "test:routes": "ALTFT_PLAYWRIGHT_WEB_SERVER=production ALTFT_PLAYWRIGHT_ADMIN_SERVER=dev playwright test tests/route-audit.spec.mjs",
     "test:routes:dev": "playwright test tests/route-audit.spec.mjs",
     "test:admin-api": "playwright test tests/admin-api.spec.mjs",

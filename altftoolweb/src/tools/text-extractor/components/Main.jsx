@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useCallback } from "react";
 import {
   ScanText,
   Upload,
@@ -28,7 +28,7 @@ const loadTesseract = () => {
     script.src =
       "https://cdn.jsdelivr.net/npm/tesseract.js@4/dist/tesseract.min.js";
     script.onload = () => resolve();
-    script.onerror = () => reject("Failed to load Tesseract.js");
+    script.onerror = () => reject(new Error("Failed to load Tesseract.js"));
     document.head.appendChild(script);
   });
 };
@@ -55,21 +55,19 @@ export default function MainComponent() {
   const [copySuccess, setCopySuccess] = useState(false);
   const [error, setError] = useState("");
   const [tesseractLoaded, setTesseractLoaded] = useState(false);
-  const [loadingTesseract, setLoadingTesseract] = useState(true);
+  const [loadingTesseract, setLoadingTesseract] = useState(false);
 
-  // Load Tesseract
-  useEffect(() => {
-    const init = async () => {
-      try {
-        await loadTesseract();
-        setTesseractLoaded(true);
-      } catch {
-        setError("Failed to load OCR engine. Please refresh page.");
-      }
-      setLoadingTesseract(false);
-    };
-    init();
-  }, []);
+  const ensureTesseract = useCallback(async () => {
+    if (tesseractLoaded || window.Tesseract || window.tesseract) {
+      setTesseractLoaded(true);
+      return;
+    }
+
+    setLoadingTesseract(true);
+    await loadTesseract();
+    setTesseractLoaded(true);
+    setLoadingTesseract(false);
+  }, [tesseractLoaded]);
 
   const doOCR = useCallback(async (file) => {
     setProcessing(true);
@@ -78,15 +76,17 @@ export default function MainComponent() {
     setOcrResult("");
 
     try {
+      await ensureTesseract();
       const { data } = await runOCR(file, setProgress);
       const formatted = `--- Confidence: ${data.confidence.toFixed(2)}% ---\n\n${data.text}`;
       setOcrResult(formatted);
     } catch {
       setError("Failed to extract text. Try another image.");
+    } finally {
+      setLoadingTesseract(false);
+      setProcessing(false);
     }
-
-    setProcessing(false);
-  }, []);
+  }, [ensureTesseract]);
 
   const handleFileChange = async (e) => {
     const file = e.target.files?.[0];
@@ -162,7 +162,7 @@ export default function MainComponent() {
                 </p>
 
                 <button
-                  disabled={!tesseractLoaded}
+                  disabled={loadingTesseract}
                   className="mt-4 px-4 py-2 rounded-md bg-(--primary) text-(--primary-foreground) cursor-pointer"
                 >
                   {loadingTesseract ? "Loading OCR..." : "Select Image"}
@@ -276,7 +276,7 @@ export default function MainComponent() {
             desc="Powered by Tesseract.js OCR engine."
           />
           <FeatureItem
-            icon={Image}
+            icon={ImageIcon}
             title="Wide Support"
             desc="Works with JPG & PNG images."
           />

@@ -594,8 +594,8 @@ const CarCostCalculator = () => {
                                         </div>
                                     </div>
                                 </div>
-                                <div className="h-[300px] mt-4">
-                                    <ResponsiveContainer width="100%" height="100%">
+                                <div className="mt-4 min-h-[300px] w-full">
+                                    <ResponsiveContainer width="100%" height={300} minWidth={1} minHeight={300}>
                                         {chartType === 'bar' ? (
                                             <BarChart data={comparisonChartData}>
                                                 <CartesianGrid strokeDasharray="3 3" stroke="rgba(0,0,0,0.05)" vertical={false} />

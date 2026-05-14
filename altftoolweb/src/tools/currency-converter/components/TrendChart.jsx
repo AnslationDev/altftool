@@ -60,8 +60,13 @@ export default function TrendChart({
       ) : (
         <>
           {/* Chart */}
-          <div className="h-[220px] sm:h-[260px] lg:h-[300px] w-full">
-            <ResponsiveContainer width="100%" height="100%">
+          {trendData.length === 0 ? (
+            <div className="flex min-h-[220px] items-center justify-center rounded-xl border border-dashed border-(--border) bg-(--background) px-4 text-center text-sm text-(--muted-foreground) sm:min-h-[260px] lg:min-h-[300px]">
+              Trend data is unavailable right now. Conversion still works with the latest cached rate.
+            </div>
+          ) : (
+          <div className="min-h-[220px] w-full sm:min-h-[260px] lg:min-h-[300px]">
+            <ResponsiveContainer width="100%" height={300} minWidth={1} minHeight={220}>
               <LineChart data={trendData}>
                 <XAxis
                   dataKey="date"
@@ -126,6 +131,7 @@ export default function TrendChart({
               </LineChart>
             </ResponsiveContainer>
           </div>
+          )}
 
           {/* Bottom Stats */}
           <div className="mt-6 grid grid-cols-1 sm:grid-cols-3 gap-3">
