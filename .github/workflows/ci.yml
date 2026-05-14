@@ -120,6 +120,9 @@ jobs:
       - name: Verify admin CRUD paths against Firestore Emulator
         run: npm run test:admin-crud:emulator
 
+      - name: Verify admin-to-web sync against Firestore Emulator
+        run: npm run test:admin-web-sync:emulator
+
   visual-regression:
     runs-on: macos-latest
     timeout-minutes: 30
