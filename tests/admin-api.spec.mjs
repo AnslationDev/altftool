@@ -94,6 +94,15 @@ test.describe("admin API safety", () => {
         invalid: expect.any(Array),
       }),
     );
+    expect(payload.qa).toEqual(
+      expect.objectContaining({
+        total: 40,
+        routeCovered: 40,
+        functionalCovered: expect.any(Number),
+        tools: expect.any(Array),
+      }),
+    );
+    expect(payload.qa.tools).toHaveLength(40);
     expect(JSON.stringify(payload.firebaseAdmin)).not.toContain("PRIVATE KEY-----");
   });
 });

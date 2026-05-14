@@ -43,6 +43,7 @@
     "test:firebase-admin-write-check": "node --test tests/firebase-admin-write-check.test.mjs",
     "test:smoke": "playwright test tests/smoke.spec.mjs",
     "test:tools:functional": "playwright test tests/tool-functional.spec.mjs",
+    "test:tools:priority": "playwright test tests/tool-priority.spec.mjs",
     "test:routes": "ALTFT_PLAYWRIGHT_WEB_SERVER=production ALTFT_PLAYWRIGHT_ADMIN_SERVER=dev playwright test tests/route-audit.spec.mjs",
     "test:routes:dev": "playwright test tests/route-audit.spec.mjs",
     "test:admin-api": "playwright test tests/admin-api.spec.mjs",
@@ -52,7 +53,7 @@
     "test:lighthouse": "ALTFT_PLAYWRIGHT_WEB_SERVER=production ALTFT_PLAYWRIGHT_ADMIN_SERVER=dev playwright test tests/lighthouse.spec.mjs",
     "test:lighthouse:dev": "playwright test tests/lighthouse.spec.mjs",
     "validate": "npm run lint:web && npm run lint:web:budget && npm run routes:check && npm run tools:check && npm run env:readiness && npm run firebase:check && npm run audit && npm run build && npm run bundle:audit && npm run test:smoke",
-    "validate:full": "npm run validate && npm run test:routes && npm run test:tools:functional && npm run test:admin-api && npm run test:firebase-admin-write-check",
+    "validate:full": "npm run validate && npm run test:routes && npm run test:tools:functional && npm run test:tools:priority && npm run test:admin-api && npm run test:firebase-admin-write-check",
     "validate:release": "npm run validate:full && npm run firebase:live-check && npm run test:security && npm run test:visual && npm run test:lighthouse"
   },
   "devDependencies": {

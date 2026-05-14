@@ -1,7 +1,7 @@
 
 
 import React, { useState, useMemo } from 'react';
-import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, BarChart, Bar, XAxis, YAxis, CartesianGrid, Legend } from 'recharts';
+import { PieChart, Pie, Cell, Tooltip, BarChart, Bar, XAxis, YAxis, CartesianGrid, Legend } from 'recharts';
 import { Calculator, Download, TrendingDown, DollarSign, Calendar, Percent } from 'lucide-react';
 import Description from "../components/Description";
 
@@ -373,26 +373,24 @@ Generated on: ${new Date().toLocaleString()}
                     </div>
                   )}
 
-                  <div className="h-64">
-                    <ResponsiveContainer width="100%" height="100%">
-                      <PieChart>
-                        <Pie
-                          data={pieData}
-                          cx="50%"
-                          cy="50%"
-                          labelLine={false}
-                          label={({ name, percent }) => `${name} ${(percent * 100).toFixed(1)}%`}
-                          outerRadius={80}
-                          fill="#8884d8"
-                          dataKey="value"
-                        >
-                          {pieData.map((entry, index) => (
-                            <Cell key={`cell-${index}`} fill={entry.color} />
-                          ))}
-                        </Pie>
-                        <Tooltip formatter={(value) => formatCurrency(value)} />
-                      </PieChart>
-                    </ResponsiveContainer>
+                  <div className="h-64 overflow-hidden">
+                    <PieChart width={360} height={256} className="mx-auto max-w-full">
+                      <Pie
+                        data={pieData}
+                        cx="50%"
+                        cy="50%"
+                        labelLine={false}
+                        label={({ name, percent }) => `${name} ${(percent * 100).toFixed(1)}%`}
+                        outerRadius={80}
+                        fill="#8884d8"
+                        dataKey="value"
+                      >
+                        {pieData.map((entry, index) => (
+                          <Cell key={`cell-${index}`} fill={entry.color} />
+                        ))}
+                      </Pie>
+                      <Tooltip formatter={(value) => formatCurrency(value)} />
+                    </PieChart>
                   </div>
 
                   <button
@@ -409,18 +407,16 @@ Generated on: ${new Date().toLocaleString()}
             {activeTab === 'breakdown' && (
               <div className="space-y-6">
                 <h2 className="text-xl font-bold text-(--foreground)">Yearly Payment Breakdown</h2>
-                <div className="h-96">
-                  <ResponsiveContainer width="100%" height="100%">
-                    <BarChart data={yearlyData}>
-                      <CartesianGrid strokeDasharray="3 3" />
-                      <XAxis dataKey="year" />
-                      <YAxis tickFormatter={(val) => `₹${(val / 1000).toFixed(0)}K`} />
-                      <Tooltip formatter={(value) => formatCurrency(value)} />
-                      <Legend />
-                      <Bar dataKey="Principal" fill="#3b82f6" />
-                      <Bar dataKey="Interest" fill="#ef4444" />
-                    </BarChart>
-                  </ResponsiveContainer>
+                <div className="overflow-x-auto">
+                  <BarChart width={760} height={384} data={yearlyData} className="max-w-full">
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis dataKey="year" />
+                    <YAxis tickFormatter={(val) => `₹${(val / 1000).toFixed(0)}K`} />
+                    <Tooltip formatter={(value) => formatCurrency(value)} />
+                    <Legend />
+                    <Bar dataKey="Principal" fill="#3b82f6" />
+                    <Bar dataKey="Interest" fill="#ef4444" />
+                  </BarChart>
                 </div>
               </div>
             )}

@@ -15,14 +15,13 @@ export default function MainComponent() {
   const [activeTab, setActiveTab] = useState('URL');
   const [qrValue, setQrValue] = useState('https://google.com');
   const [fgColor, setFgColor] = useState('#000000');
-  const [bgColor, setBgColor] = useState('#ffffff');
-  const [qrStyle, setQrStyle] = useState('squares'); 
+  const bgColor = '#ffffff';
   const [size, setSize] = useState(220);
   const [customLogo, setCustomLogo] = useState(null);
   const isClient = useHydrated();
 
   // --- Analytics States ---
-  const [geoData, setGeoData] = useState({ city: 'Fetching...', country: '...', isp: '...' });
+  const geoData = { city: 'Local', country: 'India', isp: 'Network' };
   const [scanCount, setScanCount] = useState(0);
 
   // --- Bulk States ---
@@ -50,27 +49,9 @@ export default function MainComponent() {
     return qrValue || 'https://google.com';
   }, [activeTab, qrValue, upi, vCard, wifi]);
 
-  useEffect(() => {
-    const controller = new AbortController();
-
-    fetch('https://ipwho.is/', { signal: controller.signal })
-      .then(res => res.json())
-      .then(data => {
-        if (data?.success === false) throw new Error('IP lookup failed');
-        setGeoData({
-          city: data.city || 'Local',
-          country: data.country || 'India',
-          isp: data.connection?.isp || 'Network',
-        });
-      })
-      .catch((error) => {
-        if (error.name !== 'AbortError') {
-          setGeoData({ city: 'Local', country: 'India', isp: 'Network' });
-        }
-      });
-
-    return () => controller.abort();
-  }, []);
+  useEffect(() => () => {
+    if (customLogo) URL.revokeObjectURL(customLogo);
+  }, [customLogo]);
 
   // --- Bulk CSV Functions ---
   const handleCSVUpload = (e) => {
@@ -216,17 +197,10 @@ export default function MainComponent() {
 
           <div className="bg-(--card) border border-(--border) rounded-2xl p-6 space-y-6 shadow-sm">
             <h2 className="font-semibold text-lg flex items-center gap-2 text-(--primary)"><Palette size={20} className="text-blue-600" /> Customize Style</h2>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
               <div className="space-y-1">
                 <label className="text-ml font-semibold text-slate-400 uppercase">QR Color</label>
                 <input type="color" className="w-full h-10 rounded-lg cursor-pointer bg-transparent border border-(--border)" value={fgColor} onChange={(e) => setFgColor(e.target.value)} />
-              </div>
-              <div className="space-y-1">
-                <label className="text-ml font-semibold text-slate-400 uppercase">Pattern</label>
-                <select className="w-full h-10 px-2 bg-(--background) border border-(--border) rounded-lg font-semibold text-ml" value={qrStyle} onChange={(e) => setQrStyle(e.target.value)}>
-                  <option value="squares">Squares</option>
-                  <option value="dots">Dots</option>
-                </select>
               </div>
               <div className="space-y-1">
                 <label className="text-ml font-semibold text-slate-400 uppercase">Size</label>
@@ -259,7 +233,6 @@ export default function MainComponent() {
                     size={size}
                     bgColor={bgColor}
                     fgColor={fgColor}
-                    qrStyle={qrStyle}
                     level="H"
                     includeMargin
                     imageSettings={customLogo ? { src: customLogo, height: 40, width: 40, excavate: true } : null}

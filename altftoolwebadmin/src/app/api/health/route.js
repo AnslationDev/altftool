@@ -3,6 +3,7 @@ import path from "node:path";
 import { promises as fs } from "node:fs";
 import { verifySuperAdminRequest } from "@/lib/adminAccess";
 import { getAdminDb, getFirebaseAdminConfigStatus } from "@/lib/firebaseAdmin";
+import { TOP_PRIORITY_TOOL_SLUGS, normalizeToolCategory } from "@altftool/core/toolHealth";
 
 export const dynamic = "force-dynamic";
 
@@ -88,6 +89,10 @@ function getToolCategories(tool) {
   return Array.isArray(tool.category) ? tool.category : [tool.category];
 }
 
+function hasSlugReference(source, slug) {
+  return source.includes(`"${slug}"`) || source.includes(`'${slug}'`);
+}
+
 async function buildToolQuality(webRoot) {
   const toolMetaMap = await readToolMetaMap(webRoot);
   const toolRoot = path.join(webRoot, "src/tools");
@@ -130,7 +135,7 @@ async function buildToolQuality(webRoot) {
         return {
           slug,
           name: tool?.name || slug,
-          category: getToolCategories(tool).join(", ") || "Uncategorized",
+          category: normalizeToolCategory(tool?.category),
           score: clampScore((checks.filter((check) => check.ok).length / checks.length) * 100),
           issues,
         };
@@ -169,6 +174,96 @@ async function buildToolQuality(webRoot) {
       .filter((item) => item.issues.length > 0)
       .sort((a, b) => a.score - b.score || a.slug.localeCompare(b.slug))
       .slice(0, 12),
+  };
+}
+
+async function buildPriorityQaReadiness(workspaceRoot, webRoot) {
+  const toolMetaMap = await readToolMetaMap(webRoot);
+  const packageJson = await readJson(path.join(workspaceRoot, "package.json"), {});
+  const scripts = packageJson.scripts || {};
+  const prioritySpecPath = path.join(workspaceRoot, "tests/tool-priority.spec.mjs");
+  const functionalSpecPath = path.join(workspaceRoot, "tests/tool-functional.spec.mjs");
+  const [prioritySpecExists, functionalSpecExists, prioritySpecSource, functionalSpecSource] =
+    await Promise.all([
+      fileExists(prioritySpecPath),
+      fileExists(functionalSpecPath),
+      readText(prioritySpecPath),
+      readText(functionalSpecPath),
+    ]);
+  const usesSharedPriorityList = prioritySpecSource.includes("TOP_PRIORITY_TOOL_SLUGS");
+
+  const tools = TOP_PRIORITY_TOOL_SLUGS.map((slug, index) => {
+    const tool = toolMetaMap[slug];
+    const registered = Boolean(tool);
+    const routeCovered =
+      prioritySpecExists && registered && (usesSharedPriorityList || hasSlugReference(prioritySpecSource, slug));
+
+    return {
+      rank: index + 1,
+      slug,
+      name: tool?.name || slug,
+      category: normalizeToolCategory(tool?.category),
+      route: `/tools/all/${slug}`,
+      registered,
+      routeCovered,
+      functionalCovered: functionalSpecExists && hasSlugReference(functionalSpecSource, slug),
+    };
+  });
+
+  const total = tools.length;
+  const registered = tools.filter((tool) => tool.registered).length;
+  const routeCovered = tools.filter((tool) => tool.routeCovered).length;
+  const functionalCovered = tools.filter((tool) => tool.functionalCovered).length;
+  const routeScriptReady = Boolean(scripts["test:tools:priority"]);
+
+  const checks = [
+    {
+      key: "priorityList",
+      label: "Priority tool list",
+      detail: `${total} high-traffic tools tracked`,
+      ok: total >= 40,
+    },
+    {
+      key: "prioritySpec",
+      label: "Priority route QA spec",
+      detail: "tests/tool-priority.spec.mjs",
+      ok: prioritySpecExists,
+    },
+    {
+      key: "priorityScript",
+      label: "Priority QA script",
+      detail: "npm run test:tools:priority",
+      ok: routeScriptReady,
+    },
+    {
+      key: "registeredTools",
+      label: "Priority slugs registered",
+      detail: `${registered}/${total}`,
+      ok: registered === total,
+    },
+    {
+      key: "routeCoverage",
+      label: "Priority route coverage",
+      detail: `${routeCovered}/${total}`,
+      ok: routeCovered === total,
+    },
+    {
+      key: "functionalSpec",
+      label: "Functional regression spec",
+      detail: "tests/tool-functional.spec.mjs",
+      ok: functionalSpecExists && Boolean(scripts["test:tools:functional"]),
+    },
+  ];
+
+  return {
+    score: clampScore((checks.filter((check) => check.ok).length / checks.length) * 100),
+    total,
+    registered,
+    routeCovered,
+    functionalCovered,
+    checks,
+    tools,
+    needsAttention: tools.filter((tool) => !tool.registered || !tool.routeCovered),
   };
 }
 
@@ -328,7 +423,7 @@ async function buildFirebaseAdminReadiness() {
   };
 }
 
-function buildRecommendations({ tools, seo, content, automation, firebaseAdmin }) {
+function buildRecommendations({ tools, qa, seo, content, automation, firebaseAdmin }) {
   const recommendations = [];
 
   if (tools.missingEntry || tools.missingConfig) {
@@ -351,6 +446,12 @@ function buildRecommendations({ tools, seo, content, automation, firebaseAdmin }
 
   if (seo.score < 100) {
     recommendations.push("Complete sitemap, robots, metadata, and JSON-LD coverage for crawl readiness.");
+  }
+
+  if (qa.score < 100) {
+    recommendations.push(
+      `Keep the top ${qa.total} tool route QA pack green before shipping public tool updates.`,
+    );
   }
 
   if (content.score < 100) {
@@ -380,8 +481,9 @@ export async function GET(request) {
     const workspaceRoot = path.resolve(adminRoot, "..");
     const webRoot = path.join(workspaceRoot, "altftoolweb");
 
-    const [tools, seo, content, automation, firebaseAdmin] = await Promise.all([
+    const [tools, qa, seo, content, automation, firebaseAdmin] = await Promise.all([
       buildToolQuality(webRoot),
+      buildPriorityQaReadiness(workspaceRoot, webRoot),
       buildSeoReadiness(webRoot),
       buildContentReadiness(webRoot),
       buildAutomationReadiness(workspaceRoot),
@@ -389,9 +491,10 @@ export async function GET(request) {
     ]);
 
     const overallScore = clampScore(
-      tools.averageScore * 0.45 +
-        seo.score * 0.2 +
-        content.score * 0.15 +
+      tools.averageScore * 0.35 +
+        qa.score * 0.2 +
+        seo.score * 0.15 +
+        content.score * 0.1 +
         automation.score * 0.1 +
         firebaseAdmin.score * 0.1,
     );
@@ -410,11 +513,12 @@ export async function GET(request) {
               : "Needs attention",
       },
       tools,
+      qa,
       seo,
       content,
       automation,
       firebaseAdmin,
-      recommendations: buildRecommendations({ tools, seo, content, automation, firebaseAdmin }),
+      recommendations: buildRecommendations({ tools, qa, seo, content, automation, firebaseAdmin }),
     });
   } catch (error) {
     const message = error?.message || "Health audit failed.";
