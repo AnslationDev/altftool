@@ -27,6 +27,8 @@ env:
   CI: true
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
   NEXT_TELEMETRY_DISABLED: 1
+  WEB_PROJECT_ROOT: altftoolweb
+  ADMIN_PROJECT_ROOT: altftoolwebadmin
 
 jobs:
   deploy-web:
@@ -44,6 +46,7 @@ jobs:
       VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
       VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
       VERCEL_PROJECT_ID: ${{ secrets.VERCEL_WEB_PROJECT_ID || secrets.VERCEL_PROJECT_ID }}
+      ALTFT_MONITOR_WEB_URLS: ${{ vars.ALTFT_MONITOR_WEB_URLS || vars.ALTFT_MONITOR_WEB_URL || 'https://altftool.com' }}
 
     steps:
       - name: Checkout CI commit
@@ -60,40 +63,67 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version-file: .nvmrc
+          cache: npm
+          cache-dependency-path: |
+            package-lock.json
+            altftoolweb/package-lock.json
+            altftoolwebadmin/package-lock.json
 
       - name: Check Vercel web secrets
-        id: vercel-secrets
         run: |
-          if [ -n "$VERCEL_TOKEN" ] && [ -n "$VERCEL_ORG_ID" ] && [ -n "$VERCEL_PROJECT_ID" ]; then
-            echo "configured=true" >> "$GITHUB_OUTPUT"
-          else
-            echo "::notice::Skipping web deploy. Configure VERCEL_TOKEN, VERCEL_ORG_ID, and VERCEL_WEB_PROJECT_ID or VERCEL_PROJECT_ID."
-            echo "configured=false" >> "$GITHUB_OUTPUT"
+          missing=()
+          [ -n "$VERCEL_TOKEN" ] || missing+=("VERCEL_TOKEN")
+          [ -n "$VERCEL_ORG_ID" ] || missing+=("VERCEL_ORG_ID")
+          [ -n "$VERCEL_PROJECT_ID" ] || missing+=("VERCEL_WEB_PROJECT_ID or VERCEL_PROJECT_ID")
+
+          if [ "${#missing[@]}" -gt 0 ]; then
+            printf '::error::Missing required web deploy secret(s): %s\n' "${missing[*]}"
+            exit 1
           fi
 
       - name: Install Vercel CLI
-        if: steps.vercel-secrets.outputs.configured == 'true'
         run: npm install -g vercel@latest
 
+      - name: Install workspace dependencies for post-deploy checks
+        run: npm ci
+
       - name: Pull web production environment
-        if: steps.vercel-secrets.outputs.configured == 'true'
-        run: vercel pull --yes --environment=production --token="$VERCEL_TOKEN"
+        run: vercel pull --yes --environment=production --cwd "$WEB_PROJECT_ROOT" --token="$VERCEL_TOKEN"
 
       - name: Build web deployment
-        if: steps.vercel-secrets.outputs.configured == 'true'
-        run: vercel build --prod --token="$VERCEL_TOKEN"
+        run: vercel build --prod --cwd "$WEB_PROJECT_ROOT" --token="$VERCEL_TOKEN"
 
       - name: Deploy web prebuilt output
-        if: steps.vercel-secrets.outputs.configured == 'true'
         id: deploy
         run: |
-          deployment_url="$(vercel deploy --prebuilt --prod --token="$VERCEL_TOKEN" | tail -n 1)"
+          deployment_url="$(vercel deploy --prebuilt --prod --cwd "$WEB_PROJECT_ROOT" --token="$VERCEL_TOKEN" | tail -n 1)"
           echo "url=$deployment_url" >> "$GITHUB_OUTPUT"
           {
             echo "### Web deployment"
             echo
             echo "$deployment_url"
           } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Monitor web deployment URL
+        env:
+          ALTFT_MONITOR_WEB_URLS: ${{ steps.deploy.outputs.url }}
+          ALTFT_MONITOR_OUTPUT_PATH: web-deployment-monitoring-report.json
+        run: npm run monitor:production
+
+      - name: Monitor production web domain
+        env:
+          ALTFT_MONITOR_OUTPUT_PATH: web-production-monitoring-report.json
+        run: npm run monitor:production
+
+      - name: Upload web monitoring reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: web-deploy-monitoring-reports
+          path: |
+            web-deployment-monitoring-report.json
+            web-production-monitoring-report.json
+          if-no-files-found: ignore
 
   deploy-admin:
     name: Deploy admin
@@ -126,34 +156,37 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version-file: .nvmrc
+          cache: npm
+          cache-dependency-path: |
+            package-lock.json
+            altftoolweb/package-lock.json
+            altftoolwebadmin/package-lock.json
 
       - name: Check Vercel admin secrets
-        id: vercel-secrets
         run: |
-          if [ -n "$VERCEL_TOKEN" ] && [ -n "$VERCEL_ORG_ID" ] && [ -n "$VERCEL_PROJECT_ID" ]; then
-            echo "configured=true" >> "$GITHUB_OUTPUT"
-          else
-            echo "::notice::Skipping admin deploy. Configure VERCEL_TOKEN, VERCEL_ORG_ID, and VERCEL_ADMIN_PROJECT_ID."
-            echo "configured=false" >> "$GITHUB_OUTPUT"
+          missing=()
+          [ -n "$VERCEL_TOKEN" ] || missing+=("VERCEL_TOKEN")
+          [ -n "$VERCEL_ORG_ID" ] || missing+=("VERCEL_ORG_ID")
+          [ -n "$VERCEL_PROJECT_ID" ] || missing+=("VERCEL_ADMIN_PROJECT_ID")
+
+          if [ "${#missing[@]}" -gt 0 ]; then
+            printf '::error::Missing required admin deploy secret(s): %s\n' "${missing[*]}"
+            exit 1
           fi
 
       - name: Install Vercel CLI
-        if: steps.vercel-secrets.outputs.configured == 'true'
         run: npm install -g vercel@latest
 
       - name: Pull admin production environment
-        if: steps.vercel-secrets.outputs.configured == 'true'
-        run: vercel pull --yes --environment=production --token="$VERCEL_TOKEN"
+        run: vercel pull --yes --environment=production --cwd "$ADMIN_PROJECT_ROOT" --token="$VERCEL_TOKEN"
 
       - name: Build admin deployment
-        if: steps.vercel-secrets.outputs.configured == 'true'
-        run: vercel build --prod --token="$VERCEL_TOKEN"
+        run: vercel build --prod --cwd "$ADMIN_PROJECT_ROOT" --token="$VERCEL_TOKEN"
 
       - name: Deploy admin prebuilt output
-        if: steps.vercel-secrets.outputs.configured == 'true'
         id: deploy
         run: |
-          deployment_url="$(vercel deploy --prebuilt --prod --token="$VERCEL_TOKEN" | tail -n 1)"
+          deployment_url="$(vercel deploy --prebuilt --prod --cwd "$ADMIN_PROJECT_ROOT" --token="$VERCEL_TOKEN" | tail -n 1)"
           echo "url=$deployment_url" >> "$GITHUB_OUTPUT"
           {
             echo "### Admin deployment"
