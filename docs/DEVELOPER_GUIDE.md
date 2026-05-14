@@ -242,9 +242,21 @@ Check local deployment readiness without exposing secret values:
 
 ```bash
 npm run env:readiness
+npm run deploy:readiness -- --target=all
 ```
 
 Use `npm run env:readiness:strict` before a production release. The `Deployment Readiness` GitHub Actions workflow runs the same strict check from repository secrets and variables.
+
+Vercel production deploys need these GitHub Actions repository secrets:
+
+```text
+VERCEL_TOKEN
+VERCEL_ORG_ID
+VERCEL_WEB_PROJECT_ID
+VERCEL_ADMIN_PROJECT_ID
+```
+
+`VERCEL_PROJECT_ID` can be used as the public web fallback when `VERCEL_WEB_PROJECT_ID` is not set. After changing these secrets, re-run the failed CI deploy jobs or manually run the `Vercel Deploy` workflow with target `all`.
 
 ## 10. Environment Variables
 

@@ -29,6 +29,7 @@
     "routes:check": "node scripts/check-routes.mjs",
     "env:readiness": "node scripts/check-env-readiness.mjs",
     "env:readiness:strict": "ALTFT_ENV_STRICT=true node scripts/check-env-readiness.mjs --strict",
+    "deploy:readiness": "node scripts/check-vercel-deploy-readiness.mjs",
     "firebase:check": "node scripts/check-firebase-contracts.mjs",
     "firebase:live-check": "node scripts/check-firebase-live-data.mjs",
     "firebase:admin-write-check": "npm --prefix altftoolwebadmin run firebase:admin-write-check",
