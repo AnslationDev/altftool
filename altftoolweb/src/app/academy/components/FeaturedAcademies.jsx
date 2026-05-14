@@ -70,7 +70,7 @@ export default function FeaturedAcademies({ items }) {
             >
               <div
                 className="
-                flex items-center justify-center
+                relative flex items-center justify-center
                 w-[100px] h-9 
                 sm:w-[140px] sm:h-12 
                 lg:w-[200px] lg:h-16
@@ -79,9 +79,9 @@ export default function FeaturedAcademies({ items }) {
                 <Image
                   src={academy.image}
                   alt={academy.name}
-                  width={200}
-                  height={80}
-                  className="object-contain w-full h-full"
+                  fill
+                  sizes="(max-width: 640px) 100px, (max-width: 1024px) 140px, 200px"
+                  className="object-contain"
                 />
               </div>
             </a>
