@@ -10,6 +10,27 @@ async function openTool(page, slug, heading) {
 }
 
 test.describe("microtool functional flows", () => {
+  test("tools directory search and filters stay shareable", async ({ page }) => {
+    const quality = createPageQualityGate(page);
+
+    await page.goto(`${webUrl}/tools/all?search=json`, { waitUntil: "domcontentloaded" });
+
+    await expect(page.getByTestId("tools-search-input")).toHaveValue("json");
+    await expect(page.getByTestId("tool-search-suggestions")).toContainText("JSON Editor");
+
+    await page.getByRole("link", { name: /^Developer$/ }).first().click();
+    await expect(page).toHaveURL(/\/tools\/developer\?search=json/);
+    await expect(page.getByRole("heading", { name: "Explore Tools" })).toBeVisible();
+
+    await page.getByTestId("tool-category-search").fill("pdf");
+    await expect(page.getByRole("link", { name: /PDF/ }).first()).toBeVisible();
+
+    await page.getByTestId("clear-tool-filters").click();
+    await expect(page).toHaveURL(/\/tools\/all$/);
+    await expect(page.getByTestId("tools-search-input")).toHaveValue("");
+    await quality.expectClean("tools directory search filters");
+  });
+
   test("text conversion output survives a shared state link", async ({ page }) => {
     const quality = createPageQualityGate(page);
 

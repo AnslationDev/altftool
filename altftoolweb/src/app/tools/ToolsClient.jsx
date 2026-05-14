@@ -1,14 +1,14 @@
 "use client";
 
 import Link from "next/link";
-import { useMemo, useState, useSyncExternalStore } from "react";
+import { useEffect, useMemo, useState, useSyncExternalStore } from "react";
 import { ChevronDown, History, Layers3, Search, Sparkles, Star, Wrench } from "lucide-react";
 import Icon from "@/shared/ui/Icon";
 import CTAButton from "@/shared/ui/CTAButton";
 import { useAds } from "@/ads/AdsProvider";
 import { injectAds } from "@/ads/adInjector";
 import AdPairRow from "@/ads/layouts/tools/AdToolPairRow";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 
 const ITEMS_PER_PAGE = 24;
 const FAVORITES_STORAGE_KEY = "ALTFT_TOOL_FAVORITES_V1";
@@ -61,6 +61,7 @@ const VIEW_MODES = [
   { id: "favorites", label: "Saved" },
   { id: "recent", label: "Recent" },
 ];
+const POPULAR_SEARCHES = ["json", "base64", "pdf", "image", "regex", "seo", "password", "cron"];
 
 const slugify = (str) => String(str).toLowerCase().replace(/\s+/g, "-");
 const formatLabel = (str) =>
@@ -188,10 +189,13 @@ function ToolsGridSkeleton() {
   );
 }
 
-export default function ToolsClient({ meta = {}, category }) {
+export default function ToolsClient({ meta = {}, category, initialSearch = "", initialViewMode = "all" }) {
   const slugs = useMemo(() => Object.keys(meta), [meta]);
-  const [search, setSearch] = useState("");
-  const [viewMode, setViewMode] = useState("all");
+  const [search, setSearch] = useState(initialSearch);
+  const [viewMode, setViewMode] = useState(() =>
+    VIEW_MODES.some((mode) => mode.id === initialViewMode) ? initialViewMode : "all"
+  );
+  const [categoryFilter, setCategoryFilter] = useState("");
   const favoriteSnapshot = useSyncExternalStore(
     subscribeToToolStorage,
     getFavoriteStorageSnapshot,
@@ -207,12 +211,11 @@ export default function ToolsClient({ meta = {}, category }) {
     getDeviceSnapshot,
     () => "desktop"
   );
-  const router = useRouter();
   const pathname = usePathname();
   const [selectedCategory, setSelectedCategory] = useState(() =>
     getInitialCategory(category)
   );
-  const categoryname = category ? slugify(category) : selectedCategory;
+  const categoryname = selectedCategory;
   const favoriteSlugs = useMemo(
     () => favoriteSnapshot.split("\n").filter((slug) => meta[slug]),
     [favoriteSnapshot, meta]
@@ -223,6 +226,18 @@ export default function ToolsClient({ meta = {}, category }) {
   );
   const favoriteSet = useMemo(() => new Set(favoriteSlugs), [favoriteSlugs]);
   const recentSet = useMemo(() => new Set(recentSlugs), [recentSlugs]);
+
+  useEffect(() => {
+    setSelectedCategory(getInitialCategory(category));
+  }, [category]);
+
+  useEffect(() => {
+    setSearch(initialSearch);
+  }, [initialSearch]);
+
+  useEffect(() => {
+    setViewMode(VIEW_MODES.some((mode) => mode.id === initialViewMode) ? initialViewMode : "all");
+  }, [initialViewMode]);
 
   // Ads setup
   const toolAds = useAds({ placement: "tools_listing", layout: "tool_card", device });
@@ -249,6 +264,11 @@ export default function ToolsClient({ meta = {}, category }) {
       return { slug, label: formatLabel(cat), count };
     });
   }, [categories, meta, slugs]);
+  const filteredCategoryStats = useMemo(() => {
+    const query = categoryFilter.trim().toLowerCase();
+    if (!query) return categoryStats;
+    return categoryStats.filter((cat) => cat.label.toLowerCase().includes(query) || cat.slug.includes(query));
+  }, [categoryFilter, categoryStats]);
   const categoryCount = Math.max(categories.length - 1, 0);
   const featuredCategories = useMemo(() => {
     const preferred = ["all", "converter", "developer", "pdf", "media", "data", "web", "calculator", "network", "image"];
@@ -306,6 +326,70 @@ export default function ToolsClient({ meta = {}, category }) {
       : filteredSlugs.slice(0, visibleCount);
 
   const hasMore = visibleCount < filteredSlugs.length;
+  const searchSuggestions = useMemo(() => {
+    if (!search.trim()) return [];
+
+    return filteredSlugs.slice(0, 6).map((slug) => {
+      const tool = meta[slug];
+      const categories = Array.isArray(tool?.category) ? tool.category : [tool?.category].filter(Boolean);
+      return {
+        slug,
+        name: tool?.name || formatLabel(slug),
+        category: categories[0] || "Tool",
+      };
+    });
+  }, [filteredSlugs, meta, search]);
+  const hasActiveFilters = Boolean(search.trim()) || categoryname !== "all" || viewMode !== "all";
+
+  const getDirectoryHref = ({
+    nextCategory = categoryname,
+    nextSearch = search,
+    nextViewMode = viewMode,
+  } = {}) => {
+    const normalizedCategory = slugify(nextCategory || "all");
+    const normalizedView = VIEW_MODES.some((mode) => mode.id === nextViewMode) ? nextViewMode : "all";
+    const params = new URLSearchParams();
+    const trimmedSearch = nextSearch.trim();
+
+    if (trimmedSearch) params.set("search", trimmedSearch);
+    if (normalizedView !== "all") params.set("view", normalizedView);
+
+    let targetPath = pathname;
+    if (category) {
+      targetPath = `/tools/${normalizedCategory === "all" ? "all" : normalizedCategory}`;
+    } else if (normalizedCategory !== "all") {
+      params.set("category", normalizedCategory);
+    }
+
+    const query = params.toString();
+    return query ? `${targetPath}?${query}` : targetPath;
+  };
+
+  const replaceDirectoryUrl = (nextState = {}) => {
+    if (typeof window === "undefined") return;
+    window.history.replaceState(null, "", getDirectoryHref(nextState));
+  };
+
+  const setSearchFilter = (value) => {
+    setSearch(value);
+    setVisibleCount(ITEMS_PER_PAGE);
+    replaceDirectoryUrl({ nextSearch: value });
+  };
+
+  const setViewFilter = (mode) => {
+    setViewMode(mode);
+    setVisibleCount(ITEMS_PER_PAGE);
+    replaceDirectoryUrl({ nextViewMode: mode });
+  };
+
+  const clearFilters = () => {
+    setSearch("");
+    setViewMode("all");
+    setSelectedCategory("all");
+    setCategoryFilter("");
+    setVisibleCount(ITEMS_PER_PAGE);
+    replaceDirectoryUrl({ nextCategory: "all", nextSearch: "", nextViewMode: "all" });
+  };
 
   const rememberTool = (slug) => {
     const next = [slug, ...recentSlugs.filter((item) => item !== slug)]
@@ -324,24 +408,8 @@ export default function ToolsClient({ meta = {}, category }) {
   // Handle category click (updates URL without reload)
   const handleCategoryClick = (cat) => {
     const nextCategory = cat === "all" ? "all" : slugify(cat);
-
-    if (category) {
-      router.replace(nextCategory === "all" ? "/tools" : `/tools/${nextCategory}`, {
-        scroll: false,
-      });
-      setSelectedCategory(nextCategory);
-      setVisibleCount(ITEMS_PER_PAGE);
-      return;
-    }
-
-    const params = new URLSearchParams(window.location.search);
-    if (nextCategory === "all") params.delete("category");
-    else params.set("category", nextCategory);
-
-    const query = params.toString();
-    router.replace(query ? `${pathname}?${query}` : pathname, { scroll: false });
     setSelectedCategory(nextCategory);
-    setVisibleCount(ITEMS_PER_PAGE); // reset pagination
+    setVisibleCount(ITEMS_PER_PAGE);
   };
 
   const [open, setOpen] = useState(false);
@@ -393,16 +461,46 @@ export default function ToolsClient({ meta = {}, category }) {
             <div className="relative">
               <Search className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-(--muted-foreground)" />
               <input
+                data-testid="tools-search-input"
                 type="text"
                 placeholder="Select directly or search tools, converters, code utilities..."
                 value={search}
-                onChange={(e) => {
-                  setSearch(e.target.value);
-                  setVisibleCount(ITEMS_PER_PAGE);
-                }}
+                onChange={(e) => setSearchFilter(e.target.value)}
                 className="h-12 w-full rounded-[8px] border border-[var(--border)] bg-[var(--background)] px-11 text-sm placeholder:text-(--input-placeholder) transition focus:outline-none focus:ring-1 focus:ring-[var(--primary)]"
               />
             </div>
+            {search.trim() ? (
+              <div data-testid="tool-search-suggestions" className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
+                {searchSuggestions.map((item) => (
+                  <Link
+                    key={item.slug}
+                    href={`/tools/all/${item.slug}`}
+                    onClick={() => rememberTool(item.slug)}
+                    className="flex items-center justify-between gap-3 rounded-[7px] border border-(--border) bg-(--background) px-3 py-2 text-left text-xs transition hover:border-(--primary) hover:text-(--foreground)"
+                  >
+                    <span className="min-w-0">
+                      <span className="block truncate font-semibold text-(--foreground)">{item.name}</span>
+                      <span className="block truncate text-[11px] text-(--muted-foreground)">{item.category}</span>
+                    </span>
+                    <span className="shrink-0 text-(--muted-foreground)">Open</span>
+                  </Link>
+                ))}
+              </div>
+            ) : (
+              <div className="flex flex-wrap items-center gap-2">
+                <span className="text-xs font-semibold uppercase tracking-wide text-(--muted-foreground)">Popular</span>
+                {POPULAR_SEARCHES.map((term) => (
+                  <button
+                    key={term}
+                    type="button"
+                    onClick={() => setSearchFilter(term)}
+                    className="rounded-[7px] border border-(--border) bg-(--background) px-2.5 py-1.5 text-xs font-semibold text-(--muted-foreground) hover:border-(--primary) hover:text-(--foreground)"
+                  >
+                    {formatLabel(term)}
+                  </button>
+                ))}
+              </div>
+            )}
             <div className="flex flex-wrap gap-2">
               {VIEW_MODES.map((mode) => {
                 const IconComponent = mode.id === "favorites" ? Star : mode.id === "recent" ? History : Sparkles;
@@ -410,10 +508,7 @@ export default function ToolsClient({ meta = {}, category }) {
                   <button
                     key={mode.id}
                     type="button"
-                    onClick={() => {
-                      setViewMode(mode.id);
-                      setVisibleCount(ITEMS_PER_PAGE);
-                    }}
+                    onClick={() => setViewFilter(mode.id)}
                     className={`inline-flex items-center gap-2 rounded-[7px] border px-3 py-2 text-xs font-semibold transition ${
                       viewMode === mode.id
                         ? "border-(--primary) bg-(--primary) text-(--primary-foreground)"
@@ -428,12 +523,22 @@ export default function ToolsClient({ meta = {}, category }) {
                   </button>
                 );
               })}
+              {hasActiveFilters ? (
+                <Link
+                  href="/tools/all"
+                  data-testid="clear-tool-filters"
+                  onClick={clearFilters}
+                  className="rounded-[7px] border border-(--border) bg-(--background) px-3 py-2 text-xs font-semibold text-(--muted-foreground) transition hover:border-(--primary) hover:text-(--foreground)"
+                >
+                  Clear
+                </Link>
+              ) : null}
             </div>
             <div className="flex flex-wrap gap-2">
               {featuredCategories.map((cat) => (
-                <button
+                <Link
                   key={cat}
-                  type="button"
+                  href={getDirectoryHref({ nextCategory: cat })}
                   onClick={() => handleCategoryClick(cat)}
                   className={`rounded-[7px] border px-3 py-2 text-xs font-semibold transition ${
                     categoryname === slugify(cat)
@@ -442,7 +547,7 @@ export default function ToolsClient({ meta = {}, category }) {
                   }`}
                 >
                   {formatLabel(cat)}
-                </button>
+                </Link>
               ))}
             </div>
           </div>
@@ -472,6 +577,16 @@ export default function ToolsClient({ meta = {}, category }) {
             <Layers3 className="h-4 w-4 text-(--primary)" />
             Categories
           </h4>
+          <div className="relative mb-3">
+            <Search className="pointer-events-none absolute left-3 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-(--muted-foreground)" />
+            <input
+              data-testid="tool-category-search"
+              value={categoryFilter}
+              onChange={(e) => setCategoryFilter(e.target.value)}
+              placeholder="Filter categories"
+              className="h-10 w-full rounded-[8px] border border-(--border) bg-(--card) px-9 text-xs text-(--foreground) outline-none transition placeholder:text-(--muted-foreground) focus:border-(--primary)"
+            />
+          </div>
           {/* // mobile view */}
           <div className=" block  lg:hidden">
             {/* Button */}
@@ -484,15 +599,16 @@ export default function ToolsClient({ meta = {}, category }) {
             {/* Dropdown */}
             {open && (
               <div className="mt-2 w-full rounded-[8px] border border-(--border) bg-(--card) p-2">
-                {categoryStats.map((cat) => (
-                  <div
+                {filteredCategoryStats.map((cat) => (
+                  <Link
                     key={cat.slug}
+                    href={getDirectoryHref({ nextCategory: cat.slug })}
                     onClick={() => handleSelect(cat.slug)}
                     className="flex cursor-pointer items-center justify-between rounded-[7px] px-3 py-2 text-sm text-(--muted-foreground) hover:bg-(--background)"
                   >
                     <span>{cat.label}</span>
                     <span className="text-xs">{cat.count}</span>
-                  </div>
+                  </Link>
                 ))}
               </div>
             )}
@@ -500,9 +616,10 @@ export default function ToolsClient({ meta = {}, category }) {
 
 
           <ul className="hidden space-y-1 lg:block">
-            {categoryStats.map((cat) => (
+            {filteredCategoryStats.map((cat) => (
               <li key={cat.slug}>
-                <button
+                <Link
+                  href={getDirectoryHref({ nextCategory: cat.slug })}
                   onClick={() => handleCategoryClick(cat.slug)}
                   className={`flex w-full cursor-pointer items-center justify-between rounded-[7px] px-3 py-2 text-left text-sm transition ${categoryname === cat.slug
                     ? "bg-[var(--color-primary)] text-white shadow"
@@ -513,7 +630,7 @@ export default function ToolsClient({ meta = {}, category }) {
                   <span className={`text-xs ${categoryname === cat.slug ? "text-white/80" : "text-(--muted-foreground)"}`}>
                     {cat.count}
                   </span>
-                </button>
+                </Link>
               </li>
             ))}
           </ul>
