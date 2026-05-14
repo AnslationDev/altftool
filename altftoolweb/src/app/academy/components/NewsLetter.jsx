@@ -9,7 +9,8 @@ export default function NewsletterSection() {
   const [success, setSuccess] = useState(false);
 
   const validate = (val) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val);
-  const handleSubmit = () => {
+  const handleSubmit = (event) => {
+    event?.preventDefault();
     if (!email) return setError("Email address is required.");
     if (!validate(email)) return setError("Please enter a valid email address.");
     setError("");
@@ -30,10 +31,10 @@ export default function NewsletterSection() {
       </p>
 
 
-      <div className="flex  items-stretch sm:items-center gap-3 sm:gap-4 w-full max-w-[31.75rem] mt-2 sm:mt-3 ">
+      <form onSubmit={handleSubmit} className="mt-2 flex w-full max-w-[31.75rem] flex-col gap-3 sm:mt-3 sm:flex-row sm:items-center sm:gap-4">
 
 
-        <div className={`flex items-center gap-2 w-[75%] sm:flex-1 h-11 sm:h-14 px-4 sm:px-6 rounded-[3.125rem] border bg-[var(--background)] transition-all duration-300 ease-out
+        <div className={`flex h-11 w-full items-center gap-2 rounded-[8px] border bg-[var(--background)] px-4 transition-all duration-300 ease-out sm:h-14 sm:flex-1 sm:px-6
                 focus-within:shadow-[0px_12px_24px_0px_#0F172A05,0px_4px_20px_0px_#2563EB33]
                 ${error ? "border-red-500" : success ? "border-green-500" : "border-[#D1D1D1] focus-within:border-[var(--primary)]"}`}>
           <Mail className="w-4 h-4 sm:w-5 sm:h-5 text-[var(--muted-foreground)] shrink-0" />
@@ -47,11 +48,11 @@ export default function NewsletterSection() {
         </div>
 
 
-        <button onClick={handleSubmit} className="w-[35%] sm:w-auto h-11 sm:h-14 px-2 sm:px-[1.125rem] py-2 sm:py-[0.875rem] rounded-[3.125rem] bg-[var(--primary)] text-[var(--primary-foreground)] font-bold text-sm sm:text-[1.200rem] capitalize whitespace-nowrap shrink-0 hover:opacity-90 active:opacity-80 transition-opacity cursor-pointer  sm:w-auto">
+        <button type="submit" className="h-11 w-full shrink-0 cursor-pointer rounded-[8px] bg-[var(--primary)] px-4 py-2 text-sm font-bold capitalize text-[var(--primary-foreground)] transition-opacity hover:opacity-90 active:opacity-80 sm:h-14 sm:w-auto sm:px-[1.125rem] sm:py-[0.875rem] sm:text-[1.125rem]">
           Subscribe
         </button>
 
-      </div>
+      </form>
 
 
 

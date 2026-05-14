@@ -18,8 +18,6 @@ import {
   Calendar, Code
 } from "lucide-react";
 
-import { motion, useReducedMotion } from "framer-motion";
-
 /* ---------------- ICON SLIDER DATA ---------------- */
 const icons = [
   { Icon: FileText, color: "text-blue-400" },
@@ -46,30 +44,27 @@ const icons = [
 
 /* ---------------- ICON SLIDER COMPONENT ---------------- */
 const IconSlider = ({ icons }) => {
-  const reducedMotion = useReducedMotion();
-  const renderedIcons = reducedMotion ? icons : icons.concat(icons);
-
   return (
-    <div className="overflow-hidden relative py-6">
-      <motion.div
-        className="flex gap-4"
-        animate={reducedMotion ? undefined : { x: ["0%", "-50%"] }}
-        transition={reducedMotion ? undefined : { repeat: Infinity, duration: 18, ease: "linear" }}
-      >
-        {renderedIcons.map(({ Icon, color }, index) => (
-          <div
-            key={index}
-            className="
-              flex-shrink-0 w-14 h-14 rounded-xl bg-white/5
-              border border-white/10 backdrop-blur
-              flex items-center justify-center
-              hover:scale-105 transition
-            "
-          >
-            <Icon className={`w-10 h-10 ${color}`} />
+    <div className="relative overflow-hidden py-4 sm:py-6" aria-hidden="true">
+      <div className="altftool-marquee-track flex w-max">
+        {[0, 1].map((group) => (
+          <div key={group} className="flex shrink-0 gap-3 pr-3 sm:gap-4 sm:pr-4">
+            {icons.map(({ Icon, color }, index) => (
+              <div
+                key={`${group}-${index}`}
+                className="
+                  flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-[8px]
+                  border border-white/10 bg-white/5 backdrop-blur
+                  transition hover:scale-105 motion-reduce:transform-none
+                  sm:h-14 sm:w-14
+                "
+              >
+                <Icon className={`h-8 w-8 sm:h-10 sm:w-10 ${color}`} />
+              </div>
+            ))}
           </div>
         ))}
-      </motion.div>
+      </div>
     </div>
   );
 };
@@ -90,6 +85,10 @@ export default function ExtensionsPage() {
     const handler = setTimeout(() => setDebouncedSearchQuery(searchQuery), 300);
     return () => clearTimeout(handler);
   }, [searchQuery]);
+
+  useEffect(() => {
+    setVisibleCount(18);
+  }, [selectedCategory, debouncedSearchQuery]);
 
   /* ---------------- FILTERING ---------------- */
   const filteredExtensions = useMemo(() => {
@@ -139,7 +138,7 @@ export default function ExtensionsPage() {
 
         {/* HERO */}
         <div className="section animate-slide-up">
-          <div className="relative w-full py-16 md:py-25 rounded-[40px] overflow-hidden bg-[var(--muted)] border border-[var(--border)] text-center">
+          <div className="relative w-full overflow-hidden rounded-[8px] border border-[var(--border)] bg-[var(--muted)] py-10 text-center sm:py-12 md:py-16">
             <Image
               src="/extension/hero.png"
               alt="Hero background"
@@ -151,7 +150,7 @@ export default function ExtensionsPage() {
 
             <div className="absolute inset-0 bg-[var(--background)]/40 " />
 
-            <div className="relative z-10 max-w-4xl mx-auto">
+            <div className="relative z-10 mx-auto max-w-4xl px-4 sm:px-6">
               <h1 className="section-title">
                 {selectedCategory === "All"
                   ? "Browser with Smart Extensions"
@@ -165,16 +164,16 @@ export default function ExtensionsPage() {
               <p className="section-subtitle animate-fade-up">
                 Explore high-quality extensions and themes for productivity and workflows.
               </p>
-              <div className="max-w-2xl mx-auto relative border  border-[var(--border)] rounded-full  mt-8">
-                <div className="absolute left-6 top-1/2 -translate-y-1/2 text-[var(--secondary-foreground)] group ">
-                  <Search className="w-6 h-6" />
+              <div className="relative mx-auto mt-6 max-w-2xl overflow-hidden rounded-[8px] border border-[var(--border)] bg-[var(--card)] sm:mt-8">
+                <div className="absolute left-4 top-1/2 -translate-y-1/2 text-[var(--secondary-foreground)] sm:left-5">
+                  <Search className="h-5 w-5 sm:h-6 sm:w-6" />
                 </div>
                 <input
                   type="text"
                   placeholder="Search extensions..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full h-14 pl-16 pr-6 rounded-full bg-[var(--card)]  placeholder:text-[var(--input-placeholder)] focus:ring-2 focus:ring-[var(--primary)]  transition focus:outline-none "
+                  className="h-12 w-full rounded-[8px] bg-transparent pl-12 pr-4 placeholder:text-[var(--input-placeholder)] transition focus:outline-none focus:ring-2 focus:ring-[var(--primary)] sm:h-14 sm:pl-16 sm:pr-6"
                 />
               </div>
             </div>
@@ -186,12 +185,17 @@ export default function ExtensionsPage() {
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 ">
             {topCategories.map((cat) => (
               <button
+                type="button"
                 key={cat.label}
                 onClick={() => setSelectedCategory(cat.realCat)}
-                className="h-24 animate-slide-right rounded-2xl bg-[var(--card)] border border-[var(--border)] hover:bg-[var(--card-hover)] flex items-center justify-between px-4"
+                className={`flex h-20 items-center justify-between gap-3 rounded-[8px] border px-3 text-left transition hover:bg-[var(--card-hover)] sm:h-24 sm:px-4 ${
+                  selectedCategory === cat.realCat
+                    ? "border-[var(--primary)] bg-[var(--primary)]/10 text-[var(--primary)]"
+                    : "border-[var(--border)] bg-[var(--card)]"
+                }`}
               >
-                <span>{cat.label}</span>
-                <cat.icon className="w-5 h-5" />
+                <span className="min-w-0 text-sm font-semibold leading-5 sm:text-base">{cat.label}</span>
+                <cat.icon className="h-5 w-5 shrink-0" />
               </button>
             ))}
           </div>
@@ -202,7 +206,7 @@ export default function ExtensionsPage() {
           {loading ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
               {[...Array(8)].map((_, i) => (
-                <div key={i} className="h-64 rounded-[32px] bg-[var(--muted)] animate-pulse border border-[var(--border)] overflow-hidden">
+                <div key={i} className="h-64 overflow-hidden rounded-[8px] border border-[var(--border)] bg-[var(--muted)] animate-pulse">
                    <div className="h-40 bg-[var(--card)]/50 mb-4" />
                    <div className="px-6 space-y-3">
                       <div className="h-6 bg-[var(--card)]/80 rounded-lg w-3/4" />
@@ -226,7 +230,7 @@ export default function ExtensionsPage() {
                 <div className="mt-12 flex justify-center">
                   <button
                     onClick={() => setVisibleCount((prev) => prev + 12)}
-                    className="px-8 py-3 rounded-full border border-[var(--border)]"
+                    className="rounded-[8px] border border-[var(--border)] px-8 py-3 font-semibold transition hover:border-[var(--primary)] hover:text-[var(--primary)]"
                   >
                     Load More
                   </button>
@@ -234,8 +238,11 @@ export default function ExtensionsPage() {
               )}
             </>
           ) : (
-            <div className="text-center py-20">
-              <h3>No extensions found</h3>
+            <div className="rounded-[8px] border border-[var(--border)] bg-[var(--card)] px-4 py-14 text-center">
+              <h3 className="text-lg font-semibold">No extensions found</h3>
+              <p className="mt-2 text-sm text-[var(--muted-foreground)]">
+                Try another keyword or switch back to all categories.
+              </p>
             </div>
           )}
         </div>

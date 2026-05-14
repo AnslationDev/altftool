@@ -14,10 +14,9 @@ export default function AcademyCard({ academy }) {
       target="_blank"
       rel="noopener noreferrer"
       className="
-        group flex flex-col justify-between
-        rounded-2xl border border-[var(--border)] 
-         min-w-[calc(100vw-2rem)] sm:min-w-0
-           shadow-[0px_12px_24px_0px_#0F172A05]
+        group flex w-full min-w-0 flex-col justify-between
+        rounded-[8px] border border-[var(--border)]
+        shadow-[0px_12px_24px_0px_#0F172A05]
         p-5 sm:p-6 
       "
     >
@@ -28,8 +27,7 @@ export default function AcademyCard({ academy }) {
           <AcademyLogoImage key={academy.image || academy.id || academy.name} academy={academy} />
         </div>
 
-        <div className="flex items-center gap-[6px] h-[28px] px-[10px]  text-sm text-black rounded-full border border-[#E5E7EB] bg-[#F8FAFC]
-          text-sm  text-[var(--foreground)] font-medium ">
+        <div className="flex h-[28px] items-center gap-[6px] rounded-[7px] border border-[#E5E7EB] bg-[#F8FAFC] px-[10px] text-sm font-medium text-[var(--foreground)]">
           <Star size={16} className="fill-yellow-500 stroke-yellow-500 " />
           {academy.rating}
         </div>
@@ -37,7 +35,7 @@ export default function AcademyCard({ academy }) {
 
       <span
         className="
-          mb-3 w-fit rounded-full
+          mb-3 w-fit rounded-[7px]
           bg-(--primary)/10 text-(--primary)
           px-3 py-1.5 lg:py-2 text-center text-[11px] font-extrabold uppercase  leading-none tracking-[0.55px]
     
@@ -65,7 +63,7 @@ export default function AcademyCard({ academy }) {
               key={i}
               className="
                 inline-flex items-center
-                rounded-full
+                rounded-[6px]
                 border border-[#E5E7EB]
                 bg-[#F8FAFC]
                 px-3 py-[5px]
