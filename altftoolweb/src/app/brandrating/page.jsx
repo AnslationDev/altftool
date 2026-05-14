@@ -1,48 +1,73 @@
-import React from 'react'
-import Navbar from './(components)/Navbar'
-import HeroSectionBrand from './(components)/HeroSectionBrand'
-import Categories from './(components)/Categories'
-import PopularTopic from './(components)/PopularTopic'
-import CategoryBrand from './(components)/CategoryBrand'
-import MethodologySection from './(components)/MethodologySection'
-import Brand from './(components)/Brand'
-import ConsumerRating from './(components)/ConsumerRating'
-import TrustSecure from './(components)/TrustSecure'
-import CategorySection from './(components)/CategorySection'
-import data from "./(data)/data.json"
-// import './styles/brandrating.css'
-import BrandViews from './(components)/BrandViews'
+import HeroSectionBrand from "./(components)/HeroSectionBrand";
+import Categories from "./(components)/Categories";
+import PopularTopic from "./(components)/PopularTopic";
+import MethodologySection from "./(components)/MethodologySection";
+import Brand from "./(components)/Brand";
+import ConsumerRating from "./(components)/ConsumerRating";
+import TrustSecure from "./(components)/TrustSecure";
+import data from "./(data)/data.json";
+import JsonLd from "@/platform/seo/JsonLd";
+import RouteDiscoveryBand from "@/platform/navigation/RouteDiscoveryBand";
+import { getRouteHub, getRouteHubJsonLdItems } from "@/platform/navigation/routeHubs";
+import {
+  createBreadcrumbJsonLd,
+  createCollectionPageJsonLd,
+  createItemListJsonLd,
+  createPageMetadata,
+} from "@/platform/seo/generateMetadata";
 
+const brandRatingRouteHub = getRouteHub("brandrating");
+const brandRatingDescription =
+  "Check brand ratings, product reviews, comparison signals, and tool scores on AltFTool. Compare brands and online tools with reliable context before choosing.";
 
 export async function generateMetadata() {
-  return {
+  return createPageMetadata({
     title: "Brand Rating & Reviews – Tool Scores | AltFTool",
-    description: "Check brand ratings and tool reviews on AltFTool. Compare software, extensions, and online tools with reliable scores to find the best options for your needs.",
-  };
+    description: brandRatingDescription,
+    path: "/brandrating",
+  });
 }
 
 
-function page() {
+function Page() {
   const allCategory = data.brandRating || {};
   return (
-    <div className="w-full ">
-      {/* <Navbar data={allCatgeory} /> */}
+    <>
+      <JsonLd
+        id="brandrating-schema"
+        data={[
+          createCollectionPageJsonLd({
+            path: "/brandrating",
+            name: "AltFTool Brand Rating",
+            description: brandRatingDescription,
+          }),
+          createItemListJsonLd({
+            path: "/brandrating",
+            name: "AltFTool brand rating next routes",
+            items: getRouteHubJsonLdItems("brandrating"),
+          }),
+          createBreadcrumbJsonLd([
+            { name: "Home", path: "/" },
+            { name: "Brand Rating", path: "/brandrating" },
+          ]),
+        ]}
+      />
+      <div className="w-full ">
+        <HeroSectionBrand />
 
-      <HeroSectionBrand />
+        <Categories data={allCategory} />
+        <PopularTopic data={allCategory} />
+        <MethodologySection />
+        <ConsumerRating />
+        <Brand />
 
-      <Categories data={allCategory} />
-      <PopularTopic data={allCategory} />
-      <MethodologySection />
-      <ConsumerRating />
-      <Brand />
-
-      <TrustSecure />
-      {/* <CategorySection data={allCatgeory}  /> */}
-
-    </div>
+        <TrustSecure />
+      </div>
+      <RouteDiscoveryBand {...brandRatingRouteHub} />
+    </>
 
 
-  )
+  );
 }
 
-export default page
+export default Page;

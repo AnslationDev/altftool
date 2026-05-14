@@ -405,6 +405,7 @@ test("admin module route surface resolves for local super admin", async ({ page 
 });
 
 test("seo endpoints and structured data render", async ({ page, request }) => {
+  test.setTimeout(120_000);
   const quality = createPageQualityGate(page);
 
   const sitemap = await request.get(`${webUrl}/sitemap.xml`);
@@ -414,6 +415,7 @@ test("seo endpoints and structured data render", async ({ page, request }) => {
   expect(sitemapText).toContain("/tools/all/api-stress-estimator");
   expect(sitemapText).toContain("/blogs/age-calculator-guide");
   expect(sitemapText).toContain("/exclusivedeals/most-popular");
+  expect(sitemapText).toContain("/extensions/");
 
   const robots = await request.get(`${webUrl}/robots.txt`);
   expect(robots.ok()).toBeTruthy();
@@ -440,4 +442,24 @@ test("seo endpoints and structured data render", async ({ page, request }) => {
     .evaluateAll((scripts) => scripts.map((script) => script.textContent || ""));
   expect(blogSchemas.some((schema) => schema.includes("BlogPosting"))).toBeTruthy();
   await quality.expectClean("blog structured data route");
+
+  const hubRoutes = [
+    { route: "/academy", heading: /Build skills with the rest of AltFTool/i },
+    { route: "/extensions", heading: /Pair extensions with tools and guides/i },
+    { route: "/brandrating", heading: /Compare brands, tools, and deals/i },
+    { route: "/buysmart", heading: /Turn product research into faster decisions/i },
+    { route: "/blogs", heading: /Keep reading with useful next steps/i },
+    { route: "/trendingvids", heading: /Use videos as a launch point/i },
+  ];
+
+  for (const { route, heading } of hubRoutes) {
+    const response = await request.get(`${webUrl}${route}`, { timeout: 45_000 });
+    expect(response.ok()).toBeTruthy();
+
+    const html = await response.text();
+    expect(html).toContain("CollectionPage");
+    expect(html).toContain("BreadcrumbList");
+    expect(html).toContain("ItemList");
+    expect(html).toMatch(heading);
+  }
 });

@@ -1,5 +1,6 @@
 import { toolMetaMap } from "@/platform/registry/toolMetaMap";
 import { getAllBlogs } from "@/app/blogs/data";
+import { fetchFirebaseBlogsPage } from "@/app/blogs/data/firebaseBlogs";
 import buySmartStores from "@/app/buysmart/data/stores.json";
 import dealData from "@/app/exclusivedeals/(data)/db.json";
 import top11Categories from "@/app/top11/data/categoryData";
@@ -42,6 +43,13 @@ const staticRoutes = [
   { path: "/policypages/termsandconditions", priority: 0.25 },
 ];
 
+const FIREBASE_API_KEY =
+  process.env.NEXT_PUBLIC_FIREBASE_API_KEY ||
+  "AIzaSyAYKc0SBXyY3bfKLkmcCrPf-NsPF8p_Z50";
+const FIREBASE_PROJECT_ID =
+  process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID || "altftool-bca36";
+const FIREBASE_PROJECT_ROOT = "projects/altftool";
+
 function sitemapEntry(path, options = {}) {
   return {
     url: `${getSiteUrl()}${path}`,
@@ -66,9 +74,90 @@ function normalizeTopicSlug(value = "") {
     .replace(/(^-|-$)/g, "");
 }
 
-export default function sitemap() {
+function firestoreCollectionUrl(path, pageSize = 100) {
+  const url = new URL(
+    `https://firestore.googleapis.com/v1/projects/${FIREBASE_PROJECT_ID}/databases/(default)/documents/${path}`,
+  );
+  url.searchParams.set("key", FIREBASE_API_KEY);
+  url.searchParams.set("pageSize", String(pageSize));
+  return url.toString();
+}
+
+function firestoreValueToJs(value) {
+  if (!value) return undefined;
+  if ("stringValue" in value) return value.stringValue;
+  if ("integerValue" in value) return Number(value.integerValue);
+  if ("doubleValue" in value) return Number(value.doubleValue);
+  if ("booleanValue" in value) return Boolean(value.booleanValue);
+  if ("timestampValue" in value) return value.timestampValue;
+  if ("nullValue" in value) return null;
+  if ("arrayValue" in value) {
+    return (value.arrayValue.values || []).map(firestoreValueToJs);
+  }
+  if ("mapValue" in value) {
+    return Object.fromEntries(
+      Object.entries(value.mapValue.fields || {}).map(([key, nestedValue]) => [
+        key,
+        firestoreValueToJs(nestedValue),
+      ]),
+    );
+  }
+  return undefined;
+}
+
+function decodeFirestoreDocument(document) {
+  return {
+    id: document.name?.split("/").pop() || "",
+    ...Object.fromEntries(
+      Object.entries(document.fields || {}).map(([key, value]) => [
+        key,
+        firestoreValueToJs(value),
+      ]),
+    ),
+  };
+}
+
+async function listPublicFirestoreDocs(path, pageSize = 100) {
+  try {
+    const response = await fetch(firestoreCollectionUrl(path, pageSize), {
+      next: { revalidate },
+    });
+    const payload = await response.json().catch(() => ({}));
+    if (!response.ok) return [];
+    return (payload.documents || []).map(decodeFirestoreDocument);
+  } catch {
+    return [];
+  }
+}
+
+async function getLiveSitemapCollections() {
+  const [
+    firebaseBlogs,
+    extensions,
+    brandCategories,
+    brandSubcategories,
+    brands,
+  ] = await Promise.all([
+    fetchFirebaseBlogsPage({ pageSize: 100 }).catch(() => []),
+    listPublicFirestoreDocs(`${FIREBASE_PROJECT_ROOT}/extensions`, 100),
+    listPublicFirestoreDocs(`${FIREBASE_PROJECT_ROOT}/consumerrating/data/categories`, 100),
+    listPublicFirestoreDocs(`${FIREBASE_PROJECT_ROOT}/consumerrating/data/subcategories`, 100),
+    listPublicFirestoreDocs(`${FIREBASE_PROJECT_ROOT}/consumerrating/data/brands`, 100),
+  ]);
+
+  return {
+    firebaseBlogs,
+    extensions,
+    brandCategories,
+    brandSubcategories,
+    brands,
+  };
+}
+
+export default async function sitemap() {
   const entries = [];
   const seen = new Set();
+  const liveCollections = await getLiveSitemapCollections();
 
   for (const route of staticRoutes) {
     pushUnique(entries, seen, route.path, {
@@ -112,6 +201,72 @@ export default function sitemap() {
       priority: 0.7,
       changeFrequency: "monthly",
     });
+  }
+
+  for (const blog of liveCollections.firebaseBlogs) {
+    if (blog?.slug) {
+      pushUnique(entries, seen, `/blogs/${blog.slug}`, {
+        lastModified: blog.updatedAt || blog.date ? new Date(blog.updatedAt || blog.date) : undefined,
+        priority: 0.72,
+        changeFrequency: "weekly",
+      });
+    }
+  }
+
+  for (const extension of liveCollections.extensions) {
+    const slug = normalizeSlug(extension.slug || extension.id);
+    if (slug) {
+      pushUnique(entries, seen, `/extensions/${slug}`, {
+        lastModified: extension.updatedAt || extension.createdAt
+          ? new Date(extension.updatedAt || extension.createdAt)
+          : undefined,
+        priority: 0.62,
+        changeFrequency: "weekly",
+      });
+    }
+  }
+
+  const brandCategoryById = new Map(
+    liveCollections.brandCategories
+      .filter((category) => category?.id && category?.name)
+      .map((category) => [category.id, category]),
+  );
+  const brandSubcategoryById = new Map(
+    liveCollections.brandSubcategories
+      .filter((subcategory) => subcategory?.id && subcategory?.name)
+      .map((subcategory) => [subcategory.id, subcategory]),
+  );
+
+  for (const subcategory of liveCollections.brandSubcategories) {
+    const category = brandCategoryById.get(subcategory.categoryId);
+    const categorySlug = normalizeSlug(category?.name);
+    const subcategorySlug = normalizeSlug(subcategory?.name);
+
+    if (categorySlug && subcategorySlug) {
+      pushUnique(entries, seen, `/brandrating/${categorySlug}/${subcategorySlug}`, {
+        lastModified: subcategory.updatedAt || subcategory.createdAt
+          ? new Date(subcategory.updatedAt || subcategory.createdAt)
+          : undefined,
+        priority: 0.62,
+        changeFrequency: "weekly",
+      });
+    }
+  }
+
+  for (const brand of liveCollections.brands) {
+    const category = brandCategoryById.get(brand.categoryId);
+    const subcategory = brandSubcategoryById.get(brand.subCategoryId);
+    const categorySlug = normalizeSlug(category?.name);
+    const subcategorySlug = normalizeSlug(subcategory?.name);
+    const brandSlug = normalizeSlug(brand?.name);
+
+    if (categorySlug && subcategorySlug && brandSlug) {
+      pushUnique(entries, seen, `/brandrating/${categorySlug}/${subcategorySlug}/${brandSlug}`, {
+        lastModified: brand.updatedAt || brand.createdAt ? new Date(brand.updatedAt || brand.createdAt) : undefined,
+        priority: 0.58,
+        changeFrequency: "weekly",
+      });
+    }
   }
 
   for (const store of buySmartStores) {

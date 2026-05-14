@@ -12,6 +12,9 @@ import {
   TrendingUp,
 } from "lucide-react";
 import BlogExplorerClient from "./components/BlogExplorerClient";
+import JsonLd from "@/platform/seo/JsonLd";
+import RouteDiscoveryBand from "@/platform/navigation/RouteDiscoveryBand";
+import { getRouteHub, getRouteHubJsonLdItems } from "@/platform/navigation/routeHubs";
 import {
   BLOG_CONTENT_LANES,
   BLOG_REMOTE_LIMIT,
@@ -21,17 +24,27 @@ import {
   getFeaturedBlogGroups,
 } from "./data";
 import { getFirebaseBlogCatalog } from "./data/firebaseBlogs";
+import {
+  createBreadcrumbJsonLd,
+  createCollectionPageJsonLd,
+  createItemListJsonLd,
+  createPageMetadata,
+} from "@/platform/seo/generateMetadata";
 
 export const revalidate = 3600;
 
 const laneIcons = [ReceiptText, GraduationCap, TrendingUp, Lightbulb];
+const blogsRouteHub = getRouteHub("blogs");
+const blogsDescription =
+  "Read fast, practical AltFTool guides for online tools, games, browser extensions, savings workflows, student picks, and creator-friendly digital productivity.";
 
 export async function generateMetadata() {
-  return {
+  return createPageMetadata({
     title: "AltFTool Blog - Tools, Savings & Digital Guides",
-    description:
-      "Read fast, practical AltFTool guides for online tools, games, browser extensions, savings workflows, student picks, and creator-friendly digital productivity.",
-  };
+    description: blogsDescription,
+    path: "/blogs",
+    image: "/assets/logo3.png",
+  });
 }
 
 function formatDate(date) {
@@ -191,6 +204,25 @@ export default async function BlogsPage() {
 
   return (
     <main className="bg-(--background) text-(--foreground)">
+      <JsonLd
+        id="blogs-schema"
+        data={[
+          createCollectionPageJsonLd({
+            path: "/blogs",
+            name: "AltFTool Blog",
+            description: blogsDescription,
+          }),
+          createItemListJsonLd({
+            path: "/blogs",
+            name: "AltFTool blog next routes",
+            items: getRouteHubJsonLdItems("blogs"),
+          }),
+          createBreadcrumbJsonLd([
+            { name: "Home", path: "/" },
+            { name: "Blogs", path: "/blogs" },
+          ]),
+        ]}
+      />
       <div className="mx-auto w-full max-w-[1500px] px-3 py-6 sm:px-5 md:py-8 lg:px-8">
         <section className="rounded-[var(--anslation-ds-radius-lg)] border border-(--border) bg-(--background) p-3 shadow-[var(--anslation-ds-shadow-sm)] sm:p-4">
           <div className="mb-4 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
@@ -248,6 +280,7 @@ export default async function BlogsPage() {
           totalCount={totalCount}
         />
       </div>
+      <RouteDiscoveryBand {...blogsRouteHub} />
     </main>
   );
 }
