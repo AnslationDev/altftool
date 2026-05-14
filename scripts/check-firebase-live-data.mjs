@@ -11,6 +11,19 @@ function firestoreUrl(path) {
   return `https://firestore.googleapis.com/v1/projects/${firebaseProjectId}/databases/(default)/documents/${path}?key=${firebaseApiKey}`;
 }
 
+function firestoreCollectionUrl(path, params = {}) {
+  const url = new URL(
+    `https://firestore.googleapis.com/v1/projects/${firebaseProjectId}/databases/(default)/documents/${path}`,
+  );
+  url.searchParams.set("key", firebaseApiKey);
+
+  for (const [key, value] of Object.entries(params)) {
+    if (value !== undefined && value !== null) url.searchParams.set(key, String(value));
+  }
+
+  return url.toString();
+}
+
 function firestoreParentUrl(parentPath, endpoint) {
   return `https://firestore.googleapis.com/v1/projects/${firebaseProjectId}/databases/(default)/documents/${parentPath}:${endpoint}?key=${firebaseApiKey}`;
 }
@@ -54,6 +67,20 @@ async function readDocument(path) {
   return decodeFields(payload.fields || {});
 }
 
+async function listDocuments(path, pageSize = 10) {
+  const response = await fetch(firestoreCollectionUrl(path, { pageSize }));
+  const payload = await response.json().catch(() => ({}));
+
+  if (!response.ok) {
+    throw new Error(`${path} list failed with HTTP ${response.status}`);
+  }
+
+  return (payload.documents || []).map((document) => ({
+    id: document.name?.split("/").pop() || "",
+    ...decodeFields(document.fields || {}),
+  }));
+}
+
 async function runQuery(parentPath, structuredQuery) {
   const response = await fetch(firestoreParentUrl(parentPath, "runQuery"), {
     method: "POST",
@@ -82,6 +109,25 @@ function assertMinimum(failures, label, value, minimum = 1) {
   }
 }
 
+function summarizeRows(rows, fieldCandidates = ["name", "slug", "heading", "title"]) {
+  const first = rows[0] || {};
+
+  return {
+    firstPageCount: rows.length,
+    firstLabel: fieldCandidates.map((field) => first[field]).find(Boolean) || first.id || null,
+    firstFields: Object.keys(first).filter((field) => field !== "id").sort(),
+  };
+}
+
+function summarizeStatusRows(rows) {
+  const activeCount = rows.filter((row) => String(row.status || "").toLowerCase() === "active").length;
+
+  return {
+    ...summarizeRows(rows),
+    activeCount,
+  };
+}
+
 const buySmartDocs = [
   { id: "hero", fields: ["banner"] },
   { id: "categories", fields: ["banner"] },
@@ -96,6 +142,10 @@ const summary = {
   projectId: firebaseProjectId,
   buySmart: {},
   blogs: {},
+  extensions: {},
+  academy: {},
+  trendingVideos: {},
+  consumerRating: {},
 };
 
 for (const docConfig of buySmartDocs) {
@@ -139,6 +189,37 @@ summary.blogs.firstSlug = blogDocs[0]
   : null;
 
 assertMinimum(failures, "published blogs first page", blogDocs.length);
+
+const extensionRows = await listDocuments(`projects/${ALTFT_PROJECT_ID}/extensions`, 10);
+summary.extensions = summarizeRows(extensionRows, ["name", "slug"]);
+assertMinimum(failures, "extensions first page", extensionRows.length);
+
+const academyRows = await listDocuments(`projects/${ALTFT_PROJECT_ID}/academy`, 10);
+summary.academy = summarizeRows(academyRows, ["name", "academyUrl"]);
+assertMinimum(failures, "academy first page", academyRows.length);
+
+const trendingVideoRows = await listDocuments(`projects/${ALTFT_PROJECT_ID}/trendingvideos`, 10);
+summary.trendingVideos = {
+  ...summarizeRows(trendingVideoRows, ["name", "videoUrl"]),
+  videoCount: trendingVideoRows.filter((row) => String(row.type || "").toLowerCase() !== "shorts").length,
+  shortsCount: trendingVideoRows.filter((row) => String(row.type || "").toLowerCase() === "shorts").length,
+};
+assertMinimum(failures, "trending videos first page", trendingVideoRows.length);
+
+for (const collectionId of ["categories", "subcategories", "brands"]) {
+  const rows = await listDocuments(
+    `projects/${ALTFT_PROJECT_ID}/consumerrating/data/${collectionId}`,
+    20,
+  );
+
+  summary.consumerRating[collectionId] = summarizeStatusRows(rows);
+  assertMinimum(failures, `consumer rating ${collectionId}`, rows.length);
+  assertMinimum(
+    failures,
+    `active consumer rating ${collectionId}`,
+    summary.consumerRating[collectionId].activeCount,
+  );
+}
 
 if (failures.length) {
   console.error("Firebase live data check failed:");

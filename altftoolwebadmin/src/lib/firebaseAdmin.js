@@ -14,23 +14,64 @@ function normalizePrivateKey(value = "") {
   return value.replace(/\\n/g, "\n").trim();
 }
 
+function parseServiceAccount(rawValue = "") {
+  const value = rawValue.trim();
+  if (!value) return { account: null, error: null };
+
+  try {
+    const parsed = JSON.parse(value);
+    return {
+      account: {
+        projectId: parsed.project_id || parsed.projectId || "",
+        clientEmail: parsed.client_email || parsed.clientEmail || "",
+        privateKey: parsed.private_key || parsed.privateKey || "",
+      },
+      error: null,
+    };
+  } catch {
+    return {
+      account: null,
+      error: "FIREBASE_SERVICE_ACCOUNT must be valid service-account JSON.",
+    };
+  }
+}
+
 function validateFirebaseAdminConfig(env = process.env) {
-  const values = Object.fromEntries(
+  const rawValues = Object.fromEntries(
     FIREBASE_ADMIN_ENV.map((name) => [
       name,
       typeof env[name] === "string" ? env[name].trim() : "",
     ]),
   );
-  const missing = FIREBASE_ADMIN_ENV.filter((name) => !values[name]);
-  const privateKey = normalizePrivateKey(values.FIREBASE_PRIVATE_KEY);
+  const serviceAccountRaw = typeof env.FIREBASE_SERVICE_ACCOUNT === "string"
+    ? env.FIREBASE_SERVICE_ACCOUNT
+    : "";
+  const { account: serviceAccount, error: serviceAccountError } = parseServiceAccount(serviceAccountRaw);
+  const values = {
+    projectId: rawValues.FIREBASE_PROJECT_ID || serviceAccount?.projectId || "",
+    clientEmail: rawValues.FIREBASE_CLIENT_EMAIL || serviceAccount?.clientEmail || "",
+    privateKey: rawValues.FIREBASE_PRIVATE_KEY || serviceAccount?.privateKey || "",
+  };
+  const missing = [
+    ["FIREBASE_PROJECT_ID", values.projectId],
+    ["FIREBASE_CLIENT_EMAIL", values.clientEmail],
+    ["FIREBASE_PRIVATE_KEY", values.privateKey],
+  ]
+    .filter(([, value]) => !value)
+    .map(([name]) => name);
+  const privateKey = normalizePrivateKey(values.privateKey);
   const invalid = [];
 
-  if (values.FIREBASE_CLIENT_EMAIL && !values.FIREBASE_CLIENT_EMAIL.includes("@")) {
+  if (serviceAccountError) {
+    invalid.push(serviceAccountError);
+  }
+
+  if (values.clientEmail && !values.clientEmail.includes("@")) {
     invalid.push("FIREBASE_CLIENT_EMAIL must be a service-account email.");
   }
 
   if (
-    values.FIREBASE_PRIVATE_KEY &&
+    values.privateKey &&
     (!privateKey.includes("-----BEGIN PRIVATE KEY-----") ||
       !privateKey.includes("-----END PRIVATE KEY-----"))
   ) {
@@ -41,16 +82,17 @@ function validateFirebaseAdminConfig(env = process.env) {
     ok: missing.length === 0 && invalid.length === 0,
     missing,
     invalid,
-    projectId: values.FIREBASE_PROJECT_ID || null,
-    clientEmailConfigured: Boolean(values.FIREBASE_CLIENT_EMAIL),
-    privateKeyConfigured: Boolean(values.FIREBASE_PRIVATE_KEY),
+    projectId: values.projectId || null,
+    clientEmailConfigured: Boolean(values.clientEmail),
+    privateKeyConfigured: Boolean(values.privateKey),
     privateKeyLooksComplete:
-      Boolean(values.FIREBASE_PRIVATE_KEY) &&
+      Boolean(values.privateKey) &&
       privateKey.includes("-----BEGIN PRIVATE KEY-----") &&
       privateKey.includes("-----END PRIVATE KEY-----"),
+    serviceAccountConfigured: Boolean(serviceAccountRaw.trim()),
     values: {
-      projectId: values.FIREBASE_PROJECT_ID,
-      clientEmail: values.FIREBASE_CLIENT_EMAIL,
+      projectId: values.projectId,
+      clientEmail: values.clientEmail,
       privateKey,
     },
   };
@@ -65,6 +107,7 @@ export function getFirebaseAdminConfigStatus() {
     clientEmailConfigured: status.clientEmailConfigured,
     privateKeyConfigured: status.privateKeyConfigured,
     privateKeyLooksComplete: status.privateKeyLooksComplete,
+    serviceAccountConfigured: status.serviceAccountConfigured,
     missing: status.missing,
     invalid: status.invalid,
   };

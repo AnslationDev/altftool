@@ -92,6 +92,28 @@ function normalizePrivateKey(value) {
   return value.replace(/\\n/g, "\n").trim();
 }
 
+function parseFirebaseServiceAccount(rawValue = "") {
+  const value = rawValue.trim();
+  if (!value) return { account: null, error: null };
+
+  try {
+    const parsed = JSON.parse(value);
+    return {
+      account: {
+        projectId: parsed.project_id || parsed.projectId || "",
+        clientEmail: parsed.client_email || parsed.clientEmail || "",
+        privateKey: parsed.private_key || parsed.privateKey || "",
+      },
+      error: null,
+    };
+  } catch {
+    return {
+      account: null,
+      error: "must be valid service-account JSON.",
+    };
+  }
+}
+
 function validateUrl(value) {
   if (!value) return null;
   try {
@@ -111,6 +133,75 @@ function requiredWhen(mode) {
   return false;
 }
 
+function firebaseAdminCredentialResults(env) {
+  const serviceAccountRaw = envValue(env, "FIREBASE_SERVICE_ACCOUNT");
+  const { account: serviceAccount, error: serviceAccountError } =
+    parseFirebaseServiceAccount(serviceAccountRaw);
+  const rawValues = {
+    FIREBASE_PROJECT_ID: envValue(env, "FIREBASE_PROJECT_ID"),
+    FIREBASE_CLIENT_EMAIL: envValue(env, "FIREBASE_CLIENT_EMAIL"),
+    FIREBASE_PRIVATE_KEY: envValue(env, "FIREBASE_PRIVATE_KEY"),
+  };
+  const effectiveValues = {
+    FIREBASE_PROJECT_ID: rawValues.FIREBASE_PROJECT_ID || serviceAccount?.projectId || "",
+    FIREBASE_CLIENT_EMAIL: rawValues.FIREBASE_CLIENT_EMAIL || serviceAccount?.clientEmail || "",
+    FIREBASE_PRIVATE_KEY: rawValues.FIREBASE_PRIVATE_KEY || serviceAccount?.privateKey || "",
+  };
+  const entries = [
+    {
+      name: "FIREBASE_PROJECT_ID",
+    },
+    {
+      name: "FIREBASE_CLIENT_EMAIL",
+      validate: (value) => (value && !value.includes("@") ? "must be a service-account email." : null),
+    },
+    {
+      name: "FIREBASE_PRIVATE_KEY",
+      validate: (value) => {
+        const normalized = normalizePrivateKey(value);
+        if (!value) return null;
+        if (
+          !normalized.includes("-----BEGIN PRIVATE KEY-----") ||
+          !normalized.includes("-----END PRIVATE KEY-----")
+        ) {
+          return "must be the full PEM private key.";
+        }
+        return null;
+      },
+    },
+  ];
+  const results = serviceAccountRaw
+    ? [{
+        group: "Admin service-account config",
+        name: "FIREBASE_SERVICE_ACCOUNT",
+        level: serviceAccountError ? "fail" : "pass",
+        message: serviceAccountError || "configured",
+      }]
+    : [];
+
+  for (const entry of entries) {
+    const value = effectiveValues[entry.name];
+    const rawValue = rawValues[entry.name];
+    const missing = !value;
+    const validationError = value && entry.validate ? entry.validate(value) : null;
+    const level = missing && strict ? "fail" : missing ? "warn" : validationError ? "fail" : "pass";
+
+    results.push({
+      group: "Admin service-account config",
+      name: entry.name,
+      level,
+      message: missing
+        ? strict
+          ? "required but missing"
+          : "not configured"
+        : validationError ||
+          (rawValue ? "configured" : "configured via FIREBASE_SERVICE_ACCOUNT"),
+    });
+  }
+
+  return results;
+}
+
 const checks = [
   {
     name: "Public Firebase web config",
@@ -123,29 +214,7 @@ const checks = [
   },
   {
     name: "Admin service-account config",
-    entries: [
-      { name: "FIREBASE_PROJECT_ID", required: "strict" },
-      {
-        name: "FIREBASE_CLIENT_EMAIL",
-        required: "strict",
-        validate: (value) => (value && !value.includes("@") ? "must be a service-account email." : null),
-      },
-      {
-        name: "FIREBASE_PRIVATE_KEY",
-        required: "strict",
-        validate: (value) => {
-          const normalized = normalizePrivateKey(value);
-          if (!value) return null;
-          if (
-            !normalized.includes("-----BEGIN PRIVATE KEY-----") ||
-            !normalized.includes("-----END PRIVATE KEY-----")
-          ) {
-            return "must be the full PEM private key.";
-          }
-          return null;
-        },
-      },
-    ],
+    evaluate: firebaseAdminCredentialResults,
   },
   {
     name: "Production monitoring",
@@ -175,6 +244,11 @@ const snapshot = loadEnvSnapshot();
 const results = [];
 
 for (const group of checks) {
+  if (typeof group.evaluate === "function") {
+    results.push(...group.evaluate(snapshot.values));
+    continue;
+  }
+
   for (const entry of group.entries) {
     const value = envValue(snapshot.values, entry.name);
     const isRequired = requiredWhen(entry.required);
