@@ -1,9 +1,24 @@
 name: Vercel Deploy
 
 on:
-  workflow_run:
-    workflows: ["CI"]
-    types: [completed]
+  workflow_call:
+    inputs:
+      target:
+        description: Project to deploy
+        required: false
+        default: all
+        type: string
+    secrets:
+      VERCEL_TOKEN:
+        required: false
+      VERCEL_ORG_ID:
+        required: false
+      VERCEL_PROJECT_ID:
+        required: false
+      VERCEL_WEB_PROJECT_ID:
+        required: false
+      VERCEL_ADMIN_PROJECT_ID:
+        required: false
   workflow_dispatch:
     inputs:
       target:
@@ -17,7 +32,7 @@ on:
           - admin
 
 concurrency:
-  group: vercel-deploy-${{ github.event.workflow_run.head_branch || github.ref }}-${{ inputs.target || 'auto' }}
+  group: vercel-deploy-${{ github.ref }}-${{ inputs.target || 'all' }}
   cancel-in-progress: true
 
 permissions:
@@ -35,13 +50,7 @@ jobs:
     name: Deploy web
     runs-on: ubuntu-latest
     timeout-minutes: 30
-    if: >
-      (github.event_name == 'workflow_run' &&
-        github.event.workflow_run.conclusion == 'success' &&
-        github.event.workflow_run.head_branch == 'main' &&
-        github.event.workflow_run.event == 'push') ||
-      (github.event_name == 'workflow_dispatch' &&
-        (inputs.target == 'all' || inputs.target == 'web'))
+    if: inputs.target == 'all' || inputs.target == 'web'
     env:
       VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
       VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
@@ -49,14 +58,7 @@ jobs:
       ALTFT_MONITOR_WEB_URLS: ${{ vars.ALTFT_MONITOR_WEB_URLS || vars.ALTFT_MONITOR_WEB_URL || 'https://altftool.com' }}
 
     steps:
-      - name: Checkout CI commit
-        if: github.event_name == 'workflow_run'
-        uses: actions/checkout@v4
-        with:
-          ref: ${{ github.event.workflow_run.head_sha }}
-
-      - name: Checkout selected ref
-        if: github.event_name == 'workflow_dispatch'
+      - name: Checkout
         uses: actions/checkout@v4
 
       - name: Setup Node
@@ -129,27 +131,14 @@ jobs:
     name: Deploy admin
     runs-on: ubuntu-latest
     timeout-minutes: 30
-    if: >
-      (github.event_name == 'workflow_run' &&
-        github.event.workflow_run.conclusion == 'success' &&
-        github.event.workflow_run.head_branch == 'main' &&
-        github.event.workflow_run.event == 'push') ||
-      (github.event_name == 'workflow_dispatch' &&
-        (inputs.target == 'all' || inputs.target == 'admin'))
+    if: inputs.target == 'all' || inputs.target == 'admin'
     env:
       VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
       VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
       VERCEL_PROJECT_ID: ${{ secrets.VERCEL_ADMIN_PROJECT_ID }}
 
     steps:
-      - name: Checkout CI commit
-        if: github.event_name == 'workflow_run'
-        uses: actions/checkout@v4
-        with:
-          ref: ${{ github.event.workflow_run.head_sha }}
-
-      - name: Checkout selected ref
-        if: github.event_name == 'workflow_dispatch'
+      - name: Checkout
         uses: actions/checkout@v4
 
       - name: Setup Node
