@@ -1,12 +1,15 @@
 import { db } from "@/lib/firebase";
 import { getCachedFirebaseRead } from "@/lib/firebaseCache";
 import { collection, getDocs } from "firebase/firestore";
+import {
+  isDisplayableTrendingVideo,
+  normalizeTrendingVideo,
+} from "@altftool/core/firebaseContent";
+import { ALTFT_TRENDING_VIDEOS_COLLECTION_PATH } from "@altftool/core/firebasePaths";
 
 const TRENDING_VIDEOS_COLLECTION = collection(
   db,
-  "projects",
-  "altftool",
-  "trendingvideos",
+  ...ALTFT_TRENDING_VIDEOS_COLLECTION_PATH,
 );
 
 const CATEGORY_ALIASES = {
@@ -25,14 +28,6 @@ const CATEGORY_ALIASES = {
 
 function normalizeText(value) {
   return String(value || "").trim().toLowerCase();
-}
-
-function normalizeType(type) {
-  const value = normalizeText(type);
-  if (["short", "shorts", "reel", "reels"].includes(value)) {
-    return "shorts";
-  }
-  return "video";
 }
 
 function toDateObject(value) {
@@ -120,14 +115,7 @@ function matchesSearch(item, query) {
 }
 
 function mapFirebaseDoc(doc) {
-  const data = doc.data();
-
-  return {
-    firestoreId: doc.id,
-    id: doc.id,
-    ...data,
-    type: normalizeType(data?.type),
-  };
+  return normalizeTrendingVideo(doc.data(), doc.id);
 }
 
 function sortItems(items, sortBy = "Latest") {
@@ -195,7 +183,7 @@ export async function getTrendingVideosFromFirebase() {
   try {
     return await getCachedFirebaseRead("trending-videos:list", async () => {
       const snapshot = await getDocs(TRENDING_VIDEOS_COLLECTION);
-      return snapshot.docs.map(mapFirebaseDoc);
+      return snapshot.docs.map(mapFirebaseDoc).filter(isDisplayableTrendingVideo);
     }, 120000);
   } catch (error) {
     console.error("Error fetching trending videos:", error);

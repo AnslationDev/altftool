@@ -1,12 +1,10 @@
 "use client";
 
 import { useEffect, useState, useMemo } from "react";
-import { collection, getDocs } from "firebase/firestore";
-import { db } from "@/lib/firebase";
 import { extensionMap } from "@/data/extensions";
 import { emitAlert } from "@/lib/alertBus";
 import { logAuditEvent } from "@/lib/auditClient";
-import { deleteExtension } from "./services/extensions.service";
+import { deleteExtension, fetchExtensions } from "./services/extensions.service";
 
 import ExtensionsHeader from "./components/ExtensionsHeader";
 import ExtensionsFilters from "./components/ExtensionsFilters";
@@ -48,8 +46,7 @@ const [isBulkDeleteModalOpen, setIsBulkDeleteModalOpen] = useState(false);
         const data = Object.entries(extensionMap).map(([slug, d]) => ({ id: slug, slug, ...d }));
         setExtensions(data);
       } else {
-        const snap = await getDocs(collection(db, "projects", "altftool", "extensions"));
-        setExtensions(snap.docs.map((d) => ({ id: d.id, ...d.data() })));
+        setExtensions(await fetchExtensions());
       }
     } catch (err) {
       console.error(err);

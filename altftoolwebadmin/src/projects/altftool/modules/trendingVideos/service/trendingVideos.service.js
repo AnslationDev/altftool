@@ -16,13 +16,17 @@ import {
 
 import { db } from "@/lib/firebase";
 import { clearFirebaseCache, getCachedFirebaseRead } from "@/lib/firebaseCache";
+import {
+  compactFirestoreData,
+  normalizeTrendingVideo,
+} from "@altftool/core/firebaseContent";
+import { ALTFT_TRENDING_VIDEOS_COLLECTION_PATH } from "@altftool/core/firebasePaths";
 
 /* =========================
    CONFIG
 ========================= */
 
-const PROJECT_ID = "altftool";
-const videosRef = () => collection(db, "projects", PROJECT_ID, "trendingvideos");
+const videosRef = () => collection(db, ...ALTFT_TRENDING_VIDEOS_COLLECTION_PATH);
 const ALL_VIDEOS_CACHE_KEY = "admin:trending-videos:all";
 const VIDEO_COUNT_CACHE_KEY = "admin:trending-videos:count";
 
@@ -43,7 +47,7 @@ export async function getAllVideos() {
   return getCachedFirebaseRead(ALL_VIDEOS_CACHE_KEY, async () => {
     const q = query(videosRef(), orderBy("createdAt", "desc"));
     const snap = await getDocs(q);
-    return snap.docs.map((d) => ({ id: d.id, ...d.data() }));
+    return snap.docs.map((d) => normalizeTrendingVideo(d.data(), d.id));
   }, 30000);
 }
 
@@ -58,7 +62,7 @@ export async function getVideosPaginated(pageSize = 20, lastDoc = null) {
   if (lastDoc) q = query(q, startAfter(lastDoc));
 
   const snap = await getDocs(q);
-  const videos = snap.docs.map((d) => ({ id: d.id, ...d.data() }));
+  const videos = snap.docs.map((d) => normalizeTrendingVideo(d.data(), d.id));
   const newLastDoc = snap.docs[snap.docs.length - 1] ?? null;
   return { videos, lastDoc: newLastDoc };
 }
@@ -85,9 +89,11 @@ export async function getVideosCount() {
 export async function createVideo(payload) {
   // Strip any client-generated id; Firestore will assign one
   const { id: _ignored, videoFile: _file, ...data } = payload;
+  const { id: _id, firestoreId: _firestoreId, ...normalized } =
+    compactFirestoreData(normalizeTrendingVideo(data));
 
   const docRef = await addDoc(videosRef(), {
-    ...data,
+    ...normalized,
     createdAt: serverTimestamp(),
     updatedAt: serverTimestamp(),
   });
@@ -107,10 +113,12 @@ export async function createVideo(payload) {
  */
 export async function updateVideo(docId, payload) {
   const { id: _ignored, videoFile: _file, ...data } = payload;
+  const { id: _id, firestoreId: _firestoreId, ...normalized } =
+    compactFirestoreData(normalizeTrendingVideo(data, docId));
 
-  const ref = doc(db, "projects", PROJECT_ID, "trendingvideos", docId);
+  const ref = doc(db, ...ALTFT_TRENDING_VIDEOS_COLLECTION_PATH, docId);
   await updateDoc(ref, {
-    ...data,
+    ...normalized,
     updatedAt: serverTimestamp(),
   });
   clearVideosCache();
@@ -125,7 +133,7 @@ export async function updateVideo(docId, payload) {
  * @param {string} docId
  */
 export async function deleteVideo(docId) {
-  const ref = doc(db, "projects", PROJECT_ID, "trendingvideos", docId);
+  const ref = doc(db, ...ALTFT_TRENDING_VIDEOS_COLLECTION_PATH, docId);
   await deleteDoc(ref);
   clearVideosCache();
 }
@@ -142,7 +150,7 @@ export async function deleteVideos(docIds) {
     const chunk = docIds.slice(i, i + BATCH_LIMIT);
     const batch = writeBatch(db);
     chunk.forEach((docId) => {
-      const ref = doc(db, "projects", PROJECT_ID, "trendingvideos", docId);
+      const ref = doc(db, ...ALTFT_TRENDING_VIDEOS_COLLECTION_PATH, docId);
       batch.delete(ref);
     });
     await batch.commit();
@@ -161,7 +169,7 @@ export async function deleteVideos(docIds) {
  * @param {boolean} currentValue
  */
 export async function toggleVideoPlay(docId, currentValue) {
-  const ref = doc(db, "projects", PROJECT_ID, "trendingvideos", docId);
+  const ref = doc(db, ...ALTFT_TRENDING_VIDEOS_COLLECTION_PATH, docId);
   await updateDoc(ref, {
     isPlaying: !currentValue,
     updatedAt: serverTimestamp(),

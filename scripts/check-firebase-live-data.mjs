@@ -1,3 +1,12 @@
+import {
+  isDisplayableAcademy,
+  isDisplayableExtension,
+  isDisplayableTrendingVideo,
+  normalizeAcademy,
+  normalizeExtension,
+  normalizeTrendingVideo,
+} from "@altftool/core/firebaseContent";
+
 const DEFAULT_FIREBASE_API_KEY = "AIzaSyAYKc0SBXyY3bfKLkmcCrPf-NsPF8p_Z50";
 const DEFAULT_FIREBASE_PROJECT_ID = "altftool-bca36";
 const ALTFT_PROJECT_ID = "altftool";
@@ -191,20 +200,39 @@ summary.blogs.firstSlug = blogDocs[0]
 assertMinimum(failures, "published blogs first page", blogDocs.length);
 
 const extensionRows = await listDocuments(`projects/${ALTFT_PROJECT_ID}/extensions`, 10);
-summary.extensions = summarizeRows(extensionRows, ["name", "slug"]);
+const displayableExtensions = extensionRows
+  .map((row) => normalizeExtension(row, row.id))
+  .filter(isDisplayableExtension);
+summary.extensions = {
+  ...summarizeRows(extensionRows, ["name", "slug"]),
+  displayableCount: displayableExtensions.length,
+};
 assertMinimum(failures, "extensions first page", extensionRows.length);
+assertMinimum(failures, "displayable extensions first page", displayableExtensions.length);
 
 const academyRows = await listDocuments(`projects/${ALTFT_PROJECT_ID}/academy`, 10);
-summary.academy = summarizeRows(academyRows, ["name", "academyUrl"]);
+const displayableAcademies = academyRows
+  .map((row) => normalizeAcademy(row, row.id))
+  .filter(isDisplayableAcademy);
+summary.academy = {
+  ...summarizeRows(academyRows, ["name", "academyUrl"]),
+  displayableCount: displayableAcademies.length,
+};
 assertMinimum(failures, "academy first page", academyRows.length);
+assertMinimum(failures, "displayable academy first page", displayableAcademies.length);
 
 const trendingVideoRows = await listDocuments(`projects/${ALTFT_PROJECT_ID}/trendingvideos`, 10);
+const displayableTrendingVideos = trendingVideoRows
+  .map((row) => normalizeTrendingVideo(row, row.id))
+  .filter(isDisplayableTrendingVideo);
 summary.trendingVideos = {
   ...summarizeRows(trendingVideoRows, ["name", "videoUrl"]),
   videoCount: trendingVideoRows.filter((row) => String(row.type || "").toLowerCase() !== "shorts").length,
   shortsCount: trendingVideoRows.filter((row) => String(row.type || "").toLowerCase() === "shorts").length,
+  displayableCount: displayableTrendingVideos.length,
 };
 assertMinimum(failures, "trending videos first page", trendingVideoRows.length);
+assertMinimum(failures, "displayable trending videos first page", displayableTrendingVideos.length);
 
 for (const collectionId of ["categories", "subcategories", "brands"]) {
   const rows = await listDocuments(

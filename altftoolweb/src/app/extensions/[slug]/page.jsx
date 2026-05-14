@@ -6,6 +6,8 @@ import { notFound } from "next/navigation";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 import { getCachedFirebaseRead } from "@/lib/firebaseCache";
+import { normalizeExtension } from "@altftool/core/firebaseContent";
+import { ALTFT_EXTENSIONS_COLLECTION_PATH } from "@altftool/core/firebasePaths";
 
 import {
   ArrowLeft, Check, Camera, FileJson, Chrome, Star, Shield, Zap,
@@ -58,7 +60,7 @@ export default function ExtensionDetailsPage({ params }) {
     async function fetchExtension() {
       try {
         const snap = await getCachedFirebaseRead(`extension:${slug}`, async () => {
-          const ref = doc(db, "projects", "altftool", "extensions", slug);
+          const ref = doc(db, ...ALTFT_EXTENSIONS_COLLECTION_PATH, slug);
           return getDoc(ref);
         }, 120000);
 
@@ -67,7 +69,7 @@ export default function ExtensionDetailsPage({ params }) {
           return;
         }
 
-        setExtension(snap.data());
+        setExtension(normalizeExtension(snap.data(), slug));
       } catch (err) {
         console.error(err);
         setNotFoundState(true);

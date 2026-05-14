@@ -4,8 +4,8 @@ import { useState, useEffect } from "react";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "@/lib/firebase"; 
 import { getCachedFirebaseRead } from "@/lib/firebaseCache";
-
-const PROJECT_ID = "altftool";
+import { normalizeExtension, isDisplayableExtension } from "@altftool/core/firebaseContent";
+import { ALTFT_EXTENSIONS_COLLECTION_PATH } from "@altftool/core/firebasePaths";
 
 export function useFirebaseExtensions() {
   const [extensions, setExtensions] = useState([]);
@@ -16,12 +16,11 @@ export function useFirebaseExtensions() {
     async function fetchExtensions() {
       try {
         const data = await getCachedFirebaseRead("extensions:list", async () => {
-          const colRef = collection(db, "projects", PROJECT_ID, "extensions");
+          const colRef = collection(db, ...ALTFT_EXTENSIONS_COLLECTION_PATH);
           const snapshot = await getDocs(colRef);
-          const rows = snapshot.docs.map((doc) => ({
-            slug: doc.id,
-            ...doc.data(),
-          }));
+          const rows = snapshot.docs
+            .map((doc) => normalizeExtension(doc.data(), doc.id))
+            .filter(isDisplayableExtension);
 
           rows.sort((a, b) => a.name?.localeCompare(b.name));
           return rows;

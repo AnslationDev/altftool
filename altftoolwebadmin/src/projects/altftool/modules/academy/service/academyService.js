@@ -14,9 +14,10 @@ import {
 
 import { db } from "@/lib/firebase";
 import { clearFirebaseCache, getCachedFirebaseRead } from "@/lib/firebaseCache";
+import { compactFirestoreData, normalizeAcademy } from "@altftool/core/firebaseContent";
+import { ALTFT_ACADEMY_COLLECTION_PATH } from "@altftool/core/firebasePaths";
 
-const PROJECT_ID = "altftool";
-const extRef = collection(db, "projects", PROJECT_ID, "academy");
+const extRef = collection(db, ...ALTFT_ACADEMY_COLLECTION_PATH);
 const CACHE_KEY = "admin:academy:list";
 
 /* READ */
@@ -25,21 +26,20 @@ export async function fetchAcademies() {
     const q = query(extRef, orderBy("createdAt", "desc"));
     const snap = await getDocs(q);
 
-    return snap.docs.map((d) => ({
-      id: d.id,
-      ...d.data(),
-    }));
+    return snap.docs.map((d) => normalizeAcademy(d.data(), d.id));
   }, 30000);
 }
 
 /* CREATE */
 export async function createAcademy(id, data) {
   const ref = doc(extRef, id);
+  const payload = compactFirestoreData(normalizeAcademy(data, id));
 
   await setDoc(ref, {
-    ...data,
+    ...payload,
     id,
     createdAt: serverTimestamp(),
+    updatedAt: serverTimestamp(),
   });
 
   clearFirebaseCache(CACHE_KEY);
@@ -49,9 +49,10 @@ export async function createAcademy(id, data) {
 /* UPDATE */
 export async function updateAcademy(id, updates) {
   const ref = doc(extRef, id);
+  const payload = compactFirestoreData(normalizeAcademy(updates, id));
 
   await updateDoc(ref, {
-    ...updates,
+    ...payload,
     updatedAt: serverTimestamp(),
   });
   clearFirebaseCache(CACHE_KEY);

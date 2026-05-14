@@ -6,15 +6,30 @@ const root = path.resolve(import.meta.dirname, "..");
 const requiredFiles = [
   {
     path: "packages/core/package.json",
-    includes: ['"./firebasePaths": "./src/firebasePaths.js"'],
+    includes: [
+      '"./firebaseContent": "./src/firebaseContent.js"',
+      '"./firebasePaths": "./src/firebasePaths.js"',
+    ],
   },
   {
     path: "packages/core/src/firebasePaths.js",
     includes: [
       'ALTFT_PROJECT_ID = "altftool"',
+      "ALTFT_ACADEMY_COLLECTION_PATH",
+      "ALTFT_EXTENSIONS_COLLECTION_PATH",
+      "ALTFT_TRENDING_VIDEOS_COLLECTION_PATH",
       "ALTFT_BUYSMART_ROOT",
       'featureBrand: "featurebrand"',
       "buySmartDocPath",
+    ],
+  },
+  {
+    path: "packages/core/src/firebaseContent.js",
+    includes: [
+      "normalizeAcademy",
+      "normalizeExtension",
+      "normalizeTrendingVideo",
+      "compactFirestoreData",
     ],
   },
   {
@@ -83,6 +98,48 @@ const buySmartAdminFiles = [
   "altftoolwebadmin/src/projects/altftool/modules/buysmart/services/firebaseBuySmartTrending.js",
 ];
 
+const publicContentFiles = [
+  {
+    path: "altftoolweb/src/app/academy/service/academyService.js",
+    helper: "ALTFT_ACADEMY_COLLECTION_PATH",
+    normalizer: "normalizeAcademy",
+    hardcodedPath: /collection\(db,\s*["']projects["'],\s*["']altftool["'],\s*["']academy["']/,
+  },
+  {
+    path: "altftoolweb/src/app/extensions/hooks/useFirebaseExtensions.js",
+    helper: "ALTFT_EXTENSIONS_COLLECTION_PATH",
+    normalizer: "normalizeExtension",
+    hardcodedPath: /collection\(db,\s*["']projects["'],\s*["']altftool["'],\s*["']extensions["']/,
+  },
+  {
+    path: "altftoolweb/src/app/trendingvids/services/firebaseTrendingVideos.js",
+    helper: "ALTFT_TRENDING_VIDEOS_COLLECTION_PATH",
+    normalizer: "normalizeTrendingVideo",
+    hardcodedPath: /collection\(\s*db,\s*["']projects["'],\s*["']altftool["'],\s*["']trendingvideos["']/,
+  },
+];
+
+const adminContentFiles = [
+  {
+    path: "altftoolwebadmin/src/projects/altftool/modules/academy/service/academyService.js",
+    helper: "ALTFT_ACADEMY_COLLECTION_PATH",
+    normalizer: "normalizeAcademy",
+    hardcodedPath: /collection\(db,\s*["']projects["'],\s*PROJECT_ID,\s*["']academy["']/,
+  },
+  {
+    path: "altftoolwebadmin/src/projects/altftool/modules/extensions/services/extensions.service.js",
+    helper: "ALTFT_EXTENSIONS_COLLECTION_PATH",
+    normalizer: "normalizeExtension",
+    hardcodedPath: /collection\(db,\s*["']projects["'],\s*PROJECT_ID,\s*["']extensions["']/,
+  },
+  {
+    path: "altftoolwebadmin/src/projects/altftool/modules/trendingVideos/service/trendingVideos.service.js",
+    helper: "ALTFT_TRENDING_VIDEOS_COLLECTION_PATH",
+    normalizer: "normalizeTrendingVideo",
+    hardcodedPath: /collection\(db,\s*["']projects["'],\s*PROJECT_ID,\s*["']trendingvideos["']/,
+  },
+];
+
 async function readProjectFile(relativePath) {
   return readFile(path.join(root, relativePath), "utf8");
 }
@@ -129,6 +186,28 @@ async function assertBuySmartPathHelpers(failures) {
   }
 }
 
+async function assertContentContracts(failures) {
+  for (const fileConfig of [...publicContentFiles, ...adminContentFiles]) {
+    const content = stripLineComments(await readProjectFile(fileConfig.path));
+
+    if (!content.includes('from "@altftool/core/firebasePaths"')) {
+      failures.push(`${fileConfig.path} must import shared Firebase path helpers`);
+    }
+    if (!content.includes(fileConfig.helper)) {
+      failures.push(`${fileConfig.path} must use ${fileConfig.helper}`);
+    }
+    if (!content.includes('from "@altftool/core/firebaseContent"')) {
+      failures.push(`${fileConfig.path} must import shared Firebase content normalizers`);
+    }
+    if (!content.includes(fileConfig.normalizer)) {
+      failures.push(`${fileConfig.path} must use ${fileConfig.normalizer}`);
+    }
+    if (fileConfig.hardcodedPath.test(content)) {
+      failures.push(`${fileConfig.path} must not hardcode its Firestore collection path`);
+    }
+  }
+}
+
 const failures = [];
 
 for (const contract of requiredFiles) {
@@ -136,6 +215,7 @@ for (const contract of requiredFiles) {
 }
 
 await assertBuySmartPathHelpers(failures);
+await assertContentContracts(failures);
 
 if (failures.length) {
   console.error("Firebase contract check failed:");
