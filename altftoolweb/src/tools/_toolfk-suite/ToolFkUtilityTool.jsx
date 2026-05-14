@@ -542,6 +542,40 @@ function fromBase64Url(value) {
   return normalized.padEnd(normalized.length + ((4 - (normalized.length % 4)) % 4), "=");
 }
 
+function encodeSharedToolState(slug, state) {
+  const payload = JSON.stringify({ v: 1, slug, state });
+  return toBase64Url(bytesToBase64(encoder.encode(payload)));
+}
+
+function readSharedToolState(slug) {
+  if (typeof window === "undefined") return null;
+
+  const encoded = new URLSearchParams(window.location.search).get("state");
+  if (!encoded) return null;
+
+  try {
+    const payload = JSON.parse(decoder.decode(base64ToBytes(fromBase64Url(encoded))));
+    if (payload?.v !== 1 || payload?.slug !== slug || !payload?.state) return null;
+    return payload.state;
+  } catch {
+    return null;
+  }
+}
+
+function sharedString(state, key, fallback = "") {
+  return typeof state?.[key] === "string" ? state[key] : fallback;
+}
+
+function sharedAction(state, actions = [], fallback) {
+  return actions.includes(state?.action) ? state.action : fallback;
+}
+
+function buildSharedToolUrl(slug, state) {
+  const url = new URL(window.location.href);
+  url.searchParams.set("state", encodeSharedToolState(slug, state));
+  return url.toString();
+}
+
 function prettyJson(value) {
   return JSON.stringify(JSON.parse(value), null, 2);
 }
@@ -1048,9 +1082,37 @@ function CopyButton({ value }) {
   );
 }
 
+function ShareLinkButton({ slug, state }) {
+  const [copied, setCopied] = useState(false);
+
+  return (
+    <button
+      type="button"
+      data-testid="share-tool-state"
+      aria-label="Copy shareable tool state link"
+      onClick={async () => {
+        const url = buildSharedToolUrl(slug, state);
+        window.history.replaceState(null, "", url);
+        try {
+          await navigator.clipboard.writeText(url);
+        } catch {
+          // The URL is still placed in the address bar when clipboard access is unavailable.
+        }
+        setCopied(true);
+        setTimeout(() => setCopied(false), 1200);
+      }}
+      className="inline-flex items-center gap-1.5 rounded-[7px] border border-(--border) bg-(--background) px-2.5 py-1.5 text-xs font-semibold text-(--muted-foreground) hover:border-(--primary) hover:text-(--foreground)"
+    >
+      {copied ? <CheckCircle2 className="h-3.5 w-3.5" /> : <Link2 className="h-3.5 w-3.5" />}
+      {copied ? "Copied" : "Share"}
+    </button>
+  );
+}
+
 function TextTool({ definition, slug }) {
-  const [input, setInput] = useState(definition.sample || "");
-  const [action, setAction] = useState(definition.actions[0]);
+  const sharedState = useMemo(() => readSharedToolState(slug), [slug]);
+  const [input, setInput] = useState(() => sharedString(sharedState, "input", definition.sample || ""));
+  const [action, setAction] = useState(() => sharedAction(sharedState, definition.actions, definition.actions[0]));
   const examples = getExamples(slug, definition);
   const result = useMemo(() => {
     try {
@@ -1069,6 +1131,7 @@ function TextTool({ definition, slug }) {
         active={action}
         onAction={setAction}
         examples={examples}
+        share={<ShareLinkButton slug={slug} state={{ input, action }} />}
         onExample={(example) => {
           setInput(example.value);
           if (example.action) setAction(example.action);
@@ -1080,7 +1143,8 @@ function TextTool({ definition, slug }) {
 }
 
 function CryptoTool({ definition, slug }) {
-  const [input, setInput] = useState(definition.sample || "");
+  const sharedState = useMemo(() => readSharedToolState(slug), [slug]);
+  const [input, setInput] = useState(() => sharedString(sharedState, "input", definition.sample || ""));
   const [secret, setSecret] = useState("altftool-secret");
   const [output, setOutput] = useState("");
   const [error, setError] = useState("");
@@ -1120,7 +1184,10 @@ function CryptoTool({ definition, slug }) {
   return (
     <div className="mt-4 grid gap-4 lg:grid-cols-2">
       <section className="rounded-[8px] border border-(--border) bg-(--card) p-4">
-        <label className="text-xs font-bold uppercase tracking-wide text-(--muted-foreground)">Input</label>
+        <div className="flex items-center justify-between gap-3">
+          <label className="text-xs font-bold uppercase tracking-wide text-(--muted-foreground)">Input</label>
+          <ShareLinkButton slug={slug} state={{ input }} />
+        </div>
         {examples.length > 0 && (
           <div className="mt-3 flex flex-wrap gap-2">
             {examples.map((example) => (
@@ -1135,7 +1202,7 @@ function CryptoTool({ definition, slug }) {
             ))}
           </div>
         )}
-        <textarea value={input} onChange={(e) => setInput(e.target.value)} className="mt-3 min-h-[300px] w-full rounded-[8px] border border-(--border) bg-(--background) p-3 font-mono text-sm outline-none focus:border-(--primary)" />
+        <textarea data-testid="tool-input" value={input} onChange={(e) => setInput(e.target.value)} className="mt-3 min-h-[300px] w-full rounded-[8px] border border-(--border) bg-(--background) p-3 font-mono text-sm outline-none focus:border-(--primary)" />
         <input value={secret} onChange={(e) => setSecret(e.target.value)} className="mt-3 w-full rounded-[8px] border border-(--border) bg-(--background) px-3 py-2 text-sm outline-none focus:border-(--primary)" placeholder="Passphrase for AES" />
         <div className="mt-3 flex flex-wrap gap-2">
           {definition.actions.map((item) => <ActionButton key={item} onClick={() => run(item)}>{actionLabels[item]}</ActionButton>)}
@@ -1146,14 +1213,17 @@ function CryptoTool({ definition, slug }) {
   );
 }
 
-function WorkspaceInput({ value, onChange, actions, active, onAction, examples = [], onExample }) {
+function WorkspaceInput({ value, onChange, actions, active, onAction, examples = [], onExample, share }) {
   return (
     <section className="rounded-[8px] border border-(--border) bg-(--card) p-4">
       <div className="flex items-center justify-between gap-3">
         <label className="text-xs font-bold uppercase tracking-wide text-(--muted-foreground)">Input</label>
-        <button type="button" onClick={() => onChange("")} className="text-xs font-semibold text-(--muted-foreground) hover:text-(--foreground)">
-          Clear
-        </button>
+        <div className="flex items-center gap-2">
+          {share}
+          <button type="button" onClick={() => onChange("")} className="text-xs font-semibold text-(--muted-foreground) hover:text-(--foreground)">
+            Clear
+          </button>
+        </div>
       </div>
       {examples.length > 0 && (
         <div className="mt-3 flex flex-wrap gap-2">
@@ -1170,6 +1240,7 @@ function WorkspaceInput({ value, onChange, actions, active, onAction, examples =
         </div>
       )}
       <textarea
+        data-testid="tool-input"
         value={value}
         onChange={(e) => onChange(e.target.value)}
         spellCheck={false}
@@ -1193,7 +1264,7 @@ function WorkspaceOutput({ value, error }) {
         <label className="text-xs font-bold uppercase tracking-wide text-(--muted-foreground)">Output</label>
         <CopyButton value={value} />
       </div>
-      <pre className="mt-3 min-h-[320px] overflow-auto rounded-[8px] border border-(--border) bg-(--background) p-3 text-sm leading-6 text-(--foreground)">
+      <pre data-testid="tool-output" className="mt-3 min-h-[320px] overflow-auto rounded-[8px] border border-(--border) bg-(--background) p-3 text-sm leading-6 text-(--foreground)">
         {error ? `Error: ${error}` : value}
       </pre>
     </section>
@@ -1231,10 +1302,11 @@ function FileToBase64Tool({ definition }) {
   );
 }
 
-function Base64ToFileTool({ definition }) {
-  const [input, setInput] = useState("");
-  const [filename, setFilename] = useState(definition.defaultName);
-  const [mime, setMime] = useState(definition.defaultMime);
+function Base64ToFileTool({ definition, slug }) {
+  const sharedState = useMemo(() => readSharedToolState(slug), [slug]);
+  const [input, setInput] = useState(() => sharedString(sharedState, "input", ""));
+  const [filename, setFilename] = useState(() => sharedString(sharedState, "filename", definition.defaultName));
+  const [mime, setMime] = useState(() => sharedString(sharedState, "mime", definition.defaultMime));
   const [objectUrl, setObjectUrl] = useState("");
   const [error, setError] = useState("");
 
@@ -1263,7 +1335,11 @@ function Base64ToFileTool({ definition }) {
   return (
     <div className="mt-4 grid gap-4 lg:grid-cols-2">
       <section className="rounded-[8px] border border-(--border) bg-(--card) p-4">
+        <div className="mb-3 flex justify-end">
+          <ShareLinkButton slug={slug} state={{ input, filename, mime }} />
+        </div>
         <textarea
+          data-testid="tool-input"
           value={input}
           onChange={(e) => setInput(e.target.value)}
           placeholder="Paste Base64 or a data URL..."
@@ -1294,9 +1370,13 @@ function Base64ToFileTool({ definition }) {
   );
 }
 
-function BaseConverterTool() {
-  const [value, setValue] = useState("255");
-  const [from, setFrom] = useState(10);
+function BaseConverterTool({ slug }) {
+  const sharedState = useMemo(() => readSharedToolState(slug), [slug]);
+  const [value, setValue] = useState(() => sharedString(sharedState, "value", "255"));
+  const [from, setFrom] = useState(() => {
+    const base = Number(sharedState?.from);
+    return [2, 8, 10, 16, 36].includes(base) ? base : 10;
+  });
   const presets = [
     { label: "Decimal 255", value: "255", base: 10 },
     { label: "Binary byte", value: "11111111", base: 2 },
@@ -1313,23 +1393,26 @@ function BaseConverterTool() {
 
   return (
     <div className="mt-4 rounded-[8px] border border-(--border) bg-(--card) p-4">
-      <div className="mb-3 flex flex-wrap gap-2">
-        {presets.map((preset) => (
-          <button
-            key={preset.label}
-            type="button"
-            onClick={() => {
-              setValue(preset.value);
-              setFrom(preset.base);
-            }}
-            className="rounded-[7px] border border-(--border) bg-(--background) px-2.5 py-1.5 text-xs font-semibold text-(--muted-foreground) hover:border-(--primary) hover:text-(--foreground)"
-          >
-            {preset.label}
-          </button>
-        ))}
+      <div className="mb-3 flex flex-wrap items-center justify-between gap-3">
+        <div className="flex flex-wrap gap-2">
+          {presets.map((preset) => (
+            <button
+              key={preset.label}
+              type="button"
+              onClick={() => {
+                setValue(preset.value);
+                setFrom(preset.base);
+              }}
+              className="rounded-[7px] border border-(--border) bg-(--background) px-2.5 py-1.5 text-xs font-semibold text-(--muted-foreground) hover:border-(--primary) hover:text-(--foreground)"
+            >
+              {preset.label}
+            </button>
+          ))}
+        </div>
+        <ShareLinkButton slug={slug} state={{ value, from }} />
       </div>
       <div className="grid gap-3 sm:grid-cols-[1fr_160px]">
-        <input value={value} onChange={(e) => setValue(e.target.value)} className="rounded-[8px] border border-(--border) bg-(--background) px-3 py-3 font-mono text-sm outline-none focus:border-(--primary)" />
+        <input data-testid="tool-base-input" value={value} onChange={(e) => setValue(e.target.value)} className="rounded-[8px] border border-(--border) bg-(--background) px-3 py-3 font-mono text-sm outline-none focus:border-(--primary)" />
         <select value={from} onChange={(e) => setFrom(Number(e.target.value))} className="rounded-[8px] border border-(--border) bg-(--background) px-3 py-3 text-sm outline-none focus:border-(--primary)">
           {[2, 8, 10, 16, 36].map((base) => <option key={base} value={base}>Base {base}</option>)}
         </select>
@@ -1346,8 +1429,9 @@ function BaseConverterTool() {
   );
 }
 
-function ByteConverterTool() {
-  const [bytes, setBytes] = useState("1048576");
+function ByteConverterTool({ slug }) {
+  const sharedState = useMemo(() => readSharedToolState(slug), [slug]);
+  const [bytes, setBytes] = useState(() => sharedString(sharedState, "bytes", "1048576"));
   const presets = [
     { label: "1 MiB", value: "1048576" },
     { label: "5 MB", value: "5000000" },
@@ -1367,19 +1451,22 @@ function ByteConverterTool() {
 
   return (
     <div className="mt-4 rounded-[8px] border border-(--border) bg-(--card) p-4">
-      <div className="mb-3 flex flex-wrap gap-2">
-        {presets.map((preset) => (
-          <button
-            key={preset.label}
-            type="button"
-            onClick={() => setBytes(preset.value)}
-            className="rounded-[7px] border border-(--border) bg-(--background) px-2.5 py-1.5 text-xs font-semibold text-(--muted-foreground) hover:border-(--primary) hover:text-(--foreground)"
-          >
-            {preset.label}
-          </button>
-        ))}
+      <div className="mb-3 flex flex-wrap items-center justify-between gap-3">
+        <div className="flex flex-wrap gap-2">
+          {presets.map((preset) => (
+            <button
+              key={preset.label}
+              type="button"
+              onClick={() => setBytes(preset.value)}
+              className="rounded-[7px] border border-(--border) bg-(--background) px-2.5 py-1.5 text-xs font-semibold text-(--muted-foreground) hover:border-(--primary) hover:text-(--foreground)"
+            >
+              {preset.label}
+            </button>
+          ))}
+        </div>
+        <ShareLinkButton slug={slug} state={{ bytes }} />
       </div>
-      <input value={bytes} onChange={(e) => setBytes(e.target.value)} className="w-full rounded-[8px] border border-(--border) bg-(--background) px-3 py-3 font-mono text-sm outline-none focus:border-(--primary)" />
+      <input data-testid="tool-bytes-input" value={bytes} onChange={(e) => setBytes(e.target.value)} className="w-full rounded-[8px] border border-(--border) bg-(--background) px-3 py-3 font-mono text-sm outline-none focus:border-(--primary)" />
       <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
         {Object.entries(units).map(([key, item]) => (
           <div key={key} className="rounded-[8px] border border-(--border) bg-(--background) p-4">
@@ -1392,8 +1479,9 @@ function ByteConverterTool() {
   );
 }
 
-function CronEvaluatorTool({ definition }) {
-  const [expression, setExpression] = useState(definition.sample);
+function CronEvaluatorTool({ definition, slug }) {
+  const sharedState = useMemo(() => readSharedToolState(slug), [slug]);
+  const [expression, setExpression] = useState(() => sharedString(sharedState, "expression", definition.sample));
   const presets = [
     { label: "Every 15 min weekdays", value: "*/15 9-17 * * 1-5" },
     { label: "Daily 9 AM", value: "0 9 * * *" },
@@ -1413,7 +1501,10 @@ function CronEvaluatorTool({ definition }) {
   return (
     <div className="mt-4 grid gap-4 lg:grid-cols-[0.45fr_0.55fr]">
       <section className="rounded-[8px] border border-(--border) bg-(--card) p-4">
-        <label className="text-xs font-bold uppercase tracking-wide text-(--muted-foreground)">Crontab Expression</label>
+        <div className="flex items-center justify-between gap-3">
+          <label className="text-xs font-bold uppercase tracking-wide text-(--muted-foreground)">Crontab Expression</label>
+          <ShareLinkButton slug={slug} state={{ expression }} />
+        </div>
         <div className="mt-3 flex flex-wrap gap-2">
           {presets.map((preset) => (
             <button
@@ -1444,8 +1535,9 @@ function CronEvaluatorTool({ definition }) {
   );
 }
 
-function ScientificNotationTool() {
-  const [value, setValue] = useState("123456789");
+function ScientificNotationTool({ slug }) {
+  const sharedState = useMemo(() => readSharedToolState(slug), [slug]);
+  const [value, setValue] = useState(() => sharedString(sharedState, "value", "123456789"));
   const presets = [
     { label: "Large number", value: "123456789" },
     { label: "Tiny decimal", value: "0.00000042" },
@@ -1466,19 +1558,23 @@ function ScientificNotationTool() {
 
   return (
     <div className="mt-4 rounded-[8px] border border-(--border) bg-(--card) p-4">
-      <div className="mb-3 flex flex-wrap gap-2">
-        {presets.map((preset) => (
-          <button
-            key={preset.label}
-            type="button"
-            onClick={() => setValue(preset.value)}
-            className="rounded-[7px] border border-(--border) bg-(--background) px-2.5 py-1.5 text-xs font-semibold text-(--muted-foreground) hover:border-(--primary) hover:text-(--foreground)"
-          >
-            {preset.label}
-          </button>
-        ))}
+      <div className="mb-3 flex flex-wrap items-center justify-between gap-3">
+        <div className="flex flex-wrap gap-2">
+          {presets.map((preset) => (
+            <button
+              key={preset.label}
+              type="button"
+              onClick={() => setValue(preset.value)}
+              className="rounded-[7px] border border-(--border) bg-(--background) px-2.5 py-1.5 text-xs font-semibold text-(--muted-foreground) hover:border-(--primary) hover:text-(--foreground)"
+            >
+              {preset.label}
+            </button>
+          ))}
+        </div>
+        <ShareLinkButton slug={slug} state={{ value }} />
       </div>
       <input
+        data-testid="tool-scientific-input"
         value={value}
         onChange={(e) => setValue(e.target.value)}
         className="w-full rounded-[8px] border border-(--border) bg-(--background) px-3 py-3 font-mono text-sm outline-none focus:border-(--primary)"
@@ -1497,9 +1593,10 @@ function ScientificNotationTool() {
   );
 }
 
-function TextDiffTool() {
-  const [left, setLeft] = useState("AltFTool\nJSON Editor\nBase64 Tools");
-  const [right, setRight] = useState("AltFTool\nJSON Editor Pro\nBase64 Tools\nYAML Formatter");
+function TextDiffTool({ slug }) {
+  const sharedState = useMemo(() => readSharedToolState(slug), [slug]);
+  const [left, setLeft] = useState(() => sharedString(sharedState, "left", "AltFTool\nJSON Editor\nBase64 Tools"));
+  const [right, setRight] = useState(() => sharedString(sharedState, "right", "AltFTool\nJSON Editor Pro\nBase64 Tools\nYAML Formatter"));
   const presets = [
     {
       label: "Tool list",
@@ -1534,29 +1631,32 @@ function TextDiffTool() {
 
   return (
     <div className="mt-4 grid gap-4">
-      <div className="flex flex-wrap gap-2 rounded-[8px] border border-(--border) bg-(--card) p-3">
-        {presets.map((preset) => (
-          <button
-            key={preset.label}
-            type="button"
-            onClick={() => {
-              setLeft(preset.left);
-              setRight(preset.right);
-            }}
-            className="rounded-[7px] border border-(--border) bg-(--background) px-2.5 py-1.5 text-xs font-semibold text-(--muted-foreground) hover:border-(--primary) hover:text-(--foreground)"
-          >
-            {preset.label}
-          </button>
-        ))}
+      <div className="flex flex-wrap items-center justify-between gap-3 rounded-[8px] border border-(--border) bg-(--card) p-3">
+        <div className="flex flex-wrap gap-2">
+          {presets.map((preset) => (
+            <button
+              key={preset.label}
+              type="button"
+              onClick={() => {
+                setLeft(preset.left);
+                setRight(preset.right);
+              }}
+              className="rounded-[7px] border border-(--border) bg-(--background) px-2.5 py-1.5 text-xs font-semibold text-(--muted-foreground) hover:border-(--primary) hover:text-(--foreground)"
+            >
+              {preset.label}
+            </button>
+          ))}
+        </div>
+        <ShareLinkButton slug={slug} state={{ left, right }} />
       </div>
       <div className="grid gap-4 lg:grid-cols-2">
         <section className="rounded-[8px] border border-(--border) bg-(--card) p-4">
           <label className="text-xs font-bold uppercase tracking-wide text-(--muted-foreground)">Original</label>
-          <textarea value={left} onChange={(e) => setLeft(e.target.value)} className="mt-3 min-h-[240px] w-full rounded-[8px] border border-(--border) bg-(--background) p-3 font-mono text-sm outline-none focus:border-(--primary)" />
+          <textarea data-testid="tool-diff-left" value={left} onChange={(e) => setLeft(e.target.value)} className="mt-3 min-h-[240px] w-full rounded-[8px] border border-(--border) bg-(--background) p-3 font-mono text-sm outline-none focus:border-(--primary)" />
         </section>
         <section className="rounded-[8px] border border-(--border) bg-(--card) p-4">
           <label className="text-xs font-bold uppercase tracking-wide text-(--muted-foreground)">Changed</label>
-          <textarea value={right} onChange={(e) => setRight(e.target.value)} className="mt-3 min-h-[240px] w-full rounded-[8px] border border-(--border) bg-(--background) p-3 font-mono text-sm outline-none focus:border-(--primary)" />
+          <textarea data-testid="tool-diff-right" value={right} onChange={(e) => setRight(e.target.value)} className="mt-3 min-h-[240px] w-full rounded-[8px] border border-(--border) bg-(--background) p-3 font-mono text-sm outline-none focus:border-(--primary)" />
         </section>
       </div>
       <WorkspaceOutput value={diff} />
@@ -1564,8 +1664,9 @@ function TextDiffTool() {
   );
 }
 
-function SvgTool({ definition }) {
-  const [input, setInput] = useState(definition.sample);
+function SvgTool({ definition, slug }) {
+  const sharedState = useMemo(() => readSharedToolState(slug), [slug]);
+  const [input, setInput] = useState(() => sharedString(sharedState, "input", definition.sample));
   const [preview, setPreview] = useState("");
   const [error, setError] = useState("");
 
@@ -1602,7 +1703,10 @@ function SvgTool({ definition }) {
   return (
     <div className="mt-4 grid gap-4 lg:grid-cols-2">
       <section className="rounded-[8px] border border-(--border) bg-(--card) p-4">
-        <textarea value={input} onChange={(e) => setInput(e.target.value)} className="min-h-[320px] w-full rounded-[8px] border border-(--border) bg-(--background) p-3 font-mono text-sm outline-none focus:border-(--primary)" />
+        <div className="mb-3 flex justify-end">
+          <ShareLinkButton slug={slug} state={{ input }} />
+        </div>
+        <textarea data-testid="tool-input" value={input} onChange={(e) => setInput(e.target.value)} className="min-h-[320px] w-full rounded-[8px] border border-(--border) bg-(--background) p-3 font-mono text-sm outline-none focus:border-(--primary)" />
         <div className="mt-3 flex gap-2">
           <ActionButton onClick={render}>Render PNG</ActionButton>
           <ActionButton onClick={download}>Download PNG</ActionButton>
@@ -1628,13 +1732,13 @@ export default function ToolFkUtilityTool() {
   if (["text", "code"].includes(definition.mode)) content = <TextTool definition={definition} slug={slug} />;
   if (definition.mode === "crypto") content = <CryptoTool definition={definition} slug={slug} />;
   if (definition.mode === "fileToBase64") content = <FileToBase64Tool definition={definition} />;
-  if (definition.mode === "base64ToFile") content = <Base64ToFileTool definition={definition} />;
-  if (definition.mode === "base") content = <BaseConverterTool />;
-  if (definition.mode === "bytes") content = <ByteConverterTool />;
-  if (definition.mode === "cron") content = <CronEvaluatorTool definition={definition} />;
-  if (definition.mode === "diff") content = <TextDiffTool />;
-  if (definition.mode === "scientific") content = <ScientificNotationTool />;
-  if (definition.mode === "svg") content = <SvgTool definition={definition} />;
+  if (definition.mode === "base64ToFile") content = <Base64ToFileTool definition={definition} slug={slug} />;
+  if (definition.mode === "base") content = <BaseConverterTool slug={slug} />;
+  if (definition.mode === "bytes") content = <ByteConverterTool slug={slug} />;
+  if (definition.mode === "cron") content = <CronEvaluatorTool definition={definition} slug={slug} />;
+  if (definition.mode === "diff") content = <TextDiffTool slug={slug} />;
+  if (definition.mode === "scientific") content = <ScientificNotationTool slug={slug} />;
+  if (definition.mode === "svg") content = <SvgTool definition={definition} slug={slug} />;
 
   return (
     <ToolShell definition={definition}>

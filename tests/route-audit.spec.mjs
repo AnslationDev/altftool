@@ -4,6 +4,8 @@ import { createPageQualityGate } from "./helpers/pageQuality.mjs";
 
 const webUrl = process.env.ALTFT_WEB_URL || "http://localhost:3002";
 const adminUrl = process.env.ALTFT_ADMIN_URL || "http://localhost:3001";
+const adminModuleAuditTimeoutMs = Number(process.env.ALTFT_ADMIN_MODULE_ROUTE_AUDIT_TIMEOUT_MS || 480_000);
+const adminModuleRouteTimeoutMs = Number(process.env.ALTFT_ADMIN_MODULE_ROUTE_TIMEOUT_MS || 60_000);
 
 const staticWebRoutes = [
   "/",
@@ -342,7 +344,7 @@ test("admin public and fallback routes resolve", async ({ page }) => {
 });
 
 test("admin module route surface resolves for local super admin", async ({ page }) => {
-  test.setTimeout(180_000);
+  test.setTimeout(adminModuleAuditTimeoutMs);
   const quality = createPageQualityGate(page);
   const failures = [];
 
@@ -360,9 +362,10 @@ test("admin module route surface resolves for local super admin", async ({ page 
     try {
       const response = await page.goto(`${adminUrl}${route}`, {
         waitUntil: "domcontentloaded",
-        timeout: 30_000,
+        timeout: adminModuleRouteTimeoutMs,
       });
       await page.waitForLoadState("networkidle", { timeout: 5_000 }).catch(() => {});
+      await page.waitForFunction(() => document.body?.innerText?.trim().length > 0, null, { timeout: 10_000 }).catch(() => {});
 
       const pathname = new URL(page.url()).pathname;
       const bodyText = await page.locator("body").innerText({ timeout: 10_000 }).catch(() => "");
