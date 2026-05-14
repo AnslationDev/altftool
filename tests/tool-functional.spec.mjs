@@ -121,6 +121,12 @@ test.describe("microtool functional flows", () => {
     await page.getByTestId("clear-tool-filters").click();
     await expect(page).toHaveURL(/\/tools\/all$/);
     await expect(page.getByTestId("tools-search-input")).toHaveValue("");
+
+    await page.goto(`${webUrl}/tools/all/json-editor`, { waitUntil: "domcontentloaded" });
+    await expect(page.getByRole("navigation", { name: "Tool route" })).toContainText("JSON Editor");
+    await page.goto(`${webUrl}/tools/all?view=recent`, { waitUntil: "domcontentloaded" });
+    await expect(page.getByRole("link", { name: /JSON Editor/ }).first()).toBeVisible();
+
     await quality.expectClean("tools directory search filters");
   });
 

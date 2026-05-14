@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useEffect } from "react";
 import { ArrowRight, ChevronRight } from "lucide-react";
 import { toolMetaMap } from "@/platform/registry/toolMetaMap";
 import { formatCategoryLabel, getToolCategories } from "../../toolRouteUtils";
@@ -9,6 +10,7 @@ import AdSidebar from "@/ads/layouts/shared/AdSidebar";
 import AdBottomBanner from "@/ads/layouts/shared/AdBottomBanner";
 import Icon from "@/shared/ui/Icon";
 import { buildToolSeoContent } from "../../toolSeoContent";
+import { rememberRecentTool } from "../../toolStorage";
 
 function getRelatedTools(slug, tool, limit = 6) {
   if (!tool) return [];
@@ -173,6 +175,10 @@ export default function ToolDetailChrome({ slug, category = "all", children }) {
     toolSlug: slug,
     toolCategories,
   })[0];
+
+  useEffect(() => {
+    rememberRecentTool(slug, toolMetaMap);
+  }, [slug]);
 
   return (
     <div className="w-full px-4 py-6 sm:px-6 sm:py-10 lg:px-8">

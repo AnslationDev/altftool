@@ -24,12 +24,16 @@ import { injectAds } from "@/ads/adInjector";
 import AdPairRow from "@/ads/layouts/tools/AdToolPairRow";
 import { usePathname } from "next/navigation";
 import { TOP_PRIORITY_TOOL_SLUGS } from "@altftool/core/toolHealth";
+import {
+  FAVORITES_STORAGE_KEY,
+  RECENT_LIMIT,
+  RECENT_TOOLS_STORAGE_KEY,
+  TOOL_STORAGE_EVENT,
+  readStoredSlugs,
+  writeStoredSlugs,
+} from "./toolStorage";
 
 const ITEMS_PER_PAGE = 24;
-const FAVORITES_STORAGE_KEY = "ALTFT_TOOL_FAVORITES_V1";
-const RECENT_TOOLS_STORAGE_KEY = "ALTFT_RECENT_TOOLS_V1";
-const TOOL_STORAGE_EVENT = "altftool-tools-storage";
-const RECENT_LIMIT = 12;
 const LABEL_OVERRIDES = {
   ai: "AI",
   api: "API",
@@ -118,23 +122,6 @@ const getToolCategories = (tool) =>
     ? tool.category.map((item) => slugify(item))
     : [slugify(tool?.category || "")].filter(Boolean);
 
-const readStoredSlugs = (key) => {
-  if (typeof window === "undefined") return [];
-
-  try {
-    const parsed = JSON.parse(window.localStorage.getItem(key) || "[]");
-    return Array.isArray(parsed) ? parsed.filter((item) => typeof item === "string") : [];
-  } catch {
-    return [];
-  }
-};
-
-const writeStoredSlugs = (key, value) => {
-  if (typeof window === "undefined") return;
-  window.localStorage.setItem(key, JSON.stringify(value));
-  window.dispatchEvent(new Event(TOOL_STORAGE_EVENT));
-};
-
 const subscribeToToolStorage = (callback) => {
   if (typeof window === "undefined") return () => {};
 
@@ -183,7 +170,8 @@ const getSearchScore = (slug, tool, tokens, rawQuery) => {
 };
 
 const getInitialCategory = (category) => {
-  if (category) return slugify(category);
+  const categorySlug = category ? slugify(category) : "";
+  if (categorySlug && categorySlug !== "all") return categorySlug;
   if (typeof window === "undefined") return "all";
 
   return new URLSearchParams(window.location.search).get("category") || "all";
