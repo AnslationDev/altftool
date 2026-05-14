@@ -1,0 +1,162 @@
+name: Vercel Deploy
+
+on:
+  workflow_run:
+    workflows: ["CI"]
+    types: [completed]
+  workflow_dispatch:
+    inputs:
+      target:
+        description: Project to deploy
+        required: true
+        default: all
+        type: choice
+        options:
+          - all
+          - web
+          - admin
+
+concurrency:
+  group: vercel-deploy-${{ github.event.workflow_run.head_branch || github.ref }}-${{ inputs.target || 'auto' }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+env:
+  CI: true
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+  NEXT_TELEMETRY_DISABLED: 1
+
+jobs:
+  deploy-web:
+    name: Deploy web
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    if: >
+      (github.event_name == 'workflow_run' &&
+        github.event.workflow_run.conclusion == 'success' &&
+        github.event.workflow_run.head_branch == 'main' &&
+        github.event.workflow_run.event == 'push') ||
+      (github.event_name == 'workflow_dispatch' &&
+        (inputs.target == 'all' || inputs.target == 'web'))
+    env:
+      VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+      VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+      VERCEL_PROJECT_ID: ${{ secrets.VERCEL_WEB_PROJECT_ID || secrets.VERCEL_PROJECT_ID }}
+
+    steps:
+      - name: Checkout CI commit
+        if: github.event_name == 'workflow_run'
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.workflow_run.head_sha }}
+
+      - name: Checkout selected ref
+        if: github.event_name == 'workflow_dispatch'
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+
+      - name: Check Vercel web secrets
+        id: vercel-secrets
+        run: |
+          if [ -n "$VERCEL_TOKEN" ] && [ -n "$VERCEL_ORG_ID" ] && [ -n "$VERCEL_PROJECT_ID" ]; then
+            echo "configured=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "::notice::Skipping web deploy. Configure VERCEL_TOKEN, VERCEL_ORG_ID, and VERCEL_WEB_PROJECT_ID or VERCEL_PROJECT_ID."
+            echo "configured=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Install Vercel CLI
+        if: steps.vercel-secrets.outputs.configured == 'true'
+        run: npm install -g vercel@latest
+
+      - name: Pull web production environment
+        if: steps.vercel-secrets.outputs.configured == 'true'
+        run: vercel pull --yes --environment=production --token="$VERCEL_TOKEN"
+
+      - name: Build web deployment
+        if: steps.vercel-secrets.outputs.configured == 'true'
+        run: vercel build --prod --token="$VERCEL_TOKEN"
+
+      - name: Deploy web prebuilt output
+        if: steps.vercel-secrets.outputs.configured == 'true'
+        id: deploy
+        run: |
+          deployment_url="$(vercel deploy --prebuilt --prod --token="$VERCEL_TOKEN" | tail -n 1)"
+          echo "url=$deployment_url" >> "$GITHUB_OUTPUT"
+          {
+            echo "### Web deployment"
+            echo
+            echo "$deployment_url"
+          } >> "$GITHUB_STEP_SUMMARY"
+
+  deploy-admin:
+    name: Deploy admin
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    if: >
+      (github.event_name == 'workflow_run' &&
+        github.event.workflow_run.conclusion == 'success' &&
+        github.event.workflow_run.head_branch == 'main' &&
+        github.event.workflow_run.event == 'push') ||
+      (github.event_name == 'workflow_dispatch' &&
+        (inputs.target == 'all' || inputs.target == 'admin'))
+    env:
+      VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+      VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+      VERCEL_PROJECT_ID: ${{ secrets.VERCEL_ADMIN_PROJECT_ID }}
+
+    steps:
+      - name: Checkout CI commit
+        if: github.event_name == 'workflow_run'
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.workflow_run.head_sha }}
+
+      - name: Checkout selected ref
+        if: github.event_name == 'workflow_dispatch'
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+
+      - name: Check Vercel admin secrets
+        id: vercel-secrets
+        run: |
+          if [ -n "$VERCEL_TOKEN" ] && [ -n "$VERCEL_ORG_ID" ] && [ -n "$VERCEL_PROJECT_ID" ]; then
+            echo "configured=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "::notice::Skipping admin deploy. Configure VERCEL_TOKEN, VERCEL_ORG_ID, and VERCEL_ADMIN_PROJECT_ID."
+            echo "configured=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Install Vercel CLI
+        if: steps.vercel-secrets.outputs.configured == 'true'
+        run: npm install -g vercel@latest
+
+      - name: Pull admin production environment
+        if: steps.vercel-secrets.outputs.configured == 'true'
+        run: vercel pull --yes --environment=production --token="$VERCEL_TOKEN"
+
+      - name: Build admin deployment
+        if: steps.vercel-secrets.outputs.configured == 'true'
+        run: vercel build --prod --token="$VERCEL_TOKEN"
+
+      - name: Deploy admin prebuilt output
+        if: steps.vercel-secrets.outputs.configured == 'true'
+        id: deploy
+        run: |
+          deployment_url="$(vercel deploy --prebuilt --prod --token="$VERCEL_TOKEN" | tail -n 1)"
+          echo "url=$deployment_url" >> "$GITHUB_OUTPUT"
+          {
+            echo "### Admin deployment"
+            echo
+            echo "$deployment_url"
+          } >> "$GITHUB_STEP_SUMMARY"

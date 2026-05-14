@@ -5,10 +5,16 @@ on:
     branches: [main]
   pull_request:
     branches: [main]
+  workflow_dispatch:
+  schedule:
+    - cron: "42 2 * * *"
 
 concurrency:
   group: ci-${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
+
+permissions:
+  contents: read
 
 env:
   CI: true
@@ -18,7 +24,7 @@ env:
 jobs:
   verify:
     runs-on: ubuntu-latest
-    timeout-minutes: 45
+    timeout-minutes: 75
 
     steps:
       - name: Checkout
@@ -29,7 +35,10 @@ jobs:
         with:
           node-version-file: .nvmrc
           cache: npm
-          cache-dependency-path: package-lock.json
+          cache-dependency-path: |
+            package-lock.json
+            altftoolweb/package-lock.json
+            altftoolwebadmin/package-lock.json
 
       - name: Install dependencies
         run: npm ci
@@ -48,6 +57,13 @@ jobs:
 
       - name: Verify live Firebase data
         run: npm run firebase:live-check
+
+      - name: Verify live Firebase renders on public pages
+        run: npm run test:firebase-public-pages
+
+      - name: Validate every microtool route
+        if: github.event_name != 'pull_request'
+        run: ALTFT_PLAYWRIGHT_WEB_SERVER=production ALTFT_PLAYWRIGHT_ADMIN_SERVER=dev npm run test:tools:all
 
       - name: Verify security headers
         run: npm run test:security
@@ -78,7 +94,10 @@ jobs:
         with:
           node-version-file: .nvmrc
           cache: npm
-          cache-dependency-path: package-lock.json
+          cache-dependency-path: |
+            package-lock.json
+            altftoolweb/package-lock.json
+            altftoolwebadmin/package-lock.json
 
       - name: Setup Java for Firebase Emulator
         uses: actions/setup-java@v4
@@ -114,7 +133,10 @@ jobs:
         with:
           node-version-file: .nvmrc
           cache: npm
-          cache-dependency-path: package-lock.json
+          cache-dependency-path: |
+            package-lock.json
+            altftoolweb/package-lock.json
+            altftoolwebadmin/package-lock.json
 
       - name: Install dependencies
         run: npm ci
