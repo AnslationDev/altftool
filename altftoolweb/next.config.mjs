@@ -1,8 +1,18 @@
 import { withSecurityHeaders } from "@altftool/core/next";
+import { readFileSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 const workspaceRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
+const webRoot = path.dirname(fileURLToPath(import.meta.url));
+
+function readToolSlugs() {
+  const source = readFileSync(path.join(webRoot, "src/platform/registry/toolMetaMap.js"), "utf8");
+  const match = source.match(/export const toolMetaMap = (\{[\s\S]*\});?\s*$/);
+
+  if (!match) return [];
+  return Object.keys(JSON.parse(match[1]));
+}
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -13,7 +23,14 @@ const nextConfig = {
   allowedDevOrigins: ["localhost", "127.0.0.1"],
 
   async redirects() {
+    const toolSlugRedirects = readToolSlugs().map((slug) => ({
+      source: `/tools/${slug}`,
+      destination: `/tools/all/${slug}`,
+      permanent: true,
+    }));
+
     return [
+      ...toolSlugRedirects,
       {
         source: "/blog",
         destination: "/blogs",

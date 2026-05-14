@@ -11,6 +11,10 @@ export function getToolCategories(tool) {
   return Array.isArray(tool.category) ? tool.category : [tool.category];
 }
 
+export function slugifyRouteSegment(value = "") {
+  return String(value).trim().toLowerCase().replace(/\s+/g, "-");
+}
+
 export function formatCategoryLabel(value = "all") {
   if (value === "all") return "All Tools";
   return String(value)

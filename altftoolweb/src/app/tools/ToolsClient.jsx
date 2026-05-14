@@ -2,13 +2,28 @@
 
 import Link from "next/link";
 import { useEffect, useMemo, useState, useSyncExternalStore } from "react";
-import { ChevronDown, History, Layers3, Search, Sparkles, Star, Wrench } from "lucide-react";
+import {
+  ArrowRight,
+  BadgeCheck,
+  Calculator,
+  ChevronDown,
+  Code2,
+  FileText,
+  History,
+  Image as ImageIcon,
+  Layers3,
+  Search,
+  Sparkles,
+  Star,
+  Wrench,
+} from "lucide-react";
 import Icon from "@/shared/ui/Icon";
 import CTAButton from "@/shared/ui/CTAButton";
 import { useAds } from "@/ads/AdsProvider";
 import { injectAds } from "@/ads/adInjector";
 import AdPairRow from "@/ads/layouts/tools/AdToolPairRow";
 import { usePathname } from "next/navigation";
+import { TOP_PRIORITY_TOOL_SLUGS } from "@altftool/core/toolHealth";
 
 const ITEMS_PER_PAGE = 24;
 const FAVORITES_STORAGE_KEY = "ALTFT_TOOL_FAVORITES_V1";
@@ -42,7 +57,7 @@ const QUICK_TOOL_SLUGS = [
   "password-generator",
   "image-to-base64",
   "crontab-evaluator",
-  "text-diff-tool",
+  "diff-checker",
 ];
 const SEARCH_ALIASES = {
   code: ["developer", "json", "html", "css", "javascript", "sql", "regex"],
@@ -62,6 +77,32 @@ const VIEW_MODES = [
   { id: "recent", label: "Recent" },
 ];
 const POPULAR_SEARCHES = ["json", "base64", "pdf", "image", "regex", "seo", "password", "cron"];
+const WORKFLOW_GROUPS = [
+  {
+    title: "Developer Desk",
+    label: "Code, API, debug",
+    icon: Code2,
+    slugs: ["json-editor", "regex-tester", "jwt-decoder", "diff-checker"],
+  },
+  {
+    title: "PDF & Base64",
+    label: "Files, encode, decode",
+    icon: FileText,
+    slugs: ["pdf-merger", "pdf-split-tool", "pdf-to-base64", "base64-to-pdf"],
+  },
+  {
+    title: "Image Studio",
+    label: "Compress, crop, resize",
+    icon: ImageIcon,
+    slugs: ["image-compressor", "image-resizer", "image-cropper", "svg-to-image"],
+  },
+  {
+    title: "Finance Quick Math",
+    label: "GST, EMI, SIP",
+    icon: Calculator,
+    slugs: ["gst-calculator", "loan-emi-calculator", "sip-calculator", "percentage-calculator"],
+  },
+];
 
 const slugify = (str) => String(str).toLowerCase().replace(/\s+/g, "-");
 const formatLabel = (str) =>
@@ -275,8 +316,20 @@ export default function ToolsClient({ meta = {}, category, initialSearch = "", i
     return preferred.filter((item) => categories.includes(item));
   }, [categories]);
   const quickTools = useMemo(
-    () => QUICK_TOOL_SLUGS.filter((slug) => meta[slug]).map((slug) => [slug, meta[slug]]),
+    () =>
+      [...new Set([...QUICK_TOOL_SLUGS, ...TOP_PRIORITY_TOOL_SLUGS.slice(0, 6)])]
+        .filter((slug) => meta[slug])
+        .slice(0, 14)
+        .map((slug) => [slug, meta[slug]]),
     [meta]
+  );
+  const workflowGroups = useMemo(
+    () =>
+      WORKFLOW_GROUPS.map((group) => ({
+        ...group,
+        tools: group.slugs.filter((slug) => meta[slug]).map((slug) => [slug, meta[slug]]),
+      })).filter((group) => group.tools.length),
+    [meta],
   );
   const viewModeStats = useMemo(() => ({
     all: slugs.length,
@@ -566,6 +619,51 @@ export default function ToolsClient({ meta = {}, category, initialSearch = "", i
               ))}
             </div>
           )}
+
+          {workflowGroups.length > 0 && (
+            <div className="mt-5 grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
+              {workflowGroups.map(({ title, label, icon: GroupIcon, tools }) => {
+                const firstToolSlug = tools[0][0];
+
+                return (
+                  <div
+                    key={title}
+                    className="rounded-[8px] border border-(--border) bg-(--background) p-3"
+                  >
+                    <div className="flex items-start gap-3">
+                      <div className="grid h-9 w-9 shrink-0 place-items-center rounded-[7px] bg-(--muted) text-(--primary)">
+                        <GroupIcon className="h-4 w-4" />
+                      </div>
+                      <div className="min-w-0">
+                        <p className="text-sm font-semibold text-(--foreground)">{title}</p>
+                        <p className="mt-1 text-xs text-(--muted-foreground)">{label}</p>
+                      </div>
+                    </div>
+                    <div className="mt-3 flex flex-wrap gap-1.5">
+                      {tools.slice(0, 3).map(([slug, tool]) => (
+                        <Link
+                          key={slug}
+                          href={`/tools/all/${slug}`}
+                          onClick={() => rememberTool(slug)}
+                          className="rounded-[6px] border border-(--border) px-2 py-1 text-[11px] font-semibold text-(--muted-foreground) transition hover:border-(--primary) hover:text-(--foreground)"
+                        >
+                          {tool.name}
+                        </Link>
+                      ))}
+                    </div>
+                    <Link
+                      href={`/tools/all/${firstToolSlug}`}
+                      onClick={() => rememberTool(firstToolSlug)}
+                      className="mt-3 inline-flex items-center gap-1 text-xs font-semibold text-(--primary)"
+                    >
+                      Start
+                      <ArrowRight className="h-3.5 w-3.5" />
+                    </Link>
+                  </div>
+                );
+              })}
+            </div>
+          )}
         </div>
       </div>
 
@@ -749,6 +847,7 @@ export default function ToolsClient({ meta = {}, category, initialSearch = "", i
                           onClick={() => rememberTool(slug)}
                           className="inline-flex shrink-0 items-center gap-1 text-xs font-semibold text-[var(--color-muted-foreground)] group-hover:text-[var(--color-primary)]"
                         >
+                          <BadgeCheck className="h-3.5 w-3.5" />
                           Open
                           <span className="group-hover:translate-x-1 transition-transform">→</span>
                         </Link>

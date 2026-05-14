@@ -59,8 +59,8 @@ const Header = () => {
       return;
     }
 
-    if (trimmed.length < 4) {
-      setSearchError("Type at least 4 characters.");
+    if (trimmed.length < 2) {
+      setSearchError("Type at least 2 characters.");
       return;
     }
 

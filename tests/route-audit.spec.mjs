@@ -14,6 +14,8 @@ const staticWebRoutes = [
   "/rss",
   "/sitemap.xml",
   "/tools",
+  "/tools/json-editor",
+  "/tools/not-a-category/json-editor",
   "/blogs",
   "/buysmart",
   "/buysmart/redirect?url=https%3A%2F%2Fexample.com",

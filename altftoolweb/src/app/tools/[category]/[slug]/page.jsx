@@ -1,6 +1,6 @@
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import ToolClient from "./ToolClient";
-import { buildToolMetadata, getTool } from "../../toolRouteUtils";
+import { buildToolMetadata, getTool, getToolCategories, slugifyRouteSegment } from "../../toolRouteUtils";
 import JsonLd from "@/platform/seo/JsonLd";
 import {
   createBreadcrumbJsonLd,
@@ -21,6 +21,11 @@ export default async function ToolPage({ params }) {
 
   if (!tool) {
     notFound();
+  }
+
+  const categorySlugs = getToolCategories(tool).map(slugifyRouteSegment);
+  if (category !== "all" && !categorySlugs.includes(slugifyRouteSegment(category))) {
+    redirect(`/tools/all/${slug}`);
   }
 
   const toolPath = `/tools/${category}/${slug}`;
