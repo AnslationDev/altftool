@@ -483,7 +483,14 @@ async function fetchJsonWithTimeout(url, timeoutMs = 3500) {
       signal: controller.signal,
     });
     const text = await response.text();
-    const payload = JSON.parse(text);
+    let payload;
+
+    try {
+      payload = JSON.parse(text);
+    } catch {
+      const contentType = response.headers.get("content-type") || "unknown content type";
+      throw new Error(`Health endpoint returned non-JSON (${response.status}, ${contentType}).`);
+    }
 
     return {
       response,

@@ -248,6 +248,12 @@ altftoolwebadmin/src/app/(protected)/health/page.jsx
 
 The public health API exposes safe web readiness, release, tool, content, SEO, and Firebase public-read signals. The admin health dashboard adds Firebase Admin readiness, Vercel deploy readiness, and production freshness checks against the public `/api/health` endpoint.
 
+Production deployment runbook:
+
+```text
+docs/PRODUCTION_DEPLOYMENT.md
+```
+
 Check local deployment readiness without exposing secret values:
 
 ```bash

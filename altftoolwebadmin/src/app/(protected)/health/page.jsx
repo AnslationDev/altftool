@@ -49,6 +49,29 @@ function formatDate(value) {
   }
 }
 
+function formatStatus(value) {
+  const label = String(value || "unknown").replace(/-/g, " ");
+  return label.charAt(0).toUpperCase() + label.slice(1);
+}
+
+function shortSha(value) {
+  return value ? String(value).slice(0, 8) : "Not exposed";
+}
+
+function getSignalTone(ok) {
+  return ok
+    ? "border-emerald-200 bg-emerald-50 text-emerald-700"
+    : "border-rose-200 bg-rose-50 text-rose-700";
+}
+
+function StatusBadge({ ok, label }) {
+  return (
+    <span className={`inline-flex rounded border px-2 py-1 text-xs font-bold ${getSignalTone(ok)}`}>
+      {label}
+    </span>
+  );
+}
+
 function ScoreRing({ score }) {
   const color = getScoreColor(score);
 
@@ -115,9 +138,9 @@ function CheckList({ title, icon: Icon, items }) {
       <div className="mt-4 divide-y divide-gray-100">
         {items.map((item) => (
           <div key={item.key} className="flex items-center justify-between gap-3 py-3">
-            <div>
+            <div className="min-w-0">
               <p className="text-sm font-semibold text-gray-900">{item.label}</p>
-              {item.detail && <p className="mt-1 text-xs text-gray-500">{item.detail}</p>}
+              {item.detail && <p className="mt-1 break-words text-xs text-gray-500">{item.detail}</p>}
             </div>
             {item.ok ? (
               <CheckCircle2 className="h-4 w-4 shrink-0 text-emerald-600" />
@@ -140,6 +163,151 @@ function deployReadinessItems(deploy) {
       : `Missing ${result.missing.map((item) => item.displayName || item.names.join(" or ")).join(", ")}`,
     ok: result.ok,
   }));
+}
+
+function DetailTile({ label, value, tone = "gray", mono = false }) {
+  const tones = {
+    gray: "border-gray-100 bg-gray-50 text-gray-950",
+    emerald: "border-emerald-100 bg-emerald-50 text-emerald-950",
+    rose: "border-rose-100 bg-rose-50 text-rose-950",
+  };
+
+  return (
+    <div className={`min-w-0 border p-3 rounded-md ${tones[tone] || tones.gray}`}>
+      <p className="text-xs font-semibold uppercase tracking-wide text-gray-500">{label}</p>
+      <p className={`mt-2 break-words text-sm font-bold ${mono ? "font-mono" : ""}`}>{value}</p>
+    </div>
+  );
+}
+
+function DeployReadinessPanel({ deploy }) {
+  const results = deploy?.results || [];
+  const missingSecrets = deploy?.missingSecrets || [];
+  const uniqueMissingSecrets = Array.from(
+    new Map(missingSecrets.map((secret) => [secret.displayName, secret])).values(),
+  );
+
+  return (
+    <section className="border border-gray-200 bg-white p-5 shadow-sm rounded-md" data-testid="deploy-readiness-panel">
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+        <div className="flex items-start gap-3">
+          <div className="grid h-9 w-9 place-items-center rounded-md bg-gray-950 text-white">
+            <Rocket className="h-4 w-4" />
+          </div>
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-wide text-gray-500">Deployment</p>
+            <h2 className="mt-1 text-lg font-bold text-gray-950">Vercel Deploy Readiness</h2>
+          </div>
+        </div>
+        <StatusBadge ok={Boolean(deploy?.ok)} label={deploy?.ok ? "Ready" : "Blocked"} />
+      </div>
+
+      <div className="mt-4 grid gap-3 sm:grid-cols-2">
+        {results.map((result) => (
+          <div key={result.name} className="border border-gray-100 bg-gray-50 p-3 rounded-md">
+            <div className="flex items-start justify-between gap-3">
+              <div className="min-w-0">
+                <p className="text-sm font-bold text-gray-950">{result.label}</p>
+                <p className="mt-1 break-words font-mono text-xs text-gray-500">{result.projectRoot}</p>
+              </div>
+              {result.ok ? (
+                <CheckCircle2 className="h-4 w-4 shrink-0 text-emerald-600" />
+              ) : (
+                <XCircle className="h-4 w-4 shrink-0 text-rose-600" />
+              )}
+            </div>
+            <div className="mt-3 flex flex-wrap gap-1.5">
+              {(result.missing.length ? result.missing : result.present).map((item) => (
+                <span
+                  key={`${result.name}-${item.displayName}`}
+                  className={`rounded border px-2 py-1 text-[11px] font-bold ${
+                    result.missing.length
+                      ? "border-rose-200 bg-white text-rose-700"
+                      : "border-emerald-200 bg-white text-emerald-700"
+                  }`}
+                >
+                  {result.missing.length ? item.displayName : item.label}
+                </span>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {uniqueMissingSecrets.length > 0 ? (
+        <div className="mt-4 border border-rose-100 bg-rose-50 p-3 rounded-md">
+          <p className="text-xs font-semibold uppercase tracking-wide text-rose-700">Missing GitHub Actions Secrets</p>
+          <div className="mt-2 flex flex-wrap gap-2">
+            {uniqueMissingSecrets.map((secret) => (
+              <span
+                key={secret.displayName}
+                className="max-w-full break-all rounded border border-rose-200 bg-white px-2.5 py-1 font-mono text-xs font-bold text-rose-700"
+              >
+                {secret.displayName}
+              </span>
+            ))}
+          </div>
+        </div>
+      ) : (
+        <div className="mt-4 border border-emerald-100 bg-emerald-50 p-3 text-sm font-semibold text-emerald-800 rounded-md">
+          Web and admin deploy secrets are available to CI.
+        </div>
+      )}
+
+      <ScoreBar score={deploy?.score || 0} />
+    </section>
+  );
+}
+
+function ProductionFreshnessPanel({ production }) {
+  const checks = production?.checks || [];
+  const publicHealth = production?.publicHealth;
+
+  return (
+    <section className="border border-gray-200 bg-white p-5 shadow-sm rounded-md" data-testid="production-freshness-panel">
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+        <div className="flex items-start gap-3">
+          <div className="grid h-9 w-9 place-items-center rounded-md bg-gray-950 text-white">
+            <Globe2 className="h-4 w-4" />
+          </div>
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-wide text-gray-500">Production</p>
+            <h2 className="mt-1 text-lg font-bold text-gray-950">Public Web Freshness</h2>
+          </div>
+        </div>
+        <StatusBadge ok={(production?.score || 0) >= 90} label={formatStatus(production?.status)} />
+      </div>
+
+      <div className="mt-4 grid gap-3 sm:grid-cols-2">
+        <DetailTile label="Health URL" value={production?.healthUrl || "Not configured"} mono />
+        <DetailTile
+          label="Live Health"
+          value={publicHealth?.label || publicHealth?.status || production?.error || "Not reported"}
+          tone={(production?.score || 0) >= 60 ? "emerald" : "rose"}
+        />
+        <DetailTile label="Expected Commit" value={shortSha(production?.expectedCommit)} mono />
+        <DetailTile label="Production Commit" value={shortSha(production?.productionCommit)} mono />
+      </div>
+
+      <div className="mt-4 divide-y divide-gray-100 border border-gray-100 rounded-md">
+        {checks.map((check) => (
+          <div key={check.key} className="flex items-center justify-between gap-3 px-3 py-2.5">
+            <div className="min-w-0">
+              <p className="text-sm font-semibold text-gray-900">{check.label}</p>
+              <p className="mt-1 break-words text-xs text-gray-500">{check.error || check.detail}</p>
+            </div>
+            {check.ok ? (
+              <CheckCircle2 className="h-4 w-4 shrink-0 text-emerald-600" />
+            ) : (
+              <XCircle className="h-4 w-4 shrink-0 text-rose-600" />
+            )}
+          </div>
+        ))}
+      </div>
+
+      <ScoreBar score={production?.score || 0} />
+    </section>
+  );
 }
 
 function ToolIssuesTable({ tools }) {
@@ -397,7 +565,7 @@ export default function HealthPage() {
   }, [snapshot]);
 
   return (
-    <div className="min-h-full bg-[var(--background)] px-4 py-5 sm:px-6 lg:px-8">
+    <div className="min-h-full bg-[var(--background)] px-4 py-5 sm:px-6 lg:px-8" data-testid="health-dashboard">
       <div className="mx-auto max-w-7xl space-y-5">
         <div className="flex flex-col gap-4 border border-gray-200 bg-white p-5 shadow-sm rounded-md lg:flex-row lg:items-center lg:justify-between">
           <div className="flex items-start gap-4">
@@ -451,7 +619,7 @@ export default function HealthPage() {
                   <ScoreRing score={snapshot.overall.score} />
                 </div>
 
-                <div className="mt-6 grid gap-3 sm:grid-cols-2 xl:grid-cols-5">
+                <div className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-6">
                   <div className="border border-gray-100 bg-gray-50 p-3 rounded-md">
                     <p className="text-xs font-semibold uppercase tracking-wide text-gray-500">Categories</p>
                     <p className="mt-2 text-xl font-bold text-gray-950">{formatNumber(snapshot.tools.categories)}</p>
@@ -502,7 +670,12 @@ export default function HealthPage() {
               </div>
             </section>
 
-            <section className="grid gap-4 sm:grid-cols-2 xl:grid-cols-5">
+            <section className="grid gap-4 xl:grid-cols-2">
+              <DeployReadinessPanel deploy={snapshot.deploy} />
+              <ProductionFreshnessPanel production={snapshot.production} />
+            </section>
+
+            <section className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
               {summaryCards.map((card) => (
                 <MetricCard key={card.title} {...card} />
               ))}
@@ -511,7 +684,7 @@ export default function HealthPage() {
             <ToolIssuesTable tools={snapshot.tools.topIssues} />
             <QaCoverageTable qa={snapshot.qa} />
 
-            <section className="grid gap-4 lg:grid-cols-3 2xl:grid-cols-5">
+            <section className="grid gap-4 lg:grid-cols-2 2xl:grid-cols-3">
               <CheckList title="Priority QA" icon={ClipboardCheck} items={snapshot.qa.checks} />
               <CheckList title="SEO Checks" icon={FileSearch} items={snapshot.seo.checks} />
               <CheckList title="Validation Checks" icon={Gauge} items={snapshot.automation.checks} />
