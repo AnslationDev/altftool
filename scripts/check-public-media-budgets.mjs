@@ -24,7 +24,7 @@ const sourceExtensions = new Set([
   ".mdx",
 ]);
 
-const maxPublicImageKiB = Number(process.env.ALTFT_MAX_PUBLIC_IMAGE_KIB || 10_000);
+const maxPublicImageKiB = Number(process.env.ALTFT_MAX_PUBLIC_IMAGE_KIB || 3_000);
 
 const criticalAssets = [
   {
@@ -38,6 +38,30 @@ const criticalAssets = [
   {
     file: "altftoolweb/public/academy/hero/banner-acad2.jpg",
     maxKiB: Number(process.env.ALTFT_ACADEMY_HERO_ALT_MAX_KIB || 500),
+  },
+  {
+    file: "altftoolweb/public/trending/game/Flappy.jpg",
+    maxKiB: Number(process.env.ALTFT_BLOG_GAME_COVER_MAX_KIB || 500),
+  },
+  {
+    file: "altftoolweb/public/images/featured5.jpg",
+    maxKiB: Number(process.env.ALTFT_FEATURED_IMAGE_MAX_KIB || 450),
+  },
+  {
+    file: "altftoolweb/public/images/featured6.jpg",
+    maxKiB: Number(process.env.ALTFT_FEATURED_ALT_IMAGE_MAX_KIB || 450),
+  },
+  {
+    file: "altftoolweb/public/continue.jpg",
+    maxKiB: Number(process.env.ALTFT_CONTINUE_EMPTY_STATE_MAX_KIB || 350),
+  },
+  {
+    file: "altftoolweb/public/amaz.jpg",
+    maxKiB: Number(process.env.ALTFT_OFFER_CARD_BANNER_MAX_KIB || 350),
+  },
+  {
+    file: "altftoolweb/public/banners/vertical.jpg",
+    maxKiB: Number(process.env.ALTFT_VERTICAL_AD_MAX_KIB || 450),
   },
 ];
 
@@ -53,6 +77,26 @@ const forbiddenCriticalReferences = [
   {
     pattern: "/academy/hero/banner-acad2.png",
     replacement: "/academy/hero/banner-acad2.jpg",
+  },
+  {
+    pattern: "/images/featured5.png",
+    replacement: "/images/featured5.jpg",
+  },
+  {
+    pattern: "/images/featured6.png",
+    replacement: "/images/featured6.jpg",
+  },
+  {
+    pattern: "/continue.png",
+    replacement: "/continue.jpg",
+  },
+  {
+    pattern: "/amaz.png",
+    replacement: "/amaz.jpg",
+  },
+  {
+    pattern: "/banners/vertical.png",
+    replacement: "/banners/vertical.jpg",
   },
 ];
 

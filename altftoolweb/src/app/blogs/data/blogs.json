@@ -160,7 +160,7 @@
     "category": "Language",
     "tool": "Text Translator",
     "excerpt": "Explore how online text translators break language barriers instantly.",
-    "image": "/images/featured5.png",
+    "image": "/images/featured5.jpg",
     "date": "2026-02-07",
     "content": "Text translators use AI-powered language processing to provide instant and accurate translations."
   },
@@ -282,7 +282,7 @@
   "category": "Tools",
   "tool": "Age & Gender Predictor",
   "excerpt": "Predict age and gender instantly using AI-powered facial analysis.",
-  "image": "/images/featured6.png",
+  "image": "/images/featured6.jpg",
   "date": "2026-02-27",
   "content": "Age & Gender Predictor uses AI-based facial recognition models to estimate age and detect gender instantly. It is widely used for analytics, personalization, marketing research, and user demographic insights."
 },
@@ -304,7 +304,7 @@
   "category": "Tools",
   "tool": "Background Remover",
   "excerpt": "Remove background from images instantly using AI.",
-  "image": "/images/featured5.png",
+  "image": "/images/featured5.jpg",
   "date": "2026-03-01",
   "content": "Background remover tools use AI-based segmentation to separate foreground subjects from backgrounds, making image editing fast, clean, and professional."
 },

@@ -12,7 +12,7 @@ const FeaturedSection = () => {
     { id: 2, name: "Age Calculator", image: "/images/featured2.png" },
     { id: 3, name: "QR Generator", image: "/images/featured3.png" },
     { id: 4, name: "Image Compressor", image: "/images/featured4.png" },
-    { id: 5, name: "Color Picker", image: "/images/featured5.png" },
+    { id: 5, name: "Color Picker", image: "/images/featured5.jpg" },
   ];
 
   const scroll = (direction) => {

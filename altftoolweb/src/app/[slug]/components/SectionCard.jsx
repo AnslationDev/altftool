@@ -3,7 +3,7 @@ import Link from "next/link";
 import React from "react";
 
 export default function SectionCard({
-  banner = "/amaz.png",
+  banner = "/amaz.jpg",
   logo = "/vista.png",
   country = "US",
   description = "",

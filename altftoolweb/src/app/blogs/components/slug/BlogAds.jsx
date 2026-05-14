@@ -64,7 +64,7 @@ ads = ads.slice(0, 4);
           style={{ backgroundColor: "var(--card)", borderColor: "var(--border)" }}
         >
           <ManagedImage
-            src="/banners/vertical.png"
+            src="/banners/vertical.jpg"
             alt="Advertisement"
             className="w-full h-auto object-contain"
           />

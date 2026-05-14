@@ -234,7 +234,7 @@ export default function ContinueWatching() {
           >
             <div className="w-full lg:w-1/2 flex justify-center animate-slide-right">
               <ManagedImage
-                src="/continue.png"
+                src="/continue.jpg"
                 alt="No videos"
                 className="
         scale-100 sm:scale-110 lg:scale-145
