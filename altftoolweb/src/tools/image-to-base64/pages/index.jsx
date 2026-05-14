@@ -48,7 +48,7 @@ export default function ToolHome() {
             <label className="flex min-h-56 cursor-pointer flex-col items-center justify-center rounded-lg border border-dashed border-[var(--border)] bg-[var(--background)] p-6 text-center hover:bg-[var(--muted)]">
               <UploadCloud className="h-10 w-10 text-[var(--primary)]" />
               <span className="mt-3 text-sm font-semibold">Upload image</span>
-              <input type="file" accept="image/*" className="hidden" onChange={(event) => handleFile(event.target.files?.[0])} />
+              <input data-testid="image-to-base64-file-input" type="file" accept="image/*" className="hidden" onChange={(event) => handleFile(event.target.files?.[0])} />
             </label>
             {fileInfo && (
               <div className="mt-5 space-y-2 text-sm">
@@ -73,10 +73,10 @@ export default function ToolHome() {
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img src={dataUrl} alt="" className="max-h-64 w-full object-contain" />
                 </div>
-                <textarea readOnly value={dataUrl} className="min-h-64 w-full resize-y rounded-lg border border-[var(--border)] bg-[var(--background)] p-4 font-mono text-xs outline-none" />
+                <textarea data-testid="tool-output" readOnly value={dataUrl} className="min-h-64 w-full resize-y rounded-lg border border-[var(--border)] bg-[var(--background)] p-4 font-mono text-xs outline-none" />
               </>
             ) : (
-              <div className="flex min-h-80 items-center justify-center rounded-lg border border-dashed border-[var(--border)] bg-[var(--background)] text-sm text-[var(--muted-foreground)]">
+              <div data-testid="tool-output" className="flex min-h-80 items-center justify-center rounded-lg border border-dashed border-[var(--border)] bg-[var(--background)] text-sm text-[var(--muted-foreground)]">
                 Base64 data URL will appear here.
               </div>
             )}

@@ -595,6 +595,7 @@ export default function MainComponent() {
               type="file"
               multiple
               accept="image/*"
+              data-testid="image-resizer-file-input"
               className="hidden"
               onChange={(event) => addFiles(event.target.files)}
             />
@@ -915,7 +916,7 @@ export default function MainComponent() {
             </div>
           )}
 
-          <section className="rounded-lg border border-(--border) bg-(--card) p-5">
+          <section data-testid="tool-output" className="rounded-lg border border-(--border) bg-(--card) p-5">
             <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
               <div>
                 <h2 className="font-semibold text-(--foreground)">Output Preview</h2>

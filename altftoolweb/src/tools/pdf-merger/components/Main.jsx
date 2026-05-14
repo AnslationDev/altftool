@@ -1,32 +1,64 @@
 "use client";
 
 import React, { useState } from "react";
-import { FileText, Upload, Trash2, GripVertical, Files } from "lucide-react";
+import {
+  CheckCircle,
+  Download,
+  FileText,
+  Files,
+  GripVertical,
+  Trash2,
+  Upload,
+} from "lucide-react";
 import { useDropzone } from "react-dropzone";
 import { v4 as uuidv4 } from "uuid";
 import { PDFDocument } from "pdf-lib";
 import Features from "./Features";
 
-/* Save File */
-const saveFile = async (blob, filename) => {
-  const { saveAs } = await import("file-saver");
-  saveAs(blob, filename);
-};
+function formatBytes(bytes = 0) {
+  if (!bytes) return "0 B";
+  const units = ["B", "KB", "MB", "GB"];
+  const index = Math.min(Math.floor(Math.log(bytes) / Math.log(1024)), units.length - 1);
+  const value = bytes / 1024 ** index;
+  return `${value.toFixed(value >= 10 || index === 0 ? 0 : 1)} ${units[index]}`;
+}
+
+function downloadBlob(blob, filename) {
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = filename;
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
+  URL.revokeObjectURL(url);
+}
+
+async function readPdfPageCount(file) {
+  const arrayBuffer = await file.arrayBuffer();
+  const pdf = await PDFDocument.load(arrayBuffer, { ignoreEncryption: true });
+  return pdf.getPageCount();
+}
 
 /*  Merge PDFs */
 const mergePdfs = async (files) => {
   try {
     const mergedPdf = await PDFDocument.create();
+    let pageCount = 0;
 
     for (const file of files) {
       const arrayBuffer = await file.arrayBuffer();
-      const pdf = await PDFDocument.load(arrayBuffer);
+      const pdf = await PDFDocument.load(arrayBuffer, { ignoreEncryption: true });
       const copiedPages = await mergedPdf.copyPages(pdf, pdf.getPageIndices());
       copiedPages.forEach((page) => mergedPdf.addPage(page));
+      pageCount += copiedPages.length;
     }
 
     const pdfBytes = await mergedPdf.save();
-    return new Blob([pdfBytes], { type: "application/pdf" });
+    return {
+      blob: new Blob([pdfBytes], { type: "application/pdf" }),
+      pageCount,
+    };
   } catch (error) {
     console.error("Error merging PDFs:", error);
     throw new Error("Failed to merge PDFs.");
@@ -100,7 +132,7 @@ const PDFDropzone = ({ onFilesAdded }) => {
             : "border-(--border) hover:border-(--primary)"
         }`}
     >
-      <input {...getInputProps()} />
+      <input {...getInputProps({ "data-testid": "pdf-merger-file-input" })} />
       <div className="flex flex-col items-center gap-3">
         <Upload className="h-8 w-8 text-(--muted-foreground)" />
         <p className="font-medium text-(--foreground)">
@@ -117,23 +149,49 @@ export default function MainComponent() {
   const [files, setFiles] = useState([]);
   const [isMerging, setIsMerging] = useState(false);
   const [error, setError] = useState("");
+  const [status, setStatus] = useState("Add at least two PDF files to prepare a merged output.");
+  const [result, setResult] = useState(null);
   const [draggedIndex, setDraggedIndex] = useState(null);
 
-  const handleFilesAdded = (newFiles) => {
-    const filesWithId = newFiles.map((file) => ({
-      id: uuidv4(),
-      file,
-    }));
-    setFiles((prev) => [...prev, ...filesWithId]);
-    setError("");
+  const handleFilesAdded = async (newFiles) => {
+    if (!newFiles.length) {
+      setError("Please select valid PDF files.");
+      return;
+    }
+
+    try {
+      const filesWithId = await Promise.all(newFiles.map(async (file) => ({
+        id: uuidv4(),
+        file,
+        pages: await readPdfPageCount(file),
+      })));
+      const queuedFiles = [...files, ...filesWithId];
+      setFiles(queuedFiles);
+      setError("");
+      setResult(null);
+      setStatus(`${queuedFiles.length} files queued for merging.`);
+    } catch {
+      setError("Could not read one of the selected PDFs. Password-protected or damaged files may not be supported.");
+      setStatus("PDF read failed.");
+    }
   };
 
   const handleRemoveFile = (id) => {
-    setFiles((prev) => prev.filter((f) => f.id !== id));
+    const queuedFiles = files.filter((f) => f.id !== id);
+    setFiles(queuedFiles);
+    setResult(null);
+    setStatus(
+      queuedFiles.length
+        ? `${queuedFiles.length} file${queuedFiles.length === 1 ? "" : "s"} queued for merging.`
+        : "Add at least two PDF files to prepare a merged output.",
+    );
   };
 
   const handleClearAll = () => {
     setFiles([]);
+    setResult(null);
+    setError("");
+    setStatus("Add at least two PDF files to prepare a merged output.");
   };
 
   const handleDragStart = (e, index) => {
@@ -164,16 +222,23 @@ export default function MainComponent() {
 
     setIsMerging(true);
     setError("");
+    setResult(null);
+    setStatus("Merging PDF pages locally...");
 
     try {
-      const mergedBlob = await mergePdfs(files.map((f) => f.file));
-      await saveFile(mergedBlob, `merged-${Date.now()}.pdf`);
+      const merged = await mergePdfs(files.map((f) => f.file));
+      const filename = `merged-${Date.now()}.pdf`;
+      setResult({ ...merged, filename });
+      setStatus(`Merged PDF ready: ${files.length} files, ${merged.pageCount} pages, ${formatBytes(merged.blob.size)}.`);
     } catch {
       setError("Failed to merge PDFs.");
+      setStatus("Merge failed.");
     } finally {
       setIsMerging(false);
     }
   };
+
+  const totalPages = files.reduce((sum, item) => sum + (item.pages || 0), 0);
 
   return (
     <div className="space-y-6 max-w-5xl mx-auto px-4 py-8">
@@ -227,6 +292,9 @@ export default function MainComponent() {
                   onDragOver={handleDragOver}
                   onDrop={(e) => handleDrop(e, index)}
                 />
+                <p className="mt-1 pl-10 text-xs text-(--muted-foreground)">
+                  {file.pages} page{file.pages === 1 ? "" : "s"}
+                </p>
               </div>
             ))}
           </div>
@@ -234,15 +302,39 @@ export default function MainComponent() {
       )}
 
       {/* Merge Button */}
-      <div className="bg-(--card) p-6 rounded-2xl border border-(--border) flex justify-center sm:justify-end">
+      <div className="bg-(--card) p-6 rounded-2xl border border-(--border) flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+        <pre
+          data-testid="tool-output"
+          className="min-h-[96px] flex-1 whitespace-pre-wrap rounded-lg border border-(--border) bg-(--background) p-3 text-sm leading-6 text-(--foreground)"
+        >
+          {[
+            result ? "Merged PDF ready" : status,
+            `Files: ${files.length}`,
+            `Pages: ${totalPages}`,
+            result ? `Output: ${formatBytes(result.blob.size)}` : "Output: Not generated yet",
+            error ? `Error: ${error}` : "",
+          ].filter(Boolean).join("\n")}
+        </pre>
         <button
+          type="button"
           onClick={handleMerge}
-          disabled={files.length === 0 || isMerging}
+          disabled={files.length < 2 || isMerging}
           className="bg-(--primary) text-(--primary-foreground) px-6 py-2 rounded-lg flex items-center gap-2 disabled:opacity-50 cursor-pointer"
         >
           <Files className="h-4 w-4" />
           {isMerging ? "Merging..." : "Merge Files"}
         </button>
+        {result && (
+          <button
+            type="button"
+            onClick={() => downloadBlob(result.blob, result.filename)}
+            className="border border-(--border) bg-(--background) text-(--foreground) px-6 py-2 rounded-lg flex items-center gap-2 hover:border-(--primary)"
+          >
+            <Download className="h-4 w-4" />
+            Download
+          </button>
+        )}
+        {result && <CheckCircle className="hidden h-5 w-5 text-green-600 sm:block" />}
       </div>
       <Features/>
     </div>

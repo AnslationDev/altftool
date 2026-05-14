@@ -505,6 +505,7 @@ export default function MainComponent() {
                 ref={fileInputRef}
                 type="file"
                 accept="application/pdf,.pdf"
+                data-testid="pdf-to-image-file-input"
                 className="hidden"
                 onChange={handleInputChange}
               />
@@ -744,7 +745,7 @@ export default function MainComponent() {
         </div>
 
         <aside className="space-y-6">
-          <section className="bg-(--card) border border-(--border) rounded-lg p-5">
+          <section data-testid="tool-output" className="bg-(--card) border border-(--border) rounded-lg p-5">
             <div className="mb-5 flex items-center gap-3">
               <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-(--section-highlight) text-(--primary)">
                 <Settings2 className="h-5 w-5" />

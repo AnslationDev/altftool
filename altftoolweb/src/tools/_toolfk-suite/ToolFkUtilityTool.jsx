@@ -1354,7 +1354,7 @@ function Base64ToFileTool({ definition, slug }) {
           <ActionButton onClick={download}>Download</ActionButton>
         </div>
       </section>
-      <section className="rounded-[8px] border border-(--border) bg-(--card) p-4">
+      <section data-testid="tool-output" className="rounded-[8px] border border-(--border) bg-(--card) p-4">
         <p className="text-xs font-bold uppercase tracking-wide text-(--muted-foreground)">Preview</p>
         <div className="mt-3 flex min-h-[330px] items-center justify-center rounded-[8px] border border-(--border) bg-(--background) p-3">
           {error && <p className="text-sm text-red-500">{error}</p>}

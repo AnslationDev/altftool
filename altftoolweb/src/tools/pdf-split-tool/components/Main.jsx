@@ -504,6 +504,7 @@ export default function MainComponent() {
               ref={fileInputRef}
               type="file"
               accept="application/pdf,.pdf"
+              data-testid="pdf-split-file-input"
               className="hidden"
               onChange={(event) => readPdf(event.target.files?.[0])}
             />
@@ -607,6 +608,7 @@ export default function MainComponent() {
                   {mode === "remove" ? "Pages to Remove" : "Pages to Extract"}
                 </span>
                 <input
+                  data-testid="pdf-split-page-range"
                   value={pageRange}
                   onChange={(event) => setPageRange(event.target.value)}
                   placeholder={pageCount ? `Example: 1-${Math.min(pageCount, 3)}, 7` : "Upload a PDF first"}
@@ -704,7 +706,7 @@ export default function MainComponent() {
             <StatCard icon={ShieldCheck} label="Processing" value="Local" detail="Browser-side split" />
           </div>
 
-          <section className="rounded-lg border border-(--border) bg-(--card) p-5">
+          <section data-testid="tool-output" className="rounded-lg border border-(--border) bg-(--card) p-5">
             <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
               <div>
                 <h2 className="font-semibold text-(--foreground)">Split Plan Preview</h2>

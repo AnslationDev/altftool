@@ -6,12 +6,34 @@ import CompressionControl from "../components/CompressionControl";
 import ImagePreview from "../components/ImagePreview";
 import DownloadButton from "../components/DownloadButton";
 import { useImageCompression } from "../hooks/useImageCompression";
+import { ImageProcessor } from "../utils/ImageProcessor";
 
 // extra content sections
 import HowItWorks from "../components/HowItWorks";
 import Features from "../components/Features";
 // import PrivacyPolicy from "./components/PrivacyPolicy";
 // import FAQ from "./components/FAQ";
+
+function buildCompressionSummary(originalImage, compressedImage, error, isCompressing) {
+  if (error) return `Error: ${error}`;
+  if (isCompressing) return "Compressing image...";
+  if (!originalImage) return "Upload an image to see compression output.";
+  if (!compressedImage) return `Ready: ${originalImage.name} (${ImageProcessor.formatFileSize(originalImage.size)})`;
+
+  const ratio = ImageProcessor.getCompressionRatio(
+    originalImage.size,
+    compressedImage.size,
+  );
+
+  return [
+    "Compressed image ready",
+    `Input: ${originalImage.name}`,
+    `Original: ${ImageProcessor.formatFileSize(originalImage.size)}`,
+    `Output: ${ImageProcessor.formatFileSize(compressedImage.size)}`,
+    `Dimensions: ${compressedImage.width} x ${compressedImage.height}`,
+    `Change: ${ratio > 0 ? "-" : "+"}${Math.abs(ratio)}%`,
+  ].join("\n");
+}
 
 export default function ImageComressor() {
   const {
@@ -25,6 +47,12 @@ export default function ImageComressor() {
     updateSettings,
     reset,
   } = useImageCompression();
+  const outputSummary = buildCompressionSummary(
+    originalImage,
+    compressedImage,
+    error,
+    isCompressing,
+  );
 
   return (
     <Layout>
@@ -93,6 +121,21 @@ export default function ImageComressor() {
             )}
           </>
         )}
+
+        <section className="rounded-lg border border-(--border) bg-(--card) p-5">
+          <div className="mb-3 flex items-center justify-between gap-3">
+            <h2 className="text-base font-semibold text-(--foreground)">Output Summary</h2>
+            <span className="rounded-lg border border-(--border) bg-(--background) px-2.5 py-1 text-xs font-semibold text-(--muted-foreground)">
+              Browser-side
+            </span>
+          </div>
+          <pre
+            data-testid="tool-output"
+            className="min-h-[112px] whitespace-pre-wrap rounded-lg border border-(--border) bg-(--background) p-3 text-sm leading-6 text-(--foreground)"
+          >
+            {outputSummary}
+          </pre>
+        </section>
       </div>
 
       {/* EXTRA SECTIONS */}

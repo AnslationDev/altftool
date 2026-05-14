@@ -32,7 +32,7 @@ export default function ImageUploader({ onImageUpload, hasImage }) {
                      bg-(--primary) text-(--primary-foreground) 
                      hover:opacity-90 transition"
         >
-          <input {...getInputProps()} />
+          <input {...getInputProps({ "data-testid": "image-compressor-file-input" })} />
           <svg
             className="w-5 h-5 mr-2"
             fill="none"
@@ -63,7 +63,7 @@ export default function ImageUploader({ onImageUpload, hasImage }) {
             : "border-(--border) bg-(--card) hover:bg-(--background)"
         }`}
     >
-      <input {...getInputProps()} />
+      <input {...getInputProps({ "data-testid": "image-compressor-file-input" })} />
 
       {/* Icon */}
       <div className="mx-auto w-12 h-12 mb-4 text-(--muted-foreground)">
