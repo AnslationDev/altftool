@@ -18,6 +18,7 @@ This is the route naming contract for the public web app and admin app.
 | Blog | `/blogs` | `altftoolweb/src/app/blogs/page.jsx` |
 | Brand Ratings | `/brandrating` | `altftoolweb/src/app/brandrating/page.jsx` |
 | News | `/news` | `altftoolweb/src/app/news/page.jsx` |
+| Public Health API | `/api/health` | `altftoolweb/src/app/api/health/route.js` |
 | Desktop Software | `/desktop` | `altftoolweb/src/app/desktop/page.jsx` |
 | Trending Videos | `/trendingvids` | `altftoolweb/src/app/trendingvids/page.jsx` |
 | Support | `/supportsetting` | `altftoolweb/src/app/supportsetting/page.jsx` |
@@ -62,6 +63,13 @@ Admin route helpers live in:
 altftoolwebadmin/src/config/adminRoutes.js
 altftoolwebadmin/src/lib/adminModuleRoute.jsx
 ```
+
+Global admin system routes:
+
+| Area | Canonical Route | Source |
+| --- | --- | --- |
+| System Health | `/health` | `altftoolwebadmin/src/app/(protected)/health/page.jsx` |
+| Admin Health API | `/api/health` | `altftoolwebadmin/src/app/api/health/route.js` |
 
 Legacy redirects:
 

@@ -67,6 +67,7 @@ const staticWebRoutes = [
   "/buy-smart",
   "/sales",
   "/trending-videos",
+  "/api/health",
   "/blogs/view-all/latest-blogs",
   "/blogs/view-all/tool-guides",
   "/blogs/view-all/trending-articles",
@@ -425,6 +426,28 @@ test("seo endpoints and structured data render", async ({ page, request }) => {
   const rss = await request.get(`${webUrl}/rss.xml`);
   expect(rss.ok()).toBeTruthy();
   expect(await rss.text()).toContain("<rss");
+
+  const health = await request.get(`${webUrl}/api/health`);
+  expect(health.ok()).toBeTruthy();
+  await expect(health.json()).resolves.toEqual(
+    expect.objectContaining({
+      service: "altftool-web",
+      overall: expect.objectContaining({
+        status: expect.any(String),
+        score: expect.any(Number),
+      }),
+      release: expect.objectContaining({
+        environment: expect.any(String),
+      }),
+      firebase: expect.objectContaining({
+        checks: expect.any(Array),
+      }),
+      tools: expect.objectContaining({
+        total: expect.any(Number),
+        priorityRegistered: 40,
+      }),
+    }),
+  );
 
   await page.goto(`${webUrl}/tools/all/api-stress-estimator`, { waitUntil: "domcontentloaded" });
   const toolSchemas = await page

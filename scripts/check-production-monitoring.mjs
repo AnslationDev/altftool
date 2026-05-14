@@ -88,6 +88,21 @@ const WEB_ENDPOINT_CHECKS = [
     }),
   },
   {
+    name: "web-health-api",
+    path: "/api/health",
+    parseJson: true,
+    validate: (payload) =>
+      payload?.service === "altftool-web" &&
+      Boolean(payload?.overall?.status) &&
+      Number(payload?.tools?.priorityRegistered) >= 40,
+    summarize: (payload) => ({
+      status: payload?.overall?.status || null,
+      score: payload?.overall?.score || null,
+      commit: payload?.release?.commitSha?.slice?.(0, 8) || null,
+      priorityRegistered: payload?.tools?.priorityRegistered || null,
+    }),
+  },
+  {
     name: "currency-history-api",
     path: "/api/tools/currency-converter/2024-01-02?from=USD&to=EUR",
     parseJson: true,

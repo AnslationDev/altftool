@@ -6,6 +6,7 @@
   "exports": {
     "./cache": "./src/cache.js",
     "./buysmart": "./src/buysmart.js",
+    "./deployReadiness": "./src/deployReadiness.js",
     "./env": "./src/env.js",
     "./firebaseContent": "./src/firebaseContent.js",
     "./firebasePaths": "./src/firebasePaths.js",

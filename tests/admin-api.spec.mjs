@@ -103,6 +103,21 @@ test.describe("admin API safety", () => {
       }),
     );
     expect(payload.qa.tools).toHaveLength(40);
+    expect(payload.deploy).toEqual(
+      expect.objectContaining({
+        score: expect.any(Number),
+        missingSecrets: expect.any(Array),
+        results: expect.any(Array),
+      }),
+    );
+    expect(payload.production).toEqual(
+      expect.objectContaining({
+        score: expect.any(Number),
+        status: expect.any(String),
+        checks: expect.any(Array),
+      }),
+    );
     expect(JSON.stringify(payload.firebaseAdmin)).not.toContain("PRIVATE KEY-----");
+    expect(JSON.stringify(payload.deploy)).not.toContain("dummy");
   });
 });

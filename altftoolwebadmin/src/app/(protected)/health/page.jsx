@@ -9,7 +9,9 @@ import {
   Database,
   FileSearch,
   Gauge,
+  Globe2,
   RefreshCw,
+  Rocket,
   Route,
   SearchCheck,
   ShieldCheck,
@@ -127,6 +129,17 @@ function CheckList({ title, icon: Icon, items }) {
       </div>
     </section>
   );
+}
+
+function deployReadinessItems(deploy) {
+  return (deploy?.results || []).map((result) => ({
+    key: result.name,
+    label: result.label,
+    detail: result.ok
+      ? `${result.projectRoot} is ready`
+      : `Missing ${result.missing.map((item) => item.displayName || item.names.join(" or ")).join(", ")}`,
+    ok: result.ok,
+  }));
 }
 
 function ToolIssuesTable({ tools }) {
@@ -366,6 +379,20 @@ export default function HealthPage() {
         score: snapshot.automation.score,
         icon: Route,
       },
+      {
+        title: "Deploy Readiness",
+        value: snapshot.deploy.ok ? "Ready" : `${snapshot.deploy.missingSecrets.length} gaps`,
+        helper: "Vercel token, org, web project, and admin project deployment secrets.",
+        score: snapshot.deploy.score,
+        icon: Rocket,
+      },
+      {
+        title: "Production Freshness",
+        value: snapshot.production.status,
+        helper: snapshot.production.error || "Public /api/health freshness, status, and commit signal.",
+        score: snapshot.production.score,
+        icon: Globe2,
+      },
     ];
   }, [snapshot]);
 
@@ -381,7 +408,7 @@ export default function HealthPage() {
               <p className="text-xs font-semibold uppercase tracking-wide text-gray-500">System Health</p>
               <h1 className="mt-1 text-2xl font-bold text-gray-950">AltFTool Health</h1>
               <p className="mt-2 max-w-2xl text-sm leading-6 text-gray-500">
-                Registry quality, priority route QA, SEO readiness, content coverage, and release validation in one place.
+                Registry quality, priority route QA, SEO readiness, content coverage, deployment readiness, and production freshness in one place.
               </p>
             </div>
           </div>
@@ -449,6 +476,10 @@ export default function HealthPage() {
                     <p className="text-xs font-semibold uppercase tracking-wide text-gray-500">Feature Flows</p>
                     <p className="mt-2 text-xl font-bold text-gray-950">{formatNumber(snapshot.qa.functionalCovered)}</p>
                   </div>
+                  <div className="border border-gray-100 bg-gray-50 p-3 rounded-md">
+                    <p className="text-xs font-semibold uppercase tracking-wide text-gray-500">Deploy Gaps</p>
+                    <p className="mt-2 text-xl font-bold text-gray-950">{formatNumber(snapshot.deploy.missingSecrets.length)}</p>
+                  </div>
                 </div>
               </div>
 
@@ -480,10 +511,12 @@ export default function HealthPage() {
             <ToolIssuesTable tools={snapshot.tools.topIssues} />
             <QaCoverageTable qa={snapshot.qa} />
 
-            <section className="grid gap-4 lg:grid-cols-4">
+            <section className="grid gap-4 lg:grid-cols-3 2xl:grid-cols-5">
               <CheckList title="Priority QA" icon={ClipboardCheck} items={snapshot.qa.checks} />
               <CheckList title="SEO Checks" icon={FileSearch} items={snapshot.seo.checks} />
               <CheckList title="Validation Checks" icon={Gauge} items={snapshot.automation.checks} />
+              <CheckList title="Deploy Readiness" icon={Rocket} items={deployReadinessItems(snapshot.deploy)} />
+              <CheckList title="Production Freshness" icon={Globe2} items={snapshot.production.checks || []} />
               <section className="border border-gray-200 bg-white p-4 shadow-sm rounded-md">
                 <div className="flex items-center gap-2">
                   <div className="grid h-8 w-8 place-items-center rounded-md bg-gray-100 text-gray-700">

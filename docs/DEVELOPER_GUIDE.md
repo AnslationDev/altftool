@@ -238,6 +238,16 @@ npm run monitor:production
 
 Set `ALTFT_MONITOR_WEB_URL`, `ALTFT_MONITOR_ADMIN_URL`, and `ALTFT_MONITOR_ADMIN_TOKEN` to point it at a specific deployment. The GitHub Actions monitoring workflow defaults the public web check to `https://altftool.com` and uses repository variables/secrets for admin health.
 
+Health surfaces:
+
+```text
+altftoolweb/src/app/api/health/route.js
+altftoolwebadmin/src/app/api/health/route.js
+altftoolwebadmin/src/app/(protected)/health/page.jsx
+```
+
+The public health API exposes safe web readiness, release, tool, content, SEO, and Firebase public-read signals. The admin health dashboard adds Firebase Admin readiness, Vercel deploy readiness, and production freshness checks against the public `/api/health` endpoint.
+
 Check local deployment readiness without exposing secret values:
 
 ```bash

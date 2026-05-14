@@ -3,6 +3,7 @@ import path from "node:path";
 import { promises as fs } from "node:fs";
 import { verifySuperAdminRequest } from "@/lib/adminAccess";
 import { getAdminDb, getFirebaseAdminConfigStatus } from "@/lib/firebaseAdmin";
+import { createVercelDeployReadinessReport } from "@altftool/core/deployReadiness";
 import { TOP_PRIORITY_TOOL_SLUGS, normalizeToolCategory } from "@altftool/core/toolHealth";
 
 export const dynamic = "force-dynamic";
@@ -28,6 +29,24 @@ const TOOL_CHECKS = [
 function clampScore(score) {
   if (!Number.isFinite(score)) return 0;
   return Math.max(0, Math.min(100, Math.round(score)));
+}
+
+function normalizeUrl(value = "") {
+  return String(value || "").trim().replace(/\/+$/, "");
+}
+
+function appendPath(baseUrl, suffix) {
+  if (!baseUrl) return "";
+  return `${baseUrl}${suffix.startsWith("/") ? suffix : `/${suffix}`}`;
+}
+
+function currentCommitSha() {
+  return (
+    process.env.VERCEL_GIT_COMMIT_SHA ||
+    process.env.NEXT_PUBLIC_VERCEL_GIT_COMMIT_SHA ||
+    process.env.GITHUB_SHA ||
+    null
+  );
 }
 
 function slugify(value = "") {
@@ -423,7 +442,161 @@ async function buildFirebaseAdminReadiness() {
   };
 }
 
-function buildRecommendations({ tools, qa, seo, content, automation, firebaseAdmin }) {
+function buildVercelDeployReadiness(workspaceRoot) {
+  const report = createVercelDeployReadinessReport({
+    root: workspaceRoot,
+    env: process.env,
+  });
+  const totals = report.results.reduce(
+    (summary, result) => {
+      summary.present += result.present.length;
+      summary.missing += result.missing.length;
+      return summary;
+    },
+    { present: 0, missing: 0 },
+  );
+  const total = totals.present + totals.missing;
+
+  return {
+    ...report,
+    score: clampScore(total ? (totals.present / total) * 100 : 0),
+    missingSecrets: report.results.flatMap((result) =>
+      result.missing.map((item) => ({
+        target: result.name,
+        label: item.label,
+        names: item.names,
+        displayName: item.displayName,
+      })),
+    ),
+  };
+}
+
+async function fetchJsonWithTimeout(url, timeoutMs = 3500) {
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), timeoutMs);
+
+  try {
+    const startedAt = performance.now();
+    const response = await fetch(url, {
+      cache: "no-store",
+      redirect: "follow",
+      signal: controller.signal,
+    });
+    const text = await response.text();
+    const payload = JSON.parse(text);
+
+    return {
+      response,
+      payload,
+      durationMs: Math.round(performance.now() - startedAt),
+    };
+  } finally {
+    clearTimeout(timeout);
+  }
+}
+
+async function buildProductionFreshness() {
+  const webUrl = normalizeUrl(
+    process.env.ALTFT_MONITOR_WEB_URL ||
+      process.env.NEXT_PUBLIC_SITE_URL ||
+      "https://altftool.com",
+  );
+  const healthUrl = appendPath(webUrl, "/api/health");
+  const expectedCommit = currentCommitSha();
+
+  if (!webUrl) {
+    return {
+      score: 0,
+      status: "not-configured",
+      url: null,
+      healthUrl: null,
+      expectedCommit,
+      productionCommit: null,
+      checks: [
+        {
+          key: "webUrl",
+          label: "Production web URL",
+          detail: "ALTFT_MONITOR_WEB_URL or NEXT_PUBLIC_SITE_URL",
+          ok: false,
+        },
+      ],
+    };
+  }
+
+  const checks = [
+    {
+      key: "webUrl",
+      label: "Production web URL",
+      detail: webUrl,
+      ok: true,
+    },
+  ];
+
+  try {
+    const { response, payload, durationMs } = await fetchJsonWithTimeout(healthUrl);
+    const productionCommit = payload?.release?.commitSha || null;
+    const commitMatches = !expectedCommit || !productionCommit || expectedCommit === productionCommit;
+    const healthOk = response.ok && ["healthy", "watch"].includes(payload?.overall?.status);
+
+    checks.push(
+      {
+        key: "healthEndpoint",
+        label: "Public health endpoint",
+        detail: `${response.status} in ${durationMs}ms`,
+        ok: response.ok,
+      },
+      {
+        key: "publicHealth",
+        label: "Public web health",
+        detail: payload?.overall?.label || payload?.overall?.status || "Unknown",
+        ok: healthOk,
+      },
+      {
+        key: "commitFreshness",
+        label: "Deployment freshness",
+        detail: productionCommit
+          ? `production ${productionCommit.slice(0, 8)}${expectedCommit ? `, expected ${expectedCommit.slice(0, 8)}` : ""}`
+          : "Production commit is not exposed yet.",
+        ok: commitMatches && Boolean(productionCommit || !expectedCommit),
+      },
+    );
+
+    const score = clampScore((checks.filter((check) => check.ok).length / checks.length) * 100);
+
+    return {
+      score,
+      status: score >= 90 ? "fresh" : score >= 60 ? "watch" : "stale",
+      url: webUrl,
+      healthUrl,
+      expectedCommit,
+      productionCommit,
+      durationMs,
+      publicHealth: payload?.overall || null,
+      checks,
+    };
+  } catch (error) {
+    checks.push({
+      key: "healthEndpoint",
+      label: "Public health endpoint",
+      detail: healthUrl,
+      ok: false,
+      error: error?.name === "AbortError" ? "Timed out." : error?.message || "Request failed.",
+    });
+
+    return {
+      score: clampScore((checks.filter((check) => check.ok).length / checks.length) * 100),
+      status: "stale-or-unavailable",
+      url: webUrl,
+      healthUrl,
+      expectedCommit,
+      productionCommit: null,
+      checks,
+      error: error?.name === "AbortError" ? "Timed out." : error?.message || "Production health check failed.",
+    };
+  }
+}
+
+function buildRecommendations({ tools, qa, seo, content, automation, firebaseAdmin, deploy, production }) {
   const recommendations = [];
 
   if (tools.missingEntry || tools.missingConfig) {
@@ -466,6 +639,14 @@ function buildRecommendations({ tools, qa, seo, content, automation, firebaseAdm
     recommendations.push("Configure Firebase Admin service-account env vars before testing admin write actions in production.");
   }
 
+  if (deploy.score < 100) {
+    recommendations.push("Add the missing Vercel deploy secrets so web and admin production deployments can run from CI.");
+  }
+
+  if (production.score < 100) {
+    recommendations.push("Deploy the latest public web build, then confirm the production /api/health endpoint reports a fresh commit.");
+  }
+
   if (!recommendations.length) {
     recommendations.push("System health is clean. Keep using validate:full before release pushes.");
   }
@@ -481,22 +662,26 @@ export async function GET(request) {
     const workspaceRoot = path.resolve(adminRoot, "..");
     const webRoot = path.join(workspaceRoot, "altftoolweb");
 
-    const [tools, qa, seo, content, automation, firebaseAdmin] = await Promise.all([
+    const [tools, qa, seo, content, automation, firebaseAdmin, production] = await Promise.all([
       buildToolQuality(webRoot),
       buildPriorityQaReadiness(workspaceRoot, webRoot),
       buildSeoReadiness(webRoot),
       buildContentReadiness(webRoot),
       buildAutomationReadiness(workspaceRoot),
       buildFirebaseAdminReadiness(),
+      buildProductionFreshness(),
     ]);
+    const deploy = buildVercelDeployReadiness(workspaceRoot);
 
     const overallScore = clampScore(
-      tools.averageScore * 0.35 +
-        qa.score * 0.2 +
-        seo.score * 0.15 +
+      tools.averageScore * 0.25 +
+        qa.score * 0.15 +
+        seo.score * 0.1 +
         content.score * 0.1 +
         automation.score * 0.1 +
-        firebaseAdmin.score * 0.1,
+        firebaseAdmin.score * 0.1 +
+        deploy.score * 0.1 +
+        production.score * 0.1,
     );
     const status = overallScore >= 90 ? "healthy" : overallScore >= 75 ? "watch" : "attention";
 
@@ -518,7 +703,18 @@ export async function GET(request) {
       content,
       automation,
       firebaseAdmin,
-      recommendations: buildRecommendations({ tools, qa, seo, content, automation, firebaseAdmin }),
+      deploy,
+      production,
+      recommendations: buildRecommendations({
+        tools,
+        qa,
+        seo,
+        content,
+        automation,
+        firebaseAdmin,
+        deploy,
+        production,
+      }),
     });
   } catch (error) {
     const message = error?.message || "Health audit failed.";
