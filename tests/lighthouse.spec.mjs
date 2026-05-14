@@ -61,6 +61,26 @@ const PAGES = [
       seo: 0.85,
     },
   },
+  {
+    name: "extensions catalog",
+    path: "/extensions",
+    budgets: {
+      performance: 0.3,
+      accessibility: 0.75,
+      "best-practices": 0.75,
+      seo: 0.85,
+    },
+  },
+  {
+    name: "academy catalog",
+    path: "/academy",
+    budgets: {
+      performance: 0.3,
+      accessibility: 0.75,
+      "best-practices": 0.75,
+      seo: 0.85,
+    },
+  },
 ];
 
 function formatScore(score) {

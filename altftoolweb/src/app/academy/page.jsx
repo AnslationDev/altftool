@@ -18,7 +18,7 @@ export async function generateMetadata() {
     title: "Academy – Learn Tools, Tech & Digital Skills",
     description: academyDescription,
     path: "/academy",
-    image: "/academy/hero/banner-academy.png",
+    image: "/academy/hero/banner-academy.jpg",
   });
 }
 

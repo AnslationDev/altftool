@@ -140,11 +140,12 @@ export default function ExtensionsPage() {
         <div className="section animate-slide-up">
           <div className="relative w-full overflow-hidden rounded-[8px] border border-[var(--border)] bg-[var(--muted)] py-10 text-center sm:py-12 md:py-16">
             <Image
-              src="/extension/hero.png"
-              alt="Hero background"
+              src="/extension/hero.jpg"
+              alt="Soft blue abstract extension browser hero background"
               fill
               sizes="(max-width: 1280px) 100vw, 1280px"
               className="object-cover object-center"
+              quality={82}
               priority
             />
 

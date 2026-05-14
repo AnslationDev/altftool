@@ -18,7 +18,7 @@ export async function generateMetadata() {
     title: "Best Chrome Extensions & Browser AddOns | AltFTool Extensions",
     description: extensionsDescription,
     path: "/extensions",
-    image: "/extension/hero.png",
+    image: "/extension/hero.jpg",
   });
 }
 

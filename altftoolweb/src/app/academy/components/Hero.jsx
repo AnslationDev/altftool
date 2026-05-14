@@ -13,10 +13,14 @@ import {
 import { AcademyHeroSkeleton } from "@/components/ui/skeleton";
 
 const heroImages = [
-
-  "/academy/hero/banner-academy.png",
-  "/academy/hero/banner-acad2.png",
- 
+  {
+    src: "/academy/hero/banner-academy.jpg",
+    alt: "Find the right course and build your future with AltFTool Academy",
+  },
+  {
+    src: "/academy/hero/banner-acad2.jpg",
+    alt: "Unlock your future with the Academy of Innovation and Learning",
+  },
 ];
 
 const stats = [
@@ -64,10 +68,12 @@ export default function Hero({ loading = false }) {
           {heroImages.map((img, i) => (
             <Image
               key={i}
-              src={img}
-              alt={`Hero banner ${i + 1}`}
+              src={img.src}
+              alt={img.alt}
+              aria-hidden={i !== index}
               fill
               priority={i === 0}
+              quality={78}
               sizes="100vw"
               className={`object-cover object-[center_top] sm:object-[center_20%] md:object-[center_30%] lg:object-[center_40%] xl:object-center transition-opacity duration-700 ${i === index ? "opacity-100" : "opacity-0"
                 }`}
@@ -77,6 +83,7 @@ export default function Hero({ loading = false }) {
           {/* LEFT */}
           <div className="absolute left-0 top-0 h-full w-[15%] sm:w-[12%] z-10 flex items-center justify-start pl-2 sm:pl-3 lg:pl-5">
             <button
+              type="button"
               onClick={prev}
               aria-label="Previous slide"
               className="
@@ -96,6 +103,7 @@ export default function Hero({ loading = false }) {
           {/* RIGHT */}
           <div className="absolute right-0 top-0 h-full w-[15%] sm:w-[12%] z-10 flex items-center justify-end pr-2 sm:pr-3 lg:pr-5">
             <button
+              type="button"
               onClick={next}
               aria-label="Next slide"
               className="
@@ -117,7 +125,10 @@ export default function Hero({ loading = false }) {
             {heroImages.map((_, i) => (
               <button
                 key={i}
+                type="button"
                 onClick={() => setIndex(i)}
+                aria-label={`Show academy banner ${i + 1}`}
+                aria-current={i === index ? "true" : undefined}
                 className={`rounded-full transition-all duration-500 ${i === index
                   ? "bg-white w-5 sm:w-6 lg:w-7 h-1.5 sm:h-2"
                   : "bg-white/50 w-1.5 sm:w-2 lg:w-2.5 h-1.5 sm:h-2"

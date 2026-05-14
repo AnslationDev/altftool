@@ -110,7 +110,8 @@ export default function CategorySlider() {
                 alt={item.title}
                 fill
                 className="object-cover"
-                priority={i < 4}
+                priority={i < 2}
+                quality={75}
                 sizes="(max-width: 768px) 85vw, 360px"
               />
             </div>
