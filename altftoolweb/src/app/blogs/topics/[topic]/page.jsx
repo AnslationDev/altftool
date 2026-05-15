@@ -3,6 +3,7 @@ import BlogArchivePage from "../../components/BlogArchivePage";
 import JsonLd from "@/platform/seo/JsonLd";
 import {
   BLOG_TOPIC_CLUSTER_CONFIG,
+  blogTaxonomySlug,
   getAllBlogs,
   getBlogTopicClusterBySlug,
   getBlogTopicClusters,
@@ -12,6 +13,7 @@ import { getFirebaseBlogCatalog } from "../../data/firebaseBlogs";
 import {
   createBreadcrumbJsonLd,
   createCollectionPageJsonLd,
+  createFaqJsonLd,
   createItemListJsonLd,
   createPageMetadata,
 } from "@/platform/seo/generateMetadata";
@@ -39,6 +41,32 @@ async function getTopicArchive(topicSlug) {
     cluster,
     clusters,
   };
+}
+
+function getTopicHubFaqs(cluster) {
+  if (!cluster) return [];
+
+  const leadTitle = cluster.leadPost?.heading || `${cluster.title} guides`;
+  const topCategory = cluster.relatedCategories?.[0] || cluster.title;
+
+  return [
+    {
+      question: `What is the ${cluster.title} topic hub for?`,
+      answer: `${cluster.description} It groups related AltFTool articles so readers can move through the same workflow without searching from scratch.`,
+    },
+    {
+      question: `Where should I start in ${cluster.title}?`,
+      answer: `Start with ${leadTitle}, then continue through the related reads and tags shown in this hub.`,
+    },
+    {
+      question: `How are ${cluster.title} articles selected?`,
+      answer: `Articles are matched by category, tags, tool topics, keyword overlap, and freshness signals from the AltFTool blog catalog.`,
+    },
+    {
+      question: `Can I filter this hub by ${topCategory}?`,
+      answer: `Yes. Use the related topic chips and blog filters to narrow this cluster by category, tag, freshness, and reading intent.`,
+    },
+  ];
 }
 
 export async function generateMetadata({ params }) {
@@ -69,6 +97,36 @@ export default async function BlogTopicClusterPage({ params }) {
   if (!cluster) notFound();
 
   const path = `/blogs/topics/${cluster.slug}`;
+  const topicFaqs = getTopicHubFaqs(cluster);
+  const primaryTag = cluster.relatedTags?.[0];
+  const primaryCategory = cluster.relatedCategories?.[0];
+  const hubHighlights = [
+    cluster.leadPost
+      ? {
+          kind: "article",
+          label: "Start here",
+          title: cluster.leadPost.heading,
+          caption: cluster.leadPost.excerpt || "The strongest first read in this topic path.",
+          href: `/blogs/${cluster.leadPost.slug}`,
+        }
+      : null,
+    primaryTag
+      ? {
+          kind: "topic",
+          label: "Narrow by tag",
+          title: primaryTag,
+          caption: `See articles tagged ${primaryTag} across the blog catalog.`,
+          href: `/blogs/tag/${blogTaxonomySlug(primaryTag)}`,
+        }
+      : null,
+    {
+      kind: "tool",
+      label: "Try matching tools",
+      title: `${cluster.title} tools`,
+      caption: `Open the tools catalog with ${cluster.title.toLowerCase()} context.`,
+      href: `/tools/all?search=${encodeURIComponent(primaryCategory || cluster.title)}`,
+    },
+  ].filter(Boolean);
   const relatedLabels = clusters
     .filter((item) => item.postCount > 0)
     .map((item) => ({
@@ -85,6 +143,10 @@ export default async function BlogTopicClusterPage({ params }) {
             path,
             name: `${cluster.title} Guides`,
             description: cluster.description,
+          }),
+          createFaqJsonLd({
+            path,
+            questions: topicFaqs,
           }),
           createItemListJsonLd({
             path,
@@ -110,6 +172,8 @@ export default async function BlogTopicClusterPage({ params }) {
         activeLabel={cluster.title}
         archiveType="topic"
         relatedLabels={relatedLabels}
+        hubHighlights={hubHighlights}
+        faqItems={topicFaqs}
       />
     </>
   );

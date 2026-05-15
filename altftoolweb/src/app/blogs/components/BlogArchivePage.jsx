@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowLeft, BookOpen, Hash, Layers3 } from "lucide-react";
+import { ArrowLeft, ArrowRight, BookOpen, CheckCircle2, Hash, Layers3, Route, Sparkles } from "lucide-react";
 import BlogCard from "./BlogCard";
 import { blogTaxonomySlug } from "../data";
 
@@ -27,6 +27,8 @@ export default function BlogArchivePage({
   activeLabel,
   archiveType = "category",
   relatedLabels = [],
+  hubHighlights = [],
+  faqItems = [],
 }) {
   const archiveBase = archiveType === "tag"
     ? "/blogs/tag"
@@ -90,6 +92,42 @@ export default function BlogArchivePage({
           </div>
         ) : null}
 
+        {hubHighlights.length > 0 ? (
+          <section className="mb-7 grid grid-cols-1 gap-3 lg:grid-cols-3">
+            {hubHighlights.slice(0, 3).map((item) => (
+              <Link
+                key={`${item.label}-${item.href}`}
+                href={item.href}
+                className="group rounded-[var(--anslation-ds-radius)] border border-(--border) bg-(--card) p-4 shadow-[var(--anslation-ds-shadow-sm)] transition hover:border-(--primary) hover:shadow-[var(--anslation-ds-shadow-md)]"
+              >
+                <div className="mb-3 flex items-center justify-between gap-3">
+                  <span className="inline-flex h-9 w-9 items-center justify-center rounded-[6px] bg-(--muted) text-(--primary)">
+                    {item.kind === "tool" ? (
+                      <Sparkles className="h-4 w-4" />
+                    ) : item.kind === "topic" ? (
+                      <Route className="h-4 w-4" />
+                    ) : (
+                      <BookOpen className="h-4 w-4" />
+                    )}
+                  </span>
+                  <ArrowRight className="h-4 w-4 text-(--primary) transition group-hover:translate-x-0.5" />
+                </div>
+                <p className="text-[11px] font-bold uppercase tracking-wide text-(--muted-foreground)">
+                  {item.label}
+                </p>
+                <h2 className="mt-1 line-clamp-2 text-base font-semibold tracking-normal text-(--foreground) group-hover:text-(--primary)">
+                  {item.title}
+                </h2>
+                {item.caption ? (
+                  <p className="mt-2 line-clamp-2 text-sm leading-6 text-(--muted-foreground)">
+                    {item.caption}
+                  </p>
+                ) : null}
+              </Link>
+            ))}
+          </section>
+        ) : null}
+
         {posts.length > 0 ? (
           <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-3">
             {posts.map((post) => (
@@ -114,6 +152,39 @@ export default function BlogArchivePage({
             </p>
           </div>
         )}
+
+        {faqItems.length > 0 ? (
+          <section className="mt-8 rounded-[var(--anslation-ds-radius)] border border-(--border) bg-(--card) p-5 shadow-[var(--anslation-ds-shadow-sm)]">
+            <div className="mb-4 flex items-start gap-3">
+              <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-[6px] bg-(--muted) text-(--primary)">
+                <CheckCircle2 className="h-4 w-4" />
+              </span>
+              <div>
+                <p className="text-[11px] font-bold uppercase tracking-wide text-(--muted-foreground)">
+                  Topic hub FAQ
+                </p>
+                <h2 className="mt-1 text-xl font-semibold tracking-normal text-(--foreground)">
+                  Questions before you continue
+                </h2>
+              </div>
+            </div>
+            <div className="grid gap-3 md:grid-cols-2">
+              {faqItems.slice(0, 4).map((item) => (
+                <div
+                  key={item.question}
+                  className="rounded-[6px] border border-(--border) bg-(--background) p-4"
+                >
+                  <h3 className="text-sm font-semibold text-(--foreground)">
+                    {item.question}
+                  </h3>
+                  <p className="mt-2 text-sm leading-6 text-(--muted-foreground)">
+                    {item.answer}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </section>
+        ) : null}
       </div>
     </main>
   );

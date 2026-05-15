@@ -155,9 +155,13 @@ export default function Blogs() {
     })
     .filter((blog) => {
       if (!search) return true;
+      const query = search.toLowerCase();
       return (
-        blog.heading?.toLowerCase().includes(search.toLowerCase()) ||
-        blog.author?.toLowerCase().includes(search.toLowerCase())
+        blog.heading?.toLowerCase().includes(query) ||
+        blog.author?.toLowerCase().includes(query) ||
+        blog.category?.toLowerCase().includes(query) ||
+        blog.status?.toLowerCase().includes(query) ||
+        (Array.isArray(blog.tags) ? blog.tags.join(" ") : blog.tags || "").toLowerCase().includes(query)
       );
     });
 

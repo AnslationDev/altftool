@@ -7,6 +7,7 @@ import { emitAlert } from "@/lib/alertBus";
 import { logAuditEvent } from "@/lib/auditClient";
 import { getErrorMessage } from "@/lib/apiClient";
 import { updateBlogStatus } from "../services/blogsService";
+import { getBlogContentQuality } from "./BlogSeoChecklist";
 import {
   useReactTable,
   getCoreRowModel,
@@ -18,7 +19,7 @@ import {
   ChevronUp, ChevronDown, ChevronsUpDown,
   ChevronLeft, ChevronRight,
   ChevronsLeft, ChevronsRight,
-  Maximize2, Minimize2, Columns3, Search, X,
+  Maximize2, Minimize2, Columns3, Search, X, SearchCheck,
 } from "lucide-react";
 
 /* ── Tooltip ── */
@@ -69,6 +70,40 @@ function SortIcon({ sorted }) {
   if (sorted === "asc")  return <ChevronUp   className="w-3.5 h-3.5 text-blue-500" />;
   if (sorted === "desc") return <ChevronDown className="w-3.5 h-3.5 text-blue-500" />;
   return <ChevronsUpDown className="w-3.5 h-3.5 text-gray-300" />;
+}
+
+function getAdminBlogQuality(blog = {}) {
+  return getBlogContentQuality({
+    formData: {
+      ...blog,
+      tags: Array.isArray(blog.tags) ? blog.tags.join(", ") : blog.tags || "",
+    },
+    imageAlt: blog.imageAlt || "",
+    hasImage: Boolean(blog.image),
+  });
+}
+
+function SeoScoreBadge({ blog }) {
+  const quality = getAdminBlogQuality(blog);
+  const firstIssue = quality.checks.find((check) => !check.done);
+  const toneClass =
+    quality.score >= 80
+      ? "border-green-100 bg-green-50 text-green-700"
+      : quality.score >= 60
+        ? "border-amber-100 bg-amber-50 text-amber-700"
+        : "border-red-100 bg-red-50 text-red-700";
+
+  return (
+    <div className="min-w-[118px]">
+      <div className={`inline-flex h-8 items-center gap-1.5 rounded-lg border px-2.5 text-xs font-black ${toneClass}`}>
+        <SearchCheck className="h-3.5 w-3.5" />
+        {quality.score}%
+      </div>
+      <p className="mt-1 max-w-[140px] truncate text-[10px] font-medium text-gray-400">
+        {firstIssue ? firstIssue.label : "Publish ready"}
+      </p>
+    </div>
+  );
 }
 
 /* ── Column Panel ── */
@@ -210,6 +245,14 @@ export default function BlogTable({
       },
     },
     { accessorKey: "status",       header: "Status",   size: 120, minSize: 90,  cell: ({ getValue }) => <StatusBadge status={getValue()} /> },
+    {
+      id: "seoScore",
+      header: "SEO",
+      size: 150,
+      minSize: 120,
+      sortingFn: (rowA, rowB) => getAdminBlogQuality(rowA.original).score - getAdminBlogQuality(rowB.original).score,
+      cell: ({ row }) => <SeoScoreBadge blog={row.original} />,
+    },
     { accessorKey: "likesCount",   header: "Likes",    size: 80,  minSize: 60,  cell: ({ getValue }) => <span className="text-gray-600 font-medium">{getValue() ?? 0}</span> },
     { accessorKey: "commentsCount",header: "Comments", size: 100, minSize: 80,  cell: ({ getValue }) => <span className="text-gray-600 font-medium">{getValue() ?? 0}</span> },
     {

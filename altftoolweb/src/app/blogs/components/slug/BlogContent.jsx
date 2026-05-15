@@ -6,6 +6,7 @@ import BlogCompletionCta from "./BlogCompletionCta";
 import BlogFaqSection from "./BlogFaqSection";
 import BlogInlineBlogLinks from "./BlogInlineBlogLinks";
 import BlogInlineToolCards from "./BlogInlineToolCards";
+import { enhanceArticleInternalLinks } from "../../utils/internalLinks";
 
 function splitAfterParagraphs(html = "", paragraphCount = 2) {
   const pattern = /<\/p>/gi;
@@ -106,6 +107,12 @@ export default function BlogContent({
 
   // 3. Inject unique IDs into h1–h4 so TOC anchors work
   cleanedContent = injectIds(cleanedContent);
+  const linkedContent = enhanceArticleInternalLinks(cleanedContent, {
+    blog,
+    relatedPosts,
+    relatedTools,
+  });
+  cleanedContent = linkedContent.html;
   const shouldInsertTools = relatedTools.length > 0;
   const shouldInsertBlogLinks = relatedPosts.length > 0;
   const hasInlineFaqBlock = /FAQ_WRAPPER|FAQ_ITEM|FAQ Start/i.test(cleanedContent);

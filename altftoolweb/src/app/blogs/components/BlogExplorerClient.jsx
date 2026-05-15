@@ -51,6 +51,46 @@ const FRESHNESS_OPTIONS = [
 ];
 const DEFAULT_SEARCH_SHORTCUTS = ["pdf", "image", "downloader", "calculator", "productivity", "games"];
 
+function escapeRegExp(value = "") {
+  return String(value).replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
+function getSearchTerms(query = "") {
+  return String(query)
+    .toLowerCase()
+    .split(/\s+/)
+    .map((term) => term.trim())
+    .filter((term) => term.length > 2)
+    .slice(0, 5);
+}
+
+function HighlightedText({ text, terms = [], className = "" }) {
+  const value = String(text || "");
+  const visibleTerms = terms.filter(Boolean);
+  if (!value || !visibleTerms.length) return <span className={className}>{value}</span>;
+
+  const pattern = new RegExp(`(${visibleTerms.map(escapeRegExp).join("|")})`, "ig");
+  const parts = value.split(pattern).filter((part) => part !== "");
+
+  return (
+    <span className={className}>
+      {parts.map((part, index) => {
+        const isMatch = visibleTerms.some((term) => part.toLowerCase() === term);
+        return isMatch ? (
+          <mark
+            key={`${part}-${index}`}
+            className="rounded-[4px] bg-(--primary)/15 px-0.5 text-(--foreground)"
+          >
+            {part}
+          </mark>
+        ) : (
+          <span key={`${part}-${index}`}>{part}</span>
+        );
+      })}
+    </span>
+  );
+}
+
 function formatDate(date) {
   if (!date) return "Recently updated";
   return new Intl.DateTimeFormat("en", {
@@ -390,7 +430,7 @@ function ReaderJourneyPanel({ journeys }) {
   );
 }
 
-function BlogPostCard({ post, index }) {
+function BlogPostCard({ post, index, searchTerms = [] }) {
   const priority = index < 3;
   const tags = Array.isArray(post.tags) ? post.tags.filter(Boolean).slice(0, 3) : [];
   const freshness = getBlogFreshness(post);
@@ -433,11 +473,11 @@ function BlogPostCard({ post, index }) {
           </div>
 
           <h3 className="line-clamp-2 text-[15px] font-semibold leading-snug text-(--foreground) transition group-hover:text-(--primary)">
-            {post.heading}
+            <HighlightedText text={post.heading} terms={searchTerms} />
           </h3>
 
           <p className="line-clamp-2 text-sm leading-6 text-(--muted-foreground)">
-            {post.excerpt}
+            <HighlightedText text={post.excerpt} terms={searchTerms} />
           </p>
 
           {tags.length > 0 ? (
@@ -447,7 +487,7 @@ function BlogPostCard({ post, index }) {
                   key={tag}
                   className="inline-flex h-6 items-center rounded-[6px] border border-(--border) bg-(--background) px-2 text-[10px] font-semibold text-(--muted-foreground)"
                 >
-                  {tag}
+                  <HighlightedText text={tag} terms={searchTerms} />
                 </span>
               ))}
             </div>
@@ -703,6 +743,7 @@ export default function BlogExplorerClient({
   }, [activeCategory, activeTag, deferredQuery, freshnessFilter, posts, sortMode]);
 
   const visiblePosts = filteredPosts.slice(0, visibleCount);
+  const searchTerms = useMemo(() => getSearchTerms(deferredQuery), [deferredQuery]);
   const hasMore = visibleCount < filteredPosts.length;
   const displayedCount = visiblePosts.length;
   const remainingCount = Math.max(0, filteredPosts.length - displayedCount);
@@ -1009,7 +1050,12 @@ export default function BlogExplorerClient({
         <>
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
             {visiblePosts.map((post, index) => (
-              <BlogPostCard key={post.slug} post={post} index={index} />
+              <BlogPostCard
+                key={post.slug}
+                post={post}
+                index={index}
+                searchTerms={searchTerms}
+              />
             ))}
           </div>
 

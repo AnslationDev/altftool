@@ -144,6 +144,13 @@
   color: var(--primary-active);
 }
 
+.ckeditor-content .auto-internal-link {
+  border-radius: 0.35rem;
+  background: color-mix(in srgb, var(--primary) 10%, transparent);
+  padding: 0.05rem 0.22rem;
+  text-decoration-thickness: 1px;
+}
+
 .ckeditor-content .video-wrapper {
   aspect-ratio: 16 / 9;
   margin: 1.75rem 0;
