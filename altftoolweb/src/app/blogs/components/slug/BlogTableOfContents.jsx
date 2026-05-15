@@ -34,6 +34,10 @@ function createHeadingId(text, seen) {
   return seen[base] > 1 ? `${base}-${seen[base]}` : base;
 }
 
+function cx(...classes) {
+  return classes.filter(Boolean).join(" ");
+}
+
 function extractHeadings(htmlContent) {
   const seen = {};
   const headings = [];
@@ -74,7 +78,7 @@ function injectIds(htmlContent) {
    BlogTableOfContents
 ───────────────────────────────────────── */
 
-export default function BlogTableOfContents({ content }) {
+export default function BlogTableOfContents({ content, className = "hidden lg:block" }) {
   const headings = useMemo(() => {
     if (!content) return [];
     return extractHeadings(content);
@@ -123,72 +127,55 @@ export default function BlogTableOfContents({ content }) {
   return (
     <aside
       aria-label="Table of contents"
-      className="hidden lg:block"
-      style={{ position: "sticky", top: "6rem", maxHeight: "calc(100vh - 7rem)", overflowY: "auto" }}
+      className={cx(
+        "rounded-[var(--anslation-ds-radius)] border border-(--border) bg-(--card) p-4 shadow-[var(--anslation-ds-shadow-sm)]",
+        "lg:sticky lg:top-24 lg:max-h-[calc(100vh-7rem)] lg:overflow-y-auto",
+        className,
+      )}
     >
-      {/* Title */}
-        <p
-          style={{
-            fontSize: "0.95rem",
-            fontWeight: 700,
-            letterSpacing: "0.12em",
-            textTransform: "uppercase",
-            color: "var(--muted-foreground)",
-            marginBottom: "0.85rem",
-          }}
-        >
+      <div className="mb-3 flex items-center justify-between gap-3">
+        <p className="text-[11px] font-bold uppercase tracking-[0.12em] text-(--muted-foreground)">
           On This Page
         </p>
-      {/* Card */}
-      <div
-       className="p-2  border-l border-[var(--border)]"
-      >
-        
-        <nav>
-          <ul style={{ listStyle: "none", margin: 0, padding: 0, display: "flex", flexDirection: "column", gap: "0.15rem" }}>
-            {headings.map(({ id, text, level }) => {
-              const isActive = activeId === id;
-              const indent = (level - 1) * 10; // px indent per level
-
-              return (
-                <li key={id}>
-                  <button
-                    onClick={() => handleClick(id)}
-                    title={text}
-                    style={{
-                      display: "block",
-                      width: "100%",
-                      textAlign: "left",
-                      paddingLeft: `${indent + 8}px`,
-                      paddingTop: "5px",
-                      paddingBottom: "5px",
-                      paddingRight: "8px",
-                      fontSize: level === 1 ? "0.8rem" : level === 2 ? "0.775rem" : "0.73rem",
-                      fontWeight: isActive ? 600 : level <= 2 ? 500 : 400,
-                      color: isActive ? "var(--primary)" : "var(--muted-foreground)",
-                      background: isActive ? "var(--primary)1a" : "transparent",
-                      borderLeft: isActive
-                        ? "2px solid var(--primary)"
-                        : "2px solid transparent",
-                      borderRadius: "0 4px 4px 0",
-                      cursor: "pointer",
-                      transition: "color 0.18s, background 0.18s, border-color 0.18s",
-                      lineHeight: 1.4,
-                      // clamp to 2 lines with ellipsis
-                      overflow: "hidden",
-                      display: "-webkit-box",
-                      WebkitLineClamp: 2,
-                      WebkitBoxOrient: "vertical",
-                    }}
-                  >
-                    {text}
-                  </button>
-                </li>
-              );
-            })}
-          </ul>
-        </nav>
+        <span className="rounded-full bg-(--muted) px-2 py-0.5 text-[10px] font-semibold text-(--muted-foreground)">
+          {headings.length}
+        </span>
       </div>
+
+      <nav>
+        <ul className="flex list-none flex-col gap-1 p-0">
+          {headings.map(({ id, text, level }) => {
+            const isActive = activeId === id;
+            const indentClass =
+              level <= 1
+                ? "pl-2"
+                : level === 2
+                  ? "pl-5"
+                  : level === 3
+                    ? "pl-8"
+                    : "pl-10";
+
+            return (
+              <li key={id}>
+                <button
+                  onClick={() => handleClick(id)}
+                  title={text}
+                  className={cx(
+                    "line-clamp-2 w-full rounded-[6px] border-l-2 py-1.5 pr-2 text-left leading-snug transition",
+                    indentClass,
+                    level <= 2 ? "text-xs font-semibold" : "text-[11px] font-medium",
+                    isActive
+                      ? "border-(--primary) bg-(--muted) text-(--primary)"
+                      : "border-transparent text-(--muted-foreground) hover:bg-(--muted) hover:text-(--foreground)",
+                  )}
+                >
+                  {text}
+                </button>
+              </li>
+            );
+          })}
+        </ul>
+      </nav>
     </aside>
   );
 }

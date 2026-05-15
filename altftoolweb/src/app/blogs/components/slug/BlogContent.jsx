@@ -32,7 +32,7 @@ export default function BlogContent({ content }) {
 
   return (
     <div
-      className="ckeditor-content"
+      className="ckeditor-content blog-article-content"
       dangerouslySetInnerHTML={{ __html: cleanedContent }}
     />
   );

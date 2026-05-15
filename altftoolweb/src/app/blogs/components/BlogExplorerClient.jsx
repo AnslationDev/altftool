@@ -477,11 +477,11 @@ export default function BlogExplorerClient({
 
   const syncLabel = syncState === "fresh"
     ? remoteHasMore
-      ? "Loading Firebase catalog"
-      : "Firebase catalog synced"
+      ? "Refreshing articles"
+      : "Live catalog ready"
     : syncState === "syncing"
-      ? "Loading Firebase catalog"
-      : "Instant local catalog";
+      ? "Refreshing articles"
+      : "Curated catalog";
 
   return (
     <section id="blog-explorer" className="mt-10 space-y-5">
@@ -531,7 +531,7 @@ export default function BlogExplorerClient({
           </span>
           <span className="inline-flex h-7 items-center gap-1.5 rounded-[var(--anslation-ds-radius)] border border-(--border) bg-(--background) px-2.5">
             <Sparkles className="h-3.5 w-3.5 text-(--primary)" />
-            Chunked {BLOG_CHUNK_SIZE} at a time
+            Fresh picks
           </span>
           {hasMore && (
             <button

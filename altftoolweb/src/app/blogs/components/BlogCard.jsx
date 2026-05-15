@@ -9,26 +9,14 @@ function readTime(excerpt = "") {
   return `${Math.max(1, Math.ceil(excerpt.split(" ").length / 200))} min`;
 }
 
-const CATEGORY_STYLES = {
-  Extensions:  "bg-blue-600",
-  Design:      "bg-sky-600",
-  Performance: "bg-indigo-600",
-  Tutorials:   "bg-cyan-600",
-  default:     "bg-blue-700",
-};
-
-function getCategoryBg(category = "") {
-  return CATEGORY_STYLES[category] || CATEGORY_STYLES.default;
-}
-
 // ─── Vertical card (default) ────────────────────────────────────────────────────
 
 function VerticalCard({ blog, height, showExcerpt, className }) {
   return (
     <Link href={`/blogs/${blog.slug}`} className="group block h-full">
       <article
-        className={`relative overflow-hidden rounded-2xl shadow-sm
-          hover:shadow-xl hover:shadow-blue-200/50 hover:-translate-y-1
+        className={`relative overflow-hidden rounded-[var(--anslation-ds-radius)] border border-(--border) bg-(--card) shadow-[var(--anslation-ds-shadow-sm)]
+          hover:-translate-y-0.5 hover:border-(--primary) hover:shadow-[var(--anslation-ds-shadow-md)]
           transition-all duration-300 ${height} ${className}`}
       >
         {/* Full-bleed image */}
@@ -43,8 +31,7 @@ function VerticalCard({ blog, height, showExcerpt, className }) {
         {/* Gradient overlay — stronger at bottom */}
         <div className="absolute inset-0 bg-gradient-to-t from-gray-950/85 via-gray-900/30 to-transparent" />
 
-        {/* Blue shimmer accent line at top on hover */}
-        <div className="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-blue-400 to-indigo-500
+        <div className="absolute top-0 left-0 right-0 h-0.5 bg-(--primary)
                         scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
 
         {/* Read time — top right */}
@@ -59,8 +46,7 @@ function VerticalCard({ blog, height, showExcerpt, className }) {
         {/* Bottom content */}
         <div className="absolute bottom-0 left-0 right-0 p-4">
           {/* Category */}
-          <span className={`inline-block mb-2.5 px-2.5 py-0.5 text-[10px] font-bold uppercase
-            tracking-widest rounded-full text-white ${getCategoryBg(blog.category)}`}>
+          <span className="mb-2.5 inline-block rounded-[6px] bg-(--primary) px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-widest text-(--primary-foreground)">
             {blog.category}
           </span>
 
@@ -77,7 +63,7 @@ function VerticalCard({ blog, height, showExcerpt, className }) {
           )}
 
           {/* Read arrow — appears on hover */}
-          <div className="flex items-center gap-1.5 mt-2.5 text-[11px] font-semibold text-blue-300
+          <div className="mt-2.5 flex items-center gap-1.5 text-[11px] font-semibold text-white
                           opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0
                           transition-all duration-300">
             Read article
@@ -95,13 +81,13 @@ function HorizontalCard({ blog, className }) {
   return (
     <Link href={`/blogs/${blog.slug}`} className="group block">
       <article
-        className={`flex flex-col sm:flex-row rounded-2xl overflow-hidden
+        className={`flex flex-col overflow-hidden rounded-[var(--anslation-ds-radius)] sm:flex-row
           border border-(--border) bg-(--card)
-          shadow-sm hover:shadow-lg hover:shadow-blue-100/60 hover:-translate-y-0.5
+          shadow-[var(--anslation-ds-shadow-sm)] hover:-translate-y-0.5 hover:border-(--primary) hover:shadow-[var(--anslation-ds-shadow-md)]
           transition-all duration-300 ${className}`}
       >
         {/* Image */}
-        <div className="relative w-full h-44 sm:w-52 sm:h-auto flex-shrink-0 overflow-hidden bg-blue-50">
+        <div className="relative h-44 w-full flex-shrink-0 overflow-hidden bg-(--muted) sm:h-auto sm:w-52">
           <Image
             src={blog.image}
             alt={blog.imageAlt || blog.heading}
@@ -110,11 +96,10 @@ function HorizontalCard({ blog, className }) {
             className="object-cover group-hover:scale-[1.05] transition-transform duration-500"
           />
           {/* Blue overlay on hover */}
-          <div className="absolute inset-0 bg-blue-600/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+          <div className="absolute inset-0 bg-(--primary)/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
           {/* Category pill over image */}
-          <span className={`absolute bottom-2.5 left-2.5 px-2.5 py-0.5 text-[10px] font-bold
-            uppercase tracking-widest rounded-full text-white shadow-sm ${getCategoryBg(blog.category)}`}>
+          <span className="absolute bottom-2.5 left-2.5 rounded-[6px] bg-(--primary) px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-widest text-(--primary-foreground) shadow-sm">
             {blog.category}
           </span>
         </div>
@@ -122,7 +107,7 @@ function HorizontalCard({ blog, className }) {
         {/* Content */}
         <div className="p-4 flex flex-col justify-center gap-2 flex-1">
           <h3 className="text-[14px] md:text-[15px] font-bold leading-snug line-clamp-2
-                         text-(--foreground) group-hover:text-blue-600 transition-colors duration-200">
+                         text-(--foreground) group-hover:text-(--primary) transition-colors duration-200">
             {blog.heading}
           </h3>
 
@@ -130,7 +115,7 @@ function HorizontalCard({ blog, className }) {
             {blog.excerpt}
           </p>
 
-          <div className="flex items-center gap-1 mt-1 text-[11px] font-semibold text-blue-600
+          <div className="mt-1 flex items-center gap-1 text-[11px] font-semibold text-(--primary)
                           opacity-0 group-hover:opacity-100 translate-x-1 group-hover:translate-x-0
                           transition-all duration-200">
             Read more <ArrowUpRight size={11} />
@@ -138,7 +123,7 @@ function HorizontalCard({ blog, className }) {
         </div>
 
         {/* Right blue accent bar */}
-        <div className="hidden sm:block w-0.5 bg-gradient-to-b from-blue-500 to-indigo-500
+        <div className="hidden w-0.5 bg-(--primary) sm:block
                         scale-y-0 group-hover:scale-y-100 transition-transform duration-300 origin-top self-stretch" />
       </article>
     </Link>

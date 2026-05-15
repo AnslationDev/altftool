@@ -57,10 +57,10 @@ ads = ads.slice(0, 4);
   const useFallback = ads.length === 0;
 
   return (
-    <aside className="flex flex-col sticky top-24 hidden lg:block">
+    <aside className="hidden 2xl:sticky 2xl:top-24 2xl:block">
       {useFallback ? (
         <div
-          className="overflow-hidden border shadow-sm rounded-xl"
+          className="overflow-hidden rounded-[var(--anslation-ds-radius)] border shadow-[var(--anslation-ds-shadow-sm)]"
           style={{ backgroundColor: "var(--card)", borderColor: "var(--border)" }}
         >
           <ManagedImage
@@ -71,10 +71,10 @@ ads = ads.slice(0, 4);
         </div>
       ) : (
         ads.map((ad) => (
-  <div key={ad.id} className="mb-6 last:mb-0">
-    <AdBanner ad={ad} />
-  </div>
-))
+          <div key={ad.id} className="mb-4 last:mb-0">
+            <AdBanner ad={ad} />
+          </div>
+        ))
       )}
     </aside>
   );
@@ -88,10 +88,10 @@ function AdBanner({ ad }) {
   const inner = (
     <div
       className="
-        rounded-2xl border bg-white/70 dark:bg-white/5
+        rounded-[var(--anslation-ds-radius)] border bg-(--card)
         backdrop-blur-sm
-        shadow-[0_4px_20px_rgba(0,0,0,0.05)]
-        hover:shadow-[0_6px_28px_rgba(0,0,0,0.08)]
+        shadow-[var(--anslation-ds-shadow-sm)]
+        hover:shadow-[var(--anslation-ds-shadow-md)]
         transition-all duration-300
         overflow-hidden group
       "
@@ -110,8 +110,8 @@ function AdBanner({ ad }) {
           className="
             absolute top-2 left-2
             text-[10px] px-2 py-[2px]
-            rounded-full font-medium
-            bg-(black/70) text-white
+            rounded-full font-semibold
+            bg-black/70 text-white
             backdrop-blur-sm
           "
         >
@@ -120,7 +120,7 @@ function AdBanner({ ad }) {
       </div>
 
       {/* Footer */}
-      <div className="flex items-center justify-between px-3 py-2 bg-(--background)/70">
+      <div className="flex items-center justify-between px-3 py-2 bg-(--background)">
         <span
           className="text-xs font-medium text-(--foreground)"
         >
@@ -130,13 +130,10 @@ function AdBanner({ ad }) {
         {redirect && (
           <span
             className="
-              text-xs font-semibold
-              text-[var(--primary)]
-              opacity-70 group-hover:opacity-100
-              transition
+              text-xs font-semibold text-[var(--primary)] opacity-70 transition group-hover:opacity-100
             "
           >
-            Visit →
+            Visit
           </span>
         )}
       </div>

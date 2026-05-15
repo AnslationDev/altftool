@@ -1,8 +1,9 @@
 "use client";
 /* eslint-disable react-hooks/exhaustive-deps */
 
+import Link from "next/link";
 import { useParams } from "next/navigation";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useMemo, useState, useRef } from "react";
 
 import {
   collection,
@@ -14,14 +15,12 @@ import {
   startAfter,
 } from "firebase/firestore";
 import { db } from "@/lib/firebase";
-import { ArrowLeft } from "lucide-react";
-import { useRouter } from "next/navigation";
+import { ArrowLeft, Loader2 } from "lucide-react";
 import { useAds } from "@/ads/AdsProvider";
-
-import { useMemo } from "react";
 
 import BlogCard from "@/app/blogs/components/BlogCard";
 import AdCard from "../../components/AdCard";
+import { normalizeBlog } from "../../data";
 
 function interleaveAds(posts, ads) {
   if (!ads?.length) {
@@ -71,12 +70,8 @@ function interleaveAds(posts, ads) {
 export default function BlogsViewAllPage() {
   const [loading, setLoading] = useState(true);
   const { section } = useParams();
-  const router = useRouter();
 
-  const [blogs, setBlogs] = useState([]);
-  const [allBlogs, setAllBlogs] = useState([]);
   const [visibleBlogs, setVisibleBlogs] = useState([]);
-  const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
 
   const [lastDoc, setLastDoc] = useState(null);
@@ -139,7 +134,7 @@ export default function BlogsViewAllPage() {
         ...doc.data(),
       }));
 
-      setVisibleBlogs(data);
+      setVisibleBlogs(data.map((blog, index) => normalizeBlog(blog, index)));
       setLastDoc(snap.docs[snap.docs.length - 1]);
       setHasMore(snap.docs.length === PAGE_SIZE);
     } catch (err) {
@@ -202,7 +197,10 @@ export default function BlogsViewAllPage() {
       ...doc.data(),
     }));
 
-    setVisibleBlogs((prev) => [...prev, ...newBlogs]);
+    setVisibleBlogs((prev) => [
+      ...prev,
+      ...newBlogs.map((blog, index) => normalizeBlog(blog, prev.length + index)),
+    ]);
     setLastDoc(snap.docs[snap.docs.length - 1]);
     setHasMore(snap.docs.length === PAGE_SIZE);
   };
@@ -222,10 +220,10 @@ export default function BlogsViewAllPage() {
   };
 
   const sectionHeadings = {
-    "latest-blogs": "Latest Insights to Boost Your Productivity",
-    "tool-guides": "Work Smarter with AI Tools",
-    "trending-articles": "Everything You Need to Work Smarter",
-    "editors-picks": " Explore Our Editor's Favorite Reads",
+    "latest-blogs": "Latest Blog Articles",
+    "tool-guides": "Tool Guides",
+    "trending-articles": "Trending Articles",
+    "editors-picks": "Editor's Picks",
   };
 
   const heading = sectionHeadings[section] || "All Blogs";
@@ -233,7 +231,7 @@ export default function BlogsViewAllPage() {
   const blogListAds = useAds({ placement: "blog_list" });
 
   const blogsWithAds = useMemo(() => {
-    return interleaveAds(visibleBlogs, blogListAds, 3);
+    return interleaveAds(visibleBlogs, blogListAds);
   }, [visibleBlogs, blogListAds]);
 
   const lastBlogIndex = useMemo(() => {
@@ -246,72 +244,82 @@ export default function BlogsViewAllPage() {
   }, [blogsWithAds]);
 
   return (
-    <div className="section">
-      <h1 className="text-center font-bold mb-2 lg:text-4xl text-md sm:text-xl md:text-2xl text-(--primary) mt-5">
-        {heading}
-      </h1>
+    <main className="bg-(--background) text-(--foreground)">
+      <div className="mx-auto w-full max-w-[1500px] px-3 py-6 sm:px-5 md:py-8 lg:px-8">
+        <div className="mb-6 flex flex-col gap-4 border-b border-(--border) pb-5 sm:flex-row sm:items-end sm:justify-between">
+          <div>
+            <Link
+              href="/blogs"
+              className="mb-4 inline-flex h-9 items-center gap-2 rounded-[var(--anslation-ds-radius)] border border-(--border) bg-(--card) px-3 text-sm font-semibold text-(--foreground) shadow-[var(--anslation-ds-shadow-sm)] transition hover:border-(--primary) hover:text-(--primary)"
+            >
+              <ArrowLeft className="h-4 w-4" />
+              All blogs
+            </Link>
+            <p className="text-xs font-bold uppercase tracking-wide text-(--muted-foreground)">
+              Blog collection
+            </p>
+            <h1 className="mt-1 text-3xl font-semibold tracking-normal text-(--foreground) sm:text-4xl">
+              {heading}
+            </h1>
+          </div>
+          <p className="max-w-xl text-sm leading-6 text-(--muted-foreground)">
+            Read practical guides from this topic and continue into related AltFTool resources.
+          </p>
+        </div>
 
-      <div className="mb-6 w-full border-b border-(--border) p-2 cursor-pointer mt-5">
-        <button
-          onClick={() => router.back()}
-          className="inline-flex items-center px-4 py-2 rounded-md text-var(--primary) transition cursor-pointer gap-3 hover:text-(--primary)"
-        >
-          <span className="w-8 h-8 flex justify-center items-center border border-(--border) rounded-full hover:bg-(--primary) hover:text-white transition-all duration-300">
-            <ArrowLeft size={22} />
-          </span>
-          Back to Blogs Page
-        </button>
-      </div>
+        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-3">
+          {loading
+            ? Array.from({ length: 8 }).map((_, i) => (
+                <BlogCardSkeleton key={i} />
+              ))
+            : blogsWithAds.map((item, index) => {
+                if (item.type === "ad") {
+                  return (
+                    <AdCard
+                      key={`ad-${index}`}
+                      src={item.data}
+                      height="h-[300px]"
+                    />
+                  );
+                }
 
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-        {loading
-          ? Array.from({ length: 8 }).map((_, i) => (
-              <BlogCardSkeleton key={i} />
-            ))
-          : blogsWithAds.map((item, index) => {
-              if (item.type === "ad") {
                 return (
-                  <AdCard
-                    key={`ad-${index}`}
-                    src={item.data}
-                    height="h-[300px]"
-                  />
+                  <div
+                    ref={index === lastBlogIndex ? lastBlogRef : null}
+                    key={item.data.id}
+                  >
+                    <BlogCard
+                      blog={item.data}
+                      height="h-[320px]"
+                      showExcerpt
+                    />
+                  </div>
                 );
-              }
+              })}
+        </div>
 
-              return (
-                <div
-                  ref={index === lastBlogIndex ? lastBlogRef : null}
-                  key={item.data.id}
-                >
-                  <BlogCard
-                    blog={item.data}
-                    height="h-[300px]"
-                    variant="horizontal"
-                  />
-                </div>
-              );
-            })}
+        {hasMore && !loading && (
+          <div className="mt-8 flex items-center justify-center gap-2 text-sm font-medium text-(--muted-foreground)">
+            <Loader2 className="h-4 w-4 animate-spin text-(--primary)" />
+            Loading more articles
+          </div>
+        )}
       </div>
-
-      {hasMore && !loading && (
-        <p className="text-center mt-4 text-gray-500">Loading more...</p>
-      )}
-    </div>
+    </main>
   );
 
   function BlogCardSkeleton() {
     return (
-      <div className="animate-pulse rounded-2xl border border-gray-200 overflow-hidden ">
-        <div className="h-[150px] bg-gray-200"></div>
+      <div className="animate-pulse overflow-hidden rounded-[var(--anslation-ds-radius)] border border-(--border) bg-(--card)">
+        <div className="h-[170px] bg-(--muted)"></div>
 
         <div className="p-4 space-y-3">
-          <div className="h-4 bg-gray-200 rounded w-3/4"></div>
+          <div className="h-4 bg-(--muted) rounded w-3/4"></div>
 
-          <div className="h-3 bg-gray-200 rounded w-full"></div>
-          <div className="h-3 bg-gray-200 rounded w-5/6"></div>
+          <div className="h-3 bg-(--muted) rounded w-full"></div>
+          <div className="h-3 bg-(--muted) rounded w-5/6"></div>
 
-          <div className="h-3 bg-gray-200  rounded w-1/4"></div>
+          <div className="h-3 bg-(--muted) rounded w-1/4"></div>
         </div>
       </div>
     );

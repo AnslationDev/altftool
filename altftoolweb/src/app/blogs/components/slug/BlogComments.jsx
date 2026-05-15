@@ -1,6 +1,24 @@
 "use client";
 
 import { useState } from "react";
+import { MessageCircle, Send } from "lucide-react";
+
+function formatCommentDate(comment) {
+  const value = comment.createdAt?.seconds
+    ? new Date(comment.createdAt.seconds * 1000)
+    : comment.date
+      ? new Date(comment.date)
+      : null;
+
+  if (!value || Number.isNaN(value.getTime())) return "Just now";
+
+  return new Intl.DateTimeFormat("en", {
+    month: "short",
+    day: "numeric",
+    hour: "numeric",
+    minute: "2-digit",
+  }).format(value);
+}
 
 export default function BlogComments({
   comments,
@@ -19,16 +37,28 @@ export default function BlogComments({
   };
 
   return (
-    <div className="mt-8 rounded-[var(--anslation-ds-radius-lg)] border border-[var(--border)] bg-[var(--card)] p-4 shadow-[var(--anslation-ds-shadow-sm)] md:p-5">
+    <section className="mt-8 rounded-[var(--anslation-ds-radius)] border border-[var(--border)] bg-[var(--card)] p-4 shadow-[var(--anslation-ds-shadow-sm)] md:p-5">
 
       <div className="mb-5 flex items-center justify-between">
-        <h2 className="text-lg font-semibold tracking-tight text-[var(--foreground)]">Comments</h2>
+        <div className="flex items-center gap-2">
+          <span className="flex h-9 w-9 items-center justify-center rounded-[6px] bg-[var(--muted)] text-[var(--primary)]">
+            <MessageCircle className="h-4 w-4" />
+          </span>
+          <div>
+            <p className="text-[11px] font-bold uppercase tracking-wide text-[var(--muted-foreground)]">
+              Discussion
+            </p>
+            <h2 className="text-lg font-semibold tracking-tight text-[var(--foreground)]">
+              {comments.length} {comments.length === 1 ? "comment" : "comments"}
+            </h2>
+          </div>
+        </div>
 
         {!showCommentBox && (
           <button
             type="button"
             onClick={() => setShowCommentBox(true)}
-            className="h-9 rounded-[var(--anslation-ds-radius)] bg-[var(--primary)] px-4 text-sm font-semibold text-[var(--primary-foreground)] transition hover:opacity-90"
+            className="h-9 rounded-[6px] bg-[var(--primary)] px-4 text-sm font-semibold text-[var(--primary-foreground)] transition hover:bg-[var(--primary-active)]"
           >
             Add Comment
           </button>
@@ -45,22 +75,23 @@ export default function BlogComments({
             onChange={(e) => setNewComment(e.target.value)}
             rows={4}
             placeholder="Share your thoughts..."
-            className="w-full resize-none rounded-[var(--anslation-ds-radius)] border border-[var(--border)] bg-[var(--card)] p-3 text-sm text-[var(--foreground)] outline-none focus:border-[var(--primary)] focus:ring-2 focus:ring-[var(--primary)]/15"
+            className="w-full resize-none rounded-[6px] border border-[var(--border)] bg-[var(--card)] p-3 text-sm text-[var(--foreground)] outline-none transition focus:border-[var(--primary)] focus:ring-2 focus:ring-[var(--primary)]/15"
           />
 
           <div className="flex justify-end gap-2 mt-4">
             <button
               type="button"
               onClick={() => setShowCommentBox(false)}
-              className="h-9 rounded-[var(--anslation-ds-radius)] border border-[var(--border)] px-4 text-sm font-semibold text-[var(--muted-foreground)] transition hover:bg-[var(--muted)]"
+              className="h-9 rounded-[6px] border border-[var(--border)] px-4 text-sm font-semibold text-[var(--muted-foreground)] transition hover:bg-[var(--muted)]"
             >
               Cancel
             </button>
 
             <button
               type="submit"
-              className="h-9 rounded-[var(--anslation-ds-radius)] bg-[var(--primary)] px-5 text-sm font-semibold text-[var(--primary-foreground)] transition hover:opacity-90"
+              className="inline-flex h-9 items-center gap-2 rounded-[6px] bg-[var(--primary)] px-5 text-sm font-semibold text-[var(--primary-foreground)] transition hover:bg-[var(--primary-active)]"
             >
+              <Send className="h-4 w-4" />
               Post
             </button>
           </div>
@@ -82,9 +113,7 @@ export default function BlogComments({
                   </span>
 
                   <span className="text-xs text-[var(--muted-foreground)]">
-                    {c.createdAt?.seconds
-                      ? new Date(c.createdAt.seconds * 1000).toLocaleString()
-                      : c.date}
+                    {formatCommentDate(c)}
                   </span>
                 </div>
 
@@ -96,10 +125,18 @@ export default function BlogComments({
           ))}
         </div>
       ) : (
-        <div className="rounded-[var(--anslation-ds-radius)] border border-dashed border-[var(--border)] p-8 text-center text-sm text-[var(--muted-foreground)]">
-          No comments yet. Be the first to comment.
+        <div className="rounded-[var(--anslation-ds-radius)] border border-dashed border-[var(--border)] bg-[var(--background)] p-8 text-center">
+          <div className="mx-auto mb-3 flex h-10 w-10 items-center justify-center rounded-[6px] bg-[var(--muted)] text-[var(--primary)]">
+            <MessageCircle className="h-5 w-5" />
+          </div>
+          <p className="text-sm font-semibold text-[var(--foreground)]">
+            No comments yet
+          </p>
+          <p className="mt-1 text-sm text-[var(--muted-foreground)]">
+            Be the first to add a useful note.
+          </p>
         </div>
       )}
-    </div>
+    </section>
   );
 }

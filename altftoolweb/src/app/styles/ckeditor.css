@@ -1,12 +1,24 @@
+/* CKEditor article content */
 
-/* CKEditor font sizes */
-
-.ckeditor-content{
-  padding-left: 0rem;
-  line-height: 1.8;
+.ckeditor-content {
+  color: var(--foreground);
+  font-size: 1rem;
+  line-height: 1.82;
   overflow-x: hidden;
+  overflow-wrap: anywhere;
 }
 
+.blog-article-content {
+  max-width: none;
+}
+
+.ckeditor-content > *:first-child {
+  margin-top: 0;
+}
+
+.ckeditor-content > * + * {
+  margin-top: 1.05rem;
+}
 
 .ckeditor-content .text-tiny {
   font-size: 0.7em;
@@ -24,23 +36,76 @@
   font-size: 1.8em;
 }
 
-.ckeditor-content h1 { font-size: 2rem; font-weight: 700; color: var(--primary); }
-.ckeditor-content h2 { font-size: 1.6rem; font-weight: 700; color: var(--primary); }
-.ckeditor-content h3 { font-size: 1.3rem; font-weight: 600; color: var(--primary); }
+.ckeditor-content p {
+  color: var(--muted-foreground);
+}
+
+.ckeditor-content h1,
+.ckeditor-content h2,
+.ckeditor-content h3,
+.ckeditor-content h4 {
+  color: var(--foreground);
+  font-weight: 700;
+  letter-spacing: 0;
+  line-height: 1.18;
+  scroll-margin-top: 6.5rem;
+}
+
+.ckeditor-content h1 {
+  font-size: clamp(1.85rem, 3vw, 2.5rem);
+}
+
+.ckeditor-content h2 {
+  font-size: clamp(1.45rem, 2.3vw, 2rem);
+}
+
+.ckeditor-content h3 {
+  font-size: clamp(1.2rem, 1.8vw, 1.45rem);
+}
+
+.ckeditor-content h4 {
+  font-size: 1.05rem;
+}
+
+.ckeditor-content h2:not(:first-child) {
+  border-top: 1px solid var(--border);
+  margin-top: 2rem;
+  padding-top: 1.6rem;
+}
+
+.ckeditor-content h3,
+.ckeditor-content h4 {
+  margin-top: 1.65rem;
+}
+
+.ckeditor-content ul,
+.ckeditor-content ol {
+  color: var(--muted-foreground);
+  padding-left: 1.35rem;
+}
 
 .ckeditor-content ul {
   list-style: disc;
-  padding-left: 1.5rem;
 }
 
 .ckeditor-content ol {
   list-style: decimal;
-  padding-left: 1.5rem;
+}
+
+.ckeditor-content li + li {
+  margin-top: 0.45rem;
+}
+
+.ckeditor-content li::marker {
+  color: var(--primary);
 }
 
 .ckeditor-content img {
-  max-width: 100%;
   height: auto;
+  max-width: 100%;
+  border: 1px solid var(--border);
+  border-radius: var(--anslation-ds-radius);
+  margin: 1.75rem auto;
 }
 
 .ckeditor-media {
@@ -49,63 +114,79 @@
   margin: 1rem auto;
 }
 
-/* Links */
-/* Only style "normal links", not components */
+.ckeditor-content blockquote {
+  border-left: 3px solid var(--primary);
+  border-radius: 0 var(--anslation-ds-radius) var(--anslation-ds-radius) 0;
+  background: var(--muted);
+  color: var(--foreground);
+  margin: 1.5rem 0;
+  padding: 1rem 1.1rem;
+}
+
+.ckeditor-content blockquote p {
+  color: var(--foreground);
+  margin: 0;
+}
+
 .ckeditor-content p a:not(.CTA_CK),
 .ckeditor-content li a:not(.CTA_CK),
 .ckeditor-content span a:not(.CTA_CK) {
-  color: #2563eb;
+  color: var(--primary);
+  font-weight: 600;
   text-decoration: underline;
+  text-underline-offset: 0.18em;
 }
 
 .ckeditor-content p a:hover,
 .ckeditor-content li a:hover,
-.ckeditor-content span a:hover {
-  color: #1d4ed8;
-}
-
-
+.ckeditor-content span a:hover,
 .ckeditor-content a:hover {
-  color: #1d4ed8; /* darker on hover */
+  color: var(--primary-active);
 }
 
+.ckeditor-content .video-wrapper {
+  aspect-ratio: 16 / 9;
+  margin: 1.75rem 0;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: var(--anslation-ds-radius);
+  background: var(--muted);
+}
 
-/* Tables */
-/* Tables */
+.ckeditor-content .video-wrapper iframe {
+  width: 100%;
+  height: 100%;
+}
 
 .ckeditor-content table {
+  display: block;
   width: 100%;
-  /* display: block; */
-  overflow-x: scroll;
-  /* white-space: nowrap; */
+  overflow-x: auto;
   border-collapse: collapse;
-  margin: 1.5rem 0;
-  font-size: 0.95rem;
+  margin: 1.75rem 0;
   color: var(--foreground);
   background-color: var(--background);
+  font-size: 0.95rem;
 }
 
 .ckeditor-content th,
 .ckeditor-content td {
+  min-width: 160px;
   border: 1px solid var(--border);
-  padding: 0.6rem 0.8rem;
+  padding: 0.75rem 0.85rem;
   text-align: left;
   color: var(--foreground);
   background-color: var(--background);
+  vertical-align: top;
 }
 
 .ckeditor-content th {
-  background-color: var(--card);
-  font-weight: 600;
-  color: var(--foreground);
+  background-color: var(--muted);
+  font-weight: 700;
 }
 
 .ckeditor-content tr:nth-child(even) td {
   background-color: var(--muted);
-}
-
-.ckeditor-content tr:nth-child(odd) td {
-  background-color: var(--background);
 }
 
 .ckeditor-content tr:hover td {

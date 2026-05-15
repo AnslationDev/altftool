@@ -1,6 +1,18 @@
 "use client";
+
 import Image from "next/image";
+import { CalendarDays, Clock3, UserRound } from "lucide-react";
 import { useEffect, useRef } from "react";
+
+function formatDate(date) {
+  if (!date) return "Recently updated";
+
+  return new Intl.DateTimeFormat("en", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+  }).format(new Date(date));
+}
 
 export default function BlogHeader({ blog }) {
   const headingRef = useRef(null);
@@ -17,36 +29,61 @@ export default function BlogHeader({ blog }) {
   }, []);
 
   return (
-    <div className="w-full mb-12">
-      {/* Hero Image */}
-      <div className="relative w-full h-[280px] sm:h-[360px] md:h-[420px] overflow-hidden rounded-2xl">
+    <section className="mb-8 w-full">
+      <div className="relative isolate flex min-h-[460px] overflow-hidden rounded-[var(--anslation-ds-radius-lg)] border border-(--border) bg-(--card) shadow-[var(--anslation-ds-shadow-md)] sm:min-h-[520px] lg:min-h-[560px]">
         <Image
           src={blog.image}
           alt={blog.imageAlt || blog.heading}
           fill
           sizes="(max-width: 1280px) 100vw, 1280px"
-          className="object-cover rounded-2xl scale-100 hover:scale-105 transition-transform duration-700 ease-in-out"
+          className="object-cover"
           priority
         />
 
-        {/* Gradient overlay — bottom-heavy */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent rounded-2xl" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/45 to-black/15" />
+        <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/90 to-transparent" />
 
-        {/* Category badge */}
-        <div className="absolute bottom-5 left-5 sm:bottom-8 sm:left-8">
-          <span className="inline-block bg-[var(--primary)] text-[var(--primary-foreground)] text-xs font-semibold px-3 py-1 rounded tracking-wide uppercase shadow-md">
-            {blog.category}
-          </span>
+        <div className="relative z-10 mt-auto w-full p-5 sm:p-8 lg:p-10">
+          <div className="mb-4 flex flex-wrap items-center gap-2">
+            <span className="inline-flex h-8 items-center rounded-[6px] bg-(--primary) px-3 text-xs font-bold uppercase tracking-wide text-(--primary-foreground)">
+              {blog.category}
+            </span>
+            {blog.tool && blog.tool !== blog.category ? (
+              <span className="inline-flex h-8 items-center rounded-[6px] border border-white/20 bg-white/10 px-3 text-xs font-semibold text-white backdrop-blur">
+                {blog.tool}
+              </span>
+            ) : null}
+          </div>
+
+          <h1
+            ref={headingRef}
+            className="max-w-5xl text-3xl font-semibold leading-tight tracking-normal text-white sm:text-5xl lg:text-6xl"
+          >
+            {blog.heading}
+          </h1>
+
+          {blog.excerpt ? (
+            <p className="mt-4 max-w-3xl text-sm leading-6 text-white/78 sm:text-base">
+              {blog.excerpt}
+            </p>
+          ) : null}
+
+          <div className="mt-6 flex flex-wrap items-center gap-2 text-xs font-semibold text-white/78 sm:text-sm">
+            <span className="inline-flex h-9 items-center gap-2 rounded-[6px] border border-white/15 bg-white/10 px-3 backdrop-blur">
+              <UserRound className="h-4 w-4" />
+              {blog.author || "AltFTool Editorial"}
+            </span>
+            <span className="inline-flex h-9 items-center gap-2 rounded-[6px] border border-white/15 bg-white/10 px-3 backdrop-blur">
+              <CalendarDays className="h-4 w-4" />
+              {formatDate(blog.date)}
+            </span>
+            <span className="inline-flex h-9 items-center gap-2 rounded-[6px] border border-white/15 bg-white/10 px-3 backdrop-blur">
+              <Clock3 className="h-4 w-4" />
+              {blog.readTime}
+            </span>
+          </div>
         </div>
       </div>
-
-      {/* Heading */}
-      <h1
-        ref={headingRef}
-        className="mt-8 w-full text-2xl sm:text-4xl md:text-5xl font-extrabold leading-tight tracking-tight text-[var(--primary)] drop-shadow-lg text-center px-2 sm:px-0"
-      >
-        {blog.heading}
-      </h1>
-    </div>
+    </section>
   );
 }

@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import {
   addDoc,
@@ -206,21 +207,20 @@ export default function BlogDetailClient({ slug, initialBlog, initialRelated }) 
   if (!blog && !notFound) return <BlogTopBarLoader />;
 
   return (
-    <main className="bg-(--background) py-4 text-(--foreground)">
+    <main className="bg-(--background) pb-12 pt-4 text-(--foreground) sm:pt-6">
       <div className="mx-auto w-full max-w-[1500px] px-3 sm:px-5 lg:px-8">
-        <div className="mb-5 flex items-center justify-between gap-3 border-b border-(--border) pb-3">
-          <button
-            type="button"
-            onClick={() => router.back()}
-            className="inline-flex h-9 items-center gap-2 rounded-[var(--anslation-ds-radius)] border border-(--border) bg-(--card) px-3 text-sm font-semibold text-(--foreground) transition hover:border-(--primary) hover:text-(--primary)"
+        <div className="mb-4 flex items-center justify-between gap-3">
+          <Link
+            href="/blogs"
+            className="inline-flex h-9 items-center gap-2 rounded-[var(--anslation-ds-radius)] border border-(--border) bg-(--card) px-3 text-sm font-semibold text-(--foreground) shadow-[var(--anslation-ds-shadow-sm)] transition hover:border-(--primary) hover:text-(--primary)"
           >
             <ArrowLeft className="h-4 w-4" />
-            Blogs
-          </button>
+            All blogs
+          </Link>
           {refreshing && (
             <span className="inline-flex h-8 items-center gap-2 rounded-[var(--anslation-ds-radius)] border border-(--border) bg-(--card) px-3 text-xs font-medium text-(--muted-foreground)">
               <Loader2 className="h-3.5 w-3.5 animate-spin text-(--primary)" />
-              Syncing live article
+              Updating article
             </span>
           )}
         </div>
@@ -239,14 +239,18 @@ export default function BlogDetailClient({ slug, initialBlog, initialRelated }) 
           author={blog.author}
         />
 
-        <div className="mt-10 grid grid-cols-1 items-start gap-8 lg:grid-cols-[240px_minmax(0,1fr)_260px] xl:grid-cols-[260px_minmax(0,1fr)_300px]">
-          <div className="hidden lg:block">
-            <BlogTableOfContents content={blog.description} />
-          </div>
+        <BlogTableOfContents
+          content={blog.description}
+          className="mt-5 lg:hidden"
+        />
+
+        <div className="mt-8 grid grid-cols-1 items-start justify-center gap-6 lg:grid-cols-[240px_minmax(0,820px)] xl:grid-cols-[260px_minmax(0,860px)] 2xl:grid-cols-[280px_minmax(0,840px)_300px]">
+          <BlogTableOfContents content={blog.description} />
+
           <div className="min-w-0">
-            <div className="rounded-[var(--anslation-ds-radius-lg)] border border-(--border) bg-(--card) p-4 shadow-[var(--anslation-ds-shadow-sm)] md:p-7">
+            <article className="rounded-[var(--anslation-ds-radius)] border border-(--border) bg-(--card) p-4 shadow-[var(--anslation-ds-shadow-sm)] sm:p-6 md:p-8">
               <BlogContent content={blog.description} />
-            </div>
+            </article>
             <BlogComments
               comments={comments}
               addComment={addComment}
@@ -259,11 +263,21 @@ export default function BlogDetailClient({ slug, initialBlog, initialRelated }) 
 
         {similarPosts.length > 0 && (
           <section className="mt-14 border-t border-(--border) pt-8">
-            <div className="mb-5">
-              <p className="text-xs font-semibold uppercase tracking-wide text-(--muted-foreground)">
-                More in {blog.category}
-              </p>
-              <h2 className="mt-1 text-2xl font-semibold tracking-tight text-(--foreground)">Similar posts</h2>
+            <div className="mb-5 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+              <div>
+                <p className="text-xs font-semibold uppercase tracking-wide text-(--muted-foreground)">
+                  More in {blog.category}
+                </p>
+                <h2 className="mt-1 text-2xl font-semibold tracking-tight text-(--foreground)">
+                  Similar posts
+                </h2>
+              </div>
+              <Link
+                href={`/blogs?category=${encodeURIComponent(blog.category)}`}
+                className="inline-flex h-9 items-center justify-center rounded-[var(--anslation-ds-radius)] border border-(--border) bg-(--card) px-3 text-sm font-semibold text-(--foreground) transition hover:border-(--primary) hover:text-(--primary)"
+              >
+                View category
+              </Link>
             </div>
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
               {similarPosts.map((post) => (

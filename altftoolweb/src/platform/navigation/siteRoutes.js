@@ -126,7 +126,7 @@ export const LEGAL_ROUTE_LINKS = [
 ];
 
 const HIDDEN_PUBLIC_SHELL_PREFIXES = ["/search-eng"];
-const HIDDEN_PUBLIC_SHELL_PATTERNS = [/^\/blogs\/[^/]+/];
+const HIDDEN_PUBLIC_SHELL_PATTERNS = [];
 
 export function isPublicShellHidden(pathname = "") {
   return (

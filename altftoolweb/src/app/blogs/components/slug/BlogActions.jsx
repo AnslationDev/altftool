@@ -1,10 +1,21 @@
 "use client";
 
-import { Heart, MessageCircle, Share2 } from "lucide-react";
+import { useState } from "react";
+import { Check, Heart, MessageCircle, Share2 } from "lucide-react";
 import { doc, updateDoc, increment } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 
 const PROJECT_ID = "altftool";
+
+function formatDate(date) {
+  if (!date) return "Recently updated";
+
+  return new Intl.DateTimeFormat("en", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+  }).format(new Date(date));
+}
 
 export default function BlogActions({
   blogId,
@@ -18,6 +29,7 @@ export default function BlogActions({
   author,
   date
 }) {
+  const [copied, setCopied] = useState(false);
 
   const handleLike = async () => {
     const newLiked = !liked;
@@ -39,46 +51,65 @@ export default function BlogActions({
     }
   };
 
+  const handleShare = async () => {
+    const shareData = {
+      title: document.title,
+      url: window.location.href,
+    };
+
+    if (navigator.share) {
+      await navigator.share(shareData).catch(() => {});
+      return;
+    }
+
+    await navigator.clipboard?.writeText(window.location.href);
+    setCopied(true);
+    window.setTimeout(() => setCopied(false), 1600);
+  };
+
   return (
-    <div className="mt-8 rounded-[var(--anslation-ds-radius-lg)] border border-[var(--border)] bg-[var(--card)] px-4 py-3 shadow-[var(--anslation-ds-shadow-sm)]">
-      <div className="flex flex-wrap items-center justify-between gap-4 text-sm text-[var(--muted-foreground)]">
-        <div className="flex items-center gap-4">
+    <div className="rounded-[var(--anslation-ds-radius)] border border-[var(--border)] bg-[var(--card)] px-3 py-3 shadow-[var(--anslation-ds-shadow-sm)] sm:px-4">
+      <div className="flex flex-wrap items-center justify-between gap-3 text-sm text-[var(--muted-foreground)]">
+        <div className="flex flex-wrap items-center gap-2">
           <button
             type="button"
             onClick={handleLike}
-            className={`inline-flex h-9 items-center gap-1.5 rounded-[var(--anslation-ds-radius)] border px-3 transition-colors ${
+            aria-pressed={liked}
+            className={`inline-flex h-9 items-center gap-1.5 rounded-[6px] border px-3 font-semibold transition-colors ${
               liked
                 ? "border-[var(--primary)] bg-[var(--primary)] text-[var(--primary-foreground)]"
-                : "border-[var(--border)] text-[var(--muted-foreground)] hover:text-[var(--primary)]"
+                : "border-[var(--border)] bg-[var(--background)] text-[var(--muted-foreground)] hover:border-[var(--primary)] hover:text-[var(--primary)]"
             }`}
           >
             <Heart size={18} fill={liked ? "currentColor" : "none"} />
             <span>{likes}</span>
+            <span className="hidden sm:inline">Like</span>
           </button>
 
           <button
             type="button"
             onClick={() => setShowCommentBox(!showCommentBox)}
-            className="inline-flex h-9 items-center gap-1.5 rounded-[var(--anslation-ds-radius)] border border-[var(--border)] px-3 transition-colors hover:text-[var(--primary)]"
+            className="inline-flex h-9 items-center gap-1.5 rounded-[6px] border border-[var(--border)] bg-[var(--background)] px-3 font-semibold transition-colors hover:border-[var(--primary)] hover:text-[var(--primary)]"
           >
             <MessageCircle size={18} />
             <span>{commentsCount}</span>
+            <span className="hidden sm:inline">Comments</span>
           </button>
 
           <button
             type="button"
-            onClick={() => navigator.share?.({ url: window.location.href })}
-            className="inline-flex h-9 items-center gap-1.5 rounded-[var(--anslation-ds-radius)] border border-[var(--border)] px-3 transition-colors hover:text-[var(--primary)]"
+            onClick={handleShare}
+            className="inline-flex h-9 items-center gap-1.5 rounded-[6px] border border-[var(--border)] bg-[var(--background)] px-3 font-semibold transition-colors hover:border-[var(--primary)] hover:text-[var(--primary)]"
           >
-            <Share2 size={18} />
-            <span>Share</span>
+            {copied ? <Check size={18} /> : <Share2 size={18} />}
+            <span>{copied ? "Copied" : "Share"}</span>
           </button>
         </div>
 
         <div className="flex flex-wrap items-center gap-3 text-xs font-medium text-[var(--muted-foreground)]">
-          <span>Author: {author || "Admin"}</span>
+          <span>{author || "AltFTool Editorial"}</span>
           <span className="h-1 w-1 rounded-full bg-[var(--border)]" />
-          <span>{date}</span>
+          <span>{formatDate(date)}</span>
         </div>
       </div>
     </div>
