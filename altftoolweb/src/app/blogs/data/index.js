@@ -14,6 +14,7 @@ export {
   getBlogBySlug,
   getBlogCategories,
   getBlogCategoryBySlug,
+  getBlogFreshness,
   getBlogPopularityScore,
   getBlogStats,
   getBlogTagBySlug,

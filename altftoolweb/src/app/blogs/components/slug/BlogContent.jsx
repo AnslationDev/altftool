@@ -2,6 +2,7 @@
 
 import { useEffect } from "react";
 import { injectIds } from "./BlogTableOfContents";
+import BlogInlineBlogLinks from "./BlogInlineBlogLinks";
 import BlogInlineToolCards from "./BlogInlineToolCards";
 
 function splitAfterParagraphs(html = "", paragraphCount = 2) {
@@ -20,7 +21,7 @@ function splitAfterParagraphs(html = "", paragraphCount = 2) {
   return [html, ""];
 }
 
-export default function BlogContent({ content, blog, relatedTools = [] }) {
+export default function BlogContent({ content, blog, relatedTools = [], relatedPosts = [] }) {
   useEffect(() => {
     const article = document.querySelector(".blog-article-content");
     if (!article) return undefined;
@@ -98,6 +99,7 @@ export default function BlogContent({ content, blog, relatedTools = [] }) {
   // 3. Inject unique IDs into h1–h4 so TOC anchors work
   cleanedContent = injectIds(cleanedContent);
   const shouldInsertTools = relatedTools.length > 0;
+  const shouldInsertBlogLinks = relatedPosts.length > 0;
   const [introContent, remainingContent] = shouldInsertTools
     ? splitAfterParagraphs(cleanedContent, 2)
     : [cleanedContent, ""];
@@ -113,6 +115,12 @@ export default function BlogContent({ content, blog, relatedTools = [] }) {
         />
       ) : null}
       {remainingContent ? <div dangerouslySetInnerHTML={{ __html: remainingContent }} /> : null}
+      {shouldInsertBlogLinks ? (
+        <BlogInlineBlogLinks
+          blog={blog}
+          posts={relatedPosts}
+        />
+      ) : null}
     </div>
   );
 }

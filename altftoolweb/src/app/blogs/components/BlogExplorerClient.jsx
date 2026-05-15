@@ -10,6 +10,7 @@ import {
   Clock3,
   Hash,
   Loader2,
+  RefreshCw,
   Search,
   SlidersHorizontal,
   Sparkles,
@@ -28,6 +29,7 @@ import {
 import {
   BLOG_CHUNK_SIZE,
   BLOG_REMOTE_LIMIT,
+  getBlogFreshness,
   mergeBlogPosts,
   normalizeBlog,
 } from "../data";
@@ -37,7 +39,15 @@ const SORT_OPTIONS = [
   { value: "latest", label: "Latest" },
   { value: "trending", label: "Trending" },
   { value: "quick", label: "Quick reads" },
+  { value: "refresh", label: "Needs refresh" },
   { value: "category", label: "Category" },
+];
+const FRESHNESS_OPTIONS = [
+  { value: "all", label: "All freshness" },
+  { value: "fresh", label: "Fresh" },
+  { value: "reviewed", label: "Reviewed" },
+  { value: "watch", label: "Refresh soon" },
+  { value: "stale", label: "Needs refresh" },
 ];
 const DEFAULT_SEARCH_SHORTCUTS = ["pdf", "image", "downloader", "calculator", "productivity", "games"];
 
@@ -86,6 +96,31 @@ function getPopularityScore(post = {}) {
   return views + likes * 12 + comments * 18 + recencyBoost;
 }
 
+function getFreshnessWeight(post = {}) {
+  const freshness = getBlogFreshness(post);
+  const weightMap = {
+    stale: 4,
+    watch: 3,
+    unknown: 2,
+    reviewed: 1,
+    fresh: 0,
+  };
+
+  return (weightMap[freshness.status] || 0) * 1000 + Number(freshness.daysSinceUpdate || 0);
+}
+
+function getFreshnessBadgeClass(status) {
+  const map = {
+    fresh: "border-emerald-400/35 bg-emerald-500/90 text-white",
+    reviewed: "border-blue-400/35 bg-blue-500/90 text-white",
+    watch: "border-amber-400/45 bg-amber-500/90 text-white",
+    stale: "border-red-400/45 bg-red-500/90 text-white",
+    unknown: "border-white/20 bg-black/45 text-white",
+  };
+
+  return map[status] || map.unknown;
+}
+
 function sortPosts(posts, sortMode) {
   if (sortMode === "trending") {
     return [...posts].sort((a, b) => {
@@ -97,6 +132,14 @@ function sortPosts(posts, sortMode) {
 
   if (sortMode === "quick") {
     return [...posts].sort((a, b) => a.readTimeMinutes - b.readTimeMinutes);
+  }
+
+  if (sortMode === "refresh") {
+    return [...posts].sort((a, b) => {
+      const freshnessDiff = getFreshnessWeight(b) - getFreshnessWeight(a);
+      if (freshnessDiff !== 0) return freshnessDiff;
+      return Date.parse(b.date || "") - Date.parse(a.date || "");
+    });
   }
 
   if (sortMode === "category") {
@@ -114,7 +157,7 @@ function updateSearchParams(router, searchParams, updates) {
   const params = new URLSearchParams(searchParams.toString());
 
   Object.entries(updates).forEach(([key, value]) => {
-    if (!value || value === "All" || value === "latest") {
+    if (!value || value === "All" || value === "all" || value === "latest") {
       params.delete(key);
     } else {
       params.set(key, value);
@@ -228,6 +271,27 @@ function SortSelect({ value, onChange }) {
   );
 }
 
+function FreshnessSelect({ value, onChange }) {
+  return (
+    <label className="relative inline-flex h-10 min-w-[166px] items-center rounded-[var(--anslation-ds-radius)] border border-(--border) bg-(--card) px-3 text-xs font-semibold text-(--muted-foreground)">
+      <RefreshCw className="mr-2 h-3.5 w-3.5 text-(--primary)" />
+      <select
+        value={value}
+        onChange={(event) => onChange(event.target.value)}
+        className="h-full flex-1 appearance-none bg-transparent pr-5 text-(--foreground) outline-none"
+        aria-label="Filter blogs by freshness"
+      >
+        {FRESHNESS_OPTIONS.map((option) => (
+          <option key={option.value} value={option.value}>
+            {option.label}
+          </option>
+        ))}
+      </select>
+      <ChevronDown className="pointer-events-none absolute right-2.5 h-3.5 w-3.5 text-(--muted-foreground)" />
+    </label>
+  );
+}
+
 function SearchControl({ value, onChange, onClear, pending }) {
   return (
     <div className="relative min-w-0 flex-1">
@@ -235,7 +299,7 @@ function SearchControl({ value, onChange, onClear, pending }) {
       <input
         value={value}
         onChange={(event) => onChange(event.target.value)}
-        placeholder="Search title, tags, category, tools..."
+        placeholder="Search title, author, tags, category, tools..."
         className="h-10 w-full rounded-[var(--anslation-ds-radius)] border border-(--border) bg-(--card) px-9 text-sm text-(--foreground) outline-none transition placeholder:text-(--muted-foreground) focus:border-(--primary) focus:ring-2 focus:ring-(--primary)/15"
       />
       {pending ? (
@@ -290,7 +354,7 @@ function ReaderJourneyPanel({ journeys }) {
   if (!visibleJourneys.length) return null;
 
   return (
-    <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
+    <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-4">
       {visibleJourneys.map((journey) => {
         const Icon = journey.icon;
         return (
@@ -329,6 +393,7 @@ function ReaderJourneyPanel({ journeys }) {
 function BlogPostCard({ post, index }) {
   const priority = index < 3;
   const tags = Array.isArray(post.tags) ? post.tags.filter(Boolean).slice(0, 3) : [];
+  const freshness = getBlogFreshness(post);
 
   return (
     <article className="group h-full overflow-hidden rounded-[var(--anslation-ds-radius-lg)] border border-(--border) bg-(--card) shadow-[var(--anslation-ds-shadow-sm)] transition duration-200 hover:-translate-y-0.5 hover:border-(--primary)/45 hover:shadow-[var(--anslation-ds-shadow-md)]">
@@ -345,6 +410,12 @@ function BlogPostCard({ post, index }) {
           <div className="absolute left-3 top-3 rounded-[6px] border border-white/20 bg-black/45 px-2 py-1 text-[10px] font-bold uppercase tracking-wide text-white backdrop-blur">
             {post.category}
           </div>
+          <div className={cx(
+            "absolute right-3 top-3 rounded-[6px] border px-2 py-1 text-[10px] font-bold uppercase tracking-wide backdrop-blur",
+            getFreshnessBadgeClass(freshness.status),
+          )}>
+            {freshness.label}
+          </div>
         </div>
 
         <div className="flex flex-1 flex-col gap-3 p-4">
@@ -354,6 +425,10 @@ function BlogPostCard({ post, index }) {
             <span className="inline-flex items-center gap-1">
               <Clock3 className="h-3 w-3" />
               {post.readTime}
+            </span>
+            <span className="hidden items-center gap-1 sm:inline-flex">
+              <RefreshCw className="h-3 w-3" />
+              {freshness.detail}
             </span>
           </div>
 
@@ -460,12 +535,14 @@ export default function BlogExplorerClient({
   const urlCategory = searchParams.get("category") || "All";
   const urlTag = searchParams.get("tag") || "All";
   const urlSort = searchParams.get("sort") || "latest";
+  const urlFreshness = searchParams.get("freshness") || "all";
 
   const [posts, setPosts] = useState(() => initialPosts.map((post, index) => normalizeBlog(post, index)));
   const [query, setQuery] = useState(urlQuery);
   const [activeCategory, setActiveCategory] = useState(urlCategory);
   const [activeTag, setActiveTag] = useState(urlTag);
   const [sortMode, setSortMode] = useState(urlSort);
+  const [freshnessFilter, setFreshnessFilter] = useState(urlFreshness);
   const [visibleCount, setVisibleCount] = useState(INITIAL_VISIBLE_COUNT);
   const [syncState, setSyncState] = useState("idle");
   const [remoteOffset, setRemoteOffset] = useState(initialRemoteOffset);
@@ -542,6 +619,13 @@ export default function BlogExplorerClient({
 
   const counts = useMemo(() => getCategoryCounts(posts), [posts]);
   const tagCounts = useMemo(() => getTagCounts(posts), [posts]);
+  const freshnessCounts = useMemo(() => {
+    return posts.reduce((acc, post) => {
+      const status = getBlogFreshness(post).status;
+      acc[status] = (acc[status] || 0) + 1;
+      return acc;
+    }, {});
+  }, [posts]);
   const topTags = useMemo(() => {
     const tags = Object.keys(tagCounts)
       .sort((a, b) => {
@@ -588,12 +672,13 @@ export default function BlogExplorerClient({
 
     return {
       quickCount,
+      staleCount: freshnessCounts.stale || 0,
       topCategoryName: topCategory?.[0],
       topCategoryCount: topCategory?.[1] || 0,
       topTagName: topTag?.[0],
       topTagCount: topTag?.[1] || 0,
     };
-  }, [counts, posts, tagCounts]);
+  }, [counts, freshnessCounts.stale, posts, tagCounts]);
 
   const filteredPosts = useMemo(() => {
     const categoryFiltered = activeCategory === "All"
@@ -610,8 +695,12 @@ export default function BlogExplorerClient({
       ? tagFiltered.filter((post) => post.searchText.includes(deferredQuery))
       : tagFiltered;
 
-    return sortPosts(queryFiltered, sortMode);
-  }, [activeCategory, activeTag, deferredQuery, posts, sortMode]);
+    const freshnessFiltered = freshnessFilter === "all"
+      ? queryFiltered
+      : queryFiltered.filter((post) => getBlogFreshness(post).status === freshnessFilter);
+
+    return sortPosts(freshnessFiltered, sortMode);
+  }, [activeCategory, activeTag, deferredQuery, freshnessFilter, posts, sortMode]);
 
   const visiblePosts = filteredPosts.slice(0, visibleCount);
   const hasMore = visibleCount < filteredPosts.length;
@@ -624,13 +713,14 @@ export default function BlogExplorerClient({
       updateSearchParams(router, searchParams, {
         q: query.trim(),
         category: activeCategory,
+        freshness: freshnessFilter,
         tag: activeTag,
         sort: sortMode,
       });
     }, 180);
 
     return () => window.clearTimeout(timeout);
-  }, [activeCategory, activeTag, query, router, searchParams, sortMode]);
+  }, [activeCategory, activeTag, freshnessFilter, query, router, searchParams, sortMode]);
 
   const loadNextChunk = useCallback(() => {
     setVisibleCount((current) => Math.min(current + BLOG_CHUNK_SIZE, filteredPosts.length));
@@ -661,6 +751,7 @@ export default function BlogExplorerClient({
       updateSearchParams(router, searchParams, {
         q: query.trim(),
         category,
+        freshness: freshnessFilter,
         tag: activeTag,
         sort: sortMode,
       });
@@ -674,6 +765,7 @@ export default function BlogExplorerClient({
       updateSearchParams(router, searchParams, {
         q: query.trim(),
         category: activeCategory,
+        freshness: freshnessFilter,
         tag,
         sort: sortMode,
       });
@@ -687,8 +779,23 @@ export default function BlogExplorerClient({
       updateSearchParams(router, searchParams, {
         q: query.trim(),
         category: activeCategory,
+        freshness: freshnessFilter,
         tag: activeTag,
         sort: value,
+      });
+    });
+  };
+
+  const handleFreshnessChange = (value) => {
+    startTransition(() => {
+      setFreshnessFilter(value);
+      setVisibleCount(INITIAL_VISIBLE_COUNT);
+      updateSearchParams(router, searchParams, {
+        q: query.trim(),
+        category: activeCategory,
+        freshness: value,
+        tag: activeTag,
+        sort: sortMode,
       });
     });
   };
@@ -706,6 +813,7 @@ export default function BlogExplorerClient({
       updateSearchParams(router, searchParams, {
         q: value,
         category: activeCategory,
+        freshness: freshnessFilter,
         tag: "All",
         sort: sortMode,
       });
@@ -718,6 +826,7 @@ export default function BlogExplorerClient({
     updateSearchParams(router, searchParams, {
       q: "",
       category: activeCategory,
+      freshness: freshnessFilter,
       tag: activeTag,
       sort: sortMode,
     });
@@ -727,11 +836,13 @@ export default function BlogExplorerClient({
     setQuery("");
     setActiveCategory("All");
     setActiveTag("All");
+    setFreshnessFilter("all");
     setSortMode("latest");
     setVisibleCount(INITIAL_VISIBLE_COUNT);
     updateSearchParams(router, searchParams, {
       q: "",
       category: "All",
+      freshness: "all",
       tag: "All",
       sort: "latest",
     });
@@ -756,6 +867,7 @@ export default function BlogExplorerClient({
             pending={isPending}
           />
           <SortSelect value={sortMode} onChange={handleSortChange} />
+          <FreshnessSelect value={freshnessFilter} onChange={handleFreshnessChange} />
         </div>
         <QuickSearchPills
           shortcuts={quickSearches}
@@ -809,6 +921,17 @@ export default function BlogExplorerClient({
             active: activeTag === readerJourneyData.topTagName,
             onClick: () => readerJourneyData.topTagName && handleTagChange(readerJourneyData.topTagName),
           },
+          {
+            key: "refresh",
+            label: "Freshness queue",
+            title: readerJourneyData.staleCount ? "Needs refresh" : "Fresh guides",
+            meta: readerJourneyData.staleCount
+              ? `${readerJourneyData.staleCount} posts to review`
+              : "No stale posts in loaded catalog",
+            icon: RefreshCw,
+            active: freshnessFilter === (readerJourneyData.staleCount ? "stale" : "fresh"),
+            onClick: () => handleFreshnessChange(readerJourneyData.staleCount ? "stale" : "fresh"),
+          },
         ]}
       />
 
@@ -840,6 +963,12 @@ export default function BlogExplorerClient({
               {activeTag}
             </span>
           ) : null}
+          {freshnessFilter !== "all" ? (
+            <span className="inline-flex h-7 items-center gap-1.5 rounded-[var(--anslation-ds-radius)] border border-(--border) bg-(--background) px-2.5">
+              <RefreshCw className="h-3.5 w-3.5 text-(--primary)" />
+              {FRESHNESS_OPTIONS.find((option) => option.value === freshnessFilter)?.label || "Freshness"}
+            </span>
+          ) : null}
           <span className="inline-flex h-7 items-center gap-1.5 rounded-[var(--anslation-ds-radius)] border border-(--border) bg-(--background) px-2.5">
             {syncState === "syncing" ? (
               <Loader2 className="h-3.5 w-3.5 animate-spin text-(--primary)" />
@@ -852,7 +981,7 @@ export default function BlogExplorerClient({
             <Sparkles className="h-3.5 w-3.5 text-(--primary)" />
             Fresh picks
           </span>
-          {(query || activeCategory !== "All" || activeTag !== "All" || sortMode !== "latest") && (
+          {(query || activeCategory !== "All" || activeTag !== "All" || freshnessFilter !== "all" || sortMode !== "latest") && (
             <button
               type="button"
               onClick={resetFilters}

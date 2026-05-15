@@ -7,12 +7,13 @@ import {
   CalendarClock,
   Copy,
   PenLine,
+  RefreshCw,
   ShieldCheck,
   Sparkles,
   UserRound,
 } from "lucide-react";
 import { useState } from "react";
-import { blogTaxonomySlug, stripHtml } from "../../data";
+import { blogTaxonomySlug, getBlogFreshness, stripHtml } from "../../data";
 
 function formatDate(value) {
   if (!value) return "Recently updated";
@@ -39,6 +40,7 @@ export default function BlogReaderCompanion({ blog, relatedPosts = [] }) {
   const authorName = blog.author || "AltFTool Editorial";
   const authorRole = blog.authorRole || "AltFTool Editorial";
   const reviewedBy = blog.reviewedBy || "AltFTool Editorial Team";
+  const freshness = getBlogFreshness(blog);
 
   const copyLink = async () => {
     await navigator.clipboard?.writeText(window.location.href);
@@ -72,11 +74,16 @@ export default function BlogReaderCompanion({ blog, relatedPosts = [] }) {
           </div>
         </div>
 
-        <div className="mt-4 grid gap-2 sm:grid-cols-3">
+        <div className="mt-4 grid gap-2 sm:grid-cols-2 xl:grid-cols-4">
           <div className="rounded-[6px] border border-(--border) bg-(--background) p-3">
             <CalendarClock className="mb-2 h-4 w-4 text-(--primary)" />
             <p className="text-[10px] font-bold uppercase tracking-wide text-(--muted-foreground)">Updated</p>
             <p className="mt-1 text-xs font-semibold text-(--foreground)">{updatedLabel}</p>
+          </div>
+          <div className="rounded-[6px] border border-(--border) bg-(--background) p-3">
+            <RefreshCw className="mb-2 h-4 w-4 text-(--primary)" />
+            <p className="text-[10px] font-bold uppercase tracking-wide text-(--muted-foreground)">Freshness</p>
+            <p className="mt-1 text-xs font-semibold text-(--foreground)">{freshness.label}</p>
           </div>
           <div className="rounded-[6px] border border-(--border) bg-(--background) p-3">
             <BadgeCheck className="mb-2 h-4 w-4 text-(--primary)" />

@@ -141,21 +141,92 @@ export function taxonomyLabelFromSlug(slug = "") {
 }
 
 function coerceDate(value, index = 0) {
-  let date = null;
+  let date = toBlogDate(value);
 
-  if (value?.toDate) {
-    date = value.toDate();
-  } else if (typeof value?.seconds === "number") {
-    date = new Date(value.seconds * 1000);
-  } else if (value) {
-    date = new Date(value);
-  }
-
-  if (!date || Number.isNaN(date.getTime())) {
+  if (!date) {
     date = new Date(Date.UTC(2026, 0, 1 + index));
   }
 
   return date.toISOString().slice(0, 10);
+}
+
+function toBlogDate(value) {
+  if (!value) return null;
+  if (value?.toDate) {
+    const date = value.toDate();
+    return Number.isNaN(date.getTime()) ? null : date;
+  }
+  if (typeof value?.seconds === "number") {
+    const date = new Date(value.seconds * 1000);
+    return Number.isNaN(date.getTime()) ? null : date;
+  }
+
+  const date = new Date(value);
+  return Number.isNaN(date.getTime()) ? null : date;
+}
+
+function formatFreshnessAge(days) {
+  if (days === null) return "Review date unavailable";
+  if (days <= 0) return "Updated today";
+  if (days === 1) return "Updated yesterday";
+  if (days < 31) return `Updated ${days} days ago`;
+  const months = Math.max(1, Math.round(days / 30));
+  return `Updated ${months} month${months === 1 ? "" : "s"} ago`;
+}
+
+export function getBlogFreshness(blog = {}) {
+  const reviewedDate = toBlogDate(blog.reviewedAt || blog.updatedAt || blog.date || blog.createdAt);
+  const daysSinceUpdate = reviewedDate
+    ? Math.max(0, Math.floor((Date.now() - reviewedDate.getTime()) / (1000 * 60 * 60 * 24)))
+    : null;
+
+  if (daysSinceUpdate === null) {
+    return {
+      status: "unknown",
+      label: "Review date missing",
+      detail: "Add a reviewed or updated date",
+      daysSinceUpdate,
+      reviewedAt: null,
+    };
+  }
+
+  if (daysSinceUpdate <= 30) {
+    return {
+      status: "fresh",
+      label: "Fresh",
+      detail: formatFreshnessAge(daysSinceUpdate),
+      daysSinceUpdate,
+      reviewedAt: reviewedDate.toISOString(),
+    };
+  }
+
+  if (daysSinceUpdate <= 90) {
+    return {
+      status: "reviewed",
+      label: "Reviewed",
+      detail: formatFreshnessAge(daysSinceUpdate),
+      daysSinceUpdate,
+      reviewedAt: reviewedDate.toISOString(),
+    };
+  }
+
+  if (daysSinceUpdate <= 180) {
+    return {
+      status: "watch",
+      label: "Refresh soon",
+      detail: formatFreshnessAge(daysSinceUpdate),
+      daysSinceUpdate,
+      reviewedAt: reviewedDate.toISOString(),
+    };
+  }
+
+  return {
+    status: "stale",
+    label: "Needs refresh",
+    detail: formatFreshnessAge(daysSinceUpdate),
+    daysSinceUpdate,
+    reviewedAt: reviewedDate.toISOString(),
+  };
 }
 
 function estimateReadTime(...parts) {
@@ -197,7 +268,17 @@ export function normalizeBlog(blog = {}, index = 0) {
     readTime: `${readTimeMinutes} min read`,
     readTimeMinutes,
     tags,
-    searchText: stripHtml([heading, excerpt, description, category, blog.tool, ...tags].filter(Boolean).join(" ")).toLowerCase(),
+    searchText: stripHtml([
+      heading,
+      excerpt,
+      description,
+      category,
+      blog.tool,
+      blog.author,
+      blog.authorRole,
+      blog.reviewedBy,
+      ...tags,
+    ].filter(Boolean).join(" ")).toLowerCase(),
   };
 }
 

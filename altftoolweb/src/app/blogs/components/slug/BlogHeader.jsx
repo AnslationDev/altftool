@@ -2,9 +2,9 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { CalendarDays, Clock3, UserRound } from "lucide-react";
+import { CalendarDays, Clock3, RefreshCw, UserRound } from "lucide-react";
 import { useEffect, useRef } from "react";
-import { blogTaxonomySlug } from "../../data";
+import { blogTaxonomySlug, getBlogFreshness } from "../../data";
 
 function formatDate(date) {
   if (!date) return "Recently updated";
@@ -19,6 +19,7 @@ function formatDate(date) {
 export default function BlogHeader({ blog }) {
   const headingRef = useRef(null);
   const authorName = blog.author || "AltFTool Editorial";
+  const freshness = getBlogFreshness(blog);
 
   useEffect(() => {
     const el = headingRef.current;
@@ -89,6 +90,10 @@ export default function BlogHeader({ blog }) {
             <span className="inline-flex h-9 items-center gap-2 rounded-[6px] border border-white/15 bg-white/10 px-3 backdrop-blur">
               <Clock3 className="h-4 w-4" />
               {blog.readTime}
+            </span>
+            <span className="inline-flex h-9 items-center gap-2 rounded-[6px] border border-white/15 bg-white/10 px-3 backdrop-blur">
+              <RefreshCw className="h-4 w-4" />
+              {freshness.label}
             </span>
           </div>
         </div>

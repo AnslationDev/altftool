@@ -264,6 +264,7 @@ export default function BlogDetailClient({ slug, initialBlog, initialRelated, in
                 content={blog.description}
                 blog={blog}
                 relatedTools={relatedTools}
+                relatedPosts={similarPosts}
               />
             </article>
             <BlogReaderCompanion
