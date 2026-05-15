@@ -30,6 +30,7 @@
     "env:readiness": "node scripts/check-env-readiness.mjs",
     "env:readiness:strict": "ALTFT_ENV_STRICT=true node scripts/check-env-readiness.mjs --strict",
     "health:manifest": "node scripts/generate-admin-health-manifest.mjs",
+    "health:manifest:check": "npm run health:manifest && git diff --exit-code -- altftoolwebadmin/src/data/healthManifest.json",
     "deploy:readiness": "node scripts/check-vercel-deploy-readiness.mjs",
     "firebase:check": "node scripts/check-firebase-contracts.mjs",
     "firebase:live-check": "node scripts/check-firebase-live-data.mjs",
@@ -46,6 +47,7 @@
     "test:admin-web-sync": "npm --prefix altftoolwebadmin run test:admin-web-sync",
     "test:admin-web-sync:emulator": "npx --yes firebase-tools@15.17.0 emulators:exec --only firestore --project altftool-bca36 \"npm run test:admin-web-sync\"",
     "test:firebase-admin-write-check": "node --test tests/firebase-admin-write-check.test.mjs",
+    "test:firebase-live-data-report": "node --test tests/firebase-live-data-report.test.mjs",
     "test:smoke": "playwright test tests/smoke.spec.mjs",
     "test:tools:functional": "playwright test tests/tool-functional.spec.mjs",
     "test:tools:priority": "playwright test tests/tool-priority.spec.mjs",
@@ -59,8 +61,8 @@
     "test:security": "playwright test tests/security.spec.mjs",
     "test:lighthouse": "ALTFT_PLAYWRIGHT_WEB_SERVER=production ALTFT_PLAYWRIGHT_ADMIN_SERVER=dev playwright test tests/lighthouse.spec.mjs",
     "test:lighthouse:dev": "playwright test tests/lighthouse.spec.mjs",
-    "validate": "npm run lint:web && npm run lint:web:budget && npm run routes:check && npm run tools:check && npm run env:readiness && npm run firebase:check && npm run media:check && npm run audit && npm run build && npm run bundle:audit && npm run test:smoke",
-    "validate:full": "npm run validate && npm run test:routes && npm run test:tools:functional && npm run test:tools:priority && npm run test:admin-api && npm run test:firebase-admin-write-check",
+    "validate": "npm run lint:web && npm run lint:web:budget && npm run routes:check && npm run tools:check && npm run health:manifest:check && npm run env:readiness && npm run firebase:check && npm run media:check && npm run audit && npm run build && npm run bundle:audit && npm run test:smoke",
+    "validate:full": "npm run validate && npm run test:routes && npm run test:tools:functional && npm run test:tools:priority && npm run test:admin-api && npm run test:firebase-admin-write-check && npm run test:firebase-live-data-report",
     "validate:release": "npm run validate:full && npm run firebase:live-check && npm run test:firebase-public-pages && npm run test:security && npm run test:visual && npm run test:lighthouse"
   },
   "devDependencies": {
