@@ -285,6 +285,47 @@ function QuickSearchPills({ shortcuts, activeQuery, onPick }) {
   );
 }
 
+function ReaderJourneyPanel({ journeys }) {
+  const visibleJourneys = journeys.filter((journey) => journey?.title);
+  if (!visibleJourneys.length) return null;
+
+  return (
+    <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
+      {visibleJourneys.map((journey) => {
+        const Icon = journey.icon;
+        return (
+          <button
+            key={journey.key}
+            type="button"
+            onClick={journey.onClick}
+            className={cx(
+              "group flex min-h-[112px] items-start gap-3 rounded-[var(--anslation-ds-radius-lg)] border p-4 text-left shadow-[var(--anslation-ds-shadow-sm)] transition hover:-translate-y-0.5 hover:border-(--primary) hover:shadow-[var(--anslation-ds-shadow-md)]",
+              journey.active
+                ? "border-(--primary) bg-(--primary)/10"
+                : "border-(--border) bg-(--card)",
+            )}
+          >
+            <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-[var(--anslation-ds-radius)] bg-(--muted) text-(--primary)">
+              <Icon className="h-4 w-4" />
+            </span>
+            <span className="min-w-0">
+              <span className="block text-[10px] font-bold uppercase tracking-wide text-(--muted-foreground)">
+                {journey.label}
+              </span>
+              <span className="mt-1 line-clamp-2 block text-sm font-semibold leading-snug text-(--foreground) group-hover:text-(--primary)">
+                {journey.title}
+              </span>
+              <span className="mt-1 block text-xs font-medium text-(--muted-foreground)">
+                {journey.meta}
+              </span>
+            </span>
+          </button>
+        );
+      })}
+    </div>
+  );
+}
+
 function BlogPostCard({ post, index }) {
   const priority = index < 3;
   const tags = Array.isArray(post.tags) ? post.tags.filter(Boolean).slice(0, 3) : [];
@@ -537,6 +578,23 @@ export default function BlogExplorerClient({
     }, []).slice(0, 8);
   }, [tagCounts]);
 
+  const readerJourneyData = useMemo(() => {
+    const topCategory = Object.entries(counts)
+      .filter(([category]) => category && category !== "All")
+      .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))[0];
+    const topTag = Object.entries(tagCounts)
+      .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))[0];
+    const quickCount = posts.filter((post) => Number(post.readTimeMinutes || 0) <= 3).length;
+
+    return {
+      quickCount,
+      topCategoryName: topCategory?.[0],
+      topCategoryCount: topCategory?.[1] || 0,
+      topTagName: topTag?.[0],
+      topTagCount: topTag?.[1] || 0,
+    };
+  }, [counts, posts, tagCounts]);
+
   const filteredPosts = useMemo(() => {
     const categoryFiltered = activeCategory === "All"
       ? posts
@@ -721,6 +779,38 @@ export default function BlogExplorerClient({
           />
         </div>
       </div>
+
+      <ReaderJourneyPanel
+        journeys={[
+          {
+            key: "top-category",
+            label: "Popular path",
+            title: readerJourneyData.topCategoryName,
+            meta: `${readerJourneyData.topCategoryCount} guides in this lane`,
+            icon: TrendingUp,
+            active: activeCategory === readerJourneyData.topCategoryName,
+            onClick: () => readerJourneyData.topCategoryName && handleCategoryChange(readerJourneyData.topCategoryName),
+          },
+          {
+            key: "quick",
+            label: "Fast reading",
+            title: "Under 3 minute guides",
+            meta: `${readerJourneyData.quickCount} quick reads available`,
+            icon: Clock3,
+            active: sortMode === "quick",
+            onClick: () => handleSortChange("quick"),
+          },
+          {
+            key: "top-tag",
+            label: "Topic cluster",
+            title: readerJourneyData.topTagName,
+            meta: `${readerJourneyData.topTagCount} tagged articles`,
+            icon: Hash,
+            active: activeTag === readerJourneyData.topTagName,
+            onClick: () => readerJourneyData.topTagName && handleTagChange(readerJourneyData.topTagName),
+          },
+        ]}
+      />
 
       <div className="flex flex-col gap-3 rounded-[var(--anslation-ds-radius-lg)] border border-(--border) bg-(--card) p-4 sm:flex-row sm:items-center sm:justify-between">
         <div>

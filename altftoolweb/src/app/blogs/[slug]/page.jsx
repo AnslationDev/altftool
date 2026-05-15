@@ -13,6 +13,7 @@ import {
   fetchFirebaseBlogsPage,
 } from "../data/firebaseBlogs";
 import JsonLd from "@/platform/seo/JsonLd";
+import { getRelatedToolsForBlog } from "../utils/relatedTools";
 import {
   createBlogPostingJsonLd,
   createBreadcrumbJsonLd,
@@ -201,6 +202,7 @@ export default async function BlogDetailPage({ params }) {
     return null;
   })) || getBlogBySlug(slug);
   const initialRelated = await getInitialRelatedBlogs(initialBlog, slug);
+  const initialRelatedTools = getRelatedToolsForBlog(initialBlog, 6);
 
   return (
     <>
@@ -219,11 +221,17 @@ export default async function BlogDetailPage({ params }) {
           }),
           createItemListJsonLd({
             path: `/blogs/${slug}`,
-            name: "Related AltFTool blog articles",
-            items: initialRelated.slice(0, 6).map((post) => ({
-              name: post.heading || post.title,
-              path: `/blogs/${post.slug}`,
-            })),
+            name: "Related AltFTool resources",
+            items: [
+              ...initialRelated.slice(0, 4).map((post) => ({
+                name: post.heading || post.title,
+                path: `/blogs/${post.slug}`,
+              })),
+              ...initialRelatedTools.slice(0, 4).map((tool) => ({
+                name: tool.name,
+                path: tool.href,
+              })),
+            ],
           }),
         ]}
       />
@@ -231,6 +239,7 @@ export default async function BlogDetailPage({ params }) {
         slug={slug}
         initialBlog={initialBlog}
         initialRelated={initialRelated}
+        initialRelatedTools={initialRelatedTools}
       />
     </>
   );

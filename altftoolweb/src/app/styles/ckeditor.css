@@ -281,6 +281,156 @@
   margin-top: 0.75rem;
 }
 
+.ckeditor-content .BLOG_CHECKLIST {
+  display: grid;
+  gap: 0.7rem;
+  padding-left: 0;
+  list-style: none;
+}
+
+.ckeditor-content .BLOG_CHECKLIST li {
+  position: relative;
+  padding: 0.85rem 0.95rem 0.85rem 2.6rem;
+  border: 1px solid var(--border);
+  border-radius: var(--anslation-ds-radius);
+  background: var(--background);
+}
+
+.ckeditor-content .BLOG_CHECKLIST li::before {
+  content: "";
+  position: absolute;
+  top: 1.05rem;
+  left: 1rem;
+  width: 0.75rem;
+  height: 0.75rem;
+  border-radius: 999px;
+  background: var(--primary);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--primary) 12%, transparent);
+}
+
+.ckeditor-content .BLOG_STEPS {
+  display: grid;
+  gap: 0.85rem;
+  padding-left: 0;
+  list-style: none;
+  counter-reset: blog-step;
+}
+
+.ckeditor-content .BLOG_STEPS li {
+  position: relative;
+  min-height: 3.4rem;
+  padding: 0.85rem 0.95rem 0.85rem 3.25rem;
+  border: 1px solid var(--border);
+  border-radius: var(--anslation-ds-radius);
+  background: var(--background);
+  counter-increment: blog-step;
+}
+
+.ckeditor-content .BLOG_STEPS li::before {
+  content: counter(blog-step);
+  position: absolute;
+  top: 0.9rem;
+  left: 0.95rem;
+  display: inline-flex;
+  width: 1.55rem;
+  height: 1.55rem;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  background: var(--primary);
+  color: var(--primary-foreground);
+  font-size: 0.72rem;
+  font-weight: 800;
+}
+
+.ckeditor-content .BLOG_PROS_CONS {
+  display: grid;
+  gap: 0.9rem;
+  margin: 1.5rem 0;
+}
+
+.ckeditor-content .BLOG_PROS_CONS > div {
+  border: 1px solid var(--border);
+  border-radius: var(--anslation-ds-radius);
+  background: var(--background);
+  padding: 1rem;
+}
+
+.ckeditor-content .BLOG_PROS_CONS h3 {
+  margin-top: 0;
+  font-size: 1rem;
+}
+
+.ckeditor-content .BLOG_PROS_CONS ul {
+  margin-bottom: 0;
+}
+
+.ckeditor-content .BLOG_COMPARE {
+  border-radius: var(--anslation-ds-radius);
+  box-shadow: var(--anslation-ds-shadow-sm);
+}
+
+.ckeditor-content .BLOG_CALLOUT,
+.ckeditor-content .BLOG_TOOL_CTA {
+  border: 1px solid color-mix(in srgb, var(--primary) 26%, var(--border));
+  border-radius: var(--anslation-ds-radius);
+  background: color-mix(in srgb, var(--primary) 8%, var(--card));
+  margin: 1.5rem 0;
+  padding: 1rem 1.1rem;
+}
+
+.ckeditor-content .BLOG_CALLOUT strong,
+.ckeditor-content .BLOG_TOOL_CTA strong {
+  display: block;
+  color: var(--foreground);
+  font-size: 0.95rem;
+  margin-bottom: 0.35rem;
+}
+
+.ckeditor-content .BLOG_CALLOUT p,
+.ckeditor-content .BLOG_TOOL_CTA p {
+  margin: 0;
+}
+
+.ckeditor-content .BLOG_TOOL_CTA {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.ckeditor-content .BLOG_TOOL_CTA a {
+  display: inline-flex;
+  min-height: 2.45rem;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  background: var(--primary);
+  color: var(--primary-foreground) !important;
+  padding: 0.65rem 0.9rem;
+  font-size: 0.85rem;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+@media (min-width: 760px) {
+  .ckeditor-content .BLOG_PROS_CONS {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .ckeditor-content .BLOG_TOOL_CTA {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .ckeditor-content .BLOG_TOOL_CTA a {
+    width: 100%;
+  }
+}
+
 
 /* Wrapper */
 .CTA_CK_BANNER {

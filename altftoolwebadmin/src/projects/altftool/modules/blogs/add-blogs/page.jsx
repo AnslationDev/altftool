@@ -26,6 +26,7 @@ import BlogInternalLinkAssistant from "../components/BlogInternalLinkAssistant";
 import BlogSeoChecklist, { parseBlogTags } from "../components/BlogSeoChecklist";
 import BlogLivePreview from "../components/BlogLivePreview";
 import BlogWritingAssistant from "../components/BlogWritingAssistant";
+import BlogContentBlocks from "../components/BlogContentBlocks";
 
 const BlogEditor = dynamic(() => import("../components/BlogEditor"), { ssr: false });
 
@@ -607,6 +608,10 @@ export default function AddBlog() {
               </Section>
 
               <Section title="Button Picker"><CTAButtonPicker onInsert={handleInsertContentBlock} /> <FAQPicker onInsert={handleInsertContentBlock} /></Section>
+
+              <Section title="Content Blocks">
+                <BlogContentBlocks formData={formData} onInsert={handleInsertContentBlock} />
+              </Section>
 
               <Section title="Content">
                 {errors.description && (

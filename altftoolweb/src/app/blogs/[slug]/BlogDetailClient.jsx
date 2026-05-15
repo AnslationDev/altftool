@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import {
@@ -31,7 +31,9 @@ import BlogTableOfContents from "../components/slug/BlogTableOfContents";
 import BlogReadingProgress from "../components/slug/BlogReadingProgress";
 import BlogArticleEnhancements from "../components/slug/BlogArticleEnhancements";
 import BlogReaderCompanion from "../components/slug/BlogReaderCompanion";
+import BlogRelatedTools from "../components/slug/BlogRelatedTools";
 import BlogCard from "../components/BlogCard";
+import { getRelatedToolsForBlog } from "../utils/relatedTools";
 import "../../styles/ckeditor.css";
 
 const PROJECT_ID = "altftool";
@@ -94,7 +96,7 @@ async function fetchSimilarPosts(currentBlog, excludeSlug) {
   );
 }
 
-export default function BlogDetailClient({ slug, initialBlog, initialRelated }) {
+export default function BlogDetailClient({ slug, initialBlog, initialRelated, initialRelatedTools }) {
   const router = useRouter();
 
   const [blog, setBlog] = useState(initialBlog);
@@ -105,6 +107,10 @@ export default function BlogDetailClient({ slug, initialBlog, initialRelated }) 
   const [showCommentBox, setShowCommentBox] = useState(false);
   const [notFound, setNotFound] = useState(false);
   const [refreshing, setRefreshing] = useState(Boolean(!initialBlog));
+  const relatedTools = useMemo(() => {
+    if (blog) return getRelatedToolsForBlog(blog, 6);
+    return initialRelatedTools || [];
+  }, [blog, initialRelatedTools]);
 
   const loadComments = useCallback(async (blogId) => {
     if (!blogId || typeof blogId !== "string") return;
@@ -258,6 +264,10 @@ export default function BlogDetailClient({ slug, initialBlog, initialRelated }) 
             <BlogReaderCompanion
               blog={blog}
               relatedPosts={similarPosts}
+            />
+            <BlogRelatedTools
+              blog={blog}
+              tools={relatedTools}
             />
             <BlogArticleEnhancements
               blog={blog}
