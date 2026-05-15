@@ -31,6 +31,7 @@ import BlogTableOfContents from "../components/slug/BlogTableOfContents";
 import BlogReadingProgress from "../components/slug/BlogReadingProgress";
 import BlogArticleEnhancements from "../components/slug/BlogArticleEnhancements";
 import BlogReaderCompanion from "../components/slug/BlogReaderCompanion";
+import BlogReaderTools from "../components/slug/BlogReaderTools";
 import BlogFeedback from "../components/slug/BlogFeedback";
 import BlogRelatedTools from "../components/slug/BlogRelatedTools";
 import BlogCard from "../components/BlogCard";
@@ -230,6 +231,7 @@ export default function BlogDetailClient({
   return (
     <main className="bg-(--background) pb-12 pt-4 text-(--foreground) sm:pt-6">
       <BlogReadingProgress />
+      <BlogReaderTools />
       <div className="mx-auto w-full max-w-[1500px] px-3 sm:px-5 lg:px-8">
         <div className="mb-4 flex items-center justify-between gap-3">
           <Link

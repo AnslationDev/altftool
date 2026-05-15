@@ -6,6 +6,7 @@ import BlogCompletionCta from "./BlogCompletionCta";
 import BlogFaqSection from "./BlogFaqSection";
 import BlogInlineBlogLinks from "./BlogInlineBlogLinks";
 import BlogInlineToolCards from "./BlogInlineToolCards";
+import BlogSources from "./BlogSources";
 import { enhanceArticleInternalLinks } from "../../utils/internalLinks";
 
 function splitAfterParagraphs(html = "", paragraphCount = 2) {
@@ -133,6 +134,7 @@ export default function BlogContent({
       ) : null}
       {remainingContent ? <div dangerouslySetInnerHTML={{ __html: remainingContent }} /> : null}
       {shouldInsertFaqs ? <BlogFaqSection items={faqItems} /> : null}
+      <BlogSources blog={blog} />
       <BlogCompletionCta
         blog={blog}
         relatedTools={relatedTools}

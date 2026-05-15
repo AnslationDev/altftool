@@ -123,6 +123,62 @@ function slugify(value = "") {
     .replace(/^-+|-+$/g, "");
 }
 
+function hostnameFromUrl(url = "") {
+  try {
+    return new URL(url).hostname.replace(/^www\./, "");
+  } catch {
+    return "";
+  }
+}
+
+function normalizeSources(value = []) {
+  if (!value) return [];
+
+  if (typeof value === "string") {
+    return value
+      .split(/\n+/)
+      .map((line) => line.trim())
+      .filter(Boolean)
+      .map((line) => {
+        const parts = line.split("|").map((part) => part.trim()).filter(Boolean);
+        const urlMatch = line.match(/https?:\/\/[^\s|]+/i);
+        const url = urlMatch?.[0] || "";
+        return {
+          title: parts[0] && parts[0] !== url ? parts[0] : hostnameFromUrl(url) || line,
+          url,
+          publisher: parts[2] || (parts[1] && parts[1] !== url ? parts[1] : hostnameFromUrl(url)),
+        };
+      });
+  }
+
+  if (!Array.isArray(value)) return [];
+
+  return value
+    .map((source) => {
+      if (typeof source === "string") {
+        const urlMatch = source.match(/https?:\/\/\S+/i);
+        const url = urlMatch?.[0] || "";
+        return {
+          title: source.replace(url, "").trim() || hostnameFromUrl(url) || source,
+          url,
+          publisher: hostnameFromUrl(url),
+        };
+      }
+
+      return {
+        title: source?.title || source?.name || source?.label || source?.url || "",
+        url: source?.url || source?.href || "",
+        publisher: source?.publisher || source?.site || source?.source || "",
+      };
+    })
+    .map((source) => ({
+      title: String(source.title || "").trim(),
+      url: String(source.url || "").trim(),
+      publisher: String(source.publisher || "").trim(),
+    }))
+    .filter((source) => source.title || source.url);
+}
+
 export function blogTaxonomySlug(value = "") {
   return String(value)
     .toLowerCase()
@@ -246,6 +302,7 @@ export function normalizeBlog(blog = {}, index = 0) {
     ? blog.tags
     : [category, blog.tool, blog.topic].filter(Boolean);
   const date = coerceDate(blog.date || blog.publishedAt || blog.createdAt || blog.updatedAt, index);
+  const sources = normalizeSources(blog.sources || blog.citations || blog.references);
 
   return {
     ...blog,
@@ -265,6 +322,9 @@ export function normalizeBlog(blog = {}, index = 0) {
     authorRole: blog.authorRole || "AltFTool Editorial",
     reviewedBy: blog.reviewedBy || "AltFTool Editorial Team",
     editorialNote: blog.editorialNote || "",
+    reviewedAt: blog.reviewedAt || blog.updatedAt || "",
+    sources,
+    sourceNotes: blog.sourceNotes || "",
     readTime: `${readTimeMinutes} min read`,
     readTimeMinutes,
     tags,
@@ -277,6 +337,8 @@ export function normalizeBlog(blog = {}, index = 0) {
       blog.author,
       blog.authorRole,
       blog.reviewedBy,
+      blog.sourceNotes,
+      ...sources.flatMap((source) => [source.title, source.publisher]),
       ...tags,
     ].filter(Boolean).join(" ")).toLowerCase(),
   };

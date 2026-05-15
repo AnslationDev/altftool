@@ -267,6 +267,11 @@ export function createBlogPostingJsonLd(blog) {
         .split(/[,\n]/)
         .map((tag) => tag.trim())
         .filter(Boolean);
+  const citations = Array.isArray(blog.sources)
+    ? blog.sources
+        .filter((source) => source?.title || source?.url)
+        .map((source) => source.url || source.title)
+    : [];
   const readTimeMinutes = Math.max(1, Math.ceil(wordCount / 180));
 
   return {
@@ -277,9 +282,10 @@ export function createBlogPostingJsonLd(blog) {
     description,
     image: blog.image ? absoluteUrl(blog.image) : absoluteUrl(siteConfig.defaultImagePath),
     datePublished: blog.date,
-    dateModified: blog.updatedAt || blog.date,
+    dateModified: blog.reviewedAt || blog.updatedAt || blog.date,
     articleSection: blog.category || "AltFTool guides",
     keywords: tags.length ? tags.join(", ") : undefined,
+    citation: citations.length ? citations : undefined,
     wordCount: wordCount || undefined,
     timeRequired: `PT${readTimeMinutes}M`,
     author: {

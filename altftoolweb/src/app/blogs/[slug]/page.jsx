@@ -84,7 +84,7 @@ export async function generateMetadata({ params }) {
       description,
       type: "article",
       publishedTime: blog.date,
-      modifiedTime: blog.updatedAt || blog.date,
+      modifiedTime: blog.reviewedAt || blog.updatedAt || blog.date,
       authors: [blog.author || "AltFTool Editorial"],
       tags,
     },

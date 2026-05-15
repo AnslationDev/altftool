@@ -4,6 +4,7 @@ import Link from "next/link";
 import {
   ArrowRight,
   BadgeCheck,
+  BookOpenCheck,
   CalendarClock,
   Copy,
   PenLine,
@@ -36,11 +37,12 @@ function getSummary(blog = {}) {
 export default function BlogReaderCompanion({ blog, relatedPosts = [] }) {
   const [copied, setCopied] = useState(false);
   const nextPosts = relatedPosts.slice(0, 2);
-  const updatedLabel = formatDate(blog.updatedAt || blog.date || blog.createdAt);
+  const updatedLabel = formatDate(blog.reviewedAt || blog.updatedAt || blog.date || blog.createdAt);
   const authorName = blog.author || "AltFTool Editorial";
   const authorRole = blog.authorRole || "AltFTool Editorial";
   const reviewedBy = blog.reviewedBy || "AltFTool Editorial Team";
   const freshness = getBlogFreshness(blog);
+  const sourceCount = Array.isArray(blog.sources) ? blog.sources.length : 0;
 
   const copyLink = async () => {
     await navigator.clipboard?.writeText(window.location.href);
@@ -100,6 +102,12 @@ export default function BlogReaderCompanion({ blog, relatedPosts = [] }) {
             <p className="mt-1 text-xs font-semibold text-(--foreground)">{copied ? "Link copied" : "Copy link"}</p>
           </button>
         </div>
+        {sourceCount ? (
+          <div className="mt-3 flex items-center gap-2 rounded-[6px] bg-(--muted) px-3 py-2 text-xs font-medium text-(--muted-foreground)">
+            <BookOpenCheck className="h-3.5 w-3.5 text-(--primary)" />
+            {sourceCount} cited source{sourceCount === 1 ? "" : "s"} checked for this article.
+          </div>
+        ) : null}
         <Link
           href="/policypages/about"
           className="mt-3 flex items-center gap-2 rounded-[6px] bg-(--muted) px-3 py-2 text-xs font-medium text-(--muted-foreground) transition hover:text-(--primary)"

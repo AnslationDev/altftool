@@ -78,6 +78,39 @@
   margin-top: 1.65rem;
 }
 
+.ckeditor-content .blog-copy-heading {
+  position: relative;
+}
+
+.ckeditor-content .blog-heading-copy {
+  display: inline-flex;
+  width: 1.55rem;
+  height: 1.55rem;
+  margin-left: 0.45rem;
+  vertical-align: 0.12em;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--card);
+  color: var(--muted-foreground);
+  font-size: 0.85rem;
+  font-weight: 800;
+  line-height: 1;
+  opacity: 0;
+  transition: opacity 0.18s ease, border-color 0.18s ease, color 0.18s ease;
+}
+
+.ckeditor-content .blog-copy-heading:hover .blog-heading-copy,
+.ckeditor-content .blog-heading-copy:focus-visible {
+  opacity: 1;
+}
+
+.ckeditor-content .blog-heading-copy:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
 .ckeditor-content ul,
 .ckeditor-content ol {
   color: var(--muted-foreground);
@@ -397,6 +430,11 @@
 .ckeditor-content .BLOG_CALLOUT p,
 .ckeditor-content .BLOG_TOOL_CTA p {
   margin: 0;
+}
+
+.ckeditor-content .BLOG_CALLOUT_REFRESH {
+  border-color: color-mix(in srgb, var(--primary) 34%, var(--border));
+  background: color-mix(in srgb, var(--primary) 12%, var(--card));
 }
 
 .ckeditor-content .BLOG_TOOL_CTA {

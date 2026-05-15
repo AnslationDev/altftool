@@ -27,6 +27,9 @@ import BlogSeoChecklist, { parseBlogTags } from "../../components/BlogSeoCheckli
 import BlogLivePreview from "../../components/BlogLivePreview";
 import BlogWritingAssistant from "../../components/BlogWritingAssistant";
 import BlogContentBlocks from "../../components/BlogContentBlocks";
+import BlogContentTemplates from "../../components/BlogContentTemplates";
+import BlogRefreshActions from "../../components/BlogRefreshActions";
+import BlogSourceEditor, { formatSourcesText, parseSourcesText } from "../../components/BlogSourceEditor";
 
 const BlogEditor = dynamic(() => import("../../components/BlogEditor"), { ssr: false });
 
@@ -156,6 +159,13 @@ function OfflineBanner() {
 
 const generateSlug = (t) => t.toLowerCase().trim().replace(/[^\w\s-]/g, "").replace(/\s+/g, "-").replace(/--+/g, "-");
 const stripHtml    = (h) => (h || "").replace(/<[^>]+>/g, "");
+const normalizeDateValue = (value) => {
+  if (!value) return "";
+  if (typeof value === "string") return value;
+  if (typeof value?.toDate === "function") return value.toDate().toISOString();
+  if (typeof value?.seconds === "number") return new Date(value.seconds * 1000).toISOString();
+  return "";
+};
 
 /* ════════════════════════════════════
    Main Page
@@ -169,6 +179,7 @@ export default function EditBlog() {
     heading: "", category: "", author: "", date: "",
     description: "", seoTitle: "", seoDescription: "", image: "", status: "draft",
     tags: "", authorRole: "", reviewedBy: "", editorialNote: "",
+    reviewedAt: "", sourcesText: "", sourceNotes: "",
   });
   const [imageAlt, setImageAlt]           = useState("");
   const [imageFile, setImageFile]         = useState(null);
@@ -202,6 +213,9 @@ export default function EditBlog() {
           authorRole: data.authorRole || "",
           reviewedBy: data.reviewedBy || "",
           editorialNote: data.editorialNote || "",
+          reviewedAt: normalizeDateValue(data.reviewedAt),
+          sourcesText: formatSourcesText(data.sources || data.citations || ""),
+          sourceNotes: data.sourceNotes || "",
         });
         setImageAlt(data.imageAlt || "");
         if (data.image) { setImagePreview(data.image); setImageName("Current image"); }
@@ -257,6 +271,22 @@ export default function EditBlog() {
     setFormData((prev) => ({ ...prev, ...fields }));
     setErrors((prev) => {
       const next = { ...prev };
+      Object.keys(fields).forEach((key) => {
+        next[key] = undefined;
+      });
+      return next;
+    });
+    setBannerError(null);
+  };
+
+  const handleApplyTemplate = ({ html = "", fields = {} } = {}) => {
+    setFormData((prev) => ({
+      ...prev,
+      ...fields,
+      description: `${prev.description || ""}${prev.description?.trim() ? "\n\n" : ""}${html}`,
+    }));
+    setErrors((prev) => {
+      const next = { ...prev, description: undefined };
       Object.keys(fields).forEach((key) => {
         next[key] = undefined;
       });
@@ -338,6 +368,9 @@ export default function EditBlog() {
           authorRole: formData.authorRole || "",
           reviewedBy: formData.reviewedBy || "",
           editorialNote: formData.editorialNote || "",
+          reviewedAt: formData.reviewedAt || "",
+          sources: parseSourcesText(formData.sourcesText),
+          sourceNotes: formData.sourceNotes.trim(),
           description: formData.description, excerpt,
           date: formData.date, seoTitle: formData.seoTitle.trim(),
           seoDescription: formData.seoDescription || excerpt,
@@ -465,7 +498,22 @@ export default function EditBlog() {
               </Field>
             </Section>
 
+            <Section title="Sources & Review">
+              <BlogSourceEditor
+                sourcesText={formData.sourcesText || ""}
+                sourceNotes={formData.sourceNotes || ""}
+                onChange={(fields) => handleApplyWritingFields(fields)}
+              />
+            </Section>
+
             <Section title="Button Picker"><CTAButtonPicker onInsert={handleInsertContentBlock} /> <FAQPicker onInsert={handleInsertContentBlock} /></Section>
+
+            <Section title="Content Templates">
+              <BlogContentTemplates
+                formData={formData}
+                onApplyTemplate={handleApplyTemplate}
+              />
+            </Section>
 
             <Section title="Content Blocks">
               <BlogContentBlocks formData={formData} onInsert={handleInsertContentBlock} />
@@ -563,6 +611,12 @@ export default function EditBlog() {
             />
 
             <BlogWritingAssistant
+              formData={formData}
+              onApplyFields={handleApplyWritingFields}
+              onInsertBlock={handleInsertContentBlock}
+            />
+
+            <BlogRefreshActions
               formData={formData}
               onApplyFields={handleApplyWritingFields}
               onInsertBlock={handleInsertContentBlock}

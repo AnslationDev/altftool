@@ -1,6 +1,7 @@
 "use client";
 
 import { AlertCircle, CheckCircle2, Link2, SearchCheck, Sparkles } from "lucide-react";
+import { parseSourcesText } from "./BlogSourceEditor";
 
 export function parseBlogTags(value) {
   if (Array.isArray(value)) {
@@ -78,6 +79,8 @@ export function getBlogContentQuality({ formData = {}, imageAlt = "", hasImage =
     String(formData.reviewedBy || "").trim() ||
     String(formData.editorialNote || "").trim()
   );
+  const sourceCount = parseSourcesText(formData.sourcesText || formData.sources || "").length;
+  const hasReviewDate = Boolean(formData.reviewedAt || formData.updatedAt);
   const schemaFieldCount = [
     formData.heading,
     formData.author,
@@ -159,6 +162,16 @@ export function getBlogContentQuality({ formData = {}, imageAlt = "", hasImage =
       done: hasTrustMetadata,
     },
     {
+      label: "Cited sources",
+      detail: `${sourceCount} source${sourceCount === 1 ? "" : "s"}`,
+      done: sourceCount >= 1,
+    },
+    {
+      label: "Review date",
+      detail: hasReviewDate ? "Freshness date found" : "Mark reviewed today",
+      done: hasReviewDate,
+    },
+    {
       label: "Schema metadata",
       detail: `${schemaFieldCount}/5 article fields`,
       done: hasStructuredSchemaBase,
@@ -175,6 +188,8 @@ export function getBlogContentQuality({ formData = {}, imageAlt = "", hasImage =
     !hasConclusion ? "Finish with a short conclusion or final thoughts section." : null,
     !hasAuthoredFaq ? "Add a short FAQ block so the public page can output authored FAQ schema." : null,
     !hasTrustMetadata ? "Add author role, reviewed by, or an editorial note to strengthen trust signals." : null,
+    sourceCount < 1 ? "Add at least one source so the public article can show a reference block and citation schema." : null,
+    !hasReviewDate ? "Use Refresh Actions to mark the article reviewed after updates." : null,
     !hasStructuredSchemaBase ? "Complete heading, author, date, category, SEO description, and featured image for rich Article schema." : null,
   ].filter(Boolean);
 
@@ -188,6 +203,7 @@ export function getBlogContentQuality({ formData = {}, imageAlt = "", hasImage =
       internalLinkCount,
       longParagraphCount,
       tags: tags.length,
+      sourceCount,
     },
   };
 }

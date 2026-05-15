@@ -33,6 +33,7 @@ const Header = () => {
   const [themeMenuOpen, setThemeMenuOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [searchError, setSearchError] = useState("");
+  const [themeReady, setThemeReady] = useState(false);
   const themeMenuRef = useRef(null);
   const router = useRouter();
   const pathname = usePathname();
@@ -40,7 +41,8 @@ const Header = () => {
   const currentThemeOption =
     THEME_OPTIONS.find((option) => option.value === themeMode) ??
     THEME_OPTIONS[0];
-  const CurrentThemeIcon = currentThemeOption.icon;
+  const displayedThemeOption = themeReady ? currentThemeOption : THEME_OPTIONS[0];
+  const CurrentThemeIcon = displayedThemeOption.icon;
 
   const isActive = (route) => isPublicRouteActive(pathname, route);
 
@@ -53,6 +55,10 @@ const Header = () => {
     onMouseEnter: () => prefetchRoute(href),
     onFocus: () => prefetchRoute(href),
   });
+
+  useEffect(() => {
+    setThemeReady(true);
+  }, []);
 
   useEffect(() => {
     const syncSearchQuery = setTimeout(() => {
@@ -241,7 +247,7 @@ const Header = () => {
                 aria-label="Toggle Theme"
                 aria-haspopup="menu"
                 aria-expanded={themeMenuOpen}
-                title={`Theme: ${currentThemeOption.label}`}
+                title={`Theme: ${displayedThemeOption.label}`}
               >
                 <span
                   className="grid h-4 w-4 place-items-center"
@@ -249,7 +255,7 @@ const Header = () => {
                 >
                   <CurrentThemeIcon
                     className={`h-4 w-4 ${
-                      resolvedTheme === "dark" ? "text-(--primary)" : ""
+                      themeReady && resolvedTheme === "dark" ? "text-(--primary)" : ""
                     }`}
                   />
                 </span>

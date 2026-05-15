@@ -27,6 +27,9 @@ import BlogSeoChecklist, { parseBlogTags } from "../components/BlogSeoChecklist"
 import BlogLivePreview from "../components/BlogLivePreview";
 import BlogWritingAssistant from "../components/BlogWritingAssistant";
 import BlogContentBlocks from "../components/BlogContentBlocks";
+import BlogContentTemplates from "../components/BlogContentTemplates";
+import BlogRefreshActions from "../components/BlogRefreshActions";
+import BlogSourceEditor, { parseSourcesText } from "../components/BlogSourceEditor";
 
 const BlogEditor = dynamic(() => import("../components/BlogEditor"), { ssr: false });
 
@@ -200,6 +203,7 @@ export default function AddBlog() {
     heading: "", category: "", author: "", date: "",
     description: "", seoTitle: "", seoDescription: "",
     tags: "", authorRole: "", reviewedBy: "", editorialNote: "",
+    reviewedAt: "", sourcesText: "", sourceNotes: "",
   });
   const [seoEdited, setSeoEdited]             = useState({ title: false, description: false });
   const [categories, setCategories]           = useState([]);
@@ -294,6 +298,24 @@ export default function AddBlog() {
     setFormData((prev) => ({ ...prev, ...fields }));
     setErrors((prev) => {
       const next = { ...prev };
+      Object.keys(fields).forEach((key) => {
+        next[key] = undefined;
+      });
+      return next;
+    });
+    if ("seoTitle" in fields) setSeoEdited((prev) => ({ ...prev, title: true }));
+    if ("seoDescription" in fields) setSeoEdited((prev) => ({ ...prev, description: true }));
+    setBannerError(null);
+  };
+
+  const handleApplyTemplate = ({ html = "", fields = {} } = {}) => {
+    setFormData((prev) => ({
+      ...prev,
+      ...fields,
+      description: `${prev.description || ""}${prev.description?.trim() ? "\n\n" : ""}${html}`,
+    }));
+    setErrors((prev) => {
+      const next = { ...prev, description: undefined };
       Object.keys(fields).forEach((key) => {
         next[key] = undefined;
       });
@@ -403,6 +425,9 @@ export default function AddBlog() {
           authorRole: formData.authorRole.trim(),
           reviewedBy: formData.reviewedBy.trim(),
           editorialNote: formData.editorialNote.trim(),
+          reviewedAt: formData.reviewedAt || "",
+          sources: parseSourcesText(formData.sourcesText),
+          sourceNotes: formData.sourceNotes.trim(),
           description: formData.description, excerpt,
           date: formData.date,
           seoTitle: formData.seoTitle.trim(),
@@ -490,6 +515,9 @@ export default function AddBlog() {
         authorRole: formData.authorRole || "",
         reviewedBy: formData.reviewedBy || "",
         editorialNote: formData.editorialNote || "",
+        reviewedAt: formData.reviewedAt || "",
+        sources: parseSourcesText(formData.sourcesText),
+        sourceNotes: formData.sourceNotes.trim(),
         description: formData.description || "",
         excerpt: stripHtml(formData.description || "").slice(0, 160),
         date: formData.date || "",
@@ -518,7 +546,7 @@ export default function AddBlog() {
   /* ── Discard draft ── */
   const handleDiscardDraft = () => {
     setShowDraftBanner(false);
-    setFormData({ heading: "", category: "", author: "", date: "", description: "", seoTitle: "", seoDescription: "", tags: "", authorRole: "", reviewedBy: "", editorialNote: "" });
+    setFormData({ heading: "", category: "", author: "", date: "", description: "", seoTitle: "", seoDescription: "", tags: "", authorRole: "", reviewedBy: "", editorialNote: "", reviewedAt: "", sourcesText: "", sourceNotes: "" });
     setImagePreview(""); setImageName(""); setImageFile(null); setImageAlt(""); setDraftSavedAt(null);
     try { localStorage.removeItem(DRAFT_KEY); } catch (_) {}
     emitAlert({ type: "info", message: "Draft discarded. Starting fresh." });
@@ -634,7 +662,22 @@ export default function AddBlog() {
                 </Field>
               </Section>
 
+              <Section title="Sources & Review">
+                <BlogSourceEditor
+                  sourcesText={formData.sourcesText || ""}
+                  sourceNotes={formData.sourceNotes || ""}
+                  onChange={(fields) => handleApplyWritingFields(fields)}
+                />
+              </Section>
+
               <Section title="Button Picker"><CTAButtonPicker onInsert={handleInsertContentBlock} /> <FAQPicker onInsert={handleInsertContentBlock} /></Section>
+
+              <Section title="Content Templates">
+                <BlogContentTemplates
+                  formData={formData}
+                  onApplyTemplate={handleApplyTemplate}
+                />
+              </Section>
 
               <Section title="Content Blocks">
                 <BlogContentBlocks formData={formData} onInsert={handleInsertContentBlock} />
@@ -736,6 +779,12 @@ export default function AddBlog() {
               />
 
               <BlogWritingAssistant
+                formData={formData}
+                onApplyFields={handleApplyWritingFields}
+                onInsertBlock={handleInsertContentBlock}
+              />
+
+              <BlogRefreshActions
                 formData={formData}
                 onApplyFields={handleApplyWritingFields}
                 onInsertBlock={handleInsertContentBlock}
