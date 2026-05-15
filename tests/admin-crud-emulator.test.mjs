@@ -21,14 +21,22 @@ const firestoreHost = process.env.FIRESTORE_EMULATOR_HOST?.split(":") || ["127.0
 let testEnv;
 
 test.before(async () => {
-  testEnv = await initializeTestEnvironment({
-    projectId,
-    firestore: {
-      host: firestoreHost[0],
-      port: Number(firestoreHost[1] || 8080),
-      rules: readFileSync(path.join(root, "firestore.rules"), "utf8"),
-    },
-  });
+  try {
+    testEnv = await initializeTestEnvironment({
+      projectId,
+      firestore: {
+        host: firestoreHost[0],
+        port: Number(firestoreHost[1] || 8080),
+        rules: readFileSync(path.join(root, "firestore.rules"), "utf8"),
+      },
+    });
+  } catch (error) {
+    const message = error?.cause?.code === "ECONNREFUSED"
+      ? `Firestore emulator is not running at ${firestoreHost.join(":")}. Run npm run test:admin-crud:emulator from the repo root.`
+      : error?.message || "Unable to initialize Firestore test environment.";
+
+    throw new Error(message, { cause: error });
+  }
 });
 
 test.beforeEach(async () => {
@@ -42,7 +50,7 @@ test.beforeEach(async () => {
 });
 
 test.after(async () => {
-  await testEnv.cleanup();
+  await testEnv?.cleanup();
 });
 
 async function assertCrudSucceeds(db, documentPath, createPayload, updatePayload) {

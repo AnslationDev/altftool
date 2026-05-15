@@ -5,6 +5,7 @@ import { deflateSync } from "node:zlib";
 import { createPageQualityGate } from "./helpers/pageQuality.mjs";
 
 const webUrl = process.env.ALTFT_WEB_URL || "http://localhost:3002";
+const webOrigin = new URL(webUrl).origin;
 const toolRouteTimeoutMs = Number(process.env.ALTFT_TOOL_FUNCTIONAL_ROUTE_TIMEOUT_MS || 60_000);
 const webRequire = createRequire(new URL("../altftoolweb/package.json", import.meta.url));
 const { PDFDocument, StandardFonts, rgb } = webRequire("pdf-lib");
@@ -142,6 +143,9 @@ test.describe("microtool functional flows", () => {
   test("text conversion output survives a shared state link", async ({ page }) => {
     const quality = createPageQualityGate(page);
 
+    await page.context().grantPermissions(["clipboard-read", "clipboard-write"], {
+      origin: webOrigin,
+    });
     await openTool(page, "text-to-base64", "Text to Base64");
 
     await expect(page.getByTestId("tool-action-bar")).toBeVisible();
@@ -149,6 +153,14 @@ test.describe("microtool functional flows", () => {
     await expect(page.getByTestId("copy-tool-link")).toBeVisible();
     await expect(page.getByTestId("share-tool-link")).toBeVisible();
     await expect(page.getByTestId("reset-tool-workspace")).toBeVisible();
+
+    await page.getByTestId("copy-tool-link").click();
+    await expect(page.getByTestId("copy-tool-link")).toContainText("Copied");
+    await expect.poll(() => page.evaluate(() => navigator.clipboard.readText())).toContain("/tools/all/text-to-base64");
+
+    await page.getByTestId("share-tool-link").click();
+    await expect(page.getByTestId("share-tool-link")).toContainText("Shared");
+    await expect.poll(() => page.evaluate(() => navigator.clipboard.readText())).toContain("/tools/all/text-to-base64");
 
     await page.getByTestId("tool-input").fill("hello world");
     await expect(page.getByTestId("tool-output")).toContainText("aGVsbG8gd29ybGQ=");

@@ -25,19 +25,27 @@ const storageHost = process.env.FIREBASE_STORAGE_EMULATOR_HOST?.split(":") || ["
 let testEnv;
 
 test.before(async () => {
-  testEnv = await initializeTestEnvironment({
-    projectId,
-    firestore: {
-      host: firestoreHost[0],
-      port: Number(firestoreHost[1] || 8080),
-      rules: readFileSync(path.join(root, "firestore.rules"), "utf8"),
-    },
-    storage: {
-      host: storageHost[0],
-      port: Number(storageHost[1] || 9199),
-      rules: readFileSync(path.join(root, "storage.rules"), "utf8"),
-    },
-  });
+  try {
+    testEnv = await initializeTestEnvironment({
+      projectId,
+      firestore: {
+        host: firestoreHost[0],
+        port: Number(firestoreHost[1] || 8080),
+        rules: readFileSync(path.join(root, "firestore.rules"), "utf8"),
+      },
+      storage: {
+        host: storageHost[0],
+        port: Number(storageHost[1] || 9199),
+        rules: readFileSync(path.join(root, "storage.rules"), "utf8"),
+      },
+    });
+  } catch (error) {
+    const message = error?.cause?.code === "ECONNREFUSED"
+      ? `Firebase emulators are not running at firestore=${firestoreHost.join(":")} storage=${storageHost.join(":")}. Run npm run test:firebase-rules:emulator from the repo root.`
+      : error?.message || "Unable to initialize Firebase rules test environment.";
+
+    throw new Error(message, { cause: error });
+  }
 });
 
 test.beforeEach(async () => {
@@ -59,7 +67,7 @@ test.beforeEach(async () => {
 });
 
 test.after(async () => {
-  await testEnv.cleanup();
+  await testEnv?.cleanup();
 });
 
 test("public Firestore reads stay open while public writes stay blocked", async () => {
