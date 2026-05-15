@@ -36,6 +36,7 @@ export default function BlogReaderCompanion({ blog, relatedPosts = [] }) {
   const [copied, setCopied] = useState(false);
   const nextPosts = relatedPosts.slice(0, 2);
   const updatedLabel = formatDate(blog.updatedAt || blog.date || blog.createdAt);
+  const authorName = blog.author || "AltFTool Editorial";
   const authorRole = blog.authorRole || "AltFTool Editorial";
   const reviewedBy = blog.reviewedBy || "AltFTool Editorial Team";
 
@@ -56,9 +57,12 @@ export default function BlogReaderCompanion({ blog, relatedPosts = [] }) {
             <p className="text-[11px] font-bold uppercase tracking-wide text-(--muted-foreground)">
               About this guide
             </p>
-            <h2 className="mt-1 text-lg font-semibold tracking-normal text-(--foreground)">
-              {blog.author || "AltFTool Editorial"}
-            </h2>
+            <Link
+              href={`/blogs/author/${blogTaxonomySlug(authorName)}`}
+              className="mt-1 inline-flex text-lg font-semibold tracking-normal text-(--foreground) transition hover:text-(--primary)"
+            >
+              {authorName}
+            </Link>
             <p className="mt-0.5 text-xs font-semibold text-(--primary)">
               {authorRole}
             </p>

@@ -2,8 +2,25 @@
 
 import { useEffect } from "react";
 import { injectIds } from "./BlogTableOfContents";
+import BlogInlineToolCards from "./BlogInlineToolCards";
 
-export default function BlogContent({ content }) {
+function splitAfterParagraphs(html = "", paragraphCount = 2) {
+  const pattern = /<\/p>/gi;
+  let match;
+  let count = 0;
+
+  while ((match = pattern.exec(html))) {
+    count += 1;
+    if (count >= paragraphCount) {
+      const splitIndex = match.index + match[0].length;
+      return [html.slice(0, splitIndex), html.slice(splitIndex)];
+    }
+  }
+
+  return [html, ""];
+}
+
+export default function BlogContent({ content, blog, relatedTools = [] }) {
   useEffect(() => {
     const article = document.querySelector(".blog-article-content");
     if (!article) return undefined;
@@ -80,11 +97,22 @@ export default function BlogContent({ content }) {
 
   // 3. Inject unique IDs into h1–h4 so TOC anchors work
   cleanedContent = injectIds(cleanedContent);
+  const shouldInsertTools = relatedTools.length > 0;
+  const [introContent, remainingContent] = shouldInsertTools
+    ? splitAfterParagraphs(cleanedContent, 2)
+    : [cleanedContent, ""];
 
   return (
-    <div
-      className="ckeditor-content blog-article-content"
-      dangerouslySetInnerHTML={{ __html: cleanedContent }}
-    />
+    <div className="ckeditor-content blog-article-content">
+      <div dangerouslySetInnerHTML={{ __html: introContent }} />
+      {shouldInsertTools ? (
+        <BlogInlineToolCards
+          blog={blog}
+          tools={relatedTools}
+          placement="inline"
+        />
+      ) : null}
+      {remainingContent ? <div dangerouslySetInnerHTML={{ __html: remainingContent }} /> : null}
+    </div>
   );
 }

@@ -457,6 +457,56 @@ export function getRelatedBlogs(slug, limit = 6) {
   return getRelatedBlogsForPost(current, blogPosts, limit);
 }
 
+export function getBlogAuthors(posts = blogPosts) {
+  const authors = new Map();
+
+  posts.forEach((post) => {
+    const name = post.author || DEFAULT_AUTHOR;
+    const slug = blogTaxonomySlug(name || DEFAULT_AUTHOR);
+    if (!slug) return;
+
+    const existing = authors.get(slug) || {
+      slug,
+      name,
+      role: post.authorRole || "AltFTool Editorial",
+      reviewedBy: post.reviewedBy || "AltFTool Editorial Team",
+      posts: [],
+      categories: new Set(),
+      tags: new Set(),
+      lastUpdated: "",
+    };
+
+    existing.posts.push(post);
+    if (post.category) existing.categories.add(post.category);
+    if (Array.isArray(post.tags)) {
+      post.tags.filter(Boolean).forEach((tag) => existing.tags.add(tag));
+    }
+
+    const candidateDate = post.updatedAt || post.date || post.createdAt || "";
+    if ((Date.parse(candidateDate) || 0) > (Date.parse(existing.lastUpdated) || 0)) {
+      existing.lastUpdated = candidateDate;
+    }
+
+    if (!existing.role && post.authorRole) existing.role = post.authorRole;
+    authors.set(slug, existing);
+  });
+
+  return [...authors.values()]
+    .map((author) => ({
+      ...author,
+      posts: sortBlogsByDate(author.posts),
+      postCount: author.posts.length,
+      categories: [...author.categories].sort((a, b) => a.localeCompare(b)),
+      tags: [...author.tags].sort((a, b) => a.localeCompare(b)),
+      bio: `${author.name} curates practical AltFTool guides with a focus on clear steps, useful tools, and reader-safe recommendations.`,
+    }))
+    .sort((a, b) => b.postCount - a.postCount || a.name.localeCompare(b.name));
+}
+
+export function getBlogAuthorBySlug(authorSlug, posts = blogPosts) {
+  return getBlogAuthors(posts).find((author) => author.slug === authorSlug) || null;
+}
+
 function getClusterMatchScore(cluster = {}, post = {}) {
   const haystack = [
     post.heading,

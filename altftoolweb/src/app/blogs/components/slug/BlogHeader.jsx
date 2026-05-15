@@ -18,6 +18,7 @@ function formatDate(date) {
 
 export default function BlogHeader({ blog }) {
   const headingRef = useRef(null);
+  const authorName = blog.author || "AltFTool Editorial";
 
   useEffect(() => {
     const el = headingRef.current;
@@ -74,10 +75,13 @@ export default function BlogHeader({ blog }) {
           ) : null}
 
           <div className="mt-6 flex flex-wrap items-center gap-2 text-xs font-semibold text-white/78 sm:text-sm">
-            <span className="inline-flex h-9 items-center gap-2 rounded-[6px] border border-white/15 bg-white/10 px-3 backdrop-blur">
+            <Link
+              href={`/blogs/author/${blogTaxonomySlug(authorName)}`}
+              className="inline-flex h-9 items-center gap-2 rounded-[6px] border border-white/15 bg-white/10 px-3 backdrop-blur transition hover:bg-white/15"
+            >
               <UserRound className="h-4 w-4" />
-              {blog.author || "AltFTool Editorial"}
-            </span>
+              {authorName}
+            </Link>
             <span className="inline-flex h-9 items-center gap-2 rounded-[6px] border border-white/15 bg-white/10 px-3 backdrop-blur">
               <CalendarDays className="h-4 w-4" />
               {formatDate(blog.date)}

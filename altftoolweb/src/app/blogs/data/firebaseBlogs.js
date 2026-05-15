@@ -32,6 +32,8 @@ const LIST_FIELDS = [
   "feedbackCount",
   "helpfulCount",
   "notHelpfulCount",
+  "toolClickCount",
+  "lastToolClick",
   "tool",
   "topic",
   "readTimeMinutes",

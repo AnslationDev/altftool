@@ -260,7 +260,11 @@ export default function BlogDetailClient({ slug, initialBlog, initialRelated, in
 
           <div className="min-w-0">
             <article className="rounded-[var(--anslation-ds-radius)] border border-(--border) bg-(--card) p-4 shadow-[var(--anslation-ds-shadow-sm)] sm:p-6 md:p-8">
-              <BlogContent content={blog.description} />
+              <BlogContent
+                content={blog.description}
+                blog={blog}
+                relatedTools={relatedTools}
+              />
             </article>
             <BlogReaderCompanion
               blog={blog}

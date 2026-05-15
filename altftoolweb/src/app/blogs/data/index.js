@@ -9,6 +9,8 @@ export {
   filterBlogsByTagSlug,
   getAllBlogs,
   getAllBlogTags,
+  getBlogAuthorBySlug,
+  getBlogAuthors,
   getBlogBySlug,
   getBlogCategories,
   getBlogCategoryBySlug,

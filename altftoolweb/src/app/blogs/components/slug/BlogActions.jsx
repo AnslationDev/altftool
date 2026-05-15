@@ -1,9 +1,11 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { Check, Heart, MessageCircle, Share2 } from "lucide-react";
 import { doc, updateDoc, increment } from "firebase/firestore";
 import { db } from "@/lib/firebase";
+import { blogTaxonomySlug } from "../../data";
 
 const PROJECT_ID = "altftool";
 
@@ -30,6 +32,7 @@ export default function BlogActions({
   date
 }) {
   const [copied, setCopied] = useState(false);
+  const authorName = author || "AltFTool Editorial";
 
   const handleLike = async () => {
     const newLiked = !liked;
@@ -107,7 +110,12 @@ export default function BlogActions({
         </div>
 
         <div className="flex flex-wrap items-center gap-3 text-xs font-medium text-[var(--muted-foreground)]">
-          <span>{author || "AltFTool Editorial"}</span>
+          <Link
+            href={`/blogs/author/${blogTaxonomySlug(authorName)}`}
+            className="font-semibold transition-colors hover:text-[var(--primary)]"
+          >
+            {authorName}
+          </Link>
           <span className="h-1 w-1 rounded-full bg-[var(--border)]" />
           <span>{formatDate(date)}</span>
         </div>

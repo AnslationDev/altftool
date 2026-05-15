@@ -2,7 +2,17 @@
 
 import Link from "next/link";
 import { ArrowRight, Search, Sparkles, Wrench } from "lucide-react";
+import { recordBlogToolClick } from "../../context/views.service";
 import { getRelatedToolsForBlog } from "../../utils/relatedTools";
+
+function trackToolClick(blog, tool, placement = "related") {
+  recordBlogToolClick({
+    blogId: typeof blog?.id === "string" ? blog.id : "",
+    blogSlug: blog?.slug || "",
+    toolSlug: tool?.slug,
+    placement,
+  });
+}
 
 export default function BlogRelatedTools({ blog, tools }) {
   const relatedTools = tools?.length ? tools : getRelatedToolsForBlog(blog, 6);
@@ -25,6 +35,7 @@ export default function BlogRelatedTools({ blog, tools }) {
         </div>
         <Link
           href={primaryTool.searchHref}
+          onClick={() => trackToolClick(blog, primaryTool, "browse-similar")}
           className="inline-flex h-9 items-center justify-center gap-2 rounded-[var(--anslation-ds-radius)] border border-(--border) bg-(--background) px-3 text-sm font-semibold text-(--foreground) transition hover:border-(--primary) hover:text-(--primary)"
         >
           <Search className="h-4 w-4" />
@@ -37,6 +48,7 @@ export default function BlogRelatedTools({ blog, tools }) {
           <Link
             key={tool.slug}
             href={tool.href}
+            onClick={() => trackToolClick(blog, tool)}
             className="group flex min-h-[150px] flex-col rounded-[6px] border border-(--border) bg-(--background) p-3 transition hover:border-(--primary) hover:shadow-[var(--anslation-ds-shadow-sm)]"
           >
             <div className="flex items-start justify-between gap-3">

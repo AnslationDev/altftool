@@ -3,6 +3,7 @@ import {
   blogTaxonomySlug,
   getAllBlogTags,
   getAllBlogs,
+  getBlogAuthors,
   getBlogCategories,
   getBlogTopicClusters,
 } from "@/app/blogs/data";
@@ -244,6 +245,16 @@ export default async function sitemap() {
     if (tagSlug) {
       pushUnique(entries, seen, `/blogs/tag/${tagSlug}`, {
         priority: 0.54,
+        changeFrequency: "weekly",
+      });
+    }
+  }
+
+  for (const author of getBlogAuthors(sitemapBlogs)) {
+    if (author?.slug) {
+      pushUnique(entries, seen, `/blogs/author/${author.slug}`, {
+        lastModified: author.lastUpdated ? new Date(author.lastUpdated) : undefined,
+        priority: 0.56,
         changeFrequency: "weekly",
       });
     }

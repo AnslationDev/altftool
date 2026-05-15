@@ -348,6 +348,30 @@ export function createCollectionPageJsonLd({ path, name, description } = {}) {
   };
 }
 
+export function createPersonJsonLd({
+  path,
+  name,
+  description,
+  jobTitle,
+  sameAs = [],
+} = {}) {
+  if (!path || !name) return null;
+
+  return {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "@id": `${absoluteUrl(path)}#person`,
+    name,
+    description,
+    jobTitle,
+    url: absoluteUrl(path),
+    worksFor: {
+      "@id": `${getSiteUrl()}/#organization`,
+    },
+    sameAs: sameAs.length ? sameAs : undefined,
+  };
+}
+
 export function createItemListJsonLd({ path, name, items = [] } = {}) {
   const itemListElement = items
     .filter((item) => item?.name && item?.path)

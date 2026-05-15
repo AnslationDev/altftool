@@ -14,6 +14,7 @@ import {
   Heart,
   Link2,
   MessageCircle,
+  MousePointerClick,
   RefreshCw,
   SearchCheck,
   ShieldCheck,
@@ -73,7 +74,8 @@ function getEngagement(blog = {}) {
   const views = Number(blog.views || 0);
   const likes = Number(blog.likesCount || 0);
   const comments = Number(blog.commentsCount || 0);
-  return views + likes * 12 + comments * 18;
+  const toolClicks = Number(blog.toolClickCount || 0);
+  return views + likes * 12 + comments * 18 + toolClicks * 10;
 }
 
 function getMonthKey(date) {
@@ -220,7 +222,7 @@ function StatCard({ icon: Icon, label, value, caption, tone = "blue" }) {
   );
 }
 
-function RankedBlog({ blog, index, router, metric }) {
+function RankedBlog({ blog, index, router, metric, metricLabel = "score" }) {
   return (
     <button
       type="button"
@@ -240,7 +242,7 @@ function RankedBlog({ blog, index, router, metric }) {
       </div>
       <div className="shrink-0 text-right">
         <p className="text-sm font-black text-gray-800">{metric}</p>
-        <p className="text-[10px] uppercase tracking-wider text-gray-400">score</p>
+        <p className="text-[10px] uppercase tracking-wider text-gray-400">{metricLabel}</p>
       </div>
     </button>
   );
@@ -311,6 +313,7 @@ export default function AltFToolBlogAnalyticsPage() {
         qualityChecks: quality.checks,
         qualitySuggestions: quality.suggestions,
         engagement: getEngagement(blog),
+        toolClickCount: Number(blog.toolClickCount || 0),
         readTime: calcReadTime(blog.description || ""),
         daysSinceUpdate: getDaysSince(blog.updatedAt, blog.createdAt || blog.date),
         hasInternalLinks: hasInternalLinks(blog.description || ""),
@@ -346,6 +349,7 @@ export default function AltFToolBlogAnalyticsPage() {
     const totalViews = withRefreshReasons.reduce((sum, blog) => sum + Number(blog.views || 0), 0);
     const totalLikes = withRefreshReasons.reduce((sum, blog) => sum + Number(blog.likesCount || 0), 0);
     const totalComments = withRefreshReasons.reduce((sum, blog) => sum + Number(blog.commentsCount || 0), 0);
+    const totalToolClicks = withRefreshReasons.reduce((sum, blog) => sum + Number(blog.toolClickCount || 0), 0);
     const totalHelpful = withRefreshReasons.reduce((sum, blog) => sum + Number(blog.helpfulCount || 0), 0);
     const totalNotHelpful = withRefreshReasons.reduce((sum, blog) => sum + Number(blog.notHelpfulCount || 0), 0);
     const helpfulRate = totalHelpful + totalNotHelpful
@@ -416,6 +420,7 @@ export default function AltFToolBlogAnalyticsPage() {
       totalViews,
       totalLikes,
       totalComments,
+      totalToolClicks,
       totalHelpful,
       totalNotHelpful,
       helpfulRate,
@@ -437,6 +442,10 @@ export default function AltFToolBlogAnalyticsPage() {
         .slice(0, 8),
       refreshSchedule: buildRefreshSchedule(refreshQueue),
       topBlogs: [...published].sort((a, b) => b.engagement - a.engagement).slice(0, 8),
+      ctaBlogs: [...published]
+        .filter((blog) => blog.toolClickCount > 0)
+        .sort((a, b) => b.toolClickCount - a.toolClickCount || b.engagement - a.engagement)
+        .slice(0, 8),
       lowQualityBlogs: [...withRefreshReasons].sort((a, b) => a.qualityScore - b.qualityScore).slice(0, 8),
       staleDrafts: staleDrafts.slice(0, 6),
       monthly: [...monthMap.entries()].map(([month, posts]) => ({ month, posts })),
@@ -499,9 +508,10 @@ export default function AltFToolBlogAnalyticsPage() {
         </button>
       </div>
 
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-5">
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-6">
         <StatCard icon={FileText} label="Total Posts" value={analytics.total.toLocaleString()} caption={`${analytics.published} published - ${analytics.drafts} drafts`} />
         <StatCard icon={Eye} label="Total Views" value={analytics.totalViews.toLocaleString()} caption={`${analytics.totalLikes.toLocaleString()} likes - ${analytics.totalComments.toLocaleString()} comments`} tone="green" />
+        <StatCard icon={MousePointerClick} label="Tool Clicks" value={analytics.totalToolClicks.toLocaleString()} caption={`${analytics.ctaBlogs.length} blogs sending traffic`} tone="blue" />
         <StatCard icon={SearchCheck} label="Avg Quality" value={`${analytics.avgQuality}%`} caption={`${analytics.lowQuality.length} posts need attention`} tone={analytics.avgQuality >= 75 ? "green" : "amber"} />
         <StatCard icon={Clock3} label="Avg Read Time" value={`${analytics.avgReadTime} min`} caption="Based on published content length" tone="slate" />
         <StatCard icon={ThumbsUp} label="Helpful Rate" value={`${analytics.helpfulRate}%`} caption={`${analytics.totalHelpful} helpful - ${analytics.totalNotHelpful} needs work`} tone={analytics.helpfulRate >= 70 ? "green" : "amber"} />
@@ -787,6 +797,42 @@ export default function AltFToolBlogAnalyticsPage() {
           </div>
         </section>
       </div>
+
+      <section className="rounded-2xl border border-gray-100 bg-white p-6 shadow-sm">
+        <div className="mb-5 flex flex-wrap items-center justify-between gap-3">
+          <div className="flex items-center gap-2">
+            <MousePointerClick className="h-4 w-4 text-blue-600" />
+            <div>
+              <h2 className="text-sm font-black uppercase tracking-wider text-gray-700">Tool CTA performance</h2>
+              <p className="mt-1 text-xs text-gray-400">
+                Blog posts that are moving readers into related AltFTool utilities.
+              </p>
+            </div>
+          </div>
+          <span className="rounded-lg bg-blue-50 px-3 py-1.5 text-xs font-semibold text-blue-700">
+            {analytics.totalToolClicks.toLocaleString()} tracked clicks
+          </span>
+        </div>
+
+        <div className="grid grid-cols-1 gap-3 lg:grid-cols-2">
+          {analytics.ctaBlogs.length ? (
+            analytics.ctaBlogs.slice(0, 6).map((blog, index) => (
+              <RankedBlog
+                key={blog.id}
+                blog={blog}
+                index={index}
+                router={router}
+                metric={blog.toolClickCount.toLocaleString()}
+                metricLabel="clicks"
+              />
+            ))
+          ) : (
+            <p className="rounded-xl bg-gray-50 px-3 py-8 text-center text-sm text-gray-400 lg:col-span-2">
+              No tracked tool CTA clicks yet. Inline and related tool cards will appear here after readers open tools from blogs.
+            </p>
+          )}
+        </div>
+      </section>
 
       <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
         <section className="rounded-2xl border border-gray-100 bg-white p-6 shadow-sm">

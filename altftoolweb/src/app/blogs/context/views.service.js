@@ -115,3 +115,50 @@ export async function recordBlogFeedback(blogId, sentiment) {
     return null;
   }
 }
+
+function safeMetricKey(value = "") {
+  return String(value).replace(/[.[\]*/]/g, "_").slice(0, 80) || "unknown";
+}
+
+export async function recordBlogToolClick({
+  blogId,
+  blogSlug,
+  toolSlug,
+  placement = "related",
+} = {}) {
+  if (!toolSlug || !blogId || typeof blogId !== "string") return null;
+
+  try {
+    const sessionId = getSessionId();
+    const blogRef = doc(db, "projects", PROJECT_ID, "blogs", blogId);
+    const clickRef = doc(collection(blogRef, "toolClicks"));
+    const safeToolSlug = safeMetricKey(toolSlug);
+    const safePlacement = safeMetricKey(placement);
+    const batch = writeBatch(db);
+
+    batch.set(clickRef, {
+      blogId,
+      blogSlug: blogSlug || "",
+      toolSlug,
+      placement,
+      sessionId,
+      clickedAt: serverTimestamp(),
+    });
+    batch.update(blogRef, {
+      toolClickCount: increment(1),
+      [`toolClicksBySlug.${safeToolSlug}`]: increment(1),
+      [`toolClicksByPlacement.${safePlacement}`]: increment(1),
+      lastToolClick: {
+        blogSlug: blogSlug || "",
+        toolSlug,
+        placement,
+        clickedAt: serverTimestamp(),
+      },
+    });
+    await batch.commit();
+    return { tracked: true };
+  } catch (err) {
+    console.error("recordBlogToolClick error:", err);
+    return null;
+  }
+}
