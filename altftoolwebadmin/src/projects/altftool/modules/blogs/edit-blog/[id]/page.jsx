@@ -20,6 +20,7 @@ import {
   Hash,
 } from "lucide-react";
 import CTAButtonPicker from "../../components/CtaButtonPicker";
+import FAQPicker from "../../components/FAQCreator";
 import BlogInternalLinkAssistant from "../../components/BlogInternalLinkAssistant";
 import BlogSeoChecklist, { parseBlogTags } from "../../components/BlogSeoChecklist";
 
@@ -237,7 +238,7 @@ export default function EditBlog() {
     if (fileInputRef.current) fileInputRef.current.value = "";
   };
 
-  const handleInsertInternalLinks = (html) => {
+  const handleInsertContentBlock = (html) => {
     setFormData((prev) => ({
       ...prev,
       description: `${prev.description || ""}${prev.description?.trim() ? "\n\n" : ""}${html}`,
@@ -418,7 +419,7 @@ export default function EditBlog() {
               </Field>
             </Section>
 
-            <Section title="Button Picker"><CTAButtonPicker /></Section>
+            <Section title="Button Picker"><CTAButtonPicker /> <FAQPicker onInsert={handleInsertContentBlock} /></Section>
 
             <Section title="Content">
               {errors.description && (
@@ -514,7 +515,7 @@ export default function EditBlog() {
             <BlogInternalLinkAssistant
               formData={formData}
               currentBlogId={id}
-              onInsertLinks={handleInsertInternalLinks}
+              onInsertLinks={handleInsertContentBlock}
             />
 
             {/* Image card */}

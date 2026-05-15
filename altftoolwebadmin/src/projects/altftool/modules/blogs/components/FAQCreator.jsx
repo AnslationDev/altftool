@@ -235,7 +235,7 @@ function IconStyleToggle({ value, onChange }) {
 /* ─────────────────────────────────────────────
    MAIN COMPONENT — FAQPicker
 ───────────────────────────────────────────── */
-export default function FAQPicker({ trigger }) {
+export default function FAQPicker({ trigger, onInsert }) {
   const [open, setOpen] = useState(false);
   const [faqs, setFaqs] = useState([
     { q: "What is your refund policy?", a: "We offer a full refund within 30 days of purchase, no questions asked." },
@@ -249,6 +249,12 @@ export default function FAQPicker({ trigger }) {
   const [codeOpen, setCodeOpen] = useState(false);
 
   const html = generateHTML({ faqs, title, wrapClass, iconStyle });
+
+  const handleInsert = () => {
+    if (typeof onInsert !== "function") return;
+    onInsert(html);
+    setOpen(false);
+  };
 
   const updateFAQ = useCallback((i, key, value) => {
     setFaqs((prev) => {
@@ -492,7 +498,19 @@ export default function FAQPicker({ trigger }) {
                 {faqs.length} item{faqs.length !== 1 ? "s" : ""} ·{" "}
                 Styles defined in <code className="bg-gray-100 px-1 rounded">faq.css</code>
               </p>
-              <CopyButton html={html} />
+              <div className="flex items-center gap-2">
+                {typeof onInsert === "function" ? (
+                  <button
+                    type="button"
+                    onClick={handleInsert}
+                    className="inline-flex items-center gap-1.5 rounded-lg bg-blue-600 px-3 py-1.5 text-xs font-semibold text-white transition hover:bg-blue-700"
+                  >
+                    <Plus className="h-3 w-3" />
+                    Insert into content
+                  </button>
+                ) : null}
+                <CopyButton html={html} />
+              </div>
             </div>
 
           </div>

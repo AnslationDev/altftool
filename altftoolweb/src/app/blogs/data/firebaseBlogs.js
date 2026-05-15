@@ -32,7 +32,7 @@ const LIST_FIELDS = [
   "tags",
 ];
 
-const DETAIL_FIELDS = [...LIST_FIELDS, "description", "content", "body"];
+const DETAIL_FIELDS = [...LIST_FIELDS, "description", "content", "body", "faq", "faqs", "faqItems"];
 
 function firestoreValueToJs(value) {
   if (!value) return undefined;

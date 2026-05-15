@@ -25,6 +25,10 @@ function countMatches(value = "", pattern) {
   return (String(value).match(pattern) || []).length;
 }
 
+function hasFaqContent(html = "") {
+  return /FAQ_ITEM|FAQ_Q|FAQ_A|<!--\s*FAQ Start\s*-->/i.test(String(html || ""));
+}
+
 function getParagraphs(html = "") {
   const matches = [...String(html).matchAll(/<p\b[^>]*>([\s\S]*?)<\/p>/gi)]
     .map((match) => stripHtml(match[1]))
@@ -68,6 +72,7 @@ export function getBlogContentQuality({ formData = {}, imageAlt = "", hasImage =
   const firstParagraphWords = getWordCount(paragraphs[0] || plainContent.slice(0, 360));
   const longParagraphCount = paragraphs.filter((paragraph) => getWordCount(paragraph) > 120).length;
   const hasConclusion = /conclusion|final thoughts|summary|wrap up|bottom line/i.test(plainContent);
+  const hasAuthoredFaq = hasFaqContent(formData.description);
 
   const checks = [
     {
@@ -130,6 +135,11 @@ export function getBlogContentQuality({ formData = {}, imageAlt = "", hasImage =
       detail: hasConclusion ? "Conclusion found" : "Add a summary section",
       done: hasConclusion,
     },
+    {
+      label: "Authored FAQ",
+      detail: hasAuthoredFaq ? "FAQ schema source found" : "Add FAQ builder block",
+      done: hasAuthoredFaq,
+    },
   ];
 
   const suggestions = [
@@ -140,6 +150,7 @@ export function getBlogContentQuality({ formData = {}, imageAlt = "", hasImage =
     tags.length < 3 ? "Add 3-6 topic tags for search, archives, and related posts." : null,
     totalLinkCount === 0 ? "Add one helpful outbound or internal reference where it supports the article." : null,
     !hasConclusion ? "Finish with a short conclusion or final thoughts section." : null,
+    !hasAuthoredFaq ? "Add a short FAQ block so the public page can output authored FAQ schema." : null,
   ].filter(Boolean);
 
   return {

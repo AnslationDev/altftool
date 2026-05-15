@@ -6,12 +6,15 @@ import {
   AlertTriangle,
   ArrowLeft,
   BarChart3,
+  CalendarClock,
   Clock3,
   Edit3,
   Eye,
   FileText,
   Heart,
+  Link2,
   MessageCircle,
+  RefreshCw,
   SearchCheck,
   Tags,
   TrendingUp,
@@ -28,6 +31,25 @@ function toDate(value) {
 
 function stripHtml(value = "") {
   return String(value).replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim();
+}
+
+function hasInternalLinks(html = "") {
+  return /href=["'][^"']*\/blogs\//i.test(String(html || ""));
+}
+
+function hasFaqContent(blog = {}) {
+  const description = String(blog.description || blog.content || blog.body || "");
+  const structuredFaqs = [blog.faq, blog.faqs, blog.faqItems, blog.faq?.items]
+    .filter(Array.isArray)
+    .some((items) =>
+      items.some((item) => {
+        const question = item?.question || item?.q || item?.title || "";
+        const answer = item?.answer || item?.a || item?.description || "";
+        return String(question).trim().length > 4 && String(answer).trim().length > 12;
+      })
+    );
+
+  return structuredFaqs || /FAQ_ITEM|FAQ_Q|FAQ_A|<!--\s*FAQ Start\s*-->/i.test(description);
 }
 
 function calcReadTime(html = "") {
@@ -52,6 +74,26 @@ function getEngagement(blog = {}) {
 
 function getMonthKey(date) {
   return date.toLocaleDateString("en", { month: "short", year: "2-digit" });
+}
+
+function getDaysSince(value, fallback) {
+  const date = toDate(value || fallback);
+  if (!date) return null;
+  return Math.floor((Date.now() - date.getTime()) / (1000 * 60 * 60 * 24));
+}
+
+function getRefreshReasons(blog = {}) {
+  const reasons = [];
+
+  if (blog.status === "published" && blog.daysSinceUpdate !== null && blog.daysSinceUpdate >= 90) {
+    reasons.push(`${blog.daysSinceUpdate} days since update`);
+  }
+
+  if (blog.qualityScore < 70) reasons.push(`quality ${blog.qualityScore}%`);
+  if (!blog.hasInternalLinks) reasons.push("no internal blog links");
+  if (!blog.hasFaq) reasons.push("no authored FAQ");
+
+  return reasons;
 }
 
 function StatCard({ icon: Icon, label, value, caption, tone = "blue" }) {
@@ -170,22 +212,40 @@ export default function AltFToolBlogAnalyticsPage() {
         qualitySuggestions: quality.suggestions,
         engagement: getEngagement(blog),
         readTime: calcReadTime(blog.description || ""),
+        daysSinceUpdate: getDaysSince(blog.updatedAt, blog.createdAt || blog.date),
+        hasInternalLinks: hasInternalLinks(blog.description || ""),
+        hasFaq: hasFaqContent(blog),
       };
     });
 
-    const published = enriched.filter((blog) => blog.status === "published");
-    const drafts = enriched.filter((blog) => blog.status !== "published");
-    const totalViews = enriched.reduce((sum, blog) => sum + Number(blog.views || 0), 0);
-    const totalLikes = enriched.reduce((sum, blog) => sum + Number(blog.likesCount || 0), 0);
-    const totalComments = enriched.reduce((sum, blog) => sum + Number(blog.commentsCount || 0), 0);
-    const avgQuality = enriched.length
-      ? Math.round(enriched.reduce((sum, blog) => sum + blog.qualityScore, 0) / enriched.length)
+    const withRefreshReasons = enriched.map((blog) => {
+      const refreshReasons = getRefreshReasons(blog);
+      const refreshScore =
+        refreshReasons.length * 20 +
+        Math.max(0, 70 - blog.qualityScore) +
+        (blog.daysSinceUpdate ? Math.min(30, Math.floor(blog.daysSinceUpdate / 6)) : 0) +
+        (blog.engagement > 0 ? Math.min(20, Math.floor(blog.engagement / 20)) : 0);
+
+      return {
+        ...blog,
+        refreshReasons,
+        refreshScore,
+      };
+    });
+
+    const published = withRefreshReasons.filter((blog) => blog.status === "published");
+    const drafts = withRefreshReasons.filter((blog) => blog.status !== "published");
+    const totalViews = withRefreshReasons.reduce((sum, blog) => sum + Number(blog.views || 0), 0);
+    const totalLikes = withRefreshReasons.reduce((sum, blog) => sum + Number(blog.likesCount || 0), 0);
+    const totalComments = withRefreshReasons.reduce((sum, blog) => sum + Number(blog.commentsCount || 0), 0);
+    const avgQuality = withRefreshReasons.length
+      ? Math.round(withRefreshReasons.reduce((sum, blog) => sum + blog.qualityScore, 0) / withRefreshReasons.length)
       : 0;
-    const avgReadTime = enriched.length
-      ? Math.round(enriched.reduce((sum, blog) => sum + blog.readTime, 0) / enriched.length)
+    const avgReadTime = withRefreshReasons.length
+      ? Math.round(withRefreshReasons.reduce((sum, blog) => sum + blog.readTime, 0) / withRefreshReasons.length)
       : 0;
 
-    enriched.forEach((blog) => {
+    withRefreshReasons.forEach((blog) => {
       const created = toDate(blog.createdAt || blog.date);
       if (!created) return;
       const key = getMonthKey(created);
@@ -194,7 +254,7 @@ export default function AltFToolBlogAnalyticsPage() {
 
     const categoryMap = new Map();
     const tagMap = new Map();
-    enriched.forEach((blog) => {
+    withRefreshReasons.forEach((blog) => {
       const category = blog.category || "Uncategorized";
       const categoryStats = categoryMap.get(category) || { posts: 0, views: 0 };
       categoryStats.posts += 1;
@@ -218,7 +278,7 @@ export default function AltFToolBlogAnalyticsPage() {
       .sort((a, b) => (toDate(a.updatedAt) || 0) - (toDate(b.updatedAt) || 0));
 
     return {
-      total: enriched.length,
+      total: withRefreshReasons.length,
       published: published.length,
       drafts: drafts.length,
       totalViews,
@@ -226,9 +286,16 @@ export default function AltFToolBlogAnalyticsPage() {
       totalComments,
       avgQuality,
       avgReadTime,
-      lowQuality: enriched.filter((blog) => blog.qualityScore < 70),
+      lowQuality: withRefreshReasons.filter((blog) => blog.qualityScore < 70),
+      noFaq: published.filter((blog) => !blog.hasFaq),
+      noInternalLinks: published.filter((blog) => !blog.hasInternalLinks),
+      stalePublished: published.filter((blog) => blog.daysSinceUpdate !== null && blog.daysSinceUpdate >= 90),
+      refreshQueue: published
+        .filter((blog) => blog.refreshReasons.length > 0)
+        .sort((a, b) => b.refreshScore - a.refreshScore)
+        .slice(0, 8),
       topBlogs: [...published].sort((a, b) => b.engagement - a.engagement).slice(0, 8),
-      lowQualityBlogs: [...enriched].sort((a, b) => a.qualityScore - b.qualityScore).slice(0, 8),
+      lowQualityBlogs: [...withRefreshReasons].sort((a, b) => a.qualityScore - b.qualityScore).slice(0, 8),
       staleDrafts: staleDrafts.slice(0, 6),
       monthly: [...monthMap.entries()].map(([month, posts]) => ({ month, posts })),
       categories: [...categoryMap.entries()]
@@ -296,6 +363,68 @@ export default function AltFToolBlogAnalyticsPage() {
         <StatCard icon={SearchCheck} label="Avg Quality" value={`${analytics.avgQuality}%`} caption={`${analytics.lowQuality.length} posts need attention`} tone={analytics.avgQuality >= 75 ? "green" : "amber"} />
         <StatCard icon={Clock3} label="Avg Read Time" value={`${analytics.avgReadTime} min`} caption="Based on published content length" tone="slate" />
       </div>
+
+      <section className="rounded-2xl border border-gray-100 bg-white p-6 shadow-sm">
+        <div className="mb-5 flex flex-wrap items-center justify-between gap-3">
+          <div className="flex items-center gap-2">
+            <RefreshCw className="h-4 w-4 text-blue-600" />
+            <div>
+              <h2 className="text-sm font-black uppercase tracking-wider text-gray-700">Needs refresh workflow</h2>
+              <p className="mt-1 text-xs text-gray-400">
+                Prioritized published posts with stale content, missing FAQ schema source, weak quality, or no internal links.
+              </p>
+            </div>
+          </div>
+          <div className="flex flex-wrap gap-2 text-xs font-semibold text-gray-500">
+            <span className="inline-flex h-7 items-center gap-1 rounded-lg bg-amber-50 px-2.5 text-amber-700">
+              <CalendarClock className="h-3.5 w-3.5" />
+              {analytics.stalePublished.length} stale
+            </span>
+            <span className="inline-flex h-7 items-center gap-1 rounded-lg bg-blue-50 px-2.5 text-blue-700">
+              <Link2 className="h-3.5 w-3.5" />
+              {analytics.noInternalLinks.length} no links
+            </span>
+            <span className="inline-flex h-7 items-center gap-1 rounded-lg bg-purple-50 px-2.5 text-purple-700">
+              <SearchCheck className="h-3.5 w-3.5" />
+              {analytics.noFaq.length} no FAQ
+            </span>
+          </div>
+        </div>
+
+        {analytics.refreshQueue.length ? (
+          <div className="grid grid-cols-1 gap-3 lg:grid-cols-2">
+            {analytics.refreshQueue.map((blog) => (
+              <button
+                key={blog.id}
+                type="button"
+                onClick={() => router.push(`/altftool/blogs/edit-blog/${blog.id}`)}
+                className="group flex w-full items-start gap-3 rounded-xl border border-gray-100 bg-gray-50/50 p-3 text-left transition hover:border-blue-200 hover:bg-blue-50"
+              >
+                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-white text-sm font-black text-blue-600 shadow-sm">
+                  {blog.refreshScore}
+                </div>
+                <div className="min-w-0 flex-1">
+                  <p className="line-clamp-1 text-sm font-semibold text-gray-800 group-hover:text-blue-700">
+                    {blog.heading || "Untitled blog"}
+                  </p>
+                  <div className="mt-2 flex flex-wrap gap-1.5">
+                    {blog.refreshReasons.slice(0, 3).map((reason) => (
+                      <span key={reason} className="rounded-lg bg-white px-2 py-1 text-[10px] font-semibold text-gray-500">
+                        {reason}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+                <Edit3 className="mt-1 h-4 w-4 shrink-0 text-gray-400" />
+              </button>
+            ))}
+          </div>
+        ) : (
+          <p className="rounded-xl bg-gray-50 px-3 py-8 text-center text-sm text-gray-400">
+            No published posts need refresh right now.
+          </p>
+        )}
+      </section>
 
       <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
         <section className="rounded-2xl border border-gray-100 bg-white p-6 shadow-sm lg:col-span-2">
@@ -450,7 +579,7 @@ export default function AltFToolBlogAnalyticsPage() {
       <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
         <StatCard icon={Heart} label="Likes" value={analytics.totalLikes.toLocaleString()} tone="red" />
         <StatCard icon={MessageCircle} label="Comments" value={analytics.totalComments.toLocaleString()} tone="blue" />
-        <StatCard icon={AlertTriangle} label="Quality Queue" value={analytics.lowQuality.length.toLocaleString()} caption="Posts below 70 quality score" tone="amber" />
+        <StatCard icon={AlertTriangle} label="Refresh Queue" value={analytics.refreshQueue.length.toLocaleString()} caption="Published posts needing SEO or freshness work" tone="amber" />
       </div>
     </div>
   );

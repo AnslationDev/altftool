@@ -36,6 +36,61 @@ function getBlogDescription(blog) {
   );
 }
 
+function decodeHtmlEntities(value = "") {
+  return String(value)
+    .replace(/&nbsp;/gi, " ")
+    .replace(/&amp;/gi, "&")
+    .replace(/&quot;/gi, '"')
+    .replace(/&#39;/gi, "'")
+    .replace(/&lt;/gi, "<")
+    .replace(/&gt;/gi, ">");
+}
+
+function cleanFaqText(value = "") {
+  return decodeHtmlEntities(stripHtml(value).replace(/\s+/g, " ").trim());
+}
+
+function normalizeFaqItems(value) {
+  const source = Array.isArray(value) ? value : [];
+
+  return source
+    .map((item) => ({
+      question: cleanFaqText(item?.question || item?.q || item?.title || ""),
+      answer: cleanFaqText(item?.answer || item?.a || item?.description || ""),
+    }))
+    .filter((item) => item.question.length > 4 && item.answer.length > 12)
+    .slice(0, 8);
+}
+
+function extractFaqsFromHtml(html = "") {
+  const source = String(html || "");
+  if (!source) return [];
+
+  const blockMatch = source.match(/<!--\s*FAQ Start\s*-->([\s\S]*?)<!--\s*FAQ End\s*-->/i);
+  const faqSource = blockMatch?.[1] || source;
+  const itemPattern = /<div[^>]*class=["'][^"']*FAQ_ITEM[^"']*["'][^>]*>([\s\S]*?)<\/div>\s*<\/div>/gi;
+  const items = [];
+  let itemMatch = itemPattern.exec(faqSource);
+
+  while (itemMatch) {
+    const itemHtml = itemMatch[1] || "";
+    const question = itemHtml.match(/<button[^>]*class=["'][^"']*FAQ_Q[^"']*["'][^>]*>([\s\S]*?)<\/button>/i)?.[1] || "";
+    const answer = itemHtml.match(/<div[^>]*class=["'][^"']*FAQ_A[^"']*["'][^>]*>([\s\S]*?)$/i)?.[1] || "";
+    const normalized = {
+      question: cleanFaqText(question),
+      answer: cleanFaqText(answer),
+    };
+
+    if (normalized.question.length > 4 && normalized.answer.length > 12) {
+      items.push(normalized);
+    }
+
+    itemMatch = itemPattern.exec(faqSource);
+  }
+
+  return items.slice(0, 8);
+}
+
 async function getInitialRelatedBlogs(blog, slug) {
   if (!blog) return getRelatedBlogs(slug, 6);
 
@@ -52,6 +107,22 @@ async function getInitialRelatedBlogs(blog, slug) {
 
 function buildBlogFaq(blog) {
   if (!blog) return [];
+
+  const authoredFaqs = [
+    ...normalizeFaqItems(blog.faq),
+    ...normalizeFaqItems(blog.faqs),
+    ...normalizeFaqItems(blog.faqItems),
+    ...normalizeFaqItems(blog.faq?.items),
+    ...extractFaqsFromHtml(blog.description || blog.content || blog.body || ""),
+  ].reduce((acc, item) => {
+    const key = item.question.toLowerCase();
+    if (!acc.some((existing) => existing.question.toLowerCase() === key)) {
+      acc.push(item);
+    }
+    return acc;
+  }, []);
+
+  if (authoredFaqs.length) return authoredFaqs;
 
   const title = blog.heading || blog.title || "this AltFTool article";
   const category = blog.category || "AltFTool guides";

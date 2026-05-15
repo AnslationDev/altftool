@@ -279,7 +279,7 @@ export default function AddBlog() {
 
   const clearError  = (name) => setErrors((p) => ({ ...p, [name]: undefined }));
 
-  const handleInsertInternalLinks = (html) => {
+  const handleInsertContentBlock = (html) => {
     setFormData((prev) => ({
       ...prev,
       description: `${prev.description || ""}${prev.description?.trim() ? "\n\n" : ""}${html}`,
@@ -590,7 +590,7 @@ export default function AddBlog() {
                 </Field>
               </Section>
 
-              <Section title="Button Picker"><CTAButtonPicker /> <FAQPicker /></Section>
+              <Section title="Button Picker"><CTAButtonPicker /> <FAQPicker onInsert={handleInsertContentBlock} /></Section>
 
               <Section title="Content">
                 {errors.description && (
@@ -754,7 +754,7 @@ export default function AddBlog() {
 
               <BlogInternalLinkAssistant
                 formData={formData}
-                onInsertLinks={handleInsertInternalLinks}
+                onInsertLinks={handleInsertContentBlock}
               />
 
             </div>
