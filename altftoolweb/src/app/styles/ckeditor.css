@@ -193,6 +193,94 @@
   background-color: var(--card);
 }
 
+.ckeditor-content .FAQ_HEADING {
+  margin-top: 2rem;
+}
+
+.ckeditor-content .FAQ_WRAPPER {
+  display: grid;
+  gap: 0.75rem;
+  margin: 1.25rem 0 1.75rem;
+}
+
+.ckeditor-content .FAQ_ITEM {
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: var(--anslation-ds-radius);
+  background: var(--background);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.ckeditor-content .FAQ_ITEM.FAQ_OPEN {
+  border-color: color-mix(in srgb, var(--primary) 38%, var(--border));
+  box-shadow: var(--anslation-ds-shadow-sm);
+}
+
+.ckeditor-content .FAQ_Q {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem 1.1rem;
+  border: 0;
+  background: transparent;
+  color: var(--foreground);
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.98rem;
+  font-weight: 700;
+  letter-spacing: 0;
+  line-height: 1.35;
+  text-align: left;
+}
+
+.ckeditor-content .FAQ_Q:hover {
+  color: var(--primary);
+}
+
+.ckeditor-content .FAQ_ICON {
+  display: inline-flex;
+  width: 1.35rem;
+  height: 1.35rem;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  background: var(--muted);
+  color: var(--primary);
+  font-size: 0.95rem;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.ckeditor-content .FAQ_ICON::before {
+  content: "+";
+}
+
+.ckeditor-content .FAQ_ITEM.FAQ_OPEN .FAQ_ICON::before {
+  content: "-";
+}
+
+.ckeditor-content .FAQ_A {
+  border-top: 1px solid var(--border);
+  background: var(--card);
+  padding: 0.9rem 1.1rem 1.05rem;
+}
+
+.ckeditor-content .FAQ_ITEM:not(.FAQ_OPEN) .FAQ_A {
+  display: none;
+}
+
+.ckeditor-content .FAQ_A p {
+  margin: 0;
+  color: var(--muted-foreground);
+}
+
+.ckeditor-content .FAQ_A p + p {
+  margin-top: 0.75rem;
+}
+
 
 /* Wrapper */
 .CTA_CK_BANNER {

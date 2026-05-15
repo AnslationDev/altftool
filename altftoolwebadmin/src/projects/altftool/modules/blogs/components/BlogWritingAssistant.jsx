@@ -3,6 +3,7 @@
 import {
   CheckCircle2,
   FileText,
+  HelpCircle,
   PenLine,
   PlusCircle,
   SearchCheck,
@@ -54,6 +55,15 @@ function sentenceCase(value = "") {
   const text = String(value).trim();
   if (!text) return "";
   return text.charAt(0).toUpperCase() + text.slice(1);
+}
+
+function escapeHtml(value = "") {
+  return String(value)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
 }
 
 function trimToSentence(value = "", maxLength = 158) {
@@ -129,6 +139,49 @@ function buildConclusion(formData = {}) {
   return `<h2>Final thoughts</h2><p>${sentenceCase(heading)} works best when the next step is clear. Review the checklist above, compare the related resources, and keep the workflow simple enough to repeat whenever you need it.</p>`;
 }
 
+function buildFaqBlock(formData = {}) {
+  const heading = formData.heading?.trim() || "this guide";
+  const category = formData.category?.trim() || "AltFTool";
+  const summary = buildMetaDescription(formData);
+  const questions = [
+    {
+      q: `What is ${heading} about?`,
+      a: summary,
+    },
+    {
+      q: `Who should read this ${category} guide?`,
+      a: `This guide is useful for readers who want a quick, practical way to understand ${heading.toLowerCase()} and apply the advice without extra setup.`,
+    },
+    {
+      q: `How should I use this guide?`,
+      a: "Start with the key steps, check the examples, then use the related AltFTool resources to complete the workflow faster.",
+    },
+  ];
+
+  const items = questions
+    .map(
+      (item) => `
+  <div class="FAQ_ITEM">
+    <button class="FAQ_Q">
+      <span>${escapeHtml(item.q)}</span>
+      <span class="FAQ_ICON"></span>
+    </button>
+    <div class="FAQ_A">
+      <p>${escapeHtml(item.a)}</p>
+    </div>
+  </div>`,
+    )
+    .join("");
+
+  return `<!-- FAQ Start -->
+<h2 class="FAQ_HEADING">Frequently asked questions</h2>
+<div class="FAQ_WRAPPER" data-icon="plus">
+${items}
+
+</div>
+<!-- FAQ End -->`;
+}
+
 function ActionButton({ icon: Icon, label, caption, onClick }) {
   return (
     <button
@@ -163,6 +216,7 @@ export default function BlogWritingAssistant({
       tags,
       intro: buildIntro(formData),
       conclusion: buildConclusion(formData),
+      faq: buildFaqBlock(formData),
     };
   }, [formData]);
 
@@ -229,6 +283,12 @@ export default function BlogWritingAssistant({
           label="Insert final thoughts"
           caption="Adds a clear closing section for content quality scoring."
           onClick={() => apply("Final thoughts", () => onInsertBlock?.(suggestions.conclusion))}
+        />
+        <ActionButton
+          icon={HelpCircle}
+          label="Insert FAQ block"
+          caption="Adds three schema-ready Q&A items for rich results."
+          onClick={() => apply("FAQ block", () => onInsertBlock?.(suggestions.faq))}
         />
       </div>
 

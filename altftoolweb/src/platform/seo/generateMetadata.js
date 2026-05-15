@@ -39,6 +39,24 @@ export function absoluteUrl(path = "/") {
   return `${getSiteUrl()}${path.startsWith("/") ? path : `/${path}`}`;
 }
 
+function stripHtml(value = "") {
+  return String(value)
+    .replace(/<script[\s\S]*?>[\s\S]*?<\/script>/gi, " ")
+    .replace(/<style[\s\S]*?>[\s\S]*?<\/style>/gi, " ")
+    .replace(/<[^>]*>/g, " ")
+    .replace(/&nbsp;/gi, " ")
+    .replace(/&amp;/gi, "&")
+    .replace(/&quot;/gi, '"')
+    .replace(/&#39;/gi, "'")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function getWordCount(value = "") {
+  const text = stripHtml(value);
+  return text ? text.split(/\s+/).filter(Boolean).length : 0;
+}
+
 export function normalizeSlug(value = "") {
   return String(value)
     .trim()
@@ -240,16 +258,30 @@ export function createBlogPostingJsonLd(blog) {
 
   const title = blog.heading || blog.title;
   const path = `/blogs/${blog.slug}`;
+  const content = blog.description || blog.content || blog.body || "";
+  const description = blog.seoDescription || blog.excerpt || stripHtml(content).slice(0, 180);
+  const wordCount = getWordCount(content);
+  const tags = Array.isArray(blog.tags)
+    ? blog.tags.filter(Boolean)
+    : String(blog.tags || "")
+        .split(/[,\n]/)
+        .map((tag) => tag.trim())
+        .filter(Boolean);
+  const readTimeMinutes = Math.max(1, Math.ceil(wordCount / 180));
 
   return {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
     "@id": `${absoluteUrl(path)}#article`,
     headline: title,
-    description: blog.excerpt || blog.description,
+    description,
     image: blog.image ? absoluteUrl(blog.image) : absoluteUrl(siteConfig.defaultImagePath),
     datePublished: blog.date,
     dateModified: blog.updatedAt || blog.date,
+    articleSection: blog.category || "AltFTool guides",
+    keywords: tags.length ? tags.join(", ") : undefined,
+    wordCount: wordCount || undefined,
+    timeRequired: `PT${readTimeMinutes}M`,
     author: {
       "@type": "Organization",
       name: blog.author || siteConfig.name,

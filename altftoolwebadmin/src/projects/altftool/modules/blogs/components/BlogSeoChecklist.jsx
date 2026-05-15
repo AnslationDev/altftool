@@ -73,6 +73,14 @@ export function getBlogContentQuality({ formData = {}, imageAlt = "", hasImage =
   const longParagraphCount = paragraphs.filter((paragraph) => getWordCount(paragraph) > 120).length;
   const hasConclusion = /conclusion|final thoughts|summary|wrap up|bottom line/i.test(plainContent);
   const hasAuthoredFaq = hasFaqContent(formData.description);
+  const schemaFieldCount = [
+    formData.heading,
+    formData.author,
+    formData.date,
+    formData.category,
+    formData.seoDescription,
+  ].filter((value) => String(value || "").trim()).length;
+  const hasStructuredSchemaBase = schemaFieldCount >= 5 && imageCount >= 1;
 
   const checks = [
     {
@@ -140,6 +148,11 @@ export function getBlogContentQuality({ formData = {}, imageAlt = "", hasImage =
       detail: hasAuthoredFaq ? "FAQ schema source found" : "Add FAQ builder block",
       done: hasAuthoredFaq,
     },
+    {
+      label: "Schema metadata",
+      detail: `${schemaFieldCount}/5 article fields`,
+      done: hasStructuredSchemaBase,
+    },
   ];
 
   const suggestions = [
@@ -151,6 +164,7 @@ export function getBlogContentQuality({ formData = {}, imageAlt = "", hasImage =
     totalLinkCount === 0 ? "Add one helpful outbound or internal reference where it supports the article." : null,
     !hasConclusion ? "Finish with a short conclusion or final thoughts section." : null,
     !hasAuthoredFaq ? "Add a short FAQ block so the public page can output authored FAQ schema." : null,
+    !hasStructuredSchemaBase ? "Complete heading, author, date, category, SEO description, and featured image for rich Article schema." : null,
   ].filter(Boolean);
 
   return {
