@@ -1,8 +1,9 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect } from "react";
-import { ArrowRight, ChevronRight } from "lucide-react";
+import { useEffect, useMemo, useState } from "react";
+import { ArrowRight, Check, ChevronRight, Copy, RotateCcw, Share2, ShieldCheck } from "lucide-react";
+import { TOP_PRIORITY_TOOL_SLUGS } from "@altftool/core/toolHealth";
 import { toolMetaMap } from "@/platform/registry/toolMetaMap";
 import { formatCategoryLabel, getToolCategories } from "../../toolRouteUtils";
 import { useToolAds } from "@/ads/AdsProvider";
@@ -11,6 +12,7 @@ import AdBottomBanner from "@/ads/layouts/shared/AdBottomBanner";
 import Icon from "@/shared/ui/Icon";
 import { buildToolSeoContent } from "../../toolSeoContent";
 import { rememberRecentTool } from "../../toolStorage";
+import { safeCopyText } from "@/shared/utils/clipboard";
 
 function getRelatedTools(slug, tool, limit = 6) {
   if (!tool) return [];
@@ -151,7 +153,133 @@ function ToolSeoContent({ slug, tool }) {
   );
 }
 
+function ToolActionButton({ children, icon: IconComponent, onClick, title, tone = "default", ...props }) {
+  const tones = {
+    default:
+      "border-(--border) bg-(--background) text-(--foreground) hover:border-(--primary) hover:text-(--primary)",
+    primary:
+      "border-(--primary) bg-(--primary) text-white hover:border-(--primary) hover:opacity-90",
+  };
+
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      title={title}
+      className={`inline-flex h-10 min-w-0 items-center justify-center gap-2 rounded-[7px] border px-3 text-sm font-semibold transition ${tones[tone] || tones.default}`}
+      {...props}
+    >
+      <IconComponent className="h-4 w-4 shrink-0" />
+      <span className="truncate">{children}</span>
+    </button>
+  );
+}
+
+function ToolActionBar({ slug, tool, toolName, toolCategories, onResetWorkspace }) {
+  const [copied, setCopied] = useState(false);
+  const [shared, setShared] = useState(false);
+  const isPriorityTool = TOP_PRIORITY_TOOL_SLUGS.includes(slug);
+  const primaryCategory = toolCategories[0] || "Tool";
+  const canonicalPath = `/tools/all/${slug}`;
+  const actionSummary = useMemo(() => {
+    const label = tool?.description || `${toolName} on AltFTool`;
+    return String(label).replace(/\s+/g, " ").trim();
+  }, [tool?.description, toolName]);
+
+  useEffect(() => {
+    setCopied(false);
+    setShared(false);
+  }, [slug]);
+
+  async function handleCopyLink() {
+    const href = new URL(canonicalPath, window.location.origin).toString();
+    const ok = await safeCopyText(href);
+    setCopied(ok);
+    if (ok) window.setTimeout(() => setCopied(false), 1400);
+  }
+
+  async function handleShare() {
+    const href = new URL(canonicalPath, window.location.origin).toString();
+
+    if (navigator?.share) {
+      try {
+        await navigator.share({
+          title: toolName,
+          text: actionSummary,
+          url: href,
+        });
+        setShared(true);
+        window.setTimeout(() => setShared(false), 1400);
+        return;
+      } catch (error) {
+        if (error?.name === "AbortError") return;
+      }
+    }
+
+    const ok = await safeCopyText(href);
+    setShared(ok);
+    if (ok) window.setTimeout(() => setShared(false), 1400);
+  }
+
+  return (
+    <section
+      aria-label="Tool actions"
+      data-testid="tool-action-bar"
+      className="mx-auto mb-4 w-full max-w-5xl rounded-[8px] border border-(--border) bg-(--card) px-3 py-3 shadow-[var(--anslation-ds-shadow-sm)]"
+    >
+      <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+        <div className="flex min-w-0 flex-wrap items-center gap-2">
+          {isPriorityTool && (
+            <span
+              data-testid="priority-tool-badge"
+              className="inline-flex h-8 items-center gap-1.5 rounded-[7px] border border-emerald-200 bg-emerald-50 px-2.5 text-xs font-bold text-emerald-700"
+            >
+              <ShieldCheck className="h-3.5 w-3.5" />
+              Top 40 verified
+            </span>
+          )}
+          <span className="inline-flex h-8 items-center rounded-[7px] border border-(--border) bg-(--background) px-2.5 text-xs font-semibold text-(--muted-foreground)">
+            {primaryCategory}
+          </span>
+          <span className="hidden min-w-0 truncate text-xs font-medium text-(--muted-foreground) lg:block">
+            {canonicalPath}
+          </span>
+        </div>
+
+        <div className="grid grid-cols-3 gap-2 sm:flex sm:flex-wrap sm:justify-end">
+          <ToolActionButton
+            icon={copied ? Check : Copy}
+            onClick={handleCopyLink}
+            title="Copy tool link"
+            data-testid="copy-tool-link"
+          >
+            {copied ? "Copied" : "Copy link"}
+          </ToolActionButton>
+          <ToolActionButton
+            icon={shared ? Check : Share2}
+            onClick={handleShare}
+            title="Share tool"
+            data-testid="share-tool-link"
+          >
+            {shared ? "Shared" : "Share"}
+          </ToolActionButton>
+          <ToolActionButton
+            icon={RotateCcw}
+            onClick={onResetWorkspace}
+            title="Reset workspace"
+            data-testid="reset-tool-workspace"
+            tone="primary"
+          >
+            Reset
+          </ToolActionButton>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 export default function ToolDetailChrome({ slug, category = "all", children }) {
+  const [workspaceKey, setWorkspaceKey] = useState(0);
   const tool = toolMetaMap[slug];
   const toolCategories = getToolCategories(tool);
   const categoryLabel = formatCategoryLabel(category);
@@ -180,6 +308,14 @@ export default function ToolDetailChrome({ slug, category = "all", children }) {
     rememberRecentTool(slug, toolMetaMap);
   }, [slug]);
 
+  useEffect(() => {
+    setWorkspaceKey(0);
+  }, [slug]);
+
+  function handleResetWorkspace() {
+    setWorkspaceKey((key) => key + 1);
+  }
+
   return (
     <div className="w-full px-4 py-6 sm:px-6 sm:py-10 lg:px-8">
       <div className="mx-auto flex w-full gap-6 lg:gap-8">
@@ -203,7 +339,17 @@ export default function ToolDetailChrome({ slug, category = "all", children }) {
             <span className="text-(--foreground)">{toolName}</span>
           </nav>
 
-          <div className="mx-auto w-full">{children}</div>
+          <ToolActionBar
+            slug={slug}
+            tool={tool}
+            toolName={toolName}
+            toolCategories={toolCategories}
+            onResetWorkspace={handleResetWorkspace}
+          />
+
+          <div className="mx-auto w-full" key={workspaceKey}>
+            {children}
+          </div>
 
           <ToolSeoContent slug={slug} tool={tool} />
 

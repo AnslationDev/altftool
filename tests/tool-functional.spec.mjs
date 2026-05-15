@@ -144,9 +144,20 @@ test.describe("microtool functional flows", () => {
 
     await openTool(page, "text-to-base64", "Text to Base64");
 
+    await expect(page.getByTestId("tool-action-bar")).toBeVisible();
+    await expect(page.getByTestId("priority-tool-badge")).toContainText("Top 40 verified");
+    await expect(page.getByTestId("copy-tool-link")).toBeVisible();
+    await expect(page.getByTestId("share-tool-link")).toBeVisible();
+    await expect(page.getByTestId("reset-tool-workspace")).toBeVisible();
+
     await page.getByTestId("tool-input").fill("hello world");
     await expect(page.getByTestId("tool-output")).toContainText("aGVsbG8gd29ybGQ=");
 
+    await page.getByTestId("reset-tool-workspace").click();
+    await expect(page.getByTestId("tool-input")).toHaveValue("AltFTool microtools are fast.");
+
+    await page.getByTestId("tool-input").fill("hello world");
+    await expect(page.getByTestId("tool-output")).toContainText("aGVsbG8gd29ybGQ=");
     await page.getByRole("button", { name: "Text -> Hex", exact: true }).click();
     await expect(page.getByTestId("tool-output")).toContainText("68656c6c6f20776f726c64");
 

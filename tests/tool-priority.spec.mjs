@@ -57,6 +57,11 @@ test.describe("top priority microtool route health", () => {
       const routeNav = page.getByRole("navigation", { name: "Tool route" });
       await expect(routeNav).toContainText("Tools", { timeout: routeTimeoutMs });
       await expect(routeNav).toContainText(tool.name, { timeout: routeTimeoutMs });
+      await expect(page.getByTestId("tool-action-bar")).toBeVisible({ timeout: routeTimeoutMs });
+      await expect(page.getByTestId("priority-tool-badge")).toContainText("Top 40 verified");
+      await expect(page.getByTestId("copy-tool-link")).toBeVisible();
+      await expect(page.getByTestId("share-tool-link")).toBeVisible();
+      await expect(page.getByTestId("reset-tool-workspace")).toBeVisible();
       await expect(page.getByText("Preparing workspace")).toHaveCount(0, {
         timeout: routeTimeoutMs,
       });
