@@ -1,0 +1,8 @@
+@keyframes pp-float {
+  0%, 100% { transform: translate3d(0, 0, 0); }
+  50% { transform: translate3d(22px, -24px, 0); }
+}
+
+.pp-float {
+  animation: pp-float 15s ease-in-out infinite;
+}

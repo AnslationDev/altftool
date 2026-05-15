@@ -12,11 +12,11 @@ import {
 } from 'lucide-react';
 
 const MOODS = [
-    { icon: Smile, label: 'Happy', color: '#3b82f6', key: '😊' },
-    { icon: Meh, label: 'Neutral', color: '#60a5fa', key: '😐' },
-    { icon: Moon, label: 'Tired', color: '#93c5fd', key: '😴' },
+    { icon: Smile, label: 'Happy', color: '#2563eb', key: '😊' },
+    { icon: Meh, label: 'Neutral', color: '#2563eb', key: '😐' },
+    { icon: Moon, label: 'Tired', color: '#2563eb', key: '😴' },
     { icon: Frown, label: 'Low', color: '#2563eb', key: '😔' },
-    { icon: Flame, label: 'Motivated', color: '#1d4ed8', key: '🔥' },
+    { icon: Flame, label: 'Motivated', color: '#2563eb', key: '🔥' },
 ];
 
 const MoodTracker = () => {
@@ -41,12 +41,12 @@ const MoodTracker = () => {
                             className={`
                                 flex items-center gap-4 p-3.5 rounded-2xl transition-all duration-300 border w-full
                                 ${isActive
-                                    ? 'shadow-xl shadow-blue-500/10 border-blue-500/30 bg-blue-500/5'
+                                    ? 'border-blue-500/30 bg-blue-500/5'
                                     : 'border-transparent hover:bg-(--foreground)/5'
                                 }
                             `}
                         >
-                            <div className={`p-2 rounded-xl transition-all flex items-center justify-center ${isActive ? 'bg-blue-500 text-white shadow-lg' : 'bg-(--secondary)/10 text-(--secondary) opacity-60'}`}>
+                            <div className={`p-2 rounded-xl transition-all flex items-center justify-center ${isActive ? 'bg-blue-500 text-white' : 'bg-(--secondary)/10 text-(--secondary) opacity-60'}`}>
                                 <Icon size={18} />
                             </div>
                             <span className={`text-xs font-black uppercase tracking-widest ${isActive ? 'text-blue-500' : 'text-(--secondary) opacity-40'}`}>
@@ -55,7 +55,7 @@ const MoodTracker = () => {
                             {isActive && (
                                 <motion.div
                                     layoutId="active-mood"
-                                    className="ml-auto w-2 h-2 rounded-full bg-blue-500 shadow-[0_0_12px_rgba(59,130,246,0.6)]"
+                                    className="ml-auto w-2 h-2 rounded-full bg-blue-500"
                                 />
                             )}
                         </motion.button>

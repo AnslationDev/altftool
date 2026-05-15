@@ -221,10 +221,10 @@ export default function ToolHome() {
   };
 
   return (
-    <main className="min-h-screen overflow-x-hidden bg-[var(--background)] px-4 py-6 text-[var(--foreground)] sm:px-6 lg:py-8">
-      <div className="mx-auto w-full max-w-6xl space-y-6">
+    <main className="min-h-screen overflow-x-hidden bg-[var(--background)] px-4 py-6 text-[var(--foreground)] sm:px-6 2xl:py-8">
+      <div className="mx-auto w-full max-w-[1400px] space-y-6">
         <section className="overflow-hidden rounded-lg border border-[var(--border)] bg-[var(--card)] shadow-[var(--anslation-ds-shadow-sm)]">
-          <div className="grid gap-6 p-6 lg:grid-cols-[minmax(0,1fr)_280px] lg:p-8">
+          <div className="grid gap-6 p-6 2xl:grid-cols-[minmax(0,1fr)_320px] 2xl:p-8">
             <div className="min-w-0">
               <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-[var(--muted)] px-3 py-1 text-xs font-semibold uppercase text-[var(--primary)]">
                 <Code2 className="h-4 w-4" />
@@ -240,7 +240,7 @@ export default function ToolHome() {
                 <span className="rounded-full bg-[var(--muted)] px-3 py-1">{tags.split("\n").length} tags</span>
               </div>
             </div>
-            <div className="rounded-lg border border-[var(--border)] bg-[var(--background)] p-5">
+            <div className="min-w-0 rounded-lg border border-[var(--border)] bg-[var(--background)] p-5">
               <p className="text-sm font-semibold text-[var(--muted-foreground)]">SEO readiness</p>
               <div className="mt-3 flex items-end gap-2">
                 <span className="text-5xl font-semibold text-[var(--primary)]">{checks.score}</span>
@@ -253,15 +253,15 @@ export default function ToolHome() {
           </div>
         </section>
 
-        <section className="grid min-w-0 gap-6 xl:grid-cols-[minmax(300px,420px)_minmax(0,1fr)]">
+        <section className="grid min-w-0 gap-6 2xl:grid-cols-[minmax(360px,480px)_minmax(0,1fr)]">
           <div className="min-w-0 space-y-6">
             <div className="rounded-lg border border-[var(--border)] bg-[var(--card)] p-5 shadow-[var(--anslation-ds-shadow-sm)]">
-              <div className="mb-4 flex items-center justify-between gap-3">
+              <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
                 <h2 className="text-lg font-semibold">Content</h2>
                 <button
                   type="button"
                   onClick={() => setForm(defaults)}
-                  className="inline-flex items-center gap-2 rounded-lg border border-[var(--border)] px-3 py-2 text-sm font-semibold hover:bg-[var(--muted)]"
+                  className="btn-secondary min-h-10 px-3 py-2"
                 >
                   <RotateCcw className="h-4 w-4" />
                   Reset
@@ -332,16 +332,16 @@ export default function ToolHome() {
                   <h2 className="text-lg font-semibold">Generated tags</h2>
                   <p className="mt-1 text-sm text-[var(--muted-foreground)]">Copy-ready HTML for your document head.</p>
                 </div>
-                <div className="flex flex-wrap gap-2">
+                <div className="tool-action-grid w-full sm:w-auto sm:min-w-[14rem]">
                   <button
                     type="button"
                     onClick={downloadTags}
-                    className="inline-flex items-center gap-2 rounded-lg border border-[var(--border)] px-4 py-2 text-sm font-semibold hover:bg-[var(--muted)]"
+                    className="btn-secondary min-h-10 px-3 py-2"
                   >
                     <Download className="h-4 w-4" />
                     Download
                   </button>
-                  <button type="button" onClick={copyTags} className="inline-flex items-center gap-2 rounded-lg bg-[var(--primary)] px-4 py-2 text-sm font-semibold text-white">
+                  <button type="button" onClick={copyTags} className="btn-primary min-h-10 px-3 py-2">
                     <Copy className="h-4 w-4" />
                     {copied === "tags" ? "Copied" : copied === "selected" ? "Selected" : copied === "failed" ? "Copy failed" : "Copy"}
                   </button>
@@ -356,7 +356,7 @@ export default function ToolHome() {
               />
             </div>
 
-            <div className="grid min-w-0 gap-4 md:grid-cols-2">
+            <div className="tool-card-grid">
               <QualityItem
                 label="Title length"
                 state={checks.titleState}
@@ -394,7 +394,7 @@ export default function ToolHome() {
             </PreviewCard>
 
             <PreviewCard title="Metadata summary" icon={Globe2}>
-              <div className="grid gap-3 sm:grid-cols-2">
+              <div className="tool-compact-grid">
                 <div className="rounded-lg bg-[var(--muted)] p-4">
                   <ShieldCheck className="h-5 w-5 text-[var(--primary)]" />
                   <p className="mt-2 text-sm font-semibold">Robots</p>

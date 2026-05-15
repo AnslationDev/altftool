@@ -33,7 +33,7 @@ const TodoMini = () => {
                     placeholder="Quick task..."
                     className="flex-1 bg-(--foreground)/5 border border-(--foreground)/5 rounded-xl px-4 py-2 text-sm focus:ring-2 focus:ring-blue-500/20 outline-none transition-all placeholder:opacity-30"
                 />
-                <Button type="submit" size="sm" className="px-3 bg-blue-600 hover:bg-blue-500 shadow-lg shadow-blue-600/20" disabled={!input.trim()}>
+                <Button type="submit" size="sm" className="px-3 bg-blue-600 hover:bg-blue-500" disabled={!input.trim()}>
                     <Plus size={18} />
                 </Button>
             </form>

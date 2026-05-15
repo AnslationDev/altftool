@@ -20,13 +20,13 @@ const HabitTracker = () => {
     };
 
     return (
-        <Card variant="glass" className="flex flex-col h-full p-6 shadow-xl border-white/10 dark:border-white/5">
+        <Card variant="glass" className="flex flex-col h-full p-6 border-white/10 dark:border-white/5">
             <div className="flex items-center justify-between mb-8">
                 <h3 className="text-xs font-black flex items-center gap-3 text-(--foreground) uppercase tracking-[0.2em] opacity-60">
                     <CheckCircle2 size={16} className="text-blue-500" />
                     Habit Flow
                 </h3>
-                <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 shadow-sm">
+                <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20">
                     <span className="text-[10px] font-black text-blue-500 tabular-nums">{completed}/{habits.length}</span>
                 </div>
             </div>
@@ -37,11 +37,11 @@ const HabitTracker = () => {
                     <span>Daily Progress</span>
                     <span>{Math.round(progress)}%</span>
                 </div>
-                <div className="h-1.5 w-full bg-(--secondary)/10 rounded-full overflow-hidden shadow-inner">
+                <div className="h-1.5 w-full bg-(--secondary)/10 rounded-full overflow-hidden">
                     <motion.div 
                         initial={{ width: 0 }}
                         animate={{ width: `${progress}%` }}
-                        className="h-full bg-blue-500 shadow-[0_0_12px_rgba(59,130,246,0.4)]"
+                        className="h-full bg-blue-500"
                     />
                 </div>
             </div>
@@ -55,7 +55,7 @@ const HabitTracker = () => {
                     placeholder="New habit..."
                     className="flex-1 bg-(--foreground)/5 border border-(--foreground)/5 rounded-xl px-4 py-2 text-sm focus:ring-2 focus:ring-blue-500/20 outline-none transition-all placeholder:opacity-30"
                 />
-                <Button type="submit" size="sm" className="px-3 bg-blue-600 hover:bg-blue-500 shadow-lg shadow-blue-600/20">
+                <Button type="submit" size="sm" className="px-3 bg-blue-600 hover:bg-blue-500">
                     <Plus size={18} />
                 </Button>
             </form>

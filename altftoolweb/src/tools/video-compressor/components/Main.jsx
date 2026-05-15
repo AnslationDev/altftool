@@ -562,7 +562,7 @@ export default function MainComponent() {
       </div>
 
       <section className="mt-7 rounded-lg border border-(--border) bg-(--section-highlight) p-5 sm:p-6">
-        <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_330px] lg:items-center">
+        <div className="grid gap-6 2xl:grid-cols-[minmax(0,1fr)_330px] 2xl:items-center">
           <div className="flex items-start gap-4">
             <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-(--section-highlight) text-(--primary)">
               <Gauge className="h-6 w-6" />
@@ -594,7 +594,7 @@ export default function MainComponent() {
         </div>
       </section>
 
-      <section className="mt-6 grid gap-6 lg:grid-cols-[minmax(0,1fr)_380px]">
+      <section className="mt-6 grid gap-6 2xl:grid-cols-[minmax(0,1fr)_380px]">
         <div className="space-y-6">
           <section className="rounded-lg border border-(--border) bg-(--card) p-5 sm:p-6">
             <div
@@ -699,7 +699,7 @@ export default function MainComponent() {
               </div>
             </div>
 
-            <div className="grid gap-3 md:grid-cols-3">
+            <div className="tool-compact-grid">
               {Object.entries(PRESETS).map(([key, preset]) => (
                 <button
                   key={key}
@@ -721,7 +721,7 @@ export default function MainComponent() {
               ))}
             </div>
 
-            <div className="mt-5 grid gap-4 md:grid-cols-2">
+            <div className="tool-form-grid mt-5">
               <label>
                 <span className="mb-2 block text-sm font-semibold text-(--foreground)">
                   Output Format
@@ -905,7 +905,7 @@ export default function MainComponent() {
             </div>
           )}
 
-          <div className="grid gap-4 sm:grid-cols-2">
+          <div className="tool-card-grid">
             <StatCard icon={FileVideo} label="Source" value={file ? formatBytes(file.size) : "0 B"} detail={metadata.duration ? formatTime(metadata.duration) : "No video"} />
             <StatCard icon={MonitorDown} label="Output" value={`${outputDimensions.width || "-"}x${outputDimensions.height || "-"}`} detail={settings.maxHeight === "source" ? "Original size" : `${settings.maxHeight}p cap`} />
             <StatCard icon={Gauge} label="CRF" value={settings.crf} detail={PRESETS[settings.preset]?.label || "Custom"} />

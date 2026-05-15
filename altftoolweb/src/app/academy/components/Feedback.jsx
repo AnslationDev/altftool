@@ -162,7 +162,7 @@ export default function FeedbackSection() {
                       @{item.name?.toLowerCase().replace(/\s+/g, "")}
                     </p>
                   </div>
-
+s
            
                   <div className="flex gap-1">
                     {Array.from({ length: 5 }).map((_, idx) => (

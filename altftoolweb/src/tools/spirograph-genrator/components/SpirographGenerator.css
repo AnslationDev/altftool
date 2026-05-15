@@ -1,0 +1,491 @@
+.spirograph-container {
+  width: 100%;
+  color: var(--foreground);
+}
+
+.spirograph-header {
+  text-align: center;
+  margin-bottom: 1.25rem;
+}
+
+.spirograph-header h1 {
+  font-size: clamp(2rem, 5vw, 3rem);
+  line-height: 1.1;
+  font-weight: 800;
+  color: #2f61da;
+  margin: 0 0 0.45rem;
+}
+
+.spirograph-header p {
+  margin: 0 auto;
+  max-width: 760px;
+  font-size: clamp(1rem, 2.2vw, 1.4rem);
+  line-height: 1.35;
+  color: color-mix(in srgb, var(--foreground) 88%, transparent);
+}
+
+.logo {
+  display: none;
+}
+
+.spirograph-workspace {
+  display: grid;
+  grid-template-columns: minmax(320px, 390px) 1fr;
+  gap: 1rem;
+  align-items: start;
+}
+
+.spirograph-controls-panel {
+  display: grid;
+  gap: 0.85rem;
+}
+
+.spiro-card,
+.spirograph-canvas-wrap,
+.how-it-works,
+.features-section {
+  background: var(--card, #ffffff);
+  border: 1px solid color-mix(in srgb, var(--foreground) 12%, transparent);
+  border-radius: 14px;
+  box-shadow: 0 10px 26px rgba(15, 23, 42, 0.06);
+}
+
+.spiro-card-header {
+  padding: 0.8rem 0.95rem;
+  border-bottom: 1px solid color-mix(in srgb, var(--foreground) 10%, transparent);
+  font-size: 0.78rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--foreground) 68%, transparent);
+  font-weight: 700;
+}
+
+.card-icon {
+  margin-right: 0.35rem;
+}
+
+.spiro-card-body {
+  padding: 0.95rem;
+}
+
+.pattern-tabs {
+  display: flex;
+  gap: 0.45rem;
+}
+
+.pattern-tab {
+  flex: 1;
+  border: 1px solid color-mix(in srgb, var(--foreground) 14%, transparent);
+  border-radius: 10px;
+  padding: 0.55rem 0.7rem;
+  background: transparent;
+  color: var(--foreground);
+  font-size: 0.84rem;
+  cursor: pointer;
+}
+
+.pattern-tab.active {
+  background: #2563eb;
+  border-color: #2563eb;
+  color: #fff;
+}
+
+.param-list {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.param-item {
+  display: grid;
+  gap: 0.35rem;
+}
+
+.param-help {
+  font-size: 0.72rem;
+  line-height: 1.35;
+  color: color-mix(in srgb, var(--foreground) 65%, transparent);
+}
+
+.param-label-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.param-label,
+.param-current-value,
+.toggle-label {
+  font-size: 0.84rem;
+}
+
+.param-input,
+.param-input-color,
+.presets-trigger,
+.canvas-speed input,
+.canvas-select {
+  width: 100%;
+  border: 1px solid color-mix(in srgb, var(--foreground) 16%, transparent);
+  border-radius: 10px;
+  min-height: 2.35rem;
+  padding: 0.45rem 0.62rem;
+  background: transparent;
+  color: var(--foreground);
+}
+
+.presets-wrapper {
+  position: relative;
+}
+
+.presets-trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  text-align: left;
+  cursor: pointer;
+}
+
+.presets-trigger .arrow {
+  margin-left: auto;
+  font-size: 0.72rem;
+  transition: transform 0.2s ease;
+}
+
+.presets-trigger .arrow.open {
+  transform: rotate(180deg);
+}
+
+.presets-selected-label {
+  margin-top: 0.35rem;
+  font-size: 0.75rem;
+  color: color-mix(in srgb, var(--foreground) 68%, transparent);
+}
+
+.presets-dropdown {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: calc(100% + 0.35rem);
+  z-index: 20;
+  border: 1px solid color-mix(in srgb, var(--foreground) 14%, transparent);
+  border-radius: 10px;
+  background: var(--card, #fff);
+  max-height: 230px;
+  overflow-y: auto;
+}
+
+.preset-option {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.55rem 0.62rem;
+  cursor: pointer;
+  font-size: 0.82rem;
+}
+
+.preset-option:hover,
+.preset-option.selected {
+  background: color-mix(in srgb, #2563eb 12%, transparent);
+}
+
+.color-swatches {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.color-dot {
+  width: 24px;
+  height: 24px;
+  border-radius: 999px;
+  border: 2px solid transparent;
+  cursor: pointer;
+}
+
+.color-dot.active-dot {
+  border-color: #111827;
+}
+
+.toggle-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.toggle-track {
+  width: 42px;
+  height: 24px;
+  border-radius: 999px;
+  background: #cbd5e1;
+  position: relative;
+  cursor: pointer;
+}
+
+.toggle-track.on {
+  background: #2563eb;
+}
+
+.toggle-thumb {
+  width: 18px;
+  height: 18px;
+  background: #fff;
+  border-radius: 999px;
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  transition: left 0.2s ease;
+}
+
+.toggle-track.on .toggle-thumb {
+  left: 21px;
+}
+
+.btn-group,
+.canvas-actions {
+  display: flex;
+  gap: 0.55rem;
+  flex-wrap: wrap;
+}
+
+.btn {
+  border-radius: 10px;
+  border: 1px solid transparent;
+  padding: 0.58rem 0.85rem;
+  font-weight: 600;
+  font-size: 0.84rem;
+  cursor: pointer;
+}
+
+.btn-primary {
+  background: #2563eb;
+  color: #fff;
+}
+
+.btn-accent {
+  background: #0f172a;
+  color: #fff;
+}
+
+.spirograph-canvas-wrap {
+  padding: 0.9rem;
+}
+
+.spirograph-canvas-wrap canvas {
+  width: 100%;
+  max-width: 660px;
+  display: block;
+  margin: 0 auto;
+  border-radius: 12px;
+  border: 1px solid color-mix(in srgb, var(--foreground) 12%, transparent);
+  background: #fff;
+  touch-action: none;
+}
+
+.canvas-actions {
+  margin-top: 0.85rem;
+  display: grid;
+  gap: 0.7rem;
+}
+
+.canvas-actions-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.7rem;
+  flex-wrap: wrap;
+}
+
+.canvas-action-group {
+  display: flex;
+  gap: 0.55rem;
+  flex-wrap: wrap;
+}
+
+.canvas-actions-meta {
+  justify-content: center;
+  gap: 1rem;
+}
+
+.canvas-speed {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.82rem;
+}
+
+.canvas-speed input {
+  width: 82px;
+  min-height: 2rem;
+}
+
+.canvas-select {
+  min-width: 90px;
+  min-height: 2rem;
+  padding: 0.3rem 0.5rem;
+}
+
+.canvas-export-row {
+  display: grid;
+  gap: 0.6rem;
+}
+
+.canvas-export-select {
+  width: 100%;
+}
+
+.canvas-export-btn {
+  width: fit-content;
+  margin: 0 auto;
+  min-width: 120px;
+}
+
+
+.how-it-works,
+.features-section {
+  margin-top: 1.1rem;
+  padding: 1.4rem 1.25rem 1.35rem;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+}
+
+.section-heading {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.section-heading h2 {
+  font-size: clamp(2rem, 4vw, 2.85rem);
+  line-height: 1.15;
+  margin: 0 0 0.5rem;
+  color: #2f61da;
+}
+
+.section-heading p {
+  margin: 0;
+  font-size: 1.05rem;
+  color: #64748b;
+}
+
+.steps-grid,
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.15rem;
+}
+
+.step-card,
+.feature-card {
+  min-height: 220px;
+  border: 1px solid #cbd5e1;
+  border-radius: 18px;
+  padding: 1.55rem 1.4rem;
+  background: #e5e7eb;
+  box-shadow: 0 6px 16px rgba(15, 23, 42, 0.08);
+  color: #0f172a;
+}
+
+.step-card h3,
+.feature-card h3 {
+  font-size: 1.95rem;
+  margin: 0 0 0.9rem;
+  color: #0f172a;
+}
+
+.step-card p,
+.feature-card p {
+  font-size: 1.2rem;
+  margin: 0;
+  color: #64748b;
+  line-height: 1.5;
+}
+
+.how-it-works .section-heading h2,
+.features-section .section-heading h2 {
+  color: #2f61da;
+}
+
+.how-it-works .section-heading p,
+.features-section .section-heading p {
+  color: #64748b;
+}
+
+/* Dark mode fixes for How It Works / Features cards */
+.dark .step-card,
+.dark .feature-card,
+[data-theme="dark"] .step-card,
+[data-theme="dark"] .feature-card {
+  background: #0f172a;
+  border-color: #334155;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.35);
+  color: #e2e8f0;
+}
+
+.dark .step-card h3,
+.dark .feature-card h3,
+[data-theme="dark"] .step-card h3,
+[data-theme="dark"] .feature-card h3 {
+  color: #f8fafc;
+}
+
+.dark .step-card p,
+.dark .feature-card p,
+[data-theme="dark"] .step-card p,
+[data-theme="dark"] .feature-card p {
+  color: #94a3b8;
+}
+
+.step-number,
+.feature-icon {
+  display: none;
+}
+
+@media (max-width: 1024px) {
+  .spirograph-workspace {
+    grid-template-columns: 1fr;
+  }
+
+  .steps-grid,
+  .features-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .step-card h3,
+  .feature-card h3 {
+    font-size: 1.7rem;
+  }
+
+  .step-card p,
+  .feature-card p {
+    font-size: 1.05rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .spirograph-header h1 {
+    font-size: 2.2rem;
+  }
+
+  .steps-grid,
+  .features-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .section-heading h2 {
+    font-size: 2.2rem;
+  }
+
+  .section-heading p {
+    font-size: 1rem;
+  }
+
+  .btn-group {
+    flex-direction: column;
+  }
+
+  .canvas-actions-row,
+  .canvas-actions-meta,
+  .canvas-action-group {
+    justify-content: flex-start;
+  }
+
+}

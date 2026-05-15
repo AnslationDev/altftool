@@ -57,19 +57,19 @@ export default function ToolHome() {
   return (
     <main className="min-h-screen bg-[var(--background)] px-4 py-8 text-[var(--foreground)] sm:px-6">
       <div className="mx-auto max-w-7xl space-y-6">
-        <section className="rounded-lg border border-[var(--border)] bg-[var(--card)] p-6 shadow-[var(--anslation-ds-shadow-sm)] lg:p-8">
+        <section className="rounded-lg border border-[var(--border)] bg-[var(--card)] p-6 shadow-[var(--anslation-ds-shadow-sm)] 2xl:p-8">
           <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-[var(--muted)] px-3 py-1 text-xs font-semibold uppercase text-[var(--primary)]">
             <Palette className="h-4 w-4" />
             Image colors
           </div>
-          <h1 className="text-4xl font-semibold leading-tight">Color Palette from Image</h1>
+          <h1 className="tool-heading-accent text-3xl font-semibold leading-tight sm:text-4xl">Color Palette from Image</h1>
           <p className="mt-3 max-w-2xl text-base leading-7 text-[var(--muted-foreground)]">
             Upload an image and extract a practical set of dominant colors for brand, UI, and content work.
           </p>
         </section>
 
-        <section className="grid gap-6 lg:grid-cols-[400px_1fr]">
-          <div className="rounded-lg border border-[var(--border)] bg-[var(--card)] p-5 shadow-[var(--anslation-ds-shadow-sm)]">
+        <section className="grid gap-6 2xl:grid-cols-[400px_1fr]">
+          <div className="min-w-0 rounded-lg border border-[var(--border)] bg-[var(--card)] p-5 shadow-[var(--anslation-ds-shadow-sm)]">
             <label className="flex min-h-60 cursor-pointer flex-col items-center justify-center rounded-lg border border-dashed border-[var(--border)] bg-[var(--background)] p-6 text-center hover:bg-[var(--muted)]">
               <UploadCloud className="h-10 w-10 text-[var(--primary)]" />
               <span className="mt-3 text-sm font-semibold">Upload image</span>
@@ -84,16 +84,16 @@ export default function ToolHome() {
             ) : null}
           </div>
 
-          <div className="rounded-lg border border-[var(--border)] bg-[var(--card)] p-5 shadow-[var(--anslation-ds-shadow-sm)]">
-            <div className="mb-4 flex items-center justify-between gap-3">
+          <div className="min-w-0 rounded-lg border border-[var(--border)] bg-[var(--card)] p-5 shadow-[var(--anslation-ds-shadow-sm)]">
+            <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
               <h2 className="text-lg font-semibold">Palette</h2>
               {copied && <span className="text-sm font-semibold text-green-600">{copied} copied</span>}
             </div>
-            <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+            <div className="tool-card-grid">
               {palette.map((color) => (
                 <button key={color} type="button" onClick={() => copyColor(color)} className="overflow-hidden rounded-lg border border-[var(--border)] text-left shadow-[var(--anslation-ds-shadow-sm)]">
                   <span className="block h-32" style={{ backgroundColor: color }} />
-                  <span className="flex items-center justify-between gap-3 bg-[var(--background)] px-4 py-3 font-mono text-sm font-semibold">
+                  <span className="flex items-center justify-between gap-3 bg-[var(--background)] px-4 py-3 font-mono text-sm font-semibold break-words">
                     {color.toUpperCase()}
                     <Clipboard className="h-4 w-4" />
                   </span>

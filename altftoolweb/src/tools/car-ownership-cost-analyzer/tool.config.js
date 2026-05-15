@@ -3,8 +3,8 @@ const toolConfig = {
     slug: "car-ownership-cost-analyzer",
     title: "Car Ownership Cost Calculator",
     description: "Calculate the total cost of owning a car, including purchase price, running costs, and depreciation.",
-    icon: "Car",
-    iconColor: "green"
+    icon: "car",
+    iconColor: "text-blue-500"
 }
 
 export default toolConfig;

@@ -53,7 +53,7 @@ const ScoreMeter = () => {
                         </h2>
                         <p className="text-[11px] font-bold text-(--foreground) uppercase tracking-[0.4em] mt-1 opacity-60">Dynamic lifestyle analysis</p>
                     </div>
-                    <div className={`px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest border border-blue-500/10 shadow-sm ${status.bg} ${status.color}`}>
+                    <div className={`px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest border border-blue-500/10 ${status.bg} ${status.color}`}>
                         {status.label}
                     </div>
                 </div>
@@ -91,11 +91,11 @@ const ScoreMeter = () => {
                         <span className="text-[10px] font-black uppercase tracking-widest text-(--foreground) opacity-60">Time Pool Allocation</span>
                         <span className="text-[10px] font-black uppercase tracking-widest text-blue-500">{Math.round(usedHours)} / 24 <span className="opacity-50">hrs used</span></span>
                     </div>
-                    <div className="h-2 w-full bg-(--secondary)/10 rounded-full overflow-hidden shadow-inner">
+                    <div className="h-2 w-full bg-(--secondary)/10 rounded-full overflow-hidden">
                         <motion.div 
                             initial={{ width: 0 }}
                             animate={{ width: `${(usedHours / 24) * 100}%` }}
-                            className={`h-full transition-colors duration-500 ${usedHours >= 23.9 ? 'bg-blue-400' : 'bg-blue-500 shadow-[0_0_15px_rgba(59,130,246,0.4)]'}`}
+                            className={`h-full transition-colors duration-500 ${usedHours >= 23.9 ? 'bg-blue-400' : 'bg-blue-500'}`}
                         />
                     </div>
                 </div>

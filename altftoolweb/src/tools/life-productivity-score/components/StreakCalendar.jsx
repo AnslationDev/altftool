@@ -37,7 +37,7 @@ const StreakCalendar = () => {
     const monthlyCompletion = days.length > 0 ? Math.round((streakDays.length / days.length) * 100) : 0;
 
     return (
-        <Card variant="glass" className="h-full p-8 shadow-xl border-white/10 dark:border-white/5">
+        <Card variant="glass" className="h-full p-8 shadow-sm border-white/10 dark:border-white/5">
             <div className="flex items-center justify-between mb-10">
                 <h3 className="text-xs font-black flex items-center gap-3 text-(--foreground) uppercase tracking-[0.2em] opacity-60">
                     <CalendarIcon size={16} className="text-blue-500" />
@@ -89,11 +89,11 @@ const StreakCalendar = () => {
                                 <motion.div 
                                     initial={{ scale: 0 }}
                                     animate={{ scale: 1 }}
-                                    className="absolute inset-0 bg-blue-500/10 rounded-xl border border-blue-500/20 shadow-inner" 
+                                    className="absolute inset-0 bg-blue-500/10 rounded-xl border border-blue-500/20" 
                                 />
                             )}
                             {isToday && (
-                                <div className="absolute top-0 right-0 w-1.5 h-1.5 bg-blue-500 rounded-full shadow-[0_0_8px_rgba(59,130,246,0.8)] z-10" />
+                                <div className="absolute top-0 right-0 w-1.5 h-1.5 bg-blue-500 rounded-full z-10" />
                             )}
                             <span className={`text-xs font-bold relative z-10 ${isStreak ? 'text-blue-500' : 'text-(--foreground) opacity-40 group-hover:opacity-100'} transition-all`}>
                                 {day}
@@ -105,7 +105,7 @@ const StreakCalendar = () => {
 
             <div className="mt-10 pt-8 border-t border-white/5 flex items-center justify-between">
                 <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-2xl bg-blue-500/10 flex items-center justify-center text-blue-500 shadow-inner">
+                    <div className="w-10 h-10 rounded-2xl bg-blue-500/10 flex items-center justify-center text-blue-500">
                         <CheckCircle2 size={20} />
                     </div>
                     <div>

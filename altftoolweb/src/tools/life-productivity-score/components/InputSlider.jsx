@@ -1,12 +1,12 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { 
-    Moon, 
-    Monitor, 
-    Activity, 
-    Smartphone, 
-    Droplets, 
-    Zap 
+import {
+    Moon,
+    Monitor,
+    Activity,
+    Smartphone,
+    Droplets,
+    Zap
 } from 'lucide-react';
 import { useProductivity } from '../context/ProductivityContext';
 
@@ -17,15 +17,15 @@ const InputSlider = ({ label, value, onChange, min, max, unit, icon: Icon, color
         <div className="group space-y-4">
             <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
-                    <div 
-                        className="p-2.5 rounded-xl text-white shadow-lg transition-all duration-500 group-hover:scale-110 flex items-center justify-center"
-                        style={{ backgroundColor: color, boxShadow: `0 8px 16px ${color}33` }}
+                    <div
+                        className="p-2.5 rounded-xl text-white transition-all duration-500 group-hover:scale-110 flex items-center justify-center"
+                        style={{ backgroundColor: color }}
                     >
                         {Icon && <Icon size={16} />}
                     </div>
                     <span className="text-sm font-bold text-(--foreground) tracking-tight group-hover:text-blue-500 transition-colors uppercase tracking-widest">{label}</span>
                 </div>
-                <div className="flex items-baseline gap-1 bg-blue-500/5 px-3 py-1.5 rounded-xl border border-blue-500/10 shadow-inner">
+                <div className="flex items-baseline gap-1 bg-blue-500/5 px-3 py-1.5 rounded-xl border border-blue-500/10">
                     <span className="text-xl font-black tracking-tighter text-blue-500 tabular-nums">
                         {value.toFixed(1)}
                     </span>
@@ -35,12 +35,11 @@ const InputSlider = ({ label, value, onChange, min, max, unit, icon: Icon, color
 
             <div className="relative py-4 cursor-pointer">
                 <div className="h-2 w-full bg-blue-500/10 rounded-full overflow-hidden">
-                    <div 
+                    <div
                         className="h-full transition-all duration-300"
-                        style={{ 
-                            width: `${pct}%`, 
-                            backgroundColor: color,
-                            boxShadow: `0 0 12px ${color}66`
+                        style={{
+                            width: `${pct}%`,
+                            backgroundColor: color
                         }}
                     />
                 </div>
@@ -64,21 +63,21 @@ const InputSlider = ({ label, value, onChange, min, max, unit, icon: Icon, color
 };
 
 const InputSliders = () => {
-    const { 
-        sleep, setSleep, 
-        work, setWork, 
-        exercise, setExercise, 
-        screenTime, setScreenTime, 
-        water, setWater, 
-        energy, setEnergy 
+    const {
+        sleep, setSleep,
+        work, setWork,
+        exercise, setExercise,
+        screenTime, setScreenTime,
+        water, setWater,
+        energy, setEnergy
     } = useProductivity();
 
     const sliderData = [
-        { label: 'Sleep Quality', value: sleep, onChange: setSleep, min: 0, max: 12, unit: 'hrs', icon: Moon, color: '#3b82f6' },
+        { label: 'Sleep Quality', value: sleep, onChange: setSleep, min: 0, max: 12, unit: 'hrs', icon: Moon, color: '#2563eb' },
         { label: 'Work Focus', value: work, onChange: setWork, min: 0, max: 16, unit: 'hrs', icon: Monitor, color: '#2563eb' },
-        { label: 'Physical Activity', value: exercise, onChange: setExercise, min: 0, max: 180, unit: 'min', icon: Activity, color: '#60a5fa' },
-        { label: 'Digital Usage', value: screenTime, onChange: setScreenTime, min: 0, max: 12, unit: 'hrs', icon: Smartphone, color: '#1d4ed8' },
-        { label: 'Hydration', value: water, onChange: setWater, min: 0, max: 20, unit: 'gls', icon: Droplets, color: '#3b82f6' },
+        { label: 'Physical Activity', value: exercise, onChange: setExercise, min: 0, max: 180, unit: 'min', icon: Activity, color: '#2563eb' },
+        { label: 'Digital Usage', value: screenTime, onChange: setScreenTime, min: 0, max: 12, unit: 'hrs', icon: Smartphone, color: '#2563eb' },
+        { label: 'Hydration', value: water, onChange: setWater, min: 0, max: 20, unit: 'gls', icon: Droplets, color: '#2563eb' },
         { label: 'Energy Level', value: energy, onChange: setEnergy, min: 0, max: 10, unit: '/10', icon: Zap, color: '#2563eb' },
     ];
 

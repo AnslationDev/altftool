@@ -66,7 +66,7 @@ const StyledSectionCard = ({ children, className = '', title, icon: Icon, collap
 const ResultCard = ({ title, value, subtext, icon: Icon, highlight = false, large = false }) => (
     <motion.div
         whileHover={{ y: -4 }}
-        className={`relative overflow-hidden rounded-[2rem] p-5 transition-all shadow-xl ${highlight ? 'bg-(--primary) text-white shadow-(--primary)/20' : 'bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10'}`}
+        className={`relative overflow-hidden rounded-[2rem] p-5 transition-all ${highlight ? 'bg-(--primary) text-white' : 'bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10'}`}
     >
         <div className="relative z-10 flex items-center justify-between gap-4">
             <div className="flex-1 min-w-0">
@@ -460,7 +460,7 @@ const CarCostCalculator = () => {
                                     <button
                                         key={tab}
                                         onClick={() => setActiveTab(tab)}
-                                        className={`px-6 py-2 rounded-xl font-black text-xs capitalize transition-all ${activeTab === tab ? 'bg-white dark:bg-white/10 text-(--primary) shadow-xl scale-105' : 'text-slate-600 dark:text-(--secondary) hover:text-(--foreground) hover:bg-white/50'}`}
+                                        className={`px-6 py-2 rounded-xl font-black text-xs capitalize transition-all ${activeTab === tab ? 'bg-white dark:bg-white/10 text-(--primary) scale-105' : 'text-slate-600 dark:text-(--secondary) hover:text-(--foreground) hover:bg-white/50'}`}
                                     >
                                         {tab}
                                     </button>
@@ -494,13 +494,13 @@ const CarCostCalculator = () => {
                             <div className="flex gap-2 mb-8 p-1 bg-slate-100 dark:bg-white/5 rounded-xl w-fit">
                                 <button
                                     onClick={() => updateCarA({ taxiCalcMode: 'km' })}
-                                    className={`px-4 py-1.5 rounded-lg text-[10px] font-black uppercase transition-all ${carA.taxiCalcMode === 'km' ? 'bg-white dark:bg-white/10 text-(--primary) shadow-sm' : 'text-(--secondary)'}`}
+                                    className={`px-4 py-1.5 rounded-lg text-[10px] font-black uppercase transition-all ${carA.taxiCalcMode === 'km' ? 'bg-white dark:bg-white/10 text-(--primary)' : 'text-(--secondary)'}`}
                                 >
                                     Per KM Fare
                                 </button>
                                 <button
                                     onClick={() => updateCarA({ taxiCalcMode: 'daily' })}
-                                    className={`px-4 py-1.5 rounded-lg text-[10px] font-black uppercase transition-all ${carA.taxiCalcMode === 'daily' ? 'bg-white dark:bg-white/10 text-(--primary) shadow-sm' : 'text-(--secondary)'}`}
+                                    className={`px-4 py-1.5 rounded-lg text-[10px] font-black uppercase transition-all ${carA.taxiCalcMode === 'daily' ? 'bg-white dark:bg-white/10 text-(--primary)' : 'text-(--secondary)'}`}
                                 >
                                     Daily Spent
                                 </button>
@@ -552,7 +552,7 @@ const CarCostCalculator = () => {
                                                     <td className="py-4 font-bold">{yr} Year</td>
                                                     <td className="py-4 font-black">₹{Math.round(own).toLocaleString()}</td>
                                                     <td className="py-4 font-black">₹{Math.round(taxi).toLocaleString()}</td>
-                                                    <td className={`py-4 font-black ${diff > 0 ? 'text-red-500' : 'text-blue-600'}`}>
+                                                    <td className={`py-4 font-black ${diff > 0 ? 'text-blue-500' : 'text-blue-600'}`}>
                                                         {diff > 0 ? `+₹${Math.round(diff).toLocaleString()}` : `-₹${Math.round(Math.abs(diff)).toLocaleString()}`}
                                                     </td>
                                                 </tr>
@@ -574,7 +574,7 @@ const CarCostCalculator = () => {
                                                 <button
                                                     key={v}
                                                     onClick={() => setSelectedChartRange(v)}
-                                                    className={`px-3 py-1 rounded-lg text-[9px] font-black uppercase transition-all ${selectedChartRange === v ? 'bg-white dark:bg-white/10 text-(--primary) shadow-sm' : 'text-(--secondary)'}`}
+                                                    className={`px-3 py-1 rounded-lg text-[9px] font-black uppercase transition-all ${selectedChartRange === v ? 'bg-white dark:bg-white/10 text-(--primary)' : 'text-(--secondary)'}`}
                                                 >
                                                     {v === 'all' ? 'All' : `${v}Y`}
                                                 </button>
@@ -586,7 +586,7 @@ const CarCostCalculator = () => {
                                                 <button
                                                     key={t}
                                                     onClick={() => setChartType(t)}
-                                                    className={`px-3 py-1 rounded-lg text-[9px] font-black uppercase transition-all ${chartType === t ? 'bg-white dark:bg-white/10 text-(--primary) shadow-sm' : 'text-(--secondary)'}`}
+                                                    className={`px-3 py-1 rounded-lg text-[9px] font-black uppercase transition-all ${chartType === t ? 'bg-white dark:bg-white/10 text-(--primary)' : 'text-(--secondary)'}`}
                                                 >
                                                     {t}
                                                 </button>
@@ -641,7 +641,7 @@ const CarCostCalculator = () => {
                                                 {pieData.map((entry, idx) => <Cell key={`cell-${idx}`} fill={entry.color} />)}
                                             </Pie>
                                             <Tooltip
-                                                contentStyle={{ backgroundColor: 'var(--card)', border: '1px solid var(--border)', borderRadius: '16px', boxShadow: '0 10px 30px rgba(0,0,0,0.1)' }}
+                                                contentStyle={{ backgroundColor: 'var(--card)', border: '1px solid var(--border)', borderRadius: '16px' }}
                                                 itemStyle={{ color: 'var(--foreground)', fontSize: '12px', fontWeight: 'bold' }}
                                                 formatter={(v) => `₹${v.toLocaleString()}`}
                                             />
@@ -697,11 +697,11 @@ const CarCostCalculator = () => {
                                     <motion.div
                                         initial={{ width: 0 }}
                                         animate={{ width: `${Math.min(100, calcA.budgetPercent)}%` }}
-                                        className={`absolute top-0 left-0 h-full ${budgetStatus.bg} shadow-lg`}
+                                        className={`absolute top-0 left-0 h-full ${budgetStatus.bg}`}
                                     />
                                 </div>
                                 <div className="flex items-start gap-4 p-4 rounded-2xl bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/5">
-                                    <div className={`p-2.5 rounded-xl bg-white dark:bg-white/10 ${budgetStatus.color} shadow-sm`}>
+                                    <div className={`p-2.5 rounded-xl bg-white dark:bg-white/10 ${budgetStatus.color}`}>
                                         <CircleDollarSign className="w-5 h-5" />
                                     </div>
                                     <div>
@@ -726,7 +726,7 @@ const CarCostCalculator = () => {
                                                     transition={{ delay: idx * 0.1 }}
                                                     className="flex items-start gap-4 p-4 rounded-2xl bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10"
                                                 >
-                                                    <div className="p-2.5 rounded-xl shadow-md bg-white dark:bg-white/10 text-blue-600">
+                                                    <div className="p-2.5 rounded-xl bg-white dark:bg-white/10 text-blue-600">
                                                         <rec.icon className="w-5 h-5" />
                                                     </div>
                                                     <div>
@@ -757,7 +757,7 @@ const CarCostCalculator = () => {
             {/* Footer */}
             {/* <footer className="max-w-7xl mx-auto px-4 sm:px-6 py-16 text-center border-t border-(--border) mt-12">
                 <div className="inline-flex items-center gap-3 px-6 py-2.5 bg-slate-100 dark:bg-white/5 rounded-full mb-6 border border-(--border)">
-                    <div className="w-2.5 h-2.5 bg-green-500 rounded-full animate-pulse shadow-[0_0_10px_rgba(34,197,94,0.5)]" />
+                    <div className="w-2.5 h-2.5 bg-green-500 rounded-full animate-pulse" />
                     <span className="text-[10px] font-black text-(--secondary) uppercase tracking-[0.2em]">Live Analysis Active</span>
                 </div>
                 <p className="text-sm font-bold text-(--secondary) tracking-tight">CarOwnership Cost Analyzer — Complete Financial Transparency for Vehicle Buyers</p>

@@ -75,7 +75,7 @@ export default function ToolHome() {
   return (
     <main className="min-h-screen bg-[var(--background)] px-4 py-8 text-[var(--foreground)] sm:px-6">
       <div className="mx-auto max-w-6xl space-y-6">
-        <section className="rounded-lg border border-[var(--border)] bg-[var(--card)] p-6 shadow-[var(--anslation-ds-shadow-sm)] lg:p-8">
+        <section className="rounded-lg border border-[var(--border)] bg-[var(--card)] p-6 shadow-[var(--anslation-ds-shadow-sm)] 2xl:p-8">
           <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-[var(--muted)] px-3 py-1 text-xs font-semibold uppercase text-[var(--primary)]">
             <ArrowLeftRight className="h-4 w-4" />
             Number systems
@@ -86,7 +86,7 @@ export default function ToolHome() {
           </p>
         </section>
 
-        <section className="grid gap-6 rounded-lg border border-[var(--border)] bg-[var(--card)] p-5 shadow-[var(--anslation-ds-shadow-sm)] lg:grid-cols-[360px_1fr]">
+        <section className="grid gap-6 rounded-lg border border-[var(--border)] bg-[var(--card)] p-5 shadow-[var(--anslation-ds-shadow-sm)] 2xl:grid-cols-[360px_1fr]">
           <div>
             <p className="text-sm font-semibold text-[var(--foreground)]">Input format</p>
             <div className="mt-3 grid grid-cols-3 gap-2 rounded-lg bg-[var(--muted)] p-1">
@@ -127,7 +127,7 @@ export default function ToolHome() {
 
           <div>
             {result.ok ? (
-              <div className="grid gap-4 sm:grid-cols-2">
+              <div className="tool-form-grid">
                 <OutputRow label="Decimal" value={result.decimal} onCopy={copyValue} />
                 <OutputRow label="Binary" value={result.binary} onCopy={copyValue} />
                 <OutputRow label="Hexadecimal" value={`0x${result.hex}`} onCopy={copyValue} />

@@ -62,7 +62,7 @@ export default function ToolHome() {
   return (
     <main className="min-h-screen bg-[var(--background)] px-4 py-8 text-[var(--foreground)] sm:px-6">
       <div className="mx-auto max-w-7xl space-y-6">
-        <section className="rounded-lg border border-[var(--border)] bg-[var(--card)] p-6 shadow-[var(--anslation-ds-shadow-sm)] lg:p-8">
+        <section className="rounded-lg border border-[var(--border)] bg-[var(--card)] p-6 shadow-[var(--anslation-ds-shadow-sm)] 2xl:p-8">
           <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-[var(--muted)] px-3 py-1 text-xs font-semibold uppercase text-[var(--primary)]">
             <Languages className="h-4 w-4" />
             Text transformation
@@ -85,7 +85,7 @@ export default function ToolHome() {
           {copied && <p className="mt-3 text-sm font-semibold text-green-600">{copied} copied</p>}
         </section>
 
-        <section className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+        <section className="tool-card-grid">
           {results.map(([label, value]) => (
             <ResultCard key={label} label={label} value={value} onCopy={(nextValue) => copyValue(label, nextValue)} />
           ))}

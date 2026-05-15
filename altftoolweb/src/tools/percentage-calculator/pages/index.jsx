@@ -52,7 +52,7 @@ export default function ToolHome() {
   return (
     <main className="min-h-screen bg-[var(--background)] px-4 py-8 text-[var(--foreground)] sm:px-6">
       <div className="mx-auto max-w-6xl">
-        <section className="rounded-lg border border-[var(--border)] bg-[var(--card)] p-6 shadow-[var(--anslation-ds-shadow-sm)] lg:p-8">
+        <section className="rounded-lg border border-[var(--border)] bg-[var(--card)] p-6 shadow-[var(--anslation-ds-shadow-sm)] 2xl:p-8">
           <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-[var(--muted)] px-3 py-1 text-xs font-semibold uppercase text-[var(--primary)]">
             <Percent className="h-4 w-4" />
             Daily calculator
@@ -63,7 +63,7 @@ export default function ToolHome() {
           </p>
         </section>
 
-        <section className="mt-6 grid gap-6 lg:grid-cols-[390px_1fr]">
+        <section className="mt-6 grid gap-6 2xl:grid-cols-[390px_1fr]">
           <div className="rounded-lg border border-[var(--border)] bg-[var(--card)] p-5 shadow-[var(--anslation-ds-shadow-sm)]">
             <div className="grid gap-2">
               {modes.map((item) => (
@@ -125,7 +125,7 @@ export default function ToolHome() {
             </div>
             <p className="mt-5 text-sm leading-6 text-[var(--muted-foreground)]">{result.detail}</p>
 
-            <div className="mt-6 grid gap-3 sm:grid-cols-3">
+            <div className="tool-compact-grid mt-6">
               {[
                 ["10% of value", formatNumber((10 / 100) * (Number(second) || 0))],
                 ["25% of value", formatNumber((25 / 100) * (Number(second) || 0))],

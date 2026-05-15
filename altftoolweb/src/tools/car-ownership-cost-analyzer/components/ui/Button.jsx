@@ -29,13 +29,13 @@ export const Button = React.forwardRef(({
 
   const variantStyles = {
     primary:
-      'bg-(--primary) text-white hover:brightness-110 focus:ring-(--primary) shadow-lg shadow-(--primary)/30',
+      'bg-(--primary) text-white hover:brightness-110 focus:ring-(--primary)',
     secondary:
-      'bg-slate-200 dark:bg-white/10 border border-slate-300 dark:border-white/10 text-slate-950 dark:text-white hover:bg-slate-300 dark:hover:bg-white/20 focus:ring-slate-400 shadow-sm',
+      'bg-slate-200 dark:bg-white/10 border border-slate-300 dark:border-white/10 text-slate-950 dark:text-white hover:bg-slate-300 dark:hover:bg-white/20 focus:ring-slate-400',
     ghost:
       'bg-transparent text-slate-600 dark:text-(--secondary) hover:text-(--foreground) hover:bg-slate-100 dark:hover:bg-white/5 focus:ring-slate-300',
     danger:
-      'bg-[#ef4444] text-white hover:bg-red-600 focus:ring-red-500 shadow-xl shadow-red-500/30',
+      'bg-[#ef4444] text-white hover:bg-red-600 focus:ring-red-500',
     outline:
       'bg-transparent border-2 border-(--primary) text-(--primary) hover:bg-(--primary)/5 focus:ring-(--primary)',
   };

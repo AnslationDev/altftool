@@ -10,10 +10,10 @@ import { TrendingUp } from 'lucide-react';
 function CustomTooltip({ active, payload, label }) {
     if (active && payload && payload.length) {
         return (
-            <div className="bg-(--card) backdrop-blur-xl rounded-xl p-3 border border-white/10 shadow-2xl">
+            <div className="bg-(--card) backdrop-blur-xl rounded-xl p-3 border border-white/10">
                 <p className="text-[10px] font-bold uppercase tracking-widest text-(--secondary) mb-1">{label}</p>
                 <div className="flex items-center gap-2">
-                    <div className="w-2 h-2 rounded-full bg-blue-500 shadow-[0_0_8px_rgba(59,130,246,0.5)]" />
+                    <div className="w-2 h-2 rounded-full bg-blue-500" />
                     <p className="text-sm font-black text-(--foreground)">
                         Score: {payload[0].value}
                     </p>
@@ -55,7 +55,7 @@ const Charts = ({ weeklyData = MOCK_WEEKLY, monthlyData = MOCK_MONTHLY }) => {
                             key={t}
                             onClick={() => setTab(t)}
                             className={`px-5 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all cursor-pointer ${tab === t
-                                    ? 'bg-blue-600 text-white shadow-xl shadow-blue-600/25'
+                                    ? 'bg-blue-600 text-white'
                                     : 'text-(--secondary) hover:text-(--foreground) opacity-40 hover:opacity-100'
                                 }`}
                         >

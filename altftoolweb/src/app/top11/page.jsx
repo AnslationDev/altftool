@@ -5,6 +5,7 @@ import FAQ from './components/Faq';
 import FeaturedCategories from './components/FeaturedCategories';
 import ExploreCategory from './components/ExploreCategory';
 import WhyChooseUs from './components/WhyChooseUs';
+import ExpertRecommendation from './components/ExpertRecommendation';
 
 
 export default function Page() {
@@ -12,6 +13,7 @@ export default function Page() {
   <>
    <Top11 />;
    <FeaturedCategories/>
+   <ExpertRecommendation/>
    <ExploreCategory/>
    <WhyChooseUs/>
    <Meetexpert/>

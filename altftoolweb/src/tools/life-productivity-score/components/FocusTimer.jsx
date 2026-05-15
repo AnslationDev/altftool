@@ -86,13 +86,13 @@ const FocusTimer = () => {
     const progress = (timeLeft / totalDuration) * 100;
 
     return (
-        <Card variant="glass" className="h-full flex flex-col items-center justify-between p-6 shadow-xl border-white/10 dark:border-white/5">
+        <Card variant="glass" className="h-full flex flex-col items-center justify-between p-6 shadow-sm border-white/10 dark:border-white/5">
             <div className="w-full flex items-center justify-between mb-8">
                 <h3 className="text-xs font-black flex items-center gap-3 text-(--foreground) uppercase tracking-[0.2em] opacity-60">
                     <Zap size={16} className="text-blue-500" />
                     Deep Work
                 </h3>
-                <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 shadow-sm">
+                <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20">
                     <span className="text-[10px] font-black text-blue-500 tabular-nums">{sessions} sessions</span>
                 </div>
             </div>
@@ -149,7 +149,7 @@ const FocusTimer = () => {
                         className={`flex-1 py-4 rounded-2xl font-black uppercase tracking-widest transition-all ${
                             isTimerRunning 
                             ? 'bg-(--foreground)/5 text-(--foreground) hover:bg-(--foreground)/10' 
-                            : 'bg-blue-600 text-white hover:bg-blue-500 shadow-xl shadow-blue-600/30'
+                            : 'bg-blue-600 text-white hover:bg-blue-500 shadow-sm'
                         }`}
                     >
                         {isTimerRunning ? <Pause size={20} /> : <Play size={20} className="ml-1" />}

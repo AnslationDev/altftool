@@ -156,7 +156,7 @@ export default function ToolHome() {
   return (
     <main className="min-h-screen bg-[var(--background)] px-4 py-8 text-[var(--foreground)] sm:px-6">
       <div className="mx-auto max-w-7xl space-y-6">
-        <section className="rounded-lg border border-[var(--border)] bg-[var(--card)] p-6 shadow-[var(--anslation-ds-shadow-sm)] lg:p-8">
+        <section className="rounded-lg border border-[var(--border)] bg-[var(--card)] p-6 shadow-[var(--anslation-ds-shadow-sm)] 2xl:p-8">
           <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-[var(--muted)] px-3 py-1 text-xs font-semibold uppercase text-[var(--primary)]">
             <ImageIcon className="h-4 w-4" />
             Image metadata
@@ -167,7 +167,7 @@ export default function ToolHome() {
           </p>
         </section>
 
-        <section className="grid gap-6 lg:grid-cols-[380px_1fr]">
+        <section className="grid gap-6 2xl:grid-cols-[380px_1fr]">
           <div className="rounded-lg border border-[var(--border)] bg-[var(--card)] p-5 shadow-[var(--anslation-ds-shadow-sm)]">
             <label className="flex min-h-56 cursor-pointer flex-col items-center justify-center rounded-lg border border-dashed border-[var(--border)] bg-[var(--background)] p-6 text-center hover:bg-[var(--muted)]">
               <UploadCloud className="h-10 w-10 text-[var(--primary)]" />
@@ -207,7 +207,7 @@ export default function ToolHome() {
             ) : null}
 
             {importantRows.length ? (
-              <div className="mb-5 grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
+              <div className="tool-card-grid mb-5">
                 {importantRows.map((row) => (
                   <div key={`${row.name}-${row.value}`} className="rounded-lg border border-[var(--border)] bg-[var(--background)] p-4">
                     <p className="text-xs font-semibold uppercase text-[var(--muted-foreground)]">{row.name}</p>

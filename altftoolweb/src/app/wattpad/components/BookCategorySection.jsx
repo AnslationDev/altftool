@@ -45,8 +45,8 @@ function CatCard({ item }) {
       <div
         className="
         rounded-full flex justify-center items-center overflow-hidden bg-[#f4f2f2] group
-        w-22 h-22 sm:w-24 sm:h-24 md:w-26 md:h-26
-        lg:w-30 lg:h-30 xl:w-36 xl:h-36 2xl:w-40 2xl:h-40
+        w-22 h-22 md:w-26 md:h-26 
+        lg:w-30 lg:h-30 xl:w-35 xl:h-35  [@media(min-width:1700px)]:w-40 [@media(min-width:1700px)]:h-40
        
       "
       >
@@ -56,10 +56,10 @@ function CatCard({ item }) {
           height={100}
           alt={item.name}
           className="
-          object-cover transition-transform duration-300 group-hover:scale-105
-          w-19.5 h-19.5 sm:w-21 sm:h-21 md:w-23 md:h-23
+          object-cover transition-transform duration-300 group-hover:scale-104
+          w-20.5 h-20.5 md:w-23 md:h-23
           lg:w-27 lg:h-27
-          xl:w-33 xl:h-33 2xl:w-37 2xl:h-37 rounded-full
+          xl:w-32 xl:h-32  [@media(min-width:1700px)]:w-36.5 [@media(min-width:1700px)]:h-36.5 rounded-full
         "
         />
       </div>

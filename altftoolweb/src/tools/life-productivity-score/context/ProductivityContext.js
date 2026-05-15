@@ -170,6 +170,31 @@ export const ProductivityProvider = ({ children }) => {
     const usedHours = sleep + work + (exercise / 60) + screenTime;
     const score = calculateScore();
 
+    // Track daily score history (keep last 7 days)
+    useEffect(() => {
+        const todayStr = new Date().toISOString().split('T')[0];
+        setHistory(prevHistory => {
+            const existingIndex = prevHistory.findIndex(h => h.date === todayStr);
+            
+            if (existingIndex >= 0 && prevHistory[existingIndex].score === score) {
+                return prevHistory; // No change
+            }
+
+            const newHistory = [...prevHistory];
+            if (existingIndex >= 0) {
+                newHistory[existingIndex].score = score;
+            } else {
+                newHistory.push({ date: todayStr, score });
+            }
+
+            // Keep only the last 7 days
+            if (newHistory.length > 7) {
+                return newHistory.slice(newHistory.length - 7);
+            }
+            return newHistory;
+        });
+    }, [score]);
+
     const value = {
         sleep, setSleep: handleSleepChange,
         work, setWork: handleWorkChange,

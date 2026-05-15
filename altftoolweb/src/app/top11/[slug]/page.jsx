@@ -22,7 +22,7 @@ export default function CategoryPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#f8fafc] to-[#eef2ff]">
 
-      {/* 🔥 HERO BANNER */}
+      {/* HERO BANNER */}
       <div className="relative w-full h-[260px] md:h-[360px] overflow-hidden">
 
         <ManagedImage

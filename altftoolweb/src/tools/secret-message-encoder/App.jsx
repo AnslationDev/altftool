@@ -280,14 +280,14 @@ export default function SecretMessageEncoder() {
         </p>
       </header>
 
-      <section className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      <section className="tool-card-grid mt-8">
         <StatCard label="Input" value={`${inputStats.characters} chars`} icon={MessageSquareText} />
         <StatCard label="Output" value={`${outputStats.characters} chars`} icon={FileText} />
         <StatCard label="Checksum" value={outputStats.checksum} icon={ShieldCheck} />
         <StatCard label="Algorithm" value={activeAlgorithm.label} icon={KeyRound} />
       </section>
 
-      <section className="mt-8 grid gap-6 xl:grid-cols-[0.8fr_1.2fr]">
+      <section className="mt-8 grid gap-6 2xl:grid-cols-[0.8fr_1.2fr]">
         <div className="grid gap-6">
           <Panel title="Cipher Control" eyebrow="Mode and algorithm" icon={KeyRound}>
             <div className="grid grid-cols-2 gap-2 rounded-lg border border-(--border) bg-(--background) p-2">
@@ -393,7 +393,7 @@ export default function SecretMessageEncoder() {
               </div>
             }
           >
-            <div className="grid gap-4 lg:grid-cols-2">
+            <div className="grid gap-4 2xl:grid-cols-2">
               <label className="min-w-0">
                 <span className="mb-2 block text-sm font-bold text-(--foreground)">Source Message</span>
                 <textarea
@@ -425,7 +425,7 @@ export default function SecretMessageEncoder() {
               </div>
             ) : null}
 
-            <div className="mt-5 grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
+            <div className="tool-action-grid mt-5">
               <button type="button" className="btn-primary w-full" onClick={() => handleCopy(outputText, "output")} disabled={!outputText}>
                 <Copy />
                 {copied === "output" ? "Copied" : "Copy Output"}
@@ -446,7 +446,7 @@ export default function SecretMessageEncoder() {
           </Panel>
 
           <Panel title="Payload Intelligence" eyebrow="Audit snapshot" icon={ShieldCheck}>
-            <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+            <div className="tool-card-grid">
               <StatCard label="Input Words" value={inputStats.words} icon={MessageSquareText} />
               <StatCard label="Input Bytes" value={inputStats.bytes} icon={Binary} />
               <StatCard label="Output Lines" value={outputStats.lines} icon={FileText} />
@@ -465,7 +465,7 @@ export default function SecretMessageEncoder() {
         </div>
       </section>
 
-      <section className="mt-8 grid gap-4 md:grid-cols-3">
+      <section className="tool-feature-grid mt-8">
         {[
           ["Private by default", "All transformations happen inside your browser session. Nothing is uploaded."],
           ["Shareable recipes", "Copy a link with the selected algorithm, mode, shift, and source text."],

@@ -14,10 +14,10 @@ const formatMoney = (value) =>
 
 function StatCard({ label, value, tone = "default" }) {
   return (
-    <div className="rounded-lg border border-[var(--border)] bg-[var(--card)] p-4 shadow-[var(--anslation-ds-shadow-sm)]">
+    <div className="min-w-0 rounded-lg border border-[var(--border)] bg-[var(--card)] p-4 shadow-[var(--anslation-ds-shadow-sm)]">
       <p className="text-xs font-semibold uppercase text-[var(--muted-foreground)]">{label}</p>
       <p
-        className={`mt-2 text-2xl font-semibold ${
+        className={`tool-money-value mt-2 ${
           tone === "primary" ? "text-[var(--primary)]" : "text-[var(--foreground)]"
         }`}
       >
@@ -65,29 +65,29 @@ export default function ToolHome() {
   return (
     <main className="min-h-screen bg-[var(--background)] px-4 py-8 text-[var(--foreground)] sm:px-6">
       <div className="mx-auto max-w-7xl">
-        <section className="rounded-lg border border-[var(--border)] bg-[var(--card)] p-6 shadow-[var(--anslation-ds-shadow-sm)] lg:p-8">
-          <div className="grid gap-6 lg:grid-cols-[1fr_340px] lg:items-end">
+        <section className="rounded-lg border border-[var(--border)] bg-[var(--card)] p-6 shadow-[var(--anslation-ds-shadow-sm)] 2xl:p-8">
+          <div className="grid gap-6 2xl:grid-cols-[1fr_340px] 2xl:items-end">
             <div>
               <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-[var(--muted)] px-3 py-1 text-xs font-semibold uppercase text-[var(--primary)]">
                 <ReceiptText className="h-4 w-4" />
                 Finance calculator
               </div>
-              <h1 className="text-4xl font-semibold leading-tight">GST Calculator</h1>
+              <h1 className="tool-heading-accent text-3xl font-semibold leading-tight sm:text-4xl">GST Calculator</h1>
               <p className="mt-3 max-w-2xl text-base leading-7 text-[var(--muted-foreground)]">
                 Calculate GST-inclusive or GST-exclusive prices with clean tax splits for invoices and quotes.
               </p>
             </div>
-            <div className="rounded-lg border border-[var(--border)] bg-[var(--background)] p-4">
+            <div className="min-w-0 rounded-lg border border-[var(--border)] bg-[var(--background)] p-4">
               <p className="text-xs font-semibold uppercase text-[var(--muted-foreground)]">Total amount</p>
-              <p className="mt-2 text-3xl font-semibold text-[var(--primary)]">{formatMoney(result.total)}</p>
+              <p className="tool-money-value tool-hero-value mt-2 text-[var(--primary)]">{formatMoney(result.total)}</p>
               <p className="mt-2 text-sm text-[var(--muted-foreground)]">GST amount: {formatMoney(result.tax)}</p>
             </div>
           </div>
         </section>
 
-        <section className="mt-6 grid gap-6 lg:grid-cols-[420px_1fr]">
+        <section className="mt-6 grid gap-6 2xl:grid-cols-[420px_1fr]">
           <div className="rounded-lg border border-[var(--border)] bg-[var(--card)] p-5 shadow-[var(--anslation-ds-shadow-sm)]">
-            <div className="mb-5 flex items-center justify-between">
+            <div className="mb-5 flex flex-wrap items-center justify-between gap-3">
               <h2 className="text-xl font-semibold">Inputs</h2>
               <button
                 type="button"
@@ -97,7 +97,7 @@ export default function ToolHome() {
                   setMode("exclusive");
                   setTaxType("intra");
                 }}
-                className="inline-flex h-9 items-center gap-2 rounded-md border border-[var(--border)] px-3 text-sm font-semibold text-[var(--muted-foreground)] hover:border-[var(--primary)] hover:text-[var(--primary)]"
+                className="btn-secondary min-h-9 px-3 py-1.5"
               >
                 <RotateCcw className="h-4 w-4" />
                 Reset
@@ -135,7 +135,7 @@ export default function ToolHome() {
               </div>
             </div>
 
-            <div className="mt-5 grid grid-cols-2 gap-2">
+            <div className="tool-compact-grid mt-5">
               {[
                 ["exclusive", "Add GST"],
                 ["inclusive", "Extract GST"],
@@ -144,7 +144,7 @@ export default function ToolHome() {
                   key={value}
                   type="button"
                   onClick={() => setMode(value)}
-                  className={`h-11 rounded-md border text-sm font-semibold ${
+                  className={`min-h-11 rounded-md border px-3 py-2 text-sm font-semibold ${
                     mode === value
                       ? "border-[var(--primary)] bg-[var(--primary)] text-[var(--primary-foreground)]"
                       : "border-[var(--border)] bg-[var(--background)] text-[var(--muted-foreground)]"
@@ -155,7 +155,7 @@ export default function ToolHome() {
               ))}
             </div>
 
-            <div className="mt-5 grid grid-cols-2 gap-2">
+            <div className="tool-compact-grid mt-5">
               {[
                 ["intra", "CGST + SGST"],
                 ["inter", "IGST"],
@@ -164,7 +164,7 @@ export default function ToolHome() {
                   key={value}
                   type="button"
                   onClick={() => setTaxType(value)}
-                  className={`h-11 rounded-md border text-sm font-semibold ${
+                  className={`min-h-11 rounded-md border px-3 py-2 text-sm font-semibold ${
                     taxType === value
                       ? "border-[var(--primary)] bg-[var(--primary)] text-[var(--primary-foreground)]"
                       : "border-[var(--border)] bg-[var(--background)] text-[var(--muted-foreground)]"
@@ -176,14 +176,16 @@ export default function ToolHome() {
             </div>
           </div>
 
-          <div className="grid content-start gap-4 sm:grid-cols-2">
-            <StatCard label="Taxable value" value={formatMoney(result.taxable)} />
-            <StatCard label="GST amount" value={formatMoney(result.tax)} tone="primary" />
-            <StatCard label="CGST" value={formatMoney(result.cgst)} />
-            <StatCard label="SGST" value={formatMoney(result.sgst)} />
-            <StatCard label="IGST" value={formatMoney(result.igst)} />
-            <StatCard label="Final amount" value={formatMoney(result.total)} tone="primary" />
-            <div className="rounded-lg border border-[var(--border)] bg-[var(--card)] p-5 sm:col-span-2">
+          <div className="space-y-4">
+            <div className="tool-card-grid">
+              <StatCard label="Taxable value" value={formatMoney(result.taxable)} />
+              <StatCard label="GST amount" value={formatMoney(result.tax)} tone="primary" />
+              <StatCard label="CGST" value={formatMoney(result.cgst)} />
+              <StatCard label="SGST" value={formatMoney(result.sgst)} />
+              <StatCard label="IGST" value={formatMoney(result.igst)} />
+              <StatCard label="Final amount" value={formatMoney(result.total)} tone="primary" />
+            </div>
+            <div className="rounded-lg border border-[var(--border)] bg-[var(--card)] p-5">
               <div className="mb-3 flex items-center gap-2 text-sm font-semibold text-[var(--primary)]">
                 <Calculator className="h-4 w-4" />
                 Formula

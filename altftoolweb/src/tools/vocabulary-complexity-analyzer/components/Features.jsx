@@ -9,14 +9,14 @@ const Features = () => {
 
     const features = [
         {
-            title: "Accurate Household Electricity Bill",
+            title: "Accurate Vocabulary Complexity Analysis",
             description:
-                "Calculate the exact electricity bill for your household based on the appliances you use.",
+                "Calculate the exact vocabulary complexity for your text based on the words you use.",
         },
         {
             title: "Instant Results",
             description:
-                "Get your electricity bill calculated immediately with real-time processing. No delays, just quick and accurate output.",
+                "Get your vocabulary complexity analyzed immediately with real-time processing. No delays, just quick and accurate output.",
         },
         {
             title: "Fully Responsive",
@@ -26,12 +26,12 @@ const Features = () => {
         {
             title: "Clean & Simple Interface",
             description:
-                "Minimal, distraction-free design that makes calculating your electricity bill easy and user-friendly.",
+                "Minimal, distraction-free design that makes calculating your vocabulary complexity easy and user-friendly.",
         },
         {
             title: "Privacy Focused",
             description:
-                "Your electricity bill data stays in your browser. No data storage, no tracking — complete privacy guaranteed.",
+                "Your vocabulary complexity data stays in your browser. No data storage, no tracking — complete privacy guaranteed.",
         },
         {
             title: "No Backend Required",
@@ -78,13 +78,13 @@ const Features = () => {
                         className="text-3xl sm:text-4xl font-extrabold text-(--foreground) mb-4"
                         variants={headerVariants}
                     >
-                        Why Choose Our Household Electricity Bill?
+                        Why Choose Our Vocabulary Complexity Analyzer?
                     </motion.h2>
                     <motion.p
                         className="text-base sm:text-lg text-(--muted-foreground) max-w-2xl mx-auto leading-relaxed"
                         variants={headerVariants}
                     >
-                        Simple, fast, and accurate household electricity bill calculation for everyone
+                        Simple, fast, and accurate vocabulary complexity analysis for everyone
                     </motion.p>
                 </motion.div>
 

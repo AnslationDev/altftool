@@ -403,7 +403,7 @@ export default function MainComponent() {
       </div>
 
       <section className="mt-8 rounded-lg border border-(--border) bg-(--card) p-5 sm:p-6">
-        <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_360px] lg:items-center">
+        <div className="grid gap-6 2xl:grid-cols-[minmax(0,1fr)_360px] 2xl:items-center">
           <div className="flex items-start gap-4">
             <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-(--section-highlight) text-(--primary)">
               <Wallet className="h-6 w-6" />
@@ -437,7 +437,7 @@ export default function MainComponent() {
         </div>
       </section>
 
-      <section className="mt-6 grid gap-6 lg:grid-cols-[420px_minmax(0,1fr)]">
+      <section className="mt-6 grid gap-6 2xl:grid-cols-[420px_minmax(0,1fr)]">
         <div className="space-y-4 rounded-lg border border-(--border) bg-(--card) p-5">
           <Field
             label="Initial Corpus"
@@ -563,7 +563,7 @@ export default function MainComponent() {
             </div>
           )}
 
-          <div className="grid gap-4 md:grid-cols-2">
+          <div className="tool-card-grid">
             <MetricCard
               icon={IndianRupee}
               label="Total Withdrawn"
@@ -614,7 +614,7 @@ export default function MainComponent() {
                 style={{ width: `${finalCorpusWidth}%` }}
               />
             </div>
-            <div className="mt-3 grid gap-3 text-sm sm:grid-cols-3">
+            <div className="tool-compact-grid mt-3 text-sm">
               <div className="rounded-lg bg-(--background) p-3">
                 <p className="text-(--muted-foreground)">Opening corpus</p>
                 <p className="font-semibold text-(--foreground)">{formatMoney(displayForm.corpus)}</p>
@@ -643,7 +643,7 @@ export default function MainComponent() {
               </div>
             </div>
 
-            <div className="grid gap-3 md:grid-cols-3">
+            <div className="tool-card-grid">
               {scenarios.map((scenario) => (
                 <div
                   key={scenario.label}

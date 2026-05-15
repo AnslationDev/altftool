@@ -88,7 +88,7 @@ function groupBy(items, key) {
 
 function Panel({ title, icon: Icon, eyebrow, action, children, className = "" }) {
   return (
-    <section className={`rounded-lg border border-(--border) bg-(--card) p-5 ${className}`}>
+    <section className={`min-w-0 rounded-lg border border-(--border) bg-(--card) p-4 sm:p-5 ${className}`}>
       <div className="mb-5 flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
         <div className="flex items-start gap-3">
           {Icon ? (
@@ -96,9 +96,9 @@ function Panel({ title, icon: Icon, eyebrow, action, children, className = "" })
               <Icon className="h-5 w-5" />
             </div>
           ) : null}
-          <div>
+          <div className="min-w-0">
             {eyebrow ? <p className="text-xs font-bold uppercase tracking-wide text-(--muted-foreground)">{eyebrow}</p> : null}
-            <h2 className="text-lg font-extrabold text-(--foreground)">{title}</h2>
+            <h2 className="break-words text-lg font-extrabold text-(--foreground)">{title}</h2>
           </div>
         </div>
         {action}
@@ -117,7 +117,7 @@ function StatusBadge({ tone = "info", children }) {
   };
 
   return (
-    <span className={`inline-flex items-center gap-2 rounded-full border px-3 py-1 text-xs font-bold ${styles[tone]}`}>
+    <span className={`inline-flex min-w-0 items-center justify-center gap-2 rounded-full border px-3 py-1 text-center text-xs font-bold ${styles[tone]}`}>
       {children}
     </span>
   );
@@ -163,12 +163,12 @@ function ScoreDial({ label, value, detail, icon: Icon, tone = "info" }) {
 
 function SignalRow({ label, value, icon: Icon, tone = "info" }) {
   return (
-    <div className="flex items-center justify-between gap-4 border-b border-(--border) py-3 last:border-b-0">
-      <div className="flex min-w-0 items-center gap-3">
+    <div className="flex flex-wrap items-center justify-between gap-3 border-b border-(--border) py-3 last:border-b-0">
+      <div className="flex min-w-32 flex-1 items-center gap-3">
         <div className="grid h-9 w-9 shrink-0 place-items-center rounded-lg border border-(--border) bg-(--background) text-(--primary)">
           <Icon className="h-4 w-4" />
         </div>
-        <span className="truncate text-sm font-bold text-(--foreground)">{label}</span>
+        <span className="min-w-0 whitespace-normal text-sm font-bold text-(--foreground)">{label}</span>
       </div>
       <span className="shrink-0">
         <StatusBadge tone={tone}>{value || "N/A"}</StatusBadge>
@@ -182,7 +182,7 @@ function StatTile({ label, value, icon: Icon }) {
     <div className="min-w-0 rounded-lg border border-(--border) bg-(--background) p-4">
       <div className="mb-3 flex items-center gap-2 text-(--primary)">
         <Icon className="h-4 w-4 shrink-0" />
-        <p className="min-w-0 text-xs font-bold uppercase tracking-wide text-(--muted-foreground)">{label}</p>
+        <p className="min-w-0 break-words text-xs font-bold uppercase tracking-wide text-(--muted-foreground)">{label}</p>
       </div>
       <p className="break-words text-sm font-extrabold text-(--foreground)">{value || "N/A"}</p>
     </div>
@@ -193,9 +193,9 @@ function CapabilityCard({ capability }) {
   const Icon = capability.supported ? CheckCircle2 : XCircle;
 
   return (
-    <div className="rounded-lg border border-(--border) bg-(--card) p-4">
+    <div className="min-w-0 rounded-lg border border-(--border) bg-(--card) p-4">
       <div className="mb-2 flex items-center justify-between gap-3">
-        <h3 className="text-sm font-extrabold text-(--foreground)">{capability.label}</h3>
+        <h3 className="min-w-0 break-words text-sm font-extrabold text-(--foreground)">{capability.label}</h3>
         <Icon className={`h-5 w-5 ${capability.supported ? "text-green-600" : "text-red-600"}`} />
       </div>
       <p className="text-xs font-semibold uppercase tracking-wide text-(--muted-foreground)">{capability.group}</p>
@@ -208,7 +208,7 @@ function PermissionRow({ permission }) {
   const tone = permission.tone === "success" ? "good" : permission.tone === "warning" ? "warn" : "info";
 
   return (
-    <div className="flex items-center justify-between gap-4 border-b border-(--border) py-3 last:border-b-0">
+    <div className="flex flex-col gap-3 border-b border-(--border) py-3 last:border-b-0 sm:flex-row sm:items-center sm:justify-between sm:gap-4">
       <span className="text-sm font-bold text-(--foreground)">{permission.label}</span>
       <StatusBadge tone={tone}>{permission.status}</StatusBadge>
     </div>
@@ -217,7 +217,7 @@ function PermissionRow({ permission }) {
 
 function DetailGrid({ rows }) {
   return (
-    <div className="grid gap-4 md:grid-cols-2">
+    <div className="tool-card-grid">
       {rows.map(([label, value, Icon = Sparkles]) => (
         <StatTile key={label} label={label} value={value} icon={Icon} />
       ))}
@@ -229,9 +229,9 @@ function OverviewTab({ data }) {
   const topCapabilities = data.capabilities.slice(0, 10);
 
   return (
-    <div className="grid gap-6 xl:grid-cols-[0.85fr_1.15fr]">
+    <div className="grid gap-6 2xl:grid-cols-[0.85fr_1.15fr]">
       <Panel title="Live Environment Snapshot" eyebrow="Scan summary" icon={Radar}>
-        <div className="grid gap-4 sm:grid-cols-2">
+        <div className="tool-card-grid">
           <StatTile label="Browser" value={`${data.browser.name || "N/A"} ${data.browser.version || ""}`.trim()} icon={Globe2} />
           <StatTile label="Operating System" value={data.device.os} icon={MonitorSmartphone} />
           <StatTile label="Device Type" value={data.device.deviceType} icon={Cpu} />
@@ -242,7 +242,7 @@ function OverviewTab({ data }) {
       </Panel>
 
       <Panel title="Capability Board" eyebrow="First-pass support check" icon={Sparkles}>
-        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="tool-compact-grid">
           {topCapabilities.map((capability) => (
             <CapabilityCard key={capability.key} capability={capability} />
           ))}
@@ -254,7 +254,7 @@ function OverviewTab({ data }) {
 
 function HardwareTab({ data }) {
   return (
-    <div className="grid gap-6 lg:grid-cols-2">
+    <div className="grid gap-6 2xl:grid-cols-2">
       <Panel title="Device Profile" eyebrow="Hardware identity" icon={Cpu}>
         {[
           ["Operating System", data.device.os],
@@ -329,7 +329,7 @@ function BrowserTab({ data }) {
 
   return (
     <div className="grid gap-6">
-      <div className="grid gap-6 xl:grid-cols-[0.85fr_1.15fr]">
+      <div className="grid gap-6 2xl:grid-cols-[0.85fr_1.15fr]">
         <Panel title="Browser Context" eyebrow="Runtime identity" icon={Globe2}>
           {[
             ["Browser", data.browser.name],
@@ -370,7 +370,7 @@ function BrowserTab({ data }) {
 
       {Object.entries(groupedCapabilities).map(([group, capabilities]) => (
         <Panel key={group} title={`${group} Support`} eyebrow={`${capabilities.length} browser checks`} icon={Zap}>
-          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="tool-compact-grid">
             {capabilities.map((capability) => (
               <CapabilityCard key={capability.key} capability={capability} />
             ))}
@@ -383,7 +383,7 @@ function BrowserTab({ data }) {
 
 function PrivacyTab({ data }) {
   return (
-    <div className="grid gap-6 lg:grid-cols-[0.9fr_1.1fr]">
+    <div className="grid gap-6 2xl:grid-cols-[0.9fr_1.1fr]">
       <Panel title="Security Context" eyebrow="Browser isolation" icon={Lock}>
         {[
           ["Secure Context", data.security.secureContext],
@@ -410,7 +410,7 @@ function PrivacyTab({ data }) {
       </Panel>
 
       <Panel title="Fingerprint Surface Signals" eyebrow="Readable browser signals" icon={Eye} className="lg:col-span-2">
-        <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-3">
+        <div className="tool-card-grid">
           {data.fingerprint.signals.map((signal) => (
             <div key={signal.label} className="rounded-lg border border-(--border) bg-(--background) p-4">
               <div className="mb-2 flex items-center justify-between gap-3">
@@ -512,7 +512,7 @@ export default function DeviceDashboardEntry() {
           </p>
         </div>
 
-        <div className="mx-auto mt-8 grid w-full max-w-4xl gap-3 sm:grid-cols-3">
+        <div className="tool-card-grid mx-auto mt-8 w-full max-w-4xl">
           <ScoreDial
             label="Compatibility"
             value={data.scores.compatibility}
@@ -537,18 +537,18 @@ export default function DeviceDashboardEntry() {
         </div>
       </header>
 
-      <section className="mt-8 grid gap-4 xl:grid-cols-[1.25fr_0.75fr]">
+      <section className="mt-8 grid gap-4 2xl:grid-cols-[1.25fr_0.75fr]">
         <Panel title="Environment Intelligence Panel" eyebrow="Last scan" icon={MonitorSmartphone}>
           <p className="max-w-3xl text-sm leading-relaxed text-(--muted-foreground)">
             Saara detection browser ke andar hota hai. Data server par send nahi hota. Use this panel for quick debugging before releasing browser-heavy features.
           </p>
-          <div className="mt-5 grid gap-3 md:grid-cols-2">
+          <div className="tool-card-grid mt-5">
             <StatTile label="Scanned" value={formatDate(data.summary.scannedAt)} icon={Radar} />
             <StatTile label="OS" value={data.device.os} icon={MonitorSmartphone} />
             <StatTile label="Browser" value={data.browser.name} icon={Globe2} />
             <StatTile label="GPU" value={data.gpu.vendor} icon={Zap} />
           </div>
-          <div className="mt-5 grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
+          <div className="tool-action-grid mt-5">
             <button className="btn-primary w-full px-3" onClick={refresh} disabled={loading} type="button">
               <RefreshCw className={loading ? "animate-spin" : ""} />
               Rescan Device
@@ -603,7 +603,7 @@ export default function DeviceDashboardEntry() {
         </div>
       ) : null}
 
-      <nav className="mt-6 grid gap-2 rounded-lg border border-(--border) bg-(--card) p-2 sm:grid-cols-2 lg:grid-cols-5" aria-label="Dashboard sections">
+      <nav className="tool-tab-grid mt-6 rounded-lg border border-(--border) bg-(--card) p-2" aria-label="Dashboard sections">
         {TABS.map((tab) => {
           const Icon = tab.icon;
           return (

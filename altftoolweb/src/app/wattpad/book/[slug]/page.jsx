@@ -51,7 +51,7 @@ export default async function BookDetailPage({ params }) {
     <div className="bg-(--background) min-h-screen ">
 
       {/* MAIN CONTAINER */}
-      <div className="section pt-10 lg:pt-14">
+      <div className="section pt-10 lg:pt-14 max-w-[1650px] ">
 
         {/* GRID */}
         <div className="grid grid-cols-1 xl:grid-cols-[1fr_320px] gap-12 items-start">
@@ -173,7 +173,7 @@ export default async function BookDetailPage({ params }) {
 
               </h2>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 rounded-md shadow-[0_8px_5px_-10px_rgba(0,0,0,0.2)] p-5">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 rounded-md shadow-[0_8px_5px_-10px_rgba(0,0,0,0.2)] md:p-5">
 
                 {relatedBooks.map((item, index) => (
 
@@ -182,27 +182,27 @@ export default async function BookDetailPage({ params }) {
                     href={`/wattpad/book/${item.slug}`}
                   >
 
-                    <div className="grid grid-cols-[150px_1fr] gap-5 group cursor-pointer bg-(--background) rounded-xl">
+                    <div className="grid grid-cols-[110px_1fr] sm:grid-cols-[130px_1fr] md:grid-cols-[150px_1fr] 2xl:grid-cols-[170px_1fr] gap-2 sm:gap-4 md:gap-5 group cursor-pointer bg-(--background) rounded-xl">
 
                       {/* COVER */}
                       <div className="relative rounded-xl overflow-hidden">
 
                         <Image
                           src={item.coverImage}
-                          width={150}
-                          height={180}
+                          width={170}
+                          height={260}
                           alt={item.title}
-                          className="w-[150px] h-[215px] object-cover group-hover:scale-105 transition duration-300"
+                          className="w-[110px] h-[170px] sm:w-[130px] sm:h-[190px] md:w-[150px] md:h-[220px] 2xl:w-[170px] 2xl:h-[245px]  object-cover group-hover:scale-105 transition duration-300"
                         />
 
                       </div>
 
                       {/* CONTENT */}
-                      <div>
+                      <div className="flex flex-col justify-start md:pt-1">
 
-                        <h3 className="text-[26px] leading-tight tracking-tighter font-bold line-clamp-1">
+                        <h3 className="text-2xl leading-tight tracking-tighter font-bold line-clamp-1">
 
-                          {index + 1}. {item.title}
+                          <span className="text-3xl">{index + 1}.</span> {item.title}
 
                         </h3>
 
@@ -211,27 +211,27 @@ export default async function BookDetailPage({ params }) {
                         </p>
 
                         {/* STATS */}
-                        <div className="flex gap-4 text-sm text-(--muted-foreground) mt-1">
+                        <div className="flex gap-4 md:gap-5 text-sm text-(--muted-foreground) mt-1 md:mt-2">
 
-                          <span className="flex gap-2">
+                          <span className="flex justify-center items-center gap-1 md:gap-2">
                            <Eye size={16} />{item.stats.views}
                           </span>
 
-                          <span className="flex gap-2">
+                          <span className="flex justify-center items-center gap-1 md:gap-2">
                            <List size={16} /> {item.stats.totalChapters} parts
                           </span>
 
                         </div>
 
                         {/* SUMMARY */}
-                        <p className="text-(--muted-foreground) mt-1 leading-7 line-clamp-3">
+                        <p className="text-(--mute-foreground) mt-1 md:mt-2 leading-6 tracking-tight line-clamp-2 2xl:line-clamp-4">
 
                           {item.summary}
 
                         </p>
 
                         {/* TAGS */}
-                        <div className="flex flex-wrap gap-2 mt-1">
+                        <div className="flex flex-wrap gap-2 mt-2">
 
                           {item.tags?.slice(0, 3).map((tag) => (
 

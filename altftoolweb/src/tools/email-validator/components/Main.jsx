@@ -458,7 +458,7 @@ export default function MainComponent() {
       </div>
 
       <section className="mt-8 rounded-lg border border-(--border) bg-(--card) p-5 sm:p-6">
-        <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+        <div className="flex flex-col gap-4 lg:flex-row 2xl:items-center lg:justify-between">
           <div className="flex items-start gap-4">
             <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-(--section-highlight) text-(--primary)">
               <MailCheck className="h-6 w-6" />
@@ -494,7 +494,7 @@ export default function MainComponent() {
         </div>
 
         {activeMode === "single" ? (
-          <div className="mt-6 grid gap-4 lg:grid-cols-[minmax(0,1fr)_auto]">
+          <div className="mt-6 grid gap-4 2xl:grid-cols-[minmax(0,1fr)_auto]">
             <input
               type="email"
               value={singleEmail}
@@ -569,7 +569,7 @@ export default function MainComponent() {
       )}
 
       {activeMode === "single" && singleResult && (
-        <section className="mt-6 grid gap-6 lg:grid-cols-[minmax(0,1fr)_360px]">
+        <section className="mt-6 grid gap-6 2xl:grid-cols-[minmax(0,1fr)_360px]">
           <div className="rounded-lg border border-(--border) bg-(--card) p-5 sm:p-6">
             <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
               <div>
@@ -589,7 +589,7 @@ export default function MainComponent() {
               </button>
             </div>
 
-            <div className="mt-6 grid gap-3 sm:grid-cols-3">
+            <div className="tool-card-grid mt-6">
               <MetricCard
                 icon={Globe}
                 label="Domain"

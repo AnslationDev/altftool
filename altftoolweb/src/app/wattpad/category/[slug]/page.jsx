@@ -31,7 +31,7 @@ export default async function CategoryPage({ params }) {
   );
 
   return (
-    <div className="section min-h-screen">
+    <div className="section min-h-screen max-w-[1750px] ">
 
       {/* MAIN LAYOUT */}
       <div className="grid grid-cols-1 lg:grid-cols-[1fr_320px] gap-10 item-start">
@@ -62,7 +62,7 @@ export default async function CategoryPage({ params }) {
             </p>
 
             {/* Horizontal Scroll */}
-            <div className="flex gap-3 overflow-x-auto  mt-6 no-scrollbar overflow-y-hidden">
+            <div className="flex gap-2 md:3 overflow-x-auto  mt-6 no-scrollbar overflow-y-hidden">
 
               {filteredBooks.slice(0, 8).map((book) => (
 
@@ -71,23 +71,23 @@ export default async function CategoryPage({ params }) {
                   href={`/wattpad/book/${book.slug}`}
                   className="shrink-0"
                 >
-                  <div className="w-full max-w-[200px]">
+                  <div className="w-full">
 
-                    <div className="relative rounded-md overflow-hidden w-full max-w-[170px]">
+                    <div className="relative rounded-md overflow-hidden w-full ">
 
                       <Image
                         src={book.coverImage}
-                        width={120}
-                        height={180}
+                        width={180}
+                        height={260}
                         alt={book.title}
-                        className=" w-[160px] h-[230px] object-cover hover:scale-105 transition duration-300"
+                        className="w-[110px] h-[170px] sm:w-[130px] sm:h-[230px] md:w-[160px] md:h-[230px]  2xl:w-[180px] 2xl:h-[260px] object-cover hover:scale-104 transition duration-300"
                       />
 
                     </div>
 
                     {/* Tags */}
-                    <div className="mt-3">
-                      <span className="bg-(--card) text-xs px-3 py-1 rounded-md">
+                    <div className="my-3">
+                      <span className="bg-(--card) text-xs px-3 py-1 rounded-md border border-(--border) ">
                         {book.tags?.[0]}
                       </span>
                     </div>
@@ -101,7 +101,7 @@ export default async function CategoryPage({ params }) {
           </div>
 
           {/* TAGS */}
-          <div className="bg-(--background)  rounded-lg p-6 mb-3 shadow-[0_8px_4px_-10px_rgba(0,0,0,0.2)]">
+          <div className="bg-(--background)  rounded-lg p-2 md:p-6 mb-3 shadow-[0_8px_4px_-10px_rgba(0,0,0,0.2)]">
 
             <h3 className="text-base text-(--muted-foreground) mb-2">
               Refine by tag:
@@ -127,7 +127,7 @@ export default async function CategoryPage({ params }) {
 
                 <button
                   key={tag}
-                  className="border border-(--border) rounded-lg px-3 py-1 text-sm hover:bg-(--primary) hover:text-white transition bg-(--card) "
+                  className="border border-(--border) rounded-lg px-3 py-1 text-sm hover:bg-(--primary) hover:text-white transition bg-(--card) cursor-pointer"
                 >
                   + {tag}
                 </button>
@@ -141,7 +141,7 @@ export default async function CategoryPage({ params }) {
           <div>
 
             {/* Top */}
-             <div className="rounded-md shadow-[0_8px_4px_-10px_rgba(0,0,0,0.2)] p-5">
+             <div className="rounded-md shadow-[0_8px_4px_-10px_rgba(0,0,0,0.2)] md:p-5">
             <div className="flex items-center border-b border-(--border) justify-between pb-3 mb-8">
 
               <h2 className="text-sm font-bold">
@@ -155,7 +155,7 @@ export default async function CategoryPage({ params }) {
             </div>
 
             {/* Story List */}
-            <div className="grid grid-cols-1 xl:grid-cols-2 gap-x-10 gap-y-8">
+            <div className="grid grid-cols-1 xl:grid-cols-2 gap-x-7 gap-y-6">
 
               {filteredBooks.map((book, index) => (
 
@@ -163,26 +163,26 @@ export default async function CategoryPage({ params }) {
                   key={book.id}
                   href={`/wattpad/book/${book.slug}`}
                 >
-                  <div className="grid grid-cols-[150px_1fr] gap-5 group cursor-pointer">
+                  <div className="grid grid-cols-[110px_1fr] sm:grid-cols-[130px_1fr] md:grid-cols-[150px_1fr] 2xl:grid-cols-[170px_1fr] gap-2 sm:gap-4 md:gap-5 group cursor-pointer">
 
                     {/* Cover */}
                     <div className="relative rounded-md overflow-hidden">
 
                       <Image
                         src={book.coverImage}
-                        width={120}
-                        height={170}
+                        width={170}
+                        height={260}
                         alt={book.title}
-                        className="w-[150px] h-[210px] object-cover group-hover:scale-105 transition duration-300"
+                        className="w-[110px] h-[170px] sm:w-[130px] sm:h-[190px] md:w-[150px] md:h-[220px] 2xl:w-[170px] 2xl:h-[245px] object-cover group-hover:scale-105 transition duration-300"
                       />
 
                     </div>
 
                     {/* Content */}
-                    <div>
+                    <div className="flex flex-col justify-start md:pt-1">
 
                       <h3 className="text-2xl leading-tight tracking-tighter font-bold line-clamp-1">
-                        {index + 1}.  {book.title}
+                       <span className="text-3xl"> {index + 1}.</span>  {book.title}
                       </h3>
 
                       <p className="text-(--muted-foreground) mt-1">
@@ -190,20 +190,20 @@ export default async function CategoryPage({ params }) {
                       </p>
 
                       {/* Stats */}
-                      <div className="flex gap-4 text-sm text-(--muted-foreground) mt-2">
+                      <div className="flex gap-4 md:gap-5 text-sm text-(--muted-foreground) mt-1 md:mt-2">
 
-                        <span className="flex gap-2">
-                          <Eye size={18}/> {book.stats.views}
+                        <span className="flex justify-center items-center gap-1 md:gap-2">
+                          <Eye size={16}/> {book.stats.views}
                         </span>
 
-                        <span className="flex gap-2">
-                          <List size={18} /> {book.stats.totalChapters} parts
+                        <span className="flex justify-center items-center gap-1 md:gap-2">
+                          <List size={16} /> {book.stats.totalChapters} parts
                         </span>
 
                       </div>
 
                       {/* Summary */}
-                      <p className="text-(--mute-foreground) mt-2 leading-7 tracking-tight line-clamp-3">
+                      <p className="text-(--mute-foreground) mt-1 md:mt-2 leading-6 tracking-tight line-clamp-2 2xl:line-clamp-4">
                         {book.summary}
                       </p>
 

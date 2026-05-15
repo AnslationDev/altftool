@@ -1,6 +1,10 @@
 "use client";
 
 import Image from "next/image";
+import { Users, ArrowRight, BriefcaseBusiness } from "lucide-react";
+import { useRef, useState } from "react";
+import PersonalityLoader from "./PersonalityLoader";
+import { useRouter } from "next/navigation";
 
 const tests = [
   {
@@ -13,199 +17,257 @@ const tests = [
     title: "Emotional Intelligence",
     desc: "Discover careers aligned with your strengths and working style.",
     people: "1.2k People Took This Test",
-    imgSrc: "/personality/categories/Emotional.png",
+    imgSrc: "/personality/categories/Emotion.png",
   },
   {
     title: "Leadership Style",
     desc: "Discover your leadership approach and how you inspire others.",
     people: "1.2k People Took This Test",
-    imgSrc: "/personality/categories/Leadership.png",
+    imgSrc: "/personality/categories/lead.png",
   },
   {
     title: "Introvert vs Extrovert",
     desc: "Understand your energy style and how you interact with the world.",
     people: "1.2k People Took This Test",
-    imgSrc: "/personality/categories/Introvert.png",
+    imgSrc: "/personality/categories/Intro.png",
   },
   {
     title: "Relationship Personality",
     desc: "Explore your relationship patterns and build stronger connections.",
     people: "1.2k People Took This Test",
-    imgSrc: "/personality/categories/Relationship.png",
+    imgSrc: "/personality/categories/Relation.png",
   },
   {
     title: "Communication Style",
     desc: "Explore your relationship patterns and build stronger connections.",
     people: "1.2k People Took This Test",
-    imgSrc: "/personality/categories/Communication.png",
+    imgSrc: "/personality/categories/Communicate.png",
   },
 ];
 
 export default function Categories() {
+  const [showAll, setShowAll] = useState(false);
+  const visible = showAll ? tests : tests.slice(0, 6);
+  const [loading, setLoading] = useState(false);
+  const [mobileIndex, setMobileIndex] = useState(0);
+  const router = useRouter();
+
+  const scrollRef = useRef(null);
+  const handleCardClick = () => {
+    setLoading(true);
+
+    setTimeout(() => {
+      router.push("/personality/question/1");
+    }, 3500);
+  };
+  if (loading) {
+    return <PersonalityLoader />;
+  }
   return (
-    <section
-      className="w-full py-14 md:py-10"
-      style={{ background: "var(--background)" }}
-    >
-      <div className="max-w-[1250px] mx-auto px-6">
+    <section id="personality-tests" className="section">
+      <div className="max-w-full mx-auto px-6">
         {/* Heading */}
         <div className="text-center mb-14">
-          <h2
-            className="font-['Manrope',sans-serif] font-medium text-[30px] sm:text-[38px] md:text-[46px] leading-[38px] sm:leading-[46px] md:leading-[56px] max-w-[675px] mx-auto mb-4"
-            style={{ color: "var(--foreground)" }}
-          >
+          <h2 className="section-title max-w-[675px] mx-auto">
             Explore Personality Tests Designed For You
           </h2>
-
-          <p
-            className="font-['Manrope',sans-serif] font-normal text-[15px] sm:text-[18px] md:text-[20px] leading-[24px] sm:leading-[26px] md:leading-[27px] max-w-[548px] mx-auto"
-            style={{ color: "var(--muted-foreground)" }}
-          >
+          <p className="section-subtitle max-w-[548px] mx-auto">
             Discover scientifically inspired assessments for career growth,
             relationships, self-awareness, and communication.
           </p>
         </div>
 
-        {/* Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-          {tests.map((test, i) => (
-            <div
-              key={i}
-              className="rounded-[28px] overflow-hidden flex flex-col group transition-all border"
-              style={{
-                borderColor: "rgba(0,0,0,0.06)", // thinner/lighter border
-                borderWidth: "1px",
-                boxShadow: "0 8px 30px rgba(0,0,0,0.04)",
-                background: "var(--card)",
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.transform = "translateY(-4px)";
-                e.currentTarget.style.boxShadow =
-                  "0 18px 40px rgba(0,0,0,0.08)";
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.transform = "translateY(0)";
-                e.currentTarget.style.boxShadow =
-                  "0 8px 30px rgba(0,0,0,0.04)";
-              }}
-            >
-              {/* Image */}
-              <div className="p-5 pb-0">
-                <div
-                  className="relative w-full h-[200px] sm:h-[230px] rounded-[20px] overflow-hidden"
-                  style={{ background: "var(--muted)" }}
-                >
-                  {/* Mobile/tablet: contain so image never crops */}
-                  <div className="absolute inset-0 p-5 sm:p-6 md:hidden">
-                    <div className="relative w-full h-full">
-                      <Image
-                        src={test.imgSrc}
-                        alt={test.title}
-                        fill
-                        priority={i === 0}
-                        sizes="(max-width: 767px) 90vw, 0px"
-                        className="object-contain object-center"
-                      />
+
+        <div className="relative lg:hidden">
+
+          <div
+            ref={scrollRef}
+            onScroll={(e) => {
+              const el = e.currentTarget;
+
+              const cardWidth = el.scrollWidth / tests.length;
+
+              setMobileIndex(
+                Math.min(
+                  Math.round(el.scrollLeft / cardWidth),
+                  tests.length - 1
+                )
+              );
+            }}
+            className="
+      flex gap-3
+      overflow-x-auto overflow-y-hidden
+      no-scrollbar scrollbar-hide
+      snap-x snap-mandatory
+      scroll-smooth
+      pb-4
+      px-1
+      w-full max-w-full
+    "
+          >
+            {tests.map((test, i) => (
+              <div
+                key={i}
+                className="
+          rounded-[28px]
+          overflow-hidden
+          flex flex-col
+          group
+          transition-all
+          border border-(--border)
+          bg-(--card)
+          shadow-[0px_8px_30px_0px_rgba(0,0,0,0.04)]
+          hover:shadow-[0px_18px_40px_0px_rgba(0,0,0,0.08)]
+          hover:-translate-y-1
+          cursor-pointer
+          flex-shrink-0
+          w-[75vw]
+          sm:w-[48%]
+          snap-center
+        "
+              >
+                {/* Image */}
+                <div className="p-2 pb-0">
+                  <div className="relative w-full h-[200px] sm:h-[230px] rounded-[20px] overflow-hidden bg-muted">
+                    <div className="absolute inset-0 p-2 lg:p-6 z-10">
+                      <div className="relative w-full h-full">
+                        <Image
+                          src={test.imgSrc}
+                          alt={test.title}
+                          fill
+                          priority={i === 0}
+                          sizes="75vw"
+                          className="object-contain object-center"
+                          unoptimized
+                        />
+                      </div>
                     </div>
                   </div>
+                </div>
 
-                  {/* Desktop+: keep previous look (cover) */}
-                  <div className="absolute inset-0 hidden md:block">
+                {/* Content */}
+                <div className="px-6 md:pt-5 pb-2 md:pb-6 flex-1 flex flex-col">
+                  <h3 className="font-bold text-[18px] leading-[28px] mb-1">
+                    {test.title}
+                  </h3>
+
+                  <div className="flex items-center gap-1.5 mb-3">
+                    <Users className="text-(--primary) fill-(--primary) h-5 w-5" />
+
+                    <span className="font-semibold text-[12px] text-(--muted-foreground)">
+                      {test.people}
+                    </span>
+                  </div>
+
+                  <div className="mt-auto flex items-end justify-between gap-4">
+                    <p className="leading-[23px] max-w-xl text-(--muted-foreground)">
+                      {test.desc}
+                    </p>
+
+                    <button onClick={handleCardClick} className="w-11 h-11 rounded-full flex items-center justify-center flex-shrink-0 bg-(--primary) shadow-[0_10px_20px_rgba(37,99,235,0.18)] hover:scale-105 transition-all">
+                      <ArrowRight className="text-white h-5 w-5" />
+                    </button>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+          {/* Live Indicator */}
+          <div className="flex justify-center gap-2 mt-2 lg:hidden">
+            {tests.map((_, i) => (
+              <span
+                key={i}
+                className={`
+                     rounded-full transition-all duration-300
+                     ${mobileIndex === i
+                    ? "w-6 h-2 bg-(--primary)"
+                    : "w-2 h-2 bg-gray-300"
+                  }
+               `}
+              />
+            ))}
+          </div>
+
+        </div>
+      </div>
+
+
+      {/* ── md+ grid ── */}
+      <div className="hidden lg:grid lg:grid-cols-3 gap-5">
+        {visible.map((test, i) => (
+          <div
+            key={i}
+            className="rounded-[28px] overflow-hidden flex flex-col group transition-all border border-(--border) bg-(--card) shadow-[0px_8px_30px_0px_rgba(0,0,0,0.04)] hover:shadow-[0px_18px_40px_0px_rgba(0,0,0,0.08)] hover:-translate-y-1 cursor-pointer"
+          >
+            {/* Image */}
+            <div className="p-5 pb-0">
+              <div className="relative w-full h-[200px] md:h-[210px] lg:h-[230px] 2xl:h-[280px] rounded-[20px]  overflow-hidden bg-muted">
+                {/* md: contain */}
+                <div className="absolute inset-0 p-5 md:block lg:hidden z-10">
+                  <div className="relative w-full h-full">
                     <Image
                       src={test.imgSrc}
                       alt={test.title}
                       fill
                       priority={i === 0}
-                      sizes="(min-width: 1024px) 360px, (min-width: 768px) 300px, 90vw"
-                      className="object-cover object-center transition-transform duration-500 group-hover:scale-[1.03]"
+                      sizes="(min-width: 768px) 45vw, 0px"
+                      className="object-contain object-center"
+                      unoptimized
                     />
                   </div>
                 </div>
-              </div>
 
-              {/* Content */}
-              <div className="px-6 pt-5 pb-6 flex-1 flex flex-col">
-                <h3
-                  className="font-['Inter',sans-serif] font-bold text-[20px] leading-[30px] mb-1"
-                  style={{ color: "var(--foreground)" }}
-                >
-                  {test.title}
-                </h3>
-
-                {/* People */}
-                <div className="flex items-center gap-1.5 mb-3">
-                  <svg
-                    width="16"
-                    height="16"
-                    viewBox="0 0 16 16"
-                    fill="none"
-                  >
-                    <path
-                      d="M2.5 13C2.5 10.79 4.24 9 6.5 9C7.5 9 8.41 9.38 9.09 10M9.5 5.5C9.5 6.88 8.38 8 7 8C5.62 8 4.5 6.88 4.5 5.5C4.5 4.12 5.62 3 7 3C8.38 3 9.5 4.12 9.5 5.5Z"
-                      stroke="var(--primary)"
-                      strokeWidth="1.2"
-                      strokeLinecap="round"
-                    />
-                    <path
-                      d="M14 13C14 10.79 12.26 9 10 9"
-                      stroke="var(--primary)"
-                      strokeWidth="1.2"
-                      strokeLinecap="round"
-                    />
-                    <path
-                      d="M12 5C12 6.38 10.88 7.5 9.5 7.5"
-                      stroke="var(--primary)"
-                      strokeWidth="1.2"
-                      strokeLinecap="round"
-                    />
-                  </svg>
-
-                  <span
-                    className="font-['Manrope',sans-serif] font-semibold text-[12px]"
-                    style={{ color: "var(--muted-foreground)" }}
-                  >
-                    {test.people}
-                  </span>
-                </div>
-
-                {/* Bottom */}
-                <div className="mt-auto flex items-end justify-between gap-4">
-                  <p
-                    className="font-['Inter',sans-serif] font-normal text-[14px] leading-[23px] max-w-[220px]"
-                    style={{ color: "var(--muted-foreground)" }}
-                  >
-                    {test.desc}
-                  </p>
-
-                  <button
-                    className="w-11 h-11 rounded-full flex items-center justify-center flex-shrink-0 transition-all"
-                    style={{
-                      background: "var(--primary)",
-                      boxShadow:
-                        "0 10px 20px rgba(37, 99, 235, 0.18)",
-                    }}
-                  >
-                    <svg
-                      width="18"
-                      height="18"
-                      viewBox="0 0 18 18"
-                      fill="none"
-                    >
-                      <path
-                        d="M3.75 9H14.25M9.75 4.5L14.25 9L9.75 13.5"
-                        stroke="white"
-                        strokeWidth="1.5"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                    </svg>
-                  </button>
+                {/* lg cover */}
+                <div className="absolute inset-0 hidden lg:block z-10">
+                  <Image
+                    src={test.imgSrc}
+                    alt={test.title}
+                    fill
+                    priority={i === 0}
+                    sizes="(min-width: 1024px) 360px, 300px"
+                    className="object-cover object-center transition-transform duration-500 group-hover:scale-[1.03]"
+                    unoptimized
+                  />
                 </div>
               </div>
             </div>
-          ))}
-        </div>
+
+            {/* Content */}
+            <div className="px-5 md:px-5 lg:px-6 pt-5 pb-6 flex-1 flex flex-col">
+              <h3 className="font-bold text-[17px] md:text-[17px] lg:text-[20px] leading-[30px] mb-1">
+                {test.title}
+              </h3>
+              <div className="flex items-center gap-1.5 py-3">
+                <Users className="text-(--primary) fill-(--primary) h-5 w-5" />
+                <span className="font-semibold text-[12px] text-(--muted-foreground)">
+                  {test.people}
+                </span>
+              </div>
+              <div className="mt-auto flex items-end justify-between gap-4">
+                <p className="leading-[23px] max-w-xl text-(--muted-foreground)">
+                  {test.desc}
+                </p>
+                <button onClick={handleCardClick} className="w-11 h-11 rounded-full flex items-center justify-center flex-shrink-0 bg-(--primary) shadow-[0_10px_20px_rgba(37,99,235,0.18)] hover:scale-105 transition-all">
+                  <ArrowRight className="text-white h-5 w-5" />
+                </button>
+              </div>
+            </div>
+          </div>
+        ))}
       </div>
-    </section>
+
+      {/* Load More — md+ only, only when tests > 6 */}
+      {tests.length > 6 && (
+        <div className="hidden md:flex justify-center mt-10">
+          <button
+            onClick={() => setShowAll(!showAll)}
+            className="px-8 py-3 rounded-full border border-(--border) bg-(--card) text-(--foreground) font-semibold text-[14px] hover:bg-(--primary) hover:text-white hover:border-(--primary) transition-all shadow-sm"
+          >
+            {showAll ? "Show Less" : "Load More"}
+          </button>
+        </div>
+      )}
+
+    </section >
   );
 }

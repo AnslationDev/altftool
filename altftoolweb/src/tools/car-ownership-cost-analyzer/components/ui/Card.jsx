@@ -14,12 +14,12 @@ export const Card = ({ children, className = '', variant = 'glass', hover = fals
 
   const variantStyles = {
     default: 'bg-(--card) border border-(--border)',
-    glass: 'bg-(--card) backdrop-blur-xl shadow-2xl border border-(--border)',
-    gradient: 'bg-gradient-to-br from-(--primary)/5 to-transparent backdrop-blur-xl shadow-2xl border border-(--border)',
+    glass: 'bg-(--card) backdrop-blur-xl border border-(--border)',
+    gradient: 'bg-gradient-to-br from-(--primary)/5 to-transparent backdrop-blur-xl border border-(--border)',
   };
 
   const hoverStyles = hover
-    ? 'hover:translate-y-[-4px] hover:shadow-2xl hover:shadow-(--primary)/10 cursor-pointer'
+    ? 'hover:translate-y-[-4px] cursor-pointer'
     : '';
 
   return (

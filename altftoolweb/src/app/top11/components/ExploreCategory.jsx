@@ -53,7 +53,7 @@ const cards = {
             ],
         }, {
             name: "NordVPN",
-            logo: "https://logo.clearbit.com/nordvpn.com",
+            logo: "/top11/expert-recom/nordVpn.png",
             reviews: "12,000 Reviews",
             points: [
                 "Military-grade encryption",
@@ -63,7 +63,7 @@ const cards = {
         },
         {
             name: "ExpressVPN",
-            logo: "https://logo.clearbit.com/expressvpn.com",
+            logo: "/top11/top10.png",
             reviews: "9,000 Reviews",
             points: [
                 "High-speed streaming",
@@ -72,7 +72,7 @@ const cards = {
             ],
         }, {
             name: "NordVPN",
-            logo: "https://logo.clearbit.com/nordvpn.com",
+            logo: "/top11/expert-recom/nordVpn.png",
             reviews: "12,000 Reviews",
             points: [
                 "Military-grade encryption",
@@ -82,7 +82,7 @@ const cards = {
         },
         {
             name: "ExpressVPN",
-            logo: "https://logo.clearbit.com/expressvpn.com",
+            logo: "/top11/top10.png",
             reviews: "9,000 Reviews",
             points: [
                 "High-speed streaming",
@@ -92,7 +92,7 @@ const cards = {
         },
          {
             name: "ExpressVPN",
-            logo: "https://logo.clearbit.com/expressvpn.com",
+            logo: "/top11/top10.png",
             reviews: "9,000 Reviews",
             points: [
                 "High-speed streaming",
@@ -104,7 +104,7 @@ const cards = {
     VPN: [
         {
             name: "NordVPN",
-            logo: "https://logo.clearbit.com/nordvpn.com",
+            logo: "/top11/expert-recom/nordVpn.png",
             reviews: "12,000 Reviews",
             points: [
                 "Military-grade encryption",
@@ -114,7 +114,7 @@ const cards = {
         },
         {
             name: "ExpressVPN",
-            logo: "https://logo.clearbit.com/expressvpn.com",
+            logo: "/top11/top10.png",
             reviews: "9,000 Reviews",
             points: [
                 "High-speed streaming",
@@ -129,13 +129,13 @@ export default function CategorySection() {
     const [active, setActive] = useState(categories[0]);
 
     return (
-        <section className="section">
-
+        <section className="section ">
+         <div className="section-container">
             {/* Header */}
-            <div className="mb-10">
-                <h2 className="section-title">Explore by category</h2>
-                <p className="section-subtitle !mx-0 text-left">
-                    Discover top-rated services across categories and find the best option.
+            <div className="section-header mb-10">
+                <h2 className="section-title">Browse top tools by category</h2>
+                <p className="section-subtitle">
+                    Discover top rated services, compare features and find the best option.
                 </p>
             </div>
 
@@ -228,6 +228,7 @@ export default function CategorySection() {
                     </div>
                 ))}
 
+            </div>
             </div>
 
         </section>

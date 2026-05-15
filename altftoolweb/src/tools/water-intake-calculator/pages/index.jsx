@@ -19,18 +19,18 @@ export default function ToolHome() {
   return (
     <main className="min-h-screen bg-[var(--background)] px-4 py-8 text-[var(--foreground)] sm:px-6">
       <div className="mx-auto max-w-6xl space-y-6">
-        <section className="rounded-lg border border-[var(--border)] bg-[var(--card)] p-6 shadow-[var(--anslation-ds-shadow-sm)] lg:p-8">
+        <section className="rounded-lg border border-[var(--border)] bg-[var(--card)] p-6 shadow-[var(--anslation-ds-shadow-sm)] 2xl:p-8">
           <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-[var(--muted)] px-3 py-1 text-xs font-semibold uppercase text-[var(--primary)]">
             <Droplets className="h-4 w-4" />
             Hydration estimate
           </div>
-          <h1 className="text-4xl font-semibold leading-tight">Water Intake Calculator</h1>
+          <h1 className="tool-heading-accent text-3xl font-semibold leading-tight sm:text-4xl">Water Intake Calculator</h1>
           <p className="mt-3 max-w-2xl text-base leading-7 text-[var(--muted-foreground)]">
             Estimate daily water intake from body weight, activity minutes, and climate conditions.
           </p>
         </section>
 
-        <section className="grid gap-6 lg:grid-cols-[360px_1fr]">
+        <section className="grid gap-6 2xl:grid-cols-[360px_1fr]">
           <div className="rounded-lg border border-[var(--border)] bg-[var(--card)] p-5 shadow-[var(--anslation-ds-shadow-sm)]">
             <label className="block">
               <span className="text-sm font-semibold">Weight in kg</span>
@@ -50,13 +50,13 @@ export default function ToolHome() {
             </label>
           </div>
 
-          <div className="rounded-lg border border-[var(--border)] bg-[var(--card)] p-6 shadow-[var(--anslation-ds-shadow-sm)]">
+          <div className="min-w-0 rounded-lg border border-[var(--border)] bg-[var(--card)] p-5 shadow-[var(--anslation-ds-shadow-sm)] sm:p-6">
             <div className="rounded-lg bg-sky-50 p-6 text-sky-900 dark:bg-sky-950/30 dark:text-sky-100">
               <p className="text-sm font-semibold uppercase">Daily target</p>
-              <p className="mt-3 text-5xl font-semibold">{result.liters} L</p>
-              <p className="mt-3 text-sm font-medium">{result.ml} ml, around {result.glasses} glasses of 250 ml</p>
+              <p className="tool-money-value tool-hero-value mt-3 text-sky-900 dark:text-sky-100">{result.liters} L</p>
+              <p className="mt-3 break-words text-sm font-medium">{result.ml} ml, around {result.glasses} glasses of 250 ml</p>
             </div>
-            <div className="mt-5 grid gap-3 sm:grid-cols-3">
+            <div className="tool-compact-grid mt-5">
               {Array.from({ length: Math.min(result.glasses, 12) }, (_, index) => (
                 <div key={index} className="h-12 rounded-lg bg-sky-500/80" />
               ))}

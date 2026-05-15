@@ -498,7 +498,7 @@ export default function MainComponent() {
         </p>
       </div>
 
-      <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_360px]">
+      <div className="grid gap-6 2xl:grid-cols-[minmax(0,1fr)_360px]">
         <div className="space-y-6">
           <section className="bg-(--card) border border-(--border) rounded-lg p-5 sm:p-6">
             <div
@@ -636,7 +636,7 @@ export default function MainComponent() {
                     />
                   </div>
 
-                  <div className="mt-4 grid gap-4 sm:grid-cols-2">
+                  <div className="tool-form-grid mt-4">
                     <div>
                       <div className="mb-2 flex items-center justify-between text-sm">
                         <span className="font-medium text-(--foreground)">
@@ -678,7 +678,7 @@ export default function MainComponent() {
                   </div>
                 </div>
 
-                <div className="grid gap-3 sm:grid-cols-3">
+                <div className="tool-compact-grid">
                   <div className="rounded-lg border border-(--border) p-3">
                     <p className="text-xs text-(--muted-foreground)">Current</p>
                     <p className="mt-1 font-mono text-sm font-semibold text-(--foreground)">
@@ -722,7 +722,7 @@ export default function MainComponent() {
                   </div>
                 </div>
 
-                <div className="grid gap-3 sm:grid-cols-2">
+                <div className="tool-form-grid">
                   <label className="block">
                     <span className="mb-2 block text-sm font-medium text-(--foreground)">
                       Start seconds
@@ -896,7 +896,7 @@ export default function MainComponent() {
                 <label className="mb-2 block text-sm font-medium text-(--foreground)">
                   Output format
                 </label>
-                <div className="grid grid-cols-3 gap-2">
+                <div className="tool-compact-grid">
                   {OUTPUT_OPTIONS.map((option) => (
                     <button
                       key={option.value}

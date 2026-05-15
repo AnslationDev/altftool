@@ -485,7 +485,7 @@ export default function MainComponent() {
       </div>
 
       <section className="bg-(--card) border border-(--border) rounded-lg p-5 sm:p-6">
-        <div className="grid gap-4 lg:grid-cols-[minmax(0,1fr)_220px_180px]">
+        <div className="grid gap-4 2xl:grid-cols-[minmax(0,1fr)_220px_180px]">
           <label className="block">
             <span className="mb-2 block text-sm font-medium text-(--foreground)">
               IP address, domain, or URL
@@ -544,7 +544,7 @@ export default function MainComponent() {
           </div>
         </div>
 
-        <div className="mt-4 grid gap-4 lg:grid-cols-[minmax(0,1fr)_280px] lg:items-end">
+        <div className="mt-4 grid gap-4 2xl:grid-cols-[minmax(0,1fr)_280px] 2xl:items-end">
           <label className="block">
             <span className="mb-2 flex items-center gap-2 text-sm font-medium text-(--foreground)">
               <KeyRound className="h-4 w-4 text-(--primary)" />
@@ -583,7 +583,7 @@ export default function MainComponent() {
       )}
 
       {result && (
-        <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_360px]">
+        <div className="grid gap-6 2xl:grid-cols-[minmax(0,1fr)_360px]">
           <div className="space-y-6">
             <section className="bg-(--card) border border-(--border) rounded-lg p-5 sm:p-6">
               <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
@@ -628,7 +628,7 @@ export default function MainComponent() {
                 </div>
               </div>
 
-              <div className="mt-6 grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
+              <div className="tool-card-grid mt-6">
                 {[
                   ["Country", result.country || result.countryCode || "N/A"],
                   ["Region", result.region || "N/A"],
@@ -667,7 +667,7 @@ export default function MainComponent() {
                 </div>
               </div>
 
-              <div className="grid gap-3 sm:grid-cols-2">
+              <div className="tool-card-grid">
                 {[
                   ["ASN", result.asn || "N/A"],
                   ["ISP", result.isp || "N/A"],
@@ -793,7 +793,7 @@ export default function MainComponent() {
                 </div>
               )}
 
-              <div className="mt-4 grid grid-cols-2 gap-2">
+              <div className="tool-compact-grid mt-4">
                 <a
                   href={googleMapUrl || "#"}
                   target="_blank"

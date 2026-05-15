@@ -27,9 +27,9 @@ const Button = React.forwardRef(({
     const baseStyles = 'relative inline-flex items-center justify-center font-semibold rounded-xl transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-slate-100 dark:focus:ring-offset-[#0a0a0f] disabled:opacity-50 disabled:cursor-not-allowed active:scale-[0.98]';
 
     const variants = {
-        primary: 'bg-(--primary) text-white hover:opacity-90 focus:ring-(--primary) shadow-lg shadow-(--primary)/25 hover:shadow-(--primary)/40',
+        primary: 'bg-(--primary) text-white hover:opacity-90 focus:ring-(--primary)',
         secondary: 'bg-transparent border border-slate-300 dark:border-white/20 text-slate-700 dark:text-white/90 hover:bg-slate-200/50 dark:hover:bg-white/10 hover:border-slate-400 dark:hover:border-white/30 focus:ring-slate-300 dark:focus:ring-white/30',
-        danger: 'bg-red-500 text-white hover:bg-red-600 focus:ring-red-500 shadow-lg shadow-red-500/25',
+        danger: 'bg-red-500 text-white hover:bg-red-600 focus:ring-red-500',
         ghost: 'bg-transparent text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-200/50 dark:hover:bg-white/5 focus:ring-slate-300 dark:focus:ring-white/20',
     };
 

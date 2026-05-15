@@ -600,7 +600,7 @@ export default function MainComponent() {
         </p>
       </div>
 
-      <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_360px]">
+      <div className="grid gap-6 2xl:grid-cols-[minmax(0,1fr)_360px]">
         <div className="space-y-6">
           <section className="bg-(--card) border border-(--border) rounded-lg p-5 sm:p-6">
             <div
@@ -701,7 +701,7 @@ export default function MainComponent() {
                   )}
                 </div>
                 <div className="space-y-3">
-                  <div className="grid gap-3 sm:grid-cols-3">
+                  <div className="tool-compact-grid">
                     <div className="rounded-lg border border-(--border) p-3">
                       <p className="text-xs text-(--muted-foreground)">Pages</p>
                       <p className="mt-1 text-lg font-semibold text-(--foreground)">
@@ -818,7 +818,7 @@ export default function MainComponent() {
               )}
 
               {convertedPages.length > 0 && (
-                <div className="mt-6 grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+                <div className="tool-card-grid mt-6">
                   {convertedPages.map((item) => (
                     <article
                       key={item.filename}
@@ -880,7 +880,7 @@ export default function MainComponent() {
                 <label className="mb-2 block text-sm font-medium text-(--foreground)">
                   Image format
                 </label>
-                <div className="grid grid-cols-3 gap-2">
+                <div className="tool-compact-grid">
                   {Object.entries(FORMAT_OPTIONS).map(([key, option]) => (
                     <button
                       key={key}
@@ -927,7 +927,7 @@ export default function MainComponent() {
                 <label className="mb-2 block text-sm font-medium text-(--foreground)">
                   Resolution
                 </label>
-                <div className="grid grid-cols-2 gap-2">
+                <div className="tool-compact-grid">
                   {SCALE_OPTIONS.map((option) => (
                     <button
                       key={option.value}
@@ -954,7 +954,7 @@ export default function MainComponent() {
                 <label className="mb-2 block text-sm font-medium text-(--foreground)">
                   Page background
                 </label>
-                <div className="grid grid-cols-2 gap-2">
+                <div className="tool-compact-grid">
                   {BACKGROUND_OPTIONS.map((option) => {
                     const disabled = option.value === "transparent" && format !== "png";
                     return (

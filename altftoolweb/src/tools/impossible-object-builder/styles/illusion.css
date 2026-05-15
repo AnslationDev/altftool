@@ -1,0 +1,59 @@
+@reference "../../../app/globals.css";
+
+.impossible-object-builder {
+  /* Strictly following platform global CSS */
+}
+
+.impossible-object-builder .tool-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 0.75rem; /* rounded-xl */
+  padding: 1.5rem;
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+}
+
+.impossible-object-builder .canvas-wrapper {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16/10;
+  min-height: 300px;
+  border-radius: 1rem;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  background: #000;
+}
+
+.impossible-object-builder .custom-scrollbar::-webkit-scrollbar {
+  width: 4px;
+}
+
+.impossible-object-builder .custom-scrollbar::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 10px;
+}
+
+.impossible-object-builder .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: var(--primary);
+}
+
+.impossible-object-builder input[type='range'] {
+  -webkit-appearance: none;
+  background: transparent;
+}
+
+.impossible-object-builder input[type='range']::-webkit-slider-runnable-track {
+  width: 100%;
+  height: 6px;
+  background: var(--border);
+  border-radius: 10px;
+}
+
+.impossible-object-builder input[type='range']::-webkit-slider-thumb {
+  height: 16px;
+  width: 16px;
+  border-radius: 50%;
+  background: var(--primary);
+  -webkit-appearance: none;
+  margin-top: -5px;
+  border: 2px solid white;
+}

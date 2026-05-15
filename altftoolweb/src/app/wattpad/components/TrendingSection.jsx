@@ -89,7 +89,7 @@ export default function TrendingSection({ trendingData }) {
               {/* SCROLL AREA */}
         <div
           ref={scrollRef}
-          className="flex gap-4 md:gap-5 overflow-x-auto no-scrollbar scroll-smooth px-1"
+          className="flex gap-3 overflow-x-auto no-scrollbar scroll-smooth px-1"
         >
           {stories.map((item, index) => (
             <StoryCard key={item.id || index} item={item} />

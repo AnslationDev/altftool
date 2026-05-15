@@ -33,25 +33,25 @@ export default function ToolHome() {
   return (
     <main className="min-h-screen bg-[var(--background)] px-4 py-8 text-[var(--foreground)] sm:px-6">
       <div className="mx-auto max-w-6xl space-y-6">
-        <section className="rounded-lg border border-[var(--border)] bg-[var(--card)] p-6 shadow-[var(--anslation-ds-shadow-sm)] lg:p-8">
+        <section className="rounded-lg border border-[var(--border)] bg-[var(--card)] p-6 shadow-[var(--anslation-ds-shadow-sm)] 2xl:p-8">
           <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-[var(--muted)] px-3 py-1 text-xs font-semibold uppercase text-[var(--primary)]">
             <Moon className="h-4 w-4" />
             Sleep cycles
           </div>
-          <h1 className="text-4xl font-semibold leading-tight">Sleep Calculator</h1>
+          <h1 className="tool-heading-accent text-3xl font-semibold leading-tight sm:text-4xl">Sleep Calculator</h1>
           <p className="mt-3 max-w-2xl text-base leading-7 text-[var(--muted-foreground)]">
             Find bedtime or wake-up options based on 90-minute sleep cycles and time to fall asleep.
           </p>
         </section>
 
-        <section className="grid gap-6 lg:grid-cols-[360px_1fr]">
+        <section className="grid gap-6 2xl:grid-cols-[360px_1fr]">
           <div className="rounded-lg border border-[var(--border)] bg-[var(--card)] p-5 shadow-[var(--anslation-ds-shadow-sm)]">
-            <div className="grid grid-cols-2 rounded-lg bg-[var(--muted)] p-1">
+            <div className="grid gap-1 rounded-lg bg-[var(--muted)] p-1 sm:grid-cols-2">
               {[
                 ["wake", "Wake up at"],
                 ["sleep", "Sleep at"],
               ].map(([id, label]) => (
-                <button key={id} type="button" onClick={() => setMode(id)} className={`rounded-md px-3 py-2 text-sm font-semibold ${mode === id ? "bg-[var(--card)] text-[var(--primary)] shadow-sm" : "text-[var(--muted-foreground)]"}`}>
+                <button key={id} type="button" onClick={() => setMode(id)} className={`min-h-10 rounded-md px-3 py-2 text-sm font-semibold ${mode === id ? "bg-[var(--card)] text-[var(--primary)] shadow-sm" : "text-[var(--muted-foreground)]"}`}>
                   {label}
                 </button>
               ))}
@@ -66,11 +66,11 @@ export default function ToolHome() {
             </label>
           </div>
 
-          <div className="grid gap-4 sm:grid-cols-2">
+          <div className="tool-form-grid">
             {options.map((option) => (
-              <div key={option.cycles} className="rounded-lg border border-[var(--border)] bg-[var(--card)] p-5 shadow-[var(--anslation-ds-shadow-sm)]">
+              <div key={option.cycles} className="min-w-0 rounded-lg border border-[var(--border)] bg-[var(--card)] p-5 shadow-[var(--anslation-ds-shadow-sm)]">
                 <Clock className="h-6 w-6 text-[var(--primary)]" />
-                <p className="mt-4 text-3xl font-semibold">{option.time}</p>
+                <p className="tool-money-value tool-hero-value mt-4">{option.time}</p>
                 <p className="mt-2 text-sm font-medium text-[var(--muted-foreground)]">{option.cycles} cycles, about {option.hours} hours asleep</p>
               </div>
             ))}

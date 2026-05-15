@@ -57,18 +57,18 @@ export default function ToolHome() {
   return (
     <main className="min-h-screen bg-[var(--background)] px-4 py-8 text-[var(--foreground)] sm:px-6">
       <div className="mx-auto max-w-6xl space-y-6">
-        <section className="rounded-lg border border-[var(--border)] bg-[var(--card)] p-6 shadow-[var(--anslation-ds-shadow-sm)] lg:p-8">
+        <section className="rounded-lg border border-[var(--border)] bg-[var(--card)] p-6 shadow-[var(--anslation-ds-shadow-sm)] 2xl:p-8">
           <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-[var(--muted)] px-3 py-1 text-xs font-semibold uppercase text-[var(--primary)]">
             <ShieldCheck className="h-4 w-4" />
             Secure utility
           </div>
-          <h1 className="text-4xl font-semibold leading-tight">Password Generator</h1>
+          <h1 className="tool-heading-accent text-3xl font-semibold leading-tight sm:text-4xl">Password Generator</h1>
           <p className="mt-3 max-w-2xl text-base leading-7 text-[var(--muted-foreground)]">
             Generate random passwords in the browser with length and character set controls.
           </p>
         </section>
 
-        <section className="grid gap-6 lg:grid-cols-[360px_1fr]">
+        <section className="grid gap-6 2xl:grid-cols-[360px_1fr]">
           <div className="rounded-lg border border-[var(--border)] bg-[var(--card)] p-5 shadow-[var(--anslation-ds-shadow-sm)]">
             <label className="block">
               <span className="text-sm font-semibold">Length: {length}</span>
@@ -76,25 +76,25 @@ export default function ToolHome() {
             </label>
             <div className="mt-5 grid gap-3">
               {Object.keys(pools).map((key) => (
-                <label key={key} className="flex items-center justify-between gap-3 rounded-lg bg-[var(--muted)] px-4 py-3 text-sm font-semibold capitalize">
+                <label key={key} className="flex items-center justify-between gap-3 rounded-lg bg-[var(--muted)] px-4 py-3 text-sm font-semibold capitalize break-words">
                   {key}
                   <input type="checkbox" checked={options[key]} onChange={(event) => setOptions((current) => ({ ...current, [key]: event.target.checked }))} />
                 </label>
               ))}
             </div>
-            <button type="button" onClick={regenerate} className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-lg border border-[var(--border)] px-4 py-3 text-sm font-semibold hover:bg-[var(--muted)]">
+            <button type="button" onClick={regenerate} className="btn-secondary mt-5 w-full">
               <RefreshCw className="h-4 w-4" />
               Regenerate
             </button>
           </div>
 
-          <div className="rounded-lg border border-[var(--border)] bg-[var(--card)] p-5 shadow-[var(--anslation-ds-shadow-sm)]">
+          <div className="min-w-0 rounded-lg border border-[var(--border)] bg-[var(--card)] p-5 shadow-[var(--anslation-ds-shadow-sm)]">
             <p className="text-sm font-semibold text-[var(--muted-foreground)]">Generated password</p>
             <div className="mt-3 rounded-lg bg-slate-950 p-5">
-              <p className="break-all font-mono text-2xl font-semibold leading-10 text-white">{password}</p>
+              <p className="break-all font-mono text-lg font-semibold leading-8 text-white sm:text-2xl sm:leading-10">{password}</p>
             </div>
             <div className="mt-5 flex flex-wrap items-center gap-3">
-              <button type="button" onClick={copyPassword} className="inline-flex items-center gap-2 rounded-lg bg-[var(--primary)] px-4 py-3 text-sm font-semibold text-white">
+              <button type="button" onClick={copyPassword} className="btn-primary">
                 <Copy className="h-4 w-4" />
                 {copied ? "Copied" : "Copy"}
               </button>

@@ -13,9 +13,9 @@ const formatMoney = (value) =>
 function RangeField({ label, value, suffix, min, max, step, onChange }) {
   return (
     <label className="block rounded-lg border border-[var(--border)] bg-[var(--background)] p-4">
-      <div className="mb-3 flex items-center justify-between gap-3">
-        <span className="text-sm font-semibold text-[var(--foreground)]">{label}</span>
-        <span className="rounded-md bg-[var(--muted)] px-2 py-1 text-sm font-semibold text-[var(--primary)]">
+      <div className="mb-3 flex flex-wrap items-center justify-between gap-3">
+        <span className="min-w-0 text-sm font-semibold text-[var(--foreground)]">{label}</span>
+        <span className="max-w-full rounded-md bg-[var(--muted)] px-2 py-1 text-sm font-semibold text-[var(--primary)] break-words">
           {value}{suffix}
         </span>
       </div>
@@ -67,8 +67,8 @@ export default function ToolHome() {
   return (
     <main className="min-h-screen bg-[var(--background)] px-4 py-8 text-[var(--foreground)] sm:px-6">
       <div className="mx-auto max-w-7xl">
-        <section className="rounded-lg border border-[var(--border)] bg-[var(--card)] p-6 shadow-[var(--anslation-ds-shadow-sm)] lg:p-8">
-          <div className="grid gap-6 lg:grid-cols-[1fr_360px] lg:items-end">
+        <section className="rounded-lg border border-[var(--border)] bg-[var(--card)] p-6 shadow-[var(--anslation-ds-shadow-sm)] 2xl:p-8">
+          <div className="grid gap-6 2xl:grid-cols-[1fr_360px] 2xl:items-end">
             <div>
               <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-[var(--muted)] px-3 py-1 text-xs font-semibold uppercase text-[var(--primary)]">
                 <TrendingUp className="h-4 w-4" />
@@ -79,15 +79,15 @@ export default function ToolHome() {
                 Estimate mutual fund SIP maturity with monthly investing, expected returns, and yearly step-up.
               </p>
             </div>
-            <div className="rounded-lg border border-[var(--border)] bg-[var(--background)] p-4">
+            <div className="min-w-0 rounded-lg border border-[var(--border)] bg-[var(--background)] p-4">
               <p className="text-xs font-semibold uppercase text-[var(--muted-foreground)]">Estimated maturity</p>
-              <p className="mt-2 text-3xl font-semibold text-[var(--primary)]">{formatMoney(result.maturity)}</p>
+              <p className="tool-money-value tool-hero-value mt-2 text-[var(--primary)]">{formatMoney(result.maturity)}</p>
               <p className="mt-2 text-sm text-[var(--muted-foreground)]">Wealth gain: {formatMoney(result.gains)}</p>
             </div>
           </div>
         </section>
 
-        <section className="mt-6 grid gap-6 lg:grid-cols-[420px_1fr]">
+        <section className="mt-6 grid gap-6 2xl:grid-cols-[420px_1fr]">
           <div className="space-y-4 rounded-lg border border-[var(--border)] bg-[var(--card)] p-5 shadow-[var(--anslation-ds-shadow-sm)]">
             <RangeField label="Monthly SIP" value={monthlyInvestment} suffix="" min={500} max={200000} step={500} onChange={setMonthlyInvestment} />
             <RangeField label="Expected annual return" value={returnRate} suffix="%" min={1} max={30} step={0.5} onChange={setReturnRate} />
@@ -95,19 +95,21 @@ export default function ToolHome() {
             <RangeField label="Annual SIP step-up" value={stepUp} suffix="%" min={0} max={25} step={1} onChange={setStepUp} />
           </div>
 
-          <div className="grid content-start gap-4 sm:grid-cols-2">
-            {[
-              ["Total invested", formatMoney(result.invested)],
-              ["Estimated returns", formatMoney(result.gains)],
-              ["Maturity amount", formatMoney(result.maturity)],
-              ["Final monthly SIP", formatMoney(result.finalSip)],
-            ].map(([label, value], index) => (
-              <div key={label} className="rounded-lg border border-[var(--border)] bg-[var(--card)] p-5 shadow-[var(--anslation-ds-shadow-sm)]">
-                <p className="text-xs font-semibold uppercase text-[var(--muted-foreground)]">{label}</p>
-                <p className={`mt-2 text-2xl font-semibold ${index === 2 ? "text-[var(--primary)]" : "text-[var(--foreground)]"}`}>{value}</p>
-              </div>
-            ))}
-            <div className="rounded-lg border border-[var(--border)] bg-[var(--card)] p-5 sm:col-span-2">
+          <div className="space-y-4">
+            <div className="tool-card-grid">
+              {[
+                ["Total invested", formatMoney(result.invested)],
+                ["Estimated returns", formatMoney(result.gains)],
+                ["Maturity amount", formatMoney(result.maturity)],
+                ["Final monthly SIP", formatMoney(result.finalSip)],
+              ].map(([label, value], index) => (
+                <div key={label} className="min-w-0 rounded-lg border border-[var(--border)] bg-[var(--card)] p-5 shadow-[var(--anslation-ds-shadow-sm)]">
+                  <p className="text-xs font-semibold uppercase text-[var(--muted-foreground)]">{label}</p>
+                  <p className={`tool-money-value mt-2 ${index === 2 ? "text-[var(--primary)]" : "text-[var(--foreground)]"}`}>{value}</p>
+                </div>
+              ))}
+            </div>
+            <div className="rounded-lg border border-[var(--border)] bg-[var(--card)] p-5">
               <div className="mb-4 flex items-center gap-2 text-sm font-semibold text-[var(--primary)]">
                 <BarChart3 className="h-4 w-4" />
                 Portfolio split

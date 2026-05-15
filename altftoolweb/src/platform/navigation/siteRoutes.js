@@ -10,6 +10,7 @@ import {
   ShoppingBag,
   Sparkles,
   Tags,
+  Trophy,
   Wrench,
 } from "lucide-react";
 
@@ -27,6 +28,9 @@ export const SITE_ROUTES = {
   news: { label: "News", href: "/news" },
   desktop: { label: "Desktop Software", href: "/desktop" },
   trendingVideos: { label: "Trending Videos", href: "/trendingvids" },
+  personality: { label: "Personality", href: "/personality" },
+  top11: { label: "Top11", href: "/top11" },
+  top9: { label: "Top9", href: "/top9" },
   about: { label: "About AltFTool", href: "/policypages/about" },
   contact: { label: "Contact", href: "/policypages/contact" },
   privacy: { label: "Privacy", href: "/policypages/privacy" },
@@ -65,6 +69,9 @@ export const PUBLIC_NAV_ITEMS = [
     options: [
       { ...SITE_ROUTES.desktop, icon: Monitor },
       { ...SITE_ROUTES.trendingVideos, icon: Sparkles },
+      { ...SITE_ROUTES.personality, icon: Sparkles },
+      { ...SITE_ROUTES.top11, icon: Trophy },
+      { ...SITE_ROUTES.top9, icon: LayoutGrid },
       { ...SITE_ROUTES.about, icon: ShieldCheck },
     ],
   },
@@ -78,6 +85,9 @@ export const FOOTER_ROUTE_GROUPS = [
       SITE_ROUTES.extensions,
       SITE_ROUTES.desktop,
       SITE_ROUTES.trendingVideos,
+      SITE_ROUTES.personality,
+      SITE_ROUTES.top11,
+      SITE_ROUTES.top9,
     ],
   },
   {

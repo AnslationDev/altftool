@@ -28,9 +28,9 @@ const FAQ = () => {
   return (
     <section className="section mb-8 animate-slide-up">
       {/* Heading */}
-      <div className="mb-8">
-        <h2 className="section-title">Common Questions About Top11</h2>
-        <p className="section-subtitle !mx-0 text-left">Find answers to common questions about Top11</p>
+      <div className="mb-10 text-center md:mb-14">
+        <h2 className="section-title mx-auto max-w-200">Common Questions About Top11</h2>
+        <p className="section-subtitle mx-auto max-w-145">Find answers to common questions about Top11</p>
       </div>
 
       {/* FAQ List */}

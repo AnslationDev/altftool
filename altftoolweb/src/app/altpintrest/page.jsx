@@ -1,15 +1,47 @@
 "use client";
 /* eslint-disable @next/next/no-img-element */
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Inter, Manrope } from 'next/font/google';
-import { Search, X, Bell, Heart, SlidersHorizontal, MoreHorizontal, ArrowLeft, MessageCircle, Upload, ChevronDown, Smile, Image as ImageIcon } from 'lucide-react';
+import { Search, X, Bell, Heart, SlidersHorizontal, MoreHorizontal, ArrowLeft, MessageCircle, Upload, ChevronDown, Smile, Image as ImageIcon, Download, Share2 } from 'lucide-react';
 
 const inter = Inter({ subsets: ['latin'], weight: ['400', '500', '600'] });
 const manrope = Manrope({ subsets: ['latin'], weight: ['700'] });
 
 import FilterBar from './components/FilterBar';
-import { filters, MOCK_DATA } from './data/mockData';
+import { filters as mockFilters, MOCK_DATA } from './data/mockData';
+import { firebasePinterestCategoriesSource } from './service/firebasePinterestCategories';
+import { firebasePinterestPinsSource } from './service/firebasePinterestPins';
+import { updatePinLikes } from './service/pinActions';
+
+const heights = ["h-[260px]", "h-[280px]", "h-[300px]", "h-[320px]", "h-[340px]", "h-[380px]", "h-[410px]", "h-[420px]", "h-[450px]", "h-[460px]", "h-[500px]"];
+const FALLBACK_PIN_IMAGE = "/altpintrest-images/Listitem → Group - Pin card.png";
+
+const getHeightForId = (id) => {
+  if (typeof id === 'number') return heights[id % heights.length];
+  let hash = 0;
+  for (let i = 0; i < id.length; i++) {
+    hash = id.charCodeAt(i) + ((hash << 5) - hash);
+  }
+  return heights[Math.abs(hash) % heights.length];
+};
+
+const getImageUrl = (value) => {
+  if (typeof value === "string") return value.trim();
+  if (!value || typeof value !== "object") return "";
+
+  return [
+    value.url,
+    value.src,
+    value.image,
+    value.imageUrl,
+    value.imageURL,
+    value.downloadURL,
+    value.photoURL,
+    value.thumbnail,
+    value.path,
+  ].find((candidate) => typeof candidate === "string" && candidate.trim())?.trim() || "";
+};
 
 export default function AltPinterest() {
   const [activeTab, setActiveTab] = useState("discover"); // "discover" or "saved"
@@ -18,17 +50,98 @@ export default function AltPinterest() {
   const [savedItems, setSavedItems] = useState(new Set([1, 3, 5, 7, 9, 10, 12, 14]));
   const [selectedItem, setSelectedItem] = useState(null);
 
-  let displayedItems = MOCK_DATA;
+  const [firebaseCategories, setFirebaseCategories] = useState([]);
+  const [firebasePins, setFirebasePins] = useState([]);
+
+  useEffect(() => {
+    const unsubCategories = firebasePinterestCategoriesSource.subscribe((data) => {
+      setFirebaseCategories(data);
+    });
+
+    const unsubPins = firebasePinterestPinsSource.subscribe((data) => {
+      setFirebasePins(data);
+    });
+
+    return () => {
+      unsubCategories && unsubCategories();
+      unsubPins && unsubPins();
+    };
+  }, []);
+
+  const dynamicFilters = firebaseCategories.length > 0
+    ? ["All", ...firebaseCategories.map(cat => cat.name)]
+    : mockFilters;
+
+  const dynamicData = firebasePins.length > 0
+    ? firebasePins.flatMap(pin => {
+      const category = pin.Category || pin.category || "Other";
+      const mainImage = getImageUrl(pin.image || pin.img || pin.logo || pin.url || pin.imageUrl || pin.imageURL || pin.photoURL || pin.thumbnail);
+      const gallerySource = Array.isArray(pin.gallery)
+        ? pin.gallery
+        : Array.isArray(pin.images)
+          ? pin.images
+          : [];
+      const gallery = gallerySource.map(getImageUrl).filter(Boolean);
+
+      const items = [];
+
+      // 1. Add Main Image
+      if (mainImage) {
+        items.push({
+          id: `${pin.id}-main`,
+          title: pin.title || "Untitled",
+          image: mainImage,
+          height: getHeightForId(`${pin.id}-main`),
+          category: category,
+          originalData: pin
+        });
+      }
+
+      // 2. Add Gallery Images (excluding duplicates of mainImage)
+      gallery.forEach((img, idx) => {
+        if (img && img !== mainImage) {
+          items.push({
+            id: `${pin.id}-gallery-${idx}`,
+            title: pin.title || "Untitled",
+            image: img,
+            height: getHeightForId(`${pin.id}-gallery-${idx}`),
+            category: category,
+            originalData: pin
+          });
+        }
+      });
+
+      // 3. Fallback if no images found at all
+      if (items.length === 0) {
+        items.push({
+          id: pin.id,
+          title: pin.title || "Untitled",
+          image: FALLBACK_PIN_IMAGE,
+          height: getHeightForId(pin.id),
+          category: category,
+          originalData: pin
+        });
+      }
+
+      return items;
+    })
+    : MOCK_DATA;
+
+  let displayedItems = dynamicData;
 
   if (activeTab === "discover") {
     if (activeFilter !== "All") {
       displayedItems = displayedItems.filter(item => item.category === activeFilter);
     }
     if (searchQuery) {
-      displayedItems = displayedItems.filter(item => item.title.toLowerCase().includes(searchQuery.toLowerCase()));
+      const q = searchQuery.toLowerCase();
+      displayedItems = displayedItems.filter(item =>
+        (item.title && item.title.toLowerCase().includes(q)) ||
+        (item.category && item.category.toLowerCase().includes(q))
+      );
     }
   } else if (activeTab === "saved") {
-    displayedItems = MOCK_DATA.filter(item => savedItems.has(item.id));
+    displayedItems = dynamicData.filter(item => savedItems.has(item.id));
   }
 
   const toggleSave = (e, id) => {
@@ -43,6 +156,60 @@ export default function AltPinterest() {
 
   const handleCardClick = (item) => {
     setSelectedItem(item);
+  };
+
+  const handleDownload = async (e, imageUrl, title) => {
+    e.stopPropagation();
+
+    // Check if it's a relative/local path (these don't have CORS issues)
+    if (imageUrl.startsWith('/')) {
+      const link = document.createElement('a');
+      link.href = imageUrl;
+      link.download = `${title || 'pin'}.png`;
+      link.click();
+      return;
+    }
+
+    try {
+      // Try fetching with blob (works if CORS is configured in Firebase Console)
+      const response = await fetch(imageUrl, { mode: 'cors' });
+      if (!response.ok) throw new Error('Network response was not ok');
+      const blob = await response.blob();
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `${title.replace(/\s+/g, '-').toLowerCase() || 'pin'}.jpg`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(url);
+    } catch (error) {
+      console.warn("CORS/Download failed, falling back to new tab:", error);
+      // Fallback for cross-origin images without CORS config:
+      // We open in a new tab which allows the user to right-click > Save Image
+      const newWindow = window.open(imageUrl, '_blank');
+      if (!newWindow) {
+        alert("Please allow popups to download this image.");
+      }
+    }
+  };
+
+  const handleLike = async (e, pinId, originalId) => {
+    e.stopPropagation();
+    const idToUpdate = originalId || pinId;
+    if (typeof idToUpdate !== 'string') return;
+
+    const result = await updatePinLikes(idToUpdate);
+    if (!result.success && result.error?.code === 'permission-denied') {
+      alert("Permission Denied: Please update your Firestore Rules to allow likes (see instructions).");
+    }
+  };
+
+  const handleShare = (e, item) => {
+    e.stopPropagation();
+    const shareUrl = window.location.href; // Or a specific pin URL if available
+    navigator.clipboard.writeText(shareUrl);
+    alert("Link copied to clipboard!");
   };
 
   return (
@@ -98,10 +265,10 @@ export default function AltPinterest() {
         {activeTab === "discover" && !selectedItem ? (
           <>
             {/* Filters Row */}
-            <FilterBar 
-              filters={filters} 
-              activeFilter={activeFilter} 
-              setActiveFilter={setActiveFilter} 
+            <FilterBar
+              filters={dynamicFilters}
+              activeFilter={activeFilter}
+              setActiveFilter={setActiveFilter}
             />
 
             {/* Masonry Grid */}
@@ -121,7 +288,14 @@ export default function AltPinterest() {
                     />
                   </div>
 
-                  <div className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity">
+                  <div className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity flex gap-2">
+                    <button
+                      onClick={(e) => handleDownload(e, item.image, item.title)}
+                      className="p-2 bg-white/90 hover:bg-white rounded-full text-black shadow-sm transition-colors"
+                      title="Download"
+                    >
+                      <Download size={18} />
+                    </button>
                     <button
                       onClick={(e) => toggleSave(e, item.id)}
                       className={`px-4 py-2 rounded-full font-bold text-sm ${savedItems.has(item.id) ? 'bg-black text-white' : 'bg-[#E60023] text-white'}`}
@@ -140,16 +314,13 @@ export default function AltPinterest() {
 
         ) : activeTab === "discover" && selectedItem ? (
 
-          /* ======================================= */
-          /* 3. DISCOVER: IMAGE DETAILS VIEW         */
-          /* ======================================= */
-          <div className="flex flex-col lg:flex-row gap-8 lg:gap-10 mt-2">
+          <div className="flex flex-col lg:flex-row gap-8 lg:gap-10 mt-2 items-center lg:items-start">
 
             {/* Left Column: Detail Card & Back Button */}
-            <div className="flex items-start gap-4">
+            <div className="flex flex-col lg:flex-row items-center lg:items-start gap-4 w-full lg:w-auto">
               <button
                 onClick={() => setSelectedItem(null)}
-                className="mt-3 p-3 hover:bg-[var(--muted)] rounded-full transition-colors shrink-0 border border-transparent dark:border-[var(--border)]"
+                className="self-start lg:mt-3 p-3 hover:bg-[var(--muted)] rounded-full transition-colors shrink-0 border border-transparent dark:border-[var(--border)]"
                 title="Back"
               >
                 <ArrowLeft size={24} className="text-[var(--foreground)]" />
@@ -161,12 +332,20 @@ export default function AltPinterest() {
                 {/* Actions Header */}
                 <div className="flex items-center justify-between px-6 py-5 sticky top-0 bg-[var(--card)] z-10">
                   <div className="flex items-center gap-6">
-                    <div className="flex items-center gap-1.5 hover:bg-[var(--muted)] px-2 py-1 rounded-lg cursor-pointer transition-colors text-[var(--foreground)]">
-                      <Heart size={22} className={savedItems.has(selectedItem.id) ? "fill-[#2563EB] text-[#2563EB]" : ""} />
-                      <span className="font-bold text-[15.5px]">{savedItems.has(selectedItem.id) ? "40" : "39"}</span>
+                    <div
+                      onClick={(e) => handleLike(e, selectedItem.id, selectedItem.originalData?.id)}
+                      className="flex items-center gap-1.5 hover:bg-[var(--muted)] px-2 py-1 rounded-lg cursor-pointer transition-colors text-[var(--foreground)]"
+                    >
+                      <Heart size={22} className={selectedItem.originalData?.likes > 0 ? "fill-[#2563EB] text-[#2563EB]" : ""} />
+                      <span className="font-bold text-[15.5px]">{selectedItem.originalData?.likes || 0}</span>
                     </div>
                     <MessageCircle size={22} className="hover:text-gray-500 cursor-pointer text-[var(--foreground)]" />
-                    <Upload size={22} className="hover:text-gray-500 cursor-pointer text-[var(--foreground)]" />
+                    <button onClick={(e) => handleShare(e, selectedItem)} className="hover:text-gray-500 cursor-pointer text-[var(--foreground)]">
+                      <Share2 size={22} />
+                    </button>
+                    <button onClick={(e) => handleDownload(e, selectedItem.image, selectedItem.title)} className="hover:text-gray-500 cursor-pointer text-[var(--foreground)]">
+                      <Download size={22} />
+                    </button>
                     <MoreHorizontal size={22} className="hover:text-gray-500 cursor-pointer text-[var(--foreground)]" />
                   </div>
                   <div className="flex items-center gap-5">
@@ -176,8 +355,8 @@ export default function AltPinterest() {
                     <button
                       onClick={(e) => toggleSave(e, selectedItem.id)}
                       className={`px-6 py-3 rounded-full font-bold text-[15.5px] transition-colors ${savedItems.has(selectedItem.id)
-                          ? 'bg-black text-white dark:bg-white dark:text-black'
-                          : 'bg-[#2563EB] text-white hover:bg-[#1d4ed8]'
+                        ? 'bg-black text-white dark:bg-white dark:text-black'
+                        : 'bg-[#2563EB] text-white hover:bg-[#1d4ed8]'
                         }`}
                     >
                       {savedItems.has(selectedItem.id) ? 'Saved' : 'Save'}
@@ -194,7 +373,6 @@ export default function AltPinterest() {
                     style={{ maxHeight: '650px', minHeight: '400px' }}
                   />
                 </div>
-
                 {/* Info & Comments */}
                 <div className="px-8 py-8 flex flex-col gap-6">
                   <h1 className="text-[20px] font-bold leading-tight text-[var(--foreground)] font-['Segoe_UI',_sans-serif]">
@@ -226,7 +404,19 @@ export default function AltPinterest() {
             <div className="flex-1 mt-10 lg:mt-0">
               <h3 className="font-bold text-xl mb-6 text-[var(--foreground)] lg:hidden">More like this</h3>
               <div className="columns-2 md:columns-3 gap-6">
-                {MOCK_DATA.filter(item => item.id !== selectedItem.id).map(item => (
+                {dynamicData.filter(item => {
+                  if (item.id === selectedItem.id) return false;
+
+                  // Related if: Same Category, Same Parent (Gallery), or Similar Title
+                  const sameCategory = item.category && selectedItem.category && item.category === selectedItem.category;
+                  const sameParent = item.originalData?.id && selectedItem.originalData?.id && item.originalData.id === selectedItem.originalData.id;
+                  const sameTitle = item.title && selectedItem.title && (
+                    item.title.toLowerCase().includes(selectedItem.title.toLowerCase()) ||
+                    selectedItem.title.toLowerCase().includes(item.title.toLowerCase())
+                  );
+
+                  return sameCategory || sameParent || sameTitle;
+                }).map(item => (
                   <div
                     key={item.id}
                     className="break-inside-avoid flex flex-col gap-2 mb-6 group cursor-pointer relative"
@@ -306,7 +496,14 @@ export default function AltPinterest() {
                       className={`w-full object-cover ${item.height} transition-transform duration-500 group-hover:scale-105`}
                       loading="lazy"
                     />
-                    <div className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity">
+                    <div className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity flex gap-2">
+                      <button
+                        onClick={(e) => handleDownload(e, item.image, item.title)}
+                        className="p-1.5 bg-white/90 hover:bg-white rounded-full text-black shadow-sm transition-colors"
+                        title="Download"
+                      >
+                        <Download size={16} />
+                      </button>
                       <button
                         onClick={(e) => toggleSave(e, item.id)}
                         className="px-3 py-1.5 rounded-full font-bold text-xs bg-white text-black hover:bg-gray-200"

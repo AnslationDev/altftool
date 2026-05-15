@@ -73,7 +73,7 @@ export default function Features() {
         </p>
       </div>
 
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="tool-feature-grid">
         {features.map(({ icon: Icon, title, description }) => (
           <div
             key={title}

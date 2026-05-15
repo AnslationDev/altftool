@@ -704,7 +704,7 @@ export default function MainComponent() {
       </div>
 
       <section className="bg-(--card) border border-(--border) rounded-lg p-5 sm:p-6">
-        <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
+        <div className="flex flex-col gap-4 2xl:flex-row 2xl:items-start 2xl:justify-between">
           <div className="flex items-start gap-4">
             <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-(--section-highlight) text-(--primary)">
               <Star className="h-6 w-6" />
@@ -735,7 +735,7 @@ export default function MainComponent() {
           </div>
         </div>
 
-        <div className="mt-6 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+        <div className="tool-card-grid mt-6">
           <Field label="Name">
             <input
               type="text"
@@ -776,7 +776,7 @@ export default function MainComponent() {
           </Field>
         </div>
 
-        <div className="mt-4 grid gap-4 lg:grid-cols-[minmax(0,1fr)_180px_180px_180px]">
+        <div className="mt-4 grid gap-4 2xl:grid-cols-[minmax(0,1fr)_180px_180px_180px]">
           <Field label="Birth Place">
             <div className="flex gap-2">
               <input
@@ -920,7 +920,7 @@ export default function MainComponent() {
 
       {isGenerating && (
         <section className="overflow-hidden rounded-lg border border-(--border) bg-(--section-highlight) p-5 sm:p-6">
-          <div className="flex flex-col gap-5 lg:flex-row lg:items-center lg:justify-between">
+          <div className="flex flex-col gap-5 lg:flex-row 2xl:items-center lg:justify-between">
             <div className="flex items-start gap-4">
               <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-(--primary) text-(--primary-foreground)">
                 <Star className="h-6 w-6 animate-pulse" />
@@ -939,7 +939,7 @@ export default function MainComponent() {
               </div>
             </div>
 
-            <div className="grid min-w-0 gap-3 sm:grid-cols-2 lg:w-[520px]">
+            <div className="grid min-w-0 gap-3 sm:grid-cols-2 2xl:w-[520px]">
               {REVEAL_STEPS.map((step, index) => (
                 <div
                   key={step}
@@ -969,7 +969,7 @@ export default function MainComponent() {
 
       {result && (
         <>
-          <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+          <div className="tool-card-grid">
             <StatCard
               icon={Compass}
               label="Lagna"
@@ -996,7 +996,7 @@ export default function MainComponent() {
             />
           </div>
 
-          <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_360px]">
+          <div className="grid gap-6 2xl:grid-cols-[minmax(0,1fr)_360px]">
             <section className="bg-(--card) border border-(--border) rounded-lg p-5 sm:p-6">
               <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
                 <div>
@@ -1173,7 +1173,7 @@ export default function MainComponent() {
             </aside>
           </div>
 
-          <section className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_360px]">
+          <section className="grid gap-6 2xl:grid-cols-[minmax(0,1fr)_360px]">
             <div className="bg-(--card) border border-(--border) rounded-lg p-5 sm:p-6">
               <div className="flex items-start gap-3">
                 <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-(--section-highlight) text-(--primary)">

@@ -69,11 +69,9 @@ const Features = () => {
                             className="
                                 bg-(--card)
                                 rounded-[32px]
-                                shadow-xl
                                 border border-white/5
                                 p-8
                                 flex flex-col
-                                hover:shadow-2xl
                                 hover:border-blue-500/20
                                 hover:-translate-y-2
                                 transition-all duration-500

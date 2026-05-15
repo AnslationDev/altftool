@@ -27,7 +27,7 @@ function ratio(foreground, background) {
 
 function Result({ label, pass }) {
   return (
-    <div className={`rounded-lg border p-4 ${pass ? "border-green-200 bg-green-50 text-green-800 dark:border-green-900 dark:bg-green-950/30 dark:text-green-200" : "border-red-200 bg-red-50 text-red-800 dark:border-red-900 dark:bg-red-950/30 dark:text-red-200"}`}>
+    <div className={`min-w-0 rounded-lg border p-4 ${pass ? "border-green-200 bg-green-50 text-green-800 dark:border-green-900 dark:bg-green-950/30 dark:text-green-200" : "border-red-200 bg-red-50 text-red-800 dark:border-red-900 dark:bg-red-950/30 dark:text-red-200"}`}>
       <p className="text-sm font-semibold">{label}</p>
       <p className="mt-1 text-xs font-medium">{pass ? "Pass" : "Fail"}</p>
     </div>
@@ -48,18 +48,18 @@ export default function ToolHome() {
   return (
     <main className="min-h-screen bg-[var(--background)] px-4 py-8 text-[var(--foreground)] sm:px-6">
       <div className="mx-auto max-w-6xl space-y-6">
-        <section className="rounded-lg border border-[var(--border)] bg-[var(--card)] p-6 shadow-[var(--anslation-ds-shadow-sm)] lg:p-8">
+        <section className="rounded-lg border border-[var(--border)] bg-[var(--card)] p-6 shadow-[var(--anslation-ds-shadow-sm)] 2xl:p-8">
           <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-[var(--muted)] px-3 py-1 text-xs font-semibold uppercase text-[var(--primary)]">
             <CheckSquare className="h-4 w-4" />
             Accessibility
           </div>
-          <h1 className="text-4xl font-semibold leading-tight">Color Contrast Checker</h1>
+          <h1 className="tool-heading-accent text-3xl font-semibold leading-tight sm:text-4xl">Color Contrast Checker</h1>
           <p className="mt-3 max-w-2xl text-base leading-7 text-[var(--muted-foreground)]">
             Check text/background contrast against WCAG AA and AAA thresholds for UI readability.
           </p>
         </section>
 
-        <section className="grid gap-6 lg:grid-cols-[360px_1fr]">
+        <section className="grid gap-6 2xl:grid-cols-[360px_1fr]">
           <div className="rounded-lg border border-[var(--border)] bg-[var(--card)] p-5 shadow-[var(--anslation-ds-shadow-sm)]">
             {[
               ["Text color", foreground, setForeground],
@@ -68,27 +68,27 @@ export default function ToolHome() {
               <label key={label} className="mb-5 block">
                 <span className="text-sm font-semibold">{label}</span>
                 <div className="mt-2 flex gap-3">
-                  <input type="color" value={value} onChange={(event) => setter(event.target.value)} className="h-12 w-16 rounded-lg border border-[var(--border)] bg-[var(--background)] p-1" />
+                  <input type="color" value={value} onChange={(event) => setter(event.target.value)} className="h-12 w-14 shrink-0 rounded-lg border border-[var(--border)] bg-[var(--background)] p-1 sm:w-16" />
                   <input value={value} onChange={(event) => setter(event.target.value)} className="min-w-0 flex-1 rounded-lg border border-[var(--border)] bg-[var(--background)] px-4 py-3 font-mono outline-none focus:border-[var(--primary)]" />
                 </div>
               </label>
             ))}
-            <button type="button" onClick={copyCss} className="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-[var(--primary)] px-4 py-3 text-sm font-semibold text-white">
+            <button type="button" onClick={copyCss} className="btn-primary w-full">
               <Copy className="h-4 w-4" />
               {copied ? "Copied" : "Copy CSS"}
             </button>
           </div>
 
           <div className="rounded-lg border border-[var(--border)] bg-[var(--card)] p-5 shadow-[var(--anslation-ds-shadow-sm)]">
-            <div className="rounded-lg p-8" style={{ color: foreground, backgroundColor: background }}>
+            <div className="rounded-lg p-5 sm:p-8" style={{ color: foreground, backgroundColor: background }}>
               <p className="text-sm font-semibold uppercase opacity-80">Preview</p>
-              <h2 className="mt-3 text-4xl font-semibold">Readable interface text</h2>
+              <h2 className="mt-3 break-words text-2xl font-semibold sm:text-4xl">Readable interface text</h2>
               <p className="mt-3 max-w-xl text-base leading-7">This preview shows how body copy and large headings feel with the selected colors.</p>
             </div>
-            <div className="mt-5 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-              <div className="rounded-lg border border-[var(--border)] bg-[var(--background)] p-4">
+            <div className="tool-card-grid mt-5">
+              <div className="min-w-0 rounded-lg border border-[var(--border)] bg-[var(--background)] p-4">
                 <p className="text-xs font-semibold uppercase text-[var(--muted-foreground)]">Ratio</p>
-                <p className="mt-2 text-3xl font-semibold">{contrast.toFixed(2)}:1</p>
+                <p className="tool-money-value mt-2">{contrast.toFixed(2)}:1</p>
               </div>
               <Result label="AA normal" pass={contrast >= 4.5} />
               <Result label="AA large" pass={contrast >= 3} />

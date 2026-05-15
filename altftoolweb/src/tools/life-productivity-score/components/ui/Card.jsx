@@ -16,13 +16,13 @@ const Card = ({ children, className = '', variant = 'glass', hover = false, onCl
 
     const variantStyles = {
         default: 'bg-(--card)',
-        glass: 'bg-(--card) backdrop-blur-xl border border-white/10 shadow-xl',
-        gradient: 'bg-gradient-to-br from-blue-500/5 to-blue-600/5 backdrop-blur-xl border border-white/10 shadow-xl',
-        outline: 'bg-transparent border border-slate-200 dark:border-white/10 shadow-sm',
+        glass: 'bg-(--card) backdrop-blur-xl border border-white/10',
+        gradient: 'bg-gradient-to-br from-blue-500/5 to-blue-600/5 backdrop-blur-xl border border-white/10',
+        outline: 'bg-transparent border border-slate-200 dark:border-white/10',
     };
 
     const hoverStyles = hover
-        ? 'hover:translate-y-[-4px] hover:shadow-2xl hover:shadow-(--primary)/10 cursor-pointer'
+        ? 'hover:translate-y-[-4px] cursor-pointer'
         : '';
 
     return (

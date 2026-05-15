@@ -1,0 +1,109 @@
+.fractal-tool-shell {
+  min-height: 100vh;
+  background: var(--background);
+  color: var(--foreground);
+  padding-bottom: 3.5rem;
+}
+
+.fractal-tool-container {
+  width: 100%;
+  max-width: 72rem;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+@media (min-width: 640px) { .fractal-tool-container { padding: 0 1.5rem; } }
+@media (min-width: 1024px) { .fractal-tool-container { padding: 0 2rem; } }
+
+.fractal-tool-grid { margin-top: 0.5rem; display: grid; gap: 1rem; align-items: start; }
+@media (min-width: 1024px) { .fractal-tool-grid { grid-template-columns: 1.02fr 1fr; } }
+
+.fractal-left-col,.fractal-right-col { display: flex; flex-direction: column; gap: 0.75rem; }
+.fractal-left-col { order: 2; }
+.fractal-right-col { order: 1; }
+@media (min-width: 1024px) {
+  .fractal-left-col { order: 1; position: sticky; top: 1rem; }
+  .fractal-right-col { order: 2; }
+}
+
+.fractal-card {
+  border: 1px solid var(--border);
+  background: var(--card);
+  border-radius: 16px;
+  box-shadow: 0 8px 30px rgba(16, 24, 40, 0.06);
+}
+
+.fractal-header { padding: 2rem 0 1rem; text-align: center; }
+.fractal-title { margin: 0 0 0.5rem; font-size: 2.25rem; line-height: 1.1; font-weight: 800; color: var(--primary); }
+.fractal-subtitle { max-width: 48rem; margin: 0 auto; color: var(--muted-foreground); }
+@media (min-width: 640px) { .fractal-title { font-size: 3rem; } .fractal-subtitle { font-size: 1.125rem; } }
+
+.fractal-controls-panel {
+  max-height: 90vh;
+  overflow-y: auto;
+  border-radius: 16px;
+  border: 1px solid var(--border);
+  background: var(--card);
+  padding: 1.25rem;
+  box-shadow: 0 8px 30px rgba(16, 24, 40, 0.06);
+}
+
+.fractal-controls-title { margin: 0 0 1rem; font-size: 0.875rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted-foreground); }
+.fractal-control-group { margin-bottom: 1rem; }
+.fractal-label { display: block; margin-bottom: 0.5rem; font-size: 0.875rem; font-weight: 600; color: var(--foreground); }
+.fractal-label-sm { display: block; margin-bottom: 0.25rem; font-size: 0.75rem; font-weight: 600; color: var(--muted-foreground); }
+.fractal-dropdown-btn {
+  width: 100%; display: flex; align-items: center; justify-content: space-between;
+  border: 1px solid transparent; border-radius: 8px; background: var(--muted); color: var(--foreground);
+  padding: 0.5rem 0.75rem; font-size: 0.95rem; font-weight: 600; text-align: left;
+}
+.fractal-dropdown-btn-sm { font-size: 0.875rem; }
+.fractal-chevron { width: 1rem; height: 1rem; transition: transform 0.2s ease; }
+.fractal-chevron-open { transform: rotate(180deg); }
+.fractal-preset-list { margin-top: 0.5rem; border: 1px solid var(--border); border-radius: 8px; background: var(--muted); padding: 0.5rem; }
+.fractal-preset-item { width: 100%; border: 0; border-radius: 6px; background: transparent; color: var(--foreground); text-align: left; font-size: 0.875rem; padding: 0.5rem 0.75rem; }
+.fractal-preset-item:hover { background: var(--card-hover-bg); }
+
+.fractal-grid-two { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 0.75rem; margin-bottom: 1rem; }
+.fractal-input,.fractal-select {
+  width: 100%; border: 1px solid var(--border); border-radius: 8px; background: var(--card); color: var(--foreground);
+  padding: 0.5rem 0.75rem; font-size: 0.875rem;
+}
+.fractal-range { width: 100%; cursor: pointer; }
+.fractal-color-input { width: 100%; height: 2.5rem; border-radius: 8px; border: 1px solid var(--border); background: var(--card); }
+.fractal-check { display: flex; align-items: center; gap: 0.5rem; font-size: 0.875rem; color: var(--foreground); }
+.fractal-check-input { width: 1rem; height: 1rem; }
+
+.fractal-advanced-wrap { border-top: 1px solid var(--border); padding-top: 0.75rem; }
+.fractal-advanced-panel { margin-top: 0.75rem; border: 1px solid var(--border); border-radius: 8px; background: var(--muted); padding: 0.75rem; }
+.fractal-advanced-panel > div { margin-bottom: 0.75rem; }
+.fractal-advanced-panel > :last-child { margin-bottom: 0; }
+
+.fractal-actions-card { padding: 0.75rem 1rem; border-radius: 12px; }
+.fractal-action-title { margin-bottom: 0.5rem; font-size: 0.875rem; font-weight: 600; color: var(--foreground); }
+.fractal-actions-list { display: flex; flex-direction: column; gap: 0.5rem; }
+.fractal-btn { width: 100%; border: 0; border-radius: 8px; padding: 0.5rem 1rem; font-size: 0.95rem; font-weight: 600; }
+.fractal-btn-sm { font-size: 0.875rem; }
+.fractal-canvas-card { border-radius: 16px; padding: 0.75rem; }
+.fractal-canvas-wrap { width: 100%; height: 100%; }
+.fractal-canvas-el { width: 100%; display: block; border-radius: 12px; min-height: 640px; }
+.fractal-tip { margin: 0; padding: 0 0.25rem; font-size: 0.75rem; color: var(--muted-foreground); }
+
+.fractal-description { padding-bottom: 1rem; }
+.fractal-section { margin-top: 3.5rem; }
+.fractal-section-head { text-align: center; }
+.fractal-section-title { margin: 0; font-size: 2.25rem; font-weight: 700; letter-spacing: -0.02em; color: var(--primary); }
+.fractal-section-subtitle { margin-top: 0.5rem; color: var(--muted-foreground); }
+.fractal-feature-grid { margin-top: 1.5rem; display: grid; gap: 0.75rem; }
+@media (min-width: 640px) { .fractal-feature-grid { grid-template-columns: repeat(2,minmax(0,1fr)); } }
+@media (min-width: 1024px) { .fractal-feature-grid { grid-template-columns: repeat(3,minmax(0,1fr)); } }
+.fractal-feature-card { border-radius: 16px; border: 1px solid var(--border); background: var(--card); padding: 1.5rem; box-shadow: 0 2px 10px rgba(15,23,42,0.04); }
+.fractal-feature-title { margin: 0; font-size: 1.95rem; line-height: 1.15; font-weight: 600; color: var(--foreground); }
+.fractal-feature-text { margin-top: 0.75rem; font-size: 1rem; line-height: 1.6; color: var(--muted-foreground); }
+
+.tool-btn-primary { background: var(--primary); color: var(--primary-foreground); }
+.tool-btn-primary:hover { background: var(--primary-hover); }
+.tool-btn-secondary { background: var(--secondary-bg); color: var(--secondary-foreground); border: 1px solid var(--secondary-border); }
+.tool-btn-secondary:hover { background: var(--secondary-hover); }
+.tool-btn-muted { background: var(--muted); color: var(--foreground); border: 1px solid var(--border); }
+.tool-btn-muted:hover { background: var(--card-hover-bg); }

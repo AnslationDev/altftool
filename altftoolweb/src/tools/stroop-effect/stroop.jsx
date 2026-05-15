@@ -409,14 +409,14 @@ export default function StroopEffect() {
                   </button>
 
                   {hasPlayed && (
-                    <button onClick={startCountdown} className="mt-4 btn-secondary px-8 py-4 rounded-xl text-lg font-semibold inline-flex items-center gap-3 ml-4">
+                    <button onClick={startCountdown} className="mt-4 btn-secondary px-8 py-4 rounded-xl text-lg font-semibold inline-flex items-center gap-3 sm:ml-4">
                       <RotateCcw className="w-6 h-6" /> Play Again
                     </button>
                   )}
                 </div>
 
                 {/* Global Stats */}
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 bg-(--muted) rounded-xl p-4">
+                <div className="tool-card-grid bg-(--muted) rounded-xl p-4">
                   {[
                     { label: 'Tested', value: globalStats.total.toLocaleString() },
                     { label: 'Avg Reaction', value: `${globalStats.avgReaction}ms` },
@@ -520,7 +520,7 @@ export default function StroopEffect() {
               </div>
 
               {/* Color Buttons */}
-              <div className="grid grid-cols-3 md:grid-cols-6 gap-3" ref={colorButtonsRef}>
+              <div className="tool-compact-grid" ref={colorButtonsRef}>
                 {COLORS.map((color, index) => (
                   <button
                     key={color.name}
@@ -603,7 +603,7 @@ export default function StroopEffect() {
                 </div>
 
                 {/* Key Stats */}
-                <div className="grid grid-cols-2 gap-4 mb-8">
+                <div className="tool-card-grid mb-8">
                   {[
                     { label: 'Accuracy', value: `${Math.round((score/TOTAL_TRIALS)*100)}%`, icon: '🎯' },
                     { label: 'Avg Reaction', value: `${averageReactionTime}ms`, icon: '⚡' },
@@ -654,7 +654,7 @@ export default function StroopEffect() {
                 <div className="bg-gradient-to-br from-(--card) to-(--muted) border border-(--border) rounded-2xl p-8 mb-8">
                   <div className="text-5xl font-black text-(--primary) mb-2">{shareStats.accuracy}%</div>
                   <p className="text-(--muted-foreground)">Accuracy</p>
-                  <div className="grid grid-cols-3 gap-4 mt-6">
+                  <div className="tool-compact-grid mt-6">
                     <div className="bg-(--card) rounded-lg p-3">
                       <div className="text-lg font-bold text-(--foreground)">{shareStats.averageReactionTime}ms</div>
                       <div className="text-xs text-(--muted-foreground)">Avg RT</div>

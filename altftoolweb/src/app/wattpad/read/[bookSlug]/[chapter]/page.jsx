@@ -15,7 +15,7 @@ export default async function ReaderPage({ params }) {
 
   if (!book) {
     return (
-      <div className="py-20 text-center">
+      <div className="py-20 text-center min-h-screen">
         Book not found
       </div>
     );
@@ -30,7 +30,7 @@ export default async function ReaderPage({ params }) {
 
   if (!currentChapter) {
     return (
-      <div className="py-20 text-center">
+      <div className="py-20 text-center min-h-screen">
         Chapter not found
       </div>
     );
@@ -46,11 +46,11 @@ export default async function ReaderPage({ params }) {
   );
 
   return (
-    <div className="min-h-screen bg-(background)">
+    <div className=" min-h-screen bg-(background)">
 
       {/* Top */}
       <div className="border-b border-(--border) sticky top-0 bg-(--card) backdrop-blur-xl z-50">
-        <div className="max-w-3xl mx-auto px-4 py-4 flex items-center justify-between">
+        <div className="max-w-4xl mx-auto px-4 py-4 flex items-center justify-between">
 
           <div>
             <div className="font-bold text-lg">
@@ -72,7 +72,7 @@ export default async function ReaderPage({ params }) {
       </div>
 
       {/* Content */}
-      <div className="max-w-3xl mx-auto px-4 py-12">
+      <div className="section max-w-[800px] mx-auto px-4 py-12 ">
 
         <h1 className="text-3xl md:text-5xl font-bold mb-10 leading-tight">
           {currentChapter.title}
@@ -82,9 +82,11 @@ export default async function ReaderPage({ params }) {
           {currentChapter.content}
         </div>
 
+       
+
         {/* Continue Button */}
         {hasNextChapter && (
-          <div className="mt-16 flex justify-center">
+          <div className="mt-16 mb-8 flex justify-center">
             <Link
               href={`/wattpad/read/${book.slug}/${nextChapter}`}
             >
@@ -95,10 +97,12 @@ export default async function ReaderPage({ params }) {
           </div>
         )}
 
-      </div>
-        <TextToSpeech
+           <TextToSpeech
         text={currentChapter.content}
       />
+
+      </div>
+      
     </div>
   );
 }

@@ -1,0 +1,163 @@
+/* src/tools/ambiguous-figure-viewer/styles.css */
+
+.ambiguous-figure-viewer {
+  font-family: var(--font-secondary);
+}
+
+.ambiguous-figure-viewer button,
+.ambiguous-figure-viewer input,
+.ambiguous-figure-viewer select {
+  min-width: 0;
+}
+
+.ambiguous-figure-viewer .tool-heading-accent {
+  background: linear-gradient(120deg, var(--primary), #0ea5e9, var(--primary));
+  background-size: 180% 180%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: ambiguous-gradient 9s ease infinite;
+}
+
+@keyframes ambiguous-gradient {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.viewer-overlay {
+  background:
+    radial-gradient(circle at top left, color-mix(in srgb, var(--primary) 16%, transparent), transparent 34rem),
+    var(--background);
+  color: var(--foreground);
+  backdrop-filter: blur(16px);
+}
+
+.spotlight-mask {
+  mask-image: radial-gradient(circle at var(--x) var(--y), black 0%, black 92px, transparent 180px);
+}
+
+.ambiguous-artwork {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 100%;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 20% 20%, color-mix(in srgb, var(--primary) 18%, transparent), transparent 26%),
+    linear-gradient(145deg, var(--card), var(--background));
+}
+
+.ambiguous-artwork .art-grid {
+  position: absolute;
+  inset: 0;
+  opacity: 0.26;
+  background-image:
+    linear-gradient(var(--border) 1px, transparent 1px),
+    linear-gradient(90deg, var(--border) 1px, transparent 1px);
+  background-size: 28px 28px;
+}
+
+.ambiguous-artwork .art-shape {
+  position: absolute;
+  border: 2px solid color-mix(in srgb, var(--primary) 56%, var(--border));
+  background: color-mix(in srgb, var(--primary) 12%, transparent);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--background) 55%, transparent);
+}
+
+.ambiguous-artwork .art-shape-a {
+  left: 12%;
+  top: 18%;
+  width: 42%;
+  height: 52%;
+  border-radius: 54% 46% 58% 42%;
+  transform: rotate(-18deg);
+}
+
+.ambiguous-artwork .art-shape-b {
+  right: 13%;
+  top: 18%;
+  width: 42%;
+  height: 52%;
+  border-radius: 46% 54% 42% 58%;
+  transform: rotate(18deg);
+}
+
+.ambiguous-artwork .art-shape-c {
+  left: 33%;
+  bottom: 13%;
+  width: 34%;
+  height: 28%;
+  border-radius: 50%;
+  background: var(--background);
+}
+
+.ambiguous-artwork .art-center {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  display: flex;
+  width: 4rem;
+  height: 4rem;
+  transform: translate(-50%, -50%);
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: color-mix(in srgb, var(--card) 92%, transparent);
+  color: var(--primary);
+  box-shadow: 0 14px 34px rgba(15, 23, 42, 0.14);
+}
+
+.ambiguous-artwork.is-compact .art-center {
+  width: 3rem;
+  height: 3rem;
+}
+
+.ambiguous-artwork-duck-rabbit .art-shape-a,
+.ambiguous-artwork-old-young .art-shape-a,
+.ambiguous-artwork-eskimo-indian .art-shape-a {
+  border-radius: 70% 30% 48% 52%;
+}
+
+.ambiguous-artwork-necker-cube .art-shape-a,
+.ambiguous-artwork-schroder-stairs .art-shape-a,
+.ambiguous-artwork-impossible-trident .art-shape-a {
+  border-radius: 0.85rem;
+  transform: rotate(45deg) skew(-10deg, -10deg);
+}
+
+.ambiguous-artwork-necker-cube .art-shape-b,
+.ambiguous-artwork-schroder-stairs .art-shape-b,
+.ambiguous-artwork-impossible-trident .art-shape-b {
+  border-radius: 0.85rem;
+  transform: rotate(45deg) skew(10deg, 10deg);
+}
+
+.ambiguous-artwork-rubin-vase .art-shape-a,
+.ambiguous-artwork-face-candlestick .art-shape-a,
+.ambiguous-artwork-all-is-vanity .art-shape-a {
+  border-radius: 60% 16% 16% 60%;
+}
+
+.ambiguous-artwork-rubin-vase .art-shape-b,
+.ambiguous-artwork-face-candlestick .art-shape-b,
+.ambiguous-artwork-all-is-vanity .art-shape-b {
+  border-radius: 16% 60% 60% 16%;
+}
+
+.ambiguous-artwork-spinning-dancer .art-shape-a,
+.ambiguous-artwork-ambiguous-cylinder .art-shape-a,
+.ambiguous-artwork-mach-book .art-shape-a {
+  border-radius: 999px;
+}
+
+@media (max-width: 640px) {
+  .ambiguous-figure-viewer .tool-heading-accent {
+    font-size: clamp(2.35rem, 13vw, 3.25rem);
+  }
+
+  .spotlight-mask {
+    mask-image: radial-gradient(circle at var(--x) var(--y), black 0%, black 72px, transparent 142px);
+  }
+}

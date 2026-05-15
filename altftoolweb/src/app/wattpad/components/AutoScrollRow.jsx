@@ -1,81 +1,54 @@
 "use client";
 
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import FanficCard from "./FanficCard";
 
 export default function AutoScrollRow({ items, reverse = false }) {
   const trackRef = useRef(null);
   const [paused, setPaused] = useState(false);
-  const [manualOffset, setManualOffset] = useState(0); // from button clicks
-  const [dragOffset, setDragOffset] = useState(0);     // live drag delta
-  const [isDragging, setIsDragging] = useState(false);
-  const dragStartX = useRef(null);
 
-  // --- Drag support ---
-  useEffect(() => {
-    const track = trackRef.current;
-    if (!track) return;
-
-    const onDown = (e) => {
-      setIsDragging(true);
-      setPaused(true);
-      dragStartX.current = e.touches ? e.touches[0].clientX : e.clientX;
-      setDragOffset(0);
-    };
-
-    const onMove = (e) => {
-      if (dragStartX.current === null) return;
-      const x = e.touches ? e.touches[0].clientX : e.clientX;
-      setDragOffset(x - dragStartX.current);
-    };
-
-    const onUp = () => {
-      // Absorb drag delta into manual offset so card position doesn't snap back
-      setManualOffset((prev) => prev + dragOffset);
-      setDragOffset(0);
-      setIsDragging(false);
-      setPaused(false);
-      dragStartX.current = null;
-    };
-
-    track.addEventListener("mousedown", onDown);
-    window.addEventListener("mousemove", onMove);
-    window.addEventListener("mouseup", onUp);
-    track.addEventListener("touchstart", onDown, { passive: true });
-    window.addEventListener("touchmove", onMove, { passive: true });
-    window.addEventListener("touchend", onUp);
-
-    return () => {
-      track.removeEventListener("mousedown", onDown);
-      window.removeEventListener("mousemove", onMove);
-      window.removeEventListener("mouseup", onUp);
-      track.removeEventListener("touchstart", onDown);
-      window.removeEventListener("touchmove", onMove);
-      window.removeEventListener("touchend", onUp);
-    };
-  }, [dragOffset]);
-
-  // ~3s per card — adjust to taste
-  const duration = items.length * 3;
-  const totalOffset = manualOffset + dragOffset;
+  const safeItems = Array.isArray(items) ? items : [];
+  const duration = Math.max(safeItems.length * 3, 12);
+  // const totalOffset = manualOffset + dragOffset;
 
   const handleScrollBtn = (dir) => {
-    setPaused(true);
-    setManualOffset((prev) => prev + (dir === "left" ? 300 : -300));
-    // Resume auto-scroll after user has had a moment to browse
-    setTimeout(() => setPaused(false), 1200);
-  };
 
-  const trackStyle = {
-    display: "flex",
-    gap: "1rem",
-    animation: `${reverse ? "marquee-left" : "marquee-right"} ${duration}s linear infinite`,
-    animationPlayState: paused ? "paused" : "running",
-    cursor: isDragging ? "grabbing" : "grab",
-    userSelect: "none",
-    willChange: "transform",
-  };
+  if (!trackRef.current) return;
+
+  setPaused(true);
+
+  trackRef.current.scrollBy({
+    left: dir === "left" ? -320 : 320,
+    behavior: "smooth",
+  });
+
+  setTimeout(() => {
+    setPaused(false);
+  }, 1200);
+
+};
+
+ const trackStyle = {
+  display: "flex",
+  gap: "0.75rem",
+
+  animationName: reverse
+    ? "marquee-left"
+    : "marquee-right",
+
+  animationDuration: `${duration}s`,
+  animationTimingFunction: "linear",
+  animationIterationCount: "infinite",
+
+  animationPlayState: paused
+    ? "paused"
+    : "running",
+
+  cursor: "grab",
+  userSelect: "none",
+  willChange: "transform",
+};
 
   return (
     <>
@@ -93,7 +66,7 @@ export default function AutoScrollRow({ items, reverse = false }) {
       <div
         className="relative group overflow-hidden"
         onMouseEnter={() => setPaused(true)}
-        onMouseLeave={() => !isDragging && setPaused(false)}
+        onMouseLeave={() => setPaused(false)}
       >
         {/* LEFT BUTTON */}
         <button
@@ -122,20 +95,18 @@ export default function AutoScrollRow({ items, reverse = false }) {
           Keeping them separate means neither interferes with the other.
         */}
         <div
-          style={{
-            transform: `translateX(${totalOffset}px)`,
-            transition: isDragging ? "none" : "transform 0.4s ease",
-          }}
+           ref={trackRef}
+  className="overflow-x-auto no-scrollbar scroll-smooth"
         >
-          <div ref={trackRef} style={trackStyle}>
+          <div style={trackStyle}>
             {/* Original set */}
-            {items.map((item) => (
+            {safeItems.map((item) => (
               <div key={`orig-${item.id}`} className="shrink-0">
                 <FanficCard item={item} />
               </div>
             ))}
             {/* Clone set — purely for seamless loop; hidden from assistive tech */}
-            {items.map((item) => (
+            {safeItems.map((item) => (
               <div key={`clone-${item.id}`} className="shrink-0" aria-hidden="true">
                 <FanficCard item={item} />
               </div>

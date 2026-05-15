@@ -100,7 +100,7 @@ export default function BookTabs({
 
          
          {/* DESCRIPTION */}
-<div className="border-b border-(--border) pb-10">
+<div className="border-b border-(--border) pb-5">
 
  <p
   className={`text-[17px] leading-snug text-(--foreground) transition-all duration-300 ${

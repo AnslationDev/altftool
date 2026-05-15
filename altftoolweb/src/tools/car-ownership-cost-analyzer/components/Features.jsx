@@ -114,7 +114,7 @@ const Features = () => {
                                 hover={true}
                                 className="h-full flex flex-col items-start p-8 group border-white/10"
                             >
-                                <div className={`p-4 rounded-2xl bg-slate-100 dark:bg-white/5 text-(--primary) mb-6 transition-all duration-300 group-hover:scale-110 group-hover:shadow-xl group-hover:shadow-(--primary)/20`}>
+                                <div className={`p-4 rounded-2xl bg-slate-100 dark:bg-white/5 text-(--primary) mb-6 transition-all duration-300 group-hover:scale-110`}>
                                     <feature.icon className="w-6 h-6" />
                                 </div>
 

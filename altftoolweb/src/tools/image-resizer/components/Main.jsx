@@ -546,7 +546,7 @@ export default function MainComponent() {
       </div>
 
       <section className="mt-7 rounded-lg border border-(--border) bg-(--section-highlight) p-5 sm:p-6">
-        <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_330px] lg:items-center">
+        <div className="grid gap-6 2xl:grid-cols-[minmax(0,1fr)_330px] 2xl:items-center">
           <div className="flex items-start gap-4">
             <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-(--section-highlight) text-(--primary)">
               <Maximize2 className="h-6 w-6" />
@@ -574,7 +574,7 @@ export default function MainComponent() {
         </div>
       </section>
 
-      <section className="mt-6 grid gap-6 lg:grid-cols-[400px_minmax(0,1fr)]">
+      <section className="mt-6 grid gap-6 2xl:grid-cols-[400px_minmax(0,1fr)]">
         <div className="space-y-5">
           <div
             onDragEnter={(event) => {
@@ -703,7 +703,7 @@ export default function MainComponent() {
               </select>
             </label>
 
-            <div className="mt-5 grid gap-4 sm:grid-cols-2">
+            <div className="tool-form-grid mt-5">
               <label>
                 <span className="mb-2 block text-sm font-semibold text-(--foreground)">Width</span>
                 <input
@@ -765,7 +765,7 @@ export default function MainComponent() {
               ))}
             </div>
 
-            <div className="mt-5 grid gap-4 sm:grid-cols-2">
+            <div className="tool-form-grid mt-5">
               <label>
                 <span className="mb-2 block text-sm font-semibold text-(--foreground)">Output Format</span>
                 <select
@@ -892,7 +892,7 @@ export default function MainComponent() {
             </div>
           )}
 
-          <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+          <div className="tool-card-grid">
             <StatCard icon={FileImage} label="Images" value={items.length} detail={formatBytes(totalSourceSize)} />
             <StatCard icon={Maximize2} label="Target" value={`${estimatedTarget.width}x${estimatedTarget.height}`} detail="Output pixels" />
             <StatCard icon={ImageIcon} label="Format" value={outputFormat.label} detail={`${Math.round(settings.quality * 100)}% quality`} />
@@ -939,7 +939,7 @@ export default function MainComponent() {
                       className="max-h-[520px] max-w-full rounded-md shadow-lg"
                     />
                   </div>
-                  <div className="mt-4 grid gap-3 text-sm sm:grid-cols-3">
+                  <div className="tool-compact-grid mt-4 text-sm">
                     <div className="rounded-lg bg-(--background) p-3">
                       <p className="text-(--muted-foreground)">Original</p>
                       <p className="font-semibold text-(--foreground)">

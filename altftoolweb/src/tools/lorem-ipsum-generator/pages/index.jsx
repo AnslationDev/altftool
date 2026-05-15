@@ -69,18 +69,18 @@ export default function ToolHome() {
   return (
     <main className="min-h-screen bg-[var(--background)] px-4 py-8 text-[var(--foreground)] sm:px-6">
       <div className="mx-auto max-w-7xl space-y-6">
-        <section className="rounded-lg border border-[var(--border)] bg-[var(--card)] p-6 shadow-[var(--anslation-ds-shadow-sm)] lg:p-8">
+        <section className="rounded-lg border border-[var(--border)] bg-[var(--card)] p-6 shadow-[var(--anslation-ds-shadow-sm)] 2xl:p-8">
           <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-[var(--muted)] px-3 py-1 text-xs font-semibold uppercase text-[var(--primary)]">
             <Quote className="h-4 w-4" />
             Placeholder copy
           </div>
-          <h1 className="text-4xl font-semibold leading-tight">Lorem Ipsum Generator</h1>
+          <h1 className="tool-heading-accent text-3xl font-semibold leading-tight sm:text-4xl">Lorem Ipsum Generator</h1>
           <p className="mt-3 max-w-2xl text-base leading-7 text-[var(--muted-foreground)]">
             Generate structured placeholder content for wireframes, designs, and content layouts.
           </p>
         </section>
 
-        <section className="grid gap-6 lg:grid-cols-[360px_1fr]">
+        <section className="grid items-start gap-6 2xl:grid-cols-[340px_1fr]">
           <div className="rounded-lg border border-[var(--border)] bg-[var(--card)] p-5 shadow-[var(--anslation-ds-shadow-sm)]">
             <label className="block">
               <span className="text-sm font-semibold">Output type</span>
@@ -98,13 +98,13 @@ export default function ToolHome() {
               <input type="checkbox" checked={startClassic} onChange={(event) => setStartClassic(event.target.checked)} />
               Start with classic lorem ipsum
             </label>
-            <button type="button" onClick={copyOutput} className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-lg bg-[var(--primary)] px-4 py-3 text-sm font-semibold text-white">
+            <button type="button" onClick={copyOutput} className="btn-primary mt-5 w-full">
               <Clipboard className="h-4 w-4" />
               {copied ? "Copied" : "Copy output"}
             </button>
           </div>
 
-          <pre className="min-h-[520px] whitespace-pre-wrap rounded-lg border border-[var(--border)] bg-[var(--card)] p-5 text-sm leading-7 shadow-[var(--anslation-ds-shadow-sm)]">
+          <pre className="max-h-[560px] min-h-[320px] overflow-auto whitespace-pre-wrap break-words rounded-lg border border-[var(--border)] bg-[var(--card)] p-5 text-sm leading-7 shadow-[var(--anslation-ds-shadow-sm)] sm:min-h-[380px]">
             {output}
           </pre>
         </section>

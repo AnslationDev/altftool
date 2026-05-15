@@ -13,9 +13,9 @@ const activityFactors = {
 
 function Stat({ label, value }) {
   return (
-    <div className="rounded-lg border border-[var(--border)] bg-[var(--background)] p-4">
+    <div className="min-w-0 rounded-lg border border-[var(--border)] bg-[var(--background)] p-4">
       <p className="text-xs font-semibold uppercase text-[var(--muted-foreground)]">{label}</p>
-      <p className="mt-2 text-2xl font-semibold">{value}</p>
+      <p className="tool-money-value mt-2">{value}</p>
     </div>
   );
 }
@@ -42,18 +42,18 @@ export default function ToolHome() {
   return (
     <main className="min-h-screen bg-[var(--background)] px-4 py-8 text-[var(--foreground)] sm:px-6">
       <div className="mx-auto max-w-6xl space-y-6">
-        <section className="rounded-lg border border-[var(--border)] bg-[var(--card)] p-6 shadow-[var(--anslation-ds-shadow-sm)] lg:p-8">
+        <section className="rounded-lg border border-[var(--border)] bg-[var(--card)] p-6 shadow-[var(--anslation-ds-shadow-sm)] 2xl:p-8">
           <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-[var(--muted)] px-3 py-1 text-xs font-semibold uppercase text-[var(--primary)]">
             <Activity className="h-4 w-4" />
             Fitness estimate
           </div>
-          <h1 className="text-4xl font-semibold leading-tight">Calorie / TDEE Calculator</h1>
+          <h1 className="tool-heading-accent text-3xl font-semibold leading-tight sm:text-4xl">Calorie / TDEE Calculator</h1>
           <p className="mt-3 max-w-2xl text-base leading-7 text-[var(--muted-foreground)]">
             Estimate maintenance calories, BMR, and simple weight goal targets from common fitness formulas.
           </p>
         </section>
 
-        <section className="grid gap-6 lg:grid-cols-[360px_1fr]">
+        <section className="grid gap-6 2xl:grid-cols-[360px_1fr]">
           <div className="rounded-lg border border-[var(--border)] bg-[var(--card)] p-5 shadow-[var(--anslation-ds-shadow-sm)]">
             <label className="block">
               <span className="text-sm font-semibold">Gender</span>
@@ -71,7 +71,7 @@ export default function ToolHome() {
                 <span className="text-sm font-semibold">{label}</span>
                 <div className="mt-2 flex overflow-hidden rounded-lg border border-[var(--border)] bg-[var(--background)] focus-within:border-[var(--primary)]">
                   <input type="number" value={value} onChange={(event) => setter(Number(event.target.value))} className="min-w-0 flex-1 bg-transparent px-4 py-3 outline-none" />
-                  <span className="bg-[var(--muted)] px-4 py-3 text-sm font-semibold text-[var(--muted-foreground)]">{suffix}</span>
+                  <span className="shrink-0 bg-[var(--muted)] px-3 py-3 text-sm font-semibold text-[var(--muted-foreground)] sm:px-4">{suffix}</span>
                 </div>
               </label>
             ))}
@@ -88,7 +88,7 @@ export default function ToolHome() {
           </div>
 
           <div className="rounded-lg border border-[var(--border)] bg-[var(--card)] p-5 shadow-[var(--anslation-ds-shadow-sm)]">
-            <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+            <div className="tool-card-grid">
               <Stat label="BMR" value={`${result.bmr} kcal`} />
               <Stat label="Maintenance" value={`${result.tdee} kcal`} />
               <Stat label="Fat loss" value={`${result.cut} kcal`} />

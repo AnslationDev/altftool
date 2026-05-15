@@ -1,231 +1,117 @@
 "use client";
 
+import Image from "next/image";
+import { useRef, useEffect } from "react";
+
 export default function Socials() {
   const brands = [
     {
       name: "coinbase",
-      svg: (
-        <svg
-          viewBox="0 0 190 60"
-          fill="none"
-          className="h-15 md:h-15 w-auto"
-          style={{ color: "var(--muted-foreground)" }}
-        >
-          <text
-            x="0"
-            y="42"
-            fontFamily="'Manrope',sans-serif"
-            fontSize="34"
-            fontWeight="700"
-            fill="currentColor"
-            letterSpacing="-1"
-          >
-            coinbase
-          </text>
-        </svg>
-      ),
+      image: "/personality/socials/coinbase.png",
+      width: 170,
+      height: 50,
     },
-
     {
-      name: "Spotify",
-      svg: (
-        <svg
-          viewBox="0 0 180 60"
-          fill="none"
-          className="h-15 md:h-15 w-auto"
-          style={{ color: "var(--muted-foreground)" }}
-        >
-          <circle cx="24" cy="30" r="20" fill="currentColor" />
-
-          <path
-            d="M15 24c7-2 15-1 20 2"
-            stroke="white"
-            strokeWidth="2.4"
-            strokeLinecap="round"
-          />
-          <path
-            d="M16 30c6-1.5 13-1 18 1.5"
-            stroke="white"
-            strokeWidth="2.2"
-            strokeLinecap="round"
-          />
-          <path
-            d="M18 36c5-1 10-0.5 14 1"
-            stroke="white"
-            strokeWidth="2"
-            strokeLinecap="round"
-          />
-
-          <text
-            x="52"
-            y="40"
-            fontFamily="'Manrope',sans-serif"
-            fontSize="30"
-            fontWeight="700"
-            fill="currentColor"
-            letterSpacing="-1"
-          >
-            Spotify
-          </text>
-        </svg>
-      ),
+      name: "spotify",
+      image: "/personality/socials/spotify.png",
+      width: 170,
+      height: 50,
     },
-
     {
       name: "slack",
-      svg: (
-        <svg
-          viewBox="0 0 150 60"
-          fill="none"
-          className="h-15 md:h-15 w-auto"
-          style={{ color: "var(--muted-foreground)" }}
-        >
-          {/* Slack icon */}
-          <g transform="translate(0,10)">
-            <rect
-              x="8"
-              y="0"
-              width="8"
-              height="18"
-              rx="4"
-              fill="currentColor"
-            />
-            <rect
-              x="8"
-              y="20"
-              width="8"
-              height="18"
-              rx="4"
-              fill="currentColor"
-            />
-
-            <rect
-              x="0"
-              y="12"
-              width="18"
-              height="8"
-              rx="4"
-              fill="currentColor"
-            />
-            <rect
-              x="20"
-              y="12"
-              width="18"
-              height="8"
-              rx="4"
-              fill="currentColor"
-            />
-          </g>
-
-          <text
-            x="52"
-            y="40"
-            fontFamily="'Manrope',sans-serif"
-            fontSize="30"
-            fontWeight="700"
-            fill="currentColor"
-            letterSpacing="-1"
-          >
-            slack
-          </text>
-        </svg>
-      ),
+      image: "/personality/socials/slack.png",
+      width: 150,
+      height: 50,
     },
-
     {
-      name: "Dropbox",
-      svg: (
-        <svg
-          viewBox="0 0 210 60"
-          fill="none"
-          className="h-15 md:h-15 w-auto"
-          style={{ color: "var(--muted-foreground)" }}
-        >
-          <g transform="translate(0,8)">
-            <polygon points="10,10 22,2 34,10 22,18" fill="currentColor" />
-            <polygon points="36,10 48,2 60,10 48,18" fill="currentColor" />
-            <polygon points="10,26 22,18 34,26 22,34" fill="currentColor" />
-            <polygon points="36,26 48,18 60,26 48,34" fill="currentColor" />
-          </g>
-
-          <text
-            x="74"
-            y="40"
-            fontFamily="'Manrope',sans-serif"
-            fontSize="30"
-            fontWeight="700"
-            fill="currentColor"
-            letterSpacing="-1"
-          >
-            Dropbox
-          </text>
-        </svg>
-      ),
+      name: "dropbox",
+      image: "/personality/socials/dropbox.png",
+      width: 190,
+      height: 50,
     },
-
     {
       name: "webflow",
-      svg: (
-        <svg
-          viewBox="0 0 170 60"
-          fill="none"
-          className="h-15 md:h-15 w-auto"
-          style={{ color: "var(--muted-foreground)" }}
-        >
-          <text
-            x="0"
-            y="40"
-            fontFamily="'Manrope',sans-serif"
-            fontSize="30"
-            fontWeight="800"
-            fontStyle="italic"
-            fill="currentColor"
-            letterSpacing="-1"
-          >
-            webflow
-          </text>
-        </svg>
-      ),
+      image: "/personality/socials/webflow.png",
+      width: 170,
+      height: 50,
     },
-
     {
       name: "zoom",
-      svg: (
-        <svg
-          viewBox="0 0 120 60"
-          fill="none"
-          className="h-15 md:h-15 w-auto"
-          style={{ color: "var(--muted-foreground)" }}
-        >
-          <text
-            x="0"
-            y="40"
-            fontFamily="'Manrope',sans-serif"
-            fontSize="30"
-            fontWeight="700"
-            fill="currentColor"
-            letterSpacing="-1"
-          >
-            zoom
-          </text>
-        </svg>
-      ),
+      image: "/personality/socials/zoom.png",
+      width: 120,
+      height: 50,
     },
   ];
 
+  const trackRef = useRef(null);
+  const animRef = useRef(null);
+  const posRef = useRef(0);
+  const pausedRef = useRef(false);
+
+  useEffect(() => {
+    const track = trackRef.current;
+    if (!track) return;
+
+    const speed = 1.2; 
+
+    const step = () => {
+      const halfWidth = track.scrollWidth / 2;
+
+      if (!pausedRef.current) {
+        posRef.current += speed;
+
+        if (posRef.current >= halfWidth) {
+          posRef.current -= halfWidth;
+        }
+
+        track.style.transform = `translateX(-${posRef.current}px)`;
+      }
+
+      animRef.current = requestAnimationFrame(step);
+    };
+
+    animRef.current = requestAnimationFrame(step);
+
+    return () => cancelAnimationFrame(animRef.current);
+  }, []);
+
+  const list = [...brands, ...brands];
+
   return (
-    <section
-      className="w-full py-10"
-      style={{ background: "var(--background)" }}
-    >
-      <div className="max-w-[1280px] mx-auto px-8">
-        <div className="flex items-center justify-between gap-10 overflow-x-auto scrollbar-hide">
-          {brands.map((brand) => (
+    <section className="section overflow-hidden">
+      <div
+        className="relative w-full overflow-hidden"
+        onMouseEnter={() => (pausedRef.current = true)}
+        onMouseLeave={() => (pausedRef.current = false)}
+        onTouchStart={() => (pausedRef.current = true)}
+        onTouchEnd={() => (pausedRef.current = false)}
+      >
+        {/* fade edges */}
+        <div className="pointer-events-none absolute inset-y-0 left-0 w-8 sm:w-12 md:w-16 lg:w-24 z-10 bg-gradient-to-r from-(--background) to-transparent" />
+        <div className="pointer-events-none absolute inset-y-0 right-0 w-8 sm:w-12 md:w-16 lg:w-24 z-10 bg-gradient-to-l from-(--background) to-transparent" />
+
+        <div
+          ref={trackRef}
+          className="flex will-change-transform"
+          style={{ width: "max-content" }}
+        >
+          {list.map((brand, index) => (
             <div
-              key={brand.name}
-              className="flex-shrink-0 opacity-90 hover:opacity-100 transition"
+              key={`${brand.name}-${index}`}
+              className="flex items-center justify-center shrink-0
+              px-4 sm:px-6 md:px-10 lg:px-14
+              py-2
+               mx-2 sm:mx-3 md:mx-4 lg:mx-5
+             transition-transform duration-300 hover:scale-110 active:scale-95"
             >
-              {brand.svg}
+              <Image
+                src={brand.image}
+                alt={brand.name}
+                width={brand.width}
+                height={brand.height}
+                className="h-6 sm:h-8 md:h-10 lg:h-12 w-auto object-contain opacity-80 hover:opacity-100 transition-all duration-300"
+                unoptimized
+              />
             </div>
           ))}
         </div>

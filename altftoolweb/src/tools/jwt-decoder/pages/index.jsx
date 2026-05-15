@@ -61,8 +61,8 @@ export default function ToolHome() {
   return (
     <main className="min-h-screen bg-[var(--background)] px-4 py-8 text-[var(--foreground)] sm:px-6">
       <div className="mx-auto max-w-7xl space-y-6">
-        <section className="rounded-lg border border-[var(--border)] bg-[var(--card)] p-6 shadow-[var(--anslation-ds-shadow-sm)] lg:p-8">
-          <div className="grid gap-6 lg:grid-cols-[1fr_320px] lg:items-end">
+        <section className="rounded-lg border border-[var(--border)] bg-[var(--card)] p-6 shadow-[var(--anslation-ds-shadow-sm)] 2xl:p-8">
+          <div className="grid gap-6 2xl:grid-cols-[1fr_320px] 2xl:items-end">
             <div>
               <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-[var(--muted)] px-3 py-1 text-xs font-semibold uppercase text-[var(--primary)]">
                 <KeyRound className="h-4 w-4" />
@@ -90,7 +90,7 @@ export default function ToolHome() {
           </div>
         </section>
 
-        <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_420px]">
+        <div className="grid gap-6 2xl:grid-cols-[minmax(0,1fr)_420px]">
           <Panel title="Paste JWT">
             <textarea
               value={token}
@@ -142,7 +142,7 @@ export default function ToolHome() {
         </div>
 
         {decoded.ok && (
-          <div className="grid gap-6 lg:grid-cols-2">
+          <div className="grid gap-6 2xl:grid-cols-2">
             {[
               ["Header", formatJson(decoded.header)],
               ["Payload", formatJson(decoded.payload)],

@@ -456,7 +456,7 @@ export default function MainComponent() {
       </div>
 
       <section className="mt-8 rounded-lg border border-(--border) bg-(--card) p-5 sm:p-6">
-        <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_320px] lg:items-center">
+        <div className="grid gap-6 2xl:grid-cols-[minmax(0,1fr)_320px] 2xl:items-center">
           <div className="flex items-start gap-4">
             <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-(--section-highlight) text-(--primary)">
               <Scissors className="h-6 w-6" />
@@ -484,7 +484,7 @@ export default function MainComponent() {
         </div>
       </section>
 
-      <section className="mt-6 grid gap-6 lg:grid-cols-[420px_minmax(0,1fr)]">
+      <section className="mt-6 grid gap-6 2xl:grid-cols-[420px_minmax(0,1fr)]">
         <div className="space-y-5">
           <div
             onDragEnter={(event) => {
@@ -699,7 +699,7 @@ export default function MainComponent() {
             </div>
           )}
 
-          <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+          <div className="tool-card-grid">
             <StatCard icon={FileText} label="Source Pages" value={pageCount || 0} detail="Input PDF" />
             <StatCard icon={SplitSquareHorizontal} label="Outputs" value={splitPlan.parts.length} detail={splitPlan.parts.length > 1 ? "ZIP package" : "Single PDF"} />
             <StatCard icon={Layers} label="Output Pages" value={totalOutputPages} detail="Across all files" />

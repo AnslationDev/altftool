@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { Plus, Minus } from "lucide-react";
 
 const faqs = [
   {
@@ -29,91 +30,133 @@ const faqs = [
   },
 ];
 
-export default function FAQ() {
-  const [open, setOpen] = useState(1);
+export default function Faq() {
+  const [open, setOpen] = useState(0);
 
   return (
-    <section className="w-full py-14 md:py-20" style={{ background: 'var(--background)' }}>
-      <div className="max-w-[1200px] mx-auto px-6">
-        {/* Heading */}
-        <div className="text-center mb-14">
-          <h2 className="font-['Manrope',sans-serif] font-semibold text-[30px] sm:text-[36px] md:text-[40px] leading-[38px] sm:leading-[46px] md:leading-[55px] capitalize mb-3" style={{ color: 'var(--foreground)' }}>
-            Frequently Asked Questions
-          </h2>
+    <section className="section ">
+      {/* Header */}
+      <div className="text-center mb-10 md:mb-14 ">
+        <h2 className="section-title max-w-[760px] mx-auto mb-4">
+          Frequently Asked Questions
+        </h2>
 
-          <p className="font-['Manrope',sans-serif] font-medium text-[15px] sm:text-[18px] md:text-[20px] leading-[22px] sm:leading-[26px] md:leading-[27px] capitalize" style={{ color: 'var(--muted-foreground)' }}>
-            Everything You Need To Know About Our Personality Tests
-          </p>
-        </div>
+        <p className="section-subtitle max-w-[620px] mx-auto">
+          Everything you need to know about our
+          personality tests and how they help you
+          better understand yourself.
+        </p>
+      </div>
 
-        {/* FAQ Items */}
-        <div className="flex flex-col gap-4">
-          {faqs.map((faq, i) => {
-            const isOpen = open === i;
+      {/* FAQ List */}
+      <div className="flex flex-col gap-4">
+        {faqs.map((faq, i) => {
+          const isOpen = open === i;
 
-            return (
-              <div
-                key={i}
-                className="rounded-[18px] overflow-hidden transition-all duration-200 card border"
-                style={{
-                  borderColor: isOpen ? 'var(--primary)' : 'var(--border)',
-                  boxShadow: isOpen ? 'var(--anslation-ds-shadow-md)' : 'var(--anslation-ds-shadow-sm)',
-                  borderWidth: '1px',
-                  background: 'var(--card)',
-                }}
+          return (
+            <div
+              key={i}
+              className={`
+                rounded-[20px]
+                border
+                bg-(--background)
+                overflow-hidden
+                transition-all duration-300
+                shadow-[0px_8px_30px_0px_rgba(0,0,0,0.04)]
+               
+                ${
+                  isOpen
+                    ? "border-(--primary)"
+                    : "border-(--border)"
+                }
+              `}
+             
+            >
+              {/* Question */}
+              <button
+                onClick={() =>
+                  setOpen(isOpen ? -1 : i)
+                }
+                className="
+                  w-full
+                  flex
+                  items-center
+                  justify-between
+                  gap-4
+                  text-left
+                  px-5 sm:px-6 md:px-7
+                  py-4 sm:py-5
+                  cursor-pointer
+                "
               >
-                <button
-                  onClick={() => setOpen(isOpen ? -1 : i)}
-                  className="w-full flex items-center justify-between px-6 py-5 text-left"
+                <span
+                  className="
+                    text-(--foreground)
+                    font-semibold
+                    text-[16px] sm:text-[18px] md:text-[20px]
+                    leading-[26px] sm:leading-[30px]
+                  "
                 >
-                  <span className="font-['Manrope',sans-serif] font-medium text-[19.5px] leading-[27px]" style={{ color: 'var(--foreground)' }}>
-                    {faq.q}
-                  </span>
+                  {faq.q}
+                </span>
 
-                  <div className="w-[26px] h-[26px] flex items-center justify-center flex-shrink-0">
-                    {isOpen ? (
-                      <svg
-                        width="26"
-                        height="26"
-                        viewBox="0 0 26 26"
-                        fill="none"
-                      >
-                        <path
-                          d="M5.42 13H20.58"
-                          strokeWidth="2.17"
-                          strokeLinecap="round"
-                          style={{ stroke: 'var(--primary)' }}
-                        />
-                      </svg>
-                    ) : (
-                      <svg
-                        width="26"
-                        height="26"
-                        viewBox="0 0 26 26"
-                        fill="none"
-                      >
-                        <path
-                          d="M13 5.42V20.58M5.42 13H20.58"
-                          strokeWidth="2.17"
-                          strokeLinecap="round"
-                          style={{ stroke: 'var(--muted-foreground)' }}
-                        />
-                      </svg>
-                    )}
-                  </div>
-                </button>
+                <div
+                  className={`
+                    flex-shrink-0
+                    w-9 h-9
+                    rounded-full
+                    flex items-center justify-center
+                    transition-all duration-300
+                    ${
+                      isOpen
+                        ? "bg-(--primary)/10 text-(--primary)"
+                        : "bg-(--muted) text-(--muted-foreground)"
+                    }
+                  `}
+                >
+                  {isOpen ? (
+                    <Minus className="w-5 h-5" />
+                  ) : (
+                    <Plus className="w-5 h-5" />
+                  )}
+                </div>
+              </button>
 
-                {isOpen && (
-                  <div className="px-6 pb-5">
-                    <p className="font-['Manrope',sans-serif] font-normal text-[18.2px] leading-[29px]" style={{ color: 'var(--muted-foreground)' }}>
+              {/* Answer */}
+              <div
+                className={`
+                  grid
+                  transition-all duration-300 ease-in-out
+                  ${
+                    isOpen
+                      ? "grid-rows-[1fr] opacity-100"
+                      : "grid-rows-[0fr] opacity-0"
+                  }
+                `}
+              >
+                <div className="overflow-hidden">
+                  <div
+                    className="
+                      px-5 sm:px-6 md:px-7
+                      pb-5 sm:pb-6
+                    "
+                  >
+                    <p
+                      className="
+                        text-(--muted-foreground)
+                        text-[14px] sm:text-[15px] md:text-[17px]
+                        leading-[24px] sm:leading-[28px]
+                        max-w-[95%]
+                      "
+                    >
                       {faq.a}
                     </p>
                   </div>
-                )}
+                </div>
               </div>
-            );
-          })}
-        </div>
+            </div>
+          );
+        })}
       </div>
     </section>
   );

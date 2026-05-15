@@ -2,7 +2,6 @@
 // second time 
 
 // /* src/tools/vocabulary-complexity-analyzer/services/nlpService.js */
-import nlp from 'compromise';
 
 // ----------------------  HELPERS (Exported for Actions) ----------------------
 
@@ -28,19 +27,21 @@ export function simplifyTag(tags) {
 }
 
 export async function getPOSTag(sentence, targetWord) {
-  try {
-    const doc = nlp(sentence);
-    // Target word ko dhoondo aur uske tags nikaalo
-    const match = doc.match(targetWord);
+  const word = String(targetWord || '').toLowerCase().replace(/[^a-z]/g, '');
+  if (!word) return 'u';
 
-    if (match.found) {
-      const tags = Object.keys(match.out('tags')[0][targetWord.toLowerCase()] || {});
-      return simplifyTag(tags);
-    }
-    return 'u'; // Unknown agar nahi mila
-  } catch (e) {
-    return 'u';
-  }
+  const tokens = String(sentence || '').toLowerCase().match(/\b[a-z]+\b/g) || [];
+  const index = tokens.indexOf(word);
+  const previous = index > 0 ? tokens[index - 1] : '';
+
+  if (word.endsWith('ly')) return 'adv';
+  if (/(ing|ed|ize|ise|ify|ate)$/.test(word)) return 'v';
+  if (/(ous|ful|able|ible|al|ive|ic|less|ary)$/.test(word)) return 'adj';
+  if (/(tion|sion|ment|ness|ity|ship|ance|ence)$/.test(word)) return 'n';
+  if (['a', 'an', 'the', 'this', 'that', 'very', 'more', 'most'].includes(previous)) return 'adj';
+  if (['to', 'will', 'can', 'could', 'should', 'would', 'may', 'might'].includes(previous)) return 'v';
+
+  return 'u';
 }
 
 export async function fetchSynonyms(word) {
@@ -140,4 +141,3 @@ export async function analyzeParagraphVocabulary(text, maxWords = 15) {
 
   return { originalText: text, wordMapping };
 }
-

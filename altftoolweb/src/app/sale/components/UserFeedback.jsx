@@ -1,63 +1,65 @@
 "use client";
 
-import { useEffect, useState, useRef } from "react";
+import Image from "next/image";
 import { Star } from "lucide-react";
-import ManagedImage from "@/components/ui/ManagedImage";
+import {
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 
-const UserFeedback = ({ feedback = [] }) => {
-  const [index, setIndex] = useState(0);
-  const [visibleCards, setVisibleCards] = useState(3);
-  const [maxIndicators, setMaxIndicators] = useState(feedback.length);
+const UserFeedback = ({
+  feedback = [],
+}) => {
+  const [page, setPage] = useState(0);
+  const [visibleCards, setVisibleCards] =
+    useState(3);
 
   const scrollRef = useRef(null);
 
-  // ── Handle scroll sync ──
-  const handleScroll = () => {
-    if (!scrollRef.current) return;
-
-    const cardWidth =
-      scrollRef.current.clientWidth / visibleCards;
-
-    const newIndex = Math.round(
-      scrollRef.current.scrollLeft / cardWidth
-    );
-
-    setIndex(newIndex);
-  };
-
-  // ── Responsive cards ──
+  // Responsive cards
   useEffect(() => {
     const handleResize = () => {
       const w = window.innerWidth;
 
       if (w < 640) {
         setVisibleCards(1);
-        setMaxIndicators(feedback.length);
       } else if (w < 1024) {
         setVisibleCards(2);
-        setMaxIndicators(feedback.length);
       } else {
         setVisibleCards(3);
-        setMaxIndicators(feedback.length);
       }
     };
 
     handleResize();
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, [feedback.length]);
 
-  // ── Auto scroll ──
+    window.addEventListener(
+      "resize",
+      handleResize
+    );
+
+    return () =>
+      window.removeEventListener(
+        "resize",
+        handleResize
+      );
+  }, []);
+
+  // Auto scroll
   useEffect(() => {
     if (!scrollRef.current) return;
 
     const interval = setInterval(() => {
       const cardWidth =
-        scrollRef.current.clientWidth / visibleCards;
+        scrollRef.current.clientWidth /
+        visibleCards;
 
-      let nextIndex = index + 1;
+      let nextIndex = page + 1;
 
-      if (nextIndex + visibleCards > feedback.length) {
+      if (
+        nextIndex + visibleCards >
+        feedback.length
+      ) {
         nextIndex = 0;
       }
 
@@ -66,20 +68,38 @@ const UserFeedback = ({ feedback = [] }) => {
         behavior: "smooth",
       });
 
-      setIndex(nextIndex);
+      setPage(nextIndex);
     }, 3000);
 
     return () => clearInterval(interval);
-  }, [index, visibleCards, feedback.length]);
+  }, [page, visibleCards, feedback.length]);
 
-  const totalDots = feedback.length - visibleCards + 1;
-  const visibleDots = Math.min(totalDots, maxIndicators);
+  // Handle scroll
+  const handleScroll = () => {
+    if (!scrollRef.current) return;
+
+    const cardWidth =
+      scrollRef.current.clientWidth /
+      visibleCards;
+
+    const currentIndex = Math.round(
+      scrollRef.current.scrollLeft /
+        cardWidth
+    );
+
+    setPage(currentIndex);
+  };
+
+  const totalDots = Math.max(
+    feedback.length - visibleCards + 1,
+    1
+  );
 
   return (
-    <section className="section animate-slide-up">
-      
-      {/* HEADER */}
-      <div className="flex flex-col mb-8 animate-slide-right">
+    <section className="section">
+      <div>
+        {/* Heading */}
+           <div className="flex flex-col mb-8 animate-slide-right">
         <h2 className="section-title">
           Loved by Smart Shoppers
         </h2>
@@ -88,102 +108,182 @@ const UserFeedback = ({ feedback = [] }) => {
         </p>
       </div>
 
-      {/* CAROUSEL */}
-      <div
-        ref={scrollRef}
-        onScroll={handleScroll}
-        className="overflow-x-auto no-scrollbar scroll-smooth snap-x snap-mandatory py-4  bg-(--background)"
-      >
-        <div className="flex">
+        {/* Slider */}
+        <div
+          ref={scrollRef}
+          onScroll={handleScroll}
+          className="
+            no-scrollbar
+            flex
+            snap-x
+            snap-mandatory
+            overflow-x-auto
+            scroll-smooth
+            pb-4
+          "
+        >
           {feedback.map((item, i) => (
             <div
-              key={item.id}
-              className="pr-5 mt-7 animate-slide-up"
+              key={item.id || i}
+              className="
+                flex
+                shrink-0
+                snap-start
+                px-2
+                pt-10
+              "
               style={{
-                minWidth: `${100 / visibleCards}%`,
-                animationDelay: `${i * 90}ms`,
+                width: `${100 / visibleCards}%`,
               }}
             >
-              <div className="relative rounded-[20px] p-6  shadow-[0_4px_20px_rgba(0,0,0,0.06)] hover:shadow-[0_8px_30px_rgba(0,0,0,0.06)]   transition h-full flex flex-col">
-
+              <div
+                className="
+                  relative
+                  flex
+                  w-full
+                  flex-col
+                  rounded-[30px]
+                  border
+                  border-(--border)
+                  bg-(--background)
+                  px-6
+                  pb-7
+                  pt-16
+                  shadow-[0px_8px_30px_0px_rgba(0,0,0,0.04)]
+                  transition-all
+                  duration-300
+                  hover:-translate-y-1
+                  hover:shadow-[0px_18px_40px_0px_rgba(15,23,42,0.08)]
+                  sm:px-7
+                "
+              >
                 {/* Avatar */}
-                <div className="absolute -top-7 left-6">
-                  <div className="w-18 h-18 rounded-full overflow-hidden border-2 border-(--border)">
-                    <ManagedImage
+                <div className="absolute -top-9 left-6 sm:left-7">
+                  <div
+                    className="
+                      relative
+                      h-18
+                      w-18
+                      overflow-hidden
+                      rounded-full
+                      border-4
+                      border-white
+                      shadow-[0px_18px_40px_0px_rgba(15,23,42,0.10)]
+                      sm:h-19.5
+                      sm:w-19.5
+                    "
+                  >
+                    <Image
                       src={item.avatar}
                       alt={item.name}
-                      className="object-cover w-full h-full"
+                      fill
+                      sizes="78px"
+                      className="object-cover object-center"
                     />
                   </div>
                 </div>
 
-                <div className="mt-6" />
-
-                {/* TEXT */}
-                <p className="text-(--muted-foreground) text-[13.5px] leading-relaxed line-clamp-4 ">
+                {/* Text */}
+                <p
+                  className="
+                    mb-5
+                    flex-1
+                    text-[14px]
+                    leading-6
+                    text-(--muted-foreground)
+                    sm:text-[15px] line-clamp-4
+                  "
+                >
                   {item.message}
                 </p>
 
                 {/* Divider */}
-                <div className="h-px bg-(--muted-foreground)/40 my-5" />
+                <div className="mb-4 h-px bg-(--border)" />
 
-                {/* FOOTER */}
-                <div className="flex items-center justify-between mt-auto">
+                {/* Footer */}
+                <div className="mt-auto flex items-center justify-between gap-4">
                   <div>
-                    <h4 className="font-semibold text-(--muted-foreground)">
+                    <h4
+                      className="
+                        text-[17px]
+                        font-semibold
+                        leading-6
+                        text-(--foreground)
+                      "
+                    >
                       {item.name}
                     </h4>
-                    <p className="text-xs text-gray-400">
-                      @{item.name?.toLowerCase().replace(/\s+/g, "")}
+
+                    <p
+                      className="
+                        text-[12px]
+                        leading-4
+                        text-(--muted-foreground)
+                      "
+                    >
+                      @
+                      {item.name
+                        ?.toLowerCase()
+                        .replace(/\s+/g, "")}
                     </p>
                   </div>
 
-                  {/* STARS */}
-                  <div className="flex gap-1">
-                    {Array.from({ length: 5 }).map((_, idx) => (
+                  {/* Stars */}
+                  <div className="flex shrink-0 items-center gap-1">
+                    {Array.from({
+                      length: 5,
+                    }).map((_, idx) => (
                       <Star
                         key={idx}
-                        className={`w-4 h-4 ${
-                          idx < Math.round(item.rating || 5)
+                        className={`h-4 w-4 ${
+                          idx <
+                          Math.round(
+                            item.rating || 5
+                          )
                             ? "fill-(--primary) text-(--primary)"
-                            : "text-gray-300"
+                            : "text-(--muted-foreground)"
                         }`}
                       />
                     ))}
                   </div>
                 </div>
-
               </div>
             </div>
           ))}
         </div>
-      </div>
 
-      {/* DOTS */}
-      <div className="flex justify-center gap-2 mt-6">
-        {Array.from({ length: visibleDots }).map((_, i) => (
-          <button
-            key={i}
-            onClick={() => {
-              if (!scrollRef.current) return;
+        {/* Dots */}
+        <div className="mt-6 flex justify-center gap-2">
+          {Array.from({
+            length: totalDots,
+          }).map((_, i) => (
+            <button
+              key={i}
+              onClick={() => {
+                if (!scrollRef.current) return;
 
-              const cardWidth =
-                scrollRef.current.clientWidth / visibleCards;
+                const cardWidth =
+                  scrollRef.current
+                    .clientWidth / visibleCards;
 
-              scrollRef.current.scrollTo({
-                left: i * cardWidth,
-                behavior: "smooth",
-              });
+                scrollRef.current.scrollTo({
+                  left: i * cardWidth,
+                  behavior: "smooth",
+                });
 
-              setIndex(i);
-            }}
-            className={`h-2 rounded-full transition-all duration-300 ${
-              index === i
-                ? "w-8 bg-(--primary)"
-                : "w-2 bg-gray-300"
-            }`}
-          />
-        ))}
+                setPage(i);
+              }}
+              className={`
+                h-2 rounded-full transition-all duration-300
+                ${
+                  page === i
+                    ? "w-8 bg-(--primary)"
+                    : "w-2 bg-(--border)"
+                }
+              `}
+            />
+          ))}
+        </div>
       </div>
     </section>
   );

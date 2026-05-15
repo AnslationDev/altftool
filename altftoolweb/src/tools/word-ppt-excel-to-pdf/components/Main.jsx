@@ -838,7 +838,7 @@ export default function MainComponent() {
       </div>
 
       <section className="mt-8 rounded-lg border border-(--border) bg-(--card) p-5 sm:p-6">
-        <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_320px] lg:items-center">
+        <div className="grid gap-6 2xl:grid-cols-[minmax(0,1fr)_320px] 2xl:items-center">
           <div className="flex items-start gap-4">
             <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-(--section-highlight) text-(--primary)">
               <FileOutput className="h-6 w-6" />
@@ -864,7 +864,7 @@ export default function MainComponent() {
         </div>
       </section>
 
-      <section className="mt-6 grid gap-6 lg:grid-cols-[420px_minmax(0,1fr)]">
+      <section className="mt-6 grid gap-6 2xl:grid-cols-[420px_minmax(0,1fr)]">
         <div className="space-y-5">
           <div
             onDragEnter={(event) => {
@@ -961,7 +961,7 @@ export default function MainComponent() {
               <h2 className="font-semibold text-(--foreground)">PDF Settings</h2>
             </div>
 
-            <div className="mt-5 grid gap-4 sm:grid-cols-2">
+            <div className="tool-card-grid mt-5">
               <label>
                 <span className="mb-2 block text-sm font-semibold text-(--foreground)">Page Size</span>
                 <select
@@ -1033,7 +1033,7 @@ export default function MainComponent() {
               </label>
             </div>
 
-            <div className="mt-4 grid gap-4 sm:grid-cols-2">
+            <div className="tool-form-grid mt-4">
               <label>
                 <span className="mb-2 block text-sm font-semibold text-(--foreground)">Rows per Sheet</span>
                 <input
@@ -1104,7 +1104,7 @@ export default function MainComponent() {
             </div>
           )}
 
-          <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+          <div className="tool-card-grid">
             <StatCard icon={FileText} label="Word" value={totals.word} detail="DOCX files" />
             <StatCard icon={Presentation} label="PPT" value={totals.ppt} detail="PPTX slides" />
             <StatCard icon={FileSpreadsheet} label="Excel" value={totals.excel} detail="Sheets/CSV" />

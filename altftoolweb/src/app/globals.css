@@ -466,10 +466,22 @@ select {
 
   /* PRIMARY BUTTON */
   .btn-primary {
+    display: inline-flex;
+    min-height: 2.75rem;
+    min-width: 0;
+    max-width: 100%;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.625rem 1rem;
     background: var(--primary);
     color: var(--primary-foreground);
     border-radius: var(--anslation-ds-radius);
     font-weight: 600;
+    line-height: 1.25rem;
+    text-align: center;
+    white-space: normal;
+    overflow-wrap: anywhere;
     transition: all 0.2s ease;
   }
 
@@ -480,15 +492,35 @@ select {
   .btn-primary:active {
     background: var(--primary-active);
   }
+  .personality-bg {
+    background-color: #FBFBFF;
+  }
+
+  [data-theme="dark"] .personality-bg {
+    background-color: #000A1F;
+  }
+
 
 
   /* SECONDARY BUTTON */
   .btn-secondary {
+    display: inline-flex;
+    min-height: 2.75rem;
+    min-width: 0;
+    max-width: 100%;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.625rem 1rem;
     background: var(--secondary-bg);
     color: var(--secondary-foreground);
     border: 1px solid var(--secondary-border);
     border-radius: var(--anslation-ds-radius);
     font-weight: 500;
+    line-height: 1.25rem;
+    text-align: center;
+    white-space: normal;
+    overflow-wrap: anywhere;
     transition: all 0.2s ease;
   }
 
@@ -500,8 +532,91 @@ select {
     background: var(--secondary-active);
   }
 
+  .btn-primary:disabled,
+  .btn-secondary:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
 
+  .tool-action-grid,
+  .tool-card-grid,
+  .tool-compact-grid,
+  .tool-feature-grid,
+  .tool-form-grid,
+  .tool-tab-grid {
+    display: grid;
+  }
 
+  .tool-action-grid {
+    grid-template-columns: repeat(auto-fit, minmax(min(10.5rem, 100%), 1fr));
+    gap: 0.75rem;
+  }
+
+  .tool-card-grid {
+    grid-template-columns: repeat(auto-fit, minmax(min(13rem, 100%), 1fr));
+    gap: 1rem;
+  }
+
+  .tool-compact-grid {
+    grid-template-columns: repeat(auto-fit, minmax(min(10.5rem, 100%), 1fr));
+    gap: 0.75rem;
+  }
+
+  .tool-feature-grid {
+    grid-template-columns: repeat(auto-fit, minmax(min(15rem, 100%), 1fr));
+    gap: 1rem;
+  }
+
+  .tool-form-grid {
+    grid-template-columns: repeat(auto-fit, minmax(min(16rem, 100%), 1fr));
+    gap: 1rem;
+  }
+
+  .tool-tab-grid {
+    grid-template-columns: repeat(auto-fit, minmax(min(9rem, 100%), 1fr));
+    gap: 0.5rem;
+  }
+
+  .tool-heading-accent {
+    color: var(--primary);
+    letter-spacing: 0;
+    overflow-wrap: anywhere;
+    text-wrap: balance;
+    text-shadow: 0 14px 30px rgba(37, 99, 235, 0.16);
+  }
+
+  @supports ((-webkit-background-clip: text) or (background-clip: text)) {
+    .tool-heading-accent {
+      background: linear-gradient(120deg, var(--primary), #0891b2);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+  }
+
+  .tool-money-value {
+    display: block;
+    min-width: 0;
+    max-width: 100%;
+    font-size: clamp(1.15rem, 4vw, 1.75rem);
+    font-weight: 700;
+    line-height: 1.2;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+  }
+
+  .tool-hero-value {
+    font-size: clamp(1.35rem, 5vw, 2rem);
+  }
+
+  .tool-action-grid > *,
+  .tool-card-grid > *,
+  .tool-compact-grid > *,
+  .tool-feature-grid > *,
+  .tool-form-grid > *,
+  .tool-tab-grid > * {
+    min-width: 0;
+  }
 
 }
 

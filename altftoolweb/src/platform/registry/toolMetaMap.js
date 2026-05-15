@@ -1,5 +1,16 @@
 // ⚠️ AUTO-GENERATED FILE — DO NOT EDIT
 export const toolMetaMap = {
+  "afterimage-generator": {
+    "name": "Afterimage Generator",
+    "description": "Experience retinal adaptation and complementary afterimages through color staring or image processing.",
+    "category": [
+      "Neuroscience",
+      "Visual Experiments",
+      "Science"
+    ],
+    "icon": "scan-face",
+    "iconColor": "text-rose-600"
+  },
   "age-calculator": {
     "name": "Age Calculator",
     "description": "Calculates age based on birthdate",
@@ -20,6 +31,17 @@ export const toolMetaMap = {
     "category": "AI",
     "icon": "globe",
     "iconColor": "text-gray-500"
+  },
+  "ambiguous-figure-viewer": {
+    "name": "Ambiguous Figure Viewer",
+    "description": "Experience and analyze classic optical illusions where the brain switches between multiple interpretations of the same image.",
+    "category": [
+      "Neuroscience",
+      "Visual Experiments",
+      "Psychology"
+    ],
+    "icon": "brain",
+    "iconColor": "text-purple-600"
   },
   "anger-test": {
     "name": "Anger Test",
@@ -208,6 +230,17 @@ export const toolMetaMap = {
     "icon": "link",
     "iconColor": "text-sky-600"
   },
+  "battery-health-and-lifespan-predictor": {
+    "name": "Battery Health and Lifespan Predictor",
+    "description": "Predict battery health, degradation risk, charging cycles, and estimated device lifespan from usage patterns.",
+    "category": [
+      "Web",
+      "Productivity",
+      "Calculator"
+    ],
+    "icon": "activity",
+    "iconColor": "text-green-500"
+  },
   "bg-remover": {
     "name": "Background Remover",
     "description": "Remove your Image background in just a one click",
@@ -225,12 +258,34 @@ export const toolMetaMap = {
     "icon": "calculator",
     "iconColor": "text-blue-600"
   },
+  "binaural-beat-generator": {
+    "name": "Binaural Beat Generator",
+    "description": "Create binaural beats, isochronic tones, solfeggio tones, and guided audio sessions in your browser.",
+    "category": [
+      "Lifestyle",
+      "Health",
+      "Music"
+    ],
+    "icon": "activity",
+    "iconColor": "text-blue-600"
+  },
   "bmi-calculator": {
     "name": "BMI Calculator",
     "description": "Calculate your Body Mass Index",
     "category": "Fitness",
     "icon": "activity",
     "iconColor": "text-green-600"
+  },
+  "break-even-calculator": {
+    "name": "Break-Even Calculator",
+    "description": "Calculate zero-profit break-even units, revenue, margin of safety, profit targets, and cost-volume scenarios.",
+    "category": [
+      "Business",
+      "Calculator",
+      "Finance"
+    ],
+    "icon": "scale",
+    "iconColor": "text-blue-600"
   },
   "browser-fingerprint-visualizer": {
     "name": "Browser FingerPrint",
@@ -295,8 +350,15 @@ export const toolMetaMap = {
     "name": "car-cost-analyzer",
     "description": "Calculate the total cost of owning a car, including purchase price, running costs, and depreciation.",
     "category": "Other",
-    "icon": "wrench",
-    "iconColor": "green"
+    "icon": "car",
+    "iconColor": "text-blue-500"
+  },
+  "citation-generator": {
+    "name": "Citation Generator",
+    "description": "Generate accurate citations in APA, MLA, Chicago, Harvard, IEEE, and Vancouver styles instantly.",
+    "category": "Educational",
+    "icon": "book-open",
+    "iconColor": "text-blue-600"
   },
   "code-complexity-analyzer": {
     "name": "Code Complexity Analyzer",
@@ -304,6 +366,17 @@ export const toolMetaMap = {
     "category": "education",
     "icon": "code",
     "iconColor": "blue"
+  },
+  "color-blindness-simulator": {
+    "name": "Color Blindness Simulator",
+    "description": "Advanced accessibility tool to simulate various types of color vision deficiencies in real-time.",
+    "category": [
+      "Accessibility",
+      "Design",
+      "Image"
+    ],
+    "icon": "palette",
+    "iconColor": "text-cyan-600"
   },
   "color-contrast-checker": {
     "name": "Color Contrast Checker",
@@ -315,6 +388,13 @@ export const toolMetaMap = {
     "icon": "check-square",
     "iconColor": "text-green-600"
   },
+  "color-memory-precision-test": {
+    "name": "Color Memory Precision Test",
+    "description": "Test your visual memory and color precision by recreating shades from memory.",
+    "category": "Design Tools",
+    "icon": "brain",
+    "iconColor": "text-indigo-600"
+  },
   "color-palette-from-image": {
     "name": "Color Palette from Image",
     "description": "Extract a practical color palette from uploaded images.",
@@ -324,6 +404,34 @@ export const toolMetaMap = {
     ],
     "icon": "palette",
     "iconColor": "text-teal-600"
+  },
+  "color-psychology-analyzer": {
+    "name": "Color Psychology Analyzer",
+    "description": "Analyze emotional impact, branding psychology, and cultural meanings of colors.",
+    "category": "Design Tools",
+    "icon": "palette",
+    "iconColor": "text-fuchsia-600"
+  },
+  "compound-interest-planner": {
+    "name": "Compound Interest Planner",
+    "description": "Plan lumpsum compound growth with reinvestment, yearly top-ups, tax, inflation-adjusted value, and year-wise charts.",
+    "category": [
+      "Business",
+      "Calculator",
+      "Finance"
+    ],
+    "icon": "trending-up",
+    "iconColor": "text-emerald-600"
+  },
+  "conways-game-of-life": {
+    "name": "Conway's Game of Life",
+    "description": "An interactive simulator for Conway's Game of Life, a cellular automaton where users can create initial configurations and watch how they evolve over time based on simple rules.",
+    "category": [
+      "Simulation",
+      "Science"
+    ],
+    "icon": "layers",
+    "iconColor": "text-[var(--primary)]"
   },
   "corporate-tool": {
     "name": "Corporate Tool",
@@ -357,6 +465,17 @@ export const toolMetaMap = {
     ],
     "icon": "clock",
     "iconColor": "text-orange-600"
+  },
+  "crypto-pnl-calculator": {
+    "name": "Crypto P&L Calculator",
+    "description": "Calculate crypto profit or loss from buy price, sell price, quantity, exchange fees, slippage, and tax.",
+    "category": [
+      "Business",
+      "Calculator",
+      "Finance"
+    ],
+    "icon": "bitcoin",
+    "iconColor": "text-amber-600"
   },
   "css-tools": {
     "name": "CSS Tools",
@@ -412,6 +531,39 @@ export const toolMetaMap = {
     "icon": "wallet",
     "iconColor": "text-green-700"
   },
+  "cymatics-simulator": {
+    "name": "Cymatics Simulator",
+    "description": "Visualize sound, vibration, and Chladni-style nodal patterns with an interactive cymatics simulator.",
+    "category": [
+      "EdTech",
+      "Science",
+      "Creators"
+    ],
+    "icon": "activity",
+    "iconColor": "text-amber-700"
+  },
+  "data-lens": {
+    "name": "Data Lens",
+    "description": "Upload CSV files to analyze columns, clean data, detect patterns, and generate smart visual insights.",
+    "category": [
+      "Data Tools",
+      "Analytics",
+      "Productivity"
+    ],
+    "icon": "chart-bar",
+    "iconColor": "text-blue-600"
+  },
+  "debt-payoff-calculator": {
+    "name": "Debt Payoff Calculator",
+    "description": "Compare snowball and avalanche debt payoff methods with interest, timeline, and payoff order insights.",
+    "category": [
+      "Business",
+      "Calculator",
+      "Finance"
+    ],
+    "icon": "credit-card",
+    "iconColor": "text-rose-600"
+  },
   "device-browser-dashboard": {
     "name": "Device & Browser Dashboard",
     "description": "Advanced client-side dashboard for device, browser, privacy, permissions, GPU, storage, and API capability analysis.",
@@ -437,6 +589,17 @@ export const toolMetaMap = {
     "icon": "text",
     "iconColor": "text-blue-500"
   },
+  "dividend-yield-calculator": {
+    "name": "Dividend Yield Calculator",
+    "description": "Calculate dividend yield, dividend income, tax-adjusted cash flow, and portfolio required for target income.",
+    "category": [
+      "Business",
+      "Calculator",
+      "Finance"
+    ],
+    "icon": "badge-percent",
+    "iconColor": "text-emerald-600"
+  },
   "domain-checker": {
     "name": "Domain Checker",
     "description": "Check if a domain is available or not",
@@ -446,6 +609,17 @@ export const toolMetaMap = {
     ],
     "icon": "globe",
     "iconColor": "text-gray-500"
+  },
+  "double-pendulum-chaos-simulator": {
+    "name": "Double Pendulum Chaos Simulator",
+    "description": "Real-time chaos theory visualization with interactive double pendulum physics and glowing motion trails.",
+    "category": [
+      "Physics",
+      "Simulation",
+      "Science"
+    ],
+    "icon": "circle-dashed",
+    "iconColor": "text-blue-500"
   },
   "email-validator": {
     "name": "Email Validator",
@@ -474,6 +648,13 @@ export const toolMetaMap = {
     ],
     "icon": "wand-2",
     "iconColor": "text-pink-600"
+  },
+  "emotional-mood-palette-generator": {
+    "name": "Emotional Mood → Palette Generator",
+    "description": "A psychology-driven tool that generates color palettes based on your mood and feelings.",
+    "category": "Design",
+    "icon": "palette",
+    "iconColor": "text-indigo-500"
   },
   "encoded-decoded": {
     "name": "Encoded/Decoded",
@@ -523,6 +704,17 @@ export const toolMetaMap = {
     "icon": "sparkle",
     "iconColor": "text-pink-600"
   },
+  "fd-rd-maturity-calculator": {
+    "name": "FD / RD Maturity Calculator",
+    "description": "Estimate fixed deposit and recurring deposit maturity amount, interest earned, tax impact, and growth schedule.",
+    "category": [
+      "Business",
+      "Calculator",
+      "Finance"
+    ],
+    "icon": "coins",
+    "iconColor": "text-emerald-600"
+  },
   "file-to-base64": {
     "name": "File to Base64",
     "description": "Convert local files into Base64 data URLs without uploading.",
@@ -561,6 +753,17 @@ export const toolMetaMap = {
     "icon": "form",
     "iconColor": "text-blue-500"
   },
+  "fractal-explorer": {
+    "name": "Fractal Explorer",
+    "description": "Explore Mandelbrot and Julia fractals with interactive zoom, color controls, and export tools",
+    "category": [
+      "Design",
+      "Art",
+      "Developer"
+    ],
+    "icon": "sparkles",
+    "iconColor": "text-indigo-600"
+  },
   "gift-finder": {
     "name": "Gift Finder",
     "description": "find the best gift for your loved one.",
@@ -574,6 +777,24 @@ export const toolMetaMap = {
     "category": "Business",
     "icon": "coins",
     "iconColor": "text-yellow-500"
+  },
+  "golden-ratio-visualizer": {
+    "name": "Golden Ratio Visualizer",
+    "description": "Visualize golden spirals, Fibonacci grids, and phi-based compositions with export-ready controls",
+    "category": [
+      "Design",
+      "Art",
+      "Education"
+    ],
+    "icon": "compass",
+    "iconColor": "text-amber-600"
+  },
+  "gpa-cgpa-calculator": {
+    "name": "GPA / CGPA Calculator",
+    "description": "A smart academic calculator for Semester GPA, Overall CGPA, and Percentage prediction.",
+    "category": "Education",
+    "icon": "calculator",
+    "iconColor": "text-blue-600"
   },
   "gradient-generator": {
     "name": "Gradient Generator",
@@ -712,6 +933,13 @@ export const toolMetaMap = {
     "icon": "refresh-cw",
     "iconColor": "text-blue-600"
   },
+  "image-noise-grain-adder": {
+    "name": "Image Noise & Grain Adder",
+    "description": "Add realistic film grain, vintage noise, and cinematic textures to your photos.",
+    "category": "Creators",
+    "icon": "image",
+    "iconColor": "text-blue-500"
+  },
   "image-resizer": {
     "name": "Image Resizer",
     "description": "Resize images with custom dimensions, social media presets, fit/crop modes, batch processing, and format export.",
@@ -745,6 +973,27 @@ export const toolMetaMap = {
     "icon": "film",
     "iconColor": "text-purple-600"
   },
+  "impossible-object-builder": {
+    "name": "Impossible Object Builder",
+    "description": "An interactive visual editor to create mathematically impossible optical illusion objects and 3D geometric structures.",
+    "category": [
+      "Design",
+      "3D",
+      "Optical Illusions"
+    ],
+    "icon": "layers",
+    "iconColor": "text-blue-500"
+  },
+  "inattentional-blindness": {
+    "name": "Inattentional Blindness Test",
+    "description": "Experience the famous Gorilla Experiment — test your awareness, see if you spot the unexpected, and share your results.",
+    "category": [
+      "Psychology",
+      "Fun"
+    ],
+    "icon": "scan-face",
+    "iconColor": "text-purple-600"
+  },
   "income-tax-calculator": {
     "name": "Income Tax Calculator",
     "description": "Compare India old and new tax regimes with deductions, rebate, surcharge, cess, and slab-wise breakup.",
@@ -764,6 +1013,17 @@ export const toolMetaMap = {
     ],
     "icon": "gauge",
     "iconColor": "text-green-600"
+  },
+  "interval-ear-trainer": {
+    "name": "Interval Ear Trainer",
+    "description": "Practice melodic and harmonic intervals with an interactive browser-based ear training quiz.",
+    "category": [
+      "Music",
+      "Education",
+      "Creators"
+    ],
+    "icon": "music",
+    "iconColor": "text-blue-600"
   },
   "interview-question": {
     "name": "Interview Question",
@@ -798,6 +1058,13 @@ export const toolMetaMap = {
       "Developer"
     ],
     "icon": "globe",
+    "iconColor": "text-blue-600"
+  },
+  "ishihara-color-blind-test": {
+    "name": "Ishihara Color Blind Test",
+    "description": "A professional accessibility-focused color vision deficiency screening experience.",
+    "category": "Medical",
+    "icon": "palette",
     "iconColor": "text-blue-600"
   },
   "javascript-tools": {
@@ -859,8 +1126,8 @@ export const toolMetaMap = {
     "name": "Life Productivity Score",
     "description": "Calculate your life productivity score",
     "category": "lifestyle",
-    "icon": "wrench",
-    "iconColor": "#062609"
+    "icon": "activity",
+    "iconColor": "text-green-600"
   },
   "link-preview-generator": {
     "name": "Link Preview Generator",
@@ -877,6 +1144,16 @@ export const toolMetaMap = {
     "category": "Web",
     "icon": "link",
     "iconColor": "text-blue-500"
+  },
+  "lissajous-pattern-generator": {
+    "name": "Lissajous Pattern Generator",
+    "description": "Generate elegant frequency-based mathematical curves and oscilloscope-style Lissajous patterns.",
+    "category": [
+      "Math",
+      "Simulation"
+    ],
+    "icon": "infinity",
+    "iconColor": "text-blue-600"
   },
   "loan-emi-calculator": {
     "name": "Loan EMI Calculator",
@@ -912,6 +1189,17 @@ export const toolMetaMap = {
     "icon": "edit",
     "iconColor": "text-blue-500"
   },
+  "meeting-cost-calculator": {
+    "name": "Meeting Cost Calculator",
+    "description": "Estimate meeting cost from attendees, duration, hourly rates, recurring frequency, and productivity loss.",
+    "category": [
+      "Business",
+      "Calculator",
+      "Finance"
+    ],
+    "icon": "users",
+    "iconColor": "text-violet-600"
+  },
   "meme-generator": {
     "name": "Meme Generator",
     "description": "Create funny memes easily",
@@ -929,6 +1217,28 @@ export const toolMetaMap = {
     "icon": "code",
     "iconColor": "text-cyan-600"
   },
+  "mic-waveform-visualizer": {
+    "name": "Mic Waveform Visualizer",
+    "description": "Visualize live microphone audio as oscilloscope waves, frequency bars, circular forms, and responsive color spectra.",
+    "category": [
+      "Music",
+      "Creators",
+      "Web"
+    ],
+    "icon": "mic",
+    "iconColor": "text-emerald-600"
+  },
+  "monthly-budget-planner": {
+    "name": "Monthly Budget Planner",
+    "description": "Plan monthly income, expenses, savings, and category-wise spending with a visual budget breakdown.",
+    "category": [
+      "Business",
+      "Calculator",
+      "Finance"
+    ],
+    "icon": "wallet",
+    "iconColor": "text-blue-600"
+  },
   "morse-code-translator": {
     "name": "Morse Code Translator",
     "description": "Translate plain text to Morse code and decode Morse back.",
@@ -938,6 +1248,17 @@ export const toolMetaMap = {
     ],
     "icon": "arrow-left-right",
     "iconColor": "text-amber-600"
+  },
+  "motion-aftereffect-illusion": {
+    "name": "Motion Aftereffect Illusion",
+    "description": "Watch moving patterns and experience static objects appearing to move using neuroscience-based visual illusions.",
+    "category": [
+      "Visual Experiments",
+      "Neuroscience",
+      "Interactive"
+    ],
+    "icon": "activity",
+    "iconColor": "text-[var(--primary)]"
   },
   "mp3-cutter-audio-trimmer": {
     "name": "MP3 Cutter / Audio Trimmer",
@@ -967,6 +1288,17 @@ export const toolMetaMap = {
     ],
     "icon": "clock",
     "iconColor": "text-blue-600"
+  },
+  "net-worth-tracker": {
+    "name": "Net Worth Tracker",
+    "description": "Track assets minus liabilities with monthly net worth snapshots, projections, and category breakdowns.",
+    "category": [
+      "Business",
+      "Calculator",
+      "Finance"
+    ],
+    "icon": "scale",
+    "iconColor": "text-emerald-600"
   },
   "number-to-words-converter": {
     "name": "Number to Words Converter",
@@ -1125,6 +1457,18 @@ export const toolMetaMap = {
     "icon": "calculator",
     "iconColor": "text-green-600"
   },
+  "privacy-policy-generator": {
+    "name": "Privacy Policy Generator",
+    "description": "Generate professional GDPR/CCPA-ready privacy policies for websites, SaaS products, blogs, apps, and startups.",
+    "category": [
+      "Business",
+      "Startup",
+      "Web",
+      "Developer"
+    ],
+    "icon": "shield-check",
+    "iconColor": "text-blue-600"
+  },
   "profile-picture-maker": {
     "name": "Profile Picture Maker",
     "description": "Create stunning profile pictures easily with custom styles.",
@@ -1151,6 +1495,16 @@ export const toolMetaMap = {
     ],
     "icon": "star",
     "iconColor": "text-purple-600"
+  },
+  "reaction-diffusion-simulator": {
+    "name": "Reaction Diffusion Simulator",
+    "description": "Generate zebra stripes and natural biological morphogenesis patterns with an interactive Gray-Scott reaction-diffusion simulator.",
+    "category": [
+      "Simulation",
+      "Science"
+    ],
+    "icon": "waves",
+    "iconColor": "text-blue-600"
   },
   "readme-generator": {
     "name": "README Generator",
@@ -1186,6 +1540,16 @@ export const toolMetaMap = {
     "category": "Job",
     "icon": "book-open",
     "iconColor": "text-blue-500"
+  },
+  "sacred-geometry-generator": {
+    "name": "Sacred Geometry Generator",
+    "description": "Generate sacred mathematical patterns like Flower of Life, Sri Yantra, and Metatron Cube.",
+    "category": [
+      "Math",
+      "Creators"
+    ],
+    "icon": "sparkles",
+    "iconColor": "text-amber-600"
   },
   "scientific-notation-calculator": {
     "name": "Scientific Notation Calculator",
@@ -1271,6 +1635,17 @@ export const toolMetaMap = {
     "icon": "mic",
     "iconColor": "text-yellow-700"
   },
+  "sound-to-color-synesthesia": {
+    "name": "Sound To Color Synesthesia",
+    "description": "Visualize live audio, microphone input, or uploaded songs as responsive color, frequency, and waveform art.",
+    "category": [
+      "Music",
+      "Creators",
+      "AI"
+    ],
+    "icon": "activity",
+    "iconColor": "text-blue-600"
+  },
   "spam-checker": {
     "name": "Spam Checker",
     "description": "Detect spam content instantly using intelligent pattern analysis.",
@@ -1288,6 +1663,16 @@ export const toolMetaMap = {
     ],
     "icon": "spell-check",
     "iconColor": "text-blue-600"
+  },
+  "spirograph-genrator": {
+    "name": "Spirograph Generator",
+    "description": "Generate customizable spirograph patterns and export them as PNG.",
+    "category": [
+      "Design",
+      "Creative"
+    ],
+    "icon": "orbit",
+    "iconColor": "text-cyan-600"
   },
   "sql-formatter": {
     "name": "SQL Formatter",
@@ -1326,6 +1711,17 @@ export const toolMetaMap = {
     ],
     "icon": "brain",
     "iconColor": "text-purple-600"
+  },
+  "subscription-cost-tracker": {
+    "name": "Subscription Cost Tracker",
+    "description": "Track all subscriptions with monthly and yearly cost totals, renewals, categories, and savings insights.",
+    "category": [
+      "Business",
+      "Calculator",
+      "Finance"
+    ],
+    "icon": "calendar-clock",
+    "iconColor": "text-violet-600"
   },
   "survey-builder": {
     "name": "Survey Builder",
@@ -1596,6 +1992,16 @@ export const toolMetaMap = {
     "icon": "video",
     "iconColor": "text-red-600"
   },
+  "visual-working-memory": {
+    "name": "Visual Working Memory Test",
+    "description": "Test your working memory capacity — memorize colored shapes and recall their positions in increasingly challenging rounds.",
+    "category": [
+      "Psychology",
+      "Education"
+    ],
+    "icon": "brain",
+    "iconColor": "text-purple-600"
+  },
   "vocabulary-complexity-analyzer": {
     "name": "Vocabulary Complexity Analyzer",
     "description": "Analyze the complexity of vocabulary in text",
@@ -1610,6 +2016,16 @@ export const toolMetaMap = {
     "icon": "mic",
     "iconColor": "text-rose-500"
   },
+  "voronoi-art-generator": {
+    "name": "Voronoi Art Generator",
+    "description": "Generate stunning Voronoi diagrams and abstract art with customizable colors and patterns",
+    "category": [
+      "Design",
+      "Art"
+    ],
+    "icon": "palette",
+    "iconColor": "text-purple-600"
+  },
   "water-intake-calculator": {
     "name": "Water Intake Calculator",
     "description": "Estimate daily water intake from weight, activity, and climate.",
@@ -1619,6 +2035,17 @@ export const toolMetaMap = {
     ],
     "icon": "droplet",
     "iconColor": "text-sky-600"
+  },
+  "wave-interference-simulator": {
+    "name": "Wave Interference Simulator",
+    "description": "A tool that simulates wave interference patterns, allowing users to visualize how waves interact with each other. Users can adjust parameters such as wave frequency, amplitude, and phase to see how they affect the resulting interference pattern.",
+    "category": [
+      "Physics",
+      "Simulation",
+      "Science"
+    ],
+    "icon": "activity",
+    "iconColor": "text-blue-700"
   },
   "weather-checker": {
     "name": "Weather Checker Tool",

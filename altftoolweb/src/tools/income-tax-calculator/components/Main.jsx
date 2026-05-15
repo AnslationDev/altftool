@@ -406,7 +406,7 @@ export default function MainComponent() {
       </div>
 
       <section className="mt-8 rounded-lg border border-(--border) bg-(--card) p-5 sm:p-6">
-        <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_360px] lg:items-center">
+        <div className="grid gap-6 2xl:grid-cols-[minmax(0,1fr)_360px] 2xl:items-center">
           <div className="flex items-start gap-4">
             <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-(--section-highlight) text-(--primary)">
               <ReceiptIndianRupee className="h-6 w-6" />
@@ -434,7 +434,7 @@ export default function MainComponent() {
         </div>
       </section>
 
-      <section className="mt-6 grid gap-6 lg:grid-cols-[420px_minmax(0,1fr)]">
+      <section className="mt-6 grid gap-6 2xl:grid-cols-[420px_minmax(0,1fr)]">
         <div className="space-y-4 rounded-lg border border-(--border) bg-(--card) p-5">
           <MoneyField
             label="Salary / Pension Income"
@@ -542,7 +542,7 @@ export default function MainComponent() {
             </div>
           )}
 
-          <div className="grid gap-4 md:grid-cols-2">
+          <div className="tool-card-grid">
             <MetricCard
               icon={Scale}
               label="New Regime Tax"
@@ -572,7 +572,7 @@ export default function MainComponent() {
             />
           </div>
 
-          <div className="grid gap-6 xl:grid-cols-2">
+          <div className="grid gap-6 2xl:grid-cols-2">
             <RegimeBreakup title="Old Regime Breakup" result={oldResult} recommended={recommended === "old"} />
             <RegimeBreakup title="New Regime Breakup" result={newResult} recommended={recommended === "new"} />
           </div>

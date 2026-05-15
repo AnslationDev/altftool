@@ -3,7 +3,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import {
-    Car, Zap, Smartphone, Cpu,
+    Code, Zap, Smartphone, Cpu,
     Gauge, TrendingUp, Sparkles, Shield
 } from "lucide-react";
 import Card from "./ui/Card";
@@ -11,42 +11,42 @@ import Card from "./ui/Card";
 const Features = () => {
     const features = [
         {
-            title: "Smart Ownership Cost Analysis",
+            title: "Smart Code Complexity Analysis",
             description:
-                "Calculate the exact cost of owning a car based on current market trends, fuel inflation, and maintenance projections.",
-            icon: Car,
+                "Calculate the exact complexity of code based on cyclomatic complexity, cognitive load, and maintenance projections.",
+            icon: Code,
             color: "blue"
         },
         {
-            title: "Real-Time Processing",
+            title: "Real-Time Code Complexity Analysis",
             description:
-                "Get your results instantly with our high-speed calculation engine. No waiting, just immediate financial clarity.",
+                "Get your code complexity results instantly with our high-speed calculation engine. No waiting, just immediate code complexity clarity.",
             icon: Zap,
             color: "amber"
         },
         {
-            title: "Fully Responsive UI",
+            title: "Fully Responsive Code Complexity Analysis",
             description:
-                "Optimized for every device. Access your car ownership data seamlessly on desktop, tablet, or mobile screens.",
+                "Optimized for every device. Access your code complexity data seamlessly on desktop, tablet, or mobile screens.",
             icon: Smartphone,
             color: "purple"
         },
         {
-            title: "Premium SaaS Design",
+            title: "Premium Code Complexity Analysis",
             description:
-                "A clean, distraction-free interface built with modern aesthetics to make complex financial planning simple.",
+                "A clean, distraction-free interface built with modern aesthetics to make complex code complexity analysis simple.",
             icon: Sparkles,
             color: "indigo"
         },
         {
-            title: "Privacy First Architecture",
+            title: "Privacy First Code Complexity Analysis",
             description:
                 "Your data never leaves your device. All calculations are performed locally in your browser for total security.",
             icon: Shield,
             color: "emerald"
         },
         {
-            title: "Lightweight & Efficient",
+            title: "Lightweight & Efficient Code Complexity Analysis",
             description:
                 "No heavy backend or database required. Experience lightning-fast performance with our zero-latency frontend.",
             icon: Cpu,
@@ -96,7 +96,7 @@ const Features = () => {
                         Built for <span className="text-(--primary)">Precision</span> & <span className="text-(--primary)">Simplicity</span>
                     </h2>
                     <p className="text-lg text-(--secondary) max-w-2xl mx-auto font-medium leading-relaxed">
-                        Experience the most comprehensive car cost analysis tool designed for modern car buyers and owners.
+                        Experience the most comprehensive code complexity analysis tool designed for modern developers and programmers.
                     </p>
                 </motion.div>
 
