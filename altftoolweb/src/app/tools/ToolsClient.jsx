@@ -9,6 +9,7 @@ import {
   ChevronDown,
   Code2,
   FileText,
+  Filter,
   History,
   Image as ImageIcon,
   Layers3,
@@ -467,47 +468,47 @@ export default function ToolsClient({ meta = {}, category, initialSearch = "", i
 
 
   return (
-    <div className="bg-(--background)">
+    <div className="min-h-screen bg-(--background)">
       {/* DIRECTORY HEADER */}
-      <div className="border-b border-(--border) bg-(--card)">
-        <div className="mx-auto max-w-7xl px-4 py-5 sm:px-6 lg:px-8">
-          <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+      <div className="border-b border-(--border) bg-[color-mix(in_srgb,var(--card)_92%,var(--background))]">
+        <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+          <div className="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
             <div>
-              <div className="mb-2 inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wide text-(--primary)">
+              <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-(--border) bg-(--background) px-3 py-1.5 text-xs font-bold uppercase tracking-wide text-(--primary)">
                 <Sparkles className="h-3.5 w-3.5" />
                 ToolFK-style microtool directory
               </div>
-              <h1 className="text-3xl font-semibold tracking-normal text-(--foreground) sm:text-4xl">
+              <h1 className="text-3xl font-semibold leading-tight tracking-normal text-(--foreground) sm:text-4xl">
                 All Online Tools
               </h1>
               <p className="mt-2 max-w-2xl text-sm leading-6 text-(--muted-foreground)">
                 Fast converters, developer helpers, PDF tools, media utilities, and browser-safe microtools in one compact workspace.
               </p>
             </div>
-            <div className="grid grid-cols-3 gap-2 sm:w-[360px]">
+            <div className="grid grid-cols-3 gap-2 sm:w-[390px]">
               {[
                 ["Tools", slugs.length],
                 ["Categories", categoryCount],
                 ["Showing", filteredSlugs.length],
               ].map(([label, value]) => (
-                <div key={label} className="rounded-[8px] border border-(--border) bg-(--background) px-3 py-2 text-center">
-                  <p className="text-lg font-semibold text-(--foreground)">{value}</p>
+                <div key={label} className="rounded-[8px] border border-(--border) bg-(--background) px-3 py-3 text-center shadow-[var(--anslation-ds-shadow-sm)]">
+                  <p className="text-xl font-semibold text-(--foreground)">{value}</p>
                   <p className="mt-0.5 text-[10px] font-bold uppercase tracking-wide text-(--muted-foreground)">{label}</p>
                 </div>
               ))}
             </div>
           </div>
 
-          <div className="mt-5 space-y-3">
+          <div className="mt-6 space-y-3">
             <div className="relative">
-              <Search className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-(--muted-foreground)" />
+              <Search className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-(--primary)" />
               <input
                 data-testid="tools-search-input"
                 type="text"
                 placeholder="Select directly or search tools, converters, code utilities..."
                 value={search}
                 onChange={(e) => setSearchFilter(e.target.value)}
-                className="h-12 w-full rounded-[8px] border border-[var(--border)] bg-[var(--background)] px-11 text-sm placeholder:text-(--input-placeholder) transition focus:outline-none focus:ring-1 focus:ring-[var(--primary)]"
+                className="h-[52px] w-full rounded-[8px] border border-[var(--border)] bg-[var(--background)] px-11 text-sm text-(--foreground) shadow-[var(--anslation-ds-shadow-sm)] placeholder:text-(--input-placeholder) transition focus:border-(--primary) focus:outline-none focus:ring-2 focus:ring-[color-mix(in_srgb,var(--primary)_24%,transparent)]"
               />
             </div>
             {search.trim() ? (
@@ -517,7 +518,7 @@ export default function ToolsClient({ meta = {}, category, initialSearch = "", i
                     key={item.slug}
                     href={`/tools/all/${item.slug}`}
                     onClick={() => rememberTool(item.slug)}
-                    className="flex items-center justify-between gap-3 rounded-[7px] border border-(--border) bg-(--background) px-3 py-2 text-left text-xs transition hover:border-(--primary) hover:text-(--foreground)"
+                    className="flex items-center justify-between gap-3 rounded-[7px] border border-(--border) bg-(--background) px-3 py-2.5 text-left text-xs transition hover:border-(--primary) hover:bg-(--card) hover:text-(--foreground)"
                   >
                     <span className="min-w-0">
                       <span className="block truncate font-semibold text-(--foreground)">{item.name}</span>
@@ -535,7 +536,7 @@ export default function ToolsClient({ meta = {}, category, initialSearch = "", i
                     key={term}
                     type="button"
                     onClick={() => setSearchFilter(term)}
-                    className="rounded-[7px] border border-(--border) bg-(--background) px-2.5 py-1.5 text-xs font-semibold text-(--muted-foreground) hover:border-(--primary) hover:text-(--foreground)"
+                    className="rounded-[7px] border border-(--border) bg-(--background) px-2.5 py-1.5 text-xs font-semibold text-(--muted-foreground) transition hover:border-(--primary) hover:bg-(--card) hover:text-(--foreground)"
                   >
                     {formatLabel(term)}
                   </button>
@@ -553,7 +554,7 @@ export default function ToolsClient({ meta = {}, category, initialSearch = "", i
                     className={`inline-flex items-center gap-2 rounded-[7px] border px-3 py-2 text-xs font-semibold transition ${
                       viewMode === mode.id
                         ? "border-(--primary) bg-(--primary) text-(--primary-foreground)"
-                        : "border-(--border) bg-(--background) text-(--muted-foreground) hover:border-(--primary) hover:text-(--foreground)"
+                        : "border-(--border) bg-(--background) text-(--muted-foreground) hover:border-(--primary) hover:bg-(--card) hover:text-(--foreground)"
                     }`}
                   >
                     <IconComponent className="h-3.5 w-3.5" />
@@ -569,7 +570,7 @@ export default function ToolsClient({ meta = {}, category, initialSearch = "", i
                   href="/tools/all"
                   data-testid="clear-tool-filters"
                   onClick={clearFilters}
-                  className="rounded-[7px] border border-(--border) bg-(--background) px-3 py-2 text-xs font-semibold text-(--muted-foreground) transition hover:border-(--primary) hover:text-(--foreground)"
+                  className="rounded-[7px] border border-(--border) bg-(--background) px-3 py-2 text-xs font-semibold text-(--muted-foreground) transition hover:border-(--primary) hover:bg-(--card) hover:text-(--foreground)"
                 >
                   Clear
                 </Link>
@@ -584,7 +585,7 @@ export default function ToolsClient({ meta = {}, category, initialSearch = "", i
                   className={`rounded-[7px] border px-3 py-2 text-xs font-semibold transition ${
                     categoryname === slugify(cat)
                       ? "border-(--primary) bg-(--primary) text-(--primary-foreground)"
-                      : "border-(--border) bg-(--background) text-(--muted-foreground) hover:border-(--primary) hover:text-(--foreground)"
+                      : "border-(--border) bg-(--background) text-(--muted-foreground) hover:border-(--primary) hover:bg-(--card) hover:text-(--foreground)"
                   }`}
                 >
                   {formatLabel(cat)}
@@ -600,7 +601,7 @@ export default function ToolsClient({ meta = {}, category, initialSearch = "", i
                   key={slug}
                   href={`/tools/all/${slug}`}
                   onClick={() => rememberTool(slug)}
-                  className="rounded-[7px] border border-(--border) bg-(--background) px-3 py-1.5 text-xs font-semibold text-(--muted-foreground) transition hover:border-(--primary) hover:text-(--foreground)"
+                  className="rounded-[7px] border border-(--border) bg-(--background) px-3 py-1.5 text-xs font-semibold text-(--muted-foreground) transition hover:border-(--primary) hover:bg-(--card) hover:text-(--foreground)"
                 >
                   {tool.name}
                 </Link>
@@ -616,7 +617,7 @@ export default function ToolsClient({ meta = {}, category, initialSearch = "", i
                 return (
                   <div
                     key={title}
-                    className="rounded-[8px] border border-(--border) bg-(--background) p-3"
+                    className="rounded-[8px] border border-(--border) bg-(--background) p-3 shadow-[var(--anslation-ds-shadow-sm)] transition hover:border-(--primary)"
                   >
                     <div className="flex items-start gap-3">
                       <div className="grid h-9 w-9 shrink-0 place-items-center rounded-[7px] bg-(--muted) text-(--primary)">
@@ -633,7 +634,7 @@ export default function ToolsClient({ meta = {}, category, initialSearch = "", i
                           key={slug}
                           href={`/tools/all/${slug}`}
                           onClick={() => rememberTool(slug)}
-                          className="rounded-[6px] border border-(--border) px-2 py-1 text-[11px] font-semibold text-(--muted-foreground) transition hover:border-(--primary) hover:text-(--foreground)"
+                          className="rounded-[6px] border border-(--border) bg-(--card) px-2 py-1 text-[11px] font-semibold text-(--muted-foreground) transition hover:border-(--primary) hover:text-(--foreground)"
                         >
                           {tool.name}
                         </Link>
@@ -656,12 +657,16 @@ export default function ToolsClient({ meta = {}, category, initialSearch = "", i
       </div>
 
       {/* CONTENT */}
-      <div className="mx-auto grid max-w-7xl grid-cols-1 gap-6 px-4 py-5 pb-20 sm:px-6 lg:grid-cols-[230px_1fr] lg:px-8">
+      <div className="mx-auto grid max-w-7xl grid-cols-1 gap-6 px-4 py-6 pb-20 sm:px-6 lg:grid-cols-[260px_1fr] lg:px-8">
         {/* SIDEBAR */}
         <aside className="lg:sticky lg:top-24 lg:max-h-[calc(100vh-7rem)] lg:overflow-auto">
-          <h4 className="mb-3 flex items-center gap-2 text-sm font-semibold">
-            <Layers3 className="h-4 w-4 text-(--primary)" />
-            Categories
+          <div className="rounded-[8px] border border-(--border) bg-[color-mix(in_srgb,var(--card)_86%,var(--background))] p-3 shadow-[var(--anslation-ds-shadow-sm)]">
+          <h4 className="mb-3 flex items-center justify-between gap-2 text-sm font-semibold text-(--foreground)">
+            <span className="inline-flex items-center gap-2">
+              <Layers3 className="h-4 w-4 text-(--primary)" />
+              Categories
+            </span>
+            <Filter className="h-3.5 w-3.5 text-(--muted-foreground)" />
           </h4>
           <div className="relative mb-3">
             <Search className="pointer-events-none absolute left-3 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-(--muted-foreground)" />
@@ -670,7 +675,7 @@ export default function ToolsClient({ meta = {}, category, initialSearch = "", i
               value={categoryFilter}
               onChange={(e) => setCategoryFilter(e.target.value)}
               placeholder="Filter categories"
-              className="h-10 w-full rounded-[8px] border border-(--border) bg-(--card) px-9 text-xs text-(--foreground) outline-none transition placeholder:text-(--muted-foreground) focus:border-(--primary)"
+              className="h-10 w-full rounded-[8px] border border-(--border) bg-(--background) px-9 text-xs text-(--foreground) outline-none transition placeholder:text-(--muted-foreground) focus:border-(--primary) focus:ring-2 focus:ring-[color-mix(in_srgb,var(--primary)_18%,transparent)]"
             />
           </div>
           {/* // mobile view */}
@@ -678,19 +683,24 @@ export default function ToolsClient({ meta = {}, category, initialSearch = "", i
             {/* Button */}
             <button
               onClick={() => setOpen(!open)}
-              className="w-full flex justify-between px-4 py-3 text-(--muted-foreground) rounded-[8px] border border-(--border) text-left bg-(--card)"
+              aria-expanded={open}
+              className="flex w-full justify-between rounded-[8px] border border-(--border) bg-(--background) px-4 py-3 text-left text-(--muted-foreground)"
             >
               {selectedLabel} {<ChevronDown size={20} className={open ? "rotate-180" : "rotate-0"} />}
             </button>
             {/* Dropdown */}
             {open && (
-              <div className="mt-2 w-full rounded-[8px] border border-(--border) bg-(--card) p-2">
+              <div className="mt-2 max-h-[360px] w-full overflow-auto rounded-[8px] border border-(--border) bg-(--background) p-2">
                 {filteredCategoryStats.map((cat) => (
                   <Link
                     key={cat.slug}
                     href={getDirectoryHref({ nextCategory: cat.slug })}
                     onClick={() => handleSelect(cat.slug)}
-                    className="flex cursor-pointer items-center justify-between rounded-[7px] px-3 py-2 text-sm text-(--muted-foreground) hover:bg-(--background)"
+                    className={`flex cursor-pointer items-center justify-between rounded-[7px] px-3 py-2 text-sm transition ${
+                      categoryname === cat.slug
+                        ? "bg-(--primary) text-(--primary-foreground)"
+                        : "text-(--muted-foreground) hover:bg-(--card) hover:text-(--foreground)"
+                    }`}
                   >
                     <span>{cat.label}</span>
                     <span className="text-xs">{cat.count}</span>
@@ -708,8 +718,8 @@ export default function ToolsClient({ meta = {}, category, initialSearch = "", i
                   href={getDirectoryHref({ nextCategory: cat.slug })}
                   onClick={() => handleCategoryClick(cat.slug)}
                   className={`flex w-full cursor-pointer items-center justify-between rounded-[7px] px-3 py-2 text-left text-sm transition ${categoryname === cat.slug
-                    ? "bg-[var(--color-primary)] text-white shadow"
-                    : "text-[var(--muted-foreground)] hover:bg-[var(--card-hover-bg)] hover:text-(--foreground)"
+                    ? "bg-[var(--color-primary)] text-(--primary-foreground) shadow-[var(--anslation-ds-shadow-sm)]"
+                    : "text-[var(--muted-foreground)] hover:bg-[var(--background)] hover:text-(--foreground)"
                     }`}
                 >
                   <span>{cat.label}</span>
@@ -720,14 +730,15 @@ export default function ToolsClient({ meta = {}, category, initialSearch = "", i
               </li>
             ))}
           </ul>
+          </div>
         </aside>
 
         {/* TOOLS */}
         <section className="flex flex-col items-center justify-start">
-          <div className="mb-4 flex w-full flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+          <div className="mb-4 flex w-full flex-col gap-2 border-b border-(--border) pb-4 sm:flex-row sm:items-center sm:justify-between">
             <h2 className="flex items-center gap-3 text-xl font-semibold">
               {toolsHeading}
-              <span className="rounded-full bg-[var(--card)] px-2.5 py-0.5 text-sm font-semibold text-[var(--color-muted-foreground)]">
+              <span className="rounded-full border border-(--border) bg-[var(--card)] px-2.5 py-0.5 text-sm font-semibold text-[var(--color-muted-foreground)]">
                 {filteredSlugs.length}
               </span>
             </h2>
@@ -777,10 +788,10 @@ export default function ToolsClient({ meta = {}, category, initialSearch = "", i
                   return (
                     <article
                       key={slug}
-                      className="group relative flex min-h-[136px] flex-col justify-between rounded-[8px] border border-[var(--border)] bg-[var(--card)] p-3 transition-all duration-200 hover:-translate-y-0.5 hover:border-[var(--color-primary)] hover:bg-[var(--card-hover-bg)] hover:shadow-md focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)/40]"
+                      className="group relative flex min-h-[156px] flex-col justify-between rounded-[8px] border border-[var(--border)] bg-[var(--card)] p-4 shadow-[var(--anslation-ds-shadow-sm)] transition-all duration-200 hover:-translate-y-0.5 hover:border-[var(--color-primary)] hover:bg-[color-mix(in_srgb,var(--card-hover-bg)_72%,var(--card))] hover:shadow-[var(--anslation-ds-shadow-md)] focus-within:border-[var(--color-primary)] focus-within:ring-2 focus-within:ring-[color-mix(in_srgb,var(--primary)_24%,transparent)]"
                     >
                       <div className="flex gap-3">
-                        <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-[7px] bg-(--muted)">
+                        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-[7px] border border-(--border) bg-(--muted)">
                           <Icon
                             name={tool.icon ?? "wrench"}
                             className={`h-5 w-5 ${tool.iconColor ?? "text-[var(--muted-foreground)]"}`}
@@ -792,10 +803,10 @@ export default function ToolsClient({ meta = {}, category, initialSearch = "", i
                           onClick={() => rememberTool(slug)}
                           className="min-w-0 flex-1 focus:outline-none"
                         >
-                          <h3 className="truncate text-sm font-semibold leading-tight transition group-hover:text-[var(--color-primary)]">
+                          <h3 className="truncate text-[15px] font-semibold leading-tight transition group-hover:text-[var(--color-primary)]">
                             {name}
                           </h3>
-                          <p className="mt-1 line-clamp-2 text-xs leading-5 text-[var(--color-muted-foreground)]">
+                          <p className="mt-1.5 line-clamp-2 text-xs leading-5 text-[var(--color-muted-foreground)]">
                             {tool.description || "No description available."}
                           </p>
                         </Link>
@@ -814,14 +825,14 @@ export default function ToolsClient({ meta = {}, category, initialSearch = "", i
                         </button>
                       </div>
 
-                      <div className="mt-4 flex items-center justify-between gap-3">
+                      <div className="mt-5 flex items-center justify-between gap-3">
                         {tool.category && (
                           <div className="flex max-h-[28px] flex-wrap gap-1 overflow-hidden">
                             {(Array.isArray(tool.category) ? tool.category : [tool.category]).map(
                               (cat) => (
                                 <span
                                   key={cat}
-                                  className="rounded-full bg-(--background) px-2 py-1 text-[10px] font-medium text-[var(--color-muted-foreground)]"
+                                  className="rounded-full border border-(--border) bg-(--background) px-2 py-1 text-[10px] font-medium text-[var(--color-muted-foreground)]"
                                 >
                                   {cat}
                                 </span>
@@ -833,7 +844,7 @@ export default function ToolsClient({ meta = {}, category, initialSearch = "", i
                         <Link
                           href={href}
                           onClick={() => rememberTool(slug)}
-                          className="inline-flex shrink-0 items-center gap-1 text-xs font-semibold text-[var(--color-muted-foreground)] group-hover:text-[var(--color-primary)]"
+                          className="inline-flex shrink-0 items-center gap-1 rounded-[6px] px-1.5 py-1 text-xs font-semibold text-[var(--color-muted-foreground)] transition group-hover:bg-(--background) group-hover:text-[var(--color-primary)]"
                         >
                           <BadgeCheck className="h-3.5 w-3.5" />
                           Open

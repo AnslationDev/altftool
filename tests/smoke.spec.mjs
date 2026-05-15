@@ -13,6 +13,7 @@ test("public web shell loads", async ({ page }) => {
 
   await page.goto(`${webUrl}/tools`);
 
+  await expect.poll(() => page.evaluate(() => document.documentElement.getAttribute("data-theme"))).toBe("dark");
   await expect(page.locator("#main-header")).toBeVisible();
   await expect(page.getByAltText("AltFTool").first()).toBeVisible();
   await expect(page.getByPlaceholder("Search tools, extensions...")).toBeVisible();

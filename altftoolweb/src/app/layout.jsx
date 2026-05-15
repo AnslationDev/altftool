@@ -100,7 +100,7 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" suppressHydrationWarning className={`${geistSans.variable} ${geistMono.variable}`}>
+    <html lang="en" data-theme="dark" suppressHydrationWarning className={`${geistSans.variable} ${geistMono.variable}`}>
       <head>
         <link rel="preconnect" href="https://firestore.googleapis.com" />
         <link rel="preconnect" href="https://firebasestorage.googleapis.com" />
@@ -116,8 +116,10 @@ export default function RootLayout({ children }) {
             try {
               var manual = localStorage.getItem("themeManual") === "true";
               var stored = localStorage.getItem("appTheme");
-              var system = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
-              document.documentElement.setAttribute("data-theme", manual && stored ? stored : system);
+              var valid = stored === "dark" || stored === "light";
+              var theme = manual && valid ? stored : "dark";
+              document.documentElement.setAttribute("data-theme", theme);
+              document.documentElement.style.colorScheme = theme;
             } catch (_) {}
           `}
         </Script>

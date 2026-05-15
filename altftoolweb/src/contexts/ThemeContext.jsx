@@ -3,56 +3,38 @@
 import { createContext, useContext, useEffect, useState } from "react";
 
 const ThemeContext = createContext({
-  theme: "light",
+  theme: "dark",
   toggleTheme: () => {},
 });
 
-const getSystemTheme = () =>
-  typeof window !== "undefined" &&
-  window.matchMedia("(prefers-color-scheme: dark)").matches
-    ? "dark"
-    : "light";
+const DEFAULT_THEME = "dark";
+const VALID_THEMES = new Set(["dark", "light"]);
+
+const getStoredTheme = () => {
+  if (typeof window === "undefined") return DEFAULT_THEME;
+
+  const storedTheme = localStorage.getItem("appTheme");
+  const storedManual = localStorage.getItem("themeManual") === "true";
+
+  return storedManual && VALID_THEMES.has(storedTheme) ? storedTheme : DEFAULT_THEME;
+};
 
 export const ThemeProvider = ({ children }) => {
-  const [theme, setTheme] = useState("light");
-  const [isManual, setIsManual] = useState(false);
+  const [theme, setTheme] = useState(DEFAULT_THEME);
   const [hydrated, setHydrated] = useState(false);
 
   useEffect(() => {
-    const hydrateTheme = setTimeout(() => {
-      const storedTheme = localStorage.getItem("appTheme");
-      const storedManual = localStorage.getItem("themeManual") === "true";
-      const nextTheme = storedTheme && storedManual ? storedTheme : getSystemTheme();
-
-      setIsManual(storedManual);
-      setTheme(nextTheme);
-      setHydrated(true);
-    }, 0);
-
-    return () => clearTimeout(hydrateTheme);
+    setTheme(getStoredTheme());
+    setHydrated(true);
   }, []);
 
-  // Apply theme
   useEffect(() => {
     if (!hydrated) return;
     document.documentElement.setAttribute("data-theme", theme);
+    document.documentElement.style.colorScheme = theme;
   }, [hydrated, theme]);
 
-  // Listen to OS changes ONLY if not manual
-  useEffect(() => {
-    if (!hydrated) return;
-    if (isManual) return;
-
-    const media = window.matchMedia("(prefers-color-scheme: dark)");
-    const handler = () => setTheme(getSystemTheme());
-
-    media.addEventListener("change", handler);
-    return () => media.removeEventListener("change", handler);
-  }, [hydrated, isManual]);
-
   const toggleTheme = () => {
-    setIsManual(true);
-
     setTheme((prev) => {
       const next = prev === "light" ? "dark" : "light";
       localStorage.setItem("appTheme", next);
