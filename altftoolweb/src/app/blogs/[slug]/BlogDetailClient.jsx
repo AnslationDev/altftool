@@ -34,6 +34,7 @@ import BlogReaderCompanion from "../components/slug/BlogReaderCompanion";
 import BlogFeedback from "../components/slug/BlogFeedback";
 import BlogRelatedTools from "../components/slug/BlogRelatedTools";
 import BlogCard from "../components/BlogCard";
+import { deriveBlogFaqItems } from "../utils/blogFaq";
 import { getRelatedToolsForBlog } from "../utils/relatedTools";
 import "../../styles/ckeditor.css";
 
@@ -97,7 +98,13 @@ async function fetchSimilarPosts(currentBlog, excludeSlug) {
   );
 }
 
-export default function BlogDetailClient({ slug, initialBlog, initialRelated, initialRelatedTools }) {
+export default function BlogDetailClient({
+  slug,
+  initialBlog,
+  initialRelated,
+  initialRelatedTools,
+  initialFaqs = [],
+}) {
   const router = useRouter();
 
   const [blog, setBlog] = useState(initialBlog);
@@ -112,6 +119,10 @@ export default function BlogDetailClient({ slug, initialBlog, initialRelated, in
     if (blog) return getRelatedToolsForBlog(blog, 6);
     return initialRelatedTools || [];
   }, [blog, initialRelatedTools]);
+  const faqItems = useMemo(() => {
+    const derived = deriveBlogFaqItems(blog);
+    return derived.length ? derived : initialFaqs;
+  }, [blog, initialFaqs]);
 
   const loadComments = useCallback(async (blogId) => {
     if (!blogId || typeof blogId !== "string") return;
@@ -252,7 +263,8 @@ export default function BlogDetailClient({ slug, initialBlog, initialRelated, in
 
         <BlogTableOfContents
           content={blog.description}
-          className="mt-5 lg:hidden"
+          className="sticky top-16 z-30 mt-5 lg:hidden"
+          collapsible
         />
 
         <div className="mt-8 grid grid-cols-1 items-start justify-center gap-6 lg:grid-cols-[240px_minmax(0,820px)] xl:grid-cols-[260px_minmax(0,860px)] 2xl:grid-cols-[280px_minmax(0,840px)_300px]">
@@ -265,6 +277,7 @@ export default function BlogDetailClient({ slug, initialBlog, initialRelated, in
                 blog={blog}
                 relatedTools={relatedTools}
                 relatedPosts={similarPosts}
+                faqItems={faqItems}
               />
             </article>
             <BlogReaderCompanion

@@ -2,6 +2,8 @@
 
 import { useEffect } from "react";
 import { injectIds } from "./BlogTableOfContents";
+import BlogCompletionCta from "./BlogCompletionCta";
+import BlogFaqSection from "./BlogFaqSection";
 import BlogInlineBlogLinks from "./BlogInlineBlogLinks";
 import BlogInlineToolCards from "./BlogInlineToolCards";
 
@@ -21,7 +23,13 @@ function splitAfterParagraphs(html = "", paragraphCount = 2) {
   return [html, ""];
 }
 
-export default function BlogContent({ content, blog, relatedTools = [], relatedPosts = [] }) {
+export default function BlogContent({
+  content,
+  blog,
+  relatedTools = [],
+  relatedPosts = [],
+  faqItems = [],
+}) {
   useEffect(() => {
     const article = document.querySelector(".blog-article-content");
     if (!article) return undefined;
@@ -100,6 +108,8 @@ export default function BlogContent({ content, blog, relatedTools = [], relatedP
   cleanedContent = injectIds(cleanedContent);
   const shouldInsertTools = relatedTools.length > 0;
   const shouldInsertBlogLinks = relatedPosts.length > 0;
+  const hasInlineFaqBlock = /FAQ_WRAPPER|FAQ_ITEM|FAQ Start/i.test(cleanedContent);
+  const shouldInsertFaqs = faqItems.length > 0 && !hasInlineFaqBlock;
   const [introContent, remainingContent] = shouldInsertTools
     ? splitAfterParagraphs(cleanedContent, 2)
     : [cleanedContent, ""];
@@ -115,6 +125,12 @@ export default function BlogContent({ content, blog, relatedTools = [], relatedP
         />
       ) : null}
       {remainingContent ? <div dangerouslySetInnerHTML={{ __html: remainingContent }} /> : null}
+      {shouldInsertFaqs ? <BlogFaqSection items={faqItems} /> : null}
+      <BlogCompletionCta
+        blog={blog}
+        relatedTools={relatedTools}
+        relatedPosts={relatedPosts}
+      />
       {shouldInsertBlogLinks ? (
         <BlogInlineBlogLinks
           blog={blog}

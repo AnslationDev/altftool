@@ -1,5 +1,6 @@
 "use client";
 
+import { ChevronDown, ListTree } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
 
 function slugify(text) {
@@ -78,12 +79,18 @@ function injectIds(htmlContent) {
    BlogTableOfContents
 ───────────────────────────────────────── */
 
-export default function BlogTableOfContents({ content, className = "hidden lg:block" }) {
+export default function BlogTableOfContents({
+  content,
+  className = "hidden lg:block",
+  collapsible = false,
+  initiallyOpen = false,
+}) {
   const headings = useMemo(() => {
     if (!content) return [];
     return extractHeadings(content);
   }, [content]);
   const [activeId, setActiveId] = useState(null);
+  const [isOpen, setIsOpen] = useState(!collapsible || initiallyOpen);
   const observerRef = useRef(null);
 
   // Observe heading elements in the DOM after render
@@ -133,16 +140,45 @@ export default function BlogTableOfContents({ content, className = "hidden lg:bl
         className,
       )}
     >
-      <div className="mb-3 flex items-center justify-between gap-3">
-        <p className="text-[11px] font-bold uppercase tracking-[0.12em] text-(--muted-foreground)">
-          On This Page
-        </p>
-        <span className="rounded-full bg-(--muted) px-2 py-0.5 text-[10px] font-semibold text-(--muted-foreground)">
-          {headings.length}
-        </span>
-      </div>
+      {collapsible ? (
+        <button
+          type="button"
+          onClick={() => setIsOpen((value) => !value)}
+          aria-expanded={isOpen}
+          className="flex w-full items-center justify-between gap-3 rounded-[6px] text-left"
+        >
+          <span className="flex min-w-0 items-center gap-2">
+            <ListTree className="h-4 w-4 shrink-0 text-(--primary)" />
+            <span className="text-[11px] font-bold uppercase tracking-[0.12em] text-(--muted-foreground)">
+              On This Page
+            </span>
+          </span>
+          <span className="flex items-center gap-2">
+            <span className="rounded-full bg-(--muted) px-2 py-0.5 text-[10px] font-semibold text-(--muted-foreground)">
+              {headings.length}
+            </span>
+            <ChevronDown
+              className={cx(
+                "h-4 w-4 text-(--muted-foreground) transition",
+                isOpen && "rotate-180",
+              )}
+            />
+          </span>
+        </button>
+      ) : (
+        <div className="mb-3 flex items-center justify-between gap-3">
+          <p className="flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.12em] text-(--muted-foreground)">
+            <ListTree className="h-4 w-4 text-(--primary)" />
+            On This Page
+          </p>
+          <span className="rounded-full bg-(--muted) px-2 py-0.5 text-[10px] font-semibold text-(--muted-foreground)">
+            {headings.length}
+          </span>
+        </div>
+      )}
 
-      <nav>
+      {(!collapsible || isOpen) ? (
+      <nav className={collapsible ? "mt-3" : undefined}>
         <ul className="flex list-none flex-col gap-1 p-0">
           {headings.map(({ id, text, level }) => {
             const isActive = activeId === id;
@@ -176,6 +212,7 @@ export default function BlogTableOfContents({ content, className = "hidden lg:bl
           })}
         </ul>
       </nav>
+      ) : null}
     </aside>
   );
 }

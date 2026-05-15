@@ -6,7 +6,6 @@ import {
   getRelatedBlogs,
   getRelatedBlogsForPost,
   mergeBlogPosts,
-  stripHtml,
 } from "../data";
 import {
   fetchFirebaseBlogBySlug,
@@ -18,78 +17,20 @@ import {
   createBlogPostingJsonLd,
   createBreadcrumbJsonLd,
   createFaqJsonLd,
+  createHowToJsonLd,
   createItemListJsonLd,
   createPageMetadata,
 } from "@/platform/seo/generateMetadata";
+import {
+  deriveBlogFaqItems,
+  deriveBlogHowToSteps,
+  getBlogDescription,
+} from "../utils/blogFaq";
 
 export const revalidate = 3600;
 
 export function generateStaticParams() {
   return getAllBlogs().map((blog) => ({ slug: blog.slug }));
-}
-
-function getBlogDescription(blog) {
-  return (
-    blog?.seoDescription ||
-    blog?.excerpt ||
-    stripHtml(blog?.description || blog?.content || "").slice(0, 160) ||
-    "Read practical AltFTool guides, tool tutorials, and digital productivity articles."
-  );
-}
-
-function decodeHtmlEntities(value = "") {
-  return String(value)
-    .replace(/&nbsp;/gi, " ")
-    .replace(/&amp;/gi, "&")
-    .replace(/&quot;/gi, '"')
-    .replace(/&#39;/gi, "'")
-    .replace(/&lt;/gi, "<")
-    .replace(/&gt;/gi, ">");
-}
-
-function cleanFaqText(value = "") {
-  return decodeHtmlEntities(stripHtml(value).replace(/\s+/g, " ").trim());
-}
-
-function normalizeFaqItems(value) {
-  const source = Array.isArray(value) ? value : [];
-
-  return source
-    .map((item) => ({
-      question: cleanFaqText(item?.question || item?.q || item?.title || ""),
-      answer: cleanFaqText(item?.answer || item?.a || item?.description || ""),
-    }))
-    .filter((item) => item.question.length > 4 && item.answer.length > 12)
-    .slice(0, 8);
-}
-
-function extractFaqsFromHtml(html = "") {
-  const source = String(html || "");
-  if (!source) return [];
-
-  const blockMatch = source.match(/<!--\s*FAQ Start\s*-->([\s\S]*?)<!--\s*FAQ End\s*-->/i);
-  const faqSource = blockMatch?.[1] || source;
-  const itemPattern = /<div[^>]*class=["'][^"']*FAQ_ITEM[^"']*["'][^>]*>([\s\S]*?)<\/div>\s*<\/div>/gi;
-  const items = [];
-  let itemMatch = itemPattern.exec(faqSource);
-
-  while (itemMatch) {
-    const itemHtml = itemMatch[1] || "";
-    const question = itemHtml.match(/<button[^>]*class=["'][^"']*FAQ_Q[^"']*["'][^>]*>([\s\S]*?)<\/button>/i)?.[1] || "";
-    const answer = itemHtml.match(/<div[^>]*class=["'][^"']*FAQ_A[^"']*["'][^>]*>([\s\S]*?)$/i)?.[1] || "";
-    const normalized = {
-      question: cleanFaqText(question),
-      answer: cleanFaqText(answer),
-    };
-
-    if (normalized.question.length > 4 && normalized.answer.length > 12) {
-      items.push(normalized);
-    }
-
-    itemMatch = itemPattern.exec(faqSource);
-  }
-
-  return items.slice(0, 8);
 }
 
 async function getInitialRelatedBlogs(blog, slug) {
@@ -104,46 +45,6 @@ async function getInitialRelatedBlogs(blog, slug) {
   } catch {
     return getRelatedBlogs(slug, 6);
   }
-}
-
-function buildBlogFaq(blog) {
-  if (!blog) return [];
-
-  const authoredFaqs = [
-    ...normalizeFaqItems(blog.faq),
-    ...normalizeFaqItems(blog.faqs),
-    ...normalizeFaqItems(blog.faqItems),
-    ...normalizeFaqItems(blog.faq?.items),
-    ...extractFaqsFromHtml(blog.description || blog.content || blog.body || ""),
-  ].reduce((acc, item) => {
-    const key = item.question.toLowerCase();
-    if (!acc.some((existing) => existing.question.toLowerCase() === key)) {
-      acc.push(item);
-    }
-    return acc;
-  }, []);
-
-  if (authoredFaqs.length) return authoredFaqs;
-
-  const title = blog.heading || blog.title || "this AltFTool article";
-  const category = blog.category || "AltFTool guides";
-  const readTime = blog.readTime || `${blog.readTimeMinutes || 2} min read`;
-  const readingDuration = String(readTime).replace(/\s*read$/i, "");
-
-  return [
-    {
-      question: `What is ${title} about?`,
-      answer: getBlogDescription(blog),
-    },
-    {
-      question: `How long does it take to read ${title}?`,
-      answer: `This article takes about ${readingDuration} to read.`,
-    },
-    {
-      question: `Where can I find more ${category} articles?`,
-      answer: `Browse the ${category} archive on AltFTool for more related guides, tips, and tool workflows.`,
-    },
-  ];
 }
 
 export async function generateMetadata({ params }) {
@@ -203,6 +104,8 @@ export default async function BlogDetailPage({ params }) {
   })) || getBlogBySlug(slug);
   const initialRelated = await getInitialRelatedBlogs(initialBlog, slug);
   const initialRelatedTools = getRelatedToolsForBlog(initialBlog, 6);
+  const initialFaqs = deriveBlogFaqItems(initialBlog);
+  const initialHowToSteps = deriveBlogHowToSteps(initialBlog, initialRelatedTools);
 
   return (
     <>
@@ -217,7 +120,13 @@ export default async function BlogDetailPage({ params }) {
           ]),
           createFaqJsonLd({
             path: `/blogs/${slug}`,
-            questions: buildBlogFaq(initialBlog),
+            questions: initialFaqs,
+          }),
+          createHowToJsonLd({
+            path: `/blogs/${slug}`,
+            name: initialBlog?.heading || initialBlog?.title || "AltFTool blog workflow",
+            description: getBlogDescription(initialBlog),
+            steps: initialHowToSteps,
           }),
           createItemListJsonLd({
             path: `/blogs/${slug}`,
@@ -240,6 +149,7 @@ export default async function BlogDetailPage({ params }) {
         initialBlog={initialBlog}
         initialRelated={initialRelated}
         initialRelatedTools={initialRelatedTools}
+        initialFaqs={initialFaqs}
       />
     </>
   );
