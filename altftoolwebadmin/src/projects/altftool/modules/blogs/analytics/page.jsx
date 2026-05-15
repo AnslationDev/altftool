@@ -16,7 +16,10 @@ import {
   MessageCircle,
   RefreshCw,
   SearchCheck,
+  ShieldCheck,
   Tags,
+  ThumbsDown,
+  ThumbsUp,
   TrendingUp,
 } from "lucide-react";
 import { fetchAllBlogs } from "../services/blogsService";
@@ -94,6 +97,45 @@ function getRefreshReasons(blog = {}) {
   if (!blog.hasFaq) reasons.push("no authored FAQ");
 
   return reasons;
+}
+
+function getSeoAuditIssues(blog = {}) {
+  const issues = [];
+  const failedChecks = (blog.qualityChecks || []).filter((check) => !check.done);
+
+  failedChecks.slice(0, 4).forEach((check) => {
+    issues.push({
+      key: check.label,
+      label: check.label,
+      detail: check.detail,
+    });
+  });
+
+  if (!blog.hasTrustMetadata) {
+    issues.push({
+      key: "Trust metadata",
+      label: "Trust metadata",
+      detail: "Add role, reviewer, or editorial note",
+    });
+  }
+
+  if (blog.helpfulRate !== null && blog.feedbackTotal >= 3 && blog.helpfulRate < 60) {
+    issues.push({
+      key: "Reader feedback",
+      label: "Reader feedback",
+      detail: `${blog.helpfulRate}% helpful`,
+    });
+  }
+
+  return issues.slice(0, 6);
+}
+
+function getHelpfulRate(blog = {}) {
+  const helpful = Number(blog.helpfulCount || 0);
+  const notHelpful = Number(blog.notHelpfulCount || 0);
+  const total = helpful + notHelpful;
+  if (!total) return null;
+  return Math.round((helpful / total) * 100);
 }
 
 function addDays(date, days) {
@@ -233,26 +275,33 @@ export default function AltFToolBlogAnalyticsPage() {
       return {
         ...blog,
         qualityScore: quality.score,
+        qualityChecks: quality.checks,
         qualitySuggestions: quality.suggestions,
         engagement: getEngagement(blog),
         readTime: calcReadTime(blog.description || ""),
         daysSinceUpdate: getDaysSince(blog.updatedAt, blog.createdAt || blog.date),
         hasInternalLinks: hasInternalLinks(blog.description || ""),
         hasFaq: hasFaqContent(blog),
+        hasTrustMetadata: Boolean(blog.authorRole || blog.reviewedBy || blog.editorialNote),
+        feedbackTotal: Number(blog.helpfulCount || 0) + Number(blog.notHelpfulCount || 0),
+        helpfulRate: getHelpfulRate(blog),
       };
     });
 
     const withRefreshReasons = enriched.map((blog) => {
       const refreshReasons = getRefreshReasons(blog);
+      const seoAuditIssues = getSeoAuditIssues(blog);
       const refreshScore =
         refreshReasons.length * 20 +
         Math.max(0, 70 - blog.qualityScore) +
         (blog.daysSinceUpdate ? Math.min(30, Math.floor(blog.daysSinceUpdate / 6)) : 0) +
-        (blog.engagement > 0 ? Math.min(20, Math.floor(blog.engagement / 20)) : 0);
+        (blog.engagement > 0 ? Math.min(20, Math.floor(blog.engagement / 20)) : 0) +
+        (blog.helpfulRate !== null && blog.helpfulRate < 60 ? 18 : 0);
 
       return {
         ...blog,
         refreshReasons,
+        seoAuditIssues,
         refreshScore,
       };
     });
@@ -262,6 +311,11 @@ export default function AltFToolBlogAnalyticsPage() {
     const totalViews = withRefreshReasons.reduce((sum, blog) => sum + Number(blog.views || 0), 0);
     const totalLikes = withRefreshReasons.reduce((sum, blog) => sum + Number(blog.likesCount || 0), 0);
     const totalComments = withRefreshReasons.reduce((sum, blog) => sum + Number(blog.commentsCount || 0), 0);
+    const totalHelpful = withRefreshReasons.reduce((sum, blog) => sum + Number(blog.helpfulCount || 0), 0);
+    const totalNotHelpful = withRefreshReasons.reduce((sum, blog) => sum + Number(blog.notHelpfulCount || 0), 0);
+    const helpfulRate = totalHelpful + totalNotHelpful
+      ? Math.round((totalHelpful / (totalHelpful + totalNotHelpful)) * 100)
+      : 0;
     const avgQuality = withRefreshReasons.length
       ? Math.round(withRefreshReasons.reduce((sum, blog) => sum + blog.qualityScore, 0) / withRefreshReasons.length)
       : 0;
@@ -305,6 +359,20 @@ export default function AltFToolBlogAnalyticsPage() {
       .filter((blog) => blog.refreshReasons.length > 0)
       .sort((a, b) => b.refreshScore - a.refreshScore)
       .slice(0, 9);
+    const seoAuditQueue = [...withRefreshReasons]
+      .filter((blog) => blog.seoAuditIssues.length > 0)
+      .sort((a, b) => {
+        const issueDiff = b.seoAuditIssues.length - a.seoAuditIssues.length;
+        if (issueDiff !== 0) return issueDiff;
+        return a.qualityScore - b.qualityScore;
+      })
+      .slice(0, 10);
+    const issueCounts = new Map();
+    seoAuditQueue.forEach((blog) => {
+      blog.seoAuditIssues.forEach((issue) => {
+        issueCounts.set(issue.label, (issueCounts.get(issue.label) || 0) + 1);
+      });
+    });
 
     return {
       total: withRefreshReasons.length,
@@ -313,13 +381,23 @@ export default function AltFToolBlogAnalyticsPage() {
       totalViews,
       totalLikes,
       totalComments,
+      totalHelpful,
+      totalNotHelpful,
+      helpfulRate,
       avgQuality,
       avgReadTime,
       lowQuality: withRefreshReasons.filter((blog) => blog.qualityScore < 70),
       noFaq: published.filter((blog) => !blog.hasFaq),
       noInternalLinks: published.filter((blog) => !blog.hasInternalLinks),
+      missingTrust: withRefreshReasons.filter((blog) => !blog.hasTrustMetadata),
+      lowFeedback: published.filter((blog) => blog.helpfulRate !== null && blog.feedbackTotal >= 3 && blog.helpfulRate < 60),
       stalePublished: published.filter((blog) => blog.daysSinceUpdate !== null && blog.daysSinceUpdate >= 90),
       refreshQueue,
+      seoAuditQueue,
+      issueCounts: [...issueCounts.entries()]
+        .map(([label, count]) => ({ label, count }))
+        .sort((a, b) => b.count - a.count || a.label.localeCompare(b.label))
+        .slice(0, 8),
       refreshSchedule: buildRefreshSchedule(refreshQueue),
       topBlogs: [...published].sort((a, b) => b.engagement - a.engagement).slice(0, 8),
       lowQualityBlogs: [...withRefreshReasons].sort((a, b) => a.qualityScore - b.qualityScore).slice(0, 8),
@@ -384,12 +462,98 @@ export default function AltFToolBlogAnalyticsPage() {
         </button>
       </div>
 
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-5">
         <StatCard icon={FileText} label="Total Posts" value={analytics.total.toLocaleString()} caption={`${analytics.published} published - ${analytics.drafts} drafts`} />
         <StatCard icon={Eye} label="Total Views" value={analytics.totalViews.toLocaleString()} caption={`${analytics.totalLikes.toLocaleString()} likes - ${analytics.totalComments.toLocaleString()} comments`} tone="green" />
         <StatCard icon={SearchCheck} label="Avg Quality" value={`${analytics.avgQuality}%`} caption={`${analytics.lowQuality.length} posts need attention`} tone={analytics.avgQuality >= 75 ? "green" : "amber"} />
         <StatCard icon={Clock3} label="Avg Read Time" value={`${analytics.avgReadTime} min`} caption="Based on published content length" tone="slate" />
+        <StatCard icon={ThumbsUp} label="Helpful Rate" value={`${analytics.helpfulRate}%`} caption={`${analytics.totalHelpful} helpful - ${analytics.totalNotHelpful} needs work`} tone={analytics.helpfulRate >= 70 ? "green" : "amber"} />
       </div>
+
+      <section className="rounded-2xl border border-gray-100 bg-white p-6 shadow-sm">
+        <div className="mb-5 flex flex-wrap items-center justify-between gap-3">
+          <div className="flex items-center gap-2">
+            <SearchCheck className="h-4 w-4 text-blue-600" />
+            <div>
+              <h2 className="text-sm font-black uppercase tracking-wider text-gray-700">SEO audit dashboard</h2>
+              <p className="mt-1 text-xs text-gray-400">
+                Ranked issues across metadata, schema, freshness, trust, links, FAQ, and reader signals.
+              </p>
+            </div>
+          </div>
+          <div className="flex flex-wrap gap-2 text-xs font-semibold text-gray-500">
+            <span className="inline-flex h-7 items-center gap-1 rounded-lg bg-blue-50 px-2.5 text-blue-700">
+              <SearchCheck className="h-3.5 w-3.5" />
+              {analytics.seoAuditQueue.length} audit items
+            </span>
+            <span className="inline-flex h-7 items-center gap-1 rounded-lg bg-slate-50 px-2.5 text-slate-700">
+              <ShieldCheck className="h-3.5 w-3.5" />
+              {analytics.missingTrust.length} missing trust
+            </span>
+            <span className="inline-flex h-7 items-center gap-1 rounded-lg bg-amber-50 px-2.5 text-amber-700">
+              <ThumbsDown className="h-3.5 w-3.5" />
+              {analytics.lowFeedback.length} low feedback
+            </span>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 gap-4 lg:grid-cols-[minmax(0,1.35fr)_minmax(280px,0.65fr)]">
+          <div className="space-y-2.5">
+            {analytics.seoAuditQueue.length ? (
+              analytics.seoAuditQueue.slice(0, 6).map((blog) => (
+                <button
+                  key={blog.id}
+                  type="button"
+                  onClick={() => router.push(`/altftool/blogs/edit-blog/${blog.id}`)}
+                  className="group flex w-full items-start gap-3 rounded-xl border border-gray-100 bg-gray-50/50 p-3 text-left transition hover:border-blue-200 hover:bg-blue-50"
+                >
+                  <div className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl text-sm font-black ${blog.qualityScore >= 75 ? "bg-green-50 text-green-600" : "bg-amber-50 text-amber-600"}`}>
+                    {blog.qualityScore}
+                  </div>
+                  <div className="min-w-0 flex-1">
+                    <p className="line-clamp-1 text-sm font-semibold text-gray-800 group-hover:text-blue-700">
+                      {blog.heading || "Untitled blog"}
+                    </p>
+                    <div className="mt-2 flex flex-wrap gap-1.5">
+                      {blog.seoAuditIssues.slice(0, 4).map((issue) => (
+                        <span key={`${blog.id}-${issue.label}`} className="rounded-lg bg-white px-2 py-1 text-[10px] font-semibold text-gray-500">
+                          {issue.label}: {issue.detail}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                  <Edit3 className="mt-1 h-4 w-4 shrink-0 text-gray-400" />
+                </button>
+              ))
+            ) : (
+              <p className="rounded-xl bg-gray-50 px-3 py-8 text-center text-sm text-gray-400">
+                No SEO audit issues detected right now.
+              </p>
+            )}
+          </div>
+
+          <div className="rounded-xl border border-gray-100 bg-gray-50/60 p-4">
+            <h3 className="text-xs font-black uppercase tracking-wider text-gray-500">Top issue types</h3>
+            <div className="mt-4 space-y-3">
+              {analytics.issueCounts.length ? (
+                analytics.issueCounts.map((item) => (
+                  <HorizontalBar
+                    key={item.label}
+                    label={item.label}
+                    value={item.count}
+                    max={Math.max(1, ...analytics.issueCounts.map((issue) => issue.count))}
+                    caption={`${item.count} posts`}
+                  />
+                ))
+              ) : (
+                <p className="rounded-lg bg-white px-3 py-8 text-center text-xs text-gray-400">
+                  Issue distribution will appear after audits find gaps.
+                </p>
+              )}
+            </div>
+          </div>
+        </div>
+      </section>
 
       <section className="rounded-2xl border border-gray-100 bg-white p-6 shadow-sm">
         <div className="mb-5 flex flex-wrap items-center justify-between gap-3">

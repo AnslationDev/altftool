@@ -18,7 +18,7 @@ import {
   ImageIcon, UploadCloud, Trash2, Globe, Save,
   AlertCircle, CheckCircle2, Loader2, Info, Clock,
   WifiOff, RefreshCw, AlertTriangle, ALargeSmall,
-  Hash,
+  Hash, ShieldCheck,
 } from "lucide-react";
 import CTAButtonPicker from "../components/CtaButtonPicker";
 import FAQPicker from "../components/FAQCreator";
@@ -199,7 +199,7 @@ export default function AddBlog() {
   const [formData, setFormData] = useState({
     heading: "", category: "", author: "", date: "",
     description: "", seoTitle: "", seoDescription: "",
-    tags: "",
+    tags: "", authorRole: "", reviewedBy: "", editorialNote: "",
   });
   const [seoEdited, setSeoEdited]             = useState({ title: false, description: false });
   const [categories, setCategories]           = useState([]);
@@ -400,12 +400,15 @@ export default function AddBlog() {
         blogRef = await createBlog({
           heading: formData.heading.trim(), slug,
           category: formData.category, author: formData.author.trim(),
+          authorRole: formData.authorRole.trim(),
+          reviewedBy: formData.reviewedBy.trim(),
+          editorialNote: formData.editorialNote.trim(),
           description: formData.description, excerpt,
           date: formData.date,
           seoTitle: formData.seoTitle.trim(),
           seoDescription: formData.seoDescription || excerpt,
           image: "", imageAlt: imageAlt.trim(),
-          views: 0, status: "published",
+          views: 0, likesCount: 0, commentsCount: 0, feedbackCount: 0, helpfulCount: 0, notHelpfulCount: 0, status: "published",
           tags: parseBlogTags(formData.tags),
         });
       } catch (err) {
@@ -484,12 +487,15 @@ export default function AddBlog() {
       const draftRef = await createBlog({
         heading: formData.heading || "Untitled Draft", slug,
         category: formData.category || "", author: formData.author || "",
+        authorRole: formData.authorRole || "",
+        reviewedBy: formData.reviewedBy || "",
+        editorialNote: formData.editorialNote || "",
         description: formData.description || "",
         excerpt: stripHtml(formData.description || "").slice(0, 160),
         date: formData.date || "",
         seoTitle: formData.seoTitle || "", seoDescription: formData.seoDescription || "",
         image: "", imageAlt: imageAlt.trim(),
-        views: 0, status: "draft",
+        views: 0, likesCount: 0, commentsCount: 0, feedbackCount: 0, helpfulCount: 0, notHelpfulCount: 0, status: "draft",
         tags: parseBlogTags(formData.tags),
       });
       logAuditEvent({
@@ -512,7 +518,7 @@ export default function AddBlog() {
   /* ── Discard draft ── */
   const handleDiscardDraft = () => {
     setShowDraftBanner(false);
-    setFormData({ heading: "", category: "", author: "", date: "", description: "", seoTitle: "", seoDescription: "", tags: "" });
+    setFormData({ heading: "", category: "", author: "", date: "", description: "", seoTitle: "", seoDescription: "", tags: "", authorRole: "", reviewedBy: "", editorialNote: "" });
     setImagePreview(""); setImageName(""); setImageFile(null); setImageAlt(""); setDraftSavedAt(null);
     try { localStorage.removeItem(DRAFT_KEY); } catch (_) {}
     emitAlert({ type: "info", message: "Draft discarded. Starting fresh." });
@@ -604,6 +610,27 @@ export default function AddBlog() {
                 </Field>
                 <Field label="Tags" icon={<Hash className="w-3.5 h-3.5" />} hint="Comma separated topics. Example: pdf tools, productivity, students">
                   <Input name="tags" placeholder="Add 3-6 search-friendly tags..." value={formData.tags || ""} onChange={handleChange} />
+                </Field>
+              </Section>
+
+              <Section title="Trust Metadata">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <Field label="Author Role" icon={<User className="w-3.5 h-3.5" />} hint="Shown under the author name on public blogs.">
+                    <Input name="authorRole" placeholder="AltFTool Editorial, Travel Writer..." value={formData.authorRole || ""} onChange={handleChange} />
+                  </Field>
+                  <Field label="Reviewed By" icon={<ShieldCheck className="w-3.5 h-3.5" />} hint="Shown in the editorial review badge.">
+                    <Input name="reviewedBy" placeholder="AltFTool Editorial Team" value={formData.reviewedBy || ""} onChange={handleChange} />
+                  </Field>
+                </div>
+                <Field label="Editorial Note" icon={<Info className="w-3.5 h-3.5" />} hint="Optional trust note shown in the About this guide card.">
+                  <textarea
+                    name="editorialNote"
+                    rows={3}
+                    value={formData.editorialNote || ""}
+                    onChange={handleChange}
+                    placeholder="Reviewed for accuracy, freshness, and practical usefulness..."
+                    className="w-full text-sm px-3 py-2.5 rounded-xl border border-gray-200 bg-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-400/30 focus:border-blue-400 transition resize-none"
+                  />
                 </Field>
               </Section>
 

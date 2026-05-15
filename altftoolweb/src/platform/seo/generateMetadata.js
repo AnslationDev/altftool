@@ -283,9 +283,16 @@ export function createBlogPostingJsonLd(blog) {
     wordCount: wordCount || undefined,
     timeRequired: `PT${readTimeMinutes}M`,
     author: {
-      "@type": "Organization",
+      "@type": blog.author && blog.author !== siteConfig.name ? "Person" : "Organization",
       name: blog.author || siteConfig.name,
+      jobTitle: blog.authorRole || undefined,
     },
+    reviewedBy: blog.reviewedBy
+      ? {
+          "@type": "Organization",
+          name: blog.reviewedBy,
+        }
+      : undefined,
     publisher: {
       "@id": `${getSiteUrl()}/#organization`,
     },

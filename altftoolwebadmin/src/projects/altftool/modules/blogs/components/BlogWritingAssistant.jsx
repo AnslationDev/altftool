@@ -7,6 +7,7 @@ import {
   PenLine,
   PlusCircle,
   SearchCheck,
+  ShieldCheck,
   Sparkles,
   Tags,
 } from "lucide-react";
@@ -139,6 +140,15 @@ function buildConclusion(formData = {}) {
   return `<h2>Final thoughts</h2><p>${sentenceCase(heading)} works best when the next step is clear. Review the checklist above, compare the related resources, and keep the workflow simple enough to repeat whenever you need it.</p>`;
 }
 
+function buildTrustFields(formData = {}) {
+  const category = formData.category?.trim();
+  return {
+    authorRole: category ? `${category} Guide Editor` : "AltFTool Editorial",
+    reviewedBy: "AltFTool Editorial Team",
+    editorialNote: "Reviewed for clarity, freshness, practical usefulness, and reader-safe recommendations.",
+  };
+}
+
 function buildFaqBlock(formData = {}) {
   const heading = formData.heading?.trim() || "this guide";
   const category = formData.category?.trim() || "AltFTool";
@@ -217,6 +227,7 @@ export default function BlogWritingAssistant({
       intro: buildIntro(formData),
       conclusion: buildConclusion(formData),
       faq: buildFaqBlock(formData),
+      trustFields: buildTrustFields(formData),
     };
   }, [formData]);
 
@@ -289,6 +300,12 @@ export default function BlogWritingAssistant({
           label="Insert FAQ block"
           caption="Adds three schema-ready Q&A items for rich results."
           onClick={() => apply("FAQ block", () => onInsertBlock?.(suggestions.faq))}
+        />
+        <ActionButton
+          icon={ShieldCheck}
+          label="Fill trust fields"
+          caption="Adds author role, reviewer, and editorial note."
+          onClick={() => apply("Trust fields", () => onApplyFields?.(suggestions.trustFields))}
         />
       </div>
 

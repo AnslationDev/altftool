@@ -73,6 +73,11 @@ export function getBlogContentQuality({ formData = {}, imageAlt = "", hasImage =
   const longParagraphCount = paragraphs.filter((paragraph) => getWordCount(paragraph) > 120).length;
   const hasConclusion = /conclusion|final thoughts|summary|wrap up|bottom line/i.test(plainContent);
   const hasAuthoredFaq = hasFaqContent(formData.description);
+  const hasTrustMetadata = Boolean(
+    String(formData.authorRole || "").trim() ||
+    String(formData.reviewedBy || "").trim() ||
+    String(formData.editorialNote || "").trim()
+  );
   const schemaFieldCount = [
     formData.heading,
     formData.author,
@@ -149,6 +154,11 @@ export function getBlogContentQuality({ formData = {}, imageAlt = "", hasImage =
       done: hasAuthoredFaq,
     },
     {
+      label: "Trust metadata",
+      detail: hasTrustMetadata ? "Author/reviewer context found" : "Add role, reviewer, or note",
+      done: hasTrustMetadata,
+    },
+    {
       label: "Schema metadata",
       detail: `${schemaFieldCount}/5 article fields`,
       done: hasStructuredSchemaBase,
@@ -164,6 +174,7 @@ export function getBlogContentQuality({ formData = {}, imageAlt = "", hasImage =
     totalLinkCount === 0 ? "Add one helpful outbound or internal reference where it supports the article." : null,
     !hasConclusion ? "Finish with a short conclusion or final thoughts section." : null,
     !hasAuthoredFaq ? "Add a short FAQ block so the public page can output authored FAQ schema." : null,
+    !hasTrustMetadata ? "Add author role, reviewed by, or an editorial note to strengthen trust signals." : null,
     !hasStructuredSchemaBase ? "Complete heading, author, date, category, SEO description, and featured image for rich Article schema." : null,
   ].filter(Boolean);
 

@@ -18,6 +18,7 @@ import {
   CheckCircle2, Loader2, AlertCircle, Eye,
   Info, WifiOff, AlertTriangle, ALargeSmall,
   Hash,
+  ShieldCheck,
 } from "lucide-react";
 import CTAButtonPicker from "../../components/CtaButtonPicker";
 import FAQPicker from "../../components/FAQCreator";
@@ -167,7 +168,7 @@ export default function EditBlog() {
   const [formData, setFormData] = useState({
     heading: "", category: "", author: "", date: "",
     description: "", seoTitle: "", seoDescription: "", image: "", status: "draft",
-    tags: "",
+    tags: "", authorRole: "", reviewedBy: "", editorialNote: "",
   });
   const [imageAlt, setImageAlt]           = useState("");
   const [imageFile, setImageFile]         = useState(null);
@@ -198,6 +199,9 @@ export default function EditBlog() {
           date: data.date || "", description: data.description || "", seoTitle: data.seoTitle || "",
           seoDescription: data.seoDescription || "", image: data.image || "", status: data.status || "draft",
           tags: Array.isArray(data.tags) ? data.tags.join(", ") : data.tags || "",
+          authorRole: data.authorRole || "",
+          reviewedBy: data.reviewedBy || "",
+          editorialNote: data.editorialNote || "",
         });
         setImageAlt(data.imageAlt || "");
         if (data.image) { setImagePreview(data.image); setImageName("Current image"); }
@@ -330,7 +334,11 @@ export default function EditBlog() {
       try {
         await updateBlog(id, {
           heading: formData.heading.trim(), slug, category: formData.category,
-          author: formData.author, description: formData.description, excerpt,
+          author: formData.author,
+          authorRole: formData.authorRole || "",
+          reviewedBy: formData.reviewedBy || "",
+          editorialNote: formData.editorialNote || "",
+          description: formData.description, excerpt,
           date: formData.date, seoTitle: formData.seoTitle.trim(),
           seoDescription: formData.seoDescription || excerpt,
           image: imageUrl, imageAlt: imageAlt.trim(), status,
@@ -431,6 +439,29 @@ export default function EditBlog() {
               <Field label="Tags" icon={<Hash className="w-3.5 h-3.5" />} hint="Comma separated topics for search, archives, and recommendations.">
                 <Input name="tags" placeholder="pdf tools, productivity, students" value={formData.tags || ""}
                   onChange={(e) => setFormData((p) => ({ ...p, tags: e.target.value }))} />
+              </Field>
+            </Section>
+
+            <Section title="Trust Metadata">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <Field label="Author Role" icon={<User className="w-3.5 h-3.5" />} hint="Shown under the author name on public blogs.">
+                  <Input name="authorRole" placeholder="AltFTool Editorial, Travel Writer..." value={formData.authorRole || ""}
+                    onChange={(e) => setFormData((p) => ({ ...p, authorRole: e.target.value }))} />
+                </Field>
+                <Field label="Reviewed By" icon={<ShieldCheck className="w-3.5 h-3.5" />} hint="Shown in the editorial review badge.">
+                  <Input name="reviewedBy" placeholder="AltFTool Editorial Team" value={formData.reviewedBy || ""}
+                    onChange={(e) => setFormData((p) => ({ ...p, reviewedBy: e.target.value }))} />
+                </Field>
+              </div>
+              <Field label="Editorial Note" icon={<Info className="w-3.5 h-3.5" />} hint="Optional trust note shown in the About this guide card.">
+                <textarea
+                  name="editorialNote"
+                  rows={3}
+                  value={formData.editorialNote || ""}
+                  onChange={(e) => setFormData((p) => ({ ...p, editorialNote: e.target.value }))}
+                  placeholder="Reviewed for accuracy, freshness, and practical usefulness..."
+                  className="w-full text-sm px-3 py-2.5 rounded-xl border border-gray-200 bg-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-400/30 focus:border-blue-400 transition resize-none"
+                />
               </Field>
             </Section>
 

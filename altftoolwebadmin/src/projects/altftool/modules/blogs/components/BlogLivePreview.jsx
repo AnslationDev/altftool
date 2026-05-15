@@ -80,6 +80,7 @@ export default function BlogLivePreview({
     const heading = formData.heading?.trim() || "Untitled blog preview";
     const category = formData.category?.trim() || "Category";
     const author = formData.author?.trim() || "AltFTool Editorial";
+    const authorRole = formData.authorRole?.trim() || "Editorial";
     const plainContent = stripHtml(formData.description || "");
     const wordCount = plainContent ? plainContent.split(/\s+/).filter(Boolean).length : 0;
     const readTime = Math.max(1, Math.ceil(wordCount / 180));
@@ -99,6 +100,7 @@ export default function BlogLivePreview({
 
     return {
       author,
+      authorRole,
       category,
       excerpt,
       heading,
@@ -188,6 +190,8 @@ export default function BlogLivePreview({
               <h3 className="mt-2 line-clamp-2 text-base font-bold leading-tight">{preview.heading}</h3>
               <div className="mt-2 flex flex-wrap items-center gap-2 text-[10px] text-white/80">
                 <span>{preview.author}</span>
+                <span className="h-1 w-1 rounded-full bg-white/35" />
+                <span>{preview.authorRole}</span>
                 <span className="h-1 w-1 rounded-full bg-white/35" />
                 <span className="inline-flex items-center gap-1">
                   <Calendar className="h-3 w-3" />

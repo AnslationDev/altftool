@@ -7,6 +7,7 @@ import {
   CalendarClock,
   Copy,
   PenLine,
+  ShieldCheck,
   Sparkles,
   UserRound,
 } from "lucide-react";
@@ -35,6 +36,8 @@ export default function BlogReaderCompanion({ blog, relatedPosts = [] }) {
   const [copied, setCopied] = useState(false);
   const nextPosts = relatedPosts.slice(0, 2);
   const updatedLabel = formatDate(blog.updatedAt || blog.date || blog.createdAt);
+  const authorRole = blog.authorRole || "AltFTool Editorial";
+  const reviewedBy = blog.reviewedBy || "AltFTool Editorial Team";
 
   const copyLink = async () => {
     await navigator.clipboard?.writeText(window.location.href);
@@ -56,8 +59,11 @@ export default function BlogReaderCompanion({ blog, relatedPosts = [] }) {
             <h2 className="mt-1 text-lg font-semibold tracking-normal text-(--foreground)">
               {blog.author || "AltFTool Editorial"}
             </h2>
+            <p className="mt-0.5 text-xs font-semibold text-(--primary)">
+              {authorRole}
+            </p>
             <p className="mt-2 text-sm leading-6 text-(--muted-foreground)">
-              {getSummary(blog)}
+              {blog.editorialNote || getSummary(blog)}
             </p>
           </div>
         </div>
@@ -71,7 +77,7 @@ export default function BlogReaderCompanion({ blog, relatedPosts = [] }) {
           <div className="rounded-[6px] border border-(--border) bg-(--background) p-3">
             <BadgeCheck className="mb-2 h-4 w-4 text-(--primary)" />
             <p className="text-[10px] font-bold uppercase tracking-wide text-(--muted-foreground)">Checked</p>
-            <p className="mt-1 text-xs font-semibold text-(--foreground)">Editorial review</p>
+            <p className="mt-1 text-xs font-semibold text-(--foreground)">{reviewedBy}</p>
           </div>
           <button
             type="button"
@@ -83,6 +89,13 @@ export default function BlogReaderCompanion({ blog, relatedPosts = [] }) {
             <p className="mt-1 text-xs font-semibold text-(--foreground)">{copied ? "Link copied" : "Copy link"}</p>
           </button>
         </div>
+        <Link
+          href="/policypages/about"
+          className="mt-3 flex items-center gap-2 rounded-[6px] bg-(--muted) px-3 py-2 text-xs font-medium text-(--muted-foreground) transition hover:text-(--primary)"
+        >
+          <ShieldCheck className="h-3.5 w-3.5 text-(--primary)" />
+          Editorial standards, review process, and trust policy
+        </Link>
       </div>
 
       <div className="rounded-[var(--anslation-ds-radius)] border border-(--border) bg-(--card) p-4 shadow-[var(--anslation-ds-shadow-sm)]">

@@ -31,6 +31,7 @@ import BlogTableOfContents from "../components/slug/BlogTableOfContents";
 import BlogReadingProgress from "../components/slug/BlogReadingProgress";
 import BlogArticleEnhancements from "../components/slug/BlogArticleEnhancements";
 import BlogReaderCompanion from "../components/slug/BlogReaderCompanion";
+import BlogFeedback from "../components/slug/BlogFeedback";
 import BlogRelatedTools from "../components/slug/BlogRelatedTools";
 import BlogCard from "../components/BlogCard";
 import { getRelatedToolsForBlog } from "../utils/relatedTools";
@@ -269,6 +270,7 @@ export default function BlogDetailClient({ slug, initialBlog, initialRelated, in
               blog={blog}
               tools={relatedTools}
             />
+            <BlogFeedback blog={blog} />
             <BlogArticleEnhancements
               blog={blog}
               relatedPosts={similarPosts}
