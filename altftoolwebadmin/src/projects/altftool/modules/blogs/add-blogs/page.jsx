@@ -18,9 +18,11 @@ import {
   ImageIcon, UploadCloud, Trash2, Globe, Save,
   AlertCircle, CheckCircle2, Loader2, Info, Clock,
   WifiOff, RefreshCw, AlertTriangle, ALargeSmall,
+  Hash,
 } from "lucide-react";
 import CTAButtonPicker from "../components/CtaButtonPicker";
 import FAQPicker from "../components/FAQCreator";
+import BlogSeoChecklist, { parseBlogTags } from "../components/BlogSeoChecklist";
 
 const BlogEditor = dynamic(() => import("../components/BlogEditor"), { ssr: false });
 
@@ -193,6 +195,7 @@ export default function AddBlog() {
   const [formData, setFormData] = useState({
     heading: "", category: "", author: "", date: "",
     description: "", seoTitle: "", seoDescription: "",
+    tags: "",
   });
   const [seoEdited, setSeoEdited]             = useState({ title: false, description: false });
   const [categories, setCategories]           = useState([]);
@@ -242,7 +245,7 @@ export default function AddBlog() {
         const parsed = JSON.parse(saved);
         const hasContent = parsed.formData && Object.values(parsed.formData).some((v) => v && v.trim && v.trim() !== "");
         if (hasContent) {
-          setFormData(parsed.formData || {});
+          setFormData((prev) => ({ ...prev, ...(parsed.formData || {}), tags: parsed.formData?.tags || "" }));
           setImagePreview(parsed.imagePreview || "");
           setImageName(parsed.imageName || "");
           setImageAlt(parsed.imageAlt || "");
@@ -377,6 +380,7 @@ export default function AddBlog() {
           seoDescription: formData.seoDescription || excerpt,
           image: "", imageAlt: imageAlt.trim(),
           views: 0, status: "published",
+          tags: parseBlogTags(formData.tags),
         });
       } catch (err) {
         const msg = getFriendlyError(err, "firestore");
@@ -460,6 +464,7 @@ export default function AddBlog() {
         seoTitle: formData.seoTitle || "", seoDescription: formData.seoDescription || "",
         image: "", imageAlt: imageAlt.trim(),
         views: 0, status: "draft",
+        tags: parseBlogTags(formData.tags),
       });
       logAuditEvent({
         module: "blogs", action: "BLOG_DRAFT_CREATE", entityType: "blog", entityId: draftRef.id,
@@ -481,7 +486,7 @@ export default function AddBlog() {
   /* ── Discard draft ── */
   const handleDiscardDraft = () => {
     setShowDraftBanner(false);
-    setFormData({ heading: "", category: "", author: "", date: "", description: "", seoTitle: "", seoDescription: "" });
+    setFormData({ heading: "", category: "", author: "", date: "", description: "", seoTitle: "", seoDescription: "", tags: "" });
     setImagePreview(""); setImageName(""); setImageFile(null); setImageAlt(""); setDraftSavedAt(null);
     try { localStorage.removeItem(DRAFT_KEY); } catch (_) {}
     emitAlert({ type: "info", message: "Draft discarded. Starting fresh." });
@@ -570,6 +575,9 @@ export default function AddBlog() {
                   {errors.category && (
                     <p className="flex items-center gap-1 text-xs text-red-500 font-medium mt-1"><AlertCircle className="w-3 h-3" />{errors.category}</p>
                   )}
+                </Field>
+                <Field label="Tags" icon={<Hash className="w-3.5 h-3.5" />} hint="Comma separated topics. Example: pdf tools, productivity, students">
+                  <Input name="tags" placeholder="Add 3-6 search-friendly tags..." value={formData.tags || ""} onChange={handleChange} />
                 </Field>
               </Section>
 
@@ -729,28 +737,11 @@ export default function AddBlog() {
                 <input ref={fileInputRef} type="file" accept="image/*" onChange={(e) => processFile(e.target.files[0])} className="hidden" />
               </div>
 
-              {/* Checklist */}
-              <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5 space-y-2.5">
-                <h2 className="text-xs font-black text-gray-400 uppercase tracking-widest mb-1">Checklist</h2>
-                {[
-                  { label: "Heading",                  done: !!formData.heading.trim() },
-                  { label: "Author",                   done: !!formData.author.trim() },
-                  { label: "Category",                 done: !!formData.category.trim() },
-                  { label: "Date",                     done: !!formData.date },
-                  { label: "Content",                  done: !!formData.description },
-                  { label: "Meta Title (50–60 chars)", done: seoTitleStatus.ok },
-                  { label: "SEO Description",          done: !!formData.seoDescription.trim() },
-                  { label: "Featured Image",           done: !!(imageFile || imagePreview) },
-                  { label: "Image Alt Text",           done: !!(imageFile || imagePreview) && altOk },
-                ].map(({ label, done }) => (
-                  <div key={label} className="flex items-center justify-between text-xs">
-                    <span className={done ? "text-gray-600" : "text-gray-400"}>{label}</span>
-                    <span className={`w-4 h-4 rounded-full flex items-center justify-center ${done ? "bg-green-100" : "bg-gray-100"}`}>
-                      {done ? <CheckCircle2 className="w-3 h-3 text-green-600" /> : <span className="w-1.5 h-1.5 rounded-full bg-gray-300" />}
-                    </span>
-                  </div>
-                ))}
-              </div>
+              <BlogSeoChecklist
+                formData={formData}
+                imageAlt={imageAlt}
+                hasImage={Boolean(imageFile || imagePreview)}
+              />
 
             </div>
           </div>

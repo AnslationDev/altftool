@@ -17,8 +17,10 @@ import {
   Search, FileText, ImageIcon, UploadCloud, Trash2,
   CheckCircle2, Loader2, AlertCircle, Eye,
   Info, WifiOff, AlertTriangle, ALargeSmall,
+  Hash,
 } from "lucide-react";
 import CTAButtonPicker from "../../components/CtaButtonPicker";
+import BlogSeoChecklist, { parseBlogTags } from "../../components/BlogSeoChecklist";
 
 const BlogEditor = dynamic(() => import("../../components/BlogEditor"), { ssr: false });
 
@@ -160,6 +162,7 @@ export default function EditBlog() {
   const [formData, setFormData] = useState({
     heading: "", category: "", author: "", date: "",
     description: "", seoTitle: "", seoDescription: "", image: "", status: "draft",
+    tags: "",
   });
   const [imageAlt, setImageAlt]           = useState("");
   const [imageFile, setImageFile]         = useState(null);
@@ -189,6 +192,7 @@ export default function EditBlog() {
           heading: data.heading || "", category: data.category || "", author: data.author || "",
           date: data.date || "", description: data.description || "", seoTitle: data.seoTitle || "",
           seoDescription: data.seoDescription || "", image: data.image || "", status: data.status || "draft",
+          tags: Array.isArray(data.tags) ? data.tags.join(", ") : data.tags || "",
         });
         setImageAlt(data.imageAlt || "");
         if (data.image) { setImagePreview(data.image); setImageName("Current image"); }
@@ -305,6 +309,7 @@ export default function EditBlog() {
           date: formData.date, seoTitle: formData.seoTitle.trim(),
           seoDescription: formData.seoDescription || excerpt,
           image: imageUrl, imageAlt: imageAlt.trim(), status,
+          tags: parseBlogTags(formData.tags),
         });
       } catch (err) {
         const msg = getFriendlyError(err, "firestore");
@@ -398,6 +403,10 @@ export default function EditBlog() {
               <Field label="Category" icon={<FileText className="w-3.5 h-3.5" />}>
                 <CategorySelector value={formData.category} onChange={(v) => setFormData((p) => ({ ...p, category: v }))} />
               </Field>
+              <Field label="Tags" icon={<Hash className="w-3.5 h-3.5" />} hint="Comma separated topics for search, archives, and recommendations.">
+                <Input name="tags" placeholder="pdf tools, productivity, students" value={formData.tags || ""}
+                  onChange={(e) => setFormData((p) => ({ ...p, tags: e.target.value }))} />
+              </Field>
             </Section>
 
             <Section title="Button Picker"><CTAButtonPicker /></Section>
@@ -486,6 +495,12 @@ export default function EditBlog() {
                 <p className="text-xs text-blue-600">Slug is auto-generated from the heading on save.</p>
               </div>
             </div>
+
+            <BlogSeoChecklist
+              formData={formData}
+              imageAlt={imageAlt}
+              hasImage={Boolean(imageFile || imagePreview)}
+            />
 
             {/* Image card */}
             <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5 space-y-3">

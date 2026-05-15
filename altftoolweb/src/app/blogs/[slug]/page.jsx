@@ -70,7 +70,7 @@ export async function generateMetadata({ params }) {
     title,
     description,
     path: `/blogs/${slug}`,
-    image: blog.image,
+    image: `/blogs/${slug}/opengraph-image`,
     keywords: [
       "AltFTool blog",
       blog.category,

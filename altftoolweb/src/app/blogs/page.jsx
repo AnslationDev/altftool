@@ -22,6 +22,7 @@ import {
   getBlogCategories,
   getBlogStats,
   getFeaturedBlogGroups,
+  getTrendingBlogs,
 } from "./data";
 import { getFirebaseBlogCatalog } from "./data/firebaseBlogs";
 import {
@@ -200,6 +201,7 @@ export default async function BlogsPage() {
   const categories = getBlogCategories(posts);
   const stats = getBlogStats(posts);
   const groups = getFeaturedBlogGroups(posts);
+  const trendingPosts = getTrendingBlogs(posts, 5);
   const totalCount = Math.max(firebaseCatalog.count, posts.length);
 
   return (
@@ -247,7 +249,7 @@ export default async function BlogsPage() {
 
           <div className="grid grid-cols-1 gap-4 xl:grid-cols-[minmax(0,1fr)_360px]">
             <HeroArticle post={groups.hero} />
-            <TrendingRail posts={groups.side} />
+            <TrendingRail posts={trendingPosts} />
           </div>
         </section>
 

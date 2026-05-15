@@ -197,6 +197,42 @@ export function getAllBlogTags(posts = blogPosts) {
   return [...new Set(tags.filter(Boolean))].sort((a, b) => a.localeCompare(b));
 }
 
+function getNumericMetric(post = {}, keys = []) {
+  const key = keys.find((metricKey) => post[metricKey] !== undefined);
+  return Number(post[key]) || 0;
+}
+
+export function getBlogPopularityScore(post = {}) {
+  const views = getNumericMetric(post, ["views", "viewCount", "totalViews"]);
+  const likes = getNumericMetric(post, ["likesCount", "likes", "reactions"]);
+  const comments = getNumericMetric(post, ["commentsCount", "commentCount", "comments"]);
+  const dateTime = Date.parse(post.date || post.updatedAt || post.createdAt || "");
+  const daysOld = dateTime
+    ? Math.max(0, (Date.now() - dateTime) / (1000 * 60 * 60 * 24))
+    : 90;
+  const recencyBoost = Math.max(0, 45 - Math.min(daysOld, 45));
+
+  return views + likes * 12 + comments * 18 + recencyBoost;
+}
+
+export function getTrendingBlogs(posts = blogPosts, limit = 6) {
+  return [...posts]
+    .map((post, index) => ({
+      post,
+      index,
+      score: getBlogPopularityScore(post),
+    }))
+    .sort((a, b) => {
+      if (b.score !== a.score) return b.score - a.score;
+      const dateA = Date.parse(a.post.date || "") || 0;
+      const dateB = Date.parse(b.post.date || "") || 0;
+      if (dateB !== dateA) return dateB - dateA;
+      return a.index - b.index;
+    })
+    .slice(0, limit)
+    .map(({ post }) => post);
+}
+
 export function getBlogTagBySlug(tagSlug, posts = blogPosts) {
   return (
     getAllBlogTags(posts).find((tag) => blogTaxonomySlug(tag) === tagSlug) ||

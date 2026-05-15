@@ -8,10 +8,12 @@ import {
   CheckCircle2,
   ChevronDown,
   Clock3,
+  Hash,
   Loader2,
   Search,
   SlidersHorizontal,
   Sparkles,
+  TrendingUp,
   X,
 } from "lucide-react";
 import {
@@ -33,6 +35,7 @@ import {
 const INITIAL_VISIBLE_COUNT = 36;
 const SORT_OPTIONS = [
   { value: "latest", label: "Latest" },
+  { value: "trending", label: "Trending" },
   { value: "quick", label: "Quick reads" },
   { value: "category", label: "Category" },
 ];
@@ -58,7 +61,39 @@ function getCategoryCounts(posts) {
   }, {});
 }
 
+function getTagCounts(posts) {
+  return posts.reduce((acc, post) => {
+    const tags = Array.isArray(post.tags) ? post.tags : [];
+    tags.forEach((tag) => {
+      if (!tag) return;
+      acc[tag] = (acc[tag] || 0) + 1;
+    });
+    return acc;
+  }, {});
+}
+
+function getPopularityScore(post = {}) {
+  const views = Number(post.views || post.viewCount || post.totalViews || 0);
+  const likes = Number(post.likesCount || post.likes || post.reactions || 0);
+  const comments = Number(post.commentsCount || post.commentCount || post.comments || 0);
+  const dateTime = Date.parse(post.date || post.updatedAt || post.createdAt || "");
+  const daysOld = dateTime
+    ? Math.max(0, (Date.now() - dateTime) / (1000 * 60 * 60 * 24))
+    : 90;
+  const recencyBoost = Math.max(0, 45 - Math.min(daysOld, 45));
+
+  return views + likes * 12 + comments * 18 + recencyBoost;
+}
+
 function sortPosts(posts, sortMode) {
+  if (sortMode === "trending") {
+    return [...posts].sort((a, b) => {
+      const scoreDiff = getPopularityScore(b) - getPopularityScore(a);
+      if (scoreDiff !== 0) return scoreDiff;
+      return Date.parse(b.date || "") - Date.parse(a.date || "");
+    });
+  }
+
   if (sortMode === "quick") {
     return [...posts].sort((a, b) => a.readTimeMinutes - b.readTimeMinutes);
   }
@@ -125,6 +160,52 @@ function CategoryTabs({ categories, counts, activeCategory, onChange }) {
   );
 }
 
+function TagChips({ tags, counts, activeTag, onChange }) {
+  if (!tags.length) return null;
+
+  return (
+    <div className="relative -mx-3 overflow-x-auto px-3 pb-1">
+      <div className="flex min-w-max items-center gap-2">
+        <button
+          type="button"
+          onClick={() => onChange("All")}
+          className={cx(
+            "inline-flex h-8 items-center gap-1.5 rounded-[6px] border px-2.5 text-[11px] font-semibold transition",
+            activeTag === "All"
+              ? "border-(--primary) bg-(--primary) text-(--primary-foreground)"
+              : "border-(--border) bg-(--card) text-(--muted-foreground) hover:border-(--primary) hover:text-(--foreground)",
+          )}
+        >
+          <Hash className="h-3 w-3" />
+          All tags
+        </button>
+        {tags.map((tag) => {
+          const active = tag === activeTag;
+          return (
+            <button
+              key={tag}
+              type="button"
+              onClick={() => onChange(tag)}
+              className={cx(
+                "inline-flex h-8 items-center gap-1.5 rounded-[6px] border px-2.5 text-[11px] font-semibold transition",
+                active
+                  ? "border-(--primary) bg-(--primary) text-(--primary-foreground)"
+                  : "border-(--border) bg-(--card) text-(--muted-foreground) hover:border-(--primary) hover:text-(--foreground)",
+              )}
+            >
+              <Hash className="h-3 w-3" />
+              {tag}
+              <span className={cx("rounded-full px-1.5 py-0.5 text-[10px]", active ? "bg-white/15" : "bg-(--muted)")}>
+                {counts[tag] || 0}
+              </span>
+            </button>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
 function SortSelect({ value, onChange }) {
   return (
     <label className="relative inline-flex h-10 min-w-[142px] items-center rounded-[var(--anslation-ds-radius)] border border-(--border) bg-(--card) px-3 text-xs font-semibold text-(--muted-foreground)">
@@ -153,7 +234,7 @@ function SearchControl({ value, onChange, onClear, pending }) {
       <input
         value={value}
         onChange={(event) => onChange(event.target.value)}
-        placeholder="Search tools, guides, coupons, student picks..."
+        placeholder="Search title, tags, category, tools..."
         className="h-10 w-full rounded-[var(--anslation-ds-radius)] border border-(--border) bg-(--card) px-9 text-sm text-(--foreground) outline-none transition placeholder:text-(--muted-foreground) focus:border-(--primary) focus:ring-2 focus:ring-(--primary)/15"
       />
       {pending ? (
@@ -174,6 +255,7 @@ function SearchControl({ value, onChange, onClear, pending }) {
 
 function BlogPostCard({ post, index }) {
   const priority = index < 3;
+  const tags = Array.isArray(post.tags) ? post.tags.filter(Boolean).slice(0, 3) : [];
 
   return (
     <article className="group h-full overflow-hidden rounded-[var(--anslation-ds-radius-lg)] border border-(--border) bg-(--card) shadow-[var(--anslation-ds-shadow-sm)] transition duration-200 hover:-translate-y-0.5 hover:border-(--primary)/45 hover:shadow-[var(--anslation-ds-shadow-md)]">
@@ -209,6 +291,19 @@ function BlogPostCard({ post, index }) {
           <p className="line-clamp-2 text-sm leading-6 text-(--muted-foreground)">
             {post.excerpt}
           </p>
+
+          {tags.length > 0 ? (
+            <div className="flex flex-wrap gap-1.5">
+              {tags.map((tag) => (
+                <span
+                  key={tag}
+                  className="inline-flex h-6 items-center rounded-[6px] border border-(--border) bg-(--background) px-2 text-[10px] font-semibold text-(--muted-foreground)"
+                >
+                  {tag}
+                </span>
+              ))}
+            </div>
+          ) : null}
 
           <div className="mt-auto flex items-center justify-between gap-3 pt-1">
             <span className="truncate text-xs font-medium text-(--muted-foreground)">
@@ -290,11 +385,13 @@ export default function BlogExplorerClient({
 
   const urlQuery = searchParams.get("q") || "";
   const urlCategory = searchParams.get("category") || "All";
+  const urlTag = searchParams.get("tag") || "All";
   const urlSort = searchParams.get("sort") || "latest";
 
   const [posts, setPosts] = useState(() => initialPosts.map((post, index) => normalizeBlog(post, index)));
   const [query, setQuery] = useState(urlQuery);
   const [activeCategory, setActiveCategory] = useState(urlCategory);
+  const [activeTag, setActiveTag] = useState(urlTag);
   const [sortMode, setSortMode] = useState(urlSort);
   const [visibleCount, setVisibleCount] = useState(INITIAL_VISIBLE_COUNT);
   const [syncState, setSyncState] = useState("idle");
@@ -371,18 +468,37 @@ export default function BlogExplorerClient({
   }, [initialCategories, posts]);
 
   const counts = useMemo(() => getCategoryCounts(posts), [posts]);
+  const tagCounts = useMemo(() => getTagCounts(posts), [posts]);
+  const topTags = useMemo(() => {
+    const tags = Object.keys(tagCounts)
+      .sort((a, b) => {
+        const countDiff = tagCounts[b] - tagCounts[a];
+        return countDiff || a.localeCompare(b);
+      })
+      .slice(0, 18);
+
+    return activeTag !== "All" && !tags.includes(activeTag)
+      ? [activeTag, ...tags]
+      : tags;
+  }, [activeTag, tagCounts]);
 
   const filteredPosts = useMemo(() => {
     const categoryFiltered = activeCategory === "All"
       ? posts
       : posts.filter((post) => post.category === activeCategory);
 
+    const tagFiltered = activeTag === "All"
+      ? categoryFiltered
+      : categoryFiltered.filter((post) =>
+          (Array.isArray(post.tags) ? post.tags : []).includes(activeTag)
+        );
+
     const queryFiltered = deferredQuery
-      ? categoryFiltered.filter((post) => post.searchText.includes(deferredQuery))
-      : categoryFiltered;
+      ? tagFiltered.filter((post) => post.searchText.includes(deferredQuery))
+      : tagFiltered;
 
     return sortPosts(queryFiltered, sortMode);
-  }, [activeCategory, deferredQuery, posts, sortMode]);
+  }, [activeCategory, activeTag, deferredQuery, posts, sortMode]);
 
   const visiblePosts = filteredPosts.slice(0, visibleCount);
   const hasMore = visibleCount < filteredPosts.length;
@@ -395,12 +511,13 @@ export default function BlogExplorerClient({
       updateSearchParams(router, searchParams, {
         q: query.trim(),
         category: activeCategory,
+        tag: activeTag,
         sort: sortMode,
       });
     }, 180);
 
     return () => window.clearTimeout(timeout);
-  }, [activeCategory, query, router, searchParams, sortMode]);
+  }, [activeCategory, activeTag, query, router, searchParams, sortMode]);
 
   const loadNextChunk = useCallback(() => {
     setVisibleCount((current) => Math.min(current + BLOG_CHUNK_SIZE, filteredPosts.length));
@@ -431,6 +548,20 @@ export default function BlogExplorerClient({
       updateSearchParams(router, searchParams, {
         q: query.trim(),
         category,
+        tag: activeTag,
+        sort: sortMode,
+      });
+    });
+  };
+
+  const handleTagChange = (tag) => {
+    startTransition(() => {
+      setActiveTag(tag);
+      setVisibleCount(INITIAL_VISIBLE_COUNT);
+      updateSearchParams(router, searchParams, {
+        q: query.trim(),
+        category: activeCategory,
+        tag,
         sort: sortMode,
       });
     });
@@ -443,6 +574,7 @@ export default function BlogExplorerClient({
       updateSearchParams(router, searchParams, {
         q: query.trim(),
         category: activeCategory,
+        tag: activeTag,
         sort: value,
       });
     });
@@ -459,6 +591,7 @@ export default function BlogExplorerClient({
     updateSearchParams(router, searchParams, {
       q: "",
       category: activeCategory,
+      tag: activeTag,
       sort: sortMode,
     });
   };
@@ -466,11 +599,13 @@ export default function BlogExplorerClient({
   const resetFilters = () => {
     setQuery("");
     setActiveCategory("All");
+    setActiveTag("All");
     setSortMode("latest");
     setVisibleCount(INITIAL_VISIBLE_COUNT);
     updateSearchParams(router, searchParams, {
       q: "",
       category: "All",
+      tag: "All",
       sort: "latest",
     });
   };
@@ -503,6 +638,14 @@ export default function BlogExplorerClient({
             onChange={handleCategoryChange}
           />
         </div>
+        <div className="mt-2">
+          <TagChips
+            tags={topTags}
+            counts={tagCounts}
+            activeTag={activeTag}
+            onChange={handleTagChange}
+          />
+        </div>
       </div>
 
       <div className="flex flex-col gap-3 rounded-[var(--anslation-ds-radius-lg)] border border-(--border) bg-(--card) p-4 sm:flex-row sm:items-center sm:justify-between">
@@ -521,6 +664,18 @@ export default function BlogExplorerClient({
           )}
         </div>
         <div className="flex flex-wrap items-center gap-2 text-xs font-medium text-(--muted-foreground)">
+          {sortMode === "trending" ? (
+            <span className="inline-flex h-7 items-center gap-1.5 rounded-[var(--anslation-ds-radius)] border border-(--border) bg-(--background) px-2.5">
+              <TrendingUp className="h-3.5 w-3.5 text-(--primary)" />
+              Trending first
+            </span>
+          ) : null}
+          {activeTag !== "All" ? (
+            <span className="inline-flex h-7 items-center gap-1.5 rounded-[var(--anslation-ds-radius)] border border-(--border) bg-(--background) px-2.5">
+              <Hash className="h-3.5 w-3.5 text-(--primary)" />
+              {activeTag}
+            </span>
+          ) : null}
           <span className="inline-flex h-7 items-center gap-1.5 rounded-[var(--anslation-ds-radius)] border border-(--border) bg-(--background) px-2.5">
             {syncState === "syncing" ? (
               <Loader2 className="h-3.5 w-3.5 animate-spin text-(--primary)" />
