@@ -20,6 +20,7 @@ import {
   Hash,
 } from "lucide-react";
 import CTAButtonPicker from "../../components/CtaButtonPicker";
+import BlogInternalLinkAssistant from "../../components/BlogInternalLinkAssistant";
 import BlogSeoChecklist, { parseBlogTags } from "../../components/BlogSeoChecklist";
 
 const BlogEditor = dynamic(() => import("../../components/BlogEditor"), { ssr: false });
@@ -234,6 +235,14 @@ export default function EditBlog() {
     setImageFile(null); setImagePreview(""); setImageName(""); setImageAlt("");
     setFormData((p) => ({ ...p, image: "" }));
     if (fileInputRef.current) fileInputRef.current.value = "";
+  };
+
+  const handleInsertInternalLinks = (html) => {
+    setFormData((prev) => ({
+      ...prev,
+      description: `${prev.description || ""}${prev.description?.trim() ? "\n\n" : ""}${html}`,
+    }));
+    setErrors((prev) => ({ ...prev, description: undefined }));
   };
 
   /* ── Validation ── */
@@ -500,6 +509,12 @@ export default function EditBlog() {
               formData={formData}
               imageAlt={imageAlt}
               hasImage={Boolean(imageFile || imagePreview)}
+            />
+
+            <BlogInternalLinkAssistant
+              formData={formData}
+              currentBlogId={id}
+              onInsertLinks={handleInsertInternalLinks}
             />
 
             {/* Image card */}

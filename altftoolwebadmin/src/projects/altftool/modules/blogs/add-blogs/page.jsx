@@ -22,6 +22,7 @@ import {
 } from "lucide-react";
 import CTAButtonPicker from "../components/CtaButtonPicker";
 import FAQPicker from "../components/FAQCreator";
+import BlogInternalLinkAssistant from "../components/BlogInternalLinkAssistant";
 import BlogSeoChecklist, { parseBlogTags } from "../components/BlogSeoChecklist";
 
 const BlogEditor = dynamic(() => import("../components/BlogEditor"), { ssr: false });
@@ -277,6 +278,14 @@ export default function AddBlog() {
   }, [formData, imagePreview, imageName, imageAlt]);
 
   const clearError  = (name) => setErrors((p) => ({ ...p, [name]: undefined }));
+
+  const handleInsertInternalLinks = (html) => {
+    setFormData((prev) => ({
+      ...prev,
+      description: `${prev.description || ""}${prev.description?.trim() ? "\n\n" : ""}${html}`,
+    }));
+    clearError("description");
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -741,6 +750,11 @@ export default function AddBlog() {
                 formData={formData}
                 imageAlt={imageAlt}
                 hasImage={Boolean(imageFile || imagePreview)}
+              />
+
+              <BlogInternalLinkAssistant
+                formData={formData}
+                onInsertLinks={handleInsertInternalLinks}
               />
 
             </div>

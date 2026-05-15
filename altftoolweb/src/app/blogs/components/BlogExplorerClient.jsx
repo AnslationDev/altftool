@@ -39,6 +39,7 @@ const SORT_OPTIONS = [
   { value: "quick", label: "Quick reads" },
   { value: "category", label: "Category" },
 ];
+const DEFAULT_SEARCH_SHORTCUTS = ["pdf", "image", "downloader", "calculator", "productivity", "games"];
 
 function formatDate(date) {
   if (!date) return "Recently updated";
@@ -249,6 +250,37 @@ function SearchControl({ value, onChange, onClear, pending }) {
           <X className="h-3.5 w-3.5" />
         </button>
       ) : null}
+    </div>
+  );
+}
+
+function QuickSearchPills({ shortcuts, activeQuery, onPick }) {
+  if (!shortcuts.length) return null;
+
+  return (
+    <div className="mt-3 flex flex-wrap items-center gap-2">
+      <span className="text-[11px] font-bold uppercase tracking-wide text-(--muted-foreground)">
+        Quick search
+      </span>
+      {shortcuts.map((shortcut) => {
+        const active = activeQuery === shortcut.query.toLowerCase();
+
+        return (
+          <button
+            key={shortcut.query}
+            type="button"
+            onClick={() => onPick(shortcut.query)}
+            className={cx(
+              "inline-flex h-7 items-center rounded-[6px] border px-2.5 text-[11px] font-semibold transition",
+              active
+                ? "border-(--primary) bg-(--primary) text-(--primary-foreground)"
+                : "border-(--border) bg-(--card) text-(--muted-foreground) hover:border-(--primary) hover:text-(--foreground)"
+            )}
+          >
+            {shortcut.label}
+          </button>
+        );
+      })}
     </div>
   );
 }
@@ -482,6 +514,29 @@ export default function BlogExplorerClient({
       : tags;
   }, [activeTag, tagCounts]);
 
+  const quickSearches = useMemo(() => {
+    const tagShortcuts = Object.keys(tagCounts)
+      .sort((a, b) => {
+        const countDiff = tagCounts[b] - tagCounts[a];
+        return countDiff || a.localeCompare(b);
+      })
+      .slice(0, 4)
+      .map((tag) => ({ label: tag, query: tag }));
+
+    const defaultShortcuts = DEFAULT_SEARCH_SHORTCUTS.map((query) => ({
+      label: query.replace(/\b\w/g, (char) => char.toUpperCase()),
+      query,
+    }));
+
+    return [...tagShortcuts, ...defaultShortcuts].reduce((acc, item) => {
+      const key = item.query.toLowerCase();
+      if (!acc.some((existing) => existing.query.toLowerCase() === key)) {
+        acc.push(item);
+      }
+      return acc;
+    }, []).slice(0, 8);
+  }, [tagCounts]);
+
   const filteredPosts = useMemo(() => {
     const categoryFiltered = activeCategory === "All"
       ? posts
@@ -585,6 +640,20 @@ export default function BlogExplorerClient({
     setVisibleCount(INITIAL_VISIBLE_COUNT);
   };
 
+  const handleQuickSearch = (value) => {
+    startTransition(() => {
+      setQuery(value);
+      setActiveTag("All");
+      setVisibleCount(INITIAL_VISIBLE_COUNT);
+      updateSearchParams(router, searchParams, {
+        q: value,
+        category: activeCategory,
+        tag: "All",
+        sort: sortMode,
+      });
+    });
+  };
+
   const clearQuery = () => {
     setQuery("");
     setVisibleCount(INITIAL_VISIBLE_COUNT);
@@ -630,6 +699,11 @@ export default function BlogExplorerClient({
           />
           <SortSelect value={sortMode} onChange={handleSortChange} />
         </div>
+        <QuickSearchPills
+          shortcuts={quickSearches}
+          activeQuery={deferredQuery}
+          onPick={handleQuickSearch}
+        />
         <div className="mt-3">
           <CategoryTabs
             categories={categories}
@@ -688,6 +762,16 @@ export default function BlogExplorerClient({
             <Sparkles className="h-3.5 w-3.5 text-(--primary)" />
             Fresh picks
           </span>
+          {(query || activeCategory !== "All" || activeTag !== "All" || sortMode !== "latest") && (
+            <button
+              type="button"
+              onClick={resetFilters}
+              className="inline-flex h-7 items-center gap-1.5 rounded-[var(--anslation-ds-radius)] border border-(--border) bg-(--background) px-2.5 text-xs font-semibold text-(--foreground) transition hover:border-(--primary) hover:text-(--primary)"
+            >
+              <X className="h-3.5 w-3.5" />
+              Reset
+            </button>
+          )}
           {hasMore && (
             <button
               type="button"
