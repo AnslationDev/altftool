@@ -8,7 +8,7 @@
   },
   "scripts": {
     "dev": "next dev --webpack",
-    "build": "next build",
+    "build": "node ../scripts/generate-admin-health-manifest.mjs && next build",
     "start": "next start",
     "firebase:admin-write-check": "node scripts/checkFirebaseAdminWrite.mjs",
     "firebase:admin-write-check:dry-run": "FIREBASE_ADMIN_WRITE_CHECK_MODE=dry-run node scripts/checkFirebaseAdminWrite.mjs",

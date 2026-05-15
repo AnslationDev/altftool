@@ -1,32 +1,11 @@
 import { NextResponse } from "next/server";
-import path from "node:path";
-import { promises as fs } from "node:fs";
 import { verifySuperAdminRequest } from "@/lib/adminAccess";
 import { getAdminDb, getFirebaseAdminConfigStatus } from "@/lib/firebaseAdmin";
+import { createFirebaseLiveDataReport } from "@altftool/core/firebaseLiveData";
 import { createVercelDeployReadinessReport } from "@altftool/core/deployReadiness";
-import { TOP_PRIORITY_TOOL_SLUGS, normalizeToolCategory } from "@altftool/core/toolHealth";
+import healthManifest from "@/data/healthManifest.json";
 
 export const dynamic = "force-dynamic";
-
-const TOOL_CHECKS = [
-  { key: "name", label: "Name", test: (tool) => Boolean(String(tool?.name || "").trim()) },
-  {
-    key: "description",
-    label: "Description",
-    test: (tool) => Boolean(String(tool?.description || "").trim()),
-  },
-  {
-    key: "category",
-    label: "Category",
-    test: (tool) =>
-      Array.isArray(tool?.category)
-        ? tool.category.some((category) => String(category || "").trim())
-        : Boolean(String(tool?.category || "").trim()),
-  },
-  { key: "icon", label: "Icon", test: (tool) => Boolean(String(tool?.icon || "").trim()) },
-];
-const IGNORED_TOOL_DIRS = new Set(["_toolfk-suite"]);
-const VALID_ENTRY_FILES = ["entry.js", "entry.jsx", "entry.ts", "entry.tsx"];
 
 function clampScore(score) {
   if (!Number.isFinite(score)) return 0;
@@ -51,365 +30,21 @@ function currentCommitSha() {
   );
 }
 
-function slugify(value = "") {
-  return String(value).trim().toLowerCase().replace(/\s+/g, "-");
-}
-
-async function fileExists(filePath) {
-  try {
-    const stat = await fs.stat(filePath);
-    return stat.isFile();
-  } catch {
-    return false;
-  }
-}
-
-async function readText(filePath, fallback = "") {
-  try {
-    return await fs.readFile(filePath, "utf8");
-  } catch {
-    return fallback;
-  }
-}
-
-async function readJson(filePath, fallback) {
-  try {
-    return JSON.parse(await fs.readFile(filePath, "utf8"));
-  } catch {
-    return fallback;
-  }
-}
-
-async function listDirectories(dirPath) {
-  try {
-    const entries = await fs.readdir(dirPath, { withFileTypes: true });
-    return entries
-      .filter((entry) => entry.isDirectory())
-      .map((entry) => entry.name)
-      .sort((a, b) => a.localeCompare(b));
-  } catch {
-    return [];
-  }
-}
-
-async function hasToolEntry(toolRoot, slug) {
-  const checks = await Promise.all(
-    VALID_ENTRY_FILES.map((file) => fileExists(path.join(toolRoot, slug, file))),
-  );
-  return checks.some(Boolean);
-}
-
-async function readToolMetaMap(webRoot) {
-  const source = await readText(
-    path.join(webRoot, "src/platform/registry/toolMetaMap.js"),
-  );
-  const match = source.match(/export const toolMetaMap = (\{[\s\S]*\});?\s*$/);
-
-  if (!match) {
-    throw new Error("Unable to parse tool registry.");
-  }
-
-  return JSON.parse(match[1]);
-}
-
-function getToolCategories(tool) {
-  if (!tool?.category) return [];
-  return Array.isArray(tool.category) ? tool.category : [tool.category];
-}
-
-function hasSlugReference(source, slug) {
-  return source.includes(`"${slug}"`) || source.includes(`'${slug}'`);
-}
-
-async function buildToolQuality(webRoot) {
-  const toolMetaMap = await readToolMetaMap(webRoot);
-  const toolRoot = path.join(webRoot, "src/tools");
-  const toolDirs = (await listDirectories(toolRoot)).filter(
-    (slug) => !IGNORED_TOOL_DIRS.has(slug) && !slug.startsWith("."),
-  );
-  const registrySlugs = new Set(Object.keys(toolMetaMap));
-  const directorySlugs = new Set(toolDirs);
-  const categorySlugs = new Set();
-
-  const items = await Promise.all(
-    Object.entries(toolMetaMap)
-      .sort(([a], [b]) => a.localeCompare(b))
-      .map(async ([slug, tool]) => {
-        for (const category of getToolCategories(tool)) {
-          const categorySlug = slugify(category);
-          if (categorySlug) categorySlugs.add(categorySlug);
-        }
-
-        const checks = await Promise.all([
-          ...TOOL_CHECKS.map(async (check) => ({
-            key: check.key,
-            label: check.label,
-            ok: check.test(tool),
-          })),
-          hasToolEntry(toolRoot, slug).then((ok) => ({
-            key: "entry",
-            label: "Entry component",
-            ok,
-          })),
-          fileExists(path.join(toolRoot, slug, "tool.config.js")).then((ok) => ({
-            key: "config",
-            label: "Tool config",
-            ok,
-          })),
-        ]);
-
-        const issues = checks
-          .filter((check) => !check.ok)
-          .map((check) => `${check.label} missing`);
-
-        return {
-          slug,
-          name: tool?.name || slug,
-          category: normalizeToolCategory(tool?.category),
-          score: clampScore((checks.filter((check) => check.ok).length / checks.length) * 100),
-          issues,
-        };
-      }),
-  );
-
-  const orphanToolDirs = toolDirs.filter((slug) => !registrySlugs.has(slug));
-  const registryWithoutDir = [...registrySlugs].filter((slug) => !directorySlugs.has(slug)).sort();
-  const total = items.length;
-  const healthy = items.filter((item) => item.issues.length === 0).length;
-  const averageScore = clampScore(
-    total ? items.reduce((sum, item) => sum + item.score, 0) / total : 0,
-  );
-
-  return {
-    total,
-    healthy,
-    needsAttention: total - healthy,
-    averageScore,
-    categories: categorySlugs.size,
-    directories: toolDirs.length,
-    orphanToolDirs,
-    registryWithoutDir,
-    missingEntry: items.filter((item) =>
-      item.issues.some((issue) => issue.startsWith("Entry component")),
-    ).length,
-    missingConfig: items.filter((item) =>
-      item.issues.some((issue) => issue.startsWith("Tool config")),
-    ).length,
-    missingMetadata: items.filter((item) =>
-      item.issues.some((issue) =>
-        ["Name", "Description", "Category", "Icon"].some((label) => issue.startsWith(label)),
-      ),
-    ).length,
-    topIssues: items
-      .filter((item) => item.issues.length > 0)
-      .sort((a, b) => a.score - b.score || a.slug.localeCompare(b.slug))
-      .slice(0, 12),
-  };
-}
-
-async function buildPriorityQaReadiness(workspaceRoot, webRoot) {
-  const toolMetaMap = await readToolMetaMap(webRoot);
-  const packageJson = await readJson(path.join(workspaceRoot, "package.json"), {});
-  const scripts = packageJson.scripts || {};
-  const prioritySpecPath = path.join(workspaceRoot, "tests/tool-priority.spec.mjs");
-  const functionalSpecPath = path.join(workspaceRoot, "tests/tool-functional.spec.mjs");
-  const [prioritySpecExists, functionalSpecExists, prioritySpecSource, functionalSpecSource] =
-    await Promise.all([
-      fileExists(prioritySpecPath),
-      fileExists(functionalSpecPath),
-      readText(prioritySpecPath),
-      readText(functionalSpecPath),
-    ]);
-  const usesSharedPriorityList = prioritySpecSource.includes("TOP_PRIORITY_TOOL_SLUGS");
-
-  const tools = TOP_PRIORITY_TOOL_SLUGS.map((slug, index) => {
-    const tool = toolMetaMap[slug];
-    const registered = Boolean(tool);
-    const routeCovered =
-      prioritySpecExists && registered && (usesSharedPriorityList || hasSlugReference(prioritySpecSource, slug));
-
-    return {
-      rank: index + 1,
-      slug,
-      name: tool?.name || slug,
-      category: normalizeToolCategory(tool?.category),
-      route: `/tools/all/${slug}`,
-      registered,
-      routeCovered,
-      functionalCovered: functionalSpecExists && hasSlugReference(functionalSpecSource, slug),
-    };
-  });
-
-  const total = tools.length;
-  const registered = tools.filter((tool) => tool.registered).length;
-  const routeCovered = tools.filter((tool) => tool.routeCovered).length;
-  const functionalCovered = tools.filter((tool) => tool.functionalCovered).length;
-  const routeScriptReady = Boolean(scripts["test:tools:priority"]);
-
-  const checks = [
-    {
-      key: "priorityList",
-      label: "Priority tool list",
-      detail: `${total} high-traffic tools tracked`,
-      ok: total >= 40,
-    },
-    {
-      key: "prioritySpec",
-      label: "Priority route QA spec",
-      detail: "tests/tool-priority.spec.mjs",
-      ok: prioritySpecExists,
-    },
-    {
-      key: "priorityScript",
-      label: "Priority QA script",
-      detail: "npm run test:tools:priority",
-      ok: routeScriptReady,
-    },
-    {
-      key: "registeredTools",
-      label: "Priority slugs registered",
-      detail: `${registered}/${total}`,
-      ok: registered === total,
-    },
-    {
-      key: "routeCoverage",
-      label: "Priority route coverage",
-      detail: `${routeCovered}/${total}`,
-      ok: routeCovered === total,
-    },
-    {
-      key: "functionalSpec",
-      label: "Functional regression spec",
-      detail: "tests/tool-functional.spec.mjs",
-      ok: functionalSpecExists && Boolean(scripts["test:tools:functional"]),
-    },
-  ];
-
-  return {
-    score: clampScore((checks.filter((check) => check.ok).length / checks.length) * 100),
-    total,
-    registered,
-    routeCovered,
-    functionalCovered,
-    checks,
-    tools,
-    needsAttention: tools.filter((tool) => !tool.registered || !tool.routeCovered),
-  };
-}
-
-async function buildSeoReadiness(webRoot) {
-  const checks = [
-    {
-      key: "sitemap",
-      label: "Sitemap route",
-      detail: "/sitemap.xml",
-      ok: await fileExists(path.join(webRoot, "src/app/sitemap.js")),
-    },
-    {
-      key: "robots",
-      label: "Robots route",
-      detail: "/robots.txt",
-      ok: await fileExists(path.join(webRoot, "src/app/robots.js")),
-    },
-    {
-      key: "jsonLd",
-      label: "JSON-LD component",
-      detail: "Structured data renderer",
-      ok: await fileExists(path.join(webRoot, "src/platform/seo/JsonLd.jsx")),
-    },
-    {
-      key: "metadata",
-      label: "Metadata helpers",
-      detail: "Canonical, Open Graph, Twitter",
-      ok: await fileExists(path.join(webRoot, "src/platform/seo/generateMetadata.js")),
-    },
-  ];
-
-  return {
-    score: clampScore((checks.filter((check) => check.ok).length / checks.length) * 100),
-    checks,
-  };
-}
-
-async function buildContentReadiness(webRoot) {
-  const blogsData = await readJson(path.join(webRoot, "src/app/blogs/data/blogs.json"), {});
-  const buySmartStores = await readJson(path.join(webRoot, "src/app/buysmart/data/stores.json"), []);
-  const dealData = await readJson(path.join(webRoot, "src/app/exclusivedeals/(data)/db.json"), {});
-  const newsData = await readJson(path.join(webRoot, "public/data/newsdata.json"), {});
-
-  const dealCategories = Array.isArray(dealData.categories) ? dealData.categories : [];
-  const dealBrands = dealCategories.reduce(
-    (sum, category) => sum + (Array.isArray(category.brands) ? category.brands.length : 0),
-    0,
-  );
-
-  const metrics = [
-    { key: "blogs", label: "Blog posts", value: blogsData.blogs?.length || 0, ok: (blogsData.blogs?.length || 0) > 0 },
-    { key: "buySmartStores", label: "BuySmart stores", value: buySmartStores.length || 0, ok: buySmartStores.length > 0 },
-    { key: "dealCategories", label: "Deal categories", value: dealCategories.length, ok: dealCategories.length > 0 },
-    { key: "dealBrands", label: "Deal brands", value: dealBrands, ok: dealBrands > 0 },
-    { key: "news", label: "News items", value: newsData.news?.length || 0, ok: (newsData.news?.length || 0) > 0 },
-  ];
-
-  return {
-    score: clampScore((metrics.filter((metric) => metric.ok).length / metrics.length) * 100),
-    metrics,
-  };
-}
-
-async function buildAutomationReadiness(workspaceRoot) {
-  const packageJson = await readJson(path.join(workspaceRoot, "package.json"), {});
-  const scripts = packageJson.scripts || {};
-  const checks = [
-    {
-      key: "routeAudit",
-      label: "Route audit spec",
-      detail: "tests/route-audit.spec.mjs",
-      ok: await fileExists(path.join(workspaceRoot, "tests/route-audit.spec.mjs")),
-    },
-    {
-      key: "smokeSpec",
-      label: "Smoke spec",
-      detail: "tests/smoke.spec.mjs",
-      ok: await fileExists(path.join(workspaceRoot, "tests/smoke.spec.mjs")),
-    },
-    {
-      key: "routeScript",
-      label: "Route test script",
-      detail: "npm run test:routes",
-      ok: Boolean(scripts["test:routes"]),
-    },
-    {
-      key: "fullValidation",
-      label: "Full validation script",
-      detail: "npm run validate:full",
-      ok: Boolean(scripts["validate:full"]),
-    },
-    {
-      key: "buildScripts",
-      label: "Build scripts",
-      detail: "Web and admin builds",
-      ok: Boolean(scripts["build:web"] && scripts["build:admin"]),
-    },
-  ];
-
-  return {
-    score: clampScore((checks.filter((check) => check.ok).length / checks.length) * 100),
-    checks,
-  };
-}
-
 async function buildFirebaseAdminReadiness() {
   const config = getFirebaseAdminConfigStatus();
   const checks = [
     {
       key: "projectId",
       label: "Project ID",
+      detail: config.projectId || "FIREBASE_PROJECT_ID is not configured.",
       ok: !config.missing.includes("FIREBASE_PROJECT_ID"),
     },
     {
       key: "clientEmail",
       label: "Service-account email",
+      detail: config.clientEmailConfigured
+        ? "Service-account email is configured."
+        : "FIREBASE_CLIENT_EMAIL is not configured.",
       ok:
         config.clientEmailConfigured &&
         !config.invalid.some((message) => message.includes("FIREBASE_CLIENT_EMAIL")),
@@ -417,6 +52,9 @@ async function buildFirebaseAdminReadiness() {
     {
       key: "privateKey",
       label: "Private key",
+      detail: config.privateKeyConfigured
+        ? "Private key is configured and never returned by this endpoint."
+        : "FIREBASE_PRIVATE_KEY is not configured.",
       ok:
         config.privateKeyConfigured &&
         config.privateKeyLooksComplete &&
@@ -426,6 +64,7 @@ async function buildFirebaseAdminReadiness() {
   const firestoreProbe = {
     key: "firestoreRead",
     label: "Firestore Admin SDK read",
+    detail: config.ok ? "Reading admins collection." : "Skipped until Admin SDK credentials are ready.",
     ok: false,
     skipped: !config.ok,
   };
@@ -435,27 +74,69 @@ async function buildFirebaseAdminReadiness() {
       await getAdminDb().collection("admins").limit(1).get();
       firestoreProbe.ok = true;
       firestoreProbe.skipped = false;
+      firestoreProbe.detail = "Admin SDK can read Firestore.";
     } catch (error) {
       firestoreProbe.error = error?.message || "Firestore read failed.";
+      firestoreProbe.detail = firestoreProbe.error;
       firestoreProbe.skipped = false;
     }
   }
 
   const allChecks = [...checks, firestoreProbe];
+  const score = clampScore((allChecks.filter((check) => check.ok).length / allChecks.length) * 100);
 
   return {
-    score: clampScore((allChecks.filter((check) => check.ok).length / allChecks.length) * 100),
-    status: config.ok && firestoreProbe.ok ? "ready" : "needs-config",
+    score,
+    status: config.ok && firestoreProbe.ok ? "ready" : config.ok ? "read-failed" : "needs-config",
     projectId: config.projectId,
+    adminSdkReady: config.ok,
+    firestoreReadable: firestoreProbe.ok,
     missing: config.missing,
     invalid: config.invalid,
     checks: allChecks,
   };
 }
 
-function buildVercelDeployReadiness(workspaceRoot) {
+async function buildFirebaseLiveDataReadiness() {
+  try {
+    const report = await createFirebaseLiveDataReport({
+      env: process.env,
+      timeoutMs: 4500,
+    });
+
+    return {
+      ...report,
+      passingChecks: report.checks.filter((check) => check.ok).length,
+      totalChecks: report.checks.length,
+    };
+  } catch (error) {
+    const message = error?.name === "AbortError" ? "Timed out." : error?.message || "Firebase live data check failed.";
+
+    return {
+      generatedAt: new Date().toISOString(),
+      ok: false,
+      status: "unavailable",
+      score: 0,
+      projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID || "altftool-bca36",
+      checks: [
+        {
+          key: "firebaseLiveData",
+          label: "Firebase live data",
+          detail: message,
+          error: message,
+          ok: false,
+        },
+      ],
+      sections: {},
+      failures: [message],
+      passingChecks: 0,
+      totalChecks: 1,
+    };
+  }
+}
+
+function buildVercelDeployReadiness() {
   const report = createVercelDeployReadinessReport({
-    root: workspaceRoot,
     env: process.env,
   });
   const totals = report.results.reduce(
@@ -614,7 +295,17 @@ async function buildProductionFreshness() {
   }
 }
 
-function buildRecommendations({ tools, qa, seo, content, automation, firebaseAdmin, deploy, production }) {
+function buildRecommendations({
+  tools,
+  qa,
+  seo,
+  content,
+  automation,
+  firebaseAdmin,
+  firebaseLiveData,
+  deploy,
+  production,
+}) {
   const recommendations = [];
 
   if (tools.missingEntry || tools.missingConfig) {
@@ -646,7 +337,7 @@ function buildRecommendations({ tools, qa, seo, content, automation, firebaseAdm
   }
 
   if (content.score < 100) {
-    recommendations.push("Refresh content data so blogs, stores, deals, and news all stay populated.");
+    recommendations.push("Refresh fallback content data so blogs, stores, deals, and news all stay populated.");
   }
 
   if (automation.score < 100) {
@@ -655,6 +346,10 @@ function buildRecommendations({ tools, qa, seo, content, automation, firebaseAdm
 
   if (firebaseAdmin.score < 100) {
     recommendations.push("Configure Firebase Admin service-account env vars before testing admin write actions in production.");
+  }
+
+  if (firebaseLiveData.score < 100) {
+    recommendations.push("Fix Firebase live-data reads so public content modules keep loading real Firestore data.");
   }
 
   if (deploy.score < 100) {
@@ -676,28 +371,22 @@ export async function GET(request) {
   try {
     await verifySuperAdminRequest(request);
 
-    const adminRoot = process.cwd();
-    const workspaceRoot = path.resolve(adminRoot, "..");
-    const webRoot = path.join(workspaceRoot, "altftoolweb");
-
-    const [tools, qa, seo, content, automation, firebaseAdmin, production] = await Promise.all([
-      buildToolQuality(webRoot),
-      buildPriorityQaReadiness(workspaceRoot, webRoot),
-      buildSeoReadiness(webRoot),
-      buildContentReadiness(webRoot),
-      buildAutomationReadiness(workspaceRoot),
+    const { tools, qa, seo, content, automation } = healthManifest;
+    const [firebaseAdmin, firebaseLiveData, production] = await Promise.all([
       buildFirebaseAdminReadiness(),
+      buildFirebaseLiveDataReadiness(),
       buildProductionFreshness(),
     ]);
-    const deploy = buildVercelDeployReadiness(workspaceRoot);
+    const deploy = buildVercelDeployReadiness();
 
     const overallScore = clampScore(
-      tools.averageScore * 0.25 +
-        qa.score * 0.15 +
-        seo.score * 0.1 +
-        content.score * 0.1 +
-        automation.score * 0.1 +
+      tools.averageScore * 0.22 +
+        qa.score * 0.14 +
+        seo.score * 0.08 +
+        content.score * 0.08 +
+        automation.score * 0.08 +
         firebaseAdmin.score * 0.1 +
+        firebaseLiveData.score * 0.1 +
         deploy.score * 0.1 +
         production.score * 0.1,
     );
@@ -705,6 +394,10 @@ export async function GET(request) {
 
     return NextResponse.json({
       generatedAt: new Date().toISOString(),
+      manifest: {
+        schemaVersion: healthManifest.schemaVersion,
+        generatedAt: healthManifest.generatedAt,
+      },
       overall: {
         score: overallScore,
         status,
@@ -721,6 +414,7 @@ export async function GET(request) {
       content,
       automation,
       firebaseAdmin,
+      firebaseLiveData,
       deploy,
       production,
       recommendations: buildRecommendations({
@@ -730,6 +424,7 @@ export async function GET(request) {
         content,
         automation,
         firebaseAdmin,
+        firebaseLiveData,
         deploy,
         production,
       }),

@@ -1,0 +1,565 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-05-15T03:19:36.477Z",
+  "tools": {
+    "total": 189,
+    "healthy": 189,
+    "needsAttention": 0,
+    "averageScore": 100,
+    "categories": 33,
+    "directories": 189,
+    "orphanToolDirs": [],
+    "registryWithoutDir": [],
+    "missingEntry": 0,
+    "missingConfig": 0,
+    "missingMetadata": 0,
+    "topIssues": []
+  },
+  "qa": {
+    "score": 100,
+    "total": 40,
+    "registered": 40,
+    "routeCovered": 40,
+    "functionalCovered": 40,
+    "checks": [
+      {
+        "key": "priorityList",
+        "label": "Priority tool list",
+        "detail": "40 high-traffic tools tracked",
+        "ok": true
+      },
+      {
+        "key": "prioritySpec",
+        "label": "Priority route QA spec",
+        "detail": "tests/tool-priority.spec.mjs",
+        "ok": true
+      },
+      {
+        "key": "priorityScript",
+        "label": "Priority QA script",
+        "detail": "npm run test:tools:priority",
+        "ok": true
+      },
+      {
+        "key": "registeredTools",
+        "label": "Priority slugs registered",
+        "detail": "40/40",
+        "ok": true
+      },
+      {
+        "key": "routeCoverage",
+        "label": "Priority route coverage",
+        "detail": "40/40",
+        "ok": true
+      },
+      {
+        "key": "functionalSpec",
+        "label": "Functional regression spec",
+        "detail": "tests/tool-functional.spec.mjs",
+        "ok": true
+      }
+    ],
+    "tools": [
+      {
+        "rank": 1,
+        "slug": "api-stress-estimator",
+        "name": "API STRESS ESTIMATOR",
+        "category": "Developer",
+        "route": "/tools/all/api-stress-estimator",
+        "registered": true,
+        "routeCovered": true,
+        "functionalCovered": true
+      },
+      {
+        "rank": 2,
+        "slug": "json-editor",
+        "name": "JSON Editor",
+        "category": "Developer, Data",
+        "route": "/tools/all/json-editor",
+        "registered": true,
+        "routeCovered": true,
+        "functionalCovered": true
+      },
+      {
+        "rank": 3,
+        "slug": "csv-converter",
+        "name": "CSV Converter",
+        "category": "Developer, Data",
+        "route": "/tools/all/csv-converter",
+        "registered": true,
+        "routeCovered": true,
+        "functionalCovered": true
+      },
+      {
+        "rank": 4,
+        "slug": "csv-to-json",
+        "name": "CSV to JSON",
+        "category": "Developer",
+        "route": "/tools/all/csv-to-json",
+        "registered": true,
+        "routeCovered": true,
+        "functionalCovered": true
+      },
+      {
+        "rank": 5,
+        "slug": "text-case-converter",
+        "name": "Text Case Converter",
+        "category": "Content Creation, Developer",
+        "route": "/tools/all/text-case-converter",
+        "registered": true,
+        "routeCovered": true,
+        "functionalCovered": true
+      },
+      {
+        "rank": 6,
+        "slug": "word-character-counter",
+        "name": "Word & Character Counter",
+        "category": "Content Creation, Developer",
+        "route": "/tools/all/word-character-counter",
+        "registered": true,
+        "routeCovered": true,
+        "functionalCovered": true
+      },
+      {
+        "rank": 7,
+        "slug": "url-encoder-decoder",
+        "name": "URL Encoder Decoder Tool",
+        "category": "Developer, No-Code",
+        "route": "/tools/all/url-encoder-decoder",
+        "registered": true,
+        "routeCovered": true,
+        "functionalCovered": true
+      },
+      {
+        "rank": 8,
+        "slug": "base64-to-text",
+        "name": "Base64 to Text",
+        "category": "Developer, Converter",
+        "route": "/tools/all/base64-to-text",
+        "registered": true,
+        "routeCovered": true,
+        "functionalCovered": true
+      },
+      {
+        "rank": 9,
+        "slug": "text-to-base64",
+        "name": "Text to Base64",
+        "category": "Developer, Converter",
+        "route": "/tools/all/text-to-base64",
+        "registered": true,
+        "routeCovered": true,
+        "functionalCovered": true
+      },
+      {
+        "rank": 10,
+        "slug": "base64-to-image",
+        "name": "Base64 to Image",
+        "category": "Image, Converter",
+        "route": "/tools/all/base64-to-image",
+        "registered": true,
+        "routeCovered": true,
+        "functionalCovered": true
+      },
+      {
+        "rank": 11,
+        "slug": "base64-to-pdf",
+        "name": "Base64 to PDF",
+        "category": "PDF, Converter",
+        "route": "/tools/all/base64-to-pdf",
+        "registered": true,
+        "routeCovered": true,
+        "functionalCovered": true
+      },
+      {
+        "rank": 12,
+        "slug": "file-to-base64",
+        "name": "File to Base64",
+        "category": "Converter, Developer",
+        "route": "/tools/all/file-to-base64",
+        "registered": true,
+        "routeCovered": true,
+        "functionalCovered": true
+      },
+      {
+        "rank": 13,
+        "slug": "image-to-base64",
+        "name": "Image to Base64",
+        "category": "Developer, Utility",
+        "route": "/tools/all/image-to-base64",
+        "registered": true,
+        "routeCovered": true,
+        "functionalCovered": true
+      },
+      {
+        "rank": 14,
+        "slug": "image-compressor",
+        "name": "Image Compressor",
+        "category": "Marketing, Web, Content Creation, Design",
+        "route": "/tools/all/image-compressor",
+        "registered": true,
+        "routeCovered": true,
+        "functionalCovered": true
+      },
+      {
+        "rank": 15,
+        "slug": "image-resizer",
+        "name": "Image Resizer",
+        "category": "Design, Web, Content Creation",
+        "route": "/tools/all/image-resizer",
+        "registered": true,
+        "routeCovered": true,
+        "functionalCovered": true
+      },
+      {
+        "rank": 16,
+        "slug": "image-cropper",
+        "name": "Image Cropper",
+        "category": "Design",
+        "route": "/tools/all/image-cropper",
+        "registered": true,
+        "routeCovered": true,
+        "functionalCovered": true
+      },
+      {
+        "rank": 17,
+        "slug": "pdf-merger",
+        "name": "PDF Merger Tool",
+        "category": "Web",
+        "route": "/tools/all/pdf-merger",
+        "registered": true,
+        "routeCovered": true,
+        "functionalCovered": true
+      },
+      {
+        "rank": 18,
+        "slug": "pdf-split-tool",
+        "name": "PDF Split Tool",
+        "category": "Web, Document, Business",
+        "route": "/tools/all/pdf-split-tool",
+        "registered": true,
+        "routeCovered": true,
+        "functionalCovered": true
+      },
+      {
+        "rank": 19,
+        "slug": "pdf-to-base64",
+        "name": "PDF to Base64",
+        "category": "PDF, Converter",
+        "route": "/tools/all/pdf-to-base64",
+        "registered": true,
+        "routeCovered": true,
+        "functionalCovered": true
+      },
+      {
+        "rank": 20,
+        "slug": "pdf-to-image-converter",
+        "name": "PDF to Image Converter",
+        "category": "Web",
+        "route": "/tools/all/pdf-to-image-converter",
+        "registered": true,
+        "routeCovered": true,
+        "functionalCovered": true
+      },
+      {
+        "rank": 21,
+        "slug": "svg-to-image",
+        "name": "SVG to Image",
+        "category": "Design, Converter",
+        "route": "/tools/all/svg-to-image",
+        "registered": true,
+        "routeCovered": true,
+        "functionalCovered": true
+      },
+      {
+        "rank": 22,
+        "slug": "qr-generator",
+        "name": "QR Generator",
+        "category": "Web",
+        "route": "/tools/all/qr-generator",
+        "registered": true,
+        "routeCovered": true,
+        "functionalCovered": true
+      },
+      {
+        "rank": 23,
+        "slug": "password-generator",
+        "name": "Password Generator",
+        "category": "Cybersecurity Tool, Utility",
+        "route": "/tools/all/password-generator",
+        "registered": true,
+        "routeCovered": true,
+        "functionalCovered": true
+      },
+      {
+        "rank": 24,
+        "slug": "regex-tester",
+        "name": "Regex Tester",
+        "category": "Developer, AI, Web",
+        "route": "/tools/all/regex-tester",
+        "registered": true,
+        "routeCovered": true,
+        "functionalCovered": true
+      },
+      {
+        "rank": 25,
+        "slug": "jwt-decoder",
+        "name": "JWT Decoder",
+        "category": "Developer",
+        "route": "/tools/all/jwt-decoder",
+        "registered": true,
+        "routeCovered": true,
+        "functionalCovered": true
+      },
+      {
+        "rank": 26,
+        "slug": "diff-checker",
+        "name": "Diff Checker",
+        "category": "Developer",
+        "route": "/tools/all/diff-checker",
+        "registered": true,
+        "routeCovered": true,
+        "functionalCovered": true
+      },
+      {
+        "rank": 27,
+        "slug": "markdown-preview",
+        "name": "Markdown Preview",
+        "category": "Developer",
+        "route": "/tools/all/markdown-preview",
+        "registered": true,
+        "routeCovered": true,
+        "functionalCovered": true
+      },
+      {
+        "rank": 28,
+        "slug": "markdown-html-converter",
+        "name": "Markdown / HTML Converter",
+        "category": "Developer, Content Creation",
+        "route": "/tools/all/markdown-html-converter",
+        "registered": true,
+        "routeCovered": true,
+        "functionalCovered": true
+      },
+      {
+        "rank": 29,
+        "slug": "html-to-markdown-converter",
+        "name": "HTML to Markdown Converter",
+        "category": "Developer, Web, Content Creation",
+        "route": "/tools/all/html-to-markdown-converter",
+        "registered": true,
+        "routeCovered": true,
+        "functionalCovered": true
+      },
+      {
+        "rank": 30,
+        "slug": "color-contrast-checker",
+        "name": "Color Contrast Checker",
+        "category": "Design, Developer",
+        "route": "/tools/all/color-contrast-checker",
+        "registered": true,
+        "routeCovered": true,
+        "functionalCovered": true
+      },
+      {
+        "rank": 31,
+        "slug": "gradient-generator",
+        "name": "Gradient Generator",
+        "category": "Design",
+        "route": "/tools/all/gradient-generator",
+        "registered": true,
+        "routeCovered": true,
+        "functionalCovered": true
+      },
+      {
+        "rank": 32,
+        "slug": "barcode-generator",
+        "name": "Barcode Generator",
+        "category": "Web",
+        "route": "/tools/all/barcode-generator",
+        "registered": true,
+        "routeCovered": true,
+        "functionalCovered": true
+      },
+      {
+        "rank": 33,
+        "slug": "uuid-generator",
+        "name": "UUID Generator",
+        "category": "Developer",
+        "route": "/tools/all/uuid-generator",
+        "registered": true,
+        "routeCovered": true,
+        "functionalCovered": true
+      },
+      {
+        "rank": 34,
+        "slug": "unix-timestamp-converter",
+        "name": "Unix Timestamp Converter",
+        "category": "Developer",
+        "route": "/tools/all/unix-timestamp-converter",
+        "registered": true,
+        "routeCovered": true,
+        "functionalCovered": true
+      },
+      {
+        "rank": 35,
+        "slug": "unit-converter",
+        "name": "Unit Converter",
+        "category": "Web, Developer, Lifestyle",
+        "route": "/tools/all/unit-converter",
+        "registered": true,
+        "routeCovered": true,
+        "functionalCovered": true
+      },
+      {
+        "rank": 36,
+        "slug": "percentage-calculator",
+        "name": "Percentage Calculator",
+        "category": "Business, Calculator, Finance",
+        "route": "/tools/all/percentage-calculator",
+        "registered": true,
+        "routeCovered": true,
+        "functionalCovered": true
+      },
+      {
+        "rank": 37,
+        "slug": "gst-calculator",
+        "name": "GST Calculator",
+        "category": "Business, Calculator, Finance",
+        "route": "/tools/all/gst-calculator",
+        "registered": true,
+        "routeCovered": true,
+        "functionalCovered": true
+      },
+      {
+        "rank": 38,
+        "slug": "loan-emi-calculator",
+        "name": "Loan EMI Calculator",
+        "category": "Business",
+        "route": "/tools/all/loan-emi-calculator",
+        "registered": true,
+        "routeCovered": true,
+        "functionalCovered": true
+      },
+      {
+        "rank": 39,
+        "slug": "sip-calculator",
+        "name": "SIP Calculator",
+        "category": "Business, Calculator, Finance",
+        "route": "/tools/all/sip-calculator",
+        "registered": true,
+        "routeCovered": true,
+        "functionalCovered": true
+      },
+      {
+        "rank": 40,
+        "slug": "bmi-calculator",
+        "name": "BMI Calculator",
+        "category": "Fitness",
+        "route": "/tools/all/bmi-calculator",
+        "registered": true,
+        "routeCovered": true,
+        "functionalCovered": true
+      }
+    ],
+    "needsAttention": []
+  },
+  "seo": {
+    "score": 100,
+    "checks": [
+      {
+        "key": "sitemap",
+        "label": "Sitemap route",
+        "detail": "/sitemap.xml",
+        "ok": true
+      },
+      {
+        "key": "robots",
+        "label": "Robots route",
+        "detail": "/robots.txt",
+        "ok": true
+      },
+      {
+        "key": "jsonLd",
+        "label": "JSON-LD component",
+        "detail": "Structured data renderer",
+        "ok": true
+      },
+      {
+        "key": "metadata",
+        "label": "Metadata helpers",
+        "detail": "Canonical, Open Graph, Twitter",
+        "ok": true
+      }
+    ]
+  },
+  "content": {
+    "score": 100,
+    "metrics": [
+      {
+        "key": "blogs",
+        "label": "Blog posts",
+        "value": 31,
+        "ok": true
+      },
+      {
+        "key": "buySmartStores",
+        "label": "BuySmart stores",
+        "value": 5,
+        "ok": true
+      },
+      {
+        "key": "dealCategories",
+        "label": "Deal categories",
+        "value": 12,
+        "ok": true
+      },
+      {
+        "key": "dealBrands",
+        "label": "Deal brands",
+        "value": 30,
+        "ok": true
+      },
+      {
+        "key": "news",
+        "label": "News items",
+        "value": 10,
+        "ok": true
+      }
+    ]
+  },
+  "automation": {
+    "score": 100,
+    "checks": [
+      {
+        "key": "routeAudit",
+        "label": "Route audit spec",
+        "detail": "tests/route-audit.spec.mjs",
+        "ok": true
+      },
+      {
+        "key": "smokeSpec",
+        "label": "Smoke spec",
+        "detail": "tests/smoke.spec.mjs",
+        "ok": true
+      },
+      {
+        "key": "routeScript",
+        "label": "Route test script",
+        "detail": "npm run test:routes",
+        "ok": true
+      },
+      {
+        "key": "fullValidation",
+        "label": "Full validation script",
+        "detail": "npm run validate:full",
+        "ok": true
+      },
+      {
+        "key": "buildScripts",
+        "label": "Build scripts",
+        "detail": "Web and admin builds",
+        "ok": true
+      }
+    ]
+  }
+}

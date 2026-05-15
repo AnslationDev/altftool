@@ -92,6 +92,16 @@ test.describe("admin API safety", () => {
         checks: expect.any(Array),
         missing: expect.any(Array),
         invalid: expect.any(Array),
+        firestoreReadable: expect.any(Boolean),
+      }),
+    );
+    expect(payload.firebaseLiveData).toEqual(
+      expect.objectContaining({
+        checks: expect.any(Array),
+        failures: expect.any(Array),
+        sections: expect.any(Object),
+        status: expect.any(String),
+        totalChecks: expect.any(Number),
       }),
     );
     expect(payload.qa).toEqual(
@@ -118,6 +128,7 @@ test.describe("admin API safety", () => {
       }),
     );
     expect(JSON.stringify(payload.firebaseAdmin)).not.toContain("PRIVATE KEY-----");
+    expect(JSON.stringify(payload.firebaseLiveData)).not.toContain("PRIVATE KEY-----");
     expect(JSON.stringify(payload.deploy)).not.toContain("dummy");
   });
 });

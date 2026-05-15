@@ -8,6 +8,7 @@
     "./buysmart": "./src/buysmart.js",
     "./deployReadiness": "./src/deployReadiness.js",
     "./env": "./src/env.js",
+    "./firebaseLiveData": "./src/firebaseLiveData.js",
     "./firebaseContent": "./src/firebaseContent.js",
     "./firebasePaths": "./src/firebasePaths.js",
     "./http": "./src/http.js",
