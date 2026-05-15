@@ -9,6 +9,7 @@ import {
   ExternalLink,
   ChevronDown,
   ChevronUp,
+  Plus,
   Smile,
 } from "lucide-react";
 
@@ -109,7 +110,7 @@ function CopyButton({ html }) {
 /* ─────────────────────────────────────────────
    VARIANT CARD
 ───────────────────────────────────────────── */
-function VariantCard({ variant, href, customText, iconOverride }) {
+function VariantCard({ variant, href, customText, iconOverride, onInsert }) {
   const [expanded, setExpanded] = useState(false);
 
   const icon =
@@ -143,6 +144,16 @@ function VariantCard({ variant, href, customText, iconOverride }) {
               <ChevronDown className="w-3.5 h-3.5" />
             )}
           </button>
+          {typeof onInsert === "function" ? (
+            <button
+              type="button"
+              onClick={() => onInsert(html)}
+              className="flex items-center gap-1.5 rounded-lg bg-blue-600 px-3 py-1.5 text-xs font-semibold text-white transition hover:bg-blue-700"
+            >
+              <Plus className="h-3 w-3" />
+              Insert
+            </button>
+          ) : null}
           <CopyButton html={html} />
         </div>
       </div>
@@ -162,7 +173,7 @@ function VariantCard({ variant, href, customText, iconOverride }) {
 /* ─────────────────────────────────────────────
    MAIN COMPONENT — CTAButtonPicker
 ───────────────────────────────────────────── */
-export default function CTAButtonPicker({ trigger }) {
+export default function CTAButtonPicker({ trigger, onInsert }) {
   const [open, setOpen] = useState(false);
   const [href, setHref] = useState("https://");
   const [customText, setCustomText] = useState("");
@@ -191,6 +202,11 @@ export default function CTAButtonPicker({ trigger }) {
   const noIconActive = iconOverride === "";
   const defaultIconActive = iconOverride === null;
   const customIconActive = !noIconActive && !defaultIconActive;
+  const handleInsert = (html) => {
+    if (typeof onInsert !== "function") return;
+    onInsert(html);
+    setOpen(false);
+  };
 
   return (
     <>
@@ -334,16 +350,24 @@ export default function CTAButtonPicker({ trigger }) {
             {/* Instruction strip */}
             <div className="px-6 py-2 bg-blue-50 border-b border-blue-100 shrink-0">
               <p className="text-[10px] text-blue-600 font-medium">
-                Pick a style → click <strong>Copy HTML</strong> → in CKEditor
-                click{" "}
-                <code className="bg-blue-100 px-1 rounded">
-                  {"<>"} HTML Embed
-                </code>{" "}
-                or use{" "}
-                <code className="bg-blue-100 px-1 rounded">
-                  Insert → HTML
-                </code>{" "}
-                and paste.
+                {typeof onInsert === "function" ? (
+                  <>
+                    Pick a style → click <strong>Insert</strong> to append it to the article, or copy the HTML for manual placement.
+                  </>
+                ) : (
+                  <>
+                    Pick a style → click <strong>Copy HTML</strong> → in CKEditor
+                    click{" "}
+                    <code className="bg-blue-100 px-1 rounded">
+                      {"<>"} HTML Embed
+                    </code>{" "}
+                    or use{" "}
+                    <code className="bg-blue-100 px-1 rounded">
+                      Insert → HTML
+                    </code>{" "}
+                    and paste.
+                  </>
+                )}
               </p>
             </div>
 
@@ -357,6 +381,7 @@ export default function CTAButtonPicker({ trigger }) {
                     href={href}
                     customText={customText}
                     iconOverride={iconOverride}
+                    onInsert={handleInsert}
                   />
                 ))}
               </div>

@@ -24,6 +24,7 @@ import CTAButtonPicker from "../components/CtaButtonPicker";
 import FAQPicker from "../components/FAQCreator";
 import BlogInternalLinkAssistant from "../components/BlogInternalLinkAssistant";
 import BlogSeoChecklist, { parseBlogTags } from "../components/BlogSeoChecklist";
+import BlogLivePreview from "../components/BlogLivePreview";
 
 const BlogEditor = dynamic(() => import("../components/BlogEditor"), { ssr: false });
 
@@ -590,7 +591,7 @@ export default function AddBlog() {
                 </Field>
               </Section>
 
-              <Section title="Button Picker"><CTAButtonPicker /> <FAQPicker onInsert={handleInsertContentBlock} /></Section>
+              <Section title="Button Picker"><CTAButtonPicker onInsert={handleInsertContentBlock} /> <FAQPicker onInsert={handleInsertContentBlock} /></Section>
 
               <Section title="Content">
                 {errors.description && (
@@ -680,6 +681,12 @@ export default function AddBlog() {
                   <p className="text-xs text-blue-600">{autoSaveError ? "⚠ Auto-save unavailable. Use Save Draft to keep your work." : "Draft is auto-saved locally every 2 seconds."}</p>
                 </div>
               </div>
+
+              <BlogLivePreview
+                formData={formData}
+                imagePreview={imagePreview}
+                imageAlt={imageAlt}
+              />
 
               {/* Image card */}
               <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5 space-y-3">

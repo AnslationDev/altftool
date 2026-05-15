@@ -23,6 +23,7 @@ import CTAButtonPicker from "../../components/CtaButtonPicker";
 import FAQPicker from "../../components/FAQCreator";
 import BlogInternalLinkAssistant from "../../components/BlogInternalLinkAssistant";
 import BlogSeoChecklist, { parseBlogTags } from "../../components/BlogSeoChecklist";
+import BlogLivePreview from "../../components/BlogLivePreview";
 
 const BlogEditor = dynamic(() => import("../../components/BlogEditor"), { ssr: false });
 
@@ -368,7 +369,7 @@ export default function EditBlog() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <div className="max-w-5xl mx-auto px-5 py-7 space-y-5">
+      <div className="max-w-7xl mx-auto px-5 py-7 space-y-5">
 
         <OfflineBanner />
         <BannerAlert message={bannerError} onDismiss={() => setBannerError(null)} />
@@ -419,7 +420,7 @@ export default function EditBlog() {
               </Field>
             </Section>
 
-            <Section title="Button Picker"><CTAButtonPicker /> <FAQPicker onInsert={handleInsertContentBlock} /></Section>
+            <Section title="Button Picker"><CTAButtonPicker onInsert={handleInsertContentBlock} /> <FAQPicker onInsert={handleInsertContentBlock} /></Section>
 
             <Section title="Content">
               {errors.description && (
@@ -505,6 +506,12 @@ export default function EditBlog() {
                 <p className="text-xs text-blue-600">Slug is auto-generated from the heading on save.</p>
               </div>
             </div>
+
+            <BlogLivePreview
+              formData={formData}
+              imagePreview={imagePreview}
+              imageAlt={imageAlt}
+            />
 
             <BlogSeoChecklist
               formData={formData}
