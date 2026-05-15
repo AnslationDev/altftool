@@ -11,13 +11,27 @@ function escapeRegExp(value = "") {
 test("public web shell loads", async ({ page }) => {
   const quality = createPageQualityGate(page);
 
+  await page.emulateMedia({ colorScheme: "light" });
   await page.goto(`${webUrl}/tools`);
 
-  await expect.poll(() => page.evaluate(() => document.documentElement.getAttribute("data-theme"))).toBe("dark");
+  await expect.poll(() => page.evaluate(() => document.documentElement.getAttribute("data-theme"))).toBe("light");
+  await expect.poll(() => page.evaluate(() => document.documentElement.getAttribute("data-theme-mode"))).toBe("system");
   await expect(page.locator("#main-header")).toBeVisible();
   await expect(page.getByAltText("AltFTool").first()).toBeVisible();
   await expect(page.getByPlaceholder("Search tools, extensions...")).toBeVisible();
-  await expect(page.getByRole("button", { name: "Toggle Theme" })).toBeVisible();
+  const themeToggle = page.getByRole("button", { name: "Toggle Theme" });
+  await expect(themeToggle).toBeVisible();
+  await themeToggle.click();
+  await expect(page.getByRole("menu", { name: "Theme mode" })).toBeVisible();
+  await page.getByRole("menuitemradio", { name: "Dark mode" }).click();
+  await expect.poll(() => page.evaluate(() => document.documentElement.getAttribute("data-theme"))).toBe("dark");
+  await expect.poll(() => page.evaluate(() => localStorage.getItem("appThemeMode"))).toBe("dark");
+  await themeToggle.click();
+  await page.getByRole("menuitemradio", { name: "System default" }).click();
+  await expect.poll(() => page.evaluate(() => document.documentElement.getAttribute("data-theme-mode"))).toBe("system");
+  await expect.poll(() => page.evaluate(() => document.documentElement.getAttribute("data-theme"))).toBe("light");
+  await page.emulateMedia({ colorScheme: "dark" });
+  await expect.poll(() => page.evaluate(() => document.documentElement.getAttribute("data-theme"))).toBe("dark");
   await expect(page.getByRole("link", { name: "Tools", exact: true }).first()).toHaveAttribute("href", "/tools/all");
   await expect(page.getByRole("link", { name: "Blog", exact: true }).first()).toHaveAttribute("href", "/blogs");
   await quality.expectClean("public web shell");

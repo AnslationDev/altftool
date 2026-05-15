@@ -103,7 +103,7 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" data-theme="dark" suppressHydrationWarning className={`${geistSans.variable} ${geistMono.variable}`}>
+    <html lang="en" data-theme-mode="system" suppressHydrationWarning className={`${geistSans.variable} ${geistMono.variable}`}>
       <head>
         <link rel="preconnect" href="https://firestore.googleapis.com" />
         <link rel="preconnect" href="https://firebasestorage.googleapis.com" />
@@ -117,13 +117,22 @@ export default function RootLayout({ children }) {
         <Script id="theme-init" strategy="beforeInteractive">
           {`
             try {
-              var manual = localStorage.getItem("themeManual") === "true";
-              var stored = localStorage.getItem("appTheme");
-              var valid = stored === "dark" || stored === "light";
-              var theme = manual && valid ? stored : "dark";
+              var storedMode = localStorage.getItem("appThemeMode");
+              var validMode = storedMode === "system" || storedMode === "light" || storedMode === "dark";
+              var mode = validMode ? storedMode : "system";
+              var prefersDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+              var theme = mode === "system" ? (prefersDark ? "dark" : "light") : mode;
               document.documentElement.setAttribute("data-theme", theme);
+              document.documentElement.setAttribute("data-theme-mode", mode);
               document.documentElement.style.colorScheme = theme;
-            } catch (_) {}
+            } catch (_) {
+              try {
+                var fallbackTheme = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+                document.documentElement.setAttribute("data-theme", fallbackTheme);
+                document.documentElement.setAttribute("data-theme-mode", "system");
+                document.documentElement.style.colorScheme = fallbackTheme;
+              } catch (_) {}
+            }
           `}
         </Script>
 

@@ -21,7 +21,7 @@ AltFTool is a Next.js platform for **micro tools**, **web games**, **Chrome exte
 - **Micro tools platform**: dozens of tools under `/tools/...` loaded on-demand (client-only) for performance.
 - **Games hub**: registry-driven game catalog with a bento grid UI and motion effects.
 - **Extensions hub**: registry-driven listing + detail pages, category/search, plus ad injection.
-- **Custom theme system**: light/dark via `data-theme` attribute and CSS variables.
+- **Custom theme system**: system/light/dark modes via `data-theme` attribute and CSS variables.
 - **Scroll-triggered animations**: add a class like `animate-fade-up` and it plays once when visible.
 - **Ads system**: Firestore-backed ads with placement/layout/device targeting + helper hooks.
 - **AI Chatbot**: client UI + server action proxy that can use multiple providers based on env keys.
@@ -116,7 +116,7 @@ Notes:
   - `extensionMap.js`: maps extension slug → metadata + chromeUrl
   - `animationRegistry.js`: the global animation keyframes/options registry
 - **Global contexts**: `src/contexts/`
-  - `ThemeContext.jsx`: toggles `[data-theme="dark"]`
+  - `ThemeContext.jsx`: resolves system/light/dark modes for `data-theme`
   - `GlobalAnimationProvider.jsx`: IntersectionObserver + Web Animations API runner
 - **Ads**: `src/ads/`
   - Hooks and layout components + injector utilities used by tools/games/extensions/blogs.
@@ -150,14 +150,15 @@ Notes:
   - Reusable typography classes like `.heading`, `.subheading`, `.description`
   - Some global keyframes/utilities (ex: `.text-gradient-hero`, `.animate-shine`, etc.)
 
-### Theming (light/dark)
+### Theming (system/light/dark)
 
 - Theme is controlled by setting a `data-theme` attribute on `<html>`:
   - Light: default
   - Dark: `[data-theme="dark"]`
 - Provider: `src/contexts/ThemeContext.jsx`
-  - Uses OS theme by default.
-  - When toggled manually, persists in `localStorage` (`appTheme`, `themeManual`).
+  - Uses OS theme by default through `appThemeMode: "system"`.
+  - Manual choices persist in `localStorage` as `appThemeMode` (`system`, `light`, or `dark`).
+  - Manual light/dark also writes the legacy `appTheme` and `themeManual` keys for compatibility.
 - Color tokens:
   - `src/app/globals.css` defines `--background`, `--foreground`, `--primary`, etc.
   - `src/app/theme.css` defines a parallel set of `--color-*` variables used by some sections/components.

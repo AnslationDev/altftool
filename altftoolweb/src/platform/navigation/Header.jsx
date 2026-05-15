@@ -1,8 +1,17 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
-import { ChevronDown, Menu, Moon, Search, Sun, X } from "lucide-react";
+import {
+  Check,
+  ChevronDown,
+  Menu,
+  Monitor,
+  Moon,
+  Search,
+  Sun,
+  X,
+} from "lucide-react";
 import Link from "next/link";
 import { IconButton, Input } from "@altftool/ui";
 import { useTheme } from "@/contexts/ThemeContext";
@@ -13,13 +22,25 @@ import {
 } from "./siteRoutes";
 import ManagedImage from "@/components/ui/ManagedImage";
 
+const THEME_OPTIONS = [
+  { value: "system", label: "System default", icon: Monitor },
+  { value: "light", label: "Light mode", icon: Sun },
+  { value: "dark", label: "Dark mode", icon: Moon },
+];
+
 const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [themeMenuOpen, setThemeMenuOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [searchError, setSearchError] = useState("");
+  const themeMenuRef = useRef(null);
   const router = useRouter();
   const pathname = usePathname();
-  const { toggleTheme } = useTheme();
+  const { themeMode, resolvedTheme, setThemeMode } = useTheme();
+  const currentThemeOption =
+    THEME_OPTIONS.find((option) => option.value === themeMode) ??
+    THEME_OPTIONS[0];
+  const CurrentThemeIcon = currentThemeOption.icon;
 
   const isActive = (route) => isPublicRouteActive(pathname, route);
 
@@ -42,6 +63,34 @@ const Header = () => {
 
     return () => clearTimeout(syncSearchQuery);
   }, [pathname]);
+
+  useEffect(() => {
+    setThemeMenuOpen(false);
+  }, [pathname]);
+
+  useEffect(() => {
+    if (!themeMenuOpen) return undefined;
+
+    const handlePointerDown = (event) => {
+      if (!themeMenuRef.current?.contains(event.target)) {
+        setThemeMenuOpen(false);
+      }
+    };
+
+    const handleKeyDown = (event) => {
+      if (event.key === "Escape") {
+        setThemeMenuOpen(false);
+      }
+    };
+
+    document.addEventListener("pointerdown", handlePointerDown);
+    document.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      document.removeEventListener("pointerdown", handlePointerDown);
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [themeMenuOpen]);
 
   const handleChange = (value) => {
     setSearchQuery(value);
@@ -68,6 +117,11 @@ const Header = () => {
     setSearchQuery(trimmed);
     setSearchError("");
     setMobileMenuOpen(false);
+  };
+
+  const handleThemeSelect = (nextThemeMode) => {
+    setThemeMode(nextThemeMode);
+    setThemeMenuOpen(false);
   };
 
   // Hide global header on immersive routes.
@@ -181,12 +235,63 @@ const Header = () => {
               </IconButton>
             </form>
 
-            <IconButton onClick={toggleTheme} aria-label="Toggle Theme">
-              <span className="grid h-4 w-4 place-items-center" suppressHydrationWarning>
-                <Sun className="hidden h-4 w-4 text-(--primary) dark:block" />
-                <Moon className="h-4 w-4 dark:hidden" />
-              </span>
-            </IconButton>
+            <div className="relative" ref={themeMenuRef}>
+              <IconButton
+                onClick={() => setThemeMenuOpen((isOpen) => !isOpen)}
+                aria-label="Toggle Theme"
+                aria-haspopup="menu"
+                aria-expanded={themeMenuOpen}
+                title={`Theme: ${currentThemeOption.label}`}
+              >
+                <span
+                  className="grid h-4 w-4 place-items-center"
+                  suppressHydrationWarning
+                >
+                  <CurrentThemeIcon
+                    className={`h-4 w-4 ${
+                      resolvedTheme === "dark" ? "text-(--primary)" : ""
+                    }`}
+                  />
+                </span>
+              </IconButton>
+
+              {themeMenuOpen ? (
+                <div
+                  role="menu"
+                  aria-label="Theme mode"
+                  className="absolute right-0 top-full z-50 mt-2 rounded-[var(--anslation-ds-radius)] border border-(--border) bg-(--card) p-1.5 shadow-[var(--anslation-ds-shadow-md)]"
+                >
+                  <div className="flex min-w-max items-center gap-1">
+                    {THEME_OPTIONS.map((option) => {
+                      const OptionIcon = option.icon;
+                      const isSelected = option.value === themeMode;
+
+                      return (
+                        <button
+                          key={option.value}
+                          type="button"
+                          role="menuitemradio"
+                          aria-checked={isSelected}
+                          aria-label={option.label}
+                          title={option.label}
+                          onClick={() => handleThemeSelect(option.value)}
+                          className={`relative grid h-9 w-9 place-items-center rounded-[6px] border text-(--muted-foreground) transition hover:border-(--primary) hover:bg-(--muted) hover:text-(--foreground) ${
+                            isSelected
+                              ? "border-(--primary) bg-(--muted) text-(--primary)"
+                              : "border-transparent"
+                          }`}
+                        >
+                          <OptionIcon className="h-4 w-4" />
+                          {isSelected ? (
+                            <Check className="pointer-events-none absolute -right-1 -top-1 h-3.5 w-3.5 rounded-full bg-(--primary) p-0.5 text-(--primary-foreground)" />
+                          ) : null}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+              ) : null}
+            </div>
 
             <IconButton
               onClick={() => setMobileMenuOpen(true)}
