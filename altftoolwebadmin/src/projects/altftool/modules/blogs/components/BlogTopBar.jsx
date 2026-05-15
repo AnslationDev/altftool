@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { LayoutDashboard, FileText, PlusCircle, Tag } from "lucide-react";
+import { BarChart3, FileText, PlusCircle, Tag } from "lucide-react";
 
 import CategoryModal from "./CategoryModal";
 
@@ -16,6 +16,7 @@ export default function BlogTopBar(){
   const menuItems = [
     // { name:"Overview",icon:LayoutDashboard,href:"/altftool/blogs" },
     { name:"All Blogs",icon:FileText,href:"/altftool/blogs/view-blogs" },
+    { name:"Analytics",icon:BarChart3,href:"/altftool/blogs/analytics" },
     { name:"Add New Blog",icon:PlusCircle,href:"/altftool/blogs/add-blogs" }
   ];
 

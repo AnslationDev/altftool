@@ -1,8 +1,16 @@
 import BlogDetailClient from "./BlogDetailClient";
-import { getAllBlogs, getBlogBySlug, getRelatedBlogs, stripHtml } from "../data";
+import {
+  BLOG_REMOTE_LIMIT,
+  getAllBlogs,
+  getBlogBySlug,
+  getRelatedBlogs,
+  getRelatedBlogsForPost,
+  mergeBlogPosts,
+  stripHtml,
+} from "../data";
 import {
   fetchFirebaseBlogBySlug,
-  fetchFirebaseRelatedBlogs,
+  fetchFirebaseBlogsPage,
 } from "../data/firebaseBlogs";
 import JsonLd from "@/platform/seo/JsonLd";
 import {
@@ -26,6 +34,20 @@ function getBlogDescription(blog) {
     stripHtml(blog?.description || blog?.content || "").slice(0, 160) ||
     "Read practical AltFTool guides, tool tutorials, and digital productivity articles."
   );
+}
+
+async function getInitialRelatedBlogs(blog, slug) {
+  if (!blog) return getRelatedBlogs(slug, 6);
+
+  try {
+    const firebasePosts = await fetchFirebaseBlogsPage({
+      pageSize: BLOG_REMOTE_LIMIT,
+    });
+    const candidates = mergeBlogPosts(getAllBlogs(), firebasePosts);
+    return getRelatedBlogsForPost(blog, candidates, 6);
+  } catch {
+    return getRelatedBlogs(slug, 6);
+  }
 }
 
 function buildBlogFaq(blog) {
@@ -107,11 +129,7 @@ export default async function BlogDetailPage({ params }) {
     console.error("BlogDetailPage Firebase detail failed:", error);
     return null;
   })) || getBlogBySlug(slug);
-  const initialRelated = initialBlog
-    ? await fetchFirebaseRelatedBlogs(initialBlog.category, slug, 6).catch(() =>
-        getRelatedBlogs(slug, 6)
-      )
-    : getRelatedBlogs(slug, 6);
+  const initialRelated = await getInitialRelatedBlogs(initialBlog, slug);
 
   return (
     <>

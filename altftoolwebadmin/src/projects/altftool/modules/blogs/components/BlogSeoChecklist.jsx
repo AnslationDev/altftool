@@ -1,6 +1,6 @@
 "use client";
 
-import { AlertCircle, CheckCircle2, Link2, SearchCheck } from "lucide-react";
+import { AlertCircle, CheckCircle2, Link2, SearchCheck, Sparkles } from "lucide-react";
 
 export function parseBlogTags(value) {
   if (Array.isArray(value)) {
@@ -25,6 +25,23 @@ function countMatches(value = "", pattern) {
   return (String(value).match(pattern) || []).length;
 }
 
+function getParagraphs(html = "") {
+  const matches = [...String(html).matchAll(/<p\b[^>]*>([\s\S]*?)<\/p>/gi)]
+    .map((match) => stripHtml(match[1]))
+    .filter(Boolean);
+
+  if (matches.length) return matches;
+  return stripHtml(html)
+    .split(/\n{2,}/)
+    .map((paragraph) => paragraph.trim())
+    .filter(Boolean);
+}
+
+function getWordCount(value = "") {
+  const text = stripHtml(value);
+  return text ? text.split(/\s+/).filter(Boolean).length : 0;
+}
+
 function getSlugPreview(heading = "") {
   return heading
     .toLowerCase()
@@ -35,18 +52,24 @@ function getSlugPreview(heading = "") {
     .replace(/^-+|-+$/g, "");
 }
 
-export function getBlogSeoChecklist({ formData = {}, imageAlt = "", hasImage = false } = {}) {
+export function getBlogContentQuality({ formData = {}, imageAlt = "", hasImage = false } = {}) {
+  const paragraphs = getParagraphs(formData.description);
   const plainContent = stripHtml(formData.description);
-  const wordCount = plainContent ? plainContent.split(/\s+/).filter(Boolean).length : 0;
+  const wordCount = getWordCount(formData.description);
   const metaTitleLength = String(formData.seoTitle || "").trim().length;
   const metaDescriptionLength = String(formData.seoDescription || "").trim().length;
   const tags = parseBlogTags(formData.tags);
   const slugPreview = getSlugPreview(formData.heading || "");
   const headingCount = countMatches(formData.description, /<h[2-3]\b/gi);
   const internalLinkCount = countMatches(formData.description, /href=["']\/(?:tools|blogs|buysmart|extensions|top|news)/gi);
+  const totalLinkCount = countMatches(formData.description, /<a\b/gi);
+  const imageCount = countMatches(formData.description, /<img\b/gi) + (hasImage ? 1 : 0);
   const altLength = String(imageAlt || "").trim().length;
+  const firstParagraphWords = getWordCount(paragraphs[0] || plainContent.slice(0, 360));
+  const longParagraphCount = paragraphs.filter((paragraph) => getWordCount(paragraph) > 120).length;
+  const hasConclusion = /conclusion|final thoughts|summary|wrap up|bottom line/i.test(plainContent);
 
-  return [
+  const checks = [
     {
       label: "Search title",
       detail: `${metaTitleLength}/60 characters`,
@@ -58,14 +81,24 @@ export function getBlogSeoChecklist({ formData = {}, imageAlt = "", hasImage = f
       done: metaDescriptionLength >= 120 && metaDescriptionLength <= 160,
     },
     {
-      label: "Readable content",
+      label: "Readable depth",
       detail: `${wordCount} words`,
       done: wordCount >= 300,
+    },
+    {
+      label: "Strong intro",
+      detail: `${firstParagraphWords} intro words`,
+      done: firstParagraphWords >= 35 && firstParagraphWords <= 120,
     },
     {
       label: "Section headings",
       detail: `${headingCount} H2/H3 headings`,
       done: headingCount >= 2,
+    },
+    {
+      label: "Scannable paragraphs",
+      detail: `${longParagraphCount} long paragraphs`,
+      done: longParagraphCount === 0 && paragraphs.length >= 2,
     },
     {
       label: "Internal links",
@@ -83,30 +116,63 @@ export function getBlogSeoChecklist({ formData = {}, imageAlt = "", hasImage = f
       done: slugPreview.length >= 8 && slugPreview.length <= 75,
     },
     {
-      label: "Featured image",
-      detail: hasImage ? "Ready" : "Missing",
-      done: hasImage,
+      label: "Visual support",
+      detail: `${imageCount} image${imageCount === 1 ? "" : "s"}`,
+      done: imageCount >= 1,
     },
     {
       label: "Image alt text",
       detail: `${altLength}/125 characters`,
       done: altLength >= 5 && altLength <= 125,
     },
+    {
+      label: "Clear ending",
+      detail: hasConclusion ? "Conclusion found" : "Add a summary section",
+      done: hasConclusion,
+    },
   ];
+
+  const suggestions = [
+    !checks[2].done ? "Add more practical detail, examples, or step-by-step guidance." : null,
+    !checks[3].done ? "Start with a concise intro that names the reader problem and the outcome." : null,
+    !checks[5].done ? "Split long paragraphs so the article is easier to scan on mobile." : null,
+    !checks[6].done ? "Add at least one internal link to a relevant tool, blog, deal, or extension." : null,
+    tags.length < 3 ? "Add 3-6 topic tags for search, archives, and related posts." : null,
+    totalLinkCount === 0 ? "Add one helpful outbound or internal reference where it supports the article." : null,
+    !hasConclusion ? "Finish with a short conclusion or final thoughts section." : null,
+  ].filter(Boolean);
+
+  return {
+    checks,
+    score: Math.round((checks.filter((check) => check.done).length / checks.length) * 100),
+    suggestions,
+    metrics: {
+      wordCount,
+      headingCount,
+      internalLinkCount,
+      longParagraphCount,
+      tags: tags.length,
+    },
+  };
+}
+
+export function getBlogSeoChecklist({ formData = {}, imageAlt = "", hasImage = false } = {}) {
+  return getBlogContentQuality({ formData, imageAlt, hasImage }).checks;
 }
 
 export default function BlogSeoChecklist({ formData, imageAlt, hasImage }) {
-  const checks = getBlogSeoChecklist({ formData, imageAlt, hasImage });
+  const quality = getBlogContentQuality({ formData, imageAlt, hasImage });
+  const checks = quality.checks;
   const doneCount = checks.filter((check) => check.done).length;
-  const score = Math.round((doneCount / checks.length) * 100);
+  const score = quality.score;
   const blockingCount = checks.length - doneCount;
 
   return (
     <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5 space-y-4">
       <div className="flex items-start justify-between gap-3">
         <div>
-          <h2 className="text-xs font-black text-gray-400 uppercase tracking-widest">SEO Checklist</h2>
-          <p className="mt-1 text-xs text-gray-500">Publish-ready score for search, social, and reading quality.</p>
+          <h2 className="text-xs font-black text-gray-400 uppercase tracking-widest">Quality & SEO</h2>
+          <p className="mt-1 text-xs text-gray-500">Publish-ready score for search, social, and reading flow.</p>
         </div>
         <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-blue-50 text-sm font-black text-blue-600">
           {score}
@@ -139,6 +205,22 @@ export default function BlogSeoChecklist({ formData, imageAlt, hasImage }) {
           </div>
         ))}
       </div>
+
+      {quality.suggestions.length > 0 && (
+        <div className="rounded-2xl border border-blue-100 bg-blue-50 px-3 py-3">
+          <div className="mb-2 flex items-center gap-1.5 text-[11px] font-black uppercase tracking-widest text-blue-600">
+            <Sparkles className="h-3.5 w-3.5" />
+            Next improvements
+          </div>
+          <div className="space-y-1.5">
+            {quality.suggestions.slice(0, 3).map((suggestion) => (
+              <p key={suggestion} className="text-xs leading-5 text-blue-700">
+                {suggestion}
+              </p>
+            ))}
+          </div>
+        </div>
+      )}
 
       <div className="grid grid-cols-2 gap-2 border-t border-gray-100 pt-3 text-[11px]">
         <div className="flex items-center gap-1.5 rounded-xl bg-gray-50 px-2.5 py-2 text-gray-500">

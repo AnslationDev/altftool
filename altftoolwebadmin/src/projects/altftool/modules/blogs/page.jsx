@@ -164,16 +164,24 @@ export default function Blogs() {
   return (
     <div className="space-y-6">
       <div className="max-w-7xl mx-auto py-6 space-y-6">
-        <div className="flex items-center justify-between">
+        <div className="flex flex-wrap items-center justify-between gap-3">
           <h1 className="text-2xl font-semibold text-gray-800">
             Manage your Blogs
           </h1>
-          <a
-            href="/altftool/blogs/add-blogs"
-            className="bg-(--primary) text-white px-4 py-2 rounded-md text-sm hover:opacity-90"
-          >
-            Add Blog
-          </a>
+          <div className="flex items-center gap-2">
+            <a
+              href="/altftool/blogs/analytics"
+              className="rounded-md border border-gray-200 bg-white px-4 py-2 text-sm font-semibold text-gray-700 transition hover:bg-gray-50"
+            >
+              Analytics
+            </a>
+            <a
+              href="/altftool/blogs/add-blogs"
+              className="bg-(--primary) text-white px-4 py-2 rounded-md text-sm hover:opacity-90"
+            >
+              Add Blog
+            </a>
+          </div>
         </div>
 
         <div className="bg-white rounded-xl shadow p-6">

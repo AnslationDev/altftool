@@ -20,7 +20,7 @@ import { ArrowLeft, Loader2 } from "lucide-react";
 import { db, isFirebaseConfigured } from "@/lib/firebase";
 import { getCachedFirebaseRead } from "@/lib/firebaseCache";
 import { incrementUniqueView } from "../context/views.service";
-import { normalizeBlog } from "../data";
+import { getRelatedBlogsForPost, normalizeBlog } from "../data";
 import BlogHeader from "../components/slug/BlogHeader";
 import BlogActions from "../components/slug/BlogActions";
 import BlogContent from "../components/slug/BlogContent";
@@ -68,26 +68,26 @@ async function fetchBlogBySlug(slug) {
   );
 }
 
-async function fetchSimilarPosts(category, excludeSlug) {
-  if (!category) return [];
+async function fetchSimilarPosts(currentBlog, excludeSlug) {
+  if (!currentBlog) return [];
 
   return getCachedFirebaseRead(
-    `blogs:similar:${category}:${excludeSlug}:v2`,
+    `blogs:similar:${currentBlog.slug || excludeSlug}:v3`,
     async () => {
       const snap = await getDocs(
         query(
           blogsCol(),
           where("status", "==", "published"),
-          where("category", "==", category),
           orderBy("createdAt", "desc"),
-          limit(SIMILAR_LIMIT + 1)
+          limit(72)
         )
       );
 
-      return snap.docs
+      const candidates = snap.docs
         .map((item, index) => normalizeBlog({ id: item.id, ...item.data() }, index))
-        .filter((post) => post.slug !== excludeSlug)
-        .slice(0, SIMILAR_LIMIT);
+        .filter((post) => post.slug !== excludeSlug);
+
+      return getRelatedBlogsForPost(currentBlog, candidates, SIMILAR_LIMIT);
     },
     120000
   );
@@ -145,7 +145,7 @@ export default function BlogDetailClient({ slug, initialBlog, initialRelated }) 
           loadComments(found.id);
         }
 
-        fetchSimilarPosts(found.category, slug)
+        fetchSimilarPosts(found, slug)
           .then((posts) => {
             if (!cancelled && posts.length) setSimilarPosts(posts);
           })
@@ -273,10 +273,10 @@ export default function BlogDetailClient({ slug, initialBlog, initialRelated }) 
             <div className="mb-5 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
               <div>
                 <p className="text-xs font-semibold uppercase tracking-wide text-(--muted-foreground)">
-                  More in {blog.category}
+                  Matched by topic, tags, and reader signals
                 </p>
                 <h2 className="mt-1 text-2xl font-semibold tracking-tight text-(--foreground)">
-                  Similar posts
+                  Smart related posts
                 </h2>
               </div>
               <Link

@@ -233,6 +233,123 @@ export function getTrendingBlogs(posts = blogPosts, limit = 6) {
     .map(({ post }) => post);
 }
 
+function tokenizeBlogText(value = "") {
+  const stopWords = new Set([
+    "about",
+    "after",
+    "also",
+    "and",
+    "are",
+    "best",
+    "blog",
+    "can",
+    "for",
+    "from",
+    "guide",
+    "has",
+    "how",
+    "into",
+    "online",
+    "that",
+    "the",
+    "this",
+    "tool",
+    "tools",
+    "use",
+    "with",
+    "you",
+    "your",
+  ]);
+
+  return new Set(
+    stripHtml(value)
+      .toLowerCase()
+      .replace(/&/g, " and ")
+      .split(/[^a-z0-9]+/)
+      .map((word) => word.trim())
+      .filter((word) => word.length > 2 && !stopWords.has(word)),
+  );
+}
+
+function getTagOverlapScore(currentTags = [], candidateTags = []) {
+  const current = new Set(currentTags.map((tag) => blogTaxonomySlug(tag)));
+  return candidateTags.reduce(
+    (score, tag) => score + (current.has(blogTaxonomySlug(tag)) ? 1 : 0),
+    0,
+  );
+}
+
+function getKeywordOverlapScore(current = {}, candidate = {}) {
+  const currentTokens = tokenizeBlogText([
+    current.heading,
+    current.excerpt,
+    current.category,
+    current.tool,
+    ...(Array.isArray(current.tags) ? current.tags : []),
+  ].filter(Boolean).join(" "));
+  const candidateTokens = tokenizeBlogText([
+    candidate.heading,
+    candidate.excerpt,
+    candidate.category,
+    candidate.tool,
+    ...(Array.isArray(candidate.tags) ? candidate.tags : []),
+  ].filter(Boolean).join(" "));
+
+  let overlap = 0;
+  candidateTokens.forEach((token) => {
+    if (currentTokens.has(token)) overlap += 1;
+  });
+  return overlap;
+}
+
+export function scoreRelatedBlog(current = {}, candidate = {}) {
+  if (!current?.slug || !candidate?.slug || current.slug === candidate.slug) return -1;
+
+  const currentTags = Array.isArray(current.tags) ? current.tags : [];
+  const candidateTags = Array.isArray(candidate.tags) ? candidate.tags : [];
+  const sameCategory = current.category && candidate.category && current.category === candidate.category;
+  const sameTool = current.tool && candidate.tool && current.tool === candidate.tool;
+  const tagOverlap = getTagOverlapScore(currentTags, candidateTags);
+  const keywordOverlap = getKeywordOverlapScore(current, candidate);
+  const popularity = Math.min(24, getBlogPopularityScore(candidate) / 8);
+  const dateTime = Date.parse(candidate.date || candidate.updatedAt || candidate.createdAt || "");
+  const daysOld = dateTime
+    ? Math.max(0, (Date.now() - dateTime) / (1000 * 60 * 60 * 24))
+    : 120;
+  const recency = Math.max(0, 16 - Math.min(daysOld, 60) / 4);
+
+  return (
+    (sameCategory ? 42 : 0) +
+    (sameTool ? 18 : 0) +
+    tagOverlap * 20 +
+    Math.min(keywordOverlap, 8) * 4 +
+    popularity +
+    recency
+  );
+}
+
+export function getRelatedBlogsForPost(currentPost, posts = blogPosts, limit = 6) {
+  if (!currentPost) return sortBlogsByDate(posts).slice(0, limit);
+
+  return posts
+    .filter((post) => post?.slug && post.slug !== currentPost.slug)
+    .map((post, index) => ({
+      post,
+      index,
+      score: scoreRelatedBlog(currentPost, post),
+    }))
+    .filter((item) => item.score >= 0)
+    .sort((a, b) => {
+      if (b.score !== a.score) return b.score - a.score;
+      const dateA = Date.parse(a.post.date || "") || 0;
+      const dateB = Date.parse(b.post.date || "") || 0;
+      if (dateB !== dateA) return dateB - dateA;
+      return a.index - b.index;
+    })
+    .slice(0, limit)
+    .map(({ post }) => post);
+}
+
 export function getBlogTagBySlug(tagSlug, posts = blogPosts) {
   return (
     getAllBlogTags(posts).find((tag) => blogTaxonomySlug(tag) === tagSlug) ||
@@ -275,15 +392,7 @@ export function getFeaturedBlogGroups(posts = blogPosts) {
 export function getRelatedBlogs(slug, limit = 6) {
   const current = getBlogBySlug(slug);
   if (!current) return blogPosts.filter((post) => post.slug !== slug).slice(0, limit);
-
-  const sameCategory = blogPosts.filter(
-    (post) => post.slug !== slug && post.category === current.category
-  );
-  const rest = blogPosts.filter(
-    (post) => post.slug !== slug && post.category !== current.category
-  );
-
-  return [...sameCategory, ...rest].slice(0, limit);
+  return getRelatedBlogsForPost(current, blogPosts, limit);
 }
 
 export default blogPosts;
