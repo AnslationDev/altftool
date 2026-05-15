@@ -5,6 +5,7 @@ const adminUrl = process.env.ALTFT_ADMIN_URL || "http://localhost:3001";
 const webPort = new URL(webUrl).port || "3002";
 const adminPort = new URL(adminUrl).port || "3001";
 const reuseExistingServer = process.env.ALTFT_REUSE_SERVER === "true";
+const skipAdminServer = process.env.ALTFT_SKIP_ADMIN_SERVER === "true";
 const serverMode = process.env.ALTFT_PLAYWRIGHT_SERVER || "dev";
 const webServerMode = process.env.ALTFT_PLAYWRIGHT_WEB_SERVER || serverMode;
 const adminServerMode = process.env.ALTFT_PLAYWRIGHT_ADMIN_SERVER || serverMode;
@@ -14,6 +15,24 @@ const webServerCommand = webServerMode === "production"
 const adminServerCommand = adminServerMode === "production"
   ? `npm --prefix altftoolwebadmin run start -- -p ${adminPort}`
   : `npm --prefix altftoolwebadmin run dev -- -p ${adminPort}`;
+
+const webServers = [
+  {
+    command: webServerCommand,
+    url: webUrl,
+    reuseExistingServer,
+    timeout: 120_000,
+  },
+];
+
+if (!skipAdminServer) {
+  webServers.push({
+    command: adminServerCommand,
+    url: `${adminUrl}/login`,
+    reuseExistingServer,
+    timeout: 120_000,
+  });
+}
 
 export default defineConfig({
   testDir: "./tests",
@@ -43,18 +62,5 @@ export default defineConfig({
       use: { ...devices["Desktop Chrome"] },
     },
   ],
-  webServer: [
-    {
-      command: webServerCommand,
-      url: webUrl,
-      reuseExistingServer,
-      timeout: 120_000,
-    },
-    {
-      command: adminServerCommand,
-      url: `${adminUrl}/login`,
-      reuseExistingServer,
-      timeout: 120_000,
-    },
-  ],
+  webServer: webServers,
 });

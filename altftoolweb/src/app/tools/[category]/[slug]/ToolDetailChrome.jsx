@@ -347,7 +347,7 @@ export default function ToolDetailChrome({ slug, category = "all", children }) {
             onResetWorkspace={handleResetWorkspace}
           />
 
-          <div className="mx-auto w-full" key={workspaceKey}>
+          <div className="mx-auto w-full max-w-full min-w-0 overflow-x-auto overscroll-x-contain" key={workspaceKey}>
             {children}
           </div>
 
