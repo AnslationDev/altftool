@@ -1,5 +1,7 @@
 import books from "@/app/wattpad/data/books.json";
 import categories from "@/app/wattpad/data/categories.json";
+import { createPageMetadata } from "@/platform/seo/generateMetadata";
+import { notFound } from "next/navigation";
 import {
   Eye,
   
@@ -10,21 +12,37 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 
-export default async function CategoryPage({ params }) {
+export function generateStaticParams() {
+  return categories.map((category) => ({ slug: category.slug }));
+}
 
+export async function generateMetadata({ params }) {
+  const { slug } = await params;
+  const category = categories.find((cat) => cat.slug === slug);
+
+  if (!category) {
+    return {
+      title: "Story Category Not Found",
+      robots: { index: false, follow: true },
+    };
+  }
+
+  return createPageMetadata({
+    title: `${category.name} Stories - Wattpad-Style Reads`,
+    description: category.description || `Explore trending ${category.name.toLowerCase()} stories on AltFTool.`,
+    path: `/wattpad/category/${category.slug}`,
+    image: category.coverImage,
+  });
+}
+
+export default async function CategoryPage({ params }) {
   const { slug } = await params;
 
   const category = categories.find(
     (cat) => cat.slug === slug
   );
 
-  if (!category) {
-    return (
-      <div className="p-10 text-center">
-        Category not found
-      </div>
-    );
-  }
+  if (!category) notFound();
 
   const filteredBooks = books.filter(
     (book) => book.categoryId === category.id

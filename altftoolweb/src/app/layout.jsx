@@ -32,14 +32,69 @@ const geistMono = Geist_Mono({
 });
 export const metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://altftool.com"),
+  applicationName: "AltFTool",
   title: {
     default: "AltFTool – Your Daily Digital Toolkit",
     template: "%s | AltFTool",
   },
   description:
     "AltFTool is your online tools website with free tools, software, games, must-have Chrome extensions, and best web tools to boost productivity and fun.",
+  keywords: [
+    "online tools",
+    "free web tools",
+    "micro tools",
+    "developer tools",
+    "PDF tools",
+    "image tools",
+    "productivity tools",
+    "AltFTool",
+  ],
+  authors: [{ name: "AltFTool" }],
+  creator: "AltFTool",
+  publisher: "AltFTool",
+  category: "technology",
+  alternates: {
+    canonical: "/",
+  },
+  openGraph: {
+    type: "website",
+    siteName: "AltFTool",
+    title: "AltFTool – Your Daily Digital Toolkit",
+    description:
+      "Free online tools, software picks, games, Chrome extensions, deals, ranked guides, and productivity utilities in one daily digital toolkit.",
+    url: "/",
+    images: [
+      {
+        url: "/assets/logo3.png",
+        width: 512,
+        height: 512,
+        alt: "AltFTool",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary",
+    title: "AltFTool – Your Daily Digital Toolkit",
+    description:
+      "Free online tools, software picks, games, Chrome extensions, deals, ranked guides, and productivity utilities.",
+    images: ["/assets/logo3.png"],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
+  },
+  manifest: "/manifest.webmanifest",
   icons: {
     icon: "/favicon1.png",
+    shortcut: "/favicon.ico",
+    apple: "/favicon1.png",
   },
 };
 
@@ -101,7 +156,7 @@ export default function RootLayout({ children }) {
       <body className="anslation-ds-public antialiased">
   <ThemeProvider>
     <CookieConsentProvider>
-      <AlertProvider> {/* 👈 MOVE HERE */}
+      <AlertProvider>
 
         <Suspense fallback={null}>
           <Header />

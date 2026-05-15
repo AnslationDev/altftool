@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title">
+  <title>AltFTool icon</title>
+  <rect width="512" height="512" rx="96" fill="#1f4fff"/>
+  <path d="M154 358 238 154h45l84 204h-48l-17-45h-85l-17 45h-46Zm77-84h57l-28-74-29 74Z" fill="#ffffff"/>
+  <path d="M168 392h176" stroke="#ffffff" stroke-width="28" stroke-linecap="round" opacity=".82"/>
+</svg>

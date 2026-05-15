@@ -4,6 +4,9 @@ import { fetchFirebaseBlogsPage } from "@/app/blogs/data/firebaseBlogs";
 import buySmartStores from "@/app/buysmart/data/stores.json";
 import dealData from "@/app/exclusivedeals/(data)/db.json";
 import top11Categories from "@/app/top11/data/categoryData";
+import { getTop9Items } from "@/app/top9/data/getTop9Items";
+import wattpadBooks from "@/app/wattpad/data/books.json";
+import wattpadCategories from "@/app/wattpad/data/categories.json";
 import { getSiteUrl, normalizeSlug } from "@/platform/seo/generateMetadata";
 import newsData from "../../public/data/newsdata.json";
 import topicsData from "../../public/data/topics.json";
@@ -22,6 +25,10 @@ const staticRoutes = [
   { path: "/search-eng", priority: 0.65 },
   { path: "/smartlink", priority: 0.65 },
   { path: "/top11", priority: 0.7 },
+  { path: "/top9", priority: 0.68 },
+  { path: "/personality", priority: 0.66 },
+  { path: "/wattpad", priority: 0.66 },
+  { path: "/altpintrest", priority: 0.62 },
   { path: "/trendingvids", priority: 0.7 },
   { path: "/news", priority: 0.7 },
   { path: "/news/headlines", priority: 0.6 },
@@ -304,6 +311,34 @@ export default async function sitemap() {
       priority: 0.65,
       changeFrequency: "monthly",
     });
+  }
+
+  for (const item of getTop9Items()) {
+    pushUnique(entries, seen, `/top9/${item.slug}`, {
+      lastModified: item.date ? new Date(item.date) : undefined,
+      priority: 0.58,
+      changeFrequency: "monthly",
+    });
+  }
+
+  for (const category of wattpadCategories) {
+    if (category?.slug) {
+      pushUnique(entries, seen, `/wattpad/category/${category.slug}`, {
+        lastModified: category.createdAt ? new Date(category.createdAt) : undefined,
+        priority: 0.54,
+        changeFrequency: "monthly",
+      });
+    }
+  }
+
+  for (const book of wattpadBooks) {
+    if (book?.slug) {
+      pushUnique(entries, seen, `/wattpad/book/${book.slug}`, {
+        lastModified: book.createdAt ? new Date(book.createdAt) : undefined,
+        priority: 0.56,
+        changeFrequency: "monthly",
+      });
+    }
   }
 
   for (const article of newsData.news || []) {

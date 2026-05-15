@@ -1,25 +1,50 @@
 import books from "@/app/wattpad/data/books.json";
 import chapters from "@/app/wattpad/data/chapters.json";
+import { createPageMetadata } from "@/platform/seo/generateMetadata";
+import { notFound } from "next/navigation";
 
 import Link from "next/link";
 import TextToSpeech from "@/app/wattpad/components/TextToSpeech";
 
-export default async function ReaderPage({ params }) {
+export function generateStaticParams() {
+  return chapters.flatMap((chapter) => {
+    const book = books.find((item) => item.id === chapter.bookId);
+    return book
+      ? [{ bookSlug: book.slug, chapter: String(chapter.chapterNumber) }]
+      : [];
+  });
+}
 
+export async function generateMetadata({ params }) {
+  const { bookSlug, chapter } = await params;
+  const book = books.find((item) => item.slug === bookSlug);
+  const currentChapter = book
+    ? chapters.find((item) => item.bookId === book.id && item.chapterNumber === Number(chapter))
+    : null;
+
+  if (!book || !currentChapter) {
+    return {
+      title: "Chapter Not Found",
+      robots: { index: false, follow: true },
+    };
+  }
+
+  return createPageMetadata({
+    title: `${currentChapter.title} - ${book.title}`,
+    description: `${book.title}, chapter ${currentChapter.chapterNumber}: ${currentChapter.title}.`,
+    path: `/wattpad/read/${book.slug}/${currentChapter.chapterNumber}`,
+    image: book.coverImage || book.bannerImage,
+    type: "article",
+  });
+}
+
+export default async function ReaderPage({ params }) {
   const { bookSlug, chapter } = await params;
 
   // Find book
-  const book = books.find(
-    (item) => item.slug === bookSlug
-  );
+  const book = books.find((item) => item.slug === bookSlug);
 
-  if (!book) {
-    return (
-      <div className="py-20 text-center min-h-screen">
-        Book not found
-      </div>
-    );
-  }
+  if (!book) notFound();
 
   // Find chapter
   const currentChapter = chapters.find(
@@ -28,13 +53,7 @@ export default async function ReaderPage({ params }) {
       item.chapterNumber === Number(chapter)
   );
 
-  if (!currentChapter) {
-    return (
-      <div className="py-20 text-center min-h-screen">
-        Chapter not found
-      </div>
-    );
-  }
+  if (!currentChapter) notFound();
 
   // Next chapter
   const nextChapter = Number(chapter) + 1;

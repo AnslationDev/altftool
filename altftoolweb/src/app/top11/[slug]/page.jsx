@@ -1,26 +1,63 @@
-"use client";
-
 import React from "react";
-import { useParams } from "next/navigation";
+import { notFound } from "next/navigation";
 import categoryData from "@/app/top11/data/categoryData";
+import JsonLd from "@/platform/seo/JsonLd";
+import {
+  createBreadcrumbJsonLd,
+  createItemListJsonLd,
+  createPageMetadata,
+} from "@/platform/seo/generateMetadata";
 import ManagedImage from "@/components/ui/ManagedImage";
 
-export default function CategoryPage() {
-  const params = useParams();
-  const slug = params?.slug;
+export function generateStaticParams() {
+  return Object.keys(categoryData).map((slug) => ({ slug }));
+}
 
+export async function generateMetadata({ params }) {
+  const { slug } = await params;
   const data = categoryData[slug];
 
   if (!data) {
-    return (
-      <div className="p-10 text-center text-xl font-semibold">
-        No Data Found
-      </div>
-    );
+    return {
+      title: "Top11 Category Not Found",
+      robots: { index: false, follow: true },
+    };
   }
+
+  return createPageMetadata({
+    title: data.title,
+    description: data.description,
+    path: `/top11/${slug}`,
+    image: data.banner,
+  });
+}
+
+export default async function CategoryPage({ params }) {
+  const { slug } = await params;
+  const data = categoryData[slug];
+
+  if (!data) notFound();
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#f8fafc] to-[#eef2ff]">
+      <JsonLd
+        id={`top11-schema-${slug}`}
+        data={[
+          createItemListJsonLd({
+            path: `/top11/${slug}`,
+            name: data.title,
+            items: data.tools.map((tool, index) => ({
+              name: `${index + 1}. ${tool.name}`,
+              path: `/top11/${slug}`,
+            })),
+          }),
+          createBreadcrumbJsonLd([
+            { name: "Home", path: "/" },
+            { name: "Top11", path: "/top11" },
+            { name: data.title, path: `/top11/${slug}` },
+          ]),
+        ]}
+      />
 
       {/* HERO BANNER */}
       <div className="relative w-full h-[260px] md:h-[360px] overflow-hidden">

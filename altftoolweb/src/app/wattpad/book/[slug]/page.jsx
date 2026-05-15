@@ -2,6 +2,8 @@
 import books from "@/app/wattpad/data/books.json";
 import chapters from "@/app/wattpad/data/chapters.json";
 import BookTabs from "@/app/wattpad/components/BookTabs";
+import { createPageMetadata } from "@/platform/seo/generateMetadata";
+import { notFound } from "next/navigation";
 
 import Image from "next/image";
 import Link from "next/link";
@@ -15,8 +17,31 @@ import {
   Headphones,
 } from "lucide-react";
 
-export default async function BookDetailPage({ params }) {
+export function generateStaticParams() {
+  return books.map((book) => ({ slug: book.slug }));
+}
 
+export async function generateMetadata({ params }) {
+  const { slug } = await params;
+  const book = books.find((item) => item.slug === slug);
+
+  if (!book) {
+    return {
+      title: "Story Not Found",
+      robots: { index: false, follow: true },
+    };
+  }
+
+  return createPageMetadata({
+    title: `${book.title} - Wattpad-Style Story`,
+    description: book.description || book.summary,
+    path: `/wattpad/book/${book.slug}`,
+    image: book.coverImage || book.bannerImage,
+    type: "book",
+  });
+}
+
+export default async function BookDetailPage({ params }) {
   const { slug } = await params;
 
   // BOOK
@@ -24,13 +49,7 @@ export default async function BookDetailPage({ params }) {
     (item) => item.slug === slug
   );
 
-  if (!book) {
-    return (
-      <div className="section py-24 text-center">
-        Book not found
-      </div>
-    );
-  }
+  if (!book) notFound();
 
   // CHAPTERS
   const bookChapters = chapters.filter(

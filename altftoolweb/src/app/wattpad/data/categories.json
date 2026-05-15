@@ -4,7 +4,7 @@
     "name": "Romance",
     "slug": "romance",
     "description": "Love stories and relationships",
-    "coverImage": "/images/categories/romance.jpg",
+    "coverImage": "/wattpad/trending/Behind-The-Limelight.jpg",
     "createdAt": "2025-01-01"
   },
   {
@@ -12,7 +12,7 @@
     "name": "Thriller",
     "slug": "thriller",
     "description": "Suspense and high-stakes drama",
-    "coverImage": "/images/categories/thriller.jpg",
+    "coverImage": "/wattpad/trending/Bite-Me.jpg",
     "createdAt": "2025-01-01"
   },
   {
@@ -20,7 +20,7 @@
     "name": "Fantasy",
     "slug": "fantasy",
     "description": "Magic, mythical worlds, and adventures",
-    "coverImage": "/images/categories/fantasy.jpg",
+    "coverImage": "/wattpad/trending/Forgotten-Wolf.jpg",
     "createdAt": "2025-01-01"
   },
   {
@@ -28,7 +28,7 @@
     "name": "Fanfiction",
     "slug": "fanfiction",
     "description": "Stories inspired by existing characters",
-    "coverImage": "/images/categories/fanfiction.jpg",
+    "coverImage": "/wattpad/trending/Costantino.jpg",
     "createdAt": "2025-01-01"
   },
   {
@@ -36,7 +36,7 @@
     "name": "New Adult",
     "slug": "new-adult",
     "description": "Young adult stories with mature themes",
-    "coverImage": "/images/categories/new-adult.jpg",
+    "coverImage": "/wattpad/trending/Tempting.jpg",
     "createdAt": "2025-01-01"
   },
   {
@@ -44,7 +44,7 @@
     "name": "LGBTQ+",
     "slug": "lgbtq",
     "description": "Stories centered on LGBTQ+ characters",
-    "coverImage": "/images/categories/lgbtq.jpg",
+    "coverImage": "/wattpad/trending/Lilah.jpg",
     "createdAt": "2025-01-01"
   },
   {
@@ -52,7 +52,7 @@
     "name": "Horror",
     "slug": "horror",
     "description": "Scary and supernatural stories",
-    "coverImage": "/images/categories/horror.jpg",
+    "coverImage": "/wattpad/trending/Bite-Me.jpg",
     "createdAt": "2025-01-01"
   },
   {
@@ -60,7 +60,7 @@
     "name": "Historical Fiction",
     "slug": "historical-fiction",
     "description": "Stories set in the past",
-    "coverImage": "/images/categories/historical-fiction.jpg",
+    "coverImage": "/wattpad/trending/Sidelined-2.jpg",
     "createdAt": "2025-01-01"
   },
   {
@@ -68,7 +68,7 @@
     "name": "Science Fiction",
     "slug": "science-fiction",
     "description": "Futuristic and science-based stories",
-    "coverImage": "/images/categories/science-fiction.jpg",
+    "coverImage": "/wattpad/trending/Forgotten-Wolf.jpg",
     "createdAt": "2025-01-01"
   },
   {
@@ -76,7 +76,7 @@
     "name": "Mystery",
     "slug": "mystery",
     "description": "Detective and investigation stories",
-    "coverImage": "/images/categories/mystery.jpg",
+    "coverImage": "/wattpad/trending/Tempting.jpg",
     "createdAt": "2025-01-01"
   },
   {
@@ -84,7 +84,7 @@
     "name": "Poetry",
     "slug": "poetry",
     "description": "Creative poems and verses",
-    "coverImage": "/images/categories/poetry.jpg",
+    "coverImage": "/wattpad/trending/Lilah.jpg",
     "createdAt": "2025-01-01"
   },
   {
@@ -92,7 +92,7 @@
     "name": "Adventure",
     "slug": "adventure",
     "description": "Exciting journeys and explorations",
-    "coverImage": "/images/categories/adventure.jpg",
+    "coverImage": "/wattpad/trending/Sidelined-2.jpg",
     "createdAt": "2025-01-01"
   }
 ]
