@@ -21,6 +21,7 @@ import {
   getAllBlogs,
   getBlogCategories,
   getBlogStats,
+  getBlogTopicClusters,
   getFeaturedBlogGroups,
   getTrendingBlogs,
 } from "./data";
@@ -190,6 +191,53 @@ function TrendingRail({ posts }) {
   );
 }
 
+function TopicClusterBand({ clusters }) {
+  const visibleClusters = clusters.filter((cluster) => cluster.postCount > 0).slice(0, 6);
+  if (!visibleClusters.length) return null;
+
+  return (
+    <section className="mt-10 rounded-[var(--anslation-ds-radius-lg)] border border-(--border) bg-(--card) p-4 shadow-[var(--anslation-ds-shadow-sm)] sm:p-5">
+      <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+        <div>
+          <p className="text-xs font-bold uppercase tracking-wide text-(--muted-foreground)">Topic clusters</p>
+          <h2 className="mt-1 text-xl font-semibold text-(--foreground)">Follow a complete reading path</h2>
+        </div>
+        <Link
+          href="/blogs/topics"
+          className="inline-flex h-9 items-center justify-center gap-2 rounded-[var(--anslation-ds-radius)] border border-(--border) bg-(--background) px-3 text-sm font-semibold text-(--foreground) transition hover:border-(--primary) hover:text-(--primary)"
+        >
+          View all clusters
+          <ArrowRight className="h-4 w-4" />
+        </Link>
+      </div>
+      <div className="grid grid-cols-1 gap-3 md:grid-cols-2 xl:grid-cols-3">
+        {visibleClusters.map((cluster) => (
+          <Link
+            key={cluster.slug}
+            href={`/blogs/topics/${cluster.slug}`}
+            className="group rounded-[var(--anslation-ds-radius)] border border-(--border) bg-(--background) p-4 transition hover:border-(--primary)/50 hover:bg-(--muted)"
+          >
+            <div className="flex items-start justify-between gap-3">
+              <div>
+                <p className="text-[11px] font-bold uppercase tracking-wide text-(--primary)">{cluster.eyebrow}</p>
+                <h3 className="mt-1 text-base font-semibold text-(--foreground) group-hover:text-(--primary)">
+                  {cluster.title}
+                </h3>
+              </div>
+              <span className="inline-flex h-8 min-w-8 items-center justify-center rounded-[6px] bg-(--card) px-2 text-xs font-bold text-(--primary)">
+                {cluster.postCount}
+              </span>
+            </div>
+            <p className="mt-2 line-clamp-2 text-sm leading-6 text-(--muted-foreground)">
+              {cluster.description}
+            </p>
+          </Link>
+        ))}
+      </div>
+    </section>
+  );
+}
+
 export default async function BlogsPage() {
   const localPosts = getAllBlogs();
   const firebaseCatalog = await getFirebaseBlogCatalog().catch((error) => {
@@ -202,6 +250,7 @@ export default async function BlogsPage() {
   const stats = getBlogStats(posts);
   const groups = getFeaturedBlogGroups(posts);
   const trendingPosts = getTrendingBlogs(posts, 5);
+  const topicClusters = getBlogTopicClusters(posts);
   const totalCount = Math.max(firebaseCatalog.count, posts.length);
 
   return (
@@ -254,6 +303,7 @@ export default async function BlogsPage() {
         </section>
 
         <MarketLaneGrid />
+        <TopicClusterBand clusters={topicClusters} />
 
         <section className="mt-10">
           <div className="mb-4 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">

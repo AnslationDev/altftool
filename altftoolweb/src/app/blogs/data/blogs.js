@@ -36,6 +36,65 @@ export const BLOG_CONTENT_LANES = [
   },
 ];
 
+export const BLOG_TOPIC_CLUSTER_CONFIG = [
+  {
+    slug: "ai-tools",
+    title: "AI Tools",
+    eyebrow: "Automation & prompts",
+    description: "AI writing, prompt, automation, and generator guides for faster digital work.",
+    categories: ["Digital Tools", "Tools", "AI Tools"],
+    keywords: ["ai", "chatgpt", "prompt", "automation", "generator", "copy ai", "content"],
+  },
+  {
+    slug: "image-video-tools",
+    title: "Image & Video Tools",
+    eyebrow: "Creator workflows",
+    description: "Image editing, video utilities, thumbnails, compression, and creator media workflows.",
+    categories: ["Tools", "Creators", "Media", "Content Creation"],
+    keywords: ["image", "video", "thumbnail", "compressor", "background", "animation", "youtube", "facebook"],
+  },
+  {
+    slug: "pdf-document-tools",
+    title: "PDF & Document Tools",
+    eyebrow: "Docs & text",
+    description: "PDF, document, README, text formatting, converter, and writing utility guides.",
+    categories: ["Tools", "Digital Tools", "Productivity"],
+    keywords: ["pdf", "document", "readme", "text", "case converter", "format", "converter", "writing"],
+  },
+  {
+    slug: "games-word-puzzles",
+    title: "Games & Word Puzzles",
+    eyebrow: "Playable guides",
+    description: "Game tutorials, word puzzles, quick-play tips, and lightweight browser game articles.",
+    categories: ["Games"],
+    keywords: ["game", "wordle", "2048", "puzzle", "tic tac", "snake", "play"],
+  },
+  {
+    slug: "student-productivity",
+    title: "Student Productivity",
+    eyebrow: "Study stack",
+    description: "Student-friendly productivity, learning, Chrome extension, and study workflow guides.",
+    categories: ["Extensions", "Digital Tools", "Productivity", "Education"],
+    keywords: ["student", "study", "learning", "productivity", "chrome", "extension", "school"],
+  },
+  {
+    slug: "travel-guides",
+    title: "Travel Guides",
+    eyebrow: "Planning help",
+    description: "Destination, weather, trip planning, seasonal travel, and first-time visitor guides.",
+    categories: ["Travel", "Travel Guides"],
+    keywords: ["travel", "france", "uk", "weather", "lake district", "visitor", "season", "trip"],
+  },
+  {
+    slug: "deals-buying-guides",
+    title: "Deals & Buying Guides",
+    eyebrow: "Savings research",
+    description: "Shopping, deal, coupon, product comparison, budget, and buying-decision articles.",
+    categories: ["Deals", "BuySmart", "Fashion & Lifestyle", "Shopping"],
+    keywords: ["deal", "coupon", "sale", "shopping", "budget", "cheap", "jewellery", "buying", "save"],
+  },
+];
+
 function getRawBlogs() {
   if (Array.isArray(rawBlogData)) return rawBlogData;
   if (Array.isArray(rawBlogData?.blogs)) return rawBlogData.blogs;
@@ -396,6 +455,83 @@ export function getRelatedBlogs(slug, limit = 6) {
   const current = getBlogBySlug(slug);
   if (!current) return blogPosts.filter((post) => post.slug !== slug).slice(0, limit);
   return getRelatedBlogsForPost(current, blogPosts, limit);
+}
+
+function getClusterMatchScore(cluster = {}, post = {}) {
+  const haystack = [
+    post.heading,
+    post.title,
+    post.excerpt,
+    post.description,
+    post.category,
+    post.tool,
+    ...(Array.isArray(post.tags) ? post.tags : []),
+  ].filter(Boolean).join(" ").toLowerCase();
+  const tokens = tokenizeBlogText(haystack);
+  const postCategorySlug = blogTaxonomySlug(post.category || "");
+  const genericCategorySlugs = new Set(["digital-tools", "tools", "productivity"]);
+  const categoryScore = (cluster.categories || []).reduce((score, category) => {
+    const categorySlug = blogTaxonomySlug(category);
+    if (categorySlug !== postCategorySlug) return score;
+    return Math.max(score, genericCategorySlugs.has(categorySlug) ? 8 : 42);
+  }, 0);
+  const keywordScore = (cluster.keywords || []).reduce((score, keyword) => {
+    const normalizedKeyword = String(keyword).toLowerCase();
+    const keywordTokens = [...tokenizeBlogText(normalizedKeyword)];
+    const phraseMatch = normalizedKeyword.length > 2 && haystack.includes(normalizedKeyword);
+    const tokenMatch = keywordTokens.length > 0 && keywordTokens.every((token) => tokens.has(token));
+    return score + (phraseMatch || tokenMatch ? 12 : 0);
+  }, 0);
+  const tagScore = (Array.isArray(post.tags) ? post.tags : []).reduce((score, tag) => {
+    const tagSlug = blogTaxonomySlug(tag);
+    const matches = (cluster.keywords || []).some((keyword) => blogTaxonomySlug(keyword) === tagSlug);
+    return score + (matches ? 10 : 0);
+  }, 0);
+
+  return categoryScore + keywordScore + tagScore;
+}
+
+export function getBlogTopicClusters(posts = blogPosts) {
+  return BLOG_TOPIC_CLUSTER_CONFIG.map((cluster, index) => {
+    const scoredPosts = posts
+      .map((post, postIndex) => ({
+        post,
+        postIndex,
+        score: getClusterMatchScore(cluster, post),
+      }))
+      .filter((item) => item.post?.slug && item.score >= 12)
+      .sort((a, b) => {
+        if (b.score !== a.score) return b.score - a.score;
+        const dateA = Date.parse(a.post.date || "") || 0;
+        const dateB = Date.parse(b.post.date || "") || 0;
+        if (dateB !== dateA) return dateB - dateA;
+        return a.postIndex - b.postIndex;
+      });
+    const clusterPosts = scoredPosts.map(({ post }) => post);
+    const relatedCategories = [
+      ...new Set(clusterPosts.map((post) => post.category).filter(Boolean)),
+    ].slice(0, 6);
+    const relatedTags = [
+      ...new Set(clusterPosts.flatMap((post) => Array.isArray(post.tags) ? post.tags : []).filter(Boolean)),
+    ].slice(0, 8);
+
+    return {
+      ...cluster,
+      index,
+      posts: clusterPosts,
+      postCount: clusterPosts.length,
+      leadPost: clusterPosts[0] || null,
+      relatedCategories,
+      relatedTags,
+    };
+  }).sort((a, b) => {
+    if (b.postCount !== a.postCount) return b.postCount - a.postCount;
+    return a.index - b.index;
+  });
+}
+
+export function getBlogTopicClusterBySlug(topicSlug, posts = blogPosts) {
+  return getBlogTopicClusters(posts).find((cluster) => cluster.slug === topicSlug) || null;
 }
 
 export default blogPosts;

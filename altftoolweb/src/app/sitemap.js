@@ -4,6 +4,7 @@ import {
   getAllBlogTags,
   getAllBlogs,
   getBlogCategories,
+  getBlogTopicClusters,
 } from "@/app/blogs/data";
 import { fetchFirebaseBlogsPage } from "@/app/blogs/data/firebaseBlogs";
 import buySmartStores from "@/app/buysmart/data/stores.json";
@@ -22,6 +23,7 @@ const staticRoutes = [
   { path: "/", priority: 1 },
   { path: "/tools", priority: 0.95 },
   { path: "/blogs", priority: 0.9 },
+  { path: "/blogs/topics", priority: 0.72 },
   { path: "/buysmart", priority: 0.85 },
   { path: "/buysmart/view-all", priority: 0.75 },
   { path: "/extensions", priority: 0.8 },
@@ -245,6 +247,13 @@ export default async function sitemap() {
         changeFrequency: "weekly",
       });
     }
+  }
+
+  for (const cluster of getBlogTopicClusters(sitemapBlogs).filter((item) => item.postCount > 0)) {
+    pushUnique(entries, seen, `/blogs/topics/${cluster.slug}`, {
+      priority: 0.62,
+      changeFrequency: "weekly",
+    });
   }
 
   for (const extension of liveCollections.extensions) {

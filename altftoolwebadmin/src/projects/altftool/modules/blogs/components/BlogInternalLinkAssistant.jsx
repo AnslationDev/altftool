@@ -9,6 +9,7 @@ import {
   Loader2,
   PlusCircle,
   RefreshCw,
+  Route,
   SearchCheck,
   Sparkles,
 } from "lucide-react";
@@ -99,6 +100,10 @@ function getExistingLinkSlugs(html = "") {
   return slugs;
 }
 
+function getInternalLinkCount(html = "") {
+  return getExistingLinkSlugs(html).size;
+}
+
 function scoreSuggestion(current, candidate, existingSlugs) {
   if (!candidate.slug || existingSlugs.has(candidate.slug)) return null;
   if (candidate.id && candidate.id === current.id) return null;
@@ -145,6 +150,12 @@ function buildLinkHtml(blog) {
 function buildRelatedBlock(blogs) {
   const links = blogs.map((blog) => `<li>${buildLinkHtml(blog)}</li>`).join("");
   return `<div class="altf-related-links"><p><strong>Related reads:</strong></p><ul>${links}</ul></div>`;
+}
+
+function buildTopicPathBlock(blogs) {
+  const top = blogs.slice(0, 5);
+  const links = top.map((blog, index) => `<li><strong>Step ${index + 1}:</strong> ${buildLinkHtml(blog)}</li>`).join("");
+  return `<section class="altf-topic-path"><h2>Continue this topic path</h2><p>Use these related AltFTool guides to keep learning the same workflow without starting a new search.</p><ol>${links}</ol></section>`;
 }
 
 export default function BlogInternalLinkAssistant({
@@ -195,11 +206,26 @@ export default function BlogInternalLinkAssistant({
       .slice(0, MAX_SUGGESTIONS);
   }, [blogs, currentBlogId, formData]);
 
+  const internalLinkCount = useMemo(
+    () => getInternalLinkCount(formData.description || ""),
+    [formData.description]
+  );
+  const linkHealth = internalLinkCount >= 3 ? "Strong" : internalLinkCount >= 1 ? "Needs one more" : "Missing";
+
   const insertBlogs = (items) => {
     if (!items.length || typeof onInsertLinks !== "function") return;
     onInsertLinks(buildRelatedBlock(items));
     setInsertedSlug(items.length === 1 ? items[0].slug : "bulk");
     emitAlert({ type: "success", message: `${items.length} internal link${items.length === 1 ? "" : "s"} inserted.` });
+    window.setTimeout(() => setInsertedSlug(""), 1600);
+  };
+
+  const insertTopicPath = () => {
+    const items = suggestions.slice(0, 5);
+    if (!items.length || typeof onInsertLinks !== "function") return;
+    onInsertLinks(buildTopicPathBlock(items));
+    setInsertedSlug("topic-path");
+    emitAlert({ type: "success", message: `Topic path inserted with ${items.length} contextual links.` });
     window.setTimeout(() => setInsertedSlug(""), 1600);
   };
 
@@ -224,7 +250,7 @@ export default function BlogInternalLinkAssistant({
             <h2 className="text-xs font-black text-gray-400 uppercase tracking-widest">Internal Links</h2>
           </div>
           <p className="mt-1 text-xs leading-5 text-gray-500">
-            Suggested from published blogs using category, tags, title, and content overlap.
+            Suggested from published blogs using category, tags, title, and content overlap. Current draft link health: {linkHealth}.
           </p>
         </div>
         <button
@@ -248,19 +274,34 @@ export default function BlogInternalLinkAssistant({
         </div>
       ) : suggestions.length ? (
         <>
-          <div className="flex items-center justify-between gap-3 rounded-xl border border-blue-100 bg-blue-50 px-3 py-2">
-            <span className="flex items-center gap-1.5 text-xs font-semibold text-blue-700">
-              <Sparkles className="h-3.5 w-3.5" />
-              {suggestions.length} smart matches
-            </span>
-            <button
-              type="button"
-              onClick={() => insertBlogs(suggestions.slice(0, 3))}
-              className="inline-flex h-7 items-center gap-1.5 rounded-lg bg-blue-600 px-2.5 text-xs font-semibold text-white hover:bg-blue-700"
-            >
-              <PlusCircle className="h-3.5 w-3.5" />
-              Insert top 3
-            </button>
+          <div className="rounded-xl border border-blue-100 bg-blue-50 px-3 py-2">
+            <div className="flex flex-wrap items-center justify-between gap-2">
+              <span className="flex items-center gap-1.5 text-xs font-semibold text-blue-700">
+                <Sparkles className="h-3.5 w-3.5" />
+                {suggestions.length} smart matches
+              </span>
+              <span className="rounded-lg bg-white px-2 py-1 text-[10px] font-bold uppercase tracking-wide text-blue-600">
+                {internalLinkCount} existing links
+              </span>
+            </div>
+            <div className="mt-2 grid grid-cols-1 gap-2 sm:grid-cols-2">
+              <button
+                type="button"
+                onClick={insertTopicPath}
+                className="inline-flex h-8 items-center justify-center gap-1.5 rounded-lg bg-gray-900 px-2.5 text-xs font-semibold text-white hover:bg-gray-700"
+              >
+                {insertedSlug === "topic-path" ? <CheckCircle2 className="h-3.5 w-3.5" /> : <Route className="h-3.5 w-3.5" />}
+                Auto-link topic path
+              </button>
+              <button
+                type="button"
+                onClick={() => insertBlogs(suggestions.slice(0, 3))}
+                className="inline-flex h-8 items-center justify-center gap-1.5 rounded-lg bg-blue-600 px-2.5 text-xs font-semibold text-white hover:bg-blue-700"
+              >
+                <PlusCircle className="h-3.5 w-3.5" />
+                Insert top 3
+              </button>
+            </div>
           </div>
 
           <div className="space-y-2.5">

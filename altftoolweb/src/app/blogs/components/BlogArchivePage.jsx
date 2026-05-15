@@ -28,7 +28,11 @@ export default function BlogArchivePage({
   archiveType = "category",
   relatedLabels = [],
 }) {
-  const archiveBase = archiveType === "tag" ? "/blogs/tag" : "/blogs/category";
+  const archiveBase = archiveType === "tag"
+    ? "/blogs/tag"
+    : archiveType === "topic"
+      ? "/blogs/topics"
+      : "/blogs/category";
   const uniqueCategories = new Set(posts.map((post) => post.category).filter(Boolean));
 
   return (
@@ -57,18 +61,22 @@ export default function BlogArchivePage({
           <div className="grid grid-cols-3 gap-2 lg:min-w-[360px]">
             <ArchiveStat icon={BookOpen} label="Articles" value={posts.length} />
             <ArchiveStat icon={Layers3} label="Categories" value={uniqueCategories.size || 1} />
-            <ArchiveStat icon={Hash} label={archiveType === "tag" ? "Tag" : "Topic"} value="1" />
+            <ArchiveStat icon={Hash} label={archiveType === "tag" ? "Tag" : archiveType === "topic" ? "Cluster" : "Topic"} value="1" />
           </div>
         </div>
 
         {relatedLabels.length > 0 ? (
           <div className="mb-6 flex flex-wrap gap-2">
-            {relatedLabels.slice(0, 12).map((label) => {
+            {relatedLabels.slice(0, 12).map((item) => {
+              const label = typeof item === "string" ? item : item?.label;
+              const href = typeof item === "string"
+                ? `${archiveBase}/${blogTaxonomySlug(item)}`
+                : item?.href || `${archiveBase}/${blogTaxonomySlug(label)}`;
               const active = label === activeLabel;
               return (
                 <Link
                   key={label}
-                  href={`${archiveBase}/${blogTaxonomySlug(label)}`}
+                  href={href}
                   className={`inline-flex h-8 items-center rounded-[6px] border px-3 text-xs font-semibold transition ${
                     active
                       ? "border-(--primary) bg-(--primary) text-(--primary-foreground)"

@@ -17,6 +17,7 @@ import {
   RefreshCw,
   SearchCheck,
   ShieldCheck,
+  Sparkles,
   Tags,
   ThumbsDown,
   ThumbsUp,
@@ -95,8 +96,40 @@ function getRefreshReasons(blog = {}) {
   if (blog.qualityScore < 70) reasons.push(`quality ${blog.qualityScore}%`);
   if (!blog.hasInternalLinks) reasons.push("no internal blog links");
   if (!blog.hasFaq) reasons.push("no authored FAQ");
+  if (!blog.hasTrustMetadata) reasons.push("missing trust metadata");
+  if (blog.helpfulRate !== null && blog.feedbackTotal >= 3 && blog.helpfulRate < 60) {
+    reasons.push(`reader feedback ${blog.helpfulRate}% helpful`);
+  }
 
   return reasons;
+}
+
+function getRefreshAction(blog = {}) {
+  if (!blog.hasTrustMetadata) {
+    return "Add author role, reviewer, and a short editorial note.";
+  }
+  if (!blog.hasInternalLinks) {
+    return "Insert 3-5 contextual internal links and a topic path block.";
+  }
+  if (!blog.hasFaq) {
+    return "Add an authored FAQ block for long-tail search coverage.";
+  }
+  if (blog.qualityScore < 70) {
+    return "Expand the intro, headings, examples, and scannable structure.";
+  }
+  if (blog.daysSinceUpdate !== null && blog.daysSinceUpdate >= 90) {
+    return "Refresh facts, screenshots, dates, and recommendations.";
+  }
+  if (blog.helpfulRate !== null && blog.feedbackTotal >= 3 && blog.helpfulRate < 60) {
+    return "Rewrite unclear sections using reader feedback as the first signal.";
+  }
+  return "Review SEO, links, freshness, and reader usefulness.";
+}
+
+function getRefreshTier(score = 0) {
+  if (score >= 90) return "High";
+  if (score >= 55) return "Medium";
+  return "Quick win";
 }
 
 function getSeoAuditIssues(blog = {}) {
@@ -303,6 +336,8 @@ export default function AltFToolBlogAnalyticsPage() {
         refreshReasons,
         seoAuditIssues,
         refreshScore,
+        refreshAction: getRefreshAction(blog),
+        refreshTier: getRefreshTier(refreshScore),
       };
     });
 
@@ -392,6 +427,8 @@ export default function AltFToolBlogAnalyticsPage() {
       missingTrust: withRefreshReasons.filter((blog) => !blog.hasTrustMetadata),
       lowFeedback: published.filter((blog) => blog.helpfulRate !== null && blog.feedbackTotal >= 3 && blog.helpfulRate < 60),
       stalePublished: published.filter((blog) => blog.daysSinceUpdate !== null && blog.daysSinceUpdate >= 90),
+      highPriorityRefresh: published.filter((blog) => blog.refreshReasons.length > 0 && blog.refreshScore >= 90),
+      quickRefreshWins: published.filter((blog) => blog.refreshReasons.length > 0 && blog.refreshScore < 55),
       refreshQueue,
       seoAuditQueue,
       issueCounts: [...issueCounts.entries()]
@@ -579,6 +616,14 @@ export default function AltFToolBlogAnalyticsPage() {
               <SearchCheck className="h-3.5 w-3.5" />
               {analytics.noFaq.length} no FAQ
             </span>
+            <span className="inline-flex h-7 items-center gap-1 rounded-lg bg-red-50 px-2.5 text-red-700">
+              <AlertTriangle className="h-3.5 w-3.5" />
+              {analytics.highPriorityRefresh.length} high priority
+            </span>
+            <span className="inline-flex h-7 items-center gap-1 rounded-lg bg-green-50 px-2.5 text-green-700">
+              <Sparkles className="h-3.5 w-3.5" />
+              {analytics.quickRefreshWins.length} quick wins
+            </span>
           </div>
         </div>
 
@@ -595,8 +640,22 @@ export default function AltFToolBlogAnalyticsPage() {
                   {blog.refreshScore}
                 </div>
                 <div className="min-w-0 flex-1">
-                  <p className="line-clamp-1 text-sm font-semibold text-gray-800 group-hover:text-blue-700">
-                    {blog.heading || "Untitled blog"}
+                  <div className="flex flex-wrap items-center gap-2">
+                    <p className="line-clamp-1 min-w-0 flex-1 text-sm font-semibold text-gray-800 group-hover:text-blue-700">
+                      {blog.heading || "Untitled blog"}
+                    </p>
+                    <span className={`shrink-0 rounded-lg px-2 py-1 text-[10px] font-bold uppercase tracking-wide ${
+                      blog.refreshTier === "High"
+                        ? "bg-red-50 text-red-600"
+                        : blog.refreshTier === "Medium"
+                          ? "bg-amber-50 text-amber-600"
+                          : "bg-green-50 text-green-600"
+                    }`}>
+                      {blog.refreshTier}
+                    </span>
+                  </div>
+                  <p className="mt-1 line-clamp-2 text-xs leading-5 text-gray-500">
+                    {blog.refreshAction}
                   </p>
                   <div className="mt-2 flex flex-wrap gap-1.5">
                     {blog.refreshReasons.slice(0, 3).map((reason) => (
@@ -663,7 +722,7 @@ export default function AltFToolBlogAnalyticsPage() {
                           {blog.heading || "Untitled blog"}
                         </span>
                         <span className="mt-0.5 line-clamp-1 text-[10px] text-gray-400">
-                          {blog.refreshReasons[0] || "Refresh recommended"}
+                          {blog.refreshAction || blog.refreshReasons[0] || "Refresh recommended"}
                         </span>
                       </span>
                     </button>
