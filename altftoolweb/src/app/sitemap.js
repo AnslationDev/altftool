@@ -33,6 +33,7 @@ const staticRoutes = [
   { path: "/news", priority: 0.7 },
   { path: "/news/headlines", priority: 0.6 },
   { path: "/news/local", priority: 0.6 },
+  { path: "/news/newsletter", priority: 0.48 },
   { path: "/news/topics", priority: 0.6 },
   { path: "/news/trending", priority: 0.6 },
   { path: "/brandrating", priority: 0.7 },

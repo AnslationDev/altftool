@@ -17,6 +17,7 @@ import JsonLd from "@/platform/seo/JsonLd";
 import {
   createOrganizationJsonLd,
   createWebsiteJsonLd,
+  siteConfig,
 } from "@/platform/seo/generateMetadata";
 
 const geistSans = Geist({
@@ -31,7 +32,7 @@ const geistMono = Geist_Mono({
   display: "swap",
 });
 export const metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://altftool.com"),
+  metadataBase: new URL(siteConfig.url),
   applicationName: "AltFTool",
   title: {
     default: "AltFTool – Your Daily Digital Toolkit",
@@ -65,19 +66,21 @@ export const metadata = {
     url: "/",
     images: [
       {
-        url: "/assets/logo3.png",
-        width: 512,
-        height: 512,
+        url: siteConfig.defaultImagePath,
+        width: 1200,
+        height: 630,
         alt: "AltFTool",
       },
     ],
   },
   twitter: {
-    card: "summary",
+    card: "summary_large_image",
     title: "AltFTool – Your Daily Digital Toolkit",
     description:
       "Free online tools, software picks, games, Chrome extensions, deals, ranked guides, and productivity utilities.",
-    images: ["/assets/logo3.png"],
+    site: siteConfig.twitterHandle,
+    creator: siteConfig.twitterHandle,
+    images: [siteConfig.defaultImagePath],
   },
   robots: {
     index: true,

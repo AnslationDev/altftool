@@ -1,9 +1,32 @@
 export const siteConfig = {
   name: "AltFTool",
+  shortName: "AltFTool",
   url: process.env.NEXT_PUBLIC_SITE_URL || "https://altftool.com",
   description:
     "AltFTool is your online tools website with free tools, software, games, must-have Chrome extensions, and best web tools to boost productivity and fun.",
   logoPath: "/assets/logo3.png",
+  defaultImagePath: "/assets/og-default.png",
+  locale: "en_US",
+  twitterHandle: "@altftool17279",
+  sameAs: [
+    "https://x.com/altftool17279",
+    "https://www.facebook.com/profile.php?id=61586134133885",
+    "https://www.instagram.com/altftools/",
+    "https://www.threads.com/@altftools",
+    "https://www.youtube.com/@AltFTool",
+  ],
+  keywords: [
+    "AltFTool",
+    "online tools",
+    "free web tools",
+    "micro tools",
+    "developer tools",
+    "PDF tools",
+    "image tools",
+    "productivity tools",
+    "Chrome extensions",
+    "digital toolkit",
+  ],
 };
 
 export function getSiteUrl() {
@@ -30,16 +53,28 @@ export function createPageMetadata({
   description = siteConfig.description,
   path = "/",
   image,
+  keywords = [],
   type = "website",
 } = {}) {
   const url = absoluteUrl(path);
-  const imageUrl = image ? absoluteUrl(image) : undefined;
+  const imageUrl = absoluteUrl(image || siteConfig.defaultImagePath);
+  const keywordList = [...new Set([...siteConfig.keywords, ...keywords].filter(Boolean))];
 
   return {
     title,
     description,
+    applicationName: siteConfig.name,
+    authors: [{ name: siteConfig.name, url: getSiteUrl() }],
+    creator: siteConfig.name,
+    publisher: siteConfig.name,
+    category: "technology",
+    keywords: keywordList,
     alternates: {
       canonical: path,
+      languages: {
+        "x-default": path,
+        en: path,
+      },
     },
     openGraph: {
       title,
@@ -47,13 +82,34 @@ export function createPageMetadata({
       url,
       siteName: siteConfig.name,
       type,
-      images: imageUrl ? [{ url: imageUrl, alt: title }] : undefined,
+      locale: siteConfig.locale,
+      images: [
+        {
+          url: imageUrl,
+          width: 1200,
+          height: 630,
+          alt: title || siteConfig.name,
+        },
+      ],
     },
     twitter: {
-      card: imageUrl ? "summary_large_image" : "summary",
+      card: "summary_large_image",
       title,
       description,
-      images: imageUrl ? [imageUrl] : undefined,
+      site: siteConfig.twitterHandle,
+      creator: siteConfig.twitterHandle,
+      images: [imageUrl],
+    },
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: {
+        index: true,
+        follow: true,
+        "max-image-preview": "large",
+        "max-snippet": -1,
+        "max-video-preview": -1,
+      },
     },
   };
 }
@@ -64,8 +120,10 @@ export function createOrganizationJsonLd() {
     "@type": "Organization",
     "@id": `${getSiteUrl()}/#organization`,
     name: siteConfig.name,
+    alternateName: siteConfig.shortName,
     url: getSiteUrl(),
     logo: absoluteUrl(siteConfig.logoPath),
+    sameAs: siteConfig.sameAs,
   };
 }
 
@@ -76,12 +134,13 @@ export function createWebsiteJsonLd() {
     "@id": `${getSiteUrl()}/#website`,
     name: siteConfig.name,
     url: getSiteUrl(),
+    inLanguage: "en",
     publisher: {
       "@id": `${getSiteUrl()}/#organization`,
     },
     potentialAction: {
       "@type": "SearchAction",
-      target: `${getSiteUrl()}/tools?search={search_term_string}`,
+      target: `${getSiteUrl()}/search?q={search_term_string}`,
       "query-input": "required name=search_term_string",
     },
   };
@@ -188,12 +247,44 @@ export function createBlogPostingJsonLd(blog) {
     "@id": `${absoluteUrl(path)}#article`,
     headline: title,
     description: blog.excerpt || blog.description,
-    image: blog.image ? absoluteUrl(blog.image) : undefined,
+    image: blog.image ? absoluteUrl(blog.image) : absoluteUrl(siteConfig.defaultImagePath),
     datePublished: blog.date,
     dateModified: blog.updatedAt || blog.date,
     author: {
       "@type": "Organization",
       name: blog.author || siteConfig.name,
+    },
+    publisher: {
+      "@id": `${getSiteUrl()}/#organization`,
+    },
+    mainEntityOfPage: absoluteUrl(path),
+  };
+}
+
+export function createArticleJsonLd({
+  path,
+  headline,
+  description,
+  image,
+  datePublished,
+  dateModified,
+  author,
+  type = "Article",
+} = {}) {
+  if (!path || !headline) return null;
+
+  return {
+    "@context": "https://schema.org",
+    "@type": type,
+    "@id": `${absoluteUrl(path)}#article`,
+    headline,
+    description,
+    image: image ? absoluteUrl(image) : absoluteUrl(siteConfig.defaultImagePath),
+    datePublished,
+    dateModified: dateModified || datePublished,
+    author: {
+      "@type": "Organization",
+      name: author || siteConfig.name,
     },
     publisher: {
       "@id": `${getSiteUrl()}/#organization`,

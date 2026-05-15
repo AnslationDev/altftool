@@ -1,5 +1,11 @@
 import Feeds from "../../components/sections/Feeds";
 import topicsData from "../../../../../public/data/topics.json";
+import JsonLd from "@/platform/seo/JsonLd";
+import {
+  createBreadcrumbJsonLd,
+  createCollectionPageJsonLd,
+  createPageMetadata,
+} from "@/platform/seo/generateMetadata";
 
 function slugify(value = "") {
   return String(value)
@@ -30,16 +36,39 @@ function resolveTopicLabel(topic = "") {
 export async function generateMetadata({ params }) {
   const { topic } = await params;
   const label = resolveTopicLabel(topic);
+  const topicSlug = slugify(label);
 
-  return {
+  return createPageMetadata({
     title: `${label} News & Updates | AltFTool News`,
     description: `Read the latest ${label} stories, headlines, and updates on AltFTool News.`,
-  };
+    path: `/news/topics/${topicSlug}`,
+    keywords: [`${label} news`, `${label} updates`, "AltFTool News"],
+  });
 }
 
 export default async function TopicPage({ params }) {
   const { topic } = await params;
   const label = resolveTopicLabel(topic);
+  const topicSlug = slugify(label);
 
-  return <Feeds topic={label} title={`${label} News`} />;
+  return (
+    <>
+      <JsonLd
+        id={`news-topic-schema-${topicSlug}`}
+        data={[
+          createCollectionPageJsonLd({
+            path: `/news/topics/${topicSlug}`,
+            name: `${label} News`,
+            description: `Latest ${label} stories, headlines, and updates on AltFTool News.`,
+          }),
+          createBreadcrumbJsonLd([
+            { name: "Home", path: "/" },
+            { name: "News", path: "/news" },
+            { name: `${label} News`, path: `/news/topics/${topicSlug}` },
+          ]),
+        ]}
+      />
+      <Feeds topic={label} title={`${label} News`} />
+    </>
+  );
 }

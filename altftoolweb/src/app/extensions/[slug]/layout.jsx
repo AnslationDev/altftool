@@ -1,5 +1,6 @@
 import { createTtlCache } from "@altftool/core/cache";
 import { normalizeExtension } from "@altftool/core/firebaseContent";
+import { createPageMetadata } from "@/platform/seo/generateMetadata";
 
 const metadataCache = createTtlCache({ ttlMs: 300000, maxEntries: 120 });
 const FIREBASE_API_KEY =
@@ -54,15 +55,30 @@ export async function generateMetadata({ params }) {
     try {
         const extension = await getExtensionMetadata(slug);
         if (!extension) {
-            return { title: "Extension Not Found – AltFTool" };
+            return {
+                title: "Extension Not Found – AltFTool",
+                robots: { index: false, follow: true },
+            };
         }
 
-        return {
+        return createPageMetadata({
             title: `${extension.name} – Chrome Extension`,
             description: extension.description || `Download and explore the ${extension.name} extension on AltFTool.`,
-        };
+            path: `/extensions/${extension.slug || slug}`,
+            image: extension.image,
+            keywords: [
+                extension.name,
+                `${extension.name} extension`,
+                extension.category,
+                "Chrome extension",
+            ],
+        });
     } catch (e) {
-        return { title: "Extensions – AltFTool" };
+        return createPageMetadata({
+            title: "Extensions – AltFTool",
+            description: "Explore useful Chrome extensions curated by AltFTool.",
+            path: "/extensions",
+        });
     }
 }
 
