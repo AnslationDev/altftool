@@ -1,8 +1,10 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { CalendarDays, Clock3, UserRound } from "lucide-react";
 import { useEffect, useRef } from "react";
+import { blogTaxonomySlug } from "../../data";
 
 function formatDate(date) {
   if (!date) return "Recently updated";
@@ -45,9 +47,12 @@ export default function BlogHeader({ blog }) {
 
         <div className="relative z-10 mt-auto w-full p-5 sm:p-8 lg:p-10">
           <div className="mb-4 flex flex-wrap items-center gap-2">
-            <span className="inline-flex h-8 items-center rounded-[6px] bg-(--primary) px-3 text-xs font-bold uppercase tracking-wide text-(--primary-foreground)">
+            <Link
+              href={`/blogs/category/${blogTaxonomySlug(blog.category)}`}
+              className="inline-flex h-8 items-center rounded-[6px] bg-(--primary) px-3 text-xs font-bold uppercase tracking-wide text-(--primary-foreground) transition hover:bg-(--primary-active)"
+            >
               {blog.category}
-            </span>
+            </Link>
             {blog.tool && blog.tool !== blog.category ? (
               <span className="inline-flex h-8 items-center rounded-[6px] border border-white/20 bg-white/10 px-3 text-xs font-semibold text-white backdrop-blur">
                 {blog.tool}

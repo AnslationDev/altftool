@@ -1,5 +1,10 @@
 import { toolMetaMap } from "@/platform/registry/toolMetaMap";
-import { getAllBlogs } from "@/app/blogs/data";
+import {
+  blogTaxonomySlug,
+  getAllBlogTags,
+  getAllBlogs,
+  getBlogCategories,
+} from "@/app/blogs/data";
 import { fetchFirebaseBlogsPage } from "@/app/blogs/data/firebaseBlogs";
 import buySmartStores from "@/app/buysmart/data/stores.json";
 import dealData from "@/app/exclusivedeals/(data)/db.json";
@@ -166,6 +171,7 @@ export default async function sitemap() {
   const entries = [];
   const seen = new Set();
   const liveCollections = await getLiveSitemapCollections();
+  const sitemapBlogs = [...getAllBlogs(), ...liveCollections.firebaseBlogs];
 
   for (const route of staticRoutes) {
     pushUnique(entries, seen, route.path, {
@@ -216,6 +222,26 @@ export default async function sitemap() {
       pushUnique(entries, seen, `/blogs/${blog.slug}`, {
         lastModified: blog.updatedAt || blog.date ? new Date(blog.updatedAt || blog.date) : undefined,
         priority: 0.72,
+        changeFrequency: "weekly",
+      });
+    }
+  }
+
+  for (const category of getBlogCategories(sitemapBlogs).filter((item) => item !== "All")) {
+    const categorySlug = blogTaxonomySlug(category);
+    if (categorySlug) {
+      pushUnique(entries, seen, `/blogs/category/${categorySlug}`, {
+        priority: 0.66,
+        changeFrequency: "weekly",
+      });
+    }
+  }
+
+  for (const tag of getAllBlogTags(sitemapBlogs)) {
+    const tagSlug = blogTaxonomySlug(tag);
+    if (tagSlug) {
+      pushUnique(entries, seen, `/blogs/tag/${tagSlug}`, {
+        priority: 0.54,
         changeFrequency: "weekly",
       });
     }

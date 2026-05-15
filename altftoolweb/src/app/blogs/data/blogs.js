@@ -64,6 +64,23 @@ function slugify(value = "") {
     .replace(/^-+|-+$/g, "");
 }
 
+export function blogTaxonomySlug(value = "") {
+  return String(value)
+    .toLowerCase()
+    .trim()
+    .replace(/&/g, "and")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+}
+
+export function taxonomyLabelFromSlug(slug = "") {
+  return String(slug)
+    .split("-")
+    .filter(Boolean)
+    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+    .join(" ");
+}
+
 function coerceDate(value, index = 0) {
   let date = null;
 
@@ -165,6 +182,40 @@ export function getBlogBySlug(slug) {
 
 export function getBlogCategories(posts = blogPosts) {
   return ["All", ...new Set(posts.map((post) => post.category).filter(Boolean))];
+}
+
+export function getBlogCategoryBySlug(categorySlug, posts = blogPosts) {
+  const categories = getBlogCategories(posts).filter((category) => category !== "All");
+  return (
+    categories.find((category) => blogTaxonomySlug(category) === categorySlug) ||
+    taxonomyLabelFromSlug(categorySlug)
+  );
+}
+
+export function getAllBlogTags(posts = blogPosts) {
+  const tags = posts.flatMap((post) => (Array.isArray(post.tags) ? post.tags : []));
+  return [...new Set(tags.filter(Boolean))].sort((a, b) => a.localeCompare(b));
+}
+
+export function getBlogTagBySlug(tagSlug, posts = blogPosts) {
+  return (
+    getAllBlogTags(posts).find((tag) => blogTaxonomySlug(tag) === tagSlug) ||
+    taxonomyLabelFromSlug(tagSlug)
+  );
+}
+
+export function filterBlogsByCategorySlug(posts = blogPosts, categorySlug) {
+  if (!categorySlug) return posts;
+  return posts.filter((post) => blogTaxonomySlug(post.category) === categorySlug);
+}
+
+export function filterBlogsByTagSlug(posts = blogPosts, tagSlug) {
+  if (!tagSlug) return posts;
+  return posts.filter((post) =>
+    (Array.isArray(post.tags) ? post.tags : []).some(
+      (tag) => blogTaxonomySlug(tag) === tagSlug,
+    ),
+  );
 }
 
 export function getBlogStats(posts = blogPosts) {

@@ -5,8 +5,10 @@ import { Clock, ArrowUpRight } from "lucide-react";
 
 // ─── Helpers ───────────────────────────────────────────────────────────────────
 
-function readTime(excerpt = "") {
-  return `${Math.max(1, Math.ceil(excerpt.split(" ").length / 200))} min`;
+function readTime(blog = {}) {
+  if (blog.readTime) return blog.readTime;
+  const excerpt = blog.excerpt || "";
+  return `${Math.max(1, Math.ceil(excerpt.split(" ").length / 200))} min read`;
 }
 
 // ─── Vertical card (default) ────────────────────────────────────────────────────
@@ -40,7 +42,7 @@ function VerticalCard({ blog, height, showExcerpt, className }) {
                         opacity-0 group-hover:opacity-100 translate-y-1 group-hover:translate-y-0
                         transition-all duration-300">
           <Clock size={9} />
-          {readTime(blog.excerpt)}
+          {readTime(blog)}
         </div>
 
         {/* Bottom content */}

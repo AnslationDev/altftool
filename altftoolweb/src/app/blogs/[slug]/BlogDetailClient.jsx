@@ -28,6 +28,8 @@ import BlogAds from "../components/slug/BlogAds";
 import BlogComments from "../components/slug/BlogComments";
 import BlogTopBarLoader from "../components/slug/BlogTopBarLoader";
 import BlogTableOfContents from "../components/slug/BlogTableOfContents";
+import BlogReadingProgress from "../components/slug/BlogReadingProgress";
+import BlogArticleEnhancements from "../components/slug/BlogArticleEnhancements";
 import BlogCard from "../components/BlogCard";
 import "../../styles/ckeditor.css";
 
@@ -208,6 +210,7 @@ export default function BlogDetailClient({ slug, initialBlog, initialRelated }) 
 
   return (
     <main className="bg-(--background) pb-12 pt-4 text-(--foreground) sm:pt-6">
+      <BlogReadingProgress />
       <div className="mx-auto w-full max-w-[1500px] px-3 sm:px-5 lg:px-8">
         <div className="mb-4 flex items-center justify-between gap-3">
           <Link
@@ -251,6 +254,10 @@ export default function BlogDetailClient({ slug, initialBlog, initialRelated }) 
             <article className="rounded-[var(--anslation-ds-radius)] border border-(--border) bg-(--card) p-4 shadow-[var(--anslation-ds-shadow-sm)] sm:p-6 md:p-8">
               <BlogContent content={blog.description} />
             </article>
+            <BlogArticleEnhancements
+              blog={blog}
+              relatedPosts={similarPosts}
+            />
             <BlogComments
               comments={comments}
               addComment={addComment}
