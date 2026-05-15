@@ -96,6 +96,30 @@ function getRefreshReasons(blog = {}) {
   return reasons;
 }
 
+function addDays(date, days) {
+  const next = new Date(date);
+  next.setDate(next.getDate() + days);
+  return next;
+}
+
+function formatShortDate(date) {
+  return date.toLocaleDateString("en", { month: "short", day: "numeric" });
+}
+
+function buildRefreshSchedule(queue = []) {
+  const today = new Date();
+  const slots = [
+    { label: "This week", caption: "Fix highest-impact SEO gaps", days: 0, items: queue.slice(0, 3) },
+    { label: "Next 14 days", caption: "Add FAQ and internal links", days: 7, items: queue.slice(3, 6) },
+    { label: "Backlog", caption: "Refresh when content calendar opens", days: 14, items: queue.slice(6, 9) },
+  ];
+
+  return slots.map((slot) => ({
+    ...slot,
+    dateLabel: formatShortDate(addDays(today, slot.days)),
+  }));
+}
+
 function StatCard({ icon: Icon, label, value, caption, tone = "blue" }) {
   const toneMap = {
     blue: "bg-blue-50 text-blue-600",
@@ -277,6 +301,11 @@ export default function AltFToolBlogAnalyticsPage() {
       })
       .sort((a, b) => (toDate(a.updatedAt) || 0) - (toDate(b.updatedAt) || 0));
 
+    const refreshQueue = published
+      .filter((blog) => blog.refreshReasons.length > 0)
+      .sort((a, b) => b.refreshScore - a.refreshScore)
+      .slice(0, 9);
+
     return {
       total: withRefreshReasons.length,
       published: published.length,
@@ -290,10 +319,8 @@ export default function AltFToolBlogAnalyticsPage() {
       noFaq: published.filter((blog) => !blog.hasFaq),
       noInternalLinks: published.filter((blog) => !blog.hasInternalLinks),
       stalePublished: published.filter((blog) => blog.daysSinceUpdate !== null && blog.daysSinceUpdate >= 90),
-      refreshQueue: published
-        .filter((blog) => blog.refreshReasons.length > 0)
-        .sort((a, b) => b.refreshScore - a.refreshScore)
-        .slice(0, 8),
+      refreshQueue,
+      refreshSchedule: buildRefreshSchedule(refreshQueue),
       topBlogs: [...published].sort((a, b) => b.engagement - a.engagement).slice(0, 8),
       lowQualityBlogs: [...withRefreshReasons].sort((a, b) => a.qualityScore - b.qualityScore).slice(0, 8),
       staleDrafts: staleDrafts.slice(0, 6),
@@ -424,6 +451,68 @@ export default function AltFToolBlogAnalyticsPage() {
             No published posts need refresh right now.
           </p>
         )}
+      </section>
+
+      <section className="rounded-2xl border border-gray-100 bg-white p-6 shadow-sm">
+        <div className="mb-5 flex flex-wrap items-center justify-between gap-3">
+          <div className="flex items-center gap-2">
+            <CalendarClock className="h-4 w-4 text-blue-600" />
+            <div>
+              <h2 className="text-sm font-black uppercase tracking-wider text-gray-700">Refresh sprint calendar</h2>
+              <p className="mt-1 text-xs text-gray-400">
+                Suggested order for turning the refresh queue into weekly editing work.
+              </p>
+            </div>
+          </div>
+          <span className="rounded-lg bg-gray-50 px-3 py-1.5 text-xs font-semibold text-gray-500">
+            {analytics.refreshQueue.length} queued posts
+          </span>
+        </div>
+
+        <div className="grid grid-cols-1 gap-3 lg:grid-cols-3">
+          {analytics.refreshSchedule.map((slot) => (
+            <div key={slot.label} className="rounded-xl border border-gray-100 bg-gray-50/60 p-4">
+              <div className="mb-3 flex items-start justify-between gap-3">
+                <div>
+                  <p className="text-sm font-black text-gray-900">{slot.label}</p>
+                  <p className="mt-1 text-xs leading-5 text-gray-500">{slot.caption}</p>
+                </div>
+                <span className="shrink-0 rounded-lg bg-white px-2 py-1 text-[10px] font-bold uppercase tracking-wide text-blue-600 shadow-sm">
+                  {slot.dateLabel}
+                </span>
+              </div>
+
+              {slot.items.length ? (
+                <div className="space-y-2">
+                  {slot.items.map((blog) => (
+                    <button
+                      key={blog.id}
+                      type="button"
+                      onClick={() => router.push(`/altftool/blogs/edit-blog/${blog.id}`)}
+                      className="group flex w-full items-center gap-2 rounded-lg border border-gray-100 bg-white p-2 text-left transition hover:border-blue-200 hover:bg-blue-50"
+                    >
+                      <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-blue-50 text-[11px] font-black text-blue-600">
+                        {blog.refreshScore}
+                      </span>
+                      <span className="min-w-0 flex-1">
+                        <span className="line-clamp-1 text-xs font-semibold text-gray-800 group-hover:text-blue-700">
+                          {blog.heading || "Untitled blog"}
+                        </span>
+                        <span className="mt-0.5 line-clamp-1 text-[10px] text-gray-400">
+                          {blog.refreshReasons[0] || "Refresh recommended"}
+                        </span>
+                      </span>
+                    </button>
+                  ))}
+                </div>
+              ) : (
+                <p className="rounded-lg bg-white px-3 py-6 text-center text-xs text-gray-400">
+                  Nothing scheduled here yet.
+                </p>
+              )}
+            </div>
+          ))}
+        </div>
       </section>
 
       <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">

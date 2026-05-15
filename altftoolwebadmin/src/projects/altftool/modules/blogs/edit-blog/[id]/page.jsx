@@ -24,6 +24,7 @@ import FAQPicker from "../../components/FAQCreator";
 import BlogInternalLinkAssistant from "../../components/BlogInternalLinkAssistant";
 import BlogSeoChecklist, { parseBlogTags } from "../../components/BlogSeoChecklist";
 import BlogLivePreview from "../../components/BlogLivePreview";
+import BlogWritingAssistant from "../../components/BlogWritingAssistant";
 
 const BlogEditor = dynamic(() => import("../../components/BlogEditor"), { ssr: false });
 
@@ -245,6 +246,18 @@ export default function EditBlog() {
       description: `${prev.description || ""}${prev.description?.trim() ? "\n\n" : ""}${html}`,
     }));
     setErrors((prev) => ({ ...prev, description: undefined }));
+  };
+
+  const handleApplyWritingFields = (fields = {}) => {
+    setFormData((prev) => ({ ...prev, ...fields }));
+    setErrors((prev) => {
+      const next = { ...prev };
+      Object.keys(fields).forEach((key) => {
+        next[key] = undefined;
+      });
+      return next;
+    });
+    setBannerError(null);
   };
 
   /* ── Validation ── */
@@ -511,6 +524,12 @@ export default function EditBlog() {
               formData={formData}
               imagePreview={imagePreview}
               imageAlt={imageAlt}
+            />
+
+            <BlogWritingAssistant
+              formData={formData}
+              onApplyFields={handleApplyWritingFields}
+              onInsertBlock={handleInsertContentBlock}
             />
 
             <BlogSeoChecklist

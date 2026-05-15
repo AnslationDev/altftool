@@ -30,6 +30,7 @@ import BlogTopBarLoader from "../components/slug/BlogTopBarLoader";
 import BlogTableOfContents from "../components/slug/BlogTableOfContents";
 import BlogReadingProgress from "../components/slug/BlogReadingProgress";
 import BlogArticleEnhancements from "../components/slug/BlogArticleEnhancements";
+import BlogReaderCompanion from "../components/slug/BlogReaderCompanion";
 import BlogCard from "../components/BlogCard";
 import "../../styles/ckeditor.css";
 
@@ -254,6 +255,10 @@ export default function BlogDetailClient({ slug, initialBlog, initialRelated }) 
             <article className="rounded-[var(--anslation-ds-radius)] border border-(--border) bg-(--card) p-4 shadow-[var(--anslation-ds-shadow-sm)] sm:p-6 md:p-8">
               <BlogContent content={blog.description} />
             </article>
+            <BlogReaderCompanion
+              blog={blog}
+              relatedPosts={similarPosts}
+            />
             <BlogArticleEnhancements
               blog={blog}
               relatedPosts={similarPosts}

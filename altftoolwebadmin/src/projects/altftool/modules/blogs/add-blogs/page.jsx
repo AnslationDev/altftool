@@ -25,6 +25,7 @@ import FAQPicker from "../components/FAQCreator";
 import BlogInternalLinkAssistant from "../components/BlogInternalLinkAssistant";
 import BlogSeoChecklist, { parseBlogTags } from "../components/BlogSeoChecklist";
 import BlogLivePreview from "../components/BlogLivePreview";
+import BlogWritingAssistant from "../components/BlogWritingAssistant";
 
 const BlogEditor = dynamic(() => import("../components/BlogEditor"), { ssr: false });
 
@@ -286,6 +287,20 @@ export default function AddBlog() {
       description: `${prev.description || ""}${prev.description?.trim() ? "\n\n" : ""}${html}`,
     }));
     clearError("description");
+  };
+
+  const handleApplyWritingFields = (fields = {}) => {
+    setFormData((prev) => ({ ...prev, ...fields }));
+    setErrors((prev) => {
+      const next = { ...prev };
+      Object.keys(fields).forEach((key) => {
+        next[key] = undefined;
+      });
+      return next;
+    });
+    if ("seoTitle" in fields) setSeoEdited((prev) => ({ ...prev, title: true }));
+    if ("seoDescription" in fields) setSeoEdited((prev) => ({ ...prev, description: true }));
+    setBannerError(null);
   };
 
   const handleChange = (e) => {
@@ -686,6 +701,12 @@ export default function AddBlog() {
                 formData={formData}
                 imagePreview={imagePreview}
                 imageAlt={imageAlt}
+              />
+
+              <BlogWritingAssistant
+                formData={formData}
+                onApplyFields={handleApplyWritingFields}
+                onInsertBlock={handleInsertContentBlock}
               />
 
               {/* Image card */}
