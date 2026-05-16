@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { BarChart3, FileText, PlusCircle, Tag } from "lucide-react";
+import { BarChart3, FileText, PlusCircle, Tag, WandSparkles } from "lucide-react";
 
 import CategoryModal from "./CategoryModal";
 
@@ -11,12 +11,12 @@ export default function BlogTopBar(){
 
   const pathname = usePathname();
   const [showCategoryModal,setShowCategoryModal] = useState(false);
-  const [route, setRoute] = useState("overview");
 
   const menuItems = [
     // { name:"Overview",icon:LayoutDashboard,href:"/altftool/blogs" },
     { name:"All Blogs",icon:FileText,href:"/altftool/blogs/view-blogs" },
     { name:"Analytics",icon:BarChart3,href:"/altftool/blogs/analytics" },
+    { name:"Bulk Refresh",icon:WandSparkles,href:"/altftool/blogs/bulk-refresh" },
     { name:"Add New Blog",icon:PlusCircle,href:"/altftool/blogs/add-blogs" }
   ];
 
@@ -26,7 +26,7 @@ export default function BlogTopBar(){
 
     <header className="w-full bg-white border-b shadow-sm">
 
-      <div className="max-w-7xl mx-auto flex items-center gap-6 py-4">
+      <div className="max-w-7xl mx-auto flex flex-wrap items-center gap-3 px-4 py-4">
 
         {/* Title */}
         <Link href="/altftool/blogs" className="flex items-center gap-2">
@@ -38,7 +38,7 @@ export default function BlogTopBar(){
 
         {/* Navigation */}
 
-        <nav className="flex items-center gap-4 px-6 py-3">
+        <nav className="flex min-w-0 flex-1 items-center gap-2 overflow-x-auto px-1 py-2 md:px-4">
 
           {menuItems.map(item=>{
 
@@ -54,7 +54,7 @@ export default function BlogTopBar(){
               <Link
                 key={item.name}
                 href={item.href}
-                className={`flex items-center gap-2 px-4 py-2 rounded-md text-sm font-medium transition
+                className={`flex shrink-0 items-center gap-2 px-4 py-2 rounded-md text-sm font-medium transition
                 ${
                   isActive
                     ? "bg-(--primary) text-white"
@@ -77,7 +77,7 @@ export default function BlogTopBar(){
 
         <button
           onClick={()=>setShowCategoryModal(true)}
-          className="ml-auto flex items-center gap-2 bg-(--primary) text-white px-4 py-2 rounded-md text-sm hover:opacity-90"
+          className="ml-auto flex shrink-0 items-center gap-2 bg-(--primary) text-white px-4 py-2 rounded-md text-sm hover:opacity-90"
         >
           <Tag size={16}/>
           Add Category

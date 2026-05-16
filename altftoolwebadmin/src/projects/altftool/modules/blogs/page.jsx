@@ -180,6 +180,12 @@ export default function Blogs() {
               Analytics
             </a>
             <a
+              href="/altftool/blogs/bulk-refresh"
+              className="rounded-md border border-blue-100 bg-blue-50 px-4 py-2 text-sm font-semibold text-blue-700 transition hover:bg-blue-100"
+            >
+              Bulk Refresh
+            </a>
+            <a
               href="/altftool/blogs/add-blogs"
               className="bg-(--primary) text-white px-4 py-2 rounded-md text-sm hover:opacity-90"
             >
