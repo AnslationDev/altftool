@@ -564,13 +564,31 @@ export default function AltFToolBlogAnalyticsPage() {
             <p className="mt-1 text-sm text-gray-500">Performance, content quality, category health, and publishing risks.</p>
           </div>
         </div>
-        <button
-          type="button"
-          onClick={() => router.push("/altftool/blogs/add-blogs")}
-          className="inline-flex h-10 items-center justify-center rounded-xl bg-gray-900 px-4 text-sm font-semibold text-white transition hover:bg-gray-700"
-        >
-          Add blog
-        </button>
+        <div className="flex flex-wrap items-center gap-2">
+          <button
+            type="button"
+            onClick={() => router.push("/altftool/blogs/quality")}
+            className="inline-flex h-10 items-center gap-2 rounded-xl border border-green-100 bg-green-50 px-4 text-sm font-semibold text-green-700 transition hover:bg-green-100"
+          >
+            <ShieldCheck className="h-4 w-4" />
+            Quality
+          </button>
+          <button
+            type="button"
+            onClick={() => router.push("/altftool/blogs/bulk-refresh")}
+            className="inline-flex h-10 items-center gap-2 rounded-xl border border-blue-100 bg-blue-50 px-4 text-sm font-semibold text-blue-700 transition hover:bg-blue-100"
+          >
+            <RefreshCw className="h-4 w-4" />
+            Bulk refresh
+          </button>
+          <button
+            type="button"
+            onClick={() => router.push("/altftool/blogs/add-blogs")}
+            className="inline-flex h-10 items-center justify-center rounded-xl bg-gray-900 px-4 text-sm font-semibold text-white transition hover:bg-gray-700"
+          >
+            Add blog
+          </button>
+        </div>
       </div>
 
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-6">

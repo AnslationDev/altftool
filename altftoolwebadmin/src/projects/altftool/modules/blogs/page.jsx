@@ -180,6 +180,12 @@ export default function Blogs() {
               Analytics
             </a>
             <a
+              href="/altftool/blogs/quality"
+              className="rounded-md border border-green-100 bg-green-50 px-4 py-2 text-sm font-semibold text-green-700 transition hover:bg-green-100"
+            >
+              Quality Center
+            </a>
+            <a
               href="/altftool/blogs/bulk-refresh"
               className="rounded-md border border-blue-100 bg-blue-50 px-4 py-2 text-sm font-semibold text-blue-700 transition hover:bg-blue-100"
             >
