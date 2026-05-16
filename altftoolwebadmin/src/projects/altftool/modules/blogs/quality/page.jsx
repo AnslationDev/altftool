@@ -27,6 +27,7 @@ import {
 import { emitAlert } from "@/lib/alertBus";
 import { fetchAllBlogs, updateBlog } from "../services/blogsService";
 import { parseBlogTags } from "../components/BlogSeoChecklist";
+import { buildBlogLinkGraph } from "../components/blogLinkAudit";
 import { appendRefreshBlocks, buildQuickRefreshPayload } from "../components/blogRefreshKit";
 import {
   ACTIONS,
@@ -90,10 +91,10 @@ function StatCard({ icon: Icon, label, value, caption, tone = "blue" }) {
 
   return (
     <div className="rounded-2xl border border-gray-100 bg-white p-4 shadow-sm">
-      <div className="flex items-start justify-between gap-3">
-        <div>
+      <div className="flex items-start justify-between gap-2">
+        <div className="min-w-0">
           <p className="text-xs font-black uppercase tracking-wider text-gray-400">{label}</p>
-          <p className="mt-2 text-2xl font-black text-gray-900">{value}</p>
+          <p className="mt-2 break-words text-2xl font-black leading-tight text-gray-900">{value}</p>
         </div>
         <div className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl ${toneMap[tone] || toneMap.blue}`}>
           <Icon className="h-4 w-4" />
@@ -160,9 +161,12 @@ function buildBulkPatch(blog = {}, actionKey = "review") {
   return fields;
 }
 
-function QualityRow({ blog, selected, onToggle, onEdit }) {
+function QualityRow({ blog, linkNode, selected, onToggle, onEdit }) {
   const action = getActionConfig(blog.recommendedAction);
   const ActionIcon = ACTION_ICONS[action.key] || Sparkles;
+  const brokenCount = linkNode?.audit?.brokenLinks?.length || 0;
+  const inboundCount = linkNode?.inboundCount || 0;
+  const outboundCount = linkNode?.outboundCount || 0;
 
   return (
     <article className="rounded-2xl border border-gray-100 bg-white p-4 shadow-sm transition hover:border-blue-100 hover:shadow-md">
@@ -179,121 +183,216 @@ function QualityRow({ blog, selected, onToggle, onEdit }) {
         </button>
 
         <div className="grid min-w-0 flex-1 gap-4 xl:grid-cols-[minmax(0,1fr)_260px]">
-        <div className="min-w-0">
-          <div className="flex flex-wrap items-center gap-2">
-            <span className={`rounded-lg px-2 py-1 text-[10px] font-black uppercase tracking-wide ${priorityTone(blog.refreshScore)}`}>
-              {blog.priority} - {blog.refreshScore}
-            </span>
-            <span className="rounded-lg bg-gray-50 px-2 py-1 text-[10px] font-bold uppercase tracking-wide text-gray-500">
-              {blog.status}
-            </span>
-            <span className="rounded-lg bg-blue-50 px-2 py-1 text-[10px] font-bold uppercase tracking-wide text-blue-700">
-              {blog.category}
-            </span>
-            {blog.richResultReady ? (
-              <span className="inline-flex items-center gap-1 rounded-lg bg-green-50 px-2 py-1 text-[10px] font-bold uppercase tracking-wide text-green-700">
-                <CheckCircle2 className="h-3 w-3" />
-                Rich ready
+          <div className="min-w-0">
+            <div className="flex flex-wrap items-center gap-2">
+              <span className={`rounded-lg px-2 py-1 text-[10px] font-black uppercase tracking-wide ${priorityTone(blog.refreshScore)}`}>
+                {blog.priority} - {blog.refreshScore}
               </span>
-            ) : null}
-          </div>
-
-          <button type="button" onClick={() => onEdit(blog, "")} className="mt-2 block max-w-full text-left">
-            <h2 className="line-clamp-2 text-base font-black leading-6 text-gray-900 transition hover:text-blue-700">
-              {blog.title}
-            </h2>
-          </button>
-          <p className="mt-1 line-clamp-2 text-sm leading-6 text-gray-500">{blog.excerpt}</p>
-
-          <div className="mt-3 flex flex-wrap gap-1.5">
-            {blog.gaps.length ? (
-              blog.gaps.slice(0, 7).map((gap) => (
-                <span key={`${blog.id}-${gap.key}`} title={gap.detail} className={`rounded-lg px-2 py-1 text-[11px] font-semibold ${gapTone(gap.key)}`}>
-                  {gap.label}
+              <span className="rounded-lg bg-gray-50 px-2 py-1 text-[10px] font-bold uppercase tracking-wide text-gray-500">
+                {blog.status}
+              </span>
+              <span className="rounded-lg bg-blue-50 px-2 py-1 text-[10px] font-bold uppercase tracking-wide text-blue-700">
+                {blog.category}
+              </span>
+              {blog.richResultReady ? (
+                <span className="inline-flex items-center gap-1 rounded-lg bg-green-50 px-2 py-1 text-[10px] font-bold uppercase tracking-wide text-green-700">
+                  <CheckCircle2 className="h-3 w-3" />
+                  Rich ready
                 </span>
-              ))
-            ) : (
-              <span className="inline-flex items-center gap-1 rounded-lg bg-green-50 px-2 py-1 text-[11px] font-semibold text-green-700">
-                <CheckCircle2 className="h-3.5 w-3.5" />
-                No blocking gaps
-              </span>
-            )}
-          </div>
+              ) : null}
+              {brokenCount ? (
+                <span className="inline-flex items-center gap-1 rounded-lg bg-red-50 px-2 py-1 text-[10px] font-bold uppercase tracking-wide text-red-600">
+                  <AlertTriangle className="h-3 w-3" />
+                  {brokenCount} broken
+                </span>
+              ) : null}
+            </div>
 
-          <div className="mt-4 grid grid-cols-2 gap-2 text-xs text-gray-500 md:grid-cols-4">
-            <div className="rounded-xl bg-gray-50 px-3 py-2">
-              <p className="font-black text-gray-800">{blog.wordCount.toLocaleString()}</p>
-              <p className="mt-0.5">words</p>
-            </div>
-            <div className="rounded-xl bg-gray-50 px-3 py-2">
-              <p className="font-black text-gray-800">{blog.sourceCount}</p>
-              <p className="mt-0.5">sources</p>
-            </div>
-            <div className="rounded-xl bg-gray-50 px-3 py-2">
-              <p className="font-black text-gray-800">{blog.outboundLinkCount}</p>
-              <p className="mt-0.5">links</p>
-            </div>
-            <div className="rounded-xl bg-gray-50 px-3 py-2">
-              <p className="font-black text-gray-800">{blog.daysSinceUpdate ?? "-"}</p>
-              <p className="mt-0.5">days old</p>
-            </div>
-          </div>
-        </div>
+            <button type="button" onClick={() => onEdit(blog, "")} className="mt-2 block max-w-full text-left">
+              <h2 className="line-clamp-2 text-base font-black leading-6 text-gray-900 transition hover:text-blue-700">
+                {blog.title}
+              </h2>
+            </button>
+            <p className="mt-1 line-clamp-2 text-sm leading-6 text-gray-500">{blog.excerpt}</p>
 
-        <div className="space-y-3">
-          <div className="grid grid-cols-2 gap-2">
-            <ScorePill label="Quality" score={blog.qualityScore} />
-            <ScorePill label="Schema" score={blog.schemaScore} />
-          </div>
+            <div className="mt-3 flex flex-wrap gap-1.5">
+              {blog.gaps.length ? (
+                blog.gaps.slice(0, 7).map((gap) => (
+                  <span key={`${blog.id}-${gap.key}`} title={gap.detail} className={`rounded-lg px-2 py-1 text-[11px] font-semibold ${gapTone(gap.key)}`}>
+                    {gap.label}
+                  </span>
+                ))
+              ) : (
+                <span className="inline-flex items-center gap-1 rounded-lg bg-green-50 px-2 py-1 text-[11px] font-semibold text-green-700">
+                  <CheckCircle2 className="h-3.5 w-3.5" />
+                  No blocking gaps
+                </span>
+              )}
+            </div>
 
-          <div className="rounded-xl border border-gray-100 bg-gray-50 p-3">
-            <div className="flex items-center justify-between gap-3">
-              <div className="min-w-0">
-                <p className="text-[10px] font-black uppercase tracking-wider text-gray-400">Next action</p>
-                <p className="mt-1 truncate text-sm font-black text-gray-900">{action.label}</p>
+            <div className="mt-4 grid grid-cols-2 gap-2 text-xs text-gray-500 2xl:grid-cols-4">
+              <div className="min-w-[76px] rounded-xl bg-gray-50 px-3 py-2">
+                <p className="font-black text-gray-800">{blog.wordCount.toLocaleString()}</p>
+                <p className="mt-0.5 whitespace-nowrap text-[11px] leading-4">words</p>
               </div>
-              <span className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border ${toneClasses(action.tone)}`}>
-                <ActionIcon className="h-4 w-4" />
-              </span>
+              <div className="min-w-[76px] rounded-xl bg-gray-50 px-3 py-2">
+                <p className="font-black text-gray-800">{inboundCount}</p>
+                <p className="mt-0.5 whitespace-nowrap text-[11px] leading-4">inbound</p>
+              </div>
+              <div className="min-w-[76px] rounded-xl bg-gray-50 px-3 py-2">
+                <p className="font-black text-gray-800">{outboundCount}</p>
+                <p className="mt-0.5 whitespace-nowrap text-[11px] leading-4">outbound</p>
+              </div>
+              <div className={`min-w-[76px] rounded-xl px-3 py-2 ${brokenCount ? "bg-red-50 text-red-600" : "bg-gray-50"}`}>
+                <p className="font-black">{brokenCount}</p>
+                <p className="mt-0.5 whitespace-nowrap text-[11px] leading-4">broken</p>
+              </div>
             </div>
-            <p className="mt-2 text-xs leading-5 text-gray-500">
-              Last signal: {formatAuditDate(blog.updatedDate, "No review date")}
-            </p>
           </div>
 
-          <div className="flex flex-wrap gap-2">
-            <button
-              type="button"
-              onClick={() => onEdit(blog, blog.recommendedAction)}
-              className="inline-flex h-9 flex-1 items-center justify-center gap-2 rounded-xl bg-gray-900 px-3 text-xs font-semibold text-white transition hover:bg-gray-700"
-            >
-              <WandSparkles className="h-3.5 w-3.5" />
-              Fix
-            </button>
-            <button
-              type="button"
-              onClick={() => onEdit(blog, "")}
-              className="inline-flex h-9 flex-1 items-center justify-center gap-2 rounded-xl border border-gray-200 bg-white px-3 text-xs font-semibold text-gray-700 transition hover:bg-gray-50"
-            >
-              <FileText className="h-3.5 w-3.5" />
-              Edit
-            </button>
-            {blog.publicUrl ? (
-              <a
-                href={blog.publicUrl}
-                target="_blank"
-                rel="noreferrer"
-                className="inline-flex h-9 flex-1 items-center justify-center gap-2 rounded-xl border border-blue-100 bg-blue-50 px-3 text-xs font-semibold text-blue-700 transition hover:bg-blue-100"
+          <div className="space-y-3">
+            <div className="grid grid-cols-2 gap-2">
+              <ScorePill label="Quality" score={blog.qualityScore} />
+              <ScorePill label="Schema" score={blog.schemaScore} />
+            </div>
+
+            <div className="rounded-xl border border-gray-100 bg-gray-50 p-3">
+              <div className="flex items-center justify-between gap-3">
+                <div className="min-w-0">
+                  <p className="text-[10px] font-black uppercase tracking-wider text-gray-400">Next action</p>
+                  <p className="mt-1 truncate text-sm font-black text-gray-900">{action.label}</p>
+                </div>
+                <span className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border ${toneClasses(action.tone)}`}>
+                  <ActionIcon className="h-4 w-4" />
+                </span>
+              </div>
+              <p className="mt-2 text-xs leading-5 text-gray-500">
+                Last signal: {formatAuditDate(blog.updatedDate, "No review date")}
+              </p>
+            </div>
+
+            <div className="flex flex-wrap gap-2">
+              <button
+                type="button"
+                onClick={() => onEdit(blog, blog.recommendedAction)}
+                className="inline-flex h-9 flex-1 items-center justify-center gap-2 rounded-xl bg-gray-900 px-3 text-xs font-semibold text-white transition hover:bg-gray-700"
               >
-                <ExternalLink className="h-3.5 w-3.5" />
-                View
-              </a>
-            ) : null}
+                <WandSparkles className="h-3.5 w-3.5" />
+                Fix
+              </button>
+              <button
+                type="button"
+                onClick={() => onEdit(blog, "")}
+                className="inline-flex h-9 flex-1 items-center justify-center gap-2 rounded-xl border border-gray-200 bg-white px-3 text-xs font-semibold text-gray-700 transition hover:bg-gray-50"
+              >
+                <FileText className="h-3.5 w-3.5" />
+                Edit
+              </button>
+              {blog.publicUrl ? (
+                <a
+                  href={blog.publicUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex h-9 flex-1 items-center justify-center gap-2 rounded-xl border border-blue-100 bg-blue-50 px-3 text-xs font-semibold text-blue-700 transition hover:bg-blue-100"
+                >
+                  <ExternalLink className="h-3.5 w-3.5" />
+                  View
+                </a>
+              ) : null}
+            </div>
           </div>
-        </div>
         </div>
       </div>
     </article>
+  );
+}
+
+function LinkGraphPanel({ graph, onEdit }) {
+  const brokenQueue = graph.brokenQueue.slice(0, 5);
+  const isolated = graph.isolated.slice(0, 5);
+  const hubs = graph.hubs.slice(0, 5);
+
+  return (
+    <section className="rounded-2xl border border-gray-100 bg-white p-4 shadow-sm">
+      <div className="flex items-center justify-between gap-3">
+        <div>
+          <p className="text-xs font-black uppercase tracking-wider text-gray-500">Link graph</p>
+          <h2 className="mt-1 text-xl font-black text-gray-900">{graph.summary.internalLinks.toLocaleString()} links</h2>
+        </div>
+        <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-slate-100 text-slate-600">
+          <Link2 className="h-5 w-5" />
+        </div>
+      </div>
+
+      <div className="mt-4 grid grid-cols-3 gap-2 text-center">
+        <div className="rounded-xl bg-red-50 px-2 py-2">
+          <p className="text-lg font-black text-red-600">{graph.summary.brokenLinks}</p>
+          <p className="text-[10px] font-bold uppercase tracking-wide text-red-500">Broken</p>
+        </div>
+        <div className="rounded-xl bg-amber-50 px-2 py-2">
+          <p className="text-lg font-black text-amber-700">{graph.summary.isolated}</p>
+          <p className="text-[10px] font-bold uppercase tracking-wide text-amber-600">Isolated</p>
+        </div>
+        <div className="rounded-xl bg-blue-50 px-2 py-2">
+          <p className="text-lg font-black text-blue-700">{graph.summary.missingOutbound}</p>
+          <p className="text-[10px] font-bold uppercase tracking-wide text-blue-600">No out</p>
+        </div>
+      </div>
+
+      {brokenQueue.length ? (
+        <div className="mt-4 space-y-2">
+          <p className="text-[10px] font-black uppercase tracking-wider text-gray-400">Broken links</p>
+          {brokenQueue.map((node) => (
+            <button
+              key={`broken-${node.blog.id}`}
+              type="button"
+              onClick={() => onEdit(node.blog, "links")}
+              className="group w-full rounded-xl border border-red-100 bg-red-50 px-3 py-2 text-left transition hover:border-red-200 hover:bg-red-100"
+            >
+              <span className="block line-clamp-1 text-sm font-bold text-red-700 group-hover:text-red-800">{node.blog.title}</span>
+              <span className="mt-1 block text-[11px] text-red-600">
+                {node.audit.brokenLinks.length} issue{node.audit.brokenLinks.length === 1 ? "" : "s"} - {node.audit.brokenLinks[0]?.label}
+              </span>
+            </button>
+          ))}
+        </div>
+      ) : null}
+
+      <div className="mt-4 space-y-2">
+        <p className="text-[10px] font-black uppercase tracking-wider text-gray-400">Isolated posts</p>
+        {isolated.length ? (
+          isolated.map((node) => (
+            <button
+              key={`isolated-${node.blog.id}`}
+              type="button"
+              onClick={() => onEdit(node.blog, "links")}
+              className="group w-full rounded-xl border border-gray-100 bg-gray-50 px-3 py-2 text-left transition hover:border-blue-200 hover:bg-blue-50"
+            >
+              <span className="block line-clamp-1 text-sm font-bold text-gray-700 group-hover:text-blue-700">{node.blog.title}</span>
+              <span className="mt-1 block text-[11px] text-gray-500">0 inbound - 0 outbound blog links</span>
+            </button>
+          ))
+        ) : (
+          <div className="rounded-xl bg-green-50 px-3 py-3 text-sm font-semibold text-green-700">
+            No fully isolated published posts.
+          </div>
+        )}
+      </div>
+
+      {hubs.length ? (
+        <div className="mt-4 space-y-2">
+          <p className="text-[10px] font-black uppercase tracking-wider text-gray-400">Hub posts</p>
+          {hubs.map((node) => (
+            <div key={`hub-${node.blog.id}`} className="rounded-xl bg-gray-50 px-3 py-2">
+              <p className="line-clamp-1 text-sm font-bold text-gray-700">{node.blog.title}</p>
+              <p className="mt-1 text-[11px] text-gray-500">
+                {node.inboundCount} inbound - {node.outboundCount} outbound
+              </p>
+            </div>
+          ))}
+        </div>
+      ) : null}
+    </section>
   );
 }
 
@@ -337,6 +436,7 @@ export default function BlogQualityCenterPage() {
 
   const auditedBlogs = useMemo(() => blogs.map(buildBlogAudit), [blogs]);
   const summary = useMemo(() => buildQualitySummary(auditedBlogs), [auditedBlogs]);
+  const linkGraph = useMemo(() => buildBlogLinkGraph(blogs), [blogs]);
   const categories = useMemo(
     () => ["all", ...new Set(auditedBlogs.map((blog) => blog.category).filter(Boolean))].sort((a, b) => (a === "all" ? -1 : b === "all" ? 1 : a.localeCompare(b))),
     [auditedBlogs],
@@ -494,16 +594,17 @@ export default function BlogQualityCenterPage() {
         </div>
       ) : null}
 
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-5">
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-6">
         <StatCard icon={ShieldCheck} label="Health score" value={`${summary.healthScore}%`} caption={`${summary.avgQuality}% quality - ${summary.avgSchema}% schema`} tone={summary.healthScore >= 75 ? "green" : "amber"} />
         <StatCard icon={Sparkles} label="Rich ready" value={`${summary.richReady}/${summary.published}`} caption={`${summary.articleReady} published posts are Article-ready`} tone="green" />
         <StatCard icon={AlertTriangle} label="Critical" value={summary.critical.toLocaleString()} caption={`${summary.needsWork} total posts have open gaps`} tone={summary.critical ? "red" : "green"} />
-        <StatCard icon={BookOpenCheck} label="Sources + FAQ" value={`${summary.missingSources}/${summary.missingFaq}`} caption="Published posts missing sources / FAQ" tone="amber" />
+        <StatCard icon={Link2} label="Broken links" value={linkGraph.summary.brokenLinks.toLocaleString()} caption={`${linkGraph.brokenQueue.length} posts need link cleanup`} tone={linkGraph.summary.brokenLinks ? "red" : "green"} />
+        <StatCard icon={BookOpenCheck} label="Isolated" value={linkGraph.summary.isolated.toLocaleString()} caption={`${linkGraph.summary.missingOutbound} published posts have no outbound links`} tone="amber" />
         <StatCard icon={Clock3} label="Stale posts" value={summary.stale.toLocaleString()} caption={`${summary.missingLinks} published posts need internal links`} tone={summary.stale ? "amber" : "slate"} />
       </div>
 
       <section className="rounded-2xl border border-gray-100 bg-white p-4 shadow-sm">
-        <div className="grid grid-cols-1 gap-3 lg:grid-cols-[minmax(240px,1fr)_repeat(5,minmax(130px,170px))]">
+        <div className="grid grid-cols-1 gap-3 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-[minmax(240px,1fr)_repeat(5,minmax(130px,170px))]">
           <label className="relative block">
             <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400" />
             <input
@@ -646,6 +747,7 @@ export default function BlogQualityCenterPage() {
               <QualityRow
                 key={blog.id}
                 blog={blog}
+                linkNode={linkGraph.nodeMap.get(blog.id) || linkGraph.slugMap.get(blog.slug)}
                 selected={selectedIds.includes(blog.id)}
                 onToggle={toggleSelected}
                 onEdit={openEditor}
@@ -657,6 +759,8 @@ export default function BlogQualityCenterPage() {
         </section>
 
         <aside className="space-y-4 lg:sticky lg:top-4 lg:self-start">
+          <LinkGraphPanel graph={linkGraph} onEdit={openEditor} />
+
           <section className="rounded-2xl border border-gray-100 bg-white p-4 shadow-sm">
             <div className="flex items-center justify-between gap-3">
               <div>
