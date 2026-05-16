@@ -5,13 +5,16 @@ import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import {
   ArrowRight,
+  BookOpenCheck,
   CheckCircle2,
   ChevronDown,
   Clock3,
   Hash,
   Loader2,
+  MessageCircleQuestion,
   RefreshCw,
   Search,
+  ShieldCheck,
   SlidersHorizontal,
   Sparkles,
   TrendingUp,
@@ -48,6 +51,17 @@ const FRESHNESS_OPTIONS = [
   { value: "reviewed", label: "Reviewed" },
   { value: "watch", label: "Refresh soon" },
   { value: "stale", label: "Needs refresh" },
+];
+const READINESS_OPTIONS = [
+  { value: "all", label: "All guide types" },
+  { value: "reviewed", label: "Reviewed" },
+  { value: "quick", label: "Quick reads" },
+  { value: "fresh", label: "Fresh guides" },
+  { value: "rich-ready", label: "Deep guides" },
+  { value: "seo-ready", label: "Complete guides" },
+  { value: "sources", label: "Cited guides" },
+  { value: "faq", label: "FAQ included" },
+  { value: "links", label: "Linked guides" },
 ];
 const DEFAULT_SEARCH_SHORTCUTS = ["pdf", "image", "downloader", "calculator", "productivity", "games"];
 
@@ -159,6 +173,106 @@ function getFreshnessBadgeClass(status) {
   };
 
   return map[status] || map.unknown;
+}
+
+function getSourceCount(post = {}) {
+  return Array.isArray(post.sources)
+    ? post.sources.filter((source) => source?.title || source?.url).length
+    : 0;
+}
+
+function hasFaqContent(post = {}) {
+  const structuredFaqs = [post.faq, post.faqs, post.faqItems, post.faq?.items]
+    .filter(Array.isArray)
+    .some((items) =>
+      items.some((item) => {
+        const question = String(item?.question || item?.q || item?.title || "").trim();
+        const answer = String(item?.answer || item?.a || item?.description || "").trim();
+        return question.length > 4 && answer.length > 12;
+      })
+    );
+
+  return (
+    structuredFaqs ||
+    /FAQ_ITEM|FAQ_Q|FAQ_A|<!--\s*FAQ Start\s*-->/i.test(
+      String(post.description || post.content || post.body || "")
+    )
+  );
+}
+
+function hasInternalLinks(post = {}) {
+  return /href=["']\/(?:tools|blogs|buysmart|extensions|top|news)/i.test(
+    String(post.description || post.content || post.body || "")
+  );
+}
+
+function getPostReadiness(post = {}) {
+  const sourceCount = getSourceCount(post);
+  const hasSources = sourceCount > 0;
+  const hasFaq = hasFaqContent(post);
+  const hasTrust = Boolean(post.authorRole || post.reviewedBy || post.editorialNote);
+  const hasImage = Boolean(post.image);
+  const hasImageAlt = !post.image || String(post.imageAlt || "").trim().length >= 5;
+  const metaLength = String(post.seoDescription || post.excerpt || "").trim().length;
+  const hasSearchDescription = metaLength >= 80 && metaLength <= 180;
+  const hasTags = Array.isArray(post.tags) && post.tags.filter(Boolean).length >= 2;
+  const hasLinks = hasInternalLinks(post);
+
+  const checks = [
+    { key: "sources", done: hasSources },
+    { key: "faq", done: hasFaq },
+    { key: "trust", done: hasTrust },
+    { key: "image", done: hasImage && hasImageAlt },
+    { key: "description", done: hasSearchDescription },
+    { key: "tags", done: hasTags },
+    { key: "links", done: hasLinks },
+  ];
+  const doneCount = checks.filter((check) => check.done).length;
+  const score = Math.round((doneCount / checks.length) * 100);
+  const richReady = hasSources && hasFaq && hasTrust && hasImage && hasImageAlt && hasSearchDescription;
+
+  return {
+    score,
+    richReady,
+    hasSources,
+    hasFaq,
+    hasTrust,
+    hasLinks,
+    sourceCount,
+    status: richReady ? "rich-ready" : score >= 72 ? "seo-ready" : score >= 45 ? "needs-polish" : "needs-work",
+    label: richReady ? "Deep guide" : score >= 72 ? "Complete guide" : score >= 45 ? "Quick guide" : "Starter guide",
+    missing: checks.filter((check) => !check.done).map((check) => check.key),
+  };
+}
+
+function getReadinessBadgeClass(status) {
+  const map = {
+    "rich-ready": "border-emerald-400/35 bg-emerald-500/90 text-white",
+    "seo-ready": "border-blue-400/35 bg-blue-500/90 text-white",
+    "needs-polish": "border-amber-400/45 bg-amber-500/90 text-white",
+    "needs-work": "border-white/20 bg-black/45 text-white",
+  };
+
+  return map[status] || map["needs-work"];
+}
+
+function matchesReadinessFilter(post = {}, filter = "all") {
+  if (filter === "all") return true;
+
+  const readiness = getPostReadiness(post);
+  if (filter === "rich-ready") return readiness.richReady;
+  if (filter === "seo-ready") return readiness.score >= 72;
+  if (filter === "sources") return readiness.hasSources;
+  if (filter === "faq") return readiness.hasFaq;
+  if (filter === "reviewed") return readiness.hasTrust;
+  if (filter === "links") return readiness.hasLinks;
+  if (filter === "quick") return Number(post.readTimeMinutes || 0) <= 3;
+  if (filter === "fresh") {
+    const freshness = getBlogFreshness(post).status;
+    return freshness === "fresh" || freshness === "reviewed";
+  }
+
+  return true;
 }
 
 function sortPosts(posts, sortMode) {
@@ -332,6 +446,27 @@ function FreshnessSelect({ value, onChange }) {
   );
 }
 
+function ReadinessSelect({ value, onChange }) {
+  return (
+    <label className="relative inline-flex h-10 min-w-[166px] items-center rounded-[var(--anslation-ds-radius)] border border-(--border) bg-(--card) px-3 text-xs font-semibold text-(--muted-foreground)">
+      <Sparkles className="mr-2 h-3.5 w-3.5 text-(--primary)" />
+      <select
+        value={value}
+        onChange={(event) => onChange(event.target.value)}
+        className="h-full flex-1 appearance-none bg-transparent pr-5 text-(--foreground) outline-none"
+        aria-label="Filter blogs by guide type"
+      >
+        {READINESS_OPTIONS.map((option) => (
+          <option key={option.value} value={option.value}>
+            {option.label}
+          </option>
+        ))}
+      </select>
+      <ChevronDown className="pointer-events-none absolute right-2.5 h-3.5 w-3.5 text-(--muted-foreground)" />
+    </label>
+  );
+}
+
 function SearchControl({ value, onChange, onClear, pending }) {
   return (
     <div className="relative min-w-0 flex-1">
@@ -430,10 +565,79 @@ function ReaderJourneyPanel({ journeys }) {
   );
 }
 
+function ReadinessSummary({ summary, activeFilter, onPick }) {
+  const items = [
+    {
+      key: "all",
+      label: "All guides",
+      value: summary.total,
+      icon: BookOpenCheck,
+      tone: "text-emerald-500",
+    },
+    {
+      key: "reviewed",
+      label: "Reviewed",
+      value: summary.reviewed,
+      icon: ShieldCheck,
+      tone: "text-violet-500",
+    },
+    {
+      key: "quick",
+      label: "Quick reads",
+      value: summary.quick,
+      icon: Clock3,
+      tone: "text-amber-500",
+    },
+    {
+      key: "fresh",
+      label: "Fresh guides",
+      value: summary.fresh,
+      icon: CheckCircle2,
+      tone: "text-blue-500",
+    },
+  ];
+
+  return (
+    <div className="grid grid-cols-2 gap-2 lg:grid-cols-4">
+      {items.map((item) => {
+        const Icon = item.icon;
+        const active = activeFilter === item.key;
+
+        return (
+          <button
+            key={item.key}
+            type="button"
+            onClick={() => onPick(active ? "all" : item.key)}
+            className={cx(
+              "group flex items-center justify-between gap-3 rounded-[var(--anslation-ds-radius)] border px-3 py-2 text-left transition",
+              active
+                ? "border-(--primary) bg-(--primary)/10"
+                : "border-(--border) bg-(--card) hover:border-(--primary)/45",
+            )}
+          >
+            <span className="min-w-0">
+              <span className="block text-[10px] font-bold uppercase tracking-wide text-(--muted-foreground)">
+                {item.label}
+              </span>
+              <span className="mt-0.5 block text-lg font-semibold leading-none text-(--foreground)">
+                {item.value}
+              </span>
+            </span>
+            <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-[6px] bg-(--muted)">
+              <Icon className={cx("h-4 w-4", item.tone)} />
+            </span>
+          </button>
+        );
+      })}
+    </div>
+  );
+}
+
 function BlogPostCard({ post, index, searchTerms = [] }) {
   const priority = index < 3;
   const tags = Array.isArray(post.tags) ? post.tags.filter(Boolean).slice(0, 3) : [];
   const freshness = getBlogFreshness(post);
+  const readiness = getPostReadiness(post);
 
   return (
     <article className="group h-full overflow-hidden rounded-[var(--anslation-ds-radius-lg)] border border-(--border) bg-(--card) shadow-[var(--anslation-ds-shadow-sm)] transition duration-200 hover:-translate-y-0.5 hover:border-(--primary)/45 hover:shadow-[var(--anslation-ds-shadow-md)]">
@@ -455,6 +659,12 @@ function BlogPostCard({ post, index, searchTerms = [] }) {
             getFreshnessBadgeClass(freshness.status),
           )}>
             {freshness.label}
+          </div>
+          <div className={cx(
+            "absolute bottom-3 left-3 rounded-[6px] border px-2 py-1 text-[10px] font-bold uppercase tracking-wide backdrop-blur",
+            getReadinessBadgeClass(readiness.status),
+          )}>
+            {readiness.label}
           </div>
         </div>
 
@@ -492,6 +702,43 @@ function BlogPostCard({ post, index, searchTerms = [] }) {
               ))}
             </div>
           ) : null}
+
+          <div className="grid grid-cols-3 gap-1.5">
+            <span
+              className={cx(
+                "inline-flex h-7 items-center justify-center gap-1 rounded-[6px] border px-1.5 text-[10px] font-semibold",
+                readiness.hasSources
+                  ? "border-emerald-400/25 bg-emerald-500/10 text-emerald-500"
+                  : "border-(--border) bg-(--background) text-(--muted-foreground)",
+              )}
+              title={readiness.hasSources ? `${readiness.sourceCount} cited source${readiness.sourceCount === 1 ? "" : "s"}` : "Practical guide"}
+            >
+              <BookOpenCheck className="h-3 w-3" />
+              {readiness.hasSources ? "Cited" : "Guide"}
+            </span>
+            <span
+              className={cx(
+                "inline-flex h-7 items-center justify-center gap-1 rounded-[6px] border px-1.5 text-[10px] font-semibold",
+                readiness.hasFaq
+                  ? "border-blue-400/25 bg-blue-500/10 text-blue-500"
+                  : "border-(--border) bg-(--background) text-(--muted-foreground)",
+              )}
+            >
+              <MessageCircleQuestion className="h-3 w-3" />
+              {readiness.hasFaq ? "FAQ" : "Summary"}
+            </span>
+            <span
+              className={cx(
+                "inline-flex h-7 items-center justify-center gap-1 rounded-[6px] border px-1.5 text-[10px] font-semibold",
+                readiness.hasTrust
+                  ? "border-violet-400/25 bg-violet-500/10 text-violet-500"
+                  : "border-(--border) bg-(--background) text-(--muted-foreground)",
+              )}
+            >
+              <ShieldCheck className="h-3 w-3" />
+              {readiness.hasTrust ? "Reviewed" : "Editorial"}
+            </span>
+          </div>
 
           <div className="mt-auto flex items-center justify-between gap-3 pt-1">
             <span className="truncate text-xs font-medium text-(--muted-foreground)">
@@ -576,6 +823,7 @@ export default function BlogExplorerClient({
   const urlTag = searchParams.get("tag") || "All";
   const urlSort = searchParams.get("sort") || "latest";
   const urlFreshness = searchParams.get("freshness") || "all";
+  const urlReadiness = searchParams.get("readiness") || "all";
 
   const [posts, setPosts] = useState(() => initialPosts.map((post, index) => normalizeBlog(post, index)));
   const [query, setQuery] = useState(urlQuery);
@@ -583,6 +831,7 @@ export default function BlogExplorerClient({
   const [activeTag, setActiveTag] = useState(urlTag);
   const [sortMode, setSortMode] = useState(urlSort);
   const [freshnessFilter, setFreshnessFilter] = useState(urlFreshness);
+  const [readinessFilter, setReadinessFilter] = useState(urlReadiness);
   const [visibleCount, setVisibleCount] = useState(INITIAL_VISIBLE_COUNT);
   const [syncState, setSyncState] = useState("idle");
   const [remoteOffset, setRemoteOffset] = useState(initialRemoteOffset);
@@ -666,6 +915,35 @@ export default function BlogExplorerClient({
       return acc;
     }, {});
   }, [posts]);
+  const readinessSummary = useMemo(() => {
+    return posts.reduce(
+      (acc, post) => {
+        const readiness = getPostReadiness(post);
+        const freshness = getBlogFreshness(post).status;
+        acc.total += 1;
+        acc.richReady += readiness.richReady ? 1 : 0;
+        acc.seoReady += readiness.score >= 72 ? 1 : 0;
+        acc.cited += readiness.hasSources ? 1 : 0;
+        acc.faq += readiness.hasFaq ? 1 : 0;
+        acc.reviewed += readiness.hasTrust ? 1 : 0;
+        acc.linked += readiness.hasLinks ? 1 : 0;
+        acc.quick += Number(post.readTimeMinutes || 0) <= 3 ? 1 : 0;
+        acc.fresh += freshness === "fresh" || freshness === "reviewed" ? 1 : 0;
+        return acc;
+      },
+      {
+        total: 0,
+        richReady: 0,
+        seoReady: 0,
+        cited: 0,
+        faq: 0,
+        reviewed: 0,
+        linked: 0,
+        quick: 0,
+        fresh: 0,
+      },
+    );
+  }, [posts]);
   const topTags = useMemo(() => {
     const tags = Object.keys(tagCounts)
       .sort((a, b) => {
@@ -739,8 +1017,12 @@ export default function BlogExplorerClient({
       ? queryFiltered
       : queryFiltered.filter((post) => getBlogFreshness(post).status === freshnessFilter);
 
-    return sortPosts(freshnessFiltered, sortMode);
-  }, [activeCategory, activeTag, deferredQuery, freshnessFilter, posts, sortMode]);
+    const readinessFiltered = readinessFilter === "all"
+      ? freshnessFiltered
+      : freshnessFiltered.filter((post) => matchesReadinessFilter(post, readinessFilter));
+
+    return sortPosts(readinessFiltered, sortMode);
+  }, [activeCategory, activeTag, deferredQuery, freshnessFilter, posts, readinessFilter, sortMode]);
 
   const visiblePosts = filteredPosts.slice(0, visibleCount);
   const searchTerms = useMemo(() => getSearchTerms(deferredQuery), [deferredQuery]);
@@ -755,13 +1037,14 @@ export default function BlogExplorerClient({
         q: query.trim(),
         category: activeCategory,
         freshness: freshnessFilter,
+        readiness: readinessFilter,
         tag: activeTag,
         sort: sortMode,
       });
     }, 180);
 
     return () => window.clearTimeout(timeout);
-  }, [activeCategory, activeTag, freshnessFilter, query, router, searchParams, sortMode]);
+  }, [activeCategory, activeTag, freshnessFilter, query, readinessFilter, router, searchParams, sortMode]);
 
   const loadNextChunk = useCallback(() => {
     setVisibleCount((current) => Math.min(current + BLOG_CHUNK_SIZE, filteredPosts.length));
@@ -793,6 +1076,7 @@ export default function BlogExplorerClient({
         q: query.trim(),
         category,
         freshness: freshnessFilter,
+        readiness: readinessFilter,
         tag: activeTag,
         sort: sortMode,
       });
@@ -807,6 +1091,7 @@ export default function BlogExplorerClient({
         q: query.trim(),
         category: activeCategory,
         freshness: freshnessFilter,
+        readiness: readinessFilter,
         tag,
         sort: sortMode,
       });
@@ -821,6 +1106,7 @@ export default function BlogExplorerClient({
         q: query.trim(),
         category: activeCategory,
         freshness: freshnessFilter,
+        readiness: readinessFilter,
         tag: activeTag,
         sort: value,
       });
@@ -835,6 +1121,22 @@ export default function BlogExplorerClient({
         q: query.trim(),
         category: activeCategory,
         freshness: value,
+        readiness: readinessFilter,
+        tag: activeTag,
+        sort: sortMode,
+      });
+    });
+  };
+
+  const handleReadinessChange = (value) => {
+    startTransition(() => {
+      setReadinessFilter(value);
+      setVisibleCount(INITIAL_VISIBLE_COUNT);
+      updateSearchParams(router, searchParams, {
+        q: query.trim(),
+        category: activeCategory,
+        freshness: freshnessFilter,
+        readiness: value,
         tag: activeTag,
         sort: sortMode,
       });
@@ -855,6 +1157,7 @@ export default function BlogExplorerClient({
         q: value,
         category: activeCategory,
         freshness: freshnessFilter,
+        readiness: readinessFilter,
         tag: "All",
         sort: sortMode,
       });
@@ -868,6 +1171,7 @@ export default function BlogExplorerClient({
       q: "",
       category: activeCategory,
       freshness: freshnessFilter,
+      readiness: readinessFilter,
       tag: activeTag,
       sort: sortMode,
     });
@@ -878,12 +1182,14 @@ export default function BlogExplorerClient({
     setActiveCategory("All");
     setActiveTag("All");
     setFreshnessFilter("all");
+    setReadinessFilter("all");
     setSortMode("latest");
     setVisibleCount(INITIAL_VISIBLE_COUNT);
     updateSearchParams(router, searchParams, {
       q: "",
       category: "All",
       freshness: "all",
+      readiness: "all",
       tag: "All",
       sort: "latest",
     });
@@ -909,12 +1215,20 @@ export default function BlogExplorerClient({
           />
           <SortSelect value={sortMode} onChange={handleSortChange} />
           <FreshnessSelect value={freshnessFilter} onChange={handleFreshnessChange} />
+          <ReadinessSelect value={readinessFilter} onChange={handleReadinessChange} />
         </div>
         <QuickSearchPills
           shortcuts={quickSearches}
           activeQuery={deferredQuery}
           onPick={handleQuickSearch}
         />
+        <div className="mt-3 border-t border-(--border) pt-3">
+          <ReadinessSummary
+            summary={readinessSummary}
+            activeFilter={readinessFilter}
+            onPick={handleReadinessChange}
+          />
+        </div>
         <div className="mt-3">
           <CategoryTabs
             categories={categories}
@@ -1010,6 +1324,12 @@ export default function BlogExplorerClient({
               {FRESHNESS_OPTIONS.find((option) => option.value === freshnessFilter)?.label || "Freshness"}
             </span>
           ) : null}
+          {readinessFilter !== "all" ? (
+            <span className="inline-flex h-7 items-center gap-1.5 rounded-[var(--anslation-ds-radius)] border border-(--border) bg-(--background) px-2.5">
+              <Sparkles className="h-3.5 w-3.5 text-(--primary)" />
+              {READINESS_OPTIONS.find((option) => option.value === readinessFilter)?.label || "Guide type"}
+            </span>
+          ) : null}
           <span className="inline-flex h-7 items-center gap-1.5 rounded-[var(--anslation-ds-radius)] border border-(--border) bg-(--background) px-2.5">
             {syncState === "syncing" ? (
               <Loader2 className="h-3.5 w-3.5 animate-spin text-(--primary)" />
@@ -1022,7 +1342,12 @@ export default function BlogExplorerClient({
             <Sparkles className="h-3.5 w-3.5 text-(--primary)" />
             Fresh picks
           </span>
-          {(query || activeCategory !== "All" || activeTag !== "All" || freshnessFilter !== "all" || sortMode !== "latest") && (
+          {(query ||
+            activeCategory !== "All" ||
+            activeTag !== "All" ||
+            freshnessFilter !== "all" ||
+            readinessFilter !== "all" ||
+            sortMode !== "latest") && (
             <button
               type="button"
               onClick={resetFilters}
