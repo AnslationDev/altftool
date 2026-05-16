@@ -14,6 +14,28 @@ function cleanText(value = "") {
   return decodeHtmlEntities(stripHtml(value).replace(/\s+/g, " ").trim());
 }
 
+function trimMetaDescription(value = "", maxLength = 160) {
+  const text = cleanText(value);
+  if (!text) return "";
+  if (text.length < maxLength) return /[.!?]$/.test(text) ? text : `${text}.`;
+  if (text.length === maxLength && /[.!?]$/.test(text)) return text;
+
+  const clipped = text.slice(0, maxLength);
+  const sentenceEnd = [...clipped.matchAll(/[.!?](?=\s|$)/g)]
+    .map((match) => match.index)
+    .filter((index) => index >= 80)
+    .pop();
+
+  if (sentenceEnd) return clipped.slice(0, sentenceEnd + 1).trim();
+
+  const wordBoundary = clipped.lastIndexOf(" ");
+  const tidy = (wordBoundary > 90 ? clipped.slice(0, wordBoundary) : clipped)
+    .replace(/[,:;\-\s]+$/g, "")
+    .trim();
+
+  return /[.!?]$/.test(tidy) ? tidy : `${tidy}.`;
+}
+
 function normalizeFaqItems(value) {
   const source = Array.isArray(value) ? value : [];
 
@@ -109,11 +131,11 @@ function extractHeadingSteps(html = "") {
 }
 
 export function getBlogDescription(blog) {
-  return (
+  return trimMetaDescription(
     blog?.seoDescription ||
     blog?.excerpt ||
     stripHtml(blog?.description || blog?.content || "").slice(0, 160) ||
-    "Read practical AltFTool guides, tool tutorials, and digital productivity articles."
+    "Read practical AltFTool guides, tool tutorials, and digital productivity articles.",
   );
 }
 

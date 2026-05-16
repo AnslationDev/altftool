@@ -5,6 +5,7 @@ export {
   BLOG_TOPIC_CLUSTER_CONFIG,
   blogTaxonomySlug,
   blogPosts,
+  compactBlogSummary,
   filterBlogsByCategorySlug,
   filterBlogsByTagSlug,
   getAllBlogs,

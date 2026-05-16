@@ -124,6 +124,20 @@ function slugify(value = "") {
     .replace(/^-+|-+$/g, "");
 }
 
+function uniqueLabels(values = []) {
+  const seen = new Set();
+
+  return values
+    .map((value) => String(value || "").trim())
+    .filter(Boolean)
+    .filter((value) => {
+      const key = value.toLowerCase();
+      if (seen.has(key)) return false;
+      seen.add(key);
+      return true;
+    });
+}
+
 function hostnameFromUrl(url = "") {
   try {
     return new URL(url).hostname.replace(/^www\./, "");
@@ -307,9 +321,11 @@ export function normalizeBlog(blog = {}, index = 0) {
   const excerpt = seoReadyBlog.excerpt || summarize(description);
   const readTimeMinutes = Number(blog.readTimeMinutes) || estimateReadTime(description, excerpt);
   const image = blog.image || FALLBACK_IMAGES[index % FALLBACK_IMAGES.length];
-  const tags = Array.isArray(seoReadyBlog.tags)
-    ? seoReadyBlog.tags
-    : [category, seoReadyBlog.tool, seoReadyBlog.topic].filter(Boolean);
+  const tags = uniqueLabels(
+    Array.isArray(seoReadyBlog.tags)
+      ? seoReadyBlog.tags
+      : [category, seoReadyBlog.tool, seoReadyBlog.topic]
+  );
   const date = coerceDate(blog.date || blog.publishedAt || blog.createdAt || blog.updatedAt, index);
   const sources = normalizeSources(seoReadyBlog.sources || seoReadyBlog.citations || seoReadyBlog.references);
 
@@ -352,6 +368,33 @@ export function normalizeBlog(blog = {}, index = 0) {
       ...sources.flatMap((source) => [source.title, source.publisher]),
       ...tags,
     ].filter(Boolean).join(" ")).toLowerCase(),
+  };
+}
+
+export function compactBlogSummary(blog = {}) {
+  const tags = Array.isArray(blog.tags) ? uniqueLabels(blog.tags).slice(0, 6) : [];
+
+  return {
+    id: blog.id,
+    title: blog.title || blog.heading,
+    heading: blog.heading || blog.title,
+    slug: blog.slug,
+    category: blog.category,
+    tool: blog.tool,
+    excerpt: blog.excerpt,
+    image: blog.image,
+    imageAlt: blog.imageAlt,
+    date: blog.date,
+    author: blog.author,
+    readTime: blog.readTime,
+    readTimeMinutes: blog.readTimeMinutes,
+    seoDescription: blog.seoDescription,
+    reviewedAt: blog.reviewedAt,
+    updatedAt: blog.updatedAt,
+    views: blog.views,
+    likesCount: blog.likesCount,
+    commentsCount: blog.commentsCount,
+    tags,
   };
 }
 

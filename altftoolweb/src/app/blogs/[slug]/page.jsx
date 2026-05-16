@@ -1,6 +1,7 @@
 import BlogDetailClient from "./BlogDetailClient";
 import {
   BLOG_REMOTE_LIMIT,
+  compactBlogSummary,
   getAllBlogs,
   getBlogBySlug,
   getRelatedBlogs,
@@ -34,16 +35,16 @@ export function generateStaticParams() {
 }
 
 async function getInitialRelatedBlogs(blog, slug) {
-  if (!blog) return getRelatedBlogs(slug, 6);
+  if (!blog) return getRelatedBlogs(slug, 6).map(compactBlogSummary);
 
   try {
     const firebasePosts = await fetchFirebaseBlogsPage({
       pageSize: BLOG_REMOTE_LIMIT,
     });
     const candidates = mergeBlogPosts(getAllBlogs(), firebasePosts);
-    return getRelatedBlogsForPost(blog, candidates, 6);
+    return getRelatedBlogsForPost(blog, candidates, 6).map(compactBlogSummary);
   } catch {
-    return getRelatedBlogs(slug, 6);
+    return getRelatedBlogs(slug, 6).map(compactBlogSummary);
   }
 }
 

@@ -57,9 +57,9 @@ export default function BlogArticleEnhancements({ blog, relatedPosts = [] }) {
             </div>
           </div>
           <div className="grid gap-2 sm:grid-cols-2">
-            {takeaways.map((item) => (
+            {takeaways.map((item, index) => (
               <div
-                key={item}
+                key={`${item}-${index}`}
                 className="flex gap-2 rounded-[6px] border border-(--border) bg-(--background) p-3"
               >
                 <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-(--primary)" />

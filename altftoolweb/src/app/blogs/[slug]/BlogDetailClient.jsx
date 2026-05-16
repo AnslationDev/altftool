@@ -20,7 +20,7 @@ import { ArrowLeft, Loader2 } from "lucide-react";
 import { db, isFirebaseConfigured } from "@/lib/firebase";
 import { getCachedFirebaseRead } from "@/lib/firebaseCache";
 import { incrementUniqueView } from "../context/views.service";
-import { getRelatedBlogsForPost, normalizeBlog } from "../data";
+import { compactBlogSummary, getRelatedBlogsForPost, normalizeBlog } from "../data";
 import BlogHeader from "../components/slug/BlogHeader";
 import BlogActions from "../components/slug/BlogActions";
 import BlogContent from "../components/slug/BlogContent";
@@ -35,6 +35,7 @@ import BlogReaderCompanion from "../components/slug/BlogReaderCompanion";
 import BlogReaderTools from "../components/slug/BlogReaderTools";
 import BlogFeedback from "../components/slug/BlogFeedback";
 import BlogRelatedTools from "../components/slug/BlogRelatedTools";
+import BlogArticleSnapshot from "../components/slug/BlogArticleSnapshot";
 import BlogCard from "../components/BlogCard";
 import { deriveBlogFaqItems } from "../utils/blogFaq";
 import { getRelatedToolsForBlog } from "../utils/relatedTools";
@@ -94,7 +95,7 @@ async function fetchSimilarPosts(currentBlog, excludeSlug) {
         .map((item, index) => normalizeBlog({ id: item.id, ...item.data() }, index))
         .filter((post) => post.slug !== excludeSlug);
 
-      return getRelatedBlogsForPost(currentBlog, candidates, SIMILAR_LIMIT);
+      return getRelatedBlogsForPost(currentBlog, candidates, SIMILAR_LIMIT).map(compactBlogSummary);
     },
     120000
   );
@@ -264,6 +265,13 @@ export default function BlogDetailClient({
           author={blog.author}
         />
         <BlogInsightStrip
+          blog={blog}
+          faqItems={faqItems}
+          relatedTools={relatedTools}
+          relatedPosts={similarPosts}
+        />
+
+        <BlogArticleSnapshot
           blog={blog}
           faqItems={faqItems}
           relatedTools={relatedTools}

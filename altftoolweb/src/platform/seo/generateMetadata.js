@@ -52,6 +52,28 @@ function stripHtml(value = "") {
     .trim();
 }
 
+function trimMetaDescription(value = "", maxLength = 160) {
+  const text = stripHtml(value);
+  if (!text) return siteConfig.description;
+  if (text.length < maxLength) return /[.!?]$/.test(text) ? text : `${text}.`;
+  if (text.length === maxLength && /[.!?]$/.test(text)) return text;
+
+  const clipped = text.slice(0, maxLength);
+  const sentenceEnd = [...clipped.matchAll(/[.!?](?=\s|$)/g)]
+    .map((match) => match.index)
+    .filter((index) => index >= 80)
+    .pop();
+
+  if (sentenceEnd) return clipped.slice(0, sentenceEnd + 1).trim();
+
+  const wordBoundary = clipped.lastIndexOf(" ");
+  const tidy = (wordBoundary > 90 ? clipped.slice(0, wordBoundary) : clipped)
+    .replace(/[,:;\-\s]+$/g, "")
+    .trim();
+
+  return /[.!?]$/.test(tidy) ? tidy : `${tidy}.`;
+}
+
 function getWordCount(value = "") {
   const text = stripHtml(value);
   return text ? text.split(/\s+/).filter(Boolean).length : 0;
@@ -76,11 +98,12 @@ export function createPageMetadata({
 } = {}) {
   const url = absoluteUrl(path);
   const imageUrl = absoluteUrl(image || siteConfig.defaultImagePath);
+  const cleanDescription = trimMetaDescription(description);
   const keywordList = [...new Set([...siteConfig.keywords, ...keywords].filter(Boolean))];
 
   return {
     title,
-    description,
+    description: cleanDescription,
     applicationName: siteConfig.name,
     authors: [{ name: siteConfig.name, url: getSiteUrl() }],
     creator: siteConfig.name,
@@ -96,7 +119,7 @@ export function createPageMetadata({
     },
     openGraph: {
       title,
-      description,
+      description: cleanDescription,
       url,
       siteName: siteConfig.name,
       type,
@@ -113,7 +136,7 @@ export function createPageMetadata({
     twitter: {
       card: "summary_large_image",
       title,
-      description,
+      description: cleanDescription,
       site: siteConfig.twitterHandle,
       creator: siteConfig.twitterHandle,
       images: [imageUrl],
@@ -334,7 +357,7 @@ export function createBlogPostingJsonLd(blog) {
   const title = blog.heading || blog.title;
   const path = `/blogs/${blog.slug}`;
   const content = blog.description || blog.content || blog.body || "";
-  const description = blog.seoDescription || blog.excerpt || stripHtml(content).slice(0, 180);
+  const description = trimMetaDescription(blog.seoDescription || blog.excerpt || stripHtml(content).slice(0, 180), 180);
   const wordCount = getWordCount(content);
   const tags = getBlogTags(blog.tags);
   const citations = getBlogCitations(blog);
@@ -382,7 +405,7 @@ export function createBlogPostingJsonLd(blog) {
     citation: citations.length ? citations : undefined,
     about: about.length ? about : undefined,
     wordCount: wordCount || undefined,
-    articleBody: articleBody ? articleBody.slice(0, 5000) : undefined,
+    articleBody: articleBody ? articleBody.slice(0, 1200) : undefined,
     timeRequired: `PT${readTimeMinutes}M`,
     isAccessibleForFree: true,
     inLanguage: "en",
