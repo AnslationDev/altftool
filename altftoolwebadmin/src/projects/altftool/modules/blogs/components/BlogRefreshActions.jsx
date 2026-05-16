@@ -8,47 +8,13 @@ import {
   ShieldCheck,
 } from "lucide-react";
 import { emitAlert } from "@/lib/alertBus";
-
-function todayIso() {
-  return new Date().toISOString();
-}
-
-function formatToday() {
-  return new Intl.DateTimeFormat("en", {
-    month: "short",
-    day: "numeric",
-    year: "numeric",
-  }).format(new Date());
-}
-
-function topicFromForm(formData = {}) {
-  return formData.heading?.trim() || formData.category?.trim() || "this guide";
-}
-
-function refreshNoteBlock(formData = {}) {
-  const topic = topicFromForm(formData);
-  return `<aside class="BLOG_CALLOUT BLOG_CALLOUT_REFRESH">
-  <strong>Updated review note</strong>
-  <p>This guide was refreshed on ${formatToday()} to improve clarity, source quality, internal links, and practical next steps for ${topic.toLowerCase()}.</p>
-</aside>`;
-}
-
-function refreshChecklistBlock(formData = {}) {
-  const topic = topicFromForm(formData);
-  return `<h2>What we checked in this update</h2>
-<ul class="BLOG_CHECKLIST">
-  <li>Reviewed the main advice for ${topic.toLowerCase()}.</li>
-  <li>Checked source links, examples, and outdated claims.</li>
-  <li>Improved reader flow with clearer headings and next steps.</li>
-</ul>`;
-}
-
-function sourceReminderBlock() {
-  return `<aside class="BLOG_CALLOUT">
-  <strong>Source check</strong>
-  <p>Important details can change over time. Review the linked sources and the latest official guidance before making a final decision.</p>
-</aside>`;
-}
+import {
+  buildRefreshChecklistBlock,
+  buildRefreshNoteBlock,
+  buildReviewFields,
+  buildSourceNoteFields,
+  buildSourceReminderBlock,
+} from "./blogRefreshKit";
 
 function ActionButton({ icon: Icon, label, caption, onClick }) {
   return (
@@ -74,37 +40,27 @@ export default function BlogRefreshActions({
   onInsertBlock,
 }) {
   const markReviewed = () => {
-    onApplyFields?.({
-      reviewedAt: todayIso(),
-      reviewedBy: formData.reviewedBy?.trim() || "AltFTool Editorial Team",
-      editorialNote:
-        formData.editorialNote?.trim() ||
-        "Reviewed for accuracy, freshness, source quality, practical usefulness, and reader-safe recommendations.",
-    });
+    onApplyFields?.(buildReviewFields(formData));
     emitAlert({ type: "success", message: "Review metadata updated." });
   };
 
   const addSourceNote = () => {
-    onApplyFields?.({
-      sourceNotes:
-        formData.sourceNotes?.trim() ||
-        "Sources, examples, and recommendation wording were checked during the latest editorial review.",
-    });
+    onApplyFields?.(buildSourceNoteFields(formData));
     emitAlert({ type: "success", message: "Source note added." });
   };
 
   const insertRefreshNote = () => {
-    onInsertBlock?.(refreshNoteBlock(formData));
+    onInsertBlock?.(buildRefreshNoteBlock(formData));
     emitAlert({ type: "success", message: "Refresh note inserted." });
   };
 
   const insertChecklist = () => {
-    onInsertBlock?.(refreshChecklistBlock(formData));
+    onInsertBlock?.(buildRefreshChecklistBlock(formData));
     emitAlert({ type: "success", message: "Refresh checklist inserted." });
   };
 
   const insertSourceReminder = () => {
-    onInsertBlock?.(sourceReminderBlock());
+    onInsertBlock?.(buildSourceReminderBlock());
     emitAlert({ type: "success", message: "Source reminder inserted." });
   };
 

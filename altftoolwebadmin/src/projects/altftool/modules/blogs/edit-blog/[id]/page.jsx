@@ -1,9 +1,10 @@
 "use client";
 
 import { useState, useEffect, useCallback, useRef } from "react";
-import { useRouter, useParams } from "next/navigation";
+import { useRouter, useParams, useSearchParams, usePathname } from "next/navigation";
 import dynamic from "next/dynamic";
 import { emitAlert } from "@/lib/alertBus";
+import { getAdminRouteId } from "@/lib/adminRouteParams";
 import {
   fetchBlogById,
   updateBlog,
@@ -30,6 +31,7 @@ import BlogContentBlocks from "../../components/BlogContentBlocks";
 import BlogContentTemplates from "../../components/BlogContentTemplates";
 import BlogRefreshActions from "../../components/BlogRefreshActions";
 import BlogSourceEditor, { formatSourcesText, parseSourcesText } from "../../components/BlogSourceEditor";
+import { buildQuickRefreshPayload } from "../../components/blogRefreshKit";
 
 const BlogEditor = dynamic(() => import("../../components/BlogEditor"), { ssr: false });
 
@@ -172,7 +174,10 @@ const normalizeDateValue = (value) => {
 ════════════════════════════════════ */
 export default function EditBlog() {
   const router     = useRouter();
-  const { id }     = useParams();
+  const params     = useParams();
+  const pathname   = usePathname();
+  const id         = getAdminRouteId(params, pathname);
+  const searchParams = useSearchParams();
   const fileInputRef = useRef(null);
 
   const [formData, setFormData] = useState({
@@ -194,10 +199,15 @@ export default function EditBlog() {
   const [errors, setErrors]               = useState({});
   const [seoExpanded, setSeoExpanded]     = useState(false);
   const [bannerError, setBannerError]     = useState(null);
+  const [quickActionApplied, setQuickActionApplied] = useState(false);
 
   /* ── Load blog ── */
   useEffect(() => {
-    if (!id) return;
+    if (!id) {
+      setLoading(false);
+      setBannerError("Missing blog id in the route. Please open this post from the blog list again.");
+      return;
+    }
     (async () => {
       try {
         const data = await fetchBlogById(id);
@@ -226,6 +236,28 @@ export default function EditBlog() {
       } finally { setLoading(false); }
     })();
   }, [id]); // eslint-disable-line
+
+  useEffect(() => {
+    if (loading || quickActionApplied) return;
+
+    const quickAction = searchParams.get("refreshAction") || searchParams.get("action");
+    if (!quickAction) return;
+
+    const payload = buildQuickRefreshPayload(quickAction, formData);
+    if (!payload.hasWork) return;
+
+    setFormData((prev) => ({
+      ...prev,
+      ...payload.fields,
+      description: payload.blocks.length
+        ? `${prev.description || ""}${prev.description?.trim() ? "\n\n" : ""}${payload.blocks.join("\n\n")}`
+        : prev.description,
+    }));
+    if (payload.expandSeo) setSeoExpanded(true);
+    setQuickActionApplied(true);
+    setBannerError(null);
+    emitAlert({ type: "success", message: `${payload.label} loaded. Review and save the post.` });
+  }, [loading, quickActionApplied]); // eslint-disable-line react-hooks/exhaustive-deps
 
   /* ── File handling ── */
   const fmtSize = (b) => b < 1024 * 1024 ? `${(b / 1024).toFixed(1)} KB` : `${(b / (1024 * 1024)).toFixed(1)} MB`;

@@ -6,6 +6,7 @@ import {
   AlertTriangle,
   ArrowLeft,
   BarChart3,
+  BookOpenCheck,
   CalendarClock,
   Clock3,
   Edit3,
@@ -26,6 +27,7 @@ import {
 } from "lucide-react";
 import { fetchAllBlogs } from "../services/blogsService";
 import { getBlogContentQuality } from "../components/BlogSeoChecklist";
+import { parseSourcesText } from "../components/BlogSourceEditor";
 
 function toDate(value) {
   if (!value) return null;
@@ -55,6 +57,14 @@ function hasFaqContent(blog = {}) {
     );
 
   return structuredFaqs || /FAQ_ITEM|FAQ_Q|FAQ_A|<!--\s*FAQ Start\s*-->/i.test(description);
+}
+
+function hasSources(blog = {}) {
+  return parseSourcesText(blog.sources || blog.citations || blog.references || "").length > 0;
+}
+
+function hasReviewDate(blog = {}) {
+  return Boolean(toDate(blog.reviewedAt || blog.updatedAt || blog.createdAt || blog.date));
 }
 
 function calcReadTime(html = "") {
@@ -99,6 +109,8 @@ function getRefreshReasons(blog = {}) {
   if (!blog.hasInternalLinks) reasons.push("no internal blog links");
   if (!blog.hasFaq) reasons.push("no authored FAQ");
   if (!blog.hasTrustMetadata) reasons.push("missing trust metadata");
+  if (!blog.hasSources) reasons.push("missing cited sources");
+  if (!blog.hasReviewDate) reasons.push("missing review date");
   if (blog.helpfulRate !== null && blog.feedbackTotal >= 3 && blog.helpfulRate < 60) {
     reasons.push(`reader feedback ${blog.helpfulRate}% helpful`);
   }
@@ -115,6 +127,12 @@ function getRefreshAction(blog = {}) {
   }
   if (!blog.hasFaq) {
     return "Add an authored FAQ block for long-tail search coverage.";
+  }
+  if (!blog.hasSources) {
+    return "Add cited sources and a short source review note.";
+  }
+  if (!blog.hasReviewDate) {
+    return "Mark the post reviewed and confirm the source note.";
   }
   if (blog.qualityScore < 70) {
     return "Expand the intro, headings, examples, and scannable structure.";
@@ -264,6 +282,26 @@ function HorizontalBar({ label, value, max, caption }) {
   );
 }
 
+function RefreshActionButton({ icon: Icon, label, onClick, tone = "blue" }) {
+  const toneMap = {
+    blue: "border-blue-100 bg-blue-50 text-blue-700 hover:border-blue-200",
+    amber: "border-amber-100 bg-amber-50 text-amber-700 hover:border-amber-200",
+    green: "border-green-100 bg-green-50 text-green-700 hover:border-green-200",
+    slate: "border-gray-200 bg-white text-gray-600 hover:border-gray-300",
+  };
+
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      className={`inline-flex h-8 items-center gap-1.5 rounded-lg border px-2.5 text-[11px] font-bold transition ${toneMap[tone]}`}
+    >
+      <Icon className="h-3.5 w-3.5" />
+      {label}
+    </button>
+  );
+}
+
 export default function AltFToolBlogAnalyticsPage() {
   const router = useRouter();
   const [blogs, setBlogs] = useState([]);
@@ -319,6 +357,8 @@ export default function AltFToolBlogAnalyticsPage() {
         hasInternalLinks: hasInternalLinks(blog.description || ""),
         hasFaq: hasFaqContent(blog),
         hasTrustMetadata: Boolean(blog.authorRole || blog.reviewedBy || blog.editorialNote),
+        hasSources: hasSources(blog),
+        hasReviewDate: hasReviewDate(blog),
         feedbackTotal: Number(blog.helpfulCount || 0) + Number(blog.notHelpfulCount || 0),
         helpfulRate: getHelpfulRate(blog),
       };
@@ -430,6 +470,8 @@ export default function AltFToolBlogAnalyticsPage() {
       noFaq: published.filter((blog) => !blog.hasFaq),
       noInternalLinks: published.filter((blog) => !blog.hasInternalLinks),
       missingTrust: withRefreshReasons.filter((blog) => !blog.hasTrustMetadata),
+      missingSources: withRefreshReasons.filter((blog) => !blog.hasSources),
+      missingReviewDate: withRefreshReasons.filter((blog) => !blog.hasReviewDate),
       lowFeedback: published.filter((blog) => blog.helpfulRate !== null && blog.feedbackTotal >= 3 && blog.helpfulRate < 60),
       stalePublished: published.filter((blog) => blog.daysSinceUpdate !== null && blog.daysSinceUpdate >= 90),
       highPriorityRefresh: published.filter((blog) => blog.refreshReasons.length > 0 && blog.refreshScore >= 90),
@@ -463,6 +505,9 @@ export default function AltFToolBlogAnalyticsPage() {
   const maxMonthly = Math.max(1, ...analytics.monthly.map((item) => item.posts));
   const maxCategoryViews = Math.max(1, ...analytics.categories.map((item) => item.views));
   const maxTagPosts = Math.max(1, ...analytics.tags.map((item) => item.posts));
+  const openRefreshAction = (blog, action = "seo") => {
+    router.push(`/altftool/blogs/edit-blog/${blog.id}?refreshAction=${action}`);
+  };
 
   if (loading) {
     return (
@@ -536,6 +581,10 @@ export default function AltFToolBlogAnalyticsPage() {
             <span className="inline-flex h-7 items-center gap-1 rounded-lg bg-slate-50 px-2.5 text-slate-700">
               <ShieldCheck className="h-3.5 w-3.5" />
               {analytics.missingTrust.length} missing trust
+            </span>
+            <span className="inline-flex h-7 items-center gap-1 rounded-lg bg-green-50 px-2.5 text-green-700">
+              <BookOpenCheck className="h-3.5 w-3.5" />
+              {analytics.missingSources.length} missing sources
             </span>
             <span className="inline-flex h-7 items-center gap-1 rounded-lg bg-amber-50 px-2.5 text-amber-700">
               <ThumbsDown className="h-3.5 w-3.5" />
@@ -630,6 +679,10 @@ export default function AltFToolBlogAnalyticsPage() {
               <AlertTriangle className="h-3.5 w-3.5" />
               {analytics.highPriorityRefresh.length} high priority
             </span>
+            <span className="inline-flex h-7 items-center gap-1 rounded-lg bg-slate-50 px-2.5 text-slate-700">
+              <CalendarClock className="h-3.5 w-3.5" />
+              {analytics.missingReviewDate.length} no review date
+            </span>
             <span className="inline-flex h-7 items-center gap-1 rounded-lg bg-green-50 px-2.5 text-green-700">
               <Sparkles className="h-3.5 w-3.5" />
               {analytics.quickRefreshWins.length} quick wins
@@ -640,18 +693,16 @@ export default function AltFToolBlogAnalyticsPage() {
         {analytics.refreshQueue.length ? (
           <div className="grid grid-cols-1 gap-3 lg:grid-cols-2">
             {analytics.refreshQueue.map((blog) => (
-              <button
+              <div
                 key={blog.id}
-                type="button"
-                onClick={() => router.push(`/altftool/blogs/edit-blog/${blog.id}`)}
-                className="group flex w-full items-start gap-3 rounded-xl border border-gray-100 bg-gray-50/50 p-3 text-left transition hover:border-blue-200 hover:bg-blue-50"
+                className="flex w-full items-start gap-3 rounded-xl border border-gray-100 bg-gray-50/50 p-3 text-left"
               >
                 <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-white text-sm font-black text-blue-600 shadow-sm">
                   {blog.refreshScore}
                 </div>
                 <div className="min-w-0 flex-1">
                   <div className="flex flex-wrap items-center gap-2">
-                    <p className="line-clamp-1 min-w-0 flex-1 text-sm font-semibold text-gray-800 group-hover:text-blue-700">
+                    <p className="line-clamp-1 min-w-0 flex-1 text-sm font-semibold text-gray-800">
                       {blog.heading || "Untitled blog"}
                     </p>
                     <span className={`shrink-0 rounded-lg px-2 py-1 text-[10px] font-bold uppercase tracking-wide ${
@@ -674,9 +725,34 @@ export default function AltFToolBlogAnalyticsPage() {
                       </span>
                     ))}
                   </div>
+                  <div className="mt-3 flex flex-wrap gap-2">
+                    <RefreshActionButton
+                      icon={Sparkles}
+                      label="SEO pack"
+                      tone="blue"
+                      onClick={() => openRefreshAction(blog, "seo")}
+                    />
+                    <RefreshActionButton
+                      icon={SearchCheck}
+                      label="FAQ"
+                      tone="amber"
+                      onClick={() => openRefreshAction(blog, "faq")}
+                    />
+                    <RefreshActionButton
+                      icon={BookOpenCheck}
+                      label="Sources"
+                      tone="green"
+                      onClick={() => openRefreshAction(blog, "sources")}
+                    />
+                    <RefreshActionButton
+                      icon={Edit3}
+                      label="Edit"
+                      tone="slate"
+                      onClick={() => router.push(`/altftool/blogs/edit-blog/${blog.id}`)}
+                    />
+                  </div>
                 </div>
-                <Edit3 className="mt-1 h-4 w-4 shrink-0 text-gray-400" />
-              </button>
+              </div>
             ))}
           </div>
         ) : (

@@ -1,8 +1,9 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useParams, useRouter } from "next/navigation";
+import { useParams, usePathname, useRouter } from "next/navigation";
 import { emitAlert } from "@/lib/alertBus";
+import { getAdminRouteId } from "@/lib/adminRouteParams";
 import {
   fetchBlogById,
   subscribeToComments,
@@ -183,13 +184,18 @@ function CommentsSection({ blogId }) {
 
 /* ── Main Page ── */
 export default function BlogView() {
-  const { id } = useParams();
+  const params = useParams();
+  const pathname = usePathname();
+  const id = getAdminRouteId(params, pathname);
   const router  = useRouter();
   const [blog, setBlog]     = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (!id) return;
+    if (!id) {
+      setLoading(false);
+      return;
+    }
     (async () => {
       try {
         setBlog(await fetchBlogById(id));

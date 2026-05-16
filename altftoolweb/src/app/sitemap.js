@@ -65,11 +65,24 @@ const FIREBASE_API_KEY =
 const FIREBASE_PROJECT_ID =
   process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID || "altftool-bca36";
 const FIREBASE_PROJECT_ROOT = "projects/altftool";
+const SEO_FIREBASE_BLOG_LIMIT = 500;
+const SEO_FIREBASE_PAGE_SIZE = 16;
+
+function safeDate(value) {
+  if (!value) return undefined;
+  if (value instanceof Date) return Number.isNaN(value.getTime()) ? undefined : value;
+  if (typeof value?.seconds === "number") {
+    const date = new Date(value.seconds * 1000);
+    return Number.isNaN(date.getTime()) ? undefined : date;
+  }
+  const date = new Date(value);
+  return Number.isNaN(date.getTime()) ? undefined : date;
+}
 
 function sitemapEntry(path, options = {}) {
   return {
     url: `${getSiteUrl()}${path}`,
-    lastModified: options.lastModified || new Date(),
+    lastModified: safeDate(options.lastModified) || new Date(),
     changeFrequency: options.changeFrequency || "weekly",
     priority: options.priority ?? 0.6,
   };
@@ -146,6 +159,27 @@ async function listPublicFirestoreDocs(path, pageSize = 100) {
   }
 }
 
+async function fetchFirebaseBlogsForSeo(maxPosts = SEO_FIREBASE_BLOG_LIMIT) {
+  const pageSize = SEO_FIREBASE_PAGE_SIZE;
+  const posts = [];
+  let offset = 0;
+
+  while (posts.length < maxPosts) {
+    const rows = await fetchFirebaseBlogsPage({
+      pageSize: Math.min(pageSize, maxPosts - posts.length),
+      offset,
+      includeDescription: false,
+    }).catch(() => []);
+
+    if (!rows.length) break;
+    posts.push(...rows);
+    if (rows.length < pageSize) break;
+    offset += rows.length;
+  }
+
+  return posts;
+}
+
 async function getLiveSitemapCollections() {
   const [
     firebaseBlogs,
@@ -154,7 +188,7 @@ async function getLiveSitemapCollections() {
     brandSubcategories,
     brands,
   ] = await Promise.all([
-    fetchFirebaseBlogsPage({ pageSize: 100 }).catch(() => []),
+    fetchFirebaseBlogsForSeo(),
     listPublicFirestoreDocs(`${FIREBASE_PROJECT_ROOT}/extensions`, 100),
     listPublicFirestoreDocs(`${FIREBASE_PROJECT_ROOT}/consumerrating/data/categories`, 100),
     listPublicFirestoreDocs(`${FIREBASE_PROJECT_ROOT}/consumerrating/data/subcategories`, 100),
