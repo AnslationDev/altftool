@@ -253,6 +253,81 @@ export function createHowToJsonLd({ path, name, description, steps = [] } = {}) 
   };
 }
 
+function compactJsonLdObject(value = {}) {
+  return Object.fromEntries(
+    Object.entries(value).filter(([, item]) => {
+      if (item === undefined || item === null || item === "") return false;
+      if (Array.isArray(item) && item.length === 0) return false;
+      return true;
+    }),
+  );
+}
+
+function getBlogTags(value) {
+  if (Array.isArray(value)) return value.map((tag) => String(tag).trim()).filter(Boolean);
+
+  return String(value || "")
+    .split(/[,\n]/)
+    .map((tag) => tag.trim())
+    .filter(Boolean);
+}
+
+function normalizeCitationSource(source) {
+  if (!source) return null;
+
+  if (typeof source === "string") {
+    const url = source.match(/https?:\/\/[^\s|]+/i)?.[0] || "";
+    const title = source.replace(url, "").replace(/\|+/g, " ").trim() || url || source;
+
+    return compactJsonLdObject({
+      "@type": "CreativeWork",
+      name: title,
+      url: url || undefined,
+    });
+  }
+
+  const title = source.title || source.name || source.label || source.url;
+  const url = source.url || source.href;
+  const publisher = source.publisher || source.site || source.source;
+
+  return compactJsonLdObject({
+    "@type": "CreativeWork",
+    name: title,
+    url,
+    publisher: publisher
+      ? {
+          "@type": "Organization",
+          name: publisher,
+        }
+      : undefined,
+  });
+}
+
+function getBlogCitations(blog = {}) {
+  const rawSources = Array.isArray(blog.sources)
+    ? blog.sources
+    : Array.isArray(blog.citations)
+      ? blog.citations
+      : Array.isArray(blog.references)
+        ? blog.references
+        : String(blog.sources || blog.citations || blog.references || "")
+            .split(/\n+/)
+            .filter(Boolean);
+
+  return rawSources.map(normalizeCitationSource).filter((source) => source?.name || source?.url);
+}
+
+function createInteractionStatistic(type, count) {
+  const value = Number(count || 0);
+  if (!value) return null;
+
+  return {
+    "@type": "InteractionCounter",
+    interactionType: { "@type": type },
+    userInteractionCount: value,
+  };
+}
+
 export function createBlogPostingJsonLd(blog) {
   if (!blog?.slug) return null;
 
@@ -261,49 +336,94 @@ export function createBlogPostingJsonLd(blog) {
   const content = blog.description || blog.content || blog.body || "";
   const description = blog.seoDescription || blog.excerpt || stripHtml(content).slice(0, 180);
   const wordCount = getWordCount(content);
-  const tags = Array.isArray(blog.tags)
-    ? blog.tags.filter(Boolean)
-    : String(blog.tags || "")
-        .split(/[,\n]/)
-        .map((tag) => tag.trim())
-        .filter(Boolean);
-  const citations = Array.isArray(blog.sources)
-    ? blog.sources
-        .filter((source) => source?.title || source?.url)
-        .map((source) => source.url || source.title)
-    : [];
+  const tags = getBlogTags(blog.tags);
+  const citations = getBlogCitations(blog);
   const readTimeMinutes = Math.max(1, Math.ceil(wordCount / 180));
+  const imageUrl = absoluteUrl(blog.image || siteConfig.defaultImagePath);
+  const authorName = blog.author || siteConfig.name;
+  const reviewerName = blog.reviewedBy || "";
+  const authorType = authorName && authorName !== siteConfig.name ? "Person" : "Organization";
+  const about = [blog.category, blog.tool, blog.topic, ...tags]
+    .filter(Boolean)
+    .filter((item, index, list) => list.findIndex((entry) => String(entry).toLowerCase() === String(item).toLowerCase()) === index)
+    .slice(0, 12)
+    .map((name) => ({ "@type": "Thing", name }));
+  const interactionStatistic = [
+    createInteractionStatistic("ReadAction", blog.views || blog.viewCount || blog.totalViews),
+    createInteractionStatistic("LikeAction", blog.likesCount || blog.likes || blog.reactions),
+    createInteractionStatistic("CommentAction", blog.commentsCount || blog.commentCount || blog.comments),
+  ].filter(Boolean);
+  const articleBody = stripHtml(content);
 
-  return {
+  return compactJsonLdObject({
     "@context": "https://schema.org",
     "@type": "BlogPosting",
     "@id": `${absoluteUrl(path)}#article`,
+    url: absoluteUrl(path),
     headline: title,
+    name: title,
     description,
-    image: blog.image ? absoluteUrl(blog.image) : absoluteUrl(siteConfig.defaultImagePath),
+    abstract: description,
+    image: [
+      compactJsonLdObject({
+        "@type": "ImageObject",
+        url: imageUrl,
+        contentUrl: imageUrl,
+        caption: blog.imageAlt || title,
+        width: 1200,
+        height: 630,
+      }),
+    ],
+    thumbnailUrl: imageUrl,
     datePublished: blog.date,
     dateModified: blog.reviewedAt || blog.updatedAt || blog.date,
     articleSection: blog.category || "AltFTool guides",
     keywords: tags.length ? tags.join(", ") : undefined,
     citation: citations.length ? citations : undefined,
+    about: about.length ? about : undefined,
     wordCount: wordCount || undefined,
+    articleBody: articleBody ? articleBody.slice(0, 5000) : undefined,
     timeRequired: `PT${readTimeMinutes}M`,
-    author: {
-      "@type": blog.author && blog.author !== siteConfig.name ? "Person" : "Organization",
-      name: blog.author || siteConfig.name,
-      jobTitle: blog.authorRole || undefined,
+    isAccessibleForFree: true,
+    inLanguage: "en",
+    isPartOf: {
+      "@id": `${getSiteUrl()}/#website`,
     },
-    reviewedBy: blog.reviewedBy
-      ? {
-          "@type": "Organization",
-          name: blog.reviewedBy,
-        }
+    author: compactJsonLdObject({
+      "@type": authorType,
+      name: authorName,
+      jobTitle: blog.authorRole || undefined,
+      url: authorType === "Person" ? absoluteUrl(`/blogs/author/${normalizeSlug(authorName)}`) : getSiteUrl(),
+    }),
+    reviewedBy: reviewerName
+      ? compactJsonLdObject({
+          "@type": /team|editorial|altftool/i.test(reviewerName) ? "Organization" : "Person",
+          name: reviewerName,
+          url: /team|editorial|altftool/i.test(reviewerName) ? getSiteUrl() : undefined,
+        })
+      : undefined,
+    editor: reviewerName
+      ? compactJsonLdObject({
+          "@type": /team|editorial|altftool/i.test(reviewerName) ? "Organization" : "Person",
+          name: reviewerName,
+        })
       : undefined,
     publisher: {
       "@id": `${getSiteUrl()}/#organization`,
     },
-    mainEntityOfPage: absoluteUrl(path),
-  };
+    copyrightHolder: {
+      "@id": `${getSiteUrl()}/#organization`,
+    },
+    mainEntityOfPage: {
+      "@type": "WebPage",
+      "@id": absoluteUrl(path),
+    },
+    interactionStatistic: interactionStatistic.length ? interactionStatistic : undefined,
+    potentialAction: {
+      "@type": "ReadAction",
+      target: absoluteUrl(path),
+    },
+  });
 }
 
 export function createArticleJsonLd({

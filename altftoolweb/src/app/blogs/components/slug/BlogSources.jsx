@@ -12,7 +12,7 @@ export default function BlogSources({ blog }) {
   if (!sources.length && !blog?.sourceNotes) return null;
 
   return (
-    <section className="mt-10 rounded-[var(--anslation-ds-radius)] border border-(--border) bg-(--background) p-4 sm:p-5">
+    <section id="sources" className="mt-10 scroll-mt-24 rounded-[var(--anslation-ds-radius)] border border-(--border) bg-(--background) p-4 sm:p-5">
       <div className="mb-4 flex items-start gap-3">
         <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-[6px] bg-(--muted) text-(--primary)">
           <BookOpenCheck className="h-5 w-5" />

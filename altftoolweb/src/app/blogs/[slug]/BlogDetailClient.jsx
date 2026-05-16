@@ -29,6 +29,7 @@ import BlogComments from "../components/slug/BlogComments";
 import BlogTopBarLoader from "../components/slug/BlogTopBarLoader";
 import BlogTableOfContents from "../components/slug/BlogTableOfContents";
 import BlogReadingProgress from "../components/slug/BlogReadingProgress";
+import BlogInsightStrip from "../components/slug/BlogInsightStrip";
 import BlogArticleEnhancements from "../components/slug/BlogArticleEnhancements";
 import BlogReaderCompanion from "../components/slug/BlogReaderCompanion";
 import BlogReaderTools from "../components/slug/BlogReaderTools";
@@ -261,6 +262,12 @@ export default function BlogDetailClient({
           setShowCommentBox={setShowCommentBox}
           date={blog.date}
           author={blog.author}
+        />
+        <BlogInsightStrip
+          blog={blog}
+          faqItems={faqItems}
+          relatedTools={relatedTools}
+          relatedPosts={similarPosts}
         />
 
         <BlogTableOfContents
