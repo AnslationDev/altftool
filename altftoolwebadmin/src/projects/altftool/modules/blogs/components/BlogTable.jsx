@@ -8,6 +8,7 @@ import { logAuditEvent } from "@/lib/auditClient";
 import { getErrorMessage } from "@/lib/apiClient";
 import { updateBlogStatus } from "../services/blogsService";
 import { getBlogContentQuality } from "./BlogSeoChecklist";
+import { buildBlogAudit } from "./blogQualityAudit";
 import {
   useReactTable,
   getCoreRowModel,
@@ -189,6 +190,18 @@ export default function BlogTable({
   /* ── Toggle publish status ── */
   const togglePublish = async (blog) => {
     const newStatus = blog.status === "published" ? "draft" : "published";
+    if (newStatus === "published") {
+      const audit = buildBlogAudit(blog);
+      if (audit.gaps.length > 0) {
+        const firstGap = audit.gaps[0]?.label || "Publish Gate";
+        emitAlert({
+          type: "warning",
+          message: `Publish Gate has ${audit.gaps.length} open item${audit.gaps.length === 1 ? "" : "s"} (${firstGap}). Open the editor to review and publish.`,
+        });
+        return;
+      }
+    }
+
     setBlogs((prev) => prev.map((b) => b.id === blog.id ? { ...b, status: newStatus } : b));
     try {
       await updateBlogStatus(blog.id, newStatus);

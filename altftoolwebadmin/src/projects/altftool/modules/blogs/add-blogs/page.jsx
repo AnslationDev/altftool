@@ -23,6 +23,7 @@ import {
 import CTAButtonPicker from "../components/CtaButtonPicker";
 import FAQPicker from "../components/FAQCreator";
 import BlogInternalLinkAssistant from "../components/BlogInternalLinkAssistant";
+import BlogPublishQualityGate from "../components/BlogPublishQualityGate";
 import BlogSeoChecklist, { parseBlogTags } from "../components/BlogSeoChecklist";
 import BlogLivePreview from "../components/BlogLivePreview";
 import BlogWritingAssistant from "../components/BlogWritingAssistant";
@@ -224,6 +225,7 @@ export default function AddBlog() {
   const [bannerError, setBannerError]         = useState(null);
   const [uploadTask, setUploadTask]           = useState(null);
   const [autoSaveError, setAutoSaveError]     = useState(false);
+  const [publishGate, setPublishGate]         = useState(null);
 
   /* ── Load categories ── */
   useEffect(() => {
@@ -399,11 +401,44 @@ export default function AddBlog() {
     return errorCount === 0;
   };
 
+  const ensurePublishGateReady = () => {
+    if (!publishGate) {
+      const msg = "Publish gate is still checking this post. Please wait a moment and try again.";
+      setBannerError(msg);
+      emitAlert({ type: "warning", message: msg });
+      return false;
+    }
+
+    if (!publishGate.canPublish) {
+      const firstIssue = publishGate.blockingIssues?.[0]?.label || "Required publish check";
+      const count = publishGate.blockingIssues?.length || 1;
+      const msg = `${count} publish gate blocker${count === 1 ? "" : "s"} need attention: ${firstIssue}.`;
+      setBannerError(msg);
+      emitAlert({ type: "error", message: msg });
+      return false;
+    }
+
+    const warnings = publishGate.warningIssues || [];
+    if (warnings.length > 0) {
+      const preview = warnings.slice(0, 3).map((item) => `- ${item.label}: ${item.detail}`).join("\n");
+      const ok = window.confirm(`Publish with ${warnings.length} warning${warnings.length === 1 ? "" : "s"}?\n\n${preview}\n\nContinue publishing?`);
+      if (!ok) {
+        const msg = "Publishing paused. Review the publish gate warnings before going live.";
+        setBannerError(msg);
+        emitAlert({ type: "warning", message: msg });
+        return false;
+      }
+    }
+
+    return true;
+  };
+
   /* ── Publish ── */
   const handleSubmit = async (e) => {
     e.preventDefault();
     setBannerError(null);
     if (submitting || !validate()) return;
+    if (!ensurePublishGateReady()) return;
 
     if (!navigator.onLine) {
       const msg = "You're offline. Please reconnect before publishing.";
@@ -771,6 +806,13 @@ export default function AddBlog() {
                   <p className="text-xs text-blue-600">{autoSaveError ? "⚠ Auto-save unavailable. Use Save Draft to keep your work." : "Draft is auto-saved locally every 2 seconds."}</p>
                 </div>
               </div>
+
+              <BlogPublishQualityGate
+                formData={formData}
+                imageAlt={imageAlt}
+                hasImage={Boolean(imageFile || imagePreview)}
+                onGateChange={setPublishGate}
+              />
 
               <BlogLivePreview
                 formData={formData}
