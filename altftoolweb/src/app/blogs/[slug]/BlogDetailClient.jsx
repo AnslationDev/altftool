@@ -37,7 +37,7 @@ import BlogFeedback from "../components/slug/BlogFeedback";
 import BlogRelatedTools from "../components/slug/BlogRelatedTools";
 import BlogArticleSnapshot from "../components/slug/BlogArticleSnapshot";
 import BlogCard from "../components/BlogCard";
-import { deriveBlogFaqItems } from "../utils/blogFaq";
+import { deriveBlogFaqItems, getBlogDescription } from "../utils/blogFaq";
 import { getRelatedToolsForBlog } from "../utils/relatedTools";
 import "../../styles/ckeditor.css";
 
@@ -198,13 +198,15 @@ export default function BlogDetailClient({
     document.title = blog.seoTitle?.trim() || `${blog.heading} | AltFTool Blog`;
     let meta = document.querySelector('meta[name="description"]');
 
-    if (blog.seoDescription || blog.excerpt) {
+    const metaDescription = getBlogDescription(blog);
+
+    if (metaDescription) {
       if (!meta) {
         meta = document.createElement("meta");
         meta.setAttribute("name", "description");
         document.head.appendChild(meta);
       }
-      meta.setAttribute("content", blog.seoDescription || blog.excerpt);
+      meta.setAttribute("content", metaDescription);
     }
 
     return () => {
