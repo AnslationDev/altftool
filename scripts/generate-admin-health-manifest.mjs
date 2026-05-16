@@ -277,6 +277,8 @@ async function buildPriorityQaReadiness(toolMetaMap) {
 }
 
 async function buildSeoReadiness() {
+  const packageJson = await readJson(path.join(workspaceRoot, "package.json"), {});
+  const scripts = packageJson.scripts || {};
   const checks = [
     {
       key: "sitemap",
@@ -301,6 +303,14 @@ async function buildSeoReadiness() {
       label: "Metadata helpers",
       detail: "Canonical, Open Graph, Twitter",
       ok: await fileExists(path.join(webRoot, "src/platform/seo/generateMetadata.js")),
+    },
+    {
+      key: "blogSeoAudit",
+      label: "Blog SEO readiness gate",
+      detail: "npm run seo:blog-check",
+      ok:
+        Boolean(scripts["seo:blog-check"]) &&
+        (await fileExists(path.join(workspaceRoot, "scripts/check-blog-seo-readiness.mjs"))),
     },
   ];
 

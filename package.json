@@ -40,6 +40,8 @@
     "firebase:admin-write-check:emulator": "npm run firebase:emulator:preflight && npx --yes firebase-tools@15.17.0 emulators:exec --only firestore --project altftool-bca36 \"npm --prefix altftoolwebadmin run firebase:admin-write-check\"",
     "media:check": "node scripts/check-public-media-budgets.mjs",
     "monitor:production": "node scripts/check-production-monitoring.mjs",
+    "seo:blog-check": "node --no-warnings scripts/check-blog-seo-readiness.mjs",
+    "seo:blog-live-check": "node --no-warnings scripts/check-blog-seo-readiness.mjs --live",
     "tools:check": "node --no-warnings scripts/check-tool-registry.mjs",
     "test:firebase-rules": "npm --prefix altftoolwebadmin run test:firebase-rules",
     "test:firebase-rules:emulator": "npm run firebase:emulator:preflight && npx --yes firebase-tools@15.17.0 emulators:exec --only firestore,storage --project altftool-bca36 \"npm run test:firebase-rules\"",
@@ -63,9 +65,9 @@
     "test:security": "playwright test tests/security.spec.mjs",
     "test:lighthouse": "ALTFT_PLAYWRIGHT_WEB_SERVER=production ALTFT_PLAYWRIGHT_ADMIN_SERVER=dev playwright test tests/lighthouse.spec.mjs",
     "test:lighthouse:dev": "playwright test tests/lighthouse.spec.mjs",
-    "validate": "npm run lint:web && npm run lint:web:budget && npm run routes:check && npm run tools:check && npm run health:manifest:check && npm run env:readiness && npm run firebase:check && npm run media:check && npm run audit && npm run build && npm run bundle:audit && npm run test:smoke",
+    "validate": "npm run lint:web && npm run lint:web:budget && npm run routes:check && npm run tools:check && npm run seo:blog-check && npm run health:manifest:check && npm run env:readiness && npm run firebase:check && npm run media:check && npm run audit && npm run build && npm run bundle:audit && npm run test:smoke",
     "validate:full": "npm run validate && npm run test:routes && npm run test:tools:functional && npm run test:tools:priority && npm run test:mobile-ux && npm run test:admin-api && npm run test:firebase-admin-write-check && npm run test:firebase-live-data-report",
-    "validate:release": "npm run validate:full && npm run firebase:live-check && npm run test:firebase-public-pages && npm run test:security && npm run test:visual && npm run test:lighthouse"
+    "validate:release": "npm run validate:full && npm run firebase:live-check && npm run seo:blog-live-check && npm run test:firebase-public-pages && npm run test:security && npm run test:visual && npm run test:lighthouse"
   },
   "devDependencies": {
     "@playwright/test": "^1.59.1",

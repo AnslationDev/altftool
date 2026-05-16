@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-05-15T04:04:28.273Z",
+  "generatedAt": "2026-05-16T05:03:45.332Z",
   "tools": {
     "total": 231,
     "healthy": 231,
@@ -488,6 +488,12 @@
         "key": "metadata",
         "label": "Metadata helpers",
         "detail": "Canonical, Open Graph, Twitter",
+        "ok": true
+      },
+      {
+        "key": "blogSeoAudit",
+        "label": "Blog SEO readiness gate",
+        "detail": "npm run seo:blog-check",
         "ok": true
       }
     ]

@@ -27,7 +27,7 @@ import {
 } from "lucide-react";
 import { fetchAllBlogs } from "../services/blogsService";
 import { getBlogContentQuality } from "../components/BlogSeoChecklist";
-import { parseSourcesText } from "../components/BlogSourceEditor";
+import { getBlogSchemaHealth } from "../components/blogSeoHealth";
 
 function toDate(value) {
   if (!value) return null;
@@ -42,29 +42,6 @@ function stripHtml(value = "") {
 
 function hasInternalLinks(html = "") {
   return /href=["'][^"']*\/blogs\//i.test(String(html || ""));
-}
-
-function hasFaqContent(blog = {}) {
-  const description = String(blog.description || blog.content || blog.body || "");
-  const structuredFaqs = [blog.faq, blog.faqs, blog.faqItems, blog.faq?.items]
-    .filter(Array.isArray)
-    .some((items) =>
-      items.some((item) => {
-        const question = item?.question || item?.q || item?.title || "";
-        const answer = item?.answer || item?.a || item?.description || "";
-        return String(question).trim().length > 4 && String(answer).trim().length > 12;
-      })
-    );
-
-  return structuredFaqs || /FAQ_ITEM|FAQ_Q|FAQ_A|<!--\s*FAQ Start\s*-->/i.test(description);
-}
-
-function hasSources(blog = {}) {
-  return parseSourcesText(blog.sources || blog.citations || blog.references || "").length > 0;
-}
-
-function hasReviewDate(blog = {}) {
-  return Boolean(toDate(blog.reviewedAt || blog.updatedAt || blog.createdAt || blog.date));
 }
 
 function calcReadTime(html = "") {
@@ -154,18 +131,32 @@ function getRefreshTier(score = 0) {
 
 function getSeoAuditIssues(blog = {}) {
   const issues = [];
+  const seenLabels = new Set();
+  const pushIssue = (issue) => {
+    if (!issue?.label || seenLabels.has(issue.label)) return;
+    seenLabels.add(issue.label);
+    issues.push(issue);
+  };
   const failedChecks = (blog.qualityChecks || []).filter((check) => !check.done);
 
   failedChecks.slice(0, 4).forEach((check) => {
-    issues.push({
+    pushIssue({
       key: check.label,
       label: check.label,
       detail: check.detail,
     });
   });
 
+  (blog.schemaHealth?.issues || []).slice(0, 4).forEach((check) => {
+    pushIssue({
+      key: `schema-${check.key}`,
+      label: check.label,
+      detail: check.detail,
+    });
+  });
+
   if (!blog.hasTrustMetadata) {
-    issues.push({
+    pushIssue({
       key: "Trust metadata",
       label: "Trust metadata",
       detail: "Add role, reviewer, or editorial note",
@@ -173,7 +164,7 @@ function getSeoAuditIssues(blog = {}) {
   }
 
   if (blog.helpfulRate !== null && blog.feedbackTotal >= 3 && blog.helpfulRate < 60) {
-    issues.push({
+    pushIssue({
       key: "Reader feedback",
       label: "Reader feedback",
       detail: `${blog.helpfulRate}% helpful`,
@@ -344,21 +335,26 @@ export default function AltFToolBlogAnalyticsPage() {
         imageAlt: blog.imageAlt || "",
         hasImage: Boolean(blog.image),
       });
+      const schemaHealth = getBlogSchemaHealth(blog);
 
       return {
         ...blog,
         qualityScore: quality.score,
         qualityChecks: quality.checks,
         qualitySuggestions: quality.suggestions,
+        schemaHealth,
+        schemaScore: schemaHealth.score,
+        schemaReady: schemaHealth.articleSchemaReady,
+        richResultReady: schemaHealth.richResultReady,
         engagement: getEngagement(blog),
         toolClickCount: Number(blog.toolClickCount || 0),
         readTime: calcReadTime(blog.description || ""),
         daysSinceUpdate: getDaysSince(blog.updatedAt, blog.createdAt || blog.date),
         hasInternalLinks: hasInternalLinks(blog.description || ""),
-        hasFaq: hasFaqContent(blog),
+        hasFaq: schemaHealth.flags.hasFaq,
         hasTrustMetadata: Boolean(blog.authorRole || blog.reviewedBy || blog.editorialNote),
-        hasSources: hasSources(blog),
-        hasReviewDate: hasReviewDate(blog),
+        hasSources: schemaHealth.flags.sourceCount > 0,
+        hasReviewDate: schemaHealth.flags.hasReviewDate,
         feedbackTotal: Number(blog.helpfulCount || 0) + Number(blog.notHelpfulCount || 0),
         helpfulRate: getHelpfulRate(blog),
       };
@@ -400,6 +396,9 @@ export default function AltFToolBlogAnalyticsPage() {
       : 0;
     const avgReadTime = withRefreshReasons.length
       ? Math.round(withRefreshReasons.reduce((sum, blog) => sum + blog.readTime, 0) / withRefreshReasons.length)
+      : 0;
+    const avgSchemaScore = withRefreshReasons.length
+      ? Math.round(withRefreshReasons.reduce((sum, blog) => sum + blog.schemaScore, 0) / withRefreshReasons.length)
       : 0;
 
     withRefreshReasons.forEach((blog) => {
@@ -452,6 +451,19 @@ export default function AltFToolBlogAnalyticsPage() {
         issueCounts.set(issue.label, (issueCounts.get(issue.label) || 0) + 1);
       });
     });
+    const schemaQueue = [...published]
+      .filter((blog) => !blog.richResultReady)
+      .sort((a, b) => {
+        if (a.schemaReady !== b.schemaReady) return a.schemaReady ? 1 : -1;
+        return a.schemaScore - b.schemaScore;
+      })
+      .slice(0, 8);
+    const schemaIssueCounts = new Map();
+    published.forEach((blog) => {
+      blog.schemaHealth.issues.forEach((issue) => {
+        schemaIssueCounts.set(issue.label, (schemaIssueCounts.get(issue.label) || 0) + 1);
+      });
+    });
 
     return {
       total: withRefreshReasons.length,
@@ -466,12 +478,20 @@ export default function AltFToolBlogAnalyticsPage() {
       helpfulRate,
       avgQuality,
       avgReadTime,
+      avgSchemaScore,
       lowQuality: withRefreshReasons.filter((blog) => blog.qualityScore < 70),
       noFaq: published.filter((blog) => !blog.hasFaq),
       noInternalLinks: published.filter((blog) => !blog.hasInternalLinks),
       missingTrust: withRefreshReasons.filter((blog) => !blog.hasTrustMetadata),
       missingSources: withRefreshReasons.filter((blog) => !blog.hasSources),
       missingReviewDate: withRefreshReasons.filter((blog) => !blog.hasReviewDate),
+      schemaReady: published.filter((blog) => blog.schemaReady),
+      richResultReady: published.filter((blog) => blog.richResultReady),
+      schemaQueue,
+      schemaIssueCounts: [...schemaIssueCounts.entries()]
+        .map(([label, count]) => ({ label, count }))
+        .sort((a, b) => b.count - a.count || a.label.localeCompare(b.label))
+        .slice(0, 8),
       lowFeedback: published.filter((blog) => blog.helpfulRate !== null && blog.feedbackTotal >= 3 && blog.helpfulRate < 60),
       stalePublished: published.filter((blog) => blog.daysSinceUpdate !== null && blog.daysSinceUpdate >= 90),
       highPriorityRefresh: published.filter((blog) => blog.refreshReasons.length > 0 && blog.refreshScore >= 90),
@@ -561,6 +581,111 @@ export default function AltFToolBlogAnalyticsPage() {
         <StatCard icon={Clock3} label="Avg Read Time" value={`${analytics.avgReadTime} min`} caption="Based on published content length" tone="slate" />
         <StatCard icon={ThumbsUp} label="Helpful Rate" value={`${analytics.helpfulRate}%`} caption={`${analytics.totalHelpful} helpful - ${analytics.totalNotHelpful} needs work`} tone={analytics.helpfulRate >= 70 ? "green" : "amber"} />
       </div>
+
+      <section className="rounded-2xl border border-gray-100 bg-white p-6 shadow-sm">
+        <div className="mb-5 flex flex-wrap items-center justify-between gap-3">
+          <div className="flex items-center gap-2">
+            <BookOpenCheck className="h-4 w-4 text-green-600" />
+            <div>
+              <h2 className="text-sm font-black uppercase tracking-wider text-gray-700">Schema health monitor</h2>
+              <p className="mt-1 text-xs text-gray-400">
+                Tracks BlogPosting basics, FAQ rich-result inputs, citation schema, and freshness signals.
+              </p>
+            </div>
+          </div>
+          <div className="flex flex-wrap gap-2 text-xs font-semibold text-gray-500">
+            <span className="inline-flex h-7 items-center gap-1 rounded-lg bg-green-50 px-2.5 text-green-700">
+              <ShieldCheck className="h-3.5 w-3.5" />
+              {analytics.schemaReady.length}/{analytics.published} schema ready
+            </span>
+            <span className="inline-flex h-7 items-center gap-1 rounded-lg bg-blue-50 px-2.5 text-blue-700">
+              <Sparkles className="h-3.5 w-3.5" />
+              {analytics.richResultReady.length}/{analytics.published} rich ready
+            </span>
+            <span className="inline-flex h-7 items-center gap-1 rounded-lg bg-amber-50 px-2.5 text-amber-700">
+              <SearchCheck className="h-3.5 w-3.5" />
+              {analytics.avgSchemaScore}% avg schema
+            </span>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 gap-4 lg:grid-cols-[minmax(0,1.25fr)_minmax(280px,0.75fr)]">
+          <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
+            {analytics.schemaQueue.length ? (
+              analytics.schemaQueue.slice(0, 6).map((blog) => (
+                <div key={blog.id} className="rounded-xl border border-gray-100 bg-gray-50/60 p-3">
+                  <div className="flex items-start gap-3">
+                    <div className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl text-sm font-black ${blog.schemaReady ? "bg-amber-50 text-amber-600" : "bg-red-50 text-red-600"}`}>
+                      {blog.schemaScore}
+                    </div>
+                    <div className="min-w-0 flex-1">
+                      <p className="line-clamp-1 text-sm font-semibold text-gray-800">
+                        {blog.heading || "Untitled blog"}
+                      </p>
+                      <div className="mt-2 flex flex-wrap gap-1.5">
+                        {blog.schemaHealth.issues.slice(0, 3).map((issue) => (
+                          <span key={`${blog.id}-${issue.key}`} className="rounded-lg bg-white px-2 py-1 text-[10px] font-semibold text-gray-500">
+                            {issue.label}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                  <div className="mt-3 flex flex-wrap gap-2">
+                    <RefreshActionButton
+                      icon={Sparkles}
+                      label="SEO pack"
+                      tone="blue"
+                      onClick={() => openRefreshAction(blog, "seo")}
+                    />
+                    {!blog.hasFaq && (
+                      <RefreshActionButton
+                        icon={SearchCheck}
+                        label="FAQ"
+                        tone="amber"
+                        onClick={() => openRefreshAction(blog, "faq")}
+                      />
+                    )}
+                    {!blog.hasSources && (
+                      <RefreshActionButton
+                        icon={BookOpenCheck}
+                        label="Sources"
+                        tone="green"
+                        onClick={() => openRefreshAction(blog, "sources")}
+                      />
+                    )}
+                  </div>
+                </div>
+              ))
+            ) : (
+              <p className="rounded-xl bg-gray-50 px-3 py-8 text-center text-sm text-gray-400 md:col-span-2">
+                Published blogs have the schema inputs needed for rich result monitoring.
+              </p>
+            )}
+          </div>
+
+          <div className="rounded-xl border border-gray-100 bg-gray-50/60 p-4">
+            <h3 className="text-xs font-black uppercase tracking-wider text-gray-500">Schema gap types</h3>
+            <div className="mt-4 space-y-3">
+              {analytics.schemaIssueCounts.length ? (
+                analytics.schemaIssueCounts.map((item) => (
+                  <HorizontalBar
+                    key={item.label}
+                    label={item.label}
+                    value={item.count}
+                    max={Math.max(1, ...analytics.schemaIssueCounts.map((issue) => issue.count))}
+                    caption={`${item.count} posts`}
+                  />
+                ))
+              ) : (
+                <p className="rounded-lg bg-white px-3 py-8 text-center text-xs text-gray-400">
+                  No schema gaps found in published posts.
+                </p>
+              )}
+            </div>
+          </div>
+        </div>
+      </section>
 
       <section className="rounded-2xl border border-gray-100 bg-white p-6 shadow-sm">
         <div className="mb-5 flex flex-wrap items-center justify-between gap-3">
