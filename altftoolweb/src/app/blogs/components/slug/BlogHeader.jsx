@@ -41,6 +41,8 @@ export default function BlogHeader({ blog }) {
           fill
           sizes="(max-width: 1280px) 100vw, 1280px"
           className="object-cover"
+          loading="eager"
+          fetchPriority="high"
           priority
         />
 
