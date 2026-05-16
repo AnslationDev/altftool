@@ -13,9 +13,11 @@ import {
   Route,
   SearchCheck,
   Sparkles,
+  WandSparkles,
 } from "lucide-react";
 import { emitAlert } from "@/lib/alertBus";
 import { fetchAllBlogs } from "../services/blogsService";
+import { checkExternalLinks, summarizeExternalLinkResults } from "./blogExternalLinkClient";
 import { buildBlogLinkAudit, buildBlogLinkGraph, normalizeBlogForLinkAudit } from "./blogLinkAudit";
 import { parseBlogTags } from "./BlogSeoChecklist";
 
@@ -102,7 +104,7 @@ function getExistingLinkSlugs(html = "") {
   return slugs;
 }
 
-function scoreSuggestion(current, candidate, existingSlugs) {
+function scoreSuggestion(current, candidate, existingSlugs, linkGraph) {
   if (!candidate.slug || existingSlugs.has(candidate.slug)) return null;
   if (candidate.id && candidate.id === current.id) return null;
   if (candidate.slug === current.slug) return null;
@@ -119,12 +121,18 @@ function scoreSuggestion(current, candidate, existingSlugs) {
   const daysOld = candidateTime ? Math.max(0, (Date.now() - candidateTime) / 86400000) : 180;
   const recentScore = Math.max(0, 10 - Math.floor(Math.min(daysOld, 180) / 18));
   const popularityScore = Math.min(18, Math.floor(candidate.views / 75));
+  const graphNode = linkGraph?.nodeMap?.get(candidate.id) || linkGraph?.slugMap?.get(candidate.slug);
+  const needsInbound = graphNode?.inboundCount === 0;
+  const missingOutbound = graphNode?.outboundCount === 0;
 
   let score = 0;
   if (sameCategory) score += 34;
   score += sharedTags.length * 18;
   score += sharedTokens.length * 4;
   score += popularityScore + recentScore;
+  if (needsInbound) score += 14;
+  if (missingOutbound) score += 4;
+  if (graphNode?.audit?.brokenLinks?.length === 0) score += 2;
 
   if (score < 18) return null;
 
@@ -133,9 +141,12 @@ function scoreSuggestion(current, candidate, existingSlugs) {
   if (sharedTags.length) reasons.push(`${sharedTags.length} shared tags`);
   if (sharedTokens.length) reasons.push(`${sharedTokens.length} topic matches`);
   if (candidate.views > 0) reasons.push(`${candidate.views.toLocaleString()} views`);
+  if (needsInbound) reasons.push("needs inbound");
 
   return {
     ...candidate,
+    inboundCount: graphNode?.inboundCount || 0,
+    outboundCount: graphNode?.outboundCount || 0,
     reasons,
     score,
   };
@@ -156,13 +167,41 @@ function buildTopicPathBlock(blogs) {
   return `<section class="altf-topic-path"><h2>Continue this topic path</h2><p>Use these related AltFTool guides to keep learning the same workflow without starting a new search.</p><ol>${links}</ol></section>`;
 }
 
+function buildSmartLinkBlock(blogs, currentBlog) {
+  const topic = currentBlog?.category && currentBlog.category !== "Uncategorized" ? currentBlog.category.toLowerCase() : "this topic";
+  const links = blogs
+    .map((blog) => `<li>${buildLinkHtml(blog)} <span>(${blog.reasons?.slice(0, 2).join(", ") || "related guide"})</span></li>`)
+    .join("");
+
+  return `<section class="altf-smart-links"><h2>Recommended next reads</h2><p>These ${topic} guides add useful next steps and strengthen the AltFTool internal link path.</p><ul>${links}</ul></section>`;
+}
+
+function buildSmartPlan(suggestions, internalLinkCount) {
+  const targetCount = internalLinkCount >= 3 ? 2 : internalLinkCount === 2 ? 2 : internalLinkCount === 1 ? 3 : 4;
+  const inboundRescue = suggestions.filter((blog) => blog.inboundCount === 0).slice(0, 2);
+  const strongMatches = suggestions.filter((blog) => blog.score >= 45).slice(0, targetCount + 1);
+  const items = [...new Map([...inboundRescue, ...strongMatches, ...suggestions].map((blog) => [blog.slug, blog])).values()].slice(0, targetCount);
+
+  return {
+    items,
+    label: items.length >= 4 ? "Full topic cluster" : items.length >= 2 ? "Focused link set" : "Single rescue link",
+  };
+}
+
 function LinkAuditSummary({
   audit,
   brokenLinkCount,
   currentLinkNode,
+  externalCheck,
+  externalLinkUrls,
+  externalSummary,
   inboundCount,
   internalLinkCount,
+  onCheckExternal,
 }) {
+  const checkingExternal = externalCheck?.status === "checking";
+  const hasExternalResults = externalCheck?.status === "done" && externalSummary?.total > 0;
+
   return (
     <>
       <div className="grid grid-cols-3 gap-2 text-center">
@@ -203,6 +242,62 @@ function LinkAuditSummary({
           This post is isolated in the blog graph. Add a topic path below, then link to this post from a related hub when possible.
         </div>
       ) : null}
+
+      <div className="rounded-xl border border-gray-100 bg-gray-50 px-3 py-3">
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <div>
+            <p className="text-[10px] font-black uppercase tracking-wider text-gray-400">External links</p>
+            <p className="mt-1 text-sm font-black text-gray-900">{externalLinkUrls.length} unique URL{externalLinkUrls.length === 1 ? "" : "s"}</p>
+          </div>
+          <button
+            type="button"
+            onClick={onCheckExternal}
+            disabled={!externalLinkUrls.length || checkingExternal}
+            className="inline-flex h-8 items-center gap-1.5 rounded-lg border border-gray-200 bg-white px-2.5 text-xs font-semibold text-gray-700 transition hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50"
+          >
+            {checkingExternal ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <RefreshCw className="h-3.5 w-3.5" />}
+            Live check
+          </button>
+        </div>
+
+        {externalCheck?.error ? (
+          <div className="mt-2 rounded-lg border border-red-100 bg-white px-2 py-2 text-xs font-semibold text-red-600">
+            {externalCheck.error}
+          </div>
+        ) : null}
+
+        {hasExternalResults ? (
+          <div className="mt-3 space-y-2">
+            <div className="grid grid-cols-3 gap-2 text-center">
+              <div className="rounded-lg bg-white px-2 py-2">
+                <p className="text-sm font-black text-green-700">{externalSummary.ok}</p>
+                <p className="text-[10px] font-bold uppercase tracking-wide text-green-600">OK</p>
+              </div>
+              <div className="rounded-lg bg-white px-2 py-2">
+                <p className="text-sm font-black text-amber-700">{externalSummary.warning + externalSummary.blocked}</p>
+                <p className="text-[10px] font-bold uppercase tracking-wide text-amber-600">Review</p>
+              </div>
+              <div className="rounded-lg bg-white px-2 py-2">
+                <p className="text-sm font-black text-red-600">{externalSummary.broken}</p>
+                <p className="text-[10px] font-bold uppercase tracking-wide text-red-500">Broken</p>
+              </div>
+            </div>
+
+            {externalSummary.issueResults.slice(0, 3).map((result) => (
+              <div key={`${result.url}-${result.status || result.state}`} className="rounded-lg bg-white px-2 py-2 text-xs">
+                <div className="flex items-center justify-between gap-2">
+                  <span className={`font-black ${result.state === "broken" ? "text-red-600" : "text-amber-700"}`}>
+                    {result.status || result.state}
+                  </span>
+                  <span className="text-[10px] text-gray-400">{result.durationMs}ms</span>
+                </div>
+                <p className="mt-1 truncate font-mono text-[10px] text-gray-500">{result.url}</p>
+                <p className="mt-1 text-[11px] leading-4 text-gray-600">{result.reason}</p>
+              </div>
+            ))}
+          </div>
+        ) : null}
+      </div>
     </>
   );
 }
@@ -217,6 +312,7 @@ export default function BlogInternalLinkAssistant({
   const [error, setError] = useState("");
   const [copiedSlug, setCopiedSlug] = useState("");
   const [insertedSlug, setInsertedSlug] = useState("");
+  const [externalCheck, setExternalCheck] = useState({ error: "", results: [], status: "idle" });
 
   const loadBlogs = useCallback(async () => {
     setLoading(true);
@@ -235,25 +331,6 @@ export default function BlogInternalLinkAssistant({
   useEffect(() => {
     loadBlogs();
   }, [loadBlogs]);
-
-  const suggestions = useMemo(() => {
-    const current = normalizeBlog({
-      id: currentBlogId,
-      heading: formData.heading,
-      slug: generateSlug(formData.heading),
-      category: formData.category,
-      tags: parseBlogTags(formData.tags || ""),
-      description: formData.description,
-      status: formData.status,
-    });
-    const existingSlugs = getExistingLinkSlugs(formData.description || "");
-
-    return blogs
-      .map((blog) => scoreSuggestion(current, blog, existingSlugs))
-      .filter(Boolean)
-      .sort((a, b) => b.score - a.score)
-      .slice(0, MAX_SUGGESTIONS);
-  }, [blogs, currentBlogId, formData]);
 
   const currentLinkBlog = useMemo(
     () =>
@@ -278,9 +355,33 @@ export default function BlogInternalLinkAssistant({
   const linkGraph = useMemo(() => buildBlogLinkGraph(graphBlogs), [graphBlogs]);
   const currentLinkNode = linkGraph.nodeMap.get(currentLinkBlog.id) || linkGraph.slugMap.get(currentLinkBlog.slug);
   const currentAudit = currentLinkNode?.audit || buildBlogLinkAudit(currentLinkBlog, graphBlogs);
+  const suggestions = useMemo(() => {
+    const current = normalizeBlog({
+      id: currentBlogId,
+      heading: formData.heading,
+      slug: generateSlug(formData.heading),
+      category: formData.category,
+      tags: parseBlogTags(formData.tags || ""),
+      description: formData.description,
+      status: formData.status,
+    });
+    const existingSlugs = getExistingLinkSlugs(formData.description || "");
+
+    return blogs
+      .map((blog) => scoreSuggestion(current, blog, existingSlugs, linkGraph))
+      .filter(Boolean)
+      .sort((a, b) => b.score - a.score)
+      .slice(0, MAX_SUGGESTIONS);
+  }, [blogs, currentBlogId, formData, linkGraph]);
   const internalLinkCount = currentAudit.validInternalBlogLinks.length;
   const brokenLinkCount = currentAudit.brokenLinks.length;
   const inboundCount = currentLinkNode?.inboundCount || 0;
+  const externalLinkUrls = useMemo(
+    () => [...new Set(currentAudit.externalLinks.map((link) => link.href).filter(Boolean))],
+    [currentAudit.externalLinks],
+  );
+  const externalSummary = useMemo(() => summarizeExternalLinkResults(externalCheck.results), [externalCheck.results]);
+  const smartPlan = useMemo(() => buildSmartPlan(suggestions, internalLinkCount), [internalLinkCount, suggestions]);
   const linkHealth = brokenLinkCount
     ? "Broken links"
     : internalLinkCount >= 3
@@ -288,6 +389,25 @@ export default function BlogInternalLinkAssistant({
       : internalLinkCount >= 1
         ? "Needs one more"
         : "Missing";
+
+  const runExternalCheck = async () => {
+    if (!externalLinkUrls.length) return;
+    setExternalCheck({ error: "", results: [], status: "checking" });
+    try {
+      const result = await checkExternalLinks(externalLinkUrls);
+      setExternalCheck({ checkedAt: result.checkedAt, error: "", results: result.results || [], status: "done" });
+      const summary = summarizeExternalLinkResults(result.results || []);
+      emitAlert({
+        type: summary.broken ? "warning" : "success",
+        message: summary.broken
+          ? `${summary.broken} external link${summary.broken === 1 ? "" : "s"} need cleanup.`
+          : "External links checked.",
+      });
+    } catch (err) {
+      setExternalCheck({ error: err?.message || "External link check failed.", results: [], status: "error" });
+      emitAlert({ type: "error", message: err?.message || "External link check failed." });
+    }
+  };
 
   const insertBlogs = (items) => {
     if (!items.length || typeof onInsertLinks !== "function") return;
@@ -303,6 +423,14 @@ export default function BlogInternalLinkAssistant({
     onInsertLinks(buildTopicPathBlock(items));
     setInsertedSlug("topic-path");
     emitAlert({ type: "success", message: `Topic path inserted with ${items.length} contextual links.` });
+    window.setTimeout(() => setInsertedSlug(""), 1600);
+  };
+
+  const insertSmartPlan = () => {
+    if (!smartPlan.items.length || typeof onInsertLinks !== "function") return;
+    onInsertLinks(buildSmartLinkBlock(smartPlan.items, currentLinkBlog));
+    setInsertedSlug("smart-plan");
+    emitAlert({ type: "success", message: `${smartPlan.label} inserted with ${smartPlan.items.length} links.` });
     window.setTimeout(() => setInsertedSlug(""), 1600);
   };
 
@@ -355,8 +483,12 @@ export default function BlogInternalLinkAssistant({
             audit={currentAudit}
             brokenLinkCount={brokenLinkCount}
             currentLinkNode={currentLinkNode}
+            externalCheck={externalCheck}
+            externalLinkUrls={externalLinkUrls}
+            externalSummary={externalSummary}
             inboundCount={inboundCount}
             internalLinkCount={internalLinkCount}
+            onCheckExternal={runExternalCheck}
           />
 
           <div className="rounded-xl border border-blue-100 bg-blue-50 px-3 py-2">
@@ -372,6 +504,15 @@ export default function BlogInternalLinkAssistant({
             <div className="mt-2 grid grid-cols-1 gap-2 sm:grid-cols-2">
               <button
                 type="button"
+                onClick={insertSmartPlan}
+                disabled={!smartPlan.items.length}
+                className="inline-flex h-8 items-center justify-center gap-1.5 rounded-lg bg-emerald-600 px-2.5 text-xs font-semibold text-white hover:bg-emerald-700 disabled:cursor-not-allowed disabled:bg-emerald-200"
+              >
+                {insertedSlug === "smart-plan" ? <CheckCircle2 className="h-3.5 w-3.5" /> : <WandSparkles className="h-3.5 w-3.5" />}
+                Apply smart plan
+              </button>
+              <button
+                type="button"
                 onClick={insertTopicPath}
                 className="inline-flex h-8 items-center justify-center gap-1.5 rounded-lg bg-gray-900 px-2.5 text-xs font-semibold text-white hover:bg-gray-700"
               >
@@ -381,7 +522,7 @@ export default function BlogInternalLinkAssistant({
               <button
                 type="button"
                 onClick={() => insertBlogs(suggestions.slice(0, 3))}
-                className="inline-flex h-8 items-center justify-center gap-1.5 rounded-lg bg-blue-600 px-2.5 text-xs font-semibold text-white hover:bg-blue-700"
+                className="inline-flex h-8 items-center justify-center gap-1.5 rounded-lg bg-blue-600 px-2.5 text-xs font-semibold text-white hover:bg-blue-700 sm:col-span-2"
               >
                 <PlusCircle className="h-3.5 w-3.5" />
                 Insert top 3
@@ -451,8 +592,12 @@ export default function BlogInternalLinkAssistant({
             audit={currentAudit}
             brokenLinkCount={brokenLinkCount}
             currentLinkNode={currentLinkNode}
+            externalCheck={externalCheck}
+            externalLinkUrls={externalLinkUrls}
+            externalSummary={externalSummary}
             inboundCount={inboundCount}
             internalLinkCount={internalLinkCount}
+            onCheckExternal={runExternalCheck}
           />
           <div className="rounded-xl bg-gray-50 px-3 py-4 text-xs leading-5 text-gray-500">
             Add category, tags, and a few paragraphs first. Suggestions ignore drafts and links already in the article.

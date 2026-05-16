@@ -27,6 +27,7 @@ import {
 import { emitAlert } from "@/lib/alertBus";
 import { fetchAllBlogs, updateBlog } from "../services/blogsService";
 import { parseBlogTags } from "../components/BlogSeoChecklist";
+import { checkExternalLinks, summarizeExternalLinkResults } from "../components/blogExternalLinkClient";
 import { buildBlogLinkGraph } from "../components/blogLinkAudit";
 import { appendRefreshBlocks, buildQuickRefreshPayload } from "../components/blogRefreshKit";
 import {
@@ -307,10 +308,19 @@ function QualityRow({ blog, linkNode, selected, onToggle, onEdit }) {
   );
 }
 
-function LinkGraphPanel({ graph, onEdit }) {
+function LinkGraphPanel({
+  externalCheck,
+  externalSummary,
+  externalUrls,
+  graph,
+  onCheckExternal,
+  onEdit,
+}) {
   const brokenQueue = graph.brokenQueue.slice(0, 5);
   const isolated = graph.isolated.slice(0, 5);
   const hubs = graph.hubs.slice(0, 5);
+  const checkingExternal = externalCheck?.status === "checking";
+  const hasExternalResults = externalCheck?.status === "done" && externalSummary?.total > 0;
 
   return (
     <section className="rounded-2xl border border-gray-100 bg-white p-4 shadow-sm">
@@ -337,6 +347,64 @@ function LinkGraphPanel({ graph, onEdit }) {
           <p className="text-lg font-black text-blue-700">{graph.summary.missingOutbound}</p>
           <p className="text-[10px] font-bold uppercase tracking-wide text-blue-600">No out</p>
         </div>
+      </div>
+
+      <div className="mt-4 rounded-xl border border-gray-100 bg-gray-50 px-3 py-3">
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <div>
+            <p className="text-[10px] font-black uppercase tracking-wider text-gray-400">Live external</p>
+            <p className="mt-1 text-sm font-black text-gray-900">
+              {graph.summary.externalLinks.toLocaleString()} external link{graph.summary.externalLinks === 1 ? "" : "s"}
+            </p>
+          </div>
+          <button
+            type="button"
+            onClick={onCheckExternal}
+            disabled={!externalUrls.length || checkingExternal}
+            className="inline-flex h-8 items-center gap-1.5 rounded-lg border border-gray-200 bg-white px-2.5 text-xs font-semibold text-gray-700 transition hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50"
+          >
+            <RefreshCw className={`h-3.5 w-3.5 ${checkingExternal ? "animate-spin" : ""}`} />
+            Check {externalUrls.length ? Math.min(externalUrls.length, 20) : ""}
+          </button>
+        </div>
+
+        {externalCheck?.error ? (
+          <div className="mt-2 rounded-lg border border-red-100 bg-white px-2 py-2 text-xs font-semibold text-red-600">
+            {externalCheck.error}
+          </div>
+        ) : null}
+
+        {hasExternalResults ? (
+          <div className="mt-3 space-y-2">
+            <div className="grid grid-cols-3 gap-2 text-center">
+              <div className="rounded-lg bg-white px-2 py-2">
+                <p className="text-sm font-black text-green-700">{externalSummary.ok}</p>
+                <p className="text-[10px] font-bold uppercase tracking-wide text-green-600">OK</p>
+              </div>
+              <div className="rounded-lg bg-white px-2 py-2">
+                <p className="text-sm font-black text-amber-700">{externalSummary.warning + externalSummary.blocked}</p>
+                <p className="text-[10px] font-bold uppercase tracking-wide text-amber-600">Review</p>
+              </div>
+              <div className="rounded-lg bg-white px-2 py-2">
+                <p className="text-sm font-black text-red-600">{externalSummary.broken}</p>
+                <p className="text-[10px] font-bold uppercase tracking-wide text-red-500">Broken</p>
+              </div>
+            </div>
+
+            {externalSummary.issueResults.slice(0, 3).map((result) => (
+              <div key={`${result.url}-${result.status || result.state}`} className="rounded-lg bg-white px-2 py-2 text-xs">
+                <div className="flex items-center justify-between gap-2">
+                  <span className={`font-black ${result.state === "broken" ? "text-red-600" : "text-amber-700"}`}>
+                    {result.status || result.state}
+                  </span>
+                  <span className="text-[10px] text-gray-400">{result.durationMs}ms</span>
+                </div>
+                <p className="mt-1 truncate font-mono text-[10px] text-gray-500">{result.url}</p>
+                <p className="mt-1 text-[11px] leading-4 text-gray-600">{result.reason}</p>
+              </div>
+            ))}
+          </div>
+        ) : null}
       </div>
 
       {brokenQueue.length ? (
@@ -410,6 +478,7 @@ export default function BlogQualityCenterPage() {
   const [selectedIds, setSelectedIds] = useState([]);
   const [bulkAction, setBulkAction] = useState("review");
   const [bulkApplying, setBulkApplying] = useState(false);
+  const [externalCheck, setExternalCheck] = useState({ error: "", results: [], status: "idle" });
 
   useEffect(() => {
     let mounted = true;
@@ -437,6 +506,15 @@ export default function BlogQualityCenterPage() {
   const auditedBlogs = useMemo(() => blogs.map(buildBlogAudit), [blogs]);
   const summary = useMemo(() => buildQualitySummary(auditedBlogs), [auditedBlogs]);
   const linkGraph = useMemo(() => buildBlogLinkGraph(blogs), [blogs]);
+  const externalSweepUrls = useMemo(
+    () => [
+      ...new Set(
+        linkGraph.nodes.flatMap((node) => node.audit.externalLinks.map((link) => link.href).filter(Boolean)),
+      ),
+    ].slice(0, 20),
+    [linkGraph],
+  );
+  const externalSummary = useMemo(() => summarizeExternalLinkResults(externalCheck.results), [externalCheck.results]);
   const categories = useMemo(
     () => ["all", ...new Set(auditedBlogs.map((blog) => blog.category).filter(Boolean))].sort((a, b) => (a === "all" ? -1 : b === "all" ? 1 : a.localeCompare(b))),
     [auditedBlogs],
@@ -485,6 +563,26 @@ export default function BlogQualityCenterPage() {
   const startTopIssue = () => {
     const first = filteredBlogs[0];
     if (first) openEditor(first, first.recommendedAction);
+  };
+
+  const runExternalSweep = async () => {
+    if (!externalSweepUrls.length) return;
+
+    setExternalCheck({ error: "", results: [], status: "checking" });
+    try {
+      const result = await checkExternalLinks(externalSweepUrls);
+      setExternalCheck({ checkedAt: result.checkedAt, error: "", results: result.results || [], status: "done" });
+      const summary = summarizeExternalLinkResults(result.results || []);
+      emitAlert({
+        type: summary.broken ? "warning" : "success",
+        message: summary.broken
+          ? `${summary.broken} external link${summary.broken === 1 ? "" : "s"} need cleanup.`
+          : "External link sweep completed.",
+      });
+    } catch (err) {
+      setExternalCheck({ error: err?.message || "External link sweep failed.", results: [], status: "error" });
+      emitAlert({ type: "error", message: err?.message || "External link sweep failed." });
+    }
   };
 
   const applyBulkAction = async () => {
@@ -759,7 +857,14 @@ export default function BlogQualityCenterPage() {
         </section>
 
         <aside className="space-y-4 lg:sticky lg:top-4 lg:self-start">
-          <LinkGraphPanel graph={linkGraph} onEdit={openEditor} />
+          <LinkGraphPanel
+            externalCheck={externalCheck}
+            externalSummary={externalSummary}
+            externalUrls={externalSweepUrls}
+            graph={linkGraph}
+            onCheckExternal={runExternalSweep}
+            onEdit={openEditor}
+          />
 
           <section className="rounded-2xl border border-gray-100 bg-white p-4 shadow-sm">
             <div className="flex items-center justify-between gap-3">

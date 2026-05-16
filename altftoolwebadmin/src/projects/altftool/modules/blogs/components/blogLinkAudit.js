@@ -1,5 +1,3 @@
-"use client";
-
 const ALT_HOSTS = new Set(["altftool.com", "www.altftool.com", "localhost", "127.0.0.1"]);
 
 function cleanText(value = "") {
