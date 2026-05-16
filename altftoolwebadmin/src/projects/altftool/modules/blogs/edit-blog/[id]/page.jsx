@@ -29,9 +29,10 @@ import BlogLivePreview from "../../components/BlogLivePreview";
 import BlogWritingAssistant from "../../components/BlogWritingAssistant";
 import BlogContentBlocks from "../../components/BlogContentBlocks";
 import BlogContentTemplates from "../../components/BlogContentTemplates";
+import BlogQuickFixPanel from "../../components/BlogQuickFixPanel";
 import BlogRefreshActions from "../../components/BlogRefreshActions";
 import BlogSourceEditor, { formatSourcesText, parseSourcesText } from "../../components/BlogSourceEditor";
-import { buildQuickRefreshPayload } from "../../components/blogRefreshKit";
+import { appendRefreshBlocks, buildQuickRefreshPayload } from "../../components/blogRefreshKit";
 
 const BlogEditor = dynamic(() => import("../../components/BlogEditor"), { ssr: false });
 
@@ -249,9 +250,7 @@ export default function EditBlog() {
     setFormData((prev) => ({
       ...prev,
       ...payload.fields,
-      description: payload.blocks.length
-        ? `${prev.description || ""}${prev.description?.trim() ? "\n\n" : ""}${payload.blocks.join("\n\n")}`
-        : prev.description,
+      description: appendRefreshBlocks(prev.description, payload.blocks).description,
     }));
     if (payload.expandSeo) setSeoExpanded(true);
     setQuickActionApplied(true);
@@ -309,6 +308,39 @@ export default function EditBlog() {
       return next;
     });
     setBannerError(null);
+  };
+
+  const handleApplyQuickFix = (payload = {}, action = {}) => {
+    if (!payload.hasWork) {
+      emitAlert({ type: "info", message: "No quick-fix changes were needed for this action." });
+      return;
+    }
+
+    const blockResult = appendRefreshBlocks(formData.description, payload.blocks || []);
+
+    setFormData((prev) => ({
+      ...prev,
+      ...payload.fields,
+      description: blockResult.description,
+    }));
+    setErrors((prev) => {
+      const next = { ...prev };
+      Object.keys(payload.fields || {}).forEach((key) => {
+        next[key] = undefined;
+      });
+      if (blockResult.addedCount > 0) next.description = undefined;
+      return next;
+    });
+    if (payload.expandSeo) setSeoExpanded(true);
+    setBannerError(null);
+
+    const label = payload.label || action.label || "Quick fix";
+    const suffix = blockResult.addedCount
+      ? ` ${blockResult.addedCount} content block${blockResult.addedCount === 1 ? "" : "s"} added.`
+      : blockResult.skippedCount
+        ? " Existing content blocks were already present."
+        : "";
+    emitAlert({ type: "success", message: `${label} applied. Review and save the post.${suffix}` });
   };
 
   const handleApplyTemplate = ({ html = "", fields = {} } = {}) => {
@@ -442,6 +474,7 @@ export default function EditBlog() {
   const descOk         = descLen >= 120 && descLen <= 160;
   const altLen         = imageAlt.length;
   const altOk          = altLen >= 5 && altLen <= 125;
+  const requestedQuickAction = searchParams.get("refreshAction") || searchParams.get("action") || "";
 
   if (loading) {
     return (
@@ -646,6 +679,14 @@ export default function EditBlog() {
               formData={formData}
               onApplyFields={handleApplyWritingFields}
               onInsertBlock={handleInsertContentBlock}
+            />
+
+            <BlogQuickFixPanel
+              formData={formData}
+              imageAlt={imageAlt}
+              hasImage={Boolean(imageFile || imagePreview)}
+              requestedAction={requestedQuickAction}
+              onApplyQuickFix={handleApplyQuickFix}
             />
 
             <BlogRefreshActions

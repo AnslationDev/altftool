@@ -25,6 +25,15 @@ function trimToSentence(value = "", maxLength = 158) {
   return text.slice(0, maxLength).replace(/\s+\S*$/, "").replace(/[.,;:!?-]+$/, "");
 }
 
+function getBlockSignature(block = "") {
+  const html = String(block || "");
+  if (/FAQ Start|FAQ_WRAPPER|FAQ_ITEM/i.test(html)) return "FAQ Start";
+  if (/BLOG_CALLOUT_REFRESH/i.test(html)) return "BLOG_CALLOUT_REFRESH";
+  if (/What we checked in this update/i.test(html)) return "What we checked in this update";
+  if (/Source check/i.test(html)) return "Source check";
+  return cleanText(html.replace(/<[^>]*>/g, " ")).slice(0, 90);
+}
+
 export function todayIso() {
   return new Date().toISOString();
 }
@@ -189,6 +198,32 @@ export function buildQuickRefreshPayload(action = "", formData = {}) {
     label,
     expandSeo,
     hasWork: blocks.length > 0 || Object.keys(fields).length > 0,
+  };
+}
+
+export function appendRefreshBlocks(description = "", blocks = []) {
+  const currentDescription = String(description || "");
+  const acceptedBlocks = [];
+
+  blocks.filter(Boolean).forEach((block) => {
+    const signature = getBlockSignature(block);
+    const alreadyInDescription = signature && currentDescription.includes(signature);
+    const alreadyAccepted = acceptedBlocks.some((acceptedBlock) => getBlockSignature(acceptedBlock) === signature);
+    if (!alreadyInDescription && !alreadyAccepted) acceptedBlocks.push(block);
+  });
+
+  if (!acceptedBlocks.length) {
+    return {
+      description: currentDescription,
+      addedCount: 0,
+      skippedCount: blocks.filter(Boolean).length,
+    };
+  }
+
+  return {
+    description: `${currentDescription}${currentDescription.trim() ? "\n\n" : ""}${acceptedBlocks.join("\n\n")}`,
+    addedCount: acceptedBlocks.length,
+    skippedCount: blocks.filter(Boolean).length - acceptedBlocks.length,
   };
 }
 

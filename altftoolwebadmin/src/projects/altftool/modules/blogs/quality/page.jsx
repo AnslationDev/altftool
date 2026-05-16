@@ -7,7 +7,9 @@ import {
   ArrowLeft,
   BarChart3,
   BookOpenCheck,
+  Check,
   CheckCircle2,
+  Circle,
   Clock3,
   ExternalLink,
   FileText,
@@ -20,8 +22,12 @@ import {
   ShieldCheck,
   Sparkles,
   WandSparkles,
+  X,
 } from "lucide-react";
-import { fetchAllBlogs } from "../services/blogsService";
+import { emitAlert } from "@/lib/alertBus";
+import { fetchAllBlogs, updateBlog } from "../services/blogsService";
+import { parseBlogTags } from "../components/BlogSeoChecklist";
+import { appendRefreshBlocks, buildQuickRefreshPayload } from "../components/blogRefreshKit";
 import {
   ACTIONS,
   GAP_FILTERS,
@@ -133,13 +139,46 @@ function EmptyState({ onReset }) {
   );
 }
 
-function QualityRow({ blog, onEdit }) {
+function normalizeBulkFormData(blog = {}) {
+  return {
+    ...blog,
+    heading: blog.heading || blog.title || "",
+    description: blog.description || blog.content || blog.body || "",
+    tags: Array.isArray(blog.tags) ? blog.tags.join(", ") : blog.tags || "",
+    sourceNotes: blog.sourceNotes || "",
+  };
+}
+
+function buildBulkPatch(blog = {}, actionKey = "review") {
+  const payload = buildQuickRefreshPayload(actionKey, normalizeBulkFormData(blog));
+  const fields = { ...payload.fields };
+  const blockResult = appendRefreshBlocks(blog.description || blog.content || blog.body || "", payload.blocks);
+
+  if (fields.tags) fields.tags = parseBlogTags(fields.tags);
+  if (blockResult.addedCount > 0) fields.description = blockResult.description;
+
+  return fields;
+}
+
+function QualityRow({ blog, selected, onToggle, onEdit }) {
   const action = getActionConfig(blog.recommendedAction);
   const ActionIcon = ACTION_ICONS[action.key] || Sparkles;
 
   return (
     <article className="rounded-2xl border border-gray-100 bg-white p-4 shadow-sm transition hover:border-blue-100 hover:shadow-md">
-      <div className="grid gap-4 xl:grid-cols-[minmax(0,1fr)_260px]">
+      <div className="flex gap-3">
+        <button
+          type="button"
+          onClick={() => onToggle(blog.id)}
+          className={`mt-1 flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border transition ${
+            selected ? "border-blue-500 bg-blue-600 text-white" : "border-gray-200 bg-white text-gray-400 hover:bg-gray-50"
+          }`}
+          aria-label={selected ? "Remove blog from selected bulk queue" : "Add blog to selected bulk queue"}
+        >
+          {selected ? <Check className="h-4 w-4" /> : <Circle className="h-4 w-4" />}
+        </button>
+
+        <div className="grid min-w-0 flex-1 gap-4 xl:grid-cols-[minmax(0,1fr)_260px]">
         <div className="min-w-0">
           <div className="flex flex-wrap items-center gap-2">
             <span className={`rounded-lg px-2 py-1 text-[10px] font-black uppercase tracking-wide ${priorityTone(blog.refreshScore)}`}>
@@ -252,6 +291,7 @@ function QualityRow({ blog, onEdit }) {
             ) : null}
           </div>
         </div>
+        </div>
       </div>
     </article>
   );
@@ -268,6 +308,9 @@ export default function BlogQualityCenterPage() {
   const [readinessFilter, setReadinessFilter] = useState("needs-work");
   const [categoryFilter, setCategoryFilter] = useState("all");
   const [sortMode, setSortMode] = useState("priority");
+  const [selectedIds, setSelectedIds] = useState([]);
+  const [bulkAction, setBulkAction] = useState("review");
+  const [bulkApplying, setBulkApplying] = useState(false);
 
   useEffect(() => {
     let mounted = true;
@@ -308,6 +351,11 @@ export default function BlogQualityCenterPage() {
     });
     return sortBlogAudits(filtered, sortMode);
   }, [auditedBlogs, categoryFilter, gapFilter, readinessFilter, search, sortMode, statusFilter]);
+  const selectedBlogs = useMemo(
+    () => selectedIds.map((id) => auditedBlogs.find((blog) => blog.id === id)).filter(Boolean),
+    [auditedBlogs, selectedIds],
+  );
+  const visibleSelectedCount = filteredBlogs.filter((blog) => selectedIds.includes(blog.id)).length;
 
   const resetFilters = () => {
     setSearch("");
@@ -318,6 +366,17 @@ export default function BlogQualityCenterPage() {
     setSortMode("priority");
   };
 
+  const toggleSelected = (id) => {
+    setSelectedIds((current) => (current.includes(id) ? current.filter((item) => item !== id) : [...current, id]));
+  };
+
+  const selectTopVisible = () => {
+    const visibleIds = filteredBlogs.slice(0, 25).map((blog) => blog.id);
+    setSelectedIds((current) => [...new Set([...current, ...visibleIds])]);
+  };
+
+  const clearSelected = () => setSelectedIds([]);
+
   const openEditor = (blog, action = blog.recommendedAction) => {
     const suffix = action ? `?refreshAction=${encodeURIComponent(action)}` : "";
     router.push(`/altftool/blogs/edit-blog/${blog.id}${suffix}`);
@@ -326,6 +385,42 @@ export default function BlogQualityCenterPage() {
   const startTopIssue = () => {
     const first = filteredBlogs[0];
     if (first) openEditor(first, first.recommendedAction);
+  };
+
+  const applyBulkAction = async () => {
+    if (!selectedBlogs.length || bulkApplying) return;
+
+    const action = getActionConfig(bulkAction);
+    const confirmed = window.confirm(`Apply ${action.label} to ${selectedBlogs.length} selected blog${selectedBlogs.length === 1 ? "" : "s"}?`);
+    if (!confirmed) return;
+
+    setBulkApplying(true);
+    setError("");
+    try {
+      const nowIso = new Date().toISOString();
+      const updates = await Promise.all(
+        selectedBlogs.map(async (blog) => {
+          const patch = buildBulkPatch(blog, bulkAction);
+          await updateBlog(blog.id, patch);
+          return { id: blog.id, patch: { ...patch, updatedAt: nowIso } };
+        }),
+      );
+      const updateMap = new Map(updates.map((item) => [item.id, item.patch]));
+      setBlogs((current) =>
+        current.map((blog) => {
+          const patch = updateMap.get(blog.id);
+          return patch ? { ...blog, ...patch } : blog;
+        }),
+      );
+      setSelectedIds([]);
+      emitAlert({ type: "success", message: `${action.label} applied to ${updates.length} blog${updates.length === 1 ? "" : "s"}.` });
+    } catch (err) {
+      console.error("Bulk quality action failed", err);
+      setError("Bulk action failed. Please try again with a smaller selection.");
+      emitAlert({ type: "error", message: "Bulk action failed. Please try again." });
+    } finally {
+      setBulkApplying(false);
+    }
   };
 
   if (loading) {
@@ -503,8 +598,26 @@ export default function BlogQualityCenterPage() {
 
           <div className="flex flex-wrap items-center gap-2">
             <span className="rounded-lg bg-gray-50 px-3 py-2 text-xs font-semibold text-gray-500">
-              {filteredBlogs.length} shown - {summary.total} audited
+              {filteredBlogs.length} shown - {visibleSelectedCount} selected here
             </span>
+            <button
+              type="button"
+              onClick={selectTopVisible}
+              disabled={!filteredBlogs.length}
+              className="inline-flex h-9 items-center gap-2 rounded-xl border border-blue-100 bg-blue-50 px-3 text-xs font-semibold text-blue-700 transition hover:bg-blue-100 disabled:cursor-not-allowed disabled:opacity-50"
+            >
+              <Check className="h-3.5 w-3.5" />
+              Select top 25
+            </button>
+            <button
+              type="button"
+              onClick={clearSelected}
+              disabled={!selectedIds.length}
+              className="inline-flex h-9 items-center gap-2 rounded-xl border border-gray-200 bg-white px-3 text-xs font-semibold text-gray-600 transition hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50"
+            >
+              <X className="h-3.5 w-3.5" />
+              Clear
+            </button>
             <button
               type="button"
               onClick={resetFilters}
@@ -529,13 +642,65 @@ export default function BlogQualityCenterPage() {
       <div className="grid grid-cols-1 gap-4 lg:grid-cols-[minmax(0,1fr)_340px]">
         <section className="space-y-3">
           {filteredBlogs.length ? (
-            filteredBlogs.map((blog) => <QualityRow key={blog.id} blog={blog} onEdit={openEditor} />)
+            filteredBlogs.map((blog) => (
+              <QualityRow
+                key={blog.id}
+                blog={blog}
+                selected={selectedIds.includes(blog.id)}
+                onToggle={toggleSelected}
+                onEdit={openEditor}
+              />
+            ))
           ) : (
             <EmptyState onReset={resetFilters} />
           )}
         </section>
 
         <aside className="space-y-4 lg:sticky lg:top-4 lg:self-start">
+          <section className="rounded-2xl border border-gray-100 bg-white p-4 shadow-sm">
+            <div className="flex items-center justify-between gap-3">
+              <div>
+                <p className="text-xs font-black uppercase tracking-wider text-gray-500">Bulk actions</p>
+                <h2 className="mt-1 text-xl font-black text-gray-900">{selectedBlogs.length} selected</h2>
+              </div>
+              <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-blue-50 text-blue-600">
+                <WandSparkles className="h-5 w-5" />
+              </div>
+            </div>
+
+            <div className="mt-4 grid grid-cols-2 gap-2">
+              {ACTIONS.map((action) => {
+                const Icon = ACTION_ICONS[action.key] || Sparkles;
+                const active = bulkAction === action.key;
+                return (
+                  <button
+                    key={`bulk-${action.key}`}
+                    type="button"
+                    onClick={() => setBulkAction(action.key)}
+                    className={`inline-flex h-9 items-center justify-center gap-2 rounded-xl border px-3 text-xs font-bold transition ${toneClasses(action.tone, active)}`}
+                  >
+                    <Icon className="h-3.5 w-3.5" />
+                    {action.shortLabel}
+                  </button>
+                );
+              })}
+            </div>
+
+            <button
+              type="button"
+              onClick={applyBulkAction}
+              disabled={!selectedBlogs.length || bulkApplying}
+              className="mt-4 inline-flex h-10 w-full items-center justify-center gap-2 rounded-xl bg-gray-900 px-4 text-sm font-semibold text-white transition hover:bg-gray-700 disabled:cursor-not-allowed disabled:bg-gray-300"
+            >
+              {bulkApplying ? <RefreshCw className="h-4 w-4 animate-spin" /> : <WandSparkles className="h-4 w-4" />}
+              {bulkApplying ? "Applying..." : `Apply ${getActionConfig(bulkAction).shortLabel}`}
+            </button>
+
+            <p className="mt-3 text-xs leading-5 text-gray-500">
+              Updates selected posts with the same guarded refresh helpers used by the editor, skipping duplicate FAQ or note blocks.
+            </p>
+          </section>
+
           <section className="rounded-2xl border border-gray-100 bg-white p-4 shadow-sm">
             <div className="flex items-center justify-between gap-3">
               <div>
