@@ -2,6 +2,7 @@ import fs from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { createBlogPostingJsonLd } from "../altftoolweb/src/platform/seo/generateMetadata.js";
+import { withBlogSeoDefaults } from "../altftoolweb/src/app/blogs/data/blogSeoDefaults.js";
 import { getBlogSchemaHealth, stripBlogHtml } from "../altftoolwebadmin/src/projects/altftool/modules/blogs/components/blogSeoHealth.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -78,10 +79,8 @@ function normalizeBlogForAudit(blog = {}, index = 0, source = "local") {
   const body = blog.description || blog.content || blog.body || blog.excerpt || "";
   const excerpt = blog.excerpt || stripBlogHtml(body).slice(0, 180);
   const date = toDateString(blog.date || blog.publishedAt || blog.createdAt || blog.updatedAt, index);
-
-  return {
+  const auditBlog = withBlogSeoDefaults({
     ...blog,
-    auditSource: source,
     heading,
     title: heading,
     slug,
@@ -93,9 +92,27 @@ function normalizeBlogForAudit(blog = {}, index = 0, source = "local") {
     authorRole: blog.authorRole || "AltFTool Editorial",
     reviewedBy: blog.reviewedBy || "AltFTool Editorial Team",
     reviewedAt: blog.reviewedAt || blog.updatedAt || date,
-    seoDescription: blog.seoDescription || excerpt,
     imageAlt: blog.imageAlt || `${heading} cover image`,
     tags: Array.isArray(blog.tags) ? blog.tags : [blog.category, blog.tool, blog.topic].filter(Boolean),
+  });
+
+  return {
+    ...auditBlog,
+    auditSource: source,
+    heading,
+    title: heading,
+    slug,
+    description: auditBlog.description,
+    content: auditBlog.content || auditBlog.description,
+    excerpt: auditBlog.excerpt || excerpt,
+    date,
+    author: auditBlog.author || DEFAULT_AUTHOR,
+    authorRole: auditBlog.authorRole || "AltFTool Editorial",
+    reviewedBy: auditBlog.reviewedBy || "AltFTool Editorial Team",
+    reviewedAt: auditBlog.reviewedAt || date,
+    seoDescription: auditBlog.seoDescription,
+    imageAlt: auditBlog.imageAlt || `${heading} cover image`,
+    tags: auditBlog.tags,
   };
 }
 

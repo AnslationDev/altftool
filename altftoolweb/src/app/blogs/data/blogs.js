@@ -1,4 +1,5 @@
 import rawBlogData from "./blogs.json";
+import { withBlogSeoDefaults } from "./blogSeoDefaults";
 
 export const BLOG_CHUNK_SIZE = 12;
 export const BLOG_REMOTE_LIMIT = 72;
@@ -294,37 +295,47 @@ export function normalizeBlog(blog = {}, index = 0) {
   const heading = blog.heading || blog.title || "Untitled AltFTool guide";
   const slug = blog.slug || slugify(heading);
   const category = blog.category || "Guides";
-  const description = blog.description || blog.content || blog.body || blog.excerpt || "";
-  const excerpt = blog.excerpt || summarize(description);
+  const seoReadyBlog = withBlogSeoDefaults({
+    ...blog,
+    heading,
+    title: heading,
+    slug,
+    category,
+    tool: blog.tool || blog.topic || category,
+  });
+  const description = seoReadyBlog.description || seoReadyBlog.content || seoReadyBlog.body || seoReadyBlog.excerpt || "";
+  const excerpt = seoReadyBlog.excerpt || summarize(description);
   const readTimeMinutes = Number(blog.readTimeMinutes) || estimateReadTime(description, excerpt);
   const image = blog.image || FALLBACK_IMAGES[index % FALLBACK_IMAGES.length];
-  const tags = Array.isArray(blog.tags)
-    ? blog.tags
-    : [category, blog.tool, blog.topic].filter(Boolean);
+  const tags = Array.isArray(seoReadyBlog.tags)
+    ? seoReadyBlog.tags
+    : [category, seoReadyBlog.tool, seoReadyBlog.topic].filter(Boolean);
   const date = coerceDate(blog.date || blog.publishedAt || blog.createdAt || blog.updatedAt, index);
-  const sources = normalizeSources(blog.sources || blog.citations || blog.references);
+  const sources = normalizeSources(seoReadyBlog.sources || seoReadyBlog.citations || seoReadyBlog.references);
 
   return {
-    ...blog,
+    ...seoReadyBlog,
     id: blog.id ?? slug,
     title: heading,
     heading,
     slug,
     category,
-    tool: blog.tool || blog.topic || category,
+    tool: seoReadyBlog.tool || blog.topic || category,
     excerpt,
     description,
-    content: blog.content || description,
+    content: seoReadyBlog.content || description,
     image,
     imageAlt: blog.imageAlt || `${heading} cover image`,
     date,
     author: blog.author || DEFAULT_AUTHOR,
     authorRole: blog.authorRole || "AltFTool Editorial",
     reviewedBy: blog.reviewedBy || "AltFTool Editorial Team",
-    editorialNote: blog.editorialNote || "",
+    editorialNote: blog.editorialNote || seoReadyBlog.editorialNote || "",
     reviewedAt: blog.reviewedAt || blog.updatedAt || "",
+    seoDescription: seoReadyBlog.seoDescription,
+    faqItems: seoReadyBlog.faqItems,
     sources,
-    sourceNotes: blog.sourceNotes || "",
+    sourceNotes: seoReadyBlog.sourceNotes || "",
     readTime: `${readTimeMinutes} min read`,
     readTimeMinutes,
     tags,
