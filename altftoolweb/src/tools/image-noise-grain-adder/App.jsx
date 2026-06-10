@@ -334,9 +334,9 @@ export default function ImageNoiseGrainAdder() {
             <Info size={24} />
           </div>
           <div>
-            <h4 className="text-lg font-bold text-(--foreground) mb-1">Creator's Tip</h4>
+            <h4 className="text-lg font-bold text-(--foreground) mb-1">Creator&apos;s Tip</h4>
             <p className="text-sm text-(--muted-foreground) leading-relaxed">
-              For a realistic film look, combine <strong>Fine Grain</strong> with a subtle <strong>Vignette</strong> and slightly increased <strong>Contrast</strong>. If you're going for a vintage 90s feel, add <strong>Dust & Scratches</strong> and use a higher <strong>Grain Size</strong>.
+              For a realistic film look, combine <strong>Fine Grain</strong> with a subtle <strong>Vignette</strong> and slightly increased <strong>Contrast</strong>. If you&apos;re going for a vintage 90s feel, add <strong>Dust & Scratches</strong> and use a higher <strong>Grain Size</strong>.
             </p>
           </div>
         </div>

@@ -2,7 +2,7 @@
 
 import React, { useEffect, useMemo, useState } from "react";
 import { categoryService } from "../../firebaseService/category.service";
-import ReusableTable from "../../../buysmart/(components)/(resuableComponent)/ReusableTable";
+import ReusableTable, { SafeTableImage } from "../../../buysmart/(components)/(resuableComponent)/ReusableTable";
 
 function GetCategory({ setActive, setEditData }) {
   const [data, setData] = useState([]);
@@ -39,13 +39,12 @@ function GetCategory({ setActive, setEditData }) {
       accessorKey: "image",
       header: "Image",
       Cell: ({ row }) => (
-        row.original.image ? (
-          <img
-            src={row.original.image}
-            className="h-12 w-12 object-cover rounded"
-            alt="category"
-          />
-        ) : "-"
+        <SafeTableImage
+          src={row.original.image}
+          alt={row.original.name || "Category"}
+          className="h-12 w-12 rounded border object-cover"
+          fallbackClassName="h-12 w-12 rounded border border-dashed border-gray-300 bg-gray-50"
+        />
       ),
     },
 
@@ -70,8 +69,8 @@ function GetCategory({ setActive, setEditData }) {
   };
 
   const handleDelete = async (id) => {
-    if (!confirm("Delete category?")) return;
     await categoryService.remove(id);
+    return true;
   };
 
   const handleStatusChange = async (item) => {
@@ -100,6 +99,7 @@ function GetCategory({ setActive, setEditData }) {
       onEdit={handleEdit}
       onDeleteSingle={handleDelete}
       onStatusChange={handleStatusChange}
+      confirmDeletes
     />
 
     </div>

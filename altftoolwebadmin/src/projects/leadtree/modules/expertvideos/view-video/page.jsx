@@ -13,7 +13,7 @@ import {
   Video,
   Cross,
 } from "lucide-react";
-import { Cell, Pie, PieChart, ResponsiveContainer, Tooltip } from "recharts";
+import CategoryDistributionCard from "@/components/admin/CategoryDistributionCard";
 import { fetchAllVideos } from "../expert-video-services/ExpertVideoService";
 
 const stripHtml = (h) => (h || "").replace(/<[^>]+>/g, "");
@@ -27,14 +27,6 @@ function StatusBadge({ status }) {
   );
 }
 
-const COLORS = [
-  "#6366F1", // indigo
-  "#F59E0B", // amber
-  "#EF4444", // red
-  "#06B6D4", // cyan
-  "#8B5CF6", // violet
-  "#14B8A6", // teal
-];
 export default function ViewVideos() {
   const router = useRouter();
   const [videos, setVideos]           = useState([]);
@@ -98,14 +90,6 @@ const categoryData = useMemo(() => {
             value,
         }));
     }, [videos]);
-
-    const maxCategory = useMemo(() => {
-        if (!categoryData.length) return null;
-        return categoryData.reduce((max, curr) =>
-            curr.value > max.value ? curr : max
-        );
-    }, [categoryData]);
-
 
   if (loading) {
     return (
@@ -193,73 +177,12 @@ const categoryData = useMemo(() => {
 
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
-          <div className="bg-white/70 backdrop-blur-xl border border-gray-200/60 rounded-2xl shadow-sm p-5">
-            <h3 className="text-sm font-semibold text-gray-800 mb-4">
-              Video Category Distribution
-            </h3>
-
-            <div className="h-64">
-              <ResponsiveContainer width="100%" height="100%">
-                <PieChart>
-
-                  <Pie
-                    data={categoryData}
-                    dataKey="value"
-                    nameKey="name"
-                    innerRadius={60}
-                    outerRadius={95}
-                    paddingAngle={4}
-                    labelLine={false}
-
-
-                    label={({ cx, cy }) => {
-                      return (
-                        <text
-                          x={cx}
-                          y={cy}
-                          textAnchor="middle"
-                          dominantBaseline="middle"
-                        >
-                          {/* Number */}
-                          <tspan
-                            x={cx}
-                            dy="-5"
-                            className="fill-gray-900 text-xl font-bold"
-                          >
-                            {videos.length}
-                          </tspan>
-
-                          {/* Label */}
-                          <tspan
-                            x={cx}
-                            dy="16"
-                            className="fill-gray-600 text-sm font-medium"
-                          >
-                            Total Video
-                          </tspan>
-                        </text>
-                      );
-                    }}
-                  >
-                    {categoryData.map((entry, index) => {
-                      const isTop = entry.name === maxCategory?.name;
-
-                      return (
-                        <Cell
-                          key={index}
-                          fill={isTop ? "#22C55E" : COLORS[index % COLORS.length]}
-                          stroke={isTop ? "#16A34A" : "transparent"}
-                          strokeWidth={isTop ? 1 : 0}
-                        />
-                      );
-                    })}
-                  </Pie>
-
-                  <Tooltip />
-                </PieChart>
-              </ResponsiveContainer>
-            </div>
-          </div>
+          <CategoryDistributionCard
+            title="Video Category Distribution"
+            items={categoryData}
+            total={videos.length}
+            totalLabel="Total Video"
+          />
 
 
         </div>
@@ -309,83 +232,78 @@ const categoryData = useMemo(() => {
             {filtered.map((video) => {
               const preview = video.seoDescription || stripHtml(video.description).slice(0, 120);
               return (
-                <>
-                  <div
-                    key={video.id}
-                    onClick={() => setActiveVideo(video)}
-                    className="group bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-all cursor-pointer overflow-hidden flex flex-col"
-                  >
-                    {video.thumbnailUrl ? (
-                      <div className="h-44 overflow-hidden bg-gray-100 shrink-0">
-                        <img
-                          src={video.thumbnailUrl}
-                          alt={video.heading}
-                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                        />
-                      </div>
-                    ) : (
-                      <div className="h-32 bg-gradient-to-br from-gray-100 to-gray-50 flex items-center justify-center shrink-0">
-                        <BookOpen className="w-8 h-8 text-gray-300" />
-                      </div>
-                    )}
-                    <div className="p-5 space-y-3 flex-1 flex flex-col">
-                      <div className="flex items-start justify-between gap-2">
-                        <h2 className="text-sm font-bold text-gray-900 line-clamp-2 leading-snug flex-1">
-                          {video.title}
-                        </h2>
-                        <StatusBadge status={video.status} />
-                      </div>
-                      <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-gray-500">
-                        <span className="font-medium"></span>
-                        {video.date && (
-                          <>
-                            <span className="text-gray-300">·</span>
-                            <span>{video.date}</span>
-                          </>
-                        )}
-                        {video.category && (
-                          <span className="bg-indigo-50 text-indigo-600 font-semibold px-2 py-0.5 rounded-full">
-                            {video.category}
-                          </span>
-                        )}
-                      </div>
-                      {preview && (
-                        <p className="text-xs text-gray-500 line-clamp-3 leading-relaxed flex-1">
-                          {preview}
-                        </p>
-                      )}
+                <div
+                  key={video.id}
+                  onClick={() => setActiveVideo(video)}
+                  className="group bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-all cursor-pointer overflow-hidden flex flex-col"
+                >
+                  {video.thumbnailUrl ? (
+                    <div className="h-44 overflow-hidden bg-gray-100 shrink-0">
+                      <img
+                        src={video.thumbnailUrl}
+                        alt={video.heading}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                      />
                     </div>
-                  </div>
-
-                  {activeVideo && (
-                    <div className="fixed inset-0 bg-black/70 z-50 flex items-center justify-center">
-                      <div className="bg-white rounded-xl w-[90%] max-w-3xl relative p-5 min-h-[300px] max-h-[80vh] overflow-auto">
-                     
-
-                        <button
-                          onClick={() => setActiveVideo(null)}
-                          className="absolute top-2 right-2 text-gray-600 hover:text-black text-xl flex items-center gap-1 h-10 w-10 rounded-full bg-gray-200 cursor-pointer justify-center"
-                        >
-                          <Cross/>
-                        </button>
-
-                      
-                        <video
-                          src={activeVideo.videoUrl} 
-                          controls
-                          autoPlay
-                          className="w-full rounded-lg"
-                        />
-                      </div>
+                  ) : (
+                    <div className="h-32 bg-gradient-to-br from-gray-100 to-gray-50 flex items-center justify-center shrink-0">
+                      <BookOpen className="w-8 h-8 text-gray-300" />
                     </div>
                   )}
-                </>
+                  <div className="p-5 space-y-3 flex-1 flex flex-col">
+                    <div className="flex items-start justify-between gap-2">
+                      <h2 className="text-sm font-bold text-gray-900 line-clamp-2 leading-snug flex-1">
+                        {video.title}
+                      </h2>
+                      <StatusBadge status={video.status} />
+                    </div>
+                    <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-gray-500">
+                      <span className="font-medium"></span>
+                      {video.date && (
+                        <>
+                          <span className="text-gray-300">·</span>
+                          <span>{video.date}</span>
+                        </>
+                      )}
+                      {video.category && (
+                        <span className="bg-indigo-50 text-indigo-600 font-semibold px-2 py-0.5 rounded-full">
+                          {video.category}
+                        </span>
+                      )}
+                    </div>
+                    {preview && (
+                      <p className="text-xs text-gray-500 line-clamp-3 leading-relaxed flex-1">
+                        {preview}
+                      </p>
+                    )}
+                  </div>
+                </div>
               );
             })}
+          </div>
+        )}
+
+        {activeVideo && (
+          <div className="fixed inset-0 bg-black/70 z-50 flex items-center justify-center">
+            <div className="bg-white rounded-xl w-[90%] max-w-3xl relative p-5 min-h-[300px] max-h-[80vh] overflow-auto">
+              <button
+                type="button"
+                onClick={() => setActiveVideo(null)}
+                className="absolute top-2 right-2 text-gray-600 hover:text-black text-xl flex items-center gap-1 h-10 w-10 rounded-full bg-gray-200 cursor-pointer justify-center"
+              >
+                <Cross />
+              </button>
+
+              <video
+                src={activeVideo.videoUrl}
+                controls
+                autoPlay
+                className="w-full rounded-lg"
+              />
+            </div>
           </div>
         )}
       </div>
     </div>
   );
 }
-  

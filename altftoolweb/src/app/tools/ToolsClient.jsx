@@ -1,13 +1,15 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useMemo, useState, useSyncExternalStore } from "react";
+import { useDeferredValue, useEffect, useLayoutEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
 import {
   ArrowRight,
   BadgeCheck,
   Calculator,
   ChevronDown,
+  Check,
   Code2,
+  Copy,
   FileText,
   Filter,
   History,
@@ -17,13 +19,14 @@ import {
   Sparkles,
   Star,
   Wrench,
+  X,
 } from "lucide-react";
 import Icon from "@/shared/ui/Icon";
 import CTAButton from "@/shared/ui/CTAButton";
 import { useAds } from "@/ads/AdsProvider";
 import { injectAds } from "@/ads/adInjector";
 import AdPairRow from "@/ads/layouts/tools/AdToolPairRow";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { TOP_PRIORITY_TOOL_SLUGS } from "@altftool/core/toolHealth";
 import {
   FAVORITES_STORAGE_KEY,
@@ -33,6 +36,7 @@ import {
   readStoredSlugs,
   writeStoredSlugs,
 } from "./toolStorage";
+import { prefetchToolModule } from "./toolLoaderResolver";
 
 const ITEMS_PER_PAGE = 24;
 const LABEL_OVERRIDES = {
@@ -82,6 +86,24 @@ const VIEW_MODES = [
   { id: "recent", label: "Recent" },
 ];
 const POPULAR_SEARCHES = ["json", "base64", "pdf", "image", "regex", "seo", "password", "cron"];
+const GENERIC_SEARCH_TOKENS = new Set([
+  "a",
+  "an",
+  "and",
+  "for",
+  "free",
+  "in",
+  "not",
+  "of",
+  "on",
+  "online",
+  "or",
+  "the",
+  "to",
+  "tool",
+  "tools",
+  "with",
+]);
 const WORKFLOW_GROUPS = [
   {
     title: "Developer Desk",
@@ -137,9 +159,13 @@ const subscribeToToolStorage = (callback) => {
 const createStorageSnapshot = (key) => () => readStoredSlugs(key).join("\n");
 const getFavoriteStorageSnapshot = createStorageSnapshot(FAVORITES_STORAGE_KEY);
 const getRecentStorageSnapshot = createStorageSnapshot(RECENT_TOOLS_STORAGE_KEY);
+const useClientLayoutEffect = typeof window === "undefined" ? useEffect : useLayoutEffect;
 
 const getSearchTokens = (query) => {
-  const base = query.toLowerCase().split(/[^a-z0-9]+/).filter(Boolean);
+  const base = query
+    .toLowerCase()
+    .split(/[^a-z0-9]+/)
+    .filter((token) => token && !GENERIC_SEARCH_TOKENS.has(token));
   return [...new Set(base.flatMap((token) => [token, ...(SEARCH_ALIASES[token] || [])]))];
 };
 
@@ -170,12 +196,11 @@ const getSearchScore = (slug, tool, tokens, rawQuery) => {
   return score;
 };
 
-const getInitialCategory = (category) => {
+const getInitialCategory = (category, initialCategory = "all") => {
   const categorySlug = category ? slugify(category) : "";
   if (categorySlug && categorySlug !== "all") return categorySlug;
-  if (typeof window === "undefined") return "all";
 
-  return new URLSearchParams(window.location.search).get("category") || "all";
+  return slugify(initialCategory || "all") || "all";
 };
 
 const getDeviceSnapshot = () =>
@@ -198,9 +223,9 @@ function Skeleton({ className = "" }) {
 
 function ToolCardSkeleton() {
   return (
-    <div className="rounded-xl border border-[var(--color-border)] p-6 space-y-4">
+    <div className="space-y-4 rounded-[8px] border border-[var(--color-border)] p-6">
       <div className="flex gap-4 items-center">
-        <Skeleton className="h-12 w-12 rounded-xl" />
+        <Skeleton className="h-12 w-12 rounded-[7px]" />
         <Skeleton className="h-4 w-40" />
       </div>
       <Skeleton className="h-3 w-full" />
@@ -219,9 +244,17 @@ function ToolsGridSkeleton() {
   );
 }
 
-export default function ToolsClient({ meta = {}, category, initialSearch = "", initialViewMode = "all" }) {
+export default function ToolsClient({
+  meta = {},
+  category,
+  initialCategory = "all",
+  initialSearch = "",
+  initialViewMode = "all",
+}) {
   const slugs = useMemo(() => Object.keys(meta), [meta]);
   const [search, setSearch] = useState(initialSearch);
+  const deferredSearch = useDeferredValue(search);
+  const [hydrated, setHydrated] = useState(false);
   const [viewMode, setViewMode] = useState(() =>
     VIEW_MODES.some((mode) => mode.id === initialViewMode) ? initialViewMode : "all"
   );
@@ -242,9 +275,15 @@ export default function ToolsClient({ meta = {}, category, initialSearch = "", i
     () => "desktop"
   );
   const pathname = usePathname();
+  const router = useRouter();
   const [selectedCategory, setSelectedCategory] = useState(() =>
-    getInitialCategory(category)
+    getInitialCategory(category, initialCategory)
   );
+  const initialCategoryKeyRef = useRef(`${category || ""}:${initialCategory || ""}`);
+  const initialSearchRef = useRef(initialSearch);
+  const initialViewModeRef = useRef(initialViewMode);
+  const searchInputRef = useRef(null);
+  const categoryInputRef = useRef(null);
   const categoryname = selectedCategory;
   const favoriteSlugs = useMemo(
     () => favoriteSnapshot.split("\n").filter((slug) => meta[slug]),
@@ -256,18 +295,41 @@ export default function ToolsClient({ meta = {}, category, initialSearch = "", i
   );
   const favoriteSet = useMemo(() => new Set(favoriteSlugs), [favoriteSlugs]);
   const recentSet = useMemo(() => new Set(recentSlugs), [recentSlugs]);
+  const prioritySet = useMemo(() => new Set(TOP_PRIORITY_TOOL_SLUGS), []);
 
-  useEffect(() => {
-    setSelectedCategory(getInitialCategory(category));
-  }, [category]);
+  useClientLayoutEffect(() => {
+    const nextKey = `${category || ""}:${initialCategory || ""}`;
+    if (initialCategoryKeyRef.current === nextKey) return;
+    initialCategoryKeyRef.current = nextKey;
+    setSelectedCategory(getInitialCategory(category, initialCategory));
+  }, [category, initialCategory]);
 
-  useEffect(() => {
+  useClientLayoutEffect(() => {
+    if (initialSearchRef.current === initialSearch) return;
+    initialSearchRef.current = initialSearch;
     setSearch(initialSearch);
   }, [initialSearch]);
 
-  useEffect(() => {
+  useClientLayoutEffect(() => {
+    if (initialViewModeRef.current === initialViewMode) return;
+    initialViewModeRef.current = initialViewMode;
     setViewMode(VIEW_MODES.some((mode) => mode.id === initialViewMode) ? initialViewMode : "all");
   }, [initialViewMode]);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    const params = new URLSearchParams(window.location.search);
+    const queryCategory = params.get("category");
+    const querySearch = params.get("search");
+    const queryView = params.get("view");
+
+    if (!category && queryCategory) setSelectedCategory(slugify(queryCategory) || "all");
+    if (querySearch !== null) setSearch(querySearch);
+    if (queryView && VIEW_MODES.some((mode) => mode.id === queryView)) {
+      setViewMode(queryView);
+    }
+  }, [category]);
 
   // Ads setup
   const toolAds = useAds({ placement: "tools_listing", layout: "tool_card", device });
@@ -285,13 +347,18 @@ export default function ToolsClient({ meta = {}, category, initialSearch = "", i
     return Array.from(set);
   }, [meta]);
   const categoryStats = useMemo(() => {
+    const counts = new Map([["all", slugs.length]]);
+
+    Object.values(meta).forEach((tool) => {
+      getToolCategories(tool).forEach((categoryName) => {
+        const slug = slugify(categoryName);
+        counts.set(slug, (counts.get(slug) || 0) + 1);
+      });
+    });
+
     return categories.map((cat) => {
       const slug = slugify(cat);
-      const count =
-        slug === "all"
-          ? slugs.length
-          : slugs.filter((toolSlug) => getToolCategories(meta[toolSlug]).includes(slug)).length;
-      return { slug, label: formatLabel(cat), count };
+      return { slug, label: formatLabel(cat), count: counts.get(slug) || 0 };
     });
   }, [categories, meta, slugs]);
   const filteredCategoryStats = useMemo(() => {
@@ -328,7 +395,7 @@ export default function ToolsClient({ meta = {}, category, initialSearch = "", i
 
   // Filter tools based on category and search
   const filteredSlugs = useMemo(() => {
-    const query = search.toLowerCase().trim();
+    const query = deferredSearch.toLowerCase().trim();
     const tokens = getSearchTokens(query);
     const baseSlugs = viewMode === "recent" ? recentSlugs.filter((slug) => meta[slug]) : slugs;
     const ranked = [];
@@ -354,22 +421,27 @@ export default function ToolsClient({ meta = {}, category, initialSearch = "", i
     if (!tokens.length) return ranked.sort((a, b) => a.index - b.index).map((item) => item.slug);
 
     return ranked.sort((a, b) => b.score - a.score || a.index - b.index).map((item) => item.slug);
-  }, [categoryname, favoriteSet, meta, recentSet, recentSlugs, search, slugs, viewMode]);
+  }, [categoryname, deferredSearch, favoriteSet, meta, recentSet, recentSlugs, slugs, viewMode]);
 
   const [visibleCount, setVisibleCount] = useState(ITEMS_PER_PAGE);
+  const [copiedDirectoryLink, setCopiedDirectoryLink] = useState(false);
 
-  const visibleSlugs =
-    viewMode === "all" && !search.trim()
-      ? injectAds(
-          filteredSlugs.slice(0, visibleCount),
-          toolAds,
-          toolAds[0]?.interval || 6
-        )
-      : filteredSlugs.slice(0, visibleCount);
+  const visibleSlugs = useMemo(() => {
+    const visible = filteredSlugs.slice(0, visibleCount);
+
+    if (viewMode === "all" && !deferredSearch.trim()) {
+      return injectAds(visible, toolAds, {
+        interval: toolAds[0]?.interval || 6,
+        mode: "pair",
+      });
+    }
+
+    return visible;
+  }, [deferredSearch, filteredSlugs, toolAds, visibleCount, viewMode]);
 
   const hasMore = visibleCount < filteredSlugs.length;
   const searchSuggestions = useMemo(() => {
-    if (!search.trim()) return [];
+    if (!deferredSearch.trim()) return [];
 
     return filteredSlugs.slice(0, 6).map((slug) => {
       const tool = meta[slug];
@@ -380,8 +452,12 @@ export default function ToolsClient({ meta = {}, category, initialSearch = "", i
         category: categories[0] || "Tool",
       };
     });
-  }, [filteredSlugs, meta, search]);
+  }, [deferredSearch, filteredSlugs, meta]);
+  const isFiltering = search !== deferredSearch;
   const hasActiveFilters = Boolean(search.trim()) || categoryname !== "all" || viewMode !== "all";
+  const activeFilterCount =
+    (search.trim() ? 1 : 0) + (categoryname !== "all" ? 1 : 0) + (viewMode !== "all" ? 1 : 0);
+  const firstResultSlug = filteredSlugs.find((slug) => meta[slug]);
 
   const getDirectoryHref = ({
     nextCategory = categoryname,
@@ -412,6 +488,16 @@ export default function ToolsClient({ meta = {}, category, initialSearch = "", i
     window.history.replaceState(null, "", getDirectoryHref(nextState));
   };
 
+  const getToolHref = (slug, nextCategory = categoryname) => {
+    const normalizedCategory = slugify(nextCategory || "all");
+    return `/tools/${normalizedCategory === "all" ? "all" : normalizedCategory}/${slug}`;
+  };
+
+  const prefetchDirectoryTool = (slug) => {
+    if (!meta[slug]) return;
+    prefetchToolModule(slug);
+  };
+
   const setSearchFilter = (value) => {
     setSearch(value);
     setVisibleCount(ITEMS_PER_PAGE);
@@ -424,13 +510,58 @@ export default function ToolsClient({ meta = {}, category, initialSearch = "", i
     replaceDirectoryUrl({ nextViewMode: mode });
   };
 
-  const clearFilters = () => {
-    setSearch("");
-    setViewMode("all");
+  const clearCategoryFilter = () => {
     setSelectedCategory("all");
+    setVisibleCount(ITEMS_PER_PAGE);
+    replaceDirectoryUrl({ nextCategory: "all" });
+  };
+
+  const clearAllFilters = () => {
+    setSearch("");
+    setSelectedCategory("all");
+    setViewMode("all");
     setCategoryFilter("");
     setVisibleCount(ITEMS_PER_PAGE);
-    replaceDirectoryUrl({ nextCategory: "all", nextSearch: "", nextViewMode: "all" });
+
+    if (typeof window !== "undefined") {
+      window.history.replaceState(null, "", "/tools/all");
+      return;
+    }
+
+    router.push("/tools/all");
+  };
+
+  const openFirstSearchResult = () => {
+    if (!firstResultSlug) return;
+    rememberTool(firstResultSlug);
+    prefetchDirectoryTool(firstResultSlug);
+    router.push(getToolHref(firstResultSlug, "all"));
+  };
+
+  const copyDirectoryLink = async () => {
+    if (typeof window === "undefined") return;
+
+    const href = `${window.location.origin}${getDirectoryHref()}`;
+    try {
+      await navigator.clipboard.writeText(href);
+      setCopiedDirectoryLink(true);
+      window.setTimeout(() => setCopiedDirectoryLink(false), 1400);
+    } catch {
+      setCopiedDirectoryLink(false);
+    }
+  };
+
+  const handleSearchKeyDown = (event) => {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      openFirstSearchResult();
+      return;
+    }
+
+    if (event.key === "Escape" && search.trim()) {
+      event.preventDefault();
+      setSearchFilter("");
+    }
   };
 
   const rememberTool = (slug) => {
@@ -464,24 +595,46 @@ export default function ToolsClient({ meta = {}, category, initialSearch = "", i
   const toolsHeading =
     viewMode === "favorites" ? "Saved Tools" : viewMode === "recent" ? "Recent Tools" : "Explore Tools";
 
+  useEffect(() => {
+    setHydrated(true);
+  }, []);
+
+  useEffect(() => {
+    const value = searchInputRef.current?.value || "";
+    if (value && value !== search) {
+      setSearchFilter(value);
+    }
+  }, [search]);
+
+  useEffect(() => {
+    const value = categoryInputRef.current?.value || "";
+    if (value && value !== categoryFilter) {
+      setCategoryFilter(value);
+    }
+  }, [categoryFilter]);
+
 
 
 
   return (
-    <div className="min-h-screen bg-(--background)">
+    <div
+      data-testid="tools-directory"
+      data-hydrated={hydrated ? "true" : "false"}
+      className="route-page-shell"
+    >
       {/* DIRECTORY HEADER */}
-      <div className="border-b border-(--border) bg-[color-mix(in_srgb,var(--card)_92%,var(--background))]">
-        <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+      <div className="border-b border-(--border) bg-[color-mix(in_srgb,var(--card)_86%,var(--background))]">
+        <div className="section !py-6 sm:!py-8">
           <div className="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
             <div>
-              <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-(--border) bg-(--background) px-3 py-1.5 text-xs font-bold uppercase tracking-wide text-(--primary)">
+              <div className="route-kicker mb-3">
                 <Sparkles className="h-3.5 w-3.5" />
-                ToolFK-style microtool directory
+                Microtool directory
               </div>
-              <h1 className="text-3xl font-semibold leading-tight tracking-normal text-(--foreground) sm:text-4xl">
+              <h1 className="route-title">
                 All Online Tools
               </h1>
-              <p className="mt-2 max-w-2xl text-sm leading-6 text-(--muted-foreground)">
+              <p className="route-description mt-3">
                 Fast converters, developer helpers, PDF tools, media utilities, and browser-safe microtools in one compact workspace.
               </p>
             </div>
@@ -491,59 +644,112 @@ export default function ToolsClient({ meta = {}, category, initialSearch = "", i
                 ["Categories", categoryCount],
                 ["Showing", filteredSlugs.length],
               ].map(([label, value]) => (
-                <div key={label} className="rounded-[8px] border border-(--border) bg-(--background) px-3 py-3 text-center shadow-[var(--anslation-ds-shadow-sm)]">
+                <div key={label} className="metric-tile px-3 py-3 text-center">
                   <p className="text-xl font-semibold text-(--foreground)">{value}</p>
-                  <p className="mt-0.5 text-[10px] font-bold uppercase tracking-wide text-(--muted-foreground)">{label}</p>
+                  <p className="mt-0.5 text-[10px] font-bold uppercase tracking-normal text-(--muted-foreground)">{label}</p>
                 </div>
               ))}
             </div>
           </div>
 
-          <div className="mt-6 space-y-3">
+          <div className="filter-surface mt-6 space-y-3 p-3">
             <div className="relative">
               <Search className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-(--primary)" />
               <input
+                ref={searchInputRef}
                 data-testid="tools-search-input"
                 type="text"
                 placeholder="Select directly or search tools, converters, code utilities..."
                 value={search}
                 onChange={(e) => setSearchFilter(e.target.value)}
+                onInput={(e) => setSearchFilter(e.currentTarget.value)}
+                onKeyDown={handleSearchKeyDown}
                 className="h-[52px] w-full rounded-[8px] border border-[var(--border)] bg-[var(--background)] px-11 text-sm text-(--foreground) shadow-[var(--anslation-ds-shadow-sm)] placeholder:text-(--input-placeholder) transition focus:border-(--primary) focus:outline-none focus:ring-2 focus:ring-[color-mix(in_srgb,var(--primary)_24%,transparent)]"
               />
             </div>
             {search.trim() ? (
               <div data-testid="tool-search-suggestions" className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
-                {searchSuggestions.map((item) => (
-                  <Link
-                    key={item.slug}
-                    href={`/tools/all/${item.slug}`}
-                    onClick={() => rememberTool(item.slug)}
-                    className="flex items-center justify-between gap-3 rounded-[7px] border border-(--border) bg-(--background) px-3 py-2.5 text-left text-xs transition hover:border-(--primary) hover:bg-(--card) hover:text-(--foreground)"
-                  >
-                    <span className="min-w-0">
-                      <span className="block truncate font-semibold text-(--foreground)">{item.name}</span>
-                      <span className="block truncate text-[11px] text-(--muted-foreground)">{item.category}</span>
-                    </span>
-                    <span className="shrink-0 text-(--muted-foreground)">Open</span>
-                  </Link>
-                ))}
+                {searchSuggestions.length ? (
+                  searchSuggestions.map((item) => (
+                    <Link
+                      key={item.slug}
+                      href={`/tools/all/${item.slug}`}
+                      onClick={() => rememberTool(item.slug)}
+                      onFocus={() => prefetchDirectoryTool(item.slug)}
+                      onMouseEnter={() => prefetchDirectoryTool(item.slug)}
+                      className="interactive-card flex min-h-12 items-center justify-between gap-3 px-3 py-2.5 text-left text-xs"
+                    >
+                      <span className="min-w-0">
+                        <span className="block truncate font-semibold text-(--foreground)">{item.name}</span>
+                        <span className="block truncate text-[11px] text-(--muted-foreground)">{item.category}</span>
+                      </span>
+                      <span className="shrink-0 text-(--muted-foreground)">Open</span>
+                    </Link>
+                  ))
+                ) : (
+                  <div className="rounded-[8px] border border-dashed border-(--border) bg-(--background) px-3 py-3 text-xs font-medium text-(--muted-foreground) sm:col-span-2 lg:col-span-3">
+                    No instant matches. Keep typing or clear filters to return to the full toolbox.
+                  </div>
+                )}
               </div>
             ) : (
-              <div className="flex flex-wrap items-center gap-2">
-                <span className="text-xs font-semibold uppercase tracking-wide text-(--muted-foreground)">Popular</span>
+              <div className="-mx-4 flex snap-x items-center gap-2 overflow-x-auto px-4 pb-1 sm:mx-0 sm:flex-wrap sm:overflow-visible sm:px-0 sm:pb-0">
+                <span className="shrink-0 text-xs font-semibold uppercase tracking-wide text-(--muted-foreground)">Popular</span>
                 {POPULAR_SEARCHES.map((term) => (
                   <button
                     key={term}
                     type="button"
                     onClick={() => setSearchFilter(term)}
-                    className="rounded-[7px] border border-(--border) bg-(--background) px-2.5 py-1.5 text-xs font-semibold text-(--muted-foreground) transition hover:border-(--primary) hover:bg-(--card) hover:text-(--foreground)"
+                    className="control-chip shrink-0 snap-start"
                   >
                     {formatLabel(term)}
                   </button>
                 ))}
               </div>
             )}
-            <div className="flex flex-wrap gap-2">
+            {hasActiveFilters ? (
+              <div
+                data-testid="active-tool-filters"
+                className="flex flex-wrap items-center gap-2 rounded-[8px] border border-(--border) bg-(--background) p-2"
+              >
+                <span className="text-xs font-bold uppercase tracking-wide text-(--muted-foreground)">
+                  Active
+                </span>
+                {search.trim() ? (
+                  <button
+                    type="button"
+                    onClick={() => setSearchFilter("")}
+                    className="control-chip max-w-full text-(--foreground)"
+                  >
+                    <span className="min-w-0 truncate">Search: {search.trim()}</span>
+                    <X className="h-3.5 w-3.5 text-(--muted-foreground)" />
+                  </button>
+                ) : null}
+                {categoryname !== "all" ? (
+                  <Link
+                    href={getDirectoryHref({ nextCategory: "all" })}
+                    onClick={clearCategoryFilter}
+                    className="control-chip max-w-full text-(--foreground)"
+                  >
+                    <span className="min-w-0 truncate">Category: {formatLabel(categoryname)}</span>
+                    <X className="h-3.5 w-3.5 text-(--muted-foreground)" />
+                  </Link>
+                ) : null}
+                {viewMode !== "all" ? (
+                  <button
+                    type="button"
+                    onClick={() => setViewFilter("all")}
+                    className="control-chip max-w-full text-(--foreground)"
+                  >
+                    <span className="min-w-0 truncate">
+                      View: {VIEW_MODES.find((mode) => mode.id === viewMode)?.label || "All"}
+                    </span>
+                    <X className="h-3.5 w-3.5 text-(--muted-foreground)" />
+                  </button>
+                ) : null}
+              </div>
+            ) : null}
+            <div className="-mx-4 flex snap-x gap-2 overflow-x-auto px-4 pb-1 sm:mx-0 sm:flex-wrap sm:overflow-visible sm:px-0 sm:pb-0">
               {VIEW_MODES.map((mode) => {
                 const IconComponent = mode.id === "favorites" ? Star : mode.id === "recent" ? History : Sparkles;
                 return (
@@ -551,7 +757,7 @@ export default function ToolsClient({ meta = {}, category, initialSearch = "", i
                     key={mode.id}
                     type="button"
                     onClick={() => setViewFilter(mode.id)}
-                    className={`inline-flex items-center gap-2 rounded-[7px] border px-3 py-2 text-xs font-semibold transition ${
+                    className={`inline-flex min-h-10 shrink-0 snap-start items-center gap-2 rounded-[7px] border px-3 py-2 text-xs font-semibold transition ${
                       viewMode === mode.id
                         ? "border-(--primary) bg-(--primary) text-(--primary-foreground)"
                         : "border-(--border) bg-(--background) text-(--muted-foreground) hover:border-(--primary) hover:bg-(--card) hover:text-(--foreground)"
@@ -566,23 +772,23 @@ export default function ToolsClient({ meta = {}, category, initialSearch = "", i
                 );
               })}
               {hasActiveFilters ? (
-                <Link
-                  href="/tools/all"
+                <button
+                  type="button"
                   data-testid="clear-tool-filters"
-                  onClick={clearFilters}
-                  className="rounded-[7px] border border-(--border) bg-(--background) px-3 py-2 text-xs font-semibold text-(--muted-foreground) transition hover:border-(--primary) hover:bg-(--card) hover:text-(--foreground)"
+                  onClick={clearAllFilters}
+                  className="control-chip min-h-10 shrink-0 snap-start"
                 >
-                  Clear
-                </Link>
+                  Clear {activeFilterCount}
+                </button>
               ) : null}
             </div>
-            <div className="flex flex-wrap gap-2">
+            <div className="-mx-4 flex snap-x gap-2 overflow-x-auto px-4 pb-1 sm:mx-0 sm:flex-wrap sm:overflow-visible sm:px-0 sm:pb-0">
               {featuredCategories.map((cat) => (
                 <Link
                   key={cat}
                   href={getDirectoryHref({ nextCategory: cat })}
                   onClick={() => handleCategoryClick(cat)}
-                  className={`rounded-[7px] border px-3 py-2 text-xs font-semibold transition ${
+                  className={`min-h-10 shrink-0 snap-start rounded-[7px] border px-3 py-2 text-xs font-semibold transition ${
                     categoryname === slugify(cat)
                       ? "border-(--primary) bg-(--primary) text-(--primary-foreground)"
                       : "border-(--border) bg-(--background) text-(--muted-foreground) hover:border-(--primary) hover:bg-(--card) hover:text-(--foreground)"
@@ -595,13 +801,15 @@ export default function ToolsClient({ meta = {}, category, initialSearch = "", i
           </div>
 
           {quickTools.length > 0 && (
-            <div className="mt-4 flex flex-wrap gap-2">
+            <div className="-mx-4 mt-4 flex snap-x gap-2 overflow-x-auto px-4 pb-1 sm:mx-0 sm:flex-wrap sm:overflow-visible sm:px-0 sm:pb-0">
               {quickTools.map(([slug, tool]) => (
                 <Link
                   key={slug}
                   href={`/tools/all/${slug}`}
                   onClick={() => rememberTool(slug)}
-                  className="rounded-[7px] border border-(--border) bg-(--background) px-3 py-1.5 text-xs font-semibold text-(--muted-foreground) transition hover:border-(--primary) hover:bg-(--card) hover:text-(--foreground)"
+                  onFocus={() => prefetchDirectoryTool(slug)}
+                  onMouseEnter={() => prefetchDirectoryTool(slug)}
+                  className="control-chip shrink-0 snap-start"
                 >
                   {tool.name}
                 </Link>
@@ -617,7 +825,7 @@ export default function ToolsClient({ meta = {}, category, initialSearch = "", i
                 return (
                   <div
                     key={title}
-                    className="rounded-[8px] border border-(--border) bg-(--background) p-3 shadow-[var(--anslation-ds-shadow-sm)] transition hover:border-(--primary)"
+                    className="interactive-card p-3"
                   >
                     <div className="flex items-start gap-3">
                       <div className="grid h-9 w-9 shrink-0 place-items-center rounded-[7px] bg-(--muted) text-(--primary)">
@@ -634,6 +842,8 @@ export default function ToolsClient({ meta = {}, category, initialSearch = "", i
                           key={slug}
                           href={`/tools/all/${slug}`}
                           onClick={() => rememberTool(slug)}
+                          onFocus={() => prefetchDirectoryTool(slug)}
+                          onMouseEnter={() => prefetchDirectoryTool(slug)}
                           className="rounded-[6px] border border-(--border) bg-(--card) px-2 py-1 text-[11px] font-semibold text-(--muted-foreground) transition hover:border-(--primary) hover:text-(--foreground)"
                         >
                           {tool.name}
@@ -643,6 +853,8 @@ export default function ToolsClient({ meta = {}, category, initialSearch = "", i
                     <Link
                       href={`/tools/all/${firstToolSlug}`}
                       onClick={() => rememberTool(firstToolSlug)}
+                      onFocus={() => prefetchDirectoryTool(firstToolSlug)}
+                      onMouseEnter={() => prefetchDirectoryTool(firstToolSlug)}
                       className="mt-3 inline-flex items-center gap-1 text-xs font-semibold text-(--primary)"
                     >
                       Start
@@ -657,10 +869,10 @@ export default function ToolsClient({ meta = {}, category, initialSearch = "", i
       </div>
 
       {/* CONTENT */}
-      <div className="mx-auto grid max-w-7xl grid-cols-1 gap-6 px-4 py-6 pb-20 sm:px-6 lg:grid-cols-[260px_1fr] lg:px-8">
+      <div className="section grid grid-cols-1 gap-6 !py-6 !pb-20 lg:grid-cols-[260px_1fr]">
         {/* SIDEBAR */}
         <aside className="lg:sticky lg:top-24 lg:max-h-[calc(100vh-7rem)] lg:overflow-auto">
-          <div className="rounded-[8px] border border-(--border) bg-[color-mix(in_srgb,var(--card)_86%,var(--background))] p-3 shadow-[var(--anslation-ds-shadow-sm)]">
+          <div className="filter-surface p-3">
           <h4 className="mb-3 flex items-center justify-between gap-2 text-sm font-semibold text-(--foreground)">
             <span className="inline-flex items-center gap-2">
               <Layers3 className="h-4 w-4 text-(--primary)" />
@@ -671,9 +883,11 @@ export default function ToolsClient({ meta = {}, category, initialSearch = "", i
           <div className="relative mb-3">
             <Search className="pointer-events-none absolute left-3 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-(--muted-foreground)" />
             <input
+              ref={categoryInputRef}
               data-testid="tool-category-search"
               value={categoryFilter}
               onChange={(e) => setCategoryFilter(e.target.value)}
+              onInput={(e) => setCategoryFilter(e.currentTarget.value)}
               placeholder="Filter categories"
               className="h-10 w-full rounded-[8px] border border-(--border) bg-(--background) px-9 text-xs text-(--foreground) outline-none transition placeholder:text-(--muted-foreground) focus:border-(--primary) focus:ring-2 focus:ring-[color-mix(in_srgb,var(--primary)_18%,transparent)]"
             />
@@ -691,50 +905,62 @@ export default function ToolsClient({ meta = {}, category, initialSearch = "", i
             {/* Dropdown */}
             {open && (
               <div className="mt-2 max-h-[360px] w-full overflow-auto rounded-[8px] border border-(--border) bg-(--background) p-2">
-                {filteredCategoryStats.map((cat) => (
-                  <Link
-                    key={cat.slug}
-                    href={getDirectoryHref({ nextCategory: cat.slug })}
-                    onClick={() => handleSelect(cat.slug)}
-                    className={`flex cursor-pointer items-center justify-between rounded-[7px] px-3 py-2 text-sm transition ${
-                      categoryname === cat.slug
-                        ? "bg-(--primary) text-(--primary-foreground)"
-                        : "text-(--muted-foreground) hover:bg-(--card) hover:text-(--foreground)"
-                    }`}
-                  >
-                    <span>{cat.label}</span>
-                    <span className="text-xs">{cat.count}</span>
-                  </Link>
-                ))}
+                {filteredCategoryStats.length ? (
+                  filteredCategoryStats.map((cat) => (
+                    <Link
+                      key={cat.slug}
+                      href={getDirectoryHref({ nextCategory: cat.slug })}
+                      onClick={() => handleSelect(cat.slug)}
+                      className={`flex cursor-pointer items-center justify-between rounded-[7px] px-3 py-2 text-sm transition ${
+                        categoryname === cat.slug
+                          ? "bg-(--primary) text-(--primary-foreground)"
+                          : "text-(--muted-foreground) hover:bg-(--card) hover:text-(--foreground)"
+                      }`}
+                    >
+                      <span>{cat.label}</span>
+                      <span className="text-xs">{cat.count}</span>
+                    </Link>
+                  ))
+                ) : (
+                  <div className="rounded-[7px] border border-dashed border-(--border) px-3 py-4 text-center text-xs font-medium text-(--muted-foreground)">
+                    No categories match this filter.
+                  </div>
+                )}
               </div>
             )}
           </div>
 
 
           <ul className="hidden space-y-1 lg:block">
-            {filteredCategoryStats.map((cat) => (
-              <li key={cat.slug}>
-                <Link
-                  href={getDirectoryHref({ nextCategory: cat.slug })}
-                  onClick={() => handleCategoryClick(cat.slug)}
-                  className={`flex w-full cursor-pointer items-center justify-between rounded-[7px] px-3 py-2 text-left text-sm transition ${categoryname === cat.slug
-                    ? "bg-[var(--color-primary)] text-(--primary-foreground) shadow-[var(--anslation-ds-shadow-sm)]"
-                    : "text-[var(--muted-foreground)] hover:bg-[var(--background)] hover:text-(--foreground)"
-                    }`}
-                >
-                  <span>{cat.label}</span>
-                  <span className={`text-xs ${categoryname === cat.slug ? "text-white/80" : "text-(--muted-foreground)"}`}>
-                    {cat.count}
-                  </span>
-                </Link>
+            {filteredCategoryStats.length ? (
+              filteredCategoryStats.map((cat) => (
+                <li key={cat.slug}>
+                  <Link
+                    href={getDirectoryHref({ nextCategory: cat.slug })}
+                    onClick={() => handleCategoryClick(cat.slug)}
+                    className={`flex w-full cursor-pointer items-center justify-between rounded-[7px] px-3 py-2 text-left text-sm transition ${categoryname === cat.slug
+                      ? "bg-[var(--color-primary)] text-(--primary-foreground) shadow-[var(--anslation-ds-shadow-sm)]"
+                      : "text-[var(--muted-foreground)] hover:bg-[var(--background)] hover:text-(--foreground)"
+                      }`}
+                  >
+                    <span>{cat.label}</span>
+                    <span className={`text-xs ${categoryname === cat.slug ? "text-white/80" : "text-(--muted-foreground)"}`}>
+                      {cat.count}
+                    </span>
+                  </Link>
+                </li>
+              ))
+            ) : (
+              <li className="rounded-[7px] border border-dashed border-(--border) px-3 py-4 text-center text-xs font-medium text-(--muted-foreground)">
+                No categories match this filter.
               </li>
-            ))}
+            )}
           </ul>
           </div>
         </aside>
 
         {/* TOOLS */}
-        <section className="flex flex-col items-center justify-start">
+        <section className="flex flex-col items-center justify-start" aria-busy={isFiltering ? "true" : "false"}>
           <div className="mb-4 flex w-full flex-col gap-2 border-b border-(--border) pb-4 sm:flex-row sm:items-center sm:justify-between">
             <h2 className="flex items-center gap-3 text-xl font-semibold">
               {toolsHeading}
@@ -742,9 +968,43 @@ export default function ToolsClient({ meta = {}, category, initialSearch = "", i
                 {filteredSlugs.length}
               </span>
             </h2>
-            <p className="text-sm text-(--muted-foreground)">
-              Showing {Math.min(filteredSlugs.length, visibleCount)} of {filteredSlugs.length}
+            <p className="text-sm text-(--muted-foreground)" aria-live="polite">
+              {isFiltering
+                ? "Updating results..."
+                : `Showing ${Math.min(filteredSlugs.length, visibleCount)} of ${filteredSlugs.length}`}
             </p>
+          </div>
+
+          <div className="surface-panel mb-4 flex w-full flex-col gap-3 p-3 sm:flex-row sm:items-center sm:justify-between">
+            <div className="min-w-0">
+              <p className="text-sm font-semibold text-(--foreground)">
+                {firstResultSlug ? `Best match: ${meta[firstResultSlug]?.name || formatLabel(firstResultSlug)}` : "Ready when you are"}
+              </p>
+              <p className="mt-0.5 text-xs leading-5 text-(--muted-foreground)">
+                {hasActiveFilters
+                  ? `${activeFilterCount} active filter${activeFilterCount === 1 ? "" : "s"} are shaping this workspace.`
+                  : "Search, save, and reopen recent tools without losing your place."}
+              </p>
+            </div>
+            <div className="flex shrink-0 flex-wrap gap-2">
+              <button
+                type="button"
+                onClick={openFirstSearchResult}
+                disabled={!firstResultSlug || isFiltering}
+                className="inline-flex min-h-10 items-center justify-center gap-2 rounded-[7px] border border-(--primary) bg-(--primary) px-3 text-xs font-semibold text-(--primary-foreground) transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-50"
+              >
+                Open best match
+                <ArrowRight className="h-3.5 w-3.5" />
+              </button>
+              <button
+                type="button"
+                onClick={copyDirectoryLink}
+                className="inline-flex min-h-10 items-center justify-center gap-2 rounded-[7px] border border-(--border) bg-(--background) px-3 text-xs font-semibold text-(--muted-foreground) transition hover:border-(--primary) hover:text-(--foreground)"
+              >
+                {copiedDirectoryLink ? <Check className="h-3.5 w-3.5" /> : <Copy className="h-3.5 w-3.5" />}
+                {copiedDirectoryLink ? "Copied" : "Copy view"}
+              </button>
+            </div>
           </div>
 
           {slugs.length === 0 ? (
@@ -764,6 +1024,27 @@ export default function ToolsClient({ meta = {}, category, initialSearch = "", i
                     ? "Open a tool once and it will appear here automatically."
                     : "Try a different keyword or category."}
               </p>
+              <div className="mt-5 flex flex-wrap justify-center gap-2">
+                {hasActiveFilters && (
+                  <button
+                    type="button"
+                    onClick={clearAllFilters}
+                    className="inline-flex min-h-10 items-center rounded-[7px] border border-(--primary) bg-(--primary) px-3 text-xs font-semibold text-(--primary-foreground)"
+                  >
+                    Clear filters
+                  </button>
+                )}
+                {POPULAR_SEARCHES.slice(0, 4).map((term) => (
+                  <button
+                    key={term}
+                    type="button"
+                    onClick={() => setSearchFilter(term)}
+                    className="inline-flex min-h-10 items-center rounded-[7px] border border-(--border) bg-(--background) px-3 text-xs font-semibold text-(--muted-foreground) transition hover:border-(--primary) hover:text-(--foreground)"
+                  >
+                    {formatLabel(term)}
+                  </button>
+                ))}
+              </div>
             </div>
           ) : (
             <>
@@ -783,12 +1064,15 @@ export default function ToolsClient({ meta = {}, category, initialSearch = "", i
                     tool.name ||
                     slug.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
                   const isFavorite = favoriteSet.has(slug);
-                  const href = `/tools/${categoryname}/${slug}`;
+                  const isPriority = prioritySet.has(slug);
+                  const href = getToolHref(slug);
 
                   return (
                     <article
                       key={slug}
-                      className="group relative flex min-h-[156px] flex-col justify-between rounded-[8px] border border-[var(--border)] bg-[var(--card)] p-4 shadow-[var(--anslation-ds-shadow-sm)] transition-all duration-200 hover:-translate-y-0.5 hover:border-[var(--color-primary)] hover:bg-[color-mix(in_srgb,var(--card-hover-bg)_72%,var(--card))] hover:shadow-[var(--anslation-ds-shadow-md)] focus-within:border-[var(--color-primary)] focus-within:ring-2 focus-within:ring-[color-mix(in_srgb,var(--primary)_24%,transparent)]"
+                      data-testid={`tool-card-${slug}`}
+                      data-tool-slug={slug}
+                      className="interactive-card group relative flex min-h-[156px] flex-col justify-between p-4 focus-within:border-[var(--color-primary)] focus-within:ring-2 focus-within:ring-[color-mix(in_srgb,var(--primary)_24%,transparent)]"
                     >
                       <div className="flex gap-3">
                         <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-[7px] border border-(--border) bg-(--muted)">
@@ -801,6 +1085,8 @@ export default function ToolsClient({ meta = {}, category, initialSearch = "", i
                         <Link
                           href={href}
                           onClick={() => rememberTool(slug)}
+                          onFocus={() => prefetchDirectoryTool(slug)}
+                          onMouseEnter={() => prefetchDirectoryTool(slug)}
                           className="min-w-0 flex-1 focus:outline-none"
                         >
                           <h3 className="truncate text-[15px] font-semibold leading-tight transition group-hover:text-[var(--color-primary)]">
@@ -828,6 +1114,12 @@ export default function ToolsClient({ meta = {}, category, initialSearch = "", i
                       <div className="mt-5 flex items-center justify-between gap-3">
                         {tool.category && (
                           <div className="flex max-h-[28px] flex-wrap gap-1 overflow-hidden">
+                            {isPriority ? (
+                              <span className="inline-flex items-center gap-1 rounded-full border border-emerald-200 bg-emerald-50 px-2 py-1 text-[10px] font-bold text-emerald-700">
+                                <BadgeCheck className="h-3 w-3" />
+                                Verified
+                              </span>
+                            ) : null}
                             {(Array.isArray(tool.category) ? tool.category : [tool.category]).map(
                               (cat) => (
                                 <span
@@ -844,6 +1136,8 @@ export default function ToolsClient({ meta = {}, category, initialSearch = "", i
                         <Link
                           href={href}
                           onClick={() => rememberTool(slug)}
+                          onFocus={() => prefetchDirectoryTool(slug)}
+                          onMouseEnter={() => prefetchDirectoryTool(slug)}
                           className="inline-flex shrink-0 items-center gap-1 rounded-[6px] px-1.5 py-1 text-xs font-semibold text-[var(--color-muted-foreground)] transition group-hover:bg-(--background) group-hover:text-[var(--color-primary)]"
                         >
                           <BadgeCheck className="h-3.5 w-3.5" />

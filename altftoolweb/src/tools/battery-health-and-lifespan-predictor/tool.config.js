@@ -1,4 +1,4 @@
-export default {
+const toolConfig = {
   slug: "battery-health-and-lifespan-predictor",
   name: "Battery Health and Lifespan Predictor",
   category: ["Web", "Productivity", "Calculator"],
@@ -7,3 +7,5 @@ export default {
   icon: "activity",
   iconColor: "text-green-500",
 };
+
+export default toolConfig;

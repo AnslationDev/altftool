@@ -23,11 +23,11 @@ import {
   Cell,
   Pie,
   PieChart,
-  ResponsiveContainer,
   Tooltip,
   XAxis,
   YAxis,
 } from "recharts";
+import ResponsiveContainer from "@/components/charts/SafeResponsiveContainer";
 
 const SAMPLE = {
   sharePrice: 2450,
@@ -437,7 +437,7 @@ export default function DividendYieldCalculator() {
           <div className="min-w-0 space-y-6">
             <SectionCard title="Dividend Growth Projection" description="Projected income, portfolio value and yield over time." icon={TrendingUp}>
               <div className="h-80 min-w-0">
-                <ResponsiveContainer width="100%" height="100%">
+                <ResponsiveContainer width="100%" height="100%" minWidth={1} minHeight={1}>
                   <BarChart data={metrics.rows} margin={{ top: 10, right: 8, left: 0, bottom: 0 }}>
                     <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" />
                     <XAxis dataKey="label" minTickGap={16} tick={{ fill: "var(--muted-foreground)", fontSize: 11 }} />
@@ -453,7 +453,7 @@ export default function DividendYieldCalculator() {
             <section className="grid min-w-0 gap-6 2xl:grid-cols-[minmax(0,1fr)_minmax(260px,360px)]">
               <SectionCard title="Yield Trend" description="Dividend yield changes with dividend and price growth." icon={BarChart3}>
                 <div className="h-64 min-w-0">
-                  <ResponsiveContainer width="100%" height="100%">
+                  <ResponsiveContainer width="100%" height="100%" minWidth={1} minHeight={1}>
                     <BarChart data={metrics.rows} margin={{ top: 10, right: 8, left: 0, bottom: 0 }}>
                       <XAxis dataKey="label" tick={{ fill: "var(--muted-foreground)", fontSize: 11 }} />
                       <YAxis width={48} tickFormatter={(value) => `${formatNumber(value, 1)}%`} tick={{ fill: "var(--muted-foreground)", fontSize: 11 }} />
@@ -466,7 +466,7 @@ export default function DividendYieldCalculator() {
 
               <SectionCard title="Dividend Split" description="Net cash flow versus estimated tax." icon={Wallet}>
                 <div className="h-56 min-w-0">
-                  <ResponsiveContainer width="100%" height="100%">
+                  <ResponsiveContainer width="100%" height="100%" minWidth={1} minHeight={1}>
                     <PieChart>
                       <Pie data={splitData} innerRadius="55%" outerRadius="82%" paddingAngle={3} dataKey="value" nameKey="name">
                         {splitData.map((entry, index) => (

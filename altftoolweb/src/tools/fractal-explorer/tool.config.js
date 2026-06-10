@@ -1,4 +1,4 @@
-export default {
+const toolConfig = {
     slug: "fractal-explorer",
     name: "Fractal Explorer",
     category: ["Design", "Art", "Developer"],
@@ -6,3 +6,5 @@ export default {
     icon: "sparkles",
     iconColor: "text-indigo-600",
 };
+
+export default toolConfig;

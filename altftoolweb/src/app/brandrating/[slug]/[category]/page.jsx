@@ -9,6 +9,7 @@ import Reviews from "../../(components)/brandComparison/Reviews";
 import { useParams } from "next/navigation";
 import { categoryService } from "../../service/service";
 import reviews from "../../(data)/reviews";
+import { Loader2, SearchX } from "lucide-react";
 
 function slugify(text) {
     return text
@@ -16,6 +17,14 @@ function slugify(text) {
         ?.trim()
         ?.replace(/&/g, "and")
         ?.replace(/\s+/g, "-");
+}
+
+function formatSlugLabel(text = "") {
+    return String(text)
+        .split("-")
+        .filter(Boolean)
+        .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+        .join(" ");
 }
 
 
@@ -157,8 +166,42 @@ export default function Page() {
                 )
             );
 
+    if (loading) {
+        return (
+            <div className="route-page-shell animate-slide-up">
+                <Hero title={formatSlugLabel(subcategorySlug) || "Category"} />
+                <section className="section !pt-2">
+                    <div className="surface-panel flex min-h-[280px] flex-col items-center justify-center gap-3 p-8 text-center">
+                        <Loader2 className="h-8 w-8 animate-spin text-(--primary)" />
+                        <h2 className="text-xl font-semibold text-(--foreground)">Preparing brand comparison</h2>
+                        <p className="max-w-md text-sm leading-6 text-(--muted-foreground)">
+                            Pulling the latest category, brand, and FAQ data for this route.
+                        </p>
+                    </div>
+                </section>
+            </div>
+        );
+    }
+
+    if (!subcategory) {
+        return (
+            <div className="route-page-shell animate-slide-up">
+                <Hero title="Category not found" />
+                <section className="section !pt-2">
+                    <div className="surface-panel flex min-h-[280px] flex-col items-center justify-center gap-3 p-8 text-center">
+                        <SearchX className="h-8 w-8 text-(--primary)" />
+                        <h2 className="text-xl font-semibold text-(--foreground)">No brand route available</h2>
+                        <p className="max-w-md text-sm leading-6 text-(--muted-foreground)">
+                            This category is not active yet, or the live data is still syncing.
+                        </p>
+                    </div>
+                </section>
+            </div>
+        );
+    }
+
     return (
-        <div className="min-h-screen bg-[var(--background)] text-[var(--foreground)] animate-slide-up">
+        <div className="route-page-shell animate-slide-up">
             <Hero title={subcategory?.name || "Category"} />
             <div className=" flex flex-col">
                 <TopPicks

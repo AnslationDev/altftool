@@ -1,14 +1,13 @@
 "use client";
 
 import React, { useEffect, useMemo, useState } from "react";
-import ReusableTable from "../(resuableComponent)/ReusableTable";
+import ReusableTable, { SafeTableImage } from "../(resuableComponent)/ReusableTable";
 import { firebaseBuySmartFeatureBrandSource } from "@/projects/altftool/modules/buysmart/services/firebaseBuySmartFeatureBrand";
 import { ExternalLink } from "lucide-react";
 
 function GetFeatureBrand({ setActive, setEditFeature }) {
   const [brand, setBrand] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [deleting, setDeleting] = useState(false);
 
 
   useEffect(() => {
@@ -28,21 +27,15 @@ function GetFeatureBrand({ setActive, setEditFeature }) {
 
 
   const handleDeleteSingle = async (id) => {
-    if (!confirm("Delete this brand?")) return;
-
-    setDeleting(true);
     await firebaseBuySmartFeatureBrandSource.remove(id, brand);
-    setDeleting(false);
+    return true;
   };
 
 
   const handleBulkDelete = async (ids) => {
-    if (!ids.length) return;
-    if (!confirm(`Delete ${ids.length} brands?`)) return;
-
-    setDeleting(true);
+    if (!ids.length) return false;
     await firebaseBuySmartFeatureBrandSource.bulkDelete(ids, brand);
-    setDeleting(false);
+    return true;
   };
 
   
@@ -66,9 +59,11 @@ function GetFeatureBrand({ setActive, setEditFeature }) {
       {
         header: "Image",
         Cell: ({ row }) => (
-          <img
+          <SafeTableImage
             src={row.original.BrandDetail?.[0]?.image}
+            alt={row.original.BrandDetail?.[0]?.title || "Feature brand"}
             className="h-12 w-20 rounded border object-cover"
+            fallbackClassName="h-12 w-20 rounded border border-dashed border-gray-300 bg-gray-50"
           />
         ),
       },
@@ -137,6 +132,7 @@ function GetFeatureBrand({ setActive, setEditFeature }) {
       onDeleteSingle={handleDeleteSingle}
       onBulkDelete={handleBulkDelete}
       onStatusChange={handleStatusChanged}
+      confirmDeletes
     />
   );
 }

@@ -85,9 +85,9 @@ export default function IntentSelector() {
             <div key={intent.title} className="snap-start shrink-0 w-[85%] ">
               <Link
                 href={intent.href}
-                className="group block rounded-2xl border border-[var(--card-border)]
+                className="group block rounded-[8px] border border-[var(--card-border)]
                   bg-[var(--card)] p-5 text-center transition duration-300 
-                  hover:-translate-y-1 hover:border-[var(--primary)] animate-slide-up"
+                  hover:-translate-y-0.5 hover:border-[var(--primary)] hover:shadow-[var(--anslation-ds-shadow-sm)] animate-slide-up"
               >
                 <div className="flex flex-col items-center ">
 
@@ -127,20 +127,20 @@ export default function IntentSelector() {
               href={intent.href}
               onMouseEnter={() => setHovered(i)}
               onMouseLeave={() => setHovered(null)}
-              className="group relative rounded-2xl border border-[var(--border)]
-                bg-[var(--card)] hover:bg-[var(--card-hover)] p-6 lg:p-6 xl:p-6 text-center
-                transition duration-300 hover:-translate-y-2 lg:hover:-translate-y-3
-                hover:border-[var(--primary)] hover:scale-[1.03] animate-slide-up"
+              className="group relative rounded-[8px] border border-[var(--border)]
+                bg-[var(--card)] hover:bg-[var(--card-hover-bg)] p-6 lg:p-6 xl:p-6 text-center
+                transition duration-300 hover:-translate-y-0.5
+                hover:border-[var(--primary)] hover:shadow-[var(--anslation-ds-shadow-md)] animate-slide-up"
             >
 
               <div className="flex flex-col items-center">
 
                 {/* Icon */}
                 <div
-                  className={`rounded-2xl flex items-center justify-center
+                  className={`rounded-[8px] flex items-center justify-center
                     bg-[var(--badge-bg)] mb-4 transition-all duration-300
                     w-14 h-14 lg:w-16 lg:h-16 xl:w-18 xl:h-18
-                    ${isHovered ? "scale-110" : ""}`}
+                    ${isHovered ? "scale-[1.03]" : ""}`}
                 >
                   <Icon className={`w-7 h-7 lg:w-8 lg:h-8 xl:w-9 xl:h-9 ${theme === "dark" ? "text-white" : "text-[var(--primary)]"
                     }`} />

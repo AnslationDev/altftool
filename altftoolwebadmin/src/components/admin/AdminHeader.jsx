@@ -1,37 +1,128 @@
 "use client";
 
 import Link from "next/link";
-import { useRouter, usePathname } from "next/navigation";
-import { LogOut, Shield, ShieldCheck, ChevronRight, User, Bell, ChevronDown, Headset, Moon, Sun } from "lucide-react";
-import { db } from "@/lib/firebase";
-import { getAdminRouteInfo, buildAdminBreadcrumbs } from "@/lib/routeUtils";
-import { useRef, useState, useEffect } from "react";
+import { usePathname, useRouter } from "next/navigation";
+import {
+  Activity,
+  AlertTriangle,
+  Bell,
+  Check,
+  ChevronDown,
+  ChevronRight,
+  Headset,
+  Info,
+  LogOut,
+  Megaphone,
+  Menu,
+  Monitor,
+  Moon,
+  Search,
+  Shield,
+  ShieldCheck,
+  Sun,
+  User,
+} from "lucide-react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import {
   collection,
-  query,
-  where,
+  limit,
   onSnapshot,
   orderBy,
-  limit,
+  query,
+  where,
 } from "firebase/firestore";
+import { db } from "@/lib/firebase";
+import { getAdminRouteInfo, buildAdminBreadcrumbs } from "@/lib/routeUtils";
 import { useAuth } from "@/context/AuthContext";
+import { useAdminTheme } from "@/context/ThemeContext";
+import { PROJECTS } from "@/projects";
+import { GLOBAL_ADMIN_MODULES, getProjectModuleRoute } from "@/config/adminRoutes";
+import { hasModuleAccess } from "@/lib/permissionUtils";
 
-export default function AdminHeader({ user, adminData }) {
+const THEME_OPTIONS = [
+  { value: "system", label: "System default", icon: Monitor },
+  { value: "light", label: "Light mode", icon: Sun },
+  { value: "dark", label: "Dark mode", icon: Moon },
+];
+
+const TYPE_ICON = {
+  announcement: Megaphone,
+  warning: AlertTriangle,
+  notice: Info,
+};
+
+const normalizeSearchText = (value = "") => String(value).trim().toLowerCase();
+
+function createAdminQuickRoutes({ adminData, isSuperAdmin }) {
+  const routes = [];
+
+  Object.entries(GLOBAL_ADMIN_MODULES).forEach(([key, config]) => {
+    const allowed = isSuperAdmin || config.allAdmins || adminData?.permissions?.[key]?.read === true;
+    if (!allowed) return;
+
+    routes.push({
+      key: `global-${key}`,
+      label: config.label,
+      helper: config.superadminOnly ? "Global admin" : "Workspace",
+      href: config.path,
+      icon: config.icon,
+      keywords: `${key} ${config.label}`,
+    });
+  });
+
+  Object.entries(PROJECTS).forEach(([projectId, project]) => {
+    Object.entries(project.modules || {}).forEach(([moduleKey, moduleConfig]) => {
+      const allowed =
+        isSuperAdmin ||
+        hasModuleAccess({ adminData, projectId, moduleKey, action: "read" });
+      if (!allowed) return;
+
+      routes.push({
+        key: `${projectId}-${moduleKey}`,
+        label: moduleConfig.label,
+        helper: project.name,
+        href: getProjectModuleRoute(projectId, moduleKey),
+        icon: moduleConfig.icon,
+        keywords: `${projectId} ${project.name} ${moduleKey} ${moduleConfig.label}`,
+      });
+    });
+  });
+
+  return routes;
+}
+
+function NotificationIcon({ type }) {
+  const Icon = TYPE_ICON[type] || Bell;
+
+  return (
+    <span className="mt-0.5 grid h-8 w-8 shrink-0 place-items-center rounded-lg bg-[var(--surface-soft)] text-[var(--primary)]">
+      <Icon className="h-4 w-4" />
+    </span>
+  );
+}
+
+export default function AdminHeader({ user, adminData, onOpenSidebar }) {
   const router = useRouter();
   const { logout: logoutAuth } = useAuth();
   const pathname = usePathname();
   const routeInfo = getAdminRouteInfo(pathname);
   const breadcrumbs = buildAdminBreadcrumbs(routeInfo);
   const isSuperAdmin = adminData?.roleType === "superadmin";
+  const { themeMode, resolvedTheme, setThemeMode } = useAdminTheme();
 
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [notifOpen, setNotifOpen] = useState(false);
+  const [themeMenuOpen, setThemeMenuOpen] = useState(false);
+  const [themeReady, setThemeReady] = useState(false);
   const [notifications, setNotifications] = useState([]);
   const [markingRead, setMarkingRead] = useState(null);
-  const [theme, setTheme] = useState("light");
+  const [quickQuery, setQuickQuery] = useState("");
+  const [quickOpen, setQuickOpen] = useState(false);
 
   const dropdownRef = useRef(null);
   const notifRef = useRef(null);
+  const themeMenuRef = useRef(null);
+  const quickNavRef = useRef(null);
 
   const photoURL = adminData?.photoURL || null;
   const displayName =
@@ -42,11 +133,15 @@ export default function AdminHeader({ user, adminData }) {
   const initials = displayName
     ? displayName
         .split(" ")
-        .map((n) => n[0])
+        .map((name) => name[0])
         .join("")
         .toUpperCase()
         .slice(0, 2)
     : (user?.email?.[0] ?? "A").toUpperCase();
+  const currentThemeOption =
+    THEME_OPTIONS.find((option) => option.value === themeMode) || THEME_OPTIONS[0];
+  const displayedThemeOption = themeReady ? currentThemeOption : THEME_OPTIONS[0];
+  const CurrentThemeIcon = displayedThemeOption.icon;
 
   const logout = async () => {
     await logoutAuth();
@@ -54,47 +149,132 @@ export default function AdminHeader({ user, adminData }) {
   };
 
   useEffect(() => {
-    const current =
-      document.documentElement.getAttribute("data-theme") || "light";
-    setTheme(current);
+    setThemeReady(true);
   }, []);
 
-  const toggleTheme = () => {
-    setTheme((current) => {
-      const next = current === "dark" ? "light" : "dark";
-      document.documentElement.setAttribute("data-theme", next);
-      localStorage.setItem("appTheme", next);
-      localStorage.setItem("themeManual", "true");
-      return next;
-    });
-  };
-
-  // ── Real-time unread notifications listener ──
   useEffect(() => {
-    if (user?.isLocalAdmin) return;
-    if (!user?.uid) return;
+    setDropdownOpen(false);
+    setNotifOpen(false);
+    setThemeMenuOpen(false);
+    setQuickOpen(false);
+  }, [pathname]);
 
-    const q = query(
+  useEffect(() => {
+    if (user?.isLocalAdmin) return undefined;
+    if (!user?.uid) return undefined;
+
+    const notificationsQuery = query(
       collection(db, "notifications"),
       where("userId", "==", user.uid),
       where("read", "==", false),
       orderBy("createdAt", "desc"),
-      limit(20)
+      limit(20),
     );
 
-    const unsub = onSnapshot(q, (snap) => {
-      setNotifications(snap.docs.map((d) => ({ id: d.id, ...d.data() })));
-    });
+    return onSnapshot(
+      notificationsQuery,
+      (snapshot) => {
+        setNotifications(snapshot.docs.map((docSnap) => ({ id: docSnap.id, ...docSnap.data() })));
+      },
+      (error) => {
+        console.warn("Unable to load admin notifications:", error?.message || error);
+        setNotifications([]);
+      },
+    );
+  }, [user?.isLocalAdmin, user?.uid]);
 
-    return () => unsub();
-  }, [user?.uid]);
+  useEffect(() => {
+    const closeMenus = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setDropdownOpen(false);
+      }
+      if (notifRef.current && !notifRef.current.contains(event.target)) {
+        setNotifOpen(false);
+      }
+      if (themeMenuRef.current && !themeMenuRef.current.contains(event.target)) {
+        setThemeMenuOpen(false);
+      }
+      if (quickNavRef.current && !quickNavRef.current.contains(event.target)) {
+        setQuickOpen(false);
+      }
+    };
+
+    const closeOnEscape = (event) => {
+      if (event.key !== "Escape") return;
+      setDropdownOpen(false);
+      setNotifOpen(false);
+      setThemeMenuOpen(false);
+      setQuickOpen(false);
+    };
+
+    document.addEventListener("pointerdown", closeMenus);
+    document.addEventListener("keydown", closeOnEscape);
+
+    return () => {
+      document.removeEventListener("pointerdown", closeMenus);
+      document.removeEventListener("keydown", closeOnEscape);
+    };
+  }, []);
 
   const unreadCount = notifications.length;
+  const quickRoutes = useMemo(
+    () => createAdminQuickRoutes({ adminData, isSuperAdmin }),
+    [adminData, isSuperAdmin],
+  );
+  const quickMatches = useMemo(() => {
+    const query = normalizeSearchText(quickQuery);
+    const source = quickQuery ? quickRoutes : quickRoutes.slice(0, 7);
 
-  // Mark single notification as read
-  const markRead = async (notif) => {
-    if (markingRead === notif.id) return;
-    setMarkingRead(notif.id);
+    if (!query) return source.slice(0, 7);
+
+    return source
+      .map((item, index) => {
+        const haystack = normalizeSearchText(`${item.label} ${item.helper} ${item.keywords}`);
+        const label = normalizeSearchText(item.label);
+        const score =
+          label === query
+            ? 100
+            : label.startsWith(query)
+              ? 60
+              : haystack.includes(query)
+                ? 25
+                : 0;
+
+        return { ...item, score, index };
+      })
+      .filter((item) => item.score > 0)
+      .sort((a, b) => b.score - a.score || a.index - b.index)
+      .slice(0, 7);
+  }, [quickQuery, quickRoutes]);
+
+  const closeQuickNav = () => {
+    setQuickOpen(false);
+    setQuickQuery("");
+  };
+
+  const openQuickRoute = (href) => {
+    if (!href) return;
+    closeQuickNav();
+    router.push(href);
+  };
+
+  const handleQuickKeyDown = (event) => {
+    if (event.key === "Escape") {
+      event.preventDefault();
+      closeQuickNav();
+      return;
+    }
+
+    if (event.key === "Enter" && quickMatches[0]) {
+      event.preventDefault();
+      openQuickRoute(quickMatches[0].href);
+    }
+  };
+
+  const markRead = async (notification) => {
+    if (markingRead === notification.id) return;
+    setMarkingRead(notification.id);
+
     try {
       const token = await user.getIdToken();
       await fetch("/api/notifications/mark-read", {
@@ -103,221 +283,337 @@ export default function AdminHeader({ user, adminData }) {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({ notificationId: notif.id }),
+        body: JSON.stringify({ notificationId: notification.id }),
       });
-      if (notif.actionUrl) {
-        router.push(notif.actionUrl);
+
+      if (notification.actionUrl) {
+        router.push(notification.actionUrl);
         setNotifOpen(false);
       }
-    } catch (err) {
-      console.error("mark-read error", err);
+    } catch (error) {
+      console.warn("Unable to mark notification as read:", error?.message || error);
     } finally {
       setMarkingRead(null);
     }
   };
 
-  // Close dropdowns on outside click
-  useEffect(() => {
-    const handler = (e) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
-        setDropdownOpen(false);
-      }
-      if (notifRef.current && !notifRef.current.contains(e.target)) {
-        setNotifOpen(false);
-      }
-    };
-    document.addEventListener("mousedown", handler);
-    return () => document.removeEventListener("mousedown", handler);
-  }, []);
-
-  const TYPE_ICON = {
-    announcement: "📢",
-    warning: "⚠️",
-    notice: "ℹ️",
-  };
-
   return (
-    <header className="h-14 border-b border-[var(--border)] bg-[var(--surface)] flex items-center justify-between px-6 shrink-0">
-      {/* Breadcrumbs */}
-      <div className="flex items-center gap-2 text-sm">
-        {breadcrumbs.map((crumb, i) => (
-          <div key={i} className="flex items-center gap-2">
-            {i !== 0 && <ChevronRight className="w-3.5 h-3.5 text-[var(--muted)]" />}
-            {crumb.href ? (
-              <Link
-                href={crumb.href}
-                className="text-[var(--muted)] hover:text-[var(--foreground)] transition"
-              >
-                {crumb.label}
-              </Link>
-            ) : (
-              <span className="font-semibold text-[var(--foreground)]">{crumb.label}</span>
-            )}
-          </div>
-        ))}
+    <header className="flex h-14 shrink-0 items-center justify-between gap-3 border-b border-[var(--border)] bg-[var(--surface)] px-3 sm:px-5 lg:px-6">
+      <div className="flex min-w-0 flex-1 items-center gap-2">
+        <button
+          type="button"
+          onClick={onOpenSidebar}
+          className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-[var(--border)] bg-[var(--surface)] text-[var(--muted)] transition hover:bg-[var(--surface-soft)] hover:text-[var(--foreground)] lg:hidden"
+          aria-label="Open admin navigation"
+        >
+          <Menu className="h-4 w-4" />
+        </button>
+
+        <nav
+          className="flex min-w-0 items-center gap-2 overflow-x-auto text-sm"
+          aria-label="Admin breadcrumbs"
+        >
+          {breadcrumbs.map((crumb, index) => (
+            <div key={`${crumb.label}-${index}`} className="flex shrink-0 items-center gap-2">
+              {index !== 0 ? (
+                <ChevronRight className="h-3.5 w-3.5 text-[var(--muted)]" />
+              ) : null}
+              {crumb.href ? (
+                <Link
+                  href={crumb.href}
+                  className="max-w-[9rem] truncate text-[var(--muted)] transition hover:text-[var(--foreground)] sm:max-w-[12rem]"
+                >
+                  {crumb.label}
+                </Link>
+              ) : (
+                <span className="max-w-[12rem] truncate font-semibold text-[var(--foreground)] sm:max-w-[18rem]">
+                  {crumb.label}
+                </span>
+              )}
+            </div>
+          ))}
+        </nav>
       </div>
 
-      <div className="flex items-center gap-3">
-        {/* Role badge */}
+      <div className="relative hidden min-w-[240px] max-w-md flex-1 xl:block" ref={quickNavRef}>
+        <Search className="pointer-events-none absolute left-3 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-[var(--muted)]" />
+        <input
+          value={quickQuery}
+          onChange={(event) => {
+            setQuickQuery(event.target.value);
+            setQuickOpen(true);
+          }}
+          onFocus={() => setQuickOpen(true)}
+          onKeyDown={handleQuickKeyDown}
+          placeholder="Jump to module..."
+          className="h-9 w-full rounded-lg border border-[var(--border)] bg-[var(--surface-soft)] px-9 text-sm text-[var(--foreground)] outline-none transition placeholder:text-[var(--muted)] focus:border-[var(--primary)] focus:bg-[var(--surface)] focus:ring-2 focus:ring-[color-mix(in_srgb,var(--primary)_18%,transparent)]"
+          aria-label="Jump to admin module"
+          aria-expanded={quickOpen}
+          aria-haspopup="listbox"
+        />
+        {quickOpen ? (
+          <div
+            role="listbox"
+            className="absolute left-0 right-0 top-11 z-50 overflow-hidden rounded-lg border border-[var(--border)] bg-[var(--surface)] p-1.5 shadow-[var(--shadow-lg)]"
+          >
+            {quickMatches.length ? (
+              quickMatches.map((item) => {
+                const Icon = item.icon || Search;
+
+                return (
+                  <button
+                    key={item.key}
+                    type="button"
+                    role="option"
+                    onMouseDown={(event) => event.preventDefault()}
+                    onClick={() => openQuickRoute(item.href)}
+                    className="flex w-full items-center gap-3 rounded-lg px-2.5 py-2 text-left transition hover:bg-[var(--surface-soft)]"
+                  >
+                    <span className="grid h-8 w-8 shrink-0 place-items-center rounded-lg bg-[var(--surface-soft)] text-[var(--primary)]">
+                      <Icon className="h-4 w-4" />
+                    </span>
+                    <span className="min-w-0 flex-1">
+                      <span className="block truncate text-sm font-semibold text-[var(--foreground)]">
+                        {item.label}
+                      </span>
+                      <span className="block truncate text-xs text-[var(--muted)]">
+                        {item.helper}
+                      </span>
+                    </span>
+                  </button>
+                );
+              })
+            ) : (
+              <div className="px-3 py-6 text-center text-xs font-medium text-[var(--muted)]">
+                No matching module found.
+              </div>
+            )}
+          </div>
+        ) : null}
+      </div>
+
+      <div className="flex shrink-0 items-center gap-2 sm:gap-3">
+        <Link
+          href="/health"
+          className="hidden h-9 items-center gap-1.5 rounded-lg border border-[var(--border)] bg-[var(--surface)] px-2.5 text-xs font-bold text-[var(--muted)] transition hover:bg-[var(--surface-soft)] hover:text-[var(--foreground)] md:inline-flex"
+          title="Open health dashboard"
+        >
+          <Activity className="h-3.5 w-3.5" />
+          Health
+        </Link>
+
         <span
-          className={`hidden sm:inline-flex items-center gap-1.5 text-[10px] font-bold px-2.5 py-1 rounded-full ${
+          className={`hidden items-center gap-1.5 rounded-full px-2.5 py-1 text-[10px] font-bold sm:inline-flex ${
             isSuperAdmin
-              ? "bg-gray-900 text-white"
-              : "bg-gray-100 text-gray-700"
+              ? "bg-[var(--foreground)] text-[var(--background)]"
+              : "bg-[var(--surface-soft)] text-[var(--muted)]"
           }`}
         >
           {isSuperAdmin ? (
-            <ShieldCheck className="w-3 h-3" />
+            <ShieldCheck className="h-3 w-3" />
           ) : (
-            <Shield className="w-3 h-3" />
+            <Shield className="h-3 w-3" />
           )}
           {isSuperAdmin ? "Super Admin" : "Admin"}
         </span>
 
-        <button
-          onClick={toggleTheme}
-          className="p-2 rounded-xl border border-[var(--border)] bg-[var(--surface)] text-[var(--muted)] hover:bg-[var(--surface-soft)] hover:text-[var(--foreground)] transition"
-          aria-label="Toggle theme"
-        >
-          <span className="grid h-4 w-4 place-items-center" suppressHydrationWarning>
-            <Sun className="hidden h-4 w-4 dark:block" />
-            <Moon className="h-4 w-4 dark:hidden" />
-          </span>
-        </button>
-
-        {/* ── Notification Bell ── */}
-        <div className="relative" ref={notifRef}>
+        <div className="relative" ref={themeMenuRef}>
           <button
-            onClick={() => setNotifOpen((v) => !v)}
-            className="relative p-2 rounded-xl hover:bg-gray-50 text-gray-500 transition"
-            aria-label="Notifications"
+            type="button"
+            onClick={() => setThemeMenuOpen((open) => !open)}
+            className="grid h-9 w-9 place-items-center rounded-lg border border-[var(--border)] bg-[var(--surface)] text-[var(--muted)] transition hover:bg-[var(--surface-soft)] hover:text-[var(--foreground)]"
+            aria-label={`Theme: ${displayedThemeOption.label}`}
+            aria-haspopup="menu"
+            aria-expanded={themeMenuOpen}
+            title={`Theme: ${displayedThemeOption.label}`}
           >
-            <Bell className="w-4 h-4" />
-            {unreadCount > 0 && (
-              <span className="absolute -top-0.5 -right-0.5 min-w-[16px] h-4 flex items-center justify-center bg-red-500 text-white text-[9px] font-bold rounded-full px-1 leading-none">
-                {unreadCount > 99 ? "99+" : unreadCount}
-              </span>
-            )}
+            <CurrentThemeIcon
+              className={`h-4 w-4 ${
+                themeReady && resolvedTheme === "dark" ? "text-[var(--primary)]" : ""
+              }`}
+            />
           </button>
 
-          {notifOpen && (
-            <div className="absolute right-0 top-11 w-80 bg-white border border-gray-100 rounded-2xl shadow-xl z-50 overflow-hidden">
-              <div className="flex items-center justify-between px-4 py-3 border-b border-gray-100">
-                <p className="text-sm font-semibold text-gray-800">
-                  Notifications
-                </p>
-                {unreadCount > 0 && (
-                  <span className="text-[10px] font-bold px-2 py-0.5 bg-red-100 text-red-600 rounded-full">
+          {themeMenuOpen ? (
+            <div
+              role="menu"
+              aria-label="Theme mode"
+              className="absolute right-0 top-11 z-50 rounded-lg border border-[var(--border)] bg-[var(--surface)] p-1.5 shadow-[var(--shadow-lg)]"
+            >
+              <div className="flex min-w-max items-center gap-1">
+                {THEME_OPTIONS.map((option) => {
+                  const OptionIcon = option.icon;
+                  const isSelected = option.value === themeMode;
+
+                  return (
+                    <button
+                      key={option.value}
+                      type="button"
+                      role="menuitemradio"
+                      aria-checked={isSelected}
+                      aria-label={option.label}
+                      title={option.label}
+                      onClick={() => {
+                        setThemeMode(option.value);
+                        setThemeMenuOpen(false);
+                      }}
+                      className={`relative grid h-9 w-9 place-items-center rounded-lg border text-[var(--muted)] transition hover:border-[var(--primary)] hover:bg-[var(--surface-soft)] hover:text-[var(--foreground)] ${
+                        isSelected
+                          ? "border-[var(--primary)] bg-[var(--surface-soft)] text-[var(--primary)]"
+                          : "border-transparent"
+                      }`}
+                    >
+                      <OptionIcon className="h-4 w-4" />
+                      {isSelected ? (
+                        <Check className="pointer-events-none absolute -right-1 -top-1 h-3.5 w-3.5 rounded-full bg-[var(--primary)] p-0.5 text-[var(--primary-foreground)]" />
+                      ) : null}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          ) : null}
+        </div>
+
+        <div className="relative" ref={notifRef}>
+          <button
+            type="button"
+            onClick={() => setNotifOpen((open) => !open)}
+            className="relative grid h-9 w-9 place-items-center rounded-lg text-[var(--muted)] transition hover:bg-[var(--surface-soft)] hover:text-[var(--foreground)]"
+            aria-label="Notifications"
+            aria-haspopup="menu"
+            aria-expanded={notifOpen}
+          >
+            <Bell className="h-4 w-4" />
+            {unreadCount > 0 ? (
+              <span className="absolute -right-0.5 -top-0.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-red-500 px-1 text-[9px] font-bold leading-none text-white">
+                {unreadCount > 99 ? "99+" : unreadCount}
+              </span>
+            ) : null}
+          </button>
+
+          {notifOpen ? (
+            <div className="absolute right-0 top-11 z-50 w-80 max-w-[calc(100vw-1rem)] overflow-hidden rounded-lg border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow-lg)]">
+              <div className="flex items-center justify-between gap-3 border-b border-[var(--border)] px-4 py-3">
+                <p className="text-sm font-semibold text-[var(--foreground)]">Notifications</p>
+                {unreadCount > 0 ? (
+                  <span className="rounded-full bg-red-50 px-2 py-0.5 text-[10px] font-bold text-red-600">
                     {unreadCount} unread
                   </span>
-                )}
+                ) : null}
               </div>
 
-              <div className="max-h-80 overflow-y-auto divide-y divide-gray-50">
+              <div className="max-h-80 divide-y divide-[var(--border)] overflow-y-auto">
                 {notifications.length === 0 ? (
                   <div className="py-8 text-center">
-                    <Bell className="w-6 h-6 text-gray-200 mx-auto mb-2" />
-                    <p className="text-xs text-gray-400">All caught up!</p>
+                    <Bell className="mx-auto mb-2 h-6 w-6 text-[var(--muted)] opacity-50" />
+                    <p className="text-xs text-[var(--muted)]">All caught up</p>
                   </div>
                 ) : (
-                  notifications.map((n) => (
+                  notifications.map((notification) => (
                     <button
-                      key={n.id}
-                      onClick={() => markRead(n)}
-                      disabled={markingRead === n.id}
-                      className="w-full text-left flex items-start gap-3 px-4 py-3 hover:bg-gray-50 transition group"
+                      key={notification.id}
+                      type="button"
+                      onClick={() => markRead(notification)}
+                      disabled={markingRead === notification.id}
+                      className="group flex w-full items-start gap-3 px-4 py-3 text-left transition hover:bg-[var(--surface-soft)] disabled:opacity-60"
                     >
-                      <span className="text-base shrink-0 mt-0.5">
-                        {TYPE_ICON[n.type] ?? "🔔"}
+                      <NotificationIcon type={notification.type} />
+                      <span className="min-w-0 flex-1">
+                        <span className="block truncate text-sm font-semibold leading-tight text-[var(--foreground)]">
+                          {notification.title}
+                        </span>
+                        <span className="mt-1 line-clamp-4 block text-xs leading-snug text-[var(--muted)]">
+                          {notification.body}
+                        </span>
+                        {notification.actionUrl ? (
+                          <span className="mt-1 block truncate text-[10px] font-medium text-[var(--primary)]">
+                            {notification.actionUrl}
+                          </span>
+                        ) : null}
                       </span>
-                      <div className="min-w-0">
-                        <p className="text-sm font-semibold text-gray-800 truncate leading-tight">
-                          {n.title}
-                        </p>
-                        <p className="text-xs text-gray-400 mt-0.5 line-clamp-5 leading-snug">
-                          {n.body}
-                        </p>
-                        {n.actionUrl && (
-                          <p className="text-[10px] text-blue-500 mt-0.5 truncate">
-                            {n.actionUrl}
-                          </p>
-                        )}
-                      </div>
-                      <span className="w-1.5 h-1.5 rounded-full bg-blue-500 shrink-0 mt-2" />
+                      <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--primary)]" />
                     </button>
                   ))
                 )}
               </div>
 
-              {notifications.length > 0 && (
-                <div className="px-4 py-2.5 border-t border-gray-100 bg-gray-50">
-                  <p className="text-[10px] text-gray-400 text-center">
-                    Click a notification to mark it as read
+              {notifications.length > 0 ? (
+                <div className="border-t border-[var(--border)] bg-[var(--surface-soft)] px-4 py-2.5">
+                  <p className="text-center text-[10px] text-[var(--muted)]">
+                    Open a notification to mark it as read
                   </p>
                 </div>
-              )}
+              ) : null}
             </div>
-          )}
+          ) : null}
         </div>
 
-        {/* ── Avatar + profile dropdown ── */}
         <div className="relative" ref={dropdownRef}>
           <button
-            onClick={() => setDropdownOpen((v) => !v)}
-            className="flex items-center gap-2.5 rounded-xl hover:bg-gray-50 p-1 transition cursor-pointer"
+            type="button"
+            onClick={() => setDropdownOpen((open) => !open)}
+            className="flex items-center gap-2 rounded-lg p-1 transition hover:bg-[var(--surface-soft)]"
+            aria-label="Open profile menu"
+            aria-haspopup="menu"
+            aria-expanded={dropdownOpen}
           >
             {photoURL ? (
               <img
                 src={photoURL}
                 alt="Profile"
-                className="w-8 h-8 rounded-xl object-cover border border-gray-200 shrink-0"
+                className="h-8 w-8 shrink-0 rounded-lg border border-[var(--border)] object-cover"
               />
             ) : (
-              <div className="w-8 h-8 rounded-xl bg-gray-900 text-white flex items-center justify-center text-xs font-bold shrink-0">
+              <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-[var(--foreground)] text-xs font-bold text-[var(--background)]">
                 {initials}
-              </div>
+              </span>
             )}
-            <div className="hidden md:block text-left">
+            <span className="hidden min-w-0 text-left md:block">
               {displayName ? (
-                <p className="text-sm text-gray-800 font-semibold leading-tight max-w-[160px] truncate">
+                <span className="block max-w-[160px] truncate text-sm font-semibold leading-tight text-[var(--foreground)]">
                   {displayName}
-                </p>
+                </span>
               ) : null}
-              <p className="text-xs text-gray-400 max-w-[160px] truncate">
+              <span className="block max-w-[160px] truncate text-xs text-[var(--muted)]">
                 {user?.email}
-              </p>
-              
-            </div><ChevronDown className="w-4 h-4 text-gray-400" />
+              </span>
+            </span>
+            <ChevronDown className="hidden h-4 w-4 text-[var(--muted)] sm:block" />
           </button>
 
-          {dropdownOpen && (
-            <div className="absolute right-0 top-11 w-48 bg-white border border-gray-100 rounded-xl shadow-lg z-50 overflow-hidden py-1">
+          {dropdownOpen ? (
+            <div
+              role="menu"
+              className="absolute right-0 top-11 z-50 w-52 overflow-hidden rounded-lg border border-[var(--border)] bg-[var(--surface)] py-1 shadow-[var(--shadow-lg)]"
+            >
               <Link
                 href="/profile"
                 onClick={() => setDropdownOpen(false)}
-                className="flex items-center gap-2.5 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition"
+                className="flex items-center gap-2.5 px-4 py-2.5 text-sm text-[var(--muted)] transition hover:bg-[var(--surface-soft)] hover:text-[var(--foreground)]"
               >
-                <User className="w-4 h-4 text-gray-400" />
+                <User className="h-4 w-4" />
                 My Profile
               </Link>
-              <div className="border-t border-gray-100 my-1" />
-              <Link href="/support"
+              <Link
+                href="/support"
                 onClick={() => setDropdownOpen(false)}
-                className="flex items-center gap-2.5 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition"
+                className="flex items-center gap-2.5 px-4 py-2.5 text-sm text-[var(--muted)] transition hover:bg-[var(--surface-soft)] hover:text-[var(--foreground)]"
               >
-                <Headset className="w-4 h-4 text-gray-400" />
+                <Headset className="h-4 w-4" />
                 Support
               </Link>
-              <div className="border-t border-gray-100 my-1" />
+              <div className="my-1 border-t border-[var(--border)]" />
               <button
+                type="button"
                 onClick={logout}
-                className="w-full flex items-center gap-2.5 px-4 py-2.5 text-sm text-red-600 hover:bg-red-50 transition"
+                className="flex w-full items-center gap-2.5 px-4 py-2.5 text-sm text-red-600 transition hover:bg-red-50"
               >
-                <LogOut className="w-4 h-4" />
+                <LogOut className="h-4 w-4" />
                 Logout
               </button>
             </div>
-          )}
+          ) : null}
         </div>
       </div>
     </header>

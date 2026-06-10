@@ -1,0 +1,55 @@
+import { describe, it } from "node:test";
+import assert from "node:assert/strict";
+import { readdirSync, statSync } from "node:fs";
+import { join, relative } from "node:path";
+
+const webAppRoot = "altftoolweb/src/app";
+const adminAppRoot = "altftoolwebadmin/src/app";
+const pageFilePattern = /^page\.(jsx|tsx|js|ts)$/;
+const loadingFilePattern = /^loading\.(jsx|tsx|js|ts)$/;
+
+function collectPageSegments(dir, appRoot, segments = [], inheritedLoading = false) {
+  const entries = readdirSync(dir);
+  const hasPage = entries.some((entry) => pageFilePattern.test(entry));
+  const hasLoading = entries.some((entry) => loadingFilePattern.test(entry));
+  const hasLoadingInChain = inheritedLoading || hasLoading;
+
+  if (hasPage) {
+    segments.push({
+      route: relative(appRoot, dir) || "/",
+      hasLoading,
+      hasLoadingInChain,
+    });
+  }
+
+  for (const entry of entries) {
+    if (entry.startsWith("_")) continue;
+
+    const path = join(dir, entry);
+    if (statSync(path).isDirectory()) {
+      collectPageSegments(path, appRoot, segments, hasLoadingInChain);
+    }
+  }
+
+  return segments;
+}
+
+describe("route loading coverage", () => {
+  it("keeps every public App Router page segment covered by a loading UI", () => {
+    const missing = collectPageSegments(webAppRoot, webAppRoot)
+      .filter((segment) => !segment.hasLoading)
+      .map((segment) => segment.route)
+      .sort();
+
+    assert.deepEqual(missing, []);
+  });
+
+  it("keeps admin App Router pages covered by an inherited loading UI", () => {
+    const missing = collectPageSegments(adminAppRoot, adminAppRoot)
+      .filter((segment) => !segment.hasLoadingInChain)
+      .map((segment) => segment.route)
+      .sort();
+
+    assert.deepEqual(missing, []);
+  });
+});

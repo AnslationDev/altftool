@@ -2,7 +2,6 @@ import { NextResponse } from "next/server";
 import { jsonResponse } from "@altftool/core/http";
 import { TOP_PRIORITY_TOOL_SLUGS } from "@altftool/core/toolHealth";
 import { toolMetaMap } from "@/platform/registry/toolMetaMap";
-import { isFirebaseConfigured } from "@/lib/firebase";
 import { fetchFirebaseBlogsPage } from "@/app/blogs/data/firebaseBlogs";
 import localBlogData from "@/app/blogs/data/blogs.json";
 import buySmartStores from "@/app/buysmart/data/stores.json";
@@ -32,6 +31,18 @@ function publicUrl(request) {
   return `${url.protocol}//${url.host}`;
 }
 
+function isFirebaseClientConfigured() {
+  const apiKey =
+    process.env.NEXT_PUBLIC_FIREBASE_API_KEY ||
+    "AIzaSyAYKc0SBXyY3bfKLkmcCrPf-NsPF8p_Z50";
+  const projectId = process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID || "altftool-bca36";
+  const appId =
+    process.env.NEXT_PUBLIC_FIREBASE_APP_ID ||
+    "1:111638030249:web:caeabc577fba8b5b29c6b8";
+
+  return Boolean(apiKey && projectId && appId && projectId !== "build-placeholder");
+}
+
 function scoreChecks(checks) {
   return clampScore((checks.filter((check) => check.ok).length / checks.length) * 100);
 }
@@ -46,11 +57,12 @@ function withTimeout(promise, timeoutMs = 3500) {
 }
 
 async function buildFirebaseReadiness() {
+  const configured = isFirebaseClientConfigured();
   const checks = [
     {
       key: "clientConfig",
       label: "Public Firebase client config",
-      ok: isFirebaseConfigured,
+      ok: configured,
       detail: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID || "altftool-bca36",
     },
   ];
@@ -76,7 +88,7 @@ async function buildFirebaseReadiness() {
 
   return {
     score: scoreChecks(checks),
-    configured: isFirebaseConfigured,
+    configured,
     projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID || "altftool-bca36",
     liveBlogs,
     checks,

@@ -353,6 +353,7 @@ async function buildConsumerRatingSection(config, context) {
 }
 
 export async function createFirebaseLiveDataReport(options = {}) {
+  const startedAt = performance.now();
   const config = createConfig(options.env);
   const context = {
     fetchImpl: options.fetchImpl || fetch,
@@ -380,10 +381,13 @@ export async function createFirebaseLiveDataReport(options = {}) {
   const failures = checks
     .filter((check) => !check.ok)
     .map((check) => `${check.label}: ${check.error || check.detail}`);
-  const score = clampScore((checks.filter((check) => check.ok).length / checks.length) * 100);
+  const score = clampScore(
+    checks.length ? (checks.filter((check) => check.ok).length / checks.length) * 100 : 0,
+  );
 
   return {
     generatedAt: new Date().toISOString(),
+    durationMs: Math.round(performance.now() - startedAt),
     ok: failures.length === 0,
     status: failures.length === 0 ? "live" : score >= 60 ? "partial" : "unavailable",
     score,

@@ -254,10 +254,7 @@ const pathname = usePathname();
                 <button
                   type="button"
                   onClick={() => setShowPassword((v) => !v)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-xs font-medium px-1 transition-colors"
-                  style={{ color: "var(--muted-soft)", background: "none", border: "none", cursor: "pointer" }}
-                  onMouseEnter={(e) => (e.currentTarget.style.color = "var(--foreground)")}
-                  onMouseLeave={(e) => (e.currentTarget.style.color = "var(--muted-soft)")}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-xs font-medium px-1 text-(--muted) hover:text-(--foreground) focus:text-(--foreground) bg-transparent border-0 cursor-pointer transition-colors"
                 >
                   {showPassword ? "Hide" : "Show"}
                 </button>

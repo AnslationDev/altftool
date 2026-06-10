@@ -1,8 +1,10 @@
 "use client";
 
 import { CKEditor } from "@ckeditor/ckeditor5-react";
+import { useCkeditorAssetsReady } from "@/components/admin/CkeditorAssets";
 
 export default function BlogEditor({ value, onChange }) {
+  const editorAssetsReady = useCkeditorAssetsReady();
 
   if (typeof window === "undefined") return null;
 
@@ -21,7 +23,7 @@ export default function BlogEditor({ value, onChange }) {
   const CK = window.CKEDITOR;
   const CKP = window.CKEDITOR_PREMIUM_FEATURES;
 
-  if (!CK) {
+  if (!editorAssetsReady || !CK) {
     return <div className="border p-4">Loading editor...</div>;
   }
 

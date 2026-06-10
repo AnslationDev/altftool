@@ -47,13 +47,13 @@ export default function DesktopSearchBar({
         </button>
 
         {isCityOpen && (
-          <div className="absolute left-0 top-full mt-2 bg-white border border-gray-200 rounded-2xl shadow-xl z-50 min-w-50 overflow-hidden">
+          <div className="absolute left-0 top-full mt-2 bg-(--card) border border-(--border) rounded-2xl shadow-lg z-50 min-w-50 overflow-hidden">
             <button
               onClick={() => {
                 onDetectLocation();
                 setIsCityOpen(false);
               }}
-              className="w-full flex items-center gap-2 px-4 py-3 text-sm text-(--primary) font-semibold hover:bg-blue-50 border-b"
+              className="w-full flex items-center gap-2 px-4 py-3 text-sm text-(--primary) font-semibold hover:bg-(--anslation-ds-primary-soft) border-b border-(--border)"
             >
               <MapPin className="w-4 h-4" />
               Use My Location
@@ -66,11 +66,11 @@ export default function DesktopSearchBar({
                   onCitySelect(city.value);
                   setIsCityOpen(false);
                 }}
-                className={`w-full flex items-center gap-2 px-4 py-3 text-sm hover:bg-gray-50
+                className={`w-full flex items-center gap-2 px-4 py-3 text-sm hover:bg-(--anslation-ds-soft)
                   ${
                     locationName === city.value
-                      ? "text-(--primary) font-semibold bg-blue-50"
-                      : "text-gray-700"
+                      ? "text-(--primary) font-semibold bg-(--anslation-ds-primary-soft)"
+                      : "text-(--foreground)"
                   }`}
               >
                 <MapPin className="w-3.5 h-3.5" />
@@ -98,7 +98,7 @@ export default function DesktopSearchBar({
         {searchQuery && (
           <button
             onClick={() => onSearchChange("")}
-            className="text-gray-400 hover:text-gray-600 transition cursor-pointer"
+            className="text-(--muted-foreground) hover:text-(--foreground) transition cursor-pointer"
           >
             <X className="w-4 h-4" />
           </button>
@@ -107,7 +107,7 @@ export default function DesktopSearchBar({
 
       <button
         onClick={handleSearch}
-        className="px-5 py-2 rounded-full bg-(--primary) text-white text-sm font-secondary cursor-pointer"
+        className="px-5 py-2 rounded-full bg-(--primary) text-(--primary-foreground) text-sm font-secondary cursor-pointer hover:bg-(--primary-hover) transition"
       >
         Search
       </button>

@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
-import { ArrowRight, Check, ChevronRight, Copy, RotateCcw, Share2, ShieldCheck } from "lucide-react";
+import { ArrowRight, Check, ChevronRight, Copy, RotateCcw, Share2, ShieldCheck, Star } from "lucide-react";
 import { TOP_PRIORITY_TOOL_SLUGS } from "@altftool/core/toolHealth";
 import { toolMetaMap } from "@/platform/registry/toolMetaMap";
 import { formatCategoryLabel, getToolCategories } from "../../toolRouteUtils";
@@ -10,8 +10,16 @@ import { useToolAds } from "@/ads/AdsProvider";
 import AdSidebar from "@/ads/layouts/shared/AdSidebar";
 import AdBottomBanner from "@/ads/layouts/shared/AdBottomBanner";
 import Icon from "@/shared/ui/Icon";
+import RouteLazySection from "@/components/ui/RouteLazySection";
 import { buildToolSeoContent } from "../../toolSeoContent";
-import { rememberRecentTool } from "../../toolStorage";
+import {
+  FAVORITES_STORAGE_KEY,
+  TOOL_STORAGE_EVENT,
+  readStoredSlugs,
+  rememberRecentTool,
+  writeStoredSlugs,
+} from "../../toolStorage";
+import { prefetchToolModule } from "../../toolLoaderResolver";
 import { safeCopyText } from "@/shared/utils/clipboard";
 
 function getRelatedTools(slug, tool, limit = 6) {
@@ -48,7 +56,7 @@ function getRelatedTools(slug, tool, limit = 6) {
 }
 
 function RelatedTools({ slug, tool }) {
-  const relatedTools = getRelatedTools(slug, tool);
+  const relatedTools = useMemo(() => getRelatedTools(slug, tool), [slug, tool]);
   if (!relatedTools.length) return null;
 
   return (
@@ -67,6 +75,8 @@ function RelatedTools({ slug, tool }) {
           <Link
             key={relatedSlug}
             href={`/tools/all/${relatedSlug}`}
+            onFocus={() => prefetchToolModule(relatedSlug)}
+            onMouseEnter={() => prefetchToolModule(relatedSlug)}
             className="group flex min-h-[112px] flex-col justify-between rounded-[8px] border border-(--border) bg-(--background) p-3 transition hover:border-(--primary) hover:shadow-sm"
           >
             <div className="flex gap-3">
@@ -96,9 +106,8 @@ function RelatedTools({ slug, tool }) {
 }
 
 function ToolSeoContent({ slug, tool }) {
-  if (!tool) return null;
-
-  const seoContent = buildToolSeoContent(slug, tool);
+  const seoContent = useMemo(() => (tool ? buildToolSeoContent(slug, tool) : null), [slug, tool]);
+  if (!seoContent) return null;
 
   return (
     <section className="mx-auto mt-8 w-full max-w-6xl border-y border-(--border) py-6">
@@ -153,6 +162,31 @@ function ToolSeoContent({ slug, tool }) {
   );
 }
 
+function BelowFoldSkeleton() {
+  return (
+    <div
+      aria-hidden="true"
+      className="mx-auto mt-8 grid w-full max-w-6xl gap-4 border-y border-(--border) py-6 lg:grid-cols-[0.9fr_1.1fr]"
+    >
+      <div className="space-y-3">
+        <div className="h-4 w-24 rounded-full bg-(--muted)" />
+        <div className="h-7 w-72 max-w-full rounded-[7px] bg-(--muted)" />
+        <div className="h-4 w-full rounded-full bg-(--muted)" />
+        <div className="h-4 w-4/5 rounded-full bg-(--muted)" />
+      </div>
+      <div className="grid gap-3 sm:grid-cols-3">
+        {Array.from({ length: 3 }).map((_, index) => (
+          <div key={index} className="space-y-3 rounded-[8px] border border-(--border) p-3">
+            <div className="h-4 w-28 rounded-full bg-(--muted)" />
+            <div className="h-3 w-full rounded-full bg-(--muted)" />
+            <div className="h-3 w-3/4 rounded-full bg-(--muted)" />
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 function ToolActionButton({ children, icon: IconComponent, onClick, title, tone = "default", ...props }) {
   const tones = {
     default:
@@ -178,7 +212,9 @@ function ToolActionButton({ children, icon: IconComponent, onClick, title, tone 
 function ToolActionBar({ slug, tool, toolName, toolCategories, onResetWorkspace }) {
   const [copied, setCopied] = useState(false);
   const [shared, setShared] = useState(false);
+  const [favoriteSlugs, setFavoriteSlugs] = useState([]);
   const isPriorityTool = TOP_PRIORITY_TOOL_SLUGS.includes(slug);
+  const isFavorite = favoriteSlugs.includes(slug);
   const primaryCategory = toolCategories[0] || "Tool";
   const canonicalPath = `/tools/all/${slug}`;
   const actionSummary = useMemo(() => {
@@ -190,6 +226,28 @@ function ToolActionBar({ slug, tool, toolName, toolCategories, onResetWorkspace 
     setCopied(false);
     setShared(false);
   }, [slug]);
+
+  useEffect(() => {
+    const syncFavorites = () => setFavoriteSlugs(readStoredSlugs(FAVORITES_STORAGE_KEY));
+    syncFavorites();
+
+    window.addEventListener("storage", syncFavorites);
+    window.addEventListener(TOOL_STORAGE_EVENT, syncFavorites);
+
+    return () => {
+      window.removeEventListener("storage", syncFavorites);
+      window.removeEventListener(TOOL_STORAGE_EVENT, syncFavorites);
+    };
+  }, []);
+
+  function handleToggleFavorite() {
+    const next = isFavorite
+      ? favoriteSlugs.filter((item) => item !== slug)
+      : [slug, ...favoriteSlugs].filter((item, index, list) => item && list.indexOf(item) === index);
+
+    setFavoriteSlugs(next);
+    writeStoredSlugs(FAVORITES_STORAGE_KEY, next);
+  }
 
   async function handleCopyLink() {
     const href = new URL(canonicalPath, window.location.origin).toString();
@@ -225,7 +283,7 @@ function ToolActionBar({ slug, tool, toolName, toolCategories, onResetWorkspace 
     <section
       aria-label="Tool actions"
       data-testid="tool-action-bar"
-      className="mx-auto mb-4 w-full max-w-5xl rounded-[8px] border border-(--border) bg-(--card) px-3 py-3 shadow-[var(--anslation-ds-shadow-sm)]"
+      className="mx-auto mb-4 w-full max-w-6xl rounded-[8px] border border-(--border) bg-(--card) px-3 py-3 shadow-[var(--anslation-ds-shadow-sm)]"
     >
       <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
         <div className="flex min-w-0 flex-wrap items-center gap-2">
@@ -246,7 +304,16 @@ function ToolActionBar({ slug, tool, toolName, toolCategories, onResetWorkspace 
           </span>
         </div>
 
-        <div className="grid grid-cols-3 gap-2 sm:flex sm:flex-wrap sm:justify-end">
+        <div className="grid grid-cols-2 gap-2 sm:flex sm:flex-wrap sm:justify-end">
+          <ToolActionButton
+            icon={Star}
+            onClick={handleToggleFavorite}
+            title={isFavorite ? "Remove saved tool" : "Save tool"}
+            aria-pressed={isFavorite}
+            data-testid="save-tool"
+          >
+            {isFavorite ? "Saved" : "Save"}
+          </ToolActionButton>
           <ToolActionButton
             icon={copied ? Check : Copy}
             onClick={handleCopyLink}
@@ -326,7 +393,7 @@ export default function ToolDetailChrome({ slug, category = "all", children }) {
         <main className="min-w-0 flex-1">
           <nav
             aria-label="Tool route"
-            className="mx-auto mb-4 flex w-full max-w-5xl flex-wrap items-center gap-2 text-xs font-medium text-(--muted-foreground)"
+            className="mx-auto mb-4 flex w-full max-w-6xl flex-wrap items-center gap-2 text-xs font-medium text-(--muted-foreground)"
           >
             <Link href="/tools/all" className="hover:text-(--primary)">
               Tools
@@ -347,13 +414,24 @@ export default function ToolDetailChrome({ slug, category = "all", children }) {
             onResetWorkspace={handleResetWorkspace}
           />
 
-          <div className="mx-auto w-full max-w-full min-w-0 overflow-x-auto overscroll-x-contain" key={workspaceKey}>
+          <div
+            data-testid="tool-workspace-shell"
+            data-tool-slug={slug}
+            className="mx-auto w-full max-w-6xl min-w-0 overflow-x-auto overscroll-x-contain"
+            key={workspaceKey}
+          >
             {children}
           </div>
 
-          <ToolSeoContent slug={slug} tool={tool} />
-
-          <RelatedTools slug={slug} tool={tool} />
+          <RouteLazySection
+            fallback={<BelowFoldSkeleton />}
+            idleDelay={1800}
+            minHeight={260}
+            rootMargin="420px 0px"
+          >
+            <ToolSeoContent slug={slug} tool={tool} />
+            <RelatedTools slug={slug} tool={tool} />
+          </RouteLazySection>
 
           {bottomAd?.content && (
             <div className="mt-8">

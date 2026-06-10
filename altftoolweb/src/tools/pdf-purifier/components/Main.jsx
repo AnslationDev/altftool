@@ -1,8 +1,10 @@
 "use client";
 
 import React, { useCallback, useState, useRef, useEffect } from "react";
-import { PDFDocument } from "pdf-lib";
 import {
+  ArrowDown,
+  ArrowUp,
+  Clipboard,
   FileUp,
   Download,
   CheckCircle,
@@ -16,15 +18,78 @@ import {
   Maximize2,
 } from "lucide-react";
 import ManagedImage from "@/components/ui/ManagedImage";
+import { safeCopyText } from "@/shared/utils/clipboard";
+
+let pdfDocumentPromise;
+
+function loadPdfDocument() {
+  pdfDocumentPromise ||= import("pdf-lib").then((module) => module.PDFDocument);
+  return pdfDocumentPromise;
+}
+
+const MAX_PDF_BYTES = 80 * 1024 * 1024;
+
+function formatBytes(bytes = 0) {
+  if (!bytes) return "0 B";
+  const units = ["B", "KB", "MB", "GB"];
+  const index = Math.min(
+    Math.floor(Math.log(bytes) / Math.log(1024)),
+    units.length - 1,
+  );
+  const value = bytes / 1024 ** index;
+  return `${value.toFixed(value >= 10 || index === 0 ? 0 : 1)} ${units[index]}`;
+}
+
+function sanitizeFileName(name) {
+  return (
+    name
+      .replace(/\.[^/.]+$/, "")
+      .replace(/[^a-z0-9_-]+/gi, "-")
+      .replace(/^-+|-+$/g, "")
+      .slice(0, 70) || "cleaned-pdf"
+  );
+}
+
+function downloadBlob(blob, filename) {
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = filename;
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
+  URL.revokeObjectURL(url);
+}
+
+function buildPurifierSummary(file, pages, originalPageCount) {
+  if (!file) return "";
+  const retained = new Set(pages);
+  const removed = Array.from(
+    { length: originalPageCount },
+    (_, index) => index + 1,
+  ).filter((pageNumber) => !retained.has(pageNumber));
+
+  return [
+    "PDF purifier plan",
+    `File: ${file.name}`,
+    `Size: ${formatBytes(file.size)}`,
+    `Original pages: ${originalPageCount}`,
+    `Output pages: ${pages.length}`,
+    `Order: ${pages.join(", ")}`,
+    removed.length ? `Removed pages: ${removed.join(", ")}` : "Removed pages: none",
+  ].join("\n");
+}
 
 const MainComponent = () => {
   const [file, setFile] = useState(null);
   const [pdfPages, setPdfPages] = useState([]);
+  const [originalPageCount, setOriginalPageCount] = useState(0);
   const [pagePreviews, setPagePreviews] = useState({});
   const [isProcessing, setIsProcessing] = useState(false);
   const [isLoadingPreviews, setIsLoadingPreviews] = useState(false);
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(null);
+  const [copiedSummary, setCopiedSummary] = useState(false);
   const [draggedIndex, setDraggedIndex] = useState(null);
   const [pdfjsLib, setPdfjsLib] = useState(null);
 
@@ -37,42 +102,39 @@ const MainComponent = () => {
 
   const fileInputRef = useRef(null);
 
-  // Load PDF.js dynamically with proper worker setup
+  // Load PDF.js dynamically in the browser to avoid bundling worker chunks into the route.
   useEffect(() => {
+    let cancelled = false;
+
     const loadPdfJs = async () => {
       try {
-        const pdfjs = await import("pdfjs-dist");
+        const pdfjs = await import(
+          /* webpackIgnore: true */ "https://cdn.jsdelivr.net/npm/pdfjs-dist@5.6.205/build/pdf.min.mjs"
+        );
 
-        // Set up worker - use the bundled worker from node_modules
-        if (typeof window !== "undefined") {
-          const pdfjsWorker = await import("pdfjs-dist/build/pdf.worker.mjs");
-          pdfjs.GlobalWorkerOptions.workerSrc = URL.createObjectURL(
-            new Blob([
-              `importScripts("${pdfjsWorker.default || pdfjsWorker}");`,
-            ]),
-          );
+        if (cancelled) {
+          return;
         }
 
+        pdfjs.GlobalWorkerOptions.workerSrc =
+          "https://cdn.jsdelivr.net/npm/pdfjs-dist@5.6.205/build/pdf.worker.min.mjs";
         setPdfjsLib(pdfjs);
+        setError(null);
       } catch (err) {
-        console.error("Failed to load PDF.js:", err);
-
-        // Fallback: try using CDN
-        try {
-          const pdfjs = await import("pdfjs-dist");
-          if (typeof window !== "undefined") {
-            pdfjs.GlobalWorkerOptions.workerSrc =
-              "https://unpkg.com/pdfjs-dist@4.4.168/build/pdf.worker.min.mjs";
-          }
-          setPdfjsLib(pdfjs);
-        } catch (fallbackErr) {
-          console.error("Fallback also failed:", fallbackErr);
-          setError("Failed to initialize PDF preview library.");
+        if (!cancelled) {
+          console.info(
+            "PDF preview library is temporarily unavailable. Retrying requires a page refresh.",
+            err,
+          );
         }
       }
     };
 
     loadPdfJs();
+
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
   const generatePagePreviews = async (pdfFile, scale = 0.5) => {
@@ -82,10 +144,11 @@ const MainComponent = () => {
     }
 
     setIsLoadingPreviews(true);
+    let pdf = null;
     try {
       const arrayBuffer = await pdfFile.arrayBuffer();
       const loadingTask = pdfjsLib.getDocument({ data: arrayBuffer });
-      const pdf = await loadingTask.promise;
+      pdf = await loadingTask.promise;
       const previews = {};
 
       for (let i = 1; i <= pdf.numPages; i++) {
@@ -121,6 +184,7 @@ const MainComponent = () => {
       );
       return null;
     } finally {
+      await pdf?.destroy?.();
       if (scale === 0.5) {
         setIsLoadingPreviews(false);
       }
@@ -133,10 +197,11 @@ const MainComponent = () => {
 
     setIsGeneratingHighQuality((prev) => ({ ...prev, [pageNum]: true }));
 
+    let pdf = null;
     try {
       const arrayBuffer = await file.arrayBuffer();
       const loadingTask = pdfjsLib.getDocument({ data: arrayBuffer });
-      const pdf = await loadingTask.promise;
+      pdf = await loadingTask.promise;
 
       const page = await pdf.getPage(pageNum);
       const viewport = page.getViewport({ scale: 1.5 });
@@ -158,6 +223,7 @@ const MainComponent = () => {
     } catch (err) {
       console.error("Failed to generate high-quality preview:", err);
     } finally {
+      await pdf?.destroy?.();
       setIsGeneratingHighQuality((prev) => ({ ...prev, [pageNum]: false }));
     }
   }, [file, isGeneratingHighQuality, pdfjsLib]);
@@ -203,33 +269,46 @@ const MainComponent = () => {
   const handleFileChange = async (e) => {
     setError(null);
     setSuccess(null);
+    setCopiedSummary(false);
     setIsPreviewOpen(false);
     setSelectedPage(null);
+    setOriginalPageCount(0);
     setHighQualityPreviews({});
 
     const uploadedFile = e.target.files?.[0];
     if (!uploadedFile) return;
 
-    if (uploadedFile.type !== "application/pdf") {
+    const isPdf =
+      uploadedFile.type === "application/pdf" ||
+      uploadedFile.name.toLowerCase().endsWith(".pdf");
+
+    if (!isPdf) {
       setError("Please upload a valid PDF file.");
+      return;
+    }
+
+    if (uploadedFile.size > MAX_PDF_BYTES) {
+      setError(`PDF must be under ${formatBytes(MAX_PDF_BYTES)}.`);
       return;
     }
 
     setFile(uploadedFile);
 
     try {
+      const PDFDocument = await loadPdfDocument();
       const arrayBuffer = await uploadedFile.arrayBuffer();
       const pdfDoc = await PDFDocument.load(arrayBuffer);
       const totalPages = pdfDoc.getPageCount();
 
       const pagesArray = Array.from({ length: totalPages }, (_, i) => i + 1);
+      setOriginalPageCount(totalPages);
       setPdfPages(pagesArray);
 
       // Generate previews
       await generatePagePreviews(uploadedFile, 0.5);
     } catch (err) {
       setError("Failed to load PDF. Please try another file.");
-      console.error(err);
+      console.info("PDF purifier could not load the selected file.", err);
     }
   };
 
@@ -243,6 +322,23 @@ const MainComponent = () => {
       setIsPreviewOpen(false);
       setSelectedPage(null);
     }
+  };
+
+  const movePage = (index, direction) => {
+    const nextIndex = index + direction;
+    if (nextIndex < 0 || nextIndex >= pdfPages.length) return;
+
+    setPdfPages((previous) => {
+      const nextPages = [...previous];
+      const [page] = nextPages.splice(index, 1);
+      nextPages.splice(nextIndex, 0, page);
+
+      if (isPreviewOpen && selectedPage === page) {
+        setSelectedPageIndex(nextIndex);
+      }
+
+      return nextPages;
+    });
   };
 
   const handleDragStart = (e, index) => {
@@ -280,6 +376,7 @@ const MainComponent = () => {
     setSuccess(null);
 
     try {
+      const PDFDocument = await loadPdfDocument();
       const arrayBuffer = await file.arrayBuffer();
       const originalPdf = await PDFDocument.load(arrayBuffer);
       const newPdf = await PDFDocument.create();
@@ -292,15 +389,7 @@ const MainComponent = () => {
 
       const pdfBytes = await newPdf.save();
       const blob = new Blob([pdfBytes], { type: "application/pdf" });
-      const url = URL.createObjectURL(blob);
-
-      const link = document.createElement("a");
-      link.href = url;
-      link.download = `Cleaned-${file.name}`;
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-      URL.revokeObjectURL(url);
+      downloadBlob(blob, `${sanitizeFileName(file.name)}-cleaned.pdf`);
 
       setSuccess("PDF downloaded successfully!");
       setTimeout(() => setSuccess(null), 3000);
@@ -315,13 +404,28 @@ const MainComponent = () => {
   const resetTool = () => {
     setFile(null);
     setPdfPages([]);
+    setOriginalPageCount(0);
     setPagePreviews({});
     setHighQualityPreviews({});
     setError(null);
     setSuccess(null);
+    setCopiedSummary(false);
     setIsPreviewOpen(false);
     setSelectedPage(null);
     if (fileInputRef.current) fileInputRef.current.value = "";
+  };
+
+  const copySummary = async () => {
+    if (!file || !pdfPages.length) return;
+    const success = await safeCopyText(
+      buildPurifierSummary(file, pdfPages, originalPageCount),
+    );
+    if (!success) {
+      setError("Could not copy the summary in this browser.");
+      return;
+    }
+    setCopiedSummary(true);
+    window.setTimeout(() => setCopiedSummary(false), 1400);
   };
 
   // NEW: Handle keyboard navigation in preview
@@ -370,7 +474,8 @@ const MainComponent = () => {
           <input
             ref={fileInputRef}
             type="file"
-            accept="application/pdf"
+            accept="application/pdf,.pdf"
+            data-testid="pdf-purifier-file-input"
             onChange={handleFileChange}
             className="hidden"
           />
@@ -395,6 +500,33 @@ const MainComponent = () => {
           <div className="flex items-center gap-2 mt-4 p-3 rounded-lg border border-green-500 bg-green-50 text-green-700">
             <CheckCircle className="h-5 w-5 shrink-0" />
             <span>{success}</span>
+          </div>
+        )}
+
+        {file && (
+          <div
+            data-testid="tool-output"
+            className="mt-4 rounded-lg border border-(--border) bg-(--background) p-4"
+          >
+            <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+              <div>
+                <p className="font-semibold text-(--foreground)">
+                  {pdfPages.length} of {originalPageCount || pdfPages.length} page{pdfPages.length === 1 ? "" : "s"} ready for output
+                </p>
+                <p className="mt-1 text-sm text-(--muted-foreground)">
+                  {formatBytes(file.size)} source file. Reordered output keeps the page sequence shown below.
+                </p>
+              </div>
+              <button
+                type="button"
+                onClick={copySummary}
+                disabled={!pdfPages.length}
+                className="inline-flex items-center justify-center gap-2 rounded-lg border border-(--border) bg-(--card) px-4 py-2 text-sm font-medium text-(--foreground) transition hover:bg-(--muted) disabled:opacity-60"
+              >
+                <Clipboard className="h-4 w-4" />
+                {copiedSummary ? "Copied" : "Copy Summary"}
+              </button>
+            </div>
           </div>
         )}
       </div>
@@ -478,6 +610,27 @@ const MainComponent = () => {
                     >
                       <Maximize2 className="h-4 w-4" />
                     </button>
+
+                    <div className="absolute bottom-16 left-2 z-10 flex gap-1 opacity-0 transition group-hover:opacity-100">
+                      <button
+                        type="button"
+                        onClick={() => movePage(index, -1)}
+                        disabled={index === 0}
+                        aria-label={`Move page ${pageNum} earlier`}
+                        className="rounded-full bg-(--card) p-1.5 text-(--foreground) shadow disabled:opacity-40"
+                      >
+                        <ArrowUp className="h-4 w-4" />
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => movePage(index, 1)}
+                        disabled={index === pdfPages.length - 1}
+                        aria-label={`Move page ${pageNum} later`}
+                        className="rounded-full bg-(--card) p-1.5 text-(--foreground) shadow disabled:opacity-40"
+                      >
+                        <ArrowDown className="h-4 w-4" />
+                      </button>
+                    </div>
 
                     {/* Page Preview */}
                     <div

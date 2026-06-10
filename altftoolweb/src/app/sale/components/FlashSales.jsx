@@ -104,7 +104,7 @@ useEffect(() => {
             viewport={{ once: true }}
             className="hidden md:block shrink-0 w-60 lg:w-69"
           >
-            <div className="relative h-90 rounded-[18px] overflow-hidden">
+            <div className="relative h-90 rounded-2xl overflow-hidden">
               <Image
                 src={flashSales.banner.image}
                 alt="Flash Banner"
@@ -113,38 +113,34 @@ useEffect(() => {
                 className="object-cover"
               />
 
-              
-             {/* timer overlay */}
-             <div className="absolute bottom-7 left-4 right-4">
-               <div className=" bg-[#0239be] dark:bg-[#162342] border border-[#42affe] rounded-xl px-3 py-3">
-                 
-                 <div className="flex items-center justify-center gap-3">
-      
-                   {/* HOURS */}
-                   <div className="bg-[#032170] text-white rounded-lg w-15 h-15 flex flex-col items-center justify-center">
-                     <span className="text-2xl font-bold">{time.hours}</span>
-                     <span className="text-[11px] opacity-70">HRS</span>
-                   </div>
+              {/* timer overlay */}
+              <div className="absolute bottom-7 left-4 right-4">
+                <div className="bg-(--primary) border border-(--primary)/40 rounded-xl px-3 py-3 shadow-md">
+                  <div className="flex items-center justify-center gap-3">
+                    {/* HOURS */}
+                    <div className="bg-black/25 text-(--primary-foreground) rounded-lg w-15 h-15 flex flex-col items-center justify-center">
+                      <span className="text-2xl font-bold">{time.hours}</span>
+                      <span className="text-xs opacity-70">HRS</span>
+                    </div>
 
-                   <span className="text-white font-bold text-2xl">:</span>
+                    <span className="text-(--primary-foreground) font-bold text-2xl">:</span>
 
-                   {/* MINUTES */}
-                   <div className="bg-[#022272] text-white rounded-lg w-15 h-15 flex flex-col items-center justify-center">
-                     <span className="text-2xl font-bold">{time.minutes}</span>
-                     <span className="text-[11px] opacity-70">MINS</span>
-                   </div>
+                    {/* MINUTES */}
+                    <div className="bg-black/25 text-(--primary-foreground) rounded-lg w-15 h-15 flex flex-col items-center justify-center">
+                      <span className="text-2xl font-bold">{time.minutes}</span>
+                      <span className="text-xs opacity-70">MINS</span>
+                    </div>
 
-                   <span className="text-white font-bold text-2xl">:</span>
-             
-                   {/* SECONDS */}
-                   <div className="bg-[#022272] text-white rounded-lg w-15 h-15 flex flex-col items-center justify-center">
-                     <span className="text-2xl font-bold">{time.seconds}</span>
-                     <span className="text-[11px] opacity-70">SECS</span>
-                   </div>
+                    <span className="text-(--primary-foreground) font-bold text-2xl">:</span>
 
-                 </div>
-               </div>
-             </div>
+                    {/* SECONDS */}
+                    <div className="bg-black/25 text-(--primary-foreground) rounded-lg w-15 h-15 flex flex-col items-center justify-center">
+                      <span className="text-2xl font-bold">{time.seconds}</span>
+                      <span className="text-xs opacity-70">SECS</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </motion.div>
 
@@ -157,8 +153,8 @@ useEffect(() => {
                 className="
             hidden lg:flex cursor-pointer
             absolute left-2 top-1/2 -translate-y-1/2 z-20
-            h-10 w-10 rounded-full bg-white shadow-lg text-gray-800
-            items-center justify-center group
+            h-10 w-10 rounded-full bg-(--card) border border-(--border) shadow-lg text-(--foreground)
+            items-center justify-center group hover:bg-(--anslation-ds-soft) transition
           "
               >
                 <ChevronLeft className="h-5 w-5 group-hover:scale-115" />
@@ -172,8 +168,8 @@ useEffect(() => {
                 className="
             hidden lg:flex cursor-pointer
             absolute right-2 top-1/2 -translate-y-1/2 z-20
-            h-10 w-10 rounded-full bg-white shadow-lg text-gray-800
-            items-center justify-center group
+            h-10 w-10 rounded-full bg-(--card) border border-(--border) shadow-lg text-(--foreground)
+            items-center justify-center group hover:bg-(--anslation-ds-soft) transition
           "
               >
                 <ChevronRight className="h-5 w-5 group-hover:scale-115" />

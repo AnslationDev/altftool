@@ -1,9 +1,16 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { Calculator, ReceiptText, RotateCcw } from "lucide-react";
+import { Calculator, Copy, FileDown, ReceiptText, RotateCcw } from "lucide-react";
+import { safeCopyText } from "@/shared/utils/clipboard";
 
 const GST_RATES = [0, 3, 5, 12, 18, 28];
+
+const GST_PRESETS = [
+  { label: "Standard invoice", amount: 10000, rate: 18, mode: "exclusive", taxType: "intra" },
+  { label: "Extract from bill", amount: 11800, rate: 18, mode: "inclusive", taxType: "intra" },
+  { label: "Interstate quote", amount: 50000, rate: 18, mode: "exclusive", taxType: "inter" },
+];
 
 const formatMoney = (value) =>
   new Intl.NumberFormat("en-IN", {
@@ -11,6 +18,16 @@ const formatMoney = (value) =>
     currency: "INR",
     maximumFractionDigits: 2,
   }).format(Number.isFinite(value) ? value : 0);
+
+function downloadTextFile(filename, content) {
+  const blob = new Blob([content], { type: "text/plain;charset=utf-8" });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = filename;
+  link.click();
+  URL.revokeObjectURL(url);
+}
 
 function StatCard({ label, value, tone = "default" }) {
   return (
@@ -32,6 +49,7 @@ export default function ToolHome() {
   const [rate, setRate] = useState(18);
   const [mode, setMode] = useState("exclusive");
   const [taxType, setTaxType] = useState("intra");
+  const [copied, setCopied] = useState(false);
 
   const result = useMemo(() => {
     const baseAmount = Number(amount) || 0;
@@ -61,6 +79,39 @@ export default function ToolHome() {
       igst: taxType === "inter" ? tax : 0,
     };
   }, [amount, rate, mode, taxType]);
+
+  const report = useMemo(
+    () =>
+      [
+        "GST Calculator Report",
+        `Mode: ${mode === "exclusive" ? "Add GST" : "Extract GST"}`,
+        `Tax type: ${taxType === "intra" ? "CGST + SGST" : "IGST"}`,
+        `Amount entered: ${formatMoney(Number(amount) || 0)}`,
+        `GST rate: ${rate}%`,
+        `Taxable value: ${formatMoney(result.taxable)}`,
+        `GST amount: ${formatMoney(result.tax)}`,
+        `CGST: ${formatMoney(result.cgst)}`,
+        `SGST: ${formatMoney(result.sgst)}`,
+        `IGST: ${formatMoney(result.igst)}`,
+        `Final amount: ${formatMoney(result.total)}`,
+        `Generated: ${new Date().toLocaleString()}`,
+      ].join("\n"),
+    [amount, mode, rate, result, taxType]
+  );
+
+  const applyPreset = (preset) => {
+    setAmount(preset.amount);
+    setRate(preset.rate);
+    setMode(preset.mode);
+    setTaxType(preset.taxType);
+  };
+
+  const copyReport = async () => {
+    const success = await safeCopyText(report);
+    if (!success) return;
+    setCopied(true);
+    setTimeout(() => setCopied(false), 1200);
+  };
 
   return (
     <main className="min-h-screen bg-[var(--background)] px-4 py-8 text-[var(--foreground)] sm:px-6">
@@ -102,6 +153,22 @@ export default function ToolHome() {
                 <RotateCcw className="h-4 w-4" />
                 Reset
               </button>
+            </div>
+
+            <div className="mb-5">
+              <span className="text-sm font-semibold">Quick presets</span>
+              <div className="mt-2 grid gap-2 sm:grid-cols-3 2xl:grid-cols-1">
+                {GST_PRESETS.map((preset) => (
+                  <button
+                    key={preset.label}
+                    type="button"
+                    onClick={() => applyPreset(preset)}
+                    className="rounded-md border border-[var(--border)] bg-[var(--background)] px-3 py-2 text-left text-sm font-semibold text-[var(--muted-foreground)] transition hover:border-[var(--primary)] hover:text-[var(--foreground)]"
+                  >
+                    {preset.label}
+                  </button>
+                ))}
+              </div>
             </div>
 
             <label className="block">
@@ -186,9 +253,25 @@ export default function ToolHome() {
               <StatCard label="Final amount" value={formatMoney(result.total)} tone="primary" />
             </div>
             <div className="rounded-lg border border-[var(--border)] bg-[var(--card)] p-5">
-              <div className="mb-3 flex items-center gap-2 text-sm font-semibold text-[var(--primary)]">
-                <Calculator className="h-4 w-4" />
-                Formula
+              <div className="mb-3 flex flex-wrap items-center justify-between gap-3">
+                <div className="flex items-center gap-2 text-sm font-semibold text-[var(--primary)]">
+                  <Calculator className="h-4 w-4" />
+                  Formula
+                </div>
+                <div className="flex flex-wrap gap-2">
+                  <button type="button" onClick={copyReport} className="btn-secondary min-h-9 px-3 py-1.5 text-sm">
+                    <Copy className="h-4 w-4" />
+                    {copied ? "Copied" : "Copy report"}
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => downloadTextFile("gst-calculation-report.txt", report)}
+                    className="btn-secondary min-h-9 px-3 py-1.5 text-sm"
+                  >
+                    <FileDown className="h-4 w-4" />
+                    Download
+                  </button>
+                </div>
               </div>
               <p className="text-sm leading-6 text-[var(--muted-foreground)]">
                 {mode === "exclusive"

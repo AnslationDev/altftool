@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
-import { Key, Copy, RefreshCw, Check, Sparkles } from "lucide-react";
+import { Key, Copy, RefreshCw, Check, Sparkles, FileDown } from "lucide-react";
+import { safeCopyText } from "@/shared/utils/clipboard";
 
 export default function MainSection() {
   const [uuids, setUuids] = useState([]);
@@ -9,16 +10,19 @@ export default function MainSection() {
   const [version, setVersion] = useState("v4");
 
   function generateUUIDv4() {
-    return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, (c) => {
-      const r = (Math.random() * 16) | 0;
-      const v = c === "x" ? r : (r & 0x3) | 0x8;
-      return v.toString(16);
-    });
+    if (typeof crypto?.randomUUID === "function") return crypto.randomUUID();
+
+    const bytes = crypto.getRandomValues(new Uint8Array(16));
+    bytes[6] = (bytes[6] & 0x0f) | 0x40;
+    bytes[8] = (bytes[8] & 0x3f) | 0x80;
+    const hex = [...bytes].map((byte) => byte.toString(16).padStart(2, "0")).join("");
+    return `${hex.slice(0, 8)}-${hex.slice(8, 12)}-${hex.slice(12, 16)}-${hex.slice(16, 20)}-${hex.slice(20)}`;
   }
 
   function generateUUIDv1() {
     const timestamp = Date.now();
-    const random = Math.random().toString(16).substring(2, 15);
+    const randomBytes = crypto.getRandomValues(new Uint8Array(10));
+    const random = [...randomBytes].map((byte) => byte.toString(16).padStart(2, "0")).join("");
     const timeHex = timestamp.toString(16).padStart(12, "0");
     return `${timeHex.substring(0, 8)}-${timeHex.substring(
       8,
@@ -38,16 +42,27 @@ export default function MainSection() {
     setCopiedIndex(null);
   }
 
-  function copyToClipboard(uuid, idx) {
-    navigator.clipboard.writeText(uuid);
+  async function copyToClipboard(uuid, idx) {
+    await safeCopyText(uuid);
     setCopiedIndex(idx);
     setTimeout(() => setCopiedIndex(null), 1500);
   }
 
-  function copyAll() {
-    navigator.clipboard.writeText(uuids.join("\n"));
+  async function copyAll() {
+    await safeCopyText(uuids.join("\n"));
     setCopiedIndex("all");
     setTimeout(() => setCopiedIndex(null), 1500);
+  }
+
+  function downloadAll() {
+    const url = URL.createObjectURL(new Blob([uuids.join("\n")], { type: "text/plain;charset=utf-8" }));
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = `altftool-${version}-uuids.txt`;
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    URL.revokeObjectURL(url);
   }
 
   return (
@@ -127,8 +142,8 @@ export default function MainSection() {
 
         <div className="bg-(--muted) border border-(--border) rounded-lg p-4">
           <p className="text-(--muted-foreground) text-sm">
-            <strong>UUID v4:</strong> Random • <strong>UUID v1:</strong>{" "}
-            Timestamp-based
+            <strong>UUID v4:</strong> Crypto random • <strong>UUID v1:</strong>{" "}
+            Timestamp-style with crypto random node data
           </p>
         </div>
       </div>
@@ -136,22 +151,31 @@ export default function MainSection() {
       {/* Results */}
       {uuids.length > 0 && (
         <div className="bg-(--card) border border-(--border) rounded-2xl p-6 sm:p-8 shadow">
-          <div className="flex justify-between mb-6">
+          <div className="flex flex-wrap justify-between gap-3 mb-6">
             <h2 className="text-2xl font-bold text-(--foreground)">
               Generated UUIDs
             </h2>
 
-            <button
-              onClick={copyAll}
-              className="bg-(--muted) hover:bg-(--muted)/80 text-(--foreground) px-3 py-2 rounded-lg flex items-center gap-2 cursor-pointer"
-            >
-              {copiedIndex === "all" ? (
-                <Check className="text-green-500" />
-              ) : (
-                <Copy />
-              )}
-              Copy All
-            </button>
+            <div className="flex flex-wrap gap-2">
+              <button
+                onClick={copyAll}
+                className="bg-(--muted) hover:bg-(--muted)/80 text-(--foreground) px-3 py-2 rounded-lg flex items-center gap-2 cursor-pointer"
+              >
+                {copiedIndex === "all" ? (
+                  <Check className="text-green-500" />
+                ) : (
+                  <Copy />
+                )}
+                Copy All
+              </button>
+              <button
+                onClick={downloadAll}
+                className="bg-(--muted) hover:bg-(--muted)/80 text-(--foreground) px-3 py-2 rounded-lg flex items-center gap-2 cursor-pointer"
+              >
+                <FileDown />
+                Download
+              </button>
+            </div>
           </div>
 
           <div className="space-y-3">

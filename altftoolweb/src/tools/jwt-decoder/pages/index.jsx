@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { Clipboard, KeyRound, RotateCcw, ShieldCheck } from "lucide-react";
+import { Clipboard, FileDown, KeyRound, RotateCcw, ShieldCheck } from "lucide-react";
 import { safeCopyText } from "@/shared/utils/clipboard";
 
 const SAMPLE_TOKEN =
@@ -20,6 +20,31 @@ function decodePart(part) {
 function getClaimDate(value) {
   if (!value || Number.isNaN(Number(value))) return "Not available";
   return new Date(Number(value) * 1000).toLocaleString();
+}
+
+function getRelativeExpiry(value) {
+  if (!value || Number.isNaN(Number(value))) return "No exp claim";
+  const diff = Number(value) * 1000 - Date.now();
+  const absMinutes = Math.round(Math.abs(diff) / 60000);
+  const unit = absMinutes >= 1440 ? `${Math.round(absMinutes / 1440)}d` : absMinutes >= 60 ? `${Math.round(absMinutes / 60)}h` : `${absMinutes}m`;
+  return diff >= 0 ? `Expires in ${unit}` : `Expired ${unit} ago`;
+}
+
+function getClaimType(value) {
+  if (Array.isArray(value)) return "array";
+  if (value === null) return "null";
+  return typeof value;
+}
+
+function downloadJson(filename, value) {
+  const url = URL.createObjectURL(new Blob([value], { type: "application/json;charset=utf-8" }));
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = filename;
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
+  URL.revokeObjectURL(url);
 }
 
 function Panel({ title, children }) {
@@ -57,6 +82,13 @@ export default function ToolHome() {
 
   const isExpired =
     decoded.ok && decoded.payload.exp ? Number(decoded.payload.exp) * 1000 < Date.now() : false;
+  const decodedBundle = decoded.ok
+    ? formatJson({
+        header: decoded.header,
+        payload: decoded.payload,
+        signatureLength: decoded.signature.length,
+      })
+    : "";
 
   return (
     <main className="min-h-screen bg-[var(--background)] px-4 py-8 text-[var(--foreground)] sm:px-6">
@@ -82,7 +114,7 @@ export default function ToolHome() {
                     {decoded.ok ? (isExpired ? "Expired" : "Decoded") : "Invalid token"}
                   </p>
                   <p className="text-sm text-[var(--muted-foreground)]">
-                    {decoded.ok ? `${token.trim().split(".").length} JWT parts detected` : decoded.message}
+                    {decoded.ok ? `${token.trim().split(".").length} parts. ${getRelativeExpiry(decoded.payload.exp)}` : decoded.message}
                   </p>
                 </div>
               </div>
@@ -114,6 +146,26 @@ export default function ToolHome() {
               >
                 Clear
               </button>
+              {decoded.ok ? (
+                <>
+                  <button
+                    type="button"
+                    onClick={() => copyValue("Decoded bundle", decodedBundle)}
+                    className="inline-flex items-center gap-2 rounded-lg border border-[var(--border)] px-4 py-2 text-sm font-semibold hover:bg-[var(--muted)]"
+                  >
+                    <Clipboard className="h-4 w-4" />
+                    Copy decoded
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => downloadJson("altftool-jwt-decoded.json", decodedBundle)}
+                    className="inline-flex items-center gap-2 rounded-lg border border-[var(--border)] px-4 py-2 text-sm font-semibold hover:bg-[var(--muted)]"
+                  >
+                    <FileDown className="h-4 w-4" />
+                    Download JSON
+                  </button>
+                </>
+              ) : null}
             </div>
           </Panel>
 
@@ -126,6 +178,8 @@ export default function ToolHome() {
                   ["Subject", decoded.payload.sub || "Not available"],
                   ["Issued at", getClaimDate(decoded.payload.iat)],
                   ["Expires", getClaimDate(decoded.payload.exp)],
+                  ["Expiry delta", getRelativeExpiry(decoded.payload.exp)],
+                  ["Signature bytes", decoded.signature.length || "Unsigned"],
                 ].map(([label, value]) => (
                   <div key={label} className="flex items-start justify-between gap-4 rounded-lg bg-[var(--muted)] px-3 py-2">
                     <span className="font-medium text-[var(--muted-foreground)]">{label}</span>
@@ -162,6 +216,33 @@ export default function ToolHome() {
               </Panel>
             ))}
           </div>
+        )}
+
+        {decoded.ok && (
+          <Panel title="Payload claims">
+            <div className="overflow-x-auto rounded-lg border border-[var(--border)]">
+              <table className="w-full min-w-[560px] text-left text-sm">
+                <thead className="bg-[var(--background)] text-xs uppercase text-[var(--muted-foreground)]">
+                  <tr>
+                    <th className="px-3 py-2">Claim</th>
+                    <th className="px-3 py-2">Type</th>
+                    <th className="px-3 py-2">Value</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-[var(--border)]">
+                  {Object.entries(decoded.payload).map(([key, value]) => (
+                    <tr key={key}>
+                      <td className="px-3 py-2 font-mono text-xs font-semibold text-[var(--foreground)]">{key}</td>
+                      <td className="px-3 py-2 text-xs text-[var(--muted-foreground)]">{getClaimType(value)}</td>
+                      <td className="px-3 py-2 font-mono text-xs text-[var(--muted-foreground)]">
+                        {typeof value === "object" ? JSON.stringify(value) : String(value)}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </Panel>
         )}
       </div>
     </main>

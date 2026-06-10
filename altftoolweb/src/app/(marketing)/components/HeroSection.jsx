@@ -11,9 +11,9 @@ import {
 
 export default function HeroSection() {
   const lines = [
-    ["Quietly", "Useful"],
-    ["Surprisingly", "Fun"],
-    ["Actually", "Affordable"],
+    ["AltF Tool", "Workspace"],
+    ["Useful", "Microtools"],
+    ["Fast", "Everyday Flow"],
   ];
 
   const heroPreviewCards = [
@@ -87,7 +87,7 @@ export default function HeroSection() {
   return (
     <section className="relative z-10 flex justify-center overflow-hidden bg-[var(--background)] section">
       <div className="w-full">
-        <div className="grid items-center gap-10 lg:gap-16 lg:grid-cols-2">
+        <div className="grid items-center gap-8 lg:grid-cols-[0.95fr_1.05fr] lg:gap-12">
           <motion.div
             className="w-full text-center lg:text-left"
             initial="hidden"
@@ -97,15 +97,15 @@ export default function HeroSection() {
             }}
           >
             <motion.h1
-              className="mb-5 font-bold leading-tight tracking-tight
-              text-3xl sm:text-3xl md:text-4xl lg:text-[56px] xl:text-[60px]
-              text-[var(--foreground)]"
+              className="mb-5 font-bold leading-[1.05] tracking-normal
+              text-4xl sm:text-5xl md:text-5xl lg:text-[52px] xl:text-[56px]
+              text-(--foreground)"
               variants={fadeUp}
             >
               {lines.map(([prefix, highlight]) => (
                 <span key={`${prefix}-${highlight}`} className="block">
                   {prefix}{" "}
-                  <span className="font-extrabold text-[var(--primary)]">
+                  <span className="font-extrabold text-(--primary)">
                     {highlight}
                   </span>
                 </span>
@@ -113,10 +113,10 @@ export default function HeroSection() {
             </motion.h1>
 
             <motion.p
-              className="mb-6 md:mb-8 text-sm sm:text-base md:text-lg lg:text-xl text-[var(--muted-foreground)] max-w-xl mx-auto lg:mx-0"
+              className="mb-7 md:mb-9 text-base sm:text-lg lg:text-lg text-(--muted-foreground) max-w-xl mx-auto lg:mx-0 leading-relaxed"
               variants={fadeUp}
             >
-              Smart tools, simple games, and everyday deals — all designed to just work without effort.
+              Smart tools, simple games, blogs, news, and deal surfaces in one fast workspace designed to get you to the right action quickly.
             </motion.p>
 
             <motion.div
@@ -133,31 +133,31 @@ export default function HeroSection() {
             </motion.div>
           </motion.div>
 
-          <div className="hidden h-full w-full lg:grid lg:grid-cols-2 lg:gap-4 xl:gap-5">
+          <div className="hidden h-full w-full lg:grid lg:grid-cols-2 lg:gap-4">
             {heroPreviewCards.map((item, index) => {
               const Icon = item.icon;
 
               return (
                 <motion.div
                   key={item.title}
-                  className="flex min-h-[190px] flex-col justify-between rounded-[var(--anslation-ds-radius-lg)] border border-(--border) bg-(--card) p-5 shadow-[var(--anslation-ds-shadow-sm)]"
+                  className="group flex flex-col gap-4 rounded-2xl border border-(--border) bg-(--card) p-5 shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:border-(--anslation-ds-border-strong) hover:shadow-[var(--anslation-ds-shadow-md)]"
                   initial={{ opacity: 0, y: 18 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.15 + index * 0.06, duration: 0.45 }}
                 >
-                  <div className="flex items-start justify-between gap-4">
-                    <div className="grid h-10 w-10 place-items-center rounded-[var(--anslation-ds-radius)] bg-(--muted)">
-                      <Icon className="h-5 w-5 text-(--primary)" />
+                  <div className="flex items-start justify-between gap-3">
+                    <div className="grid h-10 w-10 place-items-center rounded-xl bg-(--anslation-ds-primary-soft) text-(--primary) transition-colors group-hover:bg-(--primary) group-hover:text-(--primary-foreground)">
+                      <Icon className="h-5 w-5" />
                     </div>
-                    <span className="rounded-full border border-(--border) bg-(--background) px-2.5 py-1 text-xs font-semibold text-(--muted-foreground)">
+                    <span className="rounded-full border border-(--border) bg-(--anslation-ds-soft) px-2.5 py-1 text-[11px] font-semibold tracking-wide text-(--muted-foreground) uppercase">
                       {item.value}
                     </span>
                   </div>
                   <div>
-                    <h3 className="text-lg font-bold text-(--foreground)">
+                    <h3 className="text-base font-semibold text-(--foreground) tracking-tight">
                       {item.title}
                     </h3>
-                    <p className="mt-2 text-sm leading-6 text-(--muted-foreground)">
+                    <p className="mt-1 text-sm leading-relaxed text-(--muted-foreground)">
                       {item.desc}
                     </p>
                   </div>
@@ -167,16 +167,16 @@ export default function HeroSection() {
           </div>
         </div>
 
-        <div className="mt-12 md:mt-16  grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4 lg:gap-6">
+        <div className="mt-10 grid grid-cols-1 gap-3 sm:grid-cols-2 md:mt-12 lg:grid-cols-4 lg:gap-4">
           {features.map((feature, index) => {
             const Icon = feature.icon;
 
             return (
               <motion.div
                 key={index}
-                whileHover={{ y: -6 }}
+                whileHover={{ y: -2 }}
                 transition={{ type: "spring", stiffness: 200 }}
-                className="flex items-center gap-3 rounded-[var(--anslation-ds-radius)] border border-(--border) bg-(--card) p-3 shadow-[var(--anslation-ds-shadow-sm)] transition md:p-4"
+                className="flex items-center gap-3 rounded-[var(--anslation-ds-radius)] border border-(--border) bg-(--card) p-3 shadow-[var(--anslation-ds-shadow-sm)] transition hover:border-(--primary) hover:bg-[color-mix(in_srgb,var(--card)_78%,var(--anslation-ds-primary-soft))] md:p-4"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
               >

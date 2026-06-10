@@ -85,7 +85,7 @@ export default function ExploreCategories() {
           "
         >
           <div
-           className="w-full h-41.5 md:h-45 lg:h-48 2xl:h-53 [@media(min-width:1700px)]:h-62 relative rounded-[15px] [@media(min-width:1700px)]:rounded-3xl overflow-hidden  " 
+           className="w-full h-41.5 md:h-45 lg:h-48 2xl:h-53 [@media(min-width:1700px)]:h-62 relative rounded-2xl [@media(min-width:1700px)]:rounded-3xl overflow-hidden  "
           >
             <Image
               src={item.image}

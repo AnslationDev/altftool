@@ -22,11 +22,11 @@ import {
   Cell,
   Pie,
   PieChart as RePieChart,
-  ResponsiveContainer,
   Tooltip,
   XAxis,
   YAxis,
 } from "recharts";
+import ResponsiveContainer from "@/components/charts/SafeResponsiveContainer";
 
 const DEFAULT_INCOME = {
   salary: 85000,
@@ -620,7 +620,7 @@ export default function MonthlyBudgetPlanner() {
                   </div>
                 </div>
                 <div className="h-64 min-w-0">
-                  <ResponsiveContainer width="100%" height="100%">
+                  <ResponsiveContainer width="100%" height="100%" minWidth={1} minHeight={1}>
                     <BarChart data={overviewData} margin={{ top: 10, right: 8, left: 0, bottom: 0 }}>
                       <XAxis dataKey="name" tick={{ fill: "var(--muted-foreground)", fontSize: 12 }} />
                       <YAxis
@@ -650,7 +650,7 @@ export default function MonthlyBudgetPlanner() {
                   </div>
                 </div>
                 <div className="h-64 min-w-0">
-                  <ResponsiveContainer width="100%" height="100%">
+                  <ResponsiveContainer width="100%" height="100%" minWidth={1} minHeight={1}>
                     <RePieChart>
                       <Pie
                         data={metrics.expenseShare.filter((item) => item.amount > 0)}

@@ -248,9 +248,14 @@
 "use client";
 
 import React, { useEffect, useMemo, useState } from "react";
-import ReusableTable from "../(resuableComponent)/ReusableTable";
+import ReusableTable, { SafeTableImage } from "../(resuableComponent)/ReusableTable";
 import { firebaseBuySmartCategoriesSource } from "@/projects/altftool/modules/buysmart/services/firebaseBuySmartCategories";
-import { ExternalLink } from "lucide-react";
+import { AlertTriangle, CheckCircle2, ExternalLink, ShieldCheck } from "lucide-react";
+import {
+  getBuySmartQualitySummary,
+  isExternalMerchantUrl,
+  summarizeBuySmartQuality,
+} from "@altftool/core/buysmart";
 
 const verificationStyles = {
   draft: "bg-slate-100 text-slate-700",
@@ -265,10 +270,67 @@ function formatVerificationStatus(status) {
   return status.replace(/-/g, " ");
 }
 
+function QualityBadge({ item, items }) {
+  const quality = getBuySmartQualitySummary(item, items);
+  const style =
+    quality.status === "ready"
+      ? "border-green-200 bg-green-50 text-green-700"
+      : quality.status === "fix"
+        ? "border-red-200 bg-red-50 text-red-700"
+        : "border-amber-200 bg-amber-50 text-amber-700";
+
+  return (
+    <div className="min-w-36">
+      <span className={`inline-flex items-center gap-1 rounded-full border px-2.5 py-1 text-xs font-bold ${style}`}>
+        {quality.status === "ready" ? <CheckCircle2 className="h-3.5 w-3.5" /> : <AlertTriangle className="h-3.5 w-3.5" />}
+        {quality.score}/100
+      </span>
+      {quality.issues.length ? (
+        <p className="mt-1 line-clamp-2 text-xs text-gray-500">
+          {quality.issues.slice(0, 2).map((issue) => issue.label).join(", ")}
+        </p>
+      ) : (
+        <p className="mt-1 text-xs text-gray-500">Ready to publish</p>
+      )}
+    </div>
+  );
+}
+
+function QualitySummaryStrip({ summary }) {
+  const cards = [
+    { label: "Ready", value: summary.ready, className: "border-green-200 bg-green-50 text-green-700" },
+    { label: "Review", value: summary.review, className: "border-amber-200 bg-amber-50 text-amber-700" },
+    { label: "Fix first", value: summary.fix, className: "border-red-200 bg-red-50 text-red-700" },
+  ];
+
+  return (
+    <div className="grid gap-3 md:grid-cols-[1.2fr_repeat(3,0.6fr)]">
+      <div className="rounded-xl border border-gray-200 bg-white p-4 shadow-sm">
+        <p className="text-xs font-bold uppercase tracking-wide text-gray-500">
+          Data quality
+        </p>
+        <h2 className="mt-1 text-lg font-semibold text-gray-950">
+          {summary.total} BuySmart offer rows audited
+        </h2>
+        <p className="mt-1 text-sm text-gray-600">
+          Missing links, expiry, verification, duplicates, and success signals are checked before publishing.
+        </p>
+      </div>
+      {cards.map((card) => (
+        <div key={card.label} className={`rounded-xl border p-4 shadow-sm ${card.className}`}>
+          <p className="text-xs font-bold uppercase tracking-wide">{card.label}</p>
+          <p className="mt-2 text-2xl font-semibold tabular-nums">{card.value}</p>
+        </div>
+      ))}
+    </div>
+  );
+}
+
 function GetCategories({ setActive, setEditCategories }) {
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedLetter, setSelectedLetter] = useState("All");
+  const [quickActionId, setQuickActionId] = useState("");
 
   const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
 
@@ -287,19 +349,25 @@ function GetCategories({ setActive, setEditCategories }) {
     );
   }, [categories, selectedLetter]);
 
+  const qualitySummary = useMemo(
+    () => summarizeBuySmartQuality(categories),
+    [categories],
+  );
+
   const handleEdit = (item) => {
     setActive(true);
     setEditCategories(item);
   };
 
   const handleDeleteSingle = async (id) => {
-    if (!confirm("Delete this category?")) return;
     await firebaseBuySmartCategoriesSource.remove(id);
+    return true;
   };
 
   const handleBulkDelete = async (ids) => {
-    if (!confirm(`Delete ${ids.length} categories?`)) return;
+    if (!ids.length) return false;
     await firebaseBuySmartCategoriesSource.bulkDelete(ids, categories);
+    return true;
   };
 
   const handleStatusChanged = async (item) => {
@@ -309,18 +377,33 @@ function GetCategories({ setActive, setEditCategories }) {
     });
   };
 
+  const handleQuickVerify = async (item) => {
+    setQuickActionId(item.id);
+
+    try {
+      await firebaseBuySmartCategoriesSource.update(item.id, {
+        lastVerifiedAt: new Date().toISOString(),
+        reviewNote: item.reviewNote || "Marked verified from BuySmart quality review.",
+        successRate: Number(item.successRate) || 100,
+        verificationStatus: "verified",
+        verified: true,
+      });
+    } finally {
+      setQuickActionId("");
+    }
+  };
+
   const columns = useMemo(
     () => [
       {
         header: "Initial",
         Cell: ({ row }) => (
           row.original.img || row.original.image ? (
-            <img
+            <SafeTableImage
               src={row.original.img || row.original.image}
               alt={row.original.title || "Brand"}
               className="h-9 w-9 rounded-full border border-gray-200 object-cover"
-              loading="lazy"
-              referrerPolicy="no-referrer"
+              fallbackClassName="h-9 w-9 rounded-full border border-dashed border-gray-300 bg-gray-50"
             />
           ) : (
             <div className="h-9 w-9 rounded-full bg-black text-white flex items-center justify-center text-sm">
@@ -341,15 +424,31 @@ function GetCategories({ setActive, setEditCategories }) {
       {
         accessorKey: "link",
         header: "Link",
-        Cell: ({ cell }) => (
-          <a
-            href={cell.getValue()}
-            target="_blank"
-            className="text-blue-600 flex items-center gap-1"
-          >
-            Visit <ExternalLink size={14} />
-          </a>
-        ),
+        Cell: ({ cell }) => {
+          const href = cell.getValue();
+          if (!isExternalMerchantUrl(href)) {
+            return (
+              <span className="rounded bg-red-50 px-2 py-1 text-xs font-semibold text-red-700">
+                Missing link
+              </span>
+            );
+          }
+
+          return (
+            <a
+              href={href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-1 text-blue-600"
+            >
+              Visit <ExternalLink size={14} />
+            </a>
+          );
+        },
+      },
+      {
+        header: "Quality",
+        Cell: ({ row }) => <QualityBadge item={row.original} items={categories} />,
       },
       {
         accessorKey: "category",
@@ -427,6 +526,25 @@ function GetCategories({ setActive, setEditCategories }) {
         type: "status", 
       },
       {
+        header: "QA action",
+        Cell: ({ row }) => {
+          const item = row.original;
+          const verified = item.verificationStatus === "verified" || item.verified;
+
+          return (
+            <button
+              type="button"
+              disabled={verified || quickActionId === item.id}
+              onClick={() => handleQuickVerify(item)}
+              className="inline-flex h-9 items-center gap-2 rounded-lg border border-gray-200 bg-white px-3 text-xs font-bold text-gray-700 transition hover:border-green-300 hover:bg-green-50 disabled:cursor-not-allowed disabled:opacity-60"
+            >
+              <ShieldCheck className="h-3.5 w-3.5" />
+              {quickActionId === item.id ? "Saving..." : verified ? "Verified" : "Verify"}
+            </button>
+          );
+        },
+      },
+      {
         accessorKey: "country",
         header: "Country",
         Cell: ({ cell }) => cell.getValue() || "-",
@@ -436,11 +554,13 @@ function GetCategories({ setActive, setEditCategories }) {
         type: "action", 
       },
     ],
-    []
+    [categories, quickActionId]
   );
 
   return (
     <div className="space-y-6">
+      <QualitySummaryStrip summary={qualitySummary} />
+
       {/* Alphabet Filter */}
       <div className="bg-white border rounded-xl p-4">
         <div className="flex flex-wrap gap-2 justify-center">
@@ -480,6 +600,7 @@ function GetCategories({ setActive, setEditCategories }) {
         onDeleteSingle={handleDeleteSingle}
         onBulkDelete={handleBulkDelete}
         onStatusChange={handleStatusChanged}
+        confirmDeletes
         emptyMessage={
           selectedLetter === "All"
             ? "No categories available"

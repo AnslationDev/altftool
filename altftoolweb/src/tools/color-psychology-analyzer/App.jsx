@@ -476,7 +476,7 @@ export default function ColorPsychologyAnalyzer() {
                   ))}
                 </div>
                 <p className="text-sm text-muted-foreground leading-relaxed italic break-words">
-                  "This color triggers feelings of {analysis?.emotions.slice(0, 3).join(', ')}."
+                  &quot;This color triggers feelings of {analysis?.emotions.slice(0, 3).join(', ')}.&quot;
                 </p>
               </GlassCard>
 
@@ -579,7 +579,7 @@ export default function ColorPsychologyAnalyzer() {
         <div className="relative z-10 text-center md:text-left">
           <h4 className="text-lg md:text-xl font-black text-(--foreground) mb-2 uppercase tracking-tighter">Psychology Design Guide</h4>
           <p className="text-sm text-muted-foreground leading-relaxed max-w-3xl">
-            Colors aren't just aesthetic choices; they are powerful psychological triggers. While <strong>Red</strong> can stimulate appetite and urgency, <strong>Blue</strong> fosters trust and reliability. Use this analyzer to ensure your brand's visual identity aligns perfectly with the subconscious message you want to send to your audience.
+            Colors aren&apos;t just aesthetic choices; they are powerful psychological triggers. While <strong>Red</strong> can stimulate appetite and urgency, <strong>Blue</strong> fosters trust and reliability. Use this analyzer to ensure your brand&apos;s visual identity aligns perfectly with the subconscious message you want to send to your audience.
           </p>
         </div>
       </div>

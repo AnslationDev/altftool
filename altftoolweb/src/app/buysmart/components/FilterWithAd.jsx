@@ -5,14 +5,20 @@ import { useMemo, useState } from "react";
 import Link from "next/link";
 import { SkeletonBlock } from "@/components/ui/skeleton";
 import ManagedImage from "@/components/ui/ManagedImage";
+import TrustSignalBadges from "@/app/buysmart/components/TrustSignalBadges";
 import {
   getBrandLogoUrl,
+  getBuySmartTrustSignals,
   normalizeBuySmartCategory,
 } from "@altftool/core/buysmart";
 
 
-function CategoryCard({ cat }) {
+function CategoryCard({ cat, counters }) {
   const normalizedCat = useMemo(() => normalizeBuySmartCategory(cat), [cat]);
+  const trustSignals = useMemo(
+    () => getBuySmartTrustSignals(normalizedCat, counters),
+    [normalizedCat, counters],
+  );
   const logoFallback = useMemo(() => getBrandLogoUrl(normalizedCat), [normalizedCat]);
   const [imageLoaded, setImageLoaded] = useState(false);
   const [imageError, setImageError] = useState(false);
@@ -84,6 +90,7 @@ function CategoryCard({ cat }) {
         </div>
 
         <div className="flex flex-wrap gap-1.5">
+          <TrustSignalBadges signals={trustSignals} compact />
           <span className="inline-flex items-center gap-1 rounded-full border border-(--border) bg-(--muted) px-2 py-1 text-[11px] font-semibold text-(--muted-foreground)">
             <TicketPercent className="h-3 w-3 text-(--primary)" />
             <span className="max-w-[120px] truncate">{savingsText}</span>
@@ -112,6 +119,7 @@ function CategoryCard({ cat }) {
 }
 export default function FilterWithAdCard({
   displayedData = [],
+  counters = {},
 }) {
   const finalData = displayedData;
 
@@ -148,6 +156,7 @@ export default function FilterWithAdCard({
               <CategoryCard
                 key={`${normalizedCat.id || normalizedCat.title}-${normalizedCat.img || normalizedCat.link}`}
                 cat={normalizedCat}
+                counters={counters}
               />
             );
           })}

@@ -332,7 +332,7 @@ export default function SalesNearYou({
               onClick={() => setIsSortOpen((p) => !p)}
               className="flex items-center gap-2 px-4 py-2 rounded-full text-sm text-(--foreground) transition cursor-pointer bg-(--background) font-secondary"
             >
-              <span className="text-(--muted-foreground) text-[15px]">
+              <span className="text-(--muted-foreground) text-sm">
                 Sort by:
               </span>
 

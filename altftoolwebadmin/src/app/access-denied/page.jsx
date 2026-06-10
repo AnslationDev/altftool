@@ -59,19 +59,19 @@ export default function AccessDeniedPage() {
           <div className="flex justify-center mb-6">
             <div
               className="relative w-14 h-14 rounded-full flex items-center justify-center"
-              style={{ background: "#fee2e2", border: "1px solid #fecaca" }}
+              style={{ background: "var(--anslation-ds-danger-soft)", border: "1px solid color-mix(in srgb, var(--anslation-ds-danger) 22%, transparent)" }}
             >
               <span
                 className="absolute inset-0 rounded-full animate-ping"
                 style={{
-                  border: "1.5px solid #dc2626",
+                  border: "1.5px solid var(--anslation-ds-danger)",
                   opacity: 0.35,
                   animationDuration: "2s",
                 }}
               />
               <span
                 className="w-3 h-3 rounded-full"
-                style={{ background: "#dc2626" }}
+                style={{ background: "var(--anslation-ds-danger)" }}
               />
             </div>
           </div>

@@ -126,10 +126,10 @@ export default function FeaturedCategories() {
                   <ManagedImage
                     src={item.image}
                     alt={item.title}
-                    className="rounded-2xl w-full object-cover  transition duration-300 group-hover:scale-[1.02]"
+                    className="w-full rounded-[8px] object-cover transition duration-300 group-hover:scale-[1.01]"
                   />
 
-                  <span className={`absolute top-4 left-4 text-xs font-semibold px-3 py-1 rounded-full bg-[var(--badge-bg)] shadow ${theme === "dark" ? "text-white" : "text-[var(--primary)]"} `}>
+                  <span className={`absolute top-4 left-4 rounded-full bg-[var(--badge-bg)] px-3 py-1 text-xs font-semibold shadow-[var(--anslation-ds-shadow-sm)] ${theme === "dark" ? "text-white" : "text-[var(--primary)]"} `}>
                     {item.badge}
                   </span>
                 </div>
@@ -167,7 +167,7 @@ export default function FeaturedCategories() {
                   <div className="flex flex-wrap items-center gap-4">
                     <Link
                       href={item.href}
-                      className="px-6 py-3 rounded-full text-sm font-medium bg-[var(--primary)] text-[var(--primary-foreground)] transition hover:opacity-90 active:scale-95"
+                      className="rounded-[8px] bg-[var(--primary)] px-6 py-3 text-sm font-medium text-[var(--primary-foreground)] transition hover:opacity-90 active:scale-95"
                     >
                       {item.button}
                     </Link>
@@ -176,7 +176,7 @@ export default function FeaturedCategories() {
                       href={item.href}
                       className={`text-sm font-medium  hover:underline ${theme === "dark" ? "text-[var(--secondary-foreground)]" : "text-[var(--primary)]"}`}
                     >
-                      Learn More →
+                      Learn More
                     </Link>
                   </div>
                 </div>

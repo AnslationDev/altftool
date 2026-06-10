@@ -1,14 +1,13 @@
 "use client";
 
 import React, { useMemo, useRef, useState } from "react";
-import JSZip from "jszip";
-import { PDFDocument } from "pdf-lib";
 import {
   AlertTriangle,
   Archive,
   CheckCircle,
   Clipboard,
   Download,
+  FileDown,
   FileText,
   FileUp,
   Layers,
@@ -20,6 +19,20 @@ import {
   Trash2,
   UploadCloud,
 } from "lucide-react";
+import { safeCopyText } from "@/shared/utils/clipboard";
+
+let pdfDocumentPromise;
+let jsZipPromise;
+
+function loadPdfDocument() {
+  pdfDocumentPromise ||= import("pdf-lib").then((module) => module.PDFDocument);
+  return pdfDocumentPromise;
+}
+
+function loadJsZip() {
+  jsZipPromise ||= import("jszip").then((module) => module.default || module);
+  return jsZipPromise;
+}
 
 const SPLIT_MODES = {
   every: {
@@ -341,6 +354,7 @@ export default function MainComponent() {
     setFilenamePrefix(sanitizeFileName(nextFile.name));
 
     try {
+      const PDFDocument = await loadPdfDocument();
       const bytes = await nextFile.arrayBuffer();
       const pdf = await PDFDocument.load(bytes, { ignoreEncryption: true });
       setPageCount(pdf.getPageCount());
@@ -375,6 +389,7 @@ export default function MainComponent() {
     setProgress({ done: 0, total: splitPlan.parts.length });
 
     try {
+      const PDFDocument = await loadPdfDocument();
       const sourceBytes = await file.arrayBuffer();
       const sourcePdf = await PDFDocument.load(sourceBytes, { ignoreEncryption: true });
       const outputs = [];
@@ -411,6 +426,7 @@ export default function MainComponent() {
         );
       } else {
         setStatus("Packaging split PDFs into ZIP...");
+        const JSZip = await loadJsZip();
         const zip = new JSZip();
         outputs.forEach((output) => zip.file(output.filename, output.bytes));
         zip.file(
@@ -440,9 +456,23 @@ export default function MainComponent() {
 
   const copyPlan = async () => {
     if (!splitPlan.parts.length) return;
-    await navigator.clipboard?.writeText(buildPlanText(file, splitPlan.parts, mode));
+    const success = await safeCopyText(buildPlanText(file, splitPlan.parts, mode));
+    if (!success) {
+      setError("Could not copy the split plan in this browser.");
+      return;
+    }
     setCopied(true);
     window.setTimeout(() => setCopied(false), 1400);
+  };
+
+  const downloadPlan = () => {
+    if (!splitPlan.parts.length) return;
+    downloadBlob(
+      new Blob([buildPlanText(file, splitPlan.parts, mode)], {
+        type: "text/plain;charset=utf-8",
+      }),
+      `${sanitizeFileName(filenamePrefix || file?.name || "split-plan")}-plan.txt`,
+    );
   };
 
   return (
@@ -671,6 +701,15 @@ export default function MainComponent() {
               >
                 <Clipboard className="h-4 w-4" />
                 {copied ? "Copied" : "Copy Plan"}
+              </button>
+              <button
+                type="button"
+                className="btn-secondary"
+                onClick={downloadPlan}
+                disabled={!splitPlan.parts.length}
+              >
+                <FileDown className="h-4 w-4" />
+                Download Plan
               </button>
               <button type="button" className="btn-secondary" onClick={resetTool}>
                 <RefreshCw className="h-4 w-4" />

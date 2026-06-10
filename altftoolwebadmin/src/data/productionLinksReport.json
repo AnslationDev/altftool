@@ -1,0 +1,554 @@
+{
+  "generatedAt": "2026-05-20T19:08:04.643Z",
+  "ok": true,
+  "status": "clean",
+  "strict": true,
+  "score": 100,
+  "baseUrl": "https://altftool.com",
+  "sitemap": {
+    "url": "https://altftool.com/sitemap.xml",
+    "urlCount": 1471,
+    "error": null,
+    "sampled": [
+      "https://altftool.com/",
+      "https://altftool.com/tools/all",
+      "https://altftool.com/tools/all/api-stress-estimator",
+      "https://altftool.com/blogs",
+      "https://altftool.com/tools/all/afterimage-generator",
+      "https://altftool.com/tools/all/age-calculator",
+      "https://altftool.com/tools/all/age-gender-detector",
+      "https://altftool.com/tools/all/ai-domain-generator",
+      "https://altftool.com/tools/all/ambiguous-figure-viewer",
+      "https://altftool.com/tools/all/anger-test",
+      "https://altftool.com/tools/all/animation-generator",
+      "https://altftool.com/tools/all/api-documentation-maker"
+    ]
+  },
+  "limits": {
+    "pages": 12,
+    "linkLimitPerPage": 16,
+    "imageLimitPerPage": 8,
+    "timeoutMs": 10000
+  },
+  "totals": {
+    "pages": 12,
+    "pagesWithFailures": 0,
+    "linksChecked": 192,
+    "imagesChecked": 36,
+    "skippedExternalLinks": 60,
+    "skippedExternalImages": 0,
+    "failures": 0,
+    "notices": 24,
+    "warnings": 0
+  },
+  "pages": [
+    {
+      "ok": true,
+      "pageUrl": "https://altftool.com/",
+      "status": 200,
+      "durationMs": 43,
+      "title": "AltFTool – Your Daily Digital Toolkit",
+      "canonical": "https://altftool.com",
+      "counts": {
+        "anchors": 30,
+        "internalAnchors": 25,
+        "checkedLinks": 16,
+        "images": 3,
+        "internalImages": 3,
+        "checkedImages": 3,
+        "skippedExternalLinks": 5,
+        "skippedExternalImages": 0
+      },
+      "failures": [],
+      "notices": [
+        {
+          "type": "coverage",
+          "pageUrl": "https://altftool.com/",
+          "message": "9 internal links skipped by per-page limit"
+        },
+        {
+          "type": "coverage",
+          "pageUrl": "https://altftool.com/",
+          "message": "5 external links skipped"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "ok": true,
+      "pageUrl": "https://altftool.com/tools/all",
+      "status": 200,
+      "durationMs": 89,
+      "title": "All Online Tools - Free Browser Microtools | AltFTool",
+      "canonical": "https://altftool.com/tools/all",
+      "counts": {
+        "anchors": 126,
+        "internalAnchors": 121,
+        "checkedLinks": 16,
+        "images": 3,
+        "internalImages": 3,
+        "checkedImages": 3,
+        "skippedExternalLinks": 5,
+        "skippedExternalImages": 0
+      },
+      "failures": [],
+      "notices": [
+        {
+          "type": "coverage",
+          "pageUrl": "https://altftool.com/tools/all",
+          "message": "105 internal links skipped by per-page limit"
+        },
+        {
+          "type": "coverage",
+          "pageUrl": "https://altftool.com/tools/all",
+          "message": "5 external links skipped"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "ok": true,
+      "pageUrl": "https://altftool.com/tools/all/api-stress-estimator",
+      "status": 200,
+      "durationMs": 95,
+      "title": "API STRESS ESTIMATOR - Free Online Tool | AltFTool",
+      "canonical": "https://altftool.com/tools/all/api-stress-estimator",
+      "counts": {
+        "anchors": 28,
+        "internalAnchors": 23,
+        "checkedLinks": 16,
+        "images": 3,
+        "internalImages": 3,
+        "checkedImages": 3,
+        "skippedExternalLinks": 5,
+        "skippedExternalImages": 0
+      },
+      "failures": [],
+      "notices": [
+        {
+          "type": "coverage",
+          "pageUrl": "https://altftool.com/tools/all/api-stress-estimator",
+          "message": "7 internal links skipped by per-page limit"
+        },
+        {
+          "type": "coverage",
+          "pageUrl": "https://altftool.com/tools/all/api-stress-estimator",
+          "message": "5 external links skipped"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "ok": true,
+      "pageUrl": "https://altftool.com/blogs",
+      "status": 200,
+      "durationMs": 92,
+      "title": "AltFTool Blog - Tools, Savings & Digital Guides | AltFTool",
+      "canonical": "https://altftool.com/blogs",
+      "counts": {
+        "anchors": 28,
+        "internalAnchors": 23,
+        "checkedLinks": 16,
+        "images": 3,
+        "internalImages": 3,
+        "checkedImages": 3,
+        "skippedExternalLinks": 5,
+        "skippedExternalImages": 0
+      },
+      "failures": [],
+      "notices": [
+        {
+          "type": "coverage",
+          "pageUrl": "https://altftool.com/blogs",
+          "message": "7 internal links skipped by per-page limit"
+        },
+        {
+          "type": "coverage",
+          "pageUrl": "https://altftool.com/blogs",
+          "message": "5 external links skipped"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "ok": true,
+      "pageUrl": "https://altftool.com/tools/all/afterimage-generator",
+      "status": 200,
+      "durationMs": 350,
+      "title": "Afterimage Generator - Free Online Tool | AltFTool",
+      "canonical": "https://altftool.com/tools/all/afterimage-generator",
+      "counts": {
+        "anchors": 28,
+        "internalAnchors": 23,
+        "checkedLinks": 16,
+        "images": 3,
+        "internalImages": 3,
+        "checkedImages": 3,
+        "skippedExternalLinks": 5,
+        "skippedExternalImages": 0
+      },
+      "failures": [],
+      "notices": [
+        {
+          "type": "coverage",
+          "pageUrl": "https://altftool.com/tools/all/afterimage-generator",
+          "message": "7 internal links skipped by per-page limit"
+        },
+        {
+          "type": "coverage",
+          "pageUrl": "https://altftool.com/tools/all/afterimage-generator",
+          "message": "5 external links skipped"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "ok": true,
+      "pageUrl": "https://altftool.com/tools/all/age-calculator",
+      "status": 200,
+      "durationMs": 504,
+      "title": "Age Calculator - Free Online Tool | AltFTool",
+      "canonical": "https://altftool.com/tools/all/age-calculator",
+      "counts": {
+        "anchors": 28,
+        "internalAnchors": 23,
+        "checkedLinks": 16,
+        "images": 3,
+        "internalImages": 3,
+        "checkedImages": 3,
+        "skippedExternalLinks": 5,
+        "skippedExternalImages": 0
+      },
+      "failures": [],
+      "notices": [
+        {
+          "type": "coverage",
+          "pageUrl": "https://altftool.com/tools/all/age-calculator",
+          "message": "7 internal links skipped by per-page limit"
+        },
+        {
+          "type": "coverage",
+          "pageUrl": "https://altftool.com/tools/all/age-calculator",
+          "message": "5 external links skipped"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "ok": true,
+      "pageUrl": "https://altftool.com/tools/all/age-gender-detector",
+      "status": 200,
+      "durationMs": 369,
+      "title": "Age & Gender Detector - Free Online Tool | AltFTool",
+      "canonical": "https://altftool.com/tools/all/age-gender-detector",
+      "counts": {
+        "anchors": 28,
+        "internalAnchors": 23,
+        "checkedLinks": 16,
+        "images": 3,
+        "internalImages": 3,
+        "checkedImages": 3,
+        "skippedExternalLinks": 5,
+        "skippedExternalImages": 0
+      },
+      "failures": [],
+      "notices": [
+        {
+          "type": "coverage",
+          "pageUrl": "https://altftool.com/tools/all/age-gender-detector",
+          "message": "7 internal links skipped by per-page limit"
+        },
+        {
+          "type": "coverage",
+          "pageUrl": "https://altftool.com/tools/all/age-gender-detector",
+          "message": "5 external links skipped"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "ok": true,
+      "pageUrl": "https://altftool.com/tools/all/ai-domain-generator",
+      "status": 200,
+      "durationMs": 341,
+      "title": "AI Domain Generator - Free Online Tool | AltFTool",
+      "canonical": "https://altftool.com/tools/all/ai-domain-generator",
+      "counts": {
+        "anchors": 28,
+        "internalAnchors": 23,
+        "checkedLinks": 16,
+        "images": 3,
+        "internalImages": 3,
+        "checkedImages": 3,
+        "skippedExternalLinks": 5,
+        "skippedExternalImages": 0
+      },
+      "failures": [],
+      "notices": [
+        {
+          "type": "coverage",
+          "pageUrl": "https://altftool.com/tools/all/ai-domain-generator",
+          "message": "7 internal links skipped by per-page limit"
+        },
+        {
+          "type": "coverage",
+          "pageUrl": "https://altftool.com/tools/all/ai-domain-generator",
+          "message": "5 external links skipped"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "ok": true,
+      "pageUrl": "https://altftool.com/tools/all/ambiguous-figure-viewer",
+      "status": 200,
+      "durationMs": 299,
+      "title": "Ambiguous Figure Viewer - Free Online Tool | AltFTool",
+      "canonical": "https://altftool.com/tools/all/ambiguous-figure-viewer",
+      "counts": {
+        "anchors": 28,
+        "internalAnchors": 23,
+        "checkedLinks": 16,
+        "images": 3,
+        "internalImages": 3,
+        "checkedImages": 3,
+        "skippedExternalLinks": 5,
+        "skippedExternalImages": 0
+      },
+      "failures": [],
+      "notices": [
+        {
+          "type": "coverage",
+          "pageUrl": "https://altftool.com/tools/all/ambiguous-figure-viewer",
+          "message": "7 internal links skipped by per-page limit"
+        },
+        {
+          "type": "coverage",
+          "pageUrl": "https://altftool.com/tools/all/ambiguous-figure-viewer",
+          "message": "5 external links skipped"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "ok": true,
+      "pageUrl": "https://altftool.com/tools/all/anger-test",
+      "status": 200,
+      "durationMs": 305,
+      "title": "Anger Test - Free Online Tool | AltFTool",
+      "canonical": "https://altftool.com/tools/all/anger-test",
+      "counts": {
+        "anchors": 28,
+        "internalAnchors": 23,
+        "checkedLinks": 16,
+        "images": 3,
+        "internalImages": 3,
+        "checkedImages": 3,
+        "skippedExternalLinks": 5,
+        "skippedExternalImages": 0
+      },
+      "failures": [],
+      "notices": [
+        {
+          "type": "coverage",
+          "pageUrl": "https://altftool.com/tools/all/anger-test",
+          "message": "7 internal links skipped by per-page limit"
+        },
+        {
+          "type": "coverage",
+          "pageUrl": "https://altftool.com/tools/all/anger-test",
+          "message": "5 external links skipped"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "ok": true,
+      "pageUrl": "https://altftool.com/tools/all/animation-generator",
+      "status": 200,
+      "durationMs": 290,
+      "title": "Animation Generator - Free Online Tool | AltFTool",
+      "canonical": "https://altftool.com/tools/all/animation-generator",
+      "counts": {
+        "anchors": 28,
+        "internalAnchors": 23,
+        "checkedLinks": 16,
+        "images": 3,
+        "internalImages": 3,
+        "checkedImages": 3,
+        "skippedExternalLinks": 5,
+        "skippedExternalImages": 0
+      },
+      "failures": [],
+      "notices": [
+        {
+          "type": "coverage",
+          "pageUrl": "https://altftool.com/tools/all/animation-generator",
+          "message": "7 internal links skipped by per-page limit"
+        },
+        {
+          "type": "coverage",
+          "pageUrl": "https://altftool.com/tools/all/animation-generator",
+          "message": "5 external links skipped"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "ok": true,
+      "pageUrl": "https://altftool.com/tools/all/api-documentation-maker",
+      "status": 200,
+      "durationMs": 312,
+      "title": "API Documentation Maker - Free Online Tool | AltFTool",
+      "canonical": "https://altftool.com/tools/all/api-documentation-maker",
+      "counts": {
+        "anchors": 28,
+        "internalAnchors": 23,
+        "checkedLinks": 16,
+        "images": 3,
+        "internalImages": 3,
+        "checkedImages": 3,
+        "skippedExternalLinks": 5,
+        "skippedExternalImages": 0
+      },
+      "failures": [],
+      "notices": [
+        {
+          "type": "coverage",
+          "pageUrl": "https://altftool.com/tools/all/api-documentation-maker",
+          "message": "7 internal links skipped by per-page limit"
+        },
+        {
+          "type": "coverage",
+          "pageUrl": "https://altftool.com/tools/all/api-documentation-maker",
+          "message": "5 external links skipped"
+        }
+      ],
+      "warnings": []
+    }
+  ],
+  "failures": [],
+  "notices": [
+    {
+      "type": "coverage",
+      "pageUrl": "https://altftool.com/",
+      "message": "9 internal links skipped by per-page limit"
+    },
+    {
+      "type": "coverage",
+      "pageUrl": "https://altftool.com/",
+      "message": "5 external links skipped"
+    },
+    {
+      "type": "coverage",
+      "pageUrl": "https://altftool.com/tools/all",
+      "message": "105 internal links skipped by per-page limit"
+    },
+    {
+      "type": "coverage",
+      "pageUrl": "https://altftool.com/tools/all",
+      "message": "5 external links skipped"
+    },
+    {
+      "type": "coverage",
+      "pageUrl": "https://altftool.com/tools/all/api-stress-estimator",
+      "message": "7 internal links skipped by per-page limit"
+    },
+    {
+      "type": "coverage",
+      "pageUrl": "https://altftool.com/tools/all/api-stress-estimator",
+      "message": "5 external links skipped"
+    },
+    {
+      "type": "coverage",
+      "pageUrl": "https://altftool.com/blogs",
+      "message": "7 internal links skipped by per-page limit"
+    },
+    {
+      "type": "coverage",
+      "pageUrl": "https://altftool.com/blogs",
+      "message": "5 external links skipped"
+    },
+    {
+      "type": "coverage",
+      "pageUrl": "https://altftool.com/tools/all/afterimage-generator",
+      "message": "7 internal links skipped by per-page limit"
+    },
+    {
+      "type": "coverage",
+      "pageUrl": "https://altftool.com/tools/all/afterimage-generator",
+      "message": "5 external links skipped"
+    },
+    {
+      "type": "coverage",
+      "pageUrl": "https://altftool.com/tools/all/age-calculator",
+      "message": "7 internal links skipped by per-page limit"
+    },
+    {
+      "type": "coverage",
+      "pageUrl": "https://altftool.com/tools/all/age-calculator",
+      "message": "5 external links skipped"
+    },
+    {
+      "type": "coverage",
+      "pageUrl": "https://altftool.com/tools/all/age-gender-detector",
+      "message": "7 internal links skipped by per-page limit"
+    },
+    {
+      "type": "coverage",
+      "pageUrl": "https://altftool.com/tools/all/age-gender-detector",
+      "message": "5 external links skipped"
+    },
+    {
+      "type": "coverage",
+      "pageUrl": "https://altftool.com/tools/all/ai-domain-generator",
+      "message": "7 internal links skipped by per-page limit"
+    },
+    {
+      "type": "coverage",
+      "pageUrl": "https://altftool.com/tools/all/ai-domain-generator",
+      "message": "5 external links skipped"
+    },
+    {
+      "type": "coverage",
+      "pageUrl": "https://altftool.com/tools/all/ambiguous-figure-viewer",
+      "message": "7 internal links skipped by per-page limit"
+    },
+    {
+      "type": "coverage",
+      "pageUrl": "https://altftool.com/tools/all/ambiguous-figure-viewer",
+      "message": "5 external links skipped"
+    },
+    {
+      "type": "coverage",
+      "pageUrl": "https://altftool.com/tools/all/anger-test",
+      "message": "7 internal links skipped by per-page limit"
+    },
+    {
+      "type": "coverage",
+      "pageUrl": "https://altftool.com/tools/all/anger-test",
+      "message": "5 external links skipped"
+    },
+    {
+      "type": "coverage",
+      "pageUrl": "https://altftool.com/tools/all/animation-generator",
+      "message": "7 internal links skipped by per-page limit"
+    },
+    {
+      "type": "coverage",
+      "pageUrl": "https://altftool.com/tools/all/animation-generator",
+      "message": "5 external links skipped"
+    },
+    {
+      "type": "coverage",
+      "pageUrl": "https://altftool.com/tools/all/api-documentation-maker",
+      "message": "7 internal links skipped by per-page limit"
+    },
+    {
+      "type": "coverage",
+      "pageUrl": "https://altftool.com/tools/all/api-documentation-maker",
+      "message": "5 external links skipped"
+    }
+  ],
+  "warnings": []
+}

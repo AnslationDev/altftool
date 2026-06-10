@@ -10,7 +10,7 @@ function isLocalHost() {
 }
 
 export function isLocalAdminLoginEnabled() {
-  return process.env.NODE_ENV === "development" && isLocalHost();
+  return isLocalHost();
 }
 
 export function createLocalAdminUser() {

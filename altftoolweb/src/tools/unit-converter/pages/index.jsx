@@ -1,9 +1,11 @@
 "use client";
-import { useEffect, useState, useCallback } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 
 import {
   ArrowLeftRight,
   Clock,
+  Copy,
+  FileDown,
   History,
   ChevronDown,
   Scale,
@@ -12,6 +14,7 @@ import {
   Thermometer,
   TrendingUp,
 } from "lucide-react";
+import { safeCopyText } from "@/shared/utils/clipboard";
 
 // import FAQSection from "./components/FAQs";
 
@@ -65,6 +68,18 @@ const unitSymbols = {
   temperature: { C: "°C", F: "°F", K: "K" },
 };
 
+const getUnitSymbol = (cat, unit) => unitSymbols[cat]?.[unit] || unit || "";
+
+function downloadTextFile(filename, content) {
+  const blob = new Blob([content], { type: "text/plain;charset=utf-8" });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = filename;
+  link.click();
+  URL.revokeObjectURL(url);
+}
+
 const categoryUnits = {
   length: LengthUnits,
   weight: WeightUnits,
@@ -89,6 +104,7 @@ export default function UnitConverter() {
   const [recentConversions, setRecent] = useState([]);
   const [history, setHistoryState] = useState([]);
   const [isConverting, setIsConverting] = useState(false);
+  const [copied, setCopied] = useState(false);
 
   const CategoryIcon = categoryIcons[category];
 
@@ -96,10 +112,7 @@ export default function UnitConverter() {
       LOAD HISTORY
   ------------------------------------*/
   useEffect(() => {
-    const refresh = () => setHistoryState(getHistory());
-    refresh();
-    const interval = setInterval(refresh, 500);
-    return () => clearInterval(interval);
+    setHistoryState(getHistory());
   }, []);
 
   /*-----------------------------------
@@ -208,6 +221,42 @@ export default function UnitConverter() {
   ------------------------------------*/
   const units = categoryUnits[category];
 
+  const conversionText = useMemo(
+    () =>
+      [
+        "Unit Converter Result",
+        `Category: ${category}`,
+        `From: ${inputValue || "0"} ${getUnitSymbol(category, fromUnit)}`,
+        `To: ${result || "0"} ${getUnitSymbol(category, toUnit)}`,
+        `Generated: ${new Date().toLocaleString()}`,
+      ].join("\n"),
+    [category, fromUnit, inputValue, result, toUnit]
+  );
+
+  const historyReport = useMemo(
+    () =>
+      [
+        "Unit Converter History",
+        `Total saved conversions: ${history.length}`,
+        "",
+        ...[...history].reverse().map(
+          (item, index) =>
+            `${index + 1}. ${item.fromValue} ${getUnitSymbol(item.category, item.fromUnit)} -> ${item.result} ${getUnitSymbol(item.category, item.toUnit)} (${item.category}, ${new Date(item.ts).toLocaleString()})`
+        ),
+      ].join("\n"),
+    [history]
+  );
+
+  const canUseResult = inputValue && result && result !== "Invalid" && result !== "Error";
+
+  const copyConversion = async () => {
+    if (!canUseResult) return;
+    const success = await safeCopyText(conversionText);
+    if (!success) return;
+    setCopied(true);
+    setTimeout(() => setCopied(false), 1200);
+  };
+
   /*-----------------------------------
       MODERN NATIVE SELECT STYLE
   ------------------------------------*/
@@ -286,7 +335,7 @@ export default function UnitConverter() {
                   </div>
 
                   {/* FROM UNIT SELECT */}
-                  <div className="w-44">
+                  <div className="w-full">
                     <label className="text-sm font-medium">Unit</label>
 
                     <div className="relative">
@@ -329,7 +378,7 @@ export default function UnitConverter() {
                   </div>
 
                   {/* TO UNIT SELECT */}
-                  <div className="w-48">
+                  <div className="w-full">
                     <label className="text-sm font-medium ">Unit</label>
                     <div className="relative">
                       <select
@@ -357,17 +406,37 @@ export default function UnitConverter() {
                     Conversion Result
                   </div>
                   <div className="text-xl font-bold text-black">
-                    {inputValue || "0"} {unitSymbols[category][fromUnit]} →{" "}
-                    {result || "0"} {unitSymbols[category][toUnit]}
+                    {inputValue || "0"} {getUnitSymbol(category, fromUnit)} →{" "}
+                    {result || "0"} {getUnitSymbol(category, toUnit)}
                   </div>
 
-                  <button
-                    onClick={handleConvert}
-                    disabled={!inputValue || !result || isConverting}
-                    className="mt-4 px-4 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700 cursor-pointer"
-                  >
-                    {isConverting ? "Saving..." : "Save to History"}
-                  </button>
+                  <div className="mt-4 flex flex-wrap gap-2">
+                    <button
+                      onClick={handleConvert}
+                      disabled={!canUseResult || isConverting}
+                      className="px-4 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700 cursor-pointer disabled:cursor-not-allowed disabled:opacity-50"
+                    >
+                      {isConverting ? "Saving..." : "Save to History"}
+                    </button>
+                    <button
+                      type="button"
+                      onClick={copyConversion}
+                      disabled={!canUseResult}
+                      className="btn-secondary min-h-10 px-3 py-2 text-sm disabled:cursor-not-allowed disabled:opacity-50"
+                    >
+                      <Copy className="h-4 w-4" />
+                      {copied ? "Copied" : "Copy result"}
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => downloadTextFile("unit-conversion-result.txt", conversionText)}
+                      disabled={!canUseResult}
+                      className="btn-secondary min-h-10 px-3 py-2 text-sm disabled:cursor-not-allowed disabled:opacity-50"
+                    >
+                      <FileDown className="h-4 w-4" />
+                      Download
+                    </button>
+                  </div>
                 </div>
 
                 {/* CLEAR BUTTON */}
@@ -399,11 +468,11 @@ export default function UnitConverter() {
                   {recentConversions.map((c) => (
                     <div key={c.id} className="p-3 rounded-lg bg-(--muted)">
                       <span className="font-semibold">
-                        {c.fromValue} {unitSymbols[c.category][c.fromUnit]}
+                        {c.fromValue} {getUnitSymbol(c.category, c.fromUnit)}
                       </span>
                       <span className="text-(--muted-foreground)"> → </span>
                       <span className="font-semibold text-blue-600">
-                        {c.result} {unitSymbols[c.category][c.toUnit]}
+                        {c.result} {getUnitSymbol(c.category, c.toUnit)}
                       </span>
                     </div>
                   ))}
@@ -460,13 +529,13 @@ export default function UnitConverter() {
                         <div className="text-sm">
                           <div className="font-semibold text-(--foreground)">
                             {item.fromValue}{" "}
-                            {unitSymbols[item.category][item.fromUnit]}
+                            {getUnitSymbol(item.category, item.fromUnit)}
                           </div>
                           <div className="flex gap-2">
                             <span className="text-(--muted-foreground)">→</span>
                             <span className="font-semibold text-blue-600">
                               {item.result}{" "}
-                              {unitSymbols[item.category][item.toUnit]}
+                              {getUnitSymbol(item.category, item.toUnit)}
                             </span>
                           </div>
                         </div>
@@ -474,12 +543,22 @@ export default function UnitConverter() {
                     ))}
                   </div>
 
-                  <button
-                    onClick={handleClearHistory}
-                    className="mt-4 px-4 py-2 rounded-lg bg-red-600 text-white hover:bg-red-700 w-full cursor-pointer"
-                  >
-                    Clear All History
-                  </button>
+                  <div className="mt-4 grid gap-2 sm:grid-cols-2">
+                    <button
+                      type="button"
+                      onClick={() => downloadTextFile("unit-converter-history.txt", historyReport)}
+                      className="btn-secondary min-h-10 px-3 py-2 text-sm"
+                    >
+                      <FileDown className="h-4 w-4" />
+                      Export History
+                    </button>
+                    <button
+                      onClick={handleClearHistory}
+                      className="px-4 py-2 rounded-lg bg-red-600 text-white hover:bg-red-700 w-full cursor-pointer"
+                    >
+                      Clear All History
+                    </button>
+                  </div>
                 </div>
               )}
             </div>

@@ -52,7 +52,7 @@ function Page() {
           ]),
         ]}
       />
-      <div className="w-full ">
+      <div className="route-page-shell w-full">
         <HeroSectionBrand />
 
         <Categories data={allCategory} />

@@ -55,6 +55,12 @@ jobs:
       - name: Validate full route surface
         run: npm run validate:full
 
+      - name: Write performance budget report
+        run: npm run performance:budget:strict -- --output ci-performance-budget-report.json --output-md ci-performance-budget-report.md
+
+      - name: Write Firebase integrity report
+        run: npm run firebase:integrity:strict -- --output ci-firebase-integrity-report.json --output-md ci-firebase-integrity-report.md
+
       - name: Verify live Firebase data
         run: npm run firebase:live-check
 
@@ -79,6 +85,18 @@ jobs:
           path: |
             playwright-report/
             test-results/
+          if-no-files-found: ignore
+
+      - name: Upload quality gate reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: verify-quality-gate-reports
+          path: |
+            ci-performance-budget-report.json
+            ci-performance-budget-report.md
+            ci-firebase-integrity-report.json
+            ci-firebase-integrity-report.md
           if-no-files-found: ignore
 
   firebase-emulator:

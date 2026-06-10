@@ -13,6 +13,7 @@ import {
   onSnapshot,
   setDoc,
   updateDoc,
+  writeBatch,
 } from "firebase/firestore";
 
 import {
@@ -121,6 +122,76 @@ export async function updateBlog(id, payload) {
     ...payload,
     updatedAt: serverTimestamp(),
   });
+}
+
+function cleanRollbackFix(fix = {}) {
+  return {
+    from: String(fix.from || "").slice(0, 300),
+    href: String(fix.href || "").slice(0, 500),
+    kind: String(fix.kind || "link-fix").slice(0, 80),
+    label: String(fix.label || "Link fix").slice(0, 160),
+    to: String(fix.to || "").slice(0, 300),
+  };
+}
+
+export async function applyBlogDescriptionWithRollback({
+  blog,
+  description,
+  fixes = [],
+  mode = "safe",
+  source = "quality-center",
+}) {
+  if (!blog?.id) throw new Error("Blog id is required for rollback-safe update.");
+
+  const rollbackRef = doc(col("blogQualityRollbacks"));
+  const batch = writeBatch(db);
+  const previousDescription = String(blog.description || blog.content || blog.body || "");
+  const nextDescription = String(description || "");
+  const normalizedFixes = fixes.slice(0, 30).map(cleanRollbackFix);
+
+  batch.set(rollbackRef, {
+    blogId: blog.id,
+    blogTitle: blog.heading || blog.title || "Untitled blog",
+    blogSlug: blog.slug || "",
+    source,
+    mode,
+    fixCount: fixes.length,
+    fixes: normalizedFixes,
+    previousDescription,
+    nextDescription,
+    restoredAt: null,
+    createdAt: serverTimestamp(),
+    updatedAt: serverTimestamp(),
+  });
+
+  batch.update(docRef("blogs", blog.id), {
+    description: nextDescription,
+    updatedAt: serverTimestamp(),
+  });
+
+  await batch.commit();
+  return rollbackRef.id;
+}
+
+export async function fetchRecentBlogQualityRollbacks(pageSize = 8) {
+  const q = query(col("blogQualityRollbacks"), orderBy("createdAt", "desc"), limit(pageSize));
+  const snap = await getDocs(q);
+  return snap.docs.map((d) => ({ id: d.id, ...d.data() }));
+}
+
+export async function restoreBlogQualityRollback(rollback) {
+  if (!rollback?.id || !rollback?.blogId) throw new Error("Rollback snapshot is incomplete.");
+
+  const batch = writeBatch(db);
+  batch.update(docRef("blogs", rollback.blogId), {
+    description: String(rollback.previousDescription || ""),
+    updatedAt: serverTimestamp(),
+  });
+  batch.update(docRef("blogQualityRollbacks", rollback.id), {
+    restoredAt: serverTimestamp(),
+    updatedAt: serverTimestamp(),
+  });
+  await batch.commit();
 }
 
 export async function updateBlogImage(id, imageUrl) {

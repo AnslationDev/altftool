@@ -6,16 +6,35 @@ import { isActiveStatus, normalizeBuySmartCategory } from "@altftool/core/buysma
 import { fallbackBuySmartOffers } from "@/app/buysmart/data/fallbackOffers";
 import fallbackStores from "@/app/buysmart/data/stores.json";
 import fallbackDeals from "@/app/buysmart/data/trending.json";
+import { firebaseBuySmartAnalyticsSource } from "@/app/buysmart/service.js/firebaseBuySmartAnalytics";
 import { firebaseBuySmartCategoriesSource } from "@/app/buysmart/service.js/firebaseBuySmartCategories";
 import { firebaseBuySmartFeatureBrandSource } from "@/app/buysmart/service.js/firebaseBuySmartFeature";
 import { firebaseBuySmartStoreSource } from "@/app/buysmart/service.js/firebaseBuySmartStore";
 
-const fallbackStoreItems = fallbackStores.map((store) => ({
-  ...store,
-  image: store.image || store.logo,
-  link: store.link || (store.slug ? `/buysmart/stores/${store.slug}` : "#"),
-  status: store.status || "active",
-}));
+const fallbackStoreUrls = {
+  ajio: "https://www.ajio.com",
+  amazon: "https://www.amazon.in",
+  myntra: "https://www.myntra.com",
+  savana: "https://www.savana.com",
+};
+
+function getFallbackStoreUrl(store) {
+  if (store.url || store.link) return store.url || store.link;
+  return fallbackStoreUrls[store.slug] || "#";
+}
+
+const fallbackStoreItems = fallbackStores.map((store) => {
+  const externalUrl = getFallbackStoreUrl(store);
+
+  return {
+    ...store,
+    image: store.image || store.logo,
+    link: externalUrl,
+    status: store.status || "active",
+    storePath: store.slug ? `/buysmart/stores/${store.slug}` : "#",
+    url: externalUrl,
+  };
+});
 
 const fallbackStoreOffers = fallbackStores.map((store, index) =>
   normalizeBuySmartCategory({
@@ -23,9 +42,10 @@ const fallbackStoreOffers = fallbackStores.map((store, index) =>
     category: "Trending",
     discount: store.highlight || "View deal",
     featured: index < 3,
-    link: store.url || store.link || "#",
+    link: getFallbackStoreUrl(store),
     offerType: "deal",
     priority: Math.max(0, 30 - index),
+    slug: store.slug,
     status: store.status || "active",
     title: store.name,
     verified: true,
@@ -161,5 +181,43 @@ export function useBuySmartFeaturedDeals() {
     firebaseBuySmartFeatureBrandSource,
     fallbackFeaturedDeals,
     normalizeFeatureItems,
+  );
+}
+
+export function useBuySmartAnalytics() {
+  const [analytics, setAnalytics] = useState({ counters: {}, events: [], updatedAt: 0 });
+  const [isSynced, setIsSynced] = useState(false);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    let mounted = true;
+
+    const unsubscribe = firebaseBuySmartAnalyticsSource.subscribe(
+      (data) => {
+        if (!mounted) return;
+        setAnalytics(data || { counters: {}, events: [], updatedAt: 0 });
+        setIsSynced(true);
+        setError(null);
+      },
+      (readError) => {
+        if (!mounted) return;
+        setError(readError);
+      },
+    );
+
+    return () => {
+      mounted = false;
+      unsubscribe?.();
+    };
+  }, []);
+
+  return useMemo(
+    () => ({
+      ...analytics,
+      error,
+      isSynced,
+      loading: false,
+    }),
+    [analytics, error, isSynced],
   );
 }

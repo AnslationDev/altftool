@@ -1,4 +1,4 @@
-export default {
+const toolConfig = {
   slug: "impossible-object-builder",
   name: "Impossible Object Builder",
   description:
@@ -15,3 +15,5 @@ export default {
     "escher",
   ],
 };
+
+export default toolConfig;

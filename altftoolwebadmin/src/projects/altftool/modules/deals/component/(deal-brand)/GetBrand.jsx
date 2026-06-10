@@ -2,7 +2,7 @@
 
 import React, { useEffect, useMemo, useState } from "react";
 import { brandService } from "../../firebaseService/brand.service";
-import ReusableTable from "../../../buysmart/(components)/(resuableComponent)/ReusableTable";
+import ReusableTable, { SafeTableImage } from "../../../buysmart/(components)/(resuableComponent)/ReusableTable";
 
 function GetBrand({ setActive, setEditData }) {
 
@@ -35,7 +35,7 @@ function GetBrand({ setActive, setEditData }) {
       accessorKey: "logo",
       header: "Logo",
       Cell: ({ row }) => (
-        <img src={row.original.logo} className="h-10 w-10" />
+        <SafeTableImage src={row.original.logo} alt={`${row.original.name || "Brand"} logo`} className="h-10 w-10 rounded border object-contain" fallbackClassName="h-10 w-10 rounded border border-dashed border-gray-300 bg-gray-50" />
       )
     },
 
@@ -52,8 +52,8 @@ function GetBrand({ setActive, setEditData }) {
   };
 
   const handleDelete = async (id) => {
-    if (!confirm("Delete brand?")) return;
     await brandService.remove(id);
+    return true;
   };
  
   return (
@@ -63,6 +63,7 @@ function GetBrand({ setActive, setEditData }) {
       loading={loading}
       onEdit={handleEdit}
       onDeleteSingle={handleDelete}
+      confirmDeletes
     />
   );
 }

@@ -1,8 +1,26 @@
 import { NextResponse } from "next/server";
-import { BLOG_REMOTE_LIMIT } from "@/app/blogs/data";
-import { fetchFirebaseBlogsPage } from "@/app/blogs/data/firebaseBlogs";
+import { BLOG_REMOTE_LIMIT, blogTaxonomySlug, getAllBlogs } from "@/app/blogs/data";
+import {
+  describeFirebaseBlogError,
+  fetchFirebaseBlogsPage,
+} from "@/app/blogs/data/firebaseBlogs";
 
 export const revalidate = 300;
+
+function getStaticBlogFallback({ offset, limit, category }) {
+  const categorySlug = blogTaxonomySlug(category || "");
+  const posts = getAllBlogs().filter((post) => {
+    if (!categorySlug || category === "All") return true;
+    return blogTaxonomySlug(post.category) === categorySlug;
+  });
+  const chunk = posts.slice(offset, offset + limit);
+
+  return {
+    posts: chunk,
+    nextOffset: offset + chunk.length,
+    hasMore: offset + chunk.length < posts.length,
+  };
+}
 
 export async function GET(request) {
   const { searchParams } = new URL(request.url);
@@ -26,10 +44,12 @@ export async function GET(request) {
       hasMore: posts.length === limit,
     });
   } catch (error) {
-    console.error("GET /api/blogs failed:", error);
-    return NextResponse.json(
-      { posts: [], nextOffset: offset, hasMore: false },
-      { status: 200 }
-    );
+    const fallback = getStaticBlogFallback({ offset, limit, category });
+    console.warn("GET /api/blogs static fallback:", describeFirebaseBlogError(error));
+    return NextResponse.json({
+      ...fallback,
+      source: "static-fallback",
+      warning: "Live blog data is temporarily unavailable.",
+    });
   }
 }

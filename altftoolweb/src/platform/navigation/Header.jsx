@@ -35,6 +35,9 @@ const Header = () => {
   const [searchError, setSearchError] = useState("");
   const [themeReady, setThemeReady] = useState(false);
   const themeMenuRef = useRef(null);
+  const mobileMenuButtonRef = useRef(null);
+  const mobileCloseButtonRef = useRef(null);
+  const mobileMenuPanelId = "site-mobile-navigation";
   const router = useRouter();
   const pathname = usePathname();
   const { themeMode, resolvedTheme, setThemeMode } = useTheme();
@@ -98,6 +101,33 @@ const Header = () => {
     };
   }, [themeMenuOpen]);
 
+  useEffect(() => {
+    if (!mobileMenuOpen) return undefined;
+
+    const focusCloseButton = window.setTimeout(() => {
+      const closeButton =
+        mobileCloseButtonRef.current ||
+        document.querySelector('button[aria-label="Close menu"]');
+      closeButton?.focus({ preventScroll: true });
+    }, 50);
+
+    const handleKeyDown = (event) => {
+      if (event.key === "Escape") {
+        setMobileMenuOpen(false);
+        window.setTimeout(() => {
+          mobileMenuButtonRef.current?.focus({ preventScroll: true });
+        }, 0);
+      }
+    };
+
+    document.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      window.clearTimeout(focusCloseButton);
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [mobileMenuOpen]);
+
   const handleChange = (value) => {
     setSearchQuery(value);
     if (searchError) setSearchError("");
@@ -130,6 +160,26 @@ const Header = () => {
     setThemeMenuOpen(false);
   };
 
+  const openMobileMenu = () => {
+    setMobileMenuOpen(true);
+  };
+
+  const closeMobileMenu = ({ returnFocus = false } = {}) => {
+    setMobileMenuOpen(false);
+
+    if (returnFocus) {
+      window.setTimeout(() => {
+        mobileMenuButtonRef.current?.focus({ preventScroll: true });
+      }, 0);
+    }
+  };
+
+  const handleMobileMenuKeyDown = (event) => {
+    if (event.key !== "Enter" && event.key !== " ") return;
+    event.preventDefault();
+    openMobileMenu();
+  };
+
   // Hide global header on immersive routes.
   if (isPublicShellHidden(pathname)) {
     return null;
@@ -139,9 +189,10 @@ const Header = () => {
     <>
       <header
         id="main-header"
-        className="sticky top-0 z-50 border-b border-(--border) bg-(--card) px-4 py-2 backdrop-blur-xl sm:px-6 lg:px-10"
+        data-hydrated={themeReady ? "true" : "false"}
+        className="sticky top-0 z-50 border-b border-(--border) bg-[color-mix(in_srgb,var(--card)_90%,transparent)] px-4 py-2 shadow-[0_1px_0_rgba(15,23,42,0.03)] backdrop-blur-xl sm:px-6 lg:px-8"
       >
-        <div className="mx-auto flex h-14 max-w-[1440px] items-center justify-between gap-5">
+        <div className="mx-auto flex h-14 max-w-[var(--anslation-ds-container)] items-center justify-between gap-5">
           <Link
             href="/"
             className="flex min-w-fit items-center"
@@ -166,6 +217,8 @@ const Header = () => {
                   {item.options ? (
                     <>
                       <button
+                        type="button"
+                        aria-haspopup="true"
                         className={`relative flex items-center gap-2 rounded-[var(--anslation-ds-radius)] px-2.5 py-2 text-sm font-medium transition ${
                           isCurrent
                             ? "bg-(--primary) text-(--primary-foreground) shadow-[var(--anslation-ds-shadow-sm)]"
@@ -177,7 +230,7 @@ const Header = () => {
                         <ChevronDown className="h-4 w-4 transition group-hover:rotate-180" />
                       </button>
 
-                      <div className="absolute left-0 top-full hidden pt-2 group-hover:block">
+                      <div className="absolute left-0 top-full hidden pt-2 group-focus-within:block group-hover:block">
                         <div className="w-64 rounded-[var(--anslation-ds-radius)] border border-(--border) bg-(--card) p-1.5 shadow-[var(--anslation-ds-shadow-md)]">
                           {item.options?.map((option) => {
                             const OptionIcon = option.icon;
@@ -225,7 +278,7 @@ const Header = () => {
 
           <div className="flex items-center gap-2">
             <form
-              className="hidden items-center gap-2 sm:flex"
+              className="relative hidden items-center gap-2 sm:flex"
               onSubmit={handleSearch}
             >
               <Input
@@ -233,12 +286,18 @@ const Header = () => {
                 placeholder="Search tools, extensions..."
                 value={searchQuery}
                 onChange={(event) => handleChange(event.target.value)}
+                aria-invalid={searchError ? "true" : "false"}
                 className="w-64 bg-[var(--background)]"
               />
 
               <IconButton type="submit" aria-label="Search">
                 <Search className="h-4 w-4" />
               </IconButton>
+              {searchError ? (
+                <p className="absolute right-0 top-full mt-2 rounded-[6px] border border-[var(--anslation-ds-danger)] bg-[var(--card)] px-2 py-1 text-xs font-semibold text-[var(--anslation-ds-danger)] shadow-[var(--anslation-ds-shadow-sm)]">
+                  {searchError}
+                </p>
+              ) : null}
             </form>
 
             <div className="relative" ref={themeMenuRef}>
@@ -300,9 +359,13 @@ const Header = () => {
             </div>
 
             <IconButton
-              onClick={() => setMobileMenuOpen(true)}
+              ref={mobileMenuButtonRef}
+              onClick={openMobileMenu}
+              onKeyDown={handleMobileMenuKeyDown}
               className="lg:hidden"
               aria-label="Open menu"
+              aria-expanded={mobileMenuOpen}
+              aria-controls={mobileMenuPanelId}
             >
               <Menu className="h-5 w-5" />
             </IconButton>
@@ -311,6 +374,12 @@ const Header = () => {
       </header>
 
       <div
+        id={mobileMenuPanelId}
+        role="dialog"
+        aria-label="Mobile navigation"
+        aria-modal={mobileMenuOpen ? "true" : undefined}
+        aria-hidden={mobileMenuOpen ? undefined : "true"}
+        inert={!mobileMenuOpen}
         className={`fixed inset-0 z-50 lg:hidden ${
           mobileMenuOpen ? "" : "pointer-events-none"
         }`}
@@ -319,7 +388,7 @@ const Header = () => {
           className={`fixed inset-0 bg-black/45 backdrop-blur-sm transition-opacity duration-300 ${
             mobileMenuOpen ? "opacity-100" : "opacity-0"
           }`}
-          onClick={() => setMobileMenuOpen(false)}
+          onClick={() => closeMobileMenu()}
         />
 
         <div
@@ -330,7 +399,7 @@ const Header = () => {
           <div className="flex items-center justify-between">
             <Link
               href="/"
-              onClick={() => setMobileMenuOpen(false)}
+              onClick={() => closeMobileMenu()}
               {...routePreviewProps("/")}
             >
               <ManagedImage
@@ -341,7 +410,8 @@ const Header = () => {
             </Link>
 
             <IconButton
-              onClick={() => setMobileMenuOpen(false)}
+              ref={mobileCloseButtonRef}
+              onClick={() => closeMobileMenu({ returnFocus: true })}
               variant="ghost"
               aria-label="Close menu"
             >
@@ -402,7 +472,7 @@ const Header = () => {
                                 key={option.label}
                                 href={option.href}
                                 {...routePreviewProps(option.href)}
-                                onClick={() => setMobileMenuOpen(false)}
+                                onClick={() => closeMobileMenu()}
                                 className={`flex items-center gap-2 rounded-[var(--anslation-ds-radius)] px-2.5 py-2 text-sm font-medium transition ${
                                   isActive(option)
                                     ? "bg-(--muted) text-(--primary)"
@@ -420,7 +490,7 @@ const Header = () => {
                       <Link
                         href={item.href}
                         {...routePreviewProps(item.href)}
-                        onClick={() => setMobileMenuOpen(false)}
+                        onClick={() => closeMobileMenu()}
                         className={`flex items-center gap-2 rounded-[var(--anslation-ds-radius)] px-2.5 py-2.5 text-sm font-medium transition ${
                           isCurrent
                             ? "bg-(--muted) text-(--primary)"

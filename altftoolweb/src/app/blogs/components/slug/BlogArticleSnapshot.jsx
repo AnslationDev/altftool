@@ -1,5 +1,3 @@
-"use client";
-
 import Link from "next/link";
 import {
   ArrowRight,
@@ -10,7 +8,6 @@ import {
   Wrench,
 } from "lucide-react";
 import { blogTaxonomySlug, getBlogFreshness, stripHtml } from "../../data";
-import { recordBlogToolClick } from "../../context/views.service";
 
 function cleanText(value = "") {
   return stripHtml(String(value || ""))
@@ -57,15 +54,6 @@ function formatDate(value) {
   }).format(date);
 }
 
-function trackToolClick(blog, tool) {
-  recordBlogToolClick({
-    blogId: typeof blog?.id === "string" ? blog.id : "",
-    blogSlug: blog?.slug || "",
-    toolSlug: tool?.slug,
-    placement: "article-snapshot",
-  });
-}
-
 export default function BlogArticleSnapshot({
   blog,
   faqItems = [],
@@ -87,7 +75,10 @@ export default function BlogArticleSnapshot({
   if (!items.length && !primaryTool && !nextPost && !sourceCount && !faqItems.length) return null;
 
   return (
-    <section className="mt-5 rounded-[var(--anslation-ds-radius)] border border-(--border) bg-(--card) p-4 shadow-[var(--anslation-ds-shadow-sm)] sm:p-5">
+    <section
+      id="article-summary"
+      className="mt-5 scroll-mt-24 rounded-[var(--anslation-ds-radius)] border border-(--border) bg-(--card) p-4 shadow-[var(--anslation-ds-shadow-sm)] sm:p-5"
+    >
       <div className="grid gap-5 lg:grid-cols-[minmax(0,1fr)_320px] lg:items-start">
         <div className="min-w-0">
           <div className="mb-4 flex items-center gap-2">
@@ -122,7 +113,9 @@ export default function BlogArticleSnapshot({
             {primaryTool ? (
               <Link
                 href={primaryTool.href}
-                onClick={() => trackToolClick(blog, primaryTool)}
+                data-blog-tool-click="true"
+                data-tool-slug={primaryTool.slug}
+                data-placement="article-snapshot"
                 className="group flex items-center justify-between gap-3 rounded-[6px] bg-(--primary) px-3 py-2.5 text-sm font-semibold text-(--primary-foreground) transition hover:bg-(--primary-active)"
               >
                 <span className="inline-flex min-w-0 items-center gap-2">

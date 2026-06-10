@@ -1,5 +1,3 @@
-"use client";
-
 import Link from "next/link";
 import { ArrowRight, CheckCircle2, Hash, Lightbulb, ListChecks } from "lucide-react";
 import { blogTaxonomySlug, stripHtml } from "../../data";
@@ -84,6 +82,8 @@ export default function BlogArticleEnhancements({ blog, relatedPosts = [] }) {
                 <Link
                   key={tag}
                   href={`/blogs/tag/${blogTaxonomySlug(tag)}`}
+                  data-blog-internal-link="tag"
+                  data-source-blog-slug={blog?.slug || ""}
                   className="inline-flex h-8 items-center rounded-[6px] border border-(--border) bg-(--background) px-3 text-xs font-semibold text-(--muted-foreground) transition hover:border-(--primary) hover:text-(--foreground)"
                 >
                   {tag}
@@ -104,6 +104,10 @@ export default function BlogArticleEnhancements({ blog, relatedPosts = [] }) {
                 <Link
                   key={post.slug}
                   href={`/blogs/${post.slug}`}
+                  aria-label={`Read next: ${post.heading || post.title}`}
+                  data-blog-internal-link="read-next"
+                  data-source-blog-slug={blog?.slug || ""}
+                  data-target-blog-slug={post.slug}
                   className="group flex items-center justify-between gap-3 rounded-[6px] border border-(--border) bg-(--background) p-3 transition hover:border-(--primary)"
                 >
                   <span className="line-clamp-2 text-sm font-semibold leading-snug text-(--foreground) group-hover:text-(--primary)">

@@ -6,8 +6,6 @@ import {
     PieChart, Pie, Cell, BarChart, Bar, XAxis, YAxis,
     CartesianGrid, Tooltip, Legend, LineChart, Line, ResponsiveContainer,
 } from 'recharts';
-import html2canvas from 'html2canvas';
-import { jsPDF } from 'jspdf';
 import {
     Car, Fuel, Settings, Wallet, TrendingUp, Calculator,
     Download, Camera, Printer, RotateCcw, ChevronDown, ChevronUp,
@@ -21,6 +19,19 @@ import Button from './ui/Button';
 import Input from './ui/Input';
 import Select from './ui/Select';
 import Features from './Features';
+
+let html2canvasPromise;
+let jsPdfPromise;
+
+function loadHtml2Canvas() {
+    html2canvasPromise ||= import('html2canvas').then((module) => module.default || module);
+    return html2canvasPromise;
+}
+
+function loadJsPdf() {
+    jsPdfPromise ||= import('jspdf').then((module) => module.jsPDF || module.default);
+    return jsPdfPromise;
+}
 
 // ==================== LOCAL STYLED COMPONENTS ====================
 
@@ -252,7 +263,8 @@ const CarCostCalculator = () => {
         return data;
     }, [calcA, carA]);
 
-    const downloadPDF = () => {
+    const downloadPDF = async () => {
+        const jsPDF = await loadJsPdf();
         const doc = new jsPDF();
         doc.setFontSize(20); doc.text('Car Ownership Cost Report', 20, 30);
         doc.setFontSize(12); doc.text(`Car: ${carA.name || 'My Car'}`, 20, 45);
@@ -264,6 +276,7 @@ const CarCostCalculator = () => {
 
     const takeScreenshot = async () => {
         if (resultRef.current) {
+            const html2canvas = await loadHtml2Canvas();
             const canvas = await html2canvas(resultRef.current);
             const link = document.createElement('a');
             link.download = 'car-cost-results.png';

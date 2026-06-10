@@ -2,7 +2,7 @@
 
 import { useState , useEffect } from "react";
 import data from "../../exclusivedeals/(data)/db.json";
-// import { FAQSkeleton } from "../DealsPageSkeleton";
+import { RouteSectionSkeleton } from "@/components/ui/route-loading";
 
 const FAQ = () => {
   const { title, subtitle, items } = data.faq;
@@ -23,7 +23,7 @@ const FAQ = () => {
     setActiveIndex(activeIndex === index ? null : index);
   };
 
-//   if (loading) return <FAQSkeleton />;
+  if (loading) return <RouteSectionSkeleton cards={3} />;
 
   return (
     <section className="section mb-8 animate-slide-up">

@@ -417,7 +417,7 @@ export default function InattentionalBlindness() {
             <Brain className="w-12 h-12 text-(--primary)" />
             <h1 className="heading text-center">Inattentional Blindness</h1>
           </div>
-          <p className="description">The Viral "Gorilla Experiment" — Test Your Awareness</p>
+          <p className="description">The Viral &quot;Gorilla Experiment&quot; — Test Your Awareness</p>
           
           {gamePhase === 'intro' && (
             <div className="mt-6 flex justify-center gap-2 flex-wrap">
@@ -519,7 +519,7 @@ export default function InattentionalBlindness() {
                   ))}
                 </div>
                 <button onClick={startCountdown} className="btn-primary w-full px-8 py-5 rounded-xl text-xl font-bold flex items-center justify-center gap-3 shadow-lg">
-                  <Play className="w-6 h-6" /> I'm Ready — Start!
+                  <Play className="w-6 h-6" /> I&apos;m Ready — Start!
                 </button>
               </div>
             </div>
@@ -721,7 +721,7 @@ export default function InattentionalBlindness() {
               <div className="max-w-2xl mx-auto text-center">
                 <div className={`mb-8 p-6 rounded-xl ${gorillaSeen ? 'bg-green-50 border-2 border-green-400' : 'bg-red-50 border-2 border-red-400'}`}>
                   {gorillaSeen ? (
-                    <><Trophy className="w-12 h-12 text-green-600 mx-auto mb-3" /><h2 className="text-2xl font-bold text-green-800">You're in the 27%!</h2></>
+                    <><Trophy className="w-12 h-12 text-green-600 mx-auto mb-3" /><h2 className="text-2xl font-bold text-green-800">You&apos;re in the 27%!</h2></>
                   ) : (
                     <><AlertCircle className="w-12 h-12 text-red-600 mx-auto mb-3" /><h2 className="text-2xl font-bold text-red-800">You Missed the Gorilla!</h2></>
                   )}
@@ -781,7 +781,7 @@ export default function InattentionalBlindness() {
           )}
         </div>
         <div className="text-center mt-6 text-sm text-(--muted-foreground)">
-          Based on the "Invisible Gorilla" experiment by Chabris & Simons (1999)
+          Based on the &quot;Invisible Gorilla&quot; experiment by Chabris & Simons (1999)
         </div>
       </div>
       <style jsx>{`@keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }`}</style>

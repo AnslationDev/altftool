@@ -1,4 +1,4 @@
-export default {
+const toolConfig = {
   slug: "wave-interference-simulator",
   name: "Wave Interference Simulator",
   category: ["Physics", "Simulation", "Science"],
@@ -6,3 +6,5 @@ export default {
   icon: "activity",
   iconColor: "text-blue-700",
 };
+
+export default toolConfig;

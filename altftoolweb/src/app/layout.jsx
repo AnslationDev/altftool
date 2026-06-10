@@ -14,6 +14,8 @@ import { Suspense } from "react";
 import LazyChatBot from "@/platform/chatbot/LazyChatBot";
 import { AlertProvider } from "@/shared/ui/AlertProvider";
 import JsonLd from "@/platform/seo/JsonLd";
+import GlobalNavigationLoader from "@/components/ui/GlobalNavigationLoader";
+import { HeaderLoadingSkeleton } from "@/components/ui/route-loading";
 import {
   createOrganizationJsonLd,
   createWebsiteJsonLd,
@@ -31,6 +33,11 @@ const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   display: "swap",
 });
+
+const shouldLoadAdsense =
+  process.env.VERCEL_ENV === "production" ||
+  process.env.NEXT_PUBLIC_VERCEL_ENV === "production";
+
 export const metadata = {
   metadataBase: new URL(siteConfig.url),
   applicationName: "AltFTool",
@@ -109,6 +116,13 @@ export default function RootLayout({ children }) {
         <link rel="preconnect" href="https://firebasestorage.googleapis.com" />
         <link rel="preconnect" href="https://www.googletagmanager.com" />
         <link rel="preconnect" href="https://www.clarity.ms" />
+        {shouldLoadAdsense ? (
+          <script
+            async
+            src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5858966346488022"
+            crossOrigin="anonymous"
+          />
+        ) : null}
         <JsonLd
           id="altftool-site-schema"
           data={[createOrganizationJsonLd(), createWebsiteJsonLd()]}
@@ -171,14 +185,20 @@ export default function RootLayout({ children }) {
   <ThemeProvider>
     <CookieConsentProvider>
       <AlertProvider>
+        <GlobalNavigationLoader />
+        <a className="skip-to-content" href="#main-content">
+          Skip to main content
+        </a>
 
-        <Suspense fallback={null}>
+        <Suspense fallback={<HeaderLoadingSkeleton />}>
           <Header />
         </Suspense>
 
         <GlobalAnimationProvider>
           <AdsProvider>
-            {children}
+            <div id="main-content" tabIndex={-1}>
+              {children}
+            </div>
           </AdsProvider>
         </GlobalAnimationProvider>
 

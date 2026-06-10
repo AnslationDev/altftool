@@ -1,4 +1,4 @@
-export default {
+const toolConfig = {
   slug: "cymatics-simulator",
   name: "Cymatics Simulator",
   category: ["EdTech", "Science", "Creators"],
@@ -7,3 +7,5 @@ export default {
   icon: "activity",
   iconColor: "text-amber-700",
 };
+
+export default toolConfig;

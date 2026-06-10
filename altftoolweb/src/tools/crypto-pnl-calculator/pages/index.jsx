@@ -24,11 +24,11 @@ import {
   Pie,
   PieChart,
   ReferenceLine,
-  ResponsiveContainer,
   Tooltip,
   XAxis,
   YAxis,
 } from "recharts";
+import ResponsiveContainer from "@/components/charts/SafeResponsiveContainer";
 
 const SAMPLE = {
   symbol: "BTC",
@@ -458,7 +458,7 @@ export default function CryptoPnlCalculator() {
           <div className="min-w-0 space-y-6">
             <SectionCard title="P&L Scenario Curve" description="Net profit or loss across possible sell prices." icon={TrendingUp}>
               <div className="h-80 min-w-0">
-                <ResponsiveContainer width="100%" height="100%">
+                <ResponsiveContainer width="100%" height="100%" minWidth={1} minHeight={1}>
                   <BarChart data={metrics.scenarios} margin={{ top: 10, right: 8, left: 0, bottom: 0 }}>
                     <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" />
                     <XAxis dataKey="label" minTickGap={16} tick={{ fill: "var(--muted-foreground)", fontSize: 11 }} />
@@ -478,7 +478,7 @@ export default function CryptoPnlCalculator() {
             <section className="grid min-w-0 gap-6 2xl:grid-cols-[minmax(0,1fr)_minmax(260px,360px)]">
               <SectionCard title="Cost Breakdown" description="Entry cost, fees, tax and P&L composition." icon={Wallet}>
                 <div className="h-64 min-w-0">
-                  <ResponsiveContainer width="100%" height="100%">
+                  <ResponsiveContainer width="100%" height="100%" minWidth={1} minHeight={1}>
                     <PieChart>
                       <Pie data={splitData} innerRadius="55%" outerRadius="82%" paddingAngle={3} dataKey="value" nameKey="name">
                         {splitData.map((entry, index) => (

@@ -24,11 +24,11 @@ import {
   BarChart,
   CartesianGrid,
   Cell,
-  ResponsiveContainer,
   Tooltip,
   XAxis,
   YAxis,
 } from "recharts";
+import ResponsiveContainer from "@/components/charts/SafeResponsiveContainer";
 
 const DEFAULT_ASSETS = [
   { id: "cash", name: "Cash & Bank", value: 280000, growth: 3, category: "Liquid" },
@@ -595,7 +595,7 @@ export default function NetWorthTracker() {
                 </div>
               </div>
               <div className="h-72 min-w-0">
-                <ResponsiveContainer width="100%" height="100%">
+                <ResponsiveContainer width="100%" height="100%" minWidth={1} minHeight={1}>
                   <AreaChart data={chartData} margin={{ top: 10, right: 8, left: 0, bottom: 0 }}>
                     <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" />
                     <XAxis dataKey="label" tick={{ fill: "var(--muted-foreground)", fontSize: 12 }} />
@@ -635,7 +635,7 @@ export default function NetWorthTracker() {
                 <h2 className="font-semibold text-[var(--foreground)]">Category Breakdown</h2>
                 <p className="mt-1 text-sm text-[var(--muted-foreground)]">Assets are positive, liabilities are negative.</p>
                 <div className="mt-4 h-64 min-w-0">
-                  <ResponsiveContainer width="100%" height="100%">
+                  <ResponsiveContainer width="100%" height="100%" minWidth={1} minHeight={1}>
                     <BarChart data={categoryData} margin={{ top: 10, right: 8, left: 0, bottom: 0 }}>
                       <XAxis dataKey="name" tick={{ fill: "var(--muted-foreground)", fontSize: 11 }} />
                       <YAxis width={56} tickFormatter={(value) => formatMoney(value, true)} tick={{ fill: "var(--muted-foreground)", fontSize: 12 }} />

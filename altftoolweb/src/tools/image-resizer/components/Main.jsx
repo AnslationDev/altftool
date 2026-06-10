@@ -3,7 +3,6 @@
 /* eslint-disable @next/next/no-img-element */
 
 import React, { useMemo, useRef, useState } from "react";
-import JSZip from "jszip";
 import {
   AlertTriangle,
   Archive,
@@ -22,6 +21,14 @@ import {
   Trash2,
   UploadCloud,
 } from "lucide-react";
+import { safeCopyText } from "@/shared/utils/clipboard";
+
+let jsZipPromise;
+
+function loadJsZip() {
+  jsZipPromise ||= import("jszip").then((module) => module.default || module);
+  return jsZipPromise;
+}
 
 const PRESET_GROUPS = [
   {
@@ -62,6 +69,8 @@ const PRESET_GROUPS = [
 ];
 
 const ALL_PRESETS = PRESET_GROUPS.flatMap((group) => group.items);
+const MAX_IMAGE_FILES = 20;
+const MAX_IMAGE_BYTES = 35 * 1024 * 1024;
 
 const FORMAT_OPTIONS = {
   original: { label: "Keep Source", mime: null, ext: null },
@@ -387,12 +396,22 @@ export default function MainComponent() {
   };
 
   const addFiles = async (fileList) => {
-    const nextFiles = Array.from(fileList || []).filter((file) =>
-      file.type.startsWith("image/"),
+    const incomingFiles = Array.from(fileList || []);
+    const invalidFiles = incomingFiles.filter((file) => !file.type.startsWith("image/"));
+    const oversizedFiles = incomingFiles.filter(
+      (file) => file.type.startsWith("image/") && file.size > MAX_IMAGE_BYTES,
     );
+    const availableSlots = Math.max(0, MAX_IMAGE_FILES - items.length);
+    const nextFiles = incomingFiles
+      .filter((file) => file.type.startsWith("image/") && file.size <= MAX_IMAGE_BYTES)
+      .slice(0, availableSlots);
 
     if (!nextFiles.length) {
-      setError("Please upload JPG, PNG, WebP, AVIF, or another browser-readable image.");
+      setError(
+        availableSlots === 0
+          ? `You can process up to ${MAX_IMAGE_FILES} images at once. Clear the queue to add more.`
+          : `Please upload JPG, PNG, WebP, AVIF, or another browser-readable image under ${formatBytes(MAX_IMAGE_BYTES)}.`,
+      );
       return;
     }
 
@@ -422,7 +441,12 @@ export default function MainComponent() {
 
     setItems((previous) => [...previous, ...loadedItems]);
     setSelectedId((previous) => previous || loadedItems[0].id);
-    setStatus(`${loadedItems.length} image${loadedItems.length === 1 ? "" : "s"} added.`);
+    const skippedCount = invalidFiles.length + oversizedFiles.length + Math.max(0, incomingFiles.length - invalidFiles.length - oversizedFiles.length - nextFiles.length);
+    setStatus(
+      `${loadedItems.length} image${loadedItems.length === 1 ? "" : "s"} added.${
+        skippedCount ? ` ${skippedCount} file${skippedCount === 1 ? "" : "s"} skipped by type, size, or queue limit.` : ""
+      }`,
+    );
     setPreview(null);
   };
 
@@ -505,6 +529,7 @@ export default function MainComponent() {
         downloadBlob(outputs[0].blob, outputs[0].filename);
       } else {
         setStatus("Packaging resized images into ZIP...");
+        const JSZip = await loadJsZip();
         const zip = new JSZip();
         outputs.forEach((output) => zip.file(output.filename, output.blob));
         zip.file("resize-summary.txt", buildSummary(items, settings, activePreset));
@@ -530,7 +555,15 @@ export default function MainComponent() {
   };
 
   const copySummary = async () => {
-    await navigator.clipboard?.writeText(buildSummary(items, settings, activePreset));
+    if (!items.length) {
+      setError("Add at least one image before copying a summary.");
+      return;
+    }
+    const success = await safeCopyText(buildSummary(items, settings, activePreset));
+    if (!success) {
+      setError("Could not copy the summary in this browser.");
+      return;
+    }
     setCopied(true);
     window.setTimeout(() => setCopied(false), 1400);
   };

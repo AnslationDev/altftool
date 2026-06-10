@@ -1,6 +1,6 @@
 "use client";
 
-import { use, useEffect, useState } from "react";
+import { use, useCallback, useEffect, useState } from "react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { doc, getDoc } from "firebase/firestore";
@@ -8,6 +8,8 @@ import { db } from "@/lib/firebase";
 import { getCachedFirebaseRead } from "@/lib/firebaseCache";
 import { normalizeExtension } from "@altftool/core/firebaseContent";
 import { ALTFT_EXTENSIONS_COLLECTION_PATH } from "@altftool/core/firebasePaths";
+import DataStateNotice from "@/components/ui/DataStateNotice";
+import { ExtensionDetailSkeleton } from "@/components/ui/route-loading";
 
 import {
   ArrowLeft, Check, Camera, FileJson, Chrome, Star, Shield, Zap,
@@ -55,40 +57,74 @@ export default function ExtensionDetailsPage({ params }) {
   const [extension, setExtension] = useState(null);
   const [loading, setLoading] = useState(true);
   const [notFoundState, setNotFoundState] = useState(false);
+  const [error, setError] = useState(null);
 
-  useEffect(() => {
-    async function fetchExtension() {
-      try {
-        const snap = await getCachedFirebaseRead(`extension:${slug}`, async () => {
-          const ref = doc(db, ...ALTFT_EXTENSIONS_COLLECTION_PATH, slug);
-          return getDoc(ref);
-        }, 120000);
+  const fetchExtension = useCallback(async () => {
+    setLoading(true);
+    setError(null);
+    setNotFoundState(false);
 
-        if (!snap.exists()) {
-          setNotFoundState(true);
-          return;
-        }
+    try {
+      const snap = await getCachedFirebaseRead(`extension:${slug}`, async () => {
+        const ref = doc(db, ...ALTFT_EXTENSIONS_COLLECTION_PATH, slug);
+        return getDoc(ref);
+      }, 120000);
 
-        setExtension(normalizeExtension(snap.data(), slug));
-      } catch (err) {
-        console.error(err);
+      if (!snap.exists()) {
         setNotFoundState(true);
-      } finally {
-        setLoading(false);
+        setExtension(null);
+        return;
       }
-    }
 
-    fetchExtension();
+      setExtension(normalizeExtension(snap.data(), slug));
+    } catch (err) {
+      console.error(err);
+      setError(err);
+    } finally {
+      setLoading(false);
+    }
   }, [slug]);
 
-  /* ✅ handle states properly */
-  if (loading) return null;
+  useEffect(() => {
+    fetchExtension();
+  }, [fetchExtension]);
+
+  if (loading) return <ExtensionDetailSkeleton />;
+
+  if (error) {
+    return (
+      <div className="min-h-screen bg-[var(--background)] text-[var(--foreground)]">
+        <div className="border-b border-[var(--border)] bg-[var(--background)]/80 backdrop-blur-md">
+          <div className="container mx-auto flex h-16 max-w-6xl items-center px-4">
+            <Link
+              href="/extensions"
+              className="group inline-flex items-center text-sm font-medium text-[var(--muted-foreground)] transition-colors hover:text-[var(--foreground)]"
+            >
+              <div className="mr-2 rounded-full p-1.5 transition-colors group-hover:bg-[var(--muted)]">
+                <ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-0.5" />
+              </div>
+              Back to Extensions
+            </Link>
+          </div>
+        </div>
+        <main className="container mx-auto max-w-6xl px-4 py-10">
+          <DataStateNotice
+            tone="danger"
+            title="Extension details could not load"
+            message="The live extension data request failed. Retry once the connection is stable."
+            actionLabel="Retry"
+            onAction={() => fetchExtension()}
+          />
+        </main>
+      </div>
+    );
+  }
 
   if (notFoundState) {
     notFound();
   }
 
-  if (!extension) return null;
+  if (!extension) return <ExtensionDetailSkeleton />;
 
   const Icon = getIcon(extension.icon);
 

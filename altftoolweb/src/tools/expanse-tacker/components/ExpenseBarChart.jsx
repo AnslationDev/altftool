@@ -6,11 +6,11 @@ import {
   Bar,
   BarChart,
   CartesianGrid,
-  ResponsiveContainer,
   Tooltip,
   XAxis,
   YAxis,
 } from "recharts";
+import ResponsiveContainer from "@/components/charts/SafeResponsiveContainer";
 
 function ExpenseBarTooltip({ active, payload, label }) {
   if (active && payload && payload.length) {
@@ -42,7 +42,7 @@ const ExpenseBarChart = ({ data }) => {
 
   return (
     <div className="w-full h-[350px] sm:h-[400px] p-2 bg-white rounded-xl shadow-sm border border-gray-50">
-      <ResponsiveContainer width="100%" height="100%">
+      <ResponsiveContainer width="100%" height="100%" minWidth={1} minHeight={1}>
         <BarChart
           data={chartData}
           margin={{

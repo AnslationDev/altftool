@@ -6,10 +6,10 @@ import {
   YAxis,
   CartesianGrid,
   Tooltip,
-  ResponsiveContainer,
   Area,
   ComposedChart,
 } from 'recharts';
+import ResponsiveContainer from "@/components/charts/SafeResponsiveContainer";
 import { useTheme } from '@/contexts/ThemeContext';
 import { LocationList } from './index.js';
 
@@ -151,7 +151,7 @@ export function TrendChart({
         </div>
 
         <div className="mt-5 h-[380px] w-full min-h-[320px] rounded-[28px] bg-gradient-to-br from-slate-50/80 to-white/80 p-4 shadow-sm dark:from-slate-950/70 dark:to-slate-900/70 overflow-hidden">
-          <ResponsiveContainer width="100%" height="100%" minWidth={0}>
+          <ResponsiveContainer width="100%" height="100%" minWidth={1} minHeight={1}>
             <ComposedChart data={sanitizedData} margin={{ top: 16, right: 24, left: 8, bottom: 8 }}>
               {!isComparison && (
                 <defs>

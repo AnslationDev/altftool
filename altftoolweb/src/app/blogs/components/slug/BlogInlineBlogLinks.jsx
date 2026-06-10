@@ -1,5 +1,3 @@
-"use client";
-
 import Link from "next/link";
 import { ArrowRight, BookOpen, GitBranch, Sparkles } from "lucide-react";
 import { blogTaxonomySlug } from "../../data";
@@ -12,7 +10,10 @@ export default function BlogInlineBlogLinks({ blog, posts = [] }) {
   if (!visiblePosts.length) return null;
 
   return (
-    <aside className="not-prose my-7 rounded-[var(--anslation-ds-radius)] border border-(--border) bg-(--background) p-4 shadow-[var(--anslation-ds-shadow-sm)]">
+    <aside
+      aria-label="Related blog reading path"
+      className="not-prose my-7 rounded-[var(--anslation-ds-radius)] border border-(--border) bg-(--background) p-3 shadow-[var(--anslation-ds-shadow-sm)] sm:p-4"
+    >
       <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
         <div>
           <p className="flex items-center gap-2 text-[11px] font-bold uppercase tracking-wide text-(--muted-foreground)">
@@ -26,6 +27,8 @@ export default function BlogInlineBlogLinks({ blog, posts = [] }) {
         {blog?.category ? (
           <Link
             href={`/blogs/category/${blogTaxonomySlug(blog.category)}`}
+            data-blog-internal-link="category"
+            data-source-blog-slug={blog?.slug || ""}
             className="inline-flex h-8 items-center rounded-[6px] border border-(--border) px-2.5 text-[11px] font-bold uppercase tracking-wide text-(--muted-foreground) transition hover:border-(--primary) hover:text-(--primary)"
           >
             {blog.category}
@@ -33,12 +36,16 @@ export default function BlogInlineBlogLinks({ blog, posts = [] }) {
         ) : null}
       </div>
 
-      <div className="grid gap-2 sm:grid-cols-3">
+      <div className="-mx-1 flex snap-x gap-2 overflow-x-auto px-1 pb-1 sm:mx-0 sm:grid sm:grid-cols-3 sm:overflow-visible sm:px-0 sm:pb-0">
         {visiblePosts.map((post, index) => (
           <Link
             key={post.slug}
             href={`/blogs/${post.slug}`}
-            className="group rounded-[6px] border border-(--border) bg-(--card) p-3 transition hover:border-(--primary) hover:shadow-[var(--anslation-ds-shadow-sm)]"
+            aria-label={`Read next: ${post.heading || post.title}`}
+            data-blog-internal-link="related-post"
+            data-source-blog-slug={blog?.slug || ""}
+            data-target-blog-slug={post.slug}
+            className="group min-h-[136px] w-[82%] shrink-0 snap-start rounded-[6px] border border-(--border) bg-(--card) p-3 transition hover:border-(--primary) hover:shadow-[var(--anslation-ds-shadow-sm)] min-[460px]:w-[46%] sm:w-auto sm:shrink"
           >
             <div className="mb-3 flex items-center justify-between gap-2">
               <span className="inline-flex h-8 w-8 items-center justify-center rounded-[6px] bg-(--muted) text-(--primary)">

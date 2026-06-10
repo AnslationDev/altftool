@@ -1,5 +1,3 @@
-"use client";
-
 import Link from "next/link";
 import {
   ArrowRight,
@@ -104,6 +102,9 @@ export default function BlogInsightStrip({
             {primaryTool ? (
               <Link
                 href={primaryTool.href}
+                data-blog-tool-click="true"
+                data-tool-slug={primaryTool.slug}
+                data-placement="insight-strip"
                 className="mt-2 inline-flex text-sm font-semibold leading-5 text-(--foreground) transition hover:text-(--primary)"
               >
                 Try {primaryTool.name}
@@ -160,6 +161,9 @@ export default function BlogInsightStrip({
 
         <Link
           href={primaryTool?.href || (nextPost ? `/blogs/${nextPost.slug}` : "/blogs")}
+          data-blog-tool-click={primaryTool ? "true" : undefined}
+          data-tool-slug={primaryTool?.slug}
+          data-placement={primaryTool ? "insight-strip-cta" : undefined}
           className="inline-flex min-h-12 items-center justify-center gap-2 rounded-[var(--anslation-ds-radius)] bg-(--primary) px-4 text-sm font-semibold text-(--primary-foreground) transition hover:bg-(--primary-active) xl:w-14 xl:px-0"
           aria-label="Open recommended next action"
         >

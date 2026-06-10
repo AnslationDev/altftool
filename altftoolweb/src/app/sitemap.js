@@ -50,6 +50,7 @@ const staticRoutes = [
   { path: "/exclusivedeals/store", priority: 0.7 },
   { path: "/academy", priority: 0.6 },
   { path: "/sale", priority: 0.7 },
+  { path: "/status", priority: 0.45 },
   { path: "/policypages/about", priority: 0.35 },
   { path: "/policypages/affiliate", priority: 0.35 },
   { path: "/policypages/contact", priority: 0.35 },
@@ -66,7 +67,8 @@ const FIREBASE_PROJECT_ID =
   process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID || "altftool-bca36";
 const FIREBASE_PROJECT_ROOT = "projects/altftool";
 const SEO_FIREBASE_BLOG_LIMIT = 500;
-const SEO_FIREBASE_PAGE_SIZE = 16;
+const SEO_FIREBASE_PAGE_SIZE = 100;
+const SEO_FIRESTORE_LIST_TIMEOUT_MS = 3500;
 
 function safeDate(value) {
   if (!value) return undefined;
@@ -147,15 +149,21 @@ function decodeFirestoreDocument(document) {
 }
 
 async function listPublicFirestoreDocs(path, pageSize = 100) {
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), SEO_FIRESTORE_LIST_TIMEOUT_MS);
+
   try {
     const response = await fetch(firestoreCollectionUrl(path, pageSize), {
       next: { revalidate },
+      signal: controller.signal,
     });
     const payload = await response.json().catch(() => ({}));
     if (!response.ok) return [];
     return (payload.documents || []).map(decodeFirestoreDocument);
   } catch {
     return [];
+  } finally {
+    clearTimeout(timeout);
   }
 }
 

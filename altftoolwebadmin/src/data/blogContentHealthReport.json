@@ -1,0 +1,121 @@
+{
+  "generatedAt": "2026-05-20T17:07:40.074Z",
+  "source": "local",
+  "ok": true,
+  "status": "ready",
+  "score": 100,
+  "averageScore": 100,
+  "totals": {
+    "total": 31,
+    "ready": 31,
+    "watch": 0,
+    "needsWork": 0,
+    "criticalIssues": 0,
+    "withSources": 31,
+    "withFaq": 31,
+    "withLinks": 31
+  },
+  "checks": [
+    {
+      "key": "auditedBlogs",
+      "label": "Audited blogs",
+      "ok": true,
+      "value": 31,
+      "detail": "31 local blogs audited."
+    },
+    {
+      "key": "criticalIssues",
+      "label": "Critical fields",
+      "ok": true,
+      "value": 0,
+      "detail": "0 critical issues found."
+    },
+    {
+      "key": "readyCoverage",
+      "label": "Ready coverage",
+      "ok": true,
+      "value": 31,
+      "detail": "31/31 ready guides."
+    },
+    {
+      "key": "sourceCoverage",
+      "label": "Source coverage",
+      "ok": true,
+      "value": 31,
+      "detail": "31/31 guides cite sources."
+    },
+    {
+      "key": "faqCoverage",
+      "label": "FAQ coverage",
+      "ok": true,
+      "value": 31,
+      "detail": "31/31 guides include FAQ content."
+    },
+    {
+      "key": "linkCoverage",
+      "label": "Internal links",
+      "ok": true,
+      "value": 31,
+      "detail": "31/31 guides include internal links."
+    }
+  ],
+  "topIssues": [],
+  "lowestScoring": [
+    {
+      "slug": "2048-puzzle-game",
+      "title": "2048 Puzzle Game: Train Logical Thinking and Strategy",
+      "score": 100,
+      "status": "ready",
+      "missing": []
+    },
+    {
+      "slug": "age-gender-predictor-tool",
+      "title": "Age & Gender Predictor Tool: Smart Face-Based Detection",
+      "score": 100,
+      "status": "ready",
+      "missing": []
+    },
+    {
+      "slug": "background-remover-tool",
+      "title": "Background Remover Tool: Remove Image Background Instantly",
+      "score": 100,
+      "status": "ready",
+      "missing": []
+    },
+    {
+      "slug": "best-word-counter-tools",
+      "title": "Best Word Counter Tools for Writers in 2026",
+      "score": 100,
+      "status": "ready",
+      "missing": []
+    },
+    {
+      "slug": "breakout-game-online",
+      "title": "Breakout Game Online: Smash Bricks and Beat High Scores",
+      "score": 100,
+      "status": "ready",
+      "missing": []
+    },
+    {
+      "slug": "brick-breaker-game",
+      "title": "Brick Breaker Game Online: Classic Arcade Fun Reimagined",
+      "score": 100,
+      "status": "ready",
+      "missing": []
+    },
+    {
+      "slug": "classic-snake-game",
+      "title": "Classic Snake Game Online: Simple, Fun, and Addictive",
+      "score": 100,
+      "status": "ready",
+      "missing": []
+    },
+    {
+      "slug": "connect-four-game",
+      "title": "Connect Four Game Online: Strategic Thinking for All Ages",
+      "score": 100,
+      "status": "ready",
+      "missing": []
+    }
+  ]
+}

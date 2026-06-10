@@ -491,22 +491,22 @@ function VideoCard({ video, isJustUpdated, onResume, onClear }) {
           <div className="w-6 h-6 bg-gray-200 rounded-full flex items-center justify-center shadow-lg">
             <span
               className="w-2.5 h-2.5 rounded-full transition-colors duration-300"
-              style={{ backgroundColor: isCompleted ? "#10B981" : "#2563EB" }}
+              style={{ backgroundColor: isCompleted ? "var(--anslation-ds-success)" : "var(--primary)" }}
             />
           </div>
           {isCompleted ? "Completed ✓" : `${pct}% completed`}
         </div>
-        <span className="bg-[#E8F2FF] text-[#203667] px-3 py-1 rounded-full text-md font-semibold">
+        <span className="bg-(--anslation-ds-primary-soft) text-(--primary) px-3 py-1 rounded-full text-md font-semibold">
           {video.category}
         </span>
       </div>
 
-      <h3 className="text-[15px] font-semibold  text-(--foreground) mt-3 leading-snug line-clamp-2">
+      <h3 className="text-sm font-semibold text-(--foreground) mt-3 leading-snug line-clamp-2">
         {video.title}
       </h3>
 
       <div className="flex items-center justify-between mt-5">
-        <span className="text-sm text-[#64748B]">
+        <span className="text-sm text-(--muted-foreground)">
           {video.watchedLabel || "Just started"}
         </span>
 
@@ -514,7 +514,7 @@ function VideoCard({ video, isJustUpdated, onResume, onClear }) {
           <button
             onClick={() => onResume(video.id)}
             className="flex items-center gap-2 text-white text-sm px-5 py-2 rounded-full transition-colors font-medium cursor-pointer"
-            style={{ backgroundColor: isCompleted ? "#10B981" : "#2563EB" }}
+            style={{ backgroundColor: isCompleted ? "var(--anslation-ds-success)" : "var(--primary)" }}
           >
             <Play size={13} fill="currentColor" />
             {isCompleted ? "Rewatch" : "Resume"}

@@ -12,8 +12,14 @@ function getBearerToken(request) {
   return header.split("Bearer ")[1];
 }
 
+function isLocalHostRequest(request) {
+  const host = request.headers.get("host") || "";
+  const hostname = host.split(":")[0];
+  return ["localhost", "127.0.0.1", "::1"].includes(hostname);
+}
+
 export function isLocalDevAdminRequest(request) {
-  return process.env.NODE_ENV === "development" && getBearerToken(request) === LOCAL_ADMIN_TOKEN;
+  return getBearerToken(request) === LOCAL_ADMIN_TOKEN && (process.env.NODE_ENV === "development" || isLocalHostRequest(request));
 }
 
 export function createLocalDevAdminActor() {

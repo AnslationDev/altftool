@@ -1,4 +1,4 @@
-export default {
+const toolConfig = {
   slug: "double-pendulum-chaos-simulator",
   name: "Double Pendulum Chaos Simulator",
   category: ["Physics", "Simulation", "Science"],
@@ -6,3 +6,5 @@ export default {
   icon: "circle-dashed",
   iconColor: "text-blue-500",
 };
+
+export default toolConfig;

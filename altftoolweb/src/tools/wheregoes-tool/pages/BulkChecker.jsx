@@ -1,6 +1,5 @@
 import { useState, useCallback, useEffect } from 'react';
 import { useDropzone } from 'react-dropzone';
-import Papa from 'papaparse';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Upload, FileText, CheckCircle2, AlertCircle, Play, Loader2, Download, Table, X, Eye, LayoutList, Share2 } from 'lucide-react';
 import axios from 'axios';
@@ -9,6 +8,13 @@ import VisualGraph from '../components/VisualGraph';
 import { cn } from '../lib/utils';
 
 const API_URL = 'https://wheregoes-t1wo.onrender.com/api';
+
+let papaPromise;
+
+function loadPapa() {
+  papaPromise ||= import('papaparse').then((module) => module.default || module);
+  return papaPromise;
+}
 
 export default function BulkChecker() {
   const [urls, setUrls] = useState([]);
@@ -24,10 +30,11 @@ export default function BulkChecker() {
     document.title = 'Bulk URL Checker | WhereGoes - Batch Redirect Trace';
   }, []);
 
-  const onDrop = useCallback((acceptedFiles) => {
+  const onDrop = useCallback(async (acceptedFiles) => {
     const file = acceptedFiles[0];
     if (!file) return;
 
+    const Papa = await loadPapa();
     Papa.parse(file, {
       complete: (results) => {
         const parsedUrls = results.data
@@ -70,8 +77,9 @@ export default function BulkChecker() {
     }
   };
 
-  const downloadResults = () => {
+  const downloadResults = async () => {
     if (!results) return;
+    const Papa = await loadPapa();
     const csvData = results.map(r => ({
       Source: r.url,
       Status: r.success ? 'Success' : 'Failed',

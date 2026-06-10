@@ -1,11 +1,22 @@
 "use client";
 
 import React, { useState } from "react";
-import Papa from "papaparse";
-import readXlsxFile from "read-excel-file/browser";
 import AddCategories from "./AddCategories";
 import GetCategories from "./GetCategories";
 import { firebaseBuySmartCategoriesSource } from "@/projects/altftool/modules/buysmart/services/firebaseBuySmartCategories";
+
+let papaPromise;
+let readXlsxFilePromise;
+
+function loadPapa() {
+  papaPromise ||= import("papaparse").then((module) => module.default || module);
+  return papaPromise;
+}
+
+function loadReadXlsxFile() {
+  readXlsxFilePromise ||= import("read-excel-file/browser").then((module) => module.default || module);
+  return readXlsxFilePromise;
+}
 
 const MAX_IMPORT_FILE_BYTES = 2 * 1024 * 1024;
 const MAX_IMPORT_ROWS = 1000;
@@ -58,7 +69,7 @@ function Categories() {
   // };
 
 
-  const handleCSVUpload = (e) => {
+  const handleCSVUpload = async (e) => {
     const file = e.target.files[0];
     if (!file) return;
 
@@ -74,6 +85,7 @@ function Categories() {
 
     // CSV FILE
     if (fileType === "csv") {
+      const Papa = await loadPapa();
       Papa.parse(file, {
         header: true,
         skipEmptyLines: true,
@@ -93,6 +105,7 @@ function Categories() {
 
     // Excel import uses a maintained .xlsx parser; legacy .xls is intentionally not accepted.
     else if (fileType === "xlsx") {
+      const readXlsxFile = await loadReadXlsxFile();
       readXlsxFile(file)
         .then(async (rows) => {
           const jsonData = rowsToObjects(rows);

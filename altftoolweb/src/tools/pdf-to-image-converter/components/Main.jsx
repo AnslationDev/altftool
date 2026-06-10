@@ -1,8 +1,6 @@
 "use client";
 
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import JSZip from "jszip";
-import { PDFDocument } from "pdf-lib";
 import {
   Archive,
   CheckCircle,
@@ -20,6 +18,19 @@ import {
   UploadCloud,
   XCircle,
 } from "lucide-react";
+
+let pdfDocumentPromise;
+let jsZipPromise;
+
+function loadPdfDocument() {
+  pdfDocumentPromise ||= import("pdf-lib").then((module) => module.PDFDocument);
+  return pdfDocumentPromise;
+}
+
+function loadJsZip() {
+  jsZipPromise ||= import("jszip").then((module) => module.default || module);
+  return jsZipPromise;
+}
 
 const FORMAT_OPTIONS = {
   png: {
@@ -394,6 +405,7 @@ export default function MainComponent() {
         pdfDocRef.current = loadedPdf;
       } else {
         setPdfEngine("compatibility");
+        const PDFDocument = await loadPdfDocument();
         const metadataPdf = await PDFDocument.load(arrayBuffer, {
           ignoreEncryption: true,
         });
@@ -571,6 +583,7 @@ export default function MainComponent() {
     setZipProgress(0);
 
     try {
+      const JSZip = await loadJsZip();
       const zip = new JSZip();
       convertedPages.forEach((item) => {
         zip.file(item.filename, item.blob);

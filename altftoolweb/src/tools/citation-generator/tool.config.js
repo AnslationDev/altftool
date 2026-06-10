@@ -1,4 +1,4 @@
-export default {
+const toolConfig = {
   slug: "citation-generator",
   name: "Citation Generator",
   category: "Educational",
@@ -6,3 +6,5 @@ export default {
   icon: "book-open",
   iconColor: "text-blue-600",
 };
+
+export default toolConfig;

@@ -1,5 +1,5 @@
 import { expect, test } from "@playwright/test";
-import { writeFile } from "node:fs/promises";
+import { readFile, writeFile } from "node:fs/promises";
 import { createRequire } from "node:module";
 import { deflateSync } from "node:zlib";
 import { createPageQualityGate } from "./helpers/pageQuality.mjs";
@@ -9,6 +9,9 @@ const webOrigin = new URL(webUrl).origin;
 const toolRouteTimeoutMs = Number(process.env.ALTFT_TOOL_FUNCTIONAL_ROUTE_TIMEOUT_MS || 60_000);
 const webRequire = createRequire(new URL("../altftoolweb/package.json", import.meta.url));
 const { PDFDocument, StandardFonts, rgb } = webRequire("pdf-lib");
+const { Document, HeadingLevel, Packer, Paragraph, TextRun } = webRequire("docx");
+const JSZipModule = webRequire("jszip");
+const JSZip = JSZipModule.default || JSZipModule;
 
 function crc32(buffer) {
   let crc = 0xffffffff;
@@ -88,6 +91,103 @@ async function writePdfFixture(testInfo, filename, pageCount) {
   return fixturePath;
 }
 
+async function writeDocxFixture(testInfo, filename = "document-fixture.docx") {
+  const document = new Document({
+    creator: "AltFTool QA",
+    title: "AltFTool real document fixture",
+    sections: [
+      {
+        children: [
+          new Paragraph({
+            heading: HeadingLevel.HEADING_1,
+            children: [new TextRun("AltFTool document fixture")],
+          }),
+          new Paragraph("This DOCX verifies browser-side document conversion."),
+          new Paragraph("The exported PDF should preserve readable words."),
+        ],
+      },
+    ],
+  });
+  const fixturePath = testInfo.outputPath(filename);
+  await writeFile(fixturePath, await Packer.toBuffer(document));
+  return fixturePath;
+}
+
+async function writeCsvFixture(testInfo, filename = "sheet-fixture.csv") {
+  const fixturePath = testInfo.outputPath(filename);
+  await writeFile(
+    fixturePath,
+    "name,role,score\nAda,Engineer,98\nGrace,Architect,96\n",
+  );
+  return fixturePath;
+}
+
+async function writeTextFixture(testInfo, filename, contents) {
+  const fixturePath = testInfo.outputPath(filename);
+  await writeFile(fixturePath, contents);
+  return fixturePath;
+}
+
+async function expectDownloadFrom(page, action, filenamePattern) {
+  const downloadPromise = page.waitForEvent("download", {
+    timeout: 30_000,
+  });
+  await action.click();
+  const download = await downloadPromise;
+  expect(download.suggestedFilename()).toMatch(filenamePattern);
+  return download;
+}
+
+async function saveDownload(testInfo, download, filename) {
+  const downloadPath = testInfo.outputPath(filename);
+  await download.saveAs(downloadPath);
+  return downloadPath;
+}
+
+async function expectPdfDownload(page, testInfo, action, filenamePattern, expectedPages, outputName) {
+  const download = await expectDownloadFrom(page, action, filenamePattern);
+  const downloadPath = await saveDownload(testInfo, download, outputName);
+  const pdf = await PDFDocument.load(await readFile(downloadPath));
+  expect(pdf.getPageCount()).toBe(expectedPages);
+  return downloadPath;
+}
+
+async function expectDocxDownload(page, testInfo, action, filenamePattern, expectedText, outputName) {
+  const download = await expectDownloadFrom(page, action, filenamePattern);
+  const downloadPath = await saveDownload(testInfo, download, outputName);
+  const zip = await JSZip.loadAsync(await readFile(downloadPath));
+  const documentXml = await zip.file("word/document.xml")?.async("string");
+  expect(documentXml).toBeTruthy();
+  expect(documentXml).toContain(expectedText);
+  return downloadPath;
+}
+
+async function expectConvertedZipDownload(page, testInfo, action, filenamePattern, outputName) {
+  const download = await expectDownloadFrom(page, action, filenamePattern);
+  const downloadPath = await saveDownload(testInfo, download, outputName);
+  const zip = await JSZip.loadAsync(await readFile(downloadPath));
+  const zipFiles = Object.keys(zip.files).filter((name) => !zip.files[name].dir);
+
+  expect(zipFiles).toEqual(
+    expect.arrayContaining([
+      "document-fixture.pdf",
+      "sheet-fixture.pdf",
+      "conversion-summary.txt",
+    ]),
+  );
+
+  const summary = await zip.file("conversion-summary.txt").async("string");
+  expect(summary).toContain("Ready: 2");
+
+  for (const filename of ["document-fixture.pdf", "sheet-fixture.pdf"]) {
+    const bytes = Buffer.from(await zip.file(filename).async("uint8array"));
+    const pdf = await PDFDocument.load(bytes);
+    expect(pdf.getPageCount()).toBeGreaterThan(0);
+  }
+
+  return downloadPath;
+}
+
 async function openToolShell(page, slug, heading) {
   await page.goto(`${webUrl}/tools/all/${slug}`, {
     waitUntil: "domcontentloaded",
@@ -97,6 +197,9 @@ async function openToolShell(page, slug, heading) {
     timeout: toolRouteTimeoutMs,
   });
   await expect(page.getByText("Preparing workspace")).toHaveCount(0, {
+    timeout: toolRouteTimeoutMs,
+  });
+  await expect(page.getByTestId("tool-workspace-shell")).toBeVisible({
     timeout: toolRouteTimeoutMs,
   });
   await expect(page.locator("body")).not.toContainText("Application error");
@@ -132,12 +235,50 @@ test.describe("microtool functional flows", () => {
     await expect(page).toHaveURL(/\/tools\/all$/);
     await expect(page.getByTestId("tools-search-input")).toHaveValue("");
 
+    await page.getByTestId("tools-search-input").fill("jwt decoder");
+    await expect(page.getByTestId("active-tool-filters")).toContainText("Search: jwt decoder");
+    await page.getByTestId("tools-search-input").press("Enter");
+    await expect(page).toHaveURL(/\/tools\/all\/jwt-decoder$/);
+    await expect(page.getByRole("navigation", { name: "Tool route" })).toContainText("JWT Decoder");
+
     await page.goto(`${webUrl}/tools/all/json-editor`, { waitUntil: "domcontentloaded" });
     await expect(page.getByRole("navigation", { name: "Tool route" })).toContainText("JSON Editor");
     await page.goto(`${webUrl}/tools/all?view=recent`, { waitUntil: "domcontentloaded" });
     await expect(page.getByRole("link", { name: /JSON Editor/ }).first()).toBeVisible();
 
     await quality.expectClean("tools directory search filters");
+  });
+
+  test("tool runtime crash shows recovery fallback and retries safely", async ({ page }) => {
+    await page.context().grantPermissions(["clipboard-read", "clipboard-write"], {
+      origin: webOrigin,
+    });
+
+    await page.goto(`${webUrl}/tools/all/text-to-base64?altftool_crash=1`, {
+      waitUntil: "domcontentloaded",
+      timeout: toolRouteTimeoutMs,
+    });
+
+    const recovery = page.getByTestId("tool-runtime-recovery");
+    await expect(page.getByTestId("tool-action-bar")).toBeVisible({ timeout: toolRouteTimeoutMs });
+    await expect(page.getByTestId("tool-workspace-shell")).toBeVisible({ timeout: toolRouteTimeoutMs });
+    await expect(recovery).toBeVisible({ timeout: toolRouteTimeoutMs });
+    await expect(recovery).toContainText("Text to Base64 needs a quick reload");
+    await expect(page.getByTestId("tool-runtime-error-message")).toContainText("Local QA crash probe");
+    await expect(recovery.getByRole("link", { name: /Browse tools/i })).toHaveAttribute("href", "/tools/all");
+    await expect(recovery.getByRole("link", { name: /Open category/i })).toHaveAttribute("href", "/tools/all");
+    await expect(recovery.getByRole("link", { name: /Open/i }).first()).toBeVisible();
+    await expect(page.locator("body")).not.toContainText("Application error");
+
+    await recovery.getByRole("button", { name: /Copy details/i }).click();
+    await expect(recovery.getByRole("button", { name: /Copied/i })).toBeVisible();
+    await expect.poll(() => page.evaluate(() => navigator.clipboard.readText())).toContain("text-to-base64");
+
+    await recovery.getByRole("button", { name: /Retry workspace/i }).click();
+    await expect(page).toHaveURL(/\/tools\/all\/text-to-base64$/);
+    await expect(recovery).toHaveCount(0, { timeout: toolRouteTimeoutMs });
+    await expect(page.getByTestId("tool-output")).toBeVisible({ timeout: toolRouteTimeoutMs });
+    await expect(page.locator("body")).not.toContainText("Application error");
   });
 
   test("text conversion output survives a shared state link", async ({ page }) => {
@@ -150,9 +291,13 @@ test.describe("microtool functional flows", () => {
 
     await expect(page.getByTestId("tool-action-bar")).toBeVisible();
     await expect(page.getByTestId("priority-tool-badge")).toContainText("Top 40 verified");
+    await expect(page.getByTestId("save-tool")).toBeVisible();
     await expect(page.getByTestId("copy-tool-link")).toBeVisible();
     await expect(page.getByTestId("share-tool-link")).toBeVisible();
     await expect(page.getByTestId("reset-tool-workspace")).toBeVisible();
+
+    await page.getByTestId("save-tool").click();
+    await expect(page.getByTestId("save-tool")).toContainText("Saved");
 
     await page.getByTestId("copy-tool-link").click();
     await expect(page.getByTestId("copy-tool-link")).toContainText("Copied");
@@ -164,6 +309,10 @@ test.describe("microtool functional flows", () => {
 
     await page.getByTestId("tool-input").fill("hello world");
     await expect(page.getByTestId("tool-output")).toContainText("aGVsbG8gd29ybGQ=");
+    await expect(page.getByTestId("copy-tool-output")).toBeEnabled();
+    await page.getByTestId("copy-tool-output").click();
+    await expect(page.getByTestId("copy-tool-output")).toContainText("Copied");
+    await expect.poll(() => page.evaluate(() => navigator.clipboard.readText())).toBe("aGVsbG8gd29ybGQ=");
 
     await page.getByTestId("reset-tool-workspace").click();
     await expect(page.getByTestId("tool-input")).toHaveValue("AltFTool microtools are fast.");
@@ -233,8 +382,7 @@ test.describe("microtool functional flows", () => {
 
     await openToolShell(page, "url-encoder-decoder", "URL Encoder Decoder");
     await page.locator("textarea").first().fill("https://altftool.com/search?q=hello world&tag=dev tools");
-    await page.getByRole("button", { name: "Encode", exact: true }).click();
-    await expect(page.locator("textarea").nth(1)).toHaveValue(/hello%20world/);
+    await expect(page.getByTestId("tool-output")).toContainText("hello%20world");
 
     await openTool(page, "base64-to-text", "Base64 to Text");
     await page.getByTestId("tool-input").fill("SGVsbG8gQWx0RlRvb2w=");
@@ -298,7 +446,7 @@ test.describe("microtool functional flows", () => {
 
     await openToolShell(page, "password-generator", "Password Generator");
     await expect(page.locator("body")).toContainText("Generated password");
-    await expect(page.locator("body")).toContainText("Strength: Strong");
+    await expect(page.locator("body")).toContainText(/Strength: (Strong|Excellent)/);
 
     await openToolShell(page, "uuid-generator", "Generate Unique UUIDs Instantly");
     await page.getByRole("button", { name: "Generate UUIDs", exact: true }).click();
@@ -422,6 +570,206 @@ test.describe("microtool functional flows", () => {
     });
 
     await quality.expectClean("pdf utility uploads");
+  });
+
+  test("document PDF tools process real files and create downloads", async ({ page }, testInfo) => {
+    test.setTimeout(180_000);
+    const quality = createPageQualityGate(page);
+    const pdfPath = await writePdfFixture(testInfo, "document-tools.pdf", 2);
+    const docxPath = await writeDocxFixture(testInfo);
+    const csvPath = await writeCsvFixture(testInfo);
+
+    await openToolShell(page, "pdf-purifier", "PDF Purifier");
+    await expect(page.getByRole("button", { name: "Select PDF", exact: true })).toBeEnabled({
+      timeout: 30_000,
+    });
+    await page.getByTestId("pdf-purifier-file-input").setInputFiles(pdfPath);
+    await expect(page.getByTestId("tool-output")).toContainText("2 of 2", {
+      timeout: 30_000,
+    });
+    await expectPdfDownload(
+      page,
+      testInfo,
+      page.getByRole("button", { name: "Download PDF", exact: true }),
+      /document-tools-cleaned\.pdf$/,
+      2,
+      "purified-download.pdf",
+    );
+
+    await openToolShell(page, "pdf-to-word-converter", "PDF to Word Converter");
+    await expect(page.getByRole("button", { name: "Choose PDF", exact: true })).toBeEnabled({
+      timeout: 30_000,
+    });
+    await page.getByTestId("pdf-to-word-file-input").setInputFiles(pdfPath);
+    await expect(page.getByTestId("tool-output")).toContainText("PDF text extracted", {
+      timeout: 30_000,
+    });
+    await expect(page.locator("pre")).toContainText("AltFTool fixture 1");
+    await expectDocxDownload(
+      page,
+      testInfo,
+      page.getByRole("button", { name: "Download DOCX", exact: true }),
+      /document-tools\.docx$/,
+      "AltFTool fixture 1",
+      "pdf-to-word-download.docx",
+    );
+
+    await openToolShell(page, "word-ppt-excel-to-pdf", "Word / PPT / Excel to PDF");
+    await page.getByTestId("word-ppt-excel-file-input").setInputFiles([docxPath, csvPath]);
+    await expect(page.getByTestId("tool-output")).toContainText("Documents parsed", {
+      timeout: 30_000,
+    });
+    await expect(page.locator("body")).toContainText("document-fixture.docx");
+    await expect(page.locator("body")).toContainText("sheet-fixture.csv");
+    await expectConvertedZipDownload(
+      page,
+      testInfo,
+      page.getByRole("button", { name: "Download PDF", exact: true }),
+      /converted-pdfs\.zip$/,
+      "document-conversion-download.zip",
+    );
+    await expect(page.getByTestId("tool-output")).toContainText("PDFs exported in a ZIP", {
+      timeout: 30_000,
+    });
+
+    await openToolShell(page, "pdf-watermark", "Protect Your Documents");
+    await page.getByTestId("pdf-watermark-file-input").setInputFiles(pdfPath);
+    await expect(page.getByTestId("tool-output")).toContainText("Ready to watermark", {
+      timeout: 15_000,
+    });
+    await expectPdfDownload(
+      page,
+      testInfo,
+      page.getByRole("button", { name: /Apply Watermark/ }),
+      /document-tools-watermarked\.pdf$/,
+      2,
+      "watermarked-download.pdf",
+    );
+    await expect(page.getByTestId("tool-output")).toContainText("Last export ready", {
+      timeout: 30_000,
+    });
+
+    await openToolShell(page, "pdf-annotation", "PDF Annotation Tool");
+    await expect(page.getByRole("button", { name: "Upload PDF", exact: true })).toBeEnabled({
+      timeout: 30_000,
+    });
+    await page.getByTestId("pdf-annotation-file-input").setInputFiles(pdfPath);
+    await expect(page.getByTestId("tool-output")).toContainText("Loaded 2 pages", {
+      timeout: 30_000,
+    });
+    await expect(page.locator("canvas")).toBeVisible();
+    await expectPdfDownload(
+      page,
+      testInfo,
+      page.getByRole("button", { name: "Export PDF", exact: true }),
+      /document-tools-annotated\.pdf$/,
+      2,
+      "annotated-download.pdf",
+    );
+
+    await quality.expectClean("document PDF tools real-file flows");
+  });
+
+  test("document PDF tools keep mobile upload flows usable", async ({ page }) => {
+    test.setTimeout(120_000);
+    const quality = createPageQualityGate(page);
+    await page.setViewportSize({ width: 390, height: 844 });
+
+    const documentRoutes = [
+      {
+        slug: "pdf-purifier",
+        heading: "PDF Purifier",
+        input: "pdf-purifier-file-input",
+        control: "Select PDF",
+      },
+      {
+        slug: "pdf-to-word-converter",
+        heading: "PDF to Word Converter",
+        input: "pdf-to-word-file-input",
+        control: "Choose PDF",
+      },
+      {
+        slug: "word-ppt-excel-to-pdf",
+        heading: "Word / PPT / Excel to PDF",
+        input: "word-ppt-excel-file-input",
+        control: "Choose Files",
+      },
+      {
+        slug: "pdf-watermark",
+        heading: "Protect Your Documents",
+        input: "pdf-watermark-file-input",
+        control: "Apply Watermark",
+      },
+      {
+        slug: "pdf-annotation",
+        heading: "PDF Annotation Tool",
+        input: "pdf-annotation-file-input",
+        control: "Upload PDF",
+      },
+    ];
+
+    for (const route of documentRoutes) {
+      await openToolShell(page, route.slug, route.heading);
+      await expect(page.getByTestId(route.input)).toHaveCount(1, {
+        timeout: toolRouteTimeoutMs,
+      });
+      await expect(page.getByRole("button", { name: new RegExp(route.control) }).first()).toBeVisible({
+        timeout: toolRouteTimeoutMs,
+      });
+      await expect
+        .poll(
+          () =>
+            page.evaluate(() =>
+              Math.max(
+                0,
+                document.documentElement.scrollWidth - document.documentElement.clientWidth,
+              ),
+            ),
+          {
+            message: `${route.slug} should not create meaningful horizontal overflow on mobile`,
+            timeout: 10_000,
+          },
+        )
+        .toBeLessThanOrEqual(8);
+    }
+
+    await quality.expectClean("document PDF tools mobile upload flows");
+  });
+
+  test("document PDF tools show guided errors for invalid files", async ({ page }, testInfo) => {
+    test.setTimeout(120_000);
+    const quality = createPageQualityGate(page);
+    const corruptPdf = await writeTextFixture(testInfo, "corrupt-document.pdf", "this is not a valid pdf");
+    const legacyDoc = await writeTextFixture(testInfo, "legacy-document.doc", "legacy binary placeholder");
+
+    await openToolShell(page, "pdf-purifier", "PDF Purifier");
+    await expect(page.getByRole("button", { name: "Select PDF", exact: true })).toBeEnabled({
+      timeout: 30_000,
+    });
+    await page.getByTestId("pdf-purifier-file-input").setInputFiles(corruptPdf);
+    await expect(page.locator("body")).toContainText("Failed to load PDF", {
+      timeout: 30_000,
+    });
+    await expect(page.locator("body")).not.toContainText("Application error");
+
+    await openToolShell(page, "pdf-to-word-converter", "PDF to Word Converter");
+    await expect(page.getByRole("button", { name: "Choose PDF", exact: true })).toBeEnabled({
+      timeout: 30_000,
+    });
+    await page.getByTestId("pdf-to-word-file-input").setInputFiles(corruptPdf);
+    await expect(page.locator("body")).toContainText(/Could not read this PDF|Invalid PDF/i, {
+      timeout: 30_000,
+    });
+    await expect(page.locator("body")).not.toContainText("Application error");
+
+    await openToolShell(page, "word-ppt-excel-to-pdf", "Word / PPT / Excel to PDF");
+    await page.getByTestId("word-ppt-excel-file-input").setInputFiles(legacyDoc);
+    await expect(page.locator("body")).toContainText(/No files added|unsupported type/i, {
+      timeout: 15_000,
+    });
+    await expect(page.locator("body")).not.toContainText("Application error");
+
+    await quality.expectClean("document PDF invalid file recovery");
   });
 
   test("media conversion utilities create real previews", async ({ page }, testInfo) => {

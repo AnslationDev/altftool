@@ -170,6 +170,7 @@ test("Firebase live-data report aggregates Firestore samples without secrets", a
   assert.equal(report.ok, true);
   assert.equal(report.status, "live");
   assert.equal(report.score, 100);
+  assert.ok(report.durationMs >= 0);
   assert.equal(report.projectId, "test-project");
   assert.equal(report.failures.length, 0);
   assert.equal(report.checks.length, 19);

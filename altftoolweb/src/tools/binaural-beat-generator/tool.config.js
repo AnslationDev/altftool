@@ -1,4 +1,4 @@
-export default {
+const toolConfig = {
   slug: "binaural-beat-generator",
   name: "Binaural Beat Generator",
   category: ["Lifestyle", "Health", "Music"],
@@ -7,3 +7,5 @@ export default {
   icon: "activity",
   iconColor: "text-blue-600",
 };
+
+export default toolConfig;

@@ -1,5 +1,8 @@
+"use client";
+
 import React, { useMemo, useState } from 'react';
-import { Activity, Heart, Droplet, Flame, Download, RotateCcw, AlertCircle, Trophy, Zap, CheckCircle2, Target, Utensils, Share2 } from 'lucide-react';
+import { Activity, CheckCircle2, Copy, Download, RotateCcw, Share2, Trophy, Zap } from 'lucide-react';
+import { safeCopyText } from "@/shared/utils/clipboard";
 import Description from '../components/Description';
 
 function BMIGauge({ bmi, category }) {
@@ -65,6 +68,7 @@ export default function ToolHome() {
   const [errors, setErrors] = useState({});
   const [history, setHistory] = useState(initialTracker.history);
   const [streak] = useState(initialTracker.streak);
+  const [copied, setCopied] = useState(false);
 
   const badges = useMemo(() => {
     const earned = [];
@@ -164,29 +168,28 @@ export default function ToolHome() {
     });
   };
 
-  const downloadReport = () => {
-    if (!result) return;
-    const suggestions = getSuggestions(result.category.name);
-    
-    const reportText = `
+  const buildReportText = (currentResult) => {
+    const suggestions = getSuggestions(currentResult.category.name);
+
+    return `
 HEALTH REPORT - BMI CALCULATOR
-Generated on: ${result.date}
+Generated on: ${currentResult.date}
 ---------------------------------
 MEASUREMENTS:
-- BMI: ${result.bmi}
-- Category: ${result.category.name}
-- Height: ${result.height} cm
-- Weight: ${result.weight} kg
-- Ideal Range: ${result.idealWeight.min}kg - ${result.idealWeight.max}kg
+- BMI: ${currentResult.bmi}
+- Category: ${currentResult.category.name}
+- Height: ${currentResult.height} cm
+- Weight: ${currentResult.weight} kg
+- Ideal Range: ${currentResult.idealWeight.min}kg - ${currentResult.idealWeight.max}kg
 
 DAILY GOALS:
-- Water Intake: ${result.waterIntake} Liters
-- Protein Goal: ${result.dietPlan.protein}g
-- Maintenance Calories: ${result.calories?.maintenance || 'N/A'} kcal
+- Water Intake: ${currentResult.waterIntake} Liters
+- Protein Goal: ${currentResult.dietPlan.protein}g
+- Maintenance Calories: ${currentResult.calories?.maintenance || 'N/A'} kcal
 
-NUTRITION PLAN (${result.dietPlan.title}):
-- Focus: ${result.dietPlan.focus}
-- Suggested Foods: ${result.dietPlan.foods}
+NUTRITION PLAN (${currentResult.dietPlan.title}):
+- Focus: ${currentResult.dietPlan.focus}
+- Suggested Foods: ${currentResult.dietPlan.foods}
 
 EXPERT ADVICE:
 - Diet: ${suggestions.diet}
@@ -194,7 +197,12 @@ EXPERT ADVICE:
 
 ---------------------------------
 Stay Healthy, Stay Fit!
-    `;
+    `.trim();
+  };
+
+  const downloadReport = () => {
+    if (!result) return;
+    const reportText = buildReportText(result);
 
     const blob = new Blob([reportText], { type: 'text/plain' });
     const link = document.createElement('a');
@@ -203,14 +211,25 @@ Stay Healthy, Stay Fit!
     link.click();
   };
 
+  const copyReport = async () => {
+    if (!result) return;
+    const success = await safeCopyText(buildReportText(result));
+    if (!success) return;
+    setCopied(true);
+    setTimeout(() => setCopied(false), 1200);
+  };
+
   const shareReport = async () => {
     if (!result) return;
     const text = `Check out my BMI report! BMI: ${result.bmi} (${result.category.name}). Try it here!`;
     if (navigator.share) {
       try { await navigator.share({ title: 'My Health Report', text }); } catch (err) {}
     } else {
-      navigator.clipboard.writeText(text);
-      alert('Report summary copied to clipboard!');
+      const success = await safeCopyText(text);
+      if (success) {
+        setCopied(true);
+        setTimeout(() => setCopied(false), 1200);
+      }
     }
   };
 
@@ -299,7 +318,7 @@ Stay Healthy, Stay Fit!
             
             <div className="flex gap-3">
               <button onClick={calculate} className="flex-[2] py-4 rounded-xl font-bold bg-[var(--primary)] text-white shadow-lg active:scale-95 transition-all">Calculate Now</button>
-              <button onClick={() => {setResult(null); setHeightCm(''); setHeightFt(''); setHeightIn(''); setWeight(''); setAge(''); setGender('');}} className="flex-1 py-4 rounded-xl font-bold flex justify-center items-center gap-2 border bg-[var(--muted)] border-[var(--border)] text-[var(--muted-foreground)] hover:bg-[var(--border)] transition-all"><RotateCcw size={20}/> Reset</button>
+              <button onClick={() => {setResult(null); setHeightCm(''); setHeightFt(''); setHeightIn(''); setWeight(''); setAge(''); setGender(''); setErrors({});}} className="flex-1 py-4 rounded-xl font-bold flex justify-center items-center gap-2 border bg-[var(--muted)] border-[var(--border)] text-[var(--muted-foreground)] hover:bg-[var(--border)] transition-all"><RotateCcw size={20}/> Reset</button>
             </div>
           </div>
         </div>
@@ -343,6 +362,10 @@ Stay Healthy, Stay Fit!
               </div>
               
               <div className="flex flex-col gap-4">
+                <button onClick={copyReport} className="flex-1 py-4 rounded-2xl border-2 border-dashed border-[var(--border)] bg-[var(--card)] flex flex-col items-center justify-center gap-2 hover:bg-[var(--muted)] transition-all">
+                  <Copy className="w-6 h-6 text-[var(--primary)]" />
+                  <span className="text-xs font-bold text-[var(--foreground)] uppercase">{copied ? 'Copied' : 'Copy Report'}</span>
+                </button>
                 <button onClick={downloadReport} className="flex-1 py-4 rounded-2xl border-2 border-dashed border-[var(--border)] bg-[var(--card)] flex flex-col items-center justify-center gap-2 hover:bg-[var(--muted)] transition-all">
                   <Download className="w-6 h-6 text-[var(--primary)]" />
                   <span className="text-xs font-bold text-[var(--foreground)] uppercase">Download Report</span>

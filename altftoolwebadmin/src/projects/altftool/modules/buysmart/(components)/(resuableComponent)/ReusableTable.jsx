@@ -1,12 +1,190 @@
 "use client";
 
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import {
-  MaterialReactTable,
-  useMaterialReactTable,
-} from "material-react-table";
-import { ExternalLink, Pencil, Trash2, X } from "lucide-react";
+  AlertTriangle,
+  ChevronLeft,
+  ChevronRight,
+  ExternalLink,
+  ImageOff,
+  Loader2,
+  Pencil,
+  Search,
+  Trash2,
+  X,
+} from "lucide-react";
+import AdminDataState, { AdminDataSkeleton } from "@/components/admin/AdminDataState";
 
+const PAGE_SIZES = [10, 25, 50];
+
+function getValue(row, column) {
+  if (typeof column.accessorFn === "function") return column.accessorFn(row);
+  if (!column.accessorKey) return undefined;
+  return String(column.accessorKey)
+    .split(".")
+    .reduce((value, key) => (value == null ? undefined : value[key]), row);
+}
+
+function displayValue(value) {
+  if (value == null || value === "") return "-";
+  if (typeof value === "boolean") return value ? "Yes" : "No";
+  if (Array.isArray(value)) return value.join(", ");
+  if (typeof value === "object") return JSON.stringify(value);
+  return value;
+}
+
+function getRowLabel(row) {
+  return row?.title || row?.name || row?.brandName || row?.categoryName || row?.id || "this row";
+}
+
+export function SafeTableImage({
+  src,
+  alt = "Preview",
+  className = "h-12 w-20 rounded border border-gray-200 object-cover",
+  fallbackClassName = "h-12 w-20 rounded border border-dashed border-gray-300 bg-gray-50",
+}) {
+  const [failed, setFailed] = useState(false);
+
+  if (!src || failed) {
+    return (
+      <div className={`grid place-items-center text-xs font-medium text-gray-500 ${fallbackClassName}`}>
+        <span className="inline-flex items-center gap-2">
+          <ImageOff className="h-4 w-4" />
+          <span className="sr-only">Image unavailable</span>
+        </span>
+      </div>
+    );
+  }
+
+  return (
+    <img
+      src={src}
+      alt={alt}
+      className={className}
+      loading="lazy"
+      referrerPolicy="no-referrer"
+      onError={() => setFailed(true)}
+    />
+  );
+}
+
+function StatusButton({ item, rowId, updatingStatusId, onStatusChange, setUpdatingStatusId }) {
+  const isActive = item.status === "active";
+  const isUpdating = updatingStatusId === rowId;
+
+  if (!onStatusChange) {
+    return (
+      <span className={`inline-flex rounded-full px-3 py-1.5 text-xs font-semibold ${isActive ? "bg-green-100 text-green-700" : "bg-gray-200 text-gray-600"}`}>
+        {isActive ? "Active" : "Paused"}
+      </span>
+    );
+  }
+
+  return (
+    <button
+      type="button"
+      disabled={isUpdating}
+      onClick={async () => {
+        setUpdatingStatusId(rowId);
+        try {
+          await onStatusChange(item);
+        } finally {
+          setUpdatingStatusId(null);
+        }
+      }}
+      className={`inline-flex rounded-full px-3 py-1.5 text-xs font-semibold transition disabled:opacity-60 ${isActive ? "bg-green-100 text-green-700 hover:bg-green-200" : "bg-gray-200 text-gray-600 hover:bg-gray-300"}`}
+    >
+      {isUpdating ? "Updating..." : isActive ? "Active" : "Paused"}
+    </button>
+  );
+}
+
+function RowActions({ item, onEdit, onDeleteSingle, onPreview, deleting = false }) {
+  return (
+    <div className="flex items-center justify-center gap-2">
+      <button
+        type="button"
+        title="View"
+        onClick={() => onPreview(item)}
+        className="rounded-md p-1.5 text-blue-600 transition hover:bg-blue-50"
+      >
+        <ExternalLink size={16} />
+      </button>
+
+      {onEdit ? (
+        <button
+          type="button"
+          title="Edit"
+          disabled={deleting}
+          onClick={() => onEdit(item)}
+          className="rounded-md p-1.5 text-amber-500 transition hover:bg-amber-50 disabled:cursor-not-allowed disabled:opacity-50"
+        >
+          <Pencil size={16} />
+        </button>
+      ) : null}
+
+      {onDeleteSingle ? (
+        <button
+          type="button"
+          title={deleting ? "Deleting" : "Delete"}
+          disabled={deleting}
+          onClick={() => onDeleteSingle(item)}
+          className="rounded-md p-1.5 text-red-500 transition hover:bg-red-50 disabled:cursor-not-allowed disabled:opacity-50"
+        >
+          {deleting ? <Loader2 size={16} className="animate-spin" /> : <Trash2 size={16} />}
+        </button>
+      ) : null}
+    </div>
+  );
+}
+
+function DeleteConfirmDialog({ pendingDelete, busy, onCancel, onConfirm }) {
+  if (!pendingDelete) return null;
+
+  const isBulk = pendingDelete.type === "bulk";
+  const title = isBulk ? "Delete selected rows?" : "Delete this row?";
+  const target = isBulk
+    ? `${pendingDelete.ids.length} selected row${pendingDelete.ids.length === 1 ? "" : "s"}`
+    : getRowLabel(pendingDelete.row);
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/55 p-4 backdrop-blur-sm">
+      <div className="w-full max-w-md rounded-lg border border-gray-200 bg-white p-5 shadow-2xl">
+        <div className="flex items-start gap-3">
+          <div className="grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-red-50 text-red-600">
+            <AlertTriangle className="h-5 w-5" />
+          </div>
+          <div>
+            <h2 className="text-base font-semibold text-gray-900">{title}</h2>
+            <p className="mt-1 text-sm leading-6 text-gray-600">
+              This will permanently delete {target}. This action cannot be undone.
+            </p>
+          </div>
+        </div>
+
+        <div className="mt-5 flex flex-col-reverse gap-2 sm:flex-row sm:justify-end">
+          <button
+            type="button"
+            onClick={onCancel}
+            disabled={busy}
+            className="inline-flex h-10 items-center justify-center rounded-lg border border-gray-200 bg-white px-4 text-sm font-semibold text-gray-700 transition hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-60"
+          >
+            Cancel
+          </button>
+          <button
+            type="button"
+            onClick={onConfirm}
+            disabled={busy}
+            className="inline-flex h-10 items-center justify-center gap-2 rounded-lg bg-red-600 px-4 text-sm font-semibold text-white transition hover:bg-red-700 disabled:cursor-not-allowed disabled:opacity-60"
+          >
+            {busy ? <Loader2 className="h-4 w-4 animate-spin" /> : <Trash2 className="h-4 w-4" />}
+            {busy ? "Deleting..." : "Delete"}
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
 
 function ReusableTable({
   data = [],
@@ -17,380 +195,660 @@ function ReusableTable({
   onBulkDelete,
   onStatusChange,
   enableRowSelection = true,
+  confirmDeletes = false,
   emptyMessage = "No data available",
   getRowId = (row) => row.id,
+  storageKey = "",
 }) {
+  const derivedStorageKey = useMemo(() => {
+    if (storageKey) return storageKey;
+    const signature = columns
+      .map((column) => column.id || column.accessorKey || column.header)
+      .filter(Boolean)
+      .join(":");
+    return signature ? `altftool-admin-table:${signature}` : "";
+  }, [columns, storageKey]);
   const [rowSelection, setRowSelection] = useState({});
   const [updatingStatusId, setUpdatingStatusId] = useState(null);
   const [previewModal, setPreviewModal] = useState(false);
   const [selectedRow, setSelectedRow] = useState(null);
-  
- 
+  const [deletingRowId, setDeletingRowId] = useState(null);
+  const [bulkDeleting, setBulkDeleting] = useState(false);
+  const [pendingDelete, setPendingDelete] = useState(null);
+  const [actionError, setActionError] = useState("");
+  const [query, setQuery] = useState("");
+  const [pageIndex, setPageIndex] = useState(0);
+  const [pageSize, setPageSize] = useState(10);
+  const [preferencesReady, setPreferencesReady] = useState(false);
 
+  const canSelectRows = enableRowSelection && Boolean(onBulkDelete);
+  const selectedIds = Object.keys(rowSelection);
+
+  const filteredData = useMemo(() => {
+    const trimmedQuery = query.trim().toLowerCase();
+    if (!trimmedQuery) return data;
+
+    return data.filter((row) =>
+      columns.some((column) => {
+        const value = getValue(row, column);
+        return String(displayValue(value)).toLowerCase().includes(trimmedQuery);
+      }),
+    );
+  }, [columns, data, query]);
+
+  const pageCount = Math.max(1, Math.ceil(filteredData.length / pageSize));
+  const firstVisibleRow = filteredData.length === 0 ? 0 : pageIndex * pageSize + 1;
+  const lastVisibleRow = Math.min((pageIndex + 1) * pageSize, filteredData.length);
+  const visibleRows = useMemo(() => {
+    const start = pageIndex * pageSize;
+    return filteredData.slice(start, start + pageSize);
+  }, [filteredData, pageIndex, pageSize]);
+
+  useEffect(() => {
+    setPageIndex(0);
+  }, [query, pageSize]);
+
+  useEffect(() => {
+    if (pageIndex > pageCount - 1) setPageIndex(pageCount - 1);
+  }, [pageCount, pageIndex]);
+
+  useEffect(() => {
+    if (!derivedStorageKey || typeof window === "undefined") {
+      setPreferencesReady(true);
+      return;
+    }
+
+    try {
+      const saved = JSON.parse(window.localStorage.getItem(derivedStorageKey) || "{}");
+      if (typeof saved.query === "string") setQuery(saved.query);
+      if (PAGE_SIZES.includes(Number(saved.pageSize))) setPageSize(Number(saved.pageSize));
+    } catch {
+      // Ignore broken local preferences and continue with defaults.
+    } finally {
+      setPreferencesReady(true);
+    }
+  }, [derivedStorageKey]);
+
+  useEffect(() => {
+    if (!preferencesReady || !derivedStorageKey || typeof window === "undefined") return;
+
+    window.localStorage.setItem(
+      derivedStorageKey,
+      JSON.stringify({
+        query,
+        pageSize,
+      }),
+    );
+  }, [derivedStorageKey, pageSize, preferencesReady, query]);
+
+  useEffect(() => {
+    const validIds = new Set(data.map((row) => String(getRowId(row))));
+
+    setRowSelection((current) => {
+      const next = Object.fromEntries(Object.entries(current).filter(([id]) => validIds.has(id)));
+      return Object.keys(next).length === Object.keys(current).length ? current : next;
+    });
+  }, [data, getRowId]);
 
   function openPreviewModal(rowData) {
     setSelectedRow(rowData);
     setPreviewModal(true);
-
   }
-
 
   function closePreviewModal() {
     setPreviewModal(false);
     setSelectedRow(null);
   }
 
+  async function runTableAction(action, fallbackMessage) {
+    setActionError("");
 
+    try {
+      const result = await action();
+      return result !== false;
+    } catch (error) {
+      console.error(fallbackMessage, error);
+      setActionError(error?.message || fallbackMessage);
+      return false;
+    }
+  }
 
+  async function executeDeleteSingle(row) {
+    if (!onDeleteSingle) return;
 
-  const enhancedColumns = useMemo(() => {
-    return columns.map((col) => {
-      if (col.type === "status") {
-        return {
-          ...col,
-          Cell: ({ row }) => {
-            const item = row.original;
+    const rowId = String(getRowId(row));
+    setDeletingRowId(rowId);
 
-            return (
-              <button
-                disabled={updatingStatusId === item.id}
-                onClick={async () => {
-                  setUpdatingStatusId(item.id);
-                  await onStatusChange(item);
-                  setUpdatingStatusId(null);
-                }}
-                className={`px-3 py-1.5 rounded-full text-xs font-semibold ${item.status === "active"
-                  ? "bg-green-100 text-green-700"
-                  : "bg-gray-200 text-gray-600"
-                  }`}
-              >
-                {updatingStatusId === item.id
-                  ? "Updating..."
-                  : item.status === "active"
-                    ? "Active"
-                    : "Paused"}
-              </button>
-            );
-          },
-        };
+    const completed = await runTableAction(
+      () => onDeleteSingle(rowId, row),
+      "Delete failed. Please retry after checking Firebase access.",
+    );
+
+    setDeletingRowId(null);
+    return completed;
+  }
+
+  function requestDeleteSingle(row) {
+    if (confirmDeletes) {
+      setPendingDelete({ type: "single", row });
+      return;
+    }
+
+    executeDeleteSingle(row);
+  }
+
+  async function executeBulkDelete(ids = selectedIds) {
+    if (!onBulkDelete || ids.length === 0) return false;
+
+    setBulkDeleting(true);
+    const completed = await runTableAction(
+      () => onBulkDelete(ids),
+      "Bulk delete failed. Please retry after checking Firebase access.",
+    );
+
+    if (completed) setRowSelection({});
+    setBulkDeleting(false);
+    return completed;
+  }
+
+  function requestBulkDelete() {
+    if (!onBulkDelete || selectedIds.length === 0) return;
+
+    if (confirmDeletes) {
+      setPendingDelete({ type: "bulk", ids: [...selectedIds] });
+      return;
+    }
+
+    executeBulkDelete([...selectedIds]);
+  }
+
+  async function confirmPendingDelete() {
+    const action = pendingDelete;
+    if (!action) return;
+
+    if (action.type === "bulk") {
+      await executeBulkDelete(action.ids);
+    } else {
+      await executeDeleteSingle(action.row);
+    }
+
+    setPendingDelete(null);
+  }
+
+  async function handleStatusChange(item) {
+    if (!onStatusChange) return;
+
+    await runTableAction(
+      () => onStatusChange(item),
+      "Status update failed. Please retry after checking Firebase access.",
+    );
+  }
+
+  function renderCell(row, column, rowIndex) {
+    const rowId = getRowId(row);
+    const tableRow = { original: row, index: pageIndex * pageSize + rowIndex };
+    const cell = { getValue: () => getValue(row, column) };
+
+    if (column.type === "status") {
+      return (
+        <StatusButton
+          item={row}
+          rowId={rowId}
+          updatingStatusId={updatingStatusId}
+          onStatusChange={onStatusChange ? handleStatusChange : undefined}
+          setUpdatingStatusId={setUpdatingStatusId}
+        />
+      );
+    }
+
+    if (column.type === "action") {
+      return (
+        <RowActions
+          item={row}
+          onEdit={onEdit}
+          onDeleteSingle={onDeleteSingle ? requestDeleteSingle : undefined}
+          onPreview={openPreviewModal}
+          deleting={deletingRowId === String(rowId)}
+        />
+      );
+    }
+
+    if (typeof column.Cell === "function") {
+      return column.Cell({ row: tableRow, cell });
+    }
+
+    return displayValue(cell.getValue());
+  }
+
+  const visibleIds = visibleRows.map((row) => String(getRowId(row)));
+  const allVisibleSelected = canSelectRows && visibleIds.length > 0 && visibleIds.every((id) => rowSelection[id]);
+
+  function toggleAllVisible() {
+    setRowSelection((current) => {
+      const next = { ...current };
+      if (allVisibleSelected) {
+        visibleIds.forEach((id) => {
+          delete next[id];
+        });
+      } else {
+        visibleIds.forEach((id) => {
+          next[id] = true;
+        });
       }
-
-      if (col.type === "action") {
-        return {
-          ...col,
-          Cell: ({ row }) => {
-            const item = row.original;
-            const [toolTip, setToolTip] = useState("");
-      
-            return (
-              <div className="flex gap-2 justify-center">
-                {/* View */}
-                <button
-                  type="button"
-                  onClick={() => openPreviewModal(item)}
-                  onMouseEnter={() => setToolTip(`view-${item.id}`)}
-                  onMouseLeave={() => setToolTip("")}
-                  className="relative p-1.5 cursor-pointer rounded-md text-blue-600 hover:bg-blue-50 transition"
-                  style={{ overflow: "visible" }}
-                >
-                  <ExternalLink size={16} />
-                  {toolTip === `view-${item.id}` && (
-                    <span
-                      style={{ zIndex: 9999 }}
-                      className="pointer-events-none text-white rounded-sm px-2 py-1 bg-black absolute -top-2 left-1/2 -translate-x-1/2 whitespace-nowrap "
-                    >
-                      View
-                      <span  />
-                    </span>
-                  )}
-                </button>
-      
-                {/* Edit */}
-                {onEdit && (
-                  <button
-                    type="button"
-                    onClick={() => onEdit(item)}
-                    onMouseEnter={() => setToolTip(`edit-${item.id}`)}
-                    onMouseLeave={() => setToolTip("")}
-                    className="relative p-1.5 cursor-pointer rounded-md text-amber-500 hover:bg-amber-50 transition"
-                    style={{ overflow: "visible" }}
-                  >
-                    <Pencil size={16} />
-                    {toolTip === `edit-${item.id}` && (
-                      <span
-                        style={{ zIndex: 9999 }}
-                        className="pointer-events-none text-white rounded-sm px-2 py-1 bg-black absolute -top-2 left-1/2 -translate-x-1/2 whitespace-nowrap "
-                      >
-                        Edit
-                        <span  />
-                      </span>
-                    )}
-                  </button>
-                )}
-      
-                {/* Delete */}
-                {onDeleteSingle && (
-                  <button
-                    type="button"
-                    onClick={() => onDeleteSingle(item.id)}
-                    onMouseEnter={() => setToolTip(`delete-${item.id}`)}
-                    onMouseLeave={() => setToolTip("")}
-                    className="relative p-1.5 cursor-pointer rounded-md text-red-500 hover:bg-red-50 transition"
-                    style={{ overflow: "visible" }}
-                  >
-                    <Trash2 size={16} />
-                    {toolTip === `delete-${item.id}` && (
-                      <span
-                        style={{ zIndex: 9999 }}
-                        className="pointer-events-none text-white rounded-sm px-2 py-1 bg-black  absolute -top-2 left-1/2 -translate-x-1/2 whitespace-nowrap "
-                      >
-                        Delete 
-                        <span/>
-                      </span>
-                    )}
-                  </button>
-                )}
-              </div>
-            );
-          },
-        };
-      }
-
-      return col;
+      return next;
     });
-  }, [columns, updatingStatusId, onEdit, onDeleteSingle, onStatusChange]);
+  }
 
-  const table = useMaterialReactTable({
-    columns: enhancedColumns,
-    data,
-    state: {
-      isLoading: loading,
-      rowSelection,
-    },
-    enableRowSelection,
-    onRowSelectionChange: setRowSelection,
-    getRowId,
-    enableColumnActions: true,
-    enableColumnOrdering: true,
-    enableGrouping: true,
-    enableDensityToggle: false,
-    enableFullScreenToggle: true,
-    renderTopToolbarCustomActions: () =>
-      Object.keys(rowSelection).length > 0 &&
-      onBulkDelete && (
-        <button
-          onClick={() => onBulkDelete(Object.keys(rowSelection))}
-          className="px-4 py-2 bg-red-600 text-white rounded"
-        >
-          Delete Selected ({Object.keys(rowSelection).length})
-        </button>
-      ),
-  });
+  if (loading) {
+    return (
+      <AdminDataState
+        type="loading"
+        title="Loading table data"
+        message="Fetching the latest admin rows and preparing table controls."
+      >
+        <AdminDataSkeleton rows={6} showHeader />
+      </AdminDataState>
+    );
+  }
 
   if (!loading && data.length === 0) {
     return (
-      <div className="text-center py-12 border border-dashed rounded-lg">
-        <p className="text-lg font-semibold">{emptyMessage}</p>
-      </div>
+      <AdminDataState
+        type="empty"
+        title={emptyMessage}
+        message="Once Firebase returns records, this table will unlock search, preview, status, and bulk actions."
+      />
     );
   }
- 
 
   return (
-    <div>
-      <MaterialReactTable table={table} />
+    <div className="max-w-full overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm">
+      <div className="flex flex-col gap-3 border-b border-gray-200 p-4 lg:flex-row lg:items-center lg:justify-between">
+        <div className="relative w-full lg:max-w-sm">
+          <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400" />
+          <input
+            type="search"
+            value={query}
+            onChange={(event) => setQuery(event.target.value)}
+            placeholder="Search rows"
+            className="h-10 w-full rounded-lg border border-gray-200 bg-white pl-9 pr-3 text-sm outline-none transition focus:border-gray-400"
+          />
+        </div>
 
+        <div className="flex flex-wrap items-center gap-2 text-sm text-gray-500">
+          <span>
+            {filteredData.length} row{filteredData.length === 1 ? "" : "s"}
+          </span>
+          {filteredData.length > 0 ? (
+            <span className="rounded-full bg-gray-100 px-3 py-1 text-xs font-semibold text-gray-700">
+              Showing {firstVisibleRow}-{lastVisibleRow}
+            </span>
+          ) : null}
+          {selectedIds.length > 0 ? (
+            <span className="rounded-full bg-gray-100 px-3 py-1 text-xs font-semibold text-gray-700">
+              {selectedIds.length} selected
+            </span>
+          ) : null}
+          {selectedIds.length > 0 && onBulkDelete ? (
+            <button
+              type="button"
+              onClick={() => setRowSelection({})}
+              disabled={bulkDeleting}
+              className="inline-flex h-10 items-center gap-2 rounded-lg border border-gray-200 bg-white px-3 text-sm font-semibold text-gray-700 transition hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-60"
+            >
+              Clear selection
+            </button>
+          ) : null}
+          {selectedIds.length > 0 && onBulkDelete ? (
+            <button
+              type="button"
+              onClick={requestBulkDelete}
+              disabled={bulkDeleting}
+              className="inline-flex h-10 items-center gap-2 rounded-lg bg-red-600 px-3 text-sm font-semibold text-white transition hover:bg-red-700 disabled:cursor-not-allowed disabled:opacity-60"
+            >
+              {bulkDeleting ? <Loader2 size={16} className="animate-spin" /> : <Trash2 size={16} />}
+              {bulkDeleting ? "Deleting..." : `Delete selected (${selectedIds.length})`}
+            </button>
+          ) : null}
+        </div>
+      </div>
 
-      {previewModal && selectedRow && (
+      {actionError ? (
+        <div className="mx-4 mb-4 flex items-start gap-2 rounded-lg border border-amber-200 bg-amber-50 px-3 py-2 text-sm text-amber-700">
+          <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0" />
+          <span>{actionError}</span>
+        </div>
+      ) : null}
+
+      <div className="md:hidden">
+        {visibleRows.length > 0 ? (
+          <div className="grid gap-3 p-4">
+            {visibleRows.map((row, rowIndex) => {
+            const rowId = String(getRowId(row));
+            const actionColumn = columns.find((column) => column.type === "action");
+            const cardColumns = columns
+              .filter((column) => column.type !== "action")
+              .slice(0, 5);
+
+            return (
+              <article key={rowId || rowIndex} className="rounded-xl border border-gray-200 bg-white p-4 shadow-sm">
+                <div className="flex items-start justify-between gap-3">
+                  <div className="min-w-0">
+                    <p className="break-words text-sm font-bold text-gray-950">{getRowLabel(row)}</p>
+                    <p className="mt-1 text-xs font-semibold text-gray-500">Row {pageIndex * pageSize + rowIndex + 1}</p>
+                  </div>
+                  {canSelectRows ? (
+                    <input
+                      type="checkbox"
+                      checked={Boolean(rowSelection[rowId])}
+                      onChange={() =>
+                        setRowSelection((current) => {
+                          const next = { ...current };
+                          if (next[rowId]) delete next[rowId];
+                          else next[rowId] = true;
+                          return next;
+                        })
+                      }
+                      className="h-4 w-4 rounded border-gray-300"
+                      aria-label={`Select ${getRowLabel(row)}`}
+                    />
+                  ) : null}
+                </div>
+
+                <dl className="mt-4 grid gap-3">
+                  {cardColumns.map((column, columnIndex) => (
+                    <div key={`${rowId}-${column.id || column.accessorKey || column.header || columnIndex}`} className="rounded-lg bg-gray-50 p-3">
+                      <dt className="text-[11px] font-bold uppercase tracking-wide text-gray-500">
+                        {column.header || column.accessorKey || "Value"}
+                      </dt>
+                      <dd className="mt-1 break-words text-sm font-semibold text-gray-800">
+                        {renderCell(row, column, rowIndex)}
+                      </dd>
+                    </div>
+                  ))}
+                </dl>
+
+                {actionColumn ? (
+                  <div className="mt-4 flex justify-end border-t border-gray-100 pt-3">
+                    {renderCell(row, actionColumn, rowIndex)}
+                  </div>
+                ) : null}
+              </article>
+            );
+            })}
+          </div>
+        ) : (
+          <div className="p-4">
+            <AdminDataState
+              type="empty"
+              compact
+              title="No matching rows"
+              message={query ? `No rows match "${query}". Clear search to return to all rows.` : emptyMessage}
+              actions={query ? [{ label: "Clear search", onClick: () => setQuery(""), icon: X }] : []}
+            />
+          </div>
+        )}
+      </div>
+
+      <div className="hidden max-w-full overflow-x-auto md:block">
+        <table className="min-w-[720px] w-full divide-y divide-gray-200 text-sm">
+          <thead className="bg-gray-50 text-left text-xs font-semibold uppercase tracking-wide text-gray-500">
+            <tr>
+              {canSelectRows ? (
+                <th className="w-12 px-4 py-3">
+                  <input
+                    type="checkbox"
+                    checked={allVisibleSelected}
+                    onChange={toggleAllVisible}
+                    className="h-4 w-4 rounded border-gray-300"
+                    aria-label="Select visible rows"
+                  />
+                </th>
+              ) : null}
+              {columns.map((column, index) => (
+                <th
+                  key={column.id || column.accessorKey || column.header || index}
+                  className="whitespace-nowrap px-4 py-3"
+                  style={column.size ? { width: `${column.size}px` } : undefined}
+                >
+                  {column.header || column.accessorKey || ""}
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody className="divide-y divide-gray-100 bg-white text-gray-700">
+            {visibleRows.length > 0 ? (
+              visibleRows.map((row, rowIndex) => {
+                const rowId = String(getRowId(row));
+                return (
+                  <tr key={rowId || rowIndex} className="transition hover:bg-gray-50">
+                    {canSelectRows ? (
+                      <td className="px-4 py-3">
+                        <input
+                          type="checkbox"
+                          checked={Boolean(rowSelection[rowId])}
+                          onChange={() =>
+                            setRowSelection((current) => {
+                              const next = { ...current };
+                              if (next[rowId]) delete next[rowId];
+                              else next[rowId] = true;
+                              return next;
+                            })
+                          }
+                          className="h-4 w-4 rounded border-gray-300"
+                          aria-label={`Select row ${rowIndex + 1}`}
+                        />
+                      </td>
+                    ) : null}
+                    {columns.map((column, columnIndex) => (
+                      <td
+                        key={`${rowId}-${column.id || column.accessorKey || column.header || columnIndex}`}
+                        className="max-w-[240px] px-4 py-3 align-middle"
+                      >
+                        <div className="break-words">{renderCell(row, column, rowIndex)}</div>
+                      </td>
+                    ))}
+                  </tr>
+                );
+              })
+            ) : (
+              <tr>
+                <td colSpan={columns.length + (canSelectRows ? 1 : 0)} className="px-4 py-10 text-center font-medium text-gray-500">
+                  <AdminDataState
+                    type="empty"
+                    compact
+                    title="No matching rows"
+                    message={query ? `No rows match "${query}". Clear search to return to all rows.` : emptyMessage}
+                    actions={query ? [{ label: "Clear search", onClick: () => setQuery(""), icon: X }] : []}
+                  />
+                </td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+      </div>
+
+      <div className="flex flex-col gap-3 border-t border-gray-200 p-4 sm:flex-row sm:items-center sm:justify-between">
+        <label className="flex items-center gap-2 text-sm text-gray-500">
+          Rows per page
+          <select
+            value={pageSize}
+            onChange={(event) => setPageSize(Number(event.target.value))}
+            className="h-9 rounded-lg border border-gray-200 bg-white px-2 text-sm text-gray-700"
+          >
+            {PAGE_SIZES.map((size) => (
+              <option key={size} value={size}>
+                {size}
+              </option>
+            ))}
+          </select>
+        </label>
+
+        <div className="flex items-center gap-2 text-sm text-gray-500">
+          <span>
+            Page {pageIndex + 1} of {pageCount}
+          </span>
+          <button
+            type="button"
+            onClick={() => setPageIndex((value) => Math.max(0, value - 1))}
+            disabled={pageIndex === 0}
+            className="grid h-9 w-9 place-items-center rounded-lg border border-gray-200 text-gray-600 transition hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50"
+            aria-label="Previous page"
+          >
+            <ChevronLeft size={16} />
+          </button>
+          <button
+            type="button"
+            onClick={() => setPageIndex((value) => Math.min(pageCount - 1, value + 1))}
+            disabled={pageIndex >= pageCount - 1}
+            className="grid h-9 w-9 place-items-center rounded-lg border border-gray-200 text-gray-600 transition hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50"
+            aria-label="Next page"
+          >
+            <ChevronRight size={16} />
+          </button>
+        </div>
+      </div>
+
+      <DeleteConfirmDialog
+        pendingDelete={pendingDelete}
+        busy={bulkDeleting || Boolean(deletingRowId)}
+        onCancel={() => setPendingDelete(null)}
+        onConfirm={confirmPendingDelete}
+      />
+
+      {previewModal && selectedRow ? (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4 backdrop-blur-sm">
           <div className="relative w-full max-w-3xl overflow-hidden rounded-2xl bg-white shadow-2xl">
             <button
               type="button"
               onClick={closePreviewModal}
-              className="absolute cursor-pointer right-4 top-4 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-white text-gray-500 shadow-md transition hover:bg-gray-100 hover:text-black"
+              className="absolute right-4 top-4 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-white text-gray-500 shadow-md transition hover:bg-gray-100 hover:text-black"
             >
               <X size={18} />
             </button>
 
             <div className="border-b border-gray-200 bg-gradient-to-r from-slate-50 to-blue-50 px-6 py-5">
               <h2 className="text-2xl font-bold text-gray-800">Preview Details</h2>
-              <p className="mt-1 text-sm text-gray-500">
-                View complete information for this row
-              </p>
+              <p className="mt-1 text-sm text-gray-500">View complete information for this row</p>
             </div>
 
             <div className="max-h-[85vh] overflow-y-auto px-6 py-6">
-              <div className="gap-6 ">
-                <div className="space-y-5">
-                  {(selectedRow.image || selectedRow.img) && (
-                    <div className="overflow-hidden rounded-2xl border border-gray-200 bg-gray-50">
-                      <img
-                        src={selectedRow.image || selectedRow.img}
-                        alt={selectedRow.title || "Preview"}
-                        className="h-72 w-full object-contain "
-                      />
+              <div className="space-y-5">
+                {(selectedRow.image || selectedRow.img) && (
+                  <div className="overflow-hidden rounded-2xl border border-gray-200 bg-gray-50">
+                    <SafeTableImage
+                      src={selectedRow.image || selectedRow.img}
+                      alt={selectedRow.title || "Preview"}
+                      className="h-72 w-full object-contain"
+                      fallbackClassName="h-72 w-full rounded-lg border border-dashed border-gray-300 bg-gray-50"
+                    />
+                  </div>
+                )}
 
-                    </div>
+                <div className="grid gap-4 sm:grid-cols-2">
+                  {["category", "title", "country", "offerType"].map((key) =>
+                    selectedRow[key] ? (
+                      <div key={key} className="rounded-xl border border-gray-200 bg-gray-50 p-4">
+                        <p className="mb-1 text-sm font-medium capitalize text-gray-500">{key.replace(/([A-Z])/g, " $1")}</p>
+                        <p className="text-base font-semibold text-gray-800">{selectedRow[key]}</p>
+                      </div>
+                    ) : null,
                   )}
 
-                  <div className="flex flex-col gap-5">
-                    {selectedRow.category && (
-                      <div className="rounded-xl border border-gray-200 bg-gray-50 p-4">
-                        <p className="mb-1 text-sm font-medium text-gray-500">Category</p>
-                        <p className="text-base font-semibold text-gray-800">
-                          {selectedRow.category}
-                        </p>
-                      </div>
-                    )}
-
-                    {selectedRow.title && (
-                      <div className="rounded-xl border border-gray-200 bg-gray-50 p-4">
-                        <p className="mb-1 text-sm font-medium text-gray-500">Title</p>
-                        <p className="text-base font-semibold text-gray-800">
-                          {selectedRow.title}
-                        </p>
-                      </div>
-                    )}
-
-                    {selectedRow.link && (
-                      <div className="rounded-xl border border-gray-200 bg-gray-50 p-4">
-                        <p className="mb-1 text-sm font-medium text-gray-500">Link</p>
-                        <a
-                          href={selectedRow.link}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="break-all text-sm font-medium text-blue-600 underline underline-offset-4 hover:text-blue-800"
-                        >
-                          {selectedRow.link}
-                        </a>
-                      </div>
-                    )}
-
-                    {(selectedRow.offerType || selectedRow.discount || selectedRow.cashback || selectedRow.points || selectedRow.code) && (
-                      <div className="grid gap-3 sm:grid-cols-2">
-                        <div className="rounded-xl border border-gray-200 bg-gray-50 p-4">
-                          <p className="mb-1 text-sm font-medium text-gray-500">Offer Type</p>
-                          <p className="text-base font-semibold capitalize text-gray-800">
-                            {selectedRow.offerType || "deal"}
-                          </p>
-                        </div>
-                        <div className="rounded-xl border border-gray-200 bg-gray-50 p-4">
-                          <p className="mb-1 text-sm font-medium text-gray-500">Saving</p>
-                          <p className="text-base font-semibold text-gray-800">
-                            {selectedRow.discount ||
-                              selectedRow.cashback ||
-                              selectedRow.points ||
-                              selectedRow.code ||
-                              "-"}
-                          </p>
-                        </div>
-                      </div>
-                    )}
-
-                    {(selectedRow.verificationStatus || selectedRow.successRate !== undefined) && (
-                      <div className="grid gap-3 sm:grid-cols-2">
-                        <div className="rounded-xl border border-gray-200 bg-gray-50 p-4">
-                          <p className="mb-1 text-sm font-medium text-gray-500">Verification</p>
-                          <p className="text-base font-semibold capitalize text-gray-800">
-                            {selectedRow.verificationStatus || "pending"}
-                          </p>
-                        </div>
-                        <div className="rounded-xl border border-gray-200 bg-gray-50 p-4">
-                          <p className="mb-1 text-sm font-medium text-gray-500">Success Rate</p>
-                          <p className="text-base font-semibold text-gray-800">
-                            {Math.round(Number(selectedRow.successRate) || 0)}%
-                          </p>
-                        </div>
-                        <div className="rounded-xl border border-gray-200 bg-gray-50 p-4">
-                          <p className="mb-1 text-sm font-medium text-gray-500">Votes</p>
-                          <p className="text-base font-semibold text-gray-800">
-                            {Number(selectedRow.workingVotes) || 0} working / {Number(selectedRow.failedVotes) || 0} failed
-                          </p>
-                        </div>
-                        <div className="rounded-xl border border-gray-200 bg-gray-50 p-4">
-                          <p className="mb-1 text-sm font-medium text-gray-500">Last Verified</p>
-                          <p className="text-base font-semibold text-gray-800">
-                            {selectedRow.lastVerifiedAt || "-"}
-                          </p>
-                        </div>
-                        {selectedRow.reviewNote ? (
-                          <div className="rounded-xl border border-gray-200 bg-gray-50 p-4 sm:col-span-2">
-                            <p className="mb-1 text-sm font-medium text-gray-500">Review Note</p>
-                            <p className="text-base font-semibold text-gray-800">
-                              {selectedRow.reviewNote}
-                            </p>
-                          </div>
-                        ) : null}
-                      </div>
-                    )}
-
+                  {(selectedRow.discount || selectedRow.cashback || selectedRow.points || selectedRow.code) ? (
                     <div className="rounded-xl border border-gray-200 bg-gray-50 p-4">
-                      <p className="mb-1 text-sm font-medium text-gray-500">Country</p>
+                      <p className="mb-1 text-sm font-medium text-gray-500">Saving</p>
                       <p className="text-base font-semibold text-gray-800">
-                        {selectedRow.country || "-"}
+                        {selectedRow.discount || selectedRow.cashback || selectedRow.points || selectedRow.code}
                       </p>
                     </div>
-                  </div>
+                  ) : null}
                 </div>
 
-                <div className="my-5" >
-                  {selectedRow?.BrandDetail?.length > 0 ? (
-                    <div className="rounded-2xl border border-gray-200 bg-slate-50 p-4">
-                      <div className="mb-4 flex items-center justify-between">
-                        <h3 className="text-lg font-bold text-gray-800">Brand Details</h3>
-                       
-                      </div>
+                {selectedRow.link ? (
+                  <div className="rounded-xl border border-gray-200 bg-gray-50 p-4">
+                    <p className="mb-1 text-sm font-medium text-gray-500">Link</p>
+                    <a
+                      href={selectedRow.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="break-all text-sm font-medium text-blue-600 underline underline-offset-4 hover:text-blue-800"
+                    >
+                      {selectedRow.link}
+                    </a>
+                  </div>
+                ) : null}
 
-                      <div className="space-y-4">
-                        {selectedRow.BrandDetail.map((item, index) => (
-                          <div   key={index}  >
-                             <div
-                          
-                            className="rounded-xl border border-gray-200 bg-white p-4 shadow-sm"
-                          >
+                {(selectedRow.verificationStatus || selectedRow.successRate !== undefined) ? (
+                  <div className="grid gap-3 sm:grid-cols-2">
+                    <div className="rounded-xl border border-gray-200 bg-gray-50 p-4">
+                      <p className="mb-1 text-sm font-medium text-gray-500">Verification</p>
+                      <p className="text-base font-semibold capitalize text-gray-800">
+                        {selectedRow.verificationStatus || "pending"}
+                      </p>
+                    </div>
+                    <div className="rounded-xl border border-gray-200 bg-gray-50 p-4">
+                      <p className="mb-1 text-sm font-medium text-gray-500">Success Rate</p>
+                      <p className="text-base font-semibold text-gray-800">
+                        {Math.round(Number(selectedRow.successRate) || 0)}%
+                      </p>
+                    </div>
+                    <div className="rounded-xl border border-gray-200 bg-gray-50 p-4">
+                      <p className="mb-1 text-sm font-medium text-gray-500">Votes</p>
+                      <p className="text-base font-semibold text-gray-800">
+                        {Number(selectedRow.workingVotes) || 0} working / {Number(selectedRow.failedVotes) || 0} failed
+                      </p>
+                    </div>
+                    <div className="rounded-xl border border-gray-200 bg-gray-50 p-4">
+                      <p className="mb-1 text-sm font-medium text-gray-500">Last Verified</p>
+                      <p className="text-base font-semibold text-gray-800">{selectedRow.lastVerifiedAt || "-"}</p>
+                    </div>
+                    {selectedRow.reviewNote ? (
+                      <div className="rounded-xl border border-gray-200 bg-gray-50 p-4 sm:col-span-2">
+                        <p className="mb-1 text-sm font-medium text-gray-500">Review Note</p>
+                        <p className="text-base font-semibold text-gray-800">{selectedRow.reviewNote}</p>
+                      </div>
+                    ) : null}
+                  </div>
+                ) : null}
+
+                {selectedRow?.BrandDetail?.length > 0 ? (
+                  <div className="rounded-2xl border border-gray-200 bg-slate-50 p-4">
+                    <h3 className="mb-4 text-lg font-bold text-gray-800">Brand Details</h3>
+                    <div className="space-y-4">
+                      {selectedRow.BrandDetail.map((item, index) => (
+                        <div key={index} className="space-y-3 rounded-xl border border-gray-200 bg-white p-4 shadow-sm">
+                          {(item.image || selectedRow.img) ? (
                             <div className="overflow-hidden rounded-2xl border border-gray-200 bg-gray-50">
-                              <img
+                              <SafeTableImage
                                 src={item.image || selectedRow.img}
                                 alt={item.title || "Preview"}
-                                className="h-72 w-full object-contain "
+                                className="h-72 w-full object-contain"
+                                fallbackClassName="h-72 w-full rounded-lg border border-dashed border-gray-300 bg-gray-50"
                               />
-
                             </div>
-                          </div>
-                          <div className="rounded-xl my-5 border border-gray-200 bg-gray-50 p-4">
-                        <p className="mb-1 text-sm font-medium text-gray-500">Title</p>
-                        <p className="text-base font-semibold text-gray-800">
-                          {item.title}
-                        </p>
-                      </div>
-                      <div className="rounded-xl border border-gray-200 bg-gray-50 p-4">
-                        <p className="mb-1 text-sm font-medium text-gray-500">Link</p>
-                        <a
-                          href={item.link}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="break-all text-sm font-medium text-blue-600 underline underline-offset-4 hover:text-blue-800"
-                        >
-                          {item.link}
-                        </a>
-                      </div>
-                      
-                          </div>
-                         
-
-                        ))}
-                      </div>
+                          ) : null}
+                          <p className="font-semibold text-gray-800">{item.title}</p>
+                          {item.link ? (
+                            <a
+                              href={item.link}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="break-all text-sm font-medium text-blue-600 underline underline-offset-4 hover:text-blue-800"
+                            >
+                              {item.link}
+                            </a>
+                          ) : null}
+                        </div>
+                      ))}
                     </div>
-                  ) : (
-                    ""
-                  )}
-                </div>
+                  </div>
+                ) : null}
               </div>
             </div>
           </div>
         </div>
-      )}
-
+      ) : null}
     </div>
   );
 }

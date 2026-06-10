@@ -409,6 +409,13 @@ export function createBlogPostingJsonLd(blog) {
     timeRequired: `PT${readTimeMinutes}M`,
     isAccessibleForFree: true,
     inLanguage: "en",
+    accessMode: ["textual", "visual"],
+    accessibilityFeature: ["alternativeText", "tableOfContents", "readingOrder"],
+    accessibilityHazard: "none",
+    speakable: {
+      "@type": "SpeakableSpecification",
+      cssSelector: ["#blog-article-title", "#article-summary"],
+    },
     isPartOf: {
       "@id": `${getSiteUrl()}/#website`,
     },
@@ -491,6 +498,10 @@ export function createCollectionPageJsonLd({ path, name, description } = {}) {
     name,
     description,
     url: absoluteUrl(path),
+    inLanguage: "en",
+    isPartOf: {
+      "@id": `${getSiteUrl()}/#website`,
+    },
     publisher: {
       "@id": `${getSiteUrl()}/#organization`,
     },

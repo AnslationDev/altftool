@@ -1,9 +1,6 @@
-"use client";
-
 import Image from "next/image";
 import Link from "next/link";
-import { CalendarDays, Clock3, RefreshCw, UserRound } from "lucide-react";
-import { useEffect, useRef } from "react";
+import { CalendarDays, ChevronRight, Clock3, Home, RefreshCw, UserRound } from "lucide-react";
 import { blogTaxonomySlug, getBlogFreshness } from "../../data";
 
 function formatDate(date) {
@@ -17,24 +14,14 @@ function formatDate(date) {
 }
 
 export default function BlogHeader({ blog }) {
-  const headingRef = useRef(null);
   const authorName = blog.author || "AltFTool Editorial";
   const freshness = getBlogFreshness(blog);
 
-  useEffect(() => {
-    const el = headingRef.current;
-    if (!el) return;
-    el.classList.add("opacity-0", "translate-y-4");
-    const timer = setTimeout(() => {
-      el.style.transition = "opacity 0.7s ease, transform 0.7s ease";
-      el.classList.remove("opacity-0", "translate-y-4");
-    }, 100);
-    return () => clearTimeout(timer);
-  }, []);
+  const authorInitial = (authorName.match(/\b\w/g) || ["A"]).slice(0, 2).join("").toUpperCase();
 
   return (
-    <section className="mb-8 w-full">
-      <div className="relative isolate flex min-h-[460px] overflow-hidden rounded-[var(--anslation-ds-radius-lg)] border border-(--border) bg-(--card) shadow-[var(--anslation-ds-shadow-md)] sm:min-h-[520px] lg:min-h-[560px]">
+    <section className="mb-6 w-full sm:mb-10">
+      <div className="relative isolate flex min-h-[380px] overflow-hidden rounded-2xl border border-(--border) bg-(--card) shadow-[var(--anslation-ds-shadow-md)] sm:min-h-[480px] sm:rounded-3xl lg:min-h-[520px]">
         <Image
           src={blog.image}
           alt={blog.imageAlt || blog.heading}
@@ -46,57 +33,97 @@ export default function BlogHeader({ blog }) {
           priority
         />
 
-        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/45 to-black/15" />
-        <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/90 to-transparent" />
+        {/* Editorial gradient — strong bottom, subtle top */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/92 via-black/55 to-black/20" />
+        <div className="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-black/85 to-transparent" />
 
-        <div className="relative z-10 mt-auto w-full p-5 sm:p-8 lg:p-10">
-          <div className="mb-4 flex flex-wrap items-center gap-2">
+        <div className="relative z-10 mt-auto w-full p-5 sm:p-9 lg:p-12">
+          {/* Breadcrumb */}
+          <nav
+            aria-label="Breadcrumb"
+            className="mb-4 flex max-w-full items-center gap-1.5 overflow-x-auto whitespace-nowrap text-[12px] font-medium text-white/70 sm:mb-5"
+          >
+            <Link href="/" className="inline-flex items-center gap-1 transition hover:text-white">
+              <Home className="h-3.5 w-3.5" />
+              Home
+            </Link>
+            <ChevronRight className="h-3 w-3 shrink-0 opacity-60" />
+            <Link href="/blogs" className="transition hover:text-white">
+              Blogs
+            </Link>
+            <ChevronRight className="h-3 w-3 shrink-0 opacity-60" />
             <Link
               href={`/blogs/category/${blogTaxonomySlug(blog.category)}`}
-              className="inline-flex h-8 items-center rounded-[6px] bg-(--primary) px-3 text-xs font-bold uppercase tracking-wide text-(--primary-foreground) transition hover:bg-(--primary-active)"
+              className="min-w-0 truncate transition hover:text-white"
+            >
+              {blog.category}
+            </Link>
+          </nav>
+
+          {/* Category pill row */}
+          <div className="mb-4 flex flex-wrap items-center gap-2 sm:mb-5">
+            <Link
+              href={`/blogs/category/${blogTaxonomySlug(blog.category)}`}
+              className="inline-flex h-7 items-center rounded-md bg-(--primary) px-2.5 text-[11px] font-bold uppercase tracking-[0.08em] text-(--primary-foreground) transition hover:bg-(--primary-hover)"
             >
               {blog.category}
             </Link>
             {blog.tool && blog.tool !== blog.category ? (
-              <span className="inline-flex h-8 items-center rounded-[6px] border border-white/20 bg-white/10 px-3 text-xs font-semibold text-white backdrop-blur">
+              <span className="inline-flex h-7 items-center rounded-md border border-white/20 bg-white/10 px-2.5 text-[11px] font-semibold text-white backdrop-blur">
                 {blog.tool}
               </span>
             ) : null}
           </div>
 
+          {/* Headline */}
           <h1
-            ref={headingRef}
-            className="max-w-5xl text-3xl font-semibold leading-tight tracking-normal text-white sm:text-5xl lg:text-6xl"
+            id="blog-article-title"
+            className="max-w-5xl text-3xl font-semibold leading-[1.1] tracking-[-0.015em] text-white sm:text-5xl lg:text-6xl"
           >
             {blog.heading}
           </h1>
 
           {blog.excerpt ? (
-            <p className="mt-4 max-w-3xl text-sm leading-6 text-white/78 sm:text-base">
+            <p className="mt-4 line-clamp-3 max-w-3xl text-sm leading-relaxed text-white/80 sm:mt-5 sm:line-clamp-none sm:text-base">
               {blog.excerpt}
             </p>
           ) : null}
 
-          <div className="mt-6 flex flex-wrap items-center gap-2 text-xs font-semibold text-white/78 sm:text-sm">
+          {/* Author + meta row — editorial style */}
+          <div className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-3 sm:mt-8">
             <Link
               href={`/blogs/author/${blogTaxonomySlug(authorName)}`}
-              className="inline-flex h-9 items-center gap-2 rounded-[6px] border border-white/15 bg-white/10 px-3 backdrop-blur transition hover:bg-white/15"
+              className="inline-flex items-center gap-2.5 group"
             >
-              <UserRound className="h-4 w-4" />
-              {authorName}
+              <span className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-white/15 text-xs font-bold text-white backdrop-blur border border-white/20 transition group-hover:bg-(--primary) group-hover:border-(--primary)">
+                {authorInitial}
+              </span>
+              <span className="flex flex-col">
+                <span className="text-[11px] font-medium uppercase tracking-[0.08em] text-white/60">
+                  Written by
+                </span>
+                <span className="text-sm font-semibold text-white transition group-hover:text-(--primary)">
+                  {authorName}
+                </span>
+              </span>
             </Link>
-            <span className="inline-flex h-9 items-center gap-2 rounded-[6px] border border-white/15 bg-white/10 px-3 backdrop-blur">
-              <CalendarDays className="h-4 w-4" />
-              {formatDate(blog.date)}
-            </span>
-            <span className="inline-flex h-9 items-center gap-2 rounded-[6px] border border-white/15 bg-white/10 px-3 backdrop-blur">
-              <Clock3 className="h-4 w-4" />
-              {blog.readTime}
-            </span>
-            <span className="inline-flex h-9 items-center gap-2 rounded-[6px] border border-white/15 bg-white/10 px-3 backdrop-blur">
-              <RefreshCw className="h-4 w-4" />
-              {freshness.label}
-            </span>
+
+            <span className="hidden h-8 w-px bg-white/15 sm:inline-block" aria-hidden="true" />
+
+            <div className="flex flex-wrap items-center gap-4 text-xs font-medium text-white/75 sm:text-sm">
+              <span className="inline-flex items-center gap-1.5">
+                <CalendarDays className="h-3.5 w-3.5 opacity-70" />
+                {formatDate(blog.date)}
+              </span>
+              <span className="inline-flex items-center gap-1.5">
+                <Clock3 className="h-3.5 w-3.5 opacity-70" />
+                {blog.readTime}
+              </span>
+              <span className="inline-flex items-center gap-1.5">
+                <RefreshCw className="h-3.5 w-3.5 opacity-70" />
+                {freshness.label}
+              </span>
+            </div>
           </div>
         </div>
       </div>

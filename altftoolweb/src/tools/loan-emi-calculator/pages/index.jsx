@@ -1,9 +1,16 @@
-
+"use client";
 
 import React, { useState, useMemo } from 'react';
 import { PieChart, Pie, Cell, Tooltip, BarChart, Bar, XAxis, YAxis, CartesianGrid, Legend } from 'recharts';
-import { Calculator, Download, TrendingDown, DollarSign, Calendar, Percent } from 'lucide-react';
+import { Copy, Download, TrendingDown, DollarSign, Calendar, Percent } from 'lucide-react';
+import { safeCopyText } from "@/shared/utils/clipboard";
 import Description from "../components/Description";
+
+const LOAN_PRESETS = [
+  { label: "Home loan", loanAmount: 5000000, interestRate: 8.5, tenure: 20, income: 150000, prepayment: 0, prepaymentMonth: 12 },
+  { label: "Car loan", loanAmount: 800000, interestRate: 9.5, tenure: 5, income: 90000, prepayment: 0, prepaymentMonth: 12 },
+  { label: "Prepay plan", loanAmount: 2500000, interestRate: 8.8, tenure: 15, income: 120000, prepayment: 200000, prepaymentMonth: 18 },
+];
 
 export default function ToolHome() {
   const [loanAmount, setLoanAmount] = useState(1000000);
@@ -13,6 +20,7 @@ export default function ToolHome() {
   const [prepaymentMonth, setPrepaymentMonth] = useState(12);
   const [income, setIncome] = useState(50000);
   const [activeTab, setActiveTab] = useState('calculator');
+  const [copied, setCopied] = useState(false);
 
   const calculations = useMemo(() => {
     const P = loanAmount;
@@ -103,8 +111,7 @@ export default function ToolHome() {
     }).format(num);
   };
 
-  const downloadReport = () => {
-    const reportData = `
+  const getReportData = () => `
  Loan EMI Calculator - Report
 =====================================
 
@@ -143,6 +150,8 @@ ${calculations.schedule.slice(0, 12).map(m =>
 Generated on: ${new Date().toLocaleString()}
     `.trim();
 
+  const downloadReport = () => {
+    const reportData = getReportData();
     const blob = new Blob([reportData], { type: 'text/plain' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
@@ -150,6 +159,23 @@ Generated on: ${new Date().toLocaleString()}
     a.download = 'loan-emi-report.txt';
     a.click();
     URL.revokeObjectURL(url);
+  };
+
+  const copyReport = async () => {
+    const success = await safeCopyText(getReportData());
+    if (!success) return;
+    setCopied(true);
+    setTimeout(() => setCopied(false), 1200);
+  };
+
+  const applyPreset = (preset) => {
+    setLoanAmount(preset.loanAmount);
+    setInterestRate(preset.interestRate);
+    setTenure(preset.tenure);
+    setIncome(preset.income);
+    setPrepayment(preset.prepayment);
+    setPrepaymentMonth(Math.min(preset.prepaymentMonth, preset.tenure * 12));
+    setActiveTab('calculator');
   };
 
   return (
@@ -194,6 +220,19 @@ Generated on: ${new Date().toLocaleString()}
                 {/* Input Section */}
                 <div className="space-y-6">
                   <h2 className="text-xl font-bold text-(--foreground) mb-4">Loan Parameters</h2>
+
+                  <div className="grid gap-2 sm:grid-cols-3">
+                    {LOAN_PRESETS.map((preset) => (
+                      <button
+                        key={preset.label}
+                        type="button"
+                        onClick={() => applyPreset(preset)}
+                        className="rounded-md border border-[var(--border)] bg-[var(--card)] px-3 py-2 text-left text-sm font-semibold text-[var(--muted-foreground)] transition hover:border-[var(--primary)] hover:text-[var(--foreground)]"
+                      >
+                        {preset.label}
+                      </button>
+                    ))}
+                  </div>
                   
                   <div>
                     <label className="flex items-center justify-between mb-2">
@@ -310,7 +349,7 @@ Generated on: ${new Date().toLocaleString()}
                       />
                     </div>
 
-                    <div className={`mt-4 p-4 rounded-lg ${isAffordable ? 'bg-(--backgeound) border border-green-200' : 'bg-red-50 border border-red-200'}`}>
+                    <div className={`mt-4 p-4 rounded-lg ${isAffordable ? 'bg-(--background) border border-green-200' : 'bg-red-50 border border-red-200'}`}>
                       <div className="flex items-center justify-between">
                         <span className="font-medium text-(--foreground)">EMI/Income Ratio</span>
                         <span className={`font-bold text-lg ${isAffordable ? 'text-blue-600' : 'text-red-600'}`}>
@@ -318,7 +357,7 @@ Generated on: ${new Date().toLocaleString()}
                         </span>
                       </div>
                       <p className={`text-sm mt-2 ${isAffordable ? 'text-blue-700' : 'text-red-700'}`}>
-                        {isAffordable ? '✓ Loan is affordable (below 50% of income)' : '⚠ High EMI burden (above 50% of income)'}
+                        {isAffordable ? 'Loan is affordable (below 50% of income)' : 'High EMI burden (above 50% of income)'}
                       </p>
                     </div>
                   </div>
@@ -393,13 +432,23 @@ Generated on: ${new Date().toLocaleString()}
                     </PieChart>
                   </div>
 
-                  <button
-                    onClick={downloadReport}
-                    className="w-full bg-(--primary) text-white py-3 rounded-lg font-semibold hover:from-blue-700 hover:to-indigo-700 transition-all flex items-center justify-center gap-2 shadow-lg cursor-pointer"
-                  >
-                    <Download className="w-5 h-5" />
-                    Download Report
-                  </button>
+                  <div className="grid gap-2 sm:grid-cols-2">
+                    <button
+                      type="button"
+                      onClick={copyReport}
+                      className="w-full border border-(--border) bg-(--card) text-(--foreground) py-3 rounded-lg font-semibold transition-all flex items-center justify-center gap-2 shadow-sm cursor-pointer"
+                    >
+                      <Copy className="w-5 h-5" />
+                      {copied ? 'Copied' : 'Copy Report'}
+                    </button>
+                    <button
+                      onClick={downloadReport}
+                      className="w-full bg-(--primary) text-white py-3 rounded-lg font-semibold hover:from-blue-700 hover:to-indigo-700 transition-all flex items-center justify-center gap-2 shadow-lg cursor-pointer"
+                    >
+                      <Download className="w-5 h-5" />
+                      Download Report
+                    </button>
+                  </div>
                 </div>
               </div>
             )}

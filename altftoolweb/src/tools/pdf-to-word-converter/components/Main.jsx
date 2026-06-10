@@ -17,6 +17,7 @@ import {
   Trash2,
   UploadCloud,
 } from "lucide-react";
+import { safeCopyText } from "@/shared/utils/clipboard";
 
 const MODE_OPTIONS = {
   flow: {
@@ -28,6 +29,32 @@ const MODE_OPTIONS = {
     detail: "Keeps page boundaries and line structure visible",
   },
 };
+
+const MAX_PDF_BYTES = 80 * 1024 * 1024;
+
+function loadTesseract() {
+  return new Promise((resolve, reject) => {
+    if (window.Tesseract || window.tesseract) {
+      resolve(window.Tesseract || window.tesseract);
+      return;
+    }
+
+    const existing = document.getElementById("altftool-tesseract");
+    if (existing) {
+      existing.addEventListener("load", () => resolve(window.Tesseract || window.tesseract), { once: true });
+      existing.addEventListener("error", () => reject(new Error("Failed to load OCR engine.")), { once: true });
+      return;
+    }
+
+    const script = document.createElement("script");
+    script.id = "altftool-tesseract";
+    script.src = "https://cdn.jsdelivr.net/npm/tesseract.js@4/dist/tesseract.min.js";
+    script.async = true;
+    script.onload = () => resolve(window.Tesseract || window.tesseract);
+    script.onerror = () => reject(new Error("Failed to load OCR engine."));
+    document.head.appendChild(script);
+  });
+}
 
 function formatBytes(bytes = 0) {
   if (!bytes) return "0 B";
@@ -182,6 +209,19 @@ function groupTextItems(items) {
     .sort((a, b) => b.y - a.y);
 }
 
+function textToPageLines(text) {
+  return String(text || "")
+    .split(/\r?\n/)
+    .map((line) => line.replace(/\s+/g, " ").trim())
+    .filter(Boolean)
+    .map((line, index) => ({
+      text: line,
+      x: 0,
+      y: 1000 - index * 18,
+      fontSize: 12,
+    }));
+}
+
 function buildParagraphs(lines, detectHeadings) {
   if (!lines.length) return [];
   const averageFontSize =
@@ -253,6 +293,28 @@ function createStats(pages) {
   };
 }
 
+function buildConversionReport(file, pages, stats, mode, pageRange) {
+  return [
+    "PDF to Word conversion report",
+    `File: ${file?.name || "Untitled PDF"}`,
+    `Size: ${formatBytes(file?.size || 0)}`,
+    `Mode: ${MODE_OPTIONS[mode]?.label || mode}`,
+    `Page range: ${pageRange.trim() || "All pages"}`,
+    `Pages: ${stats.pages}`,
+    `Words: ${stats.words}`,
+    `Paragraphs: ${stats.paragraphs}`,
+    `Lines: ${stats.lines}`,
+    `Empty text pages: ${stats.scannedPages}`,
+    `OCR pages: ${pages.filter((page) => page.source === "ocr").length}`,
+    "",
+    "Selected pages",
+    ...pages.map(
+      (page) =>
+        `Page ${page.pageNumber}: ${page.lines.length} lines, ${page.paragraphs.length} paragraphs${page.source === "ocr" ? " (OCR)" : ""}`,
+    ),
+  ].join("\n");
+}
+
 function StatCard({ label, value, detail, icon: Icon }) {
   return (
     <div className="rounded-lg border border-(--border) bg-(--card) p-4">
@@ -288,7 +350,9 @@ export default function MainComponent() {
   const [isDragging, setIsDragging] = useState(false);
   const [isLoadingPdf, setIsLoadingPdf] = useState(false);
   const [isConverting, setIsConverting] = useState(false);
+  const [isRunningOcr, setIsRunningOcr] = useState(false);
   const [progress, setProgress] = useState({ done: 0, total: 0 });
+  const [ocrProgress, setOcrProgress] = useState({ done: 0, total: 0, page: 0, percent: 0 });
   const [status, setStatus] = useState("");
   const [error, setError] = useState("");
   const [copied, setCopied] = useState(false);
@@ -301,20 +365,26 @@ export default function MainComponent() {
 
     const loadPdfJs = async () => {
       try {
-        const pdfjs = await import("pdfjs-dist");
-        try {
-          pdfjs.GlobalWorkerOptions.workerSrc = new URL(
-            "pdfjs-dist/build/pdf.worker.mjs",
-            import.meta.url,
-          ).toString();
-          if (mounted) setDisablePdfWorker(false);
-        } catch {
-          if (mounted) setDisablePdfWorker(true);
+        const pdfjs = await import(
+          /* webpackIgnore: true */ "https://cdn.jsdelivr.net/npm/pdfjs-dist@5.6.205/build/pdf.min.mjs"
+        );
+
+        if (!mounted) {
+          return;
         }
-        if (mounted) setPdfjsLib(pdfjs);
+
+        pdfjs.GlobalWorkerOptions.workerSrc =
+          "https://cdn.jsdelivr.net/npm/pdfjs-dist@5.6.205/build/pdf.worker.min.mjs";
+        setDisablePdfWorker(false);
+        setPdfjsLib(pdfjs);
+        setError("");
       } catch (err) {
-        console.error("Failed to load PDF.js:", err);
-        if (mounted) setError("Failed to initialize the PDF text engine.");
+        if (mounted) {
+          console.info(
+            "PDF text engine is temporarily unavailable. Retrying requires a page refresh.",
+            err,
+          );
+        }
       }
     };
 
@@ -374,6 +444,7 @@ export default function MainComponent() {
     setPageRange("");
     setActivePreviewPage(1);
     setProgress({ done: 0, total: 0 });
+    setOcrProgress({ done: 0, total: 0, page: 0, percent: 0 });
     setStatus("");
     setError("");
     setCopied(false);
@@ -391,6 +462,11 @@ export default function MainComponent() {
       !nextFile.name.toLowerCase().endsWith(".pdf")
     ) {
       setError("Please select a valid PDF file.");
+      return;
+    }
+
+    if (nextFile.size > MAX_PDF_BYTES) {
+      setError(`PDF must be under ${formatBytes(MAX_PDF_BYTES)}.`);
       return;
     }
 
@@ -412,6 +488,7 @@ export default function MainComponent() {
     setError("");
     setStatus("Reading PDF text layers...");
     setProgress({ done: 0, total: 0 });
+    setOcrProgress({ done: 0, total: 0, page: 0, percent: 0 });
     setIsLoadingPdf(true);
 
     try {
@@ -446,15 +523,21 @@ export default function MainComponent() {
           lines,
           paragraphs,
           text,
+          source: "text-layer",
         });
 
         setProgress({ done: pageNumber, total: pdf.numPages });
       }
 
       setPages(extractedPages);
-      setStatus("PDF text extracted. Preview it, then export DOCX.");
+      const emptyPages = extractedPages.filter((page) => page.lines.length === 0).length;
+      setStatus(
+        emptyPages
+          ? `PDF text extracted. ${emptyPages} page${emptyPages === 1 ? "" : "s"} may need OCR.`
+          : "PDF text extracted. Preview it, then export DOCX.",
+      );
     } catch (err) {
-      console.error("PDF to Word extraction failed:", err);
+      console.info("PDF to Word extraction could not read the selected file.", err);
       setError(
         err?.message ||
           "Could not read this PDF. Try a text-based PDF without password protection.",
@@ -469,6 +552,85 @@ export default function MainComponent() {
     event.preventDefault();
     setIsDragging(false);
     processPdfFile(event.dataTransfer.files?.[0]);
+  };
+
+  const runOcrOnEmptyPages = async () => {
+    if (!pdfDocRef.current || !pages.some((page) => page.lines.length === 0)) return;
+
+    setIsRunningOcr(true);
+    setError("");
+    setStatus("Loading OCR engine...");
+
+    try {
+      const tesseract = await loadTesseract();
+      if (!tesseract?.recognize) {
+        throw new Error("OCR engine is unavailable.");
+      }
+
+      const emptyPages = pages.filter((page) => page.lines.length === 0);
+      const ocrUpdates = new Map();
+
+      setOcrProgress({ done: 0, total: emptyPages.length, page: emptyPages[0]?.pageNumber || 0, percent: 0 });
+
+      for (let index = 0; index < emptyPages.length; index += 1) {
+        const pageInfo = emptyPages[index];
+        const pdfPage = await pdfDocRef.current.getPage(pageInfo.pageNumber);
+        const viewport = pdfPage.getViewport({ scale: 2 });
+        const canvas = document.createElement("canvas");
+        const context = canvas.getContext("2d");
+        canvas.width = viewport.width;
+        canvas.height = viewport.height;
+
+        await pdfPage.render({ canvasContext: context, viewport }).promise;
+
+        const { data } = await tesseract.recognize(canvas, "eng", {
+          logger: (message) => {
+            if (message.status?.includes("recognizing") || message.status?.includes("loading")) {
+              setOcrProgress({
+                done: index,
+                total: emptyPages.length,
+                page: pageInfo.pageNumber,
+                percent: Math.round((message.progress || 0) * 100),
+              });
+            }
+          },
+        });
+
+        canvas.width = 0;
+        canvas.height = 0;
+
+        const lines = textToPageLines(data.text);
+        const paragraphs = buildParagraphs(lines, detectHeadings);
+        ocrUpdates.set(pageInfo.pageNumber, {
+          ...pageInfo,
+          lines,
+          paragraphs,
+          text: lines.map((line) => line.text).join("\n"),
+          source: "ocr",
+          confidence: Number(data.confidence || 0),
+        });
+
+        setOcrProgress({
+          done: index + 1,
+          total: emptyPages.length,
+          page: pageInfo.pageNumber,
+          percent: 100,
+        });
+      }
+
+      setPages((previous) =>
+        previous.map((page) => ocrUpdates.get(page.pageNumber) || page),
+      );
+      setStatus(
+        `OCR finished for ${emptyPages.length} page${emptyPages.length === 1 ? "" : "s"}. Preview and export DOCX.`,
+      );
+    } catch (err) {
+      console.error("PDF OCR failed:", err);
+      setError(err?.message || "Could not run OCR on this PDF.");
+      setStatus("");
+    } finally {
+      setIsRunningOcr(false);
+    }
   };
 
   const buildDocx = async () => {
@@ -609,7 +771,11 @@ export default function MainComponent() {
 
   const copyExtractedText = async () => {
     if (!preparedSelectedPages.length) return;
-    await navigator.clipboard?.writeText(buildPlainText(preparedSelectedPages));
+    const success = await safeCopyText(buildPlainText(preparedSelectedPages));
+    if (!success) {
+      setError("Could not copy extracted text in this browser.");
+      return;
+    }
     setCopied(true);
     window.setTimeout(() => setCopied(false), 1400);
   };
@@ -620,6 +786,21 @@ export default function MainComponent() {
       type: "text/plain;charset=utf-8",
     });
     downloadBlob(blob, `${sanitizeFileName(file.name)}.txt`);
+  };
+
+  const exportReport = () => {
+    if (!preparedSelectedPages.length || !file) return;
+    const report = buildConversionReport(
+      file,
+      preparedSelectedPages,
+      selectedStats,
+      mode,
+      pageRange,
+    );
+    downloadBlob(
+      new Blob([report], { type: "text/plain;charset=utf-8" }),
+      `${sanitizeFileName(file.name)}-conversion-report.txt`,
+    );
   };
 
   return (
@@ -679,6 +860,7 @@ export default function MainComponent() {
               ref={fileInputRef}
               type="file"
               accept="application/pdf,.pdf"
+              data-testid="pdf-to-word-file-input"
               className="hidden"
               onChange={(event) => processPdfFile(event.target.files?.[0])}
             />
@@ -828,6 +1010,24 @@ export default function MainComponent() {
                 <FileText className="h-4 w-4" />
                 TXT
               </button>
+              <button
+                type="button"
+                className="btn-secondary"
+                onClick={exportReport}
+                disabled={!preparedSelectedPages.length}
+              >
+                <Info className="h-4 w-4" />
+                Report
+              </button>
+              <button
+                type="button"
+                className="btn-secondary"
+                onClick={runOcrOnEmptyPages}
+                disabled={isRunningOcr || !pages.some((page) => page.lines.length === 0)}
+              >
+                {isRunningOcr ? <Loader2 className="h-4 w-4 animate-spin" /> : <ScanText className="h-4 w-4" />}
+                {isRunningOcr ? "Running OCR..." : "Run OCR"}
+              </button>
               <button type="button" className="btn-secondary" onClick={resetTool}>
                 <RefreshCw className="h-4 w-4" />
                 Reset
@@ -838,8 +1038,11 @@ export default function MainComponent() {
 
         <div className="space-y-6">
           {status && (
-            <div className="flex items-center gap-3 rounded-lg border border-(--border) bg-(--section-highlight) p-4 text-(--primary)">
-              {isLoadingPdf || isConverting ? (
+            <div
+              data-testid="tool-output"
+              className="flex items-center gap-3 rounded-lg border border-(--border) bg-(--section-highlight) p-4 text-(--primary)"
+            >
+              {isLoadingPdf || isConverting || isRunningOcr ? (
                 <Loader2 className="h-5 w-5 animate-spin" />
               ) : (
                 <CheckCircle className="h-5 w-5" />
@@ -872,9 +1075,20 @@ export default function MainComponent() {
           {selectedStats.scannedPages > 0 && (
             <div className="flex items-start gap-3 rounded-lg border border-amber-500/30 bg-amber-500/10 p-4 text-amber-700">
               <AlertTriangle className="mt-0.5 h-5 w-5 shrink-0" />
-              <p className="text-sm">
-                {selectedStats.scannedPages} selected page{selectedStats.scannedPages === 1 ? "" : "s"} did not expose editable text. The DOCX will include a note for those pages.
-              </p>
+              <div className="space-y-3">
+                <p className="text-sm">
+                  {selectedStats.scannedPages} selected page{selectedStats.scannedPages === 1 ? "" : "s"} did not expose editable text. Run OCR to convert scanned pages into editable text before exporting.
+                </p>
+                <button
+                  type="button"
+                  className="btn-secondary"
+                  onClick={runOcrOnEmptyPages}
+                  disabled={isRunningOcr}
+                >
+                  {isRunningOcr ? <Loader2 className="h-4 w-4 animate-spin" /> : <ScanText className="h-4 w-4" />}
+                  {isRunningOcr ? `OCR page ${ocrProgress.page} (${ocrProgress.percent}%)` : "Run OCR on Empty Pages"}
+                </button>
+              </div>
             </div>
           )}
 
@@ -911,10 +1125,15 @@ export default function MainComponent() {
                     <span className="rounded-md bg-(--card) px-2 py-1">
                       {currentPreviewPage.paragraphs.length} paragraphs
                     </span>
-                    <span className="rounded-md bg-(--card) px-2 py-1">
-                      {currentPreviewPage.width} x {currentPreviewPage.height}
-                    </span>
-                  </div>
+                <span className="rounded-md bg-(--card) px-2 py-1">
+                  {currentPreviewPage.width} x {currentPreviewPage.height}
+                </span>
+                {currentPreviewPage.source === "ocr" && (
+                  <span className="rounded-md bg-(--card) px-2 py-1">
+                    OCR {Math.round(currentPreviewPage.confidence || 0)}% confidence
+                  </span>
+                )}
+              </div>
                   <pre className="max-h-[480px] overflow-auto whitespace-pre-wrap break-words text-sm leading-6 text-(--foreground)">
                     {currentPreviewPage.text || "No embedded text found on this page."}
                   </pre>

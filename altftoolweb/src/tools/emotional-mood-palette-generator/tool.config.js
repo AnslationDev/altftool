@@ -1,4 +1,4 @@
-export default {
+const toolConfig = {
   slug: "emotional-mood-palette-generator",
   name: "Emotional Mood → Palette Generator",
   category: "Design",
@@ -6,3 +6,5 @@ export default {
   icon: "palette",
   iconColor: "text-indigo-500",
 };
+
+export default toolConfig;

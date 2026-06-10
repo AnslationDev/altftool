@@ -1,11 +1,35 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { Clipboard, RotateCcw, Text } from "lucide-react";
+import { Clipboard, FileDown, RotateCcw, Text } from "lucide-react";
 import { safeCopyText } from "@/shared/utils/clipboard";
 
 const sampleText =
   "AltFTool helps teams move faster with focused digital utilities. Paste any draft here to measure its length, reading time, and structure.";
+const COMMON_WORDS = new Set([
+  "a",
+  "an",
+  "and",
+  "are",
+  "as",
+  "at",
+  "be",
+  "by",
+  "for",
+  "from",
+  "in",
+  "is",
+  "it",
+  "of",
+  "on",
+  "or",
+  "that",
+  "the",
+  "this",
+  "to",
+  "with",
+  "your",
+]);
 
 function Stat({ label, value }) {
   return (
@@ -16,28 +40,82 @@ function Stat({ label, value }) {
   );
 }
 
+function downloadTextFile(filename, content) {
+  const url = URL.createObjectURL(new Blob([content], { type: "text/plain;charset=utf-8" }));
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = filename;
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
+  URL.revokeObjectURL(url);
+}
+
 export default function ToolHome() {
   const [text, setText] = useState(sampleText);
   const [copied, setCopied] = useState(false);
 
   const stats = useMemo(() => {
     const trimmed = text.trim();
-    const words = trimmed ? trimmed.match(/\b[\w'-]+\b/g)?.length || 0 : 0;
+    const wordList = trimmed ? trimmed.match(/\b[\w'-]+\b/g) || [] : [];
+    const words = wordList.length;
     const characters = text.length;
     const noSpaces = text.replace(/\s/g, "").length;
     const sentences = trimmed ? trimmed.split(/[.!?]+/).filter((item) => item.trim()).length : 0;
     const paragraphs = trimmed ? trimmed.split(/\n{2,}/).filter((item) => item.trim()).length : 0;
+    const lines = text ? text.split(/\r\n|\r|\n/).length : 0;
     const readingMinutes = Math.max(1, Math.ceil(words / 225));
-    return { words, characters, noSpaces, sentences, paragraphs, readingMinutes };
+    const speakingMinutes = Math.max(1, Math.ceil(words / 150));
+    const averageWordLength = words
+      ? (wordList.reduce((sum, word) => sum + word.length, 0) / words).toFixed(1)
+      : "0";
+    const longestWord = wordList.reduce((longest, word) => (word.length > longest.length ? word : longest), "");
+    const frequency = new Map();
+
+    wordList.forEach((word) => {
+      const normalized = word.toLowerCase().replace(/^'|'$/g, "");
+      if (normalized.length < 3 || COMMON_WORDS.has(normalized)) return;
+      frequency.set(normalized, (frequency.get(normalized) || 0) + 1);
+    });
+
+    const topWords = [...frequency.entries()]
+      .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))
+      .slice(0, 8);
+
+    return {
+      averageWordLength,
+      characters,
+      lines,
+      longestWord,
+      noSpaces,
+      paragraphs,
+      readingMinutes,
+      sentences,
+      speakingMinutes,
+      topWords,
+      words,
+    };
   }, [text]);
 
+  const summary = `Words: ${stats.words}
+Characters: ${stats.characters}
+Characters without spaces: ${stats.noSpaces}
+Sentences: ${stats.sentences}
+Paragraphs: ${stats.paragraphs}
+Lines: ${stats.lines}
+Reading time: ${stats.readingMinutes} min
+Speaking time: ${stats.speakingMinutes} min
+Average word length: ${stats.averageWordLength}
+Longest word: ${stats.longestWord || "None"}
+Top terms: ${stats.topWords.map(([word, count]) => `${word} (${count})`).join(", ") || "None"}`;
+
   const copySummary = async () => {
-    setCopied(
-      await safeCopyText(
-      `Words: ${stats.words}\nCharacters: ${stats.characters}\nCharacters without spaces: ${stats.noSpaces}\nSentences: ${stats.sentences}\nParagraphs: ${stats.paragraphs}\nReading time: ${stats.readingMinutes} min`,
-      ),
-    );
+    setCopied(await safeCopyText(summary));
     setTimeout(() => setCopied(false), 1000);
+  };
+
+  const downloadSummary = () => {
+    downloadTextFile("altftool-text-report.txt", `${summary}\n\n--- Source text ---\n${text}`);
   };
 
   return (
@@ -78,12 +156,36 @@ export default function ToolHome() {
               <Stat label="No spaces" value={stats.noSpaces} />
               <Stat label="Sentences" value={stats.sentences} />
               <Stat label="Paragraphs" value={stats.paragraphs} />
+              <Stat label="Lines" value={stats.lines} />
               <Stat label="Read time" value={`${stats.readingMinutes} min`} />
+              <Stat label="Speak time" value={`${stats.speakingMinutes} min`} />
+              <Stat label="Avg word" value={stats.averageWordLength} />
+              <Stat label="Longest" value={stats.longestWord || "-"} />
             </div>
-            <button type="button" onClick={copySummary} className="btn-primary mt-5 w-full">
-              <Clipboard className="h-4 w-4" />
-              {copied ? "Copied summary" : "Copy summary"}
-            </button>
+            <div className="mt-5 rounded-lg border border-[var(--border)] bg-[var(--background)] p-4">
+              <p className="text-xs font-semibold uppercase text-[var(--muted-foreground)]">Top terms</p>
+              <div className="mt-3 flex flex-wrap gap-2">
+                {stats.topWords.length ? (
+                  stats.topWords.map(([word, count]) => (
+                    <span key={word} className="rounded-[7px] border border-[var(--border)] bg-[var(--card)] px-2.5 py-1.5 text-xs font-semibold text-[var(--foreground)]">
+                      {word} <span className="text-[var(--muted-foreground)]">{count}</span>
+                    </span>
+                  ))
+                ) : (
+                  <span className="text-sm text-[var(--muted-foreground)]">Type more text to see repeated terms.</span>
+                )}
+              </div>
+            </div>
+            <div className="mt-5 grid gap-2 sm:grid-cols-2">
+              <button type="button" onClick={copySummary} className="btn-primary w-full">
+                <Clipboard className="h-4 w-4" />
+                {copied ? "Copied summary" : "Copy summary"}
+              </button>
+              <button type="button" onClick={downloadSummary} className="btn-secondary w-full">
+                <FileDown className="h-4 w-4" />
+                Download report
+              </button>
+            </div>
           </div>
         </section>
       </div>

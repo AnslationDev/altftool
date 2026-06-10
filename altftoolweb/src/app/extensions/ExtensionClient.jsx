@@ -9,6 +9,7 @@ import useDevice from "@/hooks/useDevice";
 import { injectRandomAds } from "@/ads/adInjector";
 import AdExtensionCard from "@/ads/layouts/extension/AdExtensionCard";
 import DataStateNotice from "@/components/ui/DataStateNotice";
+import { AltftoolLoader, LoadingBone } from "@/components/ui/route-loading";
 
 import {
   Image as ImageIcon,
@@ -221,17 +222,25 @@ export default function ExtensionsPage() {
           ) : null}
 
           {loading ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-              {[...Array(8)].map((_, i) => (
-                <div key={i} className="h-64 overflow-hidden rounded-[8px] border border-[var(--border)] bg-[var(--muted)] animate-pulse">
-                   <div className="h-40 bg-[var(--card)]/50 mb-4" />
-                   <div className="px-6 space-y-3">
-                      <div className="h-6 bg-[var(--card)]/80 rounded-lg w-3/4" />
-                      <div className="h-4 bg-[var(--card)]/60 rounded-lg w-1/2" />
-                   </div>
-                </div>
-              ))}
-            </div>
+            <>
+              <AltftoolLoader
+                label="Loading extensions"
+                detail="Refreshing the AltFTool extension catalog"
+                className="mb-6"
+              />
+              <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+                {Array.from({ length: 8 }).map((_, index) => (
+                  <div key={index} className="rounded-[var(--anslation-ds-radius)] border border-(--border) bg-(--card) p-3 shadow-[var(--anslation-ds-shadow-sm)]">
+                    <LoadingBone className="aspect-[16/10] rounded-[var(--anslation-ds-radius)]" />
+                    <div className="mt-4 space-y-2">
+                      <LoadingBone className="h-5 w-3/4 rounded-full" />
+                      <LoadingBone className="h-4 w-11/12 rounded-full" />
+                      <LoadingBone className="h-4 w-1/2 rounded-full" />
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </>
           ) : extensionsWithAds.length > 0 ? (
             <>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 ">

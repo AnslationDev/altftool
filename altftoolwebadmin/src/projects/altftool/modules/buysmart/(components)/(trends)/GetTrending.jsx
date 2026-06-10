@@ -217,14 +217,13 @@
 "use client";
 
 import React, { useEffect, useMemo, useState } from "react";
-import ReusableTable from "../(resuableComponent)/ReusableTable";
+import ReusableTable, { SafeTableImage } from "../(resuableComponent)/ReusableTable";
 import { firebaseBuySmartTrendingSource } from "@/projects/altftool/modules/buysmart/services/firebaseBuySmartTrending";
 import { ExternalLink } from "lucide-react";
 
 function GetTrending({ setActive, setEditTrending, filter }) {
   const [trending, setTrending] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [deleting, setDeleting] = useState(false);
 
 
   useEffect(() => {
@@ -245,26 +244,17 @@ function GetTrending({ setActive, setEditTrending, filter }) {
     setEditTrending(item);
   };
 
-  // Single Delete
   const handleDeleteSingle = async (id) => {
-    if (!confirm("Are you sure you want to delete this banner?")) return;
-
-    setDeleting(true);
     await firebaseBuySmartTrendingSource.remove(id, trending);
-    setDeleting(false);
+    return true;
   };
 
-  // Bulk Delete
   const handleBulkDelete = async (ids) => {
-    if (!ids.length) return;
-    if (!confirm(`Delete ${ids.length} selected banners?`)) return;
-
-    setDeleting(true);
+    if (!ids.length) return false;
     await firebaseBuySmartTrendingSource.bulkDelete(ids, trending);
-    setDeleting(false);
+    return true;
   };
 
-  // Status Toggle
   const handleStatusChanged = async (item) => {
     const newStatus = item.status === "active" ? "paused" : "active";
 
@@ -273,7 +263,6 @@ function GetTrending({ setActive, setEditTrending, filter }) {
     });
   };
 
-  // Columns (Reusable Compatible)
   const columns = useMemo(
     () => [
       {
@@ -284,9 +273,11 @@ function GetTrending({ setActive, setEditTrending, filter }) {
         accessorKey: "image",
         header: "Image",
         Cell: ({ cell }) => (
-          <img
+          <SafeTableImage
             src={cell.getValue()}
-            className="h-12 w-20 object-cover rounded border"
+            alt="Trending banner"
+            className="h-12 w-20 rounded border object-cover"
+            fallbackClassName="h-12 w-20 rounded border border-dashed border-gray-300 bg-gray-50"
           />
         ),
       },
@@ -345,6 +336,7 @@ function GetTrending({ setActive, setEditTrending, filter }) {
       onDeleteSingle={handleDeleteSingle}
       onBulkDelete={handleBulkDelete}
       onStatusChange={handleStatusChanged}
+      confirmDeletes
     />
   );
 }

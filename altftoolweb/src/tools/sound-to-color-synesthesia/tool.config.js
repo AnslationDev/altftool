@@ -1,4 +1,4 @@
-export default {
+const toolConfig = {
   slug: "sound-to-color-synesthesia",
   name: "Sound To Color Synesthesia",
   category: ["Music", "Creators", "AI"],
@@ -7,3 +7,5 @@ export default {
   icon: "activity",
   iconColor: "text-blue-600",
 };
+
+export default toolConfig;

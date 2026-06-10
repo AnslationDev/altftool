@@ -87,6 +87,8 @@ test.describe("admin API safety", () => {
     expect(response.ok()).toBeTruthy();
 
     const payload = await response.json();
+    expect(payload.mode).toBe("live");
+    expect(payload.liveProbeSkipped).toBe(false);
     expect(payload.firebaseAdmin).toEqual(
       expect.objectContaining({
         checks: expect.any(Array),
@@ -104,6 +106,106 @@ test.describe("admin API safety", () => {
         totalChecks: expect.any(Number),
       }),
     );
+    expect(payload.firebaseDataIntegrity).toEqual(
+      expect.objectContaining({
+        checks: expect.any(Array),
+        failures: expect.any(Array),
+        warnings: expect.any(Array),
+        sections: expect.any(Object),
+        status: expect.any(String),
+        totalChecks: expect.any(Number),
+      }),
+    );
+    expect(payload.performanceBudget).toEqual(
+      expect.objectContaining({
+        checks: expect.any(Array),
+        score: expect.any(Number),
+        status: expect.any(String),
+        totals: expect.objectContaining({
+          publicImages: expect.any(Number),
+          dynamicToolImports: expect.any(Number),
+        }),
+      }),
+    );
+    expect(payload.productionLinks).toEqual(
+      expect.objectContaining({
+        checks: expect.any(Array),
+        score: expect.any(Number),
+        status: expect.any(String),
+        totals: expect.objectContaining({
+          pages: expect.any(Number),
+          linksChecked: expect.any(Number),
+          imagesChecked: expect.any(Number),
+        }),
+        pages: expect.any(Array),
+        failures: expect.any(Array),
+        warnings: expect.any(Array),
+      }),
+    );
+    expect(payload.releaseDoctorArtifact).toEqual(
+      expect.objectContaining({
+        status: expect.any(String),
+        score: expect.any(Number),
+        summary: expect.objectContaining({
+          counts: expect.objectContaining({
+            pass: expect.any(Number),
+            warn: expect.any(Number),
+            block: expect.any(Number),
+          }),
+        }),
+        checks: expect.any(Array),
+        qualityChecks: expect.any(Array),
+        artifactCommand: "npm run release:doctor:report",
+      }),
+    );
+    expect(payload.releaseHistory).toEqual(
+      expect.objectContaining({
+        status: expect.any(String),
+        score: expect.any(Number),
+        savedEntryCount: expect.any(Number),
+        timeline: expect.any(Array),
+        metrics: expect.arrayContaining([
+          expect.objectContaining({
+            key: "release-doctor",
+            current: expect.objectContaining({
+              score: expect.any(Number),
+            }),
+            points: expect.any(Array),
+          }),
+          expect.objectContaining({
+            key: "production-links",
+            current: expect.objectContaining({
+              score: expect.any(Number),
+            }),
+          }),
+        ]),
+        checks: expect.any(Array),
+        command: "npm run release:history:report",
+      }),
+    );
+    expect(payload.fixCenter).toEqual(
+      expect.objectContaining({
+        status: expect.any(String),
+        score: expect.any(Number),
+        counts: expect.objectContaining({
+          total: expect.any(Number),
+          block: expect.any(Number),
+          warn: expect.any(Number),
+          command: expect.any(Number),
+        }),
+        items: expect.any(Array),
+        topCommands: expect.any(Array),
+        checks: expect.any(Array),
+      }),
+    );
+    if (payload.fixCenter.items.length) {
+      expect(payload.fixCenter.items[0]).toEqual(
+        expect.objectContaining({
+          targetHref: expect.stringMatching(/^#/),
+          targetLabel: expect.any(String),
+        }),
+      );
+    }
     expect(payload.qa).toEqual(
       expect.objectContaining({
         total: 40,
@@ -127,8 +229,129 @@ test.describe("admin API safety", () => {
         checks: expect.any(Array),
       }),
     );
+    expect(payload.releaseDoctor).toEqual(
+      expect.objectContaining({
+        status: expect.any(String),
+        strictStatus: expect.any(String),
+        commands: expect.objectContaining({
+          normal: "npm run release:doctor",
+          strict: "npm run release:doctor:strict",
+        }),
+        summary: expect.objectContaining({
+          counts: expect.objectContaining({
+            pass: expect.any(Number),
+            warn: expect.any(Number),
+            block: expect.any(Number),
+          }),
+          blockingChecks: expect.any(Array),
+          warningChecks: expect.any(Array),
+        }),
+        checks: expect.any(Array),
+      }),
+    );
+    expect(payload.runtimeQuality).toEqual(
+      expect.objectContaining({
+        ok: expect.any(Boolean),
+        status: expect.any(String),
+        score: expect.any(Number),
+        commands: expect.objectContaining({
+          combined: "npm run validate:runtime-quality",
+          route: "npm run qa:routes:strict",
+          firebase: "npm run firebase:live-check:strict",
+          firebaseIntegrity: "npm run firebase:integrity:strict",
+          performance: "npm run performance:budget:strict",
+        }),
+        gates: expect.arrayContaining([
+          expect.objectContaining({
+            key: "route-qa-strict",
+            command: "npm run qa:routes:strict",
+          }),
+          expect.objectContaining({
+            key: "firebase-live-strict",
+            command: "npm run firebase:live-check:strict",
+          }),
+          expect.objectContaining({
+            key: "firebase-integrity-strict",
+            command: "npm run firebase:integrity:strict",
+          }),
+          expect.objectContaining({
+            key: "performance-budget-strict",
+            command: "npm run performance:budget:strict",
+          }),
+        ]),
+      }),
+    );
+    expect(payload.releaseDoctor.checks).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          key: "vercel-deploy-readiness",
+          command: "npm run deploy:readiness -- --target=all",
+        }),
+      ]),
+    );
     expect(JSON.stringify(payload.firebaseAdmin)).not.toContain("PRIVATE KEY-----");
     expect(JSON.stringify(payload.firebaseLiveData)).not.toContain("PRIVATE KEY-----");
+    expect(JSON.stringify(payload.firebaseDataIntegrity)).not.toContain("PRIVATE KEY-----");
+    expect(JSON.stringify(payload.runtimeQuality)).not.toContain("PRIVATE KEY-----");
+    expect(JSON.stringify(payload.performanceBudget)).not.toContain("PRIVATE KEY-----");
+    expect(JSON.stringify(payload.productionLinks)).not.toContain("PRIVATE KEY-----");
+    expect(JSON.stringify(payload.releaseDoctorArtifact)).not.toContain("PRIVATE KEY-----");
+    expect(JSON.stringify(payload.releaseHistory)).not.toContain("PRIVATE KEY-----");
+    expect(JSON.stringify(payload.fixCenter)).not.toContain("PRIVATE KEY-----");
     expect(JSON.stringify(payload.deploy)).not.toContain("dummy");
+    expect(JSON.stringify(payload.releaseDoctor)).not.toContain("PRIVATE KEY-----");
+  });
+
+  test("health endpoint supports a fast lite mode with saved probes and fix links", async ({ request }) => {
+    const response = await request.get(`${adminUrl}/api/health?lite=1`, {
+      headers: localAdminHeaders,
+    });
+
+    expect(response.ok()).toBeTruthy();
+
+    const payload = await response.json();
+    expect(payload.mode).toBe("lite");
+    expect(payload.liveProbeSkipped).toBe(true);
+    expect(payload.firebaseLiveData).toEqual(
+      expect.objectContaining({
+        lite: true,
+        skipped: true,
+        checks: expect.any(Array),
+        status: expect.any(String),
+      }),
+    );
+    expect(payload.firebaseDataIntegrity).toEqual(
+      expect.objectContaining({
+        lite: true,
+        skipped: true,
+        checks: expect.any(Array),
+        status: expect.any(String),
+      }),
+    );
+    expect(payload.production).toEqual(
+      expect.objectContaining({
+        lite: true,
+        skipped: true,
+        checks: expect.any(Array),
+        status: expect.any(String),
+      }),
+    );
+    expect(payload.fixCenter).toEqual(
+      expect.objectContaining({
+        items: expect.any(Array),
+        topCommands: expect.any(Array),
+      }),
+    );
+    if (payload.fixCenter.items.length) {
+      expect(payload.fixCenter.items).toEqual(
+        expect.arrayContaining([
+          expect.objectContaining({
+            targetHref: expect.stringMatching(/^#/),
+            targetLabel: expect.any(String),
+          }),
+        ]),
+      );
+    }
+    expect(JSON.stringify(payload)).not.toContain("PRIVATE KEY-----");
   });
 });

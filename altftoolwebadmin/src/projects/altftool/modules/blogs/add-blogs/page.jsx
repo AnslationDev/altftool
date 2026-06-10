@@ -6,6 +6,7 @@ import dynamic from "next/dynamic";
 import { emitAlert } from "@/lib/alertBus";
 import {
   fetchCategoryNames,
+  fetchAllBlogs,
   createBlog,
   updateBlogImage,
   uploadBlogImage,
@@ -29,8 +30,15 @@ import BlogLivePreview from "../components/BlogLivePreview";
 import BlogWritingAssistant from "../components/BlogWritingAssistant";
 import BlogContentBlocks from "../components/BlogContentBlocks";
 import BlogContentTemplates from "../components/BlogContentTemplates";
+import BlogEditorHealthPanel from "../components/BlogEditorHealthPanel";
 import BlogRefreshActions from "../components/BlogRefreshActions";
 import BlogSourceEditor, { parseSourcesText } from "../components/BlogSourceEditor";
+import { appendRefreshBlocks } from "../components/blogRefreshKit";
+import BlogPublishPreviewModal, {
+  buildBlogChangeSummary,
+  buildBlogDuplicateIssues,
+  normalizeBlogSlug,
+} from "../components/BlogPublishPreviewModal";
 
 const BlogEditor = dynamic(() => import("../components/BlogEditor"), { ssr: false });
 
@@ -40,6 +48,20 @@ const DRAFT_KEY = "blogDraftData";
 const generateSlug    = (t) => t.toLowerCase().trim().replace(/[^\w\s-]/g, "").replace(/\s+/g, "-").replace(/--+/g, "-");
 const stripHtml       = (h) => (h || "").replace(/<[^>]+>/g, "");
 const generateExcerpt = (html, len = 160) => stripHtml(html).substring(0, len).trim();
+
+const SECTION_BY_CONTENT_ISSUE = {
+  body: "blog-section-content",
+  faq: "blog-section-button-picker",
+  freshness: "blog-section-sources-review",
+  heading: "blog-section-post-details",
+  image: "blog-section-image",
+  links: "blog-section-internal-links",
+  seoDescription: "blog-section-seo",
+  slug: "blog-section-post-details",
+  sources: "blog-section-sources-review",
+  taxonomy: "blog-section-post-details",
+  trust: "blog-section-trust",
+};
 
 /* ── SEO Title validation ── */
 const SEO_TITLE_MIN       = 50;
@@ -134,9 +156,14 @@ function Input({ error, ...props }) {
   );
 }
 
-function Section({ title, children }) {
+function Section({ title, children, highlighted = false, id }) {
   return (
-    <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 space-y-5">
+    <div
+      id={id}
+      className={`scroll-mt-24 rounded-2xl border bg-white p-6 shadow-sm transition ${
+        highlighted ? "border-blue-200 ring-4 ring-blue-100" : "border-gray-100"
+      } space-y-5`}
+    >
       <h2 className="text-xs font-black text-gray-400 uppercase tracking-widest flex items-center gap-2">
         {title}<span className="flex-1 h-px bg-gray-100" />
       </h2>
@@ -226,6 +253,21 @@ export default function AddBlog() {
   const [uploadTask, setUploadTask]           = useState(null);
   const [autoSaveError, setAutoSaveError]     = useState(false);
   const [publishGate, setPublishGate]         = useState(null);
+  const [highlightedSection, setHighlightedSection] = useState("");
+  const [blogIndex, setBlogIndex]             = useState({ blogs: [], status: "loading", error: "" });
+  const [previewRequest, setPreviewRequest]   = useState(null);
+
+  const isHighlighted = (sectionId) => highlightedSection === sectionId;
+
+  const handleJumpToContentIssue = (issueKey) => {
+    const sectionId = SECTION_BY_CONTENT_ISSUE[issueKey] || "blog-section-content";
+    if (sectionId === "blog-section-seo") setSeoExpanded(true);
+    setHighlightedSection(sectionId);
+    window.requestAnimationFrame(() => {
+      document.getElementById(sectionId)?.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+    window.setTimeout(() => setHighlightedSection((current) => (current === sectionId ? "" : current)), 1800);
+  };
 
   /* ── Load categories ── */
   useEffect(() => {
@@ -245,6 +287,22 @@ export default function AddBlog() {
         emitAlert({ type: "error", message: msg });
       }
     })();
+  }, []);
+
+  useEffect(() => {
+    let mounted = true;
+    (async () => {
+      try {
+        const blogs = await fetchAllBlogs();
+        if (mounted) setBlogIndex({ blogs, status: "ready", error: "" });
+      } catch (err) {
+        console.error("Failed to load blogs for duplicate guard", err);
+        if (mounted) setBlogIndex({ blogs: [], status: "error", error: "Could not load existing blogs for duplicate guard." });
+      }
+    })();
+    return () => {
+      mounted = false;
+    };
   }, []);
 
   /* ── Restore draft ── */
@@ -328,6 +386,41 @@ export default function AddBlog() {
     setBannerError(null);
   };
 
+  const handleApplyQuickFix = (payload = {}, action = {}) => {
+    if (!payload.hasWork) {
+      emitAlert({ type: "info", message: "No content-health changes were needed for this action." });
+      return;
+    }
+
+    const blockResult = appendRefreshBlocks(formData.description, payload.blocks || []);
+
+    setFormData((prev) => ({
+      ...prev,
+      ...payload.fields,
+      description: blockResult.description,
+    }));
+    setErrors((prev) => {
+      const next = { ...prev };
+      Object.keys(payload.fields || {}).forEach((key) => {
+        next[key] = undefined;
+      });
+      if (blockResult.addedCount > 0) next.description = undefined;
+      return next;
+    });
+    if (payload.expandSeo) setSeoExpanded(true);
+    if ("seoTitle" in (payload.fields || {})) setSeoEdited((prev) => ({ ...prev, title: true }));
+    if ("seoDescription" in (payload.fields || {})) setSeoEdited((prev) => ({ ...prev, description: true }));
+    setBannerError(null);
+
+    const label = payload.label || action.label || "Content health fix";
+    const suffix = blockResult.addedCount
+      ? ` ${blockResult.addedCount} content block${blockResult.addedCount === 1 ? "" : "s"} added.`
+      : blockResult.skippedCount
+        ? " Existing content blocks were already present."
+        : "";
+    emitAlert({ type: "success", message: `${label} applied. Review and publish when ready.${suffix}` });
+  };
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
@@ -401,7 +494,7 @@ export default function AddBlog() {
     return errorCount === 0;
   };
 
-  const ensurePublishGateReady = () => {
+  const ensurePublishGateReady = ({ confirmWarnings = true } = {}) => {
     if (!publishGate) {
       const msg = "Publish gate is still checking this post. Please wait a moment and try again.";
       setBannerError(msg);
@@ -419,7 +512,7 @@ export default function AddBlog() {
     }
 
     const warnings = publishGate.warningIssues || [];
-    if (warnings.length > 0) {
+    if (confirmWarnings && warnings.length > 0) {
       const preview = warnings.slice(0, 3).map((item) => `- ${item.label}: ${item.detail}`).join("\n");
       const ok = window.confirm(`Publish with ${warnings.length} warning${warnings.length === 1 ? "" : "s"}?\n\n${preview}\n\nContinue publishing?`);
       if (!ok) {
@@ -433,18 +526,65 @@ export default function AddBlog() {
     return true;
   };
 
+  const openSavePreview = (status = "published") => {
+    setBannerError(null);
+    if ((status === "published" && submitting) || (status !== "published" && savingDraft)) return;
+    if (status === "published" && !validate()) return;
+    if (status === "published" && !ensurePublishGateReady({ confirmWarnings: false })) return;
+
+    if (blogIndex.status === "loading") {
+      const msg = "Duplicate guard is still loading existing blogs. Please wait a moment and try again.";
+      setBannerError(msg);
+      emitAlert({ type: "warning", message: msg });
+      return;
+    }
+
+    if (blogIndex.status === "error") {
+      const msg = blogIndex.error || "Duplicate guard could not load existing blogs. Please refresh and try again.";
+      setBannerError(msg);
+      emitAlert({ type: "error", message: msg });
+      return;
+    }
+
+    const finalSlug = normalizeBlogSlug(formData.heading || (status === "published" ? "untitled" : "draft"));
+    const duplicateIssues = buildBlogDuplicateIssues({
+      blogs: blogIndex.blogs,
+      heading: formData.heading || "Untitled Draft",
+      slug: finalSlug,
+    });
+
+    setPreviewRequest({
+      changedFields: buildBlogChangeSummary({
+        current: formData,
+        imageAlt,
+        imageChanged: Boolean(imageFile || imagePreview),
+        mode: "create",
+      }),
+      duplicateIssues,
+      finalSlug,
+      status,
+    });
+
+    if (duplicateIssues.length) {
+      emitAlert({ type: "error", message: "Duplicate title or slug found. Review the preview before saving." });
+    }
+  };
+
   /* ── Publish ── */
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setBannerError(null);
-    if (submitting || !validate()) return;
-    if (!ensurePublishGateReady()) return;
+    openSavePreview("published");
+  };
+
+  const executePublish = async () => {
+    if (submitting) return;
 
     if (!navigator.onLine) {
       const msg = "You're offline. Please reconnect before publishing.";
       setBannerError(msg); emitAlert({ type: "error", message: msg }); return;
     }
 
+    setPreviewRequest((current) => (current ? { ...current, pending: true } : current));
     setSubmitting(true);
     let blogRef = null;
 
@@ -512,6 +652,7 @@ export default function AddBlog() {
 
       setStep("done");
       localStorage.removeItem(DRAFT_KEY);
+      setPreviewRequest(null);
       emitAlert({ type: "success", message: "Blog published successfully! Redirecting…" });
       setTimeout(() => router.push("/altftool/blogs"), 700);
 
@@ -525,6 +666,15 @@ export default function AddBlog() {
     }
   };
 
+  const confirmPreviewSubmit = async () => {
+    if (!previewRequest || previewRequest.duplicateIssues?.length) return;
+    if (previewRequest.status === "published") {
+      await executePublish();
+    } else {
+      await executeSaveDraft();
+    }
+  };
+
   /* ── Cancel upload ── */
   const handleCancelUpload = () => {
     if (uploadTask) {
@@ -535,12 +685,13 @@ export default function AddBlog() {
   };
 
   /* ── Save draft ── */
-  const handleSaveDraft = async () => {
+  const executeSaveDraft = async () => {
     if (savingDraft) return;
     if (!navigator.onLine) {
       emitAlert({ type: "warning", message: "You're offline. Your draft has been saved locally and will sync when you reconnect." });
       return;
     }
+    setPreviewRequest((current) => (current ? { ...current, pending: true } : current));
     setSavingDraft(true);
     try {
       const slug    = generateSlug(formData.heading || "draft");
@@ -568,6 +719,7 @@ export default function AddBlog() {
         route: "/altftool/blogs/add-blogs",
       });
       localStorage.removeItem(DRAFT_KEY);
+      setPreviewRequest(null);
       emitAlert({ type: "success", message: "Draft saved successfully!" });
       router.push("/altftool/blogs");
     } catch (err) {
@@ -577,6 +729,8 @@ export default function AddBlog() {
       setSavingDraft(false);
     }
   };
+
+  const handleSaveDraft = () => openSavePreview("draft");
 
   /* ── Discard draft ── */
   const handleDiscardDraft = () => {
@@ -602,6 +756,18 @@ export default function AddBlog() {
   return (
     <div className="space-y-6">
       <div className=" mx-auto px-5 py-7 space-y-5">
+        <BlogPublishPreviewModal
+          open={Boolean(previewRequest)}
+          mode={previewRequest?.status || "published"}
+          formData={formData}
+          finalSlug={previewRequest?.finalSlug || normalizeBlogSlug(formData.heading)}
+          changedFields={previewRequest?.changedFields || []}
+          duplicateIssues={previewRequest?.duplicateIssues || []}
+          publishGate={publishGate}
+          pending={Boolean(previewRequest?.pending || submitting || savingDraft)}
+          onCancel={() => setPreviewRequest(null)}
+          onConfirm={confirmPreviewSubmit}
+        />
 
         <OfflineBanner />
 
@@ -653,7 +819,7 @@ export default function AddBlog() {
             {/* ── Main column ── */}
             <div className="lg:col-span-2 space-y-5">
 
-              <Section title="Post Details">
+              <Section title="Post Details" id="blog-section-post-details" highlighted={isHighlighted("blog-section-post-details")}>
                 <Field label="Heading" icon={<Type className="w-3.5 h-3.5" />} required error={errors.heading}>
                   <Input name="heading" placeholder="Enter a compelling blog heading…" value={formData.heading} onChange={handleChange} error={errors.heading} />
                 </Field>
@@ -676,7 +842,7 @@ export default function AddBlog() {
                 </Field>
               </Section>
 
-              <Section title="Trust Metadata">
+              <Section title="Trust Metadata" id="blog-section-trust" highlighted={isHighlighted("blog-section-trust")}>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <Field label="Author Role" icon={<User className="w-3.5 h-3.5" />} hint="Shown under the author name on public blogs.">
                     <Input name="authorRole" placeholder="AltFTool Editorial, Travel Writer..." value={formData.authorRole || ""} onChange={handleChange} />
@@ -697,7 +863,7 @@ export default function AddBlog() {
                 </Field>
               </Section>
 
-              <Section title="Sources & Review">
+              <Section title="Sources & Review" id="blog-section-sources-review" highlighted={isHighlighted("blog-section-sources-review")}>
                 <BlogSourceEditor
                   sourcesText={formData.sourcesText || ""}
                   sourceNotes={formData.sourceNotes || ""}
@@ -705,7 +871,7 @@ export default function AddBlog() {
                 />
               </Section>
 
-              <Section title="Button Picker"><CTAButtonPicker onInsert={handleInsertContentBlock} /> <FAQPicker onInsert={handleInsertContentBlock} /></Section>
+              <Section title="Button Picker" id="blog-section-button-picker" highlighted={isHighlighted("blog-section-button-picker")}><CTAButtonPicker onInsert={handleInsertContentBlock} /> <FAQPicker onInsert={handleInsertContentBlock} /></Section>
 
               <Section title="Content Templates">
                 <BlogContentTemplates
@@ -718,7 +884,7 @@ export default function AddBlog() {
                 <BlogContentBlocks formData={formData} onInsert={handleInsertContentBlock} />
               </Section>
 
-              <Section title="Content">
+              <Section title="Content" id="blog-section-content" highlighted={isHighlighted("blog-section-content")}>
                 {errors.description && (
                   <p className="flex items-center gap-1 text-xs text-red-500 font-medium -mt-2"><AlertCircle className="w-3 h-3" />{errors.description}</p>
                 )}
@@ -733,7 +899,12 @@ export default function AddBlog() {
               </Section>
 
               {/* SEO — collapsible */}
-              <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
+              <div
+                id="blog-section-seo"
+                className={`scroll-mt-24 overflow-hidden rounded-2xl border bg-white shadow-sm transition ${
+                  isHighlighted("blog-section-seo") ? "border-blue-200 ring-4 ring-blue-100" : "border-gray-100"
+                }`}
+              >
                 <button type="button" onClick={() => setSeoExpanded((v) => !v)}
                   className="w-full flex items-center justify-between px-6 py-4 hover:bg-gray-50 transition">
                   <div className="flex items-center gap-2">
@@ -814,6 +985,14 @@ export default function AddBlog() {
                 onGateChange={setPublishGate}
               />
 
+              <BlogEditorHealthPanel
+                formData={formData}
+                imageAlt={imageAlt}
+                hasImage={Boolean(imageFile || imagePreview)}
+                onApplyQuickFix={handleApplyQuickFix}
+                onJumpToIssue={handleJumpToContentIssue}
+              />
+
               <BlogLivePreview
                 formData={formData}
                 imagePreview={imagePreview}
@@ -833,7 +1012,12 @@ export default function AddBlog() {
               />
 
               {/* Image card */}
-              <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5 space-y-3">
+              <div
+                id="blog-section-image"
+                className={`scroll-mt-24 space-y-3 rounded-2xl border bg-white p-5 shadow-sm transition ${
+                  isHighlighted("blog-section-image") ? "border-blue-200 ring-4 ring-blue-100" : "border-gray-100"
+                }`}
+              >
                 <h2 className="text-xs font-black text-gray-400 uppercase tracking-widest">Featured Image <span className="text-red-400">*</span></h2>
 
                 {!imagePreview ? (
@@ -903,10 +1087,17 @@ export default function AddBlog() {
                 hasImage={Boolean(imageFile || imagePreview)}
               />
 
-              <BlogInternalLinkAssistant
-                formData={formData}
-                onInsertLinks={handleInsertContentBlock}
-              />
+              <div
+                id="blog-section-internal-links"
+                className={`scroll-mt-24 rounded-2xl transition ${
+                  isHighlighted("blog-section-internal-links") ? "ring-4 ring-blue-100" : ""
+                }`}
+              >
+                <BlogInternalLinkAssistant
+                  formData={formData}
+                  onInsertLinks={handleInsertContentBlock}
+                />
+              </div>
 
             </div>
           </div>

@@ -2,17 +2,18 @@ import Link from "next/link";
 
 const VARIANTS = {
   primary: [
-    "bg-[var(--primary)] text-white",
-    "hover:-translate-y-0.5 hover:brightness-90",
-    "focus:ring-[var(--primary)]",
+    "bg-(--primary) text-(--primary-foreground)",
+    "shadow-[0_1px_2px_rgba(15,23,42,0.08),inset_0_0_0_1px_color-mix(in_srgb,var(--primary)_70%,#000)]",
+    "hover:bg-(--primary-hover) hover:-translate-y-px hover:shadow-[0_8px_18px_rgba(23,105,224,0.18),inset_0_0_0_1px_color-mix(in_srgb,var(--primary-hover)_70%,#000)]",
+    "active:translate-y-0 active:bg-(--primary-active)",
   ].join(" "),
 
   outline: [
-    "border border-[var(--secondary-border)]",
-    "bg-(--secondary-bg)",
-
-    "hover:bg-[var( --secondary-hover)] ",
-    "shadow-[0px_1px_8.2px_0px_#9DA3AF40]",
+    "border border-(--border) text-(--foreground)",
+    "bg-(--card)",
+    "shadow-sm",
+    "hover:border-(--anslation-ds-border-strong) hover:bg-(--anslation-ds-soft) hover:-translate-y-px",
+    "active:translate-y-0",
   ].join(" "),
 };
 
@@ -23,33 +24,37 @@ export default function CTAButton({
   variant = "primary",
   className = "",
   type = "button",
+  children,
 }) {
-  if (!text) return null;
+  const label = children ?? text;
+  if (!label) return null;
 
   const classes = [
-    "inline-flex items-center justify-center",
-    "h-12 px-8",
-    "rounded-md",
-    "text-lg font-medium",
-    "transition-all duration-200",
-    "focus:outline-none focus:ring-1 focus:ring-offset-1",
-    VARIANTS[variant],
+    "inline-flex items-center justify-center gap-2",
+    "h-12 px-7",
+    "rounded-[var(--anslation-ds-radius)]",
+    "text-base font-semibold tracking-[-0.005em]",
+    "transition-all duration-150 ease-out",
+    "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-(--primary)",
+    "disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:translate-y-0",
+    "cursor-pointer select-none",
+    VARIANTS[variant] || VARIANTS.primary,
     className,
   ].join(" ");
 
-  // 👉 ACTION BUTTON
+  // ACTION button
   if (!href) {
     return (
       <button type={type} onClick={onClick} className={classes}>
-        {text}
+        {label}
       </button>
     );
   }
 
-  // 👉 NAVIGATION BUTTON
+  // NAVIGATION button
   return (
     <Link href={href} className={classes}>
-      {text}
+      {label}
     </Link>
   );
 }

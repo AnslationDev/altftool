@@ -1,5 +1,7 @@
-"use-client";
-import React, { useState, useEffect, useMemo } from "react";
+"use client";
+import React, { useMemo, useState } from "react";
+import { Clipboard, FileDown } from "lucide-react";
+import { safeCopyText } from "@/shared/utils/clipboard";
 import Features from "./Feature";
 
 export default function App() {
@@ -16,8 +18,8 @@ export default function App() {
   const [testString, setTestString] = useState(
     "Contact us at support@example.com or sales@company.org for more information.",
   );
-  const [error, setError] = useState("");
   const [activeTab, setActiveTab] = useState("test");
+  const [copied, setCopied] = useState(false);
 
   // Common regex patterns
   const commonPatterns = [
@@ -57,8 +59,8 @@ export default function App() {
     { name: "HTML Tag", pattern: "<[^>]+>", flags: "g" },
   ];
 
-  const matches = useMemo(() => {
-    if (!pattern || !testString) return [];
+  const regexResult = useMemo(() => {
+    if (!pattern || !testString) return { error: "", matches: [] };
 
     try {
       const flagString = Object.entries(flags)
@@ -92,15 +94,38 @@ export default function App() {
         }
       }
 
-      // eslint-disable-next-line react-hooks/set-state-in-render
-      setError("");
-      return results;
+      return { error: "", matches: results };
     } catch (e) {
-      // eslint-disable-next-line react-hooks/set-state-in-render
-      setError(e.message);
-      return [];
+      return { error: e.message, matches: [] };
     }
   }, [pattern, testString, flags]);
+  const { error, matches } = regexResult;
+
+  const matchReport = useMemo(
+    () => JSON.stringify({
+      flags: Object.entries(flags).filter(([, enabled]) => enabled).map(([flag]) => flag).join(""),
+      matches: matches.map((match) => ({ groups: match.groups, index: match.index, match: match.match })),
+      pattern,
+      total: matches.length,
+    }, null, 2),
+    [flags, matches, pattern],
+  );
+
+  const copyReport = async () => {
+    setCopied(await safeCopyText(matchReport));
+    setTimeout(() => setCopied(false), 1200);
+  };
+
+  const downloadReport = () => {
+    const url = URL.createObjectURL(new Blob([matchReport], { type: "application/json;charset=utf-8" }));
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = "altftool-regex-report.json";
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    URL.revokeObjectURL(url);
+  };
 
   const highlightedText = useMemo(() => {
     if (!matches.length || !testString) return testString;
@@ -301,7 +326,7 @@ export default function App() {
                 {/* Match Stats */}
                 {!error && (
                   <div
-                    className="flex items-center gap-4 p-4 rounded-lg"
+                    className="flex flex-wrap items-center justify-between gap-4 p-4 rounded-lg"
                     style={{ backgroundColor: "var(--muted)" }}
                   >
                     <div>
@@ -320,6 +345,24 @@ export default function App() {
                       >
                         {matches.length === 1 ? "Match" : "Matches"}
                       </div>
+                    </div>
+                    <div className="flex flex-wrap gap-2">
+                      <button
+                        type="button"
+                        onClick={copyReport}
+                        className="inline-flex items-center gap-2 rounded-lg border border-(--border) bg-(--background) px-3 py-2 text-sm font-semibold text-(--foreground) transition hover:border-(--primary)"
+                      >
+                        <Clipboard className="h-4 w-4" />
+                        {copied ? "Copied" : "Copy report"}
+                      </button>
+                      <button
+                        type="button"
+                        onClick={downloadReport}
+                        className="inline-flex items-center gap-2 rounded-lg border border-(--border) bg-(--background) px-3 py-2 text-sm font-semibold text-(--foreground) transition hover:border-(--primary)"
+                      >
+                        <FileDown className="h-4 w-4" />
+                        Download JSON
+                      </button>
                     </div>
                   </div>
                 )}

@@ -72,7 +72,7 @@ export default function TrendingSales({ trendingSales }) {
         {isHovered && canScrollLeft && (
           <button
             onClick={() => scroll("left")}
-            className="hidden lg:flex absolute left-2 top-1/2 -translate-y-1/2 z-20 h-10 w-10 rounded-full bg-white shadow-lg text-gray-800 items-center justify-center group cursor-pointer"
+            className="hidden lg:flex absolute left-2 top-1/2 -translate-y-1/2 z-20 h-10 w-10 rounded-full bg-(--card) border border-(--border) shadow-lg text-(--foreground) hover:bg-(--anslation-ds-soft) transition items-center justify-center group cursor-pointer"
           >
             <ChevronLeft className="h-5 w-5 group-hover:scale-115" />
           </button>
@@ -82,7 +82,7 @@ export default function TrendingSales({ trendingSales }) {
         {isHovered && canScrollRight && (
           <button
             onClick={() => scroll("right")}
-            className="hidden lg:flex absolute right-2 top-1/2 -translate-y-1/2 z-20 h-10 w-10 rounded-full bg-white shadow-lg text-gray-800 items-center justify-center  group cursor-pointer"
+            className="hidden lg:flex absolute right-2 top-1/2 -translate-y-1/2 z-20 h-10 w-10 rounded-full bg-(--card) border border-(--border) shadow-lg text-(--foreground) hover:bg-(--anslation-ds-soft) transition items-center justify-center  group cursor-pointer"
           >
             <ChevronRight className="h-5 w-5 group-hover:scale-115" />
           </button>

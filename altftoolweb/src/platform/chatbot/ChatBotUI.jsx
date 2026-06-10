@@ -180,25 +180,28 @@ const ChatBotUI = () => {
     };
 
     return (
-        <div className="fixed bottom-5 right-5 z-[9999] font-sans antialiased">
+        <div className="fixed bottom-3 right-3 z-[9999] font-sans antialiased sm:bottom-5 sm:right-5">
 
             {/* ───────── Launcher ───────── */}
             {!isOpen && (
                 <button
+                    type="button"
                     onClick={toggleChat}
                     disabled={isLoadingData}
+                    aria-label={isLoadingData ? "Loading AltFTool search assistant" : "Open AltFTool search assistant"}
+                    title={isLoadingData ? "Loading assistant" : "Open assistant"}
                     style={{ animation: 'float-pulse 3s ease-in-out infinite' }}
-                    className="group relative flex h-[60px] w-[60px] items-center justify-center rounded-2xl shadow-2xl transition-all duration-300 hover:scale-110 active:scale-95 disabled:opacity-70 overflow-hidden"
+                    className="group relative flex h-12 w-12 items-center justify-center overflow-hidden rounded-xl shadow-2xl transition-all duration-300 hover:scale-105 active:scale-95 disabled:opacity-70 sm:h-[60px] sm:w-[60px] sm:rounded-2xl sm:hover:scale-110"
                 >
                     {/* Animated gradient border */}
                     <span className="electron-border absolute inset-0 rounded-2xl" />
-                    <span className="absolute inset-[2px] rounded-[14px] bg-white dark:bg-zinc-950" />
+                    <span className="absolute inset-[2px] rounded-[10px] bg-white dark:bg-zinc-950 sm:rounded-[14px]" />
 
                     <span className="relative z-10">
                         {isLoadingData ? (
                             <div className="h-6 w-6 animate-spin rounded-full border-2 border-blue-500 border-t-transparent" />
                         ) : (
-                            <ManagedImage src="/favicon1.png" alt="AltBot" loading="eager" className="h-9 w-9 object-contain transition-transform duration-300 group-hover:scale-110" />
+                            <ManagedImage src="/favicon1.png" alt="AltBot" loading="eager" className="h-7 w-7 object-contain transition-transform duration-300 group-hover:scale-110 sm:h-9 sm:w-9" />
                         )}
                     </span>
                 </button>
@@ -206,7 +209,7 @@ const ChatBotUI = () => {
 
             {/* ───────── Chat Window ───────── */}
             {isOpen && (
-                <div className="flex h-[82vh] max-h-[740px] min-h-[520px] w-[92vw] sm:w-[420px] origin-bottom-right flex-col overflow-hidden rounded-3xl bg-white/95 dark:bg-zinc-950/95 backdrop-blur-2xl border border-zinc-200/60 dark:border-zinc-800/60 shadow-[0_32px_80px_-12px_rgba(0,0,0,0.25)] dark:shadow-[0_32px_80px_-12px_rgba(0,0,0,0.6)] transition-all animate-in zoom-in-95 fade-in duration-300">
+                <div className="flex h-[calc(100dvh-1.5rem)] max-h-[740px] min-h-0 w-[calc(100vw-1.5rem)] origin-bottom-right flex-col overflow-hidden rounded-2xl border border-zinc-200/60 bg-white/95 shadow-[0_32px_80px_-12px_rgba(0,0,0,0.25)] backdrop-blur-2xl transition-all animate-in fade-in zoom-in-95 duration-300 dark:border-zinc-800/60 dark:bg-zinc-950/95 dark:shadow-[0_32px_80px_-12px_rgba(0,0,0,0.6)] sm:h-[82vh] sm:min-h-[520px] sm:w-[420px] sm:rounded-3xl">
 
                     {/* ── Header ── */}
                     <div className="relative overflow-hidden border-b border-zinc-100/80 dark:border-zinc-800/50 px-5 pt-5 pb-4">
@@ -239,7 +242,10 @@ const ChatBotUI = () => {
                                 </div>
                             </div>
                             <button
+                                type="button"
                                 onClick={() => setIsOpen(false)}
+                                aria-label="Close AltFTool search assistant"
+                                title="Close assistant"
                                 className="rounded-xl p-2 text-zinc-400 hover:bg-zinc-100/80 hover:text-zinc-600 dark:hover:bg-zinc-800/60 dark:hover:text-zinc-300 transition-all duration-200"
                             >
                                 <X className="h-4 w-4" />
@@ -314,6 +320,7 @@ const ChatBotUI = () => {
                                         <div className="flex flex-wrap gap-1.5 pt-2">
                                             {msg.suggestions.map((suggestion, idx) => (
                                                 <button
+                                                    type="button"
                                                     key={idx}
                                                     onClick={() => handleSend(suggestion)}
                                                     className="rounded-full border border-zinc-200/60 dark:border-zinc-700/50 bg-white/80 dark:bg-zinc-900/60 backdrop-blur-sm px-3.5 py-1.5 text-[12px] font-medium text-zinc-500 dark:text-zinc-400 transition-all duration-200 hover:bg-gradient-to-r hover:from-blue-50 hover:to-cyan-50 dark:hover:from-blue-950/30 dark:hover:to-cyan-950/30 hover:text-blue-600 dark:hover:text-blue-400 hover:border-blue-300/50 dark:hover:border-blue-700/50 hover:-translate-y-px hover:shadow-sm"
@@ -369,6 +376,8 @@ const ChatBotUI = () => {
                                     <button
                                         type="submit"
                                         disabled={!input.trim()}
+                                        aria-label="Send message"
+                                        title="Send message"
                                         className="absolute right-1.5 flex h-9 w-9 items-center justify-center rounded-full bg-gradient-to-br from-blue-600 to-blue-700 dark:from-blue-500 dark:to-blue-600 text-white shadow-lg shadow-blue-500/20 transition-all duration-200 hover:scale-105 hover:shadow-blue-500/30 active:scale-95 disabled:scale-100 disabled:opacity-25 disabled:shadow-none disabled:saturate-0"
                                     >
                                         <Send className="h-4 w-4 translate-x-[1px]" />

@@ -23,11 +23,11 @@ import {
   Cell,
   Pie,
   PieChart,
-  ResponsiveContainer,
   Tooltip,
   XAxis,
   YAxis,
 } from "recharts";
+import ResponsiveContainer from "@/components/charts/SafeResponsiveContainer";
 
 const DEFAULT_SUBSCRIPTIONS = [
   { id: "netflix", name: "Netflix", amount: 649, cycle: "monthly", category: "OTT", renewalDate: "2026-06-05", status: "active" },
@@ -550,7 +550,7 @@ export default function SubscriptionCostTracker() {
                 </div>
               </div>
               <div className="h-60 min-w-0">
-                <ResponsiveContainer width="100%" height="100%">
+                <ResponsiveContainer width="100%" height="100%" minWidth={1} minHeight={1}>
                   <BarChart data={metrics.categoryRows} margin={{ top: 10, right: 6, left: 0, bottom: 0 }}>
                     <XAxis dataKey="name" interval={0} tick={{ fill: "var(--muted-foreground)", fontSize: 10 }} />
                     <YAxis width={46} tickFormatter={(value) => formatMoney(value, true)} tick={{ fill: "var(--muted-foreground)", fontSize: 11 }} />
@@ -576,7 +576,7 @@ export default function SubscriptionCostTracker() {
                 </div>
               </div>
               <div className="h-60 min-w-0">
-                <ResponsiveContainer width="100%" height="100%">
+                <ResponsiveContainer width="100%" height="100%" minWidth={1} minHeight={1}>
                   <PieChart>
                     <Pie
                       data={metrics.categoryRows}

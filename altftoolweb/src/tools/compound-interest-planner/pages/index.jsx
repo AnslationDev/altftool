@@ -23,11 +23,11 @@ import {
   Cell,
   Pie,
   PieChart,
-  ResponsiveContainer,
   Tooltip,
   XAxis,
   YAxis,
 } from "recharts";
+import ResponsiveContainer from "@/components/charts/SafeResponsiveContainer";
 
 const SAMPLE = {
   principal: 500000,
@@ -497,7 +497,7 @@ export default function CompoundInterestPlanner() {
           <div className="min-w-0 space-y-6">
             <SectionCard title="Reinvestment Growth Chart" description="Corpus value, invested capital, and inflation-adjusted buying power." icon={TrendingUp}>
               <div className="h-80 min-w-0">
-                <ResponsiveContainer width="100%" height="100%">
+                <ResponsiveContainer width="100%" height="100%" minWidth={1} minHeight={1}>
                   <AreaChart data={metrics.rows} margin={{ top: 10, right: 10, left: 0, bottom: 0 }}>
                     <defs>
                       <linearGradient id="compoundValue" x1="0" y1="0" x2="0" y2="1">
@@ -524,7 +524,7 @@ export default function CompoundInterestPlanner() {
             <section className="grid min-w-0 gap-6 2xl:grid-cols-[minmax(0,1fr)_minmax(260px,360px)]">
               <SectionCard title="Year-wise Returns" description="Net interest generated each year." icon={BarChart3}>
                 <div className="h-64 min-w-0">
-                  <ResponsiveContainer width="100%" height="100%">
+                  <ResponsiveContainer width="100%" height="100%" minWidth={1} minHeight={1}>
                     <BarChart data={metrics.rows.slice(1)} margin={{ top: 10, right: 8, left: 0, bottom: 0 }}>
                       <XAxis dataKey="label" tick={{ fill: "var(--muted-foreground)", fontSize: 11 }} />
                       <YAxis width={56} tickFormatter={(value) => formatMoney(value, true)} tick={{ fill: "var(--muted-foreground)", fontSize: 11 }} />
@@ -537,7 +537,7 @@ export default function CompoundInterestPlanner() {
 
               <SectionCard title="Corpus Split" description="What the final value is made of." icon={Wallet}>
                 <div className="h-56 min-w-0">
-                  <ResponsiveContainer width="100%" height="100%">
+                  <ResponsiveContainer width="100%" height="100%" minWidth={1} minHeight={1}>
                     <PieChart>
                       <Pie data={splitData} innerRadius="55%" outerRadius="82%" paddingAngle={3} dataKey="value" nameKey="name">
                         {splitData.map((entry, index) => (

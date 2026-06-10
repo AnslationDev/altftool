@@ -47,7 +47,7 @@ export default function PlateControls({ onAnswer, onSkip }) {
       </form>
       
       <p className="text-xs text-(--muted-foreground) text-center italic">
-        If you don't see any number, type "none" or skip the plate.
+        If you don&apos;t see any number, type &quot;none&quot; or skip the plate.
       </p>
     </div>
   );

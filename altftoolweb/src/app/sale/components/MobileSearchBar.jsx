@@ -24,8 +24,8 @@ export default function MobileSearchBar({
 }) {
   return (
     <div className="flex flex-col sm:hidden mb-5">
-      <div className="w-full flex items-center gap-3 bg-white rounded-full px-4 py-3 shadow-[0_10px_30px_rgba(0,0,0,0.08)] border border-gray-200 focus-within:border-[#2563EB] focus-within:ring-2 focus-within:ring-[#2563EB]/20 transition">
-        <Search className="w-4 h-4 text-[#2563EB] shrink-0" />
+      <div className="w-full flex items-center gap-3 bg-(--card) rounded-full px-4 py-3 shadow-sm border border-(--border) focus-within:border-(--primary) focus-within:ring-2 focus-within:ring-(--primary)/20 transition">
+        <Search className="w-4 h-4 text-(--primary) shrink-0" />
 
         <input
           type="text"
@@ -33,13 +33,13 @@ export default function MobileSearchBar({
           onChange={(e) => onSearchChange(e.target.value)}
           onKeyDown={(e) => e.key === "Enter" && handleSearch()}
           placeholder="Search deals..."
-          className="flex-1 outline-none text-sm text-gray-700 placeholder:text-gray-400 bg-transparent min-w-0 font-secondary"
+          className="flex-1 outline-none text-sm text-(--foreground) placeholder:text-(--muted-foreground) bg-transparent min-w-0 font-secondary"
         />
 
         {searchQuery && (
           <button
             onClick={() => onSearchChange("")}
-            className="text-gray-400 hover:text-gray-600 transition cursor-pointer"
+            className="text-(--muted-foreground) hover:text-(--foreground) transition cursor-pointer"
           >
             <X className="w-4 h-4" />
           </button>
@@ -47,18 +47,18 @@ export default function MobileSearchBar({
 
         {/* City dropdown */}
         <div
-          className="relative border-l border-gray-300 pl-3 shrink-0"
+          className="relative border-l border-(--border) pl-3 shrink-0"
           ref={mobileCityRef}
         >
           <button
             onClick={() => setIsCityOpen((p) => !p)}
             disabled={locationStatus === "detecting"}
-            className="flex items-center gap-1 text-sm text-gray-700 font-secondary"
+            className="flex items-center gap-1 text-sm text-(--foreground) font-secondary"
           >
             {locationStatus === "detecting" ? (
-              <Loader2 className="w-3.5 h-3.5 text-[#2563EB] animate-spin" />
+              <Loader2 className="w-3.5 h-3.5 text-(--primary) animate-spin" />
             ) : (
-              <MapPin className="w-3.5 h-3.5 text-[#2563EB]" />
+              <MapPin className="w-3.5 h-3.5 text-(--primary)" />
             )}
 
             <span className="max-w-23 truncate">{displayCity}</span>
@@ -69,13 +69,13 @@ export default function MobileSearchBar({
           </button>
 
           {isCityOpen && (
-            <div className="absolute right-0 top-full mt-2 bg-white border border-gray-200 rounded-2xl shadow-xl z-50 min-w-45 overflow-hidden">
+            <div className="absolute right-0 top-full mt-2 bg-(--card) border border-(--border) rounded-2xl shadow-lg z-50 min-w-45 overflow-hidden">
               <button
                 onClick={() => {
                   onDetectLocation();
                   setIsCityOpen(false);
                 }}
-                className="w-full flex items-center gap-2 px-4 py-3 text-sm text-[#2563EB] font-semibold hover:bg-blue-50 border-b"
+                className="w-full flex items-center gap-2 px-4 py-3 text-sm text-(--primary) font-semibold hover:bg-(--anslation-ds-primary-soft) border-b border-(--border)"
               >
                 <MapPin className="w-4 h-4" />
                 Use My Location
@@ -88,11 +88,11 @@ export default function MobileSearchBar({
                     onCitySelect(city.value);
                     setIsCityOpen(false);
                   }}
-                  className={`w-full flex items-center gap-2 px-4 py-3 text-sm hover:bg-gray-50
+                  className={`w-full flex items-center gap-2 px-4 py-3 text-sm hover:bg-(--anslation-ds-soft)
                     ${
                       locationName === city.value
-                        ? "text-[#2563EB] font-semibold bg-blue-50"
-                        : "text-gray-700"
+                        ? "text-(--primary) font-semibold bg-(--anslation-ds-primary-soft)"
+                        : "text-(--foreground)"
                     }`}
                 >
                   <MapPin className="w-3.5 h-3.5" />
@@ -107,7 +107,7 @@ export default function MobileSearchBar({
       {/* Search Button */}
       <button
         onClick={handleSearch}
-        className="bg-[#2563EB] text-white text-sm font-semibold px-5 py-3.5 rounded-full mt-3 cursor-pointer"
+        className="bg-(--primary) text-(--primary-foreground) text-sm font-semibold px-5 py-3.5 rounded-full mt-3 cursor-pointer hover:bg-(--primary-hover) transition"
       >
         Search
       </button>

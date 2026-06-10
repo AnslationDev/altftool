@@ -1,6 +1,5 @@
 import { useRef, useState, useEffect } from "react";
 import {
-  ResponsiveContainer,
   ComposedChart,
   Line,
   CartesianGrid,
@@ -9,8 +8,7 @@ import {
   Tooltip,
   Legend,
 } from "recharts";
-import html2canvas from "html2canvas";
-import jsPDF from "jspdf";
+import ResponsiveContainer from "@/components/charts/SafeResponsiveContainer";
 import {
   ThumbsUp,
   AlertTriangle,
@@ -45,6 +43,19 @@ const styles = `
     box-shadow: 0 12px 24px rgba(59,130,246,0.15), 0 0 20px rgba(59,130,246,0.1);
   }
 `;
+
+let html2canvasPromise;
+let jsPdfPromise;
+
+function loadHtml2Canvas() {
+  html2canvasPromise ||= import("html2canvas").then((module) => module.default || module);
+  return html2canvasPromise;
+}
+
+function loadJsPdf() {
+  jsPdfPromise ||= import("jspdf").then((module) => module.default || module.jsPDF);
+  return jsPdfPromise;
+}
 
 /* ---------- Particles (unchanged) ---------- */
 function Particles() {
@@ -238,6 +249,7 @@ async function downloadPDF(result, reportRef, setDownloadState) {
   if (!reportRef.current) return;
   setDownloadState("loading");
   try {
+    const [html2canvas, jsPDF] = await Promise.all([loadHtml2Canvas(), loadJsPdf()]);
     const canvas = await html2canvas(reportRef.current, { scale: 2, backgroundColor: "#ffffff", useCORS: true });
     const imgData = canvas.toDataURL("image/png");
     const pdf = new jsPDF("p", "mm", "a4");
@@ -399,7 +411,7 @@ export default function ResultCard({ result }) {
       {Object.keys(breakdown).length > 0 && (
         <FadeInCard delay={0.4}>
           <GlassCard>
-            <div className="flex items-center gap-2 mb-2"><AlertTriangle className="w-5 h-5 text-orange-400" /><h3 className="font-semibold opacity-80">What's Draining Your Battery?</h3></div>
+            <div className="flex items-center gap-2 mb-2"><AlertTriangle className="w-5 h-5 text-orange-400" /><h3 className="font-semibold opacity-80">What&apos;s Draining Your Battery?</h3></div>
             <div className="grid grid-cols-2 md:grid-cols-3 gap-2 text-sm">
               {Object.entries(breakdown).map(([key, val]) => (
                 <div key={key} className="flex justify-between px-3 py-1 rounded-lg bg-white/5">
@@ -444,7 +456,7 @@ export default function ResultCard({ result }) {
             </div>
             <div className="h-64 md:h-72 w-full">
               {result.optimizedChart && (
-                <ResponsiveContainer width="100%" height="100%">
+                <ResponsiveContainer width="100%" height="100%" minWidth={1} minHeight={1}>
                   <ComposedChart data={result.chartData.map((d, i) => ({ ...d, optimized: result.optimizedChart[i]?.value }))}>
                     <CartesianGrid strokeDasharray="3 3" strokeOpacity={0.2} />
                     <XAxis dataKey="name" stroke="var(--secondary-foreground)" />

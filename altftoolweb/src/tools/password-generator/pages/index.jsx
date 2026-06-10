@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { Copy, RefreshCw, ShieldCheck } from "lucide-react";
+import { Copy, FileDown, RefreshCw, ShieldCheck } from "lucide-react";
 import { safeCopyText } from "@/shared/utils/clipboard";
 
 const pools = {
@@ -12,37 +12,75 @@ const pools = {
 };
 
 function randomIndex(max) {
+  if (max <= 0) return 0;
   const array = new Uint32Array(1);
-  crypto.getRandomValues(array);
+  const limit = 0xffffffff - (0xffffffff % max);
+  do {
+    crypto.getRandomValues(array);
+  } while (array[0] >= limit);
   return array[0] % max;
 }
 
 function makePassword(length, options) {
   const activePools = Object.entries(options)
-    .filter(([, enabled]) => enabled)
+    .filter(([key, enabled]) => enabled && pools[key])
     .map(([key]) => pools[key]);
-  const chars = activePools.join("");
+  const ambiguous = /[Il1O0]/g;
+  const normalizedPools = options.excludeAmbiguous
+    ? activePools.map((pool) => pool.replace(ambiguous, ""))
+    : activePools;
+  const chars = normalizedPools.join("");
   if (!chars) return "";
-  const required = activePools.map((pool) => pool[randomIndex(pool.length)]);
+  const required = normalizedPools.map((pool) => pool[randomIndex(pool.length)]);
   const rest = Array.from({ length: Math.max(0, length - required.length) }, () => chars[randomIndex(chars.length)]);
   return [...required, ...rest].sort(() => randomIndex(1000) - 500).join("");
 }
 
+function getPoolSize(options) {
+  return Object.entries(options).reduce((total, [key, enabled]) => {
+    if (!enabled || !pools[key]) return total;
+    const value = options.excludeAmbiguous ? pools[key].replace(/[Il1O0]/g, "") : pools[key];
+    return total + value.length;
+  }, 0);
+}
+
+function downloadTextFile(filename, content) {
+  const url = URL.createObjectURL(new Blob([content], { type: "text/plain;charset=utf-8" }));
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = filename;
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
+  URL.revokeObjectURL(url);
+}
+
 export default function ToolHome() {
   const [length, setLength] = useState(18);
-  const [options, setOptions] = useState({ uppercase: true, lowercase: true, numbers: true, symbols: true });
-  const [password, setPassword] = useState("");
+  const [batchCount, setBatchCount] = useState(5);
+  const [options, setOptions] = useState({
+    excludeAmbiguous: true,
+    lowercase: true,
+    numbers: true,
+    symbols: true,
+    uppercase: true,
+  });
+  const [passwords, setPasswords] = useState([]);
   const [copied, setCopied] = useState(false);
 
   const strength = useMemo(() => {
-    const enabled = Object.values(options).filter(Boolean).length;
-    const score = length * enabled;
-    if (score >= 72) return "Strong";
-    if (score >= 40) return "Good";
-    return "Basic";
+    const entropy = Math.round(length * Math.log2(Math.max(getPoolSize(options), 1)));
+    if (entropy >= 96) return { label: "Excellent", entropy };
+    if (entropy >= 72) return { label: "Strong", entropy };
+    if (entropy >= 48) return { label: "Good", entropy };
+    return { label: "Basic", entropy };
   }, [length, options]);
 
-  const regenerate = () => setPassword(makePassword(length, options));
+  const password = passwords[0] || "";
+  const regenerate = () => {
+    const count = Math.min(50, Math.max(1, Number(batchCount) || 1));
+    setPasswords(Array.from({ length: count }, () => makePassword(length, options)));
+  };
 
   useEffect(() => {
     regenerate();
@@ -51,6 +89,11 @@ export default function ToolHome() {
 
   const copyPassword = async () => {
     setCopied(await safeCopyText(password));
+    setTimeout(() => setCopied(false), 1000);
+  };
+
+  const copyAll = async () => {
+    setCopied(await safeCopyText(passwords.join("\n")));
     setTimeout(() => setCopied(false), 1000);
   };
 
@@ -74,10 +117,21 @@ export default function ToolHome() {
               <span className="text-sm font-semibold">Length: {length}</span>
               <input type="range" min="8" max="64" value={length} onChange={(event) => setLength(Number(event.target.value))} className="mt-3 w-full" />
             </label>
+            <label className="mt-5 block">
+              <span className="text-sm font-semibold">Batch count</span>
+              <input
+                type="number"
+                min="1"
+                max="50"
+                value={batchCount}
+                onChange={(event) => setBatchCount(Math.min(50, Math.max(1, Number(event.target.value) || 1)))}
+                className="mt-2 w-full rounded-lg border border-[var(--border)] bg-[var(--background)] px-3 py-2 outline-none focus:border-[var(--primary)]"
+              />
+            </label>
             <div className="mt-5 grid gap-3">
-              {Object.keys(pools).map((key) => (
+              {[...Object.keys(pools), "excludeAmbiguous"].map((key) => (
                 <label key={key} className="flex items-center justify-between gap-3 rounded-lg bg-[var(--muted)] px-4 py-3 text-sm font-semibold capitalize break-words">
-                  {key}
+                  {key === "excludeAmbiguous" ? "Exclude ambiguous" : key}
                   <input type="checkbox" checked={options[key]} onChange={(event) => setOptions((current) => ({ ...current, [key]: event.target.checked }))} />
                 </label>
               ))}
@@ -98,7 +152,29 @@ export default function ToolHome() {
                 <Copy className="h-4 w-4" />
                 {copied ? "Copied" : "Copy"}
               </button>
-              <span className="rounded-full bg-[var(--muted)] px-3 py-1 text-sm font-semibold text-[var(--muted-foreground)]">Strength: {strength}</span>
+              <button type="button" onClick={copyAll} className="btn-secondary">
+                <Copy className="h-4 w-4" />
+                Copy all
+              </button>
+              <button type="button" onClick={() => downloadTextFile("altftool-passwords.txt", passwords.join("\n"))} className="btn-secondary">
+                <FileDown className="h-4 w-4" />
+                Download
+              </button>
+              <span className="rounded-full bg-[var(--muted)] px-3 py-1 text-sm font-semibold text-[var(--muted-foreground)]">
+                Strength: {strength.label} ({strength.entropy} bits)
+              </span>
+            </div>
+            <div className="mt-5 grid gap-2">
+              {passwords.slice(1).map((item, index) => (
+                <button
+                  key={`${item}-${index}`}
+                  type="button"
+                  onClick={() => safeCopyText(item)}
+                  className="rounded-[8px] border border-[var(--border)] bg-[var(--background)] px-3 py-2 text-left font-mono text-xs text-[var(--muted-foreground)] transition hover:border-[var(--primary)] hover:text-[var(--foreground)]"
+                >
+                  {item}
+                </button>
+              ))}
             </div>
           </div>
         </section>

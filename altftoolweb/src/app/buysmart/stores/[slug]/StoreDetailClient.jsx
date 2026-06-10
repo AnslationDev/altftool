@@ -7,29 +7,46 @@ import {
   ArrowRight,
   BadgeCheck,
   CalendarClock,
+  CheckCircle2,
   Clock3,
   ExternalLink,
   Globe2,
+  HelpCircle,
+  Info,
   ShieldCheck,
   Sparkles,
   TicketPercent,
   WalletCards,
 } from "lucide-react";
 import CouponReveal from "@/app/buysmart/components/CouponReveal";
+import OfferFeedback from "@/app/buysmart/components/OfferFeedback";
+import TrustSignalBadges from "@/app/buysmart/components/TrustSignalBadges";
+import JsonLd from "@/platform/seo/JsonLd";
 import {
   fallbackBuySmartCategoryItems,
+  useBuySmartAnalytics,
   useBuySmartCategories,
 } from "@/app/buysmart/hooks/useBuySmartLiveData";
 import ManagedImage from "@/components/ui/ManagedImage";
 import { LoadingBone } from "@/components/ui/route-loading";
 import {
   getBuySmartBrandSlug,
+  getBuySmartQualitySummary,
   getBuySmartStorePath,
+  getBuySmartTrustSignals,
   getDomainFromUrl,
   getPrimarySavingsText,
+  isExternalMerchantUrl,
   normalizeBuySmartCategory,
   slugifyBuySmartBrand,
+  sortBuySmartByTrust,
 } from "@altftool/core/buysmart";
+import {
+  absoluteUrl,
+  createBreadcrumbJsonLd,
+  createFaqJsonLd,
+  createHowToJsonLd,
+} from "@/platform/seo/generateMetadata";
 
 const verificationLabels = {
   draft: "Draft",
@@ -52,10 +69,15 @@ function formatDate(value, fallback = "Live now") {
   });
 }
 
-function formatRate(value) {
-  const rate = Number(value);
-  if (!Number.isFinite(rate)) return "0%";
-  return `${Math.round(rate)}%`;
+function getDealScore(offer) {
+  let score = 48;
+  if (offer.verified) score += 22;
+  if (offer.code) score += 8;
+  if (offer.exclusive) score += 7;
+  if (offer.featured) score += 5;
+  if (offer.successRate) score += Math.min(10, Math.round(Number(offer.successRate) / 12));
+  if (offer.failedVotes > offer.workingVotes) score -= 12;
+  return Math.max(0, Math.min(100, score));
 }
 
 function getPathSlug(value) {
@@ -76,7 +98,75 @@ function getOfferSlugCandidates(item) {
     .map(slugifyBuySmartBrand);
 }
 
+function getStoreFaqs(offer, savings) {
+  return [
+    {
+      question: `How do I use the ${offer.title} BuySmart deal?`,
+      answer: offer.code
+        ? `Reveal and copy the ${offer.title} code on AltFTool, open the store, then paste the code during checkout before payment.`
+        : `Open the ${offer.title} store from AltFTool and confirm the ${savings} saving is visible before completing checkout.`,
+    },
+    {
+      question: `Is the ${offer.title} offer verified?`,
+      answer: offer.verified
+        ? "AltFTool has a positive verification signal for this offer, but merchant checkout rules can still change."
+        : "This offer is pending verification, so confirm terms, region limits, and checkout availability on the merchant site.",
+    },
+    {
+      question: "What should I check before buying?",
+      answer:
+        "Check the expiry, eligible audience, category, merchant terms, and whether the discount appears before final payment.",
+    },
+  ];
+}
+
+function getHowToSteps(offer) {
+  if (offer.code) {
+    return [
+      `Reveal the ${offer.title} coupon code on AltFTool.`,
+      "Copy the code and open the merchant store in a new tab.",
+      "Paste the code at checkout and confirm the discount before payment.",
+    ];
+  }
+
+  return [
+    `Open the ${offer.title} store from the BuySmart page.`,
+    "Review the listed saving, expiry, audience, and merchant terms.",
+    "Confirm the saving appears on the merchant checkout page before payment.",
+  ];
+}
+
+function createBuySmartOfferJsonLd({ offer, path, savings, domain }) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Offer",
+    "@id": `${absoluteUrl(path)}#offer`,
+    name: `${offer.title} ${offer.code ? "coupon code" : "deal"}`,
+    description: offer.disc || `${savings} for ${offer.audience?.toLowerCase?.() || "shoppers"}.`,
+    url: absoluteUrl(path),
+    availability: "https://schema.org/InStock",
+    category: offer.category,
+    validThrough: offer.expiresAt || undefined,
+    seller: {
+      "@type": "Organization",
+      name: offer.title,
+      url: offer.link && offer.link !== "#" ? offer.link : undefined,
+    },
+    offeredBy: {
+      "@type": "Organization",
+      name: "AltFTool",
+      url: absoluteUrl("/"),
+    },
+    eligibleCustomerType: offer.audience,
+    identifier: offer.code || offer.storeSlug,
+    areaServed: "Worldwide",
+    image: offer.img || undefined,
+    sameAs: domain ? `https://${domain}` : undefined,
+  };
+}
+
 export default function StoreDetailClient({ slug }) {
+  const { counters } = useBuySmartAnalytics();
   const { isFallback, items: offers } = useBuySmartCategories();
   const routeSlug = slugifyBuySmartBrand(slug);
 
@@ -97,11 +187,11 @@ export default function StoreDetailClient({ slug }) {
 
   const similarOffers = useMemo(() => {
     if (!offer) return [];
-    return normalizedOffers
+    const matches = normalizedOffers
       .filter((item) => getBuySmartBrandSlug(item) !== getBuySmartBrandSlug(offer))
       .filter((item) => item.category === offer.category || item.offerType === offer.offerType)
-      .slice(0, 4);
-  }, [normalizedOffers, offer]);
+    return sortBuySmartByTrust(matches, counters).slice(0, 4);
+  }, [counters, normalizedOffers, offer]);
 
   if (isFallback && !offer) {
     return <StoreDetailSkeleton />;
@@ -138,10 +228,66 @@ export default function StoreDetailClient({ slug }) {
 
   const savings = getPrimarySavingsText(offer);
   const domain = getDomainFromUrl(offer.link);
+  const hasStoreLink = isExternalMerchantUrl(offer.link);
   const verificationLabel = verificationLabels[offer.verificationStatus] || "Pending QA";
+  const trustSignals = getBuySmartTrustSignals(offer, counters);
+  const dealScore = getDealScore(offer);
+  const quality = getBuySmartQualitySummary(offer, normalizedOffers);
+  const storePath = getBuySmartStorePath(offer);
+  const faqItems = getStoreFaqs(offer, savings);
+  const howToSteps = getHowToSteps(offer);
+  const checkoutSteps = [
+    {
+      icon: ShieldCheck,
+      title: offer.verified ? "Verification checked" : "Confirm merchant terms",
+      text: offer.verified
+        ? "AltFTool has a positive verification signal for this offer."
+        : "This offer is still pending QA, so confirm it on the merchant checkout page.",
+    },
+    {
+      icon: TicketPercent,
+      title: offer.code ? "Copy or reveal the code" : "Open the live deal",
+      text: offer.code
+        ? "Use the reveal button, copy the code, then apply it at checkout."
+        : "Open the store and check that the saving appears before payment.",
+    },
+    {
+      icon: Clock3,
+      title: "Check timing",
+      text: offer.expiresAt
+        ? `This offer expiry is listed as ${formatDate(offer.expiresAt)}.`
+        : "No fixed expiry is listed, so treat the offer as live but time-sensitive.",
+    },
+  ];
+  const jsonLd = [
+    createBuySmartOfferJsonLd({
+      offer: { ...offer, link: hasStoreLink ? offer.link : "" },
+      path: storePath,
+      savings,
+      domain,
+    }),
+    createBreadcrumbJsonLd([
+      { name: "Home", path: "/" },
+      { name: "BuySmart", path: "/buysmart" },
+      { name: "All stores", path: "/buysmart/view-all" },
+      { name: offer.title, path: storePath },
+    ]),
+    createFaqJsonLd({
+      path: storePath,
+      questions: faqItems,
+    }),
+    createHowToJsonLd({
+      path: storePath,
+      name: `How to use the ${offer.title} BuySmart offer`,
+      description: `Steps to use the current ${offer.title} BuySmart saving safely.`,
+      steps: howToSteps,
+    }),
+  ];
 
   return (
-    <main className="bg-(--background) text-(--foreground)" data-testid="buysmart-store-detail">
+    <>
+    <JsonLd id="buysmart-store-schema" data={jsonLd} />
+    <main className="bg-(--background) pb-20 text-(--foreground) lg:pb-0" data-testid="buysmart-store-detail">
       <section className="section space-y-5">
         <Link
           href="/buysmart"
@@ -182,10 +328,13 @@ export default function StoreDetailClient({ slug }) {
                 <p className="mt-3 max-w-2xl text-sm leading-6 text-(--muted-foreground) sm:text-base">
                   {offer.disc || `${savings}${offer.audience ? ` for ${offer.audience.toLowerCase()}` : ""} on BuySmart.`}
                 </p>
+                <div className="mt-3">
+                  <TrustSignalBadges signals={trustSignals} />
+                </div>
 
                 <div className="mt-5 flex flex-wrap gap-3">
                   <CouponReveal offer={offer} />
-                  {offer.link && offer.link !== "#" ? (
+                  {hasStoreLink ? (
                     <a
                       href={offer.link}
                       target="_blank"
@@ -206,6 +355,41 @@ export default function StoreDetailClient({ slug }) {
               <Fact icon={Clock3} label="Expires" value={formatDate(offer.expiresAt, "Live now")} />
               <Fact icon={Globe2} label="Store" value={domain || "Merchant"} />
             </div>
+
+            <div className="mt-5 rounded-[var(--anslation-ds-radius-lg)] border border-(--border) bg-(--background) p-4">
+              <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                <div>
+                  <p className="text-xs font-semibold uppercase tracking-wide text-(--muted-foreground)">
+                    BuySmart decision score
+                  </p>
+                  <h2 className="mt-1 text-lg font-bold text-(--foreground)">
+                    {dealScore}/100 confidence before checkout
+                  </h2>
+                </div>
+                <div className="h-2 w-full overflow-hidden rounded-full bg-(--muted) sm:w-48">
+                  <div
+                    className="h-full rounded-full bg-(--primary)"
+                    style={{ width: `${dealScore}%` }}
+                  />
+                </div>
+              </div>
+
+              <div className="mt-4 grid gap-3 md:grid-cols-3">
+                {checkoutSteps.map(({ icon: Icon, title, text }) => (
+                  <div key={title} className="rounded-[var(--anslation-ds-radius)] border border-(--border) bg-(--card) p-3">
+                    <div className="flex items-center gap-2">
+                      <span className="grid h-8 w-8 place-items-center rounded-[var(--anslation-ds-radius-xs)] bg-(--muted)">
+                        <Icon className="h-4 w-4 text-(--primary)" />
+                      </span>
+                      <h3 className="text-sm font-bold text-(--foreground)">{title}</h3>
+                    </div>
+                    <p className="mt-2 text-xs leading-5 text-(--muted-foreground)">
+                      {text}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </div>
           </article>
 
           <aside className="space-y-4">
@@ -221,9 +405,10 @@ export default function StoreDetailClient({ slug }) {
               </div>
 
               <div className="mt-5 grid gap-3">
-                <Metric label="Success rate" value={formatRate(offer.successRate)} />
-                <Metric label="Working votes" value={String(offer.workingVotes || 0)} />
-                <Metric label="Failed votes" value={String(offer.failedVotes || 0)} />
+                <Metric label="Worked rate" value={trustSignals.workedRateLabel} />
+                <Metric label="Shoppers used" value={String(trustSignals.shopperUsed || 0)} />
+                <Metric label="Working votes" value={String(trustSignals.workingVotes || 0)} />
+                <Metric label="Failed votes" value={String(trustSignals.failedVotes || 0)} />
                 <Metric label="Last checked" value={formatDate(offer.lastVerifiedAt, "Not checked yet")} />
               </div>
 
@@ -232,7 +417,23 @@ export default function StoreDetailClient({ slug }) {
                   {offer.reviewNote}
                 </p>
               ) : null}
+
+              {quality.issues.length ? (
+                <div className="mt-4 rounded-[var(--anslation-ds-radius)] border border-amber-200 bg-amber-50 p-3 text-sm text-amber-800">
+                  <div className="flex items-center gap-2 font-bold">
+                    <Info className="h-4 w-4" />
+                    Quality watchlist
+                  </div>
+                  <ul className="mt-2 space-y-1">
+                    {quality.issues.slice(0, 3).map((issue) => (
+                      <li key={issue.key}>{issue.label}</li>
+                    ))}
+                  </ul>
+                </div>
+              ) : null}
             </div>
+
+            <OfferFeedback offer={offer} />
 
             <div className="rounded-[var(--anslation-ds-radius-lg)] border border-(--border) bg-(--card) p-5 shadow-[var(--anslation-ds-shadow-sm)]">
               <div className="flex items-center gap-2">
@@ -258,13 +459,72 @@ export default function StoreDetailClient({ slug }) {
             </div>
             <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
               {similarOffers.map((item) => (
-                <SimilarOfferCard key={`${item.id || item.title}-${item.storePath}`} offer={item} />
+                <SimilarOfferCard key={`${item.id || item.title}-${item.storePath}`} offer={item} counters={counters} />
               ))}
             </div>
           </section>
         ) : null}
+
+        <section className="grid gap-4 lg:grid-cols-[0.9fr_1.1fr]">
+          <div className="rounded-[var(--anslation-ds-radius-lg)] border border-(--border) bg-(--card) p-5 shadow-[var(--anslation-ds-shadow-sm)]">
+            <div className="flex items-center gap-2">
+              <CheckCircle2 className="h-5 w-5 text-(--primary)" />
+              <div>
+                <p className="text-xs font-bold uppercase tracking-wide text-(--muted-foreground)">
+                  How to use
+                </p>
+                <h2 className="mt-1 text-xl font-bold">
+                  Use this offer safely
+                </h2>
+              </div>
+            </div>
+            <ol className="mt-5 space-y-3">
+              {howToSteps.map((step, index) => (
+                <li key={step} className="flex gap-3 rounded-[var(--anslation-ds-radius)] border border-(--border) bg-(--background) p-3">
+                  <span className="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-(--primary) text-xs font-bold text-(--primary-foreground)">
+                    {index + 1}
+                  </span>
+                  <span className="text-sm leading-6 text-(--muted-foreground)">
+                    {step}
+                  </span>
+                </li>
+              ))}
+            </ol>
+          </div>
+
+          <div className="rounded-[var(--anslation-ds-radius-lg)] border border-(--border) bg-(--card) p-5 shadow-[var(--anslation-ds-shadow-sm)]">
+            <div className="flex items-center gap-2">
+              <HelpCircle className="h-5 w-5 text-(--primary)" />
+              <div>
+                <p className="text-xs font-bold uppercase tracking-wide text-(--muted-foreground)">
+                  FAQ
+                </p>
+                <h2 className="mt-1 text-xl font-bold">
+                  Quick answers
+                </h2>
+              </div>
+            </div>
+            <div className="mt-5 space-y-3">
+              {faqItems.map((item) => (
+                <details
+                  key={item.question}
+                  className="rounded-[var(--anslation-ds-radius)] border border-(--border) bg-(--background) p-3"
+                >
+                  <summary className="cursor-pointer text-sm font-bold text-(--foreground)">
+                    {item.question}
+                  </summary>
+                  <p className="mt-2 text-sm leading-6 text-(--muted-foreground)">
+                    {item.answer}
+                  </p>
+                </details>
+              ))}
+            </div>
+          </div>
+        </section>
       </section>
+      <MobileStoreActionBar offer={offer} />
     </main>
+    </>
   );
 }
 
@@ -313,7 +573,9 @@ function InfoRow({ label, value }) {
   );
 }
 
-function SimilarOfferCard({ offer }) {
+function SimilarOfferCard({ offer, counters = {} }) {
+  const trustSignals = getBuySmartTrustSignals(offer, counters);
+
   return (
     <Link
       href={getBuySmartStorePath(offer)}
@@ -339,6 +601,9 @@ function SimilarOfferCard({ offer }) {
           <p className="mt-1 truncate text-xs text-(--muted-foreground)">
             {getPrimarySavingsText(offer)}
           </p>
+          <div className="mt-2">
+            <TrustSignalBadges signals={trustSignals} compact />
+          </div>
         </div>
       </div>
       <span className="mt-4 inline-flex items-center gap-1 text-xs font-semibold text-(--primary)">
@@ -346,6 +611,42 @@ function SimilarOfferCard({ offer }) {
         <ArrowRight className="h-3.5 w-3.5 transition group-hover:translate-x-0.5" />
       </span>
     </Link>
+  );
+}
+
+function MobileStoreActionBar({ offer }) {
+  const hasStoreLink = isExternalMerchantUrl(offer.link);
+
+  return (
+    <div className="fixed inset-x-0 bottom-0 z-40 border-t border-(--border) bg-(--card)/95 p-3 shadow-[0_-12px_30px_rgba(15,23,42,0.12)] backdrop-blur lg:hidden">
+      <div className="mx-auto flex max-w-xl items-center gap-2">
+        <CouponReveal
+          offer={offer}
+          className="flex-1"
+          buttonTestId="buysmart-mobile-reveal-button"
+          modalTestId="buysmart-mobile-reveal-modal"
+        />
+        {hasStoreLink ? (
+          <a
+            href={offer.link}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex h-11 flex-1 items-center justify-center gap-2 rounded-[var(--anslation-ds-radius)] border border-(--border) bg-(--background) px-3 text-sm font-bold text-(--foreground)"
+          >
+            Visit
+            <ExternalLink className="h-4 w-4" />
+          </a>
+        ) : (
+          <Link
+            href="/buysmart/view-all"
+            className="inline-flex h-11 flex-1 items-center justify-center gap-2 rounded-[var(--anslation-ds-radius)] border border-(--border) bg-(--background) px-3 text-sm font-bold text-(--foreground)"
+          >
+            Stores
+            <ArrowRight className="h-4 w-4" />
+          </Link>
+        )}
+      </div>
+    </div>
   );
 }
 

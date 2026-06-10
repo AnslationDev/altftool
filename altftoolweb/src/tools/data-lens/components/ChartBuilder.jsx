@@ -2,8 +2,9 @@ import React, { useMemo, useState } from "react";
 import {
   BarChart, Bar, LineChart, Line, AreaChart, Area,
   PieChart, Pie, Cell, ScatterChart, Scatter,
-  XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend
+  XAxis, YAxis, CartesianGrid, Tooltip, Legend
 } from "recharts";
+import ResponsiveContainer from "@/components/charts/SafeResponsiveContainer";
 import { aggregateData } from "../utils/dataTransform";
 
 const COLORS = [
@@ -87,7 +88,7 @@ const ChartBuilder = ({ data, columns, columnTypes, chartConfig, onChange, isLoa
     if (config.chartType === "scatter") {
       return (
         <div className="flex-1 min-h-0">
-          <ResponsiveContainer width="100%" height="100%">
+          <ResponsiveContainer width="100%" height="100%" minWidth={1} minHeight={1}>
             <ScatterChart margin={{ top: 20, right: 20, bottom: 20, left: 20 }}>
               <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" />
               <XAxis
@@ -307,7 +308,7 @@ const ChartBuilder = ({ data, columns, columnTypes, chartConfig, onChange, isLoa
               </svg>
             </div>
           ) : chartData.length > 0 ? (
-            <ResponsiveContainer width="100%" height="100%">
+            <ResponsiveContainer width="100%" height="100%" minWidth={1} minHeight={1}>
               {renderChartContent()}
             </ResponsiveContainer>
           ) : (
@@ -339,7 +340,7 @@ const ChartBuilder = ({ data, columns, columnTypes, chartConfig, onChange, isLoa
               </button>
             </div>
             <div style={{ width: '100%', height: '70vh' }}>
-              <ResponsiveContainer width="100%" height="100%">
+              <ResponsiveContainer width="100%" height="100%" minWidth={1} minHeight={1}>
                 {renderChartContent()}
               </ResponsiveContainer>
             </div>

@@ -5,8 +5,8 @@ import {
   YAxis,
   Tooltip,
   CartesianGrid,
-  ResponsiveContainer,
-} from "recharts";
+  } from "recharts";
+import ResponsiveContainer from "@/components/charts/SafeResponsiveContainer";
 
 export default function BatteryGraph({ data }) {
   return (
@@ -14,7 +14,7 @@ export default function BatteryGraph({ data }) {
       <h2 className="text-lg font-semibold mb-2">
         📊 Battery Projection Comparison
       </h2>
-      <ResponsiveContainer width="100%" height="100%">
+      <ResponsiveContainer width="100%" height="100%" minWidth={1} minHeight={1}>
         <LineChart data={data}>
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="month" />

@@ -2,7 +2,7 @@
 
 import React, { useEffect, useMemo, useState } from "react";
 import { UpcomingDealService } from "../../firebaseService/UpcomingDeal.service";
-import ReusableTable from "../../../buysmart/(components)/(resuableComponent)/ReusableTable";
+import ReusableTable, { SafeTableImage } from "../../../buysmart/(components)/(resuableComponent)/ReusableTable";
 import { categoryService } from "../../firebaseService/category.service";
 
 
@@ -56,13 +56,13 @@ function GetUpcomingDeal({ setActive, setEditData }) {
       accessorKey: "logo",
       header: "Logo",
       Cell: ({ row }) => (
-        <img src={row.original.logo} className="h-10 w-10" />
+        <SafeTableImage src={row.original.logo} alt={`${row.original.name || "Brand"} logo`} className="h-10 w-10 rounded border object-contain" fallbackClassName="h-10 w-10 rounded border border-dashed border-gray-300 bg-gray-50" />
       )
     },
     { accessorKey: "bannerImg", 
       header: "Banner",
       Cell: ({ row }) => (
-        <img src={row.original.bannerImg} className="h-10 w-10" />
+        <SafeTableImage src={row.original.bannerImg} alt={`${row.original.name || "Deal"} banner`} className="h-10 w-10 rounded border object-cover" fallbackClassName="h-10 w-10 rounded border border-dashed border-gray-300 bg-gray-50" />
       )
      },
 
@@ -86,8 +86,8 @@ function GetUpcomingDeal({ setActive, setEditData }) {
   };
 
   const handleDelete = async (id) => {
-    if (!confirm("Delete brand?")) return;
     await UpcomingDealService .remove(id);
+    return true;
   };
 
    const handleStatusChange = async (item) => {
@@ -112,6 +112,8 @@ function GetUpcomingDeal({ setActive, setEditData }) {
       loading={loading}
       onEdit={handleEdit}
       onDeleteSingle={handleDelete}
+      onStatusChange={handleStatusChange}
+      confirmDeletes
     />
   );
 }

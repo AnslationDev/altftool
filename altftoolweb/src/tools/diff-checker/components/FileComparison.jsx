@@ -18,16 +18,16 @@ const FileDiffViewer = () => {
 
     const loadPdfLibraries = async () => {
       try {
-        const pdfjs = await import("pdfjs-dist");
+        const pdfjs = await import(
+          /* webpackIgnore: true */ "https://cdn.jsdelivr.net/npm/pdfjs-dist@5.6.205/build/pdf.min.mjs"
+        );
 
         if (mounted) {
-          // ✅ Use LOCAL worker (important)
-          pdfjs.GlobalWorkerOptions.workerSrc = "/pdf.worker.min.js";
+          pdfjs.GlobalWorkerOptions.workerSrc =
+            "https://cdn.jsdelivr.net/npm/pdfjs-dist@5.6.205/build/pdf.worker.min.mjs";
 
-          // ✅ Store in ref (this was missing)
           pdfjsRef.current = pdfjs;
 
-          // optional: keep your window cache
           if (typeof window !== "undefined") {
             window.__pdfjsLib = pdfjs;
           }
@@ -35,7 +35,12 @@ const FileDiffViewer = () => {
           setLibrariesLoaded(true);
         }
       } catch (error) {
-        console.error("Failed to load PDF libraries:", error);
+        if (mounted) {
+          console.info(
+            "PDF diff library is temporarily unavailable. Retrying requires a page refresh.",
+            error,
+          );
+        }
       }
     };
 

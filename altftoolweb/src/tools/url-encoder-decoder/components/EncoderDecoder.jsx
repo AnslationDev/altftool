@@ -1,166 +1,216 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
+import { ArrowDownUp, Clipboard, FileDown, Link2, RotateCcw, Search } from "lucide-react";
+import { safeCopyText } from "@/shared/utils/clipboard";
 import Toast from "./Toast";
 
-export default function EncoderDecoder() {
-  const [input, setInput] = useState(
-    "https://www.example.com/?name=Nilesh & age=25"
-  );
-  const [output, setOutput] = useState("");
-  const [toastMsg, setToastMsg] = useState("");
+const sampleUrl = "https://www.example.com/search?q=online tools & category=developer";
+const modes = [
+  { id: "encode", label: "Encode", helper: "URI component safe" },
+  { id: "decode", label: "Decode", helper: "Readable URL text" },
+  { id: "query", label: "Query JSON", helper: "Inspect parameters" },
+];
 
-const encodeURL = () => {
-  if (!input.trim()) {
-    setToastMsg("Please enter a URL to encode");
-    return;
-  }
+function downloadTextFile(filename, content) {
+  const url = URL.createObjectURL(new Blob([content], { type: "text/plain;charset=utf-8" }));
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = filename;
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
+  URL.revokeObjectURL(url);
+}
 
-  setOutput(encodeURIComponent(input.trim()));
-  setToastMsg("URL Encoded!");
-};
+function parseQuery(value) {
+  const source = value.includes("?") ? value : `https://altftool.local/?${value}`;
+  const url = new URL(source);
+  return [...url.searchParams.entries()];
+}
 
-const decodeURL = () => {
-  if (!input.trim()) {
-    setToastMsg("Please enter a URL to decode");
-    return;
-  }
+function getOutput(mode, input) {
+  const value = input.trim();
+  if (!value) return { output: "", error: "" };
 
   try {
-    setOutput(decodeURIComponent(input.trim()));
-    setToastMsg("URL Decoded!");
+    if (mode === "decode") return { output: decodeURIComponent(value), error: "" };
+    if (mode === "query") {
+      const entries = parseQuery(value);
+      return {
+        output: JSON.stringify(Object.fromEntries(entries), null, 2),
+        error: entries.length ? "" : "No query parameters found.",
+      };
+    }
+    return { output: encodeURIComponent(value), error: "" };
   } catch {
-    setOutput("");
-    setToastMsg("Invalid encoded URL");
+    return { output: "", error: "Input could not be processed for this mode." };
   }
-};
+}
 
+export default function EncoderDecoder() {
+  const [input, setInput] = useState(sampleUrl);
+  const [mode, setMode] = useState("encode");
+  const [toastMsg, setToastMsg] = useState("");
+  const result = useMemo(() => getOutput(mode, input), [input, mode]);
+  const queryRows = useMemo(() => {
+    try {
+      return parseQuery(input);
+    } catch {
+      return [];
+    }
+  }, [input]);
 
-  const clearAll = () => {
-    setInput("");
-    setOutput("");
-      setToastMsg("Cleared!");
+  const copyOutput = async () => {
+    if (!result.output) return;
+    setToastMsg((await safeCopyText(result.output)) ? "Copied!" : "Copy failed");
   };
 
-  const copyOutput = () => {
-    navigator.clipboard.writeText(output);
-    setToastMsg("Copied!");
+  const useOutput = () => {
+    if (!result.output) return;
+    setInput(result.output);
+    setMode(mode === "encode" ? "decode" : "encode");
+    setToastMsg("Output moved to input");
   };
 
   return (
-    <div className="w-full grid gap-12">
-
-      {/* INPUT SECTION */}
-      <section>
-        <h2 className="subheading mb-3">Input</h2>
-
-        <textarea
-          className="
-            w-full h-48 p-4 rounded-xl resize-none
-            bg-(--card)
-            text-(--foreground)
-            border border-(--border)
-            placeholder:text-(--muted-foreground)
-            focus:outline-none
-            focus:ring-2 focus:ring-(--primary)
-            transition-all
-          "
-          placeholder="Paste URL or text..."
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-        />
-
-        {/* Buttons */}
-        <div className="flex flex-col sm:flex-row gap-4 mt-5">
-
-          <button
-            onClick={encodeURL}
-            className="
-              flex-1 py-3 rounded-xl font-medium
-              bg-(--primary)
-              text-(--primary-foreground)
-              hover:opacity-90
-              active:scale-[0.98]
-              transition-all cursor-pointer
-            "
-          >
-            Encode
-          </button>
-
-          <button
-            onClick={decodeURL}
-            className="
-              flex-1 py-3 rounded-xl font-medium
-              border border-(--primary)
-              text-(--primary)
-              hover:bg-(--primary)
-              hover:text-(--primary-foreground)
-              active:scale-[0.98]
-              transition-all cursor-pointer
-            "
-          >
-            Decode
-          </button>
-
-          <button
-            onClick={clearAll}
-            className="
-              flex-1 py-3 rounded-xl font-medium
-              bg-(--muted)
-              text-(--foreground)
-              border border-(--border)
-              hover:opacity-90
-              active:scale-[0.98]
-              transition-all cursor-pointer
-            "
-          >
-            Clear
-          </button>
-
+    <div className="grid w-full gap-4">
+      <section className="rounded-[8px] border border-(--border) bg-(--card) p-4 shadow-[var(--anslation-ds-shadow-sm)] sm:p-5">
+        <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
+          <div className="min-w-0">
+            <p className="text-xs font-bold uppercase tracking-wide text-(--muted-foreground)">Mode</p>
+            <h2 className="mt-1 text-xl font-semibold text-(--foreground)">URL workspace</h2>
+          </div>
+          <div className="grid gap-2 sm:grid-cols-3">
+            {modes.map((item) => (
+              <button
+                key={item.id}
+                type="button"
+                onClick={() => setMode(item.id)}
+                className={`rounded-[8px] border px-3 py-2 text-left transition ${
+                  mode === item.id
+                    ? "border-(--primary) bg-(--primary) text-(--primary-foreground)"
+                    : "border-(--border) bg-(--background) text-(--foreground) hover:border-(--primary)"
+                }`}
+              >
+                <span className="block text-sm font-semibold">{item.label}</span>
+                <span className={mode === item.id ? "block text-xs text-white/80" : "block text-xs text-(--muted-foreground)"}>
+                  {item.helper}
+                </span>
+              </button>
+            ))}
+          </div>
         </div>
       </section>
 
-      {/* OUTPUT SECTION */}
-      <section>
-        <h2 className="subheading mb-3">Output</h2>
+      <div className="grid gap-4 lg:grid-cols-2">
+        <section className="rounded-[8px] border border-(--border) bg-(--card) p-4 shadow-[var(--anslation-ds-shadow-sm)] sm:p-5">
+          <div className="mb-3 flex flex-wrap items-center justify-between gap-3">
+            <div>
+              <p className="text-xs font-bold uppercase tracking-wide text-(--muted-foreground)">Input</p>
+              <p className="mt-1 text-xs text-(--muted-foreground)">{input.length.toLocaleString()} characters</p>
+            </div>
+            <div className="flex flex-wrap gap-2">
+              <button type="button" onClick={() => setInput(sampleUrl)} className="btn-secondary min-h-9 px-3 py-1.5 text-xs">
+                <Link2 className="h-3.5 w-3.5" />
+                Sample
+              </button>
+              <button type="button" onClick={() => setInput("")} className="btn-secondary min-h-9 px-3 py-1.5 text-xs">
+                <RotateCcw className="h-3.5 w-3.5" />
+                Clear
+              </button>
+            </div>
+          </div>
+          <textarea
+            data-testid="tool-input"
+            className="min-h-[300px] w-full resize-y rounded-[8px] border border-(--border) bg-(--background) p-4 font-mono text-sm leading-6 text-(--foreground) outline-none transition placeholder:text-(--muted-foreground) focus:border-(--primary)"
+            placeholder="Paste URL, encoded text, or query string..."
+            value={input}
+            onChange={(event) => setInput(event.target.value)}
+            spellCheck={false}
+          />
+        </section>
 
-        <textarea
-          className="
-            w-full h-48 p-4 rounded-xl resize-none
-            bg-(--card)
-            text-(--foreground)
-            border border-(--border)
-            focus:outline-none
-          "
-          placeholder="Result will appear here..."
-          value={output}
-          readOnly
-        />
-
-        <div className="mt-5">
-          <button
-            onClick={copyOutput}
-            disabled={!output}
-            className="
-              px-6 py-2 rounded-xl font-medium
-              bg-(--primary)
-              text-(--primary-foreground)
-              hover:opacity-90
-              active:scale-[0.98]
-              transition-all
-              disabled:opacity-40 cursor-pointer
-            "
+        <section className="rounded-[8px] border border-(--border) bg-(--card) p-4 shadow-[var(--anslation-ds-shadow-sm)] sm:p-5">
+          <div className="mb-3 flex flex-wrap items-center justify-between gap-3">
+            <div>
+              <p className="text-xs font-bold uppercase tracking-wide text-(--muted-foreground)">Output</p>
+              <p className={`mt-1 text-xs ${result.error ? "text-red-500" : "text-(--muted-foreground)"}`}>
+                {result.error || `${result.output.length.toLocaleString()} characters`}
+              </p>
+            </div>
+            <div className="flex flex-wrap gap-2">
+              <button type="button" onClick={copyOutput} disabled={!result.output} className="btn-secondary min-h-9 px-3 py-1.5 text-xs disabled:opacity-50">
+                <Clipboard className="h-3.5 w-3.5" />
+                Copy
+              </button>
+              <button type="button" onClick={useOutput} disabled={!result.output} className="btn-secondary min-h-9 px-3 py-1.5 text-xs disabled:opacity-50">
+                <ArrowDownUp className="h-3.5 w-3.5" />
+                Use output
+              </button>
+              <button
+                type="button"
+                onClick={() => downloadTextFile("altftool-url-output.txt", result.output)}
+                disabled={!result.output}
+                className="btn-secondary min-h-9 px-3 py-1.5 text-xs disabled:opacity-50"
+              >
+                <FileDown className="h-3.5 w-3.5" />
+                Download
+              </button>
+            </div>
+          </div>
+          <pre
+            data-testid="tool-output"
+            aria-live="polite"
+            className="min-h-[300px] overflow-auto whitespace-pre-wrap break-words rounded-[8px] border border-(--border) bg-(--background) p-4 font-mono text-sm leading-6 text-(--foreground)"
           >
-            Copy
-          </button>
+            {result.output || "Result will appear here."}
+          </pre>
+        </section>
+      </div>
+
+      <section className="rounded-[8px] border border-(--border) bg-(--card) p-4 shadow-[var(--anslation-ds-shadow-sm)] sm:p-5">
+        <div className="mb-3 flex items-center justify-between gap-3">
+          <div>
+            <p className="text-xs font-bold uppercase tracking-wide text-(--muted-foreground)">Query inspector</p>
+            <p className="mt-1 text-xs text-(--muted-foreground)">{queryRows.length} parameters detected</p>
+          </div>
+          <Search className="h-4 w-4 text-(--primary)" />
         </div>
+        {queryRows.length ? (
+          <div className="overflow-x-auto rounded-[8px] border border-(--border)">
+            <table className="w-full min-w-[520px] text-left text-sm">
+              <thead className="bg-(--background) text-xs uppercase text-(--muted-foreground)">
+                <tr>
+                  <th className="px-3 py-2">Key</th>
+                  <th className="px-3 py-2">Value</th>
+                  <th className="px-3 py-2">Encoded</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-(--border)">
+                {queryRows.map(([key, value], index) => (
+                  <tr key={`${key}-${index}`}>
+                    <td className="px-3 py-2 font-mono text-xs text-(--foreground)">{key}</td>
+                    <td className="px-3 py-2 font-mono text-xs text-(--muted-foreground)">{value}</td>
+                    <td className="px-3 py-2 font-mono text-xs text-(--muted-foreground)">{encodeURIComponent(value)}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        ) : (
+          <div className="rounded-[8px] border border-dashed border-(--border) bg-(--background) p-5 text-sm text-(--muted-foreground)">
+            Add a URL with query parameters to inspect keys and values.
+          </div>
+        )}
       </section>
 
-      {/* Toast */}
-      {toastMsg && (
-        <Toast message={toastMsg} onClose={() => setToastMsg("")} />
-      )}
-
+      {toastMsg ? <Toast message={toastMsg} onClose={() => setToastMsg("")} /> : null}
+      {result.output ? (
+        <span className="sr-only" aria-live="polite">
+          {mode} output updated
+        </span>
+      ) : null}
     </div>
   );
 }

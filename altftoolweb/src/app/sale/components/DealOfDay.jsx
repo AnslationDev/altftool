@@ -66,7 +66,7 @@ const CardWrapper = ({ item, children }) => {
             }
           >
             <CardWrapper item={item}> 
-              <div className="relative overflow-hidden rounded-[22px] h-[255px] md:h-[310px] lg:h-[275px] xl:h-[360px] cursor-pointer group">
+              <div className="relative overflow-hidden rounded-2xl h-[255px] md:h-[310px] lg:h-[275px] xl:h-[360px] cursor-pointer group">
                 <Image
                   src={item.image}
                   alt={item.title}
@@ -95,7 +95,7 @@ const CardWrapper = ({ item, children }) => {
             viewport={{ once: true }}
           >
             <CardWrapper item={item}>
-              <div className="relative overflow-hidden rounded-[22px] h-[235px] md:h-[265px] xl:h-[293px] cursor-pointer group">
+              <div className="relative overflow-hidden rounded-2xl h-[235px] md:h-[265px] xl:h-[293px] cursor-pointer group">
                 <Image
                   src={item.image}
                   alt={item.title}

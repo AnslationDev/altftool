@@ -1,5 +1,11 @@
 import React, { useState } from "react";
-import html2canvas from "html2canvas";
+
+let html2canvasPromise;
+
+function loadHtml2Canvas() {
+  html2canvasPromise ||= import("html2canvas").then((module) => module.default || module);
+  return html2canvasPromise;
+}
 
 export default function GifExport() {
 
@@ -24,6 +30,7 @@ export default function GifExport() {
     const recorder = new MediaRecorder(stream);
 
     const chunks = [];
+    const html2canvas = await loadHtml2Canvas();
 
     recorder.ondataavailable = (e) => {
       if (e.data.size > 0) chunks.push(e.data);

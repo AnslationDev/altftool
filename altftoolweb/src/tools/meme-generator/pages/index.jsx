@@ -1,9 +1,15 @@
 "use client";
 
 import { useState, useRef, useEffect, useCallback } from "react";
-import html2canvas from "html2canvas";
 import ManagedImage from "@/components/ui/ManagedImage";
 import Features from "../components/Features";
+
+let html2canvasPromise;
+
+function loadHtml2Canvas() {
+  html2canvasPromise ||= import("html2canvas").then((module) => module.default || module);
+  return html2canvasPromise;
+}
 
 const FONT_OPTIONS = [
   { name: "Impact", value: "Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif" },
@@ -147,6 +153,7 @@ export default function ToolHome() {
     if (!memeRef.current || !meme.image) return;
     setSelectedId(null);
     setTimeout(async () => {
+      const html2canvas = await loadHtml2Canvas();
       const canvas = await html2canvas(memeRef.current, { 
         useCORS: true, 
         scale: 3, 

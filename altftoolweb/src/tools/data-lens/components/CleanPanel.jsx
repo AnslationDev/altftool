@@ -145,7 +145,7 @@ const CleanPanel = ({ data, columnTypes, analysis, onDataCleaned }) => {
         </label>
         <label className="flex items-center gap-3 text-[var(--foreground)] cursor-pointer bg-[var(--muted)] rounded-lg px-3 py-2">
           <input type="checkbox" checked={operations.removeNone} onChange={() => toggleOp("removeNone")} className="accent-[var(--primary)]" />
-          Replace "None" strings with empty values
+          Replace &quot;None&quot; strings with empty values
         </label>
         <label className="flex items-center gap-3 text-[var(--foreground)] cursor-pointer bg-[var(--muted)] rounded-lg px-3 py-2">
           <input type="checkbox" checked={operations.removeDups} onChange={() => toggleOp("removeDups")} className="accent-[var(--primary)]" />

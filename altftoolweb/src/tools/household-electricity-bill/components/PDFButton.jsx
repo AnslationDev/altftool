@@ -1,12 +1,23 @@
 import { useState } from "react";
-import html2canvas from "html2canvas";
-import jsPDF from "jspdf";
 import { Download } from "lucide-react";
 
 import {
   formatINR,
   formatUnits,
 } from "../lib/calculateBill";
+
+let html2canvasPromise;
+let jsPdfPromise;
+
+function loadHtml2Canvas() {
+  html2canvasPromise ||= import("html2canvas").then((module) => module.default || module);
+  return html2canvasPromise;
+}
+
+function loadJsPdf() {
+  jsPdfPromise ||= import("jspdf").then((module) => module.default || module.jsPDF);
+  return jsPdfPromise;
+}
 
 export function PDFButton({
   appliances,
@@ -20,6 +31,7 @@ export function PDFButton({
     setLoading(true);
 
     try {
+      const jsPDF = await loadJsPdf();
       const doc = new jsPDF({
         unit: "pt",
         format: "a4",
@@ -171,6 +183,7 @@ export function PDFButton({
         doc.line(margin, y, margin + 40, y);
         y += 30;
 
+        const html2canvas = await loadHtml2Canvas();
         const canvas = await html2canvas(chartElement, {
           backgroundColor: "#ffffff",
           scale: 2,

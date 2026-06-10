@@ -12,13 +12,29 @@ export const firebaseBuySmartSource = {
     const oldColRef = collection(db, "buySmart");
 
     return subscribeCached("admin:buysmart:all", (emit, fail) => {
+      let hasCanonicalData = false;
+      let legacyResult = null;
+
+      const emitLegacyFallback = () => {
+        if (!hasCanonicalData && legacyResult) {
+          emit(legacyResult);
+        }
+      };
+
       const unsubNew = onSnapshot(newColRef, (snap) => {
-        if (snap.empty) return;
         const result = {};
         snap.docs.forEach((d) => {
           result[d.id] = d.data();
         });
-        emit(result);
+
+        hasCanonicalData = !snap.empty;
+
+        if (hasCanonicalData) {
+          emit(result);
+          return;
+        }
+
+        emitLegacyFallback();
       }, fail);
 
       const unsubOld = onSnapshot(oldColRef, (snap) => {
@@ -26,12 +42,13 @@ export const firebaseBuySmartSource = {
         snap.docs.forEach((d) => {
           result[d.id] = d.data();
         });
-        emit(result);
+
+        legacyResult = result;
+        emitLegacyFallback();
       }, fail);
 
       return () => { try { unsubNew?.(); } catch {} try { unsubOld?.(); } catch {} };
     }, callback, onError);
   }
 };
-
 

@@ -1,4 +1,4 @@
-export default  {
+const toolConfig = {
   slug: "reaction-diffusion-simulator",
   name: "Reaction Diffusion Simulator",
   category: ["Simulation", "Science"],
@@ -6,3 +6,5 @@ export default  {
   icon: "waves",
   iconColor: "text-blue-600",
 };
+
+export default toolConfig;

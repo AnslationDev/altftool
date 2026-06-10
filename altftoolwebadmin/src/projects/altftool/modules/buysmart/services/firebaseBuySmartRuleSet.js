@@ -12,15 +12,18 @@ import {db} from "@/lib/firebase"
 import { dualWrite, getFirestoreRefs } from "@/lib/dualWrite"
 
 
-export const ROOT = buySmartDocPath("ruleSet");
+const MODULE = "buySmart";
+const DOC_ID = "ruleSet";
+
+export const ROOT = buySmartDocPath(DOC_ID);
 const RULESET_REF = doc(db, ...ROOT);
-const { newDocRef: RULESET_NEW_REF } = getFirestoreRefs(...ROOT);
+const { oldDocRef: RULESET_LEGACY_REF } = getFirestoreRefs(MODULE, DOC_ID);
 
 
 export const  firebaseBuySmartRuleSetSource = {
    subscribe(callback, onError) {
         const unsubNew = onSnapshot(
-          RULESET_NEW_REF,
+          RULESET_REF,
           snap => {
             if (!snap.exists()) return;
             const data = snap.data().banner || [];
@@ -32,7 +35,7 @@ export const  firebaseBuySmartRuleSetSource = {
           }
         );
         const unsubOld = onSnapshot(
-          RULESET_REF,
+          RULESET_LEGACY_REF,
           snap => {
             const data = snap.exists() ? snap.data().banner || [] : [];
             callback(data);

@@ -1,14 +1,15 @@
 import React from "react";
 import DataPreview from "./DataPreview";
 import {
-  BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Cell,
+  BarChart, Bar, XAxis, YAxis, Tooltip, Cell,
 } from "recharts";
+import ResponsiveContainer from "@/components/charts/SafeResponsiveContainer";
 
 const COLORS = ["var(--primary)", "#06b6d4", "#f59e0b", "#ef4444", "#8b5cf6", "#10b981"];
 
 const MiniHistogram = ({ data }) => (
   <div className="w-full h-24">
-    <ResponsiveContainer width="100%" height="100%">
+    <ResponsiveContainer width="100%" height="100%" minWidth={1} minHeight={1}>
       <BarChart data={data}>
         <Bar dataKey="count" fill="var(--primary)" radius={[2, 2, 0, 0]} />
       </BarChart>
@@ -18,7 +19,7 @@ const MiniHistogram = ({ data }) => (
 
 const FrequencyBar = ({ data }) => (
   <div className="w-full h-32">
-    <ResponsiveContainer width="100%" height="100%">
+    <ResponsiveContainer width="100%" height="100%" minWidth={1} minHeight={1}>
       <BarChart data={data} layout="vertical" margin={{ left: 60 }}>
         <XAxis type="number" hide />
         <YAxis dataKey="value" type="category" tick={{ fontSize: 10, fill: "var(--muted-foreground)" }} width={60} />

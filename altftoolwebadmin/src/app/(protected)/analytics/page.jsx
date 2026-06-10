@@ -1,5 +1,6 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import { useEffect, useMemo, useState } from "react";
 import { getAuth } from "firebase/auth";
 import { RefreshCw } from "lucide-react";
@@ -11,11 +12,15 @@ import RecentUpdatesFeed from "./components/RecentUpdatesFeed";
 // import RecentDataTable from "./components/RecentDataTable";
 import AnalyticsEmptyState from "./components/AnalyticsEmptyState";
 import ProjectSelector from "./components/ProjectSelector";
-import AnalyticsCharts from "./components/AnalyticsCharts";
 import { sortByTimestampDesc } from "@/lib/analytics/analytics.utils";
 
 const CACHE_KEY = "analytics-dashboard-cache-v1";
 const SELECTED_PROJECT_KEY = "analytics-dashboard-selected-project-v1";
+
+const AnalyticsChartsPanel = dynamic(() => import("./components/AnalyticsCharts"), {
+  ssr: false,
+  loading: () => <AnalyticsChartsFallback />,
+});
 
 function readSessionStorage(key) {
   if (typeof window === "undefined") return null;
@@ -65,6 +70,38 @@ function LoadingCard({ message = "Loading analytics snapshot..." }) {
         ))}
       </div>
     </div>
+  );
+}
+
+function AnalyticsChartsFallback() {
+  return (
+    <section className="border border-gray-200 bg-white p-6 shadow-sm rounded-md">
+      <div className="flex flex-col gap-4 xl:flex-row xl:items-start xl:justify-between">
+        <div className="flex items-center gap-3">
+          <div className="h-9 w-9 animate-pulse rounded bg-gray-100" />
+          <div>
+            <div className="h-4 w-32 animate-pulse rounded bg-gray-200" />
+            <div className="mt-2 h-3 w-64 max-w-full animate-pulse rounded bg-gray-100" />
+          </div>
+        </div>
+        <div className="flex flex-wrap gap-2">
+          <div className="h-9 w-20 animate-pulse rounded bg-gray-100" />
+          <div className="h-9 w-20 animate-pulse rounded bg-gray-100" />
+        </div>
+      </div>
+      <div className="mt-6 grid gap-6 xl:grid-cols-[1.4fr_0.8fr]">
+        <div className="h-[320px] rounded-md border border-gray-200 bg-gray-50 p-4">
+          <div className="h-full animate-pulse rounded bg-white" />
+        </div>
+        <div className="h-[320px] rounded-md border border-gray-200 bg-gray-50 p-4">
+          <div className="mx-auto h-48 w-48 animate-pulse rounded-full bg-white" />
+          <div className="mt-6 space-y-2">
+            <div className="h-3 animate-pulse rounded bg-white" />
+            <div className="h-3 w-4/5 animate-pulse rounded bg-white" />
+          </div>
+        </div>
+      </div>
+    </section>
   );
 }
 
@@ -425,7 +462,7 @@ export default function AnalyticsPage() {
               description={filteredData.description}
             />
             {/* <div className="grid gap-6 xl:grid-cols-[1.35fr_0.65fr]"> */}
-              <AnalyticsCharts
+              <AnalyticsChartsPanel
                 projectData={filteredData.projectChartData}
                 moduleData={filteredData.moduleChartData}
               />

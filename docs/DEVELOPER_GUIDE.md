@@ -1,6 +1,6 @@
 # AltFTool Developer Guide
 
-Last updated: 2026-05-06
+Last updated: 2026-05-20
 
 This is the main onboarding guide for developers working in the AltFTool monorepo. It explains the app layout, local setup, Firebase boundaries, validation commands, and the safest way to add or change features.
 
@@ -63,11 +63,17 @@ Most smoke tests assume:
 npm run lint:web
 npm run lint:web:budget
 npm run routes:check
+npm run qa:routes:inventory
+npm run qa:routes:strict
 npm run firebase:check
+npm run firebase:live-check:strict
 npm run firebase:admin-write-check:dry-run
 npm run bundle:audit
 npm run audit
 npm run build
+npm run release:doctor
+npm run validate:runtime-quality
+npm run monitor:links
 npm run test:smoke
 npm run validate
 ```
@@ -82,6 +88,62 @@ npm run test:routes
 ```
 
 Use `npm run test:routes:dev` only when you specifically want to audit both apps against local dev servers.
+
+For a faster route QA report while the local web/admin servers are already running, use:
+
+```bash
+npm run qa:routes
+npm run qa:routes:strict
+npm run qa:routes:report
+npm run test:route-qa-report
+```
+
+This checks the standard public/admin route inventory, route error markup, basic SEO tags, key browser probes, console errors, broken images, and slow route timings. Use `npm run qa:routes:inventory` to preview the inventory without needing servers, `npm run qa:routes:full` for the expanded tool/blog route surface, or `npm run qa:routes:report` to save the latest JSON report for the admin health dashboard. The saved report runs a cold pass and a warm pass; the dashboard uses warm runtime as the active score while still showing cold compile cost.
+
+Use `npm run qa:routes:strict` when the local web/admin servers are running and you want the route quality gate to fail on route failures, warnings, or slow routes. Add `--output-md route-qa-report.md` when you need a readable artifact for a release note or CI summary.
+
+Every route QA report now includes a dashboard-ready matrix:
+
+- `matrix` lists each route/probe with pass, slow, warning, or failure status.
+- `groupMatrix` rolls those rows up by app surface, route group, score, p95, max duration, failures, warnings, and slow-route count.
+- `npm run test:route-qa-report` verifies the matrix shape without starting local servers, so release validation catches report regressions early.
+
+For Firebase production confidence, use:
+
+```bash
+npm run firebase:live-check
+npm run firebase:live-check:strict -- --output firebase-live-report.json --output-md firebase-live-report.md
+npm run firebase:integrity
+npm run firebase:integrity:strict -- --output firebase-integrity-report.json --output-md firebase-integrity-report.md
+npm run firebase:integrity:report
+npm run test:firebase-data-integrity
+```
+
+The strict live check samples the public Firestore-backed surfaces, applies a minimum score gate, and writes JSON/Markdown artifacts without exposing credentials.
+
+Use the integrity check when the question is not just "does Firebase respond?" but "is the sampled content safe to render?". It validates blog slugs/content, BuySmart arrays, extension/academy/trending-video display fields, consumer-rating active rows, duplicate slugs, URLs, and weak optional fields.
+
+For performance budgets, use:
+
+```bash
+npm run performance:budget -- --output performance-budget.json --output-md performance-budget.md
+npm run performance:budget:strict
+npm run performance:budget:report
+npm run test:performance-budget
+```
+
+The performance budget combines built Next.js JS/CSS chunk budgets, public image budgets, critical asset checks, stale image-reference checks, and the tool lazy-load boundary check. Run `npm run build` before strict mode so `.next` output exists. The `:report` command refreshes the saved admin health-dashboard artifact.
+
+For production link/image confidence, use:
+
+```bash
+npm run monitor:links -- --limit 24 --output production-links.json --output-md production-links.md
+npm run monitor:links:strict -- --limit 12
+npm run monitor:links:report -- --limit 12
+npm run test:production-surface-links
+```
+
+The link monitor samples `sitemap.xml`, prioritizes core tools/blog routes, checks same-origin anchors and images, and flags missing canonical/Open Graph metadata. Strict mode treats warnings as blockers. The `:report` command refreshes `altftoolwebadmin/src/data/productionLinksReport.json` for the admin health dashboard.
 
 The lint warning budget is intentionally strict. If you reduce warnings, lower the default budget in:
 
@@ -218,6 +280,49 @@ npm run firebase:admin-write-check
 
 Use `npm run firebase:admin-write-check:dry-run` when credentials are not available locally. For emulator validation, set `FIRESTORE_EMULATOR_HOST` before running the live command.
 
+### Firebase Admin Credential Setup
+
+Admin SDK routes need service-account credentials. Public Firebase keys are not enough for admin writes, notification broadcasts, support/admin APIs, or live admin health checks.
+
+Preferred local format:
+
+```bash
+FIREBASE_SERVICE_ACCOUNT='{"project_id":"altftool-bca36","client_email":"firebase-adminsdk-xxxxx@altftool-bca36.iam.gserviceaccount.com","private_key":"<full PEM private key with \\n escaped newlines>"}'
+```
+
+Local file format:
+
+```bash
+FIREBASE_SERVICE_ACCOUNT_FILE=/absolute/path/to/firebase-service-account.json
+```
+
+Split variable format:
+
+```bash
+FIREBASE_PROJECT_ID=altftool-bca36
+FIREBASE_CLIENT_EMAIL=firebase-adminsdk-xxxxx@altftool-bca36.iam.gserviceaccount.com
+FIREBASE_PRIVATE_KEY="<full PEM private key with \\n escaped newlines>"
+```
+
+Credential rules:
+
+- `FIREBASE_CLIENT_EMAIL` must be the service-account email from Firebase or Google Cloud IAM.
+- `FIREBASE_PRIVATE_KEY` must be the full PEM value, not only the begin/end markers.
+- When the private key is stored on one line, preserve newlines as `\n`.
+- Prefer `FIREBASE_SERVICE_ACCOUNT` in deployment secrets because it keeps the three related values together.
+- Use `FIREBASE_SERVICE_ACCOUNT_FILE` only for local developer machines or private CI mounts; never commit the JSON file.
+- Never commit real service-account values. Keep only redacted examples in docs and `.env.example` files.
+
+Recommended check order:
+
+```bash
+npm run env:readiness
+npm run firebase:admin-write-check:dry-run
+npm run firebase:admin-write-check
+```
+
+If the admin health dashboard shows `Write blocked`, fix the credential warnings first. Public Firestore reads can still be healthy while Admin SDK writes remain disabled.
+
 Run Firebase Security Rules tests with the local emulators:
 
 ```bash
@@ -234,9 +339,14 @@ Production monitoring is available through:
 
 ```bash
 npm run monitor:production
+npm run monitor:links
+npm run monitor:links:report
+npm run release:doctor:report
+npm run release:history:report
+npm run release:doctor:strict -- --output release-doctor-report.json --output-md release-doctor-report.md
 ```
 
-Set `ALTFT_MONITOR_WEB_URL`, `ALTFT_MONITOR_ADMIN_URL`, and `ALTFT_MONITOR_ADMIN_TOKEN` to point it at a specific deployment. The GitHub Actions monitoring workflow defaults the public web check to `https://altftool.com` and uses repository variables/secrets for admin health.
+Set `ALTFT_MONITOR_WEB_URL`, `ALTFT_MONITOR_ADMIN_URL`, and `ALTFT_MONITOR_ADMIN_TOKEN` to point it at a specific deployment. For the link monitor, use `ALTFT_LINK_CHECK_URL`, `ALTFT_LINK_CHECK_PAGE_LIMIT`, `ALTFT_LINK_CHECK_LINK_LIMIT`, and `ALTFT_LINK_CHECK_IMAGE_LIMIT` when you need a smaller or larger crawl. The GitHub Actions monitoring workflow defaults the public web check to `https://altftool.com` and uses repository variables/secrets for admin health.
 
 Health surfaces:
 
@@ -246,7 +356,7 @@ altftoolwebadmin/src/app/api/health/route.js
 altftoolwebadmin/src/app/(protected)/health/page.jsx
 ```
 
-The public health API exposes safe web readiness, release, tool, content, SEO, and Firebase public-read signals. The admin health dashboard adds Firebase Admin readiness, Vercel deploy readiness, and production freshness checks against the public `/api/health` endpoint.
+The public health API exposes safe web readiness, release, tool, content, SEO, and Firebase public-read signals. The admin health dashboard adds Firebase Admin readiness, Vercel deploy readiness, saved production link/image reports, saved release doctor artifacts, release score history, a prioritized fix center, and production freshness checks against the public `/api/health` endpoint. The dashboard loads `/api/health?lite=1` first so saved Firebase/production probes render quickly; use the `Refresh live` action when you need full Firestore and production freshness probes. Fix Center actions deep-link to the matching dashboard panel, and blog-quality actions also link to `/altftool/blogs/quality`.
 
 Production deployment runbook:
 
@@ -259,9 +369,14 @@ Check local deployment readiness without exposing secret values:
 ```bash
 npm run env:readiness
 npm run deploy:readiness -- --target=all
+npm run deploy:source-check -- --target=all
+npm run release:doctor
+npm run deploy:parity:strict
 ```
 
-Use `npm run env:readiness:strict` before a production release. The `Deployment Readiness` GitHub Actions workflow runs the same strict check from repository secrets and variables.
+Use `npm run release:doctor:strict` before a production release. It combines saved health/report checks, Firebase Admin access, Firebase public live data, Firebase data integrity, the saved performance budget, Vercel project readiness, production links/images, and the production `/api/health` freshness probe. Use `npm run release:doctor:report` to refresh the admin health-dashboard artifact, then `npm run release:history:report` to append the latest scores to the release history trend panel. Add `--output-md release-doctor-report.md` when you need a Markdown artifact for CI or handoff notes. Add `--require-vercel-token` in deploy/readiness CI so a missing Vercel token becomes a blocker instead of the local developer warning. Use `npm run env:readiness:strict` when validating only environment shape. The `Deployment Readiness` GitHub Actions workflow runs the same strict environment check from repository secrets and variables.
+
+Use `npm run deploy:parity:strict` after deploy to compare local release reports with live production health, commit, tool/blog counts, sitemap, RSS, and Firebase public-read signals. Add `--output parity.json --output-md parity.md` when you want artifacts.
 
 Vercel production deploys need these GitHub Actions repository secrets:
 
@@ -272,7 +387,9 @@ VERCEL_WEB_PROJECT_ID
 VERCEL_ADMIN_PROJECT_ID
 ```
 
-`VERCEL_PROJECT_ID` can be used as the public web fallback when `VERCEL_WEB_PROJECT_ID` is not set. After changing these secrets, re-run the failed CI deploy jobs or manually run the `Vercel Deploy` workflow with target `all`.
+`VERCEL_PROJECT_ID` can be used as the public web fallback when `VERCEL_WEB_PROJECT_ID` is not set. Local release checks can also read a secure token path from `VERCEL_TOKEN_FILE`. After changing these secrets, re-run the failed CI deploy jobs or manually run the `Vercel Deploy` workflow with target `all`.
+
+Both Vercel projects should deploy from the final monorepo `AnslationDev/altftool`: public web uses root directory `altftoolweb`, and admin uses root directory `altftoolwebadmin`. The deploy workflow attaches this source repo as deployment metadata and runs `npm run deploy:source-check` after each Vercel deployment so an old repo link cannot silently become the latest production build.
 
 ## 10. Environment Variables
 

@@ -34,6 +34,13 @@ function getBlockSignature(block = "") {
   return cleanText(html.replace(/<[^>]*>/g, " ")).slice(0, 90);
 }
 
+const DEFAULT_SOURCE_LINE = "AltFTool Editorial Policy | https://altftool.com/policypages/about | AltFTool";
+const DEFAULT_SOURCE = {
+  title: "AltFTool Editorial Policy",
+  url: "https://altftool.com/policypages/about",
+  publisher: "AltFTool",
+};
+
 export function todayIso() {
   return new Date().toISOString();
 }
@@ -93,6 +100,21 @@ export function buildSourceNoteFields(formData = {}) {
     sourceNotes:
       cleanText(formData.sourceNotes) ||
       "Sources, examples, and recommendation wording were checked during the latest editorial review.",
+  };
+}
+
+function hasSourceData(formData = {}) {
+  if (Array.isArray(formData.sources)) {
+    return formData.sources.some((source) => source?.title || source?.url || source?.name);
+  }
+  return cleanText(formData.sourcesText).length > 0;
+}
+
+export function buildSourceFields(formData = {}) {
+  if (hasSourceData(formData)) return {};
+  return {
+    sources: [DEFAULT_SOURCE],
+    sourcesText: DEFAULT_SOURCE_LINE,
   };
 }
 
@@ -181,7 +203,7 @@ export function buildQuickRefreshPayload(action = "", formData = {}) {
     blocks.push(buildRefreshChecklistBlock(formData));
     label = "Internal link refresh";
   } else if (normalizedAction === "sources") {
-    fields = { ...buildReviewFields(formData), ...buildSourceNoteFields(formData) };
+    fields = { ...buildReviewFields(formData), ...buildSourceNoteFields(formData), ...buildSourceFields(formData) };
     blocks.push(buildSourceReminderBlock());
     label = "Source refresh";
   } else if (normalizedAction === "seo") {

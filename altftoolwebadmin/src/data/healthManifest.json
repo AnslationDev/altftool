@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-05-16T05:03:45.332Z",
+  "generatedAt": "2026-05-17T11:18:45.634Z",
   "tools": {
     "total": 231,
     "healthy": 231,
@@ -552,6 +552,12 @@
         "key": "routeScript",
         "label": "Route test script",
         "detail": "npm run test:routes",
+        "ok": true
+      },
+      {
+        "key": "routeQaReport",
+        "label": "Route QA report",
+        "detail": "npm run qa:routes",
         "ok": true
       },
       {

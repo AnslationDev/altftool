@@ -16,6 +16,7 @@ function runChecker(extraEnv = {}) {
       FIREBASE_PROJECT_ID: "",
       FIREBASE_CLIENT_EMAIL: "",
       FIREBASE_PRIVATE_KEY: "",
+      FIREBASE_SERVICE_ACCOUNT: "",
       FIREBASE_ADMIN_WRITE_CHECK_MODE: "",
       FIRESTORE_EMULATOR_HOST: "",
       ...extraEnv,
@@ -33,6 +34,7 @@ function runCheckerAsync(extraEnv = {}) {
         FIREBASE_PROJECT_ID: "",
         FIREBASE_CLIENT_EMAIL: "",
         FIREBASE_PRIVATE_KEY: "",
+        FIREBASE_SERVICE_ACCOUNT: "",
         FIREBASE_ADMIN_WRITE_CHECK_MODE: "",
         FIRESTORE_EMULATOR_HOST: "",
         ...extraEnv,
@@ -70,7 +72,7 @@ async function createFirestoreEmulatorStub() {
   const documents = new Map();
   const server = http.createServer(async (request, response) => {
     try {
-      const documentId = request.url?.split("/__altftool_health_checks__/")[1]?.split("?")[0];
+      const documentId = request.url?.split("/altftool_health_checks/")[1]?.split("?")[0];
       response.setHeader("content-type", "application/json");
 
       if (!documentId) {
@@ -127,12 +129,41 @@ test("Firebase Admin write checker dry-run validates wiring without credentials"
   assert.doesNotMatch(result.stdout, /PRIVATE KEY-----/);
 });
 
+test("Firebase Admin write checker accepts service-account JSON in dry-run", () => {
+  const result = runChecker({
+    FIREBASE_ADMIN_WRITE_CHECK_MODE: "dry-run",
+    FIREBASE_SERVICE_ACCOUNT: JSON.stringify({
+      project_id: "altftool-bca36",
+      client_email: "sync-check@altftool-bca36.iam.gserviceaccount.com",
+      private_key: `-----BEGIN PRIVATE KEY-----\n${"A".repeat(80)}\n-----END PRIVATE KEY-----`,
+    }),
+  });
+
+  assert.equal(result.status, 0);
+  assert.match(result.stdout, /dry run passed/i);
+  assert.match(result.stdout, /"credentialReady": true/);
+  assert.match(result.stdout, /"serviceAccountConfigured": true/);
+  assert.doesNotMatch(result.stdout, /PRIVATE KEY-----/);
+});
+
 test("Firebase Admin write checker fails clearly when live credentials are missing", () => {
   const result = runChecker();
 
   assert.notEqual(result.status, 0);
   assert.match(result.stderr, /cannot run without ready credentials/i);
   assert.match(result.stderr, /FIREBASE_CLIENT_EMAIL/);
+  assert.doesNotMatch(result.stderr, /PRIVATE KEY-----/);
+});
+
+test("Firebase Admin write checker rejects placeholder private keys before SDK init", () => {
+  const result = runChecker({
+    FIREBASE_PROJECT_ID: "altftool-bca36",
+    FIREBASE_CLIENT_EMAIL: "sync-check@altftool-bca36.iam.gserviceaccount.com",
+    FIREBASE_PRIVATE_KEY: "-----BEGIN PRIVATE KEY-----\\n-----END PRIVATE KEY-----",
+  });
+
+  assert.notEqual(result.status, 0);
+  assert.match(result.stderr, /encoded key body/i);
   assert.doesNotMatch(result.stderr, /PRIVATE KEY-----/);
 });
 

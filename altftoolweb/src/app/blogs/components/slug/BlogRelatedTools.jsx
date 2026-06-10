@@ -1,18 +1,6 @@
-"use client";
-
 import Link from "next/link";
 import { ArrowRight, Search, Sparkles, Wrench } from "lucide-react";
-import { recordBlogToolClick } from "../../context/views.service";
 import { getRelatedToolsForBlog } from "../../utils/relatedTools";
-
-function trackToolClick(blog, tool, placement = "related") {
-  recordBlogToolClick({
-    blogId: typeof blog?.id === "string" ? blog.id : "",
-    blogSlug: blog?.slug || "",
-    toolSlug: tool?.slug,
-    placement,
-  });
-}
 
 export default function BlogRelatedTools({ blog, tools }) {
   const relatedTools = tools?.length ? tools : getRelatedToolsForBlog(blog, 6);
@@ -22,7 +10,10 @@ export default function BlogRelatedTools({ blog, tools }) {
   const primaryTool = relatedTools[0];
 
   return (
-    <section className="mt-5 rounded-[var(--anslation-ds-radius)] border border-(--border) bg-(--card) p-4 shadow-[var(--anslation-ds-shadow-sm)] sm:p-5">
+    <section
+      id="related-tools"
+      className="mt-5 scroll-mt-24 rounded-[var(--anslation-ds-radius)] border border-(--border) bg-(--card) p-4 shadow-[var(--anslation-ds-shadow-sm)] sm:p-5"
+    >
       <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
         <div>
           <div className="mb-2 flex items-center gap-2 text-[11px] font-bold uppercase tracking-wide text-(--muted-foreground)">
@@ -35,7 +26,9 @@ export default function BlogRelatedTools({ blog, tools }) {
         </div>
         <Link
           href={primaryTool.searchHref}
-          onClick={() => trackToolClick(blog, primaryTool, "browse-similar")}
+          data-blog-tool-click="true"
+          data-tool-slug={primaryTool.slug}
+          data-placement="browse-similar"
           className="inline-flex h-9 items-center justify-center gap-2 rounded-[var(--anslation-ds-radius)] border border-(--border) bg-(--background) px-3 text-sm font-semibold text-(--foreground) transition hover:border-(--primary) hover:text-(--primary)"
         >
           <Search className="h-4 w-4" />
@@ -48,7 +41,9 @@ export default function BlogRelatedTools({ blog, tools }) {
           <Link
             key={tool.slug}
             href={tool.href}
-            onClick={() => trackToolClick(blog, tool)}
+            data-blog-tool-click="true"
+            data-tool-slug={tool.slug}
+            data-placement="related"
             className="group flex min-h-[150px] flex-col rounded-[6px] border border-(--border) bg-(--background) p-3 transition hover:border-(--primary) hover:shadow-[var(--anslation-ds-shadow-sm)]"
           >
             <div className="flex items-start justify-between gap-3">

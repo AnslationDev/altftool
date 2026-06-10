@@ -1,4 +1,4 @@
-export default {
+const toolConfig = {
     slug: "voronoi-art-generator",
     name: "Voronoi Art Generator",
     category: ["Design", "Art"],
@@ -6,3 +6,5 @@ export default {
     icon: "palette",
     iconColor: "text-purple-600",
 };
+
+export default toolConfig;

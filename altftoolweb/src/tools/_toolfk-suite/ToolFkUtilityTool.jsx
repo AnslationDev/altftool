@@ -12,21 +12,26 @@ import {
   Code2,
   Copy,
   Download,
+  FileDown,
   FileCode2,
   FileText,
   Hash,
+  History,
   ImageIcon,
   KeyRound,
   Link2,
   RefreshCcw,
   ShieldCheck,
   Sparkles,
+  Trash2,
   Upload,
   Wand2,
 } from "lucide-react";
+import { safeCopyText } from "@/shared/utils/clipboard";
 
 const encoder = new TextEncoder();
 const decoder = new TextDecoder();
+const HISTORY_LIMIT = 6;
 
 const toolDefinitions = {
   "text-to-base64": {
@@ -36,7 +41,7 @@ const toolDefinitions = {
     description: "Encode readable text into Base64 and decode Base64 back into plain text.",
     mode: "text",
     sample: "AltFTool microtools are fast.",
-    actions: ["textToBase64", "base64ToText", "textToHex"],
+    actions: ["textToBase64", "base64ToText", "textToHex", "textStats"],
   },
   "base64-to-text": {
     title: "Base64 to Text",
@@ -45,7 +50,7 @@ const toolDefinitions = {
     description: "Decode Base64 payloads into readable UTF-8 text.",
     mode: "text",
     sample: "QWx0RlRvb2wgbWljcm90b29scw==",
-    actions: ["base64ToText", "base64ToHex", "base64UrlToBase64"],
+    actions: ["base64ToText", "base64ToHex", "base64UrlToBase64", "base64Stats"],
   },
   "base64-to-ascii": {
     title: "Base64 to ASCII",
@@ -135,7 +140,7 @@ const toolDefinitions = {
     description: "Validate, format, minify, and convert JSON snippets.",
     mode: "code",
     sample: '{"name":"AltFTool","tools":["base64","json","csv"],"active":true}',
-    actions: ["formatJson", "minifyJson", "jsonToYaml", "jsonToCsv"],
+    actions: ["formatJson", "minifyJson", "sortJsonKeys", "jsonPathList", "jsonToYaml", "jsonToCsv", "jsonStats"],
   },
   "yaml-formatter": {
     title: "YAML Formatter",
@@ -198,7 +203,7 @@ const toolDefinitions = {
     description: "Convert CSV into JSON, HTML tables, XML, SQL inserts, or Python dictionaries.",
     mode: "code",
     sample: "name,email\\nAda,ada@example.com\\nGrace,grace@example.com",
-    actions: ["csvToJson", "csvToHtml", "csvToXml", "csvToSql", "csvToPython"],
+    actions: ["csvToJson", "csvToHtml", "csvToXml", "csvToSql", "csvToPython", "csvToMarkdown", "csvStats"],
   },
   "markdown-html-converter": {
     title: "Markdown / HTML Converter",
@@ -443,6 +448,9 @@ const actionLabels = {
   extractHashtags: "Extract Hashtags",
   formatJson: "Format JSON",
   minifyJson: "Minify JSON",
+  sortJsonKeys: "Sort JSON Keys",
+  jsonPathList: "JSON Paths",
+  jsonStats: "JSON Stats",
   jsonToYaml: "JSON -> YAML",
   jsonToCsv: "JSON -> CSV",
   formatXml: "Format XML",
@@ -464,6 +472,8 @@ const actionLabels = {
   csvToXml: "CSV -> XML",
   csvToSql: "CSV -> SQL",
   csvToPython: "CSV -> Python",
+  csvToMarkdown: "CSV -> Markdown",
+  csvStats: "CSV Stats",
   markdownToHtml: "Markdown -> HTML",
   htmlToText: "HTML -> Text",
   formatYaml: "Format YAML",
@@ -477,7 +487,15 @@ const actionLabels = {
   curlToAxios: "cURL -> Axios",
   curlToPython: "cURL -> Python",
   htaccessToNginx: "Convert Rules",
+  base64Stats: "Base64 Stats",
+  textStats: "Text Stats",
 };
+
+const PANEL_CLASS = "rounded-[8px] border border-(--border) bg-(--card) p-4 shadow-[var(--anslation-ds-shadow-sm)]";
+const FIELD_CLASS =
+  "w-full rounded-[8px] border border-(--border) bg-(--background) text-(--foreground) outline-none transition focus:border-(--primary)";
+const CHIP_BUTTON_CLASS =
+  "inline-flex min-h-9 items-center justify-center rounded-[7px] border border-(--border) bg-(--background) px-2.5 py-1.5 text-xs font-semibold text-(--muted-foreground) transition hover:border-(--primary) hover:text-(--foreground)";
 
 const morseMap = {
   a: ".-", b: "-...", c: "-.-.", d: "-..", e: ".", f: "..-.", g: "--.", h: "....",
@@ -497,6 +515,33 @@ function getExamples(slug, definition) {
 function getSlugFromPath(pathname = "") {
   const parts = pathname.split("/").filter(Boolean);
   return parts.at(-1) || "text-to-base64";
+}
+
+function getToolHistoryKey(slug) {
+  return `ALTFT_TOOLFK_HISTORY_${slug}`;
+}
+
+function readToolHistory(slug) {
+  if (typeof window === "undefined") return [];
+
+  try {
+    const parsed = JSON.parse(localStorage.getItem(getToolHistoryKey(slug)) || "[]");
+    return Array.isArray(parsed) ? parsed.slice(0, HISTORY_LIMIT) : [];
+  } catch {
+    return [];
+  }
+}
+
+function writeToolHistory(slug, items) {
+  if (typeof window === "undefined") return;
+
+  try {
+    localStorage.setItem(getToolHistoryKey(slug), JSON.stringify(items.slice(0, HISTORY_LIMIT)));
+  } catch {}
+}
+
+function compactHistoryValue(value) {
+  return String(value || "").slice(0, 12000);
 }
 
 function bytesToBase64(bytes) {
@@ -578,6 +623,77 @@ function buildSharedToolUrl(slug, state) {
 
 function prettyJson(value) {
   return JSON.stringify(JSON.parse(value), null, 2);
+}
+
+function sortJsonKeysValue(value) {
+  if (Array.isArray(value)) return value.map(sortJsonKeysValue);
+  if (!value || typeof value !== "object") return value;
+
+  return Object.fromEntries(
+    Object.keys(value)
+      .sort((a, b) => a.localeCompare(b))
+      .map((key) => [key, sortJsonKeysValue(value[key])])
+  );
+}
+
+function collectJsonPaths(value, basePath = "$", paths = []) {
+  paths.push(basePath);
+
+  if (Array.isArray(value)) {
+    value.forEach((item, index) => collectJsonPaths(item, `${basePath}[${index}]`, paths));
+    return paths;
+  }
+
+  if (value && typeof value === "object") {
+    Object.entries(value).forEach(([key, item]) => {
+      const safeKey = /^[A-Za-z_$][\w$]*$/.test(key) ? `.${key}` : `[${JSON.stringify(key)}]`;
+      collectJsonPaths(item, `${basePath}${safeKey}`, paths);
+    });
+  }
+
+  return paths;
+}
+
+function getJsonStats(value) {
+  const stats = {
+    arrays: 0,
+    booleans: 0,
+    keys: 0,
+    maxDepth: 0,
+    nulls: 0,
+    numbers: 0,
+    objects: 0,
+    strings: 0,
+  };
+
+  function walk(item, depth) {
+    stats.maxDepth = Math.max(stats.maxDepth, depth);
+
+    if (Array.isArray(item)) {
+      stats.arrays += 1;
+      item.forEach((child) => walk(child, depth + 1));
+      return;
+    }
+
+    if (item === null) {
+      stats.nulls += 1;
+      return;
+    }
+
+    if (typeof item === "object") {
+      stats.objects += 1;
+      stats.keys += Object.keys(item).length;
+      Object.values(item).forEach((child) => walk(child, depth + 1));
+      return;
+    }
+
+    if (typeof item === "string") stats.strings += 1;
+    else if (typeof item === "number") stats.numbers += 1;
+    else if (typeof item === "boolean") stats.booleans += 1;
+  }
+
+  walk(value, 0);
+  return stats;
 }
 
 function jsonToYamlValue(value, indent = 0) {
@@ -686,6 +802,34 @@ function csvRecords(value) {
   return rows.slice(1).map((row) =>
     Object.fromEntries(headers.map((header, index) => [header || `column_${index + 1}`, row[index] || ""]))
   );
+}
+
+function csvToMarkdownTable(value) {
+  const rows = parseCsv(value);
+  if (!rows.length) return "";
+  const headers = rows[0];
+  const separator = headers.map(() => "---");
+  const body = rows.slice(1);
+  return [headers, separator, ...body]
+    .map((row) => `| ${row.map((cell) => String(cell || "").replace(/\|/g, "\\|")).join(" | ")} |`)
+    .join("\n");
+}
+
+function getCsvStats(value) {
+  const rows = parseCsv(value);
+  const headers = rows[0] || [];
+  const body = rows.slice(1);
+  const emptyCells = body.reduce(
+    (count, row) => count + headers.reduce((sum, _header, index) => sum + (String(row[index] || "").trim() ? 0 : 1), 0),
+    0
+  );
+
+  return {
+    columns: headers.length,
+    emptyCells,
+    headers,
+    rows: body.length,
+  };
 }
 
 function escapeHtml(value = "") {
@@ -926,6 +1070,12 @@ function outputForAction(action, input, secret) {
       return prettyJson(input);
     case "minifyJson":
       return JSON.stringify(JSON.parse(input));
+    case "sortJsonKeys":
+      return JSON.stringify(sortJsonKeysValue(JSON.parse(input)), null, 2);
+    case "jsonPathList":
+      return collectJsonPaths(JSON.parse(input)).join("\n");
+    case "jsonStats":
+      return JSON.stringify(getJsonStats(JSON.parse(input)), null, 2);
     case "jsonToYaml":
       return jsonToYamlValue(JSON.parse(input));
     case "jsonToCsv": {
@@ -981,6 +1131,10 @@ function outputForAction(action, input, secret) {
     }
     case "csvToPython":
       return JSON.stringify(csvRecords(input), null, 2).replace(/^/, "rows = ");
+    case "csvToMarkdown":
+      return csvToMarkdownTable(input);
+    case "csvStats":
+      return JSON.stringify(getCsvStats(input), null, 2);
     case "markdownToHtml":
       return markdownToHtml(input);
     case "htmlToText":
@@ -1006,15 +1160,49 @@ function outputForAction(action, input, secret) {
     }
     case "htaccessToNginx":
       return simpleNginxRewrite(input);
+    case "base64Stats": {
+      const cleaned = String(input).trim();
+      const mime = cleaned.match(/^data:([^;,]+)/)?.[1] || "raw/base64";
+      const base64 = cleaned.replace(/^data:[^,]+,/, "");
+      const normalized = /[-_]/.test(base64) ? fromBase64Url(base64) : cleaned;
+      return JSON.stringify({
+        decodedBytes: base64ToBytes(normalized).byteLength,
+        inputCharacters: cleaned.length,
+        mime,
+        paddingCharacters: (base64.match(/=/g) || []).length,
+        urlSafe: /[-_]/.test(base64),
+      }, null, 2);
+    }
+    case "textStats": {
+      const words = input.trim() ? input.trim().split(/\s+/).length : 0;
+      return JSON.stringify({
+        bytes: encoder.encode(input).byteLength,
+        characters: input.length,
+        lines: input ? input.split(/\r\n|\r|\n/).length : 0,
+        words,
+      }, null, 2);
+    }
     default:
       return secret ? `${secret}\n${input}` : input;
   }
 }
 
+function PanelHeader({ label, detail, actions }) {
+  return (
+    <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+      <div className="min-w-0">
+        <p className="text-xs font-bold uppercase tracking-wide text-(--muted-foreground)">{label}</p>
+        {detail && <p className="mt-1 text-xs leading-5 text-(--muted-foreground)">{detail}</p>}
+      </div>
+      {actions && <div className="flex shrink-0 flex-wrap items-center gap-2">{actions}</div>}
+    </div>
+  );
+}
+
 function ToolShell({ definition, children }) {
   const Icon = definition.icon || Sparkles;
   return (
-    <main className="mx-auto w-full max-w-6xl px-3 py-4 sm:px-5 lg:px-6">
+    <main className="mx-auto w-full px-0 py-4">
       <section className="rounded-[8px] border border-(--border) bg-(--card) p-5 shadow-[var(--anslation-ds-shadow-sm)] sm:p-6">
         <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
           <div className="flex gap-4">
@@ -1048,15 +1236,16 @@ function ToolShell({ definition, children }) {
   );
 }
 
-function ActionButton({ active, children, ...props }) {
+function ActionButton({ active, children, disabled, className = "", ...props }) {
   return (
     <button
       type="button"
-      className={`rounded-[7px] px-3 py-2 text-sm font-semibold transition ${
+      disabled={disabled}
+      className={`inline-flex min-h-10 items-center justify-center rounded-[7px] px-3 py-2 text-sm font-semibold transition disabled:cursor-not-allowed disabled:opacity-50 ${
         active
           ? "bg-(--primary) text-(--primary-foreground)"
           : "border border-(--border) bg-(--background) text-(--foreground) hover:border-(--primary)"
-      }`}
+      } ${className}`}
       {...props}
     >
       {children}
@@ -1064,20 +1253,46 @@ function ActionButton({ active, children, ...props }) {
   );
 }
 
-function CopyButton({ value }) {
+function CopyButton({ value, testId = "copy-tool-output" }) {
   const [copied, setCopied] = useState(false);
+  const disabled = !String(value || "").length;
+
   return (
     <button
       type="button"
+      data-testid={testId}
+      disabled={disabled}
       onClick={async () => {
-        await navigator.clipboard.writeText(value || "");
+        if (disabled) return;
+        const ok = await safeCopyText(String(value || ""));
+        if (!ok) return;
         setCopied(true);
         setTimeout(() => setCopied(false), 1200);
       }}
-      className="inline-flex items-center gap-2 rounded-[7px] border border-(--border) bg-(--background) px-3 py-2 text-sm font-semibold text-(--foreground) hover:border-(--primary)"
+      className="inline-flex min-h-10 items-center justify-center gap-2 rounded-[7px] border border-(--border) bg-(--background) px-3 py-2 text-sm font-semibold text-(--foreground) transition hover:border-(--primary) disabled:cursor-not-allowed disabled:opacity-50"
     >
       {copied ? <CheckCircle2 className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
       {copied ? "Copied" : "Copy"}
+    </button>
+  );
+}
+
+function DownloadTextButton({ value, filename = "altftool-output.txt" }) {
+  const disabled = !String(value || "").length;
+
+  return (
+    <button
+      type="button"
+      data-testid="download-tool-output"
+      disabled={disabled}
+      onClick={() => {
+        if (disabled) return;
+        downloadBlob(new Blob([String(value || "")], { type: "text/plain;charset=utf-8" }), filename);
+      }}
+      className="inline-flex min-h-10 items-center justify-center gap-2 rounded-[7px] border border-(--border) bg-(--background) px-3 py-2 text-sm font-semibold text-(--foreground) transition hover:border-(--primary) disabled:cursor-not-allowed disabled:opacity-50"
+    >
+      <FileDown className="h-4 w-4" />
+      Download
     </button>
   );
 }
@@ -1093,15 +1308,11 @@ function ShareLinkButton({ slug, state }) {
       onClick={async () => {
         const url = buildSharedToolUrl(slug, state);
         window.history.replaceState(null, "", url);
-        try {
-          await navigator.clipboard.writeText(url);
-        } catch {
-          // The URL is still placed in the address bar when clipboard access is unavailable.
-        }
+        await safeCopyText(url);
         setCopied(true);
         setTimeout(() => setCopied(false), 1200);
       }}
-      className="inline-flex items-center gap-1.5 rounded-[7px] border border-(--border) bg-(--background) px-2.5 py-1.5 text-xs font-semibold text-(--muted-foreground) hover:border-(--primary) hover:text-(--foreground)"
+      className="inline-flex min-h-9 items-center gap-1.5 rounded-[7px] border border-(--border) bg-(--background) px-2.5 py-1.5 text-xs font-semibold text-(--muted-foreground) transition hover:border-(--primary) hover:text-(--foreground)"
     >
       {copied ? <CheckCircle2 className="h-3.5 w-3.5" /> : <Link2 className="h-3.5 w-3.5" />}
       {copied ? "Copied" : "Share"}
@@ -1109,10 +1320,53 @@ function ShareLinkButton({ slug, state }) {
   );
 }
 
+function ToolHistoryTray({ history, onRestore, onClear }) {
+  if (!history.length) return null;
+
+  return (
+    <section className="mt-4 rounded-[8px] border border-(--border) bg-(--card) p-3 shadow-[var(--anslation-ds-shadow-sm)]">
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+        <div>
+          <p className="text-xs font-bold uppercase tracking-wide text-(--muted-foreground)">Saved runs</p>
+          <p className="mt-1 text-xs text-(--muted-foreground)">Restore a recent input, action, and output snapshot.</p>
+        </div>
+        <button type="button" onClick={onClear} className={CHIP_BUTTON_CLASS}>
+          <Trash2 className="h-3.5 w-3.5" />
+          Clear history
+        </button>
+      </div>
+      <div className="mt-3 grid gap-2 md:grid-cols-2 xl:grid-cols-3">
+        {history.map((item) => (
+          <button
+            key={item.id}
+            type="button"
+            onClick={() => onRestore(item)}
+            className="rounded-[8px] border border-(--border) bg-(--background) p-3 text-left transition hover:border-(--primary)"
+          >
+            <span className="flex items-center justify-between gap-3">
+              <span className="inline-flex min-w-0 items-center gap-2 text-xs font-bold text-(--foreground)">
+                <History className="h-3.5 w-3.5 shrink-0 text-(--primary)" />
+                <span className="truncate">{actionLabels[item.action] || item.action || "Run"}</span>
+              </span>
+              <span className="shrink-0 text-[10px] font-medium text-(--muted-foreground)">
+                {item.savedAt ? new Date(item.savedAt).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }) : ""}
+              </span>
+            </span>
+            <span className="mt-2 line-clamp-2 block text-xs leading-5 text-(--muted-foreground)">
+              {item.input || "Empty input"}
+            </span>
+          </button>
+        ))}
+      </div>
+    </section>
+  );
+}
+
 function TextTool({ definition, slug }) {
   const sharedState = useMemo(() => readSharedToolState(slug), [slug]);
   const [input, setInput] = useState(() => sharedString(sharedState, "input", definition.sample || ""));
   const [action, setAction] = useState(() => sharedAction(sharedState, definition.actions, definition.actions[0]));
+  const [history, setHistory] = useState(() => readToolHistory(slug));
   const examples = getExamples(slug, definition);
   const result = useMemo(() => {
     try {
@@ -1122,23 +1376,80 @@ function TextTool({ definition, slug }) {
     }
   }, [action, input]);
 
+  function saveRun() {
+    if (result.error || !String(result.output || "").length) return;
+
+    const next = [
+      {
+        action,
+        id: `${Date.now()}-${action}`,
+        input: compactHistoryValue(input),
+        output: compactHistoryValue(result.output),
+        savedAt: new Date().toISOString(),
+      },
+      ...history.filter((item) => item.input !== input || item.action !== action),
+    ].slice(0, HISTORY_LIMIT);
+
+    setHistory(next);
+    writeToolHistory(slug, next);
+  }
+
+  function restoreRun(item) {
+    setInput(item.input || "");
+    if (definition.actions.includes(item.action)) setAction(item.action);
+  }
+
+  function clearHistory() {
+    setHistory([]);
+    writeToolHistory(slug, []);
+  }
+
   return (
-    <div className="mt-4 grid gap-4 lg:grid-cols-2">
-      <WorkspaceInput
-        value={input}
-        onChange={setInput}
-        actions={definition.actions}
-        active={action}
-        onAction={setAction}
-        examples={examples}
-        share={<ShareLinkButton slug={slug} state={{ input, action }} />}
-        onExample={(example) => {
-          setInput(example.value);
-          if (example.action) setAction(example.action);
-        }}
-      />
-      <WorkspaceOutput value={result.output} error={result.error} />
-    </div>
+    <>
+      <div className="mt-4 grid gap-4 lg:grid-cols-2">
+        <WorkspaceInput
+          value={input}
+          onChange={setInput}
+          actions={definition.actions}
+          active={action}
+          onAction={setAction}
+          examples={examples}
+          share={<ShareLinkButton slug={slug} state={{ input, action }} />}
+          onExample={(example) => {
+            setInput(example.value);
+            if (example.action) setAction(example.action);
+          }}
+        />
+        <WorkspaceOutput
+          value={result.output}
+          error={result.error}
+          filename={`${slug}-${action || "output"}.txt`}
+          actions={(
+            <>
+              <button
+                type="button"
+                disabled={Boolean(result.error) || !String(result.output || "").length}
+                onClick={() => setInput(result.output)}
+                className="inline-flex min-h-10 items-center justify-center gap-2 rounded-[7px] border border-(--border) bg-(--background) px-3 py-2 text-sm font-semibold text-(--foreground) transition hover:border-(--primary) disabled:cursor-not-allowed disabled:opacity-50"
+              >
+                <ArrowDownUp className="h-4 w-4" />
+                Use output
+              </button>
+              <button
+                type="button"
+                disabled={Boolean(result.error) || !String(result.output || "").length}
+                onClick={saveRun}
+                className="inline-flex min-h-10 items-center justify-center gap-2 rounded-[7px] border border-(--border) bg-(--background) px-3 py-2 text-sm font-semibold text-(--foreground) transition hover:border-(--primary) disabled:cursor-not-allowed disabled:opacity-50"
+              >
+                <History className="h-4 w-4" />
+                Save run
+              </button>
+            </>
+          )}
+        />
+      </div>
+      <ToolHistoryTray history={history} onRestore={restoreRun} onClear={clearHistory} />
+    </>
   );
 }
 
@@ -1183,11 +1494,12 @@ function CryptoTool({ definition, slug }) {
 
   return (
     <div className="mt-4 grid gap-4 lg:grid-cols-2">
-      <section className="rounded-[8px] border border-(--border) bg-(--card) p-4">
-        <div className="flex items-center justify-between gap-3">
-          <label className="text-xs font-bold uppercase tracking-wide text-(--muted-foreground)">Input</label>
-          <ShareLinkButton slug={slug} state={{ input }} />
-        </div>
+      <section className={PANEL_CLASS}>
+        <PanelHeader
+          label="Input"
+          detail={`${String(input || "").length.toLocaleString()} characters`}
+          actions={<ShareLinkButton slug={slug} state={{ input }} />}
+        />
         {examples.length > 0 && (
           <div className="mt-3 flex flex-wrap gap-2">
             {examples.map((example) => (
@@ -1195,15 +1507,30 @@ function CryptoTool({ definition, slug }) {
                 key={example.label}
                 type="button"
                 onClick={() => setInput(example.value)}
-                className="rounded-[7px] border border-(--border) bg-(--background) px-2.5 py-1.5 text-xs font-semibold text-(--muted-foreground) hover:border-(--primary) hover:text-(--foreground)"
+                className={CHIP_BUTTON_CLASS}
               >
                 {example.label}
               </button>
             ))}
           </div>
         )}
-        <textarea data-testid="tool-input" value={input} onChange={(e) => setInput(e.target.value)} className="mt-3 min-h-[300px] w-full rounded-[8px] border border-(--border) bg-(--background) p-3 font-mono text-sm outline-none focus:border-(--primary)" />
-        <input value={secret} onChange={(e) => setSecret(e.target.value)} className="mt-3 w-full rounded-[8px] border border-(--border) bg-(--background) px-3 py-2 text-sm outline-none focus:border-(--primary)" placeholder="Passphrase for AES" />
+        <textarea
+          data-testid="tool-input"
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+          spellCheck={false}
+          autoCapitalize="off"
+          autoComplete="off"
+          autoCorrect="off"
+          aria-label="Crypto input"
+          className={`${FIELD_CLASS} mt-3 min-h-[300px] resize-y p-3 font-mono text-sm leading-6`}
+        />
+        <input
+          value={secret}
+          onChange={(e) => setSecret(e.target.value)}
+          className={`${FIELD_CLASS} mt-3 px-3 py-2 text-sm`}
+          placeholder="Passphrase for AES"
+        />
         <div className="mt-3 flex flex-wrap gap-2">
           {definition.actions.map((item) => <ActionButton key={item} onClick={() => run(item)}>{actionLabels[item]}</ActionButton>)}
         </div>
@@ -1214,17 +1541,23 @@ function CryptoTool({ definition, slug }) {
 }
 
 function WorkspaceInput({ value, onChange, actions, active, onAction, examples = [], onExample, share }) {
+  const characterCount = String(value || "").length;
+
   return (
-    <section className="rounded-[8px] border border-(--border) bg-(--card) p-4">
-      <div className="flex items-center justify-between gap-3">
-        <label className="text-xs font-bold uppercase tracking-wide text-(--muted-foreground)">Input</label>
-        <div className="flex items-center gap-2">
-          {share}
-          <button type="button" onClick={() => onChange("")} className="text-xs font-semibold text-(--muted-foreground) hover:text-(--foreground)">
-            Clear
-          </button>
-        </div>
-      </div>
+    <section className={PANEL_CLASS}>
+      <PanelHeader
+        label="Input"
+        detail={`${characterCount.toLocaleString()} characters`}
+        actions={(
+          <>
+            {share}
+            <button type="button" onClick={() => onChange("")} className={CHIP_BUTTON_CLASS}>
+              <RefreshCcw className="h-3.5 w-3.5" />
+              Clear
+            </button>
+          </>
+        )}
+      />
       {examples.length > 0 && (
         <div className="mt-3 flex flex-wrap gap-2">
           {examples.map((example) => (
@@ -1232,7 +1565,7 @@ function WorkspaceInput({ value, onChange, actions, active, onAction, examples =
               key={example.label}
               type="button"
               onClick={() => onExample?.(example)}
-              className="rounded-[7px] border border-(--border) bg-(--background) px-2.5 py-1.5 text-xs font-semibold text-(--muted-foreground) hover:border-(--primary) hover:text-(--foreground)"
+              className={CHIP_BUTTON_CLASS}
             >
               {example.label}
             </button>
@@ -1243,8 +1576,13 @@ function WorkspaceInput({ value, onChange, actions, active, onAction, examples =
         data-testid="tool-input"
         value={value}
         onChange={(e) => onChange(e.target.value)}
+        onInput={(e) => onChange(e.currentTarget.value)}
         spellCheck={false}
-        className="mt-3 min-h-[320px] w-full rounded-[8px] border border-(--border) bg-(--background) p-3 font-mono text-sm leading-6 text-(--foreground) outline-none focus:border-(--primary)"
+        autoCapitalize="off"
+        autoComplete="off"
+        autoCorrect="off"
+        aria-label="Tool input"
+        className={`${FIELD_CLASS} mt-3 min-h-[320px] resize-y p-3 font-mono text-sm leading-6`}
       />
       <div className="mt-3 flex flex-wrap gap-2">
         {actions.map((item) => (
@@ -1257,15 +1595,35 @@ function WorkspaceInput({ value, onChange, actions, active, onAction, examples =
   );
 }
 
-function WorkspaceOutput({ value, error }) {
+function WorkspaceOutput({ value, error, actions, filename = "altftool-output.txt" }) {
+  const renderedValue = error ? `Error: ${error}` : value || "Output will appear here after the tool has something to show.";
+  const detail = error
+    ? "Needs attention"
+    : value
+      ? `${String(value).length.toLocaleString()} characters`
+      : "Waiting for output";
+
   return (
-    <section className="rounded-[8px] border border-(--border) bg-(--card) p-4">
-      <div className="flex items-center justify-between gap-3">
-        <label className="text-xs font-bold uppercase tracking-wide text-(--muted-foreground)">Output</label>
-        <CopyButton value={value} />
-      </div>
-      <pre data-testid="tool-output" className="mt-3 min-h-[320px] overflow-auto rounded-[8px] border border-(--border) bg-(--background) p-3 text-sm leading-6 text-(--foreground)">
-        {error ? `Error: ${error}` : value}
+    <section className={PANEL_CLASS}>
+      <PanelHeader
+        label="Output"
+        detail={detail}
+        actions={(
+          <>
+            <CopyButton value={value} />
+            <DownloadTextButton value={value} filename={filename} />
+            {actions}
+          </>
+        )}
+      />
+      <pre
+        data-testid="tool-output"
+        aria-live="polite"
+        className={`mt-3 min-h-[320px] overflow-auto rounded-[8px] border border-(--border) bg-(--background) p-3 text-sm leading-6 ${
+          error || !value ? "text-(--muted-foreground)" : "text-(--foreground)"
+        }`}
+      >
+        {renderedValue}
       </pre>
     </section>
   );
@@ -1285,12 +1643,12 @@ function FileToBase64Tool({ definition }) {
 
   return (
     <div className="mt-4 grid gap-4 lg:grid-cols-2">
-      <section className="rounded-[8px] border border-dashed border-(--border) bg-(--card) p-6">
+      <section className="rounded-[8px] border border-dashed border-(--border) bg-(--card) p-4 shadow-[var(--anslation-ds-shadow-sm)] sm:p-6">
         <div className="flex min-h-[280px] flex-col items-center justify-center rounded-[8px] bg-(--background) p-6 text-center">
           <Upload className="h-9 w-9 text-(--primary)" />
           <h2 className="mt-4 text-lg font-semibold text-(--foreground)">Choose a local file</h2>
           <p className="mt-2 max-w-sm text-sm text-(--muted-foreground)">The file stays in your browser and is converted to a Base64 data URL.</p>
-          <label className="mt-5 inline-flex cursor-pointer rounded-[7px] bg-(--primary) px-4 py-2 text-sm font-semibold text-(--primary-foreground)">
+          <label className="mt-5 inline-flex min-h-10 cursor-pointer items-center rounded-[7px] bg-(--primary) px-4 py-2 text-sm font-semibold text-(--primary-foreground)">
             Browse file
             <input data-testid="file-to-base64-input" type="file" accept={definition.accept} className="sr-only" onChange={(e) => handleFile(e.target.files?.[0])} />
           </label>
@@ -1334,28 +1692,35 @@ function Base64ToFileTool({ definition, slug }) {
 
   return (
     <div className="mt-4 grid gap-4 lg:grid-cols-2">
-      <section className="rounded-[8px] border border-(--border) bg-(--card) p-4">
-        <div className="mb-3 flex justify-end">
-          <ShareLinkButton slug={slug} state={{ input, filename, mime }} />
-        </div>
+      <section className={PANEL_CLASS}>
+        <PanelHeader
+          label="Base64 input"
+          detail={`${String(input || "").length.toLocaleString()} characters`}
+          actions={<ShareLinkButton slug={slug} state={{ input, filename, mime }} />}
+        />
         <textarea
           data-testid="tool-input"
           value={input}
           onChange={(e) => setInput(e.target.value)}
           placeholder="Paste Base64 or a data URL..."
-          className="min-h-[280px] w-full rounded-[8px] border border-(--border) bg-(--background) p-3 font-mono text-sm outline-none focus:border-(--primary)"
+          spellCheck={false}
+          autoCapitalize="off"
+          autoComplete="off"
+          autoCorrect="off"
+          aria-label="Base64 input"
+          className={`${FIELD_CLASS} mt-3 min-h-[280px] resize-y p-3 font-mono text-sm leading-6`}
         />
         <div className="mt-3 grid gap-2 sm:grid-cols-2">
-          <input value={filename} onChange={(e) => setFilename(e.target.value)} className="rounded-[8px] border border-(--border) bg-(--background) px-3 py-2 text-sm outline-none focus:border-(--primary)" />
-          <input value={mime} onChange={(e) => setMime(e.target.value)} className="rounded-[8px] border border-(--border) bg-(--background) px-3 py-2 text-sm outline-none focus:border-(--primary)" />
+          <input value={filename} onChange={(e) => setFilename(e.target.value)} className={`${FIELD_CLASS} px-3 py-2 text-sm`} />
+          <input value={mime} onChange={(e) => setMime(e.target.value)} className={`${FIELD_CLASS} px-3 py-2 text-sm`} />
         </div>
         <div className="mt-3 flex flex-wrap gap-2">
           <ActionButton onClick={buildFile}>Preview</ActionButton>
           <ActionButton onClick={download}>Download</ActionButton>
         </div>
       </section>
-      <section data-testid="tool-output" className="rounded-[8px] border border-(--border) bg-(--card) p-4">
-        <p className="text-xs font-bold uppercase tracking-wide text-(--muted-foreground)">Preview</p>
+      <section data-testid="tool-output" className={PANEL_CLASS}>
+        <PanelHeader label="Preview" detail={objectUrl ? `${mime} ready as ${filename}` : "Waiting for decoded file"} />
         <p className="mt-2 text-sm text-(--muted-foreground)">
           {error ? "Preview failed." : objectUrl ? `Decoded ${mime} ready as ${filename}.` : "Paste data and click Preview."}
         </p>
@@ -1395,7 +1760,7 @@ function BaseConverterTool({ slug }) {
   } : null;
 
   return (
-    <div className="mt-4 rounded-[8px] border border-(--border) bg-(--card) p-4">
+    <div className={`mt-4 ${PANEL_CLASS}`}>
       <div className="mb-3 flex flex-wrap items-center justify-between gap-3">
         <div className="flex flex-wrap gap-2">
           {presets.map((preset) => (
@@ -1406,7 +1771,7 @@ function BaseConverterTool({ slug }) {
                 setValue(preset.value);
                 setFrom(preset.base);
               }}
-              className="rounded-[7px] border border-(--border) bg-(--background) px-2.5 py-1.5 text-xs font-semibold text-(--muted-foreground) hover:border-(--primary) hover:text-(--foreground)"
+              className={CHIP_BUTTON_CLASS}
             >
               {preset.label}
             </button>
@@ -1415,8 +1780,8 @@ function BaseConverterTool({ slug }) {
         <ShareLinkButton slug={slug} state={{ value, from }} />
       </div>
       <div className="grid gap-3 sm:grid-cols-[1fr_160px]">
-        <input data-testid="tool-base-input" value={value} onChange={(e) => setValue(e.target.value)} className="rounded-[8px] border border-(--border) bg-(--background) px-3 py-3 font-mono text-sm outline-none focus:border-(--primary)" />
-        <select value={from} onChange={(e) => setFrom(Number(e.target.value))} className="rounded-[8px] border border-(--border) bg-(--background) px-3 py-3 text-sm outline-none focus:border-(--primary)">
+        <input data-testid="tool-base-input" value={value} onChange={(e) => setValue(e.target.value)} className={`${FIELD_CLASS} px-3 py-3 font-mono text-sm`} />
+        <select value={from} onChange={(e) => setFrom(Number(e.target.value))} className={`${FIELD_CLASS} px-3 py-3 text-sm`}>
           {[2, 8, 10, 16, 36].map((base) => <option key={base} value={base}>Base {base}</option>)}
         </select>
       </div>
@@ -1453,7 +1818,7 @@ function ByteConverterTool({ slug }) {
   };
 
   return (
-    <div className="mt-4 rounded-[8px] border border-(--border) bg-(--card) p-4">
+    <div className={`mt-4 ${PANEL_CLASS}`}>
       <div className="mb-3 flex flex-wrap items-center justify-between gap-3">
         <div className="flex flex-wrap gap-2">
           {presets.map((preset) => (
@@ -1461,7 +1826,7 @@ function ByteConverterTool({ slug }) {
               key={preset.label}
               type="button"
               onClick={() => setBytes(preset.value)}
-              className="rounded-[7px] border border-(--border) bg-(--background) px-2.5 py-1.5 text-xs font-semibold text-(--muted-foreground) hover:border-(--primary) hover:text-(--foreground)"
+              className={CHIP_BUTTON_CLASS}
             >
               {preset.label}
             </button>
@@ -1469,7 +1834,7 @@ function ByteConverterTool({ slug }) {
         </div>
         <ShareLinkButton slug={slug} state={{ bytes }} />
       </div>
-      <input data-testid="tool-bytes-input" value={bytes} onChange={(e) => setBytes(e.target.value)} className="w-full rounded-[8px] border border-(--border) bg-(--background) px-3 py-3 font-mono text-sm outline-none focus:border-(--primary)" />
+      <input data-testid="tool-bytes-input" value={bytes} onChange={(e) => setBytes(e.target.value)} className={`${FIELD_CLASS} px-3 py-3 font-mono text-sm`} />
       <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
         {Object.entries(units).map(([key, item]) => (
           <div key={key} className="rounded-[8px] border border-(--border) bg-(--background) p-4">
@@ -1503,18 +1868,19 @@ function CronEvaluatorTool({ definition, slug }) {
 
   return (
     <div className="mt-4 grid gap-4 lg:grid-cols-[0.45fr_0.55fr]">
-      <section className="rounded-[8px] border border-(--border) bg-(--card) p-4">
-        <div className="flex items-center justify-between gap-3">
-          <label className="text-xs font-bold uppercase tracking-wide text-(--muted-foreground)">Crontab Expression</label>
-          <ShareLinkButton slug={slug} state={{ expression }} />
-        </div>
+      <section className={PANEL_CLASS}>
+        <PanelHeader
+          label="Crontab expression"
+          detail={result.error ? "Invalid expression" : "Next run times update instantly"}
+          actions={<ShareLinkButton slug={slug} state={{ expression }} />}
+        />
         <div className="mt-3 flex flex-wrap gap-2">
           {presets.map((preset) => (
             <button
               key={preset.label}
               type="button"
               onClick={() => setExpression(preset.value)}
-              className="rounded-[7px] border border-(--border) bg-(--background) px-2.5 py-1.5 text-xs font-semibold text-(--muted-foreground) hover:border-(--primary) hover:text-(--foreground)"
+              className={CHIP_BUTTON_CLASS}
             >
               {preset.label}
             </button>
@@ -1523,7 +1889,7 @@ function CronEvaluatorTool({ definition, slug }) {
         <input
           value={expression}
           onChange={(e) => setExpression(e.target.value)}
-          className="mt-3 w-full rounded-[8px] border border-(--border) bg-(--background) px-3 py-3 font-mono text-sm outline-none focus:border-(--primary)"
+          className={`${FIELD_CLASS} mt-3 px-3 py-3 font-mono text-sm`}
         />
         <div className="mt-4 grid grid-cols-5 gap-2 text-center text-xs text-(--muted-foreground)">
           {["minute", "hour", "day", "month", "weekday"].map((item) => (
@@ -1560,7 +1926,7 @@ function ScientificNotationTool({ slug }) {
     : {};
 
   return (
-    <div className="mt-4 rounded-[8px] border border-(--border) bg-(--card) p-4">
+    <div className={`mt-4 ${PANEL_CLASS}`}>
       <div className="mb-3 flex flex-wrap items-center justify-between gap-3">
         <div className="flex flex-wrap gap-2">
           {presets.map((preset) => (
@@ -1568,7 +1934,7 @@ function ScientificNotationTool({ slug }) {
               key={preset.label}
               type="button"
               onClick={() => setValue(preset.value)}
-              className="rounded-[7px] border border-(--border) bg-(--background) px-2.5 py-1.5 text-xs font-semibold text-(--muted-foreground) hover:border-(--primary) hover:text-(--foreground)"
+              className={CHIP_BUTTON_CLASS}
             >
               {preset.label}
             </button>
@@ -1580,7 +1946,7 @@ function ScientificNotationTool({ slug }) {
         data-testid="tool-scientific-input"
         value={value}
         onChange={(e) => setValue(e.target.value)}
-        className="w-full rounded-[8px] border border-(--border) bg-(--background) px-3 py-3 font-mono text-sm outline-none focus:border-(--primary)"
+        className={`${FIELD_CLASS} px-3 py-3 font-mono text-sm`}
       />
       <div className="mt-4 grid gap-3 md:grid-cols-2">
         {valid ? Object.entries(rows).map(([key, item]) => (
@@ -1644,7 +2010,7 @@ function TextDiffTool({ slug }) {
                 setLeft(preset.left);
                 setRight(preset.right);
               }}
-              className="rounded-[7px] border border-(--border) bg-(--background) px-2.5 py-1.5 text-xs font-semibold text-(--muted-foreground) hover:border-(--primary) hover:text-(--foreground)"
+              className={CHIP_BUTTON_CLASS}
             >
               {preset.label}
             </button>
@@ -1653,13 +2019,31 @@ function TextDiffTool({ slug }) {
         <ShareLinkButton slug={slug} state={{ left, right }} />
       </div>
       <div className="grid gap-4 lg:grid-cols-2">
-        <section className="rounded-[8px] border border-(--border) bg-(--card) p-4">
-          <label className="text-xs font-bold uppercase tracking-wide text-(--muted-foreground)">Original</label>
-          <textarea data-testid="tool-diff-left" value={left} onChange={(e) => setLeft(e.target.value)} className="mt-3 min-h-[240px] w-full rounded-[8px] border border-(--border) bg-(--background) p-3 font-mono text-sm outline-none focus:border-(--primary)" />
+        <section className={PANEL_CLASS}>
+          <PanelHeader label="Original" detail={`${String(left || "").length.toLocaleString()} characters`} />
+          <textarea
+            data-testid="tool-diff-left"
+            value={left}
+            onChange={(e) => setLeft(e.target.value)}
+            spellCheck={false}
+            autoCapitalize="off"
+            autoComplete="off"
+            autoCorrect="off"
+            className={`${FIELD_CLASS} mt-3 min-h-[240px] resize-y p-3 font-mono text-sm leading-6`}
+          />
         </section>
-        <section className="rounded-[8px] border border-(--border) bg-(--card) p-4">
-          <label className="text-xs font-bold uppercase tracking-wide text-(--muted-foreground)">Changed</label>
-          <textarea data-testid="tool-diff-right" value={right} onChange={(e) => setRight(e.target.value)} className="mt-3 min-h-[240px] w-full rounded-[8px] border border-(--border) bg-(--background) p-3 font-mono text-sm outline-none focus:border-(--primary)" />
+        <section className={PANEL_CLASS}>
+          <PanelHeader label="Changed" detail={`${String(right || "").length.toLocaleString()} characters`} />
+          <textarea
+            data-testid="tool-diff-right"
+            value={right}
+            onChange={(e) => setRight(e.target.value)}
+            spellCheck={false}
+            autoCapitalize="off"
+            autoComplete="off"
+            autoCorrect="off"
+            className={`${FIELD_CLASS} mt-3 min-h-[240px] resize-y p-3 font-mono text-sm leading-6`}
+          />
         </section>
       </div>
       <WorkspaceOutput value={diff} />
@@ -1705,18 +2089,30 @@ function SvgTool({ definition, slug }) {
 
   return (
     <div className="mt-4 grid gap-4 lg:grid-cols-2">
-      <section className="rounded-[8px] border border-(--border) bg-(--card) p-4">
-        <div className="mb-3 flex justify-end">
-          <ShareLinkButton slug={slug} state={{ input }} />
-        </div>
-        <textarea data-testid="tool-input" value={input} onChange={(e) => setInput(e.target.value)} className="min-h-[320px] w-full rounded-[8px] border border-(--border) bg-(--background) p-3 font-mono text-sm outline-none focus:border-(--primary)" />
-        <div className="mt-3 flex gap-2">
+      <section className={PANEL_CLASS}>
+        <PanelHeader
+          label="SVG markup"
+          detail={`${String(input || "").length.toLocaleString()} characters`}
+          actions={<ShareLinkButton slug={slug} state={{ input }} />}
+        />
+        <textarea
+          data-testid="tool-input"
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+          spellCheck={false}
+          autoCapitalize="off"
+          autoComplete="off"
+          autoCorrect="off"
+          aria-label="SVG markup"
+          className={`${FIELD_CLASS} mt-3 min-h-[320px] resize-y p-3 font-mono text-sm leading-6`}
+        />
+        <div className="mt-3 flex flex-wrap gap-2">
           <ActionButton onClick={render}>Render PNG</ActionButton>
-          <ActionButton onClick={download}>Download PNG</ActionButton>
+          <ActionButton onClick={download} disabled={!preview}>Download PNG</ActionButton>
         </div>
       </section>
-      <section data-testid="tool-output" className="rounded-[8px] border border-(--border) bg-(--card) p-4">
-        <p className="text-xs font-bold uppercase tracking-wide text-(--muted-foreground)">Preview</p>
+      <section data-testid="tool-output" className={PANEL_CLASS}>
+        <PanelHeader label="Preview" detail={preview ? "Rendered PNG ready" : "Waiting for render"} />
         <p className="mt-2 text-sm text-(--muted-foreground)">
           {error ? "SVG render failed." : preview ? "Rendered PNG ready." : "Click Render PNG."}
         </p>

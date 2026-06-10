@@ -25,11 +25,11 @@ import {
   Pie,
   PieChart,
   ReferenceLine,
-  ResponsiveContainer,
   Tooltip,
   XAxis,
   YAxis,
 } from "recharts";
+import ResponsiveContainer from "@/components/charts/SafeResponsiveContainer";
 
 const SAMPLE = {
   fixedCost: 450000,
@@ -237,7 +237,7 @@ function MetricCard({ icon: Icon, label, value, detail, tone = "default" }) {
 
 function SectionCard({ title, description, icon: Icon, children }) {
   return (
-    <section className="min-w-0 overflow-hidden rounded-lg border border-[var(--border)] bg-[var(--card)] p-4 shadow-[var(--anslation-ds-shadow-sm)] sm:p-5">
+    <section className="w-full min-w-0 overflow-hidden rounded-lg border border-[var(--border)] bg-[var(--card)] p-4 shadow-[var(--anslation-ds-shadow-sm)] sm:p-5">
       <div className="mb-4 flex min-w-0 items-start gap-3">
         {Icon ? (
           <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-[var(--section-highlight)] text-[var(--primary)]">
@@ -439,8 +439,8 @@ export default function BreakEvenCalculator() {
 
           <div className="min-w-0 space-y-6">
             <SectionCard title="Cost Volume Profit Chart" description="Revenue and cost lines cross at the break-even point." icon={LineChart}>
-              <div className="h-80 min-w-0">
-                <ResponsiveContainer width="100%" height="100%">
+              <div className="h-80 w-full min-w-0">
+                <ResponsiveContainer width="100%" height="100%" minWidth={1} minHeight={1}>
                   <AreaChart data={metrics.rows} margin={{ top: 10, right: 10, left: 0, bottom: 0 }}>
                     <defs>
                       <linearGradient id="beRevenue" x1="0" y1="0" x2="0" y2="1">
@@ -466,8 +466,8 @@ export default function BreakEvenCalculator() {
 
             <section className="grid min-w-0 gap-6 2xl:grid-cols-[minmax(0,1fr)_minmax(260px,360px)]">
               <SectionCard title="Profit Curve" description="Profit turns positive after break-even." icon={TrendingUp}>
-                <div className="h-64 min-w-0">
-                  <ResponsiveContainer width="100%" height="100%">
+                <div className="h-64 w-full min-w-0">
+                  <ResponsiveContainer width="100%" height="100%" minWidth={1} minHeight={1}>
                     <BarChart data={metrics.rows} margin={{ top: 10, right: 8, left: 0, bottom: 0 }}>
                       <XAxis dataKey="label" tick={{ fill: "var(--muted-foreground)", fontSize: 11 }} />
                       <YAxis width={56} tickFormatter={(value) => formatMoney(value, true)} tick={{ fill: "var(--muted-foreground)", fontSize: 11 }} />
@@ -484,8 +484,8 @@ export default function BreakEvenCalculator() {
               </SectionCard>
 
               <SectionCard title="Expected Sales Split" description="Cost and profit at your expected units." icon={Wallet}>
-                <div className="h-56 min-w-0">
-                  <ResponsiveContainer width="100%" height="100%">
+                <div className="h-56 w-full min-w-0">
+                  <ResponsiveContainer width="100%" height="100%" minWidth={1} minHeight={1}>
                     <PieChart>
                       <Pie data={splitData} innerRadius="55%" outerRadius="82%" paddingAngle={3} dataKey="value" nameKey="name">
                         {splitData.map((entry, index) => (

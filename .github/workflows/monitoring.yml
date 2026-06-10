@@ -42,18 +42,31 @@ jobs:
         env:
           ALTFT_MONITOR_WEB_URL: ${{ vars.ALTFT_MONITOR_WEB_URL || 'https://altftool.com' }}
           ALTFT_MONITOR_WEB_URLS: ${{ vars.ALTFT_MONITOR_WEB_URLS }}
-          ALTFT_MONITOR_ADMIN_URL: ${{ vars.ALTFT_MONITOR_ADMIN_URL }}
+          ALTFT_MONITOR_ADMIN_URL: ${{ vars.ALTFT_MONITOR_ADMIN_URL || 'https://adsmanager.altftool.com' }}
           ALTFT_MONITOR_ADMIN_TOKEN: ${{ secrets.ALTFT_MONITOR_ADMIN_TOKEN }}
+          ALTFT_MONITOR_ADMIN_EMAIL: ${{ secrets.ALTFT_MONITOR_ADMIN_EMAIL }}
+          ALTFT_MONITOR_ADMIN_PASSWORD: ${{ secrets.ALTFT_MONITOR_ADMIN_PASSWORD }}
+          ALTFT_MONITOR_FIREBASE_API_KEY: ${{ secrets.ALTFT_MONITOR_FIREBASE_API_KEY || secrets.NEXT_PUBLIC_FIREBASE_API_KEY }}
           ALTFT_MONITOR_REQUIRE_ADMIN: ${{ vars.ALTFT_MONITOR_REQUIRE_ADMIN || 'false' }}
           ALTFT_MONITOR_REQUIRE_ADMIN_AUTH: ${{ vars.ALTFT_MONITOR_REQUIRE_ADMIN_AUTH || 'false' }}
+          ALTFT_MONITOR_ALERT_WEBHOOK_URL: ${{ secrets.ALTFT_MONITOR_ALERT_WEBHOOK_URL }}
+          ALTFT_MONITOR_ALERT_FORMAT: ${{ vars.ALTFT_MONITOR_ALERT_FORMAT || 'generic' }}
           ALTFT_MONITOR_TIMEOUT_MS: ${{ vars.ALTFT_MONITOR_TIMEOUT_MS || '15000' }}
           ALTFT_MONITOR_OUTPUT_PATH: production-monitoring-report.json
         run: npm run monitor:production
 
-      - name: Upload monitoring report
+      - name: Run production link and image monitor
+        env:
+          ALTFT_LINK_CHECK_URL: ${{ vars.ALTFT_MONITOR_WEB_URL || 'https://altftool.com' }}
+        run: npm run monitor:links:strict -- --limit 24 --output production-links-report.json --output-md production-links-report.md
+
+      - name: Upload monitoring reports
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: production-monitoring-report
-          path: production-monitoring-report.json
+          name: production-monitoring-reports
+          path: |
+            production-monitoring-report.json
+            production-links-report.json
+            production-links-report.md
           if-no-files-found: ignore

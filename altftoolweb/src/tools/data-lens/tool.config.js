@@ -1,4 +1,4 @@
-export default {
+const toolConfig = {
   slug: "data-lens",
   name: "Data Lens",
   category: ["Data Tools", "Analytics", "Productivity"],
@@ -6,3 +6,5 @@ export default {
   icon: "chart-bar",
   iconColor: "text-blue-600",
 };
+
+export default toolConfig;

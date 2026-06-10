@@ -1,5 +1,3 @@
-"use client";
-
 import { BookOpenCheck, ExternalLink } from "lucide-react";
 
 function isHttpUrl(value = "") {

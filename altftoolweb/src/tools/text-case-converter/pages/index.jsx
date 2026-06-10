@@ -1,10 +1,11 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { Clipboard, Languages, RotateCcw } from "lucide-react";
+import { Clipboard, FileDown, Languages, RotateCcw } from "lucide-react";
 import { safeCopyText } from "@/shared/utils/clipboard";
 
 const sampleText = "build better tools with AltFTool";
+const HEADLINE_SMALL_WORDS = new Set(["a", "an", "and", "as", "at", "but", "by", "for", "in", "nor", "of", "on", "or", "per", "the", "to", "vs", "via", "with"]);
 
 const words = (value) =>
   value
@@ -17,10 +18,30 @@ const titleCase = (value) =>
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
     .join(" ");
 
+const headlineCase = (value) =>
+  words(value)
+    .map((word, index, list) => {
+      const lower = word.toLowerCase();
+      if (index > 0 && index < list.length - 1 && HEADLINE_SMALL_WORDS.has(lower)) return lower;
+      return lower.charAt(0).toUpperCase() + lower.slice(1);
+    })
+    .join(" ");
+
 const sentenceCase = (value) => {
   const lower = value.toLowerCase();
   return lower.replace(/(^\s*\w|[.!?]\s*\w)/g, (match) => match.toUpperCase());
 };
+
+function downloadTextFile(filename, content) {
+  const url = URL.createObjectURL(new Blob([content], { type: "text/plain;charset=utf-8" }));
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = filename;
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
+  URL.revokeObjectURL(url);
+}
 
 function ResultCard({ label, value, onCopy }) {
   return (
@@ -42,21 +63,44 @@ export default function ToolHome() {
 
   const results = useMemo(() => {
     const list = words(text);
+    const lowerWords = list.map((word) => word.toLowerCase());
+    const pascal = list.map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()).join("");
     return [
       ["Uppercase", text.toUpperCase()],
       ["Lowercase", text.toLowerCase()],
       ["Sentence case", sentenceCase(text)],
       ["Title Case", titleCase(text)],
+      ["Headline Case", headlineCase(text)],
       ["camelCase", list.map((word, index) => (index ? word.charAt(0).toUpperCase() + word.slice(1).toLowerCase() : word.toLowerCase())).join("")],
-      ["PascalCase", list.map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()).join("")],
-      ["snake_case", list.map((word) => word.toLowerCase()).join("_")],
-      ["kebab-case", list.map((word) => word.toLowerCase()).join("-")],
+      ["PascalCase", pascal],
+      ["CONSTANT_CASE", lowerWords.join("_").toUpperCase()],
+      ["snake_case", lowerWords.join("_")],
+      ["kebab-case", lowerWords.join("-")],
+      ["slug-case", lowerWords.join("-").replace(/-+/g, "-")],
+      ["dot.case", lowerWords.join(".")],
+      ["path/case", lowerWords.join("/")],
+      ["Inverse Case", Array.from(text).map((char) => (char === char.toUpperCase() ? char.toLowerCase() : char.toUpperCase())).join("")],
+      ["Alternating Case", Array.from(text).map((char, index) => (index % 2 ? char.toUpperCase() : char.toLowerCase())).join("")],
     ];
   }, [text]);
+
+  const allFormats = useMemo(
+    () => results.map(([label, value]) => `${label}: ${value}`).join("\n"),
+    [results],
+  );
 
   const copyValue = async (label, value) => {
     setCopied((await safeCopyText(value)) ? label : "");
     setTimeout(() => setCopied(""), 1000);
+  };
+
+  const copyAll = async () => {
+    setCopied((await safeCopyText(allFormats)) ? "All formats" : "");
+    setTimeout(() => setCopied(""), 1000);
+  };
+
+  const downloadAll = () => {
+    downloadTextFile("altftool-text-cases.txt", allFormats);
   };
 
   return (
@@ -82,6 +126,16 @@ export default function ToolHome() {
             </button>
           </div>
           <textarea value={text} onChange={(event) => setText(event.target.value)} className="min-h-36 w-full resize-y rounded-lg border border-[var(--border)] bg-[var(--background)] p-4 text-sm leading-7 outline-none focus:border-[var(--primary)]" />
+          <div className="mt-3 flex flex-wrap gap-2">
+            <button type="button" onClick={copyAll} className="btn-primary min-h-10 px-3 py-2">
+              <Clipboard className="h-4 w-4" />
+              Copy all formats
+            </button>
+            <button type="button" onClick={downloadAll} className="btn-secondary min-h-10 px-3 py-2">
+              <FileDown className="h-4 w-4" />
+              Download formats
+            </button>
+          </div>
           {copied && <p className="mt-3 text-sm font-semibold text-green-600">{copied} copied</p>}
         </section>
 

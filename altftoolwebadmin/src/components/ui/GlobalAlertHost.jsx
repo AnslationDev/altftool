@@ -1,36 +1,64 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { Toast, ToastHost } from "@altftool/ui";
 import { subscribeAlert } from "@/lib/alertBus";
 
-const VARIANTS = {
-  success: "bg-green-600 text-white",
-  error: "bg-red-600 text-white",
-  warning: "bg-yellow-500 text-black",
+const TONE_BY_TYPE = {
+  success: "success",
+  error: "danger",
+  danger: "danger",
+  warning: "warning",
+  info: "info",
 };
+
+const AUTO_DISMISS_MS = 4000;
 
 export default function GlobalAlertHost() {
   const [alert, setAlert] = useState(null);
+  const [leaving, setLeaving] = useState(false);
+  const timerRef = useRef(null);
+  const leaveTimerRef = useRef(null);
 
   useEffect(() => {
     const unsub = subscribeAlert((data) => {
-      setAlert(data);
-      setTimeout(() => setAlert(null), 4000);
+      clearTimeout(timerRef.current);
+      clearTimeout(leaveTimerRef.current);
+      setLeaving(false);
+      setAlert({ ...data, id: `${Date.now()}-${Math.random()}` });
+      timerRef.current = setTimeout(dismiss, AUTO_DISMISS_MS);
     });
 
-    return unsub;
+    return () => {
+      unsub();
+      clearTimeout(timerRef.current);
+      clearTimeout(leaveTimerRef.current);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  function dismiss() {
+    setLeaving(true);
+    leaveTimerRef.current = setTimeout(() => {
+      setAlert(null);
+      setLeaving(false);
+    }, 220);
+  }
 
   if (!alert) return null;
 
+  const tone = TONE_BY_TYPE[alert.type] ?? "info";
+
   return (
-    <div className="fixed top-5 right-5 z-[9999]">
-      <div
-        className={`px-4 py-3 rounded-lg shadow-lg flex justify-between gap-4 min-w-[280px] ${VARIANTS[alert.type]}`}
-      >
-        <span className="text-sm font-medium">{alert.message}</span>
-        <button onClick={() => setAlert(null)}>×</button>
-      </div>
-    </div>
+    <ToastHost position="top-right">
+      <Toast
+        key={alert.id}
+        tone={tone}
+        title={alert.title}
+        message={alert.message}
+        leaving={leaving}
+        onClose={dismiss}
+      />
+    </ToastHost>
   );
 }

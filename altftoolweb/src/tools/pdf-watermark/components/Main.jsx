@@ -1,6 +1,7 @@
 "use client";
 import { useState, useRef, useCallback, useEffect } from "react";
 import Features from "./Features";
+import { safeCopyText } from "@/shared/utils/clipboard";
 
 // ─── Load pdf-lib via <script> tag (Turbopack-safe) ───
 
@@ -20,6 +21,56 @@ function loadPdfLib() {
     script.onerror = () => reject(new Error("Failed to load pdf-lib"));
     document.head.appendChild(script);
   });
+}
+
+const MAX_PDF_BYTES = 50 * 1024 * 1024;
+
+function formatBytes(bytes = 0) {
+  if (!bytes) return "0 B";
+  const units = ["B", "KB", "MB", "GB"];
+  const index = Math.min(
+    Math.floor(Math.log(bytes) / Math.log(1024)),
+    units.length - 1,
+  );
+  const value = bytes / 1024 ** index;
+  return `${value.toFixed(value >= 10 || index === 0 ? 0 : 1)} ${units[index]}`;
+}
+
+function sanitizeFileName(name) {
+  return (
+    name
+      .replace(/\.[^/.]+$/, "")
+      .replace(/[^a-z0-9_-]+/gi, "-")
+      .replace(/^-+|-+$/g, "")
+      .slice(0, 70) || "watermarked-pdf"
+  );
+}
+
+function downloadBlob(blob, filename) {
+  const url = URL.createObjectURL(blob);
+  const anchor = document.createElement("a");
+  anchor.href = url;
+  anchor.download = filename;
+  document.body.appendChild(anchor);
+  anchor.click();
+  anchor.remove();
+  URL.revokeObjectURL(url);
+}
+
+function buildWatermarkSummary(file, output, options) {
+  return [
+    "PDF watermark summary",
+    `Source: ${file?.name || "Untitled PDF"}`,
+    `Source size: ${formatBytes(file?.size || 0)}`,
+    `Output: ${output?.name || "Not exported yet"}`,
+    `Pages: ${output?.pageCount || "pending"}`,
+    `Text: ${options.text}`,
+    `Position: ${options.position}`,
+    `Repeat: ${options.repeat ? "yes" : "no"}`,
+    `Opacity: ${Math.round(options.opacity * 100)}%`,
+    `Rotation: ${options.rotation}deg`,
+    `Color: ${options.color}`,
+  ].join("\n");
 }
 
 // ─── PDF Processing ─────
@@ -63,7 +114,10 @@ async function applyWatermarkToPdf(file, options) {
     }
   }
 
-  return await pdfDoc.save();
+  return {
+    bytes: await pdfDoc.save(),
+    pageCount: pages.length,
+  };
 }
 
 // ─── Slider ───
@@ -210,6 +264,8 @@ export default function Main() {
   const [processing, setProcessing]   = useState(false);
   const [error, setError]             = useState("");
   const [done, setDone]               = useState(false);
+  const [copied, setCopied]           = useState(false);
+  const [lastOutput, setLastOutput]   = useState(null);
   const [settingsOpen, setSettingsOpen] = useState(false);
 
   const [text, setText]         = useState("CONFIDENTIAL");
@@ -232,9 +288,10 @@ export default function Main() {
   }, [settingsOpen]);
 
   const handleFile = useCallback((f) => {
-    setError(""); setDone(false);
-    if (!f || f.type !== "application/pdf") { setError("Please upload a valid PDF file."); return; }
-    if (f.size > 50 * 1024 * 1024) { setError("File size must be under 50MB."); return; }
+    setError(""); setDone(false); setCopied(false); setLastOutput(null);
+    const isPdf = f?.type === "application/pdf" || f?.name?.toLowerCase().endsWith(".pdf");
+    if (!f || !isPdf) { setError("Please upload a valid PDF file."); return; }
+    if (f.size > MAX_PDF_BYTES) { setError(`File size must be under ${formatBytes(MAX_PDF_BYTES)}.`); return; }
     setFile(f);
   }, []);
 
@@ -244,12 +301,11 @@ export default function Main() {
     if (!file || !text.trim()) return;
     setProcessing(true); setError(""); setDone(false);
     try {
-      const bytes = await applyWatermarkToPdf(file, { text: text.trim(), fontSize, opacity, color, rotation, position, repeat });
-      const blob  = new Blob([bytes], { type: "application/pdf" });
-      const url   = URL.createObjectURL(blob);
-      const a     = document.createElement("a");
-      a.href = url; a.download = `${file.name.replace(/\.pdf$/i, "")}_watermarked.pdf`;
-      a.click(); URL.revokeObjectURL(url);
+      const result = await applyWatermarkToPdf(file, { text: text.trim(), fontSize, opacity, color, rotation, position, repeat });
+      const blob  = new Blob([result.bytes], { type: "application/pdf" });
+      const outputName = `${sanitizeFileName(file.name)}-watermarked.pdf`;
+      downloadBlob(blob, outputName);
+      setLastOutput({ name: outputName, size: blob.size, pageCount: result.pageCount });
       setDone(true);
     } catch (err) {
       console.error(err);
@@ -261,6 +317,36 @@ export default function Main() {
 
   const canApply = !!file && !!text.trim() && !processing;
   const sp = { text, setText, fontSize, setFontSize, opacity, setOpacity, rotation, setRotation, color, setColor, position, setPosition, repeat, setRepeat };
+
+  const resetTool = () => {
+    setFile(null);
+    setError("");
+    setDone(false);
+    setCopied(false);
+    setLastOutput(null);
+    if (fileInputRef.current) fileInputRef.current.value = "";
+  };
+
+  const copySummary = async () => {
+    if (!file) return;
+    const success = await safeCopyText(
+      buildWatermarkSummary(file, lastOutput, {
+        text: text.trim() || "Untitled watermark",
+        fontSize,
+        opacity,
+        color,
+        rotation,
+        position,
+        repeat,
+      }),
+    );
+    if (!success) {
+      setError("Could not copy the watermark summary in this browser.");
+      return;
+    }
+    setCopied(true);
+    window.setTimeout(() => setCopied(false), 1400);
+  };
 
   return (
     <>
@@ -318,7 +404,7 @@ export default function Main() {
                 onDragLeave={() => setDragging(false)}
                 onDrop={onDrop}
               >
-                <input ref={fileInputRef} type="file" accept=".pdf,application/pdf" className="hidden" onChange={(e) => handleFile(e.target.files[0])} />
+                <input ref={fileInputRef} type="file" accept=".pdf,application/pdf" data-testid="pdf-watermark-file-input" className="hidden" onChange={(e) => handleFile(e.target.files[0])} />
                 <div className="text-4xl mb-3">{file ? "✅" : "📄"}</div>
                 {file ? (
                   <>
@@ -328,7 +414,7 @@ export default function Main() {
                 ) : (
                   <>
                     <p className="subheading mb-1">Drop your PDF here</p>
-                    <p className="text-sm" style={{ color: "var(--muted-foreground)" }}>or tap to browse · Max 50MB</p>
+                    <p className="text-sm" style={{ color: "var(--muted-foreground)" }}>or tap to browse - Max 50MB</p>
                   </>
                 )}
               </div>
@@ -356,6 +442,45 @@ export default function Main() {
                     }}>
                       {text || "WATERMARK"}
                     </span>
+                  </div>
+                </div>
+              )}
+
+              {file && (
+                <div
+                  data-testid="tool-output"
+                  className="rounded-2xl p-4 sm:p-5 mb-4"
+                  style={{ background: "var(--card)", border: "1px solid var(--border)" }}
+                >
+                  <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                    <div>
+                      <p className="text-sm font-semibold" style={{ color: "var(--foreground)" }}>
+                        {lastOutput ? "Last export ready" : "Ready to watermark"}
+                      </p>
+                      <p className="mt-1 text-xs" style={{ color: "var(--muted-foreground)" }}>
+                        {lastOutput
+                          ? `${lastOutput.name} - ${lastOutput.pageCount} page${lastOutput.pageCount === 1 ? "" : "s"} - ${formatBytes(lastOutput.size)}`
+                          : `${file.name} - ${formatBytes(file.size)} - ${Math.round(opacity * 100)}% opacity`}
+                      </p>
+                    </div>
+                    <div className="flex flex-wrap gap-2">
+                      <button
+                        type="button"
+                        onClick={copySummary}
+                        className="pdf-btn rounded-xl px-3 py-2 text-xs font-semibold"
+                        style={{ background: "var(--muted)", border: "1px solid var(--border)", color: "var(--foreground)" }}
+                      >
+                        {copied ? "Copied" : "Copy Summary"}
+                      </button>
+                      <button
+                        type="button"
+                        onClick={resetTool}
+                        className="pdf-btn rounded-xl px-3 py-2 text-xs font-semibold"
+                        style={{ background: "var(--background)", border: "1px solid var(--border)", color: "var(--foreground)" }}
+                      >
+                        Reset
+                      </button>
+                    </div>
                   </div>
                 </div>
               )}

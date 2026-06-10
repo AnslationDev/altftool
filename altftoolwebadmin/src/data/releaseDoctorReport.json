@@ -1,0 +1,181 @@
+{
+  "generatedAt": "2026-05-20T19:08:16.735Z",
+  "status": "ready-with-warnings",
+  "strict": false,
+  "offline": false,
+  "durationMs": 7698,
+  "summary": {
+    "counts": {
+      "pass": 8,
+      "warn": 2,
+      "block": 0
+    },
+    "blockingChecks": [],
+    "warningChecks": [
+      "Firebase Admin SDK",
+      "Vercel web/admin readiness"
+    ]
+  },
+  "checks": [
+    {
+      "key": "health-manifest",
+      "label": "Tool, SEO, content, and automation manifest",
+      "status": "pass",
+      "score": 100,
+      "detail": "231/231 tools healthy, 40/40 priority routes covered.",
+      "nextAction": "",
+      "command": "npm run health:manifest",
+      "durationMs": 0,
+      "meta": {
+        "generatedAt": "2026-05-17T11:18:45.634Z",
+        "tools": 231,
+        "priorityTools": 40
+      }
+    },
+    {
+      "key": "route-qa",
+      "label": "Saved route QA report",
+      "status": "pass",
+      "score": 100,
+      "detail": "162 routes, 0 failures, 0 warnings, 0 slow routes.",
+      "nextAction": "",
+      "command": "npm run qa:routes:report",
+      "durationMs": 0,
+      "meta": {
+        "checkedAt": "2026-05-16T16:56:30.106Z",
+        "browserProbes": 15,
+        "p95Ms": 1730
+      }
+    },
+    {
+      "key": "blog-content",
+      "label": "Blog content health",
+      "status": "pass",
+      "score": 100,
+      "detail": "31/31 blogs ready; sources 31, FAQ 31, links 31.",
+      "nextAction": "",
+      "command": "npm run content:blogs:report",
+      "durationMs": 0,
+      "meta": {
+        "generatedAt": "2026-05-20T17:07:40.074Z",
+        "source": "local"
+      }
+    },
+    {
+      "key": "firebase-admin",
+      "label": "Firebase Admin SDK",
+      "status": "warn",
+      "score": 90,
+      "detail": "Firebase Admin probe skipped by --no-firebase-admin.",
+      "nextAction": "Run without --no-firebase-admin before release.",
+      "command": "npm run firebase:admin-write-check",
+      "durationMs": 0,
+      "meta": {}
+    },
+    {
+      "key": "firebase-live-data",
+      "label": "Firebase public live data",
+      "status": "pass",
+      "score": 100,
+      "detail": "19/19 live Firestore checks passing.",
+      "nextAction": "",
+      "command": "npm run firebase:live-check",
+      "durationMs": 2326,
+      "meta": {
+        "projectId": "altftool-bca36",
+        "failures": []
+      }
+    },
+    {
+      "key": "firebase-data-integrity",
+      "label": "Firebase data integrity",
+      "status": "pass",
+      "score": 100,
+      "detail": "20/20 sampled content checks passing; 0 failures, 0 warnings.",
+      "nextAction": "",
+      "command": "npm run firebase:integrity:strict",
+      "durationMs": 2265,
+      "meta": {
+        "projectId": "altftool-bca36",
+        "sampleLimit": 10,
+        "failures": [],
+        "warnings": []
+      }
+    },
+    {
+      "key": "performance-budget",
+      "label": "Performance budget",
+      "status": "pass",
+      "score": 100,
+      "detail": "390 public images, 231 lazy tool imports, 0 eager tool imports.",
+      "nextAction": "",
+      "command": "npm run performance:budget:strict",
+      "durationMs": 1,
+      "meta": {
+        "generatedAt": "2026-05-20T18:59:02.687Z",
+        "failures": [],
+        "warnings": [],
+        "totals": {
+          "failures": 0,
+          "warnings": 0,
+          "notices": 1,
+          "apps": 2,
+          "publicImages": 390,
+          "dynamicToolImports": 231,
+          "directToolImportFiles": 0
+        }
+      }
+    },
+    {
+      "key": "vercel-readiness",
+      "label": "Vercel web/admin readiness",
+      "status": "warn",
+      "score": 67,
+      "detail": "Web and admin projects are linked; secure VERCEL_TOKEN is still needed for CLI/CI deploys.",
+      "nextAction": "Set VERCEL_TOKEN or VERCEL_TOKEN_FILE in a secure shell/CI secret before manual deploy commands.",
+      "command": "npm run deploy:readiness -- --target=all",
+      "durationMs": 0,
+      "meta": {
+        "linkedProjects": 2,
+        "requireToken": false,
+        "missing": [
+          "VERCEL_TOKEN or VERCEL_TOKEN_FILE"
+        ],
+        "projects": [
+          "altftool-altftoolweb",
+          "altftools-admin"
+        ]
+      }
+    },
+    {
+      "key": "production-links",
+      "label": "Production links and images",
+      "status": "pass",
+      "score": 100,
+      "detail": "12 pages, 192 links, 36 images checked.",
+      "nextAction": "",
+      "command": "npm run monitor:links:strict",
+      "durationMs": 2702,
+      "meta": {
+        "baseUrl": "https://altftool.com",
+        "failures": [],
+        "warnings": [],
+        "notices": 24
+      }
+    },
+    {
+      "key": "production-freshness",
+      "label": "Production freshness",
+      "status": "pass",
+      "score": 100,
+      "detail": "Public health 200; status healthy; score 100.",
+      "nextAction": "",
+      "command": "npm run monitor:production",
+      "durationMs": 400,
+      "meta": {
+        "healthUrl": "https://altftool.com/api/health",
+        "commit": "06968107"
+      }
+    }
+  ]
+}

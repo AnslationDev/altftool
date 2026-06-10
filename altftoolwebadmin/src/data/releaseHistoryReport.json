@@ -1,0 +1,204 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-05-20T19:18:10.393Z",
+  "source": "release-history-report",
+  "limit": 30,
+  "latest": {
+    "id": "2026-05-20T19-08-16-735Z",
+    "generatedAt": "2026-05-20T19:08:16.735Z",
+    "status": "watch",
+    "score": 96,
+    "summary": {
+      "releaseDoctorStatus": "ready-with-warnings",
+      "releaseDoctorCounts": {
+        "pass": 8,
+        "warn": 2,
+        "block": 0
+      },
+      "productionLinkStatus": "clean",
+      "performanceStatus": "clean"
+    },
+    "metrics": [
+      {
+        "key": "release-doctor",
+        "label": "Release Doctor",
+        "score": 96,
+        "status": "watch",
+        "generatedAt": "2026-05-20T19:08:16.735Z",
+        "detail": "8 pass, 2 warn, 0 block."
+      },
+      {
+        "key": "production-links",
+        "label": "Production Links",
+        "score": 100,
+        "status": "ready",
+        "generatedAt": "2026-05-20T19:08:04.643Z",
+        "detail": "12 pages, 192 links, 36 images."
+      },
+      {
+        "key": "performance-budget",
+        "label": "Performance Budget",
+        "score": 100,
+        "status": "ready",
+        "generatedAt": "2026-05-20T18:59:02.687Z",
+        "detail": "390 public images, 231 lazy tool imports."
+      },
+      {
+        "key": "route-qa",
+        "label": "Route QA",
+        "score": 100,
+        "status": "ready",
+        "generatedAt": "2026-05-16T16:56:30.106Z",
+        "detail": "162 routes, 0 failures, 0 warnings."
+      },
+      {
+        "key": "blog-content",
+        "label": "Blog Content",
+        "score": 100,
+        "status": "ready",
+        "generatedAt": "2026-05-20T17:07:40.074Z",
+        "detail": "31/31 blogs ready."
+      },
+      {
+        "key": "tool-quality",
+        "label": "Tool Quality",
+        "score": 100,
+        "status": "ready",
+        "generatedAt": "2026-05-17T11:18:45.634Z",
+        "detail": "231/231 tools healthy."
+      },
+      {
+        "key": "firebase-live",
+        "label": "Firebase Live Data",
+        "score": 100,
+        "status": "ready",
+        "generatedAt": "2026-05-20T19:08:16.735Z",
+        "detail": "19/19 live Firestore checks passing."
+      },
+      {
+        "key": "firebase-integrity",
+        "label": "Firebase Integrity",
+        "score": 100,
+        "status": "ready",
+        "generatedAt": "2026-05-20T19:08:16.735Z",
+        "detail": "20/20 sampled content checks passing; 0 failures, 0 warnings."
+      },
+      {
+        "key": "vercel-readiness",
+        "label": "Vercel Readiness",
+        "score": 67,
+        "status": "watch",
+        "generatedAt": "2026-05-20T19:08:16.735Z",
+        "detail": "Web and admin projects are linked; secure VERCEL_TOKEN is still needed for CLI/CI deploys."
+      },
+      {
+        "key": "production-freshness",
+        "label": "Production Freshness",
+        "score": 100,
+        "status": "ready",
+        "generatedAt": "2026-05-20T19:08:16.735Z",
+        "detail": "Public health 200; status healthy; score 100."
+      }
+    ]
+  },
+  "entries": [
+    {
+      "id": "2026-05-20T19-08-16-735Z",
+      "generatedAt": "2026-05-20T19:08:16.735Z",
+      "status": "watch",
+      "score": 96,
+      "summary": {
+        "releaseDoctorStatus": "ready-with-warnings",
+        "releaseDoctorCounts": {
+          "pass": 8,
+          "warn": 2,
+          "block": 0
+        },
+        "productionLinkStatus": "clean",
+        "performanceStatus": "clean"
+      },
+      "metrics": [
+        {
+          "key": "release-doctor",
+          "label": "Release Doctor",
+          "score": 96,
+          "status": "watch",
+          "generatedAt": "2026-05-20T19:08:16.735Z",
+          "detail": "8 pass, 2 warn, 0 block."
+        },
+        {
+          "key": "production-links",
+          "label": "Production Links",
+          "score": 100,
+          "status": "ready",
+          "generatedAt": "2026-05-20T19:08:04.643Z",
+          "detail": "12 pages, 192 links, 36 images."
+        },
+        {
+          "key": "performance-budget",
+          "label": "Performance Budget",
+          "score": 100,
+          "status": "ready",
+          "generatedAt": "2026-05-20T18:59:02.687Z",
+          "detail": "390 public images, 231 lazy tool imports."
+        },
+        {
+          "key": "route-qa",
+          "label": "Route QA",
+          "score": 100,
+          "status": "ready",
+          "generatedAt": "2026-05-16T16:56:30.106Z",
+          "detail": "162 routes, 0 failures, 0 warnings."
+        },
+        {
+          "key": "blog-content",
+          "label": "Blog Content",
+          "score": 100,
+          "status": "ready",
+          "generatedAt": "2026-05-20T17:07:40.074Z",
+          "detail": "31/31 blogs ready."
+        },
+        {
+          "key": "tool-quality",
+          "label": "Tool Quality",
+          "score": 100,
+          "status": "ready",
+          "generatedAt": "2026-05-17T11:18:45.634Z",
+          "detail": "231/231 tools healthy."
+        },
+        {
+          "key": "firebase-live",
+          "label": "Firebase Live Data",
+          "score": 100,
+          "status": "ready",
+          "generatedAt": "2026-05-20T19:08:16.735Z",
+          "detail": "19/19 live Firestore checks passing."
+        },
+        {
+          "key": "firebase-integrity",
+          "label": "Firebase Integrity",
+          "score": 100,
+          "status": "ready",
+          "generatedAt": "2026-05-20T19:08:16.735Z",
+          "detail": "20/20 sampled content checks passing; 0 failures, 0 warnings."
+        },
+        {
+          "key": "vercel-readiness",
+          "label": "Vercel Readiness",
+          "score": 67,
+          "status": "watch",
+          "generatedAt": "2026-05-20T19:08:16.735Z",
+          "detail": "Web and admin projects are linked; secure VERCEL_TOKEN is still needed for CLI/CI deploys."
+        },
+        {
+          "key": "production-freshness",
+          "label": "Production Freshness",
+          "score": 100,
+          "status": "ready",
+          "generatedAt": "2026-05-20T19:08:16.735Z",
+          "detail": "Public health 200; status healthy; score 100."
+        }
+      ]
+    }
+  ]
+}

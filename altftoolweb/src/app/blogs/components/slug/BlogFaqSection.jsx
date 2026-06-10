@@ -1,5 +1,3 @@
-"use client";
-
 import { HelpCircle, MessageCircleQuestion, Sparkles } from "lucide-react";
 
 export default function BlogFaqSection({ items = [] }) {
@@ -9,7 +7,7 @@ export default function BlogFaqSection({ items = [] }) {
   return (
     <section
       id="faq"
-      className="not-prose my-8 border-y border-(--border) bg-(--background) py-5"
+      className="not-prose my-8 scroll-mt-24 rounded-[var(--anslation-ds-radius)] border border-(--border) bg-(--background) p-4 sm:p-5"
       aria-labelledby="blog-faq-heading"
     >
       <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
@@ -34,11 +32,11 @@ export default function BlogFaqSection({ items = [] }) {
       <div className="space-y-2">
         {visibleItems.map((item, index) => (
           <details
-            key={item.question}
+            key={`${item.question}-${index}`}
             open={index === 0}
-            className="group rounded-[6px] border border-(--border) bg-(--card) px-4 py-3"
+            className="group rounded-[6px] border border-(--border) bg-(--card) px-3 py-3 sm:px-4"
           >
-            <summary className="flex cursor-pointer list-none items-start gap-3 text-sm font-semibold leading-6 text-(--foreground)">
+            <summary className="flex min-h-11 cursor-pointer list-none items-start gap-3 text-sm font-semibold leading-6 text-(--foreground)">
               <MessageCircleQuestion className="mt-0.5 h-4 w-4 shrink-0 text-(--primary)" />
               <span className="min-w-0 flex-1">{item.question}</span>
               <span className="mt-1 h-2 w-2 shrink-0 rotate-45 border-b-2 border-r-2 border-(--muted-foreground) transition group-open:rotate-[225deg]" />

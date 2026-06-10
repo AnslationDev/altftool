@@ -6,7 +6,7 @@ import Link from "next/link";
 
 
 const CardContent = ({ brand, isActive, getImage, normalizedFeatures }) => {
-    const rawLink = brand?.brandLink;
+    const rawLink = brand?.brandLink || brand?.weblink || brand?.url || brand?.link;
     const validLink = (() => {
         if (!rawLink) return "";
         let link = "";

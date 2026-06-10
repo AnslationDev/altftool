@@ -1,7 +1,14 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { BarChart3, TrendingUp } from "lucide-react";
+import { BarChart3, Copy, FileDown, RotateCcw, TrendingUp } from "lucide-react";
+import { safeCopyText } from "@/shared/utils/clipboard";
+
+const SIP_PRESETS = [
+  { label: "Starter SIP", monthlyInvestment: 5000, returnRate: 10, years: 10, stepUp: 5 },
+  { label: "Balanced wealth", monthlyInvestment: 10000, returnRate: 12, years: 15, stepUp: 10 },
+  { label: "Aggressive goal", monthlyInvestment: 25000, returnRate: 14, years: 20, stepUp: 10 },
+];
 
 const formatMoney = (value) =>
   new Intl.NumberFormat("en-IN", {
@@ -9,6 +16,16 @@ const formatMoney = (value) =>
     currency: "INR",
     maximumFractionDigits: 0,
   }).format(Number.isFinite(value) ? value : 0);
+
+function downloadTextFile(filename, content) {
+  const blob = new Blob([content], { type: "text/plain;charset=utf-8" });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = filename;
+  link.click();
+  URL.revokeObjectURL(url);
+}
 
 function RangeField({ label, value, suffix, min, max, step, onChange }) {
   return (
@@ -41,6 +58,7 @@ export default function ToolHome() {
   const [returnRate, setReturnRate] = useState(12);
   const [years, setYears] = useState(15);
   const [stepUp, setStepUp] = useState(0);
+  const [copied, setCopied] = useState(false);
 
   const result = useMemo(() => {
     const monthlyRate = returnRate / 100 / 12;
@@ -63,6 +81,45 @@ export default function ToolHome() {
   }, [monthlyInvestment, returnRate, years, stepUp]);
 
   const gainPercent = result.invested ? ((result.gains / result.invested) * 100).toFixed(1) : "0.0";
+
+  const report = useMemo(
+    () =>
+      [
+        "SIP Calculator Report",
+        `Monthly SIP: ${formatMoney(monthlyInvestment)}`,
+        `Expected annual return: ${returnRate}%`,
+        `Investment period: ${years} years`,
+        `Annual SIP step-up: ${stepUp}%`,
+        `Total invested: ${formatMoney(result.invested)}`,
+        `Estimated returns: ${formatMoney(result.gains)}`,
+        `Maturity amount: ${formatMoney(result.maturity)}`,
+        `Final monthly SIP: ${formatMoney(result.finalSip)}`,
+        `Gain over invested amount: ${gainPercent}%`,
+        `Generated: ${new Date().toLocaleString()}`,
+      ].join("\n"),
+    [gainPercent, monthlyInvestment, result, returnRate, stepUp, years]
+  );
+
+  const applyPreset = (preset) => {
+    setMonthlyInvestment(preset.monthlyInvestment);
+    setReturnRate(preset.returnRate);
+    setYears(preset.years);
+    setStepUp(preset.stepUp);
+  };
+
+  const resetCalculator = () => {
+    setMonthlyInvestment(10000);
+    setReturnRate(12);
+    setYears(15);
+    setStepUp(0);
+  };
+
+  const copyReport = async () => {
+    const success = await safeCopyText(report);
+    if (!success) return;
+    setCopied(true);
+    setTimeout(() => setCopied(false), 1200);
+  };
 
   return (
     <main className="min-h-screen bg-[var(--background)] px-4 py-8 text-[var(--foreground)] sm:px-6">
@@ -89,6 +146,27 @@ export default function ToolHome() {
 
         <section className="mt-6 grid gap-6 2xl:grid-cols-[420px_1fr]">
           <div className="space-y-4 rounded-lg border border-[var(--border)] bg-[var(--card)] p-5 shadow-[var(--anslation-ds-shadow-sm)]">
+            <div>
+              <div className="mb-2 flex items-center justify-between gap-3">
+                <span className="text-sm font-semibold">Quick presets</span>
+                <button type="button" onClick={resetCalculator} className="inline-flex items-center gap-1 text-xs font-semibold text-[var(--primary)]">
+                  <RotateCcw className="h-3.5 w-3.5" />
+                  Reset
+                </button>
+              </div>
+              <div className="grid gap-2 sm:grid-cols-3 2xl:grid-cols-1">
+                {SIP_PRESETS.map((preset) => (
+                  <button
+                    key={preset.label}
+                    type="button"
+                    onClick={() => applyPreset(preset)}
+                    className="rounded-md border border-[var(--border)] bg-[var(--background)] px-3 py-2 text-left text-sm font-semibold text-[var(--muted-foreground)] transition hover:border-[var(--primary)] hover:text-[var(--foreground)]"
+                  >
+                    {preset.label}
+                  </button>
+                ))}
+              </div>
+            </div>
             <RangeField label="Monthly SIP" value={monthlyInvestment} suffix="" min={500} max={200000} step={500} onChange={setMonthlyInvestment} />
             <RangeField label="Expected annual return" value={returnRate} suffix="%" min={1} max={30} step={0.5} onChange={setReturnRate} />
             <RangeField label="Investment period" value={years} suffix=" yr" min={1} max={40} step={1} onChange={setYears} />
@@ -110,9 +188,25 @@ export default function ToolHome() {
               ))}
             </div>
             <div className="rounded-lg border border-[var(--border)] bg-[var(--card)] p-5">
-              <div className="mb-4 flex items-center gap-2 text-sm font-semibold text-[var(--primary)]">
-                <BarChart3 className="h-4 w-4" />
-                Portfolio split
+              <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
+                <div className="flex items-center gap-2 text-sm font-semibold text-[var(--primary)]">
+                  <BarChart3 className="h-4 w-4" />
+                  Portfolio split
+                </div>
+                <div className="flex flex-wrap gap-2">
+                  <button type="button" onClick={copyReport} className="btn-secondary min-h-9 px-3 py-1.5 text-sm">
+                    <Copy className="h-4 w-4" />
+                    {copied ? "Copied" : "Copy report"}
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => downloadTextFile("sip-calculation-report.txt", report)}
+                    className="btn-secondary min-h-9 px-3 py-1.5 text-sm"
+                  >
+                    <FileDown className="h-4 w-4" />
+                    Download
+                  </button>
+                </div>
               </div>
               <div className="h-4 overflow-hidden rounded-full bg-[var(--muted)]">
                 <div

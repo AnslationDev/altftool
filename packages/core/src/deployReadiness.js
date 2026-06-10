@@ -1,11 +1,28 @@
+import fs from "node:fs";
+import path from "node:path";
+
 const VALID_TARGETS = new Set(["all", "web", "admin"]);
 
 function envValue(env, name) {
   return typeof env?.[name] === "string" ? env[name].trim() : "";
 }
 
-function configured(env, names) {
-  return names.some((name) => Boolean(envValue(env, name)));
+function fileValue(filePath = "") {
+  const trimmedPath = String(filePath || "").trim();
+  if (!trimmedPath) return "";
+
+  try {
+    return fs.readFileSync(trimmedPath, "utf8").trim();
+  } catch {
+    return "";
+  }
+}
+
+function configured(env, requirement) {
+  const envConfigured = requirement.names.some((name) => Boolean(envValue(env, name)));
+  const fileConfigured = (requirement.fileNames || []).some((name) => Boolean(fileValue(envValue(env, name))));
+
+  return envConfigured || fileConfigured || Boolean(requirement.fallbackValue);
 }
 
 function normalizeTarget(target = "all") {
@@ -17,43 +34,80 @@ function selectedTargets(target) {
   return target === "all" ? ["web", "admin"] : [target];
 }
 
+function readProjectLink(root, cwd) {
+  const candidates = [
+    path.resolve(/* turbopackIgnore: true */ cwd, root, ".vercel/project.json"),
+    path.resolve(/* turbopackIgnore: true */ cwd, ".vercel/project.json"),
+  ];
+
+  for (const candidate of candidates) {
+    try {
+      const raw = JSON.parse(fs.readFileSync(/* turbopackIgnore: true */ candidate, "utf8"));
+      if (raw?.projectId || raw?.orgId) {
+        return {
+          orgId: raw.orgId || "",
+          projectId: raw.projectId || "",
+          projectName: raw.projectName || "",
+          path: candidate,
+        };
+      }
+    } catch {}
+  }
+
+  return null;
+}
+
 function createTargetConfig(env = process.env, options = {}) {
+  const cwd = options.cwd || process.cwd();
+  const webRoot = envValue(env, "WEB_PROJECT_ROOT") || options.webProjectRoot || "altftoolweb";
+  const adminRoot = envValue(env, "ADMIN_PROJECT_ROOT") || options.adminProjectRoot || "altftoolwebadmin";
+  const webLink = readProjectLink(webRoot, cwd);
+  const adminLink = readProjectLink(adminRoot, cwd);
+
   return {
     web: {
       label: "Public web",
-      root: envValue(env, "WEB_PROJECT_ROOT") || options.webProjectRoot || "altftoolweb",
+      root: webRoot,
       requirements: [
         {
           label: "Vercel API token",
           names: ["VERCEL_TOKEN"],
+          fileNames: ["VERCEL_TOKEN_FILE"],
         },
         {
           label: "Vercel team/org id",
           names: ["VERCEL_ORG_ID"],
+          fallbackValue: webLink?.orgId,
         },
         {
           label: "Public web project id",
           names: ["VERCEL_WEB_PROJECT_ID", "VERCEL_PROJECT_ID"],
+          fallbackValue: webLink?.projectId,
         },
       ],
+      link: webLink,
     },
     admin: {
       label: "Admin web",
-      root: envValue(env, "ADMIN_PROJECT_ROOT") || options.adminProjectRoot || "altftoolwebadmin",
+      root: adminRoot,
       requirements: [
         {
           label: "Vercel API token",
           names: ["VERCEL_TOKEN"],
+          fileNames: ["VERCEL_TOKEN_FILE"],
         },
         {
           label: "Vercel team/org id",
           names: ["VERCEL_ORG_ID"],
+          fallbackValue: adminLink?.orgId,
         },
         {
           label: "Admin project id",
           names: ["VERCEL_ADMIN_PROJECT_ID"],
+          fallbackValue: adminLink?.projectId,
         },
       ],
+      link: adminLink,
     },
   };
 }
@@ -63,11 +117,14 @@ function evaluateTarget(name, config, env) {
   const present = [];
 
   for (const requirement of config.requirements) {
-    const ok = configured(env, requirement.names);
+    const ok = configured(env, requirement);
     const item = {
       label: requirement.label,
-      names: requirement.names,
-      displayName: requirement.names.join(" or "),
+      names: [...requirement.names, ...(requirement.fileNames || [])],
+      displayName: [...requirement.names, ...(requirement.fileNames || [])].join(" or "),
+      source: requirement.fallbackValue && !requirement.names.some((envName) => Boolean(envValue(env, envName)))
+        ? "vercel-project-link"
+        : "env",
     };
 
     if (ok) present.push(item);
@@ -78,6 +135,12 @@ function evaluateTarget(name, config, env) {
     name,
     label: config.label,
     projectRoot: config.root,
+    projectLink: config.link
+      ? {
+          projectName: config.link.projectName,
+          path: config.link.path,
+        }
+      : null,
     ok: missing.length === 0,
     present,
     missing,
@@ -101,16 +164,19 @@ export function createVercelDeployReadinessReport(options = {}) {
       name: result.name,
       label: result.label,
       projectRoot: result.projectRoot,
+      projectLink: result.projectLink,
       ok: result.ok,
-      missing: result.missing.map(({ label, names, displayName }) => ({
+      missing: result.missing.map(({ label, names, displayName, source }) => ({
         label,
         names,
         displayName,
+        source,
       })),
-      present: result.present.map(({ label, names, displayName }) => ({
+      present: result.present.map(({ label, names, displayName, source }) => ({
         label,
         names,
         displayName,
+        source,
       })),
     })),
   };

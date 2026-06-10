@@ -8,12 +8,24 @@ const webUrls = parseUrlList(
     process.env.ALTFT_MONITOR_WEB_URL ||
     "https://altftool.com",
 );
-const adminUrl = normalizeUrl(process.env.ALTFT_MONITOR_ADMIN_URL || "");
+const adminUrl = normalizeUrl(process.env.ALTFT_MONITOR_ADMIN_URL || "https://adsmanager.altftool.com");
 const adminToken = process.env.ALTFT_MONITOR_ADMIN_TOKEN || "";
+const adminEmail = process.env.ALTFT_MONITOR_ADMIN_EMAIL || "";
+const adminPassword = process.env.ALTFT_MONITOR_ADMIN_PASSWORD || "";
+const adminFirebaseApiKey =
+  process.env.ALTFT_MONITOR_FIREBASE_API_KEY ||
+  process.env.NEXT_PUBLIC_FIREBASE_API_KEY ||
+  "";
 const requireAdmin = process.env.ALTFT_MONITOR_REQUIRE_ADMIN === "true";
 const requireAdminAuth = process.env.ALTFT_MONITOR_REQUIRE_ADMIN_AUTH === "true";
+const skipWeb = process.env.ALTFT_MONITOR_SKIP_WEB === "true";
+const skipAdmin = process.env.ALTFT_MONITOR_SKIP_ADMIN === "true";
+const skipFirebaseLiveData = process.env.ALTFT_MONITOR_SKIP_FIREBASE_LIVE_DATA === "true";
 const timeoutMs = Number(process.env.ALTFT_MONITOR_TIMEOUT_MS || 15000);
 const outputPath = process.env.ALTFT_MONITOR_OUTPUT_PATH || "";
+const alertWebhookUrl = process.env.ALTFT_MONITOR_ALERT_WEBHOOK_URL || "";
+const alertWebhookFormat = (process.env.ALTFT_MONITOR_ALERT_FORMAT || "generic").toLowerCase();
+const alertDryRun = process.env.ALTFT_MONITOR_ALERT_DRY_RUN === "true";
 
 const WEB_PAGE_CHECKS = [
   {
@@ -35,6 +47,11 @@ const WEB_PAGE_CHECKS = [
     name: "blogs-page",
     path: "/blogs",
     expectedText: ["AltFTool Blog"],
+  },
+  {
+    name: "status-page",
+    path: "/status",
+    expectedText: ["AltFTool Status", "Public web readiness"],
   },
   {
     name: "extensions-page",
@@ -121,6 +138,14 @@ const WEB_ENDPOINT_CHECKS = [
       fallback: Boolean(payload?.fallback),
       hasGoldRate: Number(payload?.rates?.XAU) > 0,
     }),
+  },
+];
+
+const ADMIN_PUBLIC_CHECKS = [
+  {
+    name: "admin-login-page",
+    path: "/login",
+    expectedText: ["AltFTools Admin", "/_next/static/"],
   },
 ];
 
@@ -230,6 +255,63 @@ async function checkHttp(checks, config) {
   }
 }
 
+async function resolveAdminBearerToken(checks) {
+  if (adminToken) {
+    checks.push({
+      name: "admin-auth-token",
+      ok: true,
+      details: { source: "ALTFT_MONITOR_ADMIN_TOKEN" },
+    });
+    return adminToken;
+  }
+
+  const hasLoginCredentials = Boolean(adminEmail && adminPassword && adminFirebaseApiKey);
+  if (!hasLoginCredentials) return "";
+
+  const url = `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${encodeURIComponent(
+    adminFirebaseApiKey,
+  )}`;
+
+  try {
+    const { response, durationMs } = await fetchWithTimeout(url, {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({
+        email: adminEmail,
+        password: adminPassword,
+        returnSecureToken: true,
+      }),
+    });
+    const payload = safeJsonParse(await response.text());
+    const token = payload?.idToken || "";
+    const ok = response.ok && Boolean(token);
+
+    checks.push({
+      name: "admin-auth-login",
+      ok,
+      status: response.status,
+      durationMs,
+      details: {
+        email: maskEmail(payload?.email || adminEmail),
+        localId: payload?.localId || null,
+      },
+      error: ok ? undefined : payload?.error?.message || "Firebase admin login failed.",
+    });
+
+    return ok ? token : "";
+  } catch (error) {
+    checks.push({
+      name: "admin-auth-login",
+      ok: false,
+      error:
+        error?.name === "AbortError"
+          ? `Timed out after ${timeoutMs}ms`
+          : error?.message || String(error),
+    });
+    return "";
+  }
+}
+
 function safeJsonParse(text) {
   try {
     return JSON.parse(text);
@@ -252,6 +334,124 @@ function sanitizeHealthPayload(payload) {
         }
       : null,
   };
+}
+
+function maskEmail(value = "") {
+  const [name, domain] = String(value).split("@");
+  if (!name || !domain) return value ? "configured" : "";
+  return `${name.slice(0, 2)}***@${domain}`;
+}
+
+function buildAlertText(report, failures) {
+  const failedLines = failures
+    .slice(0, 8)
+    .map((failure) => `- ${failure.name}: ${failure.error || failure.status || "failed"}`)
+    .join("\n");
+
+  return [
+    "AltFTool production monitor failed.",
+    `Checked: ${report.generatedAt}`,
+    `Web: ${report.webUrls.join(", ") || "not configured"}`,
+    `Admin: ${report.adminUrl || "not configured"}`,
+    `Summary: ${report.summary.passed} passed, ${report.summary.skipped} skipped, ${report.summary.failed} failed`,
+    failedLines,
+  ]
+    .filter(Boolean)
+    .join("\n");
+}
+
+function buildAlertPayload(report, failures) {
+  const text = buildAlertText(report, failures);
+  const fields = failures.slice(0, 8).map((failure) => ({
+    name: failure.name,
+    value: failure.error || String(failure.status || "failed"),
+  }));
+
+  if (alertWebhookFormat === "slack") {
+    return {
+      text,
+      blocks: [
+        {
+          type: "section",
+          text: {
+            type: "mrkdwn",
+            text: `*AltFTool production monitor failed*\n${report.summary.failed} failing check(s).`,
+          },
+        },
+        {
+          type: "section",
+          fields: fields.map((field) => ({
+            type: "mrkdwn",
+            text: `*${field.name}*\n${field.value}`,
+          })),
+        },
+      ],
+    };
+  }
+
+  if (alertWebhookFormat === "discord") {
+    return {
+      content: text,
+      embeds: [
+        {
+          title: "AltFTool production monitor failed",
+          description: `${report.summary.failed} failing check(s).`,
+          color: 15158332,
+          fields,
+          timestamp: report.generatedAt,
+        },
+      ],
+    };
+  }
+
+  return {
+    text,
+    content: text,
+    summary: report.summary,
+    failures: failures.map(({ name, url, status, error }) => ({ name, url, status, error })),
+    generatedAt: report.generatedAt,
+  };
+}
+
+async function sendFailureAlert(report, failures) {
+  if (!failures.length || !alertWebhookUrl) return;
+
+  const payload = buildAlertPayload(report, failures);
+
+  if (alertDryRun) {
+    console.log("Production monitoring alert dry-run:");
+    console.log(JSON.stringify({
+      configured: true,
+      format: alertWebhookFormat,
+      failureCount: failures.length,
+      payloadPreview: {
+        text: payload.text || payload.content || "",
+        summary: payload.summary || report.summary,
+      },
+    }, null, 2));
+    return;
+  }
+
+  try {
+    const { response, durationMs } = await fetchWithTimeout(alertWebhookUrl, {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify(payload),
+    });
+
+    if (!response.ok) {
+      console.error(`Production monitoring alert webhook failed: HTTP ${response.status}`);
+      return;
+    }
+
+    console.log(`Production monitoring alert sent in ${durationMs}ms.`);
+  } catch (error) {
+    console.error(
+      `Production monitoring alert failed: ${
+        error?.name === "AbortError" ? `Timed out after ${timeoutMs}ms` : error?.message || String(error)
+      }`,
+    );
+  }
 }
 
 function parseJsonBlock(stdout = "") {
@@ -311,6 +511,16 @@ function runFirebaseLiveDataCheck(checks) {
 }
 
 async function runWebChecks(checks) {
+  if (skipWeb) {
+    checks.push({
+      name: "web-checks",
+      ok: true,
+      skipped: true,
+      details: { reason: "ALTFT_MONITOR_SKIP_WEB=true" },
+    });
+    return;
+  }
+
   if (!webUrls.length) {
     checks.push({
       name: "web-url-configured",
@@ -342,26 +552,68 @@ async function runWebChecks(checks) {
 }
 
 async function runAdminChecks(checks) {
-  if (adminUrl && adminToken) {
-    await checkHttp(checks, {
-      name: "admin-health",
-      url: appendPath(adminUrl, "/api/health"),
-      headers: { authorization: `Bearer ${adminToken}` },
-      parseJson: true,
-      validate: (payload) =>
-        Boolean(payload?.overall?.status && payload?.firebaseAdmin?.checks) &&
-        !["attention", "critical"].includes(payload?.overall?.status),
+  if (skipAdmin) {
+    checks.push({
+      name: "admin-checks",
+      ok: true,
+      skipped: true,
+      details: { reason: "ALTFT_MONITOR_SKIP_ADMIN=true" },
     });
     return;
   }
 
-  checks.push({
+  if (!adminUrl) {
+    checks.push({
+      name: "admin-url-configured",
+      ok: !requireAdmin && !requireAdminAuth,
+      skipped: true,
+      error: "ALTFT_MONITOR_ADMIN_URL is not configured.",
+    });
+    return;
+  }
+
+  for (const check of ADMIN_PUBLIC_CHECKS) {
+    await checkHttp(checks, {
+      ...check,
+      url: appendPath(adminUrl, check.path),
+    });
+  }
+
+  const bearerToken = await resolveAdminBearerToken(checks);
+
+  if (!bearerToken) {
+    checks.push({
+      name: "admin-authenticated-health",
+      ok: !requireAdminAuth,
+      skipped: true,
+      error:
+        "Configure ALTFT_MONITOR_ADMIN_TOKEN or ALTFT_MONITOR_ADMIN_EMAIL, ALTFT_MONITOR_ADMIN_PASSWORD, and ALTFT_MONITOR_FIREBASE_API_KEY.",
+    });
+    return;
+  }
+
+  await checkHttp(checks, {
+    name: "admin-me",
+    url: appendPath(adminUrl, "/api/admin/me"),
+    headers: { authorization: `Bearer ${bearerToken}` },
+    parseJson: true,
+    validate: (payload) => payload?.roleType === "superadmin" && Boolean(payload?.email),
+    summarize: (payload) => ({
+      email: maskEmail(payload?.email || ""),
+      roleType: payload?.roleType || null,
+    }),
+  });
+
+  await checkHttp(checks, {
     name: "admin-health",
-    ok: !requireAdmin && !requireAdminAuth,
-    skipped: true,
-    error: adminUrl
-      ? "ALTFT_MONITOR_ADMIN_TOKEN is not configured."
-      : "ALTFT_MONITOR_ADMIN_URL is not configured.",
+    url: appendPath(adminUrl, "/api/health?fresh=1"),
+    headers: { authorization: `Bearer ${bearerToken}` },
+    parseJson: true,
+    validate: (payload) =>
+      Boolean(payload?.overall?.status && payload?.firebaseAdmin?.checks) &&
+      ["healthy", "watch"].includes(payload?.overall?.status) &&
+      payload?.firebaseAdmin?.status === "ready" &&
+      payload?.firebaseLiveData?.status === "live",
   });
 }
 
@@ -369,13 +621,27 @@ const checks = [];
 
 await runWebChecks(checks);
 await runAdminChecks(checks);
-runFirebaseLiveDataCheck(checks);
+if (skipFirebaseLiveData) {
+  checks.push({
+    name: "firebase-live-data",
+    ok: true,
+    skipped: true,
+    details: { reason: "ALTFT_MONITOR_SKIP_FIREBASE_LIVE_DATA=true" },
+  });
+} else {
+  runFirebaseLiveDataCheck(checks);
+}
 
 const failures = checks.filter((check) => !check.ok);
 const report = {
   generatedAt: new Date().toISOString(),
   webUrls,
   adminUrl: adminUrl || null,
+  skipped: {
+    web: skipWeb,
+    admin: skipAdmin,
+    firebaseLiveData: skipFirebaseLiveData,
+  },
   timeoutMs,
   summary: {
     total: checks.length,
@@ -398,6 +664,7 @@ if (failures.length) {
   for (const failure of failures) {
     console.error(`- ${failure.name}: ${failure.error || failure.status || "failed"}`);
   }
+  await sendFailureAlert(report, failures);
   process.exit(1);
 }
 

@@ -12,6 +12,8 @@ const FIREBASE_ADMIN_ENV = [
   "FIREBASE_CLIENT_EMAIL",
   "FIREBASE_PRIVATE_KEY",
 ];
+const HEALTH_CHECK_COLLECTION = "altftool_health_checks";
+const MIN_PRIVATE_KEY_BODY_LENGTH = 64;
 
 function envValue(name) {
   return typeof process.env[name] === "string" ? process.env[name].trim() : "";
@@ -21,28 +23,77 @@ function normalizePrivateKey(value = "") {
   return value.replace(/\\n/g, "\n").trim();
 }
 
+function privateKeyBody(value = "") {
+  return normalizePrivateKey(value)
+    .replace("-----BEGIN PRIVATE KEY-----", "")
+    .replace("-----END PRIVATE KEY-----", "")
+    .replace(/\s+/g, "");
+}
+
+function privateKeyLooksUsable(value = "") {
+  const normalized = normalizePrivateKey(value);
+  const body = privateKeyBody(normalized);
+
+  return (
+    normalized.includes("-----BEGIN PRIVATE KEY-----") &&
+    normalized.includes("-----END PRIVATE KEY-----") &&
+    body.length >= MIN_PRIVATE_KEY_BODY_LENGTH
+  );
+}
+
+function parseServiceAccount(rawValue = "") {
+  const value = rawValue.trim();
+  if (!value) return { account: null, error: null };
+
+  try {
+    const parsed = JSON.parse(value);
+    return {
+      account: {
+        projectId: parsed.project_id || parsed.projectId || "",
+        clientEmail: parsed.client_email || parsed.clientEmail || "",
+        privateKey: parsed.private_key || parsed.privateKey || "",
+      },
+      error: null,
+    };
+  } catch {
+    return {
+      account: null,
+      error: "FIREBASE_SERVICE_ACCOUNT must be valid service-account JSON.",
+    };
+  }
+}
+
 function validateCredentials() {
-  const values = Object.fromEntries(FIREBASE_ADMIN_ENV.map((name) => [name, envValue(name)]));
+  const rawValues = Object.fromEntries(FIREBASE_ADMIN_ENV.map((name) => [name, envValue(name)]));
+  const { account: serviceAccount, error: serviceAccountError } = parseServiceAccount(
+    envValue("FIREBASE_SERVICE_ACCOUNT"),
+  );
+  const values = {
+    FIREBASE_PROJECT_ID: rawValues.FIREBASE_PROJECT_ID || serviceAccount?.projectId || "",
+    FIREBASE_CLIENT_EMAIL: rawValues.FIREBASE_CLIENT_EMAIL || serviceAccount?.clientEmail || "",
+    FIREBASE_PRIVATE_KEY: rawValues.FIREBASE_PRIVATE_KEY || serviceAccount?.privateKey || "",
+  };
   const privateKey = normalizePrivateKey(values.FIREBASE_PRIVATE_KEY);
   const missing = FIREBASE_ADMIN_ENV.filter((name) => !values[name]);
   const invalid = [];
+
+  if (serviceAccountError) {
+    invalid.push(serviceAccountError);
+  }
 
   if (values.FIREBASE_CLIENT_EMAIL && !values.FIREBASE_CLIENT_EMAIL.includes("@")) {
     invalid.push("FIREBASE_CLIENT_EMAIL must be a service-account email.");
   }
 
-  if (
-    values.FIREBASE_PRIVATE_KEY &&
-    (!privateKey.includes("-----BEGIN PRIVATE KEY-----") ||
-      !privateKey.includes("-----END PRIVATE KEY-----"))
-  ) {
-    invalid.push("FIREBASE_PRIVATE_KEY must be the full PEM private key.");
+  if (values.FIREBASE_PRIVATE_KEY && !privateKeyLooksUsable(privateKey)) {
+    invalid.push("FIREBASE_PRIVATE_KEY must be the full PEM private key, including the encoded key body.");
   }
 
   return {
     ok: missing.length === 0 && invalid.length === 0,
     missing,
     invalid,
+    serviceAccountConfigured: Boolean(envValue("FIREBASE_SERVICE_ACCOUNT")),
     values: {
       projectId: values.FIREBASE_PROJECT_ID,
       clientEmail: values.FIREBASE_CLIENT_EMAIL,
@@ -90,7 +141,7 @@ async function fetchJson(url, options = {}) {
 async function runEmulatorCheck({ projectId, checkId }) {
   const host = envValue("FIRESTORE_EMULATOR_HOST");
   const baseUrl = `http://${host}/v1/projects/${projectId}/databases/(default)/documents`;
-  const documentUrl = `${baseUrl}/__altftool_health_checks__/${checkId}`;
+  const documentUrl = `${baseUrl}/${HEALTH_CHECK_COLLECTION}/${checkId}`;
   const payload = {
     fields: {
       checkId: firestoreRestValue(checkId),
@@ -134,7 +185,7 @@ async function runAdminSdkCheck({ credentials, checkId }) {
 
   const app = getApps()[0] || initializeApp(createAppOptions(credentials, cert));
   const db = getFirestore(app);
-  const docRef = db.collection("__altftool_health_checks__").doc(checkId);
+  const docRef = db.collection(HEALTH_CHECK_COLLECTION).doc(checkId);
   let wroteDocument = false;
 
   try {
@@ -175,6 +226,7 @@ if (useDryRun) {
     mode,
     emulator: useEmulator,
     credentialReady: credentials.ok,
+    serviceAccountConfigured: credentials.serviceAccountConfigured,
     missing: credentials.missing,
     invalid: credentials.invalid,
   }, null, 2));
@@ -206,7 +258,7 @@ try {
   console.log(JSON.stringify({
     mode,
     emulator: useEmulator,
-    collection: "__altftool_health_checks__",
+    collection: HEALTH_CHECK_COLLECTION,
     checkedDocument: checkId,
   }, null, 2));
 } catch (error) {
@@ -214,7 +266,7 @@ try {
   console.error("Firebase Admin write check failed.");
   console.error(JSON.stringify({
     message: error?.message || String(error),
-    collection: "__altftool_health_checks__",
+    collection: HEALTH_CHECK_COLLECTION,
     checkedDocument: checkId,
   }, null, 2));
 }

@@ -1,0 +1,815 @@
+{
+  "ok": true,
+  "score": 100,
+  "scope": "standard",
+  "webUrl": "http://localhost:3002",
+  "adminUrl": "http://localhost:3001",
+  "dryRun": false,
+  "checkedAt": "2026-05-16T16:56:30.106Z",
+  "activePass": "warm",
+  "profileMode": "cold-warm",
+  "totals": {
+    "routes": 162,
+    "browserProbes": 15,
+    "failures": 0,
+    "warnings": 0,
+    "slowRoutes": 0
+  },
+  "performance": {
+    "thresholdMs": 2500,
+    "averageMs": 357,
+    "p95Ms": 1730,
+    "maxMs": 2067,
+    "slowRoutes": [],
+    "slowest": [
+      {
+        "app": "admin",
+        "group": "admin protected browser probe",
+        "route": "/altftool/extensions",
+        "status": 200,
+        "durationMs": 2067,
+        "ok": true,
+        "issues": [],
+        "warnings": []
+      },
+      {
+        "app": "admin",
+        "group": "admin protected browser probe",
+        "route": "/altftool/blogs",
+        "status": 200,
+        "durationMs": 2064,
+        "ok": true,
+        "issues": [],
+        "warnings": []
+      },
+      {
+        "app": "admin",
+        "group": "admin protected browser probe",
+        "route": "/altftool/blogs/add-blogs",
+        "status": 200,
+        "durationMs": 2064,
+        "ok": true,
+        "issues": [],
+        "warnings": []
+      },
+      {
+        "app": "web",
+        "group": "browser probe",
+        "route": "/tools/all/api-stress-estimator",
+        "status": 200,
+        "durationMs": 1810,
+        "ok": true,
+        "issues": [],
+        "warnings": []
+      },
+      {
+        "app": "admin",
+        "group": "admin protected browser probe",
+        "route": "/health",
+        "status": 200,
+        "durationMs": 1789,
+        "ok": true,
+        "issues": [],
+        "warnings": []
+      },
+      {
+        "app": "admin",
+        "group": "admin protected browser probe",
+        "route": "/support",
+        "status": 200,
+        "durationMs": 1784,
+        "ok": true,
+        "issues": [],
+        "warnings": []
+      },
+      {
+        "app": "admin",
+        "group": "admin protected browser probe",
+        "route": "/tickets",
+        "status": 200,
+        "durationMs": 1782,
+        "ok": true,
+        "issues": [],
+        "warnings": []
+      },
+      {
+        "app": "web",
+        "group": "browser probe",
+        "route": "/blogs",
+        "status": 200,
+        "durationMs": 1765,
+        "ok": true,
+        "issues": [],
+        "warnings": []
+      },
+      {
+        "app": "web",
+        "group": "browser probe",
+        "route": "/",
+        "status": 200,
+        "durationMs": 1730,
+        "ok": true,
+        "issues": [],
+        "warnings": []
+      },
+      {
+        "app": "web",
+        "group": "browser probe",
+        "route": "/blogs/age-calculator-guide",
+        "status": 200,
+        "durationMs": 1721,
+        "ok": true,
+        "issues": [],
+        "warnings": []
+      },
+      {
+        "app": "web",
+        "group": "browser probe",
+        "route": "/tools/all",
+        "status": 200,
+        "durationMs": 1712,
+        "ok": true,
+        "issues": [],
+        "warnings": []
+      },
+      {
+        "app": "web",
+        "group": "browser probe",
+        "route": "/buysmart",
+        "status": 200,
+        "durationMs": 1708,
+        "ok": true,
+        "issues": [],
+        "warnings": []
+      },
+      {
+        "app": "web",
+        "group": "web core",
+        "route": "/blogs",
+        "status": 200,
+        "durationMs": 1294,
+        "ok": true,
+        "issues": [],
+        "warnings": []
+      },
+      {
+        "app": "admin",
+        "group": "admin protected browser probe",
+        "route": "/analytics",
+        "status": 200,
+        "durationMs": 1166,
+        "ok": true,
+        "issues": [],
+        "warnings": []
+      },
+      {
+        "app": "admin",
+        "group": "admin protected browser probe",
+        "route": "/admin-management",
+        "status": 200,
+        "durationMs": 1156,
+        "ok": true,
+        "issues": [],
+        "warnings": []
+      }
+    ]
+  },
+  "routeGroups": {
+    "web:web core": 16,
+    "web:web api": 1,
+    "web:tool category": 53,
+    "web:tool detail": 80,
+    "web:blog detail": 8,
+    "admin:admin public": 3,
+    "admin:admin authenticated api": 1
+  },
+  "failures": [],
+  "warnings": [],
+  "passes": {
+    "cold": {
+      "label": "cold",
+      "ok": true,
+      "totals": {
+        "routes": 162,
+        "browserProbes": 15,
+        "failures": 0,
+        "warnings": 0,
+        "slowRoutes": 26
+      },
+      "performance": {
+        "thresholdMs": 2500,
+        "averageMs": 1103,
+        "p95Ms": 4910,
+        "maxMs": 9228,
+        "slowRoutes": [
+          {
+            "app": "web",
+            "group": "web core",
+            "route": "/sitemap.xml",
+            "status": 200,
+            "durationMs": 9228,
+            "ok": true,
+            "issues": [],
+            "warnings": []
+          },
+          {
+            "app": "web",
+            "group": "web core",
+            "route": "/rss.xml",
+            "status": 200,
+            "durationMs": 9176,
+            "ok": true,
+            "issues": [],
+            "warnings": []
+          },
+          {
+            "app": "web",
+            "group": "tool detail",
+            "route": "/tools/all/api-stress-estimator",
+            "status": 200,
+            "durationMs": 7273,
+            "ok": true,
+            "issues": [],
+            "warnings": []
+          },
+          {
+            "app": "web",
+            "group": "tool detail",
+            "route": "/tools/developer/api-stress-estimator",
+            "status": 200,
+            "durationMs": 7272,
+            "ok": true,
+            "issues": [],
+            "warnings": []
+          },
+          {
+            "app": "web",
+            "group": "tool detail",
+            "route": "/tools/all/json-editor",
+            "status": 200,
+            "durationMs": 7262,
+            "ok": true,
+            "issues": [],
+            "warnings": []
+          },
+          {
+            "app": "web",
+            "group": "web api",
+            "route": "/api/health",
+            "status": 200,
+            "durationMs": 6982,
+            "ok": true,
+            "issues": [],
+            "warnings": []
+          },
+          {
+            "app": "web",
+            "group": "tool detail",
+            "route": "/tools/developer/json-editor",
+            "status": 200,
+            "durationMs": 5734,
+            "ok": true,
+            "issues": [],
+            "warnings": []
+          },
+          {
+            "app": "web",
+            "group": "blog detail",
+            "route": "/blogs/age-calculator-guide",
+            "status": 200,
+            "durationMs": 4913,
+            "ok": true,
+            "issues": [],
+            "warnings": []
+          },
+          {
+            "app": "web",
+            "group": "blog detail",
+            "route": "/blogs/flappy-game-online",
+            "status": 200,
+            "durationMs": 4910,
+            "ok": true,
+            "issues": [],
+            "warnings": []
+          },
+          {
+            "app": "web",
+            "group": "blog detail",
+            "route": "/blogs/youtube-downloader-extension",
+            "status": 200,
+            "durationMs": 4817,
+            "ok": true,
+            "issues": [],
+            "warnings": []
+          },
+          {
+            "app": "web",
+            "group": "blog detail",
+            "route": "/blogs/grammar-checker-extension",
+            "status": 200,
+            "durationMs": 4805,
+            "ok": true,
+            "issues": [],
+            "warnings": []
+          },
+          {
+            "app": "web",
+            "group": "blog detail",
+            "route": "/blogs/best-word-counter-tools",
+            "status": 200,
+            "durationMs": 4803,
+            "ok": true,
+            "issues": [],
+            "warnings": []
+          },
+          {
+            "app": "web",
+            "group": "blog detail",
+            "route": "/blogs/online-chess-game",
+            "status": 200,
+            "durationMs": 4801,
+            "ok": true,
+            "issues": [],
+            "warnings": []
+          },
+          {
+            "app": "web",
+            "group": "browser probe",
+            "route": "/blogs/age-calculator-guide",
+            "status": 200,
+            "durationMs": 4417,
+            "ok": true,
+            "issues": [],
+            "warnings": []
+          },
+          {
+            "app": "web",
+            "group": "browser probe",
+            "route": "/buysmart",
+            "status": 200,
+            "durationMs": 4312,
+            "ok": true,
+            "issues": [],
+            "warnings": []
+          },
+          {
+            "app": "web",
+            "group": "web core",
+            "route": "/brandrating",
+            "status": 200,
+            "durationMs": 4049,
+            "ok": true,
+            "issues": [],
+            "warnings": []
+          },
+          {
+            "app": "web",
+            "group": "web core",
+            "route": "/academy",
+            "status": 200,
+            "durationMs": 4023,
+            "ok": true,
+            "issues": [],
+            "warnings": []
+          },
+          {
+            "app": "web",
+            "group": "web core",
+            "route": "/trendingvids",
+            "status": 200,
+            "durationMs": 4022,
+            "ok": true,
+            "issues": [],
+            "warnings": []
+          },
+          {
+            "app": "web",
+            "group": "web core",
+            "route": "/exclusivedeals",
+            "status": 200,
+            "durationMs": 4019,
+            "ok": true,
+            "issues": [],
+            "warnings": []
+          },
+          {
+            "app": "web",
+            "group": "web core",
+            "route": "/search",
+            "status": 200,
+            "durationMs": 4017,
+            "ok": true,
+            "issues": [],
+            "warnings": []
+          },
+          {
+            "app": "web",
+            "group": "web core",
+            "route": "/policypages/privacy",
+            "status": 200,
+            "durationMs": 3996,
+            "ok": true,
+            "issues": [],
+            "warnings": []
+          },
+          {
+            "app": "web",
+            "group": "web core",
+            "route": "/policypages/termsandconditions",
+            "status": 200,
+            "durationMs": 3795,
+            "ok": true,
+            "issues": [],
+            "warnings": []
+          },
+          {
+            "app": "web",
+            "group": "tool category",
+            "route": "/tools/3d",
+            "status": 200,
+            "durationMs": 3767,
+            "ok": true,
+            "issues": [],
+            "warnings": []
+          },
+          {
+            "app": "web",
+            "group": "tool detail",
+            "route": "/tools/all/csv-converter",
+            "status": 200,
+            "durationMs": 3537,
+            "ok": true,
+            "issues": [],
+            "warnings": []
+          },
+          {
+            "app": "web",
+            "group": "tool detail",
+            "route": "/tools/developer/csv-converter",
+            "status": 200,
+            "durationMs": 3486,
+            "ok": true,
+            "issues": [],
+            "warnings": []
+          },
+          {
+            "app": "web",
+            "group": "web core",
+            "route": "/robots.txt",
+            "status": 200,
+            "durationMs": 3137,
+            "ok": true,
+            "issues": [],
+            "warnings": []
+          }
+        ],
+        "slowest": [
+          {
+            "app": "web",
+            "group": "web core",
+            "route": "/sitemap.xml",
+            "status": 200,
+            "durationMs": 9228,
+            "ok": true,
+            "issues": [],
+            "warnings": []
+          },
+          {
+            "app": "web",
+            "group": "web core",
+            "route": "/rss.xml",
+            "status": 200,
+            "durationMs": 9176,
+            "ok": true,
+            "issues": [],
+            "warnings": []
+          },
+          {
+            "app": "web",
+            "group": "tool detail",
+            "route": "/tools/all/api-stress-estimator",
+            "status": 200,
+            "durationMs": 7273,
+            "ok": true,
+            "issues": [],
+            "warnings": []
+          },
+          {
+            "app": "web",
+            "group": "tool detail",
+            "route": "/tools/developer/api-stress-estimator",
+            "status": 200,
+            "durationMs": 7272,
+            "ok": true,
+            "issues": [],
+            "warnings": []
+          },
+          {
+            "app": "web",
+            "group": "tool detail",
+            "route": "/tools/all/json-editor",
+            "status": 200,
+            "durationMs": 7262,
+            "ok": true,
+            "issues": [],
+            "warnings": []
+          },
+          {
+            "app": "web",
+            "group": "web api",
+            "route": "/api/health",
+            "status": 200,
+            "durationMs": 6982,
+            "ok": true,
+            "issues": [],
+            "warnings": []
+          },
+          {
+            "app": "web",
+            "group": "tool detail",
+            "route": "/tools/developer/json-editor",
+            "status": 200,
+            "durationMs": 5734,
+            "ok": true,
+            "issues": [],
+            "warnings": []
+          },
+          {
+            "app": "web",
+            "group": "blog detail",
+            "route": "/blogs/age-calculator-guide",
+            "status": 200,
+            "durationMs": 4913,
+            "ok": true,
+            "issues": [],
+            "warnings": []
+          },
+          {
+            "app": "web",
+            "group": "blog detail",
+            "route": "/blogs/flappy-game-online",
+            "status": 200,
+            "durationMs": 4910,
+            "ok": true,
+            "issues": [],
+            "warnings": []
+          },
+          {
+            "app": "web",
+            "group": "blog detail",
+            "route": "/blogs/youtube-downloader-extension",
+            "status": 200,
+            "durationMs": 4817,
+            "ok": true,
+            "issues": [],
+            "warnings": []
+          },
+          {
+            "app": "web",
+            "group": "blog detail",
+            "route": "/blogs/grammar-checker-extension",
+            "status": 200,
+            "durationMs": 4805,
+            "ok": true,
+            "issues": [],
+            "warnings": []
+          },
+          {
+            "app": "web",
+            "group": "blog detail",
+            "route": "/blogs/best-word-counter-tools",
+            "status": 200,
+            "durationMs": 4803,
+            "ok": true,
+            "issues": [],
+            "warnings": []
+          },
+          {
+            "app": "web",
+            "group": "blog detail",
+            "route": "/blogs/online-chess-game",
+            "status": 200,
+            "durationMs": 4801,
+            "ok": true,
+            "issues": [],
+            "warnings": []
+          },
+          {
+            "app": "web",
+            "group": "browser probe",
+            "route": "/blogs/age-calculator-guide",
+            "status": 200,
+            "durationMs": 4417,
+            "ok": true,
+            "issues": [],
+            "warnings": []
+          },
+          {
+            "app": "web",
+            "group": "browser probe",
+            "route": "/buysmart",
+            "status": 200,
+            "durationMs": 4312,
+            "ok": true,
+            "issues": [],
+            "warnings": []
+          }
+        ]
+      },
+      "routeGroups": {
+        "web:web core": 16,
+        "web:web api": 1,
+        "web:tool category": 53,
+        "web:tool detail": 80,
+        "web:blog detail": 8,
+        "admin:admin public": 3,
+        "admin:admin authenticated api": 1
+      },
+      "failures": [],
+      "warnings": [],
+      "score": 80
+    },
+    "warm": {
+      "label": "warm",
+      "ok": true,
+      "totals": {
+        "routes": 162,
+        "browserProbes": 15,
+        "failures": 0,
+        "warnings": 0,
+        "slowRoutes": 0
+      },
+      "performance": {
+        "thresholdMs": 2500,
+        "averageMs": 357,
+        "p95Ms": 1730,
+        "maxMs": 2067,
+        "slowRoutes": [],
+        "slowest": [
+          {
+            "app": "admin",
+            "group": "admin protected browser probe",
+            "route": "/altftool/extensions",
+            "status": 200,
+            "durationMs": 2067,
+            "ok": true,
+            "issues": [],
+            "warnings": []
+          },
+          {
+            "app": "admin",
+            "group": "admin protected browser probe",
+            "route": "/altftool/blogs",
+            "status": 200,
+            "durationMs": 2064,
+            "ok": true,
+            "issues": [],
+            "warnings": []
+          },
+          {
+            "app": "admin",
+            "group": "admin protected browser probe",
+            "route": "/altftool/blogs/add-blogs",
+            "status": 200,
+            "durationMs": 2064,
+            "ok": true,
+            "issues": [],
+            "warnings": []
+          },
+          {
+            "app": "web",
+            "group": "browser probe",
+            "route": "/tools/all/api-stress-estimator",
+            "status": 200,
+            "durationMs": 1810,
+            "ok": true,
+            "issues": [],
+            "warnings": []
+          },
+          {
+            "app": "admin",
+            "group": "admin protected browser probe",
+            "route": "/health",
+            "status": 200,
+            "durationMs": 1789,
+            "ok": true,
+            "issues": [],
+            "warnings": []
+          },
+          {
+            "app": "admin",
+            "group": "admin protected browser probe",
+            "route": "/support",
+            "status": 200,
+            "durationMs": 1784,
+            "ok": true,
+            "issues": [],
+            "warnings": []
+          },
+          {
+            "app": "admin",
+            "group": "admin protected browser probe",
+            "route": "/tickets",
+            "status": 200,
+            "durationMs": 1782,
+            "ok": true,
+            "issues": [],
+            "warnings": []
+          },
+          {
+            "app": "web",
+            "group": "browser probe",
+            "route": "/blogs",
+            "status": 200,
+            "durationMs": 1765,
+            "ok": true,
+            "issues": [],
+            "warnings": []
+          },
+          {
+            "app": "web",
+            "group": "browser probe",
+            "route": "/",
+            "status": 200,
+            "durationMs": 1730,
+            "ok": true,
+            "issues": [],
+            "warnings": []
+          },
+          {
+            "app": "web",
+            "group": "browser probe",
+            "route": "/blogs/age-calculator-guide",
+            "status": 200,
+            "durationMs": 1721,
+            "ok": true,
+            "issues": [],
+            "warnings": []
+          },
+          {
+            "app": "web",
+            "group": "browser probe",
+            "route": "/tools/all",
+            "status": 200,
+            "durationMs": 1712,
+            "ok": true,
+            "issues": [],
+            "warnings": []
+          },
+          {
+            "app": "web",
+            "group": "browser probe",
+            "route": "/buysmart",
+            "status": 200,
+            "durationMs": 1708,
+            "ok": true,
+            "issues": [],
+            "warnings": []
+          },
+          {
+            "app": "web",
+            "group": "web core",
+            "route": "/blogs",
+            "status": 200,
+            "durationMs": 1294,
+            "ok": true,
+            "issues": [],
+            "warnings": []
+          },
+          {
+            "app": "admin",
+            "group": "admin protected browser probe",
+            "route": "/analytics",
+            "status": 200,
+            "durationMs": 1166,
+            "ok": true,
+            "issues": [],
+            "warnings": []
+          },
+          {
+            "app": "admin",
+            "group": "admin protected browser probe",
+            "route": "/admin-management",
+            "status": 200,
+            "durationMs": 1156,
+            "ok": true,
+            "issues": [],
+            "warnings": []
+          }
+        ]
+      },
+      "routeGroups": {
+        "web:web core": 16,
+        "web:web api": 1,
+        "web:tool category": 53,
+        "web:tool detail": 80,
+        "web:blog detail": 8,
+        "admin:admin public": 3,
+        "admin:admin authenticated api": 1
+      },
+      "failures": [],
+      "warnings": [],
+      "score": 100
+    }
+  }
+}

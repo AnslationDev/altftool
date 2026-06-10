@@ -22,6 +22,9 @@ import {
   ChevronsLeft, ChevronsRight,
   Maximize2, Minimize2, Columns3, Search, X, SearchCheck,
 } from "lucide-react";
+import AdminDataState from "@/components/admin/AdminDataState";
+
+const BLOG_TABLE_PREFS_KEY = "altftool-admin:blog-table:v2";
 
 /* ── Tooltip ── */
 function Tooltip({ label, children, direction = "top" }) {
@@ -128,6 +131,13 @@ function ColumnPanel({ table, onClose }) {
           );
         })}
       </div>
+      <button
+        type="button"
+        onClick={() => table.getAllLeafColumns().forEach((column) => column.toggleVisibility(true))}
+        className="mt-3 w-full rounded-lg border border-gray-200 bg-gray-50 px-3 py-2 text-xs font-bold text-gray-700 transition hover:bg-gray-100"
+      >
+        Show all columns
+      </button>
     </div>
   );
 }
@@ -165,6 +175,7 @@ export default function BlogTable({
   const [showColumnPanel, setShowColumnPanel] = useState(false);
   const [columnVisibility, setColumnVisibility] = useState({});
   const [columnSizing, setColumnSizing]     = useState({});
+  const [preferencesReady, setPreferencesReady] = useState(false);
   const columnPanelRef                      = useRef(null);
 
   const { page, pageSize } = paginationModel;
@@ -186,6 +197,36 @@ export default function BlogTable({
     document.body.style.overflow = isFullscreen ? "hidden" : "";
     return () => { document.body.style.overflow = ""; };
   }, [isFullscreen]);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    try {
+      const saved = JSON.parse(window.localStorage.getItem(BLOG_TABLE_PREFS_KEY) || "{}");
+      if (saved.columnVisibility && typeof saved.columnVisibility === "object") {
+        setColumnVisibility(saved.columnVisibility);
+      }
+      if (saved.columnSizing && typeof saved.columnSizing === "object") {
+        setColumnSizing(saved.columnSizing);
+      }
+    } catch {
+      // Broken table preferences should not block the admin table.
+    } finally {
+      setPreferencesReady(true);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!preferencesReady || typeof window === "undefined") return;
+
+    window.localStorage.setItem(
+      BLOG_TABLE_PREFS_KEY,
+      JSON.stringify({
+        columnVisibility,
+        columnSizing,
+      }),
+    );
+  }, [columnSizing, columnVisibility, preferencesReady]);
 
   /* ── Toggle publish status ── */
   const togglePublish = async (blog) => {
@@ -354,6 +395,8 @@ export default function BlogTable({
             <div className="relative" ref={columnPanelRef}>
               <Tooltip label="Toggle columns" direction="bottom">
                 <button onClick={() => setShowColumnPanel((v) => !v)}
+                  type="button"
+                  aria-label="Toggle blog table columns"
                   className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition border ${showColumnPanel ? "bg-blue-50 border-blue-200 text-blue-600" : "bg-white border-gray-200 text-gray-600 hover:bg-gray-100"}`}>
                   <Columns3 className="w-3.5 h-3.5" />Columns
                 </button>
@@ -362,6 +405,8 @@ export default function BlogTable({
             </div>
             <Tooltip label={isFullscreen ? "Exit fullscreen" : "Fullscreen"} direction="bottom">
               <button onClick={() => setIsFullscreen((v) => !v)}
+                type="button"
+                aria-label={isFullscreen ? "Exit blog table fullscreen" : "Open blog table fullscreen"}
                 className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium bg-white border border-gray-200 text-gray-600 hover:bg-gray-100 transition">
                 {isFullscreen ? <Minimize2 className="w-3.5 h-3.5" /> : <Maximize2 className="w-3.5 h-3.5" />}
                 {isFullscreen ? "Exit" : "Fullscreen"}
@@ -430,10 +475,14 @@ export default function BlogTable({
             ) : table.getRowModel().rows.length === 0 ? (
               <tr>
                 <td colSpan={columns.length} className="px-4 py-16 text-center">
-                  <div className="flex flex-col items-center gap-2 text-gray-400">
-                    <span className="text-3xl">📝</span>
-                    <span className="text-sm">No blogs found</span>
-                  </div>
+                  <AdminDataState
+                    type="empty"
+                    compact
+                    title={search ? "No matching blogs" : "No blogs found"}
+                    message={search ? `No blog rows match "${search}". Clear search or switch tabs to review more content.` : "Create a draft or refresh Firebase data to populate this view."}
+                    icon={SearchCheck}
+                    actions={search ? [{ label: "Clear search", onClick: () => onSearch?.(""), icon: X }] : []}
+                  />
                 </td>
               </tr>
             ) : (

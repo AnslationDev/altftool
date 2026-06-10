@@ -5,7 +5,6 @@
 import React, { useState, useRef } from 'react';
 
 import { User, Briefcase, GraduationCap, Code, Award, Mail, Phone, MapPin, Linkedin, Github, Globe, Download, Eye, Edit3, Plus, Trash2, CheckCircle, AlertCircle, Sparkles } from 'lucide-react';
-import html2canvas from 'html2canvas';
 
 import Description from "../components/Description";
 
@@ -561,4 +560,3 @@ const TextAreaField = ({ label, value, onChange, placeholder, rows = 3 }) => (
     <textarea value={value} onChange={(e) => onChange(e.target.value)} placeholder={placeholder} rows={rows} className="w-full px-3 py-2 border border-(--border) rounded-lg  text-sm resize-none" />
   </div>
 );
-

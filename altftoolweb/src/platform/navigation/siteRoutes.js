@@ -1,4 +1,5 @@
 import {
+  Activity,
   BookOpen,
   GraduationCap,
   LayoutGrid,
@@ -25,6 +26,7 @@ export const SITE_ROUTES = {
   blogs: { label: "Blog", href: "/blogs" },
   brandRatings: { label: "Brand Ratings", href: "/brandrating" },
   support: { label: "Support", href: "/supportsetting" },
+  status: { label: "Status", href: "/status" },
   news: { label: "News", href: "/news" },
   desktop: { label: "Desktop Software", href: "/desktop" },
   trendingVideos: { label: "Trending Videos", href: "/trendingvids" },
@@ -68,6 +70,7 @@ export const PUBLIC_NAV_ITEMS = [
     icon: LayoutGrid,
     options: [
       { ...SITE_ROUTES.desktop, icon: Monitor },
+      { ...SITE_ROUTES.status, icon: Activity },
       { ...SITE_ROUTES.trendingVideos, icon: Sparkles },
       { ...SITE_ROUTES.personality, icon: Sparkles },
       { ...SITE_ROUTES.top11, icon: Trophy },
@@ -106,6 +109,7 @@ export const FOOTER_ROUTE_GROUPS = [
       SITE_ROUTES.blogs,
       SITE_ROUTES.news,
       SITE_ROUTES.support,
+      SITE_ROUTES.status,
     ],
   },
   {

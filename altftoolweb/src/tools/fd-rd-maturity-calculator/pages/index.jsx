@@ -19,11 +19,11 @@ import {
   Bar,
   BarChart,
   CartesianGrid,
-  ResponsiveContainer,
   Tooltip,
   XAxis,
   YAxis,
 } from "recharts";
+import ResponsiveContainer from "@/components/charts/SafeResponsiveContainer";
 
 const SAMPLE = {
   mode: "fd",
@@ -463,7 +463,7 @@ export default function FdRdMaturityCalculator() {
                 </div>
               </div>
               <div className="h-72 min-w-0">
-                <ResponsiveContainer width="100%" height="100%">
+                <ResponsiveContainer width="100%" height="100%" minWidth={1} minHeight={1}>
                   <AreaChart data={metrics.rows} margin={{ top: 10, right: 10, left: 0, bottom: 0 }}>
                     <defs>
                       <linearGradient id="fdValue" x1="0" y1="0" x2="0" y2="1">
@@ -494,7 +494,7 @@ export default function FdRdMaturityCalculator() {
                   </div>
                 </div>
                 <div className="h-64 min-w-0">
-                  <ResponsiveContainer width="100%" height="100%">
+                  <ResponsiveContainer width="100%" height="100%" minWidth={1} minHeight={1}>
                     <BarChart data={metrics.yearlyRows} margin={{ top: 10, right: 8, left: 0, bottom: 0 }}>
                       <XAxis dataKey="label" tick={{ fill: "var(--muted-foreground)", fontSize: 11 }} />
                       <YAxis width={56} tickFormatter={(value) => formatMoney(value, true)} tick={{ fill: "var(--muted-foreground)", fontSize: 11 }} />

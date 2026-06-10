@@ -1,4 +1,4 @@
-export default {
+const toolConfig = {
     slug: "golden-ratio-visualizer",
     name: "Golden Ratio Visualizer",
     category: ["Design", "Art", "Education"],
@@ -6,3 +6,5 @@ export default {
     icon: "compass",
     iconColor: "text-amber-600",
 };
+
+export default toolConfig;

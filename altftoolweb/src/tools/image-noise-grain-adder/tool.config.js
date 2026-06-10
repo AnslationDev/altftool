@@ -1,4 +1,4 @@
-export default {
+const toolConfig = {
   slug: "image-noise-grain-adder",
   name: "Image Noise & Grain Adder",
   category: "Creators",
@@ -6,3 +6,5 @@ export default {
   icon: "image",
   iconColor: "text-blue-500",
 };
+
+export default toolConfig;

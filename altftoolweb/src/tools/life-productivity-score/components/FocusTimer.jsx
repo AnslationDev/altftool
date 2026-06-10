@@ -83,7 +83,9 @@ const FocusTimer = () => {
     };
 
     // Flipped Progress: Starts full (100%) and goes to 0%
-    const progress = (timeLeft / totalDuration) * 100;
+    const timerCircumference = 2 * Math.PI * 82;
+    const progress = totalDuration ? (timeLeft / totalDuration) * 100 : 0;
+    const timerOffset = timerCircumference * (1 - progress / 100);
 
     return (
         <Card variant="glass" className="h-full flex flex-col items-center justify-between p-6 shadow-sm border-white/10 dark:border-white/5">
@@ -126,8 +128,9 @@ const FocusTimer = () => {
                             cx="90" cy="90" r="82" fill="none"
                             stroke={isBreak ? "#10b981" : "#3b82f6"}
                             strokeWidth="6" strokeLinecap="round"
-                            strokeDasharray={2 * Math.PI * 82}
-                            animate={{ strokeDashoffset: (2 * Math.PI * 82) * (1 - progress / 100) }}
+                            strokeDasharray={timerCircumference}
+                            initial={{ strokeDashoffset: timerCircumference }}
+                            animate={{ strokeDashoffset: timerOffset }}
                             transition={{ duration: 1, ease: "linear" }}
                         />
                     </svg>

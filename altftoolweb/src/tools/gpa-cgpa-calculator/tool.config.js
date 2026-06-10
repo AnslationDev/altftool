@@ -1,4 +1,4 @@
-export default {
+const toolConfig = {
   slug: "gpa-cgpa-calculator",
   name: "GPA / CGPA Calculator",
   category: "Education",
@@ -6,3 +6,5 @@ export default {
   icon: "calculator",
   iconColor: "text-blue-600",
 };
+
+export default toolConfig;

@@ -2,77 +2,10 @@
 
 import { ChevronDown, ListTree } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
-
-function slugify(text) {
-  return text
-    .toLowerCase()
-    .replace(/[^\w\s-]/g, "")
-    .trim()
-    .replace(/\s+/g, "-");
-}
-
-function decodeHtmlEntities(text) {
-  return text
-    .replace(/&nbsp;/gi, " ")
-    .replace(/&amp;/gi, "&")
-    .replace(/&lt;/gi, "<")
-    .replace(/&gt;/gi, ">")
-    .replace(/&quot;/gi, '"')
-    .replace(/&#39;/gi, "'");
-}
-
-function getHeadingText(innerHtml) {
-  return decodeHtmlEntities(innerHtml.replace(/<[^>]*>/g, " "))
-    .replace(/\s+/g, " ")
-    .trim();
-}
-
-function createHeadingId(text, seen) {
-  let base = slugify(text);
-  if (!base) base = "heading";
-
-  seen[base] = (seen[base] || 0) + 1;
-  return seen[base] > 1 ? `${base}-${seen[base]}` : base;
-}
+import { extractHeadings } from "../../utils/articleHeadings";
 
 function cx(...classes) {
   return classes.filter(Boolean).join(" ");
-}
-
-function extractHeadings(htmlContent) {
-  const seen = {};
-  const headings = [];
-  const headingPattern = /<h([1-4])\b[^>]*>([\s\S]*?)<\/h\1>/gi;
-  let match;
-
-  while ((match = headingPattern.exec(htmlContent))) {
-    const text = getHeadingText(match[2]);
-    if (!text) continue;
-
-    headings.push({
-      id: createHeadingId(text, seen),
-      text,
-      level: Number(match[1]),
-    });
-  }
-
-  return headings;
-}
-
-function injectIds(htmlContent) {
-  const seen = {};
-  return htmlContent.replace(
-    /<h([1-4])\b([^>]*)>([\s\S]*?)<\/h\1>/gi,
-    (match, level, attrs, innerHtml) => {
-      const text = getHeadingText(innerHtml);
-      if (!text) return match;
-
-      const id = createHeadingId(text, seen);
-      const attrsWithoutId = attrs.replace(/\s+id=(?:"[^"]*"|'[^']*'|[^\s>]+)/i, "");
-
-      return `<h${level}${attrsWithoutId} id="${id}">${innerHtml}</h${level}>`;
-    },
-  );
 }
 
 /* ─────────────────────────────────────────
@@ -135,7 +68,7 @@ export default function BlogTableOfContents({
     <aside
       aria-label="Table of contents"
       className={cx(
-        "rounded-[var(--anslation-ds-radius)] border border-(--border) bg-(--card) p-4 shadow-[var(--anslation-ds-shadow-sm)]",
+        "rounded-[var(--anslation-ds-radius)] border border-(--border) bg-(--card) p-3 shadow-[var(--anslation-ds-shadow-sm)] sm:p-4",
         "lg:sticky lg:top-24 lg:max-h-[calc(100vh-7rem)] lg:overflow-y-auto",
         className,
       )}
@@ -145,7 +78,7 @@ export default function BlogTableOfContents({
           type="button"
           onClick={() => setIsOpen((value) => !value)}
           aria-expanded={isOpen}
-          className="flex w-full items-center justify-between gap-3 rounded-[6px] text-left"
+          className="flex min-h-10 w-full items-center justify-between gap-3 rounded-[6px] text-left"
         >
           <span className="flex min-w-0 items-center gap-2">
             <ListTree className="h-4 w-4 shrink-0 text-(--primary)" />
@@ -179,7 +112,7 @@ export default function BlogTableOfContents({
 
       {(!collapsible || isOpen) ? (
       <nav className={collapsible ? "mt-3" : undefined}>
-        <ul className="flex list-none flex-col gap-1 p-0">
+        <ul className="flex max-h-[45vh] list-none flex-col gap-1 overflow-y-auto p-0 sm:max-h-none sm:overflow-visible">
           {headings.map(({ id, text, level }) => {
             const isActive = activeId === id;
             const indentClass =
@@ -194,7 +127,10 @@ export default function BlogTableOfContents({
             return (
               <li key={id}>
                 <button
+                  type="button"
                   onClick={() => handleClick(id)}
+                  aria-current={isActive ? "location" : undefined}
+                  aria-label={`Jump to ${text}`}
                   title={text}
                   className={cx(
                     "line-clamp-2 w-full rounded-[6px] border-l-2 py-1.5 pr-2 text-left leading-snug transition",
@@ -216,8 +152,3 @@ export default function BlogTableOfContents({
     </aside>
   );
 }
-
-/* ─────────────────────────────────────────
-   Export helper so BlogContent can use it
-───────────────────────────────────────── */
-export { injectIds };

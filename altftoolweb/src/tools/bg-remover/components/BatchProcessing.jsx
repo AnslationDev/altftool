@@ -1,15 +1,20 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import JSZip from "jszip";
 import {CircleCheck} from "lucide-react";
 
 let backgroundRemovalModulePromise;
+let jsZipPromise;
 
 async function removeImageBackground(file) {
   backgroundRemovalModulePromise ||= import("@imgly/background-removal");
   const { removeBackground } = await backgroundRemovalModulePromise;
   return removeBackground(file);
+}
+
+function loadJsZip() {
+  jsZipPromise ||= import("jszip").then((module) => module.default || module);
+  return jsZipPromise;
 }
 
 export default function BatchProcessor({ files }) {
@@ -64,6 +69,7 @@ export default function BatchProcessor({ files }) {
 
   // ZIP download
   const handleDownloadZip = async () => {
+    const JSZip = await loadJsZip();
     const zip = new JSZip();
 
     for (let i = 0; i < results.length; i++) {

@@ -2,9 +2,14 @@ import ToolsClient from "../ToolsClient";
 import { toolMetaMap } from "@/platform/registry/toolMetaMap";
 import { createPageMetadata } from "@/platform/seo/generateMetadata";
 import { redirect } from "next/navigation";
-import { formatCategoryLabel } from "../toolRouteUtils";
+import { formatCategoryLabel, getToolCategorySlugs } from "../toolRouteUtils";
 
-const VALID_VIEW_MODES = new Set(["all", "favorites", "recent"]);
+export const dynamic = "force-static";
+export const revalidate = 86400;
+
+export function generateStaticParams() {
+  return getToolCategorySlugs().map((category) => ({ category }));
+}
 
 export async function generateMetadata({ params }) {
   const { category } = await params;
@@ -20,18 +25,12 @@ export async function generateMetadata({ params }) {
   });
 }
 
-export default async function Page({ params, searchParams }) {
+export default async function Page({ params }) {
   const { category } = await params;
-  const query = await searchParams;
 
   if (toolMetaMap[category]) {
     redirect(`/tools/all/${category}`);
   }
 
-  const search = typeof query?.search === "string" ? query.search : "";
-  const view = typeof query?.view === "string" && VALID_VIEW_MODES.has(query.view)
-    ? query.view
-    : "all";
-
-  return <ToolsClient meta={toolMetaMap} category={category} initialSearch={search} initialViewMode={view} />;
+  return <ToolsClient meta={toolMetaMap} category={category} />;
 }

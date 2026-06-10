@@ -3,6 +3,10 @@ import { TOP_PRIORITY_TOOL_SLUGS } from "@altftool/core/toolHealth";
 
 const mobileRoutes = [
   "/tools/all",
+  "/tools/all?search=json",
+  "/blogs",
+  "/blogs/age-calculator-guide",
+  "/search?q=json",
   "/extensions",
   "/academy",
 ];
@@ -94,6 +98,40 @@ test.describe("mobile layout", () => {
       await expectNoHorizontalOverflow(page, route);
     });
   }
+
+  test("chat assistant launcher stays compact and inside mobile viewport", async ({ page }) => {
+    await page.goto("/tools/all?search=json", { waitUntil: "domcontentloaded" });
+
+    const launcher = page.getByRole("button", { name: "Open AltFTool search assistant" });
+    await expect(launcher).toBeVisible();
+
+    const box = await launcher.boundingBox();
+    expect(box, "chat launcher bounding box").toBeTruthy();
+    expect(box.width, "mobile chat launcher width").toBeLessThanOrEqual(56);
+    expect(box.height, "mobile chat launcher height").toBeLessThanOrEqual(56);
+    expect(box.x + box.width, "mobile chat launcher right edge").toBeLessThanOrEqual(390);
+    expect(box.y + box.height, "mobile chat launcher bottom edge").toBeLessThanOrEqual(844);
+  });
+
+  test("blog mobile controls remain reachable", async ({ page }) => {
+    await page.goto("/blogs", { waitUntil: "domcontentloaded" });
+
+    await expect(page.locator('main[aria-labelledby="blog-index-title"]')).toBeVisible();
+    await expect(page.getByRole("textbox", { name: "Search blog articles" })).toBeVisible();
+    await expect(page.getByRole("combobox", { name: "Sort blogs" })).toBeVisible();
+    await expect(page.getByRole("link", { name: /Explore guides/i })).toBeVisible();
+    await expectNoHorizontalOverflow(page, "mobile /blogs controls");
+  });
+
+  test("blog detail mobile reader controls remain reachable", async ({ page }) => {
+    await page.goto("/blogs/age-calculator-guide", { waitUntil: "domcontentloaded" });
+
+    await expect(page.locator('main[aria-labelledby="blog-article-title"]')).toBeVisible();
+    await expect(page.getByRole("navigation", { name: "Article reading flow" })).toBeVisible();
+    await expect(page.getByRole("button", { name: /Like this guide/i })).toBeVisible();
+    await expect(page.getByRole("button", { name: /Show comments/i })).toBeVisible();
+    await expectNoHorizontalOverflow(page, "mobile blog detail controls");
+  });
 });
 
 test.describe("top priority tool mobile layout", () => {

@@ -28,8 +28,21 @@ const STOP_WORDS = new Set([
   "your",
 ]);
 
+const ALTFT_HOSTS = new Set(["altftool.com", "www.altftool.com"]);
+
 function escapeRegExp(value = "") {
   return String(value).replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
+function decodeBasicHtmlEntities(value = "") {
+  return String(value)
+    .replace(/&quot;/gi, "\"")
+    .replace(/&#34;/g, "\"")
+    .replace(/&#x22;/gi, "\"")
+    .replace(/&apos;/gi, "'")
+    .replace(/&#39;/g, "'")
+    .replace(/&#x27;/gi, "'")
+    .replace(/&amp;/gi, "&");
 }
 
 function normalizeWhitespace(value = "") {
@@ -42,6 +55,59 @@ function stripHtml(value = "") {
 
 function makeCandidateKey(value = "") {
   return normalizeWhitespace(value).toLowerCase();
+}
+
+function normalizeInternalHref(href = "") {
+  const cleanedHref = decodeBasicHtmlEntities(href)
+    .trim()
+    .replace(/\s+(?:target|rel|class|title|aria-[a-z-]+|data-[a-z-]+)\s*=.*$/i, "");
+
+  if (!cleanedHref || cleanedHref.startsWith("#") || /^(?:mailto|tel|sms|javascript|data|blob):/i.test(cleanedHref)) {
+    return { href: cleanedHref, internal: false };
+  }
+
+  if (cleanedHref.startsWith("<")) {
+    return { href: cleanedHref, internal: false, malformed: true };
+  }
+
+  try {
+    const url = cleanedHref.startsWith("//")
+      ? new URL(`https:${cleanedHref}`)
+      : new URL(cleanedHref, "https://altftool.com");
+    const isRelative = cleanedHref.startsWith("/") && !cleanedHref.startsWith("//");
+    const isInternal = isRelative || ALTFT_HOSTS.has(url.hostname);
+
+    if (!isInternal) return { href: cleanedHref, internal: false };
+
+    return {
+      href: `${url.pathname.replace(/\/+$/, "") || "/"}${url.search}${url.hash}`,
+      internal: true,
+      path: url.pathname.replace(/\/+$/, "") || "/",
+    };
+  } catch {
+    return { href: cleanedHref, internal: false, malformed: true };
+  }
+}
+
+export function sanitizeArticleInternalLinks(html = "", { currentSlug } = {}) {
+  if (!html) return html;
+
+  return String(html).replace(
+    /<a\b([^>]*)\bhref\s*=\s*(["'])(.*?)\2([^>]*)>([\s\S]*?)<\/a>/gi,
+    (match, beforeHref, quote, href, afterHref, innerHtml) => {
+      const normalized = normalizeInternalHref(href);
+      const isSelfLink = currentSlug && normalized.path === `/blogs/${currentSlug}`;
+
+      if (normalized.malformed || isSelfLink) return innerHtml;
+      if (!normalized.internal) return match;
+
+      const dataAttribute = /data-blog-internal-link=/i.test(`${beforeHref} ${afterHref}`)
+        ? ""
+        : " data-blog-internal-link=\"content\"";
+
+      return `<a${beforeHref}href=${quote}${normalized.href}${quote}${dataAttribute}${afterHref}>${innerHtml}</a>`;
+    },
+  );
 }
 
 function getUsefulPhrase(value = "", maxWords = 4) {
@@ -86,7 +152,7 @@ function insertLinkInTextNode(text = "", candidate) {
   let linked = false;
   const nextText = text.replace(pattern, (match, prefix, phrase) => {
     linked = true;
-    return `${prefix}<a class="auto-internal-link" data-auto-internal-link="true" href="${candidate.href}">${phrase}</a>`;
+    return `${prefix}<a class="auto-internal-link" data-auto-internal-link="true" data-blog-internal-link="${candidate.label}" href="${candidate.href}">${phrase}</a>`;
   });
 
   return { text: nextText, linked };

@@ -1,36 +1,29 @@
 "use client";
 
+import { BulkActionBar as SharedBulkActionBar } from "@altftool/ui";
+
 export default function BulkActionBar({
   count,
   onDelete,
-  onClear
+  onClear,
+  deleteLabel = "Delete selected",
+  cancelLabel = "Cancel",
 }) {
-
   if (!count) return null;
 
   return (
-
-    <div className="fixed bottom-6 left-1/2 -translate-x-1/2
-      bg-black text-white px-6 py-3 rounded-lg flex gap-6 items-center shadow-lg">
-
-      <div className="text-sm">
-        {count} selected
-      </div>
-
-      <button
-        className="text-red-400 cursor-pointer"
-        onClick={onDelete}
-      >
-        Delete Selected
-      </button>
-
-      <button
-        className="text-gray-300 cursor-pointer"
-        onClick={onClear}
-      >
-        Cancel
-      </button>
-
-    </div>
+    <SharedBulkActionBar
+      count={count}
+      actions={[
+        {
+          key: "delete",
+          label: deleteLabel,
+          tone: "danger",
+          onClick: onDelete,
+        },
+      ]}
+      onCancel={onClear}
+      cancelLabel={cancelLabel}
+    />
   );
 }

@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Cell } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, Tooltip, Cell } from 'recharts';
+import ResponsiveContainer from "@/components/charts/SafeResponsiveContainer";
 import { useHabits, formatCurrency } from '../context/HabitContext';
 import Card from './ui/Card';
 
@@ -68,7 +69,7 @@ export const CostChart = () => {
           </div>
 
           <div className="h-[250px] mt-4">
-            <ResponsiveContainer width="100%" height="100%">
+            <ResponsiveContainer width="100%" height="100%" minWidth={1} minHeight={1}>
               <BarChart
                 data={chartData}
                 margin={{ top: 20, right: 20, left: 20, bottom: 20 }}

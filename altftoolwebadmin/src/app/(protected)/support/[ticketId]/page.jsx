@@ -259,7 +259,7 @@ export default function TicketDetailPage() {
   const priorityCfg = PRIORITY_CONFIG[ticket.priority] ?? PRIORITY_CONFIG.low;
 
   return (
-    <div className="min-h-screen bg-[#f7f8fa]">
+    <div className="min-h-screen bg-(--background)">
       {/* Top nav bar */}
       <div className="sticky top-0 z-20 bg-white/80 backdrop-blur-md border-b border-gray-100">
         <div className="max-w-7xl mx-auto px-4 h-14 flex items-center justify-between">
@@ -344,7 +344,7 @@ export default function TicketDetailPage() {
             </span>
           </div>
 
-          <div className="overflow-y-auto p-5 space-y-2 min-h-[220px] max-h-[420px] bg-[#f9fafb]">
+          <div className="overflow-y-auto p-5 space-y-2 min-h-[220px] max-h-[420px] bg-(--surface-soft)">
             {messages.length === 0 ? (
               <div className="flex flex-col items-center justify-center py-12 gap-3">
                 <div className="w-12 h-12 rounded-2xl bg-gray-100 flex items-center justify-center">

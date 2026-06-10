@@ -1,17 +1,5 @@
-"use client";
-
 import Link from "next/link";
 import { ArrowRight, Sparkles, Wrench } from "lucide-react";
-import { recordBlogToolClick } from "../../context/views.service";
-
-function trackToolClick(blog, tool, placement) {
-  recordBlogToolClick({
-    blogId: typeof blog?.id === "string" ? blog.id : "",
-    blogSlug: blog?.slug || "",
-    toolSlug: tool?.slug,
-    placement,
-  });
-}
 
 export default function BlogInlineToolCards({
   blog,
@@ -22,7 +10,7 @@ export default function BlogInlineToolCards({
   if (!visibleTools.length) return null;
 
   return (
-    <aside className="not-prose my-7 rounded-[var(--anslation-ds-radius)] border border-(--border) bg-(--background) p-4 shadow-[var(--anslation-ds-shadow-sm)]">
+    <aside className="not-prose my-7 rounded-[var(--anslation-ds-radius)] border border-(--border) bg-(--background) p-3 shadow-[var(--anslation-ds-shadow-sm)] sm:p-4">
       <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
         <div>
           <p className="flex items-center gap-2 text-[11px] font-bold uppercase tracking-wide text-(--muted-foreground)">
@@ -38,13 +26,15 @@ export default function BlogInlineToolCards({
         </span>
       </div>
 
-      <div className="grid gap-2 sm:grid-cols-3">
+      <div className="-mx-1 flex snap-x gap-2 overflow-x-auto px-1 pb-1 sm:mx-0 sm:grid sm:grid-cols-3 sm:overflow-visible sm:px-0 sm:pb-0">
         {visibleTools.map((tool, index) => (
           <Link
             key={tool.slug}
             href={tool.href}
-            onClick={() => trackToolClick(blog, tool, placement)}
-            className="group rounded-[6px] border border-(--border) bg-(--card) p-3 transition hover:border-(--primary) hover:shadow-[var(--anslation-ds-shadow-sm)]"
+            data-blog-tool-click="true"
+            data-tool-slug={tool.slug}
+            data-placement={placement}
+            className="group min-h-[132px] w-[82%] shrink-0 snap-start rounded-[6px] border border-(--border) bg-(--card) p-3 transition hover:border-(--primary) hover:shadow-[var(--anslation-ds-shadow-sm)] min-[460px]:w-[46%] sm:w-auto sm:shrink"
           >
             <div className="mb-3 flex items-center justify-between gap-2">
               <span className="inline-flex h-8 w-8 items-center justify-center rounded-[6px] bg-(--muted) text-(--primary)">

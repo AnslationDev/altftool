@@ -6,8 +6,10 @@
   "exports": {
     "./cache": "./src/cache.js",
     "./buysmart": "./src/buysmart.js",
+    "./blogContentHealth": "./src/blogContentHealth.js",
     "./deployReadiness": "./src/deployReadiness.js",
     "./env": "./src/env.js",
+    "./firebaseDataIntegrity": "./src/firebaseDataIntegrity.js",
     "./firebaseLiveData": "./src/firebaseLiveData.js",
     "./firebaseContent": "./src/firebaseContent.js",
     "./firebasePaths": "./src/firebasePaths.js",

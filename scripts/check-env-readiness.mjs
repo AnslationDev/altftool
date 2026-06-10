@@ -92,6 +92,26 @@ function normalizePrivateKey(value) {
   return value.replace(/\\n/g, "\n").trim();
 }
 
+const MIN_PRIVATE_KEY_BODY_LENGTH = 64;
+
+function privateKeyBody(value = "") {
+  return normalizePrivateKey(value)
+    .replace("-----BEGIN PRIVATE KEY-----", "")
+    .replace("-----END PRIVATE KEY-----", "")
+    .replace(/\s+/g, "");
+}
+
+function privateKeyLooksUsable(value = "") {
+  const normalized = normalizePrivateKey(value);
+  const body = privateKeyBody(normalized);
+
+  return (
+    normalized.includes("-----BEGIN PRIVATE KEY-----") &&
+    normalized.includes("-----END PRIVATE KEY-----") &&
+    body.length >= MIN_PRIVATE_KEY_BODY_LENGTH
+  );
+}
+
 function parseFirebaseServiceAccount(rawValue = "") {
   const value = rawValue.trim();
   if (!value) return { account: null, error: null };
@@ -123,6 +143,63 @@ function validateUrl(value) {
   } catch {
     return "must be a valid URL.";
   }
+}
+
+function monitoringCredentialResults(env) {
+  const entries = [
+    { name: "ALTFT_MONITOR_WEB_URL", required: "monitoring", validate: validateUrl },
+    { name: "ALTFT_MONITOR_ADMIN_URL", required: "monitoring", validate: validateUrl },
+  ];
+  const results = entries.map((entry) => {
+    const value = envValue(env, entry.name);
+    const isRequired = requiredWhen(entry.required);
+    const missing = !value;
+    const validationError = value && entry.validate ? entry.validate(value) : null;
+    const level = missing && isRequired ? "fail" : missing ? "warn" : validationError ? "fail" : "pass";
+
+    return {
+      group: "Production monitoring",
+      name: entry.name,
+      level,
+      message: missing
+        ? isRequired
+          ? "required but missing"
+          : "not configured"
+        : validationError || "configured",
+    };
+  });
+  const hasToken = Boolean(envValue(env, "ALTFT_MONITOR_ADMIN_TOKEN"));
+  const hasLoginCredentials = [
+    "ALTFT_MONITOR_ADMIN_EMAIL",
+    "ALTFT_MONITOR_ADMIN_PASSWORD",
+    "ALTFT_MONITOR_FIREBASE_API_KEY",
+  ].every((name) => Boolean(envValue(env, name)));
+  const authConfigured = hasToken || hasLoginCredentials;
+  const authRequired = requireMonitoring;
+
+  results.push({
+    group: "Production monitoring",
+    name: "Admin authenticated monitor",
+    level: authConfigured ? "pass" : authRequired ? "fail" : "warn",
+    message: authConfigured
+      ? hasToken
+        ? "configured via ALTFT_MONITOR_ADMIN_TOKEN"
+        : "configured via Firebase Auth login credentials"
+      : authRequired
+        ? "required but missing"
+        : "not configured",
+  });
+  const webhookUrl = envValue(env, "ALTFT_MONITOR_ALERT_WEBHOOK_URL");
+  const webhookValidationError = validateUrl(webhookUrl);
+
+  results.push({
+    group: "Production monitoring",
+    name: "ALTFT_MONITOR_ALERT_WEBHOOK_URL",
+    level: webhookUrl && webhookValidationError ? "fail" : webhookUrl ? "pass" : "warn",
+    message: webhookUrl ? webhookValidationError || "configured" : "not configured",
+  });
+
+  return results;
 }
 
 function requiredWhen(mode) {
@@ -158,23 +235,20 @@ function firebaseAdminCredentialResults(env) {
     {
       name: "FIREBASE_PRIVATE_KEY",
       validate: (value) => {
-        const normalized = normalizePrivateKey(value);
         if (!value) return null;
-        if (
-          !normalized.includes("-----BEGIN PRIVATE KEY-----") ||
-          !normalized.includes("-----END PRIVATE KEY-----")
-        ) {
-          return "must be the full PEM private key.";
+        if (!privateKeyLooksUsable(value)) {
+          return "must be the full PEM private key, including the encoded key body.";
         }
         return null;
       },
     },
   ];
+  const serviceAccountLevel = serviceAccountError ? (strict ? "fail" : "warn") : "pass";
   const results = serviceAccountRaw
     ? [{
         group: "Admin service-account config",
         name: "FIREBASE_SERVICE_ACCOUNT",
-        level: serviceAccountError ? "fail" : "pass",
+        level: serviceAccountLevel,
         message: serviceAccountError || "configured",
       }]
     : [];
@@ -184,7 +258,12 @@ function firebaseAdminCredentialResults(env) {
     const rawValue = rawValues[entry.name];
     const missing = !value;
     const validationError = value && entry.validate ? entry.validate(value) : null;
-    const level = missing && strict ? "fail" : missing ? "warn" : validationError ? "fail" : "pass";
+    let level = "pass";
+    if (missing) {
+      level = strict ? "fail" : "warn";
+    } else if (validationError) {
+      level = strict ? "fail" : "warn";
+    }
 
     results.push({
       group: "Admin service-account config",
@@ -218,15 +297,7 @@ const checks = [
   },
   {
     name: "Production monitoring",
-    entries: [
-      { name: "ALTFT_MONITOR_WEB_URL", required: "monitoring", validate: validateUrl },
-      { name: "ALTFT_MONITOR_ADMIN_URL", required: "monitoring", validate: validateUrl },
-      {
-        name: "ALTFT_MONITOR_ADMIN_TOKEN",
-        required: "monitoring",
-        validate: (value) => (value && value.length < 12 ? "looks too short for an admin health token." : null),
-      },
-    ],
+    evaluate: monitoringCredentialResults,
   },
   {
     name: "Optional AI and map integrations",

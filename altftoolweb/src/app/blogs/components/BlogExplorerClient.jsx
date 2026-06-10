@@ -37,7 +37,8 @@ import {
   normalizeBlog,
 } from "../data";
 
-const INITIAL_VISIBLE_COUNT = 36;
+const INITIAL_VISIBLE_COUNT = 24;
+const BACKGROUND_SYNC_PAGE_LIMIT = 1;
 const SORT_OPTIONS = [
   { value: "latest", label: "Latest" },
   { value: "trending", label: "Trending" },
@@ -325,8 +326,8 @@ function updateSearchParams(router, searchParams, updates) {
 
 function CategoryTabs({ categories, counts, activeCategory, onChange }) {
   return (
-    <div className="relative -mx-3 overflow-x-auto px-3 pb-1">
-      <div className="flex min-w-max gap-2">
+    <div className="relative -mx-2 overflow-x-auto px-2 pb-1">
+      <div className="flex min-w-max snap-x gap-1.5">
         {categories.map((category) => {
           const active = category === activeCategory;
           return (
@@ -334,8 +335,9 @@ function CategoryTabs({ categories, counts, activeCategory, onChange }) {
               key={category}
               type="button"
               onClick={() => onChange(category)}
+              aria-pressed={active}
               className={cx(
-                "inline-flex h-9 items-center gap-2 rounded-[var(--anslation-ds-radius)] border px-3 text-xs font-semibold transition",
+                "inline-flex h-8 shrink-0 snap-start items-center gap-1.5 rounded-[6px] border px-2.5 text-[11px] font-semibold transition",
                 active
                   ? "border-(--primary) bg-(--primary) text-(--primary-foreground) shadow-[var(--anslation-ds-shadow-sm)]"
                   : "border-(--border) bg-(--card) text-(--muted-foreground) hover:border-(--primary) hover:text-(--foreground)"
@@ -344,7 +346,7 @@ function CategoryTabs({ categories, counts, activeCategory, onChange }) {
               <span>{category}</span>
               <span
                 className={cx(
-                  "rounded-full px-1.5 py-0.5 text-[10px]",
+                  "rounded-full px-1.5 py-0.5 text-[9px]",
                   active ? "bg-white/15 text-(--primary-foreground)" : "bg-(--muted) text-(--muted-foreground)"
                 )}
               >
@@ -362,13 +364,28 @@ function TagChips({ tags, counts, activeTag, onChange }) {
   if (!tags.length) return null;
 
   return (
-    <div className="relative -mx-3 overflow-x-auto px-3 pb-1">
-      <div className="flex min-w-max items-center gap-2">
+    <details className="group rounded-[6px] border border-(--border) bg-(--card)">
+      <summary className="flex h-8 cursor-pointer list-none items-center justify-between gap-3 px-2.5 text-[11px] font-bold uppercase tracking-wide text-(--muted-foreground)">
+        <span className="inline-flex items-center gap-1.5">
+          <Hash className="h-3.5 w-3.5 text-(--primary)" />
+          Tags
+          {activeTag !== "All" ? (
+            <span className="rounded-full bg-(--primary)/10 px-1.5 py-0.5 text-[9px] text-(--primary)">
+              {activeTag}
+            </span>
+          ) : null}
+        </span>
+        <ChevronDown className="h-3.5 w-3.5 transition group-open:rotate-180" />
+      </summary>
+      <div className="relative overflow-x-auto border-t border-(--border) px-2.5 py-2">
+      <div className="flex min-w-max snap-x items-center gap-1.5">
         <button
           type="button"
           onClick={() => onChange("All")}
+          aria-pressed={activeTag === "All"}
+          aria-label="Show all blog tags"
           className={cx(
-            "inline-flex h-8 items-center gap-1.5 rounded-[6px] border px-2.5 text-[11px] font-semibold transition",
+            "inline-flex h-7 shrink-0 snap-start items-center gap-1.5 rounded-[6px] border px-2 text-[10px] font-semibold transition",
             activeTag === "All"
               ? "border-(--primary) bg-(--primary) text-(--primary-foreground)"
               : "border-(--border) bg-(--card) text-(--muted-foreground) hover:border-(--primary) hover:text-(--foreground)",
@@ -384,8 +401,10 @@ function TagChips({ tags, counts, activeTag, onChange }) {
               key={tag}
               type="button"
               onClick={() => onChange(tag)}
+              aria-pressed={active}
+              aria-label={`Filter blogs by ${tag} tag`}
               className={cx(
-                "inline-flex h-8 items-center gap-1.5 rounded-[6px] border px-2.5 text-[11px] font-semibold transition",
+                "inline-flex h-7 shrink-0 snap-start items-center gap-1.5 rounded-[6px] border px-2 text-[10px] font-semibold transition",
                 active
                   ? "border-(--primary) bg-(--primary) text-(--primary-foreground)"
                   : "border-(--border) bg-(--card) text-(--muted-foreground) hover:border-(--primary) hover:text-(--foreground)",
@@ -400,13 +419,14 @@ function TagChips({ tags, counts, activeTag, onChange }) {
           );
         })}
       </div>
-    </div>
+      </div>
+    </details>
   );
 }
 
 function SortSelect({ value, onChange }) {
   return (
-    <label className="relative inline-flex h-10 min-w-[142px] items-center rounded-[var(--anslation-ds-radius)] border border-(--border) bg-(--card) px-3 text-xs font-semibold text-(--muted-foreground)">
+    <label className="relative inline-flex h-9 w-full items-center rounded-[6px] border border-(--border) bg-(--card) px-2.5 text-xs font-semibold text-(--muted-foreground) lg:w-auto lg:min-w-[132px]">
       <SlidersHorizontal className="mr-2 h-3.5 w-3.5 text-(--primary)" />
       <select
         value={value}
@@ -427,7 +447,7 @@ function SortSelect({ value, onChange }) {
 
 function FreshnessSelect({ value, onChange }) {
   return (
-    <label className="relative inline-flex h-10 min-w-[166px] items-center rounded-[var(--anslation-ds-radius)] border border-(--border) bg-(--card) px-3 text-xs font-semibold text-(--muted-foreground)">
+    <label className="relative inline-flex h-9 w-full items-center rounded-[6px] border border-(--border) bg-(--card) px-2.5 text-xs font-semibold text-(--muted-foreground) lg:w-auto lg:min-w-[154px]">
       <RefreshCw className="mr-2 h-3.5 w-3.5 text-(--primary)" />
       <select
         value={value}
@@ -448,7 +468,7 @@ function FreshnessSelect({ value, onChange }) {
 
 function ReadinessSelect({ value, onChange }) {
   return (
-    <label className="relative inline-flex h-10 min-w-[166px] items-center rounded-[var(--anslation-ds-radius)] border border-(--border) bg-(--card) px-3 text-xs font-semibold text-(--muted-foreground)">
+    <label className="relative inline-flex h-9 w-full items-center rounded-[6px] border border-(--border) bg-(--card) px-2.5 text-xs font-semibold text-(--muted-foreground) lg:w-auto lg:min-w-[154px]">
       <Sparkles className="mr-2 h-3.5 w-3.5 text-(--primary)" />
       <select
         value={value}
@@ -472,10 +492,11 @@ function SearchControl({ value, onChange, onClear, pending }) {
     <div className="relative min-w-0 flex-1">
       <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-(--muted-foreground)" />
       <input
+        aria-label="Search blog articles"
         value={value}
         onChange={(event) => onChange(event.target.value)}
         placeholder="Search title, author, tags, category, tools..."
-        className="h-10 w-full rounded-[var(--anslation-ds-radius)] border border-(--border) bg-(--card) px-9 text-sm text-(--foreground) outline-none transition placeholder:text-(--muted-foreground) focus:border-(--primary) focus:ring-2 focus:ring-(--primary)/15"
+        className="h-9 w-full rounded-[6px] border border-(--border) bg-(--card) px-9 text-sm text-(--foreground) outline-none transition placeholder:text-(--muted-foreground) focus:border-(--primary) focus:ring-2 focus:ring-(--primary)/15"
       />
       {pending ? (
         <Loader2 className="absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 animate-spin text-(--primary)" />
@@ -497,8 +518,8 @@ function QuickSearchPills({ shortcuts, activeQuery, onPick }) {
   if (!shortcuts.length) return null;
 
   return (
-    <div className="mt-3 flex flex-wrap items-center gap-2">
-      <span className="text-[11px] font-bold uppercase tracking-wide text-(--muted-foreground)">
+    <div className="mt-2 -mx-2 flex snap-x items-center gap-1.5 overflow-x-auto px-2 pb-1 sm:mx-0 sm:flex-wrap sm:overflow-visible sm:px-0 sm:pb-0">
+      <span className="shrink-0 text-[10px] font-bold uppercase tracking-wide text-(--muted-foreground)">
         Quick search
       </span>
       {shortcuts.map((shortcut) => {
@@ -509,8 +530,9 @@ function QuickSearchPills({ shortcuts, activeQuery, onPick }) {
             key={shortcut.query}
             type="button"
             onClick={() => onPick(shortcut.query)}
+            aria-pressed={active}
             className={cx(
-              "inline-flex h-7 items-center rounded-[6px] border px-2.5 text-[11px] font-semibold transition",
+              "inline-flex h-7 shrink-0 snap-start items-center rounded-[6px] border px-2 text-[10px] font-semibold transition",
               active
                 ? "border-(--primary) bg-(--primary) text-(--primary-foreground)"
                 : "border-(--border) bg-(--card) text-(--muted-foreground) hover:border-(--primary) hover:text-(--foreground)"
@@ -520,6 +542,42 @@ function QuickSearchPills({ shortcuts, activeQuery, onPick }) {
           </button>
         );
       })}
+    </div>
+  );
+}
+
+function ActiveFilterChips({ filters, onReset }) {
+  const activeFilters = filters.filter((filter) => filter.value);
+  if (!activeFilters.length) return null;
+
+  return (
+    <div className="mt-3 flex flex-wrap items-center gap-2 border-t border-(--border) pt-3">
+      <span className="text-[11px] font-bold uppercase tracking-wide text-(--muted-foreground)">
+        Active
+      </span>
+      {activeFilters.map((filter) => {
+        const Icon = filter.icon;
+        return (
+          <button
+            key={filter.key}
+            type="button"
+            onClick={filter.onClear}
+            className="inline-flex h-8 max-w-full items-center gap-1.5 rounded-[6px] border border-(--primary)/30 bg-(--primary)/10 px-2.5 text-xs font-semibold text-(--foreground) transition hover:border-(--primary) hover:bg-(--primary) hover:text-(--primary-foreground)"
+            aria-label={`Clear ${filter.label} filter`}
+          >
+            <Icon className="h-3.5 w-3.5 shrink-0" />
+            <span className="truncate">{filter.label}: {filter.value}</span>
+            <X className="h-3.5 w-3.5 shrink-0" />
+          </button>
+        );
+      })}
+      <button
+        type="button"
+        onClick={onReset}
+        className="inline-flex h-8 items-center gap-1.5 rounded-[6px] border border-(--border) bg-(--card) px-2.5 text-xs font-semibold text-(--muted-foreground) transition hover:border-(--primary) hover:text-(--foreground)"
+      >
+        Clear all
+      </button>
     </div>
   );
 }
@@ -537,6 +595,7 @@ function ReaderJourneyPanel({ journeys }) {
             key={journey.key}
             type="button"
             onClick={journey.onClick}
+            aria-pressed={journey.active}
             className={cx(
               "group flex min-h-[112px] items-start gap-3 rounded-[var(--anslation-ds-radius-lg)] border p-4 text-left shadow-[var(--anslation-ds-shadow-sm)] transition hover:-translate-y-0.5 hover:border-(--primary) hover:shadow-[var(--anslation-ds-shadow-md)]",
               journey.active
@@ -565,84 +624,79 @@ function ReaderJourneyPanel({ journeys }) {
   );
 }
 
-function ReadinessSummary({ summary, activeFilter, onPick }) {
-  const items = [
-    {
-      key: "all",
-      label: "All guides",
-      value: summary.total,
-      icon: BookOpenCheck,
-      tone: "text-emerald-500",
-    },
-    {
-      key: "reviewed",
-      label: "Reviewed",
-      value: summary.reviewed,
-      icon: ShieldCheck,
-      tone: "text-violet-500",
-    },
-    {
-      key: "quick",
-      label: "Quick reads",
-      value: summary.quick,
-      icon: Clock3,
-      tone: "text-amber-500",
-    },
-    {
-      key: "fresh",
-      label: "Fresh guides",
-      value: summary.fresh,
-      icon: CheckCircle2,
-      tone: "text-blue-500",
-    },
-  ];
+function ResultProgress({ displayedCount, filteredCount, loadedCount, totalCount, hasMore }) {
+  const visibleTotal = Math.max(1, filteredCount || totalCount || loadedCount);
+  const percent = Math.min(100, Math.round((displayedCount / visibleTotal) * 100));
 
   return (
-    <div className="grid grid-cols-2 gap-2 lg:grid-cols-4">
-      {items.map((item) => {
-        const Icon = item.icon;
-        const active = activeFilter === item.key;
-
-        return (
-          <button
-            key={item.key}
-            type="button"
-            onClick={() => onPick(active ? "all" : item.key)}
-            className={cx(
-              "group flex items-center justify-between gap-3 rounded-[var(--anslation-ds-radius)] border px-3 py-2 text-left transition",
-              active
-                ? "border-(--primary) bg-(--primary)/10"
-                : "border-(--border) bg-(--card) hover:border-(--primary)/45",
-            )}
-          >
-            <span className="min-w-0">
-              <span className="block text-[10px] font-bold uppercase tracking-wide text-(--muted-foreground)">
-                {item.label}
-              </span>
-              <span className="mt-0.5 block text-lg font-semibold leading-none text-(--foreground)">
-                {item.value}
-              </span>
-            </span>
-            <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-[6px] bg-(--muted)">
-              <Icon className={cx("h-4 w-4", item.tone)} />
-            </span>
-          </button>
-        );
-      })}
+    <div className="mt-3">
+      <div className="flex items-center justify-between gap-3 text-[11px] font-semibold uppercase tracking-wide text-(--muted-foreground)">
+        <span>{displayedCount} visible</span>
+        <span>{hasMore ? `${Math.max(0, visibleTotal - displayedCount)} more ready` : "Complete"}</span>
+      </div>
+      <div className="mt-2 h-2 overflow-hidden rounded-full bg-(--muted)">
+        <div
+          className="h-full rounded-full bg-(--primary) transition-[width] duration-300"
+          style={{ width: `${percent}%` }}
+        />
+      </div>
     </div>
   );
 }
 
+function ExplorerQualityStrip({ activeFilter, onPick }) {
+  const items = [
+    { key: "all", label: "All guides", icon: BookOpenCheck },
+    { key: "rich-ready", label: "Deep", icon: Sparkles },
+    { key: "sources", label: "Cited", icon: BookOpenCheck },
+    { key: "faq", label: "FAQ", icon: MessageCircleQuestion },
+    { key: "links", label: "Linked", icon: ArrowRight },
+  ];
+
+  return (
+    <section className="flex flex-col gap-2 rounded-[var(--anslation-ds-radius)] border border-(--border) bg-(--card) p-3 shadow-[var(--anslation-ds-shadow-sm)] sm:flex-row sm:items-center sm:justify-between">
+      <div>
+        <p className="text-[10px] font-bold uppercase tracking-wide text-(--muted-foreground)">Content quality</p>
+        <h2 className="mt-0.5 text-sm font-semibold text-(--foreground)">Pick the most complete guides first</h2>
+      </div>
+      <div className="flex flex-wrap gap-1.5">
+        {items.map((item) => {
+          const Icon = item.icon;
+          const active = activeFilter === item.key;
+          return (
+            <button
+              key={item.key}
+              type="button"
+              onClick={() => onPick(active ? "all" : item.key)}
+              aria-pressed={active}
+              className={cx(
+                "inline-flex h-8 items-center gap-1.5 rounded-[6px] border px-2.5 text-xs font-semibold transition",
+                active
+                  ? "border-(--primary) bg-(--primary) text-(--primary-foreground)"
+                  : "border-(--border) bg-(--background) text-(--muted-foreground) hover:border-(--primary) hover:text-(--foreground)",
+              )}
+            >
+              <Icon className="h-3.5 w-3.5" />
+              {item.label}
+            </button>
+          );
+        })}
+      </div>
+    </section>
+  );
+}
+
 function BlogPostCard({ post, index, searchTerms = [] }) {
-  const priority = index < 3;
+  const priority = index === 0;
   const tags = Array.isArray(post.tags) ? post.tags.filter(Boolean).slice(0, 3) : [];
   const freshness = getBlogFreshness(post);
   const readiness = getPostReadiness(post);
+  const authorLabel = post.author || "AltFTool editors";
 
   return (
-    <article className="group h-full overflow-hidden rounded-[var(--anslation-ds-radius-lg)] border border-(--border) bg-(--card) shadow-[var(--anslation-ds-shadow-sm)] transition duration-200 hover:-translate-y-0.5 hover:border-(--primary)/45 hover:shadow-[var(--anslation-ds-shadow-md)]">
+    <article className="interactive-card group h-full overflow-hidden transition duration-200 hover:border-(--primary)/45">
       <Link href={`/blogs/${post.slug}`} prefetch={false} className="flex h-full flex-col">
-        <div className="relative aspect-[16/9] overflow-hidden bg-(--muted)">
+        <div className="relative aspect-[16/6] overflow-hidden bg-(--muted)">
           <Image
             src={post.image}
             alt={post.imageAlt || post.heading}
@@ -668,8 +722,8 @@ function BlogPostCard({ post, index, searchTerms = [] }) {
           </div>
         </div>
 
-        <div className="flex flex-1 flex-col gap-3 p-4">
-          <div className="flex items-center gap-2 text-[11px] font-medium text-(--muted-foreground)">
+        <div className="flex flex-1 flex-col gap-2 p-3.5">
+          <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-[11px] font-medium text-(--muted-foreground)">
             <span>{formatDate(post.date)}</span>
             <span className="h-1 w-1 rounded-full bg-(--border)" />
             <span className="inline-flex items-center gap-1">
@@ -682,11 +736,11 @@ function BlogPostCard({ post, index, searchTerms = [] }) {
             </span>
           </div>
 
-          <h3 className="line-clamp-2 text-[15px] font-semibold leading-snug text-(--foreground) transition group-hover:text-(--primary)">
+          <h3 className="line-clamp-2 text-sm font-semibold leading-snug text-(--foreground) transition group-hover:text-(--primary)">
             <HighlightedText text={post.heading} terms={searchTerms} />
           </h3>
 
-          <p className="line-clamp-2 text-sm leading-6 text-(--muted-foreground)">
+          <p className="line-clamp-2 text-[13px] leading-5 text-(--muted-foreground)">
             <HighlightedText text={post.excerpt} terms={searchTerms} />
           </p>
 
@@ -706,7 +760,7 @@ function BlogPostCard({ post, index, searchTerms = [] }) {
           <div className="grid grid-cols-3 gap-1.5">
             <span
               className={cx(
-                "inline-flex h-7 items-center justify-center gap-1 rounded-[6px] border px-1.5 text-[10px] font-semibold",
+                "inline-flex h-6 items-center justify-center gap-1 rounded-[6px] border px-1.5 text-[10px] font-semibold",
                 readiness.hasSources
                   ? "border-emerald-400/25 bg-emerald-500/10 text-emerald-500"
                   : "border-(--border) bg-(--background) text-(--muted-foreground)",
@@ -718,7 +772,7 @@ function BlogPostCard({ post, index, searchTerms = [] }) {
             </span>
             <span
               className={cx(
-                "inline-flex h-7 items-center justify-center gap-1 rounded-[6px] border px-1.5 text-[10px] font-semibold",
+                "inline-flex h-6 items-center justify-center gap-1 rounded-[6px] border px-1.5 text-[10px] font-semibold",
                 readiness.hasFaq
                   ? "border-blue-400/25 bg-blue-500/10 text-blue-500"
                   : "border-(--border) bg-(--background) text-(--muted-foreground)",
@@ -729,7 +783,7 @@ function BlogPostCard({ post, index, searchTerms = [] }) {
             </span>
             <span
               className={cx(
-                "inline-flex h-7 items-center justify-center gap-1 rounded-[6px] border px-1.5 text-[10px] font-semibold",
+                "inline-flex h-6 items-center justify-center gap-1 rounded-[6px] border px-1.5 text-[10px] font-semibold",
                 readiness.hasTrust
                   ? "border-violet-400/25 bg-violet-500/10 text-violet-500"
                   : "border-(--border) bg-(--background) text-(--muted-foreground)",
@@ -740,9 +794,12 @@ function BlogPostCard({ post, index, searchTerms = [] }) {
             </span>
           </div>
 
-          <div className="mt-auto flex items-center justify-between gap-3 pt-1">
-            <span className="truncate text-xs font-medium text-(--muted-foreground)">
-              {post.tool}
+          <div className="mt-auto flex items-center justify-between gap-3 pt-0.5">
+            <span className="min-w-0">
+              <span className="block truncate text-xs font-semibold text-(--foreground)">{authorLabel}</span>
+              <span className="mt-0.5 block truncate text-[11px] font-medium text-(--muted-foreground)">
+                {post.tool || `${readiness.score}% guide score`}
+              </span>
             </span>
             <span className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-[var(--anslation-ds-radius)] border border-(--border) text-(--primary) transition group-hover:border-(--primary) group-hover:bg-(--primary) group-hover:text-(--primary-foreground)">
               <ArrowRight className="h-4 w-4" />
@@ -836,11 +893,17 @@ export default function BlogExplorerClient({
   const [syncState, setSyncState] = useState("idle");
   const [remoteOffset, setRemoteOffset] = useState(initialRemoteOffset);
   const [remoteHasMore, setRemoteHasMore] = useState(totalCount > initialRemoteOffset);
+  const [remoteLoading, setRemoteLoading] = useState(false);
   const [isPending, startTransition] = useTransition();
 
   const deferredQuery = useDeferredValue(query.trim().toLowerCase());
 
   useEffect(() => {
+    if (initialRemoteOffset > 0) {
+      setSyncState("fresh");
+      return undefined;
+    }
+
     let cancelled = false;
     const controller = new AbortController();
     const schedule = window.requestIdleCallback || ((callback) => window.setTimeout(callback, 450));
@@ -853,7 +916,9 @@ export default function BlogExplorerClient({
         let hasMore = totalCount > nextOffset;
         let receivedAny = nextOffset > 0;
 
-        while (!cancelled && hasMore) {
+        let syncedPages = 0;
+
+        while (!cancelled && hasMore && syncedPages < BACKGROUND_SYNC_PAGE_LIMIT) {
           const isFirstRemotePage = nextOffset === 0;
           const page = await withTimeout(fetchRemoteBlogChunk(nextOffset, controller.signal), 12000, {
             posts: [],
@@ -870,11 +935,12 @@ export default function BlogExplorerClient({
           receivedAny = true;
           setPosts((currentPosts) =>
             isFirstRemotePage
-              ? page.posts.map((post, index) => normalizeBlog(post, index))
+              ? mergeBlogPosts(currentPosts, page.posts)
               : mergeBlogPosts(currentPosts, page.posts)
           );
           nextOffset = page.nextOffset;
           hasMore = Boolean(page.hasMore);
+          syncedPages += 1;
           setRemoteOffset(nextOffset);
           setRemoteHasMore(hasMore);
           setSyncState("fresh");
@@ -914,35 +980,6 @@ export default function BlogExplorerClient({
       acc[status] = (acc[status] || 0) + 1;
       return acc;
     }, {});
-  }, [posts]);
-  const readinessSummary = useMemo(() => {
-    return posts.reduce(
-      (acc, post) => {
-        const readiness = getPostReadiness(post);
-        const freshness = getBlogFreshness(post).status;
-        acc.total += 1;
-        acc.richReady += readiness.richReady ? 1 : 0;
-        acc.seoReady += readiness.score >= 72 ? 1 : 0;
-        acc.cited += readiness.hasSources ? 1 : 0;
-        acc.faq += readiness.hasFaq ? 1 : 0;
-        acc.reviewed += readiness.hasTrust ? 1 : 0;
-        acc.linked += readiness.hasLinks ? 1 : 0;
-        acc.quick += Number(post.readTimeMinutes || 0) <= 3 ? 1 : 0;
-        acc.fresh += freshness === "fresh" || freshness === "reviewed" ? 1 : 0;
-        return acc;
-      },
-      {
-        total: 0,
-        richReady: 0,
-        seoReady: 0,
-        cited: 0,
-        faq: 0,
-        reviewed: 0,
-        linked: 0,
-        quick: 0,
-        fresh: 0,
-      },
-    );
   }, [posts]);
   const topTags = useMemo(() => {
     const tags = Object.keys(tagCounts)
@@ -1026,10 +1063,12 @@ export default function BlogExplorerClient({
 
   const visiblePosts = filteredPosts.slice(0, visibleCount);
   const searchTerms = useMemo(() => getSearchTerms(deferredQuery), [deferredQuery]);
-  const hasMore = visibleCount < filteredPosts.length;
-  const displayedCount = visiblePosts.length;
-  const remainingCount = Math.max(0, filteredPosts.length - displayedCount);
   const loadedCount = posts.length;
+  const hasMore = visibleCount < filteredPosts.length || remoteHasMore;
+  const displayedCount = visiblePosts.length;
+  const remainingCount = visibleCount < filteredPosts.length
+    ? Math.max(0, filteredPosts.length - displayedCount)
+    : Math.max(0, totalCount - loadedCount);
 
   useEffect(() => {
     const timeout = window.setTimeout(() => {
@@ -1046,9 +1085,44 @@ export default function BlogExplorerClient({
     return () => window.clearTimeout(timeout);
   }, [activeCategory, activeTag, freshnessFilter, query, readinessFilter, router, searchParams, sortMode]);
 
+  const loadNextRemoteChunk = useCallback(async () => {
+    if (!remoteHasMore || remoteLoading) return;
+
+    setRemoteLoading(true);
+    setSyncState("syncing");
+
+    try {
+      const page = await fetchRemoteBlogChunk(remoteOffset);
+      if (!page.posts?.length) {
+        setRemoteHasMore(false);
+        setSyncState("fresh");
+        return;
+      }
+
+      setPosts((currentPosts) =>
+        remoteOffset === 0
+          ? mergeBlogPosts(currentPosts, page.posts)
+          : mergeBlogPosts(currentPosts, page.posts)
+      );
+      setVisibleCount((current) => current + BLOG_CHUNK_SIZE);
+      setRemoteOffset(page.nextOffset);
+      setRemoteHasMore(Boolean(page.hasMore));
+      setSyncState("fresh");
+    } catch {
+      setSyncState("local");
+    } finally {
+      setRemoteLoading(false);
+    }
+  }, [remoteHasMore, remoteLoading, remoteOffset]);
+
   const loadNextChunk = useCallback(() => {
-    setVisibleCount((current) => Math.min(current + BLOG_CHUNK_SIZE, filteredPosts.length));
-  }, [filteredPosts.length]);
+    if (visibleCount < filteredPosts.length) {
+      setVisibleCount((current) => Math.min(current + BLOG_CHUNK_SIZE, filteredPosts.length));
+      return;
+    }
+
+    loadNextRemoteChunk();
+  }, [filteredPosts.length, loadNextRemoteChunk, visibleCount]);
 
   const loadAllPosts = useCallback(() => {
     setVisibleCount(filteredPosts.length);
@@ -1196,17 +1270,94 @@ export default function BlogExplorerClient({
   };
 
   const syncLabel = syncState === "fresh"
-    ? remoteHasMore
-      ? "Refreshing articles"
-      : "Live catalog ready"
+    ? "Live catalog ready"
     : syncState === "syncing"
       ? "Refreshing articles"
       : "Curated catalog";
 
+  const activeFilterCount = [
+    query.trim(),
+    activeCategory !== "All" ? activeCategory : "",
+    activeTag !== "All" ? activeTag : "",
+    freshnessFilter !== "all" ? freshnessFilter : "",
+    readinessFilter !== "all" ? readinessFilter : "",
+    sortMode !== "latest" ? sortMode : "",
+  ].filter(Boolean).length;
+  const activeFilterChips = [
+    {
+      key: "query",
+      label: "Search",
+      value: query.trim() ? `${getSearchTerms(query).length || 1} term${getSearchTerms(query).length === 1 ? "" : "s"}` : "",
+      icon: Search,
+      onClear: clearQuery,
+    },
+    {
+      key: "category",
+      label: "Category",
+      value: activeCategory !== "All" ? activeCategory : "",
+      icon: BookOpenCheck,
+      onClear: () => handleCategoryChange("All"),
+    },
+    {
+      key: "tag",
+      label: "Tag",
+      value: activeTag !== "All" ? activeTag : "",
+      icon: Hash,
+      onClear: () => handleTagChange("All"),
+    },
+    {
+      key: "freshness",
+      label: "Freshness",
+      value: freshnessFilter !== "all"
+        ? FRESHNESS_OPTIONS.find((option) => option.value === freshnessFilter)?.label || freshnessFilter
+        : "",
+      icon: RefreshCw,
+      onClear: () => handleFreshnessChange("all"),
+    },
+    {
+      key: "readiness",
+      label: "Type",
+      value: readinessFilter !== "all"
+        ? READINESS_OPTIONS.find((option) => option.value === readinessFilter)?.label || readinessFilter
+        : "",
+      icon: Sparkles,
+      onClear: () => handleReadinessChange("all"),
+    },
+    {
+      key: "sort",
+      label: "Sort",
+      value: sortMode !== "latest"
+        ? SORT_OPTIONS.find((option) => option.value === sortMode)?.label || sortMode
+        : "",
+      icon: SlidersHorizontal,
+      onClear: () => handleSortChange("latest"),
+    },
+  ];
+
   return (
-    <section id="blog-explorer" className="mt-10 space-y-5">
-      <div className="sticky top-[58px] z-20 rounded-[var(--anslation-ds-radius-lg)] border border-(--border) bg-(--background)/92 p-3 shadow-[var(--anslation-ds-shadow-sm)] backdrop-blur-xl">
-        <div className="flex flex-col gap-3 lg:flex-row lg:items-center">
+    <section id="blog-explorer" className="mt-8 space-y-5 sm:mt-10">
+      <div className="filter-surface p-3">
+        <div className="mb-2 flex items-center justify-between gap-3 border-b border-(--border) pb-2 lg:hidden">
+          <div>
+            <p className="text-[11px] font-bold uppercase tracking-wide text-(--muted-foreground)">
+              Find guides
+            </p>
+            <p className="mt-0.5 text-xs font-medium text-(--muted-foreground)">
+              {filteredPosts.length} matches{activeFilterCount ? ` · ${activeFilterCount} active` : ""}
+            </p>
+          </div>
+          {activeFilterCount ? (
+            <button
+              type="button"
+              onClick={resetFilters}
+              className="inline-flex h-8 items-center gap-1.5 rounded-[6px] border border-(--border) bg-(--card) px-2.5 text-xs font-semibold text-(--foreground)"
+            >
+              <X className="h-3.5 w-3.5" />
+              Reset
+            </button>
+          ) : null}
+        </div>
+        <div className="grid gap-2 lg:grid-cols-[minmax(260px,1fr)_auto_auto_auto] lg:items-center">
           <SearchControl
             value={query}
             onChange={handleQueryChange}
@@ -1222,22 +1373,13 @@ export default function BlogExplorerClient({
           activeQuery={deferredQuery}
           onPick={handleQuickSearch}
         />
-        <div className="mt-3 border-t border-(--border) pt-3">
-          <ReadinessSummary
-            summary={readinessSummary}
-            activeFilter={readinessFilter}
-            onPick={handleReadinessChange}
-          />
-        </div>
-        <div className="mt-3">
+        <div className="mt-2 grid gap-1.5 border-t border-(--border) pt-2 lg:grid-cols-[minmax(0,1fr)_190px] lg:items-start">
           <CategoryTabs
             categories={categories}
             counts={counts}
             activeCategory={activeCategory}
             onChange={handleCategoryChange}
           />
-        </div>
-        <div className="mt-2">
           <TagChips
             tags={topTags}
             counts={tagCounts}
@@ -1245,6 +1387,7 @@ export default function BlogExplorerClient({
             onChange={handleTagChange}
           />
         </div>
+        <ActiveFilterChips filters={activeFilterChips} onReset={resetFilters} />
       </div>
 
       <ReaderJourneyPanel
@@ -1290,20 +1433,35 @@ export default function BlogExplorerClient({
         ]}
       />
 
-      <div className="flex flex-col gap-3 rounded-[var(--anslation-ds-radius-lg)] border border-(--border) bg-(--card) p-4 sm:flex-row sm:items-center sm:justify-between">
-        <div>
-          <p className="text-xs font-semibold uppercase tracking-wide text-(--muted-foreground)">Article library</p>
+      <ExplorerQualityStrip
+        activeFilter={readinessFilter}
+        onPick={handleReadinessChange}
+      />
+
+      <div className="surface-panel flex flex-col gap-3 p-4 sm:flex-row sm:items-center sm:justify-between">
+        <div className="min-w-0 flex-1">
+          <p className="text-xs font-semibold uppercase tracking-normal text-(--muted-foreground)">Article library</p>
           <h2 className="mt-1 text-xl font-semibold tracking-tight text-(--foreground)">
             {filteredPosts.length} curated reads
           </h2>
           {filteredPosts.length > 0 && (
             <p className="mt-1 text-xs font-medium text-(--muted-foreground)">
               Showing {displayedCount} of {filteredPosts.length}
+              {activeFilterCount ? ` · ${activeFilterCount} active filter${activeFilterCount === 1 ? "" : "s"}` : ""}
               {remoteHasMore && totalCount > loadedCount
                 ? ` · loaded ${loadedCount} of ${totalCount}`
                 : ""}
             </p>
           )}
+          {filteredPosts.length > 0 ? (
+            <ResultProgress
+              displayedCount={displayedCount}
+              filteredCount={filteredPosts.length}
+              loadedCount={loadedCount}
+              totalCount={totalCount}
+              hasMore={hasMore}
+            />
+          ) : null}
         </div>
         <div className="flex flex-wrap items-center gap-2 text-xs font-medium text-(--muted-foreground)">
           {sortMode === "trending" ? (
@@ -1360,10 +1518,11 @@ export default function BlogExplorerClient({
           {hasMore && (
             <button
               type="button"
-              onClick={loadAllPosts}
+              onClick={visibleCount < filteredPosts.length ? loadAllPosts : loadNextRemoteChunk}
+              disabled={remoteLoading}
               className="inline-flex h-7 items-center rounded-[var(--anslation-ds-radius)] border border-(--primary)/35 bg-(--primary)/10 px-2.5 text-xs font-semibold text-(--primary) transition hover:bg-(--primary) hover:text-(--primary-foreground)"
             >
-              Show all
+              {visibleCount < filteredPosts.length ? "Show loaded" : remoteLoading ? "Loading" : "Sync more"}
             </button>
           )}
         </div>
@@ -1389,10 +1548,20 @@ export default function BlogExplorerClient({
               <button
                 type="button"
                 onClick={loadNextChunk}
+                disabled={remoteLoading}
                 className="inline-flex h-10 items-center gap-2 rounded-[var(--anslation-ds-radius)] border border-(--border) bg-(--card) px-4 text-sm font-semibold text-(--foreground) shadow-[var(--anslation-ds-shadow-sm)] transition hover:border-(--primary) hover:text-(--primary)"
               >
-                Load next {Math.min(BLOG_CHUNK_SIZE, remainingCount)} articles
-                <ChevronDown className="h-4 w-4" />
+                {remoteLoading ? (
+                  <>
+                    <Loader2 className="h-4 w-4 animate-spin" />
+                    Loading more articles
+                  </>
+                ) : (
+                  <>
+                    Load next {Math.min(BLOG_CHUNK_SIZE, remainingCount || BLOG_CHUNK_SIZE)} articles
+                    <ChevronDown className="h-4 w-4" />
+                  </>
+                )}
               </button>
             ) : (
               <span className="text-xs font-medium text-(--muted-foreground)">

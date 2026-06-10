@@ -1,4 +1,4 @@
-"use-client";
+"use client";
 import App from "../components/Main";
 
 export default function RegexTester() {

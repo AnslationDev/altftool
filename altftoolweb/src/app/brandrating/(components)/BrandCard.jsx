@@ -1,25 +1,29 @@
 import { HomeIcon, ThumbsUp } from "lucide-react";
 import Image from "next/image";
-import Link from "next/link";
 
-export default function BrandCard({ brands, data }) {
+function getExternalLink(brand) {
+  const rawLink = brand?.weblink || brand?.brandLink || brand?.url || brand?.link || "";
+  const link = typeof rawLink === "string" ? rawLink.trim() : "";
 
-  function getURlLink(category) {
-    return category
-      ?.toLowerCase()
-      ?.trim()
-      ?.replace(/\s+/g, "-");
+  if (!link || link.toLowerCase() === "null" || link.toLowerCase() === "undefined") {
+    return "";
   }
 
+  return link.startsWith("http") ? link : `https://${link}`;
+}
+
+export default function BrandCard({ brands }) {
   return (
     <div className="space-y-8 sm:space-y-10">
 
-      {brands.map((brand) => (
+      {brands.map((brand) => {
+        const reviewLink = getExternalLink(brand);
 
-        <div
-          key={brand.id}
-          className="border border-gray-100 relative rounded-lg shadow-xl bg-white "
-        >
+        return (
+          <div
+            key={brand.id}
+            className="border border-gray-100 relative rounded-lg shadow-xl bg-white "
+          >
 
           {/* Rating Circle */}
           <div className="absolute text-(--muted-foreground)  w-12 h-12 sm:w-14 sm:h-14 -top-3 -right-3 border border-amber-400 z-20 flex justify-center items-center bg-white rounded-full text-sm sm:text-base">
@@ -151,16 +155,25 @@ export default function BrandCard({ brands, data }) {
           )}
 
           {/* Footer Link */}
-          <Link
-            className="flex justify-center py-4 text-(--muted-foreground) text-sm sm:text-base font-medium hover:underline"
-            href={brand.weblink}
-          >
-            READ OUR {brand.name} REVIEW
-          </Link>
+          {reviewLink ? (
+            <a
+              className="flex justify-center py-4 text-(--muted-foreground) text-sm sm:text-base font-medium hover:underline"
+              href={reviewLink}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              READ OUR {brand.name} REVIEW
+            </a>
+          ) : (
+            <span className="flex justify-center py-4 text-(--muted-foreground) text-sm sm:text-base font-medium">
+              REVIEW LINK NOT AVAILABLE
+            </span>
+          )}
 
-        </div>
+          </div>
+        );
 
-      ))}
+      })}
 
     </div>
   );

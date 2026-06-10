@@ -1,18 +1,6 @@
-"use client";
-
 import Link from "next/link";
 import { ArrowRight, BookOpenCheck, Rocket, Wrench } from "lucide-react";
 import { blogTaxonomySlug } from "../../data";
-import { recordBlogToolClick } from "../../context/views.service";
-
-function trackToolClick(blog, tool) {
-  recordBlogToolClick({
-    blogId: typeof blog?.id === "string" ? blog.id : "",
-    blogSlug: blog?.slug || "",
-    toolSlug: tool?.slug,
-    placement: "article-completion",
-  });
-}
 
 export default function BlogCompletionCta({ blog, relatedTools = [], relatedPosts = [] }) {
   const primaryTool = relatedTools[0];
@@ -22,7 +10,7 @@ export default function BlogCompletionCta({ blog, relatedTools = [], relatedPost
   if (!primaryTool && !nextPost && !blog?.category) return null;
 
   return (
-    <aside className="not-prose my-8 border-y border-(--border) bg-(--background) py-5">
+    <aside className="not-prose my-8 rounded-[var(--anslation-ds-radius)] border border-(--border) bg-(--background) p-4 shadow-[var(--anslation-ds-shadow-sm)] sm:p-5">
       <div className="grid gap-4 md:grid-cols-[minmax(0,1fr)_auto] md:items-center">
         <div>
           <p className="flex items-center gap-2 text-[11px] font-bold uppercase tracking-wide text-(--muted-foreground)">
@@ -41,8 +29,12 @@ export default function BlogCompletionCta({ blog, relatedTools = [], relatedPost
           {primaryTool ? (
             <Link
               href={primaryTool.href}
-              onClick={() => trackToolClick(blog, primaryTool)}
-              className="inline-flex h-10 items-center justify-center gap-2 rounded-[6px] bg-(--primary) px-4 text-sm font-semibold text-(--primary-foreground) transition hover:bg-(--primary-active)"
+              aria-label={`Open related tool: ${primaryTool.name}`}
+              data-blog-internal-link="related-tool"
+              data-blog-tool-click="true"
+              data-tool-slug={primaryTool.slug}
+              data-placement="article-completion"
+              className="inline-flex min-h-10 items-center justify-center gap-2 rounded-[6px] bg-(--primary) px-4 py-2 text-sm font-semibold text-(--primary-foreground) transition hover:bg-(--primary-active)"
             >
               <Wrench className="h-4 w-4" />
               Open tool
@@ -50,7 +42,9 @@ export default function BlogCompletionCta({ blog, relatedTools = [], relatedPost
           ) : null}
           <Link
             href={categoryHref}
-            className="inline-flex h-10 items-center justify-center gap-2 rounded-[6px] border border-(--border) bg-(--card) px-4 text-sm font-semibold text-(--foreground) transition hover:border-(--primary) hover:text-(--primary)"
+            data-blog-internal-link="category"
+            data-source-blog-slug={blog?.slug || ""}
+            className="inline-flex min-h-10 items-center justify-center gap-2 rounded-[6px] border border-(--border) bg-(--card) px-4 py-2 text-sm font-semibold text-(--foreground) transition hover:border-(--primary) hover:text-(--primary)"
           >
             <BookOpenCheck className="h-4 w-4" />
             More guides
@@ -61,6 +55,10 @@ export default function BlogCompletionCta({ blog, relatedTools = [], relatedPost
       {nextPost ? (
         <Link
           href={`/blogs/${nextPost.slug}`}
+          aria-label={`Recommended next: ${nextPost.heading || nextPost.title}`}
+          data-blog-internal-link="recommended-next"
+          data-source-blog-slug={blog?.slug || ""}
+          data-target-blog-slug={nextPost.slug}
           className="group mt-4 flex items-center justify-between gap-3 rounded-[6px] border border-(--border) bg-(--card) p-3 transition hover:border-(--primary)"
         >
           <div className="min-w-0">

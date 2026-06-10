@@ -8,6 +8,7 @@ import { ArrowLeft, DiamondPercent, Handshake } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useSearchParams } from "next/navigation";
 import { brandsfirebase } from "../service/firebasebrand";
+import { AltftoolLoader, LoadingBone } from "@/components/ui/route-loading";
 
 const TABS = [
   { label: "Popularity", value: "popularity" },
@@ -191,16 +192,31 @@ function AllStoresContent() {
         </div>
 
         {/* Brand Grid */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 lg:gap-10 gap-4">
-          {sortedData.map((brand) => (
-            <Link
-              key={brand.uniqueKey}
-              href={`/exclusivedeals/${brand.slug}/${slugify(brand.name)}`}
-            >
-              <StoreCard key={brand.uniqueKey} data={brand} />
-            </Link>
-          ))}
-        </div>
+        {loading ? (
+          <>
+            <AltftoolLoader
+              label="Loading stores"
+              detail="Refreshing live deals and store data"
+              className="mb-6"
+            />
+            <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4 lg:gap-10 xl:grid-cols-5">
+              {Array.from({ length: 10 }).map((_, index) => (
+                <LoadingBone key={index} className="h-[6.25rem] rounded-[var(--anslation-ds-radius)] sm:h-36" />
+              ))}
+            </div>
+          </>
+        ) : (
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 lg:gap-10 gap-4">
+            {sortedData.map((brand) => (
+              <Link
+                key={brand.uniqueKey}
+                href={`/exclusivedeals/${brand.slug}/${slugify(brand.name)}`}
+              >
+                <StoreCard key={brand.uniqueKey} data={brand} />
+              </Link>
+            ))}
+          </div>
+        )}
         {!loading && sortedData.length === 0 && (
   <div className="flex flex-col items-center justify-center py-20 text-center">
     <p className="text-xl font-semibold text-(--foreground)">No Brands Found</p>
@@ -218,7 +234,16 @@ function AllStoresContent() {
 
 export default function AllStoresPage() {
   return (
-    <Suspense fallback={<div className="section-container py-20 text-center text-(--muted-foreground)">Loading stores...</div>}>
+    <Suspense
+      fallback={
+        <main className="section bg-(--background) text-(--foreground)">
+          <AltftoolLoader
+            label="Loading stores"
+            detail="Preparing store filters and live deal data"
+          />
+        </main>
+      }
+    >
       <AllStoresContent />
     </Suspense>
   );

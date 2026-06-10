@@ -2,7 +2,7 @@ import { ImageResponse } from "next/og";
 import { getBlogBySlug, getBlogFreshness, stripHtml } from "../data";
 import { fetchFirebaseBlogBySlug } from "../data/firebaseBlogs";
 
-export const runtime = "edge";
+export const runtime = "nodejs";
 export const alt = "AltFTool blog article";
 export const size = {
   width: 1200,

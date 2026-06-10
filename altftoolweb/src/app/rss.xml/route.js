@@ -9,7 +9,7 @@ import { fetchFirebaseBlogsPage } from "@/app/blogs/data/firebaseBlogs";
 
 export const dynamic = "force-static";
 export const revalidate = 3600;
-const RSS_FIREBASE_PAGE_SIZE = 16;
+const RSS_FIREBASE_PAGE_SIZE = 100;
 
 function escapeXml(value = "") {
   return String(value)

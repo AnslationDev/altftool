@@ -237,7 +237,7 @@ export default function SupportManagementPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#f7f8fa]">
+    <div className="min-h-screen bg-(--background)">
       {/* Page header */}
       <div className="bg-white border-b border-gray-100">
         <div className="max-w-7xl mx-auto px-5 py-6">
@@ -376,7 +376,7 @@ export default function SupportManagementPage() {
           ) : (
             <>
               {/* Table header (desktop only) */}
-              <div className="hidden sm:grid grid-cols-[1fr_120px_80px_100px_90px_32px] gap-4 px-5 py-3 bg-gray-50/80 border-b border-gray-100 text-[10px] font-bold text-gray-400 uppercase tracking-wider">
+              <div className="hidden sm:grid grid-cols-[1fr_120px_80px_100px_90px_32px] gap-4 px-5 py-3 bg-(--surface-soft) border-b border-(--border) text-[11px] font-semibold text-(--muted) uppercase tracking-wider">
                 <span>Ticket</span>
                 <span>Type</span>
                 <span>Priority</span>

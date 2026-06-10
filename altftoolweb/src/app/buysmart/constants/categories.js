@@ -9,6 +9,7 @@ export const CATEGORY_OPTIONS = [
 ];
 
 export const SORT_OPTIONS = [
+  { label: "Trusted", value: "trusted" },
   { label: "Newest", value: "newest" },
   { label: "Today", value: "today" },
   { label: "Last 7 Days", value: "7days" },

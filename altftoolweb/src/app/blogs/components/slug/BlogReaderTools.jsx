@@ -38,7 +38,8 @@ export default function BlogReaderTools() {
       const button = document.createElement("button");
       button.type = "button";
       button.className = "blog-heading-copy";
-      button.setAttribute("aria-label", "Copy link to this section");
+      button.setAttribute("aria-label", `Copy link to ${heading.textContent?.replace("#", "").trim() || "this section"}`);
+      button.setAttribute("title", "Copy section link");
       button.textContent = "#";
 
       const copyHeadingLink = async (event) => {
@@ -83,7 +84,7 @@ export default function BlogReaderTools() {
   };
 
   return (
-    <div className="fixed bottom-4 right-4 z-40 flex flex-col gap-2 sm:bottom-5 sm:right-5">
+    <div className="fixed bottom-[calc(1rem+env(safe-area-inset-bottom))] right-3 z-40 flex flex-col gap-2 sm:bottom-5 sm:right-5">
       {copiedSection ? (
         <div className="rounded-[6px] border border-(--border) bg-(--card) px-3 py-2 text-xs font-semibold text-(--foreground) shadow-[var(--anslation-ds-shadow-md)]">
           Section link copied
@@ -92,7 +93,7 @@ export default function BlogReaderTools() {
       <button
         type="button"
         onClick={copyPage}
-        className="flex h-11 w-11 items-center justify-center rounded-[var(--anslation-ds-radius)] border border-(--border) bg-(--card) text-(--foreground) shadow-[var(--anslation-ds-shadow-md)] transition hover:border-(--primary) hover:text-(--primary)"
+        className="flex h-10 w-10 items-center justify-center rounded-[var(--anslation-ds-radius)] border border-(--border) bg-(--card) text-(--foreground) shadow-[var(--anslation-ds-shadow-md)] transition hover:border-(--primary) hover:text-(--primary) sm:h-11 sm:w-11"
         aria-label="Copy article link"
         title="Copy article link"
       >
@@ -101,7 +102,7 @@ export default function BlogReaderTools() {
       <button
         type="button"
         onClick={backToTop}
-        className={`flex h-11 w-11 items-center justify-center rounded-[var(--anslation-ds-radius)] border border-(--border) bg-(--card) text-(--foreground) shadow-[var(--anslation-ds-shadow-md)] transition hover:border-(--primary) hover:text-(--primary) ${visible ? "opacity-100" : "pointer-events-none opacity-0"}`}
+        className={`flex h-10 w-10 items-center justify-center rounded-[var(--anslation-ds-radius)] border border-(--border) bg-(--card) text-(--foreground) shadow-[var(--anslation-ds-shadow-md)] transition hover:border-(--primary) hover:text-(--primary) sm:h-11 sm:w-11 ${visible ? "opacity-100" : "pointer-events-none opacity-0"}`}
         aria-label="Back to top"
         title="Back to top"
       >

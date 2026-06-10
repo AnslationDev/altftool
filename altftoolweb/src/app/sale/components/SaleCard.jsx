@@ -17,15 +17,15 @@ export default function SaleCard({ item, index }) {
       className="
         shrink-0
         w-46.5 md:w-51.5 h-90
-        rounded-[14px]
+        rounded-2xl
         overflow-hidden
         border border-(--border)
         flex flex-col cursor-pointer group
       "
     >
       {/* TOP */}
-      <div className="bg-[#f9f9f9] p-3 relative overflow-hidden">
-        <span className="text-[11px] bg-[#2563EB] text-white px-3 py-1.5 rounded-full inline-block">
+      <div className="bg-(--anslation-ds-soft) p-3 relative overflow-hidden">
+        <span className="text-xs bg-(--primary) text-(--primary-foreground) px-3 py-1.5 rounded-full inline-block">
           {item.discount}
         </span>
 
@@ -49,7 +49,7 @@ export default function SaleCard({ item, index }) {
           {item.title}
         </h3>
 
-        <p className="text-[#2563EB] font-semibold text-sm mt-2">
+        <p className="text-(--primary) font-semibold text-sm mt-2">
           {item.price}
         </p>
 

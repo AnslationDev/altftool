@@ -249,18 +249,13 @@
 "use client";
 
 import React, { useEffect, useMemo, useState } from "react";
-import ReusableTable from "./(resuableComponent)/ReusableTable";
+import ReusableTable, { SafeTableImage } from "./(resuableComponent)/ReusableTable";
 import { firebaseBuySmartHeroSource } from "@/projects/altftool/modules/buysmart/services/firebaseBuySmartHero";
 import { ExternalLink } from "lucide-react";
-import DeleteConfirmModal from "@/components/ui/DeleteConfirmModal";
 
 function GetHeroSectionData({ setActive, setEditHero, filter }) {
   const [heroes, setHeroes] = useState([]);
   const [loading, setLoading] = useState(true);
-
-  const [selectedHero, setSelectedHero] = useState(null);
-  const [openDeleteModal, setOpenDeleteModal] = useState(false);
-  const [deletingId, setDeletingId] = useState(null);
 
  
   useEffect(() => {
@@ -282,37 +277,16 @@ function GetHeroSectionData({ setActive, setEditHero, filter }) {
   };
 
 
-  const openDeleteConfirm = (hero) => {
-    setSelectedHero(hero);
-    setOpenDeleteModal(true);
-  };
-
-
-  const cancelDelete = () => {
-    setOpenDeleteModal(false);
-    setSelectedHero(null);
-  };
-
-
-  const confirmDelete = async () => {
-    if (!selectedHero) return;
-
-    try {
-      setDeletingId(selectedHero.id);
-      await firebaseBuySmartHeroSource.remove(selectedHero.id);
-    } finally {
-      setDeletingId(null);
-      setOpenDeleteModal(false);
-      setSelectedHero(null);
-    }
+  const handleDeleteSingle = async (id) => {
+    await firebaseBuySmartHeroSource.remove(id);
+    return true;
   };
 
 
   const handleBulkDelete = async (ids) => {
-    if (!ids.length) return;
-    if (!confirm(`Delete ${ids.length} hero banners?`)) return;
-
+    if (!ids.length) return false;
     await firebaseBuySmartHeroSource.bulkDelete(ids);
+    return true;
   };
 
 
@@ -335,9 +309,11 @@ function GetHeroSectionData({ setActive, setEditHero, filter }) {
         accessorKey: "image",
         header: "Image",
         Cell: ({ cell }) => (
-          <img
+          <SafeTableImage
             src={cell.getValue()}
-            className="h-14 w-24 object-cover rounded border"
+            alt="Hero banner"
+            className="h-14 w-24 rounded border object-cover"
+            fallbackClassName="h-14 w-24 rounded border border-dashed border-gray-300 bg-gray-50"
           />
         ),
       },
@@ -388,25 +364,16 @@ function GetHeroSectionData({ setActive, setEditHero, filter }) {
   }
 
   return (
-    <>
-      <ReusableTable
-        data={heroes}
-        columns={columns}
-        loading={loading}
-        onEdit={handleEdit}
-        onDeleteSingle={(id) => openDeleteConfirm({ id })}
-        onBulkDelete={handleBulkDelete}
-        onStatusChange={handleStatusChanged}
-      />
-
-      {openDeleteModal && (
-        <DeleteConfirmModal
-          onCancel={cancelDelete}
-          onConfirm={confirmDelete}
-          loading={deletingId !== null}
-        />
-      )}
-    </>
+    <ReusableTable
+      data={heroes}
+      columns={columns}
+      loading={loading}
+      onEdit={handleEdit}
+      onDeleteSingle={handleDeleteSingle}
+      onBulkDelete={handleBulkDelete}
+      onStatusChange={handleStatusChanged}
+      confirmDeletes
+    />
   );
 }
 

@@ -8,6 +8,8 @@ const FIREBASE_PROJECT_ID =
 const PROJECT_ID = "altftool";
 const FIRESTORE_PARENT = `projects/${FIREBASE_PROJECT_ID}/databases/(default)/documents/projects/${PROJECT_ID}`;
 const CACHE_SECONDS = 300;
+const CACHE_MS = CACHE_SECONDS * 1000;
+const FIRESTORE_TIMEOUT_MS = Number(process.env.ALTFT_FIRESTORE_REST_TIMEOUT_MS || 3500);
 
 const LIST_FIELDS = [
   "heading",
@@ -44,6 +46,43 @@ const LIST_FIELDS = [
 ];
 
 const DETAIL_FIELDS = [...LIST_FIELDS, "description", "content", "body", "faq", "faqs", "faqItems"];
+const memoryCache = new Map();
+
+export function describeFirebaseBlogError(error) {
+  const message = String(error?.message || error || "Firebase blog read failed.");
+  const status = message.match(/failed:\s*(\d+)/i)?.[1];
+
+  if (/timed out/i.test(message)) {
+    return `${message}. Showing static blog fallback.`;
+  }
+
+  if (status) {
+    return `Firestore blog read failed with HTTP ${status}. Showing static blog fallback.`;
+  }
+
+  return `${message} Showing static blog fallback.`;
+}
+
+function cacheKey(name, value = {}) {
+  return `${name}:${JSON.stringify(value)}`;
+}
+
+function readCache(key) {
+  const cached = memoryCache.get(key);
+  if (!cached || cached.expiresAt <= Date.now()) {
+    memoryCache.delete(key);
+    return null;
+  }
+  return cached.value;
+}
+
+function writeCache(key, value) {
+  memoryCache.set(key, {
+    value,
+    expiresAt: Date.now() + CACHE_MS,
+  });
+  return value;
+}
 
 function firestoreValueToJs(value) {
   if (!value) return undefined;
@@ -105,15 +144,30 @@ function andFilter(filters) {
 async function firestorePost(endpoint, body) {
   if (!FIREBASE_API_KEY || !FIREBASE_PROJECT_ID) return [];
 
-  const response = await fetch(
-    `https://firestore.googleapis.com/v1/${FIRESTORE_PARENT}:${endpoint}?key=${FIREBASE_API_KEY}`,
-    {
-      method: "POST",
-      headers: { "content-type": "application/json" },
-      body: JSON.stringify(body),
-      next: { revalidate: CACHE_SECONDS },
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), FIRESTORE_TIMEOUT_MS);
+
+  let response;
+
+  try {
+    response = await fetch(
+      `https://firestore.googleapis.com/v1/${FIRESTORE_PARENT}:${endpoint}?key=${FIREBASE_API_KEY}`,
+      {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify(body),
+        next: { revalidate: CACHE_SECONDS },
+        signal: controller.signal,
+      }
+    );
+  } catch (error) {
+    if (error?.name === "AbortError") {
+      throw new Error(`Firestore ${endpoint} timed out after ${FIRESTORE_TIMEOUT_MS}ms`);
     }
-  );
+    throw error;
+  } finally {
+    clearTimeout(timeout);
+  }
 
   if (!response.ok) {
     throw new Error(`Firestore ${endpoint} failed: ${response.status}`);
@@ -128,6 +182,17 @@ export async function fetchFirebaseBlogsPage({
   category,
   includeDescription = false,
 } = {}) {
+  const normalizedOffset = Math.max(0, Number(offset) || 0);
+  const normalizedPageSize = Math.min(Math.max(1, Number(pageSize) || BLOG_REMOTE_LIMIT), 100);
+  const key = cacheKey("blogsPage", {
+    pageSize: normalizedPageSize,
+    offset: normalizedOffset,
+    category: category || "",
+    includeDescription: Boolean(includeDescription),
+  });
+  const cached = readCache(key);
+  if (cached) return cached;
+
   const fields = includeDescription ? DETAIL_FIELDS : LIST_FIELDS;
   const filters = [
     fieldFilter("status", "EQUAL", { stringValue: "published" }),
@@ -144,20 +209,25 @@ export async function fetchFirebaseBlogsPage({
       from: [{ collectionId: "blogs" }],
       where: andFilter(filters),
       orderBy: [{ field: { fieldPath: "createdAt" }, direction: "DESCENDING" }],
-      offset: Math.max(0, Number(offset) || 0),
-      limit: Math.min(Math.max(1, Number(pageSize) || BLOG_REMOTE_LIMIT), 100),
+      offset: normalizedOffset,
+      limit: normalizedPageSize,
     },
   });
 
-  return rows
+  const posts = rows
     .filter((row) => row.document)
     .map((row, index) =>
-      normalizeBlog(decodeDocument(row.document), offset + index)
+      normalizeBlog(decodeDocument(row.document), normalizedOffset + index)
     );
+
+  return writeCache(key, posts);
 }
 
 export async function fetchFirebaseBlogBySlug(slug) {
   if (!slug) return null;
+  const key = cacheKey("blogBySlug", { slug });
+  const cached = readCache(key);
+  if (cached) return cached;
 
   const rows = await firestorePost("runQuery", {
     structuredQuery: {
@@ -174,7 +244,7 @@ export async function fetchFirebaseBlogBySlug(slug) {
   });
 
   const document = rows.find((row) => row.document)?.document;
-  return document ? normalizeBlog(decodeDocument(document)) : null;
+  return writeCache(key, document ? normalizeBlog(decodeDocument(document)) : null);
 }
 
 export async function fetchFirebaseRelatedBlogs(category, excludeSlug, limit = 6) {
@@ -189,6 +259,10 @@ export async function fetchFirebaseRelatedBlogs(category, excludeSlug, limit = 6
 }
 
 export async function fetchFirebaseBlogCount() {
+  const key = cacheKey("blogCount");
+  const cached = readCache(key);
+  if (cached !== null) return cached;
+
   const rows = await firestorePost("runAggregationQuery", {
     structuredAggregationQuery: {
       structuredQuery: {
@@ -200,18 +274,22 @@ export async function fetchFirebaseBlogCount() {
   });
 
   const value = rows[0]?.result?.aggregateFields?.published_count;
-  return Number(value?.integerValue || 0);
+  return writeCache(key, Number(value?.integerValue || 0));
 }
 
 export async function getFirebaseBlogCatalog() {
+  const key = cacheKey("blogCatalog");
+  const cached = readCache(key);
+  if (cached) return cached;
+
   const [posts, count] = await Promise.all([
     fetchFirebaseBlogsPage({ pageSize: BLOG_REMOTE_LIMIT }),
     fetchFirebaseBlogCount().catch(() => 0),
   ]);
 
-  return {
+  return writeCache(key, {
     posts: sortBlogsByDate(posts),
     count: Math.max(count, posts.length),
     offset: posts.length,
-  };
+  });
 }

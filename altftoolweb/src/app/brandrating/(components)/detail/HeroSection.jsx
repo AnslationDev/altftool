@@ -2,8 +2,18 @@
 
 import React from "react";
 import Image from "next/image";
-import Link from "next/link";
 import { ThumbsUp, Star, StarHalf, Truck, ShieldCheck, Home, ArrowUpRight } from "lucide-react";
+
+function getExternalLink(brand) {
+  const rawLink = brand?.brandLink || brand?.weblink || brand?.url || brand?.link || "";
+  const link = typeof rawLink === "string" ? rawLink.trim() : "";
+
+  if (!link || link.toLowerCase() === "null" || link.toLowerCase() === "undefined") {
+    return "";
+  }
+
+  return link.startsWith("http") ? link : `https://${link}`;
+}
 
 function HeroSection({ brand, category }) {
   const normalizeBenefits = (benefits) => {
@@ -21,6 +31,7 @@ function HeroSection({ brand, category }) {
   const fullStars = Math.floor(safeRating);
   const hasHalf = safeRating % 1 >= 0.5;
   const emptyStars = 5 - fullStars - (hasHalf ? 1 : 0);
+  const externalLink = getExternalLink(brand);
 
 
   return (
@@ -138,14 +149,24 @@ function HeroSection({ brand, category }) {
               </p>
             </div>
 
-            <Link
-              href={brand?.brandLink}
-              target="_blank"
-              className="group w-full sm:w-auto h-[48px] sm:h-[52px] lg:h-[60px] px-5 sm:px-6 lg:px-7 rounded-full flex items-center justify-center gap-2 text-sm sm:text-base lg:text-lg font-semibold bg-[var(--primary)] text-white"
-            >
-              View Site
-              <ArrowUpRight className="w-4 h-4 md:w-6 md:h-6 transition-transform duration-300 group-hover:[transform:rotate(45deg)]" />
-            </Link>
+            {externalLink ? (
+              <a
+                href={externalLink}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group w-full sm:w-auto h-[48px] sm:h-[52px] lg:h-[60px] px-5 sm:px-6 lg:px-7 rounded-full flex items-center justify-center gap-2 text-sm sm:text-base lg:text-lg font-semibold bg-[var(--primary)] text-white"
+              >
+                View Site
+                <ArrowUpRight className="w-4 h-4 md:w-6 md:h-6 transition-transform duration-300 group-hover:[transform:rotate(45deg)]" />
+              </a>
+            ) : (
+              <span
+                aria-disabled="true"
+                className="w-full sm:w-auto h-[48px] sm:h-[52px] lg:h-[60px] px-5 sm:px-6 lg:px-7 rounded-full flex items-center justify-center gap-2 text-sm sm:text-base lg:text-lg font-semibold bg-(--muted-foreground)/20 text-(--muted-foreground) cursor-not-allowed"
+              >
+                Site unavailable
+              </span>
+            )}
           </div>
         </div>
       </div>

@@ -9,6 +9,7 @@ import AdNewsCard from "@/ads/layouts/news/AdNewsCard";
 import AdGameCard from "@/ads/layouts/games/AdGameCard";
 import AdBottomBanner from "@/ads/layouts/shared/AdBottomBanner";
 import AdExtensionCard from "@/ads/layouts/extension/AdExtensionCard";
+import { AltftoolLoader } from "@/components/ui/route-loading";
 
 function AdPreviewContent() {
   const params = useSearchParams();
@@ -40,7 +41,17 @@ function AdPreviewContent() {
 
 export default function AdPreviewPage() {
   return (
-    <Suspense fallback={null}>
+    <Suspense
+      fallback={
+        <main className="section flex min-h-[55vh] items-center justify-center bg-(--background) text-(--foreground)">
+          <AltftoolLoader
+            label="Loading preview"
+            detail="Preparing the selected ad layout"
+            className="max-w-md"
+          />
+        </main>
+      }
+    >
       <AdPreviewContent />
     </Suspense>
   );

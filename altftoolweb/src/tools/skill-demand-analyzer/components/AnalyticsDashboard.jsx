@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { getRecentSearches } from '../services/cache.js';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip } from 'recharts';
+import ResponsiveContainer from "@/components/charts/SafeResponsiveContainer";
 
 const loadPopularSkills = () => {
   if (typeof window === 'undefined') return [];
@@ -37,7 +38,7 @@ export function AnalyticsDashboard({ onClose }) {
             <div className="space-y-8">
               <div className="h-72">
                 <h3 className="text-lg font-semibold text-(--foreground) mb-4">Highest Demand Scores</h3>
-                <ResponsiveContainer width="100%" height="100%">
+                <ResponsiveContainer width="100%" height="100%" minWidth={1} minHeight={1}>
                   <BarChart data={popularSkills} layout="vertical" margin={{ top: 5, right: 30, left: 40, bottom: 5 }}>
                     <CartesianGrid strokeDasharray="3 3" horizontal={true} vertical={false} stroke="#374151" opacity={0.2} />
                     <XAxis type="number" domain={[0, 100]} />

@@ -1,0 +1,352 @@
+{
+  "generatedAt": "2026-05-20T18:59:02.687Z",
+  "durationMs": 595,
+  "ok": true,
+  "strict": true,
+  "requireBuild": true,
+  "status": "clean",
+  "score": 100,
+  "totals": {
+    "failures": 0,
+    "warnings": 0,
+    "notices": 1,
+    "apps": 2,
+    "publicImages": 390,
+    "dynamicToolImports": 231,
+    "directToolImportFiles": 0
+  },
+  "apps": [
+    {
+      "app": "web",
+      "buildPresent": true,
+      "chunks": {
+        "fileCount": 602,
+        "totalRawBytes": 16335339,
+        "totalGzipBytes": 4784144,
+        "totalRaw": "15952.5 KiB",
+        "totalGzip": "4672.0 KiB",
+        "largest": {
+          "file": "altftoolweb/.next/static/chunks/88603698.c40d4bde6ac1d78b.js",
+          "rawBytes": 1300805,
+          "gzipBytes": 318525,
+          "raw": "1270.3 KiB",
+          "gzip": "311.1 KiB"
+        },
+        "topFiles": [
+          {
+            "file": "altftoolweb/.next/static/chunks/88603698.c40d4bde6ac1d78b.js",
+            "raw": "1270.3 KiB",
+            "gzip": "311.1 KiB"
+          },
+          {
+            "file": "altftoolweb/.next/static/chunks/15999.2548962b70aaeb47.js",
+            "raw": "522.2 KiB",
+            "gzip": "198.2 KiB"
+          },
+          {
+            "file": "altftoolweb/.next/static/chunks/2170a4aa.4557143a7ed45380.js",
+            "raw": "469.1 KiB",
+            "gzip": "156.3 KiB"
+          },
+          {
+            "file": "altftoolweb/.next/static/chunks/2b2ccbcf.ea92888ce2a15637.js",
+            "raw": "478.2 KiB",
+            "gzip": "114.0 KiB"
+          },
+          {
+            "file": "altftoolweb/.next/static/chunks/164f4fb6.76a4d2ae2986b5a5.js",
+            "raw": "322.9 KiB",
+            "gzip": "103.0 KiB"
+          },
+          {
+            "file": "altftoolweb/.next/static/chunks/37424505.2849272e1781f1c1.js",
+            "raw": "380.9 KiB",
+            "gzip": "102.8 KiB"
+          },
+          {
+            "file": "altftoolweb/.next/static/chunks/037f3a08.1bc6c9a2574d1f88.js",
+            "raw": "380.9 KiB",
+            "gzip": "102.8 KiB"
+          },
+          {
+            "file": "altftoolweb/.next/static/chunks/65066.925594712af71fab.js",
+            "raw": "322.5 KiB",
+            "gzip": "95.8 KiB"
+          }
+        ]
+      },
+      "css": {
+        "fileCount": 29,
+        "totalRawBytes": 2805419,
+        "totalGzipBytes": 371989,
+        "totalRaw": "2739.7 KiB",
+        "totalGzip": "363.3 KiB",
+        "largest": {
+          "file": "altftoolweb/.next/static/css/33faa9f600098b5b.css",
+          "rawBytes": 474386,
+          "gzipBytes": 60024,
+          "raw": "463.3 KiB",
+          "gzip": "58.6 KiB"
+        },
+        "topFiles": [
+          {
+            "file": "altftoolweb/.next/static/css/33faa9f600098b5b.css",
+            "raw": "463.3 KiB",
+            "gzip": "58.6 KiB"
+          },
+          {
+            "file": "altftoolweb/.next/static/css/274a00221f237dd8.css",
+            "raw": "431.9 KiB",
+            "gzip": "55.1 KiB"
+          },
+          {
+            "file": "altftoolweb/.next/static/css/a2b384a459e67d86.css",
+            "raw": "428.2 KiB",
+            "gzip": "54.5 KiB"
+          },
+          {
+            "file": "altftoolweb/.next/static/css/6a9db91af64ee495.css",
+            "raw": "427.8 KiB",
+            "gzip": "54.2 KiB"
+          },
+          {
+            "file": "altftoolweb/.next/static/css/e001284c01aa6bdc.css",
+            "raw": "427.0 KiB",
+            "gzip": "54.2 KiB"
+          },
+          {
+            "file": "altftoolweb/.next/static/css/080ebc644a06d7da.css",
+            "raw": "427.0 KiB",
+            "gzip": "54.2 KiB"
+          },
+          {
+            "file": "altftoolweb/.next/static/css/6290cd7f0c7b3b82.css",
+            "raw": "13.7 KiB",
+            "gzip": "3.2 KiB"
+          },
+          {
+            "file": "altftoolweb/.next/static/css/1de76be520b4de19.css",
+            "raw": "10.9 KiB",
+            "gzip": "2.7 KiB"
+          }
+        ]
+      },
+      "budgets": {
+        "maxChunkGzipKiB": 375,
+        "maxChunkRawKiB": 1350,
+        "maxTotalJsGzipKiB": 6000,
+        "maxTotalCssGzipKiB": 650
+      },
+      "issues": [],
+      "notices": []
+    },
+    {
+      "app": "admin",
+      "buildPresent": true,
+      "chunks": {
+        "fileCount": 104,
+        "totalRawBytes": 5225737,
+        "totalGzipBytes": 1456642,
+        "totalRaw": "5103.3 KiB",
+        "totalGzip": "1422.5 KiB",
+        "largest": {
+          "file": "altftoolwebadmin/.next/static/chunks/09v13g~0ebr35.js",
+          "rawBytes": 641527,
+          "gzipBytes": 162229,
+          "raw": "626.5 KiB",
+          "gzip": "158.4 KiB"
+        },
+        "topFiles": [
+          {
+            "file": "altftoolwebadmin/.next/static/chunks/09v13g~0ebr35.js",
+            "raw": "626.5 KiB",
+            "gzip": "158.4 KiB"
+          },
+          {
+            "file": "altftoolwebadmin/.next/static/chunks/0muwvbks5tpo5.js",
+            "raw": "384.7 KiB",
+            "gzip": "110.0 KiB"
+          },
+          {
+            "file": "altftoolwebadmin/.next/static/chunks/14p_nn8aru3vp.js",
+            "raw": "384.7 KiB",
+            "gzip": "108.7 KiB"
+          },
+          {
+            "file": "altftoolwebadmin/.next/static/chunks/0f-45d-0um4yw.js",
+            "raw": "349.2 KiB",
+            "gzip": "106.5 KiB"
+          },
+          {
+            "file": "altftoolwebadmin/.next/static/chunks/0~rk~iesp54ct.js",
+            "raw": "221.2 KiB",
+            "gzip": "69.1 KiB"
+          },
+          {
+            "file": "altftoolwebadmin/.next/static/chunks/03~yq9q893hmn.js",
+            "raw": "110.0 KiB",
+            "gzip": "38.7 KiB"
+          },
+          {
+            "file": "altftoolwebadmin/.next/static/chunks/0uqgm3y7qfyr6.js",
+            "raw": "134.5 KiB",
+            "gzip": "36.6 KiB"
+          },
+          {
+            "file": "altftoolwebadmin/.next/static/chunks/05sf5h6g7moru.js",
+            "raw": "84.9 KiB",
+            "gzip": "29.5 KiB"
+          }
+        ]
+      },
+      "css": {
+        "fileCount": 0,
+        "totalRawBytes": 0,
+        "totalGzipBytes": 0,
+        "totalRaw": "0.0 KiB",
+        "totalGzip": "0.0 KiB",
+        "largest": null,
+        "topFiles": []
+      },
+      "budgets": {
+        "maxChunkGzipKiB": 250,
+        "maxChunkRawKiB": 850,
+        "maxTotalJsGzipKiB": 1600,
+        "maxTotalCssGzipKiB": 450
+      },
+      "issues": [],
+      "notices": [
+        {
+          "level": "notice",
+          "area": "css",
+          "message": "admin: no emitted CSS chunks found",
+          "app": "admin"
+        }
+      ]
+    }
+  ],
+  "media": {
+    "maxPublicImageKiB": 3000,
+    "criticalAssets": [
+      {
+        "file": "altftoolweb/public/extension/hero.jpg",
+        "bytes": 122422,
+        "size": "119.6 KiB",
+        "maxKiB": 450
+      },
+      {
+        "file": "altftoolweb/public/academy/hero/banner-academy.jpg",
+        "bytes": 302816,
+        "size": "295.7 KiB",
+        "maxKiB": 500
+      },
+      {
+        "file": "altftoolweb/public/academy/hero/banner-acad2.jpg",
+        "bytes": 321379,
+        "size": "313.8 KiB",
+        "maxKiB": 500
+      },
+      {
+        "file": "altftoolweb/public/trending/game/Flappy.jpg",
+        "bytes": 179906,
+        "size": "175.7 KiB",
+        "maxKiB": 500
+      },
+      {
+        "file": "altftoolweb/public/images/featured5.jpg",
+        "bytes": 166884,
+        "size": "163.0 KiB",
+        "maxKiB": 450
+      },
+      {
+        "file": "altftoolweb/public/images/featured6.jpg",
+        "bytes": 215927,
+        "size": "210.9 KiB",
+        "maxKiB": 450
+      },
+      {
+        "file": "altftoolweb/public/continue.jpg",
+        "bytes": 96001,
+        "size": "93.8 KiB",
+        "maxKiB": 350
+      },
+      {
+        "file": "altftoolweb/public/amaz.jpg",
+        "bytes": 139664,
+        "size": "136.4 KiB",
+        "maxKiB": 350
+      },
+      {
+        "file": "altftoolweb/public/banners/vertical.jpg",
+        "bytes": 282614,
+        "size": "276.0 KiB",
+        "maxKiB": 450
+      }
+    ],
+    "publicImages": {
+      "imageCount": 390,
+      "totalBytes": 189471518,
+      "totalSize": "185030.8 KiB",
+      "topImages": [
+        {
+          "file": "altftoolweb/public/personality/categories/Relation.png",
+          "size": "2212.7 KiB"
+        },
+        {
+          "file": "altftoolweb/public/wattpad/hero/banner-wattpad3.png",
+          "size": "2191.4 KiB"
+        },
+        {
+          "file": "altftoolweb/public/personality/categories/Intro.png",
+          "size": "2173.6 KiB"
+        },
+        {
+          "file": "altftoolweb/public/assets/newslogo.png",
+          "size": "2064.9 KiB"
+        },
+        {
+          "file": "altftoolweb/public/extension/agreesafe-privacy-protector.png",
+          "size": "2057.3 KiB"
+        },
+        {
+          "file": "altftoolweb/public/personality/categories/Emotion.png",
+          "size": "2027.5 KiB"
+        },
+        {
+          "file": "altftoolweb/public/sale-locator/news-letter/svg.png",
+          "size": "1996.8 KiB"
+        },
+        {
+          "file": "altftoolweb/public/mobilebanner1.png",
+          "size": "1892.4 KiB"
+        },
+        {
+          "file": "altftoolweb/public/images/featured7.png",
+          "size": "1887.4 KiB"
+        },
+        {
+          "file": "altftoolweb/public/trending/game/Fruit.png",
+          "size": "1884.6 KiB"
+        }
+      ],
+      "issues": []
+    }
+  },
+  "source": {
+    "dynamicToolImports": 231,
+    "directToolImports": [],
+    "sourceFileCount": 2201,
+    "issues": [],
+    "notices": []
+  },
+  "failures": [],
+  "warnings": [],
+  "notices": [
+    {
+      "level": "notice",
+      "area": "css",
+      "message": "admin: no emitted CSS chunks found",
+      "app": "admin"
+    }
+  ]
+}

@@ -1,7 +1,8 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { Percent, TrendingDown, TrendingUp } from "lucide-react";
+import { Copy, FileDown, Percent, RotateCcw, TrendingDown, TrendingUp } from "lucide-react";
+import { safeCopyText } from "@/shared/utils/clipboard";
 
 const modes = [
   { id: "of", label: "What is X% of Y?" },
@@ -9,15 +10,32 @@ const modes = [
   { id: "change", label: "Percentage change" },
 ];
 
+const presets = [
+  { label: "20% off sale", mode: "of", first: 20, second: 1499 },
+  { label: "Marks score", mode: "ratio", first: 82, second: 100 },
+  { label: "Monthly growth", mode: "change", first: 1200, second: 1560 },
+];
+
 const formatNumber = (value) =>
   new Intl.NumberFormat("en-IN", { maximumFractionDigits: 4 }).format(
     Number.isFinite(value) ? value : 0
   );
 
+function downloadTextFile(filename, content) {
+  const blob = new Blob([content], { type: "text/plain;charset=utf-8" });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = filename;
+  link.click();
+  URL.revokeObjectURL(url);
+}
+
 export default function ToolHome() {
   const [mode, setMode] = useState("of");
   const [first, setFirst] = useState(18);
   const [second, setSecond] = useState(1000);
+  const [copied, setCopied] = useState(false);
 
   const result = useMemo(() => {
     const a = Number(first) || 0;
@@ -48,6 +66,33 @@ export default function ToolHome() {
       direction: b >= a ? "up" : "down",
     };
   }, [first, second, mode]);
+
+  const report = useMemo(
+    () =>
+      [
+        "Percentage Calculator Report",
+        `Mode: ${modes.find((item) => item.id === mode)?.label || mode}`,
+        `Input 1: ${formatNumber(Number(first) || 0)}`,
+        `Input 2: ${formatNumber(Number(second) || 0)}`,
+        `Result: ${formatNumber(result.value)}${result.suffix || ""}`,
+        result.detail,
+        `Generated: ${new Date().toLocaleString()}`,
+      ].join("\n"),
+    [first, mode, result, second]
+  );
+
+  const applyPreset = (preset) => {
+    setMode(preset.mode);
+    setFirst(preset.first);
+    setSecond(preset.second);
+  };
+
+  const copyReport = async () => {
+    const success = await safeCopyText(report);
+    if (!success) return;
+    setCopied(true);
+    setTimeout(() => setCopied(false), 1200);
+  };
 
   return (
     <main className="min-h-screen bg-[var(--background)] px-4 py-8 text-[var(--foreground)] sm:px-6">
@@ -106,10 +151,56 @@ export default function ToolHome() {
                 />
               </label>
             </div>
+
+            <div className="mt-5">
+              <div className="mb-2 flex items-center justify-between gap-3">
+                <span className="text-sm font-semibold">Quick presets</span>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setMode("of");
+                    setFirst(18);
+                    setSecond(1000);
+                  }}
+                  className="inline-flex items-center gap-1 text-xs font-semibold text-[var(--primary)]"
+                >
+                  <RotateCcw className="h-3.5 w-3.5" />
+                  Reset
+                </button>
+              </div>
+              <div className="grid gap-2 sm:grid-cols-3 2xl:grid-cols-1">
+                {presets.map((preset) => (
+                  <button
+                    key={preset.label}
+                    type="button"
+                    onClick={() => applyPreset(preset)}
+                    className="rounded-md border border-[var(--border)] bg-[var(--background)] px-3 py-2 text-left text-sm font-semibold text-[var(--muted-foreground)] transition hover:border-[var(--primary)] hover:text-[var(--foreground)]"
+                  >
+                    {preset.label}
+                  </button>
+                ))}
+              </div>
+            </div>
           </div>
 
           <div className="rounded-lg border border-[var(--border)] bg-[var(--card)] p-6 shadow-[var(--anslation-ds-shadow-sm)]">
-            <p className="text-xs font-semibold uppercase text-[var(--muted-foreground)]">{result.label}</p>
+            <div className="flex flex-wrap items-center justify-between gap-3">
+              <p className="text-xs font-semibold uppercase text-[var(--muted-foreground)]">{result.label}</p>
+              <div className="flex flex-wrap gap-2">
+                <button type="button" onClick={copyReport} className="btn-secondary min-h-9 px-3 py-1.5 text-sm">
+                  <Copy className="h-4 w-4" />
+                  {copied ? "Copied" : "Copy report"}
+                </button>
+                <button
+                  type="button"
+                  onClick={() => downloadTextFile("percentage-calculation-report.txt", report)}
+                  className="btn-secondary min-h-9 px-3 py-1.5 text-sm"
+                >
+                  <FileDown className="h-4 w-4" />
+                  Download
+                </button>
+              </div>
+            </div>
             <div className="mt-4 flex flex-wrap items-center gap-4">
               <div className="rounded-lg bg-[var(--muted)] p-5">
                 <p className="text-4xl font-semibold text-[var(--primary)]">

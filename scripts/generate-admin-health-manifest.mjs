@@ -369,6 +369,14 @@ async function buildAutomationReadiness() {
       ok: Boolean(scripts["test:routes"]),
     },
     {
+      key: "routeQaReport",
+      label: "Route QA report",
+      detail: "npm run qa:routes",
+      ok:
+        Boolean(scripts["qa:routes"]) &&
+        await fileExists(path.join(workspaceRoot, "scripts/check-route-qa-report.mjs")),
+    },
+    {
       key: "fullValidation",
       label: "Full validation script",
       detail: "npm run validate:full",

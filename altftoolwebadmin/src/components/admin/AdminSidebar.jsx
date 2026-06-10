@@ -1,9 +1,9 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { PanelLeftClose, PanelLeftOpen } from "lucide-react";
+import { PanelLeftClose, PanelLeftOpen, Search, X } from "lucide-react";
 import { hasModuleAccess } from "@/lib/permissionUtils";
 import { PROJECTS, getProject } from "@/projects";
 import {
@@ -32,18 +32,22 @@ function ProjectLogo({ project, size, className = "" }) {
   );
 }
 
-export default function AdminSidebar({ adminData }) {
-  if (!adminData) return null;
+const normalizeModuleQuery = (value = "") => String(value).trim().toLowerCase();
 
+export default function AdminSidebar({ adminData, mobileOpen = false, onCloseMobile = () => {} }) {
   const pathname = usePathname();
   const router = useRouter();
   const [open, setOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+  const [moduleFilter, setModuleFilter] = useState("");
+  const closeButtonRef = useRef(null);
   const getDefaultModule = (project) => {
     return Object.keys(project.modules)[0];
   };
 
   const projects = Object.values(PROJECTS);
   const [collapsed, setCollapsed] = useState(false);
+  const compact = collapsed && !isMobile;
   const pathParts = pathname.split("/").filter(Boolean);
 
   const maybeProjectId = pathParts[0];
@@ -93,27 +97,66 @@ export default function AdminSidebar({ adminData }) {
   }, []);
 
   useEffect(() => {
+    const syncViewport = () => setIsMobile(window.innerWidth < 1024);
+    syncViewport();
+    window.addEventListener("resize", syncViewport);
+    return () => window.removeEventListener("resize", syncViewport);
+  }, []);
+
+  useEffect(() => {
+    if (mobileOpen && isMobile) {
+      closeButtonRef.current?.focus();
+    }
+  }, [isMobile, mobileOpen]);
+
+  useEffect(() => {
     localStorage.setItem("sidebar-collapsed", String(collapsed));
   }, [collapsed]);
 
+  if (!adminData) return null;
+
+  const normalizedModuleFilter = normalizeModuleQuery(moduleFilter);
   const allowedTabs = Object.keys(project.modules).filter((moduleKey) =>
     hasModuleAccess({ adminData, projectId, moduleKey, action: "read" })
   );
+  const visibleTabs = allowedTabs.filter((key) => {
+    if (!normalizedModuleFilter) return true;
+    const moduleConfig = project.modules[key];
+    const haystack = normalizeModuleQuery(`${key} ${moduleConfig?.label || ""}`);
+    return haystack.includes(normalizedModuleFilter);
+  });
+  const accessibleGlobalModules = globalModules.filter((key) => {
+    const moduleConfig = GLOBAL_ADMIN_MODULES[key];
+
+    if (moduleConfig.allAdmins) return true;
+    if (moduleConfig.superadminOnly) return adminData.roleType === "superadmin";
+
+    return adminData.roleType === "superadmin" || adminData.permissions?.[key]?.read;
+  });
+  const visibleGlobalModules = accessibleGlobalModules.filter((key) => {
+    if (!normalizedModuleFilter) return true;
+    const moduleConfig = GLOBAL_ADMIN_MODULES[key];
+    const haystack = normalizeModuleQuery(`${key} ${moduleConfig?.label || ""} system`);
+    return haystack.includes(normalizedModuleFilter);
+  });
+  const hasVisibleModules = visibleTabs.length > 0 || visibleGlobalModules.length > 0;
 
   return (
     <aside
-      className={`bg-[var(--surface)] border-r border-[var(--border)] h-full flex flex-col transition-all duration-200 shrink-0 ${collapsed ? "w-16" : "w-60"}`}
+      className={`fixed inset-y-0 left-0 z-50 flex h-full w-64 shrink-0 flex-col border-r border-[var(--border)] bg-[color-mix(in_srgb,var(--surface)_96%,var(--background))] shadow-[var(--shadow-lg)] transition-all duration-200 lg:relative lg:z-auto lg:shadow-none ${
+        mobileOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"
+      } ${compact ? "lg:w-16" : "lg:w-60"}`}
     >
       <div
         className={`h-14 flex items-center border-b border-[var(--border)] shrink-0 ${
-          collapsed ? "justify-center px-0" : "justify-between px-4"
+          compact ? "justify-center px-0" : "justify-between px-4"
         }`}
       >
         <div className="relative w-full">
-          {!collapsed ? (
+          {!compact ? (
             <button
               onClick={() => setOpen((v) => !v)}
-              className="w-full flex items-center justify-between px-2 py-1.5 rounded-lg text-[var(--foreground)] hover:bg-[var(--surface-soft)] transition"
+              className="flex w-full items-center justify-between rounded-lg border border-transparent px-2 py-1.5 text-[var(--foreground)] transition hover:border-[var(--border)] hover:bg-[var(--surface-soft)]"
             >
               <div className="flex items-center gap-2 truncate">
                 <ProjectLogo project={project} size={18} />
@@ -139,7 +182,7 @@ export default function AdminSidebar({ adminData }) {
           )}
 
           {open && (
-            <div className="absolute top-10 left-0 w-full bg-[var(--surface)] border border-[var(--border)] rounded-xl shadow-md z-50 overflow-hidden">
+            <div className="absolute left-0 top-10 z-50 w-full overflow-hidden rounded-lg border border-[var(--border)] bg-[var(--surface)] p-1 shadow-[var(--shadow-md)]">
               {projects.map((proj) => {
                 const isActive = proj.id === projectId;
                 return (
@@ -149,7 +192,7 @@ export default function AdminSidebar({ adminData }) {
                       handleProjectSwitch(proj.id);
                       setOpen(false);
                     }}
-                    className={`w-full text-left px-3 py-2 text-sm hover:bg-[var(--surface-soft)] transition flex items-center justify-between ${
+                    className={`flex w-full items-center justify-between rounded-md px-3 py-2 text-left text-sm transition hover:bg-[var(--surface-soft)] ${
                       isActive ? "font-semibold text-[var(--foreground)]" : "text-[var(--muted)]"
                     }`}
                   >
@@ -165,10 +208,19 @@ export default function AdminSidebar({ adminData }) {
           )}
         </div>
         <button
-          onClick={() => setCollapsed((v) => !v)}
-          className="p-1.5 rounded-lg text-[var(--muted)] hover:bg-[var(--surface-soft)] hover:text-[var(--foreground)] transition"
+          ref={closeButtonRef}
+          onClick={onCloseMobile}
+          className="ml-2 inline-flex rounded-lg p-1.5 text-[var(--muted)] transition hover:bg-[var(--surface-soft)] hover:text-[var(--foreground)] lg:hidden"
+          aria-label="Close admin navigation"
         >
-          {collapsed ? (
+          <X className="h-4 w-4" />
+        </button>
+        <button
+          onClick={() => setCollapsed((v) => !v)}
+          className="hidden rounded-lg p-1.5 text-[var(--muted)] transition hover:bg-[var(--surface-soft)] hover:text-[var(--foreground)] lg:inline-flex"
+          aria-label={compact ? "Expand admin navigation" : "Collapse admin navigation"}
+        >
+          {compact ? (
             <PanelLeftOpen className="w-4 h-4" />
           ) : (
             <PanelLeftClose className="w-4 h-4" />
@@ -176,8 +228,43 @@ export default function AdminSidebar({ adminData }) {
         </button>
       </div>
 
-      <nav className="flex-1 overflow-y-auto py-3 px-2 space-y-0.5">
-        {allowedTabs.map((key) => {
+      {!compact && (
+        <div className="border-b border-[var(--border)] px-3 py-3">
+          <label className="sr-only" htmlFor="admin-module-filter">
+            Filter modules
+          </label>
+          <div className="relative">
+            <Search className="pointer-events-none absolute left-3 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-[var(--muted)]" />
+            <input
+              id="admin-module-filter"
+              value={moduleFilter}
+              onChange={(event) => setModuleFilter(event.target.value)}
+              placeholder="Filter modules"
+              className="h-10 w-full rounded-lg border border-[var(--border)] bg-[var(--surface)] px-9 text-sm text-[var(--foreground)] outline-none transition placeholder:text-[var(--muted)] focus:border-[var(--primary)] focus:ring-2 focus:ring-[color-mix(in_srgb,var(--primary)_18%,transparent)]"
+            />
+            {moduleFilter ? (
+              <button
+                type="button"
+                onClick={() => setModuleFilter("")}
+                className="absolute right-2 top-1/2 grid h-6 w-6 -translate-y-1/2 place-items-center rounded-md text-[var(--muted)] transition hover:bg-[var(--surface-soft)] hover:text-[var(--foreground)]"
+                aria-label="Clear module filter"
+              >
+                <X className="h-3.5 w-3.5" />
+              </button>
+            ) : null}
+          </div>
+        </div>
+      )}
+
+      <div className="flex-1 overflow-y-auto px-2 py-3">
+        {!hasVisibleModules && !compact ? (
+          <div className="rounded-lg border border-dashed border-[var(--border)] bg-[var(--surface)] px-3 py-5 text-center text-xs font-medium text-[var(--muted)]">
+            No modules match this filter.
+          </div>
+        ) : null}
+
+        <nav className="space-y-0.5" aria-label={`${project?.name || "Project"} modules`}>
+        {visibleTabs.map((key) => {
           const moduleConfig = project.modules[key];
           if (!moduleConfig) return null;
           const Icon = moduleConfig.icon;
@@ -187,47 +274,38 @@ export default function AdminSidebar({ adminData }) {
             <Link
               key={key}
               href={href}
-              className={`relative group flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all ${
+              className={`group relative flex items-center gap-3 rounded-lg px-3 py-2.5 transition-all ${
                 isActive
-                  ? "bg-[var(--primary)] text-[var(--primary-foreground)] shadow-sm"
+                  ? "bg-[var(--primary)] text-[var(--primary-foreground)] shadow-[var(--shadow-sm)]"
                   : "text-[var(--muted)] hover:bg-[var(--surface-soft)] hover:text-[var(--foreground)]"
-              } ${collapsed ? "justify-center" : ""}`}
-              title={collapsed ? moduleConfig.label : undefined}
+              } ${compact ? "justify-center" : ""}`}
+              title={compact ? moduleConfig.label : undefined}
+              onClick={onCloseMobile}
             >
               <Icon size={16} className="shrink-0" />
-              {!collapsed && (
+              {!compact && (
                 <span className="text-sm font-medium truncate">{moduleConfig.label}</span>
               )}
-              {collapsed && isActive && (
+              {compact && isActive && (
                 <span className="absolute right-2 w-1 h-1 rounded-full bg-[var(--primary-foreground)]" />
               )}
             </Link>
           );
         })}
-      </nav>
+        </nav>
 
       {/* GLOBAL MODULES */}
-      {globalModules.length > 0 && (
+      {visibleGlobalModules.length > 0 && (
         <>
-          {!collapsed && (
+          {!compact && (
             <div className="mt-2 px-3 text-[10px] font-bold text-[var(--muted)] uppercase tracking-wider">
               System
             </div>
           )}
 
           <div className="py-2 px-2 space-y-0.5">
-            {globalModules.map((key) => {
+            {visibleGlobalModules.map((key) => {
               const moduleConfig = GLOBAL_ADMIN_MODULES[key];
-
-              const hasAccess = moduleConfig.allAdmins
-                ? true
-                : moduleConfig.superadminOnly
-                ? adminData.roleType === "superadmin"
-                : adminData.roleType === "superadmin" ||
-                  adminData.permissions?.[key]?.read;
-
-              if (!hasAccess) return null;
-
               const Icon = moduleConfig.icon;
               const isActive = pathname.startsWith(moduleConfig.path);
 
@@ -235,18 +313,19 @@ export default function AdminSidebar({ adminData }) {
                 <Link
                   key={key}
                   href={moduleConfig.path}
-                  className={`relative group flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all ${
+                  className={`group relative flex items-center gap-3 rounded-lg px-3 py-2.5 transition-all ${
                     isActive
-                      ? "bg-[var(--primary)] text-[var(--primary-foreground)] shadow-sm"
+                      ? "bg-[var(--primary)] text-[var(--primary-foreground)] shadow-[var(--shadow-sm)]"
                       : "text-[var(--muted)] hover:bg-[var(--surface-soft)] hover:text-[var(--foreground)]"
-                  } ${collapsed ? "justify-center" : ""}`}
-                  title={collapsed ? moduleConfig.label : undefined}
+                  } ${compact ? "justify-center" : ""}`}
+                  title={compact ? moduleConfig.label : undefined}
+                  onClick={onCloseMobile}
                 >
                   <Icon size={16} className="shrink-0" />
-                  {!collapsed && (
+                  {!compact && (
                     <span className="text-sm font-medium truncate">{moduleConfig.label}</span>
                   )}
-                  {collapsed && isActive && (
+                  {compact && isActive && (
                     <span className="absolute right-2 w-1 h-1 rounded-full bg-[var(--primary-foreground)]" />
                   )}
                 </Link>
@@ -255,8 +334,9 @@ export default function AdminSidebar({ adminData }) {
           </div>
         </>
       )}
+      </div>
 
-      {!collapsed && (
+      {!compact && (
         <div className="px-4 py-3 border-t border-[var(--border)] shrink-0">
           <div className="flex items-center gap-2">
             <div

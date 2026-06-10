@@ -14,7 +14,7 @@ const MAX_EVENTS = 250;
 
 function safeEventType(value) {
   const eventType = cleanText(value).toLowerCase();
-  return ["reveal", "copy", "outbound"].includes(eventType) ? eventType : "reveal";
+  return ["reveal", "copy", "outbound", "worked", "failed"].includes(eventType) ? eventType : "reveal";
 }
 
 export async function recordBuySmartEvent(offer = {}, eventType = "reveal") {
@@ -68,4 +68,8 @@ export async function recordBuySmartEvent(offer = {}, eventType = "reveal") {
     }
     return null;
   }
+}
+
+export function recordBuySmartVote(offer = {}, worked = true) {
+  return recordBuySmartEvent(offer, worked ? "worked" : "failed");
 }

@@ -1,20 +1,42 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import Link from "next/link";
+import { ArrowRight, ChevronLeft, ChevronRight, ListFilter, Store } from "lucide-react";
 import FilterRow from "@/app/buysmart/components/FilterRow";
 import FilterWithAdCard from "@/app/buysmart/components/FilterWithAd";
 
 import { useAds } from "@/ads/AdsProvider";
 import useDevice from "@/hooks/useDevice";
-import { useBuySmartCategories } from "@/app/buysmart/hooks/useBuySmartLiveData";
-import { normalizeBuySmartCategory } from "@altftool/core/buysmart";
+import {
+  useBuySmartAnalytics,
+  useBuySmartCategories,
+} from "@/app/buysmart/hooks/useBuySmartLiveData";
+import {
+  normalizeBuySmartCategory,
+  sortBuySmartByTrust,
+} from "@altftool/core/buysmart";
 import SideAd from "@/ads/layouts/buy/SideAd";
 
+function getItemTime(item) {
+  if (item.createdAt?.seconds) return item.createdAt.seconds * 1000;
+  const parsed = new Date(item.createdAt || 0).getTime();
+  return Number.isFinite(parsed) ? parsed : 0;
+}
+
+function getTimeThreshold(sortBy) {
+  const day = 24 * 60 * 60 * 1000;
+  if (sortBy === "today") return Date.now() - day;
+  if (sortBy === "7days") return Date.now() - day * 7;
+  if (sortBy === "1month") return Date.now() - day * 30;
+  return 0;
+}
+
 export default function CategoriesAZ({ selectedLetter = "All", filteredCategory }) {
+  const { counters } = useBuySmartAnalytics();
   const { items: categoriesData } = useBuySmartCategories();
   const [selectedCategory, setSelectedCategory] = useState("All");
-  const [sortBy, setSortBy] = useState("newest");
+  const [sortBy, setSortBy] = useState("trusted");
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(4);
   const device = useDevice();
@@ -49,7 +71,8 @@ export default function CategoriesAZ({ selectedLetter = "All", filteredCategory 
   );
 
   const filteredData = useMemo(() => {
-    let data = searchResults?.length ? [...searchResults] : [...(categoriesData || [])];
+    let data = (searchResults?.length ? [...searchResults] : [...(categoriesData || [])])
+      .map(normalizeBuySmartCategory);
 
     if (!searchResults && typeof filteredCategory === "string" && filteredCategory.trim()) {
       const categorySearch = filteredCategory.trim().toLowerCase();
@@ -65,16 +88,19 @@ export default function CategoriesAZ({ selectedLetter = "All", filteredCategory 
       data = data.filter((item) => item.category === selectedCategory);
     }
 
-    if (sortBy === "newest") {
-      data.sort((a, b) => {
-        const bTime = b.createdAt?.seconds ? b.createdAt.seconds * 1000 : new Date(b.createdAt || 0).getTime();
-        const aTime = a.createdAt?.seconds ? a.createdAt.seconds * 1000 : new Date(a.createdAt || 0).getTime();
-        return bTime - aTime;
-      });
+    const threshold = getTimeThreshold(sortBy);
+    if (threshold) {
+      data = data.filter((item) => getItemTime(item) >= threshold);
+    }
+
+    if (sortBy === "trusted") {
+      data = sortBuySmartByTrust(data, counters);
+    } else if (["newest", "today", "7days", "1month"].includes(sortBy)) {
+      data.sort((a, b) => getItemTime(b) - getItemTime(a));
     }
 
     return data;
-  }, [categoriesData, filteredCategory, searchResults, selectedCategory, sortBy]);
+  }, [categoriesData, counters, filteredCategory, searchResults, selectedCategory, sortBy]);
 
   const flatData = useMemo(() => {
     if (selectedLetter === "All") return filteredData;
@@ -102,9 +128,35 @@ export default function CategoriesAZ({ selectedLetter = "All", filteredCategory 
   })[0];
 
   return (
-    <div className="z-1 flex justify-center gap-8 bg-[var(--background)] text-[var(--foreground)]">
-      <section className="flex-1 py-10">
-        <div className="mb-6">
+    <div className="flex justify-center gap-8 bg-[var(--background)] text-[var(--foreground)]">
+      <section className="flex-1 py-6">
+        <div className="mb-4 flex flex-col gap-4 rounded-[var(--anslation-ds-radius-lg)] border border-(--border) bg-(--card) p-4 shadow-[var(--anslation-ds-shadow-sm)] lg:flex-row lg:items-center lg:justify-between">
+          <div className="min-w-0">
+            <div className="inline-flex items-center gap-2 rounded-full border border-(--border) bg-(--muted) px-3 py-1 text-xs font-semibold text-(--muted-foreground)">
+              <Store className="h-3.5 w-3.5 text-(--primary)" />
+              {flatData.length} brands ready
+            </div>
+            <h2 className="mt-3 text-xl font-bold leading-tight text-(--foreground) sm:text-2xl">
+              Browse verified BuySmart stores
+            </h2>
+            <p className="mt-1 max-w-2xl text-sm leading-6 text-(--muted-foreground)">
+              Filter by category, jump by alphabet, and open focused store pages with deal details.
+            </p>
+          </div>
+          <Link
+            href="/buysmart/view-all"
+            className="inline-flex h-10 shrink-0 items-center justify-center gap-2 rounded-[var(--anslation-ds-radius)] border border-(--border) bg-(--background) px-3 text-sm font-bold text-(--foreground) transition hover:border-(--primary)"
+          >
+            Full directory
+            <ArrowRight className="h-4 w-4 text-(--primary)" />
+          </Link>
+        </div>
+
+        <div className="mb-5 rounded-[var(--anslation-ds-radius-lg)] border border-(--border) bg-(--card) p-3 shadow-[var(--anslation-ds-shadow-sm)]">
+          <div className="mb-3 flex items-center gap-2 text-xs font-bold uppercase tracking-wide text-(--muted-foreground)">
+            <ListFilter className="h-4 w-4 text-(--primary)" />
+            Refine results
+          </div>
           <FilterRow
             selectedCategory={selectedCategory}
             setSelectedCategory={(category) => {
@@ -120,7 +172,7 @@ export default function CategoriesAZ({ selectedLetter = "All", filteredCategory 
           />
         </div>
         <div className="flex gap-6">
-          <FilterWithAdCard displayedData={paginatedData} />
+          <FilterWithAdCard displayedData={paginatedData} counters={counters} />
           <div className="hidden flex-shrink-0 xl:block">
             <SideAd ad={rightAd?.content} />
           </div>

@@ -39,6 +39,49 @@ async function gotoToolRoute(page, url) {
   }
 }
 
+async function expectWorkspaceHasUsableRuntime(page, slug) {
+  const workspace = page.getByTestId("tool-workspace-shell");
+  await expect(workspace).toBeVisible({ timeout: routeTimeoutMs });
+
+  const readWorkspace = () => workspace.evaluate((element) => {
+    const text = (element.innerText || "").replace(/\s+/g, " ").trim();
+    const selector = [
+      "button",
+      "input",
+      "textarea",
+      "select",
+      "canvas",
+      "svg",
+      "img",
+      "pre",
+      "table",
+      "[role='button']",
+      "[data-testid='tool-output']",
+    ].join(",");
+
+    return {
+      controlCount: element.querySelectorAll(selector).length,
+      hasNamedOutput: Boolean(element.querySelector("[data-testid='tool-output']")),
+      textLength: text.length,
+    };
+  });
+
+  await expect.poll(
+    async () => {
+      const readiness = await readWorkspace();
+      return readiness.textLength > 40 && readiness.controlCount > 0 ? 1 : 0;
+    },
+    {
+      message: `${slug} workspace should finish lazy loading and expose usable content`,
+      timeout: routeTimeoutMs,
+    },
+  ).toBe(1);
+
+  const readiness = await readWorkspace();
+  expect(readiness.textLength, `${slug} workspace should render meaningful content`).toBeGreaterThan(40);
+  expect(readiness.controlCount, `${slug} workspace should expose controls, previews, or output`).toBeGreaterThan(0);
+}
+
 const toolMetaMap = await readToolMetaMap();
 
 test.describe("top priority microtool route health", () => {
@@ -59,12 +102,18 @@ test.describe("top priority microtool route health", () => {
       await expect(routeNav).toContainText(tool.name, { timeout: routeTimeoutMs });
       await expect(page.getByTestId("tool-action-bar")).toBeVisible({ timeout: routeTimeoutMs });
       await expect(page.getByTestId("priority-tool-badge")).toContainText("Top 40 verified");
+      await expect(page.getByTestId("save-tool")).toBeVisible();
       await expect(page.getByTestId("copy-tool-link")).toBeVisible();
       await expect(page.getByTestId("share-tool-link")).toBeVisible();
       await expect(page.getByTestId("reset-tool-workspace")).toBeVisible();
+      await expect(page.getByTestId("tool-workspace-shell")).toBeVisible({ timeout: routeTimeoutMs });
+      await expect(page.getByRole("status", { name: "Preparing workspace" })).toHaveCount(0, {
+        timeout: routeTimeoutMs,
+      });
       await expect(page.getByText("Preparing workspace")).toHaveCount(0, {
         timeout: routeTimeoutMs,
       });
+      await expectWorkspaceHasUsableRuntime(page, slug);
       await expect(page.locator("body")).not.toContainText("Application error");
       await expect(page.locator("body")).not.toContainText("This page could not be found");
 

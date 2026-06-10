@@ -82,7 +82,7 @@ const handleTouchEnd = () => {
           initial={{ opacity: 0, y: 35 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.55 }}
-          className="col-span-7 rounded-[28px] overflow-hidden"
+          className="col-span-7 rounded-3xl overflow-hidden"
         >
           <Image
             src="/sale-locator/hero-section-2/hero-img1.png"
@@ -100,7 +100,7 @@ const handleTouchEnd = () => {
             initial={{ opacity: 0, x: 30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.55, delay: 0.1 }}
-            className="rounded-[28px] overflow-hidden"
+            className="rounded-3xl overflow-hidden"
           >
             <Image
               src="/sale-locator/hero-section-2/hero-img2.png"
@@ -115,7 +115,7 @@ const handleTouchEnd = () => {
             initial={{ opacity: 0, x: 30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.55, delay: 0.2 }}
-            className="rounded-[28px] overflow-hidden"
+            className="rounded-3xl overflow-hidden"
           >
             <Image
               src="/sale-locator/hero-section-2/hero-img3.png"
@@ -190,7 +190,7 @@ const handleTouchEnd = () => {
       "
           >
             {/* image icon */}
-            <div className="h-20 w-20 md:h-14 md:w-14 shrink-0 rounded-full overflow-hidden bg-[#EAF1FF] flex items-center justify-center">
+            <div className="h-20 w-20 md:h-14 md:w-14 shrink-0 rounded-full overflow-hidden bg-(--anslation-ds-primary-soft) flex items-center justify-center">
               <Image
                 src={feature.image}
                 alt={feature.title}

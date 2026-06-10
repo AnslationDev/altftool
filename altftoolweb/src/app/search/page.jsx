@@ -1,6 +1,7 @@
 import { Suspense } from "react";
 import SearchContent from "./SearchContent";
 import { createPageMetadata } from "@/platform/seo/generateMetadata";
+import { RouteLoadingShell } from "@/components/ui/route-loading";
 
 export const metadata = {
   ...createPageMetadata({
@@ -17,7 +18,7 @@ export const metadata = {
 
 export default function Page() {
   return (
-    <Suspense fallback={<div className="py-24 text-center">Loading...</div>}>
+    <Suspense fallback={<RouteLoadingShell variant="listing" />}>
       <SearchContent />
     </Suspense>
   );

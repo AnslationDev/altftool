@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useMemo, useState } from "react";
-import ReusableTable from "../../../buysmart/(components)/(resuableComponent)/ReusableTable";
+import ReusableTable, { SafeTableImage } from "../../../buysmart/(components)/(resuableComponent)/ReusableTable";
 import { topCouponService } from "../../firebaseService/topCoupon.service";
 
 function GetCoupon({ setActive, setEditData }) {
@@ -45,7 +45,7 @@ function GetCoupon({ setActive, setEditData }) {
       accessorKey: "image",
       header: "Image",
       Cell: ({ row }) => (
-        <img src={row.original.image} className="h-10 w-16 rounded" />
+        <SafeTableImage src={row.original.image} alt={row.original.name || "Coupon"} className="h-10 w-16 rounded border object-cover" fallbackClassName="h-10 w-16 rounded border border-dashed border-gray-300 bg-gray-50" />
       )
     },
 
@@ -53,7 +53,7 @@ function GetCoupon({ setActive, setEditData }) {
       accessorKey: "logo",
       header: "Logo",
       Cell: ({ row }) => (
-        <img src={row.original.logo} className="h-8 w-8 rounded" />
+        <SafeTableImage src={row.original.logo} alt={`${row.original.name || "Brand"} logo`} className="h-8 w-8 rounded border object-cover" fallbackClassName="h-8 w-8 rounded border border-dashed border-gray-300 bg-gray-50" />
       )
     },
 
@@ -80,8 +80,8 @@ function GetCoupon({ setActive, setEditData }) {
   };
 
   const handleDelete = async (id) => {
-    if (!confirm("Delete coupon?")) return;
     await topCouponService.remove(id);
+    return true;
   };
 
   const handleStatusChange = async (item) => {
@@ -99,11 +99,9 @@ function GetCoupon({ setActive, setEditData }) {
   };
 
   const handleBulkDelete = async (ids) => {
-    if (!ids.length) return;
-  
-    if (!confirm(`Delete ${ids.length} coupons?`)) return;
-  
+    if (!ids.length) return false;
     await topCouponService.bulkDelete(ids);
+    return true;
   };
 
   return (
@@ -115,6 +113,7 @@ function GetCoupon({ setActive, setEditData }) {
       onDeleteSingle={handleDelete}
       onBulkDelete={handleBulkDelete} 
       onStatusChange={handleStatusChange}
+      confirmDeletes
     />
   );
 }

@@ -19,6 +19,18 @@ on:
         required: false
       VERCEL_ADMIN_PROJECT_ID:
         required: false
+      ALTFT_MONITOR_ADMIN_TOKEN:
+        required: false
+      ALTFT_MONITOR_ADMIN_EMAIL:
+        required: false
+      ALTFT_MONITOR_ADMIN_PASSWORD:
+        required: false
+      ALTFT_MONITOR_FIREBASE_API_KEY:
+        required: false
+      ALTFT_MONITOR_ALERT_WEBHOOK_URL:
+        required: false
+      NEXT_PUBLIC_FIREBASE_API_KEY:
+        required: false
   workflow_dispatch:
     inputs:
       target:
@@ -44,6 +56,9 @@ env:
   NEXT_TELEMETRY_DISABLED: 1
   WEB_PROJECT_ROOT: altftoolweb
   ADMIN_PROJECT_ROOT: altftoolwebadmin
+  ALTFT_EXPECTED_GITHUB_REPO: AnslationDev/altftool
+  VERCEL_CWD: .
+  VERCEL_CLI_VERSION: 54.2.0
 
 jobs:
   deploy-web:
@@ -78,21 +93,37 @@ jobs:
         run: npm run deploy:readiness -- --target=web
 
       - name: Install Vercel CLI
-        run: npm install -g vercel@54.0.0
+        run: npm install -g "vercel@$VERCEL_CLI_VERSION"
 
       - name: Install workspace dependencies for post-deploy checks
         run: npm ci
 
       - name: Pull web production environment
-        run: vercel pull --yes --environment=production --cwd "$WEB_PROJECT_ROOT" --token="$VERCEL_TOKEN"
+        run: |
+          vercel link --yes --scope "$VERCEL_ORG_ID" --project "$VERCEL_WEB_PROJECT_ID" --cwd "$VERCEL_CWD" --token="$VERCEL_TOKEN"
+          vercel pull --yes --environment=production --cwd "$VERCEL_CWD" --token="$VERCEL_TOKEN"
 
       - name: Build web deployment
-        run: vercel build --prod --cwd "$WEB_PROJECT_ROOT" --token="$VERCEL_TOKEN"
+        run: vercel build --prod --cwd "$VERCEL_CWD" --token="$VERCEL_TOKEN"
 
       - name: Deploy web prebuilt output
         id: deploy
         run: |
-          deployment_url="$(vercel deploy --prebuilt --prod --cwd "$WEB_PROJECT_ROOT" --token="$VERCEL_TOKEN" | tail -n 1)"
+          deployment_output="$(vercel deploy --prebuilt --prod --cwd "$VERCEL_CWD" --token="$VERCEL_TOKEN" \
+            --meta altftSourceRepo="$ALTFT_EXPECTED_GITHUB_REPO" \
+            --meta altftProject=web \
+            --meta githubOrg=AnslationDev \
+            --meta githubRepo=altftool \
+            --meta githubCommitOrg=AnslationDev \
+            --meta githubCommitRepo=altftool \
+            --meta githubCommitRef="$GITHUB_REF_NAME" \
+            --meta githubCommitSha="$GITHUB_SHA")"
+          printf '%s\n' "$deployment_output"
+          deployment_url="$(printf '%s\n' "$deployment_output" | grep -Eo 'https://[^[:space:]]+vercel\.app' | tail -n 1)"
+          if [ -z "$deployment_url" ]; then
+            echo "Could not parse Vercel deployment URL from deploy output." >&2
+            exit 1
+          fi
           echo "url=$deployment_url" >> "$GITHUB_OUTPUT"
           {
             echo "### Web deployment"
@@ -100,16 +131,42 @@ jobs:
             echo "$deployment_url"
           } >> "$GITHUB_STEP_SUMMARY"
 
+      - name: Verify web deployment source repo
+        env:
+          ALTFT_DEPLOYMENT_URL: ${{ steps.deploy.outputs.url }}
+          ALTFT_EXPECTED_COMMIT: ${{ github.sha }}
+          VERCEL_SOURCE_OUTPUT_PATH: web-vercel-source-report.json
+        run: npm run deploy:source-check -- --target=web
+
       - name: Monitor web deployment URL
         env:
           ALTFT_MONITOR_WEB_URLS: ${{ steps.deploy.outputs.url }}
+          ALTFT_MONITOR_SKIP_ADMIN: "true"
+          ALTFT_MONITOR_ALERT_WEBHOOK_URL: ${{ secrets.ALTFT_MONITOR_ALERT_WEBHOOK_URL }}
+          ALTFT_MONITOR_ALERT_FORMAT: ${{ vars.ALTFT_MONITOR_ALERT_FORMAT || 'generic' }}
           ALTFT_MONITOR_OUTPUT_PATH: web-deployment-monitoring-report.json
         run: npm run monitor:production
 
       - name: Monitor production web domain
         env:
+          ALTFT_MONITOR_SKIP_ADMIN: "true"
+          ALTFT_MONITOR_ALERT_WEBHOOK_URL: ${{ secrets.ALTFT_MONITOR_ALERT_WEBHOOK_URL }}
+          ALTFT_MONITOR_ALERT_FORMAT: ${{ vars.ALTFT_MONITOR_ALERT_FORMAT || 'generic' }}
           ALTFT_MONITOR_OUTPUT_PATH: web-production-monitoring-report.json
         run: npm run monitor:production
+
+      - name: Monitor production web links and images
+        env:
+          ALTFT_LINK_CHECK_URL: ${{ vars.ALTFT_MONITOR_WEB_URL || 'https://altftool.com' }}
+        run: npm run monitor:links:strict -- --limit 24 --output web-production-links-report.json --output-md web-production-links-report.md
+
+      - name: Verify production web parity
+        env:
+          ALTFT_WEB_URL: ${{ vars.ALTFT_MONITOR_WEB_URL || 'https://altftool.com' }}
+          ALTFT_EXPECTED_COMMIT: ${{ github.sha }}
+          ALTFT_PARITY_OUTPUT_PATH: web-production-parity-report.json
+          ALTFT_PARITY_MARKDOWN_PATH: web-production-parity-report.md
+        run: npm run deploy:parity:strict
 
       - name: Upload web monitoring reports
         if: always()
@@ -118,8 +175,13 @@ jobs:
           name: web-deploy-monitoring-reports
           path: |
             web-vercel-readiness-report.json
+            web-vercel-source-report.json
             web-deployment-monitoring-report.json
             web-production-monitoring-report.json
+            web-production-links-report.json
+            web-production-links-report.md
+            web-production-parity-report.json
+            web-production-parity-report.md
           if-no-files-found: ignore
 
   deploy-admin:
@@ -153,7 +215,10 @@ jobs:
         run: npm run deploy:readiness -- --target=admin
 
       - name: Install Vercel CLI
-        run: npm install -g vercel@54.0.0
+        run: npm install -g "vercel@$VERCEL_CLI_VERSION"
+
+      - name: Install workspace dependencies for post-deploy checks
+        run: npm ci
 
       - name: Upload admin readiness report
         if: always()
@@ -164,18 +229,79 @@ jobs:
           if-no-files-found: ignore
 
       - name: Pull admin production environment
-        run: vercel pull --yes --environment=production --cwd "$ADMIN_PROJECT_ROOT" --token="$VERCEL_TOKEN"
+        run: |
+          vercel link --yes --scope "$VERCEL_ORG_ID" --project "$VERCEL_ADMIN_PROJECT_ID" --cwd "$VERCEL_CWD" --token="$VERCEL_TOKEN"
+          vercel pull --yes --environment=production --cwd "$VERCEL_CWD" --token="$VERCEL_TOKEN"
 
       - name: Build admin deployment
-        run: vercel build --prod --cwd "$ADMIN_PROJECT_ROOT" --token="$VERCEL_TOKEN"
+        run: vercel build --prod --cwd "$VERCEL_CWD" --token="$VERCEL_TOKEN"
 
       - name: Deploy admin prebuilt output
         id: deploy
         run: |
-          deployment_url="$(vercel deploy --prebuilt --prod --cwd "$ADMIN_PROJECT_ROOT" --token="$VERCEL_TOKEN" | tail -n 1)"
+          deployment_output="$(vercel deploy --prebuilt --prod --cwd "$VERCEL_CWD" --token="$VERCEL_TOKEN" \
+            --meta altftSourceRepo="$ALTFT_EXPECTED_GITHUB_REPO" \
+            --meta altftProject=admin \
+            --meta githubOrg=AnslationDev \
+            --meta githubRepo=altftool \
+            --meta githubCommitOrg=AnslationDev \
+            --meta githubCommitRepo=altftool \
+            --meta githubCommitRef="$GITHUB_REF_NAME" \
+            --meta githubCommitSha="$GITHUB_SHA")"
+          printf '%s\n' "$deployment_output"
+          deployment_url="$(printf '%s\n' "$deployment_output" | grep -Eo 'https://[^[:space:]]+vercel\.app' | tail -n 1)"
+          if [ -z "$deployment_url" ]; then
+            echo "Could not parse Vercel deployment URL from deploy output." >&2
+            exit 1
+          fi
           echo "url=$deployment_url" >> "$GITHUB_OUTPUT"
           {
             echo "### Admin deployment"
             echo
             echo "$deployment_url"
           } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Verify admin deployment source repo
+        env:
+          ALTFT_DEPLOYMENT_URL: ${{ steps.deploy.outputs.url }}
+          ALTFT_EXPECTED_COMMIT: ${{ github.sha }}
+          VERCEL_SOURCE_OUTPUT_PATH: admin-vercel-source-report.json
+        run: npm run deploy:source-check -- --target=admin
+
+      - name: Monitor admin deployment URL
+        env:
+          ALTFT_MONITOR_SKIP_WEB: "true"
+          ALTFT_MONITOR_ADMIN_URL: ${{ steps.deploy.outputs.url }}
+          ALTFT_MONITOR_ADMIN_TOKEN: ${{ secrets.ALTFT_MONITOR_ADMIN_TOKEN }}
+          ALTFT_MONITOR_ADMIN_EMAIL: ${{ secrets.ALTFT_MONITOR_ADMIN_EMAIL }}
+          ALTFT_MONITOR_ADMIN_PASSWORD: ${{ secrets.ALTFT_MONITOR_ADMIN_PASSWORD }}
+          ALTFT_MONITOR_FIREBASE_API_KEY: ${{ secrets.ALTFT_MONITOR_FIREBASE_API_KEY || secrets.NEXT_PUBLIC_FIREBASE_API_KEY }}
+          ALTFT_MONITOR_ALERT_WEBHOOK_URL: ${{ secrets.ALTFT_MONITOR_ALERT_WEBHOOK_URL }}
+          ALTFT_MONITOR_ALERT_FORMAT: ${{ vars.ALTFT_MONITOR_ALERT_FORMAT || 'generic' }}
+          ALTFT_MONITOR_OUTPUT_PATH: admin-deployment-monitoring-report.json
+        run: npm run monitor:production
+
+      - name: Monitor production admin domain
+        env:
+          ALTFT_MONITOR_SKIP_WEB: "true"
+          ALTFT_MONITOR_ADMIN_URL: ${{ vars.ALTFT_MONITOR_ADMIN_URL || 'https://adsmanager.altftool.com' }}
+          ALTFT_MONITOR_ADMIN_TOKEN: ${{ secrets.ALTFT_MONITOR_ADMIN_TOKEN }}
+          ALTFT_MONITOR_ADMIN_EMAIL: ${{ secrets.ALTFT_MONITOR_ADMIN_EMAIL }}
+          ALTFT_MONITOR_ADMIN_PASSWORD: ${{ secrets.ALTFT_MONITOR_ADMIN_PASSWORD }}
+          ALTFT_MONITOR_FIREBASE_API_KEY: ${{ secrets.ALTFT_MONITOR_FIREBASE_API_KEY || secrets.NEXT_PUBLIC_FIREBASE_API_KEY }}
+          ALTFT_MONITOR_ALERT_WEBHOOK_URL: ${{ secrets.ALTFT_MONITOR_ALERT_WEBHOOK_URL }}
+          ALTFT_MONITOR_ALERT_FORMAT: ${{ vars.ALTFT_MONITOR_ALERT_FORMAT || 'generic' }}
+          ALTFT_MONITOR_OUTPUT_PATH: admin-production-monitoring-report.json
+        run: npm run monitor:production
+
+      - name: Upload admin monitoring reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: admin-deploy-monitoring-reports
+          path: |
+            admin-vercel-readiness-report.json
+            admin-vercel-source-report.json
+            admin-deployment-monitoring-report.json
+            admin-production-monitoring-report.json
+          if-no-files-found: ignore

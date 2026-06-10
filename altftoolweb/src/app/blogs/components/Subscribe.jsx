@@ -109,11 +109,11 @@ export default function Subscribe() {
         position="top-center"
         toastOptions={{
           style: {
-            background: "#2563eb",
-            color: "#fff",
+            background: "var(--primary)",
+            color: "var(--primary-foreground)",
             fontWeight: "500",
             padding: "8px 14px",
-            borderRadius: "5px",
+            borderRadius: "var(--anslation-ds-radius)",
           },
         }}
       />

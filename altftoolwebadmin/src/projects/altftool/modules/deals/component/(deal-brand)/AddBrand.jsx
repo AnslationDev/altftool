@@ -4,6 +4,7 @@ import { brandService } from "../../firebaseService/brand.service";
 import { categoryService } from "../../firebaseService/category.service";
 import { allBrandService } from "../../firebaseService/allBrand.service";
 import { uploadImage } from "../../../buysmart/services/uploadImage";
+import { AlertTriangle, Trash2 } from "lucide-react";
 
 function AddBrand({ setActive, editData }) {
   const [categories, setCategories] = useState([]);
@@ -12,6 +13,7 @@ function AddBrand({ setActive, editData }) {
   const [logoFile, setLogoFile] = useState(null);
   const [editingIndex, setEditingIndex] = useState(null);
   const [conditionInput, setConditionInput] = useState("");
+  const [pendingOfferDelete, setPendingOfferDelete] = useState(null);
 
   const [form, setForm] = useState({
     name: "",
@@ -163,9 +165,7 @@ function AddBrand({ setActive, editData }) {
     setEditingIndex(null); // ✅ VERY IMPORTANT
   };
 
-  const handleRemoveOffer = (index) => {
-    if (!confirm("Delete this offer?")) return;
-
+  const removeOfferAtIndex = (index) => {
     setForm(prev => ({
       ...prev,
       offers: prev.offers.filter((_, i) => i !== index)
@@ -187,6 +187,15 @@ function AddBrand({ setActive, editData }) {
     if (editingIndex !== null && index < editingIndex) {
       setEditingIndex(prev => prev - 1);
     }
+  };
+  const handleRemoveOffer = (index) => {
+    setPendingOfferDelete(index);
+  };
+
+  const confirmRemoveOffer = () => {
+    if (pendingOfferDelete === null) return;
+    removeOfferAtIndex(pendingOfferDelete);
+    setPendingOfferDelete(null);
   };
 
   const handleEditOffer = (data, index) => {
@@ -446,6 +455,42 @@ function AddBrand({ setActive, editData }) {
       >
         Save Brand
       </button>
+
+      {pendingOfferDelete !== null && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/55 p-4 backdrop-blur-sm">
+          <div className="w-full max-w-md rounded-lg border border-gray-200 bg-white p-5 shadow-2xl">
+            <div className="flex items-start gap-3">
+              <div className="grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-red-50 text-red-600">
+                <AlertTriangle className="h-5 w-5" />
+              </div>
+              <div>
+                <h2 className="text-base font-semibold text-gray-900">Delete offer?</h2>
+                <p className="mt-1 text-sm leading-6 text-gray-600">
+                  This will remove {form.offers[pendingOfferDelete]?.title || "this offer"} from this brand before saving.
+                </p>
+              </div>
+            </div>
+
+            <div className="mt-5 flex flex-col-reverse gap-2 sm:flex-row sm:justify-end">
+              <button
+                type="button"
+                onClick={() => setPendingOfferDelete(null)}
+                className="inline-flex h-10 items-center justify-center rounded-lg border border-gray-200 bg-white px-4 text-sm font-semibold text-gray-700 transition hover:bg-gray-50"
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                onClick={confirmRemoveOffer}
+                className="inline-flex h-10 items-center justify-center gap-2 rounded-lg bg-red-600 px-4 text-sm font-semibold text-white transition hover:bg-red-700"
+              >
+                <Trash2 className="h-4 w-4" />
+                Delete
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
     </div>
   );

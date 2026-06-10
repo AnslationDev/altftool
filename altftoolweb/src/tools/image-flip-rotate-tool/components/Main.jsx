@@ -3,7 +3,6 @@
 /* eslint-disable @next/next/no-img-element */
 
 import React, { useMemo, useRef, useState } from "react";
-import JSZip from "jszip";
 import {
   AlertTriangle,
   Archive,
@@ -26,6 +25,14 @@ import {
   Trash2,
   UploadCloud,
 } from "lucide-react";
+import { safeCopyText } from "@/shared/utils/clipboard";
+
+let jsZipPromise;
+
+function loadJsZip() {
+  jsZipPromise ||= import("jszip").then((module) => module.default || module);
+  return jsZipPromise;
+}
 
 const DEFAULT_SETTINGS = {
   rotation: 0,
@@ -38,6 +45,9 @@ const DEFAULT_SETTINGS = {
   quality: 0.92,
   filenameSuffix: "flipped-rotated",
 };
+
+const MAX_IMAGE_FILES = 20;
+const MAX_IMAGE_BYTES = 35 * 1024 * 1024;
 
 const FORMAT_OPTIONS = {
   original: { label: "Keep Source", mime: null, ext: null },
@@ -325,11 +335,22 @@ export default function MainComponent() {
   };
 
   const addFiles = async (fileList) => {
-    const files = Array.from(fileList || []).filter((file) =>
-      file.type.startsWith("image/"),
+    const incomingFiles = Array.from(fileList || []);
+    const invalidFiles = incomingFiles.filter((file) => !file.type.startsWith("image/"));
+    const oversizedFiles = incomingFiles.filter(
+      (file) => file.type.startsWith("image/") && file.size > MAX_IMAGE_BYTES,
     );
+    const availableSlots = Math.max(0, MAX_IMAGE_FILES - items.length);
+    const files = incomingFiles
+      .filter((file) => file.type.startsWith("image/") && file.size <= MAX_IMAGE_BYTES)
+      .slice(0, availableSlots);
+
     if (!files.length) {
-      setError("Choose browser-readable image files like JPG, PNG, WebP, AVIF, or GIF.");
+      setError(
+        availableSlots === 0
+          ? `You can process up to ${MAX_IMAGE_FILES} images at once. Clear the queue to add more.`
+          : `Choose browser-readable image files under ${formatBytes(MAX_IMAGE_BYTES)}.`,
+      );
       return;
     }
 
@@ -359,7 +380,12 @@ export default function MainComponent() {
     if (prepared.length) {
       setItems((current) => [...current, ...prepared]);
       if (!selectedId) setSelectedId(prepared[0].id);
-      setStatus(`${prepared.length} image${prepared.length === 1 ? "" : "s"} loaded.`);
+      const skippedCount = invalidFiles.length + oversizedFiles.length + Math.max(0, incomingFiles.length - invalidFiles.length - oversizedFiles.length - files.length);
+      setStatus(
+        `${prepared.length} image${prepared.length === 1 ? "" : "s"} loaded.${
+          skippedCount ? ` ${skippedCount} file${skippedCount === 1 ? "" : "s"} skipped by type, size, or queue limit.` : ""
+        }`,
+      );
     }
 
     setProgress({ done: 0, total: 0 });
@@ -470,6 +496,7 @@ export default function MainComponent() {
       if (outputs.length === 1) {
         downloadBlob(outputs[0].blob, outputs[0].filename);
       } else {
+        const JSZip = await loadJsZip();
         const zip = new JSZip();
         outputs.forEach((output) => zip.file(output.filename, output.blob));
         const zipBlob = await zip.generateAsync({ type: "blob" });
@@ -491,7 +518,15 @@ export default function MainComponent() {
   };
 
   const copySummary = async () => {
-    await navigator.clipboard?.writeText(buildSummary(items, settings));
+    if (!items.length) {
+      setError("Add at least one image before copying a summary.");
+      return;
+    }
+    const success = await safeCopyText(buildSummary(items, settings));
+    if (!success) {
+      setError("Could not copy the summary in this browser.");
+      return;
+    }
     setCopied(true);
     window.setTimeout(() => setCopied(false), 1400);
   };
@@ -622,24 +657,17 @@ export default function MainComponent() {
                           {item.width} x {item.height}px • {formatBytes(item.file.size)}
                         </p>
                       </div>
-                      <span
-                        role="button"
-                        tabIndex={0}
+                      <button
+                        type="button"
                         onClick={(event) => {
                           event.stopPropagation();
                           removeItem(item.id);
-                        }}
-                        onKeyDown={(event) => {
-                          if (event.key === "Enter" || event.key === " ") {
-                            event.stopPropagation();
-                            removeItem(item.id);
-                          }
                         }}
                         className="rounded-md p-1 text-(--muted-foreground) hover:bg-red-500/10 hover:text-red-600"
                         aria-label={`Remove ${item.file.name}`}
                       >
                         <Trash2 className="h-4 w-4" />
-                      </span>
+                      </button>
                     </div>
                   </div>
                 ))}

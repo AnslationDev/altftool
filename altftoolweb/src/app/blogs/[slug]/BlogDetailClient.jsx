@@ -36,8 +36,10 @@ import BlogReaderTools from "../components/slug/BlogReaderTools";
 import BlogFeedback from "../components/slug/BlogFeedback";
 import BlogRelatedTools from "../components/slug/BlogRelatedTools";
 import BlogArticleSnapshot from "../components/slug/BlogArticleSnapshot";
+import BlogFlowNav from "../components/slug/BlogFlowNav";
 import BlogCard from "../components/BlogCard";
 import { deriveBlogFaqItems, getBlogDescription } from "../utils/blogFaq";
+import { getMissingBlogRedirect } from "../utils/missingBlogRedirect";
 import { getRelatedToolsForBlog } from "../utils/relatedTools";
 import "../../styles/ckeditor.css";
 
@@ -189,8 +191,8 @@ export default function BlogDetailClient({
   }, [initialBlog, loadComments, slug]);
 
   useEffect(() => {
-    if (notFound) router.replace("/blogs");
-  }, [notFound, router]);
+    if (notFound) router.replace(getMissingBlogRedirect(slug) || "/blogs");
+  }, [notFound, router, slug]);
 
   useEffect(() => {
     if (!blog) return undefined;
@@ -215,25 +217,40 @@ export default function BlogDetailClient({
   }, [blog]);
 
   const addComment = async (text) => {
-    if (!text?.trim() || !blog?.id || typeof blog.id !== "string") return;
+    const cleanedText = text?.trim();
+    if (!cleanedText) return false;
 
-    await addDoc(commentsCol(blog.id), {
-      text: text.trim(),
-      createdAt: serverTimestamp(),
-    });
-    await updateDoc(doc(db, "projects", PROJECT_ID, "blogs", blog.id), {
-      commentsCount: increment(1),
-    });
-    setComments((prev) => [
-      { text: text.trim(), createdAt: { seconds: Date.now() / 1000 } },
-      ...prev,
-    ]);
+    const localComment = {
+      text: cleanedText,
+      createdAt: { seconds: Date.now() / 1000 },
+    };
+
+    if (!blog?.id || typeof blog.id !== "string" || !isFirebaseConfigured) {
+      setComments((prev) => [localComment, ...prev]);
+      return true;
+    }
+
+    try {
+      await addDoc(commentsCol(blog.id), {
+        text: cleanedText,
+        createdAt: serverTimestamp(),
+      });
+      await updateDoc(doc(db, "projects", PROJECT_ID, "blogs", blog.id), {
+        commentsCount: increment(1),
+      });
+      setComments((prev) => [localComment, ...prev]);
+      return true;
+    } catch (error) {
+      console.warn("Unable to sync blog comment:", error?.message || error);
+      setComments((prev) => [localComment, ...prev]);
+      return true;
+    }
   };
 
   if (!blog && !notFound) return <BlogTopBarLoader />;
 
   return (
-    <main className="bg-(--background) pb-12 pt-4 text-(--foreground) sm:pt-6">
+    <main aria-labelledby="blog-article-title" className="bg-(--background) pb-12 pt-4 text-(--foreground) sm:pt-6">
       <BlogReadingProgress />
       <BlogReaderTools />
       <div className="mx-auto w-full max-w-[1500px] px-3 sm:px-5 lg:px-8">
@@ -266,6 +283,11 @@ export default function BlogDetailClient({
           date={blog.date}
           author={blog.author}
         />
+        <BlogFlowNav
+          relatedTools={relatedTools}
+          faqItems={faqItems}
+          relatedPosts={similarPosts}
+        />
         <BlogInsightStrip
           blog={blog}
           faqItems={faqItems}
@@ -290,7 +312,11 @@ export default function BlogDetailClient({
           <BlogTableOfContents content={blog.description} />
 
           <div className="min-w-0">
-            <article className="rounded-[var(--anslation-ds-radius)] border border-(--border) bg-(--card) p-4 shadow-[var(--anslation-ds-shadow-sm)] sm:p-6 md:p-8">
+            <article
+              id="article-body"
+              aria-labelledby="blog-article-title"
+              className="scroll-mt-24 rounded-[var(--anslation-ds-radius)] border border-(--border) bg-(--card) p-4 shadow-[var(--anslation-ds-shadow-sm)] sm:p-6 md:p-8"
+            >
               <BlogContent
                 content={blog.description}
                 blog={blog}
@@ -315,6 +341,7 @@ export default function BlogDetailClient({
             <BlogComments
               comments={comments}
               addComment={addComment}
+              draftKey={blog?.slug || slug}
               showCommentBox={showCommentBox}
               setShowCommentBox={setShowCommentBox}
             />
@@ -323,7 +350,7 @@ export default function BlogDetailClient({
         </div>
 
         {similarPosts.length > 0 && (
-          <section className="mt-14 border-t border-(--border) pt-8">
+          <section id="related-posts" className="mt-14 scroll-mt-24 border-t border-(--border) pt-8">
             <div className="mb-5 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
               <div>
                 <p className="text-xs font-semibold uppercase tracking-wide text-(--muted-foreground)">

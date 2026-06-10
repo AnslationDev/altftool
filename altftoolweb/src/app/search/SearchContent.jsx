@@ -7,6 +7,7 @@ import Link from "next/link";
 import { toolMetaMap } from "@/platform/registry/toolMetaMap";
 import { useFirebaseExtensions } from "@/app/extensions/hooks/useFirebaseExtensions";
 import { ArrowUpRight, Puzzle, Search, Wrench } from "lucide-react";
+import { AltftoolLoader } from "@/components/ui/route-loading";
 
 const POPULAR_SEARCHES = ["json", "pdf", "image", "base64", "regex", "coupon", "news", "academy"];
 
@@ -90,9 +91,12 @@ export default function SearchPage() {
           Showing results for <span className="font-semibold text-[var(--foreground)]">&quot;{query}&quot;</span>
         </p>
         {loading ? (
-          <p className="mt-2 text-xs font-semibold uppercase tracking-wide text-(--muted-foreground)">
-            Refreshing extension results
-          </p>
+          <AltftoolLoader
+            label="Refreshing extension results"
+            detail="Tools are ready while live extensions finish loading"
+            compact
+            className="mx-auto mt-5 max-w-xl"
+          />
         ) : null}
         <div className="mt-5 flex flex-wrap justify-center gap-2">
           <Link

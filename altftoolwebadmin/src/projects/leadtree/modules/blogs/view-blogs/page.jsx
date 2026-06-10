@@ -11,7 +11,7 @@ import {
   Clock3,
   Layers,
 } from "lucide-react";
-import { Cell, Pie, PieChart, Tooltip } from "recharts";
+import CategoryDistributionCard from "@/components/admin/CategoryDistributionCard";
 
 const stripHtml = (h) => (h || "").replace(/<[^>]+>/g, "");
 
@@ -24,14 +24,6 @@ function StatusBadge({ status }) {
   );
 }
 
-const COLORS = [
-  "#6366F1", // indigo
-  "#F59E0B", // amber
-  "#EF4444", // red
-  "#06B6D4", // cyan
-  "#8B5CF6", // violet
-  "#14B8A6", // teal
-];
 export default function ViewBlogs() {
   const router = useRouter();
   const [blogs, setBlogs]           = useState([]);
@@ -88,14 +80,6 @@ const categoryData = useMemo(() => {
             value,
         }));
     }, [blogs]);
-
-    const maxCategory = useMemo(() => {
-        if (!categoryData.length) return null;
-        return categoryData.reduce((max, curr) =>
-            curr.value > max.value ? curr : max
-        );
-    }, [categoryData]);
-
 
   if (loading) {
     return (
@@ -183,71 +167,12 @@ const categoryData = useMemo(() => {
 
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
-          <div className="bg-white/70 backdrop-blur-xl border border-gray-200/60 rounded-2xl shadow-sm p-5">
-            <h3 className="text-sm font-semibold text-gray-800 mb-4">
-              Blogs Category Distribution
-            </h3>
-
-            <div className="flex h-64 items-center justify-center">
-              <PieChart width={280} height={240}>
-
-                  <Pie
-                    data={categoryData}
-                    dataKey="value"
-                    nameKey="name"
-                    innerRadius={60}
-                    outerRadius={95}
-                    paddingAngle={4}
-                    labelLine={false}
-
-
-                    label={({ cx, cy }) => {
-                      return (
-                        <text
-                          x={cx}
-                          y={cy}
-                          textAnchor="middle"
-                          dominantBaseline="middle"
-                        >
-                          {/* Number */}
-                          <tspan
-                            x={cx}
-                            dy="-5"
-                            className="fill-gray-900 text-xl font-bold"
-                          >
-                            {blogs.length}
-                          </tspan>
-
-                          {/* Label */}
-                          <tspan
-                            x={cx}
-                            dy="16"
-                            className="fill-gray-600 text-sm font-medium"
-                          >
-                            Total Blogs
-                          </tspan>
-                        </text>
-                      );
-                    }}
-                  >
-                    {categoryData.map((entry, index) => {
-                      const isTop = entry.name === maxCategory?.name;
-
-                      return (
-                        <Cell
-                          key={index}
-                          fill={isTop ? "#22C55E" : COLORS[index % COLORS.length]}
-                          stroke={isTop ? "#16A34A" : "transparent"}
-                          strokeWidth={isTop ? 1 : 0}
-                        />
-                      );
-                    })}
-                  </Pie>
-
-                <Tooltip />
-              </PieChart>
-            </div>
-          </div>
+          <CategoryDistributionCard
+            title="Blogs Category Distribution"
+            items={categoryData}
+            total={blogs.length}
+            totalLabel="Total Blogs"
+          />
 
 
         </div>

@@ -13,7 +13,7 @@ env:
 jobs:
   environment:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 25
 
     env:
       NEXT_PUBLIC_FIREBASE_API_KEY: ${{ secrets.NEXT_PUBLIC_FIREBASE_API_KEY || vars.NEXT_PUBLIC_FIREBASE_API_KEY }}
@@ -29,8 +29,12 @@ jobs:
       OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
       NEXT_PUBLIC_DEEPSEEK_API_KEY: ${{ secrets.NEXT_PUBLIC_DEEPSEEK_API_KEY }}
       ALTFT_MONITOR_WEB_URL: ${{ vars.ALTFT_MONITOR_WEB_URL || 'https://altftool.com' }}
-      ALTFT_MONITOR_ADMIN_URL: ${{ vars.ALTFT_MONITOR_ADMIN_URL }}
+      ALTFT_MONITOR_ADMIN_URL: ${{ vars.ALTFT_MONITOR_ADMIN_URL || 'https://adsmanager.altftool.com' }}
       ALTFT_MONITOR_ADMIN_TOKEN: ${{ secrets.ALTFT_MONITOR_ADMIN_TOKEN }}
+      ALTFT_MONITOR_ADMIN_EMAIL: ${{ secrets.ALTFT_MONITOR_ADMIN_EMAIL }}
+      ALTFT_MONITOR_ADMIN_PASSWORD: ${{ secrets.ALTFT_MONITOR_ADMIN_PASSWORD }}
+      ALTFT_MONITOR_FIREBASE_API_KEY: ${{ secrets.ALTFT_MONITOR_FIREBASE_API_KEY || secrets.NEXT_PUBLIC_FIREBASE_API_KEY }}
+      ALTFT_MONITOR_ALERT_WEBHOOK_URL: ${{ secrets.ALTFT_MONITOR_ALERT_WEBHOOK_URL }}
       VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
       VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
       VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
@@ -59,10 +63,38 @@ jobs:
           VERCEL_READINESS_OUTPUT_PATH: vercel-deploy-readiness-report.json
         run: npm run deploy:readiness -- --target=all
 
-      - name: Upload Vercel readiness report
+      - name: Build web and admin for performance budgets
+        run: npm run build
+
+      - name: Generate performance budget report
+        run: npm run performance:budget:strict -- --output performance-budget-report.json --output-md performance-budget-report.md
+
+      - name: Verify Firebase data integrity
+        run: npm run firebase:integrity:strict -- --output firebase-integrity-report.json --output-md firebase-integrity-report.md
+
+      - name: Verify production links and images
+        env:
+          ALTFT_LINK_CHECK_URL: ${{ vars.ALTFT_MONITOR_WEB_URL || 'https://altftool.com' }}
+        run: npm run monitor:links:strict -- --limit 12 --output production-links-report.json --output-md production-links-report.md
+
+      - name: Run release doctor gate
+        env:
+          ALTFT_RELEASE_DOCTOR_WEB_URL: ${{ vars.ALTFT_MONITOR_WEB_URL || 'https://altftool.com' }}
+        run: npm run release:doctor:strict -- --require-vercel-token --output release-doctor-report.json --output-md release-doctor-report.md
+
+      - name: Upload deployment readiness reports
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: vercel-deploy-readiness-report
-          path: vercel-deploy-readiness-report.json
+          name: deployment-readiness-reports
+          path: |
+            vercel-deploy-readiness-report.json
+            performance-budget-report.json
+            performance-budget-report.md
+            firebase-integrity-report.json
+            firebase-integrity-report.md
+            production-links-report.json
+            production-links-report.md
+            release-doctor-report.json
+            release-doctor-report.md
           if-no-files-found: ignore

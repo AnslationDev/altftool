@@ -1,13 +1,20 @@
 "use client";
 
 import { useRef } from "react";
-import html2canvas from "html2canvas";
 import { Download } from "lucide-react";
+
+let html2canvasPromise;
+
+function loadHtml2Canvas() {
+  html2canvasPromise ||= import("html2canvas").then((module) => module.default || module);
+  return html2canvasPromise;
+}
 
 export default function ShareCard({ question, options, votes }) {
   const cardRef = useRef();
 
   const downloadImage = async () => {
+    const html2canvas = await loadHtml2Canvas();
     const canvas = await html2canvas(cardRef.current);
     const link = document.createElement("a");
     link.download = "poll-card.png";

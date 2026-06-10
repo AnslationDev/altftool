@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useMemo, useState } from "react";
-import ReusableTable from "../../../buysmart/(components)/(resuableComponent)/ReusableTable";
+import ReusableTable, { SafeTableImage } from "../../../buysmart/(components)/(resuableComponent)/ReusableTable";
 import {trendingService  } from "../../firebaseService/Trending.service";
 
 function GetSaving({ setActive, setEditData }) {
@@ -42,9 +42,11 @@ function GetSaving({ setActive, setEditData }) {
       accessorKey: "image",
       header: "Image",
       Cell: ({ row }) => (
-        <img
+        <SafeTableImage
           src={row.original.image}
-          className="h-12 w-20 object-cover rounded"
+          alt={row.original.title || "Trending deal"}
+          className="h-12 w-20 rounded border object-cover"
+          fallbackClassName="h-12 w-20 rounded border border-dashed border-gray-300 bg-gray-50"
         />
       )
     },
@@ -69,8 +71,8 @@ function GetSaving({ setActive, setEditData }) {
   };
 
   const handleDelete = async (id) => {
-    if (!confirm("Delete banner?")) return;
     await trendingService .remove(id);
+    return true;
   };
 
   const handleStatusChange = async (item) => {
@@ -96,6 +98,7 @@ function GetSaving({ setActive, setEditData }) {
       onEdit={handleEdit}
       onDeleteSingle={handleDelete}
       onStatusChange={handleStatusChange}
+      confirmDeletes
     />
   );
 }

@@ -15,6 +15,19 @@ export function slugifyRouteSegment(value = "") {
   return String(value).trim().toLowerCase().replace(/\s+/g, "-");
 }
 
+export function getToolCategorySlugs() {
+  const categories = new Set(["all"]);
+
+  Object.values(toolMetaMap).forEach((tool) => {
+    getToolCategories(tool).forEach((category) => {
+      const slug = slugifyRouteSegment(category);
+      if (slug) categories.add(slug);
+    });
+  });
+
+  return [...categories].sort();
+}
+
 export function formatCategoryLabel(value = "all") {
   if (value === "all") return "All Tools";
   return String(value)

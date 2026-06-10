@@ -24,11 +24,11 @@ import {
   BarChart,
   CartesianGrid,
   Cell,
-  ResponsiveContainer,
   Tooltip,
   XAxis,
   YAxis,
 } from "recharts";
+import ResponsiveContainer from "@/components/charts/SafeResponsiveContainer";
 
 const DEFAULT_DEBTS = [
   { id: "credit-card", name: "Credit Card", balance: 125000, apr: 36, minPayment: 6500 },
@@ -688,7 +688,7 @@ export default function DebtPayoffCalculator() {
                   </div>
                 </div>
                 <div className="h-64 min-w-0">
-                  <ResponsiveContainer width="100%" height="100%">
+                  <ResponsiveContainer width="100%" height="100%" minWidth={1} minHeight={1}>
                     <BarChart data={chartData} margin={{ top: 10, right: 8, left: 0, bottom: 0 }}>
                       <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" />
                       <XAxis dataKey="month" tick={{ fill: "var(--muted-foreground)", fontSize: 12 }} />

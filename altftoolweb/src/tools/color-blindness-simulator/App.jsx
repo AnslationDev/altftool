@@ -408,7 +408,7 @@ export default function ColorBlindnessSimulator() {
             <Info size={32} />
           </div>
           <div>
-            <h4 className="text-xl font-bold text-(--foreground) mb-2">Designer's Guide</h4>
+            <h4 className="text-xl font-bold text-(--foreground) mb-2">Designer&apos;s Guide</h4>
             <p className="text-sm text-(--muted-foreground) leading-relaxed">
               If your design becomes unreadable in <strong>Deuteranopia</strong> or <strong>Protanopia</strong> modes (the most common types), consider using icons, patterns, or direct labels in addition to color. Never rely on color alone to convey critical information or state changes.
             </p>

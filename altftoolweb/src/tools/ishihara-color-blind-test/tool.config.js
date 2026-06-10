@@ -1,4 +1,4 @@
-export default {
+const toolConfig = {
   slug: "ishihara-color-blind-test",
   name: "Ishihara Color Blind Test",
   category: "Medical",
@@ -6,3 +6,5 @@ export default {
   icon: "palette",
   iconColor: "text-blue-600",
 };
+
+export default toolConfig;

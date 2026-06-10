@@ -263,7 +263,7 @@ export default function ImpossibleObjectBuilder() {
 
                             <div className="mt-auto p-3 rounded-md bg-(--primary)/5 border border-(--primary)/10 text-center">
                                 <p className="text-[9px] text-(--secondary) font-bold italic opacity-70">
-                                    "Build your own 3D paradox"
+                                    &quot;Build your own 3D paradox&quot;
                                 </p>
                             </div>
                         </div>

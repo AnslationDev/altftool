@@ -1,7 +1,13 @@
 import React, { useState, useRef } from "react";
-import Papa from "papaparse";
 import { profileData } from "../utils/profileData";
 import { detectColumnTypes } from "../utils/detectColumnTypes";
+
+let papaPromise;
+
+function loadPapa() {
+  papaPromise ||= import("papaparse").then((module) => module.default || module);
+  return papaPromise;
+}
 
 const FileUpload = ({ onDataParsed, onProfileReady, analyzing, onAnalysisStart, onAnalysisEnd }) => {
   const [selectedFile, setSelectedFile] = useState(null);
@@ -19,7 +25,7 @@ const FileUpload = ({ onDataParsed, onProfileReady, analyzing, onAnalysisStart, 
     setProgress(0);
   };
 
-  const handleAnalyze = () => {
+  const handleAnalyze = async () => {
     if (!selectedFile || analyzing) return;
 
     onAnalysisStart?.();
@@ -27,6 +33,7 @@ const FileUpload = ({ onDataParsed, onProfileReady, analyzing, onAnalysisStart, 
 
     // We'll collect all rows here, then profile
     const rows = [];
+    const Papa = await loadPapa();
 
     Papa.parse(selectedFile, {
       header: true,

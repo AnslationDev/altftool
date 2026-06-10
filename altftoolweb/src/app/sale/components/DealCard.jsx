@@ -15,10 +15,10 @@ export default function DealCard({ deal, index, isGPS }) {
         y: -6,
         boxShadow: "0 18px 44px rgba(0,0,0,0.13)",
       }}
-      className="bg-(--background) border border-(--border) rounded-[20px] overflow-hidden shadow-[0_4px_24px_rgba(0,0,0,0.08)] transition-all duration-300 group/card w-full flex flex-col"
+      className="bg-(--card) border border-(--border) rounded-2xl overflow-hidden shadow-sm transition-all duration-300 group/card w-full flex flex-col"
     >
       {/* Image */}
-      <div className="relative overflow-hidden h-52 shrink-0 rounded-t-[20px]">
+      <div className="relative overflow-hidden h-52 shrink-0 rounded-t-2xl">
         <Image
           src={deal.image}
           alt={deal.title}
@@ -34,12 +34,12 @@ export default function DealCard({ deal, index, isGPS }) {
       {/* Content */}
       <div className="px-4 pt-3.5 pb-4 flex flex-col flex-1">
         {/* Title */}
-        <h3 className="font-bold text-(--card-foreground) text-[17px] leading-snug font-primary">
+        <h3 className="font-bold text-(--card-foreground) text-base leading-snug font-primary">
           {deal.title}
         </h3>
 
         {/* Subtitle */}
-        <p className="text-[13.5px] text-(--muted-foreground) font-secondary mt-1 mb-2 line-clamp-1">
+        <p className="text-sm text-(--muted-foreground) font-secondary mt-1 mb-2 line-clamp-1">
           {deal.subTitle}
         </p>
 
@@ -47,7 +47,7 @@ export default function DealCard({ deal, index, isGPS }) {
 
         {/* Location */}
         <div className="flex items-center justify-between gap-2 mb-3">
-          <div className="flex items-center gap-1.5 text-[12.5px] text-(--muted-foreground) font-secondary min-w-0">
+          <div className="flex items-center gap-1.5 text-xs text-(--muted-foreground) font-secondary min-w-0">
             <MapPin className="w-3.5 h-3.5 shrink-0 opacity-70" />
             <span className="truncate">
               {deal.area} • {deal.city}
@@ -56,10 +56,10 @@ export default function DealCard({ deal, index, isGPS }) {
 
           {deal.computedDistance != null && deal.type === "nearby" && (
             <div
-              className={`flex items-center gap-1 text-[11px] font-semibold shrink-0 px-2.5 py-1 rounded-full
+              className={`flex items-center gap-1 text-xs font-semibold shrink-0 px-2.5 py-1 rounded-full
                 ${
                   isGPS
-                    ? "bg-blue-50 border border-blue-200 text-blue-700"
+                    ? "bg-(--anslation-ds-info-soft) border border-(--anslation-ds-info)/20 text-(--anslation-ds-info)"
                     : "bg-(--muted)/10 text-(--muted-foreground)"
                 }`}
             >
@@ -71,10 +71,10 @@ export default function DealCard({ deal, index, isGPS }) {
         {/* Footer */}
         <div className="flex items-center justify-between mt-auto">
           <div className="flex flex-col leading-tight">
-            <span className="text-2xl font-bold text-blue-600 font-primary mb-1">
+            <span className="text-2xl font-bold text-(--primary) font-primary mb-1">
               {deal.offer}
             </span>
-            <span className="text-[12.5px] text-(--muted-foreground) font-secondary line-clamp-1">
+            <span className="text-xs text-(--muted-foreground) font-secondary line-clamp-1">
               {deal.offerText}
             </span>
           </div>

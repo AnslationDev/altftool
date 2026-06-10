@@ -11,6 +11,7 @@ import { OPEN_GLOBAL_ROUTE_KEYS, resolveProjectModule } from "@/config/adminRout
 import { getAuth } from "firebase/auth";
 import { emitAlert } from "@/lib/alertBus";
 import { usePushNotifications } from "@/lib/usePushNotifications";
+import { LockKeyhole, RefreshCw, ShieldAlert } from "lucide-react";
 
 const DEV_BYPASS_AUTH = process.env.NEXT_PUBLIC_DEV_BYPASS_AUTH === "true";
 
@@ -20,6 +21,7 @@ export default function AdminLayout({ children }) {
   const pathname = usePathname();
   const [requestingAccess, setRequestingAccess] = useState(false);
   const [accessRequested, setAccessRequested] = useState(false);
+  const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
   usePushNotifications(user);
 
   // 🔹 Extract project + module from URL
@@ -61,13 +63,36 @@ export default function AdminLayout({ children }) {
     }
   }, [user, adminData, loading, isPendingUser, isDenied, router]);
 
+  useEffect(() => {
+    setMobileSidebarOpen(false);
+  }, [pathname]);
+
+  useEffect(() => {
+    if (!mobileSidebarOpen) return undefined;
+
+    const closeOnEscape = (event) => {
+      if (event.key === "Escape") {
+        setMobileSidebarOpen(false);
+      }
+    };
+
+    document.addEventListener("keydown", closeOnEscape);
+
+    return () => {
+      document.removeEventListener("keydown", closeOnEscape);
+    };
+  }, [mobileSidebarOpen]);
+
   /* ── Loading ── */
   if (!DEV_BYPASS_AUTH && loading) {
     return (
-      <div className="h-screen flex items-center justify-center bg-[var(--background)]">
-        <div className="flex flex-col items-center gap-3 text-[var(--muted)]">
-          <div className="w-8 h-8 border-2 border-[var(--border)] border-t-[var(--foreground)] rounded-full animate-spin" />
-          <span className="text-sm font-medium">Loading dashboard…</span>
+      <div className="flex h-screen items-center justify-center bg-[var(--background)] px-4">
+        <div className="flex w-full max-w-sm flex-col items-center gap-3 rounded-lg border border-[var(--border)] bg-[var(--surface)] p-6 text-center text-[var(--muted)] shadow-sm">
+          <RefreshCw className="h-8 w-8 animate-spin text-[var(--primary)]" />
+          <span className="text-sm font-medium">Loading dashboard</span>
+          <span className="text-xs leading-5 text-[var(--muted)]">
+            Checking your admin session and module permissions.
+          </span>
         </div>
       </div>
     );
@@ -142,41 +167,64 @@ export default function AdminLayout({ children }) {
 
   if (!hasAccess) {
     return (
-      <div className="flex h-screen bg-[var(--background)] overflow-hidden">
-        {adminData && <AdminSidebar adminData={adminData} />}
-        <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
-          {adminData && <AdminHeader user={effectiveUser} adminData={adminData} />}
-          <main className="flex-1 overflow-y-auto flex items-center justify-center">
-            <div className="text-center space-y-4 max-w-sm px-4">
-              <div className="w-14 h-14 rounded-2xl bg-red-100 flex items-center justify-center mx-auto">
-                <span className="text-2xl">🔒</span>
+      <div className="flex h-screen overflow-hidden bg-[var(--background)] text-[var(--foreground)]">
+        {adminData ? (
+          <>
+            <div
+              className={`fixed inset-0 z-40 bg-black/40 backdrop-blur-sm transition-opacity lg:hidden ${
+                mobileSidebarOpen ? "opacity-100" : "pointer-events-none opacity-0"
+              }`}
+              onClick={() => setMobileSidebarOpen(false)}
+            />
+            <AdminSidebar
+              adminData={adminData}
+              mobileOpen={mobileSidebarOpen}
+              onCloseMobile={() => setMobileSidebarOpen(false)}
+            />
+          </>
+        ) : null}
+        <div className="flex min-w-0 flex-1 flex-col overflow-hidden">
+          {adminData ? (
+            <AdminHeader
+              user={effectiveUser}
+              adminData={adminData}
+              onOpenSidebar={() => setMobileSidebarOpen(true)}
+            />
+          ) : null}
+          <main className="flex flex-1 items-center justify-center overflow-y-auto px-4">
+            <div className="max-w-md space-y-4 rounded-lg border border-[var(--border)] bg-[var(--surface)] p-6 text-center shadow-sm">
+              <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-lg bg-red-50 text-red-600">
+                <LockKeyhole className="h-6 w-6" />
               </div>
 
-              <p className="text-base font-bold text-gray-800">Access Denied</p>
+              <p className="text-base font-bold text-[var(--foreground)]">Access denied</p>
 
-              <p className="text-sm text-gray-500">
-                You don't have permission to view this section.
+              <p className="text-sm leading-6 text-[var(--muted)]">
+                You do not have permission to view this section. Send a module access request and keep working elsewhere.
               </p>
 
-              <div className="flex flex-col sm:flex-row items-center justify-center gap-2 pt-1">
+              <div className="flex flex-col items-center justify-center gap-2 pt-1 sm:flex-row">
                 <button
+                  type="button"
                   onClick={() => router.back()}
-                  className="px-4 py-2 text-sm font-medium border border-gray-200 text-gray-600 rounded-lg hover:bg-white transition"
+                  className="inline-flex h-10 items-center justify-center rounded-lg border border-[var(--border)] bg-[var(--surface)] px-4 text-sm font-medium text-[var(--muted)] transition hover:bg-[var(--surface-soft)] hover:text-[var(--foreground)]"
                 >
                   Go Back
                 </button>
 
                 {!accessRequested ? (
                   <button
+                    type="button"
                     onClick={handleRequestAccess}
                     disabled={requestingAccess}
-                    className="px-4 py-2 text-sm font-semibold bg-gray-900 text-white rounded-lg hover:bg-gray-700 transition disabled:opacity-60"
+                    className="inline-flex h-10 items-center justify-center gap-2 rounded-lg bg-[var(--foreground)] px-4 text-sm font-semibold text-[var(--background)] transition hover:opacity-90 disabled:opacity-60"
                   >
+                    <ShieldAlert className="h-4 w-4" />
                     {requestingAccess ? "Requesting…" : "Request Access"}
                   </button>
                 ) : (
-                  <span className="px-4 py-2 text-sm font-medium text-green-700 bg-green-50 border border-green-200 rounded-lg">
-                    ✓ Request Submitted
+                  <span className="inline-flex h-10 items-center rounded-lg border border-green-200 bg-green-50 px-4 text-sm font-medium text-green-700">
+                    Request submitted
                   </span>
                 )}
               </div>
@@ -188,10 +236,30 @@ export default function AdminLayout({ children }) {
   }
 
   return (
-    <div className="flex h-screen bg-[var(--background)] overflow-hidden">
-      {adminData && <AdminSidebar adminData={adminData} />}
-      <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
-        {adminData && <AdminHeader user={effectiveUser} adminData={adminData} />}
+    <div className="flex h-screen overflow-hidden bg-[var(--background)] text-[var(--foreground)]">
+      {adminData ? (
+        <>
+          <div
+            className={`fixed inset-0 z-40 bg-black/40 backdrop-blur-sm transition-opacity lg:hidden ${
+              mobileSidebarOpen ? "opacity-100" : "pointer-events-none opacity-0"
+            }`}
+            onClick={() => setMobileSidebarOpen(false)}
+          />
+          <AdminSidebar
+            adminData={adminData}
+            mobileOpen={mobileSidebarOpen}
+            onCloseMobile={() => setMobileSidebarOpen(false)}
+          />
+        </>
+      ) : null}
+      <div className="flex min-w-0 flex-1 flex-col overflow-hidden">
+        {adminData ? (
+          <AdminHeader
+            user={effectiveUser}
+            adminData={adminData}
+            onOpenSidebar={() => setMobileSidebarOpen(true)}
+          />
+        ) : null}
         <main className="flex-1 overflow-y-auto">{children}</main>
       </div>
     </div>

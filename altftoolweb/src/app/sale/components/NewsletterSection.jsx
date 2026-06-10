@@ -62,8 +62,8 @@ export default function NewsletterSection({
               {/* Input */}
               <div className="max-w-[560px]">
                 <div
-                  className={`h-[55px] rounded-full border bg-(--background) px-6 flex items-center transition-all
-                   border-gray-300 focus-within:ring-1 focus-within:ring-(--primary)`}
+                  className={`h-[55px] rounded-full border bg-(--card) px-6 flex items-center transition-all
+                   border-(--border) focus-within:ring-2 focus-within:ring-(--primary)/20 focus-within:border-(--primary)`}
                 >
                   <input
                     type="email"
@@ -90,8 +90,8 @@ export default function NewsletterSection({
                 {["Weekly curated deals", "No spam, unsubscribe anytime"].map(
                   (item) => (
                     <div key={item} className="flex items-center gap-3">
-                      <div className="h-6 w-6 rounded-full bg-[#2F66E8] flex items-center justify-center shrink-0">
-                        <Check className="h-4 w-4 text-white" strokeWidth={3} />
+                      <div className="h-6 w-6 rounded-full bg-(--primary) flex items-center justify-center shrink-0">
+                        <Check className="h-4 w-4 text-(--primary-foreground)" strokeWidth={3} />
                       </div>
 
                       <span className="text-sm md:text-base text-(--foreground) font-medium font-secondary">
@@ -107,7 +107,7 @@ export default function NewsletterSection({
                 <button
                   onClick={() =>{ handleSubmit(); setEmail("")}} 
                                
-                  className=" h-[50px] px-8 md:px-10 rounded-full bg-[#2F66E8] text-white text-sm md:text-lg font-secondary hover:opacity-95 transition cursor-pointer inline-flex items-center gap-2 disabled:opacity-60"
+                  className=" h-[50px] px-8 md:px-10 rounded-full bg-(--primary) text-(--primary-foreground) text-sm md:text-lg font-secondary hover:bg-(--primary-hover) transition cursor-pointer inline-flex items-center gap-2 disabled:opacity-60"
                 >
                  Get Deal Alerts
                 </button>

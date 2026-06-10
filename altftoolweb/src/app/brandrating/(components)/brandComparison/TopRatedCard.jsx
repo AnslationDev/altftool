@@ -15,6 +15,17 @@ function getURlLink(str) {
     ?.replace(/\s+/g, "-");
 }
 
+function getExternalLink(brand) {
+  const rawLink = brand?.weblink || brand?.brandLink || brand?.url || brand?.link || "";
+  const link = typeof rawLink === "string" ? rawLink.trim() : "";
+
+  if (!link || link.toLowerCase() === "null" || link.toLowerCase() === "undefined") {
+    return "";
+  }
+
+  return link.startsWith("http") ? link : `https://${link}`;
+}
+
 export default function TopRated({
   brands = [],
   activeFeature,
@@ -71,6 +82,33 @@ export default function TopRated({
           <Star key={`e-${i}`} className="w-5 h-5 text-gray-300" />
         ))}
       </div>
+    );
+  };
+
+  const renderVisitSite = (brand) => {
+    const externalLink = getExternalLink(brand);
+
+    if (!externalLink) {
+      return (
+        <span
+          aria-disabled="true"
+          className="w-full sm:w-auto justify-center px-4 sm:px-6 py-2.5 rounded-full bg-(--muted-foreground)/20 text-(--muted-foreground) flex items-center gap-2 whitespace-nowrap cursor-not-allowed"
+        >
+          Site unavailable
+        </span>
+      );
+    }
+
+    return (
+      <a
+        href={externalLink}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="w-full sm:w-auto justify-center px-4 sm:px-6 py-2.5 rounded-full bg-(--primary) text-white flex items-center gap-2 whitespace-nowrap"
+      >
+        View Site
+        <ArrowUpRight className="w-4 h-4 md:w-5 md:h-5 transition-transform duration-300 group-hover:[transform:rotate(45deg)]" />
+      </a>
     );
   };
 
@@ -221,15 +259,7 @@ export default function TopRated({
                               Review Details
                             </Link>
 
-                            <a
-                              href={brand.weblink}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="w-full sm:w-auto justify-center px-4 sm:px-6 py-2.5 rounded-full bg-(--primary) text-white flex items-center gap-2 whitespace-nowrap"
-                            >
-                              View Site
-                              <ArrowUpRight className="w-4 h-4 md:w-5 md:h-5 transition-transform duration-300 group-hover:[transform:rotate(45deg)]" />
-                            </a>
+                            {renderVisitSite(brand)}
                           </div>
                         </div>
                       </div>
@@ -298,15 +328,7 @@ export default function TopRated({
                             Review Details
                           </Link>
 
-                          <a
-                            href={brand.weblink}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="w-full sm:w-auto justify-center px-4 sm:px-6 py-2.5 rounded-full bg-(--primary) text-white flex items-center gap-2 whitespace-nowrap"
-                          >
-                            View Site
-                            <ArrowUpRight className="w-4 h-4 md:w-5 md:h-5 transition-transform duration-300 group-hover:[transform:rotate(45deg)]" />
-                          </a>
+                          {renderVisitSite(brand)}
                         </div>
                       </div>
                     </div>

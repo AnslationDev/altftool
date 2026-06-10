@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, useEffect, useState, useCallback } from "react";
+import { createContext, useContext, useEffect, useRef, useState, useCallback } from "react";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { auth } from "@/lib/firebase";
 import {
@@ -24,6 +24,7 @@ async function fetchAdminMe(currentUser) {
 }
 
 export function AuthProvider({ children }) {
+  const mountedRef = useRef(false);
   const [user, setUser] = useState(null);
   const [adminData, setAdminData] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -31,7 +32,15 @@ export function AuthProvider({ children }) {
   const [isDenied, setIsDenied] = useState(false);
   const [localAdminLoginEnabled, setLocalAdminLoginEnabled] = useState(false);
 
+  useEffect(() => {
+    mountedRef.current = true;
+    return () => {
+      mountedRef.current = false;
+    };
+  }, []);
+
   const applyLocalAdminSession = useCallback(() => {
+    if (!mountedRef.current) return;
     setUser(createLocalAdminUser());
     setAdminData(createLocalAdminData());
     setIsPendingUser(false);
@@ -40,6 +49,8 @@ export function AuthProvider({ children }) {
   }, []);
 
   const syncUser = useCallback(async (currentUser) => {
+    if (!mountedRef.current) return;
+
     if (!currentUser) {
       setUser(null);
       setAdminData(null);
@@ -51,6 +62,7 @@ export function AuthProvider({ children }) {
 
     try {
       const res = await fetchAdminMe(currentUser);
+      if (!mountedRef.current) return;
 
       if (res.status === 404) {
         // Valid token, no admin doc yet → pending
@@ -64,6 +76,7 @@ export function AuthProvider({ children }) {
 
       if (res.status === 403) {
         const body = await res.json().catch(() => ({}));
+        if (!mountedRef.current) return;
 
         if (body?.error === "Access denied") {
           // Explicitly rejected access request
@@ -77,6 +90,7 @@ export function AuthProvider({ children }) {
 
         // Inactive admin or other 403 → sign out
         await signOut(auth);
+        if (!mountedRef.current) return;
         setUser(null);
         setAdminData(null);
         setIsPendingUser(false);
@@ -87,6 +101,7 @@ export function AuthProvider({ children }) {
 
       if (!res.ok) {
         await signOut(auth);
+        if (!mountedRef.current) return;
         setUser(null);
         setAdminData(null);
         setIsPendingUser(false);
@@ -96,6 +111,7 @@ export function AuthProvider({ children }) {
       }
 
       const data = await res.json();
+      if (!mountedRef.current) return;
       setUser(currentUser);
       setAdminData(data);
       setIsPendingUser(false);
@@ -103,12 +119,15 @@ export function AuthProvider({ children }) {
     } catch (err) {
       console.error("Auth error:", err);
       await signOut(auth);
+      if (!mountedRef.current) return;
       setUser(null);
       setAdminData(null);
       setIsPendingUser(false);
       setIsDenied(false);
     } finally {
-      setLoading(false);
+      if (mountedRef.current) {
+        setLoading(false);
+      }
     }
   }, []);
 
@@ -125,6 +144,7 @@ export function AuthProvider({ children }) {
 
     const currentUser = auth.currentUser;
     if (!currentUser) return;
+    if (!mountedRef.current) return;
     setLoading(true);
     await syncUser(currentUser);
   }, [applyLocalAdminSession, syncUser]);
@@ -138,6 +158,7 @@ export function AuthProvider({ children }) {
   const logout = useCallback(async () => {
     clearLocalAdminSession();
     await signOut(auth).catch(() => {});
+    if (!mountedRef.current) return;
     setUser(null);
     setAdminData(null);
     setIsPendingUser(false);
@@ -155,7 +176,7 @@ export function AuthProvider({ children }) {
 
     let settled = false;
     const timeout = setTimeout(() => {
-      if (!settled) {
+      if (!settled && mountedRef.current) {
         setLoading(false);
       }
     }, AUTH_STATE_TIMEOUT_MS);
@@ -172,7 +193,9 @@ export function AuthProvider({ children }) {
       settled = true;
       clearTimeout(timeout);
       console.error("Auth state error:", err);
-      setLoading(false);
+      if (mountedRef.current) {
+        setLoading(false);
+      }
     });
     return () => {
       clearTimeout(timeout);

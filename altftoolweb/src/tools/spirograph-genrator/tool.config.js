@@ -1,4 +1,4 @@
-export default {
+const toolConfig = {
   slug: "spirograph-genrator",
   name: "Spirograph Generator",
   category: ["Design", "Creative"],
@@ -6,3 +6,5 @@ export default {
   icon: "orbit",
   iconColor: "text-cyan-600",
 };
+
+export default toolConfig;

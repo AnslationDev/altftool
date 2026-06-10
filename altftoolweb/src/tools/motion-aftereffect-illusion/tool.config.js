@@ -1,4 +1,4 @@
-export default {
+const toolConfig = {
   slug: "motion-aftereffect-illusion",
   name: "Motion Aftereffect Illusion",
   description:
@@ -14,3 +14,5 @@ export default {
     "aftereffect",
   ],
 };
+
+export default toolConfig;

@@ -11,15 +11,20 @@ function readTime(blog = {}) {
   return `${Math.max(1, Math.ceil(excerpt.split(" ").length / 200))} min read`;
 }
 
-// ─── Vertical card (default) ────────────────────────────────────────────────────
+// ─── Vertical card (default) — image-led ────────────────────────────────────────
 
 function VerticalCard({ blog, height, showExcerpt, className }) {
   return (
-    <Link href={`/blogs/${blog.slug}`} className="group block h-full">
+    <Link
+      href={`/blogs/${blog.slug}`}
+      className="group block h-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-(--primary) focus-visible:ring-offset-2 focus-visible:ring-offset-(--background) rounded-2xl"
+    >
       <article
-        className={`relative overflow-hidden rounded-[var(--anslation-ds-radius)] border border-(--border) bg-(--card) shadow-[var(--anslation-ds-shadow-sm)]
-          hover:-translate-y-0.5 hover:border-(--primary) hover:shadow-[var(--anslation-ds-shadow-md)]
-          transition-all duration-300 ${height} ${className}`}
+        className={`relative overflow-hidden rounded-2xl border border-(--border) bg-(--card)
+          transition-all duration-300 ease-out
+          group-hover:-translate-y-1 group-hover:border-(--anslation-ds-border-strong)
+          group-hover:shadow-[var(--anslation-ds-shadow-md)]
+          ${height} ${className}`}
       >
         {/* Full-bleed image */}
         <Image
@@ -27,49 +32,43 @@ function VerticalCard({ blog, height, showExcerpt, className }) {
           alt={blog.imageAlt || blog.heading}
           fill
           sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 360px"
-          className="object-cover group-hover:scale-[1.06] transition-transform duration-700 ease-in-out"
+          className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04]"
         />
 
-        {/* Gradient overlay — stronger at bottom */}
-        <div className="absolute inset-0 bg-gradient-to-t from-gray-950/85 via-gray-900/30 to-transparent" />
+        {/* Editorial gradient — darker bottom for legibility */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent" />
 
-        <div className="absolute top-0 left-0 right-0 h-0.5 bg-(--primary)
-                        scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
+        {/* Top accent on hover */}
+        <div className="absolute top-0 left-0 right-0 h-[2px] bg-(--primary) scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
 
-        {/* Read time — top right */}
-        <div className="absolute top-3 right-3 flex items-center gap-1 bg-black/40 backdrop-blur-sm
-                        text-white/90 text-[10px] font-semibold px-2 py-1 rounded-full
-                        opacity-0 group-hover:opacity-100 translate-y-1 group-hover:translate-y-0
-                        transition-all duration-300">
-          <Clock size={9} />
+        {/* Read-time pill — top right */}
+        <div className="absolute top-3 right-3 inline-flex items-center gap-1.5 rounded-full bg-black/40 px-2.5 py-1 text-[11px] font-medium text-white/95 backdrop-blur-sm">
+          <Clock size={11} className="opacity-80" />
           {readTime(blog)}
         </div>
 
         {/* Bottom content */}
-        <div className="absolute bottom-0 left-0 right-0 p-4">
+        <div className="absolute bottom-0 left-0 right-0 p-5">
           {/* Category */}
-          <span className="mb-2.5 inline-block rounded-[6px] bg-(--primary) px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-widest text-(--primary-foreground)">
+          <span className="mb-3 inline-flex items-center rounded-md bg-(--primary) px-2 py-0.5 text-[10px] font-bold uppercase tracking-[0.08em] text-(--primary-foreground)">
             {blog.category}
           </span>
 
           {/* Heading */}
-          <h3 className="text-[15px] font-bold leading-snug line-clamp-2 text-white
-                         group-hover:text-blue-200 transition-colors duration-200">
+          <h3 className="text-base sm:text-lg font-semibold leading-snug tracking-tight line-clamp-2 text-white transition-colors duration-200">
             {blog.heading}
           </h3>
 
-          {showExcerpt && (
-            <p className="text-[12px] mt-1.5 line-clamp-2 text-white/70 leading-relaxed">
+          {showExcerpt && blog.excerpt && (
+            <p className="mt-2 text-sm leading-relaxed line-clamp-2 text-white/75">
               {blog.excerpt}
             </p>
           )}
 
-          {/* Read arrow — appears on hover */}
-          <div className="mt-2.5 flex items-center gap-1.5 text-[11px] font-semibold text-white
-                          opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0
-                          transition-all duration-300">
+          {/* Read CTA — appears on hover */}
+          <div className="mt-3 inline-flex items-center gap-1.5 text-xs font-semibold text-white opacity-0 translate-y-1.5 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
             Read article
-            <ArrowUpRight size={12} />
+            <ArrowUpRight size={12} className="transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
           </div>
         </div>
       </article>
@@ -77,56 +76,111 @@ function VerticalCard({ blog, height, showExcerpt, className }) {
   );
 }
 
-// ─── Horizontal card ────────────────────────────────────────────────────────────
+// ─── Horizontal card — editorial list row ────────────────────────────────────────
 
 function HorizontalCard({ blog, className }) {
   return (
-    <Link href={`/blogs/${blog.slug}`} className="group block">
+    <Link
+      href={`/blogs/${blog.slug}`}
+      className="group block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-(--primary) focus-visible:ring-offset-2 focus-visible:ring-offset-(--background) rounded-2xl"
+    >
       <article
-        className={`flex flex-col overflow-hidden rounded-[var(--anslation-ds-radius)] sm:flex-row
+        className={`flex flex-col overflow-hidden rounded-2xl sm:flex-row
           border border-(--border) bg-(--card)
-          shadow-[var(--anslation-ds-shadow-sm)] hover:-translate-y-0.5 hover:border-(--primary) hover:shadow-[var(--anslation-ds-shadow-md)]
-          transition-all duration-300 ${className}`}
+          transition-all duration-300 ease-out
+          group-hover:-translate-y-0.5 group-hover:border-(--anslation-ds-border-strong)
+          group-hover:shadow-[var(--anslation-ds-shadow-md)]
+          ${className}`}
       >
         {/* Image */}
-        <div className="relative h-44 w-full flex-shrink-0 overflow-hidden bg-(--muted) sm:h-auto sm:w-52">
+        <div className="relative h-44 w-full flex-shrink-0 overflow-hidden bg-(--anslation-ds-soft) sm:h-auto sm:w-56">
           <Image
             src={blog.image}
             alt={blog.imageAlt || blog.heading}
             fill
-            sizes="(max-width: 640px) 100vw, 208px"
-            className="object-cover group-hover:scale-[1.05] transition-transform duration-500"
+            sizes="(max-width: 640px) 100vw, 224px"
+            className="object-cover transition-transform duration-500 ease-out group-hover:scale-[1.04]"
           />
-          {/* Blue overlay on hover */}
-          <div className="absolute inset-0 bg-(--primary)/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-
-          {/* Category pill over image */}
-          <span className="absolute bottom-2.5 left-2.5 rounded-[6px] bg-(--primary) px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-widest text-(--primary-foreground) shadow-sm">
+          {/* Category pill */}
+          <span className="absolute bottom-3 left-3 inline-flex items-center rounded-md bg-(--primary) px-2 py-0.5 text-[10px] font-bold uppercase tracking-[0.08em] text-(--primary-foreground) shadow-sm">
             {blog.category}
           </span>
         </div>
 
         {/* Content */}
-        <div className="p-4 flex flex-col justify-center gap-2 flex-1">
-          <h3 className="text-[14px] md:text-[15px] font-bold leading-snug line-clamp-2
-                         text-(--foreground) group-hover:text-(--primary) transition-colors duration-200">
+        <div className="flex flex-col justify-center gap-2 p-5 flex-1 min-w-0">
+          <h3 className="text-base sm:text-[17px] font-semibold leading-snug tracking-tight line-clamp-2 text-(--foreground) group-hover:text-(--primary) transition-colors duration-200">
             {blog.heading}
           </h3>
 
-          <p className="text-[12px] text-(--muted-foreground) line-clamp-2 leading-relaxed">
-            {blog.excerpt}
-          </p>
+          {blog.excerpt ? (
+            <p className="text-sm text-(--muted-foreground) line-clamp-2 leading-relaxed">
+              {blog.excerpt}
+            </p>
+          ) : null}
 
-          <div className="mt-1 flex items-center gap-1 text-[11px] font-semibold text-(--primary)
-                          opacity-0 group-hover:opacity-100 translate-x-1 group-hover:translate-x-0
-                          transition-all duration-200">
-            Read more <ArrowUpRight size={11} />
+          <div className="mt-1 inline-flex items-center gap-3 text-xs font-medium text-(--muted-foreground)">
+            <span className="inline-flex items-center gap-1">
+              <Clock size={11} />
+              {readTime(blog)}
+            </span>
+            <span
+              aria-hidden="true"
+              className="inline-block h-3 w-px bg-(--border)"
+            />
+            <span className="inline-flex items-center gap-1 text-(--primary) opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-200 font-semibold">
+              Read article
+              <ArrowUpRight size={11} />
+            </span>
           </div>
         </div>
+      </article>
+    </Link>
+  );
+}
 
-        {/* Right blue accent bar */}
-        <div className="hidden w-0.5 bg-(--primary) sm:block
-                        scale-y-0 group-hover:scale-y-100 transition-transform duration-300 origin-top self-stretch" />
+// ─── Editorial card — text-led with small image (Stripe-blog style) ─────────────
+
+function EditorialCard({ blog, className }) {
+  return (
+    <Link
+      href={`/blogs/${blog.slug}`}
+      className="group block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-(--primary) focus-visible:ring-offset-2 focus-visible:ring-offset-(--background) rounded-2xl"
+    >
+      <article
+        className={`flex flex-col overflow-hidden rounded-2xl border border-(--border) bg-(--card)
+          transition-all duration-300 ease-out
+          group-hover:-translate-y-1 group-hover:border-(--anslation-ds-border-strong)
+          group-hover:shadow-[var(--anslation-ds-shadow-md)]
+          ${className}`}
+      >
+        <div className="relative aspect-[16/10] w-full overflow-hidden bg-(--anslation-ds-soft)">
+          <Image
+            src={blog.image}
+            alt={blog.imageAlt || blog.heading}
+            fill
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 420px"
+            className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
+          />
+        </div>
+        <div className="flex flex-col gap-3 p-5">
+          <div className="flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.08em]">
+            <span className="text-(--primary)">{blog.category}</span>
+            <span className="text-(--muted-foreground)">·</span>
+            <span className="inline-flex items-center gap-1 text-(--muted-foreground)">
+              <Clock size={11} />
+              {readTime(blog)}
+            </span>
+          </div>
+          <h3 className="text-lg sm:text-xl font-semibold leading-snug tracking-tight line-clamp-2 text-(--foreground) group-hover:text-(--primary) transition-colors duration-200">
+            {blog.heading}
+          </h3>
+          {blog.excerpt ? (
+            <p className="text-sm text-(--muted-foreground) line-clamp-2 leading-relaxed">
+              {blog.excerpt}
+            </p>
+          ) : null}
+        </div>
       </article>
     </Link>
   );
@@ -143,6 +197,9 @@ export default function BlogCard({
 }) {
   if (variant === "horizontal") {
     return <HorizontalCard blog={blog} className={className} />;
+  }
+  if (variant === "editorial") {
+    return <EditorialCard blog={blog} className={className} />;
   }
   return (
     <VerticalCard

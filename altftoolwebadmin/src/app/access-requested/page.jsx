@@ -89,14 +89,14 @@ useEffect(() => {
               <span
                 className="absolute inset-0 rounded-full animate-ping"
                 style={{
-                  border: "1.5px solid #d97706",
+                  border: "1.5px solid var(--anslation-ds-warning)",
                   opacity: 0.35,
                   animationDuration: "2s",
                 }}
               />
               <span
                 className="w-3 h-3 rounded-full"
-                style={{ background: "#d97706" }}
+                style={{ background: "var(--anslation-ds-warning)" }}
               />
             </div>
           </div>
@@ -144,10 +144,10 @@ useEffect(() => {
             <div className="flex items-start gap-3">
               <div
                 className="w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5"
-                style={{ background: "#dcfce7", border: "1px solid #bbf7d0" }}
+                style={{ background: "var(--anslation-ds-success-soft)", border: "1px solid color-mix(in srgb, var(--anslation-ds-success) 22%, transparent)" }}
               >
                 <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
-                  <path d="M2 5l2.5 2.5L8 3" stroke="#16a34a" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                  <path d="M2 5l2.5 2.5L8 3" stroke="var(--anslation-ds-success)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
               </div>
               <p className="text-sm leading-snug pt-0.5" style={{ color: "var(--muted)" }}>

@@ -22,11 +22,11 @@ import {
   Cell,
   Pie,
   PieChart,
-  ResponsiveContainer,
   Tooltip,
   XAxis,
   YAxis,
 } from "recharts";
+import ResponsiveContainer from "@/components/charts/SafeResponsiveContainer";
 
 const SAMPLE_ROLES = [
   { id: "engineering", name: "Engineering", attendees: 4, hourlyRate: 2200 },
@@ -485,7 +485,7 @@ export default function MeetingCostCalculator() {
           <div className="min-w-0 space-y-6">
             <SectionCard title="Recurring Cost View" description="Single, weekly, and annual meeting cost escalation." icon={BarChart3}>
               <div className="h-72 min-w-0">
-                <ResponsiveContainer width="100%" height="100%">
+                <ResponsiveContainer width="100%" height="100%" minWidth={1} minHeight={1}>
                   <BarChart data={recurringData} margin={{ top: 10, right: 8, left: 0, bottom: 0 }}>
                     <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" />
                     <XAxis dataKey="name" tick={{ fill: "var(--muted-foreground)", fontSize: 11 }} />
@@ -500,7 +500,7 @@ export default function MeetingCostCalculator() {
             <section className="grid min-w-0 gap-6 2xl:grid-cols-[minmax(0,1fr)_minmax(260px,360px)]">
               <SectionCard title="Role Cost Split" description="Which teams drive the meeting cost." icon={Users}>
                 <div className="h-64 min-w-0">
-                  <ResponsiveContainer width="100%" height="100%">
+                  <ResponsiveContainer width="100%" height="100%" minWidth={1} minHeight={1}>
                     <BarChart data={metrics.roles} margin={{ top: 10, right: 8, left: 0, bottom: 0 }}>
                       <XAxis dataKey="name" tick={{ fill: "var(--muted-foreground)", fontSize: 11 }} />
                       <YAxis width={56} tickFormatter={(value) => formatMoney(value, true)} tick={{ fill: "var(--muted-foreground)", fontSize: 11 }} />
@@ -517,7 +517,7 @@ export default function MeetingCostCalculator() {
 
               <SectionCard title="Cost Composition" description="Role share in one meeting." icon={Wallet}>
                 <div className="h-56 min-w-0">
-                  <ResponsiveContainer width="100%" height="100%">
+                  <ResponsiveContainer width="100%" height="100%" minWidth={1} minHeight={1}>
                     <PieChart>
                       <Pie data={pieData} innerRadius="55%" outerRadius="82%" paddingAngle={3} dataKey="value" nameKey="name">
                         {pieData.map((entry, index) => (

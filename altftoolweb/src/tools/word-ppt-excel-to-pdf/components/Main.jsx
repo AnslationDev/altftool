@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useMemo, useRef, useState } from "react";
-import JSZip from "jszip";
 import {
   AlertTriangle,
   Archive,
@@ -20,8 +19,18 @@ import {
   Trash2,
   UploadCloud,
 } from "lucide-react";
+import { safeCopyText } from "@/shared/utils/clipboard";
+
+let jsZipPromise;
+
+function loadJsZip() {
+  jsZipPromise ||= import("jszip").then((module) => module.default || module);
+  return jsZipPromise;
+}
 
 const SUPPORTED_EXTENSIONS = ["docx", "pptx", "xlsx", "xls", "csv", "txt"];
+const MAX_DOCUMENT_FILES = 20;
+const MAX_DOCUMENT_BYTES = 50 * 1024 * 1024;
 
 const PAGE_SIZES = {
   a4: "A4",
@@ -225,6 +234,7 @@ async function analyzeExcelFile(file) {
 }
 
 async function analyzePptFile(file) {
+  const JSZip = await loadJsZip();
   const zip = await JSZip.loadAsync(await file.arrayBuffer());
   const slidePaths = Object.keys(zip.files)
     .filter((path) => /^ppt\/slides\/slide\d+\.xml$/.test(path))
@@ -542,6 +552,24 @@ function getItemStats(item) {
   return "Unsupported";
 }
 
+function buildQueueSummary(items, readyItems, unsupportedCount, options) {
+  return [
+    "Document to PDF conversion queue",
+    `Files: ${items.length}`,
+    `Ready: ${readyItems.length}`,
+    `Unsupported/failed: ${unsupportedCount}`,
+    `Page size: ${PAGE_SIZES[options.pageSize] || options.pageSize}`,
+    `Orientation: ${options.orientation}`,
+    `Margin: ${MARGIN_OPTIONS[options.margin]?.label || options.margin}`,
+    `Table density: ${DENSITY_OPTIONS[options.density]?.label || options.density}`,
+    "",
+    ...items.map((item, index) => {
+      const warningCount = item.analysis?.warnings?.length || 0;
+      return `${index + 1}. ${item.name} - ${getKindLabel(item.kind)} - ${item.status} - ${getItemStats(item)}${warningCount ? ` - ${warningCount} warning(s)` : ""}`;
+    }),
+  ].join("\n");
+}
+
 function Preview({ item, options }) {
   if (!item) {
     return (
@@ -699,8 +727,47 @@ export default function MainComponent() {
   };
 
   const addFiles = async (fileList) => {
-    const nextFiles = Array.from(fileList || []);
-    if (!nextFiles.length) return;
+    const incomingFiles = Array.from(fileList || []);
+    if (!incomingFiles.length) return;
+
+    const remainingSlots = Math.max(0, MAX_DOCUMENT_FILES - items.length);
+    if (remainingSlots === 0) {
+      setError(`Queue limit reached. Remove a file before adding more than ${MAX_DOCUMENT_FILES} documents.`);
+      return;
+    }
+
+    const skipped = [];
+    const nextFiles = [];
+
+    incomingFiles.forEach((file) => {
+      const extension = getExtension(file);
+      if (!SUPPORTED_EXTENSIONS.includes(extension)) {
+        skipped.push(`${file.name}: unsupported type`);
+        return;
+      }
+
+      if (file.size > MAX_DOCUMENT_BYTES) {
+        skipped.push(`${file.name}: over ${formatBytes(MAX_DOCUMENT_BYTES)}`);
+        return;
+      }
+
+      if (nextFiles.length >= remainingSlots) {
+        skipped.push(`${file.name}: queue limit reached`);
+        return;
+      }
+
+      nextFiles.push(file);
+    });
+
+    if (!nextFiles.length) {
+      setStatus("");
+      setError(
+        skipped.length
+          ? `No files added. ${skipped.slice(0, 2).join("; ")}.`
+          : "No supported documents were selected.",
+      );
+      return;
+    }
 
     const created = nextFiles.map((file) => ({
       id: `${file.name}-${file.size}-${file.lastModified}-${crypto.randomUUID?.() || Math.random()}`,
@@ -715,8 +782,12 @@ export default function MainComponent() {
 
     setItems((previous) => [...previous, ...created]);
     setSelectedId((previous) => previous || created[0].id);
-    setError("");
-    setStatus("Parsing uploaded documents...");
+    setError(skipped.length ? `${skipped.length} file${skipped.length === 1 ? "" : "s"} skipped. ${skipped.slice(0, 2).join("; ")}.` : "");
+    setStatus(
+      skipped.length
+        ? `Parsing ${created.length} document${created.length === 1 ? "" : "s"}; ${skipped.length} skipped.`
+        : "Parsing uploaded documents...",
+    );
 
     for (const item of created) {
       try {
@@ -736,7 +807,11 @@ export default function MainComponent() {
       }
     }
 
-    setStatus("Documents parsed. Preview and convert to PDF.");
+    setStatus(
+      skipped.length
+        ? `Documents parsed. ${skipped.length} file${skipped.length === 1 ? "" : "s"} skipped.`
+        : "Documents parsed. Preview and convert to PDF.",
+    );
   };
 
   const removeItem = (id) => {
@@ -791,8 +866,13 @@ export default function MainComponent() {
         downloadBlob(outputs[0].blob, outputs[0].filename);
       } else {
         setStatus("Packaging PDFs into ZIP...");
+        const JSZip = await loadJsZip();
         const zip = new JSZip();
         outputs.forEach((output) => zip.file(output.filename, output.blob));
+        zip.file(
+          "conversion-summary.txt",
+          buildQueueSummary(items, readyItems, unsupportedCount, options),
+        );
         const zipBlob = await zip.generateAsync({
           type: "blob",
           compression: "DEFLATE",
@@ -815,14 +895,13 @@ export default function MainComponent() {
   };
 
   const copySummary = async () => {
-    const summary = [
-      "Document to PDF conversion queue",
-      `Files: ${items.length}`,
-      `Ready: ${readyItems.length}`,
-      `Unsupported/failed: ${unsupportedCount}`,
-      ...items.map((item, index) => `${index + 1}. ${item.name} - ${getKindLabel(item.kind)} - ${item.status}`),
-    ].join("\n");
-    await navigator.clipboard?.writeText(summary);
+    const success = await safeCopyText(
+      buildQueueSummary(items, readyItems, unsupportedCount, options),
+    );
+    if (!success) {
+      setError("Could not copy the conversion summary in this browser.");
+      return;
+    }
     setCopied(true);
     window.setTimeout(() => setCopied(false), 1400);
   };
@@ -885,6 +964,7 @@ export default function MainComponent() {
               type="file"
               multiple
               accept=".docx,.pptx,.xlsx,.xls,.csv,.txt,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.openxmlformats-officedocument.presentationml.presentation,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+              data-testid="word-ppt-excel-file-input"
               className="hidden"
               onChange={(event) => addFiles(event.target.files)}
             />
@@ -1087,7 +1167,10 @@ export default function MainComponent() {
 
         <div className="space-y-6">
           {status && (
-            <div className="flex items-center gap-3 rounded-lg border border-(--border) bg-(--section-highlight) p-4 text-(--primary)">
+            <div
+              data-testid="tool-output"
+              className="flex items-center gap-3 rounded-lg border border-(--border) bg-(--section-highlight) p-4 text-(--primary)"
+            >
               {analyzingCount > 0 || isConverting ? (
                 <Loader2 className="h-5 w-5 animate-spin" />
               ) : (
