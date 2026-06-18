@@ -5,4 +5,5 @@ export const PERMISSION_MODULES = {
   extensions: "Extensions",
   blogs: "Blogs",
   images: "Images",
+  pintrest: "Pinterest",
 };

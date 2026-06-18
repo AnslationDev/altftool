@@ -63,6 +63,15 @@ test.beforeEach(async () => {
       likesCount: 0,
       viewsCount: 0,
     });
+    await setDoc(doc(db, "projects/altftool/pintrest/public-pin"), {
+      title: "Public pin",
+      image: "https://example.com/pin.jpg",
+      category: "Design",
+      likes: 0,
+    });
+    await setDoc(doc(db, "projects/altftool/pintrest_categories/design-cat"), {
+      name: "Design",
+    });
   });
 });
 
@@ -111,4 +120,42 @@ test("storage uploads require active admins and safe content types", async () =>
   await assertFails(uploadBytes(ref(guestStorage, "uploads/public.png"), imageBlob, { contentType: "image/png" }));
   await assertSucceeds(uploadBytes(ref(activeStorage, "uploads/public.png"), imageBlob, { contentType: "image/png" }));
   await assertFails(uploadBytes(ref(activeStorage, "uploads/readme.txt"), textBlob, { contentType: "text/plain" }));
+});
+
+test("public users can read pinterest pins and categories", async () => {
+  const db = testEnv.unauthenticatedContext().firestore();
+
+  await assertSucceeds(getDoc(doc(db, "projects/altftool/pintrest/public-pin")));
+  await assertSucceeds(getDoc(doc(db, "projects/altftool/pintrest_categories/design-cat")));
+});
+
+test("public pinterest pin metric updates are narrow", async () => {
+  const db = testEnv.unauthenticatedContext().firestore();
+  const pinRef = doc(db, "projects/altftool/pintrest/public-pin");
+
+  // Succeeds when only likes is incremented
+  await assertSucceeds(updateDoc(pinRef, { likes: 1 }));
+  // Fails when attempting to edit title
+  await assertFails(updateDoc(pinRef, { title: "New Title" }));
+  // Fails when attempting to edit category
+  await assertFails(updateDoc(pinRef, { category: "AI Image" }));
+});
+
+test("public users cannot create or delete pins or categories", async () => {
+  const db = testEnv.unauthenticatedContext().firestore();
+
+  await assertFails(setDoc(doc(db, "projects/altftool/pintrest/new-pin"), { title: "New" }));
+  await assertFails(setDoc(doc(db, "projects/altftool/pintrest_categories/new-cat"), { name: "New" }));
+});
+
+test("active admins can create, update, and delete pinterest pins and categories", async () => {
+  const db = testEnv.authenticatedContext("active-admin").firestore();
+  const pinRef = doc(db, "projects/altftool/pintrest/public-pin");
+  const catRef = doc(db, "projects/altftool/pintrest_categories/design-cat");
+
+  // Admins can update title and other fields
+  await assertSucceeds(updateDoc(pinRef, { title: "Updated Admin Title", category: "AI Image" }));
+  // Admins can create new pins/categories
+  await assertSucceeds(setDoc(doc(db, "projects/altftool/pintrest/admin-pin"), { title: "Admin Pin" }));
+  await assertSucceeds(setDoc(doc(db, "projects/altftool/pintrest_categories/admin-cat"), { name: "Admin Cat" }));
 });

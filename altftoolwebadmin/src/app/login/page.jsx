@@ -15,6 +15,11 @@ import { usePathname } from "next/navigation";
 import { Button, Card, Input, Spinner } from "@altftool/ui";
 
 const googleProvider = new GoogleAuthProvider();
+// Always show the Google account chooser so the user can pick the right
+// account. Without this, the popup silently reuses the browser's single
+// signed-in Google session (e.g. vercel@anslation.com) instead of letting the
+// user choose their own account.
+googleProvider.setCustomParameters({ prompt: "select_account" });
 
 export default function Login() {
   const router = useRouter();
@@ -75,33 +80,54 @@ const pathname = usePathname();
     }
   };
 
-  /* ── Google login ── */
+  /* ── Shared: exchange the Google credential for an admin session ── */
+  const finishGoogleLogin = async (currentUser) => {
+    const token = await currentUser.getIdToken();
+
+    const res = await fetch("/api/admin/google-login", {
+      method: "POST",
+      headers: { Authorization: `Bearer ${token}` },
+    });
+
+    const data = await res.json().catch(() => ({}));
+
+    if (!res.ok) {
+      setGoogleError(true);
+      emitAlert({ type: "error", message: data.error ?? "Google login failed" });
+      await auth.signOut();
+      return;
+    }
+
+    if (data.status === "pending") {
+      router.replace("/access-requested");
+      return;
+    }
+    // status === "admin" → AuthContext (onAuthStateChanged) routes to dashboard.
+  };
+
+  /* ── Google login (popup). COOP is same-origin-allow-popups, and the provider
+        forces an account chooser so the user can pick the correct account. ── */
   const loginWithGoogle = async () => {
+    setGoogleLoading(true);
     try {
-      setGoogleLoading(true);
+      // signInWithPopup must be the first async call — any await before it
+      // (e.g. signOut) drops the user-activation and the popup gets blocked.
       const result = await signInWithPopup(auth, googleProvider);
-      const token = await result.user.getIdToken();
-
-      const res = await fetch("/api/admin/google-login", {
-        method: "POST",
-        headers: { Authorization: `Bearer ${token}` },
-      });
-
-      const data = await res.json();
-
-      if (!res.ok) {
-        setGoogleError(true);
-        emitAlert({ type: "error", message: data.error ?? "Google login failed" });
-        await auth.signOut();
-        return;
-      }
-
-      if (data.status === "pending") {
-        router.replace("/access-requested");
-        return;
-      }
+      await finishGoogleLogin(result.user);
     } catch (err) {
-      if (err.code !== "auth/popup-closed-by-user") {
+      const code = err?.code;
+      // A lingering session can make Firebase treat the popup as a re-link of an
+      // already-linked provider; the account is valid, so continue with it.
+      if (code === "auth/provider-already-linked" && auth.currentUser) {
+        try {
+          await finishGoogleLogin(auth.currentUser);
+          return;
+        } catch {
+          /* fall through to the generic handler */
+        }
+      }
+      // User dismissed the popup — not worth surfacing.
+      if (code !== "auth/popup-closed-by-user" && code !== "auth/cancelled-popup-request") {
         emitAlert({ type: "error", message: "Google sign-in failed. Please try again." });
       }
     } finally {

@@ -1,17 +1,21 @@
 import { withSecurityHeaders } from "@altftool/core/next";
-import { readFileSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { toolMetaMap } from "./src/platform/registry/toolMetaMap.js";
 
 const workspaceRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
-const webRoot = path.dirname(fileURLToPath(import.meta.url));
 
+// Import the generated map directly instead of regex-extracting + JSON.parsing
+// its source text. The old approach crashed the entire dev server / build with
+// "Unexpected end of JSON input" whenever toolMetaMap.js was read mid-generation
+// (it's an auto-generated file) or contained any non-JSON value. Importing the
+// object is correct, faster, and can't be tripped by a partial write.
 function readToolSlugs() {
-  const source = readFileSync(path.join(webRoot, "src/platform/registry/toolMetaMap.js"), "utf8");
-  const match = source.match(/export const toolMetaMap = (\{[\s\S]*\});?\s*$/);
-
-  if (!match) return [];
-  return Object.keys(JSON.parse(match[1]));
+  try {
+    return Object.keys(toolMetaMap ?? {});
+  } catch {
+    return [];
+  }
 }
 
 /** @type {import('next').NextConfig} */

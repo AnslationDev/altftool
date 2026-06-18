@@ -60,6 +60,17 @@ service cloud.firestore {
       }
     }
 
+    match /projects/altftool/pintrest/{pinId} {
+      allow read: if true;
+      allow update: if onlyChanges(["likes"]) || isActiveAdmin();
+      allow create, delete: if isActiveAdmin();
+    }
+
+    match /projects/altftool/pintrest_categories/{catId} {
+      allow read: if true;
+      allow create, update, delete: if isActiveAdmin();
+    }
+
     match /projects/altftool/{document=**} {
       allow read: if true;
       allow write: if isActiveAdmin();

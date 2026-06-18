@@ -29,6 +29,7 @@ const altftoolConfig = {
     trendingVideos: { label: "Trending Videos", icon: Video, routeSegment: "trending-videos" },
     salelocator: { label: "Sale Locator", icon: BadgePercent, routeSegment: "sale-locator" },
     dynamic: { label: "Dynamic", icon: Star },
+    pintrest: { label: "Pinterest", icon: Image, routeSegment: "pintrest" },
   },
 };
 

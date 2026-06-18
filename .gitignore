@@ -10,3 +10,11 @@ coverage/
 test-results/
 playwright-report/
 .vercel
+# Firebase deploy cache
+.firebase/
+# Local debug/scratch leftovers
+**/__orig_test.mjs
+# External repos
+get-shit-done/
+graphify*/
+external-get-shit-done/

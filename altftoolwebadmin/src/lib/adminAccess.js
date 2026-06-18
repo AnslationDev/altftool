@@ -12,14 +12,16 @@ function getBearerToken(request) {
   return header.split("Bearer ")[1];
 }
 
-function isLocalHostRequest(request) {
-  const host = request.headers.get("host") || "";
-  const hostname = host.split(":")[0];
-  return ["localhost", "127.0.0.1", "::1"].includes(hostname);
-}
-
 export function isLocalDevAdminRequest(request) {
-  return getBearerToken(request) === LOCAL_ADMIN_TOKEN && (process.env.NODE_ENV === "development" || isLocalHostRequest(request));
+  // SECURITY: the local-dev bypass must ONLY be reachable in a development
+  // build. The previous implementation also accepted any request whose `Host`
+  // header was "localhost" — but that header is client-controlled, so a
+  // production deployment could be tricked into granting superadmin via the
+  // well-known LOCAL_ADMIN_TOKEN simply by spoofing `Host: localhost`.
+  // `process.env.NODE_ENV` is fixed at build/runtime by the server and cannot
+  // be spoofed by the client, so we gate exclusively on it.
+  if (process.env.NODE_ENV !== "development") return false;
+  return getBearerToken(request) === LOCAL_ADMIN_TOKEN;
 }
 
 export function createLocalDevAdminActor() {

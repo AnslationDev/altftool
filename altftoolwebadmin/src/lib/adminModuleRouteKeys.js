@@ -20,6 +20,7 @@ export const ADMIN_MODULE_ROUTE_KEYS = {
     images: [""],
     salelocator: [""],
     trendingVideos: [""],
+    pintrest: [""],
   },
   leadtree: {
     blogs: [

@@ -99,6 +99,21 @@ export function AuthProvider({ children }) {
         return;
       }
 
+      if (res.status >= 500) {
+        // Transient backend/config error (e.g. Admin SDK not initialised).
+        // Do NOT sign the user out of Firebase — that turns a recoverable
+        // server hiccup into a hard logout loop. Keep the Firebase session,
+        // surface no admin data, and let the user retry.
+        console.error("Auth backend error:", res.status);
+        if (!mountedRef.current) return;
+        setUser(null);
+        setAdminData(null);
+        setIsPendingUser(false);
+        setIsDenied(false);
+        setLoading(false);
+        return;
+      }
+
       if (!res.ok) {
         await signOut(auth);
         if (!mountedRef.current) return;
