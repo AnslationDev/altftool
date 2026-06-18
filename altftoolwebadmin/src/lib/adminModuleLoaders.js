@@ -42,6 +42,9 @@ const routeLoaders = {
     trendingVideos: {
       "": () => import("@/projects/altftool/modules/trendingVideos/page.jsx"),
     },
+    pintrest: {
+      "": () => import("@/projects/altftool/modules/pintrest/page.jsx"),
+    },
   },
   leadtree: {
     blogs: {

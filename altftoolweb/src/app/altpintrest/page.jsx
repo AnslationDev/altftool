@@ -73,9 +73,9 @@ export default function AltPinterest() {
     : mockFilters;
 
   const dynamicData = firebasePins.length > 0
-    ? firebasePins.flatMap(pin => {
+    ? firebasePins.map(pin => {
       const category = pin.Category || pin.category || "Other";
-      const mainImage = getImageUrl(pin.image || pin.img || pin.logo || pin.url || pin.imageUrl || pin.imageURL || pin.photoURL || pin.thumbnail);
+      const mainImage = getImageUrl(pin.image || pin.img || pin.logo || pin.url || pin.imageUrl || pin.imageURL || pin.photoURL || pin.thumbnail) || FALLBACK_PIN_IMAGE;
       const gallerySource = Array.isArray(pin.gallery)
         ? pin.gallery
         : Array.isArray(pin.images)
@@ -83,47 +83,15 @@ export default function AltPinterest() {
           : [];
       const gallery = gallerySource.map(getImageUrl).filter(Boolean);
 
-      const items = [];
-
-      // 1. Add Main Image
-      if (mainImage) {
-        items.push({
-          id: `${pin.id}-main`,
-          title: pin.title || "Untitled",
-          image: mainImage,
-          height: getHeightForId(`${pin.id}-main`),
-          category: category,
-          originalData: pin
-        });
-      }
-
-      // 2. Add Gallery Images (excluding duplicates of mainImage)
-      gallery.forEach((img, idx) => {
-        if (img && img !== mainImage) {
-          items.push({
-            id: `${pin.id}-gallery-${idx}`,
-            title: pin.title || "Untitled",
-            image: img,
-            height: getHeightForId(`${pin.id}-gallery-${idx}`),
-            category: category,
-            originalData: pin
-          });
-        }
-      });
-
-      // 3. Fallback if no images found at all
-      if (items.length === 0) {
-        items.push({
-          id: pin.id,
-          title: pin.title || "Untitled",
-          image: FALLBACK_PIN_IMAGE,
-          height: getHeightForId(pin.id),
-          category: category,
-          originalData: pin
-        });
-      }
-
-      return items;
+      return {
+        id: pin.id,
+        title: pin.title || "Untitled",
+        image: mainImage,
+        height: getHeightForId(pin.id),
+        category: category,
+        gallery: gallery,
+        originalData: pin
+      };
     })
     : MOCK_DATA;
 
@@ -283,7 +251,7 @@ export default function AltPinterest() {
                     <img
                       src={item.image}
                       alt={item.title}
-                      className={`w-full object-cover ${item.height} transition-transform duration-500 group-hover:scale-105`}
+                      className="w-full h-auto block transition-transform duration-500 group-hover:scale-105"
                       loading="lazy"
                     />
                   </div>
@@ -365,14 +333,62 @@ export default function AltPinterest() {
                 </div>
 
                 {/* Main Image */}
-                <div className="px-4">
+                <div className="px-4 flex justify-center bg-gray-50/50 dark:bg-zinc-900/50 rounded-[24px] overflow-hidden">
                   <img
                     src={selectedItem.image}
                     alt={selectedItem.title}
-                    className="w-full rounded-[24px] object-cover"
-                    style={{ maxHeight: '650px', minHeight: '400px' }}
+                    className="max-w-full h-auto block rounded-[24px] object-contain"
+                    style={{ maxHeight: '700px' }}
                   />
                 </div>
+
+                {/* Gallery Carousel/Thumbnails if present */}
+                {selectedItem.gallery && selectedItem.gallery.length > 0 && (
+                  <div className="px-8 pt-4">
+                    <p className="text-[10px] font-semibold uppercase tracking-wider text-gray-400 mb-2">
+                      Pin Gallery ({selectedItem.gallery.length + 1} images)
+                    </p>
+                    <div className="flex gap-2.5 overflow-x-auto pb-2 scrollbar-thin scrollbar-thumb-gray-200">
+                      {/* Thumbnail for main cover image */}
+                      <button
+                        onClick={() => setSelectedItem(prev => ({
+                          ...prev,
+                          image: getImageUrl(prev.originalData?.image || prev.originalData?.img || prev.originalData?.logo || prev.originalData?.url) || FALLBACK_PIN_IMAGE
+                        }))}
+                        className={`h-14 w-14 overflow-hidden rounded-lg border-2 shrink-0 transition ${
+                          selectedItem.image === (getImageUrl(selectedItem.originalData?.image || selectedItem.originalData?.img || selectedItem.originalData?.logo || selectedItem.originalData?.url) || FALLBACK_PIN_IMAGE)
+                            ? 'border-[#2563EB]'
+                            : 'border-transparent hover:border-gray-300'
+                        }`}
+                      >
+                        <img
+                          src={getImageUrl(selectedItem.originalData?.image || selectedItem.originalData?.img || selectedItem.originalData?.logo || selectedItem.originalData?.url) || FALLBACK_PIN_IMAGE}
+                          alt=""
+                          className="h-full w-full object-cover"
+                        />
+                      </button>
+
+                      {/* Thumbnails for gallery images */}
+                      {selectedItem.gallery.map((imgUrl, idx) => (
+                        <button
+                          key={idx}
+                          onClick={() => setSelectedItem(prev => ({ ...prev, image: imgUrl }))}
+                          className={`h-14 w-14 overflow-hidden rounded-lg border-2 shrink-0 transition ${
+                            selectedItem.image === imgUrl
+                              ? 'border-[#2563EB]'
+                              : 'border-transparent hover:border-gray-300'
+                          }`}
+                        >
+                          <img
+                            src={imgUrl}
+                            alt=""
+                            className="h-full w-full object-cover"
+                          />
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                )}
                 {/* Info & Comments */}
                 <div className="px-8 py-8 flex flex-col gap-6">
                   <h1 className="text-[20px] font-bold leading-tight text-[var(--foreground)] font-['Segoe_UI',_sans-serif]">
@@ -407,15 +423,13 @@ export default function AltPinterest() {
                 {dynamicData.filter(item => {
                   if (item.id === selectedItem.id) return false;
 
-                  // Related if: Same Category, Same Parent (Gallery), or Similar Title
-                  const sameCategory = item.category && selectedItem.category && item.category === selectedItem.category;
-                  const sameParent = item.originalData?.id && selectedItem.originalData?.id && item.originalData.id === selectedItem.originalData.id;
+                  const sameCategory = item.category && selectedItem.category && item.category.toLowerCase() === selectedItem.category.toLowerCase();
                   const sameTitle = item.title && selectedItem.title && (
                     item.title.toLowerCase().includes(selectedItem.title.toLowerCase()) ||
                     selectedItem.title.toLowerCase().includes(item.title.toLowerCase())
                   );
 
-                  return sameCategory || sameParent || sameTitle;
+                  return sameCategory || sameTitle;
                 }).map(item => (
                   <div
                     key={item.id}
@@ -426,7 +440,7 @@ export default function AltPinterest() {
                       <img
                         src={item.image}
                         alt={item.title}
-                        className={`w-full object-cover ${item.height} transition-transform duration-500 group-hover:scale-105`}
+                        className="w-full h-auto block transition-transform duration-500 group-hover:scale-105"
                         loading="lazy"
                       />
                     </div>
@@ -493,7 +507,7 @@ export default function AltPinterest() {
                     <img
                       src={item.image}
                       alt={item.title}
-                      className={`w-full object-cover ${item.height} transition-transform duration-500 group-hover:scale-105`}
+                      className="w-full h-auto block transition-transform duration-500 group-hover:scale-105"
                       loading="lazy"
                     />
                     <div className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity flex gap-2">

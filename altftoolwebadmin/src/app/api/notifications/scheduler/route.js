@@ -60,8 +60,17 @@ export async function GET(request) {
   const authHeader = request.headers.get("authorization");
   const secret = process.env.CRON_SECRET;
 
-  // If CRON_SECRET is configured, verify it
-  if (secret && authHeader !== `Bearer ${secret}`) {
+  // Fail closed: a missing/empty CRON_SECRET must NOT leave this endpoint open.
+  // Previously this check was skipped entirely when CRON_SECRET was unset,
+  // which let anyone trigger mass-notification delivery.
+  if (!secret) {
+    console.error("[scheduler/GET] CRON_SECRET is not configured — refusing to run.");
+    return NextResponse.json(
+      { error: "Scheduler is not configured" },
+      { status: 503 },
+    );
+  }
+  if (authHeader !== `Bearer ${secret}`) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 

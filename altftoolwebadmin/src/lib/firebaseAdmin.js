@@ -106,15 +106,26 @@ function validateFirebaseAdminConfig(env = process.env) {
   const privateKey = normalizePrivateKey(values.privateKey);
   const invalid = [];
 
-  if (inlineServiceAccountError) {
+  // Resilience: if the resolved credentials (from inline service account or the
+  // split FIREBASE_* vars) are already complete and valid, a stray/unreadable
+  // FIREBASE_SERVICE_ACCOUNT_FILE path or malformed optional source should NOT
+  // hard-fail initialization. A leftover service-account file path pointing at
+  // another developer's machine previously took the whole Admin SDK down even
+  // though valid split credentials were present.
+  const credentialsResolvable =
+    missing.length === 0 &&
+    values.clientEmail.includes("@") &&
+    privateKeyLooksUsable(privateKey);
+
+  if (inlineServiceAccountError && !credentialsResolvable) {
     invalid.push(inlineServiceAccountError);
   }
 
-  if (serviceAccountFile.error) {
+  if (serviceAccountFile.error && !credentialsResolvable) {
     invalid.push(serviceAccountFile.error);
   }
 
-  if (fileServiceAccountError && serviceAccountFile.path) {
+  if (fileServiceAccountError && serviceAccountFile.path && !credentialsResolvable) {
     invalid.push(fileServiceAccountError.replace("FIREBASE_SERVICE_ACCOUNT", "FIREBASE_SERVICE_ACCOUNT_FILE"));
   }
 
