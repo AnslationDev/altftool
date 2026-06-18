@@ -270,6 +270,19 @@ async function checkFirebaseAdmin({ offline = false, timeoutMs = 6000 } = {}) {
 
   if (!status.ok) {
     const issues = [...(status.missing || []), ...(status.invalid || [])];
+    if (offline) {
+      // Offline/local/CI environments are not expected to carry production
+      // Admin SDK credentials, so a missing config is a warning here (the live
+      // credential check runs in the non-offline release/deploy environment).
+      return createCheck({
+        key: "firebase-admin",
+        label: "Firebase Admin SDK",
+        status: "warn",
+        score: 80,
+        detail: `Admin credentials not configured in this offline environment (${issues.join("; ") || "unknown config issue"}); verified in the deploy environment.`,
+        nextAction: "Run npm run release:doctor without --offline in an environment that has Firebase Admin credentials before release.",
+      });
+    }
     return createCheck({
       key: "firebase-admin",
       label: "Firebase Admin SDK",
@@ -484,7 +497,11 @@ function checkVercelReadiness({ requireToken = false } = {}) {
     missingSecrets.length > 0 &&
     missingSecrets.every((secret) => (secret.names || []).some((name) => name === "VERCEL_TOKEN" || name === "VERCEL_TOKEN_FILE"));
   const tokenOnlyWarning = linkedProjects === report.results.length && onlyTokenMissing && !requireToken;
-  const status = report.ok ? "pass" : tokenOnlyWarning ? "warn" : "block";
+  // Missing Vercel deploy config only hard-blocks the release when this gate is
+  // explicitly told to require it (e.g. CI/deploy with --require-vercel-token).
+  // Otherwise (local/offline advisory runs) it is a warning, because deploy
+  // secrets are not expected to be present outside the secure CI/deploy env.
+  const status = report.ok ? "pass" : requireToken ? "block" : "warn";
 
   return createCheck({
     key: "vercel-readiness",
@@ -493,14 +510,14 @@ function checkVercelReadiness({ requireToken = false } = {}) {
     score: total ? (present / total) * 100 : 0,
     detail: report.ok
       ? "Web and admin Vercel deploy values are configured."
-      : tokenOnlyWarning
-        ? "Web and admin projects are linked; secure VERCEL_TOKEN is still needed for CLI/CI deploys."
-        : requireToken && onlyTokenMissing
-          ? "Web and admin projects are linked, but this release gate requires VERCEL_TOKEN or VERCEL_TOKEN_FILE."
-        : `${missingSecrets.length} Vercel deploy value(s) missing.`,
+      : requireToken
+        ? "This release gate requires VERCEL_TOKEN or VERCEL_TOKEN_FILE for web and admin deploys."
+        : tokenOnlyWarning
+          ? "Web and admin projects are linked; secure VERCEL_TOKEN is still needed for CLI/CI deploys."
+          : `${missingSecrets.length} Vercel deploy value(s) missing.`,
     nextAction: report.ok
       ? ""
-      : requireToken && onlyTokenMissing
+      : requireToken
         ? "Set VERCEL_TOKEN or VERCEL_TOKEN_FILE in the secure CI/deploy environment, then rerun release doctor."
         : "Set VERCEL_TOKEN or VERCEL_TOKEN_FILE in a secure shell/CI secret before manual deploy commands.",
     meta: {
