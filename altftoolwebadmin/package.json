@@ -52,7 +52,7 @@
   "overrides": {
     "@tootallnate/once": "^3.0.1",
     "postcss": "^8.5.14",
-    "uuid": "^14.0.0",
+    "uuid": "^9.0.1",
     "next": {
       "postcss": "^8.5.14"
     }
