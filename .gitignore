@@ -18,3 +18,4 @@ playwright-report/
 get-shit-done/
 graphify*/
 external-get-shit-done/
+.env*

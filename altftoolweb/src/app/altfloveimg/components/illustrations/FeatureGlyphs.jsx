@@ -1,9 +1,10 @@
 "use client";
 
+import { useId } from "react";
+
 /* Bespoke gradient-stroke SVG glyphs for feature/benefit blocks.
    Each renders its own gradient so multiple can coexist. */
 
-let g = 0;
 function Frame({ children, size = 28 }) {
   return (
     <svg width={size} height={size} viewBox="0 0 32 32" fill="none" aria-hidden="true">
@@ -23,7 +24,7 @@ function grad(id) {
 const S = { stroke: "", strokeWidth: 2.1, strokeLinecap: "round", strokeLinejoin: "round", fill: "none" };
 
 export function GlyphShield({ size }) {
-  const id = `gs-${++g}`;
+  const id = `gs-${useId().replace(/:/g, "")}`;
   return (
     <Frame size={size}>
       {grad(id)}
@@ -33,7 +34,7 @@ export function GlyphShield({ size }) {
   );
 }
 export function GlyphBolt({ size }) {
-  const id = `gb-${++g}`;
+  const id = `gb-${useId().replace(/:/g, "")}`;
   return (
     <Frame size={size}>
       {grad(id)}
@@ -42,7 +43,7 @@ export function GlyphBolt({ size }) {
   );
 }
 export function GlyphInfinity({ size }) {
-  const id = `gi-${++g}`;
+  const id = `gi-${useId().replace(/:/g, "")}`;
   return (
     <Frame size={size}>
       {grad(id)}
@@ -51,7 +52,7 @@ export function GlyphInfinity({ size }) {
   );
 }
 export function GlyphDevices({ size }) {
-  const id = `gd-${++g}`;
+  const id = `gd-${useId().replace(/:/g, "")}`;
   return (
     <Frame size={size}>
       {grad(id)}
@@ -62,7 +63,7 @@ export function GlyphDevices({ size }) {
   );
 }
 export function GlyphCloudOff({ size }) {
-  const id = `gc-${++g}`;
+  const id = `gc-${useId().replace(/:/g, "")}`;
   return (
     <Frame size={size}>
       {grad(id)}
@@ -73,7 +74,7 @@ export function GlyphCloudOff({ size }) {
   );
 }
 export function GlyphGauge({ size }) {
-  const id = `gg-${++g}`;
+  const id = `gg-${useId().replace(/:/g, "")}`;
   return (
     <Frame size={size}>
       {grad(id)}
@@ -84,7 +85,7 @@ export function GlyphGauge({ size }) {
   );
 }
 export function GlyphLock({ size }) {
-  const id = `gl-${++g}`;
+  const id = `gl-${useId().replace(/:/g, "")}`;
   return (
     <Frame size={size}>
       {grad(id)}

@@ -1,6 +1,6 @@
 "use client";
 
-let n = 0;
+import { useId } from "react";
 
 /**
  * ALTF Love IMG brand mark — a gradient squircle holding two overlapping
@@ -8,7 +8,7 @@ let n = 0;
  * instantly as an image studio, scales cleanly to favicon size.
  */
 export default function Logo({ size = 36, withWordmark = false, className = "" }) {
-  const id = `ali-logo-${++n}`;
+  const id = `ali-logo-${useId().replace(/:/g, "")}`;
   return (
     <span className={`inline-flex items-center gap-2.5 ${className}`}>
       <svg width={size} height={size} viewBox="0 0 48 48" fill="none" aria-hidden="true">
