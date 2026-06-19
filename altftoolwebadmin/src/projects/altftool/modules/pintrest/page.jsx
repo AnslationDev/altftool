@@ -15,6 +15,7 @@ import {
   PlusCircle,
   X,
   Sparkles,
+  UploadCloud,
 } from "lucide-react";
 
 import {
@@ -30,6 +31,7 @@ import {
 
 import AdminDataState from "@/components/admin/AdminDataState";
 import DeleteConfirmModal from "@/components/ui/DeleteConfirmModal";
+import BulkUploadModal from "./components/BulkUploadModal";
 
 export default function PinterestAdmin() {
   const [activeTab, setActiveTab] = useState("pins"); // "pins", "categories", "insights"
@@ -41,6 +43,9 @@ export default function PinterestAdmin() {
   // Search & Filter State
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("All");
+
+  // Bulk upload modal
+  const [isBulkOpen, setIsBulkOpen] = useState(false);
 
   // Modal State for Pin Form
   const [isPinModalOpen, setIsPinModalOpen] = useState(false);
@@ -477,15 +482,25 @@ export default function PinterestAdmin() {
                   </select>
                 </div>
 
-                {/* Add Pin Button */}
-                <button
-                  type="button"
-                  onClick={openAddPinModal}
-                  className="inline-flex items-center justify-center gap-2 rounded-lg bg-indigo-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 transition"
-                >
-                  <Plus size={16} />
-                  Add New Pin
-                </button>
+                {/* Action buttons */}
+                <div className="flex gap-2.5">
+                  <button
+                    type="button"
+                    onClick={() => setIsBulkOpen(true)}
+                    className="inline-flex items-center justify-center gap-2 rounded-lg border border-indigo-200 bg-indigo-50 px-4 py-2.5 text-sm font-semibold text-indigo-700 shadow-sm hover:bg-indigo-100 transition"
+                  >
+                    <UploadCloud size={16} />
+                    Bulk Upload
+                  </button>
+                  <button
+                    type="button"
+                    onClick={openAddPinModal}
+                    className="inline-flex items-center justify-center gap-2 rounded-lg bg-indigo-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 transition"
+                  >
+                    <Plus size={16} />
+                    Add New Pin
+                  </button>
+                </div>
               </div>
 
               {/* Pins Table / Grid */}
@@ -985,6 +1000,20 @@ export default function PinterestAdmin() {
             </form>
           </div>
         </div>
+      )}
+
+      {/* ============================================================== */}
+      {/* BULK IMAGE UPLOAD MODAL                                        */}
+      {/* ============================================================== */}
+      {isBulkOpen && (
+        <BulkUploadModal
+          categories={categories}
+          defaultCategory={selectedCategory !== "All" ? selectedCategory : undefined}
+          onClose={() => setIsBulkOpen(false)}
+          onUploaded={(count) =>
+            showNotification("success", `${count} image${count > 1 ? "s" : ""} uploaded as pins.`)
+          }
+        />
       )}
 
       {/* ============================================================== */}

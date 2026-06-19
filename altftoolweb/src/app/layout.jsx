@@ -16,6 +16,7 @@ import { AlertProvider } from "@/shared/ui/AlertProvider";
 import JsonLd from "@/platform/seo/JsonLd";
 import GlobalNavigationLoader from "@/components/ui/GlobalNavigationLoader";
 import { HeaderLoadingSkeleton } from "@/components/ui/route-loading";
+import ChromeGate from "./_ChromeGate";
 import {
   createOrganizationJsonLd,
   createWebsiteJsonLd,
@@ -190,9 +191,11 @@ export default function RootLayout({ children }) {
           Skip to main content
         </a>
 
-        <Suspense fallback={<HeaderLoadingSkeleton />}>
-          <Header />
-        </Suspense>
+        <ChromeGate>
+          <Suspense fallback={<HeaderLoadingSkeleton />}>
+            <Header />
+          </Suspense>
+        </ChromeGate>
 
         <GlobalAnimationProvider>
           <AdsProvider>
@@ -202,12 +205,14 @@ export default function RootLayout({ children }) {
           </AdsProvider>
         </GlobalAnimationProvider>
 
-        <CookieBanner />
-        <NewsletterSubscribeDialog />
-        <Suspense fallback={null}>
-          <LazyChatBot />
-        </Suspense>
-        <Footer />
+        <ChromeGate>
+          <CookieBanner />
+          <NewsletterSubscribeDialog />
+          <Suspense fallback={null}>
+            <LazyChatBot />
+          </Suspense>
+          <Footer />
+        </ChromeGate>
 
       </AlertProvider>
     </CookieConsentProvider>

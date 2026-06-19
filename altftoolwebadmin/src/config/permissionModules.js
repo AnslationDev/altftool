@@ -6,4 +6,5 @@ export const PERMISSION_MODULES = {
   blogs: "Blogs",
   images: "Images",
   pintrest: "Pinterest",
+  tripfindbox: "TripFindBox",
 };

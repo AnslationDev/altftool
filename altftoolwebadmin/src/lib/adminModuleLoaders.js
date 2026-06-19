@@ -45,6 +45,9 @@ const routeLoaders = {
     pintrest: {
       "": () => import("@/projects/altftool/modules/pintrest/page.jsx"),
     },
+    tripfindbox: {
+      "": () => import("@/projects/altftool/modules/tripfindbox/page.jsx"),
+    },
   },
   leadtree: {
     blogs: {
