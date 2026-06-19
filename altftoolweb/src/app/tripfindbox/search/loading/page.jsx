@@ -33,7 +33,7 @@ export default function SearchLoadingPage() {
       const results = await searchTravelResults(criteria);
       await minimumDelay;
       saveSearchResults(results);
-      router.replace(results.length ? "/search/results" : "/search/no-results");
+      router.replace(results.length ? "/tripfindbox/search/results" : "/tripfindbox/search/no-results");
     };
 
     runSearch();
