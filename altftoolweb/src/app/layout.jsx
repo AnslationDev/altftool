@@ -15,6 +15,7 @@ import LazyChatBot from "@/platform/chatbot/LazyChatBot";
 import { AlertProvider } from "@/shared/ui/AlertProvider";
 import JsonLd from "@/platform/seo/JsonLd";
 import GlobalNavigationLoader from "@/components/ui/GlobalNavigationLoader";
+import GlobalChromeGate from "@/platform/navigation/GlobalChromeGate";
 import { HeaderLoadingSkeleton } from "@/components/ui/route-loading";
 import {
   createOrganizationJsonLd,
@@ -190,9 +191,11 @@ export default function RootLayout({ children }) {
           Skip to main content
         </a>
 
-        <Suspense fallback={<HeaderLoadingSkeleton />}>
-          <Header />
-        </Suspense>
+        <GlobalChromeGate>
+          <Suspense fallback={<HeaderLoadingSkeleton />}>
+            <Header />
+          </Suspense>
+        </GlobalChromeGate>
 
         <GlobalAnimationProvider>
           <AdsProvider>
@@ -207,7 +210,9 @@ export default function RootLayout({ children }) {
         <Suspense fallback={null}>
           <LazyChatBot />
         </Suspense>
-        <Footer />
+        <GlobalChromeGate>
+          <Footer />
+        </GlobalChromeGate>
 
       </AlertProvider>
     </CookieConsentProvider>
