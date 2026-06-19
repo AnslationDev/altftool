@@ -1,0 +1,464 @@
+/* ================================================================
+   ALTF Love IMG — professional SaaS design system
+   Blue-led palette: sky → blue → indigo → violet.
+   Scoped under .ali-scope so the rest of AltFTool is untouched.
+================================================================ */
+
+.ali-scope {
+  /* Brand palette — blue with indigo/violet accents */
+  --ali-sky: #0ea5e9;
+  --ali-blue: #2563eb;
+  --ali-blue-600: #1d4ed8;
+  --ali-blue-700: #1e40af;
+  --ali-indigo: #4f46e5;
+  --ali-violet: #7c3aed;
+  --ali-violet-600: #6d28d9;
+
+  /* Primary token used across UI */
+  --ali-brand: #2563eb;
+  --ali-brand-strong: #1d4ed8;
+  --ali-brand-ink: #1e3a8a;
+
+  --ali-grad: linear-gradient(120deg, #0ea5e9 0%, #2563eb 46%, #6d28d9 100%);
+  --ali-grad-bright: linear-gradient(120deg, #38bdf8 0%, #3b82f6 50%, #8b5cf6 100%);
+  --ali-grad-soft: linear-gradient(120deg, rgba(37, 99, 235, 0.10), rgba(124, 58, 237, 0.10));
+  --ali-grad-text: linear-gradient(110deg, #1d4ed8 0%, #4f46e5 50%, #7c3aed 100%);
+
+  /* accent default (overridable per element via --ali-accent) */
+  --ali-accent: #2563eb;
+
+  /* backward-compatible aliases (theme-aware) for earlier token names */
+  --ali-teal: var(--ali-brand);
+  --ali-teal-600: var(--ali-brand);
+  --ali-teal-700: var(--ali-brand);
+
+  /* Surfaces driven by host theme so dark mode works */
+  --ali-page: #f6f8fc;
+  --ali-surface: #ffffff;
+  --ali-surface-2: #f9fafd;
+  --ali-soft: #eef2fb;
+  --ali-border: #e6eaf2;
+  --ali-border-strong: #d4dbe8;
+  --ali-text: #0f1729;
+  --ali-text-soft: #334155;
+  --ali-muted: #64748b;
+
+  --ali-shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.05), 0 1px 3px rgba(15, 23, 42, 0.05);
+  --ali-shadow-md: 0 10px 30px rgba(37, 99, 235, 0.10);
+  --ali-shadow-lg: 0 24px 60px rgba(37, 99, 235, 0.16);
+  --ali-glow: 0 0 0 1px rgba(37, 99, 235, 0.12), 0 18px 40px rgba(37, 99, 235, 0.18);
+
+  --ali-radius: 16px;
+  --ali-radius-lg: 24px;
+
+  color: var(--ali-text);
+}
+
+[data-theme="dark"] .ali-scope {
+  --ali-page: #070b18;
+  --ali-surface: #0e1525;
+  --ali-surface-2: #111a2e;
+  --ali-soft: #16203a;
+  --ali-border: #1e2a44;
+  --ali-border-strong: #2a3a5c;
+  --ali-text: #f1f5fb;
+  --ali-text-soft: #cbd5e1;
+  --ali-muted: #94a3b8;
+
+  --ali-brand: #60a5fa;
+  --ali-brand-strong: #93c5fd;
+  --ali-brand-ink: #bfdbfe;
+
+  --ali-grad-text: linear-gradient(110deg, #7dd3fc 0%, #93c5fd 50%, #c4b5fd 100%);
+  --ali-grad-soft: linear-gradient(120deg, rgba(96, 165, 250, 0.14), rgba(167, 139, 250, 0.14));
+  --ali-shadow-md: 0 12px 32px rgba(0, 0, 0, 0.5);
+  --ali-shadow-lg: 0 28px 64px rgba(0, 0, 0, 0.6);
+  --ali-glow: 0 0 0 1px rgba(96, 165, 250, 0.25), 0 18px 44px rgba(2, 8, 23, 0.7);
+}
+
+/* ---------- layout helpers ---------- */
+.ali-container {
+  width: 100%;
+  max-width: 1240px;
+  margin-inline: auto;
+  padding-inline: clamp(1rem, 3vw, 2.25rem);
+}
+.ali-section { padding-block: clamp(3.5rem, 8vw, 6.5rem); }
+
+/* ---------- typography ---------- */
+.ali-gradient-text {
+  background: var(--ali-grad-text);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+.ali-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.76rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ali-blue-700);
+  background: var(--ali-grad-soft);
+  border: 1px solid color-mix(in srgb, var(--ali-blue) 26%, transparent);
+  padding: 0.42rem 0.9rem;
+  border-radius: 999px;
+}
+[data-theme="dark"] .ali-eyebrow { color: #bfdbfe; }
+
+/* ---------- glass + cards ---------- */
+.ali-glass {
+  background: color-mix(in srgb, var(--ali-surface) 70%, transparent);
+  backdrop-filter: blur(20px) saturate(150%);
+  -webkit-backdrop-filter: blur(20px) saturate(150%);
+  border: 1px solid color-mix(in srgb, var(--ali-border) 80%, transparent);
+}
+
+.ali-card {
+  background: var(--ali-surface);
+  border: 1px solid var(--ali-border);
+  border-radius: var(--ali-radius);
+  box-shadow: var(--ali-shadow-sm);
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.35s ease, border-color 0.35s ease;
+}
+.ali-card-hover:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--ali-shadow-lg);
+  border-color: color-mix(in srgb, var(--ali-accent) 42%, var(--ali-border));
+}
+
+/* tool card with accent ring + glow on hover */
+.ali-tool-card { position: relative; overflow: hidden; }
+.ali-tool-card::after {
+  content: "";
+  position: absolute;
+  inset-inline: 0;
+  top: 0;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, var(--ali-accent), transparent);
+  opacity: 0;
+  transition: opacity 0.35s ease;
+}
+.ali-tool-card:hover::after { opacity: 1; }
+.ali-tool-card:hover {
+  box-shadow: 0 18px 44px color-mix(in srgb, var(--ali-accent) 22%, transparent);
+}
+
+.ali-tool-icon {
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  background: color-mix(in srgb, var(--ali-accent) 13%, var(--ali-surface));
+  color: var(--ali-accent);
+  border: 1px solid color-mix(in srgb, var(--ali-accent) 22%, transparent);
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.3s ease;
+}
+[data-theme="dark"] .ali-tool-icon {
+  background: color-mix(in srgb, var(--ali-accent) 22%, var(--ali-surface));
+  color: color-mix(in srgb, var(--ali-accent) 55%, #ffffff);
+}
+.ali-tool-card:hover .ali-tool-icon {
+  transform: scale(1.08) rotate(-4deg);
+  box-shadow: 0 8px 20px color-mix(in srgb, var(--ali-accent) 35%, transparent);
+}
+
+/* ---------- buttons ---------- */
+.ali-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-weight: 600;
+  font-size: 0.94rem;
+  border-radius: 11px;
+  padding: 0.68rem 1.3rem;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: transform 0.2s ease, box-shadow 0.25s ease, background 0.25s ease,
+    opacity 0.2s ease, border-color 0.2s ease;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.ali-btn:active { transform: translateY(1px) scale(0.99); }
+.ali-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.ali-btn-primary {
+  background: var(--ali-grad);
+  color: #fff;
+  box-shadow: 0 8px 22px rgba(37, 99, 235, 0.30);
+}
+.ali-btn-primary:hover:not(:disabled) {
+  box-shadow: 0 14px 32px rgba(79, 70, 229, 0.42);
+  transform: translateY(-2px);
+}
+
+.ali-btn-ghost {
+  background: var(--ali-surface);
+  color: var(--ali-text);
+  border-color: var(--ali-border-strong);
+}
+.ali-btn-ghost:hover:not(:disabled) {
+  border-color: color-mix(in srgb, var(--ali-blue) 55%, var(--ali-border));
+  background: var(--ali-soft);
+  color: var(--ali-blue-700);
+}
+[data-theme="dark"] .ali-btn-ghost:hover:not(:disabled) { color: var(--ali-brand); }
+
+.ali-btn-lg { padding: 0.95rem 1.7rem; font-size: 1.02rem; border-radius: 13px; }
+
+/* ---------- pill / chips ---------- */
+.ali-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.45rem 0.85rem;
+  border-radius: 999px;
+  border: 1px solid var(--ali-border-strong);
+  background: var(--ali-surface);
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--ali-muted);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.ali-chip:hover { border-color: color-mix(in srgb, var(--ali-blue) 50%, var(--ali-border)); color: var(--ali-text); }
+.ali-chip[data-active="true"] {
+  background: var(--ali-grad);
+  border-color: transparent;
+  color: #fff;
+  box-shadow: 0 6px 16px rgba(37, 99, 235, 0.28);
+}
+
+/* ---------- inputs / range ---------- */
+.ali-input {
+  width: 100%;
+  background: var(--ali-surface);
+  border: 1px solid var(--ali-border-strong);
+  border-radius: 11px;
+  padding: 0.62rem 0.8rem;
+  color: var(--ali-text);
+  font-size: 0.95rem;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.ali-input:focus {
+  outline: none;
+  border-color: var(--ali-blue);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.18);
+}
+select.ali-input { cursor: pointer; }
+
+.ali-range {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 6px;
+  border-radius: 999px;
+  background: var(--ali-soft);
+  outline: none;
+}
+.ali-range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #fff;
+  border: 3px solid var(--ali-blue);
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(37, 99, 235, 0.4);
+  transition: transform 0.15s ease;
+}
+.ali-range::-webkit-slider-thumb:hover { transform: scale(1.15); }
+.ali-range::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #fff;
+  border: 3px solid var(--ali-blue);
+  cursor: pointer;
+}
+
+/* ---------- dropzone ---------- */
+.ali-dropzone {
+  position: relative;
+  border: 2px dashed color-mix(in srgb, var(--ali-blue) 42%, var(--ali-border));
+  border-radius: var(--ali-radius-lg);
+  background: var(--ali-grad-soft);
+  transition: border-color 0.25s ease, background 0.25s ease, transform 0.25s ease;
+}
+.ali-dropzone[data-drag="true"] {
+  border-color: var(--ali-blue);
+  background: color-mix(in srgb, var(--ali-blue) 12%, transparent);
+  transform: scale(1.01);
+}
+
+/* ---------- decorative background blobs ---------- */
+.ali-blobs { position: absolute; inset: 0; overflow: hidden; pointer-events: none; z-index: 0; }
+.ali-blob { position: absolute; border-radius: 50%; filter: blur(72px); opacity: 0.5; }
+.ali-blob-1 { width: 380px; height: 380px; background: #38bdf8; top: -120px; left: -80px; }
+.ali-blob-2 { width: 440px; height: 440px; background: #818cf8; top: -60px; right: -120px; opacity: 0.45; }
+.ali-blob-3 { width: 340px; height: 340px; background: #a78bfa; bottom: -150px; left: 28%; opacity: 0.4; }
+[data-theme="dark"] .ali-blob { opacity: 0.26; }
+
+/* ---------- grid background ---------- */
+.ali-grid-bg {
+  background-image:
+    linear-gradient(to right, color-mix(in srgb, var(--ali-border) 70%, transparent) 1px, transparent 1px),
+    linear-gradient(to bottom, color-mix(in srgb, var(--ali-border) 70%, transparent) 1px, transparent 1px);
+  background-size: 46px 46px;
+  -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 0%, #000 40%, transparent 100%);
+  mask-image: radial-gradient(ellipse 70% 60% at 50% 0%, #000 40%, transparent 100%);
+}
+
+/* ---------- checker (transparency preview) ---------- */
+.ali-checker {
+  background-image:
+    linear-gradient(45deg, #cbd5e1 25%, transparent 25%),
+    linear-gradient(-45deg, #cbd5e1 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, #cbd5e1 75%),
+    linear-gradient(-45deg, transparent 75%, #cbd5e1 75%);
+  background-size: 18px 18px;
+  background-position: 0 0, 0 9px, 9px -9px, -9px 0;
+  background-color: #eef2f8;
+}
+[data-theme="dark"] .ali-checker {
+  background-image:
+    linear-gradient(45deg, #1f2a40 25%, transparent 25%),
+    linear-gradient(-45deg, #1f2a40 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, #1f2a40 75%),
+    linear-gradient(-45deg, transparent 75%, #1f2a40 75%);
+  background-color: #0c1424;
+}
+
+/* ---------- animations ---------- */
+@keyframes ali-fade-up {
+  from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.ali-fade-up { animation: ali-fade-up 0.7s cubic-bezier(0.22, 1, 0.36, 1) both; }
+
+@keyframes ali-float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+.ali-float { animation: ali-float 6s ease-in-out infinite; }
+
+@keyframes ali-shimmer { 0% { background-position: -400px 0; } 100% { background-position: 400px 0; } }
+.ali-skeleton {
+  background: linear-gradient(90deg, var(--ali-soft) 25%, color-mix(in srgb, var(--ali-soft) 55%, #fff) 50%, var(--ali-soft) 75%);
+  background-size: 800px 100%;
+  animation: ali-shimmer 1.4s linear infinite;
+  border-radius: 12px;
+}
+
+@keyframes ali-spin { to { transform: rotate(360deg); } }
+.ali-spinner {
+  width: 42px; height: 42px; border-radius: 50%;
+  border: 4px solid var(--ali-soft);
+  border-top-color: var(--ali-blue);
+  animation: ali-spin 0.8s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ali-fade-up, .ali-float, .ali-skeleton, .ali-spinner { animation: none; }
+}
+
+/* ---------- accordion ---------- */
+.ali-acc-panel { display: grid; grid-template-rows: 0fr; transition: grid-template-rows 0.32s ease; }
+.ali-acc-panel[data-open="true"] { grid-template-rows: 1fr; }
+.ali-acc-panel > div { overflow: hidden; }
+
+/* ================================================================
+   S-tier additions
+================================================================ */
+
+/* accessible focus ring */
+.ali-scope a:focus-visible,
+.ali-scope button:focus-visible,
+.ali-scope [tabindex]:focus-visible,
+.ali-scope input:focus-visible,
+.ali-scope select:focus-visible {
+  outline: 2px solid var(--ali-blue);
+  outline-offset: 2px;
+  border-radius: 8px;
+}
+
+/* primary button sheen */
+.ali-btn-primary { position: relative; overflow: hidden; isolation: isolate; }
+.ali-btn-primary::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(110deg, transparent 30%, rgba(255, 255, 255, 0.35) 50%, transparent 70%);
+  transform: translateX(-120%);
+  transition: transform 0.7s ease;
+  z-index: -1;
+}
+.ali-btn-primary:hover::after { transform: translateX(120%); }
+
+/* card with faint inner gradient for depth */
+.ali-card-glow {
+  background:
+    radial-gradient(120% 120% at 0% 0%, color-mix(in srgb, var(--ali-accent) 7%, transparent), transparent 45%),
+    var(--ali-surface);
+}
+
+/* gradient hairline border card */
+.ali-card-grad {
+  position: relative;
+  background: var(--ali-surface);
+  border-radius: var(--ali-radius-lg);
+}
+.ali-card-grad::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: var(--ali-grad);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+/* trust marquee */
+.ali-marquee { display: flex; gap: 3rem; width: max-content; animation: ali-scroll 28s linear infinite; }
+.ali-marquee-wrap { -webkit-mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent); mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent); }
+@keyframes ali-scroll { to { transform: translateX(-50%); } }
+@media (prefers-reduced-motion: reduce) { .ali-marquee { animation: none; } }
+
+/* number ticker badge */
+.ali-stat-card {
+  background: var(--ali-surface);
+  border: 1px solid var(--ali-border);
+  border-radius: 18px;
+  padding: 1.1rem 1rem;
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+.ali-stat-card:hover { transform: translateY(-3px); box-shadow: var(--ali-shadow-md); border-color: color-mix(in srgb, var(--ali-blue) 35%, var(--ali-border)); }
+
+/* dot grid color helper */
+.ali-dot-ink { color: var(--ali-border-strong); }
+
+/* soft pill tab */
+.ali-tab {
+  padding: 0.5rem 1rem; border-radius: 999px; font-size: 0.88rem; font-weight: 600;
+  color: var(--ali-muted); cursor: pointer; transition: all 0.2s ease; border: 1px solid transparent;
+}
+.ali-tab:hover { color: var(--ali-text); }
+.ali-tab[data-active="true"] { background: var(--ali-grad); color: #fff; box-shadow: 0 6px 16px rgba(37,99,235,0.28); }
+
+/* number badge for steps */
+.ali-step-num {
+  font-variant-numeric: tabular-nums;
+  -webkit-text-stroke: 1.5px color-mix(in srgb, var(--ali-blue) 45%, transparent);
+  color: transparent;
+  font-weight: 800;
+}

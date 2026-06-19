@@ -15,8 +15,8 @@ import LazyChatBot from "@/platform/chatbot/LazyChatBot";
 import { AlertProvider } from "@/shared/ui/AlertProvider";
 import JsonLd from "@/platform/seo/JsonLd";
 import GlobalNavigationLoader from "@/components/ui/GlobalNavigationLoader";
+import GlobalChromeGate from "@/platform/navigation/GlobalChromeGate";
 import { HeaderLoadingSkeleton } from "@/components/ui/route-loading";
-import ChromeGate from "./_ChromeGate";
 import {
   createOrganizationJsonLd,
   createWebsiteJsonLd,
@@ -191,11 +191,11 @@ export default function RootLayout({ children }) {
           Skip to main content
         </a>
 
-        <ChromeGate>
+        <GlobalChromeGate>
           <Suspense fallback={<HeaderLoadingSkeleton />}>
             <Header />
           </Suspense>
-        </ChromeGate>
+        </GlobalChromeGate>
 
         <GlobalAnimationProvider>
           <AdsProvider>
@@ -205,14 +205,14 @@ export default function RootLayout({ children }) {
           </AdsProvider>
         </GlobalAnimationProvider>
 
-        <ChromeGate>
-          <CookieBanner />
-          <NewsletterSubscribeDialog />
-          <Suspense fallback={null}>
-            <LazyChatBot />
-          </Suspense>
+        <CookieBanner />
+        <NewsletterSubscribeDialog />
+        <Suspense fallback={null}>
+          <LazyChatBot />
+        </Suspense>
+        <GlobalChromeGate>
           <Footer />
-        </ChromeGate>
+        </GlobalChromeGate>
 
       </AlertProvider>
     </CookieConsentProvider>

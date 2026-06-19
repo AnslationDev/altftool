@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState, useEffect, useMemo, useRef } from "react";
 import {
   Image as ImageIcon,
   Tag,
@@ -16,7 +16,15 @@ import {
   X,
   Sparkles,
   UploadCloud,
+  Globe,
+  CheckCircle2,
 } from "lucide-react";
+import {
+  ref as storageRef,
+  uploadBytesResumable,
+  getDownloadURL,
+} from "firebase/storage";
+import { storage } from "@/lib/firebase";
 
 import {
   subscribePins,
@@ -58,6 +66,14 @@ export default function PinterestAdmin() {
   });
   const [pinFormError, setPinFormError] = useState("");
   const [savingPin, setSavingPin] = useState(false);
+
+  // Image upload state (file -> Firebase Storage -> URL)
+  const [imageMode, setImageMode] = useState("upload"); // "upload" | "url"
+  const [uploading, setUploading] = useState(false);
+  const [uploadProgress, setUploadProgress] = useState(0);
+  const [uploadedName, setUploadedName] = useState("");
+  const [dragOver, setDragOver] = useState(false);
+  const fileInputRef = useRef(null);
 
   // Modal / Inline State for Category Form
   const [newCatName, setNewCatName] = useState("");
@@ -163,6 +179,61 @@ export default function PinterestAdmin() {
     });
   }, [pins, searchQuery, selectedCategory]);
 
+  // Reset the upload widget state
+  const resetUploadState = () => {
+    setUploading(false);
+    setUploadProgress(0);
+    setUploadedName("");
+    setDragOver(false);
+  };
+
+  // Upload a chosen file to Firebase Storage, then store its download URL
+  const uploadImageFile = (file) => {
+    if (!file) return;
+    if (!file.type.startsWith("image/")) {
+      setPinFormError("Please choose an image file (JPG, PNG, WebP, GIF).");
+      return;
+    }
+    if (file.size > 10 * 1024 * 1024) {
+      setPinFormError("Image is too large (max 10MB).");
+      return;
+    }
+
+    setPinFormError("");
+    setUploading(true);
+    setUploadProgress(0);
+    setUploadedName(file.name);
+
+    const path = `projects/altftool/pintrest/${Date.now()}_${file.name.replace(/\s+/g, "-")}`;
+    const task = uploadBytesResumable(storageRef(storage, path), file);
+
+    task.on(
+      "state_changed",
+      (snap) => setUploadProgress(Math.round((snap.bytesTransferred / snap.totalBytes) * 100)),
+      (err) => {
+        console.error("[pintrest upload] failed:", err);
+        setUploading(false);
+        setPinFormError(
+          err?.code === "storage/unauthorized"
+            ? "Storage permission denied. Make sure you are signed in as an active admin."
+            : "Upload failed. Please try again."
+        );
+      },
+      async () => {
+        try {
+          const url = await getDownloadURL(task.snapshot.ref);
+          setPinForm((prev) => ({ ...prev, image: url }));
+          setUploadProgress(100);
+        } catch (err) {
+          console.error("[pintrest upload] url error:", err);
+          setPinFormError("Could not finalize the upload. Please try again.");
+        } finally {
+          setUploading(false);
+        }
+      }
+    );
+  };
+
   // Form handling
   const openAddPinModal = () => {
     setEditingPin(null);
@@ -173,6 +244,8 @@ export default function PinterestAdmin() {
       likes: 0,
     });
     setPinFormError("");
+    setImageMode("upload");
+    resetUploadState();
     setIsPinModalOpen(true);
   };
 
@@ -185,6 +258,8 @@ export default function PinterestAdmin() {
       likes: pin.likes || 0,
     });
     setPinFormError("");
+    setImageMode(pin.image ? "url" : "upload");
+    resetUploadState();
     setIsPinModalOpen(true);
   };
 
@@ -192,12 +267,16 @@ export default function PinterestAdmin() {
     e.preventDefault();
     setPinFormError("");
 
+    if (uploading) {
+      setPinFormError("Please wait for the image upload to finish.");
+      return;
+    }
     if (!pinForm.title.trim()) {
       setPinFormError("Title is required.");
       return;
     }
     if (!pinForm.image.trim()) {
-      setPinFormError("Image URL is required.");
+      setPinFormError("Please upload an image or paste an image URL.");
       return;
     }
 
@@ -903,44 +982,124 @@ export default function PinterestAdmin() {
                 />
               </div>
 
-              {/* Image URL with live preview */}
-              <div className="grid gap-4 sm:grid-cols-3">
-                <div className="sm:col-span-2 space-y-1.5">
-                  <label htmlFor="pin-image" className="block text-xs font-semibold text-gray-600">
-                    Image URL
-                  </label>
-                  <input
-                    id="pin-image"
-                    type="text"
-                    placeholder="https://example.com/image.jpg"
-                    value={pinForm.image}
-                    onChange={(e) => setPinForm({ ...pinForm, image: e.target.value })}
-                    className="w-full rounded-lg border border-gray-300 px-3 py-2.5 text-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
-                    required
-                  />
-                  <p className="text-[10px] text-gray-400 leading-normal">
-                    Provide a valid direct URL. For local mock testing, paths like `/altpintrest-images/...` are supported.
-                  </p>
+              {/* Pin Image — upload to Storage OR paste a URL */}
+              <div className="space-y-2">
+                <div className="flex items-center justify-between">
+                  <label className="block text-xs font-semibold text-gray-600">Pin Image</label>
+                  <div className="flex gap-1 p-0.5 bg-gray-100 rounded-lg">
+                    {[
+                      { id: "upload", label: "Upload File", icon: UploadCloud },
+                      { id: "url", label: "Paste URL", icon: Globe },
+                    ].map((m) => {
+                      const MIcon = m.icon;
+                      return (
+                        <button
+                          key={m.id}
+                          type="button"
+                          onClick={() => setImageMode(m.id)}
+                          disabled={uploading}
+                          className={`flex items-center gap-1.5 px-2.5 py-1 rounded-md text-[11px] font-semibold transition ${
+                            imageMode === m.id ? "bg-white text-gray-800 shadow-sm" : "text-gray-500 hover:text-gray-700"
+                          } disabled:opacity-50`}
+                        >
+                          <MIcon size={13} /> {m.label}
+                        </button>
+                      );
+                    })}
+                  </div>
                 </div>
-                
-                {/* Visual Preview panel */}
-                <div className="flex flex-col items-center justify-center rounded-lg border border-dashed border-gray-300 bg-gray-50 p-2 h-28 relative">
-                  {pinForm.image ? (
-                    <img
-                      src={pinForm.image}
-                      alt="Preview"
-                      className="h-full w-full object-contain rounded"
-                      onError={(e) => {
-                        e.target.style.display = "none";
-                      }}
+
+                {imageMode === "upload" ? (
+                  <>
+                    {!pinForm.image && !uploading && (
+                      <div
+                        onClick={() => fileInputRef.current?.click()}
+                        onDragOver={(e) => { e.preventDefault(); setDragOver(true); }}
+                        onDragLeave={() => setDragOver(false)}
+                        onDrop={(e) => { e.preventDefault(); setDragOver(false); uploadImageFile(e.dataTransfer.files[0]); }}
+                        className={`flex cursor-pointer flex-col items-center gap-2 rounded-xl border-2 border-dashed p-6 text-center transition ${
+                          dragOver ? "border-indigo-400 bg-indigo-50" : "border-gray-200 hover:border-indigo-300 hover:bg-gray-50"
+                        }`}
+                      >
+                        <div className={`grid h-11 w-11 place-items-center rounded-xl transition ${dragOver ? "bg-indigo-100" : "bg-gray-100"}`}>
+                          <UploadCloud size={20} className={dragOver ? "text-indigo-500" : "text-gray-400"} />
+                        </div>
+                        <p className="text-sm font-medium text-gray-700">
+                          Drop image here or <span className="text-indigo-600">browse</span>
+                        </p>
+                        <p className="text-[11px] text-gray-400">JPG, PNG, WebP, GIF · max 10MB</p>
+                      </div>
+                    )}
+
+                    {uploading && (
+                      <div className="rounded-xl border border-gray-200 bg-gray-50 p-4 space-y-2">
+                        <div className="flex justify-between text-xs font-semibold text-indigo-600">
+                          <span className="flex items-center gap-2 truncate">
+                            <Loader2 size={12} className="animate-spin shrink-0" /> Uploading {uploadedName}
+                          </span>
+                          <span>{uploadProgress}%</span>
+                        </div>
+                        <div className="h-1.5 w-full overflow-hidden rounded-full bg-gray-200">
+                          <div className="h-full rounded-full bg-indigo-500 transition-all duration-200" style={{ width: `${uploadProgress}%` }} />
+                        </div>
+                      </div>
+                    )}
+
+                    {pinForm.image && !uploading && (
+                      <div className="overflow-hidden rounded-xl border border-gray-200 bg-gray-50">
+                        <div className="relative h-40 bg-gray-100">
+                          <img src={pinForm.image} alt="Preview" className="h-full w-full object-contain" onError={(e) => { e.target.style.opacity = "0.3"; }} />
+                        </div>
+                        <div className="flex items-center justify-between gap-2 border-t border-gray-200 bg-white px-3 py-2">
+                          <span className="flex items-center gap-1.5 text-xs font-medium text-emerald-600">
+                            <CheckCircle2 size={14} /> Image ready
+                          </span>
+                          <button
+                            type="button"
+                            onClick={() => { setPinForm((p) => ({ ...p, image: "" })); resetUploadState(); fileInputRef.current?.click(); }}
+                            className="rounded-lg border border-gray-200 px-2.5 py-1 text-xs font-semibold text-gray-600 hover:bg-gray-50"
+                          >
+                            Replace
+                          </button>
+                        </div>
+                      </div>
+                    )}
+
+                    <input
+                      ref={fileInputRef}
+                      type="file"
+                      accept="image/*"
+                      className="hidden"
+                      onChange={(e) => { uploadImageFile(e.target.files[0]); e.target.value = ""; }}
                     />
-                  ) : (
-                    <div className="text-center text-gray-400">
-                      <ImageIcon size={20} className="mx-auto" />
-                      <span className="text-[10px] mt-1 block">Live Preview</span>
+                  </>
+                ) : (
+                  <div className="grid gap-3 sm:grid-cols-3">
+                    <div className="sm:col-span-2 space-y-1.5">
+                      <input
+                        id="pin-image"
+                        type="text"
+                        placeholder="https://example.com/image.jpg"
+                        value={pinForm.image}
+                        onChange={(e) => setPinForm({ ...pinForm, image: e.target.value })}
+                        className="w-full rounded-lg border border-gray-300 px-3 py-2.5 text-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+                      />
+                      <p className="text-[10px] text-gray-400 leading-normal">
+                        Paste a direct image URL. Local paths like `/altpintrest-images/...` also work.
+                      </p>
                     </div>
-                  )}
-                </div>
+                    <div className="flex h-28 items-center justify-center rounded-lg border border-dashed border-gray-300 bg-gray-50 p-2">
+                      {pinForm.image ? (
+                        <img src={pinForm.image} alt="Preview" className="h-full w-full object-contain rounded" onError={(e) => { e.target.style.display = "none"; }} />
+                      ) : (
+                        <div className="text-center text-gray-400">
+                          <ImageIcon size={20} className="mx-auto" />
+                          <span className="mt-1 block text-[10px]">Live Preview</span>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                )}
               </div>
 
               {/* Category & Likes inputs */}
@@ -990,11 +1149,11 @@ export default function PinterestAdmin() {
                 </button>
                 <button
                   type="submit"
-                  disabled={savingPin}
+                  disabled={savingPin || uploading}
                   className="inline-flex items-center justify-center gap-1.5 rounded-lg bg-indigo-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-indigo-500 transition disabled:opacity-50"
                 >
-                  {savingPin && <Loader2 size={14} className="animate-spin" />}
-                  Save Pin Data
+                  {(savingPin || uploading) && <Loader2 size={14} className="animate-spin" />}
+                  {uploading ? "Uploading…" : "Save Pin Data"}
                 </button>
               </div>
             </form>

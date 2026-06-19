@@ -31,9 +31,13 @@ const getImageUrl = (value) => {
   if (!value || typeof value !== "object") return "";
 
   return [
+    value.mediaUrl,
+    value.media,
     value.url,
     value.src,
     value.image,
+    value.img,
+    value.logo,
     value.imageUrl,
     value.imageURL,
     value.downloadURL,

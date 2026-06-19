@@ -130,6 +130,7 @@
   },
   "overrides": {
     "postcss": "^8.5.14",
+    "pdfjs-dist": "5.3.93",
     "next": {
       "postcss": "^8.5.14"
     }
