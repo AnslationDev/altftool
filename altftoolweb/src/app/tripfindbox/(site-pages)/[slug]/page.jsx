@@ -5,6 +5,7 @@ import ResultsHeader from "@/app/tripfindbox/components/ResultsHeader";
 import RouteBottomSlider from "@/app/tripfindbox/components/RouteBottomSlider";
 import SeoRouteDealsGrid from "@/app/tripfindbox/components/SeoRouteDealsGrid";
 import { getSitemapPage, sitemapPages } from "@/app/tripfindbox/lib/sitemapPages";
+import { tfbPath } from "@/app/tripfindbox/lib/tfbLink";
 import Link from "next/link";
 
 function titleFromSlug(slug) {
@@ -762,7 +763,7 @@ function RelatedStrip({ title, items }) {
       <h2>{title}</h2>
       <div className="site-related-strip">
         {items.map((item) => (
-          <Link key={item} href={`/${item.toLowerCase().replace(/&/g, "and").replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "")}`}>
+          <Link key={item} href={tfbPath(`/${item.toLowerCase().replace(/&/g, "and").replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "")}`)}>
             {item}
           </Link>
         ))}

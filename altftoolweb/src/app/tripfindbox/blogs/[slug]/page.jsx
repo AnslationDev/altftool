@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { Footer } from "@/app/tripfindbox/components/HeroSection";
 import ResultsHeader from "@/app/tripfindbox/components/ResultsHeader";
 import { buildBlogSections, fetchBlogPosts, getBlogPost, getRelatedBlogs } from "@/app/tripfindbox/lib/blogData";
+import { tfbPath } from "@/app/tripfindbox/lib/tfbLink";
 
 export const revalidate = 1800;
 
@@ -104,7 +105,7 @@ export default async function BlogDetailPage({ params }) {
         <div className="blog-related-grid">
           {relatedPosts.map((related) => (
             <article key={related.slug} className="blog-card">
-              <Link href={`/blogs/${related.slug}`} className="blog-card-image">
+              <Link href={tfbPath(`/blogs/${related.slug}`)} className="blog-card-image">
                 <img src={related.image} alt="" loading="lazy" />
                 <span>{related.category}</span>
               </Link>
@@ -114,10 +115,10 @@ export default async function BlogDetailPage({ params }) {
                   <span>{related.readingTime}</span>
                 </div>
                 <h3>
-                  <Link href={`/blogs/${related.slug}`}>{related.title}</Link>
+                  <Link href={tfbPath(`/blogs/${related.slug}`)}>{related.title}</Link>
                 </h3>
                 <p>{related.description}</p>
-                <Link href={`/blogs/${related.slug}`} className="blog-read-more">
+                <Link href={tfbPath(`/blogs/${related.slug}`)} className="blog-read-more">
                   Read More
                 </Link>
               </div>
