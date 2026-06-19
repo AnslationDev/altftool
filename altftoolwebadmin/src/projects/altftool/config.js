@@ -9,6 +9,7 @@ import {
   BadgePercent,
   TicketPercent,
   Star,
+  Plane,
 } from "lucide-react";
 import AltfLogo from "../../../public/logos/altflogo.png";
 
@@ -30,6 +31,7 @@ const altftoolConfig = {
     salelocator: { label: "Sale Locator", icon: BadgePercent, routeSegment: "sale-locator" },
     dynamic: { label: "Dynamic", icon: Star },
     pintrest: { label: "Pinterest", icon: Image, routeSegment: "pintrest" },
+    tripfindbox: { label: "TripFindBox", icon: Plane, routeSegment: "tripfindbox" },
   },
 };
 

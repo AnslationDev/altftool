@@ -7,11 +7,42 @@ import {
   onSnapshot,
   serverTimestamp,
 } from "firebase/firestore";
-import { db } from "@/lib/firebase";
+import {
+  ref as storageRef,
+  uploadBytesResumable,
+  getDownloadURL,
+} from "firebase/storage";
+import { db, storage } from "@/lib/firebase";
 
 const PROJECT_ID = "altftool";
 const PINS_REF = collection(db, "projects", PROJECT_ID, "pintrest");
 const CATEGORIES_REF = collection(db, "projects", PROJECT_ID, "pintrest_categories");
+
+/* ============================================================================
+   IMAGE UPLOAD (Firebase Storage) — used by bulk pin creation
+   ============================================================================ */
+
+// Upload one image file to Storage and resolve its public download URL.
+// onProgress receives a 0..1 fraction.
+export function uploadPinImage(file, onProgress) {
+  return new Promise((resolve, reject) => {
+    const safeName = (file.name || "image").replace(/[^a-zA-Z0-9.\-_]/g, "_");
+    const path = `pintrest/${Date.now()}-${Math.random().toString(36).slice(2, 8)}-${safeName}`;
+    const task = uploadBytesResumable(storageRef(storage, path), file);
+    task.on(
+      "state_changed",
+      (snap) => onProgress?.(snap.totalBytes ? snap.bytesTransferred / snap.totalBytes : 0),
+      reject,
+      async () => {
+        try {
+          resolve(await getDownloadURL(task.snapshot.ref));
+        } catch (err) {
+          reject(err);
+        }
+      }
+    );
+  });
+}
 
 /* ============================================================================
    PINS CRUD operations

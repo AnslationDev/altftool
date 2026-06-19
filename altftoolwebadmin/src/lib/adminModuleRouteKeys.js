@@ -21,6 +21,7 @@ export const ADMIN_MODULE_ROUTE_KEYS = {
     salelocator: [""],
     trendingVideos: [""],
     pintrest: [""],
+    tripfindbox: [""],
   },
   leadtree: {
     blogs: [
