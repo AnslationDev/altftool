@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useRef } from "react";
+import { tfbPath } from "@/app/tripfindbox/lib/tfbLink";
 
 export default function RouteBottomSlider({ title, items }) {
   const rowRef = useRef(null);
@@ -30,7 +31,7 @@ export default function RouteBottomSlider({ title, items }) {
           </button>
           <div ref={rowRef} className="route-bottom-slider-row">
             {items.map((item) => (
-              <Link key={item.slug} className="route-bottom-slider-card" href={`/${item.slug}`}>
+              <Link key={item.slug} className="route-bottom-slider-card" href={tfbPath(`/${item.slug}`)}>
                 <img src={item.image} alt="" loading="lazy" />
                 <span>{item.title}</span>
               </Link>

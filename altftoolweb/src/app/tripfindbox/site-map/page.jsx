@@ -3,6 +3,7 @@ import Link from "next/link";
 import { Footer } from "@/app/tripfindbox/components/HeroSection";
 import ResultsHeader from "@/app/tripfindbox/components/ResultsHeader";
 import { sitemapSections, slugifyPageTitle } from "@/app/tripfindbox/lib/sitemapPages";
+import { tfbPath } from "@/app/tripfindbox/lib/tfbLink";
 
 export default function SiteMapPage() {
   return (
@@ -24,7 +25,7 @@ export default function SiteMapPage() {
                   {section.items.map((item) => (
                     <li key={item}>
                       <ChevronRight size={15} />
-                      <Link href={`/${slugifyPageTitle(item)}`}>{item}</Link>
+                      <Link href={tfbPath(`/${slugifyPageTitle(item)}`)}>{item}</Link>
                     </li>
                   ))}
                 </ul>

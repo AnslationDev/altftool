@@ -23,6 +23,7 @@ import FloatingCallIcon from "./FloatingCallIcon";
 import MobileMenu from "./MobileMenu";
 import { fetchBlogPosts } from "@/app/tripfindbox/lib/blogData";
 import { fetchHomeContent, DEFAULT_HOME_CONTENT } from "@/app/tripfindbox/lib/homeContent";
+import { tfbPath } from "@/app/tripfindbox/lib/tfbLink";
 
 // Map of icon keys (stored in Firestore) to lucide-react components, so admins
 // can pick an icon by name without storing React components in the database.
@@ -49,11 +50,11 @@ function telHref(phone) {
 }
 
 function destinationHref(city) {
-  return `/flights-to-${city
+  return tfbPath(`/flights-to-${city
     .toLowerCase()
     .replace(/&/g, "and")
     .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-+|-+$/g, "")}`;
+    .replace(/^-+|-+$/g, "")}`);
 }
 
 function HeaderPhoneIcon() {
@@ -82,7 +83,7 @@ function Header({ header }) {
       </a>
       <nav className="nova-nav" aria-label="Primary navigation">
         {navLinks.map((link) => (
-          <a key={link.href} href={link.href}>{link.label}</a>
+          <a key={link.href} href={tfbPath(link.href)}>{link.label}</a>
         ))}
       </nav>
       <a className="nova-call-cta" href={telHref(header.phone)} aria-label="Call TripFindBox for best deals">
@@ -319,7 +320,7 @@ function TravelBlogsSection({ posts }) {
 
   const renderBlogCard = (post) => (
     <article className="nova-home-blog-card" key={post.slug}>
-      <Link href={`/blogs/${post.slug}`} className="nova-home-blog-image" aria-label={post.title}>
+      <Link href={tfbPath(`/blogs/${post.slug}`)} className="nova-home-blog-image" aria-label={post.title}>
         <img src={post.image} alt={post.title} />
         <span>{post.category}</span>
       </Link>
@@ -335,10 +336,10 @@ function TravelBlogsSection({ posts }) {
           </span>
         </div>
         <h3>
-          <Link href={`/blogs/${post.slug}`}>{post.title}</Link>
+          <Link href={tfbPath(`/blogs/${post.slug}`)}>{post.title}</Link>
         </h3>
         <p>{post.description}</p>
-        <Link href={`/blogs/${post.slug}`} className="nova-home-blog-link">
+        <Link href={tfbPath(`/blogs/${post.slug}`)} className="nova-home-blog-link">
           Read More <ArrowUpRight size={15} />
         </Link>
       </div>
@@ -461,7 +462,7 @@ export function Footer({ footer }) {
               <ul>
                 {(items || []).map((item) => (
                   <li key={typeof item === "string" ? item : item.label}>
-                    {typeof item === "string" ? <span>{item}</span> : <Link href={item.href}>{item.label}</Link>}
+                    {typeof item === "string" ? <span>{item}</span> : <Link href={tfbPath(item.href)}>{item.label}</Link>}
                   </li>
                 ))}
               </ul>
