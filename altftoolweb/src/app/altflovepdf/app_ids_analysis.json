@@ -1,0 +1,1530 @@
+{
+  "ids": [
+    "batch-clear-btn",
+    "batch-drop",
+    "batch-file-list",
+    "batch-input",
+    "batch-log",
+    "batch-run-btn",
+    "blank-count",
+    "blank-page-num",
+    "blank-size",
+    "compress-btn",
+    "compress-dpi",
+    "compress-heavy-opts",
+    "compress-list",
+    "compress-quality",
+    "compress-stats",
+    "crop-bottom",
+    "crop-btn",
+    "crop-left",
+    "crop-list",
+    "crop-pages-group",
+    "crop-pages-input",
+    "crop-right",
+    "crop-top",
+    "extractimages-btn",
+    "extractimages-list",
+    "flatten-btn",
+    "flatten-list",
+    "gray-quality",
+    "gray-quality-group",
+    "gray-scale",
+    "grayscale-btn",
+    "grayscale-list",
+    "grayscale-preview",
+    "hf-btn",
+    "hf-fontsize",
+    "hf-footer",
+    "hf-header",
+    "hf-list",
+    "html2pdf-btn",
+    "html2pdf-filelist",
+    "html2pdf-raw",
+    "html2pdf-tab-btn",
+    "ic-stat-original",
+    "ic-stat-output",
+    "ic-stat-saved",
+    "img2pdf-btn",
+    "img2pdf-clear-btn",
+    "img2pdf-drop",
+    "img2pdf-input",
+    "img2pdf-list",
+    "imgcompress-btn",
+    "imgcompress-clear-btn",
+    "imgcompress-drop",
+    "imgcompress-input",
+    "imgcompress-list",
+    "imgcompress-quality",
+    "imgcompress-stats",
+    "imgconvert-btn",
+    "imgconvert-clear-btn",
+    "imgconvert-drop",
+    "imgconvert-input",
+    "imgconvert-list",
+    "imgconvert-quality",
+    "imgcrop-btn",
+    "imgcrop-canvas",
+    "imgcrop-filelist",
+    "imgcrop-info",
+    "imgcrop-quality",
+    "imgcrop-reset-btn",
+    "imgresize-btn",
+    "imgresize-clear-btn",
+    "imgresize-drop",
+    "imgresize-h",
+    "imgresize-input",
+    "imgresize-list",
+    "imgresize-lock",
+    "imgresize-pct",
+    "imgresize-pct-row",
+    "imgresize-pct-val",
+    "imgresize-preview",
+    "imgresize-px-row",
+    "imgresize-quality",
+    "imgresize-w",
+    "info-display",
+    "info-grid",
+    "insertblank-btn",
+    "insertblank-list",
+    "merge-btn",
+    "merge-clear-btn",
+    "merge-drop",
+    "merge-input",
+    "merge-list",
+    "meta-author",
+    "meta-creator",
+    "meta-keywords",
+    "meta-producer",
+    "meta-subject",
+    "meta-title",
+    "metadata-btn",
+    "metadata-clear-btn",
+    "metadata-form",
+    "metadata-list",
+    "organize-clear-btn",
+    "organize-controls",
+    "organize-dl-btn",
+    "organize-grid",
+    "panel-home",
+    "pdf2img-btn",
+    "pdf2img-list",
+    "pdf2img-preview",
+    "pdf2img-scale",
+    "pdf2text-btn",
+    "pdf2text-copy",
+    "pdf2text-dl",
+    "pdf2text-list",
+    "pdf2text-output",
+    "pn-btn",
+    "pn-format",
+    "pn-list",
+    "pn-start",
+    "preview-canvas",
+    "preview-filelist",
+    "preview-next",
+    "preview-page-input",
+    "preview-prev",
+    "preview-strip",
+    "preview-total",
+    "preview-ui",
+    "preview-zoom-fit",
+    "preview-zoom-in",
+    "preview-zoom-out",
+    "preview-zoom-val",
+    "protect-btn",
+    "protect-list",
+    "protect-owner-pw",
+    "protect-user-pw",
+    "redact-apply-btn",
+    "redact-canvas",
+    "redact-clear-all",
+    "redact-clear-page",
+    "redact-list",
+    "redact-next",
+    "redact-page-info",
+    "redact-prev",
+    "redact-ui",
+    "rotate-btn",
+    "rotate-list",
+    "rotate-pages-group",
+    "rotate-pages-input",
+    "sidebar",
+    "split-btn",
+    "split-list",
+    "split-range",
+    "split-range-group",
+    "stat-original",
+    "stat-output",
+    "stat-saved",
+    "toolkit-root",
+    "unlock-btn",
+    "unlock-list",
+    "unlock-pw",
+    "web2pdf-btn",
+    "web2pdf-preview-img",
+    "wm-btn",
+    "wm-color",
+    "wm-list",
+    "wm-opacity",
+    "wm-text"
+  ],
+  "lines": [
+    {
+      "lineNum": 56,
+      "content": "const panel = document.getElementById('panel-' + name);"
+    },
+    {
+      "lineNum": 63,
+      "content": "document.getElementById('sidebar').addEventListener('click', e => {"
+    },
+    {
+      "lineNum": 69,
+      "content": "document.getElementById('panel-home').addEventListener('click', e => {"
+    },
+    {
+      "lineNum": 75,
+      "content": "const tkRoot = document.getElementById('toolkit-root');"
+    },
+    {
+      "lineNum": 77,
+      "content": "tkRoot.addEventListener('click', e => {"
+    },
+    {
+      "lineNum": 86,
+      "content": "document.getElementById('split-range-group').style.display ="
+    },
+    {
+      "lineNum": 90,
+      "content": "document.getElementById('rotate-pages-group').style.display ="
+    },
+    {
+      "lineNum": 94,
+      "content": "document.getElementById('crop-pages-group').style.display ="
+    },
+    {
+      "lineNum": 98,
+      "content": "document.getElementById('compress-heavy-opts').style.display ="
+    },
+    {
+      "lineNum": 102,
+      "content": "document.getElementById('gray-quality-group').style.display ="
+    },
+    {
+      "lineNum": 106,
+      "content": "const pxRow  = document.getElementById('imgresize-px-row');"
+    },
+    {
+      "lineNum": 107,
+      "content": "const pctRow = document.getElementById('imgresize-pct-row');"
+    },
+    {
+      "lineNum": 120,
+      "content": "const el = document.getElementById(id);"
+    },
+    {
+      "lineNum": 121,
+      "content": "const lbl = document.getElementById(labelId);"
+    },
+    {
+      "lineNum": 124,
+      "content": "el.addEventListener('input', update);"
+    },
+    {
+      "lineNum": 140,
+      "content": "const el = document.getElementById('imgresize-pct');"
+    },
+    {
+      "lineNum": 141,
+      "content": "const lbl = document.getElementById('imgresize-pct-val');"
+    },
+    {
+      "lineNum": 144,
+      "content": "el.addEventListener('input', upd); upd();"
+    },
+    {
+      "lineNum": 155,
+      "content": "const list = document.getElementById(containerId);"
+    },
+    {
+      "lineNum": 176,
+      "content": "const box = document.getElementById(id);"
+    },
+    {
+      "lineNum": 185,
+      "content": "const box = document.getElementById(id);"
+    },
+    {
+      "lineNum": 190,
+      "content": "const wrap = document.getElementById(prefix + '-progress');"
+    },
+    {
+      "lineNum": 191,
+      "content": "const bar  = document.getElementById(prefix + '-bar');"
+    },
+    {
+      "lineNum": 192,
+      "content": "const lbl  = document.getElementById(prefix + '-label') ||"
+    },
+    {
+      "lineNum": 193,
+      "content": "document.getElementById(prefix + '-progress-label');"
+    },
+    {
+      "lineNum": 225,
+      "content": "const drop  = document.getElementById(dropId);"
+    },
+    {
+      "lineNum": 226,
+      "content": "const input = document.getElementById(inputId);"
+    },
+    {
+      "lineNum": 229,
+      "content": "input.addEventListener('change', e => {"
+    },
+    {
+      "lineNum": 234,
+      "content": "drop.addEventListener('dragover', e => { e.preventDefault(); drop.classList.add('dragover'); });"
+    },
+    {
+      "lineNum": 235,
+      "content": "drop.addEventListener('dragleave', () => drop.classList.remove('dragover'));"
+    },
+    {
+      "lineNum": 236,
+      "content": "drop.addEventListener('drop', e => {"
+    },
+    {
+      "lineNum": 273,
+      "content": "document.getElementById('merge-btn').disabled = state.merge.files.length < 2;"
+    },
+    {
+      "lineNum": 277,
+      "content": "const drop  = document.getElementById('merge-drop');"
+    },
+    {
+      "lineNum": 278,
+      "content": "const input = document.getElementById('merge-input');"
+    },
+    {
+      "lineNum": 285,
+      "content": "document.getElementById('merge-btn').disabled = state.merge.files.length < 2;"
+    },
+    {
+      "lineNum": 289,
+      "content": "input.addEventListener('change', e => { handleMerge([...e.target.files]); e.target.value = ''; });"
+    },
+    {
+      "lineNum": 290,
+      "content": "drop.addEventListener('dragover', e => { e.preventDefault(); drop.classList.add('dragover'); });"
+    },
+    {
+      "lineNum": 291,
+      "content": "drop.addEventListener('dragleave', () => drop.classList.remove('dragover'));"
+    },
+    {
+      "lineNum": 292,
+      "content": "drop.addEventListener('drop', e => {"
+    },
+    {
+      "lineNum": 299,
+      "content": "document.getElementById('merge-btn').addEventListener('click', mergePDFs);"
+    },
+    {
+      "lineNum": 300,
+      "content": "document.getElementById('merge-clear-btn').addEventListener('click', () => {"
+    },
+    {
+      "lineNum": 302,
+      "content": "document.getElementById('merge-list').innerHTML = '';"
+    },
+    {
+      "lineNum": 303,
+      "content": "document.getElementById('merge-btn').disabled = true;"
+    },
+    {
+      "lineNum": 344,
+      "content": "document.getElementById('split-list').innerHTML = '';"
+    },
+    {
+      "lineNum": 345,
+      "content": "document.getElementById('split-btn').disabled = true;"
+    },
+    {
+      "lineNum": 347,
+      "content": "document.getElementById('split-btn').disabled = false;"
+    },
+    {
+      "lineNum": 353,
+      "content": "document.getElementById('split-btn').addEventListener('click', splitPDF);"
+    },
+    {
+      "lineNum": 370,
+      "content": "const rangeStr = document.getElementById('split-range').value.trim();"
+    },
+    {
+      "lineNum": 424,
+      "content": "document.getElementById('rotate-list').innerHTML = '';"
+    },
+    {
+      "lineNum": 425,
+      "content": "document.getElementById('rotate-btn').disabled = true;"
+    },
+    {
+      "lineNum": 427,
+      "content": "document.getElementById('rotate-btn').disabled = false;"
+    },
+    {
+      "lineNum": 433,
+      "content": "document.getElementById('rotate-btn').addEventListener('click', rotatePDF);"
+    },
+    {
+      "lineNum": 449,
+      "content": "targets = parsePageRange(document.getElementById('rotate-pages-input').value, pages.length);"
+    },
+    {
+      "lineNum": 488,
+      "content": "document.getElementById('organize-controls').style.display = 'flex';"
+    },
+    {
+      "lineNum": 499,
+      "content": "document.getElementById('organize-dl-btn').addEventListener('click', organizeDownload);"
+    },
+    {
+      "lineNum": 500,
+      "content": "document.getElementById('organize-clear-btn').addEventListener('click', clearOrganize);"
+    },
+    {
+      "lineNum": 503,
+      "content": "const grid = document.getElementById('organize-grid');"
+    },
+    {
+      "lineNum": 531,
+      "content": "const grid = document.getElementById('organize-grid');"
+    },
+    {
+      "lineNum": 553,
+      "content": "document.getElementById('organize-grid').addEventListener('click', e => {"
+    },
+    {
+      "lineNum": 564,
+      "content": "thumb.addEventListener('dragstart', e => {"
+    },
+    {
+      "lineNum": 568,
+      "content": "thumb.addEventListener('dragend', () => thumb.classList.remove('dragging'));"
+    },
+    {
+      "lineNum": 569,
+      "content": "thumb.addEventListener('dragover', e => e.preventDefault());"
+    },
+    {
+      "lineNum": 570,
+      "content": "thumb.addEventListener('drop', e => {"
+    },
+    {
+      "lineNum": 595,
+      "content": "document.getElementById('organize-grid').innerHTML = '';"
+    },
+    {
+      "lineNum": 596,
+      "content": "document.getElementById('organize-controls').style.display = 'none';"
+    },
+    {
+      "lineNum": 628,
+      "content": "document.getElementById('crop-list').innerHTML = '';"
+    },
+    {
+      "lineNum": 629,
+      "content": "document.getElementById('crop-btn').disabled = true;"
+    },
+    {
+      "lineNum": 631,
+      "content": "document.getElementById('crop-btn').disabled = false;"
+    },
+    {
+      "lineNum": 637,
+      "content": "document.getElementById('crop-btn').addEventListener('click', cropPDF);"
+    },
+    {
+      "lineNum": 648,
+      "content": "const top    = parseFloat(document.getElementById('crop-top').value)    || 0;"
+    },
+    {
+      "lineNum": 649,
+      "content": "const bottom = parseFloat(document.getElementById('crop-bottom').value) || 0;"
+    },
+    {
+      "lineNum": 650,
+      "content": "const left   = parseFloat(document.getElementById('crop-left').value)   || 0;"
+    },
+    {
+      "lineNum": 651,
+      "content": "const right  = parseFloat(document.getElementById('crop-right').value)  || 0;"
+    },
+    {
+      "lineNum": 656,
+      "content": "targets = parsePageRange(document.getElementById('crop-pages-input').value, pages.length);"
+    },
+    {
+      "lineNum": 692,
+      "content": "document.getElementById('insertblank-list').innerHTML = '';"
+    },
+    {
+      "lineNum": 693,
+      "content": "document.getElementById('insertblank-btn').disabled = true;"
+    },
+    {
+      "lineNum": 695,
+      "content": "document.getElementById('insertblank-btn').disabled = false;"
+    },
+    {
+      "lineNum": 701,
+      "content": "document.getElementById('insertblank-btn').addEventListener('click', insertBlankPages);"
+    },
+    {
+      "lineNum": 715,
+      "content": "const pageN    = Math.max(1, Math.min(total, parseInt(document.getElementById('blank-page-num').value) || 1));"
+    },
+    {
+      "lineNum": 716,
+      "content": "const count    = Math.max(1, parseInt(document.getElementById('blank-count').value) || 1);"
+    },
+    {
+      "lineNum": 717,
+      "content": "const sizeOpt  = document.getElementById('blank-size').value;"
+    },
+    {
+      "lineNum": 768,
+      "content": "document.getElementById('img2pdf-btn').disabled = state.img2pdf.files.length === 0;"
+    },
+    {
+      "lineNum": 771,
+      "content": "const drop  = document.getElementById('img2pdf-drop');"
+    },
+    {
+      "lineNum": 772,
+      "content": "const input = document.getElementById('img2pdf-input');"
+    },
+    {
+      "lineNum": 773,
+      "content": "input.addEventListener('change', e => { handle([...e.target.files]); e.target.value = ''; });"
+    },
+    {
+      "lineNum": 774,
+      "content": "drop.addEventListener('dragover', e => { e.preventDefault(); drop.classList.add('dragover'); });"
+    },
+    {
+      "lineNum": 775,
+      "content": "drop.addEventListener('dragleave', () => drop.classList.remove('dragover'));"
+    },
+    {
+      "lineNum": 776,
+      "content": "drop.addEventListener('drop', e => { e.preventDefault(); drop.classList.remove('dragover'); handle([...e.dataTransfer.files]); });"
+    },
+    {
+      "lineNum": 782,
+      "content": "document.getElementById('img2pdf-btn').disabled = state.img2pdf.files.length === 0;"
+    },
+    {
+      "lineNum": 785,
+      "content": "document.getElementById('img2pdf-btn').addEventListener('click', imagesToPDF);"
+    },
+    {
+      "lineNum": 786,
+      "content": "document.getElementById('img2pdf-clear-btn').addEventListener('click', () => {"
+    },
+    {
+      "lineNum": 788,
+      "content": "document.getElementById('img2pdf-list').innerHTML = '';"
+    },
+    {
+      "lineNum": 789,
+      "content": "document.getElementById('img2pdf-btn').disabled = true;"
+    },
+    {
+      "lineNum": 849,
+      "content": "document.getElementById('pdf2img-list').innerHTML = '';"
+    },
+    {
+      "lineNum": 850,
+      "content": "document.getElementById('pdf2img-btn').disabled = true;"
+    },
+    {
+      "lineNum": 851,
+      "content": "document.getElementById('pdf2img-preview').innerHTML = '';"
+    },
+    {
+      "lineNum": 853,
+      "content": "document.getElementById('pdf2img-btn').disabled = false;"
+    },
+    {
+      "lineNum": 854,
+      "content": "document.getElementById('pdf2img-preview').innerHTML = '';"
+    },
+    {
+      "lineNum": 859,
+      "content": "document.getElementById('pdf2img-btn').addEventListener('click', pdfToImages);"
+    },
+    {
+      "lineNum": 865,
+      "content": "document.getElementById('pdf2img-preview').innerHTML = '';"
+    },
+    {
+      "lineNum": 870,
+      "content": "const scale  = parseFloat(document.getElementById('pdf2img-scale').value) || 2;"
+    },
+    {
+      "lineNum": 872,
+      "content": "const preview = document.getElementById('pdf2img-preview');"
+    },
+    {
+      "lineNum": 921,
+      "content": "document.getElementById('pdf2text-list').innerHTML = '';"
+    },
+    {
+      "lineNum": 922,
+      "content": "document.getElementById('pdf2text-btn').disabled = true;"
+    },
+    {
+      "lineNum": 924,
+      "content": "document.getElementById('pdf2text-btn').disabled = false;"
+    },
+    {
+      "lineNum": 925,
+      "content": "document.getElementById('pdf2text-output').value  = '';"
+    },
+    {
+      "lineNum": 926,
+      "content": "document.getElementById('pdf2text-dl').disabled   = true;"
+    },
+    {
+      "lineNum": 927,
+      "content": "document.getElementById('pdf2text-copy').disabled = true;"
+    },
+    {
+      "lineNum": 931,
+      "content": "document.getElementById('pdf2text-btn').addEventListener('click', pdfToText);"
+    },
+    {
+      "lineNum": 932,
+      "content": "document.getElementById('pdf2text-dl').addEventListener('click',  downloadText);"
+    },
+    {
+      "lineNum": 933,
+      "content": "document.getElementById('pdf2text-copy').addEventListener('click', copyText);"
+    },
+    {
+      "lineNum": 953,
+      "content": "document.getElementById('pdf2text-output').value  = fullText;"
+    },
+    {
+      "lineNum": 954,
+      "content": "document.getElementById('pdf2text-dl').disabled   = false;"
+    },
+    {
+      "lineNum": 955,
+      "content": "document.getElementById('pdf2text-copy').disabled = false;"
+    },
+    {
+      "lineNum": 957,
+      "content": "document.getElementById('pdf2text-output').value = 'Error: ' + e.message;"
+    },
+    {
+      "lineNum": 971,
+      "content": "const btn = document.getElementById('pdf2text-copy');"
+    },
+    {
+      "lineNum": 986,
+      "content": "document.getElementById('extractimages-list').innerHTML = '';"
+    },
+    {
+      "lineNum": 987,
+      "content": "document.getElementById('extractimages-btn').disabled = true;"
+    },
+    {
+      "lineNum": 989,
+      "content": "document.getElementById('extractimages-btn').disabled = false;"
+    },
+    {
+      "lineNum": 994,
+      "content": "document.getElementById('extractimages-btn').addEventListener('click', extractImagesFromPDF);"
+    },
+    {
+      "lineNum": 1069,
+      "content": "const btn = document.getElementById('web2pdf-btn');"
+    },
+    {
+      "lineNum": 1071,
+      "content": "btn.addEventListener('click', captureTabAsPDF);"
+    },
+    {
+      "lineNum": 1094,
+      "content": "const previewImg = document.getElementById('web2pdf-preview-img');"
+    },
+    {
+      "lineNum": 1152,
+      "content": "document.getElementById('grayscale-list').innerHTML = '';"
+    },
+    {
+      "lineNum": 1153,
+      "content": "document.getElementById('grayscale-btn').disabled = true;"
+    },
+    {
+      "lineNum": 1155,
+      "content": "document.getElementById('grayscale-btn').disabled = false;"
+    },
+    {
+      "lineNum": 1156,
+      "content": "document.getElementById('grayscale-preview').innerHTML = '';"
+    },
+    {
+      "lineNum": 1161,
+      "content": "document.getElementById('grayscale-btn').addEventListener('click', convertGrayscale);"
+    },
+    {
+      "lineNum": 1167,
+      "content": "document.getElementById('grayscale-preview').innerHTML = '';"
+    },
+    {
+      "lineNum": 1172,
+      "content": "const scale   = parseFloat(document.getElementById('gray-scale').value) || 2;"
+    },
+    {
+      "lineNum": 1174,
+      "content": "const quality = parseInt(document.getElementById('gray-quality').value) / 100;"
+    },
+    {
+      "lineNum": 1175,
+      "content": "const preview = document.getElementById('grayscale-preview');"
+    },
+    {
+      "lineNum": 1241,
+      "content": "document.getElementById('compress-list').innerHTML = '';"
+    },
+    {
+      "lineNum": 1242,
+      "content": "document.getElementById('compress-btn').disabled = true;"
+    },
+    {
+      "lineNum": 1243,
+      "content": "document.getElementById('compress-stats').style.display = 'none';"
+    },
+    {
+      "lineNum": 1245,
+      "content": "document.getElementById('compress-btn').disabled = false;"
+    },
+    {
+      "lineNum": 1246,
+      "content": "document.getElementById('compress-stats').style.display = 'none';"
+    },
+    {
+      "lineNum": 1251,
+      "content": "document.getElementById('compress-btn').addEventListener('click', compressPDF);"
+    },
+    {
+      "lineNum": 1258,
+      "content": "document.getElementById('compress-stats').style.display = 'none';"
+    },
+    {
+      "lineNum": 1278,
+      "content": "const quality = parseInt(document.getElementById('compress-quality').value) / 100;"
+    },
+    {
+      "lineNum": 1279,
+      "content": "const dpi     = parseInt(document.getElementById('compress-dpi').value) || 96;"
+    },
+    {
+      "lineNum": 1314,
+      "content": "document.getElementById('stat-original').textContent = fmtSize(originalSize);"
+    },
+    {
+      "lineNum": 1315,
+      "content": "document.getElementById('stat-output').textContent   = fmtSize(out.byteLength);"
+    },
+    {
+      "lineNum": 1316,
+      "content": "document.getElementById('stat-saved').textContent    = (saved > 0 ? '-' : '+') + fmtSize(Math.abs(saved)) + ' (' + Math.abs(savedPct) + '%)';"
+    },
+    {
+      "lineNum": 1317,
+      "content": "document.getElementById('compress-stats').style.display = 'flex';"
+    },
+    {
+      "lineNum": 1338,
+      "content": "document.getElementById('pn-list').innerHTML = '';"
+    },
+    {
+      "lineNum": 1339,
+      "content": "document.getElementById('pn-btn').disabled = true;"
+    },
+    {
+      "lineNum": 1341,
+      "content": "document.getElementById('pn-btn').disabled = false;"
+    },
+    {
+      "lineNum": 1346,
+      "content": "document.getElementById('pn-btn').addEventListener('click', addPageNumbers);"
+    },
+    {
+      "lineNum": 1359,
+      "content": "const start  = parseInt(document.getElementById('pn-start').value) || 1;"
+    },
+    {
+      "lineNum": 1360,
+      "content": "const fmt    = document.getElementById('pn-format').value;"
+    },
+    {
+      "lineNum": 1405,
+      "content": "document.getElementById('hf-list').innerHTML = '';"
+    },
+    {
+      "lineNum": 1406,
+      "content": "document.getElementById('hf-btn').disabled = true;"
+    },
+    {
+      "lineNum": 1408,
+      "content": "document.getElementById('hf-btn').disabled = false;"
+    },
+    {
+      "lineNum": 1413,
+      "content": "document.getElementById('hf-btn').addEventListener('click', addHeaderFooter);"
+    },
+    {
+      "lineNum": 1417,
+      "content": "const headerText = document.getElementById('hf-header').value.trim();"
+    },
+    {
+      "lineNum": 1418,
+      "content": "const footerText = document.getElementById('hf-footer').value.trim();"
+    },
+    {
+      "lineNum": 1432,
+      "content": "const fontSize = Math.max(6, Math.min(24, parseInt(document.getElementById('hf-fontsize').value) || 10));"
+    },
+    {
+      "lineNum": 1481,
+      "content": "document.getElementById('wm-list').innerHTML = '';"
+    },
+    {
+      "lineNum": 1482,
+      "content": "document.getElementById('wm-btn').disabled = true;"
+    },
+    {
+      "lineNum": 1484,
+      "content": "document.getElementById('wm-btn').disabled = false;"
+    },
+    {
+      "lineNum": 1489,
+      "content": "document.getElementById('wm-btn').addEventListener('click', watermarkPDF);"
+    },
+    {
+      "lineNum": 1508,
+      "content": "const text  = document.getElementById('wm-text').value || 'WATERMARK';"
+    },
+    {
+      "lineNum": 1509,
+      "content": "const opacity = parseInt(document.getElementById('wm-opacity').value) / 100;"
+    },
+    {
+      "lineNum": 1510,
+      "content": "const { r, g, b } = hexToRgb(document.getElementById('wm-color').value);"
+    },
+    {
+      "lineNum": 1569,
+      "content": "document.getElementById('redact-list').innerHTML = '';"
+    },
+    {
+      "lineNum": 1570,
+      "content": "document.getElementById('redact-ui').style.display = 'none';"
+    },
+    {
+      "lineNum": 1579,
+      "content": "document.getElementById('redact-ui').style.display = 'block';"
+    },
+    {
+      "lineNum": 1602,
+      "content": "const canvas = document.getElementById('redact-canvas');"
+    },
+    {
+      "lineNum": 1615,
+      "content": "document.getElementById('redact-page-info').textContent = `Page ${pageNum} / ${s.totalPages}`;"
+    },
+    {
+      "lineNum": 1616,
+      "content": "document.getElementById('redact-prev').disabled = pageNum <= 1;"
+    },
+    {
+      "lineNum": 1617,
+      "content": "document.getElementById('redact-next').disabled = pageNum >= s.totalPages;"
+    },
+    {
+      "lineNum": 1622,
+      "content": "const canvas = document.getElementById('redact-canvas');"
+    },
+    {
+      "lineNum": 1633,
+      "content": "const canvas = document.getElementById('redact-canvas');"
+    },
+    {
+      "lineNum": 1636,
+      "content": "canvas.addEventListener('mousedown', e => {"
+    },
+    {
+      "lineNum": 1643,
+      "content": "canvas.addEventListener('mousemove', e => {"
+    },
+    {
+      "lineNum": 1654,
+      "content": "canvas.addEventListener('mouseup', e => {"
+    },
+    {
+      "lineNum": 1671,
+      "content": "canvas.addEventListener('mouseleave', () => { drawing = false; });"
+    },
+    {
+      "lineNum": 1674,
+      "content": "document.getElementById('redact-prev').addEventListener('click', () => {"
+    },
+    {
+      "lineNum": 1677,
+      "content": "document.getElementById('redact-next').addEventListener('click', () => {"
+    },
+    {
+      "lineNum": 1680,
+      "content": "document.getElementById('redact-clear-page').addEventListener('click', () => {"
+    },
+    {
+      "lineNum": 1684,
+      "content": "document.getElementById('redact-clear-all').addEventListener('click', () => {"
+    },
+    {
+      "lineNum": 1688,
+      "content": "document.getElementById('redact-apply-btn').addEventListener('click', applyRedactions);"
+    },
+    {
+      "lineNum": 1761,
+      "content": "document.getElementById('metadata-list').innerHTML = '';"
+    },
+    {
+      "lineNum": 1762,
+      "content": "document.getElementById('metadata-form').style.display = 'none';"
+    },
+    {
+      "lineNum": 1770,
+      "content": "document.getElementById('meta-title').value    = doc.getTitle()    || '';"
+    },
+    {
+      "lineNum": 1771,
+      "content": "document.getElementById('meta-author').value   = doc.getAuthor()   || '';"
+    },
+    {
+      "lineNum": 1772,
+      "content": "document.getElementById('meta-subject').value  = doc.getSubject()  || '';"
+    },
+    {
+      "lineNum": 1773,
+      "content": "document.getElementById('meta-keywords').value = (doc.getKeywords() || []).join(', ');"
+    },
+    {
+      "lineNum": 1774,
+      "content": "document.getElementById('meta-creator').value  = doc.getCreator()  || '';"
+    },
+    {
+      "lineNum": 1775,
+      "content": "document.getElementById('meta-producer').value = doc.getProducer() || '';"
+    },
+    {
+      "lineNum": 1776,
+      "content": "document.getElementById('metadata-form').style.display = 'block';"
+    },
+    {
+      "lineNum": 1783,
+      "content": "document.getElementById('metadata-btn').addEventListener('click', saveMetadata);"
+    },
+    {
+      "lineNum": 1784,
+      "content": "document.getElementById('metadata-clear-btn').addEventListener('click', () => {"
+    },
+    {
+      "lineNum": 1786,
+      "content": ".forEach(id => { document.getElementById(id).value = ''; });"
+    },
+    {
+      "lineNum": 1798,
+      "content": "const title    = document.getElementById('meta-title').value.trim();"
+    },
+    {
+      "lineNum": 1799,
+      "content": "const author   = document.getElementById('meta-author').value.trim();"
+    },
+    {
+      "lineNum": 1800,
+      "content": "const subject  = document.getElementById('meta-subject').value.trim();"
+    },
+    {
+      "lineNum": 1801,
+      "content": "const keywords = document.getElementById('meta-keywords').value.split(',').map(k => k.trim()).filter(Boolean);"
+    },
+    {
+      "lineNum": 1802,
+      "content": "const creator  = document.getElementById('meta-creator').value.trim();"
+    },
+    {
+      "lineNum": 1803,
+      "content": "const producer = document.getElementById('meta-producer').value.trim();"
+    },
+    {
+      "lineNum": 1835,
+      "content": "document.getElementById('protect-list').innerHTML = '';"
+    },
+    {
+      "lineNum": 1836,
+      "content": "document.getElementById('protect-btn').disabled = true;"
+    },
+    {
+      "lineNum": 1838,
+      "content": "document.getElementById('protect-btn').disabled = false;"
+    },
+    {
+      "lineNum": 1843,
+      "content": "document.getElementById('protect-btn').addEventListener('click', protectPDF);"
+    },
+    {
+      "lineNum": 1847,
+      "content": "const userPw  = document.getElementById('protect-user-pw').value;"
+    },
+    {
+      "lineNum": 1849,
+      "content": "const ownerPw = document.getElementById('protect-owner-pw').value || userPw;"
+    },
+    {
+      "lineNum": 1866,
+      "content": "document.getElementById('protect-user-pw').value  = '';"
+    },
+    {
+      "lineNum": 1867,
+      "content": "document.getElementById('protect-owner-pw').value = '';"
+    },
+    {
+      "lineNum": 1882,
+      "content": "document.getElementById('unlock-list').innerHTML = '';"
+    },
+    {
+      "lineNum": 1883,
+      "content": "document.getElementById('unlock-btn').disabled = true;"
+    },
+    {
+      "lineNum": 1885,
+      "content": "document.getElementById('unlock-btn').disabled = false;"
+    },
+    {
+      "lineNum": 1890,
+      "content": "document.getElementById('unlock-btn').addEventListener('click', unlockPDF);"
+    },
+    {
+      "lineNum": 1894,
+      "content": "const pw = document.getElementById('unlock-pw').value;"
+    },
+    {
+      "lineNum": 1910,
+      "content": "document.getElementById('unlock-pw').value = '';"
+    },
+    {
+      "lineNum": 1927,
+      "content": "document.getElementById('flatten-list').innerHTML = '';"
+    },
+    {
+      "lineNum": 1928,
+      "content": "document.getElementById('flatten-btn').disabled = true;"
+    },
+    {
+      "lineNum": 1930,
+      "content": "document.getElementById('flatten-btn').disabled = false;"
+    },
+    {
+      "lineNum": 1935,
+      "content": "document.getElementById('flatten-btn').addEventListener('click', flattenPDF);"
+    },
+    {
+      "lineNum": 1972,
+      "content": "const display = document.getElementById('info-display');"
+    },
+    {
+      "lineNum": 1973,
+      "content": "const grid    = document.getElementById('info-grid');"
+    },
+    {
+      "lineNum": 2044,
+      "content": "document.getElementById('imgresize-btn').disabled = state.imgresize.files.length === 0;"
+    },
+    {
+      "lineNum": 2046,
+      "content": "document.getElementById('imgresize-preview').innerHTML = '';"
+    },
+    {
+      "lineNum": 2048,
+      "content": "const drop  = document.getElementById('imgresize-drop');"
+    },
+    {
+      "lineNum": 2049,
+      "content": "const input = document.getElementById('imgresize-input');"
+    },
+    {
+      "lineNum": 2051,
+      "content": "input.addEventListener('change', e => { handle([...e.target.files]); e.target.value = ''; });"
+    },
+    {
+      "lineNum": 2052,
+      "content": "drop.addEventListener('dragover', e => { e.preventDefault(); drop.classList.add('dragover'); });"
+    },
+    {
+      "lineNum": 2053,
+      "content": "drop.addEventListener('dragleave', () => drop.classList.remove('dragover'));"
+    },
+    {
+      "lineNum": 2054,
+      "content": "drop.addEventListener('drop', e => { e.preventDefault(); drop.classList.remove('dragover'); handle([...e.dataTransfer.files]); });"
+    },
+    {
+      "lineNum": 2060,
+      "content": "document.getElementById('imgresize-btn').disabled = state.imgresize.files.length === 0;"
+    },
+    {
+      "lineNum": 2061,
+      "content": "if (state.imgresize.files.length === 0) document.getElementById('imgresize-preview').innerHTML = '';"
+    },
+    {
+      "lineNum": 2064,
+      "content": "document.getElementById('imgresize-btn').addEventListener('click', resizeImages);"
+    },
+    {
+      "lineNum": 2065,
+      "content": "document.getElementById('imgresize-clear-btn').addEventListener('click', () => {"
+    },
+    {
+      "lineNum": 2067,
+      "content": "document.getElementById('imgresize-list').innerHTML = '';"
+    },
+    {
+      "lineNum": 2068,
+      "content": "document.getElementById('imgresize-btn').disabled = true;"
+    },
+    {
+      "lineNum": 2069,
+      "content": "document.getElementById('imgresize-preview').innerHTML = '';"
+    },
+    {
+      "lineNum": 2075,
+      "content": "const lock = document.getElementById('imgresize-lock');"
+    },
+    {
+      "lineNum": 2077,
+      "content": "lock.addEventListener('click', () => {"
+    },
+    {
+      "lineNum": 2084,
+      "content": "const wEl = document.getElementById('imgresize-w');"
+    },
+    {
+      "lineNum": 2085,
+      "content": "const hEl = document.getElementById('imgresize-h');"
+    },
+    {
+      "lineNum": 2087,
+      "content": "wEl.addEventListener('input', () => {"
+    },
+    {
+      "lineNum": 2097,
+      "content": "hEl.addEventListener('input', () => {"
+    },
+    {
+      "lineNum": 2112,
+      "content": "document.getElementById('imgresize-preview').innerHTML = '';"
+    },
+    {
+      "lineNum": 2117,
+      "content": "const quality = parseInt(document.getElementById('imgresize-quality').value) / 100;"
+    },
+    {
+      "lineNum": 2118,
+      "content": "const wInput  = parseFloat(document.getElementById('imgresize-w').value);"
+    },
+    {
+      "lineNum": 2119,
+      "content": "const hInput  = parseFloat(document.getElementById('imgresize-h').value);"
+    },
+    {
+      "lineNum": 2120,
+      "content": "const pctInput = parseFloat(document.getElementById('imgresize-pct').value) || 50;"
+    },
+    {
+      "lineNum": 2126,
+      "content": "const preview = document.getElementById('imgresize-preview');"
+    },
+    {
+      "lineNum": 2224,
+      "content": "document.getElementById('imgcompress-btn').disabled = state.imgcompress.files.length === 0;"
+    },
+    {
+      "lineNum": 2226,
+      "content": "document.getElementById('imgcompress-stats').style.display = 'none';"
+    },
+    {
+      "lineNum": 2228,
+      "content": "const drop  = document.getElementById('imgcompress-drop');"
+    },
+    {
+      "lineNum": 2229,
+      "content": "const input = document.getElementById('imgcompress-input');"
+    },
+    {
+      "lineNum": 2231,
+      "content": "input.addEventListener('change', e => { handle([...e.target.files]); e.target.value = ''; });"
+    },
+    {
+      "lineNum": 2232,
+      "content": "drop.addEventListener('dragover', e => { e.preventDefault(); drop.classList.add('dragover'); });"
+    },
+    {
+      "lineNum": 2233,
+      "content": "drop.addEventListener('dragleave', () => drop.classList.remove('dragover'));"
+    },
+    {
+      "lineNum": 2234,
+      "content": "drop.addEventListener('drop', e => { e.preventDefault(); drop.classList.remove('dragover'); handle([...e.dataTransfer.files]); });"
+    },
+    {
+      "lineNum": 2240,
+      "content": "document.getElementById('imgcompress-btn').disabled = state.imgcompress.files.length === 0;"
+    },
+    {
+      "lineNum": 2241,
+      "content": "if (state.imgcompress.files.length === 0) document.getElementById('imgcompress-stats').style.display = 'none';"
+    },
+    {
+      "lineNum": 2244,
+      "content": "document.getElementById('imgcompress-btn').addEventListener('click', compressImages);"
+    },
+    {
+      "lineNum": 2245,
+      "content": "document.getElementById('imgcompress-clear-btn').addEventListener('click', () => {"
+    },
+    {
+      "lineNum": 2247,
+      "content": "document.getElementById('imgcompress-list').innerHTML = '';"
+    },
+    {
+      "lineNum": 2248,
+      "content": "document.getElementById('imgcompress-btn').disabled = true;"
+    },
+    {
+      "lineNum": 2249,
+      "content": "document.getElementById('imgcompress-stats').style.display = 'none';"
+    },
+    {
+      "lineNum": 2258,
+      "content": "document.getElementById('imgcompress-stats').style.display = 'none';"
+    },
+    {
+      "lineNum": 2262,
+      "content": "const quality = parseInt(document.getElementById('imgcompress-quality').value) / 100;"
+    },
+    {
+      "lineNum": 2311,
+      "content": "document.getElementById('ic-stat-original').textContent = fmtSize(totalOrig);"
+    },
+    {
+      "lineNum": 2312,
+      "content": "document.getElementById('ic-stat-output').textContent   = fmtSize(totalOut);"
+    },
+    {
+      "lineNum": 2313,
+      "content": "document.getElementById('ic-stat-saved').textContent    = (saved > 0 ? '-' : '+') + fmtSize(Math.abs(saved)) + ' (' + Math.abs(savedPct) + '%)';"
+    },
+    {
+      "lineNum": 2314,
+      "content": "document.getElementById('imgcompress-stats').style.display = 'flex';"
+    },
+    {
+      "lineNum": 2346,
+      "content": "document.getElementById('preview-filelist').innerHTML = '';"
+    },
+    {
+      "lineNum": 2347,
+      "content": "document.getElementById('preview-ui').style.display = 'none';"
+    },
+    {
+      "lineNum": 2354,
+      "content": "document.getElementById('preview-ui').style.display = 'block';"
+    },
+    {
+      "lineNum": 2355,
+      "content": "document.getElementById('preview-total').textContent = s.totalPages;"
+    },
+    {
+      "lineNum": 2364,
+      "content": "document.getElementById('preview-zoom-in').addEventListener('click', () => {"
+    },
+    {
+      "lineNum": 2366,
+      "content": "document.getElementById('preview-zoom-val').textContent = Math.round(s.scale * 100) + '%';"
+    },
+    {
+      "lineNum": 2369,
+      "content": "document.getElementById('preview-zoom-out').addEventListener('click', () => {"
+    },
+    {
+      "lineNum": 2371,
+      "content": "document.getElementById('preview-zoom-val').textContent = Math.round(s.scale * 100) + '%';"
+    },
+    {
+      "lineNum": 2374,
+      "content": "document.getElementById('preview-zoom-fit').addEventListener('click', () => {"
+    },
+    {
+      "lineNum": 2376,
+      "content": "document.getElementById('preview-zoom-val').textContent = '100%';"
+    },
+    {
+      "lineNum": 2381,
+      "content": "document.getElementById('preview-prev').addEventListener('click', () => {"
+    },
+    {
+      "lineNum": 2384,
+      "content": "document.getElementById('preview-next').addEventListener('click', () => {"
+    },
+    {
+      "lineNum": 2387,
+      "content": "document.getElementById('preview-page-input').addEventListener('change', e => {"
+    },
+    {
+      "lineNum": 2397,
+      "content": "document.getElementById('preview-page-input').value = n;"
+    },
+    {
+      "lineNum": 2398,
+      "content": "document.getElementById('preview-prev').disabled = n <= 1;"
+    },
+    {
+      "lineNum": 2399,
+      "content": "document.getElementById('preview-next').disabled = n >= s.totalPages;"
+    },
+    {
+      "lineNum": 2412,
+      "content": "const canvas = document.getElementById('preview-canvas');"
+    },
+    {
+      "lineNum": 2420,
+      "content": "const strip = document.getElementById('preview-strip');"
+    },
+    {
+      "lineNum": 2435,
+      "content": "wrap.addEventListener('click', () => previewGoTo(i));"
+    },
+    {
+      "lineNum": 2444,
+      "content": "const btn = document.getElementById('html2pdf-btn');"
+    },
+    {
+      "lineNum": 2446,
+      "content": "btn.addEventListener('click', htmlToPDF);"
+    },
+    {
+      "lineNum": 2449,
+      "content": "const tabBtn = document.getElementById('html2pdf-tab-btn');"
+    },
+    {
+      "lineNum": 2450,
+      "content": "if (tabBtn) tabBtn.addEventListener('click', html2pdfCaptureTab);"
+    },
+    {
+      "lineNum": 2458,
+      "content": "document.getElementById('html2pdf-filelist').innerHTML = '';"
+    },
+    {
+      "lineNum": 2512,
+      "content": "const rawHTML = document.getElementById('html2pdf-raw').value.trim();"
+    },
+    {
+      "lineNum": 2620,
+      "content": "document.getElementById('imgcrop-filelist').innerHTML = '';"
+    },
+    {
+      "lineNum": 2621,
+      "content": "document.getElementById('imgcrop-canvas').width = 0;"
+    },
+    {
+      "lineNum": 2633,
+      "content": "const canvas = document.getElementById('imgcrop-canvas');"
+    },
+    {
+      "lineNum": 2647,
+      "content": "const canvas = document.getElementById('imgcrop-canvas');"
+    },
+    {
+      "lineNum": 2650,
+      "content": "canvas.addEventListener('mousedown', e => {"
+    },
+    {
+      "lineNum": 2655,
+      "content": "canvas.addEventListener('mousemove', e => {"
+    },
+    {
+      "lineNum": 2669,
+      "content": "canvas.addEventListener('mouseup', e => {"
+    },
+    {
+      "lineNum": 2681,
+      "content": "document.getElementById('imgcrop-info').textContent ="
+    },
+    {
+      "lineNum": 2684,
+      "content": "canvas.addEventListener('mouseleave', () => { drawing = false; });"
+    },
+    {
+      "lineNum": 2686,
+      "content": "document.getElementById('imgcrop-btn').addEventListener('click', cropImage);"
+    },
+    {
+      "lineNum": 2687,
+      "content": "document.getElementById('imgcrop-reset-btn').addEventListener('click', () => {"
+    },
+    {
+      "lineNum": 2694,
+      "content": "document.getElementById('imgcrop-info').textContent = '';"
+    },
+    {
+      "lineNum": 2717,
+      "content": "const qual = parseInt(document.getElementById('imgcrop-quality').value) / 100;"
+    },
+    {
+      "lineNum": 2738,
+      "content": "document.getElementById('imgconvert-btn').disabled = state.imgconvert.files.length === 0;"
+    },
+    {
+      "lineNum": 2740,
+      "content": "document.getElementById('imgconvert-btn').disabled = false;"
+    },
+    {
+      "lineNum": 2743,
+      "content": "const drop  = document.getElementById('imgconvert-drop');"
+    },
+    {
+      "lineNum": 2744,
+      "content": "const input = document.getElementById('imgconvert-input');"
+    },
+    {
+      "lineNum": 2746,
+      "content": "input.addEventListener('change', e => { handle([...e.target.files]); e.target.value = ''; });"
+    },
+    {
+      "lineNum": 2747,
+      "content": "drop.addEventListener('dragover', e => { e.preventDefault(); drop.classList.add('dragover'); });"
+    },
+    {
+      "lineNum": 2748,
+      "content": "drop.addEventListener('dragleave', () => drop.classList.remove('dragover'));"
+    },
+    {
+      "lineNum": 2749,
+      "content": "drop.addEventListener('drop', e => { e.preventDefault(); drop.classList.remove('dragover'); handle([...e.dataTransfer.files]); });"
+    },
+    {
+      "lineNum": 2751,
+      "content": "document.getElementById('imgconvert-btn').addEventListener('click', convertImageFormat);"
+    },
+    {
+      "lineNum": 2752,
+      "content": "document.getElementById('imgconvert-clear-btn').addEventListener('click', () => {"
+    },
+    {
+      "lineNum": 2754,
+      "content": "document.getElementById('imgconvert-list').innerHTML = '';"
+    },
+    {
+      "lineNum": 2755,
+      "content": "document.getElementById('imgconvert-btn').disabled = true;"
+    },
+    {
+      "lineNum": 2769,
+      "content": "const qual  = parseInt(document.getElementById('imgconvert-quality').value) / 100;"
+    },
+    {
+      "lineNum": 2811,
+      "content": "document.getElementById('batch-run-btn').disabled = state.batch.files.length === 0;"
+    },
+    {
+      "lineNum": 2814,
+      "content": "const drop  = document.getElementById('batch-drop');"
+    },
+    {
+      "lineNum": 2815,
+      "content": "const input = document.getElementById('batch-input');"
+    },
+    {
+      "lineNum": 2817,
+      "content": "input.addEventListener('change', e => { handle([...e.target.files]); e.target.value = ''; });"
+    },
+    {
+      "lineNum": 2818,
+      "content": "drop.addEventListener('dragover', e => { e.preventDefault(); drop.classList.add('dragover'); });"
+    },
+    {
+      "lineNum": 2819,
+      "content": "drop.addEventListener('dragleave', () => drop.classList.remove('dragover'));"
+    },
+    {
+      "lineNum": 2820,
+      "content": "drop.addEventListener('drop', e => { e.preventDefault(); drop.classList.remove('dragover'); handle([...e.dataTransfer.files]); });"
+    },
+    {
+      "lineNum": 2822,
+      "content": "document.getElementById('batch-run-btn').addEventListener('click', runBatch);"
+    },
+    {
+      "lineNum": 2823,
+      "content": "document.getElementById('batch-clear-btn').addEventListener('click', () => {"
+    },
+    {
+      "lineNum": 2826,
+      "content": "document.getElementById('batch-run-btn').disabled = true;"
+    },
+    {
+      "lineNum": 2827,
+      "content": "document.getElementById('batch-log').innerHTML = '';"
+    },
+    {
+      "lineNum": 2833,
+      "content": "const list = document.getElementById('batch-file-list');"
+    },
+    {
+      "lineNum": 2849,
+      "content": "document.getElementById('batch-run-btn').disabled = state.batch.files.length === 0;"
+    },
+    {
+      "lineNum": 2854,
+      "content": "const log  = document.getElementById('batch-log');"
+    },
+    {
+      "lineNum": 2866,
+      "content": "document.getElementById('batch-log').innerHTML = '';"
+    },
+    {
+      "lineNum": 2874,
+      "content": "const statusEl = document.getElementById(`batch-s-${i}`);"
+    },
+    {
+      "lineNum": 2988,
+      "content": "var el  = document.getElementById(c.id);"
+    },
+    {
+      "lineNum": 2989,
+      "content": "var lbl = document.getElementById(c.lbl);"
+    },
+    {
+      "lineNum": 2992,
+      "content": "el.addEventListener('input', function(){ paint(el, lbl, c.sfx); });"
+    }
+  ]
+}

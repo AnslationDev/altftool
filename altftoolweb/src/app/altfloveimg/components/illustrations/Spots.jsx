@@ -1,12 +1,11 @@
 "use client";
 
+import { useId } from "react";
 import { motion, useReducedMotion } from "framer-motion";
-
-let uid = 0;
 
 /** Friendly empty / upload illustration. */
 export function UploadArt({ size = 132, className = "" }) {
-  const id = `up-${++uid}`;
+  const id = `up-${useId().replace(/:/g, "")}`;
   return (
     <svg width={size} height={size} viewBox="0 0 160 160" fill="none" className={className} aria-hidden="true">
       <defs>
@@ -36,7 +35,7 @@ export function UploadArt({ size = 132, className = "" }) {
 
 /** Animated success / done illustration. */
 export function SuccessArt({ size = 110, className = "" }) {
-  const id = `ok-${++uid}`;
+  const id = `ok-${useId().replace(/:/g, "")}`;
   const reduce = useReducedMotion();
   return (
     <svg width={size} height={size} viewBox="0 0 140 140" fill="none" className={className} aria-hidden="true">

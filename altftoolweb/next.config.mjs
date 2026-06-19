@@ -146,7 +146,10 @@ const nextConfig = {
   reactStrictMode: true,
   reactCompiler: false,
 
-  webpack(config) {
+  webpack(config, { dev }) {
+    if (dev) {
+      config.devtool = "cheap-module-source-map";
+    }
     config.ignoreWarnings = [
       ...(config.ignoreWarnings || []),
       {

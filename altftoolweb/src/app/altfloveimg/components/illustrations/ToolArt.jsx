@@ -1,8 +1,7 @@
 "use client";
 
+import { useId } from "react";
 import { UploadArt } from "./Spots";
-
-let k = 0;
 
 /* ---------- shared building blocks ---------- */
 function Defs({ id, accent = "#2563eb" }) {
@@ -49,7 +48,7 @@ function Wrap({ children, size }) {
 /* ---------- per-tool scenes ---------- */
 
 function CompressArt({ size, accent }) {
-  const id = `c${++k}`;
+  const id = `c-${useId().replace(/:/g, "")}`;
   return (
     <Wrap size={size}>
       <Defs id={id} accent={accent} />
@@ -71,7 +70,7 @@ function CompressArt({ size, accent }) {
 }
 
 function ResizeArt({ size, accent }) {
-  const id = `r${++k}`;
+  const id = `r-${useId().replace(/:/g, "")}`;
   return (
     <Wrap size={size}>
       <Defs id={id} accent={accent} />
@@ -94,7 +93,7 @@ function ResizeArt({ size, accent }) {
 }
 
 function CropArt({ size, accent }) {
-  const id = `cr${++k}`;
+  const id = `cr-${useId().replace(/:/g, "")}`;
   return (
     <Wrap size={size}>
       <Defs id={id} accent={accent} />
@@ -116,7 +115,7 @@ function CropArt({ size, accent }) {
 }
 
 function RotateArt({ size, accent }) {
-  const id = `ro${++k}`;
+  const id = `ro-${useId().replace(/:/g, "")}`;
   return (
     <Wrap size={size}>
       <Defs id={id} accent={accent} />
@@ -130,7 +129,7 @@ function RotateArt({ size, accent }) {
 }
 
 function WatermarkArt({ size, accent }) {
-  const id = `wm${++k}`;
+  const id = `wm-${useId().replace(/:/g, "")}`;
   return (
     <Wrap size={size}>
       <Defs id={id} accent={accent} />
@@ -149,7 +148,7 @@ function WatermarkArt({ size, accent }) {
 }
 
 function EditorArt({ size, accent }) {
-  const id = `ed${++k}`;
+  const id = `ed-${useId().replace(/:/g, "")}`;
   return (
     <Wrap size={size}>
       <Defs id={id} accent={accent} />
@@ -168,7 +167,7 @@ function EditorArt({ size, accent }) {
 }
 
 function MemeArt({ size, accent }) {
-  const id = `me${++k}`;
+  const id = `me-${useId().replace(/:/g, "")}`;
   return (
     <Wrap size={size}>
       <Defs id={id} accent={accent} />
@@ -182,7 +181,7 @@ function MemeArt({ size, accent }) {
 }
 
 function BgRemoverArt({ size }) {
-  const id = `bg${++k}`;
+  const id = `bg-${useId().replace(/:/g, "")}`;
   return (
     <Wrap size={size}>
       <Defs id={id} />
@@ -211,7 +210,7 @@ function BgRemoverArt({ size }) {
 }
 
 function UpscaleArt({ size, accent }) {
-  const id = `up${++k}`;
+  const id = `up-${useId().replace(/:/g, "")}`;
   return (
     <Wrap size={size}>
       <Defs id={id} accent={accent} />
@@ -249,7 +248,7 @@ function FileBadge({ x, label }) {
 }
 
 function ConvertArt({ size, accent, from = "JPG", to = "PNG" }) {
-  const id = `cv${++k}`;
+  const id = `cv-${useId().replace(/:/g, "")}`;
   return (
     <Wrap size={size}>
       <Defs id={id} accent={accent} />
