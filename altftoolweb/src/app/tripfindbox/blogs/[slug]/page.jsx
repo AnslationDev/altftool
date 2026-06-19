@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Footer } from "@/app/tripfindbox/components/HeroSection";
 import ResultsHeader from "@/app/tripfindbox/components/ResultsHeader";
+import FloatingCallIcon from "@/app/tripfindbox/components/FloatingCallIcon";
 import { buildBlogSections, fetchBlogPosts, getBlogPost, getRelatedBlogs } from "@/app/tripfindbox/lib/blogData";
 import { tfbPath } from "@/app/tripfindbox/lib/tfbLink";
 
@@ -126,6 +127,14 @@ export default async function BlogDetailPage({ params }) {
           ))}
         </div>
       </section>
+
+      <aside className="mobile-results-callbar" aria-label="Call TripFindBox support">
+        <a href="tel:+17147827278">
+          <span><FloatingCallIcon /></span>
+          <strong>Call &amp; Get Unpublished Flight Deals!</strong>
+          <b>+1-714-782-7278</b>
+        </a>
+      </aside>
 
       <Footer />
     </main>
