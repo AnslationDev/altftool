@@ -1,0 +1,26 @@
+<svg width="220" height="170" viewBox="0 0 220 170" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="designMain" x1="55" y1="31" x2="164" y2="141" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#DFF7FF"/>
+      <stop offset="0.48" stop-color="#B9C8FF"/>
+      <stop offset="1" stop-color="#7559FF"/>
+    </linearGradient>
+    <filter id="designShadow" x="24" y="11" width="174" height="149" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="20" stdDeviation="15" flood-color="#6C4DF6" flood-opacity="0.2"/>
+    </filter>
+  </defs>
+  <ellipse cx="112" cy="145" rx="73" ry="13" fill="#4F7CFF" opacity="0.12"/>
+  <g filter="url(#designShadow)">
+    <path d="M75 48C75 38.0589 83.0589 30 93 30H144C153.941 30 162 38.0589 162 48V108C162 117.941 153.941 126 144 126H93C83.0589 126 75 117.941 75 108V48Z" fill="url(#designMain)" stroke="white" stroke-width="5"/>
+    <circle cx="93" cy="54" r="8" fill="#FFFFFF"/>
+    <circle cx="141" cy="55" r="8" fill="#FFFFFF"/>
+    <circle cx="98" cy="102" r="10" fill="#FFFFFF"/>
+    <path d="M101 58C116.5 61 130 72 137 95" stroke="white" stroke-width="7" stroke-linecap="round"/>
+    <path d="M107 103C122 101 134 91 140 63" stroke="#DFF7FF" stroke-width="6" stroke-linecap="round"/>
+    <rect x="47" y="88" width="58" height="26" rx="13" fill="#FFFFFF"/>
+    <circle cx="65" cy="101" r="7" fill="#6C4DF6"/>
+    <path d="M80 101H93" stroke="#9AA8FF" stroke-width="5" stroke-linecap="round"/>
+  </g>
+  <circle cx="172" cy="40" r="7" fill="#7BE3E8"/>
+  <circle cx="51" cy="41" r="5" fill="#8B7BFF"/>
+</svg>

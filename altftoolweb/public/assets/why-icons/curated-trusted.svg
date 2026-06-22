@@ -1,0 +1,20 @@
+<svg width="72" height="72" viewBox="0 0 72 72" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="shieldBg" x1="14" y1="9" x2="58" y2="64" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFFFFF"/>
+      <stop offset="1" stop-color="#E9E6FF"/>
+    </linearGradient>
+    <linearGradient id="shieldAccent" x1="22" y1="18" x2="52" y2="51" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#7BE3E8"/>
+      <stop offset="1" stop-color="#6C4DF6"/>
+    </linearGradient>
+    <filter id="shieldShadow" x="4" y="4" width="64" height="64" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="10" stdDeviation="8" flood-color="#6C4DF6" flood-opacity="0.18"/>
+    </filter>
+  </defs>
+  <g filter="url(#shieldShadow)">
+    <rect x="12" y="10" width="48" height="48" rx="16" fill="url(#shieldBg)" stroke="white" stroke-width="3"/>
+    <path d="M36 20L49 25V35.5C49 44.2 43.4 50.6 36 53C28.6 50.6 23 44.2 23 35.5V25L36 20Z" fill="url(#shieldAccent)"/>
+    <path d="M30 36L34.1 40.1L43 31.2" stroke="white" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+</svg>

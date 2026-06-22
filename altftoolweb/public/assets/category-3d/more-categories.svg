@@ -1,0 +1,24 @@
+<svg width="220" height="170" viewBox="0 0 220 170" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="moreOrb" x1="60" y1="34" x2="160" y2="134" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFFFFF"/>
+      <stop offset="1" stop-color="#D8D2FF"/>
+    </linearGradient>
+    <linearGradient id="moreDot" x1="78" y1="57" x2="142" y2="112" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#A99BFF"/>
+      <stop offset="1" stop-color="#6C4DF6"/>
+    </linearGradient>
+    <filter id="moreShadow" x="36" y="22" width="151" height="137" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="20" stdDeviation="15" flood-color="#6C4DF6" flood-opacity="0.17"/>
+    </filter>
+  </defs>
+  <ellipse cx="112" cy="145" rx="72" ry="13" fill="#6C4DF6" opacity="0.1"/>
+  <g filter="url(#moreShadow)">
+    <circle cx="112" cy="84" r="55" fill="url(#moreOrb)" stroke="white" stroke-width="6"/>
+    <rect x="79" y="55" width="23" height="23" rx="8" fill="url(#moreDot)"/>
+    <rect x="118" y="55" width="23" height="23" rx="8" fill="url(#moreDot)" opacity="0.85"/>
+    <rect x="79" y="94" width="23" height="23" rx="8" fill="url(#moreDot)" opacity="0.75"/>
+    <rect x="118" y="94" width="23" height="23" rx="8" fill="url(#moreDot)"/>
+  </g>
+  <circle cx="167" cy="49" r="7" fill="#7BE3E8" opacity="0.7"/>
+</svg>

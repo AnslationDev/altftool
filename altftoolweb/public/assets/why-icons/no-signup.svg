@@ -1,0 +1,21 @@
+<svg width="72" height="72" viewBox="0 0 72 72" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="userBg" x1="12" y1="10" x2="60" y2="60" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFFFFF"/>
+      <stop offset="1" stop-color="#F0EDFF"/>
+    </linearGradient>
+    <linearGradient id="userAccent" x1="23" y1="18" x2="51" y2="52" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#A99BFF"/>
+      <stop offset="1" stop-color="#4F7CFF"/>
+    </linearGradient>
+    <filter id="userShadow" x="4" y="4" width="64" height="64" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="10" stdDeviation="8" flood-color="#6C4DF6" flood-opacity="0.17"/>
+    </filter>
+  </defs>
+  <g filter="url(#userShadow)">
+    <rect x="12" y="10" width="48" height="48" rx="16" fill="url(#userBg)" stroke="white" stroke-width="3"/>
+    <circle cx="34" cy="29" r="8" fill="url(#userAccent)"/>
+    <path d="M21 49C23.6 41.8 28.1 38.3 34.5 38.3C40.9 38.3 45.4 41.8 48 49" stroke="url(#userAccent)" stroke-width="5" stroke-linecap="round"/>
+    <path d="M48 23L54 29L64 18" stroke="#27C07D" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+</svg>

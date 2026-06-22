@@ -32,7 +32,7 @@ const FeaturedSection = () => {
   return (
     <section className="section py-12 lg:py-20">
       <div className="container mx-auto px-6 lg:px-24 max-w-[1350px]">
-        <div className="bg-gradient-to-b from-[#3B82F6] to-[#4FB3F6] text-white relative overflow-hidden rounded-2xl p-8 lg:p-12">
+        <div className="relative overflow-hidden rounded-2xl bg-gradient-to-b from-[var(--primary)] to-[var(--primary-hover)] p-8 text-white lg:p-12">
 
           <div className="grid items-center gap-8 lg:grid-cols-2">
 
