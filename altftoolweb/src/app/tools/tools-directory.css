@@ -1,0 +1,456 @@
+/* ============================================================
+   Tools Directory — EDITORIAL theme (token-driven, optimized).
+   Scoped under .tools-premium -> zero impact on other pages,
+   global header/footer, or ad slots. Visual layer only.
+
+   HOW TO CUSTOMISE (read this):
+   ┌──────────────────────────────────────────────────────────┐
+   │ 1) BASE PALETTE  — 8 raw values. Change one to shift the   │
+   │    whole theme at once.                                    │
+   │ 2) ROLE TOKENS   — every section/element reads its OWN     │
+   │    token (e.g. --tp-icon-bg, --tp-card-border,             │
+   │    --tp-chip-hover-bg). Each defaults to a base value but  │
+   │    can be overridden ALONE without touching anything else. │
+   │                                                            │
+   │ So: tweak BASE for a global shift, or tweak a ROLE token   │
+   │ to restyle just icons / just cards / just chips, etc.      │
+   └──────────────────────────────────────────────────────────┘
+============================================================ */
+@import url('https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,500;0,600;0,700;0,800;0,900;1,700;1,800;1,900&display=swap');
+
+.tools-premium {
+  /* ===== 1) BASE PALETTE (raw values) ===== */
+  --tp-bg: #F4F1E8;
+  /* page / paper background */
+  --tp-ink: #1a0813;
+  /* primary dark / brand ink */
+  --tp-orange: #1e74f4;
+  /* accent (legacy name kept) */
+  --tp-card: #ffffff;
+  /* surface */
+  --tp-line: #18120f;
+  /* strong hairline border */
+  --tp-soft: #e4ddcd;
+  /* soft divider */
+  --tp-muted: #6d675c;
+  /* muted text */
+  --tp-display: "Archivo", "Geist", sans-serif;
+
+  /* shape */
+  --tp-radius: 6px;
+  /* cards / surfaces */
+  --tp-radius-sm: 4px;
+  /* inputs / chips / tiles */
+  --tp-bw: 1.5px;
+  /* border width everywhere */
+
+  /* ===== 2) ROLE TOKENS (override any one independently) ===== */
+  /* shared */
+  --tp-accent: var(--tp-orange);
+  --tp-accent-ink: #ffffff;
+  --tp-text: var(--tp-ink);
+  --tp-text-muted: var(--tp-muted);
+  --tp-surface: var(--tp-card);
+  --tp-border: var(--tp-line);
+
+  /* hero */
+  --tp-kicker-bg: var(--tp-ink);
+  --tp-kicker-fg: var(--tp-bg);
+  --tp-title-color: var(--tp-ink);
+  --tp-title-accent: var(--tp-accent);
+  --tp-desc-color: var(--tp-muted);
+
+  /* metric tiles */
+  --tp-metric-border: var(--tp-line);
+  --tp-metric-value: var(--tp-ink);
+
+  /* search */
+  --tp-search-bg: var(--tp-card);
+  --tp-search-border: var(--tp-line);
+  --tp-search-text: var(--tp-ink);
+  --tp-search-focus: var(--tp-accent);
+  --tp-search-shadow: color-mix(in srgb, var(--tp-line) 12%, transparent);
+
+  /* chips */
+  --tp-chip-bg: var(--tp-card);
+  --tp-chip-fg: var(--tp-ink);
+  --tp-chip-border: var(--tp-line);
+  --tp-chip-hover-bg: var(--tp-ink);
+  --tp-chip-hover-fg: var(--tp-bg);
+
+  /* active states (view modes, categories, sidebar, primary btns) */
+  --tp-active-bg: var(--tp-accent);
+  --tp-active-fg: var(--tp-accent-ink);
+
+  /* headings */
+  --tp-heading-color: var(--tp-ink);
+
+  /* cards (workflows + tool cards + suggestions) */
+  --tp-card-bg: var(--tp-card);
+  --tp-card-border: var(--tp-line);
+  --tp-card-radius: var(--tp-radius);
+  --tp-card-hover-shadow: var(--tp-accent);
+  --tp-card-title: var(--tp-ink);
+
+  /* icon tiles (the little squares in cards) */
+  --tp-icon-bg: var(--tp-ink);
+  --tp-icon-fg: var(--tp-card);
+  /* auto-contrasts in light & dark */
+  --tp-icon-radius: 5px;
+
+  /* in-card links (Start / Open) */
+  --tp-link: var(--tp-accent);
+
+  /* in-card tag chips */
+  --tp-tag-border: var(--tp-soft);
+
+  /* sidebar */
+  --tp-side-heading: var(--tp-ink);
+  --tp-side-active-bg: var(--tp-accent);
+  --tp-side-active-fg: #ffffff;
+
+  background: var(--tp-bg);
+  color: var(--tp-text);
+}
+
+/* dark mode: only the BASE palette flips; role tokens follow automatically */
+[data-theme="dark"] .tools-premium {
+  --tp-bg: #100f0d;
+  --tp-ink: #f3f0e8;
+  --tp-card: #1a1815;
+  --tp-line: #d8d2c6;
+  --tp-soft: #2a2722;
+  --tp-muted: #a8a296;
+}
+
+/* paint the whole shell + sections */
+.tools-premium,
+.tools-premium .directory-hero,
+.tools-premium .section {
+  background: var(--tp-bg) !important;
+}
+
+/* ============================================================
+   HERO
+============================================================ */
+.tools-premium .directory-hero {
+  border-bottom: var(--tp-bw) solid var(--tp-border) !important;
+}
+
+.tools-premium .directory-hero::after {
+  display: none;
+}
+
+.tools-premium .route-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  background: var(--tp-kicker-bg);
+  color: var(--tp-kicker-fg);
+  border: none;
+  border-radius: var(--tp-radius-sm);
+  padding: 0.4rem 0.8rem;
+  font-size: 0.66rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.tools-premium .route-title {
+  font-family: var(--tp-display);
+  font-style: italic;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: -0.03em;
+  line-height: 0.92;
+  font-size: clamp(2.6rem, 7vw, 5rem);
+  color: var(--tp-title-color);
+  -webkit-text-fill-color: currentColor;
+  background: none;
+}
+
+.tools-premium .tp-accent-word {
+  color: var(--tp-title-accent);
+}
+
+.tools-premium .route-description {
+  max-width: 640px;
+  font-size: 1.02rem;
+  font-weight: 500;
+  color: var(--tp-desc-color);
+}
+
+/* metric tiles */
+.tools-premium .metric-tile {
+  background: transparent !important;
+  border: var(--tp-bw) solid var(--tp-metric-border) !important;
+  border-radius: var(--tp-radius-sm);
+  box-shadow: none !important;
+}
+
+.tools-premium .metric-tile p:first-child {
+  font-family: var(--tp-display);
+  font-style: italic;
+  font-weight: 800;
+  color: var(--tp-metric-value);
+}
+
+/* ============================================================
+   SEARCH
+============================================================ */
+.tools-premium .filter-surface {
+  background: var(--tp-search-bg) !important;
+  border: var(--tp-bw) solid var(--tp-search-border) !important;
+  border-radius: var(--tp-radius) !important;
+  box-shadow: 6px 6px 0 0 var(--tp-search-shadow) !important;
+}
+
+.tools-premium .filter-surface input[type="text"] {
+  background: var(--tp-search-bg) !important;
+  border: var(--tp-bw) solid var(--tp-search-border) !important;
+  border-radius: var(--tp-radius-sm) !important;
+  font-weight: 600;
+  color: var(--tp-search-text) !important;
+}
+
+.tools-premium .filter-surface input:focus {
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--tp-search-focus) 28%, transparent) !important;
+  border-color: var(--tp-search-focus) !important;
+}
+
+.tools-premium .filter-surface .text-xs.font-semibold.uppercase {
+  color: var(--tp-text);
+  font-weight: 800;
+  letter-spacing: 0.14em;
+}
+
+/* ============================================================
+   CHIPS / LABELS
+============================================================ */
+.tools-premium .control-chip,
+.tools-premium .filter-surface a[href],
+.tools-premium .filter-surface button:not([data-testid="clear-tool-filters"]) {
+  border-radius: var(--tp-radius-sm);
+}
+
+.tools-premium .control-chip {
+  border: var(--tp-bw) solid var(--tp-chip-border);
+  background: var(--tp-chip-bg);
+  color: var(--tp-chip-fg);
+  font-weight: 700;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  transition: all 0.16s ease;
+}
+
+.tools-premium .control-chip:hover {
+  background: var(--tp-chip-hover-bg);
+  color: var(--tp-chip-hover-fg);
+  border-color: var(--tp-chip-hover-bg);
+  transform: translateY(-1px);
+}
+
+/* active view-mode / category buttons */
+.tools-premium .filter-surface a.border-\(--primary\),
+.tools-premium .filter-surface button.border-\(--primary\) {
+  background: var(--tp-active-bg) !important;
+  border-color: var(--tp-active-bg) !important;
+  color: var(--tp-active-fg) !important;
+}
+
+/* ============================================================
+   SECTION HEADINGS
+============================================================ */
+.tools-premium h2 {
+  font-family: var(--tp-display);
+  font-style: italic;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+  color: var(--tp-heading-color);
+}
+
+/* ============================================================
+   CARDS (workflows + tool cards + search suggestions)
+============================================================ */
+.tools-premium .interactive-card {
+  background: var(--tp-card-bg) !important;
+  border: var(--tp-bw) solid var(--tp-card-border) !important;
+  border-radius: var(--tp-card-radius) !important;
+  box-shadow: none !important;
+  transition: transform 0.22s cubic-bezier(.22, 1, .36, 1), box-shadow 0.22s ease;
+}
+
+.tools-premium .interactive-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 6px 6px 0 0 var(--tp-card-hover-shadow) !important;
+}
+
+.tools-premium article.interactive-card h3 {
+  font-weight: 800;
+  color: var(--tp-card-title);
+}
+
+/* icon tiles */
+.tools-premium .interactive-card .h-9.w-9,
+.tools-premium .interactive-card .h-10.w-10 {
+  background: var(--tp-icon-bg) !important;
+  border: none !important;
+  border-radius: var(--tp-icon-radius) !important;
+}
+
+.tools-premium .interactive-card .h-9.w-9 svg,
+.tools-premium .interactive-card .h-10.w-10 svg {
+  color: var(--tp-icon-fg) !important;
+}
+
+/* in-card links (Start / Open) */
+.tools-premium .interactive-card a.text-\(--primary\),
+.tools-premium article.interactive-card a:last-child {
+  color: var(--tp-link) !important;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+/* favorite star (active) */
+.tools-premium article.interactive-card button.border-\(--primary\) {
+  background: var(--tp-active-bg) !important;
+  border-color: var(--tp-active-bg) !important;
+  color: var(--tp-active-fg) !important;
+}
+
+/* in-card tag chips */
+.tools-premium .interactive-card .rounded-full,
+.tools-premium .interactive-card .rounded-\[6px\] {
+  border-radius: var(--tp-radius-sm) !important;
+  border-color: var(--tp-tag-border) !important;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  font-weight: 700;
+}
+
+/* ============================================================
+   SIDEBAR
+============================================================ */
+.tools-premium aside .filter-surface {
+  box-shadow: none !important;
+}
+
+.tools-premium aside h4 {
+  font-family: var(--tp-display);
+  font-style: italic;
+  font-weight: 800;
+  text-transform: uppercase;
+  color: var(--tp-side-heading);
+}
+
+.tools-premium aside ul a,
+.tools-premium aside .lg\:hidden a {
+  border-radius: var(--tp-radius-sm);
+  font-weight: 600;
+}
+
+.tools-premium aside a.bg-\[var\(--color-primary\)\],
+.tools-premium aside a.bg-\(--primary\) {
+  background: var(--tp-side-active-bg) !important;
+  color: var(--tp-side-active-fg) !important;
+}
+
+/* ============================================================
+   RESULTS HEADER / PANEL
+============================================================ */
+.tools-premium .surface-panel {
+  background: var(--tp-card-bg) !important;
+  border: var(--tp-bw) solid var(--tp-card-border) !important;
+  border-radius: var(--tp-card-radius) !important;
+}
+
+.tools-premium .surface-panel button.bg-\(--primary\) {
+  background: var(--tp-active-bg) !important;
+  border-color: var(--tp-active-bg) !important;
+  color: var(--tp-active-fg) !important;
+}
+
+/* ============================================================
+   ENTRANCE ANIMATION
+============================================================ */
+@keyframes tp-rise {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.tools-premium .grid>article.interactive-card {
+  animation: tp-rise 0.4s cubic-bezier(.22, 1, .36, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tools-premium .grid>article.interactive-card {
+    animation: none;
+  }
+
+  .tools-premium .interactive-card {
+    transition: none;
+  }
+
+  .tools-premium .interactive-card:hover {
+    transform: none;
+  }
+}
+
+/* ============================================================
+   RESPONSIVE — tuned per device (scoped)
+   Layout grids are already handled by Tailwind in the markup;
+   these rules tune the EDITORIAL visuals (type scale, hard
+   shadows, spacing) so it reads well on every screen.
+============================================================ */
+
+/* safety: hard-shadow offsets must never cause horizontal scroll */
+.tools-premium { overflow-x: clip; }
+
+/* Laptop / small desktop (<= 1280px) */
+@media (max-width: 1280px) {
+  .tools-premium .route-title { font-size: clamp(2.4rem, 6.5vw, 4.2rem); }
+}
+
+/* Tablet (<= 1024px) */
+@media (max-width: 1024px) {
+  .tools-premium .route-title { font-size: clamp(2.3rem, 8vw, 3.8rem); }
+  .tools-premium .filter-surface { box-shadow: 4px 4px 0 0 var(--tp-search-shadow) !important; }
+  .tools-premium .interactive-card:hover { box-shadow: 4px 4px 0 0 var(--tp-card-hover-shadow) !important; }
+}
+
+/* Mobile (<= 640px) */
+@media (max-width: 640px) {
+  .tools-premium .route-title { font-size: clamp(2rem, 11vw, 3rem); line-height: 0.96; }
+  .tools-premium h2 { font-size: 1.3rem; line-height: 1.05; }
+  .tools-premium .route-description { font-size: 0.94rem; }
+  .tools-premium .route-kicker { font-size: 0.6rem; padding: 0.35rem 0.7rem; letter-spacing: 0.12em; }
+  .tools-premium .metric-tile p:first-child { font-size: 1.05rem; }
+  .tools-premium .filter-surface { box-shadow: 3px 3px 0 0 var(--tp-search-shadow) !important; }
+  .tools-premium .interactive-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 3px 3px 0 0 var(--tp-card-hover-shadow) !important;
+  }
+  /* let long tool/category names breathe instead of clipping awkwardly */
+  .tools-premium article.interactive-card h3 { white-space: normal; }
+}
+
+/* Small phones (<= 400px) */
+@media (max-width: 400px) {
+  .tools-premium .route-title { font-size: clamp(1.7rem, 13vw, 2.4rem); }
+  .tools-premium h2 { font-size: 1.12rem; }
+  .tools-premium .route-description { font-size: 0.9rem; }
+  .tools-premium .control-chip { font-size: 0.66rem; padding: 0.4rem 0.6rem; }
+  .tools-premium .metric-tile { padding-left: 0.4rem !important; padding-right: 0.4rem !important; }
+  .tools-premium .metric-tile p:first-child { font-size: 0.95rem; }
+  .tools-premium .metric-tile p:last-child { font-size: 9px; }
+}

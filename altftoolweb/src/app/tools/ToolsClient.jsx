@@ -1,5 +1,6 @@
 "use client";
 
+import "./tools-directory.css";
 import Link from "next/link";
 import { useDeferredValue, useEffect, useLayoutEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
 import {
@@ -620,10 +621,10 @@ export default function ToolsClient({
     <div
       data-testid="tools-directory"
       data-hydrated={hydrated ? "true" : "false"}
-      className="route-page-shell"
+      className="route-page-shell tools-premium"
     >
       {/* DIRECTORY HEADER */}
-      <div className="border-b border-(--border) bg-[color-mix(in_srgb,var(--card)_86%,var(--background))]">
+      <div className="directory-hero border-b border-(--border) bg-[color-mix(in_srgb,var(--card)_86%,var(--background))]">
         <div className="section !py-6 sm:!py-8">
           <div className="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
             <div>
@@ -632,10 +633,10 @@ export default function ToolsClient({
                 Microtool directory
               </div>
               <h1 className="route-title">
-                All Online Tools
+                All Online <span className="tp-accent-word">Tools.</span>
               </h1>
               <p className="route-description mt-3">
-                Fast converters, developer helpers, PDF tools, media utilities, and browser-safe microtools in one compact workspace.
+                High-performance utilities for developers and creators. No fluff. No login. Just speed.
               </p>
             </div>
             <div className="grid grid-cols-3 gap-2 sm:w-[390px]">
@@ -694,7 +695,7 @@ export default function ToolsClient({
               </div>
             ) : (
               <div className="-mx-4 flex snap-x items-center gap-2 overflow-x-auto px-4 pb-1 sm:mx-0 sm:flex-wrap sm:overflow-visible sm:px-0 sm:pb-0">
-                <span className="shrink-0 text-xs font-semibold uppercase tracking-wide text-(--muted-foreground)">Popular</span>
+                <span className="shrink-0 text-xs font-semibold uppercase tracking-wide text-(--muted-foreground)">Common</span>
                 {POPULAR_SEARCHES.map((term) => (
                   <button
                     key={term}
@@ -818,7 +819,18 @@ export default function ToolsClient({
           )}
 
           {workflowGroups.length > 0 && (
-            <div className="mt-5 grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
+            <div className="mt-8">
+              <div className="mb-3 flex items-end justify-between gap-3">
+                <h2 className="text-lg sm:text-2xl">Curated Workflows</h2>
+                <Link
+                  href={getDirectoryHref({ nextCategory: "all" })}
+                  className="text-[11px] font-extrabold uppercase tracking-wider"
+                  style={{ color: "var(--tp-orange)" }}
+                >
+                  View all workflows
+                </Link>
+              </div>
+              <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
               {workflowGroups.map(({ title, label, icon: GroupIcon, tools }) => {
                 const firstToolSlug = tools[0][0];
 
@@ -863,6 +875,7 @@ export default function ToolsClient({
                   </div>
                 );
               })}
+              </div>
             </div>
           )}
         </div>
