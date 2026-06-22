@@ -1,0 +1,20 @@
+.windowswap-player {
+    isolation: isolate;
+}
+
+.windowswap-player-frame iframe {
+    pointer-events: none;
+}
+
+.windowswap-player-rail button {
+    transition: transform 180ms ease, background-color 180ms ease;
+}
+
+.windowswap-player-rail button:hover {
+    transform: translateY(-1px);
+}
+
+.windowswap-player-bottom button,
+.windowswap-player-actions button {
+    transition: transform 180ms ease, background-color 180ms ease;
+}

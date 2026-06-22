@@ -17,6 +17,8 @@ import wattpadCategories from "@/app/wattpad/data/categories.json";
 import { getSiteUrl, normalizeSlug } from "@/platform/seo/generateMetadata";
 import newsData from "../../public/data/newsdata.json";
 import topicsData from "../../public/data/topics.json";
+import { TOOLS as altPdfTools } from "@/app/altflovepdf/toolsData";
+import { services as homeservServices } from "@/app/homeserv/services-data";
 
 export const revalidate = 3600;
 
@@ -58,6 +60,41 @@ const staticRoutes = [
   { path: "/policypages/disclaimer", priority: 0.25 },
   { path: "/policypages/privacy", priority: 0.25 },
   { path: "/policypages/termsandconditions", priority: 0.25 },
+
+  // --- ALTF Love IMG (browser image tools) ---
+  { path: "/altfloveimg", priority: 0.7 },
+  { path: "/altfloveimg/compress", priority: 0.64 },
+  { path: "/altfloveimg/resize", priority: 0.64 },
+  { path: "/altfloveimg/crop", priority: 0.62 },
+  { path: "/altfloveimg/rotate", priority: 0.6 },
+  { path: "/altfloveimg/jpg-to-png", priority: 0.6 },
+  { path: "/altfloveimg/png-to-jpg", priority: 0.6 },
+  { path: "/altfloveimg/webp-to-jpg", priority: 0.6 },
+  { path: "/altfloveimg/jpg-to-webp", priority: 0.6 },
+  { path: "/altfloveimg/watermark", priority: 0.6 },
+  { path: "/altfloveimg/editor", priority: 0.62 },
+  { path: "/altfloveimg/meme", priority: 0.58 },
+  { path: "/altfloveimg/background-remover", priority: 0.62 },
+  { path: "/altfloveimg/upscaler", priority: 0.62 },
+
+  // --- Altf Love PDF (browser PDF tools) ---
+  { path: "/altflovepdf", priority: 0.7 },
+
+  // --- QuoteNest Pros (homeserv) ---
+  { path: "/homeserv", priority: 0.62 },
+  { path: "/homeserv/contact-us", priority: 0.4 },
+  { path: "/homeserv/privacy-policy", priority: 0.3 },
+  { path: "/homeserv/terms-of-use", priority: 0.3 },
+
+  // --- TripFindBox (travel) ---
+  { path: "/tripfindbox", priority: 0.68 },
+  { path: "/tripfindbox/about-us", priority: 0.45 },
+  { path: "/tripfindbox/blogs", priority: 0.6 },
+  { path: "/tripfindbox/booking", priority: 0.55 },
+  { path: "/tripfindbox/contact-us", priority: 0.4 },
+  { path: "/tripfindbox/privacy-policy", priority: 0.3 },
+  { path: "/tripfindbox/terms-and-conditions", priority: 0.3 },
+  { path: "/tripfindbox/site-map", priority: 0.4 },
 ];
 
 const FIREBASE_API_KEY =
@@ -445,6 +482,26 @@ export default async function sitemap() {
       pushUnique(entries, seen, `/news/topics/${slug}`, {
         priority: 0.42,
         changeFrequency: "weekly",
+      });
+    }
+  }
+
+  // Altf Love PDF tool pages (/altflovepdf/[toolSlug])
+  for (const tool of altPdfTools || []) {
+    if (tool?.slug) {
+      pushUnique(entries, seen, `/altflovepdf/${tool.slug}`, {
+        priority: 0.62,
+        changeFrequency: "monthly",
+      });
+    }
+  }
+
+  // QuoteNest Pros service pages (/homeserv/services/[slug])
+  for (const service of homeservServices || []) {
+    if (service?.slug) {
+      pushUnique(entries, seen, `/homeserv/services/${service.slug}`, {
+        priority: 0.55,
+        changeFrequency: "monthly",
       });
     }
   }

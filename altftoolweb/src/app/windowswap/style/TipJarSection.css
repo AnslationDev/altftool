@@ -1,0 +1,19 @@
+.windowswap-tipjar {
+    position: relative;
+}
+
+.windowswap-tipjar-image {
+    transition: transform 5s ease, opacity 500ms ease;
+}
+
+.windowswap-tipjar:hover .windowswap-tipjar-image {
+    transform: scale(1.02);
+}
+
+.windowswap-tipjar-content {
+    max-width: 42rem;
+}
+
+.windowswap-tipjar-cta {
+    box-shadow: 0 16px 34px rgba(0, 0, 0, 0.2);
+}
