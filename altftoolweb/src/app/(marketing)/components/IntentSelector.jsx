@@ -1,178 +1,132 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import {
-  Briefcase,
-  Gamepad2,
-  Zap,
-  Newspaper,
-  Tag,
-  ArrowRight,
-} from "lucide-react";
 import Link from "next/link";
-import { useTheme } from "@/contexts/ThemeContext";
+import {
+  ArrowRight,
+  BadgePercent,
+  BarChart3,
+  Bot,
+  FileUp,
+  GraduationCap,
+  WandSparkles,
+} from "lucide-react";
 
-const intents = [
-  { icon: Briefcase, title: "Be Productive", description: "Tools to boost your workflow", href: "/tools" },
-  { icon: Gamepad2, title: "Have Fun", description: "Games and entertainment", href: "/games" },
-  { icon: Zap, title: "Quick Utilities", description: "Fast, simple tools", href: "/tools" },
-  { icon: Newspaper, title: "Stay Updated", description: "News and trending content", href: "/news" },
-  { icon: Tag, title: "Find Deals", description: "Best offers and discounts", href: "/exclusivedeals" },
+const workflows = [
+  {
+    icon: WandSparkles,
+    title: "Create",
+    description: "Generate assets, documents, captions, and everyday outputs.",
+    href: "/tools/all",
+    size: "lg:col-span-2",
+    stats: ["AI prompts", "Templates", "Exports"],
+    tone: "home-icon-violet",
+  },
+  {
+    icon: FileUp,
+    title: "Convert",
+    description: "Switch PDFs, images, text, code, and files into the format you need.",
+    href: "/tools/all",
+    stats: ["PDF", "Images", "Text"],
+    tone: "home-icon-cyan",
+  },
+  {
+    icon: BarChart3,
+    title: "Analyze",
+    description: "Review content, data, links, rankings, and quality signals faster.",
+    href: "/tools/all",
+    stats: ["Signals", "Scores", "Reports"],
+    tone: "home-icon-emerald",
+  },
+  {
+    icon: Bot,
+    title: "Automate",
+    description: "Use utilities and extensions to reduce repetitive browser work.",
+    href: "/extensions",
+    stats: ["Extensions", "Rules", "Shortcuts"],
+    tone: "home-icon-indigo",
+  },
+  {
+    icon: BadgePercent,
+    title: "Discover Deals",
+    description: "Find useful offers, store pages, and buying signals in one place.",
+    href: "/exclusivedeals",
+    stats: ["Offers", "Stores", "Ratings"],
+    tone: "home-icon-rose",
+  },
+  {
+    icon: GraduationCap,
+    title: "Learn",
+    description: "Explore academy guides, blogs, news, and brand research.",
+    href: "/academy",
+    stats: ["Guides", "News", "Academy"],
+    size: "lg:col-span-3",
+    tone: "home-icon-amber",
+  },
 ];
 
 export default function IntentSelector() {
-  const { theme } = useTheme();
-  const [hovered, setHovered] = useState(null);
-
-  const trackRef = useRef(null);
-  const [index, setIndex] = useState(0);
-  const pauseRef = useRef(false);
-
-  /* -------------------------------
-     Auto slide (mobile only)
-  --------------------------------*/
-  useEffect(() => {
-    const timer = setInterval(() => {
-      if (pauseRef.current) return;
-      setIndex((p) => (p === intents.length - 1 ? 0 : p + 1));
-    }, 3000);
-    return () => clearInterval(timer);
-  }, []);
-
-  /* -------------------------------
-     Scroll to active card
-  --------------------------------*/
-  useEffect(() => {
-    const track = trackRef.current;
-    if (!track) return;
-
-    const child = track.children[index];
-    if (!child) return;
-
-    track.scrollTo({
-      left: child.offsetLeft - 16,
-      behavior: "smooth",
-    });
-  }, [index]);
-
   return (
     <section className="section">
-      {/* <div className="mx-auto  px-0 space-y-8"> */}
-
-      {/* Header */}
-      <div className="section-header mb-12  animate-slide-up">
-        <h2 className="section-title">
-          What do you want to do{" "}
-          <span className="text-[var(--primary)]">right now</span>?
-        </h2>
-
-        <p className="section-subtitle">
-          Choose your vibe and we’ll guide you to the perfect tools
+      <div className="mb-8 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+        <div>
+          <p className="home-kicker">Workflows</p>
+          <h2 className="section-title text-left">
+            Start With The Workflow You Need
+          </h2>
+        </div>
+        <p className="max-w-xl text-sm leading-6 text-[var(--muted-foreground)] md:text-right">
+          AltFTool groups daily work into practical routes so you can move from
+          search to result without hunting through menus.
         </p>
       </div>
 
-      {/* ================= MOBILE SLIDER ================= */}
-      <div
-        ref={trackRef}
-        className="md:hidden flex gap-4 overflow-x-auto no-scrollbar snap-x snap-mandatory px-2 pb-2"
-        onTouchStart={() => (pauseRef.current = true)}
-        onTouchEnd={() => (pauseRef.current = false)}
-      >
-        {intents.map((intent) => {
-          const Icon = intent.icon;
-
-          return (
-            <div key={intent.title} className="snap-start shrink-0 w-[85%] ">
-              <Link
-                href={intent.href}
-                className="group block rounded-[8px] border border-[var(--card-border)]
-                  bg-[var(--card)] p-5 text-center transition duration-300 
-                  hover:-translate-y-0.5 hover:border-[var(--primary)] hover:shadow-[var(--anslation-ds-shadow-sm)] animate-slide-up"
-              >
-                <div className="flex flex-col items-center ">
-
-                  {/* Icon */}
-                  <div className="w-12 h-12 rounded-xl flex items-center justify-center  mb-3 transition group-hover:scale-105">
-                    <Icon className="w-6 h-6 text-[var(--foreground)]" />
-                  </div>
-
-                  <h3 className="font-semibold text-sm mb-1 text-[var(--foreground)]">
-                    {intent.title}
-                  </h3>
-
-                  <p className="text-xs text-[var(--secondary-foreground)] mb-2">
-                    {intent.description}
-                  </p>
-
-                  <div className="flex items-center gap-1 text-xs font-medium text-[var(--foreground)] opacity-80 group-hover:opacity-100">
-                    Explore <ArrowRight className="w-3 h-3" />
-                  </div>
-
-                </div>
-              </Link>
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {workflows.map(({ icon: Icon, title, description, href, size = "", stats, tone }) => (
+          <Link
+            key={title}
+            href={href}
+            className={`group relative overflow-hidden rounded-2xl border border-[var(--home-border)] bg-white p-5 shadow-[var(--home-shadow-sm)] transition hover:-translate-y-1.5 hover:border-[var(--primary)] hover:bg-[var(--home-hover)] hover:shadow-[var(--home-shadow-md)] ${size}`}
+          >
+            <div className="absolute -right-10 -top-10 h-32 w-32 rounded-full bg-[var(--home-primary-soft)] transition group-hover:scale-125" />
+            <div className="relative z-10 flex items-start gap-4">
+              <span className={`home-premium-icon ${tone} grid h-14 w-14 shrink-0 place-items-center rounded-xl`}>
+                <Icon className="h-6 w-6" />
+              </span>
+              <span className="min-w-0">
+                <span className="flex items-center gap-2 text-base font-bold text-[var(--foreground)]">
+                  {title}
+                  <ArrowRight className="h-4 w-4 opacity-0 transition group-hover:translate-x-1 group-hover:opacity-100" />
+                </span>
+                <span className="mt-1 block text-sm leading-6 text-[var(--muted-foreground)]">
+                  {description}
+                </span>
+              </span>
             </div>
-          );
-        })}
-      </div>
-
-      {/* ================= DESKTOP GRID ================= */}
-      <div className="hidden md:grid grid-cols-3 lg:grid-cols-5 gap-6 lg:gap-10 xl:gap-12">
-        {intents.map((intent, i) => {
-          const Icon = intent.icon;
-          const isHovered = hovered === i;
-
-          return (
-            <Link
-              key={intent.title}
-              href={intent.href}
-              onMouseEnter={() => setHovered(i)}
-              onMouseLeave={() => setHovered(null)}
-              className="group relative rounded-[8px] border border-[var(--border)]
-                bg-[var(--card)] hover:bg-[var(--card-hover-bg)] p-6 lg:p-6 xl:p-6 text-center
-                transition duration-300 hover:-translate-y-0.5
-                hover:border-[var(--primary)] hover:shadow-[var(--anslation-ds-shadow-md)] animate-slide-up"
-            >
-
-              <div className="flex flex-col items-center">
-
-                {/* Icon */}
-                <div
-                  className={`rounded-[8px] flex items-center justify-center
-                    bg-[var(--badge-bg)] mb-4 transition-all duration-300
-                    w-14 h-14 lg:w-16 lg:h-16 xl:w-18 xl:h-18
-                    ${isHovered ? "scale-[1.03]" : ""}`}
-                >
-                  <Icon className={`w-7 h-7 lg:w-8 lg:h-8 xl:w-9 xl:h-9 ${theme === "dark" ? "text-white" : "text-[var(--primary)]"
-                    }`} />
-
-                </div>
-
-                {/* Title */}
-                <h3 className="font-semibold text-base lg:text-lg xl:text-xl mb-1 text-[var(--foreground)]">
-                  {intent.title}
-                </h3>
-
-                {/* Description */}
-                <p className="text-xs lg:text-sm xl:text-base text-[var(--muted-foreground)] mb-3">
-                  {intent.description}
-                </p>
-
-                {/* CTA */}
-                <div
-                  className={`flex items-center gap-1 text-xs lg:text-sm font-medium text-[var(--primary)]
-                    transition-all duration-300
-                    ${isHovered ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"}`}
-                >
-                  Explore <ArrowRight className="w-3 h-3" />
-                </div>
-
+            <div className="relative z-10 mt-5 rounded-2xl border border-[var(--home-border)] bg-[var(--home-surface)] p-3">
+              <div className="mb-3 flex items-center gap-1.5">
+                <span className="h-2 w-2 rounded-full bg-[var(--primary)]" />
+                <span className="h-2 w-2 rounded-full bg-[var(--accent)]" />
+                <span className="h-2 w-2 rounded-full bg-[#D8CFFF]" />
               </div>
-            </Link>
-          );
-        })}
+              <div className="grid gap-2">
+                {stats.map((item, index) => (
+                  <span
+                    key={item}
+                    className="flex items-center justify-between rounded-xl bg-white px-3 py-2 text-xs font-bold text-[var(--foreground)] shadow-sm"
+                  >
+                    {item}
+                    <span
+                      className={`h-1.5 rounded-full ${
+                        index === 1 ? "w-16 bg-[var(--accent)]" : "w-10 bg-[var(--primary)]"
+                      }`}
+                    />
+                  </span>
+                ))}
+              </div>
+            </div>
+          </Link>
+        ))}
       </div>
-
-      {/* </div> */}
     </section>
   );
 }

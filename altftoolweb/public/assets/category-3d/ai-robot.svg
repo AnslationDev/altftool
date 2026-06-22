@@ -1,0 +1,30 @@
+<svg width="220" height="170" viewBox="0 0 220 170" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="aiBody" x1="46" y1="34" x2="155" y2="145" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFFFFF"/>
+      <stop offset="0.5" stop-color="#E9E6FF"/>
+      <stop offset="1" stop-color="#B7ADFF"/>
+    </linearGradient>
+    <linearGradient id="aiFace" x1="73" y1="59" x2="149" y2="99" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#17234A"/>
+      <stop offset="1" stop-color="#6C4DF6"/>
+    </linearGradient>
+    <filter id="aiShadow" x="15" y="13" width="184" height="153" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="20" stdDeviation="16" flood-color="#6C4DF6" flood-opacity="0.22"/>
+    </filter>
+  </defs>
+  <ellipse cx="110" cy="145" rx="73" ry="14" fill="#6C4DF6" opacity="0.12"/>
+  <g filter="url(#aiShadow)">
+    <path d="M64 95C64 80.0883 76.0883 68 91 68H129C143.912 68 156 80.0883 156 95V124C156 138.912 143.912 151 129 151H91C76.0883 151 64 138.912 64 124V95Z" fill="url(#aiBody)"/>
+    <rect x="72" y="40" width="76" height="58" rx="22" fill="url(#aiBody)" stroke="white" stroke-width="5"/>
+    <rect x="83" y="56" width="54" height="28" rx="14" fill="url(#aiFace)"/>
+    <circle cx="99" cy="70" r="4.5" fill="#7BE3E8"/>
+    <circle cx="121" cy="70" r="4.5" fill="#7BE3E8"/>
+    <rect x="105" y="25" width="10" height="22" rx="5" fill="#6C4DF6"/>
+    <circle cx="110" cy="21" r="8" fill="#8B7BFF"/>
+    <rect x="49" y="78" width="20" height="42" rx="10" fill="#DED8FF"/>
+    <rect x="151" y="78" width="20" height="42" rx="10" fill="#DED8FF"/>
+  </g>
+  <circle cx="176" cy="46" r="9" fill="#7BE3E8" opacity="0.7"/>
+  <circle cx="40" cy="66" r="6" fill="#FF6B6B" opacity="0.5"/>
+</svg>

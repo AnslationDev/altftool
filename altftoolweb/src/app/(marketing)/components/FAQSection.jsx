@@ -1,108 +1,86 @@
 "use client";
 
 import { useState } from "react";
-import { ChevronDown } from "lucide-react";
+import { ChevronDown, HelpCircle, MessageCircle } from "lucide-react";
 
 const faqs = [
   {
-    question: "What is Alt F Tools?",
+    question: "Is AltF tool free to use?",
     answer:
-      "Alt F Tools is an all-in-one productivity platform offering 100+ fast, lightweight micro tools to help you convert, calculate, analyze, and create — all from one place.",
+      "Yes. Core AltFTool workflows are free and designed for quick access without unnecessary friction.",
   },
   {
-    question: "Do I need to sign up to use the tools?",
+    question: "Do I need an account?",
     answer:
-      "No. Most Alt F tools are available instantly without any signup. Just open a tool and start using it.",
+      "No. Most tools can be opened and used instantly without creating an account.",
   },
   {
-    question: "Is Alt F Tools really free?",
+    question: "Is my data safe?",
     answer:
-      "Yes. Alt F Tools offers a wide range of free, ad-free tools. Some advanced tools may be added later, but core features will always remain free.",
+      "AltFTool is built around privacy-conscious workflows and avoids unnecessary data storage wherever possible.",
   },
   {
-    question: "Are my files and data safe?",
-    answer: (
-      <div className="space-y-1">
-        <p>Absolutely. Your privacy is our priority.</p>
-        <ul className="list-disc list-inside ml-4">
-          <li>Files are processed locally in your browser</li>
-          <li>No data is stored on our servers</li>
-          <li>No tracking or hidden data collection</li>
-        </ul>
-      </div>
-    ),
-  },
-  {
-    question: "Can I use Alt F Tools on mobile devices?",
+    question: "Do the tools work on mobile?",
     answer:
-      "Yes. Alt F Tools is fully responsive and works smoothly on mobile, tablet, and desktop devices.",
+      "Yes. The homepage and tools are responsive across desktop, tablet, and mobile browsers.",
   },
-  {
-    question: "Are the tools secure for sensitive data?",
-    answer:
-      "Yes. Since most tools run client-side, your sensitive data never leaves your device.",
-  },
-  // {
-  //   question: "How fast are the tools?",
-  //   answer:
-  //     "All tools are optimized for speed and performance, delivering instant results with minimal loading time.",
-  // },
-  // {
-  //   question: "Can I suggest a new tool?",
-  //   answer:
-  //     "Yes! We love feedback. You can suggest new tools through the Contact or Feedback section.",
-  // },
-  // {
-  //   question: "Are AI tools included in Alt F?",
-  //   answer:
-  //     "Yes. Alt F includes an AI Tools Hub with smart utilities designed to improve productivity while respecting user privacy.",
-  // },
 ];
 
 export default function FAQSection() {
-  const [openIndex, setOpenIndex] = useState(null);
-
-  const toggleFAQ = (index) => {
-    setOpenIndex(openIndex === index ? null : index);
-  };
+  const [openQuestion, setOpenQuestion] = useState(faqs[0].question);
 
   return (
-    <section className="section w-full bg-[var(--background)] text-[var(--foreground)] transition-colors">
-      <div className="max-w-4xl mx-auto px-4">
-        <h2 className="text-3xl sm:text-4xl font-bold text-center">
-          Frequently <span className="text-[var(--primary)]">Asked Questions</span>
-        </h2>
+    <section className="section">
+      <div className="grid items-center gap-9 lg:grid-cols-[0.78fr_1fr]">
+        <div className="flex items-center gap-8">
+          <div className="min-w-0">
+            <p className="home-kicker">Frequently asked questions</p>
+            <h2 className="max-w-sm text-[2rem] font-black leading-[1.12] text-[var(--foreground)] md:text-[2.4rem]">
+              Got questions?
+              <span className="block">We&apos;ve got answers.</span>
+            </h2>
+          </div>
 
-        <p className="text-center mt-2 text-[var(--muted-foreground)] text-sm sm:text-base">
-          Find answers to common questions about Alt F Tools.
-        </p>
+          <div className="home-faq-art relative hidden h-44 w-48 shrink-0 sm:block" aria-hidden="true">
+            <span className="home-faq-art-question">?</span>
+            <span className="home-faq-art-chat">
+              <MessageCircle className="h-7 w-7" />
+            </span>
+            <span className="home-faq-art-dot home-faq-art-dot-a" />
+            <span className="home-faq-art-dot home-faq-art-dot-b" />
+            <span className="home-faq-art-dot home-faq-art-dot-c" />
+            <HelpCircle className="home-faq-art-small" />
+          </div>
+        </div>
 
-        <div className="mt-10 space-y-4">
-          {faqs.map((faq, index) => {
-            const isOpen = openIndex === index;
+        <div className="overflow-hidden rounded-2xl border border-[var(--home-border)] bg-white shadow-[0_18px_42px_rgba(55,49,120,0.08)] dark:bg-[var(--card)]">
+          {faqs.map((faq) => {
+            const isOpen = openQuestion === faq.question;
 
             return (
-              <div
-                key={index}
-                className="border border-[var(--border)] rounded-xl bg-[var(--card)] transition-colors"
-              >
+              <div key={faq.question} className="border-b border-[var(--home-border)] last:border-b-0">
                 <button
-                  onClick={() => toggleFAQ(index)}
-                  className="w-full flex justify-between items-center p-5 text-left"
+                  type="button"
+                  onClick={() => setOpenQuestion(isOpen ? null : faq.question)}
+                  className="flex w-full items-center justify-between gap-4 px-6 py-4 text-left text-[0.95rem] text-[var(--foreground)] transition hover:bg-[var(--home-surface)]"
+                  aria-expanded={isOpen}
                 >
-                  <span className="font-medium text-sm sm:text-base">{faq.question}</span>
+                  <span className="font-extrabold">{faq.question}</span>
                   <ChevronDown
-                    className={`h-5 w-5 transition-transform duration-300 ${isOpen ? "rotate-180" : ""
-                      }`}
+                    className={`h-4 w-4 shrink-0 text-[var(--primary)] transition ${
+                      isOpen ? "rotate-180" : ""
+                    }`}
                   />
                 </button>
-
                 <div
-                  className={`overflow-hidden transition-all duration-300 ease-in-out ${isOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
-                    }`}
+                  className={`grid transition-all duration-200 ${
+                    isOpen ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
+                  }`}
                 >
-                  <div className="px-5 pb-5 text-[var(--muted-foreground)] text-sm sm:text-base">
-                    {faq.answer}
+                  <div className="overflow-hidden">
+                    <p className="px-6 pb-4 text-sm font-semibold leading-6 text-[var(--muted-foreground)]">
+                      {faq.answer}
+                    </p>
                   </div>
                 </div>
               </div>
