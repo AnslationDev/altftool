@@ -2,6 +2,7 @@
 
 import { Menu, X } from "lucide-react";
 import Link from "next/link";
+import { tfbPath } from "@/app/tripfindbox/lib/tfbLink";
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 
@@ -60,7 +61,7 @@ export default function MobileMenu({ className, links, iconSize = 24 }) {
         </div>
         <nav aria-label="Mobile menu links">
           {links.map((link) => (
-            <Link key={`${link.href}-${link.label}`} href={link.href} onClick={() => setOpen(false)}>
+            <Link key={`${link.href}-${link.label}`} href={tfbPath(link.href)} onClick={() => setOpen(false)}>
               {link.label}
             </Link>
           ))}

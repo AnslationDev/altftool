@@ -11,11 +11,12 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { useMemo, useState } from "react";
+import { tfbPath } from "@/app/tripfindbox/lib/tfbLink";
 
 function BlogCard({ post, featured = false }) {
   return (
     <article className={featured ? "blog-card blog-card-featured" : "blog-card"}>
-      <Link href={`/blogs/${post.slug}`} className="blog-card-image" aria-label={post.title}>
+      <Link href={tfbPath(`/blogs/${post.slug}`)} className="blog-card-image" aria-label={post.title}>
         <img src={post.image} alt="" loading="lazy" />
         <span>{post.category}</span>
       </Link>
@@ -31,10 +32,10 @@ function BlogCard({ post, featured = false }) {
           </span>
         </div>
         <h3>
-          <Link href={`/blogs/${post.slug}`}>{post.title}</Link>
+          <Link href={tfbPath(`/blogs/${post.slug}`)}>{post.title}</Link>
         </h3>
         <p>{post.description}</p>
-        <Link href={`/blogs/${post.slug}`} className="blog-read-more">
+        <Link href={tfbPath(`/blogs/${post.slug}`)} className="blog-read-more">
           Read More
           <ArrowRight size={16} />
         </Link>
@@ -45,7 +46,7 @@ function BlogCard({ post, featured = false }) {
 
 function CompactPost({ post }) {
   return (
-    <Link href={`/blogs/${post.slug}`} className="blog-compact-post">
+    <Link href={tfbPath(`/blogs/${post.slug}`)} className="blog-compact-post">
       <img src={post.image} alt="" loading="lazy" />
       <span>
         <small>{post.category}</small>

@@ -271,18 +271,20 @@ function DestinationsTab({ content, set, setField }) {
         itemLabel="Destination"
         items={d.items}
         onChange={(v) => set(["destinations", "items"], v)}
-        makeEmpty={() => ["", "", "", ""]}
+        makeEmpty={() => ({ city: "", price: "", description: "", image: "" })}
         renderItem={(item, on) => {
-          const arr = Array.isArray(item) ? item : ["", "", "", ""];
-          const upd = (i, val) => { const n = arr.slice(); n[i] = val; on(n); };
+          const obj = Array.isArray(item)
+            ? { city: item[0] || "", price: item[1] || "", description: item[2] || "", image: item[3] || "" }
+            : { city: "", price: "", description: "", image: "", ...(item || {}) };
+          const upd = (key, val) => on({ ...obj, [key]: val });
           return (
             <>
               <Grid>
-                <Field label="City" value={arr[0]} onChange={(v) => upd(0, v)} />
-                <Field label="Price label" value={arr[1]} onChange={(v) => upd(1, v)} />
+                <Field label="City" value={obj.city} onChange={(v) => upd("city", v)} />
+                <Field label="Price label" value={obj.price} onChange={(v) => upd("price", v)} />
               </Grid>
-              <Field label="Description" value={arr[2]} onChange={(v) => upd(2, v)} />
-              <ImageField label="Image" value={arr[3]} onChange={(v) => upd(3, v)} />
+              <Field label="Description" value={obj.description} onChange={(v) => upd("description", v)} />
+              <ImageField label="Image" value={obj.image} onChange={(v) => upd("image", v)} />
             </>
           );
         }}

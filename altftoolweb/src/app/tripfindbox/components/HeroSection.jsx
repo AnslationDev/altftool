@@ -23,6 +23,7 @@ import FloatingCallIcon from "./FloatingCallIcon";
 import MobileMenu from "./MobileMenu";
 import { fetchBlogPosts } from "@/app/tripfindbox/lib/blogData";
 import { fetchHomeContent, DEFAULT_HOME_CONTENT } from "@/app/tripfindbox/lib/homeContent";
+import { tfbPath } from "@/app/tripfindbox/lib/tfbLink";
 
 // Map of icon keys (stored in Firestore) to lucide-react components, so admins
 // can pick an icon by name without storing React components in the database.
@@ -49,11 +50,11 @@ function telHref(phone) {
 }
 
 function destinationHref(city) {
-  return `/flights-to-${city
+  return tfbPath(`/flights-to-${String(city || "")
     .toLowerCase()
     .replace(/&/g, "and")
     .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-+|-+$/g, "")}`;
+    .replace(/^-+|-+$/g, "")}`);
 }
 
 function HeaderPhoneIcon() {
@@ -82,7 +83,7 @@ function Header({ header }) {
       </a>
       <nav className="nova-nav" aria-label="Primary navigation">
         {navLinks.map((link) => (
-          <a key={link.href} href={link.href}>{link.label}</a>
+          <a key={link.href} href={tfbPath(link.href)}>{link.label}</a>
         ))}
       </nav>
       <a className="nova-call-cta" href={telHref(header.phone)} aria-label="Call TripFindBox for best deals">
@@ -102,6 +103,8 @@ function Header({ header }) {
 }
 
 function Hero({ header, hero }) {
+  hero = hero || DEFAULT_HOME_CONTENT.hero;
+  header = header || DEFAULT_HOME_CONTENT.header;
   const review = hero.reviewStrip || {};
   const filled = Number(review.filledStars) || 0;
   return (
@@ -117,9 +120,9 @@ function Hero({ header, hero }) {
           <h1>{hero.title}</h1>
           <p className="nova-lead">{hero.lead}</p>
           <div className="nova-trust">
-            {(hero.trustBadges || []).map((badge, index) => (
+            {(hero.trustBadges || []).filter(Boolean).map((badge, index) => (
               <span key={index}>
-                <Icon name={badge.iconKey} size={17} fill={badge.iconKey === "Star" ? "currentColor" : undefined} /> {badge.label}
+                <Icon name={badge?.iconKey} size={17} fill={badge?.iconKey === "Star" ? "currentColor" : undefined} /> {badge?.label}
               </span>
             ))}
           </div>
@@ -162,17 +165,23 @@ function Hero({ header, hero }) {
 }
 
 function DestinationDiscovery({ destinations }) {
-  const trendingItems = destinations.items || [];
+  const safe = destinations || DEFAULT_HOME_CONTENT.destinations;
+  const trendingItems = (safe.items || []).filter(Boolean);
   const carouselItems = [...trendingItems, ...trendingItems];
 
   return (
     <section id="discover" className="nova-section nova-discovery">
       <div className="nova-section-head" style={{ margin: "0 auto 46px", textAlign: "center" }}>
-        <h2>{destinations.sectionTitle}</h2>
+        <h2>{safe.sectionTitle}</h2>
       </div>
       <div className="nova-destination-marquee" aria-label="Trending destination deals">
         <div className="nova-destination-track">
-          {carouselItems.map(([city, price, description, image], index) => (
+          {carouselItems.map((entry, index) => {
+            const { city, price, description, image } = Array.isArray(entry)
+              ? { city: entry[0], price: entry[1], description: entry[2], image: entry[3] }
+              : (entry || {});
+            if (!image) return null;
+            return (
             <Link
               className="nova-destination-card"
               href={destinationHref(city)}
@@ -194,7 +203,8 @@ function DestinationDiscovery({ destinations }) {
                 <p>{description}</p>
               </div>
             </Link>
-          ))}
+            );
+          })}
         </div>
       </div>
     </section>
@@ -202,6 +212,7 @@ function DestinationDiscovery({ destinations }) {
 }
 
 function AboutTripFindBox({ about }) {
+  about = about || DEFAULT_HOME_CONTENT.about;
   return (
     <section
       className="nova-section nova-about"
@@ -319,7 +330,7 @@ function TravelBlogsSection({ posts }) {
 
   const renderBlogCard = (post) => (
     <article className="nova-home-blog-card" key={post.slug}>
-      <Link href={`/blogs/${post.slug}`} className="nova-home-blog-image" aria-label={post.title}>
+      <Link href={tfbPath(`/blogs/${post.slug}`)} className="nova-home-blog-image" aria-label={post.title}>
         <img src={post.image} alt={post.title} />
         <span>{post.category}</span>
       </Link>
@@ -335,10 +346,10 @@ function TravelBlogsSection({ posts }) {
           </span>
         </div>
         <h3>
-          <Link href={`/blogs/${post.slug}`}>{post.title}</Link>
+          <Link href={tfbPath(`/blogs/${post.slug}`)}>{post.title}</Link>
         </h3>
         <p>{post.description}</p>
-        <Link href={`/blogs/${post.slug}`} className="nova-home-blog-link">
+        <Link href={tfbPath(`/blogs/${post.slug}`)} className="nova-home-blog-link">
           Read More <ArrowUpRight size={15} />
         </Link>
       </div>
@@ -374,12 +385,12 @@ function Insights({ insights }) {
   return (
     <section id="insights" className="nova-section tripnest-value-strip" >
       <div className="tripnest-value-grid">
-        {(insights || []).map((item, index) => (
+        {(insights || []).filter(Boolean).map((item, index) => (
           <article key={index}>
-            <span className="tripnest-value-icon"><Icon name={item.iconKey} size={34} /></span>
+            <span className="tripnest-value-icon"><Icon name={item?.iconKey} size={34} /></span>
             <div>
-              <h3>{item.title}</h3>
-              <p>{item.text}</p>
+              <h3>{item?.title}</h3>
+              <p>{item?.text}</p>
             </div>
           </article>
         ))}
@@ -389,12 +400,13 @@ function Insights({ insights }) {
 }
 
 function Newsletter({ newsletter }) {
+  newsletter = newsletter || DEFAULT_HOME_CONTENT.newsletter;
   return (
     <section className="tripnest-newsletter-card" aria-labelledby="tripnest-newsletter-title">
       <div className="tripnest-newsletter-media">
         <Image
-          src={newsletter.image}
-          alt={newsletter.imageAlt}
+          src={newsletter.image || DEFAULT_HOME_CONTENT.newsletter.image}
+          alt={newsletter.imageAlt || ""}
           fill
           sizes="(max-width: 900px) 100vw, 34vw"
           loading="lazy"
@@ -418,11 +430,11 @@ function Newsletter({ newsletter }) {
         <p className="tripnest-newsletter-proof"><ShieldCheck size={18} /> {newsletter.proof}</p>
 
         <div className="tripnest-newsletter-perks">
-          {(newsletter.perks || []).map((perk, index) => (
+          {(newsletter.perks || []).filter(Boolean).map((perk, index) => (
             <article className="tripnest-newsletter-perk" key={index}>
-              <span><Icon name={perk.iconKey} size={28} /></span>
-              <strong>{perk.label}</strong>
-              <p>{perk.text}</p>
+              <span><Icon name={perk?.iconKey} size={28} /></span>
+              <strong>{perk?.label}</strong>
+              <p>{perk?.text}</p>
             </article>
           ))}
         </div>
@@ -455,13 +467,13 @@ export function Footer({ footer }) {
         </div>
 
         <div className="tripnest-footer-grid">
-          {footerColumns.map(({ title, items }) => (
-            <div key={title}>
+          {footerColumns.filter(Boolean).map(({ title, items }, colIndex) => (
+            <div key={title || colIndex}>
               <h3>{title}</h3>
               <ul>
-                {(items || []).map((item) => (
-                  <li key={typeof item === "string" ? item : item.label}>
-                    {typeof item === "string" ? <span>{item}</span> : <Link href={item.href}>{item.label}</Link>}
+                {(items || []).filter(Boolean).map((item, itemIndex) => (
+                  <li key={typeof item === "string" ? item : (item.label || itemIndex)}>
+                    {typeof item === "string" ? <span>{item}</span> : <Link href={tfbPath(item.href)}>{item.label}</Link>}
                   </li>
                 ))}
               </ul>
@@ -498,10 +510,22 @@ export function Footer({ footer }) {
 }
 
 export default async function HeroSection() {
-  const [homepageBlogs, content] = await Promise.all([
-    fetchBlogPosts(4),
-    fetchHomeContent(),
-  ]);
+  // Never let a data-fetch failure crash the route. fetchHomeContent already
+  // falls back to defaults internally, but we guard again here and guarantee
+  // every section object exists so no child render can throw on a bad shape.
+  let homepageBlogs = [];
+  let content = DEFAULT_HOME_CONTENT;
+  try {
+    const [blogs, fetched] = await Promise.all([
+      fetchBlogPosts(4).catch(() => []),
+      fetchHomeContent().catch(() => DEFAULT_HOME_CONTENT),
+    ]);
+    homepageBlogs = Array.isArray(blogs) ? blogs : [];
+    content = { ...DEFAULT_HOME_CONTENT, ...(fetched && typeof fetched === "object" ? fetched : {}) };
+  } catch {
+    homepageBlogs = [];
+    content = DEFAULT_HOME_CONTENT;
+  }
 
   return (
     <main className="nova-page">
