@@ -10,6 +10,7 @@ const SELF_CHROME_PREFIXES = [
   // microsites with their own header/footer
   "/altfloveimg",
   "/altflovepdf",
+  "/apps",
   "/tripfindbox",
   "/homeserv",
   // immersive / experiential apps (no global chrome)
