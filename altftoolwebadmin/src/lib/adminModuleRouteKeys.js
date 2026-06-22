@@ -22,6 +22,7 @@ export const ADMIN_MODULE_ROUTE_KEYS = {
     trendingVideos: [""],
     pintrest: [""],
     tripfindbox: [""],
+    pranksocialmedia: [""],
   },
   leadtree: {
     blogs: [

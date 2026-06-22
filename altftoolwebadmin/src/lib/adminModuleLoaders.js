@@ -48,6 +48,9 @@ const routeLoaders = {
     tripfindbox: {
       "": () => import("@/projects/altftool/modules/tripfindbox/page.jsx"),
     },
+    pranksocialmedia: {
+      "": () => import("@/projects/altftool/modules/prank-socialmedia/page.jsx"),
+    },
   },
   leadtree: {
     blogs: {

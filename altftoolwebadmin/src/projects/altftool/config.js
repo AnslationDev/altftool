@@ -10,6 +10,7 @@ import {
   TicketPercent,
   Star,
   Plane,
+  Sparkles,
 } from "lucide-react";
 import AltfLogo from "../../../public/logos/altflogo.png";
 
@@ -32,6 +33,7 @@ const altftoolConfig = {
     dynamic: { label: "Dynamic", icon: Star },
     pintrest: { label: "Pinterest", icon: Image, routeSegment: "pintrest" },
     tripfindbox: { label: "TripFindBox", icon: Plane, routeSegment: "tripfindbox" },
+    pranksocialmedia: { label: "Prank Social Media", icon: Sparkles, routeSegment: "prank-socialmedia" },
   },
 };
 
