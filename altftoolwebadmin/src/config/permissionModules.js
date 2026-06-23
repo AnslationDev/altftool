@@ -8,4 +8,5 @@ export const PERMISSION_MODULES = {
   pintrest: "Pinterest",
   tripfindbox: "TripFindBox",
   pranksocialmedia: "Prank Social Media",
+  pranx: "Pranx",
 };

@@ -34,6 +34,7 @@ const altftoolConfig = {
     pintrest: { label: "Pinterest", icon: Image, routeSegment: "pintrest" },
     tripfindbox: { label: "TripFindBox", icon: Plane, routeSegment: "tripfindbox" },
     pranksocialmedia: { label: "Prank Social Media", icon: Sparkles, routeSegment: "prank-socialmedia" },
+    pranx: { label: "Pranx", icon: Sparkles, routeSegment: "pranx" },
   },
 };
 

@@ -51,6 +51,9 @@ const routeLoaders = {
     pranksocialmedia: {
       "": () => import("@/projects/altftool/modules/prank-socialmedia/page.jsx"),
     },
+    pranx: {
+      "": () => import("@/projects/altftool/modules/pranx/page.jsx")
+    }
   },
   leadtree: {
     blogs: {

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { ImagePlus, Loader2, Plus, Trash2 } from "lucide-react";
+import { ImagePlus, Loader2, Plus, Trash2, X } from "lucide-react";
 
 import { ICON_OPTIONS, uploadMocklyImage } from "../service/mockly.service";
 
@@ -75,17 +75,31 @@ export function ImageField({ label, value, onChange }) {
     }
   };
 
+  const handleRemove = () => {
+    onChange("");
+  };
+
   return (
     <div className="mb-4">
       <span className={labelCls}>{label}</span>
       <div className="flex flex-col gap-3 sm:flex-row sm:items-start">
         {value ? (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img
-            src={value}
-            alt="preview"
-            className="h-20 w-28 flex-shrink-0 rounded-lg border border-[var(--border)] object-cover"
-          />
+          <div className="relative h-20 w-28 flex-shrink-0">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={value}
+              alt="preview"
+              className="h-full w-full rounded-lg border border-[var(--border)] object-cover"
+            />
+            {/* <button
+              type="button"
+              onClick={handleRemove}
+              title="Remove image"
+              className="absolute -top-2 -right-2 flex h-6 w-6 items-center justify-center rounded-full bg-red-500 text-white shadow-md transition hover:bg-red-600 hover:scale-110 active:scale-95"
+            >
+              <X size={13} strokeWidth={3} />
+            </button> */}
+          </div>
         ) : (
           <div className="flex h-20 w-28 flex-shrink-0 items-center justify-center rounded-lg border border-dashed border-[var(--border)] text-[var(--muted)]">
             <ImagePlus size={20} />
@@ -98,15 +112,26 @@ export function ImageField({ label, value, onChange }) {
             placeholder="Image URL or upload a file"
             onChange={(e) => onChange(e.target.value)}
           />
-          <label
-            className={`mt-2 inline-flex items-center gap-1.5 rounded-lg border border-[color:var(--primary)]/30 bg-[color:var(--primary)]/10 px-3 py-1.5 text-xs font-semibold text-[var(--primary)] transition hover:bg-[color:var(--primary)]/15 ${
-              uploading ? "cursor-wait opacity-70" : "cursor-pointer"
-            }`}
-          >
-            {uploading ? <Loader2 size={14} className="animate-spin" /> : <ImagePlus size={14} />}
-            {uploading ? "Uploading…" : "Upload image"}
-            <input type="file" accept="image/*" hidden onChange={handleFile} disabled={uploading} />
-          </label>
+          <div className="mt-2 flex flex-wrap items-center gap-2">
+            <label
+              className={`inline-flex items-center gap-1.5 rounded-lg border border-[color:var(--primary)]/30 bg-[color:var(--primary)]/10 px-3 py-1.5 text-xs font-semibold text-[var(--primary)] transition hover:bg-[color:var(--primary)]/15 ${uploading ? "cursor-wait opacity-70" : "cursor-pointer"
+                }`}
+            >
+              {uploading ? <Loader2 size={14} className="animate-spin" /> : <ImagePlus size={14} />}
+              {uploading ? "Uploading…" : "Upload image"}
+              <input type="file" accept="image/*" hidden onChange={handleFile} disabled={uploading} />
+            </label>
+            {value && (
+              <button
+                type="button"
+                onClick={handleRemove}
+                className="inline-flex items-center gap-1.5 rounded-lg border border-red-500/30 bg-red-500/10 px-3 py-1.5 text-xs font-semibold text-red-500 transition hover:bg-red-500/20"
+              >
+                <Trash2 size={14} />
+                Remove image
+              </button>
+            )}
+          </div>
         </div>
       </div>
     </div>
