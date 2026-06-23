@@ -5,7 +5,7 @@ import { Menu, X, Sparkles } from "lucide-react";
 import { Button } from "../ui/button";
 const links = [
   { to: "/prank-socialmedia", label: "Home" },
-  { to: "/templates", label: "Templates" },
+  { to: "/prank-socialmedia/templates", label: "Templates" },
   { to: "/prank-socialmedia#features", label: "Features" },
   { to: "/prank-socialmedia#how", label: "How It Works" },
   { to: "/prank-socialmedia#faq", label: "FAQ" }
@@ -28,7 +28,7 @@ function Navbar() {
         </div>
         <div className="hidden md:block">
           <Button asChild className="rounded-xl bg-gradient-primary text-primary-foreground shadow-glow hover:opacity-95">
-            <Link href="/templates">Start Creating</Link>
+            <Link href="/prank-socialmedia/templates">Start Creating</Link>
           </Button>
         </div>
         <button onClick={() => setOpen((v) => !v)} className="rounded-lg p-2 md:hidden" aria-label="Menu">
@@ -38,7 +38,7 @@ function Navbar() {
       {open && <div className="glass mt-2 flex flex-col gap-1 rounded-2xl p-3 md:hidden">
         {links.map((l) => <Link key={l.to} href={l.to} onClick={() => setOpen(false)} className="rounded-lg px-3 py-2 text-sm hover:bg-secondary">{l.label}</Link>)}
         <Button asChild className="mt-1 rounded-xl bg-gradient-primary text-primary-foreground">
-          <Link href="/templates" onClick={() => setOpen(false)}>Start Creating</Link>
+          <Link href="/prank-socialmedia/templates" onClick={() => setOpen(false)}>Start Creating</Link>
         </Button>
       </div>}
     </div>

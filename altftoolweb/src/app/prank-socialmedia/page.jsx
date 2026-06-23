@@ -40,10 +40,10 @@ function Hero() {
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
             <Button asChild size="lg" className="rounded-xl bg-gradient-primary text-primary-foreground shadow-glow hover:opacity-95">
-              <Link href="/templates">Start Creating <ArrowRight className="ml-1 h-4 w-4" /></Link>
+              <Link href="/prank-socialmedia/templates">Start Creating <ArrowRight className="ml-1 h-4 w-4" /></Link>
             </Button>
             <Button asChild size="lg" variant="outline" className="rounded-xl">
-              <Link href="/templates">Explore Templates</Link>
+              <Link href="/prank-socialmedia/templates">Explore Templates</Link>
             </Button>
           </div>
           <ul className="mt-8 flex flex-wrap gap-x-6 gap-y-2 text-sm text-muted-foreground">
@@ -121,7 +121,7 @@ function Templates() {
           <p className="mt-2 max-w-2xl text-muted-foreground">14 carefully crafted generators — every pixel modeled after the real thing.</p>
         </div>
         <Button asChild variant="ghost" className="hidden md:inline-flex">
-          <Link href="/templates">View all <ArrowRight className="ml-1 h-4 w-4" /></Link>
+          <Link href="/prank-socialmedia/templates">View all <ArrowRight className="ml-1 h-4 w-4" /></Link>
         </Button>
       </div>
       <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
