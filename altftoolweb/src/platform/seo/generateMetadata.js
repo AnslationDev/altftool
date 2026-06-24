@@ -1,3 +1,6 @@
+import { resolveSeo, applyResolvedSeo } from "@altftool/core/seo/resolver";
+import { getSeoConfigSnapshot } from "./seoConfigSource";
+
 export const siteConfig = {
   name: "AltFTool",
   shortName: "AltFTool",
@@ -88,16 +91,46 @@ export function normalizeSlug(value = "") {
     .replace(/^-+|-+$/g, "");
 }
 
-export function createPageMetadata({
-  title,
-  description = siteConfig.description,
-  path = "/",
-  image,
-  keywords = [],
-  type = "website",
-  noindex = false,
-} = {}) {
-  const url = absoluteUrl(path);
+/**
+ * Apply ALTF Engine central SEO config (if enabled) onto raw page args.
+ *
+ * Inheritance defaults ("fill") apply only where the page left a value
+ * undefined; per-URL admin overrides ("force") win over page code. When the
+ * engine is disabled or the snapshot is cold/empty, this returns the args
+ * unchanged so output is byte-identical to the pre-engine behavior. Never
+ * throws — metadata generation must not be able to fail because of the engine.
+ *
+ * `pageType` (taxonomy: "tools" | "blogs" | ...) is distinct from `type`
+ * (the OpenGraph type: "website" | "article").
+ */
+function applyCentralSeo(args = {}) {
+  const snapshot = getSeoConfigSnapshot();
+  if (!snapshot) return args;
+  try {
+    const resolved = resolveSeo(snapshot, {
+      path: args.path || "/",
+      pageType: args.pageType,
+      brandId: args.brandId,
+    });
+    return applyResolvedSeo(args, resolved);
+  } catch {
+    return args;
+  }
+}
+
+export function createPageMetadata(rawArgs = {}) {
+  const {
+    title,
+    description = siteConfig.description,
+    path = "/",
+    image,
+    keywords = [],
+    type = "website",
+    noindex = false,
+    follow = true,
+    canonical,
+  } = applyCentralSeo(rawArgs);
+  const url = canonical ? absoluteUrl(canonical) : absoluteUrl(path);
   const imageUrl = absoluteUrl(image || siteConfig.defaultImagePath);
   const cleanDescription = trimMetaDescription(description);
   const keywordList = [...new Set([...siteConfig.keywords, ...keywords].filter(Boolean))];
@@ -144,10 +177,10 @@ export function createPageMetadata({
     },
     robots: {
       index: !noindex,
-      follow: true,
+      follow,
       googleBot: {
         index: !noindex,
-        follow: true,
+        follow,
         "max-image-preview": "large",
         "max-snippet": -1,
         "max-video-preview": -1,
