@@ -305,7 +305,7 @@ class ToolRuntimeBoundary extends Component {
   }
 }
 
-export default function ToolClient({ slug, category = "all" }) {
+export default function ToolClient({ slug, category = "all", children }) {
   const Tool = useMemo(
     () =>
       dynamic(() => loadToolModule(slug), {
@@ -316,7 +316,7 @@ export default function ToolClient({ slug, category = "all" }) {
   );
 
   return (
-    <ToolDetailChrome slug={slug} category={category}>
+    <ToolDetailChrome slug={slug} category={category} seoContent={children}>
       <ToolRuntimeBoundary slug={slug} category={category}>
         {createElement(Tool)}
       </ToolRuntimeBoundary>

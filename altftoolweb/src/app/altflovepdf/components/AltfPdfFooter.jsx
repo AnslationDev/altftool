@@ -101,7 +101,7 @@ export default function AltfPdfFooter() {
           <Link href={BASE}>Home</Link>
           <Link href="/policypages/privacy">Privacy</Link>
           <Link href="/policypages/termsandconditions">Terms</Link>
-          <a href="/">An AltFTool product ↗</a>
+          <Link href="/">An AltFTool product ↗</Link>
         </div>
       </div>
     </footer>

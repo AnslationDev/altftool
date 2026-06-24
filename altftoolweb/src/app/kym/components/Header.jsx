@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 import { Search, X } from "lucide-react";
 import {
   editorials,
@@ -65,7 +66,7 @@ export default function Header({ compact = false }) {
   const router = useRouter();
   const [query, setQuery] = useState("");
   const [isFocused, setIsFocused] = useState(false);
-  const searchIndex = useMemo(createSearchIndex, []);
+  const searchIndex = useMemo(() => createSearchIndex(), []);
   const cleanQuery = query.trim().toLowerCase();
   const results = useMemo(() => {
     if (cleanQuery.length < 2) {
@@ -102,7 +103,7 @@ export default function Header({ compact = false }) {
     <header className={`kym-header${compact ? " kym-header--compact" : ""}`}>
       {compact ? (
         <div className="kym-compact-brand">
-          <a href="/kym">Know Your Meme</a>
+          <Link href="/kym">Know Your Meme</Link>
         </div>
       ) : null}
 
