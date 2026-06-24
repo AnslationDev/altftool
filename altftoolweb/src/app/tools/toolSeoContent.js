@@ -1,3 +1,5 @@
+import { toolContentOverrides } from "./toolContentOverrides";
+
 const workflowTemplates = {
   developer: {
     examples: [
@@ -76,26 +78,53 @@ export function buildToolSeoContent(slug, tool = {}) {
   const template = chooseTemplate(categories, slug, name);
   const summary = buildMetaDescription(name, description, primaryCategory);
 
+  const categoryLabel = primaryCategory ? primaryCategory.toLowerCase() : "online";
+  const override = toolContentOverrides[slug] || null;
+
+  const intro =
+    override?.intro ||
+    `${name} is a free, browser-based ${categoryLabel} tool on AltFTool. ` +
+      `${description ? `${description} ` : ""}` +
+      `Everything runs in your browser, so you can use ${name} instantly — no signup, no install, and no uploading your data to a server.`;
+
+  // Examples (benefits): prefer hand-written overrides, else inject the tool name
+  // into the category template so each page's copy is unique (not a clone).
+  const examples = override?.benefits?.length
+    ? override.benefits.map(([title, body]) => ({ title, body }))
+    : template.examples.map(([title, body]) => ({
+        title,
+        body: `${body} With ${name}, this stays fast and private in your browser.`,
+      }));
+
+  const faqs = override?.faqs?.length
+    ? override.faqs.map(([question, answer]) => ({ question, answer }))
+    : [
+        {
+          question: `Is ${name} free to use?`,
+          answer: `Yes. ${name} is available as a free online tool on AltFTool.`,
+        },
+        {
+          question: `What can I use ${name} for?`,
+          answer: description || `${name} helps with ${primaryCategory.toLowerCase()} workflows and quick browser-based tasks.`,
+        },
+        {
+          question: `Does ${name} work on mobile?`,
+          answer: `Yes. ${name} is designed for modern desktop and mobile browsers.`,
+        },
+      ];
+
   return {
     name,
     heading: `${name} workflows`,
     summary,
+    intro,
     metaDescription: summary,
-    examples: template.examples.map(([title, body]) => ({ title, body })),
-    steps: template.steps,
-    faqs: [
-      {
-        question: `Is ${name} free to use?`,
-        answer: `Yes. ${name} is available as a free online tool on AltFTool.`,
-      },
-      {
-        question: `What can I use ${name} for?`,
-        answer: description || `${name} helps with ${primaryCategory.toLowerCase()} workflows and quick browser-based tasks.`,
-      },
-      {
-        question: `Does ${name} work on mobile?`,
-        answer: `Yes. ${name} is designed for modern desktop and mobile browsers.`,
-      },
+    useCases: override?.useCases || [],
+    examples,
+    steps: [
+      `Open ${name} on AltFTool — it loads instantly in your browser.`,
+      ...template.steps,
     ],
+    faqs,
   };
 }

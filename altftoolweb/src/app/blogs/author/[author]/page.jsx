@@ -68,6 +68,8 @@ export async function generateMetadata({ params }) {
     image: author.posts[0]?.image,
     keywords: [author.name, author.role, "AltFTool author", "AltFTool editorial"],
     type: "profile",
+    // Avoid indexing author profiles with too few posts.
+    noindex: (author.posts?.length || 0) < 2,
   });
 }
 

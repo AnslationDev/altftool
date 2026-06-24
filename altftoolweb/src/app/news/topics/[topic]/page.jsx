@@ -43,6 +43,10 @@ export async function generateMetadata({ params }) {
     description: `Read the latest ${label} stories, headlines, and updates on AltFTool News.`,
     path: `/news/topics/${topicSlug}`,
     keywords: [`${label} news`, `${label} updates`, "AltFTool News"],
+    // Topic pages render a client-loaded feed (no substantial server content),
+    // so they are noindexed to avoid thin/duplicate "Discovered – not indexed" pages.
+    // Remove this flag if these pages gain unique server-rendered editorial content.
+    noindex: true,
   });
 }
 

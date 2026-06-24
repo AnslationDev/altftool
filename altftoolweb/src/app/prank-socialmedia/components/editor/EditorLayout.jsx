@@ -44,7 +44,7 @@ function EditorLayout({ title, sidebar, preview }) {
       <div className="mx-auto max-w-[1600px] px-4 py-6">
         <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
           <div className="flex items-center gap-3">
-            <Button asChild variant="ghost" size="sm" className="rounded-xl"><Link href="/templates"><ArrowLeft className="mr-1 h-4 w-4" />Templates</Link></Button>
+            <Button asChild variant="ghost" size="sm" className="rounded-xl"><Link href="/prank-socialmedia/templates"><ArrowLeft className="mr-1 h-4 w-4" />Templates</Link></Button>
             <div>
               <p className="text-xs text-muted-foreground">Editor</p>
               <h1 className="text-xl font-semibold tracking-tight">{title}</h1>
