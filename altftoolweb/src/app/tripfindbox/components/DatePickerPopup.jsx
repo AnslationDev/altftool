@@ -6,6 +6,7 @@ import { createPortal } from "react-dom";
 import FloatingCallIcon from "./FloatingCallIcon";
 import { announceBookingPopupOpen, useBookingPopupCoordinator } from "@/app/tripfindbox/lib/bookingPopupBus";
 import { getFloatingLayerStyle, prepareBookingPopup } from "@/app/tripfindbox/lib/bookingInteraction";
+import { useTripFindBoxContactInfo } from "@/app/tripfindbox/hooks/useTripFindBoxContactInfo";
 
 const today = stripTime(new Date());
 const weekDays = ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"];
@@ -139,6 +140,7 @@ export default function DatePickerPopup({
   const updateFrameRef = useRef(null);
   const popupId = useId();
   const closePanel = useCallback(() => setOpen(false), []);
+  const contact = useTripFindBoxContactInfo();
   const initialMonth = value ?? (selecting === "return" ? departureDate : null) ?? today;
   const [month, setMonth] = useState(new Date(initialMonth.getFullYear(), initialMonth.getMonth(), 1));
   const effectiveMinDate = stripTime(minDate ?? today);
@@ -290,10 +292,10 @@ export default function DatePickerPopup({
                 </div>
               ))}
             </div>
-            <a className="mobile-picker-callbar" href="tel:+17147827278">
+            <a className="mobile-picker-callbar" href={contact.href}>
               <span><FloatingCallIcon /></span>
-              <b>Call &amp; Get Unpublished Flight Deals!</b>
-              <strong>+1-714-782-7278</strong>
+              <b>{contact.mobileCallText}</b>
+              <strong>{contact.phone}</strong>
             </a>
           </div>
         </div>,

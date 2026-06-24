@@ -18,6 +18,7 @@ import { getSiteUrl, normalizeSlug } from "@/platform/seo/generateMetadata";
 import newsData from "../../public/data/newsdata.json";
 import { TOOLS as altPdfTools } from "@/app/altflovepdf/toolsData";
 import { services as homeservServices } from "@/app/homeserv/services-data";
+import { apps } from "@/app/apps/data/apps";
 
 export const revalidate = 3600;
 
@@ -29,6 +30,7 @@ const staticRoutes = [
   { path: "/buysmart", priority: 0.85 },
   { path: "/buysmart/view-all", priority: 0.75 },
   { path: "/extensions", priority: 0.8 },
+  { path: "/apps", priority: 0.78 },
   { path: "/desktop", priority: 0.7 },
   { path: "/fullscrn", priority: 0.65 },
   { path: "/search-eng", priority: 0.65 },
@@ -340,6 +342,16 @@ export default async function sitemap() {
           : undefined,
         priority: 0.62,
         changeFrequency: "weekly",
+      });
+    }
+  }
+
+  for (const app of apps || []) {
+    if (app?.slug) {
+      pushUnique(entries, seen, `/apps/${app.slug}`, {
+        lastModified: app.lastUpdated ? new Date(app.lastUpdated) : undefined,
+        priority: 0.66,
+        changeFrequency: "monthly",
       });
     }
   }

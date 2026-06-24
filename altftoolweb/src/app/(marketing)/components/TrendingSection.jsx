@@ -58,7 +58,7 @@ const trendingTools = [
 
 export default function TrendingSection() {
   return (
-    <section className="section">
+    <section className="section home-trending-section">
       <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
         <div>
           <p className="home-kicker">

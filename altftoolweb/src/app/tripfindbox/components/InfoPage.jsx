@@ -1,10 +1,13 @@
 import { Footer } from "@/app/tripfindbox/components/HeroSection";
 import ResultsHeader from "@/app/tripfindbox/components/ResultsHeader";
+import { getTripFindBoxContactInfo } from "@/app/tripfindbox/lib/contactInfo";
 
-export default function InfoPage({ eyebrow, title, intro, image, sections, children }) {
+export default async function InfoPage({ eyebrow, title, intro, image, sections, children }) {
+  const contact = await getTripFindBoxContactInfo();
+
   return (
     <main className="site-route-page info-page">
-      <ResultsHeader />
+      <ResultsHeader initialContact={contact} />
       <section
         className="info-hero"
         style={{

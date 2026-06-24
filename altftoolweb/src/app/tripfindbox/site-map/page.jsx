@@ -2,13 +2,18 @@ import { ChevronRight } from "lucide-react";
 import Link from "next/link";
 import { Footer } from "@/app/tripfindbox/components/HeroSection";
 import ResultsHeader from "@/app/tripfindbox/components/ResultsHeader";
+import { getTripFindBoxContactInfo } from "@/app/tripfindbox/lib/contactInfo";
 import { sitemapSections, slugifyPageTitle } from "@/app/tripfindbox/lib/sitemapPages";
 import { tfbPath } from "@/app/tripfindbox/lib/tfbLink";
 
-export default function SiteMapPage() {
+export const dynamic = "force-dynamic";
+
+export default async function SiteMapPage() {
+  const contact = await getTripFindBoxContactInfo();
+
   return (
     <main className="sitemap-page">
-      <ResultsHeader />
+      <ResultsHeader initialContact={contact} />
       <section className="sitemap-hero" style={{ width: "min(1120px, calc(100% - 48px))", maxWidth: "1120px", marginInline: "auto" }}>
         <h1>Sitemap</h1>
         <p>Explore TripFindBox flight routes, travel deal categories, and helpful planning pages.</p>
