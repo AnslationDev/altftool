@@ -23,6 +23,7 @@ import FloatingCallIcon from "./FloatingCallIcon";
 import MobileMenu from "./MobileMenu";
 import { fetchBlogPosts } from "@/app/tripfindbox/lib/blogData";
 import { fetchHomeContent, DEFAULT_HOME_CONTENT } from "@/app/tripfindbox/lib/homeContent";
+import { telHref } from "@/app/tripfindbox/lib/contactInfo";
 import { tfbPath } from "@/app/tripfindbox/lib/tfbLink";
 
 // Map of icon keys (stored in Firestore) to lucide-react components, so admins
@@ -43,10 +44,6 @@ const ICONS = {
 function Icon({ name, ...props }) {
   const Cmp = ICONS[name] || Sparkles;
   return <Cmp {...props} />;
-}
-
-function telHref(phone) {
-  return `tel:${(phone || "").replace(/[^\d+]/g, "")}`;
 }
 
 function destinationHref(city) {
@@ -96,6 +93,10 @@ function Header({ header }) {
       <MobileMenu
         className="nova-menu"
         iconSize={21}
+        initialContact={{
+          phone: header.phone,
+          callSubtext: header.callSubtext,
+        }}
         links={navLinks.map((link) => ({ href: link.href, label: link.label }))}
       />
     </header>

@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import FlightSearchBox from "@/app/tripfindbox/components/FlightSearchBox";
 import ResultsHeader from "@/app/tripfindbox/components/ResultsHeader";
+import { useTripFindBoxContactInfo } from "@/app/tripfindbox/hooks/useTripFindBoxContactInfo";
 import { loadSearchCriteria, saveSearchCriteria, saveSearchResults } from "@/app/tripfindbox/lib/searchSession";
 import { searchTravelResults } from "@/app/tripfindbox/lib/travelResults";
 
@@ -24,6 +25,7 @@ export default function NoResultsPage() {
   const [criteria, setCriteria] = useState(null);
   const [isMobileSearchOpen, setIsMobileSearchOpen] = useState(false);
   const [isMobileSearching, setIsMobileSearching] = useState(false);
+  const contact = useTripFindBoxContactInfo();
 
   useEffect(() => {
     queueMicrotask(() => {
@@ -104,9 +106,9 @@ export default function NoResultsPage() {
           />
         </div>
         <h2>Now Call Toll Free</h2>
-        <a className="no-result-call" href="tel:+17147827278">
+        <a className="no-result-call" href={contact.href}>
           <PhoneCall size={34} />
-          +1-714-782-7278
+          {contact.phone}
         </a>
         <h3>We are available 24x7</h3>
         <button

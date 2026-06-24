@@ -20,6 +20,7 @@ import { useEffect, useMemo, useState } from "react";
 import FlightSearchBox from "@/app/tripfindbox/components/FlightSearchBox";
 import FloatingCallIcon from "@/app/tripfindbox/components/FloatingCallIcon";
 import ResultsHeader from "@/app/tripfindbox/components/ResultsHeader";
+import { useTripFindBoxContactInfo } from "@/app/tripfindbox/hooks/useTripFindBoxContactInfo";
 import { loadSearchCriteria, loadSearchResults, saveSearchCriteria, saveSearchResults, saveSelectedTravel } from "@/app/tripfindbox/lib/searchSession";
 import { searchTravelResults } from "@/app/tripfindbox/lib/travelResults";
 
@@ -48,6 +49,7 @@ export default function ResultsPage() {
   const [hasLoadedSession, setHasLoadedSession] = useState(false);
   const [isMobileSearchOpen, setIsMobileSearchOpen] = useState(false);
   const [isMobileSearching, setIsMobileSearching] = useState(false);
+  const contact = useTripFindBoxContactInfo();
 
   useEffect(() => {
     queueMicrotask(() => {
@@ -281,7 +283,7 @@ export default function ResultsPage() {
                   <div className="results-bundle-banner">
                     <span><Sparkles size={18} /> Save Big On Bundles</span>
                     <strong>Add Hotel Or Car With Flight And Save Extra 30% On Your Trip</strong>
-                    <a href="tel:+17147827278">+1-714-782-7278</a>
+                    <a href={contact.href}>{contact.phone}</a>
                   </div>
                 )}
               </div>
@@ -300,10 +302,10 @@ export default function ResultsPage() {
       </section>
 
       <aside className="mobile-results-callbar" aria-label="Call TripFindBox support">
-        <a href="tel:+17147827278">
+        <a href={contact.href}>
           <span><FloatingCallIcon /></span>
-          <strong>Call & Get Unpublished Flight Deals!</strong>
-          <b>+1-714-782-7278</b>
+          <strong>{contact.mobileCallText}</strong>
+          <b>{contact.phone}</b>
         </a>
       </aside>
     </main>

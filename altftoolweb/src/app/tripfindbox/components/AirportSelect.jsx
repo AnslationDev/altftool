@@ -7,6 +7,7 @@ import FloatingCallIcon from "./FloatingCallIcon";
 import { announceBookingPopupOpen, useBookingPopupCoordinator } from "@/app/tripfindbox/lib/bookingPopupBus";
 import { getFloatingLayerStyle, prepareBookingPopup } from "@/app/tripfindbox/lib/bookingInteraction";
 import { airports as fallbackAirports } from "@/app/tripfindbox/lib/travelApi";
+import { useTripFindBoxContactInfo } from "@/app/tripfindbox/hooks/useTripFindBoxContactInfo";
 
 function shouldUseFloatingPopup() {
   return typeof window !== "undefined" && window.matchMedia("(min-width: 768px)").matches;
@@ -25,6 +26,7 @@ export default function AirportSelect({ label, value, onChange, error }) {
   const desktopInputRef = useRef(null);
   const popupId = useId();
   const closePanel = useCallback(() => setOpen(false), []);
+  const contact = useTripFindBoxContactInfo();
 
   useBookingPopupCoordinator(popupId, open, closePanel);
 
@@ -254,10 +256,10 @@ export default function AirportSelect({ label, value, onChange, error }) {
               </p>
             ) : null}
           </div>
-          <a className="mobile-picker-callbar" href="tel:+17147827278">
+          <a className="mobile-picker-callbar" href={contact.href}>
             <span><FloatingCallIcon /></span>
-            <b>Call &amp; Get Unpublished Flight Deals!</b>
-            <strong>+1-714-782-7278</strong>
+            <b>{contact.mobileCallText}</b>
+            <strong>{contact.phone}</strong>
           </a>
         </div>,
         document.body,

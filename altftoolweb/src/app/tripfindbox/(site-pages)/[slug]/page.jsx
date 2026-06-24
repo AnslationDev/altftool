@@ -4,9 +4,12 @@ import { Footer } from "@/app/tripfindbox/components/HeroSection";
 import ResultsHeader from "@/app/tripfindbox/components/ResultsHeader";
 import RouteBottomSlider from "@/app/tripfindbox/components/RouteBottomSlider";
 import SeoRouteDealsGrid from "@/app/tripfindbox/components/SeoRouteDealsGrid";
+import { getTripFindBoxContactInfo, telHref } from "@/app/tripfindbox/lib/contactInfo";
 import { getSitemapPage, sitemapPages } from "@/app/tripfindbox/lib/sitemapPages";
 import { tfbPath } from "@/app/tripfindbox/lib/tfbLink";
 import Link from "next/link";
+
+export const dynamic = "force-dynamic";
 
 function titleFromSlug(slug) {
   return slug
@@ -1180,17 +1183,17 @@ function bottomSliderItems(section, currentTitle) {
     .filter((item) => item.title !== currentTitle);
 }
 
-function MobileSeoCallBar() {
+function MobileSeoCallBar({ contact }) {
   return (
     <aside className="seo-mobile-callbar" aria-label="TripFindBox call support">
       <div className="seo-mobile-callbar-panel">
-        <a href="tel:+17147827278" aria-label="Call TripFindBox for unpublished flight deals">
+        <a href={telHref(contact.phone)} aria-label="Call TripFindBox for unpublished flight deals">
           <span className="seo-mobile-callbar-icon" aria-hidden="true">
             <FloatingCallIcon />
           </span>
           <span className="seo-mobile-callbar-copy">
-            <strong>Call &amp; Get Unpublished Flight Deals!</strong>
-            <b>+1-714-782-7278</b>
+            <strong>{contact.mobileCallText}</strong>
+            <b>{contact.phone}</b>
           </span>
         </a>
       </div>
@@ -1198,7 +1201,7 @@ function MobileSeoCallBar() {
   );
 }
 
-function MobileDealSupportHero({ title }) {
+function MobileDealSupportHero({ title, contact }) {
   return (
     <section className="mobile-deal-support-hero" aria-label={`${title} phone support`}>
       <div className="mobile-deal-support-bg" aria-hidden="true" />
@@ -1212,13 +1215,13 @@ function MobileDealSupportHero({ title }) {
         />
         <div className="mobile-deal-support-pill">Booking, Changes &amp; Cancellation</div>
         <p className="mobile-deal-support-copy">No-Hold, Call Answered in 5 Sec</p>
-        <a className="mobile-deal-support-call" href="tel:+17147827278" aria-label="Call TripFindBox support">
+        <a className="mobile-deal-support-call" href={telHref(contact.phone)} aria-label="Call TripFindBox support">
           <span aria-hidden="true">
             <svg viewBox="0 0 24 24" role="img">
               <path d="M6.6 2.7c.5-.2 1.1 0 1.4.5l2.1 4c.3.5.2 1.2-.3 1.6l-1.5 1.3c1.1 2.2 3 4.1 5.3 5.2l1.2-1.5c.4-.5 1.1-.6 1.6-.3l4 2.1c.5.3.8.9.5 1.4l-1.1 3c-.2.6-.8 1-1.4 1C9.9 21 3 14.1 3 5.6c0-.6.4-1.2 1-1.4l2.6-1.5Z" />
             </svg>
           </span>
-          <strong>+1-714-782-7278</strong>
+          <strong>{contact.phone}</strong>
           <small>Save Time and get our Best deals</small>
         </a>
         <strong className="mobile-deal-support-helpline">( 24/7 Helpline )</strong>
@@ -1258,11 +1261,12 @@ export default async function SitemapRoutePage({ params }) {
   const isSimpleUtilityPage = isSecurityPage || isBaggagePage || isCancellationPage || isTaxesPage || isFaqPage;
   const showMobileSeoCallBar = kind === "airline" || kind === "city" || kind === "deal";
   const sliderItems = bottomSliderItems(page.section, page.title);
+  const contact = await getTripFindBoxContactInfo();
 
   return (
     <main className={`site-route-page${isUtilityPage ? " site-route-utility-page" : ""}${isSecurityPage ? " site-security-simple-page" : ""}${isBaggagePage ? " site-baggage-simple-page" : ""}${isCancellationPage ? " site-cancellation-simple-page" : ""}${isTaxesPage ? " site-taxes-simple-page" : ""}${isFaqPage ? " site-faq-simple-page" : ""}`}>
-      {kind === "deal" ? <MobileDealSupportHero title={page.title} /> : null}
-      <ResultsHeader />
+      {kind === "deal" ? <MobileDealSupportHero title={page.title} contact={contact} /> : null}
+      <ResultsHeader initialContact={contact} />
       {isCancellationPage ? (
         <section className="site-cancellation-hero">
           <h1>CANCELLATIONS/REFUNDS/EXCHANGE</h1>
@@ -1328,7 +1332,7 @@ export default async function SitemapRoutePage({ params }) {
         ) : null}
       </section>
       <Footer />
-      {showMobileSeoCallBar ? <MobileSeoCallBar /> : null}
+      {showMobileSeoCallBar ? <MobileSeoCallBar contact={contact} /> : null}
     </main>
   );
 }

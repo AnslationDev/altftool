@@ -1,10 +1,11 @@
 import { Footer } from "@/app/tripfindbox/components/HeroSection";
 import BlogExplorer from "@/app/tripfindbox/components/BlogExplorer";
 import ResultsHeader from "@/app/tripfindbox/components/ResultsHeader";
-import FloatingCallIcon from "@/app/tripfindbox/components/FloatingCallIcon";
+import MobileResultsCallBar from "@/app/tripfindbox/components/MobileResultsCallBar";
 import { blogCategories, fetchBlogPosts } from "@/app/tripfindbox/lib/blogData";
+import { getTripFindBoxContactInfo } from "@/app/tripfindbox/lib/contactInfo";
 
-export const revalidate = 1800;
+export const dynamic = "force-dynamic";
 
 export const metadata = {
   title: "Blogs | TripFindBox",
@@ -12,19 +13,16 @@ export const metadata = {
 };
 
 export default async function BlogsPage() {
-  const posts = await fetchBlogPosts();
+  const [posts, contact] = await Promise.all([
+    fetchBlogPosts(),
+    getTripFindBoxContactInfo(),
+  ]);
 
   return (
     <main className="site-route-page tripnest-blog-page">
-      <ResultsHeader />
+      <ResultsHeader initialContact={contact} />
       <BlogExplorer posts={posts} categories={blogCategories} />
-      <aside className="mobile-results-callbar" aria-label="Call TripFindBox support">
-        <a href="tel:+17147827278">
-          <span><FloatingCallIcon /></span>
-          <strong>Call &amp; Get Unpublished Flight Deals!</strong>
-          <b>+1-714-782-7278</b>
-        </a>
-      </aside>
+      <MobileResultsCallBar initialContact={contact} />
       <Footer />
     </main>
   );
