@@ -1,7 +1,9 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { fetchHomeContent } from "@/app/tripfindbox/lib/homeContent";
+import { doc, onSnapshot } from "firebase/firestore";
+import { db, isFirebaseConfigured } from "@/lib/firebase";
+import { HOME_DOC_PATH, fetchHomeContent } from "@/app/tripfindbox/lib/homeContent";
 import {
   contactFromHomeContent,
   DEFAULT_TRIPFINDBOX_CONTACT,
@@ -20,17 +22,39 @@ export function useTripFindBoxContactInfo(initialContact) {
 
   useEffect(() => {
     let active = true;
+    let unsubscribe = null;
 
-    fetchHomeContent()
-      .then((content) => {
-        if (active) {
-          setContact(contactFromHomeContent(content));
-        }
-      })
-      .catch(() => {});
+    const applyContent = (content) => {
+      if (active) setContact(contactFromHomeContent(content));
+    };
+
+    const refreshFromRest = () => {
+      fetchHomeContent()
+        .then(applyContent)
+        .catch(() => {});
+    };
+
+    refreshFromRest();
+
+    if (isFirebaseConfigured) {
+      try {
+        unsubscribe = onSnapshot(
+          doc(db, ...HOME_DOC_PATH),
+          (snapshot) => {
+            if (snapshot.exists()) {
+              applyContent(snapshot.data());
+            }
+          },
+          refreshFromRest,
+        );
+      } catch {
+        refreshFromRest();
+      }
+    }
 
     return () => {
       active = false;
+      if (unsubscribe) unsubscribe();
     };
   }, []);
 

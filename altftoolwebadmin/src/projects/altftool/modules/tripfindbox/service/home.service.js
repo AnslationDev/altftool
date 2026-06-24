@@ -19,7 +19,7 @@ export const DEFAULT_HOME_CONTENT = {
       { label: "Insights", href: "#insights" },
       { label: "Support", href: "#support" },
     ],
-    phone: "+1-714-782-7278",
+    phone: "+1-714-782-7274",
     callSubtext: "CALL 24/7 FOR OUR BEST DEALS",
   },
   hero: {
