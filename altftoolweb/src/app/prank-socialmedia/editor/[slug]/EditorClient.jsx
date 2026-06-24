@@ -64,8 +64,8 @@ export default function EditorClient({ slug }) {
 }
 
 function SidebarForSlug({ slug }) {
-  const editor = useEditor();
-  const { set } = editor;
+  const state = useEditor();
+  const { set } = state;
 
   // ─── 1. CHATS ─────────────────────────────────────────────────────────────
   if (["whatsapp", "instagram-dm", "messenger", "telegram"].includes(slug)) {
@@ -79,7 +79,7 @@ function SidebarForSlug({ slug }) {
 
   // ─── 2. SNAPCHAT ──────────────────────────────────────────────────────────
   if (slug === "snapchat") {
-    const { username, time } = editor;
+    const { username, avatar, time } = state;
     return (
       <>
         <AvatarUpload />
@@ -97,7 +97,7 @@ function SidebarForSlug({ slug }) {
 
   // ─── 3. TWITTER ───────────────────────────────────────────────────────────
   if (slug === "twitter") {
-    const { body } = editor;
+    const { body, likes, views } = state;
     return (
       <>
         <CommonProfileFields />
@@ -112,7 +112,7 @@ function SidebarForSlug({ slug }) {
 
   // ─── 4. INSTAGRAM POST ────────────────────────────────────────────────────
   if (slug === "instagram-post") {
-    const { username, verified, caption, location, theme } = editor;
+    const { username, verified, caption, location, likes, theme, device } = state;
     return (
       <>
         <AvatarUpload />
@@ -147,7 +147,7 @@ function SidebarForSlug({ slug }) {
 
   // ─── 5. FACEBOOK POST ─────────────────────────────────────────────────────
   if (slug === "facebook-post") {
-    const { username, verified, body, time, theme } = editor;
+    const { username, verified, body, time, theme } = state;
     return (
       <>
         <AvatarUpload />
@@ -184,7 +184,7 @@ function SidebarForSlug({ slug }) {
 
   // ─── 6. YOUTUBE COMMENT ───────────────────────────────────────────────────
   if (slug === "youtube") {
-    const { username, verified, videoTitle, channelName, commentText, commentTime, theme } = editor;
+    const { username, verified, videoTitle, channelName, commentText, commentLikes, commentTime, theme } = state;
     return (
       <>
         <h3 className="text-xs font-bold text-neutral-400 mt-2 uppercase tracking-wide">Video Info</h3>
@@ -229,7 +229,7 @@ function SidebarForSlug({ slug }) {
 
   // ─── 7. NOTIFICATION ──────────────────────────────────────────────────────
   if (slug === "notification") {
-    const { username, body, time, device } = editor;
+    const { username, body, time, device } = state;
     return (
       <>
         <AvatarUpload />
@@ -257,7 +257,7 @@ function SidebarForSlug({ slug }) {
 
   // ─── 8. LOW BATTERY ───────────────────────────────────────────────────────
   if (slug === "low-battery") {
-    const { os, theme } = editor;
+    const { batteryLevel, os, theme } = state;
     return (
       <>
         <NumberField label="Battery Level (%)" storeKey="batteryLevel" />
@@ -285,7 +285,7 @@ function SidebarForSlug({ slug }) {
 
   // ─── 9. SEARCH RESULTS ────────────────────────────────────────────────────
   if (slug === "search-results") {
-    const { searchQuery, theme } = editor;
+    const { searchQuery, theme } = state;
     return (
       <>
         <Field label="Search Query">
@@ -308,7 +308,7 @@ function SidebarForSlug({ slug }) {
 
   // ─── 10. ERROR POPUP ──────────────────────────────────────────────────────
   if (slug === "error-popup") {
-    const { errorTitle, errorMessage, errorOs, theme } = editor;
+    const { errorTitle, errorMessage, errorOs, theme } = state;
     return (
       <>
         <Field label="Error Title">
@@ -341,7 +341,7 @@ function SidebarForSlug({ slug }) {
 
   // ─── 11. FAKE CALL SCREEN ─────────────────────────────────────────────────
   if (slug === "fake-call") {
-    const { callerName, callerNumber, device } = editor;
+    const { callerName, callerNumber, device } = state;
     return (
       <>
         <AvatarUpload />

@@ -14,14 +14,19 @@ function formatFeedTitle({ title, type, topic }) {
   return type === "all" ? "Latest News" : type;
 }
 
-export default function Feeds({ type = "all", location, topic, title }) {
+export default function Feeds({ type = "all", location, topic, title, initialNewsData }) {
   const device = useDevice();
-  const [newsData, setNewsData] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [newsData, setNewsData] = useState(initialNewsData ?? []);
+  const [loading, setLoading] = useState(initialNewsData ? false : true);
   const feedTitle = formatFeedTitle({ title, type, topic });
 
   // ── Fetch from API (cached server-side for 10 min) ──────────────────
   useEffect(() => {
+    if (initialNewsData && initialNewsData.length > 0) {
+      setLoading(false);
+      return;
+    }
+
     const params = new URLSearchParams();
     if (location) params.set("location", location);
     if (topic) params.set("topic", topic);
@@ -31,7 +36,7 @@ export default function Feeds({ type = "all", location, topic, title }) {
       .then(({ news }) => setNewsData(news ?? []))
       .catch(() => setNewsData([]))
       .finally(() => setLoading(false));
-  }, [location, topic]);
+  }, [location, topic, initialNewsData]);
 
   const filteredNews = useMemo(
     () => filterNews(newsData, type),

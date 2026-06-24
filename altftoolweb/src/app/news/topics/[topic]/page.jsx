@@ -6,6 +6,9 @@ import {
   createCollectionPageJsonLd,
   createPageMetadata,
 } from "@/platform/seo/generateMetadata";
+import { getNewsDataServer } from "../../lib/getNewsDataServer";
+
+export const revalidate = 600; // Cache news feed for 10 minutes
 
 function slugify(value = "") {
   return String(value)
@@ -54,6 +57,7 @@ export default async function TopicPage({ params }) {
   const { topic } = await params;
   const label = resolveTopicLabel(topic);
   const topicSlug = slugify(label);
+  const newsData = await getNewsDataServer({ topic: label });
 
   return (
     <>
@@ -72,7 +76,7 @@ export default async function TopicPage({ params }) {
           ]),
         ]}
       />
-      <Feeds topic={label} title={`${label} News`} />
+      <Feeds topic={label} title={`${label} News`} initialNewsData={newsData} />
     </>
   );
 }
