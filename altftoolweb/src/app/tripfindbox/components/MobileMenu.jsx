@@ -3,12 +3,14 @@
 import { Menu, X } from "lucide-react";
 import Link from "next/link";
 import { tfbPath } from "@/app/tripfindbox/lib/tfbLink";
+import { useTripFindBoxContactInfo } from "@/app/tripfindbox/hooks/useTripFindBoxContactInfo";
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 
-export default function MobileMenu({ className, links, iconSize = 24 }) {
+export default function MobileMenu({ className, links, iconSize = 24, initialContact }) {
   const [open, setOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
+  const contact = useTripFindBoxContactInfo(initialContact);
   const panelRef = useRef(null);
   const buttonRef = useRef(null);
 
@@ -65,8 +67,8 @@ export default function MobileMenu({ className, links, iconSize = 24 }) {
               {link.label}
             </Link>
           ))}
-          <a className="mobile-menu-call" href="tel:+17147827278" onClick={() => setOpen(false)}>Call Now</a>
-          <a className="mobile-menu-phone" href="tel:+17147827278" onClick={() => setOpen(false)}>+1-714-782-7278</a>
+          <a className="mobile-menu-call" href={contact.href} onClick={() => setOpen(false)}>Call Now</a>
+          <a className="mobile-menu-phone" href={contact.href} onClick={() => setOpen(false)}>{contact.phone}</a>
         </nav>
       </aside>
     </div>

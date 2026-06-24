@@ -61,10 +61,10 @@ export default function AppDetailClient({ app, relatedApps }) {
   };
 
   return (
-    <main className="min-h-screen bg-[#f4f1e8] text-[#0f3f2e]">
+    <main className="min-h-screen bg-[var(--background)] text-[var(--foreground)]">
       <section className="mx-auto max-w-[1320px] px-4 pb-10 pt-8 sm:px-6 lg:px-8 lg:pb-12">
-        <nav className="flex flex-wrap items-center gap-2 text-[13px] font-bold text-[#5c6b62]">
-          <Link href="/apps" className="inline-flex items-center gap-1 text-[#5F8F00] hover:text-[#0f3f2e]">
+        <nav className="flex flex-wrap items-center gap-2 text-[13px] font-bold text-[var(--muted-foreground)]">
+          <Link href="/apps" className="inline-flex items-center gap-1 text-[var(--primary)] hover:text-[var(--foreground)]">
             <ChevronLeft size={16} aria-hidden="true" />
             Apps
           </Link>
@@ -77,14 +77,14 @@ export default function AppDetailClient({ app, relatedApps }) {
             <AppIconSvg app={app} className="h-28 w-28 rounded-[24px] shadow-[0_18px_40px_rgba(15,63,46,0.18)]" />
             <div className="min-w-0 flex-1">
               <div className="flex flex-wrap items-center gap-3">
-                <h1 className="text-[34px] font-black leading-tight tracking-normal text-[#0f3f2e] sm:text-[42px]">{app.name}</h1>
-                <BadgeCheck size={26} className="fill-[#5F8F00] text-white" aria-hidden="true" />
+                <h1 className="text-[34px] font-black leading-tight tracking-normal text-[var(--foreground)] sm:text-[42px]">{app.name}</h1>
+                <BadgeCheck size={26} className="fill-[var(--primary)] text-white" aria-hidden="true" />
               </div>
-              <p className="mt-3 max-w-2xl text-sm font-semibold leading-6 text-[#5c6b62]">{app.tagline}</p>
+              <p className="mt-3 max-w-2xl text-sm font-semibold leading-6 text-[var(--muted-foreground)]">{app.tagline}</p>
               <div className="mt-3 flex flex-wrap items-center gap-2">
-                <span className="text-base font-black text-[#0f3f2e]">{app.rating}</span>
+                <span className="text-base font-black text-[var(--foreground)]">{app.rating}</span>
                 <span className="text-sm text-amber-400">★★★★★</span>
-                <span className="text-sm font-semibold text-[#5c6b62]">({app.reviewCount} Reviews)</span>
+                <span className="text-sm font-semibold text-[var(--muted-foreground)]">({app.reviewCount} Reviews)</span>
               </div>
             </div>
           </div>
@@ -93,20 +93,20 @@ export default function AppDetailClient({ app, relatedApps }) {
             {stats.map(([label, value]) => {
               const Icon = statIcons[label];
               return (
-                <div key={label} className="min-h-[92px] rounded-[18px] border border-[#d9d4c6] bg-[#f8f5eb] p-4 shadow-[0_12px_28px_rgba(15,63,46,0.055)]">
-                  <div className="flex items-center gap-2 text-[11px] font-bold text-[#5c6b62]">
-                    <Icon size={15} className="text-[#5F8F00]" aria-hidden="true" />
+                <div key={label} className="min-h-[92px] rounded-[18px] border border-[var(--home-border)] bg-[var(--section-highlight)] p-4 shadow-[0_12px_28px_rgba(15,63,46,0.055)]">
+                  <div className="flex items-center gap-2 text-[11px] font-bold text-[var(--muted-foreground)]">
+                    <Icon size={15} className="text-[var(--primary)]" aria-hidden="true" />
                     {label}
                   </div>
-                  <p className="mt-3 text-sm font-black text-[#0f3f2e]">{value}</p>
+                  <p className="mt-3 text-sm font-black text-[var(--foreground)]">{value}</p>
                 </div>
               );
             })}
           </div>
 
           <div className="mt-6 flex flex-col gap-3 sm:flex-row">
-            <DownloadButton href={app.apkUrl} className="bg-[#5F8F00] text-white hover:bg-[#4f7800] sm:min-w-72" />
-            <button className="inline-flex min-h-12 items-center justify-center gap-2 rounded-[12px] border border-[#c8d99a] bg-[#f2f7dc] px-6 text-sm font-black text-[#0f3f2e] transition hover:bg-[#e8f8b9]">
+            <DownloadButton href={app.apkUrl} className="bg-[var(--primary)] text-white hover:bg-[var(--primary-hover)] sm:min-w-72" />
+            <button className="inline-flex min-h-12 items-center justify-center gap-2 rounded-[12px] border border-[color-mix(in_srgb,var(--primary)_24%,var(--home-border))] bg-[var(--home-primary-soft)] px-6 text-sm font-black text-[var(--foreground)] transition hover:bg-[var(--home-hover)]">
               <Heart size={18} aria-hidden="true" />
               Add to Wishlist
             </button>
@@ -120,13 +120,13 @@ export default function AppDetailClient({ app, relatedApps }) {
             const icons = [ShieldCheck, Sparkles, BadgeCheck, Wifi, MonitorSmartphone];
             const Icon = icons[index % icons.length];
             return (
-              <div key={item} className="flex min-h-[104px] items-center gap-4 rounded-[18px] border border-[#d9d4c6] bg-[#fffdf7] p-5 shadow-[0_12px_30px_rgba(15,63,46,0.065)]">
-                <div className="flex h-12 w-12 items-center justify-center rounded-[15px] bg-[#5F8F00] text-white">
+              <div key={item} className="flex min-h-[104px] items-center gap-4 rounded-[18px] border border-[var(--home-border)] bg-[var(--card)] p-5 shadow-[0_12px_30px_rgba(15,63,46,0.065)]">
+                <div className="flex h-12 w-12 items-center justify-center rounded-[15px] bg-[var(--primary)] text-white">
                   <Icon size={24} aria-hidden="true" />
                 </div>
                 <div>
-                  <p className="text-sm font-black text-[#0f3f2e]">{item}</p>
-                  <p className="text-xs font-semibold text-[#5c6b62]">Verified by AppHub</p>
+                  <p className="text-sm font-black text-[var(--foreground)]">{item}</p>
+                  <p className="text-xs font-semibold text-[var(--muted-foreground)]">Verified by AppHub</p>
                 </div>
               </div>
             );
@@ -135,11 +135,11 @@ export default function AppDetailClient({ app, relatedApps }) {
       </section>
 
       <section className="mx-auto max-w-[1320px] px-4 pb-12 sm:px-6 lg:px-8 lg:pb-14">
-        <div className="relative rounded-[28px] border border-[#d9d4c6]/70 bg-[#0f3f2e] p-5 shadow-[0_22px_54px_rgba(15,63,46,0.16)] md:p-7">
+        <div className="relative rounded-[28px] border border-[var(--home-border)] bg-[var(--footer-bg)] p-5 shadow-[0_22px_54px_rgba(55,49,120,0.16)] md:p-7">
           <button
             type="button"
             onClick={goToPreviousScreenshot}
-            className="absolute left-5 top-1/2 z-10 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full bg-[#5F8F00] text-white shadow-[0_12px_30px_rgba(15,63,46,0.18)] transition hover:-translate-x-0.5 hover:bg-[#4f7800]"
+            className="absolute left-5 top-1/2 z-10 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full bg-[var(--primary)] text-white shadow-[0_12px_30px_rgba(15,63,46,0.18)] transition hover:-translate-x-0.5 hover:bg-[var(--primary-hover)]"
             aria-label="Previous screenshot"
           >
             <ChevronLeft size={20} aria-hidden="true" />
@@ -159,7 +159,7 @@ export default function AppDetailClient({ app, relatedApps }) {
           <button
             type="button"
             onClick={goToNextScreenshot}
-            className="absolute right-5 top-1/2 z-10 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full bg-[#5F8F00] text-white shadow-[0_12px_30px_rgba(15,63,46,0.18)] transition hover:translate-x-0.5 hover:bg-[#4f7800]"
+            className="absolute right-5 top-1/2 z-10 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full bg-[var(--primary)] text-white shadow-[0_12px_30px_rgba(15,63,46,0.18)] transition hover:translate-x-0.5 hover:bg-[var(--primary-hover)]"
             aria-label="Next screenshot"
           >
             <ChevronRight size={20} aria-hidden="true" />
@@ -172,7 +172,7 @@ export default function AppDetailClient({ app, relatedApps }) {
                 onClick={() => setActiveScreenshot(index)}
                 aria-label={`Show screenshot ${index + 1}`}
                 className={`h-2.5 rounded-full transition-all ${
-                  activeScreenshot === index ? "w-8 bg-[#5F8F00]" : "w-2.5 bg-white/35"
+                  activeScreenshot === index ? "w-8 bg-[var(--primary)]" : "w-2.5 bg-white/35"
                 }`}
               />
             ))}
@@ -182,37 +182,37 @@ export default function AppDetailClient({ app, relatedApps }) {
 
       <section className="mx-auto grid max-w-[1320px] gap-8 px-4 pb-12 sm:px-6 lg:grid-cols-[1fr_0.48fr] lg:px-8 lg:pb-14">
         <div className="space-y-8">
-          <div className="rounded-[24px] border border-[#d9d4c6] bg-[#fffdf7] p-8 shadow-[0_16px_40px_rgba(15,63,46,0.075)]">
-            <h2 className="text-2xl font-black text-[#0f3f2e]">About {app.name}</h2>
-            <p className="mt-5 text-[15px] font-semibold leading-8 text-[#5c6b62]">{app.description}</p>
+          <div className="rounded-[24px] border border-[var(--home-border)] bg-[var(--card)] p-8 shadow-[0_16px_40px_rgba(15,63,46,0.075)]">
+            <h2 className="text-2xl font-black text-[var(--foreground)]">About {app.name}</h2>
+            <p className="mt-5 text-[15px] font-semibold leading-8 text-[var(--muted-foreground)]">{app.description}</p>
 
             <div className="mt-8 grid gap-4 sm:grid-cols-2">
               {app.features.map((feature) => (
-                <div key={feature} className="flex items-center gap-3 rounded-[16px] bg-[#f2f7dc] p-4 text-sm font-bold text-[#385145]">
-                  <BadgeCheck size={22} className="text-[#5F8F00]" aria-hidden="true" />
+                <div key={feature} className="flex items-center gap-3 rounded-[16px] bg-[var(--home-primary-soft)] p-4 text-sm font-bold text-[var(--foreground)]">
+                  <BadgeCheck size={22} className="text-[var(--primary)]" aria-hidden="true" />
                   {feature}
                 </div>
               ))}
             </div>
           </div>
 
-          <div className="rounded-[24px] border border-[#d9d4c6] bg-[#fffdf7] p-8 shadow-[0_16px_40px_rgba(15,63,46,0.075)]">
-            <h2 className="text-2xl font-black text-[#0f3f2e]">Ratings & Reviews</h2>
+          <div className="rounded-[24px] border border-[var(--home-border)] bg-[var(--card)] p-8 shadow-[0_16px_40px_rgba(15,63,46,0.075)]">
+            <h2 className="text-2xl font-black text-[var(--foreground)]">Ratings & Reviews</h2>
             <div className="mt-6 grid gap-9 lg:grid-cols-[0.38fr_1fr]">
               <div className="flex items-end gap-3">
-                <span className="text-7xl font-black text-[#0f3f2e]">{app.rating}</span>
+                <span className="text-7xl font-black text-[var(--foreground)]">{app.rating}</span>
                 <div className="pb-2">
                   <p className="text-amber-400">★★★★★</p>
-                  <p className="text-sm font-semibold text-[#5c6b62]">{app.reviewCount} Reviews</p>
+                  <p className="text-sm font-semibold text-[var(--muted-foreground)]">{app.reviewCount} Reviews</p>
                 </div>
               </div>
               <div className="space-y-3 pt-1">
                 {[5, 4, 3, 2, 1].map((rating, index) => (
-                  <div key={rating} className="grid grid-cols-[32px_1fr_44px] items-center gap-3 text-xs font-bold text-[#5c6b62]">
+                  <div key={rating} className="grid grid-cols-[32px_1fr_44px] items-center gap-3 text-xs font-bold text-[var(--muted-foreground)]">
                     <span>{rating} ★</span>
-                    <span className="h-4 overflow-hidden rounded-full bg-[#e3ddce]">
+                    <span className="h-4 overflow-hidden rounded-full bg-[var(--home-border)]">
                       <span
-                        className="block h-full rounded-full bg-[#0f3f2e]"
+                        className="block h-full rounded-full bg-[var(--primary)]"
                         style={{ width: `${[88, 42, 24, 12, 8][index]}%` }}
                       />
                     </span>
@@ -224,13 +224,13 @@ export default function AppDetailClient({ app, relatedApps }) {
 
             <div className="mt-9 grid gap-5 sm:grid-cols-2">
               {app.reviews.map((review) => (
-                <article key={`${review.name}-${review.date}`} className="min-h-[154px] rounded-[20px] border border-[#d9d4c6] bg-[#f8f5eb] p-6 shadow-[0_12px_30px_rgba(15,63,46,0.065)]">
+                <article key={`${review.name}-${review.date}`} className="min-h-[154px] rounded-[20px] border border-[var(--home-border)] bg-[var(--section-highlight)] p-6 shadow-[0_12px_30px_rgba(15,63,46,0.065)]">
                   <div className="flex items-center justify-between gap-3">
-                    <p className="font-black text-[#0f3f2e]">{review.name}</p>
-                    <p className="text-xs font-semibold text-[#5c6b62]">{review.date}</p>
+                    <p className="font-black text-[var(--foreground)]">{review.name}</p>
+                    <p className="text-xs font-semibold text-[var(--muted-foreground)]">{review.date}</p>
                   </div>
-                  <p className="mt-3 text-sm font-semibold leading-6 text-[#5c6b62]">{review.text}</p>
-                  <p className="mt-3 text-xs font-bold text-[#5F8F00]">Helpful</p>
+                  <p className="mt-3 text-sm font-semibold leading-6 text-[var(--muted-foreground)]">{review.text}</p>
+                  <p className="mt-3 text-xs font-bold text-[var(--primary)]">Helpful</p>
                 </article>
               ))}
             </div>
@@ -238,33 +238,33 @@ export default function AppDetailClient({ app, relatedApps }) {
         </div>
 
         <aside className="space-y-8">
-          <div className="rounded-[24px] border border-[#d9d4c6] bg-[#fffdf7] p-8 shadow-[0_16px_40px_rgba(15,63,46,0.075)]">
-            <h2 className="text-xl font-black text-[#0f3f2e]">App Information</h2>
+          <div className="rounded-[24px] border border-[var(--home-border)] bg-[var(--card)] p-8 shadow-[0_16px_40px_rgba(15,63,46,0.075)]">
+            <h2 className="text-xl font-black text-[var(--foreground)]">App Information</h2>
             <dl className="mt-6 space-y-5">
               {stats.map(([label, value]) => (
-                <div key={label} className="flex items-center justify-between gap-4 border-b border-[#e3ddce] pb-3 text-sm last:border-b-0">
-                  <dt className="font-bold text-[#5c6b62]">{label}</dt>
-                  <dd className="text-right font-extrabold text-[#0f3f2e]">{value}</dd>
+                <div key={label} className="flex items-center justify-between gap-4 border-b border-[var(--home-border)] pb-3 text-sm last:border-b-0">
+                  <dt className="font-bold text-[var(--muted-foreground)]">{label}</dt>
+                  <dd className="text-right font-extrabold text-[var(--foreground)]">{value}</dd>
                 </div>
               ))}
-              <div className="flex items-center justify-between gap-4 border-b border-[#e3ddce] pb-3 text-sm">
-                <dt className="font-bold text-[#5c6b62]">Compatibility</dt>
-                <dd className="text-right font-extrabold text-[#0f3f2e]">{app.androidRequired}</dd>
+              <div className="flex items-center justify-between gap-4 border-b border-[var(--home-border)] pb-3 text-sm">
+                <dt className="font-bold text-[var(--muted-foreground)]">Compatibility</dt>
+                <dd className="text-right font-extrabold text-[var(--foreground)]">{app.androidRequired}</dd>
               </div>
               <div className="flex items-center justify-between gap-4 text-sm">
-                <dt className="font-bold text-[#5c6b62]">File Type</dt>
-                <dd className="text-right font-extrabold text-[#0f3f2e]">APK</dd>
+                <dt className="font-bold text-[var(--muted-foreground)]">File Type</dt>
+                <dd className="text-right font-extrabold text-[var(--foreground)]">APK</dd>
               </div>
             </dl>
           </div>
 
-          <div className="rounded-[24px] border border-[#d9d4c6] bg-[#0f3f2e] p-8 shadow-[0_16px_40px_rgba(15,63,46,0.12)]">
+          <div className="rounded-[24px] border border-[var(--home-border)] bg-[var(--footer-bg)] p-8 shadow-[0_16px_40px_rgba(15,63,46,0.12)]">
             <h2 className="text-2xl font-black text-white">How To Install</h2>
             <ol className="mt-7 space-y-6">
               {["Tap Download APK", "Open the downloaded file", "Allow install from browser if asked", "Tap Install and open the app"].map(
                 (step, index) => (
                   <li key={step} className="flex gap-3">
-                    <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#5F8F00] text-sm font-black text-white">
+                    <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[var(--primary)] text-sm font-black text-white">
                       {index + 1}
                     </span>
                     <span className="pt-1.5 text-sm font-bold text-white/82">{step}</span>
@@ -277,7 +277,7 @@ export default function AppDetailClient({ app, relatedApps }) {
       </section>
 
       <section className="mx-auto max-w-[1320px] px-4 pb-16 sm:px-6 lg:px-8 lg:pb-20">
-        <h2 className="text-xl font-black text-[#0f3f2e]">You may also like</h2>
+        <h2 className="text-xl font-black text-[var(--foreground)]">You may also like</h2>
         <div className="mt-5 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {relatedApps.map((relatedApp) => (
             <AppCard key={relatedApp.slug} app={relatedApp} compact descriptionFullWidth />
@@ -285,7 +285,7 @@ export default function AppDetailClient({ app, relatedApps }) {
         </div>
       </section>
 
-      <div className="sticky bottom-0 z-20 border-t border-[#254d3d] bg-[#0f3f2e]/96 p-4 shadow-[0_-12px_34px_rgba(15,63,46,0.2)] backdrop-blur">
+      <div className="sticky bottom-0 z-20 border-t border-[var(--home-border)] bg-[color-mix(in_srgb,var(--footer-bg)_96%,transparent)] p-4 shadow-[0_-12px_34px_rgba(55,49,120,0.2)] backdrop-blur">
         <div className="mx-auto flex max-w-[1320px] flex-col gap-4 px-4 sm:flex-row sm:items-center sm:justify-between sm:px-6 lg:px-8">
           <div className="flex items-center gap-3">
             <AppIconSvg app={app} className="h-14 w-14 rounded-[16px] shadow-[0_12px_24px_rgba(15,63,46,0.18)]" />
@@ -294,7 +294,7 @@ export default function AppDetailClient({ app, relatedApps }) {
               <p className="text-xs font-semibold text-white/68">{app.downloads} downloads · {app.apkSize} APK</p>
             </div>
           </div>
-          <DownloadButton href={app.apkUrl} className="w-full bg-[#5F8F00] text-white hover:bg-[#4f7800] sm:min-w-72 sm:w-auto" />
+          <DownloadButton href={app.apkUrl} className="w-full bg-[var(--primary)] text-white hover:bg-[var(--primary-hover)] sm:min-w-72 sm:w-auto" />
         </div>
       </div>
     </main>

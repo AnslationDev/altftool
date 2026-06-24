@@ -1,6 +1,12 @@
 import { notFound } from "next/navigation";
 import AppDetailClient from "../components/AppDetailClient";
 import { apps, getAppBySlug, getRelatedApps } from "../data/apps";
+import JsonLd from "@/platform/seo/JsonLd";
+import {
+  absoluteUrl,
+  createBreadcrumbJsonLd,
+  createPageMetadata,
+} from "@/platform/seo/generateMetadata";
 
 export function generateStaticParams() {
   return apps.map((app) => ({ slug: app.slug }));
@@ -16,24 +22,58 @@ export async function generateMetadata({ params }) {
     };
   }
 
-  return {
-    title: `${app.name} APK Download`,
+  return createPageMetadata({
+    title: `${app.name} APK Download | AltFTool Apps`,
     description: app.shortDescription,
-    alternates: {
-      canonical: `/apps/${app.slug}`,
+    path: `/apps/${app.slug}`,
+    image: app.iconUrl,
+    keywords: [
+      app.name,
+      `${app.name} APK`,
+      `${app.name} Android app`,
+      app.category,
+      "AltFTool apps",
+    ],
+  });
+}
+
+function createAppJsonLd(app) {
+  if (!app?.slug) return null;
+
+  return {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "@id": `${absoluteUrl(`/apps/${app.slug}`)}#software`,
+    name: app.name,
+    description: app.description || app.shortDescription,
+    url: absoluteUrl(`/apps/${app.slug}`),
+    image: absoluteUrl(app.iconUrl),
+    applicationCategory: app.category || "MobileApplication",
+    applicationSubCategory: app.category,
+    operatingSystem: app.androidRequired || "Android",
+    softwareVersion: app.version,
+    fileSize: app.apkSize,
+    downloadUrl: absoluteUrl(app.apkUrl),
+    author: {
+      "@type": "Organization",
+      name: app.developer || "AltFTool Team",
     },
-    openGraph: {
-      title: `${app.name} APK Download`,
-      description: app.shortDescription,
-      url: `/apps/${app.slug}`,
-      images: [
-        {
-          url: app.iconUrl,
-          width: 256,
-          height: 256,
-          alt: `${app.name} icon`,
-        },
-      ],
+    publisher: {
+      "@type": "Organization",
+      name: "AltFTool",
+      url: absoluteUrl("/"),
+    },
+    aggregateRating: app.rating
+      ? {
+          "@type": "AggregateRating",
+          ratingValue: app.rating,
+          reviewCount: String(app.reviewCount || "0").replace(/[^0-9.]/g, "") || undefined,
+        }
+      : undefined,
+    offers: {
+      "@type": "Offer",
+      price: "0",
+      priceCurrency: "USD",
     },
   };
 }
@@ -46,5 +86,20 @@ export default async function AppDetailPage({ params }) {
     notFound();
   }
 
-  return <AppDetailClient app={app} relatedApps={getRelatedApps(slug)} />;
+  return (
+    <>
+      <JsonLd
+        id={`${app.slug}-app-schema`}
+        data={[
+          createAppJsonLd(app),
+          createBreadcrumbJsonLd([
+            { name: "Home", path: "/" },
+            { name: "Apps", path: "/apps" },
+            { name: app.name, path: `/apps/${app.slug}` },
+          ]),
+        ]}
+      />
+      <AppDetailClient app={app} relatedApps={getRelatedApps(slug)} />
+    </>
+  );
 }

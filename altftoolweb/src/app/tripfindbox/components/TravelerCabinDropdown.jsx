@@ -6,6 +6,7 @@ import { createPortal } from "react-dom";
 import FloatingCallIcon from "./FloatingCallIcon";
 import { announceBookingPopupOpen, useBookingPopupCoordinator } from "@/app/tripfindbox/lib/bookingPopupBus";
 import { getFloatingLayerStyle, prepareBookingPopup } from "@/app/tripfindbox/lib/bookingInteraction";
+import { useTripFindBoxContactInfo } from "@/app/tripfindbox/hooks/useTripFindBoxContactInfo";
 
 const cabins = ["Economy", "Premium Economy", "Business", "First"];
 
@@ -26,6 +27,7 @@ export default function TravelerCabinDropdown({ value, onChange }) {
   const buttonRef = useRef(null);
   const popupId = useId();
   const closePanel = useCallback(() => setOpen(false), []);
+  const contact = useTripFindBoxContactInfo();
   const isDefaultTravelers =
     value.adults === 1 && value.children === 0 && value.infants === 0 && value.cabin === "Economy";
 
@@ -179,10 +181,10 @@ export default function TravelerCabinDropdown({ value, onChange }) {
           >
             Done
           </button>
-          <a className="mobile-picker-callbar" href="tel:+17147827278">
+          <a className="mobile-picker-callbar" href={contact.href}>
             <span><FloatingCallIcon /></span>
-            <b>Call &amp; Get Unpublished Flight Deals!</b>
-            <strong>+1-714-782-7278</strong>
+            <b>{contact.mobileCallText}</b>
+            <strong>{contact.phone}</strong>
           </a>
         </div>,
         document.body,

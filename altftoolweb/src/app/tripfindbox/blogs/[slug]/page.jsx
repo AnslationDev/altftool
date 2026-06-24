@@ -3,11 +3,12 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Footer } from "@/app/tripfindbox/components/HeroSection";
 import ResultsHeader from "@/app/tripfindbox/components/ResultsHeader";
-import FloatingCallIcon from "@/app/tripfindbox/components/FloatingCallIcon";
+import MobileResultsCallBar from "@/app/tripfindbox/components/MobileResultsCallBar";
 import { buildBlogSections, fetchBlogPosts, getBlogPost, getRelatedBlogs } from "@/app/tripfindbox/lib/blogData";
+import { getTripFindBoxContactInfo } from "@/app/tripfindbox/lib/contactInfo";
 import { tfbPath } from "@/app/tripfindbox/lib/tfbLink";
 
-export const revalidate = 1800;
+export const dynamic = "force-dynamic";
 
 export async function generateMetadata({ params }) {
   const { slug } = await params;
@@ -27,7 +28,10 @@ export async function generateMetadata({ params }) {
 
 export default async function BlogDetailPage({ params }) {
   const { slug } = await params;
-  const post = await getBlogPost(slug);
+  const [post, contact] = await Promise.all([
+    getBlogPost(slug),
+    getTripFindBoxContactInfo(),
+  ]);
 
   if (!post) {
     notFound();
@@ -39,7 +43,7 @@ export default async function BlogDetailPage({ params }) {
 
   return (
     <main className="site-route-page tripnest-blog-page blog-detail-page">
-      <ResultsHeader />
+      <ResultsHeader initialContact={contact} />
       <section className="blog-detail-hero">
         <Link href="/tripfindbox/blogs" className="blog-back-link">
           <ArrowLeft size={18} />
@@ -128,13 +132,7 @@ export default async function BlogDetailPage({ params }) {
         </div>
       </section>
 
-      <aside className="mobile-results-callbar" aria-label="Call TripFindBox support">
-        <a href="tel:+17147827278">
-          <span><FloatingCallIcon /></span>
-          <strong>Call &amp; Get Unpublished Flight Deals!</strong>
-          <b>+1-714-782-7278</b>
-        </a>
-      </aside>
+      <MobileResultsCallBar initialContact={contact} />
 
       <Footer />
     </main>
