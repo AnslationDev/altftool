@@ -129,6 +129,31 @@ export const LEGAL_ROUTE_LINKS = [
   SITE_ROUTES.cookie,
 ];
 
+// Top tools surfaced as server-rendered links in the footer (every page) to push
+// crawl equity to the highest-value canonical tool pages.
+export const POPULAR_TOOL_LINKS = [
+  { label: "Image Resizer", href: "/tools/all/image-resizer" },
+  { label: "Image Compressor", href: "/tools/all/image-compressor" },
+  { label: "Unit Converter", href: "/tools/all/unit-converter" },
+  { label: "Base Converter", href: "/tools/all/base-converter" },
+  { label: "Scientific Notation Calculator", href: "/tools/all/scientific-notation-calculator" },
+  { label: "Invoice Generator", href: "/tools/all/invoice-generator" },
+  { label: "Web Speed Checker", href: "/tools/all/web-speed-checker" },
+  { label: "Password Generator", href: "/tools/all/password-generator" },
+  { label: "BMI Calculator", href: "/tools/all/bmi-calculator" },
+  { label: "Age Calculator", href: "/tools/all/age-calculator" },
+  { label: "Percentage Calculator", href: "/tools/all/percentage-calculator" },
+  { label: "Markdown Preview", href: "/tools/all/markdown-preview" },
+  { label: "Resume Maker", href: "/tools/all/resume-maker" },
+  { label: "Meme Generator", href: "/tools/all/meme-generator" },
+  { label: "Currency Converter", href: "/tools/all/currency-converter" },
+  { label: "UUID Generator", href: "/tools/all/uuid-generator" },
+  { label: "Aspect Ratio Calculator", href: "/tools/all/aspect-ratio-calculator" },
+  { label: "Barcode Generator", href: "/tools/all/barcode-generator" },
+  { label: "Lorem Ipsum Generator", href: "/tools/all/lorem-ipsum-generator" },
+  { label: "Emoji Hub", href: "/tools/all/emoji-hub" },
+];
+
 const HIDDEN_PUBLIC_SHELL_PREFIXES = ["/search-eng"];
 const HIDDEN_PUBLIC_SHELL_PATTERNS = [];
 

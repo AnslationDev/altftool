@@ -1,15 +1,14 @@
 import { getSiteUrl } from "@/platform/seo/generateMetadata";
 
 export default function robots() {
-  const siteUrl = getSiteUrl().replace("www.", "");
   return {
     rules: [
       {
         userAgent: "*",
         allow: "/",
-        disallow: ["/api/", "/_next/", "/status", "/buysmart/redirect"],
+        disallow: ["/api/", "/_next/"],
       },
     ],
-    sitemap: `${siteUrl}/sitemap.xml`,
+    sitemap: `${getSiteUrl()}/sitemap.xml`,
   };
 }

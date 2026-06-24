@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import SocialLinks from "../SocialLinks";
-import { FOOTER_ROUTE_GROUPS, LEGAL_ROUTE_LINKS } from "./siteRoutes";
+import { FOOTER_ROUTE_GROUPS, LEGAL_ROUTE_LINKS, POPULAR_TOOL_LINKS } from "./siteRoutes";
 
 const HOME_FOOTER_GROUPS = [
   {
@@ -170,6 +170,29 @@ const Footer = () => {
           </div>
         </div>
       </div>
+
+      <nav
+        aria-label="Popular tools"
+        className="border-t border-[var(--anslation-ds-footer-border)]"
+      >
+        <div className="section mx-auto py-6">
+          <h3 className="mb-3 text-xs font-semibold uppercase tracking-[0.08em] text-white">
+            Popular Tools
+          </h3>
+          <ul className="flex flex-wrap gap-x-5 gap-y-2">
+            {POPULAR_TOOL_LINKS.map((link) => (
+              <li key={link.href}>
+                <Link
+                  href={link.href}
+                  className="text-sm text-[var(--anslation-ds-footer-muted)] transition-colors hover:text-[var(--anslation-ds-primary-hover)]"
+                >
+                  {link.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </nav>
 
       <div className="border-t border-[var(--anslation-ds-footer-border)]">
         <div className="section mx-auto flex flex-col gap-3 py-5 text-xs text-[var(--anslation-ds-footer-muted)] sm:flex-row sm:items-center sm:justify-between">

@@ -9,7 +9,7 @@ import {
   createToolJsonLd,
 } from "@/platform/seo/generateMetadata";
 import { buildToolSeoContent } from "../../toolSeoContent";
-import { ToolSeoContentServer, RelatedToolsServer } from "../../ToolSeoComponents";
+import ToolSeoSection from "../../ToolSeoSection";
 
 export async function generateMetadata({ params }) {
   const { slug } = await params;
@@ -53,10 +53,8 @@ export default async function ToolPage({ params }) {
           ]),
         ]}
       />
-      <ToolClient slug={slug} category={category}>
-        <ToolSeoContentServer slug={slug} tool={tool} />
-        <RelatedToolsServer slug={slug} tool={tool} />
-      </ToolClient>
+      <ToolClient slug={slug} category={category} />
+      <ToolSeoSection slug={slug} tool={tool} category={category} />
     </>
   );
 }

@@ -58,6 +58,8 @@ export async function generateMetadata({ params }) {
     path: `/blogs/category/${category}`,
     image: categoryPosts[0]?.image,
     keywords: [categoryLabel, "AltFTool blog", `${categoryLabel} guides`],
+    // Avoid indexing near-empty category archives.
+    noindex: (categoryPosts?.length || 0) < 2,
   });
 }
 

@@ -1,3 +1,5 @@
+import { toolContentOverrides } from "./toolContentOverrides";
+
 const workflowTemplates = {
   developer: {
     examples: [
@@ -6,11 +8,6 @@ const workflowTemplates = {
       ["Review output quickly", "Use the generated result as a copy-ready starting point for your next task."],
     ],
     steps: ["Add your code or data sample.", "Choose the formatter, converter, or analyzer action.", "Review the output and copy the final result."],
-    benefits: [
-      "Saves dev time: no setup needed.",
-      "Runs in-browser: completely secure, no server data transfer.",
-      "Developer friendly: handles payloads, formats, and cleanups easily.",
-    ],
   },
   converter: {
     examples: [
@@ -19,11 +16,6 @@ const workflowTemplates = {
       ["Create a clean output", "Keep the result ready for download, copy, or quick reuse."],
     ],
     steps: ["Paste or upload the source input.", "Select the conversion mode that matches your target format.", "Copy or download the converted output."],
-    benefits: [
-      "Instant results: no waiting, converts instantly.",
-      "Highly accurate: precise format handling.",
-      "Universal access: works on any device without installation.",
-    ],
   },
   calculator: {
     examples: [
@@ -32,11 +24,6 @@ const workflowTemplates = {
       ["Save a clear result", "Use the final number in notes, reports, or next-step decisions."],
     ],
     steps: ["Enter the values you already know.", "Adjust the options for your scenario.", "Use the calculated result for comparison or planning."],
-    benefits: [
-      "Precise calculations: instant results without manual math.",
-      "Scenario comparison: change variables on the fly.",
-      "Easy export: copy your results in one click.",
-    ],
   },
   media: {
     examples: [
@@ -45,11 +32,6 @@ const workflowTemplates = {
       ["Download the final file", "Keep the output ready for testing, upload, or documentation."],
     ],
     steps: ["Upload or paste the local asset data.", "Choose the output mode or preview option.", "Download or copy the finished result."],
-    benefits: [
-      "No upload lag: fast processing directly in your browser.",
-      "Format support: handles major media types.",
-      "Privacy first: your assets stay on your device, no server storage.",
-    ],
   },
   default: {
     examples: [
@@ -58,11 +40,6 @@ const workflowTemplates = {
       ["Keep output reusable", "Copy the finished result into your project, document, or daily workflow."],
     ],
     steps: ["Add the input for the task.", "Set the available options for the result you need.", "Review the output and reuse it where needed."],
-    benefits: [
-      "Completely free: unlimited usage for all tasks.",
-      "No registration: start using instantly without signup.",
-      "Secure & private: operations run locally in your browser.",
-    ],
   },
 };
 
@@ -101,27 +78,53 @@ export function buildToolSeoContent(slug, tool = {}) {
   const template = chooseTemplate(categories, slug, name);
   const summary = buildMetaDescription(name, description, primaryCategory);
 
+  const categoryLabel = primaryCategory ? primaryCategory.toLowerCase() : "online";
+  const override = toolContentOverrides[slug] || null;
+
+  const intro =
+    override?.intro ||
+    `${name} is a free, browser-based ${categoryLabel} tool on AltFTool. ` +
+      `${description ? `${description} ` : ""}` +
+      `Everything runs in your browser, so you can use ${name} instantly — no signup, no install, and no uploading your data to a server.`;
+
+  // Examples (benefits): prefer hand-written overrides, else inject the tool name
+  // into the category template so each page's copy is unique (not a clone).
+  const examples = override?.benefits?.length
+    ? override.benefits.map(([title, body]) => ({ title, body }))
+    : template.examples.map(([title, body]) => ({
+        title,
+        body: `${body} With ${name}, this stays fast and private in your browser.`,
+      }));
+
+  const faqs = override?.faqs?.length
+    ? override.faqs.map(([question, answer]) => ({ question, answer }))
+    : [
+        {
+          question: `Is ${name} free to use?`,
+          answer: `Yes. ${name} is available as a free online tool on AltFTool.`,
+        },
+        {
+          question: `What can I use ${name} for?`,
+          answer: description || `${name} helps with ${primaryCategory.toLowerCase()} workflows and quick browser-based tasks.`,
+        },
+        {
+          question: `Does ${name} work on mobile?`,
+          answer: `Yes. ${name} is designed for modern desktop and mobile browsers.`,
+        },
+      ];
+
   return {
     name,
     heading: `${name} workflows`,
     summary,
+    intro,
     metaDescription: summary,
-    examples: template.examples.map(([title, body]) => ({ title, body })),
-    steps: template.steps,
-    benefits: template.benefits,
-    faqs: [
-      {
-        question: `Is ${name} free to use?`,
-        answer: `Yes. ${name} is available as a free online tool on AltFTool.`,
-      },
-      {
-        question: `What can I use ${name} for?`,
-        answer: description || `${name} helps with ${primaryCategory.toLowerCase()} workflows and quick browser-based tasks.`,
-      },
-      {
-        question: `Does ${name} work on mobile?`,
-        answer: `Yes. ${name} is designed for modern desktop and mobile browsers.`,
-      },
+    useCases: override?.useCases || [],
+    examples,
+    steps: [
+      `Open ${name} on AltFTool — it loads instantly in your browser.`,
+      ...template.steps,
     ],
+    faqs,
   };
 }
