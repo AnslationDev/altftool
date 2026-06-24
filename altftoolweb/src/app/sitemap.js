@@ -16,7 +16,6 @@ import wattpadBooks from "@/app/wattpad/data/books.json";
 import wattpadCategories from "@/app/wattpad/data/categories.json";
 import { getSiteUrl, normalizeSlug } from "@/platform/seo/generateMetadata";
 import newsData from "../../public/data/newsdata.json";
-import topicsData from "../../public/data/topics.json";
 import { TOOLS as altPdfTools } from "@/app/altflovepdf/toolsData";
 import { services as homeservServices } from "@/app/homeserv/services-data";
 
@@ -131,15 +130,6 @@ function pushUnique(entries, seen, path, options) {
   if (!path || seen.has(path)) return;
   seen.add(path);
   entries.push(sitemapEntry(path, options));
-}
-
-function normalizeTopicSlug(value = "") {
-  return String(value)
-    .toLowerCase()
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "")
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/(^-|-$)/g, "");
 }
 
 function firestoreCollectionUrl(path, pageSize = 100) {
@@ -275,20 +265,15 @@ export default async function sitemap() {
     });
   }
 
-  for (const [slug, tool] of Object.entries(toolMetaMap)) {
+  // Only the canonical /tools/all/<slug> URL goes in the sitemap.
+  // The /tools/<category>/<slug> route still works for users but it canonicalises
+  // to /tools/all/<slug>; listing it caused the "Alternative page with proper
+  // canonical tag" duplicates, so it is intentionally excluded here.
+  for (const slug of Object.keys(toolMetaMap)) {
     pushUnique(entries, seen, `/tools/all/${slug}`, {
       priority: 0.78,
       changeFrequency: "monthly",
     });
-
-    const categories = Array.isArray(tool.category) ? tool.category : [tool.category];
-    const primaryCategory = normalizeSlug(categories.find(Boolean) || "all");
-    if (primaryCategory && primaryCategory !== "all") {
-      pushUnique(entries, seen, `/tools/${primaryCategory}/${slug}`, {
-        priority: 0.68,
-        changeFrequency: "monthly",
-      });
-    }
   }
 
   for (const blog of getAllBlogs()) {
@@ -476,15 +461,8 @@ export default async function sitemap() {
     }
   }
 
-  for (const topic of (topicsData.topics || []).slice(0, 200)) {
-    const slug = normalizeTopicSlug(topic);
-    if (slug) {
-      pushUnique(entries, seen, `/news/topics/${slug}`, {
-        priority: 0.42,
-        changeFrequency: "weekly",
-      });
-    }
-  }
+  // News topic pages are noindexed (client-loaded feeds, thin server content),
+  // so they are intentionally excluded from the sitemap to save crawl budget.
 
   // Altf Love PDF tool pages (/altflovepdf/[toolSlug])
   for (const tool of altPdfTools || []) {

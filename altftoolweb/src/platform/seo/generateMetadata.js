@@ -95,6 +95,7 @@ export function createPageMetadata({
   image,
   keywords = [],
   type = "website",
+  noindex = false,
 } = {}) {
   const url = absoluteUrl(path);
   const imageUrl = absoluteUrl(image || siteConfig.defaultImagePath);
@@ -142,10 +143,10 @@ export function createPageMetadata({
       images: [imageUrl],
     },
     robots: {
-      index: true,
+      index: !noindex,
       follow: true,
       googleBot: {
-        index: true,
+        index: !noindex,
         follow: true,
         "max-image-preview": "large",
         "max-snippet": -1,
