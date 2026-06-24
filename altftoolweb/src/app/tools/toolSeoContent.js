@@ -1,4 +1,6 @@
 import { toolContentOverrides } from "./toolContentOverrides";
+import { getSeoConfigSnapshot } from "@/platform/seo/seoConfigSource";
+import { resolveContent } from "@altftool/core/seo/resolver";
 
 const workflowTemplates = {
   developer: {
@@ -80,23 +82,31 @@ export function buildToolSeoContent(slug, tool = {}) {
 
   const categoryLabel = primaryCategory ? primaryCategory.toLowerCase() : "online";
   const override = toolContentOverrides[slug] || null;
+  // ALTF Engine: admin-managed per-page content override (highest precedence).
+  // Empty/disabled => {} so behavior is identical to before.
+  const central = resolveContent(getSeoConfigSnapshot(), `/tools/all/${slug}`);
 
   const intro =
+    central.intro ||
     override?.intro ||
     `${name} is a free, browser-based ${categoryLabel} tool on AltFTool. ` +
       `${description ? `${description} ` : ""}` +
       `Everything runs in your browser, so you can use ${name} instantly — no signup, no install, and no uploading your data to a server.`;
 
-  // Examples (benefits): prefer hand-written overrides, else inject the tool name
-  // into the category template so each page's copy is unique (not a clone).
-  const examples = override?.benefits?.length
+  // Examples (benefits): central admin override > hand-written code override >
+  // category template (with the tool name injected so copy stays unique).
+  const examples = central.benefits?.length
+    ? central.benefits.map((b) => ({ title: b.title, body: b.body }))
+    : override?.benefits?.length
     ? override.benefits.map(([title, body]) => ({ title, body }))
     : template.examples.map(([title, body]) => ({
         title,
         body: `${body} With ${name}, this stays fast and private in your browser.`,
       }));
 
-  const faqs = override?.faqs?.length
+  const faqs = central.faqs?.length
+    ? central.faqs.map((f) => ({ question: f.q, answer: f.a }))
+    : override?.faqs?.length
     ? override.faqs.map(([question, answer]) => ({ question, answer }))
     : [
         {
@@ -115,11 +125,12 @@ export function buildToolSeoContent(slug, tool = {}) {
 
   return {
     name,
+    h1: central.h1 || name,
     heading: `${name} workflows`,
     summary,
     intro,
     metaDescription: summary,
-    useCases: override?.useCases || [],
+    useCases: central.useCases?.length ? central.useCases : override?.useCases || [],
     examples,
     steps: [
       `Open ${name} on AltFTool — it loads instantly in your browser.`,

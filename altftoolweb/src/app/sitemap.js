@@ -15,6 +15,8 @@ import { getTop9Items } from "@/app/top9/data/getTop9Items";
 import wattpadBooks from "@/app/wattpad/data/books.json";
 import wattpadCategories from "@/app/wattpad/data/categories.json";
 import { getSiteUrl, normalizeSlug } from "@/platform/seo/generateMetadata";
+import { loadSeoConfig } from "@/platform/seo/seoConfigSource";
+import { resolveSitemap } from "@altftool/core/seo/resolver";
 import newsData from "../../public/data/newsdata.json";
 import { TOOLS as altPdfTools } from "@/app/altflovepdf/toolsData";
 import { services as homeservServices } from "@/app/homeserv/services-data";
@@ -128,10 +130,31 @@ function sitemapEntry(path, options = {}) {
   };
 }
 
+// ALTF Engine: central SEO config for this sitemap build (null = inert).
+let activeSeoConfig = null;
+
 function pushUnique(entries, seen, path, options) {
   if (!path || seen.has(path)) return;
+
+  let opts = options;
+  if (activeSeoConfig) {
+    try {
+      const sm = resolveSitemap(activeSeoConfig, { path });
+      if (sm && sm.include === false) return; // excluded by central config
+      if (sm && (sm.priority !== undefined || sm.changeFreq !== undefined)) {
+        opts = {
+          ...options,
+          priority: sm.priority !== undefined ? sm.priority : options?.priority,
+          changeFrequency: sm.changeFreq !== undefined ? sm.changeFreq : options?.changeFrequency,
+        };
+      }
+    } catch {
+      opts = options; // never let the engine break sitemap generation
+    }
+  }
+
   seen.add(path);
-  entries.push(sitemapEntry(path, options));
+  entries.push(sitemapEntry(path, opts));
 }
 
 function firestoreCollectionUrl(path, pageSize = 100) {
@@ -244,6 +267,9 @@ async function getLiveSitemapCollections() {
 export default async function sitemap() {
   const entries = [];
   const seen = new Set();
+  // ALTF Engine: load central config once per build. Returns an empty/disabled
+  // config (inert) unless the engine is enabled, so output is unchanged by default.
+  activeSeoConfig = await loadSeoConfig().catch(() => null);
   const liveCollections = await getLiveSitemapCollections();
   const sitemapBlogs = [...getAllBlogs(), ...liveCollections.firebaseBlogs];
 

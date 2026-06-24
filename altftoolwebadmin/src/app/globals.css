@@ -14,9 +14,29 @@
   --color-muted: var(--muted);
   --color-border: var(--border);
   --color-card: var(--surface);
+  /* Semantic surfaces + status colors (so bg-card, bg-surface-soft,
+     bg-danger-soft, text-success, etc. resolve as Tailwind utilities). */
+  --color-surface: var(--surface);
+  --color-surface-soft: var(--surface-soft);
+  --color-primary-soft: var(--anslation-ds-primary-soft);
+  --color-accent: var(--anslation-ds-accent);
+  --color-accent-soft: var(--anslation-ds-accent-soft);
+  --color-danger: var(--danger);
+  --color-danger-soft: var(--danger-soft);
+  --color-success: var(--success);
+  --color-success-soft: var(--success-soft);
+  --color-warning: var(--warning);
+  --color-warning-soft: var(--warning-soft);
+  --color-info: var(--info);
+  --color-info-soft: var(--info-soft);
   --radius-sm: var(--radius-sm);
   --radius-md: var(--radius-md);
   --radius-lg: var(--radius-lg);
+  --animate-slide-in: slide-in 0.3s ease-out;
+  @keyframes slide-in {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
 }
 
 /* =========================================

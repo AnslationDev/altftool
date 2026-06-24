@@ -1,5 +1,7 @@
 import { NextResponse } from "next/server";
 import { toolMetaMap } from "./platform/registry/toolMetaMap.js";
+import { getActiveRedirects } from "./platform/seo/redirectSource.js";
+import { resolveRedirect } from "@altftool/core/seo/resolver";
 
 const REDIRECTS_MAP = {
   "/blog": "/blogs",
@@ -16,19 +18,31 @@ const REDIRECTS_MAP = {
   "/rss": "/rss.xml",
 };
 
-export function proxy(request) {
+export async function proxy(request) {
   const url = request.nextUrl.clone();
   const host = request.headers.get("host") || "";
   let pathname = url.pathname;
   let changed = false;
+  let statusCode = 301;
 
   // 1. Force Apex domain: redirect www.altftool.com -> altftool.com
   if (host.startsWith("www.")) {
     changed = true;
   }
 
-  // 2. Perform path mapping to resolve redirect chains in 1 hop
-  if (REDIRECTS_MAP[pathname]) {
+  // 2a. ALTF Engine central redirects (admin-managed, no deploy).
+  //     Inert when the engine is off: getActiveRedirects() returns [] instantly.
+  const central = resolveRedirect(await getActiveRedirects(), pathname);
+  if (central && central.destination) {
+    // External destination -> redirect straight there with the configured status.
+    if (/^https?:\/\//i.test(central.destination)) {
+      return NextResponse.redirect(central.destination, central.statusCode);
+    }
+    pathname = central.destination;
+    changed = true;
+    statusCode = central.statusCode;
+  } else if (REDIRECTS_MAP[pathname]) {
+    // 2b. Static path mapping to resolve redirect chains in 1 hop
     pathname = REDIRECTS_MAP[pathname];
     changed = true;
   } else if (pathname.startsWith("/news/topic/")) {
@@ -55,8 +69,8 @@ export function proxy(request) {
     targetUrl.protocol = "https:";
     targetUrl.host = "altftool.com";
     targetUrl.pathname = pathname;
-    
-    return NextResponse.redirect(targetUrl, 301);
+
+    return NextResponse.redirect(targetUrl, statusCode);
   }
 
   return NextResponse.next();

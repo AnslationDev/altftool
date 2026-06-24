@@ -16,7 +16,10 @@
     "./http": "./src/http.js",
     "./next": "./src/next.js",
     "./toolHealth": "./src/toolHealth.js",
-    "./services": "./src/services.js"
+    "./services": "./src/services.js",
+    "./seo": "./src/seo/index.js",
+    "./seo/resolver": "./src/seo/resolver.js",
+    "./seo/schemas": "./src/seo/schemas.js"
   },
   "sideEffects": false
 }
