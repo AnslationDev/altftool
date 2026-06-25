@@ -11,6 +11,9 @@
   --color-foreground: var(--foreground);
   --color-primary: var(--primary);
   --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary-soft: var(--secondary-soft);
   --color-muted: var(--muted);
   --color-border: var(--border);
   --color-card: var(--surface);
@@ -53,7 +56,7 @@
   --anslation-ds-canvas: #ffffff;
   --anslation-ds-surface: #ffffff;
   --anslation-ds-soft: #eef3f6;
-  --anslation-ds-hover: #e7f0ff;
+  --anslation-ds-hover: #f0fdfa;
   --anslation-ds-sidebar: #ffffff;
   --anslation-ds-footer: #050b18;
   --anslation-ds-footer-text: #f8fafc;
@@ -67,22 +70,27 @@
   --anslation-ds-muted: #607083;
   --anslation-ds-muted-strong: #42526a;
 
-  --anslation-ds-primary: #1769e0;
-  --anslation-ds-primary-hover: #1558bf;
-  --anslation-ds-primary-active: #123f91;
-  --anslation-ds-primary-soft: #e7f0ff;
-  --anslation-ds-accent: #0f766e;
-  --anslation-ds-accent-soft: #e4f7f3;
+  /* Brand: Teal (see master.md). Functional --primary uses Teal-600 for AA text
+     contrast (Teal-500 white-on-fill is too low); brand identity is Teal-500. */
+  --anslation-ds-primary: #0d9488;
+  --anslation-ds-primary-hover: #0f766e;
+  --anslation-ds-primary-active: #115e59;
+  --anslation-ds-primary-soft: #ccfbf1;
+  --anslation-ds-brand-500: #14b8a6;
+  --anslation-ds-secondary: #22d3ee;
+  --anslation-ds-secondary-soft: #cffafe;
+  --anslation-ds-accent: #06b6d4;
+  --anslation-ds-accent-soft: #cffafe;
 
   --anslation-ds-danger: #c93d2e;
   --anslation-ds-success: #14783e;
   --anslation-ds-warning: #b7791f;
-  --anslation-ds-info: #1769e0;
+  --anslation-ds-info: #0ea5e9;
 
   --anslation-ds-success-soft: #dcf4e3;
   --anslation-ds-warning-soft: #fdf1d6;
   --anslation-ds-danger-soft: #fde2dd;
-  --anslation-ds-info-soft: var(--anslation-ds-primary-soft);
+  --anslation-ds-info-soft: #e0f2fe;
 
   --background: var(--anslation-ds-page);
   --surface: var(--anslation-ds-surface);
@@ -95,6 +103,11 @@
 
   --primary: var(--anslation-ds-primary);
   --primary-foreground: #ffffff;
+  --secondary: var(--anslation-ds-secondary);
+  --secondary-foreground: #06384a;
+  --secondary-soft: var(--anslation-ds-secondary-soft);
+  --accent: var(--anslation-ds-accent);
+  --accent-soft: var(--anslation-ds-accent-soft);
 
   --danger: var(--anslation-ds-danger);
   --success: var(--anslation-ds-success);
@@ -126,7 +139,7 @@
   --anslation-ds-canvas: #0b1220;
   --anslation-ds-surface: #101827;
   --anslation-ds-soft: #142033;
-  --anslation-ds-hover: #183255;
+  --anslation-ds-hover: #0c2e2b;
   --anslation-ds-sidebar: #050b18;
   --anslation-ds-footer: #020617;
   --anslation-ds-footer-text: #f8fafc;
@@ -138,12 +151,14 @@
   --anslation-ds-text-soft: #dbe5f2;
   --anslation-ds-muted: #94a3b8;
   --anslation-ds-muted-strong: #cbd5e1;
-  --anslation-ds-primary: #7bb8ff;
-  --anslation-ds-primary-hover: #a8d0ff;
-  --anslation-ds-primary-active: #d3e8ff;
-  --anslation-ds-primary-soft: #162d4f;
-  --anslation-ds-accent: #5eead4;
-  --anslation-ds-accent-soft: #123b3a;
+  --anslation-ds-primary: #2dd4bf;
+  --anslation-ds-primary-hover: #5eead4;
+  --anslation-ds-primary-active: #99f6e4;
+  --anslation-ds-primary-soft: #0c2e2b;
+  --anslation-ds-secondary: #22d3ee;
+  --anslation-ds-secondary-soft: #0a2f38;
+  --anslation-ds-accent: #22d3ee;
+  --anslation-ds-accent-soft: #0a2f38;
 
   --background: var(--anslation-ds-page);
   --surface: var(--anslation-ds-surface);
@@ -154,16 +169,21 @@
   --muted-soft: var(--anslation-ds-muted);
   --primary: var(--anslation-ds-primary);
   --primary-foreground: #07111f;
+  --secondary: var(--anslation-ds-secondary);
+  --secondary-foreground: #06222b;
+  --secondary-soft: var(--anslation-ds-secondary-soft);
+  --accent: var(--anslation-ds-accent);
+  --accent-soft: var(--anslation-ds-accent-soft);
 
   --anslation-ds-success: #4ade80;
   --anslation-ds-warning: #fbbf24;
   --anslation-ds-danger: #f87171;
-  --anslation-ds-info: #7bb8ff;
+  --anslation-ds-info: #38bdf8;
 
   --anslation-ds-success-soft: #0f3b21;
   --anslation-ds-warning-soft: #3b2d0b;
   --anslation-ds-danger-soft: #3b1410;
-  --anslation-ds-info-soft: var(--anslation-ds-primary-soft);
+  --anslation-ds-info-soft: #0b2a3d;
 
   --danger: var(--anslation-ds-danger);
   --success: var(--anslation-ds-success);
@@ -178,7 +198,7 @@
   --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.36);
   --shadow-md: 0 10px 28px rgba(0, 0, 0, 0.36);
   --shadow-lg: 0 24px 56px rgba(0, 0, 0, 0.46);
-  --focus-ring: 0 0 0 3px rgba(96, 165, 250, 0.24);
+  --focus-ring: 0 0 0 3px rgba(45, 212, 191, 0.30);
 }
 
 /* =========================================

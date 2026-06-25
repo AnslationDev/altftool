@@ -130,6 +130,7 @@ export default function TestimonialsSection() {
           <button
             key={dot}
             type="button"
+            suppressHydrationWarning
             aria-label={`Show testimonial from ${item.name}`}
             aria-current={dot === activeSlide ? "true" : undefined}
             onClick={() => setActiveSlide(dot)}

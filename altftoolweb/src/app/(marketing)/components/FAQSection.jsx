@@ -61,6 +61,7 @@ export default function FAQSection() {
               <div key={faq.question} className="border-b border-[var(--home-border)] last:border-b-0">
                 <button
                   type="button"
+                  suppressHydrationWarning
                   onClick={() => setOpenQuestion(isOpen ? null : faq.question)}
                   className="flex w-full items-center justify-between gap-4 px-6 py-4 text-left text-[0.95rem] text-[var(--foreground)] transition hover:bg-[var(--home-surface)]"
                   aria-expanded={isOpen}
