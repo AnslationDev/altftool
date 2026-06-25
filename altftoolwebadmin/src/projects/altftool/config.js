@@ -10,11 +10,8 @@ import {
   TicketPercent,
   Star,
   Plane,
-<<<<<<< HEAD
   Sparkles,
-=======
   Search,
->>>>>>> main
 } from "lucide-react";
 import AltfLogo from "../../../public/logos/altflogo.png";
 
