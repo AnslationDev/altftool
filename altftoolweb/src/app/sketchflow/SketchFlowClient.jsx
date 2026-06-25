@@ -20,19 +20,28 @@ import TopBar from "./components/TopBar";
 export default function SketchFlow({ config: configProp }) {
   const config = configProp || DEFAULT_HOME_CONTENT;
   const { branding, defaults, settings: settingsBase, tools, ui } = config;
-  const settings = { ...settingsBase, ...(settingsBase?.customJson && typeof settingsBase.customJson === "object" ? settingsBase.customJson : {}) };
-  const accent = branding?.accentColor || ACCENT;
+
+  const settings = useMemo(() => {
+    return { ...settingsBase, ...(settingsBase?.customJson && typeof settingsBase.customJson === "object" ? settingsBase.customJson : {}) };
+  }, [settingsBase]);
+
+  const accentRaw = branding?.accentColor || ACCENT;
   const storageKey = settings?.storageKey || STORAGE_KEY;
   const historyLimit = Number(settings?.historyLimit) || HISTORY_LIMIT;
   const autosaveIntervalMs = Number(settings?.autosaveIntervalMs) || 2000;
   const exportPrefix = ui?.exportFilePrefix || "sketchflow";
-  const cameraDefault = settings?.cameraDefault || { x: 420, y: 240, zoom: 1 };
+
+  const cameraDefault = useMemo(() => {
+    return settings?.cameraDefault || { x: 420, y: 240, zoom: 1 };
+  }, [settings?.cameraDefault]);
 
   const toolbar = useMemo(() => buildToolbarFromConfig(tools?.items), [tools]);
   const toolKeys = useMemo(() => buildToolKeysFromConfig(tools?.items), [tools]);
-  const fontOptions = defaults?.fontOptions?.length
-    ? defaults.fontOptions
-    : [defaults?.fontFamily || DEFAULT_STYLE.fontFamily, "system-ui, sans-serif", "Georgia, serif", "monospace"];
+  const fontOptions = useMemo(() => {
+    return defaults?.fontOptions?.length
+      ? defaults.fontOptions
+      : [defaults?.fontFamily || DEFAULT_STYLE.fontFamily, "system-ui, sans-serif", "Georgia, serif", "monospace"];
+  }, [defaults]);
 
   const storageKeyRef = useRef(storageKey);
   const historyLimitRef = useRef(historyLimit);
@@ -66,6 +75,9 @@ export default function SketchFlow({ config: configProp }) {
     step: settings?.gridStep ?? 32,
   }));
   const [dark, setDark] = useState(() => Boolean(settings?.darkModeDefault));
+  const accent = dark
+    ? (accentRaw === "#6965db" ? "#2dd4bf" : accentRaw)
+    : (accentRaw === "#6965db" ? "#14b8a6" : accentRaw);
   const [includeBackground, setIncludeBackground] = useState(() => Boolean(settings?.includeBackgroundDefault ?? true));
   const [toast, setToast] = useState("");
   const [contextMenu, setContextMenu] = useState(null);
@@ -187,7 +199,7 @@ export default function SketchFlow({ config: configProp }) {
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     ctx.clearRect(0, 0, width, height);
     if (renderOptions.background !== false) {
-      ctx.fillStyle = dark ? "#121212" : "#ffffff";
+      ctx.fillStyle = dark ? "#0b1220" : "#ffffff";
       ctx.fillRect(0, 0, width, height);
     }
     ctx.save();
@@ -803,7 +815,7 @@ export default function SketchFlow({ config: configProp }) {
       bg.setAttribute("y", String(minY));
       bg.setAttribute("width", String(maxX - minX));
       bg.setAttribute("height", String(maxY - minY));
-      bg.setAttribute("fill", dark ? "#121212" : "#ffffff");
+      bg.setAttribute("fill", dark ? "#0b1220" : "#ffffff");
       svg.appendChild(bg);
     }
     const rsvg = rough.svg(svg);

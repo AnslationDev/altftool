@@ -23,7 +23,7 @@ export const DEFAULT_HOME_CONTENT = {
   branding: {
     appName: "SketchFlow",
     tagline: "Hand-drawn infinite whiteboard",
-    accentColor: "#6965db",
+    accentColor: "#14b8a6",
     brandIconKey: "Sparkles",
   },
   tools: {

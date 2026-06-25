@@ -15,7 +15,7 @@ import {
 
 export const STORAGE_KEY = "altftool-sketchflow-scene-v1";
 export const HISTORY_LIMIT = 200;
-export const ACCENT = "#6965db";
+export const ACCENT = "#14b8a6";
 export const DEFAULT_STYLE = {
   strokeColor: "#1f2937",
   backgroundColor: "transparent",
