@@ -267,6 +267,7 @@ const Header = () => {
                     ) : (
                       <button
                         type="button"
+                        suppressHydrationWarning
                         aria-current={isActive ? "page" : undefined}
                         aria-haspopup="true"
                         className={homeNavItemClass}
