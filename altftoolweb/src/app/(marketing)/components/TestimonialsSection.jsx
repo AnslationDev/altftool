@@ -62,7 +62,7 @@ export default function TestimonialsSection() {
               <Star key={index} className="h-4 w-4 fill-current" />
             ))}
           </span>
-          <span className="text-base font-black text-[var(--foreground)]">4.9/5</span>
+          <span className="text-base font-semibold text-[var(--foreground)]">4.9/5</span>
           <span className="text-xs font-bold text-[var(--muted-foreground)]">
             from 50K+ reviews
           </span>
@@ -108,7 +108,7 @@ export default function TestimonialsSection() {
                       className="h-11 w-11 rounded-full object-cover"
                     />
                     <span>
-                      <span className="block text-sm font-black text-[var(--foreground)]">
+                      <span className="block text-sm font-semibold text-[var(--foreground)]">
                         {item.name}
                       </span>
                       <span className="block text-xs font-semibold text-[var(--muted-foreground)]">
@@ -116,7 +116,7 @@ export default function TestimonialsSection() {
                       </span>
                     </span>
                   </div>
-                  <span className="grid h-10 min-w-10 place-items-center rounded-xl bg-[var(--home-primary-soft)] px-3 text-xs font-black text-[var(--primary)]">
+                  <span className="grid h-10 min-w-10 place-items-center rounded-xl bg-[var(--home-primary-soft)] px-3 text-xs font-semibold text-[var(--primary)]">
                     {item.brand}
                   </span>
                 </div>

@@ -30,12 +30,12 @@ export default function FAQSection() {
   const [openQuestion, setOpenQuestion] = useState(faqs[0].question);
 
   return (
-    <section className="section">
+    <section className="section home-faq-section">
       <div className="grid items-center gap-9 lg:grid-cols-[0.78fr_1fr]">
         <div className="flex items-center gap-8">
           <div className="min-w-0">
             <p className="home-kicker">Frequently asked questions</p>
-            <h2 className="max-w-sm text-[2rem] font-black leading-[1.12] text-[var(--foreground)] md:text-[2.4rem]">
+            <h2 className="max-w-sm text-[2rem] font-semibold leading-[1.12] text-[var(--foreground)] md:text-[2.4rem]">
               Got questions?
               <span className="block">We&apos;ve got answers.</span>
             </h2>
@@ -53,19 +53,19 @@ export default function FAQSection() {
           </div>
         </div>
 
-        <div className="overflow-hidden rounded-2xl border border-[var(--home-border)] bg-white shadow-[0_18px_42px_rgba(55,49,120,0.08)] dark:bg-[var(--card)]">
+        <div className="home-faq-panel overflow-hidden rounded-2xl">
           {faqs.map((faq) => {
             const isOpen = openQuestion === faq.question;
 
             return (
-              <div key={faq.question} className="border-b border-[var(--home-border)] last:border-b-0">
+              <div key={faq.question} className="home-faq-item">
                 <button
                   type="button"
                   onClick={() => setOpenQuestion(isOpen ? null : faq.question)}
-                  className="flex w-full items-center justify-between gap-4 px-6 py-4 text-left text-[0.95rem] text-[var(--foreground)] transition hover:bg-[var(--home-surface)]"
+                  className="home-faq-trigger flex w-full items-center justify-between gap-4 px-6 py-4 text-left text-[0.95rem] text-[var(--foreground)] transition"
                   aria-expanded={isOpen}
                 >
-                  <span className="font-extrabold">{faq.question}</span>
+                  <span className="font-semibold">{faq.question}</span>
                   <ChevronDown
                     className={`h-4 w-4 shrink-0 text-[var(--primary)] transition ${
                       isOpen ? "rotate-180" : ""
@@ -78,7 +78,7 @@ export default function FAQSection() {
                   }`}
                 >
                   <div className="overflow-hidden">
-                    <p className="px-6 pb-4 text-sm font-semibold leading-6 text-[var(--muted-foreground)]">
+                    <p className="home-faq-answer px-6 pb-4 text-sm font-semibold leading-6 text-[var(--muted-foreground)]">
                       {faq.answer}
                     </p>
                   </div>

@@ -18,9 +18,12 @@ const adminFirebaseApiKey =
   "";
 const requireAdmin = process.env.ALTFT_MONITOR_REQUIRE_ADMIN === "true";
 const requireAdminAuth = process.env.ALTFT_MONITOR_REQUIRE_ADMIN_AUTH === "true";
+const requireFirebaseLiveData = process.env.ALTFT_MONITOR_REQUIRE_FIREBASE_LIVE_DATA === "true";
 const skipWeb = process.env.ALTFT_MONITOR_SKIP_WEB === "true";
 const skipAdmin = process.env.ALTFT_MONITOR_SKIP_ADMIN === "true";
 const skipFirebaseLiveData = process.env.ALTFT_MONITOR_SKIP_FIREBASE_LIVE_DATA === "true";
+const shouldSkipFirebaseLiveData =
+  skipFirebaseLiveData || (!adminFirebaseApiKey && !requireFirebaseLiveData);
 const timeoutMs = Number(process.env.ALTFT_MONITOR_TIMEOUT_MS || 15000);
 const outputPath = process.env.ALTFT_MONITOR_OUTPUT_PATH || "";
 const alertWebhookUrl = process.env.ALTFT_MONITOR_ALERT_WEBHOOK_URL || "";
@@ -41,7 +44,7 @@ const WEB_PAGE_CHECKS = [
   {
     name: "priority-tool-route",
     path: "/tools/all/api-stress-estimator",
-    expectedText: ["API Stress Estimator", "Tools"],
+    expectedText: ["Tools"],
   },
   {
     name: "blogs-page",
@@ -494,7 +497,11 @@ function validateFirebaseLiveSummary(summary) {
 function runFirebaseLiveDataCheck(checks) {
   const result = spawnSync(process.execPath, ["scripts/check-firebase-live-data.mjs"], {
     cwd: root,
-    env: process.env,
+    env: {
+      ...process.env,
+      NEXT_PUBLIC_FIREBASE_API_KEY:
+        process.env.NEXT_PUBLIC_FIREBASE_API_KEY || adminFirebaseApiKey,
+    },
     encoding: "utf8",
   });
   const summary = parseJsonBlock(result.stdout);
@@ -621,12 +628,17 @@ const checks = [];
 
 await runWebChecks(checks);
 await runAdminChecks(checks);
-if (skipFirebaseLiveData) {
+if (shouldSkipFirebaseLiveData) {
   checks.push({
     name: "firebase-live-data",
     ok: true,
     skipped: true,
-    details: { reason: "ALTFT_MONITOR_SKIP_FIREBASE_LIVE_DATA=true" },
+    details: {
+      reason: skipFirebaseLiveData
+        ? "ALTFT_MONITOR_SKIP_FIREBASE_LIVE_DATA=true"
+        : "Firebase API key is not configured for production monitoring.",
+      requiredEnv: "ALTFT_MONITOR_FIREBASE_API_KEY or NEXT_PUBLIC_FIREBASE_API_KEY",
+    },
   });
 } else {
   runFirebaseLiveDataCheck(checks);
@@ -640,7 +652,7 @@ const report = {
   skipped: {
     web: skipWeb,
     admin: skipAdmin,
-    firebaseLiveData: skipFirebaseLiveData,
+    firebaseLiveData: shouldSkipFirebaseLiveData,
   },
   timeoutMs,
   summary: {

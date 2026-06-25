@@ -206,11 +206,11 @@ const Header = () => {
           data-hydrated={themeReady ? "true" : "false"}
           className={`sticky top-0 z-50 border-b px-4 backdrop-blur-xl sm:px-6 lg:px-8 ${
             isHomeDark
-              ? "border-[#1B3858] bg-[#071426]/92 shadow-[0_1px_0_rgba(0,0,0,0.28)]"
-              : "border-[#E4E6F1] bg-[#F7F8FC]/92 shadow-[0_1px_0_rgba(55,49,120,0.08)]"
+              ? "border-[rgba(148,163,184,0.12)] bg-[#020617]/92 shadow-[0_1px_0_rgba(0,0,0,0.28)]"
+              : "border-[#E2E8F0] bg-[#F8FAFC]/92 shadow-[0_1px_0_rgba(15,23,42,0.08)]"
           }`}
         >
-          <div className="mx-auto grid h-16 max-w-[var(--anslation-ds-container)] grid-cols-[auto_1fr_auto] items-center gap-3 sm:h-[72px] lg:gap-4 xl:grid-cols-[minmax(8rem,1fr)_auto_minmax(8rem,1fr)]">
+          <div className="mx-auto grid h-16 max-w-[var(--anslation-ds-container)] grid-cols-[auto_1fr_auto] items-center gap-3 sm:h-[72px] lg:gap-4 min-[1360px]:grid-cols-[minmax(8rem,1fr)_auto_minmax(8rem,1fr)]">
             <Link
               href="/"
               className="flex min-w-fit items-center justify-self-start"
@@ -224,10 +224,10 @@ const Header = () => {
             </Link>
 
             <nav
-              className={`hidden max-w-full items-center justify-center gap-1 justify-self-center rounded-full border px-2 py-1.5 xl:flex ${
+              className={`hidden max-w-full items-center justify-center gap-1 justify-self-center rounded-full border px-2 py-1.5 min-[1360px]:flex ${
                 isHomeDark
-                  ? "border-[#1B3858] bg-[#0B1F36] shadow-[0_10px_28px_rgba(0,0,0,0.26)]"
-                  : "border-[#E4E6F1] bg-white shadow-[0_10px_28px_rgba(55,49,120,0.08)]"
+                  ? "border-transparent bg-transparent shadow-none"
+                  : "border-transparent bg-transparent shadow-none"
               }`}
             >
               {HOME_NAV_ITEMS.map((item) => {
@@ -235,16 +235,16 @@ const Header = () => {
                   isPublicRouteActive(pathname, item) ||
                   item.options?.some((option) => isPublicRouteActive(pathname, option));
                 const hasOptions = Boolean(item.options?.length);
-                const homeNavItemClass = `relative flex h-10 appearance-none items-center gap-1.5 whitespace-nowrap rounded-full border-0 px-4 py-0 font-[inherit] text-sm font-extrabold leading-5 transition ${
+                const homeNavItemClass = `relative flex h-10 appearance-none items-center gap-1.5 whitespace-nowrap rounded-full border-0 px-4 py-0 text-base font-medium leading-5 transition duration-200 [font-family:var(--font-ibm-plex-sans)] ${
                   isActive
                     ? isHomeDark
-                      ? "bg-[#102B49] text-[#B6A8FF]"
-                      : "bg-[#F0EDFF] text-[#6C4DF6]"
+                      ? "bg-[rgba(20,184,166,0.12)] text-[#14B8A6] shadow-[0_0_24px_rgba(20,184,166,0.18)]"
+                      : "bg-[#F0FDFA] text-[#0D9488] shadow-[0_2px_8px_rgba(2,6,23,0.06)]"
                     : isHomeDark
-                      ? "text-[#A9BAD0] hover:bg-[#102B49] hover:text-[#F4F9FF]"
-                      : "text-[#5F6880] hover:bg-[#F0EDFF] hover:text-[#1D2440]"
+                      ? "text-[#94A3B8] hover:bg-[#1E293B] hover:text-[#F8FAFC] hover:shadow-[0_2px_8px_rgba(2,6,23,0.6)]"
+                      : "text-[#475569] hover:bg-[#F1F5F9] hover:text-[#0F172A] hover:shadow-[0_2px_8px_rgba(2,6,23,0.06)]"
                 }`;
-                const activeUnderlineClass = `absolute inset-x-4 bottom-1 h-0.5 origin-left rounded-full bg-[#6C4DF6] transition-transform duration-200 ${
+                const activeUnderlineClass = `absolute inset-x-4 bottom-1 h-0.5 origin-left rounded-full bg-[#14B8A6] transition-transform duration-200 ${
                   isActive ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100"
                 }`;
 
@@ -280,10 +280,10 @@ const Header = () => {
                     {hasOptions ? (
                       <div className="absolute left-1/2 top-full hidden -translate-x-1/2 pt-3 group-focus-within:block group-hover:block">
                         <div
-                          className={`w-56 rounded-2xl border p-2 shadow-[0_22px_50px_rgba(55,49,120,0.16)] ${
+                          className={`w-56 rounded-2xl border p-2 shadow-[0_22px_50px_rgba(15,23,42,0.16)] ${
                             isHomeDark
-                              ? "border-[#1B3858] bg-[#0B1F36]"
-                              : "border-[#E4E6F1] bg-white"
+                              ? "border-[rgba(148,163,184,0.12)] bg-[#0F172A]"
+                              : "border-[#E2E8F0] bg-white"
                           }`}
                         >
                           {item.options.map((option) => (
@@ -291,14 +291,14 @@ const Header = () => {
                               key={option.label}
                               href={option.href}
                               {...routePreviewProps(option.href)}
-                              className={`block rounded-xl px-3 py-2.5 text-sm font-bold transition ${
+                              className={`block rounded-xl px-3 py-2.5 text-base font-medium transition duration-200 [font-family:var(--font-ibm-plex-sans)] ${
                                 isPublicRouteActive(pathname, option)
                                   ? isHomeDark
-                                    ? "bg-[#102B49] text-[#B6A8FF]"
-                                    : "bg-[#F0EDFF] text-[#6C4DF6]"
+                                    ? "bg-[rgba(20,184,166,0.12)] text-[#14B8A6] shadow-[0_0_24px_rgba(20,184,166,0.14)]"
+                                    : "bg-[#F0FDFA] text-[#0D9488]"
                                   : isHomeDark
-                                    ? "text-[#A9BAD0] hover:bg-[#102B49] hover:text-[#F4F9FF]"
-                                    : "text-[#5F6880] hover:bg-[#F0EDFF] hover:text-[#1D2440]"
+                                    ? "text-[#94A3B8] hover:bg-[#1E293B] hover:text-[#F8FAFC]"
+                                    : "text-[#475569] hover:bg-[#F1F5F9] hover:text-[#0F172A]"
                               }`}
                             >
                               {option.label}
@@ -325,10 +325,10 @@ const Header = () => {
                     onChange={(event) => handleChange(event.target.value)}
                     aria-invalid={searchError ? "true" : "false"}
                     suppressHydrationWarning
-                    className={`h-11 !w-[16rem] shrink-0 rounded-xl text-sm font-semibold shadow-none transition focus-visible:border-[#6C4DF6] focus-visible:ring-2 focus-visible:ring-[#6C4DF6]/20 min-[1800px]:!w-[24rem] ${
+                    className={`h-11 !w-[16rem] shrink-0 rounded-xl text-sm font-semibold shadow-none transition focus-visible:border-[#14B8A6] focus-visible:ring-2 focus-visible:ring-[#14B8A6]/20 min-[1800px]:!w-[24rem] ${
                       isHomeDark
-                        ? "border-[#1B3858] bg-[#0B1F36] text-[#F4F9FF] placeholder:text-[#A9BAD0]"
-                        : "border-[#D8DCEC] bg-white text-[#1D2440] placeholder:text-[#68718A]"
+                        ? "border-[rgba(148,163,184,0.12)] bg-[#0F172A] text-[#F8FAFC] placeholder:text-[#94A3B8]"
+                        : "border-[#E2E8F0] bg-white text-[#0F172A] placeholder:text-[#475569]"
                     }`}
                   />
                 </div>
@@ -358,14 +358,14 @@ const Header = () => {
                   >
                     <CurrentThemeIcon
                       className={`h-4 w-4 ${
-                        themeReady && resolvedTheme === "dark" ? "text-[#9F8CFF]" : "text-[#6C4DF6]"
+                        themeReady && resolvedTheme === "dark" ? "text-[#14B8A6]" : "text-[#14B8A6]"
                       }`}
                     />
                   </span>
                 </IconButton>
               </div>
 
-              <div className="xl:hidden">
+              <div className="min-[1360px]:hidden">
                 <IconButton
                   ref={mobileMenuButtonRef}
                   onClick={openMobileMenu}
@@ -388,7 +388,7 @@ const Header = () => {
           aria-modal={mobileMenuOpen ? "true" : undefined}
           aria-hidden={mobileMenuOpen ? undefined : "true"}
           inert={!mobileMenuOpen}
-          className={`fixed inset-0 z-[70] xl:hidden ${
+          className={`fixed inset-0 z-[70] min-[1360px]:hidden ${
             mobileMenuOpen ? "" : "pointer-events-none"
           }`}
         >
@@ -400,10 +400,10 @@ const Header = () => {
           />
 
           <aside
-            className={`fixed inset-y-0 left-0 flex w-[min(24rem,calc(100vw-0.75rem))] transform flex-col overflow-y-auto border-r p-5 shadow-[0_24px_60px_rgba(55,49,120,0.18)] transition-transform duration-300 ease-out ${
+            className={`fixed inset-y-0 left-0 flex w-[min(24rem,calc(100vw-0.75rem))] transform flex-col overflow-y-auto border-r p-5 shadow-[0_24px_60px_rgba(15,23,42,0.18)] transition-transform duration-300 ease-out ${
               isHomeDark
-                ? "border-[#1B3858] bg-[#0B1F36] text-[#F4F9FF]"
-                : "border-[#E4E6F1] bg-white text-[#1D2440]"
+                ? "border-[rgba(148,163,184,0.12)] bg-[#0F172A] text-[#F8FAFC]"
+                : "border-[#E2E8F0] bg-white text-[#0F172A]"
             } ${mobileMenuOpen ? "translate-x-0" : "-translate-x-full"}`}
           >
             <div className="flex items-center justify-between">
@@ -439,8 +439,8 @@ const Header = () => {
                   suppressHydrationWarning
                   className={`min-w-0 rounded-xl ${
                     isHomeDark
-                      ? "border-[#1B3858] bg-[#071426] text-[#F4F9FF] placeholder:text-[#A9BAD0]"
-                      : "border-[#E4E6F1]"
+                      ? "border-[rgba(148,163,184,0.12)] bg-[#020617] text-[#F8FAFC] placeholder:text-[#94A3B8]"
+                      : "border-[#E2E8F0]"
                   }`}
                 />
                 <IconButton type="submit" aria-label="Search">
@@ -464,14 +464,14 @@ const Header = () => {
                 return item.options ? (
                   <details key={item.label} className="group">
                     <summary
-                      className={`flex cursor-pointer list-none items-center justify-between rounded-xl px-3 py-3 text-sm font-bold transition ${
+                    className={`flex cursor-pointer list-none items-center justify-between rounded-xl px-3 py-3 text-sm font-medium transition duration-200 [font-family:var(--font-ibm-plex-sans)] ${
                         isCurrent
                           ? isHomeDark
-                            ? "bg-[#102B49] text-[#9F8CFF]"
-                            : "bg-[#F0EDFF] text-[#6C4DF6]"
+                            ? "bg-[rgba(20,184,166,0.12)] text-[#14B8A6] shadow-[0_0_24px_rgba(20,184,166,0.14)]"
+                            : "bg-[#F0FDFA] text-[#0D9488]"
                           : isHomeDark
-                            ? "text-[#A9BAD0] hover:bg-[#102B49] hover:text-[#F4F9FF]"
-                            : "text-[#68718A] hover:bg-[#F0EDFF] hover:text-[#1D2440]"
+                            ? "text-[#94A3B8] hover:bg-[#1E293B] hover:text-[#F8FAFC]"
+                            : "text-[#475569] hover:bg-[#F1F5F9] hover:text-[#0F172A]"
                       }`}
                     >
                       <span className="flex items-center gap-2">
@@ -489,10 +489,10 @@ const Header = () => {
                             href={option.href}
                             {...routePreviewProps(option.href)}
                             onClick={() => closeMobileMenu()}
-                            className={`flex items-center gap-2 rounded-xl px-3 py-2.5 text-sm font-bold transition ${
+                            className={`flex items-center gap-2 rounded-xl px-3 py-2.5 text-sm font-medium transition duration-200 [font-family:var(--font-ibm-plex-sans)] ${
                               isHomeDark
-                                ? "text-[#A9BAD0] hover:bg-[#102B49] hover:text-[#F4F9FF]"
-                                : "text-[#68718A] hover:bg-[#F0EDFF] hover:text-[#1D2440]"
+                                ? "text-[#94A3B8] hover:bg-[#1E293B] hover:text-[#F8FAFC]"
+                                : "text-[#475569] hover:bg-[#F1F5F9] hover:text-[#0F172A]"
                             }`}
                           >
                             <OptionIcon className="h-4 w-4" />
@@ -508,14 +508,14 @@ const Header = () => {
                     href={item.href}
                     {...routePreviewProps(item.href)}
                     onClick={() => closeMobileMenu()}
-                    className={`flex items-center gap-2 rounded-xl px-3 py-3 text-sm font-bold transition ${
+                    className={`flex items-center gap-2 rounded-xl px-3 py-3 text-sm font-medium transition duration-200 [font-family:var(--font-ibm-plex-sans)] ${
                       isCurrent
                         ? isHomeDark
-                          ? "bg-[#102B49] text-[#9F8CFF]"
-                          : "bg-[#F0EDFF] text-[#6C4DF6]"
+                          ? "bg-[rgba(20,184,166,0.12)] text-[#14B8A6] shadow-[0_0_24px_rgba(20,184,166,0.14)]"
+                          : "bg-[#F0FDFA] text-[#0D9488]"
                         : isHomeDark
-                          ? "text-[#A9BAD0] hover:bg-[#102B49] hover:text-[#F4F9FF]"
-                          : "text-[#68718A] hover:bg-[#F0EDFF] hover:text-[#1D2440]"
+                          ? "text-[#94A3B8] hover:bg-[#1E293B] hover:text-[#F8FAFC]"
+                          : "text-[#475569] hover:bg-[#F1F5F9] hover:text-[#0F172A]"
                     }`}
                   >
                     <Icon className="h-4 w-4" />
@@ -526,13 +526,13 @@ const Header = () => {
               <div
                 className={`mt-5 rounded-2xl border p-2 ${
                   isHomeDark
-                    ? "border-[#1B3858] bg-[#071426]"
-                    : "border-[#E4E6F1] bg-[#F7F8FC]"
+                    ? "border-[rgba(148,163,184,0.12)] bg-[#020617]"
+                    : "border-[#E2E8F0] bg-[#F8FAFC]"
                 }`}
               >
                 <p
-                  className={`px-2 pb-2 text-xs font-bold uppercase tracking-normal ${
-                    isHomeDark ? "text-[#A9BAD0]" : "text-[#68718A]"
+                  className={`px-2 pb-2 text-xs font-medium uppercase tracking-normal ${
+                    isHomeDark ? "text-[#94A3B8]" : "text-[#475569]"
                   }`}
                 >
                   Theme
@@ -551,11 +551,11 @@ const Header = () => {
                         className={`grid h-11 place-items-center rounded-xl border transition ${
                           isSelected
                             ? isHomeDark
-                              ? "border-[#9F8CFF] bg-[#102B49] text-[#B6A8FF]"
-                              : "border-[#6C4DF6] bg-[#F0EDFF] text-[#6C4DF6]"
+                              ? "border-[#14B8A6] bg-[#1E293B] text-[#38BDF8]"
+                              : "border-[#14B8A6] bg-[#F0FDFA] text-[#14B8A6]"
                             : isHomeDark
-                              ? "border-transparent text-[#A9BAD0] hover:bg-[#102B49]"
-                              : "border-transparent text-[#68718A] hover:bg-white"
+                              ? "border-transparent text-[#94A3B8] hover:bg-[#1E293B]"
+                              : "border-transparent text-[#475569] hover:bg-white"
                         }`}
                       >
                         <OptionIcon className="h-4 w-4" />
@@ -578,7 +578,7 @@ const Header = () => {
         data-hydrated={themeReady ? "true" : "false"}
         className="sticky top-0 z-50 border-b border-(--border) bg-[color-mix(in_srgb,var(--card)_90%,transparent)] px-4 py-2 shadow-[0_1px_0_rgba(15,23,42,0.03)] backdrop-blur-xl sm:px-6 lg:px-8"
       >
-          <div className="mx-auto grid h-14 max-w-[var(--anslation-ds-container)] grid-cols-[auto_1fr_auto] items-center gap-3 lg:gap-4 xl:grid-cols-[minmax(8rem,1fr)_auto_minmax(8rem,1fr)]">
+          <div className="mx-auto grid h-14 max-w-[var(--anslation-ds-container)] grid-cols-[auto_1fr_auto] items-center gap-3 lg:gap-4 min-[1360px]:grid-cols-[minmax(8rem,1fr)_auto_minmax(8rem,1fr)]">
           <Link
             href="/"
             className="flex min-w-fit items-center justify-self-start"
@@ -591,7 +591,7 @@ const Header = () => {
             />
           </Link>
 
-          <nav className="hidden max-w-full items-center gap-1 justify-self-center xl:flex">
+          <nav className="hidden max-w-full items-center gap-1 justify-self-center min-[1360px]:flex">
             {PUBLIC_NAV_ITEMS.map((item) => {
               const Icon = item.icon;
               const isCurrent = item.options
@@ -664,7 +664,7 @@ const Header = () => {
 
           <div className="flex min-w-fit items-center justify-end gap-2 justify-self-end">
             <form
-              className="relative hidden items-center gap-2 md:flex xl:hidden 2xl:flex"
+              className="relative hidden items-center gap-2 md:flex min-[1360px]:hidden 2xl:flex"
               onSubmit={handleSearch}
             >
               <Input
@@ -748,7 +748,7 @@ const Header = () => {
               ref={mobileMenuButtonRef}
               onClick={openMobileMenu}
               onKeyDown={handleMobileMenuKeyDown}
-              className="xl:hidden"
+              className="min-[1360px]:hidden"
               aria-label="Open menu"
               aria-expanded={mobileMenuOpen}
               aria-controls={mobileMenuPanelId}
@@ -766,7 +766,7 @@ const Header = () => {
         aria-modal={mobileMenuOpen ? "true" : undefined}
         aria-hidden={mobileMenuOpen ? undefined : "true"}
         inert={!mobileMenuOpen}
-        className={`fixed inset-0 z-[70] xl:hidden ${
+        className={`fixed inset-0 z-[70] min-[1360px]:hidden ${
           mobileMenuOpen ? "" : "pointer-events-none"
         }`}
       >

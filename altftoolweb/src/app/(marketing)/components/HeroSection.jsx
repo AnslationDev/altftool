@@ -4,8 +4,8 @@ import Image from "next/image";
 import Link from "next/link";
 import {
   ArrowRight,
+  LayoutGrid,
   ShieldCheck,
-  Sparkles,
   Star,
   Users,
 } from "lucide-react";
@@ -27,19 +27,21 @@ export default function HeroSection() {
           <div className="home-hero-content-grid grid items-center gap-9 lg:grid-cols-[0.96fr_1.04fr] xl:gap-14">
             <div className="home-reveal">
               <div className="home-reference-badge">
-                <Sparkles className="h-4 w-4" />
+                <span className="home-reference-badge-icon" aria-hidden="true">
+                  <LayoutGrid className="h-3.5 w-3.5" />
+                </span>
                 All-in-one productivity platform
               </div>
 
-              <h1 className="mt-6 max-w-[39rem] text-balance text-[clamp(2.35rem,3.9vw,3.45rem)] font-black leading-[1.06] tracking-normal text-[var(--foreground)]">
+              <h1 className="mt-6 max-w-[39rem] text-balance text-[clamp(2.35rem,3.9vw,3.45rem)] font-extrabold leading-[1.06] tracking-normal text-[var(--foreground)] [font-family:var(--home-font-display)]">
                 Find Tools. Extensions.{" "}
-                <span className="bg-gradient-to-r from-[var(--primary)] to-[#4e8cff] bg-clip-text text-transparent">
+                <span className="bg-gradient-to-r from-[var(--primary)] to-[#38BDF8] bg-clip-text text-transparent">
                   Apps.
                 </span>
                 {" "}All In One Place.
               </h1>
 
-              <p className="mt-6 max-w-[35rem] text-[0.98rem] font-semibold leading-8 text-[var(--muted-foreground)]">
+              <p className="mt-6 max-w-[35rem] text-[0.98rem] font-normal leading-8 text-[var(--muted-foreground)]">
                 Discover trusted productivity tools, browser extensions, and
                 mobile apps curated to help you work smarter.
               </p>
@@ -70,10 +72,10 @@ export default function HeroSection() {
 
             <div className="home-reveal home-hero-visual home-hero-reference-visual relative flex min-h-[330px] items-center justify-center [animation-delay:110ms]">
               <Image
-                src="/assets/home-hero-generated-team-v3.png"
+                src="/assets/home-hero-generated-team-transparent-v3.png"
                 alt="Creators exploring AltFTool digital tools on a laptop"
-                width={1536}
-                height={1024}
+                width={1341}
+                height={1013}
                 priority
                 className="home-hero-reference-image"
               />
