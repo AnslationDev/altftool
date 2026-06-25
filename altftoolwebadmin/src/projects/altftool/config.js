@@ -35,6 +35,7 @@ const altftoolConfig = {
     tripfindbox: { label: "TripFindBox", icon: Plane, routeSegment: "tripfindbox" },
     pranksocialmedia: { label: "Prank Social Media", icon: Sparkles, routeSegment: "prank-socialmedia" },
     pranx: { label: "Pranx", icon: Sparkles, routeSegment: "pranx" },
+    sketchflow: { label: "Sketch Flow", icon: Sparkles, routeSegment: "sketchflow" },
   },
 };
 

@@ -9,4 +9,5 @@ export const PERMISSION_MODULES = {
   tripfindbox: "TripFindBox",
   pranksocialmedia: "Prank Social Media",
   pranx: "Pranx",
+  sketchflow: "SketchFlow",
 };

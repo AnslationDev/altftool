@@ -53,6 +53,9 @@ const routeLoaders = {
     },
     pranx: {
       "": () => import("@/projects/altftool/modules/pranx/page.jsx")
+    },
+    sketchflow: {
+      "": () => import("@/projects/altftool/modules/sketchflow/page.jsx")
     }
   },
   leadtree: {
