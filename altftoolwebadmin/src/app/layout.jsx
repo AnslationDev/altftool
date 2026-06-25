@@ -1,6 +1,7 @@
 import GlobalAlertHost from "@/components/ui/GlobalAlertHost";
 import "./globals.css";
 import { AuthProvider } from "@/context/AuthContext";
+import SecurityGate from "@/components/security/SecurityGate";
 import { AdminThemeProvider } from "@/context/ThemeContext";
 import Script from "next/script";
 import PushToastHost from "@/components/ui/PushToastHost";
@@ -54,6 +55,7 @@ export default function RootLayout({ children }) {
           <AuthProvider>
             <GlobalAlertHost />
             <PushToastHost />
+            <SecurityGate />
             {children}
           </AuthProvider>
         </AdminThemeProvider>

@@ -4,6 +4,7 @@ import {
   Bell,
   Headset,
   ShieldAlert,
+  ShieldCheck,
   ShieldIcon,
   UserCircle,
 } from "lucide-react";
@@ -28,6 +29,12 @@ export const GLOBAL_ADMIN_MODULES = {
     label: "Health",
     icon: Activity,
     path: "/health",
+    superadminOnly: true,
+  },
+  security: {
+    label: "Security & Audit",
+    icon: ShieldCheck,
+    path: "/security",
     superadminOnly: true,
   },
   "notification-broadcast": {

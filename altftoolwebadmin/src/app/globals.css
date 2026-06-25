@@ -135,21 +135,23 @@
 [data-theme="dark"] {
   color-scheme: dark;
 
-  --anslation-ds-page: #070d18;
-  --anslation-ds-canvas: #0b1220;
-  --anslation-ds-surface: #101827;
-  --anslation-ds-soft: #142033;
-  --anslation-ds-hover: #0c2e2b;
-  --anslation-ds-sidebar: #050b18;
+  --anslation-ds-page: #0a1120;
+  --anslation-ds-canvas: #0f1828;
+  --anslation-ds-surface: #141d30;
+  --anslation-ds-soft: #1b2740;
+  --anslation-ds-hover: #1d2a44;
+  --anslation-ds-sidebar: #0b1322;
   --anslation-ds-footer: #020617;
   --anslation-ds-footer-text: #f8fafc;
   --anslation-ds-footer-muted: #94a3b8;
-  --anslation-ds-footer-border: #1e293b;
-  --anslation-ds-border: #1e293b;
-  --anslation-ds-border-strong: #334155;
+  --anslation-ds-footer-border: #2b3a54;
+  --anslation-ds-border: #2b3a54;
+  --anslation-ds-border-strong: #3f5170;
   --anslation-ds-text: #f8fafc;
   --anslation-ds-text-soft: #dbe5f2;
-  --anslation-ds-muted: #94a3b8;
+  /* Lighter secondary text for dark mode so helper/subtitle/placeholder text
+     stays clearly readable (WCAG AA) on dark navy surfaces. */
+  --anslation-ds-muted: #aebccf;
   --anslation-ds-muted-strong: #cbd5e1;
   --anslation-ds-primary: #2dd4bf;
   --anslation-ds-primary-hover: #5eead4;
@@ -494,6 +496,78 @@ a {
 .anslation-ds-admin .bg-gray-950.text-white,
 .anslation-ds-admin code.text-white {
   color: #f8fafc;
+}
+
+/* Extended neutral coverage — base layer only mapped gray 50/100/900/950.
+   These fill the mid shades (200–800) so backgrounds, borders, dividers and
+   light text also flip correctly between light and dark themes. */
+.anslation-ds-admin .bg-gray-200,
+.anslation-ds-admin .bg-gray-300,
+.anslation-ds-admin .bg-slate-200,
+.anslation-ds-admin .bg-slate-300,
+.anslation-ds-admin .bg-zinc-200,
+.anslation-ds-admin .bg-zinc-300,
+.anslation-ds-admin .bg-neutral-200,
+.anslation-ds-admin .bg-neutral-300 {
+  background-color: var(--surface-soft);
+}
+
+.anslation-ds-admin .hover\:bg-gray-200:hover,
+.anslation-ds-admin .hover\:bg-gray-300:hover,
+.anslation-ds-admin .hover\:bg-slate-200:hover,
+.anslation-ds-admin .hover\:bg-slate-300:hover {
+  background-color: var(--surface-soft);
+}
+
+.anslation-ds-admin .text-gray-200,
+.anslation-ds-admin .text-gray-300,
+.anslation-ds-admin .text-slate-200,
+.anslation-ds-admin .text-slate-300,
+.anslation-ds-admin .text-zinc-300,
+.anslation-ds-admin .text-neutral-300 {
+  color: var(--anslation-ds-muted-strong);
+}
+
+/* Placeholders + muted helper text stay readable in both themes. */
+.anslation-ds-admin ::placeholder {
+  color: var(--muted);
+  opacity: 1;
+}
+
+/* Other secondary-text utilities → unified muted token (readable both themes). */
+.anslation-ds-admin .text-muted-foreground,
+.anslation-ds-admin .text-zinc-400,
+.anslation-ds-admin .text-zinc-500,
+.anslation-ds-admin .text-neutral-400,
+.anslation-ds-admin .text-neutral-500,
+.anslation-ds-admin .text-stone-400,
+.anslation-ds-admin .text-stone-500 {
+  color: var(--muted);
+}
+
+.anslation-ds-admin .border-gray-300,
+.anslation-ds-admin .border-gray-400,
+.anslation-ds-admin .border-slate-300,
+.anslation-ds-admin .border-slate-400,
+.anslation-ds-admin .border-zinc-300,
+.anslation-ds-admin .border-neutral-300 {
+  border-color: var(--anslation-ds-border-strong);
+}
+
+.anslation-ds-admin .border-gray-600,
+.anslation-ds-admin .border-gray-700,
+.anslation-ds-admin .border-gray-800,
+.anslation-ds-admin .border-slate-600,
+.anslation-ds-admin .border-slate-700,
+.anslation-ds-admin .border-slate-800 {
+  border-color: var(--border);
+}
+
+.anslation-ds-admin .divide-gray-100 > :not([hidden]) ~ :not([hidden]),
+.anslation-ds-admin .divide-gray-200 > :not([hidden]) ~ :not([hidden]),
+.anslation-ds-admin .divide-slate-100 > :not([hidden]) ~ :not([hidden]),
+.anslation-ds-admin .divide-slate-200 > :not([hidden]) ~ :not([hidden]) {
+  border-color: var(--border);
 }
 
 /* Brand blue family */

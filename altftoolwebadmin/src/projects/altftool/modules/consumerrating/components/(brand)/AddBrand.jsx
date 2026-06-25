@@ -478,7 +478,7 @@ function AddBrand({ setActive, editBrand, setEditBrand }) {
 
                         <div
                             key={index}
-                            className="border p-4 bg-[#fbfbfb] w-full rounded space-y-2"
+                            className="border p-4 bg-surface-soft w-full rounded space-y-2"
                         >
                             <div className="flex justify-between" >
                              <div className="text-blue-600 text-xl" >#Brand {index+1}</div>
