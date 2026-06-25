@@ -56,7 +56,13 @@ const routeLoaders = {
     },
     sketchflow: {
       "": () => import("@/projects/altftool/modules/sketchflow/page.jsx")
-    }
+    },
+    seo: {
+      "": () => import("@/projects/altftool/modules/seo/page.jsx"),
+      dashboard: () => import("@/projects/altftool/modules/seo/dashboard/page.jsx"),
+      search: () => import("@/projects/altftool/modules/seo/search/page.jsx"),
+      gsc: () => import("@/projects/altftool/modules/seo/gsc/page.jsx"),
+    },
   },
   leadtree: {
     blogs: {

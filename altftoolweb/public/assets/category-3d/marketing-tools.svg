@@ -1,0 +1,25 @@
+<svg width="220" height="170" viewBox="0 0 220 170" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="mega" x1="70" y1="48" x2="153" y2="128" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFFFFF"/>
+      <stop offset="0.45" stop-color="#FFE7F0"/>
+      <stop offset="1" stop-color="#8B7BFF"/>
+    </linearGradient>
+    <linearGradient id="horn" x1="113" y1="45" x2="174" y2="103" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FF6B6B"/>
+      <stop offset="1" stop-color="#6C4DF6"/>
+    </linearGradient>
+    <filter id="marketShadow" x="28" y="26" width="165" height="132" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="18" stdDeviation="15" flood-color="#F43F5E" flood-opacity="0.16"/>
+    </filter>
+  </defs>
+  <ellipse cx="112" cy="145" rx="72" ry="13" fill="#F43F5E" opacity="0.1"/>
+  <g filter="url(#marketShadow)">
+    <path d="M67 91L136 54V120L67 103V91Z" fill="url(#mega)" stroke="white" stroke-width="5" stroke-linejoin="round"/>
+    <path d="M132 54L165 41C171.667 61.6667 171.667 85.6667 165 113L132 120V54Z" fill="url(#horn)" stroke="white" stroke-width="5"/>
+    <rect x="47" y="84" width="33" height="32" rx="12" fill="#FFFFFF"/>
+    <path d="M78 105L92 137" stroke="#6C4DF6" stroke-width="12" stroke-linecap="round"/>
+    <path d="M174 64L190 58" stroke="#7BE3E8" stroke-width="6" stroke-linecap="round"/>
+    <path d="M176 91L193 96" stroke="#FFB4C7" stroke-width="6" stroke-linecap="round"/>
+  </g>
+</svg>

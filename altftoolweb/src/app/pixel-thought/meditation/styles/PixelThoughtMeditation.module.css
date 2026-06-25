@@ -1,0 +1,133 @@
+@import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&family=Inter:wght@300;400&display=swap");
+
+.app {
+  font-family: "Cormorant Garamond", Georgia, serif;
+}
+
+.app::before {
+  animation: spaceDrift 70s ease-in-out infinite alternate;
+}
+
+.spaceStar {
+  animation:
+    twinkle var(--speed) ease-in-out infinite,
+    starDrift var(--drift-speed) ease-in-out infinite alternate;
+  animation-delay: var(--delay);
+}
+
+.thoughtStar {
+  transition: transform 1.25s ease, opacity 1.5s ease;
+}
+
+.thoughtStar::before,
+.thoughtStar::after {
+  position: absolute;
+  border-radius: 9999px;
+  background: conic-gradient(from 20deg, transparent, rgba(255, 255, 255, 0.18), transparent 18%, rgba(255, 218, 134, 0.15), transparent 36%);
+  content: "";
+  filter: blur(10px);
+  pointer-events: none;
+}
+
+.thoughtStar::before {
+  inset: -22%;
+  animation: shimmerSpin 12s linear infinite;
+  opacity: 0.58;
+}
+
+.thoughtStar::after {
+  inset: -12%;
+  animation: shimmerSpin 18s linear infinite reverse;
+  opacity: 0.35;
+}
+
+.idleStar {
+  animation: pulse 3.8s ease-in-out infinite;
+}
+
+.growStar {
+  transform: scale(1.14);
+}
+
+.shrinkingStar {
+  animation: dissolve 60s cubic-bezier(0.72, 0.02, 0.95, 0.48) forwards;
+}
+
+.particleRunning {
+  animation: orbitDust var(--p-speed) ease-in-out infinite;
+  animation-delay: var(--p-delay);
+}
+
+.spark {
+  animation: burst 1.8s ease-out forwards;
+  animation-delay: var(--p-delay);
+}
+
+.pixelSans {
+  font-family: "Inter", sans-serif;
+}
+
+.textAnywhere {
+  overflow-wrap: anywhere;
+}
+
+@keyframes spaceDrift {
+  0% { transform: translate3d(-1.2%, -0.8%, 0) scale(1.05); }
+  100% { transform: translate3d(1.4%, 1%, 0) scale(1.08); }
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: calc(var(--opacity) * 0.32); transform: scale(0.72); }
+  45% { opacity: var(--opacity); transform: scale(1.08); }
+  70% { opacity: calc(var(--opacity) * 0.58); transform: scale(0.9); }
+}
+
+@keyframes starDrift {
+  0% { translate: calc(var(--drift-x) * -0.45) calc(var(--drift-y) * -0.45); }
+  50% { translate: calc(var(--drift-x) * 0.2) calc(var(--drift-y) * 0.2); }
+  100% { translate: var(--drift-x) var(--drift-y); }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 0 18px rgba(255, 255, 255, 0.7), 0 0 48px rgba(255, 230, 160, 0.52), 0 0 108px rgba(255, 205, 112, 0.34), 0 0 190px rgba(255, 255, 255, 0.18);
+  }
+
+  50% {
+    transform: scale(1.035);
+    box-shadow: 0 0 26px rgba(255, 255, 255, 0.8), 0 0 62px rgba(255, 230, 160, 0.64), 0 0 136px rgba(255, 205, 112, 0.42), 0 0 220px rgba(255, 255, 255, 0.22);
+  }
+}
+
+@keyframes shimmerSpin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes dissolve {
+  0% { transform: translate3d(0, 0, 0) scale(1.14); opacity: 1; filter: blur(0); }
+  70% { transform: translate3d(0, -18px, 0) scale(0.28); opacity: 0.82; filter: blur(0.4px); }
+  84% { transform: translate3d(0, -26px, 0) scale(0.1); opacity: 0.54; filter: blur(1px); }
+  97% { transform: translate3d(0, -32px, 0) scale(0.015); opacity: 0.18; filter: blur(1.6px); }
+  100% { transform: translate3d(0, -34px, 0) scale(0.003); opacity: 0; filter: blur(3px); }
+}
+
+@keyframes orbitDust {
+  0% { opacity: 0; transform: translate(-50%, -50%) rotate(var(--angle)) translateX(84px) scale(0.4); }
+  20%, 80% { opacity: 0.82; }
+  100% { opacity: 0; transform: translate(-50%, -50%) rotate(calc(var(--angle) + 80deg)) translateX(15px) scale(0.08); }
+}
+
+@keyframes burst {
+  0% { opacity: 1; transform: translate(-50%, -50%) rotate(var(--angle)) translateX(0) scale(0.6); }
+  100% { opacity: 0; transform: translate(-50%, -50%) rotate(var(--angle)) translateX(var(--distance)) scale(0.05); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .app *,
+  .app::before {
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+  }
+}

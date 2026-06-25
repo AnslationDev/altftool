@@ -1,203 +1,84 @@
 "use client";
 
-import { motion } from "framer-motion";
-import CTAButton from "@/shared/ui/CTAButton";
+import Image from "next/image";
+import Link from "next/link";
 import {
-  PencilRuler,
-  Gamepad2,
-  DatabaseZap,
-  Newspaper,
+  ArrowRight,
+  ShieldCheck,
+  Sparkles,
+  Star,
+  Users,
 } from "lucide-react";
 
+const heroStats = [
+  { label: "50K+ Users", icon: Users },
+  { label: "4.9/5 Rating", icon: Star, accent: "gold" },
+  { label: "Trusted Platform", icon: ShieldCheck, accent: "green" },
+];
+
 export default function HeroSection() {
-  const lines = [
-    ["AltF Tool", "Workspace"],
-    ["Useful", "Microtools"],
-    ["Fast", "Everyday Flow"],
-  ];
-
-  const heroPreviewCards = [
-    {
-      icon: PencilRuler,
-      title: "Micro tools",
-      value: "97 live",
-      desc: "Calculators, converters, AI helpers, and makers.",
-    },
-    {
-      icon: Gamepad2,
-      title: "Quick fun",
-      value: "Games",
-      desc: "Lightweight games and playful browser utilities.",
-    },
-    {
-      icon: Newspaper,
-      title: "Daily reads",
-      value: "News",
-      desc: "Fast headlines, guides, blogs, and trend surfaces.",
-    },
-    {
-      icon: DatabaseZap,
-      title: "Deals layer",
-      value: "BuySmart",
-      desc: "Brand discovery and useful shopping signals.",
-    },
-  ];
-
-  const features = [
-    {
-      icon: PencilRuler,
-      title: "200+ Tools & Extensions",
-      description: "Works for everyone",
-      tone: "var(--anslation-ds-primary)",
-      surface: "var(--anslation-ds-primary-soft)",
-    },
-    {
-      icon: Gamepad2,
-      title: "Online Games",
-      description: "Play free online games",
-      tone: "var(--anslation-ds-accent)",
-      surface: "color-mix(in srgb, var(--anslation-ds-accent) 14%, var(--card))",
-    },
-    {
-      icon: Newspaper,
-      title: "News",
-      description: "Stay updated with latest News",
-      tone: "var(--anslation-ds-success)",
-      surface: "color-mix(in srgb, var(--anslation-ds-success) 14%, var(--card))",
-    },
-    {
-      icon: DatabaseZap,
-      title: "Powerful",
-      description: "Small tools, big impact",
-      tone: "var(--anslation-ds-danger)",
-      surface: "color-mix(in srgb, var(--anslation-ds-danger) 12%, var(--card))",
-    },
-  ];
-
-  const fadeUp = {
-    hidden: { opacity: 0, y: 30, filter: "blur(10px)" },
-    visible: {
-      opacity: 1,
-      y: 0,
-      filter: "blur(0px)",
-      transition: { duration: 0.8 },
-    },
-  };
-
   return (
-    <section className="relative z-10 flex justify-center overflow-hidden bg-[var(--background)] section">
-      <div className="w-full">
-        <div className="grid items-center gap-8 lg:grid-cols-[0.95fr_1.05fr] lg:gap-12">
-          <motion.div
-            className="w-full text-center lg:text-left"
-            initial="hidden"
-            animate="visible"
-            variants={{
-              visible: { transition: { staggerChildren: 0.2 } },
-            }}
-          >
-            <motion.h1
-              className="mb-5 font-bold leading-[1.05] tracking-normal
-              text-4xl sm:text-5xl md:text-5xl lg:text-[52px] xl:text-[56px]
-              text-(--foreground)"
-              variants={fadeUp}
-            >
-              {lines.map(([prefix, highlight]) => (
-                <span key={`${prefix}-${highlight}`} className="block">
-                  {prefix}{" "}
-                  <span className="font-extrabold text-(--primary)">
-                    {highlight}
-                  </span>
+    <section className="section home-hero-section relative overflow-hidden">
+      <div className="home-hero-band relative overflow-hidden">
+        <div className="pointer-events-none absolute inset-0 home-subtle-grid opacity-70" />
+        <div className="pointer-events-none absolute -left-40 top-10 h-[32rem] w-[32rem] rounded-full bg-[color-mix(in_srgb,var(--primary)_10%,transparent)] blur-3xl" />
+
+        <div className="home-hero-inner relative mx-auto max-w-[1280px] px-[var(--anslation-ds-gutter)]">
+          <div className="home-hero-content-grid grid items-center gap-9 lg:grid-cols-[0.96fr_1.04fr] xl:gap-14">
+            <div className="home-reveal">
+              <div className="home-reference-badge">
+                <Sparkles className="h-4 w-4" />
+                All-in-one productivity platform
+              </div>
+
+              <h1 className="mt-6 max-w-[39rem] text-balance text-[clamp(2.35rem,3.9vw,3.45rem)] font-black leading-[1.06] tracking-normal text-[var(--foreground)]">
+                Find Tools. Extensions.{" "}
+                <span className="bg-gradient-to-r from-[var(--primary)] to-[#4e8cff] bg-clip-text text-transparent">
+                  Apps.
                 </span>
-              ))}
-            </motion.h1>
+                {" "}All In One Place.
+              </h1>
 
-            <motion.p
-              className="mb-7 md:mb-9 text-base sm:text-lg lg:text-lg text-(--muted-foreground) max-w-xl mx-auto lg:mx-0 leading-relaxed"
-              variants={fadeUp}
-            >
-              Smart tools, simple games, blogs, news, and deal surfaces in one fast workspace designed to get you to the right action quickly.
-            </motion.p>
+              <p className="mt-6 max-w-[35rem] text-[0.98rem] font-semibold leading-8 text-[var(--muted-foreground)]">
+                Discover trusted productivity tools, browser extensions, and
+                mobile apps curated to help you work smarter.
+              </p>
 
-            <motion.div
-              className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center lg:justify-start"
-              variants={fadeUp}
-            >
-              <CTAButton text="Try Now" href="/tools" />
-              <CTAButton
-                text="Explore Tools"
-                href="/tools"
-                variant="outline"
-                className="text-[var(--primary)]"
-              />
-            </motion.div>
-          </motion.div>
+              <div className="mt-7 flex flex-col gap-4 sm:flex-row">
+                <Link href="/tools/all" className="home-ref-primary-btn">
+                  Explore Tools
+                  <ArrowRight className="h-4 w-4" />
+                </Link>
+                <Link href="/about-us" className="home-ref-secondary-btn">
+                  Learn More
+                </Link>
+              </div>
 
-          <div className="hidden h-full w-full lg:grid lg:grid-cols-2 lg:gap-4">
-            {heroPreviewCards.map((item, index) => {
-              const Icon = item.icon;
+              <div className="home-hero-stat-strip mt-8">
+                {heroStats.map((item) => {
+                  const Icon = item.icon;
 
-              return (
-                <motion.div
-                  key={item.title}
-                  className="group flex flex-col gap-4 rounded-2xl border border-(--border) bg-(--card) p-5 shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:border-(--anslation-ds-border-strong) hover:shadow-[var(--anslation-ds-shadow-md)]"
-                  initial={{ opacity: 0, y: 18 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.15 + index * 0.06, duration: 0.45 }}
-                >
-                  <div className="flex items-start justify-between gap-3">
-                    <div className="grid h-10 w-10 place-items-center rounded-xl bg-(--anslation-ds-primary-soft) text-(--primary) transition-colors group-hover:bg-(--primary) group-hover:text-(--primary-foreground)">
-                      <Icon className="h-5 w-5" />
-                    </div>
-                    <span className="rounded-full border border-(--border) bg-(--anslation-ds-soft) px-2.5 py-1 text-[11px] font-semibold tracking-wide text-(--muted-foreground) uppercase">
-                      {item.value}
+                  return (
+                    <span key={item.label} className="home-hero-stat-item">
+                      <Icon className={`h-5 w-5 ${item.accent ? `home-hero-stat-icon-${item.accent}` : ""}`} />
+                      {item.label}
                     </span>
-                  </div>
-                  <div>
-                    <h3 className="text-base font-semibold text-(--foreground) tracking-tight">
-                      {item.title}
-                    </h3>
-                    <p className="mt-1 text-sm leading-relaxed text-(--muted-foreground)">
-                      {item.desc}
-                    </p>
-                  </div>
-                </motion.div>
-              );
-            })}
+                  );
+                })}
+              </div>
+            </div>
+
+            <div className="home-reveal home-hero-visual home-hero-reference-visual relative flex min-h-[330px] items-center justify-center [animation-delay:110ms]">
+              <Image
+                src="/assets/home-hero-generated-team-v3.png"
+                alt="Creators exploring AltFTool digital tools on a laptop"
+                width={1536}
+                height={1024}
+                priority
+                className="home-hero-reference-image"
+              />
+            </div>
           </div>
-        </div>
-
-        <div className="mt-10 grid grid-cols-1 gap-3 sm:grid-cols-2 md:mt-12 lg:grid-cols-4 lg:gap-4">
-          {features.map((feature, index) => {
-            const Icon = feature.icon;
-
-            return (
-              <motion.div
-                key={index}
-                whileHover={{ y: -2 }}
-                transition={{ type: "spring", stiffness: 200 }}
-                className="flex items-center gap-3 rounded-[var(--anslation-ds-radius)] border border-(--border) bg-(--card) p-3 shadow-[var(--anslation-ds-shadow-sm)] transition hover:border-(--primary) hover:bg-[color-mix(in_srgb,var(--card)_78%,var(--anslation-ds-primary-soft))] md:p-4"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-              >
-                <div
-                  className="grid h-10 w-10 place-items-center rounded-[var(--anslation-ds-radius)] md:h-12 md:w-12"
-                  style={{ background: feature.surface, color: feature.tone }}
-                >
-                  <Icon className="h-5 w-5 md:h-6 md:w-6" />
-                </div>
-
-                <div className="flex-1">
-                  <h3 className="font-semibold text-sm md:text-base text-[var(--foreground)]">
-                    {feature.title}
-                  </h3>
-                  <p className="text-xs md:text-sm text-[var(--muted-foreground)]">
-                    {feature.description}
-                  </p>
-                </div>
-              </motion.div>
-            );
-          })}
         </div>
       </div>
     </section>

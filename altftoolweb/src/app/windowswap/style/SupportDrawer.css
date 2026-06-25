@@ -1,0 +1,21 @@
+.windowswap-support-drawer {
+    overscroll-behavior: contain;
+}
+
+.windowswap-support-scroll::-webkit-scrollbar {
+    width: 6px;
+}
+
+.windowswap-support-scroll::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.15);
+    border-radius: 9999px;
+}
+
+.windowswap-support-scroll::-webkit-scrollbar-thumb {
+    background: rgba(197, 101, 67, 0.35);
+    border-radius: 9999px;
+}
+
+.windowswap-support-scroll::-webkit-scrollbar-thumb:hover {
+    background: rgba(197, 101, 67, 0.6);
+}

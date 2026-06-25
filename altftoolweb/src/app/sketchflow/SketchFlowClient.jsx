@@ -256,7 +256,7 @@ export default function SketchFlow({ config: configProp }) {
         : Array.isArray(parsed.elements)
           ? parsed.elements.map(normalizeElement)
           : [];
-        const restoredCamera = parsed.camera || cameraDefault;
+      const restoredCamera = parsed.camera || cameraDefault;
       // Restore user-preference dark mode from localStorage, but fall back to
       // admin default if the user has never explicitly set it.
       const restoredDark = parsed.dark ?? defaultDark;
@@ -591,8 +591,8 @@ export default function SketchFlow({ config: configProp }) {
       const drawnId = action.element.id;
       const currentScene = elementsRef.current;
       const next = normalizeScene(currentScene.map((el) => (el.id === drawnId && el.type === "arrow" ? bindArrowEnds(el, currentScene) : el)).filter((el) => {
-          const b = boundsOf(el);
-          return el.type === "text" || b.width > 2 || b.height > 2 || el.points?.length > 2;
+        const b = boundsOf(el);
+        return el.type === "text" || b.width > 2 || b.height > 2 || el.points?.length > 2;
       }));
       applyElements(next);
       if (next.some((el) => el.id === drawnId) && !scenesEqual(action.original, next)) pushHistory(action.original);
@@ -1176,19 +1176,19 @@ export default function SketchFlow({ config: configProp }) {
   const liveTextSize = editingElement ? textSize(editingText.value || "Text", editingElement.fontSize) : null;
   const textareaStyle = editingElement
     ? {
-        left: `${camera.x + editingElement.x * camera.zoom}px`,
-        top: `${camera.y + editingElement.y * camera.zoom}px`,
-        width: `${Math.max(140, liveTextSize.width * camera.zoom)}px`,
-        minHeight: `${Math.max(48, liveTextSize.height * camera.zoom)}px`,
-        fontSize: `${editingElement.fontSize * camera.zoom}px`,
-        lineHeight: 1.25,
-        fontFamily: editingElement.fontFamily,
-        textAlign: editingElement.textAlign,
-        color: editingElement.strokeColor,
-        transform: `rotate(${editingElement.angle || 0}rad)`,
-        transformOrigin: "top left",
-        background: dark ? "rgba(18,18,18,.72)" : "rgba(255,255,255,.72)",
-      }
+      left: `${camera.x + editingElement.x * camera.zoom}px`,
+      top: `${camera.y + editingElement.y * camera.zoom}px`,
+      width: `${Math.max(140, liveTextSize.width * camera.zoom)}px`,
+      minHeight: `${Math.max(48, liveTextSize.height * camera.zoom)}px`,
+      fontSize: `${editingElement.fontSize * camera.zoom}px`,
+      lineHeight: 1.25,
+      fontFamily: editingElement.fontFamily,
+      textAlign: editingElement.textAlign,
+      color: editingElement.strokeColor,
+      transform: `rotate(${editingElement.angle || 0}rad)`,
+      transformOrigin: "top left",
+      background: dark ? "rgba(18,18,18,.72)" : "rgba(255,255,255,.72)",
+    }
     : {};
 
   useEffect(() => {

@@ -1,5 +1,8 @@
 import NewsClient from "./NewsClient";
 import { createPageMetadata } from "@/platform/seo/generateMetadata";
+import { getNewsDataServer } from "./lib/getNewsDataServer";
+
+export const revalidate = 600; // Cache news feed for 10 minutes
 
 export async function generateMetadata() {
   return createPageMetadata({
@@ -11,6 +14,7 @@ export async function generateMetadata() {
   });
 }
 
-export default function Page() {
-  return <NewsClient />;
+export default async function Page() {
+  const newsData = await getNewsDataServer();
+  return <NewsClient initialNewsData={newsData} />;
 }

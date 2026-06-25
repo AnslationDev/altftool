@@ -1,0 +1,11 @@
+.windowswap-music {
+    position: relative;
+}
+
+.windowswap-music-frame {
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35);
+}
+
+.windowswap-music-copy {
+    padding-top: 0.75rem;
+}

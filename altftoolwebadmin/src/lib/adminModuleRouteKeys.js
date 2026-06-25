@@ -24,7 +24,8 @@ export const ADMIN_MODULE_ROUTE_KEYS = {
     tripfindbox: [""],
     pranksocialmedia: [""],
     pranx: [""],
-    sketchflow:[""],
+    sketchflow: [""],
+    seo: ["", "dashboard", "search", "gsc"],
   },
   leadtree: {
     blogs: [

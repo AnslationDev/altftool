@@ -1,3 +1,7 @@
+import { toolContentOverrides } from "./toolContentOverrides";
+import { getSeoConfigSnapshot } from "@/platform/seo/seoConfigSource";
+import { resolveContent } from "@altftool/core/seo/resolver";
+
 const workflowTemplates = {
   developer: {
     examples: [
@@ -76,26 +80,62 @@ export function buildToolSeoContent(slug, tool = {}) {
   const template = chooseTemplate(categories, slug, name);
   const summary = buildMetaDescription(name, description, primaryCategory);
 
+  const categoryLabel = primaryCategory ? primaryCategory.toLowerCase() : "online";
+  const override = toolContentOverrides[slug] || null;
+  // ALTF Engine: admin-managed per-page content override (highest precedence).
+  // Empty/disabled => {} so behavior is identical to before.
+  const central = resolveContent(getSeoConfigSnapshot(), `/tools/all/${slug}`);
+
+  const intro =
+    central.intro ||
+    override?.intro ||
+    `${name} is a free, browser-based ${categoryLabel} tool on AltFTool. ` +
+      `${description ? `${description} ` : ""}` +
+      `Everything runs in your browser, so you can use ${name} instantly — no signup, no install, and no uploading your data to a server.`;
+
+  // Examples (benefits): central admin override > hand-written code override >
+  // category template (with the tool name injected so copy stays unique).
+  const examples = central.benefits?.length
+    ? central.benefits.map((b) => ({ title: b.title, body: b.body }))
+    : override?.benefits?.length
+    ? override.benefits.map(([title, body]) => ({ title, body }))
+    : template.examples.map(([title, body]) => ({
+        title,
+        body: `${body} With ${name}, this stays fast and private in your browser.`,
+      }));
+
+  const faqs = central.faqs?.length
+    ? central.faqs.map((f) => ({ question: f.q, answer: f.a }))
+    : override?.faqs?.length
+    ? override.faqs.map(([question, answer]) => ({ question, answer }))
+    : [
+        {
+          question: `Is ${name} free to use?`,
+          answer: `Yes. ${name} is available as a free online tool on AltFTool.`,
+        },
+        {
+          question: `What can I use ${name} for?`,
+          answer: description || `${name} helps with ${primaryCategory.toLowerCase()} workflows and quick browser-based tasks.`,
+        },
+        {
+          question: `Does ${name} work on mobile?`,
+          answer: `Yes. ${name} is designed for modern desktop and mobile browsers.`,
+        },
+      ];
+
   return {
     name,
+    h1: central.h1 || name,
     heading: `${name} workflows`,
     summary,
+    intro,
     metaDescription: summary,
-    examples: template.examples.map(([title, body]) => ({ title, body })),
-    steps: template.steps,
-    faqs: [
-      {
-        question: `Is ${name} free to use?`,
-        answer: `Yes. ${name} is available as a free online tool on AltFTool.`,
-      },
-      {
-        question: `What can I use ${name} for?`,
-        answer: description || `${name} helps with ${primaryCategory.toLowerCase()} workflows and quick browser-based tasks.`,
-      },
-      {
-        question: `Does ${name} work on mobile?`,
-        answer: `Yes. ${name} is designed for modern desktop and mobile browsers.`,
-      },
+    useCases: central.useCases?.length ? central.useCases : override?.useCases || [],
+    examples,
+    steps: [
+      `Open ${name} on AltFTool — it loads instantly in your browser.`,
+      ...template.steps,
     ],
+    faqs,
   };
 }

@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="520" height="128" viewBox="0 0 520 128" role="img" aria-labelledby="title desc">
+  <title id="title">Logo</title>
+  <desc id="desc">Playful safe browser pranks logo with a smiling mascot mark.</desc>
+  <defs>
+    <linearGradient id="face" x1="18" y1="13" x2="101" y2="113" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#8df8ff"/>
+      <stop offset=".53" stop-color="#39c7f4"/>
+      <stop offset="1" stop-color="#1b7bc5"/>
+    </linearGradient>
+    <linearGradient id="shine" x1="21" y1="16" x2="80" y2="72" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#fff" stop-opacity=".95"/>
+      <stop offset="1" stop-color="#fff" stop-opacity=".05"/>
+    </linearGradient>
+    <filter id="lift" x="-8" y="-8" width="536" height="144" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="6" stdDeviation="3" flood-color="#06122d" flood-opacity=".26"/>
+    </filter>
+  </defs>
+  <g filter="url(#lift)">
+    <path fill="#fff4dc" d="M42 23 17 5l8 35C15 48 9 61 9 75c0 31 26 47 55 47s55-16 55-47c0-14-6-27-16-35l8-35-25 18c-7-3-14-5-22-5s-15 2-22 5Z"/>
+    <path fill="#0b1837" d="m42 23 4 6-17-12 6 25-4 3C22 52 17 63 17 75c0 25 20 39 47 39s47-14 47-39c0-12-5-23-14-30l-4-3 6-25-17 12 4-6c-7-3-14-5-22-5s-15 2-22 5Z"/>
+    <path fill="url(#face)" d="M38 35 27 27l4 18-5 5c-7 7-10 15-10 25 0 23 20 36 48 36s48-13 48-36c0-10-3-18-10-25l-5-5 4-18-11 8c-8-6-17-9-26-9s-18 3-26 9Z"/>
+    <path fill="url(#shine)" d="M29 47c12-17 39-21 61-10-34 0-58 12-70 36 0-10 3-19 9-26Z"/>
+    <circle cx="42" cy="62" r="13" fill="#fff"/>
+    <circle cx="84" cy="62" r="13" fill="#fff"/>
+    <circle cx="45" cy="64" r="6" fill="#0b1837"/>
+    <circle cx="81" cy="64" r="6" fill="#0b1837"/>
+    <circle cx="47" cy="60" r="2.5" fill="#fff"/>
+    <circle cx="83" cy="60" r="2.5" fill="#fff"/>
+    <path fill="#0b1837" d="M30 78c8 14 20 21 34 21s26-7 34-21H30Z"/>
+    <path fill="#fff" d="M39 84h9v10c-3-1-6-3-9-5v-5Zm13 0h9v12c-3 0-6 0-9-1V84Zm13 0h9v12h-9V84Zm13 0h9v11c-3 1-6 1-9 1V84Zm13 0h4c-1 2-2 4-4 5v-5Z"/>
+    <path fill="none" stroke="#fff" stroke-linecap="round" stroke-width="4" d="M32 75c10 8 20 12 32 12s22-4 32-12"/>
+    <path fill="none" stroke="#0b1837" stroke-linecap="round" stroke-width="6" d="M23 68c-8-1-14-5-17-12m99 12c8-1 14-5 17-12"/>
+    <text x="138" y="83" fill="#fff" stroke="#0b1837" stroke-linejoin="round" stroke-width="12" paint-order="stroke fill" font-family="Inter, Arial, sans-serif" font-size="62" font-weight="900" letter-spacing="1">PRANXHUB</text>
+    <path fill="none" stroke="#ff7a59" stroke-linecap="round" stroke-width="7" d="M143 98h250"/>
+    <path fill="none" stroke="#69e6d1" stroke-linecap="round" stroke-width="7" d="M407 98h58"/>
+  </g>
+</svg>

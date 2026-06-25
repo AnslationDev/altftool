@@ -10,7 +10,11 @@ import {
   TicketPercent,
   Star,
   Plane,
+<<<<<<< HEAD
   Sparkles,
+=======
+  Search,
+>>>>>>> main
 } from "lucide-react";
 import AltfLogo from "../../../public/logos/altflogo.png";
 
@@ -36,6 +40,7 @@ const altftoolConfig = {
     pranksocialmedia: { label: "Prank Social Media", icon: Sparkles, routeSegment: "prank-socialmedia" },
     pranx: { label: "Pranx", icon: Sparkles, routeSegment: "pranx" },
     sketchflow: { label: "Sketch Flow", icon: Sparkles, routeSegment: "sketchflow" },
+    seo: { label: "SEO Engine", icon: Search, routeSegment: "seo" },
   },
 };
 

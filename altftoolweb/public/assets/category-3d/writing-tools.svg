@@ -1,0 +1,26 @@
+<svg width="220" height="170" viewBox="0 0 220 170" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="paper" x1="70" y1="21" x2="160" y2="132" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFFFFF"/>
+      <stop offset="1" stop-color="#EEE9FF"/>
+    </linearGradient>
+    <linearGradient id="pen" x1="134" y1="17" x2="82" y2="128" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFC857"/>
+      <stop offset="0.52" stop-color="#FF8B3D"/>
+      <stop offset="1" stop-color="#6C4DF6"/>
+    </linearGradient>
+    <filter id="writeShadow" x="31" y="8" width="161" height="152" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="20" stdDeviation="15" flood-color="#6C4DF6" flood-opacity="0.17"/>
+    </filter>
+  </defs>
+  <ellipse cx="112" cy="146" rx="74" ry="13" fill="#F59E0B" opacity="0.12"/>
+  <g filter="url(#writeShadow)">
+    <path d="M78 30H138L163 56V123C163 133.493 154.493 142 144 142H78C67.5066 142 59 133.493 59 123V49C59 38.5066 67.5066 30 78 30Z" fill="url(#paper)" stroke="white" stroke-width="5"/>
+    <path d="M137 31V54C137 57.3137 139.686 60 143 60H162" fill="#D9D2FF"/>
+    <path d="M82 75H134" stroke="#C9D1EE" stroke-width="7" stroke-linecap="round"/>
+    <path d="M82 96H122" stroke="#C9D1EE" stroke-width="7" stroke-linecap="round"/>
+    <path d="M132 35L152 45L109 128L85 139L89 113L132 35Z" fill="url(#pen)"/>
+    <path d="M132 35L152 45" stroke="white" stroke-width="5" stroke-linecap="round"/>
+  </g>
+  <circle cx="176" cy="83" r="8" fill="#7BE3E8" opacity="0.8"/>
+</svg>

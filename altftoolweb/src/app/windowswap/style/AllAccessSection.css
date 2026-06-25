@@ -1,0 +1,19 @@
+.windowswap-all-access {
+    position: relative;
+}
+
+.windowswap-all-access-card img {
+    transition: transform 3s ease-out, filter 3s ease-out;
+}
+
+.windowswap-all-access-card:hover img {
+    transform: scale(1.05);
+}
+
+.windowswap-all-access-copy {
+    letter-spacing: 0.01em;
+}
+
+.windowswap-all-access-cta {
+    box-shadow: 0 14px 30px rgba(0, 0, 0, 0.18);
+}

@@ -53,6 +53,8 @@ export async function generateMetadata({ params }) {
     path: `/blogs/tag/${tag}`,
     image: tagPosts[0]?.image,
     keywords: [tagLabel, "AltFTool blog", `${tagLabel} articles`],
+    // Avoid indexing thin tag archives with too few posts.
+    noindex: (tagPosts?.length || 0) < 2,
   });
 }
 

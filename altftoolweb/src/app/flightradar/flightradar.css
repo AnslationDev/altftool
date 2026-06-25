@@ -1,0 +1,101 @@
+/* src/app/flightradar/flightradar.css */
+
+/* 1. Import Premium Earthy Typography from Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
+
+/* 2. Declare Tailwind v4 Earthy Theme System */
+@theme {
+  --font-serif: 'Fraunces', serif;
+  --font-sans: 'Nunito', sans-serif;
+
+  --color-moss: #5D7052;
+  --color-clay: #C18C5D;
+  --color-sand: #E6DCCD;
+  --color-loam: #2C2C24;
+  --color-rice: #FDFCF8;
+  --color-stone: #F0EBE5;
+  --color-grass: #78786C;
+  --color-timber: #DED8CF;
+}
+
+/* 3. Global Hider for Project Header (Hydration Safe Class-bound) */
+body.hide-global-header-active #main-header {
+  display: none !important;
+}
+
+/* 4. Scrollbar Telemetry overrides */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: rgba(93, 112, 82, 0.2);
+  border-radius: 20px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(93, 112, 82, 0.4);
+}
+
+/* Custom shadow overlays */
+.shadow-soft {
+  box-shadow: 0 4px 20px -2px rgba(93, 112, 82, 0.12);
+}
+
+/* Organic Sepia Map filter */
+.organic-map-filter .leaflet-tile-pane {
+  filter: sepia(18%) contrast(96%) brightness(101%) saturate(95%);
+}
+
+/* Leaflet Container style bindings */
+.leaflet-container {
+  font-family: var(--font-sans), sans-serif !important;
+}
+
+.organic-flight-marker {
+  background: transparent !important;
+  border: none !important;
+}
+
+.fr24-popup .leaflet-popup-content-wrapper {
+  background: rgba(253, 252, 248, 0.96) !important;
+  /* bg-rice with alpha */
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(222, 216, 207, 0.8) !important;
+  /* border-timber */
+  border-radius: 16px !important;
+  padding: 0 !important;
+  box-shadow: 0 6px 20px -4px rgba(93, 112, 82, 0.15) !important;
+}
+
+.fr24-popup .leaflet-popup-content {
+  margin: 8px 12px !important;
+}
+
+.fr24-popup .leaflet-popup-tip {
+  background: rgba(253, 252, 248, 0.96) !important;
+  border-left: 1px solid rgba(222, 216, 207, 0.5) !important;
+  border-bottom: 1px solid rgba(222, 216, 207, 0.5) !important;
+}
+
+/* Fade animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}

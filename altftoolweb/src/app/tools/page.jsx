@@ -1,4 +1,5 @@
 import MicrotoolClient from "./MicrotoolClient";
+import ToolHubLinks from "./ToolHubLinks";
 import { createPageMetadata } from "@/platform/seo/generateMetadata";
 
 export async function generateMetadata() {
@@ -11,5 +12,10 @@ export async function generateMetadata() {
 }
 
 export default function Page() {
-  return <MicrotoolClient />;
+  return (
+    <>
+      <MicrotoolClient />
+      <ToolHubLinks category="all" />
+    </>
+  );
 }

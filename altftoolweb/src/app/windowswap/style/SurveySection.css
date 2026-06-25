@@ -1,0 +1,15 @@
+.windowswap-survey {
+    position: relative;
+}
+
+.windowswap-survey-illustration svg {
+    filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.14));
+}
+
+.windowswap-survey-title {
+    text-wrap: balance;
+}
+
+.windowswap-survey-cta {
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.16);
+}

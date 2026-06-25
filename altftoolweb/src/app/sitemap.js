@@ -15,8 +15,12 @@ import { getTop9Items } from "@/app/top9/data/getTop9Items";
 import wattpadBooks from "@/app/wattpad/data/books.json";
 import wattpadCategories from "@/app/wattpad/data/categories.json";
 import { getSiteUrl, normalizeSlug } from "@/platform/seo/generateMetadata";
+import { loadSeoConfig } from "@/platform/seo/seoConfigSource";
+import { resolveSitemap } from "@altftool/core/seo/resolver";
 import newsData from "../../public/data/newsdata.json";
-import topicsData from "../../public/data/topics.json";
+import { TOOLS as altPdfTools } from "@/app/altflovepdf/toolsData";
+import { services as homeservServices } from "@/app/homeserv/services-data";
+import { apps } from "@/app/apps/data/apps";
 
 export const revalidate = 3600;
 
@@ -28,6 +32,7 @@ const staticRoutes = [
   { path: "/buysmart", priority: 0.85 },
   { path: "/buysmart/view-all", priority: 0.75 },
   { path: "/extensions", priority: 0.8 },
+  { path: "/apps", priority: 0.78 },
   { path: "/desktop", priority: 0.7 },
   { path: "/fullscrn", priority: 0.65 },
   { path: "/search-eng", priority: 0.65 },
@@ -58,6 +63,41 @@ const staticRoutes = [
   { path: "/policypages/disclaimer", priority: 0.25 },
   { path: "/policypages/privacy", priority: 0.25 },
   { path: "/policypages/termsandconditions", priority: 0.25 },
+
+  // --- ALTF Love IMG (browser image tools) ---
+  { path: "/altfloveimg", priority: 0.7 },
+  { path: "/altfloveimg/compress", priority: 0.64 },
+  { path: "/altfloveimg/resize", priority: 0.64 },
+  { path: "/altfloveimg/crop", priority: 0.62 },
+  { path: "/altfloveimg/rotate", priority: 0.6 },
+  { path: "/altfloveimg/jpg-to-png", priority: 0.6 },
+  { path: "/altfloveimg/png-to-jpg", priority: 0.6 },
+  { path: "/altfloveimg/webp-to-jpg", priority: 0.6 },
+  { path: "/altfloveimg/jpg-to-webp", priority: 0.6 },
+  { path: "/altfloveimg/watermark", priority: 0.6 },
+  { path: "/altfloveimg/editor", priority: 0.62 },
+  { path: "/altfloveimg/meme", priority: 0.58 },
+  { path: "/altfloveimg/background-remover", priority: 0.62 },
+  { path: "/altfloveimg/upscaler", priority: 0.62 },
+
+  // --- Altf Love PDF (browser PDF tools) ---
+  { path: "/altflovepdf", priority: 0.7 },
+
+  // --- QuoteNest Pros (homeserv) ---
+  { path: "/homeserv", priority: 0.62 },
+  { path: "/homeserv/contact-us", priority: 0.4 },
+  { path: "/homeserv/privacy-policy", priority: 0.3 },
+  { path: "/homeserv/terms-of-use", priority: 0.3 },
+
+  // --- TripFindBox (travel) ---
+  { path: "/tripfindbox", priority: 0.68 },
+  { path: "/tripfindbox/about-us", priority: 0.45 },
+  { path: "/tripfindbox/blogs", priority: 0.6 },
+  { path: "/tripfindbox/booking", priority: 0.55 },
+  { path: "/tripfindbox/contact-us", priority: 0.4 },
+  { path: "/tripfindbox/privacy-policy", priority: 0.3 },
+  { path: "/tripfindbox/terms-and-conditions", priority: 0.3 },
+  { path: "/tripfindbox/site-map", priority: 0.4 },
 ];
 
 const FIREBASE_API_KEY =
@@ -90,19 +130,31 @@ function sitemapEntry(path, options = {}) {
   };
 }
 
+// ALTF Engine: central SEO config for this sitemap build (null = inert).
+let activeSeoConfig = null;
+
 function pushUnique(entries, seen, path, options) {
   if (!path || seen.has(path)) return;
-  seen.add(path);
-  entries.push(sitemapEntry(path, options));
-}
 
-function normalizeTopicSlug(value = "") {
-  return String(value)
-    .toLowerCase()
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "")
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/(^-|-$)/g, "");
+  let opts = options;
+  if (activeSeoConfig) {
+    try {
+      const sm = resolveSitemap(activeSeoConfig, { path });
+      if (sm && sm.include === false) return; // excluded by central config
+      if (sm && (sm.priority !== undefined || sm.changeFreq !== undefined)) {
+        opts = {
+          ...options,
+          priority: sm.priority !== undefined ? sm.priority : options?.priority,
+          changeFrequency: sm.changeFreq !== undefined ? sm.changeFreq : options?.changeFrequency,
+        };
+      }
+    } catch {
+      opts = options; // never let the engine break sitemap generation
+    }
+  }
+
+  seen.add(path);
+  entries.push(sitemapEntry(path, opts));
 }
 
 function firestoreCollectionUrl(path, pageSize = 100) {
@@ -215,6 +267,9 @@ async function getLiveSitemapCollections() {
 export default async function sitemap() {
   const entries = [];
   const seen = new Set();
+  // ALTF Engine: load central config once per build. Returns an empty/disabled
+  // config (inert) unless the engine is enabled, so output is unchanged by default.
+  activeSeoConfig = await loadSeoConfig().catch(() => null);
   const liveCollections = await getLiveSitemapCollections();
   const sitemapBlogs = [...getAllBlogs(), ...liveCollections.firebaseBlogs];
 
@@ -238,20 +293,15 @@ export default async function sitemap() {
     });
   }
 
-  for (const [slug, tool] of Object.entries(toolMetaMap)) {
+  // Only the canonical /tools/all/<slug> URL goes in the sitemap.
+  // The /tools/<category>/<slug> route still works for users but it canonicalises
+  // to /tools/all/<slug>; listing it caused the "Alternative page with proper
+  // canonical tag" duplicates, so it is intentionally excluded here.
+  for (const slug of Object.keys(toolMetaMap)) {
     pushUnique(entries, seen, `/tools/all/${slug}`, {
       priority: 0.78,
       changeFrequency: "monthly",
     });
-
-    const categories = Array.isArray(tool.category) ? tool.category : [tool.category];
-    const primaryCategory = normalizeSlug(categories.find(Boolean) || "all");
-    if (primaryCategory && primaryCategory !== "all") {
-      pushUnique(entries, seen, `/tools/${primaryCategory}/${slug}`, {
-        priority: 0.68,
-        changeFrequency: "monthly",
-      });
-    }
   }
 
   for (const blog of getAllBlogs()) {
@@ -318,6 +368,16 @@ export default async function sitemap() {
           : undefined,
         priority: 0.62,
         changeFrequency: "weekly",
+      });
+    }
+  }
+
+  for (const app of apps || []) {
+    if (app?.slug) {
+      pushUnique(entries, seen, `/apps/${app.slug}`, {
+        lastModified: app.lastUpdated ? new Date(app.lastUpdated) : undefined,
+        priority: 0.66,
+        changeFrequency: "monthly",
       });
     }
   }
@@ -439,12 +499,25 @@ export default async function sitemap() {
     }
   }
 
-  for (const topic of (topicsData.topics || []).slice(0, 200)) {
-    const slug = normalizeTopicSlug(topic);
-    if (slug) {
-      pushUnique(entries, seen, `/news/topics/${slug}`, {
-        priority: 0.42,
-        changeFrequency: "weekly",
+  // News topic pages are noindexed (client-loaded feeds, thin server content),
+  // so they are intentionally excluded from the sitemap to save crawl budget.
+
+  // Altf Love PDF tool pages (/altflovepdf/[toolSlug])
+  for (const tool of altPdfTools || []) {
+    if (tool?.slug) {
+      pushUnique(entries, seen, `/altflovepdf/${tool.slug}`, {
+        priority: 0.62,
+        changeFrequency: "monthly",
+      });
+    }
+  }
+
+  // QuoteNest Pros service pages (/homeserv/services/[slug])
+  for (const service of homeservServices || []) {
+    if (service?.slug) {
+      pushUnique(entries, seen, `/homeserv/services/${service.slug}`, {
+        priority: 0.55,
+        changeFrequency: "monthly",
       });
     }
   }

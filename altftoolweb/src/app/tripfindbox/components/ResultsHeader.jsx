@@ -1,8 +1,13 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import MobileMenu from "./MobileMenu";
+import { useTripFindBoxContactInfo } from "@/app/tripfindbox/hooks/useTripFindBoxContactInfo";
 
-export default function ResultsHeader() {
+export default function ResultsHeader({ initialContact }) {
+  const contact = useTripFindBoxContactInfo(initialContact);
+
   return (
     <header className="results-brand-header">
       <Link href="/tripfindbox" className="results-logo">
@@ -19,14 +24,15 @@ export default function ResultsHeader() {
         <Link href="/tripfindbox">Deals</Link>
         <Link href="/tripfindbox">Support</Link>
       </nav>
-      <a className="results-call" href="tel:+17147827278">
+      <a className="results-call" href={contact.href}>
         <span><PhoneIcon /></span>
-        <strong>+1-714-782-7278</strong>
-        <small>Call 24/7 for best deals</small>
+        <strong>{contact.phone}</strong>
+        <small>{contact.callSubtext}</small>
       </a>
       <MobileMenu
         className="results-menu"
         iconSize={28}
+        initialContact={contact}
         links={[
           { href: "/", label: "Flights" },
           { href: "/top-airline-deals", label: "Deals" },

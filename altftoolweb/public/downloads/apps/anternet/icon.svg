@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" role="img" aria-label="Anternet icon">
+  <defs>
+    <linearGradient id="anternet-bg" x1="14" y1="8" x2="82" y2="88" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#5F8F00"/>
+      <stop offset=".55" stop-color="#0f3f2e"/>
+      <stop offset="1" stop-color="#143f2c"/>
+    </linearGradient>
+  </defs>
+  <rect width="96" height="96" rx="24" fill="url(#anternet-bg)"/>
+  <circle cx="48" cy="48" r="28" fill="#fff" opacity=".95"/>
+  <path d="M21 48h54M48 21c8 8 12 17 12 27S56 67 48 75M48 21C40 29 36 38 36 48s4 19 12 27" fill="none" stroke="#0f3f2e" stroke-width="5.8" stroke-linecap="round"/>
+  <path d="M26 35h44M26 61h44" fill="none" stroke="#5F8F00" stroke-width="5" stroke-linecap="round"/>
+  <rect x="1" y="1" width="94" height="94" rx="23" fill="none" stroke="#fff" stroke-opacity=".16"/>
+</svg>

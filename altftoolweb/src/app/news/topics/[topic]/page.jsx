@@ -6,6 +6,9 @@ import {
   createCollectionPageJsonLd,
   createPageMetadata,
 } from "@/platform/seo/generateMetadata";
+import { getNewsDataServer } from "../../lib/getNewsDataServer";
+
+export const revalidate = 600; // Cache news feed for 10 minutes
 
 function slugify(value = "") {
   return String(value)
@@ -43,6 +46,10 @@ export async function generateMetadata({ params }) {
     description: `Read the latest ${label} stories, headlines, and updates on AltFTool News.`,
     path: `/news/topics/${topicSlug}`,
     keywords: [`${label} news`, `${label} updates`, "AltFTool News"],
+    // Topic pages render a client-loaded feed (no substantial server content),
+    // so they are noindexed to avoid thin/duplicate "Discovered – not indexed" pages.
+    // Remove this flag if these pages gain unique server-rendered editorial content.
+    noindex: true,
   });
 }
 
@@ -50,6 +57,7 @@ export default async function TopicPage({ params }) {
   const { topic } = await params;
   const label = resolveTopicLabel(topic);
   const topicSlug = slugify(label);
+  const newsData = await getNewsDataServer({ topic: label });
 
   return (
     <>
@@ -68,7 +76,7 @@ export default async function TopicPage({ params }) {
           ]),
         ]}
       />
-      <Feeds topic={label} title={`${label} News`} />
+      <Feeds topic={label} title={`${label} News`} initialNewsData={newsData} />
     </>
   );
 }

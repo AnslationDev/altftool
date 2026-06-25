@@ -345,7 +345,7 @@ function ToolActionBar({ slug, tool, toolName, toolCategories, onResetWorkspace 
   );
 }
 
-export default function ToolDetailChrome({ slug, category = "all", children }) {
+export default function ToolDetailChrome({ slug, category = "all", seoContent, children }) {
   const [workspaceKey, setWorkspaceKey] = useState(0);
   const tool = toolMetaMap[slug];
   const toolCategories = getToolCategories(tool);
@@ -423,15 +423,7 @@ export default function ToolDetailChrome({ slug, category = "all", children }) {
             {children}
           </div>
 
-          <RouteLazySection
-            fallback={<BelowFoldSkeleton />}
-            idleDelay={1800}
-            minHeight={260}
-            rootMargin="420px 0px"
-          >
-            <ToolSeoContent slug={slug} tool={tool} />
-            <RelatedTools slug={slug} tool={tool} />
-          </RouteLazySection>
+          {seoContent}
 
           {bottomAd?.content && (
             <div className="mt-8">

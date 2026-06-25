@@ -1,0 +1,21 @@
+/* ────────────────────────────────────────────────────────
+   WindowSwap Style System (Core Theme & Shared Utilities)
+   Designed for AltF WindowSwap Clone
+   ──────────────────────────────────────────────────────── */
+
+/* Core brand theme colors matching the live platform */
+.bg-windowswap-teal {
+  background-color: #133d45;
+}
+
+.bg-windowswap-terracotta {
+  background-color: #df8664;
+}
+
+.text-windowswap-cream {
+  color: #dfc7a7;
+}
+
+.text-windowswap-peach {
+  color: #f3e4cb;
+}

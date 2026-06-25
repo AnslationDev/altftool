@@ -1,0 +1,29 @@
+/* ────────────────────────────────────────────────────────
+   HeroSection Specific Custom Styles
+   AltF WindowSwap Clone
+   ──────────────────────────────────────────────────────── */
+
+/* Dynamic mesh pulsing background animation */
+@keyframes windowswap-mesh-pulse {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* Pulsing organic mesh gradient background */
+.windowswap-hero-mesh {
+  background: linear-gradient(135deg, #0b2c30, #000000, #33241b, #0b2c30);
+  background-size: 300% 300%;
+  animation: windowswap-mesh-pulse 16s ease infinite;
+}
+
+/* Radiant glow radial overlay */
+.windowswap-radial-glow {
+  background: radial-gradient(ellipse at top, rgba(29, 69, 74, 0.35) 0%, transparent 75%);
+}

@@ -86,6 +86,16 @@ const nextConfig = {
         permanent: true,
       },
       {
+        source: "/sale-locator",
+        destination: "/sale",
+        permanent: true,
+      },
+      {
+        source: "/brand-ratings",
+        destination: "/brandrating",
+        permanent: true,
+      },
+      {
         source: "/trending-videos",
         destination: "/trendingvids",
         permanent: true,

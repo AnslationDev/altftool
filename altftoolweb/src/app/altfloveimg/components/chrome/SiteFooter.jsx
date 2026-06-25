@@ -64,9 +64,9 @@ export default function SiteFooter() {
         {/* bottom bar */}
         <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t pt-6 text-sm sm:flex-row" style={{ borderColor: "var(--ali-border)", color: "var(--ali-muted)" }}>
           <p>© {year} ALTF Love IMG · 100% in-browser, your images never leave your device.</p>
-          <a href="/" className="inline-flex items-center gap-1 font-medium transition-colors hover:text-[var(--ali-blue)]">
+          <Link href="/" className="inline-flex items-center gap-1 font-medium transition-colors hover:text-[var(--ali-blue)]">
             An AltFTool product <ArrowUpRight size={14} />
-          </a>
+          </Link>
         </div>
       </div>
     </footer>

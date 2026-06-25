@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-label="OpenAir app signal icon">
+  <defs>
+    <radialGradient id="bg" cx=".48" cy=".42" r=".64">
+      <stop offset="0" stop-color="#2fbf71"/>
+      <stop offset=".52" stop-color="#264aff"/>
+      <stop offset="1" stop-color="#101827"/>
+    </radialGradient>
+  </defs>
+  <rect width="256" height="256" rx="44" fill="url(#bg)"/>
+  <circle cx="128" cy="128" r="66" fill="none" stroke="#f5fff7" stroke-width="12" opacity=".9"/>
+  <circle cx="128" cy="128" r="22" fill="#65e68e"/>
+  <path d="M128 40v28M128 188v28M40 128h28M188 128h28" stroke="#f5fff7" stroke-width="12" stroke-linecap="round"/>
+  <path d="M82 82l20 20M174 174l20 20M194 82l-20 20M102 174l-20 20" stroke="#f5fff7" stroke-width="9" stroke-linecap="round" opacity=".8"/>
+</svg>

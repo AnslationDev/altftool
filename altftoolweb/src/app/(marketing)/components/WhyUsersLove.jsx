@@ -1,80 +1,87 @@
 "use client";
 
-import { Zap, Star, Shield } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
+import { ArrowRight } from "lucide-react";
 
 const features = [
   {
-    icon: Zap,
-    title: "Fast & Simple",
-    description:
-      "No sign-ups, no installations. Just instant access to powerful tools.",
+    asset: "/assets/why-icons/curated-trusted.svg",
+    title: "Curated & Trusted",
+    text: "We review and handpick only the best tools.",
   },
   {
-    icon: Star,
-    title: "Curated Content",
-    description:
-      "Handpicked tools tested for quality, reliability, and ease of use.",
-  },
-  {
-    icon: Shield,
+    asset: "/assets/why-icons/privacy-first.svg",
     title: "Privacy First",
-    description:
-      "Your data stays yours. We don’t track, store, or sell your information.",
+    text: "Your data is safe with us. Always.",
+  },
+  {
+    asset: "/assets/why-icons/works-everywhere.svg",
+    title: "Works Everywhere",
+    text: "Use on any device, in any browser.",
+  },
+  {
+    asset: "/assets/why-icons/no-signup.svg",
+    title: "No Signup Needed",
+    text: "Instant access to all tools. No hassle.",
   },
 ];
 
-export default function WhyChooseUs() {
+export default function WhyUsersLove() {
   return (
     <section className="section">
-      {/* <div className=" mx-auto  px-0 space-y-8"> */}
+      <div className="home-why-shell grid overflow-hidden rounded-[1.45rem] bg-white shadow-[0_22px_58px_rgba(55,49,120,0.08)] ring-1 ring-[var(--home-border)] dark:bg-[var(--card)] lg:grid-cols-[0.9fr_1.18fr_0.9fr]">
+        <div className="p-7 md:p-9 lg:p-10">
+          <p className="home-kicker">Why choose AltF?</p>
+          <h2 className="max-w-sm text-[2rem] font-black leading-[1.12] text-[var(--foreground)]">
+            Everything you need. All in one place.
+          </h2>
+          <p className="mt-5 max-w-md text-[0.95rem] font-semibold leading-7 text-[var(--muted-foreground)]">
+            AltF brings the best tools, extensions, and resources together so
+            you can focus on what matters most.
+          </p>
+          <Link href="/tools/all" className="home-why-button">
+            Learn more about us
+            <ArrowRight className="h-4 w-4" />
+          </Link>
+        </div>
 
-      {/* Header */}
-      <div className="section-header">
-        <h2 className="section-title">
-          Why <span className="text-[var(--primary)]">Choose Us</span>
-        </h2>
+        <div className="grid gap-x-6 gap-y-8 border-y border-[var(--home-border)] p-7 md:grid-cols-2 md:p-9 lg:border-x lg:border-y-0 lg:p-10">
+          {features.map((feature) => (
+            <article key={feature.title} className="flex gap-4">
+              <span className="home-why-icon">
+                <Image
+                  src={feature.asset}
+                  alt=""
+                  aria-hidden
+                  width={72}
+                  height={72}
+                  className="h-12 w-12"
+                  unoptimized
+                />
+              </span>
+              <span>
+                <span className="block text-[0.95rem] font-black text-[var(--foreground)]">
+                  {feature.title}
+                </span>
+                <span className="mt-1.5 block text-[0.8rem] font-semibold leading-6 text-[var(--muted-foreground)]">
+                  {feature.text}
+                </span>
+              </span>
+            </article>
+          ))}
+        </div>
 
-        <p className="section-subtitle">
-          The best tool discovery platform for creators, developers, and businesses
-        </p>
+        <div className="relative min-h-[285px] overflow-hidden lg:min-h-0">
+          <Image
+            src="https://images.unsplash.com/photo-1556761175-4b46a572b786?q=80&w=1100&auto=format&fit=crop"
+            alt="Professionals using AltF tools"
+            fill
+            sizes="(min-width: 1024px) 28vw, 100vw"
+            className="object-cover"
+          />
+        </div>
       </div>
-
-      {/* Features */}
-      <div className="grid md:grid-cols-3 mt-12  rounded-2xl overflow-hidden">
-
-        {features.map((feature, index) => {
-          const Icon = feature.icon;
-
-          return (
-            <div
-              key={feature.title}
-              className={`px-8 py-10 lg:px-12 lg:py-14 text-center  transition  ${index !== features.length - 1
-                ? "md:border-r border-[var(--border)]"
-                : ""
-                }`}
-            >
-              {/* Icon */}
-              <div className="flex justify-center mb-6 lg:mb-8">
-                <div className="p-3 lg:p-4 rounded-full bg-[var(--badge-bg)] shadow-md">
-                  <Icon className="w-6 h-6 lg:w-8 lg:h-8 text-[var(--foreground)]" />
-                </div>
-              </div>
-
-              {/* Title */}
-              <h3 className="text-xl lg:text-2xl font-semibold mb-3 lg:mb-4 text-[var(--foreground)]">
-                {feature.title}
-              </h3>
-
-              {/* Description */}
-              <p className="leading-relaxed text-[var(--secondary-foreground)] text-sm md:text-base lg:text-lg">
-                {feature.description}
-              </p>
-            </div>
-          );
-        })}
-
-      </div>
-      {/* </div> */}
     </section>
   );
 }

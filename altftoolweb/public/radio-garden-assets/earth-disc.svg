@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 900" role="img" aria-label="Satellite style earth globe">
+  <defs>
+    <clipPath id="clip">
+      <circle cx="450" cy="450" r="438"/>
+    </clipPath>
+    <radialGradient id="ocean" cx="39%" cy="32%" r="72%">
+      <stop offset="0" stop-color="#427b8e"/>
+      <stop offset=".34" stop-color="#1f5868"/>
+      <stop offset=".7" stop-color="#0d2d3a"/>
+      <stop offset="1" stop-color="#07131e"/>
+    </radialGradient>
+    <linearGradient id="land" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#9fae6b"/>
+      <stop offset=".36" stop-color="#80754a"/>
+      <stop offset=".72" stop-color="#4f6f45"/>
+      <stop offset="1" stop-color="#2e513d"/>
+    </linearGradient>
+    <linearGradient id="dry" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#b8a56b"/>
+      <stop offset=".45" stop-color="#927a45"/>
+      <stop offset="1" stop-color="#5a5f3f"/>
+    </linearGradient>
+    <filter id="soft" x="-8%" y="-8%" width="116%" height="116%">
+      <feGaussianBlur stdDeviation="4"/>
+    </filter>
+    <filter id="texture" x="-20%" y="-20%" width="140%" height="140%">
+      <feTurbulence type="fractalNoise" baseFrequency=".022" numOctaves="4" seed="17"/>
+      <feColorMatrix type="matrix" values="0 0 0 0 0.38 0 0 0 0 0.43 0 0 0 0 0.35 0 0 0 .22 0"/>
+    </filter>
+    <radialGradient id="shade" cx="37%" cy="29%" r="73%">
+      <stop offset="0" stop-color="#ffffff" stop-opacity=".36"/>
+      <stop offset=".23" stop-color="#ffffff" stop-opacity=".13"/>
+      <stop offset=".61" stop-color="#000000" stop-opacity=".04"/>
+      <stop offset=".82" stop-color="#000000" stop-opacity=".46"/>
+      <stop offset="1" stop-color="#000000" stop-opacity=".76"/>
+    </radialGradient>
+  </defs>
+
+  <circle cx="450" cy="450" r="438" fill="url(#ocean)"/>
+  <g clip-path="url(#clip)">
+    <rect width="900" height="900" fill="url(#texture)" opacity=".6"/>
+    <g fill="url(#dry)" filter="url(#soft)" opacity=".96">
+      <path d="M100 136c80-49 170-52 256-18 71 28 136 29 196 66 59 36 92 96 73 148-20 57-95 53-125 103-29 48-6 112-50 147-47 37-104-14-158 1-61 17-112 95-181 65-74-32-40-129-82-182-44-55-132-55-144-128-12-75 67-101 100-151 21-32 43-55 85-51z"/>
+      <path d="M474 108c69-29 157-13 214 32 63 50 83 125 53 190-29 64-105 73-161 113-53 38-73 112-137 128-61 15-130-24-159-76-31-55 16-104 11-159-6-69-77-113-53-178 18-48 92-39 232-50z"/>
+      <path d="M567 381c77-31 160-2 207 62 45 61 35 147-7 203-44 59-116 98-190 83-67-14-82-89-131-127-52-40-124-34-151-95-25-55 8-116 58-147 51-32 108 24 214 21z"/>
+      <path d="M711 94c67 4 123 45 156 100 34 58 27 124-17 172-41 45-108 42-158 72-46 28-77 88-133 80-58-9-95-68-105-124-10-60 38-104 60-155 25-59 22-129 80-161 32-18 70 3 117 16z"/>
+      <path d="M642 650c64-24 133 4 166 60 28 49 18 114-28 148-50 38-124 28-168-13-44-40-59-105-31-154 11-19 25-30 61-41z"/>
+    </g>
+    <g fill="url(#land)" filter="url(#soft)" opacity=".93">
+      <path d="M214 600c61-54 146-63 207-31 71 37 91 127 50 191-42 66-140 83-209 44-61-34-109-126-48-204z"/>
+      <path d="M521 563c58-42 138-32 183 15 45 46 55 127 15 174-43 50-124 53-179 12-54-40-72-123 21-201z"/>
+      <path d="M272 278c61-33 134-25 175 22 42 48 35 122-14 160-51 39-132 28-176-19-43-47-41-112 15-163z"/>
+      <path d="M42 411c55-18 120 2 153 47 30 42 21 105-20 136-44 33-111 22-148-20-38-42-37-111 15-163z"/>
+    </g>
+    <g fill="#f7fbff" opacity=".72" filter="url(#soft)">
+      <path d="M190 72c105-28 218-25 336 8 73 21 155 23 244-1 62-17 112-17 170 0v63c-93 25-182 32-268 12-116-28-223-50-349-25-118 23-222 18-323-7V75c63 9 120 8 190-3z"/>
+      <path d="M120 796c118-35 238-38 362-12 118 25 230 32 352-3v128H0V810c42 10 78 7 120-14z"/>
+    </g>
+    <g fill="none" stroke="#d7fbff" stroke-linecap="round" stroke-width="5" opacity=".24">
+      <path d="M125 238c67 25 149 28 247 2"/>
+      <path d="M523 220c76 25 158 23 247-5"/>
+      <path d="M144 720c93-34 183-31 270 8"/>
+      <path d="M529 778c100-39 187-38 265 3"/>
+    </g>
+  </g>
+  <circle cx="450" cy="450" r="438" fill="url(#shade)"/>
+  <circle cx="450" cy="450" r="438" fill="none" stroke="#ffffff" stroke-opacity=".12" stroke-width="2"/>
+</svg>

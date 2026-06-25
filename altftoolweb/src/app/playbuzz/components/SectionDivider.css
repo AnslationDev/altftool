@@ -1,0 +1,29 @@
+﻿.section-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin: 20px 0 18px;
+  position: relative;
+}
+
+.divider-line {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: #d6d6d6;
+  z-index: 1;
+}
+
+.divider-title {
+  background: #ececec;
+  border: 1px solid #dddddd;
+  padding: 10px 22px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1.8px;
+  color: #1f2d44;
+  text-transform: uppercase;
+  z-index: 2;
+}
