@@ -4,24 +4,24 @@
    ANCESTORY DESIGN SYSTEM
    ============================================================ */
 :root {
-  --anc-bg: #f7f7f5;
-  --anc-ink: #2f2f2e;
-  --anc-muted: #5f5f5d;
-  --anc-border: #d9d9d6;
-  --anc-green: #1f6a07;
-  --anc-green-soft: #dce9c3;
+  --anc-bg: var(--anslation-ds-page, #f8fafc);
+  --anc-ink: var(--anslation-ds-text, #111827);
+  --anc-muted: var(--anslation-ds-muted, #607083);
+  --anc-border: var(--anslation-ds-border, #e2e8f0);
+  --anc-green: var(--primary); /* Map to global primary */
+  --anc-green-soft: var(--anslation-ds-primary-soft, #e7f0ff); /* Map to global primary soft */
   --anc-radius-lg: 28px;
   --anc-radius-md: 14px;
   --anc-shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
 }
 
 [data-theme="dark"] {
-  --anc-bg: #000A1F;
-  --anc-ink: #f1f5f9;
-  --anc-muted: #94a3b8;
-  --anc-border: rgba(255, 255, 255, 0.1);
-  --anc-green: #34d399;
-  --anc-green-soft: rgba(52, 211, 153, 0.1);
+  --anc-bg: var(--anslation-ds-page, #070d18);
+  --anc-ink: var(--anslation-ds-text, #f8fafc);
+  --anc-muted: var(--anslation-ds-muted, #94a3b8);
+  --anc-border: var(--anslation-ds-border, #1e293b);
+  --anc-green: var(--primary); /* Map to global primary */
+  --anc-green-soft: var(--anslation-ds-primary-soft, #162d4f); /* Map to global primary soft */
 }
 
 .ancestory-root {
@@ -34,7 +34,7 @@
    ============================================================ */
 
 [data-theme="dark"] .ancestory-root {
-  color: #f1f5f9 !important;
+  color: var(--foreground) !important;
 }
 
 /* Force all text elements to be light in dark mode */
@@ -47,7 +47,7 @@
 [data-theme="dark"] .ancestory-root h4,
 [data-theme="dark"] .ancestory-root li,
 [data-theme="dark"] .ancestory-root label {
-  color: #f1f5f9 !important;
+  color: var(--foreground) !important;
 }
 
 /* Background Overrides - Including badge backgrounds */
@@ -63,14 +63,14 @@
 [data-theme="dark"] .ancestory-root [class*="bg-[#e"],
 [data-theme="dark"] .ancestory-root [class*="bg-[#d"],
 [data-theme="dark"] .ancestory-root [class*="bg-[#c"] {
-  background-color: #0f172a !important;
+  background-color: var(--anslation-ds-surface, #101827) !important;
 }
 
 /* Force dark backgrounds for specific badges to ensure light text is visible */
 [data-theme="dark"] .ancestory-root .text-green-800,
 [data-theme="dark"] .ancestory-root .text-amber-800,
 [data-theme="dark"] .ancestory-root .text-slate-700 {
-  background-color: #0f172a !important;
+  background-color: var(--anslation-ds-surface, #101827) !important;
 }
 
 /* Specific background colors found in components */
@@ -81,7 +81,7 @@
 [data-theme="dark"] .ancestory-root [class*="bg-[#d7e0d2]"],
 [data-theme="dark"] .ancestory-root [class*="bg-[#d9e5ed]"],
 [data-theme="dark"] .ancestory-root [class*="bg-[#d8e2d2]"] {
-  background-color: #1e293b !important;
+  background-color: var(--anslation-ds-soft, #142033) !important;
 }
 
 /* Force text visibility for arbitrary color classes */
@@ -92,7 +92,7 @@
 [data-theme="dark"] .ancestory-root [class*="text-[#3f3f3e]"],
 [data-theme="dark"] .ancestory-root [class*="text-[#6a6a68]"],
 [data-theme="dark"] .ancestory-root [class*="text-[#5b5b58]"] {
-  color: #f1f5f9 !important;
+  color: var(--foreground) !important;
 }
 
 /* Border Overrides */
@@ -103,7 +103,7 @@
 [data-theme="dark"] .ancestory-root .border-amber-200,
 [data-theme="dark"] .ancestory-root [class*="border-[#d"],
 [data-theme="dark"] .ancestory-root [class*="border-[#e"] {
-  border-color: rgba(255,255,255,0.1) !important;
+  border-color: var(--anslation-ds-border, #1e293b) !important;
 }
 
 /* Leaflet Map Specific */

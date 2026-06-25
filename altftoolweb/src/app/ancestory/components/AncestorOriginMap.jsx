@@ -18,12 +18,12 @@ if (typeof window !== 'undefined') {
 }
 
 function getCountryColor(percentage) {
-  if (percentage >= 80) return '#064e3b';
-  if (percentage >= 60) return '#065f46';
-  if (percentage >= 40) return '#047857';
-  if (percentage >= 20) return '#059669';
-  if (percentage >= 10) return '#10b981';
-  return '#34d399';
+  if (percentage >= 80) return 'var(--primary)';
+  if (percentage >= 60) return 'color-mix(in srgb, var(--primary) 85%, transparent)';
+  if (percentage >= 40) return 'color-mix(in srgb, var(--primary) 70%, transparent)';
+  if (percentage >= 20) return 'color-mix(in srgb, var(--primary) 50%, transparent)';
+  if (percentage >= 10) return 'color-mix(in srgb, var(--primary) 35%, transparent)';
+  return 'color-mix(in srgb, var(--primary) 20%, transparent)';
 }
 
 export function AncestorOriginMap({ countries = [], name = '' }) {
@@ -140,9 +140,9 @@ export function AncestorOriginMap({ countries = [], name = '' }) {
         className: 'premium-location-marker',
         html: `
           <div class="relative flex items-center justify-center">
-            <div class="absolute w-full h-full rounded-full animate-ping opacity-25" style="background-color: #10b981; animation-duration: 3s;"></div>
+            <div class="absolute w-full h-full rounded-full animate-ping opacity-25" style="background-color: var(--primary); animation-duration: 3s;"></div>
             <div style="
-              background: linear-gradient(135deg, #10b981 0%, #065f46 100%);
+              background: linear-gradient(135deg, var(--primary) 0%, var(--anslation-ds-primary-active, var(--primary)) 100%);
               color: white;
               border-radius: 50%;
               width: ${size * 2}px;
@@ -154,7 +154,7 @@ export function AncestorOriginMap({ countries = [], name = '' }) {
               font-family: 'Inter', system-ui, -apple-system, sans-serif;
               font-weight: 900;
               border: 3px solid ${isDarkMode ? '#ffffff' : '#ffffff'};
-              box-shadow: ${isDarkMode ? '0 0 15px rgba(16, 185, 129, 0.6), 0 0 5px #fff' : '0 8px 24px rgba(0,0,0,0.3)'};
+              box-shadow: ${isDarkMode ? '0 0 15px var(--primary), 0 0 5px #fff' : '0 8px 24px rgba(0,0,0,0.3)'};
               z-index: 10;
               transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             " class="marker-blob hover:scale-125 cursor-pointer">
@@ -170,9 +170,9 @@ export function AncestorOriginMap({ countries = [], name = '' }) {
 
       marker.bindPopup(`
         <div style="text-align: center; padding: 12px; min-width: 140px; font-family: 'Inter', sans-serif;">
-          <div style="font-weight: 800; color: ${isDarkMode ? '#34d399' : '#065f46'}; font-size: 16px; margin-bottom: 2px;">${entry.label}</div>
+          <div style="font-weight: 800; color: var(--primary); font-size: 16px; margin-bottom: 2px;">${entry.label}</div>
           <div style="color: ${isDarkMode ? '#9ca3af' : '#6b7280'}; font-size: 12px; letter-spacing: 0.05em; text-transform: uppercase;">Historical Concentration</div>
-          <div style="margin-top: 8px; font-size: 24px; font-weight: 900; color: ${isDarkMode ? '#10b981' : '#059669'};">${entry.pct}%</div>
+          <div style="margin-top: 8px; font-size: 24px; font-weight: 900; color: var(--primary);">${entry.pct}%</div>
         </div>
       `, {
         className: 'premium-map-popup',
@@ -232,13 +232,13 @@ export function AncestorOriginMap({ countries = [], name = '' }) {
         <div className="absolute inset-0 bg-white/60 backdrop-blur-2xl dark:bg-black/60 flex items-center justify-center z-[400] rounded-2xl md:rounded-[40px]">
           <div className="text-center p-12 bg-white/90 dark:bg-gray-900/90 rounded-[40px] shadow-[0_32px_64px_rgba(0,0,0,0.4)] border border-white/20 max-w-sm">
             <div className="relative flex justify-center mb-8">
-              <div className="w-16 h-16 border-[5px] border-emerald-500/20 border-t-emerald-500 rounded-full animate-spin"></div>
+              <div className="w-16 h-16 border-[5px] border-primary/20 border-t-primary rounded-full animate-spin"></div>
               <div className="absolute inset-0 flex items-center justify-center">
-                <div className="w-8 h-8 bg-emerald-500 rounded-full animate-pulse"></div>
+                <div className="w-8 h-8 bg-primary rounded-full animate-pulse"></div>
               </div>
             </div>
             <h4 className="text-2xl font-black text-gray-900 dark:text-white mb-2">Analyzing Lineage</h4>
-            <p className="text-gray-500 dark:text-gray-400 text-sm leading-relaxed">Processing 2.4 million historical records for <span className="text-emerald-500 font-bold">${name}</span></p>
+            <p className="text-gray-500 dark:text-gray-400 text-sm leading-relaxed">Processing 2.4 million historical records for <span className="text-primary font-bold">{name}</span></p>
           </div>
         </div>
       )}

@@ -20,7 +20,7 @@ function AncestorHeroSection() {
             />
             <div className="absolute inset-x-0 bottom-[15%] text-center px-6">
               <h1 className="text-3xl md:text-5xl font-bold text-white drop-shadow-md leading-tight" style={{ fontFamily: "Georgia, serif" }}>
-                Discover the meaning and history behind <span className="text-[#97c53f]">your name.</span>
+                Discover the meaning and history behind your name.
               </h1>
             </div>
           </div>
@@ -39,14 +39,14 @@ function AncestorHeroSection() {
 
 function AncestorCuriositySection() {
   return (
-    <section className="bg-[#f6f7f5] dark:bg-(--background) py-20 border-t border-[#e2e2de] dark:border-(--border)">
+    <section className="bg-slate-50 dark:bg-slate-950 py-20 border-t border-slate-200 dark:border-slate-800">
       <div className="max-w-5xl mx-auto px-6 text-center">
-        <h2 className="text-5xl text-[#2f2f2e] dark:text-(--foreground) mb-3" style={{ fontFamily: "Georgia, serif" }}>What are you curious about?</h2>
-        <p className="text-[#5b5b58] dark:text-(--secondary-foreground) mb-10">Ready to learn more about your own family? Here are two ways to begin.</p>
+        <h2 className="text-5xl text-slate-900 dark:text-(--foreground) mb-3" style={{ fontFamily: "Georgia, serif" }}>What are you curious about?</h2>
+        <p className="text-slate-500 dark:text-(--secondary-foreground) mb-10">Ready to learn more about your own family? Here are two ways to begin.</p>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 max-w-4xl mx-auto">
           {/* Card 1: Free Trial */}
-          <div className="group bg-[#f8f9f7] dark:bg-(--muted-gray) rounded-[32px] p-8 border border-[#e2e2de] dark:border-(--border) hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-            <div className="h-48 rounded-2xl bg-[#d7e0d2] dark:bg-(--muted) mb-8 overflow-hidden flex items-center justify-center p-4">
+          <div className="group bg-white dark:bg-(--muted-gray) rounded-[32px] p-8 border border-slate-200 dark:border-(--border) hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+            <div className="h-48 rounded-2xl bg-primary/5 dark:bg-primary/10 mb-8 overflow-hidden flex items-center justify-center p-4">
               <img 
                 src="/ancestory-images/promo-trial.avif" 
                 alt="Get a free trial" 
@@ -54,15 +54,15 @@ function AncestorCuriositySection() {
               />
             </div>
             <div className="text-center">
-              <button className="bg-[#005831] hover:bg-[#004526] text-white font-bold px-8 py-3 rounded-full shadow-md hover:shadow-lg transition-all active:scale-95">
+              <button className="bg-primary hover:bg-primary/90 text-primary-foreground font-bold px-8 py-3 rounded-full shadow-md hover:shadow-lg transition-all active:scale-95">
                 Get a free trial
               </button>
             </div>
           </div>
 
           {/* Card 2: altfestoryDNA */}
-          <div className="group bg-[#f8f9f7] dark:bg-(--muted-gray) rounded-[32px] p-8 border border-[#e2e2de] dark:border-(--border) hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-            <div className="h-48 rounded-2xl bg-[#d9e5ed] dark:bg-(--muted) mb-8 overflow-hidden flex items-center justify-center p-4">
+          <div className="group bg-white dark:bg-(--muted-gray) rounded-[32px] p-8 border border-slate-200 dark:border-(--border) hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+            <div className="h-48 rounded-2xl bg-primary/5 dark:bg-primary/10 mb-8 overflow-hidden flex items-center justify-center p-4">
               <img 
                 src="/ancestory-images/promo-dna.avif" 
                 alt="Order altfestoryDNA" 
@@ -70,7 +70,7 @@ function AncestorCuriositySection() {
               />
             </div>
             <div className="text-center">
-              <button className="bg-[#005831] hover:bg-[#004526] text-white font-bold px-8 py-3 rounded-full shadow-md hover:shadow-lg transition-all active:scale-95">
+              <button className="bg-primary hover:bg-primary/90 text-primary-foreground font-bold px-8 py-3 rounded-full shadow-md hover:shadow-lg transition-all active:scale-95">
                 Order altfestoryDNA
               </button>
             </div>
