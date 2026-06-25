@@ -2,7 +2,6 @@ node_modules/
 .DS_Store
 .env
 .env.*
-!.env.example
 .next/
 out/
 dist/
@@ -18,4 +17,8 @@ playwright-report/
 get-shit-done/
 graphify*/
 external-get-shit-done/
+# Ignore all local env files...
 .env*
+# ...but keep the committed templates (this exception MUST come after .env*)
+!.env.example
+!**/.env.example
