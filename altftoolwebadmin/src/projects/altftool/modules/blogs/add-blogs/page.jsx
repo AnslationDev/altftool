@@ -19,7 +19,7 @@ import {
   ImageIcon, UploadCloud, Trash2, Globe, Save,
   AlertCircle, CheckCircle2, Loader2, Info, Clock,
   WifiOff, RefreshCw, AlertTriangle, ALargeSmall,
-  Hash, ShieldCheck,
+  Hash, ShieldCheck, Eye,
 } from "lucide-react";
 import CTAButtonPicker from "../components/CtaButtonPicker";
 import FAQPicker from "../components/FAQCreator";
@@ -39,6 +39,8 @@ import BlogPublishPreviewModal, {
   buildBlogDuplicateIssues,
   normalizeBlogSlug,
 } from "../components/BlogPublishPreviewModal";
+import BlogPreviewModal from "../components/BlogPreviewModal";
+import { isFeatureEnabled } from "@/lib/featureFlags";
 
 const BlogEditor = dynamic(() => import("../components/BlogEditor"), { ssr: false });
 
@@ -256,6 +258,8 @@ export default function AddBlog() {
   const [highlightedSection, setHighlightedSection] = useState("");
   const [blogIndex, setBlogIndex]             = useState({ blogs: [], status: "loading", error: "" });
   const [previewRequest, setPreviewRequest]   = useState(null);
+  const [blogPreviewOpen, setBlogPreviewOpen] = useState(false);
+  const blogPreviewEnabled = isFeatureEnabled("blog_preview");
 
   const isHighlighted = (sectionId) => highlightedSection === sectionId;
 
@@ -768,6 +772,13 @@ export default function AddBlog() {
           onCancel={() => setPreviewRequest(null)}
           onConfirm={confirmPreviewSubmit}
         />
+        <BlogPreviewModal
+          open={blogPreviewEnabled && blogPreviewOpen}
+          formData={formData}
+          imagePreview={imagePreview}
+          imageAlt={imageAlt}
+          onClose={() => setBlogPreviewOpen(false)}
+        />
 
         <OfflineBanner />
 
@@ -966,6 +977,13 @@ export default function AddBlog() {
                     {savingDraft ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
                     {savingDraft ? "Saving draft…" : "Save Draft"}
                   </button>
+                  {blogPreviewEnabled && (
+                    <button type="button" onClick={() => setBlogPreviewOpen(true)} disabled={submitting || savingDraft}
+                      className="w-full flex items-center justify-center gap-2 py-2.5 text-sm font-semibold border border-blue-100 rounded-xl text-blue-700 bg-blue-50 hover:bg-blue-100 transition disabled:opacity-50">
+                      <Eye className="w-4 h-4" />
+                      Preview
+                    </button>
+                  )}
                   <button type="submit" disabled={submitting || step === "done"}
                     className="w-full flex items-center justify-center gap-2 py-2.5 text-sm font-semibold bg-gray-900 hover:bg-gray-700 text-white rounded-xl transition shadow-sm disabled:opacity-50">
                     {submitting ? <Loader2 className="w-4 h-4 animate-spin" /> : <Globe className="w-4 h-4" />}
