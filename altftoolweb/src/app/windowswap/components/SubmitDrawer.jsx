@@ -134,7 +134,7 @@ export default function SubmitDrawer({ isOpen, onClose }) {
 
                 <button
                   type="submit"
-                  className="w-full bg-windowswap-terracotta hover:bg-[#b05434] text-white py-4 rounded-xl font-bold tracking-wider uppercase transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] shadow-lg mt-auto flex items-center justify-center gap-2 cursor-pointer"
+                  className="w-full windowswap-primary-button py-4 rounded-xl font-bold tracking-wider uppercase transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] mt-auto flex items-center justify-center gap-2 cursor-pointer"
                 >
                   Submit Window View
                 </button>
