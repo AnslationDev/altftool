@@ -84,7 +84,7 @@ export default async function BookDetailPage({ params }) {
               {/* COVER */}
               <div className="shrink-0 mx-auto md:mx-0">
 
-                <div className="relative w-[210px] h-[315px] rounded-[18px] overflow-hidden shadow-[0_10px_40px_rgba(0,0,0,0.18)]">
+                <div className="relative w-[210px] h-[315px] rounded-xl overflow-hidden" style={{ boxShadow: 'var(--anslation-ds-shadow-lg)' }}>
 
                   <Image
                     src={book.coverImage}
@@ -109,7 +109,7 @@ export default async function BookDetailPage({ params }) {
                 {/* AUTHOR */}
                 <div className="flex items-center gap-3 mt-4">
 
-                  <div className="w-10 h-10 rounded-full overflow-hidden relative bg-gray-200">
+                  <div className="w-10 h-10 rounded-full overflow-hidden relative bg-(--muted)">
 
                     <Image
                       src="https://images.unsplash.com/photo-1494790108377-be9c29b29330"
@@ -192,7 +192,7 @@ export default async function BookDetailPage({ params }) {
 
               </h2>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 rounded-md shadow-[0_8px_5px_-10px_rgba(0,0,0,0.2)] md:p-5">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 rounded-md md:p-5" style={{ boxShadow: 'var(--anslation-ds-shadow-md)' }}>
 
                 {relatedBooks.map((item, index) => (
 

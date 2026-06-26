@@ -64,9 +64,10 @@ export default function TrendingSection({ trendingData }) {
           <button
             onClick={() => scroll("left")}
             className="hidden lg:flex absolute left-2 top-1/2 -translate-y-1/2 z-20 
-           h-10 w-10 rounded-full bg-white shadow-lg text-gray-800 
+           h-10 w-10 rounded-full bg-(--card) text-(--foreground) 
             items-center justify-center cursor-pointer
             opacity-0 group-hover:opacity-100 transition-all duration-300"
+            style={{ boxShadow: 'var(--anslation-ds-shadow-md)' }}
           >
             <ChevronLeft className="h-5 w-5" />
           </button>
@@ -77,9 +78,10 @@ export default function TrendingSection({ trendingData }) {
           <button
             onClick={() => scroll("right")}
             className="hidden lg:flex absolute right-2 top-1/2 -translate-y-1/2 z-20 
-            h-10 w-10 rounded-full bg-white shadow-lg text-gray-800 
+            h-10 w-10 rounded-full bg-(--card) text-(--foreground) 
             items-center justify-center cursor-pointer
             opacity-0 group-hover:opacity-100 transition-all duration-300 "
+            style={{ boxShadow: 'var(--anslation-ds-shadow-md)' }}
           >
             <ChevronRight className="h-5 w-5 " />
           </button>

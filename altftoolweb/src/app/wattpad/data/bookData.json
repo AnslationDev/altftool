@@ -7,118 +7,181 @@
       "id": "1",
       "title": "Behind the Limelight",
       "author": "Kara Flynn",
-      "image": "/wattpad/trending/Behind-The-Limelight.jpg"
+      "image": "/wattpad/trending/Behind-The-Limelight.jpg",
+      "slug": "love-beyond-time"
     },
     {
       "id": "2",
       "title": "Costantino",
       "author": "Emily Jean",
-      "image": "/wattpad/trending/Costantino.jpg"
+      "image": "/wattpad/trending/Costantino.jpg",
+      "slug": "midnight-desires"
     },
-      {
+    {
       "id": "3",
       "title": "Bite Me",
       "author": "Emily Jean",
-      "image": "/wattpad/trending/Bite-Me.jpg"
+      "image": "/wattpad/trending/Bite-Me.jpg",
+      "slug": "the-silent-killer"
     },
-      {
+    {
       "id": "4",
       "title": "Tempting",
       "author": "Emily Jean",
-      "image": "/wattpad/trending/Tempting.jpg"
+      "image": "/wattpad/trending/Tempting.jpg",
+      "slug": "dark-academia"
     },
-      {
+    {
       "id": "5",
       "title": "Lilah",
       "author": "Emily Jean",
-      "image": "/wattpad/trending/Lilah.jpg"
+      "image": "/wattpad/trending/Lilah.jpg",
+      "slug": "haunted-nights"
     },
-      {
+    {
       "id": "6",
       "title": "Sidelined-2",
       "author": "Emily Jean",
-      "image": "/wattpad/trending/Sidelined-2.jpg"
+      "image": "/wattpad/trending/Sidelined-2.jpg",
+      "slug": "future-2099"
     },
-     {
+    {
       "id": "7",
       "title": "Forgotten-Wolf",
       "author": "Siberiantiggy",
-      "image": "/wattpad/trending/Forgotten-Wolf.jpg"
-    },
-     {
-      "id": "8",
-      "title": "Tempting",
-      "author": "Emily Jean",
-      "image": "/wattpad/trending/Tempting.jpg"
-    },
-     {
-      "id": "9",
-      "title": "Tempting",
-      "author": "Emily Jean",
-      "image": "/wattpad/trending/Tempting.jpg"
+      "image": "/wattpad/trending/Forgotten-Wolf.jpg",
+      "slug": "realm-of-shadows"
     }
-
   ]
 },
-"mustRead":{
+  "mustRead":{
   "title": "Must-read Fanfiction",
   "subtitle": "Explore fan-favorite stories loved by readers around the world",
   "items": [
-        {
+    {
       "id": "1",
       "title": "Behind the Limelight",
       "author": "Kara Flynn",
-      "image": "/wattpad/trending/Behind-The-Limelight.jpg"
+      "image": "/wattpad/trending/Behind-The-Limelight.jpg",
+      "slug": "love-beyond-time"
     },
     {
       "id": "2",
       "title": "Costantino",
       "author": "Emily Jean",
-      "image": "/wattpad/trending/Costantino.jpg"
+      "image": "/wattpad/trending/Costantino.jpg",
+      "slug": "midnight-desires"
     },
-      {
+    {
       "id": "3",
       "title": "Bite Me",
       "author": "Emily Jean",
-      "image": "/wattpad/trending/Bite-Me.jpg"
+      "image": "/wattpad/trending/Bite-Me.jpg",
+      "slug": "the-silent-killer"
     },
-      {
+    {
       "id": "4",
       "title": "Tempting",
       "author": "Emily Jean",
-      "image": "/wattpad/trending/Tempting.jpg"
+      "image": "/wattpad/trending/Tempting.jpg",
+      "slug": "dark-academia"
     },
-      {
+    {
       "id": "5",
       "title": "Lilah",
       "author": "Emily Jean",
-      "image": "/wattpad/trending/Lilah.jpg"
+      "image": "/wattpad/trending/Lilah.jpg",
+      "slug": "haunted-nights"
     },
-      {
+    {
       "id": "6",
       "title": "Sidelined-2",
       "author": "Emily Jean",
-      "image": "/wattpad/trending/Sidelined-2.jpg"
+      "image": "/wattpad/trending/Sidelined-2.jpg",
+      "slug": "future-2099"
     },
-     {
+    {
       "id": "7",
       "title": "Forgotten-Wolf",
       "author": "Siberiantiggy",
-      "image": "/wattpad/trending/Forgotten-Wolf.jpg"
-    },
-     {
-      "id": "8",
-      "title": "Tempting",
-      "author": "Emily Jean",
-      "image": "/wattpad/trending/Tempting.jpg"
-    },
-     {
-      "id": "9",
-      "title": "Tempting",
-      "author": "Emily Jean",
-      "image": "/wattpad/trending/Tempting.jpg"
+      "image": "/wattpad/trending/Forgotten-Wolf.jpg",
+      "slug": "realm-of-shadows"
     }
-
-    ]
+  ]
+},
+"faq": {
+  "title": "Frequently Asked Questions",
+  "subtitle": "Everything you need to know about reading on AltFTool",
+  "items": [
+    {
+      "id": "faq_1",
+      "question": "Is AltFTool free to use?",
+      "answer": "Yes, AltFTool is completely free. You can browse, read, and enjoy thousands of stories without any cost. Some premium features may be added in the future."
+    },
+    {
+      "id": "faq_2",
+      "question": "Can I read stories offline?",
+      "answer": "Currently, stories are available to read online. Offline reading support is on our roadmap and will be released in a future update."
+    },
+    {
+      "id": "faq_3",
+      "question": "How do I find stories I like?",
+      "answer": "You can browse by category, check trending stories, or use our must-read fanfiction section. More personalized recommendations are coming soon."
+    },
+    {
+      "id": "faq_4",
+      "question": "Can I write and publish my own stories?",
+      "answer": "Story publishing is coming soon! We're building tools for writers to share their work with the AltFTool community."
+    },
+    {
+      "id": "faq_5",
+      "question": "Is there a mobile app available?",
+      "answer": "AltFTool is fully responsive and works great on mobile browsers. A dedicated mobile app is in development."
+    }
+  ]
+},
+"reviews": [
+  {
+    "id": "rev_1",
+    "name": "Sarah Mitchell",
+    "avatar": "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&auto=format&fit=crop&q=60",
+    "message": "I've been reading on AltFTool for months. The selection is incredible and the reading experience is smooth. Highly recommend for any story lover!",
+    "rating": 5
+  },
+  {
+    "id": "rev_2",
+    "name": "James Rodriguez",
+    "avatar": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&auto=format&fit=crop&q=60",
+    "message": "The text-to-speech feature is a game changer. I can listen to my favorite stories during my commute. Love this platform!",
+    "rating": 5
+  },
+  {
+    "id": "rev_3",
+    "name": "Emily Chen",
+    "avatar": "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&auto=format&fit=crop&q=60",
+    "message": "Fantastic collection of fanfiction and original stories. The categories make it easy to find exactly what I'm in the mood for.",
+    "rating": 4
+  },
+  {
+    "id": "rev_4",
+    "name": "Michael Thompson",
+    "avatar": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&auto=format&fit=crop&q=60",
+    "message": "The UI is beautiful and intuitive. I love how the marquee section showcases trending stories. It feels like a premium reading app.",
+    "rating": 5
+  },
+  {
+    "id": "rev_5",
+    "name": "Priya Sharma",
+    "avatar": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=60",
+    "message": "As an avid romance reader, I'm thrilled with the selection on AltFTool. The 'must-read fanfiction' section always has great picks.",
+    "rating": 5
+  },
+  {
+    "id": "rev_6",
+    "name": "David Kim",
+    "avatar": "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&auto=format&fit=crop&q=60",
+    "message": "Great platform for discovering new authors. The chapter-by-chapter reading format brings back the joy of serialized storytelling.",
+    "rating": 4
+  }
+]
 }
-} 

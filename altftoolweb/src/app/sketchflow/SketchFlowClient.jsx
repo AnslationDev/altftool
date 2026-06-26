@@ -4,10 +4,11 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import rough from "roughjs/bundled/rough.esm";
 import getStroke from "perfect-freehand";
 import { nanoid } from "nanoid";
+import LZString from "lz-string";
 
 import { STORAGE_KEY, HISTORY_LIMIT, ACCENT, DEFAULT_STYLE, buildToolbarFromConfig, buildToolKeysFromConfig } from './utils/constants';
 import { DEFAULT_HOME_CONTENT } from './lib/homeContent';
-import { clone, normalizeScene, scenesEqual, makeElement, normalizeElement, boundsOf, centerOf, hitElement, getSelectedBounds, getHandles, pointInRect, roughOptions, pathFromStroke, drawElement, drawGrid, drawSelection, textSize, downloadFile } from './utils/utils';
+import { clone, normalizeScene, scenesEqual, makeElement, normalizeElement, boundsOf, centerOf, hitElement, getSelectedBounds, getHandles, pointInRect, roughOptions, pathFromStroke, drawElement, drawGrid, drawSelection, textSize, downloadFile, autoLayout } from './utils/utils';
 import BottomBar from "./components/BottomBar";
 import CommandPalette from "./components/CommandPalette";
 import ContextMenu from "./components/ContextMenu";
@@ -15,6 +16,7 @@ import LeftToolbar from "./components/LeftToolbar";
 import PropertiesPanel from "./components/PropertiesPanel";
 import SketchFlowStyles from "./components/SketchFlowStyles";
 import TextEditorOverlay from "./components/TextEditorOverlay";
+import LaserPanel from "./components/LaserPanel";
 import TopBar from "./components/TopBar";
 
 export default function SketchFlow({ config: configProp }) {
@@ -26,6 +28,7 @@ export default function SketchFlow({ config: configProp }) {
   }, [settingsBase]);
 
   const accentRaw = branding?.accentColor || ACCENT;
+  const hasAdminStrokeDefault = defaults?.strokeColor !== undefined && defaults?.strokeColor !== null;
   const storageKey = settings?.storageKey || STORAGE_KEY;
   const historyLimit = Number(settings?.historyLimit) || HISTORY_LIMIT;
   const autosaveIntervalMs = Number(settings?.autosaveIntervalMs) || 2000;
@@ -68,7 +71,11 @@ export default function SketchFlow({ config: configProp }) {
   const [tool, setTool] = useState("select");
   const [camera, setCamera] = useState(cameraDefault);
   const [size, setSize] = useState({ width: 900, height: 620 });
-  const [style, setStyle] = useState(() => ({ ...DEFAULT_STYLE, ...defaults }));
+  const [style, setStyle] = useState(() => ({
+    ...DEFAULT_STYLE,
+    ...defaults,
+    ...(!hasAdminStrokeDefault ? { strokeColor: Boolean(settings?.darkModeDefault) ? '#ffffff' : '#000000' } : {}),
+  }));
   const [history, setHistory] = useState({ past: [], future: [] });
   const [grid, setGrid] = useState(() => ({
     enabled: settings?.gridEnabled ?? true,
@@ -86,6 +93,10 @@ export default function SketchFlow({ config: configProp }) {
   const [paletteOpen, setPaletteOpen] = useState(false);
   const [paletteQuery, setPaletteQuery] = useState("");
   const [paletteIndex, setPaletteIndex] = useState(0);
+  const themeInitRef = useRef(false);
+  const currentLaserRef = useRef(null);
+  const laserStrokesRef = useRef([]);
+  const [laserSettings, setLaserSettings] = useState({ size: 6, color: "#ef4444" });
 
   const selectedElements = useMemo(() => elements.filter((el) => selectedIds.includes(el.id)), [elements, selectedIds]);
   const primary = selectedElements[0] || null;
@@ -208,7 +219,35 @@ export default function SketchFlow({ config: configProp }) {
     if (grid.enabled && renderOptions.grid !== false) drawGrid(ctx, renderOptions.camera || camera, { width, height }, grid.step, dark);
     const rc = rough.canvas(targetCanvas);
     scene.forEach((el) => drawElement(ctx, rc, el, imageCacheRef.current, accent));
+
     if (!renderOptions.exportMode) {
+      const now = Date.now();
+      const strokes = laserStrokesRef.current;
+      const currentLaser = currentLaserRef.current;
+      const drawLaserStroke = (stroke, opacity) => {
+        if (opacity <= 0) return;
+        const strokeData = getStroke(stroke.points, {
+          size: stroke.size,
+          thinning: 0.52,
+          smoothing: 0.58,
+          streamline: 0.5,
+        });
+        const d = pathFromStroke(strokeData);
+        if (!d) return;
+        ctx.save();
+        ctx.globalAlpha = opacity;
+        ctx.fillStyle = stroke.color;
+        ctx.fill(new Path2D(d));
+        ctx.restore();
+      };
+      strokes.forEach((s) => {
+        const age = now - s.createdAt;
+        if (age > 3500) return;
+        const opacity = age < 2500 ? 1 : Math.max(0, 1 - (age - 2500) / 1000);
+        drawLaserStroke(s, opacity);
+      });
+      if (currentLaser) drawLaserStroke(currentLaser, 1);
+
       drawSelection(ctx, scene, selectedIds, camera, accent);
       if (selectBox) {
         ctx.strokeStyle = accent;
@@ -246,13 +285,57 @@ export default function SketchFlow({ config: configProp }) {
   }, [render]);
 
   useEffect(() => {
+    if (hasAdminStrokeDefault) return;
+
+    const themeDefault = dark ? '#ffffff' : '#000000';
+    const oppositeDefault = dark ? '#000000' : '#ffffff';
+    const legacyDefault = '#1f2937';
+
+    setStyle(prev => ({ ...prev, strokeColor: themeDefault }));
+
+    if (!themeInitRef.current) {
+      themeInitRef.current = true;
+      return;
+    }
+
+    updateElements((prev) => {
+      let changed = false;
+      const next = prev.map(el => {
+        if (el.strokeColor === oppositeDefault || el.strokeColor === legacyDefault) {
+          changed = true;
+          return { ...el, strokeColor: themeDefault };
+        }
+        return el;
+      });
+      return changed ? next : prev;
+    }, { history: false });
+  }, [dark, hasAdminStrokeDefault, updateElements]);
+
+  useEffect(() => {
+    const hash = window.location.hash.slice(1);
+    if (hash) {
+      try {
+        const json = LZString.decompressFromEncodedURIComponent(hash);
+        const data = JSON.parse(json);
+        if (data?.elements?.length) {
+          const restored = data.elements.map(normalizeElement);
+          applyElements(restored);
+          if (data.camera) setCamera(data.camera);
+          if (data.dark !== undefined) setDark(data.dark);
+          if (data.grid) setGrid(data.grid);
+          window.history.replaceState(null, "", window.location.pathname);
+          showToast("Shared diagram loaded — you can edit and save your own copy");
+          return;
+        }
+      } catch {
+        // ignore invalid hash
+      }
+    }
+
     const key = storageKeyRef.current;
     const saved = window.localStorage.getItem(key);
     const prefersDark = window.matchMedia?.("(prefers-color-scheme: dark)").matches;
     const defaultDark = settings?.darkModeDefault ?? Boolean(prefersDark);
-    // Always use admin config as the authoritative source for grid settings so
-    // that admin changes are immediately reflected on page refresh, even for
-    // returning users who already have localStorage data.
     const adminGrid = { enabled: settings?.gridEnabled ?? true, step: settings?.gridStep ?? 32 };
 
     if (!saved) {
@@ -269,22 +352,24 @@ export default function SketchFlow({ config: configProp }) {
           ? parsed.elements.map(normalizeElement)
           : [];
       const restoredCamera = parsed.camera || cameraDefault;
-      // Restore user-preference dark mode from localStorage, but fall back to
-      // admin default if the user has never explicitly set it.
       const restoredDark = parsed.dark ?? defaultDark;
-      // Always honour admin grid config — these are canvas settings, not personal
-      // preferences, so admin changes must win even over localStorage.
       const restoredGrid = adminGrid;
-      applyElements(restored);
+      const themeDefault = restoredDark ? '#ffffff' : '#000000';
+      const oldDefault = !restoredDark ? '#ffffff' : '#000000';
+      const legacyDefault = '#1f2937';
+      const migrated = !hasAdminStrokeDefault
+        ? restored.map(el => (el.strokeColor === legacyDefault || el.strokeColor === oldDefault ? { ...el, strokeColor: themeDefault } : el))
+        : restored;
+      applyElements(migrated);
       setCamera(restoredCamera);
       setGrid(restoredGrid);
       setDark(restoredDark);
-      lastSavedRef.current = JSON.stringify({ elements: restored, camera: restoredCamera, grid: restoredGrid, dark: restoredDark });
+      lastSavedRef.current = JSON.stringify({ elements: migrated, camera: restoredCamera, grid: restoredGrid, dark: restoredDark });
       syncHistory({ past: [], future: [] });
     } catch {
       // Ignore broken local drafts.
     }
-  }, [applyElements, cameraDefault, settings, syncHistory]);
+  }, [applyElements, cameraDefault, hasAdminStrokeDefault, settings, showToast, syncHistory]);
 
   useEffect(() => {
     const activeImageIds = new Set(elements.filter((el) => el.type === "image" && el.imageSrc).map((el) => el.id));
@@ -516,7 +601,12 @@ export default function SketchFlow({ config: configProp }) {
       setTool("select");
       return;
     }
-    const type = tool === "laser" ? "laser" : tool === "frame" ? "frame" : tool;
+    if (tool === "laser") {
+      currentLaserRef.current = { points: [[point.x, point.y]], color: laserSettings.color, size: laserSettings.size };
+      actionRef.current = { type: "drawing-laser" };
+      return;
+    }
+    const type = tool === "frame" ? "frame" : tool;
     const el = makeElement(type, point.x, point.y, style);
     if (type === "frame") {
       el.fillStyle = "none";
@@ -583,11 +673,17 @@ export default function SketchFlow({ config: configProp }) {
       selectElementIds(ids, elements);
       return;
     }
+    if (action.type === "drawing-laser") {
+      currentLaserRef.current.points.push([point.x, point.y]);
+      render();
+      return;
+    }
     if (action.type === "drawing") {
       setElements((prev) => {
         const next = normalizeScene(prev.map((el) => {
           if (el.id !== action.element.id) return el;
-          if (el.type === "freedraw" || el.type === "laser") return { ...el, points: [...el.points, [point.x, point.y]] };
+          if (el.type === "freedraw") return { ...el, points: [...el.points, [point.x, point.y]] };
+          if (el.type === "laser") return { ...el, points: [...el.points, [point.x, point.y]] };
           if (el.type === "line" || el.type === "arrow") return { ...el, points: [el.points[0], [point.x, point.y]], width: point.x - el.x, height: point.y - el.y };
           return { ...el, x: action.start.x, y: action.start.y, width: point.x - action.start.x, height: point.y - action.start.y };
         }));
@@ -599,6 +695,17 @@ export default function SketchFlow({ config: configProp }) {
 
   const handlePointerUp = () => {
     const action = actionRef.current;
+    if (action?.type === "drawing-laser") {
+      const laser = currentLaserRef.current;
+      if (laser && laser.points.length > 2) {
+        const entry = { id: nanoid(8), points: laser.points, color: laser.color, size: laser.size, createdAt: Date.now() };
+        laserStrokesRef.current = [...laserStrokesRef.current, entry];
+      }
+      currentLaserRef.current = null;
+      actionRef.current = null;
+      render();
+      return;
+    }
     if (action?.type === "drawing") {
       const drawnId = action.element.id;
       const currentScene = elementsRef.current;
@@ -678,15 +785,15 @@ export default function SketchFlow({ config: configProp }) {
     updateElements((prev) => prev.map((el) => (selectedIds.includes(el.id) && !el.locked ? { ...el, ...patch } : el)));
   };
 
-  const groupSelected = () => {
+  const groupSelected = useCallback(() => {
     if (selectedIds.length < 2) return;
     const groupId = nanoid(8);
     updateElements((prev) => prev.map((el) => (selectedIds.includes(el.id) ? { ...el, groupIds: [...new Set([...(el.groupIds || []), groupId])] } : el)));
-  };
+  }, [selectedIds, updateElements]);
 
-  const ungroupSelected = () => {
+  const ungroupSelected = useCallback(() => {
     updateElements((prev) => prev.map((el) => (selectedIds.includes(el.id) ? { ...el, groupIds: [] } : el)));
-  };
+  }, [selectedIds, updateElements]);
 
   const reorderSelected = (direction) => {
     updateElements((prev) => {
@@ -738,6 +845,43 @@ export default function SketchFlow({ config: configProp }) {
     const zoom = Math.max(0.1, Math.min(3, Math.min((size.width - 120) / b.width, (size.height - 120) / b.height)));
     setCamera({ zoom, x: size.width / 2 - (b.x + b.width / 2) * zoom, y: size.height / 2 - (b.y + b.height / 2) * zoom });
   }, [elements, size]);
+
+  const autoLayoutScene = useCallback(() => {
+    const current = elementsRef.current;
+    if (!current.length) return;
+    const original = clone(current);
+    const layouted = autoLayout(original);
+    if (scenesEqual(original, layouted)) {
+      showToast("Diagram already well organized");
+      return;
+    }
+    pushHistory(original);
+    applyElements(layouted);
+    showToast("Auto layout applied");
+    window.requestAnimationFrame(() => {
+      const allIds = layouted.map(el => el.id);
+      const total = getSelectedBounds(layouted, allIds);
+      if (!total) return;
+      const zoom = Math.max(0.1, Math.min(3, Math.min((size.width - 120) / total.width, (size.height - 120) / total.height)));
+      setCamera({ zoom, x: size.width / 2 - (total.x + total.width / 2) * zoom, y: size.height / 2 - (total.y + total.height / 2) * zoom });
+    });
+  }, [pushHistory, applyElements, showToast, size]);
+
+  const shareScene = useCallback(() => {
+    const data = {
+      v: 1,
+      elements: persistedElements,
+      camera,
+      dark,
+      grid,
+    };
+    const compressed = LZString.compressToEncodedURIComponent(JSON.stringify(data));
+    const url = `${window.location.origin}${window.location.pathname}#${compressed}`;
+    navigator.clipboard.writeText(url).then(
+      () => showToast("Share link copied to clipboard"),
+      () => showToast("Could not copy share link")
+    );
+  }, [persistedElements, camera, dark, grid, showToast]);
 
   const exportPng = () => {
     const scene = persistedElements;
@@ -1069,6 +1213,7 @@ export default function SketchFlow({ config: configProp }) {
     { label: "Toggle theme", run: () => setDark((v) => !v) },
     { label: "Toggle grid", run: () => setGrid((g) => ({ ...g, enabled: !g.enabled })) },
     { label: "Fit to screen", run: fitToScreen },
+    { label: "Auto layout diagram", run: autoLayoutScene },
     { label: "Clear canvas", run: clearCanvas },
     { label: "Search canvas text", run: searchTextOnCanvas },
     { label: "Select all", run: () => selectElementIds(elements.map((el) => el.id)) },
@@ -1160,7 +1305,18 @@ export default function SketchFlow({ config: configProp }) {
       window.removeEventListener("keydown", onKeyDown);
       window.removeEventListener("keyup", onKeyUp);
     };
-  }, [copySelected, deleteSelected, duplicateSelected, elements, fitToScreen, paletteOpen, paste, redo, searchTextOnCanvas, selectElementIds, toolKeys, undo]);
+  }, [copySelected, deleteSelected, duplicateSelected, elements, fitToScreen, groupSelected, paletteOpen, paste, redo, searchTextOnCanvas, selectElementIds, toolKeys, undo, ungroupSelected]);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      const now = Date.now();
+      const before = laserStrokesRef.current.length;
+      laserStrokesRef.current = laserStrokesRef.current.filter((s) => now - s.createdAt < 4000);
+      if (laserStrokesRef.current.length !== before) render();
+      if (laserStrokesRef.current.some((s) => { const a = now - s.createdAt; return a >= 2500 && a < 3500; })) render();
+    }, 80);
+    return () => clearInterval(timer);
+  }, [render]);
 
   useEffect(() => {
     const onKey = (event) => {
@@ -1214,6 +1370,7 @@ export default function SketchFlow({ config: configProp }) {
   }, [editingText?.id]);
 
   useEffect(() => {
+    if (tool !== "laser") currentLaserRef.current = null;
     if (!toolbar.some(([id]) => id === tool)) {
       setTool(toolbar[0]?.[0] || "select");
     }
@@ -1238,11 +1395,20 @@ export default function SketchFlow({ config: configProp }) {
           onExportSvg={exportSvg}
           onSave={saveScene}
           onLoad={() => fileInputRef.current?.click()}
+          onShare={shareScene}
           onToggleTheme={() => setDark((current) => !current)}
           onOpenPalette={() => setPaletteOpen(true)}
         />
 
         <LeftToolbar toolbar={toolbar} activeTool={tool} onSelectTool={setTool} />
+        {tool === "laser" && (
+          <LaserPanel
+            size={laserSettings.size}
+            color={laserSettings.color}
+            onSizeChange={(s) => setLaserSettings((p) => ({ ...p, size: s }))}
+            onColorChange={(c) => setLaserSettings((p) => ({ ...p, color: c }))}
+          />
+        )}
 
         <section
           className="sf-canvas-wrap"
@@ -1273,6 +1439,7 @@ export default function SketchFlow({ config: configProp }) {
             onZoomOut={() => setCamera((current) => ({ ...current, zoom: Math.max(0.1, current.zoom / 1.15) }))}
             onZoomIn={() => setCamera((current) => ({ ...current, zoom: Math.min(30, current.zoom * 1.15) }))}
             onFitToScreen={fitToScreen}
+            onAutoLayout={autoLayoutScene}
             onToggleSelectMode={() => setTool(tool === "select" ? "frame" : "select")}
             onFullscreen={() => document.documentElement.requestFullscreen?.()}
           />
