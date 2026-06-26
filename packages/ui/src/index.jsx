@@ -29,6 +29,9 @@ export const Button = React.forwardRef(function Button(
       ref={ref}
       type={type}
       disabled={disabled || loading}
+      // Browser autofill/password-manager extensions inject attributes
+      // (e.g. fdprocessedid) onto buttons before hydration; ignore those.
+      suppressHydrationWarning
       className={cn(
         "alt-ui-button",
         `alt-ui-button--${variant}`,
@@ -68,6 +71,8 @@ export const Input = React.forwardRef(function Input(
     <input
       ref={ref}
       type={type}
+      // Autofill extensions inject attributes (fdprocessedid) before hydration.
+      suppressHydrationWarning
       className={cn("alt-ui-input", className)}
       {...props}
     />
