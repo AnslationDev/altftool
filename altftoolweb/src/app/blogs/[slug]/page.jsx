@@ -51,6 +51,7 @@ import {
   BlogEngagementComments,
   BlogEngagementProvider,
 } from "../components/slug/BlogEngagement";
+import { isFeatureEnabled } from "@/lib/featureFlags";
 import "../../styles/ckeditor.css";
 
 export const revalidate = 3600;
@@ -171,6 +172,7 @@ function toFeedbackBlog(blog) {
 export default async function BlogDetailPage({ params }) {
   const { slug } = await params;
   const initialBlog = await getBlogDetailBySlug(slug);
+  const adViewportFixEnabled = isFeatureEnabled("ad_fix_viewport");
 
   if (!initialBlog) {
     const redirectPath = getMissingBlogRedirect(slug);
@@ -263,8 +265,12 @@ export default async function BlogDetailPage({ params }) {
               collapsible
             />
 
-            <div className="mt-8 grid grid-cols-1 items-start justify-center gap-6 lg:grid-cols-[240px_minmax(0,820px)] xl:grid-cols-[260px_minmax(0,860px)] 2xl:grid-cols-[280px_minmax(0,840px)_300px]">
-              <BlogTableOfContents content={initialBlog.description} />
+            <div className={`mt-8 grid grid-cols-1 items-start justify-center gap-6 ${
+              adViewportFixEnabled
+                ? "lg:grid-cols-[minmax(0,780px)_280px] xl:grid-cols-[220px_minmax(0,760px)_280px] 2xl:grid-cols-[280px_minmax(0,840px)_300px]"
+                : "lg:grid-cols-[240px_minmax(0,820px)] xl:grid-cols-[260px_minmax(0,860px)] 2xl:grid-cols-[280px_minmax(0,840px)_300px]"
+            }`}>
+              <BlogTableOfContents content={initialBlog.description} className={adViewportFixEnabled ? "hidden xl:block" : undefined} />
 
               <div className="min-w-0">
                 <article

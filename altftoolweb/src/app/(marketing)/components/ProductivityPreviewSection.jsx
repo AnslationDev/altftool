@@ -107,12 +107,12 @@ export default function ProductivityPreviewSection() {
             <div className="absolute left-1/2 top-8 h-64 w-64 -translate-x-1/2 rounded-full bg-[color-mix(in_srgb,var(--primary)_10%,transparent)] blur-3xl" />
             <div className="absolute right-6 bottom-8 h-28 w-28 rounded-full bg-[color-mix(in_srgb,#0891b2_12%,transparent)] blur-2xl" />
 
-            <div className="absolute left-1/2 top-7 z-10 w-[min(84%,20.5rem)] -translate-x-1/2 rounded-[1.5rem] border border-[var(--home-border)] bg-[color-mix(in_srgb,var(--card)_96%,transparent)] p-4 shadow-[0_24px_50px_rgba(55,49,120,0.14)] backdrop-blur sm:top-8 sm:w-[20.5rem] sm:p-5">
+            <div className="absolute left-1/2 top-7 z-10 w-[min(84%,20.5rem)] -translate-x-1/2 rounded-[1.5rem] border border-[var(--home-border)] bg-[color-mix(in_srgb,var(--card)_96%,transparent)] p-4 shadow-[0_24px_50px_rgba(15, 23, 42,0.14)] backdrop-blur sm:top-8 sm:w-[20.5rem] sm:p-5">
               <div className="mb-4 flex items-center justify-between">
-                <span className="text-sm font-black text-[var(--foreground)]">
+                <span className="text-sm font-semibold text-[var(--foreground)]">
                   Tasks List
                 </span>
-                <span className="rounded-full bg-[var(--home-primary-soft)] px-2 py-1 text-[10px] font-black uppercase tracking-normal text-[var(--primary)]">
+                <span className="rounded-full bg-[var(--home-primary-soft)] px-2 py-1 text-[10px] font-semibold uppercase tracking-normal text-[var(--primary)]">
                   Auto saved
                 </span>
               </div>
@@ -136,11 +136,11 @@ export default function ProductivityPreviewSection() {
               ))}
             </div>
 
-            <div className="home-premium-icon home-icon-rose absolute left-4 top-[6.4rem] z-20 grid h-14 w-14 rotate-[-10deg] place-items-center rounded-2xl shadow-[0_18px_34px_rgba(108,77,246,0.16)] sm:left-7 sm:top-28 sm:h-16 sm:w-16">
+            <div className="home-premium-icon home-icon-rose absolute left-4 top-[6.4rem] z-20 grid h-14 w-14 rotate-[-10deg] place-items-center rounded-2xl shadow-[0_18px_34px_rgba(20, 184, 166,0.16)] sm:left-7 sm:top-28 sm:h-16 sm:w-16">
               <DatabaseZap className="h-6 w-6 sm:h-7 sm:w-7" />
             </div>
 
-            <div className="absolute bottom-7 left-8 z-30 rounded-2xl border border-[var(--home-border)] bg-[color-mix(in_srgb,var(--card)_96%,transparent)] px-4 py-3 shadow-[0_18px_34px_rgba(55,49,120,0.12)] backdrop-blur">
+            <div className="absolute bottom-7 left-8 z-30 rounded-2xl border border-[var(--home-border)] bg-[color-mix(in_srgb,var(--card)_96%,transparent)] px-4 py-3 shadow-[0_18px_34px_rgba(15, 23, 42,0.12)] backdrop-blur">
               <div className="flex h-11 items-end gap-1.5">
                 {[28, 44, 36, 58, 48, 70, 55, 78].map((height, index) => (
                   <span
@@ -152,11 +152,11 @@ export default function ProductivityPreviewSection() {
               </div>
             </div>
 
-            <div className="absolute bottom-10 right-7 z-30 flex rounded-full border border-[var(--home-border)] bg-[color-mix(in_srgb,var(--card)_96%,transparent)] p-1.5 shadow-[0_16px_32px_rgba(55,49,120,0.10)] backdrop-blur sm:right-10">
+            <div className="absolute bottom-10 right-7 z-30 flex rounded-full border border-[var(--home-border)] bg-[color-mix(in_srgb,var(--card)_96%,transparent)] p-1.5 shadow-[0_16px_32px_rgba(15, 23, 42,0.10)] backdrop-blur sm:right-10">
               {["M", "A", "N", "+9"].map((avatar) => (
                 <span
                   key={avatar}
-                  className="-ml-1.5 grid h-8 w-8 first:ml-0 place-items-center rounded-full border-2 border-[var(--card)] bg-[var(--home-primary-soft)] text-[11px] font-black text-[var(--primary)] shadow-[var(--home-shadow-sm)] sm:h-9 sm:w-9 sm:text-xs"
+                  className="-ml-1.5 grid h-8 w-8 first:ml-0 place-items-center rounded-full border-2 border-[var(--card)] bg-[var(--home-primary-soft)] text-[11px] font-semibold text-[var(--primary)] shadow-[var(--home-shadow-sm)] sm:h-9 sm:w-9 sm:text-xs"
                 >
                   {avatar}
                 </span>
@@ -166,7 +166,7 @@ export default function ProductivityPreviewSection() {
 
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-1 lg:gap-8">
             <div>
-              <p className="text-4xl font-black text-[var(--primary)]">
+              <p className="text-4xl font-semibold text-[var(--primary)]">
                 <AnimatedMetric value={29} suffix="M+" start={metricsActive} />
               </p>
               <p className="mt-2 max-w-xs text-sm font-semibold leading-6 text-[var(--muted-foreground)] lg:max-w-[10rem]">
@@ -175,7 +175,7 @@ export default function ProductivityPreviewSection() {
             </div>
             <div className="h-px bg-[var(--home-border)]" />
             <div>
-              <p className="text-4xl font-black text-[var(--primary)]">
+              <p className="text-4xl font-semibold text-[var(--primary)]">
                 <AnimatedMetric value={100} suffix="M+" start={metricsActive} />
               </p>
               <p className="mt-2 max-w-xs text-sm font-semibold leading-6 text-[var(--muted-foreground)] lg:max-w-[10rem]">
@@ -191,7 +191,7 @@ export default function ProductivityPreviewSection() {
                   <Icon className="h-5 w-5" />
                 </span>
                 <span>
-                  <span className="block text-base font-black text-[var(--foreground)]">
+                  <span className="block text-base font-semibold text-[var(--foreground)]">
                     {title}
                   </span>
                   <span className="mt-1 block text-sm leading-6 text-[var(--muted-foreground)]">

@@ -13,12 +13,12 @@ import AppCard from "./AppCard";
 import { AppIconSvg } from "./AppVisualAssets";
 
 const categories = [
-  { label: "Productivity", count: "2 Apps", icon: "briefcase", fill: "from-emerald-500 to-emerald-700", glow: "group-hover:shadow-emerald-500/25" },
-  { label: "Utilities", count: "2 Apps", icon: "spark", fill: "from-orange-400 to-orange-600", glow: "group-hover:shadow-orange-500/25" },
-  { label: "Tools", count: "3 Apps", icon: "tools", fill: "from-violet-500 to-fuchsia-600", glow: "group-hover:shadow-violet-500/25" },
-  { label: "Android", count: "7 Apps", icon: "grid", fill: "from-sky-500 to-blue-700", glow: "group-hover:shadow-blue-500/25" },
-  { label: "Learning", count: "OCR Ready", icon: "cap", fill: "from-teal-400 to-cyan-700", glow: "group-hover:shadow-teal-500/25" },
-  { label: "Security", count: "Safe APK", icon: "shield", fill: "from-rose-500 to-red-700", glow: "group-hover:shadow-rose-500/25" },
+  { label: "Productivity", count: "2 Apps", icon: "briefcase", fill: "from-teal-400 to-teal-600", glow: "group-hover:shadow-teal-500/25" },
+  { label: "Utilities", count: "2 Apps", icon: "spark", fill: "from-cyan-400 to-sky-500", glow: "group-hover:shadow-cyan-500/25" },
+  { label: "Tools", count: "3 Apps", icon: "tools", fill: "from-slate-700 to-cyan-500", glow: "group-hover:shadow-slate-500/25" },
+  { label: "Android", count: "7 Apps", icon: "grid", fill: "from-sky-400 to-blue-600", glow: "group-hover:shadow-blue-500/25" },
+  { label: "Learning", count: "OCR Ready", icon: "cap", fill: "from-emerald-400 to-teal-700", glow: "group-hover:shadow-emerald-500/25" },
+  { label: "Security", count: "Safe APK", icon: "shield", fill: "from-amber-400 to-teal-600", glow: "group-hover:shadow-amber-500/25" },
 ];
 
 const safetyItems = [
@@ -30,7 +30,7 @@ const safetyItems = [
 ];
 
 function CategorySvgIcon({ type }) {
-  const common = "drop-shadow-[0_8px_14px_rgba(15,63,46,0.16)]";
+  const common = "drop-shadow-[0_8px_14px_rgba(15,23,42,0.16)]";
 
   if (type === "briefcase") {
     return (
@@ -114,7 +114,7 @@ export default function AppsListingClient({ apps, searchQuery = "" }) {
         <div className="home-hero-band relative overflow-hidden lg:!min-h-[calc(100svh-64px)]">
           <div className="pointer-events-none absolute inset-0 home-subtle-grid opacity-70" />
           <div
-            className="pointer-events-none absolute inset-x-0 bottom-0 h-[52%] bg-gradient-to-r from-[var(--primary)] via-[#7b6dff] to-[#4e8cff] opacity-72"
+            className="pointer-events-none absolute inset-x-0 bottom-0 h-[52%] bg-gradient-to-r from-[var(--primary)] via-[#0EA5E9] to-[#38BDF8] opacity-72"
             style={{ clipPath: "polygon(0 34%, 100% 12%, 100% 100%, 0 100%)" }}
           />
           <div
@@ -122,32 +122,32 @@ export default function AppsListingClient({ apps, searchQuery = "" }) {
             style={{ clipPath: "polygon(0 34%, 100% 12%, 100% 100%, 0 100%)" }}
           />
           <div className="pointer-events-none absolute -left-40 top-10 h-[32rem] w-[32rem] rounded-full bg-[color-mix(in_srgb,var(--primary)_10%,transparent)] blur-3xl" />
-          <div className="pointer-events-none absolute right-[-12rem] top-16 h-[30rem] w-[30rem] rounded-full bg-[color-mix(in_srgb,#4e8cff_12%,transparent)] blur-3xl" />
+          <div className="pointer-events-none absolute right-[-12rem] top-16 h-[30rem] w-[30rem] rounded-full bg-[color-mix(in_srgb,#38BDF8_12%,transparent)] blur-3xl" />
 
           <div className="home-hero-inner relative mx-auto max-w-[1320px] px-[var(--anslation-ds-gutter)] lg:!min-h-[calc(100svh-64px)]">
-            <div className="grid items-center gap-8 lg:grid-cols-[0.74fr_1fr]">
+            <div className="grid items-center gap-8 lg:grid-cols-[0.86fr_0.88fr] xl:grid-cols-[0.9fr_0.84fr]">
               <div className="z-10 lg:-translate-y-10">
                 <div className="home-reference-badge w-fit">
                   <ShieldCheck size={15} aria-hidden="true" />
                   Trusted by 100K+ Users
                 </div>
-                <h1 className="mt-6 max-w-[39rem] text-balance text-[clamp(2.55rem,4.35vw,3.85rem)] font-black leading-[1.03] tracking-normal text-[var(--foreground)]">
-                  Discover. Download. Enjoy the <span className="bg-gradient-to-r from-[var(--primary)] to-[#4e8cff] bg-clip-text text-transparent">Best Apps</span>
+                <h1 className="mt-6 max-w-[39rem] text-balance text-[clamp(2.55rem,4.35vw,3.85rem)] font-extrabold leading-[1.03] tracking-normal text-[var(--foreground)] [font-family:var(--home-font-display)]">
+                  Discover. Download. Enjoy the <span className="bg-gradient-to-r from-[var(--primary)] to-[#38BDF8] bg-clip-text text-transparent">Best Apps</span>
                 </h1>
                 <p className="mt-6 max-w-[34rem] text-[1.04rem] font-semibold leading-8 text-[var(--muted-foreground)]">
                   Curated Android apps with clean APK downloads, verified quality, and a polished AppHub experience.
                 </p>
               </div>
 
-              <div className="relative z-10 min-h-[460px] sm:min-h-[540px] lg:min-h-[570px]">
+              <div className="relative z-10 min-h-[460px] sm:min-h-[540px] lg:min-h-[555px]">
               <div className="absolute left-1/2 top-1/2 h-[300px] w-[300px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-white/20 blur-3xl sm:h-[360px] sm:w-[360px] lg:h-[390px] lg:w-[390px]" />
 
-              <div className="absolute left-1/2 top-[48%] w-[188px] -translate-x-1/2 -translate-y-1/2 rounded-[28px] border-[6px] border-[#0b241b] bg-white p-2 shadow-[0_28px_60px_rgba(15,63,46,0.26)] sm:top-[47%] sm:w-[236px] sm:rounded-[34px] sm:border-[8px] sm:p-2.5 lg:w-[288px]">
+              <div className="absolute left-1/2 top-[48%] w-[188px] -translate-x-1/2 -translate-y-1/2 rounded-[28px] border-[6px] border-[#020617] bg-white p-2 shadow-[0_28px_60px_rgba(15,23,42,0.26)] sm:top-[47%] sm:w-[236px] sm:rounded-[34px] sm:border-[8px] sm:p-2.5 lg:w-[272px]">
                 <div className="rounded-[22px] bg-[var(--home-surface)] p-2.5 sm:rounded-[25px] sm:p-3.5">
                   <div className="mx-auto mb-2.5 h-4 w-16 rounded-full bg-[var(--footer-bg)] sm:mb-3 sm:h-5 sm:w-20" />
-                  <div className="rounded-[18px] bg-[var(--footer-bg)] p-3 text-white shadow-[0_16px_30px_rgba(55,49,120,0.24)] sm:rounded-[22px] sm:p-4">
+                  <div className="rounded-[18px] bg-[var(--footer-bg)] p-3 text-white shadow-[0_16px_30px_rgba(15,23,42,0.24)] sm:rounded-[22px] sm:p-4">
                     <p className="text-[10px] font-bold text-white/75 sm:text-[12px]">AppHub dashboard</p>
-                    <p className="mt-1.5 text-lg font-black text-[#b6a8ff] sm:mt-2 sm:text-2xl">4 curated apps</p>
+                    <p className="mt-1.5 text-lg font-bold text-[#38BDF8] sm:mt-2 sm:text-2xl">Curated apps</p>
                     <div className="mt-3 h-1.5 rounded-full bg-white/20 sm:mt-4 sm:h-2">
                       <span className="block h-full w-[76%] rounded-full bg-[var(--primary)]" />
                     </div>
@@ -157,87 +157,87 @@ export default function AppsListingClient({ apps, searchQuery = "" }) {
                       <div key={app.slug} className="flex items-center gap-2 rounded-[14px] border border-[var(--home-border)] bg-[var(--card)] p-2 shadow-[var(--home-shadow-sm)] sm:gap-3 sm:rounded-[16px] sm:p-2.5">
                         <AppIconSvg app={app} className="h-7 w-7 rounded-[9px] sm:h-9 sm:w-9 sm:rounded-[11px]" />
                         <div className="min-w-0 flex-1">
-                          <p className="truncate text-[10px] font-black text-[var(--foreground)] sm:text-[12px]">{app.name}</p>
-                          <p className="text-[8px] font-bold text-[var(--muted-foreground)] sm:text-[10px]">{app.downloads} downloads</p>
+                          <p className="truncate text-[10px] font-semibold text-[var(--foreground)] sm:text-[12px]">{app.name}</p>
+                          <p className="text-[8px] font-medium text-[var(--muted-foreground)] sm:text-[10px]">{app.downloads} downloads</p>
                         </div>
-                        <span className="text-[9px] font-black text-[var(--foreground)] sm:text-[11px]">{app.rating}</span>
+                        <span className="text-[9px] font-semibold text-[var(--foreground)] sm:text-[11px]">{app.rating}</span>
                       </div>
                     ))}
                   </div>
                 </div>
               </div>
 
-              <div className="absolute left-0 top-8 w-[150px] rounded-[18px] border border-[var(--home-border)] bg-[color-mix(in_srgb,var(--card)_84%,transparent)] p-2.5 shadow-[var(--home-shadow-md)] backdrop-blur-xl sm:left-8 sm:top-24 sm:w-[214px] sm:rounded-[22px] sm:p-4 lg:left-16">
-                <p className="text-[10px] font-black text-[var(--muted-foreground)] sm:text-[12px]">Trending Apps</p>
+              <div className="absolute left-0 top-8 w-[140px] rounded-[18px] border border-[var(--home-border)] bg-[color-mix(in_srgb,var(--card)_84%,transparent)] p-2.5 shadow-[var(--home-shadow-md)] backdrop-blur-xl sm:left-2 sm:top-24 sm:w-[196px] sm:rounded-[22px] sm:p-3.5 lg:left-4">
+                <p className="text-[10px] font-semibold text-[var(--muted-foreground)] sm:text-[12px]">Trending Apps</p>
                 <div className="mt-2 space-y-2 sm:mt-3 sm:space-y-3">
                   {apps.slice(0, 2).map((app) => (
                     <div key={app.slug} className="flex items-center gap-2 sm:gap-3">
                       <AppIconSvg app={app} className="h-7 w-7 rounded-[9px] sm:h-9 sm:w-9 sm:rounded-[11px]" />
                       <div className="min-w-0">
-                        <p className="truncate text-[10px] font-black text-[var(--foreground)] sm:text-[12px]">{app.name}</p>
-                        <p className="text-[8px] font-bold text-[var(--muted-foreground)] sm:text-[10px]">{app.rating} rating</p>
+                        <p className="truncate text-[10px] font-semibold text-[var(--foreground)] sm:text-[12px]">{app.name}</p>
+                        <p className="text-[8px] font-medium text-[var(--muted-foreground)] sm:text-[10px]">{app.rating} rating</p>
                       </div>
                     </div>
                   ))}
                 </div>
               </div>
 
-              <div className="absolute right-0 top-9 w-[148px] rounded-[18px] border border-[var(--home-border)] bg-[color-mix(in_srgb,var(--card)_84%,transparent)] p-2.5 shadow-[var(--home-shadow-md)] backdrop-blur-xl sm:right-8 sm:top-24 sm:w-[206px] sm:rounded-[22px] sm:p-3 lg:right-14">
-                <p className="text-[10px] font-black text-[var(--muted-foreground)] sm:text-[12px]">Download Statistics</p>
-                <p className="mt-1 text-lg font-black text-[var(--foreground)] sm:mt-1.5 sm:text-[22px]">3.4M+</p>
+              <div className="absolute right-[-4px] top-9 w-[148px] rounded-[18px] border border-[var(--home-border)] bg-[color-mix(in_srgb,var(--card)_84%,transparent)] p-2.5 shadow-[var(--home-shadow-md)] backdrop-blur-xl sm:right-8 sm:top-24 sm:w-[206px] sm:rounded-[22px] sm:p-3 lg:right-14">
+                <p className="text-[10px] font-semibold text-[var(--muted-foreground)] sm:text-[12px]">Download Statistics</p>
+                <p className="mt-1 text-lg font-bold text-[var(--foreground)] sm:mt-1.5 sm:text-[22px]">3.4M+</p>
                 <div className="mt-2 overflow-hidden rounded-[14px] bg-[var(--home-surface)] p-2 sm:mt-2.5 sm:rounded-[16px] sm:p-2.5">
                   <svg viewBox="0 0 160 62" className="h-[42px] w-full sm:h-[62px]" role="img" aria-label="Download progress chart">
                     <defs>
                       <linearGradient id="download-chart-fill" x1="0" y1="0" x2="1" y2="0">
-                        <stop stopColor="#6c4df6" />
-                        <stop offset="1" stopColor="#4e8cff" />
+                        <stop stopColor="#14B8A6" />
+                        <stop offset="1" stopColor="#38BDF8" />
                       </linearGradient>
                     </defs>
                     <path d="M8 52 L28 44 L44 48 L62 34 L80 38 L98 24 L116 28 L134 14 L152 20" fill="none" stroke="#e4e6f1" strokeWidth="8" strokeLinecap="round" strokeLinejoin="round" />
                     <path d="M8 52 L28 44 L44 48 L62 34 L80 38 L98 24 L116 28 L134 14 L152 20" fill="none" stroke="url(#download-chart-fill)" strokeWidth="5" strokeLinecap="round" strokeLinejoin="round" />
-                    <path d="M8 52 L28 44 L44 48 L62 34 L80 38 L98 24 L116 28 L134 14 L152 20 L152 58 L8 58 Z" fill="#6c4df6" opacity=".12" />
+                    <path d="M8 52 L28 44 L44 48 L62 34 L80 38 L98 24 L116 28 L134 14 L152 20 L152 58 L8 58 Z" fill="#14B8A6" opacity=".12" />
                     {[62, 98, 134, 152].map((cx, index) => (
-                      <circle key={cx} cx={cx} cy={[34, 24, 14, 20][index]} r="4.2" fill="#fff" stroke="#6c4df6" strokeWidth="3" />
+                      <circle key={cx} cx={cx} cy={[34, 24, 14, 20][index]} r="4.2" fill="#fff" stroke="#14B8A6" strokeWidth="3" />
                     ))}
                   </svg>
                 </div>
               </div>
 
               <div className="absolute bottom-24 left-1 w-[152px] rounded-[18px] border border-[var(--home-border)] bg-[color-mix(in_srgb,var(--card)_84%,transparent)] p-2.5 shadow-[var(--home-shadow-md)] backdrop-blur-xl sm:left-8 sm:w-[188px] sm:rounded-[22px] sm:p-3 lg:bottom-28 lg:left-14 lg:w-[224px] lg:p-4">
-                <p className="text-[10px] font-black text-[var(--muted-foreground)] sm:text-[12px]">Recently Added</p>
+                <p className="text-[10px] font-semibold text-[var(--muted-foreground)] sm:text-[12px]">Recently Added</p>
                 <div className="mt-2 flex -space-x-2 sm:mt-3">
-                  {apps.map((app) => (
+                  {apps.slice(0, 5).map((app) => (
                     <AppIconSvg key={app.slug} app={app} className="h-7 w-7 rounded-[9px] ring-2 ring-white sm:h-9 sm:w-9 sm:rounded-[11px] sm:ring-4 lg:h-10 lg:w-10 lg:rounded-[12px]" />
                   ))}
                 </div>
-                <p className="mt-2 text-[8px] font-bold text-[var(--muted-foreground)] sm:mt-3 sm:text-[10px] lg:text-[11px]">Fresh APKs reviewed weekly</p>
+                <p className="mt-2 text-[8px] font-medium text-[var(--muted-foreground)] sm:mt-3 sm:text-[10px] lg:text-[11px]">Fresh APKs reviewed weekly</p>
               </div>
 
               <div className="absolute bottom-24 right-1 w-[154px] rounded-[18px] border border-[var(--home-border)] bg-[color-mix(in_srgb,var(--card)_84%,transparent)] p-2.5 shadow-[var(--home-shadow-md)] backdrop-blur-xl sm:right-8 sm:w-[204px] sm:rounded-[22px] sm:p-3.5 lg:right-12 lg:w-[224px]">
-                <p className="text-[10px] font-black text-[var(--muted-foreground)] sm:text-[12px]">Performance Insights</p>
-                <p className="mt-1.5 text-base font-black text-[var(--foreground)] sm:mt-2 sm:text-xl">99.9% uptime</p>
+                <p className="text-[10px] font-semibold text-[var(--muted-foreground)] sm:text-[12px]">Performance Insights</p>
+                <p className="mt-1.5 text-base font-bold text-[var(--foreground)] sm:mt-2 sm:text-xl">99.9% uptime</p>
                 <div className="mt-2 grid gap-1.5 sm:mt-3 sm:gap-2">
                   {[92, 84, 76].map((value, index) => (
                     <div key={value} className="flex items-center gap-2">
                       <span className="h-2 flex-1 overflow-hidden rounded-full bg-[var(--home-border)]">
                         <span
-                          className="block h-full rounded-full bg-gradient-to-r from-[var(--primary)] to-[#4e8cff] transition-all duration-300"
+                          className="block h-full rounded-full bg-gradient-to-r from-[var(--primary)] to-[#38BDF8] transition-all duration-300"
                           style={{ width: `${value}%` }}
                         />
                       </span>
-                      <span className="w-6 text-right text-[8px] font-black text-[var(--foreground)] sm:w-7 sm:text-[10px]">{["92", "84", "76"][index]}%</span>
+                      <span className="w-6 text-right text-[8px] font-semibold text-[var(--foreground)] sm:w-7 sm:text-[10px]">{["92", "84", "76"][index]}%</span>
                     </div>
                   ))}
                 </div>
               </div>
 
               <div className="absolute left-1/2 top-[142px] -translate-x-1/2 rounded-full border border-[var(--home-border)] bg-[color-mix(in_srgb,var(--card)_84%,transparent)] px-3 py-2 shadow-[var(--home-shadow-sm)] backdrop-blur-xl sm:top-12 sm:px-4 sm:py-3">
-                <p className="text-[10px] font-black text-[var(--foreground)] sm:text-[12px]">Top Rated Apps · 4.7 ★</p>
+                <p className="text-[10px] font-semibold text-[var(--foreground)] sm:text-[12px]">Top Rated Apps · 4.7 ★</p>
               </div>
 
               <div className="absolute bottom-5 left-1/2 flex -translate-x-1/2 items-center gap-2 rounded-full border border-[var(--home-border)] bg-[color-mix(in_srgb,var(--card)_84%,transparent)] px-3 py-2 shadow-[var(--home-shadow-md)] backdrop-blur-xl sm:bottom-7 sm:gap-3 sm:px-4 sm:py-3">
                 <Users size={15} className="text-[var(--primary)] sm:h-[18px] sm:w-[18px]" aria-hidden="true" />
-                <p className="text-[10px] font-black text-[var(--foreground)] sm:text-[12px]">User Activity +28%</p>
+                <p className="text-[10px] font-semibold text-[var(--foreground)] sm:text-[12px]">User Activity +28%</p>
               </div>
             </div>
           </div>
@@ -248,8 +248,8 @@ export default function AppsListingClient({ apps, searchQuery = "" }) {
               return (
                 <div key={item.title} className="home-premium-card min-h-[110px] rounded-[20px] p-4 sm:min-h-[126px] sm:p-5">
                   <Icon size={28} className="text-[var(--primary)]" aria-hidden="true" />
-                  <p className="mt-4 text-[15px] font-black text-[var(--foreground)]">{item.title}</p>
-                  <p className="mt-1 text-[12px] font-bold leading-5 text-[var(--muted-foreground)]">{item.detail}</p>
+                  <p className="mt-4 text-[15px] font-semibold text-[var(--foreground)]">{item.title}</p>
+                  <p className="mt-1 text-[12px] font-medium leading-5 text-[var(--muted-foreground)]">{item.detail}</p>
                 </div>
               );
             })}
@@ -261,8 +261,8 @@ export default function AppsListingClient({ apps, searchQuery = "" }) {
       <section id="categories" className="mx-auto max-w-[1384px] scroll-mt-24 px-4 py-10 sm:px-6 lg:px-8 lg:py-12">
         <div className="flex items-end justify-between gap-4">
           <div>
-            <h2 className="text-xl font-black text-[var(--foreground)]">Browse by Categories</h2>
-            <p className="mt-1 text-sm font-semibold text-[var(--muted-foreground)]">Find apps by workflow and purpose.</p>
+            <h2 className="text-[22px] font-semibold leading-[1.3] text-[var(--foreground)] [font-family:var(--home-font-display)]">Browse by Categories</h2>
+            <p className="mt-1 text-[13px] font-normal leading-[1.6] text-[var(--muted-foreground)]">Find apps by workflow and purpose.</p>
           </div>
         </div>
         <div className="mt-5 grid grid-cols-2 gap-4 lg:grid-cols-6">
@@ -270,10 +270,10 @@ export default function AppsListingClient({ apps, searchQuery = "" }) {
             return (
               <div key={category.label} className="home-premium-card group relative min-h-[128px] overflow-hidden rounded-[18px] p-4 text-center lg:min-h-[138px]">
                 <span className="absolute inset-x-5 top-0 h-px bg-gradient-to-r from-transparent via-[var(--primary)] to-transparent opacity-0 transition group-hover:opacity-100" />
-                <div className={`mx-auto flex h-[54px] w-[54px] items-center justify-center rounded-[16px] bg-gradient-to-br ${category.fill} p-2.5 text-white shadow-[0_12px_22px_rgba(15,63,46,0.14)] transition duration-300 group-hover:scale-105 group-hover:shadow-lg ${category.glow} sm:h-[58px] sm:w-[58px]`}>
+                <div className={`mx-auto flex h-[54px] w-[54px] items-center justify-center rounded-[16px] bg-gradient-to-br ${category.fill} p-2.5 text-white shadow-[0_12px_22px_rgba(15,23,42,0.14)] transition duration-300 group-hover:scale-105 group-hover:shadow-lg ${category.glow} sm:h-[58px] sm:w-[58px]`}>
                   <CategorySvgIcon type={category.icon} />
                 </div>
-                <p className="mt-3 text-[14px] font-black text-[var(--foreground)]">{category.label}</p>
+                <p className="mt-3 text-[14px] font-semibold text-[var(--foreground)]">{category.label}</p>
                 <p className="mt-1 text-xs font-semibold text-[var(--muted-foreground)]">{category.count}</p>
                 <span className="mx-auto mt-2.5 block h-1 w-7 rounded-full bg-[var(--primary)] opacity-0 transition duration-300 group-hover:w-10 group-hover:opacity-100" />
               </div>
@@ -285,12 +285,12 @@ export default function AppsListingClient({ apps, searchQuery = "" }) {
       <section id="featured-apps" className="mx-auto max-w-[1384px] scroll-mt-24 px-4 pb-10 pt-2 sm:px-6 lg:px-8 lg:pb-12">
         <div className="flex items-end justify-between gap-4">
           <div>
-            <h2 className="text-xl font-black text-[var(--foreground)]">Featured Apps</h2>
-            <p className="mt-1 text-sm font-semibold text-[var(--muted-foreground)]">
+            <h2 className="text-[22px] font-semibold leading-[1.3] text-[var(--foreground)] [font-family:var(--home-font-display)]">Featured Apps</h2>
+            <p className="mt-1 text-[13px] font-normal leading-[1.6] text-[var(--muted-foreground)]">
               {normalizedQuery ? `Search results for "${searchQuery}"` : "Handpicked apps for you."}
             </p>
           </div>
-          <span className="text-sm font-black text-[var(--primary)]">{filteredApps.length} apps</span>
+          <span className="text-sm font-semibold text-[var(--primary)]">{filteredApps.length} apps</span>
         </div>
         {filteredApps.length ? (
           <div className="mt-5 grid grid-flow-col auto-cols-[82%] gap-5 overflow-x-auto pb-2 sm:auto-cols-auto sm:grid-flow-row sm:grid-cols-2 sm:overflow-visible lg:grid-cols-4">
@@ -299,9 +299,9 @@ export default function AppsListingClient({ apps, searchQuery = "" }) {
             ))}
           </div>
         ) : (
-          <div className="mt-5 rounded-[22px] border border-[var(--home-border)] bg-[var(--card)] p-8 text-center shadow-[0_14px_34px_rgba(15,63,46,0.075)]">
-            <p className="text-lg font-black text-[var(--foreground)]">No apps found</p>
-            <p className="mt-2 text-sm font-semibold text-[var(--muted-foreground)]">Try searching by app name, category, or tool type.</p>
+          <div className="mt-5 rounded-[22px] border border-[var(--home-border)] bg-[var(--card)] p-8 text-center shadow-[0_14px_34px_rgba(15,23,42,0.075)]">
+            <p className="text-lg font-semibold text-[var(--foreground)]">No apps found</p>
+            <p className="mt-2 text-sm font-normal text-[var(--muted-foreground)]">Try searching by app name, category, or tool type.</p>
           </div>
         )}
       </section>
@@ -310,8 +310,8 @@ export default function AppsListingClient({ apps, searchQuery = "" }) {
       <section id="top-rated-apps" className="mx-auto max-w-[1384px] scroll-mt-24 px-4 pb-14 pt-4 sm:px-6 lg:px-8 lg:pb-16">
         <div className="flex items-end justify-between gap-4">
           <div>
-            <h2 className="text-xl font-black text-[var(--foreground)]">Top Rated Apps</h2>
-            <p className="mt-1 text-sm font-semibold text-[var(--muted-foreground)]">High quality apps loved by users.</p>
+            <h2 className="text-[22px] font-semibold leading-[1.3] text-[var(--foreground)] [font-family:var(--home-font-display)]">Top Rated Apps</h2>
+            <p className="mt-1 text-[13px] font-normal leading-[1.6] text-[var(--muted-foreground)]">High quality apps loved by users.</p>
           </div>
         </div>
         <div className="mt-5 grid gap-5 lg:grid-cols-4">
@@ -319,11 +319,11 @@ export default function AppsListingClient({ apps, searchQuery = "" }) {
             .slice()
             .sort((a, b) => Number(b.rating) - Number(a.rating))
             .map((app) => (
-              <Link key={app.slug} href={`/apps/${app.slug}`} className="group flex min-h-[172px] flex-col justify-between rounded-[22px] border border-[var(--home-border)] bg-[var(--card)] p-6 shadow-[0_14px_34px_rgba(15,63,46,0.075)] transition hover:-translate-y-1 hover:border-[color-mix(in_srgb,var(--primary)_60%,var(--home-border))] hover:shadow-[0_22px_48px_rgba(15,63,46,0.12)] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[color-mix(in_srgb,var(--primary)_25%,transparent)]">
+              <Link key={app.slug} href={`/apps/${app.slug}`} className="group flex min-h-[172px] flex-col justify-between rounded-[22px] border border-[var(--home-border)] bg-[var(--card)] p-6 shadow-[0_14px_34px_rgba(15,23,42,0.075)] transition hover:-translate-y-1 hover:border-[color-mix(in_srgb,var(--primary)_60%,var(--home-border))] hover:shadow-[0_22px_48px_rgba(15,23,42,0.12)] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[color-mix(in_srgb,var(--primary)_25%,transparent)]">
                 <div className="flex items-center gap-4">
                   <AppIconSvg app={app} className="h-[72px] w-[72px] rounded-[20px]" />
                   <div className="min-w-0">
-                    <p className="text-[17px] font-black text-[var(--foreground)] transition group-hover:text-[var(--primary)]">
+                    <p className="text-[17px] font-semibold text-[var(--foreground)] transition group-hover:text-[var(--primary)]">
                       {app.name}
                     </p>
                     <p className="mt-1 text-xs font-semibold text-[var(--muted-foreground)]">{app.category}</p>
@@ -332,12 +332,12 @@ export default function AppsListingClient({ apps, searchQuery = "" }) {
                 <div className="mt-6 flex items-center justify-between gap-3 text-sm">
                   <div>
                     <div className="flex items-center gap-1.5">
-                      <span className="text-[16px] font-black text-[var(--foreground)]">{app.rating}</span>
+                      <span className="text-[16px] font-semibold text-[var(--foreground)]">{app.rating}</span>
                       <span className="tracking-[1px] text-[#f5a400]" aria-label={`${app.rating} star rating`}>★★★★★</span>
                     </div>
-                    <p className="mt-1 text-xs font-bold text-[var(--muted-foreground)]">{app.reviews?.length ?? 0} reviews</p>
+                    <p className="mt-1 text-xs font-medium text-[var(--muted-foreground)]">{app.reviews?.length ?? 0} reviews</p>
                   </div>
-                  <span className="rounded-full bg-[color-mix(in_srgb,var(--primary)_12%,transparent)] px-3 py-1.5 text-xs font-black text-[var(--primary)]">{app.downloads}</span>
+                  <span className="rounded-full bg-[color-mix(in_srgb,var(--primary)_12%,transparent)] px-3 py-1.5 text-xs font-semibold text-[var(--primary)]">{app.downloads}</span>
                 </div>
               </Link>
             ))}

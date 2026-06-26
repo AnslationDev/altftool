@@ -2,17 +2,17 @@
   <defs>
     <linearGradient id="moreOrb" x1="60" y1="34" x2="160" y2="134" gradientUnits="userSpaceOnUse">
       <stop stop-color="#FFFFFF"/>
-      <stop offset="1" stop-color="#D8D2FF"/>
+      <stop offset="1" stop-color="#CCFBF1"/>
     </linearGradient>
     <linearGradient id="moreDot" x1="78" y1="57" x2="142" y2="112" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#A99BFF"/>
-      <stop offset="1" stop-color="#6C4DF6"/>
+      <stop stop-color="#38BDF8"/>
+      <stop offset="1" stop-color="#14B8A6"/>
     </linearGradient>
     <filter id="moreShadow" x="36" y="22" width="151" height="137" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-      <feDropShadow dx="0" dy="20" stdDeviation="15" flood-color="#6C4DF6" flood-opacity="0.17"/>
+      <feDropShadow dx="0" dy="20" stdDeviation="15" flood-color="#14B8A6" flood-opacity="0.15"/>
     </filter>
   </defs>
-  <ellipse cx="112" cy="145" rx="72" ry="13" fill="#6C4DF6" opacity="0.1"/>
+  <ellipse cx="112" cy="145" rx="72" ry="13" fill="#14B8A6" opacity="0.1"/>
   <g filter="url(#moreShadow)">
     <circle cx="112" cy="84" r="55" fill="url(#moreOrb)" stroke="white" stroke-width="6"/>
     <rect x="79" y="55" width="23" height="23" rx="8" fill="url(#moreDot)"/>
