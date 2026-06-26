@@ -227,7 +227,7 @@ export function drawArrowhead(ctx, start, end, style, color, width) {
   ctx.restore();
 }
 
-export function drawElement(ctx, rc, el, imageCache = {}) {
+export function drawElement(ctx, rc, el, imageCache = {}, accent = ACCENT) {
   const opacity = Math.max(0, Math.min(1, el.opacity / 100));
   ctx.save();
   ctx.globalAlpha = opacity;
@@ -242,7 +242,7 @@ export function drawElement(ctx, rc, el, imageCache = {}) {
   if (el.type === "rectangle" || el.type === "frame") {
     const opts = roughOptions(el);
     if (el.type === "frame") {
-      opts.stroke = ACCENT;
+      opts.stroke = accent;
       opts.strokeWidth = Math.max(2, el.strokeWidth);
       opts.fill = "transparent";
     }
@@ -365,18 +365,18 @@ export function drawGrid(ctx, camera, size, step, dark) {
   ctx.restore();
 }
 
-export function drawSelection(ctx, elements, selectedIds, camera) {
+export function drawSelection(ctx, elements, selectedIds, camera, accent = ACCENT) {
   const bounds = getSelectedBounds(elements, selectedIds);
   if (!bounds) return;
   ctx.save();
-  ctx.strokeStyle = ACCENT;
+  ctx.strokeStyle = accent;
   ctx.lineWidth = 1.5 / camera.zoom;
   ctx.setLineDash([6 / camera.zoom, 4 / camera.zoom]);
   ctx.strokeRect(bounds.x, bounds.y, bounds.width, bounds.height);
   ctx.setLineDash([]);
   getHandles(bounds, camera.zoom).forEach((handle) => {
-    ctx.fillStyle = handle.name === "rotate" ? ACCENT : "#ffffff";
-    ctx.strokeStyle = ACCENT;
+    ctx.fillStyle = handle.name === "rotate" ? accent : "#ffffff";
+    ctx.strokeStyle = accent;
     ctx.lineWidth = 1.5 / camera.zoom;
     ctx.beginPath();
     ctx.roundRect(handle.x, handle.y, handle.width, handle.height, 2 / camera.zoom);

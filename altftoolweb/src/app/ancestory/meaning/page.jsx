@@ -44,7 +44,7 @@ export default async function AncestoryMeaningRoute({ searchParams }) {
     }
 
     return (
-        <div className="ancestory-root min-h-screen bg-gray-50 dark:bg-(--background)">
+        <div className="ancestory-root min-h-screen bg-slate-50 dark:bg-slate-950">
             <AncestorHeader />
             <AncestorMeaningPage
                 type={type}

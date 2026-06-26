@@ -5,7 +5,8 @@ import rough from "roughjs/bundled/rough.esm";
 import getStroke from "perfect-freehand";
 import { nanoid } from "nanoid";
 
-import { STORAGE_KEY, HISTORY_LIMIT, ACCENT, DEFAULT_STYLE, TOOL_KEYS, TOOLBAR } from './utils/constants';
+import { STORAGE_KEY, HISTORY_LIMIT, ACCENT, DEFAULT_STYLE, buildToolbarFromConfig, buildToolKeysFromConfig } from './utils/constants';
+import { DEFAULT_HOME_CONTENT } from './lib/homeContent';
 import { clone, normalizeScene, scenesEqual, makeElement, normalizeElement, boundsOf, centerOf, hitElement, getSelectedBounds, getHandles, pointInRect, roughOptions, pathFromStroke, drawElement, drawGrid, drawSelection, textSize, downloadFile } from './utils/utils';
 import BottomBar from "./components/BottomBar";
 import CommandPalette from "./components/CommandPalette";
@@ -16,7 +17,40 @@ import SketchFlowStyles from "./components/SketchFlowStyles";
 import TextEditorOverlay from "./components/TextEditorOverlay";
 import TopBar from "./components/TopBar";
 
-export default function SketchFlow() {
+export default function SketchFlow({ config: configProp }) {
+  const config = configProp || DEFAULT_HOME_CONTENT;
+  const { branding, defaults, settings: settingsBase, tools, ui } = config;
+
+  const settings = useMemo(() => {
+    return { ...settingsBase, ...(settingsBase?.customJson && typeof settingsBase.customJson === "object" ? settingsBase.customJson : {}) };
+  }, [settingsBase]);
+
+  const accentRaw = branding?.accentColor || ACCENT;
+  const storageKey = settings?.storageKey || STORAGE_KEY;
+  const historyLimit = Number(settings?.historyLimit) || HISTORY_LIMIT;
+  const autosaveIntervalMs = Number(settings?.autosaveIntervalMs) || 2000;
+  const exportPrefix = ui?.exportFilePrefix || "sketchflow";
+
+  const cameraDefault = useMemo(() => {
+    return settings?.cameraDefault || { x: 420, y: 240, zoom: 1 };
+  }, [settings?.cameraDefault]);
+
+  const toolbar = useMemo(() => buildToolbarFromConfig(tools?.items), [tools]);
+  const toolKeys = useMemo(() => buildToolKeysFromConfig(tools?.items), [tools]);
+  const fontOptions = useMemo(() => {
+    return defaults?.fontOptions?.length
+      ? defaults.fontOptions
+      : [defaults?.fontFamily || DEFAULT_STYLE.fontFamily, "system-ui, sans-serif", "Georgia, serif", "monospace"];
+  }, [defaults]);
+
+  const storageKeyRef = useRef(storageKey);
+  const historyLimitRef = useRef(historyLimit);
+
+  useEffect(() => {
+    storageKeyRef.current = storageKey;
+    historyLimitRef.current = historyLimit;
+  }, [storageKey, historyLimit]);
+
   const canvasRef = useRef(null);
   const imageInputRef = useRef(null);
   const fileInputRef = useRef(null);
@@ -32,13 +66,19 @@ export default function SketchFlow() {
   const [elements, setElements] = useState([]);
   const [selectedIds, setSelectedIds] = useState([]);
   const [tool, setTool] = useState("select");
-  const [camera, setCamera] = useState({ x: 420, y: 240, zoom: 1 });
+  const [camera, setCamera] = useState(cameraDefault);
   const [size, setSize] = useState({ width: 900, height: 620 });
-  const [style, setStyle] = useState(DEFAULT_STYLE);
+  const [style, setStyle] = useState(() => ({ ...DEFAULT_STYLE, ...defaults }));
   const [history, setHistory] = useState({ past: [], future: [] });
-  const [grid, setGrid] = useState({ enabled: true, step: 32 });
-  const [dark, setDark] = useState(false);
-  const [includeBackground, setIncludeBackground] = useState(true);
+  const [grid, setGrid] = useState(() => ({
+    enabled: settings?.gridEnabled ?? true,
+    step: settings?.gridStep ?? 32,
+  }));
+  const [dark, setDark] = useState(() => Boolean(settings?.darkModeDefault));
+  const accent = dark
+    ? (accentRaw === "#6965db" ? "#2dd4bf" : accentRaw)
+    : (accentRaw === "#6965db" ? "#14b8a6" : accentRaw);
+  const [includeBackground, setIncludeBackground] = useState(() => Boolean(settings?.includeBackgroundDefault ?? true));
   const [toast, setToast] = useState("");
   const [contextMenu, setContextMenu] = useState(null);
   const [selectBox, setSelectBox] = useState(null);
@@ -86,7 +126,7 @@ export default function SketchFlow() {
     const lastSnapshot = currentHistory.past[currentHistory.past.length - 1];
     if (lastSnapshot && scenesEqual(lastSnapshot, safeSnapshot)) return;
     syncHistory({
-      past: [...currentHistory.past.slice(-(HISTORY_LIMIT - 1)), safeSnapshot],
+      past: [...currentHistory.past.slice(-(historyLimitRef.current - 1)), safeSnapshot],
       future: [],
     });
   }, [syncHistory]);
@@ -159,7 +199,7 @@ export default function SketchFlow() {
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     ctx.clearRect(0, 0, width, height);
     if (renderOptions.background !== false) {
-      ctx.fillStyle = dark ? "#121212" : "#ffffff";
+      ctx.fillStyle = dark ? "#0b1220" : "#ffffff";
       ctx.fillRect(0, 0, width, height);
     }
     ctx.save();
@@ -167,19 +207,21 @@ export default function SketchFlow() {
     ctx.scale(renderOptions.camera?.zoom ?? camera.zoom, renderOptions.camera?.zoom ?? camera.zoom);
     if (grid.enabled && renderOptions.grid !== false) drawGrid(ctx, renderOptions.camera || camera, { width, height }, grid.step, dark);
     const rc = rough.canvas(targetCanvas);
-    scene.forEach((el) => drawElement(ctx, rc, el, imageCacheRef.current));
+    scene.forEach((el) => drawElement(ctx, rc, el, imageCacheRef.current, accent));
     if (!renderOptions.exportMode) {
-      drawSelection(ctx, scene, selectedIds, camera);
+      drawSelection(ctx, scene, selectedIds, camera, accent);
       if (selectBox) {
-        ctx.strokeStyle = ACCENT;
-        ctx.fillStyle = "rgba(105,101,219,.10)";
+        ctx.strokeStyle = accent;
+        ctx.fillStyle = accent.startsWith("#") && accent.length === 7
+          ? `rgba(${parseInt(accent.slice(1, 3), 16)},${parseInt(accent.slice(3, 5), 16)},${parseInt(accent.slice(5, 7), 16)},0.1)`
+          : "rgba(105,101,219,.10)";
         ctx.lineWidth = 1 / camera.zoom;
         ctx.strokeRect(selectBox.x, selectBox.y, selectBox.width, selectBox.height);
         ctx.fillRect(selectBox.x, selectBox.y, selectBox.width, selectBox.height);
       }
     }
     ctx.restore();
-  }, [camera, dark, elements, grid, selectedIds, selectBox, size]);
+  }, [camera, dark, elements, grid, selectedIds, selectBox, size, accent]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -204,31 +246,45 @@ export default function SketchFlow() {
   }, [render]);
 
   useEffect(() => {
-    const saved = window.localStorage.getItem(STORAGE_KEY);
+    const key = storageKeyRef.current;
+    const saved = window.localStorage.getItem(key);
     const prefersDark = window.matchMedia?.("(prefers-color-scheme: dark)").matches;
-    setDark(Boolean(prefersDark));
-    if (saved) {
-      try {
-        const parsed = JSON.parse(saved);
-        const restored = Array.isArray(parsed)
-          ? parsed.map(normalizeElement)
-          : Array.isArray(parsed.elements)
-            ? parsed.elements.map(normalizeElement)
-            : [];
-        const restoredCamera = parsed.camera || { x: 420, y: 240, zoom: 1 };
-        const restoredGrid = parsed.grid || { enabled: true, step: 32 };
-        const restoredDark = parsed.dark ?? Boolean(prefersDark);
-        applyElements(restored);
-        setCamera(restoredCamera);
-        setGrid(restoredGrid);
-        setDark(restoredDark);
-        lastSavedRef.current = JSON.stringify({ elements: restored, camera: restoredCamera, grid: restoredGrid, dark: restoredDark });
-        syncHistory({ past: [], future: [] });
-      } catch {
-        // Ignore broken local drafts.
-      }
+    const defaultDark = settings?.darkModeDefault ?? Boolean(prefersDark);
+    // Always use admin config as the authoritative source for grid settings so
+    // that admin changes are immediately reflected on page refresh, even for
+    // returning users who already have localStorage data.
+    const adminGrid = { enabled: settings?.gridEnabled ?? true, step: settings?.gridStep ?? 32 };
+
+    if (!saved) {
+      setDark(defaultDark);
+      setGrid(adminGrid);
+      return;
     }
-  }, [applyElements, syncHistory]);
+
+    try {
+      const parsed = JSON.parse(saved);
+      const restored = Array.isArray(parsed)
+        ? parsed.map(normalizeElement)
+        : Array.isArray(parsed.elements)
+          ? parsed.elements.map(normalizeElement)
+          : [];
+      const restoredCamera = parsed.camera || cameraDefault;
+      // Restore user-preference dark mode from localStorage, but fall back to
+      // admin default if the user has never explicitly set it.
+      const restoredDark = parsed.dark ?? defaultDark;
+      // Always honour admin grid config — these are canvas settings, not personal
+      // preferences, so admin changes must win even over localStorage.
+      const restoredGrid = adminGrid;
+      applyElements(restored);
+      setCamera(restoredCamera);
+      setGrid(restoredGrid);
+      setDark(restoredDark);
+      lastSavedRef.current = JSON.stringify({ elements: restored, camera: restoredCamera, grid: restoredGrid, dark: restoredDark });
+      syncHistory({ past: [], future: [] });
+    } catch {
+      // Ignore broken local drafts.
+    }
+  }, [applyElements, cameraDefault, settings, syncHistory]);
 
   useEffect(() => {
     const activeImageIds = new Set(elements.filter((el) => el.type === "image" && el.imageSrc).map((el) => el.id));
@@ -261,7 +317,7 @@ export default function SketchFlow() {
       const payload = JSON.stringify({ elements: persistedElements, camera, grid, dark });
       if (payload !== lastSavedRef.current) {
         try {
-          window.localStorage.setItem(STORAGE_KEY, payload);
+          window.localStorage.setItem(storageKeyRef.current, payload);
           lastSavedRef.current = payload;
           showToast("Saved");
         } catch {
@@ -269,9 +325,9 @@ export default function SketchFlow() {
           showToast("Local autosave is full");
         }
       }
-    }, 2000);
+    }, autosaveIntervalMs);
     return () => window.clearInterval(timer);
-  }, [camera, dark, grid, persistedElements, showToast]);
+  }, [autosaveIntervalMs, camera, dark, grid, persistedElements, showToast]);
 
   const undo = useCallback(() => {
     const currentHistory = historyRef.current;
@@ -294,7 +350,7 @@ export default function SketchFlow() {
     const nextScene = clone(currentHistory.future[0]);
     const nextPast = scenesEqual(currentHistory.past[currentHistory.past.length - 1], currentScene)
       ? currentHistory.past
-      : [...currentHistory.past, currentScene].slice(-HISTORY_LIMIT);
+      : [...currentHistory.past, currentScene].slice(-historyLimitRef.current);
     syncHistory({
       past: nextPast,
       future: currentHistory.future.slice(1),
@@ -547,8 +603,8 @@ export default function SketchFlow() {
       const drawnId = action.element.id;
       const currentScene = elementsRef.current;
       const next = normalizeScene(currentScene.map((el) => (el.id === drawnId && el.type === "arrow" ? bindArrowEnds(el, currentScene) : el)).filter((el) => {
-          const b = boundsOf(el);
-          return el.type === "text" || b.width > 2 || b.height > 2 || el.points?.length > 2;
+        const b = boundsOf(el);
+        return el.type === "text" || b.width > 2 || b.height > 2 || el.points?.length > 2;
       }));
       applyElements(next);
       if (next.some((el) => el.id === drawnId) && !scenesEqual(action.original, next)) pushHistory(action.original);
@@ -696,7 +752,7 @@ export default function SketchFlow() {
     canvas.style.width = `${b.width}px`;
     canvas.style.height = `${b.height}px`;
     render(canvas, { dpr, width: b.width, height: b.height, camera: { x: -b.x, y: -b.y, zoom: 1 }, exportMode: true, background: includeBackground, elements: scene });
-    canvas.toBlob((blob) => blob && downloadFile("sketchflow.png", blob, "image/png"));
+    canvas.toBlob((blob) => blob && downloadFile(`${exportPrefix}.png`, blob, "image/png"));
   };
 
   const setSvgTransform = (node, el) => {
@@ -759,7 +815,7 @@ export default function SketchFlow() {
       bg.setAttribute("y", String(minY));
       bg.setAttribute("width", String(maxX - minX));
       bg.setAttribute("height", String(maxY - minY));
-      bg.setAttribute("fill", dark ? "#121212" : "#ffffff");
+      bg.setAttribute("fill", dark ? "#0b1220" : "#ffffff");
       svg.appendChild(bg);
     }
     const rsvg = rough.svg(svg);
@@ -857,10 +913,10 @@ export default function SketchFlow() {
         svg.appendChild(image);
       }
     });
-    downloadFile("sketchflow.svg", new XMLSerializer().serializeToString(svg), "image/svg+xml");
+    downloadFile(`${exportPrefix}.svg`, new XMLSerializer().serializeToString(svg), "image/svg+xml");
   };
 
-  const saveScene = () => downloadFile("sketchflow.sketchflow", JSON.stringify({ elements: persistedElements, camera, grid, dark }, null, 2), "application/json");
+  const saveScene = () => downloadFile(`${exportPrefix}.sketchflow`, JSON.stringify({ elements: persistedElements, camera, grid, dark }, null, 2), "application/json");
 
   const loadScene = (file) => {
     if (!file) return;
@@ -1006,7 +1062,7 @@ export default function SketchFlow() {
   };
 
   const commands = [
-    ...TOOLBAR.map(([id, label]) => ({ label: `Tool: ${label}`, run: () => setTool(id) })),
+    ...toolbar.map(([id, label]) => ({ label: `Tool: ${label}`, run: () => setTool(id) })),
     { label: "Export PNG", run: exportPng },
     { label: "Export SVG", run: exportSvg },
     { label: "Save SketchFlow file", run: saveScene },
@@ -1090,9 +1146,9 @@ export default function SketchFlow() {
         event.preventDefault();
         deleteSelected();
       }
-      if (TOOL_KEYS[key]) {
+      if (toolKeys[key]) {
         event.preventDefault();
-        setTool(TOOL_KEYS[key]);
+        setTool(toolKeys[key]);
       }
     };
     window.addEventListener("keydown", onKeyDown);
@@ -1104,7 +1160,7 @@ export default function SketchFlow() {
       window.removeEventListener("keydown", onKeyDown);
       window.removeEventListener("keyup", onKeyUp);
     };
-  }, [copySelected, deleteSelected, duplicateSelected, elements, fitToScreen, paletteOpen, paste, redo, searchTextOnCanvas, selectElementIds, undo]);
+  }, [copySelected, deleteSelected, duplicateSelected, elements, fitToScreen, paletteOpen, paste, redo, searchTextOnCanvas, selectElementIds, toolKeys, undo]);
 
   useEffect(() => {
     const onKey = (event) => {
@@ -1132,19 +1188,19 @@ export default function SketchFlow() {
   const liveTextSize = editingElement ? textSize(editingText.value || "Text", editingElement.fontSize) : null;
   const textareaStyle = editingElement
     ? {
-        left: `${camera.x + editingElement.x * camera.zoom}px`,
-        top: `${camera.y + editingElement.y * camera.zoom}px`,
-        width: `${Math.max(140, liveTextSize.width * camera.zoom)}px`,
-        minHeight: `${Math.max(48, liveTextSize.height * camera.zoom)}px`,
-        fontSize: `${editingElement.fontSize * camera.zoom}px`,
-        lineHeight: 1.25,
-        fontFamily: editingElement.fontFamily,
-        textAlign: editingElement.textAlign,
-        color: editingElement.strokeColor,
-        transform: `rotate(${editingElement.angle || 0}rad)`,
-        transformOrigin: "top left",
-        background: dark ? "rgba(18,18,18,.72)" : "rgba(255,255,255,.72)",
-      }
+      left: `${camera.x + editingElement.x * camera.zoom}px`,
+      top: `${camera.y + editingElement.y * camera.zoom}px`,
+      width: `${Math.max(140, liveTextSize.width * camera.zoom)}px`,
+      minHeight: `${Math.max(48, liveTextSize.height * camera.zoom)}px`,
+      fontSize: `${editingElement.fontSize * camera.zoom}px`,
+      lineHeight: 1.25,
+      fontFamily: editingElement.fontFamily,
+      textAlign: editingElement.textAlign,
+      color: editingElement.strokeColor,
+      transform: `rotate(${editingElement.angle || 0}rad)`,
+      transformOrigin: "top left",
+      background: dark ? "rgba(18,18,18,.72)" : "rgba(255,255,255,.72)",
+    }
     : {};
 
   useEffect(() => {
@@ -1157,11 +1213,20 @@ export default function SketchFlow() {
     return () => window.cancelAnimationFrame(frame);
   }, [editingText?.id]);
 
+  useEffect(() => {
+    if (!toolbar.some(([id]) => id === tool)) {
+      setTool(toolbar[0]?.[0] || "select");
+    }
+  }, [toolbar, tool]);
+
   return (
     <main className="sketchflow-shell" data-sf-theme={dark ? "dark" : "light"}>
       <div className="sf-root">
         <TopBar
-          currentToolLabel={TOOLBAR.find(([id]) => id === tool)?.[1]}
+          appName={branding?.appName}
+          tagline={branding?.tagline}
+          brandIconKey={branding?.brandIconKey}
+          currentToolLabel={toolbar.find(([id]) => id === tool)?.[1]}
           dark={dark}
           grid={grid}
           history={history}
@@ -1177,7 +1242,7 @@ export default function SketchFlow() {
           onOpenPalette={() => setPaletteOpen(true)}
         />
 
-        <LeftToolbar activeTool={tool} onSelectTool={setTool} />
+        <LeftToolbar toolbar={toolbar} activeTool={tool} onSelectTool={setTool} />
 
         <section
           className="sf-canvas-wrap"
@@ -1218,6 +1283,8 @@ export default function SketchFlow() {
           primary={primary}
           selectedCount={selectedIds.length}
           includeBackground={includeBackground}
+          title={ui?.propertiesTitle}
+          fontOptions={fontOptions}
           onStyleChange={updateSelectedStyle}
           onIncludeBackgroundChange={setIncludeBackground}
         />
@@ -1242,6 +1309,7 @@ export default function SketchFlow() {
           query={paletteQuery}
           index={paletteIndex}
           commands={filteredCommands}
+          placeholder={ui?.commandPalettePlaceholder}
           onQueryChange={(value) => {
             setPaletteQuery(value);
             setPaletteIndex(0);
@@ -1257,7 +1325,7 @@ export default function SketchFlow() {
         <input ref={imageInputRef} hidden type="file" accept="image/*" onChange={(e) => { addImage(e.target.files?.[0]); e.target.value = ""; }} />
         <input ref={fileInputRef} hidden type="file" accept=".json,.sketchflow" onChange={(e) => { loadScene(e.target.files?.[0]); e.target.value = ""; }} />
       </div>
-      <SketchFlowStyles accent={ACCENT} />
+      <SketchFlowStyles accent={accent} googleFontUrl={ui?.googleFontUrl} />
     </main>
   );
 }

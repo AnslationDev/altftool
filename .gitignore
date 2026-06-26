@@ -19,6 +19,9 @@ graphify*/
 external-get-shit-done/
 # Ignore all local env files...
 .env*
+agents.md
+master.md
+claude.md
 # ...but keep the committed templates (this exception MUST come after .env*)
 !.env.example
 !**/.env.example

@@ -65,12 +65,12 @@ function AncestorNameOfDayCard({ type, name, data, routeType }) {
       <div className="flex flex-col gap-2 mb-5 text-sm">
         <div className="flex gap-2"><span className="text-gray-500 w-20 flex-shrink-0 dark:text-(--muted-foreground)">Origin</span><span className="text-gray-800 font-medium dark:text-(--foreground)">{origin}</span></div>
         <div className="flex gap-2"><span className="text-gray-500 w-20 flex-shrink-0 dark:text-(--muted-foreground)">Meaning</span><span className="text-gray-800 font-medium dark:text-(--foreground)">{meaning}</span></div>
-        <div className="flex gap-2"><span className="text-gray-500 w-20 flex-shrink-0 dark:text-(--muted-foreground)">Variations</span><span className="text-[#005831] font-medium">{varsText}</span></div>
+        <div className="flex gap-2"><span className="text-gray-500 w-20 flex-shrink-0 dark:text-(--muted-foreground)">Variations</span><span className="text-primary font-medium">{varsText}</span></div>
       </div>
 
       <div className="flex-grow" />
       <Link href={href}>
-        <button className="mt-4 w-max bg-[#005831] hover:bg-[#004526] dark:bg-gradient-to-r dark:from-emerald-700 dark:to-emerald-600 text-white text-sm font-semibold px-6 py-2.5 rounded-full transition-colors shadow-sm dark:shadow-emerald-900/20">Learn More</button>
+        <button className="mt-4 w-max bg-primary hover:bg-primary/90 text-primary-foreground text-sm font-semibold px-6 py-2.5 rounded-full transition-colors shadow-sm">Learn More</button>
       </Link>
     </div>
   );

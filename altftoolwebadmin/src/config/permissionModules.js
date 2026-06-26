@@ -7,4 +7,7 @@ export const PERMISSION_MODULES = {
   images: "Images",
   pintrest: "Pinterest",
   tripfindbox: "TripFindBox",
+  pranksocialmedia: "Prank Social Media",
+  pranx: "Pranx",
+  sketchflow: "SketchFlow",
 };
