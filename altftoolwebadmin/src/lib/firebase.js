@@ -3,8 +3,7 @@ import { getAuth } from "firebase/auth";
 import {
   getFirestore,
   initializeFirestore,
-  persistentLocalCache,
-  persistentMultipleTabManager,
+  memoryLocalCache,
 } from "firebase/firestore";
 import { getStorage } from "firebase/storage";
 import { getMessaging, isSupported } from "firebase/messaging";
@@ -29,18 +28,33 @@ const firebaseConfig = {
 
 const app = getApps().length ? getApp() : initializeApp(firebaseConfig);
 
+/**
+ * Single Firestore instance per page load.
+ *
+ * We intentionally use an in-memory cache (NOT IndexedDB persistence). The
+ * admin panel is always online (auth + APIs), and multi-tab IndexedDB
+ * persistence is what produced the recurring, benign
+ * "Failed to obtain primary lease for action 'Backfill Indexes' /
+ * 'Apply remote event'" warnings — only one tab can hold the persistence
+ * lease, so every other tab (and every dev HMR reload) logged it. An
+ * in-memory cache has no cross-tab lease coordination, so the warning is
+ * gone, data stays fresh, and reads are unaffected for an online tool.
+ *
+ * The instance is cached on globalThis so Fast Refresh / repeated module
+ * evaluation never re-initialises Firestore (which would throw or churn).
+ */
 function createFirestore(appInstance) {
   if (typeof window === "undefined") return getFirestore(appInstance);
+  if (globalThis.__ALTFT_FIRESTORE__) return globalThis.__ALTFT_FIRESTORE__;
 
+  let instance;
   try {
-    return initializeFirestore(appInstance, {
-      localCache: persistentLocalCache({
-        tabManager: persistentMultipleTabManager(),
-      }),
-    });
+    instance = initializeFirestore(appInstance, { localCache: memoryLocalCache() });
   } catch {
-    return getFirestore(appInstance);
+    instance = getFirestore(appInstance);
   }
+  globalThis.__ALTFT_FIRESTORE__ = instance;
+  return instance;
 }
 
 export const auth = getAuth(app);

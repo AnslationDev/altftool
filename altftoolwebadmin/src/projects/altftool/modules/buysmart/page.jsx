@@ -129,7 +129,7 @@ export default function BuySmart() {
 
             <div className="grid grid-cols-2 gap-2 sm:grid-cols-4 lg:min-w-[720px] xl:grid-cols-8">
               {MENU_ITEMS.map((item) => (
-                <div key={item.key} className="rounded-lg border border-gray-200 bg-white px-3 py-2 shadow-sm">
+                <div key={item.key} className="rounded-xl border border-gray-200 bg-white px-3 py-2 shadow-sm">
                   <p className="text-xs font-medium text-gray-500">{item.label}</p>
                   <p className="mt-1 text-lg font-semibold tabular-nums text-gray-900">
                     {getRecordCount(data?.[item.dataKey], item.key)}
@@ -144,7 +144,7 @@ export default function BuySmart() {
           <div
             role="tablist"
             aria-label="BuySmart sections"
-            className="flex gap-2 overflow-x-auto px-1"
+            className="grid grid-cols-2 gap-2 px-1 sm:grid-cols-3 lg:grid-cols-4"
           >
             {MENU_ITEMS.map((item) => {
               const Icon = item.icon;
@@ -158,7 +158,7 @@ export default function BuySmart() {
                   aria-selected={active}
                   aria-controls={`buysmart-panel-${item.key}`}
                   onClick={() => setActiveSection(item.key)}
-                  className={`flex min-w-[180px] items-center gap-3 rounded-lg border px-3 py-2 text-left transition ${
+                  className={`flex w-full items-center gap-3 rounded-xl border px-3 py-2 text-left transition ${
                     active
                       ? "border-gray-900 bg-gray-900 text-white shadow-sm"
                       : "border-gray-200 bg-white text-gray-700 hover:border-gray-300 hover:bg-gray-50"

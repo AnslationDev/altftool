@@ -2,7 +2,7 @@ const PERMISSIONS_POLICY = {
   public:
     "camera=(self), microphone=(self), geolocation=(self), fullscreen=(self), payment=(), usb=(), serial=()",
   admin:
-    "camera=(), microphone=(), geolocation=(), fullscreen=(self), payment=(), usb=(), serial=()",
+    "camera=(), microphone=(), geolocation=(self), fullscreen=(self), payment=(), usb=(), serial=()",
 };
 
 const CSP_DIRECTIVES = [

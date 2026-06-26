@@ -121,6 +121,16 @@ service cloud.firestore {
       allow read, write: if isSuperAdmin();
     }
 
+    // Security & Audit module: all access is mediated by server-side Admin SDK
+    // routes (RBAC-checked). Clients must never read/write these directly.
+    match /admin_sessions/{id}        { allow read, write: if false; }
+    match /admin_devices/{id}         { allow read, write: if false; }
+    match /admin_consents/{id}        { allow read, write: if false; }
+    match /security_events/{id}       { allow read, write: if false; }
+    match /security_settings/{id}     { allow read, write: if false; }
+    match /security_login_attempts/{id} { allow read, write: if false; }
+    match /admin_audit_logs/{id}      { allow read, write: if false; }
+
     match /{document=**} {
       allow read, write: if false;
     }
