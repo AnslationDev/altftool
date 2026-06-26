@@ -54,7 +54,7 @@ export default function SendGiftPage() {
   };
 
   return (
-    <div className="min-h-screen bg-windowswap-teal text-white font-sans antialiased flex flex-col justify-between selection:bg-[#c56543]/40 selection:text-white">
+    <div className="windowswap-theme min-h-screen font-sans antialiased flex flex-col justify-between selection:bg-primary/20 selection:text-foreground">
 
       {/* ──────────────────────────────────────────────────────── */}
       {/* NAVBAR */}
@@ -76,10 +76,10 @@ export default function SendGiftPage() {
       {/* MAIN CONTAINER */}
       {/* ──────────────────────────────────────────────────────── */}
       <main className="flex-1 flex items-center justify-center py-12 px-6">
-        <div className="w-full max-w-4xl bg-[#092327]/60 rounded-3xl border border-teal-950/50 shadow-2xl overflow-hidden backdrop-blur-md grid grid-cols-1 md:grid-cols-12">
+        <div className="w-full max-w-4xl windowswap-card overflow-hidden backdrop-blur-md grid grid-cols-1 md:grid-cols-12">
 
           {/* LEFT SIDE PANEL (Visual promo) */}
-          <div className="md:col-span-5 bg-[#c56543] p-8 md:p-12 flex flex-col justify-between text-white relative overflow-hidden select-none">
+          <div className="md:col-span-5 bg-windowswap-terracotta p-8 md:p-12 flex flex-col justify-between text-white relative overflow-hidden select-none">
             {/* Background design elements */}
             <div className="absolute -top-12 -left-12 w-48 h-48 bg-white/10 rounded-full blur-xl" />
             <div className="absolute -bottom-24 -right-12 w-64 h-64 bg-teal-950/20 rounded-full blur-2xl" />
@@ -265,7 +265,7 @@ export default function SendGiftPage() {
                 <button
                   type="submit"
                   disabled={loading}
-                  className="w-full bg-windowswap-terracotta hover:bg-[#b05434] text-white py-4 rounded-full font-semibold transition hover:scale-101 active:scale-99 shadow-lg text-sm flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
+                  className="w-full windowswap-primary-button py-4 rounded-full font-semibold transition hover:scale-101 active:scale-99 text-sm flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
                 >
                   {loading ? (
                     <span className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
@@ -281,7 +281,7 @@ export default function SendGiftPage() {
               /* SUCCESS STATE */
               <div className="flex flex-col items-center justify-center text-center py-8 space-y-6">
                 <div className="w-20 h-20 rounded-full bg-teal-950/40 border border-[#c56543]/40 flex items-center justify-center text-windowswap-terracotta animate-pulse">
-                  <Gift className="w-10 h-10 text-[#c56543]" />
+                  <Gift className="w-10 h-10 text-windowswap-peach" />
                 </div>
 
                 <div className="space-y-2">

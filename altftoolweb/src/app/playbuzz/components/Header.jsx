@@ -1,53 +1,79 @@
-﻿import React, { useState } from 'react';
+﻿import { useState } from 'react';
 import Link from 'next/link';
-import './Header.css';
+import { ChevronDown, Menu } from 'lucide-react';
 
 const Header = () => {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [searchOpen, setSearchOpen] = useState(false);
   const [aboutDropdownOpen, setAboutDropdownOpen] = useState(false);
 
   return (
-    <>
-      <header className="header">
-        <div className="header-container">
-          <div className="logo-section">
-            <button className="hamburger-btn" onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
-              <span></span>
-              <span></span>
-              <span></span>
+    <header
+      className="h-16 w-full flex items-center z-50"
+      style={{
+        backgroundColor: 'var(--anslation-ds-footer)',
+        borderBottom: '1px solid var(--anslation-ds-footer-border)',
+        color: 'var(--anslation-ds-footer-text)',
+      }}
+    >
+      <div className="w-full max-w-[1760px] mx-auto px-6 max-md:px-3 flex items-center gap-7">
+        <div className="flex items-center gap-7">
+          <button
+            className="md:hidden flex flex-col gap-[3px] p-1 bg-transparent border-none cursor-pointer focus-visible:ring-2 focus-visible:ring-[var(--primary)] focus-visible:outline-none rounded"
+            aria-label="Toggle menu"
+            style={{ color: 'var(--anslation-ds-footer-text)' }}
+          >
+            <Menu size={20} />
+          </button>
+          <Link
+            href="/playbuzz"
+            className="text-5xl max-md:text-4xl font-extrabold no-underline leading-none tracking-tight"
+            style={{ color: 'var(--anslation-ds-footer-text)' }}
+          >
+            <span style={{ color: 'var(--secondary)' }}>play</span>buzz
+          </Link>
+          <div
+            className="relative"
+            onMouseEnter={() => setAboutDropdownOpen(true)}
+            onMouseLeave={() => setAboutDropdownOpen(false)}
+          >
+            <button
+              className="flex items-center gap-1.5 bg-transparent border-none cursor-pointer text-xs font-bold tracking-wide focus-visible:ring-2 focus-visible:ring-[var(--primary)] focus-visible:outline-none rounded"
+              style={{ color: 'var(--anslation-ds-footer-muted)' }}
+            >
+              ABOUT <ChevronDown size={10} />
             </button>
-            <Link href="/playbuzz" className="logo">
-              <span className="play">play</span>buzz
-            </Link>
-
-            <div className="nav-dropdown" onMouseLeave={() => setAboutDropdownOpen(false)}>
-              <button className="dropdown-btn" onMouseEnter={() => setAboutDropdownOpen(true)}>
-                ABOUT <span className="caret">▼</span>
-              </button>
-              {aboutDropdownOpen && (
-                <div className="dropdown-menu">
-                  <a href="#">Privacy Policy</a>
-                  <a href="#">Online Terms</a>
-                  <a href="#">DMCA Notice</a>
-                </div>
-              )}
-            </div>
-          </div>
-
-          <div className="actions-section">
-            <div className="search-container">
-              {searchOpen && <input type="text" className="search-input" placeholder="Search..." autoFocus />}
-
-            </div>
-
-            <div className="avatar-placeholder"></div>
+            {aboutDropdownOpen && (
+              <div
+                className="absolute top-full left-0 mt-2.5 min-w-[190px] overflow-hidden py-1.5 rounded-md z-50"
+                style={{
+                  backgroundColor: 'var(--anslation-ds-surface)',
+                  border: '1px solid var(--anslation-ds-border)',
+                  boxShadow: 'var(--anslation-ds-shadow-md)',
+                }}
+              >
+                {['Privacy Policy', 'Online Terms', 'DMCA Notice'].map((item) => (
+                  <a
+                    key={item}
+                    href="#"
+                    className="block px-3.5 py-2.5 no-underline text-xs transition-colors focus-visible:ring-2 focus-visible:ring-[var(--primary)] focus-visible:outline-none"
+                    style={{ color: 'var(--anslation-ds-text)' }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.backgroundColor = 'var(--anslation-ds-hover)';
+                      e.currentTarget.style.color = 'var(--anslation-ds-primary)';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.backgroundColor = 'transparent';
+                      e.currentTarget.style.color = 'var(--anslation-ds-text)';
+                    }}
+                  >
+                    {item}
+                  </a>
+                ))}
+              </div>
+            )}
           </div>
         </div>
-      </header>
-
-
-    </>
+      </div>
+    </header>
   );
 };
 

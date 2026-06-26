@@ -3,6 +3,9 @@ import HeroBanner from './components/HeroBanner'
 import TrendingSection from './components/TrendingSection'
 import data from "./data/bookData.json";
 import MustReadFanfiction from './components/MustReadFanfiction';
+import BookCategorySection from './components/BookCategorySection';
+import UserReview from './components/UserReview';
+import Faqs from './components/Faqs';
 import JsonLd from '@/platform/seo/JsonLd';
 import {
   createCollectionPageJsonLd,
@@ -22,7 +25,7 @@ export async function generateMetadata() {
 export default function WattpadPage() {
   const itemList = [
     ...(data.trending?.products || []),
-    ...(data.mustRead?.products || []),
+    ...(data.mustRead?.items || []),
   ]
     .filter((item) => item?.slug || item?.title)
     .slice(0, 24)
@@ -48,10 +51,13 @@ export default function WattpadPage() {
         }),
       ]}
     />
-    <HeroBanner/> 
+    <HeroBanner/>
+    <BookCategorySection/>
     <TrendingSection trendingData={data.trending}/>
 
     <MustReadFanfiction mustReadData={data.mustRead} />
+    <UserReview feedback={data.reviews} />
+    <Faqs faq={data.faq} />
     </div>
   )
 }

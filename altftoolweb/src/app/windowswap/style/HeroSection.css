@@ -18,12 +18,70 @@
 
 /* Pulsing organic mesh gradient background */
 .windowswap-hero-mesh {
-  background: linear-gradient(135deg, #0b2c30, #000000, #33241b, #0b2c30);
+  background: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--windowswap-primary) 22%, transparent),
+    color-mix(in srgb, var(--windowswap-page) 36%, transparent),
+    color-mix(in srgb, var(--windowswap-secondary) 14%, transparent)
+  );
   background-size: 300% 300%;
   animation: windowswap-mesh-pulse 16s ease infinite;
+  opacity: 0.18;
 }
 
 /* Radiant glow radial overlay */
 .windowswap-radial-glow {
-  background: radial-gradient(ellipse at top, rgba(29, 69, 74, 0.35) 0%, transparent 75%);
+  background: radial-gradient(
+    ellipse at top,
+    color-mix(in srgb, var(--windowswap-secondary) 20%, transparent) 0%,
+    transparent 62%
+  );
+  opacity: 0.28;
+}
+
+.windowswap-hero-contrast {
+  background:
+    linear-gradient(
+      90deg,
+      color-mix(in srgb, var(--windowswap-page) 46%, transparent) 0%,
+      color-mix(in srgb, var(--windowswap-page) 18%, transparent) 38%,
+      transparent 74%
+    ),
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--windowswap-page) 30%, transparent) 0%,
+      transparent 34%,
+      color-mix(in srgb, var(--windowswap-page) 34%, transparent) 100%
+    );
+}
+
+.windowswap-hero-title,
+.windowswap-hero-cta-text,
+.windowswap-hero-subtitle,
+.windowswap-hero-nav-text {
+  text-shadow:
+    0 1px 3px rgba(0, 0, 0, 0.75),
+    0 4px 14px rgba(0, 0, 0, 0.55);
+}
+
+.windowswap-hero-title {
+  color: var(--windowswap-on-media);
+}
+
+.windowswap-hero-cta-text {
+  color: var(--windowswap-on-media);
+}
+
+.windowswap-hero-subtitle {
+  color: color-mix(in srgb, var(--windowswap-on-media) 92%, var(--windowswap-secondary));
+}
+
+.windowswap-hero-nav-text {
+  color: color-mix(in srgb, var(--windowswap-on-media) 94%, var(--windowswap-secondary));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .windowswap-hero-mesh {
+    animation: none;
+  }
 }

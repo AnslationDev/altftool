@@ -1,7 +1,6 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import Link from 'next/link';
 import SectionDivider from './SectionDivider';
-import './BottomSections.css';
 import ArticleCard from './ArticleCard';
 import { articlesData, trendingData } from '../data';
 import { playbuzzAds } from '../ads';
@@ -10,23 +9,41 @@ const PlaybuzzAdPlacement = ({ ads, className = '' }) => {
   if (!ads?.length) return null;
 
   return (
-    <aside className={`playbuzz-ad-placement ${className}`} aria-label="Sponsored advertisements">
-      <span className="playbuzz-ad-heading">Sponsored</span>
-      <div className="playbuzz-ad-stack">
+    <aside className={`w-full mt-4 ${className}`} aria-label="Sponsored advertisements">
+      <span
+        className="block mb-1.5 text-[10px] font-extrabold tracking-wider text-center uppercase"
+        style={{ color: 'var(--muted-foreground)' }}
+      >
+        Sponsored
+      </span>
+      <div className="flex flex-col gap-3">
         {ads.map((ad) => (
           <a
             key={ad.id}
             href={ad.href}
             target="_blank"
             rel="noopener noreferrer"
-            className="playbuzz-ad-card"
+            className="relative block overflow-hidden border border-border rounded-md bg-card no-underline transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md hover:border-[var(--primary)] focus-visible:ring-2 focus-visible:ring-[var(--primary)] focus-visible:outline-none"
+            style={{ boxShadow: 'var(--anslation-ds-shadow-sm)' }}
           >
             <img
               src={ad.image}
               alt={ad.alt || 'Advertisement'}
-              className="playbuzz-ad-image"
+              className="block w-full object-cover"
+              style={{
+                height: 'min(58vh, 560px)',
+                minHeight: '360px',
+                backgroundColor: 'var(--muted)',
+              }}
             />
-            {ad.label && <span className="playbuzz-ad-label">{ad.label}</span>}
+            {ad.label && (
+              <span
+                className="absolute top-2 left-2 text-[10px] font-semibold tracking-wide text-white px-2 py-0.5 rounded"
+                style={{ backgroundColor: 'rgba(0,0,0,0.6)', backdropFilter: 'blur(2px)' }}
+              >
+                {ad.label}
+              </span>
+            )}
           </a>
         ))}
       </div>
@@ -40,11 +57,10 @@ const BottomSections = ({ category }) => {
   const loadMoreRef = useRef(null);
   const popularPool = useMemo(
     () => articlesData.filter((article) => article.showInPopular !== false),
-    []
+    [],
   );
 
   const allPopularArticles = useMemo(() => {
-    // In NEW tab, show a mixed feed from all categories.
     if (category === 'NEW') return popularPool;
 
     let filtered = popularPool.filter((article) => article.category === category);
@@ -59,15 +75,14 @@ const BottomSections = ({ category }) => {
 
   const sidebarAds = useMemo(() => {
     if (!playbuzzAds?.length) return [];
-    // Only display vertical, rectangle or square ads in the sidebar
-    return playbuzzAds.filter(ad => ad.type === 'vertical' || ad.type === 'rectangle' || ad.type === 'square');
+    return playbuzzAds.filter(
+      (ad) => ad.type === 'vertical' || ad.type === 'rectangle' || ad.type === 'square',
+    );
   }, []);
 
-  /* eslint-disable react-hooks/set-state-in-effect */
   useEffect(() => {
     setVisibleCount(LOAD_BATCH_SIZE);
   }, [category]);
-  /* eslint-enable react-hooks/set-state-in-effect */
 
   useEffect(() => {
     if (category !== 'NEW') return;
@@ -78,9 +93,11 @@ const BottomSections = ({ category }) => {
       (entries) => {
         const first = entries[0];
         if (!first.isIntersecting) return;
-        setVisibleCount((prev) => Math.min(prev + LOAD_BATCH_SIZE, allPopularArticles.length));
+        setVisibleCount((prev) =>
+          Math.min(prev + LOAD_BATCH_SIZE, allPopularArticles.length),
+        );
       },
-      { rootMargin: '180px 0px' }
+      { rootMargin: '180px 0px' },
     );
 
     observer.observe(target);
@@ -88,15 +105,17 @@ const BottomSections = ({ category }) => {
   }, [category, allPopularArticles.length]);
 
   const popularArticles =
-    category === 'NEW' ? allPopularArticles.slice(0, visibleCount) : allPopularArticles;
+    category === 'NEW'
+      ? allPopularArticles.slice(0, visibleCount)
+      : allPopularArticles;
 
   return (
-    <div className="bottom-sections">
-      <div className="main-articles">
+    <div className="flex gap-4 mb-12 mt-12 items-stretch max-lg:flex-col max-lg:mt-8">
+      <div className="flex-1 min-w-0">
         <SectionDivider title="MOST POPULAR" />
-        <div className="popular-grid">
-          {popularArticles.map(article => (
-            <div key={article.id} className="popular-item">
+        <div className="grid grid-cols-2 max-md:grid-cols-1 gap-3">
+          {popularArticles.map((article) => (
+            <div key={article.id}>
               <ArticleCard
                 id={article.id}
                 image={article.image}
@@ -108,27 +127,50 @@ const BottomSections = ({ category }) => {
           ))}
         </div>
         {category === 'NEW' && visibleCount < allPopularArticles.length && (
-          <div ref={loadMoreRef} className="popular-load-trigger" aria-hidden="true" />
+          <div ref={loadMoreRef} className="w-full h-0.5" aria-hidden="true" />
         )}
-        <PlaybuzzAdPlacement ads={sidebarAds} className="mobile-ad-placement" />
+        <div className="hidden max-lg:block mt-6">
+          <PlaybuzzAdPlacement ads={sidebarAds} />
+        </div>
       </div>
 
-      <div className="sidebar">
+      <div className="w-80 shrink-0 max-lg:w-full">
         <SectionDivider title="TRENDING" />
-        <div className="trending-list">
-          {trendingData.map(article => (
-            <Link key={article.id} href={`/playbuzz/quiz-play?id=${article.id}`} className="trending-card">
-              <div className="trending-image-container">
-                <img src={article.image} alt={article.title} className="trending-image" />
+        <div className="flex flex-col gap-2">
+          {trendingData.map((article) => (
+            <Link
+              key={article.id}
+              href={`/playbuzz/quiz-play?id=${article.id}`}
+              className="flex gap-2.5 items-start border border-border bg-card rounded-md p-2 no-underline cursor-pointer transition-all hover:border-[var(--primary)] hover:shadow-sm focus-visible:ring-2 focus-visible:ring-[var(--primary)] focus-visible:outline-none"
+              style={{ color: 'inherit' }}
+            >
+              <div className="w-20 h-14 shrink-0 overflow-hidden rounded">
+                <img
+                  src={article.image}
+                  alt={article.title}
+                  className="w-full h-full object-cover"
+                />
               </div>
-              <div className="trending-content">
-                <h4 className="trending-title">{article.title}</h4>
-                <span className="trending-author">{article.author}</span>
+              <div>
+                <h4
+                  className="text-xs font-extrabold leading-tight m-0"
+                  style={{ color: 'var(--foreground)' }}
+                >
+                  {article.title}
+                </h4>
+                <span
+                  className="text-[10px] mt-0.5 inline-block"
+                  style={{ color: 'var(--muted-foreground)' }}
+                >
+                  {article.author}
+                </span>
               </div>
             </Link>
           ))}
         </div>
-        <PlaybuzzAdPlacement ads={sidebarAds} className="sidebar-ad-placement" />
+        <div className="hidden max-lg:block sticky top-24">
+          <PlaybuzzAdPlacement ads={sidebarAds} />
+        </div>
       </div>
     </div>
   );

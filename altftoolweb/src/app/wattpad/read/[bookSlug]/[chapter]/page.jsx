@@ -65,7 +65,7 @@ export default async function ReaderPage({ params }) {
   );
 
   return (
-    <div className=" min-h-screen bg-(background)">
+    <div className=" min-h-screen bg-(--background)">
 
       {/* Top */}
       <div className="border-b border-(--border) sticky top-0 bg-(--card) backdrop-blur-xl z-50">
@@ -76,7 +76,7 @@ export default async function ReaderPage({ params }) {
               {book.title}
             </div>
 
-            <div className="text-sm text(--muted-foreground)-500">
+            <div className="text-sm text-(--muted-foreground)">
               Chapter {currentChapter.chapterNumber}
             </div>
           </div>

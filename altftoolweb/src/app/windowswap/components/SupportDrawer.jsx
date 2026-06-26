@@ -77,7 +77,7 @@ export default function SupportDrawer({ isOpen, onClose }) {
 
                 <button
                   onClick={triggerCoffeeTip}
-                  className="w-full bg-windowswap-terracotta hover:bg-[#b05434] text-white py-3.5 rounded-xl font-bold transition flex items-center justify-center gap-2 hover:scale-[1.02] active:scale-[0.98] cursor-pointer shadow-md"
+                  className="w-full windowswap-primary-button py-3.5 rounded-xl font-bold transition flex items-center justify-center gap-2 hover:scale-[1.02] active:scale-[0.98] cursor-pointer"
                 >
                   <Coffee className="h-4 w-4" /> Buy us a Coffee ($5)
                 </button>

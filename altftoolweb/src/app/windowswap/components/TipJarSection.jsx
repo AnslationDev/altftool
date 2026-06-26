@@ -27,7 +27,7 @@ export default function TipJarSection({ onOpenSupport }) {
 
         <button
           onClick={onOpenSupport}
-          className="windowswap-tipjar-cta bg-white hover:bg-zinc-100 text-zinc-950 px-10 py-3 rounded-full transition-all duration-300 hover:scale-105 active:scale-95 shadow-lg font-semibold tracking-wide text-xs cursor-pointer"
+          className="windowswap-tipjar-cta windowswap-secondary-button px-10 py-3 rounded-full transition-all duration-300 hover:scale-105 active:scale-95 font-semibold tracking-wide text-xs cursor-pointer"
         >
           Find out how
         </button>

@@ -1,12 +1,17 @@
-﻿import React from 'react';
-import './Footer.css';
-
-const Footer = () => {
+﻿const Footer = () => {
   return (
-    <footer className="pb-footer">
-      <div className="pb-footer-inner" />
-      <div className="pb-footer-bottom">
-        <span className="pb-footer-copy">Copyright 2026 Playbuzz Clone. All rights reserved.</span>
+    <footer
+      className="w-full text-center px-2.5 py-3.5 mt-6"
+      style={{
+        borderTop: '1px solid var(--anslation-ds-footer-border)',
+        backgroundColor: 'var(--anslation-ds-footer)',
+        color: 'var(--anslation-ds-footer-muted)',
+      }}
+    >
+      <div className="max-w-[1760px] mx-auto text-xs border-0 p-0 flex justify-center">
+        <span style={{ color: 'var(--anslation-ds-footer-muted)' }}>
+          Copyright 2026 Playbuzz Clone. All rights reserved.
+        </span>
       </div>
     </footer>
   );

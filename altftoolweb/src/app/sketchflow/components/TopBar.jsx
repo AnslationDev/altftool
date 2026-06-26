@@ -5,6 +5,7 @@ import {
   Moon,
   Redo2,
   Save,
+  Share2,
   Shapes,
   Sun,
   Undo2,
@@ -54,6 +55,7 @@ export default function TopBar({
   onExportSvg,
   onSave,
   onLoad,
+  onShare,
   onToggleTheme,
   onOpenPalette,
 }) {
@@ -101,6 +103,9 @@ export default function TopBar({
         </button>
         <button className="sf-icon-btn" onClick={onSave} title="Save .sketchflow">
           <Save className="h-5 w-5" />
+        </button>
+        <button className="sf-icon-btn" onClick={onShare} title="Share via link">
+          <Share2 className="h-5 w-5" />
         </button>
         <button className="sf-icon-btn" onClick={onLoad} title="Load file">
           <Upload className="h-5 w-5" />

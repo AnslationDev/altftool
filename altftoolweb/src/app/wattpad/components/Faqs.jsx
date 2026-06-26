@@ -32,7 +32,7 @@ const FAQs = ({faq}) => {
     ${
       activeIndex === index
         ? "border-[1.5px] border-(--primary)"   
-        : "border-(--border) hover:border-gray-300"
+        : "border-(--border) hover:border-(--border-strong)"
     }`}
 >
             {/* Question */}
@@ -55,7 +55,7 @@ const FAQs = ({faq}) => {
              font-bold transition-all duration-300
              ${
                activeIndex === index
-                 ? "text-[#2563eb]"   // blue when open (−)
+                 ? "text-(--primary)"
                  : "text-(--muted-foreground)" // default when +
              }`}
 >
