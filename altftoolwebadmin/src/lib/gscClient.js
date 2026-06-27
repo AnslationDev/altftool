@@ -17,6 +17,8 @@
 
 import { JWT } from "google-auth-library";
 import { getServerEnv } from "@altftool/core/env";
+import { getValidAccessToken } from "./gsc/oauthClient";
+import { isConnected as isOAuthConnected, getActiveProperty } from "./gsc/tokenStore";
 
 const SCOPES = ["https://www.googleapis.com/auth/webmasters"];
 const BASE = "https://searchconsole.googleapis.com";
@@ -40,20 +42,71 @@ export function isGscConfigured() {
   );
 }
 
+/** Ready if EITHER an OAuth account is connected OR a service account is set. */
+export async function isGscReady() {
+  if (isGscConfigured()) return true;
+  try {
+    return await isOAuthConnected();
+  } catch {
+    return false;
+  }
+}
+
 /** The Search Console property, e.g. "sc-domain:altftool.com" or "https://altftool.com/". */
 export function gscSiteUrl() {
   return getServerEnv("GSC_SITE_URL") || "sc-domain:altftool.com";
 }
 
-async function gscRequest(method, url, data) {
+/** Prefer the OAuth-selected property; fall back to the env property. */
+export async function gscActiveSiteUrl() {
+  try {
+    const selected = await getActiveProperty();
+    if (selected) return selected;
+  } catch {
+    /* ignore */
+  }
+  return gscSiteUrl();
+}
+
+/**
+ * Bearer token resolution: prefer the org OAuth connection (auto-refreshing),
+ * fall back to the service-account JWT. Throws GSC_NOT_CONFIGURED when neither
+ * is available.
+ */
+async function getBearerToken() {
+  try {
+    return await getValidAccessToken();
+  } catch (error) {
+    if (error?.code !== "GSC_NO_OAUTH") throw error;
+  }
   const client = buildClient();
   if (!client) {
-    const err = new Error("Search Console is not configured (missing service-account credentials).");
+    const err = new Error("Search Console is not configured (connect a Google account or set service-account credentials).");
     err.code = "GSC_NOT_CONFIGURED";
     throw err;
   }
-  const res = await client.request({ url, method, data });
-  return res.data;
+  const token = await client.getAccessToken();
+  return typeof token === "string" ? token : token?.token;
+}
+
+async function gscRequest(method, url, data) {
+  const token = await getBearerToken();
+  const res = await fetch(url, {
+    method,
+    headers: {
+      Authorization: `Bearer ${token}`,
+      ...(data ? { "Content-Type": "application/json" } : {}),
+    },
+    body: data ? JSON.stringify(data) : undefined,
+  });
+  if (!res.ok) {
+    const errData = await res.json().catch(() => ({}));
+    const err = new Error(errData?.error?.message || `Search Console request failed (${res.status}).`);
+    err.status = res.status;
+    err.response = { status: res.status, data: errData };
+    throw err;
+  }
+  return res.json().catch(() => ({}));
 }
 
 export async function gscListSites() {

@@ -90,6 +90,17 @@ service cloud.firestore {
       allow read, write: if isActiveAdmin();
     }
 
+    // Google Search Console: OAuth tokens are encrypted and must NEVER be
+    // client-readable. Synced metrics are server-written only. The Admin SDK
+    // (server routes) bypasses these rules.
+    match /integrations/{document=**} {
+      allow read, write: if false;
+    }
+
+    match /gscDailyMetrics/{docId} {
+      allow read, write: if false;
+    }
+
     match /blogs/{blogId} {
       allow read: if true;
       allow update: if onlyChanges(["commentsCount", "likesCount", "views", "viewsCount"]);
