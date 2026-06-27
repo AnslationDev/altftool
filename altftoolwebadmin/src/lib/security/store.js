@@ -8,7 +8,6 @@ import {
   SECURITY_COLLECTIONS as C,
   SETTINGS_DOC_ID,
   DEFAULT_SECURITY_SETTINGS,
-  PRIVACY_POLICY_VERSION,
   normalizeSettings,
 } from "./config";
 import {
@@ -191,15 +190,20 @@ export async function startSession({ uid, email, request }) {
       })
     : { score: 0, level: "low", reasons: [], suspicious: false };
 
-  // Idempotent: if this device already has an active session, REUSE it instead
-  // of revoking + recreating. (Recreating revoked the prior session, whose
-  // heartbeat then reported inactive and force-logged-out the admin.)
+  // Idempotent reuse — but ONLY if the device's existing session is still
+  // within the idle window. This keeps repeated session/start calls from
+  // revoking + recreating (which logged the admin out), while never reviving a
+  // session that has already gone idle (which would resurrect a dead session).
+  const idleMs = settings.idleTimeoutMinutes * 60_000;
   const sameDevice = activeSessions.filter((s) => s.deviceId === ctx.deviceId);
-  if (sameDevice.length) {
-    const reuse = sameDevice[sameDevice.length - 1];
+  const reuse = sameDevice[sameDevice.length - 1];
+  const reusable =
+    reuse && Date.now() - (reuse.lastSeenAtMs || reuse.createdAtMs || 0) <= idleMs;
+
+  if (reusable) {
     await Promise.all(
       sameDevice
-        .slice(0, -1)
+        .filter((s) => s.id !== reuse.id)
         .map((s) => revokeSessionDoc(s.id, { reason: "reauthenticated", by: "system" })),
     );
     await upsertDevice({ uid, email, ctx });
@@ -217,10 +221,18 @@ export async function startSession({ uid, email, request }) {
     };
   }
 
-  // New device → enforce the device limit by retiring the oldest sessions.
+  // Not reusable → retire any stale same-device sessions before creating fresh.
+  if (sameDevice.length) {
+    await Promise.all(
+      sameDevice.map((s) => revokeSessionDoc(s.id, { reason: "expired", by: "system" })),
+    );
+  }
+
+  // Enforce the device limit across OTHER active devices.
   const limit = Math.max(1, settings.deviceLimit);
-  if (activeSessions.length >= limit) {
-    const overflow = activeSessions.slice(0, activeSessions.length - limit + 1);
+  const otherActive = activeSessions.filter((s) => s.deviceId !== ctx.deviceId);
+  if (otherActive.length >= limit) {
+    const overflow = otherActive.slice(0, otherActive.length - limit + 1);
     await Promise.all(
       overflow.map((s) => revokeSessionDoc(s.id, { reason: "device_limit_exceeded", by: "system" })),
     );
@@ -344,6 +356,27 @@ export async function listSessions({ uid = null, limit = 200 } = {}) {
 
 function byLastSeenDesc(a, b) {
   return (b.lastSeenAtMs || 0) - (a.lastSeenAtMs || 0);
+}
+
+/**
+ * Self sign-out: the calling admin revokes their own current device session on
+ * logout so it does not linger as "active" until idle timeout.
+ */
+export async function endSession({ uid, request }) {
+  const ctx = buildSecurityContext(request, { uid });
+  const active = await getActiveSessionsForUser(uid);
+  if (!active.length) return { ok: false };
+  const target = active.find((s) => s.deviceId === ctx.deviceId) || active[active.length - 1];
+  await revokeSessionDoc(target.id, { reason: "logout", by: uid });
+  await recordSecurityEvent({
+    type: "session.logout",
+    uid,
+    email: target.email,
+    context: ctx,
+    summary: `${ctx.deviceLabel} signed out`,
+    metadata: { sessionId: target.id },
+  });
+  return { ok: true, sessionId: target.id };
 }
 
 /* ---------------- consent ---------------- */
