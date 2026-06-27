@@ -47,27 +47,35 @@ export default function SecurityGate() {
     return data;
   }, []);
 
-  // 1. Start session + load consent ONCE per logged-in admin.
+  // 1. Start session + load consent ONCE per logged-in admin, with retry/backoff
+  //    so a transient network failure doesn't leave the session unstarted
+  //    (which would silently disable idle-timeout enforcement).
   useEffect(() => {
     if (!user?.uid) return;
     if (startedForUidRef.current === user.uid) return; // dedupe
     startedForUidRef.current = user.uid;
     let alive = true;
-    (async () => {
+    let retryTimer = null;
+    const attempt = async (tries = 0) => {
       try {
         const res = await authFetch("/api/security/session/start", { method: "POST" });
         if (!alive) return;
         sessionRef.current = res.sessionId;
         idleMinutesRef.current = res.idleTimeoutMinutes || 30;
-        if (res.consent?.required) {
-          setConsent({ ...res.consent });
-        }
+        if (res.consent?.required) setConsent({ ...res.consent });
       } catch {
-        startedForUidRef.current = null; // allow retry on next change
+        if (!alive) return;
+        if (tries < 4) {
+          retryTimer = setTimeout(() => attempt(tries + 1), Math.min(30_000, 3_000 * (tries + 1)));
+        } else {
+          startedForUidRef.current = null; // give up; allow a future re-trigger
+        }
       }
-    })();
+    };
+    attempt();
     return () => {
       alive = false;
+      if (retryTimer) clearTimeout(retryTimer);
     };
   }, [user?.uid, authFetch]);
 
