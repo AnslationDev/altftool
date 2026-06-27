@@ -28,6 +28,7 @@ import {
 import { fetchAllBlogs } from "../services/blogsService";
 import { getBlogContentQuality } from "../components/BlogSeoChecklist";
 import { getBlogSchemaHealth } from "../components/blogSeoHealth";
+import InsightsBoard from "../components/InsightsBoard";
 
 function toDate(value) {
   if (!value) return null;
@@ -590,6 +591,10 @@ export default function AltFToolBlogAnalyticsPage() {
           </button>
         </div>
       </div>
+
+      {/* Phase 4 — actionable insights: cadence, benchmarks, decay risk,
+          and a flag-gated Search Console seam. */}
+      <InsightsBoard />
 
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-6">
         <StatCard icon={FileText} label="Total Posts" value={analytics.total.toLocaleString()} caption={`${analytics.published} published - ${analytics.drafts} drafts`} />

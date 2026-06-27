@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback, useRef } from "react";
+import { useState, useEffect, useCallback, useMemo, useRef } from "react";
 import { useRouter, useParams, useSearchParams, usePathname } from "next/navigation";
 import dynamic from "next/dynamic";
 import { emitAlert } from "@/lib/alertBus";
@@ -9,8 +9,17 @@ import {
   fetchAllBlogs,
   fetchBlogById,
   updateBlog,
+  updateBlogWorkflow,
+  saveBlogRevision,
+  requestBlogRevalidation,
   uploadBlogImage,
 } from "../../services/blogsService";
+import { WORKFLOW, statusForWorkflow } from "../../lib/workflow";
+import { useAutosave, useUnsavedGuard, useEditorShortcuts, formatSavedLabel } from "../../lib/editorHooks";
+import EditorActionBar from "../../components/EditorActionBar";
+import WorkflowStatusControl from "../../components/WorkflowStatusControl";
+import BlogHistoryDrawer from "../../components/BlogHistoryDrawer";
+import KeyboardShortcutsHelp from "../../components/KeyboardShortcutsHelp";
 import { serverTimestamp } from "firebase/firestore";
 import CategorySelector from "../../components/CategorySelector";
 import { logAuditEvent } from "@/lib/auditClient";
@@ -210,6 +219,7 @@ export default function EditBlog() {
   const [formData, setFormData] = useState({
     heading: "", category: "", author: "", date: "",
     description: "", seoTitle: "", seoDescription: "", image: "", status: "draft",
+    workflowState: "", publishAt: null,
     tags: "", authorRole: "", reviewedBy: "", editorialNote: "",
     reviewedAt: "", sourcesText: "", sourceNotes: "",
   });
@@ -232,6 +242,9 @@ export default function EditBlog() {
   const [originalSnapshot, setOriginalSnapshot] = useState(null);
   const [blogIndex, setBlogIndex]         = useState({ blogs: [], status: "loading", error: "" });
   const [previewRequest, setPreviewRequest] = useState(null);
+  const [showHistory, setShowHistory]     = useState(false);
+  const [showShortcuts, setShowShortcuts] = useState(false);
+  const [workflowBusy, setWorkflowBusy]   = useState(false);
 
   const isHighlighted = (sectionId) => highlightedSection === sectionId;
 
@@ -263,6 +276,7 @@ export default function EditBlog() {
           heading: data.heading || "", category: data.category || "", author: data.author || "",
           date: data.date || "", description: data.description || "", seoTitle: data.seoTitle || "",
           seoDescription: data.seoDescription || "", image: data.image || "", status: data.status || "draft",
+          workflowState: data.workflowState || "", publishAt: data.publishAt || null,
           tags: Array.isArray(data.tags) ? data.tags.join(", ") : data.tags || "",
           authorRole: data.authorRole || "",
           reviewedBy: data.reviewedBy || "",
@@ -565,22 +579,29 @@ export default function EditBlog() {
       const slug    = generateSlug(formData.heading);
       const excerpt = stripHtml(formData.description).slice(0, 160);
 
+      const payload = {
+        heading: formData.heading.trim(), slug, category: formData.category,
+        author: formData.author,
+        authorRole: formData.authorRole || "",
+        reviewedBy: formData.reviewedBy || "",
+        editorialNote: formData.editorialNote || "",
+        reviewedAt: formData.reviewedAt || "",
+        sources: parseSourcesText(formData.sourcesText),
+        sourceNotes: formData.sourceNotes.trim(),
+        description: formData.description, excerpt,
+        date: formData.date, seoTitle: formData.seoTitle.trim(),
+        seoDescription: formData.seoDescription || excerpt,
+        image: imageUrl, imageAlt: imageAlt.trim(), status,
+        tags: parseBlogTags(formData.tags),
+      };
+
       try {
-        await updateBlog(id, {
-          heading: formData.heading.trim(), slug, category: formData.category,
-          author: formData.author,
-          authorRole: formData.authorRole || "",
-          reviewedBy: formData.reviewedBy || "",
-          editorialNote: formData.editorialNote || "",
-          reviewedAt: formData.reviewedAt || "",
-          sources: parseSourcesText(formData.sourcesText),
-          sourceNotes: formData.sourceNotes.trim(),
-          description: formData.description, excerpt,
-          date: formData.date, seoTitle: formData.seoTitle.trim(),
-          seoDescription: formData.seoDescription || excerpt,
-          image: imageUrl, imageAlt: imageAlt.trim(), status,
-          tags: parseBlogTags(formData.tags),
-        });
+        await updateBlog(id, payload);
+        // Snapshot a doc-shaped revision so version history can restore safely.
+        saveBlogRevision({
+          blog: { id, ...payload },
+          reason: status === "published" ? "publish" : "save-draft",
+        }).catch((e) => console.warn("[revision] snapshot failed", e));
       } catch (err) {
         const msg = getFriendlyError(err, "firestore");
         setBannerError(msg); emitAlert({ type: "error", message: msg });
@@ -596,6 +617,8 @@ export default function EditBlog() {
 
       setUploadStep("done");
       setPreviewRequest(null);
+      // Push the change live immediately (no-op unless revalidation is configured).
+      if (status === "published") requestBlogRevalidation(slug);
       emitAlert({ type: "success", message: status === "published" ? "Blog published!" : "Draft saved." });
       setTimeout(() => router.push("/altftool/blogs"), 600);
     } catch (err) {
@@ -622,11 +645,120 @@ export default function EditBlog() {
   const altOk          = altLen >= 5 && altLen <= 125;
   const requestedQuickAction = searchParams.get("refreshAction") || searchParams.get("action") || "";
 
+  /* ── Dirty detection vs the last saved snapshot ── */
+  const dirty = useMemo(() => {
+    const o = originalSnapshot;
+    if (!o) return false;
+    return (
+      formData.heading !== o.heading ||
+      formData.description !== o.description ||
+      formData.seoTitle !== o.seoTitle ||
+      formData.seoDescription !== o.seoDescription ||
+      formData.category !== o.category ||
+      formData.author !== o.author ||
+      formData.date !== o.date ||
+      formData.tags !== o.tags ||
+      formData.authorRole !== o.authorRole ||
+      formData.reviewedBy !== o.reviewedBy ||
+      formData.editorialNote !== o.editorialNote ||
+      formData.sourcesText !== o.sourcesText ||
+      formData.sourceNotes !== o.sourceNotes ||
+      imageAlt !== (o.imageAlt || "") ||
+      Boolean(imageFile)
+    );
+  }, [formData, imageAlt, imageFile, originalSnapshot]);
+
+  /* ── Auto-save (drafts only; never silently mutates a live post) ── */
+  const persistDraft = useCallback(async () => {
+    if (!id || formData.status === "published") return;
+    const slug = generateSlug(formData.heading || "draft");
+    const excerpt = stripHtml(formData.description).slice(0, 160);
+    await updateBlog(id, {
+      heading: (formData.heading || "").trim(),
+      slug,
+      category: formData.category,
+      author: formData.author,
+      authorRole: formData.authorRole || "",
+      reviewedBy: formData.reviewedBy || "",
+      editorialNote: formData.editorialNote || "",
+      reviewedAt: formData.reviewedAt || "",
+      sources: parseSourcesText(formData.sourcesText),
+      sourceNotes: (formData.sourceNotes || "").trim(),
+      description: formData.description,
+      excerpt,
+      date: formData.date,
+      seoTitle: (formData.seoTitle || "").trim(),
+      seoDescription: formData.seoDescription || excerpt,
+      imageAlt: imageAlt.trim(),
+      status: "draft",
+      tags: parseBlogTags(formData.tags),
+    });
+    setOriginalSnapshot({ ...formData, imageAlt, image: formData.image });
+  }, [id, formData, imageAlt]);
+
+  const autosave = useAutosave({ formData, imageAlt }, persistDraft, {
+    delay: 1500,
+    enabled: formData.status !== "published",
+    isDirty: () => dirty,
+  });
+
+  useUnsavedGuard(dirty);
+
+  /* ── Keyboard shortcuts (ref-backed to avoid stale closures) ── */
+  const shortcutActionsRef = useRef({});
+  shortcutActionsRef.current = {
+    save: () => updateBlogHandler("draft"),
+    publish: () => updateBlogHandler("published"),
+    help: () => setShowShortcuts(true),
+  };
+  const shortcutMap = useMemo(() => ({
+    "mod+s": () => shortcutActionsRef.current.save(),
+    "mod+enter": () => shortcutActionsRef.current.publish(),
+    "mod+/": () => shortcutActionsRef.current.help(),
+  }), []);
+  useEditorShortcuts(shortcutMap);
+
+  /* ── Workflow transitions (publish routes through the existing gate) ── */
+  const handleWorkflowTransition = async (to, opts = {}) => {
+    if (to === WORKFLOW.PUBLISHED) {
+      updateBlogHandler("published");
+      return;
+    }
+    setWorkflowBusy(true);
+    try {
+      await updateBlogWorkflow(id, { workflowState: to, publishAt: opts.publishAt || null });
+      setFormData((prev) => ({
+        ...prev,
+        status: statusForWorkflow(to),
+        workflowState: to,
+        publishAt: opts.publishAt || null,
+      }));
+      emitAlert({ type: "success", message: `Moved to ${to.replace(/_/g, " ")}.` });
+      logAuditEvent({
+        module: "blogs",
+        action: "BLOG_WORKFLOW",
+        entityType: "blog",
+        entityId: id,
+        summary: `Workflow → ${to}`,
+        changes: { workflowState: to },
+        route: `/altftool/blogs/edit-blog/${id}`,
+      });
+    } catch (err) {
+      console.error("Workflow transition failed", err);
+      emitAlert({ type: "error", message: "Could not update workflow state." });
+    } finally {
+      setWorkflowBusy(false);
+    }
+  };
+
+  const saveState = formData.status === "published" ? (dirty ? "dirty" : "idle") : autosave.status;
+  const savedLabel = formatSavedLabel(autosave.savedAt);
+
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="flex flex-col items-center gap-3 text-gray-400">
-          <div className="w-8 h-8 border-2 border-gray-200 border-t-blue-500 rounded-full animate-spin" />
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <div className="flex flex-col items-center gap-3 text-muted">
+          <Loader2 className="w-8 h-8 animate-spin text-primary" />
           <span className="text-sm">Loading blog…</span>
         </div>
       </div>
@@ -634,7 +766,19 @@ export default function EditBlog() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-background">
+      <EditorActionBar
+        title={`Edit: ${formData.heading || "Untitled"}`}
+        onBack={() => router.push("/altftool/blogs")}
+        status={saveState}
+        savedLabel={savedLabel}
+        onSave={() => updateBlogHandler("draft")}
+        onHistory={() => setShowHistory(true)}
+        onShortcuts={() => setShowShortcuts(true)}
+        primaryLabel={formData.status === "published" ? "Update post" : "Publish"}
+        onPrimary={() => updateBlogHandler("published")}
+        busy={saving}
+      />
       <div className="max-w-7xl mx-auto px-5 py-7 space-y-5">
         <BlogPublishPreviewModal
           open={Boolean(previewRequest)}
@@ -652,21 +796,11 @@ export default function EditBlog() {
         <OfflineBanner />
         <BannerAlert message={bannerError} onDismiss={() => setBannerError(null)} />
 
-        {/* Top bar */}
-        <div className="flex items-center justify-between gap-4 flex-wrap">
-          <div className="flex items-center gap-3">
-            <button onClick={() => router.push("/altftool/blogs")} className="p-2 rounded-xl border border-gray-200 bg-white text-gray-500 hover:bg-gray-50 transition">
-              <ArrowLeft className="w-4 h-4" />
-            </button>
-            <div>
-              <h1 className="text-lg font-bold text-gray-900">Edit Blog</h1>
-              <p className="text-xs text-gray-400 font-mono truncate max-w-[280px]">ID: {id}</p>
-            </div>
-          </div>
-          <span className={`text-xs font-bold px-3 py-1 rounded-full ${formData.status === "published" ? "bg-green-100 text-green-700" : "bg-gray-100 text-gray-600"}`}>
-            {formData.status === "published" ? "● Published" : "○ Draft"}
-          </span>
-        </div>
+        <WorkflowStatusControl
+          blog={{ status: formData.status, workflowState: formData.workflowState, publishAt: formData.publishAt }}
+          onTransition={handleWorkflowTransition}
+          busy={workflowBusy}
+        />
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
 
@@ -974,6 +1108,36 @@ export default function EditBlog() {
 
         </div>
       </div>
+
+      <BlogHistoryDrawer
+        open={showHistory}
+        blogId={id}
+        currentBlog={{
+          id,
+          heading: formData.heading,
+          slug: generateSlug(formData.heading || "draft"),
+          category: formData.category,
+          author: formData.author,
+          authorRole: formData.authorRole,
+          reviewedBy: formData.reviewedBy,
+          editorialNote: formData.editorialNote,
+          reviewedAt: formData.reviewedAt,
+          date: formData.date,
+          description: formData.description,
+          seoTitle: formData.seoTitle,
+          seoDescription: formData.seoDescription,
+          image: formData.image,
+          imageAlt,
+          status: formData.status,
+          workflowState: formData.workflowState,
+          tags: parseBlogTags(formData.tags),
+          sources: parseSourcesText(formData.sourcesText),
+          sourceNotes: formData.sourceNotes,
+        }}
+        onClose={() => setShowHistory(false)}
+        onRestored={() => window.location.reload()}
+      />
+      <KeyboardShortcutsHelp open={showShortcuts} onClose={() => setShowShortcuts(false)} />
     </div>
   );
 }

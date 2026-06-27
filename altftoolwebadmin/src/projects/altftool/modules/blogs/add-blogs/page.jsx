@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback, useRef } from "react";
+import { useState, useEffect, useCallback, useMemo, useRef } from "react";
 import { useRouter } from "next/navigation";
 import dynamic from "next/dynamic";
 import { emitAlert } from "@/lib/alertBus";
@@ -10,6 +10,7 @@ import {
   createBlog,
   updateBlogImage,
   uploadBlogImage,
+  requestBlogRevalidation,
 } from "../services/blogsService";
 import { serverTimestamp } from "firebase/firestore";
 import CategorySelector from "../components/CategorySelector";
@@ -41,6 +42,9 @@ import BlogPublishPreviewModal, {
 } from "../components/BlogPublishPreviewModal";
 import BlogPreviewModal from "../components/BlogPreviewModal";
 import { isFeatureEnabled } from "@/lib/featureFlags";
+import EditorActionBar from "../components/EditorActionBar";
+import KeyboardShortcutsHelp from "../components/KeyboardShortcutsHelp";
+import { useUnsavedGuard, useEditorShortcuts } from "../lib/editorHooks";
 
 const BlogEditor = dynamic(() => import("../components/BlogEditor"), { ssr: false });
 
@@ -657,6 +661,8 @@ export default function AddBlog() {
       setStep("done");
       localStorage.removeItem(DRAFT_KEY);
       setPreviewRequest(null);
+      // Push the new post live immediately (no-op unless revalidation is configured).
+      requestBlogRevalidation(slug);
       emitAlert({ type: "success", message: "Blog published successfully! Redirecting…" });
       setTimeout(() => router.push("/altftool/blogs"), 700);
 
@@ -736,6 +742,24 @@ export default function AddBlog() {
 
   const handleSaveDraft = () => openSavePreview("draft");
 
+  /* ── Editor shell: unsaved guard + keyboard shortcuts ── */
+  const [showShortcuts, setShowShortcuts] = useState(false);
+  const isDirty = Boolean((formData.heading || "").trim() || (formData.description || "").trim());
+  useUnsavedGuard(isDirty && !submitting);
+
+  const addShortcutRef = useRef({});
+  addShortcutRef.current = {
+    save: () => handleSaveDraft(),
+    publish: () => openSavePreview("published"),
+    help: () => setShowShortcuts(true),
+  };
+  const addShortcutMap = useMemo(() => ({
+    "mod+s": () => addShortcutRef.current.save(),
+    "mod+enter": () => addShortcutRef.current.publish(),
+    "mod+/": () => addShortcutRef.current.help(),
+  }), []);
+  useEditorShortcuts(addShortcutMap);
+
   /* ── Discard draft ── */
   const handleDiscardDraft = () => {
     setShowDraftBanner(false);
@@ -806,23 +830,17 @@ export default function AddBlog() {
         <BannerAlert message={bannerError} onDismiss={() => setBannerError(null)} />
 
         {/* Top bar */}
-        <div className="flex items-center justify-between gap-4 flex-wrap">
-          <div className="flex items-center gap-3">
-            <button onClick={() => router.push("/altftool/blogs")} className="p-2 rounded-xl border border-gray-200 bg-white text-gray-500 hover:bg-gray-50 transition">
-              <ArrowLeft className="w-4 h-4" />
-            </button>
-            <div>
-              <h1 className="text-lg font-bold text-gray-900">New Blog Post</h1>
-              {draftSavedAt && !autoSaveError && (
-                <p className="text-xs text-gray-400 flex items-center gap-1 mt-0.5"><Clock className="w-3 h-3" />Auto-saved at {fmtTime(draftSavedAt)}</p>
-              )}
-              {autoSaveError && (
-                <p className="text-xs text-amber-500 flex items-center gap-1 mt-0.5"><AlertCircle className="w-3 h-3" />Auto-save paused — save manually</p>
-              )}
-            </div>
-          </div>
-          <span className="text-xs font-bold px-3 py-1 rounded-full bg-gray-100 text-gray-500">○ Draft</span>
-        </div>
+        <EditorActionBar
+          title="New Blog Post"
+          onBack={() => router.push("/altftool/blogs")}
+          status={autoSaveError ? "error" : draftSavedAt ? "saved" : isDirty ? "dirty" : "idle"}
+          savedLabel={autoSaveError ? "Auto-save paused — save manually" : draftSavedAt ? `Auto-saved at ${fmtTime(draftSavedAt)}` : ""}
+          onSave={handleSaveDraft}
+          onShortcuts={() => setShowShortcuts(true)}
+          primaryLabel="Publish"
+          onPrimary={() => openSavePreview("published")}
+          busy={submitting || savingDraft}
+        />
 
         <form onSubmit={handleSubmit}>
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
@@ -1121,6 +1139,8 @@ export default function AddBlog() {
           </div>
         </form>
       </div>
+
+      <KeyboardShortcutsHelp open={showShortcuts} onClose={() => setShowShortcuts(false)} />
     </div>
   );
 }

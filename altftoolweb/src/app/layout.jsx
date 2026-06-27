@@ -15,6 +15,7 @@ import LazyChatBot from "@/platform/chatbot/LazyChatBot";
 import { AlertProvider } from "@/shared/ui/AlertProvider";
 import JsonLd from "@/platform/seo/JsonLd";
 import GlobalNavigationLoader from "@/components/ui/GlobalNavigationLoader";
+import WebVitalsReporter from "@/components/WebVitalsReporter";
 import GlobalChromeGate from "@/platform/navigation/GlobalChromeGate";
 import { HeaderLoadingSkeleton } from "@/components/ui/route-loading";
 import {
@@ -232,6 +233,8 @@ export default function RootLayout({ children }) {
         <GlobalChromeGate>
           <Footer />
         </GlobalChromeGate>
+
+        <WebVitalsReporter />
 
       </AlertProvider>
     </CookieConsentProvider>

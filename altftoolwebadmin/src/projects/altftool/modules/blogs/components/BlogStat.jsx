@@ -1,74 +1,65 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { FileText, Eye, MessageCircle, Heart, Edit3 } from "lucide-react";
-import { fetchAllBlogs } from "../services/blogsService";
+import { useMemo } from "react";
+import { Eye, FileText, Heart, MessageCircle, PenLine, Send } from "lucide-react";
 
-export default function BlogStat() {
-  const [stats, setStats] = useState({
-    totalPosts: 0,
-    publishedPosts: 0,
-    draftPosts: 0,
-    totalViews: 0,
-    totalLikes: 0,
-    totalComments: 0,
-  });
-
-  useEffect(() => {
-    (async () => {
-      try {
-        const blogs = await fetchAllBlogs();
-
-        let publishedPosts = 0, draftPosts = 0;
-        let totalViews = 0, totalLikes = 0, totalComments = 0;
-
-        blogs.forEach((data) => {
-          if (data.status === "published") publishedPosts++;
-          if (data.status === "draft") draftPosts++;
-          totalViews    += data.views         || 0;
-          totalLikes    += data.likesCount    || 0;
-          totalComments += data.commentsCount || 0;
-        });
-
-        setStats({
-          totalPosts: blogs.length,
-          publishedPosts,
-          draftPosts,
-          totalViews,
-          totalLikes,
-          totalComments,
-        });
-      } catch (err) {
-        console.error("Failed to load stats", err);
-      }
-    })();
-  }, []);
+/**
+ * Presentational stats strip. Consumes the already-loaded `blogs` array from
+ * the parent (no duplicate Firestore fetch). Falls back to zeroes while the
+ * parent is still loading.
+ */
+export default function BlogStat({ blogs = [], loading = false }) {
+  const stats = useMemo(() => {
+    return blogs.reduce(
+      (acc, data) => {
+        if (data.status === "published") acc.publishedPosts += 1;
+        else acc.draftPosts += 1;
+        acc.totalViews += data.views || 0;
+        acc.totalLikes += data.likesCount || 0;
+        acc.totalComments += data.commentsCount || 0;
+        return acc;
+      },
+      {
+        totalPosts: blogs.length,
+        publishedPosts: 0,
+        draftPosts: 0,
+        totalViews: 0,
+        totalLikes: 0,
+        totalComments: 0,
+      },
+    );
+  }, [blogs]);
 
   const statsData = [
-  { title: "Total Posts",     value: stats.totalPosts,     icon: <FileText      className="w-8 h-8 text-blue-500"   /> },
-  { title: "Published Posts", value: stats.publishedPosts, icon: <Eye           className="w-8 h-8 text-green-500"  /> },
-  { title: "Draft Posts",     value: stats.draftPosts,     icon: <Edit3         className="w-8 h-8 text-yellow-500" /> },
-  { title: "Total Views",     value: stats.totalViews,     icon: <Eye           className="w-8 h-8 text-indigo-500" /> },
-  { title: "Total Likes",     value: stats.totalLikes,     icon: <Heart         className="w-8 h-8 text-red-500"    /> },
-  { title: "Total Comments",  value: stats.totalComments,  icon: <MessageCircle className="w-8 h-8 text-purple-500" /> },
-];
+    { title: "Total Posts", value: stats.totalPosts, icon: FileText, tone: "text-primary bg-primary-soft" },
+    { title: "Published", value: stats.publishedPosts, icon: Send, tone: "text-success bg-success-soft" },
+    { title: "Drafts", value: stats.draftPosts, icon: PenLine, tone: "text-warning bg-warning-soft" },
+    { title: "Total Views", value: stats.totalViews, icon: Eye, tone: "text-info bg-info-soft" },
+    { title: "Total Likes", value: stats.totalLikes, icon: Heart, tone: "text-danger bg-danger-soft" },
+    { title: "Comments", value: stats.totalComments, icon: MessageCircle, tone: "text-secondary bg-secondary-soft" },
+  ];
 
   return (
-    <div className="p-6 md:p-10 bg-gray-50">
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-5 ">
-        {statsData.map((stat, index) => (
+    <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
+      {statsData.map((stat) => {
+        const Icon = stat.icon;
+        return (
           <div
-            key={index}
-            className="bg-white rounded-2xl shadow-md p-5 flex justify-between items-center hover:shadow-xl transition"
+            key={stat.title}
+            className="flex items-center justify-between gap-2 rounded-xl border border-border bg-surface p-4 shadow-sm transition hover:shadow-md"
           >
-            <div>
-              <p className="text-sm text-gray-500">{stat.title}</p>
-              <h2 className="text-2xl font-bold text-gray-800">{stat.value.toLocaleString()}</h2>
+            <div className="min-w-0">
+              <p className="truncate text-xs font-medium text-muted">{stat.title}</p>
+              <p className="mt-1 text-xl font-bold tabular-nums text-foreground">
+                {loading ? "—" : stat.value.toLocaleString()}
+              </p>
             </div>
-            {stat.icon}
+            <span className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-lg ${stat.tone}`}>
+              <Icon className="h-5 w-5" strokeWidth={2} />
+            </span>
           </div>
-        ))}
-      </div>
+        );
+      })}
     </div>
   );
 }

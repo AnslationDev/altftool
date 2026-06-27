@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { Suspense, useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
+import BulkOperationsRunner from "../components/BulkOperationsRunner";
 import {
   ArrowLeft,
   BookOpenCheck,
@@ -573,6 +574,12 @@ export default function BulkBlogRefreshPage() {
           {error}
         </div>
       )}
+
+      {/* Phase 3 — real batched bulk engine (dry-run, progress, logs, rollback).
+          Consumes ?ids= & ?action= deep-linked from the SEO Health board. */}
+      <Suspense fallback={null}>
+        <BulkOperationsRunner />
+      </Suspense>
 
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-5">
         <StatCard icon={RefreshCw} label="Refresh queue" value={stats.queue.toLocaleString()} caption={`${stats.total} total blogs audited`} tone="blue" />

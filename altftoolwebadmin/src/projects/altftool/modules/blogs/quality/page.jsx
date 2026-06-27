@@ -37,6 +37,7 @@ import {
 import { parseBlogTags } from "../components/BlogSeoChecklist";
 import { parseSourcesText } from "../components/BlogSourceEditor";
 import BlogContentHealthQueue from "../components/BlogContentHealthQueue";
+import SeoHealthBoard from "../components/SeoHealthBoard";
 import BlogInternalLinkOpportunityPanel from "../components/BlogInternalLinkOpportunityPanel";
 import BlogLinkHealthPanel from "../components/BlogLinkHealthPanel";
 import BlogLinkRollbackPanel from "../components/BlogLinkRollbackPanel";
@@ -1462,6 +1463,10 @@ export default function BlogQualityCenterPage() {
           {error}
         </div>
       ) : null}
+
+      {/* Phase 2 — actionable SEO Health board (OG/Twitter, orphans,
+          duplicates, alt text, index readiness) with one-click fixes. */}
+      <SeoHealthBoard />
 
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-6">
         <StatCard icon={ShieldCheck} label="Health score" value={`${summary.healthScore}%`} caption={`${summary.avgQuality}% quality - ${summary.avgSchema}% schema`} tone={summary.healthScore >= 75 ? "green" : "amber"} />

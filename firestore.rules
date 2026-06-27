@@ -71,6 +71,16 @@ service cloud.firestore {
       allow create, update, delete: if isActiveAdmin();
     }
 
+    // Editorial metadata (version history & bulk-job logs): admin-only,
+    // not world-readable. More specific than the catch-all below, so it wins.
+    match /projects/altftool/blogRevisions/{revisionId} {
+      allow read, write: if isActiveAdmin();
+    }
+
+    match /projects/altftool/blogBulkJobs/{jobId} {
+      allow read, write: if isActiveAdmin();
+    }
+
     match /projects/altftool/{document=**} {
       allow read: if true;
       allow write: if isActiveAdmin();
