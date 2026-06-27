@@ -50,7 +50,7 @@ export default function BlogNav({
             ${
               activeTab === tab
                 ? "bg-(--primary) text-white"
-                : "bg-gray-100 hover:bg-gray-200"
+                : "bg-surface-soft hover:bg-surface-soft"
             }`}
           >
             {tab}
@@ -65,7 +65,7 @@ export default function BlogNav({
 
         <Search
           size={16}
-          className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
+          className="absolute left-3 top-1/2 -translate-y-1/2 text-muted"
         />
 
         <input

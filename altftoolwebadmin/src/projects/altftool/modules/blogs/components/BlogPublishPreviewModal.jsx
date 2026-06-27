@@ -125,16 +125,16 @@ export function buildBlogChangeSummary({
 }
 
 function statusTone(score = 0) {
-  if (score >= 85) return "bg-green-50 text-green-700 border-green-100";
-  if (score >= 70) return "bg-amber-50 text-amber-700 border-amber-100";
-  return "bg-red-50 text-red-600 border-red-100";
+  if (score >= 85) return "bg-success-soft text-success border-success";
+  if (score >= 70) return "bg-warning-soft text-warning border-warning";
+  return "bg-danger-soft text-danger border-danger";
 }
 
 function DetailRow({ label, value }) {
   return (
-    <div className="rounded-xl bg-gray-50 px-3 py-2">
-      <p className="text-[10px] font-black uppercase tracking-wider text-gray-400">{label}</p>
-      <p className="mt-1 truncate text-sm font-bold text-gray-800">{value || "Not set"}</p>
+    <div className="rounded-xl bg-surface-soft px-3 py-2">
+      <p className="text-[10px] font-black uppercase tracking-wider text-muted">{label}</p>
+      <p className="mt-1 truncate text-sm font-bold text-foreground">{value || "Not set"}</p>
     </div>
   );
 }
@@ -162,24 +162,24 @@ export default function BlogPublishPreviewModal({
   const Icon = isPublish ? Globe : Save;
 
   return (
-    <div className="fixed inset-0 z-[80] flex items-center justify-center bg-gray-950/45 px-4 py-6 backdrop-blur-sm">
-      <div className="max-h-[90vh] w-full max-w-3xl overflow-hidden rounded-2xl bg-white shadow-2xl">
-        <div className="flex items-start justify-between gap-4 border-b border-gray-100 px-5 py-4">
+    <div className="fixed inset-0 z-[80] flex items-center justify-center bg-primary/45 px-4 py-6 backdrop-blur-sm">
+      <div className="max-h-[90vh] w-full max-w-3xl overflow-hidden rounded-2xl bg-surface shadow-2xl">
+        <div className="flex items-start justify-between gap-4 border-b border-border px-5 py-4">
           <div className="flex items-start gap-3">
-            <span className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl ${isPublish ? "bg-blue-50 text-blue-600" : "bg-gray-100 text-gray-700"}`}>
+            <span className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl ${isPublish ? "bg-primary-soft text-primary" : "bg-surface-soft text-foreground"}`}>
               <Icon className="h-5 w-5" />
             </span>
             <div>
-              <p className="text-xs font-black uppercase tracking-widest text-gray-400">Final check</p>
-              <h2 className="mt-1 text-xl font-black text-gray-900">{isPublish ? "Publish preview" : "Save draft preview"}</h2>
-              <p className="mt-1 text-sm leading-6 text-gray-500">Review slug, changed fields, duplicate checks, and quality status before saving.</p>
+              <p className="text-xs font-black uppercase tracking-widest text-muted">Final check</p>
+              <h2 className="mt-1 text-xl font-black text-foreground">{isPublish ? "Publish preview" : "Save draft preview"}</h2>
+              <p className="mt-1 text-sm leading-6 text-muted">Review slug, changed fields, duplicate checks, and quality status before saving.</p>
             </div>
           </div>
           <button
             type="button"
             onClick={onCancel}
             disabled={pending}
-            className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border border-gray-200 bg-white text-gray-500 transition hover:bg-gray-50 disabled:opacity-50"
+            className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border border-border bg-surface text-muted transition hover:bg-surface-soft disabled:opacity-50"
             aria-label="Close preview"
           >
             <X className="h-4 w-4" />
@@ -194,26 +194,26 @@ export default function BlogPublishPreviewModal({
           </div>
 
           <div className="mt-4 grid grid-cols-1 gap-3 lg:grid-cols-[minmax(0,1fr)_240px]">
-            <section className="rounded-2xl border border-gray-100 bg-white p-4">
+            <section className="rounded-2xl border border-border bg-surface p-4">
               <div className="flex items-center justify-between gap-3">
                 <div>
-                  <p className="text-xs font-black uppercase tracking-wider text-gray-400">Changed fields</p>
-                  <h3 className="mt-1 text-base font-black text-gray-900">{changedFields.length || "No"} updates</h3>
+                  <p className="text-xs font-black uppercase tracking-wider text-muted">Changed fields</p>
+                  <h3 className="mt-1 text-base font-black text-foreground">{changedFields.length || "No"} updates</h3>
                 </div>
-                <FileText className="h-5 w-5 text-gray-400" />
+                <FileText className="h-5 w-5 text-muted" />
               </div>
 
               <div className="mt-3 space-y-2">
                 {changedFields.length ? (
                   changedFields.map((field) => (
-                    <div key={field.key} className="rounded-xl bg-gray-50 px-3 py-2">
-                      <p className="text-xs font-black text-gray-700">{field.label}</p>
-                      {field.before ? <p className="mt-1 line-clamp-1 text-[11px] text-gray-400">Before: {field.before}</p> : null}
-                      <p className="mt-1 line-clamp-2 text-xs leading-5 text-gray-600">After: {field.after || "Empty"}</p>
+                    <div key={field.key} className="rounded-xl bg-surface-soft px-3 py-2">
+                      <p className="text-xs font-black text-foreground">{field.label}</p>
+                      {field.before ? <p className="mt-1 line-clamp-1 text-[11px] text-muted">Before: {field.before}</p> : null}
+                      <p className="mt-1 line-clamp-2 text-xs leading-5 text-muted">After: {field.after || "Empty"}</p>
                     </div>
                   ))
                 ) : (
-                  <div className="rounded-xl bg-green-50 px-3 py-3 text-sm font-semibold text-green-700">No tracked field changes.</div>
+                  <div className="rounded-xl bg-success-soft px-3 py-3 text-sm font-semibold text-success">No tracked field changes.</div>
                 )}
               </div>
             </section>
@@ -230,7 +230,7 @@ export default function BlogPublishPreviewModal({
                 </p>
               </div>
 
-              <div className={`rounded-2xl border px-4 py-3 ${hasDuplicates ? "border-red-100 bg-red-50 text-red-600" : "border-green-100 bg-green-50 text-green-700"}`}>
+              <div className={`rounded-2xl border px-4 py-3 ${hasDuplicates ? "border-danger bg-danger-soft text-danger" : "border-success bg-success-soft text-success"}`}>
                 <div className="flex items-center justify-between gap-3">
                   <p className="text-xs font-black uppercase tracking-wider">Duplicate guard</p>
                   {hasDuplicates ? <AlertTriangle className="h-4 w-4" /> : <CheckCircle2 className="h-4 w-4" />}
@@ -242,11 +242,11 @@ export default function BlogPublishPreviewModal({
           </div>
 
           {duplicateIssues.length ? (
-            <section className="mt-4 rounded-2xl border border-red-100 bg-red-50 px-4 py-3">
-              <p className="text-xs font-black uppercase tracking-wider text-red-600">Resolve duplicates</p>
+            <section className="mt-4 rounded-2xl border border-danger bg-danger-soft px-4 py-3">
+              <p className="text-xs font-black uppercase tracking-wider text-danger">Resolve duplicates</p>
               <div className="mt-2 space-y-1.5">
                 {duplicateIssues.slice(0, 4).map((issue) => (
-                  <p key={issue.key} className="text-sm leading-6 text-red-700">
+                  <p key={issue.key} className="text-sm leading-6 text-danger">
                     <span className="font-black">{issue.label}:</span> {issue.detail}
                   </p>
                 ))}
@@ -255,11 +255,11 @@ export default function BlogPublishPreviewModal({
           ) : null}
 
           {warnings.length ? (
-            <section className="mt-4 rounded-2xl border border-amber-100 bg-amber-50 px-4 py-3">
-              <p className="text-xs font-black uppercase tracking-wider text-amber-700">Publish warnings</p>
+            <section className="mt-4 rounded-2xl border border-warning bg-warning-soft px-4 py-3">
+              <p className="text-xs font-black uppercase tracking-wider text-warning">Publish warnings</p>
               <div className="mt-2 space-y-1.5">
                 {warnings.slice(0, 5).map((warning) => (
-                  <p key={warning.key} className="text-sm leading-6 text-amber-700">
+                  <p key={warning.key} className="text-sm leading-6 text-warning">
                     <span className="font-black">{warning.label}:</span> {warning.detail}
                   </p>
                 ))}
@@ -268,12 +268,12 @@ export default function BlogPublishPreviewModal({
           ) : null}
         </div>
 
-        <div className="flex flex-wrap items-center justify-end gap-2 border-t border-gray-100 bg-gray-50 px-5 py-4">
+        <div className="flex flex-wrap items-center justify-end gap-2 border-t border-border bg-surface-soft px-5 py-4">
           <button
             type="button"
             onClick={onCancel}
             disabled={pending}
-            className="inline-flex h-10 items-center justify-center rounded-xl border border-gray-200 bg-white px-4 text-sm font-semibold text-gray-700 transition hover:bg-gray-50 disabled:opacity-50"
+            className="inline-flex h-10 items-center justify-center rounded-xl border border-border bg-surface px-4 text-sm font-semibold text-foreground transition hover:bg-surface-soft disabled:opacity-50"
           >
             Review more
           </button>
@@ -281,7 +281,7 @@ export default function BlogPublishPreviewModal({
             type="button"
             onClick={onConfirm}
             disabled={!canConfirm}
-            className="inline-flex h-10 items-center justify-center gap-2 rounded-xl bg-gray-900 px-4 text-sm font-semibold text-white transition hover:bg-gray-700 disabled:cursor-not-allowed disabled:bg-gray-300"
+            className="inline-flex h-10 items-center justify-center gap-2 rounded-xl bg-primary px-4 text-sm font-semibold text-white transition hover:bg-primary disabled:cursor-not-allowed disabled:bg-surface-soft"
           >
             {pending ? <Loader2 className="h-4 w-4 animate-spin" /> : <Icon className="h-4 w-4" />}
             {pending ? "Saving..." : isPublish ? "Confirm publish" : "Confirm draft"}

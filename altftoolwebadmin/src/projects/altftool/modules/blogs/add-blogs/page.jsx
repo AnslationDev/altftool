@@ -75,10 +75,10 @@ const SEO_TITLE_IDEAL_MAX = 60;
 const SEO_TITLE_HARD_MAX  = 60;
 
 const getSeoTitleStatus = (len) => {
-  if (len === 0)                    return { color: "bg-gray-200",  label: "", ok: false };
-  if (len < SEO_TITLE_MIN)          return { color: "bg-amber-400", label: `Too short — aim for ${SEO_TITLE_MIN}–${SEO_TITLE_IDEAL_MAX} chars`, ok: false };
-  if (len <= SEO_TITLE_IDEAL_MAX)   return { color: "bg-green-400", label: "Perfect length", ok: true };
-  return                                   { color: "bg-red-400",   label: `Too long — will be truncated by Google (max ${SEO_TITLE_HARD_MAX})`, ok: false };
+  if (len === 0)                    return { color: "bg-surface-soft",  label: "", ok: false };
+  if (len < SEO_TITLE_MIN)          return { color: "bg-warning", label: `Too short — aim for ${SEO_TITLE_MIN}–${SEO_TITLE_IDEAL_MAX} chars`, ok: false };
+  if (len <= SEO_TITLE_IDEAL_MAX)   return { color: "bg-success", label: "Perfect length", ok: true };
+  return                                   { color: "bg-danger",   label: `Too long — will be truncated by Google (max ${SEO_TITLE_HARD_MAX})`, ok: false };
 };
 
 /* ── Friendly error translator ── */
@@ -144,13 +144,13 @@ const IMAGE_MESSAGES = {
 function Field({ label, hint, error, icon, required, children }) {
   return (
     <div className="space-y-2.5">
-      <label className="flex items-center gap-1.5 text-xs font-bold text-gray-500 uppercase tracking-wider">
-        {icon && <span className="text-gray-400">{icon}</span>}{label}
-        {required && <span className="text-red-400">*</span>}
+      <label className="flex items-center gap-1.5 text-xs font-bold text-muted uppercase tracking-wider">
+        {icon && <span className="text-muted">{icon}</span>}{label}
+        {required && <span className="text-danger">*</span>}
       </label>
       {children}
-      {hint  && !error && <p className="text-xs text-gray-400">{hint}</p>}
-      {error && <p className="flex items-center gap-1 text-xs text-red-500 font-medium"><AlertCircle className="w-3 h-3 shrink-0" />{error}</p>}
+      {hint  && !error && <p className="text-xs text-muted">{hint}</p>}
+      {error && <p className="flex items-center gap-1 text-xs text-danger font-medium"><AlertCircle className="w-3 h-3 shrink-0" />{error}</p>}
     </div>
   );
 }
@@ -158,7 +158,7 @@ function Field({ label, hint, error, icon, required, children }) {
 function Input({ error, ...props }) {
   return (
     <input {...props}
-      className={`w-full text-sm px-3 py-2.5 rounded-xl border bg-white placeholder:text-gray-400 focus:outline-none focus:ring-2 transition ${error ? "border-red-300 focus:ring-red-400/30 focus:border-red-400" : "border-gray-200 focus:ring-blue-400/30 focus:border-blue-400"}`} />
+      className={`w-full text-sm px-3 py-2.5 rounded-xl border bg-surface placeholder:text-muted focus:outline-none focus:ring-2 transition ${error ? "border-danger focus:ring-danger/30 focus:border-danger" : "border-border focus:ring-primary/30 focus:border-primary"}`} />
   );
 }
 
@@ -166,12 +166,12 @@ function Section({ title, children, highlighted = false, id }) {
   return (
     <div
       id={id}
-      className={`scroll-mt-24 rounded-2xl border bg-white p-6 shadow-sm transition ${
-        highlighted ? "border-blue-200 ring-4 ring-blue-100" : "border-gray-100"
+      className={`scroll-mt-24 rounded-2xl border bg-surface p-6 shadow-sm transition ${
+        highlighted ? "border-primary ring-4 ring-primary" : "border-border"
       } space-y-5`}
     >
-      <h2 className="text-xs font-black text-gray-400 uppercase tracking-widest flex items-center gap-2">
-        {title}<span className="flex-1 h-px bg-gray-100" />
+      <h2 className="text-xs font-black text-muted uppercase tracking-widest flex items-center gap-2">
+        {title}<span className="flex-1 h-px bg-surface-soft" />
       </h2>
       {children}
     </div>
@@ -180,8 +180,8 @@ function Section({ title, children, highlighted = false, id }) {
 
 function ProgressBar({ value }) {
   return (
-    <div className="h-1.5 w-full bg-gray-100 rounded-full overflow-hidden">
-      <div className="h-full bg-blue-500 rounded-full transition-all duration-200" style={{ width: `${value}%` }} />
+    <div className="h-1.5 w-full bg-surface-soft rounded-full overflow-hidden">
+      <div className="h-full bg-primary rounded-full transition-all duration-200" style={{ width: `${value}%` }} />
     </div>
   );
 }
@@ -189,10 +189,10 @@ function ProgressBar({ value }) {
 function BannerAlert({ message, onDismiss }) {
   if (!message) return null;
   return (
-    <div className="flex items-start gap-3 bg-red-50 border border-red-200 rounded-2xl px-4 py-3 text-sm text-red-700">
-      <AlertTriangle className="w-4 h-4 shrink-0 mt-0.5 text-red-500" />
+    <div className="flex items-start gap-3 bg-danger-soft border border-danger rounded-2xl px-4 py-3 text-sm text-danger">
+      <AlertTriangle className="w-4 h-4 shrink-0 mt-0.5 text-danger" />
       <div className="flex-1">{message}</div>
-      <button onClick={onDismiss} className="text-red-400 hover:text-red-600 text-xs font-bold ml-2">✕</button>
+      <button onClick={onDismiss} className="text-danger hover:text-danger text-xs font-bold ml-2">✕</button>
     </div>
   );
 }
@@ -206,8 +206,8 @@ function OfflineBanner() {
   }, []);
   if (!offline) return null;
   return (
-    <div className="flex items-center gap-2 bg-amber-50 border border-amber-200 rounded-2xl px-4 py-2.5 text-sm text-amber-800">
-      <WifiOff className="w-4 h-4 shrink-0 text-amber-500" />
+    <div className="flex items-center gap-2 bg-warning-soft border border-warning rounded-2xl px-4 py-2.5 text-sm text-warning">
+      <WifiOff className="w-4 h-4 shrink-0 text-warning" />
       <span>You're offline. Your draft is being saved locally — publishing requires an internet connection.</span>
     </div>
   );
@@ -218,10 +218,10 @@ function DraftRestoreBanner({ savedAt, onDismiss }) {
   const age = savedAt ? Math.round((Date.now() - savedAt.getTime()) / 60000) : 0;
   const ageLabel = age < 1 ? "just now" : age === 1 ? "1 minute ago" : `${age} minutes ago`;
   return (
-    <div className="flex items-center gap-3 bg-blue-50 border border-blue-200 rounded-2xl px-4 py-2.5 text-sm text-blue-700">
-      <Info className="w-4 h-4 shrink-0 text-blue-500" />
+    <div className="flex items-center gap-3 bg-primary-soft border border-primary rounded-2xl px-4 py-2.5 text-sm text-primary">
+      <Info className="w-4 h-4 shrink-0 text-primary" />
       <span className="flex-1">We found an unsaved draft from <strong>{ageLabel}</strong>. It has been restored automatically.</span>
-      <button onClick={onDismiss} className="text-blue-400 hover:text-blue-600 font-bold text-xs">✕ Discard draft</button>
+      <button onClick={onDismiss} className="text-primary hover:text-primary font-bold text-xs">✕ Discard draft</button>
     </div>
   );
 }
@@ -811,17 +811,17 @@ export default function AddBlog() {
         )}
 
         {autoSaveError && (
-          <div className="flex items-center gap-2 bg-amber-50 border border-amber-200 rounded-2xl px-4 py-2.5 text-sm text-amber-800">
-            <AlertCircle className="w-4 h-4 shrink-0 text-amber-500" />
+          <div className="flex items-center gap-2 bg-warning-soft border border-warning rounded-2xl px-4 py-2.5 text-sm text-warning">
+            <AlertCircle className="w-4 h-4 shrink-0 text-warning" />
             <span>Auto-save isn't working (your browser storage may be full or restricted). Please save your draft manually using the button below.</span>
           </div>
         )}
 
         {categoriesError && (
-          <div className="flex items-center gap-2 bg-red-50 border border-red-200 rounded-2xl px-4 py-2.5 text-sm text-red-700">
-            <AlertCircle className="w-4 h-4 shrink-0 text-red-500" />
+          <div className="flex items-center gap-2 bg-danger-soft border border-danger rounded-2xl px-4 py-2.5 text-sm text-danger">
+            <AlertCircle className="w-4 h-4 shrink-0 text-danger" />
             <span className="flex-1">{categoriesError}</span>
-            <button onClick={() => window.location.reload()} className="flex items-center gap-1 text-xs font-semibold text-red-600 underline hover:text-red-800">
+            <button onClick={() => window.location.reload()} className="flex items-center gap-1 text-xs font-semibold text-danger underline hover:text-danger">
               <RefreshCw className="w-3 h-3" />Refresh
             </button>
           </div>
@@ -863,7 +863,7 @@ export default function AddBlog() {
                 <Field label="Category" icon={<FileText className="w-3.5 h-3.5" />} required error={errors.category}>
                   <CategorySelector value={formData.category} onChange={(v) => { setFormData((p) => ({ ...p, category: v })); clearError("category"); }} />
                   {errors.category && (
-                    <p className="flex items-center gap-1 text-xs text-red-500 font-medium mt-1"><AlertCircle className="w-3 h-3" />{errors.category}</p>
+                    <p className="flex items-center gap-1 text-xs text-danger font-medium mt-1"><AlertCircle className="w-3 h-3" />{errors.category}</p>
                   )}
                 </Field>
                 <Field label="Tags" icon={<Hash className="w-3.5 h-3.5" />} hint="Comma separated topics. Example: pdf tools, productivity, students">
@@ -887,7 +887,7 @@ export default function AddBlog() {
                     value={formData.editorialNote || ""}
                     onChange={handleChange}
                     placeholder="Reviewed for accuracy, freshness, and practical usefulness..."
-                    className="w-full text-sm px-3 py-2.5 rounded-xl border border-gray-200 bg-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-400/30 focus:border-blue-400 transition resize-none"
+                    className="w-full text-sm px-3 py-2.5 rounded-xl border border-border bg-surface placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition resize-none"
                   />
                 </Field>
               </Section>
@@ -915,7 +915,7 @@ export default function AddBlog() {
 
               <Section title="Content" id="blog-section-content" highlighted={isHighlighted("blog-section-content")}>
                 {errors.description && (
-                  <p className="flex items-center gap-1 text-xs text-red-500 font-medium -mt-2"><AlertCircle className="w-3 h-3" />{errors.description}</p>
+                  <p className="flex items-center gap-1 text-xs text-danger font-medium -mt-2"><AlertCircle className="w-3 h-3" />{errors.description}</p>
                 )}
                 <BlogEditor value={formData.description} onChange={(data) => {
                   setFormData((prev) => {
@@ -930,43 +930,43 @@ export default function AddBlog() {
               {/* SEO — collapsible */}
               <div
                 id="blog-section-seo"
-                className={`scroll-mt-24 overflow-hidden rounded-2xl border bg-white shadow-sm transition ${
-                  isHighlighted("blog-section-seo") ? "border-blue-200 ring-4 ring-blue-100" : "border-gray-100"
+                className={`scroll-mt-24 overflow-hidden rounded-2xl border bg-surface shadow-sm transition ${
+                  isHighlighted("blog-section-seo") ? "border-primary ring-4 ring-primary" : "border-border"
                 }`}
               >
                 <button type="button" onClick={() => setSeoExpanded((v) => !v)}
-                  className="w-full flex items-center justify-between px-6 py-4 hover:bg-gray-50 transition">
+                  className="w-full flex items-center justify-between px-6 py-4 hover:bg-surface-soft transition">
                   <div className="flex items-center gap-2">
-                    <Search className="w-4 h-4 text-gray-400" />
-                    <span className="text-xs font-black text-gray-400 uppercase tracking-widest">SEO Settings</span>
+                    <Search className="w-4 h-4 text-muted" />
+                    <span className="text-xs font-black text-muted uppercase tracking-widest">SEO Settings</span>
                     <div className="flex gap-1 ml-2">
-                      <span className={`w-2 h-2 rounded-full ${errors.seoTitle ? "bg-red-400" : seoTitleStatus.ok ? "bg-green-400" : "bg-amber-400"}`} />
-                      <span className={`w-2 h-2 rounded-full ${descOk ? "bg-green-400" : errors.seoDescription ? "bg-red-400" : "bg-amber-400"}`} />
+                      <span className={`w-2 h-2 rounded-full ${errors.seoTitle ? "bg-danger" : seoTitleStatus.ok ? "bg-success" : "bg-warning"}`} />
+                      <span className={`w-2 h-2 rounded-full ${descOk ? "bg-success" : errors.seoDescription ? "bg-danger" : "bg-warning"}`} />
                     </div>
                     {(errors.seoTitle || errors.seoDescription) && !seoExpanded && (
-                      <span className="text-[10px] font-bold text-red-500 bg-red-50 px-1.5 py-0.5 rounded">Fix required — click to expand</span>
+                      <span className="text-[10px] font-bold text-danger bg-danger-soft px-1.5 py-0.5 rounded">Fix required — click to expand</span>
                     )}
                   </div>
-                  <span className="text-gray-400 text-xs">{seoExpanded ? "▲ Hide" : "▼ Show"}</span>
+                  <span className="text-muted text-xs">{seoExpanded ? "▲ Hide" : "▼ Show"}</span>
                 </button>
 
                 {seoExpanded && (
-                  <div className="px-6 pb-6 space-y-4 border-t border-gray-100">
+                  <div className="px-6 pb-6 space-y-4 border-t border-border">
                     <Field label="Meta Title" icon={<Type className="w-3.5 h-3.5" />} required error={errors.seoTitle}
                       hint={!errors.seoTitle && seoTitleLen > 0 ? `${seoTitleLen}/${SEO_TITLE_HARD_MAX} chars · ${seoTitleStatus.label}` : `${seoTitleLen}/${SEO_TITLE_HARD_MAX} chars · Ideal: ${SEO_TITLE_MIN}–${SEO_TITLE_IDEAL_MAX}`}>
                       <Input name="seoTitle" placeholder="Enter meta title (50–60 characters ideal)…" value={formData.seoTitle} onChange={handleChange} error={errors.seoTitle} maxLength={SEO_TITLE_HARD_MAX + 10} />
-                      <div className="h-1 bg-gray-100 rounded-full overflow-hidden mt-1">
+                      <div className="h-1 bg-surface-soft rounded-full overflow-hidden mt-1">
                         <div className={`h-full rounded-full transition-all ${seoTitleStatus.color}`} style={{ width: `${Math.min((seoTitleLen / SEO_TITLE_HARD_MAX) * 100, 100)}%` }} />
                       </div>
-                      {seoTitleLen > 0 && <p className="text-[10px] text-gray-400 mt-0.5">Google typically shows ~50–60 characters in search results.</p>}
+                      {seoTitleLen > 0 && <p className="text-[10px] text-muted mt-0.5">Google typically shows ~50–60 characters in search results.</p>}
                     </Field>
 
                     <Field label="SEO Description" icon={<FileText className="w-3.5 h-3.5" />} required error={errors.seoDescription} hint={`${descLen} chars · aim for 120–160`}>
                       <textarea name="seoDescription" rows={3} placeholder="Auto-filled from content — edit as needed"
                         value={formData.seoDescription} onChange={handleChange}
-                        className={`w-full text-sm px-3 py-2.5 rounded-xl border bg-white placeholder:text-gray-400 focus:outline-none focus:ring-2 transition resize-none ${errors.seoDescription ? "border-red-300 focus:ring-red-400/30" : "border-gray-200 focus:ring-blue-400/30 focus:border-blue-400"}`} />
-                      <div className="h-1 bg-gray-100 rounded-full overflow-hidden mt-1">
-                        <div className={`h-full rounded-full transition-all ${descOk ? "bg-green-400" : errors.seoDescription ? "bg-red-400" : "bg-amber-400"}`} style={{ width: `${Math.min((descLen / 160) * 100, 100)}%` }} />
+                        className={`w-full text-sm px-3 py-2.5 rounded-xl border bg-surface placeholder:text-muted focus:outline-none focus:ring-2 transition resize-none ${errors.seoDescription ? "border-danger focus:ring-danger/30" : "border-border focus:ring-primary/30 focus:border-primary"}`} />
+                      <div className="h-1 bg-surface-soft rounded-full overflow-hidden mt-1">
+                        <div className={`h-full rounded-full transition-all ${descOk ? "bg-success" : errors.seoDescription ? "bg-danger" : "bg-warning"}`} style={{ width: `${Math.min((descLen / 160) * 100, 100)}%` }} />
                       </div>
                     </Field>
                   </div>
@@ -978,39 +978,39 @@ export default function AddBlog() {
             <div className="space-y-5">
 
               {/* Publish card */}
-              <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5 space-y-4">
-                <h2 className="text-xs font-black text-gray-400 uppercase tracking-widest">Publish</h2>
+              <div className="bg-surface rounded-2xl border border-border shadow-sm p-5 space-y-4">
+                <h2 className="text-xs font-black text-muted uppercase tracking-widest">Publish</h2>
                 {step === "uploading" && (
                   <div className="space-y-2">
-                    <div className="flex justify-between text-xs text-gray-500"><span>Uploading image…</span><span className="font-semibold tabular-nums">{uploadProgress}%</span></div>
+                    <div className="flex justify-between text-xs text-muted"><span>Uploading image…</span><span className="font-semibold tabular-nums">{uploadProgress}%</span></div>
                     <ProgressBar value={uploadProgress} />
-                    <button type="button" onClick={handleCancelUpload} className="text-xs text-red-500 hover:text-red-700 font-medium underline">Cancel upload</button>
+                    <button type="button" onClick={handleCancelUpload} className="text-xs text-danger hover:text-danger font-medium underline">Cancel upload</button>
                   </div>
                 )}
-                {step === "saving" && <div className="flex items-center gap-2 text-xs text-gray-500"><Loader2 className="w-3.5 h-3.5 animate-spin text-blue-500" />Saving to database…</div>}
-                {step === "done"  && <div className="flex items-center gap-2 text-xs text-green-600 font-medium"><CheckCircle2 className="w-4 h-4" />Published! Redirecting…</div>}
+                {step === "saving" && <div className="flex items-center gap-2 text-xs text-muted"><Loader2 className="w-3.5 h-3.5 animate-spin text-primary" />Saving to database…</div>}
+                {step === "done"  && <div className="flex items-center gap-2 text-xs text-success font-medium"><CheckCircle2 className="w-4 h-4" />Published! Redirecting…</div>}
                 <div className="space-y-2">
                   <button type="button" onClick={handleSaveDraft} disabled={savingDraft || submitting}
-                    className="w-full flex items-center justify-center gap-2 py-2.5 text-sm font-semibold border border-gray-200 rounded-xl text-gray-700 bg-white hover:bg-gray-50 transition disabled:opacity-50">
+                    className="w-full flex items-center justify-center gap-2 py-2.5 text-sm font-semibold border border-border rounded-xl text-foreground bg-surface hover:bg-surface-soft transition disabled:opacity-50">
                     {savingDraft ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
                     {savingDraft ? "Saving draft…" : "Save Draft"}
                   </button>
                   {blogPreviewEnabled && (
                     <button type="button" onClick={() => setBlogPreviewOpen(true)} disabled={submitting || savingDraft}
-                      className="w-full flex items-center justify-center gap-2 py-2.5 text-sm font-semibold border border-blue-100 rounded-xl text-blue-700 bg-blue-50 hover:bg-blue-100 transition disabled:opacity-50">
+                      className="w-full flex items-center justify-center gap-2 py-2.5 text-sm font-semibold border border-primary rounded-xl text-primary bg-primary-soft hover:bg-primary-soft transition disabled:opacity-50">
                       <Eye className="w-4 h-4" />
                       Preview
                     </button>
                   )}
                   <button type="submit" disabled={submitting || step === "done"}
-                    className="w-full flex items-center justify-center gap-2 py-2.5 text-sm font-semibold bg-gray-900 hover:bg-gray-700 text-white rounded-xl transition shadow-sm disabled:opacity-50">
+                    className="w-full flex items-center justify-center gap-2 py-2.5 text-sm font-semibold bg-primary hover:bg-primary text-white rounded-xl transition shadow-sm disabled:opacity-50">
                     {submitting ? <Loader2 className="w-4 h-4 animate-spin" /> : <Globe className="w-4 h-4" />}
                     {submitting ? (step === "uploading" ? `Uploading image… ${uploadProgress}%` : step === "saving" ? "Saving to database…" : "Publishing…") : "Publish Blog"}
                   </button>
                 </div>
-                <div className="flex items-start gap-2 bg-blue-50 border border-blue-100 rounded-xl px-3 py-2.5">
-                  <Info className="w-3.5 h-3.5 text-blue-500 shrink-0 mt-0.5" />
-                  <p className="text-xs text-blue-600">{autoSaveError ? "⚠ Auto-save unavailable. Use Save Draft to keep your work." : "Draft is auto-saved locally every 2 seconds."}</p>
+                <div className="flex items-start gap-2 bg-primary-soft border border-primary rounded-xl px-3 py-2.5">
+                  <Info className="w-3.5 h-3.5 text-primary shrink-0 mt-0.5" />
+                  <p className="text-xs text-primary">{autoSaveError ? "⚠ Auto-save unavailable. Use Save Draft to keep your work." : "Draft is auto-saved locally every 2 seconds."}</p>
                 </div>
               </div>
 
@@ -1050,44 +1050,44 @@ export default function AddBlog() {
               {/* Image card */}
               <div
                 id="blog-section-image"
-                className={`scroll-mt-24 space-y-3 rounded-2xl border bg-white p-5 shadow-sm transition ${
-                  isHighlighted("blog-section-image") ? "border-blue-200 ring-4 ring-blue-100" : "border-gray-100"
+                className={`scroll-mt-24 space-y-3 rounded-2xl border bg-surface p-5 shadow-sm transition ${
+                  isHighlighted("blog-section-image") ? "border-primary ring-4 ring-primary" : "border-border"
                 }`}
               >
-                <h2 className="text-xs font-black text-gray-400 uppercase tracking-widest">Featured Image <span className="text-red-400">*</span></h2>
+                <h2 className="text-xs font-black text-muted uppercase tracking-widest">Featured Image <span className="text-danger">*</span></h2>
 
                 {!imagePreview ? (
                   <div onDragOver={(e) => { e.preventDefault(); setDragOver(true); }} onDragLeave={() => setDragOver(false)} onDrop={handleDrop}
                     onClick={() => fileInputRef.current?.click()}
-                    className={`border-2 border-dashed rounded-xl p-6 flex flex-col items-center gap-2.5 cursor-pointer transition-all ${dragOver ? "border-blue-400 bg-blue-50 scale-[1.01]" : errors.image ? "border-red-300 bg-red-50/30" : "border-gray-200 hover:border-blue-300 hover:bg-gray-50"}`}>
-                    <div className={`w-10 h-10 rounded-2xl flex items-center justify-center ${dragOver ? "bg-blue-100" : "bg-gray-100"}`}>
-                      <UploadCloud className={`w-5 h-5 ${dragOver ? "text-blue-500" : "text-gray-400"}`} />
+                    className={`border-2 border-dashed rounded-xl p-6 flex flex-col items-center gap-2.5 cursor-pointer transition-all ${dragOver ? "border-primary bg-primary-soft scale-[1.01]" : errors.image ? "border-danger bg-danger-soft/30" : "border-border hover:border-primary hover:bg-surface-soft"}`}>
+                    <div className={`w-10 h-10 rounded-2xl flex items-center justify-center ${dragOver ? "bg-primary-soft" : "bg-surface-soft"}`}>
+                      <UploadCloud className={`w-5 h-5 ${dragOver ? "text-primary" : "text-muted"}`} />
                     </div>
                     <div className="text-center">
-                      <p className="text-xs font-medium text-gray-700">Drop or <span className="text-blue-500">browse</span></p>
-                      <p className="text-[10px] text-gray-400 mt-0.5">JPG, PNG, WebP · Max 2MB</p>
+                      <p className="text-xs font-medium text-foreground">Drop or <span className="text-primary">browse</span></p>
+                      <p className="text-[10px] text-muted mt-0.5">JPG, PNG, WebP · Max 2MB</p>
                     </div>
-                    {errors.image && <p className="flex items-center gap-1 text-xs text-red-500 font-medium text-center"><AlertCircle className="w-3 h-3 shrink-0" />{errors.image}</p>}
+                    {errors.image && <p className="flex items-center gap-1 text-xs text-danger font-medium text-center"><AlertCircle className="w-3 h-3 shrink-0" />{errors.image}</p>}
                   </div>
                 ) : (
-                  <div className="rounded-xl overflow-hidden border border-gray-200">
+                  <div className="rounded-xl overflow-hidden border border-border">
                     <div className="relative group">
-                      <img src={imagePreview} alt={imageAlt || "Blog featured image"} className="w-full max-h-44 object-cover bg-gray-100" />
-                      <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition flex items-center justify-center opacity-0 group-hover:opacity-100">
+                      <img src={imagePreview} alt={imageAlt || "Blog featured image"} className="w-full max-h-44 object-cover bg-surface-soft" />
+                      <div className="absolute inset-0 bg-foreground/0 group-hover:bg-foreground/20 transition flex items-center justify-center opacity-0 group-hover:opacity-100">
                         <button type="button" onClick={removeImage}
-                          className="flex items-center gap-1 bg-red-600 hover:bg-red-700 text-white text-xs font-semibold px-3 py-1.5 rounded-lg transition">
+                          className="flex items-center gap-1 bg-danger hover:bg-danger text-white text-xs font-semibold px-3 py-1.5 rounded-lg transition">
                           <Trash2 className="w-3 h-3" />Remove
                         </button>
                       </div>
                     </div>
                     {imageFile && (
-                      <div className="flex items-center gap-2 px-3 py-2 bg-white border-t border-gray-200">
-                        <ImageIcon className="w-3.5 h-3.5 text-indigo-500 shrink-0" />
+                      <div className="flex items-center gap-2 px-3 py-2 bg-surface border-t border-border">
+                        <ImageIcon className="w-3.5 h-3.5 text-secondary shrink-0" />
                         <div className="min-w-0 flex-1">
-                          <p className="text-xs font-medium text-gray-700 truncate">{imageFile.name}</p>
-                          <p className="text-[10px] text-gray-400">{fmtSize(imageFile.size)}</p>
+                          <p className="text-xs font-medium text-foreground truncate">{imageFile.name}</p>
+                          <p className="text-[10px] text-muted">{fmtSize(imageFile.size)}</p>
                         </div>
-                        <CheckCircle2 className="w-3.5 h-3.5 text-green-500 shrink-0" />
+                        <CheckCircle2 className="w-3.5 h-3.5 text-success shrink-0" />
                       </div>
                     )}
                   </div>
@@ -1096,20 +1096,20 @@ export default function AddBlog() {
                 {/* Alt text */}
                 {(imagePreview || imageFile) && (
                   <div className="space-y-1.5 pt-1">
-                    <label className="flex items-center gap-1.5 text-xs font-bold text-gray-500 uppercase tracking-wider">
-                      <ALargeSmall className="w-3.5 h-3.5 text-gray-400" />Image Alt Text<span className="text-red-400">*</span>
+                    <label className="flex items-center gap-1.5 text-xs font-bold text-muted uppercase tracking-wider">
+                      <ALargeSmall className="w-3.5 h-3.5 text-muted" />Image Alt Text<span className="text-danger">*</span>
                     </label>
                     <input type="text" value={imageAlt}
                       onChange={(e) => { setImageAlt(e.target.value); clearError("imageAlt"); setBannerError(null); }}
                       placeholder="Describe the image for screen readers and SEO…" maxLength={150}
-                      className={`w-full text-sm px-3 py-2.5 rounded-xl border bg-white placeholder:text-gray-400 focus:outline-none focus:ring-2 transition ${errors.imageAlt ? "border-red-300 focus:ring-red-400/30 focus:border-red-400" : "border-gray-200 focus:ring-blue-400/30 focus:border-blue-400"}`} />
-                    <div className="h-1 bg-gray-100 rounded-full overflow-hidden">
-                      <div className={`h-full rounded-full transition-all ${altOk ? "bg-green-400" : altLen === 0 ? "bg-gray-200" : "bg-amber-400"}`} style={{ width: `${Math.min((altLen / 125) * 100, 100)}%` }} />
+                      className={`w-full text-sm px-3 py-2.5 rounded-xl border bg-surface placeholder:text-muted focus:outline-none focus:ring-2 transition ${errors.imageAlt ? "border-danger focus:ring-danger/30 focus:border-danger" : "border-border focus:ring-primary/30 focus:border-primary"}`} />
+                    <div className="h-1 bg-surface-soft rounded-full overflow-hidden">
+                      <div className={`h-full rounded-full transition-all ${altOk ? "bg-success" : altLen === 0 ? "bg-surface-soft" : "bg-warning"}`} style={{ width: `${Math.min((altLen / 125) * 100, 100)}%` }} />
                     </div>
                     {errors.imageAlt ? (
-                      <p className="flex items-center gap-1 text-xs text-red-500 font-medium"><AlertCircle className="w-3 h-3 shrink-0" />{errors.imageAlt}</p>
+                      <p className="flex items-center gap-1 text-xs text-danger font-medium"><AlertCircle className="w-3 h-3 shrink-0" />{errors.imageAlt}</p>
                     ) : (
-                      <p className="text-[10px] text-gray-400">{altLen}/125 chars · {altOk ? "Good length" : altLen === 0 ? "Required for accessibility & SEO" : altLen < 5 ? "Too short — be more descriptive" : "Aim for under 125 chars"}</p>
+                      <p className="text-[10px] text-muted">{altLen}/125 chars · {altOk ? "Good length" : altLen === 0 ? "Required for accessibility & SEO" : altLen < 5 ? "Too short — be more descriptive" : "Aim for under 125 chars"}</p>
                     )}
                   </div>
                 )}
@@ -1126,7 +1126,7 @@ export default function AddBlog() {
               <div
                 id="blog-section-internal-links"
                 className={`scroll-mt-24 rounded-2xl transition ${
-                  isHighlighted("blog-section-internal-links") ? "ring-4 ring-blue-100" : ""
+                  isHighlighted("blog-section-internal-links") ? "ring-4 ring-primary" : ""
                 }`}
               >
                 <BlogInternalLinkAssistant

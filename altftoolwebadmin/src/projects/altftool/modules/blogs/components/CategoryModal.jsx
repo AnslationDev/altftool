@@ -96,31 +96,31 @@ export default function CategoryModal({ onClose }) {
   };
 
   return (
-    <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
-      <div className="bg-white rounded-xl p-6 w-96 space-y-4">
+    <div className="fixed inset-0 bg-foreground/40 flex items-center justify-center z-50">
+      <div className="bg-surface rounded-xl p-6 w-96 space-y-4">
         <h2 className="text-lg font-semibold">Manage Categories</h2>
 
         {/* ── Existing ── */}
         <div>
-          <p className="text-xs font-semibold uppercase tracking-wide text-gray-400 mb-2">
+          <p className="text-xs font-semibold uppercase tracking-wide text-muted mb-2">
             Existing Categories
           </p>
           <div className="space-y-2 max-h-48 overflow-y-auto">
             {loadingExisting ? (
-              <p className="text-sm text-gray-400 text-center py-2">Loading…</p>
+              <p className="text-sm text-muted text-center py-2">Loading…</p>
             ) : existingCategories.length === 0 ? (
-              <p className="text-sm text-gray-400 italic text-center py-2">No categories yet</p>
+              <p className="text-sm text-muted italic text-center py-2">No categories yet</p>
             ) : (
               existingCategories.map((cat) => (
                 <div
                   key={cat.id}
-                  className="flex items-center justify-between px-3 py-2 bg-gray-50 border border-gray-100 rounded-lg"
+                  className="flex items-center justify-between px-3 py-2 bg-surface-soft border border-border rounded-lg"
                 >
-                  <span className="text-sm text-gray-700">{cat.name}</span>
+                  <span className="text-sm text-foreground">{cat.name}</span>
                   <button
                     onClick={() => handleDelete(cat.id)}
                     disabled={deletingIds.has(cat.id)}
-                    className="text-gray-300 hover:text-red-500 disabled:opacity-40 transition-colors text-sm"
+                    className="text-muted hover:text-danger disabled:opacity-40 transition-colors text-sm"
                   >
                     {deletingIds.has(cat.id) ? "…" : "✕"}
                   </button>
@@ -130,11 +130,11 @@ export default function CategoryModal({ onClose }) {
           </div>
         </div>
 
-        <hr className="border-dashed border-gray-200" />
+        <hr className="border-dashed border-border" />
 
         {/* ── Add new ── */}
         <div>
-          <p className="text-xs font-semibold uppercase tracking-wide text-gray-400 mb-2">
+          <p className="text-xs font-semibold uppercase tracking-wide text-muted mb-2">
             Add New Categories
           </p>
           <div className="space-y-3">
@@ -148,14 +148,14 @@ export default function CategoryModal({ onClose }) {
                 />
                 <button
                   onClick={() => removeField(index)}
-                  className="text-gray-300 hover:text-red-500 transition-colors"
+                  className="text-muted hover:text-danger transition-colors"
                 >
                   ✕
                 </button>
               </div>
             ))}
           </div>
-          <button onClick={addField} className="text-sm text-blue-600 mt-3">
+          <button onClick={addField} className="text-sm text-primary mt-3">
             + Add Another
           </button>
         </div>

@@ -25,18 +25,18 @@ function OpportunityStat({ label, value, tone }) {
 
 function SuggestionPill({ suggestion }) {
   return (
-    <div className="rounded-lg bg-white px-2 py-2">
+    <div className="rounded-lg bg-surface px-2 py-2">
       <div className="flex items-start justify-between gap-2">
-        <p className="line-clamp-1 min-w-0 text-xs font-black text-gray-800">{suggestion.title}</p>
-        <span className="shrink-0 rounded-md bg-blue-50 px-1.5 py-0.5 text-[10px] font-black text-blue-700">
+        <p className="line-clamp-1 min-w-0 text-xs font-black text-foreground">{suggestion.title}</p>
+        <span className="shrink-0 rounded-md bg-primary-soft px-1.5 py-0.5 text-[10px] font-black text-primary">
           {suggestion.score}
         </span>
       </div>
-      <p className="mt-1 truncate font-mono text-[10px] text-gray-400">{suggestion.href}</p>
+      <p className="mt-1 truncate font-mono text-[10px] text-muted">{suggestion.href}</p>
       {suggestion.reasons?.length ? (
         <div className="mt-1 flex flex-wrap gap-1">
           {suggestion.reasons.slice(0, 2).map((reason) => (
-            <span key={`${suggestion.slug}-${reason}`} className="rounded-md bg-gray-50 px-1.5 py-0.5 text-[10px] font-semibold text-gray-500">
+            <span key={`${suggestion.slug}-${reason}`} className="rounded-md bg-surface-soft px-1.5 py-0.5 text-[10px] font-semibold text-muted">
               {reason}
             </span>
           ))}
@@ -50,31 +50,31 @@ function OpportunityRow({ applying = false, copiedId, item, onApplyPlan, onCopy,
   const busy = applying || previewing;
 
   return (
-    <article className="rounded-xl border border-gray-100 bg-gray-50 px-3 py-3">
+    <article className="rounded-xl border border-border bg-surface-soft px-3 py-3">
       <div className="flex items-start justify-between gap-3">
         <div className="min-w-0">
-          <p className="line-clamp-2 text-sm font-black leading-5 text-gray-900">{item.blog.title}</p>
+          <p className="line-clamp-2 text-sm font-black leading-5 text-foreground">{item.blog.title}</p>
           <div className="mt-2 flex flex-wrap gap-1.5">
             {item.reasons.slice(0, 3).map((reason) => (
-              <span key={`${item.blog.id}-${reason}`} className="rounded-lg bg-white px-2 py-1 text-[10px] font-bold uppercase tracking-wide text-gray-500">
+              <span key={`${item.blog.id}-${reason}`} className="rounded-lg bg-surface px-2 py-1 text-[10px] font-bold uppercase tracking-wide text-muted">
                 {reason}
               </span>
             ))}
           </div>
         </div>
-        <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-white text-blue-700 shadow-sm">
+        <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-surface text-primary shadow-sm">
           <Route className="h-4 w-4" />
         </span>
       </div>
 
       <div className="mt-3 grid grid-cols-2 gap-2 text-center">
-        <div className="rounded-lg bg-white px-2 py-2">
-          <p className="text-sm font-black text-gray-900">{item.inboundCount}</p>
-          <p className="text-[10px] font-bold uppercase tracking-wide text-gray-400">Inbound</p>
+        <div className="rounded-lg bg-surface px-2 py-2">
+          <p className="text-sm font-black text-foreground">{item.inboundCount}</p>
+          <p className="text-[10px] font-bold uppercase tracking-wide text-muted">Inbound</p>
         </div>
-        <div className="rounded-lg bg-white px-2 py-2">
-          <p className="text-sm font-black text-gray-900">{item.outboundCount}</p>
-          <p className="text-[10px] font-bold uppercase tracking-wide text-gray-400">Outbound</p>
+        <div className="rounded-lg bg-surface px-2 py-2">
+          <p className="text-sm font-black text-foreground">{item.outboundCount}</p>
+          <p className="text-[10px] font-bold uppercase tracking-wide text-muted">Outbound</p>
         </div>
       </div>
 
@@ -88,7 +88,7 @@ function OpportunityRow({ applying = false, copiedId, item, onApplyPlan, onCopy,
         type="button"
         onClick={() => onApplyPlan?.({ blogIds: [item.blog.id], limit: 1 })}
         disabled={busy}
-        className="mt-3 inline-flex h-8 w-full items-center justify-center gap-1.5 rounded-lg bg-blue-700 px-2 text-xs font-semibold text-white transition hover:bg-blue-800 disabled:cursor-not-allowed disabled:bg-gray-300"
+        className="mt-3 inline-flex h-8 w-full items-center justify-center gap-1.5 rounded-lg bg-primary px-2 text-xs font-semibold text-white transition hover:bg-primary disabled:cursor-not-allowed disabled:bg-surface-soft"
       >
         {applying ? <RefreshCw className="h-3.5 w-3.5 animate-spin" /> : <WandSparkles className="h-3.5 w-3.5" />}
         {applying ? "Applying..." : "Preview apply"}
@@ -98,7 +98,7 @@ function OpportunityRow({ applying = false, copiedId, item, onApplyPlan, onCopy,
         <button
           type="button"
           onClick={() => onEdit?.(item.blog, "links")}
-          className="inline-flex h-8 items-center justify-center gap-1.5 rounded-lg bg-gray-900 px-2 text-xs font-semibold text-white transition hover:bg-gray-700"
+          className="inline-flex h-8 items-center justify-center gap-1.5 rounded-lg bg-primary px-2 text-xs font-semibold text-white transition hover:bg-primary"
         >
           <WandSparkles className="h-3.5 w-3.5" />
           Open links
@@ -106,9 +106,9 @@ function OpportunityRow({ applying = false, copiedId, item, onApplyPlan, onCopy,
         <button
           type="button"
           onClick={() => onCopy?.(item)}
-          className="inline-flex h-8 items-center justify-center gap-1.5 rounded-lg border border-gray-200 bg-white px-2 text-xs font-semibold text-gray-700 transition hover:bg-gray-50"
+          className="inline-flex h-8 items-center justify-center gap-1.5 rounded-lg border border-border bg-surface px-2 text-xs font-semibold text-foreground transition hover:bg-surface-soft"
         >
-          {copiedId === item.blog.id ? <CheckCircle2 className="h-3.5 w-3.5 text-green-600" /> : <Clipboard className="h-3.5 w-3.5" />}
+          {copiedId === item.blog.id ? <CheckCircle2 className="h-3.5 w-3.5 text-success" /> : <Clipboard className="h-3.5 w-3.5" />}
           Copy plan
         </button>
       </div>
@@ -142,28 +142,28 @@ export default function BlogInternalLinkOpportunityPanel({
   };
 
   return (
-    <section className="rounded-2xl border border-gray-100 bg-white p-4 shadow-sm">
+    <section className="rounded-2xl border border-border bg-surface p-4 shadow-sm">
       <div className="flex items-start justify-between gap-3">
         <div className="min-w-0">
-          <p className="text-xs font-black uppercase tracking-wider text-gray-500">Internal link opportunities</p>
-          <h2 className="mt-1 text-xl font-black text-gray-900">{summary.opportunityCount || 0} plans</h2>
-          <p className="mt-1 text-xs leading-5 text-gray-500">
+          <p className="text-xs font-black uppercase tracking-wider text-muted">Internal link opportunities</p>
+          <h2 className="mt-1 text-xl font-black text-foreground">{summary.opportunityCount || 0} plans</h2>
+          <p className="mt-1 text-xs leading-5 text-muted">
             Topic-match suggestions for isolated posts and articles with thin outbound paths.
           </p>
         </div>
-        <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-blue-50 text-blue-700">
+        <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-primary-soft text-primary">
           <Network className="h-5 w-5" />
         </div>
       </div>
 
       <div className="mt-4 grid grid-cols-3 gap-2">
-        <OpportunityStat label="No out" value={summary.missingOutbound || 0} tone="bg-amber-50 text-amber-700" />
-        <OpportunityStat label="Isolated" value={summary.isolated || 0} tone="bg-red-50 text-red-600" />
-        <OpportunityStat label="Ideas" value={summary.suggestionCount || 0} tone="bg-blue-50 text-blue-700" />
+        <OpportunityStat label="No out" value={summary.missingOutbound || 0} tone="bg-warning-soft text-warning" />
+        <OpportunityStat label="Isolated" value={summary.isolated || 0} tone="bg-danger-soft text-danger" />
+        <OpportunityStat label="Ideas" value={summary.suggestionCount || 0} tone="bg-primary-soft text-primary" />
       </div>
 
       {summary.zeroInboundSuggestions ? (
-        <div className="mt-3 flex items-center gap-2 rounded-xl bg-emerald-50 px-3 py-3 text-xs font-semibold leading-5 text-emerald-700">
+        <div className="mt-3 flex items-center gap-2 rounded-xl bg-success-soft px-3 py-3 text-xs font-semibold leading-5 text-success">
           <Sparkles className="h-4 w-4 shrink-0" />
           {summary.zeroInboundSuggestions} suggestions also rescue posts with zero inbound links.
         </div>
@@ -173,7 +173,7 @@ export default function BlogInternalLinkOpportunityPanel({
         type="button"
         onClick={() => onApplyPlan?.({ limit: 4 })}
         disabled={busy || !queue.length}
-        className="mt-3 inline-flex h-10 w-full items-center justify-center gap-2 rounded-xl bg-blue-700 px-4 text-sm font-semibold text-white transition hover:bg-blue-800 disabled:cursor-not-allowed disabled:bg-gray-300"
+        className="mt-3 inline-flex h-10 w-full items-center justify-center gap-2 rounded-xl bg-primary px-4 text-sm font-semibold text-white transition hover:bg-primary disabled:cursor-not-allowed disabled:bg-surface-soft"
       >
         {applying ? <RefreshCw className="h-4 w-4 animate-spin" /> : <WandSparkles className="h-4 w-4" />}
         {applying ? "Applying..." : "Preview top internal links"}
@@ -181,8 +181,8 @@ export default function BlogInternalLinkOpportunityPanel({
 
       <div className="mt-4 space-y-2">
         <div className="flex items-center justify-between gap-3">
-          <p className="text-[10px] font-black uppercase tracking-wider text-gray-400">Suggestion queue</p>
-          <span className="rounded-lg bg-gray-50 px-2 py-1 text-[10px] font-black text-gray-500">{queue.length}</span>
+          <p className="text-[10px] font-black uppercase tracking-wider text-muted">Suggestion queue</p>
+          <span className="rounded-lg bg-surface-soft px-2 py-1 text-[10px] font-black text-muted">{queue.length}</span>
         </div>
         {queue.length ? (
           queue.slice(0, 4).map((item) => (
@@ -198,15 +198,15 @@ export default function BlogInternalLinkOpportunityPanel({
             />
           ))
         ) : (
-          <div className="rounded-xl bg-green-50 px-3 py-3 text-sm font-semibold text-green-700">
+          <div className="rounded-xl bg-success-soft px-3 py-3 text-sm font-semibold text-success">
             <CheckCircle2 className="mr-1 inline h-4 w-4" />
             Current published posts have healthy internal link coverage.
           </div>
         )}
       </div>
 
-      <div className="mt-4 flex items-center gap-2 rounded-xl bg-gray-50 px-3 py-3 text-xs font-semibold leading-5 text-gray-600">
-        <ExternalLink className="h-4 w-4 shrink-0 text-gray-400" />
+      <div className="mt-4 flex items-center gap-2 rounded-xl bg-surface-soft px-3 py-3 text-xs font-semibold leading-5 text-muted">
+        <ExternalLink className="h-4 w-4 shrink-0 text-muted" />
         Copy plan gives editor-ready HTML; Open links keeps the final insert inside the blog editor.
       </div>
     </section>

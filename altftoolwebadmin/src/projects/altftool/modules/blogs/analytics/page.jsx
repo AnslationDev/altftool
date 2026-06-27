@@ -209,25 +209,25 @@ function buildRefreshSchedule(queue = []) {
 
 function StatCard({ icon: Icon, label, value, caption, tone = "blue" }) {
   const toneMap = {
-    blue: "bg-blue-50 text-blue-600",
-    green: "bg-green-50 text-green-600",
-    amber: "bg-amber-50 text-amber-600",
-    red: "bg-red-50 text-red-600",
-    slate: "bg-slate-100 text-slate-600",
+    blue: "bg-primary-soft text-primary",
+    green: "bg-success-soft text-success",
+    amber: "bg-warning-soft text-warning",
+    red: "bg-danger-soft text-danger",
+    slate: "bg-surface-soft text-muted",
   };
 
   return (
-    <div className="rounded-2xl border border-gray-100 bg-white p-5 shadow-sm">
+    <div className="rounded-2xl border border-border bg-surface p-5 shadow-sm">
       <div className="flex items-center justify-between gap-4">
         <div>
-          <p className="text-xs font-bold uppercase tracking-wider text-gray-400">{label}</p>
-          <p className="mt-2 text-2xl font-black text-gray-900">{value}</p>
+          <p className="text-xs font-bold uppercase tracking-wider text-muted">{label}</p>
+          <p className="mt-2 text-2xl font-black text-foreground">{value}</p>
         </div>
         <div className={`flex h-11 w-11 items-center justify-center rounded-2xl ${toneMap[tone]}`}>
           <Icon className="h-5 w-5" />
         </div>
       </div>
-      {caption ? <p className="mt-3 text-xs leading-5 text-gray-500">{caption}</p> : null}
+      {caption ? <p className="mt-3 text-xs leading-5 text-muted">{caption}</p> : null}
     </div>
   );
 }
@@ -237,22 +237,22 @@ function RankedBlog({ blog, index, router, metric, metricLabel = "score" }) {
     <button
       type="button"
       onClick={() => router.push(`/altftool/blogs/edit-blog/${blog.id}`)}
-      className="group flex w-full items-center gap-3 rounded-xl border border-gray-100 bg-white p-3 text-left transition hover:border-blue-200 hover:bg-blue-50/40"
+      className="group flex w-full items-center gap-3 rounded-xl border border-border bg-surface p-3 text-left transition hover:border-primary hover:bg-primary-soft/40"
     >
-      <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-gray-100 text-xs font-black text-gray-500">
+      <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-surface-soft text-xs font-black text-muted">
         {index + 1}
       </span>
       <div className="min-w-0 flex-1">
-        <p className="line-clamp-1 text-sm font-semibold text-gray-800 group-hover:text-blue-700">
+        <p className="line-clamp-1 text-sm font-semibold text-foreground group-hover:text-primary">
           {blog.heading || "Untitled blog"}
         </p>
-        <p className="mt-0.5 text-xs text-gray-400">
+        <p className="mt-0.5 text-xs text-muted">
           {blog.category || "Uncategorized"} - {calcReadTime(blog.description)} min read
         </p>
       </div>
       <div className="shrink-0 text-right">
-        <p className="text-sm font-black text-gray-800">{metric}</p>
-        <p className="text-[10px] uppercase tracking-wider text-gray-400">{metricLabel}</p>
+        <p className="text-sm font-black text-foreground">{metric}</p>
+        <p className="text-[10px] uppercase tracking-wider text-muted">{metricLabel}</p>
       </div>
     </button>
   );
@@ -264,11 +264,11 @@ function HorizontalBar({ label, value, max, caption }) {
   return (
     <div>
       <div className="mb-1 flex items-center justify-between gap-3 text-xs">
-        <span className="truncate font-semibold text-gray-600">{label}</span>
-        <span className="shrink-0 text-gray-400">{caption || value}</span>
+        <span className="truncate font-semibold text-muted">{label}</span>
+        <span className="shrink-0 text-muted">{caption || value}</span>
       </div>
-      <div className="h-2 overflow-hidden rounded-full bg-gray-100">
-        <div className="h-full rounded-full bg-blue-500" style={{ width: `${width}%` }} />
+      <div className="h-2 overflow-hidden rounded-full bg-surface-soft">
+        <div className="h-full rounded-full bg-primary" style={{ width: `${width}%` }} />
       </div>
     </div>
   );
@@ -276,10 +276,10 @@ function HorizontalBar({ label, value, max, caption }) {
 
 function RefreshActionButton({ icon: Icon, label, onClick, tone = "blue" }) {
   const toneMap = {
-    blue: "border-blue-100 bg-blue-50 text-blue-700 hover:border-blue-200",
-    amber: "border-amber-100 bg-amber-50 text-amber-700 hover:border-amber-200",
-    green: "border-green-100 bg-green-50 text-green-700 hover:border-green-200",
-    slate: "border-gray-200 bg-white text-gray-600 hover:border-gray-300",
+    blue: "border-primary bg-primary-soft text-primary hover:border-primary",
+    amber: "border-warning bg-warning-soft text-warning hover:border-warning",
+    green: "border-success bg-success-soft text-success hover:border-success",
+    slate: "border-border bg-surface text-muted hover:border-border",
   };
 
   return (
@@ -533,15 +533,15 @@ export default function AltFToolBlogAnalyticsPage() {
   if (loading) {
     return (
       <div className="mx-auto max-w-7xl space-y-5 px-4 py-8">
-        <div className="h-8 w-56 animate-pulse rounded-xl bg-gray-100" />
+        <div className="h-8 w-56 animate-pulse rounded-xl bg-surface-soft" />
         <div className="grid grid-cols-1 gap-4 md:grid-cols-4">
           {[1, 2, 3, 4].map((item) => (
-            <div key={item} className="h-32 animate-pulse rounded-2xl bg-gray-100" />
+            <div key={item} className="h-32 animate-pulse rounded-2xl bg-surface-soft" />
           ))}
         </div>
         <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
-          <div className="h-80 animate-pulse rounded-2xl bg-gray-100 lg:col-span-2" />
-          <div className="h-80 animate-pulse rounded-2xl bg-gray-100" />
+          <div className="h-80 animate-pulse rounded-2xl bg-surface-soft lg:col-span-2" />
+          <div className="h-80 animate-pulse rounded-2xl bg-surface-soft" />
         </div>
       </div>
     );
@@ -554,22 +554,22 @@ export default function AltFToolBlogAnalyticsPage() {
           <button
             type="button"
             onClick={() => router.push("/altftool/blogs")}
-            className="flex h-10 w-10 items-center justify-center rounded-xl border border-gray-200 bg-white text-gray-500 transition hover:bg-gray-50 hover:text-gray-800"
+            className="flex h-10 w-10 items-center justify-center rounded-xl border border-border bg-surface text-muted transition hover:bg-surface-soft hover:text-foreground"
             aria-label="Back to blogs"
           >
             <ArrowLeft className="h-4 w-4" />
           </button>
           <div>
-            <p className="text-xs font-black uppercase tracking-widest text-blue-600">AltFTool blogs</p>
-            <h1 className="mt-1 text-2xl font-black tracking-tight text-gray-900">Blog Analytics</h1>
-            <p className="mt-1 text-sm text-gray-500">Performance, content quality, category health, and publishing risks.</p>
+            <p className="text-xs font-black uppercase tracking-widest text-primary">AltFTool blogs</p>
+            <h1 className="mt-1 text-2xl font-black tracking-tight text-foreground">Blog Analytics</h1>
+            <p className="mt-1 text-sm text-muted">Performance, content quality, category health, and publishing risks.</p>
           </div>
         </div>
         <div className="flex flex-wrap items-center gap-2">
           <button
             type="button"
             onClick={() => router.push("/altftool/blogs/quality")}
-            className="inline-flex h-10 items-center gap-2 rounded-xl border border-green-100 bg-green-50 px-4 text-sm font-semibold text-green-700 transition hover:bg-green-100"
+            className="inline-flex h-10 items-center gap-2 rounded-xl border border-success bg-success-soft px-4 text-sm font-semibold text-success transition hover:bg-success-soft"
           >
             <ShieldCheck className="h-4 w-4" />
             Quality
@@ -577,7 +577,7 @@ export default function AltFToolBlogAnalyticsPage() {
           <button
             type="button"
             onClick={() => router.push("/altftool/blogs/bulk-refresh")}
-            className="inline-flex h-10 items-center gap-2 rounded-xl border border-blue-100 bg-blue-50 px-4 text-sm font-semibold text-blue-700 transition hover:bg-blue-100"
+            className="inline-flex h-10 items-center gap-2 rounded-xl border border-primary bg-primary-soft px-4 text-sm font-semibold text-primary transition hover:bg-primary-soft"
           >
             <RefreshCw className="h-4 w-4" />
             Bulk refresh
@@ -585,7 +585,7 @@ export default function AltFToolBlogAnalyticsPage() {
           <button
             type="button"
             onClick={() => router.push("/altftool/blogs/add-blogs")}
-            className="inline-flex h-10 items-center justify-center rounded-xl bg-gray-900 px-4 text-sm font-semibold text-white transition hover:bg-gray-700"
+            className="inline-flex h-10 items-center justify-center rounded-xl bg-primary px-4 text-sm font-semibold text-white transition hover:bg-primary"
           >
             Add blog
           </button>
@@ -605,27 +605,27 @@ export default function AltFToolBlogAnalyticsPage() {
         <StatCard icon={ThumbsUp} label="Helpful Rate" value={`${analytics.helpfulRate}%`} caption={`${analytics.totalHelpful} helpful - ${analytics.totalNotHelpful} needs work`} tone={analytics.helpfulRate >= 70 ? "green" : "amber"} />
       </div>
 
-      <section className="rounded-2xl border border-gray-100 bg-white p-6 shadow-sm">
+      <section className="rounded-2xl border border-border bg-surface p-6 shadow-sm">
         <div className="mb-5 flex flex-wrap items-center justify-between gap-3">
           <div className="flex items-center gap-2">
-            <BookOpenCheck className="h-4 w-4 text-green-600" />
+            <BookOpenCheck className="h-4 w-4 text-success" />
             <div>
-              <h2 className="text-sm font-black uppercase tracking-wider text-gray-700">Schema health monitor</h2>
-              <p className="mt-1 text-xs text-gray-400">
+              <h2 className="text-sm font-black uppercase tracking-wider text-foreground">Schema health monitor</h2>
+              <p className="mt-1 text-xs text-muted">
                 Tracks BlogPosting basics, FAQ rich-result inputs, citation schema, and freshness signals.
               </p>
             </div>
           </div>
-          <div className="flex flex-wrap gap-2 text-xs font-semibold text-gray-500">
-            <span className="inline-flex h-7 items-center gap-1 rounded-lg bg-green-50 px-2.5 text-green-700">
+          <div className="flex flex-wrap gap-2 text-xs font-semibold text-muted">
+            <span className="inline-flex h-7 items-center gap-1 rounded-lg bg-success-soft px-2.5 text-success">
               <ShieldCheck className="h-3.5 w-3.5" />
               {analytics.schemaReady.length}/{analytics.published} schema ready
             </span>
-            <span className="inline-flex h-7 items-center gap-1 rounded-lg bg-blue-50 px-2.5 text-blue-700">
+            <span className="inline-flex h-7 items-center gap-1 rounded-lg bg-primary-soft px-2.5 text-primary">
               <Sparkles className="h-3.5 w-3.5" />
               {analytics.richResultReady.length}/{analytics.published} rich ready
             </span>
-            <span className="inline-flex h-7 items-center gap-1 rounded-lg bg-amber-50 px-2.5 text-amber-700">
+            <span className="inline-flex h-7 items-center gap-1 rounded-lg bg-warning-soft px-2.5 text-warning">
               <SearchCheck className="h-3.5 w-3.5" />
               {analytics.avgSchemaScore}% avg schema
             </span>
@@ -636,18 +636,18 @@ export default function AltFToolBlogAnalyticsPage() {
           <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
             {analytics.schemaQueue.length ? (
               analytics.schemaQueue.slice(0, 6).map((blog) => (
-                <div key={blog.id} className="rounded-xl border border-gray-100 bg-gray-50/60 p-3">
+                <div key={blog.id} className="rounded-xl border border-border bg-surface-soft/60 p-3">
                   <div className="flex items-start gap-3">
-                    <div className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl text-sm font-black ${blog.schemaReady ? "bg-amber-50 text-amber-600" : "bg-red-50 text-red-600"}`}>
+                    <div className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl text-sm font-black ${blog.schemaReady ? "bg-warning-soft text-warning" : "bg-danger-soft text-danger"}`}>
                       {blog.schemaScore}
                     </div>
                     <div className="min-w-0 flex-1">
-                      <p className="line-clamp-1 text-sm font-semibold text-gray-800">
+                      <p className="line-clamp-1 text-sm font-semibold text-foreground">
                         {blog.heading || "Untitled blog"}
                       </p>
                       <div className="mt-2 flex flex-wrap gap-1.5">
                         {blog.schemaHealth.issues.slice(0, 3).map((issue) => (
-                          <span key={`${blog.id}-${issue.key}`} className="rounded-lg bg-white px-2 py-1 text-[10px] font-semibold text-gray-500">
+                          <span key={`${blog.id}-${issue.key}`} className="rounded-lg bg-surface px-2 py-1 text-[10px] font-semibold text-muted">
                             {issue.label}
                           </span>
                         ))}
@@ -681,14 +681,14 @@ export default function AltFToolBlogAnalyticsPage() {
                 </div>
               ))
             ) : (
-              <p className="rounded-xl bg-gray-50 px-3 py-8 text-center text-sm text-gray-400 md:col-span-2">
+              <p className="rounded-xl bg-surface-soft px-3 py-8 text-center text-sm text-muted md:col-span-2">
                 Published blogs have the schema inputs needed for rich result monitoring.
               </p>
             )}
           </div>
 
-          <div className="rounded-xl border border-gray-100 bg-gray-50/60 p-4">
-            <h3 className="text-xs font-black uppercase tracking-wider text-gray-500">Schema gap types</h3>
+          <div className="rounded-xl border border-border bg-surface-soft/60 p-4">
+            <h3 className="text-xs font-black uppercase tracking-wider text-muted">Schema gap types</h3>
             <div className="mt-4 space-y-3">
               {analytics.schemaIssueCounts.length ? (
                 analytics.schemaIssueCounts.map((item) => (
@@ -701,7 +701,7 @@ export default function AltFToolBlogAnalyticsPage() {
                   />
                 ))
               ) : (
-                <p className="rounded-lg bg-white px-3 py-8 text-center text-xs text-gray-400">
+                <p className="rounded-lg bg-surface px-3 py-8 text-center text-xs text-muted">
                   No schema gaps found in published posts.
                 </p>
               )}
@@ -710,31 +710,31 @@ export default function AltFToolBlogAnalyticsPage() {
         </div>
       </section>
 
-      <section className="rounded-2xl border border-gray-100 bg-white p-6 shadow-sm">
+      <section className="rounded-2xl border border-border bg-surface p-6 shadow-sm">
         <div className="mb-5 flex flex-wrap items-center justify-between gap-3">
           <div className="flex items-center gap-2">
-            <SearchCheck className="h-4 w-4 text-blue-600" />
+            <SearchCheck className="h-4 w-4 text-primary" />
             <div>
-              <h2 className="text-sm font-black uppercase tracking-wider text-gray-700">SEO audit dashboard</h2>
-              <p className="mt-1 text-xs text-gray-400">
+              <h2 className="text-sm font-black uppercase tracking-wider text-foreground">SEO audit dashboard</h2>
+              <p className="mt-1 text-xs text-muted">
                 Ranked issues across metadata, schema, freshness, trust, links, FAQ, and reader signals.
               </p>
             </div>
           </div>
-          <div className="flex flex-wrap gap-2 text-xs font-semibold text-gray-500">
-            <span className="inline-flex h-7 items-center gap-1 rounded-lg bg-blue-50 px-2.5 text-blue-700">
+          <div className="flex flex-wrap gap-2 text-xs font-semibold text-muted">
+            <span className="inline-flex h-7 items-center gap-1 rounded-lg bg-primary-soft px-2.5 text-primary">
               <SearchCheck className="h-3.5 w-3.5" />
               {analytics.seoAuditQueue.length} audit items
             </span>
-            <span className="inline-flex h-7 items-center gap-1 rounded-lg bg-slate-50 px-2.5 text-slate-700">
+            <span className="inline-flex h-7 items-center gap-1 rounded-lg bg-surface-soft px-2.5 text-foreground">
               <ShieldCheck className="h-3.5 w-3.5" />
               {analytics.missingTrust.length} missing trust
             </span>
-            <span className="inline-flex h-7 items-center gap-1 rounded-lg bg-green-50 px-2.5 text-green-700">
+            <span className="inline-flex h-7 items-center gap-1 rounded-lg bg-success-soft px-2.5 text-success">
               <BookOpenCheck className="h-3.5 w-3.5" />
               {analytics.missingSources.length} missing sources
             </span>
-            <span className="inline-flex h-7 items-center gap-1 rounded-lg bg-amber-50 px-2.5 text-amber-700">
+            <span className="inline-flex h-7 items-center gap-1 rounded-lg bg-warning-soft px-2.5 text-warning">
               <ThumbsDown className="h-3.5 w-3.5" />
               {analytics.lowFeedback.length} low feedback
             </span>
@@ -749,35 +749,35 @@ export default function AltFToolBlogAnalyticsPage() {
                   key={blog.id}
                   type="button"
                   onClick={() => router.push(`/altftool/blogs/edit-blog/${blog.id}`)}
-                  className="group flex w-full items-start gap-3 rounded-xl border border-gray-100 bg-gray-50/50 p-3 text-left transition hover:border-blue-200 hover:bg-blue-50"
+                  className="group flex w-full items-start gap-3 rounded-xl border border-border bg-surface-soft/50 p-3 text-left transition hover:border-primary hover:bg-primary-soft"
                 >
-                  <div className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl text-sm font-black ${blog.qualityScore >= 75 ? "bg-green-50 text-green-600" : "bg-amber-50 text-amber-600"}`}>
+                  <div className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl text-sm font-black ${blog.qualityScore >= 75 ? "bg-success-soft text-success" : "bg-warning-soft text-warning"}`}>
                     {blog.qualityScore}
                   </div>
                   <div className="min-w-0 flex-1">
-                    <p className="line-clamp-1 text-sm font-semibold text-gray-800 group-hover:text-blue-700">
+                    <p className="line-clamp-1 text-sm font-semibold text-foreground group-hover:text-primary">
                       {blog.heading || "Untitled blog"}
                     </p>
                     <div className="mt-2 flex flex-wrap gap-1.5">
                       {blog.seoAuditIssues.slice(0, 4).map((issue) => (
-                        <span key={`${blog.id}-${issue.label}`} className="rounded-lg bg-white px-2 py-1 text-[10px] font-semibold text-gray-500">
+                        <span key={`${blog.id}-${issue.label}`} className="rounded-lg bg-surface px-2 py-1 text-[10px] font-semibold text-muted">
                           {issue.label}: {issue.detail}
                         </span>
                       ))}
                     </div>
                   </div>
-                  <Edit3 className="mt-1 h-4 w-4 shrink-0 text-gray-400" />
+                  <Edit3 className="mt-1 h-4 w-4 shrink-0 text-muted" />
                 </button>
               ))
             ) : (
-              <p className="rounded-xl bg-gray-50 px-3 py-8 text-center text-sm text-gray-400">
+              <p className="rounded-xl bg-surface-soft px-3 py-8 text-center text-sm text-muted">
                 No SEO audit issues detected right now.
               </p>
             )}
           </div>
 
-          <div className="rounded-xl border border-gray-100 bg-gray-50/60 p-4">
-            <h3 className="text-xs font-black uppercase tracking-wider text-gray-500">Top issue types</h3>
+          <div className="rounded-xl border border-border bg-surface-soft/60 p-4">
+            <h3 className="text-xs font-black uppercase tracking-wider text-muted">Top issue types</h3>
             <div className="mt-4 space-y-3">
               {analytics.issueCounts.length ? (
                 analytics.issueCounts.map((item) => (
@@ -790,7 +790,7 @@ export default function AltFToolBlogAnalyticsPage() {
                   />
                 ))
               ) : (
-                <p className="rounded-lg bg-white px-3 py-8 text-center text-xs text-gray-400">
+                <p className="rounded-lg bg-surface px-3 py-8 text-center text-xs text-muted">
                   Issue distribution will appear after audits find gaps.
                 </p>
               )}
@@ -799,39 +799,39 @@ export default function AltFToolBlogAnalyticsPage() {
         </div>
       </section>
 
-      <section className="rounded-2xl border border-gray-100 bg-white p-6 shadow-sm">
+      <section className="rounded-2xl border border-border bg-surface p-6 shadow-sm">
         <div className="mb-5 flex flex-wrap items-center justify-between gap-3">
           <div className="flex items-center gap-2">
-            <RefreshCw className="h-4 w-4 text-blue-600" />
+            <RefreshCw className="h-4 w-4 text-primary" />
             <div>
-              <h2 className="text-sm font-black uppercase tracking-wider text-gray-700">Needs refresh workflow</h2>
-              <p className="mt-1 text-xs text-gray-400">
+              <h2 className="text-sm font-black uppercase tracking-wider text-foreground">Needs refresh workflow</h2>
+              <p className="mt-1 text-xs text-muted">
                 Prioritized published posts with stale content, missing FAQ schema source, weak quality, or no internal links.
               </p>
             </div>
           </div>
-          <div className="flex flex-wrap gap-2 text-xs font-semibold text-gray-500">
-            <span className="inline-flex h-7 items-center gap-1 rounded-lg bg-amber-50 px-2.5 text-amber-700">
+          <div className="flex flex-wrap gap-2 text-xs font-semibold text-muted">
+            <span className="inline-flex h-7 items-center gap-1 rounded-lg bg-warning-soft px-2.5 text-warning">
               <CalendarClock className="h-3.5 w-3.5" />
               {analytics.stalePublished.length} stale
             </span>
-            <span className="inline-flex h-7 items-center gap-1 rounded-lg bg-blue-50 px-2.5 text-blue-700">
+            <span className="inline-flex h-7 items-center gap-1 rounded-lg bg-primary-soft px-2.5 text-primary">
               <Link2 className="h-3.5 w-3.5" />
               {analytics.noInternalLinks.length} no links
             </span>
-            <span className="inline-flex h-7 items-center gap-1 rounded-lg bg-purple-50 px-2.5 text-purple-700">
+            <span className="inline-flex h-7 items-center gap-1 rounded-lg bg-secondary-soft px-2.5 text-secondary">
               <SearchCheck className="h-3.5 w-3.5" />
               {analytics.noFaq.length} no FAQ
             </span>
-            <span className="inline-flex h-7 items-center gap-1 rounded-lg bg-red-50 px-2.5 text-red-700">
+            <span className="inline-flex h-7 items-center gap-1 rounded-lg bg-danger-soft px-2.5 text-danger">
               <AlertTriangle className="h-3.5 w-3.5" />
               {analytics.highPriorityRefresh.length} high priority
             </span>
-            <span className="inline-flex h-7 items-center gap-1 rounded-lg bg-slate-50 px-2.5 text-slate-700">
+            <span className="inline-flex h-7 items-center gap-1 rounded-lg bg-surface-soft px-2.5 text-foreground">
               <CalendarClock className="h-3.5 w-3.5" />
               {analytics.missingReviewDate.length} no review date
             </span>
-            <span className="inline-flex h-7 items-center gap-1 rounded-lg bg-green-50 px-2.5 text-green-700">
+            <span className="inline-flex h-7 items-center gap-1 rounded-lg bg-success-soft px-2.5 text-success">
               <Sparkles className="h-3.5 w-3.5" />
               {analytics.quickRefreshWins.length} quick wins
             </span>
@@ -843,32 +843,32 @@ export default function AltFToolBlogAnalyticsPage() {
             {analytics.refreshQueue.map((blog) => (
               <div
                 key={blog.id}
-                className="flex w-full items-start gap-3 rounded-xl border border-gray-100 bg-gray-50/50 p-3 text-left"
+                className="flex w-full items-start gap-3 rounded-xl border border-border bg-surface-soft/50 p-3 text-left"
               >
-                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-white text-sm font-black text-blue-600 shadow-sm">
+                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-surface text-sm font-black text-primary shadow-sm">
                   {blog.refreshScore}
                 </div>
                 <div className="min-w-0 flex-1">
                   <div className="flex flex-wrap items-center gap-2">
-                    <p className="line-clamp-1 min-w-0 flex-1 text-sm font-semibold text-gray-800">
+                    <p className="line-clamp-1 min-w-0 flex-1 text-sm font-semibold text-foreground">
                       {blog.heading || "Untitled blog"}
                     </p>
                     <span className={`shrink-0 rounded-lg px-2 py-1 text-[10px] font-bold uppercase tracking-wide ${
                       blog.refreshTier === "High"
-                        ? "bg-red-50 text-red-600"
+                        ? "bg-danger-soft text-danger"
                         : blog.refreshTier === "Medium"
-                          ? "bg-amber-50 text-amber-600"
-                          : "bg-green-50 text-green-600"
+                          ? "bg-warning-soft text-warning"
+                          : "bg-success-soft text-success"
                     }`}>
                       {blog.refreshTier}
                     </span>
                   </div>
-                  <p className="mt-1 line-clamp-2 text-xs leading-5 text-gray-500">
+                  <p className="mt-1 line-clamp-2 text-xs leading-5 text-muted">
                     {blog.refreshAction}
                   </p>
                   <div className="mt-2 flex flex-wrap gap-1.5">
                     {blog.refreshReasons.slice(0, 3).map((reason) => (
-                      <span key={reason} className="rounded-lg bg-white px-2 py-1 text-[10px] font-semibold text-gray-500">
+                      <span key={reason} className="rounded-lg bg-surface px-2 py-1 text-[10px] font-semibold text-muted">
                         {reason}
                       </span>
                     ))}
@@ -904,37 +904,37 @@ export default function AltFToolBlogAnalyticsPage() {
             ))}
           </div>
         ) : (
-          <p className="rounded-xl bg-gray-50 px-3 py-8 text-center text-sm text-gray-400">
+          <p className="rounded-xl bg-surface-soft px-3 py-8 text-center text-sm text-muted">
             No published posts need refresh right now.
           </p>
         )}
       </section>
 
-      <section className="rounded-2xl border border-gray-100 bg-white p-6 shadow-sm">
+      <section className="rounded-2xl border border-border bg-surface p-6 shadow-sm">
         <div className="mb-5 flex flex-wrap items-center justify-between gap-3">
           <div className="flex items-center gap-2">
-            <CalendarClock className="h-4 w-4 text-blue-600" />
+            <CalendarClock className="h-4 w-4 text-primary" />
             <div>
-              <h2 className="text-sm font-black uppercase tracking-wider text-gray-700">Refresh sprint calendar</h2>
-              <p className="mt-1 text-xs text-gray-400">
+              <h2 className="text-sm font-black uppercase tracking-wider text-foreground">Refresh sprint calendar</h2>
+              <p className="mt-1 text-xs text-muted">
                 Suggested order for turning the refresh queue into weekly editing work.
               </p>
             </div>
           </div>
-          <span className="rounded-lg bg-gray-50 px-3 py-1.5 text-xs font-semibold text-gray-500">
+          <span className="rounded-lg bg-surface-soft px-3 py-1.5 text-xs font-semibold text-muted">
             {analytics.refreshQueue.length} queued posts
           </span>
         </div>
 
         <div className="grid grid-cols-1 gap-3 lg:grid-cols-3">
           {analytics.refreshSchedule.map((slot) => (
-            <div key={slot.label} className="rounded-xl border border-gray-100 bg-gray-50/60 p-4">
+            <div key={slot.label} className="rounded-xl border border-border bg-surface-soft/60 p-4">
               <div className="mb-3 flex items-start justify-between gap-3">
                 <div>
-                  <p className="text-sm font-black text-gray-900">{slot.label}</p>
-                  <p className="mt-1 text-xs leading-5 text-gray-500">{slot.caption}</p>
+                  <p className="text-sm font-black text-foreground">{slot.label}</p>
+                  <p className="mt-1 text-xs leading-5 text-muted">{slot.caption}</p>
                 </div>
-                <span className="shrink-0 rounded-lg bg-white px-2 py-1 text-[10px] font-bold uppercase tracking-wide text-blue-600 shadow-sm">
+                <span className="shrink-0 rounded-lg bg-surface px-2 py-1 text-[10px] font-bold uppercase tracking-wide text-primary shadow-sm">
                   {slot.dateLabel}
                 </span>
               </div>
@@ -946,16 +946,16 @@ export default function AltFToolBlogAnalyticsPage() {
                       key={blog.id}
                       type="button"
                       onClick={() => router.push(`/altftool/blogs/edit-blog/${blog.id}`)}
-                      className="group flex w-full items-center gap-2 rounded-lg border border-gray-100 bg-white p-2 text-left transition hover:border-blue-200 hover:bg-blue-50"
+                      className="group flex w-full items-center gap-2 rounded-lg border border-border bg-surface p-2 text-left transition hover:border-primary hover:bg-primary-soft"
                     >
-                      <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-blue-50 text-[11px] font-black text-blue-600">
+                      <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-primary-soft text-[11px] font-black text-primary">
                         {blog.refreshScore}
                       </span>
                       <span className="min-w-0 flex-1">
-                        <span className="line-clamp-1 text-xs font-semibold text-gray-800 group-hover:text-blue-700">
+                        <span className="line-clamp-1 text-xs font-semibold text-foreground group-hover:text-primary">
                           {blog.heading || "Untitled blog"}
                         </span>
-                        <span className="mt-0.5 line-clamp-1 text-[10px] text-gray-400">
+                        <span className="mt-0.5 line-clamp-1 text-[10px] text-muted">
                           {blog.refreshAction || blog.refreshReasons[0] || "Refresh recommended"}
                         </span>
                       </span>
@@ -963,7 +963,7 @@ export default function AltFToolBlogAnalyticsPage() {
                   ))}
                 </div>
               ) : (
-                <p className="rounded-lg bg-white px-3 py-6 text-center text-xs text-gray-400">
+                <p className="rounded-lg bg-surface px-3 py-6 text-center text-xs text-muted">
                   Nothing scheduled here yet.
                 </p>
               )}
@@ -973,36 +973,36 @@ export default function AltFToolBlogAnalyticsPage() {
       </section>
 
       <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
-        <section className="rounded-2xl border border-gray-100 bg-white p-6 shadow-sm lg:col-span-2">
+        <section className="rounded-2xl border border-border bg-surface p-6 shadow-sm lg:col-span-2">
           <div className="mb-5 flex items-center justify-between gap-3">
             <div className="flex items-center gap-2">
-              <BarChart3 className="h-4 w-4 text-blue-600" />
-              <h2 className="text-sm font-black uppercase tracking-wider text-gray-700">Publishing cadence</h2>
+              <BarChart3 className="h-4 w-4 text-primary" />
+              <h2 className="text-sm font-black uppercase tracking-wider text-foreground">Publishing cadence</h2>
             </div>
-            <span className="text-xs text-gray-400">Last 6 months</span>
+            <span className="text-xs text-muted">Last 6 months</span>
           </div>
           <div className="grid grid-cols-6 items-end gap-3">
             {analytics.monthly.map((item) => (
               <div key={item.month} className="flex min-h-52 flex-col justify-end gap-2">
-                <div className="flex flex-1 items-end rounded-xl bg-gray-50 px-2">
+                <div className="flex flex-1 items-end rounded-xl bg-surface-soft px-2">
                   <div
-                    className="w-full rounded-t-xl bg-blue-500"
+                    className="w-full rounded-t-xl bg-primary"
                     style={{ height: `${Math.max(8, (item.posts / maxMonthly) * 100)}%` }}
                   />
                 </div>
                 <div className="text-center">
-                  <p className="text-xs font-bold text-gray-700">{item.posts}</p>
-                  <p className="text-[10px] text-gray-400">{item.month}</p>
+                  <p className="text-xs font-bold text-foreground">{item.posts}</p>
+                  <p className="text-[10px] text-muted">{item.month}</p>
                 </div>
               </div>
             ))}
           </div>
         </section>
 
-        <section className="rounded-2xl border border-gray-100 bg-white p-6 shadow-sm">
+        <section className="rounded-2xl border border-border bg-surface p-6 shadow-sm">
           <div className="mb-5 flex items-center gap-2">
-            <TrendingUp className="h-4 w-4 text-green-600" />
-            <h2 className="text-sm font-black uppercase tracking-wider text-gray-700">Top engagement</h2>
+            <TrendingUp className="h-4 w-4 text-success" />
+            <h2 className="text-sm font-black uppercase tracking-wider text-foreground">Top engagement</h2>
           </div>
           <div className="space-y-2.5">
             {analytics.topBlogs.length ? (
@@ -1016,24 +1016,24 @@ export default function AltFToolBlogAnalyticsPage() {
                 />
               ))
             ) : (
-              <p className="rounded-xl bg-gray-50 px-3 py-8 text-center text-sm text-gray-400">No published blog engagement yet.</p>
+              <p className="rounded-xl bg-surface-soft px-3 py-8 text-center text-sm text-muted">No published blog engagement yet.</p>
             )}
           </div>
         </section>
       </div>
 
-      <section className="rounded-2xl border border-gray-100 bg-white p-6 shadow-sm">
+      <section className="rounded-2xl border border-border bg-surface p-6 shadow-sm">
         <div className="mb-5 flex flex-wrap items-center justify-between gap-3">
           <div className="flex items-center gap-2">
-            <MousePointerClick className="h-4 w-4 text-blue-600" />
+            <MousePointerClick className="h-4 w-4 text-primary" />
             <div>
-              <h2 className="text-sm font-black uppercase tracking-wider text-gray-700">Tool CTA performance</h2>
-              <p className="mt-1 text-xs text-gray-400">
+              <h2 className="text-sm font-black uppercase tracking-wider text-foreground">Tool CTA performance</h2>
+              <p className="mt-1 text-xs text-muted">
                 Blog posts that are moving readers into related AltFTool utilities.
               </p>
             </div>
           </div>
-          <span className="rounded-lg bg-blue-50 px-3 py-1.5 text-xs font-semibold text-blue-700">
+          <span className="rounded-lg bg-primary-soft px-3 py-1.5 text-xs font-semibold text-primary">
             {analytics.totalToolClicks.toLocaleString()} tracked clicks
           </span>
         </div>
@@ -1051,7 +1051,7 @@ export default function AltFToolBlogAnalyticsPage() {
               />
             ))
           ) : (
-            <p className="rounded-xl bg-gray-50 px-3 py-8 text-center text-sm text-gray-400 lg:col-span-2">
+            <p className="rounded-xl bg-surface-soft px-3 py-8 text-center text-sm text-muted lg:col-span-2">
               No tracked tool CTA clicks yet. Inline and related tool cards will appear here after readers open tools from blogs.
             </p>
           )}
@@ -1059,10 +1059,10 @@ export default function AltFToolBlogAnalyticsPage() {
       </section>
 
       <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
-        <section className="rounded-2xl border border-gray-100 bg-white p-6 shadow-sm">
+        <section className="rounded-2xl border border-border bg-surface p-6 shadow-sm">
           <div className="mb-5 flex items-center gap-2">
-            <SearchCheck className="h-4 w-4 text-blue-600" />
-            <h2 className="text-sm font-black uppercase tracking-wider text-gray-700">Quality attention queue</h2>
+            <SearchCheck className="h-4 w-4 text-primary" />
+            <h2 className="text-sm font-black uppercase tracking-wider text-foreground">Quality attention queue</h2>
           </div>
           <div className="space-y-2.5">
             {analytics.lowQualityBlogs.map((blog) => (
@@ -1070,27 +1070,27 @@ export default function AltFToolBlogAnalyticsPage() {
                 key={blog.id}
                 type="button"
                 onClick={() => router.push(`/altftool/blogs/edit-blog/${blog.id}`)}
-                className="flex w-full items-center gap-3 rounded-xl border border-gray-100 p-3 text-left transition hover:border-amber-200 hover:bg-amber-50"
+                className="flex w-full items-center gap-3 rounded-xl border border-border p-3 text-left transition hover:border-warning hover:bg-warning-soft"
               >
-                <div className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl text-sm font-black ${blog.qualityScore >= 75 ? "bg-green-50 text-green-600" : "bg-amber-50 text-amber-600"}`}>
+                <div className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl text-sm font-black ${blog.qualityScore >= 75 ? "bg-success-soft text-success" : "bg-warning-soft text-warning"}`}>
                   {blog.qualityScore}
                 </div>
                 <div className="min-w-0 flex-1">
-                  <p className="line-clamp-1 text-sm font-semibold text-gray-800">{blog.heading || "Untitled blog"}</p>
-                  <p className="mt-0.5 line-clamp-1 text-xs text-gray-400">
+                  <p className="line-clamp-1 text-sm font-semibold text-foreground">{blog.heading || "Untitled blog"}</p>
+                  <p className="mt-0.5 line-clamp-1 text-xs text-muted">
                     {blog.qualitySuggestions[0] || "Review this post before the next content refresh."}
                   </p>
                 </div>
-                <Edit3 className="h-4 w-4 shrink-0 text-gray-400" />
+                <Edit3 className="h-4 w-4 shrink-0 text-muted" />
               </button>
             ))}
           </div>
         </section>
 
-        <section className="rounded-2xl border border-gray-100 bg-white p-6 shadow-sm">
+        <section className="rounded-2xl border border-border bg-surface p-6 shadow-sm">
           <div className="mb-5 flex items-center gap-2">
-            <AlertTriangle className="h-4 w-4 text-amber-600" />
-            <h2 className="text-sm font-black uppercase tracking-wider text-gray-700">Stale drafts</h2>
+            <AlertTriangle className="h-4 w-4 text-warning" />
+            <h2 className="text-sm font-black uppercase tracking-wider text-foreground">Stale drafts</h2>
           </div>
           <div className="space-y-2.5">
             {analytics.staleDrafts.length ? (
@@ -1099,28 +1099,28 @@ export default function AltFToolBlogAnalyticsPage() {
                   key={blog.id}
                   type="button"
                   onClick={() => router.push(`/altftool/blogs/edit-blog/${blog.id}`)}
-                  className="flex w-full items-center gap-3 rounded-xl border border-gray-100 p-3 text-left transition hover:border-amber-200 hover:bg-amber-50"
+                  className="flex w-full items-center gap-3 rounded-xl border border-border p-3 text-left transition hover:border-warning hover:bg-warning-soft"
                 >
-                  <FileText className="h-4 w-4 shrink-0 text-amber-600" />
+                  <FileText className="h-4 w-4 shrink-0 text-warning" />
                   <div className="min-w-0 flex-1">
-                    <p className="line-clamp-1 text-sm font-semibold text-gray-800">{blog.heading || "Untitled draft"}</p>
-                    <p className="mt-0.5 text-xs text-gray-400">Draft - {blog.category || "Uncategorized"}</p>
+                    <p className="line-clamp-1 text-sm font-semibold text-foreground">{blog.heading || "Untitled draft"}</p>
+                    <p className="mt-0.5 text-xs text-muted">Draft - {blog.category || "Uncategorized"}</p>
                   </div>
-                  <Edit3 className="h-4 w-4 shrink-0 text-gray-400" />
+                  <Edit3 className="h-4 w-4 shrink-0 text-muted" />
                 </button>
               ))
             ) : (
-              <p className="rounded-xl bg-gray-50 px-3 py-8 text-center text-sm text-gray-400">No stale drafts older than 7 days.</p>
+              <p className="rounded-xl bg-surface-soft px-3 py-8 text-center text-sm text-muted">No stale drafts older than 7 days.</p>
             )}
           </div>
         </section>
       </div>
 
       <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
-        <section className="rounded-2xl border border-gray-100 bg-white p-6 shadow-sm">
+        <section className="rounded-2xl border border-border bg-surface p-6 shadow-sm">
           <div className="mb-5 flex items-center gap-2">
-            <BarChart3 className="h-4 w-4 text-blue-600" />
-            <h2 className="text-sm font-black uppercase tracking-wider text-gray-700">Category performance</h2>
+            <BarChart3 className="h-4 w-4 text-primary" />
+            <h2 className="text-sm font-black uppercase tracking-wider text-foreground">Category performance</h2>
           </div>
           <div className="space-y-4">
             {analytics.categories.map((item) => (
@@ -1135,10 +1135,10 @@ export default function AltFToolBlogAnalyticsPage() {
           </div>
         </section>
 
-        <section className="rounded-2xl border border-gray-100 bg-white p-6 shadow-sm">
+        <section className="rounded-2xl border border-border bg-surface p-6 shadow-sm">
           <div className="mb-5 flex items-center gap-2">
-            <Tags className="h-4 w-4 text-blue-600" />
-            <h2 className="text-sm font-black uppercase tracking-wider text-gray-700">Tag coverage</h2>
+            <Tags className="h-4 w-4 text-primary" />
+            <h2 className="text-sm font-black uppercase tracking-wider text-foreground">Tag coverage</h2>
           </div>
           <div className="space-y-4">
             {analytics.tags.length ? (
@@ -1152,7 +1152,7 @@ export default function AltFToolBlogAnalyticsPage() {
                 />
               ))
             ) : (
-              <p className="rounded-xl bg-gray-50 px-3 py-8 text-center text-sm text-gray-400">No tags saved yet. Add tags in the blog editor.</p>
+              <p className="rounded-xl bg-surface-soft px-3 py-8 text-center text-sm text-muted">No tags saved yet. Add tags in the blog editor.</p>
             )}
           </div>
         </section>

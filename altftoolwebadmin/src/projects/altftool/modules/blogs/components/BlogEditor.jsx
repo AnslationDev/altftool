@@ -69,7 +69,7 @@ export default function BlogEditor({ value, onChange }) {
           value={value || ""}
           onChange={(event) => onChange(event.target.value)}
           placeholder="Type or paste your content here..."
-          className="min-h-[360px] w-full rounded-xl border border-gray-200 bg-white p-4 text-sm text-gray-800 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
+          className="min-h-[360px] w-full rounded-xl border border-border bg-surface p-4 text-sm text-foreground outline-none focus:border-primary focus:ring-2 focus:ring-primary"
         />
       </div>
     );

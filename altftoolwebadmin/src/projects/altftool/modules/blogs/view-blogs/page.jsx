@@ -12,8 +12,8 @@ const stripHtml = (h) => (h || "").replace(/<[^>]+>/g, "");
 
 function StatusBadge({ status }) {
   return (
-    <span className={`inline-flex items-center gap-1 text-[10px] font-bold px-2 py-0.5 rounded-full ${status === "published" ? "bg-green-100 text-green-700" : "bg-gray-100 text-gray-500"}`}>
-      <span className={`w-1.5 h-1.5 rounded-full ${status === "published" ? "bg-green-500" : "bg-gray-400"}`} />
+    <span className={`inline-flex items-center gap-1 text-[10px] font-bold px-2 py-0.5 rounded-full ${status === "published" ? "bg-success-soft text-success" : "bg-surface-soft text-muted"}`}>
+      <span className={`w-1.5 h-1.5 rounded-full ${status === "published" ? "bg-success" : "bg-surface-soft"}`} />
       {status === "published" ? "Published" : "Draft"}
     </span>
   );
@@ -64,9 +64,9 @@ export default function ViewBlogs() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="flex flex-col items-center gap-3 text-gray-400">
-          <div className="w-8 h-8 border-2 border-gray-200 border-t-blue-500 rounded-full animate-spin" />
+      <div className="min-h-screen bg-surface-soft flex items-center justify-center">
+        <div className="flex flex-col items-center gap-3 text-muted">
+          <div className="w-8 h-8 border-2 border-border border-t-blue-500 rounded-full animate-spin" />
           <span className="text-sm">Loading blogs…</span>
         </div>
       </div>
@@ -74,17 +74,17 @@ export default function ViewBlogs() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-surface-soft">
       <div className="max-w-7xl mx-auto px-5 py-7 space-y-5">
 
         {/* Header */}
         <div className="flex flex-wrap items-start justify-between gap-4">
           <div>
-            <h1 className="text-xl font-bold text-gray-900">All Blogs</h1>
-            <p className="text-sm text-gray-500 mt-0.5">Browse and manage published posts and drafts.</p>
+            <h1 className="text-xl font-bold text-foreground">All Blogs</h1>
+            <p className="text-sm text-muted mt-0.5">Browse and manage published posts and drafts.</p>
           </div>
           <button onClick={() => router.push("/altftool/blogs")}
-            className="flex items-center gap-1.5 px-4 py-2 text-sm font-semibold bg-gray-900 hover:bg-gray-700 text-white rounded-xl transition shadow-sm">
+            className="flex items-center gap-1.5 px-4 py-2 text-sm font-semibold bg-primary hover:bg-primary text-white rounded-xl transition shadow-sm">
             <BookOpen className="w-4 h-4" />Manage Table
           </button>
         </div>
@@ -92,25 +92,25 @@ export default function ViewBlogs() {
         {/* KPIs */}
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
           {[
-            { label: "Total",      value: blogs.length,    color: "text-gray-800"   },
-            { label: "Published",  value: published,       color: "text-green-600"  },
-            { label: "Drafts",     value: drafts,          color: "text-amber-600"  },
-            { label: "Categories", value: uniqueCategories,color: "text-indigo-600" },
+            { label: "Total",      value: blogs.length,    color: "text-foreground"   },
+            { label: "Published",  value: published,       color: "text-success"  },
+            { label: "Drafts",     value: drafts,          color: "text-warning"  },
+            { label: "Categories", value: uniqueCategories,color: "text-secondary" },
           ].map((s) => (
-            <div key={s.label} className="bg-white rounded-2xl border border-gray-100 shadow-sm px-4 py-3.5">
-              <p className="text-[10px] font-bold text-gray-400 uppercase tracking-wider">{s.label}</p>
+            <div key={s.label} className="bg-surface rounded-2xl border border-border shadow-sm px-4 py-3.5">
+              <p className="text-[10px] font-bold text-muted uppercase tracking-wider">{s.label}</p>
               <p className={`text-2xl font-bold tabular-nums mt-1 ${s.color}`}>{s.value}</p>
             </div>
           ))}
         </div>
 
         {/* Filters */}
-        <div className="bg-white rounded-2xl border border-gray-100 shadow-sm px-4 py-3 flex flex-wrap items-center gap-3">
+        <div className="bg-surface rounded-2xl border border-border shadow-sm px-4 py-3 flex flex-wrap items-center gap-3">
           <div className="relative w-full sm:w-72">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-gray-400 pointer-events-none" />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-muted pointer-events-none" />
             <input value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Search blogs…"
-              className="w-full pl-8 pr-8 py-1.5 text-sm bg-white border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400/30 focus:border-blue-400 placeholder:text-gray-400 transition" />
-            {search && <button onClick={() => setSearch("")} className="absolute right-2.5 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"><X className="w-3.5 h-3.5" /></button>}
+              className="w-full pl-8 pr-8 py-1.5 text-sm bg-surface border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary placeholder:text-muted transition" />
+            {search && <button onClick={() => setSearch("")} className="absolute right-2.5 top-1/2 -translate-y-1/2 text-muted hover:text-muted"><X className="w-3.5 h-3.5" /></button>}
           </div>
 
           {[
@@ -119,18 +119,18 @@ export default function ViewBlogs() {
             { value: authorFilter,   setter: setAuthorFilter,   icon: <Users  className="w-3.5 h-3.5" />, options: authors.map((a) => [a, a === "all" ? "All Authors" : a]) },
           ].map((sel, i) => (
             <div key={i} className="relative">
-              <span className="absolute left-2.5 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none">{sel.icon}</span>
+              <span className="absolute left-2.5 top-1/2 -translate-y-1/2 text-muted pointer-events-none">{sel.icon}</span>
               <select value={sel.value} onChange={(e) => sel.setter(e.target.value)}
-                className="pl-7 pr-7 py-1.5 text-sm border border-gray-200 rounded-lg bg-white text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-400/30 focus:border-blue-400 appearance-none cursor-pointer transition min-w-[140px]">
+                className="pl-7 pr-7 py-1.5 text-sm border border-border rounded-lg bg-surface text-foreground focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary appearance-none cursor-pointer transition min-w-[140px]">
                 {sel.options.map(([v, l]) => <option key={v} value={v}>{l}</option>)}
               </select>
             </div>
           ))}
 
           <div className="flex items-center gap-2 ml-auto">
-            <span className="text-xs text-gray-400 whitespace-nowrap">{filtered.length} result{filtered.length !== 1 ? "s" : ""}</span>
+            <span className="text-xs text-muted whitespace-nowrap">{filtered.length} result{filtered.length !== 1 ? "s" : ""}</span>
             {hasFilters && (
-              <button onClick={clearAll} className="flex items-center gap-1 text-xs font-semibold text-gray-500 hover:text-gray-700 bg-gray-100 hover:bg-gray-200 px-2.5 py-1 rounded-lg transition">
+              <button onClick={clearAll} className="flex items-center gap-1 text-xs font-semibold text-muted hover:text-foreground bg-surface-soft hover:bg-surface-soft px-2.5 py-1 rounded-lg transition">
                 <X className="w-3 h-3" />Clear
               </button>
             )}
@@ -139,7 +139,7 @@ export default function ViewBlogs() {
 
         {/* Grid */}
         {filtered.length === 0 ? (
-          <div className="bg-white rounded-2xl border border-gray-100 shadow-sm py-16 flex flex-col items-center gap-3 text-gray-400">
+          <div className="bg-surface rounded-2xl border border-border shadow-sm py-16 flex flex-col items-center gap-3 text-muted">
             <span className="text-4xl">📝</span>
             <span className="text-sm">{hasFilters ? "No blogs match your filters." : "No blogs yet."}</span>
           </div>
@@ -149,29 +149,29 @@ export default function ViewBlogs() {
               const preview = blog.seoDescription || stripHtml(blog.description).slice(0, 120);
               return (
                 <div key={blog.id} onClick={() => router.push(`/altftool/blogs/view-blogs/${blog.id}`)}
-                  className="group bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-all cursor-pointer overflow-hidden flex flex-col">
+                  className="group bg-surface rounded-2xl border border-border shadow-sm hover:shadow-md transition-all cursor-pointer overflow-hidden flex flex-col">
                   {blog.image ? (
-                    <div className="h-44 overflow-hidden bg-gray-100 shrink-0">
+                    <div className="h-44 overflow-hidden bg-surface-soft shrink-0">
                       <img src={blog.image} alt={blog.heading} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
                     </div>
                   ) : (
-                    <div className="h-32 bg-gradient-to-br from-gray-100 to-gray-50 flex items-center justify-center shrink-0">
-                      <BookOpen className="w-8 h-8 text-gray-300" />
+                    <div className="h-32 bg-gradient-to-br from-surface-soft to-surface-soft flex items-center justify-center shrink-0">
+                      <BookOpen className="w-8 h-8 text-muted" />
                     </div>
                   )}
                   <div className="p-5 space-y-3 flex-1 flex flex-col">
                     <div className="flex items-start justify-between gap-2">
-                      <h2 className="text-sm font-bold text-gray-900 line-clamp-2 leading-snug flex-1">{blog.heading}</h2>
+                      <h2 className="text-sm font-bold text-foreground line-clamp-2 leading-snug flex-1">{blog.heading}</h2>
                       <StatusBadge status={blog.status} />
                     </div>
-                    <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-gray-500">
+                    <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-muted">
                       <span className="font-medium">{blog.author || "—"}</span>
-                      {blog.date && <><span className="text-gray-300">·</span><span>{blog.date}</span></>}
+                      {blog.date && <><span className="text-muted">·</span><span>{blog.date}</span></>}
                       {blog.category && (
-                        <span className="bg-indigo-50 text-indigo-600 font-semibold px-2 py-0.5 rounded-full">{blog.category}</span>
+                        <span className="bg-secondary-soft text-secondary font-semibold px-2 py-0.5 rounded-full">{blog.category}</span>
                       )}
                     </div>
-                    {preview && <p className="text-xs text-gray-500 line-clamp-3 leading-relaxed flex-1">{preview}</p>}
+                    {preview && <p className="text-xs text-muted line-clamp-3 leading-relaxed flex-1">{preview}</p>}
                   </div>
                 </div>
               );
