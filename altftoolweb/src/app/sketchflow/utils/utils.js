@@ -227,7 +227,7 @@ export function drawArrowhead(ctx, start, end, style, color, width) {
   ctx.restore();
 }
 
-export function drawElement(ctx, rc, el, imageCache = {}) {
+export function drawElement(ctx, rc, el, imageCache = {}, accent = ACCENT) {
   const opacity = Math.max(0, Math.min(1, el.opacity / 100));
   ctx.save();
   ctx.globalAlpha = opacity;
@@ -242,7 +242,7 @@ export function drawElement(ctx, rc, el, imageCache = {}) {
   if (el.type === "rectangle" || el.type === "frame") {
     const opts = roughOptions(el);
     if (el.type === "frame") {
-      opts.stroke = ACCENT;
+      opts.stroke = accent;
       opts.strokeWidth = Math.max(2, el.strokeWidth);
       opts.fill = "transparent";
     }
@@ -365,18 +365,18 @@ export function drawGrid(ctx, camera, size, step, dark) {
   ctx.restore();
 }
 
-export function drawSelection(ctx, elements, selectedIds, camera) {
+export function drawSelection(ctx, elements, selectedIds, camera, accent = ACCENT) {
   const bounds = getSelectedBounds(elements, selectedIds);
   if (!bounds) return;
   ctx.save();
-  ctx.strokeStyle = ACCENT;
+  ctx.strokeStyle = accent;
   ctx.lineWidth = 1.5 / camera.zoom;
   ctx.setLineDash([6 / camera.zoom, 4 / camera.zoom]);
   ctx.strokeRect(bounds.x, bounds.y, bounds.width, bounds.height);
   ctx.setLineDash([]);
   getHandles(bounds, camera.zoom).forEach((handle) => {
-    ctx.fillStyle = handle.name === "rotate" ? ACCENT : "#ffffff";
-    ctx.strokeStyle = ACCENT;
+    ctx.fillStyle = handle.name === "rotate" ? accent : "#ffffff";
+    ctx.strokeStyle = accent;
     ctx.lineWidth = 1.5 / camera.zoom;
     ctx.beginPath();
     ctx.roundRect(handle.x, handle.y, handle.width, handle.height, 2 / camera.zoom);
@@ -424,4 +424,278 @@ export function PropertyButton({ active, children, onClick }) {
       {children}
     </button>
   );
+}
+
+const NODE_TYPES = new Set(['rectangle', 'diamond', 'ellipse', 'text', 'image', 'frame']);
+
+export function autoLayout(elements, options = {}) {
+  if (!elements?.length) return elements;
+
+  const nodeSpacing = options.nodeSpacing ?? 200;
+  const layerSpacing = options.layerSpacing ?? 140;
+  const padding = options.padding ?? 80;
+
+  const nodes = elements.filter(el => NODE_TYPES.has(el.type));
+  const arrows = elements.filter(el => el.type === 'arrow');
+
+  // Build directed graph from arrow bindings
+  const children = new Map();
+  const parents = new Map();
+
+  for (const arrow of arrows) {
+    if (arrow.boundStartId && arrow.boundEndId && arrow.boundStartId !== arrow.boundEndId) {
+      if (!children.has(arrow.boundStartId)) children.set(arrow.boundStartId, []);
+      if (!parents.has(arrow.boundEndId)) parents.set(arrow.boundEndId, []);
+      children.get(arrow.boundStartId).push(arrow.boundEndId);
+      parents.get(arrow.boundEndId).push(arrow.boundStartId);
+    }
+  }
+
+  const nodeIdSet = new Set(nodes.map(n => n.id));
+  const connectedIds = new Set(
+    [...new Set([...children.keys(), ...parents.keys()])].filter(id => nodeIdSet.has(id))
+  );
+
+  // Find connected components
+  const adjacency = new Map();
+  for (const id of connectedIds) {
+    adjacency.set(id, [...(children.get(id) || []), ...(parents.get(id) || [])]);
+  }
+  const components = [];
+  const visited = new Set();
+  for (const id of connectedIds) {
+    if (visited.has(id)) continue;
+    const comp = [];
+    const stack = [id];
+    while (stack.length) {
+      const cur = stack.pop();
+      if (visited.has(cur)) continue;
+      visited.add(cur);
+      comp.push(cur);
+      for (const nb of (adjacency.get(cur) || [])) {
+        if (!visited.has(nb)) stack.push(nb);
+      }
+    }
+    components.push(comp);
+  }
+
+  // Assign layers
+  const layers = new Map();
+  for (const comp of components) {
+    const queue = comp.filter(id => !parents.has(id) || parents.get(id).length === 0).map(id => ({ id, l: 0 }));
+    const inQ = new Set(queue.map(q => q.id));
+    for (let qi = 0; qi < queue.length; qi++) {
+      const { id, l } = queue[qi];
+      const prev = layers.get(id);
+      if (prev !== undefined && prev >= l) continue;
+      layers.set(id, l);
+      for (const child of (children.get(id) || [])) {
+        if (!comp.includes(child)) continue;
+        if (inQ.has(child)) {
+          const existing = queue.find(q => q.id === child);
+          if (existing) existing.l = Math.max(existing.l, l + 1);
+        } else {
+          queue.push({ id: child, l: l + 1 });
+          inQ.add(child);
+        }
+      }
+    }
+    for (const id of comp) {
+      if (!layers.has(id)) {
+        layers.set(id, Math.max(...layers.values(), 0) + 1);
+      }
+    }
+  }
+
+  // Layer → node groups
+  const maxLayer = layers.size ? Math.max(...layers.values()) : -1;
+  const layerBuckets = [];
+  for (let l = 0; l <= maxLayer; l++) layerBuckets.push([]);
+  for (const [id, l] of layers) layerBuckets[l].push(id);
+
+  // Component-based vertical offset
+  const positions = new Map();
+  let componentOffsetY = 0;
+
+  for (const comp of components) {
+    const compLayers = [];
+    const compMin = Math.min(...comp.map(id => layers.get(id) ?? 0));
+    const compMax = Math.max(...comp.map(id => layers.get(id) ?? 0));
+    for (let l = compMin; l <= compMax; l++) {
+      const ids = comp.filter(id => (layers.get(id) ?? -1) === l);
+      if (ids.length) compLayers.push(ids);
+    }
+    for (const layerIds of compLayers) {
+      const count = layerIds.length;
+      const totalWidth = (count - 1) * nodeSpacing;
+      const startX = -totalWidth / 2;
+      for (let i = 0; i < count; i++) {
+        const id = layerIds[i];
+        positions.set(id, {
+          x: startX + i * nodeSpacing,
+          y: componentOffsetY + ((layers.get(id) ?? 0) - compMin) * layerSpacing,
+        });
+      }
+    }
+    componentOffsetY += (compMax - compMin + 1) * layerSpacing + padding;
+  }
+
+  // Unconnected nodes → tiled grid below
+  const unconnectedIds = [...nodeIdSet].filter(id => !connectedIds.has(id));
+  if (unconnectedIds.length) {
+    const cols = Math.max(1, Math.ceil(Math.sqrt(unconnectedIds.length)));
+    for (let i = 0; i < unconnectedIds.length; i++) {
+      const row = Math.floor(i / cols);
+      const col = i % cols;
+      positions.set(unconnectedIds[i], {
+        x: (col - (cols - 1) / 2) * nodeSpacing,
+        y: componentOffsetY + row * layerSpacing,
+      });
+    }
+  }
+
+  if (!positions.size) return elements;
+
+  // Build a map of original node bounds before moving
+  const origBounds = new Map();
+  for (const el of elements) {
+    if (NODE_TYPES.has(el.type)) {
+      origBounds.set(el.id, boundsOf(el));
+    }
+  }
+
+  // Compute group offsets so grouped nodes stay together
+  const groupCenters = new Map();
+  for (const el of nodes) {
+    for (const gId of (el.groupIds || [])) {
+      if (!groupCenters.has(gId)) groupCenters.set(gId, { count: 0, x: 0, y: 0 });
+      const c = groupCenters.get(gId);
+      c.count++;
+      c.x += el.x + (el.width || 0) / 2;
+      c.y += el.y + (el.height || 0) / 2;
+    }
+  }
+  for (const [, c] of groupCenters) {
+    c.x /= c.count;
+    c.y /= c.count;
+  }
+
+  const groupOffsets = new Map();
+  for (const el of nodes) {
+    for (const gId of (el.groupIds || [])) {
+      const c = groupCenters.get(gId);
+      if (c) {
+        const key = `${gId}-${el.id}`;
+        groupOffsets.set(key, {
+          dx: el.x + (el.width || 0) / 2 - c.x,
+          dy: el.y + (el.height || 0) / 2 - c.y,
+        });
+      }
+    }
+  }
+
+  // Apply positions, preserving group cohesion
+  const nodeMidpoints = new Map();
+  for (const el of nodes) {
+    const pos = positions.get(el.id);
+    if (!pos) continue;
+    nodeMidpoints.set(el.id, { ...pos });
+  }
+
+  // For grouped nodes, compute group center from layout positions
+  const groupLayoutCenters = new Map();
+  for (const [gId, c] of groupCenters) {
+    let cx = 0, cy = 0, count = 0;
+    const memberIds = nodes.filter(el => (el.groupIds || []).includes(gId)).map(el => el.id);
+    for (const mid of memberIds) {
+      const p = nodeMidpoints.get(mid);
+      if (p) { cx += p.x; cy += p.y; count++; }
+    }
+    if (count) groupLayoutCenters.set(gId, { x: cx / count, y: cy / count, count });
+  }
+
+  // Create final positions respecting groups
+  const finalPositions = new Map();
+  const placedInGroup = new Set();
+
+  // First pass: place group members relative to their group layout center
+  for (const el of nodes) {
+    const gIds = el.groupIds || [];
+    if (!gIds.length) continue;
+    const gId = gIds[0];
+    const glc = groupLayoutCenters.get(gId);
+    const orig = origBounds.get(el.id);
+    if (glc && orig) {
+      const offKey = `${gId}-${el.id}`;
+      const off = groupOffsets.get(offKey);
+      if (off) {
+        finalPositions.set(el.id, {
+          x: glc.x + off.dx - orig.width / 2,
+          y: glc.y + off.dy,
+        });
+        placedInGroup.add(el.id);
+      }
+    }
+  }
+
+  // Second pass: place remaining nodes at their individual position
+  for (const el of nodes) {
+    if (placedInGroup.has(el.id)) continue;
+    const pos = positions.get(el.id);
+    const orig = origBounds.get(el.id);
+    if (pos && orig) {
+      finalPositions.set(el.id, {
+        x: pos.x - orig.width / 2,
+        y: pos.y,
+      });
+    }
+  }
+
+  let result = elements.map(el => {
+    const fp = finalPositions.get(el.id);
+    if (fp) return { ...el, x: fp.x, y: fp.y };
+    return el;
+  });
+
+  // Reconnect arrows between repositioned nodes
+  result = result.map(el => {
+    if (el.type !== 'arrow') return el;
+
+    const startNode = el.boundStartId && result.find(n => n.id === el.boundStartId);
+    const endNode = el.boundEndId && result.find(n => n.id === el.boundEndId);
+
+    if (startNode && endNode) {
+      const sb = boundsOf(startNode);
+      const eb = boundsOf(endNode);
+      const startX = sb.x + sb.width / 2;
+      const startY = sb.y + sb.height;
+      const endX = eb.x + eb.width / 2;
+      const endY = eb.y;
+      return { ...el, points: [[startX, startY], [endX, endY]] };
+    }
+
+    if (startNode && !endNode) {
+      const sb = boundsOf(startNode);
+      const oldStart = el.points?.[0];
+      if (oldStart) {
+        const startX = sb.x + sb.width / 2;
+        const startY = sb.y + sb.height;
+        return { ...el, points: [[startX, startY], oldStart] };
+      }
+    }
+
+    if (!startNode && endNode) {
+      const eb = boundsOf(endNode);
+      const oldEnd = el.points?.[el.points.length - 1];
+      if (oldEnd) {
+        const endX = eb.x + eb.width / 2;
+        const endY = eb.y;
+        return { ...el, points: [oldEnd, [endX, endY]] };
+      }
+    }
+
+    return el;
+  });
+
+  return normalizeScene(result);
 }

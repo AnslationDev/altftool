@@ -104,7 +104,7 @@ const UserReview = ({ feedback = [] }) => {
                 animationDelay: `${i * 90}ms`,
               }}
             >
-              <div className="relative rounded-[20px] p-6  shadow-[0_4px_20px_rgba(0,0,0,0.06)] hover:shadow-[0_8px_30px_rgba(0,0,0,0.06)]   transition h-full flex flex-col">
+              <div className="relative rounded-xl p-6 transition h-full flex flex-col" style={{ boxShadow: 'var(--anslation-ds-shadow-sm)' }}>
 
                 {/* Avatar */}
                 <div className="absolute -top-7 left-6">
@@ -133,7 +133,7 @@ const UserReview = ({ feedback = [] }) => {
                     <h4 className="font-semibold text-(--muted-foreground)">
                       {item.name}
                     </h4>
-                    <p className="text-xs text-gray-400">
+                    <p className="text-xs text-(--muted-foreground)">
                       @{item.name?.toLowerCase().replace(/\s+/g, "")}
                     </p>
                   </div>
@@ -146,7 +146,7 @@ const UserReview = ({ feedback = [] }) => {
                         className={`w-4 h-4 ${
                           idx < Math.round(item.rating || 5)
                             ? "fill-(--primary) text-(--primary)"
-                            : "text-gray-300"
+                            : "text-(--muted-foreground)/40"
                         }`}
                       />
                     ))}
@@ -180,7 +180,7 @@ const UserReview = ({ feedback = [] }) => {
             className={`h-2 rounded-full transition-all duration-300 ${
               index === i
                 ? "w-8 bg-(--primary)"
-                : "w-2 bg-gray-300"
+                : "w-2 bg-(--muted-foreground)/40"
             }`}
           />
         ))}

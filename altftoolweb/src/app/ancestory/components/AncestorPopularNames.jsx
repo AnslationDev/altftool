@@ -6,19 +6,19 @@ import { POPULAR_NAMES } from "../utils/constants.jsx";
 function AncestorPopularNameCard({ item }) {
   return (
     <Link href={`/ancestory/meaning?type=first&first=${encodeURIComponent(item.name)}`}>
-      <div className="bg-white border border-gray-200 rounded-xl p-5 hover:border-[#005831]/30 hover:shadow-md transition-all cursor-pointer group dark:bg-(--muted) dark:border-(--border)">
+      <div className="bg-white border border-gray-200 rounded-xl p-5 hover:border-primary/30 hover:shadow-md transition-all cursor-pointer group dark:bg-(--muted) dark:border-(--border)">
         <div className="flex items-center gap-3 mb-2">
           <span className="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center text-gray-500 font-bold text-sm dark:bg-(--muted-gray) dark:text-(--secondary-foreground)">
             {item.rank}
           </span>
-          <h4 className="text-lg font-bold text-gray-900 dark:text-(--foreground) group-hover:text-[#005831] transition-colors">
+          <h4 className="text-lg font-bold text-gray-900 dark:text-(--foreground) group-hover:text-primary transition-colors">
             {item.name}
           </h4>
         </div>
         <p className="text-xs text-gray-400 dark:text-(--muted-foreground)">
           Country of origin: <span className="text-gray-600 dark:text-(--secondary-foreground)">{item.origin}</span>
         </p>
-        <p className="text-xs text-[#005831] mt-1 font-medium">{item.meaning}</p>
+        <p className="text-xs text-primary mt-1 font-medium">{item.meaning}</p>
       </div>
     </Link>
   );
@@ -26,12 +26,12 @@ function AncestorPopularNameCard({ item }) {
 
 export function AncestorPopularNames() {
   return (
-    <section className="py-16 bg-[#f8f8f6] relative overflow-hidden dark:bg-(--background)">
+    <section className="py-16 bg-slate-50 relative overflow-hidden dark:bg-slate-950">
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none opacity-[0.04]">
         <svg viewBox="0 0 1400 700" className="w-full h-full object-cover">
-          <ellipse cx="250" cy="270" rx="200" ry="140" fill="#005831" />
-          <ellipse cx="560" cy="240" rx="160" ry="120" fill="#005831" />
-          <ellipse cx="770" cy="230" rx="130" ry="110" fill="#005831" />
+          <ellipse cx="250" cy="270" rx="200" ry="140" fill="var(--primary)" />
+          <ellipse cx="560" cy="240" rx="160" ry="120" fill="var(--primary)" />
+          <ellipse cx="770" cy="230" rx="130" ry="110" fill="var(--primary)" />
         </svg>
       </div>
       <div className="max-w-4xl mx-auto px-6 relative z-10">

@@ -147,7 +147,7 @@ export default function TextToSpeech({ text }) {
 
   };
 
-  const playerButtonClass = `w-11 h-11 rounded-full text-white flex items-center justify-center hover:scale-105 transition cursor-pointer ${isPlaying ? "bg-(--primary)" : "bg-black"}`;
+  const playerButtonClass = `w-11 h-11 rounded-full text-white flex items-center justify-center hover:scale-105 transition cursor-pointer ${isPlaying ? "bg-(--primary)" : "bg-(--primary)"}`;
 
 return (
 
@@ -156,7 +156,7 @@ return (
     {/* DESKTOP PLAYER */}
     <div className="hidden md:block sticky bottom-5 mt-10 z-45">
 
-      <div className="backdrop-blur-xl bg-(--card)/90 border border-(--border) shadow-[0_10px_40px_rgba(0,0,0,0.12)] rounded-2xl px-6 py-4">
+      <div className="backdrop-blur-xl bg-(--card)/90 border border-(--border) rounded-2xl px-6 py-4" style={{ boxShadow: 'var(--anslation-ds-shadow-lg)' }}>
 
         <div className="flex items-center gap-6">
 
@@ -326,7 +326,7 @@ return (
         }`}
       >
 
-        <div className="rounded-2xl border border-(--border) bg-(--card)/95 backdrop-blur-xl shadow-[0_10px_40px_rgba(0,0,0,0.15)] p-4">
+        <div className="rounded-2xl border border-(--border) bg-(--card)/95 backdrop-blur-xl p-4" style={{ boxShadow: 'var(--anslation-ds-shadow-lg)' }}>
 
           {/* TOP */}
           <div className="flex items-center gap-3 mb-4">

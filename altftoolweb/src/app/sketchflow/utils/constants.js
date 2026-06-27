@@ -15,7 +15,7 @@ import {
 
 export const STORAGE_KEY = "altftool-sketchflow-scene-v1";
 export const HISTORY_LIMIT = 200;
-export const ACCENT = "#6965db";
+export const ACCENT = "#14b8a6";
 export const DEFAULT_STYLE = {
   strokeColor: "#1f2937",
   backgroundColor: "transparent",
@@ -57,4 +57,39 @@ export const TOOLBAR = [
   ["frame", "Frame", "F", Frame],
   ["laser", "Laser Pointer", "K", Zap],
 ];
+
+export const TOOL_ICONS = {
+  select: MousePointer2,
+  rectangle: Square,
+  diamond: Diamond,
+  ellipse: Circle,
+  arrow: ArrowUpRight,
+  line: Slash,
+  freedraw: PenLine,
+  text: TextCursorInput,
+  eraser: Eraser,
+  image: ImageIcon,
+  frame: Frame,
+  laser: Zap,
+};
+
+export function buildToolbarFromConfig(toolItems) {
+  if (!toolItems?.length) return TOOLBAR;
+  return toolItems
+    .filter((tool) => tool.enabled !== false)
+    .map((tool) => [tool.id, tool.label, tool.shortcut, TOOL_ICONS[tool.id] || MousePointer2]);
+}
+
+export function buildToolKeysFromConfig(toolItems) {
+  // Only fall back to the static TOOL_KEYS when no admin config exists at all.
+  // When toolItems IS provided (even if every shortcut was cleared), we respect
+  // the admin's intent and return whatever keys they configured.
+  if (!toolItems?.length) return TOOL_KEYS;
+  const keys = {};
+  toolItems.forEach((tool) => {
+    if (tool.enabled === false || !tool.shortcut) return;
+    keys[tool.shortcut.toLowerCase()] = tool.id;
+  });
+  return keys;
+}
 

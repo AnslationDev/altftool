@@ -5,6 +5,7 @@ export default function CommandPalette({
   query,
   index,
   commands,
+  placeholder = "Run a command…",
   onQueryChange,
   onIndexChange,
   onRun,
@@ -17,7 +18,7 @@ export default function CommandPalette({
       <div className="sf-palette" onClick={(event) => event.stopPropagation()}>
         <div className="sf-search">
           <Search className="h-5 w-5" />
-          <input autoFocus placeholder="Run a command…" value={query} onChange={(event) => onQueryChange(event.target.value)} />
+          <input autoFocus placeholder={placeholder} value={query} onChange={(event) => onQueryChange(event.target.value)} />
         </div>
         <div className="sf-command-list">
           {commands.map((action, actionIndex) => (

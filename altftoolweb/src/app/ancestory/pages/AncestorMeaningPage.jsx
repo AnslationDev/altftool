@@ -113,7 +113,7 @@ function AncestorDataSourceChips({ sources }) {
       {sources.map((source) => (
         <span
           key={source}
-          className="inline-flex items-center rounded-full border border-[#d3dbcf] bg-[#eef5ea] px-3 py-1 text-xs font-medium text-[#2e5a2f]"
+          className="inline-flex items-center rounded-full border border-primary/20 bg-primary/5 px-3 py-1 text-xs font-medium text-primary"
         >
           {formatSourceLabel(source)}
         </span>
@@ -146,7 +146,7 @@ function AncestorPremiumInsight({ name, origin, meaning, variations }) {
   }, []);
 
   return (
-    <section className="bg-[#f7f7f5] pb-8 dark:bg-(--background) transition-colors duration-500">
+    <section className="bg-slate-50 pb-8 dark:bg-slate-950 transition-colors duration-500">
       <div className="max-w-5xl mx-auto px-6">
         <div 
           className="rounded-2xl border p-6 shadow-sm transition-all duration-500"
@@ -156,11 +156,7 @@ function AncestorPremiumInsight({ name, origin, meaning, variations }) {
           }}
         >
           <div 
-            className="mb-4 inline-flex items-center rounded-full px-3 py-1 text-xs font-bold tracking-wide uppercase"
-            style={{
-              backgroundColor: isDark ? 'rgba(16, 185, 129, 0.15)' : '#e7f3e2',
-              color: isDark ? '#34d399' : '#235b18'
-            }}
+            className="mb-4 inline-flex items-center rounded-full px-3 py-1 text-xs font-bold tracking-wide uppercase bg-primary/10 text-primary"
           >
             Premium Name Insight
           </div>
@@ -168,7 +164,7 @@ function AncestorPremiumInsight({ name, origin, meaning, variations }) {
             className="leading-7 font-medium"
             style={{ color: isDark ? '#f1f5f9' : '#2c2c2b' }}
           >
-            <span className="font-bold" style={{ color: isDark ? '#ffffff' : '#000000' }}>{n}</span> is associated with <span style={{ color: isDark ? '#10b981' : '#1f6a07', fontWeight: 700 }}>{o}</span> origin.
+            <span className="font-bold" style={{ color: isDark ? '#ffffff' : '#000000' }}>{n}</span> is associated with <span style={{ color: 'var(--primary)', fontWeight: 700 }}>{o}</span> origin.
             <br />
             <span className="opacity-90">Meaning: {m}</span>
           </p>
@@ -195,9 +191,9 @@ function AncestorNationalizeOriginBlock({ data }) {
   if (!origin) return null;
 
   return (
-    <section className="bg-[#f7f7f5] pb-8 dark:bg-(--background)">
+    <section className="bg-slate-50 pb-8 dark:bg-slate-950">
       <div className="max-w-5xl mx-auto px-6">
-        <div className="rounded-2xl border border-[#d8e2d2] bg-white p-5 shadow-sm dark:border-(--border) dark:bg-(--muted)">
+        <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm dark:border-(--border) dark:bg-(--muted)">
           <p className="text-[11px] uppercase tracking-[0.14em] text-[#6a6a64] dark:text-(--muted-foreground)">
             Nationalize.io origin
           </p>
@@ -240,8 +236,8 @@ function AncestorHeroMeaning({ name, data }) {
               className="w-full h-auto block mx-auto"
             />
             <div className="absolute inset-x-0 bottom-[15%] text-center px-6">
-              <p className="text-white text-3xl md:text-5xl drop-shadow-md leading-tight" style={{ fontFamily: "Georgia, serif" }}>
-                Meaning of the name <span className="text-[#9dd040]">{safeString(name)}</span>
+              <p className="text-white/90 text-3xl md:text-5xl drop-shadow-md leading-tight" style={{ fontFamily: "Georgia, serif" }}>
+                Meaning of the name <span className="text-sky-400">{safeString(name)}</span>
               </p>
               
               {topThree.length > 0 && (
@@ -278,7 +274,7 @@ function AncestorConfidenceBadge({ data }) {
   };
 
   const styles = {
-    high: "bg-green-100 text-green-800 border-green-200",
+    high: "bg-primary/10 text-primary border-primary/20",
     medium: "bg-amber-100 text-amber-800 border-amber-200",
     low: "bg-slate-100 text-slate-700 border-slate-200"
   };
@@ -299,24 +295,24 @@ function AncestorStatBars({ origin, meaning, variations }) {
   const flag = inferCountryFromOrigin(originStr) ? countryToFlag(inferCountryFromOrigin(originStr)) : "";
 
   return (
-    <section className="bg-[#f7f7f5] dark:bg-(--background) pb-8">
+    <section className="bg-slate-50 dark:bg-slate-950 pb-8">
       <div className="max-w-5xl mx-auto px-6">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-          <div className="rounded-xl overflow-hidden border border-[#d5d9d1] shadow-sm dark:border-(--border) dark:shadow-emerald-900/10 dark:shadow-md">
-            <div className="bg-[#1f6a07] dark:bg-gradient-to-r dark:from-emerald-700 dark:to-emerald-600 text-white text-center text-sm font-semibold py-2">Origin</div>
-            <div className="bg-[#e6eee2] text-center py-4 text-[#2d2d2c] font-medium dark:bg-(--muted) dark:text-(--foreground) flex items-center justify-center gap-2">
+          <div className="rounded-xl overflow-hidden border border-slate-200 dark:border-(--border) shadow-sm">
+            <div className="bg-primary text-white text-center text-sm font-semibold py-2">Origin</div>
+            <div className="bg-primary/5 text-center py-4 text-slate-800 font-medium dark:bg-(--muted) dark:text-(--foreground) flex items-center justify-center gap-2">
               {flag && <span>{flag}</span>}
               {originStr || "Unknown"}
             </div>
           </div>
-          <div className="rounded-xl overflow-hidden border border-[#d5d9d1] shadow-sm dark:border-(--border) dark:shadow-emerald-900/10 dark:shadow-md">
-            <div className="bg-[#1f6a07] dark:bg-gradient-to-r dark:from-emerald-700 dark:to-emerald-600 text-white text-center text-sm font-semibold py-2">Meaning</div>
-            <div className="bg-[#e6eee2] text-center py-4 text-[#2d2d2c] font-medium dark:bg-(--muted) dark:text-(--foreground)">{meaningStr || "Not available"}</div>
+          <div className="rounded-xl overflow-hidden border border-slate-200 dark:border-(--border) shadow-sm">
+            <div className="bg-primary text-white text-center text-sm font-semibold py-2">Meaning</div>
+            <div className="bg-primary/5 text-center py-4 text-slate-800 font-medium dark:bg-(--muted) dark:text-(--foreground)">{meaningStr || "Not available"}</div>
           </div>
         </div>
-        <div className="rounded-xl overflow-hidden border border-[#d5d9d1] shadow-sm dark:border-(--border) dark:shadow-emerald-900/10 dark:shadow-md">
-          <div className="bg-[#1f6a07] dark:bg-gradient-to-r dark:from-emerald-700 dark:to-emerald-600 text-white text-center text-sm font-semibold py-2">Variations</div>
-          <div className="bg-[#e6eee2] text-center py-4 text-[#2f6f97] font-medium dark:bg-(--muted) dark:text-sky-300">
+        <div className="rounded-xl overflow-hidden border border-slate-200 dark:border-(--border) shadow-sm">
+          <div className="bg-primary text-white text-center text-sm font-semibold py-2">Variations</div>
+          <div className="bg-primary/5 text-center py-4 text-primary font-medium dark:bg-(--muted)">
             {variationsArr.length > 0 ? variationsArr.slice(0, 4).join(", ") : "No variations available"}
           </div>
         </div>
@@ -333,32 +329,32 @@ function AncestorRecordCards({ name, data }) {
   const hasPartner = Boolean(partner);
 
   return (
-    <section className="bg-[#f7f7f5] py-16">
+    <section className="bg-slate-50 dark:bg-slate-950 py-16">
       <div className="max-w-5xl mx-auto px-6 text-center">
         <h3 className="text-5xl mb-8 text-[#2f2f2e]" style={{ fontFamily: "Georgia, serif" }}>
           Based on data records...
         </h3>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-xl mx-auto">
-          <div className="bg-white rounded-lg shadow-sm border border-[#e0e0dc] overflow-hidden dark:bg-(--muted) dark:border-(--border)">
-            <div className="bg-[#c9d8c5] py-8 flex justify-center dark:bg-(--muted-gray)">
-              <UserCircle2 size={68} className="text-[#2d5246] dark:text-green-300" />
+          <div className="bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden dark:bg-(--muted) dark:border-(--border)">
+            <div className="bg-primary/5 py-8 flex justify-center">
+              <UserCircle2 size={68} className="text-primary" />
             </div>
             <div className="p-5">
-              <p className="text-4xl mb-2 text-[#2f2f2e] dark:text-(--foreground)" style={{ fontFamily: "Georgia, serif" }}>{surname || "Unknown"}</p>
-              <p className="text-sm text-[#555] dark:text-(--muted-foreground)">
+              <p className="text-4xl mb-2 text-slate-800 dark:text-(--foreground)" style={{ fontFamily: "Georgia, serif" }}>{surname || "Unknown"}</p>
+              <p className="text-sm text-slate-500 dark:text-(--muted-foreground)">
                 {hasSurname
                   ? `Common surname associated with ${displayName} based on geographical data.`
                   : `No reliable surname association available for ${displayName}.`}
               </p>
             </div>
           </div>
-          <div className="bg-white rounded-lg shadow-sm border border-[#e0e0dc] overflow-hidden dark:bg-(--muted) dark:border-(--border)">
-            <div className="bg-[#c6d9e8] py-8 flex justify-center dark:bg-(--muted-gray)">
-              <Gem size={64} className="text-[#2f6f97] dark:text-sky-300" />
+          <div className="bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden dark:bg-(--muted) dark:border-(--border)">
+            <div className="bg-primary/5 py-8 flex justify-center">
+              <Gem size={64} className="text-primary" />
             </div>
             <div className="p-5">
-              <p className="text-4xl mb-2 text-[#2f2f2e] dark:text-(--foreground)" style={{ fontFamily: "Georgia, serif" }}>{partner || "Unknown"}</p>
-              <p className="text-sm text-[#555] dark:text-(--muted-foreground)">
+              <p className="text-4xl mb-2 text-slate-800 dark:text-(--foreground)" style={{ fontFamily: "Georgia, serif" }}>{partner || "Unknown"}</p>
+              <p className="text-sm text-slate-500 dark:text-(--muted-foreground)">
                 {hasPartner
                   ? `Common partner name for ${displayName} based on historical records.`
                   : `No reliable partner-name association available for ${displayName}.`}
@@ -385,7 +381,7 @@ function AncestorCountriesBlock({ countries, name }) {
   const topTwo = normalizedCountries.slice(0, 2);
 
   return (
-    <section className="bg-[#f7f7f5] pb-12">
+    <section className="bg-slate-50 dark:bg-slate-950 pb-12">
       <AncestorOriginMap countries={normalizedCountries} name={displayName} />
       <div className="max-w-5xl mx-auto px-6 text-center py-5">
         <p className="text-[#2f2f2e] font-semibold dark:text-(--foreground)">Top countries by historical records</p>
@@ -401,7 +397,7 @@ function AncestorCountriesBlock({ countries, name }) {
                 const prob = c.probability ? Math.round(c.probability * 100) : (c.probability || 0);
                 return (
                   <span key={countryId} className="inline-flex items-center gap-2">
-                    <span className="w-2.5 h-2.5 rounded-full bg-[#64a43d]" />
+                    <span className="w-2.5 h-2.5 rounded-full bg-primary" />
                     {countryName}
                     {prob > 0 && ` (${prob}%)`}
                   </span>
@@ -425,9 +421,9 @@ function AncestorDidYouKnow({ name, data }) {
   const displayName = safeString(name);
 
   return (
-    <section className="bg-[#f1f2ef] py-16 border-t border-[#e0e0dc] dark:bg-(--background) dark:border-(--border)">
+    <section className="bg-slate-50 py-16 border-t border-slate-200 dark:bg-(--background) dark:border-(--border)">
       <div className="max-w-5xl mx-auto px-6 flex flex-col md:flex-row items-center gap-6">
-        <CalendarDays size={88} className="text-[#3f5f54]" />
+        <CalendarDays size={88} className="text-primary" />
         <div>
           <p className="text-xl text-[#3f3f3e] dark:text-(--foreground)" style={{ fontFamily: "Georgia, serif" }}>
             Historical Context
@@ -470,7 +466,7 @@ export function AncestorMeaningPage({ type, firstNameParam, lastNameParam, initi
         <p className="text-gray-700 dark:text-(--foreground) mb-4">
           {error || `Could not load data for "${primaryName}". Please try again.`}
         </p>
-        <Link href="/ancestory" className="text-[#005831] underline">
+        <Link href="/ancestory" className="text-primary hover:underline font-semibold">
           <ArrowLeft className="w-4 h-4 inline mr-1" />
           Return to search
         </Link>
@@ -516,7 +512,7 @@ export function AncestorMeaningPage({ type, firstNameParam, lastNameParam, initi
         variations={variations}
       />
 
-      <section className="bg-[#f7f7f5] pb-12 dark:bg-(--background)">
+      <section className="bg-slate-50 pb-12 dark:bg-slate-950">
         <div className="max-w-5xl mx-auto px-6">
           <div className="flex items-center justify-between mb-3">
             <p className="text-xs text-[#686866] dark:text-(--muted-foreground)">
@@ -524,7 +520,7 @@ export function AncestorMeaningPage({ type, firstNameParam, lastNameParam, initi
             </p>
             <AncestorConfidenceBadge data={primaryData} />
           </div>
-          <div className="rounded-xl border border-[#dadad6] bg-white p-6 text-[#3f3f3e] shadow-sm md:p-8 dark:bg-(--muted) dark:border-(--border) dark:text-(--foreground)" style={{ whiteSpace: 'pre-line' }}>
+          <div className="rounded-xl border border-slate-200 bg-white p-6 text-slate-700 shadow-sm md:p-8 dark:bg-(--muted) dark:border-(--border) dark:text-(--foreground)" style={{ whiteSpace: 'pre-line' }}>
             {description}
           </div>
           <AncestorDataSourceChips sources={sources} />
@@ -536,7 +532,7 @@ export function AncestorMeaningPage({ type, firstNameParam, lastNameParam, initi
 
       <AncestorDidYouKnow name={primaryName} data={primaryData} />
 
-      <section className="bg-[#195f08] py-20">
+      <section className="py-20" style={{ background: 'linear-gradient(to right, var(--primary), var(--anslation-ds-primary-hover, var(--primary)))' }}>
         <div className="max-w-4xl mx-auto px-6 text-center">
           <p className="text-white text-xl mb-6" style={{ fontFamily: "Georgia, serif" }}>
             Explore the origins of another name.
@@ -546,12 +542,12 @@ export function AncestorMeaningPage({ type, firstNameParam, lastNameParam, initi
       </section>
 
       {lookupType === "full" && data?.lastName && (
-        <section className="bg-white py-12 border-t border-[#ecece8]">
+        <section className="bg-white py-12 border-t border-slate-200 dark:bg-slate-900 dark:border-slate-800">
           <div className="max-w-5xl mx-auto px-6">
             <h3 className="text-3xl mb-4" style={{ fontFamily: "Georgia, serif" }}>
               Last Name Analysis: {lastName}
             </h3>
-            <div className="bg-[#f7f7f5] border border-[#e3e3df] rounded-lg p-6 text-[#3f3f3e]" style={{ whiteSpace: 'pre-line' }}>
+            <div className="bg-slate-50 border border-slate-200 dark:bg-slate-950 dark:border-slate-800 rounded-lg p-6 text-slate-700 dark:text-slate-300" style={{ whiteSpace: 'pre-line' }}>
               {safeString(getDescription(lastName, data.lastName))}
             </div>
           </div>

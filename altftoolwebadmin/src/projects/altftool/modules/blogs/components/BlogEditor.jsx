@@ -1,22 +1,77 @@
 "use client";
 
 import { CKEditor } from "@ckeditor/ckeditor5-react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useCkeditorAssetsReady } from "@/components/admin/CkeditorAssets";
+import { isFeatureEnabled } from "@/lib/featureFlags";
 
 export default function BlogEditor({ value, onChange }) {
   const editorAssetsReady = useCkeditorAssetsReady();
+  const editorRef = useRef(null);
+  const editorConfigRef = useRef(null);
+  const editorConfigKeyRef = useRef("");
+  const latestEditorDataRef = useRef(value || "");
+  const [editorReady, setEditorReady] = useState(false);
+  const [usePlainTextFallback, setUsePlainTextFallback] = useState(false);
+  const fixWriteEnabled = isFeatureEnabled("fix_ckeditor_write");
+  const ckeditorLicenseKey = process.env.NEXT_PUBLIC_CKEDITOR_LICENSE_KEY;
+
+  const focusEditor = useCallback(() => {
+    if (!fixWriteEnabled) return;
+    const editor = editorRef.current;
+    if (!editor) return;
+
+    try {
+      editor.editing.view.focus();
+    } catch {
+      // Focusing should never break typing or fallback rendering.
+    }
+  }, [fixWriteEnabled]);
+
+  useEffect(() => {
+    if (!fixWriteEnabled || !editorReady || !editorRef.current) return;
+
+    const nextValue = value || "";
+    if (nextValue === latestEditorDataRef.current) return;
+
+    const editor = editorRef.current;
+    if (editor.getData() === nextValue) {
+      latestEditorDataRef.current = nextValue;
+      return;
+    }
+
+    editor.setData(nextValue);
+    latestEditorDataRef.current = nextValue;
+  }, [editorReady, fixWriteEnabled, value]);
+
+  useEffect(() => {
+    if (!fixWriteEnabled || !ckeditorLicenseKey || editorAssetsReady) {
+      setUsePlainTextFallback(false);
+      return undefined;
+    }
+
+    const markFallback = () => setUsePlainTextFallback(true);
+    const timeout = window.setTimeout(markFallback, 8000);
+
+    window.addEventListener("altftool:ckeditor-error", markFallback);
+    return () => {
+      window.clearTimeout(timeout);
+      window.removeEventListener("altftool:ckeditor-error", markFallback);
+    };
+  }, [ckeditorLicenseKey, editorAssetsReady, fixWriteEnabled]);
 
   if (typeof window === "undefined") return null;
 
-  const ckeditorLicenseKey = process.env.NEXT_PUBLIC_CKEDITOR_LICENSE_KEY;
-  if (!ckeditorLicenseKey) {
+  if (!ckeditorLicenseKey || usePlainTextFallback) {
     return (
-      <textarea
-        value={value || ""}
-        onChange={(event) => onChange(event.target.value)}
-        placeholder="Type or paste your content here..."
-        className="min-h-[360px] w-full rounded-xl border border-gray-200 bg-white p-4 text-sm text-gray-800 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
-      />
+      <div data-ckeditor-ready="true">
+        <textarea
+          value={value || ""}
+          onChange={(event) => onChange(event.target.value)}
+          placeholder="Type or paste your content here..."
+          className="min-h-[360px] w-full rounded-xl border border-gray-200 bg-white p-4 text-sm text-gray-800 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
+        />
+      </div>
     );
   }
 
@@ -218,12 +273,10 @@ export default function BlogEditor({ value, onChange }) {
 
   /* ---------------- EDITOR ---------------- */
 
-  return (
-    <CKEditor
-      editor={ClassicEditor}
-      data={value}
-
-      config={{
+  const editorConfigKey = `${ckeditorLicenseKey}:${hasPremiumLicense ? "premium" : "standard"}`;
+  if (!editorConfigRef.current || editorConfigKeyRef.current !== editorConfigKey) {
+    editorConfigKeyRef.current = editorConfigKey;
+    editorConfigRef.current = {
         licenseKey: ckeditorLicenseKey,
 
         extraPlugins: [uploadPlugin],
@@ -393,12 +446,40 @@ export default function BlogEditor({ value, onChange }) {
         },
 
         placeholder: "Type or paste your content here..."
-      }}
+      };
+  }
 
-      onChange={(event, editor) => {
-        const data = editor.getData();
-        onChange(data);
-      }}
-    />
+  return (
+    <div
+      data-ckeditor-ready={editorReady ? "true" : "false"}
+      onClick={focusEditor}
+      className="ckeditor-write-surface"
+    >
+      <CKEditor
+        editor={ClassicEditor}
+        data={value || ""}
+        config={editorConfigRef.current}
+        onReady={(editor) => {
+          editorRef.current = editor;
+          latestEditorDataRef.current = editor.getData();
+          setEditorReady(true);
+
+          if (fixWriteEnabled) {
+            const editable = editor.ui?.view?.editable?.element;
+            editable?.setAttribute("data-ckeditor-ready", "true");
+            editable?.setAttribute("aria-label", "Blog content editor");
+          }
+        }}
+        onAfterDestroy={() => {
+          editorRef.current = null;
+          setEditorReady(false);
+        }}
+        onChange={(event, editor) => {
+          const data = editor.getData();
+          latestEditorDataRef.current = data;
+          onChange(data);
+        }}
+      />
+    </div>
   );
 }

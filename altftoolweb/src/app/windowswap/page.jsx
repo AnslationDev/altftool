@@ -111,7 +111,7 @@ export default function WindowSwapPage() {
   };
 
   return (
-    <div className="min-h-screen bg-windowswap-teal text-white font-sans antialiased overflow-x-hidden select-none selection:bg-[#c56543]/40 selection:text-white">
+    <div className="windowswap-theme min-h-screen font-sans antialiased overflow-x-hidden select-none selection:bg-primary/20 selection:text-foreground">
 
       {/* ──────────────────────────────────────────────────────── */}
       {/* LANDING PAGE STATE */}

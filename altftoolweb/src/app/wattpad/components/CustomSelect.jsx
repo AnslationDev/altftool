@@ -79,11 +79,12 @@ export default function CustomSelect({
 
       {/* DROPDOWN */}
       <div
-        className={`absolute bottom-[115%] left-0 w-full bg-(--card) border border-(--border) rounded-2xl shadow-[0_10px_30px_rgba(0,0,0,0.08)] overflow-hidden z-50 origin-bottom transition-all duration-300 ${
+        className={`absolute bottom-[115%] left-0 w-full bg-(--card) border border-(--border) rounded-2xl overflow-hidden z-50 origin-bottom transition-all duration-300 ${
           open
             ? "opacity-100 scale-100 visible"
             : "opacity-0 scale-95 invisible"
         }`}
+        style={{ boxShadow: open ? 'var(--anslation-ds-shadow-md)' : 'none' }}
       >
 
         <div className="max-h-[250px] overflow-y-auto">

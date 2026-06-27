@@ -6,12 +6,12 @@ import "../style/AllAccessSection.css";
 
 export default function AllAccessSection() {
   return (
-    <section id="all-access" className="windowswap-all-access w-full bg-[#133d45] py-16 px-6 sm:px-12 md:px-24 flex flex-col items-center">
+    <section id="all-access" className="windowswap-all-access windowswap-section w-full py-16 px-6 sm:px-12 md:px-24 flex flex-col items-center">
 
       <div className="max-w-9xl w-full mx-auto grid grid-cols-1 lg:grid-cols-[1.25fr_0.85fr] gap-16 items-center">
 
         {/* Left Card: Window view with cat */}
-        <div className="windowswap-all-access-card relative group rounded-none overflow-hidden shadow-2xl w-full max-w-[960px] h-[560px] sm:h-[500px] lg:h-[560px] bg-zinc-900 select-none mx-auto lg:mx-0">
+        <div className="windowswap-all-access-card windowswap-card relative group overflow-hidden w-full max-w-[960px] h-[560px] sm:h-[500px] lg:h-[560px] select-none mx-auto lg:mx-0">
           <img
             src="/windowswap-assets/all-access-bg.jpg"
             alt="Cozy Edinburgh autumn window view"
@@ -37,16 +37,16 @@ export default function AllAccessSection() {
         {/* Right Panel: Text and details */}
         <div className="windowswap-all-access-copy flex flex-col items-start lg:pl-4 text-left max-w-[620px] mx-auto lg:mx-0">
 
-          <span className="text-[10px] tracking-[0.2em] font-semibold text-zinc-300/80 uppercase">WINDOWSWAP ALL-ACCESS</span>
-          <div className="h-[1px] w-14 bg-white/20 mt-3 mb-8" />
+          <span className="text-[10px] tracking-[0.2em] font-semibold uppercase" style={{color: 'var(--windowswap-muted)'}}>WINDOWSWAP ALL-ACCESS</span>
+          <div className="windowswap-rule h-[2px] w-14 mt-3 mb-8 rounded-full" />
 
-          <p className="font-serif text-xl md:text-[22px] text-[#df8664] leading-relaxed font-normal mb-8 max-w-sm">
+          <p className="font-display text-xl md:text-[22px] leading-relaxed font-bold mb-8 max-w-sm" style={{color: 'var(--windowswap-foreground)'}}>
             Get access to all windows ever uploaded, unlimited bookmarks, playlists and even a back button.
           </p>
 
           <Link
             href="/windowswap/pricing"
-            className="windowswap-all-access-cta bg-[#df8664] hover:bg-[#d07353] text-white px-8 py-3 rounded-full transition-all duration-300 hover:scale-105 active:scale-95 shadow-md font-semibold tracking-wide text-xs cursor-pointer inline-block"
+            className="windowswap-all-access-cta windowswap-primary-button px-8 py-3 rounded-full transition-all duration-300 hover:scale-105 active:scale-95 font-semibold tracking-wide text-xs cursor-pointer inline-block"
           >
             Upgrade for $5 monthly
           </Link>

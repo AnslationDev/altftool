@@ -68,14 +68,14 @@ export function AncestorSearchPanel({ large = false, placeholder = "Enter a firs
             onChange={(e) => setSearchTerm(e.target.value)}
             onFocus={() => setIsFocused(true)}
             placeholder={placeholder}
-            className={`w-full border border-gray-300 rounded-full bg-white text-gray-800 placeholder-gray-400 dark:bg-(--background) dark:border-(--border) dark:text-gray-100 dark:placeholder-(--muted-foreground)
-              focus:outline-none focus:ring-2 focus:ring-[#005831]/40 focus:border-[#005831] dark:focus:ring-emerald-500/30 dark:focus:border-emerald-500
+            className={`w-full border border-slate-300 rounded-full bg-white text-gray-800 placeholder-gray-400 dark:bg-(--background) dark:border-(--border) dark:text-gray-100 dark:placeholder-(--muted-foreground)
+              focus:outline-none focus:ring-2 focus:ring-primary/40 focus:border-primary
               transition-all duration-300 shadow-sm
               ${large ? "pl-12 pr-32 py-4 text-base" : "pl-10 pr-24 py-3 text-sm"}`}
           />
           <button
             type="submit"
-            className={`absolute right-1.5 bg-[#005831] hover:bg-[#004526] text-white font-semibold rounded-full transition-colors
+            className={`absolute right-1.5 bg-primary hover:bg-primary/90 text-primary-foreground font-semibold rounded-full transition-colors
               ${large ? "px-6 py-2.5 text-sm" : "px-5 py-2 text-xs"}`}
           >
             Search

@@ -5,14 +5,44 @@ import {
   Moon,
   Redo2,
   Save,
+  Share2,
   Shapes,
-  Sparkles,
   Sun,
   Undo2,
   Upload,
+  Circle,
+  Frame,
+  Image as ImageIcon,
+  MousePointer2,
+  Palette,
+  PenLine,
+  Sparkles,
+  Square,
+  Zap,
 } from "lucide-react";
 
+const BRAND_ICONS = {
+  Sparkles,
+  PenLine,
+  Palette,
+  Shapes,
+  MousePointer2,
+  Square,
+  Circle,
+  Zap,
+  Frame,
+  Image: ImageIcon,
+};
+
+function BrandIcon({ name, ...props }) {
+  const Cmp = BRAND_ICONS[name] || Sparkles;
+  return <Cmp {...props} />;
+}
+
 export default function TopBar({
+  appName = "SketchFlow",
+  tagline = "Hand-drawn infinite whiteboard",
+  brandIconKey = "Sparkles",
   currentToolLabel,
   dark,
   grid,
@@ -25,16 +55,17 @@ export default function TopBar({
   onExportSvg,
   onSave,
   onLoad,
+  onShare,
   onToggleTheme,
   onOpenPalette,
 }) {
   return (
     <header className="sf-topbar">
       <div className="sf-brand">
-        <Sparkles className="h-5 w-5" />
+        <BrandIcon name={brandIconKey} className="h-5 w-5" />
         <div>
-          <h1>SketchFlow</h1>
-          <p>Hand-drawn infinite whiteboard</p>
+          <h1>{appName}</h1>
+          <p>{tagline}</p>
         </div>
       </div>
       <div className="sf-options">
@@ -72,6 +103,9 @@ export default function TopBar({
         </button>
         <button className="sf-icon-btn" onClick={onSave} title="Save .sketchflow">
           <Save className="h-5 w-5" />
+        </button>
+        <button className="sf-icon-btn" onClick={onShare} title="Share via link">
+          <Share2 className="h-5 w-5" />
         </button>
         <button className="sf-icon-btn" onClick={onLoad} title="Load file">
           <Upload className="h-5 w-5" />

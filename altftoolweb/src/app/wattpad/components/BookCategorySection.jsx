@@ -44,7 +44,7 @@ function CatCard({ item }) {
       {/* Circle Image */}
       <div
         className="
-        rounded-full flex justify-center items-center overflow-hidden bg-[#f4f2f2] group
+        rounded-full flex justify-center items-center overflow-hidden bg-(--muted) group
         w-22 h-22 md:w-26 md:h-26 
         lg:w-30 lg:h-30 xl:w-35 xl:h-35  [@media(min-width:1700px)]:w-40 [@media(min-width:1700px)]:h-40
        

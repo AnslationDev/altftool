@@ -5,17 +5,23 @@ export default function PropertiesPanel({
   primary,
   selectedCount,
   includeBackground,
+  title = "Properties",
+  fontOptions = [],
   onStyleChange,
   onIncludeBackgroundChange,
 }) {
   if (!primary) return null;
+
+  const fonts = fontOptions.length
+    ? fontOptions
+    : ['"Architects Daughter", Excalifont, Virgil, system-ui, sans-serif', "system-ui, sans-serif", "Georgia, serif", "monospace"];
 
   return (
     <aside className="sf-panel">
       <div className="sf-panel-head">
         <Palette className="h-5 w-5" />
         <div>
-          <h2>Properties</h2>
+          <h2>{title}</h2>
           <p>{selectedCount} selected</p>
         </div>
       </div>
@@ -69,10 +75,9 @@ export default function PropertiesPanel({
           <div className="sf-field-row">
             <input type="number" min="8" max="120" value={primary.fontSize} onChange={(event) => onStyleChange({ fontSize: Number(event.target.value) })} />
             <select value={primary.fontFamily} onChange={(event) => onStyleChange({ fontFamily: event.target.value })}>
-              <option>&quot;Architects Daughter&quot;, Excalifont, Virgil, system-ui, sans-serif</option>
-              <option>system-ui, sans-serif</option>
-              <option>Georgia, serif</option>
-              <option>monospace</option>
+              {fonts.map((font) => (
+                <option key={font} value={font}>{font}</option>
+              ))}
             </select>
           </div>
           <div className="sf-prop-grid sf-three">

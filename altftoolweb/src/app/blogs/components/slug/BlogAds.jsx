@@ -2,6 +2,8 @@
 
 import { useAds } from "@/ads/AdsProvider"; // adjust path if needed
 import ManagedImage from "@/components/ui/ManagedImage";
+import { isFeatureEnabled } from "@/lib/featureFlags";
+import { useEffect, useRef, useState } from "react";
 
 /**
  * BlogAds — right-sidebar ad strip for blog detail pages.
@@ -14,6 +16,9 @@ import ManagedImage from "@/components/ui/ManagedImage";
  */
 export default function BlogAds({ slug, category }) {
   const allAds = useAds({ placement: "blog_detail" });
+  const adRef = useRef(null);
+  const adViewportFixEnabled = isFeatureEnabled("ad_fix_viewport");
+  const [debugAds, setDebugAds] = useState(false);
 
   // 1 — ads explicitly targeted at this slug
  const targeted = [], byCat = [], byAll = [], global = [];
@@ -56,8 +61,46 @@ ads = ads.slice(0, 4);
 
   const useFallback = ads.length === 0;
 
+  useEffect(() => {
+    if (!adViewportFixEnabled) return;
+    setDebugAds(new URLSearchParams(window.location.search).get("debug_ads") === "1");
+  }, [adViewportFixEnabled]);
+
+  useEffect(() => {
+    if (!adViewportFixEnabled || !adRef.current) return;
+
+    const node = adRef.current;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry?.isIntersecting) return;
+        window.dispatchEvent(new CustomEvent("ad_impression", {
+          detail: {
+            placement: "blog_detail",
+            slotId: `blog_detail:${slug || "global"}`,
+            visible: true,
+          },
+        }));
+        observer.disconnect();
+      },
+      { threshold: 0.5 },
+    );
+
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, [adViewportFixEnabled, slug]);
+
   return (
-    <aside className="hidden 2xl:sticky 2xl:top-24 2xl:block">
+    <aside
+      ref={adRef}
+      data-ad-slot={`blog_detail:${slug || "global"}`}
+      data-ad-visible="true"
+      className={adViewportFixEnabled ? "hidden lg:sticky lg:top-24 lg:block" : "hidden 2xl:sticky 2xl:top-24 2xl:block"}
+    >
+      {debugAds && (
+        <div className="mb-2 rounded-[8px] border border-cyan-300 bg-cyan-50 px-3 py-2 text-[11px] font-bold text-cyan-800">
+          blog_detail:{slug || "global"} · {useFallback ? "fallback" : `${ads.length} loaded`} · visible
+        </div>
+      )}
       {useFallback ? (
         <div
           className="overflow-hidden rounded-[var(--anslation-ds-radius)] border shadow-[var(--anslation-ds-shadow-sm)]"

@@ -1,33 +1,38 @@
 "use client";
 
-import React, { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
+import { Button } from '@altftool/ui';
 import { articlesData, quizById } from '../data';
 import { playbuzzAds } from '../ads';
-import './QuizPage.css';
 
 const FALLBACK_QUESTIONS = [
   { id: 1, text: 'What word does this spell backwards? DLROW', options: ['SWORD', 'WORLD', 'WORDS', 'LOWER'], correctIndex: 1 },
   { id: 2, image: 'https://picsum.photos/seed/q2img/760/300', text: 'Read this backwards and pick what you see: DESSERT', options: ['DESERT', 'RESTED', 'TRESSED', 'STRESS'], correctIndex: 2 },
   { id: 3, text: 'Which of these reads the same forwards AND backwards?', options: ['LEVEL UP', 'RACECAR', 'MIRROR', 'FORWARD'], correctIndex: 1 },
   { id: 4, image: 'https://picsum.photos/seed/q4img/760/300', text: 'What does ENIM spell forwards?', options: ['MINI', 'MINE', 'MEAN', 'MILE'], correctIndex: 1 },
-  { id: 5, text: 'Reverse this phrase: OT EROT — What animal do you see?', options: ['Bear', 'Tiger', 'Tore To', 'Otter'], correctIndex: 2 }
+  { id: 5, text: 'Reverse this phrase: OT EROT — What animal do you see?', options: ['Bear', 'Tiger', 'Tore To', 'Otter'], correctIndex: 2 },
 ];
 
 const YouMightAlsoLike = ({ relatedArticles }) => (
-  <div className="ymal-section">
-    <hr className="ymal-separator" />
-    <div className="ymal-heading">You Might Also Like</div>
-    <div className="ymal-grid">
+  <div className="mt-8 pb-10">
+    <hr className="border-t border-border m-0 mb-6" />
+    <div className="text-xs font-bold uppercase tracking-wider mb-3.5" style={{ color: 'var(--foreground)' }}>You Might Also Like</div>
+    <div className="grid grid-cols-3 max-md:grid-cols-2 max-[480px]:grid-cols-1 gap-4">
       {relatedArticles.map((article) => (
-        <Link href={`/playbuzz/quiz-play?id=${article.id}`} key={article.id} className="ymal-card">
-          <div className="ymal-card-image">
-            <img src={article.image} alt={article.title} loading="lazy" />
+        <Link
+          href={`/playbuzz/quiz-play?id=${article.id}`}
+          key={article.id}
+          className="group block no-underline border border-border rounded-md overflow-hidden bg-card transition-all duration-300 hover:-translate-y-0.5 hover:shadow-sm hover:border-[var(--primary)] focus-visible:ring-2 focus-visible:ring-[var(--primary)] focus-visible:outline-none"
+          style={{ color: 'inherit' }}
+        >
+          <div className="relative w-full pb-[56.25%] overflow-hidden" style={{ backgroundColor: 'var(--muted)' }}>
+            <img src={article.image} alt={article.title} loading="lazy" className="absolute inset-0 w-full h-full object-cover transition-transform duration-300 group-hover:scale-105" />
           </div>
-          <div className="ymal-card-body">
-            <div className="ymal-card-title">{article.title}</div>
-            <div className="ymal-card-creator">{article.author} · {article.plays}</div>
+          <div className="px-3.5 py-3 border-t border-border">
+            <div className="text-sm font-bold text-center leading-tight mb-1.5" style={{ color: 'var(--foreground)' }}>{article.title}</div>
+            <div className="text-xs font-normal text-center" style={{ color: 'var(--muted-foreground)' }}>{article.author} &middot; {article.plays}</div>
           </div>
         </Link>
       ))}
@@ -38,10 +43,20 @@ const YouMightAlsoLike = ({ relatedArticles }) => (
 const MiddleContentAd = ({ ad }) => {
   if (!ad) return null;
   return (
-    <div className="quiz-middle-ad">
-      <a href={ad.href} target="_blank" rel="noopener noreferrer" className="quiz-middle-ad-card">
-        <img src={ad.image} alt={ad.alt || 'Advertisement'} className="quiz-middle-ad-image" />
-        {ad.label && <span className="quiz-middle-ad-label">{ad.label}</span>}
+    <div className="my-6 w-full">
+      <a
+        href={ad.href}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="relative block w-full border border-border rounded-md overflow-hidden bg-card transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md hover:border-[var(--primary)] focus-visible:ring-2 focus-visible:ring-[var(--primary)] focus-visible:outline-none"
+        style={{ boxShadow: 'var(--anslation-ds-shadow-sm)' }}
+      >
+        <img src={ad.image} alt={ad.alt || 'Advertisement'} className="w-full object-cover block" style={{ height: 'clamp(140px, 24vw, 260px)' }} />
+        {ad.label && (
+          <span className="absolute top-2 left-2 text-[10px] font-semibold tracking-wide text-white px-2 py-0.5 rounded" style={{ backgroundColor: 'rgba(0,0,0,0.6)', backdropFilter: 'blur(2px)' }}>
+            {ad.label}
+          </span>
+        )}
       </a>
     </div>
   );
@@ -61,17 +76,16 @@ const QuizPage = () => {
         image: quiz.heroImage || quiz.cardImage,
         plays: quiz.plays,
         category: quiz.category,
-        questions: quiz.questions?.length ? quiz.questions : FALLBACK_QUESTIONS
+        questions: quiz.questions?.length ? quiz.questions : FALLBACK_QUESTIONS,
       };
     }
-
     return {
       title: 'Only Highly Gifted People Can Read Backwards. Can You?',
       author: 'Terry Stein',
       image: 'https://picsum.photos/seed/forest-path/1200/600',
       plays: '2.4M plays',
       category: 'Trivia',
-      questions: FALLBACK_QUESTIONS
+      questions: FALLBACK_QUESTIONS,
     };
   }, [articleId]);
 
@@ -106,7 +120,6 @@ const QuizPage = () => {
     return playbuzzAds.find(ad => ad.type === 'horizontal-long') || playbuzzAds[0];
   }, []);
 
-  /* eslint-disable react-hooks/set-state-in-effect */
   useEffect(() => {
     window.scrollTo(0, 0);
     setGameState('intro');
@@ -115,7 +128,6 @@ const QuizPage = () => {
     setHasAnswered(false);
     setSelectedOptionIdx(null);
   }, [id]);
-  /* eslint-enable react-hooks/set-state-in-effect */
 
   const handleStart = () => {
     setGameState('playing');
@@ -163,100 +175,151 @@ const QuizPage = () => {
   const handleFacebookShare = () => {
     const shareUrl = getShareUrl();
     if (!shareUrl) return;
-    const fbUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`;
-    window.open(fbUrl, '_blank', 'noopener,noreferrer,width=650,height=500');
+    window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`, '_blank', 'noopener,noreferrer,width=650,height=500');
   };
 
   const handleShareResult = async () => {
     const shareUrl = getShareUrl();
     if (!shareUrl) return;
-
     const resultInfo = getResultInfo();
     const shareText = `${quizData.title} - I scored ${score}/${quizData.questions.length}. ${resultInfo.title}`;
-
     if (navigator.share) {
-      try {
-        await navigator.share({
-          title: quizData.title,
-          text: shareText,
-          url: shareUrl
-        });
-        return;
-      } catch (error) {
-        // User may cancel native share popup, then we silently fall back.
-      }
+      try { await navigator.share({ title: quizData.title, text: shareText, url: shareUrl }); return; } catch {}
     }
-
-    try {
-      await navigator.clipboard.writeText(shareUrl);
-      window.alert('Quiz link copied. You can paste and share it.');
-    } catch (error) {
-      window.prompt('Copy this quiz link:', shareUrl);
-    }
+    try { await navigator.clipboard.writeText(shareUrl); window.alert('Quiz link copied. You can paste and share it.'); }
+    catch { window.prompt('Copy this quiz link:', shareUrl); }
   };
 
   const handleTwitterShare = () => {
     const shareUrl = getShareUrl();
     if (!shareUrl) return;
     const resultInfo = getResultInfo();
-    const text = `${quizData.title} - I scored ${score}/${quizData.questions.length}. ${resultInfo.title}`;
-    const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(shareUrl)}`;
-    window.open(twitterUrl, '_blank', 'noopener,noreferrer,width=650,height=500');
+    window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(`${quizData.title} - I scored ${score}/${quizData.questions.length}. ${resultInfo.title}`)}&url=${encodeURIComponent(shareUrl)}`, '_blank', 'noopener,noreferrer,width=650,height=500');
   };
 
   const handleInstagramShare = async () => {
     const shareUrl = getShareUrl();
     if (!shareUrl) return;
-    try {
-      await navigator.clipboard.writeText(shareUrl);
-      window.open('https://www.instagram.com/', '_blank', 'noopener,noreferrer');
-      window.alert('Quiz link copied. Paste it in your Instagram bio, story, or DM.');
-    } catch (error) {
-      window.open('https://www.instagram.com/', '_blank', 'noopener,noreferrer');
-      window.prompt('Copy this quiz link for Instagram:', shareUrl);
-    }
+    try { await navigator.clipboard.writeText(shareUrl); window.open('https://www.instagram.com/', '_blank'); window.alert('Quiz link copied. Paste it in your Instagram bio, story, or DM.'); }
+    catch { window.open('https://www.instagram.com/', '_blank'); window.prompt('Copy this quiz link for Instagram:', shareUrl); }
   };
 
+  const renderQuestion = () => {
+    const q = quizData.questions[currentQuestionIdx];
+    return (
+      <div>
+        <div className="text-sm uppercase tracking-wider font-semibold mb-2.5" style={{ color: 'var(--muted-foreground)' }}>
+          Question {currentQuestionIdx + 1} of {quizData.questions.length}
+        </div>
+        <div className="text-4xl max-md:text-[22px] font-extrabold mb-5 leading-tight" style={{ color: 'var(--foreground)' }}>
+          {q.text}
+        </div>
+        <div className="flex flex-col gap-3">
+          {q.options.map((opt, idx) => {
+            let btnClass = 'w-full py-3.5 px-3.5 text-lg font-bold text-left rounded-md border transition-all duration-200 focus-visible:ring-2 focus-visible:ring-[var(--primary)] focus-visible:outline-none';
+            if (hasAnswered) {
+              if (idx === q.correctIndex) {
+                btnClass += ' border-[var(--anslation-ds-success)]';
+              } else if (idx === selectedOptionIdx) {
+                btnClass += ' border-[var(--anslation-ds-danger)]';
+              } else {
+                btnClass += ' opacity-40 cursor-not-allowed';
+              }
+            } else {
+              btnClass += ' hover:border-[var(--primary)]';
+            }
+            const bgColor = hasAnswered
+              ? idx === q.correctIndex
+                ? 'var(--anslation-ds-success-soft)'
+                : idx === selectedOptionIdx
+                  ? 'var(--anslation-ds-danger-soft)'
+                  : 'var(--card)'
+              : 'var(--card)';
+            const textColor = hasAnswered
+              ? idx === q.correctIndex
+                ? 'var(--anslation-ds-success)'
+                : idx === selectedOptionIdx
+                  ? 'var(--anslation-ds-danger)'
+                  : 'var(--foreground)'
+              : 'var(--foreground)';
+            return (
+              <button
+                key={idx}
+                className={btnClass}
+                style={{
+                  backgroundColor: bgColor,
+                  borderColor: 'var(--border)',
+                  color: textColor,
+                }}
+                onClick={() => handleOptionClick(idx)}
+              >
+                {opt}
+              </button>
+            );
+          })}
+        </div>
+      </div>
+    );
+  };
+
+  const renderSideAd = (ad, key) => (
+    <a
+      key={key}
+      href={ad.href}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="block border border-border rounded-md overflow-hidden bg-card transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md hover:border-[var(--primary)] focus-visible:ring-2 focus-visible:ring-[var(--primary)] focus-visible:outline-none"
+      style={{ boxShadow: 'var(--anslation-ds-shadow-sm)' }}
+    >
+      <img src={ad.image} alt={ad.alt || 'Advertisement'} className="w-full object-cover block" style={{ height: 'min(60vh, 520px)', minHeight: '360px' }} />
+      {ad.label && (
+        <span className="absolute top-2 left-2 text-[10px] font-semibold tracking-wide text-white px-2 py-0.5 rounded" style={{ backgroundColor: 'rgba(0,0,0,0.6)', backdropFilter: 'blur(2px)' }}>
+          {ad.label}
+        </span>
+      )}
+    </a>
+  );
+
   return (
-    <div className="quiz-page-outer">
-      <div className="quiz-layout-container">
-        {/* Left Column for Ads */}
+    <div className="w-full pt-10 max-md:pt-5" style={{ backgroundColor: 'var(--background)', color: 'var(--foreground)' }}>
+      <div className="flex justify-center items-start mx-auto gap-4 w-full px-4 box-border" style={{ maxWidth: 'var(--anslation-ds-container-wide)' }}>
         {playbuzzAds?.length > 0 && (
-          <div className="quiz-side-column left-column" aria-label="Sponsored ad left">
-            <div className="quiz-sticky-ad">
+          <div className="w-60 max-xl:w-48 max-lg:w-40 max-lg:hidden shrink-0" aria-label="Sponsored ad left">
+            <div className="sticky top-24 flex flex-col gap-4">
               {leftAds.map((ad, index) => (
-                <a
-                  key={`${ad.id}-left-${index}`}
-                  href={ad.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="quiz-side-ad-card"
-                >
-                  <img src={ad.image} alt={ad.alt || 'Advertisement'} className="quiz-side-ad-image" />
-                  {ad.label && <span className="quiz-side-ad-label">{ad.label}</span>}
-                </a>
+                <div key={`${ad.id}-left-${index}`} className="relative">
+                  {renderSideAd(ad, `${ad.id}-left-${index}`)}
+                </div>
               ))}
             </div>
           </div>
         )}
 
-        {/* Center Main Quiz Content */}
-        <div className="quiz-page-container">
+        <div className="w-full max-w-[860px] max-md:max-w-full px-10 max-md:px-4 py-10 max-md:py-5 bg-card flex flex-col min-h-[70vh] border border-border rounded-lg mb-10 max-md:mb-0 max-md:border-none max-md:rounded-none" style={{ boxShadow: 'var(--anslation-ds-shadow-sm)' }}>
           {gameState === 'intro' && (
             <>
-              <div className="quiz-intro-section">
-                <div className="quiz-meta-top">
-                  <div className="quiz-avatar"><img src="https://picsum.photos/seed/avatar1/64/64" alt="Author" /></div>
-                  <div className="quiz-meta-text">
-                    <span className="quiz-author">by <strong>{quizData.author}</strong></span>
-                    <span className="quiz-dot">·</span><span>{quizData.plays}</span>
-                    <span className="quiz-dot">·</span><span>{quizData.questions.length} questions</span>
-                    <span className="quiz-dot">·</span><span className="quiz-category-tag">{quizData.category || 'Trivia'}</span>
+              <div className="flex flex-col items-center text-center pb-2.5">
+                <div className="flex items-center gap-3 mb-5 text-sm w-full justify-start" style={{ color: 'var(--muted-foreground)' }}>
+                  <div className="w-9 h-9 rounded-full overflow-hidden">
+                    <img src="https://picsum.photos/seed/avatar1/64/64" alt="" className="w-full h-full object-cover" />
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span>by <strong style={{ color: 'var(--foreground)' }}>{quizData.author}</strong></span>
+                    <span className="mx-0.5">&middot;</span>
+                    <span>{quizData.plays}</span>
+                    <span className="mx-0.5">&middot;</span>
+                    <span>{quizData.questions.length} questions</span>
+                    <span className="mx-0.5">&middot;</span>
+                    <span>{quizData.category || 'Trivia'}</span>
                   </div>
                 </div>
-                <div className="quiz-hero-image"><img src={quizData.image} alt={quizData.title} /></div>
-                <h1 className="quiz-title">{quizData.title}</h1>
-                <button className="start-quiz-btn" onClick={handleStart}>Start Quiz</button>
+                <div className="w-full rounded-md overflow-hidden mb-6" style={{ boxShadow: '0 4px 15px rgba(0,0,0,0.05)' }}>
+                  <img src={quizData.image} alt={quizData.title} className="w-full h-auto block object-cover" />
+                </div>
+                <h1 className="text-3xl font-extrabold leading-tight mb-6 max-w-full" style={{ color: 'var(--foreground)' }}>{quizData.title}</h1>
+                <Button variant="primary" size="lg" onClick={handleStart}>
+                  Start Quiz
+                </Button>
               </div>
               <MiddleContentAd ad={horizontalAd} />
               <YouMightAlsoLike relatedArticles={relatedArticles} />
@@ -264,24 +327,21 @@ const QuizPage = () => {
           )}
 
           {gameState === 'playing' && (
-            <div className="quiz-playing-section">
-              <div className="pb-progress-bar-wrap"><div className="pb-progress-bar" style={{ width: `${(currentQuestionIdx / quizData.questions.length) * 100}%` }} /></div>
-              <div className="pb-question">
-                <div className="pb-question-num">Question {currentQuestionIdx + 1} of {quizData.questions.length}</div>
-                <div className="pb-question-text">{quizData.questions[currentQuestionIdx].text}</div>
-                <div className="pb-answers">
-                  {quizData.questions[currentQuestionIdx].options.map((opt, idx) => {
-                    let cls = 'pb-answer';
-                    if (hasAnswered) {
-                      if (idx === quizData.questions[currentQuestionIdx].correctIndex) cls += ' correct';
-                      else if (idx === selectedOptionIdx) cls += ' wrong';
-                      else cls += ' faded';
-                    }
-                    return <button key={idx} className={cls} onClick={() => handleOptionClick(idx)}>{opt}</button>;
-                  })}
-                </div>
+            <div className="w-full pb-6">
+              <div className="w-full h-2 rounded overflow-hidden mb-6" style={{ backgroundColor: 'var(--muted)' }}>
+                <div
+                  className="h-full transition-all duration-300 rounded"
+                  style={{ width: `${(currentQuestionIdx / quizData.questions.length) * 100}%`, backgroundColor: 'var(--primary)' }}
+                />
               </div>
-              {hasAnswered && <div className="pb-quiz-nav"><button className="pb-next-btn" onClick={handleNext}>{currentQuestionIdx === quizData.questions.length - 1 ? 'See Results' : 'Next Question'}</button></div>}
+              {renderQuestion()}
+              {hasAnswered && (
+                <div className="mt-5 text-center">
+                  <Button variant="primary" onClick={handleNext}>
+                    {currentQuestionIdx === quizData.questions.length - 1 ? 'See Results' : 'Next Question'}
+                  </Button>
+                </div>
+              )}
               <MiddleContentAd ad={horizontalAd} />
               <YouMightAlsoLike relatedArticles={relatedArticles} />
             </div>
@@ -291,16 +351,51 @@ const QuizPage = () => {
             const resultInfo = getResultInfo();
             return (
               <>
-                <div className="pb-result-screen">
-                  <div className="pb-result-score">{score}/{quizData.questions.length}</div>
-                  <div className="pb-result-label">{resultInfo.title}</div>
-                  <p className="pb-result-desc">{resultInfo.desc}</p>
-                  <div className="pb-result-share">
-                    <button className="pb-result-share-btn fb" onClick={handleFacebookShare}><span className="share-icon">f</span>Share on Facebook</button>
-                    <button className="pb-result-share-btn tw" onClick={handleTwitterShare}><span className="share-icon">x</span>Share on Twitter</button>
-                    <button className="pb-result-share-btn ig" onClick={handleInstagramShare}><span className="share-icon">ig</span>Share on Instagram</button>
-                    <button className="pb-result-share-btn copy" onClick={handleShareResult}><span className="share-icon">lnk</span>Copy Quiz Link</button>
-                    <button className="pb-result-share-btn retake" onClick={handleRetake}><span className="share-icon">r</span>Retake Quiz</button>
+                <div className="text-center px-4 pb-6 bg-transparent border-none">
+                  <div className="text-5xl font-extrabold mb-2.5" style={{ color: 'var(--primary)' }}>
+                    {score}/{quizData.questions.length}
+                  </div>
+                  <div className="text-4xl max-md:text-[28px] font-bold mb-4" style={{ color: 'var(--foreground)' }}>
+                    {resultInfo.title}
+                  </div>
+                  <p className="text-base max-w-[600px] mx-auto mb-8 leading-relaxed" style={{ color: 'var(--muted-foreground)' }}>
+                    {resultInfo.desc}
+                  </p>
+                  <div className="flex justify-center gap-4 flex-wrap">
+                    <button
+                      className="inline-flex items-center gap-2 px-6 py-3 rounded text-white font-semibold text-sm border-none cursor-pointer focus-visible:ring-2 focus-visible:ring-white/50 focus-visible:outline-none"
+                      style={{ backgroundColor: '#1877f2' }}
+                      onClick={handleFacebookShare}
+                    >
+                      <span className="w-[22px] h-[22px] rounded-full inline-flex items-center justify-center text-[11px] font-bold uppercase leading-none" style={{ backgroundColor: 'rgba(255,255,255,0.2)' }} aria-hidden="true">f</span>
+                      Share on Facebook
+                    </button>
+                    <button
+                      className="inline-flex items-center gap-2 px-6 py-3 rounded text-white font-semibold text-sm border-none cursor-pointer focus-visible:ring-2 focus-visible:ring-white/50 focus-visible:outline-none"
+                      style={{ backgroundColor: '#1da1f2' }}
+                      onClick={handleTwitterShare}
+                    >
+                      <span className="w-[22px] h-[22px] rounded-full inline-flex items-center justify-center text-[11px] font-bold uppercase leading-none" style={{ backgroundColor: 'rgba(255,255,255,0.2)' }} aria-hidden="true">x</span>
+                      Share on Twitter
+                    </button>
+                    <button
+                      className="inline-flex items-center gap-2 px-6 py-3 rounded text-white font-semibold text-sm border-none cursor-pointer focus-visible:ring-2 focus-visible:ring-white/50 focus-visible:outline-none"
+                      style={{ backgroundColor: '#e1306c' }}
+                      onClick={handleInstagramShare}
+                    >
+                      <span className="w-[22px] h-[22px] rounded-full inline-flex items-center justify-center text-[11px] font-bold uppercase leading-none" style={{ backgroundColor: 'rgba(255,255,255,0.2)' }} aria-hidden="true">ig</span>
+                      Share on Instagram
+                    </button>
+                    <button
+                      className="btn-secondary inline-flex items-center gap-2 px-6 py-3 rounded font-semibold text-sm cursor-pointer focus-visible:ring-2 focus-visible:ring-[var(--primary)] focus-visible:outline-none"
+                      onClick={handleShareResult}
+                    >
+                      <span className="w-[22px] h-[22px] rounded-full inline-flex items-center justify-center text-[11px] font-bold uppercase leading-none" style={{ backgroundColor: 'var(--muted)' }} aria-hidden="true">lnk</span>
+                      Copy Quiz Link
+                    </button>
+                    <Button variant="secondary" onClick={handleRetake}>
+                      Retake Quiz
+                    </Button>
                   </div>
                 </div>
                 <MiddleContentAd ad={horizontalAd} />
@@ -310,21 +405,13 @@ const QuizPage = () => {
           })()}
         </div>
 
-        {/* Right Column for Ads */}
         {safeRightAds?.length > 0 && (
-          <div className="quiz-side-column right-column" aria-label="Sponsored ad right">
-            <div className="quiz-sticky-ad">
+          <div className="w-60 max-xl:w-48 max-lg:w-40 max-lg:hidden shrink-0" aria-label="Sponsored ad right">
+            <div className="sticky top-24 flex flex-col gap-4">
               {safeRightAds.map((ad, index) => (
-                <a
-                  key={`${ad.id}-right-${index}`}
-                  href={ad.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="quiz-side-ad-card"
-                >
-                  <img src={ad.image} alt={ad.alt || 'Advertisement'} className="quiz-side-ad-image" />
-                  {ad.label && <span className="quiz-side-ad-label">{ad.label}</span>}
-                </a>
+                <div key={`${ad.id}-right-${index}`} className="relative">
+                  {renderSideAd(ad, `${ad.id}-right-${index}`)}
+                </div>
               ))}
             </div>
           </div>

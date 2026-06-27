@@ -7,25 +7,26 @@ import "../style/HeroSection.css";
 
 export default function HeroSection({ onStartPlaying, onOpenSubmit, onOpenSupport }) {
   return (
-    <section className="relative w-full h-[92vh] flex flex-col justify-between p-6 sm:p-12 overflow-hidden bg-black">
+    <section className="relative w-full min-h-screen flex flex-col justify-between p-6 sm:p-12 overflow-hidden bg-primary">
 
       {/* Local animated background mesh and texture overlay */}
-      <div className="absolute inset-0 windowswap-hero-mesh opacity-70 z-0" />
-      <div className="absolute inset-0 windowswap-radial-glow z-0 animate-pulse duration-[8000ms]" />
+      <div className="absolute inset-0 windowswap-hero-mesh z-0" />
       <img
         src="/windowswap-assets/hero section background.gif"
         alt="Immersive ambient window loop"
-        className="absolute inset-0 w-full h-full object-cover opacity-60 z-0 select-none pointer-events-none"
+        className="absolute inset-0 w-full h-full object-cover z-0 select-none pointer-events-none"
       />
+      <div className="absolute inset-0 windowswap-radial-glow z-0 animate-pulse duration-[8000ms]" />
+      <div className="absolute inset-0 windowswap-hero-contrast z-0" />
 
       {/* Hero Header Navbar */}
       <header className="relative w-full flex items-center justify-between z-10">
 
         {/* Left links */}
-        <div className="hidden lg:flex items-center gap-6 text-sm font-medium tracking-wide text-windowswap-cream">
+        <div className="windowswap-hero-nav-text hidden lg:flex items-center gap-6 text-sm font-medium tracking-wide text-white">
           <button
             onClick={onOpenSupport}
-            className="bg-windowswap-terracotta hover:bg-[#b05434] text-white px-4 py-2 rounded-full transition-all duration-300 hover:scale-105 active:scale-95 shadow-md flex items-center gap-1.5 font-semibold text-xs cursor-pointer"
+            className="windowswap-primary-button px-4 py-2 rounded-full transition-all duration-300 hover:scale-105 active:scale-95 flex items-center gap-1.5 font-semibold text-xs cursor-pointer"
           >
             <Coffee className="h-3 w-3" /> Buy us a coffee
           </button>
@@ -36,17 +37,17 @@ export default function HeroSection({ onStartPlaying, onOpenSubmit, onOpenSuppor
 
         {/* Center Logo */}
         <div className="absolute left-1/2 -translate-x-1/2 flex items-center justify-center">
-          <span className="font-serif text-2xl md:text-3xl tracking-[0.25em] font-medium text-white hover:opacity-95 transition-opacity cursor-pointer">
+          <span className="windowswap-hero-title font-display text-2xl md:text-3xl tracking-[0.25em] font-extrabold text-white hover:opacity-95 transition-opacity cursor-pointer">
             WindowSwap
           </span>
         </div>
 
         {/* Right links */}
-        <div className="flex items-center gap-4 sm:gap-6 text-sm font-medium tracking-wide text-windowswap-cream">
+        <div className="windowswap-hero-nav-text flex items-center gap-4 sm:gap-6 text-sm font-medium tracking-wide text-white">
 
           <button
             onClick={onOpenSubmit}
-            className="bg-white hover:bg-zinc-100 text-zinc-950 px-5 py-2 rounded-full transition-all duration-300 hover:scale-105 active:scale-95 font-semibold shadow-md flex items-center gap-1 text-xs cursor-pointer"
+            className="windowswap-secondary-button px-5 py-2 rounded-full transition-all duration-300 hover:scale-105 active:scale-95 font-semibold flex items-center gap-1 text-xs cursor-pointer"
           >
             <Upload className="h-3 w-3" /> Submit
           </button>
@@ -60,15 +61,15 @@ export default function HeroSection({ onStartPlaying, onOpenSubmit, onOpenSuppor
           onClick={onStartPlaying}
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.98 }}
-          className="group relative px-8 py-5 border border-white/60 hover:border-white rounded-full bg-white/5 hover:bg-white/10 backdrop-blur-md transition-all duration-300 shadow-[0_0_40px_-5px_rgba(255,255,255,0.05)] cursor-pointer"
+          className="group relative px-8 py-5 rounded-full windowswap-glass text-white transition-all duration-300 cursor-pointer"
         >
-          <span className="font-serif text-lg md:text-2xl tracking-[0.05em] font-light text-white flex items-center gap-3">
+          <span className="windowswap-hero-cta-text font-display text-lg md:text-2xl tracking-[0.05em] font-bold text-white flex items-center gap-3">
             Open a window somewhere in the world
           </span>
           <div className="absolute inset-0 rounded-full border border-transparent group-hover:border-white/20 transition-colors pointer-events-none" />
         </motion.button>
 
-        <p className="mt-6 text-windowswap-cream/75 font-serif text-sm italic tracking-wide">
+        <p className="windowswap-hero-subtitle mt-6 text-white font-sans text-sm font-semibold tracking-wide">
           Share your view. Travel without moving.
         </p>
       </div>

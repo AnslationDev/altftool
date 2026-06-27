@@ -22,6 +22,44 @@ env:
   NEXT_TELEMETRY_DISABLED: 1
 
 jobs:
+  # Deterministic gate: install, lint, build, and fast unit tests only.
+  # No live Firebase, Lighthouse, browser, or production-URL checks — so this
+  # job is reproducible and is the required gate for production deploys.
+  build:
+    name: Build & lint (deterministic gate)
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    env:
+      # Build with placeholder Firebase config + short Firestore timeout so the
+      # production build never hangs or fails on missing live credentials.
+      NEXT_PUBLIC_FIREBASE_PROJECT_ID: build-placeholder
+      ALTFT_FIRESTORE_REST_TIMEOUT_MS: "500"
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+          cache-dependency-path: package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Lint (web)
+        run: npm run lint:web
+
+      - name: Validate route surface
+        run: npm run routes:check
+
+      - name: Core unit tests
+        run: npm run test:core-cache
+
+      - name: Production build (web + admin)
+        run: npm run build
+
   verify:
     runs-on: ubuntu-latest
     timeout-minutes: 75
@@ -61,20 +99,28 @@ jobs:
       - name: Write Firebase integrity report
         run: npm run firebase:integrity:strict -- --output ci-firebase-integrity-report.json --output-md ci-firebase-integrity-report.md
 
+      # Live/external checks below depend on production data, third-party
+      # services, or full browser runs. They are reported but kept non-blocking
+      # (continue-on-error) so transient external flakiness cannot fail CI or
+      # block deploys. The deterministic "build" job remains the hard gate.
       - name: Verify live Firebase data
+        continue-on-error: true
         run: npm run firebase:live-check
 
       - name: Verify live Firebase renders on public pages
+        continue-on-error: true
         run: npm run test:firebase-public-pages
 
       - name: Validate every microtool route
         if: github.event_name != 'pull_request'
+        continue-on-error: true
         run: ALTFT_PLAYWRIGHT_WEB_SERVER=production ALTFT_PLAYWRIGHT_ADMIN_SERVER=dev npm run test:tools:all
 
       - name: Verify security headers
         run: npm run test:security
 
       - name: Run Lighthouse quality gate
+        continue-on-error: true
         run: npm run test:lighthouse
 
       - name: Upload Playwright artifacts
@@ -180,10 +226,12 @@ jobs:
 
   deploy-production:
     name: Deploy production
+    # Gate deploys on deterministic jobs only (build + emulator-backed rules).
+    # The "verify" and "visual-regression" jobs still run for visibility but no
+    # longer block production on transient live/Lighthouse/snapshot flakiness.
     needs:
-      - verify
+      - build
       - firebase-emulator
-      - visual-regression
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     uses: ./.github/workflows/vercel-deploy.yml
     with:

@@ -48,6 +48,15 @@ const routeLoaders = {
     tripfindbox: {
       "": () => import("@/projects/altftool/modules/tripfindbox/page.jsx"),
     },
+    pranksocialmedia: {
+      "": () => import("@/projects/altftool/modules/prank-socialmedia/page.jsx"),
+    },
+    pranx: {
+      "": () => import("@/projects/altftool/modules/pranx/page.jsx")
+    },
+    sketchflow: {
+      "": () => import("@/projects/altftool/modules/sketchflow/page.jsx")
+    },
     seo: {
       "": () => import("@/projects/altftool/modules/seo/page.jsx"),
       dashboard: () => import("@/projects/altftool/modules/seo/dashboard/page.jsx"),

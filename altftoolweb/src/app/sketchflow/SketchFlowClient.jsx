@@ -4,9 +4,11 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import rough from "roughjs/bundled/rough.esm";
 import getStroke from "perfect-freehand";
 import { nanoid } from "nanoid";
+import LZString from "lz-string";
 
-import { STORAGE_KEY, HISTORY_LIMIT, ACCENT, DEFAULT_STYLE, TOOL_KEYS, TOOLBAR } from './utils/constants';
-import { clone, normalizeScene, scenesEqual, makeElement, normalizeElement, boundsOf, centerOf, hitElement, getSelectedBounds, getHandles, pointInRect, roughOptions, pathFromStroke, drawElement, drawGrid, drawSelection, textSize, downloadFile } from './utils/utils';
+import { STORAGE_KEY, HISTORY_LIMIT, ACCENT, DEFAULT_STYLE, buildToolbarFromConfig, buildToolKeysFromConfig } from './utils/constants';
+import { DEFAULT_HOME_CONTENT } from './lib/homeContent';
+import { clone, normalizeScene, scenesEqual, makeElement, normalizeElement, boundsOf, centerOf, hitElement, getSelectedBounds, getHandles, pointInRect, roughOptions, pathFromStroke, drawElement, drawGrid, drawSelection, textSize, downloadFile, autoLayout } from './utils/utils';
 import BottomBar from "./components/BottomBar";
 import CommandPalette from "./components/CommandPalette";
 import ContextMenu from "./components/ContextMenu";
@@ -14,9 +16,44 @@ import LeftToolbar from "./components/LeftToolbar";
 import PropertiesPanel from "./components/PropertiesPanel";
 import SketchFlowStyles from "./components/SketchFlowStyles";
 import TextEditorOverlay from "./components/TextEditorOverlay";
+import LaserPanel from "./components/LaserPanel";
 import TopBar from "./components/TopBar";
 
-export default function SketchFlow() {
+export default function SketchFlow({ config: configProp }) {
+  const config = configProp || DEFAULT_HOME_CONTENT;
+  const { branding, defaults, settings: settingsBase, tools, ui } = config;
+
+  const settings = useMemo(() => {
+    return { ...settingsBase, ...(settingsBase?.customJson && typeof settingsBase.customJson === "object" ? settingsBase.customJson : {}) };
+  }, [settingsBase]);
+
+  const accentRaw = branding?.accentColor || ACCENT;
+  const hasAdminStrokeDefault = defaults?.strokeColor !== undefined && defaults?.strokeColor !== null;
+  const storageKey = settings?.storageKey || STORAGE_KEY;
+  const historyLimit = Number(settings?.historyLimit) || HISTORY_LIMIT;
+  const autosaveIntervalMs = Number(settings?.autosaveIntervalMs) || 2000;
+  const exportPrefix = ui?.exportFilePrefix || "sketchflow";
+
+  const cameraDefault = useMemo(() => {
+    return settings?.cameraDefault || { x: 420, y: 240, zoom: 1 };
+  }, [settings?.cameraDefault]);
+
+  const toolbar = useMemo(() => buildToolbarFromConfig(tools?.items), [tools]);
+  const toolKeys = useMemo(() => buildToolKeysFromConfig(tools?.items), [tools]);
+  const fontOptions = useMemo(() => {
+    return defaults?.fontOptions?.length
+      ? defaults.fontOptions
+      : [defaults?.fontFamily || DEFAULT_STYLE.fontFamily, "system-ui, sans-serif", "Georgia, serif", "monospace"];
+  }, [defaults]);
+
+  const storageKeyRef = useRef(storageKey);
+  const historyLimitRef = useRef(historyLimit);
+
+  useEffect(() => {
+    storageKeyRef.current = storageKey;
+    historyLimitRef.current = historyLimit;
+  }, [storageKey, historyLimit]);
+
   const canvasRef = useRef(null);
   const imageInputRef = useRef(null);
   const fileInputRef = useRef(null);
@@ -32,13 +69,23 @@ export default function SketchFlow() {
   const [elements, setElements] = useState([]);
   const [selectedIds, setSelectedIds] = useState([]);
   const [tool, setTool] = useState("select");
-  const [camera, setCamera] = useState({ x: 420, y: 240, zoom: 1 });
+  const [camera, setCamera] = useState(cameraDefault);
   const [size, setSize] = useState({ width: 900, height: 620 });
-  const [style, setStyle] = useState(DEFAULT_STYLE);
+  const [style, setStyle] = useState(() => ({
+    ...DEFAULT_STYLE,
+    ...defaults,
+    ...(!hasAdminStrokeDefault ? { strokeColor: Boolean(settings?.darkModeDefault) ? '#ffffff' : '#000000' } : {}),
+  }));
   const [history, setHistory] = useState({ past: [], future: [] });
-  const [grid, setGrid] = useState({ enabled: true, step: 32 });
-  const [dark, setDark] = useState(false);
-  const [includeBackground, setIncludeBackground] = useState(true);
+  const [grid, setGrid] = useState(() => ({
+    enabled: settings?.gridEnabled ?? true,
+    step: settings?.gridStep ?? 32,
+  }));
+  const [dark, setDark] = useState(() => Boolean(settings?.darkModeDefault));
+  const accent = dark
+    ? (accentRaw === "#6965db" ? "#2dd4bf" : accentRaw)
+    : (accentRaw === "#6965db" ? "#14b8a6" : accentRaw);
+  const [includeBackground, setIncludeBackground] = useState(() => Boolean(settings?.includeBackgroundDefault ?? true));
   const [toast, setToast] = useState("");
   const [contextMenu, setContextMenu] = useState(null);
   const [selectBox, setSelectBox] = useState(null);
@@ -46,6 +93,10 @@ export default function SketchFlow() {
   const [paletteOpen, setPaletteOpen] = useState(false);
   const [paletteQuery, setPaletteQuery] = useState("");
   const [paletteIndex, setPaletteIndex] = useState(0);
+  const themeInitRef = useRef(false);
+  const currentLaserRef = useRef(null);
+  const laserStrokesRef = useRef([]);
+  const [laserSettings, setLaserSettings] = useState({ size: 6, color: "#ef4444" });
 
   const selectedElements = useMemo(() => elements.filter((el) => selectedIds.includes(el.id)), [elements, selectedIds]);
   const primary = selectedElements[0] || null;
@@ -86,7 +137,7 @@ export default function SketchFlow() {
     const lastSnapshot = currentHistory.past[currentHistory.past.length - 1];
     if (lastSnapshot && scenesEqual(lastSnapshot, safeSnapshot)) return;
     syncHistory({
-      past: [...currentHistory.past.slice(-(HISTORY_LIMIT - 1)), safeSnapshot],
+      past: [...currentHistory.past.slice(-(historyLimitRef.current - 1)), safeSnapshot],
       future: [],
     });
   }, [syncHistory]);
@@ -159,7 +210,7 @@ export default function SketchFlow() {
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     ctx.clearRect(0, 0, width, height);
     if (renderOptions.background !== false) {
-      ctx.fillStyle = dark ? "#121212" : "#ffffff";
+      ctx.fillStyle = dark ? "#0b1220" : "#ffffff";
       ctx.fillRect(0, 0, width, height);
     }
     ctx.save();
@@ -167,19 +218,49 @@ export default function SketchFlow() {
     ctx.scale(renderOptions.camera?.zoom ?? camera.zoom, renderOptions.camera?.zoom ?? camera.zoom);
     if (grid.enabled && renderOptions.grid !== false) drawGrid(ctx, renderOptions.camera || camera, { width, height }, grid.step, dark);
     const rc = rough.canvas(targetCanvas);
-    scene.forEach((el) => drawElement(ctx, rc, el, imageCacheRef.current));
+    scene.forEach((el) => drawElement(ctx, rc, el, imageCacheRef.current, accent));
+
     if (!renderOptions.exportMode) {
-      drawSelection(ctx, scene, selectedIds, camera);
+      const now = Date.now();
+      const strokes = laserStrokesRef.current;
+      const currentLaser = currentLaserRef.current;
+      const drawLaserStroke = (stroke, opacity) => {
+        if (opacity <= 0) return;
+        const strokeData = getStroke(stroke.points, {
+          size: stroke.size,
+          thinning: 0.52,
+          smoothing: 0.58,
+          streamline: 0.5,
+        });
+        const d = pathFromStroke(strokeData);
+        if (!d) return;
+        ctx.save();
+        ctx.globalAlpha = opacity;
+        ctx.fillStyle = stroke.color;
+        ctx.fill(new Path2D(d));
+        ctx.restore();
+      };
+      strokes.forEach((s) => {
+        const age = now - s.createdAt;
+        if (age > 3500) return;
+        const opacity = age < 2500 ? 1 : Math.max(0, 1 - (age - 2500) / 1000);
+        drawLaserStroke(s, opacity);
+      });
+      if (currentLaser) drawLaserStroke(currentLaser, 1);
+
+      drawSelection(ctx, scene, selectedIds, camera, accent);
       if (selectBox) {
-        ctx.strokeStyle = ACCENT;
-        ctx.fillStyle = "rgba(105,101,219,.10)";
+        ctx.strokeStyle = accent;
+        ctx.fillStyle = accent.startsWith("#") && accent.length === 7
+          ? `rgba(${parseInt(accent.slice(1, 3), 16)},${parseInt(accent.slice(3, 5), 16)},${parseInt(accent.slice(5, 7), 16)},0.1)`
+          : "rgba(105,101,219,.10)";
         ctx.lineWidth = 1 / camera.zoom;
         ctx.strokeRect(selectBox.x, selectBox.y, selectBox.width, selectBox.height);
         ctx.fillRect(selectBox.x, selectBox.y, selectBox.width, selectBox.height);
       }
     }
     ctx.restore();
-  }, [camera, dark, elements, grid, selectedIds, selectBox, size]);
+  }, [camera, dark, elements, grid, selectedIds, selectBox, size, accent]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -204,31 +285,91 @@ export default function SketchFlow() {
   }, [render]);
 
   useEffect(() => {
-    const saved = window.localStorage.getItem(STORAGE_KEY);
-    const prefersDark = window.matchMedia?.("(prefers-color-scheme: dark)").matches;
-    setDark(Boolean(prefersDark));
-    if (saved) {
+    if (hasAdminStrokeDefault) return;
+
+    const themeDefault = dark ? '#ffffff' : '#000000';
+    const oppositeDefault = dark ? '#000000' : '#ffffff';
+    const legacyDefault = '#1f2937';
+
+    setStyle(prev => ({ ...prev, strokeColor: themeDefault }));
+
+    if (!themeInitRef.current) {
+      themeInitRef.current = true;
+      return;
+    }
+
+    updateElements((prev) => {
+      let changed = false;
+      const next = prev.map(el => {
+        if (el.strokeColor === oppositeDefault || el.strokeColor === legacyDefault) {
+          changed = true;
+          return { ...el, strokeColor: themeDefault };
+        }
+        return el;
+      });
+      return changed ? next : prev;
+    }, { history: false });
+  }, [dark, hasAdminStrokeDefault, updateElements]);
+
+  useEffect(() => {
+    const hash = window.location.hash.slice(1);
+    if (hash) {
       try {
-        const parsed = JSON.parse(saved);
-        const restored = Array.isArray(parsed)
-          ? parsed.map(normalizeElement)
-          : Array.isArray(parsed.elements)
-            ? parsed.elements.map(normalizeElement)
-            : [];
-        const restoredCamera = parsed.camera || { x: 420, y: 240, zoom: 1 };
-        const restoredGrid = parsed.grid || { enabled: true, step: 32 };
-        const restoredDark = parsed.dark ?? Boolean(prefersDark);
-        applyElements(restored);
-        setCamera(restoredCamera);
-        setGrid(restoredGrid);
-        setDark(restoredDark);
-        lastSavedRef.current = JSON.stringify({ elements: restored, camera: restoredCamera, grid: restoredGrid, dark: restoredDark });
-        syncHistory({ past: [], future: [] });
+        const json = LZString.decompressFromEncodedURIComponent(hash);
+        const data = JSON.parse(json);
+        if (data?.elements?.length) {
+          const restored = data.elements.map(normalizeElement);
+          applyElements(restored);
+          if (data.camera) setCamera(data.camera);
+          if (data.dark !== undefined) setDark(data.dark);
+          if (data.grid) setGrid(data.grid);
+          window.history.replaceState(null, "", window.location.pathname);
+          showToast("Shared diagram loaded — you can edit and save your own copy");
+          return;
+        }
       } catch {
-        // Ignore broken local drafts.
+        // ignore invalid hash
       }
     }
-  }, [applyElements, syncHistory]);
+
+    const key = storageKeyRef.current;
+    const saved = window.localStorage.getItem(key);
+    const prefersDark = window.matchMedia?.("(prefers-color-scheme: dark)").matches;
+    const defaultDark = settings?.darkModeDefault ?? Boolean(prefersDark);
+    const adminGrid = { enabled: settings?.gridEnabled ?? true, step: settings?.gridStep ?? 32 };
+
+    if (!saved) {
+      setDark(defaultDark);
+      setGrid(adminGrid);
+      return;
+    }
+
+    try {
+      const parsed = JSON.parse(saved);
+      const restored = Array.isArray(parsed)
+        ? parsed.map(normalizeElement)
+        : Array.isArray(parsed.elements)
+          ? parsed.elements.map(normalizeElement)
+          : [];
+      const restoredCamera = parsed.camera || cameraDefault;
+      const restoredDark = parsed.dark ?? defaultDark;
+      const restoredGrid = adminGrid;
+      const themeDefault = restoredDark ? '#ffffff' : '#000000';
+      const oldDefault = !restoredDark ? '#ffffff' : '#000000';
+      const legacyDefault = '#1f2937';
+      const migrated = !hasAdminStrokeDefault
+        ? restored.map(el => (el.strokeColor === legacyDefault || el.strokeColor === oldDefault ? { ...el, strokeColor: themeDefault } : el))
+        : restored;
+      applyElements(migrated);
+      setCamera(restoredCamera);
+      setGrid(restoredGrid);
+      setDark(restoredDark);
+      lastSavedRef.current = JSON.stringify({ elements: migrated, camera: restoredCamera, grid: restoredGrid, dark: restoredDark });
+      syncHistory({ past: [], future: [] });
+    } catch {
+      // Ignore broken local drafts.
+    }
+  }, [applyElements, cameraDefault, hasAdminStrokeDefault, settings, showToast, syncHistory]);
 
   useEffect(() => {
     const activeImageIds = new Set(elements.filter((el) => el.type === "image" && el.imageSrc).map((el) => el.id));
@@ -261,7 +402,7 @@ export default function SketchFlow() {
       const payload = JSON.stringify({ elements: persistedElements, camera, grid, dark });
       if (payload !== lastSavedRef.current) {
         try {
-          window.localStorage.setItem(STORAGE_KEY, payload);
+          window.localStorage.setItem(storageKeyRef.current, payload);
           lastSavedRef.current = payload;
           showToast("Saved");
         } catch {
@@ -269,9 +410,9 @@ export default function SketchFlow() {
           showToast("Local autosave is full");
         }
       }
-    }, 2000);
+    }, autosaveIntervalMs);
     return () => window.clearInterval(timer);
-  }, [camera, dark, grid, persistedElements, showToast]);
+  }, [autosaveIntervalMs, camera, dark, grid, persistedElements, showToast]);
 
   const undo = useCallback(() => {
     const currentHistory = historyRef.current;
@@ -294,7 +435,7 @@ export default function SketchFlow() {
     const nextScene = clone(currentHistory.future[0]);
     const nextPast = scenesEqual(currentHistory.past[currentHistory.past.length - 1], currentScene)
       ? currentHistory.past
-      : [...currentHistory.past, currentScene].slice(-HISTORY_LIMIT);
+      : [...currentHistory.past, currentScene].slice(-historyLimitRef.current);
     syncHistory({
       past: nextPast,
       future: currentHistory.future.slice(1),
@@ -460,7 +601,12 @@ export default function SketchFlow() {
       setTool("select");
       return;
     }
-    const type = tool === "laser" ? "laser" : tool === "frame" ? "frame" : tool;
+    if (tool === "laser") {
+      currentLaserRef.current = { points: [[point.x, point.y]], color: laserSettings.color, size: laserSettings.size };
+      actionRef.current = { type: "drawing-laser" };
+      return;
+    }
+    const type = tool === "frame" ? "frame" : tool;
     const el = makeElement(type, point.x, point.y, style);
     if (type === "frame") {
       el.fillStyle = "none";
@@ -527,11 +673,17 @@ export default function SketchFlow() {
       selectElementIds(ids, elements);
       return;
     }
+    if (action.type === "drawing-laser") {
+      currentLaserRef.current.points.push([point.x, point.y]);
+      render();
+      return;
+    }
     if (action.type === "drawing") {
       setElements((prev) => {
         const next = normalizeScene(prev.map((el) => {
           if (el.id !== action.element.id) return el;
-          if (el.type === "freedraw" || el.type === "laser") return { ...el, points: [...el.points, [point.x, point.y]] };
+          if (el.type === "freedraw") return { ...el, points: [...el.points, [point.x, point.y]] };
+          if (el.type === "laser") return { ...el, points: [...el.points, [point.x, point.y]] };
           if (el.type === "line" || el.type === "arrow") return { ...el, points: [el.points[0], [point.x, point.y]], width: point.x - el.x, height: point.y - el.y };
           return { ...el, x: action.start.x, y: action.start.y, width: point.x - action.start.x, height: point.y - action.start.y };
         }));
@@ -543,12 +695,23 @@ export default function SketchFlow() {
 
   const handlePointerUp = () => {
     const action = actionRef.current;
+    if (action?.type === "drawing-laser") {
+      const laser = currentLaserRef.current;
+      if (laser && laser.points.length > 2) {
+        const entry = { id: nanoid(8), points: laser.points, color: laser.color, size: laser.size, createdAt: Date.now() };
+        laserStrokesRef.current = [...laserStrokesRef.current, entry];
+      }
+      currentLaserRef.current = null;
+      actionRef.current = null;
+      render();
+      return;
+    }
     if (action?.type === "drawing") {
       const drawnId = action.element.id;
       const currentScene = elementsRef.current;
       const next = normalizeScene(currentScene.map((el) => (el.id === drawnId && el.type === "arrow" ? bindArrowEnds(el, currentScene) : el)).filter((el) => {
-          const b = boundsOf(el);
-          return el.type === "text" || b.width > 2 || b.height > 2 || el.points?.length > 2;
+        const b = boundsOf(el);
+        return el.type === "text" || b.width > 2 || b.height > 2 || el.points?.length > 2;
       }));
       applyElements(next);
       if (next.some((el) => el.id === drawnId) && !scenesEqual(action.original, next)) pushHistory(action.original);
@@ -622,15 +785,15 @@ export default function SketchFlow() {
     updateElements((prev) => prev.map((el) => (selectedIds.includes(el.id) && !el.locked ? { ...el, ...patch } : el)));
   };
 
-  const groupSelected = () => {
+  const groupSelected = useCallback(() => {
     if (selectedIds.length < 2) return;
     const groupId = nanoid(8);
     updateElements((prev) => prev.map((el) => (selectedIds.includes(el.id) ? { ...el, groupIds: [...new Set([...(el.groupIds || []), groupId])] } : el)));
-  };
+  }, [selectedIds, updateElements]);
 
-  const ungroupSelected = () => {
+  const ungroupSelected = useCallback(() => {
     updateElements((prev) => prev.map((el) => (selectedIds.includes(el.id) ? { ...el, groupIds: [] } : el)));
-  };
+  }, [selectedIds, updateElements]);
 
   const reorderSelected = (direction) => {
     updateElements((prev) => {
@@ -683,6 +846,43 @@ export default function SketchFlow() {
     setCamera({ zoom, x: size.width / 2 - (b.x + b.width / 2) * zoom, y: size.height / 2 - (b.y + b.height / 2) * zoom });
   }, [elements, size]);
 
+  const autoLayoutScene = useCallback(() => {
+    const current = elementsRef.current;
+    if (!current.length) return;
+    const original = clone(current);
+    const layouted = autoLayout(original);
+    if (scenesEqual(original, layouted)) {
+      showToast("Diagram already well organized");
+      return;
+    }
+    pushHistory(original);
+    applyElements(layouted);
+    showToast("Auto layout applied");
+    window.requestAnimationFrame(() => {
+      const allIds = layouted.map(el => el.id);
+      const total = getSelectedBounds(layouted, allIds);
+      if (!total) return;
+      const zoom = Math.max(0.1, Math.min(3, Math.min((size.width - 120) / total.width, (size.height - 120) / total.height)));
+      setCamera({ zoom, x: size.width / 2 - (total.x + total.width / 2) * zoom, y: size.height / 2 - (total.y + total.height / 2) * zoom });
+    });
+  }, [pushHistory, applyElements, showToast, size]);
+
+  const shareScene = useCallback(() => {
+    const data = {
+      v: 1,
+      elements: persistedElements,
+      camera,
+      dark,
+      grid,
+    };
+    const compressed = LZString.compressToEncodedURIComponent(JSON.stringify(data));
+    const url = `${window.location.origin}${window.location.pathname}#${compressed}`;
+    navigator.clipboard.writeText(url).then(
+      () => showToast("Share link copied to clipboard"),
+      () => showToast("Could not copy share link")
+    );
+  }, [persistedElements, camera, dark, grid, showToast]);
+
   const exportPng = () => {
     const scene = persistedElements;
     const boxes = scene.map(boundsOf);
@@ -696,7 +896,7 @@ export default function SketchFlow() {
     canvas.style.width = `${b.width}px`;
     canvas.style.height = `${b.height}px`;
     render(canvas, { dpr, width: b.width, height: b.height, camera: { x: -b.x, y: -b.y, zoom: 1 }, exportMode: true, background: includeBackground, elements: scene });
-    canvas.toBlob((blob) => blob && downloadFile("sketchflow.png", blob, "image/png"));
+    canvas.toBlob((blob) => blob && downloadFile(`${exportPrefix}.png`, blob, "image/png"));
   };
 
   const setSvgTransform = (node, el) => {
@@ -759,7 +959,7 @@ export default function SketchFlow() {
       bg.setAttribute("y", String(minY));
       bg.setAttribute("width", String(maxX - minX));
       bg.setAttribute("height", String(maxY - minY));
-      bg.setAttribute("fill", dark ? "#121212" : "#ffffff");
+      bg.setAttribute("fill", dark ? "#0b1220" : "#ffffff");
       svg.appendChild(bg);
     }
     const rsvg = rough.svg(svg);
@@ -857,10 +1057,10 @@ export default function SketchFlow() {
         svg.appendChild(image);
       }
     });
-    downloadFile("sketchflow.svg", new XMLSerializer().serializeToString(svg), "image/svg+xml");
+    downloadFile(`${exportPrefix}.svg`, new XMLSerializer().serializeToString(svg), "image/svg+xml");
   };
 
-  const saveScene = () => downloadFile("sketchflow.sketchflow", JSON.stringify({ elements: persistedElements, camera, grid, dark }, null, 2), "application/json");
+  const saveScene = () => downloadFile(`${exportPrefix}.sketchflow`, JSON.stringify({ elements: persistedElements, camera, grid, dark }, null, 2), "application/json");
 
   const loadScene = (file) => {
     if (!file) return;
@@ -1006,13 +1206,14 @@ export default function SketchFlow() {
   };
 
   const commands = [
-    ...TOOLBAR.map(([id, label]) => ({ label: `Tool: ${label}`, run: () => setTool(id) })),
+    ...toolbar.map(([id, label]) => ({ label: `Tool: ${label}`, run: () => setTool(id) })),
     { label: "Export PNG", run: exportPng },
     { label: "Export SVG", run: exportSvg },
     { label: "Save SketchFlow file", run: saveScene },
     { label: "Toggle theme", run: () => setDark((v) => !v) },
     { label: "Toggle grid", run: () => setGrid((g) => ({ ...g, enabled: !g.enabled })) },
     { label: "Fit to screen", run: fitToScreen },
+    { label: "Auto layout diagram", run: autoLayoutScene },
     { label: "Clear canvas", run: clearCanvas },
     { label: "Search canvas text", run: searchTextOnCanvas },
     { label: "Select all", run: () => selectElementIds(elements.map((el) => el.id)) },
@@ -1090,9 +1291,9 @@ export default function SketchFlow() {
         event.preventDefault();
         deleteSelected();
       }
-      if (TOOL_KEYS[key]) {
+      if (toolKeys[key]) {
         event.preventDefault();
-        setTool(TOOL_KEYS[key]);
+        setTool(toolKeys[key]);
       }
     };
     window.addEventListener("keydown", onKeyDown);
@@ -1104,7 +1305,18 @@ export default function SketchFlow() {
       window.removeEventListener("keydown", onKeyDown);
       window.removeEventListener("keyup", onKeyUp);
     };
-  }, [copySelected, deleteSelected, duplicateSelected, elements, fitToScreen, paletteOpen, paste, redo, searchTextOnCanvas, selectElementIds, undo]);
+  }, [copySelected, deleteSelected, duplicateSelected, elements, fitToScreen, groupSelected, paletteOpen, paste, redo, searchTextOnCanvas, selectElementIds, toolKeys, undo, ungroupSelected]);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      const now = Date.now();
+      const before = laserStrokesRef.current.length;
+      laserStrokesRef.current = laserStrokesRef.current.filter((s) => now - s.createdAt < 4000);
+      if (laserStrokesRef.current.length !== before) render();
+      if (laserStrokesRef.current.some((s) => { const a = now - s.createdAt; return a >= 2500 && a < 3500; })) render();
+    }, 80);
+    return () => clearInterval(timer);
+  }, [render]);
 
   useEffect(() => {
     const onKey = (event) => {
@@ -1132,19 +1344,19 @@ export default function SketchFlow() {
   const liveTextSize = editingElement ? textSize(editingText.value || "Text", editingElement.fontSize) : null;
   const textareaStyle = editingElement
     ? {
-        left: `${camera.x + editingElement.x * camera.zoom}px`,
-        top: `${camera.y + editingElement.y * camera.zoom}px`,
-        width: `${Math.max(140, liveTextSize.width * camera.zoom)}px`,
-        minHeight: `${Math.max(48, liveTextSize.height * camera.zoom)}px`,
-        fontSize: `${editingElement.fontSize * camera.zoom}px`,
-        lineHeight: 1.25,
-        fontFamily: editingElement.fontFamily,
-        textAlign: editingElement.textAlign,
-        color: editingElement.strokeColor,
-        transform: `rotate(${editingElement.angle || 0}rad)`,
-        transformOrigin: "top left",
-        background: dark ? "rgba(18,18,18,.72)" : "rgba(255,255,255,.72)",
-      }
+      left: `${camera.x + editingElement.x * camera.zoom}px`,
+      top: `${camera.y + editingElement.y * camera.zoom}px`,
+      width: `${Math.max(140, liveTextSize.width * camera.zoom)}px`,
+      minHeight: `${Math.max(48, liveTextSize.height * camera.zoom)}px`,
+      fontSize: `${editingElement.fontSize * camera.zoom}px`,
+      lineHeight: 1.25,
+      fontFamily: editingElement.fontFamily,
+      textAlign: editingElement.textAlign,
+      color: editingElement.strokeColor,
+      transform: `rotate(${editingElement.angle || 0}rad)`,
+      transformOrigin: "top left",
+      background: dark ? "rgba(18,18,18,.72)" : "rgba(255,255,255,.72)",
+    }
     : {};
 
   useEffect(() => {
@@ -1157,11 +1369,21 @@ export default function SketchFlow() {
     return () => window.cancelAnimationFrame(frame);
   }, [editingText?.id]);
 
+  useEffect(() => {
+    if (tool !== "laser") currentLaserRef.current = null;
+    if (!toolbar.some(([id]) => id === tool)) {
+      setTool(toolbar[0]?.[0] || "select");
+    }
+  }, [toolbar, tool]);
+
   return (
     <main className="sketchflow-shell" data-sf-theme={dark ? "dark" : "light"}>
       <div className="sf-root">
         <TopBar
-          currentToolLabel={TOOLBAR.find(([id]) => id === tool)?.[1]}
+          appName={branding?.appName}
+          tagline={branding?.tagline}
+          brandIconKey={branding?.brandIconKey}
+          currentToolLabel={toolbar.find(([id]) => id === tool)?.[1]}
           dark={dark}
           grid={grid}
           history={history}
@@ -1173,11 +1395,20 @@ export default function SketchFlow() {
           onExportSvg={exportSvg}
           onSave={saveScene}
           onLoad={() => fileInputRef.current?.click()}
+          onShare={shareScene}
           onToggleTheme={() => setDark((current) => !current)}
           onOpenPalette={() => setPaletteOpen(true)}
         />
 
-        <LeftToolbar activeTool={tool} onSelectTool={setTool} />
+        <LeftToolbar toolbar={toolbar} activeTool={tool} onSelectTool={setTool} />
+        {tool === "laser" && (
+          <LaserPanel
+            size={laserSettings.size}
+            color={laserSettings.color}
+            onSizeChange={(s) => setLaserSettings((p) => ({ ...p, size: s }))}
+            onColorChange={(c) => setLaserSettings((p) => ({ ...p, color: c }))}
+          />
+        )}
 
         <section
           className="sf-canvas-wrap"
@@ -1208,6 +1439,7 @@ export default function SketchFlow() {
             onZoomOut={() => setCamera((current) => ({ ...current, zoom: Math.max(0.1, current.zoom / 1.15) }))}
             onZoomIn={() => setCamera((current) => ({ ...current, zoom: Math.min(30, current.zoom * 1.15) }))}
             onFitToScreen={fitToScreen}
+            onAutoLayout={autoLayoutScene}
             onToggleSelectMode={() => setTool(tool === "select" ? "frame" : "select")}
             onFullscreen={() => document.documentElement.requestFullscreen?.()}
           />
@@ -1218,6 +1450,8 @@ export default function SketchFlow() {
           primary={primary}
           selectedCount={selectedIds.length}
           includeBackground={includeBackground}
+          title={ui?.propertiesTitle}
+          fontOptions={fontOptions}
           onStyleChange={updateSelectedStyle}
           onIncludeBackgroundChange={setIncludeBackground}
         />
@@ -1242,6 +1476,7 @@ export default function SketchFlow() {
           query={paletteQuery}
           index={paletteIndex}
           commands={filteredCommands}
+          placeholder={ui?.commandPalettePlaceholder}
           onQueryChange={(value) => {
             setPaletteQuery(value);
             setPaletteIndex(0);
@@ -1257,7 +1492,7 @@ export default function SketchFlow() {
         <input ref={imageInputRef} hidden type="file" accept="image/*" onChange={(e) => { addImage(e.target.files?.[0]); e.target.value = ""; }} />
         <input ref={fileInputRef} hidden type="file" accept=".json,.sketchflow" onChange={(e) => { loadScene(e.target.files?.[0]); e.target.value = ""; }} />
       </div>
-      <SketchFlowStyles accent={ACCENT} />
+      <SketchFlowStyles accent={accent} googleFontUrl={ui?.googleFontUrl} />
     </main>
   );
 }

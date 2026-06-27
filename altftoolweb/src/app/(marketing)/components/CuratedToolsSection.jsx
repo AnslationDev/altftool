@@ -1,21 +1,39 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
 import {
-  ArrowRight,
-  Bot,
-  CheckCircle2,
-  Puzzle,
-  Smartphone,
+  HeartHandshake,
+  Radar,
+  ShieldCheck,
   Sparkles,
+  UsersRound,
 } from "lucide-react";
 
-const toolTypes = [
-  { label: "AI Tools", icon: Bot },
-  { label: "Browser Extensions", icon: Puzzle },
-  { label: "Mobile Apps", icon: Smartphone },
-  { label: "Productivity Apps", icon: CheckCircle2 },
+const aboutHighlights = [
+  {
+    title: "Our Mission",
+    description: "Make finding useful digital tools simple and hassle-free.",
+    icon: Radar,
+    tone: "mission",
+  },
+  {
+    title: "Our Vision",
+    description: "Become the go-to destination for discovering trusted tools.",
+    icon: ShieldCheck,
+    tone: "vision",
+  },
+  {
+    title: "Our Values",
+    description: "Quality, simplicity, and user-first experiences.",
+    icon: Sparkles,
+    tone: "values",
+  },
+  {
+    title: "Our Team",
+    description: "Passionate creators focused on building better solutions.",
+    icon: UsersRound,
+    tone: "team",
+  },
 ];
 
 export default function CuratedToolsSection() {
@@ -24,48 +42,47 @@ export default function CuratedToolsSection() {
       <div className="home-curated-shell">
         <div className="home-curated-visual" aria-hidden="true">
           <Image
-            src="/assets/home-curated-tools-person.png"
+            src="/assets/home-about-visual-transparent.png"
             alt=""
-            width={1403}
-            height={1121}
+            width={1275}
+            height={1020}
             className="home-curated-image"
           />
         </div>
 
         <div className="home-curated-copy">
           <div className="home-reference-badge">
-            <Sparkles className="h-4 w-4" />
-            Discover tools
+            <HeartHandshake className="h-4 w-4" strokeWidth={2.35} />
+            ABOUT US
           </div>
 
           <h2 className="home-curated-title">
-            200+ Curated Tools{" "}
-            <span>In One Place</span>
+            Helping You Discover{" "}
+            <span>The Right Tools Faster</span>
           </h2>
 
           <p className="home-curated-description">
-            Explore trusted tools, extensions, and apps curated to help you work smarter.
+            We simplify tool discovery by bringing trusted apps, extensions, and
+            resources together in one place, helping you save time and work smarter.
           </p>
 
-          <div className="home-curated-grid">
-            {toolTypes.map((item) => {
+          <div className="home-curated-about-grid">
+            {aboutHighlights.map((item) => {
               const Icon = item.icon;
 
               return (
-                <Link key={item.label} href="/tools/all" className="home-curated-feature">
-                  <span>
-                    <Icon className="h-5 w-5" />
+                <div key={item.title} className="home-curated-about-card">
+                  <span className={`home-curated-about-icon home-curated-about-icon-${item.tone}`}>
+                    <Icon className="h-[1.35rem] w-[1.35rem]" strokeWidth={2.35} />
                   </span>
-                  {item.label}
-                </Link>
+                  <div>
+                    <h3>{item.title}</h3>
+                    <p>{item.description}</p>
+                  </div>
+                </div>
               );
             })}
           </div>
-
-          <Link href="/tools/all" className="home-curated-cta">
-            Explore All Tools
-            <ArrowRight className="h-5 w-5" />
-          </Link>
         </div>
       </div>
     </section>

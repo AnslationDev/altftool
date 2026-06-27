@@ -3,8 +3,10 @@
 import React, { useEffect, useState, useCallback } from "react";
 import BLogStat from "./components/BlogStat";
 import BlogTable from "./components/BlogTable";
+import BlogExportModal from "./components/BlogExportModal";
 import { emitAlert } from "@/lib/alertBus";
 import { logAuditEvent } from "@/lib/auditClient";
+import { isFeatureEnabled } from "@/lib/featureFlags";
 import {
   deleteBlog,
   bulkDeleteBlogs,
@@ -32,6 +34,8 @@ export default function Blogs() {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [selectedBlogs, setSelectedBlogs] = useState([]);
   const [isBulkDeleteModalOpen, setIsBulkDeleteModalOpen] = useState(false);
+  const [isExportModalOpen, setIsExportModalOpen] = useState(false);
+  const blogExportEnabled = isFeatureEnabled("blog_export");
 
   /* =============================================================
      Fetch total count
@@ -173,6 +177,15 @@ export default function Blogs() {
             Manage your Blogs
           </h1>
           <div className="flex items-center gap-2">
+            {blogExportEnabled && (
+              <button
+                type="button"
+                onClick={() => setIsExportModalOpen(true)}
+                className="rounded-md border border-gray-200 bg-white px-4 py-2 text-sm font-semibold text-gray-700 transition hover:bg-gray-50"
+              >
+                Export
+              </button>
+            )}
             <a
               href="/altftool/blogs/analytics"
               className="rounded-md border border-gray-200 bg-white px-4 py-2 text-sm font-semibold text-gray-700 transition hover:bg-gray-50"
@@ -222,6 +235,12 @@ export default function Blogs() {
           onSearch={setSearch}
         />
       </div>
+
+      <BlogExportModal
+        open={blogExportEnabled && isExportModalOpen}
+        blogs={blogs}
+        onClose={() => setIsExportModalOpen(false)}
+      />
 
       {isDeleteModalOpen && (
         <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">

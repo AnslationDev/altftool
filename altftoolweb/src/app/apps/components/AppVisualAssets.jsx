@@ -1,8 +1,8 @@
 const APP_STYLES = {
   "speed-test": {
     bg: "#050818",
-    accent: "#7c5cff",
-    accent2: "#2f55ff",
+    accent: "#38BDF8",
+    accent2: "#0D9488",
     label: "Speed",
   },
   "storage-cleanup": {
@@ -25,14 +25,14 @@ const APP_STYLES = {
   },
   anternet: {
     bg: "#0f3f2e",
-    accent: "#5F8F00",
+    accent: "#14B8A6",
     accent2: "#143f2c",
     label: "Net",
   },
   syncplay: {
-    bg: "#312e81",
-    accent: "#a78bfa",
-    accent2: "#1e1b4b",
+    bg: "#0f172a",
+    accent: "#38BDF8",
+    accent2: "#0D9488",
     label: "Sync",
   },
   "app-builder": {

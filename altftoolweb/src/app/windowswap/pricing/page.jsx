@@ -69,7 +69,7 @@ export default function PricingPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-windowswap-teal text-white font-sans antialiased flex flex-col justify-between selection:bg-[#c56543]/40 selection:text-white">
+    <div className="windowswap-theme min-h-screen font-sans antialiased flex flex-col justify-between selection:bg-primary/20 selection:text-foreground">
 
       {/* ──────────────────────────────────────────────────────── */}
       {/* HEADER NAVBAR */}
@@ -105,7 +105,7 @@ export default function PricingPage() {
 
         {/* BILLING TOGGLE SWITCH */}
         <div className="flex justify-center items-center">
-          <div className="relative flex items-center p-1 bg-[#092327]/60 border border-teal-950/70 rounded-full select-none">
+          <div className="relative flex items-center p-1 windowswap-card rounded-full select-none">
             <button
               onClick={() => setBillingCycle("monthly")}
               className={`px-6 py-2 rounded-full text-xs font-semibold tracking-wider uppercase transition cursor-pointer ${billingCycle === "monthly" ? "bg-windowswap-terracotta text-white shadow-md" : "text-windowswap-cream/70 hover:text-white"
@@ -128,7 +128,7 @@ export default function PricingPage() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto items-stretch">
 
           {/* FREE PLAN CARD */}
-          <div className="bg-[#092327]/40 rounded-3xl border border-teal-950/50 p-8 flex flex-col justify-between backdrop-blur-sm relative overflow-hidden group">
+          <div className="windowswap-card p-8 flex flex-col justify-between backdrop-blur-sm relative overflow-hidden group">
             <div className="space-y-6">
               <div className="space-y-2">
                 <span className="text-[10px] tracking-widest text-zinc-400 font-bold uppercase">Standard tier</span>
@@ -172,7 +172,7 @@ export default function PricingPage() {
             <div className="mt-8">
               <button
                 disabled
-                className="w-full bg-[#0b2c30]/40 border border-teal-950/60 text-zinc-400 py-3.5 rounded-full font-semibold text-xs tracking-wider uppercase select-none cursor-not-allowed"
+                className="w-full border border-border bg-muted/60 text-muted-foreground py-3.5 rounded-full font-semibold text-xs tracking-wider uppercase select-none cursor-not-allowed"
               >
                 Current Active Tier
               </button>
@@ -180,7 +180,7 @@ export default function PricingPage() {
           </div>
 
           {/* ALL ACCESS PREMIUM CARD */}
-          <div className="bg-[#092327]/75 rounded-3xl border border-windowswap-terracotta/40 p-8 flex flex-col justify-between backdrop-blur-md relative overflow-hidden group shadow-xl">
+          <div className="windowswap-card p-8 flex flex-col justify-between backdrop-blur-md relative overflow-hidden group">
             {/* Top highlight ribbon */}
             <div className="absolute top-0 right-0 bg-windowswap-terracotta text-white text-[9px] font-bold tracking-widest px-4 py-1.5 uppercase rounded-bl-xl select-none">
               Most Popular
@@ -188,7 +188,7 @@ export default function PricingPage() {
 
             <div className="space-y-6">
               <div className="space-y-2">
-                <span className="text-[10px] tracking-widest text-[#c56543] font-bold uppercase">All-Access member</span>
+                <span className="text-[10px] tracking-widest text-windowswap-peach font-bold uppercase">All-Access member</span>
                 <h3 className="font-serif text-2xl font-semibold text-white">WindowSwap Premium</h3>
                 <p className="text-xs text-windowswap-cream/70 leading-relaxed font-light">
                   Directly fund the global creator network, bookmark cozy spots, filter categories, and skip backward freely.
@@ -239,7 +239,7 @@ export default function PricingPage() {
             <div className="mt-8">
               <button
                 onClick={() => handleOpenCheckout(billingCycle === "monthly" ? "Premium Monthly ($5)" : "Premium Yearly ($50)")}
-                className="w-full bg-windowswap-terracotta hover:bg-[#b05434] text-white py-3.5 rounded-full font-semibold text-xs tracking-wider uppercase transition-all duration-300 hover:scale-101 active:scale-99 shadow-lg flex items-center justify-center gap-2 cursor-pointer"
+                className="w-full windowswap-primary-button py-3.5 rounded-full font-semibold text-xs tracking-wider uppercase transition-all duration-300 hover:scale-101 active:scale-99 flex items-center justify-center gap-2 cursor-pointer"
               >
                 <Sparkles className="h-3.5 w-3.5" />
                 Upgrade to All-Access
@@ -256,11 +256,11 @@ export default function PricingPage() {
             <p className="text-xs text-windowswap-cream/70 font-light">See everything included in the All-Access subscription.</p>
           </div>
 
-          <div className="bg-[#092327]/60 rounded-3xl border border-teal-950/50 overflow-hidden backdrop-blur-sm">
+          <div className="windowswap-card overflow-hidden backdrop-blur-sm">
             <div className="min-w-full overflow-x-auto">
               <table className="min-w-full divide-y divide-teal-950/30 text-xs">
                 <thead>
-                  <tr className="bg-[#0b2c30]/40 text-[10px] tracking-wider uppercase font-bold text-windowswap-cream/80">
+                  <tr className="bg-muted text-[10px] tracking-wider uppercase font-bold text-windowswap-cream">
                     <th scope="col" className="px-6 py-4 text-left font-bold">Capabilities</th>
                     <th scope="col" className="px-6 py-4 text-center w-32 font-bold">Standard Free</th>
                     <th scope="col" className="px-6 py-4 text-center w-32 font-bold text-windowswap-peach">All Access</th>
@@ -268,7 +268,7 @@ export default function PricingPage() {
                 </thead>
                 <tbody className="divide-y divide-teal-950/20 text-windowswap-cream/90">
                   {features.map((item, index) => (
-                    <tr key={index} className="hover:bg-[#0b2c30]/10 transition duration-150">
+                    <tr key={index} className="hover:bg-muted/50 transition duration-150">
                       <td className="px-6 py-4 font-medium text-left">{item.name}</td>
                       <td className="px-6 py-4 text-center">
                         {item.free ? (
@@ -295,21 +295,21 @@ export default function PricingPage() {
         {/* SECURITY & SSL BADGES */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-4xl mx-auto border-t border-teal-950/30 pt-10 text-center sm:text-left">
           <div className="flex flex-col sm:flex-row items-center gap-3">
-            <Shield className="h-8 w-8 text-[#c56543] shrink-0" />
+            <Shield className="h-8 w-8 text-windowswap-peach shrink-0" />
             <div className="space-y-1">
               <h4 className="text-xs font-semibold text-white">Secure SSL Transactions</h4>
               <p className="text-[10px] text-windowswap-cream/70 leading-normal font-light">Every purchase is shielded with industry-standard 256-bit SSL encryption.</p>
             </div>
           </div>
           <div className="flex flex-col sm:flex-row items-center gap-3">
-            <Lock className="h-8 w-8 text-[#c56543] shrink-0" />
+            <Lock className="h-8 w-8 text-windowswap-peach shrink-0" />
             <div className="space-y-1">
               <h4 className="text-xs font-semibold text-white">Encrypted Credit Details</h4>
               <p className="text-[10px] text-windowswap-cream/70 leading-normal font-light">We do not store or see your private credit numbers. Transacted directly by Stripe.</p>
             </div>
           </div>
           <div className="flex flex-col sm:flex-row items-center gap-3">
-            <HelpCircle className="h-8 w-8 text-[#c56543] shrink-0" />
+            <HelpCircle className="h-8 w-8 text-windowswap-peach shrink-0" />
             <div className="space-y-1">
               <h4 className="text-xs font-semibold text-white">Flexible Cancellation</h4>
               <p className="text-[10px] text-windowswap-cream/70 leading-normal font-light">Subscription settings are adjustable at any time inside your client profile settings.</p>
@@ -324,7 +324,7 @@ export default function PricingPage() {
       {/* ──────────────────────────────────────────────────────── */}
       {showCheckout && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/75 backdrop-blur-sm p-4 animate-fade-in">
-          <div className="w-full max-w-md bg-[#092327] rounded-3xl border border-teal-950 shadow-2xl overflow-hidden relative">
+          <div className="w-full max-w-md windowswap-card overflow-hidden relative">
 
             {/* CLOSE BUTTON */}
             <button
@@ -339,7 +339,7 @@ export default function PricingPage() {
 
                 {/* HEAD */}
                 <div className="space-y-1">
-                  <span className="text-[9px] tracking-widest text-[#c56543] uppercase font-bold">Secure Checkout</span>
+                  <span className="text-[9px] tracking-widest text-windowswap-peach uppercase font-bold">Secure Checkout</span>
                   <h3 className="font-serif text-2xl font-bold text-white">Complete Premium Upgrade</h3>
                   <p className="text-xs text-windowswap-cream/70">
                     Upgrading to: <span className="text-white font-medium">{selectedPlan}</span>
@@ -434,7 +434,7 @@ export default function PricingPage() {
                 <button
                   type="submit"
                   disabled={loading}
-                  className="w-full bg-windowswap-terracotta hover:bg-[#b05434] text-white py-4 rounded-full font-semibold transition hover:scale-101 active:scale-99 shadow-lg text-sm flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
+                  className="w-full windowswap-primary-button py-4 rounded-full font-semibold transition hover:scale-101 active:scale-99 text-sm flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
                 >
                   {loading ? (
                     <span className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
@@ -457,7 +457,7 @@ export default function PricingPage() {
               /* SUCCESS SCREEN */
               <div className="p-8 text-center flex flex-col items-center justify-center space-y-6">
                 <div className="w-20 h-20 rounded-full bg-teal-950/40 border border-[#c56543]/40 flex items-center justify-center text-windowswap-terracotta animate-pulse">
-                  <Sparkles className="w-10 h-10 text-[#c56543]" />
+                  <Sparkles className="w-10 h-10 text-windowswap-peach" />
                 </div>
 
                 <div className="space-y-2">
@@ -475,7 +475,7 @@ export default function PricingPage() {
 
                 <button
                   onClick={handleCloseCheckout}
-                  className="w-full bg-[#c56543] hover:bg-[#b05434] text-white py-3.5 rounded-full font-semibold transition hover:scale-101 active:scale-99 shadow-lg text-xs tracking-wider uppercase cursor-pointer"
+                  className="w-full windowswap-primary-button py-3.5 rounded-full font-semibold transition hover:scale-101 active:scale-99 text-xs tracking-wider uppercase cursor-pointer"
                 >
                   Return to pricing
                 </button>

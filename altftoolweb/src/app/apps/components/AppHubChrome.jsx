@@ -11,7 +11,7 @@ export function AppHubLogo() {
           <path d="M16.5 33h9.8c5 0 9-4 9-9v-2.4c0-1.9-2.3-2.9-3.7-1.6L17.4 33.5c-.3.3-.6-.5-.9-.5Z" fill="var(--primary)" />
           <path d="M20 16.5v8m0 0 3.2-3.2M20 24.5l-3.2-3.2" fill="none" stroke="#fff" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" />
         </svg>
-        <span className="truncate text-lg font-black tracking-normal text-[var(--foreground)] transition group-hover:text-[var(--primary)] sm:text-xl">
+        <span className="truncate text-lg font-bold tracking-normal text-[var(--foreground)] transition group-hover:text-[var(--primary)] sm:text-xl">
           AppHub
         </span>
       </span>
@@ -32,9 +32,9 @@ export function AppHubHeader() {
       <div className="mx-auto flex h-[60px] max-w-[1320px] items-center justify-between gap-3 px-4 sm:h-[64px] sm:gap-5 sm:px-6 lg:gap-6 lg:px-8">
         <AppHubLogo />
 
-        <nav className="hidden items-center gap-6 lg:flex xl:gap-8">
+        <nav className="hidden items-center gap-2 lg:flex xl:gap-3">
           {navItems.map((item) => (
-            <a key={item.label} href={item.href} className="text-[13px] font-extrabold text-[var(--foreground)] hover:text-[var(--primary)]">
+            <a key={item.label} href={item.href} className="rounded-full px-3 py-2 text-[13px] font-medium text-[var(--foreground)] transition duration-200 hover:bg-[var(--card-hover-bg)] hover:text-[var(--primary)]">
               {item.label}
             </a>
           ))}
@@ -53,7 +53,7 @@ export function AppHubHeader() {
           </form>
           <a
             href="#featured-apps"
-            className="inline-flex h-10 shrink-0 items-center rounded-full bg-[var(--primary)] px-4 text-[12px] font-black text-white shadow-[0_14px_28px_rgba(108,77,246,0.24)] transition hover:bg-[var(--primary-hover)] lg:px-5"
+            className="inline-flex h-10 shrink-0 items-center rounded-full bg-[linear-gradient(135deg,#0D9488,#0EA5E9)] px-4 text-[12px] font-semibold text-[var(--primary-foreground)] shadow-[0_14px_28px_rgba(20,184,166,0.24)] transition hover:-translate-y-0.5 hover:bg-[linear-gradient(135deg,#0D9488,#0EA5E9)] lg:px-5"
           >
             Get in Touch
           </a>
@@ -87,7 +87,7 @@ export function AppHubFooter() {
               <Link
                 key={social.label}
                 href="/apps"
-                className={`flex h-9 w-9 items-center justify-center rounded-full shadow-[0_10px_22px_rgba(15,63,46,0.1)] transition hover:-translate-y-0.5 ${social.className}`}
+                className={`flex h-9 w-9 items-center justify-center rounded-full shadow-[0_10px_22px_rgba(15,23,42,0.1)] transition hover:-translate-y-0.5 ${social.className}`}
                 aria-label={social.label}
               >
                 <Icon size={16} aria-hidden="true" />

@@ -119,7 +119,7 @@ export default async function CategoryPage({ params }) {
           </div>
 
           {/* TAGS */}
-          <div className="bg-(--background)  rounded-lg p-2 md:p-6 mb-3 shadow-[0_8px_4px_-10px_rgba(0,0,0,0.2)]">
+          <div className="bg-(--background)  rounded-lg p-2 md:p-6 mb-3" style={{ boxShadow: 'var(--anslation-ds-shadow-md)' }}>
 
             <h3 className="text-base text-(--muted-foreground) mb-2">
               Refine by tag:
@@ -159,7 +159,7 @@ export default async function CategoryPage({ params }) {
           <div>
 
             {/* Top */}
-             <div className="rounded-md shadow-[0_8px_4px_-10px_rgba(0,0,0,0.2)] md:p-5">
+             <div className="rounded-md md:p-5" style={{ boxShadow: 'var(--anslation-ds-shadow-md)' }}>
             <div className="flex items-center border-b border-(--border) justify-between pb-3 mb-8">
 
               <h2 className="text-sm font-bold">
@@ -259,7 +259,7 @@ export default async function CategoryPage({ params }) {
 
           {/* Sticky Ad */}
           <div className="sticky top-24 space-y-5">
-            <p className="text-sm text-gray-400 text-center mb-2">
+            <p className="text-sm text-(--muted-foreground) text-center mb-2">
                   Advertisement
                 </p>     
             <div className="overflow-hidden">
@@ -274,7 +274,7 @@ export default async function CategoryPage({ params }) {
               />
 
             </div>
-              <p className="text-sm text-gray-400 text-center mb-2">
+              <p className="text-sm text-(--muted-foreground) text-center mb-2">
                   Advertisement
                 </p>
             <div className="overflow-hidden">
