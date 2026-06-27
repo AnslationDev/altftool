@@ -11,6 +11,8 @@ import { emitAlert } from "@/lib/alertBus";
 import {
   startConnect, fetchConnection, fetchProperties, selectProperty, disconnect, fetchReport,
 } from "./services/searchConsoleService";
+import UrlInspectionPanel from "./components/UrlInspectionPanel";
+import SitemapsPanel from "./components/SitemapsPanel";
 
 const DIMENSIONS = [
   { key: "query", label: "Top queries", icon: Search },
@@ -21,9 +23,7 @@ const DIMENSIONS = [
 const RANGES = [7, 28, 90];
 
 const FUTURE = [
-  { icon: FileSearch, label: "URL Inspection", desc: "Index status & coverage per URL" },
   { icon: ShieldCheck, label: "Index Coverage", desc: "Valid / excluded / error pages" },
-  { icon: Globe, label: "Sitemaps", desc: "Submit & monitor sitemaps" },
   { icon: Gauge, label: "Core Web Vitals", desc: "LCP / INP / CLS by template" },
   { icon: BellRing, label: "Alerts", desc: "Traffic drops & new errors" },
   { icon: Download, label: "Exports", desc: "Scheduled CSV / XLSX reports" },
@@ -311,6 +311,14 @@ export default function SearchConsoleCenter() {
             )}
           </div>
         </section>
+      )}
+
+      {/* URL Inspection + Sitemaps (live) */}
+      {connected && activeProperty && (
+        <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
+          <UrlInspectionPanel />
+          <SitemapsPanel />
+        </div>
       )}
 
       {/* Future modules (architecture preview) */}

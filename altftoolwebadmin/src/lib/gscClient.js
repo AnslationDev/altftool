@@ -150,3 +150,17 @@ export async function gscSubmitSitemap(feedpath, siteUrl = gscSiteUrl()) {
   );
   return { ok: true };
 }
+
+/**
+ * Best-effort "request indexing" via the Indexing API. Officially this API only
+ * supports JobPosting / BroadcastEvent — for normal pages Google may ignore it,
+ * so callers treat failure as non-fatal and fall back to sitemap + manual GSC.
+ * Requires the `auth/indexing` scope (re-consent) or service-account access.
+ */
+export async function gscRequestIndexing(url, type = "URL_UPDATED") {
+  const data = await gscRequest("POST", "https://indexing.googleapis.com/v3/urlNotifications:publish", {
+    url,
+    type,
+  });
+  return data;
+}

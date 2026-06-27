@@ -194,12 +194,24 @@ export async function requestBlogRevalidation(slug) {
   try {
     const user = getAuth().currentUser;
     const token = user ? await user.getIdToken() : "local-dev-admin-token";
+    const headers = { "Content-Type": "application/json", Authorization: `Bearer ${token}` };
+
+    // 1. Revalidate the public page + sitemap cache.
     await fetch("/api/blogs/revalidate", {
       method: "POST",
-      headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
+      headers,
       body: JSON.stringify({ slug }),
       keepalive: true,
     });
+
+    // 2. Best-effort: re-submit the sitemap to Search Console so Google
+    //    re-crawls the change automatically (no manual re-indexing needed).
+    fetch("/api/seo/gsc/sitemaps", {
+      method: "POST",
+      headers,
+      body: JSON.stringify({}),
+      keepalive: true,
+    }).catch(() => {});
   } catch (err) {
     console.warn("[revalidate] non-blocking request failed", err);
   }

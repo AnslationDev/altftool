@@ -59,3 +59,35 @@ export async function fetchReport({ dimension = "query", days = 28 } = {}) {
   });
   return readApiJson(res, "Could not load Search Analytics");
 }
+
+export async function inspectUrl(url) {
+  const res = await fetch("/api/seo/gsc/inspect", {
+    method: "POST",
+    headers: await authHeaders(),
+    body: JSON.stringify({ url }),
+  });
+  return readApiJson(res, "URL inspection failed");
+}
+
+export async function requestIndexing(url) {
+  const res = await fetch("/api/seo/gsc/index-request", {
+    method: "POST",
+    headers: await authHeaders(),
+    body: JSON.stringify({ url }),
+  });
+  return readApiJson(res, "Index request failed");
+}
+
+export async function fetchSitemaps() {
+  const res = await fetch("/api/seo/gsc/sitemaps", { headers: await authHeaders(), cache: "no-store" });
+  return readApiJson(res, "Could not load sitemaps");
+}
+
+export async function submitSitemap(feedpath) {
+  const res = await fetch("/api/seo/gsc/sitemaps", {
+    method: "POST",
+    headers: await authHeaders(),
+    body: JSON.stringify(feedpath ? { feedpath } : {}),
+  });
+  return readApiJson(res, "Could not submit sitemap");
+}

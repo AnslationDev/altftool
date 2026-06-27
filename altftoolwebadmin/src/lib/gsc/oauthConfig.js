@@ -9,6 +9,9 @@ import crypto from "node:crypto";
 export const GSC_SCOPES = [
   "https://www.googleapis.com/auth/webmasters.readonly",
   "https://www.googleapis.com/auth/webmasters",
+  // Optional: enables the best-effort "Request indexing" (Indexing API).
+  // Officially only for JobPosting/BroadcastEvent — used best-effort here.
+  "https://www.googleapis.com/auth/indexing",
 ];
 
 export const GOOGLE_AUTH_ENDPOINT = "https://accounts.google.com/o/oauth2/v2/auth";
