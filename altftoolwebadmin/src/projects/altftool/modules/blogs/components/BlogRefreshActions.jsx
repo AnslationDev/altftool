@@ -21,14 +21,14 @@ function ActionButton({ icon: Icon, label, caption, onClick }) {
     <button
       type="button"
       onClick={onClick}
-      className="group flex w-full items-start gap-3 rounded-xl border border-gray-100 bg-gray-50/70 p-3 text-left transition hover:border-blue-200 hover:bg-blue-50"
+      className="group flex w-full items-start gap-3 rounded-xl border border-border bg-surface-soft/70 p-3 text-left transition hover:border-primary hover:bg-primary-soft"
     >
-      <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-white text-blue-600 shadow-sm">
+      <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-surface text-primary shadow-sm">
         <Icon className="h-4 w-4" />
       </span>
       <span className="min-w-0 flex-1">
-        <span className="block text-sm font-semibold text-gray-800 group-hover:text-blue-700">{label}</span>
-        <span className="mt-0.5 block text-xs leading-5 text-gray-500">{caption}</span>
+        <span className="block text-sm font-semibold text-foreground group-hover:text-primary">{label}</span>
+        <span className="mt-0.5 block text-xs leading-5 text-muted">{caption}</span>
       </span>
     </button>
   );
@@ -65,14 +65,14 @@ export default function BlogRefreshActions({
   };
 
   return (
-    <div className="rounded-2xl border border-gray-100 bg-white p-5 shadow-sm">
+    <div className="rounded-2xl border border-border bg-surface p-5 shadow-sm">
       <div className="mb-4 flex items-start gap-3">
-        <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-blue-50 text-blue-600">
+        <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-primary-soft text-primary">
           <RefreshCw className="h-4 w-4" />
         </span>
         <div>
-          <h2 className="text-xs font-black uppercase tracking-widest text-gray-400">Refresh Actions</h2>
-          <p className="mt-1 text-xs leading-5 text-gray-500">
+          <h2 className="text-xs font-black uppercase tracking-widest text-muted">Refresh Actions</h2>
+          <p className="mt-1 text-xs leading-5 text-muted">
             Quick editorial actions for stale posts, source checks, and update notes.
           </p>
         </div>

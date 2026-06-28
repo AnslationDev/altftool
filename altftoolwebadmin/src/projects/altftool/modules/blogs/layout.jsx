@@ -7,7 +7,7 @@ export default function BlogsLayout({ children }) {
 
   return (
 
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-surface-soft">
 
       <CkeditorAssets />
 

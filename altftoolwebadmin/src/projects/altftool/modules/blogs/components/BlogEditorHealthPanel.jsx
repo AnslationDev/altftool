@@ -70,9 +70,9 @@ const ACTION_LABELS = {
 };
 
 function scoreTone(score = 0) {
-  if (score >= 86) return "border-green-100 bg-green-50 text-green-700";
-  if (score >= 72) return "border-amber-100 bg-amber-50 text-amber-700";
-  return "border-red-100 bg-red-50 text-red-600";
+  if (score >= 86) return "border-success bg-success-soft text-success";
+  if (score >= 72) return "border-warning bg-warning-soft text-warning";
+  return "border-danger bg-danger-soft text-danger";
 }
 
 function normalizeBlogForHealth({ formData = {}, hasImage = false, imageAlt = "" } = {}) {
@@ -94,24 +94,24 @@ function HealthRow({ check, onApplyAction, onJumpToIssue }) {
   const actionKey = ISSUE_ACTIONS[check.key];
 
   return (
-    <div className="rounded-xl border border-gray-100 bg-gray-50 px-3 py-3">
+    <div className="rounded-xl border border-border bg-surface-soft px-3 py-3">
       <div className="flex items-start gap-3">
         <span
           className={`mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-xl ${
-            check.done ? "bg-green-100 text-green-700" : check.severity === "critical" ? "bg-red-100 text-red-600" : "bg-amber-100 text-amber-700"
+            check.done ? "bg-success-soft text-success" : check.severity === "critical" ? "bg-danger-soft text-danger" : "bg-warning-soft text-warning"
           }`}
         >
           {check.done ? <CheckCircle2 className="h-4 w-4" /> : <Icon className="h-4 w-4" />}
         </span>
         <div className="min-w-0 flex-1">
           <div className="flex flex-wrap items-center justify-between gap-2">
-            <p className="text-sm font-black text-gray-900">{check.label}</p>
+            <p className="text-sm font-black text-foreground">{check.label}</p>
             {!check.done ? (
               <div className="flex flex-wrap items-center gap-1.5">
                 <button
                   type="button"
                   onClick={() => onJumpToIssue?.(check.key)}
-                  className="inline-flex h-7 items-center gap-1.5 rounded-lg border border-gray-200 bg-white px-2.5 text-[11px] font-bold text-gray-600 transition hover:bg-gray-100"
+                  className="inline-flex h-7 items-center gap-1.5 rounded-lg border border-border bg-surface px-2.5 text-[11px] font-bold text-muted transition hover:bg-surface-soft"
                 >
                   <Link2 className="h-3.5 w-3.5" />
                   Jump
@@ -120,7 +120,7 @@ function HealthRow({ check, onApplyAction, onJumpToIssue }) {
                   <button
                     type="button"
                     onClick={() => onApplyAction(actionKey)}
-                    className="inline-flex h-7 items-center gap-1.5 rounded-lg border border-blue-100 bg-white px-2.5 text-[11px] font-bold text-blue-700 transition hover:bg-blue-50"
+                    className="inline-flex h-7 items-center gap-1.5 rounded-lg border border-primary bg-surface px-2.5 text-[11px] font-bold text-primary transition hover:bg-primary-soft"
                   >
                     <WandSparkles className="h-3.5 w-3.5" />
                     {ACTION_LABELS[actionKey]}
@@ -129,8 +129,8 @@ function HealthRow({ check, onApplyAction, onJumpToIssue }) {
               </div>
             ) : null}
           </div>
-          <p className="mt-1 text-xs leading-5 text-gray-500">{check.detail}</p>
-          {!check.done ? <p className="mt-1 text-[11px] leading-4 text-gray-400">{ISSUE_HINTS[check.key]}</p> : null}
+          <p className="mt-1 text-xs leading-5 text-muted">{check.detail}</p>
+          {!check.done ? <p className="mt-1 text-[11px] leading-4 text-muted">{ISSUE_HINTS[check.key]}</p> : null}
         </div>
       </div>
     </div>
@@ -163,14 +163,14 @@ export default function BlogEditorHealthPanel({
   };
 
   return (
-    <div className="rounded-2xl border border-gray-100 bg-white p-5 shadow-sm">
+    <div className="rounded-2xl border border-border bg-surface p-5 shadow-sm">
       <div className="flex items-start justify-between gap-3">
         <div className="min-w-0">
           <div className="flex items-center gap-2">
-            <Sparkles className="h-4 w-4 text-blue-500" />
-            <h2 className="text-xs font-black uppercase tracking-widest text-gray-400">Content Health</h2>
+            <Sparkles className="h-4 w-4 text-primary" />
+            <h2 className="text-xs font-black uppercase tracking-widest text-muted">Content Health</h2>
           </div>
-          <p className="mt-1 text-xs leading-5 text-gray-500">
+          <p className="mt-1 text-xs leading-5 text-muted">
             Field-level gaps for schema, SEO, trust, sources, FAQ, and internal links.
           </p>
         </div>
@@ -180,17 +180,17 @@ export default function BlogEditorHealthPanel({
       </div>
 
       <div className="mt-4 grid grid-cols-3 gap-2 text-center">
-        <div className="rounded-xl bg-gray-50 px-2 py-2">
-          <p className="text-sm font-black text-gray-900">{snapshot.words}</p>
-          <p className="text-[10px] font-bold uppercase tracking-wide text-gray-400">Words</p>
+        <div className="rounded-xl bg-surface-soft px-2 py-2">
+          <p className="text-sm font-black text-foreground">{snapshot.words}</p>
+          <p className="text-[10px] font-bold uppercase tracking-wide text-muted">Words</p>
         </div>
-        <div className="rounded-xl bg-gray-50 px-2 py-2">
-          <p className="text-sm font-black text-gray-900">{snapshot.sourceCount}</p>
-          <p className="text-[10px] font-bold uppercase tracking-wide text-gray-400">Sources</p>
+        <div className="rounded-xl bg-surface-soft px-2 py-2">
+          <p className="text-sm font-black text-foreground">{snapshot.sourceCount}</p>
+          <p className="text-[10px] font-bold uppercase tracking-wide text-muted">Sources</p>
         </div>
-        <div className="rounded-xl bg-gray-50 px-2 py-2">
-          <p className="text-sm font-black text-gray-900">{missingChecks.length}</p>
-          <p className="text-[10px] font-bold uppercase tracking-wide text-gray-400">Gaps</p>
+        <div className="rounded-xl bg-surface-soft px-2 py-2">
+          <p className="text-sm font-black text-foreground">{missingChecks.length}</p>
+          <p className="text-[10px] font-bold uppercase tracking-wide text-muted">Gaps</p>
         </div>
       </div>
 
@@ -198,13 +198,13 @@ export default function BlogEditorHealthPanel({
         <button
           type="button"
           onClick={() => applyAction(topAction)}
-          className="mt-4 inline-flex h-10 w-full items-center justify-center gap-2 rounded-xl bg-gray-900 px-4 text-sm font-semibold text-white transition hover:bg-gray-700"
+          className="mt-4 inline-flex h-10 w-full items-center justify-center gap-2 rounded-xl bg-primary px-4 text-sm font-semibold text-white transition hover:bg-primary"
         >
           <WandSparkles className="h-4 w-4" />
           {ACTION_LABELS[topAction]}
         </button>
       ) : (
-        <div className="mt-4 flex items-center gap-2 rounded-xl bg-green-50 px-3 py-3 text-sm font-semibold text-green-700">
+        <div className="mt-4 flex items-center gap-2 rounded-xl bg-success-soft px-3 py-3 text-sm font-semibold text-success">
           <CheckCircle2 className="h-4 w-4" />
           Content health looks ready.
         </div>

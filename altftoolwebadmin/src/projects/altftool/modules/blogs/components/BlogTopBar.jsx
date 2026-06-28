@@ -25,14 +25,14 @@ export default function BlogTopBar(){
 
     <>
 
-    <header className="w-full bg-white border-b shadow-sm">
+    <header className="w-full bg-surface border-b shadow-sm">
 
       <div className="max-w-7xl mx-auto flex flex-wrap items-center gap-3 px-4 py-4">
 
         {/* Title */}
         <Link href="/altftool/blogs" className="flex items-center gap-2">
           
-          <span className="text-lg font-bold text-gray-900">
+          <span className="text-lg font-bold text-foreground">
             Blogs
           </span>
         </Link>
@@ -59,7 +59,7 @@ export default function BlogTopBar(){
                 ${
                   isActive
                     ? "bg-(--primary) text-white"
-                    : "text-gray-600 hover:bg-gray-100"
+                    : "text-muted hover:bg-surface-soft"
                 }`}
               >
 

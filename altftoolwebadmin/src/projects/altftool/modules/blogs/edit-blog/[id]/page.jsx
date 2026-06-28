@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback, useRef } from "react";
+import { useState, useEffect, useCallback, useMemo, useRef } from "react";
 import { useRouter, useParams, useSearchParams, usePathname } from "next/navigation";
 import dynamic from "next/dynamic";
 import { emitAlert } from "@/lib/alertBus";
@@ -9,8 +9,17 @@ import {
   fetchAllBlogs,
   fetchBlogById,
   updateBlog,
+  updateBlogWorkflow,
+  saveBlogRevision,
+  requestBlogRevalidation,
   uploadBlogImage,
 } from "../../services/blogsService";
+import { WORKFLOW, statusForWorkflow } from "../../lib/workflow";
+import { useAutosave, useUnsavedGuard, useEditorShortcuts, formatSavedLabel } from "../../lib/editorHooks";
+import EditorActionBar from "../../components/EditorActionBar";
+import WorkflowStatusControl from "../../components/WorkflowStatusControl";
+import BlogHistoryDrawer from "../../components/BlogHistoryDrawer";
+import KeyboardShortcutsHelp from "../../components/KeyboardShortcutsHelp";
 import { serverTimestamp } from "firebase/firestore";
 import CategorySelector from "../../components/CategorySelector";
 import { logAuditEvent } from "@/lib/auditClient";
@@ -50,10 +59,10 @@ const SEO_TITLE_IDEAL_MAX = 60;
 const SEO_TITLE_HARD_MAX  = 60;
 
 const getSeoTitleStatus = (len) => {
-  if (len === 0)                  return { color: "bg-gray-200",  label: "", ok: false };
-  if (len < SEO_TITLE_MIN)        return { color: "bg-amber-400", label: `Too short — aim for ${SEO_TITLE_MIN}–${SEO_TITLE_IDEAL_MAX} chars`, ok: false };
-  if (len <= SEO_TITLE_IDEAL_MAX) return { color: "bg-green-400", label: "Perfect length", ok: true };
-  return                                 { color: "bg-red-400",   label: `Too long — will be truncated by Google (max ${SEO_TITLE_HARD_MAX})`, ok: false };
+  if (len === 0)                  return { color: "bg-surface-soft",  label: "", ok: false };
+  if (len < SEO_TITLE_MIN)        return { color: "bg-warning", label: `Too short — aim for ${SEO_TITLE_MIN}–${SEO_TITLE_IDEAL_MAX} chars`, ok: false };
+  if (len <= SEO_TITLE_IDEAL_MAX) return { color: "bg-success", label: "Perfect length", ok: true };
+  return                                 { color: "bg-danger",   label: `Too long — will be truncated by Google (max ${SEO_TITLE_HARD_MAX})`, ok: false };
 };
 
 /* ── Friendly error translator ── */
@@ -104,13 +113,13 @@ const IMAGE_MESSAGES = {
 function Field({ label, hint, error, icon, required, children }) {
   return (
     <div className="space-y-1.5">
-      <label className="flex items-center gap-1.5 text-xs font-bold text-gray-500 uppercase tracking-wider">
-        {icon && <span className="text-gray-400">{icon}</span>}{label}
-        {required && <span className="text-red-400">*</span>}
+      <label className="flex items-center gap-1.5 text-xs font-bold text-muted uppercase tracking-wider">
+        {icon && <span className="text-muted">{icon}</span>}{label}
+        {required && <span className="text-danger">*</span>}
       </label>
       {children}
-      {hint  && !error && <p className="text-xs text-gray-400">{hint}</p>}
-      {error && <p className="flex items-center gap-1 text-xs text-red-500 font-medium"><AlertCircle className="w-3 h-3 shrink-0" />{error}</p>}
+      {hint  && !error && <p className="text-xs text-muted">{hint}</p>}
+      {error && <p className="flex items-center gap-1 text-xs text-danger font-medium"><AlertCircle className="w-3 h-3 shrink-0" />{error}</p>}
     </div>
   );
 }
@@ -118,7 +127,7 @@ function Field({ label, hint, error, icon, required, children }) {
 function Input({ error, ...props }) {
   return (
     <input {...props}
-      className={`w-full text-sm px-3 py-2.5 rounded-xl border bg-white placeholder:text-gray-400 focus:outline-none focus:ring-2 transition ${error ? "border-red-300 focus:ring-red-400/30 focus:border-red-400" : "border-gray-200 focus:ring-blue-400/30 focus:border-blue-400"}`} />
+      className={`w-full text-sm px-3 py-2.5 rounded-xl border bg-surface placeholder:text-muted focus:outline-none focus:ring-2 transition ${error ? "border-danger focus:ring-danger/30 focus:border-danger" : "border-border focus:ring-primary/30 focus:border-primary"}`} />
   );
 }
 
@@ -126,12 +135,12 @@ function Section({ title, children, highlighted = false, id }) {
   return (
     <div
       id={id}
-      className={`scroll-mt-24 rounded-2xl border bg-white p-6 shadow-sm transition ${
-        highlighted ? "border-blue-200 ring-4 ring-blue-100" : "border-gray-100"
+      className={`scroll-mt-24 rounded-2xl border bg-surface p-6 shadow-sm transition ${
+        highlighted ? "border-primary ring-4 ring-primary" : "border-border"
       } space-y-5`}
     >
-      <h2 className="text-xs font-black text-gray-400 uppercase tracking-widest flex items-center gap-2">
-        {title}<span className="flex-1 h-px bg-gray-100" />
+      <h2 className="text-xs font-black text-muted uppercase tracking-widest flex items-center gap-2">
+        {title}<span className="flex-1 h-px bg-surface-soft" />
       </h2>
       {children}
     </div>
@@ -140,8 +149,8 @@ function Section({ title, children, highlighted = false, id }) {
 
 function ProgressBar({ value }) {
   return (
-    <div className="h-1.5 w-full bg-gray-100 rounded-full overflow-hidden">
-      <div className="h-full bg-blue-500 rounded-full transition-all duration-200" style={{ width: `${value}%` }} />
+    <div className="h-1.5 w-full bg-surface-soft rounded-full overflow-hidden">
+      <div className="h-full bg-primary rounded-full transition-all duration-200" style={{ width: `${value}%` }} />
     </div>
   );
 }
@@ -149,10 +158,10 @@ function ProgressBar({ value }) {
 function BannerAlert({ message, onDismiss }) {
   if (!message) return null;
   return (
-    <div className="flex items-start gap-3 bg-red-50 border border-red-200 rounded-2xl px-4 py-3 text-sm text-red-700">
-      <AlertTriangle className="w-4 h-4 shrink-0 mt-0.5 text-red-500" />
+    <div className="flex items-start gap-3 bg-danger-soft border border-danger rounded-2xl px-4 py-3 text-sm text-danger">
+      <AlertTriangle className="w-4 h-4 shrink-0 mt-0.5 text-danger" />
       <div className="flex-1">{message}</div>
-      <button onClick={onDismiss} className="text-red-400 hover:text-red-600 text-xs font-bold ml-2">✕</button>
+      <button onClick={onDismiss} className="text-danger hover:text-danger text-xs font-bold ml-2">✕</button>
     </div>
   );
 }
@@ -166,8 +175,8 @@ function OfflineBanner() {
   }, []);
   if (!offline) return null;
   return (
-    <div className="flex items-center gap-2 bg-amber-50 border border-amber-200 rounded-2xl px-4 py-2.5 text-sm text-amber-800">
-      <WifiOff className="w-4 h-4 shrink-0 text-amber-500" />
+    <div className="flex items-center gap-2 bg-warning-soft border border-warning rounded-2xl px-4 py-2.5 text-sm text-warning">
+      <WifiOff className="w-4 h-4 shrink-0 text-warning" />
       <span>You're offline. Changes cannot be saved — please reconnect before publishing or saving.</span>
     </div>
   );
@@ -210,6 +219,7 @@ export default function EditBlog() {
   const [formData, setFormData] = useState({
     heading: "", category: "", author: "", date: "",
     description: "", seoTitle: "", seoDescription: "", image: "", status: "draft",
+    workflowState: "", publishAt: null,
     tags: "", authorRole: "", reviewedBy: "", editorialNote: "",
     reviewedAt: "", sourcesText: "", sourceNotes: "",
   });
@@ -232,6 +242,9 @@ export default function EditBlog() {
   const [originalSnapshot, setOriginalSnapshot] = useState(null);
   const [blogIndex, setBlogIndex]         = useState({ blogs: [], status: "loading", error: "" });
   const [previewRequest, setPreviewRequest] = useState(null);
+  const [showHistory, setShowHistory]     = useState(false);
+  const [showShortcuts, setShowShortcuts] = useState(false);
+  const [workflowBusy, setWorkflowBusy]   = useState(false);
 
   const isHighlighted = (sectionId) => highlightedSection === sectionId;
 
@@ -263,6 +276,7 @@ export default function EditBlog() {
           heading: data.heading || "", category: data.category || "", author: data.author || "",
           date: data.date || "", description: data.description || "", seoTitle: data.seoTitle || "",
           seoDescription: data.seoDescription || "", image: data.image || "", status: data.status || "draft",
+          workflowState: data.workflowState || "", publishAt: data.publishAt || null,
           tags: Array.isArray(data.tags) ? data.tags.join(", ") : data.tags || "",
           authorRole: data.authorRole || "",
           reviewedBy: data.reviewedBy || "",
@@ -565,22 +579,29 @@ export default function EditBlog() {
       const slug    = generateSlug(formData.heading);
       const excerpt = stripHtml(formData.description).slice(0, 160);
 
+      const payload = {
+        heading: formData.heading.trim(), slug, category: formData.category,
+        author: formData.author,
+        authorRole: formData.authorRole || "",
+        reviewedBy: formData.reviewedBy || "",
+        editorialNote: formData.editorialNote || "",
+        reviewedAt: formData.reviewedAt || "",
+        sources: parseSourcesText(formData.sourcesText),
+        sourceNotes: formData.sourceNotes.trim(),
+        description: formData.description, excerpt,
+        date: formData.date, seoTitle: formData.seoTitle.trim(),
+        seoDescription: formData.seoDescription || excerpt,
+        image: imageUrl, imageAlt: imageAlt.trim(), status,
+        tags: parseBlogTags(formData.tags),
+      };
+
       try {
-        await updateBlog(id, {
-          heading: formData.heading.trim(), slug, category: formData.category,
-          author: formData.author,
-          authorRole: formData.authorRole || "",
-          reviewedBy: formData.reviewedBy || "",
-          editorialNote: formData.editorialNote || "",
-          reviewedAt: formData.reviewedAt || "",
-          sources: parseSourcesText(formData.sourcesText),
-          sourceNotes: formData.sourceNotes.trim(),
-          description: formData.description, excerpt,
-          date: formData.date, seoTitle: formData.seoTitle.trim(),
-          seoDescription: formData.seoDescription || excerpt,
-          image: imageUrl, imageAlt: imageAlt.trim(), status,
-          tags: parseBlogTags(formData.tags),
-        });
+        await updateBlog(id, payload);
+        // Snapshot a doc-shaped revision so version history can restore safely.
+        saveBlogRevision({
+          blog: { id, ...payload },
+          reason: status === "published" ? "publish" : "save-draft",
+        }).catch((e) => console.warn("[revision] snapshot failed", e));
       } catch (err) {
         const msg = getFriendlyError(err, "firestore");
         setBannerError(msg); emitAlert({ type: "error", message: msg });
@@ -596,6 +617,8 @@ export default function EditBlog() {
 
       setUploadStep("done");
       setPreviewRequest(null);
+      // Push the change live immediately (no-op unless revalidation is configured).
+      if (status === "published") requestBlogRevalidation(slug);
       emitAlert({ type: "success", message: status === "published" ? "Blog published!" : "Draft saved." });
       setTimeout(() => router.push("/altftool/blogs"), 600);
     } catch (err) {
@@ -622,11 +645,120 @@ export default function EditBlog() {
   const altOk          = altLen >= 5 && altLen <= 125;
   const requestedQuickAction = searchParams.get("refreshAction") || searchParams.get("action") || "";
 
+  /* ── Dirty detection vs the last saved snapshot ── */
+  const dirty = useMemo(() => {
+    const o = originalSnapshot;
+    if (!o) return false;
+    return (
+      formData.heading !== o.heading ||
+      formData.description !== o.description ||
+      formData.seoTitle !== o.seoTitle ||
+      formData.seoDescription !== o.seoDescription ||
+      formData.category !== o.category ||
+      formData.author !== o.author ||
+      formData.date !== o.date ||
+      formData.tags !== o.tags ||
+      formData.authorRole !== o.authorRole ||
+      formData.reviewedBy !== o.reviewedBy ||
+      formData.editorialNote !== o.editorialNote ||
+      formData.sourcesText !== o.sourcesText ||
+      formData.sourceNotes !== o.sourceNotes ||
+      imageAlt !== (o.imageAlt || "") ||
+      Boolean(imageFile)
+    );
+  }, [formData, imageAlt, imageFile, originalSnapshot]);
+
+  /* ── Auto-save (drafts only; never silently mutates a live post) ── */
+  const persistDraft = useCallback(async () => {
+    if (!id || formData.status === "published") return;
+    const slug = generateSlug(formData.heading || "draft");
+    const excerpt = stripHtml(formData.description).slice(0, 160);
+    await updateBlog(id, {
+      heading: (formData.heading || "").trim(),
+      slug,
+      category: formData.category,
+      author: formData.author,
+      authorRole: formData.authorRole || "",
+      reviewedBy: formData.reviewedBy || "",
+      editorialNote: formData.editorialNote || "",
+      reviewedAt: formData.reviewedAt || "",
+      sources: parseSourcesText(formData.sourcesText),
+      sourceNotes: (formData.sourceNotes || "").trim(),
+      description: formData.description,
+      excerpt,
+      date: formData.date,
+      seoTitle: (formData.seoTitle || "").trim(),
+      seoDescription: formData.seoDescription || excerpt,
+      imageAlt: imageAlt.trim(),
+      status: "draft",
+      tags: parseBlogTags(formData.tags),
+    });
+    setOriginalSnapshot({ ...formData, imageAlt, image: formData.image });
+  }, [id, formData, imageAlt]);
+
+  const autosave = useAutosave({ formData, imageAlt }, persistDraft, {
+    delay: 1500,
+    enabled: formData.status !== "published",
+    isDirty: () => dirty,
+  });
+
+  useUnsavedGuard(dirty);
+
+  /* ── Keyboard shortcuts (ref-backed to avoid stale closures) ── */
+  const shortcutActionsRef = useRef({});
+  shortcutActionsRef.current = {
+    save: () => updateBlogHandler("draft"),
+    publish: () => updateBlogHandler("published"),
+    help: () => setShowShortcuts(true),
+  };
+  const shortcutMap = useMemo(() => ({
+    "mod+s": () => shortcutActionsRef.current.save(),
+    "mod+enter": () => shortcutActionsRef.current.publish(),
+    "mod+/": () => shortcutActionsRef.current.help(),
+  }), []);
+  useEditorShortcuts(shortcutMap);
+
+  /* ── Workflow transitions (publish routes through the existing gate) ── */
+  const handleWorkflowTransition = async (to, opts = {}) => {
+    if (to === WORKFLOW.PUBLISHED) {
+      updateBlogHandler("published");
+      return;
+    }
+    setWorkflowBusy(true);
+    try {
+      await updateBlogWorkflow(id, { workflowState: to, publishAt: opts.publishAt || null });
+      setFormData((prev) => ({
+        ...prev,
+        status: statusForWorkflow(to),
+        workflowState: to,
+        publishAt: opts.publishAt || null,
+      }));
+      emitAlert({ type: "success", message: `Moved to ${to.replace(/_/g, " ")}.` });
+      logAuditEvent({
+        module: "blogs",
+        action: "BLOG_WORKFLOW",
+        entityType: "blog",
+        entityId: id,
+        summary: `Workflow → ${to}`,
+        changes: { workflowState: to },
+        route: `/altftool/blogs/edit-blog/${id}`,
+      });
+    } catch (err) {
+      console.error("Workflow transition failed", err);
+      emitAlert({ type: "error", message: "Could not update workflow state." });
+    } finally {
+      setWorkflowBusy(false);
+    }
+  };
+
+  const saveState = formData.status === "published" ? (dirty ? "dirty" : "idle") : autosave.status;
+  const savedLabel = formatSavedLabel(autosave.savedAt);
+
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="flex flex-col items-center gap-3 text-gray-400">
-          <div className="w-8 h-8 border-2 border-gray-200 border-t-blue-500 rounded-full animate-spin" />
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <div className="flex flex-col items-center gap-3 text-muted">
+          <Loader2 className="w-8 h-8 animate-spin text-primary" />
           <span className="text-sm">Loading blog…</span>
         </div>
       </div>
@@ -634,7 +766,19 @@ export default function EditBlog() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-background">
+      <EditorActionBar
+        title={`Edit: ${formData.heading || "Untitled"}`}
+        onBack={() => router.push("/altftool/blogs")}
+        status={saveState}
+        savedLabel={savedLabel}
+        onSave={() => updateBlogHandler("draft")}
+        onHistory={() => setShowHistory(true)}
+        onShortcuts={() => setShowShortcuts(true)}
+        primaryLabel={formData.status === "published" ? "Update post" : "Publish"}
+        onPrimary={() => updateBlogHandler("published")}
+        busy={saving}
+      />
       <div className="max-w-7xl mx-auto px-5 py-7 space-y-5">
         <BlogPublishPreviewModal
           open={Boolean(previewRequest)}
@@ -652,21 +796,11 @@ export default function EditBlog() {
         <OfflineBanner />
         <BannerAlert message={bannerError} onDismiss={() => setBannerError(null)} />
 
-        {/* Top bar */}
-        <div className="flex items-center justify-between gap-4 flex-wrap">
-          <div className="flex items-center gap-3">
-            <button onClick={() => router.push("/altftool/blogs")} className="p-2 rounded-xl border border-gray-200 bg-white text-gray-500 hover:bg-gray-50 transition">
-              <ArrowLeft className="w-4 h-4" />
-            </button>
-            <div>
-              <h1 className="text-lg font-bold text-gray-900">Edit Blog</h1>
-              <p className="text-xs text-gray-400 font-mono truncate max-w-[280px]">ID: {id}</p>
-            </div>
-          </div>
-          <span className={`text-xs font-bold px-3 py-1 rounded-full ${formData.status === "published" ? "bg-green-100 text-green-700" : "bg-gray-100 text-gray-600"}`}>
-            {formData.status === "published" ? "● Published" : "○ Draft"}
-          </span>
-        </div>
+        <WorkflowStatusControl
+          blog={{ status: formData.status, workflowState: formData.workflowState, publishAt: formData.publishAt }}
+          onTransition={handleWorkflowTransition}
+          busy={workflowBusy}
+        />
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
 
@@ -716,7 +850,7 @@ export default function EditBlog() {
                   value={formData.editorialNote || ""}
                   onChange={(e) => setFormData((p) => ({ ...p, editorialNote: e.target.value }))}
                   placeholder="Reviewed for accuracy, freshness, and practical usefulness..."
-                  className="w-full text-sm px-3 py-2.5 rounded-xl border border-gray-200 bg-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-400/30 focus:border-blue-400 transition resize-none"
+                  className="w-full text-sm px-3 py-2.5 rounded-xl border border-border bg-surface placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition resize-none"
                 />
               </Field>
             </Section>
@@ -744,7 +878,7 @@ export default function EditBlog() {
 
             <Section title="Content" id="blog-section-content" highlighted={isHighlighted("blog-section-content")}>
               {errors.description && (
-                <p className="flex items-center gap-1 text-xs text-red-500 font-medium -mt-2"><AlertCircle className="w-3 h-3" />{errors.description}</p>
+                <p className="flex items-center gap-1 text-xs text-danger font-medium -mt-2"><AlertCircle className="w-3 h-3" />{errors.description}</p>
               )}
               <BlogEditor value={formData.description}
                 onChange={(data) => { setFormData((p) => ({ ...p, description: data })); setErrors((p) => ({ ...p, description: undefined })); }} />
@@ -753,45 +887,45 @@ export default function EditBlog() {
             {/* SEO — collapsible */}
             <div
               id="blog-section-seo"
-              className={`scroll-mt-24 overflow-hidden rounded-2xl border bg-white shadow-sm transition ${
-                isHighlighted("blog-section-seo") ? "border-blue-200 ring-4 ring-blue-100" : "border-gray-100"
+              className={`scroll-mt-24 overflow-hidden rounded-2xl border bg-surface shadow-sm transition ${
+                isHighlighted("blog-section-seo") ? "border-primary ring-4 ring-primary" : "border-border"
               }`}
             >
               <button type="button" onClick={() => setSeoExpanded((v) => !v)}
-                className="w-full flex items-center justify-between px-6 py-4 hover:bg-gray-50 transition">
+                className="w-full flex items-center justify-between px-6 py-4 hover:bg-surface-soft transition">
                 <div className="flex items-center gap-2">
-                  <Search className="w-4 h-4 text-gray-400" />
-                  <span className="text-xs font-black text-gray-400 uppercase tracking-widest">SEO Settings</span>
+                  <Search className="w-4 h-4 text-muted" />
+                  <span className="text-xs font-black text-muted uppercase tracking-widest">SEO Settings</span>
                   <div className="flex gap-1 ml-2">
-                    <span className={`w-2 h-2 rounded-full ${errors.seoTitle ? "bg-red-400" : seoTitleStatus.ok ? "bg-green-400" : "bg-amber-400"}`} title="Meta title status" />
-                    <span className={`w-2 h-2 rounded-full ${descOk ? "bg-green-400" : "bg-amber-400"}`} title="Description length status" />
+                    <span className={`w-2 h-2 rounded-full ${errors.seoTitle ? "bg-danger" : seoTitleStatus.ok ? "bg-success" : "bg-warning"}`} title="Meta title status" />
+                    <span className={`w-2 h-2 rounded-full ${descOk ? "bg-success" : "bg-warning"}`} title="Description length status" />
                   </div>
                   {errors.seoTitle && !seoExpanded && (
-                    <span className="text-[10px] font-bold text-red-500 bg-red-50 px-1.5 py-0.5 rounded">Fix required — click to expand</span>
+                    <span className="text-[10px] font-bold text-danger bg-danger-soft px-1.5 py-0.5 rounded">Fix required — click to expand</span>
                   )}
                 </div>
-                <span className="text-gray-400 text-xs">{seoExpanded ? "▲ Hide" : "▼ Show"}</span>
+                <span className="text-muted text-xs">{seoExpanded ? "▲ Hide" : "▼ Show"}</span>
               </button>
 
               {seoExpanded && (
-                <div className="px-6 pb-6 space-y-4 border-t border-gray-100">
+                <div className="px-6 pb-6 space-y-4 border-t border-border">
                   <Field label="Meta Title" icon={<Type className="w-3.5 h-3.5" />} required error={errors.seoTitle}
                     hint={!errors.seoTitle && seoTitleLen > 0 ? `${seoTitleLen}/${SEO_TITLE_HARD_MAX} chars · ${seoTitleStatus.label}` : `${seoTitleLen}/${SEO_TITLE_HARD_MAX} chars · Ideal: ${SEO_TITLE_MIN}–${SEO_TITLE_IDEAL_MAX}`}>
                     <Input name="seoTitle" placeholder="Enter meta title (50–60 characters ideal)…" value={formData.seoTitle}
                       onChange={(e) => { setFormData((p) => ({ ...p, seoTitle: e.target.value })); setErrors((p) => ({ ...p, seoTitle: undefined })); setBannerError(null); }}
                       error={errors.seoTitle} maxLength={SEO_TITLE_HARD_MAX + 10} />
-                    <div className="h-1 bg-gray-100 rounded-full overflow-hidden mt-1">
+                    <div className="h-1 bg-surface-soft rounded-full overflow-hidden mt-1">
                       <div className={`h-full rounded-full transition-all ${seoTitleStatus.color}`} style={{ width: `${Math.min((seoTitleLen / SEO_TITLE_HARD_MAX) * 100, 100)}%` }} />
                     </div>
-                    {seoTitleLen > 0 && <p className="text-[10px] text-gray-400 mt-0.5">Google typically shows ~50–60 characters in search results.</p>}
+                    {seoTitleLen > 0 && <p className="text-[10px] text-muted mt-0.5">Google typically shows ~50–60 characters in search results.</p>}
                   </Field>
 
                   <Field label="SEO Description" icon={<FileText className="w-3.5 h-3.5" />} hint={`${descLen} chars — aim for 120–160`}>
                     <textarea name="seoDescription" rows={3} placeholder="Defaults to excerpt if empty"
                       value={formData.seoDescription} onChange={(e) => setFormData((p) => ({ ...p, seoDescription: e.target.value }))}
-                      className="w-full text-sm px-3 py-2.5 rounded-xl border border-gray-200 bg-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-400/30 focus:border-blue-400 transition resize-none" />
-                    <div className="h-1 bg-gray-100 rounded-full overflow-hidden mt-1">
-                      <div className={`h-full rounded-full transition-all ${descOk ? "bg-green-400" : "bg-amber-400"}`} style={{ width: `${Math.min((descLen / 160) * 100, 100)}%` }} />
+                      className="w-full text-sm px-3 py-2.5 rounded-xl border border-border bg-surface placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition resize-none" />
+                    <div className="h-1 bg-surface-soft rounded-full overflow-hidden mt-1">
+                      <div className={`h-full rounded-full transition-all ${descOk ? "bg-success" : "bg-warning"}`} style={{ width: `${Math.min((descLen / 160) * 100, 100)}%` }} />
                     </div>
                   </Field>
                 </div>
@@ -804,31 +938,31 @@ export default function EditBlog() {
           <div className="space-y-5">
 
             {/* Publish card */}
-            <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5 space-y-4">
-              <h2 className="text-xs font-black text-gray-400 uppercase tracking-widest">Publish</h2>
+            <div className="bg-surface rounded-2xl border border-border shadow-sm p-5 space-y-4">
+              <h2 className="text-xs font-black text-muted uppercase tracking-widest">Publish</h2>
               {uploadStep === "uploading" && (
                 <div className="space-y-2">
-                  <div className="flex justify-between text-xs text-gray-500"><span>Uploading image…</span><span className="font-semibold tabular-nums">{uploadProgress}%</span></div>
+                  <div className="flex justify-between text-xs text-muted"><span>Uploading image…</span><span className="font-semibold tabular-nums">{uploadProgress}%</span></div>
                   <ProgressBar value={uploadProgress} />
-                  <button type="button" onClick={handleCancelUpload} className="text-xs text-red-500 hover:text-red-700 font-medium underline">Cancel upload</button>
+                  <button type="button" onClick={handleCancelUpload} className="text-xs text-danger hover:text-danger font-medium underline">Cancel upload</button>
                 </div>
               )}
-              {uploadStep === "saving" && <div className="flex items-center gap-2 text-xs text-gray-500"><Loader2 className="w-3.5 h-3.5 animate-spin text-blue-500" />Saving to database…</div>}
-              {uploadStep === "done"   && <div className="flex items-center gap-2 text-xs text-green-600 font-medium"><CheckCircle2 className="w-4 h-4" />Saved! Redirecting…</div>}
+              {uploadStep === "saving" && <div className="flex items-center gap-2 text-xs text-muted"><Loader2 className="w-3.5 h-3.5 animate-spin text-primary" />Saving to database…</div>}
+              {uploadStep === "done"   && <div className="flex items-center gap-2 text-xs text-success font-medium"><CheckCircle2 className="w-4 h-4" />Saved! Redirecting…</div>}
               <div className="space-y-2">
                 <button type="button" onClick={() => updateBlogHandler("draft")} disabled={saving}
-                  className="w-full flex items-center justify-center gap-2 py-2.5 px-4 text-sm font-semibold border border-gray-200 rounded-xl text-gray-700 bg-white hover:bg-gray-50 transition disabled:opacity-50">
+                  className="w-full flex items-center justify-center gap-2 py-2.5 px-4 text-sm font-semibold border border-border rounded-xl text-foreground bg-surface hover:bg-surface-soft transition disabled:opacity-50">
                   {saving && uploadStep === "saving" ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}Save Draft
                 </button>
                 <button type="button" onClick={() => updateBlogHandler("published")} disabled={saving || uploadStep === "done"}
-                  className="w-full flex items-center justify-center gap-2 py-2.5 px-4 text-sm font-semibold bg-gray-900 hover:bg-gray-700 text-white rounded-xl transition shadow-sm disabled:opacity-50">
+                  className="w-full flex items-center justify-center gap-2 py-2.5 px-4 text-sm font-semibold bg-primary hover:bg-primary text-white rounded-xl transition shadow-sm disabled:opacity-50">
                   {saving ? <Loader2 className="w-4 h-4 animate-spin" /> : <Globe className="w-4 h-4" />}
                   {saving ? (uploadStep === "uploading" ? `Uploading… ${uploadProgress}%` : "Saving…") : "Publish"}
                 </button>
               </div>
-              <div className="flex items-start gap-2 bg-blue-50 border border-blue-100 rounded-xl px-3 py-2.5">
-                <Info className="w-3.5 h-3.5 text-blue-500 shrink-0 mt-0.5" />
-                <p className="text-xs text-blue-600">Slug is auto-generated from the heading on save.</p>
+              <div className="flex items-start gap-2 bg-primary-soft border border-primary rounded-xl px-3 py-2.5">
+                <Info className="w-3.5 h-3.5 text-primary shrink-0 mt-0.5" />
+                <p className="text-xs text-primary">Slug is auto-generated from the heading on save.</p>
               </div>
             </div>
 
@@ -883,7 +1017,7 @@ export default function EditBlog() {
             <div
               id="blog-section-internal-links"
               className={`scroll-mt-24 rounded-2xl transition ${
-                isHighlighted("blog-section-internal-links") ? "ring-4 ring-blue-100" : ""
+                isHighlighted("blog-section-internal-links") ? "ring-4 ring-primary" : ""
               }`}
             >
               <BlogInternalLinkAssistant
@@ -896,44 +1030,44 @@ export default function EditBlog() {
             {/* Image card */}
             <div
               id="blog-section-image"
-              className={`scroll-mt-24 space-y-3 rounded-2xl border bg-white p-5 shadow-sm transition ${
-                isHighlighted("blog-section-image") ? "border-blue-200 ring-4 ring-blue-100" : "border-gray-100"
+              className={`scroll-mt-24 space-y-3 rounded-2xl border bg-surface p-5 shadow-sm transition ${
+                isHighlighted("blog-section-image") ? "border-primary ring-4 ring-primary" : "border-border"
               }`}
             >
-              <h2 className="text-xs font-black text-gray-400 uppercase tracking-widest">Featured Image</h2>
+              <h2 className="text-xs font-black text-muted uppercase tracking-widest">Featured Image</h2>
 
               {!imagePreview ? (
                 <div onDragOver={(e) => { e.preventDefault(); setDragOver(true); }} onDragLeave={() => setDragOver(false)} onDrop={handleDrop}
                   onClick={() => fileInputRef.current?.click()}
-                  className={`border-2 border-dashed rounded-xl p-6 flex flex-col items-center gap-2.5 cursor-pointer transition-all ${dragOver ? "border-blue-400 bg-blue-50 scale-[1.01]" : errors.image ? "border-red-300 bg-red-50/30" : "border-gray-200 hover:border-blue-300 hover:bg-gray-50"}`}>
-                  <div className={`w-10 h-10 rounded-2xl flex items-center justify-center ${dragOver ? "bg-blue-100" : "bg-gray-100"}`}>
-                    <UploadCloud className={`w-5 h-5 ${dragOver ? "text-blue-500" : "text-gray-400"}`} />
+                  className={`border-2 border-dashed rounded-xl p-6 flex flex-col items-center gap-2.5 cursor-pointer transition-all ${dragOver ? "border-primary bg-primary-soft scale-[1.01]" : errors.image ? "border-danger bg-danger-soft/30" : "border-border hover:border-primary hover:bg-surface-soft"}`}>
+                  <div className={`w-10 h-10 rounded-2xl flex items-center justify-center ${dragOver ? "bg-primary-soft" : "bg-surface-soft"}`}>
+                    <UploadCloud className={`w-5 h-5 ${dragOver ? "text-primary" : "text-muted"}`} />
                   </div>
                   <div className="text-center">
-                    <p className="text-xs font-medium text-gray-700">Drop or <span className="text-blue-500">browse</span></p>
-                    <p className="text-[10px] text-gray-400 mt-0.5">JPG, PNG, WebP · Max 2MB</p>
+                    <p className="text-xs font-medium text-foreground">Drop or <span className="text-primary">browse</span></p>
+                    <p className="text-[10px] text-muted mt-0.5">JPG, PNG, WebP · Max 2MB</p>
                   </div>
-                  {errors.image && <p className="flex items-center gap-1 text-xs text-red-500 font-medium text-center"><AlertCircle className="w-3 h-3 shrink-0" />{errors.image}</p>}
+                  {errors.image && <p className="flex items-center gap-1 text-xs text-danger font-medium text-center"><AlertCircle className="w-3 h-3 shrink-0" />{errors.image}</p>}
                 </div>
               ) : (
-                <div className="rounded-xl overflow-hidden border border-gray-200">
+                <div className="rounded-xl overflow-hidden border border-border">
                   <div className="relative group">
-                    <img src={imagePreview} alt={imageAlt || "Blog featured image"} className="w-full max-h-44 object-cover bg-gray-100" />
-                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition flex items-center justify-center opacity-0 group-hover:opacity-100">
+                    <img src={imagePreview} alt={imageAlt || "Blog featured image"} className="w-full max-h-44 object-cover bg-surface-soft" />
+                    <div className="absolute inset-0 bg-foreground/0 group-hover:bg-foreground/20 transition flex items-center justify-center opacity-0 group-hover:opacity-100">
                       <button type="button" onClick={removeImage}
-                        className="flex items-center gap-1 bg-red-600 hover:bg-red-700 text-white text-xs font-semibold px-3 py-1.5 rounded-lg transition">
+                        className="flex items-center gap-1 bg-danger hover:bg-danger text-white text-xs font-semibold px-3 py-1.5 rounded-lg transition">
                         <Trash2 className="w-3 h-3" />Remove
                       </button>
                     </div>
                   </div>
                   {imageFile && (
-                    <div className="flex items-center gap-2 px-3 py-2 bg-white border-t border-gray-200">
-                      <ImageIcon className="w-3.5 h-3.5 text-indigo-500 shrink-0" />
+                    <div className="flex items-center gap-2 px-3 py-2 bg-surface border-t border-border">
+                      <ImageIcon className="w-3.5 h-3.5 text-secondary shrink-0" />
                       <div className="min-w-0 flex-1">
-                        <p className="text-xs font-medium text-gray-700 truncate">{imageFile.name}</p>
-                        <p className="text-[10px] text-gray-400">{fmtSize(imageFile.size)}</p>
+                        <p className="text-xs font-medium text-foreground truncate">{imageFile.name}</p>
+                        <p className="text-[10px] text-muted">{fmtSize(imageFile.size)}</p>
                       </div>
-                      <CheckCircle2 className="w-3.5 h-3.5 text-green-500 shrink-0" />
+                      <CheckCircle2 className="w-3.5 h-3.5 text-success shrink-0" />
                     </div>
                   )}
                 </div>
@@ -942,20 +1076,20 @@ export default function EditBlog() {
               {/* Alt text */}
               {(imagePreview || imageFile) && (
                 <div className="space-y-1.5 pt-1">
-                  <label className="flex items-center gap-1.5 text-xs font-bold text-gray-500 uppercase tracking-wider">
-                    <ALargeSmall className="w-3.5 h-3.5 text-gray-400" />Image Alt Text<span className="text-red-400">*</span>
+                  <label className="flex items-center gap-1.5 text-xs font-bold text-muted uppercase tracking-wider">
+                    <ALargeSmall className="w-3.5 h-3.5 text-muted" />Image Alt Text<span className="text-danger">*</span>
                   </label>
                   <input type="text" value={imageAlt}
                     onChange={(e) => { setImageAlt(e.target.value); setErrors((p) => ({ ...p, imageAlt: undefined })); setBannerError(null); }}
                     placeholder="Describe the image for screen readers and SEO…" maxLength={150}
-                    className={`w-full text-sm px-3 py-2.5 rounded-xl border bg-white placeholder:text-gray-400 focus:outline-none focus:ring-2 transition ${errors.imageAlt ? "border-red-300 focus:ring-red-400/30 focus:border-red-400" : "border-gray-200 focus:ring-blue-400/30 focus:border-blue-400"}`} />
-                  <div className="h-1 bg-gray-100 rounded-full overflow-hidden">
-                    <div className={`h-full rounded-full transition-all ${altOk ? "bg-green-400" : altLen === 0 ? "bg-gray-200" : "bg-amber-400"}`} style={{ width: `${Math.min((altLen / 125) * 100, 100)}%` }} />
+                    className={`w-full text-sm px-3 py-2.5 rounded-xl border bg-surface placeholder:text-muted focus:outline-none focus:ring-2 transition ${errors.imageAlt ? "border-danger focus:ring-danger/30 focus:border-danger" : "border-border focus:ring-primary/30 focus:border-primary"}`} />
+                  <div className="h-1 bg-surface-soft rounded-full overflow-hidden">
+                    <div className={`h-full rounded-full transition-all ${altOk ? "bg-success" : altLen === 0 ? "bg-surface-soft" : "bg-warning"}`} style={{ width: `${Math.min((altLen / 125) * 100, 100)}%` }} />
                   </div>
                   {errors.imageAlt ? (
-                    <p className="flex items-center gap-1 text-xs text-red-500 font-medium"><AlertCircle className="w-3 h-3 shrink-0" />{errors.imageAlt}</p>
+                    <p className="flex items-center gap-1 text-xs text-danger font-medium"><AlertCircle className="w-3 h-3 shrink-0" />{errors.imageAlt}</p>
                   ) : (
-                    <p className="text-[10px] text-gray-400">{altLen}/125 chars · {altOk ? "Good length" : altLen === 0 ? "Required for accessibility & SEO" : altLen < 5 ? "Too short — be more descriptive" : "Aim for under 125 chars"}</p>
+                    <p className="text-[10px] text-muted">{altLen}/125 chars · {altOk ? "Good length" : altLen === 0 ? "Required for accessibility & SEO" : altLen < 5 ? "Too short — be more descriptive" : "Aim for under 125 chars"}</p>
                   )}
                 </div>
               )}
@@ -966,7 +1100,7 @@ export default function EditBlog() {
             {/* View live */}
             {formData.status === "published" && (
               <button onClick={() => router.push(`/altftool/blogs/view-blogs/${id}`)}
-                className="w-full flex items-center justify-center gap-2 py-2.5 text-sm font-medium border border-gray-200 rounded-xl text-gray-600 bg-white hover:bg-gray-50 transition">
+                className="w-full flex items-center justify-center gap-2 py-2.5 text-sm font-medium border border-border rounded-xl text-muted bg-surface hover:bg-surface-soft transition">
                 <Eye className="w-4 h-4" />View Live Post
               </button>
             )}
@@ -974,6 +1108,36 @@ export default function EditBlog() {
 
         </div>
       </div>
+
+      <BlogHistoryDrawer
+        open={showHistory}
+        blogId={id}
+        currentBlog={{
+          id,
+          heading: formData.heading,
+          slug: generateSlug(formData.heading || "draft"),
+          category: formData.category,
+          author: formData.author,
+          authorRole: formData.authorRole,
+          reviewedBy: formData.reviewedBy,
+          editorialNote: formData.editorialNote,
+          reviewedAt: formData.reviewedAt,
+          date: formData.date,
+          description: formData.description,
+          seoTitle: formData.seoTitle,
+          seoDescription: formData.seoDescription,
+          image: formData.image,
+          imageAlt,
+          status: formData.status,
+          workflowState: formData.workflowState,
+          tags: parseBlogTags(formData.tags),
+          sources: parseSourcesText(formData.sourcesText),
+          sourceNotes: formData.sourceNotes,
+        }}
+        onClose={() => setShowHistory(false)}
+        onRestored={() => window.location.reload()}
+      />
+      <KeyboardShortcutsHelp open={showShortcuts} onClose={() => setShowShortcuts(false)} />
     </div>
   );
 }

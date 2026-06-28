@@ -210,9 +210,9 @@ export function buildBlogPublishGuardReport(auditedBlogs = [], linkGraph = null)
 }
 
 function statusTone(status = "ready") {
-  if (status === "blocked") return "border-red-100 bg-red-50 text-red-600";
-  if (status === "review") return "border-amber-100 bg-amber-50 text-amber-700";
-  return "border-green-100 bg-green-50 text-green-700";
+  if (status === "blocked") return "border-danger bg-danger-soft text-danger";
+  if (status === "review") return "border-warning bg-warning-soft text-warning";
+  return "border-success bg-success-soft text-success";
 }
 
 function GuardStat({ label, value, tone }) {
@@ -239,7 +239,7 @@ function GuardRow({ item, onEdit }) {
             {item.warnings.length === 1 ? "" : "s"}
           </p>
         </div>
-        <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-white/80">
+        <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-surface/80">
           <Icon className="h-4 w-4" />
         </span>
       </div>
@@ -247,12 +247,12 @@ function GuardRow({ item, onEdit }) {
       {issues.length ? (
         <div className="mt-2 flex flex-wrap gap-1.5">
           {issues.slice(0, 3).map((issue) => (
-            <span key={`${item.blog.id}-${issue.key}`} className="rounded-lg bg-white/80 px-2 py-1 text-[10px] font-bold uppercase tracking-wide">
+            <span key={`${item.blog.id}-${issue.key}`} className="rounded-lg bg-surface/80 px-2 py-1 text-[10px] font-bold uppercase tracking-wide">
               {issue.label}
             </span>
           ))}
           {issues.length > 3 ? (
-            <span className="rounded-lg bg-white/70 px-2 py-1 text-[10px] font-black">+{issues.length - 3}</span>
+            <span className="rounded-lg bg-surface/70 px-2 py-1 text-[10px] font-black">+{issues.length - 3}</span>
           ) : null}
         </div>
       ) : null}
@@ -260,7 +260,7 @@ function GuardRow({ item, onEdit }) {
       <button
         type="button"
         onClick={() => onEdit?.(item.blog, firstIssue?.action || item.blog.recommendedAction || "seo")}
-        className="mt-3 inline-flex h-8 w-full items-center justify-center gap-1.5 rounded-lg bg-gray-900 px-3 text-xs font-semibold text-white transition hover:bg-gray-700"
+        className="mt-3 inline-flex h-8 w-full items-center justify-center gap-1.5 rounded-lg bg-primary px-3 text-xs font-semibold text-white transition hover:bg-primary"
       >
         <WandSparkles className="h-3.5 w-3.5" />
         Fix guard
@@ -276,31 +276,31 @@ export default function BlogPublishGuardPanel({ onEdit, onFilterIssue, report })
   const avgScore = queue.length ? Math.round(queue.reduce((total, item) => total + item.score, 0) / queue.length) : 100;
 
   return (
-    <section className="rounded-2xl border border-gray-100 bg-white p-4 shadow-sm">
+    <section className="rounded-2xl border border-border bg-surface p-4 shadow-sm">
       <div className="flex items-start justify-between gap-3">
         <div className="min-w-0">
-          <p className="text-xs font-black uppercase tracking-wider text-gray-500">Publish guard</p>
-          <h2 className="mt-1 text-xl font-black text-gray-900">{summary.ready || 0}/{summary.total || 0} ready</h2>
-          <p className="mt-1 text-xs leading-5 text-gray-500">
+          <p className="text-xs font-black uppercase tracking-wider text-muted">Publish guard</p>
+          <h2 className="mt-1 text-xl font-black text-foreground">{summary.ready || 0}/{summary.total || 0} ready</h2>
+          <p className="mt-1 text-xs leading-5 text-muted">
             Required publish checks, SEO blockers, image readiness, and broken-link risk in one queue.
           </p>
         </div>
-        <div className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl border text-sm font-black ${avgScore >= 85 ? "border-green-100 bg-green-50 text-green-700" : avgScore >= 65 ? "border-amber-100 bg-amber-50 text-amber-700" : "border-red-100 bg-red-50 text-red-600"}`}>
+        <div className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl border text-sm font-black ${avgScore >= 85 ? "border-success bg-success-soft text-success" : avgScore >= 65 ? "border-warning bg-warning-soft text-warning" : "border-danger bg-danger-soft text-danger"}`}>
           {avgScore}
         </div>
       </div>
 
       <div className="mt-4 grid grid-cols-3 gap-2">
-        <GuardStat label="Blocked" value={summary.blocked || 0} tone={summary.blocked ? "bg-red-50 text-red-600" : "bg-green-50 text-green-700"} />
-        <GuardStat label="Review" value={summary.review || 0} tone={summary.review ? "bg-amber-50 text-amber-700" : "bg-slate-100 text-slate-600"} />
-        <GuardStat label="Ready" value={summary.ready || 0} tone="bg-green-50 text-green-700" />
+        <GuardStat label="Blocked" value={summary.blocked || 0} tone={summary.blocked ? "bg-danger-soft text-danger" : "bg-success-soft text-success"} />
+        <GuardStat label="Review" value={summary.review || 0} tone={summary.review ? "bg-warning-soft text-warning" : "bg-surface-soft text-muted"} />
+        <GuardStat label="Ready" value={summary.ready || 0} tone="bg-success-soft text-success" />
       </div>
 
       <div className="mt-3 grid grid-cols-2 gap-2">
         <button
           type="button"
           onClick={() => onFilterIssue?.("quality")}
-          className="inline-flex h-8 items-center justify-center gap-1.5 rounded-lg border border-blue-100 bg-blue-50 px-2 text-xs font-bold text-blue-700 transition hover:bg-blue-100"
+          className="inline-flex h-8 items-center justify-center gap-1.5 rounded-lg border border-primary bg-primary-soft px-2 text-xs font-bold text-primary transition hover:bg-primary-soft"
         >
           <SearchCheck className="h-3.5 w-3.5" />
           Meta
@@ -308,7 +308,7 @@ export default function BlogPublishGuardPanel({ onEdit, onFilterIssue, report })
         <button
           type="button"
           onClick={() => onFilterIssue?.("internal-links")}
-          className="inline-flex h-8 items-center justify-center gap-1.5 rounded-lg border border-slate-200 bg-white px-2 text-xs font-bold text-slate-700 transition hover:bg-slate-50"
+          className="inline-flex h-8 items-center justify-center gap-1.5 rounded-lg border border-border bg-surface px-2 text-xs font-bold text-foreground transition hover:bg-surface-soft"
         >
           <Link2 className="h-3.5 w-3.5" />
           Links
@@ -316,7 +316,7 @@ export default function BlogPublishGuardPanel({ onEdit, onFilterIssue, report })
         <button
           type="button"
           onClick={() => onFilterIssue?.("image")}
-          className="inline-flex h-8 items-center justify-center gap-1.5 rounded-lg border border-cyan-100 bg-cyan-50 px-2 text-xs font-bold text-cyan-700 transition hover:bg-cyan-100"
+          className="inline-flex h-8 items-center justify-center gap-1.5 rounded-lg border border-info bg-info-soft px-2 text-xs font-bold text-info transition hover:bg-info-soft"
         >
           <Image className="h-3.5 w-3.5" />
           Image
@@ -324,7 +324,7 @@ export default function BlogPublishGuardPanel({ onEdit, onFilterIssue, report })
         <button
           type="button"
           onClick={() => onFilterIssue?.("trust")}
-          className="inline-flex h-8 items-center justify-center gap-1.5 rounded-lg border border-violet-100 bg-violet-50 px-2 text-xs font-bold text-violet-700 transition hover:bg-violet-100"
+          className="inline-flex h-8 items-center justify-center gap-1.5 rounded-lg border border-secondary bg-secondary-soft px-2 text-xs font-bold text-secondary transition hover:bg-secondary-soft"
         >
           <ShieldCheck className="h-3.5 w-3.5" />
           Trust
@@ -333,23 +333,23 @@ export default function BlogPublishGuardPanel({ onEdit, onFilterIssue, report })
 
       <div className="mt-4 space-y-2">
         <div className="flex items-center justify-between gap-3">
-          <p className="text-[10px] font-black uppercase tracking-wider text-gray-400">Guard queue</p>
-          <span className="rounded-lg bg-gray-50 px-2 py-1 text-[10px] font-black text-gray-500">
+          <p className="text-[10px] font-black uppercase tracking-wider text-muted">Guard queue</p>
+          <span className="rounded-lg bg-surface-soft px-2 py-1 text-[10px] font-black text-muted">
             {(summary.blockerCount || 0) + (summary.warningCount || 0)}
           </span>
         </div>
         {activeQueue.length ? (
           activeQueue.map((item) => <GuardRow key={`publish-guard-${item.blog.id}`} item={item} onEdit={onEdit} />)
         ) : (
-          <div className="rounded-xl bg-green-50 px-3 py-3 text-sm font-semibold text-green-700">
+          <div className="rounded-xl bg-success-soft px-3 py-3 text-sm font-semibold text-success">
             <CheckCircle2 className="mr-1 inline h-4 w-4" />
             Publish guard is clear for the current blog set.
           </div>
         )}
       </div>
 
-      <div className="mt-4 flex items-center gap-2 rounded-xl bg-gray-50 px-3 py-3 text-xs font-semibold leading-5 text-gray-600">
-        <FileText className="h-4 w-4 shrink-0 text-gray-400" />
+      <div className="mt-4 flex items-center gap-2 rounded-xl bg-surface-soft px-3 py-3 text-xs font-semibold leading-5 text-muted">
+        <FileText className="h-4 w-4 shrink-0 text-muted" />
         Editor publish gate still performs the final per-post check before saving.
       </div>
     </section>

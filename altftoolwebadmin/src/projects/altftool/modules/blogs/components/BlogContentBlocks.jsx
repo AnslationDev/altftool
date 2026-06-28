@@ -146,14 +146,14 @@ export default function BlogContentBlocks({ formData = {}, onInsert }) {
             key={block.id}
             type="button"
             onClick={() => handleInsert(block)}
-            className="group flex items-start gap-3 rounded-xl border border-gray-100 bg-gray-50 p-3 text-left transition hover:border-blue-200 hover:bg-blue-50"
+            className="group flex items-start gap-3 rounded-xl border border-border bg-surface-soft p-3 text-left transition hover:border-primary hover:bg-primary-soft"
           >
-            <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-white text-blue-600 shadow-sm">
+            <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-surface text-primary shadow-sm">
               <Icon className="h-4 w-4" />
             </span>
             <span className="min-w-0">
-              <span className="block text-sm font-semibold text-gray-800 group-hover:text-blue-700">{block.label}</span>
-              <span className="mt-0.5 block text-xs leading-5 text-gray-500">{block.caption}</span>
+              <span className="block text-sm font-semibold text-foreground group-hover:text-primary">{block.label}</span>
+              <span className="mt-0.5 block text-xs leading-5 text-muted">{block.caption}</span>
             </span>
           </button>
         );

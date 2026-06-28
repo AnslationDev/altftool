@@ -1,107 +1,144 @@
 "use client";
 
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useEffect, useMemo, useState, useCallback } from "react";
+import Link from "next/link";
+import {
+  BarChart3,
+  Download,
+  Plus,
+  RefreshCw,
+  ShieldCheck,
+  WandSparkles,
+} from "lucide-react";
 import BLogStat from "./components/BlogStat";
 import BlogTable from "./components/BlogTable";
 import BlogExportModal from "./components/BlogExportModal";
 import { emitAlert } from "@/lib/alertBus";
 import { logAuditEvent } from "@/lib/auditClient";
-import { isFeatureEnabled } from "@/lib/featureFlags";
 import {
   deleteBlog,
   bulkDeleteBlogs,
-  fetchBlogCount,
-  fetchBlogsPage,
+  fetchAllBlogsCached,
+  invalidateBlogsCache,
 } from "./services/blogsService";
 
-const PAGE_SIZE = 10;
+/* Strip HTML so descriptions are searchable as plain text. */
+const stripHtml = (html) => String(html || "").replace(/<[^>]+>/g, " ");
+
+/* Build a single lowercased haystack covering every meaningful blog field so
+   the global search matches across heading, author, category, status, tags,
+   slug, SEO copy and body content. */
+function buildSearchIndex(blog) {
+  const tags = Array.isArray(blog.tags) ? blog.tags.join(" ") : blog.tags || "";
+  return [
+    blog.heading,
+    blog.title,
+    blog.author,
+    blog.category,
+    blog.status,
+    blog.slug,
+    blog.seoTitle,
+    blog.seoDescription,
+    tags,
+    stripHtml(blog.description),
+  ]
+    .filter(Boolean)
+    .join(" ")
+    .toLowerCase();
+}
 
 export default function Blogs() {
-  const [blogs, setBlogs] = useState([]);
+  const [allBlogs, setAllBlogs] = useState([]);
   const [loading, setLoading] = useState(true);
-
-  const [paginationModel, setPaginationModel] = useState({
-    page: 0,
-    pageSize: PAGE_SIZE,
-  });
-  const [rowCount, setRowCount] = useState(0);
-  const [cursorCache, setCursorCache] = useState({});
+  const [refreshing, setRefreshing] = useState(false);
 
   const [search, setSearch] = useState("");
   const [activeTab, setActiveTab] = useState("All Blogs");
+  const [categoryFilter, setCategoryFilter] = useState("all");
+  const [authorFilter, setAuthorFilter] = useState("all");
 
   const [deleteId, setDeleteId] = useState(null);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [selectedBlogs, setSelectedBlogs] = useState([]);
   const [isBulkDeleteModalOpen, setIsBulkDeleteModalOpen] = useState(false);
   const [isExportModalOpen, setIsExportModalOpen] = useState(false);
-  const blogExportEnabled = isFeatureEnabled("blog_export");
 
-  /* =============================================================
-     Fetch total count
-  ============================================================= */
-  const loadRowCount = useCallback(async () => {
+  /* ── Load all blogs once (cached) so search/filter/sort run in-memory ── */
+  const load = useCallback(async ({ force = false } = {}) => {
     try {
-      const count = await fetchBlogCount();
-      setRowCount(count);
+      if (force) {
+        invalidateBlogsCache();
+        setRefreshing(true);
+      } else {
+        setLoading(true);
+      }
+      const data = await fetchAllBlogsCached({ force });
+      setAllBlogs(data);
     } catch (err) {
-      console.error("Count fetch failed", err);
+      console.error("Failed to load blogs", err);
+      emitAlert({ type: "error", message: "Failed to load blogs" });
+    } finally {
+      setLoading(false);
+      setRefreshing(false);
     }
   }, []);
 
-  /* =============================================================
-     Fetch one page — delegates entirely to the service
-  ============================================================= */
-  const fetchPage = useCallback(
-    async (page, pageSize) => {
-      setLoading(true);
-      try {
-        const cursor = cursorCache[page] ?? null;
-        const { blogs: data, lastDoc } = await fetchBlogsPage({ pageSize, cursor });
+  useEffect(() => {
+    load();
+  }, [load]);
 
-        setBlogs(data);
-
-        if (lastDoc) {
-          setCursorCache((prev) => ({ ...prev, [page + 1]: lastDoc }));
-        }
-      } catch (err) {
-        console.error("Failed to fetch page", err);
-        emitAlert({ type: "error", message: "Failed to load blogs" });
-      } finally {
-        setLoading(false);
-      }
-    },
-    [cursorCache]
+  /* Precompute the search index alongside each blog. */
+  const indexedBlogs = useMemo(
+    () => allBlogs.map((blog) => ({ blog, _search: buildSearchIndex(blog) })),
+    [allBlogs],
   );
 
-  /* On mount */
-  useEffect(() => {
-    loadRowCount();
-    fetchPage(0, PAGE_SIZE);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+  const categoryOptions = useMemo(
+    () =>
+      Array.from(new Set(allBlogs.map((b) => b.category?.trim()).filter(Boolean))).sort(),
+    [allBlogs],
+  );
+  const authorOptions = useMemo(
+    () =>
+      Array.from(new Set(allBlogs.map((b) => b.author?.trim()).filter(Boolean))).sort(),
+    [allBlogs],
+  );
+
+  /* ── Single source of truth for the filtered list ── */
+  const filteredBlogs = useMemo(() => {
+    const query = search.trim().toLowerCase();
+    return indexedBlogs
+      .filter(({ blog }) => {
+        if (activeTab === "Drafts") return blog.status !== "published";
+        if (activeTab === "Published") return blog.status === "published";
+        return true;
+      })
+      .filter(({ blog }) => categoryFilter === "all" || blog.category === categoryFilter)
+      .filter(({ blog }) => authorFilter === "all" || blog.author === authorFilter)
+      .filter(({ _search }) => !query || _search.includes(query))
+      .map(({ blog }) => blog);
+  }, [indexedBlogs, activeTab, categoryFilter, authorFilter, search]);
+
+  const hasActiveFilters =
+    Boolean(search) ||
+    activeTab !== "All Blogs" ||
+    categoryFilter !== "all" ||
+    authorFilter !== "all";
+
+  const clearFilters = useCallback(() => {
+    setSearch("");
+    setActiveTab("All Blogs");
+    setCategoryFilter("all");
+    setAuthorFilter("all");
   }, []);
 
-  /* Pagination changes */
-  const handlePaginationModelChange = (newModel) => {
-    if (newModel.pageSize !== paginationModel.pageSize) {
-      setCursorCache({});
-      setPaginationModel({ page: 0, pageSize: newModel.pageSize });
-      fetchPage(0, newModel.pageSize);
-      return;
-    }
-    setPaginationModel(newModel);
-    fetchPage(newModel.page, newModel.pageSize);
-  };
-
-  /* =============================================================
-     Single Delete
-  ============================================================= */
+  /* ── Single delete ── */
   const confirmDelete = async () => {
     if (!deleteId) return;
     try {
       await deleteBlog(deleteId);
-      setBlogs((prev) => prev.filter((b) => b.id !== deleteId));
-      setRowCount((c) => c - 1);
+      setAllBlogs((prev) => prev.filter((b) => b.id !== deleteId));
+      setSelectedBlogs((prev) => prev.filter((id) => id !== deleteId));
       emitAlert({ type: "success", message: "Blog deleted successfully" });
       logAuditEvent({
         module: "blogs",
@@ -110,7 +147,7 @@ export default function Blogs() {
         entityId: deleteId,
         summary: `Deleted blog ${deleteId}`,
         changes: { id: deleteId },
-        route: "/blogs",
+        route: "/altftool/blogs",
       });
     } catch (err) {
       console.error("Delete failed", err);
@@ -120,18 +157,16 @@ export default function Blogs() {
     setIsDeleteModalOpen(false);
   };
 
-  /* =============================================================
-     Bulk Delete — uses the service function directly
-  ============================================================= */
+  /* ── Bulk delete ── */
   const confirmBulkDelete = async () => {
     if (selectedBlogs.length === 0) return;
     try {
       await bulkDeleteBlogs(selectedBlogs);
       const deletedCount = selectedBlogs.length;
-      setBlogs((prev) => prev.filter((b) => !selectedBlogs.includes(b.id)));
-      setRowCount((c) => c - deletedCount);
+      const ids = new Set(selectedBlogs);
+      setAllBlogs((prev) => prev.filter((b) => !ids.has(b.id)));
       setSelectedBlogs([]);
-      emitAlert({ type: "success", message: "Selected blogs deleted" });
+      emitAlert({ type: "success", message: `${deletedCount} blog${deletedCount > 1 ? "s" : ""} deleted` });
       logAuditEvent({
         module: "blogs",
         action: "BLOG_BULK_DELETE",
@@ -139,7 +174,7 @@ export default function Blogs() {
         entityId: null,
         summary: `Bulk deleted ${deletedCount} blogs`,
         changes: { ids: selectedBlogs },
-        route: "/blogs",
+        route: "/altftool/blogs",
       });
     } catch (err) {
       console.error("Bulk delete failed", err);
@@ -148,111 +183,118 @@ export default function Blogs() {
     setIsBulkDeleteModalOpen(false);
   };
 
-  /* =============================================================
-     Client-side filter (on top of paginated server data)
-  ============================================================= */
-  const filteredBlogs = blogs
-    .filter((blog) => {
-      if (activeTab === "Drafts") return blog.status === "draft";
-      if (activeTab === "Published") return blog.status === "published";
-      return true;
-    })
-    .filter((blog) => {
-      if (!search) return true;
-      const query = search.toLowerCase();
-      return (
-        blog.heading?.toLowerCase().includes(query) ||
-        blog.author?.toLowerCase().includes(query) ||
-        blog.category?.toLowerCase().includes(query) ||
-        blog.status?.toLowerCase().includes(query) ||
-        (Array.isArray(blog.tags) ? blog.tags.join(" ") : blog.tags || "").toLowerCase().includes(query)
-      );
-    });
+  const secondaryLink =
+    "inline-flex items-center gap-2 rounded-lg border border-border bg-surface px-3.5 py-2 text-sm font-semibold text-foreground transition hover:bg-surface-soft focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/40";
 
   return (
-    <div className="space-y-6">
-      <div className="max-w-7xl mx-auto py-6 space-y-6">
-        <div className="flex flex-wrap items-center justify-between gap-3">
-          <h1 className="text-2xl font-semibold text-gray-800">
-            Manage your Blogs
-          </h1>
-          <div className="flex items-center gap-2">
-            {blogExportEnabled && (
-              <button
-                type="button"
-                onClick={() => setIsExportModalOpen(true)}
-                className="rounded-md border border-gray-200 bg-white px-4 py-2 text-sm font-semibold text-gray-700 transition hover:bg-gray-50"
-              >
-                Export
-              </button>
-            )}
-            <a
-              href="/altftool/blogs/analytics"
-              className="rounded-md border border-gray-200 bg-white px-4 py-2 text-sm font-semibold text-gray-700 transition hover:bg-gray-50"
-            >
-              Analytics
-            </a>
-            <a
-              href="/altftool/blogs/quality"
-              className="rounded-md border border-green-100 bg-green-50 px-4 py-2 text-sm font-semibold text-green-700 transition hover:bg-green-100"
-            >
-              Quality Center
-            </a>
-            <a
-              href="/altftool/blogs/bulk-refresh"
-              className="rounded-md border border-blue-100 bg-blue-50 px-4 py-2 text-sm font-semibold text-blue-700 transition hover:bg-blue-100"
-            >
-              Bulk Refresh
-            </a>
-            <a
-              href="/altftool/blogs/add-blogs"
-              className="bg-(--primary) text-white px-4 py-2 rounded-md text-sm hover:opacity-90"
-            >
-              Add Blog
-            </a>
+    <div className="min-h-screen bg-background">
+      <div className="mx-auto w-full max-w-7xl px-4 py-6 space-y-6 sm:px-6">
+        {/* ── Header ── */}
+        <header className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+          <div>
+            <h1 className="text-2xl font-bold tracking-tight text-foreground">
+              Blog Management
+            </h1>
+            <p className="mt-1 text-sm text-muted">
+              Search, filter, edit and export every blog in one place.
+            </p>
           </div>
-        </div>
 
-        <div className="bg-white rounded-xl shadow p-6">
-          <BLogStat blogs={blogs} />
-        </div>
+          <div className="flex flex-wrap items-center gap-2">
+            <button
+              type="button"
+              onClick={() => load({ force: true })}
+              disabled={refreshing}
+              className={secondaryLink}
+              aria-label="Refresh blogs"
+            >
+              <RefreshCw className={`h-4 w-4 ${refreshing ? "animate-spin" : ""}`} />
+              <span className="hidden sm:inline">Refresh</span>
+            </button>
+            <button
+              type="button"
+              onClick={() => setIsExportModalOpen(true)}
+              className={secondaryLink}
+            >
+              <Download className="h-4 w-4" />
+              Export
+            </button>
+            <Link href="/altftool/blogs/analytics" className={secondaryLink}>
+              <BarChart3 className="h-4 w-4" />
+              <span className="hidden md:inline">Analytics</span>
+            </Link>
+            <Link href="/altftool/blogs/quality" className={secondaryLink}>
+              <ShieldCheck className="h-4 w-4" />
+              <span className="hidden md:inline">Quality</span>
+            </Link>
+            <Link href="/altftool/blogs/bulk-refresh" className={secondaryLink}>
+              <WandSparkles className="h-4 w-4" />
+              <span className="hidden md:inline">Bulk Refresh</span>
+            </Link>
+            <Link
+              href="/altftool/blogs/add-blogs"
+              className="inline-flex items-center gap-2 rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground shadow-sm transition hover:opacity-90 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
+            >
+              <Plus className="h-4 w-4" />
+              Add Blog
+            </Link>
+          </div>
+        </header>
 
+        {/* ── Stats ── */}
+        <BLogStat blogs={allBlogs} loading={loading} />
+
+        {/* ── Table ── */}
         <BlogTable
           blogs={filteredBlogs}
-          setBlogs={setBlogs}
+          setBlogs={setAllBlogs}
           setDeleteId={setDeleteId}
           openDeleteModal={() => setIsDeleteModalOpen(true)}
           selectedBlogs={selectedBlogs}
           setSelectedBlogs={setSelectedBlogs}
           openBulkDeleteModal={() => setIsBulkDeleteModalOpen(true)}
-          rowCount={rowCount}
-          paginationModel={paginationModel}
-          onPaginationModelChange={handlePaginationModelChange}
+          totalCount={allBlogs.length}
           loading={loading}
           activeTab={activeTab}
           onTabChange={setActiveTab}
           search={search}
           onSearch={setSearch}
+          categoryFilter={categoryFilter}
+          onCategoryFilter={setCategoryFilter}
+          categoryOptions={categoryOptions}
+          authorFilter={authorFilter}
+          onAuthorFilter={setAuthorFilter}
+          authorOptions={authorOptions}
+          hasActiveFilters={hasActiveFilters}
+          onClearFilters={clearFilters}
         />
       </div>
 
       <BlogExportModal
-        open={blogExportEnabled && isExportModalOpen}
-        blogs={blogs}
+        open={isExportModalOpen}
+        blogs={allBlogs}
         onClose={() => setIsExportModalOpen(false)}
       />
 
+      {/* ── Single delete confirm ── */}
       {isDeleteModalOpen && (
-        <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
-          <div className="bg-white p-6 rounded-xl w-80 shadow-xl">
-            <h2 className="text-lg font-semibold mb-4">
-              Are you sure you want to delete this blog?
-            </h2>
-            <div className="flex justify-end gap-3">
-              <button onClick={() => setIsDeleteModalOpen(false)} className="border px-4 py-2 rounded">
+        <div className="fixed inset-0 z-[80] flex items-center justify-center bg-foreground/40 p-4 backdrop-blur-sm">
+          <div className="w-full max-w-sm rounded-2xl border border-border bg-surface p-6 shadow-lg">
+            <h2 className="text-lg font-semibold text-foreground">Delete this blog?</h2>
+            <p className="mt-1.5 text-sm text-muted">
+              This action cannot be undone.
+            </p>
+            <div className="mt-5 flex justify-end gap-3">
+              <button
+                onClick={() => setIsDeleteModalOpen(false)}
+                className="rounded-lg border border-border bg-surface px-4 py-2 text-sm font-semibold text-foreground transition hover:bg-surface-soft"
+              >
                 Cancel
               </button>
-              <button onClick={confirmDelete} className="bg-red-600 text-white px-4 py-2 rounded">
+              <button
+                onClick={confirmDelete}
+                className="rounded-lg bg-danger px-4 py-2 text-sm font-semibold text-white transition hover:opacity-90"
+              >
                 Delete
               </button>
             </div>
@@ -260,18 +302,28 @@ export default function Blogs() {
         </div>
       )}
 
+      {/* ── Bulk delete confirm ── */}
       {isBulkDeleteModalOpen && (
-        <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
-          <div className="bg-white p-6 rounded-xl w-96 shadow-xl">
-            <h2 className="text-lg font-semibold mb-4">
+        <div className="fixed inset-0 z-[80] flex items-center justify-center bg-foreground/40 p-4 backdrop-blur-sm">
+          <div className="w-full max-w-sm rounded-2xl border border-border bg-surface p-6 shadow-lg">
+            <h2 className="text-lg font-semibold text-foreground">
               Delete {selectedBlogs.length} selected blog
               {selectedBlogs.length > 1 ? "s" : ""}?
             </h2>
-            <div className="flex justify-end gap-3">
-              <button onClick={() => setIsBulkDeleteModalOpen(false)} className="border px-4 py-2 rounded">
+            <p className="mt-1.5 text-sm text-muted">
+              This action cannot be undone.
+            </p>
+            <div className="mt-5 flex justify-end gap-3">
+              <button
+                onClick={() => setIsBulkDeleteModalOpen(false)}
+                className="rounded-lg border border-border bg-surface px-4 py-2 text-sm font-semibold text-foreground transition hover:bg-surface-soft"
+              >
                 Cancel
               </button>
-              <button onClick={confirmBulkDelete} className="bg-red-600 text-white px-4 py-2 rounded">
+              <button
+                onClick={confirmBulkDelete}
+                className="rounded-lg bg-danger px-4 py-2 text-sm font-semibold text-white transition hover:opacity-90"
+              >
                 Delete All
               </button>
             </div>
