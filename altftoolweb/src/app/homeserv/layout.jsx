@@ -7,5 +7,9 @@ export const metadata = {
 };
 
 export default function HomeservLayout({ children }) {
-  return <div className="homeserv-app">{children}</div>;
+  return (
+    <>
+      <div className="homeserv-app">{children}</div>
+    </>
+  );
 }
