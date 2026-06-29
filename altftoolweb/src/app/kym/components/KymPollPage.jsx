@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { Megaphone } from "lucide-react";
 import Header from "./Header";
 import KymAdBanner, { kymBanners } from "./KymAdBanner";
 import KymComments from "./KymComments";
@@ -73,8 +74,9 @@ export default function KymPollPage() {
   return (
     <div className="kym-page kym-article-page kym-poll-page">
       <Header compact />
-      <div className="kym-alert kym-poll-alert">
-        Cast Your Vote For May 2026's Meme Of The Month!
+      <div className="kym-alert kym-poll-alert kym-reveal" role="status">
+        <Megaphone size={16} strokeWidth={2.25} aria-hidden="true" />
+        <span>Cast Your Vote For May 2026&apos;s Meme Of The Month!</span>
       </div>
       <main className="kym-article-shell">
         <article className="kym-article kym-poll-article">

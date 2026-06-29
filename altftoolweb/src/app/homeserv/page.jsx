@@ -1,15 +1,17 @@
 "use client";
 
 import Link from "next/link";
-import { Fragment, useState } from "react";
+import { Fragment } from "react";
 import {
   ArrowRight,
   ClipboardCheck,
   MapPin,
   MousePointerClick,
+  ShieldCheck,
   Star,
+  Users,
 } from "lucide-react";
-import { SiteFooter } from "./components/SiteFooter";
+import Footer from "@/platform/navigation/Footer";
 import { SiteHeader } from "./components/SiteHeader";
 import { services } from "./services-data";
 
@@ -46,22 +48,25 @@ const testimonials = [
     role: "Kitchen Remodel",
     quote:
       "QuoteNest gave us three clear estimates by lunch. The contractor we chose finished ahead of schedule and the kitchen feels completely new.",
-    image: "/images/testimonials/maya-bennett.png",
   },
   {
     name: "Andre Wilson",
     role: "HVAC Repair",
     quote:
       "Our AC quit during a heat wave. I had a licensed tech booked within the hour, with the price range shown before anyone arrived.",
-    image: "/images/testimonials/andre-wilson.png",
   },
   {
     name: "Nora Patel",
     role: "Bathroom Upgrade",
     quote:
       "The quote comparison made it easy to spot the best fit. Clean work, fair pricing, and no awkward phone tag.",
-    image: "/images/testimonials/nora-patel.png",
   },
+];
+
+const heroStats = [
+  { label: "50K+ Homeowners", icon: Users },
+  { label: "4.9/5 Rating", icon: Star },
+  { label: "Trusted Pros", icon: ShieldCheck },
 ];
 
 const homeServiceTitles = {
@@ -93,64 +98,105 @@ const homeServiceDescriptions = {
 };
 
 export default function HomePage() {
-  const [activeTestimonial, setActiveTestimonial] = useState(0);
-
   return (
     <main>
       <SiteHeader />
 
-      <section className="section service-section" id="services">
-        <div className="section-heading">
-          <p className="eyebrow">Start with the project</p>
-          <h2>Popular home services</h2>
-          <p>Select a service below to see available pros & pricing immediately.</p>
-        </div>
-        <div className="service-grid">
-          {services.map((service) => {
-            return (
-              <Link className={`service-card ${service.tone}`} key={service.slug} href={`/homeserv/services/${service.slug}`}>
-                <span className="service-badge">{homeServiceBadges[service.slug]}</span>
-                <span className="service-art service-icon-art">
-                  <img src={homeServiceIcons[service.slug]} alt="" aria-hidden="true" />
+      {/* Hero */}
+      <section className="hs-hero">
+        <div className="hs-hero-bg" />
+        <div className="hs-hero-grid" />
+        <div className="hs-hero-content">
+          <span className="hs-eyebrow">
+            <ShieldCheck size={16} />
+            Trusted home-service quotes
+          </span>
+          <h1>
+            Compare Local Pros,{" "}
+            <span>Not Just Prices.</span>
+          </h1>
+          <p>
+            Select your project, check local availability, and compare quotes
+            from trusted professionals — all in one place.
+          </p>
+          <div className="hs-hero-actions">
+            <Link href="#services" className="hs-btn-primary">
+              Browse Services
+              <ArrowRight size={18} />
+            </Link>
+            <Link href="#process" className="hs-btn-secondary">
+              How It Works
+            </Link>
+          </div>
+          <div className="hs-hero-stats">
+            {heroStats.map((stat) => {
+              const Icon = stat.icon;
+              return (
+                <span key={stat.label} className="hs-hero-stat">
+                  <Icon size={18} />
+                  {stat.label}
                 </span>
-                <span className="service-title">{homeServiceTitles[service.slug] ?? service.title}</span>
-                <span className="service-text">{homeServiceDescriptions[service.slug] ?? service.text}</span>
-              </Link>
-            );
-          })}
+              );
+            })}
+          </div>
         </div>
       </section>
 
-      <section className="section process-section" id="process">
-        <span className="process-divider" aria-hidden="true" />
-        <div className="section-heading">
-          <p className="eyebrow">How it works</p>
-          <h2>A cleaner path to quotes</h2>
+      {/* Services */}
+      <section className="hs-section" id="services">
+        <div className="hs-heading hs-heading-center">
+          <span className="hs-eyebrow">Start with the project</span>
+          <h2>Popular home services</h2>
+          <p>Select a service below to see available pros & pricing immediately.</p>
+        </div>
+        <div className="hs-service-grid">
+          {services.map((service) => (
+            <Link
+              className="hs-service-card"
+              key={service.slug}
+              href={`/homeserv/services/${service.slug}`}
+            >
+              <span className="hs-service-badge">{homeServiceBadges[service.slug]}</span>
+              <span className="hs-service-icon-wrap">
+                <img src={homeServiceIcons[service.slug]} alt="" aria-hidden="true" />
+              </span>
+              <span className="hs-service-title">
+                {homeServiceTitles[service.slug] ?? service.title}
+              </span>
+              <span className="hs-service-desc">
+                {homeServiceDescriptions[service.slug] ?? service.text}
+              </span>
+            </Link>
+          ))}
+        </div>
+      </section>
+
+      {/* Process */}
+      <section className="hs-process-section" id="process">
+        <span className="hs-process-divider" aria-hidden="true" />
+        <div className="hs-heading hs-heading-center" style={{ marginBottom: 24 }}>
+          <span className="hs-eyebrow">How it works</span>
+          <h2 style={{ fontSize: "clamp(30px, 3.25vw, 38px)" }}>A cleaner path to quotes</h2>
           <p>Get matched with trusted local professionals in minutes, not days.</p>
         </div>
-        <div className="process-grid">
+        <div className="hs-process-grid">
           {steps.map((step, index) => {
             const StepIcon = index === 0 ? MousePointerClick : index === 1 ? ClipboardCheck : MapPin;
-
             return (
               <Fragment key={step.title}>
-                <article className="process-card">
-                  <div className="process-card-head">
-                    <span className="process-icon" aria-hidden="true">
-                      <StepIcon size={42} />
-                    </span>
-                    <span className="process-step-label">
-                      {index === 0 ? "Choose project" : index === 1 ? "Compare options" : "Match locally"}
-                    </span>
-                  </div>
-                  <div className="process-card-copy">
-                    <h3>{step.title}</h3>
-                    <p>{step.text}</p>
-                  </div>
+                <article className="hs-process-card">
+                  <span className="hs-process-icon" aria-hidden="true">
+                    <StepIcon size={42} />
+                  </span>
+                  <span className="hs-process-step">
+                    {index === 0 ? "Choose project" : index === 1 ? "Compare options" : "Match locally"}
+                  </span>
+                  <h3>{step.title}</h3>
+                  <p>{step.text}</p>
                 </article>
                 {index < steps.length - 1 ? (
-                  <span className="process-arrow" aria-hidden="true">
-                    <ArrowRight size={28} />
+                  <span className="hs-process-arrow" aria-hidden="true">
+                    <ArrowRight size={24} />
                   </span>
                 ) : null}
               </Fragment>
@@ -159,39 +205,38 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="section reviews-section" id="reviews">
-        <div className="section-heading reviews-heading">
-          <p className="eyebrow">Homeowner notes</p>
-          <h2>Trusted by Homeowners</h2>
-          <p>Real feedback from people who compared local quotes.</p>
+      {/* Reviews */}
+      <section className="hs-section" id="reviews">
+        <div className="hs-heading hs-heading-center">
+          <span className="hs-eyebrow">Homeowner notes</span>
+          <h2 style={{ fontSize: "clamp(26px, 2.8vw, 38px)" }}>Trusted by Homeowners</h2>
+          <p style={{ fontSize: 16 }}>Real feedback from people who compared local quotes.</p>
         </div>
-        <div className="testimonial-card-grid">
-          {testimonials.map((item, index) => (
-            <button
-              className={`testimonial-card ${index === activeTestimonial ? "is-active" : ""}`}
-              key={item.name}
-              onClick={() => setActiveTestimonial(index)}
-              type="button"
-            >
-              <span className="testimonial-avatar">
-                <img src={item.image} alt={`${item.name}, ${item.role}`} />
+        <div className="hs-testimonial-grid">
+          {testimonials.map((item) => (
+            <article className="hs-testimonial-card" key={item.name}>
+              <span className="hs-testimonial-avatar">
+                <img
+                  src={`https://i.pravatar.cc/160?u=${item.name}`}
+                  alt={`${item.name}, ${item.role}`}
+                />
               </span>
-              <span className="stars" aria-label="Five star rating">
+              <span className="hs-stars" aria-label="Five star rating">
                 {Array.from({ length: 5 }).map((_, starIndex) => (
                   <Star key={starIndex} size={17} fill="currentColor" />
                 ))}
               </span>
-              <span className="testimonial-quote">{item.quote}</span>
-              <span className="testimonial-person">
+              <span className="hs-testimonial-quote">{item.quote}</span>
+              <span className="hs-testimonial-person">
                 <strong>{item.name}</strong>
                 <small>{item.role}</small>
               </span>
-            </button>
+            </article>
           ))}
         </div>
       </section>
 
-      <SiteFooter />
+      <Footer />
     </main>
   );
 }

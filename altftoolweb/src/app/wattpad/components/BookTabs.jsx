@@ -7,235 +7,125 @@ import {
   Headphones,
 } from "lucide-react";
 
-export default function BookTabs({
-  book,
-  bookChapters,
-}) {
-
+export default function BookTabs({ book, bookChapters }) {
   const [activeTab, setActiveTab] = useState("summary");
-    const [expanded, setExpanded] = useState(false);
+  const [expanded, setExpanded] = useState(false);
 
   return (
-
     <div>
-
-      {/* TABS */}
-      <div className="mt-16 border-b border-(--border)">
-
+      <div className="mt-12 border-b border-(--border)">
         <div className="flex items-center gap-10">
-
-          {/* SUMMARY */}
           <button
-            onClick={() =>
-              setActiveTab("summary")
-            }
-            className={`pb-4 text-[17px] transition cursor-pointer ${
+            onClick={() => setActiveTab("summary")}
+            className={`pb-4 text-base font-semibold transition cursor-pointer border-b-[3px] ${
               activeTab === "summary"
-                ? "font-bold border-b-[3px] border-(--primary) text-(--foreground)"
-                : "font-semibold text-(--muted-foreground)"
+                ? "border-(--primary) text-(--foreground)"
+                : "border-transparent text-(--muted-foreground) hover:text-(--foreground)"
             }`}
           >
             Summary
           </button>
-
-          {/* PARTS */}
           <button
-            onClick={() =>
-              setActiveTab("parts")
-            }
-            className={`pb-4 text-[17px] transition cursor-pointer ${
+            onClick={() => setActiveTab("parts")}
+            className={`pb-4 text-base font-semibold transition cursor-pointer border-b-[3px] ${
               activeTab === "parts"
-                ? "font-bold border-b-[3px] border-(--primary) text-(--foreground)"
-                : "font-semibold text-(--muted-foreground)"
+                ? "border-(--primary) text-(--foreground)"
+                : "border-transparent text-(--muted-foreground) hover:text-(--foreground)"
             }`}
           >
             Parts
           </button>
-
         </div>
-
       </div>
 
-      {/* SUMMARY */}
       {activeTab === "summary" && (
-
-        <>
-
-          {/* STORY META */}
+        <div>
           <div className="py-6 border-b border-(--border)">
-
             <div className="flex flex-wrap items-center gap-3 text-sm">
-
-              <span className="font-bold">
-                Complete
-              </span>
-
-              <span className="text-(--muted-foreground)">
-                •
-              </span>
-
-              <span className="text-(--muted-foreground)">
-                13h 13m
-              </span>
-
+              <span className="font-bold text-(--foreground)">Complete</span>
+              <span className="text-(--muted-foreground)">•</span>
+              <span className="text-(--muted-foreground)">13h 13m</span>
             </div>
-
           </div>
 
-          {/* TAGS */}
           <div className="flex flex-wrap gap-3 py-8">
-
             {book.tags?.map((tag) => (
-
-              <span
-                key={tag}
-                className="bg-(--card) transition px-4 py-2 rounded-lg text-sm font-medium"
-              >
-                {tag}
-              </span>
-
+              <span key={tag} className="wp-book-tag">{tag}</span>
             ))}
-
           </div>
 
-         
-         {/* DESCRIPTION */}
-<div className="border-b border-(--border) pb-5">
+          <div className="border-b border-(--border) pb-5">
+            <p
+              className={`text-base leading-relaxed text-(--foreground) transition-all duration-300 ${
+                expanded ? "" : "line-clamp-2"
+              }`}
+            >
+              {book.description}
+            </p>
+            {book.description?.length > 150 && (
+              <button
+                onClick={() => setExpanded(!expanded)}
+                className="font-bold text-sm text-(--primary) hover:opacity-80 transition cursor-pointer mt-2"
+              >
+                {expanded ? "Read less" : "Read more"}
+              </button>
+            )}
+          </div>
 
- <p
-  className={`text-[17px] leading-snug text-(--foreground) transition-all duration-300 ${
-    expanded ? "" : "line-clamp-2"
-  }`}
->
-  {book.description}
-</p>
-
-  {/* BUTTON */}
-  {book.description?.length > 150 && (
-
-    <button
-      onClick={() =>
-        setExpanded(!expanded)
-      }
-      className="font-bold text-sm cursor-pointer hover:text-(--primary) transition"
-    >
-
-      {expanded ? "Read less" : "Read more"}
-
-    </button>
-
-  )}
-
-</div>
-
-          {/* TEXT TO SPEECH */}
           <div className="py-6 border-b border-(--border)">
-
-            <div className="flex items-center gap-3">
-
+            <div className="flex items-center gap-3 text-(--foreground)">
               <Headphones size={20} />
-
-              <span className="text-base">
-                Text-to-speech
-              </span>
-
+              <span className="text-base">Text-to-speech</span>
             </div>
-
           </div>
 
-          {/* RANKING */}
           <div className="py-6 border-b border-(--border)">
-
             <div className="flex items-center justify-between">
-
               <div className="flex items-center gap-4">
-
-                <span className="text-2xl font-bold">
-                  #2
-                </span>
-
-                <span className="bg-(--card) px-3 py-1 rounded-md text-sm font-medium">
-                  romance
-                </span>
-
+                <span className="text-2xl font-bold text-(--foreground)">#2</span>
+                <span className="wp-book-tag">romance</span>
               </div>
-
-              <ChevronRight size={22} />
-
+              <ChevronRight size={22} className="text-(--muted-foreground)" />
             </div>
-
           </div>
-
-        </>
-
+        </div>
       )}
 
-      {/* PARTS */}
       {activeTab === "parts" && (
-
         <div className="mt-10">
-
           <div className="flex items-center justify-between mb-8">
-
-            <h2 className="text-3xl font-extrabold tracking-tight">
+            <h2 className="text-2xl font-extrabold tracking-tight text-(--foreground)">
               Parts
             </h2>
-
-            <span className="text-(--muted-foreground)">
+            <span className="text-(--muted-foreground) text-sm">
               {bookChapters.length} Chapters
             </span>
-
           </div>
 
           <div className="space-y-4">
-
             {bookChapters.map((chapter) => (
-
               <Link
                 key={chapter.id}
                 href={`/wattpad/read/${book.slug}/${chapter.chapterNumber}`}
-                className="block mb-2"
+                className="block"
               >
-
-                <div className="group border border-(--border) rounded-2xl p-5 hover:bg-(--card) transition cursor-pointer">
-
+                <div className="wp-chapter-item">
                   <div className="flex items-center justify-between gap-5">
-
                     <div>
-
-                      <p className="text-sm text-(--muted-foreground)">
-                        Part {chapter.chapterNumber}
-                      </p>
-
-                      <h3 className="font-bold text-lg mt-1 group-hover:text-(--primary) transition">
-
-                        {chapter.title}
-
-                      </h3>
-
+                      <p className="wp-chapter-number">Part {chapter.chapterNumber}</p>
+                      <h3 className="wp-chapter-title">{chapter.title}</h3>
                     </div>
-
                     <ChevronRight
                       size={20}
-                      className="opacity-50"
+                      className="text-(--muted-foreground) opacity-50 shrink-0"
                     />
-
                   </div>
-
                 </div>
-
               </Link>
-
             ))}
-
           </div>
-
         </div>
-
       )}
-
     </div>
-
   );
-
 }

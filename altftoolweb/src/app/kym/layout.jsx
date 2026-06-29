@@ -1,8 +1,9 @@
 import "./style/kym.css";
 
 export const metadata = {
-  title: "Know Your Meme Clone",
-  description: "A local React recreation of the Know Your Meme homepage.",
+  title: "Know Your Meme — ALTFTool",
+  description:
+    "Browse meme encyclopedia entries, trending images, explainers, and vote for Meme of the Month.",
 };
 
 export default function KymLayout({ children }) {

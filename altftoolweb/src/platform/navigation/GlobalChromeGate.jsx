@@ -19,7 +19,6 @@ const SELF_CHROME_PREFIXES = [
   "/soft-murmur",
   "/prank-socialmedia",
   "/fact-net",
-  "/kym",
   "/patatap",
   "/radio-garden",
   "/windowswap",

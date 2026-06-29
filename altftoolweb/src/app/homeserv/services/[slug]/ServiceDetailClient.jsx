@@ -43,7 +43,7 @@ import {
   Wrench,
   X,
 } from "lucide-react";
-import { SiteFooter } from "../../components/SiteFooter";
+import Footer from "@/platform/navigation/Footer";
 import { SiteHeader } from "../../components/SiteHeader";
 import { services } from "../../services-data";
 
@@ -236,39 +236,39 @@ export function ServiceDetailClient({ service }) {
 
   if (flowState === "loading") {
     return (
-      <main className="detail-page match-page">
+      <main className="hs-detail-page hs-match-page">
         <SiteHeader />
-        <section className="match-loader" aria-live="polite" aria-busy="true">
+        <section className="hs-match-loader" aria-live="polite" aria-busy="true">
           <LoaderCircle size={58} />
           <h1>
             Finding {service.shortTitle} pros in {matchedLocation}...
           </h1>
         </section>
-        <SiteFooter />
+        <Footer />
       </main>
     );
   }
 
   if (flowState === "results") {
     return (
-      <main className="detail-page match-page">
+      <main className="hs-detail-page hs-match-page">
         <SiteHeader />
-        <section className="match-results">
-          <div className="section-heading centered-heading">
-            <p className="eyebrow">
+        <section className="hs-match-results">
+          <div className="hs-heading hs-heading-center">
+            <span className="hs-eyebrow">
               <ShieldCheck size={18} />
               Verified local matches
-            </p>
+            </span>
             <h1>
               Top 3 {service.shortTitle} pros in {matchedLocation}
             </h1>
             <p>Select a verified local pro below to request your free quote.</p>
           </div>
-          <div className="match-card-grid">
+          <div className="hs-match-grid">
             {service.resultPros.map((pro) => (
-              <article className="match-card" key={pro.name}>
+              <article className="hs-match-card" key={pro.name}>
                 <h2>{pro.name}</h2>
-                <div className="match-stars" aria-label={`${pro.rating} star rating`}>
+                <div className="hs-match-stars" aria-label={`${pro.rating} star rating`}>
                   {Array.from({ length: 5 }).map((_, index) => (
                     <Star key={index} size={20} fill="currentColor" />
                   ))}
@@ -278,11 +278,11 @@ export function ServiceDetailClient({ service }) {
                 <p>
                   {pro.years} • {pro.hires}
                 </p>
-                <span className="verified-pill">
+                <span className="hs-verified-pill">
                   <CheckCircle2 size={18} />
                   Verified partner
                 </span>
-                <span className="local-badge">
+                <span className="hs-local-badge">
                   {pro.badge} in {matchedLocation}
                 </span>
                 <button type="button" onClick={() => setCallModalPro(pro.name)}>
@@ -293,82 +293,85 @@ export function ServiceDetailClient({ service }) {
           </div>
         </section>
         {callModalPro ? (
-          <div className="call-modal-backdrop" role="presentation" onClick={() => setCallModalPro("")}>
+          <div className="hs-modal-backdrop" role="presentation" onClick={() => setCallModalPro("")}>
             <div
-              className="call-modal"
+              className="hs-modal"
               role="dialog"
               aria-modal="true"
               aria-labelledby="call-modal-title"
               onClick={(event) => event.stopPropagation()}
             >
-              <button className="call-modal-close" type="button" aria-label="Close call details" onClick={() => setCallModalPro("")}>
+              <button className="hs-modal-close" type="button" aria-label="Close call details" onClick={() => setCallModalPro("")}>
                 <X size={20} />
               </button>
-              <span className="caller-pulse" aria-hidden="true">
+              <span className="hs-caller-pulse" aria-hidden="true">
                 <PhoneCall size={42} />
               </span>
-              <p className="eyebrow">Call to compare quotes</p>
+              <span className="hs-eyebrow">Call to compare quotes</span>
               <h2 id="call-modal-title">{callModalPro}</h2>
-              <a className="call-number" href="tel:+18884520194">
+              <a className="hs-call-number" href="tel:+18884520194">
                 (888) 452-0194
               </a>
               <p>Speak with a quote specialist to review local availability and next steps.</p>
             </div>
           </div>
         ) : null}
-        <SiteFooter />
+        <Footer />
       </main>
     );
   }
 
   return (
-    <main className="detail-page">
+    <main className="hs-detail-page">
       <SiteHeader />
 
-      <section className={`detail-hero ${service.tone}`} id="quote-start">
-        <div className="detail-shell">
-          <div className="detail-hero-copy">
-            <Link href="/homeserv#services" className="back-link">
+      <section className="hs-detail-hero" id="quote-start">
+        <div className="hs-detail-shell">
+          <div className="hs-detail-copy">
+            <Link href="/homeserv#services" className="hs-back-link">
               <ArrowRight size={16} />
               All services
             </Link>
-            <p className="eyebrow">
+            <span className="hs-eyebrow">
               <ShieldCheck size={18} />
               {service.category} near you
-            </p>
+            </span>
             <h1>{service.headline}</h1>
             <p>{service.subhead}</p>
 
-            <div className="detail-zip-group">
-              <form className="quote-form detail-zip-form" aria-label={`Find ${service.title} pros by ZIP code`} onSubmit={handleZipSubmit}>
-                <label className={zipError ? "has-error" : undefined}>
-                  <span>Zip code</span>
-                  <input
-                    inputMode="numeric"
-                    maxLength={5}
-                    pattern="[0-9]{5}"
-                    placeholder="Enter your ZIP"
-                    aria-label="Zip code"
-                    aria-invalid={zipError ? "true" : "false"}
-                    aria-describedby={zipError ? "zip-error" : undefined}
-                    value={zip}
-                    onChange={(event) => {
-                      setZip(event.target.value.replace(/\D/g, "").slice(0, 5));
-                      if (zipError) setZipError("");
-                    }}
-                  />
-                </label>
-                <button type="submit" disabled={isCheckingZip}>
-                  {isCheckingZip ? "Checking ZIP" : "Continue"}
-                  {isCheckingZip ? <LoaderCircle size={19} /> : <ArrowRight size={19} />}
-                </button>
-              </form>
-              <small className={`zip-error detail-zip-error${zipError ? " visible" : ""}`} id="zip-error" aria-live="polite">
-                {zipError || " "}
-              </small>
-            </div>
+            <form
+              className="hs-zip-form"
+              aria-label={`Find ${service.title} pros by ZIP code`}
+              onSubmit={handleZipSubmit}
+              style={{ marginBottom: 12 }}
+            >
+              <label style={{ border: zipError ? "2px solid rgba(182, 59, 41, 0.55)" : "2px solid transparent" }}>
+                <span>Zip code</span>
+                <input
+                  inputMode="numeric"
+                  maxLength={5}
+                  pattern="[0-9]{5}"
+                  placeholder="Enter your ZIP"
+                  aria-label="Zip code"
+                  aria-invalid={zipError ? "true" : "false"}
+                  aria-describedby={zipError ? "zip-error" : undefined}
+                  value={zip}
+                  onChange={(event) => {
+                    setZip(event.target.value.replace(/\D/g, "").slice(0, 5));
+                    if (zipError) setZipError("");
+                  }}
+                />
+              </label>
+              <button type="submit" disabled={isCheckingZip}>
+                {isCheckingZip ? "Checking ZIP" : "Continue"}
+                {isCheckingZip ? <LoaderCircle size={19} /> : <ArrowRight size={19} />}
+              </button>
+            </form>
+            <small className="hs-zip-error" id="zip-error" aria-live="polite">
+              {zipError || " "}
+            </small>
 
-            <ul className="detail-bullets">
+            <ul className="hs-bullets">
               {service.bullets.map((bullet) => (
                 <li key={bullet}>
                   <CheckCircle2 size={18} />
@@ -378,11 +381,11 @@ export function ServiceDetailClient({ service }) {
             </ul>
           </div>
 
-          <aside className="detail-summary-card" aria-label={`${service.title} quote summary`}>
+          <aside className="hs-summary-card" aria-label={`${service.title} quote summary`}>
             <img src={service.projects[0].image} alt={`${service.title} project preview`} />
-            <div className="summary-overlay">
-              <p className="summary-label">How it works</p>
-              <ol className="summary-steps" aria-label={`${service.title} quote process`}>
+            <div className="hs-summary-overlay">
+              <p className="hs-summary-label">How it works</p>
+              <ol className="hs-summary-steps" aria-label={`${service.title} quote process`}>
                 {service.howItWorks.map((step, index) => {
                   const StepIcon = heroStepIcons[index] ?? CheckCircle2;
                   return (
@@ -403,7 +406,7 @@ export function ServiceDetailClient({ service }) {
         </div>
       </section>
 
-      <section className="detail-strip" aria-label={`${service.title} benefits`}>
+      <section className="hs-detail-strip" aria-label={`${service.title} benefits`}>
         {service.benefits.map((benefit) => {
           const BenefitIcon = getTitleIcon(benefit.title);
           return (
@@ -420,12 +423,12 @@ export function ServiceDetailClient({ service }) {
         })}
       </section>
 
-      <section className="section detail-projects">
-        <div className="section-heading centered-heading">
-          <p className="eyebrow">Project paths</p>
+      <section className="hs-section" style={{ paddingTop: 64 }}>
+        <div className="hs-heading hs-heading-center">
+          <span className="hs-eyebrow">Project paths</span>
           <h2>Choose the kind of {service.shortTitle.toLowerCase()} help you need</h2>
         </div>
-        <div className="project-feature-grid">
+        <div className="hs-project-grid">
           {service.projects.map((project) => (
             <article key={project.title}>
               <div>
@@ -436,7 +439,7 @@ export function ServiceDetailClient({ service }) {
                   <ArrowRight size={16} />
                 </a>
               </div>
-              <div className="project-visual">
+              <div className="hs-project-visual">
                 <img src={project.image} alt={`${project.title} example for ${service.title}`} />
               </div>
             </article>
@@ -444,13 +447,13 @@ export function ServiceDetailClient({ service }) {
         </div>
       </section>
 
-      <section className="section quote-types-card">
-        <div className="section-heading centered-heading">
-          <p className="eyebrow">Quote coverage</p>
+      <section className="hs-section hs-quote-card" style={{ paddingTop: 42 }}>
+        <div className="hs-heading hs-heading-center">
+          <span className="hs-eyebrow">Quote coverage</span>
           <h2>Receive no-obligation quotes from local pros</h2>
           <p>Every service page uses the same flow, but the project options and guidance update dynamically.</p>
         </div>
-        <div className="quote-type-grid">
+        <div className="hs-quote-grid">
           {service.quoteTypes.map((type) => {
             const QuoteIcon = getTitleIcon(type.title);
             return (
@@ -468,24 +471,24 @@ export function ServiceDetailClient({ service }) {
         </div>
       </section>
 
-      <section className="section savings-section">
-        <div className="section-heading centered-heading">
-          <p className="eyebrow">Quote comparison</p>
+      <section className="hs-section hs-savings-section">
+        <div className="hs-heading hs-heading-center">
+          <span className="hs-eyebrow">Quote comparison</span>
           <h2>Real homeowner savings examples</h2>
         </div>
-        <div className="savings-table" role="table" aria-label={`${service.title} savings examples`}>
-          <div className="savings-row savings-head" role="row">
+        <div className="hs-savings-table" role="table" aria-label={`${service.title} savings examples`}>
+          <div className="hs-savings-row hs-savings-head" role="row">
             <span role="columnheader">City</span>
             <span role="columnheader">{service.shortTitle} Job</span>
             <span role="columnheader">Lowest Quote</span>
             <span role="columnheader">Highest Quote</span>
             <span role="columnheader">Saved</span>
           </div>
-          <div className="savings-scroll-window">
-            <div className="savings-body">
+          <div className="hs-savings-scroll">
+            <div className="hs-savings-body">
               {savingsRows.map((row, index) => (
                 <div
-                  className="savings-row"
+                  className="hs-savings-row"
                   role="row"
                   key={`${row.city}-${row.job}-${index}`}
                   aria-hidden={index >= service.savingsRows.length ? true : undefined}
@@ -502,7 +505,7 @@ export function ServiceDetailClient({ service }) {
         </div>
       </section>
 
-      <section className="section insight-list">
+      <section className="hs-section hs-insight-list">
         {service.insights.map((insight, index) => {
           const InsightIcon = insightIcons[index % insightIcons.length];
           return (
@@ -519,9 +522,9 @@ export function ServiceDetailClient({ service }) {
         })}
       </section>
 
-      <section className="section alternate-services">
+      <section className="hs-section hs-alternate">
         <h2>Looking for a different project?</h2>
-        <div>
+        <div className="hs-alternate-grid">
           {otherServices.map((item) => {
             const OtherIcon = iconMap[item.icon];
             return (
@@ -534,7 +537,7 @@ export function ServiceDetailClient({ service }) {
         </div>
       </section>
 
-      <SiteFooter />
+      <Footer />
     </main>
   );
 }

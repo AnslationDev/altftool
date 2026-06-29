@@ -1,4 +1,4 @@
-import { SiteFooter } from "../components/SiteFooter";
+import Footer from "@/platform/navigation/Footer";
 import { SiteHeader } from "../components/SiteHeader";
 import { ContactForm } from "./ContactForm";
 
@@ -11,11 +11,11 @@ export default function ContactUsPage() {
   return (
     <main>
       <SiteHeader />
-      <section className="plain-page contact-page">
-        <p className="eyebrow">Contact Us</p>
+      <section className="hs-plain hs-contact-page">
+        <span className="hs-eyebrow">Contact Us</span>
         <ContactForm />
       </section>
-      <SiteFooter />
+      <Footer />
     </main>
   );
 }

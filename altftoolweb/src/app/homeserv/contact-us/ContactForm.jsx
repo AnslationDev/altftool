@@ -24,8 +24,8 @@ export function ContactForm() {
 
   return (
     <>
-      <form className="contact-form" onSubmit={handleSubmit}>
-        <div className="contact-form-grid">
+      <form className="hs-contact-form" onSubmit={handleSubmit}>
+        <div className="hs-contact-grid">
           <label>
             Full name
             <input name="name" type="text" placeholder="Maya Bennett" required />
@@ -35,7 +35,7 @@ export function ContactForm() {
             <input name="email" type="email" placeholder="maya@example.com" required />
           </label>
         </div>
-        <div className="contact-form-grid">
+        <div className="hs-contact-grid">
           <label>
             Phone number
             <input name="phone" type="tel" placeholder="(555) 123-4567" />
@@ -61,14 +61,14 @@ export function ContactForm() {
           Message
           <textarea name="message" placeholder="Tell us what you need help with, including the service type and any timing details." rows={6} required />
         </label>
-        <div className="contact-submit-row">
+        <div className="hs-contact-submit">
           <button type="submit">Send Message</button>
           <span>We usually respond within one business day.</span>
         </div>
       </form>
 
       {showToast ? (
-        <div className="form-toast" role="status" aria-live="polite">
+        <div className="hs-toast" role="status" aria-live="polite">
           <CheckCircle2 size={20} />
           <span>Your message has been submitted.</span>
           <button type="button" aria-label="Close notification" onClick={() => setShowToast(false)}>
