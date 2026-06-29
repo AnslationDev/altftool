@@ -9,6 +9,7 @@ import { usePathname } from "next/navigation";
 const LANDING_CHROME_PREFIXES = [
   "/",
   "/tools",
+  "/extensions",
 ];
 
 const SELF_CHROME_PREFIXES = [

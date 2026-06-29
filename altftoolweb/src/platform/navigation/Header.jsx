@@ -196,8 +196,15 @@ const Header = () => {
     return null;
   }
 
-  const usesLandingChrome = pathname === "/" || pathname === "/tools" || pathname?.startsWith("/tools/");
+  const usesLandingChrome =
+    pathname === "/" ||
+    pathname === "/tools" ||
+    pathname?.startsWith("/tools/") ||
+    pathname === "/extensions";
   const isHomeDark = themeReady && resolvedTheme === "dark";
+  const landingLogoSrc = isHomeDark
+    ? "/assets/altf-header-logo-dark.png"
+    : "/assets/altf-header-logo-generated.png";
 
   if (usesLandingChrome) {
     return (
@@ -213,11 +220,11 @@ const Header = () => {
           <div className="mx-auto grid h-16 max-w-[var(--anslation-ds-container)] grid-cols-[auto_1fr_auto] items-center gap-3 sm:h-[72px] lg:gap-4 min-[1360px]:grid-cols-[minmax(8rem,1fr)_auto_minmax(8rem,1fr)]">
             <Link
               href="/"
-              className="flex min-w-fit items-center justify-self-start"
+              className="inline-flex min-w-fit items-center justify-self-start transition duration-200 hover:-translate-y-0.5"
               {...routePreviewProps("/")}
             >
               <ManagedImage
-                src="/assets/logo3.png"
+                src={landingLogoSrc}
                 className="h-8 w-auto object-contain sm:h-9"
                 alt="AltFTool"
               />
@@ -400,11 +407,12 @@ const Header = () => {
             <div className="flex items-center justify-between">
               <Link
                 href="/"
+                className="inline-flex transition duration-200 hover:-translate-y-0.5"
                 onClick={() => closeMobileMenu()}
                 {...routePreviewProps("/")}
               >
                 <ManagedImage
-                  src="/assets/logo3.png"
+                  src={landingLogoSrc}
                   className="h-9 w-auto object-contain"
                   alt="AltFTool"
                 />
