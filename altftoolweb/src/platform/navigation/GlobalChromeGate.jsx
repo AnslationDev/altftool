@@ -3,9 +3,14 @@
 import { usePathname } from "next/navigation";
 
 /**
- * Hides the global AltFTool header/footer on sections that ship their own
- * chrome (e.g. /altfloveimg). Wrap <Header/> and <Footer/> with this.
+ * Shows the landing AltFTool header/footer only on routes that use the
+ * landing chrome. Sections with custom chrome stay isolated.
  */
+const LANDING_CHROME_PREFIXES = [
+  "/",
+  "/tools",
+];
+
 const SELF_CHROME_PREFIXES = [
   // microsites with their own header/footer
   "/altfloveimg",
@@ -32,9 +37,13 @@ const SELF_CHROME_PREFIXES = [
 
 export default function GlobalChromeGate({ children }) {
   const pathname = usePathname() || "";
-  const hidden = SELF_CHROME_PREFIXES.some(
+  const hasSelfChrome = SELF_CHROME_PREFIXES.some(
     (p) => pathname === p || pathname.startsWith(`${p}/`)
   );
-  if (hidden) return null;
+  const usesLandingChrome = LANDING_CHROME_PREFIXES.some((p) =>
+    p === "/" ? pathname === "/" : pathname === p || pathname.startsWith(`${p}/`)
+  );
+
+  if (hasSelfChrome || !usesLandingChrome) return null;
   return children;
 }
