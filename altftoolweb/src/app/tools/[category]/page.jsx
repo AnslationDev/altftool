@@ -1,5 +1,4 @@
 import ToolsClient from "../ToolsClient";
-import ToolHubLinks from "../ToolHubLinks";
 import { toolMetaMap } from "@/platform/registry/toolMetaMap";
 import { createPageMetadata } from "@/platform/seo/generateMetadata";
 import { redirect } from "next/navigation";
@@ -33,10 +32,5 @@ export default async function Page({ params }) {
     redirect(`/tools/all/${category}`);
   }
 
-  return (
-    <>
-      <ToolsClient meta={toolMetaMap} category={category} />
-      <ToolHubLinks category={category} />
-    </>
-  );
+  return <ToolsClient meta={toolMetaMap} category={category} />;
 }

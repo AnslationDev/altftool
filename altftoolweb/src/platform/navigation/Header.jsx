@@ -196,9 +196,10 @@ const Header = () => {
     return null;
   }
 
+  const usesLandingChrome = pathname === "/" || pathname === "/tools" || pathname?.startsWith("/tools/");
   const isHomeDark = themeReady && resolvedTheme === "dark";
 
-  if (pathname === "/") {
+  if (usesLandingChrome) {
     return (
       <>
         <header
