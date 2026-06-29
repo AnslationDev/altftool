@@ -90,8 +90,8 @@ function CopyButton({ html }) {
       onClick={handleCopy}
       className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
         copied
-          ? "bg-green-100 text-green-700 border border-green-200"
-          : "bg-gray-900 text-white hover:bg-gray-700"
+          ? "bg-success-soft text-success border border-success"
+          : "bg-primary text-white hover:bg-primary"
       }`}
     >
       {copied ? (
@@ -119,23 +119,23 @@ function VariantCard({ variant, href, customText, iconOverride, onInsert }) {
   const html = generateHTML({ variantId: variant.id, icon, text, href });
 
   return (
-    <div className="border border-gray-100 rounded-2xl bg-gray-50 overflow-hidden hover:border-gray-200 transition-all">
+    <div className="border border-border rounded-2xl bg-surface-soft overflow-hidden hover:border-border transition-all">
       {/* Preview */}
-      <div className="px-4 py-5 flex items-center justify-center min-h-[72px] bg-white">
+      <div className="px-4 py-5 flex items-center justify-center min-h-[72px] bg-surface">
         <LivePreview variantId={variant.id} icon={icon} text={text} />
       </div>
 
       {/* Footer */}
-      <div className="px-4 py-3 flex items-center justify-between gap-2 border-t border-gray-100">
+      <div className="px-4 py-3 flex items-center justify-between gap-2 border-t border-border">
         <div className="min-w-0">
-          <p className="text-xs font-bold text-gray-700">{variant.label}</p>
-          <p className="text-[10px] text-gray-400 truncate">{variant.desc}</p>
+          <p className="text-xs font-bold text-foreground">{variant.label}</p>
+          <p className="text-[10px] text-muted truncate">{variant.desc}</p>
         </div>
         <div className="flex items-center gap-2 shrink-0">
           <button
             type="button"
             onClick={() => setExpanded((v) => !v)}
-            className="p-1 rounded-lg text-gray-400 hover:text-gray-600 hover:bg-gray-100 transition"
+            className="p-1 rounded-lg text-muted hover:text-muted hover:bg-surface-soft transition"
             title="View HTML"
           >
             {expanded ? (
@@ -148,7 +148,7 @@ function VariantCard({ variant, href, customText, iconOverride, onInsert }) {
             <button
               type="button"
               onClick={() => onInsert(html)}
-              className="flex items-center gap-1.5 rounded-lg bg-blue-600 px-3 py-1.5 text-xs font-semibold text-white transition hover:bg-blue-700"
+              className="flex items-center gap-1.5 rounded-lg bg-primary px-3 py-1.5 text-xs font-semibold text-white transition hover:bg-primary"
             >
               <Plus className="h-3 w-3" />
               Insert
@@ -160,8 +160,8 @@ function VariantCard({ variant, href, customText, iconOverride, onInsert }) {
 
       {/* Expandable HTML */}
       {expanded && (
-        <div className="border-t border-gray-100 bg-gray-900 px-4 py-3">
-          <pre className="text-[10px] text-green-300 font-mono whitespace-pre-wrap break-all leading-relaxed">
+        <div className="border-t border-border bg-primary px-4 py-3">
+          <pre className="text-[10px] text-success font-mono whitespace-pre-wrap break-all leading-relaxed">
             {html}
           </pre>
         </div>
@@ -217,9 +217,9 @@ export default function CTAButtonPicker({ trigger, onInsert }) {
         <button
           type="button"
           onClick={() => setOpen(true)}
-          className="flex items-center gap-2 px-3 py-2 rounded-xl border border-gray-200 bg-white text-xs font-semibold text-gray-700 hover:bg-gray-50 hover:border-gray-300 transition shadow-sm"
+          className="flex items-center gap-2 px-3 py-2 rounded-xl border border-border bg-surface text-xs font-semibold text-foreground hover:bg-surface-soft hover:border-border transition shadow-sm"
         >
-          <Zap className="w-3.5 h-3.5 text-amber-500" />
+          <Zap className="w-3.5 h-3.5 text-warning" />
           Insert CTA Button
         </button>
       )}
@@ -236,19 +236,19 @@ export default function CTAButtonPicker({ trigger, onInsert }) {
             if (e.target === e.currentTarget) setOpen(false);
           }}
         >
-          <div className="bg-white rounded-3xl shadow-2xl w-full max-w-2xl max-h-[90vh] flex flex-col overflow-hidden">
+          <div className="bg-surface rounded-3xl shadow-2xl w-full max-w-2xl max-h-[90vh] flex flex-col overflow-hidden">
 
             {/* Header */}
-            <div className="flex items-center justify-between px-6 py-4 border-b border-gray-100 shrink-0">
+            <div className="flex items-center justify-between px-6 py-4 border-b border-border shrink-0">
               <div className="flex items-center gap-2.5">
-                <div className="w-7 h-7 rounded-xl bg-amber-50 flex items-center justify-center">
-                  <Zap className="w-4 h-4 text-amber-500" />
+                <div className="w-7 h-7 rounded-xl bg-warning-soft flex items-center justify-center">
+                  <Zap className="w-4 h-4 text-warning" />
                 </div>
                 <div>
-                  <h2 className="text-sm font-bold text-gray-900">
+                  <h2 className="text-sm font-bold text-foreground">
                     CTA Button Picker
                   </h2>
-                  <p className="text-[10px] text-gray-400">
+                  <p className="text-[10px] text-muted">
                     Copy HTML → paste in CKEditor's Insert HTML
                   </p>
                 </div>
@@ -256,19 +256,19 @@ export default function CTAButtonPicker({ trigger, onInsert }) {
               <button
                 type="button"
                 onClick={() => setOpen(false)}
-                className="p-2 rounded-xl hover:bg-gray-100 text-gray-400 hover:text-gray-700 transition"
+                className="p-2 rounded-xl hover:bg-surface-soft text-muted hover:text-foreground transition"
               >
                 <X className="w-4 h-4" />
               </button>
             </div>
 
             {/* Config */}
-            <div className="px-6 py-4 border-b border-gray-100 bg-gray-50 shrink-0 space-y-3">
+            <div className="px-6 py-4 border-b border-border bg-surface-soft shrink-0 space-y-3">
 
               {/* Row 1 — Link + Label */}
               <div className="flex flex-col sm:flex-row gap-3">
                 <div className="flex-1 space-y-1">
-                  <label className="text-[10px] font-bold text-gray-400 uppercase tracking-wider flex items-center gap-1">
+                  <label className="text-[10px] font-bold text-muted uppercase tracking-wider flex items-center gap-1">
                     <ExternalLink className="w-3 h-3" /> Button Link
                   </label>
                   <input
@@ -276,11 +276,11 @@ export default function CTAButtonPicker({ trigger, onInsert }) {
                     value={href}
                     onChange={(e) => setHref(e.target.value)}
                     placeholder="https://your-link.com"
-                    className="w-full text-xs px-3 py-2 rounded-xl border border-gray-200 bg-white focus:outline-none focus:ring-2 focus:ring-blue-400/30 focus:border-blue-400 font-mono"
+                    className="w-full text-xs px-3 py-2 rounded-xl border border-border bg-surface focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary font-mono"
                   />
                 </div>
                 <div className="flex-1 space-y-1">
-                  <label className="text-[10px] font-bold text-gray-400 uppercase tracking-wider">
+                  <label className="text-[10px] font-bold text-muted uppercase tracking-wider">
                     Button Label{" "}
                     <span className="font-normal normal-case">(optional)</span>
                   </label>
@@ -289,14 +289,14 @@ export default function CTAButtonPicker({ trigger, onInsert }) {
                     value={customText}
                     onChange={(e) => setCustomText(e.target.value)}
                     placeholder="Leave blank to use default"
-                    className="w-full text-xs px-3 py-2 rounded-xl border border-gray-200 bg-white focus:outline-none focus:ring-2 focus:ring-blue-400/30 focus:border-blue-400"
+                    className="w-full text-xs px-3 py-2 rounded-xl border border-border bg-surface focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary"
                   />
                 </div>
               </div>
 
               {/* Row 2 — Icon control */}
               <div className="space-y-2">
-                <label className="text-[10px] font-bold text-gray-400 uppercase tracking-wider flex items-center gap-1">
+                <label className="text-[10px] font-bold text-muted uppercase tracking-wider flex items-center gap-1">
                   <Smile className="w-3 h-3" /> Icon
                 </label>
                 <div className="flex items-center gap-2 flex-wrap">
@@ -305,10 +305,10 @@ export default function CTAButtonPicker({ trigger, onInsert }) {
                     value={iconInput}
                     onChange={(e) => handleIconInput(e.target.value)}
                     placeholder="Paste any emoji  e.g. 🎯"
-                    className={`flex-1 min-w-[160px] text-sm px-3 py-2 rounded-xl border bg-white focus:outline-none focus:ring-2 focus:ring-blue-400/30 focus:border-blue-400 transition ${
+                    className={`flex-1 min-w-[160px] text-sm px-3 py-2 rounded-xl border bg-surface focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition ${
                       customIconActive
-                        ? "border-blue-400 ring-2 ring-blue-400/20"
-                        : "border-gray-200"
+                        ? "border-primary ring-2 ring-primary/20"
+                        : "border-border"
                     }`}
                   />
                   <button
@@ -317,8 +317,8 @@ export default function CTAButtonPicker({ trigger, onInsert }) {
                     title="Remove icon from all buttons"
                     className={`flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-semibold border transition whitespace-nowrap ${
                       noIconActive
-                        ? "bg-gray-900 text-white border-gray-900"
-                        : "bg-white text-gray-600 border-gray-200 hover:border-gray-400 hover:bg-gray-50"
+                        ? "bg-primary text-white border-border"
+                        : "bg-surface text-muted border-border hover:border-border hover:bg-surface-soft"
                     }`}
                   >
                     <span className="text-sm leading-none">∅</span> No icon
@@ -329,14 +329,14 @@ export default function CTAButtonPicker({ trigger, onInsert }) {
                     title="Use each variant's default icon"
                     className={`flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-semibold border transition whitespace-nowrap ${
                       defaultIconActive
-                        ? "bg-gray-900 text-white border-gray-900"
-                        : "bg-white text-gray-600 border-gray-200 hover:border-gray-400 hover:bg-gray-50"
+                        ? "bg-primary text-white border-border"
+                        : "bg-surface text-muted border-border hover:border-border hover:bg-surface-soft"
                     }`}
                   >
                     <span className="text-sm leading-none">✦</span> Default icons
                   </button>
                 </div>
-                <p className="text-[10px] text-gray-400 h-3">
+                <p className="text-[10px] text-muted h-3">
                   {noIconActive &&
                     "Icon removed — all buttons will render text-only."}
                   {defaultIconActive &&
@@ -348,8 +348,8 @@ export default function CTAButtonPicker({ trigger, onInsert }) {
             </div>
 
             {/* Instruction strip */}
-            <div className="px-6 py-2 bg-blue-50 border-b border-blue-100 shrink-0">
-              <p className="text-[10px] text-blue-600 font-medium">
+            <div className="px-6 py-2 bg-primary-soft border-b border-primary shrink-0">
+              <p className="text-[10px] text-primary font-medium">
                 {typeof onInsert === "function" ? (
                   <>
                     Pick a style → click <strong>Insert</strong> to append it to the article, or copy the HTML for manual placement.
@@ -358,11 +358,11 @@ export default function CTAButtonPicker({ trigger, onInsert }) {
                   <>
                     Pick a style → click <strong>Copy HTML</strong> → in CKEditor
                     click{" "}
-                    <code className="bg-blue-100 px-1 rounded">
+                    <code className="bg-primary-soft px-1 rounded">
                       {"<>"} HTML Embed
                     </code>{" "}
                     or use{" "}
-                    <code className="bg-blue-100 px-1 rounded">
+                    <code className="bg-primary-soft px-1 rounded">
                       Insert → HTML
                     </code>{" "}
                     and paste.
@@ -388,10 +388,10 @@ export default function CTAButtonPicker({ trigger, onInsert }) {
             </div>
 
             {/* Footer */}
-            <div className="px-6 py-3 border-t border-gray-100 bg-gray-50 shrink-0">
-              <p className="text-[10px] text-gray-400 text-center">
+            <div className="px-6 py-3 border-t border-border bg-surface-soft shrink-0">
+              <p className="text-[10px] text-muted text-center">
                 Styles are defined in{" "}
-                <code className="bg-gray-100 px-1 rounded">
+                <code className="bg-surface-soft px-1 rounded">
                   cta-buttons.css
                 </code>{" "}
                 — make sure it's loaded on your public blog pages.

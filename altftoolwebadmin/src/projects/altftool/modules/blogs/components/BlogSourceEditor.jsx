@@ -72,12 +72,12 @@ export default function BlogSourceEditor({
 
   return (
     <div className="space-y-4">
-      <div className="rounded-xl border border-blue-100 bg-blue-50 px-3 py-3">
+      <div className="rounded-xl border border-primary bg-primary-soft px-3 py-3">
         <div className="flex items-start gap-2">
-          <BookOpenCheck className="mt-0.5 h-4 w-4 shrink-0 text-blue-600" />
+          <BookOpenCheck className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
           <div>
-            <p className="text-xs font-semibold text-blue-800">Citation format</p>
-            <p className="mt-1 text-xs leading-5 text-blue-700">
+            <p className="text-xs font-semibold text-primary">Citation format</p>
+            <p className="mt-1 text-xs leading-5 text-primary">
               Add one source per line: Title | URL | Publisher. Public posts show these as reader references and schema citations.
             </p>
           </div>
@@ -85,8 +85,8 @@ export default function BlogSourceEditor({
       </div>
 
       <div className="space-y-1.5">
-        <label className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-gray-500">
-          <Link2 className="h-3.5 w-3.5 text-gray-400" />
+        <label className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-muted">
+          <Link2 className="h-3.5 w-3.5 text-muted" />
           Sources
         </label>
         <textarea
@@ -94,16 +94,16 @@ export default function BlogSourceEditor({
           value={sourcesText}
           onChange={(event) => onChange?.({ sourcesText: event.target.value })}
           placeholder={"Google Search Central | https://developers.google.com/search/docs | Google\nAltFTool editorial review | https://altftool.com/policypages/about | AltFTool"}
-          className="w-full resize-none rounded-xl border border-gray-200 bg-white px-3 py-2.5 text-sm transition placeholder:text-gray-400 focus:border-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400/30"
+          className="w-full resize-none rounded-xl border border-border bg-surface px-3 py-2.5 text-sm transition placeholder:text-muted focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/30"
         />
-        <p className="text-[10px] text-gray-400">
+        <p className="text-[10px] text-muted">
           {sources.length} source{sources.length === 1 ? "" : "s"} parsed for the public reference block.
         </p>
       </div>
 
       <div className="space-y-1.5">
-        <label className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-gray-500">
-          <FileText className="h-3.5 w-3.5 text-gray-400" />
+        <label className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-muted">
+          <FileText className="h-3.5 w-3.5 text-muted" />
           Source note
         </label>
         <textarea
@@ -111,7 +111,7 @@ export default function BlogSourceEditor({
           value={sourceNotes}
           onChange={(event) => onChange?.({ sourceNotes: event.target.value })}
           placeholder="Explain what was checked, updated, or verified during editorial review."
-          className="w-full resize-none rounded-xl border border-gray-200 bg-white px-3 py-2.5 text-sm transition placeholder:text-gray-400 focus:border-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400/30"
+          className="w-full resize-none rounded-xl border border-border bg-surface px-3 py-2.5 text-sm transition placeholder:text-muted focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/30"
         />
       </div>
     </div>

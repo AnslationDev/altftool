@@ -72,15 +72,15 @@ function normalizeBlog(blog = {}) {
 }
 
 function scoreTone(score = 0) {
-  if (score >= 86) return "bg-green-50 text-green-700";
-  if (score >= 72) return "bg-amber-50 text-amber-700";
-  return "bg-red-50 text-red-600";
+  if (score >= 86) return "bg-success-soft text-success";
+  if (score >= 72) return "bg-warning-soft text-warning";
+  return "bg-danger-soft text-danger";
 }
 
 function statusTone(status = "") {
-  if (status === "ready") return "bg-green-50 text-green-700";
-  if (status === "watch") return "bg-amber-50 text-amber-700";
-  return "bg-red-50 text-red-600";
+  if (status === "ready") return "bg-success-soft text-success";
+  if (status === "watch") return "bg-warning-soft text-warning";
+  return "bg-danger-soft text-danger";
 }
 
 function QueueRow({ item, onEdit }) {
@@ -91,14 +91,14 @@ function QueueRow({ item, onEdit }) {
     <button
       type="button"
       onClick={() => onEdit?.(item.blog, action)}
-      className="group w-full rounded-xl border border-gray-100 bg-gray-50 px-3 py-3 text-left transition hover:border-blue-200 hover:bg-blue-50"
+      className="group w-full rounded-xl border border-border bg-surface-soft px-3 py-3 text-left transition hover:border-primary hover:bg-primary-soft"
     >
       <div className="flex items-start justify-between gap-3">
         <div className="min-w-0">
-          <p className="line-clamp-2 text-sm font-black leading-5 text-gray-900 group-hover:text-blue-700">{item.title}</p>
+          <p className="line-clamp-2 text-sm font-black leading-5 text-foreground group-hover:text-primary">{item.title}</p>
           <div className="mt-2 flex flex-wrap gap-1.5">
             {item.missing.slice(0, 3).map((issue) => (
-              <span key={`${item.id}-${issue}`} className="rounded-lg bg-white px-2 py-1 text-[10px] font-bold uppercase tracking-wide text-gray-500">
+              <span key={`${item.id}-${issue}`} className="rounded-lg bg-surface px-2 py-1 text-[10px] font-bold uppercase tracking-wide text-muted">
                 {issue}
               </span>
             ))}
@@ -108,7 +108,7 @@ function QueueRow({ item, onEdit }) {
       </div>
       <div className="mt-3 flex items-center justify-between gap-3 text-xs">
         <span className={`rounded-lg px-2 py-1 font-bold capitalize ${statusTone(item.status)}`}>{item.status.replace("-", " ")}</span>
-        <span className="inline-flex items-center gap-1 font-bold text-blue-700">
+        <span className="inline-flex items-center gap-1 font-bold text-primary">
           <WandSparkles className="h-3.5 w-3.5" />
           Fix
         </span>
@@ -141,32 +141,32 @@ export default function BlogContentHealthQueue({
   );
 
   return (
-    <section className="rounded-2xl border border-gray-100 bg-white p-4 shadow-sm">
+    <section className="rounded-2xl border border-border bg-surface p-4 shadow-sm">
       <div className="flex items-start justify-between gap-3">
         <div className="min-w-0">
-          <p className="text-xs font-black uppercase tracking-wider text-gray-500">Content health</p>
-          <h2 className="mt-1 text-xl font-black text-gray-900">{report.score}% score</h2>
-          <p className="mt-1 text-xs leading-5 text-gray-500">
+          <p className="text-xs font-black uppercase tracking-wider text-muted">Content health</p>
+          <h2 className="mt-1 text-xl font-black text-foreground">{report.score}% score</h2>
+          <p className="mt-1 text-xs leading-5 text-muted">
             {report.totals.ready} ready, {report.totals.watch} watch, {report.totals.needsWork} need work.
           </p>
         </div>
-        <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-blue-50 text-blue-600">
+        <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-primary-soft text-primary">
           {report.ok ? <CheckCircle2 className="h-5 w-5" /> : <AlertTriangle className="h-5 w-5" />}
         </div>
       </div>
 
       <div className="mt-4 grid grid-cols-3 gap-2 text-center">
-        <div className="rounded-xl bg-gray-50 px-2 py-2">
-          <p className="text-sm font-black text-gray-900">{report.totals.withSources}</p>
-          <p className="text-[10px] font-bold uppercase tracking-wide text-gray-400">Sources</p>
+        <div className="rounded-xl bg-surface-soft px-2 py-2">
+          <p className="text-sm font-black text-foreground">{report.totals.withSources}</p>
+          <p className="text-[10px] font-bold uppercase tracking-wide text-muted">Sources</p>
         </div>
-        <div className="rounded-xl bg-gray-50 px-2 py-2">
-          <p className="text-sm font-black text-gray-900">{report.totals.withFaq}</p>
-          <p className="text-[10px] font-bold uppercase tracking-wide text-gray-400">FAQ</p>
+        <div className="rounded-xl bg-surface-soft px-2 py-2">
+          <p className="text-sm font-black text-foreground">{report.totals.withFaq}</p>
+          <p className="text-[10px] font-bold uppercase tracking-wide text-muted">FAQ</p>
         </div>
-        <div className="rounded-xl bg-gray-50 px-2 py-2">
-          <p className="text-sm font-black text-gray-900">{report.totals.withLinks}</p>
-          <p className="text-[10px] font-bold uppercase tracking-wide text-gray-400">Links</p>
+        <div className="rounded-xl bg-surface-soft px-2 py-2">
+          <p className="text-sm font-black text-foreground">{report.totals.withLinks}</p>
+          <p className="text-[10px] font-bold uppercase tracking-wide text-muted">Links</p>
         </div>
       </div>
 
@@ -174,7 +174,7 @@ export default function BlogContentHealthQueue({
         type="button"
         onClick={() => onBulkFix?.({ actionKey: "smart", limit: 10 })}
         disabled={applying || !rows.length}
-        className="mt-4 inline-flex h-10 w-full items-center justify-center gap-2 rounded-xl bg-gray-900 px-4 text-sm font-semibold text-white transition hover:bg-gray-700 disabled:cursor-not-allowed disabled:bg-gray-300"
+        className="mt-4 inline-flex h-10 w-full items-center justify-center gap-2 rounded-xl bg-primary px-4 text-sm font-semibold text-white transition hover:bg-primary disabled:cursor-not-allowed disabled:bg-surface-soft"
       >
         {applying ? <RefreshCw className="h-4 w-4 animate-spin" /> : <WandSparkles className="h-4 w-4" />}
         {applying ? "Fixing..." : selectedCount ? `Fix ${selectedCount} selected` : "Fix top 10 issues"}
@@ -187,7 +187,7 @@ export default function BlogContentHealthQueue({
             type="button"
             onClick={() => onBulkFix?.({ actionKey: action.actionKey, issueKey: action.issueKey, limit: 10 })}
             disabled={applying}
-            className="inline-flex h-8 items-center justify-center gap-1.5 rounded-xl border border-blue-100 bg-white px-2 text-[11px] font-bold text-blue-700 transition hover:bg-blue-50 disabled:cursor-not-allowed disabled:opacity-50"
+            className="inline-flex h-8 items-center justify-center gap-1.5 rounded-xl border border-primary bg-surface px-2 text-[11px] font-bold text-primary transition hover:bg-primary-soft disabled:cursor-not-allowed disabled:opacity-50"
           >
             <WandSparkles className="h-3.5 w-3.5" />
             {action.label}
@@ -196,27 +196,27 @@ export default function BlogContentHealthQueue({
       </div>
 
       <div className="mt-4 space-y-2">
-        <p className="text-[10px] font-black uppercase tracking-wider text-gray-400">Top missing fields</p>
+        <p className="text-[10px] font-black uppercase tracking-wider text-muted">Top missing fields</p>
         {report.topIssues.slice(0, 5).map((issue) => {
           const Icon = ISSUE_ICONS[issue.key] || AlertTriangle;
           const actionKey = ISSUE_ACTIONS[issue.key];
           return (
             <div
               key={issue.key}
-              className="group flex w-full items-center justify-between gap-3 rounded-xl border border-gray-100 bg-gray-50 px-3 py-2 text-left transition hover:border-blue-200 hover:bg-blue-50"
+              className="group flex w-full items-center justify-between gap-3 rounded-xl border border-border bg-surface-soft px-3 py-2 text-left transition hover:border-primary hover:bg-primary-soft"
             >
               <button type="button" onClick={() => onFilterIssue?.(issue.key)} className="inline-flex min-w-0 flex-1 items-center gap-2 text-left">
-                <Icon className="h-3.5 w-3.5 shrink-0 text-gray-400 group-hover:text-blue-600" />
-                <span className="truncate text-sm font-semibold text-gray-700 group-hover:text-blue-700">{issue.label}</span>
+                <Icon className="h-3.5 w-3.5 shrink-0 text-muted group-hover:text-primary" />
+                <span className="truncate text-sm font-semibold text-foreground group-hover:text-primary">{issue.label}</span>
               </button>
               <div className="flex shrink-0 items-center gap-1.5">
-                <span className="rounded-lg bg-white px-2 py-1 text-xs font-black text-gray-600 shadow-sm">{issue.count}</span>
+                <span className="rounded-lg bg-surface px-2 py-1 text-xs font-black text-muted shadow-sm">{issue.count}</span>
                 {actionKey ? (
                   <button
                     type="button"
                     onClick={() => onBulkFix?.({ actionKey, issueKey: issue.key, limit: 10 })}
                     disabled={applying}
-                    className="rounded-lg bg-blue-600 px-2 py-1 text-[10px] font-black uppercase tracking-wide text-white transition hover:bg-blue-700 disabled:cursor-not-allowed disabled:bg-blue-300"
+                    className="rounded-lg bg-primary px-2 py-1 text-[10px] font-black uppercase tracking-wide text-white transition hover:bg-primary disabled:cursor-not-allowed disabled:bg-primary"
                   >
                     Fix
                   </button>
@@ -228,11 +228,11 @@ export default function BlogContentHealthQueue({
       </div>
 
       <div className="mt-4 space-y-2">
-        <p className="text-[10px] font-black uppercase tracking-wider text-gray-400">Fix queue</p>
+        <p className="text-[10px] font-black uppercase tracking-wider text-muted">Fix queue</p>
         {rows.length ? (
           rows.map((item) => <QueueRow key={`${item.id}-${item.slug}`} item={item} onEdit={onEdit} />)
         ) : (
-          <div className="rounded-xl bg-green-50 px-3 py-3 text-sm font-semibold text-green-700">
+          <div className="rounded-xl bg-success-soft px-3 py-3 text-sm font-semibold text-success">
             No content-health gaps found.
           </div>
         )}

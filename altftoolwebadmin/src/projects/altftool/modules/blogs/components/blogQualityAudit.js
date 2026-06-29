@@ -200,26 +200,26 @@ export function priorityLabel(score = 0) {
 }
 
 export function priorityTone(score = 0) {
-  if (score >= 70) return "bg-red-50 text-red-600";
-  if (score >= 42) return "bg-amber-50 text-amber-700";
-  return "bg-green-50 text-green-700";
+  if (score >= 70) return "bg-danger-soft text-danger";
+  if (score >= 42) return "bg-warning-soft text-warning";
+  return "bg-success-soft text-success";
 }
 
 export function toneClasses(tone = "slate", active = false) {
   const map = {
-    blue: active ? "border-blue-500 bg-blue-50 text-blue-700" : "border-blue-100 bg-white text-blue-700 hover:bg-blue-50",
+    blue: active ? "border-primary bg-primary-soft text-primary" : "border-primary bg-surface text-primary hover:bg-primary-soft",
     amber: active
-      ? "border-amber-500 bg-amber-50 text-amber-700"
-      : "border-amber-100 bg-white text-amber-700 hover:bg-amber-50",
+      ? "border-warning bg-warning-soft text-warning"
+      : "border-warning bg-surface text-warning hover:bg-warning-soft",
     green: active
-      ? "border-green-500 bg-green-50 text-green-700"
-      : "border-green-100 bg-white text-green-700 hover:bg-green-50",
+      ? "border-success bg-success-soft text-success"
+      : "border-success bg-surface text-success hover:bg-success-soft",
     violet: active
-      ? "border-violet-500 bg-violet-50 text-violet-700"
-      : "border-violet-100 bg-white text-violet-700 hover:bg-violet-50",
+      ? "border-secondary bg-secondary-soft text-secondary"
+      : "border-secondary bg-surface text-secondary hover:bg-secondary-soft",
     slate: active
-      ? "border-slate-700 bg-slate-900 text-white"
-      : "border-slate-200 bg-white text-slate-700 hover:bg-slate-50",
+      ? "border-border bg-primary text-white"
+      : "border-border bg-surface text-foreground hover:bg-surface-soft",
   };
   return map[tone] || map.slate;
 }

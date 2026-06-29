@@ -256,17 +256,17 @@ function CheckRow({ check, required = false }) {
   return (
     <div className="flex items-start justify-between gap-3 text-xs">
       <div className="min-w-0">
-        <p className={check.done ? "font-semibold text-gray-700" : "font-semibold text-gray-500"}>
+        <p className={check.done ? "font-semibold text-foreground" : "font-semibold text-muted"}>
           {check.label}
-          {required && <span className="ml-1 text-[10px] font-black text-red-400">*</span>}
+          {required && <span className="ml-1 text-[10px] font-black text-danger">*</span>}
         </p>
-        <p className="mt-0.5 text-[10px] text-gray-400">{check.detail}</p>
+        <p className="mt-0.5 text-[10px] text-muted">{check.detail}</p>
       </div>
-      <span className={`mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full ${check.done ? "bg-green-100" : required ? "bg-red-100" : "bg-amber-100"}`}>
+      <span className={`mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full ${check.done ? "bg-success-soft" : required ? "bg-danger-soft" : "bg-warning-soft"}`}>
         {check.done ? (
-          <CheckCircle2 className="h-3.5 w-3.5 text-green-600" />
+          <CheckCircle2 className="h-3.5 w-3.5 text-success" />
         ) : (
-          <AlertCircle className={`h-3.5 w-3.5 ${required ? "text-red-600" : "text-amber-600"}`} />
+          <AlertCircle className={`h-3.5 w-3.5 ${required ? "text-danger" : "text-warning"}`} />
         )}
       </span>
     </div>
@@ -355,9 +355,9 @@ export default function BlogPublishQualityGate({
 
   const statusTone = snapshot.canPublish
     ? snapshot.warningIssues.length
-      ? "border-amber-100 bg-amber-50 text-amber-700"
-      : "border-green-100 bg-green-50 text-green-700"
-    : "border-red-100 bg-red-50 text-red-700";
+      ? "border-warning bg-warning-soft text-warning"
+      : "border-success bg-success-soft text-success"
+    : "border-danger bg-danger-soft text-danger";
   const statusLabel = snapshot.canPublish
     ? snapshot.warningIssues.length
       ? "Review"
@@ -365,11 +365,11 @@ export default function BlogPublishQualityGate({
     : "Blocked";
 
   return (
-    <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5 space-y-4">
+    <div className="bg-surface rounded-2xl border border-border shadow-sm p-5 space-y-4">
       <div className="flex items-start justify-between gap-3">
         <div>
-          <h2 className="text-xs font-black text-gray-400 uppercase tracking-widest">Publish Gate</h2>
-          <p className="mt-1 text-xs text-gray-500">Checks the post before it can go live.</p>
+          <h2 className="text-xs font-black text-muted uppercase tracking-widest">Publish Gate</h2>
+          <p className="mt-1 text-xs text-muted">Checks the post before it can go live.</p>
         </div>
         <div className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl border text-sm font-black ${statusTone}`}>
           {snapshot.score}
@@ -379,18 +379,18 @@ export default function BlogPublishQualityGate({
       <div className="space-y-2">
         <div className="flex items-center justify-between text-xs">
           <span className={`rounded-full border px-2 py-0.5 font-bold ${statusTone}`}>{statusLabel}</span>
-          <span className="text-gray-400">{snapshot.blockingIssues.length} blocker{snapshot.blockingIssues.length === 1 ? "" : "s"}</span>
+          <span className="text-muted">{snapshot.blockingIssues.length} blocker{snapshot.blockingIssues.length === 1 ? "" : "s"}</span>
         </div>
-        <div className="h-2 w-full overflow-hidden rounded-full bg-gray-100">
+        <div className="h-2 w-full overflow-hidden rounded-full bg-surface-soft">
           <div
-            className={`h-full rounded-full transition-all ${snapshot.canPublish ? "bg-green-500" : "bg-red-400"}`}
+            className={`h-full rounded-full transition-all ${snapshot.canPublish ? "bg-success" : "bg-danger"}`}
             style={{ width: `${snapshot.score}%` }}
           />
         </div>
       </div>
 
       <div className="space-y-2.5">
-        <div className="flex items-center gap-1.5 text-[11px] font-black uppercase tracking-widest text-gray-400">
+        <div className="flex items-center gap-1.5 text-[11px] font-black uppercase tracking-widest text-muted">
           <ShieldCheck className="h-3.5 w-3.5" />
           Required
         </div>
@@ -399,8 +399,8 @@ export default function BlogPublishQualityGate({
         ))}
       </div>
 
-      <div className="space-y-2.5 border-t border-gray-100 pt-3">
-        <div className="flex items-center gap-1.5 text-[11px] font-black uppercase tracking-widest text-gray-400">
+      <div className="space-y-2.5 border-t border-border pt-3">
+        <div className="flex items-center gap-1.5 text-[11px] font-black uppercase tracking-widest text-muted">
           <Sparkles className="h-3.5 w-3.5" />
           Recommended
         </div>
@@ -409,14 +409,14 @@ export default function BlogPublishQualityGate({
         ))}
       </div>
 
-      <div className="rounded-2xl border border-blue-100 bg-blue-50 px-3 py-3">
+      <div className="rounded-2xl border border-primary bg-primary-soft px-3 py-3">
         <div className="flex items-start justify-between gap-3">
           <div>
-            <div className="flex items-center gap-1.5 text-[11px] font-black uppercase tracking-widest text-blue-600">
+            <div className="flex items-center gap-1.5 text-[11px] font-black uppercase tracking-widest text-primary">
               <ExternalLink className="h-3.5 w-3.5" />
               Live Links
             </div>
-            <p className="mt-1 text-xs leading-5 text-blue-700">
+            <p className="mt-1 text-xs leading-5 text-primary">
               {snapshot.externalUrls.length
                 ? `${snapshot.externalUrls.length} external URL${snapshot.externalUrls.length === 1 ? "" : "s"} found.`
                 : "No external URLs in this article."}
@@ -427,7 +427,7 @@ export default function BlogPublishQualityGate({
               type="button"
               onClick={runExternalCheck}
               disabled={externalCheck.status === "checking"}
-              className="inline-flex shrink-0 items-center gap-1.5 rounded-lg bg-blue-600 px-2.5 py-1.5 text-[11px] font-bold text-white transition hover:bg-blue-700 disabled:opacity-60"
+              className="inline-flex shrink-0 items-center gap-1.5 rounded-lg bg-primary px-2.5 py-1.5 text-[11px] font-bold text-white transition hover:bg-primary disabled:opacity-60"
             >
               {externalCheck.status === "checking" ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <RefreshCw className="h-3.5 w-3.5" />}
               Check
@@ -437,22 +437,22 @@ export default function BlogPublishQualityGate({
 
         {externalCheck.status === "done" && (
           <div className="mt-2 grid grid-cols-3 gap-1.5 text-center text-[10px] font-bold">
-            <span className="rounded-lg bg-white px-2 py-1 text-green-600">{snapshot.externalSummary.ok || 0} ok</span>
-            <span className="rounded-lg bg-white px-2 py-1 text-amber-600">{snapshot.externalSummary.warning || 0} warn</span>
-            <span className="rounded-lg bg-white px-2 py-1 text-red-600">
+            <span className="rounded-lg bg-surface px-2 py-1 text-success">{snapshot.externalSummary.ok || 0} ok</span>
+            <span className="rounded-lg bg-surface px-2 py-1 text-warning">{snapshot.externalSummary.warning || 0} warn</span>
+            <span className="rounded-lg bg-surface px-2 py-1 text-danger">
               {(snapshot.externalSummary.broken || 0) + (snapshot.externalSummary.blocked || 0)} fail
             </span>
           </div>
         )}
 
         {externalCheck.error && (
-          <p className="mt-2 rounded-lg bg-white px-2.5 py-2 text-xs font-medium text-red-600">{externalCheck.error}</p>
+          <p className="mt-2 rounded-lg bg-surface px-2.5 py-2 text-xs font-medium text-danger">{externalCheck.error}</p>
         )}
 
         {externalCheck.results?.length > 0 && snapshot.externalSummary.issueResults?.length > 0 && (
           <div className="mt-2 space-y-1">
             {snapshot.externalSummary.issueResults.slice(0, 3).map((result) => (
-              <p key={result.url} className="truncate rounded-lg bg-white px-2.5 py-1.5 text-[10px] font-medium text-gray-500">
+              <p key={result.url} className="truncate rounded-lg bg-surface px-2.5 py-1.5 text-[10px] font-medium text-muted">
                 {result.state}: {result.url}
               </p>
             ))}
@@ -461,11 +461,11 @@ export default function BlogPublishQualityGate({
       </div>
 
       {snapshot.blockingIssues.length > 0 && (
-        <div className="rounded-2xl border border-red-100 bg-red-50 px-3 py-3">
-          <p className="text-[11px] font-black uppercase tracking-widest text-red-600">Fix before publish</p>
+        <div className="rounded-2xl border border-danger bg-danger-soft px-3 py-3">
+          <p className="text-[11px] font-black uppercase tracking-widest text-danger">Fix before publish</p>
           <div className="mt-2 space-y-1.5">
             {snapshot.blockingIssues.slice(0, 4).map((item) => (
-              <p key={item.key} className="text-xs leading-5 text-red-700">
+              <p key={item.key} className="text-xs leading-5 text-danger">
                 {item.label}: {item.detail}
               </p>
             ))}
@@ -474,11 +474,11 @@ export default function BlogPublishQualityGate({
       )}
 
       {snapshot.canPublish && snapshot.warningIssues.length > 0 && (
-        <div className="rounded-2xl border border-amber-100 bg-amber-50 px-3 py-3">
-          <p className="text-[11px] font-black uppercase tracking-widest text-amber-700">Confirm with warnings</p>
+        <div className="rounded-2xl border border-warning bg-warning-soft px-3 py-3">
+          <p className="text-[11px] font-black uppercase tracking-widest text-warning">Confirm with warnings</p>
           <div className="mt-2 space-y-1.5">
             {snapshot.warningIssues.slice(0, 4).map((item) => (
-              <p key={item.key} className="text-xs leading-5 text-amber-700">
+              <p key={item.key} className="text-xs leading-5 text-warning">
                 {item.label}: {item.detail}
               </p>
             ))}

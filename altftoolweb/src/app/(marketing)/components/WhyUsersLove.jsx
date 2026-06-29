@@ -30,10 +30,10 @@ const features = [
 export default function WhyUsersLove() {
   return (
     <section className="section">
-      <div className="home-why-shell grid overflow-hidden rounded-[1.45rem] bg-white shadow-[0_22px_58px_rgba(55,49,120,0.08)] ring-1 ring-[var(--home-border)] dark:bg-[var(--card)] lg:grid-cols-[0.9fr_1.18fr_0.9fr]">
+      <div className="home-why-shell grid overflow-hidden rounded-[1.45rem] bg-white shadow-[0_22px_58px_rgba(15, 23, 42,0.08)] ring-1 ring-[var(--home-border)] dark:bg-[var(--card)] lg:grid-cols-[0.9fr_1.18fr_0.9fr]">
         <div className="p-7 md:p-9 lg:p-10">
           <p className="home-kicker">Why choose AltF?</p>
-          <h2 className="max-w-sm text-[2rem] font-black leading-[1.12] text-[var(--foreground)]">
+          <h2 className="max-w-sm text-[2rem] font-semibold leading-[1.12] text-[var(--foreground)]">
             Everything you need. All in one place.
           </h2>
           <p className="mt-5 max-w-md text-[0.95rem] font-semibold leading-7 text-[var(--muted-foreground)]">
@@ -61,7 +61,7 @@ export default function WhyUsersLove() {
                 />
               </span>
               <span>
-                <span className="block text-[0.95rem] font-black text-[var(--foreground)]">
+                <span className="block text-[0.95rem] font-semibold text-[var(--foreground)]">
                   {feature.title}
                 </span>
                 <span className="mt-1.5 block text-[0.8rem] font-semibold leading-6 text-[var(--muted-foreground)]">
@@ -72,13 +72,13 @@ export default function WhyUsersLove() {
           ))}
         </div>
 
-        <div className="relative min-h-[285px] overflow-hidden lg:min-h-0">
+        <div className="home-why-visual relative min-h-[285px] overflow-hidden lg:min-h-0">
           <Image
-            src="https://images.unsplash.com/photo-1556761175-4b46a572b786?q=80&w=1100&auto=format&fit=crop"
-            alt="Professionals using AltF tools"
+            src="https://images.unsplash.com/photo-1553877522-43269d4ea984?auto=format&fit=crop&w=900&q=82"
+            alt="Product team reviewing productivity tools and digital workflows"
             fill
             sizes="(min-width: 1024px) 28vw, 100vw"
-            className="object-cover"
+            className="home-why-visual-image object-cover"
           />
         </div>
       </div>

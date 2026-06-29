@@ -205,32 +205,32 @@ function LinkAuditSummary({
   return (
     <>
       <div className="grid grid-cols-3 gap-2 text-center">
-        <div className="rounded-xl bg-gray-50 px-2 py-2">
-          <p className="text-lg font-black text-gray-900">{internalLinkCount}</p>
-          <p className="text-[10px] font-bold uppercase tracking-wide text-gray-400">Outbound</p>
+        <div className="rounded-xl bg-surface-soft px-2 py-2">
+          <p className="text-lg font-black text-foreground">{internalLinkCount}</p>
+          <p className="text-[10px] font-bold uppercase tracking-wide text-muted">Outbound</p>
         </div>
-        <div className="rounded-xl bg-blue-50 px-2 py-2">
-          <p className="text-lg font-black text-blue-700">{inboundCount}</p>
-          <p className="text-[10px] font-bold uppercase tracking-wide text-blue-600">Inbound</p>
+        <div className="rounded-xl bg-primary-soft px-2 py-2">
+          <p className="text-lg font-black text-primary">{inboundCount}</p>
+          <p className="text-[10px] font-bold uppercase tracking-wide text-primary">Inbound</p>
         </div>
-        <div className={`rounded-xl px-2 py-2 ${brokenLinkCount ? "bg-red-50" : "bg-green-50"}`}>
-          <p className={`text-lg font-black ${brokenLinkCount ? "text-red-600" : "text-green-700"}`}>{brokenLinkCount}</p>
-          <p className={`text-[10px] font-bold uppercase tracking-wide ${brokenLinkCount ? "text-red-500" : "text-green-600"}`}>Broken</p>
+        <div className={`rounded-xl px-2 py-2 ${brokenLinkCount ? "bg-danger-soft" : "bg-success-soft"}`}>
+          <p className={`text-lg font-black ${brokenLinkCount ? "text-danger" : "text-success"}`}>{brokenLinkCount}</p>
+          <p className={`text-[10px] font-bold uppercase tracking-wide ${brokenLinkCount ? "text-danger" : "text-success"}`}>Broken</p>
         </div>
       </div>
 
       {brokenLinkCount ? (
-        <div className="rounded-xl border border-red-100 bg-red-50 px-3 py-3">
-          <div className="flex items-center gap-2 text-xs font-black uppercase tracking-wider text-red-600">
+        <div className="rounded-xl border border-danger bg-danger-soft px-3 py-3">
+          <div className="flex items-center gap-2 text-xs font-black uppercase tracking-wider text-danger">
             <AlertTriangle className="h-3.5 w-3.5" />
             Broken link checker
           </div>
           <div className="mt-2 space-y-1.5">
             {audit.brokenLinks.slice(0, 4).map((link, index) => (
-              <div key={`${link.href}-${index}`} className="rounded-lg bg-white px-2 py-2 text-xs">
-                <p className="font-bold text-red-700">{link.label}</p>
-                <p className="mt-0.5 truncate font-mono text-[10px] text-red-500">{link.href || "empty href"}</p>
-                {link.detail ? <p className="mt-1 text-[11px] leading-4 text-red-600">{link.detail}</p> : null}
+              <div key={`${link.href}-${index}`} className="rounded-lg bg-surface px-2 py-2 text-xs">
+                <p className="font-bold text-danger">{link.label}</p>
+                <p className="mt-0.5 truncate font-mono text-[10px] text-danger">{link.href || "empty href"}</p>
+                {link.detail ? <p className="mt-1 text-[11px] leading-4 text-danger">{link.detail}</p> : null}
               </div>
             ))}
           </div>
@@ -238,22 +238,22 @@ function LinkAuditSummary({
       ) : null}
 
       {!brokenLinkCount && currentLinkNode?.inboundCount === 0 && currentLinkNode?.outboundCount === 0 ? (
-        <div className="rounded-xl border border-amber-100 bg-amber-50 px-3 py-3 text-xs leading-5 text-amber-700">
+        <div className="rounded-xl border border-warning bg-warning-soft px-3 py-3 text-xs leading-5 text-warning">
           This post is isolated in the blog graph. Add a topic path below, then link to this post from a related hub when possible.
         </div>
       ) : null}
 
-      <div className="rounded-xl border border-gray-100 bg-gray-50 px-3 py-3">
+      <div className="rounded-xl border border-border bg-surface-soft px-3 py-3">
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div>
-            <p className="text-[10px] font-black uppercase tracking-wider text-gray-400">External links</p>
-            <p className="mt-1 text-sm font-black text-gray-900">{externalLinkUrls.length} unique URL{externalLinkUrls.length === 1 ? "" : "s"}</p>
+            <p className="text-[10px] font-black uppercase tracking-wider text-muted">External links</p>
+            <p className="mt-1 text-sm font-black text-foreground">{externalLinkUrls.length} unique URL{externalLinkUrls.length === 1 ? "" : "s"}</p>
           </div>
           <button
             type="button"
             onClick={onCheckExternal}
             disabled={!externalLinkUrls.length || checkingExternal}
-            className="inline-flex h-8 items-center gap-1.5 rounded-lg border border-gray-200 bg-white px-2.5 text-xs font-semibold text-gray-700 transition hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50"
+            className="inline-flex h-8 items-center gap-1.5 rounded-lg border border-border bg-surface px-2.5 text-xs font-semibold text-foreground transition hover:bg-surface-soft disabled:cursor-not-allowed disabled:opacity-50"
           >
             {checkingExternal ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <RefreshCw className="h-3.5 w-3.5" />}
             Live check
@@ -261,7 +261,7 @@ function LinkAuditSummary({
         </div>
 
         {externalCheck?.error ? (
-          <div className="mt-2 rounded-lg border border-red-100 bg-white px-2 py-2 text-xs font-semibold text-red-600">
+          <div className="mt-2 rounded-lg border border-danger bg-surface px-2 py-2 text-xs font-semibold text-danger">
             {externalCheck.error}
           </div>
         ) : null}
@@ -269,30 +269,30 @@ function LinkAuditSummary({
         {hasExternalResults ? (
           <div className="mt-3 space-y-2">
             <div className="grid grid-cols-3 gap-2 text-center">
-              <div className="rounded-lg bg-white px-2 py-2">
-                <p className="text-sm font-black text-green-700">{externalSummary.ok}</p>
-                <p className="text-[10px] font-bold uppercase tracking-wide text-green-600">OK</p>
+              <div className="rounded-lg bg-surface px-2 py-2">
+                <p className="text-sm font-black text-success">{externalSummary.ok}</p>
+                <p className="text-[10px] font-bold uppercase tracking-wide text-success">OK</p>
               </div>
-              <div className="rounded-lg bg-white px-2 py-2">
-                <p className="text-sm font-black text-amber-700">{externalSummary.warning + externalSummary.blocked}</p>
-                <p className="text-[10px] font-bold uppercase tracking-wide text-amber-600">Review</p>
+              <div className="rounded-lg bg-surface px-2 py-2">
+                <p className="text-sm font-black text-warning">{externalSummary.warning + externalSummary.blocked}</p>
+                <p className="text-[10px] font-bold uppercase tracking-wide text-warning">Review</p>
               </div>
-              <div className="rounded-lg bg-white px-2 py-2">
-                <p className="text-sm font-black text-red-600">{externalSummary.broken}</p>
-                <p className="text-[10px] font-bold uppercase tracking-wide text-red-500">Broken</p>
+              <div className="rounded-lg bg-surface px-2 py-2">
+                <p className="text-sm font-black text-danger">{externalSummary.broken}</p>
+                <p className="text-[10px] font-bold uppercase tracking-wide text-danger">Broken</p>
               </div>
             </div>
 
             {externalSummary.issueResults.slice(0, 3).map((result) => (
-              <div key={`${result.url}-${result.status || result.state}`} className="rounded-lg bg-white px-2 py-2 text-xs">
+              <div key={`${result.url}-${result.status || result.state}`} className="rounded-lg bg-surface px-2 py-2 text-xs">
                 <div className="flex items-center justify-between gap-2">
-                  <span className={`font-black ${result.state === "broken" ? "text-red-600" : "text-amber-700"}`}>
+                  <span className={`font-black ${result.state === "broken" ? "text-danger" : "text-warning"}`}>
                     {result.status || result.state}
                   </span>
-                  <span className="text-[10px] text-gray-400">{result.durationMs}ms</span>
+                  <span className="text-[10px] text-muted">{result.durationMs}ms</span>
                 </div>
-                <p className="mt-1 truncate font-mono text-[10px] text-gray-500">{result.url}</p>
-                <p className="mt-1 text-[11px] leading-4 text-gray-600">{result.reason}</p>
+                <p className="mt-1 truncate font-mono text-[10px] text-muted">{result.url}</p>
+                <p className="mt-1 text-[11px] leading-4 text-muted">{result.reason}</p>
               </div>
             ))}
           </div>
@@ -447,21 +447,21 @@ export default function BlogInternalLinkAssistant({
   };
 
   return (
-    <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5 space-y-4">
+    <div className="bg-surface rounded-2xl border border-border shadow-sm p-5 space-y-4">
       <div className="flex items-start justify-between gap-3">
         <div>
           <div className="flex items-center gap-2">
-            <SearchCheck className="h-4 w-4 text-blue-500" />
-            <h2 className="text-xs font-black text-gray-400 uppercase tracking-widest">Internal Links</h2>
+            <SearchCheck className="h-4 w-4 text-primary" />
+            <h2 className="text-xs font-black text-muted uppercase tracking-widest">Internal Links</h2>
           </div>
-          <p className="mt-1 text-xs leading-5 text-gray-500">
+          <p className="mt-1 text-xs leading-5 text-muted">
             Suggested from published blogs using category, tags, title, and content overlap. Current draft link health: {linkHealth}.
           </p>
         </div>
         <button
           type="button"
           onClick={loadBlogs}
-          className="inline-flex h-8 w-8 items-center justify-center rounded-xl border border-gray-200 text-gray-500 hover:bg-gray-50"
+          className="inline-flex h-8 w-8 items-center justify-center rounded-xl border border-border text-muted hover:bg-surface-soft"
           aria-label="Refresh internal link suggestions"
         >
           {loading ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <RefreshCw className="h-3.5 w-3.5" />}
@@ -469,12 +469,12 @@ export default function BlogInternalLinkAssistant({
       </div>
 
       {loading ? (
-        <div className="flex items-center gap-2 rounded-xl bg-gray-50 px-3 py-4 text-xs text-gray-500">
-          <Loader2 className="h-3.5 w-3.5 animate-spin text-blue-500" />
+        <div className="flex items-center gap-2 rounded-xl bg-surface-soft px-3 py-4 text-xs text-muted">
+          <Loader2 className="h-3.5 w-3.5 animate-spin text-primary" />
           Finding related published posts...
         </div>
       ) : error ? (
-        <div className="rounded-xl border border-red-100 bg-red-50 px-3 py-3 text-xs text-red-600">
+        <div className="rounded-xl border border-danger bg-danger-soft px-3 py-3 text-xs text-danger">
           {error}
         </div>
       ) : suggestions.length ? (
@@ -491,13 +491,13 @@ export default function BlogInternalLinkAssistant({
             onCheckExternal={runExternalCheck}
           />
 
-          <div className="rounded-xl border border-blue-100 bg-blue-50 px-3 py-2">
+          <div className="rounded-xl border border-primary bg-primary-soft px-3 py-2">
             <div className="flex flex-wrap items-center justify-between gap-2">
-              <span className="flex items-center gap-1.5 text-xs font-semibold text-blue-700">
+              <span className="flex items-center gap-1.5 text-xs font-semibold text-primary">
                 <Sparkles className="h-3.5 w-3.5" />
                 {suggestions.length} smart matches
               </span>
-              <span className="rounded-lg bg-white px-2 py-1 text-[10px] font-bold uppercase tracking-wide text-blue-600">
+              <span className="rounded-lg bg-surface px-2 py-1 text-[10px] font-bold uppercase tracking-wide text-primary">
                 {internalLinkCount} existing links
               </span>
             </div>
@@ -506,7 +506,7 @@ export default function BlogInternalLinkAssistant({
                 type="button"
                 onClick={insertSmartPlan}
                 disabled={!smartPlan.items.length}
-                className="inline-flex h-8 items-center justify-center gap-1.5 rounded-lg bg-emerald-600 px-2.5 text-xs font-semibold text-white hover:bg-emerald-700 disabled:cursor-not-allowed disabled:bg-emerald-200"
+                className="inline-flex h-8 items-center justify-center gap-1.5 rounded-lg bg-success px-2.5 text-xs font-semibold text-white hover:bg-success disabled:cursor-not-allowed disabled:bg-success-soft"
               >
                 {insertedSlug === "smart-plan" ? <CheckCircle2 className="h-3.5 w-3.5" /> : <WandSparkles className="h-3.5 w-3.5" />}
                 Apply smart plan
@@ -514,7 +514,7 @@ export default function BlogInternalLinkAssistant({
               <button
                 type="button"
                 onClick={insertTopicPath}
-                className="inline-flex h-8 items-center justify-center gap-1.5 rounded-lg bg-gray-900 px-2.5 text-xs font-semibold text-white hover:bg-gray-700"
+                className="inline-flex h-8 items-center justify-center gap-1.5 rounded-lg bg-primary px-2.5 text-xs font-semibold text-white hover:bg-primary"
               >
                 {insertedSlug === "topic-path" ? <CheckCircle2 className="h-3.5 w-3.5" /> : <Route className="h-3.5 w-3.5" />}
                 Auto-link topic path
@@ -522,7 +522,7 @@ export default function BlogInternalLinkAssistant({
               <button
                 type="button"
                 onClick={() => insertBlogs(suggestions.slice(0, 3))}
-                className="inline-flex h-8 items-center justify-center gap-1.5 rounded-lg bg-blue-600 px-2.5 text-xs font-semibold text-white hover:bg-blue-700 sm:col-span-2"
+                className="inline-flex h-8 items-center justify-center gap-1.5 rounded-lg bg-primary px-2.5 text-xs font-semibold text-white hover:bg-primary sm:col-span-2"
               >
                 <PlusCircle className="h-3.5 w-3.5" />
                 Insert top 3
@@ -532,22 +532,22 @@ export default function BlogInternalLinkAssistant({
 
           <div className="space-y-2.5">
             {suggestions.map((blog) => (
-              <div key={blog.id || blog.slug} className="rounded-xl border border-gray-100 bg-gray-50/60 p-3">
+              <div key={blog.id || blog.slug} className="rounded-xl border border-border bg-surface-soft/60 p-3">
                 <div className="flex items-start justify-between gap-3">
                   <div className="min-w-0">
-                    <p className="line-clamp-2 text-sm font-semibold leading-5 text-gray-900">{blog.heading}</p>
+                    <p className="line-clamp-2 text-sm font-semibold leading-5 text-foreground">{blog.heading}</p>
                     <div className="mt-1 flex flex-wrap items-center gap-1.5">
-                      <span className="rounded-md bg-white px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wide text-gray-500">
+                      <span className="rounded-md bg-surface px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wide text-muted">
                         {blog.category}
                       </span>
-                      <span className="rounded-md bg-white px-1.5 py-0.5 text-[10px] font-semibold text-blue-600">
+                      <span className="rounded-md bg-surface px-1.5 py-0.5 text-[10px] font-semibold text-primary">
                         Score {blog.score}
                       </span>
                     </div>
                   </div>
                   <a
                     href={`/altftool/blogs/view-blogs/${blog.id}`}
-                    className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-gray-200 bg-white text-gray-500 hover:text-blue-600"
+                    className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-border bg-surface text-muted hover:text-primary"
                     aria-label={`Preview ${blog.heading}`}
                   >
                     <ExternalLink className="h-3.5 w-3.5" />
@@ -557,7 +557,7 @@ export default function BlogInternalLinkAssistant({
                 {blog.reasons.length ? (
                   <div className="mt-2 flex flex-wrap gap-1.5">
                     {blog.reasons.slice(0, 3).map((reason) => (
-                      <span key={reason} className="rounded-md bg-white px-1.5 py-0.5 text-[10px] text-gray-500">
+                      <span key={reason} className="rounded-md bg-surface px-1.5 py-0.5 text-[10px] text-muted">
                         {reason}
                       </span>
                     ))}
@@ -568,7 +568,7 @@ export default function BlogInternalLinkAssistant({
                   <button
                     type="button"
                     onClick={() => insertBlogs([blog])}
-                    className="inline-flex h-8 items-center justify-center gap-1.5 rounded-lg bg-gray-900 px-2 text-xs font-semibold text-white hover:bg-gray-700"
+                    className="inline-flex h-8 items-center justify-center gap-1.5 rounded-lg bg-primary px-2 text-xs font-semibold text-white hover:bg-primary"
                   >
                     {insertedSlug === blog.slug ? <CheckCircle2 className="h-3.5 w-3.5" /> : <Link2 className="h-3.5 w-3.5" />}
                     Insert
@@ -576,9 +576,9 @@ export default function BlogInternalLinkAssistant({
                   <button
                     type="button"
                     onClick={() => copyLink(blog)}
-                    className="inline-flex h-8 items-center justify-center gap-1.5 rounded-lg border border-gray-200 bg-white px-2 text-xs font-semibold text-gray-600 hover:bg-gray-50"
+                    className="inline-flex h-8 items-center justify-center gap-1.5 rounded-lg border border-border bg-surface px-2 text-xs font-semibold text-muted hover:bg-surface-soft"
                   >
-                    {copiedSlug === blog.slug ? <CheckCircle2 className="h-3.5 w-3.5 text-green-500" /> : <Clipboard className="h-3.5 w-3.5" />}
+                    {copiedSlug === blog.slug ? <CheckCircle2 className="h-3.5 w-3.5 text-success" /> : <Clipboard className="h-3.5 w-3.5" />}
                     Copy HTML
                   </button>
                 </div>
@@ -599,7 +599,7 @@ export default function BlogInternalLinkAssistant({
             internalLinkCount={internalLinkCount}
             onCheckExternal={runExternalCheck}
           />
-          <div className="rounded-xl bg-gray-50 px-3 py-4 text-xs leading-5 text-gray-500">
+          <div className="rounded-xl bg-surface-soft px-3 py-4 text-xs leading-5 text-muted">
             Add category, tags, and a few paragraphs first. Suggestions ignore drafts and links already in the article.
           </div>
         </>

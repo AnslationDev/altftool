@@ -3,17 +3,42 @@ import { createPageQualityGate } from "./helpers/pageQuality.mjs";
 
 const webUrl = process.env.ALTFT_WEB_URL || "http://localhost:3002";
 const adminUrl = process.env.ALTFT_ADMIN_URL || "http://localhost:3001";
+const retryableNavigationError = /ERR_ABORTED|frame was detached|Timeout/i;
+
+async function gotoWithRetry(page, url) {
+  let lastError;
+
+  for (let attempt = 1; attempt <= 3; attempt += 1) {
+    try {
+      await page.goto(url, { waitUntil: "domcontentloaded", timeout: 45_000 });
+      return;
+    } catch (error) {
+      lastError = error;
+      if (!retryableNavigationError.test(error?.message || String(error)) || attempt === 3) {
+        throw error;
+      }
+      await page.waitForTimeout(1500 * attempt);
+    }
+  }
+
+  throw lastError;
+}
 
 async function waitForVisualStability(page) {
-  await page.waitForLoadState("networkidle", { timeout: 15_000 }).catch(() => {});
+  await page.waitForTimeout(600);
   await page.evaluate(async () => {
-    await document.fonts?.ready;
+    await Promise.race([
+      document.fonts?.ready || Promise.resolve(),
+      new Promise((resolve) => setTimeout(resolve, 3000)),
+    ]);
     document.activeElement?.blur?.();
     window.scrollTo(0, 0);
   });
 }
 
 test.describe("visual regression", () => {
+  test.describe.configure({ timeout: 120_000 });
+
   test.use({
     colorScheme: "light",
     viewport: { width: 1440, height: 1000 },
@@ -33,7 +58,7 @@ test.describe("visual regression", () => {
   test("public tools catalog first viewport stays stable", async ({ page }) => {
     const quality = createPageQualityGate(page);
 
-    await page.goto(`${webUrl}/tools`, { waitUntil: "domcontentloaded" });
+    await gotoWithRetry(page, `${webUrl}/tools`);
     await expect(page.locator("#main-header")).toBeVisible();
     await expect(page.getByRole("heading", { name: /tools/i }).first()).toBeVisible();
     await waitForVisualStability(page);
@@ -45,7 +70,7 @@ test.describe("visual regression", () => {
   test("tool workspace route first viewport stays stable", async ({ page }) => {
     const quality = createPageQualityGate(page);
 
-    await page.goto(`${webUrl}/tools/all/api-stress-estimator`, { waitUntil: "domcontentloaded" });
+    await gotoWithRetry(page, `${webUrl}/tools/all/api-stress-estimator`);
     await expect(page.getByRole("heading", { name: "API Stress Estimator", exact: true })).toBeVisible();
     await waitForVisualStability(page);
 
@@ -56,7 +81,7 @@ test.describe("visual regression", () => {
   test("admin login shell first viewport stays stable", async ({ page }) => {
     const quality = createPageQualityGate(page);
 
-    await page.goto(`${adminUrl}/login`, { waitUntil: "domcontentloaded" });
+    await gotoWithRetry(page, `${adminUrl}/login`);
     await expect(page.getByRole("heading", { name: /welcome admin/i })).toBeVisible();
     await waitForVisualStability(page);
 

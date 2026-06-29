@@ -74,8 +74,8 @@ function CopyButton({ html, size = "default" }) {
       ? "text-[10px] px-2.5 py-1.5"
       : "text-xs px-3 py-1.5";
   const style = copied
-    ? "bg-green-50 text-green-700 border border-green-200"
-    : "bg-gray-900 text-white hover:bg-gray-700";
+    ? "bg-success-soft text-success border border-success"
+    : "bg-primary text-white hover:bg-primary";
 
   return (
     <button onClick={handleCopy} type="button" className={`${base} ${sizes} ${style}`}>
@@ -97,13 +97,13 @@ function CopyButton({ html, size = "default" }) {
 ───────────────────────────────────────────── */
 function FAQItemRow({ faq, index, total, onChange, onRemove, onDuplicate, onMove }) {
   return (
-    <div className="border border-gray-100 rounded-xl overflow-hidden bg-white hover:border-gray-200 transition-all">
+    <div className="border border-border rounded-xl overflow-hidden bg-surface hover:border-border transition-all">
       {/* Row header */}
-      <div className="flex items-center gap-2 px-3 py-2 border-b border-gray-100 bg-gray-50">
-        <span className="text-[10px] font-bold text-gray-400 min-w-[18px]">
+      <div className="flex items-center gap-2 px-3 py-2 border-b border-border bg-surface-soft">
+        <span className="text-[10px] font-bold text-muted min-w-[18px]">
           #{index + 1}
         </span>
-        <span className="flex-1 text-xs text-gray-500 truncate">
+        <span className="flex-1 text-xs text-muted truncate">
           {faq.q || "New question"}
         </span>
         <div className="flex items-center gap-1">
@@ -112,7 +112,7 @@ function FAQItemRow({ faq, index, total, onChange, onRemove, onDuplicate, onMove
           type="button"
             title="Duplicate"
             onClick={() => onDuplicate(index)}
-            className="p-1 rounded-md text-gray-400 hover:text-gray-700 hover:bg-gray-100 transition"
+            className="p-1 rounded-md text-muted hover:text-foreground hover:bg-surface-soft transition"
           >
             <CopyPlus className="w-3 h-3" />
           </button>
@@ -122,7 +122,7 @@ function FAQItemRow({ faq, index, total, onChange, onRemove, onDuplicate, onMove
             title="Move up"
             disabled={index === 0}
             onClick={() => onMove(index, -1)}
-            className="p-1 rounded-md text-gray-400 hover:text-gray-700 hover:bg-gray-100 transition disabled:opacity-30 disabled:cursor-not-allowed"
+            className="p-1 rounded-md text-muted hover:text-foreground hover:bg-surface-soft transition disabled:opacity-30 disabled:cursor-not-allowed"
           >
             <ArrowUp className="w-3 h-3" />
           </button>
@@ -132,7 +132,7 @@ function FAQItemRow({ faq, index, total, onChange, onRemove, onDuplicate, onMove
             title="Move down"
             disabled={index === total - 1}
             onClick={() => onMove(index, 1)}
-            className="p-1 rounded-md text-gray-400 hover:text-gray-700 hover:bg-gray-100 transition disabled:opacity-30 disabled:cursor-not-allowed"
+            className="p-1 rounded-md text-muted hover:text-foreground hover:bg-surface-soft transition disabled:opacity-30 disabled:cursor-not-allowed"
           >
             <ArrowDown className="w-3 h-3" />
           </button>
@@ -141,7 +141,7 @@ function FAQItemRow({ faq, index, total, onChange, onRemove, onDuplicate, onMove
           type="button"
             title="Delete"
             onClick={() => onRemove(index)}
-            className="p-1 rounded-md text-gray-400 hover:text-red-600 hover:bg-red-50 transition"
+            className="p-1 rounded-md text-muted hover:text-danger hover:bg-danger-soft transition"
           >
             <Trash2 className="w-3 h-3" />
           </button>
@@ -155,14 +155,14 @@ function FAQItemRow({ faq, index, total, onChange, onRemove, onDuplicate, onMove
           placeholder="Question"
           value={faq.q}
           onChange={(e) => onChange(index, "q", e.target.value)}
-          className="w-full px-3 py-2 text-xs rounded-lg border border-gray-200 bg-transparent focus:outline-none focus:ring-2 focus:ring-blue-400/20 focus:border-blue-400"
+          className="w-full px-3 py-2 text-xs rounded-lg border border-border bg-transparent focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
         />
         <textarea
           placeholder="Answer"
           rows={2}
           value={faq.a}
           onChange={(e) => onChange(index, "a", e.target.value)}
-          className="w-full px-3 py-2 text-xs rounded-lg border border-gray-200 bg-transparent focus:outline-none focus:ring-2 focus:ring-blue-400/20 focus:border-blue-400 resize-none"
+          className="w-full px-3 py-2 text-xs rounded-lg border border-border bg-transparent focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary resize-none"
         />
       </div>
     </div>
@@ -174,27 +174,27 @@ function FAQItemRow({ faq, index, total, onChange, onRemove, onDuplicate, onMove
 ───────────────────────────────────────────── */
 function PreviewItem({ faq, isOpen, onToggle, iconStyle }) {
   return (
-    <div className="border border-gray-100 rounded-xl overflow-hidden">
+    <div className="border border-border rounded-xl overflow-hidden">
       <button
       type="button"
         onClick={onToggle}
-        className="w-full flex items-center justify-between px-4 py-3 text-sm font-medium text-left hover:bg-gray-50 transition"
+        className="w-full flex items-center justify-between px-4 py-3 text-sm font-medium text-left hover:bg-surface-soft transition"
       >
         <span>{faq.q || "Question"}</span>
         {iconStyle === "chevron" ? (
           isOpen ? (
-            <ChevronUp className="w-3.5 h-3.5 text-gray-400 shrink-0" />
+            <ChevronUp className="w-3.5 h-3.5 text-muted shrink-0" />
           ) : (
-            <ChevronDown className="w-3.5 h-3.5 text-gray-400 shrink-0" />
+            <ChevronDown className="w-3.5 h-3.5 text-muted shrink-0" />
           )
         ) : iconStyle === "plus" ? (
-          <span className="text-gray-400 font-light text-base leading-none shrink-0">
+          <span className="text-muted font-light text-base leading-none shrink-0">
             {isOpen ? "−" : "+"}
           </span>
         ) : null}
       </button>
       {isOpen && faq.a && (
-        <div className="px-4 pb-3 text-xs text-gray-500 leading-relaxed border-t border-gray-50">
+        <div className="px-4 pb-3 text-xs text-muted leading-relaxed border-t border-border">
           {faq.a}
         </div>
       )}
@@ -221,8 +221,8 @@ function IconStyleToggle({ value, onChange }) {
           onClick={() => onChange(s.id)}
           className={`px-2.5 py-1 rounded-lg text-[10px] font-semibold border transition ${
             value === s.id
-              ? "bg-gray-900 text-white border-gray-900"
-              : "bg-white text-gray-500 border-gray-200 hover:border-gray-400 hover:text-gray-700"
+              ? "bg-primary text-white border-border"
+              : "bg-surface text-muted border-border hover:border-border hover:text-foreground"
           }`}
         >
           {s.label}
@@ -308,9 +308,9 @@ export default function FAQPicker({ trigger, onInsert }) {
         <button
         type="button"
           onClick={() => setOpen(true)}
-          className="inline-flex items-center gap-2 px-3 py-2 rounded-xl border border-gray-200 bg-white text-xs font-semibold text-gray-700 hover:bg-gray-50 hover:border-gray-300 transition shadow-sm"
+          className="inline-flex items-center gap-2 px-3 py-2 rounded-xl border border-border bg-surface text-xs font-semibold text-foreground hover:bg-surface-soft hover:border-border transition shadow-sm"
         >
-          <HelpCircle className="w-3.5 h-3.5 text-blue-500" />
+          <HelpCircle className="w-3.5 h-3.5 text-primary" />
           Insert FAQ Section
         </button>
       )}
@@ -322,17 +322,17 @@ export default function FAQPicker({ trigger, onInsert }) {
           style={{ background: "rgba(0,0,0,0.45)", backdropFilter: "blur(4px)" }}
           onClick={(e) => { if (e.target === e.currentTarget) setOpen(false); }}
         >
-          <div className="bg-white rounded-3xl shadow-2xl w-full max-w-2xl max-h-[90vh] flex flex-col overflow-hidden">
+          <div className="bg-surface rounded-3xl shadow-2xl w-full max-w-2xl max-h-[90vh] flex flex-col overflow-hidden">
 
             {/* Header */}
-            <div className="flex items-center justify-between px-6 py-4 border-b border-gray-100 shrink-0">
+            <div className="flex items-center justify-between px-6 py-4 border-b border-border shrink-0">
               <div className="flex items-center gap-2.5">
-                <div className="w-7 h-7 rounded-xl bg-blue-50 flex items-center justify-center">
-                  <HelpCircle className="w-4 h-4 text-blue-500" />
+                <div className="w-7 h-7 rounded-xl bg-primary-soft flex items-center justify-center">
+                  <HelpCircle className="w-4 h-4 text-primary" />
                 </div>
                 <div>
-                  <h2 className="text-sm font-bold text-gray-900">FAQ Builder</h2>
-                  <p className="text-[10px] text-gray-400">
+                  <h2 className="text-sm font-bold text-foreground">FAQ Builder</h2>
+                  <p className="text-[10px] text-muted">
                     Build, preview, then copy HTML for your CKEditor
                   </p>
                 </div>
@@ -340,17 +340,17 @@ export default function FAQPicker({ trigger, onInsert }) {
               <button
               type="button"
                 onClick={() => setOpen(false)}
-                className="p-2 rounded-xl hover:bg-gray-100 text-gray-400 hover:text-gray-700 transition"
+                className="p-2 rounded-xl hover:bg-surface-soft text-muted hover:text-foreground transition"
               >
                 <X className="w-4 h-4" />
               </button>
             </div>
 
             {/* Config panel */}
-            <div className="px-6 py-4 border-b border-gray-100 bg-gray-50 shrink-0 space-y-3">
+            <div className="px-6 py-4 border-b border-border bg-surface-soft shrink-0 space-y-3">
               <div className="flex gap-3 flex-wrap">
                 <div className="flex-[2] min-w-[180px] space-y-1">
-                  <label className="text-[10px] font-bold text-gray-400 uppercase tracking-wider">
+                  <label className="text-[10px] font-bold text-muted uppercase tracking-wider">
                     Section heading <span className="font-normal normal-case">(optional)</span>
                   </label>
                   <input
@@ -358,11 +358,11 @@ export default function FAQPicker({ trigger, onInsert }) {
                     value={title}
                     onChange={(e) => setTitle(e.target.value)}
                     placeholder="e.g. Frequently Asked Questions"
-                    className="w-full text-xs px-3 py-2 rounded-xl border border-gray-200 bg-white focus:outline-none focus:ring-2 focus:ring-blue-400/30 focus:border-blue-400"
+                    className="w-full text-xs px-3 py-2 rounded-xl border border-border bg-surface focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary"
                   />
                 </div>
                 <div className="flex-1 min-w-[140px] space-y-1">
-                  <label className="text-[10px] font-bold text-gray-400 uppercase tracking-wider">
+                  <label className="text-[10px] font-bold text-muted uppercase tracking-wider">
                     Wrapper class
                   </label>
                   <input
@@ -370,20 +370,20 @@ export default function FAQPicker({ trigger, onInsert }) {
                     value={wrapClass}
                     onChange={(e) => setWrapClass(e.target.value)}
                     placeholder="FAQ_WRAPPER"
-                    className="w-full text-xs px-3 py-2 rounded-xl border border-gray-200 bg-white font-mono focus:outline-none focus:ring-2 focus:ring-blue-400/30 focus:border-blue-400"
+                    className="w-full text-xs px-3 py-2 rounded-xl border border-border bg-surface font-mono focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary"
                   />
                 </div>
               </div>
 
               <div className="flex gap-4 flex-wrap items-end">
                 <div className="space-y-1">
-                  <label className="text-[10px] font-bold text-gray-400 uppercase tracking-wider">
+                  <label className="text-[10px] font-bold text-muted uppercase tracking-wider">
                     Icon style
                   </label>
                   <IconStyleToggle value={iconStyle} onChange={setIconStyle} />
                 </div>
                 <div className="space-y-1">
-                  <label className="text-[10px] font-bold text-gray-400 uppercase tracking-wider">
+                  <label className="text-[10px] font-bold text-muted uppercase tracking-wider">
                     Accordion behaviour
                   </label>
                   <div className="flex gap-1.5">
@@ -397,8 +397,8 @@ export default function FAQPicker({ trigger, onInsert }) {
                         onClick={() => setAccordionMode(m.id)}
                         className={`px-2.5 py-1 rounded-lg text-[10px] font-semibold border transition ${
                           accordionMode === m.id
-                            ? "bg-gray-900 text-white border-gray-900"
-                            : "bg-white text-gray-500 border-gray-200 hover:border-gray-400 hover:text-gray-700"
+                            ? "bg-primary text-white border-border"
+                            : "bg-surface text-muted border-border hover:border-border hover:text-foreground"
                         }`}
                       >
                         {m.label}
@@ -410,18 +410,18 @@ export default function FAQPicker({ trigger, onInsert }) {
             </div>
 
             {/* Info strip */}
-            <div className="px-6 py-2 bg-blue-50 border-b border-blue-100 shrink-0">
-              <p className="text-[10px] text-blue-600 font-medium">
+            <div className="px-6 py-2 bg-primary-soft border-b border-primary shrink-0">
+              <p className="text-[10px] text-primary font-medium">
                 Add your Q&A pairs → live preview updates below → click{" "}
                 <strong>Copy HTML</strong> → paste in CKEditor's{" "}
-                <code className="bg-blue-100 px-1 rounded">{"<>"} HTML Embed</code>
+                <code className="bg-primary-soft px-1 rounded">{"<>"} HTML Embed</code>
               </p>
             </div>
 
             {/* FAQ items editor */}
-            <div className="px-6 py-4 border-b border-gray-100 shrink-0 max-h-[240px] overflow-y-auto space-y-2">
+            <div className="px-6 py-4 border-b border-border shrink-0 max-h-[240px] overflow-y-auto space-y-2">
               {faqs.length === 0 && (
-                <p className="text-xs text-gray-400 text-center py-4">
+                <p className="text-xs text-muted text-center py-4">
                   No FAQ items yet — click "Add FAQ item" below.
                 </p>
               )}
@@ -440,7 +440,7 @@ export default function FAQPicker({ trigger, onInsert }) {
               <button
               type="button"
                 onClick={addFAQ}
-                className="w-full flex items-center justify-center gap-2 py-2 rounded-xl border border-dashed border-gray-200 text-[11px] font-semibold text-gray-400 hover:border-gray-400 hover:text-gray-600 hover:bg-gray-50 transition mt-1"
+                className="w-full flex items-center justify-center gap-2 py-2 rounded-xl border border-dashed border-border text-[11px] font-semibold text-muted hover:border-border hover:text-muted hover:bg-surface-soft transition mt-1"
               >
                 <Plus className="w-3 h-3" /> Add FAQ item
               </button>
@@ -449,10 +449,10 @@ export default function FAQPicker({ trigger, onInsert }) {
             {/* Live preview */}
             <div className="flex-1 overflow-y-auto px-6 py-4 space-y-2">
               {title && (
-                <p className="text-sm font-semibold text-gray-800 mb-3">{title}</p>
+                <p className="text-sm font-semibold text-foreground mb-3">{title}</p>
               )}
               {faqs.length === 0 && (
-                <p className="text-xs text-gray-400 text-center py-6">
+                <p className="text-xs text-muted text-center py-6">
                   Add items above to see a preview.
                 </p>
               )}
@@ -468,11 +468,11 @@ export default function FAQPicker({ trigger, onInsert }) {
             </div>
 
             {/* Expandable HTML code block */}
-            <div className="shrink-0 border-t border-gray-100">
+            <div className="shrink-0 border-t border-border">
               <button
               type="button"
                 onClick={() => setCodeOpen((v) => !v)}
-                className="w-full flex items-center justify-between px-6 py-2.5 bg-gray-50 hover:bg-gray-100 text-xs text-gray-500 hover:text-gray-700 transition"
+                className="w-full flex items-center justify-between px-6 py-2.5 bg-surface-soft hover:bg-surface-soft text-xs text-muted hover:text-foreground transition"
               >
                 <span className="flex items-center gap-1.5">
                   <Code2 className="w-3 h-3" /> View generated HTML
@@ -484,8 +484,8 @@ export default function FAQPicker({ trigger, onInsert }) {
                 )}
               </button>
               {codeOpen && (
-                <div className="bg-gray-900 px-6 py-4 max-h-[180px] overflow-y-auto">
-                  <pre className="text-[10px] text-green-300 font-mono whitespace-pre-wrap break-all leading-relaxed">
+                <div className="bg-primary px-6 py-4 max-h-[180px] overflow-y-auto">
+                  <pre className="text-[10px] text-success font-mono whitespace-pre-wrap break-all leading-relaxed">
                     {html}
                   </pre>
                 </div>
@@ -493,17 +493,17 @@ export default function FAQPicker({ trigger, onInsert }) {
             </div>
 
             {/* Footer */}
-            <div className="px-6 py-3 border-t border-gray-100 bg-gray-50 flex items-center justify-between shrink-0">
-              <p className="text-[10px] text-gray-400">
+            <div className="px-6 py-3 border-t border-border bg-surface-soft flex items-center justify-between shrink-0">
+              <p className="text-[10px] text-muted">
                 {faqs.length} item{faqs.length !== 1 ? "s" : ""} ·{" "}
-                Styles defined in <code className="bg-gray-100 px-1 rounded">faq.css</code>
+                Styles defined in <code className="bg-surface-soft px-1 rounded">faq.css</code>
               </p>
               <div className="flex items-center gap-2">
                 {typeof onInsert === "function" ? (
                   <button
                     type="button"
                     onClick={handleInsert}
-                    className="inline-flex items-center gap-1.5 rounded-lg bg-blue-600 px-3 py-1.5 text-xs font-semibold text-white transition hover:bg-blue-700"
+                    className="inline-flex items-center gap-1.5 rounded-lg bg-primary px-3 py-1.5 text-xs font-semibold text-white transition hover:bg-primary"
                   >
                     <Plus className="h-3 w-3" />
                     Insert into content

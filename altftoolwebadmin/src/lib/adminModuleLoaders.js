@@ -62,6 +62,7 @@ const routeLoaders = {
       dashboard: () => import("@/projects/altftool/modules/seo/dashboard/page.jsx"),
       search: () => import("@/projects/altftool/modules/seo/search/page.jsx"),
       gsc: () => import("@/projects/altftool/modules/seo/gsc/page.jsx"),
+      "search-console": () => import("@/projects/altftool/modules/seo/search-console/page.jsx"),
     },
   },
   leadtree: {

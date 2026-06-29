@@ -171,6 +171,21 @@ export function AuthProvider({ children }) {
   }, [applyLocalAdminSession]);
 
   const logout = useCallback(async () => {
+    // Best-effort: revoke this device's server-side security session so it does
+    // not linger as "active" until idle timeout. Token is still valid here.
+    try {
+      const current = auth.currentUser;
+      if (current) {
+        const token = await current.getIdToken();
+        await fetch("/api/security/session/end", {
+          method: "POST",
+          headers: { Authorization: `Bearer ${token}` },
+          keepalive: true,
+        });
+      }
+    } catch {
+      /* ignore — never block sign-out on this */
+    }
     clearLocalAdminSession();
     await signOut(auth).catch(() => {});
     if (!mountedRef.current) return;

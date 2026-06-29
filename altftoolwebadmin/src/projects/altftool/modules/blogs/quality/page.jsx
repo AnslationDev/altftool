@@ -37,6 +37,7 @@ import {
 import { parseBlogTags } from "../components/BlogSeoChecklist";
 import { parseSourcesText } from "../components/BlogSourceEditor";
 import BlogContentHealthQueue from "../components/BlogContentHealthQueue";
+import SeoHealthBoard from "../components/SeoHealthBoard";
 import BlogInternalLinkOpportunityPanel from "../components/BlogInternalLinkOpportunityPanel";
 import BlogLinkHealthPanel from "../components/BlogLinkHealthPanel";
 import BlogLinkRollbackPanel from "../components/BlogLinkRollbackPanel";
@@ -101,65 +102,65 @@ const CONTENT_ISSUE_TO_ACTION = {
 };
 
 function scoreTone(score = 0) {
-  if (score >= 80) return "text-green-700 bg-green-50";
-  if (score >= 60) return "text-amber-700 bg-amber-50";
-  return "text-red-600 bg-red-50";
+  if (score >= 80) return "text-success bg-success-soft";
+  if (score >= 60) return "text-warning bg-warning-soft";
+  return "text-danger bg-danger-soft";
 }
 
 function barTone(score = 0) {
-  if (score >= 80) return "bg-green-500";
-  if (score >= 60) return "bg-amber-400";
-  return "bg-red-400";
+  if (score >= 80) return "bg-success";
+  if (score >= 60) return "bg-warning";
+  return "bg-danger";
 }
 
 function gapTone(key = "") {
   const map = {
-    "rich-result": "bg-blue-50 text-blue-700",
-    quality: "bg-red-50 text-red-600",
-    faq: "bg-amber-50 text-amber-700",
-    citations: "bg-green-50 text-green-700",
-    "internal-links": "bg-slate-100 text-slate-700",
-    trust: "bg-violet-50 text-violet-700",
-    image: "bg-cyan-50 text-cyan-700",
-    "review-date": "bg-orange-50 text-orange-700",
-    body: "bg-gray-100 text-gray-700",
+    "rich-result": "bg-primary-soft text-primary",
+    quality: "bg-danger-soft text-danger",
+    faq: "bg-warning-soft text-warning",
+    citations: "bg-success-soft text-success",
+    "internal-links": "bg-surface-soft text-foreground",
+    trust: "bg-secondary-soft text-secondary",
+    image: "bg-info-soft text-info",
+    "review-date": "bg-warning-soft text-warning",
+    body: "bg-surface-soft text-foreground",
   };
-  return map[key] || "bg-gray-100 text-gray-700";
+  return map[key] || "bg-surface-soft text-foreground";
 }
 
 function StatCard({ icon: Icon, label, value, caption, tone = "blue" }) {
   const toneMap = {
-    blue: "bg-blue-50 text-blue-600",
-    green: "bg-green-50 text-green-600",
-    amber: "bg-amber-50 text-amber-600",
-    red: "bg-red-50 text-red-600",
-    slate: "bg-slate-100 text-slate-600",
+    blue: "bg-primary-soft text-primary",
+    green: "bg-success-soft text-success",
+    amber: "bg-warning-soft text-warning",
+    red: "bg-danger-soft text-danger",
+    slate: "bg-surface-soft text-muted",
   };
 
   return (
-    <div className="rounded-2xl border border-gray-100 bg-white p-4 shadow-sm">
+    <div className="rounded-2xl border border-border bg-surface p-4 shadow-sm">
       <div className="flex items-start justify-between gap-2">
         <div className="min-w-0">
-          <p className="text-xs font-black uppercase tracking-wider text-gray-400">{label}</p>
-          <p className="mt-2 break-words text-2xl font-black leading-tight text-gray-900">{value}</p>
+          <p className="text-xs font-black uppercase tracking-wider text-muted">{label}</p>
+          <p className="mt-2 break-words text-2xl font-black leading-tight text-foreground">{value}</p>
         </div>
         <div className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl ${toneMap[tone] || toneMap.blue}`}>
           <Icon className="h-4 w-4" />
         </div>
       </div>
-      <p className="mt-3 text-xs leading-5 text-gray-500">{caption}</p>
+      <p className="mt-3 text-xs leading-5 text-muted">{caption}</p>
     </div>
   );
 }
 
 function ScorePill({ label, score }) {
   return (
-    <div className="rounded-xl bg-gray-50 px-3 py-2">
+    <div className="rounded-xl bg-surface-soft px-3 py-2">
       <div className="flex items-center justify-between gap-3">
-        <span className="text-[10px] font-black uppercase tracking-wider text-gray-400">{label}</span>
+        <span className="text-[10px] font-black uppercase tracking-wider text-muted">{label}</span>
         <span className={`rounded-lg px-2 py-1 text-xs font-black ${scoreTone(score)}`}>{score}</span>
       </div>
-      <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-gray-200">
+      <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-surface-soft">
         <div className={`h-full rounded-full ${barTone(score)}`} style={{ width: `${Math.max(4, score)}%` }} />
       </div>
     </div>
@@ -168,18 +169,18 @@ function ScorePill({ label, score }) {
 
 function EmptyState({ onReset }) {
   return (
-    <div className="rounded-2xl border border-dashed border-gray-200 bg-white px-6 py-12 text-center">
-      <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-2xl bg-gray-50 text-gray-400">
+    <div className="rounded-2xl border border-dashed border-border bg-surface px-6 py-12 text-center">
+      <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-2xl bg-surface-soft text-muted">
         <Filter className="h-5 w-5" />
       </div>
-      <h2 className="mt-4 text-base font-black text-gray-900">No posts in this queue</h2>
-      <p className="mx-auto mt-2 max-w-md text-sm leading-6 text-gray-500">
+      <h2 className="mt-4 text-base font-black text-foreground">No posts in this queue</h2>
+      <p className="mx-auto mt-2 max-w-md text-sm leading-6 text-muted">
         Clear one or two filters to review the full blog quality list.
       </p>
       <button
         type="button"
         onClick={onReset}
-        className="mt-5 inline-flex h-10 items-center justify-center rounded-xl border border-gray-200 bg-white px-4 text-sm font-semibold text-gray-700 transition hover:bg-gray-50"
+        className="mt-5 inline-flex h-10 items-center justify-center rounded-xl border border-border bg-surface px-4 text-sm font-semibold text-foreground transition hover:bg-surface-soft"
       >
         Reset filters
       </button>
@@ -242,13 +243,13 @@ function QualityRow({ blog, linkNode, selected, onToggle, onEdit }) {
   const outboundCount = linkNode?.outboundCount || 0;
 
   return (
-    <article className="rounded-2xl border border-gray-100 bg-white p-4 shadow-sm transition hover:border-blue-100 hover:shadow-md">
+    <article className="rounded-2xl border border-border bg-surface p-4 shadow-sm transition hover:border-primary hover:shadow-md">
       <div className="flex gap-3">
         <button
           type="button"
           onClick={() => onToggle(blog.id)}
           className={`mt-1 flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border transition ${
-            selected ? "border-blue-500 bg-blue-600 text-white" : "border-gray-200 bg-white text-gray-400 hover:bg-gray-50"
+            selected ? "border-primary bg-primary text-white" : "border-border bg-surface text-muted hover:bg-surface-soft"
           }`}
           aria-label={selected ? "Remove blog from selected bulk queue" : "Add blog to selected bulk queue"}
         >
@@ -261,20 +262,20 @@ function QualityRow({ blog, linkNode, selected, onToggle, onEdit }) {
               <span className={`rounded-lg px-2 py-1 text-[10px] font-black uppercase tracking-wide ${priorityTone(blog.refreshScore)}`}>
                 {blog.priority} - {blog.refreshScore}
               </span>
-              <span className="rounded-lg bg-gray-50 px-2 py-1 text-[10px] font-bold uppercase tracking-wide text-gray-500">
+              <span className="rounded-lg bg-surface-soft px-2 py-1 text-[10px] font-bold uppercase tracking-wide text-muted">
                 {blog.status}
               </span>
-              <span className="rounded-lg bg-blue-50 px-2 py-1 text-[10px] font-bold uppercase tracking-wide text-blue-700">
+              <span className="rounded-lg bg-primary-soft px-2 py-1 text-[10px] font-bold uppercase tracking-wide text-primary">
                 {blog.category}
               </span>
               {blog.richResultReady ? (
-                <span className="inline-flex items-center gap-1 rounded-lg bg-green-50 px-2 py-1 text-[10px] font-bold uppercase tracking-wide text-green-700">
+                <span className="inline-flex items-center gap-1 rounded-lg bg-success-soft px-2 py-1 text-[10px] font-bold uppercase tracking-wide text-success">
                   <CheckCircle2 className="h-3 w-3" />
                   Rich ready
                 </span>
               ) : null}
               {brokenCount ? (
-                <span className="inline-flex items-center gap-1 rounded-lg bg-red-50 px-2 py-1 text-[10px] font-bold uppercase tracking-wide text-red-600">
+                <span className="inline-flex items-center gap-1 rounded-lg bg-danger-soft px-2 py-1 text-[10px] font-bold uppercase tracking-wide text-danger">
                   <AlertTriangle className="h-3 w-3" />
                   {brokenCount} broken
                 </span>
@@ -282,11 +283,11 @@ function QualityRow({ blog, linkNode, selected, onToggle, onEdit }) {
             </div>
 
             <button type="button" onClick={() => onEdit(blog, "")} className="mt-2 block max-w-full text-left">
-              <h2 className="line-clamp-2 text-base font-black leading-6 text-gray-900 transition hover:text-blue-700">
+              <h2 className="line-clamp-2 text-base font-black leading-6 text-foreground transition hover:text-primary">
                 {blog.title}
               </h2>
             </button>
-            <p className="mt-1 line-clamp-2 text-sm leading-6 text-gray-500">{blog.excerpt}</p>
+            <p className="mt-1 line-clamp-2 text-sm leading-6 text-muted">{blog.excerpt}</p>
 
             <div className="mt-3 flex flex-wrap gap-1.5">
               {blog.gaps.length ? (
@@ -296,27 +297,27 @@ function QualityRow({ blog, linkNode, selected, onToggle, onEdit }) {
                   </span>
                 ))
               ) : (
-                <span className="inline-flex items-center gap-1 rounded-lg bg-green-50 px-2 py-1 text-[11px] font-semibold text-green-700">
+                <span className="inline-flex items-center gap-1 rounded-lg bg-success-soft px-2 py-1 text-[11px] font-semibold text-success">
                   <CheckCircle2 className="h-3.5 w-3.5" />
                   No blocking gaps
                 </span>
               )}
             </div>
 
-            <div className="mt-4 grid grid-cols-2 gap-2 text-xs text-gray-500 2xl:grid-cols-4">
-              <div className="min-w-[76px] rounded-xl bg-gray-50 px-3 py-2">
-                <p className="font-black text-gray-800">{blog.wordCount.toLocaleString()}</p>
+            <div className="mt-4 grid grid-cols-2 gap-2 text-xs text-muted 2xl:grid-cols-4">
+              <div className="min-w-[76px] rounded-xl bg-surface-soft px-3 py-2">
+                <p className="font-black text-foreground">{blog.wordCount.toLocaleString()}</p>
                 <p className="mt-0.5 whitespace-nowrap text-[11px] leading-4">words</p>
               </div>
-              <div className="min-w-[76px] rounded-xl bg-gray-50 px-3 py-2">
-                <p className="font-black text-gray-800">{inboundCount}</p>
+              <div className="min-w-[76px] rounded-xl bg-surface-soft px-3 py-2">
+                <p className="font-black text-foreground">{inboundCount}</p>
                 <p className="mt-0.5 whitespace-nowrap text-[11px] leading-4">inbound</p>
               </div>
-              <div className="min-w-[76px] rounded-xl bg-gray-50 px-3 py-2">
-                <p className="font-black text-gray-800">{outboundCount}</p>
+              <div className="min-w-[76px] rounded-xl bg-surface-soft px-3 py-2">
+                <p className="font-black text-foreground">{outboundCount}</p>
                 <p className="mt-0.5 whitespace-nowrap text-[11px] leading-4">outbound</p>
               </div>
-              <div className={`min-w-[76px] rounded-xl px-3 py-2 ${brokenCount ? "bg-red-50 text-red-600" : "bg-gray-50"}`}>
+              <div className={`min-w-[76px] rounded-xl px-3 py-2 ${brokenCount ? "bg-danger-soft text-danger" : "bg-surface-soft"}`}>
                 <p className="font-black">{brokenCount}</p>
                 <p className="mt-0.5 whitespace-nowrap text-[11px] leading-4">broken</p>
               </div>
@@ -329,17 +330,17 @@ function QualityRow({ blog, linkNode, selected, onToggle, onEdit }) {
               <ScorePill label="Schema" score={blog.schemaScore} />
             </div>
 
-            <div className="rounded-xl border border-gray-100 bg-gray-50 p-3">
+            <div className="rounded-xl border border-border bg-surface-soft p-3">
               <div className="flex items-center justify-between gap-3">
                 <div className="min-w-0">
-                  <p className="text-[10px] font-black uppercase tracking-wider text-gray-400">Next action</p>
-                  <p className="mt-1 truncate text-sm font-black text-gray-900">{action.label}</p>
+                  <p className="text-[10px] font-black uppercase tracking-wider text-muted">Next action</p>
+                  <p className="mt-1 truncate text-sm font-black text-foreground">{action.label}</p>
                 </div>
                 <span className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border ${toneClasses(action.tone)}`}>
                   <ActionIcon className="h-4 w-4" />
                 </span>
               </div>
-              <p className="mt-2 text-xs leading-5 text-gray-500">
+              <p className="mt-2 text-xs leading-5 text-muted">
                 Last signal: {formatAuditDate(blog.updatedDate, "No review date")}
               </p>
             </div>
@@ -348,7 +349,7 @@ function QualityRow({ blog, linkNode, selected, onToggle, onEdit }) {
               <button
                 type="button"
                 onClick={() => onEdit(blog, blog.recommendedAction)}
-                className="inline-flex h-9 flex-1 items-center justify-center gap-2 rounded-xl bg-gray-900 px-3 text-xs font-semibold text-white transition hover:bg-gray-700"
+                className="inline-flex h-9 flex-1 items-center justify-center gap-2 rounded-xl bg-primary px-3 text-xs font-semibold text-white transition hover:bg-primary"
               >
                 <WandSparkles className="h-3.5 w-3.5" />
                 Fix
@@ -356,7 +357,7 @@ function QualityRow({ blog, linkNode, selected, onToggle, onEdit }) {
               <button
                 type="button"
                 onClick={() => onEdit(blog, "")}
-                className="inline-flex h-9 flex-1 items-center justify-center gap-2 rounded-xl border border-gray-200 bg-white px-3 text-xs font-semibold text-gray-700 transition hover:bg-gray-50"
+                className="inline-flex h-9 flex-1 items-center justify-center gap-2 rounded-xl border border-border bg-surface px-3 text-xs font-semibold text-foreground transition hover:bg-surface-soft"
               >
                 <FileText className="h-3.5 w-3.5" />
                 Edit
@@ -366,7 +367,7 @@ function QualityRow({ blog, linkNode, selected, onToggle, onEdit }) {
                   href={blog.publicUrl}
                   target="_blank"
                   rel="noreferrer"
-                  className="inline-flex h-9 flex-1 items-center justify-center gap-2 rounded-xl border border-blue-100 bg-blue-50 px-3 text-xs font-semibold text-blue-700 transition hover:bg-blue-100"
+                  className="inline-flex h-9 flex-1 items-center justify-center gap-2 rounded-xl border border-primary bg-primary-soft px-3 text-xs font-semibold text-primary transition hover:bg-primary-soft"
                 >
                   <ExternalLink className="h-3.5 w-3.5" />
                   View
@@ -395,37 +396,37 @@ function LinkGraphPanel({
   const hasExternalResults = externalCheck?.status === "done" && externalSummary?.total > 0;
 
   return (
-    <section className="rounded-2xl border border-gray-100 bg-white p-4 shadow-sm">
+    <section className="rounded-2xl border border-border bg-surface p-4 shadow-sm">
       <div className="flex items-center justify-between gap-3">
         <div>
-          <p className="text-xs font-black uppercase tracking-wider text-gray-500">Link graph</p>
-          <h2 className="mt-1 text-xl font-black text-gray-900">{graph.summary.internalLinks.toLocaleString()} links</h2>
+          <p className="text-xs font-black uppercase tracking-wider text-muted">Link graph</p>
+          <h2 className="mt-1 text-xl font-black text-foreground">{graph.summary.internalLinks.toLocaleString()} links</h2>
         </div>
-        <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-slate-100 text-slate-600">
+        <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-surface-soft text-muted">
           <Link2 className="h-5 w-5" />
         </div>
       </div>
 
       <div className="mt-4 grid grid-cols-3 gap-2 text-center">
-        <div className="rounded-xl bg-red-50 px-2 py-2">
-          <p className="text-lg font-black text-red-600">{graph.summary.brokenLinks}</p>
-          <p className="text-[10px] font-bold uppercase tracking-wide text-red-500">Broken</p>
+        <div className="rounded-xl bg-danger-soft px-2 py-2">
+          <p className="text-lg font-black text-danger">{graph.summary.brokenLinks}</p>
+          <p className="text-[10px] font-bold uppercase tracking-wide text-danger">Broken</p>
         </div>
-        <div className="rounded-xl bg-amber-50 px-2 py-2">
-          <p className="text-lg font-black text-amber-700">{graph.summary.isolated}</p>
-          <p className="text-[10px] font-bold uppercase tracking-wide text-amber-600">Isolated</p>
+        <div className="rounded-xl bg-warning-soft px-2 py-2">
+          <p className="text-lg font-black text-warning">{graph.summary.isolated}</p>
+          <p className="text-[10px] font-bold uppercase tracking-wide text-warning">Isolated</p>
         </div>
-        <div className="rounded-xl bg-blue-50 px-2 py-2">
-          <p className="text-lg font-black text-blue-700">{graph.summary.missingOutbound}</p>
-          <p className="text-[10px] font-bold uppercase tracking-wide text-blue-600">No out</p>
+        <div className="rounded-xl bg-primary-soft px-2 py-2">
+          <p className="text-lg font-black text-primary">{graph.summary.missingOutbound}</p>
+          <p className="text-[10px] font-bold uppercase tracking-wide text-primary">No out</p>
         </div>
       </div>
 
-      <div className="mt-4 rounded-xl border border-gray-100 bg-gray-50 px-3 py-3">
+      <div className="mt-4 rounded-xl border border-border bg-surface-soft px-3 py-3">
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div>
-            <p className="text-[10px] font-black uppercase tracking-wider text-gray-400">Live external</p>
-            <p className="mt-1 text-sm font-black text-gray-900">
+            <p className="text-[10px] font-black uppercase tracking-wider text-muted">Live external</p>
+            <p className="mt-1 text-sm font-black text-foreground">
               {graph.summary.externalLinks.toLocaleString()} external link{graph.summary.externalLinks === 1 ? "" : "s"}
             </p>
           </div>
@@ -433,7 +434,7 @@ function LinkGraphPanel({
             type="button"
             onClick={onCheckExternal}
             disabled={!externalUrls.length || checkingExternal}
-            className="inline-flex h-8 items-center gap-1.5 rounded-lg border border-gray-200 bg-white px-2.5 text-xs font-semibold text-gray-700 transition hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50"
+            className="inline-flex h-8 items-center gap-1.5 rounded-lg border border-border bg-surface px-2.5 text-xs font-semibold text-foreground transition hover:bg-surface-soft disabled:cursor-not-allowed disabled:opacity-50"
           >
             <RefreshCw className={`h-3.5 w-3.5 ${checkingExternal ? "animate-spin" : ""}`} />
             Check {externalUrls.length ? Math.min(externalUrls.length, 20) : ""}
@@ -441,7 +442,7 @@ function LinkGraphPanel({
         </div>
 
         {externalCheck?.error ? (
-          <div className="mt-2 rounded-lg border border-red-100 bg-white px-2 py-2 text-xs font-semibold text-red-600">
+          <div className="mt-2 rounded-lg border border-danger bg-surface px-2 py-2 text-xs font-semibold text-danger">
             {externalCheck.error}
           </div>
         ) : null}
@@ -449,30 +450,30 @@ function LinkGraphPanel({
         {hasExternalResults ? (
           <div className="mt-3 space-y-2">
             <div className="grid grid-cols-3 gap-2 text-center">
-              <div className="rounded-lg bg-white px-2 py-2">
-                <p className="text-sm font-black text-green-700">{externalSummary.ok}</p>
-                <p className="text-[10px] font-bold uppercase tracking-wide text-green-600">OK</p>
+              <div className="rounded-lg bg-surface px-2 py-2">
+                <p className="text-sm font-black text-success">{externalSummary.ok}</p>
+                <p className="text-[10px] font-bold uppercase tracking-wide text-success">OK</p>
               </div>
-              <div className="rounded-lg bg-white px-2 py-2">
-                <p className="text-sm font-black text-amber-700">{externalSummary.warning + externalSummary.blocked}</p>
-                <p className="text-[10px] font-bold uppercase tracking-wide text-amber-600">Review</p>
+              <div className="rounded-lg bg-surface px-2 py-2">
+                <p className="text-sm font-black text-warning">{externalSummary.warning + externalSummary.blocked}</p>
+                <p className="text-[10px] font-bold uppercase tracking-wide text-warning">Review</p>
               </div>
-              <div className="rounded-lg bg-white px-2 py-2">
-                <p className="text-sm font-black text-red-600">{externalSummary.broken}</p>
-                <p className="text-[10px] font-bold uppercase tracking-wide text-red-500">Broken</p>
+              <div className="rounded-lg bg-surface px-2 py-2">
+                <p className="text-sm font-black text-danger">{externalSummary.broken}</p>
+                <p className="text-[10px] font-bold uppercase tracking-wide text-danger">Broken</p>
               </div>
             </div>
 
             {externalSummary.issueResults.slice(0, 3).map((result) => (
-              <div key={`${result.url}-${result.status || result.state}`} className="rounded-lg bg-white px-2 py-2 text-xs">
+              <div key={`${result.url}-${result.status || result.state}`} className="rounded-lg bg-surface px-2 py-2 text-xs">
                 <div className="flex items-center justify-between gap-2">
-                  <span className={`font-black ${result.state === "broken" ? "text-red-600" : "text-amber-700"}`}>
+                  <span className={`font-black ${result.state === "broken" ? "text-danger" : "text-warning"}`}>
                     {result.status || result.state}
                   </span>
-                  <span className="text-[10px] text-gray-400">{result.durationMs}ms</span>
+                  <span className="text-[10px] text-muted">{result.durationMs}ms</span>
                 </div>
-                <p className="mt-1 truncate font-mono text-[10px] text-gray-500">{result.url}</p>
-                <p className="mt-1 text-[11px] leading-4 text-gray-600">{result.reason}</p>
+                <p className="mt-1 truncate font-mono text-[10px] text-muted">{result.url}</p>
+                <p className="mt-1 text-[11px] leading-4 text-muted">{result.reason}</p>
               </div>
             ))}
           </div>
@@ -481,16 +482,16 @@ function LinkGraphPanel({
 
       {brokenQueue.length ? (
         <div className="mt-4 space-y-2">
-          <p className="text-[10px] font-black uppercase tracking-wider text-gray-400">Broken links</p>
+          <p className="text-[10px] font-black uppercase tracking-wider text-muted">Broken links</p>
           {brokenQueue.map((node) => (
             <button
               key={`broken-${node.blog.id}`}
               type="button"
               onClick={() => onEdit(node.blog, "links")}
-              className="group w-full rounded-xl border border-red-100 bg-red-50 px-3 py-2 text-left transition hover:border-red-200 hover:bg-red-100"
+              className="group w-full rounded-xl border border-danger bg-danger-soft px-3 py-2 text-left transition hover:border-danger hover:bg-danger-soft"
             >
-              <span className="block line-clamp-1 text-sm font-bold text-red-700 group-hover:text-red-800">{node.blog.title}</span>
-              <span className="mt-1 block text-[11px] text-red-600">
+              <span className="block line-clamp-1 text-sm font-bold text-danger group-hover:text-danger">{node.blog.title}</span>
+              <span className="mt-1 block text-[11px] text-danger">
                 {node.audit.brokenLinks.length} issue{node.audit.brokenLinks.length === 1 ? "" : "s"} - {node.audit.brokenLinks[0]?.label}
               </span>
             </button>
@@ -499,21 +500,21 @@ function LinkGraphPanel({
       ) : null}
 
       <div className="mt-4 space-y-2">
-        <p className="text-[10px] font-black uppercase tracking-wider text-gray-400">Isolated posts</p>
+        <p className="text-[10px] font-black uppercase tracking-wider text-muted">Isolated posts</p>
         {isolated.length ? (
           isolated.map((node) => (
             <button
               key={`isolated-${node.blog.id}`}
               type="button"
               onClick={() => onEdit(node.blog, "links")}
-              className="group w-full rounded-xl border border-gray-100 bg-gray-50 px-3 py-2 text-left transition hover:border-blue-200 hover:bg-blue-50"
+              className="group w-full rounded-xl border border-border bg-surface-soft px-3 py-2 text-left transition hover:border-primary hover:bg-primary-soft"
             >
-              <span className="block line-clamp-1 text-sm font-bold text-gray-700 group-hover:text-blue-700">{node.blog.title}</span>
-              <span className="mt-1 block text-[11px] text-gray-500">0 inbound - 0 outbound blog links</span>
+              <span className="block line-clamp-1 text-sm font-bold text-foreground group-hover:text-primary">{node.blog.title}</span>
+              <span className="mt-1 block text-[11px] text-muted">0 inbound - 0 outbound blog links</span>
             </button>
           ))
         ) : (
-          <div className="rounded-xl bg-green-50 px-3 py-3 text-sm font-semibold text-green-700">
+          <div className="rounded-xl bg-success-soft px-3 py-3 text-sm font-semibold text-success">
             No fully isolated published posts.
           </div>
         )}
@@ -521,11 +522,11 @@ function LinkGraphPanel({
 
       {hubs.length ? (
         <div className="mt-4 space-y-2">
-          <p className="text-[10px] font-black uppercase tracking-wider text-gray-400">Hub posts</p>
+          <p className="text-[10px] font-black uppercase tracking-wider text-muted">Hub posts</p>
           {hubs.map((node) => (
-            <div key={`hub-${node.blog.id}`} className="rounded-xl bg-gray-50 px-3 py-2">
-              <p className="line-clamp-1 text-sm font-bold text-gray-700">{node.blog.title}</p>
-              <p className="mt-1 text-[11px] text-gray-500">
+            <div key={`hub-${node.blog.id}`} className="rounded-xl bg-surface-soft px-3 py-2">
+              <p className="line-clamp-1 text-sm font-bold text-foreground">{node.blog.title}</p>
+              <p className="mt-1 text-[11px] text-muted">
                 {node.inboundCount} inbound - {node.outboundCount} outbound
               </p>
             </div>
@@ -544,26 +545,26 @@ function LinkFixPreviewModal({ applying = false, onClose, onConfirm, preview }) 
   const modeLabel = preview.mode === "combined" ? "Safe + anchor text" : preview.mode === "weak" ? "Anchor text" : "Safe URL cleanup";
 
   return (
-    <div className="fixed inset-0 z-50 flex items-end justify-center bg-gray-950/45 px-4 py-4 backdrop-blur-sm sm:items-center">
+    <div className="fixed inset-0 z-50 flex items-end justify-center bg-primary/45 px-4 py-4 backdrop-blur-sm sm:items-center">
       <section
         role="dialog"
         aria-modal="true"
         aria-labelledby="link-fix-preview-title"
-        className="max-h-[86vh] w-full max-w-2xl overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-2xl"
+        className="max-h-[86vh] w-full max-w-2xl overflow-hidden rounded-2xl border border-border bg-surface shadow-2xl"
       >
-        <div className="flex items-start justify-between gap-4 border-b border-gray-100 px-5 py-4">
+        <div className="flex items-start justify-between gap-4 border-b border-border px-5 py-4">
           <div className="min-w-0">
-            <p className="text-xs font-black uppercase tracking-wider text-blue-600">Dry-run preview</p>
-            <h2 id="link-fix-preview-title" className="mt-1 text-xl font-black text-gray-900">
+            <p className="text-xs font-black uppercase tracking-wider text-primary">Dry-run preview</p>
+            <h2 id="link-fix-preview-title" className="mt-1 text-xl font-black text-foreground">
               {preview.title}
             </h2>
-            <p className="mt-1 text-sm leading-6 text-gray-500">{preview.description}</p>
+            <p className="mt-1 text-sm leading-6 text-muted">{preview.description}</p>
           </div>
           <button
             type="button"
             onClick={onClose}
             disabled={applying}
-            className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border border-gray-200 bg-white text-gray-500 transition hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50"
+            className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border border-border bg-surface text-muted transition hover:bg-surface-soft disabled:cursor-not-allowed disabled:opacity-50"
             aria-label="Close link fix preview"
           >
             <X className="h-4 w-4" />
@@ -572,44 +573,44 @@ function LinkFixPreviewModal({ applying = false, onClose, onConfirm, preview }) 
 
         <div className="max-h-[56vh] space-y-3 overflow-y-auto px-5 py-4">
           <div className="grid grid-cols-2 gap-2 text-center sm:grid-cols-3">
-            <div className="rounded-xl bg-blue-50 px-3 py-3 text-blue-700">
+            <div className="rounded-xl bg-primary-soft px-3 py-3 text-primary">
               <p className="text-lg font-black">{candidates.length}</p>
               <p className="text-[10px] font-black uppercase tracking-wider">Posts</p>
             </div>
-            <div className="rounded-xl bg-green-50 px-3 py-3 text-green-700">
+            <div className="rounded-xl bg-success-soft px-3 py-3 text-success">
               <p className="text-lg font-black">{fixCount}</p>
               <p className="text-[10px] font-black uppercase tracking-wider">Fixes</p>
             </div>
-            <div className="col-span-2 rounded-xl bg-gray-50 px-3 py-3 text-gray-700 sm:col-span-1">
+            <div className="col-span-2 rounded-xl bg-surface-soft px-3 py-3 text-foreground sm:col-span-1">
               <p className="text-sm font-black">{modeLabel}</p>
-              <p className="text-[10px] font-black uppercase tracking-wider text-gray-400">Mode</p>
+              <p className="text-[10px] font-black uppercase tracking-wider text-muted">Mode</p>
             </div>
           </div>
 
           {candidates.map((node) => (
-            <article key={`preview-${node.blog.id}`} className="rounded-xl border border-gray-100 bg-gray-50 px-3 py-3">
+            <article key={`preview-${node.blog.id}`} className="rounded-xl border border-border bg-surface-soft px-3 py-3">
               <div className="flex items-start justify-between gap-3">
-                <h3 className="line-clamp-2 text-sm font-black leading-5 text-gray-900">{node.blog.title || node.blog.heading || "Untitled blog"}</h3>
-                <span className="rounded-lg bg-white px-2 py-1 text-xs font-black text-gray-600 shadow-sm">
+                <h3 className="line-clamp-2 text-sm font-black leading-5 text-foreground">{node.blog.title || node.blog.heading || "Untitled blog"}</h3>
+                <span className="rounded-lg bg-surface px-2 py-1 text-xs font-black text-muted shadow-sm">
                   {node.patch?.fixes?.length || 0}
                 </span>
               </div>
               <div className="mt-3 space-y-2">
                 {(node.patch?.fixes || []).slice(0, 5).map((fix, index) => (
-                  <div key={`${node.blog.id}-${fix.kind}-${index}`} className="rounded-lg bg-white px-3 py-2 text-xs leading-5 text-gray-600">
+                  <div key={`${node.blog.id}-${fix.kind}-${index}`} className="rounded-lg bg-surface px-3 py-2 text-xs leading-5 text-muted">
                     <div className="flex flex-wrap items-center gap-2">
-                      <span className="font-black text-gray-900">{fix.label}</span>
+                      <span className="font-black text-foreground">{fix.label}</span>
                       {fix.kind ? (
-                        <span className="rounded-md bg-gray-100 px-1.5 py-0.5 font-bold uppercase tracking-wide text-gray-400">{fix.kind}</span>
+                        <span className="rounded-md bg-surface-soft px-1.5 py-0.5 font-bold uppercase tracking-wide text-muted">{fix.kind}</span>
                       ) : null}
                     </div>
-                    <p className="mt-1 break-words font-mono text-[11px] text-gray-500">
-                      {fix.from || fix.href || "current link"} <span className="font-sans font-black text-gray-400">-&gt;</span> {fix.to || fix.href || "updated link"}
+                    <p className="mt-1 break-words font-mono text-[11px] text-muted">
+                      {fix.from || fix.href || "current link"} <span className="font-sans font-black text-muted">-&gt;</span> {fix.to || fix.href || "updated link"}
                     </p>
                   </div>
                 ))}
                 {(node.patch?.fixes?.length || 0) > 5 ? (
-                  <p className="px-1 text-[11px] font-semibold text-gray-400">
+                  <p className="px-1 text-[11px] font-semibold text-muted">
                     +{node.patch.fixes.length - 5} more fix{node.patch.fixes.length - 5 === 1 ? "" : "es"} in this post
                   </p>
                 ) : null}
@@ -618,8 +619,8 @@ function LinkFixPreviewModal({ applying = false, onClose, onConfirm, preview }) 
           ))}
         </div>
 
-        <div className="flex flex-wrap items-center justify-between gap-3 border-t border-gray-100 px-5 py-4">
-          <p className="text-xs leading-5 text-gray-500">
+        <div className="flex flex-wrap items-center justify-between gap-3 border-t border-border px-5 py-4">
+          <p className="text-xs leading-5 text-muted">
             Nothing is saved until you confirm. This will update only blog descriptions in Firebase.
           </p>
           <div className="flex items-center gap-2">
@@ -627,7 +628,7 @@ function LinkFixPreviewModal({ applying = false, onClose, onConfirm, preview }) 
               type="button"
               onClick={onClose}
               disabled={applying}
-              className="inline-flex h-10 items-center justify-center rounded-xl border border-gray-200 bg-white px-4 text-sm font-semibold text-gray-700 transition hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50"
+              className="inline-flex h-10 items-center justify-center rounded-xl border border-border bg-surface px-4 text-sm font-semibold text-foreground transition hover:bg-surface-soft disabled:cursor-not-allowed disabled:opacity-50"
             >
               Cancel
             </button>
@@ -635,7 +636,7 @@ function LinkFixPreviewModal({ applying = false, onClose, onConfirm, preview }) 
               type="button"
               onClick={onConfirm}
               disabled={applying || !candidates.length}
-              className="inline-flex h-10 items-center justify-center gap-2 rounded-xl bg-gray-900 px-4 text-sm font-semibold text-white transition hover:bg-gray-700 disabled:cursor-not-allowed disabled:bg-gray-300"
+              className="inline-flex h-10 items-center justify-center gap-2 rounded-xl bg-primary px-4 text-sm font-semibold text-white transition hover:bg-primary disabled:cursor-not-allowed disabled:bg-surface-soft"
             >
               {applying ? <RefreshCw className="h-4 w-4 animate-spin" /> : <WandSparkles className="h-4 w-4" />}
               {applying ? "Applying..." : `Apply ${fixCount} fix${fixCount === 1 ? "" : "es"}`}
@@ -654,20 +655,20 @@ function InternalLinkPlanPreviewModal({ applying = false, onClose, onConfirm, pr
   const fixCount = preview.fixCount || 0;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-end justify-center bg-gray-950/45 px-4 py-4 backdrop-blur-sm sm:items-center">
+    <div className="fixed inset-0 z-50 flex items-end justify-center bg-primary/45 px-4 py-4 backdrop-blur-sm sm:items-center">
       <section
         role="dialog"
         aria-modal="true"
         aria-labelledby="internal-link-plan-preview-title"
-        className="max-h-[86vh] w-full max-w-2xl overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-2xl"
+        className="max-h-[86vh] w-full max-w-2xl overflow-hidden rounded-2xl border border-border bg-surface shadow-2xl"
       >
-        <div className="flex items-start justify-between gap-4 border-b border-gray-100 px-5 py-4">
+        <div className="flex items-start justify-between gap-4 border-b border-border px-5 py-4">
           <div className="min-w-0">
-            <p className="text-xs font-black uppercase tracking-wider text-blue-600">Dry-run preview</p>
-            <h2 id="internal-link-plan-preview-title" className="mt-1 text-xl font-black text-gray-900">
+            <p className="text-xs font-black uppercase tracking-wider text-primary">Dry-run preview</p>
+            <h2 id="internal-link-plan-preview-title" className="mt-1 text-xl font-black text-foreground">
               Internal link plans
             </h2>
-            <p className="mt-1 text-sm leading-6 text-gray-500">
+            <p className="mt-1 text-sm leading-6 text-muted">
               Review generated related-read blocks before writing them to blog descriptions with rollback snapshots.
             </p>
           </div>
@@ -675,7 +676,7 @@ function InternalLinkPlanPreviewModal({ applying = false, onClose, onConfirm, pr
             type="button"
             onClick={onClose}
             disabled={applying}
-            className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border border-gray-200 bg-white text-gray-500 transition hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50"
+            className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border border-border bg-surface text-muted transition hover:bg-surface-soft disabled:cursor-not-allowed disabled:opacity-50"
             aria-label="Close internal link plan preview"
           >
             <X className="h-4 w-4" />
@@ -684,40 +685,40 @@ function InternalLinkPlanPreviewModal({ applying = false, onClose, onConfirm, pr
 
         <div className="max-h-[56vh] space-y-3 overflow-y-auto px-5 py-4">
           <div className="grid grid-cols-2 gap-2 text-center sm:grid-cols-3">
-            <div className="rounded-xl bg-blue-50 px-3 py-3 text-blue-700">
+            <div className="rounded-xl bg-primary-soft px-3 py-3 text-primary">
               <p className="text-lg font-black">{candidates.length}</p>
               <p className="text-[10px] font-black uppercase tracking-wider">Posts</p>
             </div>
-            <div className="rounded-xl bg-green-50 px-3 py-3 text-green-700">
+            <div className="rounded-xl bg-success-soft px-3 py-3 text-success">
               <p className="text-lg font-black">{fixCount}</p>
               <p className="text-[10px] font-black uppercase tracking-wider">Links</p>
             </div>
-            <div className="col-span-2 rounded-xl bg-gray-50 px-3 py-3 text-gray-700 sm:col-span-1">
+            <div className="col-span-2 rounded-xl bg-surface-soft px-3 py-3 text-foreground sm:col-span-1">
               <p className="text-sm font-black">Rollback-safe</p>
-              <p className="text-[10px] font-black uppercase tracking-wider text-gray-400">Mode</p>
+              <p className="text-[10px] font-black uppercase tracking-wider text-muted">Mode</p>
             </div>
           </div>
 
           {candidates.map((node) => (
-            <article key={`internal-plan-preview-${node.blog.id}`} className="rounded-xl border border-gray-100 bg-gray-50 px-3 py-3">
+            <article key={`internal-plan-preview-${node.blog.id}`} className="rounded-xl border border-border bg-surface-soft px-3 py-3">
               <div className="flex items-start justify-between gap-3">
-                <h3 className="line-clamp-2 text-sm font-black leading-5 text-gray-900">{node.blog.title || node.blog.heading || "Untitled blog"}</h3>
-                <span className="rounded-lg bg-white px-2 py-1 text-xs font-black text-gray-600 shadow-sm">
+                <h3 className="line-clamp-2 text-sm font-black leading-5 text-foreground">{node.blog.title || node.blog.heading || "Untitled blog"}</h3>
+                <span className="rounded-lg bg-surface px-2 py-1 text-xs font-black text-muted shadow-sm">
                   {node.patch?.fixes?.length || 0}
                 </span>
               </div>
               <div className="mt-3 space-y-2">
                 {(node.patch?.suggestions || []).slice(0, 4).map((suggestion) => (
-                  <div key={`${node.blog.id}-${suggestion.slug}`} className="rounded-lg bg-white px-3 py-2 text-xs leading-5 text-gray-600">
+                  <div key={`${node.blog.id}-${suggestion.slug}`} className="rounded-lg bg-surface px-3 py-2 text-xs leading-5 text-muted">
                     <div className="flex flex-wrap items-center gap-2">
-                      <span className="font-black text-gray-900">{suggestion.anchorText || suggestion.title}</span>
-                      <span className="rounded-md bg-blue-50 px-1.5 py-0.5 font-bold uppercase tracking-wide text-blue-700">
+                      <span className="font-black text-foreground">{suggestion.anchorText || suggestion.title}</span>
+                      <span className="rounded-md bg-primary-soft px-1.5 py-0.5 font-bold uppercase tracking-wide text-primary">
                         {suggestion.confidence || "Useful"}
                       </span>
                     </div>
-                    <p className="mt-1 break-words font-mono text-[11px] text-gray-500">{suggestion.href}</p>
+                    <p className="mt-1 break-words font-mono text-[11px] text-muted">{suggestion.href}</p>
                     {suggestion.reasons?.length ? (
-                      <p className="mt-1 text-[11px] font-semibold text-gray-400">{suggestion.reasons.slice(0, 3).join(" - ")}</p>
+                      <p className="mt-1 text-[11px] font-semibold text-muted">{suggestion.reasons.slice(0, 3).join(" - ")}</p>
                     ) : null}
                   </div>
                 ))}
@@ -726,8 +727,8 @@ function InternalLinkPlanPreviewModal({ applying = false, onClose, onConfirm, pr
           ))}
         </div>
 
-        <div className="flex flex-wrap items-center justify-between gap-3 border-t border-gray-100 px-5 py-4">
-          <p className="text-xs leading-5 text-gray-500">
+        <div className="flex flex-wrap items-center justify-between gap-3 border-t border-border px-5 py-4">
+          <p className="text-xs leading-5 text-muted">
             Existing generated smart-link blocks are replaced; custom article content stays untouched.
           </p>
           <div className="flex items-center gap-2">
@@ -735,7 +736,7 @@ function InternalLinkPlanPreviewModal({ applying = false, onClose, onConfirm, pr
               type="button"
               onClick={onClose}
               disabled={applying}
-              className="inline-flex h-10 items-center justify-center rounded-xl border border-gray-200 bg-white px-4 text-sm font-semibold text-gray-700 transition hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50"
+              className="inline-flex h-10 items-center justify-center rounded-xl border border-border bg-surface px-4 text-sm font-semibold text-foreground transition hover:bg-surface-soft disabled:cursor-not-allowed disabled:opacity-50"
             >
               Cancel
             </button>
@@ -743,7 +744,7 @@ function InternalLinkPlanPreviewModal({ applying = false, onClose, onConfirm, pr
               type="button"
               onClick={onConfirm}
               disabled={applying || !candidates.length}
-              className="inline-flex h-10 items-center justify-center gap-2 rounded-xl bg-gray-900 px-4 text-sm font-semibold text-white transition hover:bg-gray-700 disabled:cursor-not-allowed disabled:bg-gray-300"
+              className="inline-flex h-10 items-center justify-center gap-2 rounded-xl bg-primary px-4 text-sm font-semibold text-white transition hover:bg-primary disabled:cursor-not-allowed disabled:bg-surface-soft"
             >
               {applying ? <RefreshCw className="h-4 w-4 animate-spin" /> : <Link2 className="h-4 w-4" />}
               {applying ? "Applying..." : `Apply ${fixCount} link${fixCount === 1 ? "" : "s"}`}
@@ -1395,15 +1396,15 @@ export default function BlogQualityCenterPage() {
   if (loading) {
     return (
       <div className="mx-auto max-w-7xl space-y-5 px-4 py-8">
-        <div className="h-9 w-72 animate-pulse rounded-xl bg-gray-100" />
+        <div className="h-9 w-72 animate-pulse rounded-xl bg-surface-soft" />
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-5">
           {[1, 2, 3, 4, 5].map((item) => (
-            <div key={item} className="h-28 animate-pulse rounded-2xl bg-gray-100" />
+            <div key={item} className="h-28 animate-pulse rounded-2xl bg-surface-soft" />
           ))}
         </div>
         <div className="grid grid-cols-1 gap-4 lg:grid-cols-[minmax(0,1fr)_340px]">
-          <div className="h-96 animate-pulse rounded-2xl bg-gray-100" />
-          <div className="h-96 animate-pulse rounded-2xl bg-gray-100" />
+          <div className="h-96 animate-pulse rounded-2xl bg-surface-soft" />
+          <div className="h-96 animate-pulse rounded-2xl bg-surface-soft" />
         </div>
       </div>
     );
@@ -1416,15 +1417,15 @@ export default function BlogQualityCenterPage() {
           <button
             type="button"
             onClick={() => router.push("/altftool/blogs")}
-            className="flex h-10 w-10 items-center justify-center rounded-xl border border-gray-200 bg-white text-gray-500 transition hover:bg-gray-50 hover:text-gray-800"
+            className="flex h-10 w-10 items-center justify-center rounded-xl border border-border bg-surface text-muted transition hover:bg-surface-soft hover:text-foreground"
             aria-label="Back to blogs"
           >
             <ArrowLeft className="h-4 w-4" />
           </button>
           <div>
-            <p className="text-xs font-black uppercase tracking-widest text-blue-600">AltFTool blogs</p>
-            <h1 className="mt-1 text-2xl font-black tracking-tight text-gray-900">Quality Center</h1>
-            <p className="mt-1 text-sm text-gray-500">SEO readiness, rich-result gaps, freshness risk, and next editorial actions.</p>
+            <p className="text-xs font-black uppercase tracking-widest text-primary">AltFTool blogs</p>
+            <h1 className="mt-1 text-2xl font-black tracking-tight text-foreground">Quality Center</h1>
+            <p className="mt-1 text-sm text-muted">SEO readiness, rich-result gaps, freshness risk, and next editorial actions.</p>
           </div>
         </div>
 
@@ -1432,7 +1433,7 @@ export default function BlogQualityCenterPage() {
           <button
             type="button"
             onClick={() => router.push("/altftool/blogs/analytics")}
-            className="inline-flex h-10 items-center gap-2 rounded-xl border border-gray-200 bg-white px-4 text-sm font-semibold text-gray-700 transition hover:bg-gray-50"
+            className="inline-flex h-10 items-center gap-2 rounded-xl border border-border bg-surface px-4 text-sm font-semibold text-foreground transition hover:bg-surface-soft"
           >
             <BarChart3 className="h-4 w-4" />
             Analytics
@@ -1440,7 +1441,7 @@ export default function BlogQualityCenterPage() {
           <button
             type="button"
             onClick={() => router.push("/altftool/blogs/bulk-refresh")}
-            className="inline-flex h-10 items-center gap-2 rounded-xl border border-blue-100 bg-blue-50 px-4 text-sm font-semibold text-blue-700 transition hover:bg-blue-100"
+            className="inline-flex h-10 items-center gap-2 rounded-xl border border-primary bg-primary-soft px-4 text-sm font-semibold text-primary transition hover:bg-primary-soft"
           >
             <RefreshCw className="h-4 w-4" />
             Bulk refresh
@@ -1448,7 +1449,7 @@ export default function BlogQualityCenterPage() {
           <button
             type="button"
             onClick={() => router.push("/altftool/blogs/add-blogs")}
-            className="inline-flex h-10 items-center gap-2 rounded-xl bg-gray-900 px-4 text-sm font-semibold text-white transition hover:bg-gray-700"
+            className="inline-flex h-10 items-center gap-2 rounded-xl bg-primary px-4 text-sm font-semibold text-white transition hover:bg-primary"
           >
             <PlusCircle className="h-4 w-4" />
             Add blog
@@ -1457,11 +1458,15 @@ export default function BlogQualityCenterPage() {
       </div>
 
       {error ? (
-        <div className="flex items-start gap-3 rounded-2xl border border-red-100 bg-red-50 px-4 py-3 text-sm font-semibold text-red-700">
+        <div className="flex items-start gap-3 rounded-2xl border border-danger bg-danger-soft px-4 py-3 text-sm font-semibold text-danger">
           <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0" />
           {error}
         </div>
       ) : null}
+
+      {/* Phase 2 — actionable SEO Health board (OG/Twitter, orphans,
+          duplicates, alt text, index readiness) with one-click fixes. */}
+      <SeoHealthBoard />
 
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-6">
         <StatCard icon={ShieldCheck} label="Health score" value={`${summary.healthScore}%`} caption={`${summary.avgQuality}% quality - ${summary.avgSchema}% schema`} tone={summary.healthScore >= 75 ? "green" : "amber"} />
@@ -1472,22 +1477,22 @@ export default function BlogQualityCenterPage() {
         <StatCard icon={Clock3} label="Stale posts" value={summary.stale.toLocaleString()} caption={`${summary.missingLinks} published posts need internal links`} tone={summary.stale ? "amber" : "slate"} />
       </div>
 
-      <section className="rounded-2xl border border-gray-100 bg-white p-4 shadow-sm">
+      <section className="rounded-2xl border border-border bg-surface p-4 shadow-sm">
         <div className="grid grid-cols-1 gap-3 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-[minmax(240px,1fr)_repeat(5,minmax(130px,170px))]">
           <label className="relative block">
-            <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400" />
+            <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted" />
             <input
               value={search}
               onChange={(event) => setSearch(event.target.value)}
               placeholder="Search title, slug, author, category"
-              className="h-11 w-full rounded-xl border border-gray-200 bg-gray-50 pl-10 pr-3 text-sm text-gray-800 outline-none transition placeholder:text-gray-400 focus:border-blue-300 focus:bg-white focus:ring-4 focus:ring-blue-50"
+              className="h-11 w-full rounded-xl border border-border bg-surface-soft pl-10 pr-3 text-sm text-foreground outline-none transition placeholder:text-muted focus:border-primary focus:bg-surface focus:ring-4 focus:ring-primary"
             />
           </label>
 
           <select
             value={statusFilter}
             onChange={(event) => setStatusFilter(event.target.value)}
-            className="h-11 rounded-xl border border-gray-200 bg-white px-3 text-sm font-semibold text-gray-700 outline-none focus:border-blue-300 focus:ring-4 focus:ring-blue-50"
+            className="h-11 rounded-xl border border-border bg-surface px-3 text-sm font-semibold text-foreground outline-none focus:border-primary focus:ring-4 focus:ring-primary"
           >
             {STATUS_FILTERS.map((item) => (
               <option key={item.value} value={item.value}>
@@ -1499,7 +1504,7 @@ export default function BlogQualityCenterPage() {
           <select
             value={readinessFilter}
             onChange={(event) => setReadinessFilter(event.target.value)}
-            className="h-11 rounded-xl border border-gray-200 bg-white px-3 text-sm font-semibold text-gray-700 outline-none focus:border-blue-300 focus:ring-4 focus:ring-blue-50"
+            className="h-11 rounded-xl border border-border bg-surface px-3 text-sm font-semibold text-foreground outline-none focus:border-primary focus:ring-4 focus:ring-primary"
           >
             {READINESS_FILTERS.map((item) => (
               <option key={item.value} value={item.value}>
@@ -1511,7 +1516,7 @@ export default function BlogQualityCenterPage() {
           <select
             value={gapFilter}
             onChange={(event) => setGapFilter(event.target.value)}
-            className="h-11 rounded-xl border border-gray-200 bg-white px-3 text-sm font-semibold text-gray-700 outline-none focus:border-blue-300 focus:ring-4 focus:ring-blue-50"
+            className="h-11 rounded-xl border border-border bg-surface px-3 text-sm font-semibold text-foreground outline-none focus:border-primary focus:ring-4 focus:ring-primary"
           >
             {GAP_FILTERS.map((item) => (
               <option key={item.value} value={item.value}>
@@ -1523,7 +1528,7 @@ export default function BlogQualityCenterPage() {
           <select
             value={categoryFilter}
             onChange={(event) => setCategoryFilter(event.target.value)}
-            className="h-11 rounded-xl border border-gray-200 bg-white px-3 text-sm font-semibold text-gray-700 outline-none focus:border-blue-300 focus:ring-4 focus:ring-blue-50"
+            className="h-11 rounded-xl border border-border bg-surface px-3 text-sm font-semibold text-foreground outline-none focus:border-primary focus:ring-4 focus:ring-primary"
           >
             {categories.map((category) => (
               <option key={category} value={category}>
@@ -1535,7 +1540,7 @@ export default function BlogQualityCenterPage() {
           <select
             value={sortMode}
             onChange={(event) => setSortMode(event.target.value)}
-            className="h-11 rounded-xl border border-gray-200 bg-white px-3 text-sm font-semibold text-gray-700 outline-none focus:border-blue-300 focus:ring-4 focus:ring-blue-50"
+            className="h-11 rounded-xl border border-border bg-surface px-3 text-sm font-semibold text-foreground outline-none focus:border-primary focus:ring-4 focus:ring-primary"
           >
             {SORT_OPTIONS.map((item) => (
               <option key={item.value} value={item.value}>
@@ -1545,7 +1550,7 @@ export default function BlogQualityCenterPage() {
           </select>
         </div>
 
-        <div className="mt-4 flex flex-wrap items-center justify-between gap-3 border-t border-gray-100 pt-4">
+        <div className="mt-4 flex flex-wrap items-center justify-between gap-3 border-t border-border pt-4">
           <div className="flex flex-wrap gap-2">
             {ACTIONS.map((action) => {
               const Icon = ACTION_ICONS[action.key] || Sparkles;
@@ -1567,14 +1572,14 @@ export default function BlogQualityCenterPage() {
           </div>
 
           <div className="flex flex-wrap items-center gap-2">
-            <span className="rounded-lg bg-gray-50 px-3 py-2 text-xs font-semibold text-gray-500">
+            <span className="rounded-lg bg-surface-soft px-3 py-2 text-xs font-semibold text-muted">
               {filteredBlogs.length} shown - {visibleSelectedCount} selected here
             </span>
             <button
               type="button"
               onClick={selectTopVisible}
               disabled={!filteredBlogs.length}
-              className="inline-flex h-9 items-center gap-2 rounded-xl border border-blue-100 bg-blue-50 px-3 text-xs font-semibold text-blue-700 transition hover:bg-blue-100 disabled:cursor-not-allowed disabled:opacity-50"
+              className="inline-flex h-9 items-center gap-2 rounded-xl border border-primary bg-primary-soft px-3 text-xs font-semibold text-primary transition hover:bg-primary-soft disabled:cursor-not-allowed disabled:opacity-50"
             >
               <Check className="h-3.5 w-3.5" />
               Select top 25
@@ -1583,7 +1588,7 @@ export default function BlogQualityCenterPage() {
               type="button"
               onClick={clearSelected}
               disabled={!selectedIds.length}
-              className="inline-flex h-9 items-center gap-2 rounded-xl border border-gray-200 bg-white px-3 text-xs font-semibold text-gray-600 transition hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50"
+              className="inline-flex h-9 items-center gap-2 rounded-xl border border-border bg-surface px-3 text-xs font-semibold text-muted transition hover:bg-surface-soft disabled:cursor-not-allowed disabled:opacity-50"
             >
               <X className="h-3.5 w-3.5" />
               Clear
@@ -1591,7 +1596,7 @@ export default function BlogQualityCenterPage() {
             <button
               type="button"
               onClick={resetFilters}
-              className="inline-flex h-9 items-center gap-2 rounded-xl border border-gray-200 bg-white px-3 text-xs font-semibold text-gray-600 transition hover:bg-gray-50"
+              className="inline-flex h-9 items-center gap-2 rounded-xl border border-border bg-surface px-3 text-xs font-semibold text-muted transition hover:bg-surface-soft"
             >
               <Filter className="h-3.5 w-3.5" />
               Reset
@@ -1600,7 +1605,7 @@ export default function BlogQualityCenterPage() {
               type="button"
               onClick={startTopIssue}
               disabled={!filteredBlogs.length}
-              className="inline-flex h-9 items-center gap-2 rounded-xl bg-gray-900 px-3 text-xs font-semibold text-white transition hover:bg-gray-700 disabled:cursor-not-allowed disabled:bg-gray-300"
+              className="inline-flex h-9 items-center gap-2 rounded-xl bg-primary px-3 text-xs font-semibold text-white transition hover:bg-primary disabled:cursor-not-allowed disabled:bg-surface-soft"
             >
               <WandSparkles className="h-3.5 w-3.5" />
               Start top issue
@@ -1690,13 +1695,13 @@ export default function BlogQualityCenterPage() {
             onEdit={openEditor}
           />
 
-          <section className="rounded-2xl border border-gray-100 bg-white p-4 shadow-sm">
+          <section className="rounded-2xl border border-border bg-surface p-4 shadow-sm">
             <div className="flex items-center justify-between gap-3">
               <div>
-                <p className="text-xs font-black uppercase tracking-wider text-gray-500">Bulk actions</p>
-                <h2 className="mt-1 text-xl font-black text-gray-900">{selectedBlogs.length} selected</h2>
+                <p className="text-xs font-black uppercase tracking-wider text-muted">Bulk actions</p>
+                <h2 className="mt-1 text-xl font-black text-foreground">{selectedBlogs.length} selected</h2>
               </div>
-              <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-blue-50 text-blue-600">
+              <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-primary-soft text-primary">
                 <WandSparkles className="h-5 w-5" />
               </div>
             </div>
@@ -1723,24 +1728,24 @@ export default function BlogQualityCenterPage() {
               type="button"
               onClick={applyBulkAction}
               disabled={!selectedBlogs.length || bulkApplying}
-              className="mt-4 inline-flex h-10 w-full items-center justify-center gap-2 rounded-xl bg-gray-900 px-4 text-sm font-semibold text-white transition hover:bg-gray-700 disabled:cursor-not-allowed disabled:bg-gray-300"
+              className="mt-4 inline-flex h-10 w-full items-center justify-center gap-2 rounded-xl bg-primary px-4 text-sm font-semibold text-white transition hover:bg-primary disabled:cursor-not-allowed disabled:bg-surface-soft"
             >
               {bulkApplying ? <RefreshCw className="h-4 w-4 animate-spin" /> : <WandSparkles className="h-4 w-4" />}
               {bulkApplying ? "Applying..." : `Apply ${getActionConfig(bulkAction).shortLabel}`}
             </button>
 
-            <p className="mt-3 text-xs leading-5 text-gray-500">
+            <p className="mt-3 text-xs leading-5 text-muted">
               Updates selected posts with the same guarded refresh helpers used by the editor, skipping duplicate FAQ or note blocks.
             </p>
           </section>
 
-          <section className="rounded-2xl border border-gray-100 bg-white p-4 shadow-sm">
+          <section className="rounded-2xl border border-border bg-surface p-4 shadow-sm">
             <div className="flex items-center justify-between gap-3">
               <div>
-                <p className="text-xs font-black uppercase tracking-wider text-gray-500">Issue breakdown</p>
-                <h2 className="mt-1 text-xl font-black text-gray-900">{summary.needsWork} open</h2>
+                <p className="text-xs font-black uppercase tracking-wider text-muted">Issue breakdown</p>
+                <h2 className="mt-1 text-xl font-black text-foreground">{summary.needsWork} open</h2>
               </div>
-              <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-amber-50 text-amber-600">
+              <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-warning-soft text-warning">
                 <AlertTriangle className="h-5 w-5" />
               </div>
             </div>
@@ -1754,27 +1759,27 @@ export default function BlogQualityCenterPage() {
                     setGapFilter(gap.key);
                     setReadinessFilter("needs-work");
                   }}
-                  className="group flex w-full items-center justify-between gap-3 rounded-xl border border-gray-100 bg-gray-50 px-3 py-2 text-left transition hover:border-blue-200 hover:bg-blue-50"
+                  className="group flex w-full items-center justify-between gap-3 rounded-xl border border-border bg-surface-soft px-3 py-2 text-left transition hover:border-primary hover:bg-primary-soft"
                 >
-                  <span className="truncate text-sm font-semibold text-gray-700 group-hover:text-blue-700">{gap.label}</span>
-                  <span className="rounded-lg bg-white px-2 py-1 text-xs font-black text-gray-600 shadow-sm">{gap.count}</span>
+                  <span className="truncate text-sm font-semibold text-foreground group-hover:text-primary">{gap.label}</span>
+                  <span className="rounded-lg bg-surface px-2 py-1 text-xs font-black text-muted shadow-sm">{gap.count}</span>
                 </button>
               ))}
               {!summary.gapCounts.length ? (
-                <div className="rounded-xl border border-dashed border-green-100 bg-green-50 px-4 py-8 text-center text-sm font-semibold text-green-700">
+                <div className="rounded-xl border border-dashed border-success bg-success-soft px-4 py-8 text-center text-sm font-semibold text-success">
                   Every audited post is clear.
                 </div>
               ) : null}
             </div>
           </section>
 
-          <section className="rounded-2xl border border-gray-100 bg-white p-4 shadow-sm">
+          <section className="rounded-2xl border border-border bg-surface p-4 shadow-sm">
             <div className="flex items-center justify-between gap-3">
               <div>
-                <p className="text-xs font-black uppercase tracking-wider text-gray-500">Action mix</p>
-                <h2 className="mt-1 text-xl font-black text-gray-900">Focus queue</h2>
+                <p className="text-xs font-black uppercase tracking-wider text-muted">Action mix</p>
+                <h2 className="mt-1 text-xl font-black text-foreground">Focus queue</h2>
               </div>
-              <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-blue-50 text-blue-600">
+              <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-primary-soft text-primary">
                 <RefreshCw className="h-5 w-5" />
               </div>
             </div>
@@ -1786,14 +1791,14 @@ export default function BlogQualityCenterPage() {
                 return (
                   <div key={action.key}>
                     <div className="mb-1 flex items-center justify-between gap-3 text-xs">
-                      <span className="inline-flex items-center gap-1.5 font-semibold text-gray-600">
+                      <span className="inline-flex items-center gap-1.5 font-semibold text-muted">
                         <Icon className="h-3.5 w-3.5" />
                         {action.label}
                       </span>
-                      <span className="font-black text-gray-500">{action.count}</span>
+                      <span className="font-black text-muted">{action.count}</span>
                     </div>
-                    <div className="h-2 overflow-hidden rounded-full bg-gray-100">
-                      <div className="h-full rounded-full bg-blue-500" style={{ width: `${width}%` }} />
+                    <div className="h-2 overflow-hidden rounded-full bg-surface-soft">
+                      <div className="h-full rounded-full bg-primary" style={{ width: `${width}%` }} />
                     </div>
                   </div>
                 );

@@ -26,7 +26,7 @@ export default function MobileAppsSection() {
           </div>
 
           <h2 className="section-title mt-3 max-w-[31rem]">
-            We&apos;ve got powerful <span className="bg-gradient-to-r from-[var(--primary)] to-[#4e8cff] bg-clip-text text-transparent">apps</span> for you too.
+            We&apos;ve got powerful <span className="bg-gradient-to-r from-[var(--primary)] to-[#38BDF8] bg-clip-text text-transparent">apps</span> for you too.
           </h2>
 
           <p className="mt-4 max-w-[29rem] text-[0.96rem] font-semibold leading-7 text-[var(--muted-foreground)]">
@@ -57,11 +57,12 @@ export default function MobileAppsSection() {
 
         <div className="home-apps-visual home-apps-image-visual" aria-hidden="true">
           <Image
-            src="/assets/home-mobile-apps-showcase.png"
+            src="/assets/home-mobile-apps-premium-transparent-clean-v2.png"
             alt=""
-            width={1436}
-            height={1096}
+            width={1536}
+            height={1024}
             className="home-apps-showcase-image"
+            unoptimized
           />
         </div>
       </div>
