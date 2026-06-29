@@ -14,6 +14,10 @@ export default function BlogEditor({ value, onChange }) {
   const sentValuesRef = useRef([]);
   const [editorReady, setEditorReady] = useState(false);
   const [usePlainTextFallback, setUsePlainTextFallback] = useState(false);
+  // CKEditor 5 disables editing when the commercial license key is expired/invalid
+  // (console: "CKEditorError: license-key-expired"). Track it so we can fall back
+  // to a raw-HTML editor instead of leaving admins with a read-only editor.
+  const [licenseFailed, setLicenseFailed] = useState(false);
   const [editorInitialValue] = useState(value || "");
   const fixWriteEnabled = isFeatureEnabled("fix_ckeditor_write");
   const ckeditorLicenseKey = process.env.NEXT_PUBLIC_CKEDITOR_LICENSE_KEY;
@@ -63,6 +67,7 @@ export default function BlogEditor({ value, onChange }) {
   }, [editorReady, value]);
 
   useEffect(() => {
+    if (licenseFailed) return undefined; // keep raw-HTML fallback once license fails
     if (!fixWriteEnabled || !ckeditorLicenseKey || editorAssetsReady) {
       setUsePlainTextFallback(false);
       return undefined;
@@ -76,18 +81,58 @@ export default function BlogEditor({ value, onChange }) {
       window.clearTimeout(timeout);
       window.removeEventListener("altftool:ckeditor-error", markFallback);
     };
-  }, [ckeditorLicenseKey, editorAssetsReady, fixWriteEnabled]);
+  }, [ckeditorLicenseKey, editorAssetsReady, fixWriteEnabled, licenseFailed]);
+
+  // Detect an expired/invalid CKEditor license (thrown as an uncaught
+  // CKEditorError) and switch to the raw-HTML editor so content stays editable.
+  useEffect(() => {
+    const isLicenseError = (msg = "") =>
+      /license-key-(expired|invalid)|license key is (expired|invalid)/i.test(String(msg));
+
+    const onError = (event) => {
+      if (isLicenseError(event?.message || event?.error?.message)) {
+        setLicenseFailed(true);
+        setUsePlainTextFallback(true);
+      }
+    };
+    const onRejection = (event) => {
+      if (isLicenseError(event?.reason?.message || event?.reason)) {
+        setLicenseFailed(true);
+        setUsePlainTextFallback(true);
+      }
+    };
+
+    window.addEventListener("error", onError);
+    window.addEventListener("unhandledrejection", onRejection);
+    return () => {
+      window.removeEventListener("error", onError);
+      window.removeEventListener("unhandledrejection", onRejection);
+    };
+  }, []);
 
   if (typeof window === "undefined") return null;
 
   if (!ckeditorLicenseKey || usePlainTextFallback) {
     return (
       <div data-ckeditor-ready="true">
+        {licenseFailed ? (
+          <div
+            role="status"
+            className="mb-3 rounded-lg border border-warning bg-warning-soft px-3 py-2 text-xs leading-5 text-foreground"
+          >
+            The rich editor is unavailable because the CKEditor license key has
+            expired. You can still edit the <strong>raw HTML</strong> below — it is
+            saved exactly as typed. Renew{" "}
+            <code>NEXT_PUBLIC_CKEDITOR_LICENSE_KEY</code> to restore the visual editor.
+          </div>
+        ) : null}
         <textarea
           value={value || ""}
           onChange={(event) => onChange(event.target.value)}
-          placeholder="Type or paste your content here..."
-          className="min-h-[360px] w-full rounded-xl border border-border bg-surface p-4 text-sm text-foreground outline-none focus:border-primary focus:ring-2 focus:ring-primary"
+          spellCheck={false}
+          placeholder="Type or paste your HTML content here..."
+          aria-label="Blog HTML source editor"
+          className="min-h-[480px] w-full rounded-xl border border-border bg-surface p-4 font-mono text-[13px] leading-6 text-foreground outline-none focus:border-primary focus:ring-2 focus:ring-primary"
         />
       </div>
     );

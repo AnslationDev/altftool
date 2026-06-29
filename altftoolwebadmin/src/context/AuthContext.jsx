@@ -13,7 +13,21 @@ import {
 } from "@/lib/localAdminSession";
 
 const AuthContext = createContext(null);
-const AUTH_STATE_TIMEOUT_MS = 3000;
+// Safety fallback for ending the initial loading state. This is ONLY used to
+// stop the spinner when Firebase is genuinely unauthenticated; it must never
+// flip the app to "logged out" while a Firebase session is still being
+// restored (that race caused spurious /login redirects on heavy pages).
+const AUTH_FALLBACK_TIMEOUT_MS = 10000;
+const MAX_SYNC_RETRIES = 4;
+
+// Always-on, low-noise auth diagnostics. Filter the console by "[auth]".
+function authLog(...args) {
+  try {
+    console.info("[auth]", ...args);
+  } catch {
+    /* logging must never throw */
+  }
+}
 
 async function fetchAdminMe(currentUser) {
   const token = await currentUser.getIdToken(true);
@@ -31,6 +45,10 @@ export function AuthProvider({ children }) {
   const [isPendingUser, setIsPendingUser] = useState(false);
   const [isDenied, setIsDenied] = useState(false);
   const [localAdminLoginEnabled, setLocalAdminLoginEnabled] = useState(false);
+  // Retry bookkeeping so transient /api/admin/me failures never force a logout.
+  const syncRetryRef = useRef(0);
+  const syncUserRef = useRef(null);
+  const retryTimerRef = useRef(null);
 
   useEffect(() => {
     mountedRef.current = true;
@@ -52,6 +70,8 @@ export function AuthProvider({ children }) {
     if (!mountedRef.current) return;
 
     if (!currentUser) {
+      authLog("no firebase user → unauthenticated");
+      syncRetryRef.current = 0;
       setUser(null);
       setAdminData(null);
       setIsPendingUser(false);
@@ -60,12 +80,39 @@ export function AuthProvider({ children }) {
       return;
     }
 
+    // Transient-failure path: keep the Firebase session, keep the user
+    // authenticated (so route guards never bounce to /login), and retry the
+    // admin-profile fetch with backoff. We NEVER sign out on a transient error
+    // — that is what turned network blips / 5xx into unexpected logouts.
+    const keepSessionAndRetry = (reason) => {
+      if (!mountedRef.current) return;
+      setIsPendingUser(false);
+      setIsDenied(false);
+      setUser((prev) => prev || currentUser); // stay authenticated during retries
+      const tries = syncRetryRef.current;
+      if (tries >= MAX_SYNC_RETRIES) {
+        authLog(`profile sync giving up after ${tries} retries (${reason}); session preserved`);
+        setLoading(false); // stop spinner; user stays logged in, profile fills on next success
+        return;
+      }
+      syncRetryRef.current = tries + 1;
+      const delay = Math.min(15000, 1500 * (tries + 1));
+      authLog(`profile sync transient (${reason}); retry ${tries + 1}/${MAX_SYNC_RETRIES} in ${delay}ms`);
+      if (retryTimerRef.current) clearTimeout(retryTimerRef.current);
+      retryTimerRef.current = setTimeout(() => {
+        const u = auth.currentUser;
+        if (mountedRef.current && u) syncUserRef.current?.(u);
+      }, delay);
+    };
+
     try {
       const res = await fetchAdminMe(currentUser);
       if (!mountedRef.current) return;
 
       if (res.status === 404) {
         // Valid token, no admin doc yet → pending
+        authLog("profile 404 → pending approval");
+        syncRetryRef.current = 0;
         setUser(currentUser);
         setAdminData(null);
         setIsPendingUser(true);
@@ -77,9 +124,11 @@ export function AuthProvider({ children }) {
       if (res.status === 403) {
         const body = await res.json().catch(() => ({}));
         if (!mountedRef.current) return;
+        syncRetryRef.current = 0;
 
         if (body?.error === "Access denied") {
           // Explicitly rejected access request
+          authLog("profile 403 access-denied");
           setUser(currentUser);
           setAdminData(null);
           setIsPendingUser(false);
@@ -88,7 +137,22 @@ export function AuthProvider({ children }) {
           return;
         }
 
-        // Inactive admin or other 403 → sign out
+        // Inactive admin or other 403 → genuine, sign out
+        authLog("profile 403 inactive → signOut");
+        await signOut(auth);
+        if (!mountedRef.current) return;
+        setUser(null);
+        setAdminData(null);
+        setIsPendingUser(false);
+        setIsDenied(false);
+        setLoading(false);
+        return;
+      }
+
+      if (res.status === 401) {
+        // Token genuinely invalid / could not be refreshed → genuine, sign out.
+        authLog("profile 401 invalid token → signOut");
+        syncRetryRef.current = 0;
         await signOut(auth);
         if (!mountedRef.current) return;
         setUser(null);
@@ -100,21 +164,15 @@ export function AuthProvider({ children }) {
       }
 
       if (res.status >= 500) {
-        // Transient backend/config error (e.g. Admin SDK not initialised).
-        // Do NOT sign the user out of Firebase — that turns a recoverable
-        // server hiccup into a hard logout loop. Keep the Firebase session,
-        // surface no admin data, and let the user retry.
-        console.error("Auth backend error:", res.status);
-        if (!mountedRef.current) return;
-        setUser(null);
-        setAdminData(null);
-        setIsPendingUser(false);
-        setIsDenied(false);
-        setLoading(false);
+        // Recoverable server hiccup (e.g. Admin SDK not initialised). Keep the
+        // session and retry — do NOT log the user out or redirect.
+        keepSessionAndRetry(`http ${res.status}`);
         return;
       }
 
       if (!res.ok) {
+        authLog(`profile ${res.status} → signOut`);
+        syncRetryRef.current = 0;
         await signOut(auth);
         if (!mountedRef.current) return;
         setUser(null);
@@ -127,23 +185,31 @@ export function AuthProvider({ children }) {
 
       const data = await res.json();
       if (!mountedRef.current) return;
+      authLog("profile ok → authenticated");
+      syncRetryRef.current = 0;
       setUser(currentUser);
       setAdminData(data);
       setIsPendingUser(false);
       setIsDenied(false);
+      setLoading(false);
     } catch (err) {
-      console.error("Auth error:", err);
-      await signOut(auth);
       if (!mountedRef.current) return;
-      setUser(null);
-      setAdminData(null);
-      setIsPendingUser(false);
-      setIsDenied(false);
-    } finally {
-      if (mountedRef.current) {
-        setLoading(false);
-      }
+      // Network/parse error fetching the admin profile — transient. Keep the
+      // session and retry; never sign out on this.
+      keepSessionAndRetry(err?.message || "network");
     }
+  }, []);
+
+  // Keep a live ref to syncUser so retry timers can call the latest instance.
+  useEffect(() => {
+    syncUserRef.current = syncUser;
+  }, [syncUser]);
+
+  // Clear any pending retry timer on unmount.
+  useEffect(() => {
+    return () => {
+      if (retryTimerRef.current) clearTimeout(retryTimerRef.current);
+    };
   }, []);
 
   /**
@@ -205,15 +271,25 @@ export function AuthProvider({ children }) {
     }
 
     let settled = false;
-    const timeout = setTimeout(() => {
-      if (!settled && mountedRef.current) {
+    // Safety fallback ONLY. We must not end the loading state as "logged out"
+    // while Firebase is still restoring a session — doing so let the route
+    // guard redirect an authenticated user to /login on slow/heavy pages
+    // (the blog editor). So the fallback ends loading only when Firebase has
+    // genuinely no current user; otherwise it waits for onAuthStateChanged.
+    const fallback = setTimeout(() => {
+      if (settled || !mountedRef.current) return;
+      if (!auth.currentUser) {
+        authLog("init fallback: no firebase session → unauthenticated");
         setLoading(false);
+      } else {
+        authLog("init fallback: firebase session present, awaiting auth state (keep loading)");
       }
-    }, AUTH_STATE_TIMEOUT_MS);
+    }, AUTH_FALLBACK_TIMEOUT_MS);
 
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       settled = true;
-      clearTimeout(timeout);
+      clearTimeout(fallback);
+      authLog("onAuthStateChanged", currentUser ? `uid=${currentUser.uid}` : "no-user");
       if (hasLocalAdminSession()) {
         applyLocalAdminSession();
         return;
@@ -221,14 +297,15 @@ export function AuthProvider({ children }) {
       syncUser(currentUser);
     }, (err) => {
       settled = true;
-      clearTimeout(timeout);
-      console.error("Auth state error:", err);
-      if (mountedRef.current) {
+      clearTimeout(fallback);
+      authLog("onAuthStateChanged error", err?.message);
+      // Don't assume logged-out on a listener error if a session still exists.
+      if (mountedRef.current && !auth.currentUser) {
         setLoading(false);
       }
     });
     return () => {
-      clearTimeout(timeout);
+      clearTimeout(fallback);
       unsubscribe();
     };
   }, [applyLocalAdminSession, syncUser]);
