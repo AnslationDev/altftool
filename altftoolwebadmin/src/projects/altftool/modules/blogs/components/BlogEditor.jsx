@@ -11,30 +11,48 @@ export default function BlogEditor({ value, onChange }) {
   const editorConfigRef = useRef(null);
   const editorConfigKeyRef = useRef("");
   const latestEditorDataRef = useRef(value || "");
+  const sentValuesRef = useRef([]);
   const [editorReady, setEditorReady] = useState(false);
   const [usePlainTextFallback, setUsePlainTextFallback] = useState(false);
+  const [editorInitialValue] = useState(value || "");
   const fixWriteEnabled = isFeatureEnabled("fix_ckeditor_write");
   const ckeditorLicenseKey = process.env.NEXT_PUBLIC_CKEDITOR_LICENSE_KEY;
 
-  const focusEditor = useCallback(() => {
-    if (!fixWriteEnabled) return;
+  const focusEditor = useCallback((e) => {
     const editor = editorRef.current;
     if (!editor) return;
+
+    // Only focus if the user clicked directly on the outer wrapper/empty area,
+    // not on the toolbar, dropdown, editable area, dialog, or other CKEditor components.
+    if (e && e.target !== e.currentTarget) return;
 
     try {
       editor.editing.view.focus();
     } catch {
       // Focusing should never break typing or fallback rendering.
     }
-  }, [fixWriteEnabled]);
+  }, []);
 
   useEffect(() => {
-    if (!fixWriteEnabled || !editorReady || !editorRef.current) return;
-
-    const nextValue = value || "";
-    if (nextValue === latestEditorDataRef.current) return;
+    if (!editorReady || !editorRef.current) return;
 
     const editor = editorRef.current;
+    const nextValue = value || "";
+
+    // Double-layer protection against cursor jumping during active user input:
+    // 1. Skip if the editor is currently focused (typing, formatting, or editing inline elements).
+    // 2. Skip if the next value matches a recent change typed by the user.
+    if (editor.editing.view.document.isFocused) {
+      latestEditorDataRef.current = nextValue;
+      return;
+    }
+    if (sentValuesRef.current.includes(nextValue)) {
+      latestEditorDataRef.current = nextValue;
+      return;
+    }
+
+    if (nextValue === latestEditorDataRef.current) return;
+
     if (editor.getData() === nextValue) {
       latestEditorDataRef.current = nextValue;
       return;
@@ -42,7 +60,7 @@ export default function BlogEditor({ value, onChange }) {
 
     editor.setData(nextValue);
     latestEditorDataRef.current = nextValue;
-  }, [editorReady, fixWriteEnabled, value]);
+  }, [editorReady, value]);
 
   useEffect(() => {
     if (!fixWriteEnabled || !ckeditorLicenseKey || editorAssetsReady) {
@@ -137,6 +155,7 @@ export default function BlogEditor({ value, onChange }) {
     PlainTableOutput,
     RemoveFormat,
     ShowBlocks,
+    SourceEditing,
     SpecialCharacters,
     SpecialCharactersArrows,
     SpecialCharactersCurrency,
@@ -334,6 +353,7 @@ export default function BlogEditor({ value, onChange }) {
           PlainTableOutput,
           RemoveFormat,
           ShowBlocks,
+          SourceEditing,
           SpecialCharacters,
           SpecialCharactersArrows,
           SpecialCharactersCurrency,
@@ -357,7 +377,7 @@ export default function BlogEditor({ value, onChange }) {
           Underline,
           WordCount,
           ...premiumPlugins
-        ],
+        ].filter(Boolean),
 
         // ── MediaEmbed: register our Firebase provider ──────────────────────
         //
@@ -377,14 +397,10 @@ export default function BlogEditor({ value, onChange }) {
         htmlSupport: {
           allow: [
             {
-              name: "video",
+              name: /.*/,
               attributes: true,
               classes: true,
               styles: true
-            },
-            {
-              name: "source",
-              attributes: true
             }
           ]
         },
@@ -395,6 +411,7 @@ export default function BlogEditor({ value, onChange }) {
           items: [
             "undo",
             "redo",
+            SourceEditing ? "sourceEditing" : null,
             "|",
             ...premiumToolbarItems.filter((item) => item === "importWord"),
             "showBlocks",
@@ -442,7 +459,7 @@ export default function BlogEditor({ value, onChange }) {
             "todoList",
             "outdent",
             "indent"
-          ]
+          ].filter(Boolean)
         },
 
         placeholder: "Type or paste your content here..."
@@ -457,18 +474,16 @@ export default function BlogEditor({ value, onChange }) {
     >
       <CKEditor
         editor={ClassicEditor}
-        data={value || ""}
+        data={editorInitialValue}
         config={editorConfigRef.current}
         onReady={(editor) => {
           editorRef.current = editor;
           latestEditorDataRef.current = editor.getData();
           setEditorReady(true);
 
-          if (fixWriteEnabled) {
-            const editable = editor.ui?.view?.editable?.element;
-            editable?.setAttribute("data-ckeditor-ready", "true");
-            editable?.setAttribute("aria-label", "Blog content editor");
-          }
+          const editable = editor.ui?.view?.editable?.element;
+          editable?.setAttribute("data-ckeditor-ready", "true");
+          editable?.setAttribute("aria-label", "Blog content editor");
         }}
         onAfterDestroy={() => {
           editorRef.current = null;
@@ -476,6 +491,7 @@ export default function BlogEditor({ value, onChange }) {
         }}
         onChange={(event, editor) => {
           const data = editor.getData();
+          sentValuesRef.current = [data, ...sentValuesRef.current].slice(0, 10);
           latestEditorDataRef.current = data;
           onChange(data);
         }}

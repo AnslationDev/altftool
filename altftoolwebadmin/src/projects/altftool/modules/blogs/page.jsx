@@ -34,11 +34,14 @@ function buildSearchIndex(blog) {
     blog.heading,
     blog.title,
     blog.author,
+    blog.authorRole,
+    blog.reviewedBy,
     blog.category,
     blog.status,
     blog.slug,
     blog.seoTitle,
     blog.seoDescription,
+    blog.excerpt,
     tags,
     stripHtml(blog.description),
   ]
@@ -107,6 +110,7 @@ export default function Blogs() {
   /* ── Single source of truth for the filtered list ── */
   const filteredBlogs = useMemo(() => {
     const query = search.trim().toLowerCase();
+    const queryWords = query ? query.split(/\s+/).filter(Boolean) : [];
     return indexedBlogs
       .filter(({ blog }) => {
         if (activeTab === "Drafts") return blog.status !== "published";
@@ -115,7 +119,10 @@ export default function Blogs() {
       })
       .filter(({ blog }) => categoryFilter === "all" || blog.category === categoryFilter)
       .filter(({ blog }) => authorFilter === "all" || blog.author === authorFilter)
-      .filter(({ _search }) => !query || _search.includes(query))
+      .filter(({ _search }) => {
+        if (queryWords.length === 0) return true;
+        return queryWords.every((word) => _search.includes(word));
+      })
       .map(({ blog }) => blog);
   }, [indexedBlogs, activeTab, categoryFilter, authorFilter, search]);
 
