@@ -1,43 +1,17 @@
 @import "leaflet/dist/leaflet.css";
 
 /* ============================================================
-   ANCESTORY DESIGN SYSTEM
+   ANCESTORY — ALTFTool Design System (per master.md)
    ============================================================ */
-:root {
-  --anc-bg: var(--anslation-ds-page, #f8fafc);
-  --anc-ink: var(--anslation-ds-text, #111827);
-  --anc-muted: var(--anslation-ds-muted, #607083);
-  --anc-border: var(--anslation-ds-border, #e2e8f0);
-  --anc-green: var(--primary); /* Map to global primary */
-  --anc-green-soft: var(--anslation-ds-primary-soft, #e7f0ff); /* Map to global primary soft */
-  --anc-radius-lg: 28px;
-  --anc-radius-md: 14px;
-  --anc-shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
-}
-
-[data-theme="dark"] {
-  --anc-bg: var(--anslation-ds-page, #070d18);
-  --anc-ink: var(--anslation-ds-text, #f8fafc);
-  --anc-muted: var(--anslation-ds-muted, #94a3b8);
-  --anc-border: var(--anslation-ds-border, #1e293b);
-  --anc-green: var(--primary); /* Map to global primary */
-  --anc-green-soft: var(--anslation-ds-primary-soft, #162d4f); /* Map to global primary soft */
-}
-
 .ancestory-root {
   background-color: var(--anc-bg);
   color: var(--anc-ink);
 }
 
-/* ============================================================
-   ULTRA-AGGRESSIVE DARK MODE FIX
-   ============================================================ */
-
 [data-theme="dark"] .ancestory-root {
   color: var(--foreground) !important;
 }
 
-/* Force all text elements to be light in dark mode */
 [data-theme="dark"] .ancestory-root p,
 [data-theme="dark"] .ancestory-root span,
 [data-theme="dark"] .ancestory-root div,
@@ -50,7 +24,6 @@
   color: var(--foreground) !important;
 }
 
-/* Background Overrides - Including badge backgrounds */
 [data-theme="dark"] .ancestory-root .bg-white,
 [data-theme="dark"] .ancestory-root .bg-gray-50,
 [data-theme="dark"] .ancestory-root .bg-gray-100,
@@ -66,14 +39,12 @@
   background-color: var(--anslation-ds-surface, #101827) !important;
 }
 
-/* Force dark backgrounds for specific badges to ensure light text is visible */
 [data-theme="dark"] .ancestory-root .text-green-800,
 [data-theme="dark"] .ancestory-root .text-amber-800,
 [data-theme="dark"] .ancestory-root .text-slate-700 {
   background-color: var(--anslation-ds-surface, #101827) !important;
 }
 
-/* Specific background colors found in components */
 [data-theme="dark"] .ancestory-root [class*="bg-[#e6eee2]"],
 [data-theme="dark"] .ancestory-root [class*="bg-[#e7f3e2]"],
 [data-theme="dark"] .ancestory-root [class*="bg-[#c9d8c5]"],
@@ -84,7 +55,6 @@
   background-color: var(--anslation-ds-soft, #142033) !important;
 }
 
-/* Force text visibility for arbitrary color classes */
 [data-theme="dark"] .ancestory-root [class*="text-[#2f2f2e]"],
 [data-theme="dark"] .ancestory-root [class*="text-[#2c2c2b]"],
 [data-theme="dark"] .ancestory-root [class*="text-[#2d2d2c]"],
@@ -95,7 +65,6 @@
   color: var(--foreground) !important;
 }
 
-/* Border Overrides */
 [data-theme="dark"] .ancestory-root .border-gray-100,
 [data-theme="dark"] .ancestory-root .border-gray-200,
 [data-theme="dark"] .ancestory-root .border-gray-300,
@@ -103,24 +72,23 @@
 [data-theme="dark"] .ancestory-root .border-amber-200,
 [data-theme="dark"] .ancestory-root [class*="border-[#d"],
 [data-theme="dark"] .ancestory-root [class*="border-[#e"] {
-  border-color: var(--anslation-ds-border, #1e293b) !important;
+  border-color: var(--anslation-ds-border, #1E293B) !important;
 }
 
-/* Leaflet Map Specific */
 [data-theme="dark"] .leaflet-container {
-  background: #0b1120 !important;
+  background: #0B1220 !important;
 }
 
 [data-theme="dark"] .leaflet-popup-content-wrapper,
 [data-theme="dark"] .leaflet-popup-tip {
-  background: #1e293b !important;
-  color: #f8fafc !important;
+  background: #1E293B !important;
+  color: #F8FAFC !important;
   border: 1px solid rgba(255,255,255,0.1);
 }
 
 [data-theme="dark"] .leaflet-control-attribution {
   background: rgba(15, 23, 42, 0.8) !important;
-  color: #94a3b8 !important;
+  color: #94A3B8 !important;
 }
 
 [data-theme="dark"] .dark-map-tiles {

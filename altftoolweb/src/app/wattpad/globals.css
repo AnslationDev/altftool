@@ -1,0 +1,77 @@
+.wattpad-app {
+  --primary: #0D9488;
+  --primary-hover: #0F766E;
+  --primary-active: #115E59;
+  --secondary: #22D3EE;
+  --accent: #F97316;
+  --warning: #F59E0B;
+  --foreground: #111827;
+  --muted: #607083;
+  --border: #E2E8F0;
+  --surface: #FFFFFF;
+  --surface-soft: #EEF3F6;
+  --shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.06);
+  --shadow-md: 0 8px 24px rgba(15, 23, 42, 0.08);
+  --shadow-lg: 0 20px 48px rgba(15, 23, 42, 0.12);
+
+  --background: #F7F8FB;
+  --card: var(--surface);
+  --card-foreground: var(--foreground);
+  --muted-foreground: var(--muted);
+  --primary-foreground: #ffffff;
+
+  color: var(--foreground);
+  background: var(--background);
+  font-family: var(--font-geist-sans), ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  scroll-behavior: smooth;
+  overflow-x: clip;
+}
+
+[data-theme="dark"] .wattpad-app {
+  --primary: #2DD4BF;
+  --primary-hover: #5EEAD4;
+  --primary-active: #99F6E4;
+  --secondary: #22D3EE;
+  --accent: #FB923C;
+  --warning: #FBBF24;
+  --foreground: #F8FAFC;
+  --muted: #94A3B8;
+  --border: #1E293B;
+  --surface: #101827;
+  --surface-soft: #142033;
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.36);
+  --shadow-md: 0 10px 28px rgba(0, 0, 0, 0.36);
+  --shadow-lg: 0 24px 56px rgba(0, 0, 0, 0.46);
+
+  --background: #070D18;
+  --card: var(--surface);
+  --card-foreground: var(--foreground);
+  --muted-foreground: var(--muted);
+  --primary-foreground: #07111f;
+
+  color: var(--foreground);
+  background: var(--background);
+}
+
+.wattpad-app a:focus-visible,
+.wattpad-app button:focus-visible,
+.wattpad-app input:focus-visible,
+.wattpad-app select:focus-visible,
+.wattpad-app textarea:focus-visible {
+  outline: 3px solid rgba(20, 184, 166, 0.35);
+  outline-offset: 3px;
+}
+
+[data-theme="dark"] .wattpad-app a:focus-visible,
+[data-theme="dark"] .wattpad-app button:focus-visible,
+[data-theme="dark"] .wattpad-app input:focus-visible,
+[data-theme="dark"] .wattpad-app select:focus-visible,
+[data-theme="dark"] .wattpad-app textarea:focus-visible {
+  outline-color: rgba(45, 212, 191, 0.45);
+}
+
+.wattpad-app * {
+  box-sizing: border-box;
+}

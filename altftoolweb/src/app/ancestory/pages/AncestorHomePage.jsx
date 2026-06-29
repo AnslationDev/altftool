@@ -26,10 +26,10 @@ function AncestorHeroSection() {
           </div>
         </div>
 
-        <p className="text-center text-[#5c5c5a] dark:text-(--secondary-foreground) mt-12 mb-2 text-sm md:text-base">
+        <p className="text-center text-muted-foreground mt-12 mb-2 text-sm md:text-base">
           Your name gives you a sense of identity and helps you discover who you are and where you come from.
         </p>
-        <p className="text-center text-[#5c5c5a] dark:text-(--secondary-foreground) mb-8 text-sm md:text-base">Enter a name to learn its meaning and origin.</p>
+        <p className="text-center text-muted-foreground mb-8 text-sm md:text-base">Enter a name to learn its meaning and origin.</p>
 
         <AncestorSearchPanel large placeholder="First or last name" />
       </div>

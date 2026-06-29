@@ -151,8 +151,8 @@ function AncestorPremiumInsight({ name, origin, meaning, variations }) {
         <div 
           className="rounded-2xl border p-6 shadow-sm transition-all duration-500"
           style={{
-            background: isDark ? 'linear-gradient(135deg, #1e293b 0%, #0f172a 100%)' : 'linear-gradient(135deg, #f6fbf4 0%, #ffffff 100%)',
-            borderColor: isDark ? '#334155' : '#d8e2d2'
+            background: isDark ? 'linear-gradient(135deg, var(--card) 0%, var(--background) 100%)' : 'linear-gradient(135deg, var(--card) 0%, var(--card) 100%)',
+            borderColor: 'var(--border)'
           }}
         >
           <div 
@@ -161,8 +161,7 @@ function AncestorPremiumInsight({ name, origin, meaning, variations }) {
             Premium Name Insight
           </div>
           <p 
-            className="leading-7 font-medium"
-            style={{ color: isDark ? '#f1f5f9' : '#2c2c2b' }}
+            className="leading-7 font-medium text-foreground"
           >
             <span className="font-bold" style={{ color: isDark ? '#ffffff' : '#000000' }}>{n}</span> is associated with <span style={{ color: 'var(--primary)', fontWeight: 700 }}>{o}</span> origin.
             <br />
@@ -172,12 +171,12 @@ function AncestorPremiumInsight({ name, origin, meaning, variations }) {
             <div 
               className="rounded-xl border p-4 transition-colors duration-500"
               style={{
-                backgroundColor: isDark ? 'rgba(15, 23, 42, 0.5)' : '#ffffff',
-                borderColor: isDark ? '#334155' : '#e3eadf'
+                backgroundColor: isDark ? 'color-mix(in srgb, var(--card) 50%, transparent)' : 'var(--card)',
+                borderColor: 'var(--border)'
               }}
             >
-              <p className="text-[11px] uppercase tracking-[0.2em] font-black" style={{ color: isDark ? '#64748b' : '#94a3b8' }}>Variations</p>
-              <p className="mt-2 font-bold" style={{ color: isDark ? '#38bdf8' : '#2f6f97' }}>{variationText}</p>
+              <p className="text-[11px] uppercase tracking-[0.2em] font-black text-muted-foreground">Variations</p>
+              <p className="mt-2 font-bold text-primary">{variationText}</p>
             </div>
           </div>
         </div>
@@ -194,13 +193,13 @@ function AncestorNationalizeOriginBlock({ data }) {
     <section className="bg-slate-50 pb-8 dark:bg-slate-950">
       <div className="max-w-5xl mx-auto px-6">
         <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm dark:border-(--border) dark:bg-(--muted)">
-          <p className="text-[11px] uppercase tracking-[0.14em] text-[#6a6a64] dark:text-(--muted-foreground)">
+          <p className="text-[11px] uppercase tracking-[0.14em] text-muted-foreground">
             Nationalize.io origin
           </p>
-          <p className="mt-2 text-lg font-semibold text-[#2f2f2e] dark:text-(--foreground)">
+          <p className="mt-2 text-lg font-semibold text-foreground">
             {origin.countryName}
           </p>
-          <p className="mt-1 text-sm text-[#5f5f5e] dark:text-(--secondary-foreground)">
+          <p className="mt-1 text-sm text-muted-foreground">
             Strongest geographic match for this name{origin.probability > 0 ? ` (${origin.probability}%)` : ""}.
           </p>
         </div>
@@ -331,7 +330,7 @@ function AncestorRecordCards({ name, data }) {
   return (
     <section className="bg-slate-50 dark:bg-slate-950 py-16">
       <div className="max-w-5xl mx-auto px-6 text-center">
-        <h3 className="text-5xl mb-8 text-[#2f2f2e]" style={{ fontFamily: "Georgia, serif" }}>
+        <h3 className="text-5xl mb-8 text-foreground" style={{ fontFamily: "Georgia, serif" }}>
           Based on data records...
         </h3>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-xl mx-auto">
@@ -384,13 +383,13 @@ function AncestorCountriesBlock({ countries, name }) {
     <section className="bg-slate-50 dark:bg-slate-950 pb-12">
       <AncestorOriginMap countries={normalizedCountries} name={displayName} />
       <div className="max-w-5xl mx-auto px-6 text-center py-5">
-        <p className="text-[#2f2f2e] font-semibold dark:text-(--foreground)">Top countries by historical records</p>
+        <p className="text-foreground font-semibold">Top countries by historical records</p>
         {topTwo.length > 0 ? (
           <>
-            <p className="text-[#6a6a68] text-sm mb-2 dark:text-(--muted-foreground)">
+            <p className="text-muted-foreground text-sm mb-2">
               Countries with the highest concentration of {displayName} based on available data
             </p>
-            <div className="flex justify-center gap-8 text-sm text-[#3f3f3d] dark:text-(--secondary-foreground)">
+            <div className="flex justify-center gap-8 text-sm text-muted-foreground">
               {topTwo.map((c) => {
                 const countryId = c.country_id || c.code || "";
                 const countryName = COUNTRY_NAMES[countryId] || countryId;
@@ -406,7 +405,7 @@ function AncestorCountriesBlock({ countries, name }) {
             </div>
           </>
         ) : (
-          <p className="text-[#6a6a68] text-sm dark:text-(--muted-foreground)">
+          <p className="text-muted-foreground text-sm">
             Country distribution data is being analyzed for {displayName}.
           </p>
         )}
@@ -425,14 +424,14 @@ function AncestorDidYouKnow({ name, data }) {
       <div className="max-w-5xl mx-auto px-6 flex flex-col md:flex-row items-center gap-6">
         <CalendarDays size={88} className="text-primary" />
         <div>
-          <p className="text-xl text-[#3f3f3e] dark:text-(--foreground)" style={{ fontFamily: "Georgia, serif" }}>
+          <p className="text-xl text-foreground" style={{ fontFamily: "Georgia, serif" }}>
             Historical Context
           </p>
-          <p className="text-sm text-[#5f5f5e] dark:text-(--secondary-foreground) mt-1">Did you know?</p>
-          <p className="text-3xl text-[#2f2f2f] dark:text-(--foreground) mt-2">
+          <p className="text-sm text-muted-foreground mt-1">Did you know?</p>
+          <p className="text-3xl text-foreground mt-2">
             <span className="font-semibold">{year}</span> was a notable year for the name {displayName}.
           </p>
-          <p className="text-sm text-[#666] dark:text-(--secondary-foreground) mt-2">{fact}</p>
+          <p className="text-sm text-muted-foreground mt-2">{fact}</p>
         </div>
       </div>
     </section>
@@ -515,7 +514,7 @@ export function AncestorMeaningPage({ type, firstNameParam, lastNameParam, initi
       <section className="bg-slate-50 pb-12 dark:bg-slate-950">
         <div className="max-w-5xl mx-auto px-6">
           <div className="flex items-center justify-between mb-3">
-            <p className="text-xs text-[#686866] dark:text-(--muted-foreground)">
+            <p className="text-xs text-muted-foreground">
               Data based on publicly available name records and statistical analysis.
             </p>
             <AncestorConfidenceBadge data={primaryData} />
