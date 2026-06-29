@@ -46,6 +46,11 @@ const nextConfig = {
         permanent: true,
       },
       {
+        source: "/about-us",
+        destination: "/policypages/about",
+        permanent: true,
+      },
+      {
         source: "/contact",
         destination: "/policypages/contact",
         permanent: true,

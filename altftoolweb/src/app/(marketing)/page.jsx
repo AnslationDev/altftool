@@ -1,5 +1,3 @@
-"use client";
-
 import HeroSection from "./components/HeroSection";
 import CuratedToolsSection from "./components/CuratedToolsSection";
 import CategoriesSection from "./components/CategoriesSection";
