@@ -15,6 +15,7 @@ import MusicSection from "./components/MusicSection";
 import SubmitDrawer from "./components/SubmitDrawer";
 import SupportDrawer from "./components/SupportDrawer";
 import VideoPlayer from "./components/VideoPlayer";
+import Footer from "@/platform/navigation/Footer";
 
 
 export default function WindowSwapPage() {
@@ -128,7 +129,7 @@ export default function WindowSwapPage() {
           <TipJarSection onOpenSupport={() => setIsSurveyOpen(true)} />
           <SurveySection onOpenSupport={() => setIsSurveyOpen(true)} />
           <MusicSection />
-
+          <Footer />
         </div>
       )}
 

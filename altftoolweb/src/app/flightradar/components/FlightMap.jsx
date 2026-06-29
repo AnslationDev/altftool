@@ -28,10 +28,10 @@ const MapUIOverlay = () => {
   return (
     <div className="absolute right-6 top-28 z-[1000] flex flex-col gap-2 pointer-events-none">
       <div className="flex flex-col gap-[1px] bg-border/50 rounded-2xl shadow-sm overflow-hidden pointer-events-auto">
-        <button className="w-10 h-10 flex items-center justify-center bg-white/80 backdrop-blur hover:bg-white text-foreground font-bold transition-colors" onClick={() => map.zoomIn()} title="Zoom In">
+        <button className="w-10 h-10 flex items-center justify-center bg-card/80 backdrop-blur hover:bg-card text-foreground font-bold transition-colors" onClick={() => map.zoomIn()} title="Zoom In">
           <Plus size={18} />
         </button>
-        <button className="w-10 h-10 flex items-center justify-center bg-white/80 backdrop-blur hover:bg-white text-foreground font-bold transition-colors" onClick={() => map.zoomOut()} title="Zoom Out">
+        <button className="w-10 h-10 flex items-center justify-center bg-card/80 backdrop-blur hover:bg-card text-foreground font-bold transition-colors" onClick={() => map.zoomOut()} title="Zoom Out">
           <Minus size={18} />
         </button>
       </div>
@@ -150,7 +150,7 @@ export default function FlightMap({ flights, selectedFlightId, onSelectFlight })
         minZoom={2}
         worldCopyJump={false}
         scrollWheelZoom={true} 
-        style={{ height: '100%', width: '100%', background: '#EEF3F6' }}
+        style={{ height: '100%', width: '100%', background: 'var(--background)' }}
         zoomControl={false}
         attributionControl={false}
         className="organic-map-filter"

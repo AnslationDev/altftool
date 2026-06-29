@@ -8,16 +8,8 @@ export default function FlightRadarLayout({ children }) {
   useEffect(() => {
     document.body.classList.add("hide-global-header-active");
 
-    const mq = window.matchMedia("(prefers-color-scheme: dark)");
-    const applyTheme = (isDark) => {
-      document.documentElement.setAttribute("data-theme", isDark ? "dark" : "light");
-    };
-    applyTheme(mq.matches);
-    mq.addEventListener("change", (e) => applyTheme(e.matches));
-
     return () => {
       document.body.classList.remove("hide-global-header-active");
-      document.documentElement.removeAttribute("data-theme");
     };
   }, []);
 

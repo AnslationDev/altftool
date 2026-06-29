@@ -1,5 +1,9 @@
+"use client";
+
 import Link from "next/link";
-import { Search, Youtube } from "lucide-react";
+import { usePathname } from "next/navigation";
+import { Search, Youtube, Moon, Sun } from "lucide-react";
+import { useTheme } from "@/contexts/ThemeContext";
 
 const navLinks = [
   { label: "Sports", href: "/fact-net/categories/sports-culture" },
@@ -27,6 +31,9 @@ function FactNetLogo() {
 }
 
 export default function FactNetNav() {
+  const { resolvedTheme, toggleTheme } = useTheme();
+  const pathname = usePathname();
+
   return (
     <header className="fn-site-header">
       <div className="fn-brand-row">
@@ -35,6 +42,13 @@ export default function FactNetNav() {
           <p className="fn-tagline">Turn Your Curiosity Into Discovery</p>
 
           <div className="fn-header-tools">
+            <button
+              onClick={toggleTheme}
+              className="fn-theme-toggle"
+              aria-label="Toggle theme"
+            >
+              {resolvedTheme === "dark" ? <Sun className="fn-icon" /> : <Moon className="fn-icon" />}
+            </button>
             <Link href="/fact-net/listings" className="fn-youtube-link" aria-label="Browse featured facts">
               <Youtube className="fn-icon" />
             </Link>
@@ -53,11 +67,19 @@ export default function FactNetNav() {
 
       <nav className="fn-category-strip" aria-label="Fact-Net sections">
         <div className="fn-category-strip-inner">
-          {navLinks.map((link) => (
-            <Link key={`${link.href}-${link.label}`} href={link.href}>
-              {link.label}
-            </Link>
-          ))}
+          {navLinks.map((link) => {
+            const isActive = pathname === link.href || (link.href !== "/fact-net/listings" && pathname.startsWith(link.href + "/"));
+            return (
+              <Link 
+                key={`${link.href}-${link.label}`} 
+                href={link.href}
+                className={isActive ? "fn-active" : ""}
+                aria-current={isActive ? "page" : undefined}
+              >
+                {link.label}
+              </Link>
+            );
+          })}
         </div>
       </nav>
     </header>
