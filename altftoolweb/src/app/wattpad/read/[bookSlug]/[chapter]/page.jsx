@@ -41,12 +41,9 @@ export async function generateMetadata({ params }) {
 export default async function ReaderPage({ params }) {
   const { bookSlug, chapter } = await params;
 
-  // Find book
   const book = books.find((item) => item.slug === bookSlug);
-
   if (!book) notFound();
 
-  // Find chapter
   const currentChapter = chapters.find(
     (item) =>
       item.bookId === book.id &&
@@ -55,9 +52,7 @@ export default async function ReaderPage({ params }) {
 
   if (!currentChapter) notFound();
 
-  // Next chapter
   const nextChapter = Number(chapter) + 1;
-
   const hasNextChapter = chapters.find(
     (item) =>
       item.bookId === book.id &&
@@ -65,63 +60,43 @@ export default async function ReaderPage({ params }) {
   );
 
   return (
-    <div className=" min-h-screen bg-(--background)">
-
-      {/* Top */}
-      <div className="border-b border-(--border) sticky top-0 bg-(--card) backdrop-blur-xl z-50">
-        <div className="max-w-4xl mx-auto px-4 py-4 flex items-center justify-between">
-
+    <div className="min-h-screen bg-background">
+      <div className="wp-reader-header">
+        <div className="wp-reader-header-inner">
           <div>
-            <div className="font-bold text-lg">
-              {book.title}
-            </div>
-
-            <div className="text-sm text-(--muted-foreground)">
-              Chapter {currentChapter.chapterNumber}
-            </div>
+            <div className="wp-reader-book-title">{book.title}</div>
+            <div className="wp-reader-chapter-label">Chapter {currentChapter.chapterNumber}</div>
           </div>
-
           <Link
             href={`/wattpad/book/${book.slug}`}
-            className="text-sm text-(--primary) font-medium cursor-pointer"
+            className="wp-reader-back"
           >
             Back to Book
           </Link>
         </div>
       </div>
 
-      {/* Content */}
-      <div className="section max-w-[800px] mx-auto px-4 py-12 ">
-
-        <h1 className="text-3xl md:text-5xl font-bold mb-10 leading-tight">
+      <div className="wp-reader-content">
+        <h1 className="wp-reader-chapter-title">
           {currentChapter.title}
         </h1>
 
-        <div className="text-[17px] leading-9 text-(--muted-foreground) whitespace-pre-line">
+        <div className="wp-reader-body">
           {currentChapter.content}
         </div>
 
-       
-
-        {/* Continue Button */}
         {hasNextChapter && (
           <div className="mt-16 mb-8 flex justify-center">
-            <Link
-              href={`/wattpad/read/${book.slug}/${nextChapter}`}
-            >
-              <button className="bg-(--primary) transition px-8 py-4 rounded-full text-white font-semibold cursor-pointer">
+            <Link href={`/wattpad/read/${book.slug}/${nextChapter}`}>
+              <button className="wp-reader-btn">
                 Continue to Next Part
               </button>
             </Link>
           </div>
         )}
 
-           <TextToSpeech
-        text={currentChapter.content}
-      />
-
+        <TextToSpeech text={currentChapter.content} />
       </div>
-      
     </div>
   );
 }

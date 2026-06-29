@@ -28,7 +28,7 @@ export default function FlightSidebar({ selectedFlight, onSelectFlight }) {
 
           <button
             onClick={() => onSelectFlight(null)}
-            className="absolute top-3 right-3 bg-card hover:bg-white text-primary p-1.5 rounded-full shadow-sm transition-transform hover:scale-80 active:scale-95 z-10"
+            className="absolute top-3 right-3 bg-card hover:bg-background text-primary p-1.5 rounded-full shadow-sm transition-transform hover:scale-90 active:scale-95 z-10"
           >
             <X size={18} />
           </button>
@@ -42,7 +42,7 @@ export default function FlightSidebar({ selectedFlight, onSelectFlight }) {
               <p className="text-sm text-[var(--secondary)] font-bold mt-2 uppercase tracking-widest">{selectedFlight.airline}</p>
             </div>
             {/* Airline Logo Mock Organic */}
-            <div className="w-14 h-14 bg-white/50 rounded-full border border-border/50 shadow-sm flex items-center justify-center">
+            <div className="w-14 h-14 bg-card/50 rounded-full border border-border/50 shadow-sm flex items-center justify-center">
               <div className="font-bold text-primary text-xl font-sans">
                 {selectedFlight.airline.substring(0, 2)}
               </div>
@@ -81,7 +81,7 @@ export default function FlightSidebar({ selectedFlight, onSelectFlight }) {
           </div>
 
           {/* Time estimates */}
-          <div className="flex justify-between mt-6 bg-white/40 p-4 rounded-[2rem] border border-border/30 shadow-sm">
+          <div className="flex justify-between mt-6 bg-muted/20 p-4 rounded-[2rem] border border-border/30 shadow-sm">
             <div>
               <div className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest mb-1">Scheduled</div>
               <div className="text-sm text-foreground font-bold">10:00 AM</div>
@@ -145,7 +145,7 @@ export default function FlightSidebar({ selectedFlight, onSelectFlight }) {
 
 function DataCell({ label, value, highlight = false }) {
   return (
-    <div className="bg-white/60 backdrop-blur-sm border border-border/30 rounded-3xl p-4 transition-colors hover:bg-white/80">
+    <div className="bg-muted/40 backdrop-blur-sm border border-border/30 rounded-3xl p-4 transition-colors hover:bg-muted/60">
       <div className="text-[10px] text-muted-foreground font-bold uppercase tracking-widest mb-1">{label}</div>
       <div className={`text-sm font-bold ${highlight ? 'text-primary' : 'text-foreground'}`}>{value}</div>
     </div>
@@ -154,7 +154,7 @@ function DataCell({ label, value, highlight = false }) {
 
 function LockedCell({ label }) {
   return (
-    <div className="bg-border/20 backdrop-blur-sm border border-border/30 rounded-3xl p-4 transition-colors cursor-not-allowed group">
+    <div className="bg-muted/20 backdrop-blur-sm border border-border/30 rounded-3xl p-4 transition-colors cursor-not-allowed group">
       <div className="text-[10px] text-muted-foreground font-bold uppercase tracking-widest mb-1 flex items-center gap-1">
         {label}
       </div>

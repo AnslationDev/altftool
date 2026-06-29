@@ -13,6 +13,13 @@ export const metadata = {
   },
 };
 
+import Footer from "@/platform/navigation/Footer";
+
 export default function FactNetLayout({ children }) {
-  return <div className="fn-scope">{children}</div>;
+  return (
+    <>
+      <div className="fn-scope">{children}</div>
+      <Footer />
+    </>
+  );
 }

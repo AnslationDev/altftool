@@ -24,6 +24,11 @@ body.hide-global-header-active #main-header {
 
 .organic-map-filter .leaflet-tile-pane {
   filter: saturate(105%) contrast(98%) brightness(102%);
+  transition: filter 0.5s ease-in-out;
+}
+
+[data-theme="dark"] .organic-map-filter .leaflet-tile-pane {
+  filter: invert(100%) hue-rotate(180deg) brightness(95%) contrast(90%);
 }
 
 .leaflet-container {

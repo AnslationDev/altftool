@@ -2,8 +2,9 @@
 "use client";
 
 import { useState, useRef, useEffect, useMemo } from 'react';
-import { Search, Plane, Shield, Navigation, SlidersHorizontal, X, Clock, Activity, Check, RotateCcw, Compass, Radio } from 'lucide-react';
+import { Search, Plane, Shield, Navigation, SlidersHorizontal, X, Clock, Activity, Check, RotateCcw, Compass, Radio, Sun, Moon } from 'lucide-react';
 import Link from 'next/link';
+import { useTheme } from "@/contexts/ThemeContext";
 
 export default function CustomHeader({ 
   flights, 
@@ -13,6 +14,7 @@ export default function CustomHeader({
   aircraftFilter, 
   setAircraftFilter 
 }) {
+  const { resolvedTheme, setThemeMode } = useTheme();
   const [searchQuery, setSearchQuery] = useState('');
   const [showSearch, setShowSearch] = useState(false);
   const [showFilters, setShowFilters] = useState(false);
@@ -116,7 +118,7 @@ export default function CustomHeader({
   };
 
   return (
-    <header className="absolute top-6 left-1/2 -translate-x-1/2 bg-white/70 backdrop-blur-md border border-border/50 rounded-full h-16 flex items-center justify-between z-[1000] shadow-[0_4px_25px_-2px_rgba(13,148,136,0.15)] px-5 w-[95%] max-w-5xl transition-all duration-500">
+    <header className="absolute top-6 left-1/2 -translate-x-1/2 bg-card/75 backdrop-blur-md border border-border/50 rounded-full h-16 flex items-center justify-between z-[1000] shadow-[0_4px_25px_-2px_rgba(13,148,136,0.15)] px-5 w-[95%] max-w-5xl transition-all duration-500">
       
       {/* 1. Left Section: Premium Compass Brandmark & Live Badge */}
       <div className="flex items-center gap-3 shrink-0">
@@ -227,6 +229,20 @@ export default function CustomHeader({
       {/* 3. Right Section: Custom Search & Airspace Filters */}
       <div className="flex items-center gap-2 shrink-0">
         
+        {/* Global Theme Toggle Button */}
+        <button
+          onClick={() => setThemeMode(resolvedTheme === 'dark' ? 'light' : 'dark')}
+          className="h-10 w-10 flex items-center justify-center rounded-full border border-border/50 bg-card/40 hover:bg-card/80 text-foreground backdrop-blur transition-all duration-300 cursor-pointer"
+          aria-label="Toggle Theme"
+          title={`Switch to ${resolvedTheme === 'dark' ? 'Light' : 'Dark'} Mode`}
+        >
+          {resolvedTheme === 'dark' ? (
+            <Sun size={15} className="text-[#14B8A6]" />
+          ) : (
+            <Moon size={15} className="text-[#14B8A6]" />
+          )}
+        </button>
+
         {/* Filter Dropdown Toggle Button */}
         <div className="relative" ref={filterRef}>
           <button 
@@ -234,7 +250,7 @@ export default function CustomHeader({
             className={`h-10 w-10 flex items-center justify-center rounded-full border border-border/50 backdrop-blur transition-all duration-300 cursor-pointer ${
               hasActiveFilters 
                 ? 'bg-[var(--secondary)] text-white shadow-sm hover:bg-[var(--secondary)]/90 border-[var(--secondary)]/50' 
-                : 'bg-white/40 hover:bg-white/80 text-foreground border-border/50'
+                : 'bg-card/40 hover:bg-card/80 text-foreground border-border/50'
             }`}
             title="Filter Airspace"
           >
@@ -313,7 +329,7 @@ export default function CustomHeader({
             <input 
               type="text" 
               placeholder="Search..."
-              className="bg-white/40 text-foreground text-sm rounded-full pl-9 pr-8 py-2 w-[110px] sm:w-[200px] border border-border focus:outline-none focus:bg-white focus:w-[150px] sm:focus:w-[240px] focus-visible:ring-2 focus-visible:ring-moss/30 transition-all duration-300 placeholder-grass/70"
+              className="bg-muted/40 text-foreground text-sm rounded-full pl-9 pr-8 py-2 w-[110px] sm:w-[200px] border border-border/80 focus:outline-none focus:bg-card focus:border-primary/50 focus:w-[150px] sm:focus:w-[240px] transition-all duration-300 placeholder-muted-foreground/60"
               value={searchQuery}
               onChange={(e) => {
                 setSearchQuery(e.target.value);

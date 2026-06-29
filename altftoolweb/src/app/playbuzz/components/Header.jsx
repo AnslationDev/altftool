@@ -1,9 +1,13 @@
-﻿import { useState } from 'react';
+"use client";
+
+import { useState } from 'react';
 import Link from 'next/link';
-import { ChevronDown, Menu } from 'lucide-react';
+import { ChevronDown, Menu, Sun, Moon } from 'lucide-react';
+import { useTheme } from '@/contexts/ThemeContext';
 
 const Header = () => {
   const [aboutDropdownOpen, setAboutDropdownOpen] = useState(false);
+  const { resolvedTheme, setThemeMode } = useTheme();
 
   return (
     <header
@@ -14,7 +18,7 @@ const Header = () => {
         color: 'var(--anslation-ds-footer-text)',
       }}
     >
-      <div className="w-full max-w-[1760px] mx-auto px-6 max-md:px-3 flex items-center gap-7">
+      <div className="w-full max-w-[1760px] mx-auto px-6 max-md:px-3 flex items-center justify-between">
         <div className="flex items-center gap-7">
           <button
             className="md:hidden flex flex-col gap-[3px] p-1 bg-transparent border-none cursor-pointer focus-visible:ring-2 focus-visible:ring-[var(--primary)] focus-visible:outline-none rounded"
@@ -72,6 +76,25 @@ const Header = () => {
             )}
           </div>
         </div>
+
+        {/* Global Theme Toggle Button */}
+        <button
+          onClick={() => setThemeMode(resolvedTheme === 'dark' ? 'light' : 'dark')}
+          className="h-10 w-10 flex items-center justify-center rounded-full border cursor-pointer transition-all duration-300 hover:bg-[color-mix(in_srgb,var(--anslation-ds-footer-border)_30%,transparent)]"
+          style={{
+            borderColor: 'var(--anslation-ds-footer-border)',
+            backgroundColor: 'transparent',
+            color: 'var(--anslation-ds-footer-text)',
+          }}
+          aria-label="Toggle Theme"
+          title={`Switch to ${resolvedTheme === 'dark' ? 'Light' : 'Dark'} Mode`}
+        >
+          {resolvedTheme === 'dark' ? (
+            <Sun size={15} className="text-[var(--secondary)]" />
+          ) : (
+            <Moon size={15} className="text-[var(--secondary)]" />
+          )}
+        </button>
       </div>
     </header>
   );

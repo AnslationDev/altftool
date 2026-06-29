@@ -1,11 +1,15 @@
 "use client";
 
 import React from "react";
-import { Coffee, Upload } from "lucide-react";
+import { Coffee, Upload, Sun, Moon } from "lucide-react";
 import { motion } from "framer-motion";
+import { useTheme } from "@/contexts/ThemeContext";
 import "../style/HeroSection.css";
 
 export default function HeroSection({ onStartPlaying, onOpenSubmit, onOpenSupport }) {
+  const { resolvedTheme, setThemeMode } = useTheme();
+  const isDark = resolvedTheme === "dark";
+  const ThemeIcon = isDark ? Moon : Sun;
   return (
     <section className="relative w-full min-h-screen flex flex-col justify-between p-6 sm:p-12 overflow-hidden bg-primary">
 
@@ -44,7 +48,13 @@ export default function HeroSection({ onStartPlaying, onOpenSubmit, onOpenSuppor
 
         {/* Right links */}
         <div className="windowswap-hero-nav-text flex items-center gap-4 sm:gap-6 text-sm font-medium tracking-wide text-white">
-
+          <button
+            onClick={() => setThemeMode(isDark ? "light" : "dark")}
+            className="windowswap-secondary-button p-2 rounded-full transition-all duration-300 hover:scale-105 active:scale-95 flex items-center justify-center cursor-pointer"
+            aria-label="Toggle Theme"
+          >
+            <ThemeIcon className="h-4 w-4" />
+          </button>
           <button
             onClick={onOpenSubmit}
             className="windowswap-secondary-button px-5 py-2 rounded-full transition-all duration-300 hover:scale-105 active:scale-95 font-semibold flex items-center gap-1 text-xs cursor-pointer"

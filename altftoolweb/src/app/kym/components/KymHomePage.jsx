@@ -1,4 +1,4 @@
-import { MessageCircle, Play } from "lucide-react";
+import { MessageCircle, Megaphone, Play } from "lucide-react";
 import Header from "./Header";
 import KymAdBanner, { kymBanners } from "./KymAdBanner";
 import KymTrendingImages from "./KymTrendingImages";
@@ -21,7 +21,7 @@ function cardHref(item) {
 
 function ImageCard({ item, variant = "standard" }) {
   return (
-    <a className={`kym-card kym-card--${variant}`} href={cardHref(item)}>
+    <a className={`kym-card kym-card--${variant} kym-surface-card`} href={cardHref(item)}>
       <img src={item.image.src} alt="" />
       <div className="kym-card__content">
         {item.category ? <span>{item.category}</span> : null}
@@ -34,7 +34,7 @@ function ImageCard({ item, variant = "standard" }) {
 
 function EntryRow({ item }) {
   return (
-    <a className="kym-entry-row" href={cardHref(item)}>
+    <a className="kym-entry-row kym-surface-card" href={cardHref(item)}>
       <img src={item.image.src} alt="" />
       <div>
         <span>Meme</span>
@@ -48,8 +48,8 @@ function EntryRow({ item }) {
 function SectionTitle({ children, icon }) {
   return (
     <h2 className="kym-section-title">
-      {icon ? <i>{icon}</i> : null}
-      {children}
+      {icon ? <span className="kym-section-title__icon">{icon}</span> : null}
+      <span className="kym-section-title__text">{children}</span>
     </h2>
   );
 }
@@ -57,11 +57,12 @@ function SectionTitle({ children, icon }) {
 function MainColumn() {
   return (
     <article className="kym-main-column">
-      <div className="kym-alert">
-        Cast Your Vote For May 2026's Meme Of The Month!
+      <div className="kym-alert kym-reveal" role="status">
+        <Megaphone size={16} strokeWidth={2.25} aria-hidden="true" />
+        <span>Cast Your Vote For May 2026&apos;s Meme Of The Month!</span>
       </div>
 
-      <section>
+      <section className="kym-section kym-reveal">
         <SectionTitle>Today In Internet Culture</SectionTitle>
         <div className="kym-top-grid">
           {spotlightCards.map((item) => (
@@ -74,7 +75,7 @@ function MainColumn() {
         </div>
       </section>
 
-      <section>
+      <section className="kym-section kym-reveal">
         <SectionTitle>Fresh Entries</SectionTitle>
         <div className="kym-entry-list">
           {freshEntries.map((item) => (
@@ -83,8 +84,8 @@ function MainColumn() {
         </div>
       </section>
 
-      <section>
-        <SectionTitle icon={<MessageCircle size={16} />}>
+      <section className="kym-section kym-reveal">
+        <SectionTitle icon={<MessageCircle size={16} strokeWidth={2.25} />}>
           Latest Explainers
         </SectionTitle>
         <div className="kym-explainer-stack">
@@ -94,8 +95,8 @@ function MainColumn() {
         </div>
       </section>
 
-      <section>
-        <SectionTitle icon={<Play size={15} fill="currentColor" />}>
+      <section className="kym-section kym-reveal">
+        <SectionTitle icon={<Play size={15} fill="currentColor" strokeWidth={2.25} />}>
           Latest Episodes
         </SectionTitle>
         <div className="kym-episode-grid">
@@ -106,7 +107,7 @@ function MainColumn() {
 
       </section>
 
-      <section>
+      <section className="kym-section kym-reveal">
         <SectionTitle>News & Editorials</SectionTitle>
         <div className="kym-editorial-grid">
           {editorials.map((item) => (
@@ -116,7 +117,7 @@ function MainColumn() {
 
       </section>
 
-      <section>
+      <section className="kym-section kym-reveal">
         <SectionTitle>Latest</SectionTitle>
         <div className="kym-latest-feed">
           {latest.map((item) => (
@@ -132,7 +133,7 @@ function MainColumn() {
 function Sidebar() {
   return (
     <aside className="kym-sidebar">
-      <section className="kym-side-block">
+      <section className="kym-side-block kym-surface-card kym-reveal">
         <h2>Top Entries This Month</h2>
         <div className="kym-side-list">
           {topEntries.map((item, index) => (
@@ -145,14 +146,14 @@ function Sidebar() {
         </div>
       </section>
 
-      <section className="kym-side-block">
+      <section className="kym-side-block kym-surface-card kym-reveal">
         <h2>Trending Images</h2>
         <KymTrendingImages images={trendingImages} />
       </section>
 
 
 
-      <section className="kym-side-block kym-top-memes">
+      <section className="kym-side-block kym-top-memes kym-surface-card kym-reveal">
         <h2>Top 5 Memes</h2>
         <p>From the last week</p>
         {topMemes.map((item, index) => (

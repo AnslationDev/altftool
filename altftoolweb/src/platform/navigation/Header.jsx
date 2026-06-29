@@ -205,11 +205,10 @@ const Header = () => {
         <header
           id="main-header"
           data-hydrated={themeReady ? "true" : "false"}
-          className={`sticky top-0 z-50 border-b px-4 backdrop-blur-xl sm:px-6 lg:px-8 ${
-            isHomeDark
+          className={`sticky top-0 z-50 border-b px-4 backdrop-blur-xl sm:px-6 lg:px-8 ${isHomeDark
               ? "border-[rgba(148,163,184,0.12)] bg-[#020617]/92 shadow-[0_1px_0_rgba(0,0,0,0.28)]"
               : "border-[#E2E8F0] bg-[#F8FAFC]/92 shadow-[0_1px_0_rgba(15,23,42,0.08)]"
-          }`}
+            }`}
         >
           <div className="mx-auto grid h-16 max-w-[var(--anslation-ds-container)] grid-cols-[auto_1fr_auto] items-center gap-3 sm:h-[72px] lg:gap-4 min-[1360px]:grid-cols-[minmax(8rem,1fr)_auto_minmax(8rem,1fr)]">
             <Link
@@ -225,29 +224,26 @@ const Header = () => {
             </Link>
 
             <nav
-              className={`hidden max-w-full items-center justify-center gap-1 justify-self-center rounded-full border px-2 py-1.5 min-[1360px]:flex ${
-                isHomeDark
+              className={`hidden max-w-full items-center justify-center gap-1 justify-self-center rounded-full border px-2 py-1.5 min-[1360px]:flex ${isHomeDark
                   ? "border-transparent bg-transparent shadow-none"
                   : "border-transparent bg-transparent shadow-none"
-              }`}
+                }`}
             >
               {HOME_NAV_ITEMS.map((item) => {
                 const isActive =
                   isPublicRouteActive(pathname, item) ||
                   item.options?.some((option) => isPublicRouteActive(pathname, option));
                 const hasOptions = Boolean(item.options?.length);
-                const homeNavItemClass = `relative flex h-10 appearance-none items-center gap-1.5 whitespace-nowrap rounded-full border-0 px-4 py-0 text-base font-medium leading-5 transition duration-200 [font-family:var(--font-ibm-plex-sans)] ${
-                  isActive
+                const homeNavItemClass = `relative flex h-10 appearance-none items-center gap-1.5 whitespace-nowrap rounded-full border-0 px-4 py-0 text-base font-medium leading-5 transition duration-200 [font-family:var(--font-ibm-plex-sans)] ${isActive
                     ? isHomeDark
                       ? "bg-[rgba(20,184,166,0.12)] text-[#14B8A6] shadow-[0_0_24px_rgba(20,184,166,0.18)]"
                       : "bg-[#F0FDFA] text-[#0D9488] shadow-[0_2px_8px_rgba(2,6,23,0.06)]"
                     : isHomeDark
                       ? "text-[#94A3B8] hover:bg-[#1E293B] hover:text-[#F8FAFC] hover:shadow-[0_2px_8px_rgba(2,6,23,0.6)]"
                       : "text-[#475569] hover:bg-[#F1F5F9] hover:text-[#0F172A] hover:shadow-[0_2px_8px_rgba(2,6,23,0.06)]"
-                }`;
-                const activeUnderlineClass = `absolute inset-x-4 bottom-1 h-0.5 origin-left rounded-full bg-[#14B8A6] transition-transform duration-200 ${
-                  isActive ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100"
-                }`;
+                  }`;
+                const activeUnderlineClass = `absolute inset-x-4 bottom-1 h-0.5 origin-left rounded-full bg-[#14B8A6] transition-transform duration-200 ${isActive ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100"
+                  }`;
 
                 return (
                   <div key={item.label} className="group relative">
@@ -282,26 +278,24 @@ const Header = () => {
                     {hasOptions ? (
                       <div className="absolute left-1/2 top-full hidden -translate-x-1/2 pt-3 group-focus-within:block group-hover:block">
                         <div
-                          className={`w-56 rounded-2xl border p-2 shadow-[0_22px_50px_rgba(15,23,42,0.16)] ${
-                            isHomeDark
+                          className={`w-56 rounded-2xl border p-2 shadow-[0_22px_50px_rgba(15,23,42,0.16)] ${isHomeDark
                               ? "border-[rgba(148,163,184,0.12)] bg-[#0F172A]"
                               : "border-[#E2E8F0] bg-white"
-                          }`}
+                            }`}
                         >
                           {item.options.map((option) => (
                             <Link
                               key={option.label}
                               href={option.href}
                               {...routePreviewProps(option.href)}
-                              className={`block rounded-xl px-3 py-2.5 text-base font-medium transition duration-200 [font-family:var(--font-ibm-plex-sans)] ${
-                                isPublicRouteActive(pathname, option)
+                              className={`block rounded-xl px-3 py-2.5 text-base font-medium transition duration-200 [font-family:var(--font-ibm-plex-sans)] ${isPublicRouteActive(pathname, option)
                                   ? isHomeDark
                                     ? "bg-[rgba(20,184,166,0.12)] text-[#14B8A6] shadow-[0_0_24px_rgba(20,184,166,0.14)]"
                                     : "bg-[#F0FDFA] text-[#0D9488]"
                                   : isHomeDark
                                     ? "text-[#94A3B8] hover:bg-[#1E293B] hover:text-[#F8FAFC]"
                                     : "text-[#475569] hover:bg-[#F1F5F9] hover:text-[#0F172A]"
-                              }`}
+                                }`}
                             >
                               {option.label}
                             </Link>
@@ -327,11 +321,10 @@ const Header = () => {
                     onChange={(event) => handleChange(event.target.value)}
                     aria-invalid={searchError ? "true" : "false"}
                     suppressHydrationWarning
-                    className={`h-11 !w-[16rem] shrink-0 rounded-xl text-sm font-semibold shadow-none transition focus-visible:border-[#14B8A6] focus-visible:ring-2 focus-visible:ring-[#14B8A6]/20 min-[1800px]:!w-[24rem] ${
-                      isHomeDark
+                    className={`h-11 !w-[16rem] shrink-0 rounded-xl text-sm font-semibold shadow-none transition focus-visible:border-[#14B8A6] focus-visible:ring-2 focus-visible:ring-[#14B8A6]/20 min-[1800px]:!w-[24rem] ${isHomeDark
                         ? "border-[rgba(148,163,184,0.12)] bg-[#0F172A] text-[#F8FAFC] placeholder:text-[#94A3B8]"
                         : "border-[#E2E8F0] bg-white text-[#0F172A] placeholder:text-[#475569]"
-                    }`}
+                      }`}
                   />
                 </div>
 
@@ -359,9 +352,8 @@ const Header = () => {
                     suppressHydrationWarning
                   >
                     <CurrentThemeIcon
-                      className={`h-4 w-4 ${
-                        themeReady && resolvedTheme === "dark" ? "text-[#14B8A6]" : "text-[#14B8A6]"
-                      }`}
+                      className={`h-4 w-4 ${themeReady && resolvedTheme === "dark" ? "text-[#14B8A6]" : "text-[#14B8A6]"
+                        }`}
                     />
                   </span>
                 </IconButton>
@@ -390,23 +382,20 @@ const Header = () => {
           aria-modal={mobileMenuOpen ? "true" : undefined}
           aria-hidden={mobileMenuOpen ? undefined : "true"}
           inert={!mobileMenuOpen}
-          className={`fixed inset-0 z-[70] min-[1360px]:hidden ${
-            mobileMenuOpen ? "" : "pointer-events-none"
-          }`}
+          className={`fixed inset-0 z-[70] min-[1360px]:hidden ${mobileMenuOpen ? "" : "pointer-events-none"
+            }`}
         >
           <div
-            className={`fixed inset-0 bg-[#171B33]/45 backdrop-blur-sm transition-opacity duration-300 ${
-              mobileMenuOpen ? "opacity-100" : "opacity-0"
-            }`}
+            className={`fixed inset-0 bg-[#171B33]/45 backdrop-blur-sm transition-opacity duration-300 ${mobileMenuOpen ? "opacity-100" : "opacity-0"
+              }`}
             onClick={() => closeMobileMenu()}
           />
 
           <aside
-            className={`fixed inset-y-0 left-0 flex w-[min(24rem,calc(100vw-0.75rem))] transform flex-col overflow-y-auto border-r p-5 shadow-[0_24px_60px_rgba(15,23,42,0.18)] transition-transform duration-300 ease-out ${
-              isHomeDark
+            className={`fixed inset-y-0 left-0 flex w-[min(24rem,calc(100vw-0.75rem))] transform flex-col overflow-y-auto border-r p-5 shadow-[0_24px_60px_rgba(15,23,42,0.18)] transition-transform duration-300 ease-out ${isHomeDark
                 ? "border-[rgba(148,163,184,0.12)] bg-[#0F172A] text-[#F8FAFC]"
                 : "border-[#E2E8F0] bg-white text-[#0F172A]"
-            } ${mobileMenuOpen ? "translate-x-0" : "-translate-x-full"}`}
+              } ${mobileMenuOpen ? "translate-x-0" : "-translate-x-full"}`}
           >
             <div className="flex items-center justify-between">
               <Link
@@ -439,11 +428,10 @@ const Header = () => {
                   value={searchQuery}
                   onChange={(event) => handleChange(event.target.value)}
                   suppressHydrationWarning
-                  className={`min-w-0 rounded-xl ${
-                    isHomeDark
+                  className={`min-w-0 rounded-xl ${isHomeDark
                       ? "border-[rgba(148,163,184,0.12)] bg-[#020617] text-[#F8FAFC] placeholder:text-[#94A3B8]"
                       : "border-[#E2E8F0]"
-                  }`}
+                    }`}
                 />
                 <IconButton type="submit" aria-label="Search">
                   <Search className="h-4 w-4" />
@@ -466,15 +454,14 @@ const Header = () => {
                 return item.options ? (
                   <details key={item.label} className="group">
                     <summary
-                    className={`flex cursor-pointer list-none items-center justify-between rounded-xl px-3 py-3 text-sm font-medium transition duration-200 [font-family:var(--font-ibm-plex-sans)] ${
-                        isCurrent
+                      className={`flex cursor-pointer list-none items-center justify-between rounded-xl px-3 py-3 text-sm font-medium transition duration-200 [font-family:var(--font-ibm-plex-sans)] ${isCurrent
                           ? isHomeDark
                             ? "bg-[rgba(20,184,166,0.12)] text-[#14B8A6] shadow-[0_0_24px_rgba(20,184,166,0.14)]"
                             : "bg-[#F0FDFA] text-[#0D9488]"
                           : isHomeDark
                             ? "text-[#94A3B8] hover:bg-[#1E293B] hover:text-[#F8FAFC]"
                             : "text-[#475569] hover:bg-[#F1F5F9] hover:text-[#0F172A]"
-                      }`}
+                        }`}
                     >
                       <span className="flex items-center gap-2">
                         <Icon className="h-4 w-4" />
@@ -491,11 +478,10 @@ const Header = () => {
                             href={option.href}
                             {...routePreviewProps(option.href)}
                             onClick={() => closeMobileMenu()}
-                            className={`flex items-center gap-2 rounded-xl px-3 py-2.5 text-sm font-medium transition duration-200 [font-family:var(--font-ibm-plex-sans)] ${
-                              isHomeDark
+                            className={`flex items-center gap-2 rounded-xl px-3 py-2.5 text-sm font-medium transition duration-200 [font-family:var(--font-ibm-plex-sans)] ${isHomeDark
                                 ? "text-[#94A3B8] hover:bg-[#1E293B] hover:text-[#F8FAFC]"
                                 : "text-[#475569] hover:bg-[#F1F5F9] hover:text-[#0F172A]"
-                            }`}
+                              }`}
                           >
                             <OptionIcon className="h-4 w-4" />
                             {option.label}
@@ -510,15 +496,14 @@ const Header = () => {
                     href={item.href}
                     {...routePreviewProps(item.href)}
                     onClick={() => closeMobileMenu()}
-                    className={`flex items-center gap-2 rounded-xl px-3 py-3 text-sm font-medium transition duration-200 [font-family:var(--font-ibm-plex-sans)] ${
-                      isCurrent
+                    className={`flex items-center gap-2 rounded-xl px-3 py-3 text-sm font-medium transition duration-200 [font-family:var(--font-ibm-plex-sans)] ${isCurrent
                         ? isHomeDark
                           ? "bg-[rgba(20,184,166,0.12)] text-[#14B8A6] shadow-[0_0_24px_rgba(20,184,166,0.14)]"
                           : "bg-[#F0FDFA] text-[#0D9488]"
                         : isHomeDark
                           ? "text-[#94A3B8] hover:bg-[#1E293B] hover:text-[#F8FAFC]"
                           : "text-[#475569] hover:bg-[#F1F5F9] hover:text-[#0F172A]"
-                    }`}
+                      }`}
                   >
                     <Icon className="h-4 w-4" />
                     {item.label}
@@ -526,16 +511,14 @@ const Header = () => {
                 );
               })}
               <div
-                className={`mt-5 rounded-2xl border p-2 ${
-                  isHomeDark
+                className={`mt-5 rounded-2xl border p-2 ${isHomeDark
                     ? "border-[rgba(148,163,184,0.12)] bg-[#020617]"
                     : "border-[#E2E8F0] bg-[#F8FAFC]"
-                }`}
+                  }`}
               >
                 <p
-                  className={`px-2 pb-2 text-xs font-medium uppercase tracking-normal ${
-                    isHomeDark ? "text-[#94A3B8]" : "text-[#475569]"
-                  }`}
+                  className={`px-2 pb-2 text-xs font-medium uppercase tracking-normal ${isHomeDark ? "text-[#94A3B8]" : "text-[#475569]"
+                    }`}
                 >
                   Theme
                 </p>
@@ -550,15 +533,14 @@ const Header = () => {
                         type="button"
                         aria-label={option.label}
                         onClick={() => handleThemeSelect(option.value)}
-                        className={`grid h-11 place-items-center rounded-xl border transition ${
-                          isSelected
+                        className={`grid h-11 place-items-center rounded-xl border transition ${isSelected
                             ? isHomeDark
                               ? "border-[#14B8A6] bg-[#1E293B] text-[#38BDF8]"
                               : "border-[#14B8A6] bg-[#F0FDFA] text-[#14B8A6]"
                             : isHomeDark
                               ? "border-transparent text-[#94A3B8] hover:bg-[#1E293B]"
                               : "border-transparent text-[#475569] hover:bg-white"
-                        }`}
+                          }`}
                       >
                         <OptionIcon className="h-4 w-4" />
                       </button>
@@ -580,7 +562,7 @@ const Header = () => {
         data-hydrated={themeReady ? "true" : "false"}
         className="sticky top-0 z-50 border-b border-(--border) bg-[color-mix(in_srgb,var(--card)_90%,transparent)] px-4 py-2 shadow-[0_1px_0_rgba(15,23,42,0.03)] backdrop-blur-xl sm:px-6 lg:px-8"
       >
-          <div className="mx-auto grid h-14 max-w-[var(--anslation-ds-container)] grid-cols-[auto_1fr_auto] items-center gap-3 lg:gap-4 min-[1360px]:grid-cols-[minmax(8rem,1fr)_auto_minmax(8rem,1fr)]">
+        <div className="mx-auto grid h-14 max-w-[var(--anslation-ds-container)] grid-cols-[auto_1fr_auto] items-center gap-3 lg:gap-4 min-[1360px]:grid-cols-[minmax(8rem,1fr)_auto_minmax(8rem,1fr)]">
           <Link
             href="/"
             className="flex min-w-fit items-center justify-self-start"
@@ -607,11 +589,10 @@ const Header = () => {
                       <button
                         type="button"
                         aria-haspopup="true"
-                        className={`relative flex items-center gap-2 rounded-[var(--anslation-ds-radius)] px-2.5 py-2 font-[inherit] text-sm font-medium transition ${
-                          isCurrent
+                        className={`relative flex items-center gap-2 rounded-[var(--anslation-ds-radius)] px-2.5 py-2 font-[inherit] text-sm font-medium transition ${isCurrent
                             ? "bg-(--primary) text-(--primary-foreground) shadow-[var(--anslation-ds-shadow-sm)]"
                             : "text-(--muted-foreground) hover:bg-(--muted) hover:text-(--foreground)"
-                        }`}
+                          }`}
                       >
                         <Icon className="h-4 w-4" />
                         {item.label}
@@ -627,11 +608,10 @@ const Header = () => {
                                 key={option.label}
                                 href={option.href}
                                 {...routePreviewProps(option.href)}
-                                className={`flex items-center gap-3 rounded-[6px] px-2.5 py-2 text-sm transition ${
-                                  isActive(option)
+                                className={`flex items-center gap-3 rounded-[6px] px-2.5 py-2 text-sm transition ${isActive(option)
                                     ? "bg-(--muted) text-(--primary)"
                                     : "text-(--muted-foreground) hover:bg-(--muted) hover:text-(--foreground)"
-                                }`}
+                                  }`}
                               >
                                 <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-[6px] bg-(--muted) text-(--primary)">
                                   <OptionIcon className="h-4 w-4" />
@@ -649,11 +629,10 @@ const Header = () => {
                     <Link
                       href={item.href}
                       {...routePreviewProps(item.href)}
-                      className={`relative flex items-center gap-2 rounded-[var(--anslation-ds-radius)] px-2.5 py-2 font-[inherit] text-sm font-medium transition ${
-                        isCurrent
+                      className={`relative flex items-center gap-2 rounded-[var(--anslation-ds-radius)] px-2.5 py-2 font-[inherit] text-sm font-medium transition ${isCurrent
                           ? "bg-(--primary) text-(--primary-foreground) shadow-[var(--anslation-ds-shadow-sm)]"
                           : "text-(--muted-foreground) hover:bg-(--muted) hover:text-(--foreground)"
-                      }`}
+                        }`}
                     >
                       <Icon className="h-4 w-4" />
                       {item.label}
@@ -701,9 +680,8 @@ const Header = () => {
                   suppressHydrationWarning
                 >
                   <CurrentThemeIcon
-                    className={`h-4 w-4 ${
-                      themeReady && resolvedTheme === "dark" ? "text-(--primary)" : ""
-                    }`}
+                    className={`h-4 w-4 ${themeReady && resolvedTheme === "dark" ? "text-(--primary)" : ""
+                      }`}
                   />
                 </span>
               </IconButton>
@@ -728,11 +706,10 @@ const Header = () => {
                           aria-label={option.label}
                           title={option.label}
                           onClick={() => handleThemeSelect(option.value)}
-                          className={`relative grid h-9 w-9 place-items-center rounded-[6px] border text-(--muted-foreground) transition hover:border-(--primary) hover:bg-(--muted) hover:text-(--foreground) ${
-                            isSelected
+                          className={`relative grid h-9 w-9 place-items-center rounded-[6px] border text-(--muted-foreground) transition hover:border-(--primary) hover:bg-(--muted) hover:text-(--foreground) ${isSelected
                               ? "border-(--primary) bg-(--muted) text-(--primary)"
                               : "border-transparent"
-                          }`}
+                            }`}
                         >
                           <OptionIcon className="h-4 w-4" />
                           {isSelected ? (
@@ -768,21 +745,18 @@ const Header = () => {
         aria-modal={mobileMenuOpen ? "true" : undefined}
         aria-hidden={mobileMenuOpen ? undefined : "true"}
         inert={!mobileMenuOpen}
-        className={`fixed inset-0 z-[70] min-[1360px]:hidden ${
-          mobileMenuOpen ? "" : "pointer-events-none"
-        }`}
+        className={`fixed inset-0 z-[70] min-[1360px]:hidden ${mobileMenuOpen ? "" : "pointer-events-none"
+          }`}
       >
         <div
-          className={`fixed inset-0 bg-black/45 backdrop-blur-sm transition-opacity duration-300 ${
-            mobileMenuOpen ? "opacity-100" : "opacity-0"
-          }`}
+          className={`fixed inset-0 bg-black/45 backdrop-blur-sm transition-opacity duration-300 ${mobileMenuOpen ? "opacity-100" : "opacity-0"
+            }`}
           onClick={() => closeMobileMenu()}
         />
 
         <aside
-          className={`fixed inset-y-0 left-0 flex w-[min(24rem,calc(100vw-0.75rem))] transform flex-col overflow-y-auto border-r border-(--border) bg-(--card) p-5 text-(--foreground) shadow-[var(--anslation-ds-shadow-lg)] transition-transform duration-300 ease-out ${
-            mobileMenuOpen ? "translate-x-0" : "-translate-x-full"
-          }`}
+          className={`fixed inset-y-0 left-0 flex w-[min(24rem,calc(100vw-0.75rem))] transform flex-col overflow-y-auto border-r border-(--border) bg-(--card) p-5 text-(--foreground) shadow-[var(--anslation-ds-shadow-lg)] transition-transform duration-300 ease-out ${mobileMenuOpen ? "translate-x-0" : "-translate-x-full"
+            }`}
         >
           <div className="flex items-center justify-between">
             <Link
@@ -840,11 +814,10 @@ const Header = () => {
                     {item.options ? (
                       <details className="group">
                         <summary
-                          className={`flex cursor-pointer list-none items-center justify-between rounded-[var(--anslation-ds-radius)] px-2.5 py-2.5 text-sm font-medium transition ${
-                            isCurrent
+                          className={`flex cursor-pointer list-none items-center justify-between rounded-[var(--anslation-ds-radius)] px-2.5 py-2.5 text-sm font-medium transition ${isCurrent
                               ? "bg-(--muted) text-(--primary)"
                               : "text-(--muted-foreground) hover:bg-(--muted) hover:text-(--foreground)"
-                          }`}
+                            }`}
                         >
                           <span className="flex items-center gap-2">
                             <Icon className="h-4 w-4" />
@@ -861,11 +834,10 @@ const Header = () => {
                                 href={option.href}
                                 {...routePreviewProps(option.href)}
                                 onClick={() => closeMobileMenu()}
-                                className={`flex items-center gap-2 rounded-[var(--anslation-ds-radius)] px-2.5 py-2 text-sm font-medium transition ${
-                                  isActive(option)
+                                className={`flex items-center gap-2 rounded-[var(--anslation-ds-radius)] px-2.5 py-2 text-sm font-medium transition ${isActive(option)
                                     ? "bg-(--muted) text-(--primary)"
                                     : "text-(--muted-foreground) hover:bg-(--muted) hover:text-(--foreground)"
-                                }`}
+                                  }`}
                               >
                                 <OptionIcon className="h-4 w-4" />
                                 {option.label}
@@ -879,11 +851,10 @@ const Header = () => {
                         href={item.href}
                         {...routePreviewProps(item.href)}
                         onClick={() => closeMobileMenu()}
-                        className={`flex items-center gap-2 rounded-[var(--anslation-ds-radius)] px-2.5 py-2.5 text-sm font-medium transition ${
-                          isCurrent
+                        className={`flex items-center gap-2 rounded-[var(--anslation-ds-radius)] px-2.5 py-2.5 text-sm font-medium transition ${isCurrent
                             ? "bg-(--muted) text-(--primary)"
                             : "text-(--muted-foreground) hover:bg-(--muted) hover:text-(--foreground)"
-                        }`}
+                          }`}
                       >
                         <Icon className="h-4 w-4" />
                         {item.label}
