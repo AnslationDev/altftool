@@ -71,8 +71,25 @@ export default function PageSeoWorkspace() {
     return () => clearTimeout(t);
   }, [query]);
 
-  const openPath = useCallback((path, cfg) => {
-    const normalized = path.startsWith("/") ? path : `/${path}`;
+  const openPath = useCallback((rawPath, cfg) => {
+    // Accept a full URL or a path; always edit by the URL pathname so the key
+    // matches what the SEO engine resolves at runtime (never "/https://...").
+    let normalized = String(rawPath || "").trim();
+    if (/^https?:\/\//i.test(normalized)) {
+      try {
+        normalized = new URL(normalized).pathname || "/";
+      } catch {
+        /* keep as typed */
+      }
+    } else if (/^\/https?:\/\//i.test(normalized)) {
+      // Repair a previously mangled "/https://host/path" value.
+      try {
+        normalized = new URL(normalized.slice(1)).pathname || "/";
+      } catch {
+        /* keep as typed */
+      }
+    }
+    if (!normalized.startsWith("/")) normalized = `/${normalized}`;
     setActivePath(normalized);
     setForm(readPageEntry(cfg || config || {}, normalized));
     setMessage("");
