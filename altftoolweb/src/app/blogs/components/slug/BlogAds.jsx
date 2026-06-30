@@ -94,7 +94,7 @@ ads = ads.slice(0, 4);
       ref={adRef}
       data-ad-slot={`blog_detail:${slug || "global"}`}
       data-ad-visible="true"
-      className={adViewportFixEnabled ? "block w-full max-w-sm mx-auto lg:max-w-none lg:sticky lg:top-24" : "block w-full max-w-sm mx-auto 2xl:max-w-none 2xl:sticky 2xl:top-24"}
+      className={adViewportFixEnabled ? "hidden lg:sticky lg:top-24 lg:block" : "hidden 2xl:sticky 2xl:top-24 2xl:block"}
     >
       {debugAds && (
         <div className="mb-2 rounded-[8px] border border-cyan-300 bg-cyan-50 px-3 py-2 text-[11px] font-bold text-cyan-800">
