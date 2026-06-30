@@ -1,5 +1,5 @@
 import { resolveSeo, applyResolvedSeo, resolveExtendedMeta } from "@altftool/core/seo/resolver";
-import { getSeoConfigSnapshot } from "./seoConfigSource";
+import { getSeoConfigSnapshot, loadSeoConfig } from "./seoConfigSource";
 
 export const siteConfig = {
   name: "AltFTool",
@@ -148,7 +148,10 @@ function buildVerification(v) {
   return Object.keys(out).length ? out : undefined;
 }
 
-export function createPageMetadata(rawArgs = {}) {
+export async function createPageMetadata(rawArgs = {}) {
+  // Warm the central SEO config snapshot so per-URL admin overrides ALWAYS
+  // apply, regardless of where/when this is called. Inert when engine disabled.
+  await loadSeoConfig();
   const {
     title,
     description = siteConfig.description,

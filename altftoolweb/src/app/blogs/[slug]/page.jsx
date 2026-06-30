@@ -27,7 +27,6 @@ import {
   createItemListJsonLd,
   createPageMetadata,
 } from "@/platform/seo/generateMetadata";
-import { primeSeoConfig } from "@/platform/seo/seoConfigSource";
 import {
   deriveBlogFaqItems,
   deriveBlogHowToSteps,
@@ -96,9 +95,7 @@ export async function generateMetadata({ params }) {
   const title = blog.seoTitle || `${blog.heading} - AltFTool Blog`;
   const description = getBlogDescription(blog);
   const tags = Array.isArray(blog.tags) ? blog.tags.filter(Boolean) : [];
-  // Warm the central SEO config so per-URL admin overrides apply to this page.
-  await primeSeoConfig();
-  const metadata = createPageMetadata({
+  const metadata = await createPageMetadata({
     title,
     description,
     path: `/blogs/${slug}`,
