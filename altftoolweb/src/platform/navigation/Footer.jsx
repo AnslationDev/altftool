@@ -120,8 +120,13 @@ function HomeFooterSection({ group, withBorder = false }) {
 
 const Footer = () => {
   const pathname = usePathname();
+  const usesLandingChrome =
+    pathname === "/" ||
+    pathname === "/tools" ||
+    pathname?.startsWith("/tools/") ||
+    pathname === "/extensions";
 
-  if (pathname === "/") {
+  if (usesLandingChrome) {
     return (
       <footer className="relative overflow-hidden border-t border-[#0EA5E9]/25 bg-[#020B1D] text-white [font-family:var(--font-inter)]">
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_0%_0%,rgba(14,165,233,0.08),transparent_22%),radial-gradient(circle_at_100%_20%,rgba(20,184,166,0.09),transparent_24%),linear-gradient(180deg,rgba(2,11,29,0.98),rgba(2,9,24,1))]" />
@@ -164,7 +169,7 @@ const Footer = () => {
               <div className="min-w-0 lg:pr-6">
                 <Link href="/" className="inline-flex transition duration-200 hover:-translate-y-0.5">
                   <Image
-                    src="/assets/altf_white.png"
+                    src="/assets/altf-header-logo-dark.png"
                     alt="AltFTool"
                     width={210}
                     height={62}
@@ -235,7 +240,7 @@ const Footer = () => {
           <div className="max-w-md">
             <Link href="/" className="mb-4 inline-flex transition duration-200 hover:-translate-y-0.5">
               <Image
-                src="/assets/altf_white.png"
+                src="/assets/altf-header-logo-dark.png"
                 alt="AltFTool"
                 width={132}
                 height={40}

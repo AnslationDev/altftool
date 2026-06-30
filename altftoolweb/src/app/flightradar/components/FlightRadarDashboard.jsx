@@ -39,7 +39,7 @@ export default function FlightRadarDashboard() {
   const selectedFlight = flights.find(f => f.id === selectedFlightId) || null;
 
   return (
-    <div className="flex flex-col absolute inset-0 w-full h-full overflow-hidden bg-rice font-sans text-loam">
+    <div className="flex flex-col absolute inset-0 w-full h-full overflow-hidden bg-card font-sans text-foreground">
       {/* Global Grain Texture Overlay */}
       <div 
         className="pointer-events-none fixed inset-0 z-[9999] opacity-[0.03] mix-blend-multiply" 

@@ -1,4 +1,4 @@
-import { SiteFooter } from "../components/SiteFooter";
+import Footer from "@/platform/navigation/Footer";
 import { SiteHeader } from "../components/SiteHeader";
 import { createPageMetadata } from "@/platform/seo/generateMetadata";
 
@@ -14,8 +14,8 @@ export default function PrivacyPolicyPage() {
   return (
     <main>
       <SiteHeader />
-      <section className="plain-page">
-        <p className="eyebrow">Privacy Policy</p>
+      <section className="hs-plain">
+        <span className="hs-eyebrow">Privacy Policy</span>
 
         <h2>Overview</h2>
         <p>
@@ -70,7 +70,7 @@ export default function PrivacyPolicyPage() {
           support.
         </p>
       </section>
-      <SiteFooter />
+      <Footer />
     </main>
   );
 }

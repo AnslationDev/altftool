@@ -171,7 +171,7 @@ export function AncestorOriginMap({ countries = [], name = '' }) {
       marker.bindPopup(`
         <div style="text-align: center; padding: 12px; min-width: 140px; font-family: 'Inter', sans-serif;">
           <div style="font-weight: 800; color: var(--primary); font-size: 16px; margin-bottom: 2px;">${entry.label}</div>
-          <div style="color: ${isDarkMode ? '#9ca3af' : '#6b7280'}; font-size: 12px; letter-spacing: 0.05em; text-transform: uppercase;">Historical Concentration</div>
+          <div style="color: var(--muted-foreground); font-size: 12px; letter-spacing: 0.05em; text-transform: uppercase;">Historical Concentration</div>
           <div style="margin-top: 8px; font-size: 24px; font-weight: 900; color: var(--primary);">${entry.pct}%</div>
         </div>
       `, {
@@ -204,16 +204,16 @@ export function AncestorOriginMap({ countries = [], name = '' }) {
         <div 
           className="backdrop-blur-xl p-5 rounded-[24px] shadow-2xl border transition-colors duration-500"
           style={{ 
-            backgroundColor: isDarkMode ? 'rgba(15, 23, 42, 0.95)' : 'rgba(255, 255, 255, 0.95)',
+            backgroundColor: isDarkMode ? 'color-mix(in srgb, var(--card) 95%, transparent)' : 'color-mix(in srgb, var(--card) 95%, transparent)',
             borderColor: isDarkMode ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.05)'
           }}
         >
-          <p className="text-[11px] uppercase tracking-[0.2em] font-black mb-3" style={{ color: isDarkMode ? '#94a3b8' : '#64748b' }}>Lineage Analysis</p>
+          <p className="text-[11px] uppercase tracking-[0.2em] font-black mb-3 text-muted-foreground">Lineage Analysis</p>
           <div className="flex flex-col gap-3">
             {[90, 50, 10].map(p => (
               <div key={p} className="flex items-center gap-3">
                 <div className="w-4 h-4 rounded-full shadow-inner" style={{ backgroundColor: getCountryColor(p) }}></div>
-                <span className="text-xs font-bold" style={{ color: isDarkMode ? '#f8fafc' : '#1e293b' }}>{p}% Probability</span>
+                <span className="text-xs font-bold text-foreground">{p}% Probability</span>
               </div>
             ))}
           </div>

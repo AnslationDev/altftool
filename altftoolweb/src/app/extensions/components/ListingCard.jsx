@@ -17,16 +17,13 @@ export default function ListingCard({ extension, slug }) {
   return (
     <Link
       href={`/extensions/${slug}`}
-      className="group block rounded-xl bg-(--card) 
-      hover:shadow-[0_12px_40px_rgba(0,0,0,0.08)]
-      hover:bg-(--card-hover) transition-shadow
-      transition-all duration-300 min-h-[300px] border border-[var(--border)] animate-slide-down "
+      className="extension-listing-card group block min-h-[300px] rounded-xl border border-[var(--border)] bg-[var(--card)] transition-all duration-300 animate-slide-down"
     >
       <div className="h-full gap-3 p-4 flex flex-col ">
 
         {/* Thumbnail */}
         {/* Thumbnail */}
-        <div className="relative w-full h-[150px] rounded-xl overflow-hidden bg-white  text-center ">
+        <div className="extension-listing-thumb relative w-full h-[150px] rounded-xl overflow-hidden text-center ">
 
           {extension?.image && extension.image.trim() !== "" ? (
             <ManagedImage

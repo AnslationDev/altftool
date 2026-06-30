@@ -1,4 +1,4 @@
-import { SiteFooter } from "../components/SiteFooter";
+import Footer from "@/platform/navigation/Footer";
 import { SiteHeader } from "../components/SiteHeader";
 import { createPageMetadata } from "@/platform/seo/generateMetadata";
 
@@ -14,8 +14,8 @@ export default function TermsOfUsePage() {
   return (
     <main>
       <SiteHeader />
-      <section className="plain-page">
-        <p className="eyebrow">Terms of Use</p>
+      <section className="hs-plain">
+        <span className="hs-eyebrow">Terms of Use</span>
 
         <h2>Acceptance Of Terms</h2>
         <p>
@@ -71,7 +71,7 @@ export default function TermsOfUsePage() {
         <h2>Contact</h2>
         <p>Questions about these terms can be submitted through our contact page.</p>
       </section>
-      <SiteFooter />
+      <Footer />
     </main>
   );
 }

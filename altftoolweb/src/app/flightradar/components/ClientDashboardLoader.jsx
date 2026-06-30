@@ -8,9 +8,9 @@ const FlightRadarDashboard = dynamic(
   {
     ssr: false,
     loading: () => (
-      <div className="flex h-screen w-screen flex-col items-center justify-center bg-rice text-moss">
-        <div className="mb-4 h-12 w-12 animate-spin rounded-full border-4 border-t-transparent border-moss" />
-        <span className="animate-pulse text-lg font-serif font-semibold tracking-wider">
+      <div className="flex h-screen w-screen flex-col items-center justify-center bg-card text-primary">
+        <div className="mb-4 h-12 w-12 animate-spin rounded-full border-4 border-t-transparent border-primary" />
+        <span className="animate-pulse text-lg font-sans font-semibold tracking-wider">
           CALIBRATING AERO SCANNER...
         </span>
       </div>

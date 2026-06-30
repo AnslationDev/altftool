@@ -3,7 +3,7 @@
 import { useMemo, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { Search, X } from "lucide-react";
+import { BookOpen, Search, X } from "lucide-react";
 import {
   editorials,
   episodes,
@@ -101,14 +101,27 @@ export default function Header({ compact = false }) {
 
   return (
     <header className={`kym-header${compact ? " kym-header--compact" : ""}`}>
+      <div className="kym-header__grid" aria-hidden="true" />
+      <div className="kym-header__glow kym-header__glow--one" aria-hidden="true" />
+      <div className="kym-header__glow kym-header__glow--two" aria-hidden="true" />
+
       {compact ? (
         <div className="kym-compact-brand">
           <Link href="/kym">Know Your Meme</Link>
         </div>
       ) : null}
 
-      <div className="kym-hero">
-        <h1>Know Your Meme</h1>
+      <div className="kym-hero kym-reveal">
+        <p className="kym-hero__badge">
+          <span className="kym-hero__badge-icon" aria-hidden="true">
+            <BookOpen size={14} strokeWidth={2.25} />
+          </span>
+          Internet culture encyclopedia
+        </p>
+        <h1>
+          Know Your{" "}
+          <span className="kym-hero__accent">Meme</span>
+        </h1>
         <form className="kym-search" onSubmit={handleSubmit} role="search">
           <button className="kym-search__submit" type="submit" aria-label="Search KYM">
             <Search size={18} strokeWidth={2.5} />

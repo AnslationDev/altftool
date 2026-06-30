@@ -7,20 +7,23 @@ import {
   ArrowRight,
   BadgeCheck,
   Calculator,
-  ChevronDown,
-  Check,
   Code2,
-  Copy,
   FileText,
-  Filter,
+  Grid2X2,
   History,
   Image as ImageIcon,
   Layers3,
+  LockKeyhole,
+  MessageCircleQuestion,
+  Play,
+  RefreshCw,
   Search,
+  ShieldCheck,
   Sparkles,
   Star,
+  Tag,
+  UsersRound,
   Wrench,
-  X,
 } from "lucide-react";
 import Icon from "@/shared/ui/Icon";
 import CTAButton from "@/shared/ui/CTAButton";
@@ -87,6 +90,17 @@ const VIEW_MODES = [
   { id: "recent", label: "Recent" },
 ];
 const POPULAR_SEARCHES = ["json", "base64", "pdf", "image", "regex", "seo", "password", "cron"];
+const HERO_POPULAR_CUSTOM_LINKS = [
+  { href: "/altfloveimg", label: "Image Studio" },
+  { href: "/altflovepdf", label: "PDF Toolkit" },
+];
+const HERO_POPULAR_TOOL_SLUGS = ["json-editor", "text-to-base64", "pdf-to-base64", "curl-to-code-converter"];
+const SEARCH_PLACEHOLDER_PHRASES = [
+  "Search tools by name, category, or use case...",
+  "Try JSON editor...",
+  "Find PDF tools...",
+  "Search developer utilities...",
+];
 const GENERIC_SEARCH_TOKENS = new Set([
   "a",
   "an",
@@ -129,6 +143,93 @@ const WORKFLOW_GROUPS = [
     label: "GST, EMI, SIP",
     icon: Calculator,
     slugs: ["gst-calculator", "loan-emi-calculator", "sip-calculator", "percentage-calculator"],
+  },
+];
+
+const TRUST_ITEMS = [
+  {
+    title: "Trusted & Safe",
+    description: "All tools are tested and verified for security.",
+    icon: ShieldCheck,
+  },
+  {
+    title: "Always Updated",
+    description: "We keep our directory fresh and accurate.",
+    icon: RefreshCw,
+  },
+  {
+    title: "Free to Use",
+    description: "Most tools are completely free to use.",
+    icon: Tag,
+  },
+  {
+    title: "Community Driven",
+    description: "Built for creators by productivity lovers.",
+    icon: UsersRound,
+  },
+];
+
+const CATEGORY_ICON_MAP = {
+  ai: Sparkles,
+  calculator: Calculator,
+  converter: RefreshCw,
+  data: Layers3,
+  design: Sparkles,
+  developer: Code2,
+  education: FileText,
+  finance: Calculator,
+  image: ImageIcon,
+  marketing: Tag,
+  media: Play,
+  network: Grid2X2,
+  pdf: FileText,
+  productivity: BadgeCheck,
+  security: LockKeyhole,
+  seo: Search,
+  startup: Sparkles,
+  text: FileText,
+  utilities: Wrench,
+  video: Play,
+  web: Code2,
+};
+
+const FEATURED_CATEGORY_CARDS = [
+  {
+    key: "ai",
+    slug: "ai",
+    title: "AI Essentials",
+    description: "Top AI tools to save time and work smarter",
+    icon: Sparkles,
+  },
+  {
+    key: "pdf",
+    slug: "pdf",
+    title: "PDF Essentials",
+    description: "All the tools you need for PDF files",
+    icon: FileText,
+  },
+  {
+    key: "developer",
+    slug: "developer",
+    title: "Developer Hub",
+    description: "Essential tools for developers",
+    icon: Code2,
+  },
+  {
+    key: "creator",
+    slug: "media",
+    fallbackSlugs: ["image", "video"],
+    title: "Content Creator",
+    description: "Create, edit and publish content",
+    icon: ImageIcon,
+  },
+  {
+    key: "marketing",
+    slug: "marketing",
+    fallbackSlugs: ["seo", "web", "social"],
+    title: "Marketing Tools",
+    description: "Grow your brand and audience",
+    icon: Tag,
   },
 ];
 
@@ -254,6 +355,7 @@ export default function ToolsClient({
 }) {
   const slugs = useMemo(() => Object.keys(meta), [meta]);
   const [search, setSearch] = useState(initialSearch);
+  const [animatedPlaceholder, setAnimatedPlaceholder] = useState(SEARCH_PLACEHOLDER_PHRASES[0]);
   const deferredSearch = useDeferredValue(search);
   const [hydrated, setHydrated] = useState(false);
   const [viewMode, setViewMode] = useState(() =>
@@ -285,6 +387,9 @@ export default function ToolsClient({
   const initialViewModeRef = useRef(initialViewMode);
   const searchInputRef = useRef(null);
   const categoryInputRef = useRef(null);
+  const contentGridRef = useRef(null);
+  const categorySectionRef = useRef(null);
+  const resultsSectionRef = useRef(null);
   const categoryname = selectedCategory;
   const favoriteSlugs = useMemo(
     () => favoriteSnapshot.split("\n").filter((slug) => meta[slug]),
@@ -367,11 +472,17 @@ export default function ToolsClient({
     if (!query) return categoryStats;
     return categoryStats.filter((cat) => cat.label.toLowerCase().includes(query) || cat.slug.includes(query));
   }, [categoryFilter, categoryStats]);
-  const categoryCount = Math.max(categories.length - 1, 0);
   const featuredCategories = useMemo(() => {
-    const preferred = ["all", "converter", "developer", "pdf", "media", "data", "web", "calculator", "network", "image"];
-    return preferred.filter((item) => categories.includes(item));
+    const used = new Set();
+
+    return FEATURED_CATEGORY_CARDS.map((card) => {
+      const slug = [card.slug, ...(card.fallbackSlugs || [])].find((item) => categories.includes(item));
+      if (!slug || used.has(slug)) return null;
+      used.add(slug);
+      return { ...card, slug };
+    }).filter(Boolean);
   }, [categories]);
+  const categoryStatsBySlug = useMemo(() => new Map(categoryStats.map((cat) => [cat.slug, cat])), [categoryStats]);
   const quickTools = useMemo(
     () =>
       [...new Set([...QUICK_TOOL_SLUGS, ...TOP_PRIORITY_TOOL_SLUGS.slice(0, 6)])]
@@ -425,7 +536,6 @@ export default function ToolsClient({
   }, [categoryname, deferredSearch, favoriteSet, meta, recentSet, recentSlugs, slugs, viewMode]);
 
   const [visibleCount, setVisibleCount] = useState(ITEMS_PER_PAGE);
-  const [copiedDirectoryLink, setCopiedDirectoryLink] = useState(false);
 
   const visibleSlugs = useMemo(() => {
     const visible = filteredSlugs.slice(0, visibleCount);
@@ -441,23 +551,10 @@ export default function ToolsClient({
   }, [deferredSearch, filteredSlugs, toolAds, visibleCount, viewMode]);
 
   const hasMore = visibleCount < filteredSlugs.length;
-  const searchSuggestions = useMemo(() => {
-    if (!deferredSearch.trim()) return [];
-
-    return filteredSlugs.slice(0, 6).map((slug) => {
-      const tool = meta[slug];
-      const categories = Array.isArray(tool?.category) ? tool.category : [tool?.category].filter(Boolean);
-      return {
-        slug,
-        name: tool?.name || formatLabel(slug),
-        category: categories[0] || "Tool",
-      };
-    });
-  }, [deferredSearch, filteredSlugs, meta]);
+  const isSearchMode = Boolean(search.trim());
+  const searchResultSlugs = useMemo(() => filteredSlugs.filter((slug) => meta[slug]).slice(0, 12), [filteredSlugs, meta]);
   const isFiltering = search !== deferredSearch;
   const hasActiveFilters = Boolean(search.trim()) || categoryname !== "all" || viewMode !== "all";
-  const activeFilterCount =
-    (search.trim() ? 1 : 0) + (categoryname !== "all" ? 1 : 0) + (viewMode !== "all" ? 1 : 0);
   const firstResultSlug = filteredSlugs.find((slug) => meta[slug]);
 
   const getDirectoryHref = ({
@@ -511,12 +608,6 @@ export default function ToolsClient({
     replaceDirectoryUrl({ nextViewMode: mode });
   };
 
-  const clearCategoryFilter = () => {
-    setSelectedCategory("all");
-    setVisibleCount(ITEMS_PER_PAGE);
-    replaceDirectoryUrl({ nextCategory: "all" });
-  };
-
   const clearAllFilters = () => {
     setSearch("");
     setSelectedCategory("all");
@@ -537,19 +628,6 @@ export default function ToolsClient({
     rememberTool(firstResultSlug);
     prefetchDirectoryTool(firstResultSlug);
     router.push(getToolHref(firstResultSlug, "all"));
-  };
-
-  const copyDirectoryLink = async () => {
-    if (typeof window === "undefined") return;
-
-    const href = `${window.location.origin}${getDirectoryHref()}`;
-    try {
-      await navigator.clipboard.writeText(href);
-      setCopiedDirectoryLink(true);
-      window.setTimeout(() => setCopiedDirectoryLink(false), 1400);
-    } catch {
-      setCopiedDirectoryLink(false);
-    }
   };
 
   const handleSearchKeyDown = (event) => {
@@ -579,20 +657,27 @@ export default function ToolsClient({
     writeStoredSlugs(FAVORITES_STORAGE_KEY, next);
   };
 
-  // Handle category click (updates URL without reload)
+  const scrollToDirectoryContent = () => {
+    if (typeof window === "undefined") return;
+
+    window.requestAnimationFrame(() => {
+      const target = contentGridRef.current || categorySectionRef.current || resultsSectionRef.current;
+      if (!target) return;
+
+      const offset = 96;
+      const top = target.getBoundingClientRect().top + window.scrollY - offset;
+      window.scrollTo({ top: Math.max(top, 0), behavior: "smooth" });
+    });
+  };
+
+  // Handle category click without route navigation.
   const handleCategoryClick = (cat) => {
     const nextCategory = cat === "all" ? "all" : slugify(cat);
     setSelectedCategory(nextCategory);
     setVisibleCount(ITEMS_PER_PAGE);
+    scrollToDirectoryContent();
   };
 
-  const [open, setOpen] = useState(false);
-  const selectedLabel = categoryname ? formatLabel(categoryname) : "Select Category";
-
-  const handleSelect = (cat) => {
-    handleCategoryClick(cat);
-    setOpen(false);
-  };
   const toolsHeading =
     viewMode === "favorites" ? "Saved Tools" : viewMode === "recent" ? "Recent Tools" : "Explore Tools";
 
@@ -605,6 +690,51 @@ export default function ToolsClient({
     if (value && value !== search) {
       setSearchFilter(value);
     }
+  }, [search]);
+
+  useEffect(() => {
+    const fallbackPlaceholder = SEARCH_PLACEHOLDER_PHRASES[0];
+
+    if (search.trim()) {
+      setAnimatedPlaceholder(fallbackPlaceholder);
+      return undefined;
+    }
+
+    if (typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      setAnimatedPlaceholder(fallbackPlaceholder);
+      return undefined;
+    }
+
+    let phraseIndex = 0;
+    let characterIndex = 0;
+    let isDeleting = false;
+    let timeoutId;
+
+    const tick = () => {
+      const phrase = SEARCH_PLACEHOLDER_PHRASES[phraseIndex];
+      setAnimatedPlaceholder(`${phrase.slice(0, characterIndex)}|`);
+
+      let delay = 58;
+      if (!isDeleting && characterIndex < phrase.length) {
+        characterIndex += 1;
+      } else if (!isDeleting) {
+        isDeleting = true;
+        delay = 1200;
+      } else if (characterIndex > 0) {
+        characterIndex -= 1;
+        delay = 30;
+      } else {
+        isDeleting = false;
+        phraseIndex = (phraseIndex + 1) % SEARCH_PLACEHOLDER_PHRASES.length;
+        delay = 260;
+      }
+
+      timeoutId = window.setTimeout(tick, delay);
+    };
+
+    timeoutId = window.setTimeout(tick, 240);
+
+    return () => window.clearTimeout(timeoutId);
   }, [search]);
 
   useEffect(() => {
@@ -623,558 +753,399 @@ export default function ToolsClient({
       data-hydrated={hydrated ? "true" : "false"}
       className="route-page-shell tools-premium"
     >
-      {/* DIRECTORY HEADER */}
-      <div className="directory-hero border-b border-(--border) bg-[color-mix(in_srgb,var(--card)_86%,var(--background))]">
-        <div className="section !py-6 sm:!py-8">
-          <div className="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
-            <div>
-              <div className="route-kicker mb-3">
-                <Sparkles className="h-3.5 w-3.5" />
-                Microtool directory
-              </div>
-              <h1 className="route-title">
-                All Online <span className="tp-accent-word">Tools.</span>
-              </h1>
-              <p className="route-description mt-3">
-                High-performance utilities for developers and creators. No fluff. No login. Just speed.
-              </p>
-            </div>
-            <div className="grid grid-cols-3 gap-2 sm:w-[390px]">
-              {[
-                ["Tools", slugs.length],
-                ["Categories", categoryCount],
-                ["Showing", filteredSlugs.length],
-              ].map(([label, value]) => (
-                <div key={label} className="metric-tile px-3 py-3 text-center">
-                  <p className="text-xl font-semibold text-(--foreground)">{value}</p>
-                  <p className="mt-0.5 text-[10px] font-bold uppercase tracking-normal text-(--muted-foreground)">{label}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          <div className="filter-surface mt-6 space-y-3 p-3">
-            <div className="relative">
-              <Search className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-(--primary)" />
+      <div className="tools-shell">
+        <section className="tools-hero">
+          <div className="tools-hero-copy">
+            <h1 className="route-title">
+              Ready to find your perfect <span className="tp-accent-word">tool?</span>
+            </h1>
+            <p className="route-description">
+              Search 200+ trusted tools, utilities, and workflows built to help you work faster.
+            </p>
+            <div className="tools-search-row">
+              <Search className="pointer-events-none absolute right-5 top-1/2 h-5 w-5 -translate-y-1/2 text-[var(--tp-primary)]" />
               <input
                 ref={searchInputRef}
                 data-testid="tools-search-input"
                 type="text"
-                placeholder="Select directly or search tools, converters, code utilities..."
+                placeholder={animatedPlaceholder}
                 value={search}
                 onChange={(e) => setSearchFilter(e.target.value)}
                 onInput={(e) => setSearchFilter(e.currentTarget.value)}
                 onKeyDown={handleSearchKeyDown}
-                className="h-[52px] w-full rounded-[8px] border border-[var(--border)] bg-[var(--background)] px-11 text-sm text-(--foreground) shadow-[var(--anslation-ds-shadow-sm)] placeholder:text-(--input-placeholder) transition focus:border-(--primary) focus:outline-none focus:ring-2 focus:ring-[color-mix(in_srgb,var(--primary)_24%,transparent)]"
+                className="tools-search-input"
               />
-            </div>
-            {search.trim() ? (
-              <div data-testid="tool-search-suggestions" className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
-                {searchSuggestions.length ? (
-                  searchSuggestions.map((item) => (
-                    <Link
-                      key={item.slug}
-                      href={`/tools/all/${item.slug}`}
-                      onClick={() => rememberTool(item.slug)}
-                      onFocus={() => prefetchDirectoryTool(item.slug)}
-                      onMouseEnter={() => prefetchDirectoryTool(item.slug)}
-                      className="interactive-card flex min-h-12 items-center justify-between gap-3 px-3 py-2.5 text-left text-xs"
-                    >
-                      <span className="min-w-0">
-                        <span className="block truncate font-semibold text-(--foreground)">{item.name}</span>
-                        <span className="block truncate text-[11px] text-(--muted-foreground)">{item.category}</span>
-                      </span>
-                      <span className="shrink-0 text-(--muted-foreground)">Open</span>
-                    </Link>
-                  ))
-                ) : (
-                  <div className="rounded-[8px] border border-dashed border-(--border) bg-(--background) px-3 py-3 text-xs font-medium text-(--muted-foreground) sm:col-span-2 lg:col-span-3">
-                    No instant matches. Keep typing or clear filters to return to the full toolbox.
-                  </div>
-                )}
-              </div>
-            ) : (
-              <div className="-mx-4 flex snap-x items-center gap-2 overflow-x-auto px-4 pb-1 sm:mx-0 sm:flex-wrap sm:overflow-visible sm:px-0 sm:pb-0">
-                <span className="shrink-0 text-xs font-semibold uppercase tracking-wide text-(--muted-foreground)">Common</span>
-                {POPULAR_SEARCHES.map((term) => (
-                  <button
-                    key={term}
-                    type="button"
-                    onClick={() => setSearchFilter(term)}
-                    className="control-chip shrink-0 snap-start"
-                  >
-                    {formatLabel(term)}
-                  </button>
-                ))}
-              </div>
-            )}
-            {hasActiveFilters ? (
-              <div
-                data-testid="active-tool-filters"
-                className="flex flex-wrap items-center gap-2 rounded-[8px] border border-(--border) bg-(--background) p-2"
-              >
-                <span className="text-xs font-bold uppercase tracking-wide text-(--muted-foreground)">
-                  Active
-                </span>
-                {search.trim() ? (
-                  <button
-                    type="button"
-                    onClick={() => setSearchFilter("")}
-                    className="control-chip max-w-full text-(--foreground)"
-                  >
-                    <span className="min-w-0 truncate">Search: {search.trim()}</span>
-                    <X className="h-3.5 w-3.5 text-(--muted-foreground)" />
-                  </button>
-                ) : null}
-                {categoryname !== "all" ? (
-                  <Link
-                    href={getDirectoryHref({ nextCategory: "all" })}
-                    onClick={clearCategoryFilter}
-                    className="control-chip max-w-full text-(--foreground)"
-                  >
-                    <span className="min-w-0 truncate">Category: {formatLabel(categoryname)}</span>
-                    <X className="h-3.5 w-3.5 text-(--muted-foreground)" />
-                  </Link>
-                ) : null}
-                {viewMode !== "all" ? (
-                  <button
-                    type="button"
-                    onClick={() => setViewFilter("all")}
-                    className="control-chip max-w-full text-(--foreground)"
-                  >
-                    <span className="min-w-0 truncate">
-                      View: {VIEW_MODES.find((mode) => mode.id === viewMode)?.label || "All"}
-                    </span>
-                    <X className="h-3.5 w-3.5 text-(--muted-foreground)" />
-                  </button>
-                ) : null}
-              </div>
-            ) : null}
-            <div className="-mx-4 flex snap-x gap-2 overflow-x-auto px-4 pb-1 sm:mx-0 sm:flex-wrap sm:overflow-visible sm:px-0 sm:pb-0">
-              {VIEW_MODES.map((mode) => {
-                const IconComponent = mode.id === "favorites" ? Star : mode.id === "recent" ? History : Sparkles;
-                return (
-                  <button
-                    key={mode.id}
-                    type="button"
-                    onClick={() => setViewFilter(mode.id)}
-                    className={`inline-flex min-h-10 shrink-0 snap-start items-center gap-2 rounded-[7px] border px-3 py-2 text-xs font-semibold transition ${
-                      viewMode === mode.id
-                        ? "border-(--primary) bg-(--primary) text-(--primary-foreground)"
-                        : "border-(--border) bg-(--background) text-(--muted-foreground) hover:border-(--primary) hover:bg-(--card) hover:text-(--foreground)"
-                    }`}
-                  >
-                    <IconComponent className="h-3.5 w-3.5" />
-                    {mode.label}
-                    <span className={viewMode === mode.id ? "text-white/80" : "text-(--muted-foreground)"}>
-                      {viewModeStats[mode.id]}
-                    </span>
-                  </button>
-                );
-              })}
-              {hasActiveFilters ? (
-                <button
-                  type="button"
-                  data-testid="clear-tool-filters"
-                  onClick={clearAllFilters}
-                  className="control-chip min-h-10 shrink-0 snap-start"
-                >
-                  Clear {activeFilterCount}
-                </button>
-              ) : null}
-            </div>
-            <div className="-mx-4 flex snap-x gap-2 overflow-x-auto px-4 pb-1 sm:mx-0 sm:flex-wrap sm:overflow-visible sm:px-0 sm:pb-0">
-              {featuredCategories.map((cat) => (
-                <Link
-                  key={cat}
-                  href={getDirectoryHref({ nextCategory: cat })}
-                  onClick={() => handleCategoryClick(cat)}
-                  className={`min-h-10 shrink-0 snap-start rounded-[7px] border px-3 py-2 text-xs font-semibold transition ${
-                    categoryname === slugify(cat)
-                      ? "border-(--primary) bg-(--primary) text-(--primary-foreground)"
-                      : "border-(--border) bg-(--background) text-(--muted-foreground) hover:border-(--primary) hover:bg-(--card) hover:text-(--foreground)"
-                  }`}
-                >
-                  {formatLabel(cat)}
-                </Link>
-              ))}
             </div>
           </div>
 
-          {quickTools.length > 0 && (
-            <div className="-mx-4 mt-4 flex snap-x gap-2 overflow-x-auto px-4 pb-1 sm:mx-0 sm:flex-wrap sm:overflow-visible sm:px-0 sm:pb-0">
-              {quickTools.map(([slug, tool]) => (
+        </section>
+
+        {isSearchMode ? (
+          <section className="tools-search-stage" aria-live="polite">
+            {searchResultSlugs.length ? (
+              <>
+                <div className="tools-search-stage-header">
+                  <span>{isFiltering ? "Searching" : "Search results"}</span>
+                  <h2>
+                    {searchResultSlugs.length} tools matching &ldquo;{search.trim()}&rdquo;
+                  </h2>
+                </div>
+                <div className="tools-search-results-grid">
+                  {searchResultSlugs.map((slug) => {
+                    const tool = meta[slug];
+                    const name = tool.name || slug.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
+                    const categories = Array.isArray(tool.category) ? tool.category : [tool.category].filter(Boolean);
+                    const href = getToolHref(slug, "all");
+
+                    return (
+                      <Link
+                        key={slug}
+                        href={href}
+                        onClick={() => rememberTool(slug)}
+                        onFocus={() => prefetchDirectoryTool(slug)}
+                        onMouseEnter={() => prefetchDirectoryTool(slug)}
+                        className="tools-search-result-card"
+                      >
+                        <span className="tools-search-result-icon">
+                          <Icon name={tool.icon ?? "wrench"} className={`h-5 w-5 ${tool.iconColor ?? ""}`} />
+                        </span>
+                        <span className="tools-search-result-copy">
+                          <strong>{name}</strong>
+                          <small>{tool.description || "Open this tool from the matching search results."}</small>
+                          {categories.length ? (
+                            <em>{categories.slice(0, 2).join(" / ")}</em>
+                          ) : null}
+                        </span>
+                        <ArrowRight className="tools-search-result-arrow h-4 w-4" aria-hidden="true" />
+                      </Link>
+                    );
+                  })}
+                </div>
+              </>
+            ) : (
+                <div className="tools-search-empty-hero">
+                  <div className="tools-search-empty-visual" aria-hidden="true">
+                    <svg viewBox="0 0 220 220" role="img">
+                      <path className="empty-handle" d="M142 142 191 191" />
+                      <circle className="empty-lens-ring" cx="94" cy="94" r="58" />
+                      <circle className="empty-lens-face" cx="94" cy="94" r="47" />
+                      <path className="empty-shine" d="M71 61c12-9 29-13 45-9" />
+                      <circle className="empty-eye" cx="77" cy="88" r="8" />
+                      <circle className="empty-eye" cx="112" cy="88" r="8" />
+                      <path className="empty-cheek" d="M62 112c6-3 12-3 18 0" />
+                      <path className="empty-mouth" d="M82 124c8-9 17-9 25 0" />
+                    </svg>
+                  </div>
+                <h2>We couldn&apos;t find anything for &ldquo;{search.trim()}&rdquo;.</h2>
+                <p>Try a different keyword, category, file type, or use case.</p>
+              </div>
+            )}
+          </section>
+        ) : (
+          <section className="tools-control-panel">
+            <div className="tools-popular-searches">
+              <span>Popular searches:</span>
+              {HERO_POPULAR_CUSTOM_LINKS.map((item) => (
+                <Link key={item.href} href={item.href}>
+                  {item.label}
+                </Link>
+              ))}
+              {HERO_POPULAR_TOOL_SLUGS.map((slug) => {
+                const tool = meta[slug];
+                if (!tool) return null;
+
+                return (
                 <Link
                   key={slug}
                   href={`/tools/all/${slug}`}
                   onClick={() => rememberTool(slug)}
                   onFocus={() => prefetchDirectoryTool(slug)}
                   onMouseEnter={() => prefetchDirectoryTool(slug)}
-                  className="control-chip shrink-0 snap-start"
                 >
                   {tool.name}
                 </Link>
-              ))}
-            </div>
-          )}
-
-          {workflowGroups.length > 0 && (
-            <div className="mt-8">
-              <div className="mb-3 flex items-end justify-between gap-3">
-                <h2 className="text-lg sm:text-2xl">Curated Workflows</h2>
-                <Link
-                  href={getDirectoryHref({ nextCategory: "all" })}
-                  className="text-[11px] font-extrabold uppercase tracking-wider"
-                  style={{ color: "var(--tp-orange)" }}
-                >
-                  View all workflows
-                </Link>
-              </div>
-              <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
-              {workflowGroups.map(({ title, label, icon: GroupIcon, tools }) => {
-                const firstToolSlug = tools[0][0];
-
-                return (
-                  <div
-                    key={title}
-                    className="interactive-card p-3"
-                  >
-                    <div className="flex items-start gap-3">
-                      <div className="grid h-9 w-9 shrink-0 place-items-center rounded-[7px] bg-(--muted) text-(--primary)">
-                        <GroupIcon className="h-4 w-4" />
-                      </div>
-                      <div className="min-w-0">
-                        <p className="text-sm font-semibold text-(--foreground)">{title}</p>
-                        <p className="mt-1 text-xs text-(--muted-foreground)">{label}</p>
-                      </div>
-                    </div>
-                    <div className="mt-3 flex flex-wrap gap-1.5">
-                      {tools.slice(0, 3).map(([slug, tool]) => (
-                        <Link
-                          key={slug}
-                          href={`/tools/all/${slug}`}
-                          onClick={() => rememberTool(slug)}
-                          onFocus={() => prefetchDirectoryTool(slug)}
-                          onMouseEnter={() => prefetchDirectoryTool(slug)}
-                          className="rounded-[6px] border border-(--border) bg-(--card) px-2 py-1 text-[11px] font-semibold text-(--muted-foreground) transition hover:border-(--primary) hover:text-(--foreground)"
-                        >
-                          {tool.name}
-                        </Link>
-                      ))}
-                    </div>
-                    <Link
-                      href={`/tools/all/${firstToolSlug}`}
-                      onClick={() => rememberTool(firstToolSlug)}
-                      onFocus={() => prefetchDirectoryTool(firstToolSlug)}
-                      onMouseEnter={() => prefetchDirectoryTool(firstToolSlug)}
-                      className="mt-3 inline-flex items-center gap-1 text-xs font-semibold text-(--primary)"
-                    >
-                      Start
-                      <ArrowRight className="h-3.5 w-3.5" />
-                    </Link>
-                  </div>
                 );
               })}
-              </div>
             </div>
-          )}
-        </div>
-      </div>
+          </section>
+        )}
 
-      {/* CONTENT */}
-      <div className="section grid grid-cols-1 gap-6 !py-6 !pb-20 lg:grid-cols-[260px_1fr]">
-        {/* SIDEBAR */}
-        <aside className="lg:sticky lg:top-24 lg:max-h-[calc(100vh-7rem)] lg:overflow-auto">
-          <div className="filter-surface p-3">
-          <h4 className="mb-3 flex items-center justify-between gap-2 text-sm font-semibold text-(--foreground)">
-            <span className="inline-flex items-center gap-2">
-              <Layers3 className="h-4 w-4 text-(--primary)" />
-              Categories
-            </span>
-            <Filter className="h-3.5 w-3.5 text-(--muted-foreground)" />
-          </h4>
-          <div className="relative mb-3">
-            <Search className="pointer-events-none absolute left-3 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-(--muted-foreground)" />
-            <input
-              ref={categoryInputRef}
-              data-testid="tool-category-search"
-              value={categoryFilter}
-              onChange={(e) => setCategoryFilter(e.target.value)}
-              onInput={(e) => setCategoryFilter(e.currentTarget.value)}
-              placeholder="Filter categories"
-              className="h-10 w-full rounded-[8px] border border-(--border) bg-(--background) px-9 text-xs text-(--foreground) outline-none transition placeholder:text-(--muted-foreground) focus:border-(--primary) focus:ring-2 focus:ring-[color-mix(in_srgb,var(--primary)_18%,transparent)]"
-            />
-          </div>
-          {/* // mobile view */}
-          <div className=" block  lg:hidden">
-            {/* Button */}
-            <button
-              onClick={() => setOpen(!open)}
-              aria-expanded={open}
-              className="flex w-full justify-between rounded-[8px] border border-(--border) bg-(--background) px-4 py-3 text-left text-(--muted-foreground)"
-            >
-              {selectedLabel} {<ChevronDown size={20} className={open ? "rotate-180" : "rotate-0"} />}
-            </button>
-            {/* Dropdown */}
-            {open && (
-              <div className="mt-2 max-h-[360px] w-full overflow-auto rounded-[8px] border border-(--border) bg-(--background) p-2">
+        {!isSearchMode && featuredCategories.length ? (
+          <section className="tools-featured-section" aria-labelledby="tools-featured-heading">
+            <div className="tools-section-heading">
+              <div>
+                <span>Featured</span>
+                <h2 id="tools-featured-heading">Featured categories</h2>
+              </div>
+              <p>Jump into the most-used tool collections.</p>
+            </div>
+            <div className="tools-featured-grid">
+              {featuredCategories.map((card, index) => {
+                const categoryStat = categoryStatsBySlug.get(card.slug);
+                const CategoryIcon = card.icon || CATEGORY_ICON_MAP[card.slug] || Grid2X2;
+                const isActive = categoryname === card.slug;
+
+                return (
+                  <button
+                    key={card.key}
+                    type="button"
+                    data-featured={card.key}
+                    onClick={() => handleCategoryClick(card.slug)}
+                    className={`${index === 0 ? "is-primary" : ""}${isActive ? " is-active" : ""}`}
+                    aria-pressed={isActive}
+                  >
+                    {index === 0 ? (
+                      <span className="tools-featured-badge">
+                        <Star className="h-3 w-3" />
+                        Featured
+                      </span>
+                    ) : null}
+                    {index === 0 ? null : (
+                      <span className="tools-featured-icon">
+                        <CategoryIcon className="h-5 w-5" />
+                      </span>
+                    )}
+                    <span className="tools-featured-copy">
+                      <strong>{card.title}</strong>
+                      <em>{card.description}</em>
+                    </span>
+                    <span className="tools-featured-divider" />
+                    <span className="tools-featured-meta">
+                      <small>{categoryStat?.count || 0} tools</small>
+                      <span>Updated weekly</span>
+                    </span>
+                    <ArrowRight className="tools-featured-arrow h-4 w-4" aria-hidden="true" />
+                  </button>
+                );
+              })}
+            </div>
+          </section>
+        ) : null}
+
+        {/* CONTENT */}
+        {!isSearchMode ? (
+        <div ref={contentGridRef} className="tools-content-grid">
+          {/* SIDEBAR */}
+          <aside ref={categorySectionRef} className="tools-sidebar">
+            <div className="tools-sidebar-card">
+              <h4>
+                <span>Categories</span>
+              </h4>
+              <div className="tools-category-search">
+                <Search className="pointer-events-none absolute left-3 top-1/2 h-3.5 w-3.5 -translate-y-1/2" />
+                <input
+                  ref={categoryInputRef}
+                  data-testid="tool-category-search"
+                  value={categoryFilter}
+                  onChange={(e) => setCategoryFilter(e.target.value)}
+                  onInput={(e) => setCategoryFilter(e.currentTarget.value)}
+                  placeholder="Search categories..."
+                />
+              </div>
+              <ul>
                 {filteredCategoryStats.length ? (
                   filteredCategoryStats.map((cat) => (
-                    <Link
-                      key={cat.slug}
-                      href={getDirectoryHref({ nextCategory: cat.slug })}
-                      onClick={() => handleSelect(cat.slug)}
-                      className={`flex cursor-pointer items-center justify-between rounded-[7px] px-3 py-2 text-sm transition ${
-                        categoryname === cat.slug
-                          ? "bg-(--primary) text-(--primary-foreground)"
-                          : "text-(--muted-foreground) hover:bg-(--card) hover:text-(--foreground)"
-                      }`}
-                    >
-                      <span>{cat.label}</span>
-                      <span className="text-xs">{cat.count}</span>
-                    </Link>
+                    <li key={cat.slug}>
+                      <button
+                        type="button"
+                        onClick={() => handleCategoryClick(cat.slug)}
+                        className={categoryname === cat.slug ? "is-active" : ""}
+                        aria-pressed={categoryname === cat.slug}
+                      >
+                        <span>
+                          {(() => {
+                            const CategoryIcon = CATEGORY_ICON_MAP[cat.slug] || Grid2X2;
+                            return <CategoryIcon className="h-4 w-4" />;
+                          })()}
+                          {cat.label}
+                        </span>
+                        <small>{cat.count}</small>
+                      </button>
+                    </li>
                   ))
                 ) : (
-                  <div className="rounded-[7px] border border-dashed border-(--border) px-3 py-4 text-center text-xs font-medium text-(--muted-foreground)">
-                    No categories match this filter.
-                  </div>
+                  <li className="tools-empty-category">No categories match this filter.</li>
                 )}
+              </ul>
+              <div className="request-tool-card">
+                <strong>Can&apos;t find a tool?</strong>
+                <p>Request a tool and we&apos;ll try to add it.</p>
+                <button type="button">
+                  Request a Tool
+                  <MessageCircleQuestion className="h-4 w-4" />
+                </button>
               </div>
-            )}
-          </div>
+            </div>
+          </aside>
 
+          {/* TOOLS */}
+          <section ref={resultsSectionRef} className="tools-results" aria-busy={isFiltering ? "true" : "false"}>
+            <div className="tools-results-header">
+              <h2>
+                {toolsHeading}
+                <span>{filteredSlugs.length}</span>
+              </h2>
+              <div>
+                <p aria-live="polite">
+                  {isFiltering
+                    ? "Updating results..."
+                    : `Showing ${Math.min(filteredSlugs.length, visibleCount)} of ${filteredSlugs.length}`}
+                </p>
+              </div>
+            </div>
 
-          <ul className="hidden space-y-1 lg:block">
-            {filteredCategoryStats.length ? (
-              filteredCategoryStats.map((cat) => (
-                <li key={cat.slug}>
-                  <Link
-                    href={getDirectoryHref({ nextCategory: cat.slug })}
-                    onClick={() => handleCategoryClick(cat.slug)}
-                    className={`flex w-full cursor-pointer items-center justify-between rounded-[7px] px-3 py-2 text-left text-sm transition ${categoryname === cat.slug
-                      ? "bg-[var(--color-primary)] text-(--primary-foreground) shadow-[var(--anslation-ds-shadow-sm)]"
-                      : "text-[var(--muted-foreground)] hover:bg-[var(--background)] hover:text-(--foreground)"
-                      }`}
-                  >
-                    <span>{cat.label}</span>
-                    <span className={`text-xs ${categoryname === cat.slug ? "text-white/80" : "text-(--muted-foreground)"}`}>
-                      {cat.count}
-                    </span>
-                  </Link>
-                </li>
-              ))
+            {slugs.length === 0 ? (
+              <ToolsGridSkeleton />
+            ) : filteredSlugs.length === 0 ? (
+              <div className="tools-empty-state">
+                <div>
+                  <Wrench className="h-6 w-6" />
+                </div>
+                <h3>
+                  {viewMode === "favorites"
+                    ? "No saved tools yet"
+                    : viewMode === "recent"
+                      ? "No recent tools yet"
+                      : "No tools found"}
+                </h3>
+                <p>
+                  {viewMode === "favorites"
+                    ? "Save tools from the catalog to build a quick personal toolbox."
+                    : viewMode === "recent"
+                      ? "Open a tool once and it will appear here automatically."
+                      : "Try a different keyword or category."}
+                </p>
+                <div>
+                  {hasActiveFilters && (
+                    <button type="button" onClick={clearAllFilters}>
+                      Clear filters
+                    </button>
+                  )}
+                  {POPULAR_SEARCHES.slice(0, 4).map((term) => (
+                    <button key={term} type="button" onClick={() => setSearchFilter(term)}>
+                      {formatLabel(term)}
+                    </button>
+                  ))}
+                </div>
+              </div>
             ) : (
-              <li className="rounded-[7px] border border-dashed border-(--border) px-3 py-4 text-center text-xs font-medium text-(--muted-foreground)">
-                No categories match this filter.
-              </li>
-            )}
-          </ul>
-          </div>
-        </aside>
-
-        {/* TOOLS */}
-        <section className="flex flex-col items-center justify-start" aria-busy={isFiltering ? "true" : "false"}>
-          <div className="mb-4 flex w-full flex-col gap-2 border-b border-(--border) pb-4 sm:flex-row sm:items-center sm:justify-between">
-            <h2 className="flex items-center gap-3 text-xl font-semibold">
-              {toolsHeading}
-              <span className="rounded-full border border-(--border) bg-[var(--card)] px-2.5 py-0.5 text-sm font-semibold text-[var(--color-muted-foreground)]">
-                {filteredSlugs.length}
-              </span>
-            </h2>
-            <p className="text-sm text-(--muted-foreground)" aria-live="polite">
-              {isFiltering
-                ? "Updating results..."
-                : `Showing ${Math.min(filteredSlugs.length, visibleCount)} of ${filteredSlugs.length}`}
-            </p>
-          </div>
-
-          <div className="surface-panel mb-4 flex w-full flex-col gap-3 p-3 sm:flex-row sm:items-center sm:justify-between">
-            <div className="min-w-0">
-              <p className="text-sm font-semibold text-(--foreground)">
-                {firstResultSlug ? `Best match: ${meta[firstResultSlug]?.name || formatLabel(firstResultSlug)}` : "Ready when you are"}
-              </p>
-              <p className="mt-0.5 text-xs leading-5 text-(--muted-foreground)">
-                {hasActiveFilters
-                  ? `${activeFilterCount} active filter${activeFilterCount === 1 ? "" : "s"} are shaping this workspace.`
-                  : "Search, save, and reopen recent tools without losing your place."}
-              </p>
-            </div>
-            <div className="flex shrink-0 flex-wrap gap-2">
-              <button
-                type="button"
-                onClick={openFirstSearchResult}
-                disabled={!firstResultSlug || isFiltering}
-                className="inline-flex min-h-10 items-center justify-center gap-2 rounded-[7px] border border-(--primary) bg-(--primary) px-3 text-xs font-semibold text-(--primary-foreground) transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-50"
-              >
-                Open best match
-                <ArrowRight className="h-3.5 w-3.5" />
-              </button>
-              <button
-                type="button"
-                onClick={copyDirectoryLink}
-                className="inline-flex min-h-10 items-center justify-center gap-2 rounded-[7px] border border-(--border) bg-(--background) px-3 text-xs font-semibold text-(--muted-foreground) transition hover:border-(--primary) hover:text-(--foreground)"
-              >
-                {copiedDirectoryLink ? <Check className="h-3.5 w-3.5" /> : <Copy className="h-3.5 w-3.5" />}
-                {copiedDirectoryLink ? "Copied" : "Copy view"}
-              </button>
-            </div>
-          </div>
-
-          {slugs.length === 0 ? (
-            <ToolsGridSkeleton />
-          ) : filteredSlugs.length === 0 ? (
-            <div className="py-24 text-center">
-              <div className="mx-auto mb-4 h-12 w-12 rounded-full bg-[var(--color-muted)] flex items-center justify-center">
-                <Wrench className="h-6 w-6 text-[var(--color-muted-foreground)]" />
-              </div>
-              <h3 className="text-xl font-semibold mb-2">
-                {viewMode === "favorites" ? "No saved tools yet" : viewMode === "recent" ? "No recent tools yet" : "No tools found"}
-              </h3>
-              <p className="text-sm text-[var(--muted-foreground)]">
-                {viewMode === "favorites"
-                  ? "Save tools from the catalog to build a quick personal toolbox."
-                  : viewMode === "recent"
-                    ? "Open a tool once and it will appear here automatically."
-                    : "Try a different keyword or category."}
-              </p>
-              <div className="mt-5 flex flex-wrap justify-center gap-2">
-                {hasActiveFilters && (
-                  <button
-                    type="button"
-                    onClick={clearAllFilters}
-                    className="inline-flex min-h-10 items-center rounded-[7px] border border-(--primary) bg-(--primary) px-3 text-xs font-semibold text-(--primary-foreground)"
-                  >
-                    Clear filters
-                  </button>
-                )}
-                {POPULAR_SEARCHES.slice(0, 4).map((term) => (
-                  <button
-                    key={term}
-                    type="button"
-                    onClick={() => setSearchFilter(term)}
-                    className="inline-flex min-h-10 items-center rounded-[7px] border border-(--border) bg-(--background) px-3 text-xs font-semibold text-(--muted-foreground) transition hover:border-(--primary) hover:text-(--foreground)"
-                  >
-                    {formatLabel(term)}
-                  </button>
-                ))}
-              </div>
-            </div>
-          ) : (
-            <>
-              <div className="grid w-full grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-3">
-                {visibleSlugs.map((item) => {
-                  if (item?.type === "ad-pair") {
-                    return (
-                      <div key={item.id} className="sm:col-span-2 xl:col-span-3">
-                        <AdPairRow ads={item.ads} pairIndex={item.pairIndex} toolAds={toolAds} categoryname={categoryname} />
-                      </div>
-                    );
-                  }
-
-                  const slug = item;
-                  const tool = meta[slug];
-                  const name =
-                    tool.name ||
-                    slug.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
-                  const isFavorite = favoriteSet.has(slug);
-                  const isPriority = prioritySet.has(slug);
-                  const href = getToolHref(slug);
-
-                  return (
-                    <article
-                      key={slug}
-                      data-testid={`tool-card-${slug}`}
-                      data-tool-slug={slug}
-                      className="interactive-card group relative flex min-h-[156px] flex-col justify-between p-4 focus-within:border-[var(--color-primary)] focus-within:ring-2 focus-within:ring-[color-mix(in_srgb,var(--primary)_24%,transparent)]"
-                    >
-                      <div className="flex gap-3">
-                        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-[7px] border border-(--border) bg-(--muted)">
-                          <Icon
-                            name={tool.icon ?? "wrench"}
-                            className={`h-5 w-5 ${tool.iconColor ?? "text-[var(--muted-foreground)]"}`}
+              <>
+                <div className="tools-card-grid">
+                  {visibleSlugs.map((item) => {
+                    if (item?.type === "ad-pair") {
+                      return (
+                        <div key={item.id} className="tools-ad-row">
+                          <AdPairRow
+                            ads={item.ads}
+                            pairIndex={item.pairIndex}
+                            toolAds={toolAds}
+                            categoryname={categoryname}
                           />
                         </div>
+                      );
+                    }
 
-                        <Link
-                          href={href}
-                          onClick={() => rememberTool(slug)}
-                          onFocus={() => prefetchDirectoryTool(slug)}
-                          onMouseEnter={() => prefetchDirectoryTool(slug)}
-                          className="min-w-0 flex-1 focus:outline-none"
-                        >
-                          <h3 className="truncate text-[15px] font-semibold leading-tight transition group-hover:text-[var(--color-primary)]">
-                            {name}
-                          </h3>
-                          <p className="mt-1.5 line-clamp-2 text-xs leading-5 text-[var(--color-muted-foreground)]">
-                            {tool.description || "No description available."}
-                          </p>
-                        </Link>
-                        <button
-                          type="button"
-                          aria-pressed={isFavorite}
-                          aria-label={`${isFavorite ? "Remove" : "Save"} ${name}`}
-                          onClick={() => toggleFavorite(slug)}
-                          className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-[7px] border transition ${
-                            isFavorite
-                              ? "border-(--primary) bg-(--primary) text-(--primary-foreground)"
-                              : "border-(--border) bg-(--background) text-(--muted-foreground) hover:border-(--primary) hover:text-(--foreground)"
-                          }`}
-                        >
-                          <Star className={`h-4 w-4 ${isFavorite ? "fill-current" : ""}`} />
-                        </button>
-                      </div>
+                    const slug = item;
+                    const tool = meta[slug];
+                    const name = tool.name || slug.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
+                    const isFavorite = favoriteSet.has(slug);
+                    const isPriority = prioritySet.has(slug);
+                    const href = getToolHref(slug);
 
-                      <div className="mt-5 flex items-center justify-between gap-3">
-                        {tool.category && (
-                          <div className="flex max-h-[28px] flex-wrap gap-1 overflow-hidden">
-                            {isPriority ? (
-                              <span className="inline-flex items-center gap-1 rounded-full border border-emerald-200 bg-emerald-50 px-2 py-1 text-[10px] font-bold text-emerald-700">
-                                <BadgeCheck className="h-3 w-3" />
-                                Verified
-                              </span>
-                            ) : null}
-                            {(Array.isArray(tool.category) ? tool.category : [tool.category]).map(
-                              (cat) => (
-                                <span
-                                  key={cat}
-                                  className="rounded-full border border-(--border) bg-(--background) px-2 py-1 text-[10px] font-medium text-[var(--color-muted-foreground)]"
-                                >
+                    return (
+                      <article
+                        key={slug}
+                        data-testid={`tool-card-${slug}`}
+                        data-tool-slug={slug}
+                        className="tool-card group"
+                      >
+                        <div className="tool-card-top">
+                          <div className="tool-icon">
+                            <Icon name={tool.icon ?? "wrench"} className={`h-6 w-6 ${tool.iconColor ?? ""}`} />
+                          </div>
+
+                          <Link
+                            href={href}
+                            onClick={() => rememberTool(slug)}
+                            onFocus={() => prefetchDirectoryTool(slug)}
+                            onMouseEnter={() => prefetchDirectoryTool(slug)}
+                            className="tool-card-title"
+                          >
+                            <h3>{name}</h3>
+                            <p>{tool.description || "No description available."}</p>
+                          </Link>
+                          <button
+                            type="button"
+                            aria-pressed={isFavorite}
+                            aria-label={`${isFavorite ? "Remove" : "Save"} ${name}`}
+                            onClick={() => toggleFavorite(slug)}
+                            className={`tool-save-button ${isFavorite ? "is-active" : ""}`}
+                          >
+                            <Star className={`h-4 w-4 ${isFavorite ? "fill-current" : ""}`} />
+                          </button>
+                        </div>
+
+                        <div className="tool-card-footer">
+                          {tool.category && (
+                            <div>
+                              {isPriority ? (
+                                <span className="verified-pill">
+                                  <BadgeCheck className="h-3 w-3" />
+                                  Verified
+                                </span>
+                              ) : null}
+                              {(Array.isArray(tool.category) ? tool.category : [tool.category]).map((cat) => (
+                                <span key={cat} className="tool-tag">
                                   {cat}
                                 </span>
-                              )
-                            )}
-                          </div>
-                        )}
+                              ))}
+                            </div>
+                          )}
 
-                        <Link
-                          href={href}
-                          onClick={() => rememberTool(slug)}
-                          onFocus={() => prefetchDirectoryTool(slug)}
-                          onMouseEnter={() => prefetchDirectoryTool(slug)}
-                          className="inline-flex shrink-0 items-center gap-1 rounded-[6px] px-1.5 py-1 text-xs font-semibold text-[var(--color-muted-foreground)] transition group-hover:bg-(--background) group-hover:text-[var(--color-primary)]"
-                        >
-                          <BadgeCheck className="h-3.5 w-3.5" />
-                          Open
-                          <span className="group-hover:translate-x-1 transition-transform">→</span>
-                        </Link>
-                      </div>
-                    </article>
-                  );
-                })}
-              </div>
-
-              {hasMore && (
-                <div className="mt-10 flex justify-center">
-                  <CTAButton
-                    text="Load More"
-                    variant="outline"
-                    onClick={() => setVisibleCount((prev) => prev + ITEMS_PER_PAGE)}
-                  />
+                          <Link
+                            href={href}
+                            onClick={() => rememberTool(slug)}
+                            onFocus={() => prefetchDirectoryTool(slug)}
+                            onMouseEnter={() => prefetchDirectoryTool(slug)}
+                            className="tool-open-link"
+                          >
+                            Open
+                            <ArrowRight className="h-4 w-4" />
+                          </Link>
+                        </div>
+                      </article>
+                    );
+                  })}
                 </div>
-              )}
-            </>
-          )}
+
+                {hasMore && (
+                  <div className="load-more-wrap">
+                    <CTAButton
+                      text="Load More Tools"
+                      variant="outline"
+                      onClick={() => setVisibleCount((prev) => prev + ITEMS_PER_PAGE)}
+                    />
+                  </div>
+                )}
+              </>
+            )}
+          </section>
+        </div>
+        ) : null}
+
+        {!isSearchMode ? (
+        <section className="tools-trust-strip">
+          {TRUST_ITEMS.map(({ title, description, icon: TrustIcon }) => (
+            <div key={title}>
+              <TrustIcon className="h-8 w-8" />
+              <span>
+                <strong>{title}</strong>
+                <small>{description}</small>
+              </span>
+            </div>
+          ))}
         </section>
+        ) : null}
       </div>
     </div>
   );

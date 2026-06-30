@@ -27,11 +27,11 @@ const MapUIOverlay = () => {
   const map = useMap();
   return (
     <div className="absolute right-6 top-28 z-[1000] flex flex-col gap-2 pointer-events-none">
-      <div className="flex flex-col gap-[1px] bg-timber/50 rounded-2xl shadow-soft overflow-hidden pointer-events-auto">
-        <button className="w-10 h-10 flex items-center justify-center bg-white/80 backdrop-blur hover:bg-white text-loam font-bold transition-colors" onClick={() => map.zoomIn()} title="Zoom In">
+      <div className="flex flex-col gap-[1px] bg-border/50 rounded-2xl shadow-sm overflow-hidden pointer-events-auto">
+        <button className="w-10 h-10 flex items-center justify-center bg-card/80 backdrop-blur hover:bg-card text-foreground font-bold transition-colors" onClick={() => map.zoomIn()} title="Zoom In">
           <Plus size={18} />
         </button>
-        <button className="w-10 h-10 flex items-center justify-center bg-white/80 backdrop-blur hover:bg-white text-loam font-bold transition-colors" onClick={() => map.zoomOut()} title="Zoom Out">
+        <button className="w-10 h-10 flex items-center justify-center bg-card/80 backdrop-blur hover:bg-card text-foreground font-bold transition-colors" onClick={() => map.zoomOut()} title="Zoom Out">
           <Minus size={18} />
         </button>
       </div>
@@ -103,15 +103,15 @@ function getWrappedPath(origin, destination, numPoints = 60) {
   return segments;
 }
 
-// Organic Wabi-Sabi planes
+// ALTFTool-branded flight icons
 const createFlightIcon = (heading, isSelected) => {
-  const color = isSelected ? '#C18C5D' : '#5D7052'; 
+  const color = isSelected ? '#22D3EE' : '#0D9488';
   const scale = isSelected ? 1.25 : 0.9;
-  const shadow = isSelected ? 'drop-shadow(0px 4px 6px rgba(193, 140, 93, 0.4))' : 'drop-shadow(0px 2px 4px rgba(93, 112, 82, 0.3))';
+  const shadow = isSelected ? 'drop-shadow(0px 4px 6px rgba(34, 211, 238, 0.4))' : 'drop-shadow(0px 2px 4px rgba(13, 148, 136, 0.3))';
 
   const html = `
     <div style="transform: rotate(${heading}deg) scale(${scale}); width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; filter: ${shadow}; transition: transform 0.5s ease;">
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="${color}" stroke="#FDFCF8" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="${color}" stroke="#FFFFFF" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round">
         <path d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5L21 16z" />
       </svg>
     </div>
@@ -150,7 +150,7 @@ export default function FlightMap({ flights, selectedFlightId, onSelectFlight })
         minZoom={2}
         worldCopyJump={false}
         scrollWheelZoom={true} 
-        style={{ height: '100%', width: '100%', background: '#F0EBE5' }}
+        style={{ height: '100%', width: '100%', background: 'var(--background)' }}
         zoomControl={false}
         attributionControl={false}
         className="organic-map-filter"
@@ -171,16 +171,16 @@ export default function FlightMap({ flights, selectedFlightId, onSelectFlight })
             center={[airport.lat, airport.lng]}
             radius={4}
             pathOptions={{
-              color: '#5D7052',
-              fillColor: '#C18C5D',
+              color: '#0D9488',
+              fillColor: '#22D3EE',
               fillOpacity: 0.8,
               weight: 2
             }}
           >
             <Popup className="fr24-popup" closeButton={false}>
-              <div className="text-[#333] px-2 py-1">
+              <div className="text-[#111827] px-2 py-1">
                 <div className="font-bold text-[13px]">{airport.code}</div>
-                <div className="text-[11px] text-[#666]">{airport.name}</div>
+                <div className="text-[11px] text-[#607083]">{airport.name}</div>
               </div>
             </Popup>
           </CircleMarker>
@@ -193,7 +193,7 @@ export default function FlightMap({ flights, selectedFlightId, onSelectFlight })
               key={`path-${selectedFlight.id}-${idx}`}
               positions={segment}
               pathOptions={{
-                color: '#C18C5D',
+                color: '#22D3EE',
                 weight: 3,
                 opacity: 0.9,
                 dashArray: '8, 4'
@@ -220,23 +220,23 @@ export default function FlightMap({ flights, selectedFlightId, onSelectFlight })
           font-family: inherit;
         }
         .fr24-popup .leaflet-popup-content-wrapper {
-          background: rgba(255, 255, 255, 0.95);
+          background: rgba(247, 248, 251, 0.95);
           border-radius: 4px;
           padding: 0;
-          box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+          box-shadow: 0 2px 8px rgba(15,23,42,0.15);
         }
         .fr24-popup .leaflet-popup-content {
           margin: 4px 6px;
         }
         .fr24-popup .leaflet-popup-tip {
-          background: rgba(255, 255, 255, 0.95);
+          background: rgba(247, 248, 251, 0.95);
         }
         .organic-flight-marker {
           background: transparent !important;
           border: none !important;
         }
         .organic-map-filter .leaflet-tile-pane {
-          filter: sepia(15%) contrast(95%) brightness(102%);
+          filter: saturate(105%) contrast(98%) brightness(102%);
         }
       `}</style>
     </div>
