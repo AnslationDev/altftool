@@ -14,6 +14,7 @@ import { Suspense } from "react";
 import LazyChatBot from "@/platform/chatbot/LazyChatBot";
 import { AlertProvider } from "@/shared/ui/AlertProvider";
 import JsonLd from "@/platform/seo/JsonLd";
+import { primeSeoConfig } from "@/platform/seo/seoConfigSource";
 import GlobalNavigationLoader from "@/components/ui/GlobalNavigationLoader";
 import WebVitalsReporter from "@/components/WebVitalsReporter";
 import GlobalChromeGate from "@/platform/navigation/GlobalChromeGate";
@@ -59,7 +60,7 @@ const shouldLoadAdsense =
   process.env.VERCEL_ENV === "production" ||
   process.env.NEXT_PUBLIC_VERCEL_ENV === "production";
 
-export const metadata = {
+const baseMetadata = {
   metadataBase: new URL(siteConfig.url),
   applicationName: "AltFTool",
   title: {
@@ -128,6 +129,14 @@ export const metadata = {
     apple: "/favicon1.png",
   },
 };
+
+// Warm the central SEO config snapshot for the whole render tree BEFORE any
+// child page's generateMetadata runs, so per-URL overrides actually apply.
+// (Next resolves metadata root-first.) Fully inert when the engine is disabled.
+export async function generateMetadata() {
+  await primeSeoConfig();
+  return baseMetadata;
+}
 
 export default function RootLayout({ children }) {
   return (
