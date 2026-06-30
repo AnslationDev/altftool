@@ -63,9 +63,11 @@ function normalizeAd(raw) {
       ? raw.placements
       : [raw.placements].filter(Boolean),
     layout: raw.layout?.trim() ?? null,
+    // Default to visible on a device unless it is EXPLICITLY disabled.
+    // (Admin-created ads may omit `devices`; absent must mean "show", not "hide".)
     devices: {
-      desktop: raw.devices?.desktop === true,
-      mobile: raw.devices?.mobile === true,
+      desktop: raw.devices?.desktop !== false,
+      mobile: raw.devices?.mobile !== false,
     },
     categories: Array.isArray(raw.categories) ? raw.categories : [],
     target: raw.target ?? null,

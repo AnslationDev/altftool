@@ -5,14 +5,14 @@
 import { useEffect, useState, useMemo } from "react";
 import { fetchRegistrySummary } from "../services/seoService";
 import { getErrorMessage } from "@/lib/apiClient";
+import SeoNav from "../components/SeoNav";
 import { 
   Globe, 
   ShieldAlert, 
   AlertTriangle, 
   Search, 
-  RefreshCw, 
-  FileText, 
-  CheckCircle2, 
+  RefreshCw,
+  CheckCircle2,
   Layers, 
   EyeOff, 
   Link2, 
@@ -112,33 +112,9 @@ export default function SeoDashboardPage() {
     <div className="space-y-8 max-w-7xl mx-auto pb-12 animate-slide-in">
       
       {/* Tab Navigation */}
-      <nav className="flex items-center gap-6 border-b border-border pb-3 mb-6">
-        <span className="font-semibold text-primary border-b-2 border-primary pb-3 -mb-3.5 flex items-center gap-1.5">
-          <Layers className="w-4 h-4" />
-          Dashboard
-        </span>
-        <a 
-          href="/altftool/seo/search" 
-          className="text-muted hover:text-foreground pb-3 -mb-3.5 transition-colors flex items-center gap-1.5"
-        >
-          <Search className="w-4 h-4" />
-          Search
-        </a>
-        <a
-          href="/altftool/seo"
-          className="text-muted hover:text-foreground pb-3 -mb-3.5 transition-colors flex items-center gap-1.5"
-        >
-          <FileText className="w-4 h-4" />
-          Config
-        </a>
-        <a
-          href="/altftool/seo/gsc"
-          className="text-muted hover:text-foreground pb-3 -mb-3.5 transition-colors flex items-center gap-1.5"
-        >
-          <Globe className="w-4 h-4" />
-          Search Console
-        </a>
-      </nav>
+      <div className="mb-6">
+        <SeoNav active="dashboard" />
+      </div>
 
       {/* Header section */}
       <header className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
@@ -458,11 +434,11 @@ export default function SeoDashboardPage() {
                               )}
                             </button>
                             <a
-                              href={`/altftool/seo?path=${encodeURIComponent(item.path)}`}
-                              title="Generate suggestions in SEO config"
+                              href={`/altftool/seo/pages?path=${encodeURIComponent(item.path)}`}
+                              title="Edit this page's SEO"
                               className="inline-flex items-center gap-1 px-3 py-1.5 text-xs font-semibold rounded-md border border-border bg-card text-primary hover:bg-primary-soft transition-all duration-150 active:scale-95"
                             >
-                              Fix in Config
+                              Edit SEO
                               <ArrowRight className="w-3 h-3" />
                             </a>
                           </div>

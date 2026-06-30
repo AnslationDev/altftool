@@ -5,8 +5,17 @@ import ResultsHeader from "@/app/tripfindbox/components/ResultsHeader";
 import { getTripFindBoxContactInfo } from "@/app/tripfindbox/lib/contactInfo";
 import { sitemapSections, slugifyPageTitle } from "@/app/tripfindbox/lib/sitemapPages";
 import { tfbPath } from "@/app/tripfindbox/lib/tfbLink";
+import { createPageMetadata } from "@/platform/seo/generateMetadata";
 
 export const dynamic = "force-dynamic";
+
+export async function generateMetadata() {
+  return createPageMetadata({
+    title: "Sitemap | TripFindBox",
+    description: "Explore TripFindBox flight routes, travel deal categories, and helpful planning pages.",
+    path: "/tripfindbox/site-map",
+  });
+}
 
 export default async function SiteMapPage() {
   const contact = await getTripFindBoxContactInfo();

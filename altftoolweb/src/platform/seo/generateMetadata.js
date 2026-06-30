@@ -1,4 +1,4 @@
-import { resolveSeo, applyResolvedSeo } from "@altftool/core/seo/resolver";
+import { resolveSeo, applyResolvedSeo, resolveExtendedMeta } from "@altftool/core/seo/resolver";
 import { getSeoConfigSnapshot } from "./seoConfigSource";
 
 export const siteConfig = {
@@ -118,6 +118,36 @@ function applyCentralSeo(args = {}) {
   }
 }
 
+/**
+ * Resolve the central-config EXTENDED meta (OG/Twitter overrides, verification,
+ * favicon, hreflang, JSON-LD) for a path. Returns empty maps when the engine is
+ * disabled/cold so output stays byte-identical to the pre-engine behavior.
+ */
+function getExtendedMeta(path, brandId) {
+  const empty = { og: {}, twitter: {}, verification: {}, favicon: null, baseUrl: null, hreflang: [], jsonLd: [] };
+  const snapshot = getSeoConfigSnapshot();
+  if (!snapshot) return empty;
+  try {
+    return resolveExtendedMeta(snapshot, { path: path || "/", brandId });
+  } catch {
+    return empty;
+  }
+}
+
+/** Map verification tokens to the Next.js metadata.verification shape. */
+function buildVerification(v) {
+  if (!v || typeof v !== "object") return undefined;
+  const out = {};
+  if (v.google) out.google = v.google;
+  if (v.yandex) out.yandex = v.yandex;
+  const other = {};
+  if (v.bing) other["msvalidate.01"] = v.bing;
+  if (v.pinterest) other["p:domain_verify"] = v.pinterest;
+  if (v.facebook) other["facebook-domain-verification"] = v.facebook;
+  if (Object.keys(other).length) out.other = other;
+  return Object.keys(out).length ? out : undefined;
+}
+
 export function createPageMetadata(rawArgs = {}) {
   const {
     title,
@@ -135,7 +165,20 @@ export function createPageMetadata(rawArgs = {}) {
   const cleanDescription = trimMetaDescription(description);
   const keywordList = [...new Set([...siteConfig.keywords, ...keywords].filter(Boolean))];
 
-  return {
+  // Extended central-config overrides (inert/empty when engine disabled).
+  const ext = getExtendedMeta(rawArgs.path || path, rawArgs.brandId);
+  const ogImageUrl = ext.og?.image ? absoluteUrl(ext.og.image) : imageUrl;
+  const twitterImageUrl = ext.twitter?.image ? absoluteUrl(ext.twitter.image) : ogImageUrl;
+
+  const languages = { "x-default": url, en: url };
+  for (const alt of ext.hreflang || []) {
+    if (alt?.lang && alt?.href) languages[alt.lang] = absoluteUrl(alt.href);
+  }
+
+  const verification = buildVerification(ext.verification);
+  const icons = ext.favicon ? { icon: absoluteUrl(ext.favicon) } : undefined;
+
+  const metadata = {
     title,
     description: cleanDescription,
     applicationName: siteConfig.name,
@@ -146,34 +189,35 @@ export function createPageMetadata(rawArgs = {}) {
     keywords: keywordList,
     alternates: {
       canonical: url,
-      languages: {
-        "x-default": url,
-        en: url,
-      },
+      languages,
     },
     openGraph: {
-      title,
-      description: cleanDescription,
+      title: ext.og?.title || title,
+      description: ext.og?.description ? trimMetaDescription(ext.og.description) : cleanDescription,
       url,
-      siteName: siteConfig.name,
-      type,
-      locale: siteConfig.locale,
+      siteName: ext.og?.siteName || siteConfig.name,
+      type: ext.og?.type || type,
+      locale: ext.og?.locale || siteConfig.locale,
       images: [
         {
-          url: imageUrl,
+          url: ogImageUrl,
           width: 1200,
           height: 630,
-          alt: title || siteConfig.name,
+          alt: ext.og?.title || title || siteConfig.name,
         },
       ],
     },
     twitter: {
-      card: "summary_large_image",
-      title,
-      description: cleanDescription,
-      site: siteConfig.twitterHandle,
-      creator: siteConfig.twitterHandle,
-      images: [imageUrl],
+      card: ext.twitter?.card || "summary_large_image",
+      title: ext.twitter?.title || ext.og?.title || title,
+      description: ext.twitter?.description
+        ? trimMetaDescription(ext.twitter.description)
+        : ext.og?.description
+          ? trimMetaDescription(ext.og.description)
+          : cleanDescription,
+      site: ext.twitter?.site || siteConfig.twitterHandle,
+      creator: ext.twitter?.creator || siteConfig.twitterHandle,
+      images: [twitterImageUrl],
     },
     robots: {
       index: !noindex,
@@ -187,6 +231,11 @@ export function createPageMetadata(rawArgs = {}) {
       },
     },
   };
+
+  if (verification) metadata.verification = verification;
+  if (icons) metadata.icons = icons;
+
+  return metadata;
 }
 
 export function createOrganizationJsonLd() {

@@ -52,9 +52,26 @@ export async function fetchCategories() {
   return snap.docs.map((d) => ({ id: d.id, name: d.data().name }));
 }
 
+// Categories that must always be selectable even if they were never written
+// to the `categories` collection (e.g. the editorial-only "Tools" category
+// that exists on published posts but was never registered as a category doc).
+export const GUARANTEED_BLOG_CATEGORIES = ["Tools"];
+
+function mergeGuaranteedCategories(names) {
+  const list = Array.isArray(names) ? names.filter(Boolean) : [];
+  const seen = new Set(list.map((n) => String(n).toLowerCase()));
+  for (const extra of GUARANTEED_BLOG_CATEGORIES) {
+    if (extra && !seen.has(extra.toLowerCase())) {
+      list.push(extra);
+      seen.add(extra.toLowerCase());
+    }
+  }
+  return list;
+};
+
 export const fetchCategoryNames = async () => {
   const snapshot = await getDocs(col("categories"));
-  return snapshot.docs.map((doc) => doc.data().name);
+  return mergeGuaranteedCategories(snapshot.docs.map((doc) => doc.data().name));
 };
 
 export async function createCategories(names) {

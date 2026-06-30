@@ -73,6 +73,16 @@ export async function fetchRegistrySummary(refresh = false) {
   return readApiJson(res, "Failed to load dashboard");
 }
 
+// ---- Broken URL / link checker ----
+export async function checkLinks(urls = []) {
+  const res = await fetch("/api/seo/links/check", {
+    method: "POST",
+    headers: await authHeaders(),
+    body: JSON.stringify({ urls }),
+  });
+  return readApiJson(res, "Link check failed");
+}
+
 // ---- Google Search Console ----
 export async function gscGet(action, params = {}) {
   const qs = new URLSearchParams({ action, ...params });

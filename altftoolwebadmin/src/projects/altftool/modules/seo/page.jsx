@@ -12,11 +12,9 @@ import {
   getRecommendation,
 } from "./services/seoService";
 import { getErrorMessage } from "@/lib/apiClient";
+import SeoNav from "./components/SeoNav";
 import {
-  Layers,
-  Search,
   FileText,
-  Globe,
   Save,
   ShieldCheck,
   Sparkles,
@@ -193,20 +191,7 @@ export default function SeoEnginePage() {
   return (
     <div className="space-y-6 max-w-5xl mx-auto pb-12 animate-slide-in">
       {/* Tab nav */}
-      <nav className="flex items-center gap-6 border-b border-border pb-3">
-        <a href="/altftool/seo/dashboard" className="text-muted hover:text-foreground pb-3 -mb-3.5 transition-colors flex items-center gap-1.5">
-          <Layers className="w-4 h-4" /> Dashboard
-        </a>
-        <a href="/altftool/seo/search" className="text-muted hover:text-foreground pb-3 -mb-3.5 transition-colors flex items-center gap-1.5">
-          <Search className="w-4 h-4" /> Search
-        </a>
-        <span className="font-semibold text-primary border-b-2 border-primary pb-3 -mb-3.5 flex items-center gap-1.5">
-          <FileText className="w-4 h-4" /> Config
-        </span>
-        <a href="/altftool/seo/gsc" className="text-muted hover:text-foreground pb-3 -mb-3.5 transition-colors flex items-center gap-1.5">
-          <Globe className="w-4 h-4" /> Search Console
-        </a>
-      </nav>
+      <SeoNav active="config" />
 
       {/* Header */}
       <header className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">

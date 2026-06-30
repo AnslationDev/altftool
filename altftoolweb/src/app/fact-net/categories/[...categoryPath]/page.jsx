@@ -1,5 +1,6 @@
 import CategoryDetail from "../../pages/CategoryDetail";
 import { formatCount, getCategoryByPath } from "../../data/factNetData";
+import { createPageMetadata } from "@/platform/seo/generateMetadata";
 
 export const dynamic = "force-dynamic";
 
@@ -11,22 +12,19 @@ export async function generateMetadata({ params }) {
   const category = getCategoryByPath(categoryPath);
 
   if (!category) {
-    return {
+    return createPageMetadata({
       title: "Category not found",
-      robots: {
-        index: false,
-        follow: false,
-      },
-    };
+      path: `/fact-net/categories/${categoryPath}`,
+      noindex: true,
+      follow: false,
+    });
   }
 
-  return {
+  return createPageMetadata({
     title: `${category.name} Fact Hub`,
     description: `Browse ${formatCount(category.count)} original Fact Hub topics in ${category.name}.`,
-    alternates: {
-      canonical: `/fact-net/categories/${category.categoryPath}`,
-    },
-  };
+    path: `/fact-net/categories/${category.categoryPath}`,
+  });
 }
 
 export default async function Page({ params, searchParams }) {

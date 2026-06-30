@@ -1,10 +1,14 @@
 import ContactForm from "@/app/tripfindbox/components/ContactForm";
 import InfoPage from "@/app/tripfindbox/components/InfoPage";
+import { createPageMetadata } from "@/platform/seo/generateMetadata";
 
-export const metadata = {
-  title: "Contact Us | TripFindBox",
-  description: "Contact TripFindBox for travel search support and booking help.",
-};
+export async function generateMetadata() {
+  return createPageMetadata({
+    title: "Contact Us | TripFindBox",
+    description: "Contact TripFindBox for travel search support and booking help.",
+    path: "/tripfindbox/contact-us",
+  });
+}
 
 export default function ContactUsPage() {
   return (

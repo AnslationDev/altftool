@@ -1,9 +1,13 @@
 import InfoPage from "@/app/tripfindbox/components/InfoPage";
+import { createPageMetadata } from "@/platform/seo/generateMetadata";
 
-export const metadata = {
-  title: "Terms & Conditions | TripFindBox",
-  description: "Review TripFindBox terms for using the travel search and booking flow.",
-};
+export async function generateMetadata() {
+  return createPageMetadata({
+    title: "Terms & Conditions | TripFindBox",
+    description: "Review TripFindBox terms for using the travel search and booking flow.",
+    path: "/tripfindbox/terms-and-conditions",
+  });
+}
 
 export default function TermsAndConditionsPage() {
   return (

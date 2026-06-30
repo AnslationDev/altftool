@@ -1,9 +1,13 @@
 import InfoPage from "@/app/tripfindbox/components/InfoPage";
+import { createPageMetadata } from "@/platform/seo/generateMetadata";
 
-export const metadata = {
-  title: "About Us | TripFindBox",
-  description: "Learn how TripFindBox helps travelers compare routes, discover deals, and plan smoother trips.",
-};
+export async function generateMetadata() {
+  return createPageMetadata({
+    title: "About Us | TripFindBox",
+    description: "Learn how TripFindBox helps travelers compare routes, discover deals, and plan smoother trips.",
+    path: "/tripfindbox/about-us",
+  });
+}
 
 export default function AboutUsPage() {
   return (

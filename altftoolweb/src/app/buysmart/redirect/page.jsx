@@ -1,23 +1,16 @@
-"use client";
+import PageView from "./PageView";
+import { createPageMetadata } from "@/platform/seo/generateMetadata";
 
-import { Suspense } from "react";
-import RedirectClient from "./RedirectClient";
-import { AltftoolLoader } from "@/components/ui/route-loading";
+export async function generateMetadata() {
+  return createPageMetadata({
+    title: "Opening Your BuySmart Offer | AltFTool",
+    description:
+      "Preparing your BuySmart redirect. We check the destination before opening the merchant offer on AltFTool.",
+    path: "/buysmart/redirect",
+    noindex: true,
+  });
+}
 
-export default function RedirectPage() {
-  return (
-    <Suspense
-      fallback={
-        <main className="flex min-h-screen items-center justify-center bg-(--background) px-4 text-(--foreground)">
-          <AltftoolLoader
-            label="Preparing redirect"
-            detail="Checking the destination before opening the offer"
-            className="max-w-md"
-          />
-        </main>
-      }
-    >
-      <RedirectClient />
-    </Suspense>
-  );
+export default function Page(props) {
+  return <PageView {...props} />;
 }
