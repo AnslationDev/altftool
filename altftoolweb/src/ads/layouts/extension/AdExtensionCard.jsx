@@ -9,7 +9,7 @@ export default function AdExtensionCard({ ad }) {
       href={ad.redirect}
       target="_blank"
       rel="noopener noreferrer"
-      className="block relative w-full h-[300px] overflow-hidden "
+      className="extension-ad-card block relative w-full h-[300px] overflow-hidden"
     >
       {/* Image fills entire card */}
       <ManagedImage

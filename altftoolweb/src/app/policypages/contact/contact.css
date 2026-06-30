@@ -1,0 +1,664 @@
+.altf-contact {
+  --contact-max: 1180px;
+  --contact-radius: var(--anslation-ds-radius-xl);
+  min-height: 100vh;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 8% 22rem, color-mix(in srgb, var(--primary) 9%, transparent), transparent 28rem),
+    radial-gradient(circle at 92% 56rem, color-mix(in srgb, var(--secondary) 11%, transparent), transparent 32rem),
+    var(--background);
+  color: var(--foreground);
+  font-family: var(--home-font-body);
+}
+
+.altf-contact .contact-container {
+  width: min(calc(100% - 2rem), var(--contact-max));
+  margin-inline: auto;
+}
+
+.altf-contact .contact-hero-banner {
+  position: relative;
+  display: grid;
+  min-height: clamp(17.5rem, 25vw, 22rem);
+  place-items: center;
+  isolation: isolate;
+  overflow: hidden;
+  background-image:
+    linear-gradient(
+      105deg,
+      color-mix(in srgb, var(--footer-bg) 90%, transparent) 0%,
+      color-mix(in srgb, var(--footer-bg) 76%, var(--primary)) 48%,
+      color-mix(in srgb, var(--primary) 46%, transparent) 100%
+    ),
+    radial-gradient(circle at 82% 24%, color-mix(in srgb, var(--secondary) 28%, transparent), transparent 18rem),
+    url("/backgrounds/office.png");
+  background-position: center;
+  background-size: cover;
+}
+
+.altf-contact .contact-hero-banner::before {
+  content: "";
+  position: absolute;
+  inset: -18%;
+  z-index: -1;
+  background:
+    radial-gradient(circle at 28% 22%, color-mix(in srgb, var(--primary) 45%, transparent), transparent 23rem),
+    radial-gradient(circle at 70% 38%, color-mix(in srgb, var(--secondary) 32%, transparent), transparent 24rem);
+  filter: blur(18px);
+}
+
+.altf-contact .contact-hero-overlay {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--footer-bg) 20%, transparent),
+      color-mix(in srgb, var(--footer-bg) 76%, transparent)
+    ),
+    radial-gradient(circle at 50% 110%, color-mix(in srgb, var(--primary) 44%, transparent), transparent 22rem);
+}
+
+.altf-contact .contact-hero-content {
+  position: relative;
+  z-index: 1;
+  width: min(100% - 2rem, 57rem);
+  text-align: center;
+  color: var(--footer-text);
+}
+
+.altf-contact .contact-hero-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  border: 1px solid color-mix(in srgb, var(--primary) 34%, transparent);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--card) 14%, transparent);
+  color: color-mix(in srgb, var(--footer-text) 92%, var(--primary));
+  box-shadow: inset 0 1px 0 color-mix(in srgb, var(--card) 18%, transparent);
+  backdrop-filter: blur(16px);
+  font-family: var(--home-font-label);
+  font-size: 0.78rem;
+  font-weight: 780;
+  letter-spacing: 0;
+  padding: 0.48rem 0.82rem;
+  text-transform: uppercase;
+}
+
+.altf-contact .contact-hero-badge svg {
+  color: var(--primary);
+}
+
+.altf-contact .contact-hero-content h1 {
+  margin-top: 1rem;
+  font-family: var(--home-font-display);
+  font-size: clamp(2.25rem, 4.4vw, 3.75rem);
+  font-weight: 760;
+  letter-spacing: 0;
+  line-height: 1.04;
+}
+
+.altf-contact .contact-breadcrumb {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  margin-top: 1rem;
+  color: color-mix(in srgb, var(--footer-text) 82%, transparent);
+  font-size: 0.88rem;
+  font-weight: 650;
+}
+
+.altf-contact .contact-breadcrumb a {
+  color: var(--footer-text);
+}
+
+.altf-contact .contact-breadcrumb span {
+  color: var(--primary);
+}
+
+.altf-contact .contact-hero-content p {
+  max-width: 48rem;
+  margin: 1.05rem auto 0;
+  color: color-mix(in srgb, var(--footer-text) 86%, transparent);
+  font-size: clamp(0.98rem, 1.35vw, 1.1rem);
+  font-weight: 550;
+  line-height: 1.7;
+}
+
+.altf-contact .contact-section {
+  position: relative;
+  padding-block: clamp(3.75rem, 5.5vw, 5.5rem);
+}
+
+.altf-contact .contact-intro-section {
+  padding-bottom: clamp(2.4rem, 4vw, 3.5rem);
+}
+
+.altf-contact .contact-intro-grid,
+.altf-contact .contact-form-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(22rem, 0.94fr);
+  align-items: center;
+  gap: clamp(1.6rem, 4vw, 3.4rem);
+}
+
+.altf-contact .contact-copy h2,
+.altf-contact .contact-form-card h2,
+.altf-contact .contact-newsletter-card h2 {
+  color: var(--foreground);
+  font-family: var(--home-font-display);
+  font-weight: 760;
+  letter-spacing: 0;
+  line-height: 1.14;
+  text-wrap: balance;
+}
+
+.altf-contact .contact-copy h2 {
+  margin-top: 1rem;
+  font-size: clamp(2rem, 3.35vw, 3rem);
+}
+
+.altf-contact .contact-copy h2 span,
+.altf-contact .contact-form-card h2 span,
+.altf-contact .contact-newsletter-card h2 span {
+  color: transparent;
+  background: linear-gradient(90deg, var(--primary), var(--secondary));
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+.altf-contact .contact-copy p {
+  max-width: 44rem;
+  margin-top: 1rem;
+  color: var(--muted-foreground);
+  font-size: 1rem;
+  font-weight: 540;
+  line-height: 1.75;
+}
+
+.altf-contact .contact-theme-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0.45rem;
+  width: fit-content;
+}
+
+.altf-contact .contact-theme-badge svg {
+  flex: 0 0 auto;
+}
+
+.altf-contact .contact-method-list {
+  display: grid;
+  gap: 1.15rem;
+  margin-top: 2rem;
+}
+
+.altf-contact .contact-method {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.altf-contact .contact-method-icon,
+.altf-contact .contact-newsletter-icon {
+  display: grid;
+  place-items: center;
+  flex: 0 0 auto;
+  border: 1px solid color-mix(in srgb, var(--primary) 18%, var(--border));
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--primary) 16%, var(--card)), color-mix(in srgb, var(--secondary) 13%, var(--card)));
+  color: var(--primary);
+  box-shadow: var(--home-shadow-sm);
+}
+
+.altf-contact .contact-method-icon {
+  width: 3.25rem;
+  height: 3.25rem;
+  border-radius: var(--anslation-ds-radius-lg);
+}
+
+.altf-contact .contact-method strong {
+  display: block;
+  color: var(--foreground);
+  font-size: 0.98rem;
+  font-weight: 760;
+}
+
+.altf-contact .contact-method small {
+  display: block;
+  margin-top: 0.28rem;
+  color: var(--muted-foreground);
+  font-size: 0.9rem;
+  font-weight: 560;
+  line-height: 1.45;
+}
+
+.altf-contact .contact-visual-card {
+  position: relative;
+  min-height: clamp(22rem, 33vw, 31rem);
+}
+
+.altf-contact .contact-visual-image {
+  position: absolute;
+  inset: 0 0 0 18%;
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--primary) 13%, var(--border));
+  border-radius: var(--contact-radius);
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--primary) 20%, transparent), transparent 45%),
+    url("https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=1200&q=80");
+  background-position: center;
+  background-size: cover;
+  box-shadow: var(--home-shadow-lg);
+}
+
+.altf-contact .contact-quote-card {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: min(21rem, 78%);
+  transform: translateY(-50%);
+  border: 1px solid color-mix(in srgb, var(--secondary) 24%, transparent);
+  border-radius: var(--contact-radius);
+  background:
+    radial-gradient(circle at 18% 12%, color-mix(in srgb, var(--secondary) 24%, transparent), transparent 12rem),
+    linear-gradient(135deg, color-mix(in srgb, var(--footer-bg) 86%, var(--primary)), var(--footer-bg));
+  color: var(--footer-text);
+  box-shadow: var(--home-shadow-lg);
+  padding: clamp(1.3rem, 2.8vw, 2rem);
+}
+
+.altf-contact .contact-quote-card svg {
+  color: var(--secondary);
+}
+
+.altf-contact .contact-quote-card p {
+  margin-top: 1rem;
+  color: color-mix(in srgb, var(--footer-text) 88%, transparent);
+  font-size: 0.98rem;
+  font-style: italic;
+  font-weight: 560;
+  line-height: 1.72;
+}
+
+.altf-contact .contact-quote-card span,
+.altf-contact .contact-quote-card small {
+  display: block;
+}
+
+.altf-contact .contact-quote-card span {
+  margin-top: 1.35rem;
+  color: var(--footer-text);
+  font-weight: 780;
+}
+
+.altf-contact .contact-quote-card small {
+  margin-top: 0.35rem;
+  color: var(--primary);
+  font-family: var(--home-font-label);
+  font-size: 0.72rem;
+  font-weight: 780;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.altf-contact .contact-form-section {
+  padding-top: 0;
+}
+
+.altf-contact .contact-form-grid {
+  grid-template-columns: minmax(0, 0.92fr) minmax(24rem, 1fr);
+  align-items: stretch;
+  gap: 0;
+}
+
+.altf-contact .contact-map-panel,
+.altf-contact .contact-form-card,
+.altf-contact .contact-newsletter-card {
+  border: 1px solid color-mix(in srgb, var(--primary) 13%, var(--border));
+  background:
+    radial-gradient(circle at 12% 0%, color-mix(in srgb, var(--primary) 8%, transparent), transparent 16rem),
+    color-mix(in srgb, var(--card) 94%, transparent);
+  box-shadow: var(--home-shadow-md);
+}
+
+.altf-contact .contact-map-panel {
+  position: relative;
+  min-height: 32rem;
+  overflow: hidden;
+  border-radius: var(--contact-radius) 0 0 var(--contact-radius);
+  background:
+    linear-gradient(color-mix(in srgb, var(--primary) 12%, transparent) 1px, transparent 1px),
+    linear-gradient(90deg, color-mix(in srgb, var(--primary) 12%, transparent) 1px, transparent 1px),
+    radial-gradient(circle at 52% 48%, color-mix(in srgb, var(--secondary) 28%, transparent), transparent 3.4rem),
+    radial-gradient(circle at 52% 48%, color-mix(in srgb, var(--primary) 14%, transparent), transparent 10rem),
+    linear-gradient(135deg, color-mix(in srgb, var(--primary) 10%, var(--card)), color-mix(in srgb, var(--secondary) 8%, var(--card)));
+  background-size: 4.5rem 4.5rem, 4.5rem 4.5rem, auto, auto, auto;
+}
+
+.altf-contact .contact-map-embed {
+  position: absolute;
+  left: -2px;
+  top: -2.6rem;
+  z-index: 0;
+  display: block;
+  width: calc(100% + 4px);
+  height: calc(100% + 5.2rem);
+  border: 0;
+  filter: saturate(0.92) contrast(0.96);
+  transform: scale(1.015);
+  transform-origin: center;
+}
+
+.altf-contact .contact-map-panel::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--primary) 12%, transparent), transparent 42%),
+    radial-gradient(circle at 50% 52%, color-mix(in srgb, var(--primary) 10%, transparent), transparent 13rem);
+}
+
+.altf-contact .contact-map-card {
+  position: absolute;
+  left: 1.5rem;
+  top: 1.5rem;
+  z-index: 3;
+  max-width: 17rem;
+  border: 1px solid color-mix(in srgb, var(--primary) 14%, var(--border));
+  border-radius: var(--anslation-ds-radius-lg);
+  background: color-mix(in srgb, var(--card) 92%, transparent);
+  box-shadow: var(--home-shadow-md);
+  padding: 1rem;
+  backdrop-filter: blur(16px);
+}
+
+.altf-contact .contact-map-card strong,
+.altf-contact .contact-map-card span,
+.altf-contact .contact-map-card small {
+  display: block;
+}
+
+.altf-contact .contact-map-card strong {
+  color: var(--foreground);
+  font-size: 0.94rem;
+  font-weight: 780;
+}
+
+.altf-contact .contact-map-card span {
+  margin-top: 0.36rem;
+  color: var(--muted-foreground);
+  font-size: 0.78rem;
+  font-weight: 560;
+  line-height: 1.45;
+}
+
+.altf-contact .contact-map-card small {
+  margin-top: 0.5rem;
+  color: var(--primary);
+  font-size: 0.74rem;
+  font-weight: 760;
+}
+
+.altf-contact .contact-form-card {
+  border-radius: 0 var(--contact-radius) var(--contact-radius) 0;
+  padding: clamp(1.4rem, 3.3vw, 2.3rem);
+}
+
+.altf-contact .contact-form-card h2 {
+  font-size: clamp(1.65rem, 2.75vw, 2.35rem);
+}
+
+.altf-contact .contact-form-fields {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+  margin-top: 1.55rem;
+}
+
+.altf-contact .contact-form-wide {
+  grid-column: 1 / -1;
+}
+
+.altf-contact .contact-form-card label {
+  display: grid;
+  gap: 0.55rem;
+  color: var(--foreground);
+  font-size: 0.82rem;
+  font-weight: 720;
+}
+
+.altf-contact .contact-form-card input,
+.altf-contact .contact-form-card select,
+.altf-contact .contact-form-card textarea,
+.altf-contact .contact-newsletter-form input {
+  width: 100%;
+  border: 1px solid color-mix(in srgb, var(--primary) 11%, var(--border));
+  border-radius: var(--anslation-ds-radius-lg);
+  background: color-mix(in srgb, var(--background) 72%, var(--card));
+  color: var(--foreground);
+  font-size: 0.94rem;
+  font-weight: 560;
+  outline: none;
+  transition:
+    border-color 150ms ease,
+    box-shadow 150ms ease,
+    background-color 150ms ease;
+}
+
+.altf-contact .contact-form-card input,
+.altf-contact .contact-form-card select {
+  height: 3.35rem;
+  padding-inline: 1rem;
+}
+
+.altf-contact .contact-form-card textarea {
+  min-height: 9rem;
+  resize: vertical;
+  padding: 1rem;
+}
+
+.altf-contact .contact-form-card input::placeholder,
+.altf-contact .contact-form-card textarea::placeholder,
+.altf-contact .contact-newsletter-form input::placeholder {
+  color: var(--input-placeholder);
+}
+
+.altf-contact .contact-form-card input:focus,
+.altf-contact .contact-form-card select:focus,
+.altf-contact .contact-form-card textarea:focus,
+.altf-contact .contact-newsletter-form input:focus {
+  border-color: var(--primary);
+  box-shadow: var(--anslation-ds-focus-ring);
+}
+
+.altf-contact .contact-success {
+  margin-top: 1rem;
+  border: 1px solid color-mix(in srgb, var(--primary) 18%, var(--border));
+  border-radius: var(--anslation-ds-radius);
+  background: color-mix(in srgb, var(--primary) 9%, var(--card));
+  color: var(--primary);
+  font-size: 0.9rem;
+  font-weight: 700;
+  padding: 0.75rem 0.9rem;
+}
+
+.altf-contact .contact-submit-button,
+.altf-contact .contact-newsletter-form button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  border: 0;
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  color: var(--footer-text);
+  cursor: pointer;
+  font-weight: 760;
+  box-shadow: 0 18px 36px color-mix(in srgb, var(--primary) 24%, transparent);
+  transition:
+    box-shadow 150ms ease,
+    filter 150ms ease,
+    transform 150ms ease;
+}
+
+.altf-contact .contact-submit-button {
+  width: 100%;
+  min-height: 3.4rem;
+  margin-top: 1.35rem;
+  border-radius: 999px;
+}
+
+.altf-contact .contact-submit-button:hover,
+.altf-contact .contact-newsletter-form button:hover,
+.altf-contact .contact-submit-button:focus-visible,
+.altf-contact .contact-newsletter-form button:focus-visible {
+  filter: brightness(1.04);
+  box-shadow: 0 22px 42px color-mix(in srgb, var(--primary) 30%, transparent);
+  transform: translateY(-1px);
+}
+
+.altf-contact .contact-submit-button:focus-visible,
+.altf-contact .contact-newsletter-form button:focus-visible {
+  outline: none;
+  box-shadow:
+    var(--anslation-ds-focus-ring),
+    0 22px 42px color-mix(in srgb, var(--primary) 30%, transparent);
+}
+
+.altf-contact .contact-newsletter-section {
+  padding-top: 0;
+}
+
+.altf-contact .contact-newsletter-card {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) minmax(20rem, 0.84fr);
+  align-items: center;
+  gap: clamp(1rem, 2.4vw, 2rem);
+  overflow: hidden;
+  border-radius: var(--contact-radius);
+  padding: clamp(1.25rem, 2.6vw, 1.9rem);
+}
+
+.altf-contact .contact-newsletter-icon {
+  width: 4.35rem;
+  height: 4.35rem;
+  border-radius: 999px;
+}
+
+.altf-contact .contact-newsletter-card h2 {
+  font-size: clamp(1.25rem, 2vw, 1.65rem);
+}
+
+.altf-contact .contact-newsletter-card p {
+  margin-top: 0.5rem;
+  color: var(--muted-foreground);
+  font-size: 0.94rem;
+  font-weight: 560;
+  line-height: 1.55;
+}
+
+.altf-contact .contact-newsletter-form {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 0.75rem;
+}
+
+.altf-contact .contact-newsletter-form input {
+  height: 3.25rem;
+  padding-inline: 1rem;
+}
+
+.altf-contact .contact-newsletter-form button {
+  min-width: 9.5rem;
+  border-radius: 999px;
+  padding-inline: 1.35rem;
+}
+
+[data-theme="dark"] .altf-contact .contact-map-panel,
+[data-theme="dark"] .altf-contact .contact-form-card,
+[data-theme="dark"] .altf-contact .contact-newsletter-card {
+  background:
+    radial-gradient(circle at 12% 0%, color-mix(in srgb, var(--primary) 12%, transparent), transparent 16rem),
+    color-mix(in srgb, var(--card) 90%, transparent);
+  border-color: color-mix(in srgb, var(--primary) 20%, var(--border));
+}
+
+[data-theme="dark"] .altf-contact .contact-form-card input,
+[data-theme="dark"] .altf-contact .contact-form-card select,
+[data-theme="dark"] .altf-contact .contact-form-card textarea,
+[data-theme="dark"] .altf-contact .contact-newsletter-form input {
+  background: color-mix(in srgb, var(--card) 86%, var(--background));
+  border-color: color-mix(in srgb, var(--primary) 18%, var(--border));
+}
+
+@media (max-width: 980px) {
+  .altf-contact .contact-intro-grid,
+  .altf-contact .contact-form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .altf-contact .contact-form-grid {
+    gap: 1rem;
+  }
+
+  .altf-contact .contact-map-panel,
+  .altf-contact .contact-form-card {
+    border-radius: var(--contact-radius);
+  }
+
+  .altf-contact .contact-newsletter-card {
+    grid-template-columns: auto minmax(0, 1fr);
+  }
+
+  .altf-contact .contact-newsletter-form {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 760px) {
+  .altf-contact .contact-container {
+    width: min(calc(100% - 1rem), var(--contact-max));
+  }
+
+  .altf-contact .contact-hero-banner {
+    min-height: 20rem;
+  }
+
+  .altf-contact .contact-form-fields,
+  .altf-contact .contact-newsletter-form,
+  .altf-contact .contact-newsletter-card {
+    grid-template-columns: 1fr;
+  }
+
+  .altf-contact .contact-visual-image {
+    inset: 0;
+  }
+
+  .altf-contact .contact-quote-card {
+    left: 1rem;
+    right: 1rem;
+    width: auto;
+  }
+
+  .altf-contact .contact-newsletter-form button {
+    min-height: 3.25rem;
+    width: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .altf-contact .contact-submit-button,
+  .altf-contact .contact-newsletter-form button {
+    transition: none;
+  }
+
+  .altf-contact .contact-submit-button:hover,
+  .altf-contact .contact-newsletter-form button:hover {
+    transform: none;
+  }
+}

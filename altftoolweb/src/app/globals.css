@@ -12,6 +12,8 @@
   --color-foreground: var(--foreground);
   --color-primary: var(--primary);
   --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
   --color-muted: var(--muted);
   --color-muted-foreground: var(--muted-foreground);
   --color-border: var(--border);
@@ -52,17 +54,21 @@
   --anslation-ds-muted: #607083;
   --anslation-ds-muted-strong: #42526a;
 
-  --anslation-ds-primary: #1769e0;
-  --anslation-ds-primary-hover: #1558bf;
-  --anslation-ds-primary-active: #123f91;
-  --anslation-ds-primary-soft: #e7f0ff;
-  --anslation-ds-accent: #0f766e;
-  --anslation-ds-accent-soft: #e4f7f3;
+  --anslation-ds-primary: #14b8a6;
+  --anslation-ds-primary-hover: #0d9488;
+  --anslation-ds-primary-active: #0f766e;
+  --anslation-ds-primary-soft: #ccfbf1;
+  --anslation-ds-secondary: #38bdf8;
+  --anslation-ds-secondary-soft: #e0f2fe;
+  --anslation-ds-cta-gradient: linear-gradient(135deg, var(--anslation-ds-primary), var(--anslation-ds-secondary));
+  --anslation-ds-cta-gradient-hover: linear-gradient(135deg, var(--anslation-ds-primary-hover), var(--anslation-ds-secondary));
+  --anslation-ds-accent: var(--anslation-ds-secondary);
+  --anslation-ds-accent-soft: var(--anslation-ds-secondary-soft);
 
   --anslation-ds-success: #14783e;
   --anslation-ds-warning: #b7791f;
   --anslation-ds-danger: #c93d2e;
-  --anslation-ds-info: #1769e0;
+  --anslation-ds-info: var(--anslation-ds-secondary);
 
   --anslation-ds-success-soft: #dcf4e3;
   --anslation-ds-warning-soft: #fdf1d6;
@@ -79,7 +85,7 @@
   --anslation-ds-shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.06);
   --anslation-ds-shadow-md: 0 8px 24px rgba(15, 23, 42, 0.08);
   --anslation-ds-shadow-lg: 0 20px 48px rgba(15, 23, 42, 0.12);
-  --anslation-ds-focus-ring: 0 0 0 3px rgba(37, 99, 235, 0.16);
+  --anslation-ds-focus-ring: 0 0 0 3px rgba(20, 184, 166, 0.24);
   --anslation-ds-container: 1320px;
   --anslation-ds-container-wide: 1440px;
   --anslation-ds-gutter: clamp(1rem, 2.4vw, 2rem);
@@ -96,8 +102,8 @@
   --primary-hover: var(--anslation-ds-primary-hover);
   --primary-active: var(--anslation-ds-primary-active);
 
-  --secondary: #475569;
-  --secondary-foreground: var(--anslation-ds-muted);
+  --secondary: var(--anslation-ds-secondary);
+  --secondary-foreground: #075985;
   --secondary-bg: transparent;
   --secondary-border: var(--anslation-ds-border);
   --secondary-hover: var(--anslation-ds-soft);
@@ -146,6 +152,10 @@
   --anslation-ds-primary-hover: #a8d0ff;
   --anslation-ds-primary-active: #d3e8ff;
   --anslation-ds-primary-soft: #162d4f;
+  --anslation-ds-secondary: #38bdf8;
+  --anslation-ds-secondary-soft: #12364a;
+  --anslation-ds-cta-gradient: linear-gradient(135deg, #14b8a6, var(--anslation-ds-secondary));
+  --anslation-ds-cta-gradient-hover: linear-gradient(135deg, #2dd4bf, var(--anslation-ds-secondary));
   --anslation-ds-accent: #5eead4;
   --anslation-ds-accent-soft: #123b3a;
 
@@ -1037,14 +1047,21 @@ a {
   }
 
   .btn-primary {
-    background: var(--primary);
+    background: var(--anslation-ds-cta-gradient);
     color: var(--primary-foreground);
     border: 1px solid transparent;
-    box-shadow: var(--anslation-ds-shadow-sm);
+    box-shadow:
+      var(--anslation-ds-shadow-sm),
+      0 10px 24px color-mix(in srgb, var(--primary) 18%, transparent);
+    transform: translateY(0);
   }
 
   .btn-primary:hover {
-    background: var(--primary-hover);
+    background: var(--anslation-ds-cta-gradient-hover);
+    box-shadow:
+      var(--anslation-ds-shadow-md),
+      0 14px 32px color-mix(in srgb, var(--secondary) 20%, transparent);
+    transform: translateY(-1px);
   }
 
   .btn-secondary,
@@ -1140,7 +1157,7 @@ a {
     justify-content: center;
     gap: 0.5rem;
     padding: 0.625rem 1rem;
-    background: var(--primary);
+    background: var(--anslation-ds-cta-gradient);
     color: var(--primary-foreground);
     border-radius: var(--anslation-ds-radius);
     font-weight: 600;
@@ -1148,15 +1165,24 @@ a {
     text-align: center;
     white-space: normal;
     overflow-wrap: anywhere;
-    transition: all 0.2s ease;
+    box-shadow:
+      var(--anslation-ds-shadow-sm),
+      0 10px 24px color-mix(in srgb, var(--primary) 18%, transparent);
+    transform: translateY(0);
+    transition: background 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease, opacity 0.2s ease;
   }
 
   .btn-primary:hover {
-    background: var(--primary-hover);
+    background: var(--anslation-ds-cta-gradient-hover);
+    box-shadow:
+      var(--anslation-ds-shadow-md),
+      0 14px 32px color-mix(in srgb, var(--secondary) 20%, transparent);
+    transform: translateY(-1px);
   }
 
   .btn-primary:active {
     background: var(--primary-active);
+    transform: translateY(0);
   }
   .personality-bg {
     background-color: var(--anslation-ds-soft);
