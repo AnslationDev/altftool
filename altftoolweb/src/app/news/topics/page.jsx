@@ -7,12 +7,14 @@ import {
   createPageMetadata,
 } from "@/platform/seo/generateMetadata";
 
-export const metadata = createPageMetadata({
+export async function generateMetadata() {
+  return createPageMetadata({
   title: "News Topics Directory | AltFTool News",
   description: "Browse all AltFTool News topics, from technology and business to science, health, sports, and world updates.",
   path: "/news/topics",
   keywords: ["news topics", "topic directory", "technology news topics"],
 });
+}
 
 function slugify(value = "") {
   return String(value)

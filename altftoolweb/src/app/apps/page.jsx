@@ -11,12 +11,14 @@ import {
 const appsDescription =
   "Browse and download official AltFTool Android APKs for speed testing, storage cleanup, grammar help, PDF OCR scanning, and mobile productivity.";
 
-export const metadata = createPageMetadata({
+export async function generateMetadata() {
+  return createPageMetadata({
   title: "Android Apps - Download Official APKs | AltFTool",
   description: appsDescription,
   path: "/apps",
   keywords: ["Android apps", "APK downloads", "mobile apps", "AltFTool apps"],
 });
+}
 
 export default async function AppsPage({ searchParams }) {
   const params = await searchParams;

@@ -8,13 +8,15 @@ import {
 } from "@/platform/seo/generateMetadata";
 import StatusClient from "./StatusClient";
 
-export const metadata = createPageMetadata({
+export async function generateMetadata() {
+  return createPageMetadata({
   title: "AltFTool Status",
   description:
     "Live AltFTool public status for tool registry readiness, Firebase reads, content fallbacks, and SEO endpoints.",
   path: "/status",
   keywords: ["AltFTool status", "site health", "tool health", "Firebase status"],
 });
+}
 
 function createStatusJsonLd() {
   return {
