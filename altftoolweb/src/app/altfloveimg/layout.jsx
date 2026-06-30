@@ -3,7 +3,8 @@ import "./styles/altfloveimg.css";
 import SiteHeader from "./components/chrome/SiteHeader";
 import SiteFooter from "./components/chrome/SiteFooter";
 
-export const metadata = createPageMetadata({
+export async function generateMetadata() {
+  return createPageMetadata({
   title: "ALTF Love IMG — Premium Browser Image Tools",
   description:
     "Compress, resize, crop, convert, watermark and edit images right in your browser. 100% private, no uploads, unlimited and free. The premium image toolkit by AltFTool.",
@@ -24,6 +25,7 @@ export const metadata = createPageMetadata({
     "browser image processing",
   ],
 });
+}
 
 export default function AltfLoveImgLayout({ children }) {
   return (

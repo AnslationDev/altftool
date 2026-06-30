@@ -7,6 +7,7 @@ import MobileResultsCallBar from "@/app/tripfindbox/components/MobileResultsCall
 import { buildBlogSections, fetchBlogPosts, getBlogPost, getRelatedBlogs } from "@/app/tripfindbox/lib/blogData";
 import { getTripFindBoxContactInfo } from "@/app/tripfindbox/lib/contactInfo";
 import { tfbPath } from "@/app/tripfindbox/lib/tfbLink";
+import { createPageMetadata } from "@/platform/seo/generateMetadata";
 
 export const dynamic = "force-dynamic";
 
@@ -15,15 +16,17 @@ export async function generateMetadata({ params }) {
   const post = await getBlogPost(slug);
 
   if (!post) {
-    return {
+    return createPageMetadata({
       title: "Blog Not Found | TripFindBox",
-    };
+      path: `/tripfindbox/blogs/${slug}`,
+    });
   }
 
-  return {
+  return createPageMetadata({
     title: `${post.title} | TripFindBox Blog`,
     description: post.description,
-  };
+    path: `/tripfindbox/blogs/${slug}`,
+  });
 }
 
 export default async function BlogDetailPage({ params }) {

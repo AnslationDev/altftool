@@ -120,7 +120,11 @@ function HomeFooterSection({ group, withBorder = false }) {
 
 const Footer = () => {
   const pathname = usePathname();
-  const usesLandingChrome = pathname === "/" || pathname === "/tools" || pathname?.startsWith("/tools/");
+  const usesLandingChrome =
+    pathname === "/" ||
+    pathname === "/tools" ||
+    pathname?.startsWith("/tools/") ||
+    pathname === "/extensions";
 
   if (usesLandingChrome) {
     return (
@@ -165,7 +169,7 @@ const Footer = () => {
               <div className="min-w-0 lg:pr-6">
                 <Link href="/" className="inline-flex transition duration-200 hover:-translate-y-0.5">
                   <Image
-                    src="/assets/altf_white.png"
+                    src="/assets/altf-header-logo-dark.png"
                     alt="AltFTool"
                     width={210}
                     height={62}
@@ -236,7 +240,7 @@ const Footer = () => {
           <div className="max-w-md">
             <Link href="/" className="mb-4 inline-flex transition duration-200 hover:-translate-y-0.5">
               <Image
-                src="/assets/altf_white.png"
+                src="/assets/altf-header-logo-dark.png"
                 alt="AltFTool"
                 width={132}
                 height={40}

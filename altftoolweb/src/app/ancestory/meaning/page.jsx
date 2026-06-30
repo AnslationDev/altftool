@@ -1,7 +1,17 @@
 import { AncestorHeader } from '../components/AncestorHeader';
 import { AncestorMeaningPage } from '../pages/AncestorMeaningPage';
 import { fetchNameMeaning } from '../utils/api.jsx';
+import { createPageMetadata } from '@/platform/seo/generateMetadata';
 import '../style/ancestory.css';
+
+export async function generateMetadata() {
+    return createPageMetadata({
+        title: 'Name Meaning & Origin | AltFTool Ancestry',
+        description:
+            'Discover the meaning, origin, and history behind first and last names with the AltFTool ancestry name meaning tool.',
+        path: '/ancestory/meaning',
+    });
+}
 
 function normalizeParam(value) {
     if (!value) return '';

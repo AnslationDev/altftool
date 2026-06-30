@@ -1,6 +1,7 @@
 import { toolMetaMap } from "@/platform/registry/toolMetaMap";
 import { createPageMetadata } from "@/platform/seo/generateMetadata";
 import { buildToolSeoContent } from "./toolSeoContent";
+import { primeSeoConfig } from "@/platform/seo/seoConfigSource";
 
 export function getTool(slug) {
   return toolMetaMap[slug] ?? null;
@@ -70,7 +71,9 @@ export function getRelatedTools(slug, limit = 6) {
     .map(({ slug: relatedSlug, name }) => ({ slug: relatedSlug, name }));
 }
 
-export function buildToolMetadata(slug) {
+export async function buildToolMetadata(slug) {
+  // Warm the central SEO config so per-URL admin overrides apply to tool pages.
+  await primeSeoConfig();
   const tool = getTool(slug);
 
   if (!tool) {

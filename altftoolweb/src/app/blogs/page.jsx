@@ -469,6 +469,32 @@ export default async function BlogsPage() {
           }
           totalCount={totalCount}
         />
+
+        {/* Server-rendered article index — guarantees every post link is in the
+            static HTML so non-JS crawlers can discover all articles (the client
+            explorer above handles the interactive experience). */}
+        {posts.length ? (
+          <nav
+            aria-label="All articles"
+            className="mt-12 rounded-2xl border border-(--border) bg-(--card) p-5 shadow-sm sm:p-6"
+          >
+            <h2 className="text-base font-semibold tracking-tight text-(--foreground)">
+              All articles
+            </h2>
+            <ul className="mt-4 grid grid-cols-1 gap-x-6 gap-y-2 sm:grid-cols-2 lg:grid-cols-3">
+              {posts.map((post) => (
+                <li key={post.slug}>
+                  <Link
+                    href={`/blogs/${post.slug}`}
+                    className="inline-flex text-sm leading-6 text-(--muted-foreground) underline-offset-2 transition-colors hover:text-(--primary) hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-(--primary)"
+                  >
+                    {post.heading || post.title}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
+        ) : null}
       </div>
       <RouteDiscoveryBand {...blogsRouteHub} />
     </main>

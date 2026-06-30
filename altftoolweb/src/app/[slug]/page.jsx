@@ -3,6 +3,7 @@ import HeroSection from "./components/HeroSection";
 import Section1Wrapper from "./components/Section1";
 import Section2Wrapper from "./components/Section2";
 import Section3Wrapper from "./components/Section3";
+import { createPageMetadata } from "@/platform/seo/generateMetadata";
 
 export const revalidate = 3600; // Cache dynamic route configurations for 1 hour
 
@@ -32,16 +33,19 @@ export async function generateMetadata({ params }) {
   const config = await getDynamicRouteConfig();
 
   if (!config || !config.enabled || config.slug !== slug) {
-    return {
+    return createPageMetadata({
       title: "Page Not Found",
       description: "The requested page does not exist.",
-    };
+      path: `/${slug}`,
+      noindex: true,
+    });
   }
 
-  return {
+  return createPageMetadata({
     title: `${config.slug.toUpperCase()} Deals & Special Offers | AltFTool`,
     description: "Discover curated styles, fresh arrivals, and special promotions on AltFTool.",
-  };
+    path: `/${slug}`,
+  });
 }
 
 export default async function Page({ params }) {

@@ -1,68 +1,18 @@
-"use client";
+import { createPageMetadata } from "@/platform/seo/generateMetadata";
+import PageView from "./PageView";
 
-import { useState, useId } from "react";
-import Link from "next/link";
-import {
-  Mail, Zap, Clock, MapPin, Star, ArrowRight,
-  Check, Users, Newspaper, Bell, Globe, ChevronRight,
-} from "lucide-react";
-
-// ─── data ─────────────────────────────────────────────────────────────────────
-
-const STATS = [
-  { icon: Users,     value: "6M+",  label: "Daily active readers", sublabel: "across all newsletters" },
-  { icon: Newspaper, value: "3–7",  label: "Issues per week",      sublabel: "based on your preference" },
-  { icon: MapPin,    value: "500+", label: "Cities covered",       sublabel: "with hyper-local reporting" },
-];
-
-const FEATURES = [
-  { icon: Zap,   title: "Breaking alerts",    desc: "Instant notifications for major stories in your area, delivered before anyone else." },
-  { icon: Clock, title: "Morning briefing",   desc: "Start every day with a crisp 5-minute digest of what matters locally." },
-  { icon: Globe, title: "Topic customization",desc: "Choose politics, tech, sports, business — your feed, your rules." },
-  { icon: Bell,  title: "Event reminders",    desc: "Never miss a local event, town hall, or community moment again." },
-];
-
-const TESTIMONIALS = [
-  { name: "Priya S.",   text: "I get all my local news from this newsletter. It's the first thing I read every morning.", stars: 5 },
-  { name: "James K.",  text: "Incredibly well-curated. Replaced my habit of doom-scrolling social media completely.", stars: 5 },
-  { name: "Anika M.",  text: "The local section is brilliant. I finally feel connected to what's happening nearby.", stars: 4 },
-];
-
-const FREQUENCIES = [
-  { id: "daily",   label: "Daily" },
-  { id: "weekly",  label: "Weekly" },
-  { id: "breaking",label: "Breaking only" },
-];
-
-// ─── sub-components ───────────────────────────────────────────────────────────
-
-function StarRating({ count }) {
-  return (
-    <div className="flex gap-0.5">
-      {Array.from({ length: 5 }).map((_, i) => (
-        <Star
-          key={i}
-          size={12}
-          className={i < count ? "fill-amber-400 text-amber-400" : "text-[var(--border)]"}
-        />
-      ))}
-    </div>
-  );
+export async function generateMetadata() {
+  return createPageMetadata({
+    title: "Newsletter – Local News Delivered Daily | AltFTool News",
+    description:
+      "Subscribe to the AltFTool News newsletter and get curated local stories — politics, tech, business, and sports — delivered to your inbox every morning.",
+    path: "/news/newsletter",
+    keywords: ["news newsletter", "local news newsletter", "daily news digest"],
+  });
 }
 
-function StatCard({ icon: Icon, value, label, sublabel }) {
-  return (
-    <div className="flex flex-col gap-2 rounded-2xl border border-[var(--border)] bg-[var(--card)] p-6">
-      <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[var(--primary)]/10 text-[var(--primary)]">
-        <Icon size={18} />
-      </div>
-      <div className="text-3xl font-extrabold tracking-tight text-[var(--foreground)]">{value}</div>
-      <div>
-        <p className="text-sm font-semibold text-[var(--foreground)]">{label}</p>
-        <p className="text-xs text-[var(--muted-foreground)]">{sublabel}</p>
-      </div>
-    </div>
-  );
+export default function Page(props) {
+  return <PageView {...props} />;
 }
 
 function FeatureRow({ icon: Icon, title, desc }) {
@@ -236,7 +186,7 @@ export default function NewsletterPage() {
           {/* social proof */}
           <div className="flex items-center gap-3">
             <div className="flex -space-x-2">
-              {["bg-violet-500","bg-sky-500","bg-emerald-500","bg-amber-500"].map((c, i) => (
+              {["bg-violet-500", "bg-sky-500", "bg-emerald-500", "bg-amber-500"].map((c, i) => (
                 <div key={i} className={`h-8 w-8 rounded-full border-2 border-[var(--background)] ${c} flex items-center justify-center text-xs font-bold text-white`}>
                   {String.fromCharCode(65 + i)}
                 </div>

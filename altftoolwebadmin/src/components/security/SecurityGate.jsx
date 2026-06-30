@@ -79,15 +79,34 @@ export default function SecurityGate() {
     };
   }, [user?.uid, authFetch]);
 
-  // 2. Track real user activity.
+  // 2. Track real user activity. Listen in the CAPTURE phase on both window and
+  //    document so input inside editors / contenteditable widgets (e.g. the blog
+  //    CKEditor) always registers — otherwise an admin actively typing could be
+  //    counted as idle and force-signed-out. Broad event set covers keyboard,
+  //    pointer, touch, scroll, and IME/input.
   useEffect(() => {
     const onActivity = () => {
       lastActivityRef.current = Date.now();
       activeSinceBeatRef.current = true;
     };
-    const events = ["mousemove", "keydown", "click", "scroll", "touchstart"];
-    events.forEach((e) => window.addEventListener(e, onActivity, { passive: true }));
-    return () => events.forEach((e) => window.removeEventListener(e, onActivity));
+    const events = [
+      "mousemove",
+      "mousedown",
+      "keydown",
+      "input",
+      "click",
+      "scroll",
+      "wheel",
+      "touchstart",
+      "pointerdown",
+    ];
+    const opts = { passive: true, capture: true };
+    events.forEach((e) => window.addEventListener(e, onActivity, opts));
+    document.addEventListener("focusin", onActivity, true);
+    return () => {
+      events.forEach((e) => window.removeEventListener(e, onActivity, opts));
+      document.removeEventListener("focusin", onActivity, true);
+    };
   }, []);
 
   // 3. Heartbeat + idle / forced-logout enforcement.
@@ -100,6 +119,7 @@ export default function SecurityGate() {
       const idleFor = Date.now() - lastActivityRef.current;
 
       if (idleFor >= idleMs) {
+        console.info("[auth] SecurityGate: client idle timeout reached → sign out", { idleFor, idleMs });
         await forceSignOut();
         return;
       }
@@ -112,8 +132,10 @@ export default function SecurityGate() {
         });
         if (res && res.active === false) {
           if (LOGOUT_REASONS.has(res.reason)) {
+            console.info("[auth] SecurityGate: server ended session → sign out", { reason: res.reason });
             await forceSignOut(); // genuine: idle / absolute / admin force-logout
           } else {
+            console.info("[auth] SecurityGate: stale/replaced session id, re-starting (no logout)", { reason: res.reason });
             // stale/replaced session id — let session-start run again, don't log out
             sessionRef.current = null;
             startedForUidRef.current = null;

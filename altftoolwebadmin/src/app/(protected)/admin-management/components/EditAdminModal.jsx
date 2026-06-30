@@ -53,6 +53,42 @@ export default function EditAdminModal({ admin, onClose, refresh }) {
   const [passwordError, setPasswordError] = useState("");
   const [loading, setLoading] = useState(false);
   const [step, setStep] = useState("idle");
+  const [deleting, setDeleting] = useState(false);
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+
+  const deleteAdmin = async () => {
+    if (isSelf) {
+      
+      emitAlert({ type: "warning", message: "You cannot delete your own account" });
+      return;
+    }
+    setLoading(true);
+    setDeleting(true);
+    try {
+      const user = getAuth().currentUser;
+      if (!user) {
+        emitAlert({ type: "error", message: "Session expired." });
+        return;
+      }
+      const token = await user.getIdToken(true);
+      const res = await fetch("/api/admin/delete", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
+        body: JSON.stringify({ uid: admin.id }),
+      });
+
+      await readApiJson(res, "Failed to delete admin");
+
+      emitAlert({ type: "success", message: "Admin account deleted successfully" });
+      refresh();
+      onClose();
+    } catch (error) {
+      emitAlert({ type: "error", message: error?.message || "Failed to delete admin" });
+    } finally {
+      setLoading(false);
+      setDeleting(false);
+    }
+  };
 
   const currentUserUid = getAuth().currentUser?.uid;
   const isSelf = currentUserUid === admin.id;
@@ -274,16 +310,54 @@ export default function EditAdminModal({ admin, onClose, refresh }) {
 
         {/* Footer */}
         <div className="px-6 py-4 border-t border-gray-100 flex items-center justify-between gap-3 shrink-0 bg-gray-50">
-          <p className="text-xs text-gray-400">Changes take effect immediately on next login check.</p>
-          <div className="flex items-center gap-2">
-            <button onClick={onClose} disabled={loading} className="px-4 py-2 text-sm border border-gray-200 rounded-xl text-gray-600 hover:bg-white transition disabled:opacity-40">Cancel</button>
-            <button onClick={updateAdmin} disabled={loading || step === "done"}
-              className="flex items-center gap-2 px-5 py-2 text-sm bg-gray-900 hover:bg-gray-700 disabled:opacity-60 text-white font-semibold rounded-xl transition shadow-sm">
-              {loading && <Loader2 className="w-3.5 h-3.5 animate-spin" />}
-              {step === "done" && <CheckCircle2 className="w-3.5 h-3.5" />}
-              {stepLabel}
-            </button>
-          </div>
+          {showDeleteConfirm ? (
+            <>
+              <p className="text-xs font-semibold text-red-600 flex items-center gap-1.5">
+                <AlertTriangle className="w-4 h-4" /> Are you sure? This cannot be undone.
+              </p>
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={() => setShowDeleteConfirm(false)}
+                  disabled={loading}
+                  className="px-4 py-2 text-sm border border-gray-200 rounded-xl text-gray-600 hover:bg-white bg-white transition disabled:opacity-40"
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={deleteAdmin}
+                  disabled={loading}
+                  className="flex items-center gap-2 px-5 py-2 text-sm bg-red-600 hover:bg-red-700 text-white font-semibold rounded-xl transition shadow-sm"
+                >
+                  {deleting && <Loader2 className="w-3.5 h-3.5 animate-spin" />}
+                  Confirm Delete
+                </button>
+              </div>
+            </>
+          ) : (
+            <>
+              {!isSelf ? (
+                <button
+                  type="button"
+                  onClick={() => setShowDeleteConfirm(true)}
+                  disabled={loading}
+                  className="px-4 py-2 text-sm border border-red-200 rounded-xl text-red-600 hover:bg-red-50 bg-white font-semibold transition disabled:opacity-40"
+                >
+                  Delete Admin
+                </button>
+              ) : (
+                <p className="text-xs text-gray-400">Changes take effect immediately on next login check.</p>
+              )}
+              <div className="flex items-center gap-2">
+                <button onClick={onClose} disabled={loading} className="px-4 py-2 text-sm border border-gray-200 rounded-xl text-gray-600 hover:bg-white bg-white transition disabled:opacity-40">Cancel</button>
+                <button onClick={updateAdmin} disabled={loading || step === "done"}
+                  className="flex items-center gap-2 px-5 py-2 text-sm bg-gray-900 hover:bg-gray-700 disabled:opacity-60 text-white font-semibold rounded-xl transition shadow-sm">
+                  {loading && step === "saving" && <Loader2 className="w-3.5 h-3.5 animate-spin" />}
+                  {step === "done" && <CheckCircle2 className="w-3.5 h-3.5" />}
+                  {stepLabel}
+                </button>
+              </div>
+            </>
+          )}
         </div>
       </div>
     </div>

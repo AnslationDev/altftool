@@ -53,6 +53,11 @@ export default function AdminLayout({ children }) {
     }
 
     if (!user) {
+      // Only redirect to /login when there is genuinely no session. If Firebase
+      // still has a current user, the admin profile is mid-sync (or recovering
+      // from a transient error) — wait instead of bouncing an active/authenticated
+      // admin to the login page.
+      if (getAuth().currentUser) return;
       router.replace("/login");
       return;
     }

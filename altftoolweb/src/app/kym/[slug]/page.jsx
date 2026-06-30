@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import KymArticlePage from "../components/KymArticlePage";
 import KymGenericPage, { findKymItem } from "../components/KymGenericPage";
 import KymPollPage from "../components/KymPollPage";
+import { createPageMetadata } from "@/platform/seo/generateMetadata";
 
 const CUSTOM_PAGES = {
   "weekly-meme-roundup": {
@@ -18,27 +19,31 @@ const CUSTOM_PAGES = {
 
 export async function generateMetadata({ params }) {
   const { slug } = await params;
+  const path = `/kym/${slug}`;
   const customPage = CUSTOM_PAGES[slug];
 
   if (customPage) {
-    return {
+    return createPageMetadata({
       title: customPage.title,
       description: customPage.description,
-    };
+      path,
+    });
   }
 
   const item = findKymItem(slug);
 
   if (!item) {
-    return {
+    return createPageMetadata({
       title: "KYM Page",
-    };
+      path,
+    });
   }
 
-  return {
+  return createPageMetadata({
     title: item.title,
     description: `Local KYM-style detail page for ${item.title}.`,
-  };
+    path,
+  });
 }
 
 export default async function Page({ params }) {

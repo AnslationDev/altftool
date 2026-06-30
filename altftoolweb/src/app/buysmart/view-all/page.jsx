@@ -1,7 +1,8 @@
 import ViewAllClient from "./ViewAllClient";
 import { createPageMetadata } from "@/platform/seo/generateMetadata";
 
-export const metadata = createPageMetadata({
+export async function generateMetadata() {
+  return createPageMetadata({
   title: "All BuySmart Stores & Verified Deals | AltFTool",
   description:
     "Browse every BuySmart store on AltFTool with searchable brand pages, verified coupons, cashback, rewards, student offers, and category filters.",
@@ -14,6 +15,7 @@ export const metadata = createPageMetadata({
     "AltFTool BuySmart",
   ],
 });
+}
 
 export default function ViewAll() {
   return <ViewAllClient />;

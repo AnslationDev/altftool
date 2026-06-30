@@ -111,6 +111,119 @@ function normalizeSitemap(sitemap) {
   return Object.keys(out).length ? out : undefined;
 }
 
+/** Allowed Twitter card types. */
+export const TWITTER_CARD_TYPES = Object.freeze([
+  "summary",
+  "summary_large_image",
+  "app",
+  "player",
+]);
+
+function asTwitterCard(value) {
+  const s = asString(value, 40);
+  return s && TWITTER_CARD_TYPES.includes(s) ? s : undefined;
+}
+
+function asUrlOrPath(value, max = 600) {
+  const s = asString(value, max);
+  if (!s) return undefined;
+  if (s.startsWith("/") || /^https?:\/\//i.test(s)) return s;
+  return undefined;
+}
+
+/** Normalize an Open Graph override block (per-page or global default). */
+export function normalizeOg(og) {
+  if (!isPlainObject(og)) return undefined;
+  const out = dropUndefined({
+    type: asString(og.type, 40),
+    siteName: asString(og.siteName, 120),
+    title: asString(og.title, 200),
+    description: asString(og.description, 320),
+    image: asString(og.image, 500),
+    locale: asString(og.locale, 20),
+  });
+  return Object.keys(out).length ? out : undefined;
+}
+
+/** Normalize a Twitter card override block (per-page or global default). */
+export function normalizeTwitter(twitter) {
+  if (!isPlainObject(twitter)) return undefined;
+  const out = dropUndefined({
+    card: asTwitterCard(twitter.card),
+    site: asString(twitter.site, 60),
+    creator: asString(twitter.creator, 60),
+    title: asString(twitter.title, 200),
+    description: asString(twitter.description, 320),
+    image: asString(twitter.image, 500),
+  });
+  return Object.keys(out).length ? out : undefined;
+}
+
+/** Normalize site-verification tokens (Google, Bing, Yandex, Pinterest, Facebook). */
+export function normalizeVerification(v) {
+  if (!isPlainObject(v)) return undefined;
+  const out = dropUndefined({
+    google: asString(v.google, 200),
+    bing: asString(v.bing || v.msvalidate, 200),
+    yandex: asString(v.yandex, 200),
+    pinterest: asString(v.pinterest, 200),
+    facebook: asString(v.facebook || v.facebookDomain, 200),
+  });
+  return Object.keys(out).length ? out : undefined;
+}
+
+/** Normalize hreflang alternates: [{ lang, href }] (href = path or absolute URL). */
+export function normalizeHreflang(value) {
+  if (!Array.isArray(value)) return undefined;
+  const out = value
+    .map((item) => {
+      if (!isPlainObject(item)) return null;
+      const lang = asString(item.lang || item.hreflang || item.locale, 20);
+      const href = asUrlOrPath(item.href || item.url, 600);
+      if (!lang || !href) return null;
+      // Accept ISO-ish codes (en, en-US) or x-default.
+      if (!/^(x-default|[a-z]{2}(-[a-zA-Z]{2})?)$/.test(lang)) return null;
+      return { lang, href };
+    })
+    .filter(Boolean)
+    .slice(0, 60);
+  return out.length ? out : undefined;
+}
+
+/**
+ * Normalize a per-page structured-data (JSON-LD) list. Accepts a single object
+ * or an array of objects. Each entry is stored as-is after a size guard so the
+ * admin can author arbitrary schema.org types. Strings are parsed as JSON.
+ */
+export function normalizeSchemaList(value) {
+  let arr = value;
+  if (typeof arr === "string") {
+    const s = arr.trim();
+    if (!s) return undefined;
+    try {
+      arr = JSON.parse(s);
+    } catch {
+      return undefined;
+    }
+  }
+  if (isPlainObject(arr)) arr = [arr];
+  if (!Array.isArray(arr)) return undefined;
+  const out = [];
+  for (const entry of arr) {
+    if (!isPlainObject(entry)) continue;
+    let serialized;
+    try {
+      serialized = JSON.stringify(entry);
+    } catch {
+      continue;
+    }
+    if (!serialized || serialized.length > 20000) continue;
+    out.push(entry);
+    if (out.length >= 20) break;
+  }
+  return out.length ? out : undefined;
+}
+
 /** Normalize a per-page content override (H1, intro, benefits, FAQs, body). */
 export function normalizeContent(content) {
   if (!isPlainObject(content)) return undefined;
@@ -155,11 +268,16 @@ export function normalizeSeoEntry(entry) {
     image: asString(entry.image, 500),
     canonical: asString(entry.canonical, 500),
     type: asString(entry.type, 40),
+    slug: asString(entry.slug, 200),
     noindex: asBool(entry.noindex),
     follow: asBool(entry.follow),
     robots: normalizeRobots(entry.robots),
     sitemap: normalizeSitemap(entry.sitemap),
     content: normalizeContent(entry.content),
+    og: normalizeOg(entry.og),
+    twitter: normalizeTwitter(entry.twitter),
+    hreflang: normalizeHreflang(entry.hreflang),
+    schema: normalizeSchemaList(entry.schema ?? entry.jsonLd ?? entry.structuredData),
   });
 }
 
@@ -234,13 +352,19 @@ export function validateSeoConfig(input) {
 
   value.global = dropUndefined({
     siteName: asString(input?.global?.siteName, 120),
+    siteTitle: asString(input?.global?.siteTitle, 120),
     defaultBrandId: asString(input?.global?.defaultBrandId, 60),
     titleTemplate: asString(input?.global?.titleTemplate, 120),
-    title: asString(input?.global?.title, 200),
+    title: asString(input?.global?.title || input?.global?.defaultTitle, 200),
     description: asString(input?.global?.description || input?.global?.defaultDescription, 320),
     keywords: asStringArray(input?.global?.keywords || input?.global?.defaultKeywords),
-    image: asString(input?.global?.image || input?.global?.defaultOgImage, 500),
+    image: asString(input?.global?.image || input?.global?.defaultOgImage || input?.global?.socialImage, 500),
+    favicon: asUrlOrPath(input?.global?.favicon, 500),
+    baseUrl: asUrlOrPath(input?.global?.baseUrl || input?.global?.canonicalBase || input?.global?.siteUrl, 300),
     robots: normalizeRobots(input?.global?.robots || input?.global?.defaultRobots),
+    og: normalizeOg(input?.global?.og),
+    twitter: normalizeTwitter(input?.global?.twitter),
+    verification: normalizeVerification(input?.global?.verification),
   });
 
   if (isPlainObject(input.brands)) {
@@ -285,9 +409,18 @@ export function validateSeoConfig(input) {
   }
 
   if (isPlainObject(input.pages)) {
-    for (const [path, entry] of Object.entries(input.pages)) {
+    for (const [rawPath, entry] of Object.entries(input.pages)) {
+      // Be forgiving: if an admin pastes a full URL, store its path instead.
+      let path = rawPath;
+      if (/^https?:\/\//i.test(path)) {
+        try {
+          path = new URL(path).pathname || "/";
+        } catch {
+          /* fall through to the validation below */
+        }
+      }
       if (!path.startsWith("/")) {
-        errors.push(`Page override key "${path}" must start with "/".`);
+        errors.push(`Page override key "${rawPath}" must start with "/" (e.g. "/blogs/your-slug").`);
         continue;
       }
       const norm = normalizeSeoEntry(entry);

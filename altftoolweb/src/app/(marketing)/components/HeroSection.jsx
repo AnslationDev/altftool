@@ -1,5 +1,3 @@
-"use client";
-
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -51,7 +49,7 @@ export default function HeroSection() {
                   Explore Tools
                   <ArrowRight className="h-4 w-4" />
                 </Link>
-                <Link href="/about-us" className="home-ref-secondary-btn">
+                <Link href="/policypages/about" className="home-ref-secondary-btn">
                   Learn More
                 </Link>
               </div>

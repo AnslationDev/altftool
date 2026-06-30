@@ -1,13 +1,15 @@
-"use client";
+import PageView from "./PageView";
+import { createPageMetadata } from "@/platform/seo/generateMetadata";
 
-import Header from './components/Header';
-import Home from './components/Home';
+export async function generateMetadata() {
+  return createPageMetadata({
+    title: "Playbuzz – Fun Quizzes & Personality Tests | AltFTool",
+    description:
+      "Play fun quizzes and personality tests on Playbuzz and discover something new about yourself with engaging, shareable results.",
+    path: "/playbuzz",
+  });
+}
 
-export default function PlaybuzzHomePage() {
-  return (
-    <div className="min-h-screen flex flex-col bg-background text-foreground">
-      <Header />
-      <Home />
-    </div>
-  );
+export default function Page(props) {
+  return <PageView {...props} />;
 }

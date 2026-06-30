@@ -25,7 +25,7 @@ export const ADMIN_MODULE_ROUTE_KEYS = {
     pranksocialmedia: [""],
     pranx: [""],
     sketchflow: [""],
-    seo: ["", "dashboard", "search", "gsc"],
+    seo: ["", "dashboard", "search", "global", "pages", "bulk", "technical", "gsc"],
   },
   leadtree: {
     blogs: [
