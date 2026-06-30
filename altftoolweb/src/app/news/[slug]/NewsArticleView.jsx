@@ -100,7 +100,7 @@ function ShareSheet({ headline }) {
         onClick={copy}
         className={`flex h-9 items-center gap-1.5 rounded-xl border px-3 text-xs font-medium transition
           ${copied
-            ? "border-emerald-500/40 bg-emerald-500/10 text-emerald-500"
+            ? "border-[var(--anslation-ds-success-soft)] bg-[var(--anslation-ds-success-soft)] text-[var(--anslation-ds-success)]"
             : "border-[var(--border)] text-[var(--muted-foreground)] hover:bg-[var(--muted)] hover:text-[var(--foreground)]"
           }`}
         aria-label="Copy link"
@@ -251,9 +251,9 @@ export default function NewsArticleView({ article, relatedNews }) {
             onClick={() => { setLiked((v) => !v); setLikes((l) => liked ? l - 1 : l + 1); }}
             aria-label={liked ? "Unlike" : "Like"}
             className={`flex items-center gap-1.5 rounded-xl px-3 py-2 text-sm font-medium transition-all
-              ${liked ? "bg-red-500/10 text-red-500" : "text-[var(--muted-foreground)] hover:bg-[var(--muted)] hover:text-red-500"}`}
+              ${liked ? "bg-[var(--anslation-ds-danger-soft)] text-[var(--anslation-ds-danger)]" : "text-[var(--muted-foreground)] hover:bg-[var(--muted)] hover:text-[var(--anslation-ds-danger)]"}`}
           >
-            <Heart size={16} className={liked ? "fill-red-500" : "fill-transparent"} />
+            <Heart size={16} className={liked ? "fill-[var(--anslation-ds-danger)]" : "fill-transparent"} />
             <span className="tabular-nums">{formatCount(likes)}</span>
           </button>
 

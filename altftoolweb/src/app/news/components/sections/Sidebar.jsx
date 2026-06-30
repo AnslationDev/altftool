@@ -119,8 +119,8 @@ export default function Sidebar() {
             className="
               flex items-center gap-2.5 rounded-xl border border-[var(--border)]
               bg-[var(--card-active-bg)]/50 px-3 py-2.5 text-xs
-              text-[var(--muted-foreground)] transition hover:border-orange-500/40
-              hover:bg-orange-500/5 hover:text-orange-500
+              text-[var(--muted-foreground)] transition hover:border-[var(--primary)]/40
+              hover:bg-[var(--primary)]/5 hover:text-[var(--primary)]
             "
           >
             <Rss size={13} className="shrink-0" />

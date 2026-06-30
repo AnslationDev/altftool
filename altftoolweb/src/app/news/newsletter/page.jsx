@@ -107,8 +107,8 @@ function SubscribeForm() {
 
   if (state === "success") {
     return (
-      <div className="flex flex-col items-start gap-3 rounded-2xl border border-emerald-500/30 bg-emerald-500/5 p-6">
-        <div className="flex h-10 w-10 items-center justify-center rounded-full bg-emerald-500/15 text-emerald-500">
+      <div className="flex flex-col items-start gap-3 rounded-2xl border border-[var(--anslation-ds-success-soft)] bg-[var(--anslation-ds-success-soft)] p-6">
+        <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[var(--anslation-ds-success-soft)] text-[var(--anslation-ds-success)]">
           <Check size={20} />
         </div>
         <div>
@@ -131,7 +131,7 @@ function SubscribeForm() {
         <div className={`
           flex items-center gap-2 overflow-hidden rounded-xl border
           bg-[var(--card)] px-4 py-3 transition
-          ${error ? "border-red-500/50 focus-within:border-red-500" : "border-[var(--border)] focus-within:border-[var(--foreground)]/30"}
+          ${error ? "border-[var(--anslation-ds-danger-soft)] focus-within:border-[var(--anslation-ds-danger)]" : "border-[var(--border)] focus-within:border-[var(--foreground)]/30"}
         `}>
           <Mail size={15} className="shrink-0 text-[var(--muted-foreground)]" />
           <input
@@ -144,7 +144,7 @@ function SubscribeForm() {
             className="flex-1 bg-transparent text-sm text-[var(--foreground)] placeholder:text-[var(--muted-foreground)] focus:outline-none"
           />
         </div>
-        {error && <p className="text-xs text-red-500">{error}</p>}
+        {error && <p className="text-xs text-[var(--anslation-ds-danger)]">{error}</p>}
       </div>
 
       {/* frequency */}
@@ -215,7 +215,7 @@ export default function NewsletterPage() {
         <div className="space-y-6">
           {/* eyebrow */}
           <div className="inline-flex items-center gap-2 rounded-full border border-[var(--border)] bg-[var(--card)] px-3 py-1.5 text-xs font-medium text-[var(--muted-foreground)]">
-            <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
+            <span className="h-1.5 w-1.5 rounded-full bg-[var(--anslation-ds-success)] animate-pulse" />
             Free · No credit card
           </div>
 
