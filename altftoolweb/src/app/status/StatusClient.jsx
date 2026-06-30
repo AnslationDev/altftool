@@ -166,9 +166,9 @@ function UptimeHistoryPanel({ history }) {
 
       <div className="mt-4 flex h-12 items-end gap-1 overflow-hidden rounded-[var(--anslation-ds-radius)] border border-(--border) bg-(--background) p-2">
         {visibleEntries.length ? (
-          visibleEntries.map((entry) => (
+          visibleEntries.map((entry, index) => (
             <span
-              key={`${entry.checkedAt}-${entry.status}`}
+              key={`${entry.checkedAt}-${entry.status}-${index}`}
               className={`min-w-2 flex-1 rounded-sm ${entry.ok ? "bg-emerald-500" : "bg-rose-500"}`}
               style={{ height: `${Math.max(18, Math.min(100, Number(entry.score || 0)))}%` }}
               title={`${formatTime(entry.checkedAt)} - ${formatStatus(entry.status)} (${entry.score}/100)${entry.error ? ` - ${entry.error}` : ""}`}

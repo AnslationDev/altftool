@@ -7,6 +7,7 @@ import SettingsSidebar from "./components/SettingsSidebar";
 import { settingsData } from "./data/settingData";
 import { useAds } from "@/ads/AdsProvider";
 import AdCard from "@/ads/layouts/settingsupport/AdCardSupport";
+import "./supportsetting.css";
 
 
 
@@ -56,14 +57,14 @@ const sidebarAds = useMemo(() => {
   };
 
   return (
-    <div className="flex flex-col min-h-screen section">
+    <div className="support-setting-page flex flex-col min-h-screen">
 
 
       {/* Main Layout */}
-      <div className="flex flex-1 min-h-0 relative">
+      <div className="support-setting-shell section flex flex-1 min-h-0 relative">
         {/* Sidebar for Desktop — sticky so it stays in view while content scrolls */}
         <div className="hidden md:block md:w-72 shrink-0">
-          <div className="sticky top-0 h-screen overflow-y-auto">
+          <div className="support-setting-sticky sticky top-0 h-screen overflow-y-auto">
             <SettingsSidebar
               activeId={resolvedActiveId}
               onSelect={handleSelect}
@@ -100,10 +101,10 @@ const sidebarAds = useMemo(() => {
         )}
 
         {/* Content - This container allows scrolling */}
-        <div className="flex flex-1 min-w-0">
+        <div className="support-setting-main-wrap flex flex-1 min-w-0">
   
   {/* Main Content */}
-  <main className="flex-1 min-w-0">
+  <main className="support-setting-main flex-1 min-w-0">
     <SettingsContent
       activeId={resolvedActiveId}
       onOpenSidebar={handleOpenSidebar}
@@ -112,8 +113,8 @@ const sidebarAds = useMemo(() => {
 
   {/* Right Ads (Desktop only) */}
   {sidebarAds.length > 0 && (
-    <aside className="hidden lg:block w-80 shrink-0 pl-6">
-      <div className="sticky top-20 space-y-4 flex flex-col ">
+    <aside className="support-setting-ads hidden lg:block w-80 shrink-0 pl-6">
+      <div className="support-setting-ads-stack sticky top-20 space-y-4 flex flex-col ">
         {sidebarAds.map((ad, i) => (
           <AdCard key={`support-ad-${i}`} ad={ad} />
         ))}

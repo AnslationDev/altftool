@@ -13,8 +13,11 @@ import DataStateNotice from "@/components/ui/DataStateNotice";
 import { AltftoolLoader, LoadingBone } from "@/components/ui/route-loading";
 
 import {
+  ArrowRight,
   Search,
   Star,
+  LayoutGrid,
+  Users,
   MessageSquare,
   GraduationCap,
   PenTool,
@@ -90,11 +93,6 @@ export default function ExtensionsPage() {
     { label: "Developer Tools", icon: Code, realCat: "File, Data & Formatter Tools" },
   ];
 
-  const categoryCount = useMemo(
-    () => new Set(allExtensions.map((extension) => extension.category).filter(Boolean)).size,
-    [allExtensions]
-  );
-
   const handleCategorySelect = (nextCategory) => {
     setSelectedCategory(nextCategory);
     window.requestAnimationFrame(() => {
@@ -146,25 +144,21 @@ export default function ExtensionsPage() {
                 </form>
 
                 <div className="extensions-hero-stats" aria-label="Extension catalog highlights">
-                  <div>
-                    <strong>{allExtensions.length || "200+"}</strong>
-                    <span>Extensions</span>
-                  </div>
-                  <div>
-                    <strong>{categoryCount || "50+"}</strong>
-                    <span>Categories</span>
-                  </div>
-                  <div>
-                    <strong>100K+</strong>
-                    <span>Monthly Users</span>
-                  </div>
-                  <div>
-                    <strong>
-                      <Star className="h-4 w-4" aria-hidden="true" />
-                      4.8/5
-                    </strong>
-                    <span>Average Rating</span>
-                  </div>
+                  <span className="extensions-hero-stat-item">
+                    <LayoutGrid className="extensions-hero-stat-icon" aria-hidden="true" />
+                    <span className="extensions-hero-stat-value">Extensions</span>
+                    <span className="extensions-hero-stat-label">Curated add-ons</span>
+                  </span>
+                  <span className="extensions-hero-stat-item">
+                    <Users className="extensions-hero-stat-icon" aria-hidden="true" />
+                    <span className="extensions-hero-stat-value">100K+</span>
+                    <span className="extensions-hero-stat-label">Monthly Users</span>
+                  </span>
+                  <span className="extensions-hero-stat-item">
+                    <Star className="extensions-hero-stat-icon extensions-hero-stat-icon-gold" aria-hidden="true" />
+                    <span className="extensions-hero-stat-value">4.8/5</span>
+                    <span className="extensions-hero-stat-label">Average Rating</span>
+                  </span>
                 </div>
               </div>
 
@@ -192,15 +186,18 @@ export default function ExtensionsPage() {
                 type="button"
                 key={cat.label}
                 onClick={() => handleCategorySelect(cat.realCat)}
-                className={`extensions-category-card flex h-[68px] items-center justify-between gap-3 rounded-[8px] border px-3 text-left transition sm:h-[76px] sm:px-4 ${
+                className={`extensions-category-card flex h-[50px] items-center gap-3 rounded-[8px] border px-3 text-left transition sm:h-[56px] sm:px-4 ${
                   selectedCategory === cat.realCat
                     ? "extensions-category-card-active border-[var(--primary)] bg-[var(--primary)]/10 text-[var(--primary)]"
                     : "border-[var(--border)] bg-[var(--card)]"
                 }`}
               >
-                <span className="min-w-0 text-sm font-semibold leading-5 sm:text-base">{cat.label}</span>
                 <span className="extensions-category-icon">
-                  <cat.icon className="h-6 w-6 shrink-0" />
+                  <cat.icon className="h-5 w-5 shrink-0" />
+                </span>
+                <span className="min-w-0 flex-1 text-sm font-semibold leading-5">{cat.label}</span>
+                <span className="extensions-category-arrow" aria-hidden="true">
+                  <ArrowRight className="h-4 w-4" />
                 </span>
               </button>
             ))}
@@ -254,7 +251,7 @@ export default function ExtensionsPage() {
                 <div className="mt-12 flex justify-center">
                   <button
                     onClick={() => setVisibleCount((prev) => prev + 12)}
-                    className="rounded-[8px] border border-[var(--border)] px-8 py-3 font-semibold transition hover:border-[var(--primary)] hover:text-[var(--primary)]"
+                    className="extensions-load-more-button rounded-[8px] border border-[var(--border)] px-8 py-3 font-semibold transition hover:border-[var(--primary)] hover:text-[var(--primary)]"
                   >
                     Load More
                   </button>
@@ -262,7 +259,7 @@ export default function ExtensionsPage() {
               )}
             </>
           ) : (
-            <div className="rounded-[8px] border border-[var(--border)] bg-[var(--card)] px-4 py-14 text-center">
+            <div className="extensions-empty-state rounded-[8px] border border-[var(--border)] bg-[var(--card)] px-4 py-14 text-center">
               <h3 className="text-lg font-semibold">No extensions found</h3>
               <p className="mt-2 text-sm text-[var(--muted-foreground)]">
                 Try another keyword or switch back to all categories.

@@ -2,9 +2,9 @@ import { createPageMetadata } from "@/platform/seo/generateMetadata";
 
 export function generateMetadata() {
   return createPageMetadata({
-    title: "About Us",
+    title: "About AltF Tools",
     description:
-      "Learn about AltFTool — our mission to make free online tools, must-have Chrome extensions, and practical digital guides accessible to creators, students, and professionals.",
+      "Learn about AltF Tools — a curated platform for trusted productivity tools, browser extensions, apps, AI tools, and practical digital resources.",
     path: "/policypages/about",
   });
 }

@@ -1,282 +1,264 @@
-"use client";
+import Link from "next/link";
+import {
+  CheckCircle2,
+  ChevronRight,
+  FileText,
+  Gavel,
+  Handshake,
+  ShieldCheck,
+} from "lucide-react";
+import "../../styles/landing.css";
+import "./terms.css";
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
-import { FileText, Shield, Gavel } from "lucide-react";
+const quickPrinciples = [
+  "Use services lawfully",
+  "Respect platform ownership",
+  "Review outputs carefully",
+  "Clear liability boundaries",
+];
 
-/* Solid Card — visible in light & dark */
-const Card = ({ children, className = "" }) => (
-  <div
-    className={`
-      rounded-xl
-      bg-(--card)
-      ${className}
-    `}
-  >
-    {children}
-  </div>
-);
+const termsSections = [
+  {
+    id: "eligibility",
+    number: "01",
+    title: "Eligibility",
+    list: [
+      "You are at least 13 years old",
+      "You have legal capacity to accept these Terms",
+      "You comply with applicable laws and regulations",
+    ],
+  },
+  {
+    id: "use-of-services",
+    number: "02",
+    title: "Use of Services",
+    paragraphs: ["You agree not to:"],
+    list: [
+      "Violate any laws or regulations",
+      "Infringe intellectual property rights",
+      "Disrupt or interfere with platform functionality",
+      "Attempt unauthorized access to systems",
+      "Upload malware, spam, or harmful content",
+    ],
+  },
+  {
+    id: "microtools-usage",
+    number: "03",
+    title: "Microtools Usage",
+    paragraphs: [
+      "All microtools are provided on an “as-is” and “as-available” basis. We do not guarantee accuracy, reliability, or suitability for any purpose.",
+      "Use of tools is entirely at your own risk.",
+      "Tool outputs are generated automatically and may vary based on input, system updates, or third-party dependencies.",
+      "Results should not be relied upon as professional, legal, financial, or technical advice.",
+    ],
+  },
+  {
+    id: "intellectual-property",
+    number: "04",
+    title: "Intellectual Property",
+    paragraphs: [
+      "All content, tools, designs, and software are owned by AltF Tools or its licensors and protected by intellectual property laws.",
+      "You may not copy, modify, distribute, or commercially exploit any part of the Services without written permission.",
+      "All trademarks, logos, and brand elements displayed on the platform remain the exclusive property of AltF Tools.",
+    ],
+  },
+  {
+    id: "user-generated-content",
+    number: "05",
+    title: "User-Generated Content",
+    paragraphs: [
+      "By submitting content, you grant AltF Tools a non-exclusive, royalty-free license to use and display it. We reserve the right to remove content at our discretion.",
+      "You are solely responsible for ensuring that submitted content does not violate any third-party rights or applicable laws.",
+    ],
+  },
+  {
+    id: "third-party-services",
+    number: "06",
+    title: "Third-Party Services",
+    paragraphs: [
+      "We do not control or endorse third-party websites or services and are not responsible for their content or practices.",
+      "Accessing third-party services is done at your own discretion and risk.",
+    ],
+  },
+  {
+    id: "advertising-affiliates",
+    number: "07",
+    title: "Advertising & Affiliates",
+    paragraphs: [
+      "The platform may display advertisements or affiliate links. We may earn commissions at no additional cost to users.",
+      "Some links may be affiliate-based, meaning we may earn a commission without additional cost to you.",
+    ],
+  },
+  {
+    id: "disclaimer-of-warranties",
+    number: "08",
+    title: "Disclaimer of Warranties",
+    paragraphs: [
+      "Services are provided “as-is” and “as-available” without warranties of any kind, express or implied.",
+      "We make no guarantees regarding availability, accuracy, or uninterrupted operation of the Services.",
+    ],
+  },
+  {
+    id: "limitation-of-liability",
+    number: "09",
+    title: "Limitation of Liability",
+    paragraphs: [
+      "To the fullest extent permitted by law, AltF Tools shall not be liable for any damages arising from use or inability to use the Services.",
+      "This limitation applies even if we have been advised of the possibility of such damages.",
+    ],
+  },
+  {
+    id: "indemnification",
+    number: "10",
+    title: "Indemnification",
+    paragraphs: [
+      "You agree to indemnify and hold harmless AltF Tools from any claims arising from your use of the Services or violation of these Terms.",
+      "This obligation survives termination of these Terms.",
+    ],
+  },
+  {
+    id: "termination",
+    number: "11",
+    title: "Termination",
+    paragraphs: [
+      "We may suspend or terminate access at any time without notice for violations or harmful conduct.",
+      "Termination does not affect provisions that by nature should survive, including intellectual property and liability clauses.",
+    ],
+  },
+  {
+    id: "governing-law",
+    number: "12",
+    title: "Governing Law",
+    paragraphs: [
+      "These Terms are governed by the laws of India.",
+      "Courts located in India shall have exclusive jurisdiction over disputes.",
+    ],
+  },
+  {
+    id: "changes-to-these-terms",
+    number: "13",
+    title: "Changes to These Terms",
+    paragraphs: [
+      "Continued use of the platform after updates constitutes acceptance of the revised Terms.",
+      "Updated versions will be posted on this page with a revised effective date.",
+    ],
+  },
+  {
+    id: "contact",
+    number: "14",
+    title: "Contact",
+    paragraphs: ["Email: altftool@gmail.com", "Website: www.altftool.com"],
+  },
+];
 
 export default function TermsAndConditions() {
-  const [searchQuery, setSearchQuery] = useState("");
-  const router = useRouter();
-
-  const handleSearch = (query) => {
-    setSearchQuery(query);
-    if (query) {
-      router.push(`/search?q=${encodeURIComponent(query)}`);
-    }
-  };
-
   return (
-    <div className="min-h-screen bg-(--background) text-(--foreground) flex flex-col">
-      <main className="flex-grow py-12">
-        <section className="flex justify-center px-8 md:px-14 lg:px-20">
-        <div className="container max-w-7xl mx-auto space-y-12 px-4 lg:px-8">
-          {/* Hero */}
-          <div className="text-center space-y-4 ">
-            <h1 className="text-5xl font-bold text-(--primary)">
-              Terms & Conditions
-            </h1>
-            <p className="text-lg text-(--muted-foreground)">
-              Effective Date: <span className="font-medium">24th Dec 2025</span>
-            </p>
-          </div>
+    <main className="altf-home altf-terms">
+      <section className="terms-hero-banner">
+        <div className="terms-hero-overlay" aria-hidden="true" />
+        <div className="terms-hero-content">
+          <h1>Terms & Conditions</h1>
+          <nav aria-label="Breadcrumb" className="terms-breadcrumb">
+            <Link href="/">Home</Link>
+            <ChevronRight className="h-4 w-4" aria-hidden="true" />
+            <span>Terms & Conditions</span>
+          </nav>
+          <p>
+            These terms govern your access to and use of AltF Tools, microtools,
+            and related services.
+          </p>
+        </div>
+      </section>
 
-          {/* Intro */}
-          <Card className="p-8">
-            <p className="text-(--muted-foreground) leading-relaxed">
+      <section className="terms-section terms-overview-section">
+        <div className="terms-container">
+          <div className="terms-copy-block">
+            <div className="home-reference-badge terms-theme-badge">
+              <Handshake className="h-4 w-4" strokeWidth={2.35} />
+              Our Agreement
+            </div>
+            <h2>
+              Clear Rules For A{" "}
+              <span>Trusted Platform.</span>
+            </h2>
+            <p>
               Welcome to <strong>AltF Tools</strong>. These Terms & Conditions
               govern your access to and use of our website, microtools, and
               related services. By using the platform, you agree to these Terms.
             </p>
-          </Card>
+            <ul className="terms-inline-principles" aria-label="Terms principles">
+              {quickPrinciples.map((item) => (
+                <li key={item}>
+                  <CheckCircle2 className="h-4 w-4" strokeWidth={2.3} />
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
 
-          {/* Highlights */}
-          <div className="grid md:grid-cols-3 gap-6">
-            <Highlight
-              icon={Shield}
+          <div className="terms-highlight-grid" aria-label="Terms highlights">
+            <TermsHighlight
+              icon={ShieldCheck}
               title="Eligibility"
               text="Users must meet age and legal requirements."
             />
-            <Highlight
+            <TermsHighlight
               icon={FileText}
               title="Acceptable Use"
               text="Services must be used lawfully and responsibly."
             />
-            <Highlight
+            <TermsHighlight
               icon={Gavel}
               title="Legal Protection"
               text="Clear limits on warranties and liability."
             />
           </div>
-
-          {/* Terms Content */}
-          <Card className="p-8 space-y-8">
-            <Section title="1. Eligibility">
-              <ul className="list-disc pl-5 space-y-2">
-                <li>You are at least 13 years old</li>
-                <li>You have legal capacity to accept these Terms</li>
-                <li>You comply with applicable laws and regulations</li>
-              </ul>
-
-            </Section>
-
-
-            <Section title="2. Use of Services">
-              <p>You agree not to:</p>
-              <ul className="list-disc pl-5 space-y-2">
-                <li>Violate any laws or regulations</li>
-                <li>Infringe intellectual property rights</li>
-                <li>Disrupt or interfere with platform functionality</li>
-                <li>Attempt unauthorized access to systems</li>
-                <li>Upload malware, spam, or harmful content</li>
-              </ul>
-            </Section>
-
-
-            <Section title="3. Microtools Usage">
-              <p>
-                All microtools are provided on an “as-is” and “as-available”
-                basis. We do not guarantee accuracy, reliability, or suitability
-                for any purpose.
-              </p>
-              <p>Use of tools is entirely at your own risk.</p>
-              <p>
-               Tool outputs are generated automatically and may vary based on input,
-               system updates, or third-party dependencies.
-              </p>
-             <p>
-              Results should not be relied upon as professional, legal, financial, or
-              technical advice.
-             </p>
-
-            </Section>
-
-
-            <Section title="4. Intellectual Property">
-              <p>
-                All content, tools, designs, and software are owned by
-                AltF Tools or its licensors and protected by intellectual
-                property laws.
-              </p>
-              <p>
-                You may not copy, modify, distribute, or commercially exploit
-                any part of the Services without written permission.
-              </p>
-              <p>
-                All trademarks, logos, and brand elements displayed on the platform remain
-                the exclusive property of AltF Tools.
-              </p>
-
-            </Section>
-
-
-            <Section title="5. User-Generated Content">
-              <p>
-                By submitting content, you grant AltF Tools a non-exclusive,
-                royalty-free license to use and display it. We reserve the right
-                to remove content at our discretion.
-              </p>
-              <p>
-               You are solely responsible for ensuring that submitted content does not
-               violate any third-party rights or applicable laws.
-              </p>
-
-            </Section>
-
-
-            <Section title="6. Third-Party Services">
-              <p>
-                We do not control or endorse third-party websites or services
-                and are not responsible for their content or practices.
-              </p>
-              <p>
-                Accessing third-party services is done at your own discretion and risk.
-              </p>
-
-            </Section>
-
-
-            <Section title="7. Advertising & Affiliates">
-              <p>
-                The platform may display advertisements or affiliate links. We
-                may earn commissions at no additional cost to users.
-              </p>
-              <p>
-                Some links may be affiliate-based, meaning we may earn a commission without
-                additional cost to you.
-               </p>
-
-            </Section>
-
-
-            <Section title="8. Disclaimer of Warranties">
-              <p>
-                Services are provided “as-is” and “as-available” without
-                warranties of any kind, express or implied.
-              </p>
-              <p>
-               We make no guarantees regarding availability, accuracy, or uninterrupted
-               operation of the Services.
-              </p>
-
-            </Section>
-
-
-            <Section title="9. Limitation of Liability">
-              <p>
-                To the fullest extent permitted by law, AltF Tools shall not be
-                liable for any damages arising from use or inability to use the
-                Services.
-              </p>
-              <p>
-               This limitation applies even if we have been advised of the possibility of
-               such damages.
-              </p>
-
-            </Section>
-
-
-            <Section title="10. Indemnification">
-              <p>
-                You agree to indemnify and hold harmless AltF Tools from any
-                claims arising from your use of the Services or violation of
-                these Terms.
-              </p>
-              <p>
-               This obligation survives termination of these Terms.
-              </p>
-
-            </Section>
-
-
-            <Section title="11. Termination">
-              <p>
-                We may suspend or terminate access at any time without notice
-                for violations or harmful conduct.
-              </p>
-              <p>
-               Termination does not affect provisions that by nature should survive,
-               including intellectual property and liability clauses.
-              </p>
-
-            </Section>
-
-
-            <Section title="12. Governing Law">
-              <p>
-                These Terms are governed by the laws of
-                <strong> India</strong>.
-              </p>
-              <p>
-              Courts located in India shall have exclusive jurisdiction over disputes.
-              </p>
-
-            </Section>
-
-
-            <Section title="13. Changes to These Terms">
-              <p>
-                Continued use of the platform after updates constitutes
-                acceptance of the revised Terms.
-              </p>
-              <p>
-              Updated versions will be posted on this page with a revised effective date.
-             </p>
-
-            </Section>
-
-
-            <Section title="14. Contact">
-              <p>Email: <strong>altftool@gmail.com</strong></p>
-              <p>Website: <strong>www.altftool.com</strong></p>
-            </Section>
-          </Card>
         </div>
-        </section>
-      </main>
-    </div>
+      </section>
+
+      <section className="terms-section terms-policy-section">
+        <div className="terms-container terms-policy-document">
+          <div className="terms-policy-list">
+            {termsSections.map((section) => (
+              <TermsCard section={section} key={section.id} />
+            ))}
+          </div>
+        </div>
+      </section>
+    </main>
   );
 }
 
-/* Reusable blocks */
+function TermsHighlight({ icon: Icon, title, text }) {
+  return (
+    <article className="terms-highlight-card">
+      <span>
+        <Icon className="h-5 w-5" strokeWidth={2.25} />
+      </span>
+      <h3>{title}</h3>
+      <p>{text}</p>
+    </article>
+  );
+}
 
-const Highlight = ({ icon: Icon, title, text }) => (
-  <Card className="p-6 text-center space-y-4">
-    <div className="mx-auto w-12 h-12 rounded-xl flex items-center justify-center">
-      <Icon className="w-6 h-6 text-(--primary)" />
-    </div>
-    <h3 className="text-xl font-semibold">{title}</h3>
-    <p className="text-sm text-(--muted-foreground)">{text}</p>
-  </Card>
-);
+function TermsCard({ section }) {
+  return (
+    <article className="terms-policy-card" id={section.id}>
+      <h2>{`${Number(section.number)}. ${section.title}`}</h2>
 
-const Section = ({ title, children }) => (
-  <div className="space-y-3">
-    <h3 className="text-2xl font-semibold">{title}</h3>
-    <div className="text-(--muted-foreground) leading-relaxed space-y-2">
-      {children}
-    </div>
-  </div>
-);
+      <div className="terms-policy-card-body">
+        {section.paragraphs?.map((paragraph) => (
+          <p key={paragraph}>{paragraph}</p>
+        ))}
+
+        {section.list ? (
+          <ul>
+            {section.list.map((item) => (
+              <li key={item}>{item}</li>
+            ))}
+          </ul>
+        ) : null}
+      </div>
+    </article>
+  );
+}

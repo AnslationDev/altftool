@@ -35,14 +35,15 @@ const SettingsContent = ({ activeId, onOpenSidebar }) => {
   };
 
   return (
-    <div className="h-full overflow-y-auto bg-(--background) text-(--foreground)">
-      <div className="p-4 sm:p-8 max-w-5xl ">
+    <div className="support-settings-content h-full overflow-y-auto bg-(--background) text-(--foreground)">
+      <div className="support-settings-content-inner p-4 sm:p-8 max-w-5xl ">
 
         {/* Mobile Sidebar Toggle */}
         <div className="md:hidden my-5">
           <button
             onClick={onOpenSidebar}
             className="
+              support-settings-mobile-toggle
               inline-flex items-center gap-2 px-4 py-2.5
               bg-(--card)
               hover:bg-(--muted)
@@ -58,34 +59,34 @@ const SettingsContent = ({ activeId, onOpenSidebar }) => {
         </div>
 
         {/* Breadcrumb */}
-        <div className="text-xs font-medium tracking-widest text-(--muted-foreground) uppercase mb-4">
+        <div className="support-settings-breadcrumb text-xs font-medium tracking-widest text-(--muted-foreground) uppercase mb-4">
           Settings &gt; {setting.title}
         </div>
 
         {/* Heading */}
-        <h1 className="text-3xl font-bold text-(--foreground) mb-4">
+        <h1 className="support-settings-title text-3xl font-bold text-(--foreground) mb-4">
           {setting.heading}
         </h1>
 
         {/* Description */}
-        <p className="text-base text-(--muted-foreground) leading-relaxed mb-6">
+        <p className="support-settings-description text-base text-(--muted-foreground) leading-relaxed mb-6">
           {setting.description}
         </p>
 
         {/* Details */}
         {setting.details && (
           <>
-            <h2 className="text-xs font-semibold tracking-widest text-(--muted-foreground) uppercase mb-3">
+            <h2 className="support-settings-section-label text-xs font-semibold tracking-widest text-(--muted-foreground) uppercase mb-3">
               Details
             </h2>
 
-            <hr className="border-(--border) mb-4" />
+            <hr className="support-settings-rule border-(--border) mb-4" />
 
-            <ul className="space-y-2 mb-6">
+            <ul className="support-settings-detail-list space-y-2 mb-6">
               {setting.details.map((detail, i) => (
                 <li
                   key={i}
-                  className="flex items-start gap-2 text-sm text-(--muted-foreground)"
+                  className="support-settings-detail-item flex items-start gap-2 text-sm text-(--muted-foreground)"
                 >
                   <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-(--primary)" />
                   {detail}
@@ -119,7 +120,7 @@ const SettingsContent = ({ activeId, onOpenSidebar }) => {
         )} */}
 
          {setting.important && (
-          <div className="bg-amber-50 border border-amber-200 rounded-md p-4 flex items-start gap-3 mb-8">
+          <div className="support-settings-important bg-amber-50 border border-amber-200 rounded-md p-4 flex items-start gap-3 mb-8">
 
             <AlertCircle className="h-5 w-5 text-amber-600 shrink-0 mt-0.5" />
 
@@ -141,6 +142,7 @@ const SettingsContent = ({ activeId, onOpenSidebar }) => {
           <button
             onClick={handleRedirect}
             className="
+              support-settings-action
               inline-flex items-center gap-2 px-6 py-3
               bg-(--primary)
               text-(--primary-foreground)
@@ -161,6 +163,7 @@ const SettingsContent = ({ activeId, onOpenSidebar }) => {
         {setting.imageUrl && (
           <div
             className="
+              support-settings-image-card
               mb-8 rounded-lg overflow-hidden
               border border-(--border)
               bg-(--card)
@@ -168,7 +171,7 @@ const SettingsContent = ({ activeId, onOpenSidebar }) => {
             "
           >
             {!imageLoaded && (
-              <div className="w-full h-64 flex items-center justify-center">
+              <div className="support-settings-image-state w-full h-64 flex items-center justify-center">
                 <div className="animate-pulse text-center">
                   <div className="h-12 w-12 rounded-full bg-(--muted) mx-auto mb-2" />
                   <p className="text-sm text-(--muted-foreground)">
@@ -179,7 +182,7 @@ const SettingsContent = ({ activeId, onOpenSidebar }) => {
             )}
 
             {imageError && (
-              <div className="w-full h-64 flex items-center justify-center">
+              <div className="support-settings-image-state w-full h-64 flex items-center justify-center">
                 <div className="text-center text-(--muted-foreground)">
                   <AlertCircle className="h-12 w-12 mx-auto mb-2" />
                   Failed to load image
@@ -213,7 +216,7 @@ const SettingsContent = ({ activeId, onOpenSidebar }) => {
             />
 
             {imageLoaded && (
-              <div className="px-4 py-2 border-t border-(--border)">
+              <div className="support-settings-image-caption px-4 py-2 border-t border-(--border)">
                 <p className="text-xs text-(--muted-foreground)">
                   {setting.imageAlt}
                 </p>
@@ -224,11 +227,11 @@ const SettingsContent = ({ activeId, onOpenSidebar }) => {
 
         {/* After Image Section */}
         {setting.afterImageContent && (
-          <div className="mb-12">
+          <div className="support-settings-after mb-12">
 
-            <hr className="border-(--border) mb-6" />
+            <hr className="support-settings-rule border-(--border) mb-6" />
 
-            <h2 className="text-xl font-semibold mb-4">
+            <h2 className="support-settings-after-title text-xl font-semibold mb-4">
               {setting.afterImageContent.heading}
             </h2>
 

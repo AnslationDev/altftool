@@ -1514,6 +1514,19 @@
   color: var(--fn-muted);
 }
 
+.fn-themed-empty {
+  border-color: var(--border);
+  background: var(--card);
+  box-shadow: var(--anslation-ds-shadow-sm);
+}
+
+.fn-themed-button,
+.fn-themed-button:hover {
+  color: var(--primary-foreground) !important;
+  background: var(--primary);
+  box-shadow: var(--anslation-ds-shadow-sm);
+}
+
 /* ─── 26. DISABLED ───────────────────────────────────────────────── */
 .fn-disabled,
 .fn-disabled:hover {

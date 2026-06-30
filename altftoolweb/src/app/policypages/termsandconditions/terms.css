@@ -1,0 +1,320 @@
+.altf-terms {
+  --terms-max: 1220px;
+  --terms-section-title: clamp(1.35rem, 2.15vw, 1.65rem);
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at 10% 18rem, color-mix(in srgb, var(--primary) 10%, transparent), transparent 28rem),
+    radial-gradient(circle at 92% 52rem, color-mix(in srgb, var(--secondary) 12%, transparent), transparent 32rem),
+    var(--background);
+  color: var(--foreground);
+  font-family: var(--home-font-body);
+  overflow: hidden;
+}
+
+.altf-terms .terms-container {
+  width: min(calc(100% - 2rem), var(--terms-max));
+  margin-inline: auto;
+}
+
+.altf-terms .terms-hero-banner {
+  position: relative;
+  display: grid;
+  min-height: clamp(17.5rem, 25vw, 22rem);
+  place-items: center;
+  isolation: isolate;
+  overflow: hidden;
+  background-image:
+    linear-gradient(
+      105deg,
+      color-mix(in srgb, var(--footer-bg) 90%, transparent) 0%,
+      color-mix(in srgb, var(--footer-bg) 76%, var(--primary)) 48%,
+      color-mix(in srgb, var(--primary) 46%, transparent) 100%
+    ),
+    radial-gradient(circle at 82% 24%, color-mix(in srgb, var(--secondary) 28%, transparent), transparent 18rem),
+    url("/backgrounds/office.png");
+  background-position: center;
+  background-size: cover;
+}
+
+.altf-terms .terms-hero-banner::before {
+  content: "";
+  position: absolute;
+  inset: -18%;
+  z-index: -1;
+  background:
+    radial-gradient(circle at 28% 22%, color-mix(in srgb, var(--primary) 45%, transparent), transparent 23rem),
+    radial-gradient(circle at 70% 38%, color-mix(in srgb, var(--secondary) 32%, transparent), transparent 24rem);
+  filter: blur(18px);
+}
+
+.altf-terms .terms-hero-overlay {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--footer-bg) 20%, transparent),
+      color-mix(in srgb, var(--footer-bg) 76%, transparent)
+    ),
+    radial-gradient(circle at 50% 110%, color-mix(in srgb, var(--primary) 44%, transparent), transparent 22rem);
+}
+
+.altf-terms .terms-hero-content {
+  position: relative;
+  z-index: 1;
+  width: min(100% - 2rem, 57rem);
+  text-align: center;
+  color: var(--footer-text);
+}
+
+.altf-terms .terms-hero-content h1 {
+  margin-top: 0;
+  font-family: var(--home-font-display);
+  font-size: clamp(2.25rem, 4.4vw, 3.75rem);
+  font-weight: 760;
+  line-height: 1.04;
+  letter-spacing: 0;
+}
+
+.altf-terms .terms-breadcrumb {
+  margin-top: 1rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  color: color-mix(in srgb, var(--footer-text) 82%, transparent);
+  font-size: 0.88rem;
+  font-weight: 650;
+}
+
+.altf-terms .terms-breadcrumb a {
+  color: var(--footer-text);
+}
+
+.altf-terms .terms-breadcrumb span,
+.altf-terms .terms-hero-content p span {
+  color: var(--primary);
+}
+
+.altf-terms .terms-hero-content p {
+  max-width: 48rem;
+  margin: 1.05rem auto 0;
+  color: color-mix(in srgb, var(--footer-text) 86%, transparent);
+  font-size: clamp(0.98rem, 1.35vw, 1.1rem);
+  font-weight: 550;
+  line-height: 1.7;
+}
+
+.altf-terms .terms-section {
+  position: relative;
+  padding-block: clamp(4.2rem, 6vw, 6rem);
+}
+
+.altf-terms .terms-overview-section {
+  padding-bottom: clamp(3rem, 5vw, 4.5rem);
+}
+
+.altf-terms .terms-copy-block {
+  position: relative;
+  margin-inline: auto;
+  padding-left: clamp(1rem, 2vw, 1.35rem);
+}
+
+.altf-terms .terms-copy-block::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.15rem;
+  width: 0.22rem;
+  height: min(100%, 15rem);
+  border-radius: 999px;
+  background: linear-gradient(180deg, var(--primary), var(--secondary));
+  opacity: 0.9;
+}
+
+.altf-terms .terms-theme-badge {
+  width: fit-content;
+}
+
+.altf-terms .terms-copy-block h2 {
+  margin-top: 1rem;
+  color: var(--foreground);
+  font-family: var(--home-font-display);
+  font-size: var(--terms-section-title);
+  font-weight: 740;
+  line-height: 1.25;
+  letter-spacing: 0;
+  text-wrap: balance;
+}
+
+.altf-terms .terms-copy-block h2 span {
+  background: linear-gradient(90deg, var(--primary), var(--secondary));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.altf-terms .terms-copy-block p {
+  margin-top: 1rem;
+  color: var(--muted-foreground);
+  font-size: 1rem;
+  font-weight: 540;
+  line-height: 1.78;
+}
+
+.altf-terms .terms-copy-block strong {
+  color: color-mix(in srgb, var(--primary) 78%, var(--foreground));
+}
+
+.altf-terms .terms-inline-principles {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7rem;
+  margin-top: 1.35rem;
+  padding: 0;
+  list-style: none;
+}
+
+.altf-terms .terms-inline-principles li {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  border: 1px solid color-mix(in srgb, var(--primary) 18%, var(--border));
+  border-radius: 999px;
+  background: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--primary) 10%, var(--card)),
+    color-mix(in srgb, var(--secondary) 10%, var(--card))
+  );
+  color: color-mix(in srgb, var(--primary) 78%, var(--foreground));
+  font-size: 0.92rem;
+  font-weight: 670;
+  padding: 0.55rem 0.78rem;
+}
+
+.altf-terms .terms-inline-principles svg {
+  flex: 0 0 auto;
+  color: var(--primary);
+}
+
+.altf-terms .terms-highlight-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+  margin-top: clamp(1.6rem, 3vw, 2.25rem);
+}
+
+.altf-terms .terms-highlight-card {
+  border: 1px solid color-mix(in srgb, var(--primary) 14%, var(--border));
+  border-radius: 1rem;
+  background:
+    radial-gradient(circle at 20% 0%, color-mix(in srgb, var(--primary) 10%, transparent), transparent 7rem),
+    var(--card);
+  box-shadow: var(--anslation-ds-shadow-sm);
+  padding: 1rem;
+}
+
+.altf-terms .terms-highlight-card span {
+  display: grid;
+  width: 2.6rem;
+  height: 2.6rem;
+  place-items: center;
+  border-radius: 0.85rem;
+  background: linear-gradient(135deg, color-mix(in srgb, var(--primary) 14%, var(--card)), color-mix(in srgb, var(--secondary) 14%, var(--card)));
+  color: var(--primary);
+}
+
+.altf-terms .terms-highlight-card h3 {
+  margin-top: 0.9rem;
+  color: var(--foreground);
+  font-family: var(--home-font-display);
+  font-size: 1rem;
+  font-weight: 720;
+  line-height: 1.25;
+}
+
+.altf-terms .terms-highlight-card p {
+  margin-top: 0.45rem;
+  color: var(--muted-foreground);
+  font-size: 0.9rem;
+  font-weight: 520;
+  line-height: 1.6;
+}
+
+.altf-terms .terms-policy-section {
+  padding-top: 0;
+}
+
+.altf-terms .terms-policy-document {
+  max-width: var(--terms-max);
+}
+
+.altf-terms .terms-policy-list {
+  display: block;
+}
+
+.altf-terms .terms-policy-card {
+  position: relative;
+  scroll-margin-top: 6.5rem;
+  border-bottom: 1px solid color-mix(in srgb, var(--primary) 13%, var(--border));
+  padding: 0 0 clamp(1.45rem, 3vw, 2rem) clamp(1rem, 2vw, 1.35rem);
+  margin-bottom: clamp(1.45rem, 3vw, 2rem);
+}
+
+.altf-terms .terms-policy-card::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.1rem;
+  width: 0.22rem;
+  height: 2.25rem;
+  border-radius: 999px;
+  background: linear-gradient(180deg, var(--primary), var(--secondary));
+}
+
+.altf-terms .terms-policy-card h2 {
+  color: var(--foreground);
+  font-family: var(--home-font-display);
+  font-size: var(--terms-section-title);
+  font-weight: 760;
+  line-height: 1.25;
+}
+
+.altf-terms .terms-policy-card-body {
+  margin-top: 1rem;
+  color: var(--muted-foreground);
+  font-size: 0.96rem;
+  font-weight: 520;
+  line-height: 1.75;
+}
+
+.altf-terms .terms-policy-card-body p + p,
+.altf-terms .terms-policy-card-body ul + p,
+.altf-terms .terms-policy-card-body p + ul {
+  margin-top: 0.74rem;
+}
+
+.altf-terms .terms-policy-card-body ul {
+  display: block;
+  padding-left: 1.25rem;
+  list-style: disc;
+}
+
+.altf-terms .terms-policy-card-body li {
+  margin-top: 0.45rem;
+  padding-left: 0.1rem;
+}
+
+@media (max-width: 760px) {
+  .altf-terms .terms-container {
+    width: min(calc(100% - 1rem), var(--terms-max));
+  }
+
+  .altf-terms .terms-hero-banner {
+    min-height: 20rem;
+  }
+
+  .altf-terms .terms-highlight-grid {
+    grid-template-columns: 1fr;
+  }
+}

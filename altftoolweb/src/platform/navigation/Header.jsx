@@ -196,11 +196,7 @@ const Header = () => {
     return null;
   }
 
-  const usesLandingChrome =
-    pathname === "/" ||
-    pathname === "/tools" ||
-    pathname?.startsWith("/tools/") ||
-    pathname === "/extensions";
+  const usesLandingChrome = true;
   const isHomeDark = themeReady && resolvedTheme === "dark";
   const landingLogoSrc = isHomeDark
     ? "/assets/altf-header-logo-dark.png"
@@ -225,7 +221,7 @@ const Header = () => {
             >
               <ManagedImage
                 src={landingLogoSrc}
-                className="h-8 w-auto object-contain sm:h-9"
+                className={`h-8 w-auto object-contain sm:h-9 ${isHomeDark ? "brightness-110 contrast-125 drop-shadow-[0_0_14px_rgba(45,212,191,0.24)]" : ""}`}
                 alt="AltFTool"
               />
             </Link>
@@ -243,11 +239,11 @@ const Header = () => {
                 const hasOptions = Boolean(item.options?.length);
                 const homeNavItemClass = `relative flex h-10 appearance-none items-center gap-1.5 whitespace-nowrap rounded-full border-0 px-4 py-0 text-base font-medium leading-5 transition duration-200 [font-family:var(--font-ibm-plex-sans)] ${isActive
                     ? isHomeDark
-                      ? "bg-[rgba(20,184,166,0.12)] text-[#14B8A6] shadow-[0_0_24px_rgba(20,184,166,0.18)]"
-                      : "bg-[#F0FDFA] text-[#0D9488] shadow-[0_2px_8px_rgba(2,6,23,0.06)]"
+                      ? "text-[#14B8A6]"
+                      : "text-[#0D9488]"
                     : isHomeDark
-                      ? "text-[#94A3B8] hover:bg-[#1E293B] hover:text-[#F8FAFC] hover:shadow-[0_2px_8px_rgba(2,6,23,0.6)]"
-                      : "text-[#475569] hover:bg-[#F1F5F9] hover:text-[#0F172A] hover:shadow-[0_2px_8px_rgba(2,6,23,0.06)]"
+                      ? "text-[#94A3B8] hover:text-[#F8FAFC]"
+                      : "text-[#475569] hover:text-[#0F172A]"
                   }`;
                 const activeUnderlineClass = `absolute inset-x-4 bottom-1 h-0.5 origin-left rounded-full bg-[#14B8A6] transition-transform duration-200 ${isActive ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100"
                   }`;
@@ -295,16 +291,20 @@ const Header = () => {
                               key={option.label}
                               href={option.href}
                               {...routePreviewProps(option.href)}
-                              className={`block rounded-xl px-3 py-2.5 text-base font-medium transition duration-200 [font-family:var(--font-ibm-plex-sans)] ${isPublicRouteActive(pathname, option)
+                              className={`group/sub relative block rounded-xl px-3 py-2.5 text-base font-medium transition duration-200 [font-family:var(--font-ibm-plex-sans)] ${isPublicRouteActive(pathname, option)
                                   ? isHomeDark
-                                    ? "bg-[rgba(20,184,166,0.12)] text-[#14B8A6] shadow-[0_0_24px_rgba(20,184,166,0.14)]"
-                                    : "bg-[#F0FDFA] text-[#0D9488]"
+                                    ? "text-[#14B8A6]"
+                                    : "text-[#0D9488]"
                                   : isHomeDark
-                                    ? "text-[#94A3B8] hover:bg-[#1E293B] hover:text-[#F8FAFC]"
-                                    : "text-[#475569] hover:bg-[#F1F5F9] hover:text-[#0F172A]"
+                                    ? "text-[#94A3B8] hover:text-[#F8FAFC]"
+                                    : "text-[#475569] hover:text-[#0F172A]"
                                 }`}
                             >
                               {option.label}
+                              <span
+                                className={`absolute inset-x-3 bottom-1 h-0.5 origin-left rounded-full bg-[#14B8A6] transition-transform duration-200 ${isPublicRouteActive(pathname, option) ? "scale-x-100" : "scale-x-0 group-hover/sub:scale-x-100"
+                                  }`}
+                              />
                             </Link>
                           ))}
                         </div>
@@ -464,11 +464,11 @@ const Header = () => {
                     <summary
                       className={`flex cursor-pointer list-none items-center justify-between rounded-xl px-3 py-3 text-sm font-medium transition duration-200 [font-family:var(--font-ibm-plex-sans)] ${isCurrent
                           ? isHomeDark
-                            ? "bg-[rgba(20,184,166,0.12)] text-[#14B8A6] shadow-[0_0_24px_rgba(20,184,166,0.14)]"
-                            : "bg-[#F0FDFA] text-[#0D9488]"
+                            ? "text-[#14B8A6]"
+                            : "text-[#0D9488]"
                           : isHomeDark
-                            ? "text-[#94A3B8] hover:bg-[#1E293B] hover:text-[#F8FAFC]"
-                            : "text-[#475569] hover:bg-[#F1F5F9] hover:text-[#0F172A]"
+                            ? "text-[#94A3B8] hover:text-[#F8FAFC]"
+                            : "text-[#475569] hover:text-[#0F172A]"
                         }`}
                     >
                       <span className="flex items-center gap-2">
@@ -487,8 +487,8 @@ const Header = () => {
                             {...routePreviewProps(option.href)}
                             onClick={() => closeMobileMenu()}
                             className={`flex items-center gap-2 rounded-xl px-3 py-2.5 text-sm font-medium transition duration-200 [font-family:var(--font-ibm-plex-sans)] ${isHomeDark
-                                ? "text-[#94A3B8] hover:bg-[#1E293B] hover:text-[#F8FAFC]"
-                                : "text-[#475569] hover:bg-[#F1F5F9] hover:text-[#0F172A]"
+                                ? "text-[#94A3B8] hover:text-[#F8FAFC]"
+                                : "text-[#475569] hover:text-[#0F172A]"
                               }`}
                           >
                             <OptionIcon className="h-4 w-4" />
@@ -506,11 +506,11 @@ const Header = () => {
                     onClick={() => closeMobileMenu()}
                     className={`flex items-center gap-2 rounded-xl px-3 py-3 text-sm font-medium transition duration-200 [font-family:var(--font-ibm-plex-sans)] ${isCurrent
                         ? isHomeDark
-                          ? "bg-[rgba(20,184,166,0.12)] text-[#14B8A6] shadow-[0_0_24px_rgba(20,184,166,0.14)]"
-                          : "bg-[#F0FDFA] text-[#0D9488]"
+                          ? "text-[#14B8A6]"
+                          : "text-[#0D9488]"
                         : isHomeDark
-                          ? "text-[#94A3B8] hover:bg-[#1E293B] hover:text-[#F8FAFC]"
-                          : "text-[#475569] hover:bg-[#F1F5F9] hover:text-[#0F172A]"
+                          ? "text-[#94A3B8] hover:text-[#F8FAFC]"
+                          : "text-[#475569] hover:text-[#0F172A]"
                       }`}
                   >
                     <Icon className="h-4 w-4" />
@@ -598,8 +598,8 @@ const Header = () => {
                         type="button"
                         aria-haspopup="true"
                         className={`relative flex items-center gap-2 rounded-[var(--anslation-ds-radius)] px-2.5 py-2 font-[inherit] text-sm font-medium transition ${isCurrent
-                            ? "bg-(--primary) text-(--primary-foreground) shadow-[var(--anslation-ds-shadow-sm)]"
-                            : "text-(--muted-foreground) hover:bg-(--muted) hover:text-(--foreground)"
+                            ? "text-(--primary)"
+                            : "text-(--muted-foreground) hover:text-(--foreground)"
                           }`}
                       >
                         <Icon className="h-4 w-4" />
@@ -611,14 +611,15 @@ const Header = () => {
                         <div className="w-64 rounded-[var(--anslation-ds-radius)] border border-(--border) bg-(--card) p-1.5 shadow-[var(--anslation-ds-shadow-md)]">
                           {item.options?.map((option) => {
                             const OptionIcon = option.icon;
+                            const optionIsActive = isActive(option);
                             return (
                               <Link
                                 key={option.label}
                                 href={option.href}
                                 {...routePreviewProps(option.href)}
-                                className={`flex items-center gap-3 rounded-[6px] px-2.5 py-2 text-sm transition ${isActive(option)
-                                    ? "bg-(--muted) text-(--primary)"
-                                    : "text-(--muted-foreground) hover:bg-(--muted) hover:text-(--foreground)"
+                                className={`group/sub relative flex items-center gap-3 rounded-[6px] px-2.5 py-2 text-sm transition ${optionIsActive
+                                    ? "text-(--primary)"
+                                    : "text-(--muted-foreground) hover:text-(--foreground)"
                                   }`}
                               >
                                 <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-[6px] bg-(--muted) text-(--primary)">
@@ -627,6 +628,10 @@ const Header = () => {
                                 <span className="font-medium">
                                   {option.label}
                                 </span>
+                                <span
+                                  className={`absolute inset-x-2.5 bottom-0 h-0.5 origin-left rounded-full bg-(--primary) transition-transform duration-200 ${optionIsActive ? "scale-x-100" : "scale-x-0 group-hover/sub:scale-x-100"
+                                    }`}
+                                />
                               </Link>
                             );
                           })}
@@ -638,8 +643,8 @@ const Header = () => {
                       href={item.href}
                       {...routePreviewProps(item.href)}
                       className={`relative flex items-center gap-2 rounded-[var(--anslation-ds-radius)] px-2.5 py-2 font-[inherit] text-sm font-medium transition ${isCurrent
-                          ? "bg-(--primary) text-(--primary-foreground) shadow-[var(--anslation-ds-shadow-sm)]"
-                          : "text-(--muted-foreground) hover:bg-(--muted) hover:text-(--foreground)"
+                          ? "text-(--primary)"
+                          : "text-(--muted-foreground) hover:text-(--foreground)"
                         }`}
                     >
                       <Icon className="h-4 w-4" />
@@ -823,8 +828,8 @@ const Header = () => {
                       <details className="group">
                         <summary
                           className={`flex cursor-pointer list-none items-center justify-between rounded-[var(--anslation-ds-radius)] px-2.5 py-2.5 text-sm font-medium transition ${isCurrent
-                              ? "bg-(--muted) text-(--primary)"
-                              : "text-(--muted-foreground) hover:bg-(--muted) hover:text-(--foreground)"
+                              ? "text-(--primary)"
+                              : "text-(--muted-foreground) hover:text-(--foreground)"
                             }`}
                         >
                           <span className="flex items-center gap-2">
@@ -843,8 +848,8 @@ const Header = () => {
                                 {...routePreviewProps(option.href)}
                                 onClick={() => closeMobileMenu()}
                                 className={`flex items-center gap-2 rounded-[var(--anslation-ds-radius)] px-2.5 py-2 text-sm font-medium transition ${isActive(option)
-                                    ? "bg-(--muted) text-(--primary)"
-                                    : "text-(--muted-foreground) hover:bg-(--muted) hover:text-(--foreground)"
+                                    ? "text-(--primary)"
+                                    : "text-(--muted-foreground) hover:text-(--foreground)"
                                   }`}
                               >
                                 <OptionIcon className="h-4 w-4" />
@@ -860,8 +865,8 @@ const Header = () => {
                         {...routePreviewProps(item.href)}
                         onClick={() => closeMobileMenu()}
                         className={`flex items-center gap-2 rounded-[var(--anslation-ds-radius)] px-2.5 py-2.5 text-sm font-medium transition ${isCurrent
-                            ? "bg-(--muted) text-(--primary)"
-                            : "text-(--muted-foreground) hover:bg-(--muted) hover:text-(--foreground)"
+                            ? "text-(--primary)"
+                            : "text-(--muted-foreground) hover:text-(--foreground)"
                           }`}
                       >
                         <Icon className="h-4 w-4" />
