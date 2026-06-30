@@ -1,10 +1,14 @@
 import { SiteFooter } from "../components/SiteFooter";
 import { SiteHeader } from "../components/SiteHeader";
+import { createPageMetadata } from "@/platform/seo/generateMetadata";
 
-export const metadata = {
-  title: "Terms of Use | QuoteNest Pros",
-  description: "Terms for using QuoteNest Pros home-service quote pages.",
-};
+export async function generateMetadata() {
+  return createPageMetadata({
+    title: "Terms of Use | QuoteNest Pros",
+    description: "Terms for using QuoteNest Pros home-service quote pages.",
+    path: "/homeserv/terms-of-use",
+  });
+}
 
 export default function TermsOfUsePage() {
   return (

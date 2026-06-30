@@ -1,9 +1,13 @@
 import InfoPage from "@/app/tripfindbox/components/InfoPage";
+import { createPageMetadata } from "@/platform/seo/generateMetadata";
 
-export const metadata = {
-  title: "Privacy Policy | TripFindBox",
-  description: "Read how TripFindBox handles travel search information and user privacy.",
-};
+export async function generateMetadata() {
+  return createPageMetadata({
+    title: "Privacy Policy | TripFindBox",
+    description: "Read how TripFindBox handles travel search information and user privacy.",
+    path: "/tripfindbox/privacy-policy",
+  });
+}
 
 export default function PrivacyPolicyPage() {
   return (

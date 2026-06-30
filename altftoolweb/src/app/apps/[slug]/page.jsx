@@ -17,9 +17,10 @@ export async function generateMetadata({ params }) {
   const app = getAppBySlug(slug);
 
   if (!app) {
-    return {
+    return createPageMetadata({
       title: "App Not Found",
-    };
+      path: `/apps/${slug}`,
+    });
   }
 
   return createPageMetadata({

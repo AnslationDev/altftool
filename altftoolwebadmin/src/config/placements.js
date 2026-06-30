@@ -6,7 +6,8 @@
 const TECH_CATEGORIES = [
   "AI", "Lifestyle", "Creators", "Developer", "Startup",
   "Web", "Fitness", "Cybersecurity Tool", "EdTech", "Business",
-  "Job", "Marketing", "Content Creation", "No-Code", "Design", "Other",
+  "Job", "Marketing", "Content Creation", "No-Code", "Design",
+  "Tools", "Other",
 ];
 
 const ACADEMY_CATEGORIES = ["Govt & Competitive Exams",
@@ -239,7 +240,9 @@ export const PLACEMENTS = {
     label: "Blog List",
     description: "Injected inside blog list section.",
     layout: "blog_card",
-    categories: { type: "dynamic", collection: "categories" },
+    // `extra` categories are always shown even if absent from the Firestore
+    // `categories` collection (e.g. the editorial-only "Tools" category).
+    categories: { type: "dynamic", collection: "categories", extra: ["Tools"] },
     target: { type: "dynamic", collection: "blogs", field: "slug", label: "slug" },
     minSpec: { width: 1200, height: 800, ratio: 1200 / 800 },
   },
@@ -248,7 +251,7 @@ export const PLACEMENTS = {
     label: "Blog Detail",
     description: "Injected inside blog detail page.",
     layout: "blog_detail",
-    categories: { type: "dynamic", collection: "categories" },
+    categories: { type: "dynamic", collection: "categories", extra: ["Tools"] },
     target: { type: "dynamic", collection: "blogs", field: "slug", label: "slug" },
     minSpec: { width: 1200, height: 800, ratio: 1200 / 800 },
   },

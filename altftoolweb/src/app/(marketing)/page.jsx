@@ -7,6 +7,16 @@ import TestimonialsSection from "./components/TestimonialsSection";
 import TrendingSection from "./components/TrendingSection";
 import MobileAppsSection from "./components/MobileAppsSection";
 import "../styles/landing.css";
+import { createPageMetadata } from "@/platform/seo/generateMetadata";
+
+export async function generateMetadata() {
+  return createPageMetadata({
+    title: "AltFTool – Free Online Tools, Extensions & Web Apps",
+    description:
+      "AltFTool is your online tools hub with free tools, software, games, must-have Chrome extensions, and the best web tools to boost productivity and fun.",
+    path: "/",
+  });
+}
 
 export default function Page() {
   return (

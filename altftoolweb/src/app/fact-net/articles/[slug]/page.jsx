@@ -1,5 +1,6 @@
 import ArticleDetail from "../../pages/ArticleDetail";
 import { getArticleBySlug } from "../../data/factNetData";
+import { createPageMetadata } from "@/platform/seo/generateMetadata";
 
 export const dynamic = "force-dynamic";
 
@@ -8,28 +9,21 @@ export async function generateMetadata({ params }) {
   const article = getArticleBySlug(slug);
 
   if (!article) {
-    return {
+    return createPageMetadata({
       title: "Fact-Net topic not found",
-      robots: {
-        index: false,
-        follow: false,
-      },
-    };
+      path: `/fact-net/articles/${slug}`,
+      noindex: true,
+      follow: false,
+    });
   }
 
-  return {
+  return createPageMetadata({
     title: `${article.title} - Original Facts`,
     description: article.description.slice(0, 155),
-    alternates: {
-      canonical: article.href,
-    },
-    openGraph: {
-      title: article.title,
-      description: article.description.slice(0, 155),
-      type: "article",
-      images: article.image ? [{ url: article.image }] : [],
-    },
-  };
+    path: article.href || `/fact-net/articles/${slug}`,
+    type: "article",
+    image: article.image || undefined,
+  });
 }
 
 export default async function Page({ params }) {

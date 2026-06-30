@@ -529,6 +529,11 @@ export default function CreateAdModal({
         placements: [placementKey],
         categories,
         target: target || null,
+        // Write a complete record so the web normalizer never hides the ad:
+        // `devices` defaults to false on the web when absent, and `layout`
+        // mirrors the placement config used by the mock/sample ads.
+        layout: placement?.layout ?? null,
+        devices: { desktop: true, mobile: true },
         content: { bannerUrl, redirect: redirect.trim() },
         impressions: 0,
         clicks: 0,

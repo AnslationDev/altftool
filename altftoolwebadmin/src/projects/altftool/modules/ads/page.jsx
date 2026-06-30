@@ -57,19 +57,32 @@ export default function AdsAdmin() {
     if (categoryCfg.type === "dynamic") {
       setPlacementCategories(null);
 
+      // Categories guaranteed to be selectable even if missing from Firestore
+      // (e.g. the editorial-only "Tools" blog category).
+      const extra = Array.isArray(categoryCfg.extra) ? categoryCfg.extra : [];
+      const mergeExtra = (names) => {
+        const seen = new Set(names.map((n) => n.toLowerCase()));
+        const merged = [...names];
+        for (const e of extra) {
+          if (e && !seen.has(e.toLowerCase())) {
+            merged.push(e);
+            seen.add(e.toLowerCase());
+          }
+        }
+        return merged.sort((a, b) => a.localeCompare(b));
+      };
+
       let cancelled = false;
       getDocs(firestoreCollection(db, "projects", "altftool", categoryCfg.collection))
         .then((snap) => {
           if (cancelled) return;
-          const names = snap.docs
-            .map((d) => d.data().name)
-            .filter(Boolean)
-            .sort((a, b) => a.localeCompare(b));
-          setPlacementCategories(names);
+          const names = snap.docs.map((d) => d.data().name).filter(Boolean);
+          setPlacementCategories(mergeExtra(names));
         })
         .catch((err) => {
           console.error("[AdsAdmin] Failed to fetch dynamic categories:", err);
-          if (!cancelled) setPlacementCategories([]);
+          // Still expose the guaranteed extras so the placement stays usable.
+          if (!cancelled) setPlacementCategories(mergeExtra([]));
         });
 
       return () => { cancelled = true; };

@@ -7,6 +7,7 @@ import SeoRouteDealsGrid from "@/app/tripfindbox/components/SeoRouteDealsGrid";
 import { getTripFindBoxContactInfo, telHref } from "@/app/tripfindbox/lib/contactInfo";
 import { getSitemapPage, sitemapPages } from "@/app/tripfindbox/lib/sitemapPages";
 import { tfbPath } from "@/app/tripfindbox/lib/tfbLink";
+import { createPageMetadata } from "@/platform/seo/generateMetadata";
 import Link from "next/link";
 
 export const dynamic = "force-dynamic";
@@ -1240,10 +1241,11 @@ export async function generateMetadata({ params }) {
   const page = getSitemapPage(slug) ?? fallbackSitemapPage(slug);
   const title = page.title;
 
-  return {
+  return createPageMetadata({
     title: `${title} | TripFindBox`,
     description: `Search and compare TripFindBox options for ${title}.`,
-  };
+    path: `/tripfindbox/${slug}`,
+  });
 }
 
 export default async function SitemapRoutePage({ params }) {

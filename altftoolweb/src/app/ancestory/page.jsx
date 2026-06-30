@@ -1,15 +1,15 @@
-'use client'
+import PageView from "./PageView";
+import { createPageMetadata } from "@/platform/seo/generateMetadata";
 
-import React from 'react';
-import { AncestorHeader } from './components/AncestorHeader';
-import { AncestorHomePage } from './pages/AncestorHomePage';
-import './style/ancestory.css';
+export async function generateMetadata() {
+  return createPageMetadata({
+    title: "Ancestry – Discover Your Name's Meaning & Origin | AltFTool",
+    description:
+      "Explore the history, meaning, and origin of first and last names with the AltFTool ancestry tool and learn the story behind your name.",
+    path: "/ancestory",
+  });
+}
 
-export default function AncestoryPage() {
-  return (
-    <div className="ancestory-root min-h-screen bg-slate-50 dark:bg-slate-950">
-      <AncestorHeader />
-      <AncestorHomePage />
-    </div>
-  );
+export default function Page(props) {
+  return <PageView {...props} />;
 }

@@ -6,6 +6,7 @@ export {
   resolveSitemap,
   resolveRedirect,
   resolveContent,
+  resolveExtendedMeta,
   globToRegExp,
 } from "./resolver.js";
 
@@ -30,10 +31,16 @@ export {
 export {
   validateSeoConfig,
   normalizeSeoEntry,
+  normalizeOg,
+  normalizeTwitter,
+  normalizeVerification,
+  normalizeHreflang,
+  normalizeSchemaList,
   emptySeoConfig,
   SEO_RUNTIME_DOC_PATH,
   SEO_RUNTIME_COLLECTION,
   SEO_RUNTIME_DOC_ID,
   PAGE_TYPES,
   CHANGE_FREQS,
+  TWITTER_CARD_TYPES,
 } from "./schemas.js";

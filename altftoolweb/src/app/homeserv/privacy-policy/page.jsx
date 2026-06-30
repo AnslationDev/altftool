@@ -1,10 +1,14 @@
 import { SiteFooter } from "../components/SiteFooter";
 import { SiteHeader } from "../components/SiteHeader";
+import { createPageMetadata } from "@/platform/seo/generateMetadata";
 
-export const metadata = {
-  title: "Privacy Policy | QuoteNest Pros",
-  description: "Privacy practices for QuoteNest Pros home-service quote requests.",
-};
+export async function generateMetadata() {
+  return createPageMetadata({
+    title: "Privacy Policy | QuoteNest Pros",
+    description: "Privacy practices for QuoteNest Pros home-service quote requests.",
+    path: "/homeserv/privacy-policy",
+  });
+}
 
 export default function PrivacyPolicyPage() {
   return (

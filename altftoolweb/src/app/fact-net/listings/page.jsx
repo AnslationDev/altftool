@@ -1,4 +1,5 @@
 import Listings from "../pages/Listings";
+import { createPageMetadata } from "@/platform/seo/generateMetadata";
 
 export const dynamic = "force-dynamic";
 
@@ -7,13 +8,11 @@ export async function generateMetadata({ searchParams }) {
   const query = params?.q || "";
   const title = query ? `Fact Hub results for ${query}` : "All Fact Hub Topics";
 
-  return {
+  return createPageMetadata({
     title,
     description: "Browse the complete original Fact Hub catalog with category, count, and title filters.",
-    alternates: {
-      canonical: "/fact-net/listings",
-    },
-  };
+    path: "/fact-net/listings",
+  });
 }
 
 export default async function Page({ searchParams }) {
