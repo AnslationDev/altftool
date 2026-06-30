@@ -19,7 +19,7 @@ const ACADEMY_CATEGORIES = ["Govt & Competitive Exams",
 // All tool slugs — mirrors the keys in toolRuntimeMap.
 // Used as static target options for tool_detail_* placements so an ad
 // can be pinned to a specific tool's detail page.
-const TOOL_SLUGS = [
+export const TOOL_SLUGS = [
   "age-calculator",
   "age-gender-detector",
   "ai-domain-generator",

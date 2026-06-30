@@ -409,9 +409,18 @@ export function validateSeoConfig(input) {
   }
 
   if (isPlainObject(input.pages)) {
-    for (const [path, entry] of Object.entries(input.pages)) {
+    for (const [rawPath, entry] of Object.entries(input.pages)) {
+      // Be forgiving: if an admin pastes a full URL, store its path instead.
+      let path = rawPath;
+      if (/^https?:\/\//i.test(path)) {
+        try {
+          path = new URL(path).pathname || "/";
+        } catch {
+          /* fall through to the validation below */
+        }
+      }
       if (!path.startsWith("/")) {
-        errors.push(`Page override key "${path}" must start with "/".`);
+        errors.push(`Page override key "${rawPath}" must start with "/" (e.g. "/blogs/your-slug").`);
         continue;
       }
       const norm = normalizeSeoEntry(entry);
