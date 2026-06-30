@@ -45,7 +45,9 @@ export default function Page() {
         ]}
       />
       <ExtensionClient />
-      <RouteDiscoveryBand {...extensionsRouteHub} />
+      <div className="extensions-route-band">
+        <RouteDiscoveryBand {...extensionsRouteHub} />
+      </div>
     </>
   );
 }
