@@ -11,6 +11,7 @@ import {
   Share2,
   Braces,
   Languages,
+  Code2,
   Plus,
   X,
   AlertCircle,
@@ -42,6 +43,7 @@ const TABS = [
   { key: "social", label: "Social", icon: Share2 },
   { key: "schema", label: "Structured Data", icon: Braces },
   { key: "hreflang", label: "Hreflang", icon: Languages },
+  { key: "code", label: "Custom Code", icon: Code2 },
 ];
 
 export default function PageEditor({ config, path, form, onChange, onSave, onDelete, saving, message, isError }) {
@@ -55,6 +57,7 @@ export default function PageEditor({ config, path, form, onChange, onSave, onDel
   const setSitemap = (patch) => onChange({ ...form, sitemap: { ...form.sitemap, ...patch } });
   const setOg = (patch) => onChange({ ...form, og: { ...form.og, ...patch } });
   const setTw = (patch) => onChange({ ...form, twitter: { ...form.twitter, ...patch } });
+  const setCode = (patch) => onChange({ ...form, code: { ...form.code, ...patch } });
 
   const preview = useMemo(() => effectivePreview(config, path, form), [config, path, form]);
 
@@ -272,6 +275,21 @@ export default function PageEditor({ config, path, form, onChange, onSave, onDel
               <button type="button" onClick={addHreflang} className={BTN_SECONDARY}>
                 <Plus className="h-4 w-4" /> Add hreflang
               </button>
+            </div>
+          )}
+
+          {tab === "code" && (
+            <div className="space-y-4">
+              <Banner tone="warning">Page-specific raw code — injected only on this URL, in addition to global code. Scripts run on the page. Only paste trusted code.</Banner>
+              <Field label="Head code" hint="Loaded early (analytics, page-specific pixel, <style>).">
+                <TextArea value={form.code?.head} onChange={(v) => setCode({ head: v })} rows={5} mono maxLength={50000} placeholder="<!-- injected into <head> for this page -->" />
+              </Field>
+              <Field label="Body start code" hint="Injected at the top of <body> for this page.">
+                <TextArea value={form.code?.bodyStart} onChange={(v) => setCode({ bodyStart: v })} rows={4} mono maxLength={50000} placeholder="<!-- injected after <body> opens -->" />
+              </Field>
+              <Field label="Body end code" hint="Injected before </body> (widgets, deferred tracking).">
+                <TextArea value={form.code?.bodyEnd} onChange={(v) => setCode({ bodyEnd: v })} rows={4} mono maxLength={50000} placeholder="<!-- injected at the end of <body> -->" />
+              </Field>
             </div>
           )}
         </div>

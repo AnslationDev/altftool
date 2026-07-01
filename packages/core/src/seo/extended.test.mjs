@@ -11,8 +11,9 @@ import {
   normalizeVerification,
   normalizeHreflang,
   normalizeSchemaList,
+  normalizeCodeBlock,
 } from "./schemas.js";
-import { resolveExtendedMeta } from "./resolver.js";
+import { resolveExtendedMeta, resolveInjectedCode } from "./resolver.js";
 
 test("normalizeVerification keeps known providers, drops blanks", () => {
   const v = normalizeVerification({
@@ -131,6 +132,30 @@ test("resolveExtendedMeta merges global defaults under per-page overrides", () =
   assert.equal(meta.favicon, "/favicon.ico");
   assert.equal(meta.hreflang.length, 1);
   assert.equal(meta.jsonLd.length, 1);
+});
+
+test("normalizeCodeBlock keeps non-empty raw code, drops blanks", () => {
+  assert.deepEqual(
+    normalizeCodeBlock({ head: "<script>a()</script>", bodyStart: "  ", bodyEnd: "<!-- x -->" }),
+    { head: "<script>a()</script>", bodyEnd: "<!-- x -->" },
+  );
+  assert.equal(normalizeCodeBlock({ head: "" }), undefined);
+});
+
+test("resolveInjectedCode returns global + per-page blocks, inert when disabled", () => {
+  const { value } = validateSeoConfig({
+    enabled: true,
+    global: { code: { head: "<script>gtm()</script>", bodyEnd: "<!-- chat -->" } },
+    pages: { "/deal": { code: { bodyStart: "<script>pixel()</script>" } } },
+  });
+  const r = resolveInjectedCode(value, "/deal");
+  assert.equal(r.global.head, "<script>gtm()</script>");
+  assert.equal(r.global.bodyEnd, "<!-- chat -->");
+  assert.equal(r.page.bodyStart, "<script>pixel()</script>");
+  assert.equal(r.page.head, undefined);
+
+  const off = resolveInjectedCode({ ...value, enabled: false }, "/deal");
+  assert.deepEqual(off, { global: {}, page: {} });
 });
 
 test("resolveExtendedMeta is inert when disabled", () => {

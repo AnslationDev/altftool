@@ -258,6 +258,27 @@ export function normalizeContent(content) {
   return Object.keys(out).length ? out : undefined;
 }
 
+/**
+ * Normalize a custom-code block: raw HTML/script strings injected into the
+ * document head, start of body, and end of body. Admin-authored (trusted),
+ * so we keep the raw markup but cap the size to avoid runaway documents.
+ */
+export function normalizeCodeBlock(code) {
+  if (!isPlainObject(code)) return undefined;
+  const clip = (v) => {
+    if (v === undefined || v === null) return undefined;
+    const s = String(v);
+    if (!s.trim()) return undefined;
+    return s.length > 50000 ? s.slice(0, 50000) : s;
+  };
+  const out = dropUndefined({
+    head: clip(code.head),
+    bodyStart: clip(code.bodyStart ?? code.bodyOpen),
+    bodyEnd: clip(code.bodyEnd ?? code.footer),
+  });
+  return Object.keys(out).length ? out : undefined;
+}
+
 /** Normalize a per-page / per-type / brand override into the canonical shape. */
 export function normalizeSeoEntry(entry) {
   if (!isPlainObject(entry)) return {};
@@ -278,6 +299,7 @@ export function normalizeSeoEntry(entry) {
     twitter: normalizeTwitter(entry.twitter),
     hreflang: normalizeHreflang(entry.hreflang),
     schema: normalizeSchemaList(entry.schema ?? entry.jsonLd ?? entry.structuredData),
+    code: normalizeCodeBlock(entry.code),
   });
 }
 
@@ -365,6 +387,7 @@ export function validateSeoConfig(input) {
     og: normalizeOg(input?.global?.og),
     twitter: normalizeTwitter(input?.global?.twitter),
     verification: normalizeVerification(input?.global?.verification),
+    code: normalizeCodeBlock(input?.global?.code),
   });
 
   if (isPlainObject(input.brands)) {
