@@ -180,13 +180,13 @@ export default function ExtensionsPage() {
 
         {/* TOP CATEGORIES */}
         <div ref={categorySectionRef} className="section extensions-category-section">
-          <div className="extensions-category-grid grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 ">
+          <div className="extensions-category-grid flex snap-x snap-mandatory gap-3 overflow-x-auto pb-2 md:grid md:grid-cols-3 md:gap-4 md:overflow-visible md:pb-0 lg:grid-cols-5">
             {topCategories.map((cat) => (
               <button
                 type="button"
                 key={cat.label}
                 onClick={() => handleCategorySelect(cat.realCat)}
-                className={`extensions-category-card flex h-[50px] items-center gap-3 rounded-[8px] border px-3 text-left transition sm:h-[56px] sm:px-4 ${
+                className={`extensions-category-card flex h-[50px] min-w-[220px] shrink-0 snap-start items-center gap-3 rounded-[8px] border px-3 text-left transition sm:h-[56px] sm:px-4 md:min-w-0 md:shrink ${
                   selectedCategory === cat.realCat
                     ? "extensions-category-card-active border-[var(--primary)] bg-[var(--primary)]/10 text-[var(--primary)]"
                     : "border-[var(--border)] bg-[var(--card)]"

@@ -156,7 +156,7 @@ export const apps = [
       "Anternet gives users a simple Android toolkit for internet-focused actions, useful shortcuts, connection checks, and everyday network workflows in a lightweight interface.",
     category: "Tools",
     version: "1.0.0",
-    apkSize: "Coming Soon",
+    apkSize: "53 MB",
     androidRequired: "Android 6.0+",
     downloads: "New",
     rating: "4.5",

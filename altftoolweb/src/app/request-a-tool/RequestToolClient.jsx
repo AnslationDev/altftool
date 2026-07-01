@@ -10,6 +10,7 @@ import {
   MessageSquareText,
   Send,
 } from "lucide-react";
+import "./request-tool.css";
 
 const CONTACT_EMAIL = "altftool@gmail.com";
 
@@ -84,69 +85,67 @@ export default function RequestToolClient() {
   };
 
   return (
-    <main className="relative overflow-hidden bg-(--background) text-(--foreground)">
-      <div className="pointer-events-none absolute inset-x-0 top-0 h-80 bg-[linear-gradient(180deg,color-mix(in_srgb,var(--primary)_12%,transparent),color-mix(in_srgb,var(--secondary)_8%,transparent)_58%,transparent)]" />
-      <section className="section relative pb-12 pt-8 sm:pb-16 sm:pt-10 lg:pb-20 lg:pt-12">
-        <div className="mx-auto max-w-3xl text-center">
-          <h1 className="text-balance text-4xl font-extrabold leading-tight tracking-normal text-(--foreground) sm:text-5xl">
-            Request a tool
+    <main className="request-tool-page">
+      <section className="section request-tool-section">
+        <div className="request-tool-hero">
+          <h1>
+            Request a <span>tool</span>
           </h1>
-          <p className="mx-auto mt-4 max-w-2xl text-sm leading-7 text-(--muted-foreground) sm:text-base">
+          <p>
             Tell us what utility, converter, calculator, generator, or workflow you want added to AltFTool. Clear requests help us plan the tools people need most.
           </p>
         </div>
 
-        <div className="mx-auto mt-7 max-w-6xl rounded-[var(--anslation-ds-radius-xl)] border border-(--border) bg-(--card) p-3 shadow-[var(--anslation-ds-shadow-lg)] sm:mt-8 sm:p-4">
-          <div className="grid gap-5 lg:grid-cols-[0.88fr_1.62fr]">
-            <aside className="relative overflow-hidden rounded-[var(--anslation-ds-radius-lg)] bg-[linear-gradient(145deg,var(--primary),var(--primary-active))] p-6 text-(--primary-foreground) sm:p-8">
-              <div className="pointer-events-none absolute inset-x-0 bottom-0 h-32 bg-[linear-gradient(0deg,color-mix(in_srgb,var(--secondary)_22%,transparent),transparent)]" />
-              <div className="relative">
-              <h2 className="text-2xl font-bold tracking-normal">Tool request information</h2>
-              <p className="mt-3 text-sm leading-6 opacity-85">
+        <div className="request-tool-shell">
+          <div className="request-tool-grid">
+            <aside className="request-tool-info-card">
+              <div className="request-tool-info-inner">
+              <h2>Tool request information</h2>
+              <p>
                 The more specific your request is, the easier it is to evaluate and plan.
               </p>
 
-              <div className="mt-8 space-y-5">
-                <div className="flex gap-3">
-                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-[var(--anslation-ds-radius)] bg-(--primary-foreground)/15">
+              <div className="request-tool-info-list">
+                <div className="request-tool-info-row">
+                  <span className="request-tool-info-icon">
                     <Mail className="h-5 w-5" />
                   </span>
                   <span>
-                    <span className="block text-sm font-bold">Request inbox</span>
-                    <span className="mt-1 block break-all text-sm opacity-85">{CONTACT_EMAIL}</span>
+                    <span className="request-tool-info-title">Request inbox</span>
+                    <span className="request-tool-info-text break-all">{CONTACT_EMAIL}</span>
                   </span>
                 </div>
 
-                <div className="flex gap-3">
-                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-[var(--anslation-ds-radius)] bg-(--primary-foreground)/15">
+                <div className="request-tool-info-row">
+                  <span className="request-tool-info-icon">
                     <Clock3 className="h-5 w-5" />
                   </span>
                   <span>
-                    <span className="block text-sm font-bold">Planning review</span>
-                    <span className="mt-1 block text-sm opacity-85">Tool ideas are reviewed during product planning.</span>
+                    <span className="request-tool-info-title">Planning review</span>
+                    <span className="request-tool-info-text">Tool ideas are reviewed during product planning.</span>
                   </span>
                 </div>
 
-                <div className="flex gap-3">
-                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-[var(--anslation-ds-radius)] bg-(--primary-foreground)/15">
+                <div className="request-tool-info-row">
+                  <span className="request-tool-info-icon">
                     <MessageSquareText className="h-5 w-5" />
                   </span>
                   <span>
-                    <span className="block text-sm font-bold">Helpful details</span>
-                    <span className="mt-1 block text-sm opacity-85">Include inputs, outputs, examples, and the problem it solves.</span>
+                    <span className="request-tool-info-title">Helpful details</span>
+                    <span className="request-tool-info-text">Include inputs, outputs, examples, and the problem it solves.</span>
                   </span>
                 </div>
               </div>
 
-              <div className="mt-8 space-y-4 border-t border-(--primary-foreground)/20 pt-6">
+              <div className="request-tool-guide-list">
                 {requestGuides.map(({ title, description, icon: Icon }) => (
-                  <div key={title} className="flex gap-3">
-                    <span className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-[var(--anslation-ds-radius-sm)] bg-(--primary-foreground)/15">
+                  <div key={title} className="request-tool-guide-row">
+                    <span>
                       <Icon className="h-4 w-4" />
                     </span>
-                    <span>
-                      <span className="block text-sm font-bold">{title}</span>
-                      <span className="mt-1 block text-xs leading-5 opacity-80">{description}</span>
+                    <span className="min-w-0">
+                      <span className="request-tool-info-title">{title}</span>
+                      <span className="request-tool-guide-text">{description}</span>
                     </span>
                   </div>
                 ))}
@@ -157,57 +156,57 @@ export default function RequestToolClient() {
             <form
               id="request-tool-form"
               onSubmit={handleSubmit}
-              className="p-2 sm:p-5 lg:p-7"
+              className="request-tool-form"
             >
-              <div className="mb-7">
-                <h2 className="text-2xl font-bold tracking-normal text-(--foreground)">Tell us what to build</h2>
-                <p className="mt-2 text-sm leading-6 text-(--muted-foreground)">
+              <div className="request-tool-form-heading">
+                <h2>Tell us what to build</h2>
+                <p>
                   We use these details to understand the workflow, audience, and priority.
                 </p>
               </div>
 
-              <div className="grid gap-x-8 gap-y-6 sm:grid-cols-2">
+              <div className="request-tool-fields">
                 <label className="block">
-                  <span className="text-xs font-semibold text-(--muted-foreground)">Your name</span>
+                  <span>Your name</span>
                   <input
                     type="text"
                     value={form.name}
                     onChange={updateField("name")}
                     placeholder="Your name"
-                    className="mt-2 h-11 w-full border-0 border-b border-(--border) bg-transparent px-0 text-sm font-semibold text-(--foreground) outline-none transition placeholder:text-(--muted-foreground) focus:border-(--primary) focus:ring-0"
+                    className="request-tool-input"
                   />
                 </label>
 
                 <label className="block">
-                  <span className="text-xs font-semibold text-(--muted-foreground)">Your email</span>
+                  <span>Your email</span>
                   <input
                     type="email"
                     value={form.email}
                     onChange={updateField("email")}
                     placeholder="you@example.com"
                     required
-                    className="mt-2 h-11 w-full border-0 border-b border-(--border) bg-transparent px-0 text-sm font-semibold text-(--foreground) outline-none transition placeholder:text-(--muted-foreground) focus:border-(--primary) focus:ring-0"
+                    className="request-tool-input"
                   />
                 </label>
 
                 <label className="block">
-                  <span className="text-xs font-semibold text-(--muted-foreground)">Tool name</span>
+                  <span>Tool name</span>
                   <input
                     type="text"
                     value={form.toolName}
                     onChange={updateField("toolName")}
                     placeholder="Example: Invoice splitter"
                     required
-                    className="mt-2 h-11 w-full border-0 border-b border-(--border) bg-transparent px-0 text-sm font-semibold text-(--foreground) outline-none transition placeholder:text-(--muted-foreground) focus:border-(--primary) focus:ring-0"
+                    className="request-tool-input"
                   />
                 </label>
 
                 <label className="block">
-                  <span className="text-xs font-semibold text-(--muted-foreground)">Request type</span>
+                  <span>Request type</span>
                   <select
                     value={form.category}
                     onChange={updateField("category")}
-                    className="mt-2 h-11 w-full border-0 border-b border-(--border) bg-transparent px-0 text-sm font-semibold text-(--foreground) outline-none transition focus:border-(--primary) focus:ring-0"
+                    className="request-tool-input"
                   >
                     {requestTypes.map((type) => (
                       <option key={type} value={type}>
@@ -218,46 +217,46 @@ export default function RequestToolClient() {
                 </label>
 
                 <label className="block sm:col-span-2">
-                  <span className="text-xs font-semibold text-(--muted-foreground)">Who should this help?</span>
+                  <span>Who should this help?</span>
                   <input
                     type="text"
                     value={form.audience}
                     onChange={updateField("audience")}
                     placeholder="Creators, students, developers, marketers..."
-                    className="mt-2 h-11 w-full border-0 border-b border-(--border) bg-transparent px-0 text-sm font-semibold text-(--foreground) outline-none transition placeholder:text-(--muted-foreground) focus:border-(--primary) focus:ring-0"
+                    className="request-tool-input"
                   />
                 </label>
 
                 <label className="block sm:col-span-2">
-                  <span className="text-xs font-semibold text-(--primary)">Tool request</span>
+                  <span>Tool request</span>
                   <textarea
                     value={form.details}
                     onChange={updateField("details")}
                     placeholder="Describe the tool you want us to add"
                     required
                     rows={5}
-                    className="mt-2 w-full resize-y border-0 border-b border-(--primary) bg-transparent px-0 py-3 text-sm font-semibold leading-6 text-(--foreground) outline-none transition placeholder:text-(--muted-foreground) focus:border-(--primary-active) focus:ring-0"
+                    className="request-tool-textarea"
                   />
                 </label>
               </div>
 
-              <div className="mt-7 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+              <div className="request-tool-actions">
                 <button
                   type="submit"
                   disabled={!isReady}
-                  className="inline-flex h-10 w-fit items-center justify-center gap-2 rounded-[var(--anslation-ds-radius)] bg-(--primary) px-5 text-sm font-bold text-(--primary-foreground) shadow-[var(--anslation-ds-shadow-sm)] transition hover:bg-(--primary-active) focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-(--primary) disabled:cursor-not-allowed disabled:opacity-60"
+                  className="request-tool-submit"
                 >
                   <Send className="h-4 w-4" />
                   Send request
                 </button>
 
-                <p className="text-xs leading-5 text-(--muted-foreground)">
-                  Opens a prefilled email to <span className="font-semibold text-(--foreground)">{CONTACT_EMAIL}</span>.
+                <p>
+                  Opens a prefilled email to <span>{CONTACT_EMAIL}</span>.
                 </p>
               </div>
 
               {sent ? (
-                <div className="mt-4 rounded-[var(--anslation-ds-radius)] border border-(--border) bg-(--muted) p-3 text-sm font-semibold text-(--foreground)">
+                <div className="request-tool-success">
                   Your email app should open with the request details filled in.
                 </div>
               ) : null}

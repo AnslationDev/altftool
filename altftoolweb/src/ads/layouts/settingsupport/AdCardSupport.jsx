@@ -27,9 +27,9 @@ export default function AdCard({ ad }) {
       {/* Sponsored Tag */}
       <span
         className="
+          support-setting-ad-sponsored
           absolute top-2 right-2
           text-[10px] font-medium
-          bg-black/70 text-white
           px-2 py-0.5 rounded
           backdrop-blur
         "

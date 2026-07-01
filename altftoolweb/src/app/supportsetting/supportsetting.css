@@ -1,16 +1,25 @@
 .support-setting-page {
-  --support-primary: #14B8A6;
-  --support-secondary: #38BDF8;
+  --support-surface: var(--card);
+  --support-surface-soft: var(--muted);
+  --support-text: var(--foreground);
+  --support-muted: var(--muted-foreground);
+  --support-border: var(--border);
+  --support-primary: var(--primary);
+  --support-secondary: var(--secondary);
+  --support-primary-soft: color-mix(in srgb, var(--support-primary) 13%, var(--support-surface));
+  --support-secondary-soft: color-mix(in srgb, var(--support-secondary) 12%, var(--support-surface));
   --support-cta-gradient: linear-gradient(135deg, var(--support-primary), var(--support-secondary));
-  --support-cta-gradient-hover: linear-gradient(135deg, color-mix(in srgb, var(--support-primary) 88%, #0f766e), color-mix(in srgb, var(--support-secondary) 92%, #0ea5e9));
-  --support-cta-shadow: 0 18px 34px rgba(20, 184, 166, 0.28);
-  --support-cta-shadow-hover: 0 22px 42px rgba(20, 184, 166, 0.32);
+  --support-cta-gradient-hover: linear-gradient(135deg, color-mix(in srgb, var(--support-primary) 88%, var(--foreground)), color-mix(in srgb, var(--support-secondary) 92%, var(--foreground)));
+  --support-cta-shadow: 0 18px 34px color-mix(in srgb, var(--support-primary) 24%, transparent);
+  --support-cta-shadow-hover: 0 22px 42px color-mix(in srgb, var(--support-primary) 30%, transparent);
   min-height: 100vh;
   background:
-    radial-gradient(circle at 8% 10rem, color-mix(in srgb, var(--support-primary) 6%, transparent), transparent 24rem),
-    radial-gradient(circle at 95% 18rem, color-mix(in srgb, var(--support-secondary) 5%, transparent), transparent 28rem),
+    radial-gradient(circle at 73% 6%, color-mix(in srgb, var(--support-secondary) 12%, transparent), transparent 36rem),
+    radial-gradient(circle at 42% 10%, color-mix(in srgb, var(--support-primary) 7%, transparent), transparent 30rem),
+    radial-gradient(circle at 12% 0%, color-mix(in srgb, var(--support-primary) 10%, transparent), transparent 28rem),
+    linear-gradient(180deg, color-mix(in srgb, var(--support-surface) 70%, transparent) 0%, color-mix(in srgb, var(--support-primary-soft) 28%, transparent) 26rem, transparent 54rem),
     var(--background);
-  color: var(--foreground);
+  color: var(--support-text);
 }
 
 .support-setting-shell {
@@ -26,17 +35,17 @@
 }
 
 .support-settings-sidebar {
-  border: 1px solid color-mix(in srgb, var(--support-primary) 10%, var(--border));
+  border: 1px solid color-mix(in srgb, var(--support-primary) 14%, var(--support-border));
   border-radius: var(--anslation-ds-radius-lg);
   background:
-    linear-gradient(180deg, color-mix(in srgb, var(--support-primary) 4%, var(--card)), var(--card));
+    linear-gradient(180deg, color-mix(in srgb, var(--support-primary) 5%, var(--support-surface)), var(--support-surface));
   box-shadow: var(--anslation-ds-shadow-sm);
 }
 
 .support-settings-sidebar-header {
-  border-color: color-mix(in srgb, var(--support-primary) 10%, var(--border));
+  border-color: color-mix(in srgb, var(--support-primary) 14%, var(--support-border));
   background:
-    linear-gradient(135deg, color-mix(in srgb, var(--support-primary) 7%, var(--card)), color-mix(in srgb, var(--support-secondary) 4%, var(--card)));
+    linear-gradient(135deg, color-mix(in srgb, var(--support-primary) 8%, var(--support-surface)), color-mix(in srgb, var(--support-secondary) 5%, var(--support-surface)));
   backdrop-filter: blur(16px);
 }
 
@@ -46,7 +55,7 @@
 }
 
 .support-settings-close {
-  border: 1px solid color-mix(in srgb, var(--support-primary) 12%, var(--border));
+  border: 1px solid color-mix(in srgb, var(--support-primary) 12%, var(--support-border));
 }
 
 .support-settings-nav {
@@ -82,9 +91,9 @@
 .support-settings-nav-item:hover,
 .support-settings-nav-item:focus-visible {
   background:
-    linear-gradient(135deg, color-mix(in srgb, var(--support-primary) 7%, var(--card)), color-mix(in srgb, var(--support-secondary) 4%, var(--card)));
+    linear-gradient(135deg, color-mix(in srgb, var(--support-primary) 8%, var(--support-surface)), color-mix(in srgb, var(--support-secondary) 5%, var(--support-surface)));
   color: var(--support-primary);
-  box-shadow: 0 14px 30px rgba(15, 23, 42, 0.08);
+  box-shadow: var(--anslation-ds-shadow-md);
   transform: translateY(-2px);
 }
 
@@ -99,7 +108,7 @@
 
 .support-settings-nav-item-active {
   background:
-    linear-gradient(135deg, color-mix(in srgb, var(--support-primary) 12%, var(--card)), color-mix(in srgb, var(--support-secondary) 6%, var(--card))) !important;
+    linear-gradient(135deg, color-mix(in srgb, var(--support-primary) 13%, var(--support-surface)), color-mix(in srgb, var(--support-secondary) 7%, var(--support-surface))) !important;
   box-shadow:
     0 8px 18px color-mix(in srgb, var(--support-primary) 8%, transparent),
     inset 0 0 0 1px color-mix(in srgb, var(--support-primary) 20%, transparent);
@@ -120,11 +129,15 @@
   gap: clamp(1rem, 2vw, 1.5rem);
 }
 
+.support-setting-overlay {
+  background: color-mix(in srgb, var(--background) 46%, var(--foreground));
+}
+
 .support-settings-content {
-  border: 1px solid color-mix(in srgb, var(--support-primary) 10%, var(--border));
+  border: 1px solid color-mix(in srgb, var(--support-primary) 14%, var(--support-border));
   border-radius: var(--anslation-ds-radius-lg);
   background:
-    linear-gradient(180deg, color-mix(in srgb, var(--support-primary) 3%, var(--card)), var(--card));
+    linear-gradient(180deg, color-mix(in srgb, var(--support-primary) 4%, var(--support-surface)), var(--support-surface));
   box-shadow: var(--anslation-ds-shadow-sm);
 }
 
@@ -133,17 +146,17 @@
 }
 
 .support-settings-mobile-toggle {
-  border-color: color-mix(in srgb, var(--support-primary) 18%, var(--border));
-  background: color-mix(in srgb, var(--card) 92%, transparent);
+  border-color: color-mix(in srgb, var(--support-primary) 18%, var(--support-border));
+  background: color-mix(in srgb, var(--support-surface) 92%, transparent);
   box-shadow: var(--anslation-ds-shadow-sm);
 }
 
 .support-settings-breadcrumb {
   display: inline-flex;
   width: fit-content;
-  border: 1px solid color-mix(in srgb, var(--support-primary) 16%, var(--border));
+  border: 1px solid color-mix(in srgb, var(--support-primary) 16%, var(--support-border));
   border-radius: 999px;
-  background: color-mix(in srgb, var(--support-primary) 8%, var(--card));
+  background: color-mix(in srgb, var(--support-primary) 8%, var(--support-surface));
   color: var(--support-primary);
   padding: 0.45rem 0.72rem;
   letter-spacing: 0.04em;
@@ -169,7 +182,7 @@
 }
 
 .support-settings-rule {
-  border-color: color-mix(in srgb, var(--support-primary) 14%, var(--border));
+  border-color: color-mix(in srgb, var(--support-primary) 14%, var(--support-border));
 }
 
 .support-settings-detail-list {
@@ -179,9 +192,9 @@
 }
 
 .support-settings-detail-item {
-  border: 1px solid color-mix(in srgb, var(--support-primary) 8%, var(--border));
+  border: 1px solid color-mix(in srgb, var(--support-primary) 10%, var(--support-border));
   border-radius: var(--anslation-ds-radius);
-  background: color-mix(in srgb, var(--background) 36%, var(--card));
+  background: color-mix(in srgb, var(--background) 36%, var(--support-surface));
   padding: 0.75rem;
   line-height: 1.55;
   transition:
@@ -192,9 +205,9 @@
 }
 
 .support-settings-detail-item:hover {
-  border-color: color-mix(in srgb, var(--support-primary) 24%, var(--border));
-  background: color-mix(in srgb, var(--support-primary) 5%, var(--card));
-  box-shadow: 0 14px 30px rgba(15, 23, 42, 0.08);
+  border-color: color-mix(in srgb, var(--support-primary) 24%, var(--support-border));
+  background: color-mix(in srgb, var(--support-primary) 6%, var(--support-surface));
+  box-shadow: var(--anslation-ds-shadow-md);
   transform: translateY(-2px);
 }
 
@@ -203,30 +216,30 @@
 }
 
 .support-settings-important {
-  border-color: color-mix(in srgb, var(--anslation-ds-warning) 24%, var(--border));
+  border: 1px solid color-mix(in srgb, var(--support-secondary) 24%, var(--support-border));
   background:
-    radial-gradient(circle at 0% 0%, color-mix(in srgb, var(--anslation-ds-warning) 15%, transparent), transparent 13rem),
-    color-mix(in srgb, var(--anslation-ds-warning) 9%, var(--card));
+    radial-gradient(circle at 0% 0%, color-mix(in srgb, var(--support-secondary) 15%, transparent), transparent 13rem),
+    color-mix(in srgb, var(--support-secondary) 8%, var(--support-surface));
   box-shadow: var(--anslation-ds-shadow-sm);
 }
 
 .support-settings-important svg {
-  color: var(--anslation-ds-warning);
+  color: var(--support-primary);
 }
 
 .support-settings-important span {
-  color: color-mix(in srgb, var(--anslation-ds-warning) 80%, var(--foreground));
+  color: var(--support-primary);
 }
 
 .support-settings-important p {
-  color: var(--foreground);
+  color: var(--support-text);
 }
 
 .support-settings-action {
   min-height: 3.2rem;
   border-radius: 0.72rem;
   background: var(--support-cta-gradient);
-  color: #ffffff;
+  color: var(--primary-foreground);
   box-shadow: var(--support-cta-shadow);
   font-weight: 700;
   transition:
@@ -253,10 +266,10 @@
 }
 
 .support-settings-image-card {
-  border-color: color-mix(in srgb, var(--support-primary) 10%, var(--border));
+  border-color: color-mix(in srgb, var(--support-primary) 14%, var(--support-border));
   border-radius: var(--anslation-ds-radius-lg);
   background:
-    linear-gradient(180deg, color-mix(in srgb, var(--support-secondary) 3%, var(--card)), var(--card));
+    linear-gradient(180deg, color-mix(in srgb, var(--support-secondary) 4%, var(--support-surface)), var(--support-surface));
   box-shadow: var(--anslation-ds-shadow-sm);
 }
 
@@ -266,14 +279,15 @@
 }
 
 .support-settings-image-caption {
-  border-color: color-mix(in srgb, var(--support-primary) 12%, var(--border));
-  background: color-mix(in srgb, var(--background) 48%, var(--card));
+  border-color: color-mix(in srgb, var(--support-primary) 12%, var(--support-border));
+  background: color-mix(in srgb, var(--background) 48%, var(--support-surface));
 }
 
 .support-settings-after {
-  border: 1px solid color-mix(in srgb, var(--support-primary) 9%, var(--border));
+  border: 1px solid color-mix(in srgb, var(--support-primary) 12%, var(--support-border));
   border-radius: var(--anslation-ds-radius-lg);
-  background: var(--card);
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--support-primary) 3%, var(--support-surface)), var(--support-surface));
   box-shadow: var(--anslation-ds-shadow-sm);
   padding: clamp(1.1rem, 2.6vw, 1.6rem);
 }
@@ -290,9 +304,9 @@
   position: relative;
   display: block;
   overflow: hidden;
-  border: 1px solid color-mix(in srgb, var(--support-primary) 10%, var(--border));
+  border: 1px solid color-mix(in srgb, var(--support-primary) 12%, var(--support-border));
   border-radius: var(--anslation-ds-radius-lg);
-  background: var(--card);
+  background: var(--support-surface);
   box-shadow: var(--anslation-ds-shadow-sm);
   transition:
     border-color 180ms ease,
@@ -302,8 +316,8 @@
 
 .support-setting-ad-card:hover,
 .support-setting-ad-card:focus-visible {
-  border-color: color-mix(in srgb, var(--support-primary) 40%, var(--border));
-  box-shadow: 0 22px 42px rgba(20, 184, 166, 0.16);
+  border-color: color-mix(in srgb, var(--support-primary) 40%, var(--support-border));
+  box-shadow: 0 22px 42px color-mix(in srgb, var(--support-primary) 16%, transparent);
   transform: translateY(-2px);
 }
 
@@ -322,24 +336,116 @@
   transform: scale(1.035);
 }
 
+.support-setting-ad-sponsored {
+  background: color-mix(in srgb, var(--foreground) 72%, transparent);
+  color: var(--background);
+}
+
 [data-theme="dark"] .support-settings-sidebar,
 [data-theme="dark"] .support-settings-content,
 [data-theme="dark"] .support-settings-image-card,
 [data-theme="dark"] .support-settings-after,
 [data-theme="dark"] .support-setting-ad-card {
   background:
-    linear-gradient(180deg, color-mix(in srgb, var(--support-primary) 5%, var(--card)), var(--card));
-  border-color: color-mix(in srgb, var(--support-primary) 16%, var(--border));
+    linear-gradient(180deg, color-mix(in srgb, var(--support-primary) 8%, var(--support-surface)), color-mix(in srgb, var(--support-surface) 92%, var(--foreground) 3%));
+  border-color: color-mix(in srgb, var(--support-primary) 24%, var(--support-border));
 }
 
 [data-theme="dark"] .support-setting-page {
+  --support-surface: color-mix(in srgb, var(--card) 86%, var(--foreground) 4%);
+  --support-muted: color-mix(in srgb, var(--muted-foreground) 86%, var(--foreground) 14%);
+  --support-border: color-mix(in srgb, var(--border) 68%, var(--support-primary) 18%);
   --support-primary: var(--primary);
   --support-secondary: var(--secondary);
+  --support-primary-soft: color-mix(in srgb, var(--support-primary) 18%, var(--support-surface));
+  --support-secondary-soft: color-mix(in srgb, var(--support-secondary) 16%, var(--support-surface));
+  background:
+    radial-gradient(circle at 73% 6%, color-mix(in srgb, var(--support-secondary) 20%, transparent), transparent 36rem),
+    radial-gradient(circle at 42% 10%, color-mix(in srgb, var(--support-primary) 14%, transparent), transparent 30rem),
+    radial-gradient(circle at 12% 0%, color-mix(in srgb, var(--support-primary) 17%, transparent), transparent 28rem),
+    linear-gradient(180deg, color-mix(in srgb, var(--support-surface) 42%, transparent) 0%, color-mix(in srgb, var(--support-primary-soft) 30%, transparent) 26rem, transparent 54rem),
+    var(--background);
+}
+
+[data-theme="dark"] .support-settings-sidebar-header {
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--support-primary) 12%, var(--support-surface)), color-mix(in srgb, var(--support-secondary) 8%, var(--support-surface)));
+  border-color: color-mix(in srgb, var(--support-primary) 24%, var(--support-border));
+}
+
+[data-theme="dark"] .support-settings-nav-item {
+  color: var(--support-muted);
+}
+
+[data-theme="dark"] .support-settings-nav-item:hover,
+[data-theme="dark"] .support-settings-nav-item:focus-visible {
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--support-primary) 13%, var(--support-surface)), color-mix(in srgb, var(--support-secondary) 9%, var(--support-surface)));
+  color: var(--support-primary);
+}
+
+[data-theme="dark"] .support-settings-nav-item-active {
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--support-primary) 18%, var(--support-surface)), color-mix(in srgb, var(--support-secondary) 11%, var(--support-surface))) !important;
+  box-shadow:
+    0 10px 24px color-mix(in srgb, var(--support-primary) 16%, transparent),
+    inset 0 0 0 1px color-mix(in srgb, var(--support-primary) 28%, transparent);
+}
+
+[data-theme="dark"] .support-settings-breadcrumb {
+  border-color: color-mix(in srgb, var(--support-primary) 28%, var(--support-border));
+  background: color-mix(in srgb, var(--support-primary) 13%, var(--support-surface));
+  color: var(--support-primary);
+}
+
+[data-theme="dark"] .support-settings-title,
+[data-theme="dark"] .support-settings-after-title {
+  color: var(--foreground);
+}
+
+[data-theme="dark"] .support-settings-description,
+[data-theme="dark"] .support-settings-detail-item,
+[data-theme="dark"] .support-settings-image-caption p,
+[data-theme="dark"] .support-settings-after p,
+[data-theme="dark"] .support-settings-after ol,
+[data-theme="dark"] .support-settings-after h3 {
+  color: var(--support-muted);
 }
 
 [data-theme="dark"] .support-settings-detail-item {
-  background: color-mix(in srgb, var(--card) 88%, var(--background));
-  border-color: color-mix(in srgb, var(--support-primary) 14%, var(--border));
+  background: color-mix(in srgb, var(--support-surface) 88%, var(--background));
+  border-color: color-mix(in srgb, var(--support-primary) 20%, var(--support-border));
+}
+
+[data-theme="dark"] .support-settings-detail-item:hover {
+  background: color-mix(in srgb, var(--support-primary) 10%, var(--support-surface));
+  border-color: color-mix(in srgb, var(--support-primary) 34%, var(--support-border));
+}
+
+[data-theme="dark"] .support-settings-important {
+  border-color: color-mix(in srgb, var(--support-secondary) 30%, var(--support-border));
+  background:
+    radial-gradient(circle at 0% 0%, color-mix(in srgb, var(--support-secondary) 20%, transparent), transparent 13rem),
+    color-mix(in srgb, var(--support-secondary) 12%, var(--support-surface));
+}
+
+[data-theme="dark"] .support-settings-important p {
+  color: var(--foreground);
+}
+
+[data-theme="dark"] .support-settings-image-state {
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--support-primary) 12%, transparent), color-mix(in srgb, var(--support-secondary) 10%, transparent));
+}
+
+[data-theme="dark"] .support-settings-image-caption {
+  background: color-mix(in srgb, var(--support-surface) 88%, var(--background));
+  border-color: color-mix(in srgb, var(--support-primary) 20%, var(--support-border));
+}
+
+[data-theme="dark"] .support-setting-ad-sponsored {
+  background: color-mix(in srgb, var(--foreground) 84%, transparent);
+  color: var(--background);
 }
 
 @media (max-width: 1024px) {

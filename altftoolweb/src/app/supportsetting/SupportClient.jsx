@@ -82,7 +82,6 @@ const sidebarAds = useMemo(() => {
             transform transition-transform duration-300 ease-in-out
             ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'}
           `}
-          style={{ top: '62', paddingTop: '0' }}
         >
           <SettingsSidebar
             activeId={resolvedActiveId}
@@ -94,7 +93,7 @@ const sidebarAds = useMemo(() => {
         {/* Overlay for mobile sidebar */}
         {isSidebarOpen && (
           <div
-            className="fixed inset-0 bg-black/50 z-30 md:hidden transition-opacity duration-300"
+            className="support-setting-overlay fixed inset-0 z-30 md:hidden transition-opacity duration-300"
             onClick={handleCloseSidebar}
             aria-hidden="true"
           />

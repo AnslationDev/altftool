@@ -120,16 +120,16 @@ const SettingsContent = ({ activeId, onOpenSidebar }) => {
         )} */}
 
          {setting.important && (
-          <div className="support-settings-important bg-amber-50 border border-amber-200 rounded-md p-4 flex items-start gap-3 mb-8">
+          <div className="support-settings-important rounded-md p-4 flex items-start gap-3 mb-8">
 
-            <AlertCircle className="h-5 w-5 text-amber-600 shrink-0 mt-0.5" />
+            <AlertCircle className="h-5 w-5 shrink-0 mt-0.5" />
 
             <div>
-              <span className="text-xs font-bold tracking-widest uppercase text-amber-900">
+              <span className="text-xs font-bold tracking-widest uppercase">
                 Important
               </span>
 
-              <p className="text-sm text-amber-800 mt-1 leading-relaxed">
+              <p className="text-sm mt-1 leading-relaxed">
                 {setting.important}
               </p>
             </div>
