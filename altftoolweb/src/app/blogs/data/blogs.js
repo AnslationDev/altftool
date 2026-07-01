@@ -308,7 +308,23 @@ function estimateReadTime(...parts) {
 export function normalizeBlog(blog = {}, index = 0) {
   const heading = blog.heading || blog.title || "Untitled AltFTool guide";
   const slug = blog.slug || slugify(heading);
-  const category = blog.category || "Guides";
+
+  let category = blog.category || "Others";
+  const ALLOWED_CATEGORIES_SET = new Set([
+    "Tools",
+    "Games",
+    "Language",
+    "Finance",
+    "Extensions",
+    "Food",
+    "Beauty",
+    "Travel",
+    "Fashion & Lifestyle"
+  ]);
+
+  if (!ALLOWED_CATEGORIES_SET.has(category)) {
+    category = "Others";
+  }
   const seoReadyBlog = withBlogSeoDefaults({
     ...blog,
     heading,
@@ -440,7 +456,20 @@ export function getBlogBySlug(slug) {
 }
 
 export function getBlogCategories(posts = blogPosts) {
-  return ["All", ...new Set(posts.map((post) => post.category).filter(Boolean))];
+  const DESIRED_CATEGORY_ORDER = [
+    "All",
+    "Tools",
+    "Games",
+    "Language",
+    "Finance",
+    "Extensions",
+    "Food",
+    "Beauty",
+    "Travel",
+    "Fashion & Lifestyle",
+    "Others"
+  ];
+  return DESIRED_CATEGORY_ORDER;
 }
 
 export function getBlogCategoryBySlug(categorySlug, posts = blogPosts) {

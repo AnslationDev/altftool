@@ -4,6 +4,7 @@ import { normalizeItems } from "./normalize";
 import { deduplicate } from "./dedupe";
 import { rankArticles } from "./rank";
 import { cache } from "./cache";
+import { getDummyNewsData } from "./dummyNewsData";
 
 export async function getNewsDataServer({ location, topic } = {}) {
   const cacheKey = `news:${location ?? "global"}:${topic ?? "all"}`;
@@ -37,10 +38,19 @@ export async function getNewsDataServer({ location, topic } = {}) {
     const deduped = deduplicate(normalized);
     const ranked = rankArticles(deduped);
 
+    if (ranked.length === 0) {
+      console.warn("News API returned no results, falling back to dummy data");
+      const dummy = getDummyNewsData();
+      cache.set(cacheKey, dummy);
+      return dummy;
+    }
+
     cache.set(cacheKey, ranked);
     return ranked;
   } catch (error) {
-    console.error("Failed to fetch news on the server:", error);
-    return [];
+    console.error("Failed to fetch news on the server, falling back to dummy data:", error);
+    const dummy = getDummyNewsData();
+    cache.set(cacheKey, dummy);
+    return dummy;
   }
 }
