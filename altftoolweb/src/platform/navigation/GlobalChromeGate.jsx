@@ -12,7 +12,6 @@ const SELF_CHROME_PREFIXES = [
   "/altfloveimg",
   "/altflovepdf",
   "/apps",
-  "/news",
   "/tripfindbox",
   "/homeserv",
   // immersive / experiential apps (no global chrome)

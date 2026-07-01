@@ -1,8 +1,8 @@
-import Feeds from "../components/sections/Feeds";
+import NewsListing from "../components/NewsListing";
 import { createPageMetadata } from "@/platform/seo/generateMetadata";
 import { getNewsDataServer } from "../lib/getNewsDataServer";
 
-export const revalidate = 600; // Cache news feed for 10 minutes
+export const revalidate = 600;
 
 export async function generateMetadata() {
   return createPageMetadata({
@@ -15,5 +15,11 @@ export async function generateMetadata() {
 
 export default async function HeadlinesPage() {
   const newsData = await getNewsDataServer();
-  return <Feeds type="headlines" initialNewsData={newsData} />;
+  return (
+    <NewsListing
+      title="Headlines"
+      description="Top headlines and important updates curated for you."
+      articles={newsData}
+    />
+  );
 }
