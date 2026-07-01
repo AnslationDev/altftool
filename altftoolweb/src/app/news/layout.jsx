@@ -40,7 +40,7 @@ export default function NewsLayout({ children }) {
         </div>
       </div>
 
-      <Footer />
+      {/* <Footer /> */}
     </>
   );
 }

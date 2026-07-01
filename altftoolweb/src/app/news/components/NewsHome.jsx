@@ -419,11 +419,6 @@ function TopNewsCard({ news }) {
               <Zap size={24} className="text-[var(--muted-foreground)]" />
             </div>
           )}
-          {news.category && (
-            <span className="absolute left-3 top-3 rounded-full bg-[var(--primary)]/90 px-2.5 py-0.5 text-[11px] font-semibold uppercase tracking-wider text-[var(--primary-foreground)] backdrop-blur-sm">
-              {news.category}
-            </span>
-          )}
         </div>
       </Link>
       <div className="p-5">
