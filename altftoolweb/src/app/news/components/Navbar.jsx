@@ -3,7 +3,7 @@
 import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { Search, Bell, ChevronDown, Zap, Menu, X, Sun, Moon } from "lucide-react";
+import { Search, Bell, ChevronDown, Menu, X, Sun, Moon } from "lucide-react";
 import { useTheme } from "@/contexts/ThemeContext";
 
 // ─── Navigation items ────────────────────────────────────────────────────
@@ -17,14 +17,6 @@ const NAV_ITEMS = [
   { label: "Sports", href: "/news/topics/sports" },
   { label: "Entertainment", href: "/news/topics/entertainment" },
   { label: "Lifestyle", href: "/news/topics/lifestyle" },
-];
-
-const TRENDING_TAGS = [
-  { label: "Election", href: "/news/topics/election" },
-  { label: "G20 Summit", href: "/news/topics/g20-summit" },
-  { label: "India vs Australia", href: "/news/topics/india-vs-australia" },
-  { label: "ISRO", href: "/news/topics/isro" },
-  { label: "Artificial Intelligence", href: "/news/topics/artificial-intelligence" },
 ];
 
 function ThemeToggle() {
@@ -173,35 +165,6 @@ export default function Navbar() {
           >
             <Menu size={20} />
           </button>
-        </div>
-      </div>
-
-      {/* ── Trending Bar ──────────────────────────────────────────────── */}
-      <div className="border-t border-[var(--border)] bg-[var(--muted)] py-5">
-        <div className="mx-auto flex max-w-[1440px] items-center gap-6 px-4 md:px-8 lg:px-12">
-          <span className="flex shrink-0 items-center gap-1.5 text-[13px] font-bold uppercase tracking-[1px] text-[var(--primary)]">
-            <Zap size={16} />
-            Trending Now
-          </span>
-          <div className="flex items-center gap-6 overflow-x-auto scrollbar-thin">
-            {TRENDING_TAGS.map((tag, i) => (
-              <span key={tag.label} className="flex items-center gap-6">
-                {i > 0 && <span className="text-[var(--border)]">•</span>}
-                <Link
-                  href={tag.href}
-                  className="whitespace-nowrap text-[14px] font-medium text-[var(--muted-foreground)] transition-colors hover:text-[var(--primary)]"
-                >
-                  {tag.label}
-                </Link>
-              </span>
-            ))}
-          </div>
-          <Link
-            href="/news/trending"
-            className="ml-auto shrink-0 text-[14px] font-semibold text-[var(--primary)] hover:underline"
-          >
-            View All
-          </Link>
         </div>
       </div>
 

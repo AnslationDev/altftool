@@ -3,9 +3,8 @@
 import { useMemo, useState, useId } from "react";
 import Link from "next/link";
 import {
-  ChevronRight, Mail, ArrowRight, Check, Clock, Eye,
-  Bookmark, Heart, TrendingUp, Facebook, Twitter, Youtube,
-  Instagram, ExternalLink, Zap,
+  ChevronRight, ChevronDown, Mail, ArrowRight, Check, Clock, Eye, Plus,
+  Bookmark, Heart, TrendingUp, Zap,
 } from "lucide-react";
 import ManagedImage from "@/components/ui/ManagedImage";
 import NewsCard from "./ui/NewsCard";
@@ -35,51 +34,145 @@ function slugify(value = "") {
     .replace(/(^-|-$)/g, "");
 }
 
-// ─── Side Story Card ──────────────────────────────────────────────────────
-function SideStoryCard({ news }) {
+// ─── Hero Slider ──────────────────────────────────────────────────────────
+function HeroSlider({ stories, timeAgo, formatCount }) {
+  const [current, setCurrent] = useState(0);
+  const story = stories[current];
+
+  if (!story) return null;
+
   return (
-    <Link href={`/news/${news.slug}`} className="group flex gap-4">
-      <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-xl">
-        {news.image_url ? (
+    <div className="relative h-[530px] overflow-hidden rounded-[20px] bg-black shadow-sm">
+      <Link href={`/news/${story.slug}`} className="group block h-full">
+        {story.image_url ? (
           <ManagedImage
-            src={news.image_url}
-            alt=""
-            className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+            src={story.image_url}
+            alt={story.headline}
+            className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
           />
         ) : (
-          <div className="flex h-full w-full items-center justify-center bg-[var(--muted)] text-[var(--muted-foreground)]">
-            <Zap size={16} />
+          <div className="absolute inset-0 flex items-center justify-center bg-[var(--muted)]">
+            <Zap size={40} className="text-[var(--muted-foreground)]" />
           </div>
         )}
-      </div>
-      <div className="flex-1 min-w-0">
-        <span className="text-[11px] font-semibold uppercase tracking-wider text-[var(--primary)]">
-          {news.category || "General"}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
+        <span className="absolute left-5 top-5 rounded-lg bg-[var(--primary)] px-3.5 py-2 text-[12px] font-bold uppercase tracking-wide text-white">
+          Top Story
         </span>
-        <p className="mt-1 text-sm font-semibold leading-snug text-[var(--foreground)] transition-colors group-hover:text-[var(--primary)] line-clamp-2">
-          {news.headline}
-        </p>
-        <span className="mt-1.5 flex items-center gap-1 text-[11px] text-[var(--muted-foreground)]">
-          <Clock size={10} />
-          {timeAgo(news.published_hours_ago)}
-        </span>
-      </div>
-    </Link>
+        <div className="absolute bottom-8 left-7 right-7">
+          <div className="flex items-center gap-2">
+            {story.category && (
+              <span className="text-[13px] font-bold uppercase tracking-wider text-[var(--primary)]">
+                {story.category}
+              </span>
+            )}
+            <span className="text-[13px] text-white/70">{timeAgo(story.published_hours_ago)}</span>
+          </div>
+          <h2 className="mt-2 text-[40px] font-bold leading-[1.2] text-white line-clamp-2">
+            {story.headline}
+          </h2>
+          {story.summary && (
+            <p className="mt-3 line-clamp-2 text-[17px] leading-[1.6] text-white/80">
+              {story.summary}
+            </p>
+          )}
+        </div>
+      </Link>
+      {stories.length > 1 && (
+        <div className="absolute bottom-[18px] left-1/2 flex -translate-x-1/2 gap-2">
+          {stories.map((_, i) => (
+            <button
+              key={i}
+              onClick={() => setCurrent(i)}
+              className={`rounded-full transition-all ${i === current ? "w-[22px] bg-[var(--primary)]" : "w-[10px] bg-white/40 hover:bg-white/60"}`}
+              style={{ height: 4 }}
+              aria-label={`Go to slide ${i + 1}`}
+            />
+          ))}
+        </div>
+      )}
+    </div>
   );
 }
 
-// ─── Latest News Item ─────────────────────────────────────────────────────
-function LatestNewsItem({ news }) {
+// ─── Trending Headlines ──────────────────────────────────────────────────
+function TrendingHeadlines({ stories, timeAgo }) {
+  if (!stories.length) return null;
+
   return (
-    <Link href={`/news/${news.slug}`} className="group flex items-start gap-4 py-2.5">
-      <span className="mt-0.5 shrink-0 text-xs font-medium text-[var(--primary)] tabular-nums">
-        {timeAgo(news.published_hours_ago)}
-      </span>
-      <p className="flex-1 text-sm font-medium leading-snug text-[var(--foreground)] transition-colors group-hover:text-[var(--primary)] line-clamp-2">
-        {news.headline}
-      </p>
-      <ChevronRight size={14} className="mt-0.5 shrink-0 text-[var(--muted-foreground)] opacity-0 transition-opacity group-hover:opacity-100" />
-    </Link>
+    <div className="flex flex-col gap-[18px]">
+      {stories.map((s) => (
+        <Link
+          key={s.id}
+          href={`/news/${s.slug}`}
+          className="group flex items-start gap-[14px]"
+        >
+          <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-xl">
+            {s.image_url ? (
+              <ManagedImage
+                src={s.image_url}
+                alt=""
+                className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+              />
+            ) : (
+              <div className="flex h-full w-full items-center justify-center bg-[var(--muted)]">
+                <Zap size={18} className="text-[var(--muted-foreground)]" />
+              </div>
+            )}
+          </div>
+          <div className="flex-1 min-w-0">
+            <div className="flex items-center gap-2">
+              <span className="text-[12px] font-bold uppercase tracking-wider text-[var(--primary)]">
+                {s.category || "General"}
+              </span>
+              <span className="text-[12px] text-[var(--muted-foreground)]">{timeAgo(s.published_hours_ago)}</span>
+            </div>
+            <p className="mt-1 text-[18px] font-semibold leading-[1.4] text-[var(--foreground)] transition-colors group-hover:text-[var(--primary)] line-clamp-2">
+              {s.headline}
+            </p>
+          </div>
+        </Link>
+      ))}
+    </div>
+  );
+}
+
+// ─── Latest News Widget ──────────────────────────────────────────────────
+function LatestNewsWidget({ stories, timeAgo }) {
+  if (!stories.length) return null;
+
+  return (
+    <div className="flex flex-col rounded-[18px] border border-[var(--border)] bg-[var(--card)] p-5 shadow-sm">
+      <div className="mb-5 flex items-center gap-[10px]">
+        <div className="flex h-5 w-5 items-center justify-center text-[var(--primary)]">
+          <Plus size={16} />
+        </div>
+        <h3 className="text-[20px] font-bold uppercase text-[var(--foreground)]">Latest News</h3>
+      </div>
+      <div className="flex flex-col">
+        {stories.map((s, i) => (
+          <div key={s.id} className={i < stories.length - 1 ? "border-b border-[#F2F2F2] pb-4 mb-4" : ""}>
+            <Link href={`/news/${s.slug}`} className="group flex items-start gap-3">
+              <span className="mt-[3px] shrink-0 text-[var(--primary)]">
+                <Plus size={13} />
+              </span>
+              <div>
+                <span className="text-[12px] text-[var(--muted-foreground)]">{timeAgo(s.published_hours_ago)}</span>
+                <p className="mt-0.5 text-[15px] font-medium leading-snug text-[var(--foreground)] transition-colors group-hover:text-[var(--primary)] line-clamp-2">
+                  {s.headline}
+                </p>
+              </div>
+            </Link>
+          </div>
+        ))}
+      </div>
+      <Link
+        href="/news/headlines"
+        className="mt-5 flex h-[46px] w-full items-center justify-center gap-1.5 rounded-xl bg-[#F7F7F7] text-[14px] font-semibold text-[var(--foreground)] transition hover:bg-[var(--muted)] dark:bg-[var(--surface)]"
+      >
+        View All Latest News
+      </Link>
+    </div>
   );
 }
 
@@ -117,16 +210,25 @@ function NewsletterWidget() {
   }
 
   return (
-    <div className="flex flex-col items-center text-center">
-      <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[var(--primary)]/10 text-[var(--primary)]">
-        <Mail size={18} />
-      </div>
-      <h3 className="mt-4 text-base font-bold text-[var(--foreground)]">Newsletter</h3>
-      <p className="mt-1 text-sm text-[var(--muted-foreground)]">
-        Get the latest news delivered to your inbox.
-      </p>
-      <form onSubmit={handleSubmit} className="mt-4 w-full space-y-3">
+    <div className="flex flex-col">
+      {/* Header */}
+      <div className="flex items-start gap-4">
+        <div className="flex h-[66px] w-[66px] shrink-0 items-center justify-center rounded-[18px] bg-[var(--primary)]/10 text-[var(--primary)]">
+          <Mail size={30} />
+        </div>
         <div>
+          <h3 className="text-[18px] font-bold uppercase text-[var(--foreground)]">
+            Subscribe to Newsletter
+          </h3>
+          <p className="mt-[6px] max-w-[240px] text-[14px] leading-[1.6] text-[var(--muted-foreground)]">
+            Get the latest news delivered to your inbox daily.
+          </p>
+        </div>
+      </div>
+
+      {/* Form */}
+      <form onSubmit={handleSubmit} className="mt-6 flex items-center gap-3">
+        <div className="flex-1">
           <label htmlFor={emailId} className="sr-only">Email address</label>
           <input
             id={emailId}
@@ -134,48 +236,57 @@ function NewsletterWidget() {
             value={email}
             onChange={(e) => { setEmail(e.target.value); setError(""); }}
             placeholder="Enter your email"
-            className="w-full rounded-xl border border-[var(--border)] bg-[var(--surface)] px-3 py-2.5 text-sm text-[var(--foreground)] placeholder:text-[var(--muted-foreground)] focus:outline-none focus:ring-2 focus:ring-[var(--primary)]"
+            className="h-11 w-full rounded-xl border border-[#eee] bg-[#F7F7F7] px-3.5 text-[14px] text-[var(--foreground)] placeholder:text-[#999] transition focus:border-[var(--primary)] focus:bg-white focus:shadow-sm focus:outline-none dark:border-[var(--border)] dark:bg-[var(--surface)] dark:focus:bg-[var(--card)]"
           />
-          {error && <p className="mt-1.5 text-xs text-[var(--anslation-ds-danger)]">{error}</p>}
         </div>
         <button
           type="submit"
           disabled={state === "loading"}
-          className="flex w-full items-center justify-center gap-2 rounded-xl bg-[var(--primary)] px-4 py-2.5 text-sm font-semibold text-[var(--primary-foreground)] transition hover:opacity-90 disabled:opacity-60"
+          className="flex h-11 w-[120px] shrink-0 items-center justify-center rounded-xl bg-[var(--primary)] px-4 text-[14px] font-semibold text-[var(--primary-foreground)] transition hover:shadow-md active:scale-[0.97] disabled:opacity-60"
         >
-          {state === "loading" ? "Subscribing…" : "Subscribe"}
-          <ArrowRight size={13} />
+          {state === "loading" ? "Loading…" : "Subscribe"}
         </button>
       </form>
-      <p className="mt-3 text-xs text-[var(--muted-foreground)]">No spam. Unsubscribe anytime.</p>
+      {error && <p className="mt-2 text-xs text-[var(--anslation-ds-danger)]">{error}</p>}
+
+      {/* Privacy */}
+      <p className="mt-4 text-[12px] leading-[1.5] text-[var(--muted-foreground)]">
+        We respect your privacy. Unsubscribe anytime.
+      </p>
     </div>
   );
 }
 
 // ─── Follow Us ────────────────────────────────────────────────────────────
 const SOCIAL_LINKS = [
-  { icon: Facebook, label: "Facebook", href: "https://facebook.com", color: "hover:bg-blue-500/10 hover:text-blue-500 hover:border-blue-500/30" },
-  { icon: Twitter, label: "Twitter", href: "https://twitter.com", color: "hover:bg-sky-400/10 hover:text-sky-400 hover:border-sky-400/30" },
-  { icon: Instagram, label: "Instagram", href: "https://instagram.com", color: "hover:bg-pink-500/10 hover:text-pink-500 hover:border-pink-500/30" },
-  { icon: Youtube, label: "Youtube", href: "https://youtube.com", color: "hover:bg-red-500/10 hover:text-red-500 hover:border-red-500/30" },
+  { name: "Facebook", href: "https://facebook.com", icon: "f", bg: "bg-[#1877F2]", action: "Like" },
+  { name: "Twitter", href: "https://twitter.com", icon: "X", bg: "bg-black", action: "Follow" },
+  { name: "Instagram", href: "https://instagram.com", icon: "in", bg: "bg-gradient-to-tr from-[#F58529] via-[#DD2A7B] to-[#8134AF]", action: "Follow" },
+  { name: "YouTube", href: "https://youtube.com", icon: "▶", bg: "bg-[#FF0000]", action: "Subscribe" },
 ];
 
 function FollowUs() {
   return (
     <div>
-      <h3 className="mb-5 text-sm font-bold text-[var(--foreground)]">Follow Us</h3>
-      <div className="space-y-3">
-        {SOCIAL_LINKS.map(({ icon: Icon, label, href, color }) => (
+      <h3 className="mb-5 text-[20px] font-bold uppercase text-[var(--foreground)]">Follow Us</h3>
+      <div className="flex flex-col">
+        {SOCIAL_LINKS.map((s, i) => (
           <a
-            key={label}
-            href={href}
+            key={s.name}
+            href={s.href}
             target="_blank"
             rel="noopener noreferrer"
-            className={`flex items-center gap-3 rounded-xl border border-[var(--border)] px-4 py-3.5 text-sm font-medium text-[var(--muted-foreground)] transition-all ${color}`}
+            className={`group flex items-center justify-between py-3.5 ${i < SOCIAL_LINKS.length - 1 ? "border-b border-[#F3F3F3] dark:border-[var(--border)]" : ""}`}
           >
-            <Icon size={16} />
-            <span className="flex-1">{label}</span>
-            <ExternalLink size={13} className="opacity-40" />
+            <div className="flex items-center gap-[14px]">
+              <div className={`flex h-[38px] w-[38px] shrink-0 items-center justify-center rounded-full text-[13px] font-bold text-white ${s.bg}`}>
+                {s.icon}
+              </div>
+              <span className="text-[15px] font-semibold text-[var(--foreground)]">{s.name}</span>
+            </div>
+            <span className="cursor-pointer text-[14px] font-semibold text-[var(--primary)] transition hover:underline">
+              {s.action}
+            </span>
           </a>
         ))}
       </div>
@@ -197,7 +308,7 @@ export default function NewsHome({ initialNewsData }) {
   const usedIds = new Set([topStory?.id, ...sideStories.map((s) => s.id)].filter(Boolean));
 
   const latestNews = useMemo(() => {
-    return sorted.filter((a) => !usedIds.has(a.id)).slice(0, 6);
+    return sorted.filter((a) => !usedIds.has(a.id)).slice(0, 4);
   }, [sorted, usedIds]);
 
   const topNews = useMemo(() => {
@@ -205,11 +316,19 @@ export default function NewsHome({ initialNewsData }) {
     return sorted.filter((a) => !exclude.has(a.id)).slice(0, 6);
   }, [sorted, usedIds, latestNews]);
 
+  const [trendingTab, setTrendingTab] = useState("trending");
+
   const trending = useMemo(() => {
-    return [...articles]
-      .sort((a, b) => (b.likes + b.comments + b.shares) - (a.likes + a.comments + a.shares))
-      .slice(0, 6);
-  }, [articles]);
+    const sorted = [...articles];
+    if (trendingTab === "trending") {
+      sorted.sort((a, b) => (b.likes + b.comments + b.shares) - (a.likes + a.comments + a.shares));
+    } else if (trendingTab === "mostread") {
+      sorted.sort((a, b) => (b.likes) - (a.likes));
+    } else if (trendingTab === "editorspicks") {
+      sorted.sort((a, b) => (b.shares) - (a.shares));
+    }
+    return sorted.slice(0, 6);
+  }, [articles, trendingTab]);
 
   const moreNews = useMemo(() => {
     const exclude = new Set([...usedIds, ...latestNews.map((a) => a.id), ...topNews.map((a) => a.id)]);
@@ -225,137 +344,108 @@ export default function NewsHome({ initialNewsData }) {
   }
 
   return (
-    <div className="space-y-16">
+    <div className="space-y-8">
+      {/* ── Trending Bar ──────────────────────────────────────────────── */}
+      <div className="mx-auto mt-[8px] w-[95%] rounded-2xl border border-[var(--border)] bg-[var(--muted)] py-3 shadow-sm">
+        <div className="mx-auto flex items-center gap-6 px-4 md:px-8 lg:px-12">
+          <span className="flex shrink-0 items-center gap-1.5 text-[13px] font-bold uppercase tracking-[1px] text-[var(--primary)]">
+            <Zap size={16} />
+            Trending Now
+          </span>
+          <div className="flex items-center gap-6 overflow-x-auto scrollbar-thin">
+            {[
+              { label: "Election", href: "/news/topics/election" },
+              { label: "G20 Summit", href: "/news/topics/g20-summit" },
+              { label: "India vs Australia", href: "/news/topics/india-vs-australia" },
+              { label: "ISRO", href: "/news/topics/isro" },
+              { label: "Artificial Intelligence", href: "/news/topics/artificial-intelligence" },
+            ].map((tag, i) => (
+              <span key={tag.label} className="flex items-center gap-6">
+                {i > 0 && <span className="text-[var(--border)]">•</span>}
+                <Link
+                  href={tag.href}
+                  className="whitespace-nowrap text-[14px] font-bold text-[var(--muted-foreground)] transition-colors hover:text-[var(--primary)]"
+                >
+                  {tag.label}
+                </Link>
+              </span>
+            ))}
+          </div>
+          <Link
+            href="/news/trending"
+            className="ml-auto shrink-0 text-[14px] font-bold text-[var(--primary)] hover:underline"
+          >
+            View All
+          </Link>
+        </div>
+      </div>
+
       {/* ── Hero Section (3-column) ──────────────────────────────────── */}
-      <section className="grid grid-cols-1 gap-6 pt-6 lg:grid-cols-12">
-        {/* Hero Card – col-span-6 (50%) */}
-        {topStory && (
-          <div className="lg:col-span-6">
-            <Link href={`/news/${topStory.slug}`} className="group relative block overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--card)] shadow-sm transition-all hover:shadow-md">
-              <div className="relative h-72 sm:h-80 lg:h-full">
-                {topStory.image_url ? (
-                  <ManagedImage
-                    src={topStory.image_url}
-                    alt={topStory.headline}
-                    className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                  />
-                ) : (
-                  <div className="flex h-full w-full items-center justify-center bg-[var(--muted)]">
-                    <Zap size={40} className="text-[var(--muted-foreground)]" />
-                  </div>
-                )}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
-                <div className="absolute bottom-0 left-0 right-0 p-6 sm:p-7">
-                  <div className="mb-3 flex items-center gap-2">
-                    <span className="rounded-full bg-[var(--primary)] px-2.5 py-0.5 text-[11px] font-semibold uppercase tracking-wider text-white">
-                      Top Story
-                    </span>
-                    {topStory.category && (
-                      <span className="rounded-full border border-white/20 bg-white/10 px-2.5 py-0.5 text-[11px] font-semibold uppercase tracking-wider text-white backdrop-blur-sm">
-                        {topStory.category}
-                      </span>
-                    )}
-                  </div>
-                  <h2 className="text-xl font-extrabold leading-tight text-white sm:text-2xl lg:text-3xl">
-                    {topStory.headline}
-                  </h2>
-                  {topStory.summary && (
-                    <p className="mt-3 line-clamp-2 text-sm leading-relaxed text-white/80">
-                      {topStory.summary}
-                    </p>
-                  )}
-                  <div className="mt-4 flex items-center gap-3 text-xs text-white/60">
-                    <span className="flex items-center gap-1">
-                      <Clock size={11} />
-                      {timeAgo(topStory.published_hours_ago)}
-                    </span>
-                    <span className="flex items-center gap-1">
-                      <Eye size={11} />
-                      {formatCount(topStory.likes + topStory.comments + topStory.shares)} views
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </Link>
+      <section className="mx-auto max-w-[1440px] rounded-2xl border border-[var(--border)] bg-[var(--card)] px-6 py-6 shadow-sm sm:px-8">
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-[2.2fr_1fr_0.9fr]">
+          <div className="md:col-span-2 lg:col-span-1">
+            <HeroSlider stories={sorted.slice(0, 5)} timeAgo={timeAgo} formatCount={formatCount} />
           </div>
-        )}
-
-        {/* Side Stories – col-span-3 (22%) */}
-        {sideStories.length > 0 && (
-          <div className="lg:col-span-3">
-            <h3 className="mb-4 text-sm font-bold text-[var(--foreground)]">Latest Updates</h3>
-            <div className="space-y-5">
-              {sideStories.map((item) => (
-                <SideStoryCard key={item.id} news={item} />
-              ))}
-            </div>
-          </div>
-        )}
-
-        {/* Latest News – col-span-3 (28%) */}
-        {latestNews.length > 0 && (
-          <div className="lg:col-span-3">
-            <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-5">
-              <h3 className="mb-3 text-sm font-bold text-[var(--foreground)]">Latest News</h3>
-              <div className="divide-y divide-[var(--border)]">
-                {latestNews.map((item) => (
-                  <LatestNewsItem key={item.id} news={item} />
-                ))}
-              </div>
-              <Link
-                href="/news/headlines"
-                className="mt-3 flex items-center justify-center gap-1.5 rounded-xl bg-[var(--muted)] px-4 py-2.5 text-sm font-medium text-[var(--foreground)] transition hover:bg-[var(--muted-foreground)]/20"
-              >
-                View All <ChevronRight size={14} />
-              </Link>
-            </div>
-          </div>
-        )}
+          <TrendingHeadlines stories={sideStories} timeAgo={timeAgo} />
+          <LatestNewsWidget stories={latestNews} timeAgo={timeAgo} />
+        </div>
       </section>
 
       {/* ── Categories Slider ────────────────────────────────────────── */}
-      <CategoriesSection articles={articles} />
+      <div className="-mt-[22px]">
+        <CategoriesSection articles={articles} />
+      </div>
 
       {/* ── Top News + Sidebar (70/30) ───────────────────────────────── */}
-      <div className="grid grid-cols-1 gap-10 lg:grid-cols-12">
+      <div className="-mt-[22px] grid grid-cols-1 gap-6 lg:grid-cols-12">
         {/* Main Content – 8/12 (≈70%) */}
         <div className="lg:col-span-8">
-          <div className="mb-5 flex items-center justify-between">
-            <h2 className="text-lg font-bold text-[var(--foreground)]">Top News</h2>
-            <Link
-              href="/news"
-              className="flex items-center gap-1.5 text-sm font-medium text-[var(--primary)] hover:underline"
-            >
-              View All <ChevronRight size={14} />
-            </Link>
-          </div>
+          <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] px-6 py-6 shadow-sm sm:px-8">
+            <div className="mb-6 flex items-center justify-between">
+              <h2 className="text-[22px] font-bold uppercase text-[var(--foreground)]">Top News</h2>
+              <Link
+                href="/news"
+                className="text-[15px] font-semibold text-[var(--primary)] hover:underline"
+              >
+                View All
+              </Link>
+            </div>
 
-          {topNews.length > 0 ? (
-            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              {topNews.map((item) => (
-                <TopNewsCard key={item.id} news={item} />
-              ))}
-            </div>
-          ) : (
-            <div className="rounded-2xl border border-dashed border-[var(--border)] bg-[var(--card)] px-6 py-14 text-center">
-              <p className="text-sm text-[var(--muted-foreground)]">No stories to show.</p>
-            </div>
-          )}
+            {topNews.length > 0 ? (
+              <div className="grid grid-cols-1 gap-7 sm:grid-cols-2 lg:grid-cols-3">
+                {topNews.map((item) => (
+                  <TopNewsCard key={item.id} news={item} />
+                ))}
+              </div>
+            ) : (
+              <div className="rounded-2xl border border-dashed border-[var(--border)] bg-[var(--card)] px-6 py-14 text-center">
+                <p className="text-sm text-[var(--muted-foreground)]">No stories to show.</p>
+              </div>
+            )}
+          </div>
 
           {/* ── More News ──────────────────────────────────────────────── */}
           {moreNews.length > 0 && (
-            <div className="mt-10">
-              <h2 className="mb-5 text-lg font-bold text-[var(--foreground)]">More News</h2>
-              <div className="space-y-4">
+            <div className="mt-[10px] overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--card)] px-6 py-5 shadow-sm sm:px-8 sm:py-6">
+              <div className="mb-6 flex items-center justify-between">
+                <h2 className="text-[22px] font-bold uppercase text-[var(--foreground)]">More News</h2>
+                <Link
+                  href="/news/headlines"
+                  className="text-[15px] font-medium text-[var(--primary)] hover:underline"
+                >
+                  View All
+                </Link>
+              </div>
+              <div className="divide-y divide-[var(--border)]">
                 {moreNews.map((item) => (
                   <MoreNewsRow key={item.id} news={item} />
                 ))}
               </div>
               <Link
                 href="/news/headlines"
-                className="mt-5 flex items-center justify-center gap-2.5 rounded-xl border border-[var(--border)] px-5 py-3.5 text-sm font-medium text-[var(--foreground)] transition hover:bg-[var(--muted)]"
+                className="mx-auto mt-7 flex h-11 w-[200px] items-center justify-center gap-2 rounded-full bg-[var(--muted)] text-sm font-medium text-[var(--foreground)] transition hover:bg-[var(--primary)] hover:text-[var(--primary-foreground)]"
               >
-                Load More <ChevronRight size={14} />
+                Load More News <ChevronDown size={14} />
               </Link>
             </div>
           )}
@@ -363,20 +453,42 @@ export default function NewsHome({ initialNewsData }) {
 
         {/* Sidebar – 4/12 (≈30%) */}
         <aside className="lg:col-span-4">
-          <div className="space-y-10 lg:sticky lg:top-8">
+          <div className="space-y-[10px] lg:sticky lg:top-8">
             {/* Popular / Trending */}
             {trending.length > 0 && (
-              <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-5 shadow-sm">
-                <div className="mb-5 flex items-center justify-between">
-                  <h3 className="text-sm font-bold text-[var(--foreground)]">Trending Now</h3>
+              <div className="overflow-hidden rounded-[20px] border border-[var(--border)] bg-[var(--card)] p-6 shadow-sm">
+                <div className="mb-6 flex items-center justify-between">
+                  <h3 className="text-[22px] font-bold uppercase text-[var(--foreground)]">Trending Now</h3>
                   <Link
                     href="/news/trending"
-                    className="text-xs font-medium text-[var(--primary)] hover:underline"
+                    className="text-[15px] font-semibold text-[var(--primary)] hover:underline"
                   >
                     View All
                   </Link>
                 </div>
-                <div className="space-y-4">
+                <div className="mb-5 flex gap-8">
+                  {[
+                    { key: "trending", label: "Trending" },
+                    { key: "mostread", label: "Most Read" },
+                    { key: "editorspicks", label: "Editor's Picks" },
+                  ].map((tab) => (
+                    <button
+                      key={tab.key}
+                      onClick={() => setTrendingTab(tab.key)}
+                      className={`relative text-sm font-medium transition ${
+                        trendingTab === tab.key
+                          ? "font-semibold text-[var(--primary)]"
+                          : "text-[var(--muted-foreground)] hover:text-[var(--primary)]"
+                      }`}
+                    >
+                      {tab.label}
+                      {trendingTab === tab.key && (
+                        <span className="absolute -bottom-1 left-0 right-0 h-[3px] rounded-sm bg-[var(--primary)]" />
+                      )}
+                    </button>
+                  ))}
+                </div>
+                <div className="space-y-[18px]">
                   {trending.slice(0, 5).map((item, index) => (
                     <TrendingItem key={item.id} news={item} rank={index + 1} />
                   ))}
@@ -385,7 +497,7 @@ export default function NewsHome({ initialNewsData }) {
             )}
 
             {/* Newsletter Widget */}
-            <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-5 shadow-sm">
+            <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-6 shadow-sm">
               <NewsletterWidget />
             </div>
 
@@ -405,9 +517,9 @@ function TopNewsCard({ news }) {
   const [saved, setSaved] = useState(false);
 
   return (
-    <article className="group overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--card)] shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-md">
-      <Link href={`/news/${news.slug}`} className="block">
-        <div className="relative aspect-[16/9] overflow-hidden">
+    <article className="group flex flex-col overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--card)] shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-md">
+      <Link href={`/news/${news.slug}`}>
+        <div className="relative h-[200px] overflow-hidden">
           {news.image_url ? (
             <ManagedImage
               src={news.image_url}
@@ -421,37 +533,36 @@ function TopNewsCard({ news }) {
           )}
         </div>
       </Link>
-      <div className="p-5">
-        <div className="flex items-center gap-2 text-[11px] text-[var(--muted-foreground)]">
-          <span>{news.source || "Unknown"}</span>
-          <span className="h-1 w-1 rounded-full bg-[var(--border)]" />
-          <span className="flex items-center gap-1">
-            <Clock size={10} />
+      <div className="flex flex-1 flex-col px-4 pb-4 pt-[14px]">
+        <div className="flex items-center gap-2">
+          <span className="text-[12px] font-bold uppercase tracking-wider text-[var(--primary)]">
+            {news.category || "General"}
+          </span>
+          <span className="text-[12px] text-[var(--muted-foreground)]">
             {timeAgo(news.published_hours_ago)}
           </span>
         </div>
         <Link href={`/news/${news.slug}`}>
-          <h3 className="mt-2.5 text-sm font-bold leading-snug text-[var(--foreground)] transition-colors group-hover:text-[var(--primary)] line-clamp-2">
+          <h3 className="mt-[6px] text-xl font-bold leading-[1.35] text-[var(--foreground)] transition-colors group-hover:text-[var(--primary)] line-clamp-2">
             {news.headline}
           </h3>
         </Link>
         {news.summary && (
-          <p className="mt-1.5 line-clamp-2 text-sm leading-relaxed text-[var(--muted-foreground)]">
+          <p className="mt-2 line-clamp-2 text-[14px] leading-[1.6] text-[var(--muted-foreground)]">
             {news.summary}
           </p>
         )}
-        <div className="mt-4 flex items-center justify-between border-t border-[var(--border)] pt-4">
-          <span className="flex items-center gap-1 text-xs text-[var(--muted-foreground)]">
-            <Eye size={12} />
-            {formatCount(news.likes + news.comments + news.shares)}
+        <div className="mt-auto flex items-center justify-between pt-4">
+          <span className="flex items-center gap-[6px] text-[13px] font-medium text-[var(--muted-foreground)]">
+            <Eye size={14} />
+            {formatCount(news.likes + news.comments + news.shares)} views
           </span>
           <button
             onClick={(e) => { e.preventDefault(); setSaved((v) => !v); }}
             aria-label={saved ? "Unsave" : "Save"}
-            className={`flex items-center gap-1 text-xs font-medium transition ${saved ? "text-[var(--primary)]" : "text-[var(--muted-foreground)] hover:text-[var(--foreground)]"}`}
+            className={`flex h-5 w-5 items-center justify-center transition ${saved ? "text-[var(--primary)]" : "text-[var(--muted-foreground)] hover:text-[var(--primary)]"}`}
           >
-            <Bookmark size={12} className={saved ? "fill-[var(--primary)]" : ""} />
-            {saved ? "Saved" : "Save"}
+            <Bookmark size={16} className={saved ? "fill-[var(--primary)]" : ""} />
           </button>
         </div>
       </div>
@@ -461,20 +572,37 @@ function TopNewsCard({ news }) {
 
 // ─── Trending Item (sidebar) ──────────────────────────────────────────────
 function TrendingItem({ news, rank }) {
+  const readTime = Math.max(3, Math.ceil(news.headline.length / 100) * 3);
+
   return (
-    <Link href={`/news/${news.slug}`} className="group flex items-start gap-4">
-      <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-[var(--primary)]/10 text-xs font-bold text-[var(--primary)]">
-        {rank}
+    <Link href={`/news/${news.slug}`} className="group flex items-center gap-[14px]">
+      <span className="flex w-[42px] shrink-0 justify-center text-[32px] font-bold text-[var(--border)]">
+        {String(rank).padStart(2, "0")}
       </span>
-      <div className="flex-1 min-w-0">
-        <p className="text-sm font-medium leading-snug text-[var(--foreground)] transition-colors group-hover:text-[var(--primary)] line-clamp-2">
+      <div className="relative h-[60px] w-[60px] shrink-0 overflow-hidden rounded-[10px]">
+        {news.image_url ? (
+          <ManagedImage
+            src={news.image_url}
+            alt=""
+            className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+          />
+        ) : (
+          <div className="flex h-full w-full items-center justify-center bg-[var(--muted)] text-[var(--muted-foreground)]">
+            <Zap size={18} />
+          </div>
+        )}
+      </div>
+      <div className="flex flex-1 flex-col gap-[6px] min-w-0">
+        <p className="text-[15px] font-semibold leading-[1.4] text-[var(--foreground)] transition-colors group-hover:text-[var(--primary)] line-clamp-2">
           {news.headline}
         </p>
-        <span className="mt-1.5 flex items-center gap-1 text-xs text-[var(--muted-foreground)]">
-          <Clock size={10} />
-          {timeAgo(news.published_hours_ago)}
+        <span className="text-[13px] font-medium text-[var(--muted-foreground)]">
+          {readTime} min read &bull; {formatCount(news.likes + news.comments + news.shares)} views
         </span>
       </div>
+      <span className="shrink-0 text-base text-[var(--muted-foreground)] transition group-hover:translate-x-0.5 group-hover:text-[var(--primary)]">
+        &gt;
+      </span>
     </Link>
   );
 }
@@ -484,42 +612,52 @@ function MoreNewsRow({ news }) {
   const [saved, setSaved] = useState(false);
 
   return (
-    <Link href={`/news/${news.slug}`} className="group flex items-center gap-4 rounded-xl border border-[var(--border)] bg-[var(--card)] p-4 transition-all hover:shadow-sm">
-      <div className="relative h-14 w-20 shrink-0 overflow-hidden rounded-lg">
-        {news.image_url ? (
-          <ManagedImage
-            src={news.image_url}
-            alt=""
-            className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
-          />
-        ) : (
-          <div className="flex h-full w-full items-center justify-center bg-[var(--muted)]">
-            <Zap size={16} className="text-[var(--muted-foreground)]" />
+    <div className="group flex items-start justify-between py-4">
+      <div className="flex flex-1 gap-4">
+        <div className="relative h-[60px] w-[80px] shrink-0 overflow-hidden rounded-[10px]">
+          {news.image_url ? (
+            <ManagedImage
+              src={news.image_url}
+              alt=""
+              className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+            />
+          ) : (
+            <div className="flex h-full w-full items-center justify-center bg-[var(--muted)]">
+              <Zap size={16} className="text-[var(--muted-foreground)]" />
+            </div>
+          )}
+        </div>
+        <div className="flex-1 min-w-0">
+          <div className="flex items-center gap-[6px]">
+            <span className="text-[11px] font-bold uppercase tracking-wider text-[var(--primary)]">
+              {news.category || "General"}
+            </span>
+            <span className="text-xs text-[var(--muted-foreground)]">
+              {timeAgo(news.published_hours_ago)}
+            </span>
           </div>
-        )}
+          <p className="mt-[4px] text-lg font-bold leading-[1.3] text-[var(--foreground)] transition-colors group-hover:text-[var(--primary)] line-clamp-2">
+            {news.headline}
+          </p>
+          {news.summary && (
+            <p className="mt-[6px] text-sm leading-[1.5] text-[var(--muted-foreground)] line-clamp-2">
+              {news.summary}
+            </p>
+          )}
+        </div>
       </div>
-      <div className="flex-1 min-w-0">
-        <p className="text-sm font-semibold leading-snug text-[var(--foreground)] transition-colors group-hover:text-[var(--primary)] line-clamp-1">
-          {news.headline}
-        </p>
-        <span className="mt-1.5 flex items-center gap-2 text-xs text-[var(--muted-foreground)]">
-          <span className="flex items-center gap-1">
-            <Clock size={10} />
-            {timeAgo(news.published_hours_ago)}
-          </span>
-          <span className="flex items-center gap-1">
-            <Eye size={10} />
-            {formatCount(news.likes + news.comments + news.shares)}
-          </span>
+      <div className="ml-5 flex shrink-0 flex-col items-end justify-center gap-[10px]">
+        <span className="text-[13px] font-medium text-[var(--muted-foreground)]">
+          {formatCount(news.likes + news.comments + news.shares)} views
         </span>
+        <button
+          onClick={(e) => { e.preventDefault(); e.stopPropagation(); setSaved((v) => !v); }}
+          aria-label={saved ? "Unsave" : "Save"}
+          className={`flex h-6 w-6 items-center justify-center rounded transition ${saved ? "text-[var(--primary)]" : "text-[var(--muted-foreground)] hover:text-[var(--primary)]"}`}
+        >
+          <Bookmark size={16} className={saved ? "fill-[var(--primary)]" : ""} />
+        </button>
       </div>
-      <button
-        onClick={(e) => { e.preventDefault(); e.stopPropagation(); setSaved((v) => !v); }}
-        aria-label={saved ? "Unsave" : "Save"}
-        className={`shrink-0 rounded-lg p-1.5 transition ${saved ? "text-[var(--primary)]" : "text-[var(--muted-foreground)] hover:text-[var(--foreground)]"}`}
-      >
-        <Bookmark size={14} className={saved ? "fill-[var(--primary)]" : ""} />
-      </button>
-    </Link>
+    </div>
   );
 }
