@@ -7,6 +7,7 @@ const SettingsSidebar = ({ activeId, onSelect, onClose }) => {
   return (
     <aside
       className="
+        support-settings-sidebar
         w-72 h-full overflow-y-auto
         bg-(--card)
         border-r border-(--border)
@@ -18,6 +19,7 @@ const SettingsSidebar = ({ activeId, onSelect, onClose }) => {
       {/* Header */}
       <div
         className="
+          support-settings-sidebar-header
           p-5 pb-3 flex items-center justify-between
           bg-(--card)
           sticky top-0 z-10
@@ -32,6 +34,7 @@ const SettingsSidebar = ({ activeId, onSelect, onClose }) => {
         <button
           onClick={onClose}
           className="
+            support-settings-close
             md:hidden p-2
             rounded-lg
             hover:bg-(--muted)
@@ -46,6 +49,7 @@ const SettingsSidebar = ({ activeId, onSelect, onClose }) => {
       {/* Navigation */}
       <nav
         className="
+          support-settings-nav
           px-3 py-4
           bg-(--background)
         "
@@ -62,6 +66,7 @@ const SettingsSidebar = ({ activeId, onSelect, onClose }) => {
               aria-label={`${item.title} settings`}
               aria-current={isActive ? "page" : undefined}
               className={`
+                support-settings-nav-item
                 w-full flex items-center gap-3
                 px-3 py-2.5 mb-1
                 rounded-md text-sm text-left
@@ -71,6 +76,7 @@ const SettingsSidebar = ({ activeId, onSelect, onClose }) => {
                 ${
                   isActive
                     ? `
+                      support-settings-nav-item-active
                       bg-(--primary)/10
                       text-(--primary)
                       font-medium
@@ -78,6 +84,7 @@ const SettingsSidebar = ({ activeId, onSelect, onClose }) => {
                       shadow-sm
                     `
                     : `
+                      support-settings-nav-item-idle
                       text-(--muted-foreground)
                       border-transparent
                       hover:bg-(--muted)

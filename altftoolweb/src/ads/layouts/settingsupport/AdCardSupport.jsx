@@ -13,6 +13,7 @@ export default function AdCard({ ad }) {
       href={redirect || "#"}
       target="_blank"
       rel="noopener noreferrer"
+      className="support-setting-ad-card"
     >
       {/* Image Container */}
       <div className="relative w-full aspect-[16/9]">

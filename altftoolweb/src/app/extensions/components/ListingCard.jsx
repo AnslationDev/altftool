@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Star } from "lucide-react";
+import { ArrowRight, Star } from "lucide-react";
 import ManagedImage from "@/components/ui/ManagedImage";
 
 export default function ListingCard({ extension, slug }) {
@@ -60,8 +60,11 @@ export default function ListingCard({ extension, slug }) {
         </p>
 
         {/* Footer (users) */}
-        <div className="mt-auto pt-3 text-xs text-(--muted-foreground)">
-          {usersCount} users
+        <div className="mt-auto flex items-center justify-between gap-3 pt-3 text-xs text-(--muted-foreground)">
+          <span>{usersCount} users</span>
+          <span className="extension-listing-action inline-flex items-center gap-1 font-bold">
+            Open <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
+          </span>
         </div>
       </div>
     </Link>

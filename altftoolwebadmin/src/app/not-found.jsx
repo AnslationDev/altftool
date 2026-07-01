@@ -25,8 +25,8 @@ const adminFallbackRoutes = [
 export default function NotFound() {
   return (
     <main className="flex min-h-screen items-center justify-center bg-[var(--background)] px-4 py-12 text-[var(--foreground)]">
-      <section className="w-full max-w-2xl rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-6 shadow-sm">
-        <p className="text-xs font-bold uppercase tracking-[0.16em] text-[var(--muted)]">
+      <section className="w-full max-w-2xl rounded-[var(--radius-xl)] border border-[var(--border)] bg-[var(--surface)] p-6 shadow-[var(--shadow-sm)]">
+        <p className="text-xs font-bold uppercase tracking-[0.16em] text-[var(--primary)]">
           Route not found
         </p>
         <h1 className="mt-2 text-2xl font-semibold tracking-tight">
@@ -41,7 +41,7 @@ export default function NotFound() {
             <Link
               key={href}
               href={href}
-              className="rounded-xl border border-[var(--border)] bg-[var(--surface-soft)] p-4 transition hover:border-[var(--primary)] hover:bg-[var(--surface)]"
+              className="rounded-[var(--radius-lg)] border border-[var(--border)] bg-[var(--surface-soft)] p-4 shadow-[var(--shadow-sm)] transition hover:border-[var(--primary)] hover:bg-[var(--surface)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--primary)]"
             >
               <Icon className="h-5 w-5 text-[var(--primary)]" />
               <span className="mt-3 block text-sm font-semibold">{label}</span>
@@ -54,7 +54,7 @@ export default function NotFound() {
 
         <Link
           href="/login"
-          className="mt-6 inline-flex items-center gap-2 rounded-xl border border-[var(--border)] px-4 py-2 text-sm font-medium text-[var(--muted)] transition hover:bg-[var(--surface-soft)] hover:text-[var(--foreground)]"
+          className="mt-6 inline-flex h-10 items-center gap-2 rounded-[var(--radius-md)] border border-[var(--border)] bg-[var(--surface)] px-4 text-sm font-medium text-[var(--muted)] transition hover:bg-[var(--surface-soft)] hover:text-[var(--foreground)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--primary)]"
         >
           <ArrowLeft className="h-4 w-4" />
           Back to login

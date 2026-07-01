@@ -2,9 +2,9 @@ import Link from "next/link";
 
 const VARIANTS = {
   primary: [
-    "bg-(--primary) text-(--primary-foreground)",
-    "shadow-[0_1px_2px_rgba(15,23,42,0.08),inset_0_0_0_1px_color-mix(in_srgb,var(--primary)_70%,#000)]",
-    "hover:bg-(--primary-hover) hover:-translate-y-px hover:shadow-[0_8px_18px_rgba(23,105,224,0.18),inset_0_0_0_1px_color-mix(in_srgb,var(--primary-hover)_70%,#000)]",
+    "bg-[var(--anslation-ds-cta-gradient)] text-(--primary-foreground)",
+    "shadow-[0_1px_2px_rgba(15,23,42,0.08),0_10px_24px_color-mix(in_srgb,var(--primary)_18%,transparent)]",
+    "hover:bg-[var(--anslation-ds-cta-gradient-hover)] hover:-translate-y-px hover:shadow-[0_8px_18px_color-mix(in_srgb,var(--secondary)_20%,transparent),0_14px_32px_color-mix(in_srgb,var(--primary)_16%,transparent)]",
     "active:translate-y-0 active:bg-(--primary-active)",
   ].join(" "),
 

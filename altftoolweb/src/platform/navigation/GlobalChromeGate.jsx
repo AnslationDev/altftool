@@ -1,17 +1,12 @@
 "use client";
 
 import { usePathname } from "next/navigation";
+import { isPublicShellHidden } from "./siteRoutes";
 
 /**
- * Shows the landing AltFTool header/footer only on routes that use the
- * landing chrome. Sections with custom chrome stay isolated.
+ * Shows the global AltFTool header/footer on standard public routes.
+ * Sections with custom chrome stay isolated.
  */
-const LANDING_CHROME_PREFIXES = [
-  "/",
-  "/tools",
-  "/extensions",
-];
-
 const SELF_CHROME_PREFIXES = [
   // microsites with their own header/footer
   "/altfloveimg",
@@ -40,10 +35,7 @@ export default function GlobalChromeGate({ children }) {
   const hasSelfChrome = SELF_CHROME_PREFIXES.some(
     (p) => pathname === p || pathname.startsWith(`${p}/`)
   );
-  const usesLandingChrome = LANDING_CHROME_PREFIXES.some((p) =>
-    p === "/" ? pathname === "/" : pathname === p || pathname.startsWith(`${p}/`)
-  );
 
-  if (hasSelfChrome || !usesLandingChrome) return null;
+  if (hasSelfChrome || isPublicShellHidden(pathname)) return null;
   return children;
 }

@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import SocialLinks from "../SocialLinks";
-import { FOOTER_ROUTE_GROUPS, LEGAL_ROUTE_LINKS, POPULAR_TOOL_LINKS } from "./siteRoutes";
+import { FOOTER_ROUTE_GROUPS, isPublicShellHidden, LEGAL_ROUTE_LINKS, POPULAR_TOOL_LINKS } from "./siteRoutes";
 import {
   FaFacebookF,
   FaInstagram,
@@ -45,10 +45,10 @@ const HOME_FOOTER_GROUPS = [
   {
     title: "Support",
     links: [
-      { label: "FAQ", href: "/supportsetting" },
+      { label: "FAQ", href: "/policypages/faq" },
       { label: "Support", href: "/supportsetting" },
       { label: "Status", href: "/status" },
-      { label: "Request a Tool", href: "/supportsetting" },
+      { label: "Request a Tool", href: "/request-a-tool" },
     ],
   },
 ];
@@ -120,11 +120,7 @@ function HomeFooterSection({ group, withBorder = false }) {
 
 const Footer = () => {
   const pathname = usePathname();
-  const usesLandingChrome =
-    pathname === "/" ||
-    pathname === "/tools" ||
-    pathname?.startsWith("/tools/") ||
-    pathname === "/extensions";
+  const usesLandingChrome = !isPublicShellHidden(pathname);
 
   if (usesLandingChrome) {
     return (
@@ -201,7 +197,7 @@ const Footer = () => {
                 </div>
               </div>
 
-              <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4 lg:gap-0">
+              <div className="grid grid-cols-2 gap-x-6 gap-y-8 lg:grid-cols-4 lg:gap-x-0 lg:gap-y-0">
                 {HOME_FOOTER_GROUPS.map((group, index) => (
                   <HomeFooterSection
                     key={group.title}

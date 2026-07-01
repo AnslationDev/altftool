@@ -13,10 +13,10 @@ export default function NotFound() {
   return (
     <div className="section flex min-h-[70vh] items-center justify-center py-16">
       <div className="w-full max-w-3xl text-center">
-        <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-[var(--anslation-ds-radius-lg)] border border-(--border) bg-(--card) text-(--primary)">
+        <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-[var(--anslation-ds-radius-lg)] border border-(--border) bg-(--card) text-(--primary) shadow-[var(--anslation-ds-shadow-sm)]">
           <Compass className="h-6 w-6" />
         </div>
-        <p className="mt-6 text-sm font-semibold uppercase tracking-[0.12em] text-(--muted-foreground)">
+        <p className="mt-6 text-sm font-semibold uppercase tracking-[0.12em] text-(--primary)">
           404
         </p>
         <h1 className="mt-2 text-3xl font-bold tracking-normal text-(--foreground) sm:text-4xl">
@@ -31,9 +31,9 @@ export default function NotFound() {
             <Link
               key={href}
               href={href}
-              className="group flex items-center gap-3 rounded-[var(--anslation-ds-radius)] border border-(--border) bg-(--card) p-4 transition hover:border-(--primary) hover:bg-(--muted)"
+              className="group flex items-center gap-3 rounded-[var(--anslation-ds-radius)] border border-(--border) bg-(--card) p-4 shadow-[var(--anslation-ds-shadow-sm)] transition hover:border-(--primary) hover:bg-(--muted) hover:shadow-[var(--anslation-ds-shadow-md)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-(--primary)"
             >
-              <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-[6px] bg-(--muted) text-(--primary)">
+              <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-[var(--anslation-ds-radius-sm)] bg-(--muted) text-(--primary)">
                 <Icon className="h-5 w-5" />
               </span>
               <span>
@@ -50,7 +50,7 @@ export default function NotFound() {
 
         <Link
           href="/"
-          className="mt-8 inline-flex items-center gap-2 rounded-[var(--anslation-ds-radius)] bg-(--primary) px-4 py-2 text-sm font-semibold text-(--primary-foreground) transition hover:bg-(--primary-active)"
+          className="mt-8 inline-flex h-10 items-center gap-2 rounded-[var(--anslation-ds-radius)] bg-(--primary) px-4 text-sm font-semibold text-(--primary-foreground) shadow-[var(--anslation-ds-shadow-sm)] transition hover:bg-(--primary-active) focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-(--primary)"
         >
           <Home className="h-4 w-4" />
           Go Home
