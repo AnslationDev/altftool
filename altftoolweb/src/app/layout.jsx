@@ -14,7 +14,10 @@ import { Suspense } from "react";
 import LazyChatBot from "@/platform/chatbot/LazyChatBot";
 import { AlertProvider } from "@/shared/ui/AlertProvider";
 import JsonLd from "@/platform/seo/JsonLd";
-import { primeSeoConfig } from "@/platform/seo/seoConfigSource";
+import { primeSeoConfig, loadSeoConfig } from "@/platform/seo/seoConfigSource";
+import { resolveInjectedCode } from "@altftool/core/seo";
+import InjectedCode from "@/platform/seo/InjectedCode";
+import PerPageCode from "@/platform/seo/PerPageCode";
 import GlobalNavigationLoader from "@/components/ui/GlobalNavigationLoader";
 import WebVitalsReporter from "@/components/WebVitalsReporter";
 import GlobalChromeGate from "@/platform/navigation/GlobalChromeGate";
@@ -138,7 +141,15 @@ export async function generateMetadata() {
   return baseMetadata;
 }
 
-export default function RootLayout({ children }) {
+export default async function RootLayout({ children }) {
+  // Admin-authored custom code (raw HTML/scripts). Global is SSR-injected here;
+  // per-page code is injected client-side (only when the site has any).
+  const seoConfig = await loadSeoConfig().catch(() => null);
+  const { global: customCode } = resolveInjectedCode(seoConfig, null);
+  const hasPageCode =
+    seoConfig?.enabled !== false &&
+    !!seoConfig?.pages &&
+    Object.values(seoConfig.pages).some((p) => p && p.code);
   return (
     <html lang="en" data-theme-mode="system" suppressHydrationWarning className={`${geistSans.variable} ${geistMono.variable} ${sora.variable} ${inter.variable} ${ibmPlexSans.variable}`}>
       <head>
@@ -212,6 +223,9 @@ export default function RootLayout({ children }) {
       </head>
 
       <body className="anslation-ds-public antialiased">
+  <InjectedCode id="head" html={customCode.head} />
+  <InjectedCode id="body-start" html={customCode.bodyStart} />
+  <PerPageCode active={hasPageCode} />
   <ThemeProvider>
     <CookieConsentProvider>
       <AlertProvider>
@@ -244,6 +258,7 @@ export default function RootLayout({ children }) {
         </GlobalChromeGate>
 
         <WebVitalsReporter />
+        <InjectedCode id="body-end" html={customCode.bodyEnd} />
 
       </AlertProvider>
     </CookieConsentProvider>

@@ -20,11 +20,11 @@ export async function fetchSeoConfig() {
   return data.config;
 }
 
-export async function saveSeoConfig(config, { force = false } = {}) {
+export async function saveSeoConfig(config, { force = false, paths = [] } = {}) {
   const res = await fetch("/api/seo/config", {
     method: "PUT",
     headers: await authHeaders(),
-    body: JSON.stringify({ config, force }),
+    body: JSON.stringify({ config, force, paths }),
   });
   return readApiJson(res, "Failed to save SEO config");
 }

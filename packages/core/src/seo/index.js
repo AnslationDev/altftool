@@ -7,6 +7,7 @@ export {
   resolveRedirect,
   resolveContent,
   resolveExtendedMeta,
+  resolveInjectedCode,
   globToRegExp,
 } from "./resolver.js";
 
@@ -36,6 +37,7 @@ export {
   normalizeVerification,
   normalizeHreflang,
   normalizeSchemaList,
+  normalizeCodeBlock,
   emptySeoConfig,
   SEO_RUNTIME_DOC_PATH,
   SEO_RUNTIME_COLLECTION,
