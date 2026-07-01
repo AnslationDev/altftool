@@ -90,7 +90,10 @@ export async function PUT(request) {
       metadata: { version: next.version, enabled: next.enabled, warnings: errors },
     }).catch(() => {});
 
-    triggerWebRevalidate().catch(() => {});
+    const revalidatePaths = Array.isArray(body?.paths)
+      ? body.paths.filter((p) => typeof p === "string" && p.startsWith("/"))
+      : [];
+    triggerWebRevalidate(revalidatePaths).catch(() => {});
 
     return NextResponse.json({ ok: true, version: next.version, warnings: errors });
   } catch (error) {
@@ -101,13 +104,13 @@ export async function PUT(request) {
 
 // Best-effort: ask the public web app to revalidate the seo-config cache tag so
 // changes go live within seconds (no deploy). Failure never blocks the save.
-async function triggerWebRevalidate() {
+async function triggerWebRevalidate(paths = []) {
   const url = process.env.ALTFT_WEB_REVALIDATE_URL;
   const secret = process.env.ALTFT_REVALIDATE_SECRET;
   if (!url || !secret) return;
   await fetch(url, {
     method: "POST",
     headers: { "Content-Type": "application/json", "x-revalidate-secret": secret },
-    body: JSON.stringify({ tag: "seo-config" }),
+    body: JSON.stringify({ tag: "seo-config", paths: Array.isArray(paths) ? paths : [] }),
   });
 }

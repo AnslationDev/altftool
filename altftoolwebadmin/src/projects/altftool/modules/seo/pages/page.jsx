@@ -101,7 +101,7 @@ export default function PageSeoWorkspace() {
     setMessage("");
     setIsError(false);
     try {
-      const res = await saveSeoConfig(nextConfig, {});
+      const res = await saveSeoConfig(nextConfig, { paths: activePath ? [activePath] : [] });
       setConfig(nextConfig);
       setMessage(`${successMsg} (v${res.version}). Live within a few seconds.`);
       setIsError(false);

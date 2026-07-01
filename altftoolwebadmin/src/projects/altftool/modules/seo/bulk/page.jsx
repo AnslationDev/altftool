@@ -156,7 +156,7 @@ export default function BulkSeoPage() {
       if (!Object.keys(pages[path]).length) delete pages[path];
     }
     try {
-      const res = await saveSeoConfig({ ...config, pages }, {});
+      const res = await saveSeoConfig({ ...config, pages }, { paths: [...selected] });
       setConfig({ ...config, pages });
       setMessage(`Applied to ${selected.size} page(s) (v${res.version}).`);
     } catch (e) {
@@ -205,7 +205,7 @@ export default function BulkSeoPage() {
     setMessage("");
     setIsError(false);
     try {
-      const res = await saveSeoConfig({ ...config, pages: merged }, {});
+      const res = await saveSeoConfig({ ...config, pages: merged }, { paths: Object.keys(importPreview.pages) });
       setConfig({ ...config, pages: merged });
       setMessage(`Imported ${Object.keys(importPreview.pages).length} page override(s) (v${res.version}).`);
       setImportText("");
