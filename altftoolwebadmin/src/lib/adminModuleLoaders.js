@@ -97,6 +97,21 @@ const routeLoaders = {
       "view-team": () => import("@/projects/leadtree/modules/ourteams/view-team/page.jsx"),
     },
   },
+  myluckydeal: {
+    dashboard: { "": () => import("@/projects/myluckydeal/modules/dashboard/page.jsx") },
+    deals: { "": () => import("@/projects/myluckydeal/modules/deals/page.jsx") },
+    categories: { "": () => import("@/projects/myluckydeal/modules/categories/page.jsx") },
+    stores: { "": () => import("@/projects/myluckydeal/modules/stores/page.jsx") },
+    coupons: { "": () => import("@/projects/myluckydeal/modules/coupons/page.jsx") },
+    blogs: { "": () => import("@/projects/myluckydeal/modules/blogs/page.jsx") },
+    faqs: { "": () => import("@/projects/myluckydeal/modules/faqs/page.jsx") },
+    hero: { "": () => import("@/projects/myluckydeal/modules/hero/page.jsx") },
+    ads: { "": () => import("@/projects/myluckydeal/modules/ads/page.jsx") },
+    offers: { "": () => import("@/projects/myluckydeal/modules/offers/page.jsx") },
+    collections: { "": () => import("@/projects/myluckydeal/modules/collections/page.jsx") },
+    settings: { "": () => import("@/projects/myluckydeal/modules/settings/page.jsx") },
+    migration: { "": () => import("@/projects/myluckydeal/modules/migration/page.jsx") },
+  },
 };
 
 const layoutLoaders = {

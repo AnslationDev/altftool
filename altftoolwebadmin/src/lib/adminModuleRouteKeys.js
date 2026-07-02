@@ -40,6 +40,21 @@ export const ADMIN_MODULE_ROUTE_KEYS = {
     expertvideos: ["", "add-video", "edit-video/[id]", "view-video", "view-video/[id]"],
     ourteams: ["", "view-team"],
   },
+  myluckydeal: {
+    dashboard: [""],
+    deals: [""],
+    categories: [""],
+    stores: [""],
+    coupons: [""],
+    blogs: [""],
+    faqs: [""],
+    hero: [""],
+    ads: [""],
+    offers: [""],
+    collections: [""],
+    settings: [""],
+    migration: [""],
+  },
 };
 
 export const ADMIN_MODULE_LAYOUT_KEYS = {

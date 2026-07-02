@@ -86,6 +86,14 @@ service cloud.firestore {
       allow write: if isActiveAdmin();
     }
 
+    // My Lucky Deals website content: world-readable (the public site reads
+    // deals/categories/stores/coupons/blogs/faqs/hero/ads/settings from here),
+    // writable only by active admins via the ALTFTool panel.
+    match /projects/myluckydeal/{document=**} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+
     match /projects/{projectId}/{document=**} {
       allow read, write: if isActiveAdmin();
     }
