@@ -164,7 +164,7 @@ export const apps = [
     lastUpdated: "May 14, 2024",
     developer: "AltFTool Team",
     iconUrl: "/downloads/apps/anternet/icon.svg",
-    apkUrl: "/downloads/apps/anternet/anternet.apk",
+    apkUrl: "https://drive.google.com/uc?export=download&id=1ppX_XYul0k3mAEGomsHDech1D5uCx0Ot",
     screenshots: [
       "https://placehold.co/420x840/052e2b/5F8F00.png?text=Internet+Tools",
       "https://placehold.co/420x840/0f3f2e/f8f5eb.png?text=Quick+Access",
