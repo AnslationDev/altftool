@@ -68,7 +68,7 @@ export const ADMIN_MODULE_ROUTE_KEYS = {
     navbar: [""],
     footer: [""],
     home: [""],
-    "contact-us": [""],
+    "contact-us": ["", "settings"],
     advertiser: ["", "hero-section", "traffic-types"],
     publisers: [""],
     blog: [""],

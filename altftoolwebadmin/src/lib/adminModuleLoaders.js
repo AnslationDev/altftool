@@ -144,6 +144,7 @@ const routeLoaders = {
     },
     "contact-us": {
       "": () => import("@/projects/carrerbook/modules/contact-us/page.jsx"),
+      settings: () => import("@/projects/carrerbook/modules/contact-us/settings/page.jsx"),
     },
     advertiser: {
       "": () => import("@/projects/carrerbook/modules/advertiser/page.jsx"),

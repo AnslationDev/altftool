@@ -8,12 +8,11 @@ import {
   PenTool,
   Users,
 } from "lucide-react";
-import Leadtreelogo from "../../../public/logos/leadlogo.png"
 
 const carrerbookConfig = {
   id: "carrerbook",
-  name: "Carrer Book",
-  logo: Leadtreelogo,
+  name: "CareerBook",
+  logo: "/logos/carrerbook-icon.png",
   color: "#10b981",
   modules: {
     navbar: { label: "Navbar", icon: LayoutPanelTop },
