@@ -19,12 +19,18 @@ import { db, storage } from "@/lib/firebase";
 
 const PROJECT_ID = "carrerbook";
 const SETTINGS_PATH = ["projects", PROJECT_ID, "contact", "settings"];
-const LEADS_PATH = ["projects", PROJECT_ID, "contactLeads"];
+const LEADS_PATH = ["projects", PROJECT_ID, "contact", "settings", "submissions"];
 
 export const DEFAULT_CONTACT = {
   active: true,
   title: "Get In Touch",
   submitText: "Submit",
+  autoReplyEnabled: true,
+  greetingEmailSubject: "Thanks for contacting CareerBook, {{name}}",
+  greetingEmailTemplate:
+    "Hi {{name}},\n\nThanks for reaching out to CareerBook. We have received your message and our team will get back to you shortly.\n\nBest regards,\nCareerBook Team",
+  adminNotificationEmail: "moreply@gmail.com",
+  successMessage: "Thanks! Your message has been received. Our team will contact you soon.",
   placeholders: {
     name: "Name",
     email: "Email",
@@ -75,6 +81,11 @@ export async function saveContactSettings(payload) {
       ...payload,
       title: clean(payload.title),
       submitText: clean(payload.submitText),
+      autoReplyEnabled: payload.autoReplyEnabled !== false,
+      greetingEmailSubject: clean(payload.greetingEmailSubject),
+      greetingEmailTemplate: clean(payload.greetingEmailTemplate),
+      adminNotificationEmail: clean(payload.adminNotificationEmail),
+      successMessage: clean(payload.successMessage),
       addressTitle: clean(payload.addressTitle),
       addressText: clean(payload.addressText),
       hoursTitle: clean(payload.hoursTitle),
@@ -102,6 +113,13 @@ export async function resetContactSettings() {
 export async function updateContactLeadStatus(id, status) {
   await updateDoc(doc(db, ...LEADS_PATH, id), {
     status,
+    updatedAt: serverTimestamp(),
+  });
+}
+
+export async function updateContactLeadMeta(id, payload) {
+  await updateDoc(doc(db, ...LEADS_PATH, id), {
+    ...payload,
     updatedAt: serverTimestamp(),
   });
 }

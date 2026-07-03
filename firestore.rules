@@ -122,6 +122,51 @@ service cloud.firestore {
         nonEmptyText(request.resource.data.message, 3000);
     }
 
+    match /projects/carrerbook/contact/settings/submissions/{leadId} {
+      allow read, update, delete: if isActiveAdmin();
+      allow create: if hasOnly([
+          "name",
+          "email",
+          "website",
+          "skypeId",
+          "companyName",
+          "queryType",
+          "message",
+          "status",
+          "createdAt",
+          "source"
+        ]) &&
+        request.resource.data.status == "new" &&
+        nonEmptyText(request.resource.data.name, 120) &&
+        nonEmptyText(request.resource.data.email, 254) &&
+        nonEmptyText(request.resource.data.message, 3000);
+    }
+
+    match /projects/carrerbook/contact-us/settings {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+
+      match /submissions/{leadId} {
+        allow read, update, delete: if isActiveAdmin();
+        allow create: if hasOnly([
+            "name",
+            "email",
+            "website",
+            "skypeId",
+            "companyName",
+            "queryType",
+            "message",
+            "status",
+            "createdAt",
+            "source"
+          ]) &&
+          request.resource.data.status == "new" &&
+          nonEmptyText(request.resource.data.name, 120) &&
+          nonEmptyText(request.resource.data.email, 254) &&
+          nonEmptyText(request.resource.data.message, 3000);
+      }
+    }
+
     match /projects/carrerbook/homesection/{sectionId} {
       allow read: if true;
       allow write: if isActiveAdmin();

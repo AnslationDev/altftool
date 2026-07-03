@@ -11,8 +11,10 @@ import {
   RefreshCw,
   Save,
   Search,
+  Send,
   Trash2,
 } from "lucide-react";
+import { getAuth } from "firebase/auth";
 import DeleteConfirmModal from "@/components/ui/DeleteConfirmModal";
 import { emitAlert } from "@/lib/alertBus";
 import {
@@ -83,6 +85,7 @@ function ContactPreview({ content }) {
           <button className="mt-7 rounded-full bg-amber-500 px-10 py-3 font-bold text-white">
             {content.submitText}
           </button>
+          <p className="mt-4 max-w-md text-xs leading-6 text-white/60">{content.successMessage}</p>
         </div>
         <div className="overflow-hidden rounded-xl" style={{ background: content.panelColor }}>
           <div className="p-7">
@@ -122,6 +125,10 @@ export default function CareerBookContactAdminPage() {
   const [query, setQuery] = useState("");
   const [statusFilter, setStatusFilter] = useState("all");
   const [selectedLead, setSelectedLead] = useState(null);
+  const [greetingTarget, setGreetingTarget] = useState(null);
+  const [greetingForm, setGreetingForm] = useState({ to: "", subject: "", message: "" });
+  const [greetingSending, setGreetingSending] = useState(false);
+  const [greetingErrors, setGreetingErrors] = useState({});
   const [deleteTarget, setDeleteTarget] = useState(null);
   const [deleteLoading, setDeleteLoading] = useState(false);
 
@@ -233,6 +240,69 @@ export default function CareerBookContactAdminPage() {
     }
   };
 
+  const openGreetingModal = (lead) => {
+    const subject = interpolateTemplate(content.greetingEmailSubject, lead, content);
+    const message = interpolateTemplate(content.greetingEmailTemplate, lead, content);
+    setGreetingTarget(lead);
+    setGreetingForm({
+      to: lead.email || "",
+      subject: subject || `Thanks for contacting CareerBook, ${lead.name || "there"}`,
+      message: message || `Hi ${lead.name || "there"},\n\nThanks for reaching out to CareerBook.`,
+    });
+    setGreetingErrors({});
+  };
+
+  const handleGreetingField = (key, value) => {
+    setGreetingForm((prev) => ({ ...prev, [key]: value }));
+    setGreetingErrors((prev) => ({ ...prev, [key]: "" }));
+  };
+
+  const sendGreeting = async () => {
+    const nextErrors = {};
+    if (!greetingForm.to?.trim()) nextErrors.to = "Recipient email is required.";
+    if (!greetingForm.subject?.trim()) nextErrors.subject = "Subject is required.";
+    if (!greetingForm.message?.trim()) nextErrors.message = "Message is required.";
+    setGreetingErrors(nextErrors);
+    if (Object.keys(nextErrors).length) return;
+
+    setGreetingSending(true);
+    try {
+      const target = greetingTarget;
+      const auth = getAuth();
+      const token = await auth.currentUser?.getIdToken(true);
+      if (!token) {
+        throw new Error("Your session has expired. Please sign in again.");
+      }
+
+      const response = await fetch("/api/contact/send-greeting", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          leadId: target?.id,
+          to: greetingForm.to.trim(),
+          subject: greetingForm.subject.trim(),
+          message: greetingForm.message.trim(),
+        }),
+      });
+
+      const payload = await response.json().catch(() => ({}));
+      if (!response.ok) {
+        throw new Error(payload?.error || "Failed to send greeting email.");
+      }
+
+      emitAlert({ type: "success", message: "Greeting email sent." });
+      setGreetingTarget(null);
+      setGreetingForm({ to: "", subject: "", message: "" });
+    } catch (error) {
+      emitAlert({ type: "error", message: error?.message || "Failed to send greeting email." });
+    } finally {
+      setGreetingSending(false);
+    }
+  };
+
   const handleDelete = async () => {
     if (!deleteTarget) return;
     setDeleteLoading(true);
@@ -313,6 +383,29 @@ export default function CareerBookContactAdminPage() {
                 </Field>
                 <Field label="Submit button text" error={errors.submitText}>
                   <input value={draft.submitText} onChange={(event) => setField("submitText", event.target.value)} className={inputClass} />
+                </Field>
+                <button
+                  onClick={() => setField("autoReplyEnabled", draft.autoReplyEnabled === false)}
+                  className={`flex w-full items-center justify-between rounded-xl border px-4 py-3 text-sm font-semibold ${
+                    draft.autoReplyEnabled !== false
+                      ? "border-emerald-200 bg-emerald-50 text-emerald-700"
+                      : "border-gray-200 bg-gray-50 text-gray-500"
+                  }`}
+                >
+                  <span>{draft.autoReplyEnabled !== false ? "Auto reply enabled" : "Auto reply disabled"}</span>
+                  <span className={`h-2.5 w-2.5 rounded-full ${draft.autoReplyEnabled !== false ? "bg-emerald-500" : "bg-gray-400"}`} />
+                </button>
+                <Field label="Greeting email subject" error={errors.greetingEmailSubject}>
+                  <input value={draft.greetingEmailSubject || ""} onChange={(event) => setField("greetingEmailSubject", event.target.value)} className={inputClass} />
+                </Field>
+                <Field label="Greeting email template" error={errors.greetingEmailTemplate}>
+                  <textarea value={draft.greetingEmailTemplate || ""} onChange={(event) => setField("greetingEmailTemplate", event.target.value)} rows={6} className={textareaClass} />
+                </Field>
+                <Field label="Admin notification email" error={errors.adminNotificationEmail}>
+                  <input value={draft.adminNotificationEmail || ""} onChange={(event) => setField("adminNotificationEmail", event.target.value)} className={inputClass} />
+                </Field>
+                <Field label="Form success message" error={errors.successMessage}>
+                  <textarea value={draft.successMessage || ""} onChange={(event) => setField("successMessage", event.target.value)} rows={3} className={textareaClass} />
                 </Field>
                 <div className="grid gap-3 sm:grid-cols-2">
                   {Object.entries(draft.placeholders || {}).map(([key, value]) => (
@@ -404,9 +497,18 @@ export default function CareerBookContactAdminPage() {
                       <td className="px-4 py-3"><span className={`rounded-full px-2.5 py-1 text-xs font-semibold ${STATUS_STYLES[lead.status] || STATUS_STYLES.new}`}>{lead.status || "new"}</span></td>
                       <td className="px-4 py-3">
                         <div className="flex justify-end gap-1">
-                          <button onClick={() => setSelectedLead(lead)} className="rounded-lg p-2 text-blue-500 hover:bg-blue-50"><Eye className="h-4 w-4" /></button>
-                          <button onClick={() => markLead(lead, lead.status === "contacted" ? "read" : "contacted")} className="rounded-lg p-2 text-emerald-600 hover:bg-emerald-50"><CheckCircle2 className="h-4 w-4" /></button>
-                          <button onClick={() => setDeleteTarget({ type: "lead", ...lead })} className="rounded-lg p-2 text-red-500 hover:bg-red-50"><Trash2 className="h-4 w-4" /></button>
+                          <button onClick={() => setSelectedLead(lead)} className="rounded-lg p-2 text-blue-500 hover:bg-blue-50" title="View lead">
+                            <Eye className="h-4 w-4" />
+                          </button>
+                          <button onClick={() => openGreetingModal(lead)} className="rounded-lg p-2 text-violet-600 hover:bg-violet-50" title="Send greeting">
+                            <Mail className="h-4 w-4" />
+                          </button>
+                          <button onClick={() => markLead(lead, lead.status === "contacted" ? "read" : "contacted")} className="rounded-lg p-2 text-emerald-600 hover:bg-emerald-50" title="Mark contacted">
+                            <CheckCircle2 className="h-4 w-4" />
+                          </button>
+                          <button onClick={() => setDeleteTarget({ type: "lead", ...lead })} className="rounded-lg p-2 text-red-500 hover:bg-red-50" title="Delete lead">
+                            <Trash2 className="h-4 w-4" />
+                          </button>
                         </div>
                       </td>
                     </tr>
@@ -428,10 +530,80 @@ export default function CareerBookContactAdminPage() {
             </div>
             <div className="mt-5 grid gap-3 sm:grid-cols-2">
               {["email", "website", "skypeId", "companyName", "queryType"].map((key) => <Detail key={key} label={key} value={selectedLead[key]} />)}
+              <Detail label="emailSent" value={selectedLead.emailSent ? "Yes" : "No"} />
+              <Detail label="emailSentAt" value={formatDate(selectedLead.emailSentAt)} />
             </div>
             <Detail label="message" value={selectedLead.message} large />
             <div className="mt-5 flex flex-wrap justify-end gap-2">
+              <button
+                onClick={() => {
+                  openGreetingModal(selectedLead);
+                  setSelectedLead(null);
+                }}
+                className="rounded-xl border border-violet-200 px-4 py-2 text-sm font-semibold text-violet-700 hover:bg-violet-50"
+              >
+                Send Greeting
+              </button>
               {["new", "read", "contacted"].map((status) => <button key={status} onClick={() => markLead(selectedLead, status)} className="rounded-xl border border-gray-200 px-4 py-2 text-sm font-semibold text-gray-600 hover:bg-gray-50">Mark {status}</button>)}
+            </div>
+          </div>
+        </div>
+      ) : null}
+
+      {greetingTarget ? (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/45 px-4 backdrop-blur-sm">
+          <div className="w-full max-w-3xl rounded-2xl bg-white p-6 shadow-2xl">
+            <div className="flex items-start justify-between gap-4">
+              <div>
+                <p className="text-xs font-bold uppercase tracking-widest text-gray-400">Send Greeting</p>
+                <h2 className="mt-1 text-lg font-bold text-gray-900">Reply to {greetingTarget.name || "lead"}</h2>
+              </div>
+              <button onClick={() => setGreetingTarget(null)} className="rounded-lg border border-gray-200 px-3 py-1.5 text-sm font-semibold text-gray-500">
+                Close
+              </button>
+            </div>
+
+            <div className="mt-5 grid gap-4">
+              <Field label="To" error={greetingErrors.to}>
+                <input
+                  value={greetingForm.to}
+                  onChange={(event) => handleGreetingField("to", event.target.value)}
+                  className={inputClass}
+                />
+              </Field>
+              <Field label="Subject" error={greetingErrors.subject}>
+                <input
+                  value={greetingForm.subject}
+                  onChange={(event) => handleGreetingField("subject", event.target.value)}
+                  className={inputClass}
+                />
+              </Field>
+              <Field label="Message" error={greetingErrors.message}>
+                <textarea
+                  value={greetingForm.message}
+                  onChange={(event) => handleGreetingField("message", event.target.value)}
+                  rows={10}
+                  className={textareaClass}
+                />
+              </Field>
+              <div className="rounded-xl border border-gray-200 bg-gray-50 p-4 text-xs leading-6 text-gray-500">
+                Use <code>{`{{name}}`}</code>, <code>{`{{email}}`}</code>, <code>{`{{companyName}}`}</code>, and{" "}
+                <code>{`{{queryType}}`}</code> inside the greeting template.
+              </div>
+            </div>
+
+            <div className="mt-5 flex justify-end gap-3">
+              <button onClick={() => setGreetingTarget(null)} className="rounded-xl border border-gray-200 px-4 py-2.5 text-sm font-semibold text-gray-600 hover:bg-gray-50">
+                Cancel
+              </button>
+              <button
+                onClick={sendGreeting}
+                disabled={greetingSending}
+                className="inline-flex items-center gap-2 rounded-xl bg-gray-900 px-4 py-2.5 text-sm font-semibold text-white hover:bg-gray-700 disabled:opacity-60"
+              >
+                {greetingSending ? <Loader2 className="h-4 w-4 animate-spin" /> : <Send className="h-4 w-4" />}
+                Send Greeting
+              </button>
             </div>
           </div>
         </div>
@@ -463,7 +635,23 @@ function validateContact(values) {
   const errors = {};
   if (!values.title?.trim()) errors.title = "Section title is required.";
   if (!values.submitText?.trim()) errors.submitText = "Submit text is required.";
+  if (values.autoReplyEnabled !== false) {
+    if (!values.greetingEmailSubject?.trim()) errors.greetingEmailSubject = "Greeting subject is required.";
+    if (!values.greetingEmailTemplate?.trim()) errors.greetingEmailTemplate = "Greeting template is required.";
+    if (!values.adminNotificationEmail?.trim()) errors.adminNotificationEmail = "Admin notification email is required.";
+  }
+  if (!values.successMessage?.trim()) errors.successMessage = "Success message is required.";
   return errors;
+}
+
+function interpolateTemplate(template, lead = {}, content = {}) {
+  if (!template) return "";
+  return String(template)
+    .replaceAll("{{name}}", lead.name || "")
+    .replaceAll("{{email}}", lead.email || "")
+    .replaceAll("{{companyName}}", lead.companyName || "")
+    .replaceAll("{{queryType}}", lead.queryType || "")
+    .replaceAll("{{successMessage}}", content.successMessage || "");
 }
 
 const inputClass = "w-full rounded-xl border border-gray-200 px-3 py-2.5 text-sm outline-none transition focus:border-gray-900 focus:ring-2 focus:ring-gray-900/10";
