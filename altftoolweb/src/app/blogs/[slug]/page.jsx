@@ -95,7 +95,7 @@ export async function generateMetadata({ params }) {
   const title = blog.seoTitle || `${blog.heading} - AltFTool Blog`;
   const description = getBlogDescription(blog);
   const tags = Array.isArray(blog.tags) ? blog.tags.filter(Boolean) : [];
-  const metadata = await createPageMetadata({
+  const metadata = createPageMetadata({
     title,
     description,
     path: `/blogs/${slug}`,
@@ -114,6 +114,8 @@ export async function generateMetadata({ params }) {
     authors: [{ name: blog.author || "AltFTool Editorial" }],
     openGraph: {
       ...metadata.openGraph,
+      title,
+      description,
       type: "article",
       publishedTime: blog.date,
       modifiedTime: blog.reviewedAt || blog.updatedAt || blog.date,
@@ -122,6 +124,8 @@ export async function generateMetadata({ params }) {
     },
     twitter: {
       ...metadata.twitter,
+      title,
+      description,
     },
   };
 }

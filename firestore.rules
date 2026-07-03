@@ -86,6 +86,112 @@ service cloud.firestore {
       allow write: if isActiveAdmin();
     }
 
+    match /projects/carrerbook/footer/settings {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+
+    match /projects/carrerbook/footerEmails/{emailId} {
+      allow read, update, delete: if isActiveAdmin();
+      allow create: if hasOnly(["email", "status", "createdAt"]) &&
+        request.resource.data.status == "unread" &&
+        nonEmptyText(request.resource.data.email, 254);
+    }
+
+    match /projects/carrerbook/contact/settings {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+
+    match /projects/carrerbook/contactLeads/{leadId} {
+      allow read, update, delete: if isActiveAdmin();
+      allow create: if hasOnly([
+          "name",
+          "email",
+          "website",
+          "skypeId",
+          "companyName",
+          "queryType",
+          "message",
+          "status",
+          "createdAt"
+        ]) &&
+        request.resource.data.status == "new" &&
+        nonEmptyText(request.resource.data.name, 120) &&
+        nonEmptyText(request.resource.data.email, 254) &&
+        nonEmptyText(request.resource.data.message, 3000);
+    }
+
+    match /projects/carrerbook/homesection/{sectionId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+
+      match /services/{serviceId} {
+        allow read: if true;
+        allow write: if isActiveAdmin();
+      }
+
+      match /features/{featureId} {
+        allow read: if true;
+        allow write: if isActiveAdmin();
+      }
+
+      match /faqs/{faqId} {
+        allow read: if true;
+        allow write: if isActiveAdmin();
+      }
+
+      match /cards/{cardId} {
+        allow read: if true;
+        allow write: if isActiveAdmin();
+      }
+
+      match /{marketingTable}/{rowId} {
+        allow read: if marketingTable in ["cpl", "cps", "cpi"];
+        allow write: if marketingTable in ["cpl", "cps", "cpi"] && isActiveAdmin();
+      }
+    }
+
+    match /projects/carrerbook/advertiser/{sectionId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+
+      match /cards/{cardId} {
+        allow read: if true;
+        allow write: if isActiveAdmin();
+      }
+    }
+
+    match /projects/carrerbook/publisher/{sectionId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+
+      match /cards/{cardId} {
+        allow read: if true;
+        allow write: if isActiveAdmin();
+      }
+    }
+
+    match /projects/carrerbook/about-us/{sectionId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+
+      match /cards/{cardId} {
+        allow read: if true;
+        allow write: if isActiveAdmin();
+      }
+    }
+
+    match /projects/carrerbook/team/settings {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+
+    match /projects/carrerbook/teamMembers/{memberId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+
     match /projects/{projectId}/{document=**} {
       allow read, write: if isActiveAdmin();
     }
