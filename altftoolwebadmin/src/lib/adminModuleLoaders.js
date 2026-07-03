@@ -97,7 +97,42 @@ const routeLoaders = {
       "view-team": () => import("@/projects/leadtree/modules/ourteams/view-team/page.jsx"),
     },
   },
-  myluckydeal: {
+  carrerbook: {
+    navbar: {
+      "": () => import("@/projects/carrerbook/modules/navbar/page.jsx"),
+    },
+    footer: {
+      "": () => import("@/projects/carrerbook/modules/footer/page.jsx"),
+    },
+    home: {
+      "": () => import("@/projects/carrerbook/modules/home/page.jsx"),
+    },
+    "contact-us": {
+      "": () => import("@/projects/carrerbook/modules/contact-us/page.jsx"),
+    },
+    advertiser: {
+      "": () => import("@/projects/carrerbook/modules/advertiser/page.jsx"),
+      "hero-section": () => import("@/projects/carrerbook/modules/advertiser/hero-section/page.jsx"),
+      "traffic-types": () => import("@/projects/carrerbook/modules/advertiser/traffic-types/page.jsx"),
+    },
+    publisers: {
+      "": () => import("@/projects/carrerbook/modules/publisers/page.jsx"),
+    },
+    blog: {
+      "": () => import("@/projects/carrerbook/modules/blog/page.jsx"),
+    },
+    "about-us": {
+      "": () => import("@/projects/carrerbook/modules/about-us/page.jsx"),
+      "hero-section": () => import("@/projects/carrerbook/modules/about-us/hero-section/page.jsx"),
+      "lead-section": () => import("@/projects/carrerbook/modules/about-us/lead-section/page.jsx"),
+    },
+    team: {
+      "": () => import("@/projects/carrerbook/modules/team/page.jsx"),
+    },
+  
+},
+
+myluckydeal: {
     dashboard: { "": () => import("@/projects/myluckydeal/modules/dashboard/page.jsx") },
     deals: { "": () => import("@/projects/myluckydeal/modules/deals/page.jsx") },
     categories: { "": () => import("@/projects/myluckydeal/modules/categories/page.jsx") },
@@ -112,7 +147,6 @@ const routeLoaders = {
     settings: { "": () => import("@/projects/myluckydeal/modules/settings/page.jsx") },
     migration: { "": () => import("@/projects/myluckydeal/modules/migration/page.jsx") },
   },
-};
 
 const layoutLoaders = {
   altftool: {
