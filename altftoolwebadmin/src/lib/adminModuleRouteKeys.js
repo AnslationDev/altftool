@@ -40,6 +40,17 @@ export const ADMIN_MODULE_ROUTE_KEYS = {
     expertvideos: ["", "add-video", "edit-video/[id]", "view-video", "view-video/[id]"],
     ourteams: ["", "view-team"],
   },
+  carrerbook: {
+    navbar: [""],
+    footer: [""],
+    home: [""],
+    "contact-us": [""],
+    advertiser: ["", "hero-section", "traffic-types"],
+    publisers: [""],
+    blog: [""],
+    "about-us": ["", "hero-section", "lead-section"],
+    team: [""],
+  },
 };
 
 export const ADMIN_MODULE_LAYOUT_KEYS = {
