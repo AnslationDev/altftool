@@ -1,0 +1,163 @@
+const CATEGORIES = [
+  "world", "tech", "politics", "business", "science",
+  "sports", "health", "entertainment",
+];
+
+const SOURCES = [
+  "Reuters", "AP News", "BBC News", "CNN", "The Guardian",
+  "Al Jazeera", "Bloomberg", "Forbes", "TechCrunch", "The Verge",
+  "ESPN", "Medical News Today", "Nature", "The Times", "NDTV",
+  "Times of India", "The Hindu", "Hindustan Times", "India Today", "Economic Times",
+];
+
+const HEADLINES = [
+  "Global Climate Summit Reaches Historic Agreement on Carbon Emissions",
+  "Tech Giant Unveils Revolutionary AI-Powered Smartphone Assistant",
+  "Central Bank Announces Surprise Interest Rate Cut Amid Economic Concerns",
+  "Scientists Discover New Species in Deep Ocean Expedition",
+  "Major Breakthrough in Cancer Research Offers New Hope for Patients",
+  "Olympic Committee Confirms Host City for 2036 Summer Games",
+  "United Nations Passes Landmark Resolution on Digital Rights",
+  "Electric Vehicle Sales Surge Past 50% Market Share in Europe",
+  "World Leaders Gather for Emergency Summit on Cybersecurity",
+  "New Study Reveals Link Between Sleep Quality and Brain Health",
+  "Space Agency Announces Plans for Permanent Moon Base by 2040",
+  "Global Supply Chain Disruptions Ease as Shipping Costs Drop",
+  "Revolutionary Battery Technology Could Double EV Range",
+  "Ancient City Discovered Beneath Amazon Rainforest",
+  "Pandemic Preparedness Treaty Signed by 190 Nations",
+  "Artificial Intelligence Creates Masterpiece That Sells for Millions",
+  "Renewable Energy Sources Now Power 40% of Global Grid",
+  "Major Earthquake Relief Efforts Underway in Affected Region",
+  "Quantum Computing Breakthrough Solves Decade-Old Problem",
+  "World Health Organization Declares End to Global Health Emergency",
+  "Stock Markets Reach All-Time High on Tech Sector Rally",
+  "New Education Reform Bill Passes with Bipartisan Support",
+  "Gene Therapy Successfully Treats Rare Genetic Disorder",
+  "International Space Station Welcomes First Commercial Crew",
+  "Breakthrough in Fusion Energy Brings Clean Power Closer",
+  "Social Media Platform Introduces New Privacy Features",
+  "Global Food Prices Drop for Third Consecutive Month",
+  "Archaeologists Unearth 5000-Year-Old Civilization Artifacts",
+  "Autonomous Vehicles Get Green Light for Highway Testing",
+  "New Vaccine Shows Promise Against Multiple Cancer Types",
+  "Record-Breaking Heatwave Sparks Climate Action Debate",
+  "Digital Currency Launched by Major Central Bank Coalition",
+  "Robotics Startup Raises $2 Billion for Humanoid Development",
+  "Ocean Cleanup Project Removes Record Amount of Plastic Waste",
+  "First Successful Pig-to-Human Heart Transplant Announced",
+  "Global Internet Connectivity Reaches 90% of World Population",
+  "New Antibiotic Discovered in Soil Bacteria Shows Promise",
+  "International Trade Agreement Reduces Tariffs by 30%",
+  "Mental Health Awareness Campaign Reaches 100 Million People",
+  "Flying Taxis Get Regulatory Approval for Urban Operations",
+  "World's Largest Telescope Captures Stunning Galaxy Images",
+  "Cybersecurity Alliance Formed to Combat Ransomware Attacks",
+  "Sustainable Farming Techniques Boost Crop Yields by 40%",
+  "New Desalination Technology Provides Fresh Water to Arid Regions",
+  "Global Education Initiative Enrolls 50 Million Children",
+  "Breakthrough in Plastic Recycling Creates Circular Economy",
+  "AI-Powered Weather Prediction Saves Lives in Natural Disasters",
+  "International Space Telescope Discovers New Exoplanet",
+  "Universal Basic Income Trial Shows Positive Results",
+  "High-Speed Rail Network Connects Major Cities Across Continent",
+  "New Alzheimer's Drug Slows Disease Progression in Trials",
+  "Smart City Project Reduces Traffic Congestion by 60%",
+  "Global Reforestation Effort Plants 2 Billion Trees",
+  "Breakthrough in Water Purification Technology Announced",
+  "Online Learning Platform Reaches 500 Million Users Worldwide",
+  "New Satellite Network Provides Internet to Remote Areas",
+  "Electric Aviation Takes Flight with First Commercial Route",
+  "International Collaboration Cures Rare Childhood Disease",
+  "Smart Agriculture Technology Reduces Water Usage by 50%",
+  "Global Peace Index Shows Improvement in Conflict Resolution",
+  "New Biofuel Made from Algae Shows Commercial Viability",
+  "Digital Identity System Provides Services to 1 Billion People",
+  "Advanced Prosthetics Restore Movement for Amputees",
+  "International Dark Sky Reserves Expand to Protect Night Views",
+  "3D-Printed Organs Successfully Transplanted in Clinical Trial",
+  "Global Waste Management Initiative Reduces Landfill by 35%",
+  "New Brain-Computer Interface Allows Paralyzed Patients to Communicate",
+  "International Sports Event Breaks Viewership Records",
+  "Vertical Farming Revolutionizes Urban Food Production",
+  "Global Dengue Fever Cases Drop After Successful Vaccination Drive",
+  "New Material Stronger Than Steel Yet Lighter Than Plastic",
+  "International Agreement Protects 30% of Ocean by 2030",
+  "Telemedicine Platform Provides Healthcare to Rural Communities",
+  "Global Literacy Rate Reaches Highest Level in History",
+  "New Solar Panel Technology Achieves 50% Efficiency",
+  "International Robotics Competition Attracts 10000 Participants",
+  "Ocean Warming Slows Due to International Conservation Efforts",
+  "New Early Warning System Prevents Tsunami Casualties",
+  "Global Microfinance Initiative Lifts 10 Million Out of Poverty",
+  "Artificial Reef Project Restores Marine Biodiversity",
+  "International Space Station Celebrates 30 Years in Orbit",
+  "New Rapid COVID-19 Test Delivers Results in 5 Minutes",
+  "Global Air Quality Improves Due to Clean Energy Transition",
+  "Smart Grid Technology Reduces Power Outages by 70%",
+  "International Animal Conservation Saves Species from Extinction",
+  "New Nanotechnology Delivers Drugs Directly to Cancer Cells",
+  "Global Volunteer Network Mobilizes 5 Million for Disaster Relief",
+  "Wheelchair-Accessible Smart City Design Wins International Award",
+  "International Coral Reef Restoration Shows Remarkable Recovery",
+  "New Hydrogen Fuel Technology Powers Heavy-Duty Trucks",
+  "Global Water Scarcity Addressed by Innovative Conservation Methods",
+  "AI-Assisted Surgery Improves Patient Outcomes by 40%",
+  "International Youth Climate Summit Drafts Global Action Plan",
+  "New Biodegradable Packaging Replaces Single-Use Plastics",
+  "Global Mental Health Hotline Provides 24/7 Support in 50 Languages",
+  "Vertical Wind Turbines Bring Renewable Energy to Urban Areas",
+  "International Art Exhibition Features AI-Generated Masterpieces",
+  "New Ocean Monitoring System Predicts Tsunamis Hours in Advance",
+  "Global Food Waste Reduction Program Saves 5 Million Tons Annually",
+  "Bionic Eye Restores Vision for Blind Patients in Clinical Trial",
+  "International Collaboration Maps Complete Human Brain Connectome",
+  "New Carbon Capture Technology Removes CO2 at Record Speed",
+  "Global Sports League Introduces Revolutionary Player Safety Measures",
+  "Autonomous Delivery Drones Begin Commercial Operations",
+  "International Wildlife Corridor Connects Habitats Across Borders",
+  "New Sound Wave Technology Non-Invasively Treats Brain Disorders",
+  "Global Recycling Rate Doubles Due to Advanced Sorting Technology",
+  "Smart Contact Lenses Provide Real-Time Health Monitoring",
+  "International Dark Matter Experiment Yields Surprising Results",
+  "New Earthquake Prediction System Achieves 90% Accuracy",
+  "Global Ocean Cleanup Vessel Processes 10000 Tons of Plastic",
+  "Floating Solar Farms Generate Clean Energy on Reservoirs",
+  "International Gene Bank Preserves DNA of 1 Million Species",
+  "Firefighting Drones Combat Wildfires with Precision",
+  "Global Handwashing Campaign Reduces Disease Transmission by 60%",
+];
+
+let idCounter = 1;
+
+function generateDummyNews(index) {
+  const hoursAgo = Math.floor(Math.random() * 720);
+  const category = CATEGORIES[Math.floor(Math.random() * CATEGORIES.length)];
+  const source = SOURCES[Math.floor(Math.random() * SOURCES.length)];
+  const headline = HEADLINES[index % HEADLINES.length];
+  const likes = Math.floor(Math.random() * 50000);
+  const comments = Math.floor(Math.random() * 5000);
+  const shares = Math.floor(Math.random() * 10000);
+
+  return {
+    id: `dummy-${idCounter++}`,
+    slug: headline
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/(^-|-$)/g, ""),
+    headline,
+    summary: `${headline}. This is a detailed summary of the news story covering key developments, expert opinions, and what this means for the future.`,
+    image_url: `https://picsum.photos/seed/${index}/800/600`,
+    category,
+    source,
+    published_hours_ago: hoursAgo,
+    likes,
+    comments,
+    shares,
+  };
+}
+
+export function getDummyNewsData(count = 120) {
+  idCounter = 1;
+  return Array.from({ length: count }, (_, i) => generateDummyNews(i));
+}

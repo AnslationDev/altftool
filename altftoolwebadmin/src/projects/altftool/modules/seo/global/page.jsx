@@ -14,6 +14,7 @@ import {
   Twitter,
   BadgeCheck,
   Image as ImageIcon,
+  Code2,
   AlertCircle,
   CheckCircle2,
 } from "lucide-react";
@@ -68,6 +69,11 @@ function readGlobalForm(global = {}) {
       pinterest: global.verification?.pinterest || "",
       facebook: global.verification?.facebook || "",
     },
+    code: {
+      head: global.code?.head || "",
+      bodyStart: global.code?.bodyStart || "",
+      bodyEnd: global.code?.bodyEnd || "",
+    },
   };
 }
 
@@ -95,6 +101,7 @@ function buildGlobal(form) {
     og: cleanObj(form.og),
     twitter: cleanObj(form.twitter),
     verification: cleanObj(form.verification),
+    code: cleanObj(form.code),
   };
 }
 
@@ -133,6 +140,7 @@ export default function GlobalSeoPage() {
   const setOg = (patch) => setForm((f) => ({ ...f, og: { ...f.og, ...patch } }));
   const setTw = (patch) => setForm((f) => ({ ...f, twitter: { ...f.twitter, ...patch } }));
   const setVer = (patch) => setForm((f) => ({ ...f, verification: { ...f.verification, ...patch } }));
+  const setCode = (patch) => setForm((f) => ({ ...f, code: { ...f.code, ...patch } }));
 
   const preview = useMemo(() => {
     if (!form) return null;
@@ -322,6 +330,25 @@ export default function GlobalSeoPage() {
                 <TextInput value={form.verification.facebook} onChange={(v) => setVer({ facebook: v })} placeholder="token" maxLength={200} />
               </Field>
             </div>
+          </SectionCard>
+
+          <SectionCard
+            title="Custom Head & Body Code"
+            icon={Code2}
+            description="Site-wide raw HTML/scripts — analytics, GTM, pixels, custom CSS, chat widgets. Applied on every page."
+          >
+            <Banner tone="warning">
+              Advanced: this injects raw code into every page. Only paste code from sources you trust. For search-engine verification, prefer the Verification tags above.
+            </Banner>
+            <Field label="Head code" hint="Loaded early on every page (analytics, GTM, <style>, meta pixels).">
+              <TextArea value={form.code.head} onChange={(v) => setCode({ head: v })} rows={5} mono maxLength={50000} placeholder="<!-- e.g. Google Tag Manager, analytics, <style>… -->" />
+            </Field>
+            <Field label="Body start code" hint="Injected right after <body> opens (e.g. GTM noscript).">
+              <TextArea value={form.code.bodyStart} onChange={(v) => setCode({ bodyStart: v })} rows={4} mono maxLength={50000} placeholder="<!-- injected at the top of <body> -->" />
+            </Field>
+            <Field label="Body end code" hint="Injected before </body> (chat widgets, deferred tracking scripts).">
+              <TextArea value={form.code.bodyEnd} onChange={(v) => setCode({ bodyEnd: v })} rows={4} mono maxLength={50000} placeholder="<!-- injected at the end of <body> -->" />
+            </Field>
           </SectionCard>
 
           <SectionCard title="Homepage preview" icon={Globe2} description="How the homepage defaults appear on Google and social platforms.">

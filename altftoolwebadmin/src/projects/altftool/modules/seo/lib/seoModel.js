@@ -59,6 +59,7 @@ export function emptyPageEntry() {
     twitter: { card: "", title: "", description: "", image: "" },
     hreflang: [],
     schema: [],
+    code: { head: "", bodyStart: "", bodyEnd: "" },
   };
 }
 
@@ -75,6 +76,7 @@ export function readPageEntry(config, path) {
     twitter: { ...base.twitter, ...(stored.twitter || {}) },
     hreflang: Array.isArray(stored.hreflang) ? stored.hreflang : [],
     schema: Array.isArray(stored.schema) ? stored.schema : [],
+    code: { ...base.code, ...(stored.code || {}) },
     // robots stored either flat (noindex/follow) or nested; flatten for the form
     noindex: typeof stored.noindex === "boolean" ? stored.noindex : stored?.robots?.index === false,
     follow: typeof stored.follow === "boolean" ? stored.follow : stored?.robots?.follow !== false,
@@ -116,6 +118,8 @@ export function compactPageEntry(form) {
   if (hreflang.length) out.hreflang = hreflang;
 
   if (Array.isArray(form.schema) && form.schema.length) out.schema = form.schema;
+  const code = compactPlain(form.code);
+  if (code) out.code = code;
   return out;
 }
 

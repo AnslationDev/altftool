@@ -26,7 +26,11 @@ const FIREBASE_PROJECT_ID =
 
 const SEO_DOC_PATH = "projects/altftool/seo/runtime";
 const CACHE_SECONDS = Number(process.env.ALTFT_SEO_CONFIG_TTL_SECONDS || 300);
-const CACHE_MS = CACHE_SECONDS * 1000;
+// In-memory snapshot lives much shorter than the (globally revalidatable) fetch
+// cache, so admin edits reflect within seconds even on warm serverless instances
+// that never receive the reset signal. The fetch cache (revalidate=CACHE_SECONDS,
+// tag) is invalidated globally on save via /api/revalidate.
+const SNAPSHOT_TTL_MS = Number(process.env.ALTFT_SEO_SNAPSHOT_TTL_SECONDS || 20) * 1000;
 const TIMEOUT_MS = Number(process.env.ALTFT_FIRESTORE_REST_TIMEOUT_MS || 3500);
 export const SEO_CONFIG_REVALIDATE_TAG = "seo-config";
 
@@ -114,7 +118,7 @@ export async function loadSeoConfig() {
       .then((config) => {
         if (config) {
           cachedConfig = config;
-          cachedExpiry = Date.now() + CACHE_MS;
+          cachedExpiry = Date.now() + SNAPSHOT_TTL_MS;
         }
         return cachedConfig || emptySeoConfig();
       })
