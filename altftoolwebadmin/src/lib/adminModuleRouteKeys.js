@@ -71,7 +71,7 @@ export const ADMIN_MODULE_ROUTE_KEYS = {
     "contact-us": ["", "settings"],
     advertiser: ["", "hero-section", "traffic-types"],
     publisers: [""],
-    blog: [""],
+    blog: ["", "add-article", "edit-article/[id]", "view-articles"],
     "about-us": ["", "hero-section", "lead-section"],
     team: [""],
   },
