@@ -2,46 +2,48 @@
 
 import { AlertTriangle, CheckCircle2, Database, Info, Loader2, RefreshCw } from "lucide-react";
 
+/**
+ * Token-driven state styles so every tone renders correctly in BOTH light and
+ * dark themes (see master.md — no hardcoded palette values).
+ */
 const stateStyles = {
   loading: {
     icon: Loader2,
-    iconClassName: "animate-spin text-gray-500",
-    border: "border-gray-200",
-    background: "bg-white",
-    title: "text-gray-900",
-    message: "text-gray-600",
+    iconClassName: "animate-spin text-[var(--muted)]",
+    container: "border-[var(--border)] bg-[var(--surface)]",
+    title: "text-[var(--foreground)]",
+    message: "text-[var(--muted)]",
   },
   empty: {
     icon: Database,
-    iconClassName: "text-gray-500",
-    border: "border-dashed border-gray-300",
-    background: "bg-white",
-    title: "text-gray-900",
-    message: "text-gray-600",
+    iconClassName: "text-[var(--muted)]",
+    container: "border-dashed border-[var(--border-strong,var(--border))] bg-[var(--surface)]",
+    title: "text-[var(--foreground)]",
+    message: "text-[var(--muted)]",
   },
   error: {
     icon: AlertTriangle,
-    iconClassName: "text-amber-600",
-    border: "border-amber-200",
-    background: "bg-amber-50",
-    title: "text-amber-950",
-    message: "text-amber-800",
+    iconClassName: "text-[var(--warning)]",
+    container:
+      "border-[color-mix(in_srgb,var(--warning)_35%,var(--border))] bg-[color-mix(in_srgb,var(--warning-soft)_60%,var(--surface))]",
+    title: "text-[var(--foreground)]",
+    message: "text-[var(--foreground)] opacity-80",
   },
   success: {
     icon: CheckCircle2,
-    iconClassName: "text-emerald-600",
-    border: "border-emerald-200",
-    background: "bg-emerald-50",
-    title: "text-emerald-950",
-    message: "text-emerald-800",
+    iconClassName: "text-[var(--success)]",
+    container:
+      "border-[color-mix(in_srgb,var(--success)_35%,var(--border))] bg-[color-mix(in_srgb,var(--success-soft)_60%,var(--surface))]",
+    title: "text-[var(--foreground)]",
+    message: "text-[var(--foreground)] opacity-80",
   },
   info: {
     icon: Info,
-    iconClassName: "text-sky-600",
-    border: "border-sky-200",
-    background: "bg-sky-50",
-    title: "text-sky-950",
-    message: "text-sky-800",
+    iconClassName: "text-[var(--info)]",
+    container:
+      "border-[color-mix(in_srgb,var(--info)_35%,var(--border))] bg-[color-mix(in_srgb,var(--info-soft)_60%,var(--surface))]",
+    title: "text-[var(--foreground)]",
+    message: "text-[var(--foreground)] opacity-80",
   },
 };
 
@@ -77,7 +79,7 @@ export default function AdminDataState({
 
   return (
     <div
-      className={`rounded-2xl ${state.border} ${state.background} border shadow-sm ${
+      className={`rounded-[var(--radius-lg)] border shadow-[var(--shadow-sm)] ${state.container} ${
         compact ? "p-4" : "p-6"
       } ${className}`}
       aria-live={ariaLive || (type === "error" ? "assertive" : "polite")}
@@ -85,7 +87,7 @@ export default function AdminDataState({
       <div className="flex flex-col gap-5 md:flex-row md:items-start md:justify-between">
         <div className="flex items-start gap-4">
           <div
-            className={`grid shrink-0 place-items-center rounded-xl border border-white/70 bg-white shadow-sm ${
+            className={`grid shrink-0 place-items-center rounded-[var(--radius-md)] border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow-sm)] ${
               compact ? "h-9 w-9" : "h-11 w-11"
             }`}
           >
@@ -93,7 +95,9 @@ export default function AdminDataState({
           </div>
           <div className="min-w-0">
             {meta ? (
-              <p className="mb-1 text-xs font-semibold uppercase tracking-wide text-gray-500">{meta}</p>
+              <p className="mb-1 text-xs font-semibold uppercase tracking-wide text-[var(--muted)]">
+                {meta}
+              </p>
             ) : null}
             <h2 className={`text-base font-semibold ${state.title}`}>{title}</h2>
             {message ? (
@@ -113,10 +117,10 @@ export default function AdminDataState({
                   type="button"
                   onClick={action.onClick}
                   disabled={action.disabled}
-                  className={`inline-flex h-10 items-center justify-center gap-2 rounded-lg border px-4 text-sm font-semibold shadow-sm transition disabled:cursor-not-allowed disabled:opacity-60 ${
+                  className={`inline-flex h-10 items-center justify-center gap-2 rounded-[var(--radius-md)] border px-4 text-sm font-semibold shadow-[var(--shadow-sm)] transition disabled:cursor-not-allowed disabled:opacity-60 ${
                     action.variant === "primary"
-                      ? "border-gray-950 bg-gray-950 text-white hover:bg-gray-800"
-                      : "border-gray-200 bg-white text-gray-700 hover:bg-gray-50"
+                      ? "border-transparent bg-[var(--primary)] text-[var(--primary-foreground)] hover:bg-[var(--anslation-ds-primary-hover,var(--primary))]"
+                      : "border-[var(--border)] bg-[var(--surface)] text-[var(--foreground)] hover:bg-[var(--surface-soft)]"
                   }`}
                 >
                   {ActionIcon ? <ActionIcon className="h-4 w-4" /> : null}
@@ -134,19 +138,23 @@ export default function AdminDataState({
 }
 
 export function AdminDataSkeleton({ rows = 5, columns = 1, showHeader = false, compact = false }) {
-  const columnClass = columns >= 3 ? "sm:grid-cols-2 xl:grid-cols-3" : columns === 2 ? "sm:grid-cols-2" : "";
+  const columnClass =
+    columns >= 3 ? "sm:grid-cols-2 xl:grid-cols-3" : columns === 2 ? "sm:grid-cols-2" : "";
 
   return (
     <div className="grid gap-3">
       {showHeader ? (
         <div className="mb-1 flex items-center justify-between gap-4">
-          <div className="h-5 w-48 animate-pulse rounded bg-gray-100" />
-          <div className="h-9 w-24 animate-pulse rounded-lg bg-gray-100" />
+          <div className="h-5 w-48 animate-pulse rounded-[var(--radius-sm)] bg-[var(--surface-soft)]" />
+          <div className="h-9 w-24 animate-pulse rounded-[var(--radius-md)] bg-[var(--surface-soft)]" />
         </div>
       ) : null}
       <div className={`grid gap-3 ${columnClass}`}>
         {Array.from({ length: rows }).map((_, index) => (
-          <div key={index} className={`${compact ? "h-9" : "h-12"} animate-pulse rounded-xl bg-gray-100`} />
+          <div
+            key={index}
+            className={`${compact ? "h-9" : "h-12"} animate-pulse rounded-[var(--radius-md)] bg-[var(--surface-soft)]`}
+          />
         ))}
       </div>
     </div>

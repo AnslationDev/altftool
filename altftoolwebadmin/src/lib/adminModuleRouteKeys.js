@@ -91,6 +91,22 @@ export const ADMIN_MODULE_ROUTE_KEYS = {
     settings: [""],
     migration: [""],
   },
+  anternet: {
+    banners: [""],
+    tasks: [""],
+    quizcategories: [""],
+    questions: [""],
+    spinprizes: [""],
+    videosections: [""],
+    earningtasks: [""],
+    settings: [""],
+    migration: [""],
+    ads: [""],
+    notifications: [""],
+    pages: [""],
+    users: [""],
+    arenas: [""],
+  },
 };
 
 export const ADMIN_MODULE_LAYOUT_KEYS = {

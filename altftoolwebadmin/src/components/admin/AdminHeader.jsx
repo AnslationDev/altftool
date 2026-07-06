@@ -123,6 +123,21 @@ export default function AdminHeader({ user, adminData, onOpenSidebar }) {
   const notifRef = useRef(null);
   const themeMenuRef = useRef(null);
   const quickNavRef = useRef(null);
+  const quickInputRef = useRef(null);
+
+  // ⌘K / Ctrl+K focuses the quick navigation search.
+  useEffect(() => {
+    const handleShortcut = (event) => {
+      if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "k") {
+        event.preventDefault();
+        quickInputRef.current?.focus();
+        setQuickOpen(true);
+      }
+    };
+
+    document.addEventListener("keydown", handleShortcut);
+    return () => document.removeEventListener("keydown", handleShortcut);
+  }, []);
 
   const photoURL = adminData?.photoURL || null;
   const displayName =
@@ -298,7 +313,7 @@ export default function AdminHeader({ user, adminData, onOpenSidebar }) {
   };
 
   return (
-    <header className="flex h-14 shrink-0 items-center justify-between gap-3 border-b border-[var(--border)] bg-[var(--surface)] px-3 sm:px-5 lg:px-6">
+    <header className="flex h-16 shrink-0 items-center justify-between gap-3 border-b border-[var(--border)] bg-[var(--surface)] px-3 sm:px-5 lg:px-6">
       <div className="flex min-w-0 flex-1 items-center gap-2">
         <button
           type="button"
@@ -338,6 +353,7 @@ export default function AdminHeader({ user, adminData, onOpenSidebar }) {
       <div className="relative hidden min-w-[240px] max-w-md flex-1 xl:block" ref={quickNavRef}>
         <Search className="pointer-events-none absolute left-3 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-[var(--muted)]" />
         <input
+          ref={quickInputRef}
           value={quickQuery}
           onChange={(event) => {
             setQuickQuery(event.target.value);
@@ -345,29 +361,36 @@ export default function AdminHeader({ user, adminData, onOpenSidebar }) {
           }}
           onFocus={() => setQuickOpen(true)}
           onKeyDown={handleQuickKeyDown}
-          placeholder="Jump to module..."
-          className="h-9 w-full rounded-lg border border-[var(--border)] bg-[var(--surface-soft)] px-9 text-sm text-[var(--foreground)] outline-none transition placeholder:text-[var(--muted)] focus:border-[var(--primary)] focus:bg-[var(--surface)] focus:ring-2 focus:ring-[color-mix(in_srgb,var(--primary)_18%,transparent)]"
+          placeholder="Jump to module…"
+          className="h-9 w-full rounded-lg border border-[var(--border)] bg-[var(--surface-soft)] pl-9 pr-12 text-sm text-[var(--foreground)] outline-none transition placeholder:text-[var(--muted)] focus:border-[var(--primary)] focus:bg-[var(--surface)] focus:ring-2 focus:ring-[color-mix(in_srgb,var(--primary)_18%,transparent)]"
           aria-label="Jump to admin module"
           aria-expanded={quickOpen}
           aria-haspopup="listbox"
         />
+        <kbd className="pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2 rounded-md border border-[var(--border)] bg-[var(--surface)] px-1.5 py-0.5 font-mono text-[10px] font-semibold text-[var(--muted)]">
+          ⌘K
+        </kbd>
         {quickOpen ? (
           <div
             role="listbox"
             className="absolute left-0 right-0 top-11 z-50 overflow-hidden rounded-lg border border-[var(--border)] bg-[var(--surface)] p-1.5 shadow-[var(--shadow-lg)]"
           >
             {quickMatches.length ? (
-              quickMatches.map((item) => {
+              quickMatches.map((item, index) => {
                 const Icon = item.icon || Search;
+                const isEnterTarget = index === 0 && Boolean(quickQuery);
 
                 return (
                   <button
                     key={item.key}
                     type="button"
                     role="option"
+                    aria-selected={isEnterTarget}
                     onMouseDown={(event) => event.preventDefault()}
                     onClick={() => openQuickRoute(item.href)}
-                    className="flex w-full items-center gap-3 rounded-lg px-2.5 py-2 text-left transition hover:bg-[var(--surface-soft)]"
+                    className={`flex w-full items-center gap-3 rounded-lg px-2.5 py-2 text-left transition hover:bg-[var(--surface-soft)] ${
+                      isEnterTarget ? "bg-[var(--surface-soft)]" : ""
+                    }`}
                   >
                     <span className="grid h-8 w-8 shrink-0 place-items-center rounded-lg bg-[var(--surface-soft)] text-[var(--primary)]">
                       <Icon className="h-4 w-4" />
@@ -380,6 +403,11 @@ export default function AdminHeader({ user, adminData, onOpenSidebar }) {
                         {item.helper}
                       </span>
                     </span>
+                    {isEnterTarget ? (
+                      <kbd className="rounded-md border border-[var(--border)] bg-[var(--surface)] px-1.5 py-0.5 font-mono text-[10px] font-semibold text-[var(--muted)]">
+                        ↵
+                      </kbd>
+                    ) : null}
                   </button>
                 );
               })
@@ -403,14 +431,11 @@ export default function AdminHeader({ user, adminData, onOpenSidebar }) {
         </Link>
 
         <span
-          className={`hidden items-center gap-1.5 rounded-full px-2.5 py-1 text-[10px] font-bold sm:inline-flex ${
-            isSuperAdmin
-              ? "bg-[var(--foreground)] text-[var(--background)]"
-              : "bg-[var(--surface-soft)] text-[var(--muted)]"
-          }`}
+          className="hidden items-center gap-1.5 rounded-full border border-[var(--border)] bg-[var(--surface-soft)] px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.04em] text-[var(--muted)] sm:inline-flex"
+          title={isSuperAdmin ? "Super Admin — full access" : "Admin"}
         >
           {isSuperAdmin ? (
-            <ShieldCheck className="h-3 w-3" />
+            <ShieldCheck className="h-3 w-3 text-[var(--primary)]" />
           ) : (
             <Shield className="h-3 w-3" />
           )}
@@ -421,7 +446,7 @@ export default function AdminHeader({ user, adminData, onOpenSidebar }) {
           <button
             type="button"
             onClick={() => setThemeMenuOpen((open) => !open)}
-            className="grid h-9 w-9 place-items-center rounded-lg border border-[var(--border)] bg-[var(--surface)] text-[var(--muted)] transition hover:bg-[var(--surface-soft)] hover:text-[var(--foreground)]"
+            className="grid h-9 w-9 place-items-center rounded-lg text-[var(--muted)] transition hover:bg-[var(--surface-soft)] hover:text-[var(--foreground)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color-mix(in_srgb,var(--primary)_35%,transparent)]"
             aria-label={`Theme: ${displayedThemeOption.label}`}
             aria-haspopup="menu"
             aria-expanded={themeMenuOpen}
@@ -479,14 +504,14 @@ export default function AdminHeader({ user, adminData, onOpenSidebar }) {
           <button
             type="button"
             onClick={() => setNotifOpen((open) => !open)}
-            className="relative grid h-9 w-9 place-items-center rounded-lg text-[var(--muted)] transition hover:bg-[var(--surface-soft)] hover:text-[var(--foreground)]"
+            className="relative grid h-9 w-9 place-items-center rounded-lg text-[var(--muted)] transition hover:bg-[var(--surface-soft)] hover:text-[var(--foreground)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color-mix(in_srgb,var(--primary)_35%,transparent)]"
             aria-label="Notifications"
             aria-haspopup="menu"
             aria-expanded={notifOpen}
           >
             <Bell className="h-4 w-4" />
             {unreadCount > 0 ? (
-              <span className="absolute -right-0.5 -top-0.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-red-500 px-1 text-[9px] font-bold leading-none text-white">
+              <span className="absolute -right-0.5 -top-0.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-[var(--danger)] px-1 text-[9px] font-bold leading-none text-white">
                 {unreadCount > 99 ? "99+" : unreadCount}
               </span>
             ) : null}
@@ -497,13 +522,13 @@ export default function AdminHeader({ user, adminData, onOpenSidebar }) {
               <div className="flex items-center justify-between gap-3 border-b border-[var(--border)] px-4 py-3">
                 <p className="text-sm font-semibold text-[var(--foreground)]">Notifications</p>
                 {unreadCount > 0 ? (
-                  <span className="rounded-full bg-red-50 px-2 py-0.5 text-[10px] font-bold text-red-600">
+                  <span className="rounded-full bg-[var(--danger-soft)] px-2 py-0.5 text-[10px] font-bold text-[var(--danger)]">
                     {unreadCount} unread
                   </span>
                 ) : null}
               </div>
 
-              <div className="max-h-80 divide-y divide-[var(--border)] overflow-y-auto">
+              <div className="admin-thin-scroll max-h-80 divide-y divide-[var(--border)] overflow-y-auto">
                 {notifications.length === 0 ? (
                   <div className="py-8 text-center">
                     <Bell className="mx-auto mb-2 h-6 w-6 text-[var(--muted)] opacity-50" />
@@ -585,8 +610,16 @@ export default function AdminHeader({ user, adminData, onOpenSidebar }) {
           {dropdownOpen ? (
             <div
               role="menu"
-              className="absolute right-0 top-11 z-50 w-52 overflow-hidden rounded-lg border border-[var(--border)] bg-[var(--surface)] py-1 shadow-[var(--shadow-lg)]"
+              className="absolute right-0 top-11 z-50 w-56 overflow-hidden rounded-lg border border-[var(--border)] bg-[var(--surface)] py-1 shadow-[var(--shadow-lg)]"
             >
+              <div className="border-b border-[var(--border)] px-4 py-2.5">
+                {displayName ? (
+                  <p className="truncate text-sm font-semibold text-[var(--foreground)]">
+                    {displayName}
+                  </p>
+                ) : null}
+                <p className="truncate text-xs text-[var(--muted)]">{user?.email}</p>
+              </div>
               <Link
                 href="/profile"
                 onClick={() => setDropdownOpen(false)}
@@ -607,7 +640,7 @@ export default function AdminHeader({ user, adminData, onOpenSidebar }) {
               <button
                 type="button"
                 onClick={logout}
-                className="flex w-full items-center gap-2.5 px-4 py-2.5 text-sm text-red-600 transition hover:bg-red-50"
+                className="flex w-full items-center gap-2.5 px-4 py-2.5 text-sm text-[var(--danger)] transition hover:bg-[var(--danger-soft)]"
               >
                 <LogOut className="h-4 w-4" />
                 Logout

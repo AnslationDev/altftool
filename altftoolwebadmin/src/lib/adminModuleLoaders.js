@@ -218,6 +218,22 @@ const routeLoaders = {
       "": () => import("@/projects/myluckydeal/modules/migration/page.jsx"),
     },
   },
+  anternet: {
+    banners: { "": () => import("@/projects/anternet/modules/banners/page.jsx") },
+    tasks: { "": () => import("@/projects/anternet/modules/tasks/page.jsx") },
+    quizcategories: { "": () => import("@/projects/anternet/modules/quizcategories/page.jsx") },
+    questions: { "": () => import("@/projects/anternet/modules/questions/page.jsx") },
+    spinprizes: { "": () => import("@/projects/anternet/modules/spinprizes/page.jsx") },
+    videosections: { "": () => import("@/projects/anternet/modules/videosections/page.jsx") },
+    earningtasks: { "": () => import("@/projects/anternet/modules/earningtasks/page.jsx") },
+    settings: { "": () => import("@/projects/anternet/modules/settings/page.jsx") },
+    migration: { "": () => import("@/projects/anternet/modules/migration/page.jsx") },
+    ads: { "": () => import("@/projects/anternet/modules/ads/page.jsx") },
+    notifications: { "": () => import("@/projects/anternet/modules/notifications/page.jsx") },
+    pages: { "": () => import("@/projects/anternet/modules/pages/page.jsx") },
+    users: { "": () => import("@/projects/anternet/modules/users/page.jsx") },
+    arenas: { "": () => import("@/projects/anternet/modules/arenas/page.jsx") },
+  },
 };
 
 const layoutLoaders = {

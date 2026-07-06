@@ -79,7 +79,13 @@ export const OPEN_GLOBAL_ROUTE_KEYS = new Set(
 
 export function formatAdminSegment(segment = "") {
   if (!segment) return "";
-  if (/^[a-z0-9_-]{16,}$/i.test(segment) || !Number.isNaN(Number(segment))) {
+  // Only treat a segment as an opaque record ID when it does NOT read like
+  // hyphen/underscore-separated words (e.g. "admin-management"). IDs are
+  // numeric, UUID-like, or a single long alphanumeric token.
+  const isNumericId = !Number.isNaN(Number(segment));
+  const isUuidLike = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(segment);
+  const isOpaqueToken = /^[a-z0-9]{16,}$/i.test(segment) && /\d/.test(segment);
+  if (isNumericId || isUuidLike || isOpaqueToken) {
     return "Details";
   }
 

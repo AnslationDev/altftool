@@ -258,6 +258,31 @@ export async function fetchFirebaseRelatedBlogs(category, excludeSlug, limit = 6
   return posts.filter((post) => post.slug !== excludeSlug).slice(0, limit);
 }
 
+// Admin-managed blog categories (projects/altftool/categories). Used so the
+// frontend category list stays in sync with Admin CRUD automatically.
+export async function fetchFirebaseBlogCategories() {
+  const key = cacheKey("blogCategories");
+  const cached = readCache(key);
+  if (cached) return cached;
+
+  const rows = await firestorePost("runQuery", {
+    structuredQuery: {
+      select: { fields: [{ fieldPath: "name" }] },
+      from: [{ collectionId: "categories" }],
+      orderBy: [{ field: { fieldPath: "name" }, direction: "ASCENDING" }],
+      limit: 200,
+    },
+  });
+
+  const names = rows
+    .filter((row) => row.document)
+    .map((row) => decodeDocument(row.document).name)
+    .filter((name) => typeof name === "string" && name.trim().length > 0)
+    .map((name) => name.trim());
+
+  return writeCache(key, names);
+}
+
 export async function fetchFirebaseBlogCount() {
   const key = cacheKey("blogCount");
   const cached = readCache(key);

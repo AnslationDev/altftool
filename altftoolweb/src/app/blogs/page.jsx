@@ -30,6 +30,7 @@ import {
 } from "./data";
 import {
   describeFirebaseBlogError,
+  fetchFirebaseBlogCategories,
   getFirebaseBlogCatalog,
 } from "./data/firebaseBlogs";
 import {
@@ -282,10 +283,13 @@ function TopicClusterBand({ clusters }) {
 
 export default async function BlogsPage() {
   const localPosts = getAllBlogs();
-  const firebaseCatalog = await getFastFirebaseBlogCatalog();
+  const [firebaseCatalog, adminCategoryNames] = await Promise.all([
+    getFastFirebaseBlogCatalog(),
+    fetchFirebaseBlogCategories().catch(() => []),
+  ]);
   const hasFirebaseCatalog = Boolean(firebaseCatalog?.posts?.length);
   const posts = hasFirebaseCatalog ? firebaseCatalog.posts : localPosts;
-  const categories = getBlogCategories(posts);
+  const categories = getBlogCategories(posts, adminCategoryNames);
   const stats = getBlogStats(posts);
   const groups = getFeaturedBlogGroups(posts);
   const trendingPosts = getTrendingBlogs(posts, 5);

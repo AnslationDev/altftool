@@ -337,11 +337,27 @@ export default function AddBlog() {
     }
   }, []);
 
-  /* ── Auto-save draft every 2s ── */
+  /* ── Auto-save draft every 2s ──
+     The interval reads the latest values from a ref so it is created once —
+     typing no longer tears it down and recreates it on every keystroke — and
+     the localStorage write (plus the re-render from setDraftSavedAt) is
+     skipped entirely when nothing has changed since the last save. */
+  const draftSnapshotRef = useRef({ formData, imagePreview, imageName, imageAlt });
   useEffect(() => {
+    draftSnapshotRef.current = { formData, imagePreview, imageName, imageAlt };
+  }, [formData, imagePreview, imageName, imageAlt]);
+
+  useEffect(() => {
+    let lastSerialized = "";
     const id = setInterval(() => {
       try {
-        localStorage.setItem(DRAFT_KEY, JSON.stringify({ formData, imagePreview, imageName, imageAlt, savedAt: new Date().toISOString() }));
+        const payload = JSON.stringify(draftSnapshotRef.current);
+        if (payload === lastSerialized) return;
+        localStorage.setItem(
+          DRAFT_KEY,
+          JSON.stringify({ ...draftSnapshotRef.current, savedAt: new Date().toISOString() })
+        );
+        lastSerialized = payload;
         setDraftSavedAt(new Date());
         setAutoSaveError(false);
       } catch (err) {
@@ -350,9 +366,48 @@ export default function AddBlog() {
       }
     }, 2000);
     return () => clearInterval(id);
-  }, [formData, imagePreview, imageName, imageAlt]);
+  }, []);
 
   const clearError  = (name) => setErrors((p) => ({ ...p, [name]: undefined }));
+
+  /* ── Debounced editor → form sync ──
+     CKEditor fires onChange on every keystroke. Pushing each keystroke into
+     formData re-renders every heavy panel (publish gate, content health,
+     live preview, SEO checklist) per character, which can freeze the tab and
+     trip React's nested-update limit. The editor owns the text while focused,
+     so syncing the form ~250ms after typing pauses is lossless. */
+  const editorSyncTimerRef = useRef(null);
+  const seoEditedRef = useRef(seoEdited);
+  useEffect(() => {
+    seoEditedRef.current = seoEdited;
+  }, [seoEdited]);
+
+  const applyEditorData = useCallback((data) => {
+    setFormData((prev) => {
+      const updated = { ...prev, description: data };
+      if (!seoEditedRef.current.description) updated.seoDescription = generateExcerpt(data);
+      return updated;
+    });
+    setErrors((p) => ({ ...p, description: undefined }));
+  }, []);
+
+  const handleEditorChange = useCallback(
+    (data) => {
+      if (editorSyncTimerRef.current) window.clearTimeout(editorSyncTimerRef.current);
+      editorSyncTimerRef.current = window.setTimeout(() => {
+        editorSyncTimerRef.current = null;
+        applyEditorData(data);
+      }, 250);
+    },
+    [applyEditorData]
+  );
+
+  useEffect(
+    () => () => {
+      if (editorSyncTimerRef.current) window.clearTimeout(editorSyncTimerRef.current);
+    },
+    []
+  );
 
   const handleInsertContentBlock = (html) => {
     setFormData((prev) => ({
@@ -917,14 +972,7 @@ export default function AddBlog() {
                 {errors.description && (
                   <p className="flex items-center gap-1 text-xs text-danger font-medium -mt-2"><AlertCircle className="w-3 h-3" />{errors.description}</p>
                 )}
-                <BlogEditor value={formData.description} onChange={(data) => {
-                  setFormData((prev) => {
-                    const updated = { ...prev, description: data };
-                    if (!seoEdited.description) updated.seoDescription = generateExcerpt(data);
-                    return updated;
-                  });
-                  clearError("description");
-                }} />
+                <BlogEditor value={formData.description} onChange={handleEditorChange} />
               </Section>
 
               {/* SEO — collapsible */}
