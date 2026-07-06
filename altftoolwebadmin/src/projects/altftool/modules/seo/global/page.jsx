@@ -111,6 +111,7 @@ export default function GlobalSeoPage() {
   const [enabled, setEnabled] = useState(false);
   const [status, setStatus] = useState("loading");
   const [message, setMessage] = useState("");
+  const [savedPopup, setSavedPopup] = useState("");
   const [isError, setIsError] = useState(false);
   const [warnings, setWarnings] = useState([]);
 
@@ -165,6 +166,7 @@ export default function GlobalSeoPage() {
       setConfig(next);
       setStatus("ready");
       setMessage(`Saved global SEO settings (v${res.version}). Live within a few seconds.`);
+      setSavedPopup(`Saved global SEO settings (v${res.version}). Live within a few seconds.`);
       setWarnings(res.warnings || []);
     } catch (e) {
       setStatus("ready");
@@ -176,6 +178,12 @@ export default function GlobalSeoPage() {
 
   return (
     <div className="mx-auto max-w-6xl space-y-6 pb-12 animate-slide-in">
+      <SuccessDialog
+        open={Boolean(savedPopup)}
+        title="Changes applied successfully"
+        message={savedPopup}
+        onClose={() => setSavedPopup("")}
+      />
       <SeoNav active="global" />
 
       <header className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">

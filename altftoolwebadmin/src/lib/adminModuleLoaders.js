@@ -15,6 +15,8 @@ const routeLoaders = {
         import("@/projects/altftool/modules/blogs/add-blogs/page.jsx"),
       analytics: () =>
         import("@/projects/altftool/modules/blogs/analytics/page.jsx"),
+      automation: () =>
+        import("@/projects/altftool/modules/blogs/automation/page.jsx"),
       "bulk-refresh": () =>
         import("@/projects/altftool/modules/blogs/bulk-refresh/page.jsx"),
       "edit-blog/[id]": () =>

@@ -98,3 +98,17 @@ export async function gscPost(body) {
   });
   return readApiJson(res, "Search Console request failed");
 }
+
+// ---- AI page-entry generation (Pages editor "Generate with AI") ----
+// Returns a full proposed entry (title/description/keywords/og/twitter/schema)
+// built from the page registry + live Search Console queries. Nothing is
+// persisted server-side — the caller fills the form for admin review.
+export async function generateSeoPageEntry(path) {
+  const res = await fetch("/api/seo/generate", {
+    method: "POST",
+    headers: await authHeaders(),
+    body: JSON.stringify({ preview: true, path }),
+  });
+  const data = await readApiJson(res, "AI generation failed");
+  return data.preview;
+}

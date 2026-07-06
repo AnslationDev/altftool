@@ -323,7 +323,9 @@ export function normalizeBlog(blog = {}, index = 0) {
     tool: blog.tool || blog.topic || category,
   });
   const description = seoReadyBlog.description || seoReadyBlog.content || seoReadyBlog.body || seoReadyBlog.excerpt || "";
-  const excerpt = seoReadyBlog.excerpt || summarize(description);
+  // Legacy docs sometimes store raw HTML in `excerpt` — cards then rendered
+  // literal "<p>" text. Always strip markup from card/summary text.
+  const excerpt = stripHtml(seoReadyBlog.excerpt || summarize(description));
   const readTimeMinutes = Number(blog.readTimeMinutes) || estimateReadTime(description, excerpt);
   const image = blog.image || FALLBACK_IMAGES[index % FALLBACK_IMAGES.length];
   const tags = uniqueLabels(
@@ -362,6 +364,8 @@ export function normalizeBlog(blog = {}, index = 0) {
     tags,
     searchText: stripHtml([
       heading,
+      // Slug words so URL-style queries ("password-protect-pdf") match too.
+      String(slug || "").replace(/-/g, " "),
       excerpt,
       description,
       category,

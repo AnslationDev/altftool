@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { BarChart3, FileText, PlusCircle, ShieldCheck, Tag, WandSparkles } from "lucide-react";
+import { BarChart3, Bot, FileText, PlusCircle, ShieldCheck, Tag, WandSparkles } from "lucide-react";
 
 import CategoryModal from "./CategoryModal";
 
@@ -18,6 +18,7 @@ export default function BlogTopBar(){
     { name:"Analytics",icon:BarChart3,href:"/altftool/blogs/analytics" },
     { name:"Quality",icon:ShieldCheck,href:"/altftool/blogs/quality" },
     { name:"Bulk Refresh",icon:WandSparkles,href:"/altftool/blogs/bulk-refresh" },
+    { name:"Automation",icon:Bot,href:"/altftool/blogs/automation" },
     { name:"Add New Blog",icon:PlusCircle,href:"/altftool/blogs/add-blogs" }
   ];
 

@@ -67,6 +67,10 @@ export function BlogEngagementProvider({ blog, children }) {
       return;
     }
 
+    // Capture the blogId this load was started for: a slow in-flight read
+    // must never overwrite state after the user has navigated to another post.
+    const requestedBlogId = blogId;
+
     setCommentsLoading(true);
     try {
       const snap = await withTimeout(
@@ -75,7 +79,7 @@ export function BlogEngagementProvider({ blog, children }) {
         null,
       );
 
-      if (snap) {
+      if (snap && requestedBlogId === blogId) {
         setComments(snap.docs.map((item) => ({ id: item.id, ...item.data() })));
       }
     } catch (error) {

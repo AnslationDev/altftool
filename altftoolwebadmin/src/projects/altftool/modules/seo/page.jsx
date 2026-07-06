@@ -13,6 +13,7 @@ import {
 } from "./services/seoService";
 import { getErrorMessage } from "@/lib/apiClient";
 import SeoNav from "./components/SeoNav";
+import { SuccessDialog } from "./components/ui";
 import {
   FileText,
   Save,
@@ -49,6 +50,7 @@ export default function SeoEnginePage() {
   const [original, setOriginal] = useState("");
   const [status, setStatus] = useState("loading");
   const [message, setMessage] = useState("");
+  const [savedPopup, setSavedPopup] = useState("");
   const [isError, setIsError] = useState(false);
   const [warnings, setWarnings] = useState([]);
   const [enabled, setEnabled] = useState(false);
@@ -124,6 +126,7 @@ export default function SeoEnginePage() {
       setText(saved);
       setStatus("ready");
       setMessage(`Saved successfully (v${res.version}). Live within a few seconds.`);
+      setSavedPopup(`Saved successfully (v${res.version}). Live within a few seconds.`);
       setWarnings(res.warnings || []);
     } catch (error) {
       setStatus("ready");
@@ -191,6 +194,12 @@ export default function SeoEnginePage() {
   return (
     <div className="space-y-6 max-w-5xl mx-auto pb-12 animate-slide-in">
       {/* Tab nav */}
+      <SuccessDialog
+        open={Boolean(savedPopup)}
+        title="Changes applied successfully"
+        message={savedPopup}
+        onClose={() => setSavedPopup("")}
+      />
       <SeoNav active="config" />
 
       {/* Header */}
