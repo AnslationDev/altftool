@@ -10,7 +10,7 @@ function LoadingBone({ className = "" }) {
       aria-hidden="true"
       className={cx("relative overflow-hidden rounded-[var(--radius-md)] bg-[var(--surface-soft)]", className)}
     >
-      <div className="absolute inset-y-0 left-0 w-1/2 translate-x-[-120%] animate-skeleton-shimmer bg-gradient-to-r from-transparent via-white/55 to-transparent" />
+      <div className="absolute inset-y-0 left-0 w-1/2 translate-x-[-120%] animate-skeleton-shimmer bg-gradient-to-r from-transparent via-[color-mix(in_srgb,var(--surface)_65%,transparent)] to-transparent" />
     </div>
   );
 }

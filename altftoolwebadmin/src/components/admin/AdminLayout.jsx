@@ -198,7 +198,7 @@ export default function AdminLayout({ children }) {
           ) : null}
           <main className="flex flex-1 items-center justify-center overflow-y-auto px-4">
             <div className="max-w-md space-y-4 rounded-lg border border-[var(--border)] bg-[var(--surface)] p-6 text-center shadow-sm">
-              <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-lg bg-red-50 text-red-600">
+              <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-lg bg-[var(--danger-soft)] text-[var(--danger)]">
                 <LockKeyhole className="h-6 w-6" />
               </div>
 
@@ -222,13 +222,13 @@ export default function AdminLayout({ children }) {
                     type="button"
                     onClick={handleRequestAccess}
                     disabled={requestingAccess}
-                    className="inline-flex h-10 items-center justify-center gap-2 rounded-lg bg-[var(--foreground)] px-4 text-sm font-semibold text-[var(--background)] transition hover:opacity-90 disabled:opacity-60"
+                    className="inline-flex h-10 items-center justify-center gap-2 rounded-lg bg-[var(--primary)] px-4 text-sm font-semibold text-[var(--primary-foreground)] shadow-[var(--shadow-sm)] transition hover:bg-[var(--anslation-ds-primary-hover,var(--primary))] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color-mix(in_srgb,var(--primary)_35%,transparent)] disabled:opacity-60"
                   >
                     <ShieldAlert className="h-4 w-4" />
                     {requestingAccess ? "Requesting…" : "Request Access"}
                   </button>
                 ) : (
-                  <span className="inline-flex h-10 items-center rounded-lg border border-green-200 bg-green-50 px-4 text-sm font-medium text-green-700">
+                  <span className="inline-flex h-10 items-center rounded-lg border border-[color-mix(in_srgb,var(--success)_35%,var(--border))] bg-[var(--success-soft)] px-4 text-sm font-medium text-[var(--success)]">
                     Request submitted
                   </span>
                 )}

@@ -216,6 +216,31 @@ export default function EditBlog() {
   const searchParams = useSearchParams();
   const fileInputRef = useRef(null);
 
+  /* ── Debounced editor → form sync (see add-blogs for rationale) ── */
+  const editorSyncTimerRef = useRef(null);
+  const applyEditorData = useCallback((data) => {
+    setFormData((p) => ({ ...p, description: data }));
+    setErrors((p) => ({ ...p, description: undefined }));
+  }, []);
+
+  const handleEditorChange = useCallback(
+    (data) => {
+      if (editorSyncTimerRef.current) window.clearTimeout(editorSyncTimerRef.current);
+      editorSyncTimerRef.current = window.setTimeout(() => {
+        editorSyncTimerRef.current = null;
+        applyEditorData(data);
+      }, 250);
+    },
+    [applyEditorData]
+  );
+
+  useEffect(
+    () => () => {
+      if (editorSyncTimerRef.current) window.clearTimeout(editorSyncTimerRef.current);
+    },
+    []
+  );
+
   const [formData, setFormData] = useState({
     heading: "", category: "", author: "", date: "",
     description: "", seoTitle: "", seoDescription: "", image: "", status: "draft",
@@ -880,8 +905,7 @@ export default function EditBlog() {
               {errors.description && (
                 <p className="flex items-center gap-1 text-xs text-danger font-medium -mt-2"><AlertCircle className="w-3 h-3" />{errors.description}</p>
               )}
-              <BlogEditor value={formData.description}
-                onChange={(data) => { setFormData((p) => ({ ...p, description: data })); setErrors((p) => ({ ...p, description: undefined })); }} />
+              <BlogEditor value={formData.description} onChange={handleEditorChange} />
             </Section>
 
             {/* SEO — collapsible */}
