@@ -9,7 +9,13 @@ const PROJECT_ID = "altftool";
 const FIRESTORE_PARENT = `projects/${FIREBASE_PROJECT_ID}/databases/(default)/documents/projects/${PROJECT_ID}`;
 const CACHE_SECONDS = 300;
 const CACHE_MS = CACHE_SECONDS * 1000;
-const FIRESTORE_TIMEOUT_MS = Number(process.env.ALTFT_FIRESTORE_REST_TIMEOUT_MS || 3500);
+// "Not found"/empty results are cached briefly (not for the full 5 minutes):
+// caching null for 300s made freshly published posts 404 for up to 5 minutes.
+const NEGATIVE_CACHE_MS = 30 * 1000;
+// 3.5s was borderline on cold starts and flapped requests onto the static
+// fallback (listing/search then silently showed stale data). 8s default,
+// still overridable via env.
+const FIRESTORE_TIMEOUT_MS = Number(process.env.ALTFT_FIRESTORE_REST_TIMEOUT_MS || 8000);
 
 const LIST_FIELDS = [
   "heading",
@@ -70,16 +76,30 @@ function cacheKey(name, value = {}) {
 function readCache(key) {
   const cached = memoryCache.get(key);
   if (!cached || cached.expiresAt <= Date.now()) {
-    memoryCache.delete(key);
+    // NOTE: entry is intentionally kept so readStaleCache() can serve the
+    // last known-good value when Firestore errors out.
     return null;
   }
   return cached.value;
 }
 
+/** Last known-good value, even if expired — lets callers degrade to slightly
+    stale LIVE data instead of the static snapshot when Firestore errors. */
+function readStaleCache(key) {
+  const cached = memoryCache.get(key);
+  if (!cached || cached.value === null || cached.value === undefined) return null;
+  if (Array.isArray(cached.value) && cached.value.length === 0) return null;
+  return cached.value;
+}
+
 function writeCache(key, value) {
+  const isEmpty =
+    value === null ||
+    value === undefined ||
+    (Array.isArray(value) && value.length === 0);
   memoryCache.set(key, {
     value,
-    expiresAt: Date.now() + CACHE_MS,
+    expiresAt: Date.now() + (isEmpty ? NEGATIVE_CACHE_MS : CACHE_MS),
   });
   return value;
 }
@@ -201,18 +221,27 @@ export async function fetchFirebaseBlogsPage({
       : null,
   ];
 
-  const rows = await firestorePost("runQuery", {
-    structuredQuery: {
-      select: {
-        fields: fields.map((fieldPath) => ({ fieldPath })),
+  let rows;
+  try {
+    rows = await firestorePost("runQuery", {
+      structuredQuery: {
+        select: {
+          fields: fields.map((fieldPath) => ({ fieldPath })),
+        },
+        from: [{ collectionId: "blogs" }],
+        where: andFilter(filters),
+        orderBy: [{ field: { fieldPath: "createdAt" }, direction: "DESCENDING" }],
+        offset: normalizedOffset,
+        limit: normalizedPageSize,
       },
-      from: [{ collectionId: "blogs" }],
-      where: andFilter(filters),
-      orderBy: [{ field: { fieldPath: "createdAt" }, direction: "DESCENDING" }],
-      offset: normalizedOffset,
-      limit: normalizedPageSize,
-    },
-  });
+    });
+  } catch (error) {
+    // Prefer slightly stale LIVE data over the static snapshot on transient
+    // Firestore failures; rethrow only when we have nothing better.
+    const stale = readStaleCache(key);
+    if (stale) return stale;
+    throw error;
+  }
 
   const posts = rows
     .filter((row) => row.document)
@@ -229,19 +258,26 @@ export async function fetchFirebaseBlogBySlug(slug) {
   const cached = readCache(key);
   if (cached) return cached;
 
-  const rows = await firestorePost("runQuery", {
-    structuredQuery: {
-      select: {
-        fields: DETAIL_FIELDS.map((fieldPath) => ({ fieldPath })),
+  let rows;
+  try {
+    rows = await firestorePost("runQuery", {
+      structuredQuery: {
+        select: {
+          fields: DETAIL_FIELDS.map((fieldPath) => ({ fieldPath })),
+        },
+        from: [{ collectionId: "blogs" }],
+        where: andFilter([
+          fieldFilter("status", "EQUAL", { stringValue: "published" }),
+          fieldFilter("slug", "EQUAL", { stringValue: slug }),
+        ]),
+        limit: 1,
       },
-      from: [{ collectionId: "blogs" }],
-      where: andFilter([
-        fieldFilter("status", "EQUAL", { stringValue: "published" }),
-        fieldFilter("slug", "EQUAL", { stringValue: slug }),
-      ]),
-      limit: 1,
-    },
-  });
+    });
+  } catch (error) {
+    const stale = readStaleCache(key);
+    if (stale) return stale;
+    throw error;
+  }
 
   const document = rows.find((row) => row.document)?.document;
   return writeCache(key, document ? normalizeBlog(decodeDocument(document)) : null);

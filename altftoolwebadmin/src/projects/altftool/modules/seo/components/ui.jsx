@@ -3,8 +3,8 @@
 // ALTF Engine — Meta SEO Management shared UI primitives.
 // All styling uses semantic design tokens per master.md (light + dark, AA).
 
-import { useState } from "react";
-import { X, Plus } from "lucide-react";
+import { useEffect, useState } from "react";
+import { X, Plus, CheckCircle2 } from "lucide-react";
 
 export const BTN_PRIMARY =
   "inline-flex items-center justify-center gap-2 px-4 py-2.5 text-sm font-semibold rounded-lg bg-primary text-primary-foreground hover:opacity-90 transition shadow-sm disabled:opacity-50 disabled:cursor-not-allowed";
@@ -216,5 +216,60 @@ export function AddRowButton({ onClick, label }) {
     <button type="button" onClick={onClick} className={BTN_SECONDARY}>
       <Plus className="h-4 w-4" /> {label}
     </button>
+  );
+}
+
+/* ── Centered save-success dialog ──────────────────────────────────────────
+   Professional confirmation shown after any save/update in the SEO module.
+   Centered modal (not a corner toast), auto-dismisses, Escape/backdrop/button
+   close, focus-safe, tokens-only (light+dark, AA). Purely presentational —
+   callers still keep their existing state flow. */
+export function SuccessDialog({ open, title = "Changes applied", message = "", onClose, autoCloseMs = 2600 }) {
+  useEffect(() => {
+    if (!open) return undefined;
+    const timer = window.setTimeout(() => onClose?.(), autoCloseMs);
+    const onKey = (event) => {
+      if (event.key === "Escape") onClose?.();
+    };
+    window.addEventListener("keydown", onKey);
+    return () => {
+      window.clearTimeout(timer);
+      window.removeEventListener("keydown", onKey);
+    };
+  }, [open, autoCloseMs, onClose]);
+
+  if (!open) return null;
+
+  return (
+    <div
+      className="fixed inset-0 z-[80] flex items-center justify-center p-4"
+      role="dialog"
+      aria-modal="true"
+      aria-label={title}
+    >
+      <button
+        type="button"
+        aria-label="Dismiss"
+        onClick={onClose}
+        className="absolute inset-0 bg-foreground/25 backdrop-blur-[2px] transition-opacity"
+      />
+      <div className="relative w-full max-w-sm rounded-2xl border border-border bg-card p-6 text-center shadow-xl animate-slide-in">
+        <span className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-success-soft ring-8 ring-success-soft/40">
+          <CheckCircle2 className="h-7 w-7 text-success" />
+        </span>
+        <h2 className="mt-4 text-base font-bold text-foreground">{title}</h2>
+        {message ? <p className="mt-1.5 text-sm leading-6 text-muted">{message}</p> : null}
+        <button type="button" onClick={onClose} className={`${BTN_PRIMARY} mt-5 w-full`}>
+          Done
+        </button>
+        <div className="absolute inset-x-6 bottom-2 h-0.5 overflow-hidden rounded-full bg-surface-soft" aria-hidden="true">
+          <div
+            className="h-full rounded-full bg-success"
+            style={{ animation: `seoDialogDrain ${autoCloseMs}ms linear forwards` }}
+          />
+        </div>
+        <style>{`@keyframes seoDialogDrain { from { width: 100%; } to { width: 0%; } }`}</style>
+      </div>
+    </div>
   );
 }

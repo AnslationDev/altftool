@@ -4,9 +4,43 @@ import { ThumbsDown, ThumbsUp } from "lucide-react";
 import { useMemo, useState } from "react";
 import { recordBlogFeedback } from "../../context/views.service";
 
-function getInitialChoice(feedbackKey) {
+// Remembered feedback expires so returning readers can re-vote after content
+// has been revised (stale "Helpful" pins previously lived forever).
+const FEEDBACK_TTL_MS = 180 * 24 * 60 * 60 * 1000; // ~6 months
+
+function readStoredChoice(feedbackKey) {
   if (typeof window === "undefined" || !feedbackKey) return "";
-  return localStorage.getItem(`blog-feedback:${feedbackKey}`) || "";
+  const raw = localStorage.getItem(`blog-feedback:${feedbackKey}`);
+  if (!raw) return "";
+  // Legacy format: plain sentiment string (no timestamp) — keep honoring it.
+  if (raw === "helpful" || raw === "notHelpful") return raw;
+  try {
+    const parsed = JSON.parse(raw);
+    if (!parsed?.sentiment) return "";
+    if (Date.now() - Number(parsed.timestamp || 0) > FEEDBACK_TTL_MS) {
+      localStorage.removeItem(`blog-feedback:${feedbackKey}`);
+      return "";
+    }
+    return parsed.sentiment;
+  } catch {
+    return "";
+  }
+}
+
+function writeStoredChoice(feedbackKey, sentiment) {
+  if (typeof window === "undefined" || !feedbackKey) return;
+  if (!sentiment) {
+    localStorage.removeItem(`blog-feedback:${feedbackKey}`);
+    return;
+  }
+  localStorage.setItem(
+    `blog-feedback:${feedbackKey}`,
+    JSON.stringify({ sentiment, timestamp: Date.now() }),
+  );
+}
+
+function getInitialChoice(feedbackKey) {
+  return readStoredChoice(feedbackKey);
 }
 
 export default function BlogFeedback({ blog }) {
@@ -26,7 +60,7 @@ export default function BlogFeedback({ blog }) {
     const previous = choice;
     setChoice(sentiment);
     setStatus("Saving...");
-    localStorage.setItem(`blog-feedback:${feedbackKey}`, sentiment);
+    writeStoredChoice(feedbackKey, sentiment);
 
     if (!firebaseBlogId) {
       setStatus("Thanks for the feedback.");
@@ -37,8 +71,7 @@ export default function BlogFeedback({ blog }) {
     const result = await recordBlogFeedback(firebaseBlogId, sentiment);
     if (!result) {
       setChoice(previous);
-      if (previous) localStorage.setItem(`blog-feedback:${feedbackKey}`, previous);
-      else localStorage.removeItem(`blog-feedback:${feedbackKey}`);
+      writeStoredChoice(feedbackKey, previous);
       setStatus("Could not save. Try again later.");
       window.setTimeout(() => setStatus(""), 2200);
       return;

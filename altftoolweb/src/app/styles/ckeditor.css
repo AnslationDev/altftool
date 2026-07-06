@@ -886,3 +886,57 @@
   background: color-mix(in srgb, var(--anslation-ds-primary) 22%, transparent);
   color: var(--foreground);
 }
+
+/* ── Nested content fidelity (CKEditor output) ─────────────────────────
+   Nested lists and blockquotes previously collapsed to the same level,
+   flattening the visual hierarchy of long-form guides. */
+.ckeditor-content ul ul,
+.ckeditor-content ol ol,
+.ckeditor-content ul ol,
+.ckeditor-content ol ul {
+  margin-top: 0.35em;
+  margin-bottom: 0.35em;
+  padding-left: 1.35em;
+}
+
+.ckeditor-content ul ul {
+  list-style-type: circle;
+}
+
+.ckeditor-content ul ul ul {
+  list-style-type: square;
+}
+
+.ckeditor-content ol ol {
+  list-style-type: lower-alpha;
+}
+
+.ckeditor-content ol ol ol {
+  list-style-type: lower-roman;
+}
+
+.ckeditor-content blockquote blockquote {
+  margin-top: 0.75em;
+  margin-bottom: 0;
+  border-left-width: 2px;
+  opacity: 0.92;
+}
+
+/* Long unbroken strings (URLs, tokens) must never break the layout. */
+.ckeditor-content p,
+.ckeditor-content li,
+.ckeditor-content td,
+.ckeditor-content th {
+  overflow-wrap: break-word;
+  word-break: break-word;
+}
+
+/* Tables: keep readable on small screens without breaking the column grid. */
+@media (max-width: 640px) {
+  .ckeditor-content table {
+    display: block;
+    max-width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+}

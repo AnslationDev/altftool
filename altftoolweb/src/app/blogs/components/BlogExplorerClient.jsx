@@ -49,7 +49,11 @@ function getRelativeTime(dateString) {
 }
 
 const INITIAL_VISIBLE_COUNT = 24;
-const BACKGROUND_SYNC_PAGE_LIMIT = 1;
+// 1 page (72 posts) left most of the published catalog invisible to search —
+// only the newest 72 posts were ever searchable. 12 idle-paced pages cover
+// 800+ posts; the loop still stops the moment hasMore turns false, and each
+// page is served by the ISR-cached /api/blogs route (no read amplification).
+const BACKGROUND_SYNC_PAGE_LIMIT = 12;
 const SORT_OPTIONS = [
   { value: "latest", label: "Latest First" },
   { value: "trending", label: "Trending" },

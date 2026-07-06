@@ -6,10 +6,10 @@
 
 import { useCallback, useEffect, useState } from "react";
 import { Search, FileEdit, ArrowRight, BadgeCheck, CornerDownLeft, RefreshCw } from "lucide-react";
-import { fetchSeoConfig, saveSeoConfig, runPageSearch } from "../services/seoService";
+import { fetchSeoConfig, saveSeoConfig, runPageSearch, generateSeoPageEntry } from "../services/seoService";
 import { getErrorMessage } from "@/lib/apiClient";
 import SeoNav from "../components/SeoNav";
-import { Banner, BTN_SECONDARY } from "../components/ui";
+import { Banner, BTN_SECONDARY, SuccessDialog } from "../components/ui";
 import { readPageEntry, compactPageEntry } from "../lib/seoModel";
 import PageEditor from "./components/PageEditor";
 
@@ -24,8 +24,10 @@ export default function PageSeoWorkspace() {
   const [activePath, setActivePath] = useState("");
   const [form, setForm] = useState(null);
   const [saving, setSaving] = useState(false);
+  const [generating, setGenerating] = useState(false);
   const [message, setMessage] = useState("");
   const [isError, setIsError] = useState(false);
+  const [savedPopup, setSavedPopup] = useState("");
 
   // Load full config once (needed for editing + saving merges).
   useEffect(() => {
@@ -105,6 +107,7 @@ export default function PageSeoWorkspace() {
       setConfig(nextConfig);
       setMessage(`${successMsg} (v${res.version}). Live within a few seconds.`);
       setIsError(false);
+      setSavedPopup(`${successMsg} for ${activePath || "this page"} (v${res.version}). Changes are live within a few seconds.`);
     } catch (e) {
       setIsError(true);
       setMessage(getErrorMessage(e));
@@ -122,6 +125,46 @@ export default function PageSeoWorkspace() {
     await persist({ ...config, pages }, "Saved page SEO");
   }
 
+  // "Generate with AI": fills every editable section (title, description,
+  // keywords, OG, Twitter, JSON-LD) from the existing SEO lane engine — page
+  // registry context + live Search Console queries. Nothing is saved until
+  // the admin reviews and hits Save & publish (audited config path).
+  async function handleGenerate() {
+    if (!activePath || generating) return null;
+    setGenerating(true);
+    setMessage("");
+    setIsError(false);
+    try {
+      const preview = await generateSeoPageEntry(activePath);
+      const proposed = preview?.proposed || {};
+      setForm((current) => ({
+        ...current,
+        ...(proposed.title ? { title: proposed.title } : {}),
+        ...(proposed.description ? { description: proposed.description } : {}),
+        ...(Array.isArray(proposed.keywords) && proposed.keywords.length
+          ? { keywords: proposed.keywords }
+          : {}),
+        og: { ...current.og, ...(proposed.og || {}) },
+        twitter: { ...current.twitter, ...(proposed.twitter || {}) },
+        ...(Array.isArray(proposed.schema) && proposed.schema.length
+          ? { schema: proposed.schema }
+          : {}),
+      }));
+      const queries = preview?.gscSnapshot?.topQueries?.length || 0;
+      setMessage(
+        `AI draft filled${queries ? ` using ${queries} live Search Console quer${queries === 1 ? "y" : "ies"}` : ""} — review each tab, then Save & publish.`,
+      );
+      setIsError(false);
+      return proposed;
+    } catch (e) {
+      setIsError(true);
+      setMessage(getErrorMessage(e));
+      return null;
+    } finally {
+      setGenerating(false);
+    }
+  }
+
   async function handleDelete() {
     const pages = { ...(config.pages || {}) };
     delete pages[activePath];
@@ -133,6 +176,12 @@ export default function PageSeoWorkspace() {
 
   return (
     <div className="mx-auto max-w-7xl space-y-6 pb-12 animate-slide-in">
+      <SuccessDialog
+        open={Boolean(savedPopup)}
+        title="Changes applied successfully"
+        message={savedPopup}
+        onClose={() => setSavedPopup("")}
+      />
       <SeoNav active="pages" />
 
       <header>
@@ -226,6 +275,8 @@ export default function PageSeoWorkspace() {
               path={activePath}
               form={form}
               onChange={setForm}
+              onGenerate={handleGenerate}
+              generating={generating}
               onSave={handleSave}
               onDelete={handleDelete}
               saving={saving}

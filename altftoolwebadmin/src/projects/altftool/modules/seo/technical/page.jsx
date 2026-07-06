@@ -22,7 +22,7 @@ import {
 import { fetchSeoConfig, saveSeoConfig, checkLinks } from "../services/seoService";
 import { getErrorMessage } from "@/lib/apiClient";
 import SeoNav from "../components/SeoNav";
-import { Field, TextArea, Select, Toggle, Banner, SectionCard, BTN_PRIMARY, BTN_SECONDARY } from "../components/ui";
+import { Field, TextArea, Select, Toggle, Banner, SectionCard, BTN_PRIMARY, BTN_SECONDARY, SuccessDialog } from "../components/ui";
 import { getBaseUrl } from "../lib/seoModel";
 
 const linesToArray = (text) => String(text || "").split("\n").map((l) => l.trim()).filter(Boolean);
@@ -32,6 +32,7 @@ export default function TechnicalSeoPage() {
   const [config, setConfig] = useState(null);
   const [status, setStatus] = useState("loading");
   const [message, setMessage] = useState("");
+  const [savedPopup, setSavedPopup] = useState("");
   const [isError, setIsError] = useState(false);
 
   // robots
@@ -89,6 +90,7 @@ export default function TechnicalSeoPage() {
       setConfig(next);
       setStatus("ready");
       setMessage(`${successMsg} (v${res.version}). Live within a few seconds.`);
+      setSavedPopup(`${successMsg} (v${res.version}). Live within a few seconds.`);
     } catch (e) {
       setStatus("ready");
       setIsError(true);
@@ -144,6 +146,12 @@ export default function TechnicalSeoPage() {
 
   return (
     <div className="mx-auto max-w-6xl space-y-6 pb-12 animate-slide-in">
+      <SuccessDialog
+        open={Boolean(savedPopup)}
+        title="Changes applied successfully"
+        message={savedPopup}
+        onClose={() => setSavedPopup("")}
+      />
       <SeoNav active="technical" />
 
       <header>
