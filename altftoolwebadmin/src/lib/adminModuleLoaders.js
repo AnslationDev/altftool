@@ -160,6 +160,12 @@ const routeLoaders = {
     },
     blog: {
       "": () => import("@/projects/carrerbook/modules/blog/page.jsx"),
+      "add-article": () =>
+        import("@/projects/carrerbook/modules/blog/add-article/page.jsx"),
+      "edit-article/[id]": () =>
+        import("@/projects/carrerbook/modules/blog/edit-article/[id]/page.jsx"),
+      "view-articles": () =>
+        import("@/projects/carrerbook/modules/blog/view-articles/page.jsx"),
     },
     "about-us": {
       "": () => import("@/projects/carrerbook/modules/about-us/page.jsx"),
