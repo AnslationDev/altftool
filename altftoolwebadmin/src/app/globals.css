@@ -822,13 +822,63 @@ a {
   min-height: 400px;
 }
 
+/* ── CKEditor 5 theming — map the Lark theme onto ALTFTool semantic tokens so
+   the editor follows light AND dark mode (master.md: no hardcoded colours). ── */
+:root {
+  --ck-color-base-background: var(--surface);
+  --ck-color-base-foreground: var(--surface-soft);
+  --ck-color-base-border: var(--border);
+  --ck-color-base-text: var(--foreground);
+  --ck-color-focus-border: var(--primary);
+  --ck-color-text: var(--foreground);
+  --ck-color-toolbar-background: var(--surface);
+  --ck-color-toolbar-border: var(--border);
+  --ck-color-button-default-background: transparent;
+  --ck-color-button-default-hover-background: var(--surface-soft);
+  --ck-color-button-default-active-background: var(--surface-soft);
+  --ck-color-button-on-background: color-mix(in srgb, var(--primary) 14%, transparent);
+  --ck-color-button-on-hover-background: color-mix(in srgb, var(--primary) 20%, transparent);
+  --ck-color-button-on-active-background: color-mix(in srgb, var(--primary) 24%, transparent);
+  --ck-color-button-on-color: var(--primary);
+  --ck-color-dropdown-panel-background: var(--surface);
+  --ck-color-dropdown-panel-border: var(--border);
+  --ck-color-panel-background: var(--surface);
+  --ck-color-panel-border: var(--border);
+  --ck-color-input-background: var(--surface);
+  --ck-color-input-border: var(--border);
+  --ck-color-input-text: var(--foreground);
+  --ck-color-list-background: var(--surface);
+  --ck-color-list-button-hover-background: var(--surface-soft);
+  --ck-color-list-button-on-background: color-mix(in srgb, var(--primary) 16%, transparent);
+  --ck-color-list-button-on-text: var(--primary);
+  --ck-color-labeled-field-label-background: var(--surface);
+  --ck-color-dialog-background: var(--surface);
+  --ck-color-dialog-form-header-border: var(--border);
+  --ck-color-editable-blur-selection: color-mix(in srgb, var(--primary) 22%, transparent);
+  --ck-color-widget-hover-border: color-mix(in srgb, var(--primary) 60%, transparent);
+  --ck-color-widget-editable-focus-background: var(--surface);
+}
+
+.ck.ck-editor__main > .ck-editor__editable:not(.ck-focused) {
+  border-color: var(--border);
+}
+
+.ck.ck-editor__main > .ck-editor__editable.ck-focused:not(.ck-editor__nested-editable) {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary) 22%, transparent);
+}
+
+.ck.ck-content a {
+  color: var(--primary);
+}
+
 .editor-fullscreen {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: white;
+  background: var(--surface);
   z-index: 9999;
   padding: 20px;
   overflow: auto;

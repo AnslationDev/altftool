@@ -52,6 +52,10 @@ function loadScript(src) {
   window.__ALTFT_CKEDITOR_SCRIPT_PROMISES__[src] = new Promise((resolve, reject) => {
     const script = existingScript || document.createElement("script");
 
+    // cdn.ckeditor.com serves CORS headers; loading the bundles as CORS
+    // scripts unmasks their runtime errors (otherwise license errors surface
+    // as an unusable "Script error." with no error code).
+    script.crossOrigin = "anonymous";
     script.src = src;
     script.async = true;
     script.onload = () => {
