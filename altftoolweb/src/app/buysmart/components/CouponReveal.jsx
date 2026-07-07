@@ -78,7 +78,7 @@ export default function CouponReveal({
         data-testid={buttonTestId}
         onClick={handleReveal}
         disabled={!isHydrated}
-        className={`inline-flex h-11 items-center justify-center gap-2 rounded-[var(--anslation-ds-radius)] bg-(--primary) px-4 text-sm font-semibold text-(--primary-foreground) shadow-[var(--anslation-ds-shadow-sm)] transition hover:bg-(--primary-hover) focus:outline-none focus:ring-2 focus:ring-(--primary) disabled:cursor-not-allowed disabled:opacity-70 ${className}`}
+        className={`buy-smart-gradient-cta inline-flex h-11 items-center justify-center gap-2 rounded-[var(--anslation-ds-radius)] px-4 text-sm font-semibold transition focus:outline-none focus:ring-2 focus:ring-(--primary) disabled:cursor-not-allowed disabled:opacity-70 ${className}`}
       >
         <TicketPercent className="h-4 w-4" />
         {!isHydrated ? "Preparing deal" : hasCode ? "Reveal code" : "View deal"}
@@ -163,7 +163,7 @@ export default function CouponReveal({
                     target="_blank"
                     rel="noopener noreferrer"
                     onClick={handleOutbound}
-                    className="inline-flex h-11 w-full items-center justify-center gap-2 rounded-[var(--anslation-ds-radius)] bg-(--primary) px-4 text-sm font-semibold text-(--primary-foreground) transition hover:bg-(--primary-hover)"
+                    className="buy-smart-gradient-cta inline-flex h-11 w-full items-center justify-center gap-2 rounded-[var(--anslation-ds-radius)] px-4 text-sm font-semibold transition hover:-translate-y-0.5"
                   >
                     {hasCode ? "Open store after copy" : "Open store"}
                     <ArrowRight className="h-4 w-4" />

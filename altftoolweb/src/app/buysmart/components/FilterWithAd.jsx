@@ -42,7 +42,7 @@ function CategoryCard({ cat, counters }) {
     <Link
       href={href}
       data-testid="buysmart-category-card"
-      className="group flex min-h-[282px] flex-col overflow-hidden rounded-[var(--anslation-ds-radius)] border border-(--border) bg-(--card) shadow-[var(--anslation-ds-shadow-sm)] transition hover:-translate-y-0.5 hover:border-(--primary) motion-reduce:transform-none"
+      className="group flex min-h-[282px] flex-col overflow-hidden rounded-[var(--anslation-ds-radius)] border shadow-[var(--anslation-ds-shadow-sm)] transition hover:-translate-y-0.5 motion-reduce:transform-none"
     >
       <div className="relative aspect-[4/3] overflow-hidden bg-(--muted)">
         {imageSrc && !imageLoaded && !imageError ? (
@@ -91,25 +91,25 @@ function CategoryCard({ cat, counters }) {
 
         <div className="flex flex-wrap gap-1.5">
           <TrustSignalBadges signals={trustSignals} compact />
-          <span className="inline-flex items-center gap-1 rounded-full border border-(--border) bg-(--muted) px-2 py-1 text-[11px] font-semibold text-(--muted-foreground)">
+        <span className="buy-smart-chip inline-flex items-center gap-1 rounded-full border px-2 py-1 text-[11px] font-semibold">
             <TicketPercent className="h-3 w-3 text-(--primary)" />
             <span className="max-w-[120px] truncate">{savingsText}</span>
           </span>
           {normalizedCat.verified ? (
-            <span className="inline-flex items-center gap-1 rounded-full border border-(--border) bg-(--background) px-2 py-1 text-[11px] font-semibold text-(--muted-foreground)">
+            <span className="buy-smart-chip-secondary inline-flex items-center gap-1 rounded-full border px-2 py-1 text-[11px] font-semibold">
               <BadgeCheck className="h-3 w-3 text-(--primary)" />
               Verified
             </span>
           ) : null}
           {normalizedCat.exclusive ? (
-            <span className="inline-flex items-center gap-1 rounded-full border border-(--border) bg-(--background) px-2 py-1 text-[11px] font-semibold text-(--muted-foreground)">
+            <span className="buy-smart-chip-secondary inline-flex items-center gap-1 rounded-full border px-2 py-1 text-[11px] font-semibold">
               <Sparkles className="h-3 w-3 text-(--primary)" />
               Exclusive
             </span>
           ) : null}
         </div>
 
-        <div className="mt-auto flex items-center justify-between rounded-[var(--anslation-ds-radius)] border border-(--border) bg-(--background) px-3 py-2 text-xs font-semibold text-(--muted-foreground)">
+        <div className="buy-smart-cta-surface mt-auto flex items-center justify-between rounded-[var(--anslation-ds-radius)] border px-3 py-2 text-xs font-semibold text-(--muted-foreground)">
           <span className="truncate">{normalizedCat.code || "Open deal"}</span>
           <ArrowRight className="h-3.5 w-3.5 shrink-0 text-(--primary) transition group-hover:translate-x-0.5" />
         </div>
@@ -134,7 +134,7 @@ export default function FilterWithAdCard({
     >
       {/* Left: Cards */}
       {finalData.length === 0 ? (
-        <div className="flex min-h-[45vh] w-full flex-shrink-0 flex-col items-center justify-center gap-3 rounded-[var(--anslation-ds-radius)] border border-(--border) bg-(--card) px-4 text-center shadow-[var(--anslation-ds-shadow-sm)]">
+        <div className="buy-smart-themed-panel flex min-h-[45vh] w-full flex-shrink-0 flex-col items-center justify-center gap-3 rounded-[var(--anslation-ds-radius)] border px-4 text-center shadow-[var(--anslation-ds-shadow-sm)]">
           <div className="flex items-center justify-center">
             <TriangleAlert className="h-10 w-10 text-(--muted-foreground)" />
           </div>

@@ -129,10 +129,10 @@ export default function CategoriesAZ({ selectedLetter = "All", filteredCategory 
 
   return (
     <div className="flex justify-center gap-8 bg-[var(--background)] text-[var(--foreground)]">
-      <section className="flex-1 py-6">
-        <div className="mb-4 flex flex-col gap-4 rounded-[var(--anslation-ds-radius-lg)] border border-(--border) bg-(--card) p-4 shadow-[var(--anslation-ds-shadow-sm)] lg:flex-row lg:items-center lg:justify-between">
+      <section className="flex-1 py-0">
+        <div className="buy-smart-themed-panel mb-4 flex flex-col gap-4 rounded-[var(--anslation-ds-radius-lg)] border p-4 shadow-[var(--anslation-ds-shadow-sm)] transition lg:flex-row lg:items-center lg:justify-between">
           <div className="min-w-0">
-            <div className="inline-flex items-center gap-2 rounded-full border border-(--border) bg-(--muted) px-3 py-1 text-xs font-semibold text-(--muted-foreground)">
+            <div className="buy-smart-chip inline-flex items-center gap-2 rounded-full border px-3 py-1 text-xs font-semibold">
               <Store className="h-3.5 w-3.5 text-(--primary)" />
               {flatData.length} brands ready
             </div>
@@ -145,14 +145,14 @@ export default function CategoriesAZ({ selectedLetter = "All", filteredCategory 
           </div>
           <Link
             href="/buysmart/view-all"
-            className="inline-flex h-10 shrink-0 items-center justify-center gap-2 rounded-[var(--anslation-ds-radius)] border border-(--border) bg-(--background) px-3 text-sm font-bold text-(--foreground) transition hover:border-(--primary)"
+            className="buy-smart-gradient-cta inline-flex h-10 shrink-0 items-center justify-center gap-2 rounded-[var(--anslation-ds-radius)] px-3 text-sm font-bold transition hover:-translate-y-0.5"
           >
             Full directory
-            <ArrowRight className="h-4 w-4 text-(--primary)" />
+            <ArrowRight className="h-4 w-4" />
           </Link>
         </div>
 
-        <div className="mb-5 rounded-[var(--anslation-ds-radius-lg)] border border-(--border) bg-(--card) p-3 shadow-[var(--anslation-ds-shadow-sm)]">
+        <div className="buy-smart-themed-panel mb-5 rounded-[var(--anslation-ds-radius-lg)] border p-3 shadow-[var(--anslation-ds-shadow-sm)] transition">
           <div className="mb-3 flex items-center gap-2 text-xs font-bold uppercase tracking-wide text-(--muted-foreground)">
             <ListFilter className="h-4 w-4 text-(--primary)" />
             Refine results
@@ -183,7 +183,7 @@ export default function CategoriesAZ({ selectedLetter = "All", filteredCategory 
             <button
               disabled={safeCurrentPage === 1}
               onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
-              className="flex h-10 w-auto items-center justify-center gap-2 rounded-[var(--anslation-ds-radius)] border border-(--border) bg-(--card) px-3 text-(--foreground) shadow-[var(--anslation-ds-shadow-sm)] transition hover:border-(--primary) disabled:opacity-50 sm:h-12 sm:w-[135px] sm:px-5"
+              className="buy-smart-gradient-cta flex h-10 w-auto items-center justify-center gap-2 rounded-[var(--anslation-ds-radius)] px-3 transition disabled:opacity-50 sm:h-12 sm:w-[135px] sm:px-5"
             >
               <ChevronLeft size={16} />
               <span className="hidden sm:inline">Previous</span>
@@ -210,7 +210,7 @@ export default function CategoriesAZ({ selectedLetter = "All", filteredCategory 
             <button
               disabled={totalPages === 0 || safeCurrentPage >= totalPages}
               onClick={() => setCurrentPage(p => Math.min(totalPages || 1, p + 1))}
-              className="flex h-10 w-auto items-center justify-center gap-2 rounded-[var(--anslation-ds-radius)] border border-(--border) bg-(--card) px-3 text-(--foreground) shadow-[var(--anslation-ds-shadow-sm)] transition hover:border-(--primary) disabled:opacity-50 sm:h-12 sm:w-[135px] sm:px-5"
+              className="buy-smart-gradient-cta flex h-10 w-auto items-center justify-center gap-2 rounded-[var(--anslation-ds-radius)] px-3 transition disabled:opacity-50 sm:h-12 sm:w-[135px] sm:px-5"
             >
               <span className="hidden sm:inline">Next</span>
               <ChevronRight size={16} />
