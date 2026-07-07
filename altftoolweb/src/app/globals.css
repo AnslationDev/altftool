@@ -148,15 +148,15 @@
   --anslation-ds-muted: #94a3b8;
   --anslation-ds-muted-strong: #cbd5e1;
 
-  --anslation-ds-primary: #7bb8ff;
-  --anslation-ds-primary-hover: #a8d0ff;
-  --anslation-ds-primary-active: #d3e8ff;
+  --anslation-ds-primary: #14b8a6;
+  --anslation-ds-primary-hover: #0d9488;
+  --anslation-ds-primary-active: #0f766e;
   --anslation-ds-primary-soft: #162d4f;
   --anslation-ds-secondary: #38bdf8;
   --anslation-ds-secondary-soft: #12364a;
-  --anslation-ds-cta-gradient: linear-gradient(135deg, #14b8a6, var(--anslation-ds-secondary));
-  --anslation-ds-cta-gradient-hover: linear-gradient(135deg, #2dd4bf, var(--anslation-ds-secondary));
-  --anslation-ds-accent: #5eead4;
+  --anslation-ds-cta-gradient: linear-gradient(135deg, var(--anslation-ds-primary), var(--anslation-ds-secondary));
+  --anslation-ds-cta-gradient-hover: linear-gradient(135deg, var(--anslation-ds-primary-hover), var(--anslation-ds-secondary));
+  --anslation-ds-accent: var(--anslation-ds-secondary);
   --anslation-ds-accent-soft: #123b3a;
 
   --anslation-ds-success: #4ade80;
@@ -180,7 +180,7 @@
   --primary-foreground: #07111f;
   --primary-hover: var(--anslation-ds-primary-hover);
   --primary-active: var(--anslation-ds-primary-active);
-  --secondary: #9aabc1;
+  --secondary: var(--anslation-ds-secondary);
   --secondary-foreground: var(--anslation-ds-muted);
   --secondary-border: var(--anslation-ds-border);
   --secondary-hover: var(--anslation-ds-soft);

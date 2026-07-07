@@ -131,7 +131,7 @@ export default function SavingsHub() {
         {stats.map(({ icon: Icon, label, value }) => (
           <div
             key={label}
-            className="rounded-[var(--anslation-ds-radius)] border border-(--border) bg-(--card) p-4 shadow-[var(--anslation-ds-shadow-sm)]"
+            className="buy-smart-themed-card rounded-[var(--anslation-ds-radius)] border p-4 shadow-[var(--anslation-ds-shadow-sm)] transition"
           >
             <div className="flex items-center justify-between gap-3">
               <div>
@@ -140,7 +140,7 @@ export default function SavingsHub() {
                   {label}
                 </p>
               </div>
-              <span className="grid h-10 w-10 place-items-center rounded-[var(--anslation-ds-radius)] bg-(--muted)">
+              <span className="buy-smart-icon-surface grid h-10 w-10 place-items-center rounded-[var(--anslation-ds-radius)]">
                 <Icon className="h-5 w-5 text-(--primary)" />
               </span>
             </div>
@@ -150,7 +150,7 @@ export default function SavingsHub() {
 
       <div className="grid gap-4 lg:grid-cols-[0.72fr_1.28fr]">
         <div className="space-y-4">
-          <div className="rounded-[var(--anslation-ds-radius)] border border-(--border) bg-(--card) p-4 shadow-[var(--anslation-ds-shadow-sm)]">
+          <div className="buy-smart-themed-panel rounded-[var(--anslation-ds-radius)] border p-4 shadow-[var(--anslation-ds-shadow-sm)] transition">
             <label className="text-xs font-semibold uppercase text-(--muted-foreground)">
               Search savings
             </label>
@@ -187,7 +187,7 @@ export default function SavingsHub() {
             </div>
           </div>
 
-          <div className="rounded-[var(--anslation-ds-radius)] border border-(--border) bg-(--card) p-4 shadow-[var(--anslation-ds-shadow-sm)]">
+          <div className="buy-smart-themed-panel rounded-[var(--anslation-ds-radius)] border p-4 shadow-[var(--anslation-ds-shadow-sm)] transition">
             <div className="flex items-center justify-between gap-3">
               <div>
                 <p className="text-sm font-bold text-(--foreground)">Popular categories</p>
@@ -205,7 +205,7 @@ export default function SavingsHub() {
                     setQuery(category);
                     setActiveFilter("all");
                   }}
-                  className="flex w-full items-center justify-between rounded-[var(--anslation-ds-radius)] border border-(--border) bg-(--background) px-3 py-2 text-left text-sm transition hover:border-(--primary)"
+                  className="buy-smart-cta-surface flex w-full items-center justify-between rounded-[var(--anslation-ds-radius)] border px-3 py-2 text-left text-sm transition hover:border-(--primary)"
                 >
                   <span className="font-semibold text-(--foreground)">{category}</span>
                   <span className="text-xs text-(--muted-foreground)">{count} offers</span>
@@ -232,10 +232,10 @@ function SavingsOfferCard({ offer }) {
   return (
     <Link
       href={href}
-      className="group flex min-h-[260px] flex-col rounded-[var(--anslation-ds-radius)] border border-(--border) bg-(--card) p-4 shadow-[var(--anslation-ds-shadow-sm)] transition hover:-translate-y-0.5 hover:border-(--primary)"
+      className="buy-smart-themed-card group flex min-h-[260px] flex-col rounded-[var(--anslation-ds-radius)] border p-4 shadow-[var(--anslation-ds-shadow-sm)] transition hover:-translate-y-0.5"
     >
       <div className="flex items-start justify-between gap-3">
-        <span className="grid h-12 w-12 shrink-0 place-items-center rounded-[var(--anslation-ds-radius)] border border-(--border) bg-(--background)">
+        <span className="buy-smart-icon-surface grid h-12 w-12 shrink-0 place-items-center rounded-[var(--anslation-ds-radius)]">
           {offer.img ? (
             <ManagedImage
               src={offer.img}
@@ -250,7 +250,7 @@ function SavingsOfferCard({ offer }) {
           )}
         </span>
 
-        <span className="rounded-full border border-(--border) bg-(--muted) px-2.5 py-1 text-[11px] font-semibold capitalize text-(--muted-foreground)">
+        <span className="buy-smart-chip rounded-full border px-2.5 py-1 text-[11px] font-semibold capitalize">
           {offer.offerType}
         </span>
       </div>
@@ -276,7 +276,7 @@ function SavingsOfferCard({ offer }) {
         </div>
       </div>
 
-      <div className="mt-4 flex items-center justify-between gap-3 rounded-[var(--anslation-ds-radius)] border border-(--border) bg-(--background) px-3 py-2">
+      <div className="buy-smart-cta-surface mt-4 flex items-center justify-between gap-3 rounded-[var(--anslation-ds-radius)] border px-3 py-2">
         <div>
           <p className="text-[11px] font-semibold uppercase text-(--muted-foreground)">
             {offer.code ? "Code" : "Saving"}
@@ -293,7 +293,7 @@ function SavingsOfferCard({ offer }) {
 
 function Chip({ icon: Icon, label }) {
   return (
-    <span className="inline-flex items-center gap-1 rounded-full border border-(--border) bg-(--background) px-2 py-1 text-[11px] font-semibold text-(--muted-foreground)">
+    <span className="buy-smart-chip-secondary inline-flex items-center gap-1 rounded-full border px-2 py-1 text-[11px] font-semibold">
       <Icon className="h-3 w-3 text-(--primary)" />
       {label}
     </span>
