@@ -168,7 +168,7 @@ function LatestNewsWidget({ stories, timeAgo }) {
       </div>
       <Link
         href="/news/headlines"
-        className="mt-5 flex h-[46px] w-full items-center justify-center gap-1.5 rounded-xl bg-[#F7F7F7] text-[14px] font-semibold text-[var(--foreground)] transition hover:bg-[var(--muted)] dark:bg-[var(--surface)]"
+        className="mt-5 flex h-[46px] w-full items-center justify-center gap-1.5 rounded-xl bg-[var(--primary)] text-[14px] font-semibold text-[var(--primary-foreground)] transition hover:shadow-md active:scale-[0.97]"
       >
         View All Latest News
       </Link>
