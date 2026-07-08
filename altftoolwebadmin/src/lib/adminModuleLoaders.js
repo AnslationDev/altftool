@@ -172,6 +172,15 @@ const routeLoaders = {
       "lead-section": () =>
         import("@/projects/carrerbook/modules/about-us/lead-section/page.jsx"),
     },
+    "term-condition": {
+      "": () => import("@/projects/carrerbook/modules/term-condition/page.jsx"),
+    },
+    policy: {
+      "": () => import("@/projects/carrerbook/modules/policy/page.jsx"),
+    },
+    events: {
+      "": () => import("@/projects/carrerbook/modules/events/page.jsx"),
+    },
     team: {
       "": () => import("@/projects/carrerbook/modules/team/page.jsx"),
     },

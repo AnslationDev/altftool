@@ -1,5 +1,6 @@
 import {
   Building2,
+  CalendarDays,
   Contact,
   Home,
   LayoutPanelTop,
@@ -23,6 +24,10 @@ const carrerbookConfig = {
     publisers: { label: "Publisers", icon: PenTool },
     blog: { label: "Blog", icon: Newspaper },
     "about-us": { label: "About Us", icon: Building2 },
+     "term-condition": { label: "Term & Condition", icon: Building2 },
+    policy: { label: "Policy", icon: Building2 },
+    service:{label: "Service", icon: Building2},
+    events: { label: "Events", icon: CalendarDays },
     team: { label: "Team", icon: Users },
   },
 };
