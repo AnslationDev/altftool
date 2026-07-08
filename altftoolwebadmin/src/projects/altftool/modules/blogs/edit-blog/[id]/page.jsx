@@ -412,10 +412,13 @@ export default function EditBlog() {
     if (fileInputRef.current) fileInputRef.current.value = "";
   };
 
-  const handleInsertContentBlock = (html) => {
+  const handleInsertContentBlock = (payload) => {
     setFormData((prev) => ({
       ...prev,
-      description: `${prev.description || ""}${prev.description?.trim() ? "\n\n" : ""}${html}`,
+      description:
+        payload && typeof payload === "object" && "description" in payload
+          ? payload.description
+          : `${prev.description || ""}${prev.description?.trim() ? "\n\n" : ""}${payload}`,
     }));
     setErrors((prev) => ({ ...prev, description: undefined }));
   };
@@ -465,11 +468,14 @@ export default function EditBlog() {
     emitAlert({ type: "success", message: `${label} applied. Review and save the post.${suffix}` });
   };
 
-  const handleApplyTemplate = ({ html = "", fields = {} } = {}) => {
+  const handleApplyTemplate = ({ html = "", fields = {}, description } = {}) => {
     setFormData((prev) => ({
       ...prev,
       ...fields,
-      description: `${prev.description || ""}${prev.description?.trim() ? "\n\n" : ""}${html}`,
+      description:
+        typeof description === "string"
+          ? description
+          : `${prev.description || ""}${prev.description?.trim() ? "\n\n" : ""}${html}`,
     }));
     setErrors((prev) => {
       const next = { ...prev, description: undefined };

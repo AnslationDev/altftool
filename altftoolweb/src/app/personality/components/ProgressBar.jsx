@@ -16,16 +16,16 @@ export default function ProgressBar({
       </div>
 
       <div className="flex items-center gap-3">
-        <div className="flex-1 h-2 rounded-full bg-[#E8EEFF] overflow-hidden">
+        <div className="flex-1 h-2 rounded-full personality-progress-track overflow-hidden">
           <div
-            className="h-full rounded-full bg-[#1E63FF] transition-all duration-500"
+            className="h-full rounded-full personality-progress-fill transition-all duration-500"
             style={{
               width: `${progress}%`,
             }}
           />
         </div>
 
-        <span className="text-[#1E63FF] font-bold text-sm">
+        <span className="text-(--primary) font-bold text-sm">
           {Math.floor(progress)}%
         </span>
       </div>

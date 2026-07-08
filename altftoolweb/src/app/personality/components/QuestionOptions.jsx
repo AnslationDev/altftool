@@ -37,8 +37,8 @@ export default function QuestionOptions({
               hover:-translate-y-[2px]
               ${
                 isSelected
-                  ? "border-(--primary) bg-(--primary)/10 shadow-[0_8px_25px_rgba(0,0,0,0.06)]"
-                  : "border-(--border) hover:border-(--primary)/40 hover:bg-(--primary)/5 hover:shadow-[0_8px_25px_rgba(0,0,0,0.04)]"
+                  ? "border-(--primary) bg-(--primary)/10 shadow-[var(--anslation-ds-shadow-md)]"
+                  : "border-(--border) bg-(--card) hover:border-(--primary)/40 hover:bg-(--primary)/5 hover:shadow-[var(--anslation-ds-shadow-md)]"
               }
             `}
           >

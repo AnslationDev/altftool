@@ -1,10 +1,10 @@
 .support-setting-page {
-  --support-primary: #14B8A6;
-  --support-secondary: #38BDF8;
+  --support-primary: var(--primary);
+  --support-secondary: var(--secondary);
   --support-cta-gradient: linear-gradient(135deg, var(--support-primary), var(--support-secondary));
-  --support-cta-gradient-hover: linear-gradient(135deg, color-mix(in srgb, var(--support-primary) 88%, #0f766e), color-mix(in srgb, var(--support-secondary) 92%, #0ea5e9));
-  --support-cta-shadow: 0 18px 34px rgba(20, 184, 166, 0.28);
-  --support-cta-shadow-hover: 0 22px 42px rgba(20, 184, 166, 0.32);
+  --support-cta-gradient-hover: linear-gradient(135deg, var(--primary-hover, var(--support-primary)), var(--support-secondary));
+  --support-cta-shadow: 0 18px 34px color-mix(in srgb, var(--support-primary) 26%, transparent);
+  --support-cta-shadow-hover: 0 22px 42px color-mix(in srgb, var(--support-secondary) 24%, transparent);
   min-height: 100vh;
   background:
     radial-gradient(circle at 8% 10rem, color-mix(in srgb, var(--support-primary) 6%, transparent), transparent 24rem),
@@ -26,17 +26,18 @@
 }
 
 .support-settings-sidebar {
-  border: 1px solid color-mix(in srgb, var(--support-primary) 10%, var(--border));
+  border: 1px solid color-mix(in srgb, var(--support-primary) 16%, var(--border));
   border-radius: var(--anslation-ds-radius-lg);
   background:
-    linear-gradient(180deg, color-mix(in srgb, var(--support-primary) 4%, var(--card)), var(--card));
+    radial-gradient(circle at 12% 0%, color-mix(in srgb, var(--support-primary) 9%, transparent), transparent 12rem),
+    linear-gradient(180deg, color-mix(in srgb, var(--support-secondary) 4%, var(--card)), var(--card));
   box-shadow: var(--anslation-ds-shadow-sm);
 }
 
 .support-settings-sidebar-header {
-  border-color: color-mix(in srgb, var(--support-primary) 10%, var(--border));
+  border-color: color-mix(in srgb, var(--support-primary) 18%, var(--border));
   background:
-    linear-gradient(135deg, color-mix(in srgb, var(--support-primary) 7%, var(--card)), color-mix(in srgb, var(--support-secondary) 4%, var(--card)));
+    linear-gradient(135deg, color-mix(in srgb, var(--support-primary) 12%, var(--card)), color-mix(in srgb, var(--support-secondary) 9%, var(--card)));
   backdrop-filter: blur(16px);
 }
 
@@ -82,9 +83,9 @@
 .support-settings-nav-item:hover,
 .support-settings-nav-item:focus-visible {
   background:
-    linear-gradient(135deg, color-mix(in srgb, var(--support-primary) 7%, var(--card)), color-mix(in srgb, var(--support-secondary) 4%, var(--card)));
+    linear-gradient(135deg, color-mix(in srgb, var(--support-primary) 10%, var(--card)), color-mix(in srgb, var(--support-secondary) 8%, var(--card)));
   color: var(--support-primary);
-  box-shadow: 0 14px 30px rgba(15, 23, 42, 0.08);
+  box-shadow: 0 14px 30px color-mix(in srgb, var(--support-primary) 12%, transparent);
   transform: translateY(-2px);
 }
 
@@ -99,10 +100,11 @@
 
 .support-settings-nav-item-active {
   background:
-    linear-gradient(135deg, color-mix(in srgb, var(--support-primary) 12%, var(--card)), color-mix(in srgb, var(--support-secondary) 6%, var(--card))) !important;
+    linear-gradient(135deg, color-mix(in srgb, var(--support-primary) 16%, var(--card)), color-mix(in srgb, var(--support-secondary) 12%, var(--card))) !important;
+  color: var(--support-primary);
   box-shadow:
-    0 8px 18px color-mix(in srgb, var(--support-primary) 8%, transparent),
-    inset 0 0 0 1px color-mix(in srgb, var(--support-primary) 20%, transparent);
+    0 10px 24px color-mix(in srgb, var(--support-primary) 14%, transparent),
+    inset 0 0 0 1px color-mix(in srgb, var(--support-primary) 28%, transparent);
 }
 
 .support-settings-nav-item-active::after {
@@ -121,10 +123,11 @@
 }
 
 .support-settings-content {
-  border: 1px solid color-mix(in srgb, var(--support-primary) 10%, var(--border));
+  border: 1px solid color-mix(in srgb, var(--support-primary) 16%, var(--border));
   border-radius: var(--anslation-ds-radius-lg);
   background:
-    linear-gradient(180deg, color-mix(in srgb, var(--support-primary) 3%, var(--card)), var(--card));
+    radial-gradient(circle at 95% 0%, color-mix(in srgb, var(--support-secondary) 7%, transparent), transparent 16rem),
+    linear-gradient(180deg, color-mix(in srgb, var(--support-primary) 4%, var(--card)), var(--card));
   box-shadow: var(--anslation-ds-shadow-sm);
 }
 
@@ -133,8 +136,8 @@
 }
 
 .support-settings-mobile-toggle {
-  border-color: color-mix(in srgb, var(--support-primary) 18%, var(--border));
-  background: color-mix(in srgb, var(--card) 92%, transparent);
+  border-color: color-mix(in srgb, var(--support-primary) 24%, var(--border));
+  background: linear-gradient(135deg, color-mix(in srgb, var(--support-primary) 10%, var(--card)), color-mix(in srgb, var(--support-secondary) 8%, var(--card)));
   box-shadow: var(--anslation-ds-shadow-sm);
 }
 
@@ -194,7 +197,7 @@
 .support-settings-detail-item:hover {
   border-color: color-mix(in srgb, var(--support-primary) 24%, var(--border));
   background: color-mix(in srgb, var(--support-primary) 5%, var(--card));
-  box-shadow: 0 14px 30px rgba(15, 23, 42, 0.08);
+  box-shadow: 0 14px 30px color-mix(in srgb, var(--support-primary) 12%, transparent);
   transform: translateY(-2px);
 }
 
@@ -203,19 +206,19 @@
 }
 
 .support-settings-important {
-  border-color: color-mix(in srgb, var(--anslation-ds-warning) 24%, var(--border));
+  border-color: color-mix(in srgb, var(--support-primary) 24%, var(--border));
   background:
-    radial-gradient(circle at 0% 0%, color-mix(in srgb, var(--anslation-ds-warning) 15%, transparent), transparent 13rem),
-    color-mix(in srgb, var(--anslation-ds-warning) 9%, var(--card));
+    radial-gradient(circle at 0% 0%, color-mix(in srgb, var(--support-secondary) 16%, transparent), transparent 13rem),
+    linear-gradient(135deg, color-mix(in srgb, var(--support-primary) 9%, var(--card)), color-mix(in srgb, var(--support-secondary) 8%, var(--card)));
   box-shadow: var(--anslation-ds-shadow-sm);
 }
 
 .support-settings-important svg {
-  color: var(--anslation-ds-warning);
+  color: var(--support-primary);
 }
 
 .support-settings-important span {
-  color: color-mix(in srgb, var(--anslation-ds-warning) 80%, var(--foreground));
+  color: var(--support-primary);
 }
 
 .support-settings-important p {
@@ -225,8 +228,9 @@
 .support-settings-action {
   min-height: 3.2rem;
   border-radius: 0.72rem;
+  border: 1px solid color-mix(in srgb, var(--support-secondary) 26%, transparent);
   background: var(--support-cta-gradient);
-  color: #ffffff;
+  color: var(--primary-foreground);
   box-shadow: var(--support-cta-shadow);
   font-weight: 700;
   transition:
@@ -253,10 +257,10 @@
 }
 
 .support-settings-image-card {
-  border-color: color-mix(in srgb, var(--support-primary) 10%, var(--border));
+  border-color: color-mix(in srgb, var(--support-primary) 16%, var(--border));
   border-radius: var(--anslation-ds-radius-lg);
   background:
-    linear-gradient(180deg, color-mix(in srgb, var(--support-secondary) 3%, var(--card)), var(--card));
+    linear-gradient(180deg, color-mix(in srgb, var(--support-secondary) 7%, var(--card)), var(--card));
   box-shadow: var(--anslation-ds-shadow-sm);
 }
 
@@ -267,13 +271,15 @@
 
 .support-settings-image-caption {
   border-color: color-mix(in srgb, var(--support-primary) 12%, var(--border));
-  background: color-mix(in srgb, var(--background) 48%, var(--card));
+  background: color-mix(in srgb, var(--support-primary) 5%, var(--card));
 }
 
 .support-settings-after {
-  border: 1px solid color-mix(in srgb, var(--support-primary) 9%, var(--border));
+  border: 1px solid color-mix(in srgb, var(--support-primary) 16%, var(--border));
   border-radius: var(--anslation-ds-radius-lg);
-  background: var(--card);
+  background:
+    radial-gradient(circle at 100% 0%, color-mix(in srgb, var(--support-secondary) 7%, transparent), transparent 12rem),
+    var(--card);
   box-shadow: var(--anslation-ds-shadow-sm);
   padding: clamp(1.1rem, 2.6vw, 1.6rem);
 }
@@ -290,7 +296,7 @@
   position: relative;
   display: block;
   overflow: hidden;
-  border: 1px solid color-mix(in srgb, var(--support-primary) 10%, var(--border));
+  border: 1px solid color-mix(in srgb, var(--support-primary) 16%, var(--border));
   border-radius: var(--anslation-ds-radius-lg);
   background: var(--card);
   box-shadow: var(--anslation-ds-shadow-sm);
@@ -303,7 +309,7 @@
 .support-setting-ad-card:hover,
 .support-setting-ad-card:focus-visible {
   border-color: color-mix(in srgb, var(--support-primary) 40%, var(--border));
-  box-shadow: 0 22px 42px rgba(20, 184, 166, 0.16);
+  box-shadow: 0 22px 42px color-mix(in srgb, var(--support-primary) 18%, transparent);
   transform: translateY(-2px);
 }
 
@@ -322,24 +328,17 @@
   transform: scale(1.035);
 }
 
+[data-theme="dark"] .support-settings-detail-item {
+  background: color-mix(in srgb, var(--card) 88%, var(--background));
+  border-color: color-mix(in srgb, var(--support-primary) 14%, var(--border));
+}
+
 [data-theme="dark"] .support-settings-sidebar,
 [data-theme="dark"] .support-settings-content,
 [data-theme="dark"] .support-settings-image-card,
 [data-theme="dark"] .support-settings-after,
 [data-theme="dark"] .support-setting-ad-card {
-  background:
-    linear-gradient(180deg, color-mix(in srgb, var(--support-primary) 5%, var(--card)), var(--card));
-  border-color: color-mix(in srgb, var(--support-primary) 16%, var(--border));
-}
-
-[data-theme="dark"] .support-setting-page {
-  --support-primary: var(--primary);
-  --support-secondary: var(--secondary);
-}
-
-[data-theme="dark"] .support-settings-detail-item {
-  background: color-mix(in srgb, var(--card) 88%, var(--background));
-  border-color: color-mix(in srgb, var(--support-primary) 14%, var(--border));
+  border-color: color-mix(in srgb, var(--support-primary) 22%, var(--border));
 }
 
 @media (max-width: 1024px) {

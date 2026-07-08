@@ -78,19 +78,19 @@ export default function ExploreVideos({
   if (tab === "Reels") {
     return (
       <div className="fixed inset-0 z-[10000] bg-(--card) flex flex-col ">
-        <div className="  flex items-center justify-between px-4 sm:px-6 py-3 border-b border-[#E2E8F0] bg-(--background) shrink-0">
+        <div className="flex items-center justify-between px-4 sm:px-6 py-3 border-b border-(--border) bg-(--background) shrink-0">
           <h2 className="text-lg sm:text-xl font-semibold text-(--foreground)">
             Reels
           </h2>
 
           <div className="flex items-center gap-3">
-            <div className="bg-[#F1F5F9] border-(--border) rounded-full p-1 flex gap-1">
+            <div className="bg-(--card) border border-(--border) rounded-full p-1 flex gap-1 shadow-sm">
               {["Videos", "Reels"].map((item) => (
                 <button
                   key={item}
                   onClick={() => setTab(item)}
                   className={`px-4 py-1.5 text-sm rounded-full transition cursor-pointer ${
-                    tab === item ? "bg-[#2563EB] text-white" : "text-[#64748B]"
+                    tab === item ? "bg-gradient-to-r from-(--primary) to-(--secondary) text-white shadow-[0_10px_24px_rgba(20,184,166,0.22)]" : "text-(--muted)"
                   }`}
                 >
                   {item}
@@ -100,10 +100,10 @@ export default function ExploreVideos({
 
             <button
               onClick={() => setTab("Videos")}
-              className="p-2 rounded-full hover:bg-[#F1F5F9] transition cursor-pointer"
+              className="p-2 rounded-full hover:bg-(--card) border border-(--border) transition cursor-pointer"
               aria-label="Close Reels"
             >
-              <X size={20} className="text-[#64748B]" />
+              <X size={20} className="text-(--muted)" />
             </button>
           </div>
         </div>
@@ -138,7 +138,7 @@ export default function ExploreVideos({
   w-fit            
   self-start      
   sm:self-auto
-  rounded-full p-1 flex gap-1 shadow-sm
+  rounded-full border border-(--border) bg-(--card) p-1 flex gap-1 shadow-sm
   animate-slide-left  "
             >
               {["Videos", "Reels"].map((item) => (
@@ -147,8 +147,8 @@ export default function ExploreVideos({
                   onClick={() => setTab(item)}
                   className={`px-4 sm:px-5 py-2 text-sm rounded-full transition cursor-pointer whitespace-nowrap ${
                     tab === item
-                      ? "bg-(--primary) text-white"
-                      : "text-(--muted-foreground)"
+                      ? "bg-gradient-to-r from-(--primary) to-(--secondary) text-white shadow-[0_10px_24px_rgba(20,184,166,0.22)]"
+                      : "text-(--muted)"
                   }`}
                 >
                   {item}
@@ -165,8 +165,8 @@ export default function ExploreVideos({
                     onClick={() => handleCategoryClick(filter)}
                     className={`animate-slide-right px-4 sm:px-5 py-2.5 rounded-2xl text-sm font-medium border transition cursor-pointer flex-shrink-0 ${
                       activeFilter === filter
-                        ? "bg-[#2563EB] text-white border-[#2563EB] shadow-[0_12px_30px_rgba(37,99,235,0.18)]"
-                        : "bg-white text-[#475569] border-[#E2E8F0] hover:border-[#2563EB] hover:text-[#2563EB]"
+                        ? "bg-gradient-to-r from-(--primary) to-(--secondary) text-white border-transparent shadow-[0_12px_30px_rgba(20,184,166,0.2)]"
+                        : "bg-(--card) text-(--muted) border-(--border) hover:border-(--primary) hover:text-(--primary)"
                     }`}
                   >
                     {filter}
@@ -176,14 +176,14 @@ export default function ExploreVideos({
             </div>
 
             <div className="flex items-center gap-2 animate-slide-left">
-              <span className="text-md text-(--muted-foreground) whitespace-nowrap">
+              <span className="text-md text-(--muted) whitespace-nowrap">
                 Sort by :
               </span>
               <div className="relative">
                 <select
                   value={sortBy}
                   onChange={(e) => setSortBy(e.target.value)}
-                  className="appearance-none border border-(--border) rounded-full px-4 pr-10 py-2 text-sm text-(--foreground) outline-none cursor-pointer"
+                  className="appearance-none border border-(--border) bg-(--card) rounded-full px-4 pr-10 py-2 text-sm text-(--foreground) outline-none cursor-pointer focus:border-(--primary)"
                 >
                   <option>Latest</option>
                   <option>Popular</option>
@@ -217,7 +217,7 @@ export default function ExploreVideos({
                 return (
                   <div
                     key={i}
-                    className={`w-full animate-slide-right rounded-[20px] p-4 shadow-sm flex flex-col h-full space-y-3 shadow-md transition-all duration-300 ease-out hover:shadow-[0_20px_40px_rgba(0,0,0,0.15)] ${theme === "dark" ? "bg-(--card) border border-(--border)" : "bg-white border border-gray-200"}`}
+                    className={`w-full animate-slide-right rounded-[20px] p-4 shadow-sm flex flex-col h-full space-y-3 transition-all duration-300 ease-out hover:-translate-y-1 hover:border-(--primary) hover:shadow-[0_20px_44px_rgba(20,184,166,0.14)] ${theme === "dark" ? "bg-(--card) border border-(--border)" : "bg-(--card) border border-(--border)"}`}
                   >
                     <div className="flex flex-col flex-grow">
                       <div
@@ -251,17 +251,17 @@ export default function ExploreVideos({
                           />
                         )}
 
-                        <div className="absolute top-3 right-3 bg-[#E8F2FF] text-[#203667] text-sm font-semibold px-3 py-1 rounded-full flex items-center gap-1">
+                        <div className="absolute top-3 right-3 bg-(--card) text-(--foreground) text-sm font-semibold px-3 py-1 rounded-full flex items-center gap-1 shadow-sm">
                           <Clock size={16} />
                           {v.time}
                         </div>
                       </div>
 
                       <div className="flex items-center justify-between mt-4 text-sm">
-                        <span className="bg-[#E8F2FF] text-[#203667] px-3 py-1 rounded-full text-md font-bold">
+                        <span className="bg-(--card) border border-(--border) text-(--primary) px-3 py-1 rounded-full text-md font-bold">
                           {v.channelName}
                         </span>
-                        <span className="text-[#94A3B8] text-xs sm:text-sm">
+                        <span className="text-(--muted) text-xs sm:text-sm">
                           {v.date}
                         </span>
                       </div>
@@ -270,7 +270,7 @@ export default function ExploreVideos({
                         {v.title}
                       </h3>
 
-                      <p className="text-sm text-[#64748B] mt-2 line-clamp-2 min-h-[40px]">
+                      <p className="text-sm text-(--muted) mt-2 line-clamp-2 min-h-[40px]">
                         {v.desc || ""}
                       </p>
                     </div>
@@ -278,7 +278,7 @@ export default function ExploreVideos({
                     <button
                       // ── FIX: pass full video object, not just the ID ──────────────
                       onClick={() => setSelectedVideo(v)}
-                      className="mt-auto w-full bg-(--primary) text-white py-3 rounded-full flex items-center justify-center gap-2 text-sm hover:bg-(--primary-hover) cursor-pointer"
+                      className="mt-auto w-full bg-gradient-to-r from-(--primary) to-(--secondary) text-white py-3 rounded-full flex items-center justify-center gap-2 text-sm shadow-[0_12px_30px_rgba(20,184,166,0.22)] transition hover:-translate-y-0.5 hover:shadow-[0_18px_38px_rgba(20,184,166,0.28)] cursor-pointer"
                     >
                       <Play size={16} /> Watch Now
                     </button>
@@ -293,7 +293,7 @@ export default function ExploreVideos({
               <button
                 onClick={handleLoadMore}
                 disabled={isLoadingMore}
-                className="bg-[#E8F2FF] text-[#203667] px-6 py-3 rounded-full transition cursor-pointer flex flex-row items-center gap-2 font-semibold"
+                className="bg-(--card) border border-(--border) text-(--primary) px-5 py-2.5 rounded-full transition cursor-pointer flex flex-row items-center gap-2 font-semibold hover:bg-gradient-to-r hover:from-(--primary) hover:to-(--secondary) hover:text-white hover:shadow-[0_12px_30px_rgba(20,184,166,0.22)] disabled:opacity-60"
               >
                 <Plus />
                 {isLoadingMore ? "Loading..." : "Load More Content"}

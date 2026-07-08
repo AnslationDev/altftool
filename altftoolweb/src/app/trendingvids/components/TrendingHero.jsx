@@ -494,10 +494,14 @@ export default function WatchPage() {
   return (
     <div className="">
       <div className=" mt-6 sm:mt-14 flex flex-col items-center text-center px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto">
-        <h1 className="text-(--primary) text-2xl sm:text-3xl md:text-4xl lg:text-6xl font-bold leading-tight">
-          Discover Trending Videos Instantly
+        <h1 className="section-title items-center text-center">
+          Discover{" "}
+          <span className="trending-gradient-text">
+            Trending Videos
+          </span>{" "}
+          Instantly
         </h1>
-        <p className="section-subtitle text-sm sm:text-base md:text-xl">
+        <p className="section-subtitle items-center text-center">
           Stay updated with the most popular videos across categories, regions,
           and topics — all in one place.
         </p>
@@ -562,7 +566,7 @@ export default function WatchPage() {
               <div
                 key={id}
                 ref={(el) => (cardRefs.current[id] = el)}
-                className="relative rounded-xl overflow-hidden group cursor-pointer flex-shrink-0"
+                className="relative rounded-xl overflow-hidden group cursor-pointer flex-shrink-0 border border-(--border) bg-(--card) shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-[0_20px_44px_rgba(20,184,166,0.14)]"
                 style={{ width: "296px", aspectRatio: "296/405" }}
                 onClick={() => {
                   if (!isPlaying) handlePlay(id);
@@ -576,7 +580,7 @@ export default function WatchPage() {
 
                 {isMobile && (
                   <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="flex items-center justify-center w-10 h-10 rounded-full bg-gray-200/80">
+                    <div className="flex items-center justify-center w-10 h-10 rounded-full bg-gradient-to-r from-(--primary) to-(--secondary) text-white shadow-[0_10px_24px_rgba(20,184,166,0.24)]">
                       <Play size={20} />
                     </div>
                   </div>
@@ -605,15 +609,15 @@ export default function WatchPage() {
                         </button> */}
                       </>
                     ) : (
-                      <div className="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition duration-300 flex flex-col justify-end p-3">
+                      <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/30 to-transparent opacity-0 group-hover:opacity-100 transition duration-300 flex flex-col justify-end p-3">
                         <p className="text-white text-md line-clamp-2 mb-8">
                           {item.description}
                         </p>
                         <div className="flex justify-between items-center mt-2 mb-5">
-                          <span className="text-sm flex gap-3 items-center text-gray-300">
+                          <span className="text-sm flex gap-3 items-center text-white">
                             <Clock size={16} /> {item.time}
                           </span>
-                          <button className="flex items-center gap-2 bg-black/50 text-white w-18 h-6 text-sm rounded-full justify-center cursor-pointer">
+                          <button className="flex items-center gap-2 bg-gradient-to-r from-(--primary) to-(--secondary) text-white w-18 h-6 text-sm rounded-full justify-center cursor-pointer shadow-[0_10px_24px_rgba(20,184,166,0.24)]">
                             <Play size={16} /> play
                           </button>
                         </div>

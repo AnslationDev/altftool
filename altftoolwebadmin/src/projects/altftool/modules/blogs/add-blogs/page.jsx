@@ -431,10 +431,13 @@ export default function AddBlog() {
     []
   );
 
-  const handleInsertContentBlock = (html) => {
+  const handleInsertContentBlock = (payload) => {
     setFormData((prev) => ({
       ...prev,
-      description: `${prev.description || ""}${prev.description?.trim() ? "\n\n" : ""}${html}`,
+      description:
+        payload && typeof payload === "object" && "description" in payload
+          ? payload.description
+          : `${prev.description || ""}${prev.description?.trim() ? "\n\n" : ""}${payload}`,
     }));
     clearError("description");
   };
@@ -453,11 +456,14 @@ export default function AddBlog() {
     setBannerError(null);
   };
 
-  const handleApplyTemplate = ({ html = "", fields = {} } = {}) => {
+  const handleApplyTemplate = ({ html = "", fields = {}, description } = {}) => {
     setFormData((prev) => ({
       ...prev,
       ...fields,
-      description: `${prev.description || ""}${prev.description?.trim() ? "\n\n" : ""}${html}`,
+      description:
+        typeof description === "string"
+          ? description
+          : `${prev.description || ""}${prev.description?.trim() ? "\n\n" : ""}${html}`,
     }));
     setErrors((prev) => {
       const next = { ...prev, description: undefined };

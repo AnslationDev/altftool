@@ -4,7 +4,7 @@ import FeaturedList from './components/FeaturedList';
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-white">      
+    <main className="top9-page min-h-screen">
       <Hero />
       <ContentArea />
       <FeaturedList /> 

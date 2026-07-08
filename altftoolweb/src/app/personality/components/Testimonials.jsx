@@ -160,15 +160,12 @@ export default function Testimonials() {
                   flex flex-col
                   w-full
                   rounded-[30px]
-                  border border-(--border)
-                  bg-(--background)
+                  personality-card
                   pt-16
                   px-6 sm:px-7
                   pb-7
                   transition-all duration-300
                   hover:-translate-y-1
-                  hover:shadow-[0px_18px_40px_0px_rgba(15,23,42,0.08)]
-                  shadow-[0px_8px_30px_0px_rgba(0,0,0,0.04)]
                 "
               >
                 {/* Avatar */}
@@ -180,7 +177,7 @@ export default function Testimonials() {
                       sm:w-[78px] sm:h-[78px]
                       rounded-full
                       overflow-hidden
-                      border-4 border-white
+                      border-4 border-(--card)
                       shadow-[0px_18px_40px_0px_rgba(15,23,42,0.10)]
                     "
                   >
@@ -247,7 +244,7 @@ export default function Testimonials() {
                           idx <
                           Math.round(t.rating)
                             ? "fill-(--primary) text-(--primary)"
-                            : "text-gray-300"
+                            : "text-(--border)"
                         }`}
                       />
                     ))}
@@ -284,7 +281,7 @@ export default function Testimonials() {
                 ${
                   page === i
                     ? "w-8 bg-(--primary)"
-                    : "w-2 bg-gray-300"
+                    : "w-2 bg-(--border)"
                 }
               `}
             />

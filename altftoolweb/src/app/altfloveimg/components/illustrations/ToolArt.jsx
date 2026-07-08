@@ -4,7 +4,7 @@ import { useId } from "react";
 import { UploadArt } from "./Spots";
 
 /* ---------- shared building blocks ---------- */
-function Defs({ id, accent = "#2563eb" }) {
+function Defs({ id, accent = "#14B8A6" }) {
   return (
     <defs>
       <linearGradient id={`${id}-sky`} x1="0" y1="0" x2="0" y2="1">
@@ -14,7 +14,7 @@ function Defs({ id, accent = "#2563eb" }) {
         <stop stopColor="#fde68a" /><stop offset="1" stopColor="#fb923c" />
       </linearGradient>
       <linearGradient id={`${id}-ac`} x1="0" y1="0" x2="1" y2="1">
-        <stop stopColor={accent} /><stop offset="1" stopColor="#7c3aed" />
+        <stop stopColor={accent} /><stop offset="1" stopColor="#38BDF8" />
       </linearGradient>
     </defs>
   );
@@ -30,7 +30,7 @@ function Photo({ id, x, y, w, h, r = 10 }) {
         <rect x={x + 4} y={y + 4} width={w - 8} height={h - 8} fill={`url(#${id}-sky)`} />
         <circle cx={x + w - 22} cy={y + 22} r="9" fill={`url(#${id}-sun)`} />
         <path d={`M${x + 4} ${y + h - 4} L${x + w * 0.32} ${y + h * 0.5} L${x + w * 0.52} ${y + h * 0.72} L${x + w * 0.66} ${y + h * 0.58} L${x + w - 4} ${y + h - 4} Z`} fill="#60a5fa" />
-        <path d={`M${x + w * 0.28} ${y + h - 4} L${x + w * 0.55} ${y + h * 0.56} L${x + w * 0.82} ${y + h - 4} Z`} fill="#6366f1" />
+        <path d={`M${x + w * 0.28} ${y + h - 4} L${x + w * 0.55} ${y + h * 0.56} L${x + w * 0.82} ${y + h - 4} Z`} fill="#14B8A6" />
       </g>
       <rect x={x} y={y} width={w} height={h} rx={r} fill="none" stroke="#dbe3f1" strokeWidth="1.5" />
     </g>
@@ -234,9 +234,9 @@ function UpscaleArt({ size, accent }) {
   );
 }
 
-const FORMAT_COLORS = { JPG: "#f59e0b", PNG: "#2563eb", WEBP: "#10b981" };
+const FORMAT_COLORS = { JPG: "#0D9488", PNG: "#14B8A6", WEBP: "#38BDF8" };
 function FileBadge({ x, label }) {
-  const c = FORMAT_COLORS[label] || "#2563eb";
+  const c = FORMAT_COLORS[label] || "#14B8A6";
   return (
     <g transform={`translate(${x},44)`}>
       <path d="M0 0 h40 l16 16 v60 a6 6 0 0 1 -6 6 h-50 a6 6 0 0 1 -6 -6 v-70 a6 6 0 0 1 6 -6 z" fill="#fff" stroke="#dbe3f1" strokeWidth="1.5" />
@@ -272,7 +272,7 @@ const CONVERT_MAP = {
 };
 
 /* ---------- dispatcher ---------- */
-export default function ToolArt({ slug, size = 220, accent = "#2563eb" }) {
+export default function ToolArt({ slug, size = 220, accent = "#14B8A6" }) {
   if (CONVERT_MAP[slug]) {
     const [from, to] = CONVERT_MAP[slug];
     return <ConvertArt size={size} accent={accent} from={from} to={to} />;

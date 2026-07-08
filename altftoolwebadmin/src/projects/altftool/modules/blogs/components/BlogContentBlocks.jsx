@@ -9,6 +9,10 @@ import {
   Wrench,
 } from "lucide-react";
 import { emitAlert } from "@/lib/alertBus";
+import BlogHelperToggleButton from "./BlogHelperToggleButton";
+import { hasMarkedBlock, removeMarkedBlock, wrapMarkedBlock } from "./blogToggleBlocks";
+
+const BLOCK_MARKER_PREFIX = "ALTFT_CONTENT_BLOCK";
 
 function stripHtml(value = "") {
   return String(value)
@@ -133,29 +137,34 @@ const blockBuilders = [
 
 export default function BlogContentBlocks({ formData = {}, onInsert }) {
   const handleInsert = (block) => {
-    onInsert?.(block.build(formData));
+    const markerId = block.id;
+    const attached = hasMarkedBlock(formData.description, BLOCK_MARKER_PREFIX, markerId);
+
+    if (attached) {
+      onInsert?.({
+        description: removeMarkedBlock(formData.description, BLOCK_MARKER_PREFIX, markerId),
+      });
+      emitAlert({ type: "success", message: `${block.label} block removed.` });
+      return;
+    }
+
+    onInsert?.(wrapMarkedBlock(BLOCK_MARKER_PREFIX, markerId, block.build(formData)));
     emitAlert({ type: "success", message: `${block.label} block inserted.` });
   };
 
   return (
     <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
       {blockBuilders.map((block) => {
-        const Icon = block.icon;
+        const attached = hasMarkedBlock(formData.description, BLOCK_MARKER_PREFIX, block.id);
         return (
-          <button
+          <BlogHelperToggleButton
             key={block.id}
-            type="button"
-            onClick={() => handleInsert(block)}
-            className="group flex items-start gap-3 rounded-xl border border-border bg-surface-soft p-3 text-left transition hover:border-primary hover:bg-primary-soft"
-          >
-            <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-surface text-primary shadow-sm">
-              <Icon className="h-4 w-4" />
-            </span>
-            <span className="min-w-0">
-              <span className="block text-sm font-semibold text-foreground group-hover:text-primary">{block.label}</span>
-              <span className="mt-0.5 block text-xs leading-5 text-muted">{block.caption}</span>
-            </span>
-          </button>
+            icon={block.icon}
+            label={block.label}
+            caption={block.caption}
+            attached={attached}
+            onToggle={() => handleInsert(block)}
+          />
         );
       })}
     </div>

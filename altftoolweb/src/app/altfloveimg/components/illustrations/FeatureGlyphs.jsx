@@ -16,7 +16,7 @@ function grad(id) {
   return (
     <defs>
       <linearGradient id={id} x1="2" y1="2" x2="30" y2="30" gradientUnits="userSpaceOnUse">
-        <stop stopColor="#0ea5e9" /><stop offset="0.5" stopColor="#2563eb" /><stop offset="1" stopColor="#7c3aed" />
+        <stop stopColor="#14B8A6" /><stop offset="0.5" stopColor="#38BDF8" /><stop offset="1" stopColor="#0D9488" />
       </linearGradient>
     </defs>
   );

@@ -77,22 +77,22 @@ function CommentItem({ c, index }) {
       <ManagedImage
         src={snippet.authorProfileImageUrl}
         alt={snippet.authorDisplayName}
-        className="w-8 h-8 rounded-full flex-shrink-0 object-cover border border-gray-200"
+        className="w-8 h-8 rounded-full flex-shrink-0 object-cover border border-(--border)"
       />
       <div className="flex-1 min-w-0">
         <div className="flex items-center gap-2 mb-0.5">
           <p className="text-[12px] font-semibold text-(--foreground)">
             {snippet.authorDisplayName}
           </p>
-          <span className="text-[10px] text-(--muted-foreground)">
+          <span className="text-[10px] text-(--muted)">
             {timeAgo(snippet.publishedAt)}
           </span>
         </div>
-        <p className="text-[12.5px] text-(--muted-foreground) leading-relaxed">
+        <p className="text-[12.5px] text-(--muted) leading-relaxed">
           {snippet.textDisplay}
         </p>
         {snippet.likeCount > 0 && (
-          <div className="flex items-center gap-1 mt-1 text-[11px] text-gray-400">
+          <div className="flex items-center gap-1 mt-1 text-[11px] text-(--muted)">
             <ThumbsUp size={10} />
             <span>{fmt(snippet.likeCount)}</span>
           </div>
@@ -115,12 +115,12 @@ function SuggestedCard({ s, onClick, active }) {
     <button
       className={`flex gap-3 w-full rounded-xl p-2.5 cursor-pointer text-left transition-all duration-150 mb-2 border ${active
         ? "bg-(--card) border-(--card-border)"
-        : " border-transparent hover:bg-gray-500 hover:text-(--foreground)"
+        : " border-transparent hover:bg-(--card) border border-(--border) hover:text-(--primary)"
         }`}
       onClick={() => onClick(s.videoId)}
       title={s.title}
     >
-      <div className="relative w-[90px] xl:w-[100px] h-[56px] xl:h-[60px] flex-shrink-0 rounded-lg overflow-hidden bg-gray-100">
+      <div className="relative w-[90px] xl:w-[100px] h-[56px] xl:h-[60px] flex-shrink-0 rounded-lg overflow-hidden bg-(--card) border border-(--border)">
         <ManagedImage
           src={s.image}
           alt={s.title}
@@ -139,7 +139,7 @@ function SuggestedCard({ s, onClick, active }) {
         <p className="text-[12px] font-semibold text-(--foreground) line-clamp-2 leading-snug mb-1">
           {s.title}
         </p>
-        <p className="text-[10.5px] text-(--muted-foreground)">
+        <p className="text-[10.5px] text-(--muted)">
           {s.views ? `${fmt(s.views)} views · ` : ""}
           {timeAgo(s.date)}
         </p>
@@ -184,21 +184,21 @@ function ShareModal({ videoTitle, videoId, directUrl, onClose }) {
           </h3>
           <button
             onClick={onClose}
-            className="w-7 h-7 rounded-full bg-(--card) flex items-center justify-center cursor-pointer hover:bg-gray-200 transition-colors"
+            className="w-7 h-7 rounded-full bg-(--card) flex items-center justify-center cursor-pointer hover:bg-(--card) border border-(--border) hover:text-(--primary) transition-colors"
           >
             <X size={14} />
           </button>
         </div>
         <div className="flex gap-2 mb-4">
-          <div className="flex-1 bg-(--card) border border-gray-200 rounded-lg px-3 py-2 text-[12px] text-(--foreground) truncate select-all">
-            <Link size={12} className="flex-shrink-0 text-gray-400" />
+          <div className="flex-1 bg-(--card) border border-(--border) rounded-lg px-3 py-2 text-[12px] text-(--foreground) truncate select-all">
+            <Link size={12} className="flex-shrink-0 text-(--muted)" />
             <span className="truncate select-all">{url}</span>
           </div>
           <button
             onClick={handleCopy}
             className={`text-[12px] font-semibold px-3 rounded-lg transition-colors cursor-pointer ${copied
               ? "bg-green-500 text-white"
-              : "bg-blue-600 text-white hover:bg-blue-700"
+              : "bg-gradient-to-r from-(--primary) to-(--secondary) text-white shadow-[0_10px_24px_rgba(20,184,166,0.22)]"
               }`}
           >
             {copied ? "Copied!" : "Copy"}
@@ -216,7 +216,7 @@ function ShareModal({ videoTitle, videoId, directUrl, onClose }) {
                 onClose();
               } catch (_) { }
             }}
-            className="w-full flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white text-[13px] font-semibold py-2.5 rounded-xl transition-colors cursor-pointer"
+            className="w-full flex items-center justify-center gap-2 bg-gradient-to-r from-(--primary) to-(--secondary) text-white text-[13px] font-semibold py-2.5 rounded-xl transition cursor-pointer shadow-[0_10px_24px_rgba(20,184,166,0.22)] hover:-translate-y-0.5"
           >
             <Share2 size={15} />
             Share via…
@@ -425,7 +425,7 @@ export default function VideoDialogModal({ videoId: initialVideoId, onClose }) {
           role="dialog"
           aria-modal="true"
           className="
-            relative bg-white rounded-2xl w-full shadow-2xl overflow-hidden
+            relative bg-(--card) border border-(--border) rounded-2xl w-full shadow-2xl overflow-hidden
             flex flex-col
             xl:grid xl:grid-cols-[1fr_320px] xl:flex-none
             max-w-[1100px]
@@ -436,7 +436,7 @@ export default function VideoDialogModal({ videoId: initialVideoId, onClose }) {
           }}
         >
           <button
-            className="absolute top-3 right-3 z-20 w-8 h-8 rounded-full bg-gray-100 border border-gray-200 text-gray-500 cursor-pointer flex items-center justify-center transition-all duration-200 hover:bg-gray-200 hover:text-gray-800 hover:scale-110 active:scale-95"
+            className="absolute top-3 right-3 z-20 w-8 h-8 rounded-full bg-(--card) border border-(--border) text-(--muted) cursor-pointer flex items-center justify-center transition-all duration-200 hover:text-(--primary) hover:scale-110 active:scale-95"
             onClick={onClose}
             aria-label="Close"
           >
@@ -507,15 +507,15 @@ export default function VideoDialogModal({ videoId: initialVideoId, onClose }) {
                   </div>
                 </div>
 
-                <div className="h-px bg-gray-100 mb-4" />
+                <div className="h-px bg-(--border) mb-4" />
 
                 {/* Actions */}
                 <div className="flex items-center gap-4 mb-5">
                   <button
                     onClick={handleLike}
                     className={`flex items-center gap-1.5 text-[13px] font-medium cursor-pointer transition-colors ${liked
-                      ? "text-blue-600"
-                      : "text-(--muted-foreground) hover:text-blue-600"
+                      ? "text-(--primary)"
+                      : "text-(--muted) hover:text-(--primary)"
                       }`}
                   >
                     <ThumbsUp
@@ -530,7 +530,7 @@ export default function VideoDialogModal({ videoId: initialVideoId, onClose }) {
                   </button>
                   <button
                     onClick={handleShare}
-                    className="flex items-center gap-1.5 text-[13px] font-medium text-(--muted-foreground) cursor-pointer hover:text-blue-600 transition-colors"
+                    className="flex items-center gap-1.5 text-[13px] font-medium text-(--muted) cursor-pointer hover:text-(--primary) transition-colors"
                   >
                     <Share2 size={16} />
                     <span>Share</span>
@@ -538,14 +538,14 @@ export default function VideoDialogModal({ videoId: initialVideoId, onClose }) {
                 </div>
 
                 <div className="xl:hidden">
-                  <div className="flex gap-1 bg-gray-100 rounded-full p-1 mb-4 w-fit">
+                  <div className="flex gap-1 bg-(--card) border border-(--border) rounded-full p-1 mb-4 w-fit">
                     {["suggestions", "comments"].map((t) => (
                       <button
                         key={t}
                         onClick={() => setRightTab(t)}
                         className={`px-4 py-1.5 rounded-full text-[12px] font-semibold transition cursor-pointer capitalize ${rightTab === t
-                          ? "bg-white text-[#2563EB] shadow-sm"
-                          : "text-gray-500"
+                          ? "bg-(--card) text-(--primary) shadow-sm"
+                          : "text-(--muted)"
                           }`}
                       >
                         {t === "suggestions" ? "Up Next" : "Comments"}
@@ -559,7 +559,7 @@ export default function VideoDialogModal({ videoId: initialVideoId, onClose }) {
                         Array.from({ length: 4 }).map((_, i) => (
                           <div
                             key={i}
-                            className="flex gap-3 p-2.5 mb-2 bg-gray-50 rounded-xl border border-gray-100"
+                            className="flex gap-3 p-2.5 mb-2 bg-(--card) rounded-xl border border-(--border)"
                           >
                             <SkeletonBlock className="w-[90px] h-[56px] rounded-lg flex-shrink-0" />
                             <div className="flex-1 pt-0.5 flex flex-col gap-2">
@@ -569,7 +569,7 @@ export default function VideoDialogModal({ videoId: initialVideoId, onClose }) {
                           </div>
                         ))
                       ) : suggestions.length === 0 ? (
-                        <p className="text-center py-6 text-gray-400 text-[13px]">
+                        <p className="text-center py-6 text-(--muted) text-[13px]">
                           No suggestions.
                         </p>
                       ) : (
@@ -591,7 +591,7 @@ export default function VideoDialogModal({ videoId: initialVideoId, onClose }) {
                         <h3 className="text-[13px] font-bold text-(--foreground)">
                           Comments
                         </h3>
-                        <span className="text-[11px] text-(--muted-foreground) bg-gray-100 px-2 py-0.5 rounded-full">
+                        <span className="text-[11px] text-(--muted) bg-(--card) border border-(--border) px-2 py-0.5 rounded-full">
                           {fmt(stats?.commentCount)}
                         </span>
                       </div>
@@ -607,7 +607,7 @@ export default function VideoDialogModal({ videoId: initialVideoId, onClose }) {
                             </div>
                           ))
                         ) : comments.length === 0 ? (
-                          <p className="text-center py-6 text-gray-400 text-[13px]">
+                          <p className="text-center py-6 text-(--muted) text-[13px]">
                             No comments.
                           </p>
                         ) : (
@@ -625,7 +625,7 @@ export default function VideoDialogModal({ videoId: initialVideoId, onClose }) {
                     <h3 className="text-[13px] font-bold text-(--foreground)">
                       Comments
                     </h3>
-                    <span className="text-[11px] text-(--muted-foreground) bg-gray-100 px-2 py-0.5 rounded-full">
+                    <span className="text-[11px] text-(--muted) bg-(--card) border border-(--border) px-2 py-0.5 rounded-full">
                       {fmt(stats?.commentCount)}
                     </span>
                   </div>
@@ -642,7 +642,7 @@ export default function VideoDialogModal({ videoId: initialVideoId, onClose }) {
                         </div>
                       ))
                     ) : comments.length === 0 ? (
-                      <div className="text-center py-8 text-(--muted-foreground) text-[13px]">
+                      <div className="text-center py-8 text-(--muted) text-[13px]">
                         No comments available.
                       </div>
                     ) : (
@@ -665,7 +665,7 @@ export default function VideoDialogModal({ videoId: initialVideoId, onClose }) {
                 Array.from({ length: 6 }).map((_, i) => (
                   <div
                     key={i}
-                    className="flex gap-3 p-2.5 mb-2 bg-white rounded-xl border border-gray-100"
+                    className="flex gap-3 p-2.5 mb-2 bg-(--card) rounded-xl border border-(--border)"
                   >
                     <SkeletonBlock className="w-[100px] h-[60px] rounded-lg flex-shrink-0" />
                     <div className="flex-1 pt-0.5 flex flex-col gap-2">
@@ -676,7 +676,7 @@ export default function VideoDialogModal({ videoId: initialVideoId, onClose }) {
                   </div>
                 ))
               ) : suggestions.length === 0 ? (
-                <div className="text-center py-8 text-(--muted-foreground) text-[13px]">
+                <div className="text-center py-8 text-(--muted) text-[13px]">
                   No suggestions available.
                 </div>
               ) : (
