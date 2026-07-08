@@ -33,7 +33,7 @@ const ContentArea = () => {
   ];
 
   return (
-    <div className="max-w-7xl mx-auto px-4 py-8 grid grid-cols-1 lg:grid-cols-12 gap-8 bg-white">
+    <div className="max-w-7xl mx-auto px-4 py-8 grid grid-cols-1 lg:grid-cols-12 gap-8">
 
       {/* LEFT SIDE */}
       <div className="lg:col-span-8">
@@ -44,11 +44,11 @@ const ContentArea = () => {
 
             <div
               key={index}
-              className="bg-[#f6f6f6] border border-gray-200 p-5 md:p-6 flex flex-col sm:flex-row gap-6 shadow-sm"
+              className="top9-card p-5 md:p-6 flex flex-col sm:flex-row gap-6 rounded-[var(--anslation-ds-radius-lg)]"
             >
 
               {/* IMAGE */}
-              <div className="w-full sm:w-[230px] h-[230px] shrink-0 overflow-hidden rounded-md border border-gray-300 bg-white">
+              <div className="top9-image-frame w-full sm:w-[230px] h-[230px] shrink-0 overflow-hidden rounded-[var(--anslation-ds-radius)]">
 
                 <img
                   src={item.image}
@@ -61,25 +61,25 @@ const ContentArea = () => {
               {/* CONTENT */}
               <div className="flex-1 flex flex-col justify-center">
 
-                <span className="text-[13px] uppercase tracking-wide text-gray-400 mb-2">
+                <span className="top9-muted-text text-[13px] uppercase tracking-wide mb-2">
                   New List
                 </span>
 
                 <Link href={`/top9/${item.slug}`}>
 
-                  <h2 className="text-[24px] md:text-[30px] font-medium text-[#0086b3] leading-tight hover:underline mb-5">
+                  <h2 className="top9-link text-[24px] md:text-[30px] font-bold leading-tight hover:underline mb-5">
                     {item.title}
                   </h2>
 
                 </Link>
 
-                <ol className="space-y-2 text-[15px] text-gray-700">
+                <ol className="space-y-2 text-[15px] top9-muted-text">
 
                   {item.top.map((name, idx) => (
 
                     <li
                       key={idx}
-                      className="border-b border-gray-200 pb-2"
+                      className="border-b border-(--border) pb-2"
                     >
                       <span className="font-semibold mr-2">
                         {idx + 1}.
@@ -106,7 +106,7 @@ const ContentArea = () => {
       <aside className="lg:col-span-4 space-y-8">
 
         {/* TABS */}
-        <div className="border border-gray-200 bg-[#f2f2f2]">
+        <div className="top9-panel rounded-[var(--anslation-ds-radius-lg)] overflow-hidden">
 
           {/* TAB HEADINGS */}
           <div className="grid grid-cols-3 text-center">
@@ -116,10 +116,10 @@ const ContentArea = () => {
               <button
                 key={tab}
                 onClick={() => setActiveTab(tab)}
-                className={`py-3 text-[14px] capitalize transition-all border-b border-gray-200 ${
+                className={`py-3 text-[14px] capitalize transition-all border-b border-(--border) ${
                   activeTab === tab
-                    ? "bg-white font-semibold text-gray-900"
-                    : "text-gray-500 hover:bg-gray-100"
+                    ? "bg-(--card) font-semibold text-(--foreground)"
+                    : "top9-muted-text hover:bg-(--primary)/5"
                 }`}
               >
                 {tab}
@@ -130,7 +130,7 @@ const ContentArea = () => {
           </div>
 
           {/* TAB CONTENT */}
-          <div className="bg-white p-4">
+          <div className="bg-(--card) p-4">
 
             <div className="space-y-4">
 
@@ -138,12 +138,12 @@ const ContentArea = () => {
 
                 <div
                   key={i}
-                  className="border-b border-gray-100 pb-3 last:border-b-0"
+                  className="border-b border-(--border) pb-3 last:border-b-0"
                 >
 
                   <Link
                     href={`/top9/${item.slug}`}
-                    className="text-[14px] text-[#0086b3] leading-relaxed hover:underline"
+                    className="top9-link text-[14px] leading-relaxed hover:underline"
                   >
                     {item.title}
                   </Link>
@@ -161,7 +161,7 @@ const ContentArea = () => {
         {/* AUTO LISTS */}
         <div>
 
-          <h3 className="text-[14px] uppercase tracking-wider text-gray-400 mb-5">
+          <h3 className="top9-muted-text text-[14px] uppercase tracking-wider mb-5">
             Auto-Updating Lists
           </h3>
 
@@ -174,7 +174,7 @@ const ContentArea = () => {
                 className="flex items-start gap-3"
               >
 
-                <div className="w-11 h-11 rounded-full overflow-hidden border border-gray-200 shrink-0">
+                <div className="top9-image-frame w-11 h-11 rounded-full overflow-hidden shrink-0">
 
                   <img
                     src={item.img}
@@ -188,13 +188,13 @@ const ContentArea = () => {
 
                   <Link href={`/top9/${item.slug}`}>
 
-                    <p className="text-[14px] font-semibold text-[#0086b3] hover:underline leading-snug">
+                    <p className="top9-link text-[14px] font-semibold hover:underline leading-snug">
                       {item.title}
                     </p>
 
                   </Link>
 
-                  <p className="text-[12px] text-gray-400 mt-1">
+                  <p className="top9-muted-text text-[12px] mt-1">
                     Auto Updated
                   </p>
 

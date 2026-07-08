@@ -343,7 +343,7 @@ export default function ReelsView() {
 
       {loading && videos.length > 0 && (
         <div
-          className="flex items-center justify-center text-muted-foreground text-sm snap-start"
+          className="flex items-center justify-center text-(--muted) text-sm snap-start"
           style={{ height: "100dvh" }}
         >
           Loading more reels…
@@ -418,7 +418,7 @@ function CommentSheet({ videoId, comments, onAdd, onClose }) {
               U
             </div>
             <div>
-              <p className="text-xs text-(--muted-foreground)">{c.time}</p>
+              <p className="text-xs text-(--muted)">{c.time}</p>
               <p className="text-sm">{c.text}</p>
             </div>
           </div>

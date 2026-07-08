@@ -85,8 +85,8 @@ export default function QuestionPage() {
     };
 
     return (
-        <section className="section">
-            <div className="max-w-5xl mx-auto  rounded-[24px]   flex flex-col overflow-hidden">
+        <section className="section personality-page personality-bg min-h-screen">
+            <div className="max-w-5xl mx-auto rounded-[24px] flex flex-col overflow-hidden">
 
                 {/* HEADER */}
                 <div className="relative px-6 md:px-10  flex items-center justify-center text-(--muted-foreground)">
@@ -148,7 +148,7 @@ export default function QuestionPage() {
     rounded-2xl
     border
     border-(--border)
-    bg-(--background)
+    bg-(--card)
     flex
     items-center
     justify-center
@@ -171,10 +171,8 @@ export default function QuestionPage() {
     sm:w-auto
     px-8
     rounded-2xl
-    bg-(--primary)
-    hover:bg-(--primary-hover)
+    personality-primary-action
     transition-all
-    text-white
     font-semibold
     flex
     items-center
@@ -192,7 +190,7 @@ export default function QuestionPage() {
                     </div>
 
                     {/* Footer */}
-                    <div className="mt-10 flex items-center gap-2 text--(sm) text-(--muted-foreground)">
+                    <div className="mt-10 flex items-center gap-2 text-sm text-(--muted-foreground)">
                         <ShieldCheck className="w-5 h-5 text-(--primary)" />
 
                         <span className="text-sm md:text-base">

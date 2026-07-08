@@ -1,3 +1,65 @@
+/* ALTFTool themed page canvas */
+
+.trending-page-shell {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  color: var(--foreground);
+  background:
+    radial-gradient(circle at 12% 6%, color-mix(in srgb, var(--primary) 10%, transparent) 0, transparent 28rem),
+    radial-gradient(circle at 88% 12%, color-mix(in srgb, var(--secondary) 10%, transparent) 0, transparent 30rem),
+    linear-gradient(180deg, var(--page, var(--background)) 0%, var(--background) 48%, var(--page, var(--background)) 100%);
+}
+
+.trending-page-shell::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  opacity: 0.34;
+  background-image:
+    radial-gradient(circle at 9% 18%, color-mix(in srgb, var(--primary) 22%, transparent) 0 1px, transparent 1.8px),
+    radial-gradient(circle at 91% 24%, color-mix(in srgb, var(--secondary) 20%, transparent) 0 1px, transparent 1.8px),
+    linear-gradient(115deg, transparent 0 24%, color-mix(in srgb, var(--primary) 9%, transparent) 24.5%, transparent 40%);
+  background-size: 20px 20px, 22px 22px, 100% 100%;
+  mask-image: linear-gradient(180deg, #000 0 40%, transparent 74%);
+  pointer-events: none;
+}
+
+.trending-page-shell .section {
+  width: min(1180px, calc(100% - 32px));
+  margin-inline: auto;
+}
+
+.trending-page-shell .section-title {
+  color: var(--foreground);
+  font-weight: 800;
+  letter-spacing: -0.035em;
+}
+
+.trending-page-shell .section-subtitle,
+.trending-page-shell .description {
+  color: color-mix(in srgb, var(--foreground) 76%, var(--background));
+}
+
+.trending-page-shell .text-\(--muted\) {
+  color: color-mix(in srgb, var(--foreground) 74%, var(--background));
+}
+
+.trending-page-shell .section-title span {
+  color: var(--primary);
+}
+
+.trending-page-shell .trending-gradient-text {
+  background-image: linear-gradient(135deg, var(--primary), var(--secondary), var(--primary));
+  background-size: 200% auto;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  animation: hero-gradient 3s ease infinite;
+}
+
 /* 🔥 SECTION SPACING SYSTEM */
 
 /* 🔥 Universal Responsive Section Spacing */
@@ -48,8 +110,5 @@
     max-height: 88dvh;
   }
 }
-
-
-
 
 

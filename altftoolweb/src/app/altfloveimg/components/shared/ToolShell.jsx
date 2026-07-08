@@ -14,7 +14,7 @@ export default function ToolShell({ slug, children }) {
   const Icon = tool?.icon;
   const related = relatedTools(slug, 3);
   const reduce = useReducedMotion();
-  const accent = tool?.accent || "#2563eb";
+  const accent = tool?.accent || "#14B8A6";
 
   return (
     <div className="relative" style={{ background: "var(--ali-page)", "--ali-accent": accent }}>
@@ -43,7 +43,7 @@ export default function ToolShell({ slug, children }) {
           <div className="flex items-start gap-4">
             {Icon && (
               <div className="grid h-16 w-16 shrink-0 place-items-center rounded-2xl text-white shadow-lg"
-                style={{ background: `linear-gradient(135deg, ${accent}, #4f46e5)`, boxShadow: `0 12px 28px color-mix(in srgb, ${accent} 35%, transparent)` }}>
+                style={{ background: `linear-gradient(135deg, ${accent}, var(--secondary, #38BDF8))`, boxShadow: `0 12px 28px color-mix(in srgb, ${accent} 35%, transparent)` }}>
                 <Icon size={30} />
               </div>
             )}

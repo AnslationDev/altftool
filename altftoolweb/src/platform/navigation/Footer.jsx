@@ -47,7 +47,6 @@ const HOME_FOOTER_GROUPS = [
     links: [
       { label: "FAQ", href: "/policypages/faq" },
       { label: "Support", href: "/supportsetting" },
-      { label: "Status", href: "/status" },
       { label: "Request a Tool", href: "/request-a-tool" },
     ],
   },

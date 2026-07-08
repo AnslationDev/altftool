@@ -15,24 +15,16 @@ import {
   buildSourceNoteFields,
   buildSourceReminderBlock,
 } from "./blogRefreshKit";
+import BlogHelperToggleButton from "./BlogHelperToggleButton";
+import {
+  clearedFields,
+  fieldsMatch,
+  hasMarkedBlock,
+  removeMarkedBlock,
+  wrapMarkedBlock,
+} from "./blogToggleBlocks";
 
-function ActionButton({ icon: Icon, label, caption, onClick }) {
-  return (
-    <button
-      type="button"
-      onClick={onClick}
-      className="group flex w-full items-start gap-3 rounded-xl border border-border bg-surface-soft/70 p-3 text-left transition hover:border-primary hover:bg-primary-soft"
-    >
-      <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-surface text-primary shadow-sm">
-        <Icon className="h-4 w-4" />
-      </span>
-      <span className="min-w-0 flex-1">
-        <span className="block text-sm font-semibold text-foreground group-hover:text-primary">{label}</span>
-        <span className="mt-0.5 block text-xs leading-5 text-muted">{caption}</span>
-      </span>
-    </button>
-  );
-}
+const REFRESH_MARKER_PREFIX = "ALTFT_REFRESH_ACTION";
 
 export default function BlogRefreshActions({
   formData = {},
@@ -40,28 +32,55 @@ export default function BlogRefreshActions({
   onInsertBlock,
 }) {
   const markReviewed = () => {
-    onApplyFields?.(buildReviewFields(formData));
-    emitAlert({ type: "success", message: "Review metadata updated." });
+    const fields = buildReviewFields(formData);
+    const attached = Boolean(formData.reviewedAt) || fieldsMatch(formData, fields);
+    onApplyFields?.(attached ? clearedFields(fields) : fields);
+    emitAlert({ type: "success", message: attached ? "Review metadata removed." : "Review metadata updated." });
   };
 
   const addSourceNote = () => {
-    onApplyFields?.(buildSourceNoteFields(formData));
-    emitAlert({ type: "success", message: "Source note added." });
+    const fields = buildSourceNoteFields(formData);
+    const attached = fieldsMatch(formData, fields);
+    onApplyFields?.(attached ? clearedFields(fields) : fields);
+    emitAlert({ type: "success", message: attached ? "Source note removed." : "Source note added." });
   };
 
-  const insertRefreshNote = () => {
-    onInsertBlock?.(buildRefreshNoteBlock(formData));
-    emitAlert({ type: "success", message: "Refresh note inserted." });
+  const toggleBlock = ({ id, label, html }) => {
+    const attached = hasMarkedBlock(formData.description, REFRESH_MARKER_PREFIX, id);
+    if (attached) {
+      onInsertBlock?.({
+        description: removeMarkedBlock(formData.description, REFRESH_MARKER_PREFIX, id),
+      });
+      emitAlert({ type: "success", message: `${label} removed.` });
+      return;
+    }
+
+    onInsertBlock?.(wrapMarkedBlock(REFRESH_MARKER_PREFIX, id, html));
+    emitAlert({ type: "success", message: `${label} inserted.` });
   };
+
+  const reviewFields = buildReviewFields(formData);
+  const sourceNoteFields = buildSourceNoteFields(formData);
+  const reviewAttached = Boolean(formData.reviewedAt) || fieldsMatch(formData, reviewFields);
+  const sourceNoteAttached = fieldsMatch(formData, sourceNoteFields);
+  const refreshNoteAttached = hasMarkedBlock(formData.description, REFRESH_MARKER_PREFIX, "refresh-note");
+  const checklistAttached = hasMarkedBlock(formData.description, REFRESH_MARKER_PREFIX, "review-checklist");
+  const sourceReminderAttached = hasMarkedBlock(formData.description, REFRESH_MARKER_PREFIX, "source-reminder");
 
   const insertChecklist = () => {
-    onInsertBlock?.(buildRefreshChecklistBlock(formData));
-    emitAlert({ type: "success", message: "Refresh checklist inserted." });
+    toggleBlock({
+      id: "review-checklist",
+      label: "Refresh checklist",
+      html: buildRefreshChecklistBlock(formData),
+    });
   };
 
   const insertSourceReminder = () => {
-    onInsertBlock?.(buildSourceReminderBlock());
-    emitAlert({ type: "success", message: "Source reminder inserted." });
+    toggleBlock({
+      id: "source-reminder",
+      label: "Source reminder",
+      html: buildSourceReminderBlock(),
+    });
   };
 
   return (
@@ -79,35 +98,47 @@ export default function BlogRefreshActions({
       </div>
 
       <div className="space-y-2.5">
-        <ActionButton
+        <BlogHelperToggleButton
           icon={CalendarCheck2}
           label="Mark reviewed today"
           caption="Sets reviewed date, reviewer, and a trust note."
+          attached={reviewAttached}
           onClick={markReviewed}
+          onToggle={markReviewed}
         />
-        <ActionButton
+        <BlogHelperToggleButton
           icon={BookOpenCheck}
           label="Add source note"
           caption="Fills the source review note used on public pages."
-          onClick={addSourceNote}
+          attached={sourceNoteAttached}
+          onToggle={addSourceNote}
         />
-        <ActionButton
+        <BlogHelperToggleButton
           icon={FileCheck2}
           label="Insert refresh note"
           caption="Adds a visible update note inside the article."
-          onClick={insertRefreshNote}
+          attached={refreshNoteAttached}
+          onToggle={() =>
+            toggleBlock({
+              id: "refresh-note",
+              label: "Refresh note",
+              html: buildRefreshNoteBlock(formData),
+            })
+          }
         />
-        <ActionButton
+        <BlogHelperToggleButton
           icon={ShieldCheck}
           label="Insert review checklist"
           caption="Adds a scannable list of what changed."
-          onClick={insertChecklist}
+          attached={checklistAttached}
+          onToggle={insertChecklist}
         />
-        <ActionButton
+        <BlogHelperToggleButton
           icon={BookOpenCheck}
           label="Insert source reminder"
           caption="Adds reader-safe context for changing details."
-          onClick={insertSourceReminder}
+          attached={sourceReminderAttached}
+          onToggle={insertSourceReminder}
         />
       </div>
     </div>

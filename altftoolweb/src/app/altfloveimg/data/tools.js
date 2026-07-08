@@ -29,7 +29,7 @@ export const TOOLS = [
       "Reduce file size dramatically while keeping crisp quality. Batch process and compare before/after instantly.",
     icon: Minimize2,
     category: "organize",
-    accent: "#2563eb",
+    accent: "#14B8A6",
     badge: "Popular",
   },
   {
@@ -40,7 +40,7 @@ export const TOOLS = [
       "Set exact width and height, scale by percentage, or lock the aspect ratio with a live preview.",
     icon: Scaling,
     category: "organize",
-    accent: "#0ea5e9",
+    accent: "#38BDF8",
   },
   {
     slug: "crop",
@@ -50,7 +50,7 @@ export const TOOLS = [
       "Crop freely or snap to Instagram, Facebook, LinkedIn and YouTube ratios with an interactive frame.",
     icon: Crop,
     category: "organize",
-    accent: "#6366f1",
+    accent: "#0D9488",
   },
   {
     slug: "rotate",
@@ -60,7 +60,7 @@ export const TOOLS = [
       "Rotate by 90°, 180° or 270° and flip horizontally or vertically. Perfect orientation, every time.",
     icon: RotateCw,
     category: "organize",
-    accent: "#8b5cf6",
+    accent: "#06B6D4",
   },
   {
     slug: "jpg-to-png",
@@ -69,7 +69,7 @@ export const TOOLS = [
     description: "Convert JPG photos to high-quality PNG files right in your browser.",
     icon: ImageIcon,
     category: "convert",
-    accent: "#0891b2",
+    accent: "#14B8A6",
   },
   {
     slug: "png-to-jpg",
@@ -78,7 +78,7 @@ export const TOOLS = [
     description: "Flatten PNGs onto a background and export compact JPG images.",
     icon: FileImage,
     category: "convert",
-    accent: "#3b82f6",
+    accent: "#38BDF8",
   },
   {
     slug: "webp-to-jpg",
@@ -87,7 +87,7 @@ export const TOOLS = [
     description: "Turn modern WEBP images into widely supported JPG files instantly.",
     icon: Repeat,
     category: "convert",
-    accent: "#6366f1",
+    accent: "#0D9488",
   },
   {
     slug: "jpg-to-webp",
@@ -96,7 +96,7 @@ export const TOOLS = [
     description: "Convert JPG to WEBP for dramatically smaller files with great quality.",
     icon: Repeat,
     category: "convert",
-    accent: "#14b8a6",
+    accent: "#14B8A6",
   },
   {
     slug: "watermark",
@@ -106,7 +106,7 @@ export const TOOLS = [
       "Add text or image watermarks with full control over position, size, opacity and rotation.",
     icon: Stamp,
     category: "create",
-    accent: "#7c3aed",
+    accent: "#06B6D4",
   },
   {
     slug: "editor",
@@ -116,7 +116,7 @@ export const TOOLS = [
       "Fine-tune brightness, contrast, saturation, exposure, blur and sharpen with real-time preview.",
     icon: SlidersHorizontal,
     category: "create",
-    accent: "#2563eb",
+    accent: "#14B8A6",
     badge: "New",
   },
   {
@@ -127,7 +127,7 @@ export const TOOLS = [
       "Create classic memes with customizable fonts, colors and stroke, then export in one click.",
     icon: Smile,
     category: "create",
-    accent: "#ec4899",
+    accent: "#38BDF8",
   },
   {
     slug: "background-remover",
@@ -137,7 +137,7 @@ export const TOOLS = [
       "Remove image backgrounds with a premium, guided workflow. AI-ready architecture.",
     icon: Eraser,
     category: "ai",
-    accent: "#0ea5e9",
+    accent: "#38BDF8",
     badge: "AI",
   },
   {
@@ -148,7 +148,7 @@ export const TOOLS = [
       "Upscale and sharpen images up to 4×. Premium UI prepared for future AI integration.",
     icon: Sparkles,
     category: "ai",
-    accent: "#8b5cf6",
+    accent: "#0D9488",
     badge: "AI",
   },
 ];

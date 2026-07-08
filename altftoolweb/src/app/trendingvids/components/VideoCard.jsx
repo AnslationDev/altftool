@@ -30,7 +30,7 @@ const VideoCard = ({ video, onClick }) => {
 
         {/* Hover Overlay */}
         <div className="absolute inset-0 bg-slate-950/40 opacity-0 group-hover:opacity-100 transition-opacity duration-500 backdrop-blur-[2px] flex items-center justify-center">
-          <div className="w-14 h-14 rounded-full bg-white text-primary flex items-center justify-center shadow-2xl scale-50 group-hover:scale-100 transition-all duration-500 ease-out">
+          <div className="w-14 h-14 rounded-full bg-gradient-to-r from-(--primary) to-(--secondary) text-white flex items-center justify-center shadow-2xl scale-50 group-hover:scale-100 transition-all duration-500 ease-out">
             <Play className="w-6 h-6 fill-current ml-1" />
           </div>
         </div>
@@ -39,7 +39,7 @@ const VideoCard = ({ video, onClick }) => {
         {video.duration && (
           <div className="absolute bottom-3 right-3 px-2.5 py-1 rounded-lg bg-black/60 backdrop-blur-md text-white text-[9px] font-black tracking-widest uppercase border border-white/10">
             <div className="flex items-center gap-1.5">
-              <Clock className="w-3 h-3 text-primary" />
+              <Clock className="w-3 h-3 text-(--primary)" />
               {video.duration}
             </div>
           </div>
@@ -56,7 +56,7 @@ const VideoCard = ({ video, onClick }) => {
       {/* Content */}
       <div className="p-6 pt-4">
         <div className="flex justify-between items-start gap-4">
-          <h3 className="font-primary font-black text-lg md:text-xl line-clamp-2 leading-[1.1] group-hover:text-primary transition-colors duration-300 uppercase tracking-tighter">
+          <h3 className="font-primary font-black text-lg md:text-xl line-clamp-2 leading-[1.1] group-hover:text-(--primary) transition-colors duration-300 uppercase tracking-tighter">
             {video.title || "Untitled Video"}
           </h3>
 
@@ -66,14 +66,14 @@ const VideoCard = ({ video, onClick }) => {
         </div>
 
         {video.description && (
-          <p className="mt-4 text-sm text-(--muted-foreground) line-clamp-2 font-secondary font-medium leading-relaxed italic opacity-80 group-hover:opacity-100 transition-opacity">
+          <p className="mt-4 text-sm text-(--muted) line-clamp-2 font-secondary font-medium leading-relaxed italic opacity-80 group-hover:opacity-100 transition-opacity">
             “{video.description}”
           </p>
         )}
 
         <div className="mt-6 flex items-center gap-3">
           <div className="h-[1px] flex-1 bg-(--border)/50" />
-          <span className="text-[10px] font-black text-primary uppercase tracking-[0.2em]">
+          <span className="text-[10px] font-black text-(--primary) uppercase tracking-[0.2em]">
             View Details
           </span>
           <div className="h-[1px] w-4 bg-primary group-hover:w-12 transition-all duration-500" />

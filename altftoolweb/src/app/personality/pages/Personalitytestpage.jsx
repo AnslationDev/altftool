@@ -8,7 +8,7 @@ import FAQ from "../components/Faq";
 
 export default function PersonalityTestPage() {
   return (
-    <main className="w-full personality-bg">
+    <main className="w-full personality-page personality-bg">
       <Hero />
       <Socials />
       <HowItWorks />

@@ -46,12 +46,12 @@ const Hero = () => {
   };
 
   return (
-    <section className="bg-[#E0A028] py-8 overflow-hidden w-full">
+    <section className="top9-hero py-8 overflow-hidden w-full">
       <div className="w-full px-3 sm:px-6 lg:px-8">
 
         {/* Heading */}
-        <h1 className="text-xl sm:text-2xl md:text-4xl font-light text-center text-(--primary) mb-10">
-          227,193 top nine lists for everything under (& including) the sun.
+        <h1 className="text-xl sm:text-2xl md:text-4xl font-extrabold text-center mb-10 leading-tight">
+          <span className="top9-gradient-text">227,193 top nine lists</span> for everything under (& including) the sun.
         </h1>
 
         {/* Trending Slider (same as before) */}
@@ -59,7 +59,7 @@ const Hero = () => {
           {canScrollLeft && (
             <button
               onClick={() => scroll("left")}
-              className="hidden lg:flex absolute left-2 top-1/2 -translate-y-1/2 z-20 w-11 h-11 items-center justify-center bg-[#c58b1e] text-white rounded-full"
+              className="top9-primary-action hidden lg:flex absolute left-2 top-1/2 -translate-y-1/2 z-20 w-11 h-11 items-center justify-center rounded-full"
             >
               <ChevronLeft size={22} />
             </button>
@@ -96,7 +96,7 @@ const Hero = () => {
           {canScrollRight && (
             <button
               onClick={() => scroll("right")}
-              className="hidden lg:flex absolute right-2 top-1/2 -translate-y-1/2 z-20 w-11 h-11 items-center justify-center bg-[#c58b1e] text-white rounded-full"
+              className="top9-primary-action hidden lg:flex absolute right-2 top-1/2 -translate-y-1/2 z-20 w-11 h-11 items-center justify-center rounded-full"
             >
               <ChevronRight size={22} />
             </button>
@@ -108,17 +108,17 @@ const Hero = () => {
           <input
             type="text"
             placeholder="What's your passion?"
-            className="w-full py-5 pl-6 pr-16 bg-white rounded-sm text-grey-600"
+            className="top9-search w-full py-5 pl-6 pr-16 rounded-[var(--anslation-ds-radius-lg)] outline-none focus:border-(--primary)"
           />
-          <Search className="absolute right-7 top-1/2 -translate-y-1/2" />
+          <Search className="absolute right-7 top-1/2 -translate-y-1/2 text-(--primary)" />
         </div>
 
         {/* CATEGORY BAR (UPDATED LIKE IMAGE) */}
-        <div className="flex items-center max-w-6xl mx-auto bg-[#c58b1e] rounded-full px-2 py-2 shadow-inner">
+        <div className="top9-panel flex items-center max-w-6xl mx-auto rounded-full px-2 py-2">
 
           <button
             onClick={() => scrollCategories("left")}
-            className="w-10 h-10 flex items-center justify-center text-white"
+            className="w-10 h-10 flex items-center justify-center text-(--primary)"
           >
             <ChevronLeft />
           </button>
@@ -131,7 +131,7 @@ const Hero = () => {
               {["TV","Anime","Music","Movies","Countries","2024","Disney","Food","Football","Rap","Games","Metal","Singers","Sports"].map((tag) => (
                 <span
                   key={tag}
-                  className="px-4 py-2  text-white text-sm bg-white/10 hover:bg-white/20 transition cursor-pointer"
+                  className="top9-pill px-4 py-2 text-sm hover:bg-(--primary)/15 transition cursor-pointer rounded-full"
                 >
                   {tag}
                 </span>
@@ -141,7 +141,7 @@ const Hero = () => {
 
           <button
             onClick={() => scrollCategories("right")}
-            className="w-10 h-10 flex items-center justify-center text-white"
+            className="w-10 h-10 flex items-center justify-center text-(--primary)"
           >
             <ChevronRight />
           </button>

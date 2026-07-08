@@ -1,5 +1,6 @@
 import Personalitytestpage from "./pages/Personalitytestpage";
 import { createPageMetadata } from "@/platform/seo/generateMetadata";
+import "./personality.css";
 
 export async function generateMetadata() {
   return createPageMetadata({

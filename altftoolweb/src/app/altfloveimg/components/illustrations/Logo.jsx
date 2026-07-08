@@ -15,8 +15,8 @@ export default function Logo({ size = 36, withWordmark = false, className = "" }
         <defs>
           <linearGradient id={`${id}-bg`} x1="4" y1="4" x2="44" y2="44" gradientUnits="userSpaceOnUse">
             <stop stopColor="#38bdf8" />
-            <stop offset="0.5" stopColor="#2563eb" />
-            <stop offset="1" stopColor="#7c3aed" />
+            <stop offset="0.5" stopColor="#38BDF8" />
+            <stop offset="1" stopColor="#0D9488" />
           </linearGradient>
           <linearGradient id={`${id}-sun`} x1="0" y1="0" x2="1" y2="1">
             <stop stopColor="#fde68a" />
@@ -37,8 +37,8 @@ export default function Logo({ size = 36, withWordmark = false, className = "" }
           {/* sun */}
           <circle cx="27" cy="23" r="2.6" fill={`url(#${id}-sun)`} />
           {/* mountains */}
-          <path d="M13 33 l4.6 -5.4 3.4 3.8 3-3.4 4 5 Z" fill="#2563eb" />
-          <path d="M13 33 l3.2 -3.6 2.4 2.6 -1 1 Z" fill="#7c3aed" fillOpacity="0.85" />
+          <path d="M13 33 l4.6 -5.4 3.4 3.8 3-3.4 4 5 Z" fill="#14B8A6" />
+          <path d="M13 33 l3.2 -3.6 2.4 2.6 -1 1 Z" fill="#38BDF8" fillOpacity="0.85" />
         </g>
 
         {/* spark */}

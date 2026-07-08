@@ -194,7 +194,7 @@ export default function VideoPlayer({ videoId, thumbnail, category, title }) {
             <div className="absolute bottom-2 left-0 right-0 px-4 py-2 flex items-center justify-between gap-3">
               <button
                 onClick={handleResumeClick}
-                className="text-[11px] bg-(--primary) hover:bg-blue-700 text-white px-3 py-1 rounded-md font-semibold transition-colors flex items-center gap-1 cursor-pointer"
+                className="text-[11px] bg-gradient-to-r from-(--primary) to-(--secondary) text-white px-3 py-1 rounded-md font-semibold transition flex items-center gap-1 cursor-pointer shadow-[0_10px_24px_rgba(20,184,166,0.22)] hover:-translate-y-0.5"
               >
                 <Play size={12} />
                 Start from {formatTime(resumeTime)}
@@ -209,9 +209,9 @@ export default function VideoPlayer({ videoId, thumbnail, category, title }) {
               aria-label="Play"
             >
               <span
-                className={`flex items-center justify-center w-12 h-12 rounded-full bg-white/90 shadow-lg transition-all duration-200 ${hovered ? "scale-110 shadow-xl" : ""}`}
+                className={`flex items-center justify-center w-12 h-12 rounded-full bg-white/95 shadow-lg transition-all duration-200 ${hovered ? "scale-110 shadow-[0_16px_36px_rgba(20,184,166,0.28)]" : ""}`}
               >
-                <Play className="text-(--primary) fill-blue-600" />
+                <Play className="text-(--primary) fill-(--primary)" />
               </span>
             </button>
           )}
