@@ -5,6 +5,7 @@
 import { useMemo, useState } from "react";
 import {
   Save,
+  Sparkles,
   Trash2,
   FileText,
   ShieldCheck,
@@ -46,7 +47,7 @@ const TABS = [
   { key: "code", label: "Custom Code", icon: Code2 },
 ];
 
-export default function PageEditor({ config, path, form, onChange, onSave, onDelete, saving, message, isError }) {
+export default function PageEditor({ config, path, form, onChange, onSave, onDelete, onGenerate, generating, saving, message, isError }) {
   const [tab, setTab] = useState("basic");
   const [schemaText, setSchemaText] = useState(() =>
     form.schema?.length ? JSON.stringify(form.schema, null, 2) : "",
@@ -99,10 +100,29 @@ export default function PageEditor({ config, path, form, onChange, onSave, onDel
           </div>
         </div>
         <div className="flex shrink-0 gap-2">
-          <button type="button" onClick={onDelete} disabled={saving} className={BTN_DANGER} title="Remove this page override">
+          <button type="button" onClick={onDelete} disabled={saving || generating} className={BTN_DANGER} title="Remove this page override">
             <Trash2 className="h-4 w-4" /> Clear override
           </button>
-          <button type="button" onClick={() => onSave(schemaError)} disabled={saving || !!schemaError} className={BTN_PRIMARY}>
+          {onGenerate ? (
+            <button
+              type="button"
+              disabled={saving || generating}
+              onClick={async () => {
+                // Fills every section from the AI SEO engine (registry context
+                // + live Search Console queries). Review, then Save & publish.
+                const proposed = await onGenerate();
+                if (Array.isArray(proposed?.schema) && proposed.schema.length) {
+                  setSchemaText(JSON.stringify(proposed.schema, null, 2));
+                  setSchemaError("");
+                }
+              }}
+              className={BTN_SECONDARY}
+              title="Fill all sections with AI using live Search Console data"
+            >
+              <Sparkles className="h-4 w-4" /> {generating ? "Generating…" : "Generate with AI"}
+            </button>
+          ) : null}
+          <button type="button" onClick={() => onSave(schemaError)} disabled={saving || generating || !!schemaError} className={BTN_PRIMARY}>
             <Save className="h-4 w-4" /> {saving ? "Saving…" : "Save & publish"}
           </button>
         </div>

@@ -1,4 +1,5 @@
 import { createPageMetadata } from "@/platform/seo/generateMetadata";
+import "../../personality.css";
 
 export async function generateMetadata({ params }) {
   const { id } = await params;

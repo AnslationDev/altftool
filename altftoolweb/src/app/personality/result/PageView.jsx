@@ -34,6 +34,7 @@ export default function ResultPage() {
     <section
       className="
         min-h-screen
+        personality-page
         personality-bg
         px-3
         sm:px-4
@@ -55,7 +56,7 @@ export default function ResultPage() {
           md:rounded-[32px]
           border
           border-(--border)
-          bg-(--background)
+          bg-(--card)
           shadow-[0_10px_60px_rgba(0,0,0,0.08)]
         "
       >
@@ -186,7 +187,7 @@ export default function ResultPage() {
                 rounded-2xl
                 border
                 border-(--border)
-                bg-(--background)
+                bg-(--card)
                 p-4
                 sm:p-5
                 md:p-6
@@ -200,14 +201,14 @@ export default function ResultPage() {
                     sm:w-12
                     sm:h-12
                     rounded-xl
-                    bg-green-500/10
+                bg-(--primary)/10
                     flex
                     items-center
                     justify-center
                     shrink-0
                   "
                 >
-                  <CheckCircle2 className="w-5 h-5 sm:w-6 sm:h-6 text-green-500" />
+                  <CheckCircle2 className="w-5 h-5 sm:w-6 sm:h-6 text-(--primary)" />
                 </div>
 
                 <div>
@@ -228,7 +229,7 @@ export default function ResultPage() {
                 rounded-2xl
                 border
                 border-(--border)
-                bg-(--background)
+                bg-(--card)
                 p-4
                 sm:p-5
                 md:p-6
@@ -277,12 +278,12 @@ export default function ResultPage() {
               </span>
             </div>
 
-            <div className="h-2.5 sm:h-3 overflow-hidden rounded-full bg-(--border)">
+            <div className="h-2.5 sm:h-3 overflow-hidden rounded-full personality-progress-track">
               <div
                 className="
                   h-full
                   rounded-full
-                  bg-(--primary)
+                  personality-progress-fill
                   transition-all
                   duration-700
                 "

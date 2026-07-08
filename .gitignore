@@ -25,3 +25,6 @@ claude.md
 # ...but keep the committed templates (this exception MUST come after .env*)
 !.env.example
 !**/.env.example
+
+# temp local assets (not for the repo)
+/pppd.png

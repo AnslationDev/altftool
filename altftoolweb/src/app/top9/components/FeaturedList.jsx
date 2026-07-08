@@ -8,7 +8,7 @@ const FeaturedList = () => {
   return (
     <section className="max-w-7xl mx-auto px-4 py-16">
 
-      <div className="bg-[#f2f2f2] border-b border-gray-200 px-4 py-2 mb-12 mt-[-20] lg:w-full">
+      <div className="top9-panel rounded-[var(--anslation-ds-radius)] px-4 py-2 mb-12 mt-[-20] lg:w-full">
         <h3 className="text-[15px] font-bold text-(--primary) uppercase">
           Featured Lists
         </h3>
@@ -33,7 +33,7 @@ const FeaturedList = () => {
               >
 
                 {/* UPDATED HEIGHT */}
-                <div className="overflow-hidden shadow-xl border border-gray-100 h-[320px]">
+                <div className="top9-image-frame overflow-hidden h-[320px] rounded-[var(--anslation-ds-radius-lg)]">
 
                   <img
                     src={item.img}
@@ -54,11 +54,11 @@ const FeaturedList = () => {
 
                 <div className="flex items-center gap-3">
 
-                  <span className="text-[11px] font-bold text-blue-600 bg-blue-50 px-3 py-1 rounded-full uppercase tracking-tighter border border-blue-100">
+                  <span className="top9-pill text-[11px] font-bold px-3 py-1 rounded-full uppercase tracking-tighter">
                     {item.cat}
                   </span>
 
-                  <span className="text-gray-300 font-mono text-xs">
+                  <span className="top9-muted-text font-mono text-xs">
                     #{String(i + 1).padStart(2, "0")}
                   </span>
 
@@ -66,13 +66,13 @@ const FeaturedList = () => {
 
                 <Link href={`/top9/${item.slug}`}>
 
-                  <h2 className="text-2xl font-bold text-gray-900 leading-tight hover:text-blue-600 transition-colors">
+                  <h2 className="text-2xl font-bold text-(--foreground) leading-tight hover:text-(--primary) transition-colors">
                     {item.title}
                   </h2>
 
                 </Link>
 
-                <p className="text-gray-500 text-[15px] leading-relaxed  line-clamp-5 italic sm:not-italic">
+                <p className="top9-muted-text text-[15px] leading-relaxed line-clamp-5 italic sm:not-italic">
                   {item.desc}
                 </p>
 
@@ -83,17 +83,17 @@ const FeaturedList = () => {
 
                 <div className="flex items-center gap-3">
 
-                  <div className="w-9 h-9 bg-pink-500 rounded-full flex items-center justify-center text-white text-xs font-bold shadow-md">
+                  <div className="top9-primary-action w-9 h-9 rounded-full flex items-center justify-center text-xs font-bold">
                     V
                   </div>
 
                   <div>
 
-                    <p className="text-sm font-bold text-gray-900">
+                    <p className="text-sm font-bold text-(--foreground)">
                       Victoria
                     </p>
 
-                    <p className="text-[11px] text-gray-400 font-medium tracking-wide uppercase">
+                    <p className="top9-muted-text text-[11px] font-medium tracking-wide uppercase">
                       {item.date}
                     </p>
 
@@ -103,12 +103,12 @@ const FeaturedList = () => {
 
                 <Link
                   href={`/top9/${item.slug}`}
-                  className="inline-flex items-center gap-2 text-blue-600 font-bold text-sm group/link"
+                  className="top9-link inline-flex items-center gap-2 font-bold text-sm group/link"
                 >
 
                   Read article
 
-                  <span className="w-7 h-7 bg-blue-50 rounded-full flex items-center justify-center group-hover/link:bg-blue-600 group-hover/link:text-white transition-all">
+                  <span className="w-7 h-7 bg-(--primary)/10 rounded-full flex items-center justify-center group-hover/link:bg-(--primary) group-hover/link:text-(--primary-foreground) transition-all">
                     →
                   </span>
 

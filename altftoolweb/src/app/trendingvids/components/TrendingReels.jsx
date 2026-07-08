@@ -37,7 +37,7 @@ const TrendingReels = ({ onBack }) => {
                         e.preventDefault();
                         onBack();
                     }}
-                    className="flex items-center justify-center p-3 rounded-full bg-black/40 backdrop-blur-xl text-white border border-white/10 hover:bg-blue-600 transition-all shadow-2xl"
+                    className="flex items-center justify-center p-3 rounded-full bg-black/40 backdrop-blur-xl text-white border border-white/10 hover:bg-gradient-to-r hover:from-(--primary) hover:to-(--secondary) transition-all shadow-2xl"
                 >
                     <ArrowLeft className="w-6 h-6" />
                 </button>
@@ -58,8 +58,8 @@ const TrendingReels = ({ onBack }) => {
 
                 {/* Desktop Navigation Arrows */}
                 <div className="absolute -right-16 top-1/2 -translate-y-1/2 flex flex-col gap-4 z-30 hidden lg:flex">
-                    <button onClick={() => scrollToIndex(activeIndex - 1)} className="p-3 rounded-full bg-white/10 text-white hover:bg-blue-600 transition-all"><ChevronUp /></button>
-                    <button onClick={() => scrollToIndex(activeIndex + 1)} className="p-3 rounded-full bg-white/10 text-white hover:bg-blue-600 transition-all"><ChevronDown /></button>
+                    <button onClick={() => scrollToIndex(activeIndex - 1)} className="p-3 rounded-full bg-white/10 text-white hover:bg-gradient-to-r hover:from-(--primary) hover:to-(--secondary) transition-all"><ChevronUp /></button>
+                    <button onClick={() => scrollToIndex(activeIndex + 1)} className="p-3 rounded-full bg-white/10 text-white hover:bg-gradient-to-r hover:from-(--primary) hover:to-(--secondary) transition-all"><ChevronDown /></button>
                 </div>
             </div>
         </div>

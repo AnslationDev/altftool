@@ -68,7 +68,7 @@ export default function OfferFeedback({ offer }) {
           onClick={() => handleVote("worked")}
           className={`inline-flex h-11 items-center justify-center gap-2 rounded-[var(--anslation-ds-radius)] border px-3 text-sm font-bold transition disabled:cursor-not-allowed disabled:opacity-70 ${
             selectedVote === "worked"
-              ? "border-emerald-300 bg-emerald-50 text-emerald-700"
+              ? "border-(--primary) bg-(--muted) text-(--primary)"
               : "border-(--border) bg-(--background) text-(--foreground) hover:border-(--primary)"
           }`}
         >
@@ -81,7 +81,7 @@ export default function OfferFeedback({ offer }) {
           onClick={() => handleVote("failed")}
           className={`inline-flex h-11 items-center justify-center gap-2 rounded-[var(--anslation-ds-radius)] border px-3 text-sm font-bold transition disabled:cursor-not-allowed disabled:opacity-70 ${
             selectedVote === "failed"
-              ? "border-amber-300 bg-amber-50 text-amber-700"
+              ? "border-(--secondary) bg-(--muted) text-(--primary)"
               : "border-(--border) bg-(--background) text-(--foreground) hover:border-(--primary)"
           }`}
         >
@@ -97,7 +97,7 @@ export default function OfferFeedback({ offer }) {
       ) : null}
 
       {error ? (
-        <p className="mt-3 rounded-[var(--anslation-ds-radius)] border border-amber-200 bg-amber-50 px-3 py-2 text-xs font-semibold text-amber-700">
+        <p className="mt-3 rounded-[var(--anslation-ds-radius)] border border-[var(--anslation-ds-danger)] bg-(--card) px-3 py-2 text-xs font-semibold text-[var(--anslation-ds-danger)]">
           {error}
         </p>
       ) : null}

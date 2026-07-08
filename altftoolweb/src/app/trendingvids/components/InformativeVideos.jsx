@@ -64,10 +64,10 @@ const InformativeVideos = ({ data = videos, categoryList = categories }) => {
       <div className="flex flex-col gap-10">
         <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
           <div className="space-y-2">
-            <h1 className="text-4xl md:text-5xl font-black font-primary tracking-tight text-foreground">
-              Content <span className="text-primary">Library</span>
+            <h1 className="text-4xl md:text-5xl font-black font-primary tracking-tight text-(--foreground)">
+              Content <span className="text-(--primary)">Library</span>
             </h1>
-            <p className="text-muted-foreground font-medium flex items-center gap-2">
+            <p className="text-(--muted) font-medium flex items-center gap-2">
               <span className="w-1.5 h-1.5 bg-primary rounded-full" />
               Showing {allFilteredVideos.length} curated resources
             </p>
@@ -76,11 +76,11 @@ const InformativeVideos = ({ data = videos, categoryList = categories }) => {
           <div className="relative w-full lg:w-[400px] group z-20">
             <div className="absolute -inset-0.5 bg-gradient-to-r from-primary/50 to-purple-500/50 rounded-2xl blur opacity-0 group-focus-within:opacity-100 transition duration-500" />
             <div className="relative flex items-center bg-card border border-border rounded-2xl shadow-sm group-focus-within:bg-background">
-              <Search className="ml-4 w-5 h-5 text-muted-foreground group-focus-within:text-primary transition-colors" />
+              <Search className="ml-4 w-5 h-5 text-(--muted) group-focus-within:text-(--primary) transition-colors" />
               <input
                 type="text"
                 placeholder="Search resources..."
-                className="w-full p-4 bg-transparent focus:outline-none font-medium text-sm text-foreground placeholder:text-muted-foreground/70"
+                className="w-full p-4 bg-transparent focus:outline-none font-medium text-sm text-(--foreground) placeholder:text-(--muted)"
                 value={searchQuery}
                 onChange={(e) => {
                   setSearchQuery(e.target.value);
@@ -97,7 +97,7 @@ const InformativeVideos = ({ data = videos, categoryList = categories }) => {
             onClick={() => scrollCategories("left")}
             className="z-10 p-2 rounded-xl border border-border bg-card/80 backdrop-blur-sm
                hover:bg-accent hover:text-accent-foreground
-               text-muted-foreground shadow-sm transition-all active:scale-95 hidden md:flex"
+               text-(--muted) shadow-sm transition-all active:scale-95 hidden md:flex"
           >
             <ChevronLeft className="w-4 h-4" />
           </button>
@@ -135,8 +135,8 @@ const InformativeVideos = ({ data = videos, categoryList = categories }) => {
                     )}
                     <span
                       className={`text-sm font-bold tracking-wide transition-colors duration-200 ${isActive
-                          ? "text-primary"
-                          : "text-muted-foreground hover:text-foreground"
+                          ? "text-(--primary)"
+                          : "text-(--muted) hover:text-(--foreground)"
                         }`}
                     >
                       {category}
@@ -151,7 +151,7 @@ const InformativeVideos = ({ data = videos, categoryList = categories }) => {
             onClick={() => scrollCategories("right")}
             className="z-10 p-2 rounded-xl border border-border bg-card/80 backdrop-blur-sm
                hover:bg-accent hover:text-accent-foreground
-               text-muted-foreground shadow-sm transition-all active:scale-95 hidden md:flex"
+               text-(--muted) shadow-sm transition-all active:scale-95 hidden md:flex"
           >
             <ChevronRight className="w-4 h-4" />
           </button>
@@ -187,8 +187,8 @@ const InformativeVideos = ({ data = videos, categoryList = categories }) => {
               <div className="flex flex-col items-center justify-center mt-16 gap-4">
                 <button
                   onClick={handleLoadMore}
-                  className="group relative px-10 py-4 bg-primary text-primary-foreground font-bold rounded-2xl 
-                 transition-all duration-300 hover:scale-[1.02] active:scale-95 
+                  className="group relative px-10 py-4 bg-primary text-(--primary)-foreground font-bold rounded-2xl
+                 transition-all duration-300 hover:scale-[1.02] active:scale-95
                  shadow-[0_0_20px_-5px_rgba(var(--primary),0.4)] hover:shadow-[0_0_30px_-5px_rgba(var(--primary),0.6)]
                  overflow-hidden border border-white/10"
                 >
@@ -202,7 +202,7 @@ const InformativeVideos = ({ data = videos, categoryList = categories }) => {
                 </button>
 
                 {/* Subtle indicator of remaining items */}
-                <p className="text-xs font-bold text-muted-foreground uppercase tracking-[0.2em] opacity-70">
+                <p className="text-xs font-bold text-(--muted) uppercase tracking-[0.2em] opacity-70">
                   Viewing {displayedVideos.length} of {allFilteredVideos.length}{" "}
                   resources
                 </p>
@@ -212,13 +212,13 @@ const InformativeVideos = ({ data = videos, categoryList = categories }) => {
         ) : (
           <div className="flex flex-col items-center justify-center py-20 space-y-4 text-center bg-card/30 rounded-3xl border border-dashed border-border">
             <div className="p-4 bg-background rounded-full shadow-sm">
-              <Search className="w-8 h-8 text-muted-foreground" />
+              <Search className="w-8 h-8 text-(--muted)" />
             </div>
             <div>
-              <h3 className="text-lg font-bold text-foreground">
+              <h3 className="text-lg font-bold text-(--foreground)">
                 No matches found
               </h3>
-              <p className="text-sm text-muted-foreground">
+              <p className="text-sm text-(--muted)">
                 Try adjusting your filters
               </p>
             </div>
@@ -227,7 +227,7 @@ const InformativeVideos = ({ data = videos, categoryList = categories }) => {
                 setSearchQuery("");
                 setSelectedCategory("All");
               }}
-              className="px-4 py-2 text-primary font-bold text-xs uppercase tracking-widest hover:bg-primary/5 rounded-lg transition-colors"
+              className="px-4 py-2 text-(--primary) font-bold text-xs uppercase tracking-widest hover:bg-primary/5 rounded-lg transition-colors"
             >
               Clear Filters
             </button>
@@ -273,27 +273,27 @@ const InformativeVideos = ({ data = videos, categoryList = categories }) => {
 
               <div className="lg:flex-1 p-6 lg:p-8 flex flex-col overflow-y-auto">
                 <div className="space-y-4">
-                  <span className="inline-flex items-center px-2.5 py-1 rounded-md text-xs font-bold uppercase tracking-wider bg-primary/10 text-primary w-fit">
+                  <span className="inline-flex items-center px-2.5 py-1 rounded-md text-xs font-bold uppercase tracking-wider bg-primary/10 text-(--primary) w-fit">
                     {selectedVideo.category}
                   </span>
-                  <h2 className="text-2xl font-black font-primary text-foreground leading-tight">
+                  <h2 className="text-2xl font-black font-primary text-(--foreground) leading-tight">
                     {selectedVideo.title}
                   </h2>
-                  <p className="text-muted-foreground leading-relaxed text-sm">
+                  <p className="text-(--muted) leading-relaxed text-sm">
                     {selectedVideo.description}
                   </p>
                 </div>
 
                 <div className="mt-auto pt-8 border-t border-border flex items-center gap-6">
-                  <div className="flex items-center gap-2 text-foreground font-bold">
-                    <Clock className="w-4 h-4 text-primary" />
+                  <div className="flex items-center gap-2 text-(--foreground) font-bold">
+                    <Clock className="w-4 h-4 text-(--primary)" />
                     <span>{selectedVideo.duration}</span>
                   </div>
                   <a
                     href={selectedVideo.videoUrl}
                     target="_blank"
                     rel="noreferrer"
-                    className="flex items-center gap-2 text-sm font-bold text-primary hover:underline"
+                    className="flex items-center gap-2 text-sm font-bold text-(--primary) hover:underline"
                   >
                     Open on YouTube <Play className="w-3 h-3 fill-current" />
                   </a>

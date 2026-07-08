@@ -14,7 +14,7 @@ export const VIDEO_METADATA = {
   dQw4w9WgXcQ: {
     title: "Mastering Data Visualization in Modern Apps",
     category: "Data Analytics",
-    categoryColor: "#2563EB",
+    categoryColor: "var(--primary)",
     categoryBg: "#EEF2FF",
     description:
       "This Data visualiztion app for learns and master in data visualiztion .",
@@ -106,7 +106,7 @@ function ClearHistoryConfirmPopup({ count, onConfirm, onCancel }) {
 
   return (
     <div
-      className="fixed inset-0 z-[9999] bg-white/70 flex items-center justify-center p-4 "
+      className="fixed inset-0 z-[9999] bg-slate-950/45 backdrop-blur-sm flex items-center justify-center p-4 "
       onClick={(e) => e.target === e.currentTarget && onCancel()}
     >
       <div className="bg-(--card) rounded-2xl shadow-2xl w-full max-w-sm p-6 border border-(--border)">
@@ -129,7 +129,7 @@ function ClearHistoryConfirmPopup({ count, onConfirm, onCancel }) {
         <div className="flex gap-3">
           <button
             onClick={onCancel}
-            className="flex-1 py-2.5 rounded-xl border border-(--secondary-border) text-[16px] font-semibold text-(--foreground) hover:bg-(--secondary-hover) transition-colors cursor-pointer"
+            className="flex-1 py-2.5 rounded-xl border border-(--secondary-border) text-[16px] font-semibold text-(--foreground) hover:bg-(--card) border border-(--border) transition-colors cursor-pointer"
           >
             Cancel
           </button>
@@ -262,7 +262,7 @@ export default function ContinueWatching() {
         lg:ml-24
       "
               >
-                <div className="w-16 h-16 shrink-0 rounded-full bg-blue-100 flex items-center justify-center">
+                <div className="w-16 h-16 shrink-0 rounded-full bg-(--card) border border-(--border) flex items-center justify-center">
                   <Video size={30} className="text-(--primary)" />
                 </div>
 
@@ -287,11 +287,13 @@ export default function ContinueWatching() {
             w-full sm:w-fit
             px-5 py-3
             rounded-full
-            bg-(--primary)
+            bg-gradient-to-r from-(--primary) to-(--secondary)
             text-white
             cursor-pointer
             font-medium
-            hover:bg-(--primary-hover)
+            shadow-[0_12px_30px_rgba(20,184,166,0.22)]
+            hover:-translate-y-0.5
+            hover:shadow-[0_18px_38px_rgba(20,184,166,0.28)]
             transition
             flex items-center justify-center gap-2
             whitespace-nowrap
@@ -307,7 +309,8 @@ export default function ContinueWatching() {
               {/* INFO BOX */}
               <div
                 className="
-        bg-blue-50
+        bg-(--card)
+        border border-(--border)
         rounded-xl
         p-4 sm:p-5
         flex flex-col sm:flex-row
@@ -319,16 +322,16 @@ export default function ContinueWatching() {
         lg:ml-24
       "
               >
-                <div className="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center shrink-0">
+                <div className="w-12 h-12 rounded-full bg-(--card) flex items-center justify-center shrink-0 shadow-sm">
                   <HiOutlineLightBulb size={28} className="text-(--primary)" />
                 </div>
 
                 <div>
-                  <span className="font-semibold text-base sm:text-lg text-(--foreground)/70">
+                  <span className="font-semibold text-base sm:text-lg text-(--foreground)">
                     Your watched videos will appear here.
                   </span>
 
-                  <p className="text-sm text-(--muted-foreground)">
+                  <p className="text-sm text-(--muted)">
                     The more you watch, the better we recommend.
                   </p>
                 </div>
@@ -403,7 +406,7 @@ function SectionHeader({ count, onClearAll }) {
         flex items-center gap-1.5 text-sm
         text-(--foreground) hover:text-red-400
         transition-colors px-3 py-1.5 rounded-lg
-        hover:bg-red-50 border border-(--secondary-border)
+        hover:bg-red-50 dark:hover:bg-red-950/30 border border-(--secondary-border)
         hover:border-red-100 cursor-pointer whitespace-nowrap
         md:absolute md:right-0 md:top-1/2 md:-translate-y-1/2
       "
@@ -428,13 +431,13 @@ function VideoCard({ video, isJustUpdated, onResume, onClear }) {
     <div
       className={`flex-shrink-0 w-[400px] animate-slide-right  bg-(--card)  border border-[var(--border)] rounded-[20px]  p-4     
     transition-all duration-300 ease-out
-  hover:(--secondary-hover) ${theme === "dark" ? "bg-(--card)" : "bg-white"}
+  ${theme === "dark" ? "bg-(--card)" : "bg-(--card)"}
   
-  hover:shadow-[0_20px_40px_rgba(0,0,0,0.15)]
+  hover:-translate-y-1 hover:shadow-[0_20px_44px_rgba(20,184,166,0.14)]
     
     ${
       isJustUpdated
-        ? "border-blue-300 shadow-blue-100 shadow-md"
+        ? "border-(--primary) shadow-[0_12px_30px_rgba(20,184,166,0.18)]"
         : "border-[#E2E8F0]"
     }`}
     >
@@ -462,7 +465,7 @@ function VideoCard({ video, isJustUpdated, onResume, onClear }) {
         )}
 
         {video.duration > 0 && (
-          <div className="absolute top-3 right-3 bg-[#E8F2FF]  text-[#203667] text-sm font-semibold px-3 py-1 rounded-full flex items-center gap-1">
+          <div className="absolute top-3 right-3 bg-(--card) text-(--foreground) text-sm font-semibold px-3 py-1 rounded-full flex items-center gap-1 shadow-sm">
             <Clock size={20} />
             {formatTime(video.duration)}
           </div>
@@ -475,20 +478,22 @@ function VideoCard({ video, isJustUpdated, onResume, onClear }) {
           </div>
         )}
 
-        <div className="absolute bg-white bottom-3 left-3  right-3  h-[8px] rounded-full  overflow-hidden">
+        <div className="absolute bg-white/70 bottom-3 left-3  right-3  h-[8px] rounded-full  overflow-hidden">
           <div
             className="h-full rounded-r-full w-full   transition-all duration-700"
             style={{
               width: `${pct}%`,
-              backgroundColor: isCompleted ? "#10B981" : "#2563EB",
+              background: isCompleted
+                ? "var(--anslation-ds-success)"
+                : "linear-gradient(90deg, var(--primary), var(--secondary))",
             }}
           />
         </div>
       </div>
 
       <div className="flex items-center justify-between mt-3">
-        <div className="flex items-center gap-3 text-md text-(--muted-foreground)">
-          <div className="w-6 h-6 bg-gray-200 rounded-full flex items-center justify-center shadow-lg">
+        <div className="flex items-center gap-3 text-md text-(--muted)">
+          <div className="w-6 h-6 bg-(--card) border border-(--border) rounded-full flex items-center justify-center shadow-lg">
             <span
               className="w-2.5 h-2.5 rounded-full transition-colors duration-300"
               style={{ backgroundColor: isCompleted ? "var(--anslation-ds-success)" : "var(--primary)" }}
@@ -496,7 +501,7 @@ function VideoCard({ video, isJustUpdated, onResume, onClear }) {
           </div>
           {isCompleted ? "Completed ✓" : `${pct}% completed`}
         </div>
-        <span className="bg-(--anslation-ds-primary-soft) text-(--primary) px-3 py-1 rounded-full text-md font-semibold">
+        <span className="bg-(--card) border border-(--border) text-(--primary) px-3 py-1 rounded-full text-md font-semibold">
           {video.category}
         </span>
       </div>
@@ -506,15 +511,15 @@ function VideoCard({ video, isJustUpdated, onResume, onClear }) {
       </h3>
 
       <div className="flex items-center justify-between mt-5">
-        <span className="text-sm text-(--muted-foreground)">
+        <span className="text-sm text-(--muted)">
           {video.watchedLabel || "Just started"}
         </span>
 
         <div className="flex items-center gap-2">
           <button
             onClick={() => onResume(video.id)}
-            className="flex items-center gap-2 text-white text-sm px-5 py-2 rounded-full transition-colors font-medium cursor-pointer"
-            style={{ backgroundColor: isCompleted ? "var(--anslation-ds-success)" : "var(--primary)" }}
+            className="flex items-center gap-2 text-white text-sm px-5 py-2 rounded-full transition font-medium cursor-pointer shadow-[0_10px_24px_rgba(20,184,166,0.22)] hover:-translate-y-0.5"
+            style={{ background: isCompleted ? "var(--anslation-ds-success)" : "linear-gradient(90deg, var(--primary), var(--secondary))" }}
           >
             <Play size={13} fill="currentColor" />
             {isCompleted ? "Rewatch" : "Resume"}

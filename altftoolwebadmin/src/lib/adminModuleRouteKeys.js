@@ -7,6 +7,7 @@ export const ADMIN_MODULE_ROUTE_KEYS = {
       "",
       "add-blogs",
       "analytics",
+      "automation",
       "bulk-refresh",
       "edit-blog/[id]",
       "quality",

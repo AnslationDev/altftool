@@ -59,13 +59,10 @@ export default function Trust() {
                 className="
                   group
                   rounded-[24px]
-                  border border-(--border)
-                 bg-(--background)
+                  personality-card
                   p-5 sm:p-6 lg:p-8
                   flex flex-col items-center text-center
                   transition-all duration-300
-                  shadow-[0px_8px_30px_0px_#00000008]
-                  hover:shadow-[0px_18px_40px_0px_rgba(0,0,0,0.08)]
                   hover:-translate-y-1
                   
                 "
@@ -125,7 +122,7 @@ export default function Trust() {
                 w-9 h-9
                 rounded-full
                 border-2 border-(--primary)
-                bg-(--muted)
+                bg-(--card)
                 flex items-center justify-center
                 text-(--primary)
               "

@@ -5,7 +5,7 @@ export default function QuestionCard({
 }) {
   return (
     <div className="w-full max-w-4xl text-center">
-      <h1 className="text-3xl md:text-5xl font-bold leading-[1.2] ">
+      <h1 className="text-3xl md:text-5xl font-bold leading-[1.2] text-(--foreground)">
         {question}
       </h1>
 

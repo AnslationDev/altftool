@@ -9,10 +9,10 @@ const MARQUEE = [
 ];
 
 const REVIEWS = [
-  { quote: "Finally an image compressor that doesn't upload my client photos to some random server. The before/after slider is chef's kiss.", name: "Maya R.", role: "Freelance Photographer", initials: "MR", c: "#2563eb" },
-  { quote: "I batch-resize product shots every week. It does it in seconds and the ZIP export saves me so much time.", name: "Daniel K.", role: "E-commerce Manager", initials: "DK", c: "#7c3aed" },
-  { quote: "The crop presets for Instagram and YouTube are exactly what our social team needed. No more guessing dimensions.", name: "Priya S.", role: "Social Media Lead", initials: "PS", c: "#0891b2" },
-  { quote: "Clean, fast, and it works on my phone. Converted a folder of WEBP files on the train. Zero friction.", name: "Tomás L.", role: "Indie Developer", initials: "TL", c: "#0ea5e9" },
+  { quote: "Finally an image compressor that doesn't upload my client photos to some random server. The before/after slider is chef's kiss.", name: "Maya R.", role: "Freelance Photographer", initials: "MR", c: "#14B8A6" },
+  { quote: "I batch-resize product shots every week. It does it in seconds and the ZIP export saves me so much time.", name: "Daniel K.", role: "E-commerce Manager", initials: "DK", c: "#38BDF8" },
+  { quote: "The crop presets for Instagram and YouTube are exactly what our social team needed. No more guessing dimensions.", name: "Priya S.", role: "Social Media Lead", initials: "PS", c: "#0D9488" },
+  { quote: "Clean, fast, and it works on my phone. Converted a folder of WEBP files on the train. Zero friction.", name: "Tomás L.", role: "Indie Developer", initials: "TL", c: "#06B6D4" },
 ];
 
 export default function Testimonials() {
@@ -28,7 +28,7 @@ export default function Testimonials() {
         <div className="ali-marquee-wrap mt-6 overflow-hidden">
           <div className="ali-marquee">
             {[...MARQUEE, ...MARQUEE].map((m, i) => (
-              <span key={i} className="whitespace-nowrap text-lg font-semibold" style={{ color: "var(--ali-border-strong)" }}>
+              <span key={i} className="whitespace-nowrap text-lg font-semibold" style={{ color: "var(--ali-text-soft)" }}>
                 {m}
               </span>
             ))}
@@ -52,7 +52,7 @@ export default function Testimonials() {
                 </div>
                 <blockquote className="mt-3 flex-1 text-[15px] leading-relaxed">"{r.quote}"</blockquote>
                 <figcaption className="mt-5 flex items-center gap-3">
-                  <span className="grid h-11 w-11 place-items-center rounded-full text-sm font-bold text-white" style={{ background: `linear-gradient(135deg, ${r.c}, #4f46e5)` }}>{r.initials}</span>
+                  <span className="grid h-11 w-11 place-items-center rounded-full text-sm font-bold text-white" style={{ background: `linear-gradient(135deg, ${r.c}, var(--secondary, #38BDF8))` }}>{r.initials}</span>
                   <span>
                     <span className="block text-sm font-semibold">{r.name}</span>
                     <span className="block text-xs" style={{ color: "var(--ali-muted)" }}>{r.role}</span>

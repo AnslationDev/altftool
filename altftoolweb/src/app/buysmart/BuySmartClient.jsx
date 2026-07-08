@@ -5,7 +5,6 @@ import dynamic from "next/dynamic";
 import Link from "next/link";
 import {
   ArrowRight,
-  BadgeCheck,
   ListChecks,
   Search,
   ShieldCheck,
@@ -13,6 +12,7 @@ import {
 } from "lucide-react";
 
 import HeroBanner from "./components/HeroBanner";
+import "./components/buysmart-theme.css";
 import useIdleRedirect from "@/hooks/useIdleRedirect";
 import RouteLazySection from "@/components/ui/RouteLazySection";
 import {
@@ -71,14 +71,12 @@ export default function Page() {
   return (
     <div
       data-testid="buysmart-page"
-      className="route-page-shell mx-auto"
+      className="buy-smart-page route-page-shell mx-auto"
     >
-      <section data-testid="buysmart-hero-section" className="section !py-4 sm:!py-5">
-        <HeroBanner />
-      </section>
-
-      <section className="section !pt-0">
-        <BuySmartFlowStrip scrollToFilter={scrollToFilter} />
+      <section data-testid="buysmart-hero-section" className="!py-0">
+        <HeroBanner>
+          <BuySmartFlowStrip scrollToFilter={scrollToFilter} />
+        </HeroBanner>
       </section>
 
       <RouteLazySection
@@ -87,7 +85,7 @@ export default function Page() {
         minHeight={380}
         rootMargin="900px 0px"
       >
-        <section id="brand-search" className="section">
+        <section id="brand-search" className="section buy-smart-section-compact">
           <SearchExplore
             scrollToFilter={scrollToFilter}
             SetSearchInput={SetSearchInput}
@@ -200,29 +198,31 @@ function BuySmartFlowStrip({ scrollToFilter }) {
   ];
 
   return (
-    <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+    <div className="buy-smart-flow-grid">
       {items.map(({ icon: Icon, label, title, description, href, action }) => {
         const content = (
           <>
-            <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-[var(--anslation-ds-radius)] bg-(--muted) text-(--primary)">
-              <Icon className="h-4 w-4" />
-            </span>
-            <span className="min-w-0 flex-1">
-              <span className="text-[10px] font-bold uppercase tracking-wide text-(--muted-foreground)">
-                {label}
+            <span className="buy-smart-flow-top">
+              <span className="buy-smart-flow-icon">
+                <Icon className="h-5 w-5" />
               </span>
-              <span className="mt-1 block text-sm font-bold text-(--foreground)">
-                {title}
-              </span>
-              <span className="mt-1 line-clamp-2 block text-xs leading-5 text-(--muted-foreground)">
-                {description}
+              <span className="buy-smart-flow-arrow">
+                <ArrowRight className="h-4 w-4" />
               </span>
             </span>
-            <ArrowRight className="h-4 w-4 shrink-0 text-(--primary)" />
+            <span className="buy-smart-flow-label">
+              {label}
+            </span>
+            <span className="buy-smart-flow-title">
+              {title}
+            </span>
+            <span className="buy-smart-flow-description">
+              {description}
+            </span>
           </>
         );
 
-        const className = "interactive-card group flex min-h-[116px] items-start gap-3 p-3 text-left motion-reduce:transform-none";
+        const className = "buy-smart-flow-card group";
 
         if (action) {
           return (
@@ -238,10 +238,6 @@ function BuySmartFlowStrip({ scrollToFilter }) {
           </Link>
         );
       })}
-      <div className="surface-panel flex items-center gap-2 px-3 py-2 text-xs font-semibold text-(--muted-foreground) sm:col-span-2 lg:col-span-4">
-        <BadgeCheck className="h-4 w-4 text-(--primary)" />
-        BuySmart keeps fallback data ready while live Firebase content syncs in, so the page stays useful even during slow network reads.
-      </div>
     </div>
   );
 }

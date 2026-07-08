@@ -51,7 +51,7 @@ export default function Benefits() {
           <RevealGroup className="grid gap-5 sm:grid-cols-2 lg:col-span-2 lg:grid-cols-2" stagger={0.06}>
             {ITEMS.map(({ Glyph, title, body }) => (
               <RevealItem key={title} variants={scaleIn}>
-                <div className="ali-card ali-card-hover ali-card-glow flex h-full flex-col p-6" style={{ "--ali-accent": "#2563eb" }}>
+                <div className="ali-card ali-card-hover ali-card-glow flex h-full flex-col p-6" style={{ "--ali-accent": "var(--primary, #14B8A6)" }}>
                   <span className="grid h-12 w-12 place-items-center rounded-xl" style={{ background: "var(--ali-grad-soft)" }}>
                     <Glyph size={26} />
                   </span>

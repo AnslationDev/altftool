@@ -18,7 +18,7 @@ import {
 import { fetchSeoConfig, saveSeoConfig, runPageSearch } from "../services/seoService";
 import { getErrorMessage } from "@/lib/apiClient";
 import SeoNav from "../components/SeoNav";
-import { Field, Select, TextInput, KeywordsInput, Banner, SectionCard, BTN_PRIMARY, BTN_SECONDARY } from "../components/ui";
+import { Field, Select, TextInput, KeywordsInput, Banner, SectionCard, BTN_PRIMARY, BTN_SECONDARY, SuccessDialog } from "../components/ui";
 import {
   PAGE_TYPE_OPTIONS,
   CHANGE_FREQ_OPTIONS,
@@ -45,6 +45,7 @@ export default function BulkSeoPage() {
   const [selected, setSelected] = useState(() => new Set());
   const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState("");
+  const [savedPopup, setSavedPopup] = useState("");
   const [isError, setIsError] = useState(false);
 
   // bulk patch controls
@@ -159,6 +160,7 @@ export default function BulkSeoPage() {
       const res = await saveSeoConfig({ ...config, pages }, { paths: [...selected] });
       setConfig({ ...config, pages });
       setMessage(`Applied to ${selected.size} page(s) (v${res.version}).`);
+      setSavedPopup(`Applied to ${selected.size} page(s) (v${res.version}).`);
     } catch (e) {
       setIsError(true);
       setMessage(getErrorMessage(e));
@@ -208,6 +210,7 @@ export default function BulkSeoPage() {
       const res = await saveSeoConfig({ ...config, pages: merged }, { paths: Object.keys(importPreview.pages) });
       setConfig({ ...config, pages: merged });
       setMessage(`Imported ${Object.keys(importPreview.pages).length} page override(s) (v${res.version}).`);
+      setSavedPopup(`Imported ${Object.keys(importPreview.pages).length} page override(s) (v${res.version}).`);
       setImportText("");
       setImportPreview(null);
     } catch (e) {
@@ -220,6 +223,12 @@ export default function BulkSeoPage() {
 
   return (
     <div className="mx-auto max-w-7xl space-y-6 pb-12 animate-slide-in">
+      <SuccessDialog
+        open={Boolean(savedPopup)}
+        title="Changes applied successfully"
+        message={savedPopup}
+        onClose={() => setSavedPopup("")}
+      />
       <SeoNav active="bulk" />
 
       <header>

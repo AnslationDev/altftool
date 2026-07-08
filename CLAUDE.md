@@ -13,6 +13,6 @@ Quick rules (full detail in `master.md`):
 - Support **light AND dark** on every screen; meet **WCAG AA** (contrast, focus, keyboard, reduced-motion).
 - Keep changes backward-compatible; the SEO engine stays inert behind `ALTFT_SEO_ENGINE_ENABLED`.
 - Build both apps with **`next build --webpack`** (Turbopack can't resolve the `@altftool/*` workspace packages).
-- Companion docs: `ALTFTool-Design-System.pdf`, `ALTF_ENGINE_PLATFORM_ARCHITECTURE.md`.
+- Companion docs: `ALTFTool-Design-System.pdf`, `docs/ALTF_ENGINE_PLATFORM_ARCHITECTURE.md` (all report/architecture .md files live in `docs/`; only `master.md`, `CLAUDE.md`, `DESIGN_SYSTEM.md`, `AGENTS.md` stay at the root).
 
 > Workflow: **read `master.md` → use existing tokens/components → light+dark → AA → build with `--webpack` → verify → ship.**

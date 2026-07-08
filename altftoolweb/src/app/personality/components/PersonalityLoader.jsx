@@ -51,7 +51,7 @@ export default function PersonalityLoader() {
         circumference - (progress / 100) * circumference;
 
     return (
-        <section className="fixed inset-0 z-[9999] flex items-center justify-center px-4 overflow-hidden bg-black/20 backdrop-blur-md pointer-events-auto">
+        <section className="fixed inset-0 z-[9999] personality-page flex items-center justify-center px-4 overflow-hidden bg-black/20 backdrop-blur-md pointer-events-auto">
             <div
                 className="
                 bg-(--card)
@@ -61,8 +61,8 @@ export default function PersonalityLoader() {
           rounded-[28px]
 sm:rounded-[36px]
 md:rounded-[40px]
-          border-(---border) 
-          shadow-[0_20px_80px_rgba(31,79,255,0.08)]
+          border border-(--border)
+          shadow-[var(--anslation-ds-shadow-lg)]
           p-4
 sm:p-6
           md:p-10
@@ -85,10 +85,7 @@ md:px-6
 py-2.5
 sm:py-3
               rounded-full
-             bg-[#F0F5FF]
-             border
-              border-[#D6E4FF]
-              text-(--primary)
+             personality-pill
               font-semibold
            text-[13px]
 sm:text-[15px]
@@ -124,7 +121,7 @@ md:text-[18px]
                                cx="50%"
 cy="50%"
                                 r={radius}
-                                stroke="#E8EEFF"
+                                stroke="var(--border)"
                                 strokeWidth="10"
                                 fill="none"
                             />
@@ -134,7 +131,7 @@ cy="50%"
                                 cx="120"
                                 cy="120"
                                 r={radius}
-                                stroke="#1E63FF"
+                                stroke="var(--primary)"
                                 strokeWidth="10"
                                 fill="none"
                                 strokeLinecap="round"
@@ -182,7 +179,7 @@ px-2 font-normal max-w-[520px] leading-[1.8]">
                     {/* Progress Bar */}
                     <div className="w-full max-w-[680px] mt-12">
                         <div className="flex justify-between mb-3">
-                            <span className="text-[#08104D] font-semibold">
+                            <span className="text-(--foreground) font-semibold">
                                 Personality Analysis
                             </span>
 
@@ -191,14 +188,12 @@ px-2 font-normal max-w-[520px] leading-[1.8]">
                             </span>
                         </div>
 
-                        <div className="h-4 rounded-full bg-[#E8EEFF] overflow-y-auto">
+                        <div className="h-4 rounded-full personality-progress-track overflow-hidden">
                             <div
                                 className="
                   h-full
                   rounded-full
-                  bg-gradient-to-r
-                  from-[#1E63FF]
-                  to-[#5A8BFF]
+                  personality-progress-fill
                   transition-all
                   duration-500
                   ease-out
@@ -211,7 +206,7 @@ px-2 font-normal max-w-[520px] leading-[1.8]">
                     </div>
 
                     {/* Footer */}
-                    <div className="mt-12 flex items-center justify-center gap-2 text-muted-foreground text-sm md:text-base">
+                    <div className="mt-12 flex items-center justify-center gap-2 text-(--muted-foreground) text-sm md:text-base">
                         <ShieldCheck className="w-5 h-5 text-(--primary)" />
                         <span>Secure • Private • Confidential</span>
                     </div>

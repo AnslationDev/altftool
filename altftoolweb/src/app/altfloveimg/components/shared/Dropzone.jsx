@@ -25,7 +25,7 @@ export default function Dropzone({
   const inputRef = useRef(null);
   const [drag, setDrag] = useState(false);
   const reduce = useReducedMotion();
-  const accent = slug ? getTool(slug)?.accent || "#2563eb" : "#2563eb";
+  const accent = slug ? getTool(slug)?.accent || "#14B8A6" : "#14B8A6";
 
   const handleFiles = useCallback(
     (list) => {

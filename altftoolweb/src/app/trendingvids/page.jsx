@@ -44,8 +44,10 @@ export default function Page() {
           ]),
         ]}
       />
-      <TrendingClient />
-      <RouteDiscoveryBand {...trendingRouteHub} />
+      <main className="trending-page-shell">
+        <TrendingClient />
+        <RouteDiscoveryBand {...trendingRouteHub} />
+      </main>
     </>
   );
 }
