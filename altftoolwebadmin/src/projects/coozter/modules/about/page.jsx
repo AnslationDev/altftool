@@ -7,10 +7,10 @@ import {
   ABOUT_SECTION_TABS,
   ARRAY_FIELD_DEFAULTS,
   DEFAULT_ABOUT_PAGE_CONTENT,
+  ROOT_ARRAY_SECTIONS,
   saveAboutPageContent,
   seedAboutPageContent,
   subscribeAboutPageContent,
-  uploadAboutAsset,
   validateAboutPageContent,
 } from "./service/about.service";
 import { LoadingFields, PreviewPanel, buttonClass } from "./components/AboutSectionShared";
@@ -36,8 +36,6 @@ export default function CoozterAboutAdminPage() {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [seeding, setSeeding] = useState(false);
-  const [uploadKey, setUploadKey] = useState("");
-  const [uploadProgress, setUploadProgress] = useState(0);
   const [errors, setErrors] = useState({});
   const saveInFlightRef = useRef(false);
   const seedInFlightRef = useRef(false);
@@ -59,12 +57,12 @@ export default function CoozterAboutAdminPage() {
     () => ABOUT_SECTION_TABS.find((section) => section.key === activeSection)?.label || "About Section",
     [activeSection],
   );
-  const activeData = content[activeSection] || (activeSection === "proofMetrics" ? [] : {});
+  const activeData = content[activeSection] || (ROOT_ARRAY_SECTIONS.has(activeSection) ? [] : {});
   const activeErrors = Object.keys(errors).filter((key) => key.startsWith(`${activeSection}.`)).length;
   const SectionComponent = SECTION_COMPONENTS[activeSection] || HeroSectionTab;
 
   function setSectionField(field, value) {
-    if (activeSection === "proofMetrics") return;
+    if (ROOT_ARRAY_SECTIONS.has(activeSection)) return;
     setContent((prev) => ({
       ...prev,
       [activeSection]: {
@@ -76,16 +74,16 @@ export default function CoozterAboutAdminPage() {
   }
 
   function setSectionActive() {
-    if (activeSection === "proofMetrics") return;
+    if (ROOT_ARRAY_SECTIONS.has(activeSection)) return;
     setSectionField("isActive", activeData.isActive === false);
   }
 
   function updateArrayItem(arrayKey, index, field, value) {
     setContent((prev) => {
-      if (activeSection === "proofMetrics") {
-        const rows = [...(prev.proofMetrics || [])];
+      if (ROOT_ARRAY_SECTIONS.has(activeSection)) {
+        const rows = [...(prev[activeSection] || [])];
         rows[index] = { ...rows[index], [field]: value };
-        return { ...prev, proofMetrics: rows };
+        return { ...prev, [activeSection]: rows };
       }
 
       const rows = [...(prev[activeSection]?.[arrayKey] || [])];
@@ -103,11 +101,11 @@ export default function CoozterAboutAdminPage() {
 
   function addArrayItem(arrayKey) {
     setContent((prev) => {
-      if (activeSection === "proofMetrics") {
-        const rows = prev.proofMetrics || [];
+      if (ROOT_ARRAY_SECTIONS.has(activeSection)) {
+        const rows = prev[activeSection] || [];
         return {
           ...prev,
-          proofMetrics: [...rows, { ...ARRAY_FIELD_DEFAULTS.proofMetrics, sortOrder: rows.length + 1 }],
+          [activeSection]: [...rows, { ...(ARRAY_FIELD_DEFAULTS[arrayKey] || {}), sortOrder: rows.length + 1, isActive: true }],
         };
       }
 
@@ -118,10 +116,7 @@ export default function CoozterAboutAdminPage() {
           ...prev[activeSection],
           [arrayKey]: [
             ...rows,
-            {
-              ...(ARRAY_FIELD_DEFAULTS[arrayKey] || { sortOrder: rows.length + 1, isActive: true }),
-              sortOrder: rows.length + 1,
-            },
+            { ...(ARRAY_FIELD_DEFAULTS[arrayKey] || { sortOrder: rows.length + 1, isActive: true }), sortOrder: rows.length + 1 },
           ],
         },
       };
@@ -130,16 +125,15 @@ export default function CoozterAboutAdminPage() {
 
   function removeArrayItem(arrayKey, index) {
     setContent((prev) => {
-      if (activeSection === "proofMetrics") {
-        return { ...prev, proofMetrics: (prev.proofMetrics || []).filter((_, itemIndex) => itemIndex !== index) };
+      if (ROOT_ARRAY_SECTIONS.has(activeSection)) {
+        return { ...prev, [activeSection]: (prev[activeSection] || []).filter((_, itemIndex) => itemIndex !== index) };
       }
 
-      const rows = (prev[activeSection]?.[arrayKey] || []).filter((_, itemIndex) => itemIndex !== index);
       return {
         ...prev,
         [activeSection]: {
           ...prev[activeSection],
-          [arrayKey]: rows,
+          [arrayKey]: (prev[activeSection]?.[arrayKey] || []).filter((_, itemIndex) => itemIndex !== index),
         },
       };
     });
@@ -194,42 +188,6 @@ export default function CoozterAboutAdminPage() {
     }
   }
 
-  async function handleUpload(file, target) {
-    if (!file) return;
-    if (!file.type.startsWith("image/")) {
-      emitAlert({ type: "error", message: "Please upload an image file." });
-      return;
-    }
-    if (file.size > 10 * 1024 * 1024) {
-      emitAlert({ type: "error", message: "Image must be 10MB or smaller." });
-      return;
-    }
-
-    const key = target.join(".");
-    setUploadKey(key);
-    setUploadProgress(0);
-    try {
-      const uploaded = await uploadAboutAsset({
-        file,
-        sectionKey: activeSection,
-        fieldKey: key,
-        onProgress: setUploadProgress,
-      });
-
-      if (target.length === 1) {
-        setSectionField(target[0], uploaded.url);
-      } else {
-        updateArrayItem(target[0], target[1], target[2], uploaded.url);
-      }
-      emitAlert({ type: "success", message: "Image uploaded." });
-    } catch (error) {
-      emitAlert({ type: "error", message: error?.message || "Image upload failed." });
-    } finally {
-      setUploadKey("");
-      setUploadProgress(0);
-    }
-  }
-
   return (
     <main className="min-h-screen bg-[var(--background)] p-4 text-[var(--foreground)] sm:p-6">
       <div className="mx-auto flex max-w-7xl flex-col gap-5">
@@ -254,9 +212,10 @@ export default function CoozterAboutAdminPage() {
         <section className="grid gap-3 sm:grid-cols-2 xl:grid-cols-6">
           {ABOUT_SECTION_TABS.map((tab) => {
             const isCurrent = activeSection === tab.key;
-            const section = content[tab.key] || {};
             const tabErrors = Object.keys(errors).filter((key) => key.startsWith(`${tab.key}.`)).length;
-            const active = tab.key === "proofMetrics" ? (content.proofMetrics || []).some((item) => item.isActive !== false) : section.isActive !== false;
+            const active = ROOT_ARRAY_SECTIONS.has(tab.key)
+              ? (content[tab.key] || []).some((item) => item.isActive !== false)
+              : content[tab.key]?.isActive !== false;
             return (
               <button
                 key={tab.key}
@@ -285,16 +244,8 @@ export default function CoozterAboutAdminPage() {
                 <p className="text-xs font-bold uppercase tracking-[0.08em] text-[var(--muted)]">{activeLabel}</p>
                 <h2 className="mt-1 text-lg font-bold text-[var(--foreground)]">Editable Fields</h2>
               </div>
-              {activeSection !== "proofMetrics" ? (
-                <button
-                  type="button"
-                  onClick={setSectionActive}
-                  className={`rounded-lg border px-3 py-2 text-sm font-semibold transition ${
-                    activeData.isActive === false
-                      ? "border-[var(--border)] bg-[var(--surface-soft)] text-[var(--muted)]"
-                      : "border-[color-mix(in_srgb,var(--success)_35%,var(--border))] bg-[color-mix(in_srgb,var(--success)_10%,var(--surface))] text-[var(--success)]"
-                  }`}
-                >
+              {!ROOT_ARRAY_SECTIONS.has(activeSection) ? (
+                <button type="button" onClick={setSectionActive} className={buttonClass("secondary")}>
                   {activeData.isActive === false ? "Section Hidden" : "Section Active"}
                 </button>
               ) : null}
@@ -306,13 +257,10 @@ export default function CoozterAboutAdminPage() {
               <SectionComponent
                 section={activeData}
                 errors={errors}
-                uploadKey={uploadKey}
-                uploadProgress={uploadProgress}
                 onFieldChange={setSectionField}
                 onArrayAdd={addArrayItem}
                 onArrayRemove={removeArrayItem}
                 onArrayUpdate={updateArrayItem}
-                onUpload={handleUpload}
               />
             )}
           </div>

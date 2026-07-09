@@ -6,10 +6,10 @@ const coozterConfig = {
   logo: "/logos/coozter-icon.svg",
   color: "#14B8A6",
   modules: {
-    home: { label: "Home ", icon: Home },
-    about: { label: "About us", icon: Info },
-    services: { label: "Our Services ", icon: BriefcaseBusiness },
-    blog: { label: "Our Blogs ", icon: BookOpenText },
+    home: { label: "Home Page", icon: Home },
+    about: { label: "About Page", icon: Info },
+    services: { label: "Services Page", icon: BriefcaseBusiness },
+    blog: { label: "Blog Page", icon: BookOpenText },
   },
 };
 
