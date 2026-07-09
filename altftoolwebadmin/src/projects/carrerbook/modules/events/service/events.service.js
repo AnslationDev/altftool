@@ -9,7 +9,7 @@ export const DEFAULT_EVENTS_PAGE = {
   active: true,
   hero: {
     eyebrow: "CareerBook Events",
-    heading: "Events & Product Showcases",
+    heading: "Event & Product Showcases",
     subtitle:
       "Explore CareerBook launches, partner sessions, product walkthroughs, and live conversations designed for advertisers, publishers, and growth teams.",
   },
