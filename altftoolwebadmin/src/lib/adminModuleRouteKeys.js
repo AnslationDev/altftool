@@ -74,6 +74,9 @@ export const ADMIN_MODULE_ROUTE_KEYS = {
     publisers: [""],
     blog: ["", "add-article", "edit-article/[id]", "view-articles"],
     "about-us": ["", "hero-section", "lead-section"],
+    "term-condition": [""],
+    policy: [""],
+    events: [""],
     team: [""],
   },
 
