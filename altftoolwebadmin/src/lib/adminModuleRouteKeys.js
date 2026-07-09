@@ -127,6 +127,7 @@ export const ADMIN_MODULE_ROUTE_KEYS = {
 export const ADMIN_MODULE_LAYOUT_KEYS = {
   altftool: new Set(["blogs"]),
   leadtree: new Set(["blogs", "creditcard", "expertvideos", "ourteams"]),
+  carrerbook: new Set(["blog"]),
 };
 
 export function resolveAdminModuleRouteKey(

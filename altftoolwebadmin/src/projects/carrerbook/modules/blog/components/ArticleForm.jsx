@@ -23,6 +23,7 @@ import {
   Zap,
 } from "lucide-react";
 import { emitAlert } from "@/lib/alertBus";
+import CareerBookBlogEditor from "./CareerBookBlogEditor";
 import {
   EMPTY_ARTICLE,
   createBlogArticle,
@@ -249,7 +250,7 @@ export default function ArticleForm({ mode = "create", article = null }) {
                 <textarea value={form.excerpt} onChange={(event) => setField("excerpt", event.target.value)} rows={3} className={textareaClass} placeholder="Short blog summary..." />
               </Field>
               <Field label="Blog Content" error={errors.content}>
-                <textarea value={form.content} onChange={(event) => setField("content", event.target.value)} rows={15} className={textareaClass} placeholder="Type or paste your content here..." />
+                <CareerBookBlogEditor value={form.content} onChange={(value) => setField("content", value)} error={errors.content} />
               </Field>
             </Panel>
 
