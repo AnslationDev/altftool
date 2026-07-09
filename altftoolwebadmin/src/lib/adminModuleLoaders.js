@@ -188,6 +188,33 @@ const routeLoaders = {
     },
   },
 
+  growvibe: {
+    navbar: {
+      "": () => import("@/projects/growvibe/modules/navbar/page.jsx"),
+    },
+    home: {
+      "": () => import("@/projects/growvibe/modules/home/page.jsx"),
+    },
+    services: {
+      "": () => import("@/projects/growvibe/modules/services/page.jsx"),
+    },
+    "case-studies": {
+      "": () => import("@/projects/growvibe/modules/case-studies/page.jsx"),
+    },
+    blog: {
+      "": () => import("@/projects/growvibe/modules/blog/page.jsx"),
+    },
+    pages: {
+      "": () => import("@/projects/growvibe/modules/pages/page.jsx"),
+    },
+    leads: {
+      "": () => import("@/projects/growvibe/modules/leads/page.jsx"),
+    },
+    footer: {
+      "": () => import("@/projects/growvibe/modules/footer/page.jsx"),
+    },
+  },
+
   myluckydeal: {
     dashboard: {
       "": () => import("@/projects/myluckydeal/modules/dashboard/page.jsx"),

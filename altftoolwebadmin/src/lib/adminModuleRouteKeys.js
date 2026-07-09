@@ -80,6 +80,17 @@ export const ADMIN_MODULE_ROUTE_KEYS = {
     team: [""],
   },
 
+  growvibe: {
+    navbar: [""],
+    home: [""],
+    services: [""],
+    "case-studies": [""],
+    blog: [""],
+    pages: [""],
+    leads: [""],
+    footer: [""],
+  },
+
   myluckydeal: {
     dashboard: [""],
     deals: [""],
