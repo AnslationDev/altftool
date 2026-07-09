@@ -76,7 +76,7 @@ export default function FAQ() {
               ${
                 activeIndex === index
                   ? "border-[1.5px] border-(--primary)"
-                  : "border-black/10 hover:border-gray-300"
+                  : "border-(--border) hover:border-(--primary)/40"
               }`}
             style={{ animationDelay: `${index * 70}ms` }}
           >
@@ -101,7 +101,7 @@ export default function FAQ() {
                   font-bold transition-all duration-300
                   ${
                     activeIndex === index
-                      ? "text-[#2563eb]"
+                      ? "text-(--primary)"
                       : "text-(--muted-foreground)"
                   }`}
               >

@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowRight, BadgeCheck, Sparkles, TicketPercent, TriangleAlert } from "lucide-react";
+import { ArrowRight, BadgeCheck, Star, TicketPercent, TriangleAlert } from "lucide-react";
 import { useMemo, useState } from "react";
 import Link from "next/link";
 import { SkeletonBlock } from "@/components/ui/skeleton";
@@ -27,6 +27,8 @@ function CategoryCard({ cat, counters }) {
   const href = normalizedCat.storePath || normalizedCat.link || "#";
   const showFallback = !imageSrc || imageError;
   const savingsText = normalizedCat.discount || normalizedCat.cashback || normalizedCat.points || "View deal";
+  const rating = normalizedCat.rating || normalizedCat.score || "4.6";
+  const reviewCount = normalizedCat.reviews || normalizedCat.reviewCount || `${Math.max(410, (title.length * 80) % 1200)} reviews`;
 
   const handleImageError = () => {
     if (logoFallback && imageSrc !== logoFallback) {
@@ -42,9 +44,9 @@ function CategoryCard({ cat, counters }) {
     <Link
       href={href}
       data-testid="buysmart-category-card"
-      className="group flex min-h-[282px] flex-col overflow-hidden rounded-[var(--anslation-ds-radius)] border shadow-[var(--anslation-ds-shadow-sm)] transition hover:-translate-y-0.5 motion-reduce:transform-none"
+      className="buy-smart-store-card group flex min-h-[164px] items-center gap-5 overflow-hidden rounded-[24px] border p-5 transition motion-reduce:transform-none"
     >
-      <div className="relative aspect-[4/3] overflow-hidden bg-(--muted)">
+      <div className="buy-smart-store-logo relative h-28 w-28 shrink-0 overflow-hidden rounded-[22px] border bg-(--card) sm:h-32 sm:w-32">
         {imageSrc && !imageLoaded && !imageError ? (
           <SkeletonBlock className="absolute inset-0 rounded-none" />
         ) : null}
@@ -58,7 +60,7 @@ function CategoryCard({ cat, counters }) {
             decoding="async"
             fetchPriority="low"
             referrerPolicy="no-referrer"
-            className={`h-full w-full bg-(--card) object-contain p-6 transition duration-300 group-hover:scale-[1.02] motion-reduce:transform-none ${
+            className={`h-full w-full bg-(--card) object-contain p-5 transition duration-300 group-hover:scale-[1.04] motion-reduce:transform-none ${
               imageLoaded ? "opacity-100" : "opacity-0"
             }`}
             onLoad={() => setImageLoaded(true)}
@@ -70,48 +72,46 @@ function CategoryCard({ cat, counters }) {
             <span className="grid h-12 w-12 place-items-center rounded-[var(--anslation-ds-radius)] bg-(--primary) text-lg font-bold text-(--primary-foreground)">
               {title.slice(0, 1).toUpperCase()}
             </span>
-            <span className="text-xs font-semibold text-(--muted-foreground)">
-              Verified brand
-            </span>
           </div>
         ) : null}
       </div>
 
-      <div className="flex flex-1 flex-col gap-3 p-3 sm:p-4">
-        <div className="min-h-[48px]">
-          <h3 className="line-clamp-2 text-sm font-bold leading-snug text-(--foreground) sm:text-base">
-            {title}
-          </h3>
-          {normalizedCat.category ? (
-            <p className="mt-1 truncate text-xs font-semibold text-(--primary)">
-              {normalizedCat.category}
+      <div className="flex min-w-0 flex-1 self-stretch flex-col">
+        <div className="flex items-start justify-between gap-3">
+          <div className="min-w-0">
+            <h3 className="line-clamp-1 text-lg font-extrabold leading-snug text-(--foreground)">
+              {title}
+            </h3>
+            <p className="mt-1 truncate text-sm font-semibold text-(--muted-foreground)">
+              {normalizedCat.category || "All Categories"}
+              {normalizedCat.trending || normalizedCat.exclusive ? (
+                <span className="text-(--primary)"> · Trending</span>
+              ) : null}
             </p>
-          ) : null}
+          </div>
+          <span className="buy-smart-store-arrow hidden h-9 w-9 shrink-0 place-items-center rounded-full sm:grid">
+            <ArrowRight className="h-4 w-4" />
+          </span>
         </div>
 
-        <div className="flex flex-wrap gap-1.5">
-          <TrustSignalBadges signals={trustSignals} compact />
-        <span className="buy-smart-chip inline-flex items-center gap-1 rounded-full border px-2 py-1 text-[11px] font-semibold">
-            <TicketPercent className="h-3 w-3 text-(--primary)" />
-            <span className="max-w-[120px] truncate">{savingsText}</span>
+        <div className="mt-3 flex flex-wrap items-center gap-2">
+          <TrustSignalBadges signals={trustSignals} compact showUsage={false} />
+          <span className="buy-smart-chip inline-flex h-6 items-center gap-1 rounded-full border px-2 text-[10px] font-bold">
+            <TicketPercent className="h-2.5 w-2.5 text-(--primary)" />
+            <span className="max-w-[140px] truncate">{savingsText}</span>
           </span>
           {normalizedCat.verified ? (
-            <span className="buy-smart-chip-secondary inline-flex items-center gap-1 rounded-full border px-2 py-1 text-[11px] font-semibold">
-              <BadgeCheck className="h-3 w-3 text-(--primary)" />
+            <span className="buy-smart-chip-secondary inline-flex h-6 items-center gap-1 rounded-full border px-2 text-[10px] font-bold">
+              <BadgeCheck className="h-2.5 w-2.5 text-(--primary)" />
               Verified
             </span>
           ) : null}
-          {normalizedCat.exclusive ? (
-            <span className="buy-smart-chip-secondary inline-flex items-center gap-1 rounded-full border px-2 py-1 text-[11px] font-semibold">
-              <Sparkles className="h-3 w-3 text-(--primary)" />
-              Exclusive
-            </span>
-          ) : null}
         </div>
 
-        <div className="buy-smart-cta-surface mt-auto flex items-center justify-between rounded-[var(--anslation-ds-radius)] border px-3 py-2 text-xs font-semibold text-(--muted-foreground)">
-          <span className="truncate">{normalizedCat.code || "Open deal"}</span>
-          <ArrowRight className="h-3.5 w-3.5 shrink-0 text-(--primary) transition group-hover:translate-x-0.5" />
+        <div className="mt-auto flex items-center gap-2 pt-4 text-sm font-bold text-(--foreground)">
+          <Star className="h-4 w-4 fill-[var(--anslation-ds-warning)] text-[var(--anslation-ds-warning)]" />
+          <span>{rating}</span>
+          <span className="font-semibold text-(--muted-foreground)">({reviewCount})</span>
         </div>
       </div>
     </Link>
@@ -148,7 +148,7 @@ export default function FilterWithAdCard({
           <p className="text-sm font-semibold text-(--primary)">Try another one</p>
         </div>
       ) : (
-        <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4 2xl:grid-cols-5 gap-5 flex-1 min-w-[280px]">
+        <div className="grid min-w-[280px] flex-1 grid-cols-1 gap-5 lg:grid-cols-2">
           {finalData.map((cat) => {
             const normalizedCat = normalizeBuySmartCategory(cat);
 

@@ -118,13 +118,13 @@ function StoreCard({ data }) {
   return (
     <div
       key={data.id}
-      className="w-full group cursor-pointer relative overflow-hidden rounded-2xl sm:rounded-4xl h-25 sm:h-36 border-[1.5px] border-(--border) bg-white shadow-[0_2px_30px_0_rgba(0,0,0,0.05)] transition-all duration-500 ease-out hover:bg-(--primary) hover:shadow-lg hover:-translate-y-1"
+      className="w-full group cursor-pointer relative overflow-hidden rounded-2xl sm:rounded-4xl h-25 sm:h-36 deals-card-surface transition-all duration-500 ease-out hover:bg-(--primary) hover:shadow-lg hover:-translate-y-1"
     >
       {/* Diagonal discount banner — top-left corner */}
       {data.brandDiscount && (
         <div className="absolute -top-1 -left-1 w-28 h-28 overflow-hidden rounded-tl-2xl pointer-events-none z-10">
           <div
-            className="absolute bg-(--primary) group-hover:bg-white group-hover:text-(--primary) text-white font-bold text-xs leading-tight text-center transition-colors duration-500"
+            className="absolute bg-(--primary) group-hover:bg-(--card) group-hover:text-(--primary) text-(--primary-foreground) font-bold text-xs leading-tight text-center transition-colors duration-500"
             style={{
               width: "120px",
               top: "18px",
@@ -157,7 +157,7 @@ function StoreCard({ data }) {
 
       {/* Hover Content */}
       <div
-        className="absolute inset-0 flex flex-col items-center justify-center text-white 
+        className="absolute inset-0 flex flex-col items-center justify-center text-(--primary-foreground) 
         opacity-0 translate-y-4 
         transition-all duration-500 ease-out 
         group-hover:opacity-100 group-hover:translate-y-0"

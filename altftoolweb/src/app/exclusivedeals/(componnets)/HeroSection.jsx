@@ -78,7 +78,7 @@ function HeroSection() {
   ${
     current === i
       ? "bg-(--primary) w-8 opacity-100"
-      : "bg-[#1e3a8a] w-2 opacity-40"
+      : "bg-(--border) w-2 opacity-80"
   }`}
           />
         ))}

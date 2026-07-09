@@ -44,7 +44,7 @@ export default function TrendingDeals() {
 
   return (
     <section className="space-y-7 animate-slide-up">
-      <div className="section-header">
+      <div className="section-header buy-smart-section-header-plain">
         <h2 className="section-title">Top Featured Brands</h2>
         <p className="section-subtitle">Your Journey to Better Brands Starts Here</p>
       </div>

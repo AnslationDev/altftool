@@ -126,11 +126,11 @@ export default function FeedbackSection() {
                 animationDelay: `${i * 90}ms`,
               }}
             >
-              <div className="relative  rounded-2xl p-6 border border-(--border) shadow-sm hover:shadow-lg transition h-full flex flex-col">
+              <div className="academy-card-surface relative rounded-2xl p-6 transition h-full flex flex-col">
 
                 {/* Avatar */}
                 <div className="absolute -top-7 left-6">
-                  <div className="w-14 h-14 relative rounded-full overflow-hidden border-2 border-[#E6E6E6]">
+                  <div className="w-14 h-14 relative rounded-full overflow-hidden border-2 border-(--border)">
                     <ManagedImage
                       src={item.img}
                       alt={item.name}
@@ -155,10 +155,10 @@ export default function FeedbackSection() {
                 {/* FOOTER */}
                 <div className="flex items-center justify-between mt-auto">
                   <div>
-                    <h4 className="font-semibold text-(--muted-foreground)">
+                    <h4 className="font-semibold text-(--foreground)">
                       {item.name}
                     </h4>
-                    <p className="text-xs text-gray-400">
+                    <p className="academy-muted-text text-xs">
                       @{item.name?.toLowerCase().replace(/\s+/g, "")}
                     </p>
                   </div>
@@ -169,8 +169,8 @@ s
                       <Star
                         key={idx}
                         className={`w-4 h-4 ${idx < Math.round(item.rating || 5)
-                          ? "fill-blue-500 text-blue-500"
-                          : "text-gray-300"
+                          ? "fill-(--primary) text-(--primary)"
+                          : "text-(--border)"
                           }`}
                       />
                     ))}
@@ -206,8 +206,8 @@ s
               setIndex(i);
             }}
             className={`h-2 rounded-full transition-all duration-300 ${index === i
-              ? "w-8 bg-[var(--primary)]"
-              : "w-2 bg-gray-300"
+              ? "w-8 bg-(--primary)"
+              : "w-2 bg-(--border)"
               }`}
           />
         ))}

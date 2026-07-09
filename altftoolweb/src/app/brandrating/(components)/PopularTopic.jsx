@@ -181,8 +181,8 @@ function getUrlLink(value) {
                   transition-colors duration-200
                   cursor-pointer
                   ${activeFilter === idx
-                    ? "bg-(--primary) text-white border-(--primary)"
-                    : "border-(--border) text-(--muted-foreground) bg-(--background) hover:bg-(--primary) hover:text-white hover:border-(--primary) hover:scale-[1.03]"
+                    ? "bg-(--primary) text-(--primary-foreground) border-(--primary)"
+                    : "border-(--border) text-(--muted-foreground) bg-(--card) hover:bg-(--primary) hover:text-(--primary-foreground) hover:border-(--primary) hover:scale-[1.03]"
                   }
                 `}
               >
@@ -201,7 +201,7 @@ function getUrlLink(value) {
         <div
           data-dropdown-portal="true"
           style={{ top: dropdownPos.top, left: dropdownPos.left }}
-          className="dropdown-inner fixed w-[220px] bg-(--background)  border border-(--border) rounded-[12px] shadow-xl py-2 max-h-[260px] overflow-y-auto z-[9999] [scrollbar-width:none] [-ms-overflow-style:none]"
+          className="dropdown-inner fixed w-[220px] bg-(--card) border border-(--border) rounded-[12px] shadow-xl py-2 max-h-[260px] overflow-y-auto z-[9999] [scrollbar-width:none] [-ms-overflow-style:none]"
         >
           {filters[activeFilter].options.map((option, i) => (
             <button
@@ -210,7 +210,7 @@ function getUrlLink(value) {
                 router.push(`/brandrating/categories/${getUrlLink(option)}`);
                 setActiveFilter(null);
               }}
-              className="w-full text-left px-4 py-2 text-sm text-(--foreground) hover:bg-(--muted-foreground)/20 truncate transition-all duration-200 ease-in-out hover:pl-5"
+              className="w-full text-left px-4 py-2 text-sm text-(--foreground) hover:bg-(--primary)/8 truncate transition-all duration-200 ease-in-out hover:pl-5"
               title={option}
             >
               {option}
@@ -222,18 +222,18 @@ function getUrlLink(value) {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
         {loading ? (
-          <div className="col-span-2 text-center py-10 text-gray-500">
+          <div className="col-span-2 text-center py-10 brandrating-muted-text">
             Loading...
           </div>
         ) : popularData.length === 0 ? (
-          <div className="col-span-2 text-center py-10 text-gray-500">
+          <div className="col-span-2 text-center py-10 brandrating-muted-text">
             No products added yet in this category
           </div>
         ) : (
           popularData.map((brand, index) => (
             <div
               key={brand?.id || `${brand?.name}-${index}`}
-              className="flex-1 rounded-[20px] border border-(--border) p-[16px] sm:p-[20px] flex flex-col gap-5 group transition-all duration-300 ease-in-out hover:border-(--primary) hover:shadow-[0_10px_30px_rgba(37,99,235,0.15)] hover:-translate-y-1 animate-slide-up"
+              className="flex-1 rounded-[20px] brandrating-card-surface p-[16px] sm:p-[20px] flex flex-col gap-5 group transition-all duration-300 ease-in-out hover:border-(--primary) hover:-translate-y-1 animate-slide-up"
               style={{ animationDelay: `${index * 120}ms` }}
             >
               <div className="relative w-full h-[200px] sm:h-[240px] md:h-[280px] lg:h-[320px] rounded-[12px] overflow-hidden flex-shrink-0">
@@ -246,7 +246,7 @@ function getUrlLink(value) {
                 />
 
                 <div className="absolute top-3 sm:top-[41px] left-0 h-[28px] sm:h-[42px] px-3 sm:px-5 bg-(--primary) rounded-tr-[30px] rounded-br-[30px] flex items-center">
-                  <span className="font-semibold text-[11px] sm:text-sm text-white truncate">
+                  <span className="font-semibold text-[11px] sm:text-sm text-(--primary-foreground) truncate">
                     {activeCategory}
                   </span>
                 </div>
@@ -272,7 +272,7 @@ function getUrlLink(value) {
                 </div>
                 <Link href={`/brandrating/${getUrlLink(activeCategory)}/pdetail/${getUrlLink(brand?.name)}`} className="w-full sm:w-auto"> 
                 <button className="w-full sm:w-auto flex items-center justify-center sm:justify-start gap-[5px] h-[36px] sm:h-[44px] px-3 sm:px-5 text-[12px] sm:text-sm 
-                rounded-full bg-(--primary) text-white font-medium whitespace-nowrap flex-shrink-0 transition-all duration-200 cursor-pointer">
+                rounded-full brandrating-action font-medium whitespace-nowrap flex-shrink-0 transition-all duration-200 cursor-pointer hover:-translate-y-0.5">
                    View Details
                     <ArrowUpRight size={16} className="transition-transform duration-300 group-hover:[transform:rotate(45deg)]" /> 
                    </button> 

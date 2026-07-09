@@ -60,7 +60,7 @@ export default function StoreGrid({ filter }) {
 
   return (
     <div className="flex flex-col gap-6 animate-slide-up">
-      <div className="section-header">
+      <div className="section-header buy-smart-section-header-plain">
         <h2 className="section-title">
           What&apos;s <span>Trending Now</span>
         </h2>

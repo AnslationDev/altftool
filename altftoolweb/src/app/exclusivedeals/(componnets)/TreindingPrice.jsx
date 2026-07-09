@@ -85,11 +85,11 @@ function TrendingPrice() {
             hidden lg:flex
             absolute left-5 top-[38%] -translate-y-1/2 -translate-x-4 z-10
             items-center justify-center
-            w-10 h-10 rounded-full bg-white shadow-lg border border-gray-100
-            text-gray-700 hover:bg-gray-50 active:scale-95
+            w-10 h-10 rounded-full bg-(--card) shadow-lg border border-(--border)
+            text-(--foreground) hover:bg-(--primary)/5 active:scale-95
             transition-all duration-200 cursor-pointer
             ${isHovered ? "opacity-100 scale-100" : "opacity-0 scale-90 pointer-events-none"}
-            ${!canScrollLeft ? "opacity-30 cursor-not-allowed" : "hover:bg-gray-50 active:scale-95"}
+            ${!canScrollLeft ? "opacity-30 cursor-not-allowed" : "hover:bg-(--primary)/5 active:scale-95"}
           `}
             aria-label="Scroll left"
           >
@@ -120,8 +120,8 @@ function TrendingPrice() {
             hidden lg:flex
             absolute right-5 top-[38%] -translate-y-1/2 translate-x-4 z-10
             items-center justify-center
-            w-10 h-10 rounded-full bg-white shadow-lg border border-gray-100
-            text-gray-700 hover:bg-gray-50 active:scale-95
+            w-10 h-10 rounded-full bg-(--card) shadow-lg border border-(--border)
+            text-(--foreground) hover:bg-(--primary)/5 active:scale-95
             transition-all duration-200 cursor-pointer
             ${isHovered ? "opacity-100 scale-100" : "opacity-0 scale-90 pointer-events-none"}
           `}
@@ -151,10 +151,10 @@ function PriceCard({ item }) {
           />
         </div>
         <div className="py-1 text-center">
-          <div className="text-lg sm:text-xl font-bold">
+          <div className="text-lg sm:text-xl font-bold text-(--foreground)">
             {item.title} ₹{item.price}
           </div>
-          <div className="sm:text-lg text-md break-words">
+          <div className="sm:text-lg text-md break-words deals-muted-text">
             {item.description}
           </div>
         </div>

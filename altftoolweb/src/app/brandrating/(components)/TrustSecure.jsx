@@ -69,7 +69,7 @@ function TrustSecure() {
                 <div
                   key={index}
                   className="
-                    min-w-full bg-[var(--search-buysmart,#eef1f8)]
+                    min-w-full brandrating-soft-surface
                     flex flex-col md:flex-row items-center justify-between
                     gap-5 sm:gap-6 lg:gap-10
                     px-5 sm:px-10 md:px-10 lg:px-16

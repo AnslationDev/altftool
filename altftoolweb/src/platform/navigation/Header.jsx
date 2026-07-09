@@ -34,6 +34,7 @@ const Header = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [searchError, setSearchError] = useState("");
   const [themeReady, setThemeReady] = useState(false);
+  const [collapsedDesktopMenu, setCollapsedDesktopMenu] = useState(null);
   const themeMenuRef = useRef(null);
   const mobileMenuButtonRef = useRef(null);
   const mobileCloseButtonRef = useRef(null);
@@ -171,6 +172,19 @@ const Header = () => {
     setThemeMenuOpen(false);
   };
 
+  const collapseDesktopDropdown = (menuLabel) => {
+    setCollapsedDesktopMenu(menuLabel);
+    if (document.activeElement instanceof HTMLElement) {
+      document.activeElement.blur();
+    }
+  };
+
+  const resetDesktopDropdownCollapse = (menuLabel) => {
+    setCollapsedDesktopMenu((collapsedMenu) =>
+      collapsedMenu === menuLabel ? null : collapsedMenu
+    );
+  };
+
   const openMobileMenu = () => {
     setMobileMenuOpen(true);
   };
@@ -249,7 +263,11 @@ const Header = () => {
                   }`;
 
                 return (
-                  <div key={item.label} className="group relative">
+                  <div
+                    key={item.label}
+                    className="group relative"
+                    onMouseLeave={() => resetDesktopDropdownCollapse(item.label)}
+                  >
                     {item.href ? (
                       <Link
                         href={item.href}
@@ -278,7 +296,7 @@ const Header = () => {
                       </button>
                     )}
 
-                    {hasOptions ? (
+                    {hasOptions && collapsedDesktopMenu !== item.label ? (
                       <div className="absolute left-1/2 top-full hidden -translate-x-1/2 pt-3 group-focus-within:block group-hover:block">
                         <div
                           className={`w-56 rounded-2xl border p-2 shadow-[0_22px_50px_rgba(15,23,42,0.16)] ${isHomeDark
@@ -291,6 +309,7 @@ const Header = () => {
                               key={option.label}
                               href={option.href}
                               {...routePreviewProps(option.href)}
+                              onClick={() => collapseDesktopDropdown(item.label)}
                               className={`group/sub relative block rounded-xl px-3 py-2.5 text-base font-medium transition duration-200 [font-family:var(--font-ibm-plex-sans)] ${isPublicRouteActive(pathname, option)
                                   ? isHomeDark
                                     ? "text-[#14B8A6]"
@@ -591,7 +610,11 @@ const Header = () => {
                 : isActive(item);
 
               return (
-                <div key={item.label} className="group relative">
+                <div
+                  key={item.label}
+                  className="group relative"
+                  onMouseLeave={() => resetDesktopDropdownCollapse(item.label)}
+                >
                   {item.options ? (
                     <>
                       <button
@@ -607,7 +630,8 @@ const Header = () => {
                         <ChevronDown className="h-4 w-4 transition group-hover:rotate-180" />
                       </button>
 
-                      <div className="absolute left-0 top-full hidden pt-2 group-focus-within:block group-hover:block">
+                      {collapsedDesktopMenu !== item.label ? (
+                        <div className="absolute left-0 top-full hidden pt-2 group-focus-within:block group-hover:block">
                         <div className="w-64 rounded-[var(--anslation-ds-radius)] border border-(--border) bg-(--card) p-1.5 shadow-[var(--anslation-ds-shadow-md)]">
                           {item.options?.map((option) => {
                             const OptionIcon = option.icon;
@@ -617,6 +641,7 @@ const Header = () => {
                                 key={option.label}
                                 href={option.href}
                                 {...routePreviewProps(option.href)}
+                                onClick={() => collapseDesktopDropdown(item.label)}
                                 className={`group/sub relative flex items-center gap-3 rounded-[6px] px-2.5 py-2 text-sm transition ${optionIsActive
                                     ? "text-(--primary)"
                                     : "text-(--muted-foreground) hover:text-(--foreground)"
@@ -636,7 +661,8 @@ const Header = () => {
                             );
                           })}
                         </div>
-                      </div>
+                        </div>
+                      ) : null}
                     </>
                   ) : (
                     <Link

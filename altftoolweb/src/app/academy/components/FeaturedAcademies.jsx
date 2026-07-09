@@ -40,7 +40,7 @@ export default function FeaturedAcademies({ items }) {
   const list = [...items, ...items];
 
   return (
-    <section className="section bg-white overflow-hidden">
+    <section className="section overflow-hidden">
       <div
         className="relative w-full overflow-hidden"
         onMouseEnter={() => (pausedRef.current = true)}
@@ -49,8 +49,8 @@ export default function FeaturedAcademies({ items }) {
         onTouchEnd={() => (pausedRef.current = false)}
       >
         {/* Fade edges */}
-        <div className="pointer-events-none absolute inset-y-0 left-0 w-10 sm:w-16 lg:w-24 z-10 bg-gradient-to-r from-white to-transparent" />
-        <div className="pointer-events-none absolute inset-y-0 right-0 w-10 sm:w-16 lg:w-24 z-10 bg-gradient-to-l from-white to-transparent" />
+        <div className="academy-fade-left pointer-events-none absolute inset-y-0 left-0 w-10 sm:w-16 lg:w-24 z-10" />
+        <div className="academy-fade-right pointer-events-none absolute inset-y-0 right-0 w-10 sm:w-16 lg:w-24 z-10" />
 
         <div
           ref={trackRef}

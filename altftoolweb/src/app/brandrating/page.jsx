@@ -5,6 +5,7 @@ import MethodologySection from "./(components)/MethodologySection";
 import Brand from "./(components)/Brand";
 import ConsumerRating from "./(components)/ConsumerRating";
 import TrustSecure from "./(components)/TrustSecure";
+import "./brandrating.css";
 import data from "./(data)/data.json";
 import JsonLd from "@/platform/seo/JsonLd";
 import RouteDiscoveryBand from "@/platform/navigation/RouteDiscoveryBand";
@@ -52,7 +53,7 @@ function Page() {
           ]),
         ]}
       />
-      <div className="route-page-shell w-full">
+      <div className="brandrating-page route-page-shell w-full">
         <HeroSectionBrand />
 
         <Categories data={allCategory} />
