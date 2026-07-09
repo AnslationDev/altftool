@@ -202,6 +202,23 @@ service cloud.firestore {
       }
     }
 
+    // GrowVibe website content — publicly readable, admin-managed.
+    match /projects/growvibe/content/{sectionId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+
+    // GrowVibe contact-form leads — anonymous create with strict field
+    // validation; reading/managing is admin-only.
+    match /projects/growvibe/leads/{leadId} {
+      allow create: if request.resource.data.keys().hasOnly(
+          ["name", "email", "phone", "service", "message", "status", "createdAt"]
+        ) &&
+        request.resource.data.name is string && request.resource.data.name.size() > 0 &&
+        request.resource.data.email is string && request.resource.data.email.size() > 3;
+      allow read, update, delete: if isActiveAdmin();
+    }
+
     match /projects/carrerbook/homesection/{sectionId} {
       allow read: if true;
       allow write: if isActiveAdmin();

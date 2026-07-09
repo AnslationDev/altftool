@@ -1,0 +1,1293 @@
+{
+  "navbar": {
+    "active": true,
+    "links": [
+      {
+        "label": "Home",
+        "href": "/"
+      },
+      {
+        "label": "About Us",
+        "href": "/about"
+      },
+      {
+        "label": "Services",
+        "href": "/services"
+      },
+      {
+        "label": "Case Studies",
+        "href": "/case-studies"
+      },
+      {
+        "label": "Blog",
+        "href": "/blog"
+      },
+      {
+        "label": "Pricing",
+        "href": "/pricing"
+      },
+      {
+        "label": "Contact",
+        "href": "/contact"
+      }
+    ],
+    "ctaText": "Get a Free Proposal",
+    "ctaLink": "/contact"
+  },
+  "footer": {
+    "active": true,
+    "description": "We are a digital marketing agency focused on helping businesses grow through innovative marketing solutions.",
+    "address": "123, Growth Tower, Sector 62, Noida, Uttar Pradesh 201039",
+    "email": "hello@growvibe.com",
+    "phone": "+91 98765 43210",
+    "hours": "Mon – Sat: 10:00 AM - 7:00 PM",
+    "newsletterTitle": "Subscribe to our newsletter",
+    "newsletterText": "Get the latest insights & marketing tips straight to your inbox.",
+    "copyright": "© 2026 GrowVibe. All rights reserved.",
+    "socials": [
+      {
+        "label": "Facebook",
+        "url": "#"
+      },
+      {
+        "label": "Instagram",
+        "url": "#"
+      },
+      {
+        "label": "LinkedIn",
+        "url": "#"
+      },
+      {
+        "label": "YouTube",
+        "url": "#"
+      }
+    ]
+  },
+  "home-hero": {
+    "active": true,
+    "tickerText": "120+ campaigns live right now",
+    "tickerHighlight": "5.6X avg. ROAS",
+    "eyebrow": "Digital. Affiliate. Advertising.",
+    "headingDark": "We Grow Brands With",
+    "headingBlue": "Digital Marketing, Affiliate & Advertising Solutions",
+    "subtitle": "Data-driven strategies that bring more traffic, higher conversions and maximum ROI for your business.",
+    "button1Text": "Get a Free Proposal",
+    "button1Link": "/contact",
+    "button2Text": "View Our Services",
+    "button2Link": "/services",
+    "rating": "4.9/5",
+    "ratingText": "trusted by 500+ businesses across India",
+    "stats": [
+      {
+        "label": "Revenue Generated",
+        "value": "₹ 12.8 Cr+",
+        "note": "↑ 67% this year"
+      },
+      {
+        "label": "Leads Delivered",
+        "value": "48K+",
+        "note": "↑ 58% this year"
+      },
+      {
+        "label": "ROAS Achieved",
+        "value": "5.6X",
+        "note": "Average ROAS"
+      }
+    ]
+  },
+  "home-services": {
+    "active": true,
+    "eyebrow": "Our Core Services",
+    "headingDark": "Six growth engines.",
+    "headingGray": "One team, accountable to the only metric that matters — revenue.",
+    "featuredChartLabel": "Avg. client traffic growth",
+    "featuredChartBadge": "↑ 3.8X in 12 months",
+    "consultTitle": "Free Marketing Consultation",
+    "consultText": "Not sure which strategy is right for your business? Talk to our experts and get a customized plan.",
+    "consultButton": "Book Free Call",
+    "consultImage": "https://images.unsplash.com/photo-1556761175-b413da4baf72?w=800&q=80&auto=format&fit=crop"
+  },
+  "home-why": {
+    "active": true,
+    "eyebrow": "Why Businesses Choose GrowVibe",
+    "headingDark": "Agencies promise.",
+    "headingGray": "We put our name on the numbers.",
+    "reasons": [
+      {
+        "title": "ROI Focused",
+        "text": "We focus on results that matter to your bottom line."
+      },
+      {
+        "title": "Data Driven",
+        "text": "Every decision is backed by real data, not guesses."
+      },
+      {
+        "title": "Transparent",
+        "text": "Clear reporting and total transparency, always."
+      },
+      {
+        "title": "Expert Team",
+        "text": "Certified experts with years of experience."
+      },
+      {
+        "title": "Proven Results",
+        "text": "Track record of delivering growth consistently."
+      }
+    ],
+    "bannerTitle": "10+ Years of Experience",
+    "bannerText": "Delivering Growth for 500+ Businesses across India — from ambitious startups to market leaders.",
+    "bannerButton": "Know More About Us",
+    "bannerImage": "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=1100&q=80&auto=format&fit=crop"
+  },
+  "home-process": {
+    "active": true,
+    "heading": "Our Process",
+    "steps": [
+      {
+        "step": "01",
+        "title": "Discovery",
+        "text": "We understand your business, goals & target audience."
+      },
+      {
+        "step": "02",
+        "title": "Strategy",
+        "text": "We create a data-driven strategy tailored to your business."
+      },
+      {
+        "step": "03",
+        "title": "Execution",
+        "text": "We execute campaigns across the right channels."
+      },
+      {
+        "step": "04",
+        "title": "Optimization",
+        "text": "We monitor, optimize and make data-backed improvements."
+      },
+      {
+        "step": "05",
+        "title": "Scale",
+        "text": "We scale what works and focus on better performance & ROI."
+      }
+    ],
+    "cardTitle": "Let's Grow Together",
+    "cardText": "Ready to scale your business with performance marketing?",
+    "cardButton": "Start Your Growth"
+  },
+  "home-stats": {
+    "active": true,
+    "stats": [
+      {
+        "value": "10",
+        "suffix": "+",
+        "label": "Years of Experience"
+      },
+      {
+        "value": "500",
+        "suffix": "+",
+        "label": "Happy Clients"
+      },
+      {
+        "value": "1",
+        "suffix": "M+",
+        "label": "Leads Generated"
+      },
+      {
+        "value": "300",
+        "suffix": "+",
+        "label": "Projects Completed"
+      },
+      {
+        "value": "98",
+        "suffix": "%",
+        "label": "Client Retention"
+      },
+      {
+        "value": "12.8",
+        "prefix": "₹ ",
+        "suffix": " Cr+",
+        "label": "Revenue Generated"
+      }
+    ]
+  },
+  "home-testimonials": {
+    "active": true,
+    "heading": "What Our Clients Say",
+    "panelTitle": "Trusted by 500+",
+    "panelSubtitle": "Businesses Across India",
+    "items": [
+      {
+        "quote": "GrowVibe transformed our online presence and helped us scale our leads by 300% in just 6 months. Highly recommended!",
+        "name": "Rohit Sharma",
+        "role": "CEO, TechNova",
+        "avatar": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=160&h=160&q=80&auto=format&fit=crop&crop=faces"
+      },
+      {
+        "quote": "Their team is professional, transparent and results-driven. Our ROI has never been this consistent.",
+        "name": "Anjali Verma",
+        "role": "Marketing Head, EduLearn",
+        "avatar": "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=160&h=160&q=80&auto=format&fit=crop&crop=faces"
+      },
+      {
+        "quote": "Excellent communication, timely delivery and great strategies. We saw real growth in sales and brand awareness.",
+        "name": "Vikram Patel",
+        "role": "Founder, FitLife",
+        "avatar": "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=160&h=160&q=80&auto=format&fit=crop&crop=faces"
+      }
+    ]
+  },
+  "home-cases-intro": {
+    "active": true,
+    "eyebrow": "Success Stories",
+    "headingDark": "Results that speak louder",
+    "headingGradient": "than promises",
+    "subtitle": "Every engagement is measured in revenue, leads and ROAS. Here's what that looks like for brands like yours.",
+    "buttonText": "View All Case Studies"
+  },
+  "home-faq": {
+    "active": true,
+    "heading": "Frequently Asked Questions",
+    "cardTitle": "Still have questions?",
+    "cardText": "Talk to our marketing experts",
+    "cardButton": "Contact Us Now",
+    "faqs": [
+      {
+        "q": "What services do you offer?",
+        "a": "We offer end-to-end growth marketing: digital marketing, SEO optimization, performance marketing, affiliate marketing, lead generation and brand promotion — all under one roof."
+      },
+      {
+        "q": "How long does it take to see results?",
+        "a": "Paid campaigns typically show measurable traction within 2–4 weeks, while SEO and organic growth compound over 3–6 months. We share transparent progress reports every step of the way."
+      },
+      {
+        "q": "What platforms do you work on?",
+        "a": "We run and optimize campaigns across Google, Meta (Facebook & Instagram), YouTube, LinkedIn and leading affiliate networks — wherever your customers are."
+      },
+      {
+        "q": "How do you measure success?",
+        "a": "Every engagement is tied to clear KPIs — ROAS, cost per lead, conversion rate and revenue growth — tracked in real time through shared dashboards."
+      },
+      {
+        "q": "Do you work with startups and small businesses?",
+        "a": "Absolutely. From early-stage startups to established enterprises, we tailor strategy and budgets to your stage of growth."
+      },
+      {
+        "q": "What is your pricing model?",
+        "a": "We offer flexible engagement models — monthly retainers, performance-based pricing and custom project plans. Book a free call and we'll recommend what fits best."
+      }
+    ]
+  },
+  "home-cta": {
+    "active": true,
+    "heading": "Ready to Grow Your Business?",
+    "subtitle": "Let's build a growth strategy tailored for your brand.",
+    "button1Text": "Get a Free Proposal",
+    "button1Link": "/contact",
+    "button2Text": "Talk to Our Expert",
+    "button2Link": "/contact"
+  },
+  "services": {
+    "active": true,
+    "items": [
+      {
+        "slug": "digital-marketing",
+        "name": "Digital Marketing",
+        "icon": "megaphone",
+        "short": "Comprehensive digital marketing strategies to grow your brand online.",
+        "tagline": "Full-funnel digital growth, engineered around your business goals",
+        "description": "From awareness to conversion, we plan and run integrated digital campaigns across search, social, email and content — all measured against the revenue they generate, not vanity metrics.",
+        "features": [
+          {
+            "title": "Growth Strategy",
+            "text": "A 90-day roadmap built on market, competitor and audience research."
+          },
+          {
+            "title": "Social Media Marketing",
+            "text": "Content calendars, community management and paid amplification."
+          },
+          {
+            "title": "Email & Automation",
+            "text": "Lifecycle flows that nurture leads and win back lapsed customers."
+          },
+          {
+            "title": "Content Marketing",
+            "text": "SEO-driven blogs, videos and creatives that build authority."
+          },
+          {
+            "title": "Online Reputation",
+            "text": "Review management and brand monitoring across platforms."
+          },
+          {
+            "title": "Analytics & Reporting",
+            "text": "Live dashboards tying every rupee spent to results."
+          }
+        ],
+        "process": [
+          {
+            "step": "01",
+            "title": "Audit",
+            "text": "We benchmark your current digital presence against competitors."
+          },
+          {
+            "step": "02",
+            "title": "Plan",
+            "text": "Channel mix, budgets and KPIs agreed with your team."
+          },
+          {
+            "step": "03",
+            "title": "Launch",
+            "text": "Campaigns go live with tracking configured end-to-end."
+          },
+          {
+            "step": "04",
+            "title": "Grow",
+            "text": "Weekly optimization sprints compound performance."
+          }
+        ],
+        "deliverables": [
+          "Digital marketing strategy document",
+          "Monthly content & campaign calendar",
+          "Creative design & ad copywriting",
+          "Cross-channel campaign management",
+          "Marketing automation setup",
+          "Monthly performance review calls"
+        ],
+        "stats": [
+          {
+            "value": "3.8X",
+            "label": "Average traffic growth"
+          },
+          {
+            "value": "62%",
+            "label": "Lower acquisition cost"
+          },
+          {
+            "value": "200+",
+            "label": "Brands grown"
+          }
+        ],
+        "faqs": [
+          {
+            "q": "Which channels do you cover under digital marketing?",
+            "a": "Search (Google), social (Meta, LinkedIn, X), YouTube, email, WhatsApp and content marketing — we recommend the mix that fits your audience and budget."
+          },
+          {
+            "q": "Do you create the content and creatives too?",
+            "a": "Yes. Copy, static creatives, short-form video and landing pages are produced in-house so campaigns ship fast and stay on-brand."
+          },
+          {
+            "q": "How soon can we start?",
+            "a": "After a free consultation call, onboarding takes about a week — audit, access setup and strategy sign-off — before campaigns go live."
+          }
+        ],
+        "caseStudy": "e-commerce-brand"
+      },
+      {
+        "slug": "seo-optimization",
+        "name": "SEO Optimization",
+        "icon": "gear",
+        "short": "Rank higher on Google and get discovered by your potential customers.",
+        "tagline": "Own the search results your customers are already typing",
+        "description": "We combine technical SEO, content strategy and authority building to move you up the rankings that matter — and keep you there as algorithms change.",
+        "features": [
+          {
+            "title": "Technical SEO",
+            "text": "Site speed, crawlability, indexing and Core Web Vitals fixes."
+          },
+          {
+            "title": "Keyword Strategy",
+            "text": "Intent-mapped keyword clusters that match your funnel."
+          },
+          {
+            "title": "On-Page Optimization",
+            "text": "Titles, structure, schema and internal linking done right."
+          },
+          {
+            "title": "Content That Ranks",
+            "text": "Briefs and articles engineered for topical authority."
+          },
+          {
+            "title": "Link Building",
+            "text": "White-hat digital PR and authority link acquisition."
+          },
+          {
+            "title": "Local SEO",
+            "text": "Google Business Profile and local pack domination."
+          }
+        ],
+        "process": [
+          {
+            "step": "01",
+            "title": "Technical Audit",
+            "text": "150+ point crawl uncovering everything holding you back."
+          },
+          {
+            "step": "02",
+            "title": "Roadmap",
+            "text": "Prioritized fixes and content plan by impact vs effort."
+          },
+          {
+            "step": "03",
+            "title": "Execute",
+            "text": "Fixes shipped, content published, links earned."
+          },
+          {
+            "step": "04",
+            "title": "Compound",
+            "text": "Rankings, traffic and leads grow month over month."
+          }
+        ],
+        "deliverables": [
+          "Complete technical SEO audit",
+          "Keyword & content gap research",
+          "On-page optimization implementation",
+          "4–12 SEO articles per month",
+          "Authority backlink acquisition",
+          "Monthly ranking & traffic reports"
+        ],
+        "stats": [
+          {
+            "value": "310%",
+            "label": "Average organic growth"
+          },
+          {
+            "value": "Top 3",
+            "label": "Rankings for money keywords"
+          },
+          {
+            "value": "6 mo",
+            "label": "Typical payback period"
+          }
+        ],
+        "faqs": [
+          {
+            "q": "How long does SEO take to show results?",
+            "a": "Early movement typically shows in 6–8 weeks; meaningful traffic and lead growth compounds from month 3–6 depending on competition."
+          },
+          {
+            "q": "Do you guarantee #1 rankings?",
+            "a": "No honest agency can. We guarantee process, transparency and a track record — 80% of our clients reach page one for priority keywords within 6 months."
+          },
+          {
+            "q": "Is SEO worth it if I'm already running ads?",
+            "a": "Absolutely — SEO lowers your blended acquisition cost over time and captures demand ads miss. The two work best together."
+          }
+        ],
+        "caseStudy": "edtech-platform"
+      },
+      {
+        "slug": "performance-marketing",
+        "name": "Performance Marketing",
+        "icon": "performance",
+        "short": "ROI-focused ad campaigns across Google, Meta, YouTube & more.",
+        "tagline": "Paid campaigns accountable to one number: your return",
+        "description": "Media buying across Google, Meta, YouTube and programmatic — run by specialists obsessed with ROAS, backed by conversion tracking you can trust.",
+        "features": [
+          {
+            "title": "Google Ads",
+            "text": "Search, Shopping, Display and Performance Max managed daily."
+          },
+          {
+            "title": "Meta Ads",
+            "text": "Full-funnel Facebook & Instagram campaigns that scale."
+          },
+          {
+            "title": "YouTube Ads",
+            "text": "Video campaigns for awareness that converts later."
+          },
+          {
+            "title": "Conversion Tracking",
+            "text": "Server-side tracking and attribution done properly."
+          },
+          {
+            "title": "Creative Testing",
+            "text": "Systematic ad creative iteration to beat fatigue."
+          },
+          {
+            "title": "CRO",
+            "text": "Landing page testing to squeeze more from every click."
+          }
+        ],
+        "process": [
+          {
+            "step": "01",
+            "title": "Account Audit",
+            "text": "We find wasted spend and quick wins in week one."
+          },
+          {
+            "step": "02",
+            "title": "Restructure",
+            "text": "Campaigns rebuilt around clean data and clear goals."
+          },
+          {
+            "step": "03",
+            "title": "Test",
+            "text": "Creative, audience and bid experiments run weekly."
+          },
+          {
+            "step": "04",
+            "title": "Scale",
+            "text": "Winners get budget; losers get killed — fast."
+          }
+        ],
+        "deliverables": [
+          "Ad account audit & restructure",
+          "Campaign setup & daily management",
+          "Ad creative design & copy",
+          "Conversion tracking implementation",
+          "Weekly experiment reports",
+          "Live ROAS dashboard"
+        ],
+        "stats": [
+          {
+            "value": "5.6X",
+            "label": "Average ROAS delivered"
+          },
+          {
+            "value": "₹40Cr+",
+            "label": "Ad spend managed"
+          },
+          {
+            "value": "48K+",
+            "label": "Leads generated"
+          }
+        ],
+        "faqs": [
+          {
+            "q": "What ad budget do I need to start?",
+            "a": "We recommend at least ₹1L/month in ad spend so campaigns gather enough data to optimize. Our management fee is separate and plan-based."
+          },
+          {
+            "q": "How do you report performance?",
+            "a": "A live dashboard shows spend, ROAS, CPA and revenue in real time, plus a weekly summary and monthly deep-dive call."
+          },
+          {
+            "q": "Can you fix an underperforming account?",
+            "a": "That's our specialty. Most accounts we take over see meaningful ROAS improvement within the first 60 days after restructuring."
+          }
+        ],
+        "caseStudy": "saas-company"
+      },
+      {
+        "slug": "affiliate-marketing",
+        "name": "Affiliate Marketing",
+        "icon": "network",
+        "short": "Build, manage & scale affiliate programs that drive consistent sales.",
+        "tagline": "A commission-only sales force working for your brand 24×7",
+        "description": "We design, launch and manage affiliate programs — recruiting the right partners, policing quality and scaling the channel into a predictable revenue engine.",
+        "features": [
+          {
+            "title": "Program Design",
+            "text": "Commission structures and terms that attract top affiliates."
+          },
+          {
+            "title": "Partner Recruitment",
+            "text": "Curated network of creators, publishers and media buyers."
+          },
+          {
+            "title": "Tracking & Attribution",
+            "text": "Reliable postback tracking with fraud protection."
+          },
+          {
+            "title": "Partner Enablement",
+            "text": "Creatives, feeds and offers your affiliates need to sell."
+          },
+          {
+            "title": "Compliance & Quality",
+            "text": "Brand-safety monitoring and traffic quality policing."
+          },
+          {
+            "title": "Payout Management",
+            "text": "Validation, invoicing and on-time partner payouts."
+          }
+        ],
+        "process": [
+          {
+            "step": "01",
+            "title": "Design",
+            "text": "Economics, tracking stack and program terms defined."
+          },
+          {
+            "step": "02",
+            "title": "Recruit",
+            "text": "Launch with hand-picked affiliates in your niche."
+          },
+          {
+            "step": "03",
+            "title": "Enable",
+            "text": "Partners get assets, offers and dedicated support."
+          },
+          {
+            "step": "04",
+            "title": "Scale",
+            "text": "Double down on top partners, prune low quality."
+          }
+        ],
+        "deliverables": [
+          "Affiliate program strategy & setup",
+          "Tracking platform implementation",
+          "Partner recruitment & onboarding",
+          "Monthly partner newsletters & promos",
+          "Fraud monitoring & quality reports",
+          "Payout processing & reconciliation"
+        ],
+        "stats": [
+          {
+            "value": "1,200+",
+            "label": "Active affiliate partners"
+          },
+          {
+            "value": "22%",
+            "label": "Avg. revenue from affiliates"
+          },
+          {
+            "value": "0%",
+            "label": "Tolerance for fraud traffic"
+          }
+        ],
+        "faqs": [
+          {
+            "q": "Which affiliate platforms do you work with?",
+            "a": "Impact, Partnerize, Trackier, HasOffers and custom in-house stacks — we recommend based on your volume and market."
+          },
+          {
+            "q": "How do you prevent affiliate fraud?",
+            "a": "Multi-layer monitoring: click/conversion anomaly detection, IP and device analysis, and manual audits before every payout cycle."
+          },
+          {
+            "q": "When does an affiliate program make sense?",
+            "a": "If you have proven conversion rates and healthy margins, affiliates can add 15–30% incremental revenue. We'll tell you honestly if you're not ready."
+          }
+        ],
+        "caseStudy": "e-commerce-brand"
+      },
+      {
+        "slug": "lead-generation",
+        "name": "Lead Generation",
+        "icon": "magnet",
+        "short": "High-quality leads that convert into paying customers consistently.",
+        "tagline": "A predictable pipeline of sales-ready leads, every single month",
+        "description": "Landing pages, lead magnets, paid campaigns and nurture flows engineered as one system — so your sales team talks to prospects who actually want to buy.",
+        "features": [
+          {
+            "title": "Lead Funnels",
+            "text": "High-converting landing pages and multi-step funnels."
+          },
+          {
+            "title": "Lead Magnets",
+            "text": "Audits, calculators and guides your audience wants."
+          },
+          {
+            "title": "Paid Lead Campaigns",
+            "text": "Google, Meta and LinkedIn lead-gen campaigns."
+          },
+          {
+            "title": "Lead Qualification",
+            "text": "Scoring and enrichment so sales gets the best first."
+          },
+          {
+            "title": "CRM Integration",
+            "text": "Leads flow into your CRM with full source data."
+          },
+          {
+            "title": "Nurture Sequences",
+            "text": "Email/WhatsApp flows that warm leads till they're ready."
+          }
+        ],
+        "process": [
+          {
+            "step": "01",
+            "title": "Define",
+            "text": "Ideal customer profile and lead criteria agreed."
+          },
+          {
+            "step": "02",
+            "title": "Build",
+            "text": "Funnels, magnets and tracking assembled."
+          },
+          {
+            "step": "03",
+            "title": "Drive",
+            "text": "Traffic switched on across the best channels."
+          },
+          {
+            "step": "04",
+            "title": "Qualify",
+            "text": "Scored, verified leads delivered to your CRM daily."
+          }
+        ],
+        "deliverables": [
+          "Lead funnel strategy & buildout",
+          "Landing page design & copy",
+          "Lead magnet creation",
+          "Campaign management",
+          "CRM & automation integration",
+          "Weekly lead quality reports"
+        ],
+        "stats": [
+          {
+            "value": "48K+",
+            "label": "Leads delivered"
+          },
+          {
+            "value": "38%",
+            "label": "Avg. lead-to-opportunity rate"
+          },
+          {
+            "value": "₹210",
+            "label": "Avg. cost per qualified lead"
+          }
+        ],
+        "faqs": [
+          {
+            "q": "How do you ensure lead quality, not just volume?",
+            "a": "Every lead is validated (phone/email), scored against your ICP, and junk is filtered before delivery. You only pay for campaigns, not bad data."
+          },
+          {
+            "q": "Which industries do you generate leads for?",
+            "a": "EdTech, real estate, BFSI, healthcare, SaaS and D2C are our strongest verticals, with playbooks proven across 100+ campaigns."
+          },
+          {
+            "q": "Can leads integrate with our CRM?",
+            "a": "Yes — HubSpot, Zoho, Salesforce, LeadSquared or even Google Sheets, with UTM-level source tracking on every record."
+          }
+        ],
+        "caseStudy": "edtech-platform"
+      },
+      {
+        "slug": "brand-promotion",
+        "name": "Brand Promotion",
+        "icon": "trend",
+        "short": "Build brand awareness and authority across multiple digital channels.",
+        "tagline": "Make your brand the one your market thinks of first",
+        "description": "Strategic brand campaigns, influencer partnerships and PR that build recall, trust and preference — measured with brand-lift studies, not guesswork.",
+        "features": [
+          {
+            "title": "Brand Strategy",
+            "text": "Positioning, messaging and identity that stand out."
+          },
+          {
+            "title": "Influencer Marketing",
+            "text": "Creator partnerships with real, relevant audiences."
+          },
+          {
+            "title": "Digital PR",
+            "text": "Media coverage and features that build authority."
+          },
+          {
+            "title": "Video Campaigns",
+            "text": "YouTube and OTT campaigns for mass awareness."
+          },
+          {
+            "title": "Community Building",
+            "text": "Owned audiences on social that compound over time."
+          },
+          {
+            "title": "Brand-Lift Measurement",
+            "text": "Recall and consideration tracked scientifically."
+          }
+        ],
+        "process": [
+          {
+            "step": "01",
+            "title": "Position",
+            "text": "Sharp positioning and messaging framework defined."
+          },
+          {
+            "step": "02",
+            "title": "Create",
+            "text": "Campaign platform and hero content produced."
+          },
+          {
+            "step": "03",
+            "title": "Amplify",
+            "text": "Influencers, PR and paid media push in sync."
+          },
+          {
+            "step": "04",
+            "title": "Measure",
+            "text": "Brand-lift and share-of-voice tracked quarterly."
+          }
+        ],
+        "deliverables": [
+          "Brand positioning workshop",
+          "Campaign concept & creative production",
+          "Influencer sourcing & management",
+          "Digital PR outreach",
+          "Always-on social presence",
+          "Quarterly brand health reports"
+        ],
+        "stats": [
+          {
+            "value": "150M+",
+            "label": "Campaign impressions"
+          },
+          {
+            "value": "4.2X",
+            "label": "Avg. branded search lift"
+          },
+          {
+            "value": "500+",
+            "label": "Creator partnerships"
+          }
+        ],
+        "faqs": [
+          {
+            "q": "How do you measure brand campaigns?",
+            "a": "Branded search volume, direct traffic, share of voice, and periodic brand-lift surveys — awareness spend gets the same accountability as performance spend."
+          },
+          {
+            "q": "Do you handle influencer contracts and payments?",
+            "a": "End to end: sourcing, negotiation, contracting, content approvals, FTC/ASCI compliance and payouts."
+          },
+          {
+            "q": "Is brand promotion only for big budgets?",
+            "a": "No — focused micro-influencer and digital PR programs start small and scale as ROI proves out."
+          }
+        ],
+        "caseStudy": "saas-company"
+      }
+    ]
+  },
+  "case-studies": {
+    "active": true,
+    "eyebrow": "Success Stories",
+    "heroTitle": "Growth you can measure, stories you can verify",
+    "heroSubtitle": "No vanity metrics. No cherry-picked screenshots. A transparent look at the challenges, strategies and outcomes behind our client partnerships.",
+    "impact": [
+      {
+        "value": "500+",
+        "label": "Brands Grown"
+      },
+      {
+        "value": "₹12.8 Cr+",
+        "label": "Revenue Generated"
+      },
+      {
+        "value": "48K+",
+        "label": "Leads Delivered"
+      },
+      {
+        "value": "98%",
+        "label": "Client Retention"
+      }
+    ],
+    "items": [
+      {
+        "slug": "e-commerce-brand",
+        "tag": "E-commerce Brand",
+        "title": "Increased Revenue by 320% in 6 Months",
+        "image": "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1200&q=80&auto=format&fit=crop",
+        "imageAlt": "E-commerce analytics dashboard showing revenue growth",
+        "industry": "D2C Fashion & Lifestyle",
+        "services": [
+          "Performance Marketing",
+          "SEO Optimization",
+          "Affiliate Marketing"
+        ],
+        "challenge": "A fast-growing D2C fashion brand was stuck at a revenue plateau. Ad costs were climbing 20% quarter over quarter, ROAS had slipped below 2X, and 85% of revenue depended on paid channels alone.",
+        "solution": "We rebuilt their ad account around a full-funnel structure, launched an affiliate program with 200+ fashion creators, and invested in SEO for high-intent category pages — diversifying revenue while systematically testing creatives every week.",
+        "results": [
+          {
+            "value": "320%",
+            "label": "Revenue Growth"
+          },
+          {
+            "value": "2.4X",
+            "label": "More Conversions"
+          },
+          {
+            "value": "60%",
+            "label": "Lower CPA"
+          },
+          {
+            "value": "35%",
+            "label": "Revenue now organic/affiliate"
+          }
+        ],
+        "quote": {
+          "text": "GrowVibe didn't just run our ads — they rebuilt how our growth engine works. Six months in, we're breaking revenue records with healthier margins.",
+          "name": "Priya Malhotra",
+          "role": "Co-founder, D2C Fashion Brand"
+        }
+      },
+      {
+        "slug": "edtech-platform",
+        "tag": "EdTech Platform",
+        "title": "Generated 48K+ Leads with 5.6X ROAS",
+        "image": "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200&q=80&auto=format&fit=crop",
+        "imageAlt": "Campaign performance charts on a laptop screen",
+        "industry": "EdTech — Test Preparation",
+        "services": [
+          "Lead Generation",
+          "Performance Marketing",
+          "Digital Marketing"
+        ],
+        "challenge": "An EdTech platform needed qualified student leads at scale for its test-prep courses, but previous agencies delivered high volumes of junk leads — sales connect rates were under 30% and counselors were drowning in bad data.",
+        "solution": "We rebuilt the funnel around a free scholarship test as the lead magnet, added phone-OTP validation and lead scoring before CRM handoff, and ran tightly themed Google and Meta campaigns per exam category with dedicated landing pages.",
+        "results": [
+          {
+            "value": "48K+",
+            "label": "Leads Generated"
+          },
+          {
+            "value": "5.6X",
+            "label": "ROAS Achieved"
+          },
+          {
+            "value": "70%",
+            "label": "Cost Reduction"
+          },
+          {
+            "value": "68%",
+            "label": "Sales connect rate"
+          }
+        ],
+        "quote": {
+          "text": "Lead quality changed our business. Our counselors now spend time with students who actually want to enroll — enrollment doubled with the same team.",
+          "name": "Anjali Verma",
+          "role": "Marketing Head, EduLearn"
+        }
+      },
+      {
+        "slug": "saas-company",
+        "tag": "SaaS Company",
+        "title": "Boosted Signups by 180% Through PPC Campaigns",
+        "image": "https://images.unsplash.com/photo-1551434678-e076c223a692?w=1200&q=80&auto=format&fit=crop",
+        "imageAlt": "SaaS team optimizing PPC campaigns on their screens",
+        "industry": "B2B SaaS — HR Technology",
+        "services": [
+          "Performance Marketing",
+          "Brand Promotion",
+          "SEO Optimization"
+        ],
+        "challenge": "A B2B SaaS startup had product-market fit but anonymous demand — high trial CAC on generic keywords, weak branded search volume, and long sales cycles stalling growth targets before a funding round.",
+        "solution": "We shifted spend to competitor and use-case keywords, launched LinkedIn thought-leadership and YouTube demo campaigns to build category awareness, and optimized the trial signup flow — cutting friction from 7 form fields to 3.",
+        "results": [
+          {
+            "value": "180%",
+            "label": "Signups Increase"
+          },
+          {
+            "value": "3.2X",
+            "label": "Conversion Rate"
+          },
+          {
+            "value": "50%",
+            "label": "Lower CPC"
+          },
+          {
+            "value": "4.2X",
+            "label": "Branded search lift"
+          }
+        ],
+        "quote": {
+          "text": "The GrowVibe team thinks like operators, not vendors. Pipeline from digital tripled in two quarters — it was a key part of our Series A story.",
+          "name": "Vikram Patel",
+          "role": "Founder, FitLife SaaS"
+        }
+      }
+    ]
+  },
+  "blog": {
+    "active": true,
+    "eyebrow": "Insights & Resources",
+    "heroTitle": "Growth marketing, minus the guesswork",
+    "heroSubtitle": "Playbooks, breakdowns and lessons from campaigns we run every day — written by the specialists who run them.",
+    "posts": [
+      {
+        "slug": "seo-strategies-2026",
+        "category": "SEO",
+        "date": "Jun 28, 2026",
+        "readTime": "6 min read",
+        "author": "Rohit Sharma",
+        "authorRole": "Head of SEO, GrowVibe",
+        "title": "10 SEO Strategies That Actually Move Rankings in 2026",
+        "excerpt": "Search keeps evolving. Here are the on-page, technical and content tactics driving real organic growth for our clients right now.",
+        "image": "https://images.unsplash.com/photo-1499750310107-5fef28a66643?w=1400&q=80&auto=format&fit=crop",
+        "imageAlt": "Laptop and notebook on a desk during content planning",
+        "body": [
+          {
+            "heading": "Search changed — your playbook should too",
+            "text": "AI overviews, zero-click results and endless algorithm updates have rewritten the rules of organic growth. The brands still winning in 2026 aren't chasing hacks — they're building topical authority systematically and treating technical health as non-negotiable. Across 60+ client sites, these are the strategies producing measurable ranking gains right now."
+          },
+          {
+            "heading": "1–3: Get the foundations ruthless",
+            "text": "Core Web Vitals are table stakes: sites passing all three metrics outrank slow competitors in 78% of the head-to-head comparisons we track. Next, fix crawl waste — most sites burn crawl budget on parameter URLs and thin tags. Finally, structured data everywhere it's honest: product, FAQ, review and organization schema still win disproportionate SERP real estate."
+          },
+          {
+            "heading": "4–7: Build topical authority, not orphan posts",
+            "text": "One great article changes nothing. Clusters do. Map every money keyword to a pillar page, surround it with 8–12 supporting pieces answering real questions, and interlink them deliberately. Refresh decaying content quarterly — updating a ranking article is 5x cheaper than earning a new ranking from scratch."
+          },
+          {
+            "heading": "8–10: Earn authority you can defend",
+            "text": "Digital PR beats guest-post link farms — one data-driven story picked up by ten publications outperforms a hundred directory links. Invest in author entities: bylines, profiles and expertise signals matter in a post-E-E-A-T world. And measure what matters: rankings are a means; pipeline is the KPI we report."
+          }
+        ],
+        "related": [
+          "meta-ads-scaling",
+          "landing-page-formula"
+        ]
+      },
+      {
+        "slug": "meta-ads-scaling",
+        "category": "Performance Marketing",
+        "date": "Jun 14, 2026",
+        "readTime": "8 min read",
+        "author": "Neha Kapoor",
+        "authorRole": "Performance Lead, GrowVibe",
+        "title": "How to Scale Meta Ads Without Killing Your ROAS",
+        "excerpt": "Scaling ad spend usually tanks efficiency. This framework helped an e-commerce brand 4x budget while holding a 5+ ROAS.",
+        "image": "https://images.unsplash.com/photo-1533750349088-cd871a92f312?w=1400&q=80&auto=format&fit=crop",
+        "imageAlt": "Marketer analysing campaign performance charts",
+        "body": [
+          {
+            "heading": "Why scaling breaks most ad accounts",
+            "text": "Double the budget on a winning campaign and watch ROAS crater — every media buyer has lived it. The cause is usually structural: audiences too narrow, creative fatiguing under higher frequency, and the algorithm re-entering learning phase every time you touch budgets. Scaling is a system problem, not a bidding problem."
+          },
+          {
+            "heading": "The 20% rule and horizontal scaling",
+            "text": "Vertical scaling works in 20% increments every 3–4 days — big jumps reset learning. But the real growth lever is horizontal: duplicate winning ad sets into fresh audiences, new geos and new placements. We structure accounts as testing, scaling and retention layers so budget flows toward proven winners without disturbing them."
+          },
+          {
+            "heading": "Creative volume is the new targeting",
+            "text": "With targeting increasingly automated, creative is the biggest lever left. Winning accounts ship 8–15 new creatives weekly: hooks remixed, formats rotated (UGC, statics, motion), angles tested against different customer objections. Fatigue is measured, not felt — when frequency passes 2.5 and CTR drops 20%, assets rotate automatically."
+          },
+          {
+            "heading": "The result: 4x spend, ROAS intact",
+            "text": "Applying this framework, a D2C client scaled from ₹8L to ₹34L monthly spend over one quarter while ROAS held at 5.2X. The full playbook — account structure, creative cadence and scaling checklist — is what our performance team runs for every account."
+          }
+        ],
+        "related": [
+          "seo-strategies-2026",
+          "landing-page-formula"
+        ]
+      },
+      {
+        "slug": "landing-page-formula",
+        "category": "Lead Generation",
+        "date": "May 30, 2026",
+        "readTime": "5 min read",
+        "author": "Arjun Mehta",
+        "authorRole": "CRO Specialist, GrowVibe",
+        "title": "The Landing Page Formula Behind 48K+ Qualified Leads",
+        "excerpt": "Great traffic dies on weak pages. The exact structure, copy blocks and trust signals we use to double conversion rates.",
+        "image": "https://images.unsplash.com/photo-1553877522-43269d4ea984?w=1400&q=80&auto=format&fit=crop",
+        "imageAlt": "Team reviewing a landing page wireframe on a screen",
+        "body": [
+          {
+            "heading": "Your ads aren't the problem",
+            "text": "We audit dozens of funnels every month, and the pattern repeats: healthy click-through rates dying on pages that convert at 2% when they should do 8–12%. Before touching campaigns, fix the destination. This is the page structure behind 48,000+ validated leads across EdTech, real estate and BFSI clients."
+          },
+          {
+            "heading": "The five blocks that do the work",
+            "text": "Block one: a headline that names the outcome and the audience — not your brand slogan. Block two: proof immediately (numbers, logos, ratings) before any feature talk. Block three: a three-step 'how it works' that kills confusion. Block four: objection-handling FAQs pulled from real sales calls. Block five: a form that asks only what sales genuinely needs — every extra field costs 8–12% conversion."
+          },
+          {
+            "heading": "Trust is a conversion feature",
+            "text": "The biggest lifts rarely come from button colors. They come from trust: real testimonials with faces and outcomes, recognizable client logos, transparent pricing signals and a privacy line beside the form. On mobile — where 80% of your traffic lives — sticky CTAs and sub-3-second load times are worth more than any redesign."
+          },
+          {
+            "heading": "Test in weeks, not quarters",
+            "text": "One structured A/B test per week, hypothesis-driven, measured to statistical significance. Small compounding wins — headline, form length, social proof placement — doubled conversion rates for three different clients last quarter. Boring process, spectacular results."
+          }
+        ],
+        "related": [
+          "seo-strategies-2026",
+          "meta-ads-scaling"
+        ]
+      },
+      {
+        "slug": "zero-click-search",
+        "category": "SEO",
+        "date": "May 18, 2026",
+        "readTime": "7 min read",
+        "author": "Rohit Sharma",
+        "authorRole": "Head of SEO, GrowVibe",
+        "title": "Zero-Click Search: Winning Traffic When Google Answers First",
+        "excerpt": "AI overviews now answer half of all queries on the results page. Here's how smart brands still capture the click that matters.",
+        "image": "https://images.unsplash.com/photo-1432888622747-4eb9a8efeb07?w=1400&q=80&auto=format&fit=crop",
+        "imageAlt": "Research and content notes spread on a desk",
+        "body": [
+          {
+            "heading": "The SERP ate your traffic — now what?",
+            "text": "Between AI overviews, featured snippets and people-also-ask boxes, more than half of searches now end without a click. Panicking brands are cutting SEO budgets exactly when the smartest ones are doubling down — because the clicks that remain are higher-intent than ever."
+          },
+          {
+            "heading": "Own the answer, then own the click",
+            "text": "The playbook starts with being the cited source: structured data, quotable definitions and original statistics get you into AI overviews. From there, brand recall does the work — users who see your name in the answer search for you directly within days. We track this 'second-search effect' across every client account."
+          },
+          {
+            "heading": "Build for queries AI can't answer",
+            "text": "Comparison pages, calculators, live pricing, local inventory and genuine opinion pieces still force the click. Shift content investment toward these formats and your organic revenue keeps compounding while competitors chase disappearing informational traffic."
+          },
+          {
+            "heading": "Measure revenue, not rankings",
+            "text": "In a zero-click world, average position is a vanity metric. We report branded search lift, organic-assisted pipeline and share of AI citations — the numbers that still connect search to money."
+          }
+        ],
+        "related": [
+          "seo-strategies-2026",
+          "landing-page-formula"
+        ]
+      },
+      {
+        "slug": "youtube-ads-2026",
+        "category": "Performance Marketing",
+        "date": "May 5, 2026",
+        "readTime": "6 min read",
+        "author": "Neha Kapoor",
+        "authorRole": "Performance Lead, GrowVibe",
+        "title": "YouTube Ads: The Underpriced Attention Channel of 2026",
+        "excerpt": "CPMs on Meta keep climbing while YouTube watch time explodes. The framework we use to turn video views into tracked revenue.",
+        "image": "https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?w=1400&q=80&auto=format&fit=crop",
+        "imageAlt": "YouTube app opening on a smartphone",
+        "body": [
+          {
+            "heading": "Why YouTube, why now",
+            "text": "Connected-TV viewing and Shorts have pushed YouTube past every other platform for daily watch time in India — yet most performance budgets still ignore it. The result: attention that costs 40-60% less per thousand than equivalent Meta inventory."
+          },
+          {
+            "heading": "Creative is the targeting",
+            "text": "Winning YouTube accounts treat the first five seconds as the audience filter: call out the viewer, name the problem, show the product. We brief every ad around one hook, one proof moment and one clear next step — then cut six variations per concept."
+          },
+          {
+            "heading": "The full-funnel structure",
+            "text": "In-feed and Shorts build cheap awareness pools; in-stream retargets watchers with offer-led creative; Performance Max mops up intent. Server-side conversion tracking ties every view-through to revenue so scaling decisions run on data, not faith."
+          },
+          {
+            "heading": "What to expect",
+            "text": "Clients typically see blended CAC drop 15-25% within two quarters of adding YouTube — not because YouTube converts cheapest last-click, but because it makes every other channel cheaper. That's the point most dashboards miss."
+          }
+        ],
+        "related": [
+          "meta-ads-scaling",
+          "seo-strategies-2026"
+        ]
+      },
+      {
+        "slug": "whatsapp-nurture-flows",
+        "category": "Lead Generation",
+        "date": "Apr 22, 2026",
+        "readTime": "5 min read",
+        "author": "Arjun Mehta",
+        "authorRole": "CRO Specialist, GrowVibe",
+        "title": "WhatsApp Nurture Flows That Convert 3x Better Than Email",
+        "excerpt": "98% open rates change the nurture math completely. The exact 7-message sequence we deploy for lead-gen clients in India.",
+        "image": "https://images.unsplash.com/photo-1563986768609-322da13575f3?w=1400&q=80&auto=format&fit=crop",
+        "imageAlt": "Person using messaging apps on a smartphone",
+        "body": [
+          {
+            "heading": "The channel your leads actually open",
+            "text": "Email nurture in India averages 18% opens; WhatsApp sits above 95%. For lead-gen funnels where speed-to-conversation decides revenue, that gap is the whole game. But most brands either spam and get blocked, or never message at all."
+          },
+          {
+            "heading": "The 7-message framework",
+            "text": "Instant value delivery, a qualification question, social proof story, objection handler, counselor introduction, scarcity nudge, and a break-up message — spaced over nine days. Every message ends with a low-friction reply prompt, because replies train both the algorithm and the lead."
+          },
+          {
+            "heading": "Compliance keeps the channel alive",
+            "text": "Opt-in at the form, one-tap opt-out in every flow, and utility templates over marketing templates wherever possible. Accounts that respect the inbox keep 24-hour session rates high and per-message costs low."
+          },
+          {
+            "heading": "The results",
+            "text": "Across EdTech and BFSI clients, WhatsApp-nurtured leads convert 2.8-3.4x better than email-only cohorts, with sales teams reporting dramatically warmer first calls. Pair it with lead scoring and your counselors only ever talk to people who want to talk."
+          }
+        ],
+        "related": [
+          "landing-page-formula",
+          "meta-ads-scaling"
+        ]
+      }
+    ]
+  },
+  "pricing": {
+    "active": true,
+    "eyebrow": "Pricing Plans",
+    "heroTitle": "Simple plans. Serious growth.",
+    "heroSubtitle": "Transparent pricing that scales with your business — every plan includes dedicated specialists, real reporting and no hidden fees.",
+    "plans": [
+      {
+        "name": "Starter",
+        "tagline": "For small businesses getting started with digital growth.",
+        "price": "₹25,000",
+        "period": "/month",
+        "featured": false,
+        "cta": "Start Growing",
+        "features": [
+          "2 marketing channels",
+          "SEO audit & on-page optimization",
+          "Monthly performance report",
+          "Ad budget up to ₹1L/month",
+          "Email support"
+        ]
+      },
+      {
+        "name": "Growth",
+        "tagline": "For brands ready to scale leads and revenue aggressively.",
+        "price": "₹50,000",
+        "period": "/month",
+        "featured": true,
+        "cta": "Scale With Us",
+        "features": [
+          "4 marketing channels",
+          "Full SEO + content strategy",
+          "Weekly reporting dashboard",
+          "Ad budget up to ₹5L/month",
+          "Dedicated account manager",
+          "Landing page optimization"
+        ]
+      },
+      {
+        "name": "Enterprise",
+        "tagline": "Custom strategy for large brands with complex needs.",
+        "price": "Custom",
+        "period": "",
+        "featured": false,
+        "cta": "Talk to Sales",
+        "features": [
+          "Unlimited channels & campaigns",
+          "Dedicated growth team",
+          "Real-time analytics & attribution",
+          "Unlimited ad budget management",
+          "Priority 24×7 support"
+        ]
+      }
+    ]
+  },
+  "about": {
+    "active": true,
+    "eyebrow": "Who We Are",
+    "heroTitle": "The growth partner behind 500+ winning brands",
+    "heroSubtitle": "For over a decade, GrowVibe has helped startups and enterprises turn digital marketing from a cost center into their most predictable growth engine.",
+    "storyHeading": "Started with one belief: marketing should pay for itself",
+    "storyPara1": "GrowVibe began in 2016 as a three-person performance team frustrated with agencies that celebrated impressions while clients worried about revenue. We decided every campaign we ran would be accountable to one question — did it grow the business?",
+    "storyPara2": "Today we're a 60+ member team of media buyers, SEO specialists, creatives and analysts managing ₹40Cr+ in annual ad spend — still answering to that same question, for over 500 brands across India.",
+    "storyImage": "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=1000&q=80&auto=format&fit=crop",
+    "values": [
+      {
+        "title": "Results over reports",
+        "text": "Every strategy is judged by the revenue it creates, not the slides it fills."
+      },
+      {
+        "title": "Radical transparency",
+        "text": "Live dashboards, honest calls and no hiding behind jargon — ever."
+      },
+      {
+        "title": "Speed of execution",
+        "text": "Ideas ship in days. Momentum compounds faster than perfection."
+      },
+      {
+        "title": "Partners, not vendors",
+        "text": "We win when you win — most of our clients stay 2+ years."
+      }
+    ]
+  },
+  "contact": {
+    "active": true,
+    "eyebrow": "Contact Us",
+    "heroTitle": "Let's build your growth story",
+    "heroSubtitle": "Tell us about your business and goals — our experts will get back to you within 24 hours with a free, customized growth plan.",
+    "panelTitle": "Let's talk growth",
+    "panelText": "Prefer a direct line? Reach us any way you like — we respond fast."
+  }
+}
