@@ -107,9 +107,9 @@ export function useCkeditorAssetsReady() {
   return ready;
 }
 
-export default function CkeditorAssets() {
+export default function CkeditorAssets({ force = false }) {
   useEffect(() => {
-    if (!process.env.NEXT_PUBLIC_CKEDITOR_LICENSE_KEY) return undefined;
+    if (!force && !process.env.NEXT_PUBLIC_CKEDITOR_LICENSE_KEY) return undefined;
 
     let cancelled = false;
 

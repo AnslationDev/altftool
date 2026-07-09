@@ -260,6 +260,9 @@ const layoutLoaders = {
     ourteams: () =>
       import("@/projects/leadtree/modules/ourteams/layout.jsx"),
   },
+  carrerbook: {
+    blog: () => import("@/projects/carrerbook/modules/blog/layout.jsx"),
+  },
 };
 
 export function getAdminModulePageLoader(projectId, moduleKey, routeKey) {
