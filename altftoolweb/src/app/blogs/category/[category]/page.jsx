@@ -9,7 +9,7 @@ import {
   mergeBlogPosts,
   sortBlogsByDate,
 } from "../../data";
-import { getFirebaseBlogCatalog } from "../../data/firebaseBlogs";
+import { fetchAllFirebaseBlogs } from "../../data/firebaseBlogs";
 import {
   createBreadcrumbJsonLd,
   createCollectionPageJsonLd,
@@ -26,11 +26,13 @@ export function generateStaticParams() {
 }
 
 async function getMergedPosts() {
-  const firebaseCatalog = await getFirebaseBlogCatalog().catch(() => ({
-    posts: [],
-  }));
+  // Fetch the FULL published catalog (paginated), not just the most-recent
+  // ~100, so every post in this category server-renders as a crawlable link.
+  // Otherwise categories whose posts fall outside the recent slice rendered an
+  // empty archive and orphaned those posts from Google's crawl graph.
+  const firebasePosts = await fetchAllFirebaseBlogs().catch(() => []);
 
-  return mergeBlogPosts(getAllBlogs(), firebaseCatalog.posts);
+  return mergeBlogPosts(getAllBlogs(), firebasePosts);
 }
 
 async function getCategoryArchive(categorySlug) {

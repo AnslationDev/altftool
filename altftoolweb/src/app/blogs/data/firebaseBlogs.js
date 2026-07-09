@@ -354,3 +354,37 @@ export async function getFirebaseBlogCatalog() {
     offset: posts.length,
   });
 }
+
+/**
+ * Paginated full-catalog fetch for crawlable server-rendered archives (blog
+ * category/tag hubs, HTML index).
+ *
+ * `getFirebaseBlogCatalog()` only returns the most-recent BLOG_REMOTE_LIMIT
+ * (≤100) posts, so hub pages whose posts fall outside that recent slice
+ * server-rendered an empty "No articles found" state and offered Googlebot ZERO
+ * crawlable links to those posts — which is why hundreds of blog URLs sat in
+ * Search Console as "Discovered – currently not indexed" (in the sitemap, but
+ * never crawled because nothing linked to them). This loops pages the same way
+ * the sitemap does so a hub renders EVERY relevant post as a real <a href>.
+ * Optionally filtered by `category` (Firestore field match). Never throws.
+ */
+export async function fetchAllFirebaseBlogs({ maxPosts = 500, category } = {}) {
+  const pageSize = 100;
+  const all = [];
+  let offset = 0;
+
+  while (all.length < maxPosts) {
+    const rows = await fetchFirebaseBlogsPage({
+      pageSize: Math.min(pageSize, maxPosts - all.length),
+      offset,
+      category,
+    }).catch(() => []);
+
+    if (!rows.length) break;
+    all.push(...rows);
+    if (rows.length < pageSize) break;
+    offset += rows.length;
+  }
+
+  return all;
+}
