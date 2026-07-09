@@ -53,8 +53,8 @@ const Blog = () => {
           <button
             onClick={prev}
             disabled={index === 0}
-            className="w-10 h-10 flex items-center justify-center rounded-full border 
-                       hover:bg-black hover:text-white transition disabled:opacity-40"
+            className="w-10 h-10 flex items-center justify-center rounded-full border border-(--border) 
+                       text-(--foreground) hover:bg-(--primary) hover:text-(--primary-foreground) transition disabled:opacity-40"
           >
             <ChevronLeft size={20} />
           </button>
@@ -62,8 +62,8 @@ const Blog = () => {
           <button
             onClick={next}
             disabled={index + visibleCards >= blogs.length}
-            className="w-10 h-10 flex items-center justify-center rounded-full border 
-                       hover:bg-black hover:text-white transition disabled:opacity-40"
+            className="w-10 h-10 flex items-center justify-center rounded-full border border-(--border) 
+                       text-(--foreground) hover:bg-(--primary) hover:text-(--primary-foreground) transition disabled:opacity-40"
           >
             <ChevronRight size={20} />
           </button>
@@ -84,7 +84,7 @@ const Blog = () => {
               className="px-3 cursor-pointer "
               style={{ minWidth: `${100 / visibleCards}%` }}
             >
-              <div className="bg-white rounded-2xl border border-gray-200   transition overflow-hidden h-full">
+              <div className="deals-card-surface rounded-2xl transition overflow-hidden h-full">
 
                 {/* Image */}
                 <div className="relative h-56">
@@ -106,7 +106,7 @@ const Blog = () => {
                     {blog.heading}
                   </h2>
 
-                  <div className="flex items-center gap-3 text-sm text-gray-500 mb-3">
+                  <div className="flex items-center gap-3 text-sm deals-muted-text mb-3">
                     <div className="w-6 h-6 relative rounded-full overflow-hidden">
                       <Image
                         src={blog.authorImg || "/images/avatar.png"}
@@ -121,13 +121,13 @@ const Blog = () => {
                     <span>{blog.date}</span>
                   </div>
 
-                  <p className="text-gray-600 text-sm line-clamp-3 mb-4">
+                  <p className="deals-muted-text text-sm line-clamp-3 mb-4">
                     {blog.description}
                   </p>
 
                   <Link
                     href={`/exclusivedeals/e-blogs/${blog.category}/${blog.slug}`}
-                    className="font-semibold hover:underline"
+                    className="font-semibold deals-link hover:underline"
                   >
                     Read Now
                   </Link>

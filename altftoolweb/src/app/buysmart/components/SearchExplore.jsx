@@ -9,9 +9,9 @@ export default function SearchExplore({
 }) {
   return (
     <section className="space-y-5 animate-slide-up">
-      <div className="buy-smart-deals-banner relative overflow-hidden rounded-[var(--anslation-ds-radius-lg)] px-5 py-3.5 shadow-[var(--anslation-ds-shadow-sm)] sm:px-7 sm:py-4 lg:px-10">
+      <div className="buy-smart-deals-banner relative overflow-hidden px-5 py-3.5 shadow-[var(--anslation-ds-shadow-sm)] sm:px-7 sm:py-4 lg:px-10">
         <div className="pointer-events-none absolute inset-0" />
-        <div className="relative z-10 grid items-center gap-5 md:grid-cols-[240px_minmax(0,1fr)_auto] lg:grid-cols-[280px_minmax(0,1fr)_auto]">
+        <div className="buy-smart-deals-inner relative z-10 grid items-center gap-5 md:grid-cols-[240px_minmax(0,1fr)_auto] lg:grid-cols-[280px_minmax(0,1fr)_auto]">
           <ManagedImage
             src="/buy-smart/deals-gift.png"
             alt="Gift box with deal confetti"

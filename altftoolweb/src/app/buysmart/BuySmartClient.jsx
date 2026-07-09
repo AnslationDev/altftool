@@ -16,7 +16,6 @@ import "./components/buysmart-theme.css";
 import useIdleRedirect from "@/hooks/useIdleRedirect";
 import RouteLazySection from "@/components/ui/RouteLazySection";
 import {
-  AlphabetFilterSkeleton,
   CategoriesSkeleton,
   DiscoverBrandsSkeleton,
   FeatureBrandSkeleton,
@@ -39,15 +38,11 @@ const DiscoverBrands = dynamic(() => import("./components/DiscoverBrands"), {
 const SearchExplore = dynamic(() => import("./components/SearchExplore"), {
   loading: () => <SearchExploreSkeleton />,
 });
-const AlphabetFilter = dynamic(() => import("./components/AlphabetFilter"), {
-  loading: () => <AlphabetFilterSkeleton />,
-});
 const Categories = dynamic(() => import("./components/Categories"), {
   loading: () => <CategoriesSkeleton />,
 });
 
 export default function Page() {
-  const [selectedLetter, setSelectedLetter] = useState("All");
   const [filteredCategory, setFilteredCategory] = useState(null);
   const [searchInput, SetSearchInput] = useState("");
 
@@ -63,10 +58,6 @@ export default function Page() {
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: "instant" });
   }, []);
-
-  const handleSelect = (char) => {
-    setSelectedLetter(char);
-  };
 
   return (
     <div
@@ -104,14 +95,9 @@ export default function Page() {
         rootMargin="900px 0px"
       >
         <section id="brand-directory" className="section">
-          <AlphabetFilter
-            onSelect={handleSelect}
-            selectedLetter={selectedLetter}
-          />
-
           <div ref={filterRef}>
             <Categories
-              selectedLetter={selectedLetter}
+              selectedLetter="All"
               filteredCategory={filteredCategory}
             />
           </div>

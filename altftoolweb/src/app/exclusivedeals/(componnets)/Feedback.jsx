@@ -113,7 +113,7 @@ useEffect(() => {
             >
               <div
                 className="rounded-2xl p-6 sm:p-7 lg:p-8
-                  border border-(--border) shadow-sm hover:shadow-lg transition h-full flex flex-col relative"
+                  deals-card-surface h-full flex flex-col relative"
               >
                 {/* Avatar - half outside card */}
                 <div className="absolute -top-7 left-6">
@@ -172,7 +172,7 @@ useEffect(() => {
         });
       }}
       className={`h-2 rounded-full cursor-pointer transition-all duration-300
-        ${index === i ? "bg-(--primary) w-8 opacity-100" : "bg-[#1e3a8a] w-2 opacity-40"}`}
+        ${index === i ? "bg-(--primary) w-8 opacity-100" : "bg-(--border) w-2 opacity-70"}`}
     />
   ))}
 </div>

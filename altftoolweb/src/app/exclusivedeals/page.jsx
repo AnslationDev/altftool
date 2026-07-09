@@ -1,4 +1,5 @@
 import DealsClient from "./DealsClient";
+import "./exclusivedeals.css";
 import dealData from "./(data)/db.json";
 import JsonLd from "@/platform/seo/JsonLd";
 import {

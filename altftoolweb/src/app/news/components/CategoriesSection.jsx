@@ -8,14 +8,14 @@ import {
 } from "lucide-react";
 
 const CATEGORIES = [
-  { key: "world", icon: Globe, label: "World", color: "bg-blue-500/10 text-blue-500" },
-  { key: "tech", icon: Cpu, label: "Technology", color: "bg-cyan-500/10 text-cyan-500" },
-  { key: "politics", icon: Building2, label: "Politics", color: "bg-orange-500/10 text-orange-500" },
-  { key: "business", icon: Briefcase, label: "Business", color: "bg-emerald-500/10 text-emerald-500" },
-  { key: "science", icon: Microscope, label: "Science", color: "bg-purple-500/10 text-purple-500" },
-  { key: "sports", icon: Trophy, label: "Sports", color: "bg-amber-500/10 text-amber-500" },
-  { key: "health", icon: Heart, label: "Health", color: "bg-rose-500/10 text-rose-500" },
-  { key: "entertainment", icon: Sparkles, label: "Entertainment", color: "bg-pink-500/10 text-pink-500" },
+  { key: "world", icon: Globe, label: "World" },
+  { key: "tech", icon: Cpu, label: "Technology" },
+  { key: "politics", icon: Building2, label: "Politics" },
+  { key: "business", icon: Briefcase, label: "Business" },
+  { key: "science", icon: Microscope, label: "Science" },
+  { key: "sports", icon: Trophy, label: "Sports" },
+  { key: "health", icon: Heart, label: "Health" },
+  { key: "entertainment", icon: Sparkles, label: "Entertainment" },
 ];
 
 function slugify(value = "") {
@@ -63,15 +63,15 @@ export default function CategoriesSection({ articles = [] }) {
         ref={scrollRef}
         className="flex gap-4 overflow-x-auto px-4 py-2 no-scrollbar"
       >
-        {CATEGORIES.map(({ key, icon: Icon, label, color }) => {
+        {CATEGORIES.map(({ key, icon: Icon, label }) => {
           const count = getCount(key);
           return (
             <Link
               key={key}
               href={`/news/topics/${slugify(label)}`}
-              className="group flex shrink-0 items-center gap-4 rounded-xl border border-[var(--border)] bg-[var(--card)] px-6 py-5 text-sm font-medium text-[var(--muted-foreground)] transition-all hover:scale-105 hover:shadow-md hover:border-[var(--primary)]"
+              className="group flex shrink-0 items-center gap-4 rounded-xl news-card-surface px-6 py-5 text-sm font-medium text-[var(--muted-foreground)] transition-all hover:scale-105 hover:border-[var(--primary)]"
             >
-              <Icon size={28} className={color} />
+              <Icon size={28} className="rounded-lg bg-[var(--primary)]/10 p-1 text-[var(--primary)]" />
               <div className="text-left">
                 <p className="text-sm font-semibold text-[var(--foreground)]">{label}</p>
                 <p className="text-xs text-[var(--muted-foreground)]">{count} stories</p>

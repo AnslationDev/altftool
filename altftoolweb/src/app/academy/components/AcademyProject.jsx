@@ -89,7 +89,7 @@ export default function AcademyProject() {
   const featured = academies.slice(0, 6);
 
   return (
-    <main className="min-h-screen bg-[var(--background)]">
+    <main className="academy-page min-h-screen">
       <div className="">
         <Hero loading={loading} />
         {loadState === "fallback" ? (

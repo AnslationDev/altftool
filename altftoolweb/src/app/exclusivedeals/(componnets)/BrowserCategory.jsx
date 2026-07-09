@@ -52,7 +52,7 @@ function CatCard({ item }) {
   return (
     <div className='flex justify-center items-center cursor-pointer flex-col min-h-[140px] py-4'>
       
-      <div className='rounded-full flex justify-center items-center overflow-hidden bg-[#f4f2f2] w-20 h-20 sm:w-24 sm:h-24 md:w-26 md:h-26 lg:w-30 lg:h-30 xl:w-36 xl:h-36 2xl:w-40 2xl:h-40'>
+      <div className='deals-image-shell rounded-full flex justify-center items-center overflow-hidden w-20 h-20 sm:w-24 sm:h-24 md:w-26 md:h-26 lg:w-30 lg:h-30 xl:w-36 xl:h-36 2xl:w-40 2xl:h-40'>
         {item.id == 1 ? (
           <Image src={item.image} width={120} height={120} alt={item.name} className='object-cover animate-pulse transition-transform duration-300 hover:scale-110 xl:w-[130px] xl:h-[130px]' />
         ) : (

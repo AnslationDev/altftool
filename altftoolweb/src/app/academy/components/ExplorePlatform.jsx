@@ -57,8 +57,7 @@ export default function ExplorePlatform({
                          text-(--foreground)
                          transition-all duration-300 cursor-pointer 
                          hover:-translate-y-1 hover:border-(--primary)
-                         shadow-[0px_12px_24px_0px_#0F172A05]
-                         hover:shadow-[0px_12px_24px_0px_#0F172A05,0px_4px_20px_0px_#2563EB33]
+                         academy-card-surface
                                 ${activeCategory === item.title
                                     ? "bg-(--primary) text-(--primary-foreground) border-(--primary)"
                                     : "border-(--border)"
@@ -72,8 +71,8 @@ export default function ExplorePlatform({
 
                                   transition-all duration-300 
                                   ${activeCategory === item.title
-                                        ? "bg-[#F8FAFC] text-(--primary)"
-                                        : "bg-[#EEF4FF] text-(--primary) group-hover dark:bg-[#F8FAFC]"
+                                        ? "bg-(--primary-foreground) text-(--primary)"
+                                        : "bg-(--primary)/10 text-(--primary)"
                                     }`}
                             >
                                 {item.icon}
@@ -85,8 +84,8 @@ export default function ExplorePlatform({
                                 </h3>
                                 <p
                                     className={`text-sm ${activeCategory === item.title
-                                        ? "text-white/80"
-                                        : "text-gray-500"
+                                        ? "text-(--primary-foreground)/80"
+                                        : "text-(--muted-foreground)"
                                         }`}
                                 >
                                     {item.desc}

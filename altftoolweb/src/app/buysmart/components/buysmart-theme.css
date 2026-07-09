@@ -55,6 +55,29 @@
   content: "";
 }
 
+.buy-smart-page .buy-smart-section-header-plain::after {
+  display: none;
+}
+
+.buy-smart-page .buy-smart-trust-badge {
+  border-color: color-mix(in srgb, var(--primary) 16%, var(--border));
+  background: color-mix(in srgb, var(--primary) 7%, var(--card));
+  color: var(--muted-foreground);
+  box-shadow: var(--anslation-ds-shadow-sm);
+  transition: border-color 150ms ease, box-shadow 150ms ease, transform 150ms ease, background 150ms ease;
+}
+
+.buy-smart-page .buy-smart-trust-badge svg {
+  color: var(--primary);
+}
+
+.buy-smart-page .buy-smart-trust-badge:hover {
+  border-color: color-mix(in srgb, var(--primary) 36%, var(--border));
+  background: color-mix(in srgb, var(--primary) 10%, var(--card));
+  box-shadow: var(--anslation-ds-shadow-md);
+  transform: translateY(-1px);
+}
+
 .buy-smart-page .section-title span,
 .buy-smart-page .buy-smart-gradient-text {
   background: linear-gradient(115deg, var(--primary), var(--secondary));
@@ -110,6 +133,49 @@
   box-shadow: var(--anslation-ds-shadow-md);
 }
 
+.buy-smart-page .buy-smart-filter-bar {
+  border-color: color-mix(in srgb, var(--primary) 14%, var(--border));
+  background: color-mix(in srgb, var(--card) 94%, transparent);
+}
+
+.buy-smart-page .buy-smart-filter-select {
+  min-height: 2.75rem;
+  border: 1px solid color-mix(in srgb, var(--primary) 14%, var(--border));
+  background:
+    radial-gradient(circle at 14% 18%, color-mix(in srgb, var(--primary) 7%, transparent), transparent 6rem),
+    var(--card);
+  box-shadow: var(--anslation-ds-shadow-sm);
+  transition: border-color 150ms ease, box-shadow 150ms ease, background 150ms ease;
+}
+
+.buy-smart-page .buy-smart-filter-select:hover,
+.buy-smart-page .buy-smart-filter-select:focus {
+  border-color: color-mix(in srgb, var(--primary) 42%, var(--border));
+  box-shadow: var(--anslation-ds-shadow-md);
+}
+
+.buy-smart-page .buy-smart-store-card {
+  border-color: color-mix(in srgb, var(--primary) 13%, var(--border));
+  background:
+    radial-gradient(circle at 8% 0%, color-mix(in srgb, var(--primary) 5%, transparent), transparent 8rem),
+    var(--card);
+  box-shadow: var(--anslation-ds-shadow-sm);
+}
+
+.buy-smart-page .buy-smart-store-card:hover {
+  border-color: color-mix(in srgb, var(--primary) 38%, var(--border));
+  box-shadow: var(--anslation-ds-shadow-md);
+  transform: translateY(-2px);
+}
+
+.buy-smart-page .buy-smart-store-logo {
+  border-color: color-mix(in srgb, var(--primary) 12%, var(--border));
+  background:
+    radial-gradient(circle at 50% 12%, color-mix(in srgb, var(--secondary) 8%, transparent), transparent 7rem),
+    var(--card);
+  box-shadow: var(--anslation-ds-shadow-sm);
+}
+
 .buy-smart-page .buy-smart-icon-surface {
   border: 1px solid color-mix(in srgb, var(--primary) 20%, var(--border));
   background:
@@ -134,6 +200,16 @@
   border-color: color-mix(in srgb, var(--primary) 22%, var(--border));
   background:
     linear-gradient(135deg, color-mix(in srgb, var(--primary) 8%, var(--background)), color-mix(in srgb, var(--secondary) 8%, var(--background)));
+  transition: border-color 150ms ease, box-shadow 150ms ease, transform 150ms ease, background 150ms ease, color 150ms ease;
+}
+
+.buy-smart-page .buy-smart-cta-surface:hover {
+  border-color: color-mix(in srgb, var(--primary) 48%, var(--border));
+  background:
+    radial-gradient(circle at 12% 24%, color-mix(in srgb, var(--secondary) 16%, transparent), transparent 7rem),
+    linear-gradient(135deg, color-mix(in srgb, var(--primary) 13%, var(--card)), color-mix(in srgb, var(--secondary) 12%, var(--card)));
+  box-shadow: var(--anslation-ds-shadow-md);
+  transform: translateY(-1px);
 }
 
 .buy-smart-page .buy-smart-gradient-cta {
@@ -156,11 +232,19 @@
 }
 
 .buy-smart-deals-banner {
+  width: 100vw;
+  margin-inline: calc(50% - 50vw);
   border: 1px solid color-mix(in srgb, var(--primary) 16%, var(--border));
+  border-inline: 0;
   background:
     radial-gradient(circle at 14% 50%, color-mix(in srgb, var(--primary) 11%, transparent), transparent 18rem),
     radial-gradient(circle at 92% 20%, color-mix(in srgb, var(--secondary) 10%, transparent), transparent 16rem),
     linear-gradient(135deg, color-mix(in srgb, var(--primary) 8%, var(--card)), color-mix(in srgb, var(--secondary) 7%, var(--card)));
+}
+
+.buy-smart-deals-inner {
+  max-width: var(--anslation-ds-container);
+  margin-inline: auto;
 }
 
 .buy-smart-primary-pill {
@@ -173,6 +257,60 @@
   border-color: color-mix(in srgb, var(--secondary) 24%, var(--border));
   background: color-mix(in srgb, var(--secondary) 10%, var(--card));
   color: var(--primary);
+}
+
+.buy-smart-store-arrow {
+  border: 1px solid color-mix(in srgb, var(--primary) 14%, var(--border));
+  background:
+    radial-gradient(circle at 30% 18%, color-mix(in srgb, var(--secondary) 14%, transparent), transparent 70%),
+    color-mix(in srgb, var(--primary) 8%, var(--card));
+  color: var(--primary);
+  box-shadow: 0 12px 26px color-mix(in srgb, var(--primary) 12%, transparent);
+  transition: transform 150ms ease, background 150ms ease, color 150ms ease, box-shadow 150ms ease;
+}
+
+.buy-smart-page [data-testid="buysmart-category-card"]:hover .buy-smart-store-arrow {
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  color: var(--primary-foreground);
+  box-shadow: 0 16px 32px color-mix(in srgb, var(--primary) 22%, transparent);
+  transform: translateX(3px);
+}
+
+.buy-smart-page .buy-smart-page-nav,
+.buy-smart-page .buy-smart-page-number {
+  border: 1px solid color-mix(in srgb, var(--primary) 14%, var(--border));
+  background: var(--card);
+  color: var(--muted-foreground);
+  box-shadow: var(--anslation-ds-shadow-sm);
+}
+
+.buy-smart-page .buy-smart-page-nav:hover,
+.buy-smart-page .buy-smart-page-number:hover {
+  border-color: color-mix(in srgb, var(--primary) 36%, var(--border));
+  color: var(--primary);
+  box-shadow: var(--anslation-ds-shadow-md);
+  transform: translateY(-1px);
+}
+
+.buy-smart-page .buy-smart-page-number.is-active {
+  border-color: color-mix(in srgb, var(--primary) 24%, transparent);
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  color: var(--primary-foreground);
+  box-shadow: 0 14px 32px color-mix(in srgb, var(--primary) 22%, transparent);
+}
+
+.buy-smart-page .buy-smart-savings-stat-badge {
+  border-color: color-mix(in srgb, var(--primary) 16%, var(--border));
+  background:
+    radial-gradient(circle at 14% 22%, color-mix(in srgb, var(--secondary) 10%, transparent), transparent 7rem),
+    color-mix(in srgb, var(--primary) 6%, var(--card));
+  box-shadow: var(--anslation-ds-shadow-sm);
+}
+
+.buy-smart-page .buy-smart-savings-stat-badge:hover {
+  border-color: color-mix(in srgb, var(--primary) 36%, var(--border));
+  box-shadow: var(--anslation-ds-shadow-md);
+  transform: translateY(-1px);
 }
 
 [data-theme="dark"] .buy-smart-page {
@@ -198,6 +336,12 @@
   color: color-mix(in srgb, var(--muted-foreground) 88%, var(--foreground));
 }
 
+[data-theme="dark"] .buy-smart-page .buy-smart-trust-badge {
+  border-color: color-mix(in srgb, var(--primary) 28%, var(--border));
+  background: color-mix(in srgb, var(--primary) 10%, var(--surface));
+  color: color-mix(in srgb, var(--foreground) 82%, var(--muted-foreground));
+}
+
 [data-theme="dark"] .buy-smart-page :is(.buy-smart-themed-card, .buy-smart-themed-panel, [data-testid="buysmart-category-card"]) {
   border-color: color-mix(in srgb, var(--primary) 24%, var(--border));
   background:
@@ -210,6 +354,33 @@
 [data-theme="dark"] .buy-smart-page :is([data-testid="buysmart-category-card"], .buy-smart-themed-card, .buy-smart-themed-panel):hover {
   border-color: color-mix(in srgb, var(--primary) 42%, var(--border));
   box-shadow: 0 22px 52px color-mix(in srgb, var(--background) 68%, transparent);
+}
+
+[data-theme="dark"] .buy-smart-page .buy-smart-filter-bar {
+  border-color: color-mix(in srgb, var(--primary) 22%, var(--border));
+  background: color-mix(in srgb, var(--card) 86%, transparent);
+}
+
+[data-theme="dark"] .buy-smart-page .buy-smart-filter-select {
+  border-color: color-mix(in srgb, var(--primary) 24%, var(--border));
+  background:
+    radial-gradient(circle at 14% 18%, color-mix(in srgb, var(--primary) 12%, transparent), transparent 6rem),
+    color-mix(in srgb, var(--card) 92%, transparent);
+}
+
+[data-theme="dark"] .buy-smart-page .buy-smart-store-card {
+  border-color: color-mix(in srgb, var(--primary) 22%, var(--border));
+  background:
+    radial-gradient(circle at 8% 0%, color-mix(in srgb, var(--primary) 10%, transparent), transparent 8rem),
+    color-mix(in srgb, var(--card) 94%, transparent);
+  box-shadow: 0 16px 36px color-mix(in srgb, var(--background) 58%, transparent);
+}
+
+[data-theme="dark"] .buy-smart-page .buy-smart-store-logo {
+  border-color: color-mix(in srgb, var(--primary) 24%, var(--border));
+  background:
+    radial-gradient(circle at 50% 12%, color-mix(in srgb, var(--secondary) 13%, transparent), transparent 7rem),
+    color-mix(in srgb, var(--surface) 92%, transparent);
 }
 
 [data-theme="dark"] .buy-smart-page .buy-smart-icon-surface {
@@ -241,12 +412,39 @@
     linear-gradient(135deg, color-mix(in srgb, var(--surface) 84%, var(--primary)), color-mix(in srgb, var(--surface) 88%, var(--secondary)));
 }
 
+[data-theme="dark"] .buy-smart-page .buy-smart-cta-surface:hover {
+  border-color: color-mix(in srgb, var(--primary) 44%, var(--border));
+  background:
+    radial-gradient(circle at 14% 14%, color-mix(in srgb, var(--secondary) 18%, transparent), transparent 12rem),
+    linear-gradient(135deg, color-mix(in srgb, var(--surface) 78%, var(--primary)), color-mix(in srgb, var(--surface) 82%, var(--secondary)));
+  box-shadow: 0 18px 44px color-mix(in srgb, var(--background) 64%, transparent);
+}
+
 [data-theme="dark"] .buy-smart-deals-banner {
   border-color: color-mix(in srgb, var(--primary) 24%, var(--border));
   background:
     radial-gradient(circle at 14% 50%, color-mix(in srgb, var(--primary) 16%, transparent), transparent 18rem),
     radial-gradient(circle at 92% 20%, color-mix(in srgb, var(--secondary) 14%, transparent), transparent 16rem),
     linear-gradient(135deg, color-mix(in srgb, var(--surface) 90%, var(--primary)), color-mix(in srgb, var(--surface) 88%, var(--secondary)));
+}
+
+[data-theme="dark"] .buy-smart-store-arrow {
+  border-color: color-mix(in srgb, var(--primary) 28%, var(--border));
+  background: color-mix(in srgb, var(--primary) 13%, var(--surface));
+}
+
+[data-theme="dark"] .buy-smart-page .buy-smart-page-nav,
+[data-theme="dark"] .buy-smart-page .buy-smart-page-number {
+  border-color: color-mix(in srgb, var(--primary) 22%, var(--border));
+  background: color-mix(in srgb, var(--card) 92%, transparent);
+  color: color-mix(in srgb, var(--foreground) 74%, var(--muted-foreground));
+}
+
+[data-theme="dark"] .buy-smart-page .buy-smart-savings-stat-badge {
+  border-color: color-mix(in srgb, var(--primary) 26%, var(--border));
+  background:
+    radial-gradient(circle at 14% 22%, color-mix(in srgb, var(--secondary) 13%, transparent), transparent 7rem),
+    color-mix(in srgb, var(--primary) 10%, var(--surface));
 }
 
 [data-theme="dark"] .buy-smart-page :is(input, select, textarea) {

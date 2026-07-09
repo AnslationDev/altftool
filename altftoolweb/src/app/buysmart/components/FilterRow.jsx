@@ -2,7 +2,7 @@
 
 import { useMemo } from "react";
 import { SORT_OPTIONS } from "@/app/buysmart/constants/categories";
-import { ChevronDown } from "lucide-react";
+import { ArrowUpDown, ChevronDown, Tags } from "lucide-react";
 
 export default function FilterRow({
   selectedCategory,
@@ -32,22 +32,23 @@ export default function FilterRow({
     <div className="flex w-full flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
       <div className="flex w-full flex-wrap items-center gap-3 sm:w-auto">
         <div className="relative w-full sm:w-auto">
+          <Tags
+            size={16}
+            className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-(--primary)"
+          />
           <select
             value={selectedCategory}
             onChange={(e) => setSelectedCategory(e.target.value)}
             className="
+              buy-smart-filter-select
               appearance-none
-              px-4 py-2.5 pr-10
+              px-4 py-2.5 pl-10 pr-10
               rounded-[var(--anslation-ds-radius)]
-              border border-(--border)
-              bg-(--background)
               text-(--muted-foreground)
-              text-sm sm:text-base font-medium
-              shadow-[var(--anslation-ds-shadow-sm)]
+              text-sm font-bold
               cursor-pointer
               outline-none
               w-full sm:w-auto
-              focus:border-(--primary) focus:ring-2 focus:ring-(--primary)
             "
           >
             {categories.map((cat) => (
@@ -70,22 +71,23 @@ export default function FilterRow({
         </span>
 
         <div className="relative w-full sm:w-auto">
+          <ArrowUpDown
+            size={16}
+            className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-(--primary)"
+          />
           <select
             value={sortBy}
             onChange={(e) => setSortBy(e.target.value)}
             className="
+              buy-smart-filter-select
               appearance-none
-              px-4 py-2.5 pr-10
+              px-4 py-2.5 pl-10 pr-10
               rounded-[var(--anslation-ds-radius)]
-              border border-(--border)
-              bg-(--background)
               text-(--muted-foreground)
-              text-sm sm:text-base font-medium
-              shadow-[var(--anslation-ds-shadow-sm)]
+              text-sm font-bold
               cursor-pointer
               outline-none
               w-full sm:w-auto
-              focus:border-(--primary) focus:ring-2 focus:ring-(--primary)
             "
           >
             {SORT_OPTIONS.map((sort) => (
