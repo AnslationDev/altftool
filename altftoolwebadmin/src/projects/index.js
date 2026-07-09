@@ -3,6 +3,7 @@ import leadtree from "./leadtree/config";
 import carrerbook from "./carrerbook/config";
 import myluckydeal from "./myluckydeal/config";
 import anternet from "./anternet/config";
+import coozter from "./coozter/config"
 
 export const PROJECTS = {
     altftool,
@@ -10,6 +11,7 @@ export const PROJECTS = {
     carrerbook,
     myluckydeal,
     anternet,
+    coozter,
 };
 
 export const getProject = (projectId) => {

@@ -77,6 +77,38 @@ export const ADMIN_MODULE_ROUTE_KEYS = {
     team: [""],
   },
 
+  coozter: {
+    home: [
+      "",
+      "blog-preview",
+      "contact-cta",
+      "hero-section",
+      "marketing-channels",
+      "process-section",
+      "services-preview",
+      "trust-section",
+    ],
+    about: [
+      "",
+      "beliefs-section",
+      "hero-section",
+      "proof-metrics",
+      "team-section",
+      "why-choose-section",
+      "work-model-section",
+    ],
+    services: [
+      "",
+      "faq-section",
+      "growth-engine-section",
+      "hero-section",
+      "outcomes-section",
+      "process-section",
+      "service-categories-section",
+    ],
+    blog: ["", "add-article", "edit-article/[id]"],
+  },
+
   myluckydeal: {
     dashboard: [""],
     deals: [""],

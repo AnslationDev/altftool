@@ -126,7 +126,7 @@ export default function AdminSidebar({ adminData, mobileOpen = false, onCloseMob
     if (!targetModule || !newProject.modules[targetModule]) {
       targetModule = getDefaultModule(newProject);
     }
-    router.push(getProjectModuleRoute(newProjectId, targetModule));
+    router.push(targetModule ? getProjectModuleRoute(newProjectId, targetModule) : `/${newProjectId}`);
   };
 
   useEffect(() => {
