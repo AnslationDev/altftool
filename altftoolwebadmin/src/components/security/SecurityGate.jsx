@@ -48,8 +48,6 @@ export default function SecurityGate() {
   }, []);
 
   // 1. Start session + load consent ONCE per logged-in admin, with retry/backoff
-  //    so a transient network failure doesn't leave the session unstarted
-  //    (which would silently disable idle-timeout enforcement).
   useEffect(() => {
     if (!user?.uid) return;
     if (startedForUidRef.current === user.uid) return; // dedupe
@@ -62,29 +60,36 @@ export default function SecurityGate() {
         if (!alive) return;
         sessionRef.current = res.sessionId;
         idleMinutesRef.current = res.idleTimeoutMinutes || 30;
+        lastActivityRef.current = Date.now(); // RESET client-side activity timer on session start!
         if (res.consent?.required) setConsent({ ...res.consent });
       } catch {
         if (!alive) return;
         if (tries < 4) {
-          retryTimer = setTimeout(() => attempt(tries + 1), Math.min(30_000, 3_000 * (tries + 1)));
+          retryTimer = setTimeout(() => attempt(tries + 1), 2000 * Math.pow(2, tries));
         } else {
-          startedForUidRef.current = null; // give up; allow a future re-trigger
+          // Give up gracefully — do NOT force sign-out. A persistent
+          // session/start failure is usually transient (server cold-start, 5xx,
+          // network blip, or a shields/ad-blocker interfering); signing an
+          // authenticated admin out here just turns a backend hiccup into an
+          // unexpected logout. Reset the dedupe so a later trigger can retry;
+          // idle enforcement still runs server-side on the next heartbeat.
+          console.warn("[auth] SecurityGate: session start failed persistently; will retry later (no logout)");
+          startedForUidRef.current = null;
         }
       }
     };
     attempt();
     return () => {
       alive = false;
+      startedForUidRef.current = null; // reset dedupe on unmount/re-render to handle Strict Mode
       if (retryTimer) clearTimeout(retryTimer);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user?.uid, authFetch]);
 
-  // 2. Track real user activity. Listen in the CAPTURE phase on both window and
-  //    document so input inside editors / contenteditable widgets (e.g. the blog
-  //    CKEditor) always registers — otherwise an admin actively typing could be
-  //    counted as idle and force-signed-out. Broad event set covers keyboard,
-  //    pointer, touch, scroll, and IME/input.
+  // 2. Track activity to reset idle timeout.
   useEffect(() => {
+    lastActivityRef.current = Date.now(); // Initialize activity timer to client-side mount time!
     const onActivity = () => {
       lastActivityRef.current = Date.now();
       activeSinceBeatRef.current = true;
