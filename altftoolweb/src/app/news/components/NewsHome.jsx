@@ -168,7 +168,7 @@ function LatestNewsWidget({ stories, timeAgo }) {
       </div>
       <Link
         href="/news/headlines"
-        className="mt-5 flex h-[46px] w-full items-center justify-center gap-1.5 rounded-xl bg-[var(--muted)] text-[14px] font-semibold text-[var(--foreground)] transition hover:bg-[var(--primary)] hover:text-[var(--primary-foreground)]"
+        className="mt-5 flex h-[46px] w-full items-center justify-center gap-1.5 rounded-xl bg-[var(--primary)] text-[14px] font-semibold text-[var(--primary-foreground)] transition hover:shadow-md active:scale-[0.97]"
       >
         View All Latest News
       </Link>
@@ -475,11 +475,10 @@ export default function NewsHome({ initialNewsData }) {
                     <button
                       key={tab.key}
                       onClick={() => setTrendingTab(tab.key)}
-                      className={`relative text-sm font-medium transition ${
-                        trendingTab === tab.key
+                      className={`relative text-sm font-medium transition ${trendingTab === tab.key
                           ? "font-semibold text-[var(--primary)]"
                           : "text-[var(--muted-foreground)] hover:text-[var(--primary)]"
-                      }`}
+                        }`}
                     >
                       {tab.label}
                       {trendingTab === tab.key && (

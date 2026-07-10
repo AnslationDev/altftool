@@ -26,3 +26,17 @@ export function buySmartDocPath(docId) {
 export function altfToolCollectionPath(collectionId) {
   return [...ALTFT_PROJECT_ROOT, collectionId];
 }
+
+export const SMARTLUCKY_PROJECT_ID = "smartlucky";
+
+export const SMARTLUCKY_PROJECT_ROOT = ["projects", SMARTLUCKY_PROJECT_ID];
+
+export const SMARTLUCKY_BLOGS_COLLECTION = [...SMARTLUCKY_PROJECT_ROOT, "blogs"];
+export const SMARTLUCKY_SERVICES_COLLECTION = [...SMARTLUCKY_PROJECT_ROOT, "services"];
+export const SMARTLUCKY_SOLUTIONS_COLLECTION = [...SMARTLUCKY_PROJECT_ROOT, "solutions"];
+export const SMARTLUCKY_PLATFORMS_COLLECTION = [...SMARTLUCKY_PROJECT_ROOT, "platforms"];
+export const SMARTLUCKY_SETTINGS_DOC = [...SMARTLUCKY_PROJECT_ROOT, "settings", "site"];
+
+export function smartluckyCollectionPath(collectionId) {
+  return [...SMARTLUCKY_PROJECT_ROOT, collectionId];
+}
