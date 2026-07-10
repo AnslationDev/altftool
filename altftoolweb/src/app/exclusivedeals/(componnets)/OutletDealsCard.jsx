@@ -143,8 +143,8 @@ function Card({ brand, className = "w-55 sm:w-62 md:w-72 mb-6 md:mb-10", onClick
         >
           <path
             d="M412 258C412 280.091 394.091 298 372 298H345C322.909 298 305 315.909 305 338V372C305 394.091 287.091 412 265 412H40C17.9086 412 0 394.091 0 372V40C0 17.9086 17.9086 0 40 0H372C394.091 0 412 17.9086 412 40V258Z"
-            fill="#FFFFFF"
-            stroke="#CBD5E1"
+            fill="var(--card)"
+            stroke="var(--border)"
             strokeWidth="1"
             filter="url(#shadow)"
           />
@@ -162,17 +162,17 @@ function Card({ brand, className = "w-55 sm:w-62 md:w-72 mb-6 md:mb-10", onClick
               />
             </div>
 
-            <div className="text-right  text-xl [@media(min-width:1650px)]:text-[26px] text-white font-bold">
+            <div className="text-right text-xl [@media(min-width:1650px)]:text-[26px] text-(--primary-foreground) font-bold">
               Up to {formatDiscount(brand.discount)}
             </div>
           </div>
 
           <div className="px-4 py-4 flex-1">
-            <h2 className="text-base md:text-lg font-bold text-gray-800 [@media(min-width:1650px)]:text-[22px] ">
+            <h2 className="text-base md:text-lg font-bold text-(--foreground) [@media(min-width:1650px)]:text-[22px] ">
               Coupon on {brand.brandname}
             </h2>
 
-            <p className="text-sm text-gray-700 mt-2 line-clamp-2 [@media(min-width:1650px)]:line-clamp-3 [@media(min-width:1650px)]:text-base">
+            <p className="deals-muted-text text-sm mt-2 line-clamp-2 [@media(min-width:1650px)]:line-clamp-3 [@media(min-width:1650px)]:text-base">
               {brand.description}
             </p>
           </div>
@@ -194,7 +194,7 @@ function Card({ brand, className = "w-55 sm:w-62 md:w-72 mb-6 md:mb-10", onClick
 
                 onClick?.();
               }}
-              className="w-10 h-10 md:w-14 md:h-14 [@media(min-width:1650px)]:w-17 [@media(min-width:1650px)]:h-17  bg-(--primary) text-white rounded-full flex items-center justify-center text-xl hover:scale-110 transition"
+              className="deals-primary-action w-10 h-10 md:w-14 md:h-14 [@media(min-width:1650px)]:w-17 [@media(min-width:1650px)]:h-17 rounded-full flex items-center justify-center text-xl hover:scale-110 transition"
             >
               <ArrowRight
                 size={30}

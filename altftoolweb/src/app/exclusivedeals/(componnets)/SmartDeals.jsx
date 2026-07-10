@@ -149,7 +149,7 @@ export default function SmartDeals() {
 
         {/* RIGHT IMAGE */}
         <div className="flex-1 flex justify-end mt-10 lg:mt-0 animate-slide-left">
-          <div className="w-[280px] h-[280px] sm:w-[340px] sm:h-[340px] rounded-full overflow-hidden bg-[#E8EFFF]">
+          <div className="w-[280px] h-[280px] sm:w-[340px] sm:h-[340px] rounded-full overflow-hidden deals-image-shell">
             <Image
               src={girlImg}
               alt="shopping"

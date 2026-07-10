@@ -149,7 +149,10 @@ export default async function RootLayout({ children }) {
   const hasPageCode =
     seoConfig?.enabled !== false &&
     !!seoConfig?.pages &&
-    Object.values(seoConfig.pages).some((p) => p && p.code);
+    // Activate for pages that have custom code OR per-page JSON-LD (schema), so
+    // AI-/admin-authored structured data is injected even when a page has no
+    // raw code block.
+    Object.values(seoConfig.pages).some((p) => p && (p.code || p.schema));
   return (
     <html lang="en" data-theme-mode="system" suppressHydrationWarning className={`${geistSans.variable} ${geistMono.variable} ${sora.variable} ${inter.variable} ${ibmPlexSans.variable}`}>
       <head>

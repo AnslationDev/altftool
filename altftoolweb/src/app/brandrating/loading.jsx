@@ -1,11 +1,12 @@
 "use client";
 
 import React from "react";
+import "./brandrating.css";
 
 function Bone({ className = "" }) {
   return (
-    <div className={`relative overflow-hidden rounded-md bg-gray-200 ${className}`}>
-      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/50 to-transparent animate-shimmer" />
+    <div className={`relative overflow-hidden rounded-md bg-(--muted) ${className}`}>
+      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-(--card) to-transparent opacity-50 animate-shimmer" />
     </div>
   );
 }
@@ -33,7 +34,7 @@ function CategorySkeleton() {
     <section className="w-full px-4 py-8">
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
         {Array.from({ length: 6 }).map((_, i) => (
-          <div key={i} className="p-3 border border-gray-100 rounded-xl">
+          <div key={i} className="p-3 border border-(--border) bg-(--card) rounded-xl">
             <Bone className="h-20 w-full mb-3 rounded-lg" />
             <Bone className="h-4 w-3/4 mb-2" />
             <Bone className="h-3 w-1/2" />
@@ -49,7 +50,7 @@ function HorizontalSkeleton() {
     <section className="w-full px-4 py-8">
       <div className="flex gap-4 overflow-hidden">
         {Array.from({ length: 3 }).map((_, i) => (
-          <div key={i} className="min-w-[280px] flex flex-col gap-3 border border-gray-100 rounded-xl p-4">
+          <div key={i} className="min-w-[280px] flex flex-col gap-3 border border-(--border) bg-(--card) rounded-xl p-4">
             <Bone className="h-32 w-full rounded-lg" />
             <Bone className="h-4 w-3/4" />
             <Bone className="h-3 w-1/2" />
@@ -77,7 +78,7 @@ function CardGridSkeleton() {
     <section className="w-full px-4 py-8">
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {Array.from({ length: 6 }).map((_, i) => (
-          <div key={i} className="p-5 border border-gray-100 rounded-2xl">
+          <div key={i} className="p-5 border border-(--border) bg-(--card) rounded-2xl">
             <Bone className="h-40 w-full mb-4 rounded-xl" />
             <Bone className="h-5 w-2/3 mb-2" />
             <Bone className="h-4 w-1/2 mb-3" />
@@ -92,7 +93,7 @@ function CardGridSkeleton() {
 //  MAIN LOADING
 export default function Loading() {
   return (
-    <div className="w-full">
+    <div className="brandrating-page w-full">
 
       <HeroSkeleton />
       <CategorySkeleton />

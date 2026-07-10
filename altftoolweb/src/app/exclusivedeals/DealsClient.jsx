@@ -44,7 +44,7 @@ export default function DealsPage() {
  
 
   return (
-    <div  className="bg-(--dealspage-background) text-(--foreground)">
+    <div className="exclusive-deals-page bg-(--dealspage-background) text-(--foreground)">
           <HeroSection/>
           <OutletDealsCard/>
           <RouteLazySection fallback={<RouteStripSkeleton items={6} />} minHeight={260}>

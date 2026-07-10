@@ -15,7 +15,7 @@ export default function AcademyResults({ items, activeCategory, loading = false 
       {items?.length > 0 ? (
         <AcademyGrid items={items} activeCategory={activeCategory}/>
       ) : (
-        <p className="text-center text-gray-500 py-10 animate-slide-up">No results found</p>
+        <p className="academy-muted-text text-center py-10 animate-slide-up">No results found</p>
       )}
     </section>
   );

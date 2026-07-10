@@ -171,14 +171,14 @@ useEffect(() => {
               disabled={index === 0}
               className="absolute left-2 top-1/2 -translate-y-1/2 z-10
   w-10 h-10 flex items-center justify-center
-  rounded-full bg-white shadow-md border border-gray-200
+  rounded-full bg-(--card) shadow-md border border-(--border)
   opacity-0 group-hover/slider:opacity-100 transition-opacity duration-300
-  disabled:opacity-0 hover:bg-gray-50"
+  disabled:opacity-0 hover:bg-(--primary)/5"
             >
               <ChevronLeft
                 size={20}
                 strokeWidth={3}
-                className="text-gray-700 cursor-pointer bg-white/90 backdrop-blur"
+                className="text-(--foreground) cursor-pointer backdrop-blur"
               />
             </button>
           )}
@@ -190,14 +190,14 @@ useEffect(() => {
               disabled={index + visibleCards >= items.length}
               className="absolute right-2 top-1/2 -translate-y-1/2 z-10
   w-10 h-10 flex items-center justify-center
-  rounded-full bg-white shadow-md border border-gray-200
+  rounded-full bg-(--card) shadow-md border border-(--border)
   opacity-0 group-hover/slider:opacity-100 transition-opacity duration-300
-  disabled:opacity-0 hover:bg-gray-50"
+  disabled:opacity-0 hover:bg-(--primary)/5"
             >
               <ChevronRight
                 size={20}
                 strokeWidth={3}
-                className="text-gray-700 cursor-pointer bg-white/90 backdrop-blur"
+                className="text-(--foreground) cursor-pointer backdrop-blur"
               />
             </button>
           )}
@@ -267,7 +267,7 @@ useEffect(() => {
                   height: "6px",
                   width: i === index ? "18px" : "6px",
                   borderRadius: "3px",
-                  background: i === index ? "#2563EB" : "#D1D5DB",
+                  background: i === index ? "var(--primary)" : "var(--border)",
                   transition:"width 0.4s cubic-bezier(0.33,1,0.68,1), background 0.3s ease"
                 }}
               />

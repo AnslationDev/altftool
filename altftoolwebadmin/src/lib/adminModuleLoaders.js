@@ -174,6 +174,15 @@ const routeLoaders = {
       "lead-section": () =>
         import("@/projects/carrerbook/modules/about-us/lead-section/page.jsx"),
     },
+    "term-condition": {
+      "": () => import("@/projects/carrerbook/modules/term-condition/page.jsx"),
+    },
+    policy: {
+      "": () => import("@/projects/carrerbook/modules/policy/page.jsx"),
+    },
+    events: {
+      "": () => import("@/projects/carrerbook/modules/events/page.jsx"),
+    },
     team: {
       "": () => import("@/projects/carrerbook/modules/team/page.jsx"),
     },
@@ -212,6 +221,33 @@ const routeLoaders = {
       "": () => import("@/projects/coozter/modules/blog/page.jsx"),
       "add-article": () => import("@/projects/coozter/modules/blog/add-article/page.jsx"),
       "edit-article/[id]": () => import("@/projects/coozter/modules/blog/edit-article/[id]/page.jsx"),
+    },
+  },
+
+  growvibe: {
+    navbar: {
+      "": () => import("@/projects/growvibe/modules/navbar/page.jsx"),
+    },
+    home: {
+      "": () => import("@/projects/growvibe/modules/home/page.jsx"),
+    },
+    services: {
+      "": () => import("@/projects/growvibe/modules/services/page.jsx"),
+    },
+    "case-studies": {
+      "": () => import("@/projects/growvibe/modules/case-studies/page.jsx"),
+    },
+    blog: {
+      "": () => import("@/projects/growvibe/modules/blog/page.jsx"),
+    },
+    pages: {
+      "": () => import("@/projects/growvibe/modules/pages/page.jsx"),
+    },
+    leads: {
+      "": () => import("@/projects/growvibe/modules/leads/page.jsx"),
+    },
+    footer: {
+      "": () => import("@/projects/growvibe/modules/footer/page.jsx"),
     },
   },
 
@@ -286,6 +322,9 @@ const layoutLoaders = {
       import("@/projects/leadtree/modules/expertvideos/layout.jsx"),
     ourteams: () =>
       import("@/projects/leadtree/modules/ourteams/layout.jsx"),
+  },
+  carrerbook: {
+    blog: () => import("@/projects/carrerbook/modules/blog/layout.jsx"),
   },
 };
 

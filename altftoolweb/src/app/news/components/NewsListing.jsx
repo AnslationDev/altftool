@@ -79,13 +79,13 @@ function NewsletterWidget() {
             value={email}
             onChange={(e) => { setEmail(e.target.value); setError(""); }}
             placeholder="Enter your email"
-            className="h-11 w-full rounded-xl border border-[#eee] bg-[#F7F7F7] px-3.5 text-[14px] text-[var(--foreground)] placeholder:text-[#999] transition focus:border-[var(--primary)] focus:bg-white focus:shadow-sm focus:outline-none dark:border-[var(--border)] dark:bg-[var(--surface)] dark:focus:bg-[var(--card)]"
+            className="h-11 w-full rounded-xl border border-[var(--border)] bg-[var(--card)] px-3.5 text-[14px] text-[var(--foreground)] placeholder:text-[var(--muted-foreground)] transition focus:border-[var(--primary)] focus:bg-[var(--card)] focus:shadow-sm focus:outline-none focus:ring-2 focus:ring-[var(--primary)]/10"
           />
         </div>
         <button
           type="submit"
           disabled={state === "loading"}
-          className="flex h-11 w-[120px] shrink-0 items-center justify-center rounded-xl bg-[var(--primary)] px-4 text-[14px] font-semibold text-[var(--primary-foreground)] transition hover:shadow-md active:scale-[0.97] disabled:opacity-60"
+          className="flex h-11 w-[120px] shrink-0 items-center justify-center rounded-xl news-action px-4 text-[14px] font-semibold transition hover:-translate-y-0.5 active:scale-[0.97] disabled:opacity-60"
         >
           {state === "loading" ? "Loading\u2026" : "Subscribe"}
         </button>
@@ -100,10 +100,10 @@ function NewsletterWidget() {
 }
 
 const SOCIAL_LINKS = [
-  { name: "Facebook", href: "https://facebook.com", icon: "f", bg: "bg-[#1877F2]", action: "Like" },
-  { name: "Twitter", href: "https://twitter.com", icon: "X", bg: "bg-black", action: "Follow" },
-  { name: "Instagram", href: "https://instagram.com", icon: "in", bg: "bg-gradient-to-tr from-[#F58529] via-[#DD2A7B] to-[#8134AF]", action: "Follow" },
-  { name: "YouTube", href: "https://youtube.com", icon: "\u25B6", bg: "bg-[#FF0000]", action: "Subscribe" },
+  { name: "Facebook", href: "https://facebook.com", icon: "f", action: "Like" },
+  { name: "Twitter", href: "https://twitter.com", icon: "X", action: "Follow" },
+  { name: "Instagram", href: "https://instagram.com", icon: "in", action: "Follow" },
+  { name: "YouTube", href: "https://youtube.com", icon: "\u25B6", action: "Subscribe" },
 ];
 
 function FollowUs() {
@@ -117,10 +117,10 @@ function FollowUs() {
             href={s.href}
             target="_blank"
             rel="noopener noreferrer"
-            className={`group flex items-center justify-between py-3.5 ${i < SOCIAL_LINKS.length - 1 ? "border-b border-[#F3F3F3] dark:border-[var(--border)]" : ""}`}
+            className={`group flex items-center justify-between py-3.5 ${i < SOCIAL_LINKS.length - 1 ? "border-b border-[var(--border)]" : ""}`}
           >
             <div className="flex items-center gap-[14px]">
-              <div className={`flex h-[38px] w-[38px] shrink-0 items-center justify-center rounded-full text-[13px] font-bold text-white ${s.bg}`}>
+              <div className="news-social-icon flex h-[38px] w-[38px] shrink-0 items-center justify-center rounded-full text-[13px] font-bold">
                 {s.icon}
               </div>
               <span className="text-[15px] font-semibold text-[var(--foreground)]">{s.name}</span>

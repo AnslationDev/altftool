@@ -3,6 +3,7 @@
 import { usePathname } from "next/navigation";
 import Sidebar from "./components/sections/Sidebar";
 import Ads from "./components/sections/Ads";
+import "./news-theme.css";
 
 const KNOWN_SUBROUTES = new Set([
   "headlines", "local", "newsletter", "topics", "trending", "api",
@@ -33,7 +34,7 @@ export default function NewsLayout({ children }) {
   const isFullWidth = isFullWidthPage(pathname);
 
   return (
-    <div className="w-full px-5 md:px-8 mb-[10px]">
+    <div className="news-page w-full px-5 md:px-8 mb-[10px]">
       <div className={`grid w-full grid-cols-1 gap-8 ${!isNewsHome && !isArticle && !isFullWidth ? "lg:grid-cols-[260px_1fr_300px] xl:grid-cols-[260px_1fr_300px]" : "mx-auto max-w-[1500px]"}`}>
         {!isNewsHome && !isArticle && !isFullWidth && (
           <aside className="hidden lg:block">

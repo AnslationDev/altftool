@@ -34,6 +34,8 @@ const Header = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [searchError, setSearchError] = useState("");
   const [themeReady, setThemeReady] = useState(false);
+  const [activeDesktopMenu, setActiveDesktopMenu] = useState(null);
+  const [collapsedDesktopMenu, setCollapsedDesktopMenu] = useState(null);
   const themeMenuRef = useRef(null);
   const mobileMenuButtonRef = useRef(null);
   const mobileCloseButtonRef = useRef(null);
@@ -82,6 +84,15 @@ const Header = () => {
   useEffect(() => {
     const closeMenuTimer = window.setTimeout(() => setMobileMenuOpen(false), 0);
     return () => window.clearTimeout(closeMenuTimer);
+  }, [pathname]);
+
+  useEffect(() => {
+    const closeDesktopMenuTimer = window.setTimeout(() => {
+      setActiveDesktopMenu(null);
+      setCollapsedDesktopMenu(null);
+    }, 0);
+
+    return () => window.clearTimeout(closeDesktopMenuTimer);
   }, [pathname]);
 
   useEffect(() => {
@@ -171,6 +182,37 @@ const Header = () => {
     setThemeMenuOpen(false);
   };
 
+  const collapseDesktopDropdown = (menuLabel) => {
+    setActiveDesktopMenu(null);
+    setCollapsedDesktopMenu(menuLabel);
+    if (document.activeElement instanceof HTMLElement) {
+      document.activeElement.blur();
+    }
+  };
+
+  const openDesktopDropdown = (menuLabel) => {
+    setCollapsedDesktopMenu(null);
+    setActiveDesktopMenu(menuLabel);
+  };
+
+  const toggleDesktopDropdown = (menuLabel) => {
+    setCollapsedDesktopMenu(null);
+    setActiveDesktopMenu((activeMenu) =>
+      activeMenu === menuLabel ? null : menuLabel
+    );
+  };
+
+  const closeDesktopDropdown = (menuLabel) => {
+    setActiveDesktopMenu((activeMenu) =>
+      activeMenu === menuLabel ? null : activeMenu
+    );
+  };
+
+  const closeDesktopDropdowns = () => {
+    setActiveDesktopMenu(null);
+    setCollapsedDesktopMenu(null);
+  };
+
   const openMobileMenu = () => {
     setMobileMenuOpen(true);
   };
@@ -237,6 +279,9 @@ const Header = () => {
                   isPublicRouteActive(pathname, item) ||
                   item.options?.some((option) => isPublicRouteActive(pathname, option));
                 const hasOptions = Boolean(item.options?.length);
+                const isDesktopMenuOpen =
+                  activeDesktopMenu === item.label &&
+                  collapsedDesktopMenu !== item.label;
                 const homeNavItemClass = `relative flex h-10 appearance-none items-center gap-1.5 whitespace-nowrap rounded-full border-0 px-4 py-0 text-base font-medium leading-5 transition duration-200 [font-family:var(--font-ibm-plex-sans)] ${isActive
                     ? isHomeDark
                       ? "text-[#14B8A6]"
@@ -249,18 +294,41 @@ const Header = () => {
                   }`;
 
                 return (
-                  <div key={item.label} className="group relative">
+                  <div
+                    key={item.label}
+                    className="group relative"
+                    onMouseEnter={() => {
+                      prefetchRoute(item.href);
+                      if (hasOptions) {
+                        openDesktopDropdown(item.label);
+                        return;
+                      }
+                      closeDesktopDropdowns();
+                    }}
+                    onFocusCapture={() => {
+                      prefetchRoute(item.href);
+                      if (hasOptions) {
+                        openDesktopDropdown(item.label);
+                        return;
+                      }
+                      closeDesktopDropdowns();
+                    }}
+                    onMouseLeave={() => closeDesktopDropdown(item.label)}
+                  >
                     {item.href ? (
                       <Link
                         href={item.href}
                         aria-current={isActive ? "page" : undefined}
                         aria-haspopup={hasOptions ? "true" : undefined}
-                        {...routePreviewProps(item.href)}
+                        aria-expanded={hasOptions ? isDesktopMenuOpen : undefined}
+                        onClick={() => {
+                          if (hasOptions) openDesktopDropdown(item.label);
+                        }}
                         className={homeNavItemClass}
                       >
                         {item.label}
                         {hasOptions ? (
-                          <ChevronDown className="h-3.5 w-3.5 transition group-hover:rotate-180" />
+                          <ChevronDown className={`h-3.5 w-3.5 transition ${isDesktopMenuOpen ? "rotate-180" : ""}`} />
                         ) : null}
                         <span className={activeUnderlineClass} />
                       </Link>
@@ -270,16 +338,18 @@ const Header = () => {
                         suppressHydrationWarning
                         aria-current={isActive ? "page" : undefined}
                         aria-haspopup="true"
+                        aria-expanded={isDesktopMenuOpen}
+                        onClick={() => toggleDesktopDropdown(item.label)}
                         className={homeNavItemClass}
                       >
                         {item.label}
-                        <ChevronDown className="h-3.5 w-3.5 transition group-hover:rotate-180" />
+                        <ChevronDown className={`h-3.5 w-3.5 transition ${isDesktopMenuOpen ? "rotate-180" : ""}`} />
                         <span className={activeUnderlineClass} />
                       </button>
                     )}
 
-                    {hasOptions ? (
-                      <div className="absolute left-1/2 top-full hidden -translate-x-1/2 pt-3 group-focus-within:block group-hover:block">
+                    {hasOptions && isDesktopMenuOpen ? (
+                      <div className="absolute left-1/2 top-full -translate-x-1/2 pt-3">
                         <div
                           className={`w-56 rounded-2xl border p-2 shadow-[0_22px_50px_rgba(15,23,42,0.16)] ${isHomeDark
                               ? "border-[rgba(148,163,184,0.12)] bg-[#0F172A]"
@@ -291,6 +361,7 @@ const Header = () => {
                               key={option.label}
                               href={option.href}
                               {...routePreviewProps(option.href)}
+                              onClick={() => collapseDesktopDropdown(item.label)}
                               className={`group/sub relative block rounded-xl px-3 py-2.5 text-base font-medium transition duration-200 [font-family:var(--font-ibm-plex-sans)] ${isPublicRouteActive(pathname, option)
                                   ? isHomeDark
                                     ? "text-[#14B8A6]"
@@ -589,14 +660,40 @@ const Header = () => {
               const isCurrent = item.options
                 ? item.options.some((option) => isActive(option))
                 : isActive(item);
+              const hasOptions = Boolean(item.options?.length);
+              const isDesktopMenuOpen =
+                activeDesktopMenu === item.label &&
+                collapsedDesktopMenu !== item.label;
 
               return (
-                <div key={item.label} className="group relative">
-                  {item.options ? (
+                <div
+                  key={item.label}
+                  className="group relative"
+                  onMouseEnter={() => {
+                    prefetchRoute(item.href);
+                    if (hasOptions) {
+                      openDesktopDropdown(item.label);
+                      return;
+                    }
+                    closeDesktopDropdowns();
+                  }}
+                  onFocusCapture={() => {
+                    prefetchRoute(item.href);
+                    if (hasOptions) {
+                      openDesktopDropdown(item.label);
+                      return;
+                    }
+                    closeDesktopDropdowns();
+                  }}
+                  onMouseLeave={() => closeDesktopDropdown(item.label)}
+                >
+                  {hasOptions ? (
                     <>
                       <button
                         type="button"
                         aria-haspopup="true"
+                        aria-expanded={isDesktopMenuOpen}
+                        onClick={() => toggleDesktopDropdown(item.label)}
                         className={`relative flex items-center gap-2 rounded-[var(--anslation-ds-radius)] px-2.5 py-2 font-[inherit] text-sm font-medium transition ${isCurrent
                             ? "text-(--primary)"
                             : "text-(--muted-foreground) hover:text-(--foreground)"
@@ -604,10 +701,11 @@ const Header = () => {
                       >
                         <Icon className="h-4 w-4" />
                         {item.label}
-                        <ChevronDown className="h-4 w-4 transition group-hover:rotate-180" />
+                        <ChevronDown className={`h-4 w-4 transition ${isDesktopMenuOpen ? "rotate-180" : ""}`} />
                       </button>
 
-                      <div className="absolute left-0 top-full hidden pt-2 group-focus-within:block group-hover:block">
+                      {isDesktopMenuOpen ? (
+                        <div className="absolute left-0 top-full pt-2">
                         <div className="w-64 rounded-[var(--anslation-ds-radius)] border border-(--border) bg-(--card) p-1.5 shadow-[var(--anslation-ds-shadow-md)]">
                           {item.options?.map((option) => {
                             const OptionIcon = option.icon;
@@ -617,6 +715,7 @@ const Header = () => {
                                 key={option.label}
                                 href={option.href}
                                 {...routePreviewProps(option.href)}
+                                onClick={() => collapseDesktopDropdown(item.label)}
                                 className={`group/sub relative flex items-center gap-3 rounded-[6px] px-2.5 py-2 text-sm transition ${optionIsActive
                                     ? "text-(--primary)"
                                     : "text-(--muted-foreground) hover:text-(--foreground)"
@@ -636,7 +735,8 @@ const Header = () => {
                             );
                           })}
                         </div>
-                      </div>
+                        </div>
+                      ) : null}
                     </>
                   ) : (
                     <Link

@@ -62,7 +62,7 @@ export default function Hero({ loading = false }) {
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
       >
-        <div className="group relative w-full h-full rounded-xl overflow-hidden">
+        <div className="academy-hero-shell group relative w-full h-full rounded-xl overflow-hidden">
 
           {/* Images */}
           {heroImages.map((img, i) => (
@@ -88,7 +88,7 @@ export default function Hero({ loading = false }) {
               aria-label="Previous slide"
               className="
                 w-7 h-7 sm:w-10 sm:h-10 lg:w-12 lg:h-12
-                rounded-full bg-(--background)/85 hover:bg-(--background)
+                rounded-full bg-(--card)/90 hover:bg-(--card)
                 flex items-center justify-center
                 shadow-md
                 transition-all duration-300 ease-out
@@ -108,7 +108,7 @@ export default function Hero({ loading = false }) {
               aria-label="Next slide"
               className="
                 w-7 h-7 sm:w-10 sm:h-10 lg:w-12 lg:h-12
-                rounded-full bg-(--background)/85 hover:bg-(--background)
+                rounded-full bg-(--card)/90 hover:bg-(--card)
                 flex items-center justify-center
                 shadow-md
                 transition-all duration-300 ease-out
@@ -130,8 +130,8 @@ export default function Hero({ loading = false }) {
                 aria-label={`Show academy banner ${i + 1}`}
                 aria-current={i === index ? "true" : undefined}
                 className={`rounded-full transition-all duration-500 ${i === index
-                  ? "bg-white w-5 sm:w-6 lg:w-7 h-1.5 sm:h-2"
-                  : "bg-white/50 w-1.5 sm:w-2 lg:w-2.5 h-1.5 sm:h-2"
+                  ? "bg-(--primary) w-5 sm:w-6 lg:w-7 h-1.5 sm:h-2"
+                  : "bg-(--card)/70 w-1.5 sm:w-2 lg:w-2.5 h-1.5 sm:h-2"
                   }`}
               />
             ))}
@@ -147,8 +147,7 @@ export default function Hero({ loading = false }) {
   -mt-6 sm:-mt-10 md:-mt-14 lg:-mt-18 xl:-mt-22
   mx-auto
   w-[99%] sm:w-[97%] md:w-[95%] lg:w-[90%] xl:w-[86%] 2xl:w-[88%]
-  bg-gradient-to-r from-blue-600 to-blue-700
-  text-white rounded-xl
+  academy-stat-strip rounded-xl
   px-4 sm:px-8 md:px-12 lg:px-10 xl:px-12
   py-5 sm:py-6 md:py-7 lg:py-7 xl:py-8
   shadow-lg shadow-black/10
@@ -170,7 +169,7 @@ export default function Hero({ loading = false }) {
 
                 {/* divider */}
                 {i !== 0 && (
-                  <div className="hidden lg:block h-10 w-px bg-white/20 shrink-0" />
+                <div className="hidden lg:block h-10 w-px bg-(--primary-foreground)/20 shrink-0" />
                 )}
 
 
@@ -178,11 +177,11 @@ export default function Hero({ loading = false }) {
             w-10 h-10 sm:w-12 sm:h-12
             lg:w-11 lg:h-11 xl:w-12 xl:h-12
             2xl:w-14 2xl:h-14
-            rounded-full border border-white/30
+            rounded-full border border-(--primary-foreground)/30
             flex items-center justify-center shrink-0
           ">
                   <Icon className="
-              text-white
+              text-(--primary-foreground)
               w-5 h-5 sm:w-6 sm:h-6
               lg:w-5 lg:h-5
               2xl:w-7 xl:h-7

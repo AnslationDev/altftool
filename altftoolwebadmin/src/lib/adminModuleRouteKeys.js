@@ -74,6 +74,9 @@ export const ADMIN_MODULE_ROUTE_KEYS = {
     publisers: [""],
     blog: ["", "add-article", "edit-article/[id]", "view-articles"],
     "about-us": ["", "hero-section", "lead-section"],
+    "term-condition": [""],
+    policy: [""],
+    events: [""],
     team: [""],
   },
 
@@ -107,6 +110,17 @@ export const ADMIN_MODULE_ROUTE_KEYS = {
       "service-categories-section",
     ],
     blog: ["", "add-article", "edit-article/[id]"],
+  },
+
+  growvibe: {
+    navbar: [""],
+    home: [""],
+    services: [""],
+    "case-studies": [""],
+    blog: [""],
+    pages: [""],
+    leads: [""],
+    footer: [""],
   },
 
   myluckydeal: {
@@ -145,6 +159,7 @@ export const ADMIN_MODULE_ROUTE_KEYS = {
 export const ADMIN_MODULE_LAYOUT_KEYS = {
   altftool: new Set(["blogs"]),
   leadtree: new Set(["blogs", "creditcard", "expertvideos", "ourteams"]),
+  carrerbook: new Set(["blog"]),
 };
 
 export function resolveAdminModuleRouteKey(

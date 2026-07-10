@@ -15,10 +15,10 @@ const pagesLinks = [
 ];
 
 const socialLinks = [
-  { icon: Twitter, label: "Twitter", href: "https://twitter.com", color: "hover:text-sky-400   hover:bg-sky-400/10" },
-  { icon: Facebook, label: "Facebook", href: "https://facebook.com", color: "hover:text-blue-500  hover:bg-blue-500/10" },
-  { icon: Instagram, label: "Instagram", href: "https://instagram.com", color: "hover:text-pink-500  hover:bg-pink-500/10" },
-  { icon: Youtube, label: "YouTube", href: "https://youtube.com", color: "hover:text-red-500   hover:bg-red-500/10" },
+  { icon: Twitter, label: "Twitter", href: "https://twitter.com" },
+  { icon: Facebook, label: "Facebook", href: "https://facebook.com" },
+  { icon: Instagram, label: "Instagram", href: "https://instagram.com" },
+  { icon: Youtube, label: "YouTube", href: "https://youtube.com" },
 ];
 
 const legalLinks = [
@@ -29,8 +29,8 @@ const legalLinks = [
 ];
 
 const badgeStyle = {
-  Hot: "bg-orange-500/15 text-orange-500 border-orange-500/20",
-  Live: "bg-red-500/15   text-red-500   border-red-500/20 animate-pulse",
+  Hot: "news-category-pill",
+  Live: "news-category-pill animate-pulse",
 };
 
 export default function Sidebar() {
@@ -135,7 +135,7 @@ export default function Sidebar() {
           Follow Us
         </p>
         <div className="flex gap-1.5">
-          {socialLinks.map(({ icon: Icon, href, label, color }) => (
+          {socialLinks.map(({ icon: Icon, href, label }) => (
             <a
               key={label}
               href={href}
@@ -145,7 +145,7 @@ export default function Sidebar() {
               className={`
                 flex h-9 w-9 items-center justify-center rounded-xl
                 border border-[var(--border)] text-[var(--muted-foreground)]
-                transition-all duration-150 ${color}
+                transition-all duration-150 hover:border-[var(--primary)] hover:bg-[var(--primary)]/10 hover:text-[var(--primary)]
               `}
             >
               <Icon size={15} />

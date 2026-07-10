@@ -1,0 +1,80 @@
+.brandrating-page {
+  --brandrating-gradient: linear-gradient(135deg, var(--primary), var(--secondary, #38BDF8));
+  --brandrating-muted: color-mix(in srgb, var(--foreground) 70%, var(--background));
+  --brandrating-card: color-mix(in srgb, var(--card) 94%, transparent);
+  --brandrating-soft: color-mix(in srgb, var(--primary) 8%, var(--background));
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at 14% 8%, color-mix(in srgb, var(--primary) 10%, transparent), transparent 28rem),
+    radial-gradient(circle at 84% 18%, color-mix(in srgb, var(--secondary, #38BDF8) 10%, transparent), transparent 30rem),
+    linear-gradient(180deg, var(--background) 0%, color-mix(in srgb, var(--primary) 4%, var(--background)) 46%, var(--background) 100%);
+  color: var(--foreground);
+  font-family: var(--font-primary), var(--font-sans), Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+.brandrating-page :is(h1, h2, h3, .section-title) {
+  color: var(--foreground);
+  font-family: var(--font-primary), var(--font-sans), Inter, ui-sans-serif, system-ui, sans-serif;
+  letter-spacing: 0;
+}
+
+.brandrating-page .section-title {
+  font-weight: 800;
+  line-height: 1.08;
+}
+
+.brandrating-page :is(.section-subtitle, [class*="text-(--muted-foreground)"]) {
+  color: var(--brandrating-muted);
+}
+
+.brandrating-card-surface {
+  border: 1px solid color-mix(in srgb, var(--border) 86%, var(--primary));
+  background: var(--brandrating-card);
+  box-shadow: var(--anslation-ds-shadow-sm);
+  transition: border-color 150ms ease, box-shadow 150ms ease, transform 150ms ease;
+}
+
+.brandrating-card-surface:hover {
+  border-color: color-mix(in srgb, var(--primary) 34%, var(--border));
+  box-shadow: var(--anslation-ds-shadow-md);
+}
+
+.brandrating-panel {
+  border: 1px solid color-mix(in srgb, var(--border) 86%, var(--primary));
+  background: color-mix(in srgb, var(--card) 92%, transparent);
+  box-shadow: var(--anslation-ds-shadow-sm);
+}
+
+.brandrating-soft-surface {
+  background:
+    radial-gradient(circle at 15% 0%, color-mix(in srgb, var(--primary) 10%, transparent), transparent 18rem),
+    linear-gradient(135deg, color-mix(in srgb, var(--primary) 8%, var(--card)), color-mix(in srgb, var(--secondary, #38BDF8) 7%, var(--card)));
+}
+
+.brandrating-muted-text {
+  color: var(--brandrating-muted);
+}
+
+.brandrating-action {
+  background: var(--brandrating-gradient);
+  color: var(--primary-foreground);
+  box-shadow: 0 14px 32px color-mix(in srgb, var(--primary) 20%, transparent);
+}
+
+.brandrating-dot-muted {
+  background: var(--border);
+}
+
+[data-theme="dark"] .brandrating-page {
+  --brandrating-card: color-mix(in srgb, var(--card) 88%, transparent);
+  --brandrating-muted: color-mix(in srgb, var(--foreground) 74%, var(--muted-foreground));
+  background:
+    radial-gradient(circle at 14% 8%, color-mix(in srgb, var(--primary) 15%, transparent), transparent 28rem),
+    radial-gradient(circle at 84% 18%, color-mix(in srgb, var(--secondary, #38BDF8) 12%, transparent), transparent 30rem),
+    linear-gradient(180deg, var(--background) 0%, color-mix(in srgb, var(--primary) 6%, var(--background)) 46%, var(--background) 100%);
+}
+
+[data-theme="dark"] .brandrating-page .brandrating-card-surface,
+[data-theme="dark"] .brandrating-page .brandrating-panel {
+  background: color-mix(in srgb, var(--card) 88%, transparent);
+}
