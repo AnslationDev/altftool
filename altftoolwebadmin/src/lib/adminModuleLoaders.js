@@ -133,7 +133,69 @@ const routeLoaders = {
         import("@/projects/leadtree/modules/ourteams/view-team/page.jsx"),
     },
   },
-
+  smartlucky: {
+    home: {
+      "": () => import("@/projects/smartlucky/modules/home/page.jsx"),
+    },
+    about: {
+      "": () => import("@/projects/smartlucky/modules/about/page.jsx"),
+    },
+    services: {
+      "": () => import("@/projects/smartlucky/modules/services-page/page.jsx"),
+    },
+    solutions: {
+      "": () => import("@/projects/smartlucky/modules/solutions-page/page.jsx"),
+    },
+    resources: {
+      "": () => import("@/projects/smartlucky/modules/resources/page.jsx"),
+    },
+    contact: {
+      "": () => import("@/projects/smartlucky/modules/contact/page.jsx"),
+    },
+    blog: {
+      "": () => import("@/projects/smartlucky/modules/blog/page.jsx"),
+    },
+    platforms: {
+      "": () => import("@/projects/smartlucky/modules/platforms-page/page.jsx"),
+    },
+    "contact-submissions": {
+      "": () => import("@/projects/smartlucky/modules/contact-submissions/page.jsx"),
+    },
+  },
+  alphobia: {
+    home: {
+      "": () => import("@/projects/alphobia/modules/home/page.jsx"),
+    },
+    about: {
+      "": () => import("@/projects/alphobia/modules/about/page.jsx"),
+    },
+    services: {
+      "": () => import("@/projects/alphobia/modules/services/page.jsx"),
+    },
+    casestudies: {
+      "": () => import("@/projects/alphobia/modules/casestudies/page.jsx"),
+    },
+    insights: {
+      "": () => import("@/projects/alphobia/modules/insights/page.jsx"),
+    },
+    assets: {
+      "": () => import("@/projects/alphobia/modules/assets/page.jsx"),
+    },
+    contacts: {
+      "": () => import("@/projects/alphobia/modules/contacts/page.jsx"),
+    },
+  },
+  marketys: {
+    about: { "": () => import("@/projects/marketys/modules/about/page.jsx") },
+    home: { "": () => import("@/projects/marketys/modules/home/page.jsx") },
+    blogs: { "": () => import("@/projects/marketys/modules/blogs/page.jsx") },
+    reviews: { "": () => import("@/projects/marketys/modules/reviews/page.jsx") },
+    services: { "": () => import("@/projects/marketys/modules/services/page.jsx") },
+    bookings: { "": () => import("@/projects/marketys/modules/bookings/page.jsx") },
+    contact: { "": () => import("@/projects/marketys/modules/contact/page.jsx") },
+    team: { "": () => import("@/projects/marketys/modules/team/page.jsx") },
+    settings: { "": () => import("@/projects/marketys/modules/settings/page.jsx") },
+  },
   carrerbook: {
     navbar: {
       "": () => import("@/projects/carrerbook/modules/navbar/page.jsx"),
@@ -179,6 +241,13 @@ const routeLoaders = {
     },
     policy: {
       "": () => import("@/projects/carrerbook/modules/policy/page.jsx"),
+    },
+    client: {
+      "": () => import("@/projects/carrerbook/modules/client/page.jsx"),
+      advertiser: () =>
+        import("@/projects/carrerbook/modules/client/advertiser/page.jsx"),
+      publisher: () =>
+        import("@/projects/carrerbook/modules/client/publisher/page.jsx"),
     },
     events: {
       "": () => import("@/projects/carrerbook/modules/events/page.jsx"),
@@ -325,6 +394,9 @@ const layoutLoaders = {
   },
   carrerbook: {
     blog: () => import("@/projects/carrerbook/modules/blog/layout.jsx"),
+  },
+  marketys: {
+    blogs: () => import("@/projects/marketys/modules/blogs/layout.jsx"),
   },
 };
 

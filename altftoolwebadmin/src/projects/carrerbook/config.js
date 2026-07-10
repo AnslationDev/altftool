@@ -27,7 +27,7 @@ const carrerbookConfig = {
     "about-us": { label: "About Us", icon: Building2 },
      "term-condition": { label: "Term & Condition", icon: Building2 },
     policy: { label: "Policy", icon: Building2 },
-    service:{label: "Service", icon: Building2},
+    client:{label: "Clients", icon: Building2},
     events: { label: "Events", icon: CalendarDays },
     team: { label: "Team", icon: Users },
   },

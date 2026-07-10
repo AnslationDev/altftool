@@ -64,7 +64,37 @@ export const ADMIN_MODULE_ROUTE_KEYS = {
     ],
     ourteams: ["", "view-team"],
   },
-
+  smartlucky: {
+    home: [""],
+    about: [""],
+    services: [""],
+    solutions: [""],
+    resources: [""],
+    contact: [""],
+    blog: [""],
+    platforms: [""],
+    "contact-submissions": [""],
+  },
+  alphobia: {
+    home: [""],
+    about: [""],
+    services: [""],
+    casestudies: [""],
+    insights: [""],
+    assets: [""],
+    contacts: [""],
+  },
+  marketys: {
+    about: [""],
+    home: [""],
+    blogs: [""],
+    reviews: [""],
+    services: [""],
+    bookings: [""],
+    contact: [""],
+    team: [""],
+    settings: [""],
+  },
   carrerbook: {
     navbar: [""],
     footer: [""],
@@ -76,6 +106,7 @@ export const ADMIN_MODULE_ROUTE_KEYS = {
     "about-us": ["", "hero-section", "lead-section"],
     "term-condition": [""],
     policy: [""],
+    client: ["", "advertiser", "publisher"],
     events: [""],
     team: [""],
   },
@@ -157,6 +188,7 @@ export const ADMIN_MODULE_ROUTE_KEYS = {
 export const ADMIN_MODULE_LAYOUT_KEYS = {
   altftool: new Set(["blogs"]),
   leadtree: new Set(["blogs", "creditcard", "expertvideos", "ourteams"]),
+  marketys: new Set(["blogs"]),
   carrerbook: new Set(["blog"]),
 };
 
