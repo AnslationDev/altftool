@@ -195,171 +195,171 @@ const routeLoaders = {
     contact: { "": () => import("@/projects/marketys/modules/contact/page.jsx") },
     team: { "": () => import("@/projects/marketys/modules/team/page.jsx") },
     settings: { "": () => import("@/projects/marketys/modules/settings/page.jsx") },
+  },
+  carrerbook: {
+    navbar: {
+      "": () => import("@/projects/carrerbook/modules/navbar/page.jsx"),
+    },
+    footer: {
+      "": () => import("@/projects/carrerbook/modules/footer/page.jsx"),
+    },
+    home: {
+      "": () => import("@/projects/carrerbook/modules/home/page.jsx"),
+    },
+    "contact-us": {
+      "": () => import("@/projects/carrerbook/modules/contact-us/page.jsx"),
+      settings: () => import("@/projects/carrerbook/modules/contact-us/settings/page.jsx"),
+    },
+    advertiser: {
+      "": () => import("@/projects/carrerbook/modules/advertiser/page.jsx"),
+      "hero-section": () =>
+        import("@/projects/carrerbook/modules/advertiser/hero-section/page.jsx"),
+      "traffic-types": () =>
+        import("@/projects/carrerbook/modules/advertiser/traffic-types/page.jsx"),
+    },
+    publisers: {
+      "": () => import("@/projects/carrerbook/modules/publisers/page.jsx"),
+    },
+    blog: {
+      "": () => import("@/projects/carrerbook/modules/blog/page.jsx"),
+      "add-article": () =>
+        import("@/projects/carrerbook/modules/blog/add-article/page.jsx"),
+      "edit-article/[id]": () =>
+        import("@/projects/carrerbook/modules/blog/edit-article/[id]/page.jsx"),
+      "view-articles": () =>
+        import("@/projects/carrerbook/modules/blog/view-articles/page.jsx"),
+    },
+    "about-us": {
+      "": () => import("@/projects/carrerbook/modules/about-us/page.jsx"),
+      "hero-section": () =>
+        import("@/projects/carrerbook/modules/about-us/hero-section/page.jsx"),
+      "lead-section": () =>
+        import("@/projects/carrerbook/modules/about-us/lead-section/page.jsx"),
+    },
+    "term-condition": {
+      "": () => import("@/projects/carrerbook/modules/term-condition/page.jsx"),
+    },
+    policy: {
+      "": () => import("@/projects/carrerbook/modules/policy/page.jsx"),
+    },
+    events: {
+      "": () => import("@/projects/carrerbook/modules/events/page.jsx"),
+    },
+    team: {
+      "": () => import("@/projects/carrerbook/modules/team/page.jsx"),
+    },
+  },
 
-    carrerbook: {
-      navbar: {
-        "": () => import("@/projects/carrerbook/modules/navbar/page.jsx"),
-      },
-      footer: {
-        "": () => import("@/projects/carrerbook/modules/footer/page.jsx"),
-      },
-      home: {
-        "": () => import("@/projects/carrerbook/modules/home/page.jsx"),
-      },
-      "contact-us": {
-        "": () => import("@/projects/carrerbook/modules/contact-us/page.jsx"),
-        settings: () => import("@/projects/carrerbook/modules/contact-us/settings/page.jsx"),
-      },
-      advertiser: {
-        "": () => import("@/projects/carrerbook/modules/advertiser/page.jsx"),
-        "hero-section": () =>
-          import("@/projects/carrerbook/modules/advertiser/hero-section/page.jsx"),
-        "traffic-types": () =>
-          import("@/projects/carrerbook/modules/advertiser/traffic-types/page.jsx"),
-      },
-      publisers: {
-        "": () => import("@/projects/carrerbook/modules/publisers/page.jsx"),
-      },
-      blog: {
-        "": () => import("@/projects/carrerbook/modules/blog/page.jsx"),
-        "add-article": () =>
-          import("@/projects/carrerbook/modules/blog/add-article/page.jsx"),
-        "edit-article/[id]": () =>
-          import("@/projects/carrerbook/modules/blog/edit-article/[id]/page.jsx"),
-        "view-articles": () =>
-          import("@/projects/carrerbook/modules/blog/view-articles/page.jsx"),
-      },
-      "about-us": {
-        "": () => import("@/projects/carrerbook/modules/about-us/page.jsx"),
-        "hero-section": () =>
-          import("@/projects/carrerbook/modules/about-us/hero-section/page.jsx"),
-        "lead-section": () =>
-          import("@/projects/carrerbook/modules/about-us/lead-section/page.jsx"),
-      },
-      "term-condition": {
-        "": () => import("@/projects/carrerbook/modules/term-condition/page.jsx"),
-      },
-      policy: {
-        "": () => import("@/projects/carrerbook/modules/policy/page.jsx"),
-      },
-      events: {
-        "": () => import("@/projects/carrerbook/modules/events/page.jsx"),
-      },
-      team: {
-        "": () => import("@/projects/carrerbook/modules/team/page.jsx"),
-      },
+  growvibe: {
+    navbar: {
+      "": () => import("@/projects/growvibe/modules/navbar/page.jsx"),
     },
+    home: {
+      "": () => import("@/projects/growvibe/modules/home/page.jsx"),
+    },
+    services: {
+      "": () => import("@/projects/growvibe/modules/services/page.jsx"),
+    },
+    "case-studies": {
+      "": () => import("@/projects/growvibe/modules/case-studies/page.jsx"),
+    },
+    blog: {
+      "": () => import("@/projects/growvibe/modules/blog/page.jsx"),
+    },
+    pages: {
+      "": () => import("@/projects/growvibe/modules/pages/page.jsx"),
+    },
+    leads: {
+      "": () => import("@/projects/growvibe/modules/leads/page.jsx"),
+    },
+    footer: {
+      "": () => import("@/projects/growvibe/modules/footer/page.jsx"),
+    },
+  },
 
-    growvibe: {
-      navbar: {
-        "": () => import("@/projects/growvibe/modules/navbar/page.jsx"),
-      },
-      home: {
-        "": () => import("@/projects/growvibe/modules/home/page.jsx"),
-      },
-      services: {
-        "": () => import("@/projects/growvibe/modules/services/page.jsx"),
-      },
-      "case-studies": {
-        "": () => import("@/projects/growvibe/modules/case-studies/page.jsx"),
-      },
-      blog: {
-        "": () => import("@/projects/growvibe/modules/blog/page.jsx"),
-      },
-      pages: {
-        "": () => import("@/projects/growvibe/modules/pages/page.jsx"),
-      },
-      leads: {
-        "": () => import("@/projects/growvibe/modules/leads/page.jsx"),
-      },
-      footer: {
-        "": () => import("@/projects/growvibe/modules/footer/page.jsx"),
-      },
+  myluckydeal: {
+    dashboard: {
+      "": () => import("@/projects/myluckydeal/modules/dashboard/page.jsx"),
     },
+    deals: {
+      "": () => import("@/projects/myluckydeal/modules/deals/page.jsx"),
+    },
+    categories: {
+      "": () => import("@/projects/myluckydeal/modules/categories/page.jsx"),
+    },
+    stores: {
+      "": () => import("@/projects/myluckydeal/modules/stores/page.jsx"),
+    },
+    coupons: {
+      "": () => import("@/projects/myluckydeal/modules/coupons/page.jsx"),
+    },
+    blogs: {
+      "": () => import("@/projects/myluckydeal/modules/blogs/page.jsx"),
+    },
+    faqs: {
+      "": () => import("@/projects/myluckydeal/modules/faqs/page.jsx"),
+    },
+    hero: {
+      "": () => import("@/projects/myluckydeal/modules/hero/page.jsx"),
+    },
+    ads: {
+      "": () => import("@/projects/myluckydeal/modules/ads/page.jsx"),
+    },
+    offers: {
+      "": () => import("@/projects/myluckydeal/modules/offers/page.jsx"),
+    },
+    collections: {
+      "": () => import("@/projects/myluckydeal/modules/collections/page.jsx"),
+    },
+    settings: {
+      "": () => import("@/projects/myluckydeal/modules/settings/page.jsx"),
+    },
+    migration: {
+      "": () => import("@/projects/myluckydeal/modules/migration/page.jsx"),
+    },
+  },
+  anternet: {
+    banners: { "": () => import("@/projects/anternet/modules/banners/page.jsx") },
+    tasks: { "": () => import("@/projects/anternet/modules/tasks/page.jsx") },
+    quizcategories: { "": () => import("@/projects/anternet/modules/quizcategories/page.jsx") },
+    questions: { "": () => import("@/projects/anternet/modules/questions/page.jsx") },
+    spinprizes: { "": () => import("@/projects/anternet/modules/spinprizes/page.jsx") },
+    videosections: { "": () => import("@/projects/anternet/modules/videosections/page.jsx") },
+    earningtasks: { "": () => import("@/projects/anternet/modules/earningtasks/page.jsx") },
+    settings: { "": () => import("@/projects/anternet/modules/settings/page.jsx") },
+    migration: { "": () => import("@/projects/anternet/modules/migration/page.jsx") },
+    ads: { "": () => import("@/projects/anternet/modules/ads/page.jsx") },
+    notifications: { "": () => import("@/projects/anternet/modules/notifications/page.jsx") },
+    pages: { "": () => import("@/projects/anternet/modules/pages/page.jsx") },
+    users: { "": () => import("@/projects/anternet/modules/users/page.jsx") },
+    arenas: { "": () => import("@/projects/anternet/modules/arenas/page.jsx") },
+  },
+};
 
-    myluckydeal: {
-      dashboard: {
-        "": () => import("@/projects/myluckydeal/modules/dashboard/page.jsx"),
-      },
-      deals: {
-        "": () => import("@/projects/myluckydeal/modules/deals/page.jsx"),
-      },
-      categories: {
-        "": () => import("@/projects/myluckydeal/modules/categories/page.jsx"),
-      },
-      stores: {
-        "": () => import("@/projects/myluckydeal/modules/stores/page.jsx"),
-      },
-      coupons: {
-        "": () => import("@/projects/myluckydeal/modules/coupons/page.jsx"),
-      },
-      blogs: {
-        "": () => import("@/projects/myluckydeal/modules/blogs/page.jsx"),
-      },
-      faqs: {
-        "": () => import("@/projects/myluckydeal/modules/faqs/page.jsx"),
-      },
-      hero: {
-        "": () => import("@/projects/myluckydeal/modules/hero/page.jsx"),
-      },
-      ads: {
-        "": () => import("@/projects/myluckydeal/modules/ads/page.jsx"),
-      },
-      offers: {
-        "": () => import("@/projects/myluckydeal/modules/offers/page.jsx"),
-      },
-      collections: {
-        "": () => import("@/projects/myluckydeal/modules/collections/page.jsx"),
-      },
-      settings: {
-        "": () => import("@/projects/myluckydeal/modules/settings/page.jsx"),
-      },
-      migration: {
-        "": () => import("@/projects/myluckydeal/modules/migration/page.jsx"),
-      },
-    },
-    anternet: {
-      banners: { "": () => import("@/projects/anternet/modules/banners/page.jsx") },
-      tasks: { "": () => import("@/projects/anternet/modules/tasks/page.jsx") },
-      quizcategories: { "": () => import("@/projects/anternet/modules/quizcategories/page.jsx") },
-      questions: { "": () => import("@/projects/anternet/modules/questions/page.jsx") },
-      spinprizes: { "": () => import("@/projects/anternet/modules/spinprizes/page.jsx") },
-      videosections: { "": () => import("@/projects/anternet/modules/videosections/page.jsx") },
-      earningtasks: { "": () => import("@/projects/anternet/modules/earningtasks/page.jsx") },
-      settings: { "": () => import("@/projects/anternet/modules/settings/page.jsx") },
-      migration: { "": () => import("@/projects/anternet/modules/migration/page.jsx") },
-      ads: { "": () => import("@/projects/anternet/modules/ads/page.jsx") },
-      notifications: { "": () => import("@/projects/anternet/modules/notifications/page.jsx") },
-      pages: { "": () => import("@/projects/anternet/modules/pages/page.jsx") },
-      users: { "": () => import("@/projects/anternet/modules/users/page.jsx") },
-      arenas: { "": () => import("@/projects/anternet/modules/arenas/page.jsx") },
-    },
-  };
+const layoutLoaders = {
+  altftool: {
+    blogs: () => import("@/projects/altftool/modules/blogs/layout.jsx"),
+  },
+  leadtree: {
+    blogs: () => import("@/projects/leadtree/modules/blogs/layout.jsx"),
+    creditcard: () =>
+      import("@/projects/leadtree/modules/creditcard/layout.jsx"),
+    expertvideos: () =>
+      import("@/projects/leadtree/modules/expertvideos/layout.jsx"),
+    ourteams: () =>
+      import("@/projects/leadtree/modules/ourteams/layout.jsx"),
+  },
+  carrerbook: {
+    blog: () => import("@/projects/carrerbook/modules/blog/layout.jsx"),
+  },
+  marketys: {
+    blogs: () => import("@/projects/marketys/modules/blogs/layout.jsx"),
+  },
+};
 
-  const layoutLoaders = {
-    altftool: {
-      blogs: () => import("@/projects/altftool/modules/blogs/layout.jsx"),
-    },
-    leadtree: {
-      blogs: () => import("@/projects/leadtree/modules/blogs/layout.jsx"),
-      creditcard: () =>
-        import("@/projects/leadtree/modules/creditcard/layout.jsx"),
-      expertvideos: () =>
-        import("@/projects/leadtree/modules/expertvideos/layout.jsx"),
-      ourteams: () =>
-        import("@/projects/leadtree/modules/ourteams/layout.jsx"),
-    },
-    carrerbook: {
-      blog: () => import("@/projects/carrerbook/modules/blog/layout.jsx"),
-    },
-    marketys: {
-      blogs: () => import("@/projects/marketys/modules/blogs/layout.jsx"),
-    },
-  };
-
-  export function getAdminModulePageLoader(projectId, moduleKey, routeKey) {
-    const moduleRoutes = routeLoaders[projectId]?.[moduleKey];
-return moduleRoutes?.[routeKey] || null;
+export function getAdminModulePageLoader(projectId, moduleKey, routeKey) {
+  const moduleRoutes = routeLoaders[projectId]?.[moduleKey];
+  return moduleRoutes?.[routeKey] || null;
 }
 
 export function getAdminModuleLayoutLoader(projectId, moduleKey) {
