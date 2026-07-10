@@ -154,6 +154,10 @@ const routeLoaders = {
     },
     blog: {
       "": () => import("@/projects/smartlucky/modules/blog/page.jsx"),
+      "add-blogs": () =>
+        import("@/projects/smartlucky/modules/blog/add-blogs/page.jsx"),
+      "edit-blog/[id]": () =>
+        import("@/projects/smartlucky/modules/blog/edit-blog/[id]/page.jsx"),
     },
     platforms: {
       "": () => import("@/projects/smartlucky/modules/platforms-page/page.jsx"),

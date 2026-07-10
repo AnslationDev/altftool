@@ -71,7 +71,7 @@ export const ADMIN_MODULE_ROUTE_KEYS = {
     solutions: [""],
     resources: [""],
     contact: [""],
-    blog: [""],
+    blog: ["", "add-blogs", "edit-blog/[id]"],
     platforms: [""],
     "contact-submissions": [""],
   },
