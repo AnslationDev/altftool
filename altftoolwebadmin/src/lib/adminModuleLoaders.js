@@ -180,6 +180,13 @@ const routeLoaders = {
     policy: {
       "": () => import("@/projects/carrerbook/modules/policy/page.jsx"),
     },
+    client: {
+      "": () => import("@/projects/carrerbook/modules/client/page.jsx"),
+      advertiser: () =>
+        import("@/projects/carrerbook/modules/client/advertiser/page.jsx"),
+      publisher: () =>
+        import("@/projects/carrerbook/modules/client/publisher/page.jsx"),
+    },
     events: {
       "": () => import("@/projects/carrerbook/modules/events/page.jsx"),
     },
