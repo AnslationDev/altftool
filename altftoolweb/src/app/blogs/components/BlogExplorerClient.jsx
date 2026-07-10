@@ -28,6 +28,7 @@ import AutoScrollSlider from "./AutoScrollSlider";
 import {
   BLOG_CHUNK_SIZE,
   BLOG_REMOTE_LIMIT,
+  blogTaxonomySlug,
   mergeBlogPosts,
   normalizeBlog,
 } from "../data";
@@ -48,7 +49,11 @@ function getRelativeTime(dateString) {
 }
 
 const INITIAL_VISIBLE_COUNT = 24;
-const BACKGROUND_SYNC_PAGE_LIMIT = 1;
+// 1 page (72 posts) left most of the published catalog invisible to search —
+// only the newest 72 posts were ever searchable. 12 idle-paced pages cover
+// 800+ posts; the loop still stops the moment hasMore turns false, and each
+// page is served by the ISR-cached /api/blogs route (no read amplification).
+const BACKGROUND_SYNC_PAGE_LIMIT = 12;
 const SORT_OPTIONS = [
   { value: "latest", label: "Latest First" },
   { value: "trending", label: "Trending" },
@@ -108,9 +113,12 @@ function cx(...classes) {
 }
 
 function getCategoryCounts(posts) {
+  // Counts are keyed by taxonomy slug so lookups stay case-insensitive
+  // ("Tools" tab still counts legacy posts stored as "tools").
   return posts.reduce((acc, post) => {
-    acc.All = (acc.All || 0) + 1;
-    acc[post.category] = (acc[post.category] || 0) + 1;
+    acc.all = (acc.all || 0) + 1;
+    const key = blogTaxonomySlug(post.category);
+    if (key) acc[key] = (acc[key] || 0) + 1;
     return acc;
   }, {});
 }
@@ -160,7 +168,7 @@ function CategoryTabs({ categories, counts, activeCategory, onChange }) {
     <div className="flex flex-wrap items-center gap-2">
       {categories.map((category) => {
         const active = category === activeCategory;
-        const count = counts ? (counts[category] || 0) : 0;
+        const count = counts ? (counts[blogTaxonomySlug(category)] || 0) : 0;
         return (
           <button
             key={category}
@@ -451,7 +459,7 @@ function CategoriesWidget({ categories, counts, activeCategory, onChangeCategory
                 "text-xs font-bold transition-colors",
                 isActive ? "text-(--primary)" : "text-(--foreground) group-hover:text-(--primary)"
               )}>
-                {counts[cat] || 0}
+                {counts[blogTaxonomySlug(cat)] || 0}
               </span>
             </button>
           );
@@ -678,9 +686,10 @@ export default function BlogExplorerClient({
   const counts = useMemo(() => getCategoryCounts(posts), [posts]);
 
   const filteredPosts = useMemo(() => {
+    const activeCategorySlug = blogTaxonomySlug(activeCategory);
     let result = activeCategory === "All"
       ? posts
-      : posts.filter((post) => post.category === activeCategory);
+      : posts.filter((post) => blogTaxonomySlug(post.category) === activeCategorySlug);
 
     if (deferredQuery) {
       result = result.filter((post) => post.searchText?.includes(deferredQuery));

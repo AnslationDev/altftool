@@ -1,31 +1,31 @@
 /* ================================================================
-   ALTF Love IMG — professional SaaS design system
-   Blue-led palette: sky → blue → indigo → violet.
+   ALTF Love IMG — ALTFTool professional SaaS design system
+   Theme palette: primary teal → secondary cyan.
    Scoped under .ali-scope so the rest of AltFTool is untouched.
 ================================================================ */
 
 .ali-scope {
-  /* Brand palette — blue with indigo/violet accents */
-  --ali-sky: #0ea5e9;
-  --ali-blue: #2563eb;
-  --ali-blue-600: #1d4ed8;
-  --ali-blue-700: #1e40af;
-  --ali-indigo: #4f46e5;
-  --ali-violet: #7c3aed;
-  --ali-violet-600: #6d28d9;
+  /* Brand palette — mirrors the global ALTFTool tokens */
+  --ali-sky: var(--secondary, #38bdf8);
+  --ali-blue: var(--primary, #14b8a6);
+  --ali-blue-600: var(--primary-hover, #0d9488);
+  --ali-blue-700: var(--primary-active, #0f766e);
+  --ali-indigo: var(--secondary, #38bdf8);
+  --ali-violet: color-mix(in srgb, var(--secondary, #38bdf8) 72%, var(--primary, #14b8a6));
+  --ali-violet-600: var(--secondary, #38bdf8);
 
   /* Primary token used across UI */
-  --ali-brand: #2563eb;
-  --ali-brand-strong: #1d4ed8;
-  --ali-brand-ink: #1e3a8a;
+  --ali-brand: var(--primary, #14b8a6);
+  --ali-brand-strong: var(--primary-hover, #0d9488);
+  --ali-brand-ink: var(--primary-active, #0f766e);
 
-  --ali-grad: linear-gradient(120deg, #0ea5e9 0%, #2563eb 46%, #6d28d9 100%);
-  --ali-grad-bright: linear-gradient(120deg, #38bdf8 0%, #3b82f6 50%, #8b5cf6 100%);
-  --ali-grad-soft: linear-gradient(120deg, rgba(37, 99, 235, 0.10), rgba(124, 58, 237, 0.10));
-  --ali-grad-text: linear-gradient(110deg, #1d4ed8 0%, #4f46e5 50%, #7c3aed 100%);
+  --ali-grad: linear-gradient(135deg, var(--primary, #14b8a6) 0%, var(--secondary, #38bdf8) 100%);
+  --ali-grad-bright: linear-gradient(135deg, #2dd4bf 0%, var(--secondary, #38bdf8) 100%);
+  --ali-grad-soft: linear-gradient(135deg, color-mix(in srgb, var(--primary, #14b8a6) 12%, transparent), color-mix(in srgb, var(--secondary, #38bdf8) 12%, transparent));
+  --ali-grad-text: linear-gradient(110deg, var(--primary, #14b8a6) 0%, var(--secondary, #38bdf8) 55%, var(--primary, #14b8a6) 100%);
 
   /* accent default (overridable per element via --ali-accent) */
-  --ali-accent: #2563eb;
+  --ali-accent: var(--primary, #14b8a6);
 
   /* backward-compatible aliases (theme-aware) for earlier token names */
   --ali-teal: var(--ali-brand);
@@ -33,25 +33,47 @@
   --ali-teal-700: var(--ali-brand);
 
   /* Surfaces driven by host theme so dark mode works */
-  --ali-page: #f6f8fc;
-  --ali-surface: #ffffff;
-  --ali-surface-2: #f9fafd;
-  --ali-soft: #eef2fb;
-  --ali-border: #e6eaf2;
-  --ali-border-strong: #d4dbe8;
-  --ali-text: #0f1729;
-  --ali-text-soft: #334155;
-  --ali-muted: #64748b;
+  --ali-page: var(--page, #f7f8fb);
+  --ali-surface: var(--surface, #ffffff);
+  --ali-surface-2: var(--surface-soft, #eef3f6);
+  --ali-soft: var(--surface-soft, #eef3f6);
+  --ali-border: var(--border, #e2e8f0);
+  --ali-border-strong: var(--border-strong, #cbd5e1);
+  --ali-text: color-mix(in srgb, var(--foreground, #111827) 94%, #020617);
+  --ali-text-soft: color-mix(in srgb, var(--foreground, #111827) 84%, #334155);
+  --ali-muted: color-mix(in srgb, var(--foreground, #111827) 68%, #475569);
 
   --ali-shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.05), 0 1px 3px rgba(15, 23, 42, 0.05);
-  --ali-shadow-md: 0 10px 30px rgba(37, 99, 235, 0.10);
-  --ali-shadow-lg: 0 24px 60px rgba(37, 99, 235, 0.16);
-  --ali-glow: 0 0 0 1px rgba(37, 99, 235, 0.12), 0 18px 40px rgba(37, 99, 235, 0.18);
+  --ali-shadow-md: 0 10px 30px color-mix(in srgb, var(--primary, #14b8a6) 14%, transparent);
+  --ali-shadow-lg: 0 24px 60px color-mix(in srgb, var(--primary, #14b8a6) 18%, transparent);
+  --ali-glow: 0 0 0 1px color-mix(in srgb, var(--primary, #14b8a6) 16%, transparent), 0 18px 40px color-mix(in srgb, var(--primary, #14b8a6) 20%, transparent);
 
   --ali-radius: 16px;
   --ali-radius-lg: 24px;
 
   color: var(--ali-text);
+  font-family: var(--font-primary), var(--font-sans), Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+.ali-scope h1,
+.ali-scope h2,
+.ali-scope h3,
+.ali-scope h4,
+.ali-scope h5,
+.ali-scope h6,
+.ali-scope button,
+.ali-scope input,
+.ali-scope select,
+.ali-scope textarea {
+  font-family: inherit;
+}
+
+.ali-scope p,
+.ali-scope li,
+.ali-scope span,
+.ali-scope a,
+.ali-scope button {
+  text-rendering: geometricPrecision;
 }
 
 [data-theme="dark"] .ali-scope {
@@ -65,12 +87,12 @@
   --ali-text-soft: #cbd5e1;
   --ali-muted: #94a3b8;
 
-  --ali-brand: #60a5fa;
-  --ali-brand-strong: #93c5fd;
-  --ali-brand-ink: #bfdbfe;
+  --ali-brand: #2dd4bf;
+  --ali-brand-strong: #5eead4;
+  --ali-brand-ink: #99f6e4;
 
-  --ali-grad-text: linear-gradient(110deg, #7dd3fc 0%, #93c5fd 50%, #c4b5fd 100%);
-  --ali-grad-soft: linear-gradient(120deg, rgba(96, 165, 250, 0.14), rgba(167, 139, 250, 0.14));
+  --ali-grad-text: linear-gradient(110deg, #2dd4bf 0%, #38bdf8 55%, #2dd4bf 100%);
+  --ali-grad-soft: linear-gradient(135deg, rgba(45, 212, 191, 0.14), rgba(56, 189, 248, 0.14));
   --ali-shadow-md: 0 12px 32px rgba(0, 0, 0, 0.5);
   --ali-shadow-lg: 0 28px 64px rgba(0, 0, 0, 0.6);
   --ali-glow: 0 0 0 1px rgba(96, 165, 250, 0.25), 0 18px 44px rgba(2, 8, 23, 0.7);
@@ -108,7 +130,7 @@
   padding: 0.42rem 0.9rem;
   border-radius: 999px;
 }
-[data-theme="dark"] .ali-eyebrow { color: #bfdbfe; }
+[data-theme="dark"] .ali-eyebrow { color: #99f6e4; }
 
 /* ---------- glass + cards ---------- */
 .ali-glass {
@@ -192,10 +214,10 @@
 .ali-btn-primary {
   background: var(--ali-grad);
   color: #fff;
-  box-shadow: 0 8px 22px rgba(37, 99, 235, 0.30);
+  box-shadow: 0 8px 22px color-mix(in srgb, var(--primary, #14b8a6) 28%, transparent);
 }
 .ali-btn-primary:hover:not(:disabled) {
-  box-shadow: 0 14px 32px rgba(79, 70, 229, 0.42);
+  box-shadow: 0 14px 32px color-mix(in srgb, var(--secondary, #38bdf8) 32%, transparent);
   transform: translateY(-2px);
 }
 
@@ -233,7 +255,7 @@
   background: var(--ali-grad);
   border-color: transparent;
   color: #fff;
-  box-shadow: 0 6px 16px rgba(37, 99, 235, 0.28);
+  box-shadow: 0 6px 16px color-mix(in srgb, var(--primary, #14b8a6) 26%, transparent);
 }
 
 /* ---------- inputs / range ---------- */
@@ -302,9 +324,9 @@ select.ali-input { cursor: pointer; }
 /* ---------- decorative background blobs ---------- */
 .ali-blobs { position: absolute; inset: 0; overflow: hidden; pointer-events: none; z-index: 0; }
 .ali-blob { position: absolute; border-radius: 50%; filter: blur(72px); opacity: 0.5; }
-.ali-blob-1 { width: 380px; height: 380px; background: #38bdf8; top: -120px; left: -80px; }
-.ali-blob-2 { width: 440px; height: 440px; background: #818cf8; top: -60px; right: -120px; opacity: 0.45; }
-.ali-blob-3 { width: 340px; height: 340px; background: #a78bfa; bottom: -150px; left: 28%; opacity: 0.4; }
+.ali-blob-1 { width: 380px; height: 380px; background: var(--primary, #14b8a6); top: -120px; left: -80px; }
+.ali-blob-2 { width: 440px; height: 440px; background: var(--secondary, #38bdf8); top: -60px; right: -120px; opacity: 0.45; }
+.ali-blob-3 { width: 340px; height: 340px; background: color-mix(in srgb, var(--primary, #14b8a6) 56%, var(--secondary, #38bdf8)); bottom: -150px; left: 28%; opacity: 0.4; }
 [data-theme="dark"] .ali-blob { opacity: 0.26; }
 
 /* ---------- grid background ---------- */
@@ -453,7 +475,7 @@ select.ali-input { cursor: pointer; }
   color: var(--ali-muted); cursor: pointer; transition: all 0.2s ease; border: 1px solid transparent;
 }
 .ali-tab:hover { color: var(--ali-text); }
-.ali-tab[data-active="true"] { background: var(--ali-grad); color: #fff; box-shadow: 0 6px 16px rgba(37,99,235,0.28); }
+.ali-tab[data-active="true"] { background: var(--ali-grad); color: #fff; box-shadow: 0 6px 16px color-mix(in srgb, var(--primary, #14b8a6) 26%, transparent); }
 
 /* number badge for steps */
 .ali-step-num {

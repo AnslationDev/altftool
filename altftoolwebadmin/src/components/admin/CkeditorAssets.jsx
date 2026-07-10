@@ -52,6 +52,10 @@ function loadScript(src) {
   window.__ALTFT_CKEDITOR_SCRIPT_PROMISES__[src] = new Promise((resolve, reject) => {
     const script = existingScript || document.createElement("script");
 
+    // cdn.ckeditor.com serves CORS headers; loading the bundles as CORS
+    // scripts unmasks their runtime errors (otherwise license errors surface
+    // as an unusable "Script error." with no error code).
+    script.crossOrigin = "anonymous";
     script.src = src;
     script.async = true;
     script.onload = () => {
@@ -103,9 +107,9 @@ export function useCkeditorAssetsReady() {
   return ready;
 }
 
-export default function CkeditorAssets() {
+export default function CkeditorAssets({ force = false }) {
   useEffect(() => {
-    if (!process.env.NEXT_PUBLIC_CKEDITOR_LICENSE_KEY) return undefined;
+    if (!force && !process.env.NEXT_PUBLIC_CKEDITOR_LICENSE_KEY) return undefined;
 
     let cancelled = false;
 

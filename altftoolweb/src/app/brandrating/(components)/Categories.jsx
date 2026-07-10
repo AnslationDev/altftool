@@ -120,7 +120,7 @@ function Categories() {
     }
 
     return (
-        <section className="bg-(--background) section">
+        <section className="section">
             <div className="flex flex-col items-center gap-2 pb-8 sm:pb-10">
                 <h2 className="section-title text-center">
                     Top-Searched Matchups
@@ -159,21 +159,21 @@ function Categories() {
                             className="w-[calc(50vw-28px)] flex-shrink-0 sm:w-[280px] md:w-[300px] lg:w-full xl:w-full min-h-[260px]
               border-0 rounded-none shadow-none bg-transparent
               lg:flex-shrink sm:min-h-[280px] md:min-h-[320px] lg:min-h-[240px] xl:min-h-[300px]
-              sm:rounded-xl sm:border sm:border-(--border)
+              sm:rounded-xl sm:border brandrating-card-surface
               flex flex-col items-center justify-between text-center
               pt-12 sm:pt-16 md:pt-20 lg:pt-8 xl:pt-18
               pr-10 sm:pr-12 lg:pr-8
               pb-10 sm:pb-12 lg:pb-6
               pl-10 sm:pl-12 lg:pl-8 xl:pr-10 xl:pb-10 xl:pl-10
               gap-4 group
-              sm:hover:shadow-lg sm:hover:border-(--primary)
+              sm:hover:border-(--primary)
               transition-all duration-500 ease-out cursor-pointer"
                         >
 
                             <div
                                 className="w-[110px] h-[110px] lg:w-[80px] lg:h-[80px] xl:w-[110px] xl:h-[110px]
                                            flex items-center justify-center rounded-[65px]
-                bg-(--search-buysmart) flex-shrink-0
+                bg-(--primary)/8 border border-(--primary)/15 flex-shrink-0
                 transition-all duration-300 group-hover:bg-(--primary) group-hover:scale-110"
                             >
                                 {getCategoryIcon(item?.icon, item?.name)}
@@ -205,7 +205,7 @@ function Categories() {
                         className={`w-2.5 h-2.5 rounded-full transition-all duration-300
                        ${Math.floor(mobileIndex / 2) === i
                                 ? "bg-[var(--primary)] scale-110"
-                                : "bg-gray-300"
+                                : "brandrating-dot-muted"
                             }`}
                     />
                 ))}
@@ -221,7 +221,6 @@ function Categories() {
 
 
 export default Categories;
-
 
 
 

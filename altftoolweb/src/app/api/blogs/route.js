@@ -32,16 +32,23 @@ export async function GET(request) {
   const category = searchParams.get("category") || undefined;
 
   try {
-    const posts = await fetchFirebaseBlogsPage({
+    // Probe one row beyond the requested page so hasMore is exact — the old
+    // `posts.length === limit` heuristic triggered one guaranteed-empty fetch
+    // whenever the catalog size aligned with a page boundary. (Page size is
+    // capped at 100, so at limit=100 the heuristic is kept.)
+    const probeSize = limit < 100 ? limit + 1 : limit;
+    const fetched = await fetchFirebaseBlogsPage({
       offset,
-      pageSize: limit,
+      pageSize: probeSize,
       category,
     });
+    const posts = fetched.slice(0, limit);
+    const hasMore = probeSize > limit ? fetched.length > limit : fetched.length === limit;
 
     return NextResponse.json({
       posts,
       nextOffset: offset + posts.length,
-      hasMore: posts.length === limit,
+      hasMore,
     });
   } catch (error) {
     const fallback = getStaticBlogFallback({ offset, limit, category });

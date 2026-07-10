@@ -60,7 +60,7 @@ export default function StoreGrid({ filter }) {
 
   return (
     <div className="flex flex-col gap-6 animate-slide-up">
-      <div className="section-header">
+      <div className="section-header buy-smart-section-header-plain">
         <h2 className="section-title">
           What&apos;s <span>Trending Now</span>
         </h2>
@@ -97,7 +97,7 @@ export default function StoreGrid({ filter }) {
                 </div>
                 <div className="relative z-10 flex h-full flex-col justify-end px-5 pb-4 text-white">
                   {store.tag && (
-                    <span className="mb-1 w-fit rounded-full bg-white/20 px-2 py-[2px] text-[11px] font-semibold">
+                    <span className="buy-smart-chip mb-1 w-fit rounded-full border px-2 py-[2px] text-[11px] font-semibold">
                       {store.tag}
                     </span>
                   )}
@@ -134,8 +134,8 @@ function StoreImageCard({ store }) {
 
   return (
     <>
-      <div className="absolute inset-0 flex flex-col items-start justify-end gap-2 bg-(--muted) p-5">
-        <span className="rounded-full border border-(--border) bg-(--card) px-2.5 py-1 text-xs font-semibold text-(--muted-foreground)">
+      <div className="buy-smart-themed-card absolute inset-0 flex flex-col items-start justify-end gap-2 border-0 p-5">
+        <span className="buy-smart-chip rounded-full border px-2.5 py-1 text-xs font-semibold">
           Trending
         </span>
         <p className="text-xl font-bold text-(--foreground)">

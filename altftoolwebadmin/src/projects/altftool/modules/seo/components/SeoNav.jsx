@@ -2,7 +2,7 @@
 
 // ALTF Engine — shared tab navigation for the Meta SEO Management module.
 
-import { Layers, Search, Globe2, FileEdit, ListChecks, Wrench, FileText, Globe } from "lucide-react";
+import { Layers, Search, Globe2, FileEdit, ListChecks, Wrench, FileText, Globe, Bot } from "lucide-react";
 
 const TABS = [
   { key: "dashboard", label: "Dashboard", href: "/altftool/seo/dashboard", icon: Layers },
@@ -13,18 +13,22 @@ const TABS = [
   { key: "technical", label: "Technical", href: "/altftool/seo/technical", icon: Wrench },
   { key: "config", label: "Config (JSON)", href: "/altftool/seo", icon: FileText },
   { key: "gsc", label: "Search Console", href: "/altftool/seo/gsc", icon: Globe },
+  { key: "automation", label: "Automation", href: "/altftool/blogs/automation", icon: Bot },
 ];
 
 export default function SeoNav({ active }) {
   return (
-    <nav className="flex items-center gap-5 overflow-x-auto border-b border-border pb-3">
+    <nav
+      aria-label="SEO sections"
+      className="flex items-center gap-1 overflow-x-auto rounded-2xl border border-border bg-surface-soft/70 p-1.5 shadow-sm"
+    >
       {TABS.map(({ key, label, href, icon: Icon }) => {
         const isActive = key === active;
         return isActive ? (
           <span
             key={key}
             aria-current="page"
-            className="flex shrink-0 items-center gap-1.5 border-b-2 border-primary pb-3 -mb-3.5 font-semibold text-primary"
+            className="flex shrink-0 items-center gap-1.5 rounded-xl bg-card px-3.5 py-2 text-sm font-semibold text-primary shadow-sm ring-1 ring-border"
           >
             <Icon className="h-4 w-4" />
             {label}
@@ -33,7 +37,7 @@ export default function SeoNav({ active }) {
           <a
             key={key}
             href={href}
-            className="flex shrink-0 items-center gap-1.5 pb-3 -mb-3.5 text-muted transition-colors hover:text-foreground"
+            className="flex shrink-0 items-center gap-1.5 rounded-xl px-3.5 py-2 text-sm font-medium text-muted transition-colors hover:bg-card/70 hover:text-foreground focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
           >
             <Icon className="h-4 w-4" />
             {label}

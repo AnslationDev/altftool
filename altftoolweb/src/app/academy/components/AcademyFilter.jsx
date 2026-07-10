@@ -43,8 +43,7 @@ export default function AcademyFilter({ categories, active, onChange }) {
                   layoutId="academy-filter-active"
                   className="
                 absolute inset-0 -z-10 rounded-md
-                bg-gradient-to-r
-                from-indigo-500 via-blue-500 to-cyan-400
+                bg-(--primary)
               "
                   transition={{
                     type: "spring",
@@ -57,7 +56,7 @@ export default function AcademyFilter({ categories, active, onChange }) {
               <span
                 className={
                   isActive
-                    ? "text-white"
+                    ? "text-(--primary-foreground)"
                     : "text-(--muted-foreground) hover:text-(--muted-foreground)/80"
                 }
               >

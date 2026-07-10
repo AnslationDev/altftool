@@ -73,9 +73,9 @@ export default function Hero() {
           <motion.div variants={item} className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-3 text-sm" style={{ color: "var(--ali-muted)" }}>
             <span className="inline-flex items-center gap-2.5">
               <span className="flex -space-x-2">
-                {[["MR", "#2563eb"], ["DK", "#7c3aed"], ["PS", "#0891b2"], ["TL", "#0ea5e9"]].map(([t, c]) => (
+                {[["MR", "#14B8A6"], ["DK", "#38BDF8"], ["PS", "#0D9488"], ["TL", "#06B6D4"]].map(([t, c]) => (
                   <span key={t} className="grid h-7 w-7 place-items-center rounded-full text-[10px] font-bold text-white ring-2"
-                    style={{ background: `linear-gradient(135deg, ${c}, #4f46e5)`, ["--tw-ring-color"]: "var(--ali-page)" }}>
+                    style={{ background: `linear-gradient(135deg, ${c}, var(--secondary, #38BDF8))`, ["--tw-ring-color"]: "var(--ali-page)" }}>
                     {t}
                   </span>
                 ))}

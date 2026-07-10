@@ -59,7 +59,7 @@ export default function Faq() {
               className={`
                 rounded-[20px]
                 border
-                bg-(--background)
+                bg-(--card)
                 overflow-hidden
                 transition-all duration-300
                 shadow-[0px_8px_30px_0px_rgba(0,0,0,0.04)]
@@ -110,7 +110,7 @@ export default function Faq() {
                     ${
                       isOpen
                         ? "bg-(--primary)/10 text-(--primary)"
-                        : "bg-(--muted) text-(--muted-foreground)"
+                        : "bg-(--primary)/5 text-(--muted-foreground)"
                     }
                   `}
                 >

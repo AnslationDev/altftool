@@ -1,3 +1,95 @@
+.academy-page {
+  --academy-gradient: linear-gradient(135deg, var(--primary), var(--secondary));
+  --academy-muted: color-mix(in srgb, var(--foreground) 70%, var(--background));
+  --academy-card: color-mix(in srgb, var(--card) 94%, transparent);
+  --academy-soft: color-mix(in srgb, var(--primary) 8%, var(--background));
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at 14% 8%, color-mix(in srgb, var(--primary) 10%, transparent), transparent 28rem),
+    radial-gradient(circle at 86% 16%, color-mix(in srgb, var(--secondary) 11%, transparent), transparent 30rem),
+    linear-gradient(180deg, var(--background) 0%, color-mix(in srgb, var(--primary) 4%, var(--background)) 44%, var(--background) 100%);
+  color: var(--foreground);
+  font-family: var(--font-primary), var(--font-sans), Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+.academy-page :is(h1, h2, h3, .section-title, .academy-heading) {
+  color: var(--foreground);
+  font-family: var(--font-primary), var(--font-sans), Inter, ui-sans-serif, system-ui, sans-serif;
+  letter-spacing: 0;
+}
+
+.academy-page .section-title,
+.academy-page .academy-heading {
+  font-weight: 800;
+  line-height: 1.08;
+}
+
+.academy-page :is(.section-subtitle, .academy-subheading, [class*="text-(--muted-foreground)"]) {
+  color: var(--academy-muted);
+}
+
+.academy-gradient-text {
+  background: var(--academy-gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.academy-card-surface {
+  border: 1px solid color-mix(in srgb, var(--border) 86%, var(--primary));
+  background: var(--academy-card);
+  box-shadow: var(--anslation-ds-shadow-sm);
+  transition: border-color 150ms ease, box-shadow 150ms ease, transform 150ms ease;
+}
+
+.academy-card-surface:hover {
+  border-color: color-mix(in srgb, var(--primary) 34%, var(--border));
+  box-shadow: var(--anslation-ds-shadow-md);
+}
+
+.academy-panel {
+  border: 1px solid color-mix(in srgb, var(--border) 86%, var(--primary));
+  background: color-mix(in srgb, var(--card) 92%, transparent);
+  box-shadow: var(--anslation-ds-shadow-sm);
+}
+
+.academy-pill {
+  border: 1px solid color-mix(in srgb, var(--primary) 22%, var(--border));
+  background: color-mix(in srgb, var(--primary) 10%, var(--card));
+  color: var(--primary);
+}
+
+.academy-hero-shell {
+  border: 1px solid color-mix(in srgb, var(--border) 70%, var(--primary));
+  box-shadow: var(--anslation-ds-shadow-md);
+}
+
+.academy-stat-strip {
+  background: var(--academy-gradient);
+  color: var(--primary-foreground);
+  box-shadow: 0 18px 42px color-mix(in srgb, var(--primary) 18%, transparent);
+}
+
+.academy-fade-left {
+  background: linear-gradient(90deg, var(--background), transparent);
+}
+
+.academy-fade-right {
+  background: linear-gradient(270deg, var(--background), transparent);
+}
+
+.academy-muted-text {
+  color: var(--academy-muted);
+}
+
+.academy-link {
+  color: var(--primary);
+}
+
+.academy-link:hover {
+  color: var(--primary-hover);
+}
+
 /* ---------- Section Wrapper ---------- */
 .academy-section {
   width: 100%;
@@ -65,8 +157,8 @@
   align-items: center;
   gap: clamp(0.25rem, 1vw, 0.5rem);
   padding: clamp(0.5rem, 1.5vw, 0.875rem) clamp(0.75rem, 2vw, 1.125rem);
-  background-color: #2563eb;
-  color: #ffffff;
+  background: var(--academy-gradient);
+  color: var(--primary-foreground);
   font-weight: 700;
   font-size: clamp(0.7rem, 1.5vw, 1.2rem);
   line-height: 1.2;
@@ -80,7 +172,7 @@
 
 .academy-btn:hover {
   transform: scale(1.05);
-
+  box-shadow: var(--anslation-ds-shadow-md);
 }
 
 .academy-btn:active {
@@ -124,4 +216,18 @@
 .academy-btn:hover .icon-in {
   transform: translate(0, 0);
   opacity: 1;
+}
+
+[data-theme="dark"] .academy-page {
+  --academy-card: color-mix(in srgb, var(--card) 88%, transparent);
+  --academy-muted: color-mix(in srgb, var(--foreground) 74%, var(--muted-foreground));
+  background:
+    radial-gradient(circle at 14% 8%, color-mix(in srgb, var(--primary) 15%, transparent), transparent 28rem),
+    radial-gradient(circle at 86% 16%, color-mix(in srgb, var(--secondary) 12%, transparent), transparent 30rem),
+    linear-gradient(180deg, var(--background) 0%, color-mix(in srgb, var(--primary) 6%, var(--background)) 44%, var(--background) 100%);
+}
+
+[data-theme="dark"] .academy-panel,
+[data-theme="dark"] .academy-card-surface {
+  background: color-mix(in srgb, var(--card) 88%, transparent);
 }

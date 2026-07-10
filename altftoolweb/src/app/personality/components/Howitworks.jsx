@@ -11,7 +11,6 @@ const steps = [
     desc: "Respond to carefully designed personality-based scenarios in just a few minutes.",
     imgSrc: "/personality/how-it-works/Answer.png",
     icon: <ClipboardList />,
-    cardBg: "from-blue-50 to-indigo-100",
   },
   {
     num: "02",
@@ -19,7 +18,6 @@ const steps = [
     desc: "Our advanced system analyzes your responses, behavioral patterns and emotional traits.",
     imgSrc: "/personality/how-it-works/Ai.png",
     icon: <Brain />,
-    cardBg: "from-sky-50 to-blue-100",
   },
   {
     num: "03",
@@ -27,7 +25,6 @@ const steps = [
     desc: "Receive detailed personality insights, strengths, and growth recommendations instantly.",
     imgSrc: "/personality/how-it-works/Get.png",
     icon: <ChartNoAxesColumn />,
-    cardBg: "from-indigo-50 to-violet-100",
   },
 ];
 
@@ -50,7 +47,7 @@ export default function HowItWorks() {
           {steps.map((step, i) => (
             <div
               key={i}
-              className="bg-(--card) group rounded-[24px] sm:rounded-[28px] xl:rounded-[30px] overflow-hidden flex flex-col xl:flex-col border transition-all duration-300 ease-out border-(--border) shadow-[0px_4px_20px_0px_rgba(0,0,0,0.05)] hover:shadow-[0px_10px_30px_rgba(0,0,0,0.08)]"
+              className="personality-card group rounded-[24px] sm:rounded-[28px] xl:rounded-[30px] overflow-hidden flex flex-col xl:flex-col border transition-all duration-300 ease-out"
              
             >
               {/* Image area */}
@@ -60,7 +57,7 @@ export default function HowItWorks() {
               >
                 {/* Step number badge (overlay like design) */}
                 <div
-                  className="absolute top-4 left-4 w-11 h-11 rounded-full flex items-center justify-center z-20 bg-(--primary)"
+                  className="absolute top-4 left-4 w-11 h-11 rounded-full flex items-center justify-center z-20 personality-primary-action"
                 >
                   <span className="px-7 pt-6 pb-7 md:py-6 md:pr-6 md:pl-4 flex items-start gap-4 md:flex-1 font-bold text-white text-[18px]">
                     {step.num}

@@ -29,7 +29,7 @@ export default function Workflow() {
             const Icon = s.icon;
             return (
               <RevealItem key={s.n} variants={scaleIn}>
-                <div className="ali-card ali-card-hover relative flex flex-col items-center p-7 text-center" style={{ "--ali-accent": "#2563eb" }}>
+                <div className="ali-card ali-card-hover relative flex flex-col items-center p-7 text-center" style={{ "--ali-accent": "var(--primary, #14B8A6)" }}>
                   <span className="absolute right-5 top-4 text-4xl ali-step-num">{s.n}</span>
                   <div className="grid h-16 w-16 place-items-center rounded-2xl text-white shadow-lg" style={{ background: "var(--ali-grad)" }}>
                     <Icon size={28} />

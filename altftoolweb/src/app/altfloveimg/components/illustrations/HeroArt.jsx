@@ -20,19 +20,19 @@ export default function HeroArt({ className = "" }) {
           <stop stopColor="#fde68a" /><stop offset="1" stopColor="#fb923c" />
         </linearGradient>
         <linearGradient id="ha-m1" x1="0" y1="0" x2="0" y2="1">
-          <stop stopColor="#6366f1" /><stop offset="1" stopColor="#4338ca" />
+          <stop stopColor="#14B8A6" /><stop offset="1" stopColor="#0D9488" />
         </linearGradient>
         <linearGradient id="ha-m2" x1="0" y1="0" x2="0" y2="1">
-          <stop stopColor="#22d3ee" /><stop offset="1" stopColor="#0891b2" />
+          <stop stopColor="#38BDF8" /><stop offset="1" stopColor="#14B8A6" />
         </linearGradient>
         <linearGradient id="ha-brand" x1="0" y1="0" x2="1" y2="1">
-          <stop stopColor="#38bdf8" /><stop offset="0.5" stopColor="#2563eb" /><stop offset="1" stopColor="#7c3aed" />
+          <stop stopColor="#14B8A6" /><stop offset="0.5" stopColor="#38BDF8" /><stop offset="1" stopColor="#0D9488" />
         </linearGradient>
         <linearGradient id="ha-win" x1="0" y1="0" x2="1" y2="1">
           <stop stopColor="#ffffff" /><stop offset="1" stopColor="#eef2fb" />
         </linearGradient>
         <filter id="ha-shadow" x="-20%" y="-20%" width="140%" height="140%">
-          <feDropShadow dx="0" dy="22" stdDeviation="26" floodColor="#2563eb" floodOpacity="0.20" />
+          <feDropShadow dx="0" dy="22" stdDeviation="26" floodColor="#14B8A6" floodOpacity="0.20" />
         </filter>
         <clipPath id="ha-photo"><rect x="118" y="150" width="300" height="196" rx="14" /></clipPath>
       </defs>
@@ -65,15 +65,15 @@ export default function HeroArt({ className = "" }) {
         <motion.g {...(reduce ? {} : { animate: { x: [-26, 26, -26] }, transition: { duration: 6, repeat: Infinity, ease: "easeInOut" } })}>
           <rect x="266" y="150" width="3" height="196" fill="#ffffff" />
           <circle cx="267.5" cy="248" r="15" fill="#ffffff" stroke="#dbe3f1" />
-          <path d="M262 244 l-5 4 5 4 M273 244 l5 4 -5 4" stroke="#2563eb" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+          <path d="M262 244 l-5 4 5 4 M273 244 l5 4 -5 4" stroke="#14B8A6" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
         </motion.g>
 
         {/* slider control row */}
         <rect x="118" y="362" width="190" height="8" rx="4" fill="#eef2fb" />
         <rect x="118" y="362" width="120" height="8" rx="4" fill="url(#ha-brand)" />
-        <circle cx="238" cy="366" r="8" fill="#ffffff" stroke="#2563eb" strokeWidth="2.5" />
+        <circle cx="238" cy="366" r="8" fill="#ffffff" stroke="#14B8A6" strokeWidth="2.5" />
         <rect x="330" y="358" width="90" height="16" rx="8" fill="url(#ha-brand)" fillOpacity="0.14" />
-        <rect x="342" y="364" width="66" height="4" rx="2" fill="#2563eb" fillOpacity="0.5" />
+        <rect x="342" y="364" width="66" height="4" rx="2" fill="#14B8A6" fillOpacity="0.5" />
       </g>
 
       {/* floating tool rail */}
@@ -112,7 +112,7 @@ export default function HeroArt({ className = "" }) {
         <path d="M70 120 l4 10 10 4 -10 4 -4 10 -4 -10 -10 -4 10 -4 z" fill="url(#ha-brand)" />
       </motion.g>
       <motion.g {...pulse(3.2)}>
-        <path d="M498 96 l3 7 7 3 -7 3 -3 7 -3 -7 -7 -3 7 -3 z" fill="#7c3aed" />
+        <path d="M498 96 l3 7 7 3 -7 3 -3 7 -3 -7 -7 -3 7 -3 z" fill="#38BDF8" />
       </motion.g>
       <motion.g {...pulse(2.2)}>
         <circle cx="120" cy="430" r="5" fill="#22d3ee" />

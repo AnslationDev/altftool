@@ -111,7 +111,12 @@ export default function VideoGridSection() {
   rounded-xl lg:rounded-2xl
   overflow-hidden
   group cursor-pointer
-  bg-gray-200"
+  bg-(--card)
+  border border-(--border)
+  shadow-sm
+  transition duration-300
+  hover:-translate-y-1
+  hover:shadow-[0_20px_44px_rgba(20,184,166,0.14)]"
                   onClick={() => setSelectedVideo(video)}
                 >
                   <video
@@ -124,7 +129,7 @@ export default function VideoGridSection() {
                     className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition duration-300"
                   />
 
-                  <div className="absolute inset-0 transition" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950/18 to-transparent opacity-0 group-hover:opacity-100 transition" />
                   <div className="absolute inset-0 flex items-center justify-center"></div>
                 </div>
               );
@@ -145,7 +150,7 @@ export default function VideoGridSection() {
                     return (
                       <div
                         key={i}
-                        className="relative animate-slide-up rounded-xl overflow-hidden group cursor-pointer bg-gray-200"
+                        className="relative animate-slide-up rounded-xl overflow-hidden group cursor-pointer bg-(--card) border border-(--border) shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-[0_20px_44px_rgba(20,184,166,0.14)]"
                         onClick={() => setSelectedVideo(video)}
                       >
                         <video
@@ -157,7 +162,7 @@ export default function VideoGridSection() {
                           preload="metadata"
                           className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition duration-300"
                         />
-                        <div className="absolute inset-0  transition" />
+                        <div className="absolute inset-0 bg-gradient-to-t from-slate-950/18 to-transparent opacity-0 group-hover:opacity-100 transition" />
                         <div className="absolute inset-0 flex items-center justify-center"></div>
                       </div>
                     );

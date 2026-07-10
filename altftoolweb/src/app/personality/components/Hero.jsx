@@ -61,10 +61,7 @@ export default function Hero() {
    px-3 sm:px-4 py-2
     rounded-full
     mb-6 sm:mb-8
-    bg-[#F0F5FF]
-    border
-    border-[#D6E4FF]
-    text-(--primary)
+    personality-pill
   "
         >
           <Sparkles className="w-5 h-5 text-[var(--primary)]" />
@@ -74,12 +71,12 @@ export default function Hero() {
           </span>
         </div>
         <div className="section-header px-4 sm:px-6 lg:px-0 ">
-          <h1 className="section-title font-medium text-[32px] sm:text-[40px] md:text-[52px] lg:text-[60px] leading-[38px] sm:leading-[46px] md:leading-[58px] lg:leading-[66px]">
+          <h1 className="section-title font-bold text-[32px] sm:text-[40px] md:text-[52px] lg:text-[60px] leading-[38px] sm:leading-[46px] md:leading-[58px] lg:leading-[66px]">
             Understand Yourself Better
             <br />
             With Scientifically Inspired
             <br />
-            <span className="text-(--primary)">Personality Tests</span>
+            <span className="personality-gradient-text">Personality Tests</span>
           </h1>
 
           <p className="section-subtitle max-w-[520px] sm:max-w-xl">
@@ -119,7 +116,7 @@ export default function Hero() {
         {/* CTA Button */}
         <button
          onClick={handleScroll}
-          className="bg-(--primary) hover:bg-(--primary-hover) text-white rounded-full flex items-center gap-3 px-3 sm:px-6 py-3 sm:py-3.5 mb-2 sm:mb-0 text-[14px] sm:text-[15px] "
+          className="personality-primary-action rounded-full flex items-center gap-3 px-3 sm:px-6 py-3 sm:py-3.5 mb-2 sm:mb-0 text-[14px] sm:text-[15px] transition-all"
 
         >
           Start Free Test
@@ -152,7 +149,7 @@ px-[7.5%] sm:px-[15%]
                 className="relative min-w-[85%]
   sm:min-w-[70%]
   md:min-w-[45%]
-  lg:min-w-[320px] aspect-square rounded-[22px] overflow-hidden border-[6px] border-white/95 bg-[#dfe7f6] shadow-[0_18px_44px_rgba(0,0,0,0.08)]"
+  lg:min-w-[320px] aspect-square rounded-[22px] overflow-hidden border-[6px] personality-visual-tile"
               >
                 <div className="absolute inset-0 p-4 sm:p-5 md:p-6">
                   <div className="relative w-full h-full">
@@ -198,9 +195,7 @@ xl:h-[300px]
           overflow-hidden
           flex-shrink-0
           border-[8px]
-          border-white/95
-          bg-[#dfe7f6]
-          shadow-[0_20px_60px_rgba(0,0,0,0.08)]
+          personality-visual-tile
           transition-all
           duration-700
           ease-[cubic-bezier(0.22,1,0.36,1)]

@@ -44,7 +44,7 @@ export default function TrendingDeals() {
 
   return (
     <section className="space-y-7 animate-slide-up">
-      <div className="section-header">
+      <div className="section-header buy-smart-section-header-plain">
         <h2 className="section-title">Top Featured Brands</h2>
         <p className="section-subtitle">Your Journey to Better Brands Starts Here</p>
       </div>
@@ -57,8 +57,8 @@ export default function TrendingDeals() {
               onClick={() => setActiveCategory(category)}
               className={`flex h-10 shrink-0 cursor-pointer items-center justify-center whitespace-nowrap rounded-[var(--anslation-ds-radius)] border border-(--border) px-5 text-center text-sm font-semibold transition ${
                 currentCategory === category
-                  ? "bg-(--primary) text-(--primary-foreground)"
-                  : "bg-(--card) text-(--muted-foreground) hover:border-(--primary) hover:text-(--foreground)"
+                  ? "buy-smart-gradient-cta"
+                  : "buy-smart-chip-secondary hover:border-(--primary) hover:text-(--foreground)"
               }`}
             >
               {category}
@@ -122,8 +122,8 @@ function DealCard({ deal, aspectClass = "aspect-video" }) {
   return (
     <Link href={deal.link} target="_blank" rel="noopener noreferrer">
       <div className={`relative w-full ${aspectClass} overflow-hidden rounded-[var(--anslation-ds-radius)] border border-(--border) bg-(--muted) shadow-[var(--anslation-ds-shadow-sm)]`}>
-        <div className="absolute inset-0 flex flex-col justify-end gap-2 bg-(--muted) p-5">
-          <span className="w-fit rounded-full border border-(--border) bg-(--card) px-2.5 py-1 text-xs font-semibold text-(--muted-foreground)">
+        <div className="buy-smart-themed-card absolute inset-0 flex flex-col justify-end gap-2 border-0 p-5">
+          <span className="buy-smart-chip w-fit rounded-full border px-2.5 py-1 text-xs font-semibold">
             Featured
           </span>
           <p className="text-lg font-bold text-(--foreground)">

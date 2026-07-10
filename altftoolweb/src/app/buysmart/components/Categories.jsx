@@ -1,8 +1,14 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import Link from "next/link";
-import { ArrowRight, ChevronLeft, ChevronRight, ListFilter, Store } from "lucide-react";
+import {
+  BadgeCheck,
+  ChevronLeft,
+  ChevronRight,
+  CircleDollarSign,
+  Gift,
+  ListFilter,
+} from "lucide-react";
 import FilterRow from "@/app/buysmart/components/FilterRow";
 import FilterWithAdCard from "@/app/buysmart/components/FilterWithAd";
 
@@ -129,31 +135,35 @@ export default function CategoriesAZ({ selectedLetter = "All", filteredCategory 
 
   return (
     <div className="flex justify-center gap-8 bg-[var(--background)] text-[var(--foreground)]">
-      <section className="flex-1 py-6">
-        <div className="mb-4 flex flex-col gap-4 rounded-[var(--anslation-ds-radius-lg)] border border-(--border) bg-(--card) p-4 shadow-[var(--anslation-ds-shadow-sm)] lg:flex-row lg:items-center lg:justify-between">
-          <div className="min-w-0">
-            <div className="inline-flex items-center gap-2 rounded-full border border-(--border) bg-(--muted) px-3 py-1 text-xs font-semibold text-(--muted-foreground)">
-              <Store className="h-3.5 w-3.5 text-(--primary)" />
-              {flatData.length} brands ready
-            </div>
-            <h2 className="mt-3 text-xl font-bold leading-tight text-(--foreground) sm:text-2xl">
-              Browse verified BuySmart stores
+      <section className="flex-1 py-0">
+        <div className="mb-6 text-center">
+          <div className="section-header buy-smart-section-header-plain">
+            <h2 className="section-title">
+              Browse Verified <span>BuySmart Stores</span>
             </h2>
-            <p className="mt-1 max-w-2xl text-sm leading-6 text-(--muted-foreground)">
-              Filter by category, jump by alphabet, and open focused store pages with deal details.
+            <p className="section-subtitle mx-auto mt-3 max-w-2xl">
+              Handpicked brands offering the best deals and trusted shopping experience.
             </p>
+            <div className="mt-5 flex flex-wrap items-center justify-center gap-3">
+              {[
+                { icon: BadgeCheck, label: "Verified & Trusted" },
+                { icon: CircleDollarSign, label: "Best Prices Guaranteed" },
+                { icon: Gift, label: "Exclusive Offers" },
+              ].map(({ icon: Icon, label }) => (
+                <span
+                  key={label}
+                  className="buy-smart-trust-badge inline-flex h-10 items-center gap-2 rounded-full border px-4 text-xs font-bold sm:text-sm"
+                >
+                  <Icon className="h-4 w-4" />
+                  {label}
+                </span>
+              ))}
+            </div>
           </div>
-          <Link
-            href="/buysmart/view-all"
-            className="inline-flex h-10 shrink-0 items-center justify-center gap-2 rounded-[var(--anslation-ds-radius)] border border-(--border) bg-(--background) px-3 text-sm font-bold text-(--foreground) transition hover:border-(--primary)"
-          >
-            Full directory
-            <ArrowRight className="h-4 w-4 text-(--primary)" />
-          </Link>
         </div>
 
-        <div className="mb-5 rounded-[var(--anslation-ds-radius-lg)] border border-(--border) bg-(--card) p-3 shadow-[var(--anslation-ds-shadow-sm)]">
-          <div className="mb-3 flex items-center gap-2 text-xs font-bold uppercase tracking-wide text-(--muted-foreground)">
+        <div className="buy-smart-filter-bar mb-6 flex flex-col gap-4 rounded-[var(--anslation-ds-radius-lg)] border p-3 shadow-[var(--anslation-ds-shadow-sm)] sm:flex-row sm:items-center sm:justify-between">
+          <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wide text-(--muted-foreground)">
             <ListFilter className="h-4 w-4 text-(--primary)" />
             Refine results
           </div>
@@ -178,12 +188,12 @@ export default function CategoriesAZ({ selectedLetter = "All", filteredCategory 
           </div>
         </div>
 
-        <div className="mt-6 flex flex-col items-center gap-3">
-          <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-5 lg:gap-7">
+        <div className="mt-8 flex flex-col items-center gap-3">
+          <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3">
             <button
               disabled={safeCurrentPage === 1}
               onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
-              className="flex h-10 w-auto items-center justify-center gap-2 rounded-[var(--anslation-ds-radius)] border border-(--border) bg-(--card) px-3 text-(--foreground) shadow-[var(--anslation-ds-shadow-sm)] transition hover:border-(--primary) disabled:opacity-50 sm:h-12 sm:w-[135px] sm:px-5"
+              className="buy-smart-page-nav flex h-10 w-auto items-center justify-center gap-2 rounded-[var(--anslation-ds-radius)] px-3 text-sm font-bold transition disabled:opacity-50 sm:h-11 sm:w-[124px] sm:px-5"
             >
               <ChevronLeft size={16} />
               <span className="hidden sm:inline">Previous</span>
@@ -195,7 +205,7 @@ export default function CategoriesAZ({ selectedLetter = "All", filteredCategory 
                     <button
                       key={page}
                       onClick={() => setCurrentPage(page)}
-                      className={`flex items-center justify-center h-[28px] sm:h-[40px] md:h-[45px] min-w-[16px] sm:min-w-[20px] md:min-w-[24px] ${safeCurrentPage === page ? " text-(--foreground)" : "text-(--muted-foreground)"
+                      className={`buy-smart-page-number flex h-10 min-w-10 items-center justify-center rounded-[var(--anslation-ds-radius)] px-3 text-sm font-bold transition ${safeCurrentPage === page ? "is-active" : ""
                         }`}
                     >
                       {page}
@@ -210,7 +220,7 @@ export default function CategoriesAZ({ selectedLetter = "All", filteredCategory 
             <button
               disabled={totalPages === 0 || safeCurrentPage >= totalPages}
               onClick={() => setCurrentPage(p => Math.min(totalPages || 1, p + 1))}
-              className="flex h-10 w-auto items-center justify-center gap-2 rounded-[var(--anslation-ds-radius)] border border-(--border) bg-(--card) px-3 text-(--foreground) shadow-[var(--anslation-ds-shadow-sm)] transition hover:border-(--primary) disabled:opacity-50 sm:h-12 sm:w-[135px] sm:px-5"
+              className="buy-smart-page-nav flex h-10 w-auto items-center justify-center gap-2 rounded-[var(--anslation-ds-radius)] px-3 text-sm font-bold transition disabled:opacity-50 sm:h-11 sm:w-[124px] sm:px-5"
             >
               <span className="hidden sm:inline">Next</span>
               <ChevronRight size={16} />

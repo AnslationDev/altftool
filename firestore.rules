@@ -51,12 +51,27 @@ service cloud.firestore {
 
     match /projects/altftool/blogs/{blogId} {
       allow read: if true;
-      allow update: if onlyChanges(["commentsCount", "likesCount", "views", "viewsCount"]);
+      // Public engagement counters the web app increments anonymously. The
+      // web already writes helpful/notHelpful/feedback and tool-click fields —
+      // they were missing here, which raised console permission errors for
+      // every visitor on the blog detail page.
+      allow update: if onlyChanges([
+        "commentsCount", "likesCount", "views", "viewsCount",
+        "helpfulCount", "notHelpfulCount", "feedbackCount",
+        "toolClickCount", "toolClicksBySlug", "lastToolClick"
+      ]);
       allow create, delete: if isActiveAdmin();
 
       match /views/{viewId} {
         allow read: if false;
         allow create: if hasOnly(["viewedAt"]);
+      }
+
+      // Per-session reader feedback docs written by BlogFeedback (anonymous).
+      match /feedback/{sessionId} {
+        allow read: if false;
+        allow create, update: if true;
+        allow delete: if isActiveAdmin();
       }
     }
 
@@ -81,7 +96,195 @@ service cloud.firestore {
       allow read, write: if isActiveAdmin();
     }
 
+    // Content automation (blog + SEO lanes): admin-only, never world-readable.
+    // Server lanes write via the Admin SDK (bypasses rules); these matches gate
+    // the admin UI's client SDK and shield the world-readable catch-all below.
+    match /projects/altftool/blogTopics/{topicId} {
+      allow read, write: if isActiveAdmin();
+    }
+
+    match /projects/altftool/blogAutomationRuns/{runId} {
+      allow read: if isActiveAdmin();
+      allow write: if false; // run logs are server-authored only
+    }
+
+    match /projects/altftool/seoProposals/{proposalId} {
+      allow read, write: if isActiveAdmin();
+    }
+
+    match /projects/altftool/settings/{settingId} {
+      allow read, write: if isActiveAdmin();
+    }
+
     match /projects/altftool/{document=**} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+
+    match /projects/carrerbook/footer/settings {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+
+    match /projects/carrerbook/footerEmails/{emailId} {
+      allow read, update, delete: if isActiveAdmin();
+      allow create: if hasOnly(["email", "status", "createdAt"]) &&
+        request.resource.data.status == "unread" &&
+        nonEmptyText(request.resource.data.email, 254);
+    }
+
+    match /projects/carrerbook/contact/settings {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+
+    match /projects/carrerbook/contactLeads/{leadId} {
+      allow read, update, delete: if isActiveAdmin();
+      allow create: if hasOnly([
+          "name",
+          "email",
+          "website",
+          "skypeId",
+          "companyName",
+          "queryType",
+          "message",
+          "status",
+          "createdAt"
+        ]) &&
+        request.resource.data.status == "new" &&
+        nonEmptyText(request.resource.data.name, 120) &&
+        nonEmptyText(request.resource.data.email, 254) &&
+        nonEmptyText(request.resource.data.message, 3000);
+    }
+
+    match /projects/carrerbook/contact/settings/submissions/{leadId} {
+      allow read, update, delete: if isActiveAdmin();
+      allow create: if hasOnly([
+          "name",
+          "email",
+          "website",
+          "skypeId",
+          "companyName",
+          "queryType",
+          "message",
+          "status",
+          "createdAt",
+          "source"
+        ]) &&
+        request.resource.data.status == "new" &&
+        nonEmptyText(request.resource.data.name, 120) &&
+        nonEmptyText(request.resource.data.email, 254) &&
+        nonEmptyText(request.resource.data.message, 3000);
+    }
+
+    match /projects/carrerbook/contact-us/settings {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+
+      match /submissions/{leadId} {
+        allow read, update, delete: if isActiveAdmin();
+        allow create: if hasOnly([
+            "name",
+            "email",
+            "website",
+            "skypeId",
+            "companyName",
+            "queryType",
+            "message",
+            "status",
+            "createdAt",
+            "source"
+          ]) &&
+          request.resource.data.status == "new" &&
+          nonEmptyText(request.resource.data.name, 120) &&
+          nonEmptyText(request.resource.data.email, 254) &&
+          nonEmptyText(request.resource.data.message, 3000);
+      }
+    }
+
+    // GrowVibe website content — publicly readable, admin-managed.
+    match /projects/growvibe/content/{sectionId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+
+    // GrowVibe contact-form leads — anonymous create with strict field
+    // validation; reading/managing is admin-only.
+    match /projects/growvibe/leads/{leadId} {
+      allow create: if request.resource.data.keys().hasOnly(
+          ["name", "email", "phone", "service", "message", "status", "createdAt"]
+        ) &&
+        request.resource.data.name is string && request.resource.data.name.size() > 0 &&
+        request.resource.data.email is string && request.resource.data.email.size() > 3;
+      allow read, update, delete: if isActiveAdmin();
+    }
+
+    match /projects/carrerbook/homesection/{sectionId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+
+      match /services/{serviceId} {
+        allow read: if true;
+        allow write: if isActiveAdmin();
+      }
+
+      match /features/{featureId} {
+        allow read: if true;
+        allow write: if isActiveAdmin();
+      }
+
+      match /faqs/{faqId} {
+        allow read: if true;
+        allow write: if isActiveAdmin();
+      }
+
+      match /cards/{cardId} {
+        allow read: if true;
+        allow write: if isActiveAdmin();
+      }
+
+      match /{marketingTable}/{rowId} {
+        allow read: if marketingTable in ["cpl", "cps", "cpi"];
+        allow write: if marketingTable in ["cpl", "cps", "cpi"] && isActiveAdmin();
+      }
+    }
+
+    match /projects/carrerbook/advertiser/{sectionId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+
+      match /cards/{cardId} {
+        allow read: if true;
+        allow write: if isActiveAdmin();
+      }
+    }
+
+    match /projects/carrerbook/publisher/{sectionId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+
+      match /cards/{cardId} {
+        allow read: if true;
+        allow write: if isActiveAdmin();
+      }
+    }
+
+    match /projects/carrerbook/about-us/{sectionId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+
+      match /cards/{cardId} {
+        allow read: if true;
+        allow write: if isActiveAdmin();
+      }
+    }
+
+    match /projects/carrerbook/team/settings {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+
+    match /projects/carrerbook/teamMembers/{memberId} {
       allow read: if true;
       allow write: if isActiveAdmin();
     }

@@ -176,6 +176,54 @@ export default function About() {
 
       <section className="about-section about-intro-section">
         <div className="about-container about-intro-grid">
+          <div className="about-visual-card about-platform-visual">
+            <div className="about-visual-orb" aria-hidden="true" />
+            <Image
+              src="/assets/home-about-visual-transparent.png"
+              alt="AltF Tools visual showing curated digital tools"
+              width={1275}
+              height={1020}
+              priority
+              className="about-main-person about-main-lady"
+            />
+            <div className="about-community-badge">
+              <span className="about-avatar-stack" aria-hidden="true">
+                <Image
+                  src="/academy/feedback/rahul.jpg"
+                  alt=""
+                  width={40}
+                  height={40}
+                />
+                <Image
+                  src="/academy/feedback/amit.png"
+                  alt=""
+                  width={40}
+                  height={40}
+                />
+                <Image
+                  src="/personality/testimonials/image2.jpg"
+                  alt=""
+                  width={40}
+                  height={40}
+                />
+              </span>
+              Trusted by 100K+ users
+            </div>
+            {floatingCategories.map((item) => {
+              const Icon = item.icon;
+
+              return (
+                <span
+                  className={`about-floating-chip ${item.position}`}
+                  key={item.label}
+                >
+                  <Icon className="h-4 w-4" strokeWidth={2.25} />
+                  {item.label}
+                </span>
+              );
+            })}
+          </div>
+
           <div className="about-copy-block">
             <div className="home-reference-badge">
               <Info className="h-4 w-4" strokeWidth={2.35} />
@@ -212,39 +260,6 @@ export default function About() {
               Explore Tools
               <ArrowRight className="h-4 w-4" />
             </Link>
-          </div>
-
-          <div className="about-visual-card about-platform-visual">
-            <div className="about-visual-orb" aria-hidden="true" />
-            <Image
-              src="/assets/aboutss.png"
-              alt="AltF Tools guide presenting curated digital tools"
-              width={520}
-              height={480}
-              priority
-              className="about-main-person about-main-lady"
-            />
-            <div className="about-community-badge">
-              <span className="about-avatar-stack" aria-hidden="true">
-                <span>A</span>
-                <span>T</span>
-                <span>F</span>
-              </span>
-              Trusted by 100K+ users
-            </div>
-            {floatingCategories.map((item) => {
-              const Icon = item.icon;
-
-              return (
-                <span
-                  className={`about-floating-chip ${item.position}`}
-                  key={item.label}
-                >
-                  <Icon className="h-4 w-4" strokeWidth={2.25} />
-                  {item.label}
-                </span>
-              );
-            })}
           </div>
         </div>
       </section>

@@ -18,6 +18,7 @@ import {
 } from "lucide-react";
 import ManagedImage from "@/components/ui/ManagedImage";
 import TrustSignalBadges from "@/app/buysmart/components/TrustSignalBadges";
+import "@/app/buysmart/components/buysmart-theme.css";
 import {
   useBuySmartAnalytics,
   useBuySmartCategories,
@@ -166,7 +167,7 @@ export default function ViewAllClient() {
   }
 
   return (
-    <main className="bg-(--background) text-(--foreground)" data-testid="buysmart-view-all">
+    <main className="buy-smart-page bg-(--background) text-(--foreground)" data-testid="buysmart-view-all">
       <section className="section !py-5 sm:!py-7">
         <div className="mb-4">
           <Link
@@ -389,7 +390,7 @@ export default function ViewAllClient() {
               <button
                 type="button"
                 onClick={resetFilters}
-                className="mt-5 inline-flex h-10 items-center justify-center rounded-[var(--anslation-ds-radius)] bg-(--primary) px-4 text-sm font-bold text-(--primary-foreground)"
+                className="buy-smart-gradient-cta mt-5 inline-flex h-10 items-center justify-center rounded-[var(--anslation-ds-radius)] px-4 text-sm font-bold transition hover:-translate-y-0.5"
               >
                 Reset directory
               </button>
@@ -476,7 +477,7 @@ function StoreDirectoryCard({ item, counters = {} }) {
       <div className="mt-auto flex items-center gap-2 pt-4">
         <Link
           href={storeHref}
-          className="inline-flex h-10 flex-1 items-center justify-center gap-2 rounded-[var(--anslation-ds-radius)] bg-(--primary) px-3 text-sm font-bold text-(--primary-foreground) transition hover:bg-(--primary-hover)"
+          className="buy-smart-gradient-cta inline-flex h-10 flex-1 items-center justify-center gap-2 rounded-[var(--anslation-ds-radius)] px-3 text-sm font-bold transition hover:-translate-y-0.5"
         >
           View details
           <ArrowRight className="h-4 w-4" />

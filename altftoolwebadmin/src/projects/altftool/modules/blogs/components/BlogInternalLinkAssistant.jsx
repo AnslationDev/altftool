@@ -20,8 +20,10 @@ import { fetchAllBlogs } from "../services/blogsService";
 import { checkExternalLinks, summarizeExternalLinkResults } from "./blogExternalLinkClient";
 import { buildBlogLinkAudit, buildBlogLinkGraph, normalizeBlogForLinkAudit } from "./blogLinkAudit";
 import { parseBlogTags } from "./BlogSeoChecklist";
+import { hasMarkedBlock, removeMarkedBlock, wrapMarkedBlock } from "./blogToggleBlocks";
 
 const MAX_SUGGESTIONS = 8;
+const INTERNAL_LINK_MARKER_PREFIX = "ALTFT_INTERNAL_LINKS";
 
 function stripHtml(value = "") {
   return String(value).replace(/<[^>]+>/g, " ");
@@ -186,6 +188,11 @@ function buildSmartPlan(suggestions, internalLinkCount) {
     items,
     label: items.length >= 4 ? "Full topic cluster" : items.length >= 2 ? "Focused link set" : "Single rescue link",
   };
+}
+
+function linkBlockId(type, items = []) {
+  const slugs = items.map((item) => item.slug).filter(Boolean).join("--");
+  return `${type}-${slugs || "empty"}`;
 }
 
 function LinkAuditSummary({
@@ -409,29 +416,55 @@ export default function BlogInternalLinkAssistant({
     }
   };
 
+  const toggleLinkBlock = ({ id, html, insertedKey, successMessage, removeMessage }) => {
+    if (hasMarkedBlock(currentLinkBlog.description, INTERNAL_LINK_MARKER_PREFIX, id)) {
+      onInsertLinks?.({
+        description: removeMarkedBlock(currentLinkBlog.description, INTERNAL_LINK_MARKER_PREFIX, id),
+      });
+      setInsertedSlug("");
+      emitAlert({ type: "success", message: removeMessage });
+      return;
+    }
+
+    onInsertLinks(wrapMarkedBlock(INTERNAL_LINK_MARKER_PREFIX, id, html));
+    setInsertedSlug(insertedKey);
+    emitAlert({ type: "success", message: successMessage });
+    window.setTimeout(() => setInsertedSlug(""), 1600);
+  };
+
   const insertBlogs = (items) => {
     if (!items.length || typeof onInsertLinks !== "function") return;
-    onInsertLinks(buildRelatedBlock(items));
-    setInsertedSlug(items.length === 1 ? items[0].slug : "bulk");
-    emitAlert({ type: "success", message: `${items.length} internal link${items.length === 1 ? "" : "s"} inserted.` });
-    window.setTimeout(() => setInsertedSlug(""), 1600);
+    const id = linkBlockId(items.length === 1 ? "related" : "related-bulk", items);
+    toggleLinkBlock({
+      id,
+      html: buildRelatedBlock(items),
+      insertedKey: items.length === 1 ? items[0].slug : "bulk",
+      successMessage: `${items.length} internal link${items.length === 1 ? "" : "s"} inserted.`,
+      removeMessage: `${items.length} internal link${items.length === 1 ? "" : "s"} removed.`,
+    });
   };
 
   const insertTopicPath = () => {
     const items = suggestions.slice(0, 5);
     if (!items.length || typeof onInsertLinks !== "function") return;
-    onInsertLinks(buildTopicPathBlock(items));
-    setInsertedSlug("topic-path");
-    emitAlert({ type: "success", message: `Topic path inserted with ${items.length} contextual links.` });
-    window.setTimeout(() => setInsertedSlug(""), 1600);
+    toggleLinkBlock({
+      id: linkBlockId("topic-path", items),
+      html: buildTopicPathBlock(items),
+      insertedKey: "topic-path",
+      successMessage: `Topic path inserted with ${items.length} contextual links.`,
+      removeMessage: "Topic path removed.",
+    });
   };
 
   const insertSmartPlan = () => {
     if (!smartPlan.items.length || typeof onInsertLinks !== "function") return;
-    onInsertLinks(buildSmartLinkBlock(smartPlan.items, currentLinkBlog));
-    setInsertedSlug("smart-plan");
-    emitAlert({ type: "success", message: `${smartPlan.label} inserted with ${smartPlan.items.length} links.` });
-    window.setTimeout(() => setInsertedSlug(""), 1600);
+    toggleLinkBlock({
+      id: linkBlockId("smart-plan", smartPlan.items),
+      html: buildSmartLinkBlock(smartPlan.items, currentLinkBlog),
+      insertedKey: "smart-plan",
+      successMessage: `${smartPlan.label} inserted with ${smartPlan.items.length} links.`,
+      removeMessage: `${smartPlan.label} removed.`,
+    });
   };
 
   const copyLink = async (blog) => {
@@ -502,31 +535,60 @@ export default function BlogInternalLinkAssistant({
               </span>
             </div>
             <div className="mt-2 grid grid-cols-1 gap-2 sm:grid-cols-2">
+              {(() => {
+                const smartPlanAttached = hasMarkedBlock(
+                  currentLinkBlog.description,
+                  INTERNAL_LINK_MARKER_PREFIX,
+                  linkBlockId("smart-plan", smartPlan.items),
+                );
+                const topicPathItems = suggestions.slice(0, 5);
+                const topicPathAttached = hasMarkedBlock(
+                  currentLinkBlog.description,
+                  INTERNAL_LINK_MARKER_PREFIX,
+                  linkBlockId("topic-path", topicPathItems),
+                );
+                const topThreeItems = suggestions.slice(0, 3);
+                const topThreeAttached = hasMarkedBlock(
+                  currentLinkBlog.description,
+                  INTERNAL_LINK_MARKER_PREFIX,
+                  linkBlockId("related-bulk", topThreeItems),
+                );
+
+                return (
+                  <>
               <button
                 type="button"
                 onClick={insertSmartPlan}
                 disabled={!smartPlan.items.length}
-                className="inline-flex h-8 items-center justify-center gap-1.5 rounded-lg bg-success px-2.5 text-xs font-semibold text-white hover:bg-success disabled:cursor-not-allowed disabled:bg-success-soft"
+                aria-pressed={smartPlanAttached}
+                className={`inline-flex h-8 items-center justify-center gap-1.5 rounded-lg px-2.5 text-xs font-semibold text-white hover:bg-success disabled:cursor-not-allowed disabled:bg-success-soft ${
+                  smartPlanAttached ? "bg-primary" : "bg-success"
+                }`}
               >
-                {insertedSlug === "smart-plan" ? <CheckCircle2 className="h-3.5 w-3.5" /> : <WandSparkles className="h-3.5 w-3.5" />}
-                Apply smart plan
+                {insertedSlug === "smart-plan" || smartPlanAttached ? <CheckCircle2 className="h-3.5 w-3.5" /> : <WandSparkles className="h-3.5 w-3.5" />}
+                {smartPlanAttached ? "Remove smart plan" : "Apply smart plan"}
               </button>
               <button
                 type="button"
                 onClick={insertTopicPath}
+                aria-pressed={topicPathAttached}
                 className="inline-flex h-8 items-center justify-center gap-1.5 rounded-lg bg-primary px-2.5 text-xs font-semibold text-white hover:bg-primary"
               >
-                {insertedSlug === "topic-path" ? <CheckCircle2 className="h-3.5 w-3.5" /> : <Route className="h-3.5 w-3.5" />}
-                Auto-link topic path
+                {insertedSlug === "topic-path" || topicPathAttached ? <CheckCircle2 className="h-3.5 w-3.5" /> : <Route className="h-3.5 w-3.5" />}
+                {topicPathAttached ? "Remove topic path" : "Auto-link topic path"}
               </button>
               <button
                 type="button"
                 onClick={() => insertBlogs(suggestions.slice(0, 3))}
+                aria-pressed={topThreeAttached}
                 className="inline-flex h-8 items-center justify-center gap-1.5 rounded-lg bg-primary px-2.5 text-xs font-semibold text-white hover:bg-primary sm:col-span-2"
               >
-                <PlusCircle className="h-3.5 w-3.5" />
-                Insert top 3
+                {topThreeAttached ? <CheckCircle2 className="h-3.5 w-3.5" /> : <PlusCircle className="h-3.5 w-3.5" />}
+                {topThreeAttached ? "Remove top 3" : "Insert top 3"}
               </button>
+                  </>
+                );
+              })()}
             </div>
           </div>
 
@@ -565,14 +627,24 @@ export default function BlogInternalLinkAssistant({
                 ) : null}
 
                 <div className="mt-3 grid grid-cols-2 gap-2">
+                  {(() => {
+                    const linkAttached = hasMarkedBlock(
+                      currentLinkBlog.description,
+                      INTERNAL_LINK_MARKER_PREFIX,
+                      linkBlockId("related", [blog]),
+                    );
+                    return (
                   <button
                     type="button"
                     onClick={() => insertBlogs([blog])}
+                    aria-pressed={linkAttached}
                     className="inline-flex h-8 items-center justify-center gap-1.5 rounded-lg bg-primary px-2 text-xs font-semibold text-white hover:bg-primary"
                   >
-                    {insertedSlug === blog.slug ? <CheckCircle2 className="h-3.5 w-3.5" /> : <Link2 className="h-3.5 w-3.5" />}
-                    Insert
+                    {insertedSlug === blog.slug || linkAttached ? <CheckCircle2 className="h-3.5 w-3.5" /> : <Link2 className="h-3.5 w-3.5" />}
+                    {linkAttached ? "Remove" : "Insert"}
                   </button>
+                    );
+                  })()}
                   <button
                     type="button"
                     onClick={() => copyLink(blog)}

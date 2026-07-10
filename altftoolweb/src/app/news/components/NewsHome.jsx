@@ -56,23 +56,23 @@ function HeroSlider({ stories, timeAgo, formatCount }) {
           </div>
         )}
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
-        <span className="absolute left-5 top-5 rounded-lg bg-[var(--primary)] px-3.5 py-2 text-[12px] font-bold uppercase tracking-wide text-white">
+        <span className="absolute left-5 top-5 rounded-lg bg-[var(--primary)] px-3.5 py-2 text-[12px] font-bold uppercase tracking-wide text-[var(--primary-foreground)]">
           Top Story
         </span>
-        <div className="absolute bottom-8 left-7 right-7">
+        <div className="absolute bottom-8 left-7 right-7 z-10">
           <div className="flex items-center gap-2">
             {story.category && (
-              <span className="text-[13px] font-bold uppercase tracking-wider text-[var(--primary)]">
+              <span className="text-[13px] font-bold uppercase tracking-wider text-[var(--secondary)] drop-shadow">
                 {story.category}
               </span>
             )}
-            <span className="text-[13px] text-white/70">{timeAgo(story.published_hours_ago)}</span>
+            <span className="text-[13px] text-white/75 drop-shadow">{timeAgo(story.published_hours_ago)}</span>
           </div>
-          <h2 className="mt-2 text-[40px] font-bold leading-[1.2] text-white line-clamp-2">
+          <h2 className="mt-2 text-[40px] font-bold leading-[1.2] text-white drop-shadow-md line-clamp-2">
             {story.headline}
           </h2>
           {story.summary && (
-            <p className="mt-3 line-clamp-2 text-[17px] leading-[1.6] text-white/80">
+            <p className="mt-3 line-clamp-2 text-[17px] leading-[1.6] text-white/85 drop-shadow">
               {story.summary}
             </p>
           )}
@@ -142,7 +142,7 @@ function LatestNewsWidget({ stories, timeAgo }) {
   if (!stories.length) return null;
 
   return (
-    <div className="flex flex-col rounded-[18px] border border-[var(--border)] bg-[var(--card)] p-5 shadow-sm">
+    <div className="flex flex-col rounded-[18px] news-card-surface p-5">
       <div className="mb-5 flex items-center gap-[10px]">
         <div className="flex h-5 w-5 items-center justify-center text-[var(--primary)]">
           <Plus size={16} />
@@ -151,7 +151,7 @@ function LatestNewsWidget({ stories, timeAgo }) {
       </div>
       <div className="flex flex-col">
         {stories.map((s, i) => (
-          <div key={s.id} className={i < stories.length - 1 ? "border-b border-[#F2F2F2] pb-4 mb-4" : ""}>
+          <div key={s.id} className={i < stories.length - 1 ? "border-b border-[var(--border)] pb-4 mb-4" : ""}>
             <Link href={`/news/${s.slug}`} className="group flex items-start gap-3">
               <span className="mt-[3px] shrink-0 text-[var(--primary)]">
                 <Plus size={13} />
@@ -236,13 +236,13 @@ function NewsletterWidget() {
             value={email}
             onChange={(e) => { setEmail(e.target.value); setError(""); }}
             placeholder="Enter your email"
-            className="h-11 w-full rounded-xl border border-[#eee] bg-[#F7F7F7] px-3.5 text-[14px] text-[var(--foreground)] placeholder:text-[#999] transition focus:border-[var(--primary)] focus:bg-white focus:shadow-sm focus:outline-none dark:border-[var(--border)] dark:bg-[var(--surface)] dark:focus:bg-[var(--card)]"
+            className="h-11 w-full rounded-xl border border-[var(--border)] bg-[var(--card)] px-3.5 text-[14px] text-[var(--foreground)] placeholder:text-[var(--muted-foreground)] transition focus:border-[var(--primary)] focus:bg-[var(--card)] focus:shadow-sm focus:outline-none focus:ring-2 focus:ring-[var(--primary)]/10"
           />
         </div>
         <button
           type="submit"
           disabled={state === "loading"}
-          className="flex h-11 w-[120px] shrink-0 items-center justify-center rounded-xl bg-[var(--primary)] px-4 text-[14px] font-semibold text-[var(--primary-foreground)] transition hover:shadow-md active:scale-[0.97] disabled:opacity-60"
+          className="flex h-11 w-[120px] shrink-0 items-center justify-center rounded-xl news-action px-4 text-[14px] font-semibold transition hover:-translate-y-0.5 active:scale-[0.97] disabled:opacity-60"
         >
           {state === "loading" ? "Loading…" : "Subscribe"}
         </button>
@@ -259,10 +259,10 @@ function NewsletterWidget() {
 
 // ─── Follow Us ────────────────────────────────────────────────────────────
 const SOCIAL_LINKS = [
-  { name: "Facebook", href: "https://facebook.com", icon: "f", bg: "bg-[#1877F2]", action: "Like" },
-  { name: "Twitter", href: "https://twitter.com", icon: "X", bg: "bg-black", action: "Follow" },
-  { name: "Instagram", href: "https://instagram.com", icon: "in", bg: "bg-gradient-to-tr from-[#F58529] via-[#DD2A7B] to-[#8134AF]", action: "Follow" },
-  { name: "YouTube", href: "https://youtube.com", icon: "▶", bg: "bg-[#FF0000]", action: "Subscribe" },
+  { name: "Facebook", href: "https://facebook.com", icon: "f", action: "Like" },
+  { name: "Twitter", href: "https://twitter.com", icon: "X", action: "Follow" },
+  { name: "Instagram", href: "https://instagram.com", icon: "in", action: "Follow" },
+  { name: "YouTube", href: "https://youtube.com", icon: "▶", action: "Subscribe" },
 ];
 
 function FollowUs() {
@@ -276,10 +276,10 @@ function FollowUs() {
             href={s.href}
             target="_blank"
             rel="noopener noreferrer"
-            className={`group flex items-center justify-between py-3.5 ${i < SOCIAL_LINKS.length - 1 ? "border-b border-[#F3F3F3] dark:border-[var(--border)]" : ""}`}
+            className={`group flex items-center justify-between py-3.5 ${i < SOCIAL_LINKS.length - 1 ? "border-b border-[var(--border)]" : ""}`}
           >
             <div className="flex items-center gap-[14px]">
-              <div className={`flex h-[38px] w-[38px] shrink-0 items-center justify-center rounded-full text-[13px] font-bold text-white ${s.bg}`}>
+              <div className="news-social-icon flex h-[38px] w-[38px] shrink-0 items-center justify-center rounded-full text-[13px] font-bold">
                 {s.icon}
               </div>
               <span className="text-[15px] font-semibold text-[var(--foreground)]">{s.name}</span>
@@ -337,7 +337,7 @@ export default function NewsHome({ initialNewsData }) {
 
   if (!articles.length) {
     return (
-      <div className="rounded-2xl border border-dashed border-[var(--border)] bg-[var(--surface)] p-12 text-center">
+      <div className="rounded-2xl border border-dashed border-[var(--border)] bg-[var(--card)] p-12 text-center">
         <p className="text-sm text-[var(--muted-foreground)]">No news available at the moment.</p>
       </div>
     );
@@ -346,7 +346,7 @@ export default function NewsHome({ initialNewsData }) {
   return (
     <div className="space-y-8">
       {/* ── Trending Bar ──────────────────────────────────────────────── */}
-      <div className="mx-auto mt-[8px] w-[95%] rounded-2xl border border-[var(--border)] bg-[var(--muted)] py-3 shadow-sm">
+      <div className="mx-auto mt-[8px] w-[95%] rounded-2xl news-soft-surface py-3 shadow-sm">
         <div className="mx-auto flex items-center gap-6 px-4 md:px-8 lg:px-12">
           <span className="flex shrink-0 items-center gap-1.5 text-[13px] font-bold uppercase tracking-[1px] text-[var(--primary)]">
             <Zap size={16} />
@@ -381,7 +381,7 @@ export default function NewsHome({ initialNewsData }) {
       </div>
 
       {/* ── Hero Section (3-column) ──────────────────────────────────── */}
-      <section className="mx-auto max-w-[1440px] rounded-2xl border border-[var(--border)] bg-[var(--card)] px-6 py-6 shadow-sm sm:px-8">
+      <section className="mx-auto max-w-[1440px] rounded-2xl news-card-surface px-6 py-6 sm:px-8">
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-[2.2fr_1fr_0.9fr]">
           <div className="md:col-span-2 lg:col-span-1">
             <HeroSlider stories={sorted.slice(0, 5)} timeAgo={timeAgo} formatCount={formatCount} />
@@ -400,7 +400,7 @@ export default function NewsHome({ initialNewsData }) {
       <div className="-mt-[22px] grid grid-cols-1 gap-6 lg:grid-cols-12">
         {/* Main Content – 8/12 (≈70%) */}
         <div className="lg:col-span-8">
-          <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] px-6 py-6 shadow-sm sm:px-8">
+          <div className="rounded-2xl news-card-surface px-6 py-6 sm:px-8">
             <div className="mb-6 flex items-center justify-between">
               <h2 className="text-[22px] font-bold uppercase text-[var(--foreground)]">Top News</h2>
               <Link
@@ -426,7 +426,7 @@ export default function NewsHome({ initialNewsData }) {
 
           {/* ── More News ──────────────────────────────────────────────── */}
           {moreNews.length > 0 && (
-            <div className="mt-[10px] overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--card)] px-6 py-5 shadow-sm sm:px-8 sm:py-6">
+            <div className="mt-[10px] overflow-hidden rounded-2xl news-card-surface px-6 py-5 sm:px-8 sm:py-6">
               <div className="mb-6 flex items-center justify-between">
                 <h2 className="text-[22px] font-bold uppercase text-[var(--foreground)]">More News</h2>
                 <Link
@@ -456,7 +456,7 @@ export default function NewsHome({ initialNewsData }) {
           <div className="space-y-[10px] lg:sticky lg:top-8">
             {/* Popular / Trending */}
             {trending.length > 0 && (
-              <div className="overflow-hidden rounded-[20px] border border-[var(--border)] bg-[var(--card)] p-6 shadow-sm">
+              <div className="overflow-hidden rounded-[20px] news-card-surface p-6">
                 <div className="mb-6 flex items-center justify-between">
                   <h3 className="text-[22px] font-bold uppercase text-[var(--foreground)]">Trending Now</h3>
                   <Link
@@ -475,11 +475,10 @@ export default function NewsHome({ initialNewsData }) {
                     <button
                       key={tab.key}
                       onClick={() => setTrendingTab(tab.key)}
-                      className={`relative text-sm font-medium transition ${
-                        trendingTab === tab.key
+                      className={`relative text-sm font-medium transition ${trendingTab === tab.key
                           ? "font-semibold text-[var(--primary)]"
                           : "text-[var(--muted-foreground)] hover:text-[var(--primary)]"
-                      }`}
+                        }`}
                     >
                       {tab.label}
                       {trendingTab === tab.key && (
@@ -497,12 +496,12 @@ export default function NewsHome({ initialNewsData }) {
             )}
 
             {/* Newsletter Widget */}
-            <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-6 shadow-sm">
+            <div className="rounded-2xl news-card-surface p-6">
               <NewsletterWidget />
             </div>
 
             {/* Follow Us */}
-            <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-6 shadow-sm">
+            <div className="rounded-2xl news-card-surface p-6">
               <FollowUs />
             </div>
           </div>
@@ -517,7 +516,7 @@ function TopNewsCard({ news }) {
   const [saved, setSaved] = useState(false);
 
   return (
-    <article className="group flex flex-col overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--card)] shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-md">
+    <article className="group flex flex-col overflow-hidden rounded-2xl news-card-surface transition-all duration-300 hover:-translate-y-1">
       <Link href={`/news/${news.slug}`}>
         <div className="relative h-[200px] overflow-hidden">
           {news.image_url ? (

@@ -1,0 +1,69 @@
+.news-page {
+  --news-gradient: linear-gradient(135deg, var(--primary), var(--secondary, #38BDF8));
+  --news-muted: color-mix(in srgb, var(--foreground) 70%, var(--background));
+  --news-card: color-mix(in srgb, var(--card) 94%, transparent);
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at 12% 6%, color-mix(in srgb, var(--primary) 10%, transparent), transparent 28rem),
+    radial-gradient(circle at 88% 16%, color-mix(in srgb, var(--secondary, #38BDF8) 10%, transparent), transparent 30rem),
+    linear-gradient(180deg, var(--background) 0%, color-mix(in srgb, var(--primary) 4%, var(--background)) 44%, var(--background) 100%);
+  color: var(--foreground);
+  font-family: var(--font-primary), var(--font-sans), Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+.news-page :is(h1, h2, h3) {
+  font-family: var(--font-primary), var(--font-sans), Inter, ui-sans-serif, system-ui, sans-serif;
+  letter-spacing: 0;
+}
+
+.news-card-surface {
+  border: 1px solid color-mix(in srgb, var(--border) 86%, var(--primary));
+  background: var(--news-card);
+  box-shadow: var(--anslation-ds-shadow-sm);
+  transition: border-color 150ms ease, box-shadow 150ms ease, transform 150ms ease;
+}
+
+.news-card-surface:hover {
+  border-color: color-mix(in srgb, var(--primary) 34%, var(--border));
+  box-shadow: var(--anslation-ds-shadow-md);
+}
+
+.news-soft-surface {
+  background:
+    radial-gradient(circle at 12% 0%, color-mix(in srgb, var(--primary) 10%, transparent), transparent 18rem),
+    linear-gradient(135deg, color-mix(in srgb, var(--primary) 8%, var(--card)), color-mix(in srgb, var(--secondary, #38BDF8) 7%, var(--card)));
+}
+
+.news-muted-text {
+  color: var(--news-muted);
+}
+
+.news-action {
+  background: var(--news-gradient);
+  color: var(--primary-foreground);
+  box-shadow: 0 14px 32px color-mix(in srgb, var(--primary) 20%, transparent);
+}
+
+.news-category-pill {
+  border-color: color-mix(in srgb, var(--primary) 22%, var(--border));
+  background: color-mix(in srgb, var(--primary) 10%, var(--card));
+  color: var(--primary);
+}
+
+.news-social-icon {
+  background: var(--news-gradient);
+  color: var(--primary-foreground);
+}
+
+[data-theme="dark"] .news-page {
+  --news-card: color-mix(in srgb, var(--card) 88%, transparent);
+  --news-muted: color-mix(in srgb, var(--foreground) 74%, var(--muted-foreground));
+  background:
+    radial-gradient(circle at 12% 6%, color-mix(in srgb, var(--primary) 15%, transparent), transparent 28rem),
+    radial-gradient(circle at 88% 16%, color-mix(in srgb, var(--secondary, #38BDF8) 12%, transparent), transparent 30rem),
+    linear-gradient(180deg, var(--background) 0%, color-mix(in srgb, var(--primary) 6%, var(--background)) 44%, var(--background) 100%);
+}
+
+[data-theme="dark"] .news-page .news-card-surface {
+  background: color-mix(in srgb, var(--card) 88%, transparent);
+}

@@ -1,6 +1,7 @@
 "use client";
 
 import {
+  Check,
   CheckCircle2,
   FileText,
   HelpCircle,
@@ -10,10 +11,49 @@ import {
   ShieldCheck,
   Sparkles,
   Tags,
+  X,
 } from "lucide-react";
 import { useMemo, useState } from "react";
 import { emitAlert } from "@/lib/alertBus";
 import { parseBlogTags } from "./BlogSeoChecklist";
+
+/* ── Attached-helper markers ─────────────────────────────────────────────
+   Block helpers wrap their HTML in comment markers. The blog content itself
+   is the single source of truth: a helper is "attached" when its marker is
+   present in the draft, so the state survives refreshes, draft restores, and
+   editing sessions — and removal is always exact. Comments are invisible on
+   the public blog. */
+const MARKER_PREFIX = "ALTFT_WRITING_HELPER";
+const startMarker = (id) => `<!-- ${MARKER_PREFIX}:${id} START -->`;
+const endMarker = (id) => `<!-- ${MARKER_PREFIX}:${id} END -->`;
+const wrapHelperBlock = (id, html) => `${startMarker(id)}\n${html}\n${endMarker(id)}`;
+const hasHelperBlock = (description = "", id) => String(description).includes(startMarker(id));
+
+function escapeRegExp(value = "") {
+  return String(value).replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
+function removeHelperBlock(description = "", id) {
+  const pattern = new RegExp(
+    `[ \\t]*${escapeRegExp(startMarker(id))}[\\s\\S]*?${escapeRegExp(endMarker(id))}[ \\t]*`,
+    "g",
+  );
+  return String(description).replace(pattern, "").replace(/\n{3,}/g, "\n\n").trim();
+}
+
+const normalizeFieldValue = (value = "") => String(value ?? "").replace(/\s+/g, " ").trim();
+
+function fieldsMatch(formData = {}, fields = {}) {
+  const entries = Object.entries(fields);
+  if (!entries.length) return false;
+  return entries.every(([key, suggested]) => {
+    const current = normalizeFieldValue(formData[key]);
+    return current !== "" && current === normalizeFieldValue(suggested);
+  });
+}
+
+const clearedFields = (fields = {}) =>
+  Object.fromEntries(Object.keys(fields).map((key) => [key, ""]));
 
 const STOP_WORDS = new Set([
   "about",
@@ -192,19 +232,50 @@ ${items}
 <!-- FAQ End -->`;
 }
 
-function ActionButton({ icon: Icon, label, caption, onClick }) {
+function HelperButton({ icon: Icon, label, caption, attached, onToggle }) {
   return (
     <button
       type="button"
-      onClick={onClick}
-      className="group flex w-full items-start gap-3 rounded-xl border border-border bg-surface-soft/70 p-3 text-left transition hover:border-primary hover:bg-primary-soft"
+      onClick={onToggle}
+      aria-pressed={attached}
+      aria-label={attached ? `Remove ${label}` : `Add ${label}`}
+      title={attached ? `Remove "${label}" from this post` : `Add "${label}" to this post`}
+      className={`group flex w-full items-start gap-3 rounded-xl border p-3 text-left transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-surface ${
+        attached
+          ? "border-primary bg-primary-soft shadow-sm"
+          : "border-border bg-surface-soft/70 hover:border-primary hover:bg-primary-soft"
+      }`}
     >
-      <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-surface text-primary shadow-sm">
-        <Icon className="h-4 w-4" />
+      <span
+        className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-xl shadow-sm transition-colors duration-200 ${
+          attached ? "bg-primary text-white" : "bg-surface text-primary"
+        }`}
+      >
+        {attached ? <Check className="h-4 w-4" /> : <Icon className="h-4 w-4" />}
       </span>
       <span className="min-w-0 flex-1">
-        <span className="block text-sm font-semibold text-foreground group-hover:text-primary">{label}</span>
+        <span className="flex items-center gap-2">
+          <span
+            className={`block truncate text-sm font-semibold transition-colors duration-200 ${
+              attached ? "text-primary" : "text-foreground group-hover:text-primary"
+            }`}
+          >
+            {label}
+          </span>
+          {attached && (
+            <span className="inline-flex shrink-0 items-center gap-1 rounded-full bg-primary px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-white">
+              <CheckCircle2 className="h-3 w-3" />
+              Added
+            </span>
+          )}
+        </span>
         <span className="mt-0.5 block text-xs leading-5 text-muted">{caption}</span>
+        {attached && (
+          <span className="mt-1 inline-flex items-center gap-1 text-xs font-semibold text-danger opacity-0 transition-opacity duration-200 group-hover:opacity-100 group-focus-visible:opacity-100">
+            <X className="h-3 w-3" />
+            Click to remove
+          </span>
+        )}
       </span>
     </button>
   );
@@ -215,7 +286,9 @@ export default function BlogWritingAssistant({
   onApplyFields,
   onInsertBlock,
 }) {
-  const [lastAction, setLastAction] = useState("");
+  // Field helpers remember what they last applied so the "Added" state stays
+  // visible even if the underlying suggestion drifts as the draft evolves.
+  const [appliedFields, setAppliedFields] = useState({});
 
   const suggestions = useMemo(() => {
     const tags = buildTags(formData);
@@ -231,12 +304,116 @@ export default function BlogWritingAssistant({
     };
   }, [formData]);
 
-  const apply = (label, callback) => {
-    callback();
-    setLastAction(label);
-    emitAlert({ type: "success", message: `${label} applied.` });
-    window.setTimeout(() => setLastAction(""), 1600);
+  const description = formData.description || "";
+
+  /* ── Helper definitions — one array drives buttons, state, add, and remove ── */
+  const helpers = [
+    {
+      id: "seo",
+      icon: SearchCheck,
+      label: "SEO fields",
+      caption: "Meta title and description sized for search previews.",
+      type: "fields",
+      fields: {
+        seoTitle: suggestions.metaTitle,
+        seoDescription: suggestions.metaDescription,
+      },
+    },
+    {
+      id: "tags",
+      icon: Tags,
+      label: "Topic tags",
+      caption: suggestions.tags.length
+        ? suggestions.tags.join(", ")
+        : "Uses heading, category, and draft content.",
+      type: "fields",
+      fields: { tags: suggestions.tags.join(", ") },
+    },
+    {
+      id: "intro",
+      icon: PenLine,
+      label: "Intro paragraph",
+      caption: "Adds a concise opening that names the reader outcome.",
+      type: "block",
+      html: suggestions.intro,
+    },
+    {
+      id: "conclusion",
+      icon: FileText,
+      label: "Final thoughts",
+      caption: "Adds a clear closing section for content quality scoring.",
+      type: "block",
+      html: suggestions.conclusion,
+    },
+    {
+      id: "faq",
+      icon: HelpCircle,
+      label: "FAQ block",
+      caption: "Adds three schema-ready Q&A items for rich results.",
+      type: "block",
+      html: suggestions.faq,
+    },
+    {
+      id: "trust",
+      icon: ShieldCheck,
+      label: "Trust fields",
+      caption: "Adds author role, reviewer, and editorial note.",
+      type: "fields",
+      fields: suggestions.trustFields,
+    },
+  ];
+
+  /* ── Single source of truth: derive "attached" from the draft itself ──
+     Block helpers: their marker is present in the content.
+     Field helpers: the fields still hold what the helper filled in. */
+  const isAttached = (helper) => {
+    if (helper.type === "block") return hasHelperBlock(description, helper.id);
+    return (
+      fieldsMatch(formData, helper.fields) ||
+      (appliedFields[helper.id] ? fieldsMatch(formData, appliedFields[helper.id]) : false)
+    );
   };
+
+  const addHelper = (helper) => {
+    if (helper.type === "block") {
+      // Never attach twice — replace the existing block instead of duplicating.
+      if (hasHelperBlock(description, helper.id)) {
+        onApplyFields?.({
+          description: `${removeHelperBlock(description, helper.id)}\n\n${wrapHelperBlock(helper.id, helper.html)}`,
+        });
+      } else {
+        onInsertBlock?.(wrapHelperBlock(helper.id, helper.html));
+      }
+    } else {
+      onApplyFields?.(helper.fields);
+      setAppliedFields((prev) => ({ ...prev, [helper.id]: helper.fields }));
+    }
+    emitAlert({ type: "success", message: `${helper.label} added to this post.` });
+  };
+
+  const removeHelper = (helper) => {
+    if (helper.type === "block") {
+      onApplyFields?.({ description: removeHelperBlock(description, helper.id) });
+    } else {
+      onApplyFields?.(clearedFields(helper.fields));
+      setAppliedFields((prev) => {
+        const next = { ...prev };
+        delete next[helper.id];
+        return next;
+      });
+    }
+    emitAlert({ type: "success", message: `${helper.label} removed from this post.` });
+  };
+
+  const toggleHelper = (helper) => {
+    if (isAttached(helper)) {
+      removeHelper(helper);
+    } else {
+      addHelper(helper);
+    }
+  };
+
+  const attachedCount = helpers.filter(isAttached).length;
 
   return (
     <div className="rounded-2xl border border-border bg-surface p-5 shadow-sm">
@@ -247,66 +424,33 @@ export default function BlogWritingAssistant({
             <h2 className="text-xs font-black uppercase tracking-widest text-muted">Writing Helper</h2>
           </div>
           <p className="mt-1 text-xs leading-5 text-muted">
-            One-click SEO, tags, intro, and ending blocks generated from the current draft.
+            One-click SEO, tags, intro, and ending blocks generated from the current draft. Click a
+            helper to add it — click again to remove it.
           </p>
         </div>
-        {lastAction ? (
-          <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-success-soft text-success">
-            <CheckCircle2 className="h-4 w-4" />
+        {attachedCount > 0 && (
+          <span
+            role="status"
+            aria-label={`${attachedCount} writing helper${attachedCount === 1 ? "" : "s"} active`}
+            className="inline-flex shrink-0 items-center gap-1 rounded-full bg-success-soft px-2.5 py-1 text-[11px] font-bold text-success"
+          >
+            <CheckCircle2 className="h-3.5 w-3.5" />
+            {attachedCount} active
           </span>
-        ) : null}
+        )}
       </div>
 
       <div className="space-y-2.5">
-        <ActionButton
-          icon={SearchCheck}
-          label="Fill SEO fields"
-          caption="Meta title and description sized for search previews."
-          onClick={() =>
-            apply("SEO fields", () =>
-              onApplyFields?.({
-                seoTitle: suggestions.metaTitle,
-                seoDescription: suggestions.metaDescription,
-              })
-            )
-          }
-        />
-        <ActionButton
-          icon={Tags}
-          label="Generate topic tags"
-          caption={suggestions.tags.length ? suggestions.tags.join(", ") : "Uses heading, category, and draft content."}
-          onClick={() =>
-            apply("Topic tags", () =>
-              onApplyFields?.({
-                tags: suggestions.tags.join(", "),
-              })
-            )
-          }
-        />
-        <ActionButton
-          icon={PenLine}
-          label="Insert intro paragraph"
-          caption="Adds a concise opening that names the reader outcome."
-          onClick={() => apply("Intro paragraph", () => onInsertBlock?.(suggestions.intro))}
-        />
-        <ActionButton
-          icon={FileText}
-          label="Insert final thoughts"
-          caption="Adds a clear closing section for content quality scoring."
-          onClick={() => apply("Final thoughts", () => onInsertBlock?.(suggestions.conclusion))}
-        />
-        <ActionButton
-          icon={HelpCircle}
-          label="Insert FAQ block"
-          caption="Adds three schema-ready Q&A items for rich results."
-          onClick={() => apply("FAQ block", () => onInsertBlock?.(suggestions.faq))}
-        />
-        <ActionButton
-          icon={ShieldCheck}
-          label="Fill trust fields"
-          caption="Adds author role, reviewer, and editorial note."
-          onClick={() => apply("Trust fields", () => onApplyFields?.(suggestions.trustFields))}
-        />
+        {helpers.map((helper) => (
+          <HelperButton
+            key={helper.id}
+            icon={helper.icon}
+            label={helper.label}
+            caption={helper.caption}
+            attached={isAttached(helper)}
+            onToggle={() => toggleHelper(helper)}
+          />
+        ))}
       </div>
 
       <div className="mt-4 rounded-xl border border-primary bg-primary-soft px-3 py-2 text-xs leading-5 text-primary">

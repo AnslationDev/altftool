@@ -10,6 +10,16 @@ import {
 } from "lucide-react";
 import { emitAlert } from "@/lib/alertBus";
 import { parseBlogTags } from "./BlogSeoChecklist";
+import BlogHelperToggleButton from "./BlogHelperToggleButton";
+import {
+  clearedFields,
+  fieldsMatch,
+  hasMarkedBlock,
+  removeMarkedBlock,
+  wrapMarkedBlock,
+} from "./blogToggleBlocks";
+
+const TEMPLATE_MARKER_PREFIX = "ALTFT_CONTENT_TEMPLATE";
 
 function escapeHtml(value = "") {
   return String(value)
@@ -234,26 +244,39 @@ const templates = [
 ];
 
 function TemplateButton({ template, formData, onApplyTemplate }) {
-  const Icon = template.icon;
-  const apply = () => {
-    onApplyTemplate?.({ label: template.label, ...template.build(formData) });
+  const built = template.build(formData);
+  const markerId = template.id;
+  const attached =
+    hasMarkedBlock(formData.description, TEMPLATE_MARKER_PREFIX, markerId) ||
+    fieldsMatch(formData, built.fields);
+
+  const toggle = () => {
+    if (attached) {
+      onApplyTemplate?.({
+        label: template.label,
+        fields: clearedFields(built.fields),
+        description: removeMarkedBlock(formData.description, TEMPLATE_MARKER_PREFIX, markerId),
+      });
+      emitAlert({ type: "success", message: `${template.label} template removed.` });
+      return;
+    }
+
+    onApplyTemplate?.({
+      label: template.label,
+      fields: built.fields,
+      html: wrapMarkedBlock(TEMPLATE_MARKER_PREFIX, markerId, built.html),
+    });
     emitAlert({ type: "success", message: `${template.label} template applied.` });
   };
 
   return (
-    <button
-      type="button"
-      onClick={apply}
-      className="group flex items-start gap-3 rounded-xl border border-border bg-surface-soft p-3 text-left transition hover:border-primary hover:bg-primary-soft"
-    >
-      <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-surface text-primary shadow-sm">
-        <Icon className="h-4 w-4" />
-      </span>
-      <span className="min-w-0">
-        <span className="block text-sm font-semibold text-foreground group-hover:text-primary">{template.label}</span>
-        <span className="mt-0.5 block text-xs leading-5 text-muted">{template.caption}</span>
-      </span>
-    </button>
+    <BlogHelperToggleButton
+      icon={template.icon}
+      label={template.label}
+      caption={template.caption}
+      attached={attached}
+      onToggle={toggle}
+    />
   );
 }
 

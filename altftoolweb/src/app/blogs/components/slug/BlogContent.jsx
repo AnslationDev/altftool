@@ -37,6 +37,19 @@ export default function BlogContent({
   // 1. Remove color styles
   cleanedContent = cleanedContent.replace(/color\s*:\s*[^;"]+;?/gi, "");
 
+  // 1b. External links: neutralize javascript: URLs and force new-tab with a
+  // safe rel. Internal/altftool links keep default same-tab navigation.
+  cleanedContent = cleanedContent
+    .replace(/href\s*=\s*(["'])\s*javascript:[^"']*\1/gi, 'href="#"')
+    .replace(/<a\b([^>]*href=(["'])https?:\/\/[^"']+\2[^>]*)>/gi, (match, attrs) => {
+      if (/https?:\/\/(www\.)?altftool\.com/i.test(match)) return match;
+      const cleanedAttrs = attrs
+        .replace(/\starget\s*=\s*(["'])[^"']*\1/gi, "")
+        .replace(/\srel\s*=\s*(["'])[^"']*\1/gi, "")
+        .trim();
+      return `<a ${cleanedAttrs} target="_blank" rel="noopener noreferrer nofollow">`;
+    });
+
   // 2. Convert YouTube oembed → iframe
   cleanedContent = cleanedContent.replace(
     /<oembed url="https:\/\/www\.youtube\.com\/watch\?v=([^"&]+)[^"]*"><\/oembed>/g,

@@ -114,7 +114,7 @@ function ConsumerRating() {
                 className={`w-2.5 h-2.5 rounded-full transition-all duration-300
       ${mobileIndex === i
                     ? "bg-[var(--primary)] scale-110"
-                    : "bg-gray-300"
+                    : "brandrating-dot-muted"
                   }`}
               />
             ))}

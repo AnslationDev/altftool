@@ -1,4 +1,5 @@
 import JsonLd from "@/platform/seo/JsonLd";
+import "./top9.css";
 import {
   createCollectionPageJsonLd,
   createItemListJsonLd,
@@ -44,5 +45,4 @@ export default function Page() {
     </main>
   );
 }
-
 

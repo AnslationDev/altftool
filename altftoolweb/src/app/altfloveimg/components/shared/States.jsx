@@ -20,7 +20,7 @@ export function EmptyState({ illustration = true, icon: Icon = ImageOff, title, 
   return (
     <div className="flex flex-col items-center justify-center gap-3 rounded-2xl border border-dashed py-12 text-center px-6"
       style={{ borderColor: "var(--ali-border-strong)" }}>
-      {illustration ? <UploadArt size={108} /> : <div className="ali-tool-icon" style={{ "--ali-accent": "#2563eb" }}><Icon size={24} /></div>}
+      {illustration ? <UploadArt size={108} /> : <div className="ali-tool-icon" style={{ "--ali-accent": "var(--primary, #14B8A6)" }}><Icon size={24} /></div>}
       <p className="mt-1 font-semibold">{title || "Nothing here yet"}</p>
       {subtitle && <p className="max-w-sm text-sm" style={{ color: "var(--ali-muted)" }}>{subtitle}</p>}
     </div>

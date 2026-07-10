@@ -1,7 +1,8 @@
 import {
-  Activity,
   BookOpen,
+  FileText,
   GraduationCap,
+  ImageIcon,
   LayoutGrid,
   MapPin,
   Monitor,
@@ -29,6 +30,8 @@ export const SITE_ROUTES = {
   requestTool: { label: "Request a Tool", href: "/request-a-tool" },
   faq: { label: "FAQ", href: "/policypages/faq" },
   status: { label: "Status", href: "/status" },
+  imageTools: { label: "Image Tools", href: "/altfloveimg" },
+  pdfTools: { label: "PDF Tools", href: "/altflovepdf" },
   news: { label: "News", href: "/news" },
   desktop: { label: "Desktop Software", href: "/desktop" },
   trendingVideos: { label: "Trending Videos", href: "/trendingvids" },
@@ -72,7 +75,8 @@ export const PUBLIC_NAV_ITEMS = [
     icon: LayoutGrid,
     options: [
       { ...SITE_ROUTES.desktop, icon: Monitor },
-      { ...SITE_ROUTES.status, icon: Activity },
+      { ...SITE_ROUTES.imageTools, icon: ImageIcon },
+      { ...SITE_ROUTES.pdfTools, icon: FileText },
       { ...SITE_ROUTES.trendingVideos, icon: Sparkles },
       { ...SITE_ROUTES.personality, icon: Sparkles },
       { ...SITE_ROUTES.top11, icon: Trophy },

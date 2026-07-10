@@ -98,8 +98,9 @@ export default function RequestToolClient() {
 
         <div className="mx-auto mt-7 max-w-6xl rounded-[var(--anslation-ds-radius-xl)] border border-(--border) bg-(--card) p-3 shadow-[var(--anslation-ds-shadow-lg)] sm:mt-8 sm:p-4">
           <div className="grid gap-5 lg:grid-cols-[0.88fr_1.62fr]">
-            <aside className="relative overflow-hidden rounded-[var(--anslation-ds-radius-lg)] bg-[linear-gradient(145deg,var(--primary),var(--primary-active))] p-6 text-(--primary-foreground) sm:p-8">
-              <div className="pointer-events-none absolute inset-x-0 bottom-0 h-32 bg-[linear-gradient(0deg,color-mix(in_srgb,var(--secondary)_22%,transparent),transparent)]" />
+            <aside className="relative overflow-hidden rounded-[var(--anslation-ds-radius-lg)] bg-[linear-gradient(145deg,var(--primary),var(--secondary))] p-6 text-(--primary-foreground) shadow-[0_18px_42px_color-mix(in_srgb,var(--primary)_22%,transparent)] sm:p-8">
+              <div className="pointer-events-none absolute inset-x-0 bottom-0 h-32 bg-[linear-gradient(0deg,color-mix(in_srgb,var(--secondary)_30%,transparent),transparent)]" />
+              <div className="pointer-events-none absolute -right-16 -top-16 h-44 w-44 rounded-full bg-(--primary-foreground)/15 blur-3xl" />
               <div className="relative">
               <h2 className="text-2xl font-bold tracking-normal">Tool request information</h2>
               <p className="mt-3 text-sm leading-6 opacity-85">
@@ -108,7 +109,7 @@ export default function RequestToolClient() {
 
               <div className="mt-8 space-y-5">
                 <div className="flex gap-3">
-                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-[var(--anslation-ds-radius)] bg-(--primary-foreground)/15">
+                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-[var(--anslation-ds-radius)] border border-(--primary-foreground)/20 bg-(--primary-foreground)/15 shadow-[var(--anslation-ds-shadow-sm)]">
                     <Mail className="h-5 w-5" />
                   </span>
                   <span>
@@ -118,7 +119,7 @@ export default function RequestToolClient() {
                 </div>
 
                 <div className="flex gap-3">
-                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-[var(--anslation-ds-radius)] bg-(--primary-foreground)/15">
+                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-[var(--anslation-ds-radius)] border border-(--primary-foreground)/20 bg-(--primary-foreground)/15 shadow-[var(--anslation-ds-shadow-sm)]">
                     <Clock3 className="h-5 w-5" />
                   </span>
                   <span>
@@ -128,7 +129,7 @@ export default function RequestToolClient() {
                 </div>
 
                 <div className="flex gap-3">
-                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-[var(--anslation-ds-radius)] bg-(--primary-foreground)/15">
+                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-[var(--anslation-ds-radius)] border border-(--primary-foreground)/20 bg-(--primary-foreground)/15 shadow-[var(--anslation-ds-shadow-sm)]">
                     <MessageSquareText className="h-5 w-5" />
                   </span>
                   <span>
@@ -138,10 +139,10 @@ export default function RequestToolClient() {
                 </div>
               </div>
 
-              <div className="mt-8 space-y-4 border-t border-(--primary-foreground)/20 pt-6">
+              <div className="mt-8 space-y-4 border-t border-(--primary-foreground)/25 pt-6">
                 {requestGuides.map(({ title, description, icon: Icon }) => (
                   <div key={title} className="flex gap-3">
-                    <span className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-[var(--anslation-ds-radius-sm)] bg-(--primary-foreground)/15">
+                    <span className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-[var(--anslation-ds-radius-sm)] border border-(--primary-foreground)/20 bg-(--primary-foreground)/15">
                       <Icon className="h-4 w-4" />
                     </span>
                     <span>
@@ -236,7 +237,7 @@ export default function RequestToolClient() {
                     placeholder="Describe the tool you want us to add"
                     required
                     rows={5}
-                    className="mt-2 w-full resize-y border-0 border-b border-(--primary) bg-transparent px-0 py-3 text-sm font-semibold leading-6 text-(--foreground) outline-none transition placeholder:text-(--muted-foreground) focus:border-(--primary-active) focus:ring-0"
+                    className="mt-2 w-full resize-y border-0 border-b border-(--primary) bg-[linear-gradient(180deg,color-mix(in_srgb,var(--primary)_3%,transparent),color-mix(in_srgb,var(--secondary)_3%,transparent))] px-3 py-3 text-sm font-semibold leading-6 text-(--foreground) outline-none transition placeholder:text-(--muted-foreground) focus:border-(--secondary) focus:ring-0"
                   />
                 </label>
               </div>
@@ -245,7 +246,7 @@ export default function RequestToolClient() {
                 <button
                   type="submit"
                   disabled={!isReady}
-                  className="inline-flex h-10 w-fit items-center justify-center gap-2 rounded-[var(--anslation-ds-radius)] bg-(--primary) px-5 text-sm font-bold text-(--primary-foreground) shadow-[var(--anslation-ds-shadow-sm)] transition hover:bg-(--primary-active) focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-(--primary) disabled:cursor-not-allowed disabled:opacity-60"
+                  className="inline-flex h-10 w-fit items-center justify-center gap-2 rounded-[var(--anslation-ds-radius)] bg-[linear-gradient(135deg,var(--primary),var(--secondary))] px-5 text-sm font-bold text-(--primary-foreground) shadow-[0_14px_32px_color-mix(in_srgb,var(--primary)_24%,transparent)] transition hover:-translate-y-0.5 hover:shadow-[0_18px_42px_color-mix(in_srgb,var(--secondary)_24%,transparent)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-(--primary) disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:translate-y-0"
                 >
                   <Send className="h-4 w-4" />
                   Send request

@@ -41,6 +41,10 @@ import BlogPublishPreviewModal, {
   normalizeBlogSlug,
 } from "../components/BlogPublishPreviewModal";
 import BlogPreviewModal from "../components/BlogPreviewModal";
+import BlogValidationPanel, {
+  jumpToBlogField,
+  revealValidationPanel,
+} from "../components/BlogValidationPanel";
 import { isFeatureEnabled } from "@/lib/featureFlags";
 import EditorActionBar from "../components/EditorActionBar";
 import KeyboardShortcutsHelp from "../components/KeyboardShortcutsHelp";
@@ -248,6 +252,7 @@ export default function AddBlog() {
   const [imageAlt, setImageAlt]               = useState("");
   const [dragOver, setDragOver]               = useState(false);
   const [errors, setErrors]                   = useState({});
+  const [validationLive, setValidationLive]   = useState(false);
   const [submitting, setSubmitting]           = useState(false);
   const [savingDraft, setSavingDraft]         = useState(false);
   const [uploadProgress, setUploadProgress]   = useState(0);
@@ -337,11 +342,27 @@ export default function AddBlog() {
     }
   }, []);
 
-  /* ── Auto-save draft every 2s ── */
+  /* ── Auto-save draft every 2s ──
+     The interval reads the latest values from a ref so it is created once —
+     typing no longer tears it down and recreates it on every keystroke — and
+     the localStorage write (plus the re-render from setDraftSavedAt) is
+     skipped entirely when nothing has changed since the last save. */
+  const draftSnapshotRef = useRef({ formData, imagePreview, imageName, imageAlt });
   useEffect(() => {
+    draftSnapshotRef.current = { formData, imagePreview, imageName, imageAlt };
+  }, [formData, imagePreview, imageName, imageAlt]);
+
+  useEffect(() => {
+    let lastSerialized = "";
     const id = setInterval(() => {
       try {
-        localStorage.setItem(DRAFT_KEY, JSON.stringify({ formData, imagePreview, imageName, imageAlt, savedAt: new Date().toISOString() }));
+        const payload = JSON.stringify(draftSnapshotRef.current);
+        if (payload === lastSerialized) return;
+        localStorage.setItem(
+          DRAFT_KEY,
+          JSON.stringify({ ...draftSnapshotRef.current, savedAt: new Date().toISOString() })
+        );
+        lastSerialized = payload;
         setDraftSavedAt(new Date());
         setAutoSaveError(false);
       } catch (err) {
@@ -350,14 +371,73 @@ export default function AddBlog() {
       }
     }, 2000);
     return () => clearInterval(id);
-  }, [formData, imagePreview, imageName, imageAlt]);
+  }, []);
 
   const clearError  = (name) => setErrors((p) => ({ ...p, [name]: undefined }));
 
-  const handleInsertContentBlock = (html) => {
+  /* ── Debounced editor → form sync ──
+     CKEditor fires onChange on every keystroke. Pushing each keystroke into
+     formData re-renders every heavy panel (publish gate, content health,
+     live preview, SEO checklist) per character, which can freeze the tab and
+     trip React's nested-update limit. The editor owns the text while focused,
+     so syncing the form ~250ms after typing pauses is lossless. */
+  const editorSyncTimerRef = useRef(null);
+  const seoEditedRef = useRef(seoEdited);
+  useEffect(() => {
+    seoEditedRef.current = seoEdited;
+  }, [seoEdited]);
+
+  const applyEditorData = useCallback((data) => {
+    setFormData((prev) => {
+      const updated = { ...prev, description: data };
+      if (!seoEditedRef.current.description) updated.seoDescription = generateExcerpt(data);
+      return updated;
+    });
+    setErrors((p) => ({ ...p, description: undefined }));
+  }, []);
+
+  const pendingEditorDataRef = useRef(null);
+  const handleEditorChange = useCallback(
+    (data) => {
+      pendingEditorDataRef.current = data;
+      if (editorSyncTimerRef.current) window.clearTimeout(editorSyncTimerRef.current);
+      editorSyncTimerRef.current = window.setTimeout(() => {
+        editorSyncTimerRef.current = null;
+        pendingEditorDataRef.current = null;
+        applyEditorData(data);
+      }, 250);
+    },
+    [applyEditorData]
+  );
+
+  /* Flush any editor keystrokes still waiting in the debounce window so that
+     saving/publishing right after typing never drops the last edits. */
+  const flushEditorSync = useCallback(() => {
+    if (editorSyncTimerRef.current) {
+      window.clearTimeout(editorSyncTimerRef.current);
+      editorSyncTimerRef.current = null;
+    }
+    if (pendingEditorDataRef.current != null) {
+      const data = pendingEditorDataRef.current;
+      pendingEditorDataRef.current = null;
+      applyEditorData(data);
+    }
+  }, [applyEditorData]);
+
+  useEffect(
+    () => () => {
+      if (editorSyncTimerRef.current) window.clearTimeout(editorSyncTimerRef.current);
+    },
+    []
+  );
+
+  const handleInsertContentBlock = (payload) => {
     setFormData((prev) => ({
       ...prev,
-      description: `${prev.description || ""}${prev.description?.trim() ? "\n\n" : ""}${html}`,
+      description:
+        payload && typeof payload === "object" && "description" in payload
+          ? payload.description
+          : `${prev.description || ""}${prev.description?.trim() ? "\n\n" : ""}${payload}`,
     }));
     clearError("description");
   };
@@ -376,11 +456,14 @@ export default function AddBlog() {
     setBannerError(null);
   };
 
-  const handleApplyTemplate = ({ html = "", fields = {} } = {}) => {
+  const handleApplyTemplate = ({ html = "", fields = {}, description } = {}) => {
     setFormData((prev) => ({
       ...prev,
       ...fields,
-      description: `${prev.description || ""}${prev.description?.trim() ? "\n\n" : ""}${html}`,
+      description:
+        typeof description === "string"
+          ? description
+          : `${prev.description || ""}${prev.description?.trim() ? "\n\n" : ""}${html}`,
     }));
     setErrors((prev) => {
       const next = { ...prev, description: undefined };
@@ -470,12 +553,15 @@ export default function AddBlog() {
   };
 
   /* ── Validation ── */
-  const validate = () => {
+  // Pure rule set — used by validate() on publish AND by the live
+  // re-validation effect that keeps the validation panel updated in
+  // real time after the first publish attempt.
+  const computeValidationErrors = useCallback(() => {
     const e = {};
     if (!formData.heading.trim())       e.heading       = VALIDATION_MESSAGES.heading;
     if (!formData.author.trim())        e.author        = VALIDATION_MESSAGES.author;
     if (!formData.date)                 e.date          = VALIDATION_MESSAGES.date;
-    if (!formData.description)          e.description   = VALIDATION_MESSAGES.description;
+    if (!(pendingEditorDataRef.current ?? formData.description)) e.description = VALIDATION_MESSAGES.description;
     if (!formData.seoDescription.trim())e.seoDescription = VALIDATION_MESSAGES.seoDescription;
     if (!imageFile && !imagePreview)    e.image         = VALIDATION_MESSAGES.image;
     if ((imageFile || imagePreview) && !imageAlt.trim()) e.imageAlt = VALIDATION_MESSAGES.imageAlt;
@@ -491,15 +577,46 @@ export default function AddBlog() {
     else if (seoTitleLen < SEO_TITLE_MIN)  e.seoTitle = VALIDATION_MESSAGES.seoTitleShort(seoTitleLen);
     else if (seoTitleLen > SEO_TITLE_HARD_MAX) e.seoTitle = VALIDATION_MESSAGES.seoTitleLong(seoTitleLen);
 
+    return e;
+  }, [formData, imageFile, imagePreview, imageAlt, categories]);
+
+  const validate = () => {
+    const e = computeValidationErrors();
     setErrors(e);
+    setValidationLive(true);
     if (e.seoTitle || e.seoDescription) setSeoExpanded(true);
 
     const errorCount = Object.keys(e).length;
     if (errorCount > 0) {
       const noun = errorCount === 1 ? "1 field needs" : `${errorCount} fields need`;
       emitAlert({ type: "error", message: `${noun} your attention before publishing. Please scroll up to check the highlighted fields.` });
+      revealValidationPanel();
     }
     return errorCount === 0;
+  };
+
+  /* Live re-validation: after the first publish attempt, the validation
+     panel and field errors track every change instantly. Never active
+     before the first attempt, so the existing publish workflow and the
+     untouched-form experience stay exactly the same. */
+  useEffect(() => {
+    if (!validationLive) return;
+    setErrors(computeValidationErrors());
+  }, [validationLive, computeValidationErrors]);
+
+  /* Click-to-fix: scroll to, expand (SEO), highlight, and focus the field —
+     including the CKEditor editable (or its raw-HTML fallback). */
+  const handleJumpToValidationField = (fieldKey) => {
+    jumpToBlogField(fieldKey, {
+      onExpandSeo: () => setSeoExpanded(true),
+      onHighlightSection: (sectionId) => {
+        setHighlightedSection(sectionId);
+        window.setTimeout(
+          () => setHighlightedSection((current) => (current === sectionId ? "" : current)),
+          1800
+        );
+      },
+    });
   };
 
   const ensurePublishGateReady = ({ confirmWarnings = true } = {}) => {
@@ -535,6 +652,7 @@ export default function AddBlog() {
   };
 
   const openSavePreview = (status = "published") => {
+    flushEditorSync();
     setBannerError(null);
     if ((status === "published" && submitting) || (status !== "published" && savingDraft)) return;
     if (status === "published" && !validate()) return;
@@ -829,6 +947,12 @@ export default function AddBlog() {
 
         <BannerAlert message={bannerError} onDismiss={() => setBannerError(null)} />
 
+        <BlogValidationPanel
+          errors={errors}
+          attempted={validationLive}
+          onJump={handleJumpToValidationField}
+        />
+
         {/* Top bar */}
         <EditorActionBar
           title="New Blog Post"
@@ -917,14 +1041,7 @@ export default function AddBlog() {
                 {errors.description && (
                   <p className="flex items-center gap-1 text-xs text-danger font-medium -mt-2"><AlertCircle className="w-3 h-3" />{errors.description}</p>
                 )}
-                <BlogEditor value={formData.description} onChange={(data) => {
-                  setFormData((prev) => {
-                    const updated = { ...prev, description: data };
-                    if (!seoEdited.description) updated.seoDescription = generateExcerpt(data);
-                    return updated;
-                  });
-                  clearError("description");
-                }} />
+                <BlogEditor value={formData.description} onChange={handleEditorChange} />
               </Section>
 
               {/* SEO — collapsible */}
@@ -1059,7 +1176,9 @@ export default function AddBlog() {
                 {!imagePreview ? (
                   <div onDragOver={(e) => { e.preventDefault(); setDragOver(true); }} onDragLeave={() => setDragOver(false)} onDrop={handleDrop}
                     onClick={() => fileInputRef.current?.click()}
-                    className={`border-2 border-dashed rounded-xl p-6 flex flex-col items-center gap-2.5 cursor-pointer transition-all ${dragOver ? "border-primary bg-primary-soft scale-[1.01]" : errors.image ? "border-danger bg-danger-soft/30" : "border-border hover:border-primary hover:bg-surface-soft"}`}>
+                    data-image-dropzone tabIndex={-1} role="button" aria-label="Upload featured image"
+                    onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); fileInputRef.current?.click(); } }}
+                    className={`border-2 border-dashed rounded-xl p-6 flex flex-col items-center gap-2.5 cursor-pointer transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-danger ${dragOver ? "border-primary bg-primary-soft scale-[1.01]" : errors.image ? "border-danger bg-danger-soft/30" : "border-border hover:border-primary hover:bg-surface-soft"}`}>
                     <div className={`w-10 h-10 rounded-2xl flex items-center justify-center ${dragOver ? "bg-primary-soft" : "bg-surface-soft"}`}>
                       <UploadCloud className={`w-5 h-5 ${dragOver ? "text-primary" : "text-muted"}`} />
                     </div>
@@ -1099,7 +1218,7 @@ export default function AddBlog() {
                     <label className="flex items-center gap-1.5 text-xs font-bold text-muted uppercase tracking-wider">
                       <ALargeSmall className="w-3.5 h-3.5 text-muted" />Image Alt Text<span className="text-danger">*</span>
                     </label>
-                    <input type="text" value={imageAlt}
+                    <input type="text" id="blog-image-alt-input" value={imageAlt}
                       onChange={(e) => { setImageAlt(e.target.value); clearError("imageAlt"); setBannerError(null); }}
                       placeholder="Describe the image for screen readers and SEO…" maxLength={150}
                       className={`w-full text-sm px-3 py-2.5 rounded-xl border bg-surface placeholder:text-muted focus:outline-none focus:ring-2 transition ${errors.imageAlt ? "border-danger focus:ring-danger/30 focus:border-danger" : "border-border focus:ring-primary/30 focus:border-primary"}`} />

@@ -21,6 +21,7 @@ import {
 import CouponReveal from "@/app/buysmart/components/CouponReveal";
 import OfferFeedback from "@/app/buysmart/components/OfferFeedback";
 import TrustSignalBadges from "@/app/buysmart/components/TrustSignalBadges";
+import "@/app/buysmart/components/buysmart-theme.css";
 import JsonLd from "@/platform/seo/JsonLd";
 import {
   fallbackBuySmartCategoryItems,
@@ -199,7 +200,7 @@ export default function StoreDetailClient({ slug }) {
 
   if (!offer) {
     return (
-      <main className="bg-(--background) text-(--foreground)">
+      <main className="buy-smart-page bg-(--background) text-(--foreground)">
         <section className="section">
           <Link
             href="/buysmart"
@@ -216,7 +217,7 @@ export default function StoreDetailClient({ slug }) {
             </p>
             <Link
               href="/buysmart"
-              className="mt-5 inline-flex h-10 items-center justify-center rounded-[var(--anslation-ds-radius)] bg-(--primary) px-4 text-sm font-semibold text-(--primary-foreground)"
+              className="buy-smart-gradient-cta mt-5 inline-flex h-10 items-center justify-center rounded-[var(--anslation-ds-radius)] px-4 text-sm font-semibold transition hover:-translate-y-0.5"
             >
               Explore offers
             </Link>
@@ -287,7 +288,7 @@ export default function StoreDetailClient({ slug }) {
   return (
     <>
     <JsonLd id="buysmart-store-schema" data={jsonLd} />
-    <main className="bg-(--background) pb-20 text-(--foreground) lg:pb-0" data-testid="buysmart-store-detail">
+    <main className="buy-smart-page bg-(--background) pb-20 text-(--foreground) lg:pb-0" data-testid="buysmart-store-detail">
       <section className="section space-y-5">
         <Link
           href="/buysmart"
@@ -419,7 +420,7 @@ export default function StoreDetailClient({ slug }) {
               ) : null}
 
               {quality.issues.length ? (
-                <div className="mt-4 rounded-[var(--anslation-ds-radius)] border border-amber-200 bg-amber-50 p-3 text-sm text-amber-800">
+                <div className="mt-4 rounded-[var(--anslation-ds-radius)] border border-(--secondary) bg-(--muted) p-3 text-sm text-(--foreground)">
                   <div className="flex items-center gap-2 font-bold">
                     <Info className="h-4 w-4" />
                     Quality watchlist
@@ -652,7 +653,7 @@ function MobileStoreActionBar({ offer }) {
 
 function StoreDetailSkeleton() {
   return (
-    <main className="bg-(--background) text-(--foreground)">
+    <main className="buy-smart-page bg-(--background) text-(--foreground)">
       <section className="section space-y-5">
         <LoadingBone className="h-5 w-40 rounded-full" />
         <div className="grid gap-5 lg:grid-cols-[1.05fr_0.95fr]">

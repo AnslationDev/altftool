@@ -28,7 +28,7 @@ export default function CategorySection({ onCategoryClick, categories = [] }) {
             onClick={() => {
               onCategoryClick(category);
             }}
-            className="group animate-slide-right text-left rounded-2xl border border-(--border) bg-(--card) p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-[#2563EB] hover:shadow-[0_18px_40px_rgba(37,99,235,0.12)]"
+            className="group animate-slide-right text-left rounded-2xl border border-(--border) bg-(--card) p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-(--primary) hover:shadow-[0_18px_40px_rgba(20,184,166,0.14)]"
           >
             <div className="flex h-full flex-col justify-between">
               <div className="space-y-4">
@@ -36,16 +36,16 @@ export default function CategorySection({ onCategoryClick, categories = [] }) {
                   <h3 className="text-xl text-(--foreground) font-semibold leading-snug">
                     {category}
                   </h3>
-                  <p className="pt-2 text-sm text-[#64748B] leading-6">
+                  <p className="pt-2 text-sm text-(--muted) leading-6">
                     Explore curated videos and discover relevant content in this
                     category.
                   </p>
                 </div>
               </div>
 
-              <div className="pt-2 flex items-center justify-between text-[#2563EB]">
+              <div className="pt-2 flex items-center justify-between text-(--primary)">
                 <span className="text-sm font-semibold">Explore category</span>
-                <div className="rounded-full bg-[#E8F2FF] p-2 transition group-hover:translate-x-1">
+                <div className="rounded-full bg-(--card) border border-(--border) p-2 transition group-hover:translate-x-1 group-hover:bg-gradient-to-r group-hover:from-(--primary) group-hover:to-(--secondary) group-hover:text-white">
                   <ArrowRight className="w-4 h-4" />
                 </div>
               </div>

@@ -337,16 +337,7 @@ function timeAgo(h) {
 }
 
 function getCategoryStyle(cat) {
-  const map = {
-    politics: "bg-red-500/10 text-red-500 border-red-500/20",
-    tech: "bg-blue-500/10 text-blue-500 border-blue-500/20",
-    business: "bg-amber-500/10 text-amber-500 border-amber-500/20",
-    science: "bg-emerald-500/10 text-emerald-500 border-emerald-500/20",
-    sports: "bg-orange-500/10 text-orange-500 border-orange-500/20",
-    health: "bg-pink-500/10 text-pink-500 border-pink-500/20",
-    world: "bg-purple-500/10 text-purple-500 border-purple-500/20",
-  };
-  return map[cat?.toLowerCase()] ?? "bg-zinc-500/10 text-zinc-400 border-zinc-500/20";
+  return "news-category-pill";
 }
 
 // ─── Sub-components ──────────────────────────────────────────────────────────
@@ -405,7 +396,7 @@ export default function NewsCard({ news, variant = "default", rank }) {
   // ─── Variant: featured ─────────────────────────────────────────────────
   if (variant === "featured") {
     return (
-      <article className="group overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-sm transition-all hover:shadow-md">
+      <article className="group overflow-hidden rounded-2xl news-card-surface transition-all">
         {news.image_url && (
           <Link href={`/news/${news.slug}`} className="block">
             <div className="relative h-64 w-full overflow-hidden sm:h-80 md:h-96">
@@ -519,7 +510,7 @@ export default function NewsCard({ news, variant = "default", rank }) {
   if (variant === "category") {
     return (
       <Link href={`/news/${news.slug}`} className="group block">
-        <div className="rounded-xl border border-[var(--border)] bg-[var(--surface)] p-4 transition hover:shadow-sm hover:border-[var(--border-strong)]">
+        <div className="rounded-xl news-card-surface p-4 transition hover:border-[var(--primary)]">
           <h4 className="text-sm font-semibold text-[var(--foreground)] group-hover:underline line-clamp-2">
             {news.headline}
           </h4>
@@ -548,7 +539,7 @@ export default function NewsCard({ news, variant = "default", rank }) {
   // ─── Variant: trending (with rank) ──────────────────────────────────
   if (variant === "trending") {
     return (
-      <article className="group flex gap-5 rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-5 transition hover:shadow-md">
+      <article className="group flex gap-5 rounded-2xl news-card-surface p-5 transition">
         <div className="shrink-0 text-2xl font-extrabold text-[var(--muted-foreground)] opacity-30 tabular-nums">
           {rank}
         </div>
@@ -580,7 +571,7 @@ export default function NewsCard({ news, variant = "default", rank }) {
 
   // ─── Default variant (original card) ──────────────────────────────────
   return (
-    <article className="group relative w-full overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--anslation-ds-shadow-sm)] transition-all duration-300 hover:shadow-[var(--anslation-ds-shadow-md)] hover:-translate-y-1">
+    <article className="group relative w-full overflow-hidden rounded-2xl news-card-surface transition-all duration-300 hover:-translate-y-1">
       {news.image_url && (
         <Link href={`/news/${news.slug}`} className="block" tabIndex={-1} aria-hidden>
           <div className="relative h-52 w-full overflow-hidden sm:h-56 md:h-80">
@@ -593,7 +584,7 @@ export default function NewsCard({ news, variant = "default", rank }) {
             <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
             {news.category && (
               <span className={`absolute left-3 top-3 flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[11px] font-semibold uppercase tracking-wider backdrop-blur-md border border-white/10 ${catStyle}`}>
-                <span className={`h-1.5 w-1.5 rounded-full ${catStyle.split(" ")[0]}`} />
+                <span className="h-1.5 w-1.5 rounded-full bg-[var(--primary)]" />
                 {news.category}
               </span>
             )}

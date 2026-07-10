@@ -1,7 +1,7 @@
 "use client";
 
 import { useSearchParams } from "next/navigation";
-import { useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 
 import { toolMetaMap } from "@/platform/registry/toolMetaMap";
@@ -67,6 +67,48 @@ export default function SearchPage() {
   const trimmedQuery = query.trim().toLowerCase();
   const isValid = trimmedQuery.length >= 2;
 
+  // Blog posts were entirely absent from site-wide search. Reuse the existing
+  // ISR-cached /api/blogs route (live Firestore posts) — fetched lazily, once,
+  // and only when there is a valid query.
+  const [blogIndex, setBlogIndex] = useState([]);
+  useEffect(() => {
+    if (!isValid || blogIndex.length) return undefined;
+
+    const controller = new AbortController();
+    fetch("/api/blogs?limit=72", {
+      headers: { accept: "application/json" },
+      signal: controller.signal,
+    })
+      .then((response) => (response.ok ? response.json() : null))
+      .then((payload) => {
+        const posts = Array.isArray(payload?.posts) ? payload.posts : [];
+        if (!posts.length) return;
+        setBlogIndex(
+          posts.map((post) => ({
+            slug: post.slug,
+            name: post.heading || post.title,
+            description: post.excerpt || post.seoDescription || "",
+            category: post.category,
+            searchable: [
+              post.heading,
+              String(post.slug || "").replace(/-/g, " "),
+              post.category,
+              post.excerpt,
+              ...(Array.isArray(post.tags) ? post.tags : []),
+            ]
+              .filter(Boolean)
+              .join(" ")
+              .toLowerCase(),
+          })),
+        );
+      })
+      .catch(() => {
+        /* search still works for tools/extensions */
+      });
+
+    return () => controller.abort();
+  }, [isValid, blogIndex.length]);
+
   const tools = useMemo(
     () =>
       Object.entries(toolMetaMap).map(([slug, data]) => ({
@@ -94,8 +136,11 @@ export default function SearchPage() {
     return {
       tools: tools.filter(matchItem).sort((a, b) => rankItem(a) - rankItem(b) || a.name.localeCompare(b.name)),
       extensions: dynamicExtensions.filter(matchItem).sort((a, b) => rankItem(a) - rankItem(b) || a.name.localeCompare(b.name)),
+      blogs: blogIndex
+        .filter((item) => item.searchable.includes(trimmedQuery))
+        .sort((a, b) => rankItem(a) - rankItem(b) || a.name.localeCompare(b.name)),
     };
-  }, [dynamicExtensions, isValid, tools, trimmedQuery]);
+  }, [blogIndex, dynamicExtensions, isValid, tools, trimmedQuery]);
 
   if (!isValid) {
     return (
@@ -131,8 +176,9 @@ export default function SearchPage() {
 
   const hasResults =
     results.tools.length ||
-    results.extensions.length;
-  const totalResults = results.tools.length + results.extensions.length;
+    results.extensions.length ||
+    results.blogs.length;
+  const totalResults = results.tools.length + results.extensions.length + results.blogs.length;
 
   return (
     <main className="altf-search-page">
@@ -186,6 +232,7 @@ export default function SearchPage() {
         <span><strong>{totalResults}</strong> total matches</span>
         <span><strong>{results.tools.length}</strong> tools</span>
         <span><strong>{results.extensions.length}</strong> extensions</span>
+        <span><strong>{results.blogs.length}</strong> guides</span>
       </div>
 
       {!hasResults && (
@@ -212,6 +259,12 @@ export default function SearchPage() {
           items={results.extensions}
           base="/extensions"
           accent="cyan"
+        />
+        <ResultSection
+          title="Guides & Blogs"
+          items={results.blogs}
+          base="/blogs"
+          accent="primary"
         />
       </div>
     </main>

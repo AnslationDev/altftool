@@ -309,22 +309,11 @@ export function normalizeBlog(blog = {}, index = 0) {
   const heading = blog.heading || blog.title || "Untitled AltFTool guide";
   const slug = blog.slug || slugify(heading);
 
-  let category = blog.category || "Others";
-  const ALLOWED_CATEGORIES_SET = new Set([
-    "Tools",
-    "Games",
-    "Language",
-    "Finance",
-    "Extensions",
-    "Food",
-    "Beauty",
-    "Travel",
-    "Fashion & Lifestyle"
-  ]);
-
-  if (!ALLOWED_CATEGORIES_SET.has(category)) {
-    category = "Others";
-  }
+  // Keep the category exactly as authored in the Admin Panel. "Others" is
+  // only a fallback for blogs that genuinely have no category — never a
+  // clamp against a hardcoded whitelist (see: category mapping fix).
+  let category = typeof blog.category === "string" ? blog.category.trim() : "";
+  category = category || "Others";
   const seoReadyBlog = withBlogSeoDefaults({
     ...blog,
     heading,
@@ -334,7 +323,9 @@ export function normalizeBlog(blog = {}, index = 0) {
     tool: blog.tool || blog.topic || category,
   });
   const description = seoReadyBlog.description || seoReadyBlog.content || seoReadyBlog.body || seoReadyBlog.excerpt || "";
-  const excerpt = seoReadyBlog.excerpt || summarize(description);
+  // Legacy docs sometimes store raw HTML in `excerpt` — cards then rendered
+  // literal "<p>" text. Always strip markup from card/summary text.
+  const excerpt = stripHtml(seoReadyBlog.excerpt || summarize(description));
   const readTimeMinutes = Number(blog.readTimeMinutes) || estimateReadTime(description, excerpt);
   const image = blog.image || FALLBACK_IMAGES[index % FALLBACK_IMAGES.length];
   const tags = uniqueLabels(
@@ -373,6 +364,8 @@ export function normalizeBlog(blog = {}, index = 0) {
     tags,
     searchText: stripHtml([
       heading,
+      // Slug words so URL-style queries ("password-protect-pdf") match too.
+      String(slug || "").replace(/-/g, " "),
       excerpt,
       description,
       category,
@@ -455,21 +448,51 @@ export function getBlogBySlug(slug) {
   return blogPosts.find((blog) => blog.slug === slug) || null;
 }
 
-export function getBlogCategories(posts = blogPosts) {
-  const DESIRED_CATEGORY_ORDER = [
-    "All",
-    "Tools",
-    "Games",
-    "Language",
-    "Finance",
-    "Extensions",
-    "Food",
-    "Beauty",
-    "Travel",
-    "Fashion & Lifestyle",
-    "Others"
-  ];
-  return DESIRED_CATEGORY_ORDER;
+// Legacy editorial ordering — known categories keep this order at the front
+// of the list; anything new from the Admin Panel follows alphabetically.
+const PREFERRED_CATEGORY_ORDER = [
+  "Tools",
+  "Games",
+  "Language",
+  "Finance",
+  "Extensions",
+  "Food",
+  "Beauty",
+  "Travel",
+  "Fashion & Lifestyle",
+];
+
+export function getBlogCategories(posts = blogPosts, extraCategoryNames = []) {
+  const bySlug = new Map();
+  const register = (label) => {
+    const clean = typeof label === "string" ? label.trim() : "";
+    if (!clean) return;
+    const slug = blogTaxonomySlug(clean);
+    if (!slug || slug === "all" || bySlug.has(slug)) return;
+    bySlug.set(slug, clean);
+  };
+
+  // Admin-managed category names win on casing; post-derived labels fill in
+  // anything not (or no longer) registered in the categories collection.
+  extraCategoryNames.forEach(register);
+  posts.forEach((post) => register(post?.category));
+
+  const ordered = [];
+  for (const label of PREFERRED_CATEGORY_ORDER) {
+    const slug = blogTaxonomySlug(label);
+    if (bySlug.has(slug)) {
+      ordered.push(bySlug.get(slug));
+      bySlug.delete(slug);
+    }
+  }
+
+  const othersSlug = blogTaxonomySlug("Others");
+  const hasOthers = bySlug.has(othersSlug);
+  if (hasOthers) bySlug.delete(othersSlug);
+
+  const rest = [...bySlug.values()].sort((a, b) => a.localeCompare(b));
+
+  return ["All", ...ordered, ...rest, ...(hasOthers ? ["Others"] : [])];
 }
 
 export function getBlogCategoryBySlug(categorySlug, posts = blogPosts) {
@@ -595,7 +618,10 @@ export function scoreRelatedBlog(current = {}, candidate = {}) {
 
   const currentTags = Array.isArray(current.tags) ? current.tags : [];
   const candidateTags = Array.isArray(candidate.tags) ? candidate.tags : [];
-  const sameCategory = current.category && candidate.category && current.category === candidate.category;
+  const sameCategory =
+    current.category &&
+    candidate.category &&
+    blogTaxonomySlug(current.category) === blogTaxonomySlug(candidate.category);
   const sameTool = current.tool && candidate.tool && current.tool === candidate.tool;
   const tagOverlap = getTagOverlapScore(currentTags, candidateTags);
   const keywordOverlap = getKeywordOverlapScore(current, candidate);
