@@ -254,6 +254,51 @@ const routeLoaders = {
     },
   },
 
+  apexboost: {
+    frontend: {
+      "": () => import("@/projects/apexboost/modules/frontend/page.jsx"),
+    },
+    hero: {
+      "": () => import("@/projects/apexboost/modules/hero/page.jsx"),
+    },
+    blogs: {
+      "": () => import("@/projects/apexboost/modules/blogs/page.jsx"),
+    },
+    services: {
+      "": () => import("@/projects/apexboost/modules/services/page.jsx"),
+    },
+    testimonials: {
+      "": () => import("@/projects/apexboost/modules/testimonials/page.jsx"),
+    },
+    portfolio: {
+      "": () => import("@/projects/apexboost/modules/portfolio/page.jsx"),
+    },
+    faq: {
+      "": () => import("@/projects/apexboost/modules/faq/page.jsx"),
+    },
+    features: {
+      "": () => import("@/projects/apexboost/modules/features/page.jsx"),
+    },
+    stats: {
+      "": () => import("@/projects/apexboost/modules/stats/page.jsx"),
+    },
+    process: {
+      "": () => import("@/projects/apexboost/modules/process/page.jsx"),
+    },
+    whyChooseUs: {
+      "": () => import("@/projects/apexboost/modules/whyChooseUs/page.jsx"),
+    },
+    cta: {
+      "": () => import("@/projects/apexboost/modules/cta/page.jsx"),
+    },
+    navLinks: {
+      "": () => import("@/projects/apexboost/modules/navLinks/page.jsx"),
+    },
+    contact: {
+      "": () => import("@/projects/apexboost/modules/contact/page.jsx"),
+    },
+  },
+
   growvibe: {
     navbar: {
       "": () => import("@/projects/growvibe/modules/navbar/page.jsx"),

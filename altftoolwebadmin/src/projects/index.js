@@ -7,6 +7,7 @@ import carrerbook from "./carrerbook/config";
 import myluckydeal from "./myluckydeal/config";
 import anternet from "./anternet/config";
 import growvibe from "./growvibe/config";
+import apexboost from "./apexboost/config";
 
 export const PROJECTS = {
   altftool,
@@ -18,6 +19,7 @@ export const PROJECTS = {
   myluckydeal,
   anternet,
   growvibe,
+  apexboost
 };
 
 export const getProject = (projectId) => {
