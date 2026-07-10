@@ -11,7 +11,11 @@ export default async function robots() {
   const rule = {
     userAgent: "*",
     allow: crawl.allow.length ? ["/", ...crawl.allow] : "/",
-    disallow: ["/api/", "/_next/", ...crawl.disallow],
+    // Do NOT disallow /_next/ — Googlebot needs the hashed CSS/JS/font assets
+    // under /_next/static to render pages for indexing. Blocking them caused 46
+    // "Blocked by robots.txt" entries in Search Console (all /_next/static/*)
+    // and degrades render-based indexing. Only /api/ (non-content) is blocked.
+    disallow: ["/api/", ...crawl.disallow],
   };
 
   const sitemap = crawl.extraSitemaps.length

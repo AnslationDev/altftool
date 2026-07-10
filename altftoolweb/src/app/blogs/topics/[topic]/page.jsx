@@ -9,7 +9,7 @@ import {
   getBlogTopicClusters,
   mergeBlogPosts,
 } from "../../data";
-import { getFirebaseBlogCatalog } from "../../data/firebaseBlogs";
+import { fetchAllFirebaseBlogs } from "../../data/firebaseBlogs";
 import {
   createBreadcrumbJsonLd,
   createCollectionPageJsonLd,
@@ -25,11 +25,11 @@ export function generateStaticParams() {
 }
 
 async function getMergedPosts() {
-  const firebaseCatalog = await getFirebaseBlogCatalog().catch(() => ({
-    posts: [],
-  }));
+  // Full paginated catalog so every post in this topic cluster server-renders
+  // as a crawlable link (the recent-~100 slice left older cluster posts orphaned).
+  const firebasePosts = await fetchAllFirebaseBlogs().catch(() => []);
 
-  return mergeBlogPosts(getAllBlogs(), firebaseCatalog.posts);
+  return mergeBlogPosts(getAllBlogs(), firebasePosts);
 }
 
 async function getTopicArchive(topicSlug) {
