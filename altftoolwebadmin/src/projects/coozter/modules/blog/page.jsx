@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { Edit3, Eye, FileText, Loader2, PencilLine, Plus, RefreshCw, Save, Search, Trash2 } from "lucide-react";
+import { ChevronLeft, ChevronRight, Edit3, Eye, FileText, Loader2, PencilLine, Plus, RefreshCw, Save, Search, Trash2 } from "lucide-react";
 import { emitAlert } from "@/lib/alertBus";
 import {
   DEFAULT_BLOG_PAGE_CONTENT,
@@ -22,6 +22,9 @@ const buttonClass =
   "inline-flex h-10 items-center gap-2 rounded-lg bg-[var(--primary)] px-4 text-sm font-semibold text-[var(--primary-foreground)] shadow-[var(--shadow-sm)] transition disabled:opacity-60";
 const secondaryButtonClass =
   "inline-flex h-10 items-center gap-2 rounded-lg border border-[var(--border)] bg-[var(--surface)] px-4 text-sm font-semibold text-[var(--foreground)] shadow-[var(--shadow-sm)] transition hover:bg-[var(--surface-soft)] disabled:opacity-60";
+const paginationButtonClass =
+  "inline-flex h-9 w-9 items-center justify-center rounded-lg border border-[var(--border)] bg-[var(--surface)] text-[var(--foreground)] transition hover:bg-[var(--surface-soft)] disabled:cursor-not-allowed disabled:opacity-50";
+const BLOGS_PER_PAGE = 10;
 
 const SECTION_FIELDS = {
   heroSection: [
@@ -68,6 +71,7 @@ export default function CoozterBlogAdminPage() {
   const [posts, setPosts] = useState([]);
   const [query, setQuery] = useState("");
   const [activeTab, setActiveTab] = useState("all");
+  const [currentPage, setCurrentPage] = useState(1);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const saveInFlightRef = useRef(false);
@@ -111,6 +115,22 @@ export default function CoozterBlogAdminPage() {
       return [post.title, post.slug, post.category, post.author].some((value) => String(value || "").toLowerCase().includes(search));
     });
   }, [activeTab, posts, query]);
+
+  const totalPages = Math.max(1, Math.ceil(filteredPosts.length / BLOGS_PER_PAGE));
+  const paginatedPosts = useMemo(() => {
+    const start = (currentPage - 1) * BLOGS_PER_PAGE;
+    return filteredPosts.slice(start, start + BLOGS_PER_PAGE);
+  }, [currentPage, filteredPosts]);
+  const pageStart = filteredPosts.length ? (currentPage - 1) * BLOGS_PER_PAGE + 1 : 0;
+  const pageEnd = Math.min(currentPage * BLOGS_PER_PAGE, filteredPosts.length);
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [activeTab, query]);
+
+  useEffect(() => {
+    setCurrentPage((page) => Math.min(page, totalPages));
+  }, [totalPages]);
 
   function setSectionField(sectionKey, field, value) {
     setContent((prev) => ({
@@ -215,7 +235,7 @@ export default function CoozterBlogAdminPage() {
           <StatCard label="Draft Posts" value={postStats.drafts} icon={<PencilLine className="h-6 w-6" />} tone="warning" />
         </section>
 
-        <section className="grid gap-5 xl:grid-cols-[minmax(0,0.58fr)_minmax(420px,0.42fr)]">
+        <section className="grid gap-5 xl:grid-cols-2">
           <div className="space-y-5">
             {Object.entries(SECTION_FIELDS).map(([sectionKey, fields]) => (
               <Panel key={sectionKey} title={sectionKey}>
@@ -285,25 +305,95 @@ export default function CoozterBlogAdminPage() {
 
           <aside className="space-y-5">
             <Panel title="Blog Posts">
-              <div className="flex flex-wrap gap-2">
-                <TabButton active={activeTab === "all"} onClick={() => setActiveTab("all")}>
-                  All Blogs
-                </TabButton>
-                <TabButton active={activeTab === "draft"} onClick={() => setActiveTab("draft")}>
-                  Drafts
-                </TabButton>
-                <TabButton active={activeTab === "published"} onClick={() => setActiveTab("published")}>
-                  Published
-                </TabButton>
+              <div className="flex flex-wrap items-center justify-between gap-3">
+                <div className="flex flex-wrap gap-2">
+                  <TabButton active={activeTab === "all"} onClick={() => setActiveTab("all")}>
+                    All Blogs
+                  </TabButton>
+                  <TabButton active={activeTab === "draft"} onClick={() => setActiveTab("draft")}>
+                    Drafts
+                  </TabButton>
+                  <TabButton active={activeTab === "published"} onClick={() => setActiveTab("published")}>
+                    Published
+                  </TabButton>
+                </div>
+                <p className="text-xs font-semibold uppercase tracking-[0.08em] text-[var(--muted)]">
+                  {pageStart}-{pageEnd} of {filteredPosts.length}
+                </p>
               </div>
               <label className="relative block">
                 <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[var(--muted)]" />
                 <input value={query} onChange={(event) => setQuery(event.target.value)} className={`${inputClass} pl-10`} placeholder="Search posts..." />
               </label>
-              <p className="text-xs font-semibold uppercase tracking-[0.08em] text-[var(--muted)]">
-                {filteredPosts.length} {filteredPosts.length === 1 ? "blog" : "blogs"}
-              </p>
-              <div className="mt-4 space-y-3">
+              <div className="overflow-hidden rounded-lg border border-[var(--border)]">
+                {loading ? (
+                  <div className="p-6 text-sm font-semibold text-[var(--muted)]">Loading blogs...</div>
+                ) : paginatedPosts.length ? (
+                  <div className="overflow-x-auto">
+                    <table className="w-full min-w-[680px] border-collapse text-left text-sm">
+                      <thead className="bg-[var(--surface-soft)] text-[11px] uppercase tracking-[0.08em] text-[var(--muted)]">
+                        <tr>
+                          <Th>Title</Th>
+                          <Th>Category</Th>
+                          <Th>Author</Th>
+                          <Th>Date</Th>
+                          <Th>Status</Th>
+                          <Th>Actions</Th>
+                        </tr>
+                      </thead>
+                      <tbody className="divide-y divide-[var(--border)]">
+                        {paginatedPosts.map((post) => (
+                          <tr key={post.id} className="bg-[var(--surface)] text-[var(--foreground)] transition hover:bg-[var(--surface-soft)]">
+                            <td className="max-w-[260px] px-4 py-3">
+                              <p className="truncate font-semibold">{post.title || "Untitled blog"}</p>
+                              <p className="mt-1 truncate text-xs text-[var(--muted)]">{post.slug || "-"}</p>
+                            </td>
+                            <td className="px-4 py-3 text-[var(--muted)]">{post.category || "Uncategorized"}</td>
+                            <td className="px-4 py-3 text-[var(--muted)]">{post.author || "-"}</td>
+                            <td className="px-4 py-3 text-[var(--muted)]">{post.displayDate || post.date || formatDate(post.createdAt)}</td>
+                            <td className="px-4 py-3"><StatusBadge published={isPublishedPost(post)} /></td>
+                            <td className="px-4 py-3">
+                              <div className="flex items-center gap-2">
+                                <Link href={`/coozter/blog/edit-article/${encodeURIComponent(post.id)}`} className="inline-flex h-9 w-9 items-center justify-center rounded-lg border border-[var(--border)] text-[var(--muted)] transition hover:bg-[var(--surface-soft)] hover:text-[var(--foreground)]" title="Edit blog">
+                                  <Edit3 className="h-4 w-4" />
+                                </Link>
+                                <button type="button" onClick={() => togglePost(post)} className="h-9 rounded-lg border border-[var(--border)] px-3 text-xs font-semibold text-[var(--foreground)] transition hover:bg-[var(--surface-soft)]">
+                                  {isPublishedPost(post) ? "Draft" : "Publish"}
+                                </button>
+                                <button type="button" onClick={() => removePost(post)} className="inline-flex h-9 w-9 items-center justify-center rounded-lg border border-[color-mix(in_srgb,var(--danger)_35%,var(--border))] text-[var(--danger)] transition hover:bg-[color-mix(in_srgb,var(--danger)_10%,var(--surface))]" title="Delete blog">
+                                  <Trash2 className="h-4 w-4" />
+                                </button>
+                              </div>
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                ) : (
+                  <div className="p-6 text-center">
+                    <FileText className="mx-auto h-6 w-6 text-[var(--muted)]" />
+                    <p className="mt-2 text-sm font-semibold text-[var(--muted)]">No blog posts yet.</p>
+                  </div>
+                )}
+              </div>
+              <div className="flex flex-wrap items-center justify-between gap-3">
+                <p className="text-xs font-semibold text-[var(--muted)]">
+                  Showing {pageStart}-{pageEnd} of {filteredPosts.length} blogs
+                </p>
+                <div className="flex items-center gap-2">
+                  <button type="button" onClick={() => setCurrentPage((page) => Math.max(1, page - 1))} disabled={currentPage <= 1} className={paginationButtonClass}>
+                    <ChevronLeft className="h-4 w-4" />
+                  </button>
+                  <span className="inline-flex h-9 items-center rounded-lg border border-[var(--border)] px-3 text-xs font-bold text-[var(--foreground)]">
+                    Page {currentPage} / {totalPages}
+                  </span>
+                  <button type="button" onClick={() => setCurrentPage((page) => Math.min(totalPages, page + 1))} disabled={currentPage >= totalPages} className={paginationButtonClass}>
+                    <ChevronRight className="h-4 w-4" />
+                  </button>
+                </div>
+              </div>
+              <div className="hidden">
                 {loading ? (
                   <p className="text-sm font-semibold text-[var(--muted)]">Loading...</p>
                 ) : filteredPosts.length ? filteredPosts.map((post) => (
@@ -374,6 +464,25 @@ function TabButton({ active, onClick, children }) {
   );
 }
 
+function Th({ children }) {
+  return <th className="px-4 py-3 font-bold">{children}</th>;
+}
+
+function StatusBadge({ published }) {
+  return (
+    <span
+      className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-bold ${
+        published
+          ? "bg-[color-mix(in_srgb,var(--success)_12%,var(--surface))] text-[var(--success)]"
+          : "bg-[var(--surface-soft)] text-[var(--muted)]"
+      }`}
+    >
+      <span className="h-1.5 w-1.5 rounded-full bg-current" />
+      {published ? "Published" : "Draft"}
+    </span>
+  );
+}
+
 function Panel({ title, children }) {
   return (
     <section className="rounded-lg border border-[var(--border)] bg-[var(--surface)] p-4 shadow-[var(--shadow-sm)]">
@@ -385,6 +494,12 @@ function Panel({ title, children }) {
 
 function isPublishedPost(post) {
   return post?.status === "published" || post?.published === true;
+}
+
+function formatDate(value) {
+  const date = value?.toDate?.() || (value ? new Date(value) : null);
+  if (!date || Number.isNaN(date.getTime())) return "-";
+  return date.toLocaleDateString("en-US");
 }
 
 function Field({ label, children, wide = false }) {
