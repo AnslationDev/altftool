@@ -1,10 +1,11 @@
 "use client";
 
 // Injects admin-authored PER-PAGE custom code (head / body-start / body-end)
-// on the client, keyed by the current path. Runs only when the site actually
-// has per-page code (the layout passes `active`), so pages without it make no
-// request. Scripts pasted as raw <script> tags are re-created so they execute
-// (innerHTML-inserted scripts do not run on their own).
+// AND per-page JSON-LD structured data (schema) on the client, keyed by the
+// current path. Runs only when the site actually has per-page code or schema
+// (the layout passes `active`), so pages without it make no request. Scripts
+// pasted as raw <script> tags are re-created so they execute (innerHTML-inserted
+// scripts do not run on their own).
 
 import { usePathname } from "next/navigation";
 import { useEffect } from "react";
@@ -44,6 +45,21 @@ export default function PerPageCode({ active = false }) {
       }
     };
 
+    const placeJsonLd = (items) => {
+      if (!Array.isArray(items)) return;
+      for (const item of items) {
+        if (!item) continue;
+        const serialized = typeof item === "string" ? item : JSON.stringify(item);
+        if (!serialized || !serialized.trim()) continue;
+        const s = document.createElement("script");
+        s.type = "application/ld+json";
+        s.setAttribute("data-altft-page-code", "1");
+        s.text = serialized;
+        document.head.appendChild(s);
+        injected.push(s);
+      }
+    };
+
     fetch(`/api/seo/page-code?path=${encodeURIComponent(pathname)}`, { cache: "no-store" })
       .then((r) => (r.ok ? r.json() : null))
       .then((data) => {
@@ -51,6 +67,7 @@ export default function PerPageCode({ active = false }) {
         place(data.head, document.head, false);
         place(data.bodyStart, document.body, true);
         place(data.bodyEnd, document.body, false);
+        placeJsonLd(data.jsonLd);
       })
       .catch(() => {});
 

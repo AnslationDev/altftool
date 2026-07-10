@@ -63,7 +63,7 @@ export default function LearningPlatform({ loading = false }) {
               >
 
 
-                <div className="w-[clamp(2rem,3vw,2.5rem)] h-[clamp(2rem,3vw,2.5rem)] flex-shrink-0 flex items-center justify-center rounded-full bg-blue-600 text-white">
+                <div className="academy-stat-strip w-[clamp(2rem,3vw,2.5rem)] h-[clamp(2rem,3vw,2.5rem)] flex-shrink-0 flex items-center justify-center rounded-full">
                   <ChevronRight className="w-[clamp(0.875rem,1.25vw,1.25rem)] h-[clamp(0.875rem,1.25vw,1.25rem)]" />
                 </div>
 

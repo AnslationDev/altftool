@@ -34,9 +34,9 @@ export default function NewsletterSection() {
       <form onSubmit={handleSubmit} className="mt-2 flex w-full max-w-[31.75rem] flex-col gap-3 sm:mt-3 sm:flex-row sm:items-center sm:gap-4">
 
 
-        <div className={`flex h-11 w-full items-center gap-2 rounded-[8px] border bg-[var(--background)] px-4 transition-all duration-300 ease-out sm:h-14 sm:flex-1 sm:px-6
-                focus-within:shadow-[0px_12px_24px_0px_#0F172A05,0px_4px_20px_0px_#2563EB33]
-                ${error ? "border-red-500" : success ? "border-green-500" : "border-[#D1D1D1] focus-within:border-[var(--primary)]"}`}>
+        <div className={`flex h-11 w-full items-center gap-2 rounded-[8px] border bg-(--card) px-4 transition-all duration-300 ease-out sm:h-14 sm:flex-1 sm:px-6
+                focus-within:shadow-[var(--anslation-ds-shadow-md)]
+                ${error ? "border-red-500" : success ? "border-green-500" : "border-(--border) focus-within:border-(--primary)"}`}>
           <Mail className="w-4 h-4 sm:w-5 sm:h-5 text-[var(--muted-foreground)] shrink-0" />
           <input
             type="email"
@@ -48,7 +48,7 @@ export default function NewsletterSection() {
         </div>
 
 
-        <button type="submit" className="h-11 w-full shrink-0 cursor-pointer rounded-[8px] bg-[var(--primary)] px-4 py-2 text-sm font-bold capitalize text-[var(--primary-foreground)] transition-opacity hover:opacity-90 active:opacity-80 sm:h-14 sm:w-auto sm:px-[1.125rem] sm:py-[0.875rem] sm:text-[1.125rem]">
+        <button type="submit" className="academy-btn h-11 w-full shrink-0 cursor-pointer rounded-[8px] px-4 py-2 text-sm font-bold capitalize transition-opacity hover:opacity-90 active:opacity-80 sm:h-14 sm:w-auto sm:px-[1.125rem] sm:py-[0.875rem] sm:text-[1.125rem]">
           Subscribe
         </button>
 

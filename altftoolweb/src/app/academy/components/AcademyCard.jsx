@@ -15,8 +15,8 @@ export default function AcademyCard({ academy }) {
       rel="noopener noreferrer"
       className="
         group flex w-full min-w-0 flex-col justify-between
-        rounded-[8px] border border-[var(--border)]
-        shadow-[0px_12px_24px_0px_#0F172A05]
+        academy-card-surface
+        rounded-[8px]
         p-5 sm:p-6 
       "
     >
@@ -27,7 +27,7 @@ export default function AcademyCard({ academy }) {
           <AcademyLogoImage key={academy.image || academy.id || academy.name} academy={academy} />
         </div>
 
-        <div className="flex h-[28px] items-center gap-[6px] rounded-[7px] border border-[#E5E7EB] bg-[#F8FAFC] px-[10px] text-sm font-medium text-[var(--foreground)]">
+        <div className="academy-pill flex h-[28px] items-center gap-[6px] rounded-[7px] px-[10px] text-sm font-medium">
           <Star size={16} className="fill-yellow-500 stroke-yellow-500 " />
           {academy.rating}
         </div>
@@ -64,10 +64,10 @@ export default function AcademyCard({ academy }) {
               className="
                 inline-flex items-center
                 rounded-[6px]
-                border border-[#E5E7EB]
-                bg-[#F8FAFC]
+                border border-(--border)
+                bg-(--primary)/5
                 px-3 py-[5px]
-                text-xs font-medium text-gray-600
+                text-xs font-medium text-(--muted-foreground)
               "
             >
               {s}
@@ -77,13 +77,13 @@ export default function AcademyCard({ academy }) {
       )}
 
 
-      <div className="w-full h-px bg-[#E2E8F0] mb-4" />
+      <div className="w-full h-px bg-(--border) mb-4" />
 
 
       <div className="flex items-center justify-between">
 
         <div className="flex flex-col leading-tight">
-          <span className="text-[11px] font-bold uppercase tracking-[0.6px] text-[#4A5565]">
+          <span className="academy-muted-text text-[11px] font-bold uppercase tracking-[0.6px]">
             Starting at
           </span>
 

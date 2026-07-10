@@ -65,8 +65,8 @@ useEffect(() => {
             <button
   type="button"
   onClick={handleMobileMenuToggle}
-  className={`lg:hidden p-2 text-gray-700 z-50
-    hover:text-black focus:outline-none focus:ring-2 focus:ring-gray-300
+  className={`lg:hidden p-2 text-(--foreground) z-50
+    hover:text-(--primary) focus:outline-none focus:ring-2 focus:ring-(--primary)/30
     rounded-md transition-all duration-300
     ${showHamburger ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-1 pointer-events-none"}
   `}
@@ -87,7 +87,7 @@ useEffect(() => {
                   }}
                   className="relative flex items-center gap-1 cursor-pointer group"
                 >
-                  <span className="text-sm xl:text-base font-medium group-hover:text-black">
+                  <span className="text-sm xl:text-base font-medium group-hover:text-(--primary)">
                     {menuItem.item}
                   </span>
                   <ChevronDown
@@ -103,7 +103,7 @@ useEffect(() => {
             {/* SEARCH */}
             <div className="relative w-full  max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-96" ref={searchRef}>
               <Search 
-                className="absolute left-3  sm:left-4 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none" 
+                className="absolute left-3 sm:left-4 top-1/2 -translate-y-1/2 text-(--muted-foreground) pointer-events-none" 
                 size={16}
               />
               <input
@@ -111,7 +111,7 @@ useEffect(() => {
                 onClick={handleSearchClick}
                 onFocus={handleSearchClick}
                 placeholder="Search for coupons, stores..."
-                className="w-full pl-9 text-(--muted-foreground) sm:pl-11 z-50 pr-3 sm:pr-4 py-1.5 sm:py-2 text-sm sm:text-base rounded-full border bg-gray-50 focus:outline-none focus:ring-2 focus:ring-black/10"
+                className="w-full pl-9 text-(--foreground) placeholder:text-(--muted-foreground) sm:pl-11 z-50 pr-3 sm:pr-4 py-1.5 sm:py-2 text-sm sm:text-base rounded-full border border-(--border) bg-(--card) focus:outline-none focus:ring-2 focus:ring-(--primary)/25"
               />
               
               {/* SEARCH DROPDOWN */}
@@ -125,7 +125,7 @@ useEffect(() => {
 
           {/* MOBILE MENU */}
           {mobileMenuOpen && (
-            <div className="lg:hidden border-t border-gray-200">
+            <div className="lg:hidden border-t border-(--border)">
               <nav className="py-2">
                 {navbarMenu.map((menuItem) => (
                   <div key={menuItem.id}>
@@ -135,9 +135,9 @@ useEffect(() => {
                         e.preventDefault();
                         handleMobileMenuClick(menuItem.item);
                       }}
-                      className="w-full flex items-center justify-between px-4 py-3 cursor-pointer hover:bg-gray-50 text-left"
+                      className="w-full flex items-center justify-between px-4 py-3 cursor-pointer hover:bg-(--primary)/5 text-left"
                     >
-                      <span className="text-sm sm:text-base font-medium text-gray-700">
+                      <span className="text-sm sm:text-base font-medium text-(--foreground)">
                         {menuItem.item}
                       </span>
                       <ChevronDown
@@ -150,7 +150,7 @@ useEffect(() => {
                     
                     {/* Mobile Dropdown Content */}
                     {menu === menuItem.item && (
-                      <div className="bg-gray-50 px-4 py-4">
+                      <div className="bg-(--card) px-4 py-4">
                         {menuItem.item === "Categories" && <Categories />}
                         {menuItem.item === "All Stores" && <AllStoreSection />}
                       </div>
@@ -176,9 +176,9 @@ useEffect(() => {
         <div
           onMouseEnter={() => setMenu("Categories")}
           onMouseLeave={() => setMenu("")}
-          className="hidden lg:block absolute left-0 w-full z-40 bg-white shadow-2xl"
+          className="hidden lg:block absolute left-0 w-full z-40 bg-(--card) shadow-2xl"
         >
-          <div className="mx-auto bg-gray-200 py-10">
+          <div className="mx-auto bg-(--background) py-10">
             <Categories />
           </div>
         </div>
@@ -187,9 +187,9 @@ useEffect(() => {
         <div
           onMouseEnter={() => setMenu("All Stores")}
           onMouseLeave={() => setMenu("")}
-          className="hidden lg:block absolute left-0 w-full z-40 bg-white shadow-2xl"
+          className="hidden lg:block absolute left-0 w-full z-40 bg-(--card) shadow-2xl"
         >
-          <div className="mx-auto bg-gray-200 py-10">
+          <div className="mx-auto bg-(--background) py-10">
             <AllStoreSection />
           </div>
         </div>

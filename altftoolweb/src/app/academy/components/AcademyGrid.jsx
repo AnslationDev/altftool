@@ -74,7 +74,7 @@ export default function AcademyGrid({ items = [], activeCategory }) {
         <div className="flex sm:hidden justify-center mt-5">
           <button
             onClick={handleLoadMore}
-            className="px-5 py-2.5 rounded-full border border-[var(--border)] text-sm font-semibold text-[var(--foreground)]transition-colors"
+            className="px-5 py-2.5 rounded-full border border-(--border) bg-(--card) text-sm font-semibold text-(--foreground) transition-colors hover:border-(--primary) hover:text-(--primary)"
           >
             Next
           </button>

@@ -117,7 +117,7 @@ useEffect(() => {
             className={`h-2 rounded-full cursor-pointer transition-all duration-500 ease-in-out
               ${activeIndex === i
                 ? "bg-(--primary) w-8 opacity-100"
-                : "bg-[#1e3a8a] w-2 opacity-40"
+                : "brandrating-dot-muted w-2 opacity-80"
               }`}
           />
         ))}
