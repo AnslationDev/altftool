@@ -6,6 +6,7 @@ import marketys from "./marketys/config";
 import carrerbook from "./carrerbook/config";
 import myluckydeal from "./myluckydeal/config";
 import anternet from "./anternet/config";
+import coozter from "./coozter/config";
 import growvibe from "./growvibe/config";
 
 export const PROJECTS = {
@@ -17,6 +18,7 @@ export const PROJECTS = {
   carrerbook,
   myluckydeal,
   anternet,
+  coozter,
   growvibe,
 };
 

@@ -111,6 +111,36 @@ export const ADMIN_MODULE_ROUTE_KEYS = {
     team: [""],
   },
 
+  coozter: {
+    home: [
+      "",
+      "hero-section",
+      "marketing-channels",
+      "process-section",
+      "services-preview",
+      "trust-section",
+    ],
+    about: [
+      "",
+      "beliefs-section",
+      "hero-section",
+      "team-section",
+      "why-choose-section",
+      "work-model-section",
+    ],
+    services: [
+      "",
+      "faq-section",
+      "growth-engine-section",
+      "hero-section",
+      "outcomes-section",
+      "process-section",
+      "service-categories-section",
+    ],
+    blog: ["", "add-article", "edit-article/[id]"],
+    "contact-us": [""],
+  },
+
   growvibe: {
     navbar: [""],
     home: [""],
