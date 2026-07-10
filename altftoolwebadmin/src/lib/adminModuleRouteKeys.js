@@ -83,8 +83,6 @@ export const ADMIN_MODULE_ROUTE_KEYS = {
   coozter: {
     home: [
       "",
-      "blog-preview",
-      "contact-cta",
       "hero-section",
       "marketing-channels",
       "process-section",
@@ -95,7 +93,6 @@ export const ADMIN_MODULE_ROUTE_KEYS = {
       "",
       "beliefs-section",
       "hero-section",
-      "proof-metrics",
       "team-section",
       "why-choose-section",
       "work-model-section",
@@ -110,6 +107,7 @@ export const ADMIN_MODULE_ROUTE_KEYS = {
       "service-categories-section",
     ],
     blog: ["", "add-article", "edit-article/[id]"],
+    "contact-us": [""],
   },
 
   growvibe: {

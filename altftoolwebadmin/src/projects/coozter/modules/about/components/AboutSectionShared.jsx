@@ -19,7 +19,6 @@ export const ARRAY_FIELDS = {
     items: { label: "Work Items", fields: [["iconKey", "Icon key"], ["title", "Title"], ["descriptionText", "Description", "textarea"]] },
   },
   teamSection: { members: { label: "Team Members", fields: [["name", "Name"], ["role", "Role"], ["focusText", "Focus text", "textarea"], ["imageUrl", "Image URL"], ["imageAltText", "Image alt text"], ["companyName", "Company name"], ["linkedinUrl", "LinkedIn URL"], ["bioText", "Bio", "textarea"]] } },
-  proofMetrics: { proofMetrics: { label: "Proof Metrics", fields: [["value", "Value"], ["label", "Label"]] } },
 };
 
 export function SectionEditor({ sectionKey, section, errors, onFieldChange, onArrayAdd, onArrayRemove, onArrayUpdate }) {

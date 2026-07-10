@@ -191,8 +191,6 @@ const routeLoaders = {
   coozter: {
     home: {
       "": () => import("@/projects/coozter/modules/home/page.jsx"),
-      "blog-preview": () => import("@/projects/coozter/modules/home/blog-preview/page.jsx"),
-      "contact-cta": () => import("@/projects/coozter/modules/home/contact-cta/page.jsx"),
       "hero-section": () => import("@/projects/coozter/modules/home/hero-section/page.jsx"),
       "marketing-channels": () => import("@/projects/coozter/modules/home/marketing-channels/page.jsx"),
       "process-section": () => import("@/projects/coozter/modules/home/process-section/page.jsx"),
@@ -203,7 +201,6 @@ const routeLoaders = {
       "": () => import("@/projects/coozter/modules/about/page.jsx"),
       "beliefs-section": () => import("@/projects/coozter/modules/about/beliefs-section/page.jsx"),
       "hero-section": () => import("@/projects/coozter/modules/about/hero-section/page.jsx"),
-      "proof-metrics": () => import("@/projects/coozter/modules/about/proof-metrics/page.jsx"),
       "team-section": () => import("@/projects/coozter/modules/about/team-section/page.jsx"),
       "why-choose-section": () => import("@/projects/coozter/modules/about/why-choose-section/page.jsx"),
       "work-model-section": () => import("@/projects/coozter/modules/about/work-model-section/page.jsx"),
@@ -221,6 +218,9 @@ const routeLoaders = {
       "": () => import("@/projects/coozter/modules/blog/page.jsx"),
       "add-article": () => import("@/projects/coozter/modules/blog/add-article/page.jsx"),
       "edit-article/[id]": () => import("@/projects/coozter/modules/blog/edit-article/[id]/page.jsx"),
+    },
+    "contact-us": {
+      "": () => import("@/projects/coozter/modules/contact-us/page.jsx"),
     },
   },
 

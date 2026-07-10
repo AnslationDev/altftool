@@ -20,8 +20,6 @@ import TrustSectionTab from "./trust-section/page";
 import MarketingChannelsTab from "./marketing-channels/page";
 import ProcessSectionTab from "./process-section/page";
 import ServicesPreviewTab from "./services-preview/page";
-import BlogPreviewTab from "./blog-preview/page";
-import ContactCtaTab from "./contact-cta/page";
 
 const SECTION_COMPONENTS = {
   heroSection: HeroSectionTab,
@@ -29,8 +27,6 @@ const SECTION_COMPONENTS = {
   marketingChannelsSection: MarketingChannelsTab,
   processSection: ProcessSectionTab,
   servicesPreviewSection: ServicesPreviewTab,
-  blogPreviewSection: BlogPreviewTab,
-  contactCtaSection: ContactCtaTab,
 };
 
 export default function CoozterHomeAdminPage() {
@@ -234,7 +230,7 @@ export default function CoozterHomeAdminPage() {
           </div>
         </header>
 
-        <section className="grid gap-3 sm:grid-cols-2 xl:grid-cols-7">
+        <section className="grid gap-3 sm:grid-cols-2 xl:grid-cols-5">
           {HOME_SECTION_TABS.map((tab) => {
             const isCurrent = activeSection === tab.key;
             const section = content[tab.key] || {};

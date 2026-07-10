@@ -19,7 +19,6 @@ import WhyChooseSectionTab from "./why-choose-section/page";
 import BeliefsSectionTab from "./beliefs-section/page";
 import WorkModelSectionTab from "./work-model-section/page";
 import TeamSectionTab from "./team-section/page";
-import ProofMetricsTab from "./proof-metrics/page";
 
 const SECTION_COMPONENTS = {
   heroSection: HeroSectionTab,
@@ -27,7 +26,6 @@ const SECTION_COMPONENTS = {
   beliefsSection: BeliefsSectionTab,
   workModelSection: WorkModelSectionTab,
   teamSection: TeamSectionTab,
-  proofMetrics: ProofMetricsTab,
 };
 
 export default function CoozterAboutAdminPage() {
@@ -168,7 +166,7 @@ export default function CoozterAboutAdminPage() {
           </div>
         </header>
 
-        <section className="grid gap-3 sm:grid-cols-2 xl:grid-cols-6">
+        <section className="grid gap-3 sm:grid-cols-2 xl:grid-cols-5">
           {ABOUT_SECTION_TABS.map((tab) => {
             const isCurrent = activeSection === tab.key;
             const tabErrors = Object.keys(errors).filter((key) => key.startsWith(`${tab.key}.`)).length;

@@ -13,8 +13,6 @@ export const HOME_SECTION_TABS = [
   { key: "marketingChannelsSection", label: "Marketing Channels" },
   { key: "processSection", label: "Process Section" },
   { key: "servicesPreviewSection", label: "Services Preview" },
-  { key: "blogPreviewSection", label: "Blog Preview" },
-  { key: "contactCtaSection", label: "Contact CTA" },
 ];
 
 export const DEFAULT_HOME_PAGE_CONTENT = {
@@ -352,18 +350,6 @@ export function validateHomePageContent(content) {
   requireFields(errors, "processSection", data.processSection, ["headingText", "imageAltText"]);
   requireFields(errors, "servicesPreviewSection", data.servicesPreviewSection, ["headingText", "descriptionText", "buttonLabel", "buttonUrl"]);
   requireUrl(errors, "servicesPreviewSection", data.servicesPreviewSection.buttonUrl, "buttonUrl");
-  requireFields(errors, "blogPreviewSection", data.blogPreviewSection, ["eyebrowText", "headingText", "buttonLabel", "buttonUrl"]);
-  requireUrl(errors, "blogPreviewSection", data.blogPreviewSection.buttonUrl, "buttonUrl");
-  requireFields(errors, "contactCtaSection", data.contactCtaSection, [
-    "headingText",
-    "descriptionText",
-    "primaryButtonLabel",
-    "primaryButtonUrl",
-    "secondaryButtonLabel",
-    "secondaryButtonUrl",
-  ]);
-  requireUrl(errors, "contactCtaSection", data.contactCtaSection.primaryButtonUrl, "primaryButtonUrl");
-  requireUrl(errors, "contactCtaSection", data.contactCtaSection.secondaryButtonUrl, "secondaryButtonUrl");
 
   validateRows(errors, "heroSection", "metrics", data.heroSection.metrics, ["value", "label"]);
   validateRows(errors, "trustSection", "stats", data.trustSection.stats, ["value", "label"]);
@@ -374,7 +360,6 @@ export function validateHomePageContent(content) {
   validateRows(errors, "processSection", "steps", data.processSection.steps, ["title", "descriptionText"]);
   validateRows(errors, "servicesPreviewSection", "tags", data.servicesPreviewSection.tags, ["label"]);
   validateRows(errors, "servicesPreviewSection", "selectedServices", data.servicesPreviewSection.selectedServices, ["serviceSlug"]);
-  validateRows(errors, "blogPreviewSection", "selectedBlogs", data.blogPreviewSection.selectedBlogs, ["blogSlug"]);
 
   return errors;
 }

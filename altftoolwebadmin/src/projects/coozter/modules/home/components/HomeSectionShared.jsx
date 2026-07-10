@@ -35,20 +35,6 @@ export const SECTION_FIELDS = {
     ["buttonLabel", "Button label"],
     ["buttonUrl", "Button URL"],
   ],
-  blogPreviewSection: [
-    ["eyebrowText", "Eyebrow text"],
-    ["headingText", "Heading text", "textarea"],
-    ["buttonLabel", "Button label"],
-    ["buttonUrl", "Button URL"],
-  ],
-  contactCtaSection: [
-    ["headingText", "Heading text", "textarea"],
-    ["descriptionText", "Description", "textarea"],
-    ["primaryButtonLabel", "Primary button label"],
-    ["primaryButtonUrl", "Primary button URL"],
-    ["secondaryButtonLabel", "Secondary button label"],
-    ["secondaryButtonUrl", "Secondary button URL"],
-  ],
 };
 
 export const ARRAY_FIELDS = {
@@ -121,12 +107,6 @@ export const ARRAY_FIELDS = {
     selectedServices: {
       label: "Selected Services",
       fields: [["serviceSlug", "Service slug"]],
-    },
-  },
-  blogPreviewSection: {
-    selectedBlogs: {
-      label: "Selected Blogs",
-      fields: [["blogSlug", "Blog slug"]],
     },
   },
 };
@@ -324,7 +304,7 @@ export function Field({ label, error, children, wide = false }) {
 }
 
 export function PreviewPanel({ label, section, errorCount, content }) {
-  const activeSections = Object.values(content).filter((item) => item?.isActive !== false).length;
+  const activeSections = HOME_SECTION_TABS.filter((item) => content?.[item.key]?.isActive !== false).length;
   const repeatedCount = Object.values(section || {}).reduce((count, value) => (Array.isArray(value) ? count + value.length : count), 0);
 
   return (

@@ -24,6 +24,8 @@ const secondaryButtonClass =
   "inline-flex h-10 items-center gap-2 rounded-lg border border-[var(--border)] bg-[var(--surface)] px-4 text-sm font-semibold text-[var(--foreground)] shadow-[var(--shadow-sm)] transition hover:bg-[var(--surface-soft)] disabled:opacity-60";
 const paginationButtonClass =
   "inline-flex h-9 w-9 items-center justify-center rounded-lg border border-[var(--border)] bg-[var(--surface)] text-[var(--foreground)] transition hover:bg-[var(--surface-soft)] disabled:cursor-not-allowed disabled:opacity-50";
+const iconButtonClass =
+  "inline-flex h-9 w-9 items-center justify-center rounded-lg border border-[var(--border)] text-[var(--muted)] transition hover:bg-[var(--surface-soft)] hover:text-[var(--foreground)]";
 const BLOGS_PER_PAGE = 10;
 
 const SECTION_FIELDS = {
@@ -35,22 +37,24 @@ const SECTION_FIELDS = {
     ["insightLabel", "Insight label"],
     ["notesLabel", "Notes label"],
   ],
-  articleListSection: [
-    ["eyebrowText", "Eyebrow text"],
-    ["headingText", "Heading text", "textarea"],
-    ["articleFoundSingularText", "Article found singular text"],
-    ["articleFoundPluralText", "Article found plural text"],
-    ["emptyMoreArticlesText", "Empty more articles text", "textarea"],
-    ["emptyTitle", "Empty title"],
-    ["emptyDescription", "Empty description", "textarea"],
-  ],
-  buttons: [
-    ["featuredButtonLabel", "Featured button label"],
-    ["cardButtonLabel", "Card button label"],
-    ["previewButtonLabel", "Preview button label"],
-    ["backButtonLabel", "Back button label"],
-    ["allArticlesLabel", "All articles label"],
-  ],
+  // articleListSection is intentionally hidden from the admin form.
+  // articleListSection: [
+  //   ["eyebrowText", "Eyebrow text"],
+  //   ["headingText", "Heading text", "textarea"],
+  //   ["articleFoundSingularText", "Article found singular text"],
+  //   ["articleFoundPluralText", "Article found plural text"],
+  //   ["emptyMoreArticlesText", "Empty more articles text", "textarea"],
+  //   ["emptyTitle", "Empty title"],
+  //   ["emptyDescription", "Empty description", "textarea"],
+  // ],
+  // Button labels are intentionally hidden from the admin form.
+  // buttons: [
+  //   ["featuredButtonLabel", "Featured button label"],
+  //   ["cardButtonLabel", "Card button label"],
+  //   ["previewButtonLabel", "Preview button label"],
+  //   ["backButtonLabel", "Back button label"],
+  //   ["allArticlesLabel", "All articles label"],
+  // ],
 };
 
 const DETAIL_GROUPS = {
@@ -62,8 +66,10 @@ const DETAIL_GROUPS = {
   sideCardOne: [["iconKey", "Icon key"], ["eyebrowText", "Eyebrow text"], ["descriptionText", "Description", "textarea"]],
   sideCardTwo: [["iconKey", "Icon key"], ["eyebrowText", "Eyebrow text"], ["descriptionText", "Description", "textarea"]],
   ctaSection: [["headingText", "Heading text"], ["descriptionText", "Description", "textarea"], ["buttonLabel", "Button label"], ["buttonUrl", "Button URL"]],
-  relatedSection: [["eyebrowText", "Eyebrow text"], ["headingText", "Heading text"], ["allArticlesLabel", "All articles label"], ["allArticlesUrl", "All articles URL"]],
-  newsletterSection: [["headingText", "Heading text"], ["descriptionText", "Description", "textarea"], ["placeholderText", "Placeholder text"], ["submitAriaLabel", "Submit aria label"], ["validationErrorText", "Validation error text"], ["successText", "Success text"]],
+  // relatedSection is intentionally hidden from the admin form.
+  // relatedSection: [["eyebrowText", "Eyebrow text"], ["headingText", "Heading text"], ["allArticlesLabel", "All articles label"], ["allArticlesUrl", "All articles URL"]],
+  // newsletterSection is intentionally hidden from the admin form.
+  // newsletterSection: [["headingText", "Heading text"], ["descriptionText", "Description", "textarea"], ["placeholderText", "Placeholder text"], ["submitAriaLabel", "Submit aria label"], ["validationErrorText", "Validation error text"], ["successText", "Success text"]],
 };
 
 export default function CoozterBlogAdminPage() {
@@ -212,20 +218,23 @@ export default function CoozterBlogAdminPage() {
   }
 
   return (
-    <main className="min-h-screen bg-[var(--background)] p-4 text-[var(--foreground)] sm:p-6">
+    <main className="min-h-screen bg-[var(--page)] p-4 text-[var(--foreground)] sm:p-6">
       <div className="mx-auto flex max-w-7xl flex-col gap-5">
-        <header className="flex flex-wrap items-start justify-between gap-4">
-          <div>
-            <h1 className="mt-1 text-2xl font-bold">Blog Page Content</h1>
-            <p className="mt-1 text-sm text-[var(--muted)]">Page fields and posts for `projects/coozter/blogs`.</p>
-          </div>
-          <div className="flex flex-wrap gap-2">
-            <button type="button" onClick={handleSeed} className={secondaryButtonClass}><RefreshCw className="h-4 w-4" /> Seed Defaults</button>
-            <button type="button" onClick={handleSave} disabled={saving} className={buttonClass}>
-              {saving ? <Loader2 className="h-4 w-4 animate-spin" /> : <Save className="h-4 w-4" />}
-              Save Page Text
-            </button>
-            <Link href="/coozter/blog/add-article" className={buttonClass}><Plus className="h-4 w-4" /> Add Post</Link>
+        <header className="rounded-lg border border-[var(--border)] bg-[var(--surface)] p-4 shadow-[var(--shadow-sm)]">
+          <div className="flex flex-wrap items-start justify-between gap-4">
+            <div>
+              <p className="text-xs font-bold uppercase tracking-[0.08em] text-[var(--primary)]">Coozter</p>
+              <h1 className="mt-1 text-2xl font-bold">Blog Management</h1>
+              <p className="mt-1 text-sm text-[var(--muted)]">Edit blog page copy and manage posts from `projects/coozter/blogs`.</p>
+            </div>
+            <div className="flex flex-wrap gap-2">
+              <button type="button" onClick={handleSeed} className={secondaryButtonClass}><RefreshCw className="h-4 w-4" /> Seed Defaults</button>
+              <button type="button" onClick={handleSave} disabled={saving} className={buttonClass}>
+                {saving ? <Loader2 className="h-4 w-4 animate-spin" /> : <Save className="h-4 w-4" />}
+                Save Page Text
+              </button>
+              <Link href="/coozter/blog/add-article" className={buttonClass}><Plus className="h-4 w-4" /> Add Post</Link>
+            </div>
           </div>
         </header>
 
@@ -235,7 +244,7 @@ export default function CoozterBlogAdminPage() {
           <StatCard label="Draft Posts" value={postStats.drafts} icon={<PencilLine className="h-6 w-6" />} tone="warning" />
         </section>
 
-        <section className="grid gap-5 xl:grid-cols-2">
+        <section className="grid items-start gap-5 xl:grid-cols-[minmax(0,0.47fr)_minmax(0,0.53fr)]">
           <div className="space-y-5">
             {Object.entries(SECTION_FIELDS).map(([sectionKey, fields]) => (
               <Panel key={sectionKey} title={sectionKey}>
@@ -285,6 +294,7 @@ export default function CoozterBlogAdminPage() {
                 </div>
               ))}
 
+              {/*
               <div className="rounded-lg border border-[var(--border)] p-4">
                 <h3 className="mb-3 text-sm font-bold text-[var(--foreground)]">contents</h3>
                 <div className="space-y-3">
@@ -300,10 +310,11 @@ export default function CoozterBlogAdminPage() {
                   ))}
                 </div>
               </div>
+              */}
             </Panel>
           </div>
 
-          <aside className="space-y-5">
+          <aside className="space-y-5 xl:sticky xl:top-6">
             <Panel title="Blog Posts">
               <div className="flex flex-wrap items-center justify-between gap-3">
                 <div className="flex flex-wrap gap-2">
@@ -330,7 +341,7 @@ export default function CoozterBlogAdminPage() {
                   <div className="p-6 text-sm font-semibold text-[var(--muted)]">Loading blogs...</div>
                 ) : paginatedPosts.length ? (
                   <div className="overflow-x-auto">
-                    <table className="w-full min-w-[680px] border-collapse text-left text-sm">
+                    <table className="w-full min-w-[720px] border-collapse text-left text-sm">
                       <thead className="bg-[var(--surface-soft)] text-[11px] uppercase tracking-[0.08em] text-[var(--muted)]">
                         <tr>
                           <Th>Title</Th>
@@ -344,7 +355,7 @@ export default function CoozterBlogAdminPage() {
                       <tbody className="divide-y divide-[var(--border)]">
                         {paginatedPosts.map((post) => (
                           <tr key={post.id} className="bg-[var(--surface)] text-[var(--foreground)] transition hover:bg-[var(--surface-soft)]">
-                            <td className="max-w-[260px] px-4 py-3">
+                            <td className="max-w-[280px] px-4 py-3">
                               <p className="truncate font-semibold">{post.title || "Untitled blog"}</p>
                               <p className="mt-1 truncate text-xs text-[var(--muted)]">{post.slug || "-"}</p>
                             </td>
@@ -354,13 +365,13 @@ export default function CoozterBlogAdminPage() {
                             <td className="px-4 py-3"><StatusBadge published={isPublishedPost(post)} /></td>
                             <td className="px-4 py-3">
                               <div className="flex items-center gap-2">
-                                <Link href={`/coozter/blog/edit-article/${encodeURIComponent(post.id)}`} className="inline-flex h-9 w-9 items-center justify-center rounded-lg border border-[var(--border)] text-[var(--muted)] transition hover:bg-[var(--surface-soft)] hover:text-[var(--foreground)]" title="Edit blog">
+                                <Link href={`/coozter/blog/edit-article/${encodeURIComponent(post.id)}`} className={iconButtonClass} title="Edit blog" aria-label={`Edit ${post.title || "blog"}`}>
                                   <Edit3 className="h-4 w-4" />
                                 </Link>
                                 <button type="button" onClick={() => togglePost(post)} className="h-9 rounded-lg border border-[var(--border)] px-3 text-xs font-semibold text-[var(--foreground)] transition hover:bg-[var(--surface-soft)]">
                                   {isPublishedPost(post) ? "Draft" : "Publish"}
                                 </button>
-                                <button type="button" onClick={() => removePost(post)} className="inline-flex h-9 w-9 items-center justify-center rounded-lg border border-[color-mix(in_srgb,var(--danger)_35%,var(--border))] text-[var(--danger)] transition hover:bg-[color-mix(in_srgb,var(--danger)_10%,var(--surface))]" title="Delete blog">
+                                <button type="button" onClick={() => removePost(post)} className="inline-flex h-9 w-9 items-center justify-center rounded-lg border border-[color-mix(in_srgb,var(--danger)_35%,var(--border))] text-[var(--danger)] transition hover:bg-[color-mix(in_srgb,var(--danger)_10%,var(--surface))]" title="Delete blog" aria-label={`Delete ${post.title || "blog"}`}>
                                   <Trash2 className="h-4 w-4" />
                                 </button>
                               </div>
@@ -392,35 +403,6 @@ export default function CoozterBlogAdminPage() {
                     <ChevronRight className="h-4 w-4" />
                   </button>
                 </div>
-              </div>
-              <div className="hidden">
-                {loading ? (
-                  <p className="text-sm font-semibold text-[var(--muted)]">Loading...</p>
-                ) : filteredPosts.length ? filteredPosts.map((post) => (
-                  <article key={post.id} className="rounded-lg border border-[var(--border)] bg-[var(--surface-soft)] p-3">
-                    <div className="flex items-start justify-between gap-3">
-                      <div>
-                        <h3 className="text-sm font-bold">{post.title}</h3>
-                        <p className="mt-1 text-xs text-[var(--muted)]">{post.category || "Uncategorized"} · {post.displayDate || post.date || "-"}</p>
-                      </div>
-                      <span className={isPublishedPost(post) ? "text-xs font-bold text-[var(--success)]" : "text-xs font-bold text-[var(--muted)]"}>
-                        {isPublishedPost(post) ? "Published" : "Draft"}
-                      </span>
-                    </div>
-                    <div className="mt-3 flex flex-wrap gap-2">
-                      <Link href={`/coozter/blog/edit-article/${encodeURIComponent(post.id)}`} className={secondaryButtonClass}><Edit3 className="h-4 w-4" /> Edit</Link>
-                      <button type="button" onClick={() => togglePost(post)} className={secondaryButtonClass}>{isPublishedPost(post) ? "Draft" : "Publish"}</button>
-                      <button type="button" onClick={() => removePost(post)} className="inline-flex h-10 items-center gap-2 rounded-lg border border-[color-mix(in_srgb,var(--danger)_35%,var(--border))] px-4 text-sm font-semibold text-[var(--danger)]">
-                        <Trash2 className="h-4 w-4" /> Delete
-                      </button>
-                    </div>
-                  </article>
-                )) : (
-                  <div className="rounded-lg border border-dashed border-[var(--border)] p-6 text-center">
-                    <FileText className="mx-auto h-6 w-6 text-[var(--muted)]" />
-                    <p className="mt-2 text-sm font-semibold text-[var(--muted)]">No blog posts yet.</p>
-                  </div>
-                )}
               </div>
             </Panel>
           </aside>

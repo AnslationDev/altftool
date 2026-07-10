@@ -1,4 +1,4 @@
-import { BookOpenText, BriefcaseBusiness, Home, Info } from "lucide-react";
+import { BookOpenText, BriefcaseBusiness, Contact, Home, Info } from "lucide-react";
 
 const coozterConfig = {
   id: "coozter",
@@ -10,6 +10,7 @@ const coozterConfig = {
     about: { label: "About Page", icon: Info },
     services: { label: "Services Page", icon: BriefcaseBusiness },
     blog: { label: "Blog Page", icon: BookOpenText },
+    "contact-us": { label: "Contact Us", icon: Contact },
   },
 };
 

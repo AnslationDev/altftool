@@ -5,7 +5,7 @@ import { db } from "@/lib/firebase";
 
 const ABOUT_DOC_PATH = ["projects", "coozter", "about", "aboutPageContent"];
 
-export const ROOT_ARRAY_SECTIONS = new Set(["proofMetrics"]);
+export const ROOT_ARRAY_SECTIONS = new Set();
 
 export const ABOUT_SECTION_TABS = [
   { key: "heroSection", label: "Hero Section" },
@@ -13,7 +13,6 @@ export const ABOUT_SECTION_TABS = [
   { key: "beliefsSection", label: "Beliefs Section" },
   { key: "workModelSection", label: "Work Model" },
   { key: "teamSection", label: "Team Section" },
-  { key: "proofMetrics", label: "Proof Metrics" },
 ];
 
 export const DEFAULT_ABOUT_PAGE_CONTENT = {
@@ -60,10 +59,6 @@ export const DEFAULT_ABOUT_PAGE_CONTENT = {
     companyLabel: "Company",
     members: [{ name: "Nisha Kapoor", role: "Strategy Lead", focusText: "Positioning and partner offer design.", imageUrl: "", imageAltText: "", companyName: "Coozter", linkedinUrl: "", bioText: "", isActive: true, sortOrder: 1 }],
   },
-  proofMetrics: [
-    { value: "4.8x", label: "campaign ROI", isActive: true, sortOrder: 1 },
-    { value: "32", label: "partner launches", isActive: true, sortOrder: 2 },
-  ],
 };
 
 export const ARRAY_FIELD_DEFAULTS = {
@@ -72,7 +67,6 @@ export const ARRAY_FIELD_DEFAULTS = {
   visualNodes: { iconKey: "", label: "", sortOrder: 1, isActive: true },
   items: { iconKey: "", title: "", descriptionText: "", sortOrder: 1, isActive: true },
   members: { name: "", role: "", focusText: "", imageUrl: "", imageAltText: "", companyName: "", linkedinUrl: "", bioText: "", sortOrder: 1, isActive: true },
-  proofMetrics: { value: "", label: "", sortOrder: 1, isActive: true },
 };
 
 export function subscribeAboutPageContent(onNext, onError) {
@@ -104,7 +98,6 @@ export function normalizeAboutPageContent(content = {}) {
     beliefsSection: { ...normalizeSection(merged.beliefsSection, ["eyebrowText", "headingText", "descriptionText"]), values: normalizeRows(merged.beliefsSection.values, ["title", "descriptionText"]) },
     workModelSection: { ...normalizeSection(merged.workModelSection, ["eyebrowText", "visualAltText", "centerIconKey"]), visualNodes: normalizeRows(merged.workModelSection.visualNodes, ["iconKey", "label"]), items: normalizeRows(merged.workModelSection.items, ["iconKey", "title", "descriptionText"]) },
     teamSection: { ...normalizeSection(merged.teamSection, ["eyebrowText", "headingText", "descriptionText", "modalCompanyLabelSuffix", "focusLabel", "companyLabel"]), members: normalizeRows(merged.teamSection.members, ["name", "role", "focusText", "imageUrl", "imageAltText", "companyName", "linkedinUrl", "bioText"]) },
-    proofMetrics: normalizeRows(merged.proofMetrics, ["value", "label"]),
   };
 }
 
@@ -117,7 +110,6 @@ function mergeAboutPageContent(data = {}) {
     beliefsSection: { ...DEFAULT_ABOUT_PAGE_CONTENT.beliefsSection, ...(data.beliefsSection || {}) },
     workModelSection: { ...DEFAULT_ABOUT_PAGE_CONTENT.workModelSection, ...(data.workModelSection || {}) },
     teamSection: { ...DEFAULT_ABOUT_PAGE_CONTENT.teamSection, ...(data.teamSection || {}) },
-    proofMetrics: Array.isArray(data.proofMetrics) ? data.proofMetrics : DEFAULT_ABOUT_PAGE_CONTENT.proofMetrics,
   };
 }
 
