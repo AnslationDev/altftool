@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useMemo } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import {
@@ -111,8 +111,6 @@ export default function AdminSidebar({ adminData, mobileOpen = false, onCloseMob
     currentModule = null;
   }
 
-  const globalModules = Object.keys(GLOBAL_ADMIN_MODULES);
-
   useEffect(() => {
     if (maybeProject) {
       localStorage.setItem("last-project-id", maybeProjectId);
@@ -171,32 +169,55 @@ export default function AdminSidebar({ adminData, mobileOpen = false, onCloseMob
     };
   }, [open]);
 
+  // Access-based lists (independent of the filter text): memoized so we do NOT
+  // re-run hasModuleAccess per module on every render / filter keystroke — same
+  // deterministic result, identical authorization outcome, pure render perf.
+  // Hooks live ABOVE the early return below to satisfy the Rules of Hooks; each
+  // memo guards the null-adminData case internally.
+  const allowedTabs = useMemo(() => {
+    if (!adminData || !project) return [];
+    return Object.keys(project.modules).filter((moduleKey) =>
+      hasModuleAccess({ adminData, projectId, moduleKey, action: "read" }),
+    );
+  }, [adminData, project, projectId]);
+
+  const accessibleGlobalModules = useMemo(() => {
+    if (!adminData) return [];
+    return Object.keys(GLOBAL_ADMIN_MODULES).filter((key) => {
+      const moduleConfig = GLOBAL_ADMIN_MODULES[key];
+      if (moduleConfig.allAdmins) return true;
+      if (moduleConfig.superadminOnly) return adminData.roleType === "superadmin";
+      return adminData.roleType === "superadmin" || adminData.permissions?.[key]?.read;
+    });
+  }, [adminData]);
+
+  // Filter-based lists: only re-filter the already-computed access lists when the
+  // query changes — the per-module access check is not recomputed per keystroke.
+  const normalizedModuleFilter = useMemo(
+    () => normalizeModuleQuery(moduleFilter),
+    [moduleFilter],
+  );
+
+  const visibleTabs = useMemo(() => {
+    if (!normalizedModuleFilter) return allowedTabs;
+    return allowedTabs.filter((key) => {
+      const moduleConfig = project?.modules?.[key];
+      const haystack = normalizeModuleQuery(`${key} ${moduleConfig?.label || ""}`);
+      return haystack.includes(normalizedModuleFilter);
+    });
+  }, [allowedTabs, normalizedModuleFilter, project]);
+
+  const visibleGlobalModules = useMemo(() => {
+    if (!normalizedModuleFilter) return accessibleGlobalModules;
+    return accessibleGlobalModules.filter((key) => {
+      const moduleConfig = GLOBAL_ADMIN_MODULES[key];
+      const haystack = normalizeModuleQuery(`${key} ${moduleConfig?.label || ""} system`);
+      return haystack.includes(normalizedModuleFilter);
+    });
+  }, [accessibleGlobalModules, normalizedModuleFilter]);
+
   if (!adminData) return null;
 
-  const normalizedModuleFilter = normalizeModuleQuery(moduleFilter);
-  const allowedTabs = Object.keys(project.modules).filter((moduleKey) =>
-    hasModuleAccess({ adminData, projectId, moduleKey, action: "read" })
-  );
-  const visibleTabs = allowedTabs.filter((key) => {
-    if (!normalizedModuleFilter) return true;
-    const moduleConfig = project.modules[key];
-    const haystack = normalizeModuleQuery(`${key} ${moduleConfig?.label || ""}`);
-    return haystack.includes(normalizedModuleFilter);
-  });
-  const accessibleGlobalModules = globalModules.filter((key) => {
-    const moduleConfig = GLOBAL_ADMIN_MODULES[key];
-
-    if (moduleConfig.allAdmins) return true;
-    if (moduleConfig.superadminOnly) return adminData.roleType === "superadmin";
-
-    return adminData.roleType === "superadmin" || adminData.permissions?.[key]?.read;
-  });
-  const visibleGlobalModules = accessibleGlobalModules.filter((key) => {
-    if (!normalizedModuleFilter) return true;
-    const moduleConfig = GLOBAL_ADMIN_MODULES[key];
-    const haystack = normalizeModuleQuery(`${key} ${moduleConfig?.label || ""} system`);
-    return haystack.includes(normalizedModuleFilter);
-  });
   const hasVisibleModules = visibleTabs.length > 0 || visibleGlobalModules.length > 0;
   const isSuperAdmin = adminData.roleType === "superadmin";
 
