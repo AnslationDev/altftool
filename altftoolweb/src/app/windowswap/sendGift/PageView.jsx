@@ -178,7 +178,7 @@ export default function SendGiftPage() {
                 {/* RECIPIENT FIELDS */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div className="space-y-1">
-                    <label className="text-[10px] tracking-wider uppercase font-bold text-windowswap-cream/80">Recipient's Name</label>
+                    <label className="text-[10px] tracking-wider uppercase font-bold text-windowswap-cream/80">Recipient&#39;s Name</label>
                     <input
                       type="text"
                       name="recipientName"
@@ -190,7 +190,7 @@ export default function SendGiftPage() {
                     />
                   </div>
                   <div className="space-y-1">
-                    <label className="text-[10px] tracking-wider uppercase font-bold text-windowswap-cream/80">Recipient's Email</label>
+                    <label className="text-[10px] tracking-wider uppercase font-bold text-windowswap-cream/80">Recipient&#39;s Email</label>
                     <input
                       type="email"
                       name="recipientEmail"
@@ -297,7 +297,7 @@ export default function SendGiftPage() {
                   <div><span className="text-windowswap-cream/60">Sender:</span> <span className="text-white font-medium">{formData.senderName}</span></div>
                   <div><span className="text-windowswap-cream/60">Recipient:</span> <span className="text-white font-medium">{formData.recipientName} ({formData.recipientEmail})</span></div>
                   <div><span className="text-windowswap-cream/60">Selected Plan:</span> <span className="text-white font-medium capitalize">{formData.plan === "1year" ? "1 Year All-Access ($25)" : formData.plan === "6months" ? "6 Months All-Access ($15)" : "Lifetime All-Access ($60)"}</span></div>
-                  {formData.message && <div><span className="text-windowswap-cream/60">Personal Message:</span> <span className="text-white italic">"{formData.message}"</span></div>}
+                  {formData.message && <div><span className="text-windowswap-cream/60">Personal Message:</span> <span className="text-white italic">&quot;{formData.message}&quot;</span></div>}
                 </div>
 
                 <button
@@ -318,7 +318,7 @@ export default function SendGiftPage() {
       {/* ──────────────────────────────────────────────────────── */}
       <footer className="w-full max-w-6xl mx-auto px-6 py-8 flex flex-col sm:flex-row items-center justify-between text-[10px] tracking-widest text-windowswap-cream/55 select-none font-medium">
         <span>POWERED BY <span className="text-white font-semibold">stripe</span></span>
-        <span className="uppercase mt-2 sm:mt-0">SECURE 256-BIT SSL ENCRYPTION • T&C's APPLY</span>
+        <span className="uppercase mt-2 sm:mt-0">SECURE 256-BIT SSL ENCRYPTION • T&C&#39;s APPLY</span>
       </footer>
 
     </div>

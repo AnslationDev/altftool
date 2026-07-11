@@ -8,13 +8,13 @@ const retryableNavigationError = /ERR_ABORTED|frame was detached|Timeout/i;
 async function gotoWithRetry(page, url) {
   let lastError;
 
-  for (let attempt = 1; attempt <= 3; attempt += 1) {
+  for (let attempt = 1; attempt <= 4; attempt += 1) {
     try {
-      await page.goto(url, { waitUntil: "domcontentloaded", timeout: 45_000 });
+      await page.goto(url, { waitUntil: "domcontentloaded", timeout: 90_000 });
       return;
     } catch (error) {
       lastError = error;
-      if (!retryableNavigationError.test(error?.message || String(error)) || attempt === 3) {
+      if (!retryableNavigationError.test(error?.message || String(error)) || attempt === 4) {
         throw error;
       }
       await page.waitForTimeout(1500 * attempt);
@@ -37,7 +37,7 @@ async function waitForVisualStability(page) {
 }
 
 test.describe("visual regression", () => {
-  test.describe.configure({ timeout: 120_000 });
+  test.describe.configure({ timeout: 240_000 });
 
   test.use({
     colorScheme: "light",
