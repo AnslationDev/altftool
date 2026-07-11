@@ -23,7 +23,7 @@ const smokeWarmupRoutes = [
 ];
 
 test.beforeAll(async ({ browser }) => {
-  test.setTimeout(300_000);
+  test.setTimeout(480_000);
   const page = await browser.newPage();
   for (const url of smokeWarmupRoutes) {
     try {

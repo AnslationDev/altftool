@@ -48,7 +48,7 @@ test.describe("visual regression", () => {
 
   // Pre-warm the compilation of Next.js pages sequentially outside the timed test blocks
   test.beforeAll(async ({ browser }) => {
-    test.setTimeout(240_000);
+    test.setTimeout(480_000);
     const context = await browser.newContext();
     const page = await context.newPage();
     for (const route of warmupRoutes) {
