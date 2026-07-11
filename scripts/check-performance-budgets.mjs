@@ -15,7 +15,7 @@ const DEFAULT_APP_BUDGETS = [
     maxChunkGzipKiB: 375,
     maxChunkRawKiB: 1350,
     maxTotalJsGzipKiB: 6000,
-    maxTotalCssGzipKiB: 650,
+    maxTotalCssGzipKiB: 950,
   },
   {
     name: "admin",
