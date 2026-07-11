@@ -8,6 +8,34 @@ function escapeRegExp(value = "") {
   return String(value).replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 }
 
+// Under `next dev` the first request to a heavy route triggers on-demand
+// compilation (the /tools catalog alone can take ~2 min cold on CI), which
+// overruns the default per-test navigation deadline. Give tests more room and
+// pre-warm the heavy public routes once so the timed navigations below hit
+// already-compiled routes and stay fast.
+test.describe.configure({ timeout: 120_000 });
+
+const smokeWarmupRoutes = [
+  `${webUrl}/tools`,
+  `${webUrl}/tools/all/api-stress-estimator`,
+  `${webUrl}/tools/developer/api-stress-estimator`,
+  `${webUrl}/buysmart`,
+];
+
+test.beforeAll(async ({ browser }) => {
+  test.setTimeout(300_000);
+  const page = await browser.newPage();
+  for (const url of smokeWarmupRoutes) {
+    try {
+      await page.goto(url, { waitUntil: "domcontentloaded", timeout: 120_000 });
+    } catch {
+      // Non-fatal: a slow/failed warm-up just falls back to on-demand
+      // compilation inside the test itself.
+    }
+  }
+  await page.close();
+});
+
 test("public web shell loads", async ({ page }) => {
   const quality = createPageQualityGate(page);
 
