@@ -14,8 +14,8 @@
   ],
   "scripts": {
     "build": "npm run build:web && npm run build:admin",
-    "build:web": "npm --prefix altftoolweb run build",
-    "build:admin": "npm --prefix altftoolwebadmin run build",
+    "build:web": "node scripts/run-with-node-memory.mjs npm --prefix altftoolweb run build",
+    "build:admin": "node scripts/run-with-node-memory.mjs npm --prefix altftoolwebadmin run build",
     "bundle:audit": "node scripts/check-bundle-budgets.mjs",
     "dev:web": "npm --prefix altftoolweb run dev -- -p 3002",
     "dev:admin": "npm --prefix altftoolwebadmin run dev -- -p 3001",

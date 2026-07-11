@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, useEffect, useRef, useState, useCallback } from "react";
+import { createContext, useContext, useEffect, useRef, useState, useCallback, useMemo } from "react";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { auth } from "@/lib/firebase";
 import {
@@ -286,9 +286,31 @@ export function AuthProvider({ children }) {
       }
     }, AUTH_FALLBACK_TIMEOUT_MS);
 
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+    const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
       settled = true;
       clearTimeout(fallback);
+
+      // Absorb a TRANSIENT null. A cross-tab storage-poll blip, or a briefly
+      // blocked/partitioned Auth persistence (observed in production alongside
+      // `net::ERR_BLOCKED_BY_CLIENT`), can fire `no-user` even though the
+      // session is still valid — bouncing an active admin to /login. Give it a
+      // short grace window; if the auth state recovers, re-sync instead of
+      // logging out. A genuinely cleared session stays null and logs out as
+      // before. Explicit logout() sets state directly, so it is unaffected.
+      if (!currentUser) {
+        await new Promise((resolve) => setTimeout(resolve, 1200));
+        if (!mountedRef.current) return;
+        if (auth.currentUser) {
+          authLog("onAuthStateChanged transient no-user recovered → re-sync");
+          if (hasLocalAdminSession()) {
+            applyLocalAdminSession();
+            return;
+          }
+          syncUser(auth.currentUser);
+          return;
+        }
+      }
+
       authLog("onAuthStateChanged", currentUser ? `uid=${currentUser.uid}` : "no-user");
       if (hasLocalAdminSession()) {
         applyLocalAdminSession();
@@ -310,24 +332,40 @@ export function AuthProvider({ children }) {
     };
   }, [applyLocalAdminSession, syncUser]);
 
-  return (
-    <AuthContext.Provider
-      value={{
-        user,
-        adminData,
-        loading,
-        isPendingUser,
-        isDenied,
-        isSuperAdmin: adminData?.roleType === "superadmin",
-        localAdminLoginEnabled,
-        signInLocalAdmin,
-        logout,
-        refreshAuth,
-      }}
-    >
-      {children}
-    </AuthContext.Provider>
+  // Memoize the context value so the always-mounted shell (AdminLayout,
+  // AdminHeader, SecurityGate) and every useAuth() consumer only re-render on a
+  // real auth-state change — NOT on every AuthProvider render (e.g. transient
+  // retry setState churn or a background token refresh). signInLocalAdmin,
+  // logout and refreshAuth are already useCallback-stable, so the value is
+  // stable across unrelated renders. Pure perf; identical value, no behavior
+  // change.
+  const value = useMemo(
+    () => ({
+      user,
+      adminData,
+      loading,
+      isPendingUser,
+      isDenied,
+      isSuperAdmin: adminData?.roleType === "superadmin",
+      localAdminLoginEnabled,
+      signInLocalAdmin,
+      logout,
+      refreshAuth,
+    }),
+    [
+      user,
+      adminData,
+      loading,
+      isPendingUser,
+      isDenied,
+      localAdminLoginEnabled,
+      signInLocalAdmin,
+      logout,
+      refreshAuth,
+    ],
   );
+
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
 
 export const useAuth = () => useContext(AuthContext);

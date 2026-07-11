@@ -246,6 +246,13 @@ const routeLoaders = {
     policy: {
       "": () => import("@/projects/carrerbook/modules/policy/page.jsx"),
     },
+    client: {
+      "": () => import("@/projects/carrerbook/modules/client/page.jsx"),
+      advertiser: () =>
+        import("@/projects/carrerbook/modules/client/advertiser/page.jsx"),
+      publisher: () =>
+        import("@/projects/carrerbook/modules/client/publisher/page.jsx"),
+    },
     events: {
       "": () => import("@/projects/carrerbook/modules/events/page.jsx"),
     },
@@ -296,6 +303,42 @@ const routeLoaders = {
     },
     contact: {
       "": () => import("@/projects/apexboost/modules/contact/page.jsx"),
+
+    },
+  },
+  coozter: {
+    home: {
+      "": () => import("@/projects/coozter/modules/home/page.jsx"),
+      "hero-section": () => import("@/projects/coozter/modules/home/hero-section/page.jsx"),
+      "marketing-channels": () => import("@/projects/coozter/modules/home/marketing-channels/page.jsx"),
+      "process-section": () => import("@/projects/coozter/modules/home/process-section/page.jsx"),
+      "services-preview": () => import("@/projects/coozter/modules/home/services-preview/page.jsx"),
+      "trust-section": () => import("@/projects/coozter/modules/home/trust-section/page.jsx"),
+    },
+    about: {
+      "": () => import("@/projects/coozter/modules/about/page.jsx"),
+      "beliefs-section": () => import("@/projects/coozter/modules/about/beliefs-section/page.jsx"),
+      "hero-section": () => import("@/projects/coozter/modules/about/hero-section/page.jsx"),
+      "team-section": () => import("@/projects/coozter/modules/about/team-section/page.jsx"),
+      "why-choose-section": () => import("@/projects/coozter/modules/about/why-choose-section/page.jsx"),
+      "work-model-section": () => import("@/projects/coozter/modules/about/work-model-section/page.jsx"),
+    },
+    services: {
+      "": () => import("@/projects/coozter/modules/services/page.jsx"),
+      "faq-section": () => import("@/projects/coozter/modules/services/faq-section/page.jsx"),
+      "growth-engine-section": () => import("@/projects/coozter/modules/services/growth-engine-section/page.jsx"),
+      "hero-section": () => import("@/projects/coozter/modules/services/hero-section/page.jsx"),
+      "outcomes-section": () => import("@/projects/coozter/modules/services/outcomes-section/page.jsx"),
+      "process-section": () => import("@/projects/coozter/modules/services/process-section/page.jsx"),
+      "service-categories-section": () => import("@/projects/coozter/modules/services/service-categories-section/page.jsx"),
+    },
+    blog: {
+      "": () => import("@/projects/coozter/modules/blog/page.jsx"),
+      "add-article": () => import("@/projects/coozter/modules/blog/add-article/page.jsx"),
+      "edit-article/[id]": () => import("@/projects/coozter/modules/blog/edit-article/[id]/page.jsx"),
+    },
+    "contact-us": {
+      "": () => import("@/projects/coozter/modules/contact-us/page.jsx"),
     },
   },
 

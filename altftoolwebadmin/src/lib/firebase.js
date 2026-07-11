@@ -1,5 +1,13 @@
 import { initializeApp, getApps, getApp } from "firebase/app";
-import { getAuth } from "firebase/auth";
+import {
+  getAuth,
+  initializeAuth,
+  indexedDBLocalPersistence,
+  browserLocalPersistence,
+  browserSessionPersistence,
+  inMemoryPersistence,
+  browserPopupRedirectResolver,
+} from "firebase/auth";
 import {
   getFirestore,
   initializeFirestore,
@@ -57,7 +65,48 @@ function createFirestore(appInstance) {
   return instance;
 }
 
-export const auth = getAuth(app);
+/**
+ * Resilient Auth persistence.
+ *
+ * Bare `getAuth(app)` leaves Auth on the default IndexedDB persistence with
+ * cross-tab storage polling. When a privacy browser / shields / ad-blocker
+ * partitions or blocks that storage (observed in production as
+ * `net::ERR_BLOCKED_BY_CLIENT` on firebase.googleapis.com), the persistence
+ * poll reads `null` and Firebase fires `onAuthStateChanged(null)` — an
+ * unexpected logout. We give Auth an explicit fallback chain so a blocked
+ * IndexedDB degrades to localStorage → sessionStorage → in-memory instead of
+ * resolving the user to null (mirrors the deliberate Firestore hardening above).
+ *
+ * `popupRedirectResolver` is REQUIRED here: the login page uses
+ * `signInWithPopup` for Google sign-in, and `initializeAuth` does not wire a
+ * default resolver (unlike `getAuth`), so omitting it breaks Google login.
+ *
+ * Cached on globalThis and try/caught so Fast Refresh / repeated evaluation
+ * never calls `initializeAuth` twice (which throws "already-initialized").
+ */
+function createAuth(appInstance) {
+  if (typeof window === "undefined") return getAuth(appInstance);
+  if (globalThis.__ALTFT_AUTH__) return globalThis.__ALTFT_AUTH__;
+
+  let instance;
+  try {
+    instance = initializeAuth(appInstance, {
+      persistence: [
+        indexedDBLocalPersistence,
+        browserLocalPersistence,
+        browserSessionPersistence,
+        inMemoryPersistence,
+      ],
+      popupRedirectResolver: browserPopupRedirectResolver,
+    });
+  } catch {
+    instance = getAuth(appInstance); // already initialised elsewhere
+  }
+  globalThis.__ALTFT_AUTH__ = instance;
+  return instance;
+}
+
+export const auth = createAuth(app);
 export const db = createFirestore(app);
 export const storage = getStorage(app);
 

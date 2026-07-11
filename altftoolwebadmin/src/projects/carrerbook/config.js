@@ -16,7 +16,8 @@ const carrerbookConfig = {
   logo: "/logos/carrerbook-icon.png",
   color: "#10b981",
   modules: {
-    navbar: { label: "Navbar", icon: LayoutPanelTop },
+      navbar: { label: "Navbar", icon: LayoutPanelTop },
+      service:{label:"Service", icon: LayoutPanelTop },
     footer: { label: "Footer", icon: PanelBottom },
     home: { label: "Home", icon: Home },
     "contact-us": { label: "Contact Us", icon: Contact },
@@ -26,7 +27,7 @@ const carrerbookConfig = {
     "about-us": { label: "About Us", icon: Building2 },
      "term-condition": { label: "Term & Condition", icon: Building2 },
     policy: { label: "Policy", icon: Building2 },
-    service:{label: "Service", icon: Building2},
+    client:{label: "Clients", icon: Building2},
     events: { label: "Events", icon: CalendarDays },
     team: { label: "Team", icon: Users },
   },
