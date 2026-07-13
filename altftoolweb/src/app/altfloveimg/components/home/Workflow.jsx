@@ -16,7 +16,7 @@ export default function Workflow() {
         <Reveal className="mx-auto max-w-2xl text-center">
           <span className="ali-eyebrow">How it works</span>
           <h2 className="mt-4 text-3xl font-bold tracking-tight sm:text-4xl">
-            Three steps. <span className="ali-gradient-text">That's it.</span>
+            Three steps. <span className="ali-gradient-text">That&#39;s it.</span>
           </h2>
         </Reveal>
 

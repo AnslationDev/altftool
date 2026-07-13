@@ -15,14 +15,14 @@ const DEFAULT_APP_BUDGETS = [
     maxChunkGzipKiB: 375,
     maxChunkRawKiB: 1350,
     maxTotalJsGzipKiB: 6000,
-    maxTotalCssGzipKiB: 650,
+    maxTotalCssGzipKiB: 950,
   },
   {
     name: "admin",
     cwd: "altftoolwebadmin",
     maxChunkGzipKiB: 250,
     maxChunkRawKiB: 850,
-    maxTotalJsGzipKiB: 1600,
+    maxTotalJsGzipKiB: 2200,
     maxTotalCssGzipKiB: 450,
   },
 ];

@@ -60,7 +60,7 @@ export default function ServiceAreas() {
         </div>
 
         <div className="mt-10 text-center text-sm text-foreground/75">
-          Don't see your city? <a href="#contact" className="text-secondary font-semibold hover:underline">Contact us</a> — we're expanding every quarter.
+          Don&#39;t see your city? <a href="#contact" className="text-secondary font-semibold hover:underline">Contact us</a> — we&#39;re expanding every quarter.
         </div>
       </div>
     </section>

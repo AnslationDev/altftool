@@ -62,7 +62,7 @@ const routeLoaders = {
     },
     pranksocialmedia: {
       "": () =>
-        import("@/projects/altftool/modules/prank-socialmedia/page.jsx"),
+        import("@/projects/altftool/modules/pranksocialmedia/page.jsx"),
     },
     pranx: {
       "": () => import("@/projects/altftool/modules/pranx/page.jsx"),

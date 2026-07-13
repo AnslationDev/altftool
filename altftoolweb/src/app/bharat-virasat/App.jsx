@@ -216,7 +216,7 @@ export default function App() {
               data-reveal-delay="1"
               className="serif text-[clamp(3.5rem,12vw,9.5rem)] leading-[0.85] tracking-[-0.03em]"
             >
-              India's
+              India&#39;s
               <br />
               <span className="italic opacity-80">Living Heritage</span>
             </h1>
@@ -941,7 +941,7 @@ function DetailModal({
             <div className="rounded-2xl border border-white/10 bg-gradient-to-br from-amber-500/10 to-transparent p-6">
               <div className="text-[10px] tracking-[0.2em] uppercase opacity-60 mb-2">Did you know</div>
               <p className="serif italic text-lg leading-snug">
-                "{site.tagline}"
+                &quot;{site.tagline}&quot;
               </p>
             </div>
 

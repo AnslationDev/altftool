@@ -50,7 +50,7 @@ export default function Testimonials() {
                 <div className="flex gap-0.5" style={{ color: "#f59e0b" }}>
                   {Array.from({ length: 5 }).map((_, i) => <Star key={i} size={16} fill="#f59e0b" />)}
                 </div>
-                <blockquote className="mt-3 flex-1 text-[15px] leading-relaxed">"{r.quote}"</blockquote>
+                <blockquote className="mt-3 flex-1 text-[15px] leading-relaxed">&quot;{r.quote}&quot;</blockquote>
                 <figcaption className="mt-5 flex items-center gap-3">
                   <span className="grid h-11 w-11 place-items-center rounded-full text-sm font-bold text-white" style={{ background: `linear-gradient(135deg, ${r.c}, var(--secondary, #38BDF8))` }}>{r.initials}</span>
                   <span>

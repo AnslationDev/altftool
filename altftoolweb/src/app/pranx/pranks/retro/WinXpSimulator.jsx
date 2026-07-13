@@ -48,7 +48,7 @@ export function WinXpSimulator() {
             <p className="mt-4 font-semibold">Online Windows XP simulator that runs in your web browser. Activate full screen and play with fake windows.</p>
             <div className="mt-8 flex items-center gap-5">
               <span className="text-6xl font-black text-blue-500">1.</span>
-              <h2 className="text-2xl font-black text-blue-500">Open a prank on your victim's computer</h2>
+              <h2 className="text-2xl font-black text-blue-500">Open a prank on your victim&#39;s computer</h2>
             </div>
             <div className="mt-4 grid grid-cols-5 gap-4 lg:grid-cols-8">
               {shortcuts.map((item) => <button key={item} className="grid justify-items-center gap-1 text-center text-sm font-bold"><span className="grid h-12 w-12 place-items-center rounded bg-slate-100 text-2xl">▣</span>{item}</button>)}

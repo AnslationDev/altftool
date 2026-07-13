@@ -93,7 +93,7 @@ export function GoogleTerminal() {
                 <span className="bg-red-400 px-3 py-1 text-black">Enter</span>
                 <span>Search</span>
                 <span className="bg-red-400 px-3 py-1 text-black">Esc</span>
-                <span>I'm Feeling Lucky</span>
+                <span>I&#39;m Feeling Lucky</span>
               </div>
               <pre className="text-[clamp(3.4rem,9vw,9rem)] font-black leading-none tracking-tight">
                 <span className="text-cyan-300">G</span><span className="text-red-500">o</span><span className="text-yellow-300">o</span><span className="text-fuchsia-400">g</span><span className="text-green-400">l</span><span className="text-red-500">e</span>

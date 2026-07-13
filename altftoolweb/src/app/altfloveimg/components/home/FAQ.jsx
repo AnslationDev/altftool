@@ -35,7 +35,7 @@ export default function FAQ() {
             <div>
               <p className="text-sm font-semibold">Still curious?</p>
               <Link href={`${BASE}/compress`} className="text-sm font-medium" style={{ color: "var(--ali-blue)" }}>
-                Just try a tool — it's instant →
+                Just try a tool — it&#39;s instant →
               </Link>
             </div>
           </div>
