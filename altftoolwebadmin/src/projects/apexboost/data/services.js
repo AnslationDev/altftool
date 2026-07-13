@@ -1,0 +1,278 @@
+import {
+  Search,
+  Share2,
+  PenTool,
+  Mail,
+  Users,
+  Target,
+  Repeat,
+  LineChart,
+  Handshake,
+  Network,
+  Link2,
+  Percent,
+  Ticket,
+  Megaphone,
+  Globe,
+  ThumbsUp,
+  Camera,
+  Play,
+  MonitorSmartphone,
+  Eye,
+  TrendingUp,
+  MousePointerClick,
+} from "lucide-react";
+
+/**
+ * The THREE core service pillars of the agency.
+ * Strictly: Digital Marketing · Affiliate Marketing · Advertising Marketing
+ */
+
+export const servicesHeading = {
+  "eyebrow": "What We Do",
+  "title": "Three pillars of",
+  "highlight": "explosive growth",
+  "subtitle": "Everything we do revolves around Digital, Affiliate and Advertising marketing — engineered to turn attention into measurable revenue."
+};
+
+export const services = [
+  {
+    "id": "digital",
+    icon: Search,
+    "title": "Digital Marketing",
+    "tagline": "Build a magnetic, always-on growth engine.",
+    "description": "We grow your organic presence, nurture audiences and turn attention into revenue with a full-funnel digital strategy engineered for compounding ROI.",
+    "accent": "from-brand to-brand-cyan",
+    "image": "https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=2000&q=80",
+    "deleted": false,
+    "features": [
+      "Full-funnel strategy",
+      "SEO & content engines",
+      "Lifecycle email automation",
+      "Conversion rate optimization"
+    ],
+    "items": [
+      {
+        "title": "Search Engine Optimization",
+        icon: Search,
+        "desc": "Dominate search results and drive high-intent organic traffic.",
+        "image": "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "title": "Search Engine Marketing",
+        icon: TrendingUp,
+        "desc": "Capture demand instantly with targeted search campaigns.",
+        "image": "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "title": "Social Media Marketing",
+        icon: Share2,
+        "desc": "Build brand loyalty and engage audiences across platforms.",
+        "image": "https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "title": "Content Marketing",
+        icon: Search,
+        "desc": "Create compelling narratives that educate and convert.",
+        "image": "https://images.unsplash.com/photo-1542744173-05336fcc7ad4?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "title": "Email Marketing",
+        icon: Search,
+        "desc": "Nurture leads and drive repeat sales with automated flows.",
+        "image": "https://images.unsplash.com/photo-1556761175-4b46a572b786?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "title": "Influencer Marketing",
+        icon: Search,
+        "desc": "Leverage trusted voices to amplify your brand's reach.",
+        "image": "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "title": "Lead Generation",
+        icon: Search,
+        "desc": "Fill your pipeline with qualified, high-quality prospects.",
+        "image": "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "title": "Conversion Optimization",
+        icon: Search,
+        "desc": "Turn more of your existing traffic into paying customers.",
+        "image": "https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "title": "Marketing Automation",
+        icon: Search,
+        "desc": "Scale your efforts with smart, triggered workflows.",
+        "image": "https://images.unsplash.com/photo-1542744173-05336fcc7ad4?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "title": "Analytics & Reporting",
+        icon: Search,
+        "desc": "Gain crystal-clear visibility into what drives your growth.",
+        "image": "https://images.unsplash.com/photo-1556761175-4b46a572b786?auto=format&fit=crop&w=600&q=80"
+      }
+    ]
+  },
+  {
+    "id": "affiliate",
+    icon: Search,
+    "title": "Affiliate Marketing",
+    "tagline": "Scale revenue through a performance partner network.",
+    "description": "We design, launch and scale profitable affiliate programs — recruiting the right partners and paying only for measurable results that move your bottom line.",
+    "accent": "from-brand-purple to-brand",
+    "image": "https://images.unsplash.com/photo-1556761175-4b46a572b786?auto=format&fit=crop&w=2000&q=80",
+    "deleted": false,
+    "features": [
+      "Custom affiliate setup",
+      "Vetted partner recruitment",
+      "Fraud-proof tracking",
+      "Commission strategy"
+    ],
+    "items": [
+      {
+        "title": "Affiliate Program Setup",
+        icon: Search,
+        "desc": "Launch customized programs tailored to your margins.",
+        "image": "https://images.unsplash.com/photo-1542744173-05336fcc7ad4?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "title": "Affiliate Recruitment",
+        icon: Search,
+        "desc": "Source and onboard high-performing niche partners.",
+        "image": "https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "title": "Affiliate Strategy",
+        icon: Search,
+        "desc": "Design commission structures that incentivize volume.",
+        "image": "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "title": "Partner Network",
+        icon: Search,
+        "desc": "Tap into our exclusive database of vetted affiliates.",
+        "image": "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "title": "Affiliate Tracking",
+        icon: Search,
+        "desc": "Implement fraud-proof tracking for precise attribution.",
+        "image": "https://images.unsplash.com/photo-1556761175-4b46a572b786?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "title": "Commission Management",
+        icon: Search,
+        "desc": "Automate payouts and manage tier-based incentives.",
+        "image": "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "title": "Referral Marketing",
+        icon: Search,
+        "desc": "Turn your best customers into vocal brand advocates.",
+        "image": "https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "title": "Coupon Marketing",
+        icon: Search,
+        "desc": "Deploy strategic discounts without hurting brand equity.",
+        "image": "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "title": "Affiliate Analytics",
+        icon: Search,
+        "desc": "Monitor partner ROI and campaign performance in real-time.",
+        "image": "https://images.unsplash.com/photo-1542744173-05336fcc7ad4?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "title": "Performance Optimization",
+        icon: Search,
+        "desc": "Continuously refine offers to maximize affiliate yield.",
+        "image": "https://images.unsplash.com/photo-1556761175-4b46a572b786?auto=format&fit=crop&w=600&q=80"
+      }
+    ]
+  },
+  {
+    "id": "advertising",
+    icon: Search,
+    "title": "Advertising Marketing",
+    "tagline": "Launch high-converting paid campaigns at scale.",
+    "description": "From Google to Meta to YouTube, we architect paid campaigns that profitably acquire customers — obsessed with lowering CPA and maximizing ROAS.",
+    "accent": "from-brand-cyan to-brand-purple",
+    "image": "https://images.unsplash.com/photo-1542744173-05336fcc7ad4?auto=format&fit=crop&w=2000&q=80",
+    "deleted": false,
+    "features": [
+      "Cross-channel ad management",
+      "Creative testing at scale",
+      "Retargeting & remarketing",
+      "Profitable scaling"
+    ],
+    "items": [
+      {
+        "title": "Google Ads",
+        icon: Search,
+        "desc": "Capture high-intent searches with precise SEM strategies.",
+        "image": "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "title": "Facebook Ads",
+        icon: Search,
+        "desc": "Scale revenue with visually compelling social campaigns.",
+        "image": "https://images.unsplash.com/photo-1542744173-05336fcc7ad4?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "title": "Instagram Ads",
+        icon: Search,
+        "desc": "Engage visual shoppers and drive mobile conversions.",
+        "image": "https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "title": "Meta Ads",
+        icon: Search,
+        "desc": "Leverage advanced algorithms for cross-network reach.",
+        "image": "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "title": "YouTube Ads",
+        icon: Search,
+        "desc": "Tell your brand story with high-impact video ads.",
+        "image": "https://images.unsplash.com/photo-1556761175-4b46a572b786?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "title": "Display Advertising",
+        icon: Search,
+        "desc": "Build awareness across the web with striking banners.",
+        "image": "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "title": "Native Advertising",
+        icon: Search,
+        "desc": "Blend in seamlessly with content to bypass ad blindness.",
+        "image": "https://images.unsplash.com/photo-1542744173-05336fcc7ad4?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "title": "Remarketing",
+        icon: Search,
+        "desc": "Bring back bounced visitors and recover lost sales.",
+        "image": "https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "title": "PPC Campaigns",
+        icon: Search,
+        "desc": "Pay only for performance with rigorous bid management.",
+        "image": "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "title": "Performance Advertising",
+        icon: Search,
+        "desc": "Data-driven media buying obsessed with ROAS.",
+        "image": "https://images.unsplash.com/photo-1556761175-4b46a572b786?auto=format&fit=crop&w=600&q=80"
+      }
+    ]
+  }
+];
+
+// Flat list of all sub-services for the filterable grid
+export const allServices = services.flatMap((s) =>
+  s.items.map((it) => ({ ...it, category: s.title })),
+);

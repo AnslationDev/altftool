@@ -456,7 +456,9 @@ test("seo endpoints and structured data render", async ({ page, request }) => {
   expect(toolSchemas.some((schema) => schema.includes("SoftwareApplication"))).toBeTruthy();
   expect(toolSchemas.some((schema) => schema.includes("FAQPage"))).toBeTruthy();
   expect(toolSchemas.some((schema) => schema.includes("HowTo"))).toBeTruthy();
-  await expect(page.getByRole("heading", { name: /workflows/i })).toBeVisible();
+  // The old "workflows" section heading is gone from the tool detail page;
+  // the tool's SEO/feature block now renders a "Why Choose Our …?" heading.
+  await expect(page.getByRole("heading", { name: /why choose our/i })).toBeVisible();
   await quality.expectClean("tool structured data route");
 
   await page.goto(`${webUrl}/blogs/age-calculator-guide`, { waitUntil: "domcontentloaded" });

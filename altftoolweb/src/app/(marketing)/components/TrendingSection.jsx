@@ -34,7 +34,7 @@ const trendingTools = [
     title: "Color Palette from Image",
     tag: "Design Tools",
     href: "/tools/all/color-palette-from-image",
-    image: "/images/featured5.png",
+    image: "/images/featured5.jpg",
     description: "Extract a practical color palette from uploaded images.",
     rating: "4.7",
     reviews: "7.3K",

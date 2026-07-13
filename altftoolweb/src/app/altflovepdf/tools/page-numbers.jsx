@@ -227,9 +227,9 @@ export default function PageNumbers() {
                 onChange={(e) => setFormat(e.target.value)}
                 style={{ marginTop: "6px" }}
               >
-                <option value="n">Just Numbers (e.g. "1")</option>
-                <option value="page-n">Page Prefix (e.g. "Page 1")</option>
-                <option value="n-of-total">Total Progress (e.g. "1 of 12")</option>
+                <option value="n">Just Numbers (e.g. &quot;1&quot;)</option>
+                <option value="page-n">Page Prefix (e.g. &quot;Page 1&quot;)</option>
+                <option value="n-of-total">Total Progress (e.g. &quot;1 of 12&quot;)</option>
               </select>
             </div>
           </div>

@@ -62,7 +62,7 @@ const routeLoaders = {
     },
     pranksocialmedia: {
       "": () =>
-        import("@/projects/altftool/modules/prank-socialmedia/page.jsx"),
+        import("@/projects/altftool/modules/pranksocialmedia/page.jsx"),
     },
     pranx: {
       "": () => import("@/projects/altftool/modules/pranx/page.jsx"),
@@ -154,6 +154,10 @@ const routeLoaders = {
     },
     blog: {
       "": () => import("@/projects/smartlucky/modules/blog/page.jsx"),
+      "add-blogs": () =>
+        import("@/projects/smartlucky/modules/blog/add-blogs/page.jsx"),
+      "edit-blog/[id]": () =>
+        import("@/projects/smartlucky/modules/blog/edit-blog/[id]/page.jsx"),
     },
     platforms: {
       "": () => import("@/projects/smartlucky/modules/platforms-page/page.jsx"),
@@ -257,6 +261,51 @@ const routeLoaders = {
     },
   },
 
+  apexboost: {
+    frontend: {
+      "": () => import("@/projects/apexboost/modules/frontend/page.jsx"),
+    },
+    hero: {
+      "": () => import("@/projects/apexboost/modules/hero/page.jsx"),
+    },
+    blogs: {
+      "": () => import("@/projects/apexboost/modules/blogs/page.jsx"),
+    },
+    services: {
+      "": () => import("@/projects/apexboost/modules/services/page.jsx"),
+    },
+    testimonials: {
+      "": () => import("@/projects/apexboost/modules/testimonials/page.jsx"),
+    },
+    portfolio: {
+      "": () => import("@/projects/apexboost/modules/portfolio/page.jsx"),
+    },
+    faq: {
+      "": () => import("@/projects/apexboost/modules/faq/page.jsx"),
+    },
+    features: {
+      "": () => import("@/projects/apexboost/modules/features/page.jsx"),
+    },
+    stats: {
+      "": () => import("@/projects/apexboost/modules/stats/page.jsx"),
+    },
+    process: {
+      "": () => import("@/projects/apexboost/modules/process/page.jsx"),
+    },
+    whyChooseUs: {
+      "": () => import("@/projects/apexboost/modules/whyChooseUs/page.jsx"),
+    },
+    cta: {
+      "": () => import("@/projects/apexboost/modules/cta/page.jsx"),
+    },
+    navLinks: {
+      "": () => import("@/projects/apexboost/modules/navLinks/page.jsx"),
+    },
+    contact: {
+      "": () => import("@/projects/apexboost/modules/contact/page.jsx"),
+
+    },
+  },
   coozter: {
     home: {
       "": () => import("@/projects/coozter/modules/home/page.jsx"),

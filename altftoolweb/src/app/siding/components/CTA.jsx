@@ -22,7 +22,7 @@ export default function CTA() {
                 Limited Spring Booking
               </div>
               <h2 className="font-display font-extrabold text-3xl lg:text-5xl leading-tight">
-                Ready to Upgrade Your<br />Home's Exterior?
+                Ready to Upgrade Your<br />Home&#39;s Exterior?
               </h2>
               <p className="mt-5 text-lg text-primary-foreground/85 max-w-lg">
                 Join thousands of homeowners who trust EliteShield to protect what matters most.

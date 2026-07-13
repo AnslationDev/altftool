@@ -1,6 +1,6 @@
 // src/tools/ambiguous-figure-viewer/tool.config.js
 
-module.exports = {
+export default {
   name: "Ambiguous Figure Viewer",
   title: "Ambiguous Figure Viewer",
   description: "Experience and analyze classic optical illusions where the brain switches between multiple interpretations of the same image.",

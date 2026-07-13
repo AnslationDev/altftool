@@ -56,7 +56,7 @@ export default function PrankFrame({ prank, children, wide = false }) {
           </div>
         </div>
         <div className="w-full lg:w-[250px] shrink-0 sticky top-24 h-fit">
-          <AdSidebar ad={{ bannerUrl: "/banners/vertical.png", redirect: "#" }} />
+          <AdSidebar ad={{ bannerUrl: "/banners/vertical.jpg", redirect: "#" }} />
         </div>
       </div>
     </main>

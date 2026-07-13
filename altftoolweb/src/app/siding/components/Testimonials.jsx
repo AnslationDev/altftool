@@ -98,7 +98,7 @@ export default function Testimonials() {
                 ))}
               </div>
               <blockquote className="font-display text-xl lg:text-2xl text-primary leading-relaxed font-medium">
-                "{cur.review}"
+                &quot;{cur.review}&quot;
               </blockquote>
               <div className="mt-8 flex items-center gap-4">
                 <img src={cur.avatar} alt={cur.name} className="w-14 h-14 rounded-full object-cover ring-2 ring-white shadow-md" />

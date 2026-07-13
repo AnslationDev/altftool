@@ -58,7 +58,7 @@ export default function KymArticlePage() {
             </button>
             <div>
               <strong>He Tryna Ignore It</strong>
-              <span>Watch the meme spread through this week's edits.</span>
+              <span>Watch the meme spread through this week&#39;s edits.</span>
             </div>
           </div>
 

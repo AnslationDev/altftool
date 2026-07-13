@@ -2,6 +2,11 @@ import { expect } from "@playwright/test";
 
 const IGNORED_CONSOLE_PATTERNS = [
   /Download the React DevTools/i,
+  // Resource-load console errors carry no URL, so they cannot distinguish a
+  // real broken app asset from an external service (Firebase, analytics)
+  // that is simply unconfigured/unreachable in CI. They are replaced by the
+  // URL-aware same-origin response check below.
+  /Failed to load resource/i,
 ];
 
 const DANGEROUS_WARNING_PATTERNS = [
@@ -19,8 +24,29 @@ function isDangerousWarning(text) {
   return DANGEROUS_WARNING_PATTERNS.some((pattern) => pattern.test(text));
 }
 
+function isSameOriginUrl(url) {
+  try {
+    const { hostname } = new URL(url);
+    return hostname === "localhost" || hostname === "127.0.0.1";
+  } catch {
+    return false;
+  }
+}
+
 export function createPageQualityGate(page, { failOnWarnings = false } = {}) {
   let consoleIssues = [];
+
+  // Flag failing responses served by the app itself (missing chunks, broken
+  // API routes, dead asset paths). External hosts are excluded on purpose —
+  // in CI, Firebase/analytics endpoints are unconfigured or unreachable and
+  // their failures say nothing about the app's own route surface.
+  page.on("response", (response) => {
+    const status = response.status();
+    const url = response.url();
+    if (status >= 400 && isSameOriginUrl(url)) {
+      consoleIssues.push(`http ${status}: ${url}`);
+    }
+  });
 
   page.on("console", (message) => {
     const type = message.type();

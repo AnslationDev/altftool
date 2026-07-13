@@ -46,7 +46,7 @@ function SnapchatPreview() {
         ) : (
           <div className="absolute inset-0 flex flex-col items-center justify-center p-6 text-center text-neutral-500 bg-neutral-950">
             <p className="text-sm font-semibold">Snapchat Story/Camera Mockup</p>
-            <p className="text-xs mt-1">Upload a "Post image" in the sidebar to show a custom Snap picture.</p>
+            <p className="text-xs mt-1">Upload a &quot;Post image&quot; in the sidebar to show a custom Snap picture.</p>
           </div>
         )}
 

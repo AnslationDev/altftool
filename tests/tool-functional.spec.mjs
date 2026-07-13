@@ -222,27 +222,23 @@ test.describe("microtool functional flows", () => {
     await page.goto(`${webUrl}/tools/all?search=json`, { waitUntil: "domcontentloaded" });
 
     await expect(page.getByTestId("tools-search-input")).toHaveValue("json");
-    await expect(page.getByTestId("tool-search-suggestions")).toContainText("JSON Editor");
+    // The old suggestions dropdown / category links / filter chips were
+    // replaced by live inline filtering of the directory grid with the
+    // search kept in the URL, so assert that current shareable behaviour.
+    await expect(page.getByRole("link", { name: /JSON Editor/ }).first()).toBeVisible();
 
-    await page.getByRole("link", { name: /^Developer$/ }).first().click();
-    await expect(page).toHaveURL(/\/tools\/developer\?search=json/);
-    await expect(page.getByRole("heading", { name: "Explore Tools" })).toBeVisible();
-
-    await page.getByTestId("tool-category-search").fill("pdf");
-    await expect(page.getByRole("link", { name: /PDF/ }).first()).toBeVisible();
-
-    await page.getByTestId("clear-tool-filters").click();
-    await expect(page).toHaveURL(/\/tools\/all$/);
-    await expect(page.getByTestId("tools-search-input")).toHaveValue("");
-
+    // Typing keeps the URL shareable; clearing the input cleans it again.
     await page.getByTestId("tools-search-input").fill("jwt decoder");
-    await expect(page.getByTestId("active-tool-filters")).toContainText("Search: jwt decoder");
-    await page.getByTestId("tools-search-input").press("Enter");
-    await expect(page).toHaveURL(/\/tools\/all\/jwt-decoder$/);
-    await expect(page.getByRole("navigation", { name: "Tool route" })).toContainText("JWT Decoder");
+    await expect(page).toHaveURL(/\/tools\/all\?search=jwt(\+|%20)decoder/);
+    await page.getByTestId("tools-search-input").fill("");
+    await expect(page).toHaveURL(/\/tools\/all$/);
 
-    await page.goto(`${webUrl}/tools/all/json-editor`, { waitUntil: "domcontentloaded" });
+    // A filtered result card links straight to the tool workspace.
+    await page.getByTestId("tools-search-input").fill("json editor");
+    await page.getByRole("link", { name: /JSON Editor/ }).first().click();
+    await expect(page).toHaveURL(/\/tools\/all\/json-editor$/);
     await expect(page.getByRole("navigation", { name: "Tool route" })).toContainText("JSON Editor");
+
     await page.goto(`${webUrl}/tools/all?view=recent`, { waitUntil: "domcontentloaded" });
     await expect(page.getByRole("link", { name: /JSON Editor/ }).first()).toBeVisible();
 

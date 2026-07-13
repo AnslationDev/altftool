@@ -22,8 +22,13 @@ const pairs = [
 
 function Slider({ pair }) {
   const [pos, setPos] = useState(50);
+  const [boxW, setBoxW] = useState(0);
   const ref = useRef(null);
   const dragging = useRef(false);
+
+  const measure = useCallback(() => {
+    if (ref.current) setBoxW(ref.current.clientWidth);
+  }, []);
 
   const move = useCallback((clientX) => {
     const rect = ref.current?.getBoundingClientRect();
@@ -31,6 +36,12 @@ function Slider({ pair }) {
     const x = ((clientX - rect.left) / rect.width) * 100;
     setPos(Math.max(0, Math.min(100, x)));
   }, []);
+
+  useEffect(() => {
+    measure();
+    window.addEventListener("resize", measure);
+    return () => window.removeEventListener("resize", measure);
+  }, [measure]);
 
   useEffect(() => {
     const onMove = (e) => {
@@ -59,7 +70,7 @@ function Slider({ pair }) {
       onTouchStart={(e) => { dragging.current = true; move(e.touches[0].clientX); }}
     >
       {/* After uses the same home image with a polished, upgraded finish. */}
-      <img src={pair.image} alt="After siding transformation" className="absolute inset-0 w-full h-full object-cover saturate-125 contrast-110 brightness-105" />
+      <img src={pair.image} alt="After siding transformation" className="absolute inset-0 w-full h-full object-cover saturate-125 contrast-110 brightness-105" onLoad={measure} />
       <div className="absolute inset-0 bg-gradient-to-tr from-secondary/10 via-transparent to-surface/10 pointer-events-none" />
       <span className="absolute top-4 right-4 px-3 py-1.5 rounded-full bg-secondary text-primary-foreground text-xs font-bold tracking-wider uppercase shadow-lg z-10">
         After
@@ -71,7 +82,7 @@ function Slider({ pair }) {
           src={pair.image}
           alt="Before siding transformation"
           className="absolute inset-0 h-full object-cover grayscale sepia brightness-[0.72] contrast-[0.82] saturate-[0.55]"
-          style={{ width: `${ref.current?.clientWidth || 1000}px` }}
+          style={{ width: `${boxW || 1000}px` }}
         />
         <div className="absolute inset-0 before-aging-overlay opacity-45 mix-blend-multiply" />
         <div className="absolute inset-0 before-stripe-overlay opacity-25" />

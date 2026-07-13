@@ -141,7 +141,7 @@ export default function About() {
             <p className="mt-5 text-lg text-foreground/75 leading-relaxed">
               For over two decades, EliteShield has protected and beautified American homes
               with siding systems engineered to outlast the elements. Family-founded and
-              homeowner-obsessed, we treat every project like it's our own.
+              homeowner-obsessed, we treat every project like it&#39;s our own.
             </p>
 
             <div className="mt-6 space-y-4">

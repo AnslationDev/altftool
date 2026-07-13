@@ -8,6 +8,7 @@ import myluckydeal from "./myluckydeal/config";
 import anternet from "./anternet/config";
 import coozter from "./coozter/config";
 import growvibe from "./growvibe/config";
+import apexboost from "./apexboost/config";
 
 export const PROJECTS = {
   altftool,
@@ -20,6 +21,7 @@ export const PROJECTS = {
   anternet,
   coozter,
   growvibe,
+  apexboost
 };
 
 export const getProject = (projectId) => {

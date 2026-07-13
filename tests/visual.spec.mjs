@@ -3,21 +3,22 @@ import { createPageQualityGate } from "./helpers/pageQuality.mjs";
 
 const webUrl = process.env.ALTFT_WEB_URL || "http://localhost:3002";
 const adminUrl = process.env.ALTFT_ADMIN_URL || "http://localhost:3001";
-const retryableNavigationError = /ERR_ABORTED|frame was detached|Timeout/i;
+const retryableNavigationError = /ERR_ABORTED|frame was detached|Timeout|interrupted by another navigation/i;
+const warmupRoutes = [`${webUrl}/tools`, `${webUrl}/tools/all/api-stress-estimator`];
 
 async function gotoWithRetry(page, url) {
   let lastError;
 
-  for (let attempt = 1; attempt <= 3; attempt += 1) {
+  for (let attempt = 1; attempt <= 4; attempt += 1) {
     try {
-      await page.goto(url, { waitUntil: "domcontentloaded", timeout: 45_000 });
+      await page.goto(url, { waitUntil: "domcontentloaded", timeout: 150_000 });
       return;
     } catch (error) {
       lastError = error;
-      if (!retryableNavigationError.test(error?.message || String(error)) || attempt === 3) {
+      if (!retryableNavigationError.test(error?.message || String(error)) || attempt === 4) {
         throw error;
       }
-      await page.waitForTimeout(1500 * attempt);
+      await page.waitForTimeout(2000 * attempt);
     }
   }
 
@@ -25,11 +26,11 @@ async function gotoWithRetry(page, url) {
 }
 
 async function waitForVisualStability(page) {
-  await page.waitForTimeout(600);
+  await page.waitForTimeout(1000);
   await page.evaluate(async () => {
     await Promise.race([
       document.fonts?.ready || Promise.resolve(),
-      new Promise((resolve) => setTimeout(resolve, 3000)),
+      new Promise((resolve) => setTimeout(resolve, 5000)),
     ]);
     document.activeElement?.blur?.();
     window.scrollTo(0, 0);
@@ -37,11 +38,27 @@ async function waitForVisualStability(page) {
 }
 
 test.describe("visual regression", () => {
-  test.describe.configure({ timeout: 120_000 });
+  // Increased suite-level timeout to allow for potential dev server compile delays
+  test.describe.configure({ timeout: 240_000 });
 
   test.use({
     colorScheme: "light",
     viewport: { width: 1440, height: 1000 },
+  });
+
+  // Pre-warm the compilation of Next.js pages sequentially outside the timed test blocks
+  test.beforeAll(async ({ browser }) => {
+    test.setTimeout(480_000);
+    const context = await browser.newContext();
+    const page = await context.newPage();
+    for (const route of warmupRoutes) {
+      try {
+        await gotoWithRetry(page, route);
+      } catch (e) {
+        console.warn(`Failed to pre-warm ${route}:`, e.message);
+      }
+    }
+    await context.close();
   });
 
   test.beforeEach(async ({ page }) => {
@@ -72,6 +89,10 @@ test.describe("visual regression", () => {
 
     await gotoWithRetry(page, `${webUrl}/tools/all/api-stress-estimator`);
     await expect(page.getByRole("heading", { name: "API Stress Estimator", exact: true })).toBeVisible();
+    // The mool itself is a client-only dynamic import; wait for its "Loading..."
+    // placeholder to resolve so the screenshot captures the loaded tool (the
+    // baseline state) rather than the transient loading shell.
+    await expect(page.getByText(/Loading API stress estimator/i)).toBeHidden({ timeout: 30_000 });
     await waitForVisualStability(page);
 
     await expect(page).toHaveScreenshot("web-tool-workspace.png");
