@@ -444,6 +444,9 @@ const layoutLoaders = {
   carrerbook: {
     blog: () => import("@/projects/carrerbook/modules/blog/layout.jsx"),
   },
+  coozter: {
+    blog: () => import("@/projects/coozter/modules/blog/layout.jsx"),
+  },
   marketys: {
     blogs: () => import("@/projects/marketys/modules/blogs/layout.jsx"),
   },
@@ -457,4 +460,3 @@ export function getAdminModulePageLoader(projectId, moduleKey, routeKey) {
 export function getAdminModuleLayoutLoader(projectId, moduleKey) {
   return layoutLoaders[projectId]?.[moduleKey] || null;
 }
-

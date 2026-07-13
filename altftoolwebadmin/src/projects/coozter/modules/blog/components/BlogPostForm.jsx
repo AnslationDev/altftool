@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { ArrowLeft, Image as ImageIcon, Loader2, Save, Upload } from "lucide-react";
 import { emitAlert } from "@/lib/alertBus";
+import CoozterBlogEditor from "./CoozterBlogEditor";
 import {
   EMPTY_BLOG_POST,
   createBlogPost,
@@ -24,6 +25,7 @@ export default function BlogPostForm({ mode = "create", post = null }) {
     ...EMPTY_BLOG_POST,
     ...post,
     body: Array.isArray(post?.body) ? post.body : [],
+    contentHtml: getInitialContentHtml(post),
     seo: { ...EMPTY_BLOG_POST.seo, ...(post?.seo || {}) },
   }));
   const [errors, setErrors] = useState({});
@@ -74,7 +76,7 @@ export default function BlogPostForm({ mode = "create", post = null }) {
     ["title", "slug", "category", "author", "excerpt", "imageUrl", "imageAlt", "readTime", "displayDate", "date"].forEach((field) => {
       if (!String(form[field] || "").trim()) nextErrors[field] = "Required";
     });
-    if (!form.body.length) nextErrors.body = "Required";
+    if (!stripHtml(form.contentHtml).trim()) nextErrors.contentHtml = "Required";
     if (!String(form.seo.metaTitle || "").trim()) nextErrors["seo.metaTitle"] = "Required";
     if (!String(form.seo.metaDescription || "").trim()) nextErrors["seo.metaDescription"] = "Required";
     if (!String(form.seo.canonicalUrl || "").trim()) nextErrors["seo.canonicalUrl"] = "Required";
@@ -87,10 +89,10 @@ export default function BlogPostForm({ mode = "create", post = null }) {
     setSaving(true);
     try {
       if (mode === "edit") {
-        await updateBlogPost(post.id, form);
+        await updateBlogPost(post.id, preparePostPayload(form));
         emitAlert({ type: "success", message: "Blog post updated." });
       } else {
-        await createBlogPost(form);
+        await createBlogPost(preparePostPayload(form));
         emitAlert({ type: "success", message: "Blog post created." });
       }
       router.push("/coozter/blog");
@@ -144,7 +146,9 @@ export default function BlogPostForm({ mode = "create", post = null }) {
               </div>
               <Field label="Excerpt" error={errors.excerpt}><textarea rows={3} value={form.excerpt} onChange={(event) => setField("excerpt", event.target.value)} className={textareaClass} /></Field>
               <Field label="Description"><textarea rows={3} value={form.description} onChange={(event) => setField("description", event.target.value)} className={textareaClass} /></Field>
-              <Field label="Body paragraphs" error={errors.body}><textarea rows={8} value={form.body.join("\n")} onChange={(event) => setField("body", event.target.value.split(/\r?\n/).map((item) => item.trim()).filter(Boolean))} className={textareaClass} /></Field>
+              <Field label="Blog content" error={errors.contentHtml}>
+                <CoozterBlogEditor value={form.contentHtml} onChange={(value) => setField("contentHtml", value)} error={errors.contentHtml} />
+              </Field>
               <Field label="Pull quote"><textarea rows={3} value={form.pullQuote} onChange={(event) => setField("pullQuote", event.target.value)} className={textareaClass} /></Field>
             </Panel>
 
@@ -188,6 +192,60 @@ export default function BlogPostForm({ mode = "create", post = null }) {
   );
 }
 
+function getInitialContentHtml(post) {
+  if (post?.contentHtml || post?.bodyHtml) return post.contentHtml || post.bodyHtml;
+  if (typeof post?.body === "string") return post.body;
+  if (Array.isArray(post?.body)) {
+    return post.body
+      .map((item) => String(item || "").trim())
+      .filter(Boolean)
+      .map((item) => (/<[a-z][\s\S]*>/i.test(item) ? item : `<p>${escapeHtml(item)}</p>`))
+      .join("");
+  }
+  return "";
+}
+
+function preparePostPayload(form) {
+  const body = htmlToParagraphs(form.contentHtml);
+  return {
+    ...form,
+    contentHtml: form.contentHtml,
+    body,
+  };
+}
+
+function htmlToParagraphs(html) {
+  return stripHtml(html)
+    .split(/\n{2,}/)
+    .map((item) => item.trim())
+    .filter(Boolean);
+}
+
+function stripHtml(html) {
+  return String(html || "")
+    .replace(/<br\s*\/?>/gi, "\n")
+    .replace(/<\/(?:p|div|h[1-6]|li|blockquote|tr)>/gi, "\n\n")
+    .replace(/<[^>]+>/g, " ")
+    .replace(/&nbsp;/gi, " ")
+    .replace(/&amp;/gi, "&")
+    .replace(/&lt;/gi, "<")
+    .replace(/&gt;/gi, ">")
+    .replace(/&quot;/gi, "\"")
+    .replace(/&#39;/g, "'")
+    .replace(/[ \t]+\n/g, "\n")
+    .replace(/\n{3,}/g, "\n\n")
+    .trim();
+}
+
+function escapeHtml(value) {
+  return String(value)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+
 function Panel({ title, children }) {
   return (
     <section className="rounded-lg border border-[var(--border)] bg-[var(--surface)] p-4 shadow-[var(--shadow-sm)]">
@@ -199,10 +257,10 @@ function Panel({ title, children }) {
 
 function Field({ label, error, children }) {
   return (
-    <label className="block">
+    <div className="block">
       <span className="mb-1.5 block text-xs font-bold uppercase tracking-[0.08em] text-[var(--muted)]">{label}</span>
       {children}
       {error ? <span className="mt-1 block text-xs font-semibold text-[var(--danger)]">{error}</span> : null}
-    </label>
+    </div>
   );
 }

@@ -206,6 +206,7 @@ export const ADMIN_MODULE_LAYOUT_KEYS = {
   leadtree: new Set(["blogs", "creditcard", "expertvideos", "ourteams"]),
   marketys: new Set(["blogs"]),
   carrerbook: new Set(["blog"]),
+  coozter: new Set(["blog"]),
 };
 
 export function resolveAdminModuleRouteKey(
@@ -223,4 +224,3 @@ export function resolveAdminModuleRouteKey(
 export function hasAdminModuleLayout(projectId, moduleKey) {
   return ADMIN_MODULE_LAYOUT_KEYS[projectId]?.has(moduleKey) || false;
 }
-
