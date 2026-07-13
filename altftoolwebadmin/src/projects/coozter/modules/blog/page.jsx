@@ -223,15 +223,15 @@ export default function CoozterBlogAdminPage() {
         <header className="rounded-lg border border-[var(--border)] bg-[var(--surface)] p-4 shadow-[var(--shadow-sm)]">
           <div className="flex flex-wrap items-start justify-between gap-4">
             <div>
-              <p className="text-xs font-bold uppercase tracking-[0.08em] text-[var(--primary)]">Coozter</p>
+         
               <h1 className="mt-1 text-2xl font-bold">Blog Management</h1>
-              <p className="mt-1 text-sm text-[var(--muted)]">Edit blog page copy and manage posts from `projects/coozter/blogs`.</p>
+            
             </div>
             <div className="flex flex-wrap gap-2">
-              <button type="button" onClick={handleSeed} className={secondaryButtonClass}><RefreshCw className="h-4 w-4" /> Seed Defaults</button>
+              {/* <button type="button" onClick={handleSeed} className={secondaryButtonClass}><RefreshCw className="h-4 w-4" /> Seed Defaults</button> */}
               <button type="button" onClick={handleSave} disabled={saving} className={buttonClass}>
                 {saving ? <Loader2 className="h-4 w-4 animate-spin" /> : <Save className="h-4 w-4" />}
-                Save Page Text
+                Save 
               </button>
               <Link href="/coozter/blog/add-article" className={buttonClass}><Plus className="h-4 w-4" /> Add Post</Link>
             </div>
@@ -244,8 +244,8 @@ export default function CoozterBlogAdminPage() {
           <StatCard label="Draft Posts" value={postStats.drafts} icon={<PencilLine className="h-6 w-6" />} tone="warning" />
         </section>
 
-        <section className="grid items-start gap-5 xl:grid-cols-[minmax(0,0.47fr)_minmax(0,0.53fr)]">
-          <div className="space-y-5">
+        <section className="grid items-start gap-5 ">
+          {/* <div className="space-y-5">
             {Object.entries(SECTION_FIELDS).map(([sectionKey, fields]) => (
               <Panel key={sectionKey} title={sectionKey}>
                 <div className="mb-3 flex items-center gap-2">
@@ -294,25 +294,10 @@ export default function CoozterBlogAdminPage() {
                 </div>
               ))}
 
-              {/*
-              <div className="rounded-lg border border-[var(--border)] p-4">
-                <h3 className="mb-3 text-sm font-bold text-[var(--foreground)]">contents</h3>
-                <div className="space-y-3">
-                  {(content.detailPage?.contents || []).map((row, index) => (
-                    <div key={index} className="grid gap-3 md:grid-cols-[1fr_1fr_110px_110px]">
-                      <input value={row.label || ""} onChange={(event) => updateContentRow(index, "label", event.target.value)} className={inputClass} />
-                      <input value={row.targetId || ""} onChange={(event) => updateContentRow(index, "targetId", event.target.value)} className={inputClass} />
-                      <input type="number" value={row.sortOrder ?? index + 1} onChange={(event) => updateContentRow(index, "sortOrder", event.target.value)} className={inputClass} />
-                      <button type="button" onClick={() => updateContentRow(index, "isActive", row.isActive === false)} className={secondaryButtonClass}>
-                        {row.isActive === false ? "Hidden" : "Active"}
-                      </button>
-                    </div>
-                  ))}
-                </div>
-              </div>
-              */}
+              
+       
             </Panel>
-          </div>
+          </div> */}
 
           <aside className="space-y-5 xl:sticky xl:top-6">
             <Panel title="Blog Posts">

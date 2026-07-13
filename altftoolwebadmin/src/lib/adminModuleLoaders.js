@@ -307,6 +307,9 @@ const routeLoaders = {
     },
   },
   coozter: {
+    navbar: {
+      "": () => import("@/projects/coozter/modules/navbar/page.jsx"),
+    },
     home: {
       "": () => import("@/projects/coozter/modules/home/page.jsx"),
       "hero-section": () => import("@/projects/coozter/modules/home/hero-section/page.jsx"),

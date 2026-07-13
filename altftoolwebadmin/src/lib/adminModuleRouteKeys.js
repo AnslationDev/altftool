@@ -128,6 +128,7 @@ export const ADMIN_MODULE_ROUTE_KEYS = {
   },
 
   coozter: {
+    navbar: [""],
     home: [
       "",
       "hero-section",
