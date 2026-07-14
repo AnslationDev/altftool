@@ -10,15 +10,38 @@ service cloud.firestore {
       return /databases/$(database)/documents/admins/$(request.auth.uid);
     }
 
-    function isActiveAdmin() {
+    function rbacAdminDoc() {
+      return /databases/$(database)/documents/super_admin_dashboard/main/admin_users/$(request.auth.uid);
+    }
+
+    function isLegacyActiveAdmin() {
       return signedIn() &&
         exists(adminDoc()) &&
         get(adminDoc()).data.isActive == true;
     }
 
+    function isRbacActiveAdmin() {
+      return signedIn() &&
+        exists(rbacAdminDoc()) &&
+        get(rbacAdminDoc()).data.status == "active";
+    }
+
+    function isActiveAdmin() {
+      return isLegacyActiveAdmin() || isRbacActiveAdmin();
+    }
+
     function isSuperAdmin() {
-      return isActiveAdmin() &&
-        get(adminDoc()).data.roleType == "superadmin";
+      return (
+        isLegacyActiveAdmin() &&
+        get(adminDoc()).data.roleType == "superadmin"
+      ) || (
+        isRbacActiveAdmin() &&
+        (
+          get(rbacAdminDoc()).data.isSuperAdmin == true ||
+          get(rbacAdminDoc()).data.roleId == "super_admin" ||
+          get(rbacAdminDoc()).data.roleType == "superadmin"
+        )
+      );
     }
 
     function hasOnly(keys) {
@@ -47,6 +70,67 @@ service cloud.firestore {
       allow create: if signedIn() &&
         request.resource.data.uid == request.auth.uid &&
         request.resource.data.status == "pending";
+    }
+
+    match /super_admin_dashboard/{dashboardId} {
+      allow read, write: if isSuperAdmin();
+
+      match /admin_users/{uid} {
+        allow read: if isSuperAdmin() || (signedIn() && request.auth.uid == uid);
+        allow create, delete: if isSuperAdmin();
+        allow update: if isSuperAdmin() ||
+          (signedIn() &&
+            request.auth.uid == uid &&
+            request.resource.data.diff(resource.data).affectedKeys().hasOnly(["bio", "designation", "firstName", "fullName", "lastName", "photoURL", "team", "updatedAt"]));
+
+        match /project_access/{projectId} {
+          allow read: if isSuperAdmin() || (signedIn() && request.auth.uid == uid);
+          allow write: if isSuperAdmin();
+
+          match /modules/{moduleId} {
+            allow read: if isSuperAdmin() || (signedIn() && request.auth.uid == uid);
+            allow write: if isSuperAdmin();
+          }
+        }
+
+        match /sessions/{sessionId} {
+          allow read: if isSuperAdmin() || (signedIn() && request.auth.uid == uid);
+          allow create, update: if signedIn() && request.auth.uid == uid;
+          allow delete: if isSuperAdmin();
+        }
+      }
+
+      match /admin_roles/{roleId} {
+        allow read: if isActiveAdmin();
+        allow write: if isSuperAdmin();
+      }
+
+      match /admin_audit_logs/{logId} {
+        allow read: if isSuperAdmin();
+        allow write: if false;
+      }
+
+      match /admin_sessions/{sessionId} {
+        allow read, write: if isSuperAdmin();
+      }
+
+      match /admin_security_events/{eventId} {
+        allow read: if isSuperAdmin();
+        allow create: if isActiveAdmin();
+        allow update, delete: if isSuperAdmin();
+      }
+
+      match /admin_access_requests/{requestId} {
+        allow read, update, delete: if isSuperAdmin();
+        allow create: if signedIn() &&
+          request.resource.data.uid == request.auth.uid &&
+          request.resource.data.status == "pending";
+      }
+
+      match /admin_settings/{settingId} {
+        allow read: if isActiveAdmin();
+        allow write: if isSuperAdmin();
+      }
     }
 
     match /projects/altftool/blogs/{blogId} {

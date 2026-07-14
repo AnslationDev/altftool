@@ -2,17 +2,15 @@
 
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import {
-  Check,
-  ChevronsUpDown,
   PanelLeftClose,
   PanelLeftOpen,
   Search,
   X,
 } from "lucide-react";
 import { hasModuleAccess } from "@/lib/permissionUtils";
-import { PROJECTS, getProject } from "@/projects";
+import { getProject } from "@/projects";
 import {
   getProjectModuleRoute,
   GLOBAL_ADMIN_MODULES,
@@ -73,17 +71,9 @@ function SidebarSectionLabel({ children }) {
 
 export default function AdminSidebar({ adminData, mobileOpen = false, onCloseMobile = () => {} }) {
   const pathname = usePathname();
-  const router = useRouter();
-  const [open, setOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const [moduleFilter, setModuleFilter] = useState("");
   const closeButtonRef = useRef(null);
-  const switcherRef = useRef(null);
-  const getDefaultModule = (project) => {
-    return Object.keys(project.modules)[0];
-  };
-
-  const projects = Object.values(PROJECTS);
   const [collapsed, setCollapsed] = useState(false);
   const compact = collapsed && !isMobile;
   const pathParts = pathname.split("/").filter(Boolean);
@@ -101,13 +91,12 @@ export default function AdminSidebar({ adminData, mobileOpen = false, onCloseMob
     currentModule = resolvedModule?.moduleKey || pathParts[1];
     project = maybeProject;
   } else {
-    const savedProjectId =
-      typeof window !== "undefined"
-        ? localStorage.getItem("last-project-id")
-        : null;
-    const savedProject = savedProjectId ? getProject(savedProjectId) : null;
-    project = savedProject || Object.values(PROJECTS)[0];
-    projectId = project.id;
+    project = {
+      id: "super-admin",
+      name: "Super Admin",
+      logo: null,
+      modules: {},
+    };
     currentModule = null;
   }
 
@@ -118,16 +107,6 @@ export default function AdminSidebar({ adminData, mobileOpen = false, onCloseMob
       localStorage.setItem("last-project-id", maybeProjectId);
     }
   }, [maybeProject, maybeProjectId]);
-
-  const handleProjectSwitch = (newProjectId) => {
-    const newProject = getProject(newProjectId);
-    if (!newProject) return;
-    let targetModule = currentModule;
-    if (!targetModule || !newProject.modules[targetModule]) {
-      targetModule = getDefaultModule(newProject);
-    }
-    router.push(getProjectModuleRoute(newProjectId, targetModule));
-  };
 
   useEffect(() => {
     const saved = localStorage.getItem("sidebar-collapsed");
@@ -150,26 +129,6 @@ export default function AdminSidebar({ adminData, mobileOpen = false, onCloseMob
   useEffect(() => {
     localStorage.setItem("sidebar-collapsed", String(collapsed));
   }, [collapsed]);
-
-  useEffect(() => {
-    if (!open) return undefined;
-
-    const closeOnOutside = (event) => {
-      if (switcherRef.current && !switcherRef.current.contains(event.target)) {
-        setOpen(false);
-      }
-    };
-    const closeOnEscape = (event) => {
-      if (event.key === "Escape") setOpen(false);
-    };
-
-    document.addEventListener("pointerdown", closeOnOutside);
-    document.addEventListener("keydown", closeOnEscape);
-    return () => {
-      document.removeEventListener("pointerdown", closeOnOutside);
-      document.removeEventListener("keydown", closeOnEscape);
-    };
-  }, [open]);
 
   if (!adminData) return null;
 
@@ -197,7 +156,8 @@ export default function AdminSidebar({ adminData, mobileOpen = false, onCloseMob
     const haystack = normalizeModuleQuery(`${key} ${moduleConfig?.label || ""} system`);
     return haystack.includes(normalizedModuleFilter);
   });
-  const hasVisibleModules = visibleTabs.length > 0 || visibleGlobalModules.length > 0;
+  const showProjectModules = Boolean(maybeProject);
+  const hasVisibleModules = (showProjectModules && visibleTabs.length > 0) || visibleGlobalModules.length > 0;
   const isSuperAdmin = adminData.roleType === "superadmin";
 
   return (
@@ -206,20 +166,17 @@ export default function AdminSidebar({ adminData, mobileOpen = false, onCloseMob
         mobileOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"
       } ${compact ? "lg:w-16" : "lg:w-60"}`}
     >
-      {/* Project switcher */}
+      {/* Fixed admin context. Project switching is only allowed from /super-admin project cards. */}
       <div
         className={`flex h-16 shrink-0 items-center border-b border-[var(--border)] ${
           compact ? "justify-center px-0" : "justify-between gap-1 px-3"
         }`}
       >
-        <div className="relative min-w-0 flex-1" ref={switcherRef}>
+        <div className="relative min-w-0 flex-1">
           {!compact ? (
-            <button
-              type="button"
-              onClick={() => setOpen((v) => !v)}
-              aria-haspopup="listbox"
-              aria-expanded={open}
-              className="flex w-full items-center justify-between gap-2 rounded-lg border border-transparent px-2 py-1.5 text-left transition hover:border-[var(--border)] hover:bg-[var(--surface-soft)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color-mix(in_srgb,var(--primary)_35%,transparent)]"
+            <div
+              className="flex w-full items-center gap-2 rounded-lg px-2 py-1.5 text-left"
+              aria-label={maybeProject ? `${project?.name} project context` : "Super admin console context"}
             >
               <span className="flex min-w-0 items-center gap-2.5">
                 <span className="grid h-8 w-8 shrink-0 place-items-center rounded-lg border border-[var(--border)] bg-[var(--surface)]">
@@ -233,69 +190,24 @@ export default function AdminSidebar({ adminData, mobileOpen = false, onCloseMob
                 </span>
                 <span className="min-w-0">
                   <span className="block truncate text-[13px] font-semibold leading-tight text-[var(--foreground)]">
-                    {project?.name || "Select Project"}
+                    {maybeProject ? project?.name : "Super Admin"}
                   </span>
                   <span className="block text-[10.5px] font-medium uppercase tracking-[0.06em] text-[var(--muted)]">
-                    Project
+                    {maybeProject ? "Project" : "Console"}
                   </span>
                 </span>
               </span>
-              <ChevronsUpDown className="h-3.5 w-3.5 shrink-0 text-[var(--muted)]" />
-            </button>
+            </div>
           ) : (
-            <button
-              type="button"
-              onClick={() => setOpen((v) => !v)}
-              aria-haspopup="listbox"
-              aria-expanded={open}
-              aria-label="Switch project"
-              className="mx-auto grid h-9 w-9 place-items-center rounded-lg border border-transparent transition hover:border-[var(--border)] hover:bg-[var(--surface-soft)]"
+            <div
+              aria-label={maybeProject ? `${project?.name} project context` : "Super admin console context"}
+              className="mx-auto grid h-9 w-9 place-items-center rounded-lg"
             >
               {project?.logo ? (
                 <ProjectLogo project={project} size={20} />
               ) : (
                 <span className="text-sm font-semibold">{project?.name?.[0]}</span>
               )}
-            </button>
-          )}
-
-          {open && (
-            <div
-              role="listbox"
-              aria-label="Projects"
-              className={`absolute top-[calc(100%+6px)] z-50 overflow-hidden rounded-lg border border-[var(--border)] bg-[var(--surface)] p-1 shadow-[var(--shadow-md)] ${
-                compact ? "left-0 w-52" : "left-0 w-full"
-              }`}
-            >
-              <p className="px-2.5 pb-1 pt-1.5 text-[10px] font-bold uppercase tracking-[0.08em] text-[var(--muted)]">
-                Switch project
-              </p>
-              {projects.map((proj) => {
-                const isActive = proj.id === projectId;
-                return (
-                  <button
-                    key={proj.id}
-                    type="button"
-                    role="option"
-                    aria-selected={isActive}
-                    onClick={() => {
-                      handleProjectSwitch(proj.id);
-                      setOpen(false);
-                    }}
-                    className={`flex w-full items-center justify-between gap-2 rounded-md px-2.5 py-2 text-left text-[13px] transition hover:bg-[var(--surface-soft)] ${
-                      isActive
-                        ? "font-semibold text-[var(--foreground)]"
-                        : "text-[var(--muted)] hover:text-[var(--foreground)]"
-                    }`}
-                  >
-                    <span className="flex min-w-0 items-center gap-2">
-                      <ProjectLogo project={proj} size={16} />
-                      <span className="truncate">{proj.name}</span>
-                    </span>
-                    {isActive && <Check className="h-3.5 w-3.5 shrink-0 text-[var(--primary)]" />}
-                  </button>
-                );
-              })}
             </div>
           )}
         </div>
@@ -368,7 +280,7 @@ export default function AdminSidebar({ adminData, mobileOpen = false, onCloseMob
           </div>
         ) : null}
 
-        {visibleTabs.length > 0 && (
+        {showProjectModules && visibleTabs.length > 0 && (
           <>
             {!compact && <SidebarSectionLabel>{project?.name || "Project"} modules</SidebarSectionLabel>}
             <nav className="space-y-0.5" aria-label={`${project?.name || "Project"} modules`}>

@@ -8,7 +8,7 @@ import { readApiJson } from "@/lib/apiClient";
 import { PROJECTS } from "@/projects";
 import {
   X, Mail, Lock, Eye, EyeOff, ShieldCheck, Shield,
-  AlertCircle, Loader2, CheckCircle2, Info,
+  AlertCircle, Loader2, Users, CheckCircle2, Info,
 } from "lucide-react";
 
 const PROJECT_LIST = Object.values(PROJECTS);
@@ -56,6 +56,8 @@ function Section({ title, children }) {
 export default function CreateAdminModal({ onClose, refresh }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [fullName, setFullName] = useState("");
+  const [team, setTeam] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [roleType, setRoleType] = useState("admin");
   const [projectAccess, setProjectAccess] = useState({});
@@ -85,9 +87,15 @@ export default function CreateAdminModal({ onClose, refresh }) {
     else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) e.email = "Enter a valid email address";
     if (!password) e.password = "Password is required";
     else if (password.length < 6) e.password = "Password must be at least 6 characters";
+     if (!fullName.trim()) {
+    e.fullName = "Full name is required";
+  }
+    
     setErrors(e);
     return Object.keys(e).length === 0;
   };
+
+  
 
   const createAdmin = async () => {
     if (!validate()) return;
@@ -104,6 +112,8 @@ export default function CreateAdminModal({ onClose, refresh }) {
         body: JSON.stringify({
           email,
           password,
+          fullName,
+          team,
           roleType,
           permissions: {},
           projectAccess: roleType === "superadmin" ? {} : projectAccess,
@@ -166,7 +176,43 @@ export default function CreateAdminModal({ onClose, refresh }) {
                 </button>
               </div>
             </Field>
+            <Field
+              label="Full Name"
+              icon={<Users className="w-3.5 h-3.5" />}
+              required
+              error={errors.fullName}
+              hint="Enter the full name of the admin."
+            >
+              <TextInput
+                type="text"
+                placeholder="Enter full name"
+                value={fullName}
+                onChange={(e) => {
+                  setFullName(e.target.value);
+                  setErrors((prev) => ({ ...prev, fullName: undefined }));
+                }}
+                error={errors.fullName}
+                disabled={loading}
+              />
+            </Field>
+
+            <Field
+              label="Team"
+              icon={<Users className="w-3.5 h-3.5" />}
+              hint="Optional team, department, or function for this administrator."
+            >
+              <TextInput
+                type="text"
+                placeholder="e.g. Operations"
+                value={team}
+                onChange={(e) => setTeam(e.target.value)}
+                disabled={loading}
+              />
+            </Field>
+
           </Section>
+
+       
 
           <Section title="Role & Access">
             <div className="grid grid-cols-2 gap-3">

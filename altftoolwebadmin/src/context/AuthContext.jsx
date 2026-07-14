@@ -318,7 +318,7 @@ export function AuthProvider({ children }) {
         loading,
         isPendingUser,
         isDenied,
-        isSuperAdmin: adminData?.roleType === "superadmin",
+        isSuperAdmin: adminData?.roleType === "superadmin" || adminData?.isSuperAdmin === true,
         localAdminLoginEnabled,
         signInLocalAdmin,
         logout,

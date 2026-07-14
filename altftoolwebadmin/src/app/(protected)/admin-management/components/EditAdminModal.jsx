@@ -7,7 +7,7 @@ import { emitAlert } from "@/lib/alertBus";
 import { readApiJson } from "@/lib/apiClient";
 import { PROJECTS } from "@/projects";
 import {
-  X, Lock, Eye, EyeOff, Shield, ShieldCheck,
+  X, Mail, Lock, Eye, EyeOff, Shield, ShieldCheck, Users,
   AlertTriangle, AlertCircle, Loader2, CheckCircle2, UserX, UserCheck,
 } from "lucide-react";
 
@@ -44,6 +44,9 @@ function Section({ title, children }) {
 }
 
 export default function EditAdminModal({ admin, onClose, refresh }) {
+  const [email, setEmail] = useState(admin.email || "");
+  const [fullName, setFullName] = useState(admin.fullName || "");
+  const [team, setTeam] = useState(admin.team || "");
   const [roleType, setRoleType] = useState(admin.roleType);
   const [projectAccess, setProjectAccess] = useState(admin.projectAccess || {});
   const [activeProjectId, setActiveProjectId] = useState(PROJECT_LIST[0]?.id ?? null);
@@ -131,6 +134,9 @@ export default function EditAdminModal({ admin, onClose, refresh }) {
         body: JSON.stringify({
           uid: admin.id,
           updates: {
+            email,
+            fullName,
+            team,
             roleType,
             isActive,
             permissions: {},
@@ -200,9 +206,41 @@ export default function EditAdminModal({ admin, onClose, refresh }) {
                 </span>
               </div>
             </div>
+            <Field label="Login Email" icon={<Mail className="w-3.5 h-3.5" />} hint="Used to sign in to the admin panel.">
+              <input
+                type="email"
+                value={email}
+                onChange={(event) => setEmail(event.target.value)}
+                disabled={loading}
+                autoComplete="email"
+                className="w-full text-sm px-3 py-2.5 rounded-xl border border-gray-200 bg-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-400/30 focus:border-blue-400 transition"
+              />
+            </Field>
+            <div className="grid gap-4 sm:grid-cols-2">
+              <Field label="Full Name" icon={<Users className="w-3.5 h-3.5" />} hint="Shown on the admin card.">
+                <input
+                  type="text"
+                  value={fullName}
+                  onChange={(event) => setFullName(event.target.value)}
+                  disabled={loading}
+                  autoComplete="name"
+                  className="w-full text-sm px-3 py-2.5 rounded-xl border border-gray-200 bg-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-400/30 focus:border-blue-400 transition"
+                />
+              </Field>
+              <Field label="Team" icon={<Users className="w-3.5 h-3.5" />} hint="Optional team or department.">
+                <input
+                  type="text"
+                  value={team}
+                  onChange={(event) => setTeam(event.target.value)}
+                  disabled={loading}
+                  placeholder="e.g. Operations"
+                  className="w-full text-sm px-3 py-2.5 rounded-xl border border-gray-200 bg-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-400/30 focus:border-blue-400 transition"
+                />
+              </Field>
+            </div>
           </Section>
 
-          <Section title="Change Password">
+          <Section title="Reset Password">
             {isSelf && (
               <div className="flex items-start gap-2 bg-amber-50 border border-amber-200 rounded-xl px-4 py-3">
                 <AlertTriangle className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
@@ -210,7 +248,7 @@ export default function EditAdminModal({ admin, onClose, refresh }) {
               </div>
             )}
             <Field label="New Password" icon={<Lock className="w-3.5 h-3.5" />}
-              hint="Leave blank to keep the current password." error={passwordError}>
+              hint="Passwords cannot be viewed. Enter a new password to reset it." error={passwordError}>
               <div className="relative">
                 <input type={showPassword ? "text" : "password"} name="edit-admin-new-password"
                   autoComplete="new-password" placeholder="Leave blank to keep current password"
