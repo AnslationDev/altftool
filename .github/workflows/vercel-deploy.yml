@@ -82,10 +82,7 @@ jobs:
         with:
           node-version-file: .nvmrc
           cache: npm
-          cache-dependency-path: |
-            package-lock.json
-            altftoolweb/package-lock.json
-            altftoolwebadmin/package-lock.json
+          cache-dependency-path: package-lock.json
 
       - name: Check Vercel web secrets
         env:
@@ -209,10 +206,7 @@ jobs:
         with:
           node-version-file: .nvmrc
           cache: npm
-          cache-dependency-path: |
-            package-lock.json
-            altftoolweb/package-lock.json
-            altftoolwebadmin/package-lock.json
+          cache-dependency-path: package-lock.json
 
       - name: Check Vercel admin secrets
         env:

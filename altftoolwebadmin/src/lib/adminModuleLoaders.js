@@ -62,7 +62,7 @@ const routeLoaders = {
     },
     pranksocialmedia: {
       "": () =>
-        import("@/projects/altftool/modules/prank-socialmedia/page.jsx"),
+        import("@/projects/altftool/modules/pranksocialmedia/page.jsx"),
     },
     pranx: {
       "": () => import("@/projects/altftool/modules/pranx/page.jsx"),
@@ -133,7 +133,73 @@ const routeLoaders = {
         import("@/projects/leadtree/modules/ourteams/view-team/page.jsx"),
     },
   },
-
+  smartlucky: {
+    home: {
+      "": () => import("@/projects/smartlucky/modules/home/page.jsx"),
+    },
+    about: {
+      "": () => import("@/projects/smartlucky/modules/about/page.jsx"),
+    },
+    services: {
+      "": () => import("@/projects/smartlucky/modules/services-page/page.jsx"),
+    },
+    solutions: {
+      "": () => import("@/projects/smartlucky/modules/solutions-page/page.jsx"),
+    },
+    resources: {
+      "": () => import("@/projects/smartlucky/modules/resources/page.jsx"),
+    },
+    contact: {
+      "": () => import("@/projects/smartlucky/modules/contact/page.jsx"),
+    },
+    blog: {
+      "": () => import("@/projects/smartlucky/modules/blog/page.jsx"),
+      "add-blogs": () =>
+        import("@/projects/smartlucky/modules/blog/add-blogs/page.jsx"),
+      "edit-blog/[id]": () =>
+        import("@/projects/smartlucky/modules/blog/edit-blog/[id]/page.jsx"),
+    },
+    platforms: {
+      "": () => import("@/projects/smartlucky/modules/platforms-page/page.jsx"),
+    },
+    "contact-submissions": {
+      "": () => import("@/projects/smartlucky/modules/contact-submissions/page.jsx"),
+    },
+  },
+  alphobia: {
+    home: {
+      "": () => import("@/projects/alphobia/modules/home/page.jsx"),
+    },
+    about: {
+      "": () => import("@/projects/alphobia/modules/about/page.jsx"),
+    },
+    services: {
+      "": () => import("@/projects/alphobia/modules/services/page.jsx"),
+    },
+    casestudies: {
+      "": () => import("@/projects/alphobia/modules/casestudies/page.jsx"),
+    },
+    insights: {
+      "": () => import("@/projects/alphobia/modules/insights/page.jsx"),
+    },
+    assets: {
+      "": () => import("@/projects/alphobia/modules/assets/page.jsx"),
+    },
+    contacts: {
+      "": () => import("@/projects/alphobia/modules/contacts/page.jsx"),
+    },
+  },
+  marketys: {
+    about: { "": () => import("@/projects/marketys/modules/about/page.jsx") },
+    home: { "": () => import("@/projects/marketys/modules/home/page.jsx") },
+    blogs: { "": () => import("@/projects/marketys/modules/blogs/page.jsx") },
+    reviews: { "": () => import("@/projects/marketys/modules/reviews/page.jsx") },
+    services: { "": () => import("@/projects/marketys/modules/services/page.jsx") },
+    bookings: { "": () => import("@/projects/marketys/modules/bookings/page.jsx") },
+    contact: { "": () => import("@/projects/marketys/modules/contact/page.jsx") },
+    team: { "": () => import("@/projects/marketys/modules/team/page.jsx") },
+    settings: { "": () => import("@/projects/marketys/modules/settings/page.jsx") },
+  },
   carrerbook: {
     navbar: {
       "": () => import("@/projects/carrerbook/modules/navbar/page.jsx"),
@@ -192,6 +258,90 @@ const routeLoaders = {
     },
     team: {
       "": () => import("@/projects/carrerbook/modules/team/page.jsx"),
+    },
+  },
+
+  apexboost: {
+    frontend: {
+      "": () => import("@/projects/apexboost/modules/frontend/page.jsx"),
+    },
+    hero: {
+      "": () => import("@/projects/apexboost/modules/hero/page.jsx"),
+    },
+    blogs: {
+      "": () => import("@/projects/apexboost/modules/blogs/page.jsx"),
+    },
+    services: {
+      "": () => import("@/projects/apexboost/modules/services/page.jsx"),
+    },
+    testimonials: {
+      "": () => import("@/projects/apexboost/modules/testimonials/page.jsx"),
+    },
+    portfolio: {
+      "": () => import("@/projects/apexboost/modules/portfolio/page.jsx"),
+    },
+    faq: {
+      "": () => import("@/projects/apexboost/modules/faq/page.jsx"),
+    },
+    features: {
+      "": () => import("@/projects/apexboost/modules/features/page.jsx"),
+    },
+    stats: {
+      "": () => import("@/projects/apexboost/modules/stats/page.jsx"),
+    },
+    process: {
+      "": () => import("@/projects/apexboost/modules/process/page.jsx"),
+    },
+    whyChooseUs: {
+      "": () => import("@/projects/apexboost/modules/whyChooseUs/page.jsx"),
+    },
+    cta: {
+      "": () => import("@/projects/apexboost/modules/cta/page.jsx"),
+    },
+    navLinks: {
+      "": () => import("@/projects/apexboost/modules/navLinks/page.jsx"),
+    },
+    contact: {
+      "": () => import("@/projects/apexboost/modules/contact/page.jsx"),
+
+    },
+  },
+  coozter: {
+    navbar: {
+      "": () => import("@/projects/coozter/modules/navbar/page.jsx"),
+    },
+    home: {
+      "": () => import("@/projects/coozter/modules/home/page.jsx"),
+      "hero-section": () => import("@/projects/coozter/modules/home/hero-section/page.jsx"),
+      "marketing-channels": () => import("@/projects/coozter/modules/home/marketing-channels/page.jsx"),
+      "process-section": () => import("@/projects/coozter/modules/home/process-section/page.jsx"),
+      "services-preview": () => import("@/projects/coozter/modules/home/services-preview/page.jsx"),
+      "trust-section": () => import("@/projects/coozter/modules/home/trust-section/page.jsx"),
+    },
+    about: {
+      "": () => import("@/projects/coozter/modules/about/page.jsx"),
+      "beliefs-section": () => import("@/projects/coozter/modules/about/beliefs-section/page.jsx"),
+      "hero-section": () => import("@/projects/coozter/modules/about/hero-section/page.jsx"),
+      "team-section": () => import("@/projects/coozter/modules/about/team-section/page.jsx"),
+      "why-choose-section": () => import("@/projects/coozter/modules/about/why-choose-section/page.jsx"),
+      "work-model-section": () => import("@/projects/coozter/modules/about/work-model-section/page.jsx"),
+    },
+    services: {
+      "": () => import("@/projects/coozter/modules/services/page.jsx"),
+      "faq-section": () => import("@/projects/coozter/modules/services/faq-section/page.jsx"),
+      "growth-engine-section": () => import("@/projects/coozter/modules/services/growth-engine-section/page.jsx"),
+      "hero-section": () => import("@/projects/coozter/modules/services/hero-section/page.jsx"),
+      "outcomes-section": () => import("@/projects/coozter/modules/services/outcomes-section/page.jsx"),
+      "process-section": () => import("@/projects/coozter/modules/services/process-section/page.jsx"),
+      "service-categories-section": () => import("@/projects/coozter/modules/services/service-categories-section/page.jsx"),
+    },
+    blog: {
+      "": () => import("@/projects/coozter/modules/blog/page.jsx"),
+      "add-article": () => import("@/projects/coozter/modules/blog/add-article/page.jsx"),
+      "edit-article/[id]": () => import("@/projects/coozter/modules/blog/edit-article/[id]/page.jsx"),
+    },
+    "contact-us": {
+      "": () => import("@/projects/coozter/modules/contact-us/page.jsx"),
     },
   },
 
@@ -297,6 +447,12 @@ const layoutLoaders = {
   carrerbook: {
     blog: () => import("@/projects/carrerbook/modules/blog/layout.jsx"),
   },
+  coozter: {
+    blog: () => import("@/projects/coozter/modules/blog/layout.jsx"),
+  },
+  marketys: {
+    blogs: () => import("@/projects/marketys/modules/blogs/layout.jsx"),
+  },
 };
 
 export function getAdminModulePageLoader(projectId, moduleKey, routeKey) {
@@ -307,4 +463,3 @@ export function getAdminModulePageLoader(projectId, moduleKey, routeKey) {
 export function getAdminModuleLayoutLoader(projectId, moduleKey) {
   return layoutLoaders[projectId]?.[moduleKey] || null;
 }
-

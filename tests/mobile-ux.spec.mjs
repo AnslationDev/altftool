@@ -117,9 +117,12 @@ test.describe("mobile layout", () => {
     await page.goto("/blogs", { waitUntil: "domcontentloaded" });
 
     await expect(page.locator('main[aria-labelledby="blog-index-title"]')).toBeVisible();
-    await expect(page.getByRole("textbox", { name: "Search blog articles" })).toBeVisible();
-    await expect(page.getByRole("combobox", { name: "Sort blogs" })).toBeVisible();
+    // The inline search textbox + sort dropdown were replaced by a
+    // "Search all" entry link and category quick links in the blog hero,
+    // so assert the current mobile controls instead.
+    await expect(page.getByRole("link", { name: /Search all/i }).first()).toBeVisible();
     await expect(page.getByRole("link", { name: /Explore guides/i })).toBeVisible();
+    await expect(page.getByRole("link", { name: /Topic clusters/i })).toBeVisible();
     await expectNoHorizontalOverflow(page, "mobile /blogs controls");
   });
 

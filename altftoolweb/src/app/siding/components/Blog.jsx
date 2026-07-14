@@ -23,7 +23,7 @@ export default function Blog() {
           </h2>
           <p className="mt-5 text-lg text-foreground/75">
             Practical siding advice, design inspiration, and industry know-how written by
-            EliteShield's senior craftsmen and design specialists.
+            EliteShield&#39;s senior craftsmen and design specialists.
           </p>
         </motion.div>
 

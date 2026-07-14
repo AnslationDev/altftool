@@ -53,7 +53,11 @@ async function getFcmToken(messaging, swRegistration) {
     }
     return token;
   } catch (err) {
-    console.warn("[push] getToken failed:", err.message);
+    // Non-fatal: FCM registration is commonly blocked by privacy browsers /
+    // ad-blockers / unsupported push services (surfaces as
+    // "Registration failed - push service error"). Push is optional and the
+    // admin works fully without it, so log at debug to avoid alarming noise.
+    console.debug("[push] getToken skipped (push unavailable):", err?.message);
     return null;
   }
 }

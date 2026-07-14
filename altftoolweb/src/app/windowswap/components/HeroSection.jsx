@@ -16,7 +16,7 @@ export default function HeroSection({ onStartPlaying, onOpenSubmit, onOpenSuppor
       {/* Local animated background mesh and texture overlay */}
       <div className="absolute inset-0 windowswap-hero-mesh z-0" />
       <img
-        src="/windowswap-assets/hero section background.gif"
+        src="/windowswap-assets/hero section background.webp"
         alt="Immersive ambient window loop"
         className="absolute inset-0 w-full h-full object-cover z-0 select-none pointer-events-none"
       />

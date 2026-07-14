@@ -283,7 +283,7 @@ export default function HomePage() {
             ))}
           </div>
           <div className="mt-6">
-            <AdSidebar ad={{ bannerUrl: "/banners/vertical.png", redirect: "#" }} />
+            <AdSidebar ad={{ bannerUrl: "/banners/vertical.jpg", redirect: "#" }} />
           </div>
         </aside>
       </section>

@@ -73,10 +73,7 @@ jobs:
         with:
           node-version-file: .nvmrc
           cache: npm
-          cache-dependency-path: |
-            package-lock.json
-            altftoolweb/package-lock.json
-            altftoolwebadmin/package-lock.json
+          cache-dependency-path: package-lock.json
 
       - name: Install dependencies
         run: npm ci
@@ -158,10 +155,7 @@ jobs:
         with:
           node-version-file: .nvmrc
           cache: npm
-          cache-dependency-path: |
-            package-lock.json
-            altftoolweb/package-lock.json
-            altftoolwebadmin/package-lock.json
+          cache-dependency-path: package-lock.json
 
       - name: Setup Java for Firebase Emulator
         uses: actions/setup-java@v4
@@ -171,9 +165,6 @@ jobs:
 
       - name: Install dependencies
         run: npm ci
-
-      - name: Install admin rules-test dependencies
-        run: npm --prefix altftoolwebadmin ci
 
       - name: Verify Firebase Admin write checker emulator branch
         run: npm run test:firebase-admin-write-check
@@ -200,10 +191,7 @@ jobs:
         with:
           node-version-file: .nvmrc
           cache: npm
-          cache-dependency-path: |
-            package-lock.json
-            altftoolweb/package-lock.json
-            altftoolwebadmin/package-lock.json
+          cache-dependency-path: package-lock.json
 
       - name: Install dependencies
         run: npm ci

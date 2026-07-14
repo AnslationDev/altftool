@@ -64,7 +64,53 @@ export const ADMIN_MODULE_ROUTE_KEYS = {
     ],
     ourteams: ["", "view-team"],
   },
-
+  smartlucky: {
+    home: [""],
+    about: [""],
+    services: [""],
+    solutions: [""],
+    resources: [""],
+    contact: [""],
+    blog: ["", "add-blogs", "edit-blog/[id]"],
+    platforms: [""],
+    "contact-submissions": [""],
+  },
+  alphobia: {
+    home: [""],
+    about: [""],
+    services: [""],
+    casestudies: [""],
+    insights: [""],
+    assets: [""],
+    contacts: [""],
+  },
+  apexboost: {
+    frontend: [""],
+    hero: [""],
+    blogs: [""],
+    services: [""],
+    testimonials: [""],
+    portfolio: [""],
+    faq: [""],
+    features: [""],
+    stats: [""],
+    process: [""],
+    whyChooseUs: [""],
+    cta: [""],
+    navLinks: [""],
+    contact: [""],
+  },
+  marketys: {
+    about: [""],
+    home: [""],
+    blogs: [""],
+    reviews: [""],
+    services: [""],
+    bookings: [""],
+    contact: [""],
+    team: [""],
+    settings: [""],
+  },
   carrerbook: {
     navbar: [""],
     footer: [""],
@@ -79,6 +125,37 @@ export const ADMIN_MODULE_ROUTE_KEYS = {
     client: ["", "advertiser", "publisher"],
     events: [""],
     team: [""],
+  },
+
+  coozter: {
+    navbar: [""],
+    home: [
+      "",
+      "hero-section",
+      "marketing-channels",
+      "process-section",
+      "services-preview",
+      "trust-section",
+    ],
+    about: [
+      "",
+      "beliefs-section",
+      "hero-section",
+      "team-section",
+      "why-choose-section",
+      "work-model-section",
+    ],
+    services: [
+      "",
+      "faq-section",
+      "growth-engine-section",
+      "hero-section",
+      "outcomes-section",
+      "process-section",
+      "service-categories-section",
+    ],
+    blog: ["", "add-article", "edit-article/[id]"],
+    "contact-us": [""],
   },
 
   growvibe: {
@@ -128,7 +205,9 @@ export const ADMIN_MODULE_ROUTE_KEYS = {
 export const ADMIN_MODULE_LAYOUT_KEYS = {
   altftool: new Set(["blogs"]),
   leadtree: new Set(["blogs", "creditcard", "expertvideos", "ourteams"]),
+  marketys: new Set(["blogs"]),
   carrerbook: new Set(["blog"]),
+  coozter: new Set(["blog"]),
 };
 
 export function resolveAdminModuleRouteKey(
@@ -146,4 +225,3 @@ export function resolveAdminModuleRouteKey(
 export function hasAdminModuleLayout(projectId, moduleKey) {
   return ADMIN_MODULE_LAYOUT_KEYS[projectId]?.has(moduleKey) || false;
 }
-

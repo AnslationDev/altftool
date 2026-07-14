@@ -1,6 +1,8 @@
 import fs from "fs";
 import path from "path";
+import { createRequire } from "module";
 
+const require = createRequire(import.meta.url);
 const TOOLS_DIR = "src/tools";
 const OUTPUT = "src/platform/registry/toolMetaMap.js";
 const ICON_ALIASES = {
@@ -42,8 +44,28 @@ for (const dir of toolDirs) {
 
   if (!fs.existsSync(configPath)) continue;
 
-  const configModule = await import(path.resolve(configPath));
-  const config = configModule.default ?? configModule.toolConfig ?? {};
+  let config = {};
+  try {
+    const configModule = await import(path.resolve(configPath));
+    config = configModule.default ?? configModule.toolConfig ?? {};
+  } catch {
+    // Fallback for CommonJS-style configs (module.exports) under "type": "module".
+    try {
+      const code = fs.readFileSync(configPath, "utf8");
+      const moduleShim = { exports: {} };
+      // eslint-disable-next-line no-new-func
+      new Function("module", "exports", "require", "console", code)(
+        moduleShim,
+        moduleShim.exports,
+        require,
+        console,
+      );
+      config = moduleShim.exports ?? {};
+    } catch (fallbackError) {
+      console.warn(`⚠️ Skipping "${dir}" (config could not be loaded): ${fallbackError.message}`);
+      continue;
+    }
+  }
   const slug = dir.toLowerCase();
 
   toolMeta[slug] = {

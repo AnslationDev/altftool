@@ -303,6 +303,19 @@ service cloud.firestore {
       allow read, update, delete: if isActiveAdmin();
     }
 
+    // Coozter contact-form leads — anonymous create with strict field
+    // validation; reading/managing is admin-only.
+    match /projects/coozter/leads/{leadId} {
+      allow create: if request.resource.data.keys().hasOnly(
+          ["budget", "company", "createdAt", "email", "message", "name", "phone", "service", "status", "website"]
+        ) &&
+        request.resource.data.status == "new" &&
+        nonEmptyText(request.resource.data.name, 120) &&
+        nonEmptyText(request.resource.data.email, 254) &&
+        nonEmptyText(request.resource.data.message, 3000);
+      allow read, update, delete: if isActiveAdmin();
+    }
+
     match /projects/carrerbook/homesection/{sectionId} {
       allow read: if true;
       allow write: if isActiveAdmin();
