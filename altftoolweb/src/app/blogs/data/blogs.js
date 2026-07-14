@@ -527,7 +527,7 @@ export function getBlogPopularityScore(post = {}) {
 }
 
 export function getTrendingBlogs(posts = blogPosts, limit = 6) {
-  return [...posts]
+  const ranked = [...posts]
     .map((post, index) => ({
       post,
       index,
@@ -540,8 +540,17 @@ export function getTrendingBlogs(posts = blogPosts, limit = 6) {
       if (dateB !== dateA) return dateB - dateA;
       return a.index - b.index;
     })
-    .slice(0, limit)
     .map(({ post }) => post);
+
+  // Always surface the most recently published blog in Trending — a brand-new
+  // post has no views/likes/comments yet, so it would otherwise never rank.
+  // Pin the latest post first, then fill the remaining slots by popularity
+  // score (deduped by slug so it never appears twice).
+  const latest = sortBlogsByDate(posts)[0];
+  if (!latest) return ranked.slice(0, limit);
+
+  const rest = ranked.filter((post) => post.slug !== latest.slug);
+  return [latest, ...rest].slice(0, limit);
 }
 
 function tokenizeBlogText(value = "") {
