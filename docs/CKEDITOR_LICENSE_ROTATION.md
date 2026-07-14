@@ -74,7 +74,8 @@ If the rich editor still doesn't load after the swap: the new key wasn't picked 
 | Key (jti) | Expired | Note |
 |---|---|---|
 | `811fce63-…` | 2026-05-06 | first trial key |
-| `82d9d48b-…` | 2026-07-20 | current key (as of 2026-07-07) |
+| `82d9d48b-…` | 2026-07-20 | rotated out 2026-07-14 |
+| `acbac65e-…` | 2026-07-28 | current key (as of 2026-07-14) |
 
 Add a row every time you rotate.
 
