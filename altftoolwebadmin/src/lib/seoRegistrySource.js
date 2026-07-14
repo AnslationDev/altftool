@@ -9,9 +9,16 @@
 import { buildPageIndexEntry } from "@altftool/core/seo";
 import { TOOL_SLUGS } from "@/config/placements";
 import { adminDb } from "@/lib/firebaseAdmin";
+import { DEFAULT_SEO_PROJECT, resolveSeoProjectId } from "@/lib/seoProject";
 
 const TTL_MS = Number(process.env.ALTFT_REGISTRY_TTL_MS || 120_000);
-let cache = { at: 0, entries: [] };
+// Per-project cache so switching projects never serves another project's pages.
+const caches = new Map();
+
+function getCache(projectId) {
+  if (!caches.has(projectId)) caches.set(projectId, { at: 0, entries: [] });
+  return caches.get(projectId);
+}
 
 function inventoryUrl() {
   return (
@@ -55,7 +62,8 @@ async function fetchWebInventory() {
 }
 
 // Build a registry from data the admin can read directly. No cross-app call.
-async function buildLocalRegistry() {
+async function buildLocalRegistry(projectId = DEFAULT_SEO_PROJECT) {
+  const isAltftool = projectId === DEFAULT_SEO_PROJECT;
   const entries = [];
   const seen = new Set();
   const push = (input) => {
@@ -68,7 +76,7 @@ async function buildLocalRegistry() {
   // Existing per-page overrides (so any custom path is manageable).
   let overrideKeys = new Set();
   try {
-    const snap = await adminDb.doc("projects/altftool/seo/runtime").get();
+    const snap = await adminDb.doc(`projects/${projectId}/seo/runtime`).get();
     const pages = snap.exists ? snap.data()?.pages : null;
     if (pages && typeof pages === "object") {
       for (const [path, entry] of Object.entries(pages)) {
@@ -89,26 +97,30 @@ async function buildLocalRegistry() {
     /* ignore — overrides are optional */
   }
 
-  // Static hubs.
-  for (const [path, title] of [
-    ["/", "AltFTool — Home"],
-    ["/tools", "All Tools"],
-    ["/blogs", "Blog"],
-    ["/news", "News"],
-    ["/extensions", "Extensions"],
-  ]) {
-    push({ path, title, pageType: "static", source: "static", hasOverride: overrideKeys.has(path) });
-  }
+  // Static hubs + the shared tool catalogue are altftool.com's site map; only
+  // seed them for the altftool project. Other projects derive their registry
+  // from their own overrides + blogs until a per-project inventory URL is set.
+  if (isAltftool) {
+    for (const [path, title] of [
+      ["/", "AltFTool — Home"],
+      ["/tools", "All Tools"],
+      ["/blogs", "Blog"],
+      ["/news", "News"],
+      ["/extensions", "Extensions"],
+    ]) {
+      push({ path, title, pageType: "static", source: "static", hasOverride: overrideKeys.has(path) });
+    }
 
-  // Tools (from the static slug list shared with the Ads module).
-  for (const slug of TOOL_SLUGS) {
-    const path = `/tools/all/${slug}`;
-    push({ path, title: titleFromSlug(slug), pageType: "tools", source: "tool", hasOverride: overrideKeys.has(path) });
+    // Tools (from the static slug list shared with the Ads module).
+    for (const slug of TOOL_SLUGS) {
+      const path = `/tools/all/${slug}`;
+      push({ path, title: titleFromSlug(slug), pageType: "tools", source: "tool", hasOverride: overrideKeys.has(path) });
+    }
   }
 
   // Blogs (Firestore — admin has direct access).
   try {
-    const blogSnap = await adminDb.collection("projects").doc("altftool").collection("blogs").get();
+    const blogSnap = await adminDb.collection("projects").doc(projectId).collection("blogs").get();
     blogSnap.forEach((d) => {
       const b = d.data() || {};
       const slug = b.slug || d.id;
@@ -131,16 +143,22 @@ async function buildLocalRegistry() {
 }
 
 /**
- * @param {{ force?: boolean }} [opts]
+ * @param {{ force?: boolean, projectId?: string }} [opts]
  * @returns {Promise<object[]>} normalized PageIndexEntry records
  */
-export async function getRegistryEntries({ force = false } = {}) {
+export async function getRegistryEntries({ force = false, projectId } = {}) {
+  const id = resolveSeoProjectId(projectId);
+  const cache = getCache(id);
   if (!force && cache.at + TTL_MS > Date.now() && cache.entries.length) return cache.entries;
 
-  // Prefer the richer cross-app inventory; fall back to a locally-built registry.
-  let entries = await fetchWebInventory();
-  if (!entries.length) entries = await buildLocalRegistry();
+  // The cross-app inventory endpoint is altftool.com's; only use it for the
+  // altftool project. Every project falls back to a locally-built registry.
+  let entries = id === DEFAULT_SEO_PROJECT ? await fetchWebInventory() : [];
+  if (!entries.length) entries = await buildLocalRegistry(id);
 
-  if (entries.length) cache = { at: Date.now(), entries };
+  if (entries.length) {
+    cache.at = Date.now();
+    cache.entries = entries;
+  }
   return entries.length ? entries : cache.entries;
 }

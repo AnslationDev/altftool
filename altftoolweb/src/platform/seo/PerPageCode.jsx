@@ -36,7 +36,10 @@ export default function PerPageCode({ active = false }) {
     const injected = [];
 
     const place = (html, target, prepend) => {
-      if (!html) return;
+      // Only inject real HTML/script markup. Bare text (e.g. a verification
+      // token mis-pasted into the custom-code field) is never valid here and
+      // would show as stray visible text, so treat it as inert.
+      if (!html || typeof html !== "string" || !/<[^>]+>/.test(html)) return;
       for (const node of buildNodes(html)) {
         if (node.setAttribute) node.setAttribute("data-altft-page-code", "1");
         if (prepend && target.firstChild) target.insertBefore(node, target.firstChild);

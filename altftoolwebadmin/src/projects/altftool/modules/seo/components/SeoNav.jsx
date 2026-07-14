@@ -1,22 +1,38 @@
 "use client";
 
 // ALTF Engine — shared tab navigation for the Meta SEO Management module.
+// The module is mounted per-project at /<project>/seo/..., so every tab is
+// built relative to the active project (read from the route params).
 
+import { useParams } from "next/navigation";
 import { Layers, Search, Globe2, FileEdit, ListChecks, Wrench, FileText, Globe, Bot } from "lucide-react";
 
-const TABS = [
-  { key: "dashboard", label: "Dashboard", href: "/altftool/seo/dashboard", icon: Layers },
-  { key: "search", label: "Search", href: "/altftool/seo/search", icon: Search },
-  { key: "global", label: "Global", href: "/altftool/seo/global", icon: Globe2 },
-  { key: "pages", label: "Pages", href: "/altftool/seo/pages", icon: FileEdit },
-  { key: "bulk", label: "Bulk", href: "/altftool/seo/bulk", icon: ListChecks },
-  { key: "technical", label: "Technical", href: "/altftool/seo/technical", icon: Wrench },
-  { key: "config", label: "Config (JSON)", href: "/altftool/seo", icon: FileText },
-  { key: "gsc", label: "Search Console", href: "/altftool/seo/gsc", icon: Globe },
-  { key: "automation", label: "Automation", href: "/altftool/blogs/automation", icon: Bot },
-];
+function buildTabs(project) {
+  const base = `/${project}/seo`;
+  const tabs = [
+    { key: "dashboard", label: "Dashboard", href: `${base}/dashboard`, icon: Layers },
+    { key: "search", label: "Search", href: `${base}/search`, icon: Search },
+    { key: "global", label: "Global", href: `${base}/global`, icon: Globe2 },
+    { key: "pages", label: "Pages", href: `${base}/pages`, icon: FileEdit },
+    { key: "bulk", label: "Bulk", href: `${base}/bulk`, icon: ListChecks },
+    { key: "technical", label: "Technical", href: `${base}/technical`, icon: Wrench },
+    { key: "config", label: "Config (JSON)", href: base, icon: FileText },
+  ];
+  // Search Console (single altftool-global Google connection) and Automation
+  // (altftool blogs) are altftool-only until per-project wiring exists.
+  if (project === "altftool") {
+    tabs.push({ key: "gsc", label: "Search Console", href: `${base}/gsc`, icon: Globe });
+    tabs.push({ key: "automation", label: "Automation", href: `/${project}/blogs/automation`, icon: Bot });
+  }
+  return tabs;
+}
 
 export default function SeoNav({ active }) {
+  const params = useParams();
+  const project =
+    (typeof params?.project === "string" && params.project) || "altftool";
+  const TABS = buildTabs(project);
+
   return (
     <nav
       aria-label="SEO sections"

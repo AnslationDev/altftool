@@ -2,16 +2,10 @@
 // ALTF Engine global search over the page registry.
 
 import { NextResponse } from "next/server";
-import { verifyActiveAdmin } from "@/lib/serverAdminAuth";
+import { authorizeSeoRequest, seoAccessErrorResponse } from "@/lib/seoAuth";
 import { enforceRateLimit } from "@altftool/core/http";
 import { searchPages } from "@altftool/core/seo";
 import { getRegistryEntries } from "@/lib/seoRegistrySource";
-
-function authErrorResponse(error) {
-  const message = String(error?.message || "Unauthorized");
-  const status = /forbidden|inactive/i.test(message) ? 403 : 401;
-  return NextResponse.json({ error: status === 403 ? "Forbidden" : "Unauthorized" }, { status });
-}
 
 export async function GET(request) {
   const limited = enforceRateLimit(NextResponse, request, {
@@ -21,10 +15,11 @@ export async function GET(request) {
   });
   if (limited) return limited;
 
+  let projectId;
   try {
-    await verifyActiveAdmin(request);
+    ({ projectId } = await authorizeSeoRequest(request, "read"));
   } catch (error) {
-    return authErrorResponse(error);
+    return seoAccessErrorResponse(error);
   }
 
   const { searchParams } = request.nextUrl;
@@ -33,7 +28,7 @@ export async function GET(request) {
   const force = searchParams.get("refresh") === "1";
 
   try {
-    const entries = await getRegistryEntries({ force });
+    const entries = await getRegistryEntries({ force, projectId });
     const results = searchPages(entries, q, { type, limit: 50 });
     return NextResponse.json({ total: entries.length, count: results.length, results });
   } catch (error) {
