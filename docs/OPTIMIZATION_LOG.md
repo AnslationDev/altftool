@@ -44,16 +44,36 @@ export), `dotenv` (scripts), `lighthouse` (CI perf gate), `@emotion/*`
 
 ---
 
+## Phase 2 — Build/config optimization (Track A) ✅
+**Change:** `altftoolwebadmin/next.config.mjs`
+- `compiler.removeConsole` (production only, `exclude: ["error","warn"]`) — strips
+  the ~319 debug `console.*` from production bundles at compile time. Dev keeps
+  every log; `error`/`warn` preserved. This is the safe, complete replacement for
+  hand-editing 319 call sites (no source churn, no risk of deleting a real
+  error-log).
+- `experimental.optimizePackageImports: ["lucide-react", "@tanstack/react-table",
+  "recharts", "react-select"]` — barrel tree-shaking so only used icons/exports
+  are bundled (lucide-react is imported in 386 files). Transform-only.
+
+**Behavior impact:** none (dev identical; prod drops debug logs only).
+**Verification:** `NODE_ENV=production next build --webpack` passes, no config
+warnings.
+
+---
+
 ## Backlog (next phases)
-- **P2 (A):** Verified dead-file/dead-export removal across `src`.
-- **P3 (A):** Production console hygiene — remove debug `console.log/info/debug`,
-  keep `console.error/warn`.
-- **P4 (A):** De-duplicate copy-pasted per-project utilities into shared helpers.
+- **P3 (A):** Verified dead-file / dead-export removal across `src`.
+- **P4 (A):** De-duplicate copy-pasted per-project utilities/services into shared
+  helpers (verified by build).
 - **P5 (B):** Bundle: dynamic-import heavy client libs (recharts, react-select)
-  off the initial chunk where safe.
+  off the initial chunk where safe (needs runtime QA).
 - **P6 (B):** Narrow client/server boundaries on the heaviest routes; reduce the
-  505 `"use client"` surface where components are actually server-safe.
+  505 `"use client"` surface where components are server-safe (needs hydration QA).
 - **P7 (B):** Decompose god-components (1,200–1,900-LOC `page.jsx`) and memoize
-  proven-hot subtrees.
-- **P8 (B):** Data-fetching/caching (replace `useEffect` fetch waterfalls;
-  scope Firebase queries).
+  proven-hot subtrees (needs Profiler).
+- **P8 (B):** Data-fetching/caching — replace `useEffect` fetch waterfalls; scope
+  Firebase queries (needs runtime QA).
+
+> Track B items are prepared with rationale and validated at build level, but
+> require running/profiling the authenticated app before merge — the user
+> performs that local QA per their workflow.
