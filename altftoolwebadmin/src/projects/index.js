@@ -10,7 +10,8 @@ import coozter from "./coozter/config";
 import growvibe from "./growvibe/config";
 import apexboost from "./apexboost/config";
 
-export const PROJECTS = {
+
+export const PROJECTS = { 
   altftool,
   leadtree,
   smartlucky,

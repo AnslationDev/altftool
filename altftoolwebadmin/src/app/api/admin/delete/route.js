@@ -1,8 +1,10 @@
-import { adminAuth, adminDb } from "@/lib/firebaseAdmin";
+import { adminAuth } from "@/lib/firebaseAdmin";
 import { writeAdminAuditLog } from "@/lib/adminAuditLog";
 import { NextResponse } from "next/server";
 import { enforceRateLimit } from "@altftool/core/http";
 import { verifySuperAdminRequest } from "@/lib/adminAccess";
+import { RBAC_COLLECTIONS } from "@/lib/rbacPaths";
+import { getRbacRootRef } from "@/lib/serverRbac";
 
 export async function POST(req) {
   try {
@@ -25,7 +27,7 @@ export async function POST(req) {
     }
 
     // 1️⃣ Fetch target admin data first for the audit log
-    const targetDoc = await adminDb.collection("admins").doc(uid).get();
+    const targetDoc = await getRbacRootRef().collection(RBAC_COLLECTIONS.adminUsers).doc(uid).get();
     const targetData = targetDoc.exists ? targetDoc.data() : null;
 
     // 2️⃣ Delete from Firebase Authentication
@@ -40,7 +42,7 @@ export async function POST(req) {
     }
 
     // 3️⃣ Delete from Firestore
-    await adminDb.collection("admins").doc(uid).delete();
+    await getRbacRootRef().collection(RBAC_COLLECTIONS.adminUsers).doc(uid).delete();
 
     // 4️⃣ Log the audit event
     await writeAdminAuditLog({

@@ -1,15 +1,21 @@
 import { NextResponse } from "next/server";
 import { adminAuth, adminDb } from "@/lib/firebaseAdmin";
+import {
+  buildRbacAdminProfile,
+  getLatestRbacAccessRequest,
+  getRbacAdminDoc,
+} from "@/lib/serverRbac";
 
 /**
  * GET /api/admin/me
  *
- * Status codes:
- *   200 → valid active admin
- *   401 → no / invalid token
- *   403 → inactive admin  (body: { error: "Inactive admin" })
- *         rejected request (body: { error: "Access denied" })  ← must stay this exact string
- *   404 → valid token, no admin doc, pending request           ← DO NOT sign out on this
+ * Resolves admin identity in this order:
+ * 1. New enterprise RBAC path:
+ *    super_admin_dashboard/main/admin_users/{uid}
+ * 2. Legacy admins collection:
+ *    admins/{uid}
+ *
+ * This lets us migrate safely without breaking existing admin accounts.
  */
 export async function GET(request) {
   try {
@@ -22,10 +28,17 @@ export async function GET(request) {
     const token = authHeader.split("Bearer ")[1];
     const decoded = await adminAuth.verifyIdToken(token);
 
-    /* ── Look up by UID first ── */
+    const rbacAdmin = await getRbacAdminDoc(decoded);
+    if (rbacAdmin) {
+      const profile = await buildRbacAdminProfile(decoded, rbacAdmin);
+      if (!profile.isActive) {
+        return NextResponse.json({ error: "Inactive admin" }, { status: 403 });
+      }
+      return NextResponse.json(profile);
+    }
+
     let snap = await adminDb.collection("admins").doc(decoded.uid).get();
 
-    /* ── Fallback: look up by email (Google ↔ password UID mismatch) ── */
     if (!snap.exists && decoded.email) {
       const byEmail = await adminDb
         .collection("admins")
@@ -38,8 +51,15 @@ export async function GET(request) {
       }
     }
 
-    /* ── No admin doc found → inspect access request ── */
     if (!snap.exists) {
+      const latestRbacRequest = await getLatestRbacAccessRequest(decoded);
+      if (latestRbacRequest?.status === "rejected") {
+        return NextResponse.json({ error: "Access denied" }, { status: 403 });
+      }
+      if (latestRbacRequest?.status === "pending") {
+        return NextResponse.json({ error: "Pending approval" }, { status: 404 });
+      }
+
       const reqSnap = await adminDb
         .collection("accessRequests")
         .where("uid", "==", decoded.uid)
@@ -51,7 +71,6 @@ export async function GET(request) {
         const latest = reqSnap.docs[0].data();
 
         if (latest.status === "rejected") {
-          // Must return exactly "Access denied" — AuthContext keys on this string
           return NextResponse.json({ error: "Access denied" }, { status: 403 });
         }
 
@@ -60,7 +79,6 @@ export async function GET(request) {
         }
       }
 
-      // No request at all → treat as pending (just logged in via Google for first time)
       return NextResponse.json({ error: "Admin not found" }, { status: 404 });
     }
 
@@ -71,11 +89,16 @@ export async function GET(request) {
     }
 
     return NextResponse.json({
+      uid: snap.id,
       email: data.email,
       roleType: data.roleType ?? "admin",
+      roleId: data.roleType === "superadmin" ? "super_admin" : "admin",
+      status: data.isActive === false ? "suspended" : "active",
+      isActive: data.isActive !== false,
+      isSuperAdmin: data.roleType === "superadmin",
+      rbacVersion: 1,
       permissions: data.permissions ?? {},
       projectAccess: data.projectAccess ?? {},
-      // Profile fields — included if present, omitted if not set yet
       ...(data.firstName !== undefined && { firstName: data.firstName }),
       ...(data.lastName !== undefined && { lastName: data.lastName }),
       ...(data.fullName !== undefined && { fullName: data.fullName }),

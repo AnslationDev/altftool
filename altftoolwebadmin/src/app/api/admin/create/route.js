@@ -1,10 +1,11 @@
-import { syncAdminClaims } from "@/lib/syncAdminClaims";
 import { writeAdminAuditLog } from "@/lib/adminAuditLog";
 import { NextResponse } from "next/server";
 import { adminAuth, adminDb } from "@/lib/firebaseAdmin";
 import { FieldValue } from "firebase-admin/firestore";
 import { verifySuperAdminRequest } from "@/lib/adminAccess";
 import { enforceRateLimit } from "@altftool/core/http";
+import { RBAC_COLLECTIONS } from "@/lib/rbacPaths";
+import { getRbacRootRef, writeRbacAuditLog } from "@/lib/serverRbac";
 
 const VALID_ROLE_TYPES = new Set(["admin", "superadmin"]);
 
@@ -30,11 +31,22 @@ export async function POST(req) {
   } catch {
     return NextResponse.json({ error: "Invalid request body" }, { status: 400 });
   }
+const {
+  email,
+  password,
+  fullName,
+  team,
+  roleType,
+  permissions,
+  projectAccess,
+} = body;
 
-  const { email, password, roleType, permissions, projectAccess } = body;
-
-  const normalizedEmail = String(email || "").trim().toLowerCase();
-  const normalizedRoleType = VALID_ROLE_TYPES.has(roleType) ? roleType : "admin";
+const normalizedEmail = String(email || "").trim().toLowerCase();
+const normalizedFullName = String(fullName || "").trim();
+const normalizedTeam = String(team || "").trim();
+const normalizedRoleType = VALID_ROLE_TYPES.has(roleType)
+  ? roleType
+  : "admin";
 
   if (!normalizedEmail) {
     return NextResponse.json({ error: "Email is required" }, { status: 400 });
@@ -43,6 +55,12 @@ export async function POST(req) {
   if (!normalizedEmail.includes("@")) {
     return NextResponse.json({ error: "A valid email is required" }, { status: 400 });
   }
+  if (!normalizedFullName) {
+  return NextResponse.json(
+    { error: "Full name is required" },
+    { status: 400 }
+  );
+}
 
   try {
     let uid;
@@ -57,6 +75,18 @@ export async function POST(req) {
       const existingAuthUser = await adminAuth.getUserByEmail(normalizedEmail);
       uid = existingAuthUser.uid;
       authUserExisted = true;
+      if (password) {
+        if (password.length < 6) {
+          return NextResponse.json(
+            { error: "Password must be at least 6 characters" },
+            { status: 400 }
+          );
+        }
+        await adminAuth.updateUser(uid, {
+  password,
+  displayName: normalizedFullName,
+});
+      }
     } catch (lookupErr) {
       if (lookupErr.code === "auth/user-not-found") {
         // No Firebase Auth user → must be a new password-based admin
@@ -66,7 +96,11 @@ export async function POST(req) {
             { status: 400 }
           );
         }
-        const newUser = await adminAuth.createUser({ email: normalizedEmail, password });
+        const newUser = await adminAuth.createUser({
+           email: normalizedEmail,
+            password,
+            displayName: normalizedFullName });
+
         uid = newUser.uid;
         authUserExisted = false;
       } else {
@@ -84,7 +118,10 @@ export async function POST(req) {
        don't silently overwrite it — return a clear error.
     ───────────────────────────────────────────────────────────── */
     if (authUserExisted) {
-      const existingDoc = await adminDb.collection("admins").doc(uid).get();
+      const existingDoc = await getRbacRootRef()
+        .collection(RBAC_COLLECTIONS.adminUsers)
+        .doc(uid)
+        .get();
       if (existingDoc.exists) {
         return NextResponse.json(
           { error: `An admin account already exists for ${normalizedEmail}. Use Edit Admin to update it.` },
@@ -96,20 +133,71 @@ export async function POST(req) {
     /* ─────────────────────────────────────────────────────────────
        Write Firestore admin doc (source of truth)
     ───────────────────────────────────────────────────────────── */
-    await adminDb.collection("admins").doc(uid).set({
-      email: normalizedEmail,
-      isActive: true,
-      roleType: normalizedRoleType,
-      permissions: normalizedRoleType === "superadmin" ? {} : (permissions || {}),
-      projectAccess: normalizedRoleType === "superadmin" ? {} : (projectAccess || {}),
-      createdAt: FieldValue.serverTimestamp(),
-    });
+    const root = getRbacRootRef();
+    const rbacUserRef = root.collection(RBAC_COLLECTIONS.adminUsers).doc(uid);
+    const batch = adminDb.batch();
+
+   batch.set(
+  rbacUserRef,
+  {
+    uid,
+    fullName: normalizedFullName,
+    team: normalizedTeam,
+    email: normalizedEmail,
+    roleId:
+      normalizedRoleType === "superadmin"
+        ? "super_admin"
+        : "admin",
+    roleType: normalizedRoleType,
+    status: "active",
+    isSuperAdmin: normalizedRoleType === "superadmin",
+    permissions:
+      normalizedRoleType === "superadmin"
+        ? {}
+        : (permissions || {}),
+    projectAccess:
+      normalizedRoleType === "superadmin"
+        ? {}
+        : (projectAccess || {}),
+    createdAt: FieldValue.serverTimestamp(),
+    updatedAt: FieldValue.serverTimestamp(),
+    createdBy: actor?.uid || null,
+  },
+  { merge: true }
+);
+    if (normalizedRoleType !== "superadmin" && projectAccess) {
+      Object.entries(projectAccess).forEach(([projectId, access]) => {
+        const projectRef = rbacUserRef.collection(RBAC_COLLECTIONS.projectAccess).doc(projectId);
+        batch.set(projectRef, {
+          projectId,
+          access: access?.access !== false,
+          roleId: access?.roleId || "admin",
+          updatedAt: FieldValue.serverTimestamp(),
+        }, { merge: true });
+
+        Object.entries(access?.permissions || {}).forEach(([moduleId, modulePerms]) => {
+          batch.set(projectRef.collection(RBAC_COLLECTIONS.modules).doc(moduleId), {
+            moduleId,
+            access: true,
+            actions: {
+              read: modulePerms?.read === true,
+              view: modulePerms?.read === true,
+              write: modulePerms?.write === true,
+              create: modulePerms?.write === true,
+              edit: modulePerms?.write === true,
+              delete: modulePerms?.delete === true,
+            },
+            updatedAt: FieldValue.serverTimestamp(),
+          }, { merge: true });
+        });
+      });
+    }
+
+    await batch.commit();
 
     /* ─────────────────────────────────────────────────────────────
        Sync custom claims from Firestore
     ───────────────────────────────────────────────────────────── */
-    await syncAdminClaims(uid);
-
     await writeAdminAuditLog({
       action: "ADMIN_CREATE",
       actorUid: actor?.uid ?? null,
@@ -118,11 +206,31 @@ export async function POST(req) {
       targetEmail: normalizedEmail,
       summary: `Created admin ${normalizedEmail}`,
       changes: {
-        roleType: normalizedRoleType,
-        permissions: normalizedRoleType === "superadmin" ? {} : (permissions || {}),
-        projectAccess: normalizedRoleType === "superadmin" ? {} : (projectAccess || {}),
-        isActive: true,
-      },
+  fullName: normalizedFullName,
+  team: normalizedTeam,
+  roleType: normalizedRoleType,
+  permissions:
+    normalizedRoleType === "superadmin"
+      ? {}
+      : (permissions || {}),
+  projectAccess:
+    normalizedRoleType === "superadmin"
+      ? {}
+      : (projectAccess || {}),
+  isActive: true,
+},
+    });
+
+    
+
+    await writeRbacAuditLog({
+      actorUid: actor?.uid ?? null,
+      actorEmail: actor?.email ?? null,
+      action: "admin.create",
+      targetType: "admin_user",
+      targetId: uid,
+      targetEmail: normalizedEmail,
+      message: `Created admin ${normalizedEmail}`,
     });
 
     return NextResponse.json({ success: true });

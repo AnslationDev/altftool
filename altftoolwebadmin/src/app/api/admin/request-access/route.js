@@ -1,6 +1,7 @@
 import { adminAuth, adminDb } from "@/lib/firebaseAdmin";
 import { NextResponse } from "next/server";
 import { enforceRateLimit } from "@altftool/core/http";
+import { RBAC_COLLECTIONS, SUPER_ADMIN_DASHBOARD_COLLECTION, SUPER_ADMIN_DASHBOARD_DOC } from "@/lib/rbacPaths";
 
 /**
  * POST /api/admin/request-access
@@ -76,6 +77,16 @@ export async function POST(req) {
     }
 
     const ref = await adminDb.collection("accessRequests").add(docData);
+    await adminDb
+      .collection(SUPER_ADMIN_DASHBOARD_COLLECTION)
+      .doc(SUPER_ADMIN_DASHBOARD_DOC)
+      .collection(RBAC_COLLECTIONS.accessRequests)
+      .doc(ref.id)
+      .set({
+        ...docData,
+        legacyRequestId: ref.id,
+        createdAt: new Date(),
+      }, { merge: true });
 
     return NextResponse.json({ success: true, id: ref.id });
   } catch (err) {

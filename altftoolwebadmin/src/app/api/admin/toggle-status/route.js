@@ -1,8 +1,9 @@
-import { adminDb } from "@/lib/firebaseAdmin";
 import { writeAdminAuditLog } from "@/lib/adminAuditLog";
 import { NextResponse } from "next/server";
 import { enforceRateLimit } from "@altftool/core/http";
 import { verifySuperAdminRequest } from "@/lib/adminAccess";
+import { RBAC_COLLECTIONS } from "@/lib/rbacPaths";
+import { getRbacRootRef, writeRbacAuditLog } from "@/lib/serverRbac";
 
 export async function POST(req) {
   try {
@@ -28,12 +29,14 @@ export async function POST(req) {
       return NextResponse.json({ error: "You cannot change your own active status" }, { status: 400 });
     }
 
-    await adminDb
-      .collection("admins")
+    await getRbacRootRef()
+      .collection(RBAC_COLLECTIONS.adminUsers)
       .doc(adminId)
-      .update({
-        isActive
-      });
+      .set({
+        status: isActive ? "active" : "suspended",
+        isActive,
+        updatedAt: new Date(),
+      }, { merge: true });
 
     await writeAdminAuditLog({
       action: "ADMIN_STATUS_TOGGLE",
@@ -42,6 +45,15 @@ export async function POST(req) {
       targetUid: adminId,
       summary: `Set admin ${adminId} to ${isActive ? "active" : "inactive"}`,
       changes: { isActive },
+    });
+
+    await writeRbacAuditLog({
+      action: "admin.status.toggle",
+      actorUid: actor?.uid ?? null,
+      actorEmail: actor?.email ?? null,
+      targetType: "admin_user",
+      targetId: adminId,
+      message: `Set admin ${adminId} to ${isActive ? "active" : "suspended"}`,
     });
 
     return NextResponse.json({ success: true });
