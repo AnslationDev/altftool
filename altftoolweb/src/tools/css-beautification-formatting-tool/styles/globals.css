@@ -1,0 +1,147 @@
+.css-formatter-tool {
+  min-height: 100vh;
+  --cf-surface: color-mix(in srgb, var(--card), transparent 18%);
+  --cf-surface-strong: color-mix(in srgb, var(--card), transparent 5%);
+  --cf-line: color-mix(in srgb, var(--primary), var(--border) 70%);
+  --cf-glow: color-mix(in srgb, var(--primary), transparent 78%);
+  --cf-accent: #2563eb;
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--background), var(--primary) 4%), var(--background) 42%),
+    radial-gradient(circle at 9% 8%, color-mix(in srgb, var(--primary), transparent 82%), transparent 28%),
+    radial-gradient(circle at 92% 18%, rgba(37, 99, 235, 0.16), transparent 30%),
+    radial-gradient(circle at 52% 100%, rgba(59, 130, 246, 0.1), transparent 34%),
+    var(--background);
+  color: var(--foreground);
+}
+
+.css-formatter-tool,
+.css-formatter-tool * {
+  box-sizing: border-box;
+}
+
+[data-theme="dark"] .css-formatter-tool {
+  --cf-surface: rgba(12, 20, 38, 0.72);
+  --cf-surface-strong: rgba(15, 25, 45, 0.9);
+  --cf-line: rgba(96, 165, 250, 0.22);
+  --cf-glow: rgba(59, 130, 246, 0.16);
+}
+
+.cf-shell {
+  width: min(1440px, 100%);
+  margin: 0 auto;
+  padding: 24px clamp(12px, 3vw, 24px) 56px;
+  overflow-x: hidden;
+}
+
+.cf-glass {
+  min-width: 0;
+  position: relative;
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.09), transparent 34%),
+    var(--cf-surface);
+  border: 1px solid var(--cf-line);
+  box-shadow:
+    0 22px 58px rgba(2, 6, 23, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.14);
+  backdrop-filter: blur(22px);
+  -webkit-backdrop-filter: blur(22px);
+}
+
+.cf-glass::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border-radius: inherit;
+  background: linear-gradient(135deg, rgba(37, 99, 235, 0.24), transparent 35%, rgba(96, 165, 250, 0.2));
+  opacity: 0.28;
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  padding: 1px;
+  mask-composite: exclude;
+  -webkit-mask-composite: xor;
+}
+
+.cf-neon {
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--primary), transparent 86%),
+    0 18px 54px var(--cf-glow);
+}
+
+.cf-hero {
+  isolation: isolate;
+}
+
+.cf-hero::after {
+  content: "";
+  position: absolute;
+  right: -80px;
+  top: -90px;
+  width: 260px;
+  height: 260px;
+  border-radius: 999px;
+  background: radial-gradient(circle, rgba(96, 165, 250, 0.22), transparent 64%);
+  pointer-events: none;
+  z-index: -1;
+}
+
+.cf-input {
+  width: 100%;
+  min-height: 44px;
+  border-radius: 12px;
+  border: 1px solid var(--cf-line);
+  background: color-mix(in srgb, var(--card), transparent 14%);
+  color: var(--foreground);
+  padding: 10px 12px;
+  outline: none;
+  transition: border-color 160ms ease, box-shadow 160ms ease;
+}
+
+.cf-input:focus {
+  border-color: color-mix(in srgb, var(--primary), white 10%);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary), transparent 78%);
+}
+
+.cf-code-input {
+  width: 100%;
+  height: 28rem;
+  max-height: 70vh;
+  resize: vertical;
+  border: 0;
+  border-radius: 0;
+  background: color-mix(in srgb, var(--background), var(--primary) 2%);
+  color: var(--foreground);
+  padding: 16px;
+  outline: none;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-size: 0.875rem;
+  line-height: 1.5rem;
+  overflow: auto;
+  white-space: pre;
+}
+
+.cf-code-input::placeholder {
+  color: var(--input-placeholder);
+}
+
+.cf-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 36px;
+  border-radius: 999px;
+  border: 1px solid var(--cf-line);
+  padding: 8px 12px;
+  font-size: 13px;
+  max-width: 100%;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  text-align: left;
+  transition: all 180ms ease;
+}
+
+.cf-chip-active {
+  border-color: color-mix(in srgb, var(--primary), white 4%);
+  background: color-mix(in srgb, var(--primary), transparent 84%);
+  color: var(--foreground);
+}
