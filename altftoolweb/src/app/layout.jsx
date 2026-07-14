@@ -199,6 +199,16 @@ export default async function RootLayout({ children }) {
           strategy="afterInteractive"
         />
 
+        {/* Skimlinks affiliate monetisation (pubcode 306210X1794449). The bundle
+            is domain-locked to altftool.com and self-disables elsewhere; it loads
+            after hydration and rewrites outbound commerce links. Monetisation
+            begins once the Skimlinks account is approved. */}
+        <Script
+          id="skimlinks"
+          src="https://s.skimresources.com/js/306210X1794449.skimlinks.js"
+          strategy="afterInteractive"
+        />
+
         <Script id="ga-init" strategy="afterInteractive">
           {`
     if (location.hostname !== "localhost" && location.hostname !== "127.0.0.1") {
