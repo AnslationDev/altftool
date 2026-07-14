@@ -202,6 +202,16 @@ export const ADMIN_MODULE_ROUTE_KEYS = {
   },
 };
 
+// Route keys for modules shared by every project (SHARED_PROJECT_MODULES in
+// src/projects/index.js). SEO resolves these routes under every project.
+// NOTE: "gsc" (Google Search Console) is intentionally NOT shared — it is backed
+// by a single altftool-global connection, so it stays altftool-only (via
+// ADMIN_MODULE_ROUTE_KEYS.altftool.seo) to avoid exposing altftool's search data
+// under other projects. It becomes shared once per-project GSC connections exist.
+export const SHARED_MODULE_ROUTE_KEYS = {
+  seo: ["", "dashboard", "search", "global", "pages", "bulk", "technical"],
+};
+
 export const ADMIN_MODULE_LAYOUT_KEYS = {
   altftool: new Set(["blogs"]),
   leadtree: new Set(["blogs", "creditcard", "expertvideos", "ourteams"]),
@@ -215,7 +225,12 @@ export function resolveAdminModuleRouteKey(
   moduleKey,
   candidates
 ) {
-  const routeKeys = ADMIN_MODULE_ROUTE_KEYS[projectId]?.[moduleKey] || [];
+  // Project-specific route keys win; shared modules (e.g. the SEO Engine) fall
+  // back to the platform-wide set so they resolve under every project.
+  const routeKeys =
+    ADMIN_MODULE_ROUTE_KEYS[projectId]?.[moduleKey] ||
+    SHARED_MODULE_ROUTE_KEYS[moduleKey] ||
+    [];
   const match = candidates.find((candidate) =>
     routeKeys.includes(candidate)
   );

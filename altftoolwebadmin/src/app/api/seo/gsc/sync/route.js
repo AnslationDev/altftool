@@ -10,7 +10,7 @@
 
 import { NextResponse } from "next/server";
 import { adminDb } from "@/lib/firebaseAdmin";
-import { verifyActiveAdmin } from "@/lib/serverAdminAuth";
+import { authorizeSeoRequest } from "@/lib/seoAuth";
 import { isGscReady, gscActiveSiteUrl, gscSearchAnalytics } from "@/lib/gscClient";
 import { markSynced } from "@/lib/gsc/tokenStore";
 
@@ -27,8 +27,9 @@ async function authorize(request) {
   const secret = process.env.ALTFT_GSC_SYNC_SECRET;
   const provided = request.headers.get("x-sync-secret");
   if (secret && provided && provided === secret) return { actor: "cron" };
-  // Fall back to an authenticated admin (manual "Sync now").
-  await verifyActiveAdmin(request);
+  // Fall back to an authenticated admin (manual "Sync now"). GSC is altftool's
+  // single connection, so require altftool SEO access.
+  await authorizeSeoRequest(request, "read", { forceProject: "altftool" });
   return { actor: "admin" };
 }
 

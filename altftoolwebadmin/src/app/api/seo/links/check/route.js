@@ -5,18 +5,12 @@
 // redirects and errors. Follows the admin API convention: rate-limit -> auth.
 
 import { NextResponse } from "next/server";
-import { verifyActiveAdmin } from "@/lib/serverAdminAuth";
+import { authorizeSeoRequest, seoAccessErrorResponse } from "@/lib/seoAuth";
 import { enforceRateLimit } from "@altftool/core/http";
 
 const MAX_URLS = 60;
 const TIMEOUT_MS = 8000;
 const DEFAULT_BASE = (process.env.ALTFT_WEB_BASE_URL || "https://altftool.com").replace(/\/+$/, "");
-
-function authErrorResponse(error) {
-  const message = String(error?.message || "Unauthorized");
-  const status = /forbidden|inactive/i.test(message) ? 403 : 401;
-  return NextResponse.json({ error: status === 403 ? "Forbidden" : "Unauthorized" }, { status });
-}
 
 function toAbsolute(input) {
   const s = String(input || "").trim();
@@ -61,9 +55,9 @@ export async function POST(request) {
   if (limited) return limited;
 
   try {
-    await verifyActiveAdmin(request);
+    await authorizeSeoRequest(request, "read");
   } catch (error) {
-    return authErrorResponse(error);
+    return seoAccessErrorResponse(error);
   }
 
   let body;

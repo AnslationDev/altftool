@@ -5,7 +5,7 @@
 // POST { action: "inspect", url } | { action: "submit-sitemap", feedpath }
 
 import { NextResponse } from "next/server";
-import { verifyActiveAdmin } from "@/lib/serverAdminAuth";
+import { authorizeSeoRequest, seoAccessErrorResponse } from "@/lib/seoAuth";
 import { enforceRateLimit } from "@altftool/core/http";
 import {
   isGscConfigured,
@@ -17,11 +17,10 @@ import {
   gscSubmitSitemap,
 } from "@/lib/gscClient";
 
-function authErrorResponse(error) {
-  const message = String(error?.message || "Unauthorized");
-  const status = /forbidden|inactive/i.test(message) ? 403 : 401;
-  return NextResponse.json({ error: status === 403 ? "Forbidden" : "Unauthorized" }, { status });
-}
+// GSC is altftool's single Google connection — every call is authorized against
+// the altftool SEO module so no other project's admin can reach altftool's
+// Search Console data by hitting this API directly.
+const GSC_PROJECT = { forceProject: "altftool" };
 
 // Map Google API errors into a friendly hint.
 function gscErrorResponse(error) {
@@ -50,9 +49,9 @@ export async function GET(request) {
   const limited = enforceRateLimit(NextResponse, request, { limit: 40, windowMs: 60_000, scope: "seo-gsc" });
   if (limited) return limited;
   try {
-    await verifyActiveAdmin(request);
+    await authorizeSeoRequest(request, "read", GSC_PROJECT);
   } catch (error) {
-    return authErrorResponse(error);
+    return seoAccessErrorResponse(error);
   }
 
   const action = request.nextUrl.searchParams.get("action") || "status";
@@ -104,9 +103,9 @@ export async function POST(request) {
   const limited = enforceRateLimit(NextResponse, request, { limit: 30, windowMs: 60_000, scope: "seo-gsc-write" });
   if (limited) return limited;
   try {
-    await verifyActiveAdmin(request);
+    await authorizeSeoRequest(request, "read", GSC_PROJECT);
   } catch (error) {
-    return authErrorResponse(error);
+    return seoAccessErrorResponse(error);
   }
 
   let body = {};
