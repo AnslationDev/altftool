@@ -15,6 +15,10 @@ function buildNodes(html) {
   tmp.innerHTML = html;
   const nodes = [];
   Array.from(tmp.childNodes).forEach((child) => {
+    // Skip stray top-level text nodes (e.g. a bare verification token pasted
+    // beside a <meta> tag). These slots only carry element markup, so loose
+    // text is always an accidental paste that would render as visible text.
+    if (child.nodeType === 3) return;
     if (child.nodeType === 1 && child.tagName === "SCRIPT") {
       const s = document.createElement("script");
       for (const attr of child.attributes) s.setAttribute(attr.name, attr.value);
