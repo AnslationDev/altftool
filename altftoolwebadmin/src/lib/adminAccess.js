@@ -1,5 +1,6 @@
 import { createTtlCache } from "@altftool/core/cache";
 import { adminAuth, adminDb } from "@/lib/firebaseAdmin";
+import { buildRbacAdminProfile, getRbacAdminDoc } from "@/lib/serverRbac";
 
 const adminAccessCache = createTtlCache({ ttlMs: 5000, maxEntries: 200 });
 const LOCAL_ADMIN_TOKEN = "local-dev-admin-token";
@@ -53,6 +54,13 @@ export async function verifySuperAdminRequest(request) {
   }
 
   const decoded = await adminAuth.verifyIdToken(token);
+  const rbacAdmin = await getRbacAdminDoc(decoded);
+  if (rbacAdmin) {
+    const profile = await buildRbacAdminProfile(decoded, rbacAdmin);
+    if (profile.isSuperAdmin && profile.isActive) return decoded;
+    throw new Error("Unauthorized");
+  }
+
   const { data, exists } = await getAdminAccess(decoded.uid);
 
   if (!exists || data?.roleType !== "superadmin" || data?.isActive === false) {

@@ -2,10 +2,12 @@ import {
   Activity,
   BarChart3,
   Bell,
+  FolderKanban,
   Headset,
   ShieldAlert,
   ShieldCheck,
   ShieldIcon,
+  SlidersHorizontal,
   UserCircle,
 } from "lucide-react";
 import { getProject } from "@/projects";
@@ -13,6 +15,12 @@ import { getProject } from "@/projects";
 export const ADMIN_HOME_ROUTE = "/";
 
 export const GLOBAL_ADMIN_MODULES = {
+  "super-admin": {
+    label: "Project",
+    icon: FolderKanban,
+    path: "/super-admin",
+    superadminOnly: true,
+  },
   "admin-management": {
     label: "Admin Management",
     icon: ShieldIcon,
@@ -32,9 +40,21 @@ export const GLOBAL_ADMIN_MODULES = {
     superadminOnly: true,
   },
   security: {
-    label: "Security & Audit",
+    label: "Security",
     icon: ShieldCheck,
     path: "/security",
+    superadminOnly: true,
+  },
+  "audit-logs": {
+    label: "Audit Logs",
+    icon: ShieldAlert,
+    path: "/audit-logs",
+    superadminOnly: true,
+  },
+  rbac: {
+    label: "RBAC Foundation",
+    icon: SlidersHorizontal,
+    path: "/rbac",
     superadminOnly: true,
   },
   "notification-broadcast": {

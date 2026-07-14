@@ -1,4 +1,5 @@
 import { adminAuth, adminDb } from "@/lib/firebaseAdmin";
+import { buildRbacAdminProfile, getRbacAdminDoc } from "@/lib/serverRbac";
 
 async function getBearerToken(request) {
   const authHeader = request.headers.get("authorization");
@@ -12,6 +13,17 @@ async function getBearerToken(request) {
 export async function verifyActiveAdmin(request) {
   const token = await getBearerToken(request);
   const decoded = await adminAuth.verifyIdToken(token);
+  const rbacAdmin = await getRbacAdminDoc(decoded);
+
+  if (rbacAdmin) {
+    const profile = await buildRbacAdminProfile(decoded, rbacAdmin);
+    if (!profile.isActive) throw new Error("Inactive admin");
+    return {
+      decoded,
+      admin: profile,
+    };
+  }
+
   const snap = await adminDb.collection("admins").doc(decoded.uid).get();
 
   if (!snap.exists) {
@@ -37,7 +49,7 @@ export async function verifyActiveAdmin(request) {
 export async function verifySuperAdmin(request) {
   const { decoded, admin } = await verifyActiveAdmin(request);
 
-  if (admin.roleType !== "superadmin") {
+  if (admin.roleType !== "superadmin" && admin.isSuperAdmin !== true) {
     throw new Error("Forbidden");
   }
 

@@ -1,45 +1,63 @@
-import { adminAuth, adminDb } from "@/lib/firebaseAdmin";
+import { adminDb } from "@/lib/firebaseAdmin";
 import { NextResponse } from "next/server";
+import { verifySuperAdminRequest } from "@/lib/adminAccess";
+import { RBAC_COLLECTIONS } from "@/lib/rbacPaths";
+import { getRbacRootRef } from "@/lib/serverRbac";
 
-async function verifySuperAdmin(req) {
-  const header = req.headers.get("authorization");
-  if (!header?.startsWith("Bearer ")) throw new Error("No token");
-
-  const token = header.replace("Bearer ", "");
-  const decoded = await adminAuth.verifyIdToken(token);
-
-  const snap = await adminDb.collection("admins").doc(decoded.uid).get();
-  if (!snap.exists || snap.data()?.roleType !== "superadmin" || !snap.data()?.isActive) {
-    throw new Error("Unauthorized");
-  }
-
-  return decoded;
+function toMillis(value) {
+  return value?.toMillis?.() || (value instanceof Date ? value.getTime() : value || null);
 }
 
-/**
- * GET /api/admin/access-requests
- * Returns all access requests (superadmin only).
- * Optional ?status=pending|approved|rejected query param.
- */
+function normalizeRequest(doc, source) {
+  const data = doc.data() || {};
+  return {
+    id: doc.id,
+    source,
+    ...data,
+    createdAt: toMillis(data.createdAt),
+    approvedAt: toMillis(data.approvedAt),
+    rejectedAt: toMillis(data.rejectedAt),
+  };
+}
+
+async function readRequests(collectionRef, statusFilter, source) {
+  let query = collectionRef.orderBy("createdAt", "desc");
+  if (statusFilter) {
+    query = query.where("status", "==", statusFilter);
+  }
+  const snap = await query.get().catch(async () => {
+    const fallback = await collectionRef.get();
+    return {
+      docs: fallback.docs
+        .filter((doc) => !statusFilter || doc.data()?.status === statusFilter)
+        .sort((a, b) => toMillis(b.data()?.createdAt) - toMillis(a.data()?.createdAt)),
+    };
+  });
+  return snap.docs.map((doc) => normalizeRequest(doc, source));
+}
+
 export async function GET(req) {
   try {
-    await verifySuperAdmin(req);
+    await verifySuperAdminRequest(req);
 
     const { searchParams } = new URL(req.url);
-    const statusFilter = searchParams.get("status"); // optional
+    const statusFilter = searchParams.get("status");
 
-    let query = adminDb.collection("accessRequests").orderBy("createdAt", "desc");
+    const [legacyRequests, rbacRequests] = await Promise.all([
+      readRequests(adminDb.collection("accessRequests"), statusFilter, "legacy").catch(() => []),
+      readRequests(getRbacRootRef().collection(RBAC_COLLECTIONS.accessRequests), statusFilter, "rbac").catch(() => []),
+    ]);
 
-    if (statusFilter) {
-      query = query.where("status", "==", statusFilter);
-    }
+    const merged = new Map();
+    legacyRequests.forEach((request) => merged.set(request.id, request));
+    rbacRequests.forEach((request) => {
+      const existing = merged.get(request.id) || {};
+      merged.set(request.id, { ...existing, ...request });
+    });
 
-    const snap = await query.get();
-
-    const requests = snap.docs.map((doc) => ({
-      id: doc.id,
-      ...doc.data(),
-    }));
+    const requests = Array.from(merged.values()).sort(
+      (a, b) => (b.createdAt || 0) - (a.createdAt || 0),
+    );
 
     return NextResponse.json({ requests });
   } catch (err) {
