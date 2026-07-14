@@ -91,6 +91,42 @@ Static sweep of the whole `src` tree for the classic leak patterns:
 
 **Result:** no memory leaks found. Effects are properly cleaned up across the app.
 
+## Phase 5 — Real bundle measurement from a production build (Track A) ✅
+Ran a full `NODE_ENV=production next build --webpack` (exit 0, compiled in 75s)
+and measured the **actual emitted chunks on disk** (`.next/static/chunks`,
+8.5 MB total) plus the eager critical path from `build-manifest.json`
+`rootMainFiles`. This replaces guesswork with hard numbers.
+
+**Eager critical path (loads on every page) — lean, nothing removable:**
+- `webpack` runtime + `framework` (185 KB) + `react-dom` (`c7879cf7`, 195 KB) +
+  app-shared (`5158`, 217 KB) + `main-app` + one polyfill (110 KB).
+- `AuthContext` pulls the Firebase **auth** SDK into this path — but auth state
+  gates every screen on first paint, so it is core and correctly eager. Firebase
+  v9 is already modular/tree-shaken, so `optimizePackageImports` cannot shrink it
+  and lazy-loading it would break the auth gate. No safe win here.
+
+**Heavy libraries are correctly lazy (NOT on the initial load):**
+- `2928` = **recharts, 358 KB** — async chunk, loads only on analytics screens
+  (already `next/dynamic`). Confirmed absent from `rootMainFiles`.
+- `8342` = **541 KB** biggest single chunk — also async (module-scoped), loads
+  only when that one module opens. Not eager.
+
+**Conclusion of the measurement:** route/library splitting is already doing its
+job. The two largest chunks (541 KB + 358 KB) never touch the initial load, and
+the eager path is framework + core auth with no extractable bloat. There is no
+"one big eager chunk" to break up — the win the bundle-analyzer would normally
+surface is already realized in this codebase.
+
+**On dead code (Phase 3 re-tested with a real tool):** installed and ran `knip`.
+It reported **780 of 879 files as "unused"** — including `AdminLayout.jsx`,
+`AdminSidebar.jsx`, `adminModuleLoaders.js`, and `config/adminRoutes.js`, all of
+which are live. Cause: the app reaches pages through a **dynamic string-based
+module loader** + **App-Router convention routing**, which knip cannot trace
+without a fully-configured Next.js plugin and a hand-listed entry for every
+module. This confirms — at higher fidelity — that automated dead-code deletion
+is unsafe in this architecture. Deletion remains correctly deferred to a
+per-file, human-reviewed pass, not an auto-sweep.
+
 ## Evidence-based conclusion (Principal Architect)
 After a full static pass — dependency graph, bundle composition, route/render
 flow, effect lifecycles, component inventory — the admin app is **already
