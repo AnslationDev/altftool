@@ -61,8 +61,23 @@ warnings.
 
 ---
 
+## Phase 3 — Dead code: investigated, deletion deferred (integrity note) ⚠️
+Scanned all 567 non-convention source modules for zero-reference files. The
+automated heuristic flagged 76 — **but it is unreliable and I will not bulk-delete
+on it.** Proof: it flagged `src/projects/index.js`, which is imported by 22 files
+as the `@/projects` directory alias. Alias imports (`@/projects`), dynamic string
+imports, and barrel re-exports evade basename matching → false positives that
+would break the app. Unimported files also don't ship to the bundle (no runtime
+cost), so this is a maintainability item, not a perf one.
+
+**Correct path (safe):** run a real reachability tool in-repo and review its
+report — e.g. add `knip` (`npx knip`) or `ts-prune`. High-confidence dead
+candidates to review there include `src/config/roles.js`, `src/context/
+ProjectContext.jsx`, and ~20 orphaned `app/(protected)/health/components/*Panel.jsx`
+(health page appears rewritten) — each must be confirmed by the tool before
+removal. Not auto-deleted here.
+
 ## Backlog (next phases)
-- **P3 (A):** Verified dead-file / dead-export removal across `src`.
 - **P4 (A):** De-duplicate copy-pasted per-project utilities/services into shared
   helpers (verified by build).
 - **P5 (B):** Bundle: dynamic-import heavy client libs (recharts, react-select)
