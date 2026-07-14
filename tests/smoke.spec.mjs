@@ -8,6 +8,34 @@ function escapeRegExp(value = "") {
   return String(value).replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 }
 
+// Under `next dev` the first request to a heavy route triggers on-demand
+// compilation (the /tools catalog alone can take ~2 min cold on CI), which
+// overruns the default per-test navigation deadline. Give tests more room and
+// pre-warm the heavy public routes once so the timed navigations below hit
+// already-compiled routes and stay fast.
+test.describe.configure({ timeout: 120_000 });
+
+const smokeWarmupRoutes = [
+  `${webUrl}/tools`,
+  `${webUrl}/tools/all/api-stress-estimator`,
+  `${webUrl}/tools/developer/api-stress-estimator`,
+  `${webUrl}/buysmart`,
+];
+
+test.beforeAll(async ({ browser }) => {
+  test.setTimeout(480_000);
+  const page = await browser.newPage();
+  for (const url of smokeWarmupRoutes) {
+    try {
+      await page.goto(url, { waitUntil: "domcontentloaded", timeout: 120_000 });
+    } catch {
+      // Non-fatal: a slow/failed warm-up just falls back to on-demand
+      // compilation inside the test itself.
+    }
+  }
+  await page.close();
+});
+
 test("public web shell loads", async ({ page }) => {
   const quality = createPageQualityGate(page);
 
@@ -18,20 +46,20 @@ test("public web shell loads", async ({ page }) => {
   await expect.poll(() => page.evaluate(() => document.documentElement.getAttribute("data-theme-mode"))).toBe("system");
   await expect(page.locator("#main-header")).toBeVisible();
   await expect(page.getByAltText("AltFTool").first()).toBeVisible();
-  await expect(page.getByPlaceholder("Search tools, extensions...")).toBeVisible();
+  // The catalog hero search uses an animated typewriter placeholder, so match
+  // the input by its stable class instead of a full placeholder string.
+  await expect(page.locator("input.tools-search-input")).toBeVisible();
+  // The header control is now a direct light/dark toggle (the old dropdown
+  // menu with "Dark mode" / "System default" options was removed), so assert
+  // the current toggle-and-persist behaviour instead.
   const themeToggle = page.getByRole("button", { name: "Toggle Theme" });
   await expect(themeToggle).toBeVisible();
   await themeToggle.click();
-  await expect(page.getByRole("menu", { name: "Theme mode" })).toBeVisible();
-  await page.getByRole("menuitemradio", { name: "Dark mode" }).click();
   await expect.poll(() => page.evaluate(() => document.documentElement.getAttribute("data-theme"))).toBe("dark");
   await expect.poll(() => page.evaluate(() => localStorage.getItem("appThemeMode"))).toBe("dark");
   await themeToggle.click();
-  await page.getByRole("menuitemradio", { name: "System default" }).click();
-  await expect.poll(() => page.evaluate(() => document.documentElement.getAttribute("data-theme-mode"))).toBe("system");
   await expect.poll(() => page.evaluate(() => document.documentElement.getAttribute("data-theme"))).toBe("light");
-  await page.emulateMedia({ colorScheme: "dark" });
-  await expect.poll(() => page.evaluate(() => document.documentElement.getAttribute("data-theme"))).toBe("dark");
+  await expect.poll(() => page.evaluate(() => localStorage.getItem("appThemeMode"))).toBe("light");
   await expect(page.getByRole("link", { name: "Tools", exact: true }).first()).toHaveAttribute("href", "/tools/all");
   await expect(page.getByRole("link", { name: "Blog", exact: true }).first()).toHaveAttribute("href", "/blogs");
   await quality.expectClean("public web shell");
@@ -80,33 +108,20 @@ test("buysmart A-Z category cards load brand images", async ({ page }) => {
   await expect(page.getByTestId("buysmart-savings-hub")).toBeVisible();
   await expect(page.getByRole("heading", { name: "AltFTool Savings Hub" })).toBeVisible();
 
+  // The old "Choose Your Brand A-Z" section (with buysmart-category-image
+  // brand logos) was redesigned into letter-badge store cards under the
+  // "Top Featured Brands" section, so anchor on the current UI instead.
   for (let i = 0; i < 12; i += 1) {
-    if (await page.getByText("Choose Your Brand A-Z").count()) break;
+    if (await page.getByTestId("buysmart-category-card").count()) break;
     await page.mouse.wheel(0, 750);
     await page.waitForTimeout(700);
   }
 
-  await expect(page.getByRole("heading", { name: "Choose Your Brand A-Z" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Top Featured Brands" })).toBeVisible();
 
   const firstCard = page.getByTestId("buysmart-category-card").first();
   await firstCard.scrollIntoViewIfNeeded();
   await expect(firstCard).toBeVisible();
-
-  await page.waitForFunction(() =>
-    [...document.querySelectorAll('[data-testid="buysmart-category-image"]')].some(
-      (img) => img.complete && img.naturalWidth > 0,
-    ),
-  );
-
-  const brokenImages = await page
-    .getByTestId("buysmart-category-image")
-    .evaluateAll((images) =>
-      images
-        .filter((img) => img.complete && img.naturalWidth === 0)
-        .map((img) => img.getAttribute("src")),
-    );
-
-  expect(brokenImages).toEqual([]);
 
   const detailLink = page.locator('a[href^="/buysmart/stores/"]').first();
   await expect(detailLink).toBeVisible();

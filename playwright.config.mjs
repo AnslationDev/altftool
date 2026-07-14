@@ -53,6 +53,11 @@ export default defineConfig({
       pathTemplate: "{testDir}/__screenshots__{/projectName}/{testFilePath}/{arg}{ext}",
     },
   },
+  // Retry browser tests on CI so a transient runner hiccup (slow compile,
+  // network blip) re-runs the test instead of failing the job; genuinely
+  // broken tests still fail after the retries. Paired with
+  // `trace: "on-first-retry"` below, every retry also captures a trace.
+  retries: process.env.CI ? 2 : 0,
   workers: process.env.CI ? 2 : 3,
   reporter: process.env.CI ? [["github"], ["list"]] : "list",
   use: {

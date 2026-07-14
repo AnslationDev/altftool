@@ -2,7 +2,7 @@ export const playbuzzAds = [
     {
         id: 'playbuzz-ad-vertical-1',
         type: 'vertical',
-        image: '/banners/vertical.png',
+        image: '/banners/vertical.jpg',
         href: 'https://altftool.com/',
         label: 'Sponsored',
         alt: 'Advertisement'
@@ -10,7 +10,7 @@ export const playbuzzAds = [
     {
         id: 'playbuzz-ad-vertical-2',
         type: 'vertical',
-        image: '/banners/vertical.png',
+        image: '/banners/vertical.jpg',
         href: 'https://altftool.com/',
         label: 'Sponsored',
         alt: 'Advertisement'
@@ -18,7 +18,7 @@ export const playbuzzAds = [
     {
         id: 'playbuzz-ad-vertical-3',
         type: 'vertical',
-        image: '/banners/vertical.png',
+        image: '/banners/vertical.jpg',
         href: 'https://altftool.com/',
         label: 'Sponsored',
         alt: 'Advertisement'
@@ -26,7 +26,7 @@ export const playbuzzAds = [
     {
         id: 'playbuzz-ad-vertical-4',
         type: 'vertical',
-        image: '/banners/vertical.png',
+        image: '/banners/vertical.jpg',
         href: 'https://altftool.com/',
         label: 'Sponsored',
         alt: 'Advertisement'

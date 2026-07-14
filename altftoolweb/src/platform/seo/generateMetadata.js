@@ -1,5 +1,5 @@
 import { resolveSeo, applyResolvedSeo, resolveExtendedMeta } from "@altftool/core/seo/resolver";
-import { getSeoConfigSnapshot, loadSeoConfig } from "./seoConfigSource";
+import { getSeoConfigSnapshot, loadSeoConfig } from "./seoConfigSource.js";
 
 export const siteConfig = {
   name: "AltFTool",

@@ -268,7 +268,7 @@ export function PreviewPanel({ label, section, errorCount, content }) {
 
   return (
     <aside className="space-y-4">
-      <section className="rounded-lg border border-[var(--border)] bg-[var(--surface)] p-4 shadow-[var(--shadow-sm)]">
+      {/* <section className="rounded-lg border border-[var(--border)] bg-[var(--surface)] p-4 shadow-[var(--shadow-sm)]">
         <div className="flex items-center gap-2">
           <Eye className="h-4 w-4 text-[var(--primary)]" />
           <p className="text-sm font-bold text-[var(--foreground)]">Backend Summary</p>
@@ -279,14 +279,14 @@ export function PreviewPanel({ label, section, errorCount, content }) {
           <SummaryRow label="Active sections" value={`${activeSections} / ${SERVICES_SECTION_TABS.length}`} />
           <SummaryRow label="Validation issues" value={errorCount} tone={errorCount ? "danger" : "success"} />
         </div>
-      </section>
+      </section> */}
 
-      <section className="rounded-lg border border-[var(--border)] bg-[var(--surface)] p-4 shadow-[var(--shadow-sm)]">
+      {/* <section className="rounded-lg border border-[var(--border)] bg-[var(--surface)] p-4 shadow-[var(--shadow-sm)]">
         <p className="text-sm font-bold text-[var(--foreground)]">Storage Path</p>
         <p className="mt-2 break-all rounded-md bg-[var(--surface-soft)] p-3 font-mono text-xs text-[var(--muted)]">
           projects/coozter/services/servicesPageContent
         </p>
-      </section>
+      </section> */}
     </aside>
   );
 }

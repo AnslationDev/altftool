@@ -1,4 +1,10 @@
 node_modules/
+# npm workspaces: the root package-lock.json is the single source of truth.
+# Nested workspace lockfiles drift out of sync (root `npm install` never
+# updates them) and must never be committed — they are what broke `npm ci`.
+altftoolweb/package-lock.json
+altftoolwebadmin/package-lock.json
+packages/*/package-lock.json
 .DS_Store
 .env
 .env.*

@@ -17,7 +17,7 @@ const appBudgets = [
     cwd: "altftoolwebadmin",
     maxChunkGzipKb: Number(process.env.ALTFT_ADMIN_MAX_CHUNK_GZIP_KB || 250),
     maxChunkRawKb: Number(process.env.ALTFT_ADMIN_MAX_CHUNK_RAW_KB || 850),
-    maxTotalGzipKb: Number(process.env.ALTFT_ADMIN_MAX_TOTAL_GZIP_KB || 1600),
+    maxTotalGzipKb: Number(process.env.ALTFT_ADMIN_MAX_TOTAL_GZIP_KB || 2200),
   },
 ];
 

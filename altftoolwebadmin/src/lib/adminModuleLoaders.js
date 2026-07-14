@@ -62,7 +62,7 @@ const routeLoaders = {
     },
     pranksocialmedia: {
       "": () =>
-        import("@/projects/altftool/modules/prank-socialmedia/page.jsx"),
+        import("@/projects/altftool/modules/pranksocialmedia/page.jsx"),
     },
     pranx: {
       "": () => import("@/projects/altftool/modules/pranx/page.jsx"),
@@ -307,6 +307,9 @@ const routeLoaders = {
     },
   },
   coozter: {
+    navbar: {
+      "": () => import("@/projects/coozter/modules/navbar/page.jsx"),
+    },
     home: {
       "": () => import("@/projects/coozter/modules/home/page.jsx"),
       "hero-section": () => import("@/projects/coozter/modules/home/hero-section/page.jsx"),
@@ -444,6 +447,9 @@ const layoutLoaders = {
   carrerbook: {
     blog: () => import("@/projects/carrerbook/modules/blog/layout.jsx"),
   },
+  coozter: {
+    blog: () => import("@/projects/coozter/modules/blog/layout.jsx"),
+  },
   marketys: {
     blogs: () => import("@/projects/marketys/modules/blogs/layout.jsx"),
   },
@@ -457,4 +463,3 @@ export function getAdminModulePageLoader(projectId, moduleKey, routeKey) {
 export function getAdminModuleLayoutLoader(projectId, moduleKey) {
   return layoutLoaders[projectId]?.[moduleKey] || null;
 }
-
