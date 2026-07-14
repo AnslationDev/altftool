@@ -158,7 +158,7 @@ export default function CoozterAboutAdminPage() {
     <main className="min-h-screen bg-[var(--background)] p-4 text-[var(--foreground)] sm:p-6">
       <div className="mx-auto flex max-w-7xl flex-col gap-5">
         <header className="flex flex-wrap items-start justify-between gap-4">
-          <h1 className="mt-1 text-2xl font-bold text-[var(--foreground)]">About Page Content</h1>
+          <h1 className="mt-1 text-2xl font-bold text-[var(--foreground)]">About Page </h1>
           <div className="flex flex-wrap gap-2">
             <button type="button" onClick={() => setContent(DEFAULT_ABOUT_PAGE_CONTENT)} className={buttonClass("secondary")}><RefreshCw className="h-4 w-4" /> Reset Form</button>
             <button type="button" onClick={handleSeedDefaults} disabled={seeding || saving} className={buttonClass("secondary")}>{seeding ? <Loader2 className="h-4 w-4 animate-spin" /> : <DatabaseZap className="h-4 w-4" />} Seed Defaults</button>
