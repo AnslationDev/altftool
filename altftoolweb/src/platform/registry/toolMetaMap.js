@@ -1,5 +1,15 @@
 // ⚠️ AUTO-GENERATED FILE — DO NOT EDIT
 export const toolMetaMap = {
+  "2048-game": {
+    "name": "2048 Game",
+    "description": "Merge tiles to reach 2048 in this classic sliding puzzle game.",
+    "category": [
+      "Game",
+      "Entertainment"
+    ],
+    "icon": "gamepad-2",
+    "iconColor": "text-amber-600"
+  },
   "afterimage-generator": {
     "name": "Afterimage Generator",
     "description": "Experience retinal adaptation and complementary afterimages through color staring or image processing.",
@@ -64,6 +74,13 @@ export const toolMetaMap = {
     "icon": "book-open",
     "iconColor": "text-gray-500"
   },
+  "api-endpoint-usage-mapper": {
+    "name": "API Endpoint Usage Mapper",
+    "description": "Map API endpoint usage from logs, request records, cURL commands, or source code entirely in your browser.",
+    "category": "Developer",
+    "icon": "route",
+    "iconColor": "text-primary"
+  },
   "api-stress-estimator": {
     "name": "API STRESS ESTIMATOR",
     "description": "Estimate the stress on your API under different traffic scenarios and configurations.",
@@ -104,6 +121,16 @@ export const toolMetaMap = {
     ],
     "icon": "music",
     "iconColor": "text-pink-700"
+  },
+  "avatar-generator": {
+    "name": "Avatar Generator",
+    "description": "Generate unique AI-style avatars with custom colors, backgrounds, and facial features. Download as PNG or copy instantly.",
+    "category": [
+      "Creators",
+      "AI"
+    ],
+    "icon": "user",
+    "iconColor": "text-(--primary)"
   },
   "barcode-generator": {
     "name": "Barcode Generator",
@@ -269,12 +296,31 @@ export const toolMetaMap = {
     "icon": "activity",
     "iconColor": "text-blue-600"
   },
+  "bingo-game": {
+    "name": "Bingo Game",
+    "description": "Play a classic 5x5 Bingo game with auto-generated boards, number calling, win detection, confetti celebrations, and score tracking.",
+    "category": [
+      "Games",
+      "Fun"
+    ],
+    "icon": "grid-3x3",
+    "iconColor": "text-teal-600"
+  },
   "bmi-calculator": {
     "name": "BMI Calculator",
     "description": "Calculate your Body Mass Index",
     "category": "Fitness",
     "icon": "activity",
     "iconColor": "text-green-600"
+  },
+  "bookmark-organization-assistant": {
+    "name": "Bookmark Organization Assistant",
+    "description": "Organize bookmarks with folders, categories, tags, favorites, drag-and-drop, search, filters, bulk actions, and import/export.",
+    "category": [
+      "Productivity"
+    ],
+    "icon": "bookmark",
+    "iconColor": "text-(--primary)"
   },
   "break-even-calculator": {
     "name": "Break-Even Calculator",
@@ -346,12 +392,51 @@ export const toolMetaMap = {
     "icon": "activity",
     "iconColor": "text-green-600"
   },
+  "candy-crush": {
+    "name": "Candy Crush",
+    "description": "Play a free match-3 Candy Crush game online. Swap candies, trigger combos, beat level targets, and chase your high score.",
+    "category": [
+      "Game",
+      "Lifestyle"
+    ],
+    "icon": "gift",
+    "iconColor": "text-(--primary)"
+  },
   "car-ownership-cost-analyzer": {
     "name": "car-cost-analyzer",
     "description": "Calculate the total cost of owning a car, including purchase price, running costs, and depreciation.",
     "category": "Other",
     "icon": "car",
     "iconColor": "text-blue-500"
+  },
+  "card-trick": {
+    "name": "Card Trick",
+    "description": "Experience a premium interactive card trick: shuffle, draw, pick a card, and watch a magic reveal with smooth animations.",
+    "category": [
+      "Game",
+      "Lifestyle"
+    ],
+    "icon": "wand-2",
+    "iconColor": "text-(--primary)"
+  },
+  "chess-multiplayer": {
+    "name": "Chess Multiplayer",
+    "description": "Play a full multiplayer chess match locally with legal-move validation, timers, move history, captured pieces, draw offers and resign.",
+    "category": [
+      "Game"
+    ],
+    "icon": "crown",
+    "iconColor": "text-(--primary)"
+  },
+  "chinese-character-generator": {
+    "name": "Chinese Character Generator",
+    "description": "Generate authentic Chinese characters by category with meanings, pinyin, stroke counts, and Unicode. Copy, favorite, and download as PNG/SVG.",
+    "category": [
+      "Creators",
+      "Language"
+    ],
+    "icon": "languages",
+    "iconColor": "text-(--primary)"
   },
   "citation-generator": {
     "name": "Citation Generator",
@@ -404,6 +489,16 @@ export const toolMetaMap = {
     ],
     "icon": "palette",
     "iconColor": "text-teal-600"
+  },
+  "color-picker": {
+    "name": "Color Picker",
+    "description": "Professional real-time color picker with format conversions and palette generation.",
+    "category": [
+      "Design",
+      "Developer"
+    ],
+    "icon": "palette",
+    "iconColor": "text-blue-500"
   },
   "color-psychology-analyzer": {
     "name": "Color Psychology Analyzer",
@@ -564,6 +659,16 @@ export const toolMetaMap = {
     "icon": "credit-card",
     "iconColor": "text-rose-600"
   },
+  "decision-matrix-builder": {
+    "name": "Decision Matrix Builder",
+    "description": "Build weighted decision matrices to evaluate and compare options objectively.",
+    "category": [
+      "Business",
+      "Utility"
+    ],
+    "icon": "grid-3x3",
+    "iconColor": "text-orange-600"
+  },
   "device-browser-dashboard": {
     "name": "Device & Browser Dashboard",
     "description": "Advanced client-side dashboard for device, browser, privacy, permissions, GPU, storage, and API capability analysis.",
@@ -621,6 +726,16 @@ export const toolMetaMap = {
     "icon": "circle-dashed",
     "iconColor": "text-blue-500"
   },
+  "email-thread-summarizer": {
+    "name": "Email Thread Summarizer",
+    "description": "Turn long email conversations into a concise local summary with decisions, action items, participants, and open questions.",
+    "category": [
+      "Business",
+      "Productivity"
+    ],
+    "icon": "mail-check",
+    "iconColor": "text-primary"
+  },
   "email-validator": {
     "name": "Email Validator",
     "description": "Validate email syntax, domain DNS, MX records, disposable domains, role accounts, and bulk lists.",
@@ -649,6 +764,16 @@ export const toolMetaMap = {
     "icon": "wand-2",
     "iconColor": "text-pink-600"
   },
+  "emotion-detector": {
+    "name": "Emotion Detector",
+    "description": "Identify and analyze human facial expressions and emotions in real-time or from uploaded photos using AI.",
+    "category": [
+      "AI",
+      "Image"
+    ],
+    "icon": "smile",
+    "iconColor": "text-teal-500"
+  },
   "emotional-mood-palette-generator": {
     "name": "Emotional Mood → Palette Generator",
     "description": "A psychology-driven tool that generates color palettes based on your mood and feelings.",
@@ -663,12 +788,30 @@ export const toolMetaMap = {
     "icon": "lock",
     "iconColor": "text-yellow-500"
   },
+  "error-log-pattern-grouper": {
+    "name": "Error Log Pattern Grouper",
+    "description": "Group recurring error-log patterns locally and inspect their frequency, severity, and examples.",
+    "category": "Developer",
+    "icon": "list-collapse",
+    "iconColor": "text-primary"
+  },
   "excel-formula": {
     "name": "Excel Formula",
     "description": "Get the Excel formulas Easily",
     "category": "EdTech",
     "icon": "help-circle",
     "iconColor": "text-gray-500"
+  },
+  "excel-to-chart": {
+    "name": "Excel to Chart Converter",
+    "description": "Convert Excel (XLSX, XLS) and CSV files into beautiful interactive charts. Customize chart styles, edit data, and export as PNG or SVG.",
+    "category": [
+      "Web",
+      "Document",
+      "Business"
+    ],
+    "icon": "bar-chart-3",
+    "iconColor": "text-teal-600"
   },
   "exif-data-viewer": {
     "name": "EXIF Data Viewer",
@@ -746,6 +889,15 @@ export const toolMetaMap = {
     "icon": "clock",
     "iconColor": "text-gray-500"
   },
+  "folder-structure-visualizer": {
+    "name": "Folder Structure Visualizer",
+    "description": "Visualize any folder as an interactive tree with icons, search, filters, breadcrumbs, zoom, pan, minimap, and statistics.",
+    "category": [
+      "Developer"
+    ],
+    "icon": "folder-tree",
+    "iconColor": "text-(--primary)"
+  },
   "form-builder": {
     "name": "Form Builder",
     "description": "Build forms with ease.",
@@ -763,6 +915,17 @@ export const toolMetaMap = {
     ],
     "icon": "sparkles",
     "iconColor": "text-indigo-600"
+  },
+  "frame-rate-converter": {
+    "name": "Frame Rate Converter",
+    "description": "Upload a video and convert its frame rate to any target FPS — 23.976, 24, 25, 29.97, 30, 48, 50, 60, 120 fps and more. Runs entirely in your browser via FFmpeg.wasm.",
+    "category": [
+      "Video",
+      "Calculator",
+      "Utility"
+    ],
+    "icon": "film",
+    "iconColor": "text-teal-600"
   },
   "gift-finder": {
     "name": "Gift Finder",
@@ -827,6 +990,16 @@ export const toolMetaMap = {
     "category": "AI",
     "icon": "calculator",
     "iconColor": "text-green-600"
+  },
+  "heic-to-jpg": {
+    "name": "HEIC to JPG Converter",
+    "description": "Convert Apple HEIC/HEIF images into standard JPG or PNG files locally in your web browser. Supports batch conversions, custom image quality, and ZIP exports.",
+    "category": [
+      "Media",
+      "Converter"
+    ],
+    "icon": "image",
+    "iconColor": "text-teal-500"
   },
   "hex-to-base64": {
     "name": "Hex to Base64",
@@ -922,6 +1095,17 @@ export const toolMetaMap = {
     "icon": "crop",
     "iconColor": "text-gray-400"
   },
+  "image-editor": {
+    "name": "Image Editor",
+    "description": "Adjust brightness, saturation, inversion, grayscale, rotation, and flip on your images.",
+    "category": [
+      "Design",
+      "Image",
+      "Utility"
+    ],
+    "icon": "image",
+    "iconColor": "text-blue-600"
+  },
   "image-flip-rotate-tool": {
     "name": "Image Flip & Rotate Tool",
     "description": "Flip, mirror, rotate, straighten, preview, and export images in browser with batch ZIP downloads.",
@@ -1005,6 +1189,16 @@ export const toolMetaMap = {
     "icon": "calculator",
     "iconColor": "text-indigo-600"
   },
+  "insect-tracker": {
+    "name": "Insect Tracker",
+    "description": "Catch butterflies, bees, ladybugs and more in this fast, fun insect-tracking arcade game. Beat your high score across rising difficulty levels.",
+    "category": [
+      "Game",
+      "Lifestyle"
+    ],
+    "icon": "footprints",
+    "iconColor": "text-(--primary)"
+  },
   "internet-speed-test": {
     "name": "Internet Speed Test",
     "description": "Get fast and accurate speed test results for your network.",
@@ -1075,6 +1269,18 @@ export const toolMetaMap = {
     ],
     "icon": "code",
     "iconColor": "text-yellow-600"
+  },
+  "join-photo-and-signature": {
+    "name": "Join Photo & Signature",
+    "description": "Merge photo and signature into a single image. Perfect for online applications (UPSC, bank, academic exams) requiring specific layout sizes and file KB limits.",
+    "category": [
+      "Web",
+      "Image",
+      "Utility",
+      "Business"
+    ],
+    "icon": "image",
+    "iconColor": "text-teal-600"
   },
   "json-editor": {
     "name": "JSON Editor",
@@ -1200,6 +1406,16 @@ export const toolMetaMap = {
     "icon": "users",
     "iconColor": "text-violet-600"
   },
+  "meeting-transcript-action-extractor": {
+    "name": "Meeting Transcript Action Extractor",
+    "description": "Extract action items, decisions, and key points from meeting transcripts automatically.",
+    "category": [
+      "Business",
+      "Productivity"
+    ],
+    "icon": "clipboard-list",
+    "iconColor": "text-violet-600"
+  },
   "meme-generator": {
     "name": "Meme Generator",
     "description": "Create funny memes easily",
@@ -1227,6 +1443,15 @@ export const toolMetaMap = {
     ],
     "icon": "mic",
     "iconColor": "text-emerald-600"
+  },
+  "mobile-voting-app": {
+    "name": "Mobile Voting App",
+    "description": "Create real-time voting and polling apps for elections, team decisions, live events, and community feedback.",
+    "category": [
+      "Business"
+    ],
+    "icon": "vote",
+    "iconColor": "text-teal-600"
   },
   "monthly-budget-planner": {
     "name": "Monthly Budget Planner",
@@ -1311,6 +1536,16 @@ export const toolMetaMap = {
     "icon": "file-text",
     "iconColor": "text-indigo-600"
   },
+  "online-compiler": {
+    "name": "Online Code Compiler",
+    "description": "Write HTML, CSS, and JavaScript in a powerful Monaco editor and preview the result live in a sandboxed iframe. Templates, projects, console, and more.",
+    "category": [
+      "Developer",
+      "Code"
+    ],
+    "icon": "code-2",
+    "iconColor": "text-(--primary)"
+  },
   "online-notepad": {
     "name": "Online Notepad",
     "description": "Write, autosave, export, and clear quick notes in your browser.",
@@ -1387,6 +1622,17 @@ export const toolMetaMap = {
     "icon": "files",
     "iconColor": "text-red-600"
   },
+  "pdf-summarizer": {
+    "name": "PDF Summarizer",
+    "description": "Extract text from uploaded PDF files and generate clear, structured summaries with key points, keywords, and reading time estimates.",
+    "category": [
+      "Document",
+      "AI",
+      "Business"
+    ],
+    "icon": "file-text",
+    "iconColor": "text-teal-600"
+  },
   "pdf-to-base64": {
     "name": "PDF to Base64",
     "description": "Convert local PDF files into Base64 data URLs.",
@@ -1437,6 +1683,16 @@ export const toolMetaMap = {
     "icon": "calculator",
     "iconColor": "text-blue-600"
   },
+  "photo-to-sketch": {
+    "name": "Photo to Sketch",
+    "description": "Convert any photo into a realistic pencil sketch with adjustable intensity, zoom, before/after compare, and one-click download.",
+    "category": [
+      "Image",
+      "Creators"
+    ],
+    "icon": "pencil",
+    "iconColor": "text-(--primary)"
+  },
   "poll-maker": {
     "name": "Poll Maker",
     "description": "Create interactive polls quickly and collect real-time responses.",
@@ -1486,6 +1742,23 @@ export const toolMetaMap = {
     ],
     "icon": "qr-code",
     "iconColor": "text-black-600"
+  },
+  "quiz-app": {
+    "name": "Quiz App",
+    "description": "Take a focused multiple-choice quiz with progress tracking, scoring, answer review, and restart controls.",
+    "category": [
+      "Education",
+      "Productivity"
+    ],
+    "icon": "circle-help",
+    "iconColor": "text-teal-600"
+  },
+  "quote-generator": {
+    "name": "Quote Generator",
+    "description": "Generate, customize, and download beautiful quotes for social media.",
+    "category": "Creators",
+    "icon": "quote",
+    "iconColor": "text-purple-600"
   },
   "rashi-finder": {
     "name": "Rashi Finder",
@@ -1541,6 +1814,16 @@ export const toolMetaMap = {
     "icon": "book-open",
     "iconColor": "text-blue-500"
   },
+  "rock-paper-scissors": {
+    "name": "Rock Paper Scissors",
+    "description": "Play Rock Paper Scissors and Flip Coin in a premium game hub with smooth animations, live stats, streaks, and sound.",
+    "category": [
+      "Game",
+      "Lifestyle"
+    ],
+    "icon": "footprints",
+    "iconColor": "text-(--primary)"
+  },
   "sacred-geometry-generator": {
     "name": "Sacred Geometry Generator",
     "description": "Generate sacred mathematical patterns like Flower of Life, Sri Yantra, and Metatron Cube.",
@@ -1567,6 +1850,16 @@ export const toolMetaMap = {
     "category": "Creators",
     "icon": "video",
     "iconColor": "text-blue--500"
+  },
+  "screenshot-change-detector": {
+    "name": "Screenshot Change Detector",
+    "description": "Compare two screenshots and detect visual differences with pixel-level accuracy.",
+    "category": [
+      "Developer",
+      "Utility"
+    ],
+    "icon": "image-plus",
+    "iconColor": "text-blue-600"
   },
   "secret-message-encoder": {
     "name": "Secret Message Encoder",
@@ -1625,6 +1918,16 @@ export const toolMetaMap = {
     ],
     "icon": "clock",
     "iconColor": "text-indigo-600"
+  },
+  "snake-water-gun-game": {
+    "name": "Snake Water Gun Game",
+    "description": "Play Snake Water Gun against the computer — pick your move, see who wins, and track your score across rounds.",
+    "category": [
+      "Games",
+      "Fun"
+    ],
+    "icon": "gamepad-2",
+    "iconColor": "text-teal-600"
   },
   "sound-decibel-checker": {
     "name": "Sound Decibel Checker",
@@ -1824,6 +2127,27 @@ export const toolMetaMap = {
     "icon": "binary",
     "iconColor": "text-indigo-600"
   },
+  "text-to-binary": {
+    "name": "Text to Binary / Binary to Text",
+    "description": "Convert text to binary and binary back to text instantly. Each character is converted to its 8-bit binary representation.",
+    "category": [
+      "Developer",
+      "Converter"
+    ],
+    "icon": "binary",
+    "iconColor": "text-indigo-600"
+  },
+  "text-to-handwriting": {
+    "name": "Text to Handwriting Converter",
+    "description": "Convert typed text or digital notes into realistic handwritten pages. Customize paper ruling, margins, realistic ink colors, handwriting fonts, and hand-jitter simulation.",
+    "category": [
+      "Creators",
+      "Design",
+      "Productivity"
+    ],
+    "icon": "edit-3",
+    "iconColor": "text-teal-500"
+  },
   "text-to-voice": {
     "name": "Text to Voice Tool",
     "description": "Convert text into natural-sounding voice instantly with ease.",
@@ -1841,6 +2165,26 @@ export const toolMetaMap = {
     ],
     "icon": "languages",
     "iconColor": "text-blue-700"
+  },
+  "tic-tac-toe-game": {
+    "name": "Tic-Tac-Toe Game",
+    "description": "Play a responsive Tic-Tac-Toe game with score tracking, win detection, draw handling, and optional computer moves.",
+    "category": [
+      "Games",
+      "Productivity"
+    ],
+    "icon": "grid-3x3",
+    "iconColor": "text-teal-600"
+  },
+  "timeline-builder": {
+    "name": "Timeline Builder",
+    "description": "Create visual timelines with milestones, dates, and descriptions for projects and events.",
+    "category": [
+      "Business",
+      "Utility"
+    ],
+    "icon": "milestone",
+    "iconColor": "text-emerald-600"
   },
   "to-do-list": {
     "name": "To Do List",
@@ -1982,6 +2326,17 @@ export const toolMetaMap = {
     "icon": "video",
     "iconColor": "text-blue-600"
   },
+  "video-to-gif": {
+    "name": "Video to GIF Converter",
+    "description": "Convert MP4, WebM, or OGG video clips into highly-optimized animated GIFs directly in your browser. Customize frame rate, dimensions, loop options, and speed.",
+    "category": [
+      "Media",
+      "Converter",
+      "Creators"
+    ],
+    "icon": "video",
+    "iconColor": "text-teal-500"
+  },
   "video-trimmer": {
     "name": "Video Trimmer",
     "description": "Trim video clips in your browser with precise start and end controls.",
@@ -2064,6 +2419,17 @@ export const toolMetaMap = {
     ],
     "icon": "gauge",
     "iconColor": "text-blue-600"
+  },
+  "webp-to-png-jpg": {
+    "name": "WebP to PNG / JPG Converter",
+    "description": "Convert WebP images to high-quality PNG, JPG, or PDF files quickly in your browser. Batch convert multiple files and download as a ZIP archive.",
+    "category": [
+      "Web",
+      "Image",
+      "Utility"
+    ],
+    "icon": "image",
+    "iconColor": "text-teal-600"
   },
   "weight-loss-tracker": {
     "name": "Weight Loss Tracker",
