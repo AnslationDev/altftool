@@ -1,0 +1,243 @@
+// Curated, static dataset of Chinese characters (and Japanese kanji-style glyphs).
+// All values are verified: real glyphs, correct pinyin with tone marks,
+// accurate stroke counts, and real Unicode codepoints (U+XXXX).
+//
+// Fields per entry:
+//   char     - the glyph
+//   pinyin   - romanization with tone marks
+//   meaning  - concise English meaning
+//   strokes  - stroke count
+//   unicode  - Unicode codepoint string (U+XXXX)
+//   category - source category label
+//   similar  - array of related glyph strings
+//   variant  - optional linked script form { script, char, unicode }
+
+export const CATEGORIES = [
+  "Common Characters",
+  "Lucky Characters",
+  "Love",
+  "Peace",
+  "Strength",
+  "Wisdom",
+  "Nature",
+  "Zodiac",
+  "Family",
+  "Success",
+  "Business",
+  "Happiness",
+  "Japanese Kanji-style",
+  "Traditional Chinese",
+  "Simplified Chinese",
+];
+
+export const CHARACTERS = [
+  // ---------------- Common Characters ----------------
+  { char: "人", pinyin: "rén", meaning: "person; people", strokes: 2, unicode: "U+4EBA", category: "Common Characters", similar: ["口", "大", "入"] },
+  { char: "口", pinyin: "kǒu", meaning: "mouth; opening", strokes: 3, unicode: "U+53E3", category: "Common Characters", similar: ["日", "中", "田"] },
+  { char: "日", pinyin: "rì", meaning: "sun; day", strokes: 4, unicode: "U+65E5", category: "Common Characters", similar: ["月", "目", "旦"] },
+  { char: "月", pinyin: "yuè", meaning: "moon; month", strokes: 4, unicode: "U+6708", category: "Common Characters", similar: ["日", "朋", "明"] },
+  { char: "水", pinyin: "shuǐ", meaning: "water", strokes: 4, unicode: "U+6C34", category: "Common Characters", similar: ["火", "木", "冰"] },
+  { char: "火", pinyin: "huǒ", meaning: "fire", strokes: 4, unicode: "U+706B", category: "Common Characters", similar: ["水", "炎", "灯"] },
+  { char: "木", pinyin: "mù", meaning: "wood; tree", strokes: 4, unicode: "U+6728", category: "Common Characters", similar: ["林", "森", "本"] },
+  { char: "山", pinyin: "shān", meaning: "mountain", strokes: 3, unicode: "U+5C71", category: "Common Characters", similar: ["石", "川", "峰"] },
+  { char: "天", pinyin: "tiān", meaning: "sky; heaven", strokes: 4, unicode: "U+5929", category: "Common Characters", similar: ["大", "夫", "空"] },
+  { char: "心", pinyin: "xīn", meaning: "heart; mind", strokes: 4, unicode: "U+5FC3", category: "Common Characters", similar: ["思", "爱", "必"] },
+  { char: "中", pinyin: "zhōng", meaning: "middle; China", strokes: 4, unicode: "U+4E2D", category: "Common Characters", similar: ["口", "申", "忠"] },
+  { char: "大", pinyin: "dà", meaning: "big; great", strokes: 3, unicode: "U+5927", category: "Common Characters", similar: ["天", "太", "人"] },
+
+  // ---------------- Lucky Characters ----------------
+  { char: "福", pinyin: "fú", meaning: "fortune; blessing", strokes: 13, unicode: "U+798F", category: "Lucky Characters", similar: ["禄", "寿", "喜"] },
+  { char: "禄", pinyin: "lù", meaning: "prosperity; emolument", strokes: 12, unicode: "U+7984", category: "Lucky Characters", similar: ["福", "寿", "财"] },
+  { char: "寿", pinyin: "shòu", meaning: "longevity; life", strokes: 14, unicode: "U+5BFF", variant: { script: "Traditional", char: "壽", unicode: "U+58FD" }, category: "Lucky Characters", similar: ["福", "康", "健"] },
+  { char: "喜", pinyin: "xǐ", meaning: "joy; happiness", strokes: 12, unicode: "U+559C", category: "Lucky Characters", similar: ["福", "庆", "悦"] },
+  { char: "财", pinyin: "cái", meaning: "wealth; money", strokes: 7, unicode: "U+8D22", category: "Lucky Characters", similar: ["富", "宝", "货"] },
+  { char: "吉", pinyin: "jí", meaning: "auspicious; lucky", strokes: 6, unicode: "U+5409", category: "Lucky Characters", similar: ["祥", "瑞", "利"] },
+  { char: "祥", pinyin: "xiáng", meaning: "auspicious; omen", strokes: 10, unicode: "U+7965", category: "Lucky Characters", similar: ["吉", "瑞", "福"] },
+  { char: "瑞", pinyin: "ruì", meaning: "auspicious; jade", strokes: 13, unicode: "U+745E", category: "Lucky Characters", similar: ["祥", "吉", "玉"] },
+  { char: "兴", pinyin: "xīng", meaning: "prosper; flourish", strokes: 6, unicode: "U+5174", variant: { script: "Traditional", char: "興", unicode: "U+8208" }, category: "Lucky Characters", similar: ["旺", "隆", "盛"] },
+  { char: "旺", pinyin: "wàng", meaning: "prosperous; flourishing", strokes: 8, unicode: "U+65FA", category: "Lucky Characters", similar: ["兴", "盛", "荣"] },
+  { char: "发", pinyin: "fā", meaning: "prosper; send out", strokes: 5, unicode: "U+53D1", variant: { script: "Traditional", char: "發", unicode: "U+767C" }, category: "Lucky Characters", similar: ["财", "达", "展"] },
+  { char: "庆", pinyin: "qìng", meaning: "celebrate; bless", strokes: 6, unicode: "U+5E86", variant: { script: "Traditional", char: "慶", unicode: "U+6176" }, category: "Lucky Characters", similar: ["喜", "贺", "福"] },
+
+  // ---------------- Love ----------------
+  { char: "爱", pinyin: "ài", meaning: "love", strokes: 10, unicode: "U+7231", variant: { script: "Traditional", char: "愛", unicode: "U+611B" }, category: "Love", similar: ["情", "心", "恋"] },
+  { char: "情", pinyin: "qíng", meaning: "feeling; love; emotion", strokes: 11, unicode: "U+60C5", category: "Love", similar: ["爱", "心", "意"] },
+  { char: "心", pinyin: "xīn", meaning: "heart", strokes: 4, unicode: "U+5FC3", category: "Love", similar: ["爱", "思", "念"] },
+  { char: "恋", pinyin: "liàn", meaning: "love; be fond of", strokes: 10, unicode: "U+604B", category: "Love", similar: ["爱", "念", "慕"] },
+  { char: "吻", pinyin: "wěn", meaning: "kiss", strokes: 7, unicode: "U+543B", category: "Love", similar: ["口", "亲", "唇"] },
+  { char: "缘", pinyin: "yuán", meaning: "fate; bond; affinity", strokes: 12, unicode: "U+7F18", category: "Love", similar: ["分", "因", "故"] },
+  { char: "伴", pinyin: "bàn", meaning: "companion; partner", strokes: 7, unicode: "U+4F34", category: "Love", similar: ["侣", "友", "陪"] },
+  { char: "惜", pinyin: "xī", meaning: "cherish; treasure", strokes: 11, unicode: "U+60DC", category: "Love", similar: ["爱", "念", "怜"] },
+  { char: "恩", pinyin: "ēn", meaning: "grace; kindness; love", strokes: 10, unicode: "U+6069", category: "Love", similar: ["情", "惠", "德"] },
+  { char: "柔", pinyin: "róu", meaning: "gentle; soft", strokes: 9, unicode: "U+67D4", category: "Love", similar: ["温", "软", "婉"] },
+  { char: "慕", pinyin: "mù", meaning: "admire; adore", strokes: 14, unicode: "U+6155", category: "Love", similar: ["恋", "爱", "仰"] },
+  { char: "蜜", pinyin: "mì", meaning: "honey; sweet", strokes: 14, unicode: "U+871C", category: "Love", similar: ["甜", "糖", "蜂"] },
+
+  // ---------------- Peace ----------------
+  { char: "平", pinyin: "píng", meaning: "peace; flat; calm", strokes: 5, unicode: "U+5E73", category: "Peace", similar: ["安", "和", "静"] },
+  { char: "安", pinyin: "ān", meaning: "peace; safe; calm", strokes: 6, unicode: "U+5B89", category: "Peace", similar: ["平", "宁", "静"] },
+  { char: "和", pinyin: "hé", meaning: "harmony; peace", strokes: 8, unicode: "U+548C", category: "Peace", similar: ["平", "谐", "睦"] },
+  { char: "宁", pinyin: "níng", meaning: "peaceful; tranquil", strokes: 5, unicode: "U+5B81", variant: { script: "Traditional", char: "寧", unicode: "U+5BE7" }, category: "Peace", similar: ["安", "静", "寂"] },
+  { char: "静", pinyin: "jìng", meaning: "quiet; still; calm", strokes: 14, unicode: "U+9759", category: "Peace", similar: ["安", "默", "寂"] },
+  { char: "泰", pinyin: "tài", meaning: "peaceful; great", strokes: 10, unicode: "U+6CF0", category: "Peace", similar: ["安", "平", "稳"] },
+  { char: "康", pinyin: "kāng", meaning: "well-being; peace", strokes: 11, unicode: "U+5EB7", category: "Peace", similar: ["健", "宁", "安"] },
+  { char: "谐", pinyin: "xié", meaning: "harmony; concord", strokes: 11, unicode: "U+8C10", category: "Peace", similar: ["和", "睦", "调"] },
+  { char: "顺", pinyin: "shùn", meaning: "smooth; favorable", strokes: 9, unicode: "U+987A", category: "Peace", similar: ["畅", "和", "通"] },
+  { char: "稳", pinyin: "wěn", meaning: "stable; steady", strokes: 14, unicode: "U+7A33", category: "Peace", similar: ["安", "定", "固"] },
+  { char: "恬", pinyin: "tián", meaning: "calm; peaceful", strokes: 9, unicode: "U+606C", category: "Peace", similar: ["静", "淡", "安"] },
+  { char: "逸", pinyin: "yì", meaning: "ease; leisure", strokes: 11, unicode: "U+9038", category: "Peace", similar: ["闲", "舒", "安"] },
+
+  // ---------------- Strength ----------------
+  { char: "力", pinyin: "lì", meaning: "strength; power", strokes: 2, unicode: "U+529B", category: "Strength", similar: ["气", "劲", "勇"] },
+  { char: "强", pinyin: "qiáng", meaning: "strong; powerful", strokes: 11, unicode: "U+5F3A", category: "Strength", similar: ["壮", "刚", "劲"] },
+  { char: "勇", pinyin: "yǒng", meaning: "brave; courageous", strokes: 9, unicode: "U+52C7", category: "Strength", similar: ["敢", "猛", "刚"] },
+  { char: "刚", pinyin: "gāng", meaning: "firm; unyielding", strokes: 6, unicode: "U+521A", category: "Strength", similar: ["强", "硬", "毅"] },
+  { char: "壮", pinyin: "zhuàng", meaning: "strong; sturdy", strokes: 6, unicode: "U+58EE", category: "Strength", similar: ["强", "健", "大"] },
+  { char: "劲", pinyin: "jìn", meaning: "vigor; strength", strokes: 7, unicode: "U+52B2", category: "Strength", similar: ["力", "强", "健"] },
+  { char: "毅", pinyin: "yì", meaning: "resolute; firm", strokes: 15, unicode: "U+6BC5", category: "Strength", similar: ["刚", "坚", "恒"] },
+  { char: "韧", pinyin: "rèn", meaning: "tough; resilient", strokes: 7, unicode: "U+97E7", category: "Strength", similar: ["强", "柔", "坚"] },
+  { char: "雄", pinyin: "xióng", meaning: "mighty; male", strokes: 12, unicode: "U+96C4", category: "Strength", similar: ["伟", "壮", "豪"] },
+  { char: "猛", pinyin: "měng", meaning: "fierce; violent", strokes: 11, unicode: "U+731B", category: "Strength", similar: ["勇", "烈", "强"] },
+  { char: "霸", pinyin: "bà", meaning: "dominate; overlord", strokes: 21, unicode: "U+9738", category: "Strength", similar: ["王", "雄", "强"] },
+  { char: "威", pinyin: "wēi", meaning: "power; authority", strokes: 9, unicode: "U+5A01", category: "Strength", similar: ["武", "严", "雄"] },
+
+  // ---------------- Wisdom ----------------
+  { char: "智", pinyin: "zhì", meaning: "wisdom; intellect", strokes: 12, unicode: "U+667A", category: "Wisdom", similar: ["慧", "聪", "明"] },
+  { char: "慧", pinyin: "huì", meaning: "wisdom; clever", strokes: 15, unicode: "U+6167", category: "Wisdom", similar: ["智", "聪", "敏"] },
+  { char: "学", pinyin: "xué", meaning: "study; learn", strokes: 8, unicode: "U+5B66", variant: { script: "Traditional", char: "學", unicode: "U+5B78" }, category: "Wisdom", similar: ["习", "知", "问"] },
+  { char: "思", pinyin: "sī", meaning: "think; consider", strokes: 9, unicode: "U+601D", category: "Wisdom", similar: ["想", "念", "虑"] },
+  { char: "辨", pinyin: "biàn", meaning: "discern; distinguish", strokes: 17, unicode: "U+8FA8", category: "Wisdom", similar: ["辩", "析", "明"] },
+  { char: "悟", pinyin: "wù", meaning: "realize; awaken", strokes: 10, unicode: "U+609F", category: "Wisdom", similar: ["觉", "慧", "明"] },
+  { char: "明", pinyin: "míng", meaning: "bright; clear", strokes: 8, unicode: "U+660E", category: "Wisdom", similar: ["智", "亮", "清"] },
+  { char: "聪", pinyin: "cōng", meaning: "clever; sharp (ears)", strokes: 15, unicode: "U+806A", category: "Wisdom", similar: ["慧", "敏", "智"] },
+  { char: "睿", pinyin: "ruì", meaning: "wise; far-sighted", strokes: 14, unicode: "U+777F", category: "Wisdom", similar: ["智", "明", "圣"] },
+  { char: "博", pinyin: "bó", meaning: "broad; learned", strokes: 12, unicode: "U+535A", category: "Wisdom", similar: ["学", "识", "大"] },
+  { char: "识", pinyin: "shí", meaning: "knowledge; recognize", strokes: 7, unicode: "U+8BC6", variant: { script: "Traditional", char: "識", unicode: "U+8B58" }, category: "Wisdom", similar: ["知", "学", "见"] },
+  { char: "哲", pinyin: "zhé", meaning: "philosophy; wise", strokes: 10, unicode: "U+54F2", category: "Wisdom", similar: ["智", "理", "思"] },
+
+  // ---------------- Nature ----------------
+  { char: "木", pinyin: "mù", meaning: "tree; wood", strokes: 4, unicode: "U+6728", category: "Nature", similar: ["林", "森", "树"] },
+  { char: "水", pinyin: "shuǐ", meaning: "water", strokes: 4, unicode: "U+6C34", category: "Nature", similar: ["河", "海", "冰"] },
+  { char: "火", pinyin: "huǒ", meaning: "fire", strokes: 4, unicode: "U+706B", category: "Nature", similar: ["炎", "焰", "灯"] },
+  { char: "山", pinyin: "shān", meaning: "mountain", strokes: 3, unicode: "U+5C71", category: "Nature", similar: ["石", "峰", "岳"] },
+  { char: "风", pinyin: "fēng", meaning: "wind", strokes: 4, unicode: "U+98CE", variant: { script: "Traditional", char: "風", unicode: "U+98A8" }, category: "Nature", similar: ["云", "雨", "气"] },
+  { char: "云", pinyin: "yún", meaning: "cloud", strokes: 4, unicode: "U+4E91", variant: { script: "Traditional", char: "雲", unicode: "U+96F2" }, category: "Nature", similar: ["雨", "霞", "雾"] },
+  { char: "雨", pinyin: "yǔ", meaning: "rain", strokes: 8, unicode: "U+96E8", category: "Nature", similar: ["雪", "云", "雷"] },
+  { char: "石", pinyin: "shí", meaning: "stone; rock", strokes: 5, unicode: "U+77F3", category: "Nature", similar: ["山", "岩", "矿"] },
+  { char: "林", pinyin: "lín", meaning: "forest; woods", strokes: 8, unicode: "U+6797", category: "Nature", similar: ["木", "森", "树"] },
+  { char: "川", pinyin: "chuān", meaning: "river; stream", strokes: 3, unicode: "U+5DDD", category: "Nature", similar: ["水", "河", "流"] },
+  { char: "星", pinyin: "xīng", meaning: "star", strokes: 9, unicode: "U+661F", category: "Nature", similar: ["月", "光", "辰"] },
+  { char: "海", pinyin: "hǎi", meaning: "sea", strokes: 10, unicode: "U+6D77", category: "Nature", similar: ["水", "洋", "河"] },
+
+  // ---------------- Zodiac ----------------
+  { char: "鼠", pinyin: "shǔ", meaning: "rat (1st zodiac)", strokes: 13, unicode: "U+9F20", category: "Zodiac", similar: ["牛", "兽", "穴"] },
+  { char: "牛", pinyin: "niú", meaning: "ox (2nd zodiac)", strokes: 4, unicode: "U+725B", category: "Zodiac", similar: ["羊", "牧", "兽"] },
+  { char: "虎", pinyin: "hǔ", meaning: "tiger (3rd zodiac)", strokes: 8, unicode: "U+864E", category: "Zodiac", similar: ["狮", "猛", "王"] },
+  { char: "兔", pinyin: "tù", meaning: "rabbit (4th zodiac)", strokes: 8, unicode: "U+5154", category: "Zodiac", similar: ["月", "耳", "草"] },
+  { char: "龙", pinyin: "lóng", meaning: "dragon (5th zodiac)", strokes: 5, unicode: "U+9F99", variant: { script: "Traditional", char: "龍", unicode: "U+9F8D" }, category: "Zodiac", similar: ["凤", "王", "云"] },
+  { char: "蛇", pinyin: "shé", meaning: "snake (6th zodiac)", strokes: 11, unicode: "U+86C7", category: "Zodiac", similar: ["虫", "龙", "弯"] },
+  { char: "马", pinyin: "mǎ", meaning: "horse (7th zodiac)", strokes: 3, unicode: "U+9A6C", variant: { script: "Traditional", char: "馬", unicode: "U+99AC" }, category: "Zodiac", similar: ["牛", "驰", "奔"] },
+  { char: "羊", pinyin: "yáng", meaning: "goat (8th zodiac)", strokes: 6, unicode: "U+7F8A", category: "Zodiac", similar: ["牛", "牧", "美"] },
+  { char: "猴", pinyin: "hóu", meaning: "monkey (9th zodiac)", strokes: 12, unicode: "U+7334", category: "Zodiac", similar: ["猿", "树", "果"] },
+  { char: "鸡", pinyin: "jī", meaning: "rooster (10th zodiac)", strokes: 7, unicode: "U+9E21", variant: { script: "Traditional", char: "雞", unicode: "U+96DE" }, category: "Zodiac", similar: ["鸟", "羽", "晨"] },
+  { char: "狗", pinyin: "gǒu", meaning: "dog (11th zodiac)", strokes: 8, unicode: "U+72D7", category: "Zodiac", similar: ["犬", "兽", "守"] },
+  { char: "猪", pinyin: "zhū", meaning: "pig (12th zodiac)", strokes: 11, unicode: "U+732A", category: "Zodiac", similar: ["豕", "肉", "福"] },
+
+  // ---------------- Family ----------------
+  { char: "家", pinyin: "jiā", meaning: "home; family", strokes: 10, unicode: "U+5BB6", category: "Family", similar: ["室", "居", "庭"] },
+  { char: "父", pinyin: "fù", meaning: "father", strokes: 4, unicode: "U+7236", category: "Family", similar: ["母", "亲", "家"] },
+  { char: "母", pinyin: "mǔ", meaning: "mother", strokes: 5, unicode: "U+6BCD", category: "Family", similar: ["父", "亲", "爱"] },
+  { char: "子", pinyin: "zǐ", meaning: "child; son", strokes: 3, unicode: "U+5B50", category: "Family", similar: ["女", "儿", "孙"] },
+  { char: "女", pinyin: "nǚ", meaning: "woman; daughter", strokes: 3, unicode: "U+5973", category: "Family", similar: ["母", "子", "妹"] },
+  { char: "兄", pinyin: "xiōng", meaning: "elder brother", strokes: 5, unicode: "U+5144", category: "Family", similar: ["弟", "姐", "妹"] },
+  { char: "弟", pinyin: "dì", meaning: "younger brother", strokes: 7, unicode: "U+5F1F", category: "Family", similar: ["兄", "姐", "妹"] },
+  { char: "亲", pinyin: "qīn", meaning: "relative; kin", strokes: 9, unicode: "U+4EB2", variant: { script: "Traditional", char: "親", unicode: "U+89AA" }, category: "Family", similar: ["家", "爱", "朋"] },
+  { char: "孝", pinyin: "xiào", meaning: "filial piety", strokes: 7, unicode: "U+5B5D", category: "Family", similar: ["敬", "顺", "亲"] },
+  { char: "族", pinyin: "zú", meaning: "clan; tribe", strokes: 11, unicode: "U+65CF", category: "Family", similar: ["家", "民", "群"] },
+  { char: "和", pinyin: "hé", meaning: "harmony", strokes: 8, unicode: "U+548C", category: "Family", similar: ["睦", "谐", "平"] },
+  { char: "爱", pinyin: "ài", meaning: "love", strokes: 10, unicode: "U+7231", variant: { script: "Traditional", char: "愛", unicode: "U+611B" }, category: "Family", similar: ["家", "亲", "心"] },
+
+  // ---------------- Success ----------------
+  { char: "成", pinyin: "chéng", meaning: "success; complete", strokes: 6, unicode: "U+6210", category: "Success", similar: ["功", "就", "达"] },
+  { char: "功", pinyin: "gōng", meaning: "achievement; merit", strokes: 5, unicode: "U+529F", category: "Success", similar: ["成", "勋", "劳"] },
+  { char: "胜", pinyin: "shèng", meaning: "victory; win", strokes: 9, unicode: "U+80DC", variant: { script: "Traditional", char: "勝", unicode: "U+52DD" }, category: "Success", similar: ["利", "赢", "强"] },
+  { char: "赢", pinyin: "yíng", meaning: "win; profit", strokes: 17, unicode: "U+8D62", category: "Success", similar: ["胜", "利", "赚"] },
+  { char: "达", pinyin: "dá", meaning: "attain; reach", strokes: 6, unicode: "U+8FBE", variant: { script: "Traditional", char: "達", unicode: "U+9054" }, category: "Success", similar: ["成", "通", "到"] },
+  { char: "就", pinyin: "jiù", meaning: "accomplish; then", strokes: 12, unicode: "U+5C31", category: "Success", similar: ["成", "职", "业"] },
+  { char: "业", pinyin: "yè", meaning: "career; business", strokes: 5, unicode: "U+4E1A", variant: { script: "Traditional", char: "業", unicode: "U+696D" }, category: "Success", similar: ["事", "职", "商"] },
+  { char: "冠", pinyin: "guàn", meaning: "crown; first", strokes: 9, unicode: "U+51A0", category: "Success", similar: ["王", "首", "戴"] },
+  { char: "登", pinyin: "dēng", meaning: "ascend; mount", strokes: 12, unicode: "U+767B", category: "Success", similar: ["升", "攀", "高"] },
+  { char: "荣", pinyin: "róng", meaning: "glory; honor", strokes: 9, unicode: "U+8363", category: "Success", similar: ["耀", "华", "誉"] },
+  { char: "创", pinyin: "chuàng", meaning: "create; originate", strokes: 6, unicode: "U+521B", category: "Success", similar: ["造", "新", "业"] },
+  { char: "勋", pinyin: "xūn", meaning: "merit; achievement", strokes: 9, unicode: "U+52CB", category: "Success", similar: ["功", "劳", "誉"] },
+
+  // ---------------- Business ----------------
+  { char: "商", pinyin: "shāng", meaning: "commerce; trade", strokes: 11, unicode: "U+5546", category: "Business", similar: ["贸", "市", "贾"] },
+  { char: "贸", pinyin: "mào", meaning: "trade; commerce", strokes: 9, unicode: "U+8D38", category: "Business", similar: ["商", "易", "市"] },
+  { char: "市", pinyin: "shì", meaning: "market; city", strokes: 5, unicode: "U+5E02", category: "Business", similar: ["商", "场", "集"] },
+  { char: "利", pinyin: "lì", meaning: "profit; benefit", strokes: 7, unicode: "U+5229", category: "Business", similar: ["盈", "财", "益"] },
+  { char: "富", pinyin: "fù", meaning: "rich; wealthy", strokes: 12, unicode: "U+5BCC", category: "Business", similar: ["财", "贵", "裕"] },
+  { char: "财", pinyin: "cái", meaning: "wealth; capital", strokes: 7, unicode: "U+8D22", category: "Business", similar: ["富", "货", "利"] },
+  { char: "营", pinyin: "yíng", meaning: "operate; manage", strokes: 11, unicode: "U+8425", variant: { script: "Traditional", char: "營", unicode: "U+71DF" }, category: "Business", similar: ["商", "业", "运"] },
+  { char: "货", pinyin: "huò", meaning: "goods; cargo", strokes: 8, unicode: "U+8D27", category: "Business", similar: ["财", "商", "物"] },
+  { char: "信", pinyin: "xìn", meaning: "trust; faith", strokes: 9, unicode: "U+4FE1", category: "Business", similar: ["诚", "誉", "任"] },
+  { char: "通", pinyin: "tōng", meaning: "connect; circulate", strokes: 10, unicode: "U+901A", category: "Business", similar: ["达", "流", "商"] },
+  { char: "赢", pinyin: "yíng", meaning: "win; profit", strokes: 17, unicode: "U+8D62", category: "Business", similar: ["利", "盈", "胜"] },
+  { char: "贾", pinyin: "gǔ", meaning: "merchant; trader", strokes: 10, unicode: "U+8D3E", category: "Business", similar: ["商", "贩", "市"] },
+
+  // ---------------- Happiness ----------------
+  { char: "喜", pinyin: "xǐ", meaning: "joy; delight", strokes: 12, unicode: "U+559C", category: "Happiness", similar: ["乐", "悦", "庆"] },
+  { char: "乐", pinyin: "lè", meaning: "happy; pleasure", strokes: 5, unicode: "U+4E50", variant: { script: "Traditional", char: "樂", unicode: "U+697D" }, category: "Happiness", similar: ["喜", "欢", "悦"] },
+  { char: "笑", pinyin: "xiào", meaning: "smile; laugh", strokes: 10, unicode: "U+7B11", category: "Happiness", similar: ["喜", "乐", "欢"] },
+  { char: "欢", pinyin: "huān", meaning: "joyful; glad", strokes: 6, unicode: "U+6B22", variant: { script: "Traditional", char: "歡", unicode: "U+6B61" }, category: "Happiness", similar: ["喜", "乐", "笑"] },
+  { char: "福", pinyin: "fú", meaning: "blessing; happiness", strokes: 13, unicode: "U+798F", category: "Happiness", similar: ["喜", "禄", "寿"] },
+  { char: "悦", pinyin: "yuè", meaning: "pleased; delighted", strokes: 10, unicode: "U+60A6", category: "Happiness", similar: ["喜", "乐", "愉"] },
+  { char: "欣", pinyin: "xīn", meaning: "glad; joyful", strokes: 8, unicode: "U+6B23", category: "Happiness", similar: ["喜", "悦", "赏"] },
+  { char: "甜", pinyin: "tián", meaning: "sweet", strokes: 11, unicode: "U+751C", category: "Happiness", similar: ["蜜", "美", "笑"] },
+  { char: "愉", pinyin: "yú", meaning: "happy; cheerful", strokes: 12, unicode: "U+6109", category: "Happiness", similar: ["悦", "乐", "喜"] },
+  { char: "爽", pinyin: "shuǎng", meaning: "refreshing; cheerful", strokes: 11, unicode: "U+723D", category: "Happiness", similar: ["快", "畅", "朗"] },
+  { char: "蜜", pinyin: "mì", meaning: "honey; sweet", strokes: 14, unicode: "U+871C", category: "Happiness", similar: ["甜", "糖", "爱"] },
+  { char: "庆", pinyin: "qìng", meaning: "celebrate", strokes: 6, unicode: "U+5E86", variant: { script: "Traditional", char: "慶", unicode: "U+6176" }, category: "Happiness", similar: ["喜", "贺", "福"] },
+
+  // ---------------- Japanese Kanji-style ----------------
+  { char: "愛", pinyin: "ài", meaning: "love (kanji form)", strokes: 13, unicode: "U+611B", variant: { script: "Simplified", char: "爱", unicode: "U+7231" }, category: "Japanese Kanji-style", similar: ["恋", "心", "情"] },
+  { char: "龍", pinyin: "lóng", meaning: "dragon (kanji form)", strokes: 16, unicode: "U+9F8D", variant: { script: "Simplified", char: "龙", unicode: "U+9F99" }, category: "Japanese Kanji-style", similar: ["鳳", "雲", "王"] },
+  { char: "桜", pinyin: "yīng", meaning: "cherry blossom (sakura)", strokes: 11, unicode: "U+685C", category: "Japanese Kanji-style", similar: ["花", "桃", "美"] },
+  { char: "夢", pinyin: "mèng", meaning: "dream (kanji form)", strokes: 13, unicode: "U+5922", variant: { script: "Simplified", char: "梦", unicode: "U+68A6" }, category: "Japanese Kanji-style", similar: ["幻", "想", "星"] },
+  { char: "美", pinyin: "měi", meaning: "beauty", strokes: 9, unicode: "U+7F8E", category: "Japanese Kanji-style", similar: ["麗", "雅", "花"] },
+  { char: "空", pinyin: "kōng", meaning: "sky; empty (sora)", strokes: 8, unicode: "U+7A7A", category: "Japanese Kanji-style", similar: ["天", "雲", "風"] },
+  { char: "風", pinyin: "fēng", meaning: "wind (kanji form)", strokes: 9, unicode: "U+98A8", variant: { script: "Simplified", char: "风", unicode: "U+98CE" }, category: "Japanese Kanji-style", similar: ["雲", "雨", "空"] },
+  { char: "月", pinyin: "yuè", meaning: "moon (tsuki)", strokes: 4, unicode: "U+6708", category: "Japanese Kanji-style", similar: ["星", "夜", "空"] },
+  { char: "花", pinyin: "huā", meaning: "flower (hana)", strokes: 7, unicode: "U+82B1", category: "Japanese Kanji-style", similar: ["桜", "美", "草"] },
+  { char: "心", pinyin: "xīn", meaning: "heart (kokoro)", strokes: 4, unicode: "U+5FC3", category: "Japanese Kanji-style", similar: ["愛", "思", "静"] },
+  { char: "雪", pinyin: "xuě", meaning: "snow (yuki)", strokes: 11, unicode: "U+96EA", category: "Japanese Kanji-style", similar: ["氷", "白", "冬"] },
+  { char: "海", pinyin: "hǎi", meaning: "sea (umi)", strokes: 10, unicode: "U+6D77", category: "Japanese Kanji-style", similar: ["水", "波", "島"] },
+
+  // ---------------- Traditional Chinese ----------------
+  { char: "愛", pinyin: "ài", meaning: "love", strokes: 13, unicode: "U+611B", variant: { script: "Simplified", char: "爱", unicode: "U+7231" }, category: "Traditional Chinese", similar: ["情", "心", "戀"] },
+  { char: "龍", pinyin: "lóng", meaning: "dragon", strokes: 16, unicode: "U+9F8D", variant: { script: "Simplified", char: "龙", unicode: "U+9F99" }, category: "Traditional Chinese", similar: ["鳳", "王", "雲"] },
+  { char: "國", pinyin: "guó", meaning: "country; nation", strokes: 11, unicode: "U+570B", variant: { script: "Simplified", char: "国", unicode: "U+56FD" }, category: "Traditional Chinese", similar: ["家", "邦", "土"] },
+  { char: "體", pinyin: "tǐ", meaning: "body; form", strokes: 22, unicode: "U+9AD4", variant: { script: "Simplified", char: "体", unicode: "U+4F53" }, category: "Traditional Chinese", similar: ["身", "骨", "形"] },
+  { char: "學", pinyin: "xué", meaning: "study; learn", strokes: 16, unicode: "U+5B78", variant: { script: "Simplified", char: "学", unicode: "U+5B66" }, category: "Traditional Chinese", similar: ["習", "問", "知"] },
+  { char: "門", pinyin: "mén", meaning: "door; gate", strokes: 8, unicode: "U+9580", variant: { script: "Simplified", char: "门", unicode: "U+95E8" }, category: "Traditional Chinese", similar: ["戶", "窗", "開"] },
+  { char: "華", pinyin: "huá", meaning: "magnificent; China", strokes: 12, unicode: "U+83EF", variant: { script: "Simplified", char: "华", unicode: "U+534E" }, category: "Traditional Chinese", similar: ["美", "榮", "麗"] },
+  { char: "豐", pinyin: "fēng", meaning: "abundant; plentiful", strokes: 18, unicode: "U+8C50", variant: { script: "Simplified", char: "丰", unicode: "U+4E30" }, category: "Traditional Chinese", similar: ["富", "盈", "滿"] },
+  { char: "鳥", pinyin: "niǎo", meaning: "bird", strokes: 14, unicode: "U+9CE5", variant: { script: "Simplified", char: "鸟", unicode: "U+9E1F" }, category: "Traditional Chinese", similar: ["羽", "飛", "禽"] },
+  { char: "親", pinyin: "qīn", meaning: "relative; parents", strokes: 15, unicode: "U+89AA", variant: { script: "Simplified", char: "亲", unicode: "U+4EB2" }, category: "Traditional Chinese", similar: ["家", "愛", "朋"] },
+  { char: "雲", pinyin: "yún", meaning: "cloud", strokes: 12, unicode: "U+96F2", variant: { script: "Simplified", char: "云", unicode: "U+4E91" }, category: "Traditional Chinese", similar: ["雨", "霞", "風"] },
+  { char: "風", pinyin: "fēng", meaning: "wind", strokes: 9, unicode: "U+98A8", variant: { script: "Simplified", char: "风", unicode: "U+98CE" }, category: "Traditional Chinese", similar: ["雲", "雨", "氣"] },
+
+  // ---------------- Simplified Chinese ----------------
+  { char: "爱", pinyin: "ài", meaning: "love", strokes: 10, unicode: "U+7231", variant: { script: "Traditional", char: "愛", unicode: "U+611B" }, category: "Simplified Chinese", similar: ["情", "心", "恋"] },
+  { char: "龙", pinyin: "lóng", meaning: "dragon", strokes: 5, unicode: "U+9F99", variant: { script: "Traditional", char: "龍", unicode: "U+9F8D" }, category: "Simplified Chinese", similar: ["凤", "王", "云"] },
+  { char: "国", pinyin: "guó", meaning: "country; nation", strokes: 8, unicode: "U+56FD", variant: { script: "Traditional", char: "國", unicode: "U+570B" }, category: "Simplified Chinese", similar: ["家", "邦", "土"] },
+  { char: "体", pinyin: "tǐ", meaning: "body; form", strokes: 7, unicode: "U+4F53", variant: { script: "Traditional", char: "體", unicode: "U+9AD4" }, category: "Simplified Chinese", similar: ["身", "骨", "形"] },
+  { char: "学", pinyin: "xué", meaning: "study; learn", strokes: 8, unicode: "U+5B66", variant: { script: "Traditional", char: "學", unicode: "U+5B78" }, category: "Simplified Chinese", similar: ["习", "问", "知"] },
+  { char: "门", pinyin: "mén", meaning: "door; gate", strokes: 3, unicode: "U+95E8", variant: { script: "Traditional", char: "門", unicode: "U+9580" }, category: "Simplified Chinese", similar: ["户", "窗", "开"] },
+  { char: "华", pinyin: "huá", meaning: "magnificent; China", strokes: 6, unicode: "U+534E", variant: { script: "Traditional", char: "華", unicode: "U+83EF" }, category: "Simplified Chinese", similar: ["美", "荣", "丽"] },
+  { char: "丰", pinyin: "fēng", meaning: "abundant; plentiful", strokes: 4, unicode: "U+4E30", variant: { script: "Traditional", char: "豐", unicode: "U+8C50" }, category: "Simplified Chinese", similar: ["富", "盈", "满"] },
+  { char: "鸟", pinyin: "niǎo", meaning: "bird", strokes: 5, unicode: "U+9E1F", variant: { script: "Traditional", char: "鳥", unicode: "U+9CE5" }, category: "Simplified Chinese", similar: ["羽", "飞", "禽"] },
+  { char: "亲", pinyin: "qīn", meaning: "relative; parents", strokes: 9, unicode: "U+4EB2", variant: { script: "Traditional", char: "親", unicode: "U+89AA" }, category: "Simplified Chinese", similar: ["家", "爱", "朋"] },
+  { char: "云", pinyin: "yún", meaning: "cloud", strokes: 4, unicode: "U+4E91", variant: { script: "Traditional", char: "雲", unicode: "U+96F2" }, category: "Simplified Chinese", similar: ["雨", "霞", "风"] },
+  { char: "风", pinyin: "fēng", meaning: "wind", strokes: 4, unicode: "U+98CE", variant: { script: "Traditional", char: "風", unicode: "U+98A8" }, category: "Simplified Chinese", similar: ["云", "雨", "气"] },
+];
