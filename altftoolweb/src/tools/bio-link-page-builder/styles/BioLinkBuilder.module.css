@@ -1,0 +1,9 @@
+.appShell {
+  isolation: isolate;
+  width: 100%;
+  min-width: 0;
+}
+
+.appShell * {
+  min-width: 0;
+}

@@ -1,0 +1,18 @@
+.batch-generation-tool {
+  min-width: 0;
+  min-height: 100%;
+  background: var(--background);
+  color: var(--foreground);
+}
+
+.batch-generation-tool * {
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+.batch-generation-shell {
+  width: min(1200px, 100%);
+  margin: 0 auto;
+  padding: 24px clamp(12px, 3vw, 24px) 48px;
+  overflow-x: hidden;
+}
