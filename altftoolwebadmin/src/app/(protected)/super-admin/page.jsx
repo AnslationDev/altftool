@@ -97,6 +97,9 @@ function ProjectCard({ project, href, accessible, projectSummary }) {
   const moduleCount = projectSummary?.moduleCount || modules.length;
   const description = projectSummary?.description || meta.description || `Manage ${project.name} modules and admin content.`;
 
+
+  console.log(project.length , "project data")
+
   return (
     <Link
       href={accessible ? href : "/access-denied"}
@@ -117,7 +120,7 @@ function ProjectCard({ project, href, accessible, projectSummary }) {
       </div>
 
       <div className="mt-5 min-w-0 flex-1">
-        <h2 className="text-lg font-black tracking-tight text-[var(--foreground)]">{project.name}</h2>
+        <h2 className="text-lg font-black tracking-tight text-[var(--foreground)]">{project.projectName}</h2>
         <p className="mt-2 line-clamp-3 text-sm leading-6 text-[var(--muted)]">
           {description}
         </p>
@@ -126,12 +129,14 @@ function ProjectCard({ project, href, accessible, projectSummary }) {
       <div className="mt-5 grid grid-cols-2 gap-3 border-t border-[var(--border)] pt-4">
         <div>
           <p className="text-[11px] font-bold uppercase tracking-[0.08em] text-[var(--muted)]">Modules</p>
-          <p className="mt-1 text-xl font-black text-[var(--foreground)]">{moduleCount}</p>
+          <p className="mt-1 text-xl font-black text-[var(--foreground)]">{project.moduleCount}</p>
         </div>
         <div>
           <p className="text-[11px] font-bold uppercase tracking-[0.08em] text-[var(--muted)]">Open</p>
           <p className="mt-1 inline-flex items-center gap-1 text-sm font-bold" style={{ color: accent }}>
-            Admin Panel <ArrowRight className="h-4 w-4 transition group-hover:translate-x-0.5" />
+            <Link  href={project.adminRoute}>
+            Admin Panel <ArrowRight className="h-4 w-4 transition group-hover:translate-x-0.5" /></Link>
+            
           </p>
         </div>
       </div>
@@ -160,6 +165,8 @@ export default function SuperAdminDashboardPage() {
     return map;
   }, [summary]);
 
+
+
   const fallbackModules = activeProjects.reduce(
     (count, project) => count + Object.keys(project.modules || {}).length,
     0,
@@ -187,6 +194,8 @@ export default function SuperAdminDashboardPage() {
   useEffect(() => {
     loadSummary();
   }, [loadSummary]);
+
+  console.log("summary project data is comming" , summary)
 
   const counts = summary?.counts || {};
   const totalProjects = counts.projects || activeProjects.length;
@@ -312,7 +321,7 @@ export default function SuperAdminDashboardPage() {
           </div>
 
           <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-            {projects.map((project) => {
+             { summary?.projects?.map((project) => {
               const firstModuleKey = Object.keys(project.modules || {})[0];
               const href = firstModuleKey ? getProjectModuleRoute(project.id, firstModuleKey) : `/${project.id}`;
               const accessible = isSuperAdmin || hasProjectAccess({ adminData, projectId: project.id });
