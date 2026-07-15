@@ -2,6 +2,14 @@
 
 import CustomBlogEditor from "@/components/admin/CustomBlogEditor";
 
-export default function CareerBookBlogEditor({ value, onChange }) {
-  return <CustomBlogEditor value={value} onChange={onChange} />;
+export default function CareerBookBlogEditor({ value, onChange, error, readOnly, draftKey }) {
+  return (
+    <CustomBlogEditor
+      value={value}
+      onChange={onChange}
+      error={error}
+      readOnly={readOnly}
+      draftKey={draftKey || "careerbook-blog-editor"}
+    />
+  );
 }
