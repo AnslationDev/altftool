@@ -1,4 +1,4 @@
-import { memo, useMemo, useRef, useEffect, useState } from "react";
+import { memo, useCallback, useMemo, useRef, useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { PLAYERS, TOTAL_CELLS, SAFE_POSITIONS, HOME_ENTRY } from "../engine/constants";
 

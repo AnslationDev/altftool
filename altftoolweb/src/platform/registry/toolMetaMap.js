@@ -53,12 +53,42 @@ export const toolMetaMap = {
     "icon": "scan-face",
     "iconColor": "text-purple-500"
   },
+  "age-progression-generator": {
+    "name": "Age Progression Generator",
+    "description": "Upload your photo and use the target age slider to visualize your look, traits, and wellness projections in the future.",
+    "category": [
+      "AI",
+      "Image"
+    ],
+    "icon": "hourglass",
+    "iconColor": "text-purple-500"
+  },
   "ai-domain-generator": {
     "name": "AI Domain Generator",
     "description": "Generate AI Domains",
     "category": "AI",
     "icon": "globe",
     "iconColor": "text-gray-500"
+  },
+  "ai-face-match": {
+    "name": "AI Face Match",
+    "description": "Upload two images to execute a face comparison and calculate their similarity index.",
+    "category": [
+      "AI",
+      "Image"
+    ],
+    "icon": "scan-face",
+    "iconColor": "text-teal-500"
+  },
+  "ai-passport-photo-maker": {
+    "name": "AI Passport Photo Maker",
+    "description": "Create professional passport and visa photos with AI-powered face detection, background removal, and multi-format print sheets.",
+    "category": [
+      "Photo",
+      "Productivity"
+    ],
+    "icon": "id-card",
+    "iconColor": "text-blue-600"
   },
   "ambiguous-figure-viewer": {
     "name": "Ambiguous Figure Viewer",
@@ -149,6 +179,16 @@ export const toolMetaMap = {
     ],
     "icon": "music",
     "iconColor": "text-pink-700"
+  },
+  "aura-color-generator": {
+    "name": "Aura Color Generator",
+    "description": "Upload a photo and discover your fictional aura color with playful descriptions!",
+    "category": [
+      "Fun",
+      "Entertainment"
+    ],
+    "icon": "circle",
+    "iconColor": "text-purple-500"
   },
   "avatar-generator": {
     "name": "Avatar Generator",
@@ -318,6 +358,13 @@ export const toolMetaMap = {
     "icon": "activity",
     "iconColor": "text-green-500"
   },
+  "beauty-score": {
+    "name": "Beauty Score Calculator",
+    "description": "Calculate your facial beauty score based on symmetry and the Golden Ratio.",
+    "category": "Fun / AI",
+    "icon": "scan-face",
+    "iconColor": "text-purple-500"
+  },
   "bg-remover": {
     "name": "Background Remover",
     "description": "Remove your Image background in just a one click",
@@ -366,6 +413,16 @@ export const toolMetaMap = {
     ],
     "icon": "link",
     "iconColor": "text-cyan-600"
+  },
+  "birthday-analyzer": {
+    "name": "Birthday Analyzer",
+    "description": "Get detailed birthday insights including zodiac signs, age analytics, milestones, and live countdowns.",
+    "category": [
+      "Lifestyle",
+      "AI"
+    ],
+    "icon": "cake",
+    "iconColor": "text-pink-600"
   },
   "bmi-calculator": {
     "name": "BMI Calculator",
@@ -418,6 +475,16 @@ export const toolMetaMap = {
     "category": "Cybersecurity Tool",
     "icon": "shield-check",
     "iconColor": "text-red-800"
+  },
+  "browser-session-analyzer": {
+    "name": "Browser Session Analyzer",
+    "description": "Analyze browser tab sessions, detect duplicates, categorize domains, and get productivity insights to clean up your browsing.",
+    "category": [
+      "Developer",
+      "Productivity"
+    ],
+    "icon": "layout-dashboard",
+    "iconColor": "text-indigo-600"
   },
   "bulk-text-replacer": {
     "name": "Bulk Text Replacer",
@@ -498,6 +565,17 @@ export const toolMetaMap = {
     "icon": "wand-2",
     "iconColor": "text-(--primary)"
   },
+  "cartoon-yourself": {
+    "name": "Cartoon Yourself",
+    "description": "Transform your photos into cartoon-style portraits with multiple art styles and customization.",
+    "category": [
+      "Design",
+      "Image",
+      "Creators"
+    ],
+    "icon": "paintbrush",
+    "iconColor": "text-violet-600"
+  },
   "celebrity-look-alike": {
     "name": "Which Celebrity Do You Look Like?",
     "description": "Upload a photo and discover which celebrity shares your facial features and jawline structure.",
@@ -541,6 +619,20 @@ export const toolMetaMap = {
     "category": "Educational",
     "icon": "book-open",
     "iconColor": "text-blue-600"
+  },
+  "clipboard-capsule": {
+    "name": "Clipboard Capsule",
+    "description": "Save, manage, categorize, and retrieve your clipboard history seamlessly.",
+    "category": "Productivity",
+    "icon": "clipboard",
+    "iconColor": "text-emerald-600"
+  },
+  "clipboard-history": {
+    "name": "Clipboard History",
+    "description": "Track, save and manage your clipboard history with auto-detection and smart categorization.",
+    "category": "Productivity",
+    "icon": "clock",
+    "iconColor": "text-violet-600"
   },
   "clothing-body-measurements": {
     "name": "Clothing / Body Measurement Conversions",
@@ -865,6 +957,16 @@ export const toolMetaMap = {
     "icon": "table-properties",
     "iconColor": "text-cyan-500"
   },
+  "decision-wheel": {
+    "name": "Decision Wheel",
+    "description": "Spin to decide! Random picker, team selector, giveaway wheel with full customization, statistics, and sharing.",
+    "category": [
+      "Fun",
+      "Productivity"
+    ],
+    "icon": "pi",
+    "iconColor": "text-teal-600"
+  },
   "definition-of-done-generator": {
     "name": "Definition of Done Generator",
     "description": "Generate a practical Definition of Done checklist tailored to project type, tech stack, team size, and compliance needs.",
@@ -1078,6 +1180,16 @@ export const toolMetaMap = {
     "icon": "wallet",
     "iconColor": "text-emerald-600"
   },
+  "face-shape-detector": {
+    "name": "Face Shape Detector",
+    "description": "Analyze facial landmarks to mathematically determine your face shape and get style recommendations.",
+    "category": [
+      "AI",
+      "Image"
+    ],
+    "icon": "scan",
+    "iconColor": "text-indigo-500"
+  },
   "fake-data": {
     "name": "Fake Data",
     "description": "Generate fake data for testing",
@@ -1127,6 +1239,16 @@ export const toolMetaMap = {
     "icon": "file-code",
     "iconColor": "text-cyan-500"
   },
+  "file-metadata-explorer": {
+    "name": "File Metadata Explorer",
+    "description": "Extract and explore detailed metadata from files — images, documents, audio, video, and more. All processing stays in your browser.",
+    "category": [
+      "Developer",
+      "Productivity"
+    ],
+    "icon": "file-search",
+    "iconColor": "text-violet-600"
+  },
   "file-to-base64": {
     "name": "File to Base64",
     "description": "Convert local files into Base64 data URLs without uploading.",
@@ -1166,6 +1288,17 @@ export const toolMetaMap = {
     ],
     "icon": "folder-tree",
     "iconColor": "text-(--primary)"
+  },
+  "font-css-style-generator": {
+    "name": "Font CSS Style Generator",
+    "description": "Generate responsive typography CSS with live font previews, gradients, shadows, presets, copy, download, and local history.",
+    "category": [
+      "Design",
+      "Developer",
+      "Web"
+    ],
+    "icon": "type",
+    "iconColor": "text-cyan-500"
   },
   "form-abandonment-simulator": {
     "name": "Form Abandonment Simulator",
@@ -1220,6 +1353,16 @@ export const toolMetaMap = {
     "icon": "users",
     "iconColor": "text-cyan-500"
   },
+  "future-baby-generator": {
+    "name": "Future Baby Generator",
+    "description": "Upload parents' photos and enter names to predict baby facial features, genetics, and name recommendations.",
+    "category": [
+      "AI",
+      "Image"
+    ],
+    "icon": "baby",
+    "iconColor": "text-blue-500"
+  },
   "future-child-predictor": {
     "name": "Future Child Predictor",
     "description": "Enter parents' names and select physical traits to predict your future child's genetic traits and personality profile.",
@@ -1233,6 +1376,13 @@ export const toolMetaMap = {
     "category": "Lifestyle",
     "icon": "heart-handshake",
     "iconColor": "text-indigo-500"
+  },
+  "generate-random-string": {
+    "name": "Generate Random String",
+    "description": "Generate secure random strings, batches, patterns, QR codes, and exports in the browser.",
+    "category": "Developer",
+    "icon": "key-round",
+    "iconColor": "text-cyan-500"
   },
   "gift-finder": {
     "name": "Gift Finder",
@@ -1251,12 +1401,30 @@ export const toolMetaMap = {
     "icon": "search",
     "iconColor": "text-teal-500"
   },
+  "giveaway-winner-picker": {
+    "name": "Giveaway Winner Picker",
+    "description": "Create giveaways, manage participant entries, detect duplicates, and reveal fair random winners with animated draw history.",
+    "category": [
+      "Creators",
+      "Marketing",
+      "Utility"
+    ],
+    "icon": "gift",
+    "iconColor": "text-fuchsia-600"
+  },
   "gold-price-checker": {
     "name": "Gold Price Checker",
     "description": "Check the current price of gold in real-time",
     "category": "Business",
     "icon": "coins",
     "iconColor": "text-yellow-500"
+  },
+  "golden-hour-time-estimator": {
+    "name": "Golden Hour Time Estimator",
+    "description": "Calculate precise golden hour, sunrise, sunset, and blue hour windows with real-time countdowns, sun path animation, and camera planning alerts.",
+    "category": "Creators",
+    "icon": "sun",
+    "iconColor": "text-amber-500"
   },
   "golden-ratio-visualizer": {
     "name": "Golden Ratio Visualizer",
@@ -1308,6 +1476,13 @@ export const toolMetaMap = {
     "icon": "calculator",
     "iconColor": "text-green-600"
   },
+  "hashtag-set-organizer": {
+    "name": "Hashtag Set Organizer",
+    "description": "Futuristic social media hashtag planner & marketing dashboard.",
+    "category": "Marketing",
+    "icon": "hash",
+    "iconColor": "text-blue-500"
+  },
   "heic-to-jpg": {
     "name": "HEIC to JPG Converter",
     "description": "Convert Apple HEIC/HEIF images into standard JPG or PNG files locally in your web browser. Supports batch conversions, custom image quality, and ZIP exports.",
@@ -1327,6 +1502,16 @@ export const toolMetaMap = {
     ],
     "icon": "hash",
     "iconColor": "text-sky-600"
+  },
+  "hidden-talent-finder": {
+    "name": "Hidden Talent Finder",
+    "description": "Discover your unique and quirky hidden talent based on your name and birth month.",
+    "category": [
+      "Lifestyle",
+      "Fun"
+    ],
+    "icon": "sparkles",
+    "iconColor": "text-purple-500"
   },
   "hindi-vernamala": {
     "name": "Hindi Varnamala",
@@ -1686,12 +1871,26 @@ export const toolMetaMap = {
     "icon": "star",
     "iconColor": "text-purple-600"
   },
+  "lens-field-of-view-calculator": {
+    "name": "Lens Field of View Calculator",
+    "description": "Calculate camera field of view, crop factors, scene coverage, and compare lenses in real-time.",
+    "category": "Creators",
+    "icon": "camera",
+    "iconColor": "text-blue-500"
+  },
   "life-productivity-score": {
     "name": "Life Productivity Score",
     "description": "Calculate your life productivity score",
     "category": "lifestyle",
     "icon": "activity",
     "iconColor": "text-green-600"
+  },
+  "link-organizer": {
+    "name": "Link Organizer",
+    "description": "Group, save, and bulk-open your daily links and resources.",
+    "category": "Productivity",
+    "icon": "link",
+    "iconColor": "text-blue-500"
   },
   "link-preview-generator": {
     "name": "Link Preview Generator",
@@ -1743,6 +1942,26 @@ export const toolMetaMap = {
     "icon": "heart",
     "iconColor": "text-rose-500"
   },
+  "lucky-face-score": {
+    "name": "Lucky Face Score",
+    "description": "Upload a photo and discover your fictional luck score with fun badges and fortune!",
+    "category": [
+      "Fun",
+      "Entertainment"
+    ],
+    "icon": "clover",
+    "iconColor": "text-amber-500"
+  },
+  "ludo-multiplayer": {
+    "name": "Ludo Multiplayer",
+    "description": "Play classic Ludo with friends locally or challenge the AI. Features smart AI, 3D dice, themes, and full statistics.",
+    "category": [
+      "Game",
+      "Entertainment"
+    ],
+    "icon": "dices",
+    "iconColor": "text-amber-500"
+  },
   "markdown-html-converter": {
     "name": "Markdown / HTML Converter",
     "description": "Convert Markdown into HTML and strip HTML back to text.",
@@ -1758,6 +1977,17 @@ export const toolMetaMap = {
     "description": "Preview Markdown files",
     "category": "Developer",
     "icon": "edit",
+    "iconColor": "text-blue-500"
+  },
+  "meeting-agenda-builder": {
+    "name": "Meeting Agenda Builder",
+    "description": "Create meetings, manage attendees, build real-time draggable agendas, track actions, reminders, and export meeting summaries.",
+    "category": [
+      "Productivity",
+      "Business",
+      "Planning"
+    ],
+    "icon": "clipboard-list",
     "iconColor": "text-blue-500"
   },
   "meeting-cost-calculator": {
@@ -1829,6 +2059,17 @@ export const toolMetaMap = {
     "icon": "wallet",
     "iconColor": "text-blue-600"
   },
+  "morse-code-audio": {
+    "name": "Morse Code Audio",
+    "description": "Convert text to Morse code, listen to audible signals with customizable pitch, speed, and volume, and follow real-time visual highlight tracking.",
+    "category": [
+      "Text",
+      "Audio",
+      "Education"
+    ],
+    "icon": "volume-2",
+    "iconColor": "text-teal-500"
+  },
   "morse-code-translator": {
     "name": "Morse Code Translator",
     "description": "Translate plain text to Morse code and decode Morse back.",
@@ -1879,6 +2120,26 @@ export const toolMetaMap = {
     "icon": "clock",
     "iconColor": "text-blue-600"
   },
+  "mysql-visualization-tools": {
+    "name": "MySQL Visualization Tools",
+    "description": "Visualize MySQL schemas, ER diagrams, relationships, query references, and export browser-generated diagrams in real time.",
+    "category": [
+      "Developer",
+      "Web"
+    ],
+    "icon": "database-zap",
+    "iconColor": "text-cyan-500"
+  },
+  "name-compatibility": {
+    "name": "Name Compatibility",
+    "description": "Check the compatibility between two names with detailed love, friendship, and soulmate analysis.",
+    "category": [
+      "Lifestyle",
+      "Fun"
+    ],
+    "icon": "heart",
+    "iconColor": "text-rose-600"
+  },
   "net-worth-tracker": {
     "name": "Net Worth Tracker",
     "description": "Track assets minus liabilities with monthly net worth snapshots, projections, and category breakdowns.",
@@ -1910,6 +2171,27 @@ export const toolMetaMap = {
     ],
     "icon": "file-text",
     "iconColor": "text-indigo-600"
+  },
+  "okr-generator": {
+    "name": "OKR Generator",
+    "description": "Generate objectives with measurable key results and suggested initiatives using AI-style prompts.",
+    "category": [
+      "Productivity",
+      "Planning",
+      "Business"
+    ],
+    "icon": "circle-dot",
+    "iconColor": "text-violet-500"
+  },
+  "old-photo-restorer": {
+    "name": "Old Photo Restorer",
+    "description": "Breathe new life into vintage, grainy, sepia-toned, or scratched photographs with AI restoration logic.",
+    "category": [
+      "AI",
+      "Image"
+    ],
+    "icon": "wand-2",
+    "iconColor": "text-teal-500"
   },
   "online-compiler": {
     "name": "Online Code Compiler",
@@ -2152,6 +2434,16 @@ export const toolMetaMap = {
     "icon": "quote",
     "iconColor": "text-purple-600"
   },
+  "random-fun-picker": {
+    "name": "Random Fun Picker",
+    "description": "Pick a lunch spot, play Truth or Dare, or randomly select names — three fun tools in one.",
+    "category": [
+      "Fun",
+      "Productivity"
+    ],
+    "icon": "shuffle",
+    "iconColor": "text-cyan-600"
+  },
   "rashi-finder": {
     "name": "Rashi Finder",
     "description": "Find your rashi instantly based on date of birth.",
@@ -2283,6 +2575,13 @@ export const toolMetaMap = {
     "icon": "layers",
     "iconColor": "text-gray-600"
   },
+  "shot-list-planner": {
+    "name": "Shot List Planner",
+    "description": "Plan scenes, sequence shots, track production status, manage gear notes, and export printable shooting sheets.",
+    "category": "Creators",
+    "icon": "clapperboard",
+    "iconColor": "text-cyan-500"
+  },
   "simon-says-game": {
     "name": "Simon Says Game",
     "description": "Train your memory with the classic Simon Says game featuring multiple modes, difficulty levels, sound effects, and score tracking.",
@@ -2322,6 +2621,16 @@ export const toolMetaMap = {
     "icon": "droplet",
     "iconColor": "text-pink-600"
   },
+  "skin-tone-analyzer": {
+    "name": "Skin Tone Analyzer",
+    "description": "Capture from your webcam or upload a photo to identify surface tone, Fitzpatrick type, and get personalized wardrobe and cosmetic color advice.",
+    "category": [
+      "AI",
+      "Image"
+    ],
+    "icon": "droplet",
+    "iconColor": "text-rose-500"
+  },
   "sleep-calculator": {
     "name": "Sleep Calculator",
     "description": "Find ideal bedtime or wake-up options using 90-minute sleep cycles.",
@@ -2331,6 +2640,17 @@ export const toolMetaMap = {
     ],
     "icon": "clock",
     "iconColor": "text-indigo-600"
+  },
+  "smart-goal-planner": {
+    "name": "SMART Goal Planner",
+    "description": "Create SMART goals, manage milestones and tasks, track live progress, reminders, analytics, reports, and local autosave.",
+    "category": [
+      "Productivity",
+      "Planning",
+      "Business"
+    ],
+    "icon": "target",
+    "iconColor": "text-cyan-500"
   },
   "snake-game": {
     "name": "Snake Game",
@@ -2390,6 +2710,16 @@ export const toolMetaMap = {
     "icon": "spell-check",
     "iconColor": "text-blue-600"
   },
+  "spirit-animal-finder": {
+    "name": "Spirit Animal Finder",
+    "description": "Discover your spirit animal through personality questions and find your deep connection with nature.",
+    "category": [
+      "Lifestyle",
+      "Fun"
+    ],
+    "icon": "paw-print",
+    "iconColor": "text-amber-600"
+  },
   "spirograph-genrator": {
     "name": "Spirograph Generator",
     "description": "Generate customizable spirograph patterns and export them as PNG.",
@@ -2399,6 +2729,17 @@ export const toolMetaMap = {
     ],
     "icon": "orbit",
     "iconColor": "text-cyan-600"
+  },
+  "sprint-goal-generator": {
+    "name": "Sprint Goal Generator",
+    "description": "Create focused sprint goals with measurable outcomes, scope notes, risks, and review prompts for agile planning.",
+    "category": [
+      "Productivity",
+      "Planning",
+      "Business"
+    ],
+    "icon": "flag",
+    "iconColor": "text-violet-500"
   },
   "sql-formatter": {
     "name": "SQL Formatter",
@@ -2428,6 +2769,13 @@ export const toolMetaMap = {
     "icon": "footprints",
     "iconColor": "text-green-700"
   },
+  "storyboard-builder": {
+    "name": "Storyboard Builder",
+    "description": "Create visual sequences, plan scene durations, sequence shots, sketch concepts, organize actor dialogue, and export production sheets.",
+    "category": "Creators",
+    "icon": "clapperboard",
+    "iconColor": "text-indigo-500"
+  },
   "stroop-effect": {
     "name": "Stroop Effect Test",
     "description": "Test your cognitive control — name the color, not the word. Measure your Stroop Effect and reaction time in this classic psychology experiment.",
@@ -2448,6 +2796,16 @@ export const toolMetaMap = {
     ],
     "icon": "calendar-clock",
     "iconColor": "text-violet-600"
+  },
+  "superpower-generator": {
+    "name": "Superpower Generator",
+    "description": "Generate your unique superhero persona, complete with a primary superpower, a funny weakness, and a dramatic origin story.",
+    "category": [
+      "Lifestyle",
+      "Fun"
+    ],
+    "icon": "zap",
+    "iconColor": "text-yellow-500"
   },
   "survey-builder": {
     "name": "Survey Builder",
@@ -2519,6 +2877,16 @@ export const toolMetaMap = {
     "icon": "file-diff",
     "iconColor": "text-rose-600"
   },
+  "text-diff-viewer": {
+    "name": "Text Diff Viewer",
+    "description": "Compare text versions side-by-side with syntax highlighting, version history, analytics, and export.",
+    "category": [
+      "Developer",
+      "Productivity"
+    ],
+    "icon": "file-diff",
+    "iconColor": "text-blue-600"
+  },
   "text-encryptor": {
     "name": "Text Encryptor",
     "description": "Hash text and encrypt or decrypt AES-GCM payloads locally.",
@@ -2581,6 +2949,17 @@ export const toolMetaMap = {
     "icon": "edit-3",
     "iconColor": "text-teal-500"
   },
+  "text-to-nato-phonetic": {
+    "name": "Text to NATO Phonetic",
+    "description": "Convert text messages into the international NATO phonetic spelling (Alpha, Bravo, Charlie...) for clear verbal communication, with client-side audio pronunciation.",
+    "category": [
+      "Text",
+      "Education",
+      "Utility"
+    ],
+    "icon": "volume-2",
+    "iconColor": "text-cyan-500"
+  },
   "text-to-qr-code": {
     "name": "Text to QR Code",
     "description": "Convert text, URLs, contacts, Wi-Fi credentials, and more into high-quality QR codes with real-time preview and customization.",
@@ -2609,6 +2988,13 @@ export const toolMetaMap = {
     "icon": "languages",
     "iconColor": "text-blue-700"
   },
+  "thumbnail-layout-planner": {
+    "name": "Thumbnail Layout Planner",
+    "description": "Plan YouTube thumbnail layouts with draggable visual elements, live preview, workflow tracking, branding notes, and exportable creative briefs.",
+    "category": "Creators",
+    "icon": "layout-template",
+    "iconColor": "text-cyan-500"
+  },
   "tic-tac-toe-game": {
     "name": "Tic-Tac-Toe Game",
     "description": "Play a responsive Tic-Tac-Toe game with score tracking, win detection, draw handling, and optional computer moves.",
@@ -2618,6 +3004,17 @@ export const toolMetaMap = {
     ],
     "icon": "grid-3x3",
     "iconColor": "text-teal-600"
+  },
+  "time-blocking-planner": {
+    "name": "Time Blocking Planner",
+    "description": "Plan daily work with real-time draggable time blocks, reminders, notes, dashboard stats, filters, and local autosave.",
+    "category": [
+      "Productivity",
+      "Planning",
+      "Utility"
+    ],
+    "icon": "calendar-clock",
+    "iconColor": "text-cyan-500"
   },
   "timeline-builder": {
     "name": "Timeline Builder",
@@ -2637,6 +3034,16 @@ export const toolMetaMap = {
     ],
     "icon": "check-square",
     "iconColor": "text-green-700"
+  },
+  "twin-finder": {
+    "name": "Twin Finder",
+    "description": "Upload two photos and discover your playful similarity score with fun visual comparisons!",
+    "category": [
+      "Fun",
+      "Entertainment"
+    ],
+    "icon": "users",
+    "iconColor": "text-pink-500"
   },
   "typing-master": {
     "name": "Typing Master Tool",
@@ -2884,6 +3291,17 @@ export const toolMetaMap = {
     "icon": "image",
     "iconColor": "text-teal-600"
   },
+  "weekly-review-dashboard": {
+    "name": "Weekly Review Dashboard",
+    "description": "Review weekly progress with real-time goals, tasks, reflections, planning, reminders, analytics, charts, local save, and exportable summaries.",
+    "category": [
+      "Productivity",
+      "Planning",
+      "Business"
+    ],
+    "icon": "layout-dashboard",
+    "iconColor": "text-cyan-500"
+  },
   "weight-loss-tracker": {
     "name": "Weight Loss Tracker",
     "description": "Track your weight loss progress with simple daily updates.",
@@ -2955,6 +3373,16 @@ export const toolMetaMap = {
     "icon": "braces",
     "iconColor": "text-emerald-600"
   },
+  "younger-version-generator": {
+    "name": "Younger Version Generator",
+    "description": "Upload a photo and simulate what your younger self would look like, along with retro polaroid frames and childhood traits summaries.",
+    "category": [
+      "AI",
+      "Image"
+    ],
+    "icon": "undo",
+    "iconColor": "text-cyan-500"
+  },
   "youtube-thumbnail-downloader": {
     "name": "YouTube Thumbnail Downloader",
     "description": "Preview and download YouTube video thumbnails in available sizes.",
@@ -2974,82 +3402,5 @@ export const toolMetaMap = {
     ],
     "icon": "video",
     "iconColor": "text-red-700"
-  },
-  "decision-wheel": {
-    "name": "Decision Wheel",
-    "description": "Spin to decide! Random picker, team selector, giveaway wheel with full customization, statistics, and sharing.",
-    "category": ["Fun", "Productivity"],
-    "icon": "pi",
-    "iconColor": "text-teal-600"
-  },
-  "random-fun-picker": {
-    "name": "Random Fun Picker",
-    "description": "Pick a lunch spot, play Truth or Dare, or randomly select names — three fun tools in one.",
-    "category": ["Fun", "Productivity"],
-    "icon": "shuffle",
-    "iconColor": "text-cyan-600"
-  },
-  "text-diff-viewer": {
-    "name": "Text Diff Viewer",
-    "description": "Compare text versions side-by-side with syntax highlighting, version history, analytics, and export.",
-    "category": ["Developer", "Productivity"],
-    "icon": "file-diff",
-    "iconColor": "text-blue-600"
-  },
-  "ludo-multiplayer": {
-    "name": "Ludo Multiplayer",
-    "description": "Play classic Ludo with friends locally or challenge the AI. Features smart AI, 3D dice, themes, and full statistics.",
-    "category": ["Game", "Entertainment"],
-    "icon": "dices",
-    "iconColor": "text-amber-500"
-  },
-  "file-metadata-explorer": {
-    "name": "File Metadata Explorer",
-    "description": "Extract and explore detailed metadata from files — images, documents, audio, video, and more. All processing stays in your browser.",
-    "category": ["Developer", "Productivity"],
-    "icon": "file-search",
-    "iconColor": "text-violet-600"
-  },
-  "browser-session-analyzer": {
-    "name": "Browser Session Analyzer",
-    "description": "Analyze browser tab sessions, detect duplicates, categorize domains, and get productivity insights to clean up your browsing.",
-    "category": ["Developer", "Productivity"],
-    "icon": "layout-dashboard",
-    "iconColor": "text-indigo-600"
-  },
-  "twin-finder": {
-    "name": "Twin Finder",
-    "description": "Upload two photos and discover your playful similarity score with fun visual comparisons!",
-    "category": ["Fun", "Entertainment"],
-    "icon": "users",
-    "iconColor": "text-pink-500"
-  },
-  "aura-color-generator": {
-    "name": "Aura Color Generator",
-    "description": "Upload a photo and discover your fictional aura color with playful descriptions!",
-    "category": ["Fun", "Entertainment"],
-    "icon": "circle",
-    "iconColor": "text-purple-500"
-  },
-  "lucky-face-score": {
-    "name": "Lucky Face Score",
-    "description": "Upload a photo and discover your fictional luck score with fun badges and fortune!",
-    "category": ["Fun", "Entertainment"],
-    "icon": "clover",
-    "iconColor": "text-amber-500"
-  },
-  "beauty-score": {
-    "name": "Beauty Score",
-    "description": "Upload a photo for a fun, fictional beauty score with positive compliments and style tags!",
-    "category": ["Fun", "Entertainment"],
-    "icon": "sparkles",
-    "iconColor": "text-pink-500"
-  },
-  "ai-passport-photo-maker": {
-    "name": "AI Passport Photo Maker",
-    "description": "Create professional passport and visa photos with AI-powered face detection, background removal, and multi-format print sheets.",
-    "category": ["Photo", "Productivity"],
-    "icon": "passport",
-    "iconColor": "text-blue-600"
   }
 };
