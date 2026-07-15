@@ -151,32 +151,24 @@ async function analyzeCollectionSource({
   source,
 }) {
   const ref = collectionRefFromPath(source.collectionPath);
-  const count = await getCollectionCount(ref);
-  const recentCreatedDocs = await getRecentCollectionDocs(
-    ref,
-    source.createdAtField,
-    ANALYTICS_RECENT_LIMIT,
-  );
-  const recentUpdatedDocs = await getRecentCollectionDocs(
-    ref,
-    source.updatedAtField,
-    ANALYTICS_RECENT_LIMIT,
-  );
-  const recentCreatedCount = await getRecentCollectionCount(
-    ref,
-    source.createdAtField,
-    7,
-  );
-  const recentCreatedWindow = await getCollectionDocsSince(
-    ref,
-    source.createdAtField,
-    7,
-  );
-  const recentUpdatedWindow = await getCollectionDocsSince(
-    ref,
-    source.updatedAtField,
-    7,
-  );
+  // These six reads are independent — run them concurrently instead of awaiting
+  // one after another. Per source this turns 6 sequential Firestore round-trips
+  // into a single parallel batch (the dominant cost of the analytics dashboard).
+  const [
+    count,
+    recentCreatedDocs,
+    recentUpdatedDocs,
+    recentCreatedCount,
+    recentCreatedWindow,
+    recentUpdatedWindow,
+  ] = await Promise.all([
+    getCollectionCount(ref),
+    getRecentCollectionDocs(ref, source.createdAtField, ANALYTICS_RECENT_LIMIT),
+    getRecentCollectionDocs(ref, source.updatedAtField, ANALYTICS_RECENT_LIMIT),
+    getRecentCollectionCount(ref, source.createdAtField, 7),
+    getCollectionDocsSince(ref, source.createdAtField, 7),
+    getCollectionDocsSince(ref, source.updatedAtField, 7),
+  ]);
 
   const recentCreated = recentCreatedDocs
     .map((item) => {
@@ -386,90 +378,94 @@ function mergeDailySeries(seriesList, keyName) {
 
 export async function getAnalyticsDashboardData() {
   const registry = await discoverAnalyticsRegistry();
-  const moduleResults = [];
+  // Analyze every module of every project concurrently. Previously this was a
+  // triple-nested SEQUENTIAL loop (project → module → source), so dashboard
+  // latency grew linearly with the number of tracked collections. Now each
+  // module — and each source within it — is read in parallel, so wall-clock is
+  // bound by the single slowest read instead of the sum of them all.
+  const moduleResults = await Promise.all(
+    registry.flatMap((project) =>
+      project.modules.map(async (module) => {
+        const baseModule = {
+          projectId: project.projectId,
+          projectName: project.projectName,
+          moduleKey: module.moduleKey,
+          moduleLabel: module.moduleLabel,
+          totalRecords: 0,
+          recentCreatedCount: 0,
+          recentCreated: [],
+          recentUpdated: [],
+          lastActivityAtMs: null,
+        };
 
-  for (const project of registry) {
-    for (const module of project.modules) {
-      const baseModule = {
-        projectId: project.projectId,
-        projectName: project.projectName,
-        moduleKey: module.moduleKey,
-        moduleLabel: module.moduleLabel,
-        totalRecords: 0,
-        recentCreatedCount: 0,
-        recentCreated: [],
-        recentUpdated: [],
-        lastActivityAtMs: null,
-      };
+        const sourceResults = await Promise.all(
+          module.sources.map((source) =>
+            source.type === "collection"
+              ? analyzeCollectionSource({
+                  projectId: project.projectId,
+                  projectName: project.projectName,
+                  moduleKey: module.moduleKey,
+                  moduleLabel: module.moduleLabel,
+                  moduleCoverage: "tracked",
+                  source,
+                })
+              : analyzeDocArraySource({
+                  projectId: project.projectId,
+                  projectName: project.projectName,
+                  moduleKey: module.moduleKey,
+                  moduleLabel: module.moduleLabel,
+                  moduleCoverage: "tracked",
+                  source,
+                }),
+          ),
+        );
 
-      const sourceResults = [];
-      for (const source of module.sources) {
-        const result = source.type === "collection"
-          ? await analyzeCollectionSource({
-              projectId: project.projectId,
-              projectName: project.projectName,
-              moduleKey: module.moduleKey,
-              moduleLabel: module.moduleLabel,
-              moduleCoverage: "tracked",
-              source,
-            })
-          : await analyzeDocArraySource({
-              projectId: project.projectId,
-              projectName: project.projectName,
-              moduleKey: module.moduleKey,
-              moduleLabel: module.moduleLabel,
-              moduleCoverage: "tracked",
-              source,
-            });
+        const totalRecords = sourceResults.reduce((sum, source) => sum + source.count, 0);
+        const recentCreatedCount = sourceResults.reduce(
+          (sum, source) => sum + source.recentCreatedCount,
+          0,
+        );
+        const recentCreated = clampList(
+          uniqueBy(
+            sortByTimestampDesc(sourceResults.flatMap((source) => source.recentCreated)),
+            (item) => item.id,
+          ),
+          12,
+        );
+        const recentUpdated = clampList(
+          uniqueBy(
+            sortByTimestampDesc(sourceResults.flatMap((source) => source.recentUpdated)),
+            (item) => item.id,
+          ),
+          12,
+        );
+        const lastActivityAtMs = Math.max(
+          ...sourceResults.map((source) => source.lastActivityAtMs ?? 0),
+          0,
+        ) || null;
+        const dailyCreatedSeries = mergeDailySeries(
+          sourceResults.map((source) => source.dailyCreatedSeries),
+          "count",
+        );
+        const dailyUpdatedSeries = mergeDailySeries(
+          sourceResults.map((source) => source.dailyUpdatedSeries),
+          "count",
+        );
 
-        sourceResults.push(result);
-      }
-
-      const totalRecords = sourceResults.reduce((sum, source) => sum + source.count, 0);
-      const recentCreatedCount = sourceResults.reduce(
-        (sum, source) => sum + source.recentCreatedCount,
-        0,
-      );
-      const recentCreated = clampList(
-        uniqueBy(
-          sortByTimestampDesc(sourceResults.flatMap((source) => source.recentCreated)),
-          (item) => item.id,
-        ),
-        12,
-      );
-      const recentUpdated = clampList(
-        uniqueBy(
-          sortByTimestampDesc(sourceResults.flatMap((source) => source.recentUpdated)),
-          (item) => item.id,
-        ),
-        12,
-      );
-      const lastActivityAtMs = Math.max(
-        ...sourceResults.map((source) => source.lastActivityAtMs ?? 0),
-        0,
-      ) || null;
-      const dailyCreatedSeries = mergeDailySeries(
-        sourceResults.map((source) => source.dailyCreatedSeries),
-        "count",
-      );
-      const dailyUpdatedSeries = mergeDailySeries(
-        sourceResults.map((source) => source.dailyUpdatedSeries),
-        "count",
-      );
-
-      moduleResults.push({
-        ...baseModule,
-        totalRecords,
-        recentCreatedCount,
-        recentCreated,
-        recentUpdated,
-        recentUpdatedCount: recentUpdated.length,
-        lastActivityAtMs,
-        dailyCreatedSeries,
-        dailyUpdatedSeries,
-      });
-    }
-  }
+        return {
+          ...baseModule,
+          totalRecords,
+          recentCreatedCount,
+          recentCreated,
+          recentUpdated,
+          recentUpdatedCount: recentUpdated.length,
+          lastActivityAtMs,
+          dailyCreatedSeries,
+          dailyUpdatedSeries,
+        };
+      }),
+    ),
+  );
 
   const projects = registry.map((project) => {
     const modules = moduleResults.filter((item) => item.projectId === project.projectId);
