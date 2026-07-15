@@ -6,14 +6,39 @@ service firebase.storage {
       return request.auth != null;
     }
 
+    // Legacy admin doc.
     function adminDoc() {
       return /databases/(default)/documents/admins/$(request.auth.uid);
     }
 
-    function isActiveAdmin() {
+    // New RBAC admin doc (super_admin_dashboard/main/admin_users/{uid}). Storage
+    // rules were never updated when the app migrated to RBAC, so an admin who
+    // exists ONLY in RBAC (no legacy `admins/{uid}` doc) failed every upload —
+    // e.g. an Ad banner upload was denied, which surfaced as "can't create ad".
+    function rbacAdminDoc() {
+      return /databases/(default)/documents/super_admin_dashboard/main/admin_users/$(request.auth.uid);
+    }
+
+    function isLegacyActiveAdmin() {
       return signedIn() &&
         firestore.exists(adminDoc()) &&
         firestore.get(adminDoc()).data.isActive == true;
+    }
+
+    // Mirror serverRbac.js normalizeStatus(): explicit `status` wins; when absent
+    // (docs that stored only `isActive`), active unless isActive === false.
+    function rbacDocActive(data) {
+      return data.get("status", data.get("isActive", true) ? "active" : "suspended") == "active";
+    }
+
+    function isRbacActiveAdmin() {
+      return signedIn() &&
+        firestore.exists(rbacAdminDoc()) &&
+        rbacDocActive(firestore.get(rbacAdminDoc()).data);
+    }
+
+    function isActiveAdmin() {
+      return isLegacyActiveAdmin() || isRbacActiveAdmin();
     }
 
     function isSafeUpload(maxBytes) {

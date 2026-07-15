@@ -144,12 +144,21 @@ const pathname = usePathname();
 
   };
 
-  if (loading) {
+  // Show a neutral spinner — never the sign-in form — while the session is
+  // resolving OR when an admin is already authenticated. Without this, if the
+  // app ever momentarily routes to /login with a valid session (a back-button,
+  // a route prefetch, or a transient guard evaluation while navigating between
+  // the Super Admin console and a project panel), the full login form + Google
+  // button rendered for a frame before the redirect effect fired — which looked
+  // like an unexpected "logout + login popup" mid-navigation. `googleError`
+  // still lets the form show after a failed Google sign-in (the user is signed
+  // out there and needs to retry).
+  if (loading || (user && !googleError)) {
     return (
       <div className="h-screen flex items-center justify-center" style={{ background: "var(--background)" }}>
         <Card className="px-5 py-3 flex items-center gap-2.5 text-sm" style={{ color: "var(--muted)" }}>
           <Spinner size="sm" />
-          Checking session…
+          {loading ? "Checking session…" : "Signing you in…"}
         </Card>
       </div>
     );

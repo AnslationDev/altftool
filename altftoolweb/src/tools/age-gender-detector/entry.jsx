@@ -1,6 +1,7 @@
-import ToolHome from "./pages";
+"use client";
 
+import AgeGenderDetectorApp from "./pages";
 
-export default function Toolentry(){
-  return <ToolHome/>
+export default function ToolEntry() {
+  return <AgeGenderDetectorApp />;
 }

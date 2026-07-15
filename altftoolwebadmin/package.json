@@ -7,8 +7,8 @@
     "npm": ">=11"
   },
   "scripts": {
-    "dev": "next dev --webpack",
-    "build": "node ../scripts/generate-admin-health-manifest.mjs && next build --webpack",
+    "dev": "node scripts/generate-tool-slugs.mjs && next dev --webpack",
+    "build": "node scripts/generate-tool-slugs.mjs && node ../scripts/generate-admin-health-manifest.mjs && next build --webpack",
     "start": "next start",
     "firebase:admin-write-check": "node scripts/checkFirebaseAdminWrite.mjs",
     "firebase:admin-write-check:dry-run": "FIREBASE_ADMIN_WRITE_CHECK_MODE=dry-run node scripts/checkFirebaseAdminWrite.mjs",
@@ -35,12 +35,9 @@
     "papaparse": "^5.5.3",
     "react": "^19.2.5",
     "react-country-flag": "^3.1.0",
-    "react-datepicker": "^9.1.0",
     "react-dom": "^19.2.5",
     "react-hook-form": "^7.74.0",
-    "react-hot-toast": "^2.6.0",
     "react-select": "^5.10.2",
-    "react-window": "^2.2.7",
     "read-excel-file": "^9.0.9",
     "recharts": "^3.8.1"
   },

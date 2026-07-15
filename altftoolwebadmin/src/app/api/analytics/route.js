@@ -1,26 +1,15 @@
 import { NextResponse } from "next/server";
-import { adminAuth, adminDb } from "@/lib/firebaseAdmin";
+import { verifySuperAdminRequest } from "@/lib/adminAccess";
 import { getAnalyticsDashboardData } from "@/lib/analytics/analytics.service";
-
-async function verifySuperAdmin(request) {
-  const authHeader = request.headers.get("authorization");
-  if (!authHeader?.startsWith("Bearer ")) {
-    throw new Error("Unauthorized");
-  }
-
-  const token = authHeader.split("Bearer ")[1];
-  const decoded = await adminAuth.verifyIdToken(token);
-  const snap = await adminDb.collection("admins").doc(decoded.uid).get();
-  const data = snap.data();
-
-  if (!snap.exists || data?.roleType !== "superadmin" || !data?.isActive) {
-    throw new Error("Unauthorized");
-  }
-}
 
 export async function GET(request) {
   try {
-    await verifySuperAdmin(request)
+    // RBAC-aware: recognises super admins in the new RBAC store
+    // (super_admin_dashboard/main/admin_users) AND the legacy `admins`
+    // collection. The old hand-rolled check here only read legacy `admins`, so
+    // a super admin who exists ONLY in RBAC got a 401 and the dashboard failed
+    // to load.
+    await verifySuperAdminRequest(request);
     const dashboard = await getAnalyticsDashboardData();
     return NextResponse.json(dashboard);
   } catch (error) {

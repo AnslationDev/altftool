@@ -1,11 +1,7 @@
 "use client";
 
-import StepApp from "./pages";
+import StepCounterApp from "./pages";
 
 export default function ToolEntry() {
-  return (
-    <div>
-      <StepApp />
-    </div>
-  );
+  return <StepCounterApp />;
 }
