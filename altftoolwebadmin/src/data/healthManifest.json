@@ -1,14 +1,25 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-07-14T12:32:56.542Z",
+  "generatedAt": "2026-07-15T12:40:30.172Z",
   "tools": {
-    "total": 316,
-    "healthy": 316,
+    "total": 361,
+    "healthy": 361,
     "needsAttention": 0,
     "averageScore": 100,
-    "categories": 62,
-    "directories": 316,
-    "orphanToolDirs": [],
+    "categories": 65,
+    "directories": 371,
+    "orphanToolDirs": [
+      "browser-session-exporter",
+      "dream-vacation-finder",
+      "lucky-number-generator",
+      "profile-pic-bg-changer",
+      "profile-picture-rating",
+      "random-business-idea",
+      "random-life-challenge",
+      "rot13-encoder-decoder",
+      "social-media-simulator",
+      "viral-thumbnail-maker"
+    ],
     "registryWithoutDir": [],
     "missingEntry": 0,
     "missingConfig": 0,
@@ -17,15 +28,15 @@
   },
   "qa": {
     "score": 100,
-    "total": 40,
-    "registered": 40,
-    "routeCovered": 40,
+    "total": 51,
+    "registered": 51,
+    "routeCovered": 51,
     "functionalCovered": 40,
     "checks": [
       {
         "key": "priorityList",
         "label": "Priority tool list",
-        "detail": "40 high-traffic tools tracked",
+        "detail": "51 high-traffic tools tracked",
         "ok": true
       },
       {
@@ -43,13 +54,13 @@
       {
         "key": "registeredTools",
         "label": "Priority slugs registered",
-        "detail": "40/40",
+        "detail": "51/51",
         "ok": true
       },
       {
         "key": "routeCoverage",
         "label": "Priority route coverage",
-        "detail": "40/40",
+        "detail": "51/51",
         "ok": true
       },
       {
@@ -459,6 +470,116 @@
         "registered": true,
         "routeCovered": true,
         "functionalCovered": true
+      },
+      {
+        "rank": 41,
+        "slug": "decision-wheel",
+        "name": "Decision Wheel",
+        "category": "Fun, Productivity",
+        "route": "/tools/all/decision-wheel",
+        "registered": true,
+        "routeCovered": true,
+        "functionalCovered": false
+      },
+      {
+        "rank": 42,
+        "slug": "random-fun-picker",
+        "name": "Random Fun Picker",
+        "category": "Fun, Productivity",
+        "route": "/tools/all/random-fun-picker",
+        "registered": true,
+        "routeCovered": true,
+        "functionalCovered": false
+      },
+      {
+        "rank": 43,
+        "slug": "text-diff-viewer",
+        "name": "Text Diff Viewer",
+        "category": "Developer, Productivity",
+        "route": "/tools/all/text-diff-viewer",
+        "registered": true,
+        "routeCovered": true,
+        "functionalCovered": false
+      },
+      {
+        "rank": 44,
+        "slug": "ludo-multiplayer",
+        "name": "Ludo Multiplayer",
+        "category": "Game, Entertainment",
+        "route": "/tools/all/ludo-multiplayer",
+        "registered": true,
+        "routeCovered": true,
+        "functionalCovered": false
+      },
+      {
+        "rank": 45,
+        "slug": "file-metadata-explorer",
+        "name": "File Metadata Explorer",
+        "category": "Developer, Productivity",
+        "route": "/tools/all/file-metadata-explorer",
+        "registered": true,
+        "routeCovered": true,
+        "functionalCovered": false
+      },
+      {
+        "rank": 46,
+        "slug": "browser-session-analyzer",
+        "name": "Browser Session Analyzer",
+        "category": "Developer, Productivity",
+        "route": "/tools/all/browser-session-analyzer",
+        "registered": true,
+        "routeCovered": true,
+        "functionalCovered": false
+      },
+      {
+        "rank": 47,
+        "slug": "twin-finder",
+        "name": "Twin Finder",
+        "category": "Fun, Entertainment",
+        "route": "/tools/all/twin-finder",
+        "registered": true,
+        "routeCovered": true,
+        "functionalCovered": false
+      },
+      {
+        "rank": 48,
+        "slug": "aura-color-generator",
+        "name": "Aura Color Generator",
+        "category": "Fun, Entertainment",
+        "route": "/tools/all/aura-color-generator",
+        "registered": true,
+        "routeCovered": true,
+        "functionalCovered": false
+      },
+      {
+        "rank": 49,
+        "slug": "lucky-face-score",
+        "name": "Lucky Face Score",
+        "category": "Fun, Entertainment",
+        "route": "/tools/all/lucky-face-score",
+        "registered": true,
+        "routeCovered": true,
+        "functionalCovered": false
+      },
+      {
+        "rank": 50,
+        "slug": "beauty-score",
+        "name": "Beauty Score Calculator",
+        "category": "Fun / AI",
+        "route": "/tools/all/beauty-score",
+        "registered": true,
+        "routeCovered": true,
+        "functionalCovered": false
+      },
+      {
+        "rank": 51,
+        "slug": "ai-passport-photo-maker",
+        "name": "AI Passport Photo Maker",
+        "category": "Photo, Productivity",
+        "route": "/tools/all/ai-passport-photo-maker",
+        "registered": true,
+        "routeCovered": true,
+        "functionalCovered": false
       }
     ],
     "needsAttention": []
