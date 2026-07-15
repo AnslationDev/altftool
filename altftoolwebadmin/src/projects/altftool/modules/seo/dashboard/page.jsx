@@ -3,6 +3,7 @@
 // ALTF Engine — SEO Dashboard (Phase A): page counts by type + aggregate health.
 
 import { useEffect, useState, useMemo } from "react";
+import { useParams } from "next/navigation";
 import { fetchRegistrySummary } from "../services/seoService";
 import { getErrorMessage } from "@/lib/apiClient";
 import SeoNav from "../components/SeoNav";
@@ -33,6 +34,9 @@ const HEALTH_LABELS = {
 };
 
 export default function SeoDashboardPage() {
+  const params = useParams();
+  const project =
+    (typeof params?.project === "string" && params.project) || "altftool";
   const [data, setData] = useState(null);
   const [status, setStatus] = useState("loading");
   const [error, setError] = useState("");
@@ -434,7 +438,7 @@ export default function SeoDashboardPage() {
                               )}
                             </button>
                             <a
-                              href={`/altftool/seo/pages?path=${encodeURIComponent(item.path)}`}
+                              href={`/${project}/seo/pages?path=${encodeURIComponent(item.path)}`}
                               title="Edit this page's SEO"
                               className="inline-flex items-center gap-1 px-3 py-1.5 text-xs font-semibold rounded-md border border-border bg-card text-primary hover:bg-primary-soft transition-all duration-150 active:scale-95"
                             >

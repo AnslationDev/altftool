@@ -8,28 +8,22 @@
 import { NextResponse } from "next/server";
 import { FieldValue } from "firebase-admin/firestore";
 import { adminDb } from "@/lib/firebaseAdmin";
-import { verifyActiveAdmin } from "@/lib/serverAdminAuth";
+import { authorizeSeoRequest, seoAccessErrorResponse } from "@/lib/seoAuth";
+import { DEFAULT_SEO_PROJECT, seoRuntimeDocPath } from "@/lib/seoProject";
 import { writeAdminAuditLog } from "@/lib/adminAuditLog";
 import { enforceRateLimit } from "@altftool/core/http";
 import { validateSeoConfig, emptySeoConfig } from "@altftool/core/seo/schemas";
 
-const SEO_DOC = "projects/altftool/seo/runtime";
-
-function authErrorResponse(error) {
-  const message = String(error?.message || "Unauthorized");
-  const status = /forbidden|inactive/i.test(message) ? 403 : 401;
-  return NextResponse.json({ error: status === 403 ? "Forbidden" : "Unauthorized" }, { status });
-}
-
 export async function GET(request) {
+  let projectId;
   try {
-    await verifyActiveAdmin(request);
+    ({ projectId } = await authorizeSeoRequest(request, "read"));
   } catch (error) {
-    return authErrorResponse(error);
+    return seoAccessErrorResponse(error);
   }
 
   try {
-    const snap = await adminDb.doc(SEO_DOC).get();
+    const snap = await adminDb.doc(seoRuntimeDocPath(projectId)).get();
     const config = snap.exists ? snap.data() : emptySeoConfig();
     return NextResponse.json({ config });
   } catch (error) {
@@ -46,11 +40,12 @@ export async function PUT(request) {
   });
   if (limited) return limited;
 
-  let auth;
+  let auth, projectId;
   try {
-    auth = await verifyActiveAdmin(request);
+    auth = await authorizeSeoRequest(request, "write");
+    projectId = auth.projectId;
   } catch (error) {
-    return authErrorResponse(error);
+    return seoAccessErrorResponse(error);
   }
 
   let body;
@@ -67,7 +62,7 @@ export async function PUT(request) {
   }
 
   try {
-    const ref = adminDb.doc(SEO_DOC);
+    const ref = adminDb.doc(seoRuntimeDocPath(projectId));
     const prev = await ref.get();
     const prevVersion = prev.exists ? Number(prev.data()?.version || 0) : 0;
 
@@ -84,16 +79,22 @@ export async function PUT(request) {
     await writeAdminAuditLog({
       action: "seo.config.update",
       module: "seo",
+      project: projectId,
       actorUid: auth.admin.uid,
       actorEmail: auth.admin.email,
-      summary: `Updated SEO config to v${next.version}`,
-      metadata: { version: next.version, enabled: next.enabled, warnings: errors },
+      summary: `Updated SEO config to v${next.version} (${projectId})`,
+      metadata: { project: projectId, version: next.version, enabled: next.enabled, warnings: errors },
     }).catch(() => {});
 
-    const revalidatePaths = Array.isArray(body?.paths)
-      ? body.paths.filter((p) => typeof p === "string" && p.startsWith("/"))
-      : [];
-    triggerWebRevalidate(revalidatePaths).catch(() => {});
+    // Cross-app cache revalidation targets altftool.com specifically (its env
+    // vars); only fire it for the altftool project so no other project can bust
+    // altftool's cache. Per-project revalidation is future per-project wiring.
+    if (projectId === DEFAULT_SEO_PROJECT) {
+      const revalidatePaths = Array.isArray(body?.paths)
+        ? body.paths.filter((p) => typeof p === "string" && p.startsWith("/"))
+        : [];
+      triggerWebRevalidate(revalidatePaths).catch(() => {});
+    }
 
     return NextResponse.json({ ok: true, version: next.version, warnings: errors });
   } catch (error) {

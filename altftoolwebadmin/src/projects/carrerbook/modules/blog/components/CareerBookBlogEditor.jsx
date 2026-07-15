@@ -233,7 +233,6 @@ export default function CareerBookBlogEditor({ value, onChange, error }) {
             BalloonToolbar,
             BlockQuote,
             Bold,
-            Bookmark,
             Code,
             CodeBlock,
             Emoji,

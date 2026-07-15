@@ -54,10 +54,14 @@ async function writeHandler({ request, audit }) {
 
 export const GET = withAdminApi(readHandler, {
   rateLimit: { limit: 40, windowMs: 60_000, scope: "seo-gsc-sitemaps-read" },
+  // GSC is altftool's single Google connection — lock to altftool SEO access.
+  requireProjectModule: { project: "altftool", moduleKey: "seo", action: "read" },
 });
 
 export const POST = withAdminApi(writeHandler, {
   rateLimit: { limit: 20, windowMs: 60_000, scope: "seo-gsc-sitemaps-write" },
+  // GSC is altftool's single Google connection — lock to altftool SEO access.
+  requireProjectModule: { project: "altftool", moduleKey: "seo", action: "read" },
   audit: { module: "seo" },
   mutating: true,
 });

@@ -15,6 +15,10 @@ function buildNodes(html) {
   tmp.innerHTML = html;
   const nodes = [];
   Array.from(tmp.childNodes).forEach((child) => {
+    // Skip stray top-level text nodes (e.g. a bare verification token pasted
+    // beside a <meta> tag). These slots only carry element markup, so loose
+    // text is always an accidental paste that would render as visible text.
+    if (child.nodeType === 3) return;
     if (child.nodeType === 1 && child.tagName === "SCRIPT") {
       const s = document.createElement("script");
       for (const attr of child.attributes) s.setAttribute(attr.name, attr.value);
@@ -36,7 +40,10 @@ export default function PerPageCode({ active = false }) {
     const injected = [];
 
     const place = (html, target, prepend) => {
-      if (!html) return;
+      // Only inject real HTML/script markup. Bare text (e.g. a verification
+      // token mis-pasted into the custom-code field) is never valid here and
+      // would show as stray visible text, so treat it as inert.
+      if (!html || typeof html !== "string" || !/<[^>]+>/.test(html)) return;
       for (const node of buildNodes(html)) {
         if (node.setAttribute) node.setAttribute("data-altft-page-code", "1");
         if (prepend && target.firstChild) target.insertBefore(node, target.firstChild);

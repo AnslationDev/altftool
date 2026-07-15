@@ -68,6 +68,8 @@ async function writeHandler({ request, audit }) {
 
 export const GET = withAdminApi(readHandler, {
   rateLimit: { limit: 60, windowMs: 60_000, scope: "seo-gsc-oauth-read" },
+  // GSC is altftool's single Google connection — lock to altftool SEO access.
+  requireProjectModule: { project: "altftool", moduleKey: "seo", action: "read" },
 });
 
 export const POST = withAdminApi(writeHandler, {

@@ -431,6 +431,26 @@ const routeLoaders = {
   },
 };
 
+// Shared, project-agnostic module page loaders. These modules exist for EVERY
+// project (SHARED_PROJECT_MODULES) through one implementation, resolved
+// regardless of the projectId in the URL. The SEO Engine pages physically live
+// under the altftool namespace but are fully project-scoped at runtime via the
+// ?project= param their service sends and the server RBAC gate.
+const sharedModuleLoaders = {
+  seo: {
+    "": () => import("@/projects/altftool/modules/seo/page.jsx"),
+    dashboard: () => import("@/projects/altftool/modules/seo/dashboard/page.jsx"),
+    search: () => import("@/projects/altftool/modules/seo/search/page.jsx"),
+    global: () => import("@/projects/altftool/modules/seo/global/page.jsx"),
+    pages: () => import("@/projects/altftool/modules/seo/pages/page.jsx"),
+    bulk: () => import("@/projects/altftool/modules/seo/bulk/page.jsx"),
+    technical: () => import("@/projects/altftool/modules/seo/technical/page.jsx"),
+    gsc: () => import("@/projects/altftool/modules/seo/gsc/page.jsx"),
+    "search-console": () =>
+      import("@/projects/altftool/modules/seo/search-console/page.jsx"),
+  },
+};
+
 const layoutLoaders = {
   altftool: {
     blogs: () => import("@/projects/altftool/modules/blogs/layout.jsx"),
@@ -456,7 +476,10 @@ const layoutLoaders = {
 };
 
 export function getAdminModulePageLoader(projectId, moduleKey, routeKey) {
-  const moduleRoutes = routeLoaders[projectId]?.[moduleKey];
+  // Project-specific modules take precedence; shared modules (e.g. the SEO
+  // Engine) resolve for any project that doesn't define its own implementation.
+  const moduleRoutes =
+    routeLoaders[projectId]?.[moduleKey] || sharedModuleLoaders[moduleKey];
   return moduleRoutes?.[routeKey] || null;
 }
 

@@ -17,6 +17,7 @@ import { NextResponse } from "next/server";
 import { enforceRateLimit } from "@altftool/core/http";
 import { verifyActiveAdmin } from "@/lib/serverAdminAuth";
 import { verifySuperAdminRequest } from "@/lib/adminAccess";
+import { hasModuleAccess } from "@/lib/permissionUtils";
 import { writeAdminAuditLog } from "@/lib/adminAuditLog";
 import { buildSecurityContext } from "./store";
 
@@ -25,6 +26,11 @@ const MUTATING = new Set(["POST", "PUT", "PATCH", "DELETE"]);
 export function withAdminApi(handler, options = {}) {
   const {
     requireSuperAdmin = false,
+    // Enforce project-scoped RBAC: { project, moduleKey, action } — the caller
+    // must have that action on that project's module (superadmin bypasses). Used
+    // to lock project-scoped surfaces (e.g. GSC → altftool SEO) so one project's
+    // admin can never reach another project's data via a direct API call.
+    requireProjectModule = null,
     rateLimit = null,
     audit = null,
     mutating = undefined,
@@ -48,10 +54,22 @@ export function withAdminApi(handler, options = {}) {
         principal = {
           uid: decoded.uid,
           email: decoded.email ?? admin?.email ?? null,
-          superAdmin: admin?.roleType === "superadmin",
+          superAdmin: admin?.roleType === "superadmin" || admin?.isSuperAdmin === true,
           admin,
           decoded,
         };
+        // Project-scoped RBAC gate (superadmin bypasses inside hasModuleAccess).
+        if (
+          requireProjectModule &&
+          !hasModuleAccess({
+            adminData: admin,
+            projectId: requireProjectModule.project,
+            moduleKey: requireProjectModule.moduleKey,
+            action: requireProjectModule.action || "read",
+          })
+        ) {
+          return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+        }
       }
     } catch {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
