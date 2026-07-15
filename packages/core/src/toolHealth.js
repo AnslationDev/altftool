@@ -39,6 +39,17 @@ export const TOP_PRIORITY_TOOL_SLUGS = [
   "loan-emi-calculator",
   "sip-calculator",
   "bmi-calculator",
+  "decision-wheel",
+  "random-fun-picker",
+  "text-diff-viewer",
+  "ludo-multiplayer",
+  "file-metadata-explorer",
+  "browser-session-analyzer",
+  "twin-finder",
+  "aura-color-generator",
+  "lucky-face-score",
+  "beauty-score",
+  "ai-passport-photo-maker",
 ];
 
 export function normalizeToolCategory(category) {

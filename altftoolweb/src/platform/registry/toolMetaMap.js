@@ -2974,5 +2974,82 @@ export const toolMetaMap = {
     ],
     "icon": "video",
     "iconColor": "text-red-700"
+  },
+  "decision-wheel": {
+    "name": "Decision Wheel",
+    "description": "Spin to decide! Random picker, team selector, giveaway wheel with full customization, statistics, and sharing.",
+    "category": ["Fun", "Productivity"],
+    "icon": "pi",
+    "iconColor": "text-teal-600"
+  },
+  "random-fun-picker": {
+    "name": "Random Fun Picker",
+    "description": "Pick a lunch spot, play Truth or Dare, or randomly select names — three fun tools in one.",
+    "category": ["Fun", "Productivity"],
+    "icon": "shuffle",
+    "iconColor": "text-cyan-600"
+  },
+  "text-diff-viewer": {
+    "name": "Text Diff Viewer",
+    "description": "Compare text versions side-by-side with syntax highlighting, version history, analytics, and export.",
+    "category": ["Developer", "Productivity"],
+    "icon": "file-diff",
+    "iconColor": "text-blue-600"
+  },
+  "ludo-multiplayer": {
+    "name": "Ludo Multiplayer",
+    "description": "Play classic Ludo with friends locally or challenge the AI. Features smart AI, 3D dice, themes, and full statistics.",
+    "category": ["Game", "Entertainment"],
+    "icon": "dices",
+    "iconColor": "text-amber-500"
+  },
+  "file-metadata-explorer": {
+    "name": "File Metadata Explorer",
+    "description": "Extract and explore detailed metadata from files — images, documents, audio, video, and more. All processing stays in your browser.",
+    "category": ["Developer", "Productivity"],
+    "icon": "file-search",
+    "iconColor": "text-violet-600"
+  },
+  "browser-session-analyzer": {
+    "name": "Browser Session Analyzer",
+    "description": "Analyze browser tab sessions, detect duplicates, categorize domains, and get productivity insights to clean up your browsing.",
+    "category": ["Developer", "Productivity"],
+    "icon": "layout-dashboard",
+    "iconColor": "text-indigo-600"
+  },
+  "twin-finder": {
+    "name": "Twin Finder",
+    "description": "Upload two photos and discover your playful similarity score with fun visual comparisons!",
+    "category": ["Fun", "Entertainment"],
+    "icon": "users",
+    "iconColor": "text-pink-500"
+  },
+  "aura-color-generator": {
+    "name": "Aura Color Generator",
+    "description": "Upload a photo and discover your fictional aura color with playful descriptions!",
+    "category": ["Fun", "Entertainment"],
+    "icon": "circle",
+    "iconColor": "text-purple-500"
+  },
+  "lucky-face-score": {
+    "name": "Lucky Face Score",
+    "description": "Upload a photo and discover your fictional luck score with fun badges and fortune!",
+    "category": ["Fun", "Entertainment"],
+    "icon": "clover",
+    "iconColor": "text-amber-500"
+  },
+  "beauty-score": {
+    "name": "Beauty Score",
+    "description": "Upload a photo for a fun, fictional beauty score with positive compliments and style tags!",
+    "category": ["Fun", "Entertainment"],
+    "icon": "sparkles",
+    "iconColor": "text-pink-500"
+  },
+  "ai-passport-photo-maker": {
+    "name": "AI Passport Photo Maker",
+    "description": "Create professional passport and visa photos with AI-powered face detection, background removal, and multi-format print sheets.",
+    "category": ["Photo", "Productivity"],
+    "icon": "passport",
+    "iconColor": "text-blue-600"
   }
 };
