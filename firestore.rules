@@ -20,10 +20,20 @@ service cloud.firestore {
         get(adminDoc()).data.isActive == true;
     }
 
+    // Mirror serverRbac.js normalizeStatus(): an explicit `status` wins; when it
+    // is absent (legacy/migrated admin docs that stored only `isActive: true`),
+    // the admin is active unless `isActive` is explicitly false. Previously this
+    // required status == "active", so those legacy docs were treated as active by
+    // the server (admin could log in and SEE the panel) but were denied every
+    // Firestore write — e.g. creating an Ad failed with "insufficient permissions".
+    function rbacDocActive(data) {
+      return data.get("status", data.get("isActive", true) ? "active" : "suspended") == "active";
+    }
+
     function isRbacActiveAdmin() {
       return signedIn() &&
         exists(rbacAdminDoc()) &&
-        get(rbacAdminDoc()).data.status == "active";
+        rbacDocActive(get(rbacAdminDoc()).data);
     }
 
     function isActiveAdmin() {

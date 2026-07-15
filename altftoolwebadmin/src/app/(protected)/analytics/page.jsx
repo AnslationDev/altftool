@@ -169,11 +169,26 @@ export default function AnalyticsPage() {
           throw new Error("Your session is not ready. Please refresh and try again.");
         }
 
-        const response = await fetch("/api/analytics", {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+        // Guard against a hung request: never let the page spin forever. If the
+        // server takes too long, abort and surface a retryable error instead.
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 60_000);
+        let response;
+        try {
+          response = await fetch("/api/analytics", {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+            signal: controller.signal,
+          });
+        } catch (fetchErr) {
+          if (fetchErr?.name === "AbortError") {
+            throw new Error("Analytics took too long to load. Please try Refresh.");
+          }
+          throw fetchErr;
+        } finally {
+          clearTimeout(timeoutId);
+        }
 
         if (!response.ok) {
           throw new Error("Analytics could not be loaded.");

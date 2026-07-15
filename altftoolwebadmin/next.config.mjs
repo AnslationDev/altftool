@@ -13,6 +13,28 @@ const nextConfig = {
   serverExternalPackages: ["firebase-admin"],
   allowedDevOrigins: ["localhost", "127.0.0.1"],
 
+  // Strip debug console.* from PRODUCTION bundles only (dev keeps every log).
+  // error/warn are preserved for real diagnostics. Behavior-neutral: logging is
+  // not application logic. Replaces hand-editing 319 call sites.
+  compiler: {
+    removeConsole:
+      process.env.NODE_ENV === "production"
+        ? { exclude: ["error", "warn"] }
+        : false,
+  },
+
+  // Tree-shake heavy barrel packages so only the icons/components actually used
+  // are bundled (lucide-react alone is imported in 386 files). Transform-only —
+  // no runtime behavior change.
+  experimental: {
+    optimizePackageImports: [
+      "lucide-react",
+      "@tanstack/react-table",
+      "recharts",
+      "react-select",
+    ],
+  },
+
   async redirects() {
     return [
       {

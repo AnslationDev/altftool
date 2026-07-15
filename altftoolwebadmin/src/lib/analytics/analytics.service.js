@@ -36,8 +36,14 @@ async function getCollectionCount(ref) {
     const snap = await ref.count().get();
     return snap.data().count ?? 0;
   } catch {
-    const snap = await ref.get();
-    return snap.size;
+    // count() aggregation should normally succeed. The fallback is capped so a
+    // huge collection can never be read in full here (which would hang the API).
+    try {
+      const snap = await ref.limit(5000).get();
+      return snap.size;
+    } catch {
+      return 0;
+    }
   }
 }
 
@@ -66,6 +72,11 @@ async function getRecentCollectionCount(ref, field, days) {
   }
 }
 
+// Feeds the 7-day daily-activity buckets. Capped with an explicit limit so a
+// very large/active collection can never make this read the whole collection
+// (which previously made the analytics API hang for minutes / never return).
+const ANALYTICS_WINDOW_READ_CAP = 3000;
+
 async function getCollectionDocsSince(ref, field, days) {
   if (!field) return [];
 
@@ -73,7 +84,11 @@ async function getCollectionDocsSince(ref, field, days) {
     const cutoff = Timestamp.fromMillis(
       Date.now() - days * 86400000,
     );
-    const snap = await ref.where(field, ">=", cutoff).get();
+    const snap = await ref
+      .where(field, ">=", cutoff)
+      .orderBy(field, "desc")
+      .limit(ANALYTICS_WINDOW_READ_CAP)
+      .get();
     return snap.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
   } catch {
     return [];
@@ -151,32 +166,24 @@ async function analyzeCollectionSource({
   source,
 }) {
   const ref = collectionRefFromPath(source.collectionPath);
-  const count = await getCollectionCount(ref);
-  const recentCreatedDocs = await getRecentCollectionDocs(
-    ref,
-    source.createdAtField,
-    ANALYTICS_RECENT_LIMIT,
-  );
-  const recentUpdatedDocs = await getRecentCollectionDocs(
-    ref,
-    source.updatedAtField,
-    ANALYTICS_RECENT_LIMIT,
-  );
-  const recentCreatedCount = await getRecentCollectionCount(
-    ref,
-    source.createdAtField,
-    7,
-  );
-  const recentCreatedWindow = await getCollectionDocsSince(
-    ref,
-    source.createdAtField,
-    7,
-  );
-  const recentUpdatedWindow = await getCollectionDocsSince(
-    ref,
-    source.updatedAtField,
-    7,
-  );
+  // These six reads are independent — run them concurrently instead of awaiting
+  // one after another. Per source this turns 6 sequential Firestore round-trips
+  // into a single parallel batch (the dominant cost of the analytics dashboard).
+  const [
+    count,
+    recentCreatedDocs,
+    recentUpdatedDocs,
+    recentCreatedCount,
+    recentCreatedWindow,
+    recentUpdatedWindow,
+  ] = await Promise.all([
+    getCollectionCount(ref),
+    getRecentCollectionDocs(ref, source.createdAtField, ANALYTICS_RECENT_LIMIT),
+    getRecentCollectionDocs(ref, source.updatedAtField, ANALYTICS_RECENT_LIMIT),
+    getRecentCollectionCount(ref, source.createdAtField, 7),
+    getCollectionDocsSince(ref, source.createdAtField, 7),
+    getCollectionDocsSince(ref, source.updatedAtField, 7),
+  ]);
 
   const recentCreated = recentCreatedDocs
     .map((item) => {
@@ -384,92 +391,120 @@ function mergeDailySeries(seriesList, keyName) {
   return [...merged.values()].sort((a, b) => a.dateKey.localeCompare(b.dateKey));
 }
 
+// Run `task` over `items` with at most `limit` in flight at once. Preserves
+// input order in the result. Bounds how many Firestore reads are open
+// simultaneously so a large registry can't exhaust the client and hang.
+async function mapWithConcurrency(items, limit, task) {
+  const results = new Array(items.length);
+  let cursor = 0;
+  const workers = Array.from({ length: Math.min(limit, items.length) }, async () => {
+    while (cursor < items.length) {
+      const index = cursor++;
+      results[index] = await task(items[index], index);
+    }
+  });
+  await Promise.all(workers);
+  return results;
+}
+
+// How many modules are analyzed at once. Each module still reads its sources —
+// and each source's sub-reads — in parallel, so this caps total concurrency at
+// a safe level (roughly limit × sources × 6) instead of firing everything.
+const ANALYTICS_MODULE_CONCURRENCY = 6;
+
 export async function getAnalyticsDashboardData() {
   const registry = await discoverAnalyticsRegistry();
-  const moduleResults = [];
+  // Analyze modules in parallel but with BOUNDED concurrency. An earlier
+  // unbounded Promise.all opened hundreds of simultaneous Firestore reads for a
+  // large registry, which could exhaust the client and make the API hang (the
+  // dashboard then spun forever). This keeps the parallel speed-up while staying
+  // within safe limits.
+  const moduleTasks = registry.flatMap((project) =>
+    project.modules.map((module) => ({ project, module })),
+  );
+  const moduleResults = await mapWithConcurrency(
+    moduleTasks,
+    ANALYTICS_MODULE_CONCURRENCY,
+    async ({ project, module }) => {
+        const baseModule = {
+          projectId: project.projectId,
+          projectName: project.projectName,
+          moduleKey: module.moduleKey,
+          moduleLabel: module.moduleLabel,
+          totalRecords: 0,
+          recentCreatedCount: 0,
+          recentCreated: [],
+          recentUpdated: [],
+          lastActivityAtMs: null,
+        };
 
-  for (const project of registry) {
-    for (const module of project.modules) {
-      const baseModule = {
-        projectId: project.projectId,
-        projectName: project.projectName,
-        moduleKey: module.moduleKey,
-        moduleLabel: module.moduleLabel,
-        totalRecords: 0,
-        recentCreatedCount: 0,
-        recentCreated: [],
-        recentUpdated: [],
-        lastActivityAtMs: null,
-      };
+        const sourceResults = await Promise.all(
+          module.sources.map((source) =>
+            source.type === "collection"
+              ? analyzeCollectionSource({
+                  projectId: project.projectId,
+                  projectName: project.projectName,
+                  moduleKey: module.moduleKey,
+                  moduleLabel: module.moduleLabel,
+                  moduleCoverage: "tracked",
+                  source,
+                })
+              : analyzeDocArraySource({
+                  projectId: project.projectId,
+                  projectName: project.projectName,
+                  moduleKey: module.moduleKey,
+                  moduleLabel: module.moduleLabel,
+                  moduleCoverage: "tracked",
+                  source,
+                }),
+          ),
+        );
 
-      const sourceResults = [];
-      for (const source of module.sources) {
-        const result = source.type === "collection"
-          ? await analyzeCollectionSource({
-              projectId: project.projectId,
-              projectName: project.projectName,
-              moduleKey: module.moduleKey,
-              moduleLabel: module.moduleLabel,
-              moduleCoverage: "tracked",
-              source,
-            })
-          : await analyzeDocArraySource({
-              projectId: project.projectId,
-              projectName: project.projectName,
-              moduleKey: module.moduleKey,
-              moduleLabel: module.moduleLabel,
-              moduleCoverage: "tracked",
-              source,
-            });
+        const totalRecords = sourceResults.reduce((sum, source) => sum + source.count, 0);
+        const recentCreatedCount = sourceResults.reduce(
+          (sum, source) => sum + source.recentCreatedCount,
+          0,
+        );
+        const recentCreated = clampList(
+          uniqueBy(
+            sortByTimestampDesc(sourceResults.flatMap((source) => source.recentCreated)),
+            (item) => item.id,
+          ),
+          12,
+        );
+        const recentUpdated = clampList(
+          uniqueBy(
+            sortByTimestampDesc(sourceResults.flatMap((source) => source.recentUpdated)),
+            (item) => item.id,
+          ),
+          12,
+        );
+        const lastActivityAtMs = Math.max(
+          ...sourceResults.map((source) => source.lastActivityAtMs ?? 0),
+          0,
+        ) || null;
+        const dailyCreatedSeries = mergeDailySeries(
+          sourceResults.map((source) => source.dailyCreatedSeries),
+          "count",
+        );
+        const dailyUpdatedSeries = mergeDailySeries(
+          sourceResults.map((source) => source.dailyUpdatedSeries),
+          "count",
+        );
 
-        sourceResults.push(result);
-      }
-
-      const totalRecords = sourceResults.reduce((sum, source) => sum + source.count, 0);
-      const recentCreatedCount = sourceResults.reduce(
-        (sum, source) => sum + source.recentCreatedCount,
-        0,
-      );
-      const recentCreated = clampList(
-        uniqueBy(
-          sortByTimestampDesc(sourceResults.flatMap((source) => source.recentCreated)),
-          (item) => item.id,
-        ),
-        12,
-      );
-      const recentUpdated = clampList(
-        uniqueBy(
-          sortByTimestampDesc(sourceResults.flatMap((source) => source.recentUpdated)),
-          (item) => item.id,
-        ),
-        12,
-      );
-      const lastActivityAtMs = Math.max(
-        ...sourceResults.map((source) => source.lastActivityAtMs ?? 0),
-        0,
-      ) || null;
-      const dailyCreatedSeries = mergeDailySeries(
-        sourceResults.map((source) => source.dailyCreatedSeries),
-        "count",
-      );
-      const dailyUpdatedSeries = mergeDailySeries(
-        sourceResults.map((source) => source.dailyUpdatedSeries),
-        "count",
-      );
-
-      moduleResults.push({
-        ...baseModule,
-        totalRecords,
-        recentCreatedCount,
-        recentCreated,
-        recentUpdated,
-        recentUpdatedCount: recentUpdated.length,
-        lastActivityAtMs,
-        dailyCreatedSeries,
-        dailyUpdatedSeries,
-      });
-    }
-  }
+        return {
+          ...baseModule,
+          totalRecords,
+          recentCreatedCount,
+          recentCreated,
+          recentUpdated,
+          recentUpdatedCount: recentUpdated.length,
+          lastActivityAtMs,
+          dailyCreatedSeries,
+          dailyUpdatedSeries,
+        };
+    },
+  );
 
   const projects = registry.map((project) => {
     const modules = moduleResults.filter((item) => item.projectId === project.projectId);
