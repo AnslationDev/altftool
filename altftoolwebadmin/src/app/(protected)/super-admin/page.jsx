@@ -97,9 +97,6 @@ function ProjectCard({ project, href, accessible, projectSummary }) {
   const moduleCount = projectSummary?.moduleCount || modules.length;
   const description = projectSummary?.description || meta.description || `Manage ${project.name} modules and admin content.`;
 
-
-  console.log(project.length , "project data")
-
   return (
     <Link
       href={accessible ? href : "/access-denied"}
@@ -134,9 +131,10 @@ function ProjectCard({ project, href, accessible, projectSummary }) {
         <div>
           <p className="text-[11px] font-bold uppercase tracking-[0.08em] text-[var(--muted)]">Open</p>
           <p className="mt-1 inline-flex items-center gap-1 text-sm font-bold" style={{ color: accent }}>
-            <Link  href={project.adminRoute}>
-            Admin Panel <ArrowRight className="h-4 w-4 transition group-hover:translate-x-0.5" /></Link>
-            
+            {/* The whole card is already a <Link> to `href`; a nested <Link>
+                here produced invalid <a>-in-<a> markup and made clicks land on
+                the wrong target intermittently. Render as plain text instead. */}
+            Admin Panel <ArrowRight className="h-4 w-4 transition group-hover:translate-x-0.5" />
           </p>
         </div>
       </div>
@@ -194,8 +192,6 @@ export default function SuperAdminDashboardPage() {
   useEffect(() => {
     loadSummary();
   }, [loadSummary]);
-
-  console.log("summary project data is comming" , summary)
 
   const counts = summary?.counts || {};
   const totalProjects = counts.projects || activeProjects.length;
@@ -321,17 +317,29 @@ export default function SuperAdminDashboardPage() {
           </div>
 
           <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-             { summary?.projects?.map((project) => {
-              const firstModuleKey = Object.keys(project.modules || {})[0];
-              const href = firstModuleKey ? getProjectModuleRoute(project.id, firstModuleKey) : `/${project.id}`;
-              const accessible = isSuperAdmin || hasProjectAccess({ adminData, projectId: project.id });
+             { summary?.projects?.map((summaryProject) => {
+              // The summary API returns { projectId, projectName, adminRoute, ... }
+              // (NOT { id, modules }). Merge it with the local project registry so
+              // the card has both the registry meta (id, modules, logo, name) and
+              // the server-computed route. Reading project.id / project.modules
+              // straight off the API object left them undefined, which made the
+              // href fall through to `/undefined`.
+              const projectId = summaryProject.projectId;
+              const registry = PROJECTS[projectId];
+              const firstModuleKey = Object.keys(registry?.modules || {})[0];
+              const href =
+                summaryProject.adminRoute ||
+                (registry && firstModuleKey
+                  ? getProjectModuleRoute(projectId, firstModuleKey)
+                  : `/${projectId}`);
+              const accessible = isSuperAdmin || hasProjectAccess({ adminData, projectId });
               return (
                 <ProjectCard
-                  key={project.id}
-                  project={project}
+                  key={projectId}
+                  project={{ ...registry, ...summaryProject, id: projectId }}
                   href={href}
                   accessible={accessible}
-                  projectSummary={summaryProjectsById.get(project.id)}
+                  projectSummary={summaryProjectsById.get(projectId)}
                 />
               );
             })}
