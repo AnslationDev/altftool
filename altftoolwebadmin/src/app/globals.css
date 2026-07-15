@@ -818,74 +818,87 @@ a {
 }
 
 
-.ck-editor__editable {
+/* ── Custom Tiptap Editor / ProseMirror theming ── */
+.ProseMirror {
   min-height: 400px;
+  outline: none;
 }
 
-/* ── CKEditor 5 theming — map the Lark theme onto ALTFTool semantic tokens so
-   the editor follows light AND dark mode (master.md: no hardcoded colours). ── */
-:root {
-  --ck-color-base-background: var(--surface);
-  --ck-color-base-foreground: var(--surface-soft);
-  --ck-color-base-border: var(--border);
-  --ck-color-base-text: var(--foreground);
-  --ck-color-focus-border: var(--primary);
-  --ck-color-text: var(--foreground);
-  --ck-color-toolbar-background: var(--surface);
-  --ck-color-toolbar-border: var(--border);
-  --ck-color-button-default-background: transparent;
-  --ck-color-button-default-hover-background: var(--surface-soft);
-  --ck-color-button-default-active-background: var(--surface-soft);
-  --ck-color-button-on-background: color-mix(in srgb, var(--primary) 14%, transparent);
-  --ck-color-button-on-hover-background: color-mix(in srgb, var(--primary) 20%, transparent);
-  --ck-color-button-on-active-background: color-mix(in srgb, var(--primary) 24%, transparent);
-  --ck-color-button-on-color: var(--primary);
-  --ck-color-dropdown-panel-background: var(--surface);
-  --ck-color-dropdown-panel-border: var(--border);
-  --ck-color-panel-background: var(--surface);
-  --ck-color-panel-border: var(--border);
-  --ck-color-input-background: var(--surface);
-  --ck-color-input-border: var(--border);
-  --ck-color-input-text: var(--foreground);
-  --ck-color-list-background: var(--surface);
-  --ck-color-list-button-hover-background: var(--surface-soft);
-  --ck-color-list-button-on-background: color-mix(in srgb, var(--primary) 16%, transparent);
-  --ck-color-list-button-on-text: var(--primary);
-  --ck-color-labeled-field-label-background: var(--surface);
-  --ck-color-dialog-background: var(--surface);
-  --ck-color-dialog-form-header-border: var(--border);
-  --ck-color-editable-blur-selection: color-mix(in srgb, var(--primary) 22%, transparent);
-  --ck-color-widget-hover-border: color-mix(in srgb, var(--primary) 60%, transparent);
-  --ck-color-widget-editable-focus-background: var(--surface);
+.ProseMirror p.is-editor-empty:first-child::before {
+  content: attr(data-placeholder);
+  float: left;
+  color: var(--muted);
+  pointer-events: none;
+  height: 0;
 }
 
-.ck.ck-editor__main > .ck-editor__editable:not(.ck-focused) {
-  border-color: var(--border);
+.ProseMirror a {
+  color: var(--primary) !important;
+  text-decoration: underline;
+  cursor: pointer;
 }
 
-.ck.ck-editor__main > .ck-editor__editable.ck-focused:not(.ck-editor__nested-editable) {
-  border-color: var(--primary);
-  box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary) 22%, transparent);
+.ProseMirror ul {
+  list-style-type: disc !important;
+  padding-left: 1.5rem;
+  margin: 0.5rem 0;
 }
 
-.ck.ck-content a {
-  color: var(--primary);
+.ProseMirror ol {
+  list-style-type: decimal !important;
+  padding-left: 1.5rem;
+  margin: 0.5rem 0;
 }
 
-.editor-fullscreen {
-  position: fixed;
-  top: 0;
-  left: 0;
+.ProseMirror blockquote {
+  border-left: 4px solid var(--primary);
+  padding-left: 1rem;
+  color: var(--muted);
+  font-style: italic;
+  margin: 1rem 0;
+}
+
+.ProseMirror pre {
+  background: var(--surface-soft);
+  color: var(--foreground);
+  padding: 0.75rem 1rem;
+  border-radius: var(--radius-md);
+  font-family: var(--anslation-ds-font-mono);
+  overflow-x: auto;
+  margin: 1rem 0;
+}
+
+.blog-table {
+  border-collapse: collapse;
+  margin: 1.5rem 0;
   width: 100%;
-  height: 100%;
-  background: var(--surface);
-  z-index: 9999;
-  padding: 20px;
-  overflow: auto;
 }
 
-.editor-fullscreen .ck-editor__editable {
-  min-height: calc(100vh - 120px);
+.blog-table td,
+.blog-table th {
+  border: 1px solid var(--border);
+  min-width: 1em;
+  padding: 0.75rem;
+  position: relative;
+  vertical-align: top;
+}
+
+.blog-table th {
+  background-color: var(--surface-soft);
+  font-weight: bold;
+  text-align: left;
+}
+
+.blog-table .selectedCell:after {
+  background: color-mix(in srgb, var(--primary) 12%, transparent);
+  content: "";
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  pointer-events: none;
+  position: absolute;
+  z-index: 2;
 }
 
 /* ── Thin, token-driven scrollbars for dense admin panels (sidebar, menus) ── */

@@ -1,6 +1,5 @@
 "use client";
 
-import CkeditorAssets from "@/components/admin/CkeditorAssets";
 import BlogTopBar from "./components/BlogTopBar";
 
 export default function BlogsLayout({ children }) {
@@ -8,8 +7,6 @@ export default function BlogsLayout({ children }) {
   return (
 
     <div className="min-h-screen bg-surface-soft">
-
-      <CkeditorAssets />
 
       {/* Top Navigation */}
 
