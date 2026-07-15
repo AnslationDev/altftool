@@ -1,10 +1,11 @@
 const toolConfig = {
-  slug:"age-gender-detector",
-  name:"Age & Gender Detector",
-  category:"AI",
-  description:"Detects age and gender of a person",
+  slug: "age-gender-detector",
+  name: "Age & Gender Detector",
+  category: ["AI"],
+  description:
+    "Upload a photo and our advanced AI will detect the person's estimated age and gender in seconds.",
   icon: "scan-face",
-  iconColor: "text-purple-500",
-}
+  iconColor: "text-teal-600",
+};
 
 export default toolConfig;

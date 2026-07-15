@@ -1,243 +1,345 @@
-import LoadingSpinner from "./LoadingSpinner";
-import ErrorMessage from "./ErrorMessage";
-import { User, Calendar, Smile, Shapes, Star, Camera, Download, Share2, Copy } from "lucide-react";
-import { formatAnalysisText } from "../services/exportAnalysis";
+"use client";
 
-export default function ResultPanel({ analyzing, result, error, onReset }) {
+import { useState } from "react";
+import {
+  Check,
+  Clock3,
+  Download,
+  Loader2,
+  Mars,
+  RefreshCw,
+  ScanFace,
+  TriangleAlert,
+  Users,
+  Venus,
+} from "lucide-react";
+import { toneColor } from "../utils/tones";
+import { CARD, FOCUS_RING } from "./ui.jsx";
 
-  if (analyzing) return <LoadingSpinner />;
+function pct(value) {
+  return `${Math.round((value || 0) * 100)}%`;
+}
 
-  if (error) return <ErrorMessage message={error} />;
+function titleCase(value) {
+  return value ? value.charAt(0).toUpperCase() + value.slice(1) : "—";
+}
 
-  if (!result) return null;
+/* ---------------------------- corner brackets ---------------------------- */
 
-  const faces = result?.faces || (Array.isArray(result) ? result : []);
+function FaceBrackets({ image, face }) {
+  if (!image || !face) return null;
+  const { naturalWidth, naturalHeight } = image;
+  const left = (face.box.x / naturalWidth) * 100;
+  const top = (face.box.y / naturalHeight) * 100;
+  const width = (face.box.width / naturalWidth) * 100;
+  const height = (face.box.height / naturalHeight) * 100;
 
-  const handleDownload = () => {
-    const text = formatAnalysisText(result);
-    const blob = new Blob([text], { type: "text/plain" });
-    const url = URL.createObjectURL(blob);
-
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = "face-analysis.txt";
-    a.click();
-
-    URL.revokeObjectURL(url);
-  };
-
-  const handleCopy = async () => {
-    const text = formatAnalysisText(result);
-    await navigator.clipboard.writeText(text);
-    alert("Analysis copied to clipboard");
-  };
-
-  const handleShare = async () => {
-    const text = formatAnalysisText(result);
-
-    if (navigator.share) {
-      await navigator.share({
-        title: "Face Analysis Result",
-        text
-      });
-    } else {
-      alert("Sharing not supported on this browser");
-    }
-  };
+  const corner = "absolute h-5 w-5 border-(--anslation-ds-secondary)";
 
   return (
-    <div className="flex flex-col justify-center space-y-6">
+    <span
+      aria-hidden="true"
+      className="pointer-events-none absolute"
+      style={{ left: `${left}%`, top: `${top}%`, width: `${width}%`, height: `${height}%` }}
+    >
+      <span className={`${corner} left-0 top-0 rounded-tl-[6px] border-l-[3px] border-t-[3px]`} />
+      <span className={`${corner} right-0 top-0 rounded-tr-[6px] border-r-[3px] border-t-[3px]`} />
+      <span className={`${corner} bottom-0 left-0 rounded-bl-[6px] border-b-[3px] border-l-[3px]`} />
+      <span className={`${corner} bottom-0 right-0 rounded-br-[6px] border-b-[3px] border-r-[3px]`} />
+    </span>
+  );
+}
 
-      <h3 className="subheading">Analysis Results</h3>
+/* ------------------------------ result export ----------------------------- */
 
-      {faces.filter(Boolean).map((face, index) => (
+async function downloadAnnotatedResult(image, face) {
+  const img = new Image();
+  img.src = image.src;
+  await img.decode();
 
-        <div key={index} className="space-y-5 border border-(--border) p-6 rounded-2xl">
+  const canvas = document.createElement("canvas");
+  canvas.width = img.naturalWidth;
+  canvas.height = img.naturalHeight + 84;
+  const ctx = canvas.getContext("2d");
 
-          <h4 className="font-semibold text-lg">
-            Face {index + 1}
-          </h4>
+  ctx.fillStyle = "#101827";
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  ctx.drawImage(img, 0, 0);
 
-          {/* Gender */}
-          <div className="bg-(--card) rounded-2xl p-6 border border-(--border)">
-            <div className="flex items-center space-x-4">
-              <div className="w-12 h-12 bg-(--primary) rounded-xl flex items-center justify-center">
-                <User className="text-white" size={22} />
-              </div>
+  // face box
+  const { x, y, width, height } = face.box;
+  ctx.strokeStyle = "#22d3ee";
+  ctx.lineWidth = Math.max(3, canvas.width / 240);
+  ctx.strokeRect(x, y, width, height);
 
-              <div>
-                <p className="text-sm text-(--muted-foreground)">Gender</p>
-                <p className="text-2xl font-bold capitalize">
-                  {face.gender}
-                </p>
+  // caption band
+  const bandY = img.naturalHeight;
+  ctx.fillStyle = "#101827";
+  ctx.fillRect(0, bandY, canvas.width, 84);
+  ctx.fillStyle = "#f8fafc";
+  ctx.font = `bold ${Math.max(20, canvas.width / 28)}px system-ui, sans-serif`;
+  ctx.fillText(
+    `Age ~${face.age} · ${titleCase(face.gender)} · Confidence ${pct(face.genderConfidence)}`,
+    16,
+    bandY + 52,
+  );
 
-                <p className="text-xs text-(--muted-foreground)">
-                  Confidence: {(face.genderConfidence * 100).toFixed(1)}%
-                </p>
-              </div>
-            </div>
-          </div>
+  const url = canvas.toDataURL("image/png");
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = "age-gender-result.png";
+  link.click();
+}
 
-          {/* Age */}
-          <div className="bg-(--card) rounded-2xl p-6 border border-(--border)">
-            <div className="flex items-center space-x-4">
-              <div className="w-12 h-12 bg-(--primary) rounded-xl flex items-center justify-center">
-                <Calendar className="text-white" size={22} />
-              </div>
+/* --------------------------------- states --------------------------------- */
 
-              <div>
-                <p className="text-sm text-muted-foreground">
-                  Estimated Age Range
-                </p>
-                <p className="text-2xl font-bold">
-                  {face.ageRange.min} - {face.ageRange.max} years
-                </p>
-              </div>
-            </div>
-          </div>
+function EmptyState() {
+  return (
+    <div className="flex flex-1 flex-col items-center justify-center gap-3 rounded-[12px] border-2 border-dashed border-(--border) bg-(--background) px-6 py-14 text-center">
+      <span className="flex h-16 w-16 items-center justify-center rounded-full bg-(--muted) text-(--muted-foreground)">
+        <ScanFace size={28} aria-hidden="true" />
+      </span>
+      <p className="text-sm font-bold text-(--foreground)">No photo analyzed yet</p>
+      <p className="max-w-[260px] text-xs leading-5 text-(--muted-foreground)">
+        Upload a photo or use your camera — the estimated age and gender will appear here
+        instantly.
+      </p>
+    </div>
+  );
+}
 
-          {/* Emotion */}
-          <div className="bg-(--card) rounded-2xl p-6 border border-(--border)">
-            <div className="flex items-center space-x-4">
-              <div className="w-12 h-12 bg-(--primary) rounded-xl flex items-center justify-center">
-                <Smile className="text-white" size={22} />
-              </div>
+function BusyState({ status }) {
+  return (
+    <div
+      className="flex flex-1 flex-col items-center justify-center gap-3 rounded-[12px] border border-(--border) bg-(--background) px-6 py-14 text-center"
+      role="status"
+    >
+      <Loader2
+        size={30}
+        aria-hidden="true"
+        className="motion-safe:animate-spin text-(--primary-hover) dark:text-(--primary)"
+      />
+      <p className="text-sm font-bold text-(--foreground)">
+        {status === "loading" ? "Loading AI model…" : "Analyzing face…"}
+      </p>
+      <p className="max-w-[260px] text-xs leading-5 text-(--muted-foreground)">
+        {status === "loading"
+          ? "First run downloads a small on-device model (~600KB). It stays cached after that."
+          : "Estimating age and gender locally on your device."}
+      </p>
+    </div>
+  );
+}
 
-              <div>
-                <p className="text-sm text-(--muted-foreground)">Primary Emotion</p>
-                <p className="text-2xl font-bold capitalize">
-                  {face.dominantEmotion}
-                </p>
-              </div>
-            </div>
-          </div>
-
-          {/* Face Shape */}
-          <div className="bg-(--card) rounded-2xl p-6 border border-(--border)">
-            <div className="flex items-center space-x-4">
-              <div className="w-12 h-12 bg-(--primary) rounded-xl flex items-center justify-center">
-                <Shapes className="text-white" size={22} />
-              </div>
-
-              <div>
-                <p className="text-sm text-(--muted-foreground)">Face Shape</p>
-                <p className="text-2xl font-bold capitalize">
-                  {face.faceShape}
-                </p>
-              </div>
-            </div>
-          </div>
-
-          {/* Celebrity Look-Alike */}
-          {face.celebrityMatch && (
-            <div className="bg-(--card) rounded-2xl p-6 border border-(--border)">
-              <div className="flex items-center space-x-4">
-                <div className="w-12 h-12 bg-(--primary) rounded-xl flex items-center justify-center">
-                  <Star className="text-white" size={22} />
-                </div>
-
-                <div>
-                  <p className="text-sm text-(--muted-foreground)">
-                    Celebrity Look-Alike
-                  </p>
-
-                  <p className="text-2xl font-bold">
-                    {face.celebrityMatch.name}
-                  </p>
-
-                  <p className="text-xs text-(--muted-foreground)">
-                    {face.celebrityMatch.similarity}% similarity
-                  </p>
-                </div>
-              </div>
-            </div>
-          )}
-
-          {/* Face Quality Score */}
-          {face.faceQuality && (
-            <div className="bg-(--card) rounded-2xl p-6 border border-(--border)">
-              <div className="flex items-center space-x-4">
-                <div className="w-12 h-12 bg-(--primary) rounded-xl flex items-center justify-center">
-                  <Camera className="text-white" size={22} />
-                </div>
-
-                <div>
-                  <p className="text-sm text-(--muted-foreground)">
-                    Face Quality Score
-                  </p>
-
-                  <p className="text-lg font-semibold">
-                    Lighting: {face.faceQuality.lighting}
-                  </p>
-
-                  <p className="text-lg font-semibold">
-                    Face Visibility: {face.faceQuality.visibility}
-                  </p>
-
-                  <p className="text-lg font-semibold">
-                    Blur: {face.faceQuality.blur}
-                  </p>
-
-                  <p className="text-xl font-bold mt-1">
-                    Score: {face.faceQuality.score}/100
-                  </p>
-                </div>
-              </div>
-            </div>
-          )}
-
-        </div>
-      ))}
-
-      {result.similarity && (
-        <div className="mt-4 text-center">
-          <p className="text-lg font-semibold">
-            Similarity: {result.similarity}%
-          </p>
-
-          <p className="text-sm text-(--muted-foreground)">
-            {result.samePerson ? "Likely same person" : "Different people"}
-          </p>
-        </div>
-      )}
-
-      {/* Download / Share / Copy */}
-      <div className="bg-(--card) rounded-2xl p-6 border border-(--border) space-y-4">
-        <p className="font-semibold">📤 Download Analysis</p>
-
-        <div className="flex gap-3 flex-wrap">
-
-          <button
-            onClick={handleDownload}
-            className="flex items-center gap-2 px-4 py-2 bg-(--primary) text-white rounded-xl cursor-pointer"
-          >
-            <Download size={18} /> Download Result
-          </button>
-
-          <button
-            onClick={handleShare}
-            className="flex items-center gap-2 px-4 py-2 border border-(--border) rounded-xl cursor-pointer"
-          >
-            <Share2 size={18} /> Share Result
-          </button>
-
-          <button
-            onClick={handleCopy}
-            className="flex items-center gap-2 px-4 py-2 border border-(--border) rounded-xl cursor-pointer"
-          >
-            <Copy size={18} /> Copy Analysis
-          </button>
-
-        </div>
-      </div>
-
-      <button
-        onClick={onReset}
-        className="mt-4 py-3 bg-(--primary) text-white rounded-xl font-semibold cursor-pointer"
+function ErrorState({ error, onReset }) {
+  return (
+    <div className="flex flex-1 flex-col items-center justify-center gap-3 rounded-[12px] border px-6 py-14 text-center"
+      style={{
+        borderColor: "color-mix(in srgb, var(--anslation-ds-danger) 35%, transparent)",
+        backgroundColor: "color-mix(in srgb, var(--anslation-ds-danger-soft) 55%, transparent)",
+      }}
+      role="alert"
+    >
+      <span
+        className="flex h-14 w-14 items-center justify-center rounded-full"
+        style={{
+          backgroundColor: "var(--anslation-ds-danger-soft)",
+          color: "color-mix(in srgb, var(--anslation-ds-danger) 75%, var(--foreground))",
+        }}
       >
+        <TriangleAlert size={24} aria-hidden="true" />
+      </span>
+      <p className="text-sm font-bold text-(--foreground)">Detection failed</p>
+      <p className="max-w-[280px] text-xs leading-5 text-(--muted-foreground)">{error}</p>
+      <button
+        type="button"
+        onClick={onReset}
+        className={`mt-1 inline-flex h-10 items-center justify-center gap-2 rounded-[8px] border border-(--border) bg-(--card) px-4 text-sm font-bold text-(--foreground) transition hover:border-(--primary) ${FOCUS_RING}`}
+      >
+        <RefreshCw size={15} aria-hidden="true" />
         Try Another Photo
       </button>
-
     </div>
+  );
+}
+
+/* ---------------------------------- panel --------------------------------- */
+
+export default function ResultPanel({
+  status,
+  image,
+  faces,
+  activeFace,
+  setActiveFace,
+  processingMs,
+  error,
+  onReset,
+}) {
+  const [downloading, setDownloading] = useState(false);
+  const face = faces[activeFace] || faces[0] || null;
+  const hasResult = status === "done" && face && image;
+
+  async function handleDownload() {
+    if (!hasResult || downloading) return;
+    setDownloading(true);
+    try {
+      await downloadAnnotatedResult(image, face);
+    } finally {
+      setDownloading(false);
+    }
+  }
+
+  return (
+    <section aria-label="Detection result" className={`${CARD} flex flex-col p-4 sm:p-5`}>
+      <div className="mb-3 flex items-center justify-between gap-2">
+        <h2 className="text-sm font-bold tracking-tight text-(--foreground)">Detection Result</h2>
+        {faces.length > 1 && (
+          <div className="flex gap-1.5" role="tablist" aria-label="Detected faces">
+            {faces.map((item, index) => (
+              <button
+                key={index}
+                type="button"
+                role="tab"
+                aria-selected={index === activeFace}
+                onClick={() => setActiveFace(index)}
+                className={`rounded-full px-2.5 py-1 text-[11px] font-bold transition ${FOCUS_RING} ${
+                  index === activeFace
+                    ? "bg-(--primary) text-(--primary-foreground)"
+                    : "bg-(--muted) text-(--muted-foreground) hover:text-(--foreground)"
+                }`}
+              >
+                Face {index + 1}
+              </button>
+            ))}
+          </div>
+        )}
+      </div>
+
+      {status === "idle" && <EmptyState />}
+      {(status === "loading" || status === "analyzing") && <BusyState status={status} />}
+      {status === "error" && <ErrorState error={error} onReset={onReset} />}
+
+      {hasResult && (
+        <div className="flex flex-1 flex-col gap-4">
+          <div className="grid gap-4 sm:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
+            {/* annotated preview */}
+            <div className="relative self-start overflow-hidden rounded-[12px] border border-(--border) bg-(--muted)">
+              <img
+                src={image.src}
+                alt="Analyzed"
+                className="block h-auto w-full"
+                draggable={false}
+              />
+              <FaceBrackets image={image} face={face} />
+            </div>
+
+            {/* headline tiles + confidence */}
+            <div className="flex flex-col gap-3">
+              <div className="grid grid-cols-2 gap-3">
+                <div className="flex flex-col items-center justify-center rounded-[12px] border border-(--border) bg-(--background) p-4 text-center">
+                  <p className="text-xs font-semibold text-(--muted-foreground)">Estimated Age</p>
+                  <p className="mt-1 text-4xl font-extrabold leading-none tabular-nums text-(--primary-hover) dark:text-(--primary)">
+                    {face.age}
+                  </p>
+                  <p className="mt-1.5 text-xs font-semibold text-(--muted-foreground)">
+                    years old
+                  </p>
+                </div>
+                <div className="flex flex-col items-center justify-center rounded-[12px] border border-(--border) bg-(--background) p-4 text-center">
+                  <p className="text-xs font-semibold text-(--muted-foreground)">Gender</p>
+                  <span
+                    className="mt-1.5"
+                    style={{ color: toneColor(face.gender === "female" ? "danger" : "info") }}
+                  >
+                    {face.gender === "female" ? (
+                      <Venus size={30} aria-hidden="true" />
+                    ) : (
+                      <Mars size={30} aria-hidden="true" />
+                    )}
+                  </span>
+                  <p className="mt-1.5 text-lg font-extrabold leading-none text-(--foreground)">
+                    {titleCase(face.gender)}
+                  </p>
+                </div>
+              </div>
+
+              <div className="rounded-[12px] border border-(--border) bg-(--background) p-4">
+                <div className="mb-2 flex items-center justify-between text-xs font-semibold">
+                  <span className="text-(--muted-foreground)">Confidence Score</span>
+                  <span className="tabular-nums text-(--foreground)">
+                    {pct(face.genderConfidence)}
+                  </span>
+                </div>
+                <div
+                  role="progressbar"
+                  aria-valuenow={Math.round(face.genderConfidence * 100)}
+                  aria-valuemin={0}
+                  aria-valuemax={100}
+                  aria-label="Confidence score"
+                  className="h-2 overflow-hidden rounded-full bg-(--muted)"
+                >
+                  <div
+                    className="h-full rounded-full"
+                    style={{
+                      width: pct(face.genderConfidence),
+                      background: "var(--anslation-ds-cta-gradient)",
+                    }}
+                  />
+                </div>
+
+                <dl className="mt-3 divide-y divide-(--border) text-sm">
+                  <div className="flex items-center justify-between gap-2 py-2">
+                    <dt className="flex items-center gap-1.5 text-(--muted-foreground)">
+                      <ScanFace size={14} aria-hidden="true" /> Face Detected
+                    </dt>
+                    <dd
+                      className="flex items-center gap-1 font-bold"
+                      style={{ color: toneColor("success") }}
+                    >
+                      <Check size={14} aria-hidden="true" /> Yes
+                    </dd>
+                  </div>
+                  <div className="flex items-center justify-between gap-2 py-2">
+                    <dt className="flex items-center gap-1.5 text-(--muted-foreground)">
+                      <Clock3 size={14} aria-hidden="true" /> Processing Time
+                    </dt>
+                    <dd className="font-bold tabular-nums text-(--foreground)">
+                      {(processingMs / 1000).toFixed(1)} sec
+                    </dd>
+                  </div>
+                  <div className="flex items-center justify-between gap-2 py-2">
+                    <dt className="flex items-center gap-1.5 text-(--muted-foreground)">
+                      <Users size={14} aria-hidden="true" /> Faces Found
+                    </dt>
+                    <dd className="font-bold tabular-nums text-(--foreground)">{faces.length}</dd>
+                  </div>
+                </dl>
+              </div>
+            </div>
+          </div>
+
+          <div className="mt-auto grid grid-cols-2 gap-2.5">
+            <button
+              type="button"
+              onClick={onReset}
+              className={`inline-flex h-11 items-center justify-center gap-2 rounded-[8px] border border-(--border) bg-(--card) px-4 text-sm font-bold text-(--foreground) transition hover:border-(--primary) hover:text-(--primary-hover) dark:hover:text-(--primary) ${FOCUS_RING}`}
+            >
+              <RefreshCw size={16} aria-hidden="true" />
+              Analyze Another
+            </button>
+            <button
+              type="button"
+              onClick={handleDownload}
+              disabled={downloading}
+              className={`inline-flex h-11 items-center justify-center gap-2 rounded-[8px] px-4 text-sm font-bold text-white shadow-[0_6px_16px_color-mix(in_srgb,var(--primary)_30%,transparent)] transition hover:opacity-95 disabled:opacity-60 ${FOCUS_RING}`}
+              style={{ background: "var(--anslation-ds-cta-gradient)" }}
+            >
+              <Download size={16} aria-hidden="true" />
+              {downloading ? "Preparing…" : "Download Result"}
+            </button>
+          </div>
+        </div>
+      )}
+    </section>
   );
 }

@@ -1,165 +1,144 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
-import UploadArea from "../components/UploadArea";
-import ImagePreview from "../components/ImagePreview";
-import ResultPanel from "../components/ResultPanel";
-import HowItWorks from "../components/HowItWorks";
+import { useState } from "react";
+import { BadgeCheck, ScanFace, Sparkles, UserRoundCheck, ShieldCheck } from "lucide-react";
 import useImageAnalysis from "../hooks/useImageAnalysis";
-import WebcamDetector from "../components/WebcamDetector";
+import UploadArea from "../components/UploadArea.jsx";
+import ResultPanel from "../components/ResultPanel.jsx";
+import WebcamDetector from "../components/WebcamDetector.jsx";
+import FeatureStrip from "../components/FeatureStrip.jsx";
+import HowItWorks from "../components/HowItWorks.jsx";
+import ExampleResults from "../components/ExampleResults.jsx";
+import TipsFaq from "../components/TipsFaq.jsx";
+import ExploreAiTools from "../components/ExploreAiTools.jsx";
 
-import { getFaceDescriptor, compareFaces } from "../services/faceSimilarity";
+function TrustChip({ icon: Icon, tone, children }) {
+  const tones = {
+    success: {
+      backgroundColor: "var(--anslation-ds-success-soft)",
+      color: "color-mix(in srgb, var(--anslation-ds-success) 72%, var(--foreground))",
+    },
+    neutral: { backgroundColor: "var(--muted)", color: "var(--muted-foreground)" },
+    primary: {
+      backgroundColor: "var(--anslation-ds-primary-soft)",
+      color: "color-mix(in srgb, var(--anslation-ds-primary) 60%, var(--foreground))",
+    },
+  };
+  return (
+    <span
+      className="inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-bold"
+      style={tones[tone] || tones.neutral}
+    >
+      <Icon size={13} aria-hidden="true" />
+      {children}
+    </span>
+  );
+}
 
-export default function ToolHome() {
-  const [preview, setPreview] = useState(null);
-  const [mode, setMode] = useState("upload");
-  const [uploadMode, setUploadMode] = useState("single");
-  const [cameraDenied, setCameraDenied] = useState(false);
+function Hero() {
+  return (
+    <header className="relative overflow-hidden">
+      <div className="flex items-start justify-between gap-6">
+        <div className="min-w-0">
+          <div className="flex flex-wrap items-center gap-3">
+            <h1 className="text-[26px] font-bold leading-tight tracking-tight text-(--foreground) sm:text-4xl">
+              Age &amp; Gender Detector
+            </h1>
+            <span
+              className="inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-bold"
+              style={{
+                backgroundColor: "var(--anslation-ds-secondary-soft)",
+                color: "color-mix(in srgb, var(--anslation-ds-secondary) 60%, var(--foreground))",
+              }}
+            >
+              <Sparkles size={13} aria-hidden="true" />
+              AI-Powered
+            </span>
+          </div>
+          <p className="mt-2 max-w-xl text-sm leading-6 text-(--muted-foreground) sm:text-[15px]">
+            Upload a photo and our advanced AI will detect the person&apos;s estimated age and
+            gender in seconds.
+          </p>
+          <div className="mt-4 flex flex-wrap gap-2">
+            <TrustChip icon={BadgeCheck} tone="success">
+              100% Free
+            </TrustChip>
+            <TrustChip icon={UserRoundCheck} tone="neutral">
+              No Sign Up
+            </TrustChip>
+            <TrustChip icon={ShieldCheck} tone="primary">
+              Privacy First
+            </TrustChip>
+          </div>
+        </div>
 
-  const [similarity, setSimilarity] = useState(null);
+        {/* decorative illustration */}
+        <div aria-hidden="true" className="relative hidden h-36 w-48 shrink-0 lg:block">
+          <span className="absolute right-24 top-20 h-16 w-16 rounded-full border border-dashed border-(--border)" />
+          <span className="absolute right-0 top-24 h-10 w-10 rounded-full border border-dashed border-(--border)" />
+          <span
+            className="absolute right-8 top-2 flex h-24 w-24 rotate-6 items-center justify-center rounded-[20px] text-white shadow-[var(--anslation-ds-shadow-md)]"
+            style={{ background: "var(--anslation-ds-cta-gradient)" }}
+          >
+            <ScanFace size={44} />
+          </span>
+          <Sparkles
+            size={18}
+            className="absolute right-36 top-4 text-(--primary-hover) dark:text-(--primary)"
+          />
+          <Sparkles size={13} className="absolute right-2 top-6 text-(--muted-foreground)" />
+        </div>
+      </div>
+    </header>
+  );
+}
 
-  const startCameraRef = useRef(null);
-
-  const { analyzing, result, error, analyzeImage, reset, setResult } = useImageAnalysis();
-
-  async function checkSimilarity(img1, img2) {
-    const desc1 = await getFaceDescriptor(img1);
-    const desc2 = await getFaceDescriptor(img2);
-
-    if (!desc1 || !desc2) {
-      console.error("Face not detected in one of the images");
-      return;
-    }
-
-    const result = compareFaces(desc1, desc2);
-    setSimilarity(result);
-  }
-
-  // ✅ FIX: Always trigger camera when switching to camera mode
-  useEffect(() => {
-    if (mode === "camera" && startCameraRef.current) {
-      startCameraRef.current();
-    }
-  }, [mode]);
+export default function AgeGenderDetectorApp() {
+  const analysis = useImageAnalysis();
+  const [cameraOpen, setCameraOpen] = useState(false);
+  const busy = analysis.status === "loading" || analysis.status === "analyzing";
 
   return (
-    <div className="min-h-screen bg-(--background) p-4 sm:p-6 lg:p-8">
-      <div className="max-w-5xl mx-auto">
+    <div className="font-secondary space-y-5 pb-2 text-(--foreground) sm:space-y-6">
+      <Hero />
 
-        <div className="text-center mb-10">
-          <h1 className="heading mb-4">Age & Gender Detector</h1>
-          <p className="description">
-            Upload a photo or use your webcam and our AI will analyze facial
-            features to estimate age and gender instantly.
-          </p>
-        </div>
-
-        {/* Mode Switch */}
-        <div className="flex justify-center gap-4 mb-6">
-          <button
-            onClick={() => { setMode("upload"); setPreview(null); reset(); }}
-            className={`px-6 py-3 rounded-xl cursor-pointer font-medium ${mode === "upload" ? "bg-(--primary) text-white" : "bg-(--card) border border-(--border)"
-              }`}
-          >
-            From Device
-          </button>
-
-          <button
-            onClick={() => { setMode("camera"); setPreview(null); reset(); setCameraDenied(false); }}
-            className={`px-6 py-3 rounded-xl cursor-pointer font-medium ${mode === "camera" ? "bg-(--primary) text-white" : "bg-(--card) border border-(--border)"
-              }`}
-          >
-            Use Camera
-          </button>
-        </div>
-
-        {/* Tool Card */}
-        <div className="bg-(--card) rounded-3xl shadow-2xl overflow-hidden">
-          {mode === "upload" ? (
-            !preview ? (
-              <>
-                <div className="flex justify-center gap-2 mt-4">
-                  <button
-                    onClick={() => setUploadMode("single")}
-                    className={`px-4 py-2 rounded-xl text-sm font-medium cursor-pointer transition ${uploadMode === "single"
-                        ? "bg-(--primary) text-white shadow"
-                        : "bg-(--card) text-(--muted-foreground) border border-(--border) hover:bg-(--muted-background)"
-                      }`}
-                  >
-                    Single Image
-                  </button>
-
-                  <button
-                    onClick={() => setUploadMode("compare")}
-                    className={`px-4 py-2 rounded-xl text-sm font-medium cursor-pointer transition ${uploadMode === "compare"
-                        ? "bg-(--primary) text-white shadow"
-                        : "bg-(--card) text-(--muted-foreground) border border-(--border) hover:bg-(--muted-background)"
-                      }`}
-                  >
-                    Compare Two Faces
-                  </button>
-                </div>
-
-                <UploadArea
-                  mode={uploadMode}
-                  setPreview={setPreview}
-                  analyzeImage={analyzeImage}
-                  setResult={setResult}
-                />
-              </>
-            ) : (
-              <div className="p-6 sm:p-8 lg:p-10">
-                <div className="grid lg:grid-cols-2 gap-8">
-                  <ImagePreview
-                    mode={uploadMode}
-                    preview={preview}
-                    onReset={() => { setPreview(null); reset(); }}
-                  />
-                  <ResultPanel
-                    analyzing={analyzing}
-                    result={result}
-                    error={error}
-                    onReset={() => { setPreview(null); reset(); }}
-                  />
-                </div>
-              </div>
-            )
-          ) : (
-            <div className="p-6 sm:p-8 lg:p-10">
-              <div className="grid lg:grid-cols-2 gap-8">
-                <WebcamDetector
-                  onResult={(data) => {
-                    setResult(data);
-                    setCameraDenied(false); // ✅ FIX: reset if working
-                  }}
-                  onCameraDenied={() => setCameraDenied(true)}
-                  setStartCamera={(fn) => { startCameraRef.current = fn; }}
-                />
-
-                <ResultPanel
-                  analyzing={false}
-                  result={result}
-                  error={error}
-                  onReset={() => { setMode("upload"); setPreview(null); reset(); }}
-                />
-              </div>
-
-              {cameraDenied && (
-                <div className="mt-4 p-4 bg-(--card) border border-(--border) rounded-xl text-sm text-(--muted-foreground)">
-                  <p><strong>Camera access is blocked. Please enable camera from your browser settings.</strong></p>
-                  <ol className="list-decimal ml-6 mt-2">
-                    <li>Click the lock icon in the browser&apos;s address bar.</li>
-                    <li>Allow camera access.</li>
-                    <li>Refresh this page.</li>
-                  </ol>
-                </div>
-              )}
-            </div>
-          )}
-        </div>
-
-        <HowItWorks />
+      <div className="grid items-stretch gap-4 lg:grid-cols-[0.9fr_1.1fr]">
+        <UploadArea
+          onFile={analysis.analyzeFile}
+          onOpenCamera={() => setCameraOpen(true)}
+          disabled={busy}
+        />
+        <ResultPanel
+          status={analysis.status}
+          image={analysis.image}
+          faces={analysis.faces}
+          activeFace={analysis.activeFace}
+          setActiveFace={analysis.setActiveFace}
+          processingMs={analysis.processingMs}
+          error={analysis.error}
+          onReset={analysis.reset}
+        />
       </div>
+
+      <FeatureStrip />
+
+      <HowItWorks />
+
+      <ExampleResults />
+
+      <TipsFaq />
+
+      <ExploreAiTools />
+
+      {cameraOpen && (
+        <WebcamDetector
+          onCapture={(dataUrl) => {
+            setCameraOpen(false);
+            analysis.analyzeSrc(dataUrl);
+          }}
+          onClose={() => setCameraOpen(false)}
+        />
+      )}
     </div>
   );
 }

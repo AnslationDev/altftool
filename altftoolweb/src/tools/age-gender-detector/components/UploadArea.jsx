@@ -1,153 +1,114 @@
 "use client";
 
-import { useRef } from "react";
-import { Upload } from "lucide-react";
-import { getFaceDescriptor, compareFaces } from "../services/faceSimilarity";
-// import Alert from "@/shared/ui/Alert";
-import { useAlert } from "@/shared/ui/AlertProvider";
+import { useRef, useState } from "react";
+import { Camera, CloudUpload, ShieldCheck, Upload } from "lucide-react";
+import { CARD, FOCUS_RING } from "./ui.jsx";
 
-export default function UploadArea({ mode, setPreview, analyzeImage, setResult }) {
-  const fileInputRef = useRef(null);
-  const {showAlert} = useAlert();
+export default function UploadArea({ onFile, onOpenCamera, disabled }) {
+  const inputRef = useRef(null);
+  const [dragOver, setDragOver] = useState(false);
 
-  const validateImage = (file) => {
-    const validTypes = ["image/jpeg", "image/png", "image/webp"];
+  function openPicker() {
+    inputRef.current?.click();
+  }
 
-    if (!validTypes.includes(file.type)) {
-      showAlert("Upload JPG, PNG or WEBP", "error");
-      return false;
-    }
+  function handleChange(event) {
+    const file = event.target.files?.[0];
+    if (file) onFile(file);
+    event.target.value = "";
+  }
 
-    if (file.size > 10 * 1024 * 1024) {
-      showAlert("Image must be under 10MB", "error");
-      return false;
-    }
-
-    return true;
-  };
-
-  const processFiles = async (files) => {
-
-    const fileArray = Array.from(files);
-
-    // ✅ COMPARE MODE → MUST HAVE EXACTLY 2
-    if (mode === "compare") {
-      if (fileArray.length !== 2) {
-        showAlert("Please upload exactly TWO images to compare.", "error");
-        return;
-      }
-    }
-
-    const validFiles = fileArray.filter((file) => validateImage(file));
-    if (validFiles.length === 0) return;
-
-    const readers = validFiles.map(
-      (file) =>
-        new Promise((resolve) => {
-          const reader = new FileReader();
-          reader.onloadend = () => resolve(reader.result);
-          reader.readAsDataURL(file);
-        })
-    );
-
-    const images = await Promise.all(readers);
-
-    setPreview(mode === "compare" ? images : images[0]);
-
-    // =========================
-    // SINGLE MODE (UNCHANGED)
-    // =========================
-    if (mode === "single") {
-      analyzeImage(images[0], "single");
-      return;
-    }
-
-    // =========================
-    // COMPARE MODE (ONLY SIMILARITY)
-    // =========================
-
-    try {
-      const img1 = new Image();
-      const img2 = new Image();
-
-      img1.src = images[0];
-      img2.src = images[1];
-
-      await Promise.all([
-        new Promise((res) => (img1.onload = res)),
-        new Promise((res) => (img2.onload = res)),
-      ]);
-
-      const desc1 = await getFaceDescriptor(img1);
-      const desc2 = await getFaceDescriptor(img2);
-
-      if (!desc1 || !desc2) {
-        setResult(null);
-        showAlert("Face not detected in one of the images.", "error");
-        // <Alert 
-        // type="error"
-        // message={"Face not detected in one of the image"}
-        // onClose={false} />
-        return;
-      }
-
-      const similarityData = compareFaces(desc1, desc2);
-
-      // ✅ ONLY COMPARISON RESULT
-      setResult({
-        similarity: similarityData.similarity,
-        samePerson: similarityData.samePerson
-      });
-
-    } catch (err) {
-      console.error(err);
-      setResult(null);
-      showAlert("Comparison failed.", "error");
-    }
-  };
-
-  const handleDrop = (e) => {
-    e.preventDefault();
-    processFiles(e.dataTransfer.files);
-  };
+  function handleDrop(event) {
+    event.preventDefault();
+    setDragOver(false);
+    if (disabled) return;
+    const file = event.dataTransfer?.files?.[0];
+    if (file) onFile(file);
+  }
 
   return (
-    <div
-      className="px-8 sm:px-12 lg:px-16 py-4 sm:py-6 lg:py-8"
-      onDragOver={(e) => e.preventDefault()}
-      onDrop={handleDrop}
-    >
+    <section aria-label="Upload a photo" className={`${CARD} flex flex-col p-4 sm:p-5`}>
       <div
-        onClick={() => fileInputRef.current?.click()}
-        className="border-2 border-dashed border-(--border) rounded-2xl p-10 text-center cursor-pointer hover:border-(--primary) transition"
+        role="button"
+        tabIndex={0}
+        aria-label="Drag and drop an image here, or press Enter to browse"
+        onClick={openPicker}
+        onKeyDown={(event) => {
+          if (event.key === "Enter" || event.key === " ") {
+            event.preventDefault();
+            openPicker();
+          }
+        }}
+        onDragOver={(event) => {
+          event.preventDefault();
+          if (!disabled) setDragOver(true);
+        }}
+        onDragLeave={() => setDragOver(false)}
+        onDrop={handleDrop}
+        className={`flex flex-1 cursor-pointer flex-col items-center justify-center rounded-[12px] border-2 border-dashed px-6 py-10 text-center transition sm:py-14 ${FOCUS_RING} ${
+          dragOver
+            ? "border-(--primary) bg-[color-mix(in_srgb,var(--primary)_7%,transparent)]"
+            : "border-[color-mix(in_srgb,var(--primary)_35%,var(--border))] bg-(--background) hover:border-(--primary)"
+        } ${disabled ? "pointer-events-none opacity-60" : ""}`}
       >
-        <Upload className="mx-auto mb-4 text-(--primary)" size={48} />
+        <span
+          className="relative mb-5 flex h-20 w-20 items-center justify-center rounded-full"
+          style={{ backgroundColor: "var(--anslation-ds-primary-soft)" }}
+        >
+          <span
+            className="flex h-14 w-14 items-center justify-center rounded-full text-white shadow-[0_8px_20px_color-mix(in_srgb,var(--primary)_35%,transparent)]"
+            style={{ background: "var(--anslation-ds-cta-gradient)" }}
+          >
+            <CloudUpload size={26} aria-hidden="true" />
+          </span>
+        </span>
 
-        <h3 className="subheading mb-2">
-          {mode === "compare"
-            ? "Upload Two Photos to Compare Faces"
-            : "Upload a Photo to Analyze"}
-        </h3>
-
-        <p className="description mb-4">
-          {mode === "compare"
-            ? "Upload exactly 2 images to check similarity"
-            : "Detect age, gender and face details"}
+        <p className="text-base font-bold text-(--foreground)">
+          Drag &amp; drop an image here
+        </p>
+        <p className="mt-0.5 text-sm font-semibold text-(--muted-foreground)">
+          or click to browse
+        </p>
+        <p className="mt-3 text-xs font-medium text-(--muted-foreground)">
+          Supports: JPG, PNG, WebP · Max size: 10MB
         </p>
 
-        <button className="px-6 py-3 bg-(--primary) text-white rounded-xl font-medium cursor-pointer">
-          Choose File
-        </button>
+        <div className="mt-6 flex flex-wrap items-center justify-center gap-2.5">
+          <span
+            className={`inline-flex h-11 items-center justify-center gap-2 rounded-[8px] px-4 text-sm font-bold text-white shadow-[0_6px_16px_color-mix(in_srgb,var(--primary)_30%,transparent)] transition hover:opacity-95`}
+            style={{ background: "var(--anslation-ds-cta-gradient)" }}
+          >
+            <Upload size={16} aria-hidden="true" />
+            Upload Image
+          </span>
+          <button
+            type="button"
+            onClick={(event) => {
+              event.stopPropagation();
+              onOpenCamera();
+            }}
+            className={`inline-flex h-11 items-center justify-center gap-2 rounded-[8px] border border-(--border) bg-(--card) px-4 text-sm font-bold text-(--foreground) transition hover:border-(--primary) hover:text-(--primary-hover) dark:hover:text-(--primary) ${FOCUS_RING}`}
+          >
+            <Camera size={16} aria-hidden="true" />
+            Use Camera
+          </button>
+        </div>
       </div>
 
       <input
-        ref={fileInputRef}
+        ref={inputRef}
         type="file"
-        accept="image/*"
-        multiple={mode === "compare"}
-        className="hidden"
-        onChange={(e) => processFiles(e.target.files)}
+        accept="image/jpeg,image/png,image/webp"
+        className="sr-only"
+        onChange={handleChange}
+        aria-hidden="true"
+        tabIndex={-1}
       />
-    </div>
+
+      <p className="mt-4 flex items-start justify-center gap-1.5 text-center text-xs font-medium leading-5 text-(--muted-foreground)">
+        <ShieldCheck size={14} aria-hidden="true" className="mt-0.5 shrink-0" />
+        Your images are processed locally in your browser. We do not upload or store any data.
+      </p>
+    </section>
   );
 }

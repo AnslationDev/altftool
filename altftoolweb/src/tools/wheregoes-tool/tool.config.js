@@ -1,10 +1,10 @@
 const toolConfig = {
   slug: "wheregoes-tool",
-  name: "WhereGoes Tracer",
+  name: "WhereGoes Tool",
   category: ["Web", "Developer", "Network"],
-  description: "Trace the complete redirect chain of any URL, test APIs, and inspect response headers.",
+  description: "Trace URL redirects, check status codes, and analyze response headers.",
   icon: "link",
-  iconColor: "text-primary",
+  iconColor: "text-teal-600",
 };
 
 export default toolConfig;

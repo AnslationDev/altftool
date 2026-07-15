@@ -1,203 +1,134 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
-import { getFaceApi } from "../services/faceApiClient";
+import { useEffect, useRef, useState } from "react";
+import { Camera, X } from "lucide-react";
+import { FOCUS_RING } from "./ui.jsx";
 
-export default function WebcamDetector({ onResult, onCameraDenied, setStartCamera }) {
+/**
+ * Camera capture modal. Streams the front camera, captures a single frame
+ * as a data URL, and hands it to the analyzer. Nothing is recorded.
+ */
+export default function WebcamDetector({ onCapture, onClose }) {
   const videoRef = useRef(null);
-  const canvasRef = useRef(null);
   const streamRef = useRef(null);
-  const intervalRef = useRef(null);
-
-  const [running, setRunning] = useState(false);
-  const [cameraDenied, setCameraDenied] = useState(false);
-
-  const loadModels = useCallback(async () => {
-    const MODEL_URL = "/models";
-    const faceapi = await getFaceApi();
-
-    await Promise.all([
-      faceapi.nets.tinyFaceDetector.loadFromUri(MODEL_URL),
-      faceapi.nets.ageGenderNet.loadFromUri(MODEL_URL),
-      faceapi.nets.faceExpressionNet.loadFromUri(MODEL_URL),
-      faceapi.nets.faceLandmark68Net.loadFromUri(MODEL_URL),
-    ]);
-  }, []);
-
-  const startCamera = useCallback(async () => {
-    try {
-      const stream = await navigator.mediaDevices.getUserMedia({ video: true });
-      streamRef.current = stream;
-
-      if (!videoRef.current) return;
-      videoRef.current.srcObject = stream;
-
-      videoRef.current.onloadedmetadata = () => {
-        if (!videoRef.current) return;
-        videoRef.current.play();
-
-        if (canvasRef.current) {
-          canvasRef.current.width = videoRef.current.videoWidth;
-          canvasRef.current.height = videoRef.current.videoHeight;
-        }
-
-        setRunning(true);
-        setCameraDenied(false);
-      };
-    } catch (err) {
-      console.error("Camera access denied:", err);
-      setCameraDenied(true);
-      if (onCameraDenied) onCameraDenied();
-    }
-  }, [onCameraDenied]);
+  const [error, setError] = useState("");
+  const [ready, setReady] = useState(false);
 
   useEffect(() => {
-    if (typeof setStartCamera === "function") {
-      setStartCamera(() => startCamera); // FIX: ensure stable reference
-    }
-  }, [setStartCamera, startCamera]);
+    let cancelled = false;
 
-  const stopCamera = useCallback(() => {
-    if (intervalRef.current) clearInterval(intervalRef.current);
-    if (streamRef.current) {
-      streamRef.current.getTracks().forEach((track) => track.stop());
-      streamRef.current = null;
+    async function startCamera() {
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({
+          video: { facingMode: "user", width: { ideal: 1280 }, height: { ideal: 720 } },
+          audio: false,
+        });
+        if (cancelled) {
+          stream.getTracks().forEach((track) => track.stop());
+          return;
+        }
+        streamRef.current = stream;
+        if (videoRef.current) {
+          videoRef.current.srcObject = stream;
+          await videoRef.current.play();
+          setReady(true);
+        }
+      } catch {
+        if (!cancelled) {
+          setError(
+            "Camera access was denied or is unavailable. You can still upload a photo instead.",
+          );
+        }
+      }
     }
-    if (videoRef.current) videoRef.current.srcObject = null;
-    setRunning(false);
+
+    startCamera();
+
+    return () => {
+      cancelled = true;
+      streamRef.current?.getTracks().forEach((track) => track.stop());
+    };
   }, []);
 
-  function calculateFaceShape(jawPoints) {
-    if (!jawPoints || jawPoints.length < 17) return "unknown";
+  function handleCapture() {
+    const video = videoRef.current;
+    if (!video || !ready) return;
 
-    const left = jawPoints[0];
-    const right = jawPoints[16];
-    const chin = jawPoints[8];
+    const canvas = document.createElement("canvas");
+    canvas.width = video.videoWidth;
+    canvas.height = video.videoHeight;
+    const ctx = canvas.getContext("2d");
+    // Mirror back so the capture matches what the user saw.
+    ctx.translate(canvas.width, 0);
+    ctx.scale(-1, 1);
+    ctx.drawImage(video, 0, 0);
 
-    const width = Math.abs(right.x - left.x);
-    const height = Math.abs(chin.y - ((left.y + right.y) / 2));
-
-    const ratio = height / width;
-
-    if (ratio > 1.45) return "oval";
-    if (ratio > 1.25) return "round";
-    if (ratio > 1.05) return "square";
-
-    return "heart";
+    onCapture(canvas.toDataURL("image/png"));
   }
 
-  const detect = useCallback(async () => {
-    const video = videoRef.current;
-    const canvas = canvasRef.current;
-    if (!video || !canvas) return;
-    if (video.readyState !== 4 || video.videoWidth === 0) return;
-
-    const faceapi = await getFaceApi();
-
-    const detections = await faceapi
-      .detectAllFaces(video, new faceapi.TinyFaceDetectorOptions())
-      .withFaceLandmarks()
-      .withFaceExpressions()
-      .withAgeAndGender();
-
-    const displaySize = { width: video.videoWidth, height: video.videoHeight };
-    faceapi.matchDimensions(canvas, displaySize);
-
-    const resized = faceapi.resizeResults(detections, displaySize);
-    const ctx = canvas.getContext("2d");
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-    const results = resized.map((det) => {
-      const box = det.detection.box;
-      ctx.strokeStyle = "#6366F1";
-      ctx.lineWidth = 2;
-      ctx.strokeRect(box.x, box.y, box.width, box.height);
-
-      const dominantEmotion = Object.entries(det.expressions).sort((a, b) => b[1] - a[1])[0][0];
-
-      const jawPoints = det.landmarks.getJawOutline();
-
-      const faceShape = calculateFaceShape(jawPoints);
-
-      const estimatedAge = Math.round(det.age);
-      const minAge = estimatedAge - 2;
-      const maxAge = estimatedAge + 2;
-
-      const text = `${det.gender} ${minAge}-${maxAge} (${dominantEmotion})`;
-
-      ctx.fillStyle = "#6366F1";
-      ctx.font = "16px sans-serif";
-      ctx.fillText(text, box.x, box.y - 10);
-
-      const landmarks = det.landmarks;
-      if (landmarks) {
-        const drawPoint = (pt) => {
-          ctx.beginPath();
-          ctx.arc(pt.x, pt.y, 2, 0, Math.PI * 2);
-          ctx.fillStyle = "#FF5733";
-          ctx.fill();
-        };
-
-        landmarks.getLeftEye().forEach(drawPoint);
-        landmarks.getRightEye().forEach(drawPoint);
-        landmarks.getNose().forEach(drawPoint);
-        landmarks.getMouth().forEach(drawPoint);
-        landmarks.getJawOutline().forEach(drawPoint);
-      }
-
-      return {
-        ageRange: {
-          min: estimatedAge - 2,
-          max: estimatedAge + 2
-        },
-        gender: det.gender,
-        genderConfidence: det.genderProbability,
-        dominantEmotion,
-        faceShape
-      };
-    });
-
-    if (onResult) onResult(results);
-  }, [onResult]);
-
-  useEffect(() => {
-    async function init() {
-      try {
-        await loadModels();
-        await startCamera();
-      } catch (err) {
-        console.error("Init failed:", err);
-        setCameraDenied(true);
-        if (onCameraDenied) onCameraDenied();
-      }
-    }
-    init();
-  }, [loadModels, onCameraDenied, startCamera]);
-
-  useEffect(() => {
-    if (!running) return;
-    intervalRef.current = setInterval(() => detect(), 300);
-    return () => {
-      if (intervalRef.current) clearInterval(intervalRef.current);
-    };
-  }, [detect, running]);
-
-  useEffect(() => {
-    return () => stopCamera();
-  }, [stopCamera]);
-
   return (
-    <div className="relative w-full ">
-      <>
-        <video ref={videoRef} autoPlay muted className="rounded-xl w-full h-full object-cover" />
-        <canvas ref={canvasRef} className="absolute top-0 left-0 w-full h-full" />
+    <div
+      role="dialog"
+      aria-modal="true"
+      aria-label="Take a photo with your camera"
+      className="fixed inset-0 z-50 flex items-center justify-center p-4"
+    >
+      <button
+        type="button"
+        aria-label="Close camera"
+        onClick={onClose}
+        className="absolute inset-0 cursor-default"
+        style={{ backgroundColor: "color-mix(in srgb, var(--foreground) 45%, transparent)" }}
+      />
 
-        {cameraDenied && (
-          <div className="absolute inset-0 flex items-center justify-center bg-black/50 text-white text-sm">
-            Camera access denied or failed to initialize
-          </div>
-        )}
-      </>
+      <div className="relative w-full max-w-lg overflow-hidden rounded-[16px] border border-(--border) bg-(--card) shadow-[var(--anslation-ds-shadow-lg)]">
+        <div className="flex items-center justify-between border-b border-(--border) px-4 py-3">
+          <h2 className="text-sm font-bold text-(--foreground)">Use Camera</h2>
+          <button
+            type="button"
+            onClick={onClose}
+            aria-label="Close"
+            className={`flex h-8 w-8 items-center justify-center rounded-[8px] text-(--muted-foreground) transition hover:bg-(--muted) hover:text-(--foreground) ${FOCUS_RING}`}
+          >
+            <X size={16} aria-hidden="true" />
+          </button>
+        </div>
+
+        <div className="relative aspect-video w-full bg-black/80">
+          {error ? (
+            <p className="flex h-full items-center justify-center px-8 text-center text-sm font-medium text-white">
+              {error}
+            </p>
+          ) : (
+            <video
+              ref={videoRef}
+              playsInline
+              muted
+              className="h-full w-full -scale-x-100 object-cover"
+            />
+          )}
+        </div>
+
+        <div className="flex items-center justify-center gap-2.5 px-4 py-4">
+          <button
+            type="button"
+            onClick={handleCapture}
+            disabled={!ready || Boolean(error)}
+            className={`inline-flex h-11 items-center justify-center gap-2 rounded-[8px] px-5 text-sm font-bold text-white transition hover:opacity-95 disabled:pointer-events-none disabled:opacity-60 ${FOCUS_RING}`}
+            style={{ background: "var(--anslation-ds-cta-gradient)" }}
+          >
+            <Camera size={16} aria-hidden="true" />
+            Capture Photo
+          </button>
+          <button
+            type="button"
+            onClick={onClose}
+            className={`inline-flex h-11 items-center justify-center rounded-[8px] border border-(--border) bg-(--card) px-5 text-sm font-bold text-(--foreground) transition hover:border-(--primary) ${FOCUS_RING}`}
+          >
+            Cancel
+          </button>
+        </div>
+      </div>
     </div>
   );
 }
