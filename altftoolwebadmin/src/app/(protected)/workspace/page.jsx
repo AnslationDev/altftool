@@ -8,6 +8,7 @@ import ActivityTimeline from "./components/ActivityTimeline";
 import ActivityAnalytics from "./components/ActivityAnalytics";
 import ActivityFilters from "./components/ActivityFilters";
 import EventDetailDrawer from "./components/EventDetailDrawer";
+import MigrationBanner from "./components/MigrationBanner";
 import { breadcrumb } from "./components/helpers";
 
 const PAGE_SIZE = 40;
@@ -116,6 +117,8 @@ export default function WorkspaceExplorerPage() {
             Refresh
           </button>
         </div>
+
+        <MigrationBanner />
 
         <div className="grid gap-5 lg:grid-cols-[300px_1fr]">
           <aside className="h-max rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-3 shadow-[var(--shadow-sm)] lg:sticky lg:top-4">

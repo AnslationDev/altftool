@@ -9,7 +9,7 @@
 //
 // It never throws: auditing must never break a CRUD flow.
 
-import { FieldValue } from "firebase-admin/firestore";
+import { FieldValue, Timestamp } from "firebase-admin/firestore";
 import { adminDb } from "@/lib/firebaseAdmin";
 import { buildWorkspaceContext } from "@/lib/workspace";
 import { actionKindFor } from "./actionKinds";
@@ -143,14 +143,21 @@ function buildLegacyMirror(event) {
 /**
  * Write one activity event (v2 + rollups + legacy mirror). Never throws.
  * @param {object} entry
+ * @param {{ mirrorLegacy?: boolean, atMs?: number }} [opts]
+ *   mirrorLegacy=false skips the admin_audit_logs mirror (used by the backfill,
+ *   where the legacy doc already exists). atMs pins the event timestamp (used to
+ *   preserve historical times during migration) instead of "now".
  */
-export async function writeActivityEvent(entry = {}) {
+export async function writeActivityEvent(entry = {}, opts = {}) {
   try {
     if (!entry.action) return; // an event without an action is a no-op (parity with old logger)
 
-    const nowMs = Date.now();
+    const mirrorLegacy = opts.mirrorLegacy !== false;
+    const nowMs = typeof opts.atMs === "number" && opts.atMs > 0 ? opts.atMs : Date.now();
     const event = buildActivityEvent(entry, nowMs);
-    const serverTs = FieldValue.serverTimestamp();
+    const serverTs = typeof opts.atMs === "number" && opts.atMs > 0
+      ? Timestamp.fromMillis(opts.atMs)
+      : FieldValue.serverTimestamp();
 
     const batch = adminDb.batch();
 
@@ -175,15 +182,18 @@ export async function writeActivityEvent(entry = {}) {
       batch.set(ref, rollup, { merge: true });
     }
 
-    // 3. legacy mirror (keeps the current audit view working)
-    const legacyRef = adminDb.collection(LEGACY_AUDIT_COLLECTION).doc();
-    batch.set(legacyRef, {
-      ...buildLegacyMirror(event),
-      targetUid: entry.targetUid ?? null,
-      targetEmail: entry.targetEmail ?? null,
-      createdAtMs: nowMs,
-      createdAt: serverTs,
-    });
+    // 3. legacy mirror (keeps the current audit view working). Skipped during
+    // backfill, where the source admin_audit_logs doc already exists.
+    if (mirrorLegacy) {
+      const legacyRef = adminDb.collection(LEGACY_AUDIT_COLLECTION).doc();
+      batch.set(legacyRef, {
+        ...buildLegacyMirror(event),
+        targetUid: entry.targetUid ?? null,
+        targetEmail: entry.targetEmail ?? null,
+        createdAtMs: nowMs,
+        createdAt: serverTs,
+      });
+    }
 
     await batch.commit();
     return eventRef.id;
