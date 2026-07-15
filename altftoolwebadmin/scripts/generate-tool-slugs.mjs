@@ -2,10 +2,11 @@
 // auto-generated tool registry (altftoolweb/src/platform/registry/toolRuntimeMap.js).
 //
 // The Ads module pins ads to specific tool detail pages using this slug list.
-// It MUST stay in sync with the live tools, otherwise newly-added tools do not
-// appear as ad targets. Run this whenever tools are added/removed:
-//   node scripts/generate-tool-slugs.mjs
-import { readFileSync, writeFileSync } from "node:fs";
+// This runs automatically as part of `npm run build` and `npm run dev` (see
+// package.json), so the list stays in sync with the live tools on every build —
+// no manual step. When a new tool is added, its slug appears here on the next
+// build/deploy. You can still run it by hand: node scripts/generate-tool-slugs.mjs
+import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import path from "node:path";
 
@@ -16,14 +17,24 @@ const runtimeMapPath = path.resolve(
 );
 const outPath = path.resolve(here, "../src/config/toolSlugs.generated.js");
 
+// Build-safe: if the web registry isn't present (e.g. a partial checkout that
+// doesn't include the web app), keep the existing committed list instead of
+// failing the build.
+if (!existsSync(runtimeMapPath)) {
+  console.warn(
+    `[generate-tool-slugs] Source not found (${path.relative(process.cwd(), runtimeMapPath)}); keeping existing toolSlugs.generated.js.`,
+  );
+  process.exit(0);
+}
+
 const src = readFileSync(runtimeMapPath, "utf8");
 // Keys are the quoted object keys: `"slug": () => import(...)`
 const slugs = [...src.matchAll(/^\s*"([a-z0-9][a-z0-9-]*)"\s*:/gim)].map((m) => m[1]);
 const unique = [...new Set(slugs)].sort((a, b) => a.localeCompare(b));
 
 if (unique.length === 0) {
-  console.error("[generate-tool-slugs] No slugs found — aborting to avoid wiping the list.");
-  process.exit(1);
+  console.warn("[generate-tool-slugs] No slugs parsed from source; keeping existing list.");
+  process.exit(0);
 }
 
 const body =
