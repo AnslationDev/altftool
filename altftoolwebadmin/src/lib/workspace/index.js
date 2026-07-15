@@ -6,22 +6,12 @@
 //
 // Consumers (Audit, Analytics, Permissions, …) import from here.
 
-import { workspaceRegistry } from "./registry";
-import { registerFallbackProjects } from "./fallback";
-import "./registrations.generated"; // side-effect: explicit self-registrations
-
-let bootstrapped = false;
-
-// Idempotent: safe to call from anywhere; only does work once per process.
-export function ensureWorkspaceBootstrapped() {
-  if (bootstrapped) return workspaceRegistry;
-  registerFallbackProjects();
-  bootstrapped = true;
-  return workspaceRegistry;
-}
+import { ensureWorkspaceBootstrapped } from "./bootstrap";
 
 // Bootstrap eagerly on first import so consumers get a ready registry.
 ensureWorkspaceBootstrapped();
+
+export { ensureWorkspaceBootstrapped } from "./bootstrap";
 
 export { workspaceRegistry } from "./registry";
 export { WorkspaceRegistry, registerProject } from "./registry";
@@ -36,3 +26,7 @@ export const getWorkspaceChildren = (hierarchyPath) => ensureWorkspaceBootstrapp
 export const getWorkspaceAncestry = (hierarchyPath) => ensureWorkspaceBootstrapped().getAncestry(hierarchyPath);
 export const getWorkspaceStats = () => ensureWorkspaceBootstrapped().stats();
 export const getWorkspaceIssues = () => ensureWorkspaceBootstrapped().getIssues();
+
+// Phase 2 — metadata resolver + context builder.
+export { resolveWorkspaceNode, UNCLASSIFIED_PROJECT } from "./resolve";
+export { buildWorkspaceContext } from "./context";
