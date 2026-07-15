@@ -28,7 +28,7 @@ import { htmlToEditor } from "../editor/EditorUtils.js";
  */
 
 function EditorShell({ error, onEmitFromSource }) {
-  const { editor, readOnly, draft, emit } = useAltfEditor();
+  const { editor, readOnly, draft, emit, flush } = useAltfEditor();
   const containerRef = useRef(null);
   const [isSourceView, setIsSourceView] = useState(false);
   const [sourceDraft, setSourceDraft] = useState("");
@@ -45,7 +45,17 @@ function EditorShell({ error, onEmitFromSource }) {
     const previous = document.body.style.overflow;
     document.body.style.overflow = "hidden";
     const onKey = (event) => {
-      if (event.key === "Escape") setIsFullscreen(false);
+      if (event.key !== "Escape") return;
+      // Don't exit fullscreen while a dialog/palette/slash-menu/context-menu
+      // is open — Esc closes that first.
+      if (
+        document.querySelector(
+          ".altft-dialog-backdrop, .altft-slash-portal, .altft-context-menu",
+        )
+      ) {
+        return;
+      }
+      setIsFullscreen(false);
     };
     window.addEventListener("keydown", onKey);
     return () => {
@@ -58,7 +68,9 @@ function EditorShell({ error, onEmitFromSource }) {
   useEffect(() => {
     const onKey = (event) => {
       if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "k") {
-        if (!containerRef.current?.contains(document.activeElement)) return;
+        const inside =
+          containerRef.current?.contains(document.activeElement) || editor?.isFocused;
+        if (!inside) return;
         event.preventDefault();
         if (editor && !editor.state.selection.empty) {
           setLinkOpen(true);
@@ -85,10 +97,13 @@ function EditorShell({ error, onEmitFromSource }) {
       editor.commands.setContent(htmlToEditor(sourceDraft), false);
       setIsSourceView(false);
     } else {
+      // Force any pending debounced emit so the source view opens with the
+      // freshest sanitized HTML, not a value up to one debounce interval old.
+      flush?.();
       setSourceDraft(onEmitFromSource.current?.latest ?? "");
       setIsSourceView(true);
     }
-  }, [editor, isSourceView, sourceDraft, onEmitFromSource]);
+  }, [editor, isSourceView, sourceDraft, onEmitFromSource, flush]);
 
   if (!editor) {
     return (
@@ -139,7 +154,12 @@ function EditorShell({ error, onEmitFromSource }) {
 
       <div className="flex min-h-0 flex-1 overflow-hidden bg-surface">
         <div className="min-w-0 flex-1 overflow-y-auto">
-          {isSourceView ? (
+          {/* EditorContent stays mounted (hidden) in source view — unmounting
+              it mid-session tears down node views and crashes React. */}
+          <div style={isSourceView ? { display: "none" } : undefined}>
+            <EditorContent editor={editor} />
+          </div>
+          {isSourceView && (
             <textarea
               value={sourceDraft}
               onChange={(event) => {
@@ -151,8 +171,6 @@ function EditorShell({ error, onEmitFromSource }) {
               aria-label="Blog HTML source editor"
               className="h-full min-h-[440px] w-full resize-none border-0 bg-[#0b1220] p-6 font-mono text-[13px] leading-6 text-slate-100 outline-none"
             />
-          ) : (
-            <EditorContent editor={editor} />
           )}
         </div>
         <EditorSeoPanel open={seoOpen && !isSourceView} onClose={() => setSeoOpen(false)} refreshKey={seoRefresh} />
@@ -160,13 +178,12 @@ function EditorShell({ error, onEmitFromSource }) {
 
       <EditorStatusBar mode={isSourceView ? "HTML Source" : focusMode ? "Focus" : "Visual"} />
 
-      {!isSourceView && (
-        <>
-          <EditorBubbleMenu onEditLink={() => setLinkOpen(true)} />
-          <EditorFloatingMenu />
-          <EditorContextMenu containerRef={containerRef} />
-        </>
-      )}
+      {/* Always mounted — unmounting tippy-based menus mid-session races
+          React's commit phase (NotFoundError: removeChild). Their shouldShow
+          predicates keep them hidden whenever they don't apply. */}
+      <EditorBubbleMenu onEditLink={() => setLinkOpen(true)} />
+      <EditorFloatingMenu />
+      {!isSourceView && <EditorContextMenu containerRef={containerRef} />}
 
       <EditorLinkDialog open={linkOpen} onClose={() => setLinkOpen(false)} />
       <EditorCommandPalette open={paletteOpen} onClose={() => setPaletteOpen(false)} />

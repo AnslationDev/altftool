@@ -37,6 +37,24 @@ export const SlashCommands = Extension.create({
           let renderer = null;
           let container = null;
 
+          // Defer DOM removal so React finishes unmounting the portal first —
+          // removing the container synchronously throws NotFoundError inside
+          // React's commit phase.
+          const cleanup = () => {
+            const r = renderer;
+            const c = container;
+            renderer = null;
+            container = null;
+            if (!r && !c) return;
+            window.setTimeout(() => {
+              try {
+                r?.destroy();
+              } finally {
+                c?.remove();
+              }
+            }, 0);
+          };
+
           const position = (clientRect) => {
             if (!container || !clientRect) return;
             const rect = clientRect();
@@ -68,20 +86,12 @@ export const SlashCommands = Extension.create({
             },
             onKeyDown: (props) => {
               if (props.event.key === "Escape") {
-                renderer?.destroy();
-                container?.remove();
-                renderer = null;
-                container = null;
+                cleanup();
                 return true;
               }
               return renderer?.ref?.onKeyDown?.(props) ?? false;
             },
-            onExit: () => {
-              renderer?.destroy();
-              container?.remove();
-              renderer = null;
-              container = null;
-            },
+            onExit: cleanup,
           };
         },
       }),

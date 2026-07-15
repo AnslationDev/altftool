@@ -34,6 +34,7 @@ import { Markdown } from "tiptap-markdown";
 
 import { FontSize } from "./extensions/FontSize";
 import { LineHeight } from "./extensions/LineHeight";
+import { ListKeymap } from "./extensions/ListKeymap";
 import { ResizableImage } from "./extensions/ResizableImage.jsx";
 import { AnchorIds } from "./extensions/AnchorIds";
 import { SlashCommands } from "./extensions/SlashCommands";
@@ -80,12 +81,37 @@ export default function EditorProvider({
   onChangeRef.current = onChange;
   const [draftState, setDraftState] = useState({ available: false, html: "", savedAt: null });
   const [saveState, setSaveState] = useState("idle"); // idle | saving | saved
-  const saveTimer = useRef(null);
+  const emitTimer = useRef(null);
 
   const emit = useCallback((html) => {
     sentValuesRef.current = [html, ...sentValuesRef.current].slice(0, 10);
     onChangeRef.current?.(html);
   }, []);
+
+  // The expensive work per edit — a full sanitize + heading-anchor DOM pass
+  // plus firing onChange (which makes the host re-run its Publish Gate / live
+  // preview). Running this on EVERY keystroke froze large documents, so we
+  // DEBOUNCE it: keystrokes only reschedule the timer, and the heavy pass runs
+  // once typing pauses. Flushed immediately on blur / unmount so nothing is lost.
+  const emitFromInstance = useCallback(
+    (instance) => {
+      if (!instance || instance.isDestroyed) return;
+      const html = exportHtml(instance);
+      emit(html);
+      if (draftKey) {
+        try {
+          window.localStorage.setItem(
+            `ALTFT_EDITOR_DRAFT:${draftKey}`,
+            JSON.stringify({ html, savedAt: Date.now() }),
+          );
+          setSaveState("saved");
+        } catch {
+          setSaveState("idle");
+        }
+      }
+    },
+    [emit, draftKey],
+  );
 
   const insertImageFiles = useCallback(async (editorInstance, files) => {
     for (const file of files) {
@@ -111,6 +137,7 @@ export default function EditorProvider({
       FontSize,
       FontFamily,
       LineHeight,
+      ListKeymap,
       Subscript,
       Superscript,
       Highlight.configure({ multicolor: true }),
@@ -168,28 +195,58 @@ export default function EditorProvider({
       },
     },
     onUpdate: ({ editor: instance }) => {
-      const html = exportHtml(instance);
-      emit(html);
-      if (draftKey) {
-        setSaveState("saving");
-        window.clearTimeout(saveTimer.current);
-        saveTimer.current = window.setTimeout(() => {
-          try {
-            window.localStorage.setItem(
-              `ALTFT_EDITOR_DRAFT:${draftKey}`,
-              JSON.stringify({ html, savedAt: Date.now() }),
-            );
-            setSaveState("saved");
-          } catch {
-            setSaveState("idle");
-          }
-        }, 900);
-      }
+      // Cheap per-keystroke work only. React bails out of the re-render once
+      // saveState is already "saving", so this stays free while typing.
+      if (draftKey) setSaveState("saving");
+      window.clearTimeout(emitTimer.current);
+      emitTimer.current = window.setTimeout(() => emitFromInstance(instance), 300);
     },
   });
 
   const editorApiRef = useRef({});
   editorApiRef.current.editor = editor;
+
+  // Run any pending debounced emit right now (before save, on blur, on unmount).
+  const flush = useCallback(() => {
+    window.clearTimeout(emitTimer.current);
+    emitFromInstance(editorApiRef.current.editor);
+  }, [emitFromInstance]);
+
+  // Flush the pending edit whenever the editor loses focus (e.g. the user
+  // clicks Save / Publish or tabs away) and on unmount, so the host always
+  // has the latest sanitized HTML even though typing is debounced.
+  useEffect(() => {
+    if (!editor) return undefined;
+    const onBlur = () => flush();
+    editor.on("blur", onBlur);
+    return () => {
+      editor.off("blur", onBlur);
+      window.clearTimeout(emitTimer.current);
+      emitFromInstance(editor);
+    };
+  }, [editor, flush, emitFromInstance]);
+
+  // Debug/testing hook — lets the console (and E2E tests) reach the instance
+  // and force a pending debounced emit.
+  useEffect(() => {
+    if (typeof window !== "undefined" && editor) {
+      window.__ALTFT_EDITOR__ = editor;
+      window.__ALTFT_FLUSH__ = flush;
+      window.__ALTFT_EXPORT__ = () => exportHtml(editor);
+    }
+  }, [editor, flush]);
+
+  // Re-render all consumers on EVERY transaction (including selection-only
+  // ones) so toolbar active-states and can() checks are never stale. Without
+  // this, clicking into bold text or drag-selecting table cells would leave
+  // the toolbar showing the previous state.
+  const [transactionTick, setTransactionTick] = useState(0);
+  useEffect(() => {
+    if (!editor) return undefined;
+    const bump = () => setTransactionTick((tick) => (tick + 1) % 1_000_000);
+    editor.on("transaction", bump);
+    return () => editor.off("transaction", bump);
+  }, [editor]);
 
   /* ------------- adopt external value changes without clobbering ------------- */
 
@@ -258,12 +315,14 @@ export default function EditorProvider({
       editor,
       readOnly,
       emit,
+      flush,
       insertImageFiles,
       openImagePicker: () => fileInputRef.current?.click(),
       draft: { ...draftState, restore: restoreDraft, discard: discardDraft },
       saveState,
     }),
-    [editor, readOnly, emit, insertImageFiles, draftState, restoreDraft, discardDraft, saveState],
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [editor, readOnly, emit, flush, insertImageFiles, draftState, restoreDraft, discardDraft, saveState, transactionTick],
   );
 
   return (

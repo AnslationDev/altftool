@@ -48,7 +48,11 @@ export default function EditorBubbleMenu({ onEditLink }) {
       shouldShow={({ editor: instance, state }) => {
         if (!instance.isEditable) return false;
         if (state.selection.empty) return false;
-        if (instance.isActive("image") || instance.isActive("firebaseVideo")) return false;
+        // Only for TEXT selections — node selections (image, video, youtube,
+        // iframe, comment atoms) have their own controls, and showing tippy
+        // over them causes overlay + unmount races.
+        if ("node" in state.selection && state.selection.node) return false;
+        if (state.selection.constructor?.name?.includes("Cell")) return false;
         return true;
       }}
     >
