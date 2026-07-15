@@ -7,8 +7,8 @@
     "npm": ">=11"
   },
   "scripts": {
-    "dev": "node scripts/generate-tool-slugs.mjs && next dev --webpack",
-    "build": "node scripts/generate-tool-slugs.mjs && node ../scripts/generate-admin-health-manifest.mjs && next build --webpack",
+    "dev": "node scripts/generate-tool-slugs.mjs && node scripts/generate-workspace-registry.mjs && next dev --webpack",
+    "build": "node scripts/generate-tool-slugs.mjs && node scripts/generate-workspace-registry.mjs && node ../scripts/generate-admin-health-manifest.mjs && next build --webpack",
     "start": "next start",
     "firebase:admin-write-check": "node scripts/checkFirebaseAdminWrite.mjs",
     "firebase:admin-write-check:dry-run": "FIREBASE_ADMIN_WRITE_CHECK_MODE=dry-run node scripts/checkFirebaseAdminWrite.mjs",
