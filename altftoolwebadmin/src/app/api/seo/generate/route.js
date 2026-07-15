@@ -3,7 +3,7 @@
 // priority scorer pick). Writes seoProposals only; never touches seo/runtime.
 
 import { NextResponse } from "next/server";
-import { verifyActiveAdmin } from "@/lib/serverAdminAuth";
+import { authorizeSeoRequest, seoAccessErrorResponse } from "@/lib/seoAuth";
 import { enforceRateLimit } from "@altftool/core/http";
 import { CRON_SECRET_ENV, isAutomationEnabled } from "@/lib/automation/constants";
 import { readAutomationSettings } from "@/lib/automation/settings";
@@ -29,11 +29,17 @@ export async function POST(request) {
   if (secret && provided === secret) {
     startedBy = "cron";
   } else {
+    // The SEO generation lane is backed by altftool's automation internals
+    // (page registry, priority scorer, seoProposals), so it is authorized
+    // strictly against the altftool SEO module — another project's admin can
+    // never trigger it and pull altftool-derived data.
     try {
-      const { admin } = await verifyActiveAdmin(request);
+      const { admin } = await authorizeSeoRequest(request, "write", {
+        forceProject: "altftool",
+      });
       startedBy = admin.email || admin.uid;
-    } catch {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    } catch (error) {
+      return seoAccessErrorResponse(error);
     }
   }
 

@@ -1,5 +1,16 @@
 // ⚠️ AUTO-GENERATED FILE — DO NOT EDIT
 export const toolMetaMap = {
+  "2-images-swap": {
+    "name": "2 Images Swap",
+    "description": "Upload two images and instantly swap their positions with real-time preview and export.",
+    "category": [
+      "Design",
+      "Image",
+      "Creators"
+    ],
+    "icon": "arrow-left-right",
+    "iconColor": "text-violet-600"
+  },
   "2048-game": {
     "name": "2048 Game",
     "description": "Merge tiles to reach 2048 in this classic sliding puzzle game.",
@@ -9,6 +20,13 @@ export const toolMetaMap = {
     ],
     "icon": "gamepad-2",
     "iconColor": "text-amber-600"
+  },
+  "ad-copy-ab-planner": {
+    "name": "Ad Copy A/B Planner",
+    "description": "Futuristic A/B ad copy planner, side-by-side comparison, live mock previews, and campaign testing scheduler.",
+    "category": "Marketing",
+    "icon": "columns",
+    "iconColor": "text-blue-500"
   },
   "afterimage-generator": {
     "name": "Afterimage Generator",
@@ -52,6 +70,16 @@ export const toolMetaMap = {
     ],
     "icon": "brain",
     "iconColor": "text-purple-600"
+  },
+  "analog-clock-alarm": {
+    "name": "Analog Clock & Alarm",
+    "description": "Real-time analog clock with alarms, world clocks, stopwatch, and countdown timer.",
+    "category": [
+      "Productivity",
+      "Lifestyle"
+    ],
+    "icon": "clock",
+    "iconColor": "text-teal-600"
   },
   "anger-test": {
     "name": "Anger Test",
@@ -257,6 +285,28 @@ export const toolMetaMap = {
     "icon": "link",
     "iconColor": "text-sky-600"
   },
+  "batch-generation-tool": {
+    "name": "Batch Generation Tool",
+    "description": "Create dynamic batch workflows with live generation, queue tracking, reusable templates, local history, analytics, and browser exports.",
+    "category": [
+      "Productivity",
+      "Developer",
+      "No-Code"
+    ],
+    "icon": "workflow",
+    "iconColor": "text-cyan-500"
+  },
+  "batch-timestamp-conversion-tool": {
+    "name": "Batch Timestamp Conversion Tool",
+    "description": "Convert mixed Unix timestamps and human dates in real time with timezone comparison, validation, history, search, and browser exports.",
+    "category": [
+      "Developer",
+      "Productivity",
+      "Web"
+    ],
+    "icon": "clock-3",
+    "iconColor": "text-cyan-500"
+  },
   "battery-health-and-lifespan-predictor": {
     "name": "Battery Health and Lifespan Predictor",
     "description": "Predict battery health, degradation risk, charging cycles, and estimated device lifespan from usage patterns.",
@@ -306,12 +356,30 @@ export const toolMetaMap = {
     "icon": "grid-3x3",
     "iconColor": "text-teal-600"
   },
+  "bio-link-page-builder": {
+    "name": "Bio Link Page Builder",
+    "description": "Build a professional creator bio page with live preview, sortable links, branding controls, local save, QR sharing, and export.",
+    "category": [
+      "Creators",
+      "Marketing",
+      "No-Code"
+    ],
+    "icon": "link",
+    "iconColor": "text-cyan-600"
+  },
   "bmi-calculator": {
     "name": "BMI Calculator",
     "description": "Calculate your Body Mass Index",
     "category": "Fitness",
     "icon": "activity",
     "iconColor": "text-green-600"
+  },
+  "bookmark-capsule": {
+    "name": "Bookmark Capsule",
+    "description": "Organize, search, categorize, preview, and manage your website bookmarks.",
+    "category": "Productivity",
+    "icon": "bookmark",
+    "iconColor": "text-indigo-600"
   },
   "bookmark-organization-assistant": {
     "name": "Bookmark Organization Assistant",
@@ -321,6 +389,17 @@ export const toolMetaMap = {
     ],
     "icon": "bookmark",
     "iconColor": "text-(--primary)"
+  },
+  "brand-kit-manager": {
+    "name": "Brand Kit Manager",
+    "description": "Create, organize, preview, and export complete brand kits with logos, colors, typography, links, and guidelines.",
+    "category": [
+      "Design",
+      "Marketing",
+      "Creators"
+    ],
+    "icon": "badge",
+    "iconColor": "text-indigo-600"
   },
   "break-even-calculator": {
     "name": "Break-Even Calculator",
@@ -419,6 +498,13 @@ export const toolMetaMap = {
     "icon": "wand-2",
     "iconColor": "text-(--primary)"
   },
+  "celebrity-look-alike": {
+    "name": "Which Celebrity Do You Look Like?",
+    "description": "Upload a photo and discover which celebrity shares your facial features and jawline structure.",
+    "category": "AI & Image Tools",
+    "icon": "user",
+    "iconColor": "text-amber-500"
+  },
   "chess-multiplayer": {
     "name": "Chess Multiplayer",
     "description": "Play a full multiplayer chess match locally with legal-move validation, timers, move history, captured pieces, draw offers and resign.",
@@ -438,12 +524,34 @@ export const toolMetaMap = {
     "icon": "languages",
     "iconColor": "text-(--primary)"
   },
+  "chinese-word-segmentation": {
+    "name": "Chinese Word Segmentation & Multi-Language Split Tool",
+    "description": "Segment Chinese text, split English and Hindi, detect mixed language, and export live NLP-style token results in the browser.",
+    "category": [
+      "EdTech",
+      "Developer",
+      "AI"
+    ],
+    "icon": "languages",
+    "iconColor": "text-cyan-500"
+  },
   "citation-generator": {
     "name": "Citation Generator",
     "description": "Generate accurate citations in APA, MLA, Chicago, Harvard, IEEE, and Vancouver styles instantly.",
     "category": "Educational",
     "icon": "book-open",
     "iconColor": "text-blue-600"
+  },
+  "clothing-body-measurements": {
+    "name": "Clothing / Body Measurement Conversions",
+    "description": "Convert clothing sizes between US, UK, EU, and international standards for women's, men's, and kids' apparel. Also convert body measurements between inches, centimeters, and feet+inches.",
+    "category": [
+      "Lifestyle",
+      "Converter",
+      "Web"
+    ],
+    "icon": "ruler",
+    "iconColor": "text-purple-600"
   },
   "code-complexity-analyzer": {
     "name": "Code Complexity Analyzer",
@@ -463,6 +571,17 @@ export const toolMetaMap = {
     "icon": "palette",
     "iconColor": "text-cyan-600"
   },
+  "color-code-conversion-tool": {
+    "name": "Color Code Conversion Tool",
+    "description": "Convert HEX, RGB, RGBA, HSL, HSLA, and CMYK in real time with live preview, copy actions, local history, and synced editable outputs.",
+    "category": [
+      "Design",
+      "Developer",
+      "Web"
+    ],
+    "icon": "palette",
+    "iconColor": "text-cyan-500"
+  },
   "color-contrast-checker": {
     "name": "Color Contrast Checker",
     "description": "Check WCAG contrast ratio for text and background colors.",
@@ -472,6 +591,17 @@ export const toolMetaMap = {
     ],
     "icon": "check-square",
     "iconColor": "text-green-600"
+  },
+  "color-conversions": {
+    "name": "Color Conversions",
+    "description": "Convert colors between HEX, RGB, RGBA, HSL, HSLA, HSV, and CMYK formats with a live preview swatch, harmonies, and one-click copy.",
+    "category": [
+      "Design",
+      "Developer",
+      "Web"
+    ],
+    "icon": "palette",
+    "iconColor": "text-fuchsia-600"
   },
   "color-memory-precision-test": {
     "name": "Color Memory Precision Test",
@@ -506,6 +636,16 @@ export const toolMetaMap = {
     "category": "Design Tools",
     "icon": "palette",
     "iconColor": "text-fuchsia-600"
+  },
+  "component-naming-auditor": {
+    "name": "Component Naming Auditor",
+    "description": "Audit React component names, file names, duplicate declarations, and naming convention drift.",
+    "category": [
+      "Developer",
+      "Productivity"
+    ],
+    "icon": "case-sensitive",
+    "iconColor": "text-primary"
   },
   "compound-interest-planner": {
     "name": "Compound Interest Planner",
@@ -561,6 +701,13 @@ export const toolMetaMap = {
     "icon": "clock",
     "iconColor": "text-orange-600"
   },
+  "crush-percentage": {
+    "name": "Crush Percentage",
+    "description": "Evaluate your chemistry and odds with your crush by taking a fun interactive compatibility quiz.",
+    "category": "Lifestyle",
+    "icon": "smile",
+    "iconColor": "text-pink-500"
+  },
   "crypto-pnl-calculator": {
     "name": "Crypto P&L Calculator",
     "description": "Calculate crypto profit or loss from buy price, sell price, quantity, exchange fees, slippage, and tax.",
@@ -571,6 +718,33 @@ export const toolMetaMap = {
     ],
     "icon": "bitcoin",
     "iconColor": "text-amber-600"
+  },
+  "css-beautification-formatting-tool": {
+    "name": "CSS Beautification and Formatting Tool",
+    "description": "Beautify, validate, minify, compare, copy, and download CSS in real time inside the browser.",
+    "category": "Developer",
+    "icon": "braces",
+    "iconColor": "text-blue-500"
+  },
+  "css-beautifier": {
+    "name": "CSS Beautifier",
+    "description": "Format, beautify, and clean minified or messy CSS code with options to adjust tab indentation size and copy output.",
+    "category": [
+      "Developers",
+      "Utilities"
+    ],
+    "icon": "layout",
+    "iconColor": "text-teal-500"
+  },
+  "css-minifier": {
+    "name": "CSS Minifier",
+    "description": "Compress, minify, and shrink messy CSS code to reduce bundle size, showing detailed savings statistics.",
+    "category": [
+      "Developers",
+      "Utilities"
+    ],
+    "icon": "minimize",
+    "iconColor": "text-teal-500"
   },
   "css-tools": {
     "name": "CSS Tools",
@@ -648,6 +822,17 @@ export const toolMetaMap = {
     "icon": "chart-bar",
     "iconColor": "text-blue-600"
   },
+  "date-time-conversions": {
+    "name": "Date / Time Conversions",
+    "description": "Convert between time units, Unix timestamps, and date formats. Calculate date differences and durations with precision.",
+    "category": [
+      "Calculator",
+      "Developer",
+      "Web"
+    ],
+    "icon": "clock",
+    "iconColor": "text-sky-600"
+  },
   "debt-payoff-calculator": {
     "name": "Debt Payoff Calculator",
     "description": "Compare snowball and avalanche debt payoff methods with interest, timeline, and payoff order insights.",
@@ -668,6 +853,48 @@ export const toolMetaMap = {
     ],
     "icon": "grid-3x3",
     "iconColor": "text-orange-600"
+  },
+  "decision-matrix-tool": {
+    "name": "Decision Matrix Tool",
+    "description": "Compare options with dynamic criteria, live weighted scoring, rankings, analytics, local save, filters, and exportable decision reports.",
+    "category": [
+      "Productivity",
+      "Business",
+      "Planning"
+    ],
+    "icon": "table-properties",
+    "iconColor": "text-cyan-500"
+  },
+  "definition-of-done-generator": {
+    "name": "Definition of Done Generator",
+    "description": "Generate a practical Definition of Done checklist tailored to project type, tech stack, team size, and compliance needs.",
+    "category": [
+      "Productivity",
+      "Planning",
+      "Business"
+    ],
+    "icon": "list-checks",
+    "iconColor": "text-violet-500"
+  },
+  "dependency-upgrade-impact-estimator": {
+    "name": "Dependency Upgrade Impact Estimator",
+    "description": "Estimate upgrade risk from package dependency version changes, release distance, and critical package signals.",
+    "category": [
+      "Developer",
+      "Productivity"
+    ],
+    "icon": "package-check",
+    "iconColor": "text-primary"
+  },
+  "design-compare": {
+    "name": "Design Compare",
+    "description": "Compare two UI designs or images with side-by-side, overlay, slider, zoom, grid, and download controls.",
+    "category": [
+      "Design",
+      "Image"
+    ],
+    "icon": "columns-3",
+    "iconColor": "text-cyan-600"
   },
   "device-browser-dashboard": {
     "name": "Device & Browser Dashboard",
@@ -705,6 +932,16 @@ export const toolMetaMap = {
     "icon": "badge-percent",
     "iconColor": "text-emerald-600"
   },
+  "document-version-timeline": {
+    "name": "Document Version Timeline",
+    "description": "Convert document changelog notes into a clean timeline of versions, owners, dates, and change themes.",
+    "category": [
+      "Business",
+      "Productivity"
+    ],
+    "icon": "history",
+    "iconColor": "text-primary"
+  },
   "domain-checker": {
     "name": "Domain Checker",
     "description": "Check if a domain is available or not",
@@ -725,6 +962,17 @@ export const toolMetaMap = {
     ],
     "icon": "circle-dashed",
     "iconColor": "text-blue-500"
+  },
+  "eisenhower-matrix-tool": {
+    "name": "Eisenhower Matrix Tool",
+    "description": "Prioritize tasks in a real-time four-quadrant matrix with drag-and-drop workflow, live dashboard, notes, filters, and local save.",
+    "category": [
+      "Productivity",
+      "Business",
+      "Utility"
+    ],
+    "icon": "layout-dashboard",
+    "iconColor": "text-cyan-600"
   },
   "email-thread-summarizer": {
     "name": "Email Thread Summarizer",
@@ -858,6 +1106,27 @@ export const toolMetaMap = {
     "icon": "coins",
     "iconColor": "text-emerald-600"
   },
+  "feedback-categorizer": {
+    "name": "Feedback Categorizer",
+    "description": "Group customer feedback into themes, estimate sentiment, and surface high-priority product signals.",
+    "category": [
+      "Business",
+      "Productivity"
+    ],
+    "icon": "messages-square",
+    "iconColor": "text-primary"
+  },
+  "file-encoding-conversion-tool": {
+    "name": "File Encoding Conversion Tool",
+    "description": "Detect, validate, repair, preview, compare, copy, and download real browser-based file encoding conversions.",
+    "category": [
+      "Developer",
+      "Web",
+      "Utility"
+    ],
+    "icon": "file-code",
+    "iconColor": "text-cyan-500"
+  },
   "file-to-base64": {
     "name": "File to Base64",
     "description": "Convert local files into Base64 data URLs without uploading.",
@@ -898,6 +1167,16 @@ export const toolMetaMap = {
     "icon": "folder-tree",
     "iconColor": "text-(--primary)"
   },
+  "form-abandonment-simulator": {
+    "name": "Form Abandonment Simulator",
+    "description": "Model form-step drop-off, estimate completion losses, and identify friction points before launch.",
+    "category": [
+      "Marketing",
+      "Productivity"
+    ],
+    "icon": "list-checks",
+    "iconColor": "text-primary"
+  },
   "form-builder": {
     "name": "Form Builder",
     "description": "Build forms with ease.",
@@ -927,12 +1206,50 @@ export const toolMetaMap = {
     "icon": "film",
     "iconColor": "text-teal-600"
   },
+  "friendship-meter": {
+    "name": "Friendship Meter",
+    "description": "Measure the strength, loyalty, and elements of your friendship by detailing shared interests and bonds.",
+    "category": "Lifestyle",
+    "icon": "users",
+    "iconColor": "text-cyan-500"
+  },
+  "friendship-score": {
+    "name": "Friendship Score",
+    "description": "Measure the strength of your friendship using name alignment algorithms and interactive parameter sliders.",
+    "category": "Lifestyle",
+    "icon": "users",
+    "iconColor": "text-cyan-500"
+  },
+  "future-child-predictor": {
+    "name": "Future Child Predictor",
+    "description": "Enter parents' names and select physical traits to predict your future child's genetic traits and personality profile.",
+    "category": "Lifestyle",
+    "icon": "baby",
+    "iconColor": "text-blue-500"
+  },
+  "future-partner-prediction": {
+    "name": "Future Partner Prediction",
+    "description": "Answer compatibility and trait questions to get a fun, detailed profile of your future life partner.",
+    "category": "Lifestyle",
+    "icon": "heart-handshake",
+    "iconColor": "text-indigo-500"
+  },
   "gift-finder": {
     "name": "Gift Finder",
     "description": "find the best gift for your loved one.",
     "category": "Lifestyle",
     "icon": "gift",
     "iconColor": "text-indigo-600"
+  },
+  "github-profile-finder": {
+    "name": "GitHub Profile Finder",
+    "description": "Search and discover detailed statistics, repository listings, star counts, fork metrics, and language breakdowns for any GitHub user profile.",
+    "category": [
+      "Developers",
+      "Utilities"
+    ],
+    "icon": "search",
+    "iconColor": "text-teal-500"
   },
   "gold-price-checker": {
     "name": "Gold Price Checker",
@@ -1282,6 +1599,37 @@ export const toolMetaMap = {
     "icon": "image",
     "iconColor": "text-teal-600"
   },
+  "joke-generator": {
+    "name": "Joke Generator",
+    "description": "Generate random jokes from multiple categories with favorites, search, and export options.",
+    "category": [
+      "Entertainment",
+      "Lifestyle",
+      "Fun"
+    ],
+    "icon": "smile",
+    "iconColor": "text-amber-600"
+  },
+  "js-beautifier": {
+    "name": "JS Beautifier",
+    "description": "Format, beautify, and clean minified or messy JavaScript code with options to adjust tab indentation size and copy output.",
+    "category": [
+      "Developers",
+      "Utilities"
+    ],
+    "icon": "file-code",
+    "iconColor": "text-teal-500"
+  },
+  "json-compare": {
+    "name": "JSON Compare",
+    "description": "Compare two JSON files, URL payloads, or text inputs side-by-side with semantic difference highlighting.",
+    "category": [
+      "Developers",
+      "Utilities"
+    ],
+    "icon": "columns",
+    "iconColor": "text-teal-500"
+  },
   "json-editor": {
     "name": "JSON Editor",
     "description": "Validate, format, minify, and convert JSON snippets.",
@@ -1298,6 +1646,16 @@ export const toolMetaMap = {
     "category": "Developer",
     "icon": "text",
     "iconColor": "text-blue-500"
+  },
+  "json-relationship-mapper": {
+    "name": "JSON Relationship Mapper",
+    "description": "Map nested JSON into paths, inferred relationships, references, and structure metrics locally in your browser.",
+    "category": [
+      "Developer",
+      "Data"
+    ],
+    "icon": "git-fork",
+    "iconColor": "text-primary"
   },
   "json-to-yaml-converter": {
     "name": "JSON to YAML Converter",
@@ -1377,6 +1735,13 @@ export const toolMetaMap = {
     ],
     "icon": "quote",
     "iconColor": "text-violet-600"
+  },
+  "love-calculator": {
+    "name": "Love Calculator",
+    "description": "Calculate compatibility and relationship potential between two names using name matching algorithms.",
+    "category": "Lifestyle",
+    "icon": "heart",
+    "iconColor": "text-rose-500"
   },
   "markdown-html-converter": {
     "name": "Markdown / HTML Converter",
@@ -1524,6 +1889,16 @@ export const toolMetaMap = {
     ],
     "icon": "scale",
     "iconColor": "text-emerald-600"
+  },
+  "number-system-conversions": {
+    "name": "Number System Conversions",
+    "description": "Convert numbers between binary, octal, decimal, hexadecimal, and base-36 with real-time precision, supporting large integers and Unicode.",
+    "category": [
+      "Developer",
+      "Calculator"
+    ],
+    "icon": "binary",
+    "iconColor": "text-teal-600"
   },
   "number-to-words-converter": {
     "name": "Number to Words Converter",
@@ -1683,6 +2058,13 @@ export const toolMetaMap = {
     "icon": "calculator",
     "iconColor": "text-blue-600"
   },
+  "photo-love-compatibility": {
+    "name": "Love Compatibility by Photos",
+    "description": "Upload two photos to run face alignment scans and compute an AI-based compatibility rating.",
+    "category": "AI & Image Tools",
+    "icon": "heart",
+    "iconColor": "text-red-500"
+  },
   "photo-to-sketch": {
     "name": "Photo to Sketch",
     "description": "Convert any photo into a realistic pencil sketch with adjustable intensity, zoom, before/after compare, and one-click download.",
@@ -1692,6 +2074,16 @@ export const toolMetaMap = {
     ],
     "icon": "pencil",
     "iconColor": "text-(--primary)"
+  },
+  "pixar-style-generator": {
+    "name": "Pixar Style Generator",
+    "description": "Generate Pixar-style 3D characters via free AI prompts, or upload your own photo/URL to apply local 3D claymation filters and glassy animated eyes.",
+    "category": [
+      "Creative",
+      "Utilities"
+    ],
+    "icon": "sparkles",
+    "iconColor": "text-teal-500"
   },
   "poll-maker": {
     "name": "Poll Maker",
@@ -1778,6 +2170,16 @@ export const toolMetaMap = {
     ],
     "icon": "waves",
     "iconColor": "text-blue-600"
+  },
+  "reading-time-calculator": {
+    "name": "Reading Time Calculator",
+    "description": "Estimate reading time, word count, sentence count, and readability metrics for any text in real time.",
+    "category": [
+      "Content Creation",
+      "Education"
+    ],
+    "icon": "book-open",
+    "iconColor": "text-teal-600"
   },
   "readme-generator": {
     "name": "README Generator",
@@ -1881,6 +2283,17 @@ export const toolMetaMap = {
     "icon": "layers",
     "iconColor": "text-gray-600"
   },
+  "simon-says-game": {
+    "name": "Simon Says Game",
+    "description": "Train your memory with the classic Simon Says game featuring multiple modes, difficulty levels, sound effects, and score tracking.",
+    "category": [
+      "Games",
+      "Education",
+      "Productivity"
+    ],
+    "icon": "brain",
+    "iconColor": "text-teal-600"
+  },
   "sip-calculator": {
     "name": "SIP Calculator",
     "description": "Estimate SIP maturity value, invested amount, and wealth gain with annual step-up.",
@@ -1918,6 +2331,16 @@ export const toolMetaMap = {
     ],
     "icon": "clock",
     "iconColor": "text-indigo-600"
+  },
+  "snake-game": {
+    "name": "Snake Game",
+    "description": "Play a responsive Snake game with speed levels, collision detection, touch controls, and score statistics.",
+    "category": [
+      "Games",
+      "Productivity"
+    ],
+    "icon": "gamepad-2",
+    "iconColor": "text-teal-600"
   },
   "snake-water-gun-game": {
     "name": "Snake Water Gun Game",
@@ -2076,6 +2499,16 @@ export const toolMetaMap = {
     "icon": "languages",
     "iconColor": "text-indigo-600"
   },
+  "text-compare": {
+    "name": "Text Compare",
+    "description": "Compare two text blocks in real time with line highlights, similarity, statistics, copy, and download actions.",
+    "category": [
+      "Text",
+      "Developer"
+    ],
+    "icon": "file-diff",
+    "iconColor": "text-teal-600"
+  },
   "text-diff-tool": {
     "name": "Text Diff Tool",
     "description": "Compare two text blocks line-by-line and highlight differences.",
@@ -2148,6 +2581,16 @@ export const toolMetaMap = {
     "icon": "edit-3",
     "iconColor": "text-teal-500"
   },
+  "text-to-qr-code": {
+    "name": "Text to QR Code",
+    "description": "Convert text, URLs, contacts, Wi-Fi credentials, and more into high-quality QR codes with real-time preview and customization.",
+    "category": [
+      "Web",
+      "Design"
+    ],
+    "icon": "qr-code",
+    "iconColor": "text-teal-600"
+  },
   "text-to-voice": {
     "name": "Text to Voice Tool",
     "description": "Convert text into natural-sounding voice instantly with ease.",
@@ -2203,6 +2646,16 @@ export const toolMetaMap = {
     ],
     "icon": "keyboard",
     "iconColor": "text-blue-600"
+  },
+  "ui-spacing-consistency-checker": {
+    "name": "UI Spacing Consistency Checker",
+    "description": "Audit Tailwind spacing classes and pixel values against a consistent 4px design-system rhythm.",
+    "category": [
+      "Design",
+      "Developer"
+    ],
+    "icon": "ruler",
+    "iconColor": "text-primary"
   },
   "ultimate-wheel-spinner": {
     "name": "Ultimate Wheel Spin Tool",
@@ -2471,6 +2924,16 @@ export const toolMetaMap = {
     ],
     "icon": "files",
     "iconColor": "text-violet-600"
+  },
+  "workflow-bottleneck-finder": {
+    "name": "Workflow Bottleneck Finder",
+    "description": "Find slow workflow steps by comparing active time, wait time, rework, and throughput pressure.",
+    "category": [
+      "Business",
+      "Productivity"
+    ],
+    "icon": "activity",
+    "iconColor": "text-primary"
   },
   "xml-editor": {
     "name": "XML Editor",

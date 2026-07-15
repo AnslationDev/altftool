@@ -3,26 +3,21 @@
 // health) plus the top pages needing attention.
 
 import { NextResponse } from "next/server";
-import { verifyActiveAdmin } from "@/lib/serverAdminAuth";
+import { authorizeSeoRequest, seoAccessErrorResponse } from "@/lib/seoAuth";
 import { summarizeRegistry } from "@altftool/core/seo";
 import { getRegistryEntries } from "@/lib/seoRegistrySource";
 
-function authErrorResponse(error) {
-  const message = String(error?.message || "Unauthorized");
-  const status = /forbidden|inactive/i.test(message) ? 403 : 401;
-  return NextResponse.json({ error: status === 403 ? "Forbidden" : "Unauthorized" }, { status });
-}
-
 export async function GET(request) {
+  let projectId;
   try {
-    await verifyActiveAdmin(request);
+    ({ projectId } = await authorizeSeoRequest(request, "read"));
   } catch (error) {
-    return authErrorResponse(error);
+    return seoAccessErrorResponse(error);
   }
 
   const force = request.nextUrl.searchParams.get("refresh") === "1";
   try {
-    const entries = await getRegistryEntries({ force });
+    const entries = await getRegistryEntries({ force, projectId });
     const summary = summarizeRegistry(entries);
 
     // Top "needs attention": indexable pages missing title/description.

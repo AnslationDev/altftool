@@ -3,6 +3,7 @@
 // ALTF Engine — Global Search (Phase A): search any page across all sources.
 
 import { useState } from "react";
+import { useParams } from "next/navigation";
 import { runPageSearch } from "../services/seoService";
 import { getErrorMessage } from "@/lib/apiClient";
 import {
@@ -28,6 +29,10 @@ const TYPE_BADGE = {
 };
 
 export default function SeoSearchPage() {
+  const params = useParams();
+  const project =
+    (typeof params?.project === "string" && params.project) || "altftool";
+  const seoBase = `/${project}/seo`;
   const [q, setQ] = useState("");
   const [type, setType] = useState("all");
   const [results, setResults] = useState([]);
@@ -63,18 +68,20 @@ export default function SeoSearchPage() {
     <div className="space-y-6 max-w-7xl mx-auto pb-12 animate-slide-in">
       {/* Tab nav */}
       <nav className="flex items-center gap-6 border-b border-border pb-3">
-        <a href="/altftool/seo/dashboard" className="text-muted hover:text-foreground pb-3 -mb-3.5 transition-colors flex items-center gap-1.5">
+        <a href={`${seoBase}/dashboard`} className="text-muted hover:text-foreground pb-3 -mb-3.5 transition-colors flex items-center gap-1.5">
           <Layers className="w-4 h-4" /> Dashboard
         </a>
         <span className="font-semibold text-primary border-b-2 border-primary pb-3 -mb-3.5 flex items-center gap-1.5">
           <SearchIcon className="w-4 h-4" /> Search
         </span>
-        <a href="/altftool/seo" className="text-muted hover:text-foreground pb-3 -mb-3.5 transition-colors flex items-center gap-1.5">
+        <a href={seoBase} className="text-muted hover:text-foreground pb-3 -mb-3.5 transition-colors flex items-center gap-1.5">
           <FileText className="w-4 h-4" /> Config
         </a>
-        <a href="/altftool/seo/gsc" className="text-muted hover:text-foreground pb-3 -mb-3.5 transition-colors flex items-center gap-1.5">
-          <Globe className="w-4 h-4" /> Search Console
-        </a>
+        {project === "altftool" && (
+          <a href={`${seoBase}/gsc`} className="text-muted hover:text-foreground pb-3 -mb-3.5 transition-colors flex items-center gap-1.5">
+            <Globe className="w-4 h-4" /> Search Console
+          </a>
+        )}
       </nav>
 
       <header>
@@ -182,7 +189,7 @@ export default function SeoSearchPage() {
               <Row label="Description" value={active.description || "—"} />
             </dl>
             <a
-              href={`/altftool/seo?path=${encodeURIComponent(active.path)}`}
+              href={`${seoBase}?path=${encodeURIComponent(active.path)}`}
               className="inline-flex items-center gap-1.5 mt-2 text-sm font-medium text-primary hover:underline"
             >
               <Sparkles className="w-4 h-4" /> Edit SEO / get AI suggestion

@@ -7,30 +7,23 @@
 import { NextResponse } from "next/server";
 import { FieldValue } from "firebase-admin/firestore";
 import { adminDb } from "@/lib/firebaseAdmin";
-import { verifyActiveAdmin } from "@/lib/serverAdminAuth";
+import { authorizeSeoRequest, seoAccessErrorResponse } from "@/lib/seoAuth";
+import { seoRuntimeDocPath, seoHealthCollectionPath } from "@/lib/seoProject";
 import { writeAdminAuditLog } from "@/lib/adminAuditLog";
 import { enforceRateLimit } from "@altftool/core/http";
 import { analyzeSeoHealth } from "@altftool/core/seo";
 import { emptySeoConfig } from "@altftool/core/seo/schemas";
 
-const SEO_DOC = "projects/altftool/seo/runtime";
-const HEALTH_COLLECTION = "projects/altftool/seo_health";
-
-function authErrorResponse(error) {
-  const message = String(error?.message || "Unauthorized");
-  const status = /forbidden|inactive/i.test(message) ? 403 : 401;
-  return NextResponse.json({ error: status === 403 ? "Forbidden" : "Unauthorized" }, { status });
-}
-
 export async function GET(request) {
+  let projectId;
   try {
-    await verifyActiveAdmin(request);
+    ({ projectId } = await authorizeSeoRequest(request, "read"));
   } catch (error) {
-    return authErrorResponse(error);
+    return seoAccessErrorResponse(error);
   }
   try {
     const snap = await adminDb
-      .collection(HEALTH_COLLECTION)
+      .collection(seoHealthCollectionPath(projectId))
       .orderBy("createdAt", "desc")
       .limit(20)
       .get();
@@ -59,15 +52,16 @@ export async function POST(request) {
   });
   if (limited) return limited;
 
-  let auth;
+  let auth, projectId;
   try {
-    auth = await verifyActiveAdmin(request);
+    auth = await authorizeSeoRequest(request, "read");
+    projectId = auth.projectId;
   } catch (error) {
-    return authErrorResponse(error);
+    return seoAccessErrorResponse(error);
   }
 
   try {
-    const docSnap = await adminDb.doc(SEO_DOC).get();
+    const docSnap = await adminDb.doc(seoRuntimeDocPath(projectId)).get();
     const config = docSnap.exists ? docSnap.data() : emptySeoConfig();
 
     let body = {};
@@ -87,15 +81,16 @@ export async function POST(request) {
       actorEmail: auth.admin.email || null,
       createdAt: FieldValue.serverTimestamp(),
     };
-    const ref = await adminDb.collection(HEALTH_COLLECTION).add(stored);
+    const ref = await adminDb.collection(seoHealthCollectionPath(projectId)).add(stored);
 
     await writeAdminAuditLog({
       action: "seo.health.run",
       module: "seo",
+      project: projectId,
       actorUid: auth.admin.uid,
       actorEmail: auth.admin.email,
-      summary: `Ran SEO health check (score ${report.metrics.score}, ${report.metrics.errors} errors)`,
-      metadata: { snapshotId: ref.id, ...report.metrics },
+      summary: `Ran SEO health check for ${projectId} (score ${report.metrics.score}, ${report.metrics.errors} errors)`,
+      metadata: { project: projectId, snapshotId: ref.id, ...report.metrics },
     }).catch(() => {});
 
     return NextResponse.json({ id: ref.id, ...report });

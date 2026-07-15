@@ -7,7 +7,7 @@
 // suggestion goes through the audited /api/seo/config save path on the client.
 
 import { NextResponse } from "next/server";
-import { verifyActiveAdmin } from "@/lib/serverAdminAuth";
+import { authorizeSeoRequest, seoAccessErrorResponse } from "@/lib/seoAuth";
 import { enforceRateLimit } from "@altftool/core/http";
 import { getServerEnv } from "@altftool/core/env";
 import {
@@ -18,12 +18,6 @@ import {
 
 const MODEL = "gemini-2.5-flash";
 
-function authErrorResponse(error) {
-  const message = String(error?.message || "Unauthorized");
-  const status = /forbidden|inactive/i.test(message) ? 403 : 401;
-  return NextResponse.json({ error: status === 403 ? "Forbidden" : "Unauthorized" }, { status });
-}
-
 export async function POST(request) {
   const limited = enforceRateLimit(NextResponse, request, {
     limit: 15,
@@ -33,9 +27,9 @@ export async function POST(request) {
   if (limited) return limited;
 
   try {
-    await verifyActiveAdmin(request);
+    await authorizeSeoRequest(request, "read");
   } catch (error) {
-    return authErrorResponse(error);
+    return seoAccessErrorResponse(error);
   }
 
   let body = {};

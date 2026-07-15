@@ -65,6 +65,8 @@ async function handler({ request, audit }) {
 
 export const POST = withAdminApi(handler, {
   rateLimit: { limit: 20, windowMs: 60_000, scope: "seo-gsc-index-request" },
+  // GSC is altftool's single Google connection — lock to altftool SEO access.
+  requireProjectModule: { project: "altftool", moduleKey: "seo", action: "read" },
   audit: { module: "seo" },
   mutating: true,
 });
