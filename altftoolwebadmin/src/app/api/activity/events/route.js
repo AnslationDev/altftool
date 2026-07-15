@@ -27,9 +27,23 @@ export async function GET(request) {
     const cursor = url.searchParams.get("cursor") ? Number(url.searchParams.get("cursor")) : null;
     const from = url.searchParams.get("from") ? Number(url.searchParams.get("from")) : null;
     const to = url.searchParams.get("to") ? Number(url.searchParams.get("to")) : null;
+    // Scoped views (alternative primary filters): User Activity + Entity History.
+    const actorUid = url.searchParams.get("actorUid") || null;
+    const entityType = url.searchParams.get("entityType") || null;
+    const entityId = url.searchParams.get("entityId") || null;
 
     let q = adminDb.collection(COLLECTION);
-    if (path) q = q.where("pathAncestors", "array-contains", path);
+    if (entityId) {
+      // Entity History — one entity's lifecycle across the workspace.
+      if (entityType) q = q.where("entityType", "==", entityType);
+      q = q.where("entityId", "==", entityId);
+    } else if (actorUid) {
+      // User Activity — everything one actor did.
+      q = q.where("actorUid", "==", actorUid);
+    } else if (path) {
+      // Subtree feed.
+      q = q.where("pathAncestors", "array-contains", path);
+    }
     if (from != null) q = q.where("createdAtMs", ">=", from);
     if (to != null) q = q.where("createdAtMs", "<=", to);
     q = q.orderBy("createdAtMs", "desc").limit(pageSize + 1);

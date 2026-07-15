@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
-import { ChevronRight, X } from "lucide-react";
+import { ChevronRight, History, X } from "lucide-react";
 import { breadcrumb, formatDateTime, kindMeta } from "./helpers";
 
 function Row({ label, value }) {
@@ -14,7 +14,7 @@ function Row({ label, value }) {
   );
 }
 
-export default function EventDetailDrawer({ event, onClose }) {
+export default function EventDetailDrawer({ event, onClose, onViewEntity }) {
   useEffect(() => {
     const onKey = (e) => { if (e.key === "Escape") onClose(); };
     document.addEventListener("keydown", onKey);
@@ -90,6 +90,16 @@ export default function EventDetailDrawer({ event, onClose }) {
               </pre>
             </div>
           )}
+
+          {onViewEntity && event.entityId ? (
+            <button
+              type="button"
+              onClick={onViewEntity}
+              className="mt-4 inline-flex h-9 w-full items-center justify-center gap-2 rounded-lg border border-[var(--border)] bg-[var(--surface)] px-4 text-sm font-bold text-[var(--foreground)] transition hover:border-[var(--primary)] hover:text-[var(--primary)]"
+            >
+              <History className="h-4 w-4" /> View this entity's history
+            </button>
+          ) : null}
         </div>
       </div>
     </div>
