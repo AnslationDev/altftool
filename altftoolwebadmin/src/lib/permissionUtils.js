@@ -10,6 +10,7 @@ export const SUPERADMIN_ONLY_GLOBAL_MODULES = new Set([
   "notification-broadcast",
   "rbac",
   "tickets",
+  "workspace",
 ]);
 
 /**

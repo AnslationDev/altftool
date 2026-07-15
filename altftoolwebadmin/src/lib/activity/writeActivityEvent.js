@@ -70,6 +70,9 @@ export function buildActivityEvent(entry = {}, nowMs = null) {
     feature: node.feature,
     featureName: node.featureName,
     hierarchyPath: node.hierarchyPath,
+    // Every ancestor path (incl. self). Enables time-ordered SUBTREE feeds:
+    // where("pathAncestors","array-contains", <node>).orderBy("createdAtMs","desc").
+    pathAncestors: ancestorPaths(node.hierarchyPath),
     resolvedBy: node.source,
     // event
     consumer: entry.consumer || "audit",
