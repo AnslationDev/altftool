@@ -143,6 +143,19 @@ service cloud.firestore {
       }
     }
 
+    // Unified activity events (Workspace Management System). Written by the
+    // Admin SDK only (tamper-proof from the browser); read by super admins.
+    // Project-scoped read filtering is enforced in the read API layer.
+    match /activity_events/{eventId} {
+      allow read: if isSuperAdmin();
+      allow write: if false;
+    }
+
+    match /activity_rollups/{rollupId} {
+      allow read: if isSuperAdmin();
+      allow write: if false;
+    }
+
     match /projects/altftool/blogs/{blogId} {
       allow read: if true;
       // Public engagement counters the web app increments anonymously. The

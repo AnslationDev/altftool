@@ -4,6 +4,7 @@ import {
   Bell,
   FolderKanban,
   Headset,
+  Layers,
   ShieldAlert,
   ShieldCheck,
   ShieldIcon,
@@ -49,6 +50,12 @@ export const GLOBAL_ADMIN_MODULES = {
     label: "Audit Logs",
     icon: ShieldAlert,
     path: "/audit-logs",
+    superadminOnly: true,
+  },
+  workspace: {
+    label: "Workspace",
+    icon: Layers,
+    path: "/workspace",
     superadminOnly: true,
   },
   rbac: {
