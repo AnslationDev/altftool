@@ -36,8 +36,14 @@ async function getCollectionCount(ref) {
     const snap = await ref.count().get();
     return snap.data().count ?? 0;
   } catch {
-    const snap = await ref.get();
-    return snap.size;
+    // count() aggregation should normally succeed. The fallback is capped so a
+    // huge collection can never be read in full here (which would hang the API).
+    try {
+      const snap = await ref.limit(5000).get();
+      return snap.size;
+    } catch {
+      return 0;
+    }
   }
 }
 
@@ -66,6 +72,11 @@ async function getRecentCollectionCount(ref, field, days) {
   }
 }
 
+// Feeds the 7-day daily-activity buckets. Capped with an explicit limit so a
+// very large/active collection can never make this read the whole collection
+// (which previously made the analytics API hang for minutes / never return).
+const ANALYTICS_WINDOW_READ_CAP = 3000;
+
 async function getCollectionDocsSince(ref, field, days) {
   if (!field) return [];
 
@@ -73,7 +84,11 @@ async function getCollectionDocsSince(ref, field, days) {
     const cutoff = Timestamp.fromMillis(
       Date.now() - days * 86400000,
     );
-    const snap = await ref.where(field, ">=", cutoff).get();
+    const snap = await ref
+      .where(field, ">=", cutoff)
+      .orderBy(field, "desc")
+      .limit(ANALYTICS_WINDOW_READ_CAP)
+      .get();
     return snap.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
   } catch {
     return [];
@@ -376,16 +391,41 @@ function mergeDailySeries(seriesList, keyName) {
   return [...merged.values()].sort((a, b) => a.dateKey.localeCompare(b.dateKey));
 }
 
+// Run `task` over `items` with at most `limit` in flight at once. Preserves
+// input order in the result. Bounds how many Firestore reads are open
+// simultaneously so a large registry can't exhaust the client and hang.
+async function mapWithConcurrency(items, limit, task) {
+  const results = new Array(items.length);
+  let cursor = 0;
+  const workers = Array.from({ length: Math.min(limit, items.length) }, async () => {
+    while (cursor < items.length) {
+      const index = cursor++;
+      results[index] = await task(items[index], index);
+    }
+  });
+  await Promise.all(workers);
+  return results;
+}
+
+// How many modules are analyzed at once. Each module still reads its sources —
+// and each source's sub-reads — in parallel, so this caps total concurrency at
+// a safe level (roughly limit × sources × 6) instead of firing everything.
+const ANALYTICS_MODULE_CONCURRENCY = 6;
+
 export async function getAnalyticsDashboardData() {
   const registry = await discoverAnalyticsRegistry();
-  // Analyze every module of every project concurrently. Previously this was a
-  // triple-nested SEQUENTIAL loop (project → module → source), so dashboard
-  // latency grew linearly with the number of tracked collections. Now each
-  // module — and each source within it — is read in parallel, so wall-clock is
-  // bound by the single slowest read instead of the sum of them all.
-  const moduleResults = await Promise.all(
-    registry.flatMap((project) =>
-      project.modules.map(async (module) => {
+  // Analyze modules in parallel but with BOUNDED concurrency. An earlier
+  // unbounded Promise.all opened hundreds of simultaneous Firestore reads for a
+  // large registry, which could exhaust the client and make the API hang (the
+  // dashboard then spun forever). This keeps the parallel speed-up while staying
+  // within safe limits.
+  const moduleTasks = registry.flatMap((project) =>
+    project.modules.map((module) => ({ project, module })),
+  );
+  const moduleResults = await mapWithConcurrency(
+    moduleTasks,
+    ANALYTICS_MODULE_CONCURRENCY,
+    async ({ project, module }) => {
         const baseModule = {
           projectId: project.projectId,
           projectName: project.projectName,
@@ -463,8 +503,7 @@ export async function getAnalyticsDashboardData() {
           dailyCreatedSeries,
           dailyUpdatedSeries,
         };
-      }),
-    ),
+    },
   );
 
   const projects = registry.map((project) => {
