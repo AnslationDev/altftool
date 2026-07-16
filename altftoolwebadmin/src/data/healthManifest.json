@@ -1,29 +1,16 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-07-16T12:14:20.340Z",
+  "generatedAt": "2026-07-16T12:39:19.813Z",
   "tools": {
-    "total": 431,
-    "healthy": 431,
+    "total": 444,
+    "healthy": 444,
     "needsAttention": 0,
     "averageScore": 100,
     "categories": 86,
     "directories": 446,
     "orphanToolDirs": [
       "_shared",
-      "ai-prompt-organizer",
-      "ai-selfie-enhancer",
-      "before-after-slider",
-      "chatgpt-chat-export",
-      "codex-chat-transfer",
-      "duplicate-photo-finder",
-      "face-similarity-checker",
-      "future-job-predictor",
-      "image-resolution-compare",
-      "logo-similarity-checker",
-      "screenshot-compare",
-      "seating-chart-maker",
-      "startup-name-generator",
-      "watermark-remover"
+      "seating-chart-maker"
     ],
     "registryWithoutDir": [],
     "missingEntry": 0,
