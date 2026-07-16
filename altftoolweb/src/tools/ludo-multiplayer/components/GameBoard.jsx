@@ -1,6 +1,7 @@
 import { memo, useCallback, useMemo, useRef, useEffect, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { PLAYERS, TOTAL_CELLS, SAFE_POSITIONS, HOME_ENTRY } from "../engine/constants";
+import { motion } from "framer-motion";
+import { PLAYERS, SAFE_POSITIONS, TOTAL_CELLS, BOARD_SIZE, HOME_STRETCH_SIZE } from "../engine/constants";
+import { MAIN_ROUTE, getMainRouteCoord, getHomeLaneCoord, getHomeSpawnCoord, getRouteState, getRouteTileKey } from "../engine/routeLayout";
 
 const BOARD_THEME_COLORS = {
   classic: { board: "#F8FAFC", cells: "#E2E8F0", border: "#CBD5E1", homeAccent: "#EF4444" },
@@ -45,119 +46,36 @@ const HOME_POSITIONS = [
 ];
 
 function getCellCoord(index) {
-  const map = {};
-  let x = 6, y = 0, dx = 0, dy = 1;
-
-  for (let i = 0; i < 52; i++) {
-    map[i] = { x, y };
-    if (i === 5) { dx = 1; dy = 0; }
-    else if (i === 11) { dx = 0; dy = -1; }
-    else if (i === 12) { x = 8; y = 6; dx = -1; dy = 0; continue; }
-    else if (i === 16) { dx = 0; dy = 1; }
-    else if (i === 17) { x = 6; y = 8; dx = 0; dy = 1; continue; }
-    else if (i === 18) { dx = -1; dy = 0; }
-    else if (i === 23) { dx = 0; dy = -1; }
-    else if (i === 24) { x = 0; y = 6; dx = 1; dy = 0; continue; }
-    else if (i === 28) { dx = 0; dy = 1; }
-    else if (i === 29) { x = 6; y = 5; dx = 0; dy = -1; continue; }
-    else if (i === 34) { dx = -1; dy = 0; }
-    else if (i === 35) { x = 5; y = 6; dx = 0; dy = 1; continue; }
-    else if (i === 39) { dx = 0; dy = 1; }
-    else if (i === 40) { x = 7; y = 6; dx = 0; dy = -1; continue; }
-    else if (i === 44) { dx = 1; dy = 0; }
-    else if (i === 45) { x = 6; y = 7; dx = 1; dy = 0; continue; }
-    else if (i === 50) { dx = -1; dy = 0; }
-
-    x += dx;
-    y += dy;
-  }
-  return map[index] || { x: 0, y: 0 };
+  const coord = getMainRouteCoord(index);
+  return { x: coord.x, y: coord.y };
 }
 
-const PATH_SEQUENCE = Array.from({ length: 52 }, (_, i) => i);
-const HOME_STRETCH_PATHS = {
-  0: Array.from({ length: 6 }, (_, i) => 52 + i),
-  1: Array.from({ length: 6 }, (_, i) => 58 + i),
-  2: Array.from({ length: 6 }, (_, i) => 64 + i),
-  3: Array.from({ length: 6 }, (_, i) => 70 + i),
-};
-
-function getFullPathForPlayer(playerId, startPos, steps) {
-  const path = [];
-  let currentPos = startPos;
-  let currentSteps = 0;
-
-  for (let s = 1; s <= steps; s++) {
-    currentSteps++;
-    if (currentSteps <= 51) {
-      currentPos = (startPos + s - 1) % 52;
-    } else {
-      const homeIndex = currentSteps - 52;
-      if (homeIndex < 6) {
-        path.push({ type: "home", pos: 52 + playerId * 6 + homeIndex, step: currentSteps });
-        continue;
-      }
-    }
-    path.push({ type: "main", pos: currentPos, step: currentSteps });
-  }
-  return path;
+function getHomeCoord(playerId, homeIndex) {
+  const lane = getHomeLaneCoord(playerId, homeIndex);
+  return { x: lane.x, y: lane.y };
 }
 
 function getPathCoordinates(playerId, token, diceValue) {
   if (token.position === -1) {
     if (diceValue !== 6) return [];
-    const startPos = PLAYERS[playerId].start;
-    const path = [];
-    for (let s = 1; s <= diceValue; s++) {
-      if (s === 1) {
-        path.push({ type: "enter", pos: startPos, step: 0 });
-      } else {
-        const pos = (startPos + s - 1) % 52;
-        path.push({ type: "main", pos, step: s - 1 });
-      }
-    }
-    return path;
+    return [{ type: "enter", pos: 0, step: 1 }];
   }
 
   const currentSteps = token.steps;
   const newSteps = currentSteps + diceValue;
-
   if (newSteps > 56) return [];
+  if (newSteps === 56) return [{ type: "finish", pos: 99, step: newSteps }];
 
   const path = [];
-  for (let s = 1; s <= diceValue; s++) {
-    const stepNum = currentSteps + s;
-    if (stepNum <= 51) {
-      const pos = (token.position + s) % 52;
-      path.push({ type: "main", pos, step: stepNum });
-    } else if (stepNum <= 56) {
-      const homeIndex = stepNum - 52;
-      if (homeIndex < 6) {
-        path.push({ type: "home", pos: 52 + playerId * 6 + homeIndex, step: stepNum });
-      }
+  for (let step = currentSteps + 1; step <= newSteps; step += 1) {
+    const state = getRouteState(playerId, step);
+    if (state.type === "main") {
+      path.push({ type: "main", pos: state.position, step });
+    } else if (state.type === "home") {
+      path.push({ type: "home", pos: state.position, step });
     }
   }
   return path;
-}
-
-function getHomeCoord(playerId, homeIndex) {
-  const baseX = 6;
-  const baseY = 6;
-  const centerX = 7.5;
-  const centerY = 7.5;
-
-  switch (playerId) {
-    case 0:
-      return { x: centerX - 1.5 + homeIndex * 0.5, y: centerY - 1.5 };
-    case 1:
-      return { x: centerX + 1.5, y: centerY - 1.5 + homeIndex * 0.5 };
-    case 2:
-      return { x: centerX + 1.5 - homeIndex * 0.5, y: centerY + 1.5 };
-    case 3:
-      return { x: centerX - 1.5, y: centerY + 1.5 - homeIndex * 0.5 };
-    default:
-      return { x: centerX, y: centerY };
-  }
 }
 
 function GameBoard({
@@ -359,16 +277,15 @@ function GameBoard({
           </g>
         ))}
 
-        {PATH_SEQUENCE.map((i) => {
-          const pos = getCellCoord(i);
-          const safe = SAFE_POSITIONS.includes(i);
-          const isStart = [0, 13, 26, 39].includes(i);
-          const startPlayer = [0, 13, 26, 39].indexOf(i);
+        {MAIN_ROUTE.map((coord, index) => {
+          const safe = SAFE_POSITIONS.includes(index);
+          const isStart = [0, 13, 26, 39].includes(index);
+          const startPlayer = [0, 13, 26, 39].indexOf(index);
           return (
-            <g key={`cell-${i}`}>
+            <g key={`cell-${index}`}>
               <rect
-                x={pos.x}
-                y={pos.y}
+                x={coord.x}
+                y={coord.y}
                 width="1"
                 height="1"
                 fill={safe ? "#FBBF2433" : isStart ? `${PLAYERS[startPlayer].color}30` : theme.cells}
@@ -378,8 +295,8 @@ function GameBoard({
               />
               {safe && (
                 <circle
-                  cx={pos.x + 0.5}
-                  cy={pos.y + 0.5}
+                  cx={coord.x + 0.5}
+                  cy={coord.y + 0.5}
                   r="0.2"
                   fill="none"
                   stroke="#F59E0B"
@@ -389,8 +306,8 @@ function GameBoard({
               )}
               {isStart && (
                 <circle
-                  cx={pos.x + 0.5}
-                  cy={pos.y + 0.5}
+                  cx={coord.x + 0.5}
+                  cy={coord.y + 0.5}
                   r="0.25"
                   fill={PLAYERS[startPlayer].color}
                   opacity="0.3"
@@ -400,26 +317,25 @@ function GameBoard({
           );
         })}
 
-        {HOME_STRETCH_PATHS[0] &&
-          Object.entries(HOME_STRETCH_PATHS).map(([playerId, indices]) =>
-            indices.map((idx, i) => {
-              const coord = getHomeCoord(parseInt(playerId), i);
-              const playerColor = PLAYERS[playerId].color;
-              return (
-                <rect
-                  key={`homeStretch-${playerId}-${i}`}
-                  x={coord.x - 0.2}
-                  y={coord.y - 0.2}
-                  width="0.45"
-                  height="0.45"
-                  fill={`${playerColor}25`}
-                  stroke={playerColor}
-                  strokeWidth="0.05"
-                  rx="0.1"
-                />
-              );
-            })
-          )}
+        {Array.from({ length: 4 }).map((_, playerId) =>
+          Array.from({ length: HOME_STRETCH_SIZE }).map((_, laneIndex) => {
+            const coord = getHomeLaneCoord(playerId, laneIndex);
+            const playerColor = PLAYERS[playerId].color;
+            return (
+              <rect
+                key={`homeStretch-${playerId}-${laneIndex}`}
+                x={coord.x - 0.2}
+                y={coord.y - 0.2}
+                width="0.45"
+                height="0.45"
+                fill={`${playerColor}25`}
+                stroke={playerColor}
+                strokeWidth="0.05"
+                rx="0.1"
+              />
+            );
+          })
+        )}
 
         {selectedPath.map((step, i) => {
           let cx, cy;
@@ -428,9 +344,9 @@ function GameBoard({
             cx = pos.x + 0.5;
             cy = pos.y + 0.5;
           } else if (step.type === "home") {
-            const playerId = Math.floor((step.pos - 52) / 6);
-            const homeIndex = (step.pos - 52) % 6;
-            const coord = getHomeCoord(playerId, homeIndex);
+            const playerId = Math.floor((step.pos - 100) / 10);
+            const homeIndex = step.pos - 100 - playerId * 10;
+            const coord = getHomeCoord(playerId, homeIndex - 1);
             cx = coord.x;
             cy = coord.y;
           } else {
@@ -514,9 +430,9 @@ function GameBoard({
                 cx = pos.x + 0.5;
                 cy = pos.y + 0.5;
               } else if (step.type === "home") {
-                const playerId = Math.floor((step.pos - 52) / 6);
-                const homeIndex = (step.pos - 52) % 6;
-                const coord = getHomeCoord(playerId, homeIndex);
+                const playerId = Math.floor((step.pos - 100) / 10);
+                const homeIndex = step.pos - 100 - playerId * 10;
+                const coord = getHomeCoord(playerId, homeIndex - 1);
                 cx = coord.x;
                 cy = coord.y;
               } else {

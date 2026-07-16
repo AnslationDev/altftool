@@ -7,9 +7,11 @@ import ImageEditor from '../../_shared/components/ImageEditor';
 import SkeletonLoader from '../../_shared/components/SkeletonLoader';
 import ErrorCard from '../../_shared/components/ErrorCard';
 import BeforeAfterSlider from '../../_shared/components/BeforeAfterSlider';
+import FaceSelector from '../../_shared/components/FaceSelector';
 import { useFaceDetection } from '../../_shared/hooks/useFaceDetection';
-import { downloadCanvas, shareImage } from '../../_shared/utils/download';
+import { shareImage } from '../../_shared/utils/download';
 import { compressImage, loadImage, getCanvasBlob } from '../../_shared/utils/imageProcessing';
+import { createHiResCanvas, exportCanvas } from '../../_shared/render/exportEngine';
 import { HAIR_STYLES, HAIR_COLORS, renderHairStyle } from '../utils/hairStyles';
 
 const STYLE_CATEGORIES = [
@@ -29,15 +31,17 @@ export default function HairstyleTool() {
   const [resultCanvas, setResultCanvas] = useState(null);
   const [showSlider, setShowSlider] = useState(false);
   const [downloading, setDownloading] = useState(false);
+  const [selectedFace, setSelectedFace] = useState(0);
   const [adjustments, setAdjustments] = useState({
     scale: 100, rotation: 180, opacity: 100,
     thickness: 50, density: 50, length: 100,
     brightness: 100, contrast: 100,
+    volume: 50, shine: 50,
   });
 
   const canvasRef = useRef(null);
   const processedCanvasRef = useRef(null);
-  const { loading: faceLoading, error: faceError, faceData, modelsReady, loadModels, detectFace, reset: resetFace } = useFaceDetection();
+  const { loading: faceLoading, error: faceError, faceData, faces, modelsReady, loadModels, detectFace, reset: resetFace } = useFaceDetection();
   const [processing, setProcessing] = useState(false);
   const [previewKey, setPreviewKey] = useState(0);
 
@@ -92,22 +96,31 @@ export default function HairstyleTool() {
     if (image && faceData) applyPreview();
   }, [selectedStyle, selectedColor, adjustments, image, faceData]);
 
-  const handleDetect = useCallback(async () => {
+  const handleDetect = useCallback(async (faceIndex = selectedFace) => {
     if (!image) return;
     const img = await loadImage(image.src);
-    await detectFace(img);
+    await detectFace(img, { faceIndex });
+  }, [image, detectFace, selectedFace]);
+
+  const handleSelectFace = useCallback(async (index) => {
+    setSelectedFace(index);
+    if (!image) return;
+    const img = await loadImage(image.src);
+    await detectFace(img, { faceIndex: index });
   }, [image, detectFace]);
 
   useEffect(() => {
-    if (image && modelsReady && !faceData && !faceLoading) handleDetect();
+    if (image && modelsReady && !faceData && !faceLoading && !faces) handleDetect(-1);
   }, [image, modelsReady]);
 
   const handleDownload = async (type = 'png') => {
     if (!resultCanvas) return;
     setDownloading(true);
     try {
+      const scale = pickScale(resultCanvas.width, resultCanvas.height, 3840, Math.min(2, window.devicePixelRatio || 1));
+      const hiRes = scale > 1 ? createHiResCanvas(resultCanvas, scale) : resultCanvas;
       const mimeType = type === 'jpg' ? 'image/jpeg' : 'image/png';
-      const blob = await getCanvasBlob(resultCanvas, mimeType, 0.95);
+      const blob = await getCanvasBlob(hiRes, mimeType, 0.95);
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
@@ -167,7 +180,9 @@ export default function HairstyleTool() {
         <div className="lg:col-span-2 space-y-4">
           <div className="relative rounded-xl overflow-hidden border border-[var(--border)] bg-black/5 dark:bg-white/5" style={{ minHeight: 400 }}>
             {image ? (
-              showSlider && resultCanvas ? (
+              faces && faces.length > 1 && !faceData ? (
+                <FaceSelector faces={faces} imageSrc={image.src} onSelect={handleSelectFace} />
+              ) : showSlider && resultCanvas ? (
                 <BeforeAfterSlider key={previewKey} beforeImage={image.src} afterCanvas={resultCanvas} className="w-full" style={{ maxHeight: 500 }} />
               ) : (
                 <img src={image.src} alt="Uploaded" className="w-full h-full object-contain" style={{ maxHeight: 500 }} />

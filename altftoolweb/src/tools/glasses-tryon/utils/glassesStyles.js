@@ -1,3 +1,5 @@
+import { renderGlasses as renderGlassesReal } from '../../_shared/render/glassesRenderer.js';
+
 export const GLASSES_STYLES = [
   { id: 'rectangle', name: 'Rectangle', category: 'classic' },
   { id: 'square', name: 'Square', category: 'classic' },
@@ -47,53 +49,40 @@ export const FRAME_COLORS = [
 ];
 
 export function renderGlasses(ctx, style, faceData, options) {
+  const enriched = faceData.hairline || faceData.eyeCenter ? faceData : null;
+  const face = enriched || legacyToFace(faceData, options);
+  renderGlassesReal(ctx, style, face, options);
+}
+
+function legacyToFace(faceData, options) {
   const { box, landmarks } = faceData;
-  const { frameColor, lensColor, frameWidth, height, rotation, lensTransparency, scale, bridgeWidth } = options;
-
-  ctx.save();
-
-  const leftEye = landmarks.leftEye;
-  const rightEye = landmarks.rightEye;
-
-  const eyeCenterX = (leftEye[3]?.x + rightEye[0]?.x) / 2 || box.x + box.width / 2;
-  const eyeY = (leftEye[1]?.y + rightEye[1]?.y) / 2 || box.y + box.height * 0.4;
-  const eyeDist = Math.abs((rightEye[0]?.x || box.x + box.width * 0.6) - (leftEye[3]?.x || box.x + box.width * 0.4));
-  const lensW = eyeDist * 0.55 * (scale / 100);
-  const lensH = (height || 50) / 100 * lensW * 0.7;
-  const bridgeW = eyeDist * 0.18 * (bridgeWidth || 50) / 50;
-  const frameW = (frameWidth || 50) / 100 * 6 + 3;
-
-  ctx.translate(eyeCenterX, eyeY);
-  ctx.rotate(((rotation || 180) - 180) * Math.PI / 180);
-  ctx.translate(-eyeCenterX, -eyeY);
-
-  const glassesMap = {
-    'rectangle': drawRectGlasses,
-    'square': drawSquareGlasses,
-    'round': drawRoundGlasses,
-    'oval': drawOvalGlasses,
-    'aviator': drawAviatorGlasses,
-    'wayfarer': drawWayfarerGlasses,
-    'cat-eye': drawCatEyeGlasses,
-    'clubmaster': drawClubmasterGlasses,
-    'rimless': drawRimlessGlasses,
-    'half-rim': drawHalfRimGlasses,
-    'sports': drawSportsGlasses,
-    'reading': drawRectGlasses,
-    'luxury': drawWayfarerGlasses,
-    'fashion': drawCatEyeGlasses,
-    'gaming': drawSportsGlasses,
-    'blue-light': drawRimlessGlasses,
-    'sunglasses': drawAviatorGlasses,
-    'oversized': drawOversizedGlasses,
-    'retro': drawRoundGlasses,
-    'kids': drawRectGlasses,
+  const leftEye = landmarks?.leftEye || [];
+  const rightEye = landmarks?.rightEye || [];
+  const le = {
+    x: leftEye[3]?.x || box.x + box.width * 0.4,
+    y: leftEye[1]?.y || box.y + box.height * 0.4,
   };
-
-  const drawer = glassesMap[style] || drawRectGlasses;
-  drawer(ctx, eyeCenterX, eyeY, eyeDist, lensW, lensH, bridgeW, frameW, frameColor, lensColor, lensTransparency, options);
-
-  ctx.restore();
+  const re = {
+    x: rightEye[0]?.x || box.x + box.width * 0.6,
+    y: rightEye[1]?.y || box.y + box.height * 0.4,
+  };
+  const eyeCenter = midpoint(le, re);
+  return {
+    box,
+    landmarks,
+    eyeCenter,
+    leftEye: le,
+    rightEye: re,
+    eyeDistance: dist(le, re),
+    noseTip: landmarks?.noseTip?.[2] || { x: eyeCenter.x, y: eyeCenter.y + box.height * 0.1 },
+    pose: { roll: 0, yaw: 0, pitch: 0 },
+    faceShape: 'Oval',
+    lighting: null,
+    jawWidth: box.width * 0.85,
+    foreheadWidth: box.width,
+    faceWidth: box.width,
+    faceHeight: box.height,
+  };
 }
 
 function drawLens(ctx, x, y, w, h, color, transparency) {

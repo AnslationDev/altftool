@@ -1,3 +1,5 @@
+import { renderHair } from '../../_shared/render/hairRenderer.js';
+
 export const HAIR_STYLES = [
   { id: 'buzz-cut', name: 'Buzz Cut', category: 'short', complexity: 'simple' },
   { id: 'fade', name: 'Fade', category: 'short', complexity: 'medium' },
@@ -41,51 +43,46 @@ export const HAIR_COLORS = [
 ];
 
 export function renderHairStyle(ctx, style, faceData, options) {
+  // Delegate to the realistic HairRenderer. `faceData` is the enriched object
+  // produced by analyzeFace(); legacy fields are read as a fallback.
+  const enriched = faceData.hairline ? faceData : null;
+  const face = enriched || legacyToFace(faceData, options);
+  renderHair(ctx, style, face, options);
+}
+
+// Minimal shim for the old { box, landmarks } shape so this module is robust.
+function legacyToFace(faceData, options) {
   const { box, landmarks } = faceData;
-  const { color, scale, rotation, opacity, thickness, density, length } = options;
-
-  ctx.save();
-  ctx.globalAlpha = opacity / 100;
-  const cx = box.x + box.width / 2;
-  const cy = box.y + box.height / 3;
-  const baseW = box.width * 0.9 * (scale / 100);
-  const baseH = box.height * 0.35 * (scale / 100) * (length / 100);
-  const topY = box.y - box.height * 0.05;
-
-  ctx.translate(cx, cy);
-  ctx.rotate((rotation - 180) * Math.PI / 180);
-  ctx.translate(-cx, -cy);
-
-  const r = thickness / 100;
-
-  const hairMap = {
-    'buzz-cut': drawBuzzCut,
-    'fade': drawFade,
-    'crew-cut': drawBuzzCut,
-    'french-crop': drawFrenchCrop,
-    'pompadour': drawPompadour,
-    'quiff': drawQuiff,
-    'undercut': drawUndercut,
-    'side-part': drawSidePart,
-    'middle-part': drawMiddlePart,
-    'curtains': drawCurtains,
-    'slick-back': drawSlickBack,
-    'comb-over': drawCombOver,
-    'messy': drawMessy,
-    'spiky': drawSpiky,
-    'long': drawLong,
-    'wolf-cut': drawWolfCut,
-    'mullet': drawMullet,
-    'man-bun': drawManBun,
-    'curly': drawCurly,
-    'afro': drawAfro,
-    'bald': () => {},
+  const leftEye = landmarks?.leftEye || [];
+  const rightEye = landmarks?.rightEye || [];
+  const jawline = landmarks?.jawline || [];
+  const hairline = [
+    { x: box.x, y: box.y },
+    { x: box.x + box.width * 0.25, y: box.y - box.height * 0.12 },
+    { x: box.x + box.width * 0.5, y: box.y - box.height * 0.18 },
+    { x: box.x + box.width * 0.75, y: box.y - box.height * 0.12 },
+    { x: box.x + box.width, y: box.y },
+  ];
+  return {
+    box,
+    hairline,
+    landmarks,
+    pose: { roll: 0, yaw: 0, pitch: 0 },
+    faceShape: 'Oval',
+    lighting: null,
+    eyeCenter: { x: box.x + box.width / 2, y: box.y + box.height * 0.4 },
+    leftEye: leftEye[3] || { x: box.x + box.width * 0.4, y: box.y + box.height * 0.4 },
+    rightEye: rightEye[0] || { x: box.x + box.width * 0.6, y: box.y + box.height * 0.4 },
+    eyeDistance: box.width * 0.4,
+    noseTip: { x: box.x + box.width / 2, y: box.y + box.height * 0.55 },
+    chin: jawline[8] || { x: box.x + box.width / 2, y: box.y + box.height * 0.85 },
+    upperLip: { x: box.x + box.width / 2, y: box.y + box.height * 0.7 },
+    lipCenter: { x: box.x + box.width / 2, y: box.y + box.height * 0.72 },
+    jawWidth: box.width * 0.85,
+    foreheadWidth: box.width,
+    faceWidth: box.width,
+    faceHeight: box.height,
   };
-
-  const drawer = hairMap[style] || drawBuzzCut;
-  drawer(ctx, cx, box, baseW, baseH, topY, color, r, density, landmarks);
-
-  ctx.restore();
 }
 
 function drawBuzzCut(ctx, cx, box, bw, bh, topY, color) {

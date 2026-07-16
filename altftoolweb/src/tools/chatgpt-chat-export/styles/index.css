@@ -1,0 +1,164 @@
+.hljs-keyword {
+  color: #7c3aed;
+}
+.dark .hljs-keyword {
+  color: #a78bfa;
+}
+
+.hljs-string {
+  color: #059669;
+}
+.dark .hljs-string {
+  color: #34d399;
+}
+
+.hljs-number {
+  color: #d97706;
+}
+.dark .hljs-number {
+  color: #fbbf24;
+}
+
+.hljs-comment {
+  color: #94a3b8;
+  font-style: italic;
+}
+.dark .hljs-comment {
+  color: #64748b;
+}
+
+.hljs-built_in {
+  color: #2563eb;
+}
+.dark .hljs-built_in {
+  color: #60a5fa;
+}
+
+.hljs-function {
+  color: #7c3aed;
+}
+.dark .hljs-function {
+  color: #a78bfa;
+}
+
+.hljs-attr {
+  color: #b45309;
+}
+.dark .hljs-attr {
+  color: #f59e0b;
+}
+
+.hljs-title {
+  color: #1d4ed8;
+}
+.dark .hljs-title {
+  color: #93c5fd;
+}
+
+.hljs-property {
+  color: #0d9488;
+}
+.dark .hljs-property {
+  color: #2dd4bf;
+}
+
+.hljs-selector-tag {
+  color: #7c3aed;
+}
+.dark .hljs-selector-tag {
+  color: #a78bfa;
+}
+
+.hljs-selector-class {
+  color: #b45309;
+}
+.dark .hljs-selector-class {
+  color: #fbbf24;
+}
+
+.hljs-selector-id {
+  color: #dc2626;
+}
+.dark .hljs-selector-id {
+  color: #f87171;
+}
+
+.hljs-tag {
+  color: #2563eb;
+}
+.dark .hljs-tag {
+  color: #60a5fa;
+}
+
+.hljs-name {
+  color: #7c3aed;
+}
+.dark .hljs-name {
+  color: #a78bfa;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .chatgpt-export-pro * {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulse-skeleton {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.3s ease-out;
+}
+
+.animate-slide-up {
+  animation: slideUp 0.4s ease-out;
+}
+
+.animate-skeleton {
+  animation: pulse-skeleton 1.5s ease-in-out infinite;
+}
+
+.prose pre {
+  margin: 0;
+  padding: 0;
+  background: transparent;
+}
+
+.prose code {
+  font-size: 0.8125rem;
+}
+
+.dark .prose {
+  color: var(--foreground);
+}
+
+.scrollbar-thin::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 3px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb:hover {
+  background: var(--border-strong);
+}

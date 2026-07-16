@@ -1,0 +1,14 @@
+@import "../../privacy-policy-generator/styles/globals.css";
+
+.jump-code-tool .pp-policy-copy {
+  max-width: 100%;
+}
+
+.jump-code-tool .jump-code-output {
+  white-space: pre;
+  tab-size: 2;
+}
+
+.jump-code-tool .jump-preview-surface {
+  scroll-behavior: smooth;
+}

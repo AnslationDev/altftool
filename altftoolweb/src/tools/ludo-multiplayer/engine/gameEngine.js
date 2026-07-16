@@ -1,4 +1,5 @@
-import { TOTAL_CELLS, TOKENS_PER_PLAYER, SAFE_POSITIONS, HOME_ENTRY, MAX_CONSECUTIVE_SIXES } from "./constants";
+import { TOTAL_CELLS, TOKENS_PER_PLAYER, SAFE_POSITIONS, MAX_CONSECUTIVE_SIXES, MAX_PATH_STEPS, HOME_STRETCH_SIZE } from "./constants.js";
+import { getStartPosition, getRouteState, getRouteTileKey } from "./routeLayout.js";
 
 let nextId = 1;
 function uid() { return nextId++; }
@@ -65,58 +66,37 @@ export function getValidMoves(game, playerId) {
 
     if (token.position === -1) {
       if (game.diceValue === 6) {
-        moves.push({ tokenIndex: idx, from: -1, to: getStartPosition(playerId), action: "enter" });
+        moves.push({ tokenIndex: idx, from: -1, to: getStartPosition(playerId), action: "enter", steps: 1, tileKey: getRouteTileKey(playerId, 1) });
       }
       return;
     }
 
-    const newPos = (token.position + game.diceValue) % TOTAL_CELLS;
-    const newSteps = token.steps + game.diceValue;
+    const currentSteps = token.steps;
+    const newSteps = currentSteps + game.diceValue;
+    const nextState = getRouteState(playerId, newSteps);
 
-    if (newSteps > 56) return;
-
-    if (newSteps === 56) {
-      moves.push({ tokenIndex: idx, from: token.position, to: 99, action: "finish" });
+    if (newSteps > MAX_PATH_STEPS) return;
+    if (newSteps === MAX_PATH_STEPS) {
+      moves.push({ tokenIndex: idx, from: token.position, to: 99, action: "finish", steps: newSteps, tileKey: "finish" });
       return;
     }
 
-    if (isInHomeStretch(token.steps, newSteps, playerId)) {
-      moves.push({ tokenIndex: idx, from: token.position, to: newPos, action: "move", steps: newSteps });
-      return;
-    }
-
-    if (canMoveTo(newPos, playerId, token.steps, newSteps)) {
-      const kill = wouldKill(game, newPos, playerId);
-      moves.push({ tokenIndex: idx, from: token.position, to: newPos, action: kill ? "kill" : "move", steps: newSteps, killTarget: kill });
-    }
+    const killTarget = wouldKill(game, nextState, playerId, newSteps);
+    const action = killTarget ? "kill" : "move";
+    moves.push({ tokenIndex: idx, from: token.position, to: nextState.position, action, steps: newSteps, killTarget, tileKey: nextState.type === "main" ? getRouteTileKey(playerId, newSteps) : `home:${nextState.position}` });
   });
 
   return moves;
 }
 
-function getStartPosition(playerId) {
-  return [0, 13, 26, 39][playerId];
-}
-
-function isInHomeStretch(currentSteps, newSteps, playerId) {
-  const homeEntry = 50 + playerId * 13;
-  return currentSteps >= homeEntry || newSteps > 50;
-}
-
-function canMoveTo(pos, playerId, currentSteps, newSteps) {
-  const start = getStartPosition(playerId);
-  const homeEntryVal = 50;
-
-  if (currentSteps <= 50 && newSteps > 50) return true;
-  if (newSteps > 56) return false;
-  return true;
-}
-
-function wouldKill(game, pos, attackerId) {
+function wouldKill(game, nextState, attackerId, steps) {
+  if (nextState.type !== "main") return null;
+  if (SAFE_POSITIONS.includes(nextState.position)) return null;
   for (const player of game.players) {
     if (player.id === attackerId) continue;
     for (const token of player.tokens) {
-      if (token.position === pos && !token.isFinished && !SAFE_POSITIONS.includes(pos)) {
+      if (token.isFinished) continue;
+      if (token.position === nextState.position && token.position >= 0) {
         return { playerId: player.id, tokenIndex: player.tokens.indexOf(token) };
       }
     }
@@ -130,9 +110,11 @@ export function applyMove(game, playerId, move) {
 
   if (move.action === "enter") {
     token.position = getStartPosition(playerId);
-    token.steps = 0;
+    token.steps = 1;
+    token.isHome = false;
   } else if (move.action === "finish") {
     token.position = 99;
+    token.steps = MAX_PATH_STEPS;
     token.isFinished = true;
     player.finished++;
     if (player.finished === TOKENS_PER_PLAYER) {
@@ -144,6 +126,8 @@ export function applyMove(game, playerId, move) {
       const target = game.players[move.killTarget.playerId].tokens[move.killTarget.tokenIndex];
       target.position = -1;
       target.steps = 0;
+      target.isFinished = false;
+      target.isHome = false;
     }
     token.position = move.to;
     token.steps = move.steps;
@@ -170,3 +154,5 @@ export function checkForExtraTurn(diceValue) {
 export function checkThreeConsecutiveSixes(player) {
   return player.consecutiveSixes >= MAX_CONSECUTIVE_SIXES;
 }
+
+export { getStartPosition, getRouteState, getRouteTileKey } from "./routeLayout.js";

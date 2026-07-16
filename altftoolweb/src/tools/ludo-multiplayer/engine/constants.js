@@ -11,6 +11,8 @@ export const TOTAL_CELLS = 52;
 export const TOKENS_PER_PLAYER = 4;
 export const HOME_ENTRY = [50, 11, 24, 37];
 export const SAFE_POSITIONS = [0, 8, 13, 21, 26, 34, 39, 47];
+export const HOME_STRETCH_SIZE = 6;
+export const MAX_PATH_STEPS = 56;
 
 export const DICE_MIN = 1;
 export const DICE_MAX = 6;

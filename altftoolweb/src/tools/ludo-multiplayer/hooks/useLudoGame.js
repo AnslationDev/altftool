@@ -148,7 +148,7 @@ export function useLudoGame() {
       return;
     }
 
-    const extraTurn = move.action === "kill" || (g.diceValue === 6 && !checkForExtraTurn(g.diceValue));
+    const extraTurn = move.action === "kill" || checkForExtraTurn(g.diceValue);
     g.currentPlayer = extraTurn ? g.currentPlayer : (g.currentPlayer + 1) % g.players.length;
     g.phase = "roll";
     g.diceRolled = false;
@@ -188,7 +188,7 @@ export function useLudoGame() {
         setThinkingAI(false);
         return;
       }
-      const extraTurn = move.action === "kill" || (diceVal === 6);
+      const extraTurn = move.action === "kill" || checkForExtraTurn(diceVal);
       g.currentPlayer = extraTurn ? g.currentPlayer : (g.currentPlayer + 1) % g.players.length;
       g.phase = "roll";
       g.canRoll = true;

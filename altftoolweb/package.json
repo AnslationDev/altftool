@@ -123,7 +123,9 @@
     "turndown-plugin-gfm": "^1.0.2",
     "uuid": "^14.0.0",
     "xlsx": "npm:@e965/xlsx@^0.20.3",
-    "zustand": "^5.0.3"
+    "zustand": "^5.0.3",
+    "@prettier/plugin-php": "^0.25.0",
+    "prettier": "^3.9.5"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4.1.18",
