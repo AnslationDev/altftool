@@ -1,3 +1,5 @@
+import { renderBeard } from '../../_shared/render/beardRenderer.js';
+
 export const BEARD_STYLES = [
   { id: 'clean-shaven', name: 'Clean Shaven', category: 'none', complexity: 'simple' },
   { id: 'light-stubble', name: 'Light Stubble', category: 'stubble', complexity: 'simple' },
@@ -32,43 +34,36 @@ export const BEARD_COLORS = [
 ];
 
 export function renderBeardStyle(ctx, style, faceData, options) {
+  const enriched = faceData.hairline || faceData.chin ? faceData : null;
+  const face = enriched || legacyToFace(faceData, options);
+  renderBeard(ctx, style, face, options);
+}
+
+function legacyToFace(faceData, options) {
   const { box, landmarks } = faceData;
-  const { color, scale, opacity, length, density, darkness, sharpness, rotation } = options;
-
-  ctx.save();
-  ctx.globalAlpha = opacity / 100;
-
-  const cx = box.x + box.width / 2;
-  const chinY = landmarks.jawline[8]?.y || (box.y + box.height * 0.8);
-  const jawPoints = landmarks.jawline;
-
-  const beardMap = {
-    'clean-shaven': () => {},
-    'light-stubble': (ctx) => drawStubble(ctx, cx, chinY, box, 0.15, color, density),
-    'medium-stubble': (ctx) => drawStubble(ctx, cx, chinY, box, 0.3, color, density),
-    'heavy-stubble': (ctx) => drawStubble(ctx, cx, chinY, box, 0.5, color, density),
-    'goatee': (ctx) => drawGoatee(ctx, cx, chinY, box, color, scale, length, density),
-    'circle-beard': (ctx) => drawCircleBeard(ctx, cx, chinY, box, color, scale, length),
-    'van-dyke': (ctx) => drawVanDyke(ctx, cx, chinY, box, color, scale, length, jawPoints),
-    'balbo': (ctx) => drawBalbo(ctx, cx, chinY, box, color, scale, length, jawPoints),
-    'anchor': (ctx) => drawAnchor(ctx, cx, chinY, box, color, scale, length, jawPoints),
-    'french-beard': (ctx) => drawFrenchBeard(ctx, cx, chinY, box, color, scale, length, jawPoints),
-    'full-beard': (ctx) => drawFullBeard(ctx, cx, chinY, box, color, scale, length, density, jawPoints, darkness),
-    'garibaldi': (ctx) => drawGaribaldi(ctx, cx, chinY, box, color, scale, length, density, jawPoints),
-    'ducktail': (ctx) => drawDucktail(ctx, cx, chinY, box, color, scale, length, density, jawPoints),
-    'corporate': (ctx) => drawCorporate(ctx, cx, chinY, box, color, scale, length, density, jawPoints),
-    'bandholz': (ctx) => drawBandholz(ctx, cx, chinY, box, color, scale, length, density, jawPoints),
-    'mutton-chops': (ctx) => drawMuttonChops(ctx, cx, chinY, box, color, scale, length, jawPoints),
-    'chin-strap': (ctx) => drawChinStrap(ctx, cx, chinY, box, color, scale, length, jawPoints),
-    'soul-patch': (ctx) => drawSoulPatch(ctx, cx, chinY, box, color, scale),
-    'handlebar': (ctx) => drawHandlebar(ctx, cx, chinY, box, color, scale, length, density, jawPoints),
-    'custom': (ctx) => drawFullBeard(ctx, cx, chinY, box, color, scale, length, density, jawPoints, darkness),
+  const jawline = landmarks?.jawline || [];
+  const outerLips = landmarks?.outerLips || [];
+  const chin = jawline[8] || { x: box.x + box.width / 2, y: box.y + box.height * 0.85 };
+  const lipCenter = outerLips.length
+    ? {
+        x: (outerLips[0].x + outerLips[6].x) / 2,
+        y: (outerLips[0].y + outerLips[6].y) / 2,
+      }
+    : { x: box.x + box.width / 2, y: box.y + box.height * 0.72 };
+  return {
+    box,
+    landmarks,
+    chin,
+    lipCenter,
+    pose: { roll: 0, yaw: 0, pitch: 0 },
+    faceShape: 'Oval',
+    lighting: null,
+    eyeCenter: { x: box.x + box.width / 2, y: box.y + box.height * 0.4 },
+    jawWidth: box.width * 0.85,
+    foreheadWidth: box.width,
+    faceWidth: box.width,
+    faceHeight: box.height,
   };
-
-  const drawer = beardMap[style] || drawFullBeard;
-  drawer(ctx);
-
-  ctx.restore();
 }
 
 function getJawWidth(box, jawPoints) {

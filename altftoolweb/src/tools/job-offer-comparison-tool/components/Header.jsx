@@ -1,0 +1,44 @@
+import React from 'react';
+import { Moon, Sun, Download, Plus } from 'lucide-react';
+
+const Header = ({ theme, setTheme, onAddOffer, onExport }) => {
+    return (
+        <div className="job-header">
+            <div className="job-header-left">
+                <div>
+                    <h1 className="job-header-title">Job Offer Comparison</h1>
+                    <p className="job-header-subtitle">
+                        Compare multiple offers and find your best opportunity
+                    </p>
+                </div>
+            </div>
+            <div className="job-header-right">
+                <button
+                    className="job-btn job-btn-secondary"
+                    onClick={onExport}
+                    title="Export comparison"
+                >
+                    <Download size={18} />
+                    Export
+                </button>
+                <button
+                    className="job-btn job-btn-primary"
+                    onClick={onAddOffer}
+                    title="Add new job offer"
+                >
+                    <Plus size={18} />
+                    Add Offer
+                </button>
+                <button
+                    className="job-theme-toggle"
+                    onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}
+                    title="Toggle dark mode"
+                >
+                    {theme === 'light' ? <Moon size={20} /> : <Sun size={20} />}
+                </button>
+            </div>
+        </div>
+    );
+};
+
+export default Header;

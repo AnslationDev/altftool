@@ -82,6 +82,28 @@ export const toolMetaMap = {
     "icon": "scan-face",
     "iconColor": "text-teal-500"
   },
+  "ai-fake-image-detector": {
+    "name": "AI Fake Image Detector",
+    "description": "Analyze images to detect AI-generated content, deepfakes, and manipulation artifacts.",
+    "category": [
+      "AI",
+      "Security",
+      "Content Creation"
+    ],
+    "icon": "shield-check",
+    "iconColor": "text-violet-600"
+  },
+  "ai-memory-capsule": {
+    "name": "AI Memory Capsule",
+    "description": "Create, analyze, and preserve your memories with AI-powered mood analysis, word insights, and emotional journey tracking.",
+    "category": [
+      "Productivity",
+      "AI",
+      "Personal"
+    ],
+    "icon": "brain",
+    "iconColor": "text-violet-600"
+  },
   "ai-object-counter": {
     "name": "AI Object Counter",
     "description": "Detect and count objects in images using TensorFlow.js COCO-SSD. Supports 90+ object categories with confidence scoring and visualization.",
@@ -103,6 +125,27 @@ export const toolMetaMap = {
     ],
     "icon": "id-card",
     "iconColor": "text-blue-600"
+  },
+  "ai-prompt-organizer": {
+    "name": "AI Prompt Organizer",
+    "description": "Organize, save, tag, and search your custom AI prompts with quick copy buttons and JSON backup options.",
+    "category": [
+      "Developers",
+      "Utilities"
+    ],
+    "icon": "gauge",
+    "iconColor": "text-teal-500"
+  },
+  "ai-selfie-enhancer": {
+    "name": "AI Selfie Enhancer",
+    "description": "Enhance your selfies with smart AI-driven filters, skin smoothing, lighting correction, and background tuning directly in your browser.",
+    "category": [
+      "AI",
+      "Design",
+      "Media"
+    ],
+    "icon": "sparkle",
+    "iconColor": "text-teal-500"
   },
   "ambiguous-figure-viewer": {
     "name": "Ambiguous Figure Viewer",
@@ -372,6 +415,25 @@ export const toolMetaMap = {
     "icon": "activity",
     "iconColor": "text-green-500"
   },
+  "beard-style-preview": {
+    "name": "Beard Style Preview",
+    "description": "Preview different beard styles on your face with AI-powered jawline detection. Try stubble, goatee, full beard, and more.",
+    "category": [
+      "AI",
+      "Image",
+      "Style",
+      "Beauty"
+    ],
+    "icon": "user",
+    "iconColor": "text-cyan-500"
+  },
+  "beauty-score": {
+    "name": "Beauty Score Calculator",
+    "description": "Calculate your facial beauty score based on symmetry and the Golden Ratio.",
+    "category": "Fun / AI",
+    "icon": "scan-face",
+    "iconColor": "text-purple-500"
+  },
   "before-after-comparator": {
     "name": "Before vs After Comparator",
     "description": "Compare two images with slider, side-by-side, and fade overlay modes. Includes resolution and difference analysis.",
@@ -384,24 +446,16 @@ export const toolMetaMap = {
     "icon": "pilcrow-left",
     "iconColor": "text-blue-500"
   },
-  "beauty-score": {
-    "name": "Beauty Score Calculator",
-    "description": "Calculate your facial beauty score based on symmetry and the Golden Ratio.",
-    "category": "Fun / AI",
-    "icon": "scan-face",
-    "iconColor": "text-purple-500"
-  },
-  "beard-style-preview": {
-    "name": "Beard Style Preview",
-    "description": "Preview different beard styles on your face with AI-powered jawline detection. Try stubble, goatee, full beard, and more.",
+  "before-after-slider": {
+    "name": "Before/After Slider",
+    "description": "Compare two images interactively with a draggable before/after slider. Perfect for showcasing edits, restorations, and transformations.",
     "category": [
-      "AI",
+      "Design",
       "Image",
-      "Style",
-      "Beauty"
+      "Creators"
     ],
-    "icon": "user",
-    "iconColor": "text-cyan-500"
+    "icon": "image-plus",
+    "iconColor": "text-teal-500"
   },
   "bg-remover": {
     "name": "Background Remover",
@@ -461,6 +515,16 @@ export const toolMetaMap = {
     ],
     "icon": "cake",
     "iconColor": "text-pink-600"
+  },
+  "blur-comparison": {
+    "name": "Blur Comparison",
+    "description": "Interactively compare different blur intensities on your images with a side-by-side slider.",
+    "category": [
+      "Design",
+      "Image"
+    ],
+    "icon": "droplet",
+    "iconColor": "text-indigo-500"
   },
   "blur-detector": {
     "name": "Blur Detector",
@@ -643,6 +707,17 @@ export const toolMetaMap = {
     "icon": "user",
     "iconColor": "text-amber-500"
   },
+  "chatgpt-chat-export": {
+    "name": "ChatGPT Chat Export",
+    "description": "Convert exported ChatGPT conversations into beautiful documents. Parse, view, search, and export to PDF, DOCX, Markdown, HTML, and more.",
+    "category": [
+      "AI",
+      "Productivity",
+      "Document"
+    ],
+    "icon": "message-square",
+    "iconColor": "text-emerald-500"
+  },
   "chess-multiplayer": {
     "name": "Chess Multiplayer",
     "description": "Play a full multiplayer chess match locally with legal-move validation, timers, move history, captured pieces, draw offers and resign.",
@@ -712,6 +787,16 @@ export const toolMetaMap = {
     "icon": "code",
     "iconColor": "blue"
   },
+  "codex-chat-transfer": {
+    "name": "Codex Chat Transfer",
+    "description": "Convert chatbot chat logs and conversational arrays between OpenAI, Anthropic, and Markdown formats instantly.",
+    "category": [
+      "Developers",
+      "Utilities"
+    ],
+    "icon": "refresh-cw",
+    "iconColor": "text-teal-500"
+  },
   "color-blindness-simulator": {
     "name": "Color Blindness Simulator",
     "description": "Advanced accessibility tool to simulate various types of color vision deficiencies in real-time.",
@@ -761,6 +846,16 @@ export const toolMetaMap = {
     "category": "Design Tools",
     "icon": "brain",
     "iconColor": "text-indigo-600"
+  },
+  "color-palette-compare": {
+    "name": "Color Palette Compare",
+    "description": "Compare two color palettes side-by-side in real-world UI mockups to test contrast and aesthetics.",
+    "category": [
+      "Design",
+      "Web"
+    ],
+    "icon": "palette",
+    "iconColor": "text-rose-500"
   },
   "color-palette-from-image": {
     "name": "Color Palette from Image",
@@ -819,6 +914,17 @@ export const toolMetaMap = {
     ],
     "icon": "layers",
     "iconColor": "text-[var(--primary)]"
+  },
+  "cookie-viewer": {
+    "name": "Cookie Viewer",
+    "description": "View, manage, add, edit, and delete browser cookies in real-time.",
+    "category": [
+      "Developer",
+      "Web",
+      "Security"
+    ],
+    "icon": "cookie",
+    "iconColor": "text-amber-600"
   },
   "corporate-tool": {
     "name": "Corporate Tool",
@@ -1083,6 +1189,13 @@ export const toolMetaMap = {
     "icon": "text",
     "iconColor": "text-blue-500"
   },
+  "discount-stacking-calculator": {
+    "name": "Discount Stacking Calculator",
+    "description": "Optimize your shopping savings by combining multiple discounts, coupons, card offers, and cashback with real-time stacking analysis.",
+    "category": "Financial Tools",
+    "icon": "wrench",
+    "iconColor": "text-muted-foreground"
+  },
   "dividend-yield-calculator": {
     "name": "Dividend Yield Calculator",
     "description": "Calculate dividend yield, dividend income, tax-adjusted cash flow, and portfolio required for target income.",
@@ -1147,6 +1260,23 @@ export const toolMetaMap = {
     "icon": "copy-check",
     "iconColor": "text-purple-500"
   },
+  "duplicate-line-remover": {
+    "name": "Duplicate Line Remover",
+    "description": "Identify and remove duplicate lines from lists, code, or logs with custom case-sensitivity and whitespace settings.",
+    "category": "Text",
+    "icon": "list-x",
+    "iconColor": "text-teal-500"
+  },
+  "duplicate-photo-finder": {
+    "name": "Duplicate Photo Finder",
+    "description": "Scan, group, and remove visually similar or exact duplicate photos locally using perceptual hashing. 100% private and browser-based.",
+    "category": [
+      "Design",
+      "Developer"
+    ],
+    "icon": "image",
+    "iconColor": "text-rose-500"
+  },
   "eisenhower-matrix-tool": {
     "name": "Eisenhower Matrix Tool",
     "description": "Prioritize tasks in a real-time four-quadrant matrix with drag-and-drop workflow, live dashboard, notes, filters, and local save.",
@@ -1157,6 +1287,13 @@ export const toolMetaMap = {
     ],
     "icon": "layout-dashboard",
     "iconColor": "text-cyan-600"
+  },
+  "email-extractor": {
+    "name": "Email Extractor",
+    "description": "Extract email addresses from raw text, HTML content, or logs instantly, with domain frequency breakdowns and sorting.",
+    "category": "Text",
+    "icon": "mail",
+    "iconColor": "text-teal-500"
   },
   "email-thread-summarizer": {
     "name": "Email Thread Summarizer",
@@ -1262,6 +1399,16 @@ export const toolMetaMap = {
     "icon": "wallet",
     "iconColor": "text-emerald-600"
   },
+  "exposure-triangle-guide": {
+    "name": "Exposure Triangle Guide",
+    "description": "Learn how aperture, shutter speed, and ISO interact with live exposure feedback and scene presets.",
+    "category": [
+      "Creators",
+      "EdTech"
+    ],
+    "icon": "aperture",
+    "iconColor": "text-blue-600"
+  },
   "face-shape-detector": {
     "name": "Face Shape Detector",
     "description": "Analyze facial landmarks to mathematically determine your face shape and get style recommendations.",
@@ -1271,6 +1418,16 @@ export const toolMetaMap = {
     ],
     "icon": "scan",
     "iconColor": "text-indigo-500"
+  },
+  "face-similarity-checker": {
+    "name": "Face Similarity Checker",
+    "description": "Compare visual similarity between two face images using client-side landmark analysis. Completely private and runs in-browser.",
+    "category": [
+      "Design",
+      "Developer"
+    ],
+    "icon": "scan-face",
+    "iconColor": "text-rose-500"
   },
   "fake-data": {
     "name": "Fake Data",
@@ -1435,6 +1592,13 @@ export const toolMetaMap = {
     "icon": "users",
     "iconColor": "text-cyan-500"
   },
+  "furniture-layout-planner": {
+    "name": "Furniture Layout Planner",
+    "description": "Plan room dimensions, arrange furniture pieces, check spacing, save layouts, and export printable floor plans.",
+    "category": "Lifestyle",
+    "icon": "armchair",
+    "iconColor": "text-amber-600"
+  },
   "future-baby-generator": {
     "name": "Future Baby Generator",
     "description": "Upload parents' photos and enter names to predict baby facial features, genetics, and name recommendations.",
@@ -1452,12 +1616,32 @@ export const toolMetaMap = {
     "icon": "baby",
     "iconColor": "text-blue-500"
   },
+  "future-job-predictor": {
+    "name": "Future Job Predictor",
+    "description": "Advanced career simulation engine. Analyze education, skills, and trend projections to find your path in the future economy.",
+    "category": [
+      "Science",
+      "Developer"
+    ],
+    "icon": "star",
+    "iconColor": "text-rose-500"
+  },
   "future-partner-prediction": {
     "name": "Future Partner Prediction",
     "description": "Answer compatibility and trait questions to get a fun, detailed profile of your future life partner.",
     "category": "Lifestyle",
     "icon": "heart-handshake",
     "iconColor": "text-indigo-500"
+  },
+  "future-salary-predictor": {
+    "name": "Future Salary Predictor",
+    "description": "Project your future earnings and salary growth over time based on expected annual increments.",
+    "category": [
+      "Finance",
+      "Career"
+    ],
+    "icon": "trending-up",
+    "iconColor": "text-emerald-500"
   },
   "generate-random-string": {
     "name": "Generate Random String",
@@ -1628,6 +1812,16 @@ export const toolMetaMap = {
     "icon": "book-open",
     "iconColor": "text-rose-700"
   },
+  "home-maintenance-scheduler": {
+    "name": "Home Maintenance Scheduler",
+    "description": "Plan home maintenance tasks with due dates, frequency, priorities, and monthly scheduling.",
+    "category": [
+      "Home",
+      "Productivity"
+    ],
+    "icon": "calendar-check",
+    "iconColor": "text-emerald-600"
+  },
   "horoscope-reader": {
     "name": "Horoscope Reader",
     "description": "Read daily horoscope insights tailored to your zodiac sign.",
@@ -1684,6 +1878,13 @@ export const toolMetaMap = {
     "icon": "network",
     "iconColor": "text-purple-700"
   },
+  "icon-maker": {
+    "name": "Icon Maker Tool",
+    "description": "Create, preview, copy, and export production-ready app icons, favicons, launcher assets, and PWA icons in the browser.",
+    "category": "Design",
+    "icon": "sparkles",
+    "iconColor": "text-blue-500"
+  },
   "image-compressor": {
     "name": "Image Compressor",
     "description": "Compress images instantly and reduce file size efficiently.",
@@ -1725,6 +1926,18 @@ export const toolMetaMap = {
     "icon": "refresh-cw",
     "iconColor": "text-blue-600"
   },
+  "image-metadata-viewer": {
+    "name": "Image Metadata Viewer",
+    "description": "Extract and view complete image metadata including EXIF, IPTC, GPS, and file properties.",
+    "category": [
+      "Design",
+      "Developers",
+      "Privacy",
+      "Content Creation"
+    ],
+    "icon": "scan-search",
+    "iconColor": "text-teal-600"
+  },
   "image-noise-grain-adder": {
     "name": "Image Noise & Grain Adder",
     "description": "Add realistic film grain, vintage noise, and cinematic textures to your photos.",
@@ -1754,6 +1967,17 @@ export const toolMetaMap = {
     ],
     "icon": "image",
     "iconColor": "text-blue-600"
+  },
+  "image-resolution-compare": {
+    "name": "Image Resolution Compare",
+    "description": "Compare image resolution, quality, sharpness, DPI, and compression like a professional. Analyze two images side-by-side with detailed metrics.",
+    "category": [
+      "Design",
+      "AI",
+      "Developer"
+    ],
+    "icon": "image-plus",
+    "iconColor": "text-sky-500"
   },
   "image-to-base64": {
     "name": "Image to Base64",
@@ -1809,6 +2033,13 @@ export const toolMetaMap = {
     "icon": "calculator",
     "iconColor": "text-indigo-600"
   },
+  "ingredient-substitute-finder": {
+    "name": "Ingredient Substitute Finder",
+    "description": "Find instant ingredient replacements with precise ratios and dietary filters.",
+    "category": "Kitchen Tools",
+    "icon": "chef-hat",
+    "iconColor": "text-blue-500"
+  },
   "insect-tracker": {
     "name": "Insect Tracker",
     "description": "Catch butterflies, bees, ladybugs and more in this fast, fun insect-tracking arcade game. Beat your high score across rising difficulty levels.",
@@ -1818,6 +2049,16 @@ export const toolMetaMap = {
     ],
     "icon": "footprints",
     "iconColor": "text-(--primary)"
+  },
+  "instagram-dp-enhancer": {
+    "name": "Instagram DP Enhancer",
+    "description": "Enhance your Instagram display picture with vibrant gradient borders, filters, and effects — download-ready in 1080x1080.",
+    "category": [
+      "Design",
+      "Social Media"
+    ],
+    "icon": "instagram",
+    "iconColor": "text-pink-500"
   },
   "internet-speed-test": {
     "name": "Internet Speed Test",
@@ -1890,6 +2131,17 @@ export const toolMetaMap = {
     "icon": "code",
     "iconColor": "text-yellow-600"
   },
+  "job-offer-comparison-tool": {
+    "name": "Job Offer Comparison Tool",
+    "description": "Compare multiple job offers side-by-side with intelligent scoring, financial breakdown, and recommendations to find the best opportunity.",
+    "category": [
+      "Productivity",
+      "Career",
+      "Finance"
+    ],
+    "icon": "briefcase",
+    "iconColor": "text-blue-600"
+  },
   "join-photo-and-signature": {
     "name": "Join Photo & Signature",
     "description": "Merge photo and signature into a single image. Perfect for online applications (UPSC, bank, academic exams) requiring specific layout sizes and file KB limits.",
@@ -1943,6 +2195,18 @@ export const toolMetaMap = {
     "icon": "braces",
     "iconColor": "text-emerald-600"
   },
+  "json-mutual-conversion-postman-parameters-tool": {
+    "name": "JSON Mutual Conversion Postman Parameters Tool",
+    "description": "Convert JSON to Postman query params, form-data, x-www-form-urlencoded bodies, raw JSON, dynamic headers, and cURL with real-time two-way parsing.",
+    "category": [
+      "Developer",
+      "Web",
+      "API",
+      "Converter"
+    ],
+    "icon": "braces",
+    "iconColor": "text-blue-600"
+  },
   "json-parser": {
     "name": "JSON Parser",
     "description": "Parse JSON data and display it in a readable format",
@@ -1960,6 +2224,25 @@ export const toolMetaMap = {
     "icon": "git-fork",
     "iconColor": "text-primary"
   },
+  "json-to-go-struct": {
+    "name": "JSON To Go Struct Generator",
+    "description": "Generate production-ready Go structs from JSON with nested objects, arrays, nullable fields, JSON tags, copy, download, and local history.",
+    "category": [
+      "Developer",
+      "Web",
+      "Code",
+      "Converter"
+    ],
+    "icon": "braces",
+    "iconColor": "text-blue-600"
+  },
+  "json-to-typescript": {
+    "name": "JSON to TypeScript",
+    "description": "Convert JSON objects recursively into type-safe TypeScript interfaces or type statements with formatting options.",
+    "category": "Developer",
+    "icon": "file-code",
+    "iconColor": "text-teal-500"
+  },
   "json-to-yaml-converter": {
     "name": "JSON to YAML Converter",
     "description": "Convert JSON objects and arrays into readable YAML.",
@@ -1969,6 +2252,17 @@ export const toolMetaMap = {
     ],
     "icon": "file-code",
     "iconColor": "text-yellow-600"
+  },
+  "jump-code-generator": {
+    "name": "Jump Code Generator",
+    "description": "Generate real anchor, smooth scroll, route navigation, button jump, and reusable navigation snippets instantly.",
+    "category": [
+      "Developer",
+      "Web",
+      "Productivity"
+    ],
+    "icon": "mouse-pointer-click",
+    "iconColor": "text-cyan-600"
   },
   "jwt-decoder": {
     "name": "JWT Decoder",
@@ -2026,6 +2320,23 @@ export const toolMetaMap = {
     "icon": "link",
     "iconColor": "text-blue-500"
   },
+  "linkedin-profile-photo-generator": {
+    "name": "LinkedIn Profile Photo Generator",
+    "description": "Create a professional LinkedIn profile photo with customizable borders, overlays, filters, and backgrounds — all in real-time.",
+    "category": [
+      "Design",
+      "Social Media"
+    ],
+    "icon": "linkedin",
+    "iconColor": "text-blue-600"
+  },
+  "linux-common-command-query-tool": {
+    "name": "Linux Common Command Query Tool",
+    "description": "Live Linux command query studio with searchable syntax, examples, favorites, history, and cheat sheet exports.",
+    "category": "Developer",
+    "icon": "terminal",
+    "iconColor": "text-cyan-500"
+  },
   "lissajous-pattern-generator": {
     "name": "Lissajous Pattern Generator",
     "description": "Generate elegant frequency-based mathematical curves and oscilloscope-style Lissajous patterns.",
@@ -2036,12 +2347,41 @@ export const toolMetaMap = {
     "icon": "infinity",
     "iconColor": "text-blue-600"
   },
+  "list-sorter": {
+    "name": "List Sorter",
+    "description": "Sort list items alphabetically, numerically, by text length, or reverse with options for custom list separators.",
+    "category": "Text",
+    "icon": "sort-asc",
+    "iconColor": "text-teal-500"
+  },
   "loan-emi-calculator": {
     "name": "Loan EMI Calculator",
     "description": "Loan EMI Calculator helps you calculate the monthly EMI of a loan.",
     "category": "Business",
     "icon": "credit-card",
     "iconColor": "text-yellow-500"
+  },
+  "localstorage-explorer": {
+    "name": "LocalStorage Explorer",
+    "description": "View, manage, add, edit, and delete browser LocalStorage keys and values in real-time.",
+    "category": [
+      "Developer",
+      "Web",
+      "Security"
+    ],
+    "icon": "database",
+    "iconColor": "text-blue-600"
+  },
+  "logo-similarity-checker": {
+    "name": "Logo Similarity Checker",
+    "description": "Compare two logos using AI-powered visual analysis. Analyze shape, color, layout, and typography similarity entirely in your browser.",
+    "category": [
+      "Design",
+      "AI",
+      "Developer"
+    ],
+    "icon": "image",
+    "iconColor": "text-indigo-500"
   },
   "lorem-ipsum-generator": {
     "name": "Lorem Ipsum Generator",
@@ -2090,6 +2430,16 @@ export const toolMetaMap = {
     "icon": "dices",
     "iconColor": "text-amber-500"
   },
+  "macro-calculator": {
+    "name": "Macro Calculator",
+    "description": "Calculate your perfect daily macros for fat loss, muscle gain, or maintenance.",
+    "category": [
+      "Fitness",
+      "Health"
+    ],
+    "icon": "utensils",
+    "iconColor": "text-blue-600"
+  },
   "markdown-html-converter": {
     "name": "Markdown / HTML Converter",
     "description": "Convert Markdown into HTML and strip HTML back to text.",
@@ -2105,6 +2455,20 @@ export const toolMetaMap = {
     "description": "Preview Markdown files",
     "category": "Developer",
     "icon": "edit",
+    "iconColor": "text-blue-500"
+  },
+  "md5-hash-generator": {
+    "name": "MD5 Hash Generator",
+    "description": "Generate secure, cryptographic MD5 hash values (checksums) from any input text instantly, with real-time outputs.",
+    "category": "Text",
+    "icon": "hash",
+    "iconColor": "text-teal-500"
+  },
+  "medicine-schedule-builder": {
+    "name": "Medicine Schedule Builder",
+    "description": "Organize routines, track doses, and receive real-time medicine reminders.",
+    "category": "Health & Wellness",
+    "icon": "wrench",
     "iconColor": "text-blue-500"
   },
   "meeting-agenda-builder": {
@@ -2300,6 +2664,16 @@ export const toolMetaMap = {
     "icon": "file-text",
     "iconColor": "text-indigo-600"
   },
+  "occasion-reminder": {
+    "name": "Occasion Reminder",
+    "description": "Track important occasions with smart reminders, recurrence rules, and action-ready schedules.",
+    "category": [
+      "Productivity",
+      "Lifestyle"
+    ],
+    "icon": "bell-ring",
+    "iconColor": "text-indigo-600"
+  },
   "okr-generator": {
     "name": "OKR Generator",
     "description": "Generate objectives with measurable key results and suggested initiatives using AI-style prompts.",
@@ -2320,6 +2694,17 @@ export const toolMetaMap = {
     ],
     "icon": "wand-2",
     "iconColor": "text-teal-500"
+  },
+  "one-rep-max-calculator": {
+    "name": "One Rep Max Calculator",
+    "description": "Calculate your estimated one-rep max weight using scientific formulas. Track your fitness progress with multiple calculation methods.",
+    "category": [
+      "Fitness",
+      "Health",
+      "Calculator"
+    ],
+    "icon": "dumbbell",
+    "iconColor": "text-red-600"
   },
   "online-compiler": {
     "name": "Online Code Compiler",
@@ -2349,6 +2734,20 @@ export const toolMetaMap = {
     ],
     "icon": "package-search",
     "iconColor": "text-purple-700"
+  },
+  "palindrome-checker": {
+    "name": "Palindrome Checker",
+    "description": "Check if a word, phrase, sentence, or number reads the same backwards as forwards, with character-matching highlights and clean visual gauges.",
+    "category": "Text",
+    "icon": "check-circle",
+    "iconColor": "text-teal-500"
+  },
+  "pantry-expiry-tracker": {
+    "name": "Pantry Expiry Tracker",
+    "description": "Futuristic kitchen inventory management with real-time expiry tracking and reminders.",
+    "category": "Kitchen Tools",
+    "icon": "shopping-basket",
+    "iconColor": "text-blue-500"
   },
   "para-phrasing-tool": {
     "name": "Paraphrasing Tool",
@@ -2468,12 +2867,40 @@ export const toolMetaMap = {
     "icon": "calculator",
     "iconColor": "text-blue-600"
   },
+  "periodic-table-query-tool": {
+    "name": "Periodic Table Query Tool",
+    "description": "Interactive periodic table explorer with live element search, filtering, comparison, favorites, and exports.",
+    "category": "EdTech",
+    "icon": "atom",
+    "iconColor": "text-cyan-500"
+  },
+  "perlin-noise-art-generator": {
+    "name": "Perlin Noise Art Generator",
+    "description": "Real-time procedural noise generator for terrains, clouds, textures, and generative art with animation and map export",
+    "category": [
+      "Design",
+      "Art",
+      "Generative"
+    ],
+    "icon": "palette",
+    "iconColor": "text-amber-600"
+  },
   "photo-love-compatibility": {
     "name": "Love Compatibility by Photos",
     "description": "Upload two photos to run face alignment scans and compute an AI-based compatibility rating.",
     "category": "AI & Image Tools",
     "icon": "heart",
     "iconColor": "text-red-500"
+  },
+  "photo-shoot-planner": {
+    "name": "Photo Shoot Planner",
+    "description": "Plan your photo shoots with themes, locations, shot lists, timeline blocks, and exportable schedules.",
+    "category": [
+      "Creators",
+      "Productivity"
+    ],
+    "icon": "camera",
+    "iconColor": "text-amber-600"
   },
   "photo-to-sketch": {
     "name": "Photo to Sketch",
@@ -2484,6 +2911,13 @@ export const toolMetaMap = {
     ],
     "icon": "pencil",
     "iconColor": "text-(--primary)"
+  },
+  "php-beautifier-studio": {
+    "name": "PHP Beautifier Studio",
+    "description": "A real-time, browser-based PHP formatting and beautification utility to clean and standardize your PHP code safely.",
+    "category": "Developer",
+    "icon": "code",
+    "iconColor": "text-indigo-500"
   },
   "pixar-style-generator": {
     "name": "Pixar Style Generator",
@@ -2526,6 +2960,17 @@ export const toolMetaMap = {
     ],
     "icon": "shield-check",
     "iconColor": "text-blue-600"
+  },
+  "product-image-compare": {
+    "name": "Product Image Compare",
+    "description": "Interactively compare two product images (e.g., Before/After or variations) side-by-side with a drag slider.",
+    "category": [
+      "Design",
+      "Image",
+      "E-commerce"
+    ],
+    "icon": "image",
+    "iconColor": "text-emerald-500"
   },
   "profile-pic-bg-changer": {
     "name": "Profile Picture Background Changer",
@@ -2671,12 +3116,33 @@ export const toolMetaMap = {
     "icon": "heart",
     "iconColor": "text-rose-600"
   },
+  "renter-security-checklist": {
+    "name": "Renter Security Checklist",
+    "description": "Futuristic property verification and safety management tool for renters.",
+    "category": "Property Management",
+    "icon": "shield-check",
+    "iconColor": "text-blue-500"
+  },
   "resume-maker": {
     "name": "Resume Maker",
     "description": "Create a professional resume",
     "category": "Job",
     "icon": "book-open",
     "iconColor": "text-blue-500"
+  },
+  "return-deadline-tracker": {
+    "name": "Return Deadline Tracker",
+    "description": "Track shopping return windows, refund status, and deadlines with futuristic precision.",
+    "category": "Shopping Tools",
+    "icon": "wrench",
+    "iconColor": "text-blue-500"
+  },
+  "robots-txt-generator": {
+    "name": "Robots.txt Generator",
+    "description": "Create standard robots.txt files for search engines with interactive forms to configure crawling rules, delays, and sitemaps.",
+    "category": "Developer",
+    "icon": "file-text",
+    "iconColor": "text-teal-500"
   },
   "rock-paper-scissors": {
     "name": "Rock Paper Scissors",
@@ -2687,6 +3153,17 @@ export const toolMetaMap = {
     ],
     "icon": "footprints",
     "iconColor": "text-(--primary)"
+  },
+  "room-paint-calculator": {
+    "name": "Room Paint Calculator",
+    "description": "Estimate paint quantity, cost, coats, and shopping list for single or multiple rooms.",
+    "category": [
+      "Home",
+      "Calculator",
+      "Business"
+    ],
+    "icon": "paintbrush",
+    "iconColor": "text-cyan-600"
   },
   "rot13-encoder-decoder": {
     "name": "ROT13 Encoder/Decoder",
@@ -2732,6 +3209,17 @@ export const toolMetaMap = {
     "icon": "image-plus",
     "iconColor": "text-blue-600"
   },
+  "screenshot-compare": {
+    "name": "Screenshot Compare",
+    "description": "Compare two screenshots side-by-side, with a draggable slider, or as a pixel-difference overlay. Perfect for UI review, version tracking, and QA testing.",
+    "category": [
+      "Design",
+      "Developer",
+      "Image"
+    ],
+    "icon": "image-plus",
+    "iconColor": "text-teal-500"
+  },
   "secret-message-encoder": {
     "name": "Secret Message Encoder",
     "description": "Encode, decode, inspect, copy, share, and export secret-message payloads with classical ciphers, Base64, URL, Morse, binary, and AES-GCM.",
@@ -2742,6 +3230,16 @@ export const toolMetaMap = {
     ],
     "icon": "lock",
     "iconColor": "text-blue-600"
+  },
+  "secret-santa-pair-generator": {
+    "name": "Secret Santa Pair Generator",
+    "description": "Generate secret santa pair outputs quickly for sharing, planning, or creative work.",
+    "category": [
+      "Games",
+      "Productivity"
+    ],
+    "icon": "gift",
+    "iconColor": "text-rose-600"
   },
   "shadow-generator": {
     "name": "Shadow Generator",
@@ -2780,6 +3278,13 @@ export const toolMetaMap = {
     ],
     "icon": "trending-up",
     "iconColor": "text-emerald-600"
+  },
+  "sitemap-generator": {
+    "name": "Sitemap Generator",
+    "description": "Create standard XML sitemaps containing page URLs, update frequency, priority levels, and modification dates to optimize crawling.",
+    "category": "Developer",
+    "icon": "network",
+    "iconColor": "text-teal-500"
   },
   "skill-demand-analyzer": {
     "name": "Skill Demand Analyzer",
@@ -2959,6 +3464,23 @@ export const toolMetaMap = {
     "icon": "database",
     "iconColor": "text-cyan-700"
   },
+  "ssl-certificate-inspector": {
+    "name": "SSL Certificate Inspector Studio",
+    "description": "Real-time SSL certificate lookup, HTTPS validation, TLS detection, expiry monitoring, certificate chain viewing, and exportable security reports.",
+    "category": "Developer",
+    "icon": "shield-check",
+    "iconColor": "text-cyan-600"
+  },
+  "startup-name-generator": {
+    "name": "Startup Name Generator",
+    "description": "Advanced AI-powered naming generator and professional branding suite. Discover names, slogans, dynamic logo mockups, and color palettes.",
+    "category": [
+      "Marketing",
+      "Developer"
+    ],
+    "icon": "sparkle",
+    "iconColor": "text-cyan-500"
+  },
   "step-counter": {
     "name": "Step Counter",
     "description": "Track your daily steps and monitor activity progress easily.",
@@ -2974,6 +3496,16 @@ export const toolMetaMap = {
     "category": "Creators",
     "icon": "clapperboard",
     "iconColor": "text-indigo-500"
+  },
+  "stream-settings-calculator": {
+    "name": "Stream Settings Calculator",
+    "description": "Calculate stream settings values quickly with a simple, structured workflow.",
+    "category": [
+      "Creators",
+      "Productivity"
+    ],
+    "icon": "monitor-play",
+    "iconColor": "text-blue-600"
   },
   "stroop-effect": {
     "name": "Stroop Effect Test",
@@ -2995,6 +3527,17 @@ export const toolMetaMap = {
     ],
     "icon": "calendar-clock",
     "iconColor": "text-violet-600"
+  },
+  "subtitle-timing-adjuster": {
+    "name": "Subtitle Timing Adjuster",
+    "description": "Shift, scale, and correct subtitle timings with range targeting, QA checks, and export-ready SRT output.",
+    "category": [
+      "Video",
+      "Creators",
+      "Developer"
+    ],
+    "icon": "captions",
+    "iconColor": "text-blue-600"
   },
   "superpower-generator": {
     "name": "Superpower Generator",
@@ -3107,6 +3650,13 @@ export const toolMetaMap = {
     ],
     "icon": "scan-text",
     "iconColor": "text-indigo-600"
+  },
+  "text-reverser": {
+    "name": "Text Reverser",
+    "description": "Reverse text characters, lines, or word orders with custom separation settings instantly inside your browser.",
+    "category": "Text",
+    "icon": "arrow-left-right",
+    "iconColor": "text-teal-500"
   },
   "text-summarizer": {
     "name": "Text Summarizer",
@@ -3303,6 +3853,13 @@ export const toolMetaMap = {
     "icon": "clock",
     "iconColor": "text-sky-600"
   },
+  "upside-down-text": {
+    "name": "Upside Down Text",
+    "description": "Flip your text upside down and backwards using mathematical Unicode character mappings for creative styling.",
+    "category": "Text",
+    "icon": "rotate-cw",
+    "iconColor": "text-teal-500"
+  },
   "url-encoder-decoder": {
     "name": "URL Encoder Decoder Tool",
     "description": "Encode and decode URLs instantly for safe web usage.",
@@ -3461,6 +4018,18 @@ export const toolMetaMap = {
     "icon": "droplet",
     "iconColor": "text-sky-600"
   },
+  "watermark-remover": {
+    "name": "Watermark Remover",
+    "description": "Remove watermarks from images using AI-powered detection and smart inpainting. Supports logos, text, transparent, and repeated watermarks with multiple selection tools and export options.",
+    "category": [
+      "Image",
+      "AI",
+      "Design",
+      "Creators"
+    ],
+    "icon": "wand-2",
+    "iconColor": "text-teal-500"
+  },
   "wave-interference-simulator": {
     "name": "Wave Interference Simulator",
     "description": "A tool that simulates wave interference patterns, allowing users to visualize how waves interact with each other. Users can adjust parameters such as wave frequency, amplitude, and phase to see how they affect the resulting interference pattern.",
@@ -3500,6 +4069,15 @@ export const toolMetaMap = {
     ],
     "icon": "image",
     "iconColor": "text-teal-600"
+  },
+  "weekly-meal-planner": {
+    "name": "Weekly Meal Planner",
+    "description": "Plan your meals for the week with an organized interface and clear next steps.",
+    "category": [
+      "Food"
+    ],
+    "icon": "calendar-days",
+    "iconColor": "text-green-600"
   },
   "weekly-review-dashboard": {
     "name": "Weekly Review Dashboard",
@@ -3563,6 +4141,16 @@ export const toolMetaMap = {
     "icon": "activity",
     "iconColor": "text-primary"
   },
+  "workout-planner": {
+    "name": "Workout Planner",
+    "description": "Plan workout tasks with organized inputs, timelines, and clear next steps.",
+    "category": [
+      "Fitness",
+      "Productivity"
+    ],
+    "icon": "dumbbell",
+    "iconColor": "text-orange-600"
+  },
   "xml-editor": {
     "name": "XML Editor",
     "description": "Format, minify, and inspect XML documents.",
@@ -3612,5 +4200,12 @@ export const toolMetaMap = {
     ],
     "icon": "video",
     "iconColor": "text-red-700"
+  },
+  "zalgo-text-generator": {
+    "name": "Zalgo Text Generator",
+    "description": "Generate creepy, glitched unicode text with adjustable corruption layers (up, middle, down diacritical marks) for design and social posts.",
+    "category": "Text",
+    "icon": "skull",
+    "iconColor": "text-teal-500"
   }
 };

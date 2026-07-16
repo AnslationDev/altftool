@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useCallback, useRef, useEffect } from 'react';
+import { analyzeFace } from '../render/faceAnalysis.js';
 
 let modelsLoaded = false;
 let loadingPromise = null;
@@ -27,6 +28,8 @@ export function useFaceDetection() {
   const [error, setError] = useState(null);
   const [faceData, setFaceData] = useState(null);
   const [modelsReady, setModelsReady] = useState(false);
+  const [faces, setFaces] = useState(null);
+  const lastFacesRef = useRef(null);
   const mountedRef = useRef(true);
 
   useEffect(() => {
@@ -46,72 +49,58 @@ export function useFaceDetection() {
     }
   }, []);
 
-  const detectFace = useCallback(async (image) => {
+  const detectFace = useCallback(async (image, { faceIndex = 0 } = {}) => {
     if (!modelsReady) await ensureModels();
     setLoading(true);
     setError(null);
     setFaceData(null);
     try {
       const faceapi = await import('@vladmandic/face-api');
-      const detection = await faceapi
-        .detectAllFaces(image, new faceapi.TinyFaceDetectorOptions({ inputSize: 320, scoreThreshold: 0.5 }))
+      const detections = await faceapi
+        .detectAllFaces(image, new faceapi.TinyFaceDetectorOptions({ inputSize: 416, scoreThreshold: 0.4 }))
         .withFaceLandmarks()
         .withFaceExpressions()
         .withAgeAndGender();
 
-      if (!detection || detection.length === 0) {
+      if (!detections || detections.length === 0) {
         throw new Error('No face detected. Please try a different image.');
       }
-      if (detection.length > 1) {
-        throw new Error('Multiple faces detected. Please use an image with one face.');
+
+      // Capture the list of faces for multi-face handling.
+      const allBoxes = detections.map((d) => {
+        const b = d.detection.box;
+        return { x: b.x, y: b.y, width: b.width, height: b.height };
+      });
+      lastFacesRef.current = allBoxes;
+      allBoxes._w = image.width;
+      allBoxes._h = image.height;
+      if (mountedRef.current) setFaces(allBoxes);
+
+      if (detections.length > 1 && faceIndex < 0) {
+        // Multi-face: surface the face list; do not show a blocking error.
+        if (mountedRef.current) setError(null);
+        throw new Error('MULTIPLE_FACES');
       }
 
-      const result = detection[0];
-      const box = result.detection.box;
-      const landmarks = result.landmarks.positions;
-      const jawline = landmarks.slice(0, 17);
-      const leftEyebrow = landmarks.slice(17, 22);
-      const rightEyebrow = landmarks.slice(22, 27);
-      const noseBridge = landmarks.slice(27, 31);
-      const noseTip = landmarks.slice(31, 36);
-      const leftEye = landmarks.slice(36, 42);
-      const rightEye = landmarks.slice(42, 48);
-      const outerLips = landmarks.slice(48, 60);
-      const innerLips = landmarks.slice(60, 68);
+      const idx = faceIndex >= 0 ? Math.min(faceIndex, detections.length - 1) : 0;
+      const result = detections[idx];
 
-      const expressions = result.expressions;
-      const age = Math.round(result.age);
-      const gender = result.gender;
+      // Pull image pixels for lighting analysis.
+      let imageData = null;
+      try {
+        const probe = document.createElement('canvas');
+        const maxDim = 512;
+        const scale = Math.min(1, maxDim / Math.max(image.width, image.height));
+        probe.width = Math.max(1, Math.round(image.width * scale));
+        probe.height = Math.max(1, Math.round(image.height * scale));
+        const pctx = probe.getContext('2d');
+        pctx.drawImage(image, 0, 0, probe.width, probe.height);
+        imageData = pctx.getImageData(0, 0, probe.width, probe.height);
+      } catch (e) {
+        imageData = null;
+      }
 
-      const foreheadWidth = Math.abs(rightEyebrow[4]?.x - leftEyebrow[0]?.x) || box.width;
-      const jawWidth = Math.abs(jawline[16]?.x - jawline[0]?.x) || box.width;
-      const faceWidth = box.width;
-      const faceHeight = box.height;
-      const faceRatio = faceWidth / faceHeight;
-
-      let faceShape = 'Oval';
-      if (faceRatio > 1.2) faceShape = 'Round';
-      else if (faceRatio > 1.05) faceShape = 'Square';
-      else if (faceRatio < 0.85) faceShape = 'Rectangle';
-      else if (foreheadWidth > jawWidth * 1.15) faceShape = 'Heart';
-      const eyeDistance = Math.abs(rightEye[0]?.x - leftEye[3]?.x) || box.width * 0.4;
-      const headWidth = box.width;
-
-      const data = {
-        box: { x: box.x, y: box.y, width: box.width, height: box.height },
-        landmarks: { jawline, leftEyebrow, rightEyebrow, noseBridge, noseTip, leftEye, rightEye, outerLips, innerLips },
-        expressions,
-        age,
-        gender,
-        faceShape,
-        faceWidth,
-        faceHeight,
-        foreheadWidth,
-        jawWidth,
-        eyeDistance,
-        headWidth,
-        detection,
-      };
+      const data = analyzeFace(result, imageData);
 
       if (mountedRef.current) setFaceData(data);
       return data;
@@ -125,9 +114,10 @@ export function useFaceDetection() {
 
   const reset = useCallback(() => {
     setFaceData(null);
+    setFaces(null);
     setError(null);
     setLoading(false);
   }, []);
 
-  return { loading, error, faceData, modelsReady, loadModels, detectFace, reset };
+  return { loading, error, faceData, faces, modelsReady, loadModels, detectFace, reset };
 }

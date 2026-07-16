@@ -1,0 +1,161 @@
+@import "../../privacy-policy-generator/styles/globals.css";
+
+.postman-converter-tool.pp-theme-ready {
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--background), #eff6ff 22%) 0%, var(--background) 48%, color-mix(in srgb, var(--background), #ecfeff 20%) 100%),
+    radial-gradient(circle at 91% 11%, rgba(167, 243, 238, 0.5), transparent 28%),
+    radial-gradient(circle at 9% 8%, rgba(147, 197, 253, 0.28), transparent 24%);
+  color: var(--foreground);
+}
+
+.postman-converter-tool.pp-theme-ready .pp-glass {
+  background:
+    linear-gradient(145deg, color-mix(in srgb, var(--card), white 52%), color-mix(in srgb, var(--card), transparent 8%) 48%, color-mix(in srgb, var(--card), #ecfeff 18%)),
+    var(--pp-surface);
+  border-color: color-mix(in srgb, var(--primary), var(--border) 58%);
+  color: var(--foreground);
+}
+
+.postman-converter-tool.pp-theme-ready .pp-button-secondary,
+.postman-converter-tool.pp-theme-ready .pp-icon-button {
+  background: color-mix(in srgb, var(--card), var(--background) 16%);
+  border-color: color-mix(in srgb, var(--primary), var(--border) 68%);
+  color: var(--foreground);
+}
+
+.postman-converter-tool.pp-theme-ready .pp-input,
+.postman-converter-tool.pp-theme-ready textarea,
+.postman-converter-tool.pp-theme-ready pre {
+  background: color-mix(in srgb, var(--background), var(--card) 24%);
+  border-color: color-mix(in srgb, var(--primary), var(--border) 72%);
+  color: var(--foreground);
+}
+
+.postman-converter-tool .pp-button-secondary {
+  min-width: 0;
+  max-width: 100%;
+  min-height: 46px;
+  padding: 0.55rem 0.9rem;
+  white-space: normal;
+  line-height: 1.2;
+  text-align: center;
+}
+
+.postman-converter-tool .pp-button-secondary svg,
+.postman-converter-tool .pp-icon-button svg {
+  flex-shrink: 0;
+}
+
+.postman-converter-tool .pp-input {
+  min-width: 0;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.postman-converter-tool .postman-hero {
+  min-height: 300px;
+  border: 1px solid rgba(147, 197, 253, 0.95);
+  background:
+    radial-gradient(circle at 93% 12%, rgba(190, 242, 232, 0.72), transparent 22%),
+    radial-gradient(circle at 0% 100%, rgba(191, 219, 254, 0.25), transparent 24%),
+    linear-gradient(135deg, color-mix(in srgb, var(--card), white 48%), color-mix(in srgb, var(--card), transparent 8%) 58%, color-mix(in srgb, var(--card), #ecfeff 18%));
+}
+
+.postman-converter-tool .postman-hero-pill {
+  border: 1px solid rgba(147, 197, 253, 0.95);
+  background: rgba(219, 234, 254, 0.72);
+  color: #3b82f6;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.85);
+}
+
+.postman-converter-tool .postman-hero-pill-extra {
+  border-left: 1px solid rgba(59, 130, 246, 0.28);
+  padding-left: 0.5rem;
+  color: #0f766e;
+  font-size: 0.78rem;
+}
+
+.postman-converter-tool .postman-hero-title {
+  color: #3b82f6;
+  letter-spacing: 0;
+}
+
+.postman-converter-tool .postman-hero-copy {
+  color: var(--muted-foreground);
+}
+
+.postman-converter-tool textarea,
+.postman-converter-tool pre {
+  tab-size: 2;
+}
+
+.postman-converter-tool button:disabled {
+  transform: none;
+  box-shadow: none;
+}
+
+.postman-converter-tool select option {
+  color: #0f172a;
+}
+
+[data-theme="dark"] .postman-converter-tool.pp-theme-ready {
+  background:
+    linear-gradient(135deg, var(--background) 0%, #071431 46%, #000a1f 100%),
+    radial-gradient(circle at 91% 11%, rgba(45, 212, 191, 0.17), transparent 28%),
+    radial-gradient(circle at 9% 8%, rgba(96, 165, 250, 0.16), transparent 24%);
+}
+
+[data-theme="dark"] .postman-converter-tool.pp-theme-ready .pp-glass {
+  background:
+    linear-gradient(145deg, rgba(30, 41, 59, 0.82), rgba(15, 25, 45, 0.86) 48%, rgba(8, 47, 73, 0.54)),
+    var(--pp-surface);
+  border-color: rgba(96, 165, 250, 0.28);
+}
+
+[data-theme="dark"] .postman-converter-tool .postman-hero {
+  background:
+    radial-gradient(circle at 93% 12%, rgba(45, 212, 191, 0.18), transparent 22%),
+    radial-gradient(circle at 0% 100%, rgba(96, 165, 250, 0.16), transparent 24%),
+    linear-gradient(135deg, rgba(15, 23, 42, 0.92), rgba(15, 25, 45, 0.86) 58%, rgba(8, 47, 73, 0.58));
+}
+
+[data-theme="dark"] .postman-converter-tool .postman-hero-pill {
+  background: rgba(37, 99, 235, 0.15);
+  border-color: rgba(96, 165, 250, 0.42);
+  color: #60a5fa;
+}
+
+[data-theme="dark"] .postman-converter-tool .postman-hero-pill-extra {
+  border-left-color: rgba(96, 165, 250, 0.25);
+  color: #5eead4;
+}
+
+[data-theme="dark"] .postman-converter-tool.pp-theme-ready .pp-input,
+[data-theme="dark"] .postman-converter-tool.pp-theme-ready textarea,
+[data-theme="dark"] .postman-converter-tool.pp-theme-ready pre {
+  background: rgba(0, 10, 31, 0.58);
+  border-color: rgba(96, 165, 250, 0.25);
+  color: var(--foreground);
+}
+
+@media (max-width: 640px) {
+  .postman-converter-tool .postman-hero {
+    min-height: 260px;
+  }
+
+  .postman-converter-tool .postman-hero-title {
+    font-size: 2.35rem;
+  }
+
+  .postman-converter-tool .postman-hero-copy {
+    font-size: 1.05rem;
+    line-height: 1.65;
+  }
+
+  .postman-converter-tool .postman-hero-pill-extra {
+    border-left: 0;
+    padding-left: 0;
+    width: 100%;
+  }
+}

@@ -12,19 +12,6 @@ export function evaluateMoves(game, playerId, difficulty) {
   }));
 
   scored.sort((a, b) => b.score - a.score);
-
-  if (difficulty === "easy") {
-    const idx = Math.floor(Math.random() * Math.min(3, scored.length));
-    return scored[idx].move;
-  }
-  if (difficulty === "medium") {
-    const rand = Math.random();
-    if (rand < 0.25) {
-      const idx = Math.floor(Math.random() * scored.length);
-      return scored[idx].move;
-    }
-    return scored[0].move;
-  }
   return scored[0].move;
 }
 
@@ -61,14 +48,6 @@ function scoreMove(game, playerId, move, difficulty) {
 
     const threats = countThreats(game, move.to, playerId);
     if (threats > 0) score -= threats * 30;
-  }
-
-  if (difficulty === "hard") {
-    score += Math.random() * 5;
-  } else if (difficulty === "medium") {
-    score += Math.random() * 20;
-  } else {
-    score += Math.random() * 40;
   }
 
   return score;

@@ -1,0 +1,412 @@
+[
+  {
+    "name": "ls",
+    "aliases": ["dir", "list"],
+    "category": "File Commands",
+    "description": "Lists files and directories in the current or specified path.",
+    "syntax": "ls [options] [path]",
+    "examples": ["ls -la", "ls -lh /var/log", "ls -R src"],
+    "keywords": ["files", "directories", "list", "hidden", "permissions"],
+    "related": ["cd", "find", "chmod"]
+  },
+  {
+    "name": "cd",
+    "aliases": ["chdir"],
+    "category": "File Commands",
+    "description": "Changes the current shell working directory.",
+    "syntax": "cd [directory]",
+    "examples": ["cd /etc/nginx", "cd ..", "cd ~"],
+    "keywords": ["directory", "navigate", "path", "shell"],
+    "related": ["pwd", "ls", "mkdir"]
+  },
+  {
+    "name": "pwd",
+    "aliases": ["print working directory"],
+    "category": "File Commands",
+    "description": "Prints the absolute path of the current working directory.",
+    "syntax": "pwd [options]",
+    "examples": ["pwd", "pwd -P"],
+    "keywords": ["path", "directory", "location"],
+    "related": ["cd", "ls"]
+  },
+  {
+    "name": "cp",
+    "aliases": ["copy"],
+    "category": "File Commands",
+    "description": "Copies files or directories from one location to another.",
+    "syntax": "cp [options] source destination",
+    "examples": ["cp app.conf app.conf.bak", "cp -r public backup-public", "cp -v *.log logs/"],
+    "keywords": ["copy", "file", "directory", "backup"],
+    "related": ["mv", "rsync", "mkdir"]
+  },
+  {
+    "name": "mv",
+    "aliases": ["move", "rename"],
+    "category": "File Commands",
+    "description": "Moves or renames files and directories.",
+    "syntax": "mv [options] source destination",
+    "examples": ["mv old.txt new.txt", "mv build/ /tmp/build", "mv -i report.pdf archive/"],
+    "keywords": ["move", "rename", "file", "directory"],
+    "related": ["cp", "rm", "ls"]
+  },
+  {
+    "name": "rm",
+    "aliases": ["remove", "delete"],
+    "category": "File Commands",
+    "description": "Removes files or directories from the filesystem.",
+    "syntax": "rm [options] file...",
+    "examples": ["rm old.log", "rm -i important.txt", "rm -r cache/"],
+    "keywords": ["delete", "remove", "file", "directory"],
+    "related": ["rmdir", "find", "mv"]
+  },
+  {
+    "name": "mkdir",
+    "aliases": ["make directory"],
+    "category": "File Commands",
+    "description": "Creates one or more directories.",
+    "syntax": "mkdir [options] directory...",
+    "examples": ["mkdir logs", "mkdir -p app/cache/tmp", "mkdir -m 755 public"],
+    "keywords": ["directory", "create", "folder"],
+    "related": ["rmdir", "cd", "chmod"]
+  },
+  {
+    "name": "find",
+    "aliases": ["search files"],
+    "category": "File Commands",
+    "description": "Searches for files and directories using names, paths, metadata, and actions.",
+    "syntax": "find [path] [expression]",
+    "examples": ["find . -name \"*.log\"", "find /var -type f -size +100M", "find . -mtime -7"],
+    "keywords": ["search", "file", "directory", "name", "mtime", "size"],
+    "related": ["grep", "ls", "rm"]
+  },
+  {
+    "name": "grep",
+    "aliases": ["egrep", "fgrep"],
+    "category": "File Commands",
+    "description": "Searches text using patterns and prints matching lines.",
+    "syntax": "grep [options] pattern [file...]",
+    "examples": ["grep -R \"TODO\" src", "grep -n \"error\" app.log", "grep -i \"failed\" /var/log/syslog"],
+    "keywords": ["search", "text", "pattern", "logs", "regex"],
+    "related": ["find", "awk", "sed"]
+  },
+  {
+    "name": "tar",
+    "aliases": ["archive"],
+    "category": "Compression / Decompression",
+    "description": "Creates, lists, and extracts tar archives, including gzip or bzip2 compressed archives.",
+    "syntax": "tar [options] archive [files...]",
+    "examples": ["tar -xvf file.tar", "tar -czvf app.tar.gz app/", "tar -tjf archive.tar.bz2"],
+    "keywords": ["archive", "extract", "compress", "decompress", "tarball"],
+    "related": ["gzip", "gunzip", "bzip2", "zip"]
+  },
+  {
+    "name": "zip",
+    "aliases": ["compress zip"],
+    "category": "Compression / Decompression",
+    "description": "Packages and compresses files into a ZIP archive.",
+    "syntax": "zip [options] archive.zip file...",
+    "examples": ["zip site.zip index.html", "zip -r project.zip project/", "zip -e secrets.zip notes.txt"],
+    "keywords": ["zip", "compress", "archive", "password"],
+    "related": ["unzip", "tar", "gzip"]
+  },
+  {
+    "name": "unzip",
+    "aliases": ["extract zip"],
+    "category": "Compression / Decompression",
+    "description": "Lists, tests, or extracts files from ZIP archives.",
+    "syntax": "unzip [options] archive.zip",
+    "examples": ["unzip archive.zip", "unzip archive.zip -d output/", "unzip -l archive.zip"],
+    "keywords": ["zip", "extract", "decompress", "archive"],
+    "related": ["zip", "tar", "gunzip"]
+  },
+  {
+    "name": "gzip",
+    "aliases": ["compress gz"],
+    "category": "Compression / Decompression",
+    "description": "Compresses files using gzip and usually replaces the original with a .gz file.",
+    "syntax": "gzip [options] file...",
+    "examples": ["gzip access.log", "gzip -k app.log", "gzip -9 large.sql"],
+    "keywords": ["gzip", "compress", "gz", "logs"],
+    "related": ["gunzip", "tar", "bzip2"]
+  },
+  {
+    "name": "gunzip",
+    "aliases": ["gzip decompress"],
+    "category": "Compression / Decompression",
+    "description": "Decompresses files created by gzip.",
+    "syntax": "gunzip [options] file.gz...",
+    "examples": ["gunzip access.log.gz", "gunzip -k backup.sql.gz", "gunzip -c app.log.gz > app.log"],
+    "keywords": ["gzip", "decompress", "extract", "gz"],
+    "related": ["gzip", "tar", "unzip"]
+  },
+  {
+    "name": "bzip2",
+    "aliases": ["bunzip2", "bz2"],
+    "category": "Compression / Decompression",
+    "description": "Compresses files using the bzip2 block-sorting compression algorithm.",
+    "syntax": "bzip2 [options] file...",
+    "examples": ["bzip2 dump.sql", "bzip2 -k archive.tar", "bunzip2 archive.tar.bz2"],
+    "keywords": ["bzip2", "bz2", "compress", "decompress"],
+    "related": ["tar", "gzip", "gunzip"]
+  },
+  {
+    "name": "chmod",
+    "aliases": ["change mode"],
+    "category": "Permissions",
+    "description": "Changes file or directory permission bits.",
+    "syntax": "chmod [options] mode file...",
+    "examples": ["chmod 755 file", "chmod +x script.sh", "chmod -R u+rwX,g-rwx,o-rwx private/"],
+    "keywords": ["permissions", "mode", "execute", "read", "write"],
+    "related": ["chown", "sudo", "ls"]
+  },
+  {
+    "name": "chown",
+    "aliases": ["change owner"],
+    "category": "Permissions",
+    "description": "Changes file owner and group ownership.",
+    "syntax": "chown [options] owner[:group] file...",
+    "examples": ["chown deploy app.log", "chown www-data:www-data /var/www", "chown -R user:group project/"],
+    "keywords": ["owner", "group", "permissions", "ownership"],
+    "related": ["chmod", "sudo", "ls"]
+  },
+  {
+    "name": "sudo",
+    "aliases": ["superuser do"],
+    "category": "Permissions",
+    "description": "Runs a command with another user's privileges, commonly root.",
+    "syntax": "sudo [options] command",
+    "examples": ["sudo apt update", "sudo systemctl restart nginx", "sudo -u postgres psql"],
+    "keywords": ["root", "privilege", "admin", "permissions"],
+    "related": ["chmod", "chown", "su"]
+  },
+  {
+    "name": "systemctl",
+    "aliases": ["systemd"],
+    "category": "Services",
+    "description": "Controls systemd services, units, and system state.",
+    "syntax": "systemctl [command] [unit]",
+    "examples": ["systemctl start nginx", "systemctl status ssh", "systemctl enable docker"],
+    "keywords": ["service", "systemd", "start", "stop", "restart", "status"],
+    "related": ["service", "journalctl", "sudo"]
+  },
+  {
+    "name": "service",
+    "aliases": ["init service"],
+    "category": "Services",
+    "description": "Runs System V init scripts or service commands on compatible systems.",
+    "syntax": "service service-name command",
+    "examples": ["service nginx status", "service apache2 restart", "service ssh stop"],
+    "keywords": ["service", "init", "start", "stop", "restart"],
+    "related": ["systemctl", "journalctl"]
+  },
+  {
+    "name": "journalctl",
+    "aliases": ["systemd logs"],
+    "category": "Services",
+    "description": "Queries and displays logs from the systemd journal.",
+    "syntax": "journalctl [options]",
+    "examples": ["journalctl -u nginx", "journalctl -xe", "journalctl -f"],
+    "keywords": ["logs", "systemd", "service", "debug", "journal"],
+    "related": ["systemctl", "service", "grep"]
+  },
+  {
+    "name": "ping",
+    "aliases": ["icmp"],
+    "category": "Networking",
+    "description": "Tests network reachability by sending ICMP echo requests.",
+    "syntax": "ping [options] destination",
+    "examples": ["ping google.com", "ping -c 4 8.8.8.8", "ping -i 2 server.local"],
+    "keywords": ["network", "latency", "icmp", "connectivity"],
+    "related": ["ip", "traceroute", "ssh"]
+  },
+  {
+    "name": "ssh",
+    "aliases": ["secure shell"],
+    "category": "Networking",
+    "description": "Connects securely to remote systems over SSH.",
+    "syntax": "ssh [options] user@host",
+    "examples": ["ssh user@example.com", "ssh -i key.pem ubuntu@server", "ssh -p 2222 root@10.0.0.5"],
+    "keywords": ["remote", "login", "secure", "network", "terminal"],
+    "related": ["scp", "ping", "sudo"]
+  },
+  {
+    "name": "ip",
+    "aliases": ["iproute2"],
+    "category": "Networking",
+    "description": "Shows and configures network interfaces, addresses, routes, and neighbors.",
+    "syntax": "ip [object] [command]",
+    "examples": ["ip addr show", "ip route", "ip link set eth0 up"],
+    "keywords": ["network", "interface", "address", "route"],
+    "related": ["ifconfig", "ping", "netstat"]
+  },
+  {
+    "name": "ifconfig",
+    "aliases": ["interface config"],
+    "category": "Networking",
+    "description": "Displays or configures network interfaces on older net-tools based systems.",
+    "syntax": "ifconfig [interface] [options]",
+    "examples": ["ifconfig", "ifconfig eth0", "ifconfig eth0 up"],
+    "keywords": ["network", "interface", "legacy", "address"],
+    "related": ["ip", "netstat", "ping"]
+  },
+  {
+    "name": "netstat",
+    "aliases": ["network statistics"],
+    "category": "Networking",
+    "description": "Displays network connections, routing tables, and listening ports.",
+    "syntax": "netstat [options]",
+    "examples": ["netstat -tulpen", "netstat -rn", "netstat -an | grep LISTEN"],
+    "keywords": ["ports", "connections", "network", "listening", "route"],
+    "related": ["ss", "ip", "grep"]
+  },
+  {
+    "name": "ps",
+    "aliases": ["process status"],
+    "category": "Process Commands",
+    "description": "Reports a snapshot of current processes.",
+    "syntax": "ps [options]",
+    "examples": ["ps aux", "ps -ef | grep nginx", "ps -p 1234 -o pid,cmd"],
+    "keywords": ["process", "pid", "status", "list"],
+    "related": ["top", "kill", "grep"]
+  },
+  {
+    "name": "top",
+    "aliases": ["process monitor"],
+    "category": "Process Commands",
+    "description": "Displays live system process and resource usage.",
+    "syntax": "top [options]",
+    "examples": ["top", "top -u deploy", "top -p 1234"],
+    "keywords": ["process", "monitor", "cpu", "memory", "live"],
+    "related": ["ps", "kill", "htop"]
+  },
+  {
+    "name": "kill",
+    "aliases": ["terminate"],
+    "category": "Process Commands",
+    "description": "Sends a signal to a process, commonly to terminate it.",
+    "syntax": "kill [signal] pid...",
+    "examples": ["kill 1234", "kill -TERM 1234", "kill -9 1234"],
+    "keywords": ["process", "signal", "terminate", "pid"],
+    "related": ["ps", "top", "pkill"]
+  },
+  {
+    "name": "apt",
+    "aliases": ["apt-get", "debian package"],
+    "category": "Package Managers",
+    "description": "Installs, updates, removes, and searches packages on Debian and Ubuntu systems.",
+    "syntax": "apt [command] [package]",
+    "examples": ["sudo apt update", "sudo apt install nginx", "apt search nodejs"],
+    "keywords": ["package", "install", "ubuntu", "debian", "update"],
+    "related": ["dnf", "yum", "sudo"]
+  },
+  {
+    "name": "dnf",
+    "aliases": ["fedora package"],
+    "category": "Package Managers",
+    "description": "Manages RPM packages on Fedora, RHEL, and related distributions.",
+    "syntax": "dnf [command] [package]",
+    "examples": ["sudo dnf check-update", "sudo dnf install nginx", "dnf search postgresql"],
+    "keywords": ["package", "install", "fedora", "rhel", "rpm"],
+    "related": ["yum", "apt", "sudo"]
+  },
+  {
+    "name": "yum",
+    "aliases": ["yellowdog updater"],
+    "category": "Package Managers",
+    "description": "Manages RPM packages on older RHEL, CentOS, and compatible systems.",
+    "syntax": "yum [command] [package]",
+    "examples": ["sudo yum update", "sudo yum install httpd", "yum search redis"],
+    "keywords": ["package", "install", "centos", "rhel", "rpm"],
+    "related": ["dnf", "apt", "sudo"]
+  },
+  {
+    "name": "df",
+    "aliases": ["disk free"],
+    "category": "Disk / Storage",
+    "description": "Shows filesystem disk space usage.",
+    "syntax": "df [options] [file...]",
+    "examples": ["df -h", "df -Th", "df -i"],
+    "keywords": ["disk", "space", "filesystem", "storage"],
+    "related": ["du", "lsblk", "mount"]
+  },
+  {
+    "name": "du",
+    "aliases": ["disk usage"],
+    "category": "Disk / Storage",
+    "description": "Estimates file and directory space usage.",
+    "syntax": "du [options] [file...]",
+    "examples": ["du -sh .", "du -h --max-depth=1 /var", "du -ah logs | sort -h"],
+    "keywords": ["disk", "usage", "directory", "size"],
+    "related": ["df", "find", "sort"]
+  },
+  {
+    "name": "lsblk",
+    "aliases": ["list block devices"],
+    "category": "Disk / Storage",
+    "description": "Lists block devices such as disks, partitions, and mountpoints.",
+    "syntax": "lsblk [options]",
+    "examples": ["lsblk", "lsblk -f", "lsblk -o NAME,SIZE,TYPE,MOUNTPOINT"],
+    "keywords": ["disk", "block", "partition", "mount", "storage"],
+    "related": ["df", "mount", "du"]
+  },
+  {
+    "name": "useradd",
+    "aliases": ["add user"],
+    "category": "User Management",
+    "description": "Creates a new user account.",
+    "syntax": "useradd [options] login",
+    "examples": ["sudo useradd deploy", "sudo useradd -m -s /bin/bash alice", "sudo useradd -G sudo alice"],
+    "keywords": ["user", "account", "create", "admin"],
+    "related": ["usermod", "passwd", "sudo"]
+  },
+  {
+    "name": "usermod",
+    "aliases": ["modify user"],
+    "category": "User Management",
+    "description": "Modifies an existing user account.",
+    "syntax": "usermod [options] login",
+    "examples": ["sudo usermod -aG docker deploy", "sudo usermod -s /bin/zsh alice", "sudo usermod -L bob"],
+    "keywords": ["user", "group", "modify", "account"],
+    "related": ["useradd", "passwd", "groups"]
+  },
+  {
+    "name": "passwd",
+    "aliases": ["password"],
+    "category": "User Management",
+    "description": "Changes user passwords and password attributes.",
+    "syntax": "passwd [options] [user]",
+    "examples": ["passwd", "sudo passwd deploy", "sudo passwd -l guest"],
+    "keywords": ["password", "user", "account", "lock"],
+    "related": ["useradd", "usermod", "sudo"]
+  },
+  {
+    "name": "free",
+    "aliases": ["memory usage"],
+    "category": "System Monitoring",
+    "description": "Displays system memory and swap usage.",
+    "syntax": "free [options]",
+    "examples": ["free -h", "free -m", "watch free -h"],
+    "keywords": ["memory", "ram", "swap", "monitor"],
+    "related": ["top", "vmstat", "uptime"]
+  },
+  {
+    "name": "uptime",
+    "aliases": ["load average"],
+    "category": "System Monitoring",
+    "description": "Shows how long the system has been running and current load averages.",
+    "syntax": "uptime [options]",
+    "examples": ["uptime", "uptime -p", "uptime -s"],
+    "keywords": ["load", "system", "boot", "monitor"],
+    "related": ["top", "free", "who"]
+  },
+  {
+    "name": "vmstat",
+    "aliases": ["virtual memory stats"],
+    "category": "System Monitoring",
+    "description": "Reports virtual memory, processes, CPU, and I/O statistics.",
+    "syntax": "vmstat [options] [delay [count]]",
+    "examples": ["vmstat", "vmstat 2 5", "vmstat -s"],
+    "keywords": ["memory", "cpu", "io", "monitor", "performance"],
+    "related": ["free", "top", "iostat"]
+  }
+]
