@@ -1,11 +1,12 @@
 "use client";
 
-import { CalendarClock, Hourglass, ShieldCheck, Sparkles, UserRoundCheck, Lock } from "lucide-react";
+import { ShieldCheck, Sparkles, UserRoundCheck, Lock } from "lucide-react";
 import { Chip } from "./ui";
+import { Calendar3D, Hourglass3D } from "./illustrations";
 
 export default function Hero() {
   return (
-    <header className="grid items-center gap-6 lg:grid-cols-[1.1fr_0.9fr]">
+    <header className="grid items-center gap-6 lg:grid-cols-[1.05fr_0.95fr]">
       <div>
         <span
           className="inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-bold text-(--primary)"
@@ -26,27 +27,17 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* Decorative illustration — gradient panel with calendar + hourglass. */}
       <div
         className="relative hidden aspect-[4/3] overflow-hidden rounded-3xl border border-(--border) lg:block"
-        style={{ background: "linear-gradient(135deg, color-mix(in srgb, var(--primary) 16%, var(--card)), color-mix(in srgb, var(--secondary) 18%, var(--card)))" }}
+        style={{ background: "linear-gradient(135deg, color-mix(in srgb, var(--primary) 14%, var(--card)), color-mix(in srgb, #3B82F6 20%, var(--card)))" }}
         aria-hidden="true"
       >
-        <div className="absolute inset-0 grid place-items-center">
-          <div className="flex items-end gap-6">
-            <span
-              className="grid h-28 w-28 place-items-center rounded-3xl text-(--primary) shadow-sm"
-              style={{ background: "color-mix(in srgb, var(--card) 80%, transparent)" }}
-            >
-              <CalendarClock className="h-14 w-14" strokeWidth={1.5} />
-            </span>
-            <span
-              className="grid h-20 w-20 place-items-center rounded-2xl text-(--secondary) shadow-sm"
-              style={{ background: "color-mix(in srgb, var(--card) 80%, transparent)" }}
-            >
-              <Hourglass className="h-10 w-10" strokeWidth={1.5} />
-            </span>
-          </div>
+        <span className="absolute right-8 top-8 h-4 w-4 rounded-full" style={{ background: "#8B5CF6", opacity: 0.5 }} />
+        <span className="absolute left-10 top-16 h-3 w-3 rounded-full" style={{ background: "var(--secondary)", opacity: 0.6 }} />
+        <span className="absolute bottom-10 right-16 h-2.5 w-2.5 rounded-full" style={{ background: "#3B82F6", opacity: 0.6 }} />
+        <div className="absolute inset-0 flex items-center justify-center gap-4">
+          <Calendar3D size={150} className="drop-shadow-md" />
+          <Hourglass3D size={104} className="drop-shadow-md" />
         </div>
       </div>
     </header>

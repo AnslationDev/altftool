@@ -1,7 +1,8 @@
 "use client";
 
-import { CalendarDays, Sun, Clock, Timer, Hourglass, Cake } from "lucide-react";
+import { CalendarDays, Sun, Clock, Timer, Hourglass } from "lucide-react";
 import { StatTile, fmt } from "./ui";
+import { Cake3D } from "./illustrations";
 
 export default function ResultBanner({ age, totals }) {
   const big = [
@@ -32,7 +33,9 @@ export default function ResultBanner({ age, totals }) {
             </div>
           ))}
         </div>
-        <Cake className="pointer-events-none absolute -bottom-4 -right-3 h-28 w-28 text-white/20" strokeWidth={1.2} />
+        <div className="pointer-events-none absolute -bottom-3 -right-2 opacity-90">
+          <Cake3D size={110} />
+        </div>
       </div>
 
       <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">

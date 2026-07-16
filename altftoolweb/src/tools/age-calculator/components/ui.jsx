@@ -63,3 +63,12 @@ export function Chip({ icon: Icon, children }) {
 }
 
 export const fmt = (n) => Number(n || 0).toLocaleString("en-US");
+
+// Accent tones: master.md teal (primary) + cyan (secondary), plus blue as the
+// additional accent the brief allows. Used to colour tiles/illustration chips.
+export const ACCENT = {
+  teal: "var(--primary)",
+  cyan: "var(--secondary)",
+  blue: "#3B82F6",
+  violet: "#8B5CF6",
+};
