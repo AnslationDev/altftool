@@ -4,46 +4,64 @@
       "collectionGroup": "accessRequests",
       "queryScope": "COLLECTION",
       "fields": [
-        { "fieldPath": "uid", "order": "ASCENDING" },
+        { "fieldPath": "status", "order": "ASCENDING" },
+        { "fieldPath": "createdAt", "order": "DESCENDING" },
+        { "fieldPath": "__name__", "order": "DESCENDING" }
+      ],
+      "density": "SPARSE_ALL"
+    },
+    {
+      "collectionGroup": "accessRequests",
+      "queryScope": "COLLECTION",
+      "fields": [
         { "fieldPath": "type", "order": "ASCENDING" },
-        { "fieldPath": "createdAt", "order": "DESCENDING" }
-      ]
+        { "fieldPath": "uid", "order": "ASCENDING" },
+        { "fieldPath": "createdAt", "order": "DESCENDING" },
+        { "fieldPath": "__name__", "order": "DESCENDING" }
+      ],
+      "density": "SPARSE_ALL"
     },
     {
       "collectionGroup": "accessRequests",
       "queryScope": "COLLECTION",
       "fields": [
         { "fieldPath": "uid", "order": "ASCENDING" },
-        { "fieldPath": "type", "order": "ASCENDING" },
-        { "fieldPath": "status", "order": "ASCENDING" },
-        { "fieldPath": "projectId", "order": "ASCENDING" },
-        { "fieldPath": "moduleKey", "order": "ASCENDING" }
-      ]
+        { "fieldPath": "createdAt", "order": "DESCENDING" },
+        { "fieldPath": "__name__", "order": "DESCENDING" }
+      ],
+      "density": "SPARSE_ALL"
     },
     {
       "collectionGroup": "blogs",
       "queryScope": "COLLECTION",
       "fields": [
-        { "fieldPath": "status", "order": "ASCENDING" },
-        { "fieldPath": "createdAt", "order": "DESCENDING" }
-      ]
-    },
-    {
-      "collectionGroup": "blogs",
-      "queryScope": "COLLECTION",
-      "fields": [
-        { "fieldPath": "status", "order": "ASCENDING" },
         { "fieldPath": "category", "order": "ASCENDING" },
-        { "fieldPath": "createdAt", "order": "DESCENDING" }
-      ]
+        { "fieldPath": "status", "order": "ASCENDING" },
+        { "fieldPath": "createdAt", "order": "DESCENDING" },
+        { "fieldPath": "__name__", "order": "DESCENDING" }
+      ],
+      "density": "SPARSE_ALL"
     },
     {
-      "collectionGroup": "blogRevisions",
+      "collectionGroup": "blogs",
       "queryScope": "COLLECTION",
       "fields": [
-        { "fieldPath": "blogId", "order": "ASCENDING" },
-        { "fieldPath": "createdAt", "order": "DESCENDING" }
-      ]
+        { "fieldPath": "status", "order": "ASCENDING" },
+        { "fieldPath": "createdAt", "order": "DESCENDING" },
+        { "fieldPath": "__name__", "order": "DESCENDING" }
+      ],
+      "density": "SPARSE_ALL"
+    },
+    {
+      "collectionGroup": "notifications",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "read", "order": "ASCENDING" },
+        { "fieldPath": "userId", "order": "ASCENDING" },
+        { "fieldPath": "createdAt", "order": "DESCENDING" },
+        { "fieldPath": "__name__", "order": "DESCENDING" }
+      ],
+      "density": "SPARSE_ALL"
     },
     {
       "collectionGroup": "support_tickets",
@@ -51,49 +69,40 @@
       "fields": [
         { "fieldPath": "createdBy", "order": "ASCENDING" },
         { "fieldPath": "isDeleted", "order": "ASCENDING" },
-        { "fieldPath": "createdAt", "order": "DESCENDING" }
-      ]
+        { "fieldPath": "createdAt", "order": "DESCENDING" },
+        { "fieldPath": "__name__", "order": "DESCENDING" }
+      ],
+      "density": "SPARSE_ALL"
     },
     {
       "collectionGroup": "support_tickets",
       "queryScope": "COLLECTION",
       "fields": [
-        { "fieldPath": "status", "order": "ASCENDING" },
         { "fieldPath": "isDeleted", "order": "ASCENDING" },
-        { "fieldPath": "autoDeleteAt", "order": "ASCENDING" }
-      ]
+        { "fieldPath": "createdAt", "order": "DESCENDING" },
+        { "fieldPath": "__name__", "order": "DESCENDING" }
+      ],
+      "density": "SPARSE_ALL"
     },
     {
       "collectionGroup": "activity_events",
       "queryScope": "COLLECTION",
       "fields": [
-        { "fieldPath": "hierarchyPath", "order": "ASCENDING" },
-        { "fieldPath": "createdAtMs", "order": "DESCENDING" }
-      ]
-    },
-    {
-      "collectionGroup": "activity_events",
-      "queryScope": "COLLECTION",
-      "fields": [
-        { "fieldPath": "projectId", "order": "ASCENDING" },
-        { "fieldPath": "createdAtMs", "order": "DESCENDING" }
-      ]
+        { "fieldPath": "pathAncestors", "arrayConfig": "CONTAINS" },
+        { "fieldPath": "createdAtMs", "order": "DESCENDING" },
+        { "fieldPath": "__name__", "order": "DESCENDING" }
+      ],
+      "density": "SPARSE_ALL"
     },
     {
       "collectionGroup": "activity_events",
       "queryScope": "COLLECTION",
       "fields": [
         { "fieldPath": "actorUid", "order": "ASCENDING" },
-        { "fieldPath": "createdAtMs", "order": "DESCENDING" }
-      ]
-    },
-    {
-      "collectionGroup": "activity_events",
-      "queryScope": "COLLECTION",
-      "fields": [
-        { "fieldPath": "actionKind", "order": "ASCENDING" },
-        { "fieldPath": "createdAtMs", "order": "DESCENDING" }
-      ]
+        { "fieldPath": "createdAtMs", "order": "DESCENDING" },
+        { "fieldPath": "__name__", "order": "DESCENDING" }
+      ],
+      "density": "SPARSE_ALL"
     },
     {
       "collectionGroup": "activity_events",
@@ -101,16 +110,40 @@
       "fields": [
         { "fieldPath": "entityType", "order": "ASCENDING" },
         { "fieldPath": "entityId", "order": "ASCENDING" },
-        { "fieldPath": "createdAtMs", "order": "DESCENDING" }
-      ]
+        { "fieldPath": "createdAtMs", "order": "DESCENDING" },
+        { "fieldPath": "__name__", "order": "DESCENDING" }
+      ],
+      "density": "SPARSE_ALL"
     },
     {
       "collectionGroup": "activity_events",
       "queryScope": "COLLECTION",
       "fields": [
-        { "fieldPath": "pathAncestors", "arrayConfig": "CONTAINS" },
-        { "fieldPath": "createdAtMs", "order": "DESCENDING" }
-      ]
+        { "fieldPath": "hierarchyPath", "order": "ASCENDING" },
+        { "fieldPath": "createdAtMs", "order": "DESCENDING" },
+        { "fieldPath": "__name__", "order": "DESCENDING" }
+      ],
+      "density": "SPARSE_ALL"
+    },
+    {
+      "collectionGroup": "activity_events",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "projectId", "order": "ASCENDING" },
+        { "fieldPath": "createdAtMs", "order": "DESCENDING" },
+        { "fieldPath": "__name__", "order": "DESCENDING" }
+      ],
+      "density": "SPARSE_ALL"
+    },
+    {
+      "collectionGroup": "activity_events",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "actionKind", "order": "ASCENDING" },
+        { "fieldPath": "createdAtMs", "order": "DESCENDING" },
+        { "fieldPath": "__name__", "order": "DESCENDING" }
+      ],
+      "density": "SPARSE_ALL"
     }
   ],
   "fieldOverrides": []
