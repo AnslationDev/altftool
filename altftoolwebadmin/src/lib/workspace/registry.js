@@ -172,6 +172,26 @@ export class WorkspaceRegistry {
       if (path === projectId || path.startsWith(projectId + "/")) this._nodes.delete(path);
     }
     this._projects.delete(projectId);
+    // Drop this project's previously-recorded diagnostics too, so an idempotent
+    // re-registration doesn't leave stale errors or duplicate warnings behind.
+    this._issues = this._issues.filter((issue) => issue.projectId !== projectId);
+  }
+
+  /**
+   * Every MODULE-level node whose key matches `moduleKey`, across all projects
+   * AND all applications. The resolver uses this to detect genuine ambiguity:
+   * the same module under two applications yields two matches, so a bare module
+   * name is only resolved when there is exactly one match anywhere.
+   */
+  findModuleNodes(moduleKey) {
+    if (!moduleKey) return [];
+    const out = [];
+    for (const node of this._nodes.values()) {
+      if (node.level === "module" && (node.moduleKey === moduleKey || node.id === moduleKey)) {
+        out.push(node);
+      }
+    }
+    return out;
   }
 
   hasProject(projectId) {

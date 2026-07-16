@@ -59,7 +59,6 @@ export async function POST(request) {
 
     let migrated = 0;
     let skipped = 0;
-    const flagBatch = adminDb.batch();
 
     for (const doc of snap.docs) {
       const d = doc.data() || {};
@@ -69,12 +68,20 @@ export async function POST(request) {
       }
       if (!d.action) { skipped++; continue; }
       const atMs = d.createdAtMs || d.createdAt?.toMillis?.() || Date.now();
-      await writeActivityEvent(entryFromLegacy(d), { mirrorLegacy: false, atMs });
-      flagBatch.set(doc.ref, { migratedToActivity: true }, { merge: true });
+      // Deterministic event id keyed on the source doc → a re-run OVERWRITES the
+      // same event instead of creating a duplicate.
+      const written = await writeActivityEvent(entryFromLegacy(d), {
+        mirrorLegacy: false,
+        atMs,
+        eventId: `legacy_${doc.id}`,
+      });
+      if (!written) { skipped++; continue; } // write failed — leave unflagged, retried next run
+      // Flag THIS doc immediately (not batched to the end). If the request dies
+      // mid-run only the single in-flight doc can be reprocessed, and the
+      // deterministic id makes that reprocess idempotent for the event doc.
+      await doc.ref.set({ migratedToActivity: true }, { merge: true });
       migrated++;
     }
-
-    if (migrated > 0) await flagBatch.commit();
 
     const scanned = snap.size;
     const hasMore = scanned === batchSize;

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { getAuth } from "firebase/auth";
 import { Check, DatabaseZap, Loader2, X } from "lucide-react";
 
@@ -11,12 +11,17 @@ export default function MigrationBanner() {
   const [state, setState] = useState("idle"); // idle | running | done | error
   const [migrated, setMigrated] = useState(0);
   const [dismissed, setDismissed] = useState(false);
+  // Guard against setState-after-unmount: the import can run for many sequential
+  // round-trips and the user may navigate away mid-loop.
+  const mountedRef = useRef(true);
+  useEffect(() => () => { mountedRef.current = false; }, []);
 
   const run = async () => {
     setState("running");
     setMigrated(0);
     let cursor = null;
     let total = 0;
+    let complete = false;
     try {
       const token = await getAuth().currentUser?.getIdToken();
       if (!token) throw new Error("no session");
@@ -30,14 +35,18 @@ export default function MigrationBanner() {
         if (!res.ok) throw new Error(`http ${res.status}`);
         const data = await res.json();
         total += data.migrated || 0;
-        setMigrated(total);
-        if (!data.hasMore) break;
+        if (mountedRef.current) setMigrated(total);
+        if (!data.hasMore) { complete = true; break; } // genuinely finished
         cursor = data.nextCursor;
-        if (!cursor) break;
+        if (!cursor) break; // hasMore but no cursor → stuck; stop as incomplete
+        if (!mountedRef.current) return; // user left the page — stop the loop
       }
-      setState("done");
+      // Only report "done" when the server actually said there was no more. If
+      // we bailed on the safety cap / a missing cursor, surface it as an error
+      // so the user knows the import is incomplete and can resume.
+      if (mountedRef.current) setState(complete ? "done" : "error");
     } catch {
-      setState("error");
+      if (mountedRef.current) setState("error");
     }
   };
 
