@@ -401,6 +401,7 @@
 .tools-popular-searches {
   margin-top: 0;
   flex-wrap: wrap;
+  justify-content: center;
 }
 
 .tools-popular-searches span {
@@ -1787,6 +1788,7 @@
 
   .tools-popular-searches {
     flex-wrap: nowrap;
+    justify-content: flex-start;
     overflow-x: auto;
     overflow-y: hidden;
     padding: 6px 2px 12px;

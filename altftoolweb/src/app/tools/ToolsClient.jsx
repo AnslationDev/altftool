@@ -760,7 +760,7 @@ export default function ToolsClient({
               Ready to find your perfect <span className="tp-accent-word">tool?</span>
             </h1>
             <p className="route-description">
-              Search 200+ trusted tools, utilities, and workflows built to help you work faster.
+              Search 350+ trusted tools, utilities, and workflows built to help you work faster.
             </p>
             <div className="tools-search-row">
               <Search className="pointer-events-none absolute right-5 top-1/2 h-5 w-5 -translate-y-1/2 text-[var(--tp-primary)]" />
