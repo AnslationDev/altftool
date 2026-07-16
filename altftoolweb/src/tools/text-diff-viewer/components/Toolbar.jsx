@@ -1,6 +1,6 @@
 import { Button } from "@altftool/ui";
 import {
-  Columns2, AlignLeft, Undo2, Redo2, ArrowsUpDown,
+  Columns2, AlignLeft, Undo2, Redo2, ArrowUpDown,
   Trash2, FileDown, Copy, Share2, Search, BarChart3,
   Settings, Maximize2, Save, Type,
 } from "lucide-react";
@@ -69,7 +69,7 @@ export default function Toolbar({
 
       <button onClick={onUndo} disabled={!canUndo} className="p-1.5 rounded-lg hover:bg-(--muted) text-(--muted-foreground) disabled:opacity-30 transition"><Undo2 size="16" /></button>
       <button onClick={onRedo} disabled={!canRedo} className="p-1.5 rounded-lg hover:bg-(--muted) text-(--muted-foreground) disabled:opacity-30 transition"><Redo2 size="16" /></button>
-      <button onClick={onSwap} className="p-1.5 rounded-lg hover:bg-(--muted) text-(--muted-foreground) transition" title="Swap A/B"><ArrowsUpDown size="16" /></button>
+      <button onClick={onSwap} className="p-1.5 rounded-lg hover:bg-(--muted) text-(--muted-foreground) transition" title="Swap A/B"><ArrowUpDown size="16" /></button>
       <button onClick={onClear} className="p-1.5 rounded-lg hover:bg-(--muted) text-(--muted-foreground) transition" title="Clear"><Trash2 size="16" /></button>
 
       <div className="w-px h-6 bg-(--border)" />

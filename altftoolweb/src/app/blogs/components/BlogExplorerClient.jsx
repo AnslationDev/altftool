@@ -412,8 +412,8 @@ function TrendingRail({ posts }) {
   return (
     <div className="rounded-2xl border border-(--border) bg-(--card) p-5 shadow-sm h-full flex flex-col">
       <div className="flex items-center justify-between mb-5 shrink-0">
-        <h3 className="text-sm font-bold uppercase tracking-wider text-(--foreground)">Trending Now</h3>
-        <Link href="/blogs?sort=trending" className="text-xs font-bold text-(--primary) hover:underline">
+        <h3 className="text-sm font-bold uppercase tracking-wider text-(--foreground)">Latest</h3>
+        <Link href="/blogs" className="text-xs font-bold text-(--primary) hover:underline">
           View all
         </Link>
       </div>

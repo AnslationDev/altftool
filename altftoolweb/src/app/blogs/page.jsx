@@ -25,9 +25,8 @@ import {
   getBlogStats,
   getBlogTopicClusters,
   getFeaturedBlogGroups,
-  getTrendingBlogs,
   getAllBlogTags,
-  sortBlogsByDate,
+  sortBlogsByRecency,
 } from "./data";
 import {
   describeFirebaseBlogError,
@@ -293,10 +292,11 @@ export default async function BlogsPage() {
   const categories = getBlogCategories(posts, adminCategoryNames);
   const stats = getBlogStats(posts);
   const groups = getFeaturedBlogGroups(posts);
-  const trendingPosts = getTrendingBlogs(posts, 5);
-  // Hero slider surfaces the newest posts (by date), not popularity — an old
-  // high-view tool post must never sit above brand-new content there.
-  const latestPosts = sortBlogsByDate(posts).slice(0, 5);
+  // Latest across the whole catalog — ranked by true publish recency
+  // (createdAt / publishedAt), NOT the author-set display date, which is often
+  // backdated and was burying freshly-published posts. Feeds BOTH the hero
+  // slider and the sidebar list so both sides show the newest content.
+  const latestPosts = sortBlogsByRecency(posts).slice(0, 5);
   const topicClusters = getBlogTopicClusters(posts);
   const tags = getAllBlogTags(posts);
   const totalCount = Math.max(firebaseCatalog?.count || 0, posts.length);
@@ -346,7 +346,7 @@ export default async function BlogsPage() {
           totalCount={totalCount}
           stats={stats}
           featuredPosts={latestPosts.map(compactExplorerPost)}
-          trendingPosts={trendingPosts.map(compactExplorerPost)}
+          trendingPosts={latestPosts.map(compactExplorerPost)}
         >
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             <MarketLaneGrid />
