@@ -37,10 +37,19 @@ export async function POST(request) {
       module,
       actorUid: actor.uid,
       actorEmail: actor.email,
+      actorRole: actor.roleType ?? null,
       targetUid: body?.targetUid ?? null,
       targetEmail: body?.targetEmail ?? null,
       summary: body?.summary ?? null,
       changes: body?.changes ?? null,
+      // Optional explicit Workspace hierarchy hints (highest resolver priority);
+      // `route` is the pathname the client attaches for accurate classification.
+      projectId: body?.projectId ?? body?.project ?? null,
+      application: body?.application ?? null,
+      section: body?.section ?? null,
+      feature: body?.feature ?? null,
+      entityName: body?.entityName ?? null,
+      route: body?.route ?? null,
       metadata: {
         entityType: body?.entityType ?? null,
         entityId: body?.entityId ?? null,

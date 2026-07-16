@@ -136,6 +136,8 @@
     }
   },
   "dependencies": {
+    "@tiptap/core": "^2.27.2",
+    "@tiptap/pm": "^2.27.2",
     "heic2any": "^0.0.4"
   }
 }

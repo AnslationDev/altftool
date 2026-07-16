@@ -1,13 +1,13 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-07-15T12:40:30.172Z",
+  "generatedAt": "2026-07-15T14:07:05.852Z",
   "tools": {
     "total": 361,
     "healthy": 361,
     "needsAttention": 0,
     "averageScore": 100,
     "categories": 65,
-    "directories": 371,
+    "directories": 370,
     "orphanToolDirs": [
       "browser-session-exporter",
       "dream-vacation-finder",
@@ -17,7 +17,6 @@
       "random-business-idea",
       "random-life-challenge",
       "rot13-encoder-decoder",
-      "social-media-simulator",
       "viral-thumbnail-maker"
     ],
     "registryWithoutDir": [],

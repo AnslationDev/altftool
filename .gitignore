@@ -34,3 +34,6 @@ claude.md
 
 # temp local assets (not for the repo)
 /pppd.png
+
+# Claude Code session/tooling data
+.claude/
