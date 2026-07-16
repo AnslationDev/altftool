@@ -1,121 +1,101 @@
-
-
 "use client";
 
-import { useState, useEffect } from "react";
-import Header from "../components/Header";
-import DateForm from "../components/DateForm";
-import TodayInfo from "../components/TodayInfo";
-import AgeCards from "../components/AgeCards";
-import TimeLived from "../components/TimeLived";
+import { useCallback, useEffect, useState } from "react";
+import Hero from "../components/Hero";
+import AgeForm from "../components/AgeForm";
+import ResultBanner from "../components/ResultBanner";
+import AgeInNumbers from "../components/AgeInNumbers";
+import LifeTimeline from "../components/LifeTimeline";
 import NextBirthday from "../components/NextBirthday";
-import Toggle from "../components/Toggle";
-import Zodiac from "../components/Zodiac";
-import Smart from "../components/Smart";
-import { calculateAgeData } from "../utils/dateUtils.js"; 
-import Features from "../components/Features";
+import { calculateAgeData } from "../utils/dateUtils.js";
 
+function toDate(dateStr, timeStr) {
+  if (!dateStr) return null;
+  const d = new Date(`${dateStr}T${timeStr || "00:00"}`);
+  return Number.isNaN(d.getTime()) ? null : d;
+}
 
 export default function ToolHome() {
   const [birthDate, setBirthDate] = useState("");
-  const [age, setAge] = useState(null);
-  const [nextBirthday, setNextBirthday] = useState(null);
-  const [totalMinutes, setTotalMinutes] = useState(0);
-  const [totalSeconds, setTotalSeconds] = useState(0);
+  const [birthTime, setBirthTime] = useState("");
+  const [data, setData] = useState(null);
   const [error, setError] = useState("");
-  const [today] = useState(new Date());
 
-  const todayString = today.toISOString().split("T")[0];
+  const todayString = new Date().toISOString().split("T")[0];
 
- const handleCalculate = (e) => {
-  e.preventDefault();
+  const compute = useCallback((dateStr, timeStr) => {
+    const birth = toDate(dateStr, timeStr);
+    if (!birth) return { error: "Please enter a valid date of birth." };
+    if (birth > new Date()) return { error: "Date of birth must be in the past." };
+    return { data: calculateAgeData(birth) };
+  }, []);
 
-  if (!birthDate) {
-    setError("Please enter your date of birth.");
-    return;
-  }
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (!birthDate) { setError("Please enter your date of birth."); setData(null); return; }
+    const res = compute(birthDate, birthTime);
+    if (res.error) { setError(res.error); setData(null); return; }
+    setError("");
+    setData(res.data);
+  };
 
-  const birth = new Date(birthDate);
+  const quickSet = (which) => {
+    const now = new Date();
+    let d = now;
+    if (which === "yesterday") d = new Date(now.getTime() - 86400000);
+    if (which === "y2k") d = new Date(2000, 0, 1);
+    const iso = d.toISOString().split("T")[0];
+    setBirthDate(iso);
+    const res = compute(iso, birthTime);
+    if (res.error) { setError(res.error); setData(null); } else { setError(""); setData(res.data); }
+  };
 
-  if (isNaN(birth)) {
-    setError("Invalid date entered.");
-    return;
-  }
+  const clearAll = () => { setBirthDate(""); setBirthTime(""); setData(null); setError(""); };
 
-  if (birth >= today) {
-    setError("Date of birth must be in the past.");
-    return;
-  }
-
-  setError("");
-
-  const result = calculateAgeData(birth);
-  setAge(result.age);
-  setTotalMinutes(result.totalMinutes);
-  setTotalSeconds(result.totalSeconds);
-  setNextBirthday(result.nextBirthday);
-};
-
-
-  
-useEffect(() => {
-  if (!birthDate || error) return;
-
-  const interval = setInterval(() => {
-    const birth = new Date(birthDate);
-    const result = calculateAgeData(birth);
-
-    setAge(result.age);
-    setTotalMinutes(result.totalMinutes);
-    setTotalSeconds(result.totalSeconds);
-    setNextBirthday(result.nextBirthday);
-  }, 1000);
-
-  return () => clearInterval(interval);
-}, [birthDate, error]);
+  // Live tick — keep seconds/minutes and the birthday countdown fresh.
+  useEffect(() => {
+    if (!birthDate || error) return undefined;
+    const id = setInterval(() => {
+      const res = compute(birthDate, birthTime);
+      if (res.data) setData(res.data);
+    }, 1000);
+    return () => clearInterval(id);
+  }, [birthDate, birthTime, error, compute]);
 
   return (
-    <div className="px-4 py-6">
+    <div className="mx-auto max-w-6xl px-4 py-8 sm:px-6">
+      <div className="space-y-6">
+        <Hero />
 
-           <Header />
+        <AgeForm
+          birthDate={birthDate}
+          birthTime={birthTime}
+          todayString={todayString}
+          onChangeDate={setBirthDate}
+          onChangeTime={setBirthTime}
+          onQuickSet={quickSet}
+          onClear={clearAll}
+          onSubmit={handleSubmit}
+          error={error}
+        />
 
-      <div className="max-w-5xl mx-auto bg-(--card) rounded-xl shadow-lg overflow-hidden py-5">
-       
+        {data && (
+          <>
+            <ResultBanner age={data.age} totals={data.totals} />
+            <AgeInNumbers body={data.body} />
+            <LifeTimeline timeline={data.timeline} />
+            <NextBirthday data={data.nextBirthday} />
+          </>
+        )}
 
-        <div className="p-6 space-y-6 ">
-          <DateForm
-            birthDate={birthDate}
-            todayString={todayString}
-            setBirthDate={setBirthDate}
-            handleCalculate={handleCalculate}
-          />
+        {!data && !error && (
+          <p className="rounded-2xl border border-dashed border-(--border) bg-(--card) px-5 py-10 text-center text-sm text-(--muted-foreground)">
+            Enter your date of birth above to see your exact age and life stats.
+          </p>
+        )}
 
-          {error && (
-            <div className="bg-red-50 text-red-600 p-3 rounded-lg text-center">
-              ❌ {error}
-            </div>
-          )}
-
-          <TodayInfo today={today} />
-
-          {age && (
-            <>
-              <AgeCards age={age} />
-              <TimeLived minutes={totalMinutes} seconds={totalSeconds} />
-              <NextBirthday data={nextBirthday} />
-              <Toggle />
-            </>
-          )}
-        </div>   
-   <div className=" grid grid-cols-2 -space-x-1 ">
-  <Zodiac />
-  <Smart />
-</div>
-      
+        {/* Phase 2 — Fun Facts, Compare, Milestones, Share, More Tools, How it works, FAQ */}
       </div>
-    
-      
-      <Features/>
     </div>
   );
 }
