@@ -22,11 +22,9 @@ import {
   blogTaxonomySlug,
   getAllBlogs,
   getBlogCategories,
-  getBlogStats,
   getBlogTopicClusters,
   getFeaturedBlogGroups,
   getAllBlogTags,
-  sortBlogsByRecency,
 } from "./data";
 import {
   describeFirebaseBlogError,
@@ -111,6 +109,12 @@ function HeroShortcutRail({ categories, clusters }) {
   );
 }
 
+// Some Firebase-authored excerpts contain raw HTML fragments; strip them so
+// list/hero surfaces never render literal "<h2>" tags.
+function stripHtml(value = "") {
+  return String(value).replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim();
+}
+
 function compactExplorerPost(post = {}) {
   return {
     id: post.id,
@@ -120,11 +124,16 @@ function compactExplorerPost(post = {}) {
     category: post.category,
     tool: post.tool,
     topic: post.topic,
-    excerpt: post.excerpt,
-    description: post.excerpt || post.seoDescription || "",
+    excerpt: stripHtml(post.excerpt),
+    description: stripHtml(post.excerpt || post.seoDescription || ""),
     image: post.image,
     imageAlt: post.imageAlt,
     date: post.date,
+    // Real publish timestamps so the client can rank by true recency (the
+    // featured hero always shows the newest Admin-published blogs).
+    createdAt: post.createdAt,
+    publishedAt: post.publishedAt,
+    status: post.status,
     author: post.author,
     authorRole: post.authorRole,
     reviewedBy: post.reviewedBy,
@@ -168,6 +177,7 @@ async function getFastFirebaseBlogCatalog() {
 }
 
 function CompactArticle({ post, index }) {
+  const description = stripHtml(post.description || post.excerpt || "");
   return (
     <Link
       href={`/blogs/${post.slug}`}
@@ -193,9 +203,9 @@ function CompactArticle({ post, index }) {
         <h3 className="mt-2 line-clamp-2 text-lg sm:text-xl md:text-2xl font-bold leading-snug tracking-tight text-(--foreground) transition-colors group-hover:text-(--primary)">
           {post.heading}
         </h3>
-        {post.description && (
+        {description && (
           <p className="mt-3 line-clamp-2 text-sm leading-relaxed text-(--muted-foreground)">
-            {post.description}
+            {description}
           </p>
         )}
         <div className="mt-auto pt-5 flex items-center justify-between">
@@ -209,25 +219,46 @@ function CompactArticle({ post, index }) {
   );
 }
 
+// Section heading matching the explorer's accent-bar style so every section
+// on the page shares one visual rhythm.
+function BandHeading({ title, action, actionHref, id }) {
+  return (
+    <div className="mb-5 flex flex-wrap items-center justify-between gap-3">
+      <h2 id={id} className="flex items-center gap-3 text-xl font-bold tracking-tight text-(--foreground) sm:text-2xl">
+        <span aria-hidden="true" className="h-6 w-1 rounded-full bg-(--primary)" />
+        {title}
+      </h2>
+      {action && actionHref ? (
+        <Link href={actionHref} className="inline-flex items-center gap-1.5 text-sm font-bold text-(--primary) hover:underline">
+          {action} <ArrowRight className="h-4 w-4" />
+        </Link>
+      ) : null}
+    </div>
+  );
+}
+
 function MarketLaneGrid() {
   return (
-    <section className="grid grid-cols-1 gap-4 sm:grid-cols-2 h-full">
-      {BLOG_CONTENT_LANES.map((lane, index) => {
-        const Icon = laneIcons[index] || BookOpen;
-        return (
-          <article
-            key={lane.title}
-            className="group rounded-2xl border border-(--border) bg-(--card) p-5 shadow-sm transition-all duration-200 ease-out hover:-translate-y-0.5 hover:border-(--anslation-ds-border-strong) hover:shadow-[var(--anslation-ds-shadow-md)]"
-          >
-            <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-xl bg-(--anslation-ds-primary-soft) text-(--primary) transition-colors group-hover:bg-(--primary) group-hover:text-(--primary-foreground)">
-              <Icon className="h-5 w-5" />
-            </div>
-            <p className="text-[10px] font-bold uppercase tracking-[0.1em] text-(--muted-foreground)">{lane.eyebrow}</p>
-            <h2 className="mt-1.5 text-base font-semibold tracking-tight text-(--foreground)">{lane.title}</h2>
-            <p className="mt-2 text-sm leading-relaxed text-(--muted-foreground)">{lane.description}</p>
-          </article>
-        );
-      })}
+    <section aria-labelledby="content-lanes-heading">
+      <BandHeading id="content-lanes-heading" title="Browse by Intent" />
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        {BLOG_CONTENT_LANES.map((lane, index) => {
+          const Icon = laneIcons[index] || BookOpen;
+          return (
+            <article
+              key={lane.title}
+              className="group flex flex-col rounded-2xl border border-(--border) bg-(--card) p-5 shadow-sm transition-all duration-200 ease-out hover:-translate-y-0.5 hover:border-(--anslation-ds-border-strong) hover:shadow-[var(--anslation-ds-shadow-md)]"
+            >
+              <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-xl bg-(--anslation-ds-primary-soft) text-(--primary) transition-colors group-hover:bg-(--primary) group-hover:text-(--primary-foreground)">
+                <Icon className="h-5 w-5" />
+              </div>
+              <p className="text-[10px] font-bold uppercase tracking-[0.1em] text-(--muted-foreground)">{lane.eyebrow}</p>
+              <h3 className="mt-1.5 text-base font-semibold tracking-tight text-(--foreground)">{lane.title}</h3>
+              <p className="mt-2 text-sm leading-relaxed text-(--muted-foreground)">{lane.description}</p>
+            </article>
+          );
+        })}
+      </div>
     </section>
   );
 }
@@ -237,28 +268,19 @@ function TopicClusterBand({ clusters }) {
   if (!visibleClusters.length) return null;
 
   return (
-    <section className="rounded-2xl border border-(--border) bg-(--card) p-5 shadow-sm sm:p-6 h-full flex flex-col">
-      <div className="mb-5 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
-        <div>
-          <p className="text-[10px] font-bold uppercase tracking-[0.1em] text-(--muted-foreground)">Topic clusters</p>
-          <h2 className="mt-1.5 text-xl font-semibold tracking-tight text-(--foreground) sm:text-2xl">
-            Follow a complete reading path
-          </h2>
-        </div>
-        <Link
-          href="/blogs/topics"
-          className="inline-flex h-10 items-center justify-center gap-2 rounded-xl border border-(--border) bg-(--background) px-4 text-sm font-semibold text-(--foreground) transition-all duration-150 hover:-translate-y-px hover:border-(--anslation-ds-border-strong) hover:bg-(--anslation-ds-soft) active:translate-y-0"
-        >
-          View all clusters
-          <ArrowRight className="h-4 w-4" />
-        </Link>
-      </div>
-      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 flex-1">
+    <section aria-labelledby="topic-clusters-heading">
+      <BandHeading
+        id="topic-clusters-heading"
+        title="Topic Clusters"
+        action="View all clusters"
+        actionHref="/blogs/topics"
+      />
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {visibleClusters.map((cluster) => (
           <Link
             key={cluster.slug}
             href={`/blogs/topics/${cluster.slug}`}
-            className="group flex flex-col rounded-xl border border-(--border) bg-(--background) p-4 transition-all duration-200 hover:-translate-y-0.5 hover:border-(--anslation-ds-border-strong) hover:bg-(--card) hover:shadow-[var(--anslation-ds-shadow-sm)]"
+            className="group flex flex-col rounded-2xl border border-(--border) bg-(--card) p-5 shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:border-(--anslation-ds-border-strong) hover:shadow-[var(--anslation-ds-shadow-md)]"
           >
             <div className="flex items-start justify-between gap-3">
               <div className="min-w-0 flex-1">
@@ -290,13 +312,10 @@ export default async function BlogsPage() {
   const hasFirebaseCatalog = Boolean(firebaseCatalog?.posts?.length);
   const posts = hasFirebaseCatalog ? firebaseCatalog.posts : localPosts;
   const categories = getBlogCategories(posts, adminCategoryNames);
-  const stats = getBlogStats(posts);
   const groups = getFeaturedBlogGroups(posts);
-  // Latest across the whole catalog — ranked by true publish recency
-  // (createdAt / publishedAt), NOT the author-set display date, which is often
-  // backdated and was burying freshly-published posts. Feeds BOTH the hero
-  // slider and the sidebar list so both sides show the newest content.
-  const latestPosts = sortBlogsByRecency(posts).slice(0, 5);
+  // The featured hero + latest list are ranked client-side by true publish
+  // recency (createdAt / publishedAt) so newly Admin-published blogs surface
+  // instantly and cascade older ones down — see BlogExplorerClient.
   const topicClusters = getBlogTopicClusters(posts);
   const tags = getAllBlogTags(posts);
   const totalCount = Math.max(firebaseCatalog?.count || 0, posts.length);
@@ -323,14 +342,15 @@ export default async function BlogsPage() {
         ]}
       />
       <div className="section-wide mx-auto w-full px-3 py-6 sm:px-5 md:py-8 lg:px-8">
-        <section className="pb-6">
+        {/* Compact header — the featured hero carousel leads the page. */}
+        <section className="pb-5">
           <h1
             id="blog-index-title"
-            className="text-4xl font-semibold tracking-[-0.02em] text-(--primary) sm:text-5xl lg:text-6xl"
+            className="text-2xl font-bold tracking-tight text-(--foreground) sm:text-3xl"
           >
-            ALTFTool Blog
+            ALTFTool <span className="text-(--primary)">Blog</span>
           </h1>
-          <p className="mt-3 max-w-2xl text-base leading-relaxed text-(--muted-foreground) sm:text-lg">
+          <p className="mt-1.5 max-w-2xl text-sm leading-relaxed text-(--muted-foreground) sm:text-base">
             {blogsDescription}
           </p>
         </section>
@@ -344,28 +364,19 @@ export default async function BlogsPage() {
             hasFirebaseCatalog ? firebaseCatalog.offset : 0
           }
           totalCount={totalCount}
-          stats={stats}
-          featuredPosts={latestPosts.map(compactExplorerPost)}
-          trendingPosts={latestPosts.map(compactExplorerPost)}
         >
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            <MarketLaneGrid />
-            <TopicClusterBand clusters={topicClusters} />
-          </div>
-          <section className="mt-6">
-            <div className="mb-4 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-              <div>
-                <p className="text-xs font-bold uppercase tracking-normal text-(--muted-foreground)">Editorial map</p>
-                <h2 className="mt-1 text-xl font-semibold text-(--foreground)">Popular paths</h2>
-              </div>
-              <div className="flex items-center gap-2 text-xs font-medium text-(--muted-foreground)">
-                <Layers3 className="h-4 w-4 text-(--primary)" />
-                Reader shortcuts by topic
-              </div>
-            </div>
-            <AutoScrollSlider className="-mx-3 px-3 pb-4 sm:-mx-5 sm:px-5 md:-mx-8 md:px-8">
+          <MarketLaneGrid />
+          <TopicClusterBand clusters={topicClusters} />
+          <section aria-labelledby="popular-paths-heading">
+            <BandHeading
+              id="popular-paths-heading"
+              title="Popular Paths"
+              action="Explore topics"
+              actionHref="/blogs/topics"
+            />
+            <AutoScrollSlider className="pb-4">
               {groups.trending.map((post, index) => (
-                <div key={post.slug} className="w-[100%] shrink-0 snap-center sm:w-[90%] md:w-[80%] lg:w-[70%]">
+                <div key={post.slug} className="w-full shrink-0 snap-start sm:w-[85%] lg:w-[48.9%]">
                   <CompactArticle post={post} index={index} />
                 </div>
               ))}
