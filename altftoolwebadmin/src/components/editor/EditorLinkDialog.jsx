@@ -55,16 +55,23 @@ export default function EditorLinkDialog({ open, onClose }) {
   function apply(event) {
     event?.preventDefault?.();
     if (!validation.ok) return;
-    editor
-      .chain()
-      .focus()
-      .extendMarkRange("link")
-      .setLink({
-        href: validation.href,
-        target: newTab ? "_blank" : null,
-        rel: newTab ? "noopener noreferrer" : null,
-      })
-      .run();
+    const attrs = {
+      href: validation.href,
+      target: newTab ? "_blank" : null,
+      rel: newTab ? "noopener noreferrer" : null,
+    };
+    // With no selection (and not already on a link) setLink has no text to
+    // mark, so nothing gets inserted. Insert the URL itself as the link text
+    // instead, so the link actually appears.
+    if (editor.state.selection.empty && !editor.isActive("link")) {
+      editor
+        .chain()
+        .focus()
+        .insertContent({ type: "text", text: validation.href, marks: [{ type: "link", attrs }] })
+        .run();
+    } else {
+      editor.chain().focus().extendMarkRange("link").setLink(attrs).run();
+    }
     onClose();
   }
 

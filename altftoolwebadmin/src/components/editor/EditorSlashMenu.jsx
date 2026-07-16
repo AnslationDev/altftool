@@ -26,6 +26,7 @@ export const EditorSlashMenuList = forwardRef(function EditorSlashMenuList(
 
   useImperativeHandle(ref, () => ({
     onKeyDown: ({ event }) => {
+      if (!items.length) return false; // nothing to navigate — avoid % 0 (NaN)
       if (event.key === "ArrowDown") {
         setSelectedIndex((index) => (index + 1) % items.length);
         return true;

@@ -39,7 +39,7 @@ import { ResizableImage } from "./extensions/ResizableImage.jsx";
 import { AnchorIds } from "./extensions/AnchorIds";
 import { SlashCommands } from "./extensions/SlashCommands";
 import { FirebaseVideo } from "./extensions/VideoExtension";
-import { HtmlComment, RawIframe } from "./extensions/PreserveExtensions";
+import { HtmlComment, HtmlCommentInline, RawIframe } from "./extensions/PreserveExtensions";
 import { cleanPastedHtml, exportHtml, htmlToEditor } from "./EditorUtils";
 import "./editor.css";
 
@@ -82,6 +82,10 @@ export default function EditorProvider({
   const [draftState, setDraftState] = useState({ available: false, html: "", savedAt: null });
   const [saveState, setSaveState] = useState("idle"); // idle | saving | saved
   const emitTimer = useRef(null);
+  // True while a debounced edit is queued but not yet emitted. Used to stop the
+  // external-value sync from clobbering in-flight local edits (e.g. an autosave
+  // round-trip that echoes transformed HTML back through the value prop).
+  const pendingEmitRef = useRef(false);
 
   const emit = useCallback((html) => {
     sentValuesRef.current = [html, ...sentValuesRef.current].slice(0, 10);
@@ -96,6 +100,7 @@ export default function EditorProvider({
   const emitFromInstance = useCallback(
     (instance) => {
       if (!instance || instance.isDestroyed) return;
+      pendingEmitRef.current = false;
       const html = exportHtml(instance);
       emit(html);
       if (draftKey) {
@@ -152,6 +157,7 @@ export default function EditorProvider({
       FirebaseVideo,
       RawIframe,
       HtmlComment,
+      HtmlCommentInline,
       AnchorIds,
       TaskList,
       TaskItem.configure({ nested: true }),
@@ -198,6 +204,7 @@ export default function EditorProvider({
       // Cheap per-keystroke work only. React bails out of the re-render once
       // saveState is already "saving", so this stays free while typing.
       if (draftKey) setSaveState("saving");
+      pendingEmitRef.current = true;
       window.clearTimeout(emitTimer.current);
       emitTimer.current = window.setTimeout(() => emitFromInstance(instance), 300);
     },
@@ -255,6 +262,9 @@ export default function EditorProvider({
     const next = value || "";
     if (sentValuesRef.current.includes(next)) return;
     if (editor.isFocused) return;
+    // A debounced local edit is still queued — adopting the prop now would
+    // overwrite the user's latest typing. Let the pending emit settle first.
+    if (pendingEmitRef.current) return;
     if (exportHtml(editor) === next) return;
     editor.commands.setContent(htmlToEditor(next), false);
   }, [value, editor]);

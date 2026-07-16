@@ -33,25 +33,30 @@ function ImageView({ node, updateAttributes, deleteNode, selected, editor }) {
     (event, direction) => {
       event.preventDefault();
       event.stopPropagation();
-      const img = wrapperRef.current?.querySelector("img");
-      if (!img) return;
+      const wrapper = wrapperRef.current;
+      const img = wrapper?.querySelector("img");
+      if (!img || !wrapper) return;
       const startX = event.clientX;
       const startWidth = img.getBoundingClientRect().width;
       const parentWidth =
-        wrapperRef.current.closest(".ProseMirror")?.getBoundingClientRect().width || 800;
+        wrapper.closest(".ProseMirror")?.getBoundingClientRect().width || 800;
       setResizing(true);
 
+      // Resize live via a plain style write (cheap, no document mutation), then
+      // commit the final width to the node ONCE on mouse-up. Updating the
+      // attribute on every mousemove flooded the debounced onChange and pushed
+      // one undo entry per pixel dragged.
+      let nextWidth = Math.round(startWidth);
       const onMove = (moveEvent) => {
         const delta = (moveEvent.clientX - startX) * (direction === "left" ? -1 : 1);
-        const next = Math.round(
-          Math.min(parentWidth, Math.max(80, startWidth + delta)),
-        );
-        updateAttributes({ width: next });
+        nextWidth = Math.round(Math.min(parentWidth, Math.max(80, startWidth + delta)));
+        wrapper.style.width = `${nextWidth}px`;
       };
       const onUp = () => {
         setResizing(false);
         document.removeEventListener("mousemove", onMove);
         document.removeEventListener("mouseup", onUp);
+        updateAttributes({ width: nextWidth });
       };
       document.addEventListener("mousemove", onMove);
       document.addEventListener("mouseup", onUp);
@@ -232,11 +237,14 @@ export const ResizableImage = Image.extend({
         },
       },
       align: {
-        default: "center",
+        // null = "no explicit alignment" → serialize as a bare <img> so old
+        // posts keep their exact markup. Only an explicit left/right/center
+        // (or a caption/width) promotes the image to a <figure> wrapper.
+        default: null,
         parseHTML: (element) =>
           element.closest("figure")?.getAttribute("data-align") ||
           element.getAttribute("data-align") ||
-          "center",
+          null,
       },
       caption: {
         default: null,
@@ -266,6 +274,16 @@ export const ResizableImage = Image.extend({
       style: "max-width:100%;height:auto;",
     };
 
+    const hasCaption = caption !== null && caption !== undefined && caption !== "";
+    const hasAlign = align === "left" || align === "right" || align === "center";
+
+    // Nothing special (no caption, no width, no explicit alignment) → keep the
+    // original bare <img> markup instead of silently rewrapping every image in
+    // a <figure> with forced centering on each save.
+    if (!hasCaption && !width && !hasAlign) {
+      return ["img", imgAttrs];
+    }
+
     const figureStyle = [
       width ? `width:${width}px` : null,
       "max-width:100%",
@@ -278,16 +296,18 @@ export const ResizableImage = Image.extend({
       .filter(Boolean)
       .join(";");
 
-    if (caption !== null && caption !== undefined && caption !== "") {
+    const figureAttrs = { ...(align ? { "data-align": align } : {}), style: figureStyle };
+
+    if (hasCaption) {
       return [
         "figure",
-        { "data-align": align, style: figureStyle },
+        figureAttrs,
         ["img", imgAttrs],
         ["figcaption", { style: "text-align:center;font-size:0.85em;opacity:0.75;margin-top:6px;" }, caption],
       ];
     }
 
-    return ["figure", { "data-align": align, style: figureStyle }, ["img", imgAttrs]];
+    return ["figure", figureAttrs, ["img", imgAttrs]];
   },
 
   addNodeView() {
