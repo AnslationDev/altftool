@@ -47,7 +47,7 @@ export default function CompareAges({ defaultDate = "" }) {
 
   return (
     <SectionCard title="Compare With Someone" icon={GitCompareArrows}>
-      <div className="grid gap-3 sm:grid-cols-[1fr_1fr_auto]">
+      <div className="grid gap-3 @sm:grid-cols-2 @2xl:grid-cols-[1fr_1fr_auto]">
         <label className="block">
           <span className="mb-1 block text-xs font-bold text-(--muted-foreground)">Your Birth Date</span>
           <input type="date" max={todayStr} value={a} onChange={(e) => setA(e.target.value)} className={inputCls} />
@@ -59,7 +59,7 @@ export default function CompareAges({ defaultDate = "" }) {
         <button
           type="button"
           onClick={run}
-          className="mt-auto inline-flex h-11 items-center justify-center rounded-lg bg-(--primary) px-5 text-sm font-bold text-(--primary-foreground) transition hover:bg-(--primary-hover)"
+          className="mt-auto inline-flex h-11 items-center justify-center rounded-lg bg-(--primary) px-5 text-sm font-bold text-(--primary-foreground) transition hover:bg-(--primary-hover) @sm:col-span-2 @2xl:col-span-1"
         >
           Compare
         </button>

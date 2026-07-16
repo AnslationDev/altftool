@@ -14,7 +14,7 @@ const TOOLS = [
 export default function RelatedTools() {
   return (
     <SectionCard title="More Date & Time Tools" icon={LayoutGrid}>
-      <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
+      <div className="grid grid-cols-2 gap-3 @2xl:grid-cols-4">
         {TOOLS.map((t) => (
           <Link
             key={t.slug}

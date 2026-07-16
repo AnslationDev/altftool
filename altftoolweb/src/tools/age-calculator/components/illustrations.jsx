@@ -115,6 +115,30 @@ export function Trophy3D({ size = 96, className = "" }) {
   );
 }
 
+export function Clock3D({ size = 72, className = "" }) {
+  return (
+    <svg viewBox="0 0 72 72" width={size} height={size} className={className} role="img" aria-label="Clock">
+      <Defs id="clk" />
+      <circle cx="36" cy="38" r="26" fill={`url(#clk-teal)`} />
+      <circle cx="36" cy="38" r="20" fill="#fff" opacity="0.94" />
+      <line x1="36" y1="38" x2="36" y2="26" stroke={TEAL_D} strokeWidth="4" strokeLinecap="round" />
+      <line x1="36" y1="38" x2="45" y2="43" stroke={BLUE} strokeWidth="3.5" strokeLinecap="round" />
+      <circle cx="36" cy="38" r="2.5" fill={TEAL_D} />
+      <rect x="14" y="10" width="12" height="7" rx="3.5" transform="rotate(-24 20 13)" fill={TEAL_D} />
+      <rect x="46" y="10" width="12" height="7" rx="3.5" transform="rotate(24 52 13)" fill={TEAL_D} />
+    </svg>
+  );
+}
+
+export function Podium3D({ width = 220, height = 46, className = "" }) {
+  return (
+    <svg viewBox="0 0 220 46" width={width} height={height} className={className} aria-hidden="true">
+      <ellipse cx="110" cy="23" rx="104" ry="18" fill="#0F172A" opacity="0.08" />
+      <ellipse cx="110" cy="18" rx="104" ry="16" fill="#fff" opacity="0.55" />
+    </svg>
+  );
+}
+
 export function Calculator3D({ size = 110, className = "" }) {
   return (
     <svg viewBox="0 0 110 110" width={size} height={size} className={className} role="img" aria-label="Calculator">

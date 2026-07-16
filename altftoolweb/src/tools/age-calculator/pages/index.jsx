@@ -15,6 +15,25 @@ import RelatedTools from "../components/RelatedTools";
 import HowItWorks from "../components/HowItWorks";
 import FaqSection from "../components/FaqSection";
 import { calculateAgeData, formatDate } from "../utils/dateUtils.js";
+import { BadgeCheck, KeyRound, ShieldCheck, MonitorSmartphone } from "lucide-react";
+
+function TrustStrip() {
+  const items = [
+    { icon: BadgeCheck, label: "Free to use" },
+    { icon: KeyRound, label: "No signup required" },
+    { icon: ShieldCheck, label: "100% private" },
+    { icon: MonitorSmartphone, label: "Works on all devices" },
+  ];
+  return (
+    <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 rounded-2xl border border-(--border) bg-(--card) px-4 py-3.5 shadow-sm">
+      {items.map((i) => (
+        <span key={i.label} className="inline-flex items-center gap-1.5 text-xs font-semibold text-(--muted-foreground)">
+          <i.icon className="h-3.5 w-3.5 text-(--primary)" strokeWidth={1.9} /> {i.label}
+        </span>
+      ))}
+    </div>
+  );
+}
 
 function toDate(dateStr, timeStr) {
   if (!dateStr) return null;
@@ -78,7 +97,9 @@ export default function ToolHome() {
   }, [data, birthDate, birthTime]);
 
   return (
-    <div className="mx-auto max-w-6xl px-4 py-8 sm:px-6">
+    // No extra horizontal padding here — the tool-detail chrome already pads
+    // the page, and double padding made the content feel squeezed inward.
+    <div className="mx-auto w-full max-w-6xl py-6">
       <div className="space-y-6">
         <Hero />
 
@@ -115,6 +136,8 @@ export default function ToolHome() {
                 <FaqSection />
               </div>
             </div>
+
+            <TrustStrip />
           </>
         ) : (
           <>
@@ -128,6 +151,7 @@ export default function ToolHome() {
               <FaqSection />
             </div>
             <RelatedTools />
+            <TrustStrip />
           </>
         )}
       </div>

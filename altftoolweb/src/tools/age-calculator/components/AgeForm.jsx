@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowRight, CalendarDays, Clock, RotateCcw, Sun, Trash2, Cake } from "lucide-react";
+import { ArrowRight, CalendarDays, Clock, RotateCcw, Sun, Trash2, Cake, ShieldCheck } from "lucide-react";
 
 const chip =
   "inline-flex items-center gap-1.5 rounded-lg border border-(--border) bg-(--card) px-3 py-1.5 text-xs font-bold text-(--foreground) transition hover:border-(--primary) hover:text-(--primary)";
@@ -64,7 +64,8 @@ export default function AgeForm({
 
         <button
           type="submit"
-          className="ml-auto inline-flex h-11 items-center justify-center gap-2 rounded-lg bg-(--primary) px-6 text-sm font-bold text-(--primary-foreground) shadow-sm transition hover:bg-(--primary-hover)"
+          className="ml-auto inline-flex h-12 w-full items-center justify-center gap-2 rounded-xl px-8 text-sm font-bold text-(--primary-foreground) shadow-md transition hover:opacity-95 hover:shadow-lg sm:w-auto sm:min-w-[220px]"
+          style={{ background: "var(--anslation-ds-cta-gradient, var(--primary))" }}
         >
           <Cake className="h-4 w-4" /> Calculate Age <ArrowRight className="h-4 w-4" />
         </button>
@@ -76,7 +77,7 @@ export default function AgeForm({
         </p>
       ) : (
         <p className="mt-3 flex items-center gap-1.5 text-xs font-medium text-(--muted-foreground)">
-          <Cake className="h-3.5 w-3.5 text-(--primary)" /> We never store your date of birth.
+          <ShieldCheck className="h-3.5 w-3.5 text-(--primary)" /> We never store your date of birth.
         </p>
       )}
     </form>
