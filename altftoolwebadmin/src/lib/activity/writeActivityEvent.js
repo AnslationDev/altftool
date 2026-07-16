@@ -159,43 +159,72 @@ export async function writeActivityEvent(entry = {}, opts = {}) {
       ? Timestamp.fromMillis(opts.atMs)
       : FieldValue.serverTimestamp();
 
-    const batch = adminDb.batch();
+    // Deterministic event id (passed by the backfill) makes a re-migration
+    // OVERWRITE the same event doc instead of creating a duplicate.
+    const eventsCol = adminDb.collection(ACTIVITY_EVENTS_COLLECTION);
+    const eventRef = opts.eventId ? eventsCol.doc(String(opts.eventId)) : eventsCol.doc();
 
-    // 1. the event
-    const eventRef = adminDb.collection(ACTIVITY_EVENTS_COLLECTION).doc();
-    batch.set(eventRef, { ...event, createdAt: serverTs });
+    // 1. CRITICAL write — the event + (optionally) the legacy mirror. This is the
+    // source of truth. It is kept OFF the hot rollup docs so that contention on
+    // an aggregate counter can never drop the actual audit record (previously a
+    // single atomic batch meant a hot-doc ABORTED killed the whole event).
+    const critical = adminDb.batch();
+    critical.set(eventRef, { ...event, createdAt: serverTs });
 
-    // 2. rollups for the node + every ancestor prefix
-    const kind = event.actionKind;
-    const actorKey = event.actorUid && /^[A-Za-z0-9_-]+$/.test(event.actorUid) ? event.actorUid : null;
-    for (const path of ancestorPaths(event.hierarchyPath)) {
-      const ref = adminDb.collection(ACTIVITY_ROLLUPS_COLLECTION).doc(rollupDocId(path));
-      const rollup = {
-        hierarchyPath: path,
-        count: FieldValue.increment(1),
-        byAction: { [kind]: FieldValue.increment(1) },
-        lastAtMs: nowMs,
-        lastAction: event.action,
-        updatedAt: serverTs,
-      };
-      if (actorKey) rollup.byActor = { [actorKey]: FieldValue.increment(1) };
-      batch.set(ref, rollup, { merge: true });
-    }
-
-    // 3. legacy mirror (keeps the current audit view working). Skipped during
+    // legacy mirror (keeps the current audit view working). Skipped during
     // backfill, where the source admin_audit_logs doc already exists.
     if (mirrorLegacy) {
+      const legacy = buildLegacyMirror(event);
       const legacyRef = adminDb.collection(LEGACY_AUDIT_COLLECTION).doc();
-      batch.set(legacyRef, {
-        ...buildLegacyMirror(event),
+      critical.set(legacyRef, {
+        ...legacy,
+        // Preserve the caller's original module when the resolver couldn't map
+        // one (null moduleKey) — keeps the legacy audit table's Module column
+        // and module filters working exactly as before.
+        module: event.moduleKey || entry.module || entry.moduleKey || null,
+        // Keep any EXTRA metadata keys (oldValue/newValue/…) the caller sent.
+        metadata: { ...(entry.metadata || {}), ...legacy.metadata },
         targetUid: entry.targetUid ?? null,
         targetEmail: entry.targetEmail ?? null,
         createdAtMs: nowMs,
         createdAt: serverTs,
       });
     }
+    await critical.commit();
 
-    await batch.commit();
+    // 2. BEST-EFFORT rollups — aggregate counters for the node + every ancestor
+    // prefix. Isolated in their own batch + try/catch so a hot-doc contention
+    // failure degrades to an undercount, never a lost event.
+    try {
+      const kind = event.actionKind;
+      // Firestore map keys accept far more than a Firebase UID's charset; allow
+      // federated/SAML uids (., :, @, |, =) so their per-actor counts aren't
+      // silently dropped. Still reject path separators / reserved chars.
+      const actorKey = event.actorUid && /^[A-Za-z0-9_.:@|=-]+$/.test(event.actorUid) ? event.actorUid : null;
+      const rollupBatch = adminDb.batch();
+      for (const path of ancestorPaths(event.hierarchyPath)) {
+        const ref = adminDb.collection(ACTIVITY_ROLLUPS_COLLECTION).doc(rollupDocId(path));
+        const rollup = {
+          hierarchyPath: path,
+          count: FieldValue.increment(1),
+          byAction: { [kind]: FieldValue.increment(1) },
+          updatedAt: serverTs,
+        };
+        // "last activity" tracks the most recent LIVE event only. Backfilled
+        // historical events arrive in arbitrary order, so writing lastAtMs there
+        // would move it BACKWARDS — leave those fields to live traffic.
+        if (mirrorLegacy) {
+          rollup.lastAtMs = nowMs;
+          rollup.lastAction = event.action;
+        }
+        if (actorKey) rollup.byActor = { [actorKey]: FieldValue.increment(1) };
+        rollupBatch.set(ref, rollup, { merge: true });
+      }
+      await rollupBatch.commit();
+    } catch (rollupError) {
+      console.warn("[activity] rollup update failed (event kept):", rollupError?.message || rollupError);
+    }
+
     return eventRef.id;
   } catch (error) {
     // Never let auditing break a CRUD flow.

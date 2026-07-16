@@ -166,6 +166,14 @@
   user-select: none;
 }
 
+/* Inline HTML comment marker — flows within a line of text. */
+.altft-editor .altft-editor-comment--inline {
+  padding: 1px 8px;
+  margin: 0 2px;
+  font-size: 10px;
+  vertical-align: middle;
+}
+
 /* Tables */
 .altft-editor .ProseMirror table {
   border-collapse: collapse;

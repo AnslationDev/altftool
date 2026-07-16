@@ -7,10 +7,20 @@
 // (array-contains composes with orderBy, unlike a string range). Empty path =
 // the whole workspace. Cursor is the createdAtMs of the last row.
 import { NextResponse } from "next/server";
+import { FieldPath } from "firebase-admin/firestore";
 import { verifySuperAdminRequest } from "@/lib/adminAccess";
 import { adminDb } from "@/lib/firebaseAdmin";
 
 const COLLECTION = "activity_events";
+
+// Parse a numeric query param, treating "" / missing / non-numeric as absent
+// (a NaN would silently pass a `!= null` guard and match zero documents).
+function numParam(url, key) {
+  const raw = url.searchParams.get(key);
+  if (raw == null || raw === "") return null;
+  const n = Number(raw);
+  return Number.isFinite(n) ? n : null;
+}
 
 function serialize(data) {
   const { createdAt, ...rest } = data || {};
@@ -24,9 +34,19 @@ export async function GET(request) {
     const path = url.searchParams.get("path") || "";
     const sizeParam = Number(url.searchParams.get("pageSize") || 40);
     const pageSize = Math.min(Math.max(Number.isFinite(sizeParam) ? sizeParam : 40, 10), 100);
-    const cursor = url.searchParams.get("cursor") ? Number(url.searchParams.get("cursor")) : null;
-    const from = url.searchParams.get("from") ? Number(url.searchParams.get("from")) : null;
-    const to = url.searchParams.get("to") ? Number(url.searchParams.get("to")) : null;
+    // Cursor is composite: "<createdAtMs>_<docId>" (a bare timestamp cursor
+    // dropped every event that shared the last row's millisecond — common after
+    // a bulk backfill assigns many events the same ms).
+    const rawCursor = url.searchParams.get("cursor") || "";
+    let cursorMs = null;
+    let cursorId = null;
+    const cutIdx = rawCursor.lastIndexOf("_");
+    if (cutIdx > 0) {
+      const ms = Number(rawCursor.slice(0, cutIdx));
+      if (Number.isFinite(ms)) { cursorMs = ms; cursorId = rawCursor.slice(cutIdx + 1); }
+    }
+    const from = numParam(url, "from");
+    const to = numParam(url, "to");
     // Scoped views (alternative primary filters): User Activity + Entity History.
     const actorUid = url.searchParams.get("actorUid") || null;
     const entityType = url.searchParams.get("entityType") || null;
@@ -46,14 +66,19 @@ export async function GET(request) {
     }
     if (from != null) q = q.where("createdAtMs", ">=", from);
     if (to != null) q = q.where("createdAtMs", "<=", to);
-    q = q.orderBy("createdAtMs", "desc").limit(pageSize + 1);
-    if (cursor != null) q = q.startAfter(cursor);
+    // Document id is the tiebreaker so ties on createdAtMs paginate correctly.
+    // Existing composite indexes end in `createdAtMs DESC`, whose implicit
+    // __name__ ordering matches this, so no new index is required.
+    q = q.orderBy("createdAtMs", "desc").orderBy(FieldPath.documentId(), "desc").limit(pageSize + 1);
+    if (cursorMs != null && cursorId) q = q.startAfter(cursorMs, cursorId);
 
     const snap = await q.get();
     const docs = snap.docs;
     const hasMore = docs.length > pageSize;
-    const events = docs.slice(0, pageSize).map((d) => ({ id: d.id, ...serialize(d.data()) }));
-    const nextCursor = hasMore && events.length ? events[events.length - 1].createdAtMs : null;
+    const returned = docs.slice(0, pageSize);
+    const events = returned.map((d) => ({ id: d.id, ...serialize(d.data()) }));
+    const last = returned[returned.length - 1];
+    const nextCursor = hasMore && last ? `${last.data().createdAtMs}_${last.id}` : null;
 
     return NextResponse.json({ path, events, hasMore, nextCursor });
   } catch (error) {

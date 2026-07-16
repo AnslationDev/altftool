@@ -22,8 +22,8 @@ export default function EditorCommandPalette({ open, onClose }) {
     if (!q) return all;
     return all.filter(
       (item) =>
-        item.label.toLowerCase().includes(q) ||
-        item.keywords.some((keyword) => keyword.includes(q)),
+        String(item.label || "").toLowerCase().includes(q) ||
+        (item.keywords || []).some((keyword) => keyword.includes(q)),
     );
   }, [query]);
 

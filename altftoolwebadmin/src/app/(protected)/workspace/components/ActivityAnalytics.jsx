@@ -53,7 +53,7 @@ function Panel({ title, icon: Icon, children, empty }) {
   );
 }
 
-export default function ActivityAnalytics({ path, authFetch, onScopeActor, onScopeEntity, onSelectNode }) {
+export default function ActivityAnalytics({ path, authFetch, reloadKey, onScopeActor, onScopeEntity, onSelectNode }) {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -64,7 +64,8 @@ export default function ActivityAnalytics({ path, authFetch, onScopeActor, onSco
     if (path) params.set("path", path);
     authFetch(`/api/activity/analytics?${params}`).then((d) => { if (alive) { setData(d); setLoading(false); } });
     return () => { alive = false; };
-  }, [path, authFetch]);
+    // reloadKey is included so the header "Refresh" button refetches analytics.
+  }, [path, authFetch, reloadKey]);
 
   const actionRows = useMemo(() => {
     if (!data?.byAction) return [];
@@ -78,10 +79,15 @@ export default function ActivityAnalytics({ path, authFetch, onScopeActor, onSco
     return <p className="py-16 text-center text-sm text-[var(--muted)]">Analytics unavailable.</p>;
   }
 
-  const maxChild = Math.max(1, ...data.childBreakdown.map((c) => c.count));
+  // Defensive: the API always returns these arrays today, but never assume — a
+  // partial/older response shape must not white-screen the whole view.
+  const childBreakdown = data.childBreakdown || [];
+  const topActors = data.topActors || [];
+  const topEntities = data.topEntities || [];
+  const maxChild = Math.max(1, ...childBreakdown.map((c) => c.count));
   const maxAction = Math.max(1, ...actionRows.map((a) => a.count));
-  const maxActor = Math.max(1, ...data.topActors.map((a) => a.count));
-  const maxEntity = Math.max(1, ...data.topEntities.map((e) => e.count));
+  const maxActor = Math.max(1, ...topActors.map((a) => a.count));
+  const maxEntity = Math.max(1, ...topEntities.map((e) => e.count));
 
   return (
     <div className="space-y-5">
@@ -89,7 +95,7 @@ export default function ActivityAnalytics({ path, authFetch, onScopeActor, onSco
         <StatTile icon={Activity} label="Total activity" value={data.total} />
         <StatTile icon={BarChart3} label={`Last ${data.days} days`} value={data.windowTotal} tone="var(--info)" />
         <StatTile icon={Users} label="Active users" value={data.uniqueActors} tone="var(--success)" />
-        <StatTile icon={Boxes} label="Sub-sections" value={data.childBreakdown.length} tone="var(--warning)" />
+        <StatTile icon={Boxes} label="Sub-sections" value={childBreakdown.length} tone="var(--warning)" />
       </div>
 
       <div className="rounded-xl border border-[var(--border)] bg-[var(--surface)] p-4">
@@ -98,9 +104,9 @@ export default function ActivityAnalytics({ path, authFetch, onScopeActor, onSco
       </div>
 
       <div className="grid gap-4 lg:grid-cols-2">
-        <Panel title="Most active sections" icon={Boxes} empty={data.childBreakdown.length ? null : "No sub-sections."}>
+        <Panel title="Most active sections" icon={Boxes} empty={childBreakdown.length ? null : "No sub-sections."}>
           <div className="space-y-2.5">
-            {data.childBreakdown.slice(0, 8).map((c) => (
+            {childBreakdown.slice(0, 8).map((c) => (
               <BarRow key={c.hierarchyPath} label={c.label} count={c.count} max={maxChild} onClick={onSelectNode ? () => onSelectNode(c.hierarchyPath, c.label) : undefined} />
             ))}
           </div>
@@ -115,17 +121,17 @@ export default function ActivityAnalytics({ path, authFetch, onScopeActor, onSco
           </div>
         </Panel>
 
-        <Panel title="Most active users" icon={Users} empty={data.topActors.length ? null : "No user activity in window."}>
+        <Panel title="Most active users" icon={Users} empty={topActors.length ? null : "No user activity in window."}>
           <div className="space-y-2.5">
-            {data.topActors.map((a) => (
+            {topActors.map((a) => (
               <BarRow key={a.email} label={a.email} count={a.count} max={maxActor} tone="var(--success)" onClick={a.uid && onScopeActor ? () => onScopeActor(a.uid, a.email) : undefined} />
             ))}
           </div>
         </Panel>
 
-        <Panel title="Most modified entities" icon={FileStack} empty={data.topEntities.length ? null : "No entity activity in window."}>
+        <Panel title="Most modified entities" icon={FileStack} empty={topEntities.length ? null : "No entity activity in window."}>
           <div className="space-y-2.5">
-            {data.topEntities.map((e) => (
+            {topEntities.map((e) => (
               <BarRow
                 key={`${e.entityType}:${e.entityId}`}
                 label={e.name || e.entityId}

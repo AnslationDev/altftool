@@ -66,6 +66,17 @@ function assemble(source, parts) {
 
   const deepest = featureNode || sectionNode || moduleNode || appNode || project || null;
 
+  // A section/feature cannot exist without its module. If moduleKey is absent,
+  // do NOT let a section slug slide up into the module slot of the path (that
+  // would make "project/app/drafts" look like a module named "drafts" and
+  // disagree with nodePath). Only append section/feature when their parent
+  // level is actually present.
+  const pathParts = [projectId, application, moduleKey];
+  if (moduleKey && section) {
+    pathParts.push(section);
+    if (feature) pathParts.push(feature);
+  }
+
   return {
     resolved: Boolean(projectId),
     source,
@@ -80,7 +91,7 @@ function assemble(source, parts) {
     sectionName: sectionNode?.label || (section ? titleize(section) : null),
     feature: feature || null,
     featureName: featureNode?.label || (feature ? titleize(feature) : null),
-    hierarchyPath: joinPath(projectId, application, moduleKey, section, feature) || UNCLASSIFIED_PROJECT,
+    hierarchyPath: joinPath(...pathParts) || UNCLASSIFIED_PROJECT,
     nodePath: deepest?.hierarchyPath || null,
   };
 }
@@ -112,6 +123,10 @@ function parseRoute(route) {
  */
 export function resolveWorkspaceNode(input = {}) {
   ensureWorkspaceBootstrapped();
+  // A default parameter only fills in for `undefined`, not `null`. Guard here so
+  // a caller forwarding a nullable value (e.g. event.workspace) can never crash
+  // the resolver — this module must never throw and never drop an activity.
+  if (input == null) input = {};
   const section = input.section || null;
   const feature = input.feature || null;
 
@@ -126,21 +141,20 @@ export function resolveWorkspaceNode(input = {}) {
     });
   }
 
-  // 2. Registry lookup — a bare module key unique across the whole workspace
+  // 2. Registry lookup — a bare module key unique across the whole workspace.
+  // Count EVERY matching module node (across all projects AND applications), so
+  // the same module under two applications of one project is treated as
+  // genuinely ambiguous and falls through — never silently guessed.
   const bareModule = input.moduleKey || input.module;
   if (bareModule) {
-    const matches = [];
-    for (const project of workspaceRegistry.listProjects()) {
-      const node = findModuleNode(project.id, bareModule);
-      if (node) matches.push(node);
-    }
+    const matches = workspaceRegistry.findModuleNodes(bareModule);
     if (matches.length === 1) {
       const m = matches[0];
       return assemble("registry", {
         projectId: m.projectId, application: m.applicationId, moduleKey: m.moduleKey, section, feature,
       });
     }
-    // ambiguous (same module in many projects) or none → fall through
+    // ambiguous (same module in many projects/apps) or none → fall through
   }
 
   // 3. Route resolver

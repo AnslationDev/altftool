@@ -12,6 +12,7 @@ import {
   Trash2,
 } from "lucide-react";
 import { useAltfEditor } from "./EditorProvider.jsx";
+import { cleanPastedHtml } from "./EditorUtils.js";
 
 /**
  * EditorContextMenu — custom right-click menu inside the editing surface:
@@ -111,6 +112,19 @@ export default function EditorContextMenu({ containerRef }) {
       label: "Paste",
       run: async () => {
         try {
+          // Prefer rich HTML so formatting survives; fall back to plain text.
+          if (navigator.clipboard?.read) {
+            const clipItems = await navigator.clipboard.read();
+            for (const clipItem of clipItems) {
+              if (clipItem.types.includes("text/html")) {
+                const html = await (await clipItem.getType("text/html")).text();
+                if (html) {
+                  editor.chain().focus().insertContent(cleanPastedHtml(html)).run();
+                  return;
+                }
+              }
+            }
+          }
           const text = await navigator.clipboard.readText();
           if (text) editor.chain().focus().insertContent(text).run();
         } catch {
