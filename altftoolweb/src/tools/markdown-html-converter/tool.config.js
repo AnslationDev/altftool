@@ -1,4 +1,5 @@
 const toolConfig = {
+  slug: "markdown-html-converter",
   "slug": "markdown-html-converter",
   "name": "Markdown / HTML Converter",
   "category": [

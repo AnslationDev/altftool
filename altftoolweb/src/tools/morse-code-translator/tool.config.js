@@ -1,4 +1,5 @@
 const toolConfig = {
+  slug: "morse-code-translator",
   "slug": "morse-code-translator",
   "name": "Morse Code Translator",
   "category": [

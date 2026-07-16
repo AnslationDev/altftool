@@ -1,4 +1,5 @@
 const toolConfig = {
+  slug: "url-escape-unescape",
   "slug": "url-escape-unescape",
   "name": "URL Escape / Unescape",
   "category": [

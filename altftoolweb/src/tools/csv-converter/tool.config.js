@@ -1,4 +1,5 @@
 const toolConfig = {
+  slug: "csv-converter",
   "slug": "csv-converter",
   "name": "CSV Converter",
   "category": [

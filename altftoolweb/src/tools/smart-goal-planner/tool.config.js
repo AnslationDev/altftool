@@ -1,4 +1,5 @@
 const smartGoalPlannerConfig = {
+  slug: "smart-goal-planner",
   name: "SMART Goal Planner",
   description:
     "Create SMART goals, manage milestones and tasks, track live progress, reminders, analytics, reports, and local autosave.",

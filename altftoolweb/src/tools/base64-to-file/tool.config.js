@@ -1,4 +1,5 @@
 const toolConfig = {
+  slug: "base64-to-file",
   "slug": "base64-to-file",
   "name": "Base64 to File",
   "category": [

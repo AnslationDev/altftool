@@ -1,4 +1,5 @@
 const toolConfig = {
+  slug: "xml-editor",
   "slug": "xml-editor",
   "name": "XML Editor",
   "category": [

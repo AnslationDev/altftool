@@ -1,4 +1,5 @@
 export default {
+  slug: "css-beautifier",
   name: "CSS Beautifier",
   description: "Format, beautify, and clean minified or messy CSS code with options to adjust tab indentation size and copy output.",
   category: ["Developers", "Utilities"],

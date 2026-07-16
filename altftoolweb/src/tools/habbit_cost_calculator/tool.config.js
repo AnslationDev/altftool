@@ -1,4 +1,5 @@
 const toolConfig = {
+  slug: "habbit_cost_calculator",
   "slug": "habbit_cost_calculator",
   "name": "Habit Cost Calculator",
   "description": "Calculate the cost of your habits and make informed decisions.",

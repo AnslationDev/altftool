@@ -48,10 +48,12 @@ export const toolMetaMap = {
   },
   "age-gender-detector": {
     "name": "Age & Gender Detector",
-    "description": "Detects age and gender of a person",
-    "category": "AI",
+    "description": "Upload a photo and our advanced AI will detect the person's estimated age and gender in seconds.",
+    "category": [
+      "AI"
+    ],
     "icon": "scan-face",
-    "iconColor": "text-purple-500"
+    "iconColor": "text-teal-600"
   },
   "age-progression-generator": {
     "name": "Age Progression Generator",
@@ -79,6 +81,18 @@ export const toolMetaMap = {
     ],
     "icon": "scan-face",
     "iconColor": "text-teal-500"
+  },
+  "ai-object-counter": {
+    "name": "AI Object Counter",
+    "description": "Detect and count objects in images using TensorFlow.js COCO-SSD. Supports 90+ object categories with confidence scoring and visualization.",
+    "category": [
+      "AI",
+      "Image",
+      "Computer Vision",
+      "Data"
+    ],
+    "icon": "scan",
+    "iconColor": "text-emerald-500"
   },
   "ai-passport-photo-maker": {
     "name": "AI Passport Photo Maker",
@@ -358,12 +372,36 @@ export const toolMetaMap = {
     "icon": "activity",
     "iconColor": "text-green-500"
   },
+  "before-after-comparator": {
+    "name": "Before vs After Comparator",
+    "description": "Compare two images with slider, side-by-side, and fade overlay modes. Includes resolution and difference analysis.",
+    "category": [
+      "Image",
+      "Design",
+      "Photography",
+      "Creators"
+    ],
+    "icon": "pilcrow-left",
+    "iconColor": "text-blue-500"
+  },
   "beauty-score": {
     "name": "Beauty Score Calculator",
     "description": "Calculate your facial beauty score based on symmetry and the Golden Ratio.",
     "category": "Fun / AI",
     "icon": "scan-face",
     "iconColor": "text-purple-500"
+  },
+  "beard-style-preview": {
+    "name": "Beard Style Preview",
+    "description": "Preview different beard styles on your face with AI-powered jawline detection. Try stubble, goatee, full beard, and more.",
+    "category": [
+      "AI",
+      "Image",
+      "Style",
+      "Beauty"
+    ],
+    "icon": "user",
+    "iconColor": "text-cyan-500"
   },
   "bg-remover": {
     "name": "Background Remover",
@@ -423,6 +461,18 @@ export const toolMetaMap = {
     ],
     "icon": "cake",
     "iconColor": "text-pink-600"
+  },
+  "blur-detector": {
+    "name": "Blur Detector",
+    "description": "Detect motion blur, lens blur, and out-of-focus regions in images with blur heatmap visualization and AI suggestions.",
+    "category": [
+      "AI",
+      "Image",
+      "Photography",
+      "Creators"
+    ],
+    "icon": "eye-off",
+    "iconColor": "text-cyan-500"
   },
   "bmi-calculator": {
     "name": "BMI Calculator",
@@ -485,6 +535,16 @@ export const toolMetaMap = {
     ],
     "icon": "layout-dashboard",
     "iconColor": "text-indigo-600"
+  },
+  "browser-session-exporter": {
+    "name": "Browser Session Exporter",
+    "description": "Parse tab logs, bookmark exports, or URL lists and export them as clean Markdown logs, JSON dumps, or HTML links lists.",
+    "category": [
+      "Developers",
+      "Utilities"
+    ],
+    "icon": "share-2",
+    "iconColor": "text-teal-500"
   },
   "bulk-text-replacer": {
     "name": "Bulk Text Replacer",
@@ -1065,6 +1125,28 @@ export const toolMetaMap = {
     "icon": "circle-dashed",
     "iconColor": "text-blue-500"
   },
+  "dream-vacation-finder": {
+    "name": "Dream Vacation Finder",
+    "description": "Answer a few questions and discover your perfect vacation destination — from tropical beaches to mountain escapes, and everything in between.",
+    "category": [
+      "Lifestyle",
+      "Fun"
+    ],
+    "icon": "plane",
+    "iconColor": "text-sky-500"
+  },
+  "duplicate-image-finder": {
+    "name": "Duplicate Image Finder",
+    "description": "Find exact and near-duplicate images using perceptual hashing. Supports batch upload, similarity scoring, and group management.",
+    "category": [
+      "Image",
+      "Utility",
+      "Productivity",
+      "Creators"
+    ],
+    "icon": "copy-check",
+    "iconColor": "text-purple-500"
+  },
   "eisenhower-matrix-tool": {
     "name": "Eisenhower Matrix Tool",
     "description": "Prioritize tasks in a real-time four-quadrant matrix with drag-and-drop workflow, live dashboard, notes, filters, and local save.",
@@ -1412,6 +1494,18 @@ export const toolMetaMap = {
     "icon": "gift",
     "iconColor": "text-fuchsia-600"
   },
+  "glasses-tryon": {
+    "name": "Glasses Try-on",
+    "description": "Try on different glasses styles with AI-powered eye detection. Browse classic, retro, fashion, and sports frames.",
+    "category": [
+      "AI",
+      "Image",
+      "Style",
+      "Fashion"
+    ],
+    "icon": "glasses",
+    "iconColor": "text-teal-500"
+  },
   "gold-price-checker": {
     "name": "Gold Price Checker",
     "description": "Check the current price of gold in real-time",
@@ -1475,6 +1569,18 @@ export const toolMetaMap = {
     "category": "AI",
     "icon": "calculator",
     "iconColor": "text-green-600"
+  },
+  "hairstyle-preview": {
+    "name": "Hair Style Preview",
+    "description": "Try on different hairstyles with AI-powered face detection. Preview short, medium, and long hairstyles with various colors and adjustments.",
+    "category": [
+      "AI",
+      "Image",
+      "Style",
+      "Beauty"
+    ],
+    "icon": "sparkles",
+    "iconColor": "text-teal-500"
   },
   "hashtag-set-organizer": {
     "name": "Hashtag Set Organizer",
@@ -1625,6 +1731,18 @@ export const toolMetaMap = {
     "category": "Creators",
     "icon": "image",
     "iconColor": "text-blue-500"
+  },
+  "image-quality-checker": {
+    "name": "Image Quality Checker",
+    "description": "Analyze image quality with 10+ professional metrics including sharpness, brightness, contrast, noise, exposure, and histogram analysis.",
+    "category": [
+      "AI",
+      "Image",
+      "Design",
+      "Creators"
+    ],
+    "icon": "scan-eye",
+    "iconColor": "text-teal-500"
   },
   "image-resizer": {
     "name": "Image Resizer",
@@ -1950,6 +2068,16 @@ export const toolMetaMap = {
       "Entertainment"
     ],
     "icon": "clover",
+    "iconColor": "text-amber-500"
+  },
+  "lucky-number-generator": {
+    "name": "Lucky Number Generator",
+    "description": "Generate lucky numbers by random, lottery style, numerology, horoscope, or custom ranges. Save favorites and track your history.",
+    "category": [
+      "Fun",
+      "Calculator"
+    ],
+    "icon": "dice-6",
     "iconColor": "text-amber-500"
   },
   "ludo-multiplayer": {
@@ -2399,6 +2527,16 @@ export const toolMetaMap = {
     "icon": "shield-check",
     "iconColor": "text-blue-600"
   },
+  "profile-pic-bg-changer": {
+    "name": "Profile Picture Background Changer",
+    "description": "Change the background of your profile picture with AI-powered background removal and customizable backgrounds.",
+    "category": [
+      "Design",
+      "AI"
+    ],
+    "icon": "image",
+    "iconColor": "text-teal-500"
+  },
   "profile-picture-maker": {
     "name": "Profile Picture Maker",
     "description": "Create stunning profile pictures easily with custom styles.",
@@ -2407,6 +2545,17 @@ export const toolMetaMap = {
     ],
     "icon": "image-plus",
     "iconColor": "text-purple-600"
+  },
+  "profile-picture-rating": {
+    "name": "Profile Picture Rating",
+    "description": "Upload your profile picture to analyze lighting, composition, expression, and get actionable AI-powered feedback to optimize your social/professional presence.",
+    "category": [
+      "AI",
+      "Design",
+      "Lifestyle"
+    ],
+    "icon": "user",
+    "iconColor": "text-teal-500"
   },
   "qr-generator": {
     "name": "QR Generator",
@@ -2434,6 +2583,16 @@ export const toolMetaMap = {
     "icon": "quote",
     "iconColor": "text-purple-600"
   },
+  "random-business-idea": {
+    "name": "Random Business Idea",
+    "description": "Generate unique business ideas on demand — combine industries, technologies, and business models for your next startup.",
+    "category": [
+      "Business",
+      "Fun"
+    ],
+    "icon": "lightbulb",
+    "iconColor": "text-amber-500"
+  },
   "random-fun-picker": {
     "name": "Random Fun Picker",
     "description": "Pick a lunch spot, play Truth or Dare, or randomly select names — three fun tools in one.",
@@ -2443,6 +2602,17 @@ export const toolMetaMap = {
     ],
     "icon": "shuffle",
     "iconColor": "text-cyan-600"
+  },
+  "random-life-challenge": {
+    "name": "Random Life Challenge",
+    "description": "Gamify your self-improvement. Spin the wheel to get random daily challenges in fitness, mindfulness, creativity, kindness, and step out of your comfort zone.",
+    "category": [
+      "Lifestyle",
+      "Fun",
+      "Utilities"
+    ],
+    "icon": "sparkles",
+    "iconColor": "text-teal-500"
   },
   "rashi-finder": {
     "name": "Rashi Finder",
@@ -2517,6 +2687,13 @@ export const toolMetaMap = {
     ],
     "icon": "footprints",
     "iconColor": "text-(--primary)"
+  },
+  "rot13-encoder-decoder": {
+    "name": "ROT13 Encoder/Decoder",
+    "description": "Encodes or decodes text using the ROT13 substitution cipher, which shifts each letter by 13 positions in the alphabet.",
+    "category": "Text Tools",
+    "icon": "file-text",
+    "iconColor": "text-green-800"
   },
   "sacred-geometry-generator": {
     "name": "Sacred Geometry Generator",
@@ -2652,6 +2829,18 @@ export const toolMetaMap = {
     "icon": "target",
     "iconColor": "text-cyan-500"
   },
+  "smile-detector": {
+    "name": "Smile Detector",
+    "description": "Analyze your smile with AI-powered facial expression detection. Get smile score, emotion analysis, confidence meter, and detailed report.",
+    "category": [
+      "AI",
+      "Image",
+      "Fun",
+      "Health"
+    ],
+    "icon": "smile",
+    "iconColor": "text-yellow-500"
+  },
   "snake-game": {
     "name": "Snake Game",
     "description": "Play a responsive Snake game with speed levels, collision detection, touch controls, and score statistics.",
@@ -2671,6 +2860,16 @@ export const toolMetaMap = {
     ],
     "icon": "gamepad-2",
     "iconColor": "text-teal-600"
+  },
+  "social-media-simulator": {
+    "name": "Social Media Simulator",
+    "description": "Simulate social media feeds and posts to preview their visual appearance and layouts in real-time.",
+    "category": [
+      "Marketing",
+      "Utilities"
+    ],
+    "icon": "share-2",
+    "iconColor": "text-blue-500"
   },
   "sound-decibel-checker": {
     "name": "Sound Decibel Checker",
@@ -2767,7 +2966,7 @@ export const toolMetaMap = {
       "Fitness"
     ],
     "icon": "footprints",
-    "iconColor": "text-green-700"
+    "iconColor": "text-teal-600"
   },
   "storyboard-builder": {
     "name": "Storyboard Builder",
@@ -3207,6 +3406,17 @@ export const toolMetaMap = {
     "icon": "video",
     "iconColor": "text-red-600"
   },
+  "viral-thumbnail-maker": {
+    "name": "Viral Thumbnail Maker",
+    "description": "Generate high-converting, viral YouTube thumbnails using AI. Answer a few questions about your video, generate the layout, customize text overlays, and download.",
+    "category": [
+      "AI",
+      "Design",
+      "Media"
+    ],
+    "icon": "image",
+    "iconColor": "text-teal-500"
+  },
   "visual-working-memory": {
     "name": "Visual Working Memory Test",
     "description": "Test your working memory capacity — memorize colored shapes and recall their positions in increasingly challenging rounds.",
@@ -3312,15 +3522,15 @@ export const toolMetaMap = {
     "iconColor": "text-red-600"
   },
   "wheregoes-tool": {
-    "name": "WhereGoes Tracer",
-    "description": "Trace the complete redirect chain of any URL, test APIs, and inspect response headers.",
+    "name": "WhereGoes Tool",
+    "description": "Trace URL redirects, check status codes, and analyze response headers.",
     "category": [
       "Web",
       "Developer",
       "Network"
     ],
     "icon": "link",
-    "iconColor": "text-primary"
+    "iconColor": "text-teal-600"
   },
   "word-character-counter": {
     "name": "Word & Character Counter",

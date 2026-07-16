@@ -1,4 +1,5 @@
 const toolConfig = {
+  slug: "text-encryptor",
   "slug": "text-encryptor",
   "name": "Text Encryptor",
   "category": [

@@ -1,4 +1,5 @@
 const toolConfig = {
+  slug: "sql-formatter-online",
   "slug": "sql-formatter-online",
   "name": "SQL Formatter Online",
   "category": [

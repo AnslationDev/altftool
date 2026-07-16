@@ -1,4 +1,5 @@
 const toolConfig = {
+  slug: "unicode-ascii-converter",
   "slug": "unicode-ascii-converter",
   "name": "Unicode / ASCII Converter",
   "category": [

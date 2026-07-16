@@ -1,4 +1,5 @@
 const toolConfig = {
+  slug: "htaccess-to-nginx",
   "slug": "htaccess-to-nginx",
   "name": "HTAccess to NGINX",
   "category": [

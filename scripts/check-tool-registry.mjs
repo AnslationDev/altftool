@@ -6,7 +6,7 @@ const rootDir = process.cwd();
 const toolsDir = path.join(rootDir, "altftoolweb/src/tools");
 const metaPath = path.join(rootDir, "altftoolweb/src/platform/registry/toolMetaMap.js");
 const runtimePath = path.join(rootDir, "altftoolweb/src/platform/registry/toolRuntimeMap.js");
-const ignoredToolDirs = new Set(["_toolfk-suite"]);
+const ignoredToolDirs = new Set(["_shared", "_toolfk-suite"]);
 const validEntryFiles = ["entry.js", "entry.jsx", "entry.ts", "entry.tsx"];
 const iconAliases = {
   "search-icon": "search",

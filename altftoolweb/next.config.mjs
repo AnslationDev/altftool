@@ -171,7 +171,22 @@ const nextConfig = {
         module: /@vladmandic\/face-api/,
         message: /Critical dependency: require function is used in a way in which dependencies cannot be statically extracted/,
       },
+      {
+        module: /@tensorflow/,
+        message: /Critical dependency|Require function/,
+      },
     ];
+
+    config.resolve = config.resolve || {};
+    config.resolve.fallback = {
+      ...config.resolve.fallback,
+      fs: false,
+      path: false,
+      crypto: false,
+      util: false,
+      stream: false,
+      assert: false,
+    };
 
     return config;
   },

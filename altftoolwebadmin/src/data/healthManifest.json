@@ -1,23 +1,15 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-07-15T14:07:05.852Z",
+  "generatedAt": "2026-07-16T06:56:39.509Z",
   "tools": {
-    "total": 361,
-    "healthy": 361,
+    "total": 380,
+    "healthy": 380,
     "needsAttention": 0,
     "averageScore": 100,
-    "categories": 65,
-    "directories": 370,
+    "categories": 71,
+    "directories": 381,
     "orphanToolDirs": [
-      "browser-session-exporter",
-      "dream-vacation-finder",
-      "lucky-number-generator",
-      "profile-pic-bg-changer",
-      "profile-picture-rating",
-      "random-business-idea",
-      "random-life-challenge",
-      "rot13-encoder-decoder",
-      "viral-thumbnail-maker"
+      "_shared"
     ],
     "registryWithoutDir": [],
     "missingEntry": 0,

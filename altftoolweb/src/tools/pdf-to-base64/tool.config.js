@@ -1,4 +1,5 @@
 const toolConfig = {
+  slug: "pdf-to-base64",
   "slug": "pdf-to-base64",
   "name": "PDF to Base64",
   "category": [

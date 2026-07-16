@@ -1,4 +1,5 @@
 const toolConfig = {
+  slug: "base64-url-converter",
   "slug": "base64-url-converter",
   "name": "Base64 URL Converter",
   "category": [

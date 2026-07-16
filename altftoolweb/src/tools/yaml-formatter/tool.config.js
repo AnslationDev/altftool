@@ -1,4 +1,5 @@
 const toolConfig = {
+  slug: "yaml-formatter",
   "slug": "yaml-formatter",
   "name": "YAML Formatter",
   "category": [

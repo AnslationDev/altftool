@@ -1,4 +1,5 @@
 const toolConfig = {
+  slug: "base64-url-encoder",
   "slug": "base64-url-encoder",
   "name": "Base64 URL Encoder",
   "category": [

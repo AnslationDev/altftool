@@ -1,4 +1,5 @@
 const toolConfig = {
+  slug: "svg-to-image",
   "slug": "svg-to-image",
   "name": "SVG to Image",
   "category": [
