@@ -1,4 +1,5 @@
 const toolConfig = {
+  slug: "emoji-remover",
   "slug": "emoji-remover",
   "name": "Emoji Remover",
   "category": [

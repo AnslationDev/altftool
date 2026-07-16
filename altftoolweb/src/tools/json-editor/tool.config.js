@@ -1,4 +1,5 @@
 const toolConfig = {
+  slug: "json-editor",
   "slug": "json-editor",
   "name": "JSON Editor",
   "category": [

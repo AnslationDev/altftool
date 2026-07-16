@@ -1,4 +1,5 @@
 const toolConfig = {
+  slug: "audio-to-base64",
   "slug": "audio-to-base64",
   "name": "Audio to Base64",
   "category": [

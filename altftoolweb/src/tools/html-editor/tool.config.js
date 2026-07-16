@@ -1,4 +1,5 @@
 const toolConfig = {
+  slug: "html-editor",
   "slug": "html-editor",
   "name": "HTML Editor",
   "category": [

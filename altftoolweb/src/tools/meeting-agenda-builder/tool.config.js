@@ -1,4 +1,5 @@
 const meetingAgendaBuilderConfig = {
+  slug: "meeting-agenda-builder",
   name: "Meeting Agenda Builder",
   description:
     "Create meetings, manage attendees, build real-time draggable agendas, track actions, reminders, and export meeting summaries.",

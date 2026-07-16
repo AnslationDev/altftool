@@ -1,4 +1,5 @@
 const toolConfig = {
+  slug: "base64-to-video",
   "slug": "base64-to-video",
   "name": "Base64 to Video",
   "category": [

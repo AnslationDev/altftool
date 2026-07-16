@@ -1,4 +1,5 @@
 const toolConfig = {
+  slug: "scientific-notation-calculator",
   "slug": "scientific-notation-calculator",
   "name": "Scientific Notation Calculator",
   "category": [

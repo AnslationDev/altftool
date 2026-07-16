@@ -1,4 +1,5 @@
 const toolConfig = {
+  slug: "curl-to-code-converter",
   "slug": "curl-to-code-converter",
   "name": "cURL to Code Converter",
   "category": [

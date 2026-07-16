@@ -1,4 +1,5 @@
 const toolConfig = {
+  slug: "css-tools",
   "slug": "css-tools",
   "name": "CSS Tools",
   "category": [

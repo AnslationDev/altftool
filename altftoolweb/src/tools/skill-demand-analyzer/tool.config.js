@@ -1,4 +1,5 @@
 const toolConfig = {
+  slug: "skill-demand-analyzer",
   "slug": "skill-demand-analyzer",
   "name": "Skill Demand Analyzer",
   "description": "Analyze the demand for various skills in the job market.",

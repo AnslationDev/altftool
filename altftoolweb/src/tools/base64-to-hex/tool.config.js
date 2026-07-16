@@ -1,4 +1,5 @@
 const toolConfig = {
+  slug: "base64-to-hex",
   "slug": "base64-to-hex",
   "name": "Base64 to Hex",
   "category": [

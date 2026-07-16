@@ -1,4 +1,5 @@
 const giveawayWinnerPickerConfig = {
+  slug: "giveaway-winner-picker",
   name: "Giveaway Winner Picker",
   description:
     "Create giveaways, manage participant entries, detect duplicates, and reveal fair random winners with animated draw history.",

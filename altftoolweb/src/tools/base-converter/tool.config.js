@@ -1,4 +1,5 @@
 const toolConfig = {
+  slug: "base-converter",
   "slug": "base-converter",
   "name": "Base Converter",
   "category": [

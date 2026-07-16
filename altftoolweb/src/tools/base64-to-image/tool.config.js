@@ -1,4 +1,5 @@
 const toolConfig = {
+  slug: "base64-to-image",
   "slug": "base64-to-image",
   "name": "Base64 to Image",
   "category": [

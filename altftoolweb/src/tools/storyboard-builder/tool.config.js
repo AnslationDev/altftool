@@ -1,4 +1,5 @@
 const config = {
+  slug: "storyboard-builder",
   name: "Storyboard Builder",
   description: "Create visual sequences, plan scene durations, sequence shots, sketch concepts, organize actor dialogue, and export production sheets.",
   category: "Creators",

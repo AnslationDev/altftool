@@ -1,4 +1,5 @@
 export default {
+  slug: "css-minifier",
   name: "CSS Minifier",
   description: "Compress, minify, and shrink messy CSS code to reduce bundle size, showing detailed savings statistics.",
   category: ["Developers", "Utilities"],

@@ -1,4 +1,5 @@
 const toolConfig = {
+  slug: "javascript-tools",
   "slug": "javascript-tools",
   "name": "JavaScript Tools",
   "category": [

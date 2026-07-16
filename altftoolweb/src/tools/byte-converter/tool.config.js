@@ -1,4 +1,5 @@
 const toolConfig = {
+  slug: "byte-converter",
   "slug": "byte-converter",
   "name": "Byte Converter",
   "category": [

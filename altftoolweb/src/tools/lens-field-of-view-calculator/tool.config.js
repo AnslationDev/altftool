@@ -1,4 +1,5 @@
 const config = {
+  slug: "lens-field-of-view-calculator",
   name: "Lens Field of View Calculator",
   description: "Calculate camera field of view, crop factors, scene coverage, and compare lenses in real-time.",
   category: "Creators",

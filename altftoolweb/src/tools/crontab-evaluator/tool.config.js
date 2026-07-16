@@ -1,4 +1,5 @@
 const toolConfig = {
+  slug: "crontab-evaluator",
   "slug": "crontab-evaluator",
   "name": "Crontab Evaluator",
   "category": [

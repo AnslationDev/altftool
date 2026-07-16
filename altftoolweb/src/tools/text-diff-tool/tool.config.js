@@ -1,4 +1,5 @@
 const toolConfig = {
+  slug: "text-diff-tool",
   "slug": "text-diff-tool",
   "name": "Text Diff Tool",
   "category": [
