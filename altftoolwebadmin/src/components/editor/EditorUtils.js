@@ -147,26 +147,32 @@ export function seoAudit(editor) {
     return true;
   });
 
+  // Count each link ONCE. A single link that spans several text nodes (e.g. it
+  // wraps some bold text) appears on each of those nodes' mark sets, so we only
+  // tally when the href changes from the previous node — i.e. at a link
+  // boundary. Non-link nodes reset the run so two separate links to the same
+  // URL are still counted separately.
+  let prevHref = null;
   editor.state.doc.descendants((node) => {
-    node.marks.forEach((mark) => {
-      if (mark.type.name === "link") {
-        const href = String(mark.attrs.href || "");
-        if (/^https?:\/\//i.test(href) && typeof window !== "undefined") {
-          try {
-            const url = new URL(href);
-            if (url.hostname === window.location.hostname || url.hostname.endsWith("altftool.com")) {
-              links.internal += 1;
-            } else {
-              links.external += 1;
-            }
-          } catch {
+    const linkMark = node.marks?.find?.((mark) => mark.type.name === "link");
+    const href = linkMark ? String(linkMark.attrs.href || "") : null;
+    if (href && href !== prevHref) {
+      if (/^https?:\/\//i.test(href) && typeof window !== "undefined") {
+        try {
+          const url = new URL(href);
+          if (url.hostname === window.location.hostname || url.hostname.endsWith("altftool.com")) {
+            links.internal += 1;
+          } else {
             links.external += 1;
           }
-        } else {
-          links.internal += 1;
+        } catch {
+          links.external += 1;
         }
+      } else {
+        links.internal += 1;
       }
-    });
+    }
+    prevHref = href;
     return true;
   });
 

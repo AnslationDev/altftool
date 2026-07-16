@@ -29,8 +29,8 @@ export const SlashCommands = Extension.create({
           const q = query.toLowerCase();
           return getSlashCommands().filter(
             (item) =>
-              item.label.toLowerCase().includes(q) ||
-              item.keywords.some((keyword) => keyword.includes(q)),
+              String(item.label || "").toLowerCase().includes(q) ||
+              (item.keywords || []).some((keyword) => keyword.includes(q)),
           );
         },
         render: () => {

@@ -278,7 +278,7 @@ function HeroArticle({ post }) {
 
       <div className="absolute left-6 top-6 inline-flex items-center gap-1.5 rounded-full bg-white/20 backdrop-blur-md px-3 py-1.5 text-[10px] font-bold uppercase tracking-widest text-white border border-white/20 shadow-sm">
         <Sparkles className="h-3.5 w-3.5 text-(--primary)" />
-        TRENDING NOW
+        LATEST
       </div>
 
       <div className="absolute inset-0 p-6 md:p-8 lg:p-10 flex flex-col justify-end items-start w-full md:w-[85%] lg:w-[75%]">
@@ -853,7 +853,7 @@ export default function BlogExplorerClient({
         <div className="mb-8 grid grid-cols-1 lg:grid-cols-4 gap-8">
           <div className="lg:col-span-3 min-w-0">
             <AutoScrollSlider className="pb-2 h-full">
-              {trendingPosts.map((post) => (
+              {featuredPosts.map((post) => (
                 <div key={post.slug} className="w-full h-full shrink-0 snap-center">
                   <HeroArticle post={post} />
                 </div>

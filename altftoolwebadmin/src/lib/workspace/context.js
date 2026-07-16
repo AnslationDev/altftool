@@ -25,6 +25,10 @@ function normalizeActor(actor) {
  * @returns {{ node: object, actor: object, device: object|null, resolvedBy: string }}
  */
 export function buildWorkspaceContext(input = {}, opts = {}) {
+  // Defaults only cover `undefined`; guard explicit nulls so an actor-less or
+  // metadata-less call that passes null (rather than omitting the arg) can't
+  // crash the audit path.
+  if (opts == null) opts = {};
   const node = resolveWorkspaceNode(input);
   const actor = normalizeActor(opts.actor);
   // device/context is passed through untouched here (browser/os/ip/geo are

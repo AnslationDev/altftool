@@ -16,6 +16,21 @@ const ROLLUPS = "activity_rollups";
 const rid = (p) => String(p || "unclassified").replace(/\//g, "~");
 const dayKey = (ms) => new Date(ms).toISOString().slice(0, 10);
 
+// Run async tasks with a bounded fan-out (keeps per-day count() queries cheap
+// without hammering Firestore with 90 simultaneous requests).
+async function mapWithConcurrency(items, fn, limit = 10) {
+  const results = new Array(items.length);
+  let cursor = 0;
+  const worker = async () => {
+    while (cursor < items.length) {
+      const i = cursor++;
+      results[i] = await fn(items[i], i);
+    }
+  };
+  await Promise.all(Array.from({ length: Math.min(limit, items.length) }, worker));
+  return results;
+}
+
 export async function GET(request) {
   try {
     await verifySuperAdminRequest(request);
@@ -54,21 +69,37 @@ export async function GET(request) {
       }))
       .sort((a, b) => b.count - a.count);
 
-    // Recent window → growth, top actors, most-modified entities.
-    const cutoff = Date.now() - days * 86400000;
-    let q = adminDb.collection(EVENTS);
-    if (path) q = q.where("pathAncestors", "array-contains", path);
-    q = q.where("createdAtMs", ">=", cutoff).orderBy("createdAtMs", "desc").limit(1500);
-    const evSnap = await q.get();
-    const events = evSnap.docs.map((d) => d.data());
+    // Growth over time — EXACT per-day counts via cheap count() aggregations.
+    // (A single bounded doc-read window read only the newest N events, so once a
+    // busy node exceeded the cap older days falsely dropped to zero.)
+    const now = Date.now();
+    const dayMs = 86400000;
+    const startOfUtcDay = (ms) => { const d = new Date(ms); d.setUTCHours(0, 0, 0, 0); return d.getTime(); };
+    const scoped = (col) => (path ? col.where("pathAncestors", "array-contains", path) : col);
+    const dayStarts = [];
+    for (let i = days - 1; i >= 0; i--) dayStarts.push(startOfUtcDay(now - i * dayMs));
 
-    const bucket = new Map();
-    for (let i = days - 1; i >= 0; i--) bucket.set(dayKey(Date.now() - i * 86400000), 0);
+    const dayCounts = await mapWithConcurrency(dayStarts, async (ds) => {
+      const agg = await scoped(adminDb.collection(EVENTS))
+        .where("createdAtMs", ">=", ds)
+        .where("createdAtMs", "<", ds + dayMs)
+        .count().get();
+      return agg.data().count || 0;
+    });
+    const growth = dayStarts.map((ds, i) => ({ date: dayKey(ds), count: dayCounts[i] }));
+    const windowTotal = dayCounts.reduce((a, b) => a + b, 0);
+
+    // Top actors / most-modified entities — from a bounded recent SAMPLE (exact
+    // top-N would require reading every event). The counts above are exact;
+    // these lists are "recent activity" approximations for very busy nodes.
+    const sampleSnap = await scoped(adminDb.collection(EVENTS))
+      .where("createdAtMs", ">=", dayStarts[0] ?? now - days * dayMs)
+      .orderBy("createdAtMs", "desc")
+      .limit(1500)
+      .get();
     const actors = new Map();
     const entities = new Map();
-    for (const e of events) {
-      const k = dayKey(e.createdAtMs);
-      if (bucket.has(k)) bucket.set(k, bucket.get(k) + 1);
+    for (const e of sampleSnap.docs.map((d) => d.data())) {
       if (e.actorEmail) {
         const a = actors.get(e.actorEmail) || { email: e.actorEmail, uid: e.actorUid || null, count: 0 };
         a.count++;
@@ -84,10 +115,10 @@ export async function GET(request) {
     }
 
     return NextResponse.json({
-      path, days, total, windowTotal: events.length,
+      path, days, total, windowTotal,
       byAction,
       childBreakdown,
-      growth: [...bucket.entries()].map(([date, count]) => ({ date, count })),
+      growth,
       topActors: [...actors.values()].sort((a, b) => b.count - a.count).slice(0, 8),
       topEntities: [...entities.values()].sort((a, b) => b.count - a.count).slice(0, 8),
       uniqueActors: actors.size,

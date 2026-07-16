@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { getAuth } from "firebase/auth";
 import { Activity, BarChart3, ChevronRight, Layers, RefreshCw, User, X } from "lucide-react";
 import ExplorerTree from "./components/ExplorerTree";
@@ -25,6 +25,9 @@ export default function WorkspaceExplorerPage() {
   const [filters, setFilters] = useState({ search: "", kind: "all" });
   const [drawerEvent, setDrawerEvent] = useState(null);
   const [reloadKey, setReloadKey] = useState(0);
+  // Bumped every time the feed (node/scope/reload) changes, so an in-flight
+  // "load more" for the previous feed can detect it and drop its stale page.
+  const feedTokenRef = useRef(0);
 
   const authFetch = useCallback(async (url) => {
     try {
@@ -50,6 +53,7 @@ export default function WorkspaceExplorerPage() {
   // First page whenever node / scope / reload changes (timeline view only).
   useEffect(() => {
     if (view !== "timeline") return;
+    feedTokenRef.current += 1; // new feed — invalidate any in-flight "load more"
     let alive = true;
     setLoading(true);
     setEvents([]);
@@ -65,8 +69,12 @@ export default function WorkspaceExplorerPage() {
 
   const loadMore = useCallback(async () => {
     if (!nextCursor) return;
+    const token = feedTokenRef.current;
     setLoadingMore(true);
     const data = await authFetch(`/api/activity/events?${eventsParams(nextCursor)}`);
+    // The node/scope changed while this page was in flight — drop it so events
+    // from the previous feed don't get appended to the new one.
+    if (token !== feedTokenRef.current) { setLoadingMore(false); return; }
     setEvents((prev) => [...prev, ...(data?.events || [])]);
     setNextCursor(data?.nextCursor || null);
     setHasMore(Boolean(data?.hasMore));
@@ -177,6 +185,7 @@ export default function WorkspaceExplorerPage() {
               <ActivityAnalytics
                 path={selected.path}
                 authFetch={authFetch}
+                reloadKey={reloadKey}
                 onSelectNode={selectNode}
                 onScopeActor={scopeActor}
                 onScopeEntity={scopeEntity}
