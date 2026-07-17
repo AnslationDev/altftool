@@ -47,17 +47,23 @@ function defaultProps(type) {
   switch (type) {
     case "hero":
       return { heading: "", subheading: "", description: "", primaryLabel: "", primaryUrl: "", secondaryLabel: "", secondaryUrl: "", image: "", badge: "", align: "left" };
+    case "banner":
+      return { heading: "", text: "", ctaLabel: "", ctaUrl: "", tone: "info" };
+    case "intro":
+      return { heading: "", body: "" };
     case "cta":
       return { heading: "", description: "", buttonLabel: "", buttonUrl: "" };
     case "faq":
-      return { items: [] };
     case "features":
     case "benefits":
     case "stats":
     case "steps":
     case "testimonials":
     case "gallery":
-      return { items: [] };
+      return { heading: "", items: [] };
+    case "relatedTools":
+    case "blogRecommend":
+      return { heading: "", items: [] };
     case "text":
       return { html: "" };
     case "image":
