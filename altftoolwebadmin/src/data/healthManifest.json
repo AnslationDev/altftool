@@ -1,13 +1,13 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-07-17T10:04:54.149Z",
+  "generatedAt": "2026-07-17T11:45:52.106Z",
   "tools": {
-    "total": 464,
-    "healthy": 464,
+    "total": 502,
+    "healthy": 502,
     "needsAttention": 0,
     "averageScore": 100,
-    "categories": 86,
-    "directories": 466,
+    "categories": 89,
+    "directories": 504,
     "orphanToolDirs": [
       "_shared",
       "seating-chart-maker"
