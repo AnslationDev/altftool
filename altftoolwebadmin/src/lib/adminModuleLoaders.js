@@ -413,6 +413,58 @@ const routeLoaders = {
       "": () => import("@/projects/myluckydeal/modules/migration/page.jsx"),
     },
   },
+  anslic: {
+    navbar: {
+      "": () => import("@/projects/anslic/modules/navbar/page.jsx"),
+    },
+    footer: {
+      "": () => import("@/projects/anslic/modules/footer/page.jsx"),
+    },
+    home: {
+      "": () => import("@/projects/anslic/modules/home/page.jsx"),
+      hero: () => import("@/projects/anslic/modules/home/hero/page.jsx"),
+      "about-preview": () =>
+        import("@/projects/anslic/modules/home/about-preview/page.jsx"),
+      "services-preview": () =>
+        import("@/projects/anslic/modules/home/services-preview/page.jsx"),
+      testimonials: () =>
+        import("@/projects/anslic/modules/home/testimonials/page.jsx"),
+      "team-preview": () =>
+        import("@/projects/anslic/modules/home/team-preview/page.jsx"),
+      cta: () => import("@/projects/anslic/modules/home/cta/page.jsx"),
+      "blog-preview": () =>
+        import("@/projects/anslic/modules/home/blog-preview/page.jsx"),
+    },
+    about: {
+      "": () => import("@/projects/anslic/modules/about/page.jsx"),
+      hero: () => import("@/projects/anslic/modules/about/hero/page.jsx"),
+      "mission-vision": () =>
+        import("@/projects/anslic/modules/about/mission-vision/page.jsx"),
+      values: () => import("@/projects/anslic/modules/about/values/page.jsx"),
+      "team-preview": () =>
+        import("@/projects/anslic/modules/about/team-preview/page.jsx"),
+    },
+    stats: {
+      "": () => import("@/projects/anslic/modules/stats/page.jsx"),
+    },
+    services: {
+      "": () => import("@/projects/anslic/modules/services/page.jsx"),
+    },
+    team: {
+      "": () => import("@/projects/anslic/modules/team/page.jsx"),
+    },
+    blog: {
+      "": () => import("@/projects/anslic/modules/blog/page.jsx"),
+      "add-article": () =>
+        import("@/projects/anslic/modules/blog/add-article/page.jsx"),
+      "edit-article/[id]": () =>
+        import("@/projects/anslic/modules/blog/edit-article/[id]/page.jsx"),
+    },
+    contact: {
+      "": () => import("@/projects/anslic/modules/contact/page.jsx"),
+      leads: () => import("@/projects/anslic/modules/contact/leads/page.jsx"),
+    },
+  },
   anternet: {
     banners: { "": () => import("@/projects/anternet/modules/banners/page.jsx") },
     tasks: { "": () => import("@/projects/anternet/modules/tasks/page.jsx") },

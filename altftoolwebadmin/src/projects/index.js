@@ -10,6 +10,7 @@ import anternet from "./anternet/config";
 import coozter from "./coozter/config";
 import growvibe from "./growvibe/config";
 import apexboost from "./apexboost/config";
+import anslic from "./anslic/config";
 
 // Modules shared by EVERY project. The SEO Engine is a platform-wide capability:
 // each project manages its OWN SEO (its own config doc + health history, fully
@@ -42,7 +43,8 @@ const RAW_PROJECTS = {
   anternet,
   coozter,
   growvibe,
-  apexboost
+  apexboost,
+  anslic
 };
 
 export const PROJECTS = Object.fromEntries(

@@ -184,6 +184,17 @@ export const ADMIN_MODULE_ROUTE_KEYS = {
     settings: [""],
     migration: [""],
   },
+  anslic: {
+    navbar: [""],
+    footer: [""],
+    home: ["", "hero", "about-preview", "services-preview", "testimonials", "team-preview", "cta", "blog-preview"],
+    about: ["", "hero", "mission-vision", "values", "team-preview"],
+    stats: [""],
+    services: [""],
+    team: [""],
+    blog: ["", "add-article", "edit-article/[id]"],
+    contact: ["", "leads"],
+  },
   anternet: {
     banners: [""],
     tasks: [""],
