@@ -28,6 +28,8 @@
     "@monaco-editor/react": "^4.7.0",
     "@mui/icons-material": "^7.3.11",
     "@mui/material": "^7.3.11",
+    "@pdfsmaller/pdf-decrypt": "^1.0.1",
+    "@prettier/plugin-php": "^0.25.0",
     "@radix-ui/react-accordion": "^1.2.3",
     "@radix-ui/react-dialog": "^1.1.6",
     "@radix-ui/react-dropdown-menu": "^2.1.6",
@@ -87,6 +89,7 @@
     "pdf-lib": "^1.17.1",
     "pdfjs-dist": "^5.3.93",
     "perfect-freehand": "^1.2.3",
+    "prettier": "^3.9.5",
     "qrcode.react": "^4.2.0",
     "quagga": "^0.6.16",
     "react": "^19.2.5",
@@ -123,9 +126,7 @@
     "turndown-plugin-gfm": "^1.0.2",
     "uuid": "^14.0.0",
     "xlsx": "npm:@e965/xlsx@^0.20.3",
-    "zustand": "^5.0.3",
-    "@prettier/plugin-php": "^0.25.0",
-    "prettier": "^3.9.5"
+    "zustand": "^5.0.3"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4.1.18",

@@ -160,6 +160,16 @@ export const POPULAR_TOOL_LINKS = [
   { label: "Barcode Generator", href: "/tools/all/barcode-generator" },
   { label: "Lorem Ipsum Generator", href: "/tools/all/lorem-ipsum-generator" },
   { label: "Emoji Hub", href: "/tools/all/emoji-hub" },
+  { label: "Lucky Number Generator", href: "/tools/all/lucky-number-generator" },
+  { label: "Rock Paper Scissors", href: "/tools/all/rock-paper-scissors" },
+  { label: "Snake Game", href: "/tools/all/snake-game" },
+  { label: "Tic Tac Toe", href: "/tools/all/tic-tac-toe-game" },
+  { label: "Joke Generator", href: "/tools/all/joke-generator" },
+  { label: "Dice Roller (3D)", href: "/tools/all/dice-roller-3d" },
+  { label: "Whack-a-Mole", href: "/tools/all/whack-a-mole" },
+  { label: "Emoji Quiz", href: "/tools/all/emoji-quiz" },
+  { label: "Memory Card Game", href: "/tools/all/memory-card-game" },
+  { label: "Compliment Generator", href: "/tools/all/compliment-generator" },
 ];
 
 const HIDDEN_PUBLIC_SHELL_PREFIXES = ["/search-eng"];
