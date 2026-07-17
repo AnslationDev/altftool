@@ -31,6 +31,11 @@ const routeLoaders = {
     buysmart: {
       "": () => import("@/projects/altftool/modules/buysmart/page.jsx"),
     },
+    landing: {
+      "": () => import("@/projects/altftool/modules/landing/page.jsx"),
+      "edit/[id]": () =>
+        import("@/projects/altftool/modules/landing/edit/[id]/page.jsx"),
+    },
     consumerrating: {
       "": () =>
         import("@/projects/altftool/modules/consumerrating/page.jsx"),
