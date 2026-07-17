@@ -4,8 +4,26 @@ import { useEffect, useMemo, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { ArrowLeft, Loader2, Save, ExternalLink } from "lucide-react";
 import { fetchLander, updateLander, isSlugTaken, slugify } from "../../services/landersService";
-import { LANDER_STATUSES, STATUS_META } from "../../lib/schema";
+import { LANDER_STATUSES, STATUS_META, newLanderDoc } from "../../lib/schema";
 import SectionBuilder from "../../components/SectionBuilder";
+import SettingsPanels from "../../components/SettingsPanels";
+
+// Firestore Timestamp | number | null -> epoch millis | null
+const toMs = (v) => (v?.toMillis ? v.toMillis() : typeof v === "number" ? v : null);
+
+// Pull the page-level settings slice out of a loaded doc, filling any gaps with
+// the schema defaults so older docs open cleanly.
+function metaFrom(doc) {
+  const d = newLanderDoc({ title: doc.title || "" });
+  return {
+    seo: { ...d.seo, ...(doc.seo || {}) },
+    theme: { ...d.theme, ...(doc.theme || {}) },
+    schema: { ...d.schema, ...(doc.schema || {}) },
+    ads: { placements: {}, ...(doc.ads || {}) },
+    publishAt: toMs(doc.publishAt),
+    expireAt: toMs(doc.expireAt),
+  };
+}
 
 export default function EditLanderPage() {
   const { id } = useParams();
@@ -13,6 +31,7 @@ export default function EditLanderPage() {
   const [lander, setLander] = useState(null);
   const [form, setForm] = useState({ title: "", slug: "", status: "draft" });
   const [sections, setSections] = useState([]);
+  const [meta, setMeta] = useState(null);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
@@ -26,6 +45,7 @@ export default function EditLanderPage() {
       setLander(doc);
       setForm({ title: doc.title || "", slug: doc.slug || "", status: doc.status || "draft" });
       setSections(Array.isArray(doc.sections) ? doc.sections : []);
+      setMeta(metaFrom(doc));
       setLoading(false);
     });
     return () => { alive = false; };
@@ -37,9 +57,10 @@ export default function EditLanderPage() {
       form.title !== (lander.title || "") ||
       form.slug !== (lander.slug || "") ||
       form.status !== (lander.status || "draft") ||
-      JSON.stringify(sections) !== JSON.stringify(lander.sections || [])
+      JSON.stringify(sections) !== JSON.stringify(lander.sections || []) ||
+      JSON.stringify(meta) !== JSON.stringify(metaFrom(lander))
     );
-  }, [form, sections, lander]);
+  }, [form, sections, meta, lander]);
 
   const save = async () => {
     if (!form.title.trim()) { setError("Title is required."); return; }
@@ -48,7 +69,11 @@ export default function EditLanderPage() {
     setSaving(true); setError("");
     try {
       if (await isSlugTaken(slug, id)) { setError("That slug is already taken."); setSaving(false); return; }
-      const patch = { title: form.title.trim(), slug, status: form.status, sections };
+      const patch = {
+        title: form.title.trim(), slug, status: form.status, sections,
+        seo: meta.seo, theme: meta.theme, schema: meta.schema, ads: meta.ads,
+        publishAt: meta.publishAt ?? null, expireAt: meta.expireAt ?? null,
+      };
       await updateLander(id, patch, { revisionReason: "edit" });
       setLander((l) => ({ ...l, ...patch }));
       setForm((f) => ({ ...f, slug }));
@@ -105,6 +130,8 @@ export default function EditLanderPage() {
           </section>
 
           <SectionBuilder sections={sections} onChange={setSections} landerId={id} />
+
+          {meta ? <SettingsPanels meta={meta} onChange={setMeta} landerId={id} /> : null}
         </div>
       </div>
 

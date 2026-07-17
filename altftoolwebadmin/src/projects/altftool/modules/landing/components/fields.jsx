@@ -104,6 +104,41 @@ export function ImageField({ value, onChange, landerId, label = "Image" }) {
   );
 }
 
+// Accessible on/off switch.
+export function Toggle({ checked, onChange, label, hint }) {
+  return (
+    <div className="flex items-start justify-between gap-3">
+      <div className="min-w-0">
+        <span className="block text-xs font-bold text-[var(--foreground)]">{label}</span>
+        {hint ? <span className="mt-0.5 block text-[11px] text-[var(--muted)]">{hint}</span> : null}
+      </div>
+      <button
+        type="button" role="switch" aria-checked={!!checked} aria-label={label}
+        onClick={() => onChange(!checked)}
+        className={`relative inline-flex h-6 w-11 shrink-0 items-center rounded-full transition ${checked ? "bg-[var(--primary)]" : "bg-[var(--border)]"}`}
+      >
+        <span className={`inline-block h-5 w-5 transform rounded-full bg-white shadow transition ${checked ? "translate-x-[22px]" : "translate-x-0.5"}`} />
+      </button>
+    </div>
+  );
+}
+
+// Color swatch + hex input, kept in sync.
+export function ColorField({ value, onChange, label, fallback = "#14B8A6" }) {
+  return (
+    <Field label={label}>
+      <div className="flex items-center gap-2">
+        <input
+          type="color" value={value || fallback} onChange={(e) => onChange(e.target.value)}
+          className="h-10 w-12 shrink-0 cursor-pointer rounded-lg border border-[var(--border)] bg-[var(--background)] p-1"
+          aria-label={`${label} color`}
+        />
+        <Input value={value} onChange={onChange} placeholder={fallback} />
+      </div>
+    </Field>
+  );
+}
+
 // Generic repeater for list-based sections (features, faq, stats…). Renders
 // `renderItem(item, patch)` per row with add / remove / move-up / move-down.
 export function ListEditor({ items = [], onChange, renderItem, addLabel = "Add item", newItem }) {
