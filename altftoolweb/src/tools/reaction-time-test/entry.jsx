@@ -1,5 +1,7 @@
-import ToolHome from "./pages";
+"use client";
+
+import ReactionTimeTest from "./pages";
 
 export default function ToolEntry() {
-  return <ToolHome />;
+  return <ReactionTimeTest />;
 }
