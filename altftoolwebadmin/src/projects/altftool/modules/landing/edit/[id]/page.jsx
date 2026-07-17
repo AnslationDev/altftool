@@ -2,15 +2,17 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
-import { ArrowLeft, Loader2, Save, ExternalLink, Layers } from "lucide-react";
+import { ArrowLeft, Loader2, Save, ExternalLink } from "lucide-react";
 import { fetchLander, updateLander, isSlugTaken, slugify } from "../../services/landersService";
 import { LANDER_STATUSES, STATUS_META } from "../../lib/schema";
+import SectionBuilder from "../../components/SectionBuilder";
 
 export default function EditLanderPage() {
   const { id } = useParams();
   const router = useRouter();
   const [lander, setLander] = useState(null);
   const [form, setForm] = useState({ title: "", slug: "", status: "draft" });
+  const [sections, setSections] = useState([]);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
@@ -23,15 +25,21 @@ export default function EditLanderPage() {
       if (!doc) { setError("Landing page not found."); setLoading(false); return; }
       setLander(doc);
       setForm({ title: doc.title || "", slug: doc.slug || "", status: doc.status || "draft" });
+      setSections(Array.isArray(doc.sections) ? doc.sections : []);
       setLoading(false);
     });
     return () => { alive = false; };
   }, [id]);
 
-  const dirty = useMemo(
-    () => lander && (form.title !== (lander.title || "") || form.slug !== (lander.slug || "") || form.status !== (lander.status || "draft")),
-    [form, lander],
-  );
+  const dirty = useMemo(() => {
+    if (!lander) return false;
+    return (
+      form.title !== (lander.title || "") ||
+      form.slug !== (lander.slug || "") ||
+      form.status !== (lander.status || "draft") ||
+      JSON.stringify(sections) !== JSON.stringify(lander.sections || [])
+    );
+  }, [form, sections, lander]);
 
   const save = async () => {
     if (!form.title.trim()) { setError("Title is required."); return; }
@@ -40,8 +48,9 @@ export default function EditLanderPage() {
     setSaving(true); setError("");
     try {
       if (await isSlugTaken(slug, id)) { setError("That slug is already taken."); setSaving(false); return; }
-      await updateLander(id, { title: form.title.trim(), slug, status: form.status }, { revisionReason: "edit" });
-      setLander((l) => ({ ...l, title: form.title.trim(), slug, status: form.status }));
+      const patch = { title: form.title.trim(), slug, status: form.status, sections };
+      await updateLander(id, patch, { revisionReason: "edit" });
+      setLander((l) => ({ ...l, ...patch }));
       setForm((f) => ({ ...f, slug }));
       setSavedAt(Date.now());
     } catch {
@@ -95,11 +104,7 @@ export default function EditLanderPage() {
             {error ? <p className="mt-3 text-sm font-semibold text-[var(--danger,#EF4444)]">{error}</p> : null}
           </section>
 
-          <section className="rounded-2xl border border-dashed border-[var(--border)] bg-[var(--surface,var(--card))] p-8 text-center">
-            <Layers className="mx-auto mb-2 h-7 w-7 text-[var(--primary)]" strokeWidth={1.7} />
-            <p className="text-sm font-bold text-[var(--foreground)]">Section Builder</p>
-            <p className="mx-auto mt-1 max-w-md text-xs text-[var(--muted)]">Drag-and-drop sections (Hero, Features, FAQ, CTA and more) arrive in the next phase. Page settings above are live now.</p>
-          </section>
+          <SectionBuilder sections={sections} onChange={setSections} landerId={id} />
         </div>
       </div>
 
@@ -107,7 +112,7 @@ export default function EditLanderPage() {
       <div className="fixed inset-x-0 bottom-0 border-t border-[var(--border)] bg-[var(--surface,var(--card))]/95 backdrop-blur">
         <div className="mx-auto flex max-w-4xl items-center justify-between gap-3 px-4 py-3 sm:px-6">
           <span className="text-xs text-[var(--muted)]">
-            {saving ? "Saving…" : savedAt ? "All changes saved" : dirty ? "Unsaved changes" : "Up to date"}
+            {saving ? "Saving…" : savedAt && !dirty ? "All changes saved" : dirty ? "Unsaved changes" : "Up to date"}
           </span>
           <div className="flex items-center gap-2">
             <a href={`/lander/${lander.slug}`} target="_blank" rel="noopener noreferrer" className="inline-flex h-10 items-center gap-1.5 rounded-lg border border-[var(--border)] px-4 text-sm font-bold text-[var(--foreground)] hover:border-[var(--primary)] hover:text-[var(--primary)]"><ExternalLink className="h-4 w-4" /> Preview</a>
