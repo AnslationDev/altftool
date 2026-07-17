@@ -415,6 +415,21 @@ export function sortBlogsByDate(posts = []) {
   });
 }
 
+// "Latest" = when a post actually went live. The authored `date` field can be
+// backdated (many posts sit at an early-2026 date), so sorting by it buried
+// freshly-published posts. Rank by the most recent of createdAt / publishedAt /
+// date instead, so a newly-added blog surfaces regardless of its display date.
+function blogRecencyTime(post = {}) {
+  const times = [post.createdAt, post.publishedAt, post.date]
+    .map((value) => toBlogDate(value)?.getTime())
+    .filter((time) => Number.isFinite(time));
+  return times.length ? Math.max(...times) : 0;
+}
+
+export function sortBlogsByRecency(posts = []) {
+  return [...posts].sort((a, b) => blogRecencyTime(b) - blogRecencyTime(a));
+}
+
 const normalizedBlogs = sortBlogsByDate(
   getRawBlogs()
     .map((blog, index) => normalizeBlog(blog, index))

@@ -29,6 +29,7 @@ export {
   normalizeBlog,
   scoreRelatedBlog,
   sortBlogsByDate,
+  sortBlogsByRecency,
   stripHtml,
   taxonomyLabelFromSlug,
 } from "./blogs";

@@ -5,15 +5,32 @@ import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import {
   ArrowRight,
+  BarChart3,
+  Bookmark,
+  BookOpen,
+  Calculator,
+  CalendarClock,
   ChevronDown,
+  ChevronLeft,
+  ChevronRight,
+  Code2,
+  Cpu,
+  Download,
+  FileText,
+  Gamepad2,
+  Image as ImageIcon,
+  LayoutGrid,
+  Lightbulb,
   Loader2,
+  SquarePen,
   Search,
+  Send,
+  Shirt,
   Sparkles,
-  Layers3,
+  Users,
+  Wrench,
   X,
-  Clock,
-  RefreshCw,
-  User,
+  Zap,
 } from "lucide-react";
 import {
   useCallback,
@@ -24,38 +41,27 @@ import {
   useState,
   useTransition,
 } from "react";
-import AutoScrollSlider from "./AutoScrollSlider";
 import {
   BLOG_CHUNK_SIZE,
   BLOG_REMOTE_LIMIT,
   blogTaxonomySlug,
   mergeBlogPosts,
   normalizeBlog,
+  sortBlogsByRecency,
 } from "../data";
 
-function getRelativeTime(dateString) {
-  if (!dateString) return "";
-  const date = new Date(dateString);
-  const now = new Date();
-  const diffTime = Math.max(0, now - date);
-  const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
-  const diffMonths = Math.floor(diffDays / 30);
-  const diffYears = Math.floor(diffDays / 365);
-
-  if (diffYears > 0) return `Updated ${diffYears} year${diffYears > 1 ? "s" : ""} ago`;
-  if (diffMonths > 0) return `Updated ${diffMonths} month${diffMonths > 1 ? "s" : ""} ago`;
-  if (diffDays > 0) return `Updated ${diffDays} day${diffDays > 1 ? "s" : ""} ago`;
-  return "Updated recently";
-}
-
-const INITIAL_VISIBLE_COUNT = 24;
+// Pagination: 12 cards per page — first paint stays light, Load More
+// reveals the next 12 (remote chunks are fetched only when local posts run out).
+const INITIAL_VISIBLE_COUNT = 12;
+const PAGE_SIZE = 12;
 // 1 page (72 posts) left most of the published catalog invisible to search —
 // only the newest 72 posts were ever searchable. 12 idle-paced pages cover
 // 800+ posts; the loop still stops the moment hasMore turns false, and each
 // page is served by the ISR-cached /api/blogs route (no read amplification).
 const BACKGROUND_SYNC_PAGE_LIMIT = 12;
-const SORT_OPTIONS = [
-  { value: "latest", label: "Latest First" },
+const SORT_TABS = [
+  { value: "latest", label: "Latest" },
+  { value: "popular", label: "Popular" },
   { value: "trending", label: "Trending" },
 ];
 
@@ -101,15 +107,26 @@ function HighlightedText({ text, terms = [], className = "" }) {
 
 function formatDate(date) {
   if (!date) return "Recently updated";
+  // Post dates are stored date-only ("YYYY-MM-DD"), which `new Date()` parses
+  // as UTC midnight. Formatting in UTC keeps the calendar day identical on the
+  // server (UTC) and the client (any local zone) — otherwise users west of UTC
+  // saw the previous day on hydration, triggering a mismatch on every card.
   return new Intl.DateTimeFormat("en", {
     month: "short",
     day: "numeric",
     year: "numeric",
+    timeZone: "UTC",
   }).format(new Date(date));
 }
 
 function cx(...classes) {
   return classes.filter(Boolean).join(" ");
+}
+
+// Some remote-loaded excerpts contain raw HTML fragments; strip them so list
+// surfaces never render literal tags.
+function stripHtml(value = "") {
+  return String(value).replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim();
 }
 
 function getCategoryCounts(posts) {
@@ -123,17 +140,21 @@ function getCategoryCounts(posts) {
   }, {});
 }
 
-function getPopularityScore(post = {}) {
+function getEngagementScore(post = {}) {
   const views = Number(post.views || post.viewCount || post.totalViews || 0);
   const likes = Number(post.likesCount || post.likes || post.reactions || 0);
   const comments = Number(post.commentsCount || post.commentCount || post.comments || 0);
+  return views + likes * 12 + comments * 18;
+}
+
+function getPopularityScore(post = {}) {
   const dateTime = Date.parse(post.date || post.updatedAt || post.createdAt || "");
   const daysOld = dateTime
     ? Math.max(0, (Date.now() - dateTime) / (1000 * 60 * 60 * 24))
     : 90;
   const recencyBoost = Math.max(0, 45 - Math.min(daysOld, 45));
 
-  return views + likes * 12 + comments * 18 + recencyBoost;
+  return getEngagementScore(post) + recencyBoost;
 }
 
 function sortPosts(posts, sortMode) {
@@ -144,14 +165,39 @@ function sortPosts(posts, sortMode) {
       return Date.parse(b.date || "") - Date.parse(a.date || "");
     });
   }
-  return [...posts].sort((a, b) => Date.parse(b.date || "") - Date.parse(a.date || ""));
+  if (sortMode === "popular") {
+    // Pure engagement, no recency boost — long-standing reader favourites.
+    return [...posts].sort((a, b) => {
+      const scoreDiff = getEngagementScore(b) - getEngagementScore(a);
+      if (scoreDiff !== 0) return scoreDiff;
+      return Date.parse(b.date || "") - Date.parse(a.date || "");
+    });
+  }
+  // "Latest" = when a post actually went live (createdAt / publishedAt), not
+  // the author-set display date which is often backdated — so a blog just
+  // published from the Admin Panel surfaces at the very top.
+  return sortBlogsByRecency(posts);
+}
+
+// A post came from Firebase (i.e. was published via the Admin Panel) when it
+// carries a server timestamp. Used to keep the featured hero on genuinely
+// published content once the live catalog has synced in.
+function isPublishedPost(post = {}) {
+  return Boolean(post.createdAt || post.publishedAt || post.status === "published");
 }
 
 function updateSearchParams(router, searchParams, updates) {
   const params = new URLSearchParams(searchParams.toString());
 
   Object.entries(updates).forEach(([key, value]) => {
-    if (!value || value === "All" || value === "all" || value === "latest") {
+    // Only drop a param when it equals THAT key's default — otherwise searching
+    // for the literal words "latest" or "all" stripped the ?q= param and made
+    // the search unshareable / lost on refresh.
+    const isDefault =
+      !value ||
+      (key === "category" && (value === "All" || value === "all")) ||
+      (key === "sort" && value === "latest");
+    if (isDefault) {
       params.delete(key);
     } else {
       params.set(key, value);
@@ -163,74 +209,538 @@ function updateSearchParams(router, searchParams, updates) {
   router.replace(query ? `/blogs?${query}` : "/blogs", { scroll: false });
 }
 
-function CategoryTabs({ categories, counts, activeCategory, onChange }) {
+/* ─────────────────────────── presentation ─────────────────────────── */
+
+function AuthorAvatar({ name, className = "" }) {
+  const initial = String(name || "A").trim().charAt(0).toUpperCase();
   return (
-    <div className="flex flex-wrap items-center gap-2">
-      {categories.map((category) => {
-        const active = category === activeCategory;
-        const count = counts ? (counts[blogTaxonomySlug(category)] || 0) : 0;
-        return (
-          <button
-            key={category}
-            type="button"
-            onClick={() => onChange(category)}
-            aria-pressed={active}
-            className={cx(
-              "inline-flex h-9 items-center justify-center gap-2 rounded-md border px-3 text-sm font-medium transition-all duration-200",
-              active
-                ? "border-(--primary) bg-(--primary) text-(--primary-foreground) shadow-sm"
-                : "border-(--border) bg-(--card) text-(--foreground) hover:border-(--anslation-ds-border-strong) hover:bg-(--anslation-ds-soft)"
-            )}
-          >
-            {category}
-            <span
-              className={cx(
-                "inline-flex items-center justify-center rounded-full px-1.5 py-0.5 text-[10px] font-bold leading-none",
-                active
-                  ? "bg-white/20 text-(--primary-foreground)"
-                  : "bg-(--muted) text-(--muted-foreground)"
-              )}
-            >
-              {count}
-            </span>
+    <span
+      aria-hidden="true"
+      className={cx(
+        "inline-flex shrink-0 items-center justify-center rounded-full bg-(--anslation-ds-primary-soft) font-bold text-(--primary)",
+        className || "h-6 w-6 text-[11px]",
+      )}
+    >
+      {initial}
+    </span>
+  );
+}
+
+function SectionHeading({ title, action, actionHref, onAction, id }) {
+  return (
+    <div className="mb-5 flex flex-wrap items-center justify-between gap-3">
+      <h2 id={id} className="flex items-center gap-3 text-xl font-bold tracking-tight text-(--foreground) sm:text-2xl">
+        <span aria-hidden="true" className="h-6 w-1 rounded-full bg-(--primary)" />
+        {title}
+      </h2>
+      {action ? (
+        actionHref ? (
+          <Link href={actionHref} className="inline-flex items-center gap-1.5 text-sm font-bold text-(--primary) hover:underline">
+            {action} <ArrowRight className="h-4 w-4" />
+          </Link>
+        ) : (
+          <button type="button" onClick={onAction} className="inline-flex items-center gap-1.5 text-sm font-bold text-(--primary) hover:underline">
+            {action} <ArrowRight className="h-4 w-4" />
           </button>
-        );
-      })}
+        )
+      ) : null}
     </div>
   );
 }
 
-function SortSelect({ value, onChange }) {
+/**
+ * Full-width featured hero carousel — dark navy panel, copy left, cover image
+ * right, arrow + dot navigation, gentle auto-advance (paused on hover and
+ * under prefers-reduced-motion).
+ */
+function FeaturedHeroCarousel({ posts }) {
+  const [index, setIndex] = useState(0);
+  const [paused, setPaused] = useState(false);
+  const count = posts.length;
+
+  const go = useCallback(
+    (delta) => setIndex((current) => (current + delta + count) % count),
+    [count],
+  );
+
+  useEffect(() => {
+    if (count < 2 || paused) return undefined;
+    if (window.matchMedia?.("(prefers-reduced-motion: reduce)").matches) return undefined;
+    const timer = window.setInterval(() => go(1), 6500);
+    return () => window.clearInterval(timer);
+  }, [count, go, paused]);
+
+  if (!count) return null;
+  // Guard the index: the post list is recomputed live as new blogs sync in, so
+  // a persisted `index` can momentarily point past a shorter array — wrap it
+  // instead of dereferencing undefined.
+  const post = posts[index % count];
+
   return (
-    <div className="relative inline-flex items-center text-sm font-semibold text-(--muted-foreground)">
-      <span className="mr-2 hidden sm:inline">Sort by:</span>
-      <select
-        value={value}
-        onChange={(event) => onChange(event.target.value)}
-        className="h-11 appearance-none bg-transparent pr-6 text-(--foreground) outline-none font-bold cursor-pointer"
-        aria-label="Sort blogs"
+    <section
+      aria-roledescription="carousel"
+      aria-label="Featured articles"
+      className="relative overflow-hidden rounded-2xl shadow-md"
+      style={{
+        background:
+          "linear-gradient(140deg, var(--anslation-ds-footer, #0F172A) 35%, color-mix(in srgb, var(--primary) 40%, var(--anslation-ds-footer, #0F172A)))",
+      }}
+      onMouseEnter={() => setPaused(true)}
+      onMouseLeave={() => setPaused(false)}
+    >
+      {/* decorative dots */}
+      <span aria-hidden="true" className="absolute left-[46%] top-8 h-2 w-2 rounded-full bg-white/25" />
+      <span aria-hidden="true" className="absolute bottom-10 left-10 h-1.5 w-1.5 rounded-full" style={{ background: "var(--secondary)", opacity: 0.6 }} />
+
+      <div className="grid items-center gap-6 p-6 sm:p-8 lg:grid-cols-[1.05fr_0.95fr] lg:p-10">
+        <div className="min-w-0 sm:px-8 lg:px-10">
+          <span className="inline-flex items-center gap-1.5 rounded-full bg-(--primary) px-3 py-1 text-[10px] font-bold uppercase tracking-widest text-(--primary-foreground)">
+            <Sparkles className="h-3 w-3" /> Featured
+          </span>
+          <h2 className="mt-4 line-clamp-3 text-2xl font-bold leading-[1.15] text-white sm:text-3xl lg:text-4xl">
+            {post.heading}
+          </h2>
+          {stripHtml(post.excerpt) ? (
+            <p className="mt-3 line-clamp-2 max-w-xl text-sm leading-relaxed text-white/75 sm:text-base">
+              {stripHtml(post.excerpt)}
+            </p>
+          ) : null}
+          <div className="mt-4 flex flex-wrap items-center gap-2 text-xs font-semibold text-white/70">
+            {post.author ? (
+              <span className="inline-flex items-center gap-2 text-white/85">
+                <AuthorAvatar name={post.author} className="h-6 w-6 text-[11px]" />
+                {post.author}
+              </span>
+            ) : null}
+            {post.date ? (
+              <>
+                <span aria-hidden="true" className="h-1 w-1 rounded-full bg-white/40" />
+                <span>{formatDate(post.date)}</span>
+              </>
+            ) : null}
+            {post.readTime ? (
+              <>
+                <span aria-hidden="true" className="h-1 w-1 rounded-full bg-white/40" />
+                <span>{post.readTime}</span>
+              </>
+            ) : null}
+          </div>
+          <Link
+            href={`/blogs/${post.slug}`}
+            prefetch={false}
+            className="mt-6 inline-flex h-11 items-center gap-2 rounded-xl bg-(--primary) px-6 text-sm font-bold text-(--primary-foreground) shadow-sm transition hover:bg-(--primary-hover)"
+          >
+            Read Article <ArrowRight className="h-4 w-4" />
+          </Link>
+        </div>
+
+        <Link
+          href={`/blogs/${post.slug}`}
+          prefetch={false}
+          tabIndex={-1}
+          aria-hidden="true"
+          className="relative hidden aspect-[16/10] overflow-hidden rounded-xl border border-white/10 lg:block"
+        >
+          <Image
+            src={post.image}
+            alt=""
+            fill
+            priority={index === 0}
+            sizes="(max-width: 1024px) 0px, 44vw"
+            className="object-cover"
+          />
+        </Link>
+      </div>
+
+      {count > 1 ? (
+        <>
+          <button
+            type="button"
+            onClick={() => go(-1)}
+            aria-label="Previous featured article"
+            className="absolute left-3 top-1/2 hidden h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-white/20 bg-white/10 text-white backdrop-blur transition hover:bg-white/20 sm:flex"
+          >
+            <ChevronLeft className="h-5 w-5" />
+          </button>
+          <button
+            type="button"
+            onClick={() => go(1)}
+            aria-label="Next featured article"
+            className="absolute right-3 top-1/2 hidden h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-white/20 bg-white/10 text-white backdrop-blur transition hover:bg-white/20 sm:flex"
+          >
+            <ChevronRight className="h-5 w-5" />
+          </button>
+          <div className="flex items-center justify-center gap-2 pb-5">
+            {posts.map((item, dotIndex) => (
+              <button
+                key={item.slug}
+                type="button"
+                onClick={() => setIndex(dotIndex)}
+                aria-label={`Go to featured article ${dotIndex + 1}`}
+                aria-current={dotIndex === index}
+                className={cx(
+                  "h-1.5 rounded-full transition-all",
+                  dotIndex === index ? "w-6 bg-(--primary)" : "w-1.5 bg-white/30 hover:bg-white/50",
+                )}
+              />
+            ))}
+          </div>
+        </>
+      ) : (
+        <div className="pb-5" />
+      )}
+    </section>
+  );
+}
+
+const CATEGORY_ICONS = [
+  [/game/i, Gamepad2],
+  [/download/i, Download],
+  [/image|photo|design/i, ImageIcon],
+  [/pdf|doc/i, FileText],
+  [/calc|finance/i, Calculator],
+  [/fashion|lifestyle/i, Shirt],
+  [/digital|tech/i, Cpu],
+  [/\bai\b|smart/i, Sparkles],
+  [/seo|marketing/i, BarChart3],
+  [/dev|code/i, Code2],
+  [/productivity/i, Zap],
+  [/tool/i, Wrench],
+];
+
+function categoryIcon(name = "") {
+  const match = CATEGORY_ICONS.find(([pattern]) => pattern.test(name));
+  return match ? match[1] : BookOpen;
+}
+
+/**
+ * Category band under the hero — icon + name + article count per category,
+ * ending in an "All Categories" reset card. Buttons drive the same
+ * client-side filter as before.
+ */
+function CategoryBand({ categories, counts, activeCategory, onChange }) {
+  const items = categories.filter((category) => category !== "All").slice(0, 6);
+
+  return (
+    <section aria-label="Blog categories" className="rounded-2xl border border-(--border) bg-(--card) px-3 py-2 shadow-sm">
+      <div className="flex items-stretch gap-1 overflow-x-auto scrollbar-hide">
+        {items.map((category) => {
+          const Icon = categoryIcon(category);
+          const active = category === activeCategory;
+          return (
+            <button
+              key={category}
+              type="button"
+              onClick={() => onChange(active ? "All" : category)}
+              aria-pressed={active}
+              className={cx(
+                "flex min-w-[132px] flex-1 items-center gap-3 rounded-xl px-3 py-2.5 text-left transition",
+                active ? "bg-(--anslation-ds-primary-soft)" : "hover:bg-(--anslation-ds-soft)",
+              )}
+            >
+              <span
+                className={cx(
+                  "grid h-9 w-9 shrink-0 place-items-center rounded-lg",
+                  active ? "bg-(--primary) text-(--primary-foreground)" : "bg-(--anslation-ds-primary-soft) text-(--primary)",
+                )}
+              >
+                <Icon className="h-4 w-4" strokeWidth={1.9} />
+              </span>
+              <span className="min-w-0">
+                <span className="block truncate text-sm font-bold text-(--foreground)">{category}</span>
+                <span className="block text-xs font-medium text-(--muted-foreground)">
+                  {(counts[blogTaxonomySlug(category)] || 0) === 1
+                    ? "1 Article"
+                    : `${counts[blogTaxonomySlug(category)] || 0} Articles`}
+                </span>
+              </span>
+            </button>
+          );
+        })}
+        <button
+          type="button"
+          onClick={() => onChange("All")}
+          className="flex min-w-[132px] flex-1 items-center gap-3 rounded-xl px-3 py-2.5 text-left transition hover:bg-(--anslation-ds-soft)"
+        >
+          <span className="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-(--anslation-ds-primary-soft) text-(--primary)">
+            <LayoutGrid className="h-4 w-4" strokeWidth={1.9} />
+          </span>
+          <span className="min-w-0">
+            <span className="block truncate text-sm font-bold text-(--foreground)">All Categories</span>
+            <span className="inline-flex items-center gap-1 text-xs font-bold text-(--primary)">
+              View all <ArrowRight className="h-3 w-3" />
+            </span>
+          </span>
+        </button>
+      </div>
+    </section>
+  );
+}
+
+function FeaturedPickCard({ post }) {
+  return (
+    <Link
+      href={`/blogs/${post.slug}`}
+      prefetch={false}
+      className="group flex h-full flex-col overflow-hidden rounded-2xl border border-(--border) bg-(--card) shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-(--anslation-ds-border-strong) hover:shadow-[var(--anslation-ds-shadow-md)]"
+    >
+      <div className="relative aspect-[16/9] overflow-hidden bg-(--anslation-ds-soft)">
+        <Image
+          src={post.image}
+          alt={post.imageAlt || post.heading}
+          fill
+          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+          className="object-cover transition-transform duration-500 group-hover:scale-[1.04]"
+        />
+        {post.category ? (
+          <span className="absolute left-4 top-4 rounded-full bg-(--primary) px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-(--primary-foreground) shadow-sm">
+            {post.category}
+          </span>
+        ) : null}
+      </div>
+      <div className="flex flex-1 flex-col p-5">
+        <h3 className="line-clamp-2 text-lg font-bold leading-snug text-(--foreground) transition-colors group-hover:text-(--primary)">
+          {post.heading}
+        </h3>
+        {stripHtml(post.excerpt) ? (
+          <p className="mt-2 line-clamp-2 text-sm leading-relaxed text-(--muted-foreground)">{stripHtml(post.excerpt)}</p>
+        ) : null}
+        <div className="mt-auto flex items-center justify-between pt-4 text-xs font-semibold text-(--muted-foreground)">
+          {post.author ? (
+            <span className="inline-flex min-w-0 items-center gap-2">
+              <AuthorAvatar name={post.author} />
+              <span className="truncate">{post.author}</span>
+            </span>
+          ) : (
+            <span />
+          )}
+          {post.readTime ? <span className="shrink-0">{post.readTime}</span> : null}
+        </div>
+      </div>
+    </Link>
+  );
+}
+
+const BOOKMARKS_KEY = "altft-blog-bookmarks";
+
+function readBookmarks() {
+  try {
+    const value = JSON.parse(window.localStorage.getItem(BOOKMARKS_KEY) || "[]");
+    return Array.isArray(value) ? value : [];
+  } catch {
+    return [];
+  }
+}
+
+function ArticleRow({ post, searchTerms = [], bookmarked, onToggleBookmark, divider }) {
+  return (
+    <article className={cx("group relative flex gap-4 py-4 sm:gap-5", divider && "border-b border-(--border)")}>
+      <Link
+        href={`/blogs/${post.slug}`}
+        prefetch={false}
+        tabIndex={-1}
+        aria-hidden="true"
+        className="relative block h-20 w-28 shrink-0 overflow-hidden rounded-xl bg-(--anslation-ds-soft) sm:h-24 sm:w-36"
       >
-        {SORT_OPTIONS.map((option) => (
-          <option key={option.value} value={option.value}>
-            {option.label}
-          </option>
+        <Image
+          src={post.image}
+          alt=""
+          fill
+          sizes="144px"
+          className="object-cover transition-transform duration-500 group-hover:scale-[1.05]"
+        />
+      </Link>
+      <div className="min-w-0 flex-1">
+        <h3 className="line-clamp-2 pr-8 text-base font-bold leading-snug text-(--foreground) sm:text-lg">
+          <Link href={`/blogs/${post.slug}`} prefetch={false} className="transition-colors hover:text-(--primary)">
+            <HighlightedText text={post.heading} terms={searchTerms} />
+          </Link>
+        </h3>
+        {stripHtml(post.excerpt) ? (
+          <p className="mt-1 line-clamp-2 hidden text-sm leading-relaxed text-(--muted-foreground) sm:block">
+            <HighlightedText text={stripHtml(post.excerpt)} terms={searchTerms} />
+          </p>
+        ) : null}
+        <div className="mt-2 flex flex-wrap items-center gap-x-2 gap-y-1 text-xs font-semibold text-(--muted-foreground)">
+          {post.author ? (
+            <span className="inline-flex items-center gap-1.5">
+              <AuthorAvatar name={post.author} className="h-5 w-5 text-[10px]" />
+              {post.author}
+            </span>
+          ) : null}
+          {post.date ? (
+            <>
+              <span aria-hidden="true" className="h-1 w-1 rounded-full bg-(--border)" />
+              <span>{formatDate(post.date)}</span>
+            </>
+          ) : null}
+          {post.readTime ? (
+            <>
+              <span aria-hidden="true" className="h-1 w-1 rounded-full bg-(--border)" />
+              <span>{post.readTime}</span>
+            </>
+          ) : null}
+        </div>
+      </div>
+      <button
+        type="button"
+        onClick={() => onToggleBookmark(post.slug)}
+        aria-label={bookmarked ? "Remove bookmark" : "Bookmark this article"}
+        aria-pressed={bookmarked}
+        className={cx(
+          "absolute right-0 top-4 inline-flex h-8 w-8 items-center justify-center rounded-lg transition",
+          bookmarked
+            ? "text-(--primary)"
+            : "text-(--muted-foreground) hover:bg-(--anslation-ds-soft) hover:text-(--primary)",
+        )}
+      >
+        <Bookmark className={cx("h-4 w-4", bookmarked && "fill-current")} />
+      </button>
+    </article>
+  );
+}
+
+function PopularArticlesWidget({ posts, onViewAll }) {
+  if (!posts?.length) return null;
+  return (
+    <div className="rounded-2xl border border-(--border) bg-(--card) p-5 shadow-sm">
+      <h3 className="mb-4 flex items-center gap-2 text-base font-bold text-(--foreground)">
+        <BarChart3 className="h-4 w-4 text-(--primary)" /> Popular Articles
+      </h3>
+      <div className="flex flex-col gap-4">
+        {posts.map((post) => (
+          <Link key={post.slug} href={`/blogs/${post.slug}`} prefetch={false} className="group flex gap-3">
+            <span className="relative block h-14 w-14 shrink-0 overflow-hidden rounded-lg bg-(--anslation-ds-soft)">
+              <Image src={post.image} alt="" fill sizes="56px" className="object-cover" />
+            </span>
+            <span className="min-w-0">
+              <span className="line-clamp-2 text-sm font-bold leading-tight text-(--foreground) transition-colors group-hover:text-(--primary)">
+                {post.heading}
+              </span>
+              {post.readTime ? (
+                <span className="mt-1 block text-xs font-medium text-(--muted-foreground)">{post.readTime}</span>
+              ) : null}
+            </span>
+          </Link>
         ))}
-      </select>
-      <ChevronDown className="pointer-events-none absolute right-0 h-4 w-4 text-(--foreground)" />
+      </div>
+      <button type="button" onClick={onViewAll} className="mt-4 inline-flex items-center gap-1.5 text-sm font-bold text-(--primary) hover:underline">
+        View all popular <ArrowRight className="h-4 w-4" />
+      </button>
     </div>
+  );
+}
+
+function NewsletterWidget() {
+  return (
+    <div
+      className="relative overflow-hidden rounded-2xl border border-(--border) p-5 shadow-sm"
+      style={{
+        background:
+          "linear-gradient(150deg, color-mix(in srgb, var(--primary) 10%, var(--card)), color-mix(in srgb, var(--secondary) 12%, var(--card)))",
+      }}
+    >
+      <span className="pointer-events-none absolute -right-2 top-4 rotate-12 text-(--primary) opacity-70" aria-hidden="true">
+        <Send className="h-10 w-10" strokeWidth={1.5} />
+      </span>
+      <h3 className="text-lg font-bold text-(--foreground)">Stay Updated</h3>
+      <p className="mt-1.5 max-w-[85%] text-sm leading-relaxed text-(--muted-foreground)">
+        Get the latest articles, tools, and productivity tips straight to your inbox.
+      </p>
+      <form className="mt-4 flex gap-2" onSubmit={(e) => e.preventDefault()}>
+        <input
+          type="email"
+          required
+          placeholder="Enter your email"
+          aria-label="Email address"
+          className="h-11 w-full min-w-0 rounded-lg border border-(--border) bg-(--card) px-3.5 text-sm font-medium text-(--foreground) outline-none transition placeholder:text-(--muted-foreground) focus:border-(--primary) focus:ring-1 focus:ring-(--primary)"
+        />
+        <button
+          type="submit"
+          className="h-11 shrink-0 rounded-lg bg-(--primary) px-4 text-sm font-bold text-(--primary-foreground) transition-colors hover:bg-(--primary-hover)"
+        >
+          Subscribe
+        </button>
+      </form>
+      <p className="mt-2.5 text-xs text-(--muted-foreground)">No spam. Unsubscribe anytime.</p>
+    </div>
+  );
+}
+
+const QUICK_ACCESS_OPTIONS = [
+  "Digital Tools",
+  "Games",
+  "Tools",
+  "Fashion & Lifestyle",
+  "Pdf",
+  "Image",
+  "Downloader",
+  "Calculator",
+];
+
+function QuickAccessWidget({ activeQuery, onChangeQuery }) {
+  return (
+    <div className="rounded-2xl border border-(--border) bg-(--card) p-5 shadow-sm">
+      <h3 className="mb-3 text-base font-bold text-(--foreground)">Quick Access</h3>
+      <div className="flex flex-wrap gap-2">
+        {QUICK_ACCESS_OPTIONS.map((option) => {
+          const isActive = option.toLowerCase() === activeQuery.trim().toLowerCase();
+          return (
+            <button
+              key={option}
+              type="button"
+              onClick={() => onChangeQuery(isActive ? "" : option)}
+              className={cx(
+                "inline-flex h-8 items-center justify-center rounded-lg border px-3 text-xs font-semibold transition-colors",
+                isActive
+                  ? "border-(--primary) bg-(--primary) text-(--primary-foreground)"
+                  : "border-(--border) bg-(--background) text-(--foreground) hover:border-(--primary) hover:text-(--primary)",
+              )}
+            >
+              {option}
+            </button>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
+const TRUST_ITEMS = [
+  { icon: SquarePen, title: "Expertly Written", body: "In-depth, well-researched content you can trust." },
+  { icon: CalendarClock, title: "Regular Updates", body: "New articles every week on trending topics." },
+  { icon: Lightbulb, title: "Actionable Insights", body: "Tips and guides you can apply immediately." },
+  { icon: Users, title: "Community Driven", body: "Built for creators, developers, and innovators." },
+];
+
+function TrustStrip() {
+  return (
+    <section aria-label="Why read the ALTFTool blog" className="grid grid-cols-1 gap-4 rounded-2xl border border-(--border) bg-(--card) p-6 shadow-sm sm:grid-cols-2 lg:grid-cols-4">
+      {TRUST_ITEMS.map((item) => (
+        <div key={item.title} className="flex items-start gap-3">
+          <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-(--anslation-ds-primary-soft) text-(--primary)">
+            <item.icon className="h-5 w-5" strokeWidth={1.9} />
+          </span>
+          <span>
+            <span className="block text-sm font-bold text-(--foreground)">{item.title}</span>
+            <span className="mt-0.5 block text-xs leading-relaxed text-(--muted-foreground)">{item.body}</span>
+          </span>
+        </div>
+      ))}
+    </section>
   );
 }
 
 function SearchControl({ value, onChange, onClear, pending }) {
   return (
-    <div className="relative min-w-[240px] max-w-sm flex-1">
+    <div className="relative w-full sm:w-64">
       <Search className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-(--muted-foreground)" />
       <input
         aria-label="Search blog articles"
         value={value}
         onChange={(event) => onChange(event.target.value)}
         placeholder="Search articles..."
-        className="h-11 w-full rounded-lg border border-(--border) bg-(--card) px-10 text-sm font-medium text-(--foreground) shadow-sm outline-none transition placeholder:text-(--muted-foreground) focus:border-(--primary) focus:ring-1 focus:ring-(--primary)"
+        className="h-10 w-full rounded-lg border border-(--border) bg-(--card) px-10 text-sm font-medium text-(--foreground) shadow-sm outline-none transition placeholder:text-(--muted-foreground) focus:border-(--primary) focus:ring-1 focus:ring-(--primary)"
       />
       {pending ? (
         <Loader2 className="absolute right-3.5 top-1/2 h-4 w-4 -translate-y-1/2 animate-spin text-(--primary)" />
@@ -244,295 +754,6 @@ function SearchControl({ value, onChange, onClear, pending }) {
           <X className="h-3.5 w-3.5" />
         </button>
       ) : null}
-    </div>
-  );
-}
-
-function StatCard({ value, label }) {
-  return (
-    <div className="flex flex-col items-center justify-center rounded-xl border border-(--border) bg-(--card) px-6 py-2 shadow-sm min-w-[100px]">
-      <span className="text-xl font-bold text-(--foreground)">{value}</span>
-      <span className="text-[10px] font-semibold uppercase tracking-wider text-(--muted-foreground)">{label}</span>
-    </div>
-  );
-}
-
-function HeroArticle({ post }) {
-  if (!post) return null;
-
-  return (
-    <Link
-      href={`/blogs/${post.slug}`}
-      prefetch={false}
-      className="group relative flex flex-col overflow-hidden rounded-2xl border border-(--border) shadow-sm h-full w-full min-h-[460px] lg:min-h-0"
-    >
-      <Image
-        src={post.image}
-        alt={post.imageAlt || post.heading}
-        fill
-        priority
-        sizes="(max-width: 1024px) 100vw, 75vw"
-        className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
-      />
-      <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-black/10" />
-
-      <div className="absolute left-6 top-6 inline-flex items-center gap-1.5 rounded-full bg-white/20 backdrop-blur-md px-3 py-1.5 text-[10px] font-bold uppercase tracking-widest text-white border border-white/20 shadow-sm">
-        <Sparkles className="h-3.5 w-3.5 text-(--primary)" />
-        LATEST
-      </div>
-
-      <div className="absolute inset-0 p-6 md:p-8 lg:p-10 flex flex-col justify-end items-start w-full md:w-[85%] lg:w-[75%]">
-        <div className="flex flex-wrap items-center gap-3 mb-4 text-xs font-semibold text-white/90">
-          <span className="inline-flex items-center justify-center rounded bg-(--primary) px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-(--primary-foreground)">
-            {post.category || "TOOLS"}
-          </span>
-          <span>{post.date || 'Mar 4, 2026'}</span>
-          <span className="h-1 w-1 rounded-full bg-white/50" />
-          <span>{post.readTime || '2 min read'}</span>
-        </div>
-
-        <h2 className="mb-3 text-3xl font-bold leading-[1.15] text-white sm:text-4xl lg:text-[40px] transition-colors group-hover:text-teal-50">
-          {post.heading}
-        </h2>
-
-        {post.excerpt ? (
-          <p className="mb-6 line-clamp-2 text-sm leading-relaxed text-white/80 sm:text-base max-w-2xl">
-            {post.excerpt}
-          </p>
-        ) : null}
-
-        <div className="inline-flex items-center gap-3 text-[13px] font-bold text-white transition-colors">
-          Read featured guide
-          <span className="flex h-8 w-8 items-center justify-center rounded-full bg-(--primary) group-hover:bg-(--primary-hover) transition-colors text-(--primary-foreground) shadow-sm">
-            <ArrowRight className="h-4 w-4" />
-          </span>
-        </div>
-      </div>
-    </Link>
-  );
-}
-
-function BlogPostCard({ post, searchTerms = [] }) {
-  return (
-    <Link href={`/blogs/${post.slug}`} prefetch={false} className="group relative flex overflow-hidden rounded-2xl border border-(--border) bg-(--card) shadow-sm transition-all duration-300 hover:shadow-[var(--anslation-ds-shadow-md)] hover:border-(--anslation-ds-border-strong) h-full">
-      {/* Vertical Category Strip */}
-      <div className="w-10 shrink-0 border-r border-(--border) bg-(--anslation-ds-soft) flex items-center justify-center relative">
-        <div className="-rotate-90 whitespace-nowrap text-[10px] font-bold uppercase tracking-widest text-(--muted-foreground)">
-          {post.category}
-        </div>
-      </div>
-
-      <div className="flex flex-1 flex-col p-4">
-        <div className="relative aspect-[4/3] overflow-hidden rounded-xl bg-(--muted) mb-4">
-          <Image
-            src={post.image}
-            alt={post.imageAlt || post.heading}
-            fill
-            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-            className="object-cover transition duration-500 group-hover:scale-[1.035]"
-          />
-        </div>
-
-        <h3 className="line-clamp-2 text-lg font-bold leading-snug text-(--foreground) transition group-hover:text-(--primary) mb-2">
-          <HighlightedText text={post.heading} terms={searchTerms} />
-        </h3>
-
-        <div className="mb-3 flex flex-wrap items-center gap-x-2 gap-y-1 text-[11px] font-semibold text-(--muted-foreground)">
-          <span>{post.date}</span>
-
-          {post.readTime && (
-            <>
-              <span className="h-1 w-1 rounded-full bg-(--border)" />
-              <span className="flex items-center gap-1">
-                <Clock className="h-3 w-3" />
-                {post.readTime}
-              </span>
-            </>
-          )}
-
-          {post.updatedAt && post.updatedAt !== post.date && (
-            <>
-              <span className="h-1 w-1 rounded-full bg-(--border)" />
-              <span className="flex items-center gap-1">
-                <RefreshCw className="h-3 w-3" />
-                {getRelativeTime(post.updatedAt)}
-              </span>
-            </>
-          )}
-        </div>
-
-        <p className="line-clamp-3 text-sm leading-relaxed text-(--muted-foreground) mb-4 flex-1">
-          <HighlightedText text={post.excerpt} terms={searchTerms} />
-        </p>
-
-        <div className="mt-auto flex items-center justify-between text-sm font-bold">
-          {post.author && (
-            <span className="text-(--muted-foreground) flex items-center gap-1">
-              <User className="h-3 w-3" />
-              {post.author}
-            </span>
-          )}
-          <span className="inline-flex items-center gap-2 text-(--primary) ml-auto">
-            Read More
-            <ArrowRight className="h-4 w-4 transition-transform duration-200 ease-out group-hover:translate-x-1" />
-          </span>
-        </div>
-      </div>
-    </Link>
-  );
-}
-
-function CompactArticle({ post }) {
-  return (
-    <Link href={`/blogs/${post.slug}`} className="group flex gap-4 transition-all duration-200 ease-out">
-      <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-xl bg-(--anslation-ds-soft)">
-        <Image
-          src={post.image}
-          alt={post.imageAlt || post.heading}
-          fill
-          sizes="64px"
-          className="object-cover transition-transform duration-500 ease-out group-hover:scale-[1.05]"
-        />
-      </div>
-      <div className="min-w-0 flex-1 flex flex-col justify-center">
-        <div className="text-[10px] font-bold uppercase tracking-widest text-(--primary) mb-1">
-          {post.category}
-        </div>
-        <h4 className="line-clamp-2 text-sm font-bold leading-tight text-(--foreground) transition-colors group-hover:text-(--primary)">
-          {post.heading}
-        </h4>
-        <p className="mt-1 text-xs font-medium text-(--muted-foreground)">{post.readTime}</p>
-      </div>
-    </Link>
-  );
-}
-
-function TrendingRail({ posts }) {
-  if (!posts?.length) return null;
-  return (
-    <div className="rounded-2xl border border-(--border) bg-(--card) p-5 shadow-sm h-full flex flex-col">
-      <div className="flex items-center justify-between mb-5 shrink-0">
-        <h3 className="text-sm font-bold uppercase tracking-wider text-(--foreground)">Trending Now</h3>
-        <Link href="/blogs?sort=trending" className="text-xs font-bold text-(--primary) hover:underline">
-          View all
-        </Link>
-      </div>
-      <div className="flex flex-col gap-5 flex-1 justify-between">
-        {posts.map((post) => (
-          <CompactArticle key={post.slug} post={post} />
-        ))}
-      </div>
-    </div>
-  );
-}
-
-function CategoriesWidget({ categories, counts, activeCategory, onChangeCategory }) {
-  return (
-    <div className="rounded-2xl border border-(--border) bg-(--card) p-4 shadow-sm">
-      <div className="flex items-center justify-between mb-3">
-        <h3 className="text-sm font-bold uppercase tracking-wider text-(--foreground)">Categories</h3>
-      </div>
-      <div className="flex flex-col">
-        {categories.map((cat, idx) => {
-          const isActive = cat === activeCategory;
-          return (
-            <button
-              key={cat}
-              type="button"
-              onClick={() => onChangeCategory(cat)}
-              className={cx(
-                "flex items-center justify-between py-2 transition-colors group",
-                idx !== categories.length - 1 ? "border-b border-(--border)" : "",
-                isActive ? "text-(--primary)" : "text-(--foreground) hover:text-(--primary)"
-              )}
-            >
-              <span className="flex items-center gap-2 text-sm font-semibold">
-                <div className={cx(
-                  "h-4 w-4 rounded-full border flex items-center justify-center transition-colors",
-                  isActive ? "border-(--primary)" : "border-(--border) group-hover:border-(--primary)"
-                )}>
-                  {isActive && <div className="h-1.5 w-1.5 rounded-full bg-(--primary)"></div>}
-                </div>
-                {cat}
-              </span>
-              <span className={cx(
-                "text-xs font-bold transition-colors",
-                isActive ? "text-(--primary)" : "text-(--foreground) group-hover:text-(--primary)"
-              )}>
-                {counts[blogTaxonomySlug(cat)] || 0}
-              </span>
-            </button>
-          );
-        })}
-      </div>
-    </div>
-  );
-}
-
-const QUICK_ACCESS_OPTIONS = [
-  "Digital Tools",
-  "Games",
-  "Tools",
-  "Fashion & Lifestyle",
-  "Pdf",
-  "Image",
-  "Downloader",
-  "Calculator"
-];
-
-function QuickAccessWidget({ activeQuery, onChangeQuery }) {
-  return (
-    <div className="rounded-2xl border border-(--border) bg-(--card) p-4 shadow-sm">
-      <div className="mb-3">
-        <h3 className="text-sm font-bold uppercase tracking-wider text-(--foreground)">Quick Access</h3>
-      </div>
-      <div className="flex flex-wrap gap-2">
-        {QUICK_ACCESS_OPTIONS.map((option) => {
-          const isActive = option.toLowerCase() === activeQuery.trim().toLowerCase();
-          return (
-            <button
-              key={option}
-              type="button"
-              onClick={() => onChangeQuery(isActive ? "" : option)}
-              className={cx(
-                "inline-flex h-8 items-center justify-center rounded-lg border px-3 text-xs font-semibold transition-colors",
-                isActive
-                  ? "border-(--primary) bg-(--primary) text-(--primary-foreground)"
-                  : "border-(--border) bg-(--background) text-(--foreground) hover:border-(--primary) hover:text-(--primary)"
-              )}
-            >
-              {option}
-            </button>
-          );
-        })}
-      </div>
-    </div>
-  );
-}
-
-function NewsletterWidget() {
-  return (
-    <div className="rounded-2xl border border-(--border) bg-(--card) p-5 shadow-sm">
-      <h3 className="mb-2 text-sm font-bold uppercase tracking-wider text-(--foreground)">Stay Updated</h3>
-      <p className="mb-5 text-sm leading-relaxed text-(--muted-foreground)">
-        Get new articles, tips & productivity insights straight to your inbox.
-      </p>
-      <form className="flex flex-col gap-3" onSubmit={(e) => e.preventDefault()}>
-        <input
-          type="email"
-          placeholder="Enter your email"
-          className="h-11 w-full rounded-lg border border-(--border) bg-(--background) px-4 text-sm font-medium text-(--foreground) outline-none transition placeholder:text-(--muted-foreground) focus:border-(--primary) focus:ring-1 focus:ring-(--primary)"
-        />
-        <button
-          type="submit"
-          className="h-11 w-full rounded-lg bg-(--primary) px-4 text-sm font-bold text-(--primary-foreground) transition-colors hover:bg-(--primary-hover)"
-        >
-          Subscribe
-        </button>
-      </form>
-      <p className="mt-3 text-xs text-(--muted-foreground)">
-        No spam. Unsubscribe anytime.
-      </p>
     </div>
   );
 }
@@ -557,6 +778,8 @@ function EmptyState({ query, onReset }) {
     </div>
   );
 }
+
+/* ─────────────────────────── data plumbing ─────────────────────────── */
 
 function withTimeout(promise, timeoutMs, fallbackValue) {
   return Promise.race([
@@ -594,18 +817,13 @@ function waitForIdle(delay = 120) {
 export default function BlogExplorerClient({
   initialPosts,
   categories: initialCategories,
-  tags,
   initialRemoteOffset = 0,
   totalCount = initialPosts.length,
-  stats,
-  featuredPosts,
-  trendingPosts,
   children,
-  heroShortcutRail,
 }) {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const sentinelRef = useRef(null);
+  const articlesRef = useRef(null);
 
   const urlQuery = searchParams.get("q") || "";
   const urlCategory = searchParams.get("category") || "All";
@@ -619,9 +837,28 @@ export default function BlogExplorerClient({
   const [remoteOffset, setRemoteOffset] = useState(initialRemoteOffset);
   const [remoteHasMore, setRemoteHasMore] = useState(totalCount > initialRemoteOffset);
   const [remoteLoading, setRemoteLoading] = useState(false);
+  const [bookmarks, setBookmarks] = useState([]);
   const [isPending, startTransition] = useTransition();
 
   const deferredQuery = useDeferredValue(query.trim().toLowerCase());
+
+  useEffect(() => {
+    setBookmarks(readBookmarks());
+  }, []);
+
+  const toggleBookmark = useCallback((slug) => {
+    setBookmarks((current) => {
+      const next = current.includes(slug)
+        ? current.filter((item) => item !== slug)
+        : [...current, slug];
+      try {
+        window.localStorage.setItem(BOOKMARKS_KEY, JSON.stringify(next));
+      } catch {
+        /* storage unavailable */
+      }
+      return next;
+    });
+  }, []);
 
   useEffect(() => {
     if (initialRemoteOffset > 0) {
@@ -641,7 +878,6 @@ export default function BlogExplorerClient({
         let syncedPages = 0;
 
         while (!cancelled && hasMore && syncedPages < BACKGROUND_SYNC_PAGE_LIMIT) {
-          const isFirstRemotePage = nextOffset === 0;
           const page = await withTimeout(fetchRemoteBlogChunk(nextOffset, controller.signal), 12000, {
             posts: [],
             nextOffset,
@@ -654,11 +890,7 @@ export default function BlogExplorerClient({
             break;
           }
 
-          setPosts((currentPosts) =>
-            isFirstRemotePage
-              ? mergeBlogPosts(currentPosts, page.posts)
-              : mergeBlogPosts(currentPosts, page.posts)
-          );
+          setPosts((currentPosts) => mergeBlogPosts(currentPosts, page.posts));
           nextOffset = page.nextOffset;
           hasMore = Boolean(page.hasMore);
           syncedPages += 1;
@@ -685,6 +917,19 @@ export default function BlogExplorerClient({
 
   const counts = useMemo(() => getCategoryCounts(posts), [posts]);
 
+  // Featured hero — the freshest published blogs, recomputed live from the
+  // post state. As the background sync merges newly published Firebase blogs,
+  // the newest ones enter the hero and the oldest drop out automatically. Once
+  // the live catalog has synced, the hero shows only Admin-published content.
+  const HERO_COUNT = 5;
+  const heroPosts = useMemo(() => {
+    const ranked = sortBlogsByRecency(posts);
+    const published = ranked.filter(isPublishedPost);
+    const pool = published.length >= 3 ? published : ranked;
+    return pool.slice(0, HERO_COUNT);
+  }, [posts]);
+  const heroSlugs = useMemo(() => new Set(heroPosts.map((post) => post.slug)), [heroPosts]);
+
   const filteredPosts = useMemo(() => {
     const activeCategorySlug = blogTaxonomySlug(activeCategory);
     let result = activeCategory === "All"
@@ -695,12 +940,34 @@ export default function BlogExplorerClient({
       result = result.filter((post) => post.searchText?.includes(deferredQuery));
     }
 
-    return sortPosts(result, sortMode);
-  }, [activeCategory, deferredQuery, posts, sortMode]);
+    const sorted = sortPosts(result, sortMode);
+    // Default view: the hero's posts cascade OUT of the list (they're already
+    // shown above), so an article ages from hero → list as newer posts publish.
+    // In any filtered/search view we show everything that matches.
+    if (activeCategory === "All" && !deferredQuery) {
+      return sorted.filter((post) => !heroSlugs.has(post.slug));
+    }
+    return sorted;
+  }, [activeCategory, deferredQuery, posts, sortMode, heroSlugs]);
 
   const visiblePosts = filteredPosts.slice(0, visibleCount);
   const searchTerms = useMemo(() => getSearchTerms(deferredQuery), [deferredQuery]);
-  const hasMore = visibleCount < filteredPosts.length || remoteHasMore;
+  // Remote paging uses a single all-categories offset, so extending via the
+  // remote catalog only makes sense in the default (unfiltered) view. Under an
+  // active category/search we page through the already-loaded local matches
+  // only — otherwise "Load More" fetched unrelated posts that got filtered out
+  // and the button never went away.
+  const isDefaultView = activeCategory === "All" && !deferredQuery;
+  const hasMore = isDefaultView
+    ? visibleCount < filteredPosts.length || remoteHasMore
+    : visibleCount < filteredPosts.length;
+
+  // Featured picks + sidebar stay distinct from the hero (no repeats).
+  const featuredPicks = useMemo(
+    () => sortPosts(posts, "trending").filter((post) => !heroSlugs.has(post.slug)).slice(0, 3),
+    [posts, heroSlugs],
+  );
+  const popularSidebarPosts = useMemo(() => sortPosts(posts, "popular").slice(0, 5), [posts]);
 
   useEffect(() => {
     const timeout = window.setTimeout(() => {
@@ -725,12 +992,8 @@ export default function BlogExplorerClient({
         return;
       }
 
-      setPosts((currentPosts) =>
-        remoteOffset === 0
-          ? mergeBlogPosts(currentPosts, page.posts)
-          : mergeBlogPosts(currentPosts, page.posts)
-      );
-      setVisibleCount((current) => current + BLOG_CHUNK_SIZE);
+      setPosts((currentPosts) => mergeBlogPosts(currentPosts, page.posts));
+      setVisibleCount((current) => current + PAGE_SIZE);
       setRemoteOffset(page.nextOffset);
       setRemoteHasMore(Boolean(page.hasMore));
     } finally {
@@ -740,25 +1003,11 @@ export default function BlogExplorerClient({
 
   const loadNextChunk = useCallback(() => {
     if (visibleCount < filteredPosts.length) {
-      setVisibleCount((current) => Math.min(current + BLOG_CHUNK_SIZE, filteredPosts.length));
+      setVisibleCount((current) => Math.min(current + PAGE_SIZE, filteredPosts.length));
       return;
     }
     loadNextRemoteChunk();
   }, [filteredPosts.length, loadNextRemoteChunk, visibleCount]);
-
-  useEffect(() => {
-    if (!sentinelRef.current || !hasMore) return undefined;
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) loadNextChunk();
-      },
-      { rootMargin: "520px 0px" }
-    );
-
-    observer.observe(sentinelRef.current);
-    return () => observer.disconnect();
-  }, [hasMore, loadNextChunk]);
 
   const handleCategoryChange = (category) => {
     startTransition(() => {
@@ -811,83 +1060,95 @@ export default function BlogExplorerClient({
     });
   };
 
-  // We no longer hide sections based on category filtering to keep layout stable
-  const showFeatured = true;
-
-  const displayCategories = ["All", "Guides", "News", "Updates", "Tutorials"];
+  const jumpToArticles = (sortValue) => {
+    if (sortValue) handleSortChange(sortValue);
+    articlesRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
 
   return (
-    <section id="blog-explorer" className="mt-8">
-      {heroShortcutRail && <div className="mb-8 -mt-4">{heroShortcutRail}</div>}
+    <section id="blog-explorer" className="mt-2 flex flex-col gap-8">
+      {/* 1 — Featured hero carousel */}
+      {heroPosts.length > 0 && <FeaturedHeroCarousel posts={heroPosts} />}
 
-      {/* Toolbar: Actions & Stats */}
-      <div className="mb-8 flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
-        <div className="flex flex-wrap gap-3">
-          <Link
-            href="#blog-explorer"
-            className="inline-flex h-11 items-center justify-center gap-2 rounded-xl bg-(--primary) px-5 text-sm font-bold text-(--primary-foreground) transition hover:bg-(--primary-hover)"
-          >
-            Explore guides
-            <ArrowRight className="h-4 w-4" />
-          </Link>
-          <Link
-            href="/blogs/topics"
-            className="inline-flex h-11 items-center justify-center gap-2 rounded-xl border border-(--border) bg-(--card) px-5 text-sm font-bold text-(--foreground) transition hover:border-(--anslation-ds-border-strong) hover:bg-(--anslation-ds-soft)"
-          >
-            Topic clusters
-            <Layers3 className="h-4 w-4" />
-          </Link>
-        </div>
+      {/* 2 — Category band */}
+      <CategoryBand
+        categories={initialCategories}
+        counts={counts}
+        activeCategory={activeCategory}
+        onChange={handleCategoryChange}
+      />
 
-        {stats && (
-          <div className="flex gap-4 overflow-x-auto pb-2 sm:pb-0">
-            <StatCard value={stats.posts || 31} label="Articles" />
-            <StatCard value={stats.categories || 5} label="Categories" />
-            <StatCard value={stats.tools || 31} label="Tools" />
+      {/* 3 — Featured picks */}
+      {featuredPicks.length > 0 && (
+        <section aria-labelledby="featured-picks-heading">
+          <SectionHeading
+            id="featured-picks-heading"
+            title="Featured Picks"
+            action="View all featured"
+            onAction={() => jumpToArticles("trending")}
+          />
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {featuredPicks.map((post) => (
+              <FeaturedPickCard key={post.slug} post={post} />
+            ))}
           </div>
-        )}
-      </div>
-
-      {/* Featured & Trending Row */}
-      {featuredPosts?.length > 0 && (
-        <div className="mb-8 grid grid-cols-1 lg:grid-cols-4 gap-8">
-          <div className="lg:col-span-3 min-w-0">
-            <AutoScrollSlider className="pb-2 h-full">
-              {featuredPosts.map((post) => (
-                <div key={post.slug} className="w-full h-full shrink-0 snap-center">
-                  <HeroArticle post={post} />
-                </div>
-              ))}
-            </AutoScrollSlider>
-          </div>
-          <div className="lg:col-span-1">
-            <TrendingRail posts={trendingPosts} />
-          </div>
-        </div>
+        </section>
       )}
 
-      {children && <div className="mb-8">{children}</div>}
-
-      {/* Main Split Layout */}
-      <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
-        {/* Left Column (Main Content - spans 3 cols) */}
-        <div className="lg:col-span-3 flex flex-col gap-8">
+      {/* 4 — Latest articles + sidebar */}
+      <div ref={articlesRef} className="grid grid-cols-1 gap-8 lg:grid-cols-3 scroll-mt-24">
+        <div className="min-w-0 lg:col-span-2">
+          <div className="mb-5 flex flex-wrap items-center justify-between gap-x-4 gap-y-3">
+            <h2 className="flex items-center gap-3 text-xl font-bold tracking-tight text-(--foreground) sm:text-2xl">
+              <span aria-hidden="true" className="h-6 w-1 rounded-full bg-(--primary)" />
+              Latest Articles
+            </h2>
+            <div className="flex flex-wrap items-center gap-3">
+            <div className="flex items-center gap-1" role="tablist" aria-label="Sort articles">
+              {SORT_TABS.map((tab) => {
+                const active = sortMode === tab.value;
+                return (
+                  <button
+                    key={tab.value}
+                    type="button"
+                    role="tab"
+                    aria-selected={active}
+                    onClick={() => handleSortChange(tab.value)}
+                    className={cx(
+                      "relative px-3 py-1.5 text-sm font-bold transition-colors",
+                      active ? "text-(--primary)" : "text-(--muted-foreground) hover:text-(--foreground)",
+                    )}
+                  >
+                    {tab.label}
+                    {active && (
+                      <span aria-hidden="true" className="absolute inset-x-3 -bottom-0.5 h-0.5 rounded-full bg-(--primary)" />
+                    )}
+                  </button>
+                );
+              })}
+            </div>
+            <SearchControl value={query} onChange={handleQueryChange} onClear={clearQuery} pending={isPending} />
+            </div>
+          </div>
 
           {filteredPosts.length === 0 ? (
             <EmptyState query={query} onReset={resetFilters} />
           ) : (
-            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-3">
-              {visiblePosts.map((post) => (
-                <BlogPostCard
+            <div className="rounded-2xl border border-(--border) bg-(--card) px-5 shadow-sm">
+              {visiblePosts.map((post, index) => (
+                <ArticleRow
                   key={post.slug}
                   post={post}
                   searchTerms={searchTerms}
+                  bookmarked={bookmarks.includes(post.slug)}
+                  onToggleBookmark={toggleBookmark}
+                  divider={index !== visiblePosts.length - 1}
                 />
               ))}
             </div>
           )}
 
-          <div ref={sentinelRef} className="flex min-h-16 items-center justify-center py-6">
+          <div className="flex min-h-16 items-center justify-center py-6">
             {hasMore ? (
               <button
                 type="button"
@@ -902,7 +1163,7 @@ export default function BlogExplorerClient({
                   </>
                 ) : (
                   <>
-                    Load more articles
+                    Load More Articles
                     <ChevronDown className="h-4 w-4" />
                   </>
                 )}
@@ -911,15 +1172,11 @@ export default function BlogExplorerClient({
           </div>
         </div>
 
-        {/* Right Column (Sidebar - spans 1 col) */}
+        {/* Sidebar */}
         <div className="lg:col-span-1">
-          <div className="sticky top-20 flex flex-col gap-4 pb-12">
-            <CategoriesWidget 
-              categories={initialCategories} 
-              counts={counts}
-              activeCategory={activeCategory}
-              onChangeCategory={setActiveCategory}
-            />
+          <div className="sticky top-20 flex flex-col gap-5 pb-12">
+            <PopularArticlesWidget posts={popularSidebarPosts} onViewAll={() => jumpToArticles("popular")} />
+            <NewsletterWidget />
             <QuickAccessWidget
               activeQuery={query}
               onChangeQuery={(val) => {
@@ -930,6 +1187,12 @@ export default function BlogExplorerClient({
           </div>
         </div>
       </div>
+
+      {/* 5 — extra editorial sections from the server page, same 8-unit rhythm */}
+      {children && <div className="flex flex-col gap-8">{children}</div>}
+
+      {/* 6 — trust strip */}
+      <TrustStrip />
     </section>
   );
 }

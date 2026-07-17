@@ -74,6 +74,10 @@ for (const dir of toolDirs) {
     category: cleanCategory(config.category),
     icon: normalizeIcon(config.icon ?? "wrench"),
     iconColor: cleanText(config.iconColor) || "text-muted-foreground",
+    // Opt-in flag: tools that need the full viewport (canvas/image/PDF/code
+    // editors) set `wideWorkspace: true` in tool.config.js to disable the
+    // detail-page ad rail and the workspace width cap.
+    ...(config.wideWorkspace === true ? { wideWorkspace: true } : {}),
   };
 
 }
