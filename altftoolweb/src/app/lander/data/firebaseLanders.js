@@ -86,8 +86,23 @@ async function firestorePost(endpoint, body) {
   return response.json();
 }
 
-// A published landing page by slug, or null. Matches slugLower so lookups are
-// case-insensitive and consistent with how the admin stores slugs.
+const toMs = (v) => (typeof v === "number" ? v : v ? Date.parse(v) || null : null);
+
+// Whether a landing page should be publicly visible right now. Makes the admin
+// scheduling window real without a cron: a `scheduled` page goes live once
+// publishAt has passed, and any page auto-hides once expireAt has passed.
+export function isLanderLive(doc, now = Date.now()) {
+  if (!doc) return false;
+  const publishAt = toMs(doc.publishAt);
+  const expireAt = toMs(doc.expireAt);
+  if (expireAt && expireAt <= now) return false;
+  if (doc.status === "published") return true;
+  if (doc.status === "scheduled") return !!publishAt && publishAt <= now;
+  return false;
+}
+
+// A live landing page by slug, or null. Matches slugLower (case-insensitive,
+// consistent with how the admin stores slugs) then applies the schedule gate.
 export async function fetchFirebaseLanderBySlug(slug) {
   if (!slug) return null;
   const key = `lander:${String(slug).toLowerCase()}`;
@@ -100,7 +115,7 @@ export async function fetchFirebaseLanderBySlug(slug) {
       structuredQuery: {
         from: [{ collectionId: "landers" }],
         where: andFilter([
-          fieldFilter("status", "EQUAL", { stringValue: "published" }),
+          fieldFilter("status", "IN", { arrayValue: { values: [{ stringValue: "published" }, { stringValue: "scheduled" }] } }),
           fieldFilter("slugLower", "EQUAL", { stringValue: String(slug).toLowerCase() }),
         ]),
         limit: 1,
@@ -111,7 +126,8 @@ export async function fetchFirebaseLanderBySlug(slug) {
   }
 
   const document = rows.find((row) => row.document)?.document;
-  return writeCache(key, document ? decodeDocument(document) : null);
+  const doc = document ? decodeDocument(document) : null;
+  return writeCache(key, isLanderLive(doc) ? doc : null);
 }
 
 // All published slugs (+ updatedAt) — for generateStaticParams and sitemaps.
@@ -124,9 +140,9 @@ export async function fetchAllPublishedLanderSlugs({ max = 500 } = {}) {
   try {
     rows = await firestorePost("runQuery", {
       structuredQuery: {
-        select: { fields: [{ fieldPath: "slug" }, { fieldPath: "updatedAt" }] },
+        select: { fields: ["slug", "updatedAt", "status", "publishAt", "expireAt"].map((fieldPath) => ({ fieldPath })) },
         from: [{ collectionId: "landers" }],
-        where: fieldFilter("status", "EQUAL", { stringValue: "published" }),
+        where: fieldFilter("status", "IN", { arrayValue: { values: [{ stringValue: "published" }, { stringValue: "scheduled" }] } }),
         limit: Math.min(max, 500),
       },
     });
@@ -137,7 +153,7 @@ export async function fetchAllPublishedLanderSlugs({ max = 500 } = {}) {
   const items = rows
     .filter((row) => row.document)
     .map((row) => decodeDocument(row.document))
-    .filter((d) => d.slug)
+    .filter((d) => d.slug && isLanderLive(d))
     .map((d) => ({ slug: d.slug, updatedAt: d.updatedAt || null }));
 
   return writeCache(key, items);

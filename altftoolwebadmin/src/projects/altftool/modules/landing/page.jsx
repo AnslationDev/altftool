@@ -4,9 +4,10 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import {
   LayoutTemplate, Plus, Search, Copy, Trash2, Pencil, ExternalLink, Loader2, X,
+  CheckSquare, Send, Archive,
 } from "lucide-react";
 import {
-  subscribeLanders, createLander, duplicateLander, deleteLander, slugify, isSlugTaken,
+  subscribeLanders, createLander, duplicateLander, deleteLander, setLanderStatus, slugify, isSlugTaken,
 } from "./services/landersService";
 import { LANDER_STATUSES, STATUS_META } from "./lib/schema";
 
@@ -94,6 +95,8 @@ export default function LandingPagesModule() {
   const [statusFilter, setStatusFilter] = useState("all");
   const [creating, setCreating] = useState(false);
   const [busyId, setBusyId] = useState("");
+  const [selected, setSelected] = useState(() => new Set());
+  const [bulkBusy, setBulkBusy] = useState(false);
 
   useEffect(() => subscribeLanders(setItems, () => setItems([])), []);
 
@@ -114,6 +117,31 @@ export default function LandingPagesModule() {
     if (!window.confirm(`Delete "${title || "this page"}"? This cannot be undone.`)) return;
     setBusyId(id); try { await deleteLander(id); } finally { setBusyId(""); }
   };
+
+  const toggleSel = (id) => setSelected((prev) => {
+    const next = new Set(prev);
+    next.has(id) ? next.delete(id) : next.add(id);
+    return next;
+  });
+  const allVisibleSelected = filtered?.length > 0 && filtered.every((p) => selected.has(p.id));
+  const toggleSelAll = () => setSelected((prev) => {
+    if (!filtered) return prev;
+    if (filtered.every((p) => prev.has(p.id))) return new Set();
+    return new Set(filtered.map((p) => p.id));
+  });
+  const clearSel = () => setSelected(new Set());
+
+  const bulk = async (fn, confirmMsg) => {
+    const ids = [...selected];
+    if (!ids.length) return;
+    if (confirmMsg && !window.confirm(confirmMsg.replace("{n}", ids.length))) return;
+    setBulkBusy(true);
+    try { await Promise.all(ids.map(fn)); clearSel(); }
+    finally { setBulkBusy(false); }
+  };
+  const bulkPublish = () => bulk((id) => setLanderStatus(id, "published"));
+  const bulkArchive = () => bulk((id) => setLanderStatus(id, "archived"));
+  const bulkDelete = () => bulk((id) => deleteLander(id), "Delete {n} landing page(s)? This cannot be undone.");
 
   return (
     <div className="min-h-full bg-[var(--background)] px-4 py-6 sm:px-6">
@@ -147,7 +175,8 @@ export default function LandingPagesModule() {
         </div>
 
         <div className="overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface,var(--card))] shadow-[var(--shadow-sm)]">
-          <div className="hidden grid-cols-[1fr_140px_120px_150px] gap-3 border-b border-[var(--border)] px-4 py-2.5 text-[11px] font-bold uppercase tracking-wide text-[var(--muted)] sm:grid">
+          <div className="hidden grid-cols-[28px_1fr_140px_120px_150px] items-center gap-3 border-b border-[var(--border)] px-4 py-2.5 text-[11px] font-bold uppercase tracking-wide text-[var(--muted)] sm:grid">
+            <input type="checkbox" checked={!!allVisibleSelected} onChange={toggleSelAll} aria-label="Select all" className="h-4 w-4 cursor-pointer accent-[var(--primary)]" />
             <span>Page</span><span>Status</span><span>Updated</span><span className="text-right">Actions</span>
           </div>
 
@@ -159,7 +188,8 @@ export default function LandingPagesModule() {
             </div>
           ) : (
             filtered.map((p) => (
-              <div key={p.id} className="grid grid-cols-1 items-center gap-3 border-b border-[var(--border)] px-4 py-3 last:border-0 sm:grid-cols-[1fr_140px_120px_150px]">
+              <div key={p.id} className={`grid grid-cols-[28px_1fr] items-center gap-3 border-b border-[var(--border)] px-4 py-3 last:border-0 sm:grid-cols-[28px_1fr_140px_120px_150px] ${selected.has(p.id) ? "bg-[color-mix(in_srgb,var(--primary)_6%,transparent)]" : ""}`}>
+                <input type="checkbox" checked={selected.has(p.id)} onChange={() => toggleSel(p.id)} aria-label={`Select ${p.title || "page"}`} className="h-4 w-4 cursor-pointer accent-[var(--primary)]" />
                 <button onClick={() => goEdit(p.id)} className="min-w-0 text-left">
                   <p className="truncate text-sm font-bold text-[var(--foreground)]">{p.title || "Untitled"}</p>
                   <p className="truncate text-xs text-[var(--muted)]">/lander/{p.slug}</p>
@@ -177,6 +207,20 @@ export default function LandingPagesModule() {
           )}
         </div>
       </div>
+
+      {selected.size > 0 && (
+        <div className="fixed inset-x-0 bottom-4 z-[80] mx-auto flex w-[min(680px,92vw)] items-center justify-between gap-3 rounded-2xl border border-[var(--border)] bg-[var(--surface,var(--card))] px-4 py-3 shadow-[var(--shadow-lg)]">
+          <span className="flex items-center gap-2 text-sm font-bold text-[var(--foreground)]">
+            <CheckSquare className="h-4 w-4 text-[var(--primary)]" /> {selected.size} selected
+          </span>
+          <div className="flex items-center gap-2">
+            <button onClick={bulkPublish} disabled={bulkBusy} className="inline-flex h-9 items-center gap-1.5 rounded-lg border border-[var(--border)] px-3 text-xs font-bold text-[var(--foreground)] hover:border-[var(--primary)] hover:text-[var(--primary)] disabled:opacity-50"><Send className="h-3.5 w-3.5" /> Publish</button>
+            <button onClick={bulkArchive} disabled={bulkBusy} className="inline-flex h-9 items-center gap-1.5 rounded-lg border border-[var(--border)] px-3 text-xs font-bold text-[var(--foreground)] hover:border-[var(--primary)] hover:text-[var(--primary)] disabled:opacity-50"><Archive className="h-3.5 w-3.5" /> Archive</button>
+            <button onClick={bulkDelete} disabled={bulkBusy} className="inline-flex h-9 items-center gap-1.5 rounded-lg border border-[var(--border)] px-3 text-xs font-bold text-[var(--foreground)] hover:border-[var(--danger,#EF4444)] hover:text-[var(--danger,#EF4444)] disabled:opacity-50"><Trash2 className="h-3.5 w-3.5" /> Delete</button>
+            <button onClick={clearSel} className="grid h-9 w-9 place-items-center rounded-lg text-[var(--muted)] hover:text-[var(--foreground)]">{bulkBusy ? <Loader2 className="h-4 w-4 animate-spin" /> : <X className="h-4 w-4" />}</button>
+          </div>
+        </div>
+      )}
 
       {creating && <CreateModal onClose={() => setCreating(false)} onCreated={(id) => { setCreating(false); goEdit(id); }} />}
     </div>

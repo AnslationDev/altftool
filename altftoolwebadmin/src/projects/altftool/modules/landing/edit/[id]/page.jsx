@@ -2,11 +2,12 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
-import { ArrowLeft, Loader2, Save, ExternalLink } from "lucide-react";
+import { ArrowLeft, Loader2, Save, ExternalLink, History } from "lucide-react";
 import { fetchLander, updateLander, isSlugTaken, slugify } from "../../services/landersService";
 import { LANDER_STATUSES, STATUS_META, newLanderDoc } from "../../lib/schema";
 import SectionBuilder from "../../components/SectionBuilder";
 import SettingsPanels from "../../components/SettingsPanels";
+import HistoryDrawer from "../../components/HistoryDrawer";
 
 // Firestore Timestamp | number | null -> epoch millis | null
 const toMs = (v) => (v?.toMillis ? v.toMillis() : typeof v === "number" ? v : null);
@@ -36,6 +37,7 @@ export default function EditLanderPage() {
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
   const [savedAt, setSavedAt] = useState(null);
+  const [showHistory, setShowHistory] = useState(false);
 
   useEffect(() => {
     let alive = true;
@@ -85,6 +87,24 @@ export default function EditLanderPage() {
     }
   };
 
+  // Load a revision snapshot into the working editor state (not persisted until
+  // the user hits Save, which writes a new "restore" revision).
+  const applyRevision = (snap) => {
+    if (snap.title != null || snap.slug != null || snap.status != null) {
+      setForm({ title: snap.title ?? form.title, slug: snap.slug ?? form.slug, status: snap.status ?? form.status });
+    }
+    if (Array.isArray(snap.sections)) setSections(snap.sections);
+    setMeta((m) => ({
+      seo: snap.seo ?? m.seo,
+      theme: snap.theme ?? m.theme,
+      schema: snap.schema ?? m.schema,
+      ads: snap.ads ?? m.ads,
+      publishAt: toMs(snap.publishAt) ?? m.publishAt,
+      expireAt: toMs(snap.expireAt) ?? m.expireAt,
+    }));
+    setShowHistory(false);
+  };
+
   if (loading) {
     return <div className="flex items-center justify-center gap-2 py-24 text-sm text-[var(--muted)]"><Loader2 className="h-4 w-4 animate-spin" /> Loading…</div>;
   }
@@ -102,7 +122,10 @@ export default function EditLanderPage() {
   return (
     <div className="min-h-full bg-[var(--background)] pb-24">
       <div className="mx-auto max-w-4xl px-4 py-6 sm:px-6">
-        <button onClick={() => router.push("/altftool/landing")} className="mb-4 inline-flex items-center gap-1.5 text-sm font-bold text-[var(--muted)] hover:text-[var(--foreground)]"><ArrowLeft className="h-4 w-4" /> Landing Pages</button>
+        <div className="mb-4 flex items-center justify-between">
+          <button onClick={() => router.push("/altftool/landing")} className="inline-flex items-center gap-1.5 text-sm font-bold text-[var(--muted)] hover:text-[var(--foreground)]"><ArrowLeft className="h-4 w-4" /> Landing Pages</button>
+          <button onClick={() => setShowHistory(true)} className="inline-flex h-9 items-center gap-1.5 rounded-lg border border-[var(--border)] px-3 text-sm font-bold text-[var(--foreground)] hover:border-[var(--primary)] hover:text-[var(--primary)]"><History className="h-4 w-4" /> History</button>
+        </div>
 
         <div className="space-y-5">
           <section className="rounded-2xl border border-[var(--border)] bg-[var(--surface,var(--card))] p-5 shadow-[var(--shadow-sm)]">
@@ -134,6 +157,8 @@ export default function EditLanderPage() {
           {meta ? <SettingsPanels meta={meta} onChange={setMeta} landerId={id} /> : null}
         </div>
       </div>
+
+      {showHistory && <HistoryDrawer landerId={id} onRestore={applyRevision} onClose={() => setShowHistory(false)} />}
 
       {/* Sticky save bar */}
       <div className="fixed inset-x-0 bottom-0 border-t border-[var(--border)] bg-[var(--surface,var(--card))]/95 backdrop-blur">

@@ -120,7 +120,7 @@ export async function duplicateLander(id) {
 
 /* -------------------------------- revisions ------------------------------- */
 
-const REVISION_FIELDS = ["title", "slug", "status", "seo", "theme", "sections", "ads", "schema"];
+const REVISION_FIELDS = ["title", "slug", "status", "seo", "theme", "sections", "ads", "schema", "publishAt", "expireAt"];
 
 export async function saveLanderRevision({ lander, reason = "manual", actor = null }) {
   if (!lander?.id) return;
