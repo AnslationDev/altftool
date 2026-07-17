@@ -840,6 +840,17 @@ export const toolMetaMap = {
     "icon": "palette",
     "iconColor": "text-fuchsia-600"
   },
+  "color-match-game": {
+    "name": "Color Match Game",
+    "description": "Test your color perception by matching the target color from a grid of similar shades. How good is your eye?",
+    "category": [
+      "Fun",
+      "Game",
+      "Entertainment"
+    ],
+    "icon": "eye",
+    "iconColor": "text-green-600"
+  },
   "color-memory-precision-test": {
     "name": "Color Memory Precision Test",
     "description": "Test your visual memory and color precision by recreating shades from memory.",
@@ -883,6 +894,16 @@ export const toolMetaMap = {
     "category": "Design Tools",
     "icon": "palette",
     "iconColor": "text-fuchsia-600"
+  },
+  "compliment-generator": {
+    "name": "Compliment Generator",
+    "description": "Brighten someone's day with a random compliment. Choose from categories like personality, appearance, or talent.",
+    "category": [
+      "Fun",
+      "Lifestyle"
+    ],
+    "icon": "heart",
+    "iconColor": "text-pink-600"
   },
   "component-naming-auditor": {
     "name": "Component Naming Auditor",
@@ -1069,6 +1090,16 @@ export const toolMetaMap = {
     "icon": "activity",
     "iconColor": "text-amber-700"
   },
+  "dad-joke-machine": {
+    "name": "Dad Joke Machine",
+    "description": "Get a never-ending supply of classic dad jokes with puns, wordplay, and eye-rolling goodness.",
+    "category": [
+      "Fun",
+      "Entertainment"
+    ],
+    "icon": "laugh",
+    "iconColor": "text-teal-600"
+  },
   "data-lens": {
     "name": "Data Lens",
     "description": "Upload CSV files to analyze columns, clean data, detect patterns, and generate smart visual insights.",
@@ -1174,6 +1205,17 @@ export const toolMetaMap = {
     ],
     "icon": "gauge",
     "iconColor": "text-blue-600"
+  },
+  "dice-roller-3d": {
+    "name": "Dice Roller (3D)",
+    "description": "Roll virtual 3D dice with realistic physics animations. Supports multiple dice types from D4 to D20.",
+    "category": [
+      "Fun",
+      "Game",
+      "Entertainment"
+    ],
+    "icon": "dices",
+    "iconColor": "text-orange-600"
   },
   "dictionary-app": {
     "name": "Dictionary App",
@@ -1316,12 +1358,33 @@ export const toolMetaMap = {
     "icon": "mail",
     "iconColor": "text-blue-600"
   },
+  "embarrassing-story-generator": {
+    "name": "Embarrassing Story Generator",
+    "description": "Generate cringe-worthy and hilarious embarrassing stories that are totally believable (or not).",
+    "category": [
+      "Fun",
+      "Entertainment"
+    ],
+    "icon": "unplug",
+    "iconColor": "text-rose-600"
+  },
   "emoji-hub": {
     "name": "Emoji Hub",
     "description": "A collection of emoji icons",
     "category": "Creators",
     "icon": "smile",
     "iconColor": "text-yellow-500"
+  },
+  "emoji-quiz": {
+    "name": "Emoji Quiz",
+    "description": "Guess the movie, song, phrase, or word from a series of emoji clues. Multiple categories and difficulty levels.",
+    "category": [
+      "Fun",
+      "Game",
+      "Entertainment"
+    ],
+    "icon": "puzzle",
+    "iconColor": "text-fuchsia-600"
   },
   "emoji-remover": {
     "name": "Emoji Remover",
@@ -1382,6 +1445,16 @@ export const toolMetaMap = {
     "icon": "bar-chart-3",
     "iconColor": "text-teal-600"
   },
+  "excuse-generator": {
+    "name": "Excuse Generator",
+    "description": "Generate creative and believable excuses for any situation. Choose from categories like work, school, social, or dates.",
+    "category": [
+      "Fun",
+      "Lifestyle"
+    ],
+    "icon": "shield-off",
+    "iconColor": "text-slate-600"
+  },
   "exif-data-viewer": {
     "name": "EXIF Data Viewer",
     "description": "Inspect image metadata including camera, date, and GPS fields.",
@@ -1436,6 +1509,16 @@ export const toolMetaMap = {
     "icon": "user",
     "iconColor": "text-gray-500"
   },
+  "fake-excuse-letter-generator": {
+    "name": "Fake Excuse Letter Generator",
+    "description": "Generate professional-looking fake excuse letters for missing work, school, or events with customizable details.",
+    "category": [
+      "Fun",
+      "Lifestyle"
+    ],
+    "icon": "file-text",
+    "iconColor": "text-blue-600"
+  },
   "fancy-text-generator": {
     "name": "Fancy Text Generator",
     "description": "Generate stylish Unicode text variants for bios, posts, and names.",
@@ -1445,6 +1528,17 @@ export const toolMetaMap = {
     ],
     "icon": "sparkle",
     "iconColor": "text-pink-600"
+  },
+  "fast-click-challenge": {
+    "name": "Fast Click Challenge",
+    "description": "Test your clicking speed in 10 seconds. Click as fast as you can and compare your CPS with friends.",
+    "category": [
+      "Fun",
+      "Game",
+      "Entertainment"
+    ],
+    "icon": "mouse-pointer-click",
+    "iconColor": "text-orange-500"
   },
   "fd-rd-maturity-calculator": {
     "name": "FD / RD Maturity Calculator",
@@ -1591,6 +1685,16 @@ export const toolMetaMap = {
     "category": "Lifestyle",
     "icon": "users",
     "iconColor": "text-cyan-500"
+  },
+  "funny-nickname-generator": {
+    "name": "Funny Nickname Generator",
+    "description": "Generate hilarious and creative nicknames based on your name, personality, or random themes.",
+    "category": [
+      "Fun",
+      "Entertainment"
+    ],
+    "icon": "smile-plus",
+    "iconColor": "text-yellow-600"
   },
   "furniture-layout-planner": {
     "name": "Furniture Layout Planner",
@@ -2400,6 +2504,26 @@ export const toolMetaMap = {
     "icon": "heart",
     "iconColor": "text-rose-500"
   },
+  "lucky-color-picker": {
+    "name": "Lucky Color Picker",
+    "description": "Discover your lucky color for today based on your mood, zodiac sign, or random selection with color psychology insights.",
+    "category": [
+      "Fun",
+      "Lifestyle"
+    ],
+    "icon": "palette",
+    "iconColor": "text-purple-600"
+  },
+  "lucky-day-predictor": {
+    "name": "Lucky Day Predictor",
+    "description": "Find out if today is your lucky day based on numerology, birth date, and cosmic alignment predictions.",
+    "category": [
+      "Fun",
+      "Lifestyle"
+    ],
+    "icon": "sparkles",
+    "iconColor": "text-amber-600"
+  },
   "lucky-face-score": {
     "name": "Lucky Face Score",
     "description": "Upload a photo and discover your fictional luck score with fun badges and fortune!",
@@ -2509,6 +2633,17 @@ export const toolMetaMap = {
     "category": "Creators",
     "icon": "image",
     "iconColor": "text-blue-500"
+  },
+  "memory-card-game": {
+    "name": "Memory Card Game",
+    "description": "Test and train your memory by matching pairs of cards. Choose from multiple themes and difficulty levels.",
+    "category": [
+      "Fun",
+      "Game",
+      "Entertainment"
+    ],
+    "icon": "layers",
+    "iconColor": "text-blue-600"
   },
   "meta-tag-generator": {
     "name": "Meta Tag Generator",
@@ -2642,6 +2777,17 @@ export const toolMetaMap = {
     ],
     "icon": "scale",
     "iconColor": "text-emerald-600"
+  },
+  "number-guessing-game": {
+    "name": "Number Guessing Game",
+    "description": "Guess the secret number between 1 and 100. Get hints like higher or lower and try to beat your best score.",
+    "category": [
+      "Fun",
+      "Game",
+      "Entertainment"
+    ],
+    "icon": "brain",
+    "iconColor": "text-cyan-600"
   },
   "number-system-conversions": {
     "name": "Number System Conversions",
@@ -2919,6 +3065,16 @@ export const toolMetaMap = {
     "icon": "code",
     "iconColor": "text-indigo-500"
   },
+  "pickup-line-generator": {
+    "name": "Pickup Line Generator",
+    "description": "Generate smooth, cheesy, or funny pickup lines for any situation. Choose from categories like romantic, nerdy, or witty.",
+    "category": [
+      "Fun",
+      "Entertainment"
+    ],
+    "icon": "sparkle",
+    "iconColor": "text-pink-500"
+  },
   "pixar-style-generator": {
     "name": "Pixar Style Generator",
     "description": "Generate Pixar-style 3D characters via free AI prompts, or upload your own photo/URL to apply local 3D claymation filters and glassy animated eyes.",
@@ -3078,6 +3234,17 @@ export const toolMetaMap = {
     "icon": "waves",
     "iconColor": "text-blue-600"
   },
+  "reaction-time-test": {
+    "name": "Reaction Time Test",
+    "description": "Test your reflexes with a simple reaction time challenge. Click as fast as you can when the screen changes color.",
+    "category": [
+      "Fun",
+      "Game",
+      "Entertainment"
+    ],
+    "icon": "zap",
+    "iconColor": "text-yellow-500"
+  },
   "reading-time-calculator": {
     "name": "Reading Time Calculator",
     "description": "Estimate reading time, word count, sentence count, and readability metrics for any text in real time.",
@@ -3137,6 +3304,16 @@ export const toolMetaMap = {
     "icon": "wrench",
     "iconColor": "text-blue-500"
   },
+  "roast-generator": {
+    "name": "Roast Generator",
+    "description": "Generate hilarious and creative roasts for friends, enemies, or yourself. Choose from savage, playful, or witty styles.",
+    "category": [
+      "Fun",
+      "Entertainment"
+    ],
+    "icon": "flame",
+    "iconColor": "text-red-600"
+  },
   "robots-txt-generator": {
     "name": "Robots.txt Generator",
     "description": "Create standard robots.txt files for search engines with interactive forms to configure crawling rules, delays, and sitemaps.",
@@ -3181,6 +3358,16 @@ export const toolMetaMap = {
     ],
     "icon": "sparkles",
     "iconColor": "text-amber-600"
+  },
+  "sarcasm-generator": {
+    "name": "Sarcasm Generator",
+    "description": "Generate perfectly sarcastic responses for any situation. Because nothing says 'I care' like thinly veiled contempt.",
+    "category": [
+      "Fun",
+      "Entertainment"
+    ],
+    "icon": "message-circle",
+    "iconColor": "text-indigo-600"
   },
   "scientific-notation-calculator": {
     "name": "Scientific Notation Calculator",
@@ -4099,6 +4286,17 @@ export const toolMetaMap = {
     "icon": "activity",
     "iconColor": "text-red-600"
   },
+  "whack-a-mole": {
+    "name": "Whack-a-Mole",
+    "description": "Whack moles as they pop up from their holes. Test your speed and reflexes in this classic arcade game.",
+    "category": [
+      "Fun",
+      "Game",
+      "Entertainment"
+    ],
+    "icon": "hammer",
+    "iconColor": "text-amber-700"
+  },
   "wheregoes-tool": {
     "name": "WhereGoes Tool",
     "description": "Trace URL redirects, check status codes, and analyze response headers.",
@@ -4170,6 +4368,16 @@ export const toolMetaMap = {
     ],
     "icon": "braces",
     "iconColor": "text-emerald-600"
+  },
+  "yes-or-no-oracle": {
+    "name": "Yes or No Oracle",
+    "description": "Get a mystical yes or no answer to any question. The oracle provides guidance with ancient wisdom and cosmic insight.",
+    "category": [
+      "Fun",
+      "Entertainment"
+    ],
+    "icon": "crystal-ball",
+    "iconColor": "text-violet-600"
   },
   "younger-version-generator": {
     "name": "Younger Version Generator",
