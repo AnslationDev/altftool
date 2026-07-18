@@ -710,8 +710,10 @@ export default function EditBlog() {
 
       setUploadStep("done");
       setPreviewRequest(null);
-      // Push the change live immediately (no-op unless revalidation is configured).
-      if (status === "published") requestBlogRevalidation(slug);
+      // Push the change live immediately for BOTH publish and unpublish — a
+      // draft/archived save must refresh the public cache so the post drops
+      // off /blogs and its slug page 404s instead of lingering for an hour.
+      requestBlogRevalidation(slug);
       emitAlert({ type: "success", message: status === "published" ? "Blog published!" : "Draft saved." });
       setTimeout(() => router.push("/altftool/blogs"), 600);
     } catch (err) {

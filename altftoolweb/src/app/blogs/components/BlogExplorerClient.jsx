@@ -702,23 +702,25 @@ function NewsletterWidget() {
   );
 }
 
-const QUICK_ACCESS_OPTIONS = [
+const QUICK_ACCESS_FALLBACK = [
   "Digital Tools",
-  "Games",
   "Tools",
-  "Fashion & Lifestyle",
   "Pdf",
   "Image",
   "Downloader",
   "Calculator",
 ];
 
-function QuickAccessWidget({ activeQuery, onChangeQuery }) {
+function QuickAccessWidget({ activeQuery, onChangeQuery, categories = [] }) {
+  // Prefer the real, live category list (so options never go stale) and fall
+  // back to a sensible default when categories haven't loaded yet.
+  const options = (categories.filter((c) => c && c !== "All").slice(0, 8));
+  const list = options.length ? options : QUICK_ACCESS_FALLBACK;
   return (
     <div className="rounded-2xl border border-(--border) bg-(--card) p-5 shadow-sm">
       <h3 className="mb-3 text-base font-bold text-(--foreground)">Quick Access</h3>
       <div className="flex flex-wrap gap-2">
-        {QUICK_ACCESS_OPTIONS.map((option) => {
+        {list.map((option) => {
           const isActive = option.toLowerCase() === activeQuery.trim().toLowerCase();
           return (
             <button
@@ -1221,6 +1223,7 @@ export default function BlogExplorerClient({
             <NewsletterWidget />
             <QuickAccessWidget
               activeQuery={query}
+              categories={initialCategories}
               onChangeQuery={(val) => {
                 handleQueryChange(val);
                 setActiveCategory("All");

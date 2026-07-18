@@ -14,6 +14,7 @@ import {
   TrendingUp,
 } from "lucide-react";
 import BlogExplorerClient from "./components/BlogExplorerClient";
+import BlogCampaignSlot from "./components/BlogCampaignSlot";
 import JsonLd from "@/platform/seo/JsonLd";
 import RouteDiscoveryBand from "@/platform/navigation/RouteDiscoveryBand";
 import AutoScrollSlider from "./components/AutoScrollSlider";
@@ -156,7 +157,11 @@ function compactExplorerPost(post = {}) {
 }
 
 async function getFastFirebaseBlogCatalog() {
-  if (process.env.ALTFT_BLOGS_SSR_FIREBASE !== "true") {
+  // Render LIVE published blogs server-side by default so the homepage never
+  // shows unpublished/removed posts baked into the static seed (the catalog
+  // read is ISR-cached, so this doesn't amplify Firestore reads). Set
+  // ALTFT_BLOGS_SSR_FIREBASE="false" to force the static-seed fallback.
+  if (process.env.ALTFT_BLOGS_SSR_FIREBASE === "false") {
     return null;
   }
 
@@ -360,6 +365,9 @@ export default async function BlogsPage() {
           </p>
         </section>
 
+        {/* Campaign zone — top leaderboard (filled from the Admin Ads manager). */}
+        <BlogCampaignSlot placement="blog_home_top" className="mb-6" />
+
         <Suspense fallback={null}>
         <BlogExplorerClient
           heroShortcutRail={<HeroShortcutRail categories={categories} clusters={topicClusters} />}
@@ -372,6 +380,8 @@ export default async function BlogsPage() {
           totalCount={totalCount}
         >
           <MarketLaneGrid />
+          {/* Campaign zone — mid-page banner. */}
+          <BlogCampaignSlot placement="blog_home_mid" />
           <TopicClusterBand clusters={topicClusters} />
           <section aria-labelledby="popular-paths-heading">
             <BandHeading
