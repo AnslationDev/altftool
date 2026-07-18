@@ -11,7 +11,6 @@ import { NewsletterSubscribeDialog } from "@/platform/consentalerts/NewsletterSu
 import GlobalAnimationProvider from "@/contexts/GlobalAnimationProvider";
 import { AdsProvider } from "@/ads/AdsProvider";
 import { Suspense } from "react";
-import LazyChatBot from "@/platform/chatbot/LazyChatBot";
 import { AlertProvider } from "@/shared/ui/AlertProvider";
 import JsonLd from "@/platform/seo/JsonLd";
 import { primeSeoConfig, loadSeoConfig } from "@/platform/seo/seoConfigSource";
@@ -263,9 +262,8 @@ export default async function RootLayout({ children }) {
 
         <CookieBanner />
         <NewsletterSubscribeDialog />
-        <Suspense fallback={null}>
-          <LazyChatBot />
-        </Suspense>
+        {/* AltBot (chatbot) removed for now — planned for a future release.
+            Its module lived at src/platform/chatbot/. */}
         <GlobalChromeGate>
           <Footer />
         </GlobalChromeGate>

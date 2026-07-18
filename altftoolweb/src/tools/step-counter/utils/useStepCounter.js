@@ -17,12 +17,17 @@ import {
   todayKey,
 } from "./stepStore";
 
-const SIMULATED_STEPS_PER_SECOND = 2;
+// Calm, natural cadence for the simulated counter: steps tick in one-by-one,
+// roughly one step every 0.8–1.2 seconds with a little random variation, so
+// the count climbs 1, 2, 3… at an easy human walking rhythm — never in a rush.
+const STEP_INTERVAL_MIN_MS = 800;
+const STEP_INTERVAL_MAX_MS = 1200;
 const MOTION_DEBOUNCE_MS = 400;
 
 /**
  * All Step Counter behaviour in one hook:
- * - localStorage persistence (per-day history, goal, achievements)
+ * - session-only persistence (per-day history, goal, achievements live in
+ *   sessionStorage and reset when the browser session ends)
  * - real step detection via the devicemotion sensor on mobile
  * - clearly-labelled simulated pace on devices without a motion sensor
  * - active-time tracking + achievement unlocks
@@ -184,14 +189,43 @@ export default function useStepCounter() {
     return () => window.removeEventListener("devicemotion", handleMotion);
   }, [isActive, sensorMode, addSteps]);
 
-  /* -------------------- active-time ticker + simulated pace ------------------- */
+  /* ------------------------- simulated walking cadence ------------------------ */
+
+  // Steps arrive one at a time on a human rhythm (~1 step every 0.5–0.75s with
+  // natural jitter), so the counter climbs 1, 2, 3… like a real walk instead of
+  // jumping in batches.
+  useEffect(() => {
+    if (!isActive || sensorMode !== "simulated") return undefined;
+
+    let timeoutId;
+    let cancelled = false;
+
+    const scheduleNextStep = () => {
+      const delay =
+        STEP_INTERVAL_MIN_MS +
+        Math.random() * (STEP_INTERVAL_MAX_MS - STEP_INTERVAL_MIN_MS);
+      timeoutId = window.setTimeout(() => {
+        if (cancelled) return;
+        addSteps(1);
+        scheduleNextStep();
+      }, delay);
+    };
+
+    scheduleNextStep();
+
+    return () => {
+      cancelled = true;
+      window.clearTimeout(timeoutId);
+    };
+  }, [isActive, sensorMode, addSteps]);
+
+  /* ----------------------------- active-time ticker ---------------------------- */
 
   useEffect(() => {
     if (!isActive) return undefined;
 
     const tick = window.setInterval(() => {
       addActiveTime(1000);
-      if (sensorMode === "simulated") addSteps(SIMULATED_STEPS_PER_SECOND);
       // Refresh the day key so the UI rolls over cleanly at midnight.
       setDayKey((prev) => {
         const next = todayKey();
@@ -200,7 +234,7 @@ export default function useStepCounter() {
     }, 1000);
 
     return () => window.clearInterval(tick);
-  }, [isActive, sensorMode, addSteps, addActiveTime]);
+  }, [isActive, addActiveTime]);
 
   /* -------------------------------- selectors -------------------------------- */
 

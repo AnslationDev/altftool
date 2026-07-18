@@ -14,7 +14,8 @@ import top11Categories from "@/app/top11/data/categoryData";
 import { getTop9Items } from "@/app/top9/data/getTop9Items";
 import wattpadBooks from "@/app/wattpad/data/books.json";
 import wattpadCategories from "@/app/wattpad/data/categories.json";
-import { getSiteUrl, normalizeSlug } from "@/platform/seo/generateMetadata";
+import { absoluteUrl, getSiteUrl, normalizeSlug } from "@/platform/seo/generateMetadata";
+import { getAllGeoSlugs } from "@/platform/seo/geoLocations";
 import { loadSeoConfig } from "@/platform/seo/seoConfigSource";
 import { resolveSitemap } from "@altftool/core/seo/resolver";
 import newsData from "../../public/data/newsdata.json";
@@ -122,12 +123,17 @@ function safeDate(value) {
 }
 
 function sitemapEntry(path, options = {}) {
-  return {
+  const entry = {
     url: `${getSiteUrl()}${path}`,
     lastModified: safeDate(options.lastModified) || new Date(),
     changeFrequency: options.changeFrequency || "weekly",
     priority: options.priority ?? 0.6,
   };
+  // Image sitemap support (Next.js MetadataRoute.Sitemap `images` field).
+  if (Array.isArray(options.images) && options.images.length) {
+    entry.images = options.images;
+  }
+  return entry;
 }
 
 // ALTF Engine: central SEO config for this sitemap build (null = inert).
@@ -309,6 +315,7 @@ export default async function sitemap() {
       lastModified: blog.date ? new Date(blog.date) : undefined,
       priority: 0.7,
       changeFrequency: "monthly",
+      images: blog.image ? [absoluteUrl(blog.image)] : undefined,
     });
   }
 
@@ -318,8 +325,19 @@ export default async function sitemap() {
         lastModified: blog.updatedAt || blog.date ? new Date(blog.updatedAt || blog.date) : undefined,
         priority: 0.72,
         changeFrequency: "weekly",
+        images: blog.image ? [absoluteUrl(blog.image)] : undefined,
       });
     }
+  }
+
+  // GEO landing pages (Entity SEO) — every registry location, plus the hub.
+  // Adding a location to src/platform/seo/geoLocations.js adds it here too.
+  pushUnique(entries, seen, "/locations", { priority: 0.6, changeFrequency: "weekly" });
+  for (const geo of getAllGeoSlugs()) {
+    pushUnique(entries, seen, `/locations/${geo}`, {
+      priority: 0.55,
+      changeFrequency: "monthly",
+    });
   }
 
   for (const category of getBlogCategories(sitemapBlogs).filter((item) => item !== "All")) {
