@@ -1,4 +1,5 @@
 export default {
+  slug: "ingredient-substitute-finder",
   name: "Ingredient Substitute Finder",
   description: "Find instant ingredient replacements with precise ratios and dietary filters.",
   category: "Kitchen Tools",
