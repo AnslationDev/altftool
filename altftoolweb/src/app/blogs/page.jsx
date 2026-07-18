@@ -246,17 +246,21 @@ function MarketLaneGrid() {
         {BLOG_CONTENT_LANES.map((lane, index) => {
           const Icon = laneIcons[index] || BookOpen;
           return (
-            <article
+            <Link
               key={lane.title}
+              href={lane.href || "/blogs"}
               className="group flex flex-col rounded-2xl border border-(--border) bg-(--card) p-5 shadow-sm transition-all duration-200 ease-out hover:-translate-y-0.5 hover:border-(--anslation-ds-border-strong) hover:shadow-[var(--anslation-ds-shadow-md)]"
             >
               <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-xl bg-(--anslation-ds-primary-soft) text-(--primary) transition-colors group-hover:bg-(--primary) group-hover:text-(--primary-foreground)">
                 <Icon className="h-5 w-5" />
               </div>
               <p className="text-[10px] font-bold uppercase tracking-[0.1em] text-(--muted-foreground)">{lane.eyebrow}</p>
-              <h3 className="mt-1.5 text-base font-semibold tracking-tight text-(--foreground)">{lane.title}</h3>
+              <h3 className="mt-1.5 flex items-center gap-1 text-base font-semibold tracking-tight text-(--foreground) transition-colors group-hover:text-(--primary)">
+                {lane.title}
+                <ArrowRight className="h-4 w-4 opacity-0 -translate-x-1 transition-all group-hover:opacity-100 group-hover:translate-x-0" />
+              </h3>
               <p className="mt-2 text-sm leading-relaxed text-(--muted-foreground)">{lane.description}</p>
-            </article>
+            </Link>
           );
         })}
       </div>

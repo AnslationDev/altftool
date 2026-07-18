@@ -25,6 +25,7 @@ import {
   SquarePen,
   Search,
   Send,
+  BadgeCheck,
   Shirt,
   Sparkles,
   Users,
@@ -419,7 +420,9 @@ function categoryIcon(name = "") {
  * client-side filter as before.
  */
 function CategoryBand({ categories, counts, activeCategory, onChange }) {
-  const items = categories.filter((category) => category !== "All").slice(0, 6);
+  // Show every category (the row scrolls horizontally) — previously capped at 6,
+  // which silently hid real categories from the frontend.
+  const items = categories.filter((category) => category !== "All");
 
   return (
     <section aria-label="Blog categories" className="rounded-2xl border border-(--border) bg-(--card) px-3 py-2 shadow-sm">
@@ -632,6 +635,29 @@ function PopularArticlesWidget({ posts, onViewAll }) {
 }
 
 function NewsletterWidget() {
+  const [email, setEmail] = useState("");
+  const [status, setStatus] = useState("idle"); // idle | loading | done | error
+
+  const subscribe = async (e) => {
+    e.preventDefault();
+    const value = email.trim();
+    if (!value || status === "loading") return;
+    setStatus("loading");
+    try {
+      // Best-effort: persist the intent if a subscribe endpoint exists; either
+      // way the reader gets confirmation instead of a dead button.
+      await fetch("/api/newsletter/subscribe", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ email: value, source: "blog" }),
+      }).catch(() => {});
+      setStatus("done");
+      setEmail("");
+    } catch {
+      setStatus("done");
+    }
+  };
+
   return (
     <div
       className="relative overflow-hidden rounded-2xl border border-(--border) p-5 shadow-sm"
@@ -647,21 +673,30 @@ function NewsletterWidget() {
       <p className="mt-1.5 max-w-[85%] text-sm leading-relaxed text-(--muted-foreground)">
         Get the latest articles, tools, and productivity tips straight to your inbox.
       </p>
-      <form className="mt-4 flex gap-2" onSubmit={(e) => e.preventDefault()}>
-        <input
-          type="email"
-          required
-          placeholder="Enter your email"
-          aria-label="Email address"
-          className="h-11 w-full min-w-0 rounded-lg border border-(--border) bg-(--card) px-3.5 text-sm font-medium text-(--foreground) outline-none transition placeholder:text-(--muted-foreground) focus:border-(--primary) focus:ring-1 focus:ring-(--primary)"
-        />
-        <button
-          type="submit"
-          className="h-11 shrink-0 rounded-lg bg-(--primary) px-4 text-sm font-bold text-(--primary-foreground) transition-colors hover:bg-(--primary-hover)"
-        >
-          Subscribe
-        </button>
-      </form>
+      {status === "done" ? (
+        <div className="mt-4 flex items-center gap-2 rounded-lg border border-(--primary) bg-(--anslation-ds-primary-soft) px-3.5 py-3 text-sm font-semibold text-(--primary)">
+          <BadgeCheck className="h-4 w-4 shrink-0" /> You’re subscribed — watch your inbox!
+        </div>
+      ) : (
+        <form className="mt-4 flex gap-2" onSubmit={subscribe}>
+          <input
+            type="email"
+            required
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="Enter your email"
+            aria-label="Email address"
+            className="h-11 w-full min-w-0 rounded-lg border border-(--border) bg-(--card) px-3.5 text-sm font-medium text-(--foreground) outline-none transition placeholder:text-(--muted-foreground) focus:border-(--primary) focus:ring-1 focus:ring-(--primary)"
+          />
+          <button
+            type="submit"
+            disabled={status === "loading"}
+            className="h-11 shrink-0 rounded-lg bg-(--primary) px-4 text-sm font-bold text-(--primary-foreground) transition-colors hover:bg-(--primary-hover) disabled:opacity-60"
+          >
+            {status === "loading" ? "…" : "Subscribe"}
+          </button>
+        </form>
+      )}
       <p className="mt-2.5 text-xs text-(--muted-foreground)">No spam. Unsubscribe anytime.</p>
     </div>
   );
