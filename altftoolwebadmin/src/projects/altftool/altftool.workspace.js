@@ -18,6 +18,7 @@ registerProject({
         deals: { label: "Deals" },
         extensions: { label: "Browser Extensions" },
         images: { label: "Images" },
+        landing: { label: "Landing Pages" },
         pintrest: { label: "Pinterest" },
         salelocator: { label: "Sale Locator" },
         seo: { label: "SEO" },
