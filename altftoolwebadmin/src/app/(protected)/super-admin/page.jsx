@@ -97,6 +97,9 @@ function ProjectCard({ project, href, accessible, projectSummary }) {
   const moduleCount = projectSummary?.moduleCount || modules.length;
   const description = projectSummary?.description || meta.description || `Manage ${project.name} modules and admin content.`;
 
+
+  console.log(href , "href" );
+
   return (
     <Link
       href={accessible ? href : "/access-denied"}
@@ -162,6 +165,12 @@ export default function SuperAdminDashboardPage() {
     (summary?.projects || []).forEach((project) => map.set(project.projectId, project));
     return map;
   }, [summary]);
+
+
+
+  console.log("summry",summary)
+
+
 
 
 
