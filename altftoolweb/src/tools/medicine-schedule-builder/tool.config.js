@@ -1,10 +1,9 @@
-import { Pill } from "lucide-react";
-
 export const config = {
+  slug: "medicine-schedule-builder",
   name: "Medicine Schedule Builder",
   description: "Organize routines, track doses, and receive real-time medicine reminders.",
   category: "Health & Wellness",
-  icon: Pill,
+  icon: "pill",
   status: "New",
   featured: true,
   iconColor: "text-blue-500"

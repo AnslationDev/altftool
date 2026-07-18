@@ -1,4 +1,5 @@
 export default {
+  slug: "pantry-expiry-tracker",
   name: "Pantry Expiry Tracker",
   description: "Futuristic kitchen inventory management with real-time expiry tracking and reminders.",
   category: "Kitchen Tools",
