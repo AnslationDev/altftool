@@ -15,6 +15,7 @@ export const ADMIN_MODULE_ROUTE_KEYS = {
       "view-blogs/[id]",
     ],
     buysmart: [""],
+    landing: ["", "edit/[id]"],
     consumerrating: [""],
     deals: [""],
     dynamic: [""],

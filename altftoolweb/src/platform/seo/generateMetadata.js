@@ -1,5 +1,6 @@
 import { resolveSeo, applyResolvedSeo, resolveExtendedMeta } from "@altftool/core/seo/resolver";
 import { getSeoConfigSnapshot, loadSeoConfig } from "./seoConfigSource.js";
+import { getGeoCountries } from "./geoLocations.js";
 
 export const siteConfig = {
   name: "AltFTool",
@@ -30,6 +31,24 @@ export const siteConfig = {
     "Chrome extensions",
     "digital toolkit",
   ],
+  // Entity SEO: topics the brand is an authority on (Organization.knowsAbout).
+  knowsAbout: [
+    "online tools",
+    "file converters",
+    "PDF tools",
+    "image editing tools",
+    "developer tools",
+    "calculators",
+    "AI tools",
+    "productivity software",
+    "browser games",
+    "Chrome extensions",
+  ],
+  contactPath: "/policypages/contact",
+  // Optional Knowledge Graph signals — set via env when ready; omitted when empty.
+  founderName: process.env.NEXT_PUBLIC_ORG_FOUNDER || "",
+  foundingDate: process.env.NEXT_PUBLIC_ORG_FOUNDING_DATE || "",
+  contactEmail: process.env.NEXT_PUBLIC_ORG_CONTACT_EMAIL || "",
 };
 
 export function getSiteUrl() {
@@ -241,17 +260,64 @@ export async function createPageMetadata(rawArgs = {}) {
   return metadata;
 }
 
+/**
+ * Brand entity (Knowledge Graph hub). Every other node references this via
+ * `@id: …/#organization`, so publisher/provider/about relations across the
+ * whole site resolve to ONE entity.
+ *
+ * GEO Entity SEO: `areaServed` lists the countries from the geo registry
+ * (src/platform/seo/geoLocations.js), each disambiguated with Wikidata —
+ * the legitimate, non-spam signal that associates the AltFTool brand with
+ * those location entities ("AltFTool India", "AltFTool USA", …). Add a
+ * location to the registry and this node updates automatically.
+ */
 export function createOrganizationJsonLd() {
-  return {
+  const logoUrl = absoluteUrl(siteConfig.logoPath);
+
+  const node = {
     "@context": "https://schema.org",
     "@type": "Organization",
     "@id": `${getSiteUrl()}/#organization`,
     name: siteConfig.name,
     alternateName: siteConfig.shortName,
+    legalName: siteConfig.name,
+    description: siteConfig.description,
     url: getSiteUrl(),
-    logo: absoluteUrl(siteConfig.logoPath),
+    logo: {
+      "@type": "ImageObject",
+      "@id": `${getSiteUrl()}/#logo`,
+      url: logoUrl,
+      contentUrl: logoUrl,
+      caption: siteConfig.name,
+    },
+    image: logoUrl,
     sameAs: siteConfig.sameAs,
+    brand: {
+      "@type": "Brand",
+      name: siteConfig.name,
+      logo: logoUrl,
+    },
+    knowsAbout: siteConfig.knowsAbout,
+    contactPoint: {
+      "@type": "ContactPoint",
+      contactType: "customer support",
+      url: absoluteUrl(siteConfig.contactPath),
+      availableLanguage: ["English", "Hindi"],
+    },
+    areaServed: getGeoCountries().map((country) => ({
+      "@type": "Country",
+      name: country.name,
+      sameAs: country.wikidata,
+    })),
   };
+
+  if (siteConfig.contactEmail) node.email = siteConfig.contactEmail;
+  if (siteConfig.foundingDate) node.foundingDate = siteConfig.foundingDate;
+  if (siteConfig.founderName) {
+    node.founder = { "@type": "Person", name: siteConfig.founderName };
+  }
+
+  return node;
 }
 
 export function createWebsiteJsonLd() {
@@ -260,6 +326,8 @@ export function createWebsiteJsonLd() {
     "@type": "WebSite",
     "@id": `${getSiteUrl()}/#website`,
     name: siteConfig.name,
+    alternateName: `${siteConfig.name} — Free Online Tools`,
+    description: siteConfig.description,
     url: getSiteUrl(),
     inLanguage: "en",
     publisher: {
@@ -267,7 +335,10 @@ export function createWebsiteJsonLd() {
     },
     potentialAction: {
       "@type": "SearchAction",
-      target: `${getSiteUrl()}/search?q={search_term_string}`,
+      target: {
+        "@type": "EntryPoint",
+        urlTemplate: `${getSiteUrl()}/search?q={search_term_string}`,
+      },
       "query-input": "required name=search_term_string",
     },
   };
@@ -299,22 +370,37 @@ export function createToolJsonLd({ slug, tool, category = "all" } = {}) {
     ? tool.category
     : [tool.category].filter(Boolean);
 
+  const url = absoluteUrl(`/tools/${category || "all"}/${slug}`);
+
   return {
     "@context": "https://schema.org",
-    "@type": "SoftwareApplication",
+    "@type": ["SoftwareApplication", "WebApplication"],
     "@id": `${absoluteUrl(`/tools/all/${slug}`)}#software`,
     name: tool.name || slug.replace(/-/g, " "),
     description: tool.description || siteConfig.description,
-    url: absoluteUrl(`/tools/${category || "all"}/${slug}`),
+    url,
     applicationCategory: categories[0] || "WebApplication",
+    applicationSubCategory: categories.slice(1).join(", ") || undefined,
     operatingSystem: "Web",
+    browserRequirements: "Requires a modern web browser with JavaScript enabled",
+    isAccessibleForFree: true,
+    inLanguage: "en",
+    image: absoluteUrl(siteConfig.defaultImagePath),
     offers: {
       "@type": "Offer",
       price: "0",
       priceCurrency: "USD",
+      availability: "https://schema.org/InStock",
     },
     publisher: {
       "@id": `${getSiteUrl()}/#organization`,
+    },
+    isPartOf: {
+      "@id": `${getSiteUrl()}/#website`,
+    },
+    mainEntityOfPage: {
+      "@type": "WebPage",
+      "@id": url,
     },
   };
 }
@@ -616,6 +702,75 @@ export function createPersonJsonLd({
     },
     sameAs: sameAs.length ? sameAs : undefined,
   };
+}
+
+/**
+ * ImageObject node — use for hero/OG images that should be eligible for
+ * image rich results (blogs, tool screenshots).
+ */
+export function createImageObjectJsonLd({ path, image, caption, width = 1200, height = 630 } = {}) {
+  if (!image) return null;
+  const imageUrl = absoluteUrl(image);
+
+  return {
+    "@context": "https://schema.org",
+    "@type": "ImageObject",
+    "@id": `${absoluteUrl(path || image)}#image`,
+    url: imageUrl,
+    contentUrl: imageUrl,
+    caption: caption || siteConfig.name,
+    width,
+    height,
+    representativeOfPage: true,
+  };
+}
+
+/**
+ * VideoObject node — wire in when video content ships (blog embeds,
+ * tool demo videos). All Google-required fields are enforced.
+ */
+export function createVideoJsonLd({
+  path,
+  name,
+  description,
+  thumbnailUrl,
+  uploadDate,
+  duration,
+  contentUrl,
+  embedUrl,
+} = {}) {
+  if (!path || !name || !thumbnailUrl || !uploadDate) return null;
+
+  const node = {
+    "@context": "https://schema.org",
+    "@type": "VideoObject",
+    "@id": `${absoluteUrl(path)}#video`,
+    name,
+    description: description || name,
+    thumbnailUrl: absoluteUrl(thumbnailUrl),
+    uploadDate,
+    publisher: { "@id": `${getSiteUrl()}/#organization` },
+  };
+  if (duration) node.duration = duration; // ISO 8601, e.g. "PT2M30S"
+  if (contentUrl) node.contentUrl = absoluteUrl(contentUrl);
+  if (embedUrl) node.embedUrl = absoluteUrl(embedUrl);
+  return node;
+}
+
+/**
+ * hreflang readiness — build the `alternates.languages` map for a page that
+ * has real language/regional variants. Pass ONLY variants that exist as
+ * distinct URLs; pages without variants keep the default x-default/en pair
+ * emitted by createPageMetadata. Example:
+ *   buildLanguageAlternates("/tools/all/step-counter", { "hi-IN": "/hi/tools/all/step-counter" })
+ */
+export function buildLanguageAlternates(path, variants = {}) {
+  const canonical = absoluteUrl(path);
+  const languages = { "x-default": canonical, en: canonical };
+  for (const [lang, href] of Object.entries(variants)) {
+    if (lang && href) languages[lang] = absoluteUrl(href);
+  }
+  return languages;
 }
 
 export function createItemListJsonLd({ path, name, items = [] } = {}) {

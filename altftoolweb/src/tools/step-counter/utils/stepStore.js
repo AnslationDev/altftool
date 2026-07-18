@@ -2,7 +2,10 @@
 
 /**
  * Step Counter — persistence + derived stats.
- * All data lives in the visitor's browser (localStorage). No network calls.
+ * All data lives in the visitor's browser for the CURRENT SESSION ONLY
+ * (sessionStorage — it survives reloads/navigation but clears when the
+ * browser tab/session ends, so every new session starts fresh at 0 steps).
+ * No network calls.
  */
 
 export const STORAGE_KEY = "ALTFT_STEP_COUNTER_V1";
@@ -101,7 +104,7 @@ function sanitizeState(raw) {
 export function loadState() {
   if (typeof window === "undefined") return createEmptyState();
   try {
-    return sanitizeState(JSON.parse(window.localStorage.getItem(STORAGE_KEY) || "null"));
+    return sanitizeState(JSON.parse(window.sessionStorage.getItem(STORAGE_KEY) || "null"));
   } catch {
     return createEmptyState();
   }
@@ -110,7 +113,7 @@ export function loadState() {
 export function saveState(state) {
   if (typeof window === "undefined") return;
   try {
-    window.localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    window.sessionStorage.setItem(STORAGE_KEY, JSON.stringify(state));
   } catch {
     /* storage may be unavailable (private mode / quota) — the tool keeps working in memory */
   }
