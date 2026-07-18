@@ -23,6 +23,7 @@ export const DEFAULT_SETTINGS = {
   singleQuote: false,
   trailingCommaPHP: true,
   braceStyle: "1tbs",
+  phpVersion: "8.2",
 };
 
 export const formatPhp = async (code, settings = DEFAULT_SETTINGS) => {
