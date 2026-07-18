@@ -122,8 +122,18 @@ export default function EditLanderPage() {
     setTab("sections");
   };
 
+  const getPublicBaseUrl = () => {
+    if (typeof window !== "undefined") {
+      const hostname = window.location.hostname;
+      if (hostname === "localhost" || hostname === "127.0.0.1" || hostname.startsWith("192.168.")) {
+        return "http://localhost:3002";
+      }
+    }
+    return "https://altftool.com";
+  };
+
   const copyUrl = () => {
-    navigator.clipboard?.writeText(`https://altftool.com/lander/${form.slug}`);
+    navigator.clipboard?.writeText(`${getPublicBaseUrl()}/lander/${form.slug}`);
     setCopied(true); setTimeout(() => setCopied(false), 1500);
   };
 
@@ -154,7 +164,7 @@ export default function EditLanderPage() {
             <span className="font-bold text-[var(--foreground)]">Edit: {form.title || "Untitled"}</span>
           </nav>
           <div className="flex items-center gap-2">
-            <a href={`/lander/${lander.slug}`} target="_blank" rel="noopener noreferrer" className="inline-flex h-10 items-center gap-1.5 rounded-lg border border-[var(--border)] px-4 text-sm font-bold text-[var(--foreground)] hover:border-[var(--primary)] hover:text-[var(--primary)]"><ExternalLink className="h-4 w-4" /> Preview</a>
+            <a href={`${getPublicBaseUrl()}/lander/${lander.slug}`} target="_blank" rel="noopener noreferrer" className="inline-flex h-10 items-center gap-1.5 rounded-lg border border-[var(--border)] px-4 text-sm font-bold text-[var(--foreground)] hover:border-[var(--primary)] hover:text-[var(--primary)]"><ExternalLink className="h-4 w-4" /> Preview</a>
             <div ref={menuRef} className="relative inline-flex">
               <button onClick={() => save({ status: "published", reason: "publish" })} disabled={saving} className="inline-flex h-10 items-center gap-1.5 rounded-l-lg bg-[var(--primary)] px-4 text-sm font-bold text-[var(--primary-foreground)] hover:brightness-95 disabled:opacity-60">
                 {saving ? <Loader2 className="h-4 w-4 animate-spin" /> : <Rocket className="h-4 w-4" />} {form.status === "published" ? "Update" : "Publish"}

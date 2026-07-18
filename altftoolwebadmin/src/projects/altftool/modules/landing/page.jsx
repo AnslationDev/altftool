@@ -98,6 +98,16 @@ export default function LandingPagesModule() {
   const [selected, setSelected] = useState(() => new Set());
   const [bulkBusy, setBulkBusy] = useState(false);
 
+  const getPublicBaseUrl = () => {
+    if (typeof window !== "undefined") {
+      const hostname = window.location.hostname;
+      if (hostname === "localhost" || hostname === "127.0.0.1" || hostname.startsWith("192.168.")) {
+        return "http://localhost:3002";
+      }
+    }
+    return "https://altftool.com";
+  };
+
   useEffect(() => subscribeLanders(setItems, () => setItems([])), []);
 
   const goEdit = useCallback((id) => router.push(`/altftool/landing/edit/${id}`), [router]);
@@ -197,7 +207,7 @@ export default function LandingPagesModule() {
                 <div><StatusPill status={p.status} /></div>
                 <p className="text-xs text-[var(--muted)]">{fmtTime(p.updatedAt)}</p>
                 <div className="flex items-center justify-end gap-1">
-                  <a href={`/lander/${p.slug}`} target="_blank" rel="noopener noreferrer" title="Open" className="grid h-8 w-8 place-items-center rounded-lg text-[var(--muted)] hover:text-[var(--primary)]"><ExternalLink className="h-4 w-4" /></a>
+                  <a href={`${getPublicBaseUrl()}/lander/${p.slug}`} target="_blank" rel="noopener noreferrer" title="Open" className="grid h-8 w-8 place-items-center rounded-lg text-[var(--muted)] hover:text-[var(--primary)]"><ExternalLink className="h-4 w-4" /></a>
                   <button onClick={() => goEdit(p.id)} title="Edit" className="grid h-8 w-8 place-items-center rounded-lg text-[var(--muted)] hover:text-[var(--primary)]"><Pencil className="h-4 w-4" /></button>
                   <button onClick={() => onDuplicate(p.id)} disabled={busyId === p.id} title="Duplicate" className="grid h-8 w-8 place-items-center rounded-lg text-[var(--muted)] hover:text-[var(--primary)] disabled:opacity-50"><Copy className="h-4 w-4" /></button>
                   <button onClick={() => onDelete(p.id, p.title)} disabled={busyId === p.id} title="Delete" className="grid h-8 w-8 place-items-center rounded-lg text-[var(--muted)] hover:text-[var(--danger,#EF4444)] disabled:opacity-50"><Trash2 className="h-4 w-4" /></button>
