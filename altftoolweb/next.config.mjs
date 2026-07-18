@@ -188,12 +188,21 @@ const nextConfig = {
       assert: false,
     };
 
+    if (!dev && config.optimization?.minimizer) {
+      for (const minimizer of config.optimization.minimizer) {
+        if (minimizer.options && "parallel" in minimizer.options) {
+          minimizer.options.parallel = false;
+        }
+      }
+    }
+
     return config;
   },
 
   experimental: {
     workerThreads: false,
-    cpus: 2,
+    cpus: 1,
+    webpackBuildWorker: false,
   },
 };
 
