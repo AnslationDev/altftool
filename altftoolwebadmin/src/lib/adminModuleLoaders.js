@@ -418,6 +418,112 @@ const routeLoaders = {
       "": () => import("@/projects/myluckydeal/modules/migration/page.jsx"),
     },
   },
+  anslic: {
+    navbar: {
+      "": () => import("@/projects/anslic/modules/navbar/page.jsx"),
+    },
+    footer: {
+      "": () => import("@/projects/anslic/modules/footer/page.jsx"),
+    },
+    home: {
+      "": () => import("@/projects/anslic/modules/home/page.jsx"),
+      hero: () => import("@/projects/anslic/modules/home/hero/page.jsx"),
+      "about-preview": () =>
+        import("@/projects/anslic/modules/home/about-preview/page.jsx"),
+      "services-preview": () =>
+        import("@/projects/anslic/modules/home/services-preview/page.jsx"),
+      testimonials: () =>
+        import("@/projects/anslic/modules/home/testimonials/page.jsx"),
+      "team-preview": () =>
+        import("@/projects/anslic/modules/home/team-preview/page.jsx"),
+      cta: () => import("@/projects/anslic/modules/home/cta/page.jsx"),
+      "blog-preview": () =>
+        import("@/projects/anslic/modules/home/blog-preview/page.jsx"),
+    },
+    about: {
+      "": () => import("@/projects/anslic/modules/about/page.jsx"),
+      hero: () => import("@/projects/anslic/modules/about/hero/page.jsx"),
+      "mission-vision": () =>
+        import("@/projects/anslic/modules/about/mission-vision/page.jsx"),
+      values: () => import("@/projects/anslic/modules/about/values/page.jsx"),
+      "team-preview": () =>
+        import("@/projects/anslic/modules/about/team-preview/page.jsx"),
+    },
+    stats: {
+      "": () => import("@/projects/anslic/modules/stats/page.jsx"),
+    },
+    services: {
+      "": () => import("@/projects/anslic/modules/services/page.jsx"),
+    },
+    team: {
+      "": () => import("@/projects/anslic/modules/team/page.jsx"),
+    },
+    blog: {
+      "": () => import("@/projects/anslic/modules/blog/page.jsx"),
+      "add-article": () =>
+        import("@/projects/anslic/modules/blog/add-article/page.jsx"),
+      "edit-article/[id]": () =>
+        import("@/projects/anslic/modules/blog/edit-article/[id]/page.jsx"),
+    },
+    contact: {
+      "": () => import("@/projects/anslic/modules/contact/page.jsx"),
+      leads: () => import("@/projects/anslic/modules/contact/leads/page.jsx"),
+    },
+  },
+  infodrif: {
+    navbar: {
+      "": () => import("@/projects/infodrif/modules/navbar/page.jsx"),
+    },
+    home: {
+      "": () => import("@/projects/infodrif/modules/home/page.jsx"),
+      hero: () => import("@/projects/infodrif/modules/home/hero/page.jsx"),
+      "trusted-by": () =>
+        import("@/projects/infodrif/modules/home/trusted-by/page.jsx"),
+      "work-strategy": () =>
+        import("@/projects/infodrif/modules/home/work-strategy/page.jsx"),
+      showcase: () => import("@/projects/infodrif/modules/home/showcase/page.jsx"),
+    },
+    about: {
+      "": () => import("@/projects/infodrif/modules/about/page.jsx"),
+      hero: () => import("@/projects/infodrif/modules/about/hero/page.jsx"),
+      intro: () => import("@/projects/infodrif/modules/about/intro/page.jsx"),
+      services: () => import("@/projects/infodrif/modules/about/services/page.jsx"),
+      story: () => import("@/projects/infodrif/modules/about/story/page.jsx"),
+      team: () => import("@/projects/infodrif/modules/about/team/page.jsx"),
+    },
+    partners: {
+      "": () => import("@/projects/infodrif/modules/partners/page.jsx"),
+      hero: () => import("@/projects/infodrif/modules/partners/hero/page.jsx"),
+      "service-features": () =>
+        import("@/projects/infodrif/modules/partners/service-features/page.jsx"),
+      features: () =>
+        import("@/projects/infodrif/modules/partners/features/page.jsx"),
+      pricing: () => import("@/projects/infodrif/modules/partners/pricing/page.jsx"),
+    },
+    blog: {
+      "": () => import("@/projects/infodrif/modules/blog/page.jsx"),
+      "add-article": () =>
+        import("@/projects/infodrif/modules/blog/add-article/page.jsx"),
+      "edit-article/[id]": () =>
+        import("@/projects/infodrif/modules/blog/edit-article/[id]/page.jsx"),
+      categories: () =>
+        import("@/projects/infodrif/modules/blog/categories/page.jsx"),
+    },
+    offers: {
+      "": () => import("@/projects/infodrif/modules/offers/page.jsx"),
+      "add-offer": () =>
+        import("@/projects/infodrif/modules/offers/add-offer/page.jsx"),
+      "edit-offer/[id]": () =>
+        import("@/projects/infodrif/modules/offers/edit-offer/[id]/page.jsx"),
+    },
+    contact: {
+      "": () => import("@/projects/infodrif/modules/contact/page.jsx"),
+      leads: () => import("@/projects/infodrif/modules/contact/leads/page.jsx"),
+    },
+    footer: {
+      "": () => import("@/projects/infodrif/modules/footer/page.jsx"),
+    },
+  },
   anternet: {
     banners: { "": () => import("@/projects/anternet/modules/banners/page.jsx") },
     tasks: { "": () => import("@/projects/anternet/modules/tasks/page.jsx") },
