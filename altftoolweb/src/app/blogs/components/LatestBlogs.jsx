@@ -4,16 +4,20 @@ import { ArrowRight, Section } from "lucide-react";
 import { PostCard } from "./FeaturedPostsSection";
 import SectionHeader from "./CommonSecHeading";
 
+const toRecency = (b) =>
+  b?.updatedAt?.seconds ??
+  b?.createdAt?.seconds ??
+  (b?.updatedAt ? Date.parse(b.updatedAt) / 1000 : 0) ||
+  0;
+
 export default function LatestBlogs({ blogs = [], section, imageHeight }) {
-  const sortedBlogs = [...blogs].sort(
-    (a, b) => b.updatedAt.seconds - a.updatedAt.seconds,
-  );
+  const sortedBlogs = [...blogs].sort((a, b) => toRecency(b) - toRecency(a));
 
   const featured = sortedBlogs[0];
 
   const sideBlogs = sortedBlogs.slice(1, 3);
 
-  const moreBlogs = sortedBlogs.slice(4, 8);
+  const moreBlogs = sortedBlogs.slice(3, 7);
 
   if (!featured) return null;
 

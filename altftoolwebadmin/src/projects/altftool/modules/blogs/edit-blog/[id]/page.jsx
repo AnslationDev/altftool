@@ -585,7 +585,9 @@ export default function EditBlog() {
 
   const openSavePreview = (status = "draft") => {
     flushEditorSync();
-    if (saving || !validate()) return;
+    // Only enforce full publish-level validation when actually publishing —
+    // drafts save freely (matches the add-blog page and the silent autosave).
+    if (saving || (status === "published" && !validate())) return;
     setBannerError(null);
     if (status === "published" && !ensurePublishGateReady({ confirmWarnings: false })) return;
 
@@ -678,6 +680,11 @@ export default function EditBlog() {
         date: formData.date, seoTitle: formData.seoTitle.trim(),
         seoDescription: formData.seoDescription || excerpt,
         image: imageUrl, imageAlt: imageAlt.trim(), status,
+        // Keep the workflow state in lock-step with status so the workflow
+        // control never shows e.g. "In review" for a live post, and stamp
+        // publishedAt on the publish transition.
+        workflowState: status === "published" ? WORKFLOW.PUBLISHED : WORKFLOW.DRAFT,
+        ...(status === "published" ? { publishedAt: serverTimestamp() } : {}),
         tags: parseBlogTags(formData.tags),
       };
 
@@ -972,7 +979,7 @@ export default function EditBlog() {
               {errors.description && (
                 <p className="flex items-center gap-1 text-xs text-danger font-medium -mt-2"><AlertCircle className="w-3 h-3" />{errors.description}</p>
               )}
-              <BlogEditor value={formData.description} onChange={handleEditorChange} />
+              <BlogEditor value={formData.description} onChange={handleEditorChange} draftKey={`altftool-blog-edit-${id}`} />
             </Section>
 
             {/* SEO — collapsible */}

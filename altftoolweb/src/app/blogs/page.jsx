@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -355,6 +356,7 @@ export default async function BlogsPage() {
           </p>
         </section>
 
+        <Suspense fallback={null}>
         <BlogExplorerClient
           heroShortcutRail={<HeroShortcutRail categories={categories} clusters={topicClusters} />}
           initialPosts={posts.map(compactExplorerPost)}
@@ -383,6 +385,7 @@ export default async function BlogsPage() {
             </AutoScrollSlider>
           </section>
         </BlogExplorerClient>
+        </Suspense>
       </div>
       <RouteDiscoveryBand {...blogsRouteHub} />
     </main>

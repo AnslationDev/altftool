@@ -114,7 +114,7 @@ export default function BlogsViewAllPage() {
       } else if (section === "trending-articles") {
         q = query(
           blogsRef,
-
+          where("status", "==", "published"),
           orderBy("views", "desc"),
           limit(PAGE_SIZE),
         );
@@ -122,7 +122,7 @@ export default function BlogsViewAllPage() {
         q = query(
           blogsRef,
           where("status", "==", "published"),
-
+          orderBy("createdAt", "desc"),
           limit(PAGE_SIZE),
         );
       }
@@ -175,7 +175,7 @@ export default function BlogsViewAllPage() {
     } else if (section === "trending-articles") {
       q = query(
         blogsRef,
-
+        where("status", "==", "published"),
         orderBy("views", "desc"),
         startAfter(lastDoc),
         limit(PAGE_SIZE),

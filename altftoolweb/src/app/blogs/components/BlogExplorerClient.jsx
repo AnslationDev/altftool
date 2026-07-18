@@ -835,7 +835,14 @@ export default function BlogExplorerClient({
   const [sortMode, setSortMode] = useState(urlSort);
   const [visibleCount, setVisibleCount] = useState(INITIAL_VISIBLE_COUNT);
   const [remoteOffset, setRemoteOffset] = useState(initialRemoteOffset);
-  const [remoteHasMore, setRemoteHasMore] = useState(totalCount > initialRemoteOffset);
+  // When a remote catalog seeded the first page (initialRemoteOffset > 0) but
+  // the total count is unknown/underreported (e.g. the count aggregation
+  // failed and collapsed to the loaded length), assume more exist — the
+  // Load-More fetch is the source of truth and will flip this off when the
+  // catalog is genuinely exhausted. Prevents silently capping at the first page.
+  const [remoteHasMore, setRemoteHasMore] = useState(
+    initialRemoteOffset > 0 || totalCount > initialRemoteOffset,
+  );
   const [remoteLoading, setRemoteLoading] = useState(false);
   const [bookmarks, setBookmarks] = useState([]);
   const [isPending, startTransition] = useTransition();
