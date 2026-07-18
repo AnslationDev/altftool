@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
-import { useParams, useRouter } from "next/navigation";
+import { useParams, useRouter, usePathname } from "next/navigation";
 import {
   ArrowLeft, Loader2, Save, ExternalLink, ChevronRight, Copy, Check,
   Rocket, ChevronDown, BarChart3, MousePointerClick, Eye,
@@ -13,6 +13,7 @@ import { SeoSettings, DesignSettings } from "../../components/SettingsPanels";
 import PageStatusCard from "../../components/PageStatusCard";
 import PageInfoCards from "../../components/PageInfoCards";
 import HistoryList from "../../components/HistoryList";
+import { getAdminRouteId } from "@/lib/adminRouteParams";
 
 const toMs = (v) => (v?.toMillis ? v.toMillis() : typeof v === "number" ? v : null);
 
@@ -37,8 +38,10 @@ const TABS = [
 ];
 
 export default function EditLanderPage() {
-  const { id } = useParams();
+  const params = useParams();
+  const pathname = usePathname();
   const router = useRouter();
+  const id = getAdminRouteId(params, pathname);
   const [lander, setLander] = useState(null);
   const [form, setForm] = useState({ title: "", slug: "", status: "draft" });
   const [sections, setSections] = useState([]);
