@@ -1704,3 +1704,78 @@ a {
     scroll-behavior: auto !important;
   }
 }
+
+/* ============================================================
+   ALTFT app-theme tokens ("--sc-*")
+   Palette for the premium app-style tool experiences (Step
+   Counter UI + the shared "About this tool" SEO sections).
+   Intentionally a self-contained indigo/violet system, separate
+   from the site primary tokens — but fully light/dark aware via
+   the same [data-theme="dark"] switch as the rest of the site.
+   ============================================================ */
+
+:root {
+  --sc-bg: #EDF0FA;
+  --sc-card: #FFFFFF;
+  --sc-tile: #EDF0FA;
+  --sc-ink: #1E2438;
+  --sc-muted: #7C84A3;
+  --sc-faint: #A9AFC6;
+  --sc-border: #E7EAF6;
+  --sc-ring-track: #E9EBF8;
+
+  --sc-indigo: #6366F1;
+  --sc-violet: #8B5CF6;
+  --sc-blue: #3B82F6;
+  --sc-green: #10B981;
+  --sc-orange: #F97316;
+
+  --sc-soft-indigo: #E7E9FE;
+  --sc-soft-violet: #F0E9FE;
+  --sc-soft-blue: #E0EDFE;
+  --sc-soft-green: #DCF5EB;
+  --sc-soft-orange: #FFEDE2;
+
+  --sc-danger: #DC2626;
+  --sc-soft-danger: #FDE8E8;
+
+  --sc-navy: #2A2653;
+  --sc-navy-text: #B9B6DF;
+
+  --sc-shadow: 0 10px 30px rgba(99, 102, 241, 0.10);
+  --sc-shadow-lg: 0 16px 36px rgba(99, 102, 241, 0.20);
+  --sc-nav-shadow: 0 12px 32px rgba(30, 36, 56, 0.14);
+}
+
+[data-theme="dark"] {
+  --sc-bg: #0B0E20;
+  --sc-card: #151936;
+  --sc-tile: #1E2347;
+  --sc-ink: #EEF0FB;
+  --sc-muted: #A2A8CC;
+  --sc-faint: #7A80A8;
+  --sc-border: #2A2F55;
+  --sc-ring-track: #262B52;
+
+  --sc-indigo: #8B93F8;
+  --sc-violet: #A78BFA;
+  --sc-blue: #60A5FA;
+  --sc-green: #34D399;
+  --sc-orange: #FB923C;
+
+  --sc-soft-indigo: rgba(99, 102, 241, 0.22);
+  --sc-soft-violet: rgba(139, 92, 246, 0.22);
+  --sc-soft-blue: rgba(59, 130, 246, 0.20);
+  --sc-soft-green: rgba(16, 185, 129, 0.18);
+  --sc-soft-orange: rgba(249, 115, 22, 0.18);
+
+  --sc-danger: #F87171;
+  --sc-soft-danger: rgba(220, 38, 38, 0.22);
+
+  --sc-navy: #2E295E;
+  --sc-navy-text: #C6C3E8;
+
+  --sc-shadow: 0 10px 30px rgba(0, 0, 0, 0.40);
+  --sc-shadow-lg: 0 16px 36px rgba(0, 0, 0, 0.55);
+  --sc-nav-shadow: 0 12px 32px rgba(0, 0, 0, 0.50);
+}

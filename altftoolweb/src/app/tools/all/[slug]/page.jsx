@@ -1,11 +1,12 @@
 import { notFound } from "next/navigation";
 import ToolClient from "../../[category]/[slug]/ToolClient";
-import { buildToolMetadata, getTool } from "../../toolRouteUtils";
+import { buildToolMetadata, getRelatedTools, getTool } from "../../toolRouteUtils";
 import JsonLd from "@/platform/seo/JsonLd";
 import {
   createBreadcrumbJsonLd,
   createFaqJsonLd,
   createHowToJsonLd,
+  createItemListJsonLd,
   createToolJsonLd,
 } from "@/platform/seo/generateMetadata";
 import { buildToolSeoContent } from "../../toolSeoContent";
@@ -26,6 +27,10 @@ export default async function ToolPage({ params }) {
 
   const toolPath = `/tools/all/${slug}`;
   const seoContent = buildToolSeoContent(slug, tool);
+  const relatedItems = getRelatedTools(slug, 6).map((item) => ({
+    name: item.name,
+    path: `/tools/all/${item.slug}`,
+  }));
 
   return (
     <>
@@ -45,6 +50,12 @@ export default async function ToolPage({ params }) {
             { name: "Tools", path: "/tools" },
             { name: tool.name, path: toolPath },
           ]),
+          // Entity relations: Tool → related Tools (internal linking graph).
+          createItemListJsonLd({
+            path: toolPath,
+            name: `Tools related to ${tool.name}`,
+            items: relatedItems,
+          }),
         ]}
       />
       <ToolClient slug={slug} category="all" />

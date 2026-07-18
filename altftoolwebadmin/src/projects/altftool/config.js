@@ -12,6 +12,7 @@ import {
   Plane,
   Sparkles,
   Search,
+  LayoutTemplate,
 } from "lucide-react";
 import AltfLogo from "../../../public/logos/altflogo.png";
 
@@ -24,6 +25,7 @@ const altftoolConfig = {
     ads: { label: "Ads", icon: Megaphone },
     buysmart: { label: "BuySmart", icon: ShoppingCart },
     blogs: { label: "Blogs", icon: Tag },
+    landing: { label: "Landing Pages", icon: LayoutTemplate },
     deals: { label: "Deals", icon: TicketPercent },
     consumerrating: { label: "Consumer Rating", icon: Star, routeSegment: "consumer-rating" },
     extensions: { label: "Extensions", icon: Wrench },

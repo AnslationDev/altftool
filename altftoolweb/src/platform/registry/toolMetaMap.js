@@ -21,6 +21,27 @@ export const toolMetaMap = {
     "icon": "gamepad-2",
     "iconColor": "text-amber-600"
   },
+  "ac-tonnage-calculator": {
+    "name": "AC Tonnage Calculator",
+    "description": "Size your air conditioner correctly from room dimensions, sun exposure, and city climate, then estimate the monthly running cost.",
+    "category": [
+      "Utility",
+      "Calculator"
+    ],
+    "icon": "air-vent",
+    "iconColor": "text-teal-600"
+  },
+  "acne-severity-analyzer": {
+    "name": "Acne Severity Analyzer",
+    "description": "Analyze acne severity with AI-powered skin analysis. Detect blemishes, inflammation, and breakouts with detailed scoring and coverage metrics.",
+    "category": [
+      "Beauty",
+      "Health",
+      "Selfie"
+    ],
+    "icon": "search",
+    "iconColor": "text-teal-500"
+  },
   "ad-copy-ab-planner": {
     "name": "Ad Copy A/B Planner",
     "description": "Futuristic A/B ad copy planner, side-by-side comparison, live mock previews, and campaign testing scheduler.",
@@ -147,6 +168,26 @@ export const toolMetaMap = {
     "icon": "sparkle",
     "iconColor": "text-teal-500"
   },
+  "air-fryer-converter": {
+    "name": "Air Fryer Time & Temp Converter",
+    "description": "Convert any oven recipe to air fryer settings instantly, with food presets, flip reminders, and safe doneness temps.",
+    "category": [
+      "Lifestyle",
+      "Calculator"
+    ],
+    "icon": "flame",
+    "iconColor": "text-teal-600"
+  },
+  "alcohol-unit-calculator": {
+    "name": "Alcohol Units & BAC Calculator",
+    "description": "Count standard alcohol units from real drink sizes, track your week, and estimate blood alcohol with the Widmark formula.",
+    "category": [
+      "Health",
+      "Calculator"
+    ],
+    "icon": "wine",
+    "iconColor": "text-teal-600"
+  },
   "ambiguous-figure-viewer": {
     "name": "Ambiguous Figure Viewer",
     "description": "Experience and analyze classic optical illusions where the brain switches between multiple interpretations of the same image.",
@@ -227,6 +268,27 @@ export const toolMetaMap = {
     "icon": "crop",
     "iconColor": "text-blue-600"
   },
+  "attendance-calculator": {
+    "name": "Attendance Percentage Calculator",
+    "description": "Check your attendance percentage and find exactly how many classes you must attend — or can safely skip.",
+    "category": [
+      "Education",
+      "Calculator"
+    ],
+    "icon": "calendar-check",
+    "iconColor": "text-teal-600"
+  },
+  "attention-span-test": {
+    "name": "Attention Span Test",
+    "description": "Measure your sustained attention and impulsivity with a scientific Continuous Performance Task (CPT).",
+    "category": [
+      "Neuroscience",
+      "Health",
+      "Interactive"
+    ],
+    "icon": "target",
+    "iconColor": "text-red-500"
+  },
   "audio-to-base64": {
     "name": "Audio to Base64",
     "description": "Convert local audio files into Base64 data URLs.",
@@ -256,6 +318,16 @@ export const toolMetaMap = {
     ],
     "icon": "user",
     "iconColor": "text-(--primary)"
+  },
+  "baking-pan-converter": {
+    "name": "Baking Pan Size Converter",
+    "description": "Scale any recipe between pan sizes with an exact ingredient multiplier, bake-time advice, and overflow warnings.",
+    "category": [
+      "Lifestyle",
+      "Calculator"
+    ],
+    "icon": "square",
+    "iconColor": "text-teal-600"
   },
   "barcode-generator": {
     "name": "Barcode Generator",
@@ -381,6 +453,13 @@ export const toolMetaMap = {
     ],
     "icon": "link",
     "iconColor": "text-sky-600"
+  },
+  "basic-calculator": {
+    "name": "Basic Calculator",
+    "description": "A premium glassmorphic calculator. Supports basic arithmetic operators (+, -, *, /), memory storage, signs, and calculation history.",
+    "category": "Math",
+    "icon": "calculator",
+    "iconColor": "text-teal-600"
   },
   "batch-generation-tool": {
     "name": "Batch Generation Tool",
@@ -516,6 +595,33 @@ export const toolMetaMap = {
     "icon": "cake",
     "iconColor": "text-pink-600"
   },
+  "blood-pressure-checker": {
+    "name": "Blood Pressure Checker",
+    "description": "Track and monitor your blood pressure readings with charts and history.",
+    "category": "Health & Fitness",
+    "icon": "heart-pulse",
+    "iconColor": "text-rose-500"
+  },
+  "blood-pressure-log": {
+    "name": "Blood Pressure Log & Tracker",
+    "description": "Log blood pressure readings, see each one categorised by the AHA scale, and print a clean trend summary for your doctor.",
+    "category": [
+      "Health",
+      "Utility"
+    ],
+    "icon": "heart-pulse",
+    "iconColor": "text-teal-600"
+  },
+  "blood-sugar-log": {
+    "name": "Blood Sugar Log & Tracker",
+    "description": "Log glucose readings with meal context, see target-range badges, time in range, and an estimated HbA1c.",
+    "category": [
+      "Health",
+      "Utility"
+    ],
+    "icon": "droplet",
+    "iconColor": "text-teal-600"
+  },
   "blur-comparison": {
     "name": "Blur Comparison",
     "description": "Interactively compare different blur intensities on your images with a side-by-side slider.",
@@ -545,6 +651,16 @@ export const toolMetaMap = {
     "icon": "activity",
     "iconColor": "text-green-600"
   },
+  "body-fat-calculator": {
+    "name": "Body Fat Percentage Calculator",
+    "description": "Estimate body fat with the US Navy tape method or BMI formula, then see fat vs lean mass and plan a realistic goal.",
+    "category": [
+      "Health",
+      "Fitness"
+    ],
+    "icon": "person-standing",
+    "iconColor": "text-teal-600"
+  },
   "bookmark-capsule": {
     "name": "Bookmark Capsule",
     "description": "Organize, search, categorize, preview, and manage your website bookmarks.",
@@ -560,6 +676,26 @@ export const toolMetaMap = {
     ],
     "icon": "bookmark",
     "iconColor": "text-(--primary)"
+  },
+  "box-breathing": {
+    "name": "Box Breathing Exercise",
+    "description": "Follow a guided breathing pace with a visual timer, from box breathing to the 4-7-8 sleep breath.",
+    "category": [
+      "Health",
+      "Psychology"
+    ],
+    "icon": "wind",
+    "iconColor": "text-teal-600"
+  },
+  "bpm-tap-counter": {
+    "name": "BPM Tap Tempo Counter",
+    "description": "Tap along to any song to find its BPM instantly, with tempo markings, a steadiness score and genre references.",
+    "category": [
+      "Music",
+      "Utility"
+    ],
+    "icon": "music",
+    "iconColor": "text-teal-600"
   },
   "brand-kit-manager": {
     "name": "Brand Kit Manager",
@@ -582,6 +718,16 @@ export const toolMetaMap = {
     ],
     "icon": "scale",
     "iconColor": "text-blue-600"
+  },
+  "brokerage-calculator": {
+    "name": "Brokerage & Trading Charges Calculator",
+    "description": "See every rupee a trade costs — brokerage, STT, GST, stamp duty and DP charges — plus your real net profit.",
+    "category": [
+      "Finance",
+      "Calculator"
+    ],
+    "icon": "receipt-indian-rupee",
+    "iconColor": "text-teal-600"
   },
   "browser-fingerprint-visualizer": {
     "name": "Browser FingerPrint",
@@ -644,6 +790,27 @@ export const toolMetaMap = {
     ],
     "icon": "binary",
     "iconColor": "text-blue-700"
+  },
+  "cac-calculator": {
+    "name": "CAC Calculator",
+    "description": "Calculate Customer Acquisition Cost across marketing channels, compare channel efficiency, and track LTV:CAC ratio in real time.",
+    "category": [
+      "Business",
+      "Marketing",
+      "Finance"
+    ],
+    "icon": "target",
+    "iconColor": "text-emerald-600"
+  },
+  "caffeine-tracker": {
+    "name": "Caffeine Intake Tracker",
+    "description": "Log every coffee, tea, and energy drink, watch caffeine decay in your body, and get a last-cup cutoff for better sleep.",
+    "category": [
+      "Health",
+      "Lifestyle"
+    ],
+    "icon": "coffee",
+    "iconColor": "text-teal-600"
   },
   "calender-panchang": {
     "name": "Calender Panchang",
@@ -748,6 +915,16 @@ export const toolMetaMap = {
     "icon": "languages",
     "iconColor": "text-cyan-500"
   },
+  "chit-fund-calculator": {
+    "name": "Chit Fund Calculator",
+    "description": "Simulate a chit month by month — bids, dividends and foreman commission — to see what your bidding month really costs or earns.",
+    "category": [
+      "Finance",
+      "Calculator"
+    ],
+    "icon": "users-round",
+    "iconColor": "text-teal-600"
+  },
   "citation-generator": {
     "name": "Citation Generator",
     "description": "Generate accurate citations in APA, MLA, Chicago, Harvard, IEEE, and Vancouver styles instantly.",
@@ -797,6 +974,27 @@ export const toolMetaMap = {
     "icon": "refresh-cw",
     "iconColor": "text-teal-500"
   },
+  "coffee-brew-ratio": {
+    "name": "Coffee Brew Ratio Calculator",
+    "description": "Work out the exact coffee and water for pour-over, French press, AeroPress, espresso, moka and cold brew.",
+    "category": [
+      "Lifestyle",
+      "Calculator"
+    ],
+    "icon": "coffee",
+    "iconColor": "text-teal-600"
+  },
+  "coin-flip": {
+    "name": "Coin Flip",
+    "description": "Flip a fair virtual coin with a 3D animation, best-of series scoring, streaks, and saved heads-tails stats.",
+    "category": [
+      "Games",
+      "Fun",
+      "Utility"
+    ],
+    "icon": "coins",
+    "iconColor": "text-teal-600"
+  },
   "color-blindness-simulator": {
     "name": "Color Blindness Simulator",
     "description": "Advanced accessibility tool to simulate various types of color vision deficiencies in real-time.",
@@ -839,6 +1037,17 @@ export const toolMetaMap = {
     ],
     "icon": "palette",
     "iconColor": "text-fuchsia-600"
+  },
+  "color-match-game": {
+    "name": "Color Match Game",
+    "description": "Test your color perception by matching the target color from a grid of similar shades. How good is your eye?",
+    "category": [
+      "Fun",
+      "Game",
+      "Entertainment"
+    ],
+    "icon": "eye",
+    "iconColor": "text-green-600"
   },
   "color-memory-precision-test": {
     "name": "Color Memory Precision Test",
@@ -883,6 +1092,16 @@ export const toolMetaMap = {
     "category": "Design Tools",
     "icon": "palette",
     "iconColor": "text-fuchsia-600"
+  },
+  "compliment-generator": {
+    "name": "Compliment Generator",
+    "description": "Brighten someone's day with a random compliment. Choose from categories like personality, appearance, or talent.",
+    "category": [
+      "Fun",
+      "Lifestyle"
+    ],
+    "icon": "heart",
+    "iconColor": "text-pink-600"
   },
   "component-naming-auditor": {
     "name": "Component Naming Auditor",
@@ -933,12 +1152,32 @@ export const toolMetaMap = {
     "icon": "briefcase-business",
     "iconColor": "text-indigo-600"
   },
+  "countdown-timer": {
+    "name": "Countdown Timer",
+    "description": "Run multiple named countdown timers with progress rings, alarms, and presets — accurate even in background tabs.",
+    "category": [
+      "Utility",
+      "Productivity"
+    ],
+    "icon": "alarm-clock",
+    "iconColor": "text-teal-600"
+  },
   "cover-letter": {
     "name": "Cover Letter",
     "description": "Create a cover letter for your next job interview",
     "category": "Job",
     "icon": "mail",
     "iconColor": "text-blue-400"
+  },
+  "credit-card-interest-calculator": {
+    "name": "Credit Card Interest & Minimum Payment Trap",
+    "description": "See the true cost of paying only the minimum due — months to clear, total interest with GST, and faster payoff plans.",
+    "category": [
+      "Finance",
+      "Calculator"
+    ],
+    "icon": "credit-card",
+    "iconColor": "text-teal-600"
   },
   "cron-expression-generator": {
     "name": "Cron Expression Generator",
@@ -994,6 +1233,41 @@ export const toolMetaMap = {
     "icon": "layout",
     "iconColor": "text-teal-500"
   },
+  "css-border-radius-generator": {
+    "name": "CSS Border Radius Generator",
+    "description": "Generate border-radius rules visually. Custom simple and advanced 8-value organic border styles with interactive controls.",
+    "category": "Design",
+    "icon": "square-dashed",
+    "iconColor": "text-teal-600"
+  },
+  "css-button-generator": {
+    "name": "CSS Button Generator",
+    "description": "Create premium CSS buttons visually. Tweak fonts, borders, shadows, hover animations, gradients, and export HTML/CSS.",
+    "category": "Design",
+    "icon": "mouse-pointer-click",
+    "iconColor": "text-teal-600"
+  },
+  "css-filter-effects": {
+    "name": "CSS Filter Effects",
+    "description": "Apply standard CSS filter properties (blur, grayscale, sepia, invert, hue-rotate) visually with live image preview and clean CSS exports.",
+    "category": "Design",
+    "icon": "sliders",
+    "iconColor": "text-teal-600"
+  },
+  "css-flexbox-generator": {
+    "name": "CSS Flexbox Generator",
+    "description": "Configure CSS Flexbox layouts visually. Custom item numbers, container properties, alignment configurations, and responsive code outputs.",
+    "category": "Design",
+    "icon": "layout",
+    "iconColor": "text-teal-600"
+  },
+  "css-grid-generator": {
+    "name": "CSS Grid Generator",
+    "description": "Generate CSS Grid layouts visually. Adjust column/row counts, gaps, and copy complete CSS grid-template code instantly.",
+    "category": "Design",
+    "icon": "grid",
+    "iconColor": "text-teal-600"
+  },
   "css-minifier": {
     "name": "CSS Minifier",
     "description": "Compress, minify, and shrink messy CSS code to reduce bundle size, showing detailed savings statistics.",
@@ -1040,6 +1314,16 @@ export const toolMetaMap = {
     "icon": "arrow-left-right",
     "iconColor": "text-purple-600"
   },
+  "cups-to-grams": {
+    "name": "Cups to Grams Converter",
+    "description": "Convert cups, tablespoons and millilitres to grams for 40+ baking ingredients using real density data.",
+    "category": [
+      "Lifestyle",
+      "Calculator"
+    ],
+    "icon": "scale",
+    "iconColor": "text-teal-600"
+  },
   "curl-to-code-converter": {
     "name": "cURL to Code Converter",
     "description": "Convert simple cURL commands into fetch, Axios, or Python requests.",
@@ -1069,6 +1353,47 @@ export const toolMetaMap = {
     "icon": "activity",
     "iconColor": "text-amber-700"
   },
+  "dad-joke-machine": {
+    "name": "Dad Joke Machine",
+    "description": "Get a never-ending supply of classic dad jokes with puns, wordplay, and eye-rolling goodness.",
+    "category": [
+      "Fun",
+      "Entertainment"
+    ],
+    "icon": "laugh",
+    "iconColor": "text-teal-600"
+  },
+  "daily-spend-planner": {
+    "name": "Safe-to-Spend Daily Planner",
+    "description": "See exactly how much you can spend per day for the rest of this month after bills and savings.",
+    "category": [
+      "Finance",
+      "Calculator"
+    ],
+    "icon": "wallet-minimal",
+    "iconColor": "text-teal-600"
+  },
+  "daily-word-game": {
+    "name": "Daily Word Game",
+    "description": "Guess the hidden five-letter word in six tries — a fresh daily puzzle, practice mode, streaks, and shareable results.",
+    "category": [
+      "Games",
+      "Fun"
+    ],
+    "icon": "whole-word",
+    "iconColor": "text-teal-600"
+  },
+  "dark-circle-detector": {
+    "name": "Dark Circle Detector",
+    "description": "Detect and analyze dark circles under your eyes with AI-powered color analysis. Assess severity, pigmentation levels, and get personalized skincare insights.",
+    "category": [
+      "Beauty",
+      "Health",
+      "Selfie"
+    ],
+    "icon": "scan-face",
+    "iconColor": "text-teal-500"
+  },
   "data-lens": {
     "name": "Data Lens",
     "description": "Upload CSV files to analyze columns, clean data, detect patterns, and generate smart visual insights.",
@@ -1090,6 +1415,17 @@ export const toolMetaMap = {
     ],
     "icon": "clock",
     "iconColor": "text-sky-600"
+  },
+  "dca-calculator": {
+    "name": "DCA Calculator",
+    "description": "Estimate investment growth using Dollar Cost Averaging. Compare weekly, monthly, quarterly, or yearly recurring investments with return scenarios.",
+    "category": [
+      "Business",
+      "Calculator",
+      "Finance"
+    ],
+    "icon": "trending-up",
+    "iconColor": "text-emerald-600"
   },
   "debt-payoff-calculator": {
     "name": "Debt Payoff Calculator",
@@ -1164,6 +1500,16 @@ export const toolMetaMap = {
     "icon": "columns-3",
     "iconColor": "text-cyan-600"
   },
+  "desk-stretch-generator": {
+    "name": "Desk Stretch Routine Generator",
+    "description": "Build a guided desk stretch routine for the time you have, then follow it with timed holds and audio cues.",
+    "category": [
+      "Health",
+      "Fitness"
+    ],
+    "icon": "stretch-horizontal",
+    "iconColor": "text-teal-600"
+  },
   "device-browser-dashboard": {
     "name": "Device & Browser Dashboard",
     "description": "Advanced client-side dashboard for device, browser, privacy, permissions, GPU, storage, and API capability analysis.",
@@ -1174,6 +1520,28 @@ export const toolMetaMap = {
     ],
     "icon": "gauge",
     "iconColor": "text-blue-600"
+  },
+  "dice-roller": {
+    "name": "Dice Roller",
+    "description": "Roll d4 to d100 dice with modifiers, fair crypto randomness, running stats, and a full roll history.",
+    "category": [
+      "Games",
+      "Fun",
+      "Utility"
+    ],
+    "icon": "dices",
+    "iconColor": "text-teal-600"
+  },
+  "dice-roller-3d": {
+    "name": "Dice Roller (3D)",
+    "description": "Roll virtual 3D dice with realistic physics animations. Supports multiple dice types from D4 to D20.",
+    "category": [
+      "Fun",
+      "Game",
+      "Entertainment"
+    ],
+    "icon": "dices",
+    "iconColor": "text-orange-600"
   },
   "dictionary-app": {
     "name": "Dictionary App",
@@ -1188,6 +1556,24 @@ export const toolMetaMap = {
     "category": "Developer",
     "icon": "text",
     "iconColor": "text-blue-500"
+  },
+  "digit-span-test": {
+    "name": "Digit Span Test",
+    "description": "Measure your short-term working memory capacity with standard forward and reverse digit span tests.",
+    "category": [
+      "Neuroscience",
+      "Interactive",
+      "Education"
+    ],
+    "icon": "hash",
+    "iconColor": "text-teal-600"
+  },
+  "discount-calculator": {
+    "name": "Discount Calculator",
+    "description": "Calculate sales savings. Tweak discount rates, stacked discounts (e.g. 20% + 10%), tax additions, and view dynamic financial breakdowns.",
+    "category": "Math",
+    "icon": "percent",
+    "iconColor": "text-teal-600"
   },
   "discount-stacking-calculator": {
     "name": "Discount Stacking Calculator",
@@ -1237,6 +1623,16 @@ export const toolMetaMap = {
     ],
     "icon": "circle-dashed",
     "iconColor": "text-blue-500"
+  },
+  "dough-hydration-calculator": {
+    "name": "Dough Hydration Calculator",
+    "description": "Baker's percentage calculator for bread and pizza — hydration, salt, yeast or sourdough starter, with recipe scaling.",
+    "category": [
+      "Lifestyle",
+      "Calculator"
+    ],
+    "icon": "wheat",
+    "iconColor": "text-teal-600"
   },
   "dream-vacation-finder": {
     "name": "Dream Vacation Finder",
@@ -1316,12 +1712,43 @@ export const toolMetaMap = {
     "icon": "mail",
     "iconColor": "text-blue-600"
   },
+  "embarrassing-story-generator": {
+    "name": "Embarrassing Story Generator",
+    "description": "Generate cringe-worthy and hilarious embarrassing stories that are totally believable (or not).",
+    "category": [
+      "Fun",
+      "Entertainment"
+    ],
+    "icon": "unplug",
+    "iconColor": "text-rose-600"
+  },
+  "emergency-fund-calculator": {
+    "name": "Emergency Fund Calculator",
+    "description": "Size your emergency fund from real monthly essentials, see your savings gap, and get a month-by-month plan to fill it.",
+    "category": [
+      "Finance",
+      "Calculator"
+    ],
+    "icon": "shield",
+    "iconColor": "text-teal-600"
+  },
   "emoji-hub": {
     "name": "Emoji Hub",
     "description": "A collection of emoji icons",
     "category": "Creators",
     "icon": "smile",
     "iconColor": "text-yellow-500"
+  },
+  "emoji-quiz": {
+    "name": "Emoji Quiz",
+    "description": "Guess the movie, song, phrase, or word from a series of emoji clues. Multiple categories and difficulty levels.",
+    "category": [
+      "Fun",
+      "Game",
+      "Entertainment"
+    ],
+    "icon": "puzzle",
+    "iconColor": "text-fuchsia-600"
   },
   "emoji-remover": {
     "name": "Emoji Remover",
@@ -1357,6 +1784,16 @@ export const toolMetaMap = {
     "icon": "lock",
     "iconColor": "text-yellow-500"
   },
+  "epf-calculator": {
+    "name": "EPF Calculator",
+    "description": "Project your EPF corpus at retirement with the real 12% split, EPS cap, yearly interest and EEE tax status.",
+    "category": [
+      "Finance",
+      "Calculator"
+    ],
+    "icon": "landmark",
+    "iconColor": "text-teal-600"
+  },
   "error-log-pattern-grouper": {
     "name": "Error Log Pattern Grouper",
     "description": "Group recurring error-log patterns locally and inspect their frequency, severity, and examples.",
@@ -1381,6 +1818,16 @@ export const toolMetaMap = {
     ],
     "icon": "bar-chart-3",
     "iconColor": "text-teal-600"
+  },
+  "excuse-generator": {
+    "name": "Excuse Generator",
+    "description": "Generate creative and believable excuses for any situation. Choose from categories like work, school, social, or dates.",
+    "category": [
+      "Fun",
+      "Lifestyle"
+    ],
+    "icon": "shield-off",
+    "iconColor": "text-slate-600"
   },
   "exif-data-viewer": {
     "name": "EXIF Data Viewer",
@@ -1409,15 +1856,26 @@ export const toolMetaMap = {
     "icon": "aperture",
     "iconColor": "text-blue-600"
   },
+  "eye-rest-timer": {
+    "name": "20-20-20 Eye Rest Timer",
+    "description": "Every 20 minutes, look 20 feet away for 20 seconds. A looping screen-break timer with guided eye exercises.",
+    "category": [
+      "Health",
+      "Productivity"
+    ],
+    "icon": "eye",
+    "iconColor": "text-teal-600"
+  },
   "face-shape-detector": {
     "name": "Face Shape Detector",
-    "description": "Analyze facial landmarks to mathematically determine your face shape and get style recommendations.",
+    "description": "Detect your face shape instantly using AI-powered facial landmark analysis. Identify oval, round, square, heart, diamond, and oblong face shapes with precision.",
     "category": [
+      "Beauty",
       "AI",
-      "Image"
+      "Selfie"
     ],
-    "icon": "scan",
-    "iconColor": "text-indigo-500"
+    "icon": "scan-face",
+    "iconColor": "text-teal-500"
   },
   "face-similarity-checker": {
     "name": "Face Similarity Checker",
@@ -1429,12 +1887,33 @@ export const toolMetaMap = {
     "icon": "scan-face",
     "iconColor": "text-rose-500"
   },
+  "face-symmetry-checker": {
+    "name": "Face Symmetry Checker",
+    "description": "Analyze your facial symmetry with AI-powered landmark detection. Score your eye, brow, cheek, jaw, nose, and lip symmetry with detailed metrics.",
+    "category": [
+      "Beauty",
+      "AI",
+      "Selfie"
+    ],
+    "icon": "scan-face",
+    "iconColor": "text-teal-500"
+  },
   "fake-data": {
     "name": "Fake Data",
     "description": "Generate fake data for testing",
     "category": "Developer",
     "icon": "user",
     "iconColor": "text-gray-500"
+  },
+  "fake-excuse-letter-generator": {
+    "name": "Fake Excuse Letter Generator",
+    "description": "Generate professional-looking fake excuse letters for missing work, school, or events with customizable details.",
+    "category": [
+      "Fun",
+      "Lifestyle"
+    ],
+    "icon": "file-text",
+    "iconColor": "text-blue-600"
   },
   "fancy-text-generator": {
     "name": "Fancy Text Generator",
@@ -1445,6 +1924,17 @@ export const toolMetaMap = {
     ],
     "icon": "sparkle",
     "iconColor": "text-pink-600"
+  },
+  "fast-click-challenge": {
+    "name": "Fast Click Challenge",
+    "description": "Test your clicking speed in 10 seconds. Click as fast as you can and compare your CPS with friends.",
+    "category": [
+      "Fun",
+      "Game",
+      "Entertainment"
+    ],
+    "icon": "mouse-pointer-click",
+    "iconColor": "text-orange-500"
   },
   "fd-rd-maturity-calculator": {
     "name": "FD / RD Maturity Calculator",
@@ -1498,6 +1988,16 @@ export const toolMetaMap = {
     "icon": "upload",
     "iconColor": "text-indigo-700"
   },
+  "final-grade-calculator": {
+    "name": "Final Grade Calculator",
+    "description": "See exactly what you must score on the final exam to hit your target grade, with reverse and weighted-average modes.",
+    "category": [
+      "Education",
+      "Calculator"
+    ],
+    "icon": "graduation-cap",
+    "iconColor": "text-teal-600"
+  },
   "financial-update": {
     "name": "Financial Update",
     "description": "Financial Update allows you to track the stock market trends and get Updates on the latest financial news.",
@@ -1505,12 +2005,33 @@ export const toolMetaMap = {
     "icon": "bar-chart-3",
     "iconColor": "text-indigo-500"
   },
+  "fire-number-calculator": {
+    "name": "FIRE Number Calculator",
+    "description": "Find the corpus that buys your freedom, the year you reach it, and whether you can already coast to it.",
+    "category": [
+      "Finance",
+      "Calculator"
+    ],
+    "icon": "flame",
+    "iconColor": "text-teal-600"
+  },
   "flow-chart-maker": {
     "name": "Flow Chart Maker",
     "description": "Create flowcharts with ease and share them with your team.",
     "category": "No-code",
     "icon": "workflow",
     "iconColor": "text-gray-500"
+  },
+  "focus-score-calculator": {
+    "name": "Focus Score Calculator",
+    "description": "Calculate your daily focus score based on lifestyle factors, sleep, screen time, and productivity metrics.",
+    "category": [
+      "Productivity",
+      "Health",
+      "Lifestyle"
+    ],
+    "icon": "activity",
+    "iconColor": "text-indigo-600"
   },
   "focus-timer": {
     "name": "Focus Timer",
@@ -1538,6 +2059,16 @@ export const toolMetaMap = {
     ],
     "icon": "type",
     "iconColor": "text-cyan-500"
+  },
+  "food-shelf-life-guide": {
+    "name": "Food Shelf Life Guide",
+    "description": "Look up how long any food keeps in the pantry, fridge or freezer, and check whether leftovers are still safe to eat.",
+    "category": [
+      "Lifestyle",
+      "Health"
+    ],
+    "icon": "refrigerator",
+    "iconColor": "text-teal-600"
   },
   "form-abandonment-simulator": {
     "name": "Form Abandonment Simulator",
@@ -1567,6 +2098,16 @@ export const toolMetaMap = {
     "icon": "sparkles",
     "iconColor": "text-indigo-600"
   },
+  "fraction-calculator": {
+    "name": "Fraction Calculator",
+    "description": "Add, subtract, multiply, and divide fractions with step-by-step working, simplification, and decimal conversion.",
+    "category": [
+      "Education",
+      "Calculator"
+    ],
+    "icon": "divide",
+    "iconColor": "text-teal-600"
+  },
   "frame-rate-converter": {
     "name": "Frame Rate Converter",
     "description": "Upload a video and convert its frame rate to any target FPS — 23.976, 24, 25, 29.97, 30, 48, 50, 60, 120 fps and more. Runs entirely in your browser via FFmpeg.wasm.",
@@ -1576,6 +2117,16 @@ export const toolMetaMap = {
       "Utility"
     ],
     "icon": "film",
+    "iconColor": "text-teal-600"
+  },
+  "freelance-rate-calculator": {
+    "name": "Freelance Hourly Rate Calculator",
+    "description": "Work backwards from the income you want to the hourly, day, and retainer rates you must actually charge.",
+    "category": [
+      "Finance",
+      "Business"
+    ],
+    "icon": "badge-indian-rupee",
     "iconColor": "text-teal-600"
   },
   "friendship-meter": {
@@ -1591,6 +2142,16 @@ export const toolMetaMap = {
     "category": "Lifestyle",
     "icon": "users",
     "iconColor": "text-cyan-500"
+  },
+  "funny-nickname-generator": {
+    "name": "Funny Nickname Generator",
+    "description": "Generate hilarious and creative nicknames based on your name, personality, or random themes.",
+    "category": [
+      "Fun",
+      "Entertainment"
+    ],
+    "icon": "smile-plus",
+    "iconColor": "text-yellow-600"
   },
   "furniture-layout-planner": {
     "name": "Furniture Layout Planner",
@@ -1690,6 +2251,23 @@ export const toolMetaMap = {
     "icon": "glasses",
     "iconColor": "text-teal-500"
   },
+  "glassmorphism-css-generator": {
+    "name": "Glassmorphism CSS Generator",
+    "description": "Create premium glassmorphic UI cards visually. Customize blur, background opacity, border styling, and shadows with clean CSS output.",
+    "category": "Design",
+    "icon": "layers",
+    "iconColor": "text-teal-600"
+  },
+  "gold-jewellery-calculator": {
+    "name": "Gold Jewellery Price Calculator",
+    "description": "See the real price of gold jewellery: purity rate, making charges, wastage, GST 3% and your resale loss.",
+    "category": [
+      "Finance",
+      "Lifestyle"
+    ],
+    "icon": "gem",
+    "iconColor": "text-teal-600"
+  },
   "gold-price-checker": {
     "name": "Gold Price Checker",
     "description": "Check the current price of gold in real-time",
@@ -1736,6 +2314,46 @@ export const toolMetaMap = {
     "icon": "spell-check",
     "iconColor": "text-green-600"
   },
+  "gratuity-calculator": {
+    "name": "Gratuity Calculator",
+    "description": "Estimate your gratuity payout under the Payment of Gratuity Act, with rounding rules, eligibility, and tax-free limits.",
+    "category": [
+      "Finance",
+      "Calculator"
+    ],
+    "icon": "briefcase-business",
+    "iconColor": "text-teal-600"
+  },
+  "grocery-list-builder": {
+    "name": "Smart Grocery List Builder",
+    "description": "Build categorised grocery lists with smart auto-sorting, check-off shopping mode, restock suggestions, and easy sharing.",
+    "category": [
+      "Lifestyle",
+      "Productivity"
+    ],
+    "icon": "shopping-cart",
+    "iconColor": "text-teal-600"
+  },
+  "grounding-exercise": {
+    "name": "5-4-3-2-1 Grounding Exercise",
+    "description": "A guided 5-4-3-2-1 sensory grounding walkthrough with paced breathing and calm backup techniques for anxious moments.",
+    "category": [
+      "Health",
+      "Psychology"
+    ],
+    "icon": "anchor",
+    "iconColor": "text-teal-600"
+  },
+  "group-bill-splitter": {
+    "name": "Group Expense Splitter",
+    "description": "Track shared expenses for trips and flatmates, see who owes whom, and settle up with the fewest possible payments.",
+    "category": [
+      "Finance",
+      "Productivity"
+    ],
+    "icon": "users",
+    "iconColor": "text-teal-600"
+  },
   "gst-calculator": {
     "name": "GST Calculator",
     "description": "Calculate inclusive or exclusive GST with CGST, SGST, and IGST breakdowns.",
@@ -1753,6 +2371,17 @@ export const toolMetaMap = {
     "category": "AI",
     "icon": "calculator",
     "iconColor": "text-green-600"
+  },
+  "hair-color-preview": {
+    "name": "Hair Color Preview",
+    "description": "Preview 30+ hair colors on your photo instantly. Try natural shades, fashion colors, highlights, and balayage with realistic in-browser simulation.",
+    "category": [
+      "Beauty",
+      "Style",
+      "Selfie"
+    ],
+    "icon": "sparkle",
+    "iconColor": "text-teal-500"
   },
   "hairstyle-preview": {
     "name": "Hair Style Preview",
@@ -1772,6 +2401,23 @@ export const toolMetaMap = {
     "category": "Marketing",
     "icon": "hash",
     "iconColor": "text-blue-500"
+  },
+  "health-pre": {
+    "name": "Health Pre",
+    "description": "Predict potential health conditions based on your symptoms with our AI-powered health analysis tool.",
+    "category": "Health & Fitness",
+    "icon": "stethoscope",
+    "iconColor": "text-teal-500"
+  },
+  "heart-rate-zones": {
+    "name": "Heart Rate Training Zones",
+    "description": "Find your max heart rate and five training zones in real bpm, using Tanaka or Karvonen, with the zone to actually train in.",
+    "category": [
+      "Fitness",
+      "Health"
+    ],
+    "icon": "heart-pulse",
+    "iconColor": "text-teal-600"
   },
   "heic-to-jpg": {
     "name": "HEIC to JPG Converter",
@@ -1802,6 +2448,16 @@ export const toolMetaMap = {
     ],
     "icon": "sparkles",
     "iconColor": "text-purple-500"
+  },
+  "hiit-timer": {
+    "name": "HIIT & Tabata Timer",
+    "description": "Interval timer for HIIT, Tabata, EMOM, and boxing rounds with audio cues, sets, and drift-free timing.",
+    "category": [
+      "Fitness",
+      "Health"
+    ],
+    "icon": "activity",
+    "iconColor": "text-teal-600"
   },
   "hindi-vernamala": {
     "name": "Hindi Varnamala",
@@ -1838,6 +2494,16 @@ export const toolMetaMap = {
     "icon": "plug",
     "iconColor": "text-blue-600"
   },
+  "hra-exemption-calculator": {
+    "name": "HRA Exemption Calculator",
+    "description": "Find your exempt and taxable HRA with the three-rule method, metro limits, and the tax you save at your slab.",
+    "category": [
+      "Finance",
+      "Calculator"
+    ],
+    "icon": "house",
+    "iconColor": "text-teal-600"
+  },
   "htaccess-to-nginx": {
     "name": "HTAccess to NGINX",
     "description": "Convert common Apache rewrite rules into starter NGINX rewrites.",
@@ -1857,6 +2523,13 @@ export const toolMetaMap = {
     ],
     "icon": "file-code",
     "iconColor": "text-red-600"
+  },
+  "html-table-generator": {
+    "name": "HTML Table Generator",
+    "description": "Create HTML tables with custom row/column layouts. Tweak designs, edit table cells directly, and copy clean markup/CSS code.",
+    "category": "Developer",
+    "icon": "table",
+    "iconColor": "text-teal-600"
   },
   "html-to-markdown-converter": {
     "name": "HTML to Markdown Converter",
@@ -1884,6 +2557,23 @@ export const toolMetaMap = {
     "category": "Design",
     "icon": "sparkles",
     "iconColor": "text-blue-500"
+  },
+  "ideal-weight-calculator": {
+    "name": "Ideal Weight Calculator",
+    "description": "Compare Devine, Robinson, Miller and Hamwi ideal weights, and get a healthy range tuned to your frame size and height.",
+    "category": [
+      "Health",
+      "Fitness"
+    ],
+    "icon": "scale",
+    "iconColor": "text-teal-600"
+  },
+  "image-collage-maker": {
+    "name": "Image Collage Maker",
+    "description": "Create beautiful photo collages from your images with customizable layouts and spacings.",
+    "category": "Creators",
+    "icon": "layout",
+    "iconColor": "text-violet-500"
   },
   "image-compressor": {
     "name": "Image Compressor",
@@ -2001,6 +2691,13 @@ export const toolMetaMap = {
     "icon": "film",
     "iconColor": "text-purple-600"
   },
+  "img-to-pdf": {
+    "name": "Image to PDF Converter",
+    "description": "Convert JPG, PNG, and other image formats to high-quality PDF documents. Drag and drop your images to create professional PDFs instantly.",
+    "category": "Documents",
+    "icon": "file-text",
+    "iconColor": "text-blue-500"
+  },
   "impossible-object-builder": {
     "name": "Impossible Object Builder",
     "description": "An interactive visual editor to create mathematically impossible optical illusion objects and 3D geometric structures.",
@@ -2033,6 +2730,16 @@ export const toolMetaMap = {
     "icon": "calculator",
     "iconColor": "text-indigo-600"
   },
+  "inflation-calculator": {
+    "name": "Inflation Impact Calculator",
+    "description": "See what inflation does to your money — future costs, shrinking purchasing power, and the return you need to beat it.",
+    "category": [
+      "Finance",
+      "Calculator"
+    ],
+    "icon": "trending-up",
+    "iconColor": "text-teal-600"
+  },
   "ingredient-substitute-finder": {
     "name": "Ingredient Substitute Finder",
     "description": "Find instant ingredient replacements with precise ratios and dietary filters.",
@@ -2060,6 +2767,16 @@ export const toolMetaMap = {
     "icon": "instagram",
     "iconColor": "text-pink-500"
   },
+  "intermittent-fasting-timer": {
+    "name": "Intermittent Fasting Timer",
+    "description": "Track your fasting window live, see the metabolic phase you are in, and log every fast with streaks.",
+    "category": [
+      "Health",
+      "Lifestyle"
+    ],
+    "icon": "timer",
+    "iconColor": "text-teal-600"
+  },
   "internet-speed-test": {
     "name": "Internet Speed Test",
     "description": "Get fast and accurate speed test results for your network.",
@@ -2086,6 +2803,16 @@ export const toolMetaMap = {
     "category": "Other",
     "icon": "book",
     "iconColor": "text-blue-500"
+  },
+  "inverter-battery-calculator": {
+    "name": "Inverter & Battery Backup Calculator",
+    "description": "Size your home inverter VA and battery Ah from your real appliance load, with backup and charging time.",
+    "category": [
+      "Utility",
+      "Calculator"
+    ],
+    "icon": "battery-charging",
+    "iconColor": "text-teal-600"
   },
   "invoice-generator": {
     "name": "Invoice Generator",
@@ -2273,6 +3000,16 @@ export const toolMetaMap = {
     "icon": "lock",
     "iconColor": "text-amber-600"
   },
+  "kitchen-multi-timer": {
+    "name": "Kitchen Multi-Timer",
+    "description": "Run named timers for every dish at once, with real cook-time presets and a plan that gets everything ready together.",
+    "category": [
+      "Lifestyle",
+      "Utility"
+    ],
+    "icon": "timer-reset",
+    "iconColor": "text-teal-600"
+  },
   "kundli-birth-chart-generator": {
     "name": "Kundli / Birth Chart Generator",
     "description": "Generate a Vedic-style birth chart with lagna, planets, houses, nakshatra, tithi, and dasha timeline.",
@@ -2282,6 +3019,26 @@ export const toolMetaMap = {
     ],
     "icon": "star",
     "iconColor": "text-purple-600"
+  },
+  "land-area-converter": {
+    "name": "Land Area Converter (Indian Units)",
+    "description": "Convert bigha, katha, kanal, guntha, cent and acre using the exact value your state actually uses.",
+    "category": [
+      "Utility",
+      "Calculator"
+    ],
+    "icon": "land-plot",
+    "iconColor": "text-teal-600"
+  },
+  "leftover-recipe-finder": {
+    "name": "Leftover Ingredients Recipe Finder",
+    "description": "Tick what is left in your fridge and get real dishes you can cook tonight, plus ones you are one item away from.",
+    "category": [
+      "Lifestyle",
+      "Fun"
+    ],
+    "icon": "salad",
+    "iconColor": "text-teal-600"
   },
   "lens-field-of-view-calculator": {
     "name": "Lens Field of View Calculator",
@@ -2361,6 +3118,27 @@ export const toolMetaMap = {
     "icon": "credit-card",
     "iconColor": "text-yellow-500"
   },
+  "loan-prepayment-analyzer": {
+    "name": "Loan Prepayment vs Investment Analyzer",
+    "description": "Should you prepay your loan or invest the money? See interest saved vs wealth gained, break-even return, and a clear verdict.",
+    "category": [
+      "Finance",
+      "Calculator"
+    ],
+    "icon": "git-compare",
+    "iconColor": "text-teal-600"
+  },
+  "loan-prepayment-savings": {
+    "name": "Loan Prepayment Savings",
+    "description": "See how extra loan payments reduce interest costs and shorten tenure. Compare one-time, monthly, quarterly, half-yearly, yearly, or custom prepayment plans.",
+    "category": [
+      "Business",
+      "Calculator",
+      "Finance"
+    ],
+    "icon": "landmark",
+    "iconColor": "text-emerald-600"
+  },
   "localstorage-explorer": {
     "name": "LocalStorage Explorer",
     "description": "View, manage, add, edit, and delete browser LocalStorage keys and values in real-time.",
@@ -2383,6 +3161,16 @@ export const toolMetaMap = {
     "icon": "image",
     "iconColor": "text-indigo-500"
   },
+  "long-weekend-planner": {
+    "name": "Long Weekend Planner",
+    "description": "Find every long weekend of the year and the exact leaves to apply for, so a handful of days off buys you weeks of holiday.",
+    "category": [
+      "Lifestyle",
+      "Productivity"
+    ],
+    "icon": "calendar-range",
+    "iconColor": "text-teal-600"
+  },
   "lorem-ipsum-generator": {
     "name": "Lorem Ipsum Generator",
     "description": "Generate clean placeholder copy by paragraphs, sentences, or words.",
@@ -2399,6 +3187,26 @@ export const toolMetaMap = {
     "category": "Lifestyle",
     "icon": "heart",
     "iconColor": "text-rose-500"
+  },
+  "lucky-color-picker": {
+    "name": "Lucky Color Picker",
+    "description": "Discover your lucky color for today based on your mood, zodiac sign, or random selection with color psychology insights.",
+    "category": [
+      "Fun",
+      "Lifestyle"
+    ],
+    "icon": "palette",
+    "iconColor": "text-purple-600"
+  },
+  "lucky-day-predictor": {
+    "name": "Lucky Day Predictor",
+    "description": "Find out if today is your lucky day based on numerology, birth date, and cosmic alignment predictions.",
+    "category": [
+      "Fun",
+      "Lifestyle"
+    ],
+    "icon": "sparkles",
+    "iconColor": "text-amber-600"
   },
   "lucky-face-score": {
     "name": "Lucky Face Score",
@@ -2440,6 +3248,17 @@ export const toolMetaMap = {
     "icon": "utensils",
     "iconColor": "text-blue-600"
   },
+  "makeup-shade-finder": {
+    "name": "Makeup Shade Finder",
+    "description": "Find your perfect makeup shades with AI-powered skin analysis. Get personalized foundation, blush, lipstick, eyeshadow, and bronzer recommendations.",
+    "category": [
+      "Beauty",
+      "Style",
+      "Fashion"
+    ],
+    "icon": "palette",
+    "iconColor": "text-teal-500"
+  },
   "markdown-html-converter": {
     "name": "Markdown / HTML Converter",
     "description": "Convert Markdown into HTML and strip HTML back to text.",
@@ -2468,8 +3287,18 @@ export const toolMetaMap = {
     "name": "Medicine Schedule Builder",
     "description": "Organize routines, track doses, and receive real-time medicine reminders.",
     "category": "Health & Wellness",
-    "icon": "wrench",
+    "icon": "pill",
     "iconColor": "text-blue-500"
+  },
+  "meditation-timer": {
+    "name": "Meditation Timer",
+    "description": "A distraction-free sitting timer with synthesized bells, interval chimes, and a private session log.",
+    "category": [
+      "Health",
+      "Psychology"
+    ],
+    "icon": "brain",
+    "iconColor": "text-teal-600"
   },
   "meeting-agenda-builder": {
     "name": "Meeting Agenda Builder",
@@ -2510,6 +3339,39 @@ export const toolMetaMap = {
     "icon": "image",
     "iconColor": "text-blue-500"
   },
+  "memory-card-game": {
+    "name": "Memory Card Game",
+    "description": "Test and train your memory by matching pairs of cards. Choose from multiple themes and difficulty levels.",
+    "category": [
+      "Fun",
+      "Game",
+      "Entertainment"
+    ],
+    "icon": "layers",
+    "iconColor": "text-blue-600"
+  },
+  "memory-span-calculator": {
+    "name": "Memory Span Calculator",
+    "description": "Measure your short-term memory span with digit, letter, and visual sequence tests. Track your span over time and learn the neuroscience behind it.",
+    "category": [
+      "Neuroscience",
+      "Interactive",
+      "Education"
+    ],
+    "icon": "brain",
+    "iconColor": "text-emerald-600"
+  },
+  "mental-rotation-test": {
+    "name": "Mental Rotation Test",
+    "description": "Measure your spatial intelligence and ability to mentally manipulate shapes.",
+    "category": [
+      "Neuroscience",
+      "Interactive",
+      "Education"
+    ],
+    "icon": "box",
+    "iconColor": "text-blue-500"
+  },
   "meta-tag-generator": {
     "name": "Meta Tag Generator",
     "description": "Generate SEO, Open Graph, and Twitter meta tags.",
@@ -2519,6 +3381,16 @@ export const toolMetaMap = {
     ],
     "icon": "code",
     "iconColor": "text-cyan-600"
+  },
+  "metronome": {
+    "name": "Online Metronome",
+    "description": "Keep perfect time with a precise online metronome — tap tempo, time signatures, subdivisions, and accented beats.",
+    "category": [
+      "Music",
+      "Utility"
+    ],
+    "icon": "music-2",
+    "iconColor": "text-teal-600"
   },
   "mic-waveform-visualizer": {
     "name": "Mic Waveform Visualizer",
@@ -2540,6 +3412,16 @@ export const toolMetaMap = {
     "icon": "vote",
     "iconColor": "text-teal-600"
   },
+  "mocktail-mixer": {
+    "name": "Mocktail & Drink Mixer",
+    "description": "Pick what is on your shelf and get alcohol-free drinks with exact ml ratios, scaling from one glass to a party pitcher.",
+    "category": [
+      "Lifestyle",
+      "Fun"
+    ],
+    "icon": "cup-soda",
+    "iconColor": "text-teal-600"
+  },
   "monthly-budget-planner": {
     "name": "Monthly Budget Planner",
     "description": "Plan monthly income, expenses, savings, and category-wise spending with a visual budget breakdown.",
@@ -2550,6 +3432,16 @@ export const toolMetaMap = {
     ],
     "icon": "wallet",
     "iconColor": "text-blue-600"
+  },
+  "moon-phase-viewer": {
+    "name": "Moon Phase Today & Calendar",
+    "description": "See today's moon phase, illumination and age, plus a full monthly calendar and upcoming new and full moon dates.",
+    "category": [
+      "Lifestyle",
+      "Science"
+    ],
+    "icon": "moon",
+    "iconColor": "text-teal-600"
   },
   "morse-code-audio": {
     "name": "Morse Code Audio",
@@ -2583,6 +3475,17 @@ export const toolMetaMap = {
     "icon": "activity",
     "iconColor": "text-[var(--primary)]"
   },
+  "moving-checklist-builder": {
+    "name": "Moving Checklist Builder",
+    "description": "Create a personalised moving checklist organised by countdown phase. Track tasks, add custom items, and export your plan.",
+    "category": [
+      "Lifestyle",
+      "Productivity",
+      "Utility"
+    ],
+    "icon": "truck",
+    "iconColor": "text-emerald-600"
+  },
   "mp3-cutter-audio-trimmer": {
     "name": "MP3 Cutter / Audio Trimmer",
     "description": "Cut, trim, and export audio clips with browser-side controls.",
@@ -2611,6 +3514,17 @@ export const toolMetaMap = {
     ],
     "icon": "clock",
     "iconColor": "text-blue-600"
+  },
+  "multiplication-table": {
+    "name": "Multiplication Table",
+    "description": "Generate, customise, and visualise multiplication tables with patterns, charts, and export options.",
+    "category": [
+      "Calculator",
+      "Education",
+      "Math"
+    ],
+    "icon": "grid",
+    "iconColor": "text-emerald-600"
   },
   "mysql-visualization-tools": {
     "name": "MySQL Visualization Tools",
@@ -2642,6 +3556,37 @@ export const toolMetaMap = {
     ],
     "icon": "scale",
     "iconColor": "text-emerald-600"
+  },
+  "nps-calculator": {
+    "name": "NPS Calculator",
+    "description": "Project your NPS corpus at 60, the pension your mandatory annuity buys, and the real tax you save.",
+    "category": [
+      "Finance",
+      "Calculator"
+    ],
+    "icon": "shield",
+    "iconColor": "text-teal-600"
+  },
+  "number-guessing-game": {
+    "name": "Number Guessing Game",
+    "description": "Guess the secret number between 1 and 100. Get hints like higher or lower and try to beat your best score.",
+    "category": [
+      "Fun",
+      "Game",
+      "Entertainment"
+    ],
+    "icon": "brain",
+    "iconColor": "text-cyan-600"
+  },
+  "number-plate-decoder": {
+    "name": "Indian Number Plate Decoder",
+    "description": "Decode any Indian registration number: state, RTO district, series and number, plus the plate colour rules.",
+    "category": [
+      "Utility",
+      "Fun"
+    ],
+    "icon": "car",
+    "iconColor": "text-teal-600"
   },
   "number-system-conversions": {
     "name": "Number System Conversions",
@@ -2726,6 +3671,26 @@ export const toolMetaMap = {
     "icon": "edit",
     "iconColor": "text-emerald-600"
   },
+  "oven-temperature-converter": {
+    "name": "Oven Temperature Converter",
+    "description": "Convert oven temperatures between Celsius, Fahrenheit, gas marks and fan settings with a full reference chart.",
+    "category": [
+      "Lifestyle",
+      "Utility"
+    ],
+    "icon": "thermometer",
+    "iconColor": "text-teal-600"
+  },
+  "ovulation-calculator": {
+    "name": "Ovulation Calculator",
+    "description": "See your ovulation day, fertile window, and best days to conceive for the next six cycles on a clear calendar.",
+    "category": [
+      "Health",
+      "Lifestyle"
+    ],
+    "icon": "calendar-days",
+    "iconColor": "text-teal-600"
+  },
   "package-version-checker": {
     "name": "Package Version Checker",
     "description": "Check package versions quickly and compare updates instantly.",
@@ -2758,6 +3723,16 @@ export const toolMetaMap = {
     "icon": "refresh-cw",
     "iconColor": "text-blue-600"
   },
+  "party-food-planner": {
+    "name": "Party Food Quantity Planner",
+    "description": "Plan exact party food and drink quantities with real per-person portions, totals, and a ready shopping list.",
+    "category": [
+      "Lifestyle",
+      "Calculator"
+    ],
+    "icon": "party-popper",
+    "iconColor": "text-teal-600"
+  },
   "password-generator": {
     "name": "Password Generator",
     "description": "Generate strong random passwords with flexible character controls.",
@@ -2767,6 +3742,16 @@ export const toolMetaMap = {
     ],
     "icon": "shield-check",
     "iconColor": "text-emerald-600"
+  },
+  "password-strength-checker": {
+    "name": "Password Strength Checker",
+    "description": "Test password strength locally with entropy math, crack-time estimates, and pattern warnings — nothing leaves your browser.",
+    "category": [
+      "Cybersecurity Tool",
+      "Utility"
+    ],
+    "icon": "shield-check",
+    "iconColor": "text-teal-600"
   },
   "pdf-annotation": {
     "name": "PDF Annotation Tool",
@@ -2785,6 +3770,17 @@ export const toolMetaMap = {
     ],
     "icon": "files",
     "iconColor": "text-red-600"
+  },
+  "pdf-password-remover": {
+    "name": "PDF Password Remover",
+    "description": "Remove passwords from protected PDF files instantly and 100% locally in your browser. No data is ever uploaded to any server.",
+    "category": [
+      "PDF",
+      "Utilities",
+      "Security"
+    ],
+    "icon": "file-lock",
+    "iconColor": "text-teal-500"
   },
   "pdf-purifier": {
     "name": "PDF Purifier Tool",
@@ -2867,6 +3863,26 @@ export const toolMetaMap = {
     "icon": "calculator",
     "iconColor": "text-blue-600"
   },
+  "perfect-egg-timer": {
+    "name": "Perfect Egg Timer",
+    "description": "Time boiled eggs exactly how you like them, adjusted for egg size, fridge chill, and altitude.",
+    "category": [
+      "Lifestyle",
+      "Utility"
+    ],
+    "icon": "egg",
+    "iconColor": "text-teal-600"
+  },
+  "period-cycle-tracker": {
+    "name": "Period & Cycle Tracker",
+    "description": "Predict your next periods, fertile window, and ovulation day, and log past cycles for personalised accuracy.",
+    "category": [
+      "Health",
+      "Lifestyle"
+    ],
+    "icon": "calendar-heart",
+    "iconColor": "text-teal-600"
+  },
   "periodic-table-query-tool": {
     "name": "Periodic Table Query Tool",
     "description": "Interactive periodic table explorer with live element search, filtering, comparison, favorites, and exports.",
@@ -2884,6 +3900,16 @@ export const toolMetaMap = {
     ],
     "icon": "palette",
     "iconColor": "text-amber-600"
+  },
+  "pet-age-converter": {
+    "name": "Pet Age Calculator (Dog & Cat Years)",
+    "description": "See your dog or cat's age in human years with vet-style size-based math, life stages, and lifespan progress.",
+    "category": [
+      "Lifestyle",
+      "Fun"
+    ],
+    "icon": "paw-print",
+    "iconColor": "text-teal-600"
   },
   "photo-love-compatibility": {
     "name": "Love Compatibility by Photos",
@@ -2919,6 +3945,27 @@ export const toolMetaMap = {
     "icon": "code",
     "iconColor": "text-indigo-500"
   },
+  "pickup-line-generator": {
+    "name": "Pickup Line Generator",
+    "description": "Generate smooth, cheesy, or funny pickup lines for any situation. Choose from categories like romantic, nerdy, or witty.",
+    "category": [
+      "Fun",
+      "Entertainment"
+    ],
+    "icon": "sparkle",
+    "iconColor": "text-pink-500"
+  },
+  "pigmentation-analyzer": {
+    "name": "Pigmentation Analyzer",
+    "description": "Analyze skin pigmentation with AI-powered tone analysis. Detect hyperpigmentation, dark spots, and uneven skin tone with detailed variation scoring.",
+    "category": [
+      "Beauty",
+      "Health",
+      "Selfie"
+    ],
+    "icon": "sun",
+    "iconColor": "text-teal-500"
+  },
   "pixar-style-generator": {
     "name": "Pixar Style Generator",
     "description": "Generate Pixar-style 3D characters via free AI prompts, or upload your own photo/URL to apply local 3D claymation filters and glassy animated eyes.",
@@ -2937,6 +3984,66 @@ export const toolMetaMap = {
     ],
     "icon": "bar-chart-2",
     "iconColor": "text-purple-600"
+  },
+  "portfolio-rebalancer": {
+    "name": "Portfolio Rebalancing Calculator",
+    "description": "See how far your portfolio has drifted and get the exact buys and sells — or rebalance with fresh money and no tax.",
+    "category": [
+      "Finance",
+      "Calculator"
+    ],
+    "icon": "chart-pie",
+    "iconColor": "text-teal-600"
+  },
+  "posture-reminder": {
+    "name": "Posture & Movement Reminder",
+    "description": "Get nudged off your chair on a timer, with a guided movement break, posture self-check, and sit-stand cycles.",
+    "category": [
+      "Health",
+      "Productivity"
+    ],
+    "icon": "accessibility",
+    "iconColor": "text-teal-600"
+  },
+  "ppf-calculator": {
+    "name": "PPF Calculator",
+    "description": "Project your Public Provident Fund maturity with year-wise growth, loan and withdrawal limits, and tax-free returns.",
+    "category": [
+      "Finance",
+      "Calculator"
+    ],
+    "icon": "piggy-bank",
+    "iconColor": "text-teal-600"
+  },
+  "prayer-times-qibla": {
+    "name": "Prayer Times & Qibla Direction",
+    "description": "Get accurate daily prayer times and the Qibla bearing for any city, computed offline on your own device.",
+    "category": [
+      "Lifestyle",
+      "Utility"
+    ],
+    "icon": "compass",
+    "iconColor": "text-teal-600"
+  },
+  "pregnancy-due-date": {
+    "name": "Pregnancy Due Date Calculator",
+    "description": "Estimate your due date from LMP, conception, or IVF transfer, with trimester dates, milestones, and weekly baby size.",
+    "category": [
+      "Health",
+      "Lifestyle"
+    ],
+    "icon": "baby",
+    "iconColor": "text-teal-600"
+  },
+  "pressure-cooker-converter": {
+    "name": "Pressure Cooker Time Converter",
+    "description": "Convert cook times to pressure-cooker whistles and Instant-Pot minutes, with dal, rice, rajma and meat charts.",
+    "category": [
+      "Lifestyle",
+      "Calculator"
+    ],
+    "icon": "cooking-pot",
+    "iconColor": "text-teal-600"
   },
   "pricing-calculator": {
     "name": "Pricing Calculator Tool",
@@ -3011,6 +4118,16 @@ export const toolMetaMap = {
     "icon": "qr-code",
     "iconColor": "text-black-600"
   },
+  "quit-smoking-tracker": {
+    "name": "Quit Smoking Tracker",
+    "description": "Track your smoke-free time, money saved, and the real health milestones your body unlocks after quitting.",
+    "category": [
+      "Health",
+      "Lifestyle"
+    ],
+    "icon": "cigarette-off",
+    "iconColor": "text-teal-600"
+  },
   "quiz-app": {
     "name": "Quiz App",
     "description": "Take a focused multiple-choice quiz with progress tracking, scoring, answer review, and restart controls.",
@@ -3078,6 +4195,17 @@ export const toolMetaMap = {
     "icon": "waves",
     "iconColor": "text-blue-600"
   },
+  "reaction-time-test": {
+    "name": "Reaction Time Test",
+    "description": "Measure your reaction time in milliseconds with a simple click test. Track attempts, see your stats, and compare your score.",
+    "category": [
+      "Fun",
+      "Interactive",
+      "Science"
+    ],
+    "icon": "zap",
+    "iconColor": "text-emerald-600"
+  },
   "reading-time-calculator": {
     "name": "Reading Time Calculator",
     "description": "Estimate reading time, word count, sentence count, and readability metrics for any text in real time.",
@@ -3098,6 +4226,37 @@ export const toolMetaMap = {
     "icon": "file-code",
     "iconColor": "text-orange-600"
   },
+  "recipe-nutrition-estimator": {
+    "name": "Recipe Nutrition Estimator",
+    "description": "Build any recipe from real ingredient data and see calories, protein, carbs, fat and fibre per serving.",
+    "category": [
+      "Health",
+      "Calculator"
+    ],
+    "icon": "apple",
+    "iconColor": "text-teal-600"
+  },
+  "recipe-scaler": {
+    "name": "Recipe Scaler & Serving Converter",
+    "description": "Scale any recipe up or down by servings or pan size, with fraction-friendly amounts and smart tips for salt, spice, and leavening.",
+    "category": [
+      "Lifestyle",
+      "Calculator"
+    ],
+    "icon": "chef-hat",
+    "iconColor": "text-teal-600"
+  },
+  "redness-analyzer": {
+    "name": "Redness Analyzer",
+    "description": "Analyze facial redness with AI-powered color analysis. Detect inflammation, sensitivity, and vascular activity with precise scoring and severity assessment.",
+    "category": [
+      "Beauty",
+      "Health",
+      "Selfie"
+    ],
+    "icon": "activity",
+    "iconColor": "text-teal-500"
+  },
   "regex-tester": {
     "name": "Regex Tester",
     "description": "Test and validate regular expressions instantly with live results.",
@@ -3116,12 +4275,55 @@ export const toolMetaMap = {
     "icon": "heart",
     "iconColor": "text-rose-600"
   },
+  "rent-receipt-generator": {
+    "name": "Rent Receipt Generator",
+    "description": "Create print-ready monthly or quarterly rent receipts with amount in words, PAN line, and revenue stamp note.",
+    "category": [
+      "Finance",
+      "Business",
+      "Utility"
+    ],
+    "icon": "receipt-text",
+    "iconColor": "text-teal-600"
+  },
+  "rent-vs-buy-calculator": {
+    "name": "Rent vs Buy Home Calculator",
+    "description": "Compare renting vs buying a home in India — EMI, appreciation, invested savings, and a clear verdict for your horizon.",
+    "category": [
+      "Finance",
+      "Calculator"
+    ],
+    "icon": "scale",
+    "iconColor": "text-teal-600"
+  },
+  "rental-yield-calculator": {
+    "name": "Rental Yield Calculator",
+    "description": "Calculate gross and net rental yield, annual income, expenses, ROI, cash flow, and break-even for rental properties.",
+    "category": [
+      "Business",
+      "Calculator",
+      "Finance"
+    ],
+    "icon": "home",
+    "iconColor": "text-emerald-600"
+  },
   "renter-security-checklist": {
     "name": "Renter Security Checklist",
     "description": "Futuristic property verification and safety management tool for renters.",
     "category": "Property Management",
     "icon": "shield-check",
     "iconColor": "text-blue-500"
+  },
+  "restaurant-bill-splitter": {
+    "name": "Restaurant Bill Splitter",
+    "description": "Split a restaurant bill by item, share GST and tip proportionally, and get per-person totals that add up to the exact bill.",
+    "category": [
+      "Finance",
+      "Calculator",
+      "Lifestyle"
+    ],
+    "icon": "receipt",
+    "iconColor": "text-teal-600"
   },
   "resume-maker": {
     "name": "Resume Maker",
@@ -3130,12 +4332,42 @@ export const toolMetaMap = {
     "icon": "book-open",
     "iconColor": "text-blue-500"
   },
+  "retirement-corpus-calculator": {
+    "name": "Retirement Corpus Calculator",
+    "description": "Find the retirement corpus you need and the monthly SIP to get there, with inflation-adjusted math and a year-wise plan.",
+    "category": [
+      "Finance",
+      "Calculator"
+    ],
+    "icon": "armchair",
+    "iconColor": "text-teal-600"
+  },
   "return-deadline-tracker": {
     "name": "Return Deadline Tracker",
     "description": "Track shopping return windows, refund status, and deadlines with futuristic precision.",
     "category": "Shopping Tools",
-    "icon": "wrench",
+    "icon": "package-check",
     "iconColor": "text-blue-500"
+  },
+  "rice-water-ratio": {
+    "name": "Rice & Grain Water Ratio Guide",
+    "description": "Exact water for any grain — basmati to millets — by pot, pressure cooker or rice cooker, with soak tips and yield.",
+    "category": [
+      "Lifestyle",
+      "Calculator"
+    ],
+    "icon": "utensils",
+    "iconColor": "text-teal-600"
+  },
+  "roast-generator": {
+    "name": "Roast Generator",
+    "description": "Generate hilarious and creative roasts for friends, enemies, or yourself. Choose from savage, playful, or witty styles.",
+    "category": [
+      "Fun",
+      "Entertainment"
+    ],
+    "icon": "flame",
+    "iconColor": "text-red-600"
   },
   "robots-txt-generator": {
     "name": "Robots.txt Generator",
@@ -3153,6 +4385,16 @@ export const toolMetaMap = {
     ],
     "icon": "footprints",
     "iconColor": "text-(--primary)"
+  },
+  "roman-numeral-converter": {
+    "name": "Roman Numeral Converter",
+    "description": "Convert numbers to Roman numerals and back with strict validation, place-value breakdowns, and symbol references.",
+    "category": [
+      "Education",
+      "Utility"
+    ],
+    "icon": "hash",
+    "iconColor": "text-teal-600"
   },
   "room-paint-calculator": {
     "name": "Room Paint Calculator",
@@ -3172,6 +4414,27 @@ export const toolMetaMap = {
     "icon": "file-text",
     "iconColor": "text-green-800"
   },
+  "rto-mock-test": {
+    "name": "RTO Driving Licence Mock Test",
+    "description": "Practise for your Indian learner's licence with 140+ real RTO-style questions, timed mock tests and instant explanations.",
+    "category": [
+      "Education",
+      "Utility"
+    ],
+    "icon": "car-front",
+    "iconColor": "text-teal-600"
+  },
+  "rule-of-72-calculator": {
+    "name": "Rule of 72 Calculator",
+    "description": "Estimate how many years it takes for an investment to double at a given annual return rate, or find the required rate to double in a target number of years.",
+    "category": [
+      "Business",
+      "Calculator",
+      "Finance"
+    ],
+    "icon": "trending-up",
+    "iconColor": "text-emerald-600"
+  },
   "sacred-geometry-generator": {
     "name": "Sacred Geometry Generator",
     "description": "Generate sacred mathematical patterns like Flower of Life, Sri Yantra, and Metatron Cube.",
@@ -3181,6 +4444,54 @@ export const toolMetaMap = {
     ],
     "icon": "sparkles",
     "iconColor": "text-amber-600"
+  },
+  "safe-defrost-calculator": {
+    "name": "Safe Defrost Time Calculator",
+    "description": "Work out how long frozen food needs to thaw safely, and exactly when to move it out of the freezer.",
+    "category": [
+      "Lifestyle",
+      "Health"
+    ],
+    "icon": "snowflake",
+    "iconColor": "text-teal-600"
+  },
+  "salary-in-hand-calculator": {
+    "name": "Salary In-Hand Calculator (CTC to Take-Home)",
+    "description": "Convert annual CTC to monthly take-home pay with PF, professional tax, and FY 2025-26 new-regime income tax.",
+    "category": [
+      "Finance",
+      "Calculator",
+      "Business"
+    ],
+    "icon": "wallet",
+    "iconColor": "text-teal-600"
+  },
+  "sarcasm-generator": {
+    "name": "Sarcasm Generator",
+    "description": "Generate perfectly sarcastic responses for any situation. Because nothing says 'I care' like thinly veiled contempt.",
+    "category": [
+      "Fun",
+      "Entertainment"
+    ],
+    "icon": "message-circle",
+    "iconColor": "text-indigo-600"
+  },
+  "savings-challenge-tracker": {
+    "name": "Savings Challenge Tracker",
+    "description": "Run a 52-week savings challenge or a no-spend month with tap-to-mark grids, streaks, and milestone celebrations.",
+    "category": [
+      "Finance",
+      "Lifestyle"
+    ],
+    "icon": "target",
+    "iconColor": "text-teal-600"
+  },
+  "scientific-calculator": {
+    "name": "Scientific Calculator",
+    "description": "Advanced scientific calculator. Features algebraic entry, trigonometrics (sin, cos, tan), logarithms (log, ln), brackets, powers, and logs.",
+    "category": "Math",
+    "icon": "binary",
+    "iconColor": "text-teal-600"
   },
   "scientific-notation-calculator": {
     "name": "Scientific Notation Calculator",
@@ -3220,6 +4531,24 @@ export const toolMetaMap = {
     "icon": "image-plus",
     "iconColor": "text-teal-500"
   },
+  "seasonal-color-analysis": {
+    "name": "Seasonal Color Analysis",
+    "description": "Discover your personal color season — Spring, Summer, Autumn, or Winter — based on your skin tone, hair, and eye color. Get your custom palette.",
+    "category": [
+      "Beauty",
+      "Style",
+      "Fashion"
+    ],
+    "icon": "palette",
+    "iconColor": "text-teal-500"
+  },
+  "seating-chart-maker": {
+    "name": "Interactive Seating Chart Maker",
+    "description": "Design seating arrangements for weddings, classrooms, and banquets with table layouts and attendee dragging.",
+    "category": "Lifestyle",
+    "icon": "users",
+    "iconColor": "text-blue-500"
+  },
   "secret-message-encoder": {
     "name": "Secret Message Encoder",
     "description": "Encode, decode, inspect, copy, share, and export secret-message payloads with classical ciphers, Base64, URL, Morse, binary, and AES-GCM.",
@@ -3249,6 +4578,16 @@ export const toolMetaMap = {
     ],
     "icon": "layers",
     "iconColor": "text-gray-600"
+  },
+  "shoe-size-converter": {
+    "name": "Shoe Size Converter",
+    "description": "Convert UK, US, EU, and Indian shoe sizes for men, women, and kids — or find your size from foot length in cm.",
+    "category": [
+      "Lifestyle",
+      "Utility"
+    ],
+    "icon": "footprints",
+    "iconColor": "text-teal-600"
   },
   "shot-list-planner": {
     "name": "Shot List Planner",
@@ -3313,6 +4652,17 @@ export const toolMetaMap = {
     "icon": "droplet",
     "iconColor": "text-rose-500"
   },
+  "skin-undertone-checker": {
+    "name": "Skin Undertone Checker",
+    "description": "Discover your skin undertone — warm, cool, or neutral — using AI-powered color analysis. Find the perfect foundation, lipstick, and jewelry matches.",
+    "category": [
+      "Beauty",
+      "Style",
+      "Selfie"
+    ],
+    "icon": "palette",
+    "iconColor": "text-teal-500"
+  },
   "sleep-calculator": {
     "name": "Sleep Calculator",
     "description": "Find ideal bedtime or wake-up options using 90-minute sleep cycles.",
@@ -3322,6 +4672,16 @@ export const toolMetaMap = {
     ],
     "icon": "clock",
     "iconColor": "text-indigo-600"
+  },
+  "sleep-debt-calculator": {
+    "name": "Sleep Debt Calculator",
+    "description": "Log your last two weeks of sleep to see how many hours you owe, and get a realistic plan to repay it.",
+    "category": [
+      "Health",
+      "Lifestyle"
+    ],
+    "icon": "bed",
+    "iconColor": "text-teal-600"
   },
   "smart-goal-planner": {
     "name": "SMART Goal Planner",
@@ -3375,6 +4735,16 @@ export const toolMetaMap = {
     ],
     "icon": "share-2",
     "iconColor": "text-blue-500"
+  },
+  "society-maintenance-splitter": {
+    "name": "Society Maintenance Charge Splitter",
+    "description": "Split society maintenance across flats by equal, per sq ft, parking or custom basis with printable bills.",
+    "category": [
+      "Finance",
+      "Utility"
+    ],
+    "icon": "building-2",
+    "iconColor": "text-teal-600"
   },
   "sound-decibel-checker": {
     "name": "Sound Decibel Checker",
@@ -3471,6 +4841,16 @@ export const toolMetaMap = {
     "icon": "shield-check",
     "iconColor": "text-cyan-600"
   },
+  "stamp-duty-estimator": {
+    "name": "Property Stamp Duty & Registration Estimator",
+    "description": "Estimate stamp duty, registration fees, and the full one-time cost of buying property across 23 Indian states and UTs.",
+    "category": [
+      "Finance",
+      "Calculator"
+    ],
+    "icon": "file-signature",
+    "iconColor": "text-teal-600"
+  },
   "startup-name-generator": {
     "name": "Startup Name Generator",
     "description": "Advanced AI-powered naming generator and professional branding suite. Discover names, slogans, dynamic logo mockups, and color palettes.",
@@ -3488,6 +4868,36 @@ export const toolMetaMap = {
       "Fitness"
     ],
     "icon": "footprints",
+    "iconColor": "text-teal-600"
+  },
+  "step-up-sip-calculator": {
+    "name": "Step-Up SIP Calculator",
+    "description": "See how raising your SIP a little every year grows your corpus — exact month-by-month math against a flat SIP.",
+    "category": [
+      "Finance",
+      "Calculator"
+    ],
+    "icon": "trending-up",
+    "iconColor": "text-teal-600"
+  },
+  "stock-average-calculator": {
+    "name": "Stock Average Price Calculator",
+    "description": "Find your true average buy price, live P&L, and break-even, plus a planner for averaging down the smart way.",
+    "category": [
+      "Finance",
+      "Calculator"
+    ],
+    "icon": "candlestick-chart",
+    "iconColor": "text-teal-600"
+  },
+  "stopwatch": {
+    "name": "Online Stopwatch",
+    "description": "Accurate online stopwatch with laps, keyboard shortcuts, and fastest/slowest lap analysis.",
+    "category": [
+      "Utility",
+      "Productivity"
+    ],
+    "icon": "timer",
     "iconColor": "text-teal-600"
   },
   "storyboard-builder": {
@@ -3539,6 +4949,26 @@ export const toolMetaMap = {
     "icon": "captions",
     "iconColor": "text-blue-600"
   },
+  "sudoku": {
+    "name": "Sudoku — Daily Puzzle & Unlimited",
+    "description": "Play a shared daily sudoku or unlimited puzzles with notes, hints, streaks, and four difficulty levels.",
+    "category": [
+      "Games",
+      "Fun"
+    ],
+    "icon": "grid-3x3",
+    "iconColor": "text-teal-600"
+  },
+  "sukanya-samriddhi-calculator": {
+    "name": "Sukanya Samriddhi Yojana Calculator",
+    "description": "Project your daughter's Sukanya Samriddhi maturity with real scheme rules — 15 years of deposits, 21-year maturity, year-wise growth.",
+    "category": [
+      "Finance",
+      "Calculator"
+    ],
+    "icon": "piggy-bank",
+    "iconColor": "text-teal-600"
+  },
   "superpower-generator": {
     "name": "Superpower Generator",
     "description": "Generate your unique superhero persona, complete with a primary superpower, a funny weakness, and a dramatic origin story.",
@@ -3557,6 +4987,13 @@ export const toolMetaMap = {
     ],
     "icon": "list-checks",
     "iconColor": "text-purple-600"
+  },
+  "svg-blob-generator": {
+    "name": "SVG Blob Generator",
+    "description": "Create organic SVG shapes with random seed generators. Export clean SVG code or CSS inline strings.",
+    "category": "Design",
+    "icon": "spline",
+    "iconColor": "text-teal-600"
   },
   "svg-to-image": {
     "name": "SVG to Image",
@@ -3774,6 +5211,17 @@ export const toolMetaMap = {
     ],
     "icon": "milestone",
     "iconColor": "text-emerald-600"
+  },
+  "tip-calculator": {
+    "name": "Tip Calculator",
+    "description": "Work out the tip, total, and per-person share in seconds, with round-up splits and tipping norms for India, the US, and Europe.",
+    "category": [
+      "Finance",
+      "Calculator",
+      "Lifestyle"
+    ],
+    "icon": "hand-coins",
+    "iconColor": "text-teal-600"
   },
   "to-do-list": {
     "name": "To Do List",
@@ -4018,6 +5466,16 @@ export const toolMetaMap = {
     "icon": "droplet",
     "iconColor": "text-sky-600"
   },
+  "water-tank-calculator": {
+    "name": "Water Tank Size Calculator",
+    "description": "Size your overhead tank and sump from BIS per-capita water norms, with dimensions and filling time.",
+    "category": [
+      "Utility",
+      "Calculator"
+    ],
+    "icon": "droplets",
+    "iconColor": "text-teal-600"
+  },
   "watermark-remover": {
     "name": "Watermark Remover",
     "description": "Remove watermarks from images using AI-powered detection and smart inpainting. Supports logos, text, transparent, and repeated watermarks with multiple selection tools and export options.",
@@ -4099,6 +5557,17 @@ export const toolMetaMap = {
     "icon": "activity",
     "iconColor": "text-red-600"
   },
+  "whack-a-mole": {
+    "name": "Whack-a-Mole",
+    "description": "Whack moles as they pop up from their holes. Test your speed and reflexes in this classic arcade game.",
+    "category": [
+      "Fun",
+      "Game",
+      "Entertainment"
+    ],
+    "icon": "hammer",
+    "iconColor": "text-amber-700"
+  },
   "wheregoes-tool": {
     "name": "WhereGoes Tool",
     "description": "Trace URL redirects, check status codes, and analyze response headers.",
@@ -4108,6 +5577,16 @@ export const toolMetaMap = {
       "Network"
     ],
     "icon": "link",
+    "iconColor": "text-teal-600"
+  },
+  "wifi-qr-generator": {
+    "name": "WiFi QR Code Generator",
+    "description": "Create a scannable WiFi QR code so guests can join your network instantly. Generated locally, nothing is uploaded.",
+    "category": [
+      "Utility",
+      "Web"
+    ],
+    "icon": "wifi",
     "iconColor": "text-teal-600"
   },
   "word-character-counter": {
@@ -4141,6 +5620,17 @@ export const toolMetaMap = {
     "icon": "activity",
     "iconColor": "text-primary"
   },
+  "working-memory-trainer": {
+    "name": "Working Memory Trainer",
+    "description": "Train your working memory and fluid intelligence with the scientifically proven Dual N-Back task.",
+    "category": [
+      "Neuroscience",
+      "Health",
+      "Interactive"
+    ],
+    "icon": "brain-circuit",
+    "iconColor": "text-fuchsia-600"
+  },
   "workout-planner": {
     "name": "Workout Planner",
     "description": "Plan workout tasks with organized inputs, timelines, and clear next steps.",
@@ -4150,6 +5640,16 @@ export const toolMetaMap = {
     ],
     "icon": "dumbbell",
     "iconColor": "text-orange-600"
+  },
+  "xirr-calculator": {
+    "name": "XIRR Calculator",
+    "description": "Find the true annualized return of SIPs and irregular investments with exact XIRR math and benchmark comparisons.",
+    "category": [
+      "Finance",
+      "Calculator"
+    ],
+    "icon": "percent",
+    "iconColor": "text-teal-600"
   },
   "xml-editor": {
     "name": "XML Editor",
@@ -4170,6 +5670,16 @@ export const toolMetaMap = {
     ],
     "icon": "braces",
     "iconColor": "text-emerald-600"
+  },
+  "yes-or-no-oracle": {
+    "name": "Yes or No Oracle",
+    "description": "Get a mystical yes or no answer to any question. The oracle provides guidance with ancient wisdom and cosmic insight.",
+    "category": [
+      "Fun",
+      "Entertainment"
+    ],
+    "icon": "crystal-ball",
+    "iconColor": "text-violet-600"
   },
   "younger-version-generator": {
     "name": "Younger Version Generator",
@@ -4200,6 +5710,16 @@ export const toolMetaMap = {
     ],
     "icon": "video",
     "iconColor": "text-red-700"
+  },
+  "zakat-calculator": {
+    "name": "Zakat Calculator",
+    "description": "Work out the zakat due on your cash, gold, silver, business and investments against the gold or silver nisab.",
+    "category": [
+      "Finance",
+      "Calculator"
+    ],
+    "icon": "hand-heart",
+    "iconColor": "text-teal-600"
   },
   "zalgo-text-generator": {
     "name": "Zalgo Text Generator",

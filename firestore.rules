@@ -223,6 +223,18 @@ service cloud.firestore {
       allow read, write: if isActiveAdmin();
     }
 
+    // Landing Page CMS: pages are world-readable (the public /lander/[slug]
+    // route renders published pages); revisions are admin-only so draft history
+    // is never exposed by the world-readable catch-all below.
+    match /projects/altftool/landers/{landerId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+
+    match /projects/altftool/landerRevisions/{revisionId} {
+      allow read, write: if isActiveAdmin();
+    }
+
     match /projects/altftool/{document=**} {
       allow read: if true;
       allow write: if isActiveAdmin();
