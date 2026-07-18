@@ -497,6 +497,113 @@ service cloud.firestore {
       allow read, update, delete: if isActiveAdmin();
     }
 
+    // Infodrif tenant — public marketing site content, admin-managed.
+    // Without these blocks the catch-all below makes every collection
+    // admin-only, and the unauthenticated site renders its JSON fallback
+    // forever instead of anything the admin publishes.
+    match /projects/infodrif/navbar/settings {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+
+    match /projects/infodrif/navbarItems/{itemId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+
+    match /projects/infodrif/footer/settings {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+
+    // One collection for all four footer link groups, discriminated by a
+    // `group` field (company | topics | social | legal).
+    match /projects/infodrif/footerLinks/{linkId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+
+    // Section singletons carry named item subcollections rather than a single
+    // `items` list — hero has rotatingWords/customerAvatars/teamAvatars and
+    // showcase has row1/row2/row3, so the extra {listId} level is required.
+    match /projects/infodrif/homesection/{sectionId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+
+      match /{listId}/{itemId} {
+        allow read: if true;
+        allow write: if isActiveAdmin();
+      }
+    }
+
+    match /projects/infodrif/about/{sectionId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+
+      match /{listId}/{itemId} {
+        allow read: if true;
+        allow write: if isActiveAdmin();
+      }
+    }
+
+    match /projects/infodrif/partners/{sectionId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+
+      match /{listId}/{itemId} {
+        allow read: if true;
+        allow write: if isActiveAdmin();
+      }
+    }
+
+    // `settings` (list page copy) and `detail` (article page chrome).
+    match /projects/infodrif/blog/{sectionId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+
+    match /projects/infodrif/blogCategories/{categoryId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+
+    match /projects/infodrif/blogArticles/{blogId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+
+    match /projects/infodrif/offers/settings {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+
+    match /projects/infodrif/offerItems/{offerId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+
+    match /projects/infodrif/contact/settings {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+
+    match /projects/infodrif/seoRoutes/{routeId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+
+    // Infodrif contact-form leads — anonymous create with strict field
+    // validation; reading/managing is admin-only. Mirrors the anslic pattern
+    // above, minus the phone/service fields this form does not collect.
+    match /projects/infodrif/contactLeads/{leadId} {
+      allow create: if hasOnly(["name", "email", "message", "status", "createdAt"]) &&
+        request.resource.data.status == "new" &&
+        nonEmptyText(request.resource.data.name, 120) &&
+        nonEmptyText(request.resource.data.email, 254) &&
+        nonEmptyText(request.resource.data.message, 3000);
+      allow read, update, delete: if isActiveAdmin();
+    }
+
     match /projects/{projectId}/{document=**} {
       allow read, write: if isActiveAdmin();
     }

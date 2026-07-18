@@ -195,6 +195,16 @@ export const ADMIN_MODULE_ROUTE_KEYS = {
     blog: ["", "add-article", "edit-article/[id]"],
     contact: ["", "leads"],
   },
+  infodrif: {
+    navbar: [""],
+    home: ["", "hero", "trusted-by", "work-strategy", "showcase"],
+    about: ["", "hero", "intro", "services", "story", "team"],
+    partners: ["", "hero", "service-features", "features", "pricing"],
+    blog: ["", "add-article", "edit-article/[id]", "categories"],
+    offers: ["", "add-offer", "edit-offer/[id]"],
+    contact: ["", "leads"],
+    footer: [""],
+  },
   anternet: {
     banners: [""],
     tasks: [""],
