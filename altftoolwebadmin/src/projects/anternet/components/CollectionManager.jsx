@@ -2,8 +2,10 @@
 
 import { useEffect, useMemo, useState, useCallback } from "react";
 import { listDocs, saveDoc, removeDoc } from "../lib/firebase";
-import { validate } from "../lib/schemas";
+import { validate, validateVideoList, videoRowType } from "../lib/schemas";
 import { Button, Modal, Field } from "./ui";
+
+const isVideoListField = (f) => f.type === "videolist";
 
 function Cell({ value }) {
   if (typeof value === "boolean" || value === undefined || value === null || value === "") {
@@ -79,13 +81,41 @@ export default function CollectionManager({ schema, lookups, notify }) {
     const docId = v[idKey];
     if (!docId) errs[idKey] = "Required";
     if (editing.isNew && rows?.some((r) => r.id === docId)) errs[idKey] = "Already exists — must be unique";
+
+    // Cross-field rule for Video Sections: each video row needs a valid source
+    // for whichever mode (YouTube / Upload / URL) it was created with.
+    const videoField = schema.fields.find(isVideoListField);
+    if (videoField) {
+      const rowErrs = validateVideoList(v[videoField.key]);
+      if (Object.keys(rowErrs).length) {
+        errs[videoField.key] = Object.entries(rowErrs).map(([i, msg]) => `Row ${Number(i) + 1}: ${msg}`).join(" · ");
+      }
+    }
+
     setErrors(errs);
     if (Object.keys(errs).length) return;
 
     setBusy(true);
     try {
       const clean = {};
-      schema.fields.forEach((f) => { if (v[f.key] !== undefined && v[f.key] !== "") clean[f.key] = v[f.key]; });
+      schema.fields.forEach((f) => {
+        if (v[f.key] === undefined || v[f.key] === "") return;
+        if (f === videoField) {
+          // Stamp videoType explicitly (migrates legacy videoId-only rows) and
+          // drop stale fields left over from a different mode the admin tried
+          // before settling on the current one.
+          clean[f.key] = v[f.key].map((row) => {
+            const type = videoRowType(row);
+            const mode = f.modes[type];
+            const keys = mode ? mode.fields.map((mf) => mf.key) : Object.keys(row);
+            const picked = {};
+            keys.forEach((k) => { if (row[k] !== undefined && row[k] !== "") picked[k] = row[k]; });
+            return { ...picked, videoType: type };
+          });
+          return;
+        }
+        clean[f.key] = v[f.key];
+      });
       clean[idKey] = docId;
       await saveDoc(schema.collection, docId, clean, { isNew: editing.isNew });
       notify(`${schema.label}: "${docId}" saved ✓`);
@@ -169,7 +199,7 @@ export default function CollectionManager({ schema, lookups, notify }) {
         <Modal wide title={`${editing.isNew ? "Add" : "Edit"} — ${schema.label}`} onClose={() => setEditing(null)}>
           <div className="mla-form">
             {schema.fields.map((f) => (
-              <div key={f.key} className={`mla-field${["textarea", "list", "keyvalue", "image", "objectlist", "group"].includes(f.type) ? " mla-field-full" : ""}`}>
+              <div key={f.key} className={`mla-field${["textarea", "list", "keyvalue", "image", "objectlist", "videolist", "group"].includes(f.type) ? " mla-field-full" : ""}`}>
                 <label>
                   {f.label}{f.required && <em> *</em>}
                   {f.isId && !editing.isNew && <span className="mla-muted"> (immutable)</span>}
@@ -178,6 +208,7 @@ export default function CollectionManager({ schema, lookups, notify }) {
                   <input value={editing.values[f.key] || ""} disabled />
                 ) : (
                   <Field field={f} value={editing.values[f.key]} lookups={lookups}
+                    rowErrors={isVideoListField(f) ? validateVideoList(editing.values[f.key]) : undefined}
                     onChange={(v) => setEditing((s) => ({ ...s, values: { ...s.values, [f.key]: v } }))} />
                 )}
                 {f.hint && <p className="mla-hint">{f.hint}</p>}

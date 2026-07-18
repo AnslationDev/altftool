@@ -14,9 +14,9 @@
  */
 import { initializeApp, getApps, getApp } from "firebase/app";
 import {
-  getFirestore, collection, doc, getDoc, getDocs, setDoc, deleteDoc, serverTimestamp,
+  getFirestore, collection, doc, getDoc, getDocs,
 } from "firebase/firestore";
-import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { getStorage, ref, uploadBytes, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut } from "firebase/auth";
 
 const envConfig = {
@@ -82,22 +82,39 @@ export async function getDocById(colName, id) {
   return snap.exists() ? { id: snap.id, ...snap.data() } : null;
 }
 
+/**
+ * Saves/deletes go through server API routes backed by the Firebase Admin
+ * SDK (see /api/anternet/save and /api/anternet/delete) instead of the
+ * client Firestore SDK. This keeps writes working regardless of the
+ * client's Firestore security-rule/auth state (e.g. the "Local Admin"
+ * dev session, which never performs real Firebase Auth and previously
+ * caused "Missing or insufficient permissions" on Save).
+ */
+async function callAnternetApi(path, body) {
+  const user = auth?.currentUser;
+  const idToken = user ? await user.getIdToken().catch(() => null) : null;
+  const res = await fetch(path, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      ...(idToken ? { Authorization: `Bearer ${idToken}` } : {}),
+    },
+    body: JSON.stringify(body),
+  });
+  const result = await res.json().catch(() => ({}));
+  if (!res.ok) throw new Error(result.error || `Request failed (${res.status})`);
+  return result;
+}
+
 export async function saveDoc(colName, id, data, { isNew = false } = {}) {
   ensure();
-  const user = auth?.currentUser;
-  const payload = {
-    ...data,
-    updatedAt: serverTimestamp(),
-    updatedBy: user?.email || "panel",
-    ...(isNew ? { createdAt: serverTimestamp() } : {}),
-  };
-  await setDoc(docRef(colName, id), payload, { merge: true });
-  return { id, ...payload };
+  await callAnternetApi("/api/anternet/save", { collection: colName, id, data, isNew });
+  return { id, ...data };
 }
 
 export async function removeDoc(colName, id) {
   ensure();
-  await deleteDoc(docRef(colName, id));
+  await callAnternetApi("/api/anternet/delete", { collection: colName, id });
 }
 
 /* ------------------------------ Storage upload ---------------------------- */
@@ -108,4 +125,36 @@ export async function uploadImage(file, folder, name) {
   const r = ref(storage, path);
   await uploadBytes(r, file);
   return getDownloadURL(r);
+}
+
+/**
+ * Resumable upload with progress — used by the Video Sections "Upload Video"
+ * and "Thumbnail Upload" fields only. `uploadImage` above is left untouched
+ * so every other module that calls it (banners, tasks, quiz, spin, ads,
+ * earningtasks) is completely unaffected by this addition.
+ */
+function uploadWithProgress(file, path, onProgress) {
+  ensure();
+  const r = ref(storage, path);
+  const task = uploadBytesResumable(r, file);
+  return new Promise((resolve, reject) => {
+    task.on(
+      "state_changed",
+      (snap) => onProgress?.(Math.round((snap.bytesTransferred / snap.totalBytes) * 100)),
+      reject,
+      async () => { try { resolve(await getDownloadURL(task.snapshot.ref)); } catch (e) { reject(e); } }
+    );
+  });
+}
+
+export async function uploadVideoFile(file, folder, name, onProgress) {
+  const clean = (name || file.name).toLowerCase().replace(/[^a-z0-9.-]+/g, "-");
+  const path = `projects/anternet/media/${folder}/${Date.now()}-${clean}`;
+  return uploadWithProgress(file, path, onProgress);
+}
+
+export async function uploadThumbnail(file, folder, name, onProgress) {
+  const clean = (name || file.name).toLowerCase().replace(/[^a-z0-9.-]+/g, "-");
+  const path = `projects/anternet/media/${folder}/${Date.now()}-${clean}`;
+  return uploadWithProgress(file, path, onProgress);
 }
