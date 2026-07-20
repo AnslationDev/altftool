@@ -3938,13 +3938,13 @@ export const toolMetaMap = {
     "icon": "pencil",
     "iconColor": "text-(--primary)"
   },
-  "php-beautifier-studio": {
-    "name": "PHP Beautifier Studio",
-    "description": "A real-time, browser-based PHP formatting and beautification utility to clean and standardize your PHP code safely.",
-    "category": "Developer",
-    "icon": "code",
-    "iconColor": "text-indigo-500"
-  },
+  // "php-beautifier-studio": {
+  //   "name": "PHP Beautifier Studio",
+  //   "description": "A real-time, browser-based PHP formatting and beautification utility to clean and standardize your PHP code safely.",
+  //   "category": "Developer",
+  //   "icon": "code",
+  //   "iconColor": "text-indigo-500"
+  // },
   "pickup-line-generator": {
     "name": "Pickup Line Generator",
     "description": "Generate smooth, cheesy, or funny pickup lines for any situation. Choose from categories like romantic, nerdy, or witty.",
