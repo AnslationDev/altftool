@@ -3,6 +3,8 @@ import { ArrowLeft, ArrowRight, BookOpen, CheckCircle2, Hash, Layers3, Route, Sp
 import BlogCard from "./BlogCard";
 import { blogTaxonomySlug } from "../data";
 
+const ARCHIVE_CARD_LIMIT = 48;
+
 function ArchiveStat({ icon: Icon, label, value }) {
   return (
     <div className="rounded-[var(--anslation-ds-radius)] border border-(--border) bg-(--card) px-3 py-2 shadow-[var(--anslation-ds-shadow-sm)]">
@@ -36,6 +38,8 @@ export default function BlogArchivePage({
       ? "/blogs/topics"
       : "/blogs/category";
   const uniqueCategories = new Set(posts.map((post) => post.category).filter(Boolean));
+  const cardPosts = posts.slice(0, ARCHIVE_CARD_LIMIT);
+  const indexedPosts = posts.slice(ARCHIVE_CARD_LIMIT);
 
   return (
     <main className="bg-(--background) text-(--foreground)">
@@ -130,7 +134,7 @@ export default function BlogArchivePage({
 
         {posts.length > 0 ? (
           <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-3">
-            {posts.map((post) => (
+            {cardPosts.map((post) => (
               <BlogCard
                 key={post.slug}
                 blog={post}
@@ -152,6 +156,36 @@ export default function BlogArchivePage({
             </p>
           </div>
         )}
+
+        {indexedPosts.length > 0 ? (
+          <section className="mt-8 border-t border-(--border) pt-7">
+            <div className="flex flex-col gap-1 sm:flex-row sm:items-end sm:justify-between sm:gap-4">
+              <div>
+                <p className="text-[11px] font-bold uppercase tracking-wide text-(--muted-foreground)">
+                  Complete archive
+                </p>
+                <h2 className="mt-1 text-xl font-semibold tracking-normal text-(--foreground)">
+                  More {activeLabel} articles
+                </h2>
+              </div>
+              <p className="text-sm text-(--muted-foreground)">
+                {indexedPosts.length} additional reads
+              </p>
+            </div>
+            <div className="mt-4 grid gap-x-6 sm:grid-cols-2 lg:grid-cols-3">
+              {indexedPosts.map((post) => (
+                <Link
+                  key={post.slug}
+                  href={`/blogs/${post.slug}`}
+                  className="group flex min-h-11 items-center justify-between gap-3 border-b border-(--border) py-2 text-sm font-medium text-(--foreground) transition hover:border-(--primary) hover:text-(--primary)"
+                >
+                  <span className="line-clamp-2">{post.heading}</span>
+                  <ArrowRight className="h-4 w-4 shrink-0 text-(--muted-foreground) transition group-hover:translate-x-0.5 group-hover:text-(--primary)" />
+                </Link>
+              ))}
+            </div>
+          </section>
+        ) : null}
 
         {faqItems.length > 0 ? (
           <section className="mt-8 rounded-[var(--anslation-ds-radius)] border border-(--border) bg-(--card) p-5 shadow-[var(--anslation-ds-shadow-sm)]">

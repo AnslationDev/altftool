@@ -12,7 +12,7 @@
     "predev": "npm run generate:registry",
     "dev": "next dev --webpack",
     "prebuild": "npm run generate:registry",
-    "build": "node scripts/use-patched-next-dependencies.mjs && node ../scripts/run-with-node-memory.mjs next build --webpack",
+    "build": "node scripts/use-patched-next-dependencies.mjs && node ../scripts/run-with-node-memory.mjs next build --webpack && node scripts/check-prerender-size.mjs",
     "start": "next start",
     "lint": "eslint"
   },
