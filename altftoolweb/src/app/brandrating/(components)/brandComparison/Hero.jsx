@@ -5,7 +5,7 @@ import Image from "next/image";
 import { ArrowLeft } from "lucide-react";
 import User from "../../(assets)/users.png";
 
-export default function HeroSection({ title }) {
+export default function HeroSection({ title, subtitle }) {
   return (
     <section className="section w-full flex flex-col bg-(--search-buysmart) py-12 sm:py-16 md:py-20 lg:py-24 items-center animate-slide-up">
       <div className="w-full max-w-7xl px-4 flex items-center justify-center grid grid-cols-3 items-center">
@@ -41,9 +41,9 @@ export default function HeroSection({ title }) {
         </h1>
 
         <p className="section-subtitle max-w-4xl mx-auto animate-slide-right" style={{ animationDelay: "200ms" }}>
-          Quality sleep is a necessity, not a luxury. The right mattress supports comfort,
-          reduces aches, and helps you wake up refreshed. To find your perfect night&apos;s sleep,
-          see our top mattress picks below.
+          {subtitle ||
+            `Compare the leading brands in ${title || "this category"} — ranked by rating,
+            features, and overall value — and find the right pick in minutes.`}
         </p>
 
         <div className="mt-8 sm:mt-10 md:mt-12 flex flex-col sm:flex-row justify-center items-center gap-4 sm:gap-5 animate-slide-up" style={{ animationDelay: "280ms" }}>

@@ -60,7 +60,9 @@ test.describe("admin blog authoring UX", () => {
 
     await openNavigation.click();
     await expect(page.getByRole("button", { name: "Close admin navigation" })).toBeVisible();
-    await expect(page.getByRole("link", { name: "Blogs" })).toBeVisible();
+    await expect(
+      page.getByRole("navigation", { name: "System modules" }).getByRole("link", { name: "Admin Management" }),
+    ).toBeVisible();
     await page.getByRole("button", { name: "Close admin navigation" }).click();
 
     const themeButton = page.getByRole("button", { name: "Theme: System default" });
@@ -125,7 +127,7 @@ test.describe("admin blog authoring UX", () => {
     await expect(jumpButtons.first()).toBeVisible();
     await jumpButtons.first().click();
 
-    await expect.poll(() => page.locator(".ring-blue-100").count()).toBeGreaterThan(0);
+    await expect(page.locator("#blog-section-post-details")).toHaveClass(/ring-primary/);
     await quality.expectClean("admin blog content health jump");
   });
 

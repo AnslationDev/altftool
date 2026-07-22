@@ -1,7 +1,7 @@
 "use client";
 
-import ToolFkUtilityTool from "@/tools/_toolfk-suite/ToolFkUtilityTool";
+import Base64ToAsciiPage from "./pages";
 
 export default function ToolEntry() {
-  return <ToolFkUtilityTool />;
+  return <Base64ToAsciiPage />;
 }

@@ -3,7 +3,7 @@
    Inspired by Calm, Endel, and Apple TV Screensavers
    ======================================================= */
 
-:root {
+.ambient-container {
   --primary-gold: #c8954a;
   --primary-gold-glow: rgba(200, 149, 74, 0.4);
   --glass-bg: rgba(10, 15, 12, 0.65);

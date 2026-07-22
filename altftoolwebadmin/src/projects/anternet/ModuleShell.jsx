@@ -22,6 +22,9 @@ const SETTINGS_DEFAULTS = {
   features: FEATURE_FLAGS,
   rewards: REWARD_RULES,
   integrations: INTEGRATIONS,
+  watchandearn: { title: "Watch & Earn", videoId: "aqz-KE-bpKQ", rewardCoins: 15, durationLabel: "30 sec" },
+  mysterygift: { earningLabel: "Mystery Gift Box", cooldownHours: 24, rewardMin: 5, rewardMax: 50, rewardStep: 100, imageUrl: "", lottieUrl: "" },
+  bonusladder: { dailyGoal: 1000, coinIconUrl: "", trophyIconUrl: "" },
 };
 
 /** Module key → collection schema key (1:1 for Anternet). */
@@ -37,6 +40,11 @@ const VIEW_TO_COLLECTION = {
   notifications: "notifications",
   pages: "pages",
   arenas: "arenas",
+  winners: "winners",
+  quickearn: "quickearn",
+  explorecards: "explorecards",
+  homecategories: "homecategories",
+  bonusladdertiers: "bonusladdertiers",
 };
 
 export default function ModuleShell({ view }) {
@@ -66,7 +74,12 @@ export default function ModuleShell({ view }) {
       <div className="mla-root mla-embed">
         <style>{css}</style>
         <div className="mla-panelcard">
-          <h3>Firebase not configured</h3>
+          <header className="mla-pagehead">
+            <div>
+              <h1>Firebase not configured</h1>
+              <p>Anternet content management is unavailable.</p>
+            </div>
+          </header>
           <p className="mla-muted">
             Set the host app&apos;s <code>NEXT_PUBLIC_FIREBASE_*</code> environment variables and restart.
           </p>

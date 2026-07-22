@@ -1,0 +1,1460 @@
+/* ================================================================
+   HousingNeeds — standalone home-services microsite
+   Scoped entirely under .hn-app. Imported once by
+   src/app/business-ops/housingneeds/layout.jsx
+
+   STRATEGY
+   - A private --hn-* token layer, SEEDED from the global AltFTool
+     tokens (--card, --foreground, --anslation-ds-*). Because those
+     already flip under [data-theme="dark"], surfaces and text follow
+     the site theme with no duplicated colour tables.
+   - Only genuinely theme-specific treatments (glows, scrims, mesh
+     opacity, accent hue) get an explicit [data-theme="dark"] override.
+   - Per-vertical colour comes from [data-accent] on the page root, so
+     the shared layout carries zero conditional colour logic.
+   - NO Tailwind utilities and NO @theme block in this file: a second
+     @theme would emit :root custom properties globally and collide
+     with globals.css.
+   ================================================================ */
+
+/* ---------------------------------------------------------------
+   1. Token layer
+   --------------------------------------------------------------- */
+
+.hn-context-bar {
+  position: relative;
+  z-index: 100;
+  border-bottom: 1px solid var(--border);
+  background: var(--card);
+  color: var(--foreground);
+  font-family: var(--font-primary);
+  box-shadow: var(--anslation-ds-shadow-sm);
+}
+
+.hn-context-bar__inner {
+  display: flex;
+  min-height: 44px;
+  max-width: var(--anslation-ds-container-wide);
+  margin-inline: auto;
+  padding-inline: var(--anslation-ds-gutter);
+  align-items: center;
+  gap: 12px;
+}
+
+.hn-context-bar__back,
+.hn-context-bar__brand,
+.hn-context-bar__directory {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.hn-context-bar__back,
+.hn-context-bar__directory {
+  min-height: 40px;
+  color: var(--foreground);
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.hn-context-bar__back:hover,
+.hn-context-bar__directory:hover {
+  color: var(--primary);
+}
+
+.hn-context-bar__back:focus-visible,
+.hn-context-bar__directory:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+.hn-context-bar__brand {
+  color: var(--primary);
+  font-weight: 700;
+}
+
+.hn-context-bar__separator {
+  width: 1px;
+  height: 20px;
+  background: var(--border);
+}
+
+.hn-context-bar__location {
+  min-width: 0;
+  overflow: hidden;
+  color: var(--muted-foreground);
+  font-size: 13px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.hn-context-bar__preview {
+  padding: 4px 8px;
+  border: 1px solid color-mix(in srgb, var(--primary) 22%, var(--border));
+  border-radius: var(--anslation-ds-radius-sm);
+  background: color-mix(in srgb, var(--primary) 8%, var(--card));
+  color: var(--primary);
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.hn-context-bar__directory {
+  margin-left: auto;
+}
+
+@media (max-width: 640px) {
+  .hn-context-bar__location,
+  .hn-context-bar__preview,
+  .hn-context-bar__separator {
+    display: none;
+  }
+}
+
+.hn-app {
+  /* surfaces + text, seeded from the global theme */
+  --hn-page: var(--background);
+  --hn-surface: var(--card);
+  --hn-surface-2: var(--anslation-ds-soft);
+  --hn-elevated: var(--anslation-ds-surface);
+  --hn-border: var(--border);
+  --hn-border-strong: var(--anslation-ds-border-strong);
+  --hn-text: var(--foreground);
+  --hn-text-soft: var(--anslation-ds-text-soft);
+  --hn-muted: var(--muted-foreground);
+
+  /* geometry */
+  --hn-radius-sm: 8px;
+  --hn-radius: 14px;
+  --hn-radius-lg: 20px;
+  --hn-radius-xl: 28px;
+  --hn-container: 1200px;
+  --hn-gutter: clamp(1.1rem, 3vw, 2rem);
+  --hn-section-y: clamp(3.5rem, 8vw, 6.5rem);
+
+  /* elevation */
+  --hn-shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.07);
+  --hn-shadow: 0 10px 30px -12px rgba(15, 23, 42, 0.18);
+  --hn-shadow-lg: 0 30px 70px -24px rgba(15, 23, 42, 0.28);
+
+  /* accent — overridden per vertical by [data-accent]; this is the
+     neutral fallback used by the hub page */
+  --hn-accent: #0f766e;
+  --hn-accent-strong: #115e59;
+  --hn-accent-contrast: #ffffff;
+  --hn-accent-tint: rgba(15, 118, 110, 0.1);
+  --hn-accent-ring: rgba(15, 118, 110, 0.28);
+
+  /* Focus indicator. Deliberately NOT the accent: a 28%-alpha accent ring
+     measures ~1.5:1 against its own surface, well under the 3:1 WCAG 1.4.11
+     minimum for non-text UI. A solid near-black/near-white token clears it on
+     every accent and every surface in both themes. */
+  --hn-focus: #0b1220;
+
+  background: var(--hn-page);
+  color: var(--hn-text);
+  font-family: var(--font-primary);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Dark: soften elevation (dark shadows read as mud) and lift the
+   accent hue so it stays legible on a near-black surface. */
+[data-theme="dark"] .hn-app {
+  --hn-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --hn-shadow: 0 12px 34px -14px rgba(0, 0, 0, 0.7);
+  --hn-shadow-lg: 0 34px 80px -28px rgba(0, 0, 0, 0.8);
+  /* Light-on-dark focus ring: #0b1220 would vanish against the dark page. */
+  --hn-focus: #f8fafc;
+}
+
+/* --- per-vertical accents ---------------------------------------
+   Light values are darkened for contrast on white; dark values are
+   lightened for contrast on near-black. Both directions matter.
+
+   Each selector matches BOTH the page root (.hn-app[data-accent])
+   and any descendant carrying data-accent, so the hub page can show
+   seven differently-accented cards on one screen. Custom properties
+   inherit, so a card's children pick up its accent automatically. */
+
+/* Light-mode accents are deliberately one shade darker than the "brand" hue.
+   The 600-level shades (#ea580c, #d97706, #0d9488 ...) only reach 3.2-4.1:1
+   against white, which fails WCAG AA 4.5:1 BOTH ways — as white button labels
+   on the accent AND as accent link text on a white card. The 700-level shades
+   below clear 5.0:1 in every case. Verified numerically, not by eye. */
+.hn-app[data-accent="orange"],  .hn-app [data-accent="orange"]  { --hn-accent:#c2410c; --hn-accent-strong:#9a3412; --hn-accent-tint:rgba(194,65,12,.1);  --hn-accent-ring:rgba(194,65,12,.3); }
+.hn-app[data-accent="sky"],     .hn-app [data-accent="sky"]     { --hn-accent:#0369a1; --hn-accent-strong:#075985; --hn-accent-tint:rgba(3,105,161,.1);   --hn-accent-ring:rgba(3,105,161,.3); }
+.hn-app[data-accent="teal"],    .hn-app [data-accent="teal"]    { --hn-accent:#0f766e; --hn-accent-strong:#115e59; --hn-accent-tint:rgba(15,118,110,.1);  --hn-accent-ring:rgba(15,118,110,.3); }
+.hn-app[data-accent="violet"],  .hn-app [data-accent="violet"]  { --hn-accent:#6d28d9; --hn-accent-strong:#5b21b6; --hn-accent-tint:rgba(109,40,217,.1);  --hn-accent-ring:rgba(109,40,217,.3); }
+.hn-app[data-accent="amber"],   .hn-app [data-accent="amber"]   { --hn-accent:#b45309; --hn-accent-strong:#92400e; --hn-accent-tint:rgba(180,83,9,.1);    --hn-accent-ring:rgba(180,83,9,.3); }
+.hn-app[data-accent="rose"],    .hn-app [data-accent="rose"]    { --hn-accent:#be123c; --hn-accent-strong:#9f1239; --hn-accent-tint:rgba(190,18,60,.1);   --hn-accent-ring:rgba(190,18,60,.3); }
+.hn-app[data-accent="emerald"], .hn-app [data-accent="emerald"] { --hn-accent:#047857; --hn-accent-strong:#065f46; --hn-accent-tint:rgba(4,120,87,.1);    --hn-accent-ring:rgba(4,120,87,.3); }
+.hn-app[data-accent="lime"],    .hn-app [data-accent="lime"]    { --hn-accent:#4d7c0f; --hn-accent-strong:#3f6212; --hn-accent-tint:rgba(77,124,15,.1);   --hn-accent-ring:rgba(77,124,15,.3); }
+
+[data-theme="dark"] .hn-app[data-accent="orange"],  [data-theme="dark"] .hn-app [data-accent="orange"]  { --hn-accent:#fb923c; --hn-accent-strong:#fdba74; --hn-accent-contrast:#1a0d02; --hn-accent-tint:rgba(251,146,60,.14); --hn-accent-ring:rgba(251,146,60,.36); }
+[data-theme="dark"] .hn-app[data-accent="sky"],     [data-theme="dark"] .hn-app [data-accent="sky"]     { --hn-accent:#38bdf8; --hn-accent-strong:#7dd3fc; --hn-accent-contrast:#04141f; --hn-accent-tint:rgba(56,189,248,.14); --hn-accent-ring:rgba(56,189,248,.36); }
+[data-theme="dark"] .hn-app[data-accent="teal"],    [data-theme="dark"] .hn-app [data-accent="teal"]    { --hn-accent:#2dd4bf; --hn-accent-strong:#5eead4; --hn-accent-contrast:#031512; --hn-accent-tint:rgba(45,212,191,.14); --hn-accent-ring:rgba(45,212,191,.36); }
+[data-theme="dark"] .hn-app[data-accent="violet"],  [data-theme="dark"] .hn-app [data-accent="violet"]  { --hn-accent:#a78bfa; --hn-accent-strong:#c4b5fd; --hn-accent-contrast:#120a24; --hn-accent-tint:rgba(167,139,250,.14); --hn-accent-ring:rgba(167,139,250,.36); }
+[data-theme="dark"] .hn-app[data-accent="amber"],   [data-theme="dark"] .hn-app [data-accent="amber"]   { --hn-accent:#fbbf24; --hn-accent-strong:#fcd34d; --hn-accent-contrast:#1a1202; --hn-accent-tint:rgba(251,191,36,.14); --hn-accent-ring:rgba(251,191,36,.36); }
+[data-theme="dark"] .hn-app[data-accent="rose"],    [data-theme="dark"] .hn-app [data-accent="rose"]    { --hn-accent:#fb7185; --hn-accent-strong:#fda4af; --hn-accent-contrast:#1e0509; --hn-accent-tint:rgba(251,113,133,.14); --hn-accent-ring:rgba(251,113,133,.36); }
+[data-theme="dark"] .hn-app[data-accent="emerald"], [data-theme="dark"] .hn-app [data-accent="emerald"] { --hn-accent:#34d399; --hn-accent-strong:#6ee7b7; --hn-accent-contrast:#02160e; --hn-accent-tint:rgba(52,211,153,.14); --hn-accent-ring:rgba(52,211,153,.36); }
+[data-theme="dark"] .hn-app[data-accent="lime"],    [data-theme="dark"] .hn-app [data-accent="lime"]    { --hn-accent:#a3e635; --hn-accent-strong:#bef264; --hn-accent-contrast:#111a02; --hn-accent-tint:rgba(163,230,53,.14); --hn-accent-ring:rgba(163,230,53,.36); }
+
+/* ---------------------------------------------------------------
+   2. Primitives
+   --------------------------------------------------------------- */
+
+.hn-app *,
+.hn-app *::before,
+.hn-app *::after { box-sizing: border-box; }
+
+.hn-shell { display: flex; flex-direction: column; min-height: 100vh; }
+
+.hn-wrap {
+  width: 100%;
+  max-width: var(--hn-container);
+  margin-inline: auto;
+  padding-inline: var(--hn-gutter);
+}
+
+.hn-section { padding-block: var(--hn-section-y); }
+.hn-section--tint { background: var(--hn-surface-2); }
+
+/* Anchor targets must clear the sticky header, or clicking "FAQs" scrolls the
+   heading underneath it and the nav looks broken even though the scroll
+   position is technically "correct".
+
+   Sized to the header (min-height 4rem + 1px border) plus 3px, deliberately
+   tight rather than generous: alternating sections are tinted, and any larger
+   offset leaves a sliver of the PREVIOUS section's background above the tint
+   band, which reads as a seam. The sections carry their own generous top
+   padding, so the heading still lands well clear. */
+.hn-app section[id] { scroll-margin-top: calc(4rem + 4px); }
+
+/* Smooth anchor scrolling. scroll-behavior only takes effect on the scrolling
+   element, so it has to be set on <html> — :has() scopes it to pages that
+   actually contain this module rather than applying site-wide. Unsupported
+   browsers simply jump, which is the correct fallback. */
+@media (prefers-reduced-motion: no-preference) {
+  html:has(.hn-app) { scroll-behavior: smooth; }
+}
+
+.hn-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.3rem 0.75rem;
+  border-radius: 999px;
+  border: 1px solid var(--hn-accent-ring);
+  background: var(--hn-accent-tint);
+  color: var(--hn-accent);
+  font-size: 0.75rem;
+  font-weight: 650;
+  letter-spacing: 0.045em;
+  text-transform: uppercase;
+}
+
+.hn-h2 {
+  margin-top: 1rem;
+  font-size: clamp(1.75rem, 3.4vw, 2.6rem);
+  font-weight: 700;
+  line-height: 1.14;
+  letter-spacing: -0.024em;
+  color: var(--hn-text);
+  text-wrap: balance;
+}
+
+.hn-lede {
+  margin-top: 0.9rem;
+  max-width: 46rem;
+  font-size: clamp(0.98rem, 1.3vw, 1.075rem);
+  line-height: 1.72;
+  color: var(--hn-muted);
+  text-wrap: pretty;
+}
+
+.hn-head--center { text-align: center; }
+.hn-head--center .hn-lede { margin-inline: auto; }
+
+/* buttons */
+.hn-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.8rem 1.35rem;
+  border-radius: var(--hn-radius-sm);
+  border: 1px solid transparent;
+  font-family: inherit;
+  font-size: 0.925rem;
+  font-weight: 600;
+  line-height: 1;
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform .18s ease, box-shadow .18s ease, background-color .18s ease,
+    border-color .18s ease, color .18s ease;
+}
+
+.hn-btn:focus-visible {
+  outline: none;
+  outline: 3px solid var(--hn-focus);
+  outline-offset: 2px;
+}
+
+.hn-btn--primary {
+  background: var(--hn-accent);
+  color: var(--hn-accent-contrast);
+  box-shadow: 0 10px 24px -12px var(--hn-accent-ring);
+}
+.hn-btn--primary:hover {
+  background: var(--hn-accent-strong);
+  transform: translateY(-2px);
+  box-shadow: 0 16px 32px -14px var(--hn-accent-ring);
+}
+
+.hn-btn--ghost {
+  background: transparent;
+  border-color: var(--hn-border-strong);
+  color: var(--hn-text);
+}
+.hn-btn--ghost:hover {
+  background: var(--hn-surface-2);
+  border-color: var(--hn-accent);
+  color: var(--hn-accent);
+}
+
+.hn-btn--lg { padding: 0.95rem 1.7rem; font-size: 1rem; }
+
+.hn-ext-icon { opacity: .75; }
+
+/* Visually hidden but announced — used to warn that a link opens a new tab. */
+.hn-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ---------------------------------------------------------------
+   3. Header
+   --------------------------------------------------------------- */
+
+.hn-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  border-bottom: 1px solid var(--hn-border);
+  background: color-mix(in srgb, var(--hn-surface) 84%, transparent);
+  backdrop-filter: saturate(180%) blur(14px);
+  -webkit-backdrop-filter: saturate(180%) blur(14px);
+}
+
+.hn-header-inner {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  min-height: 4rem;
+}
+
+.hn-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 1.02rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--hn-text);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.hn-brand-mark {
+  display: grid;
+  place-items: center;
+  width: 2.05rem;
+  height: 2.05rem;
+  border-radius: 9px;
+  background: linear-gradient(140deg, var(--hn-accent), var(--hn-accent-strong));
+  color: var(--hn-accent-contrast);
+}
+
+.hn-nav {
+  display: none;
+  align-items: center;
+  gap: 0.15rem;
+  margin-left: 0.75rem;
+}
+
+@media (min-width: 1024px) { .hn-nav { display: flex; } }
+
+.hn-nav a {
+  padding: 0.45rem 0.7rem;
+  border-radius: 7px;
+  font-size: 0.865rem;
+  font-weight: 500;
+  color: var(--hn-muted);
+  text-decoration: none;
+  transition: color .16s ease, background-color .16s ease;
+}
+.hn-nav a:hover { color: var(--hn-text); background: var(--hn-surface-2); }
+.hn-nav a[aria-current="page"] { color: var(--hn-accent); background: var(--hn-accent-tint); font-weight: 600; }
+
+.hn-header-actions { margin-left: auto; display: inline-flex; align-items: center; gap: .5rem; }
+
+.hn-icon-btn {
+  display: grid;
+  place-items: center;
+  width: 2.2rem;
+  height: 2.2rem;
+  border-radius: 8px;
+  border: 1px solid var(--hn-border);
+  background: var(--hn-surface);
+  color: var(--hn-muted);
+  cursor: pointer;
+  transition: color .16s ease, border-color .16s ease, background-color .16s ease;
+}
+.hn-icon-btn:hover { color: var(--hn-text); border-color: var(--hn-border-strong); background: var(--hn-surface-2); }
+.hn-icon-btn:focus-visible { outline: none; box-shadow: 0 0 0 3px var(--hn-accent-ring); }
+
+.hn-header .hn-btn { padding: 0.6rem 1rem; font-size: 0.865rem; }
+.hn-header-cta { display: none; }
+@media (min-width: 640px) { .hn-header-cta { display: inline-flex; } }
+
+/* the drawer toggle only exists below the desktop nav breakpoint */
+@media (min-width: 1024px) { .hn-menu-btn { display: none; } }
+
+/* mobile drawer */
+.hn-drawer {
+  display: grid;
+  gap: 0.15rem;
+  padding: 0.6rem var(--hn-gutter) 1rem;
+  border-top: 1px solid var(--hn-border);
+  background: var(--hn-surface);
+}
+@media (min-width: 1024px) { .hn-drawer { display: none; } }
+
+.hn-drawer a {
+  padding: 0.65rem 0.6rem;
+  border-radius: 8px;
+  font-size: 0.925rem;
+  font-weight: 500;
+  color: var(--hn-text-soft);
+  text-decoration: none;
+}
+.hn-drawer a:hover { background: var(--hn-surface-2); }
+.hn-drawer a[aria-current="page"] { color: var(--hn-accent); background: var(--hn-accent-tint); font-weight: 600; }
+
+/* ---------------------------------------------------------------
+   4. Hero — layered mesh, no photography
+   --------------------------------------------------------------- */
+
+/* Full-bleed cinematic hero: photo behind, dark scrim, centred stack.
+   Text is white in BOTH themes — it sits on a darkened photograph, not on the
+   page surface, so it is not theme-dependent. Only the scrim weight changes. */
+/* Layering uses positive z-index on siblings rather than negative values
+   behind an isolated parent. Negative z-index inside `isolation: isolate` is
+   legal but relies on painting order that stacking-context edge cases and
+   compositors handle inconsistently; an explicit 0/1/2/3 stack does not. */
+.hn-hero {
+  position: relative;
+  display: grid;
+  place-items: center;
+  min-height: min(90vh, 860px);
+  overflow: hidden;
+  border-bottom: 1px solid var(--hn-border);
+  padding-block: clamp(4.5rem, 10vw, 7rem);
+  text-align: center;
+  background: #0a0f1a; /* fallback while the photo decodes */
+}
+
+.hn-hero-bg { position: absolute; inset: 0; z-index: 0; }
+
+.hn-hero-bg .hn-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  aspect-ratio: auto;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.hn-hero-bg .hn-img-scrim { display: none; }
+
+/* Slow push-in. Runs once, forwards, so it settles rather than looping. */
+.hn-hero-bg .hn-img-el {
+  filter: none;
+  animation: hn-kenburns 20s cubic-bezier(.22,.61,.36,1) both;
+}
+
+/* Two stacked scrims: a vertical one for overall legibility, plus an accent
+   wash so each vertical still reads as its own colour. */
+/* Two-part scrim, tuned so the photograph stays clearly visible while the
+   centred text still clears contrast even over a bright sky:
+     - a light overall vertical wash, heavier at the bottom where the section
+       meets the page surface
+     - an ellipse concentrated behind the text block only
+   These are additive, so keep the numbers modest — an earlier version stacked
+   a 0.62 wash with a 0.5 radial and rendered the photo effectively black. */
+.hn-hero-scrim {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    radial-gradient(68% 62% at 50% 52%, rgba(6,10,18,.46) 0%, transparent 72%),
+    linear-gradient(180deg, rgba(6,10,18,.40) 0%, rgba(6,10,18,.30) 42%, rgba(6,10,18,.66) 100%);
+}
+
+/* Accent wash so each vertical still reads as its own colour. Normal blending,
+   not multiply — multiply compounded with the scrim and crushed the image. */
+.hn-hero-tint {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--hn-accent) 14%, transparent) 0%,
+    transparent 58%
+  );
+}
+
+[data-theme="dark"] .hn-hero-scrim {
+  background:
+    radial-gradient(68% 62% at 50% 52%, rgba(3,6,12,.52) 0%, transparent 72%),
+    linear-gradient(180deg, rgba(3,6,12,.48) 0%, rgba(3,6,12,.38) 42%, rgba(3,6,12,.78) 100%);
+}
+
+.hn-hero-inner {
+  position: relative;
+  z-index: 3;
+  width: 100%;
+  max-width: 60rem;
+  margin-inline: auto;
+  padding-inline: var(--hn-gutter);
+}
+
+.hn-hero-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.8rem;
+  font-size: 0.76rem;
+  font-weight: 650;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, .82);
+}
+
+/* the short rule that precedes the kicker in the reference layouts */
+.hn-hero-eyebrow::before {
+  content: "";
+  width: 2.2rem;
+  height: 1px;
+  background: currentColor;
+  opacity: .6;
+}
+
+.hn-hero h1 {
+  margin-top: 1.35rem;
+  font-size: clamp(2.4rem, 6.2vw, 4.35rem);
+  font-weight: 800;
+  line-height: 1.04;
+  letter-spacing: -0.035em;
+  color: #fff;
+  text-wrap: balance;
+  text-shadow: 0 2px 30px rgba(0, 0, 0, .35);
+}
+
+/* accent phrase + hand-drawn underline */
+.hn-hero-accent {
+  position: relative;
+  display: inline-block;
+  color: color-mix(in srgb, var(--hn-accent) 65%, #ffffff);
+  white-space: nowrap;
+}
+
+.hn-hero-underline {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -0.16em;
+  width: 100%;
+  height: 0.28em;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.hn-hero-underline path {
+  fill: none;
+  stroke: color-mix(in srgb, var(--hn-accent) 70%, #ffffff);
+  stroke-width: 6;
+  stroke-linecap: round;
+  stroke-dasharray: 420;
+  stroke-dashoffset: 420;
+  animation: hn-draw .8s cubic-bezier(.22,.61,.36,1) .5s forwards;
+}
+
+.hn-hero-sub {
+  margin: 1.35rem auto 0;
+  max-width: 44rem;
+  font-size: clamp(1rem, 1.5vw, 1.14rem);
+  line-height: 1.68;
+  color: rgba(255, 255, 255, .84);
+  text-wrap: pretty;
+}
+
+/* factual capability pills */
+.hn-hero-points {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.6rem;
+  margin: 1.9rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.hn-hero-points li {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.5rem 0.95rem;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, .22);
+  background: rgba(255, 255, 255, .09);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  font-size: 0.845rem;
+  font-weight: 550;
+  color: rgba(255, 255, 255, .93);
+}
+
+.hn-hero-points svg {
+  color: color-mix(in srgb, var(--hn-accent) 60%, #ffffff);
+  flex-shrink: 0;
+}
+
+.hn-hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.8rem;
+  margin-top: 2.1rem;
+}
+
+/* On a photo the ghost button needs its own light treatment — the themed
+   border/text tokens are tuned for page surfaces, not imagery. */
+.hn-hero-actions .hn-btn--ghost {
+  border-color: rgba(255, 255, 255, .38);
+  color: #fff;
+  background: rgba(255, 255, 255, .07);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.hn-hero-actions .hn-btn--ghost:hover {
+  background: rgba(255, 255, 255, .16);
+  border-color: #fff;
+  color: #fff;
+}
+
+/* scroll cue */
+.hn-hero-scroll {
+  position: absolute;
+  left: 50%;
+  bottom: 1.4rem;
+  transform: translateX(-50%);
+  z-index: 3;
+  display: grid;
+  place-items: center;
+  width: 1.6rem;
+  height: 2.6rem;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, .35);
+  color: rgba(255, 255, 255, .7);
+}
+
+.hn-hero-scroll span {
+  display: block;
+  width: 3px;
+  height: 6px;
+  border-radius: 2px;
+  background: currentColor;
+  animation: hn-scroll-cue 1.9s ease-in-out infinite;
+}
+
+@media (max-width: 640px) { .hn-hero-scroll { display: none; } }
+
+/* ---- entrance choreography ----
+   Each element rises on a staggered delay. `both` holds the from-state before
+   the delay elapses, so nothing flashes at full opacity first. */
+/* Timings are deliberately tight. The h1 is the LCP candidate on every one of
+   these pages, and `fill-mode: both` holds it at opacity 0 until its delay
+   elapses — so every millisecond of delay is a millisecond added to LCP. The
+   whole sequence resolves in under 0.7s, with the headline fully painted by
+   ~0.5s, which reads as deliberate without costing a meaningful LCP penalty. */
+.hn-hero-eyebrow,
+.hn-hero h1,
+.hn-hero-sub,
+.hn-hero-points,
+.hn-hero-actions {
+  animation: hn-rise .42s cubic-bezier(.22,.61,.36,1) both;
+}
+
+.hn-hero-eyebrow { animation-delay: .04s; }
+.hn-hero h1      { animation-delay: .09s; }
+.hn-hero-sub     { animation-delay: .17s; }
+.hn-hero-points  { animation-delay: .24s; }
+.hn-hero-actions { animation-delay: .30s; }
+.hn-hero-scroll  { animation: hn-rise .5s ease both .55s; }
+
+@keyframes hn-rise {
+  from { opacity: 0; transform: translateY(22px); }
+  to   { opacity: 1; transform: none; }
+}
+
+@keyframes hn-kenburns {
+  from { transform: scale(1.09); }
+  to   { transform: scale(1); }
+}
+
+@keyframes hn-draw {
+  to { stroke-dashoffset: 0; }
+}
+
+@keyframes hn-scroll-cue {
+  0%, 100% { transform: translateY(-4px); opacity: .35; }
+  50%      { transform: translateY(5px);  opacity: 1; }
+}
+
+/* ---------------------------------------------------------------
+   4b. Photography
+   --------------------------------------------------------------- */
+
+.hn-img {
+  position: relative;
+  overflow: hidden;
+  margin: 0;
+  border-radius: var(--hn-radius-lg);
+  border: 1px solid var(--hn-border);
+  background: var(--hn-surface-2);
+  box-shadow: var(--hn-shadow);
+  isolation: isolate;
+}
+
+.hn-img--landscape { aspect-ratio: 16 / 10; }
+.hn-img--portrait  { aspect-ratio: 4 / 5; }
+.hn-img--square    { aspect-ratio: 1 / 1; }
+.hn-img--wide      { aspect-ratio: 21 / 9; }
+
+.hn-img-el {
+  object-fit: cover;
+  /* Slight lift out of pure-white blowout in light mode. */
+  filter: saturate(1.02);
+}
+
+/* A daylight photo on a near-black page glares; a soft scrim tuned per theme
+   keeps photos sitting IN the page rather than punched through it. */
+.hn-img-scrim {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(
+    180deg,
+    transparent 45%,
+    color-mix(in srgb, var(--hn-page) 30%, transparent) 100%
+  );
+}
+
+[data-theme="dark"] .hn-img-scrim {
+  background:
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--hn-page) 12%, transparent) 0%,
+      color-mix(in srgb, var(--hn-page) 55%, transparent) 100%
+    );
+}
+
+[data-theme="dark"] .hn-img-el { filter: saturate(0.95) brightness(0.9); }
+
+/* Accent glyph badge floated over a photo */
+.hn-img-badge {
+  position: absolute;
+  z-index: 2;
+  left: 1rem;
+  bottom: 1rem;
+  display: grid;
+  place-items: center;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 14px;
+  background: linear-gradient(140deg, var(--hn-accent), var(--hn-accent-strong));
+  color: var(--hn-accent-contrast);
+  box-shadow: 0 14px 30px -12px rgba(0, 0, 0, .5);
+}
+
+/* caption chip over a photo */
+.hn-img-caption {
+  position: absolute;
+  z-index: 2;
+  right: 1rem;
+  bottom: 1rem;
+  max-width: min(22rem, 70%);
+  padding: 0.55rem 0.85rem;
+  border-radius: var(--hn-radius-sm);
+  background: color-mix(in srgb, var(--hn-surface) 88%, transparent);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid var(--hn-border);
+  font-size: 0.79rem;
+  line-height: 1.5;
+  color: var(--hn-text-soft);
+}
+
+/* --- split section: photo one side, content the other --- */
+
+.hn-split {
+  display: grid;
+  gap: clamp(1.75rem, 4vw, 3.25rem);
+  align-items: center;
+}
+
+@media (min-width: 900px) {
+  .hn-split { grid-template-columns: 1fr 1fr; }
+  /* photo trails the copy on wide screens for the alternate band */
+  .hn-split--reverse .hn-split-media { order: 2; }
+}
+
+.hn-split-list {
+  display: grid;
+  gap: 1.15rem;
+  margin-top: 1.75rem;
+  padding: 0;
+  list-style: none;
+}
+
+.hn-split-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.85rem;
+}
+
+.hn-split-icon {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 2.4rem;
+  height: 2.4rem;
+  border-radius: 11px;
+  background: var(--hn-accent-tint);
+  color: var(--hn-accent);
+}
+
+.hn-split-item h3 {
+  font-size: 1rem;
+  font-weight: 650;
+  line-height: 1.35;
+  color: var(--hn-text);
+}
+
+.hn-split-item p {
+  margin-top: 0.25rem;
+  font-size: 0.885rem;
+  line-height: 1.65;
+  color: var(--hn-muted);
+}
+
+/* --- wide banner band --- */
+
+.hn-band {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--hn-radius-xl);
+  border: 1px solid var(--hn-border);
+  box-shadow: var(--hn-shadow-lg);
+  isolation: isolate;
+}
+
+.hn-band .hn-img {
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  aspect-ratio: 21 / 9;
+}
+
+@media (max-width: 700px) {
+  .hn-band .hn-img { aspect-ratio: 4 / 3; }
+}
+
+.hn-band-copy {
+  position: absolute;
+  z-index: 2;
+  inset: auto 0 0 0;
+  padding: clamp(1.25rem, 3vw, 2.25rem);
+  background: linear-gradient(
+    180deg,
+    transparent,
+    color-mix(in srgb, var(--hn-page) 88%, transparent) 62%
+  );
+}
+
+.hn-band-copy h2 {
+  font-size: clamp(1.2rem, 2.4vw, 1.75rem);
+  font-weight: 700;
+  letter-spacing: -0.018em;
+  color: var(--hn-text);
+  text-wrap: balance;
+}
+
+.hn-band-copy p {
+  margin-top: 0.4rem;
+  max-width: 40rem;
+  font-size: 0.9rem;
+  line-height: 1.65;
+  color: var(--hn-text-soft);
+}
+
+/* ---------------------------------------------------------------
+   5. Cards + grids
+   --------------------------------------------------------------- */
+
+.hn-grid { display: grid; gap: 1.1rem; margin-top: 2.75rem; }
+.hn-grid--2 { grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr)); }
+.hn-grid--3 { grid-template-columns: repeat(auto-fit, minmax(min(100%, 19rem), 1fr)); }
+.hn-grid--4 { grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr)); }
+
+/* Options run 3 or 4 items. A 19rem minimum caps the row at 3, stranding a
+   lone 4th card in a half-empty row; 15.5rem lets all four sit on one row at
+   desktop and fall to 2x2 on tablet. */
+.hn-grid--options { grid-template-columns: repeat(auto-fit, minmax(min(100%, 15.5rem), 1fr)); }
+
+/* HnReveal wraps each card, so the card is a grandchild of the grid and can
+   never inherit the row height on its own. Without this, `margin-top: auto`
+   on the card footers has no effect and the bottom edges come out ragged. */
+.hn-grid > .hn-reveal { display: flex; }
+.hn-grid > .hn-reveal > * { width: 100%; }
+
+.hn-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding: 1.5rem;
+  border-radius: var(--hn-radius-lg);
+  border: 1px solid var(--hn-border);
+  background: var(--hn-surface);
+  box-shadow: var(--hn-shadow-sm);
+  transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+}
+
+.hn-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--hn-accent-ring);
+  box-shadow: var(--hn-shadow);
+}
+
+.hn-card-icon {
+  display: grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 12px;
+  background: var(--hn-accent-tint);
+  color: var(--hn-accent);
+}
+
+/* --- service card: photo on top, body, full-width booking CTA --- */
+
+.hn-card--service {
+  padding: 0;
+  gap: 0;
+  overflow: hidden;
+}
+
+/* The photo bleeds to the card edge, so it drops its own frame and radius —
+   the card's overflow:hidden clips it to the rounded corner instead. */
+.hn-card-media {
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  aspect-ratio: 16 / 10;
+}
+
+.hn-card-media .hn-img-el { transition: transform .4s ease; }
+.hn-card--service:hover .hn-card-media .hn-img-el { transform: scale(1.04); }
+
+/* The accent badge is decorative here and would crowd a 16:10 thumbnail. */
+.hn-card-media .hn-img-badge {
+  left: 0.75rem;
+  bottom: 0.75rem;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 10px;
+}
+
+.hn-card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1.25rem 1.25rem 0;
+}
+
+/* margin-top:auto pins the footer to the card foot so buttons line up across a
+   row even when descriptions differ in length. Requires the card to stretch,
+   which `.hn-grid > .hn-reveal { display: flex }` already guarantees.
+
+   The inset is padding on this wrapper rather than margins on the button:
+   HnReveal renders the card itself, so `.hn-grid > .hn-reveal > *` above
+   forces width:100% onto every direct child at a specificity the button
+   cannot outrank. Width plus side margins therefore overflowed the card and
+   got clipped by its overflow:hidden. Nesting the button one level down puts
+   it out of that selector's reach. */
+.hn-card-foot {
+  margin-top: auto;
+  padding: 0 1.25rem 1.25rem;
+}
+
+.hn-card-cta {
+  width: 100%;
+  justify-content: center;
+}
+
+/* Fallback when no photo was sourced for a service. It takes the same 16:10
+   footprint as a photo so a mixed row still reads as one deliberate design
+   instead of one card with a broken image. */
+.hn-card--service > .hn-card-icon {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 10;
+  border-radius: 0;
+  border-bottom: 1px solid var(--hn-border);
+  background:
+    radial-gradient(120% 120% at 50% 0%, var(--hn-accent-tint), transparent 72%),
+    var(--hn-surface-2);
+}
+
+.hn-card--service > .hn-card-icon svg {
+  width: 34px;
+  height: 34px;
+  opacity: 0.85;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hn-card--service:hover .hn-card-media .hn-img-el { transform: none; }
+}
+
+.hn-card h3 {
+  font-size: 1.045rem;
+  font-weight: 650;
+  line-height: 1.3;
+  letter-spacing: -0.012em;
+  color: var(--hn-text);
+}
+
+.hn-card p {
+  font-size: 0.9rem;
+  line-height: 1.65;
+  color: var(--hn-muted);
+}
+
+/* ---------------------------------------------------------------
+   6. Options / material comparison
+   --------------------------------------------------------------- */
+
+.hn-option {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  padding: 1.6rem 1.5rem 1.5rem;
+  border-radius: var(--hn-radius-lg);
+  border: 1px solid var(--hn-border);
+  background: var(--hn-surface);
+  box-shadow: var(--hn-shadow-sm);
+  overflow: hidden;
+  transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+}
+
+.hn-option::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--hn-accent), var(--hn-accent-strong));
+}
+
+.hn-option:hover {
+  transform: translateY(-3px);
+  border-color: var(--hn-accent-ring);
+  box-shadow: var(--hn-shadow);
+}
+
+.hn-option h3 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: -0.015em;
+  color: var(--hn-text);
+}
+
+.hn-option-summary { font-size: 0.9rem; line-height: 1.65; color: var(--hn-muted); }
+
+.hn-option-meta {
+  display: grid;
+  gap: 0.5rem;
+  padding: 0.85rem 0;
+  border-block: 1px solid var(--hn-border);
+}
+
+.hn-option-meta div { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; }
+.hn-option-meta dt { font-size: 0.775rem; font-weight: 600; text-transform: uppercase; letter-spacing: .04em; color: var(--hn-muted); }
+.hn-option-meta dd { font-size: 0.875rem; font-weight: 600; color: var(--hn-text); text-align: right; }
+
+.hn-option ul { display: grid; gap: 0.45rem; padding: 0; margin: 0; list-style: none; }
+.hn-option ul li {
+  position: relative;
+  padding-left: 1.15rem;
+  font-size: 0.855rem;
+  line-height: 1.6;
+  color: var(--hn-muted);
+}
+.hn-option ul li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.55em;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--hn-accent);
+}
+
+/* ---------------------------------------------------------------
+   7. Process
+   --------------------------------------------------------------- */
+
+.hn-steps {
+  display: grid;
+  gap: 1.5rem;
+  margin-top: 2.75rem;
+  counter-reset: hn-step;
+}
+@media (min-width: 880px) { .hn-steps { grid-template-columns: repeat(4, 1fr); gap: 1.1rem; } }
+
+.hn-step { position: relative; padding-top: 3.6rem; }
+
+.hn-step::before {
+  counter-increment: hn-step;
+  content: counter(hn-step);
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: grid;
+  place-items: center;
+  width: 2.7rem;
+  height: 2.7rem;
+  border-radius: 50%;
+  background: var(--hn-accent);
+  color: var(--hn-accent-contrast);
+  font-size: 1.02rem;
+  font-weight: 700;
+  box-shadow: 0 10px 22px -10px var(--hn-accent-ring);
+}
+
+/* connector line between steps */
+@media (min-width: 880px) {
+  .hn-step::after {
+    content: "";
+    position: absolute;
+    top: 1.35rem;
+    left: 3.1rem;
+    right: -1.1rem;
+    height: 2px;
+    background: linear-gradient(90deg, var(--hn-accent-ring), transparent);
+  }
+  .hn-step:last-child::after { display: none; }
+}
+
+.hn-step h3 { font-size: 1.02rem; font-weight: 650; color: var(--hn-text); }
+.hn-step p { margin-top: 0.45rem; font-size: 0.895rem; line-height: 1.65; color: var(--hn-muted); }
+
+/* ---------------------------------------------------------------
+   8. Cost factors
+   --------------------------------------------------------------- */
+
+.hn-factors { display: grid; gap: 0; margin-top: 2.5rem; border-radius: var(--hn-radius-lg); border: 1px solid var(--hn-border); background: var(--hn-surface); overflow: hidden; }
+
+.hn-factor {
+  display: grid;
+  gap: 0.3rem;
+  padding: 1.15rem 1.4rem;
+  border-bottom: 1px solid var(--hn-border);
+}
+.hn-factor:last-child { border-bottom: 0; }
+
+@media (min-width: 760px) {
+  .hn-factor { grid-template-columns: 15rem 1fr; gap: 1.5rem; align-items: baseline; }
+}
+
+.hn-factor dt {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  font-size: 0.945rem;
+  font-weight: 650;
+  color: var(--hn-text);
+}
+.hn-factor dt svg { color: var(--hn-accent); flex-shrink: 0; }
+.hn-factor dd { font-size: 0.895rem; line-height: 1.68; color: var(--hn-muted); }
+
+/* ---------------------------------------------------------------
+   9. FAQ
+   --------------------------------------------------------------- */
+
+.hn-faq { margin-top: 2.5rem; max-width: 52rem; margin-inline: auto; display: grid; gap: 0.7rem; }
+
+.hn-faq-item {
+  border-radius: var(--hn-radius);
+  border: 1px solid var(--hn-border);
+  background: var(--hn-surface);
+  overflow: hidden;
+  transition: border-color .18s ease, box-shadow .18s ease;
+}
+.hn-faq-item[data-open="true"] { border-color: var(--hn-accent-ring); box-shadow: var(--hn-shadow-sm); }
+
+.hn-faq-q {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.1rem 1.3rem;
+  border: 0;
+  background: transparent;
+  color: var(--hn-text);
+  font-family: inherit;
+  font-size: 0.985rem;
+  font-weight: 600;
+  line-height: 1.45;
+  text-align: left;
+  cursor: pointer;
+}
+.hn-faq-q:focus-visible { outline: none; box-shadow: inset 0 0 0 2px var(--hn-accent-ring); }
+
+.hn-faq-sign {
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  width: 1.6rem;
+  height: 1.6rem;
+  border-radius: 50%;
+  background: var(--hn-accent-tint);
+  color: var(--hn-accent);
+  transition: transform .22s ease;
+}
+.hn-faq-item[data-open="true"] .hn-faq-sign { transform: rotate(45deg); }
+
+.hn-faq-a { padding: 0 1.3rem 1.15rem; font-size: 0.915rem; line-height: 1.72; color: var(--hn-muted); }
+
+/* ---------------------------------------------------------------
+   10. CTA band
+   --------------------------------------------------------------- */
+
+.hn-cta {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  border-radius: var(--hn-radius-xl);
+  border: 1px solid var(--hn-accent-ring);
+  background: var(--hn-surface);
+  padding: clamp(2.25rem, 5vw, 3.5rem);
+  text-align: center;
+}
+
+.hn-cta::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    radial-gradient(40rem 20rem at 50% -30%, var(--hn-accent-tint), transparent 70%),
+    linear-gradient(180deg, transparent, color-mix(in srgb, var(--hn-accent) 5%, transparent));
+}
+
+.hn-cta h2 {
+  font-size: clamp(1.6rem, 3vw, 2.25rem);
+  font-weight: 750;
+  line-height: 1.18;
+  letter-spacing: -0.022em;
+  color: var(--hn-text);
+  text-wrap: balance;
+}
+
+.hn-cta p { margin: 0.85rem auto 0; max-width: 38rem; font-size: 1rem; line-height: 1.7; color: var(--hn-muted); }
+.hn-cta .hn-hero-actions { justify-content: center; }
+
+/* ---------------------------------------------------------------
+   11. Cross-links + footer
+   --------------------------------------------------------------- */
+
+.hn-xlink {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  padding: 1rem 1.15rem;
+  border-radius: var(--hn-radius);
+  border: 1px solid var(--hn-border);
+  background: var(--hn-surface);
+  color: inherit;
+  text-decoration: none;
+  transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease;
+}
+.hn-xlink:hover { transform: translateY(-2px); border-color: var(--hn-accent-ring); box-shadow: var(--hn-shadow-sm); }
+
+.hn-xlink-icon {
+  display: grid;
+  place-items: center;
+  width: 2.3rem;
+  height: 2.3rem;
+  border-radius: 10px;
+  background: var(--hn-accent-tint);
+  color: var(--hn-accent);
+  flex-shrink: 0;
+}
+
+.hn-xlink strong { display: block; font-size: 0.94rem; font-weight: 650; color: var(--hn-text); }
+.hn-xlink span { display: block; margin-top: 0.1rem; font-size: 0.815rem; color: var(--hn-muted); }
+.hn-xlink-arrow { margin-left: auto; color: var(--hn-muted); flex-shrink: 0; }
+
+.hn-footer { margin-top: auto; border-top: 1px solid var(--hn-border); background: var(--hn-surface-2); }
+.hn-footer-inner { padding-block: 2.25rem; display: grid; gap: 1.5rem; }
+@media (min-width: 760px) { .hn-footer-inner { grid-template-columns: 1.2fr 2fr; gap: 3rem; } }
+
+.hn-footer-links { display: grid; grid-template-columns: repeat(auto-fit, minmax(8rem, 1fr)); gap: 0.5rem 1rem; }
+.hn-footer-links a { font-size: 0.875rem; color: var(--hn-muted); text-decoration: none; transition: color .16s ease; }
+.hn-footer-links a:hover { color: var(--hn-accent); }
+
+.hn-footer-note { padding-block: 1.1rem; border-top: 1px solid var(--hn-border); font-size: 0.79rem; line-height: 1.6; color: var(--hn-muted); }
+
+/* ---------------------------------------------------------------
+   12. Hub page
+   --------------------------------------------------------------- */
+
+.hn-hub-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  padding: 1.6rem;
+  border-radius: var(--hn-radius-lg);
+  border: 1px solid var(--hn-border);
+  background: var(--hn-surface);
+  box-shadow: var(--hn-shadow-sm);
+  text-decoration: none;
+  color: inherit;
+  overflow: hidden;
+  transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+}
+
+.hn-hub-card::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--hn-accent), var(--hn-accent-strong));
+  opacity: 0;
+  transition: opacity .2s ease;
+}
+
+.hn-hub-card:hover { transform: translateY(-4px); border-color: var(--hn-accent-ring); box-shadow: var(--hn-shadow); }
+.hn-hub-card:hover::before { opacity: 1; }
+.hn-hub-card:focus-visible { outline: none; box-shadow: 0 0 0 3px var(--hn-accent-ring); }
+
+/* Cards carrying a photo lose their own padding at the top so the image can
+   bleed to the card edge. */
+.hn-hub-card--media { padding: 0; gap: 0; }
+.hn-hub-card--media > :not(.hn-hub-thumb) { padding-inline: 1.5rem; }
+.hn-hub-card--media > h2 { padding-top: 1.25rem; }
+.hn-hub-card--media > .hn-hub-more { margin-inline: 1.5rem; padding-inline: 0; margin-bottom: 1.35rem; }
+.hn-hub-card--media > p { padding-bottom: 1rem; }
+
+.hn-hub-thumb {
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  aspect-ratio: 16 / 9;
+}
+
+.hn-hub-card--media:hover .hn-img-el { transform: scale(1.03); }
+.hn-hub-thumb .hn-img-el { transition: transform .35s ease; }
+
+@media (prefers-reduced-motion: reduce) {
+  .hn-hub-card--media:hover .hn-img-el { transform: none; }
+}
+
+.hn-hub-card h2 { font-size: 1.14rem; font-weight: 700; letter-spacing: -0.015em; color: var(--hn-text); }
+.hn-hub-card p { font-size: 0.895rem; line-height: 1.65; color: var(--hn-muted); }
+
+.hn-hub-more {
+  margin-top: auto;
+  padding-top: 0.9rem;
+  border-top: 1px solid var(--hn-border);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.855rem;
+  font-weight: 600;
+  color: var(--hn-accent);
+}
+.hn-hub-card:hover .hn-hub-arrow { transform: translateX(3px); }
+.hn-hub-arrow { transition: transform .2s ease; }
+
+/* ---------------------------------------------------------------
+   13. Reveal animation
+   --------------------------------------------------------------- */
+
+.hn-reveal {
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity .55s cubic-bezier(.22,.61,.36,1), transform .55s cubic-bezier(.22,.61,.36,1);
+  will-change: opacity, transform;
+}
+.hn-reveal[data-shown="true"] { opacity: 1; transform: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  /* Collapsing duration lands every animation on its END state, which is the
+     visible one for the hero rise, the ken-burns push-in and the underline
+     draw — so content is fully shown, just not animated. */
+  .hn-app *,
+  .hn-app *::before,
+  .hn-app *::after {
+    animation-duration: .001ms !important;
+    transition-duration: .001ms !important;
+  }
+
+  /* Exception: an infinite loop collapsed to 0.001ms becomes a strobe rather
+     than stopping. Kill it outright and hold the underline drawn. */
+  .hn-hero-scroll span { animation: none !important; }
+  .hn-hero-underline path {
+    animation: none !important;
+    stroke-dashoffset: 0 !important;
+  }
+  .hn-reveal { opacity: 1; transform: none; }
+  .hn-card:hover,
+  .hn-option:hover,
+  .hn-hub-card:hover,
+  .hn-xlink:hover,
+  .hn-btn--primary:hover { transform: none; }
+}
+
+/* Content is guaranteed visible three ways, because an animation must never
+   be able to hide content permanently:
+     1. prefers-reduced-motion (above)      — no animation at all
+     2. <noscript> override in layout.jsx   — scripting disabled
+     3. failsafe timer in HnReveal.jsx      — IntersectionObserver never fires */

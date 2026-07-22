@@ -117,6 +117,19 @@ export async function removeDoc(colName, id) {
   await callAnternetApi("/api/anternet/delete", { collection: colName, id });
 }
 
+/**
+ * Persists a drag-and-drop reorder — writes each doc's new `order` index
+ * (its position in `orderedIds`) through the same `saveDoc` every other
+ * write uses. Card counts here are small (single digits to low tens), so N
+ * parallel writes is simpler than standing up a batch-write route.
+ */
+export async function reorderDocs(colName, orderedIds) {
+  ensure();
+  await Promise.all(
+    orderedIds.map((id, i) => saveDoc(colName, id, { order: i }, { isNew: false }))
+  );
+}
+
 /* ------------------------------ Storage upload ---------------------------- */
 export async function uploadImage(file, folder, name) {
   ensure();

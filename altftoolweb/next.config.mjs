@@ -5,6 +5,22 @@ import { toolMetaMap } from "./src/platform/registry/toolMetaMap.js";
 
 const workspaceRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 
+function readBuildCpuCount() {
+  const configured = Number.parseInt(process.env.ALTFT_BUILD_CPUS ?? "", 10);
+
+  if (!Number.isFinite(configured)) {
+    return 1;
+  }
+
+  // Four workers use the Amplify Large instance well without letting the
+  // unusually large tool catalog consume every available CPU and memory slot.
+  return Math.min(Math.max(configured, 1), 4);
+}
+
+const buildCpuCount = readBuildCpuCount();
+const parallelMinification =
+  process.env.ALTFT_PARALLEL_MINIFY === "true" && buildCpuCount > 1;
+
 // Import the generated map directly instead of regex-extracting + JSON.parsing
 // its source text. The old approach crashed the entire dev server / build with
 // "Unexpected end of JSON input" whenever toolMetaMap.js was read mid-generation
@@ -253,12 +269,14 @@ const nextConfig = {
       };
     }
 
-    // Keep terser single-threaded: parallel workers spike build memory on the
-    // 629-tool catalog (from landing-refactor branch).
+    // Local and standard-size builders stay single-threaded. Amplify's Large
+    // builder can opt into bounded parallelism alongside a larger Node heap.
     if (!dev && config.optimization?.minimizer) {
       for (const minimizer of config.optimization.minimizer) {
         if (minimizer.options && "parallel" in minimizer.options) {
-          minimizer.options.parallel = false;
+          minimizer.options.parallel = parallelMinification
+            ? Math.max(1, buildCpuCount - 1)
+            : false;
         }
       }
     }
@@ -267,8 +285,8 @@ const nextConfig = {
   },
 
   experimental: {
-    workerThreads: false,
-    cpus: 1,
+    workerThreads: buildCpuCount > 1,
+    cpus: buildCpuCount,
     webpackBuildWorker: false,
   },
 };

@@ -5,45 +5,46 @@
   --color-slate-900: #0f172a;
 }
 
-* {
+.life-productivity-tool,
+.life-productivity-tool * {
   box-sizing: border-box;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-html {
+.life-productivity-tool {
   scroll-behavior: smooth;
 }
 
-body {
+.life-productivity-tool {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 /* Custom scrollbar */
-::-webkit-scrollbar {
+.life-productivity-tool ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
 }
 
-::-webkit-scrollbar-track {
+.life-productivity-tool ::-webkit-scrollbar-track {
   background: transparent;
 }
 
-::-webkit-scrollbar-thumb {
+.life-productivity-tool ::-webkit-scrollbar-thumb {
   background: rgba(255, 255, 255, 0.1);
   border-radius: 4px;
 }
 
-::-webkit-scrollbar-thumb:hover {
+.life-productivity-tool ::-webkit-scrollbar-thumb:hover {
   background: rgba(255, 255, 255, 0.2);
 }
 
 /* Typography & Layout Ref Reference from Habit Cost Calculator */
-.heading {
+.life-productivity-tool .heading {
   @apply text-3xl md:text-5xl font-[900] tracking-tighter leading-tight text-center;
 }
 
-.description {
+.life-productivity-tool .description {
   @apply text-sm md:text-base font-medium opacity-60 text-center tracking-tight;
 }
 
@@ -59,50 +60,50 @@ body {
   }
 }
 
-.animate-fade-up {
+.life-productivity-tool .animate-fade-up {
   animation: fadeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 /* Card glass variant override */
-.glass {
+.life-productivity-tool .glass {
   background: rgba(var(--card), 0.05);
   backdrop-filter: blur(12px);
   border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 /* Number formatting */
-.tabular-nums {
+.life-productivity-tool .tabular-nums {
   font-variant-numeric: tabular-nums;
 }
 
 /* Input number arrows removal */
-input[type='number']::-webkit-inner-spin-button,
-input[type='number']::-webkit-outer-spin-button {
+.life-productivity-tool input[type='number']::-webkit-inner-spin-button,
+.life-productivity-tool input[type='number']::-webkit-outer-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
 
-input[type='number'] {
+.life-productivity-tool input[type='number'] {
   -moz-appearance: textfield;
 }
 
 /* Selection styling */
-::selection {
+.life-productivity-tool ::selection {
   background: rgba(59, 130, 246, 0.3);
 }
 
 /* Focus visible */
-:focus-visible {
+.life-productivity-tool :focus-visible {
   outline: 2px solid #3b82f6;
   outline-offset: 2px;
 }
 
 /* Utility for card hover */
-.card-hover {
+.life-productivity-tool .card-hover {
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.card-hover:hover {
+.life-productivity-tool .card-hover:hover {
   transform: translateY(-4px);
   box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
 }

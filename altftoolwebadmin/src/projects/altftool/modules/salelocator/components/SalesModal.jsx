@@ -2,7 +2,12 @@
 
 import { useState, useEffect, useMemo, useRef, useCallback } from "react";
 import { emitAlert } from "@/lib/alertBus";
-// import { createSale, updateSale } from "../service/sales.service";
+import { logAuditEvent } from "@/lib/auditClient";
+import {
+  createSale,
+  updateSale,
+  uploadSaleImage,
+} from "../services/sales.service";
 import {
   X,
   Loader2,
@@ -452,8 +457,19 @@ export default function SaleModal({ sales = [], onClose, onSave, initialData }) 
     if (config.hasImage && imageType === "url" && !imageUrl.trim()) {
       e.image = "Image URL is required";
     }
+    if (config.hasImage && imageType === "upload" && !imageFile && !imagePreview) {
+      e.image = "Choose an image to upload";
+    }
     if (config.hasHeroImage && heroImageType === "url" && !heroImageUrl.trim()) {
       e.heroImage = "Hero image URL is required";
+    }
+    if (
+      config.hasHeroImage &&
+      heroImageType === "upload" &&
+      !heroImageFile &&
+      !heroImagePreview
+    ) {
+      e.heroImage = "Choose a hero image to upload";
     }
 
     setErrors(e);
@@ -467,9 +483,14 @@ export default function SaleModal({ sales = [], onClose, onSave, initialData }) 
     setStep("saving");
 
     try {
-      // Resolve image URLs (file upload → in a real app you'd upload to storage first)
-      const resolvedImage = imageType === "url" ? imageUrl : imagePreview || "";
-      const resolvedHeroImage = heroImageType === "url" ? heroImageUrl : heroImagePreview || "";
+      const resolvedImage =
+        imageType === "upload" && imageFile
+          ? await uploadSaleImage(imageFile, "products")
+          : imageUrl || imagePreview || "";
+      const resolvedHeroImage =
+        heroImageType === "upload" && heroImageFile
+          ? await uploadSaleImage(heroImageFile, "heroes")
+          : heroImageUrl || heroImagePreview || "";
 
       let payload = {};
 
@@ -503,14 +524,19 @@ export default function SaleModal({ sales = [], onClose, onSave, initialData }) 
         };
       }
 
-      const id = initialData?.id || Date.now();
+      const id = isEdit
+        ? await updateSale(initialData.id, payload)
+        : await createSale(payload);
 
-      // Uncomment when backend ready:
-      // if (isEdit) {
-      //   await updateSale(initialData.firestoreId, payload);
-      // } else {
-      //   id = await createSale(payload);
-      // }
+      logAuditEvent({
+        module: "sale-locator",
+        action: isEdit ? "SALE_UPDATE" : "SALE_CREATE",
+        entityType: "sale",
+        entityId: id,
+        summary: `${isEdit ? "Updated" : "Created"} ${type} sale`,
+        changes: { type },
+        route: "/altftool/sale-locator",
+      });
 
       onSave({ ...payload, id, createdAt: initialData?.createdAt || new Date().toISOString() });
 

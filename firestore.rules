@@ -241,8 +241,7 @@ service cloud.firestore {
     }
 
     // Public newsletter opt-in: create-only with strict shape validation.
-    // Deliberately a top-level collection — subscriber emails must NEVER live
-    // under the world-readable /projects/altftool/** wildcard above.
+    // Subscriber emails stay outside the world-readable AltFTool project tree.
     match /newsletter_subscribers/{subscriberId} {
       allow read, update, delete: if isActiveAdmin();
       allow create: if hasOnly(["email", "source", "createdAt"]) &&
@@ -627,6 +626,638 @@ service cloud.firestore {
         nonEmptyText(request.resource.data.email, 254) &&
         nonEmptyText(request.resource.data.message, 3000);
       allow read, update, delete: if isActiveAdmin();
+    }
+
+    // DailyHnt tenant — public marketing site content, admin-managed. Every
+    // collection/doc under projects/dailyhnt (navbar, home sections, services,
+    // team, blog, testimonials, faq, about, contact, policy, terms, footer,
+    // site settings) is world-readable so the public DailyHnt site can render
+    // it; writes are admin-only. Without this block the catch-all below keeps
+    // dailyhnt content admin-only and the site renders its JSON fallback forever.
+    match /projects/dailyhnt/{document=**} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+
+    // Samvatsara tenant — public marketing site content, admin-managed. Content
+    // collections/docs are world-readable so the public Samvatsara site can
+    // render them; writes are admin-only. Leads + newsletter captures are NOT
+    // world-readable (kept out of any read:true wildcard): anonymous create with
+    // strict validation, admin-only read/manage.
+    match /projects/samvatsara/settings/{docId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+    match /projects/samvatsara/navbar/{docId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+    match /projects/samvatsara/navbarPrimary/{itemId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+    match /projects/samvatsara/navbarServices/{itemId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+    match /projects/samvatsara/footer/{docId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+    match /projects/samvatsara/footerResources/{itemId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+    match /projects/samvatsara/home/{docId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+    match /projects/samvatsara/homeTrustedLogos/{itemId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+    match /projects/samvatsara/homeStats/{itemId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+    match /projects/samvatsara/homeWhyReasons/{itemId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+    match /projects/samvatsara/services/{docId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+    match /projects/samvatsara/team/{docId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+    match /projects/samvatsara/blog/{docId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+    match /projects/samvatsara/blogArticles/{blogId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+    match /projects/samvatsara/testimonials/{itemId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+    match /projects/samvatsara/faqs/{itemId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+    match /projects/samvatsara/portfolio/{itemId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+    match /projects/samvatsara/about/{docId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+    match /projects/samvatsara/aboutValues/{itemId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+    match /projects/samvatsara/contact/{docId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+    match /projects/samvatsara/policy/{docId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+    match /projects/samvatsara/terms/{docId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+    // Contact-form leads — anonymous validated create; admin-only read/manage.
+    match /projects/samvatsara/contactLeads/{leadId} {
+      allow create: if hasOnly(["name", "email", "projectType", "budget", "message", "status", "createdAt"]) &&
+        request.resource.data.status == "new" &&
+        nonEmptyText(request.resource.data.name, 120) &&
+        nonEmptyText(request.resource.data.email, 254) &&
+        nonEmptyText(request.resource.data.message, 3000);
+      allow read, update, delete: if isActiveAdmin();
+    }
+    // Newsletter captures — anonymous validated create; admin-only read/manage.
+    match /projects/samvatsara/newsletterEmails/{emailId} {
+      allow create: if hasOnly(["email", "source", "status", "createdAt"]) &&
+        request.resource.data.status == "new" &&
+        nonEmptyText(request.resource.data.email, 254);
+      allow read, update, delete: if isActiveAdmin();
+    }
+
+    // Offerhoppr tenant — public marketing site content, admin-managed. Content
+    // collections/docs are world-readable so the public offerhopper site can
+    // render them; writes are admin-only. Leads + newsletter captures are NOT
+    // world-readable (kept out of any read:true wildcard): anonymous create with
+    // strict validation, admin-only read/manage.
+    match /projects/offerhoppr/settings/{docId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+    match /projects/offerhoppr/navbar/{docId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+    match /projects/offerhoppr/navbarPrimary/{itemId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+    match /projects/offerhoppr/footer/{docId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+    match /projects/offerhoppr/footerResources/{itemId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+    match /projects/offerhoppr/home/{docId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+    match /projects/offerhoppr/homeTrustedLogos/{itemId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+    match /projects/offerhoppr/homeStats/{itemId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+    match /projects/offerhoppr/homeWhyReasons/{itemId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+    match /projects/offerhoppr/services/{docId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+    match /projects/offerhoppr/team/{docId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+    match /projects/offerhoppr/blog/{docId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+    match /projects/offerhoppr/blogArticles/{blogId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+    match /projects/offerhoppr/testimonials/{itemId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+    match /projects/offerhoppr/faqs/{itemId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+    match /projects/offerhoppr/about/{docId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+    match /projects/offerhoppr/aboutValues/{itemId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+    match /projects/offerhoppr/aboutTimeline/{itemId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+    match /projects/offerhoppr/contact/{docId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+    match /projects/offerhoppr/policy/{docId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+    match /projects/offerhoppr/terms/{docId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+    match /projects/offerhoppr/misc/{docId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+    // Contact-form leads — anonymous validated create; admin-only read/manage.
+    match /projects/offerhoppr/contactLeads/{leadId} {
+      allow create: if hasOnly(["name", "email", "topic", "budget", "message", "status", "createdAt"]) &&
+        request.resource.data.status == "new" &&
+        nonEmptyText(request.resource.data.name, 120) &&
+        nonEmptyText(request.resource.data.email, 254) &&
+        nonEmptyText(request.resource.data.message, 3000);
+      allow read, update, delete: if isActiveAdmin();
+    }
+    // Newsletter captures — anonymous validated create; admin-only read/manage.
+    match /projects/offerhoppr/newsletterEmails/{emailId} {
+      allow create: if hasOnly(["email", "source", "status", "createdAt"]) &&
+        request.resource.data.status == "new" &&
+        nonEmptyText(request.resource.data.email, 254);
+      allow read, update, delete: if isActiveAdmin();
+    }
+
+    // ---------------------------------------------------------------------
+    // Dealnbook — public marketing site. All content docs/collections are
+    // world-readable; writes are admin-only. No lead-capture module is in
+    // scope, so there are no anonymous-create collections here (mirrors
+    // offerhoppr's precedent for projects without a contact-leads module).
+    // ---------------------------------------------------------------------
+    match /projects/dealnbook/settings/{docId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+    match /projects/dealnbook/navbar/{docId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+    match /projects/dealnbook/navbarPrimary/{itemId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+    match /projects/dealnbook/footer/{docId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+    match /projects/dealnbook/footerQuickLinks/{itemId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+    match /projects/dealnbook/footerResources/{itemId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+    match /projects/dealnbook/home/{docId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+    match /projects/dealnbook/homeVisualCards/{itemId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+    match /projects/dealnbook/homeTrustedLogos/{itemId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+    match /projects/dealnbook/homeStats/{itemId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+    match /projects/dealnbook/homeAboutPoints/{itemId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+    match /projects/dealnbook/homeWhyItems/{itemId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+    match /projects/dealnbook/services/{docId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+    match /projects/dealnbook/team/{docId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+    match /projects/dealnbook/blog/{docId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+    match /projects/dealnbook/blogArticles/{blogId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+    match /projects/dealnbook/testimonials/{itemId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+    match /projects/dealnbook/faqs/{itemId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+    match /projects/dealnbook/about/{docId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+    match /projects/dealnbook/aboutPrinciples/{itemId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+    match /projects/dealnbook/contact/{docId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+    match /projects/dealnbook/legal/{docId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+
+    // ---------------------------------------------------------------------
+    // Offerris — public marketing site (kinetic digital agency). All content
+    // docs/collections are world-readable (the site is server-rendered via
+    // Firestore REST) and admin-writable. No lead-capture module is in scope
+    // (contact/newsletter forms are client-side no-ops), so there are no
+    // anonymous-create collections here — mirrors dealnbook's precedent.
+    // Field names mirror the site's bundled data/*.json fallback; see
+    // src/projects/offerris/CONTRACT.md.
+    // ---------------------------------------------------------------------
+    match /projects/offerris/settings/{docId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+    match /projects/offerris/navbar/{docId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+    match /projects/offerris/navbarPrimary/{itemId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+    match /projects/offerris/navbarServicesMenu/{itemId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+    match /projects/offerris/footer/{docId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+    match /projects/offerris/footerQuickLinks/{itemId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+    match /projects/offerris/footerResources/{itemId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+    match /projects/offerris/home/{docId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+    match /projects/offerris/homeTrustedLogos/{itemId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+    match /projects/offerris/homeStats/{itemId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+    match /projects/offerris/homeAboutHighlights/{itemId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+    match /projects/offerris/homeWhyItems/{itemId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+    match /projects/offerris/services/{docId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+    match /projects/offerris/team/{docId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+    match /projects/offerris/blog/{docId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+    match /projects/offerris/blogArticles/{blogId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+    match /projects/offerris/testimonials/{itemId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+    match /projects/offerris/faqs/{itemId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+    match /projects/offerris/about/{docId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+    match /projects/offerris/aboutStoryImages/{itemId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+    match /projects/offerris/aboutValues/{itemId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+    match /projects/offerris/aboutTimeline/{itemId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+    match /projects/offerris/contact/{docId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+    match /projects/offerris/contactHours/{itemId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+    match /projects/offerris/legal/{docId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+
+    // ---------------------------------------------------------------------
+    // Shophobia — public marketing site (Y2K chrome studio). All content
+    // docs/collections are world-readable (the site is server-rendered via
+    // Firestore REST) and admin-writable. No lead-capture module is in scope
+    // (contact/newsletter forms are client-side no-ops), so there are no
+    // anonymous-create collections here — mirrors offerris's precedent.
+    // Field names mirror the site's bundled data/*.json fallback; see
+    // src/projects/shophobia/CONTRACT.md.
+    // ---------------------------------------------------------------------
+    match /projects/shophobia/settings/{docId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+    match /projects/shophobia/siteStats/{itemId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+    match /projects/shophobia/navbar/{docId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+    match /projects/shophobia/navbarPrimary/{itemId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+    match /projects/shophobia/footer/{docId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+    match /projects/shophobia/footerQuickLinks/{itemId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+    match /projects/shophobia/footerResources/{itemId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+    match /projects/shophobia/home/{docId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+    match /projects/shophobia/homeTrustedLogos/{itemId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+    match /projects/shophobia/homeAboutHighlights/{itemId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+    match /projects/shophobia/homeWhyItems/{itemId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+    match /projects/shophobia/services/{docId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+    match /projects/shophobia/team/{docId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+    match /projects/shophobia/blog/{docId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+    match /projects/shophobia/blogArticles/{blogId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+    match /projects/shophobia/testimonials/{itemId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+    match /projects/shophobia/faqs/{itemId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+    match /projects/shophobia/about/{docId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+    match /projects/shophobia/aboutValues/{itemId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+    match /projects/shophobia/contact/{docId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+    match /projects/shophobia/legal/{docId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+
+    // ---------------------------------------------------------------------
+    // Infovasta — public marketing site. All content docs/collections are
+    // world-readable (the site is server-rendered via Firestore REST) and
+    // admin-writable. Lead/newsletter collections allow anonymous validated
+    // create. Field names mirror the site's bundled data/*.json fallback.
+    // ---------------------------------------------------------------------
+    match /projects/infovasta/settings/{docId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+    match /projects/infovasta/pages/{docId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+    match /projects/infovasta/navItems/{itemId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+    match /projects/infovasta/home/{docId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+    match /projects/infovasta/services/{itemId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+    match /projects/infovasta/whyChooseUs/{itemId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+    match /projects/infovasta/process/{itemId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+    match /projects/infovasta/team/{itemId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+    match /projects/infovasta/testimonials/{itemId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+    match /projects/infovasta/portfolio/{itemId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+    match /projects/infovasta/blogArticles/{itemId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+    match /projects/infovasta/faqs/{itemId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+    match /projects/infovasta/about/{docId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+    match /projects/infovasta/aboutStats/{itemId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+    match /projects/infovasta/aboutValues/{itemId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+    match /projects/infovasta/aboutTimeline/{itemId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+    match /projects/infovasta/footer/{docId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+    match /projects/infovasta/contact/{docId} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
+    }
+    // Contact-form leads — anonymous validated create; admin-only read/manage.
+    match /projects/infovasta/contactLeads/{leadId} {
+      allow create: if hasOnly(["name", "email", "subject", "message", "status", "createdAt"]) &&
+        request.resource.data.status == "new" &&
+        nonEmptyText(request.resource.data.name, 120) &&
+        nonEmptyText(request.resource.data.email, 254) &&
+        nonEmptyText(request.resource.data.message, 3000);
+      allow read, update, delete: if isActiveAdmin();
+    }
+    // Newsletter captures — anonymous validated create; admin-only read/manage.
+    match /projects/infovasta/newsletterEmails/{emailId} {
+      allow create: if hasOnly(["email", "source", "status", "createdAt"]) &&
+        request.resource.data.status == "new" &&
+        nonEmptyText(request.resource.data.email, 254);
+      allow read, update, delete: if isActiveAdmin();
+    }
+
+    // Anternet is a public mobile experience. Content is public-readable while
+    // every mutation remains restricted to an active administrator.
+    match /projects/anternet/{document=**} {
+      allow read: if true;
+      allow write: if isActiveAdmin();
     }
 
     match /projects/{projectId}/{document=**} {

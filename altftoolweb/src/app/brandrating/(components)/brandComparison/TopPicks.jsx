@@ -43,7 +43,7 @@ export default function TopPicks({ brands = [] }) {
           }}
           className="
             flex flex-nowrap
-            items-stretch lg:items-end
+            items-stretch
             overflow-x-auto lg:overflow-visible
             snap-x snap-mandatory lg:snap-none
             scroll-smooth no-scrollbar
@@ -54,9 +54,10 @@ export default function TopPicks({ brands = [] }) {
           {topBrands[1] && (
 
             <div style={{ animationDelay: "100ms" }} className="
-                 w-[calc(100vw-2rem)] min-w-[calc(100vw-2rem)] 
+                 w-[calc(100vw-2rem)] min-w-[calc(100vw-2rem)]
                 md:w-[68vw] md:min-w-[68vw] md:max-w-[640px]
-                p-3 sm:p-5 lg:p-6 
+                p-3 sm:p-5 lg:p-6
+                flex flex-col
                 flex-shrink-0 snap-center
                 lg:min-w-0 lg:w-auto lg:flex-1 lg:px-0 lg:justify-stretch
                 order-2 lg:order-1
@@ -69,9 +70,10 @@ export default function TopPicks({ brands = [] }) {
           {/* CENTER → #1 */}
           {topBrands[0] && (
             <div style={{ animationDelay: "180ms" }} className="
-                 w-[calc(100vw-2rem)] min-w-[calc(100vw-2rem)] 
+                 w-[calc(100vw-2rem)] min-w-[calc(100vw-2rem)]
                 md:w-[72vw] md:min-w-[72vw] md:max-w-[680px]
-              p-3 sm:p-5 lg:p-6 
+              p-3 sm:p-5 lg:p-6
+                flex flex-col
                 flex-shrink-0 snap-center
                 lg:min-w-0 lg:w-auto lg:flex-1 lg:px-0 lg:justify-stretch
                 order-1 lg:order-2
@@ -87,10 +89,10 @@ export default function TopPicks({ brands = [] }) {
           {/* RIGHT → #3 */}
           {topBrands[2] && (
             <div style={{ animationDelay: "260ms" }} className="
-               w-[calc(100vw-2rem)] min-w-[calc(100vw-2rem)] 
+               w-[calc(100vw-2rem)] min-w-[calc(100vw-2rem)]
                 md:w-[68vw] md:min-w-[68vw] md:max-w-[640px]
-              flex justify-center items-start
-               p-3 sm:p-5 lg:p-6 
+              flex flex-col
+               p-3 sm:p-5 lg:p-6
                 flex-shrink-0 snap-center
                 lg:min-w-0 lg:w-auto lg:flex-1 lg:px-0 lg:justify-stretch
                 order-3

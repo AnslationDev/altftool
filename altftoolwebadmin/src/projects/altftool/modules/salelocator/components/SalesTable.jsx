@@ -165,7 +165,7 @@ function ActionCell({ item, onEdit, onDelete, linkKey = "ctaLink" }) {
       </Tooltip>
       <Tooltip label="Delete">
         <button
-          onClick={(e) => {e.stopPropagation(); onDelete(item);} }
+          onClick={(e) => { e.stopPropagation(); onDelete(item.id); }}
           className="p-1.5 rounded-lg hover:bg-red-50 transition">
           <Trash2 className="w-4 h-4 text-red-500" />
         </button>

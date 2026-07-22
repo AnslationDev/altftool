@@ -218,23 +218,24 @@ test.describe("microtool functional flows", () => {
 
   test("tools directory search and filters stay shareable", async ({ page }) => {
     const quality = createPageQualityGate(page);
+    const searchInput = page.locator('[data-testid="tools-search-input"]:visible');
 
     await page.goto(`${webUrl}/tools/all?search=json`, { waitUntil: "domcontentloaded" });
 
-    await expect(page.getByTestId("tools-search-input")).toHaveValue("json");
+    await expect(searchInput).toHaveValue("json");
     // The old suggestions dropdown / category links / filter chips were
     // replaced by live inline filtering of the directory grid with the
     // search kept in the URL, so assert that current shareable behaviour.
     await expect(page.getByRole("link", { name: /JSON Editor/ }).first()).toBeVisible();
 
     // Typing keeps the URL shareable; clearing the input cleans it again.
-    await page.getByTestId("tools-search-input").fill("jwt decoder");
+    await searchInput.fill("jwt decoder");
     await expect(page).toHaveURL(/\/tools\/all\?search=jwt(\+|%20)decoder/);
-    await page.getByTestId("tools-search-input").fill("");
+    await searchInput.fill("");
     await expect(page).toHaveURL(/\/tools\/all$/);
 
     // A filtered result card links straight to the tool workspace.
-    await page.getByTestId("tools-search-input").fill("json editor");
+    await searchInput.fill("json editor");
     await page.getByRole("link", { name: /JSON Editor/ }).first().click();
     await expect(page).toHaveURL(/\/tools\/all\/json-editor$/);
     await expect(page.getByRole("navigation", { name: "Tool route" })).toContainText("JSON Editor");
@@ -256,8 +257,7 @@ test.describe("microtool functional flows", () => {
     });
 
     const recovery = page.getByTestId("tool-runtime-recovery");
-    await expect(page.getByTestId("tool-action-bar")).toBeVisible({ timeout: toolRouteTimeoutMs });
-    await expect(page.getByTestId("tool-workspace-shell")).toBeVisible({ timeout: toolRouteTimeoutMs });
+    await expect(page.getByRole("navigation", { name: "Tool route" })).toContainText("Text to Base64");
     await expect(recovery).toBeVisible({ timeout: toolRouteTimeoutMs });
     await expect(recovery).toContainText("Text to Base64 needs a quick reload");
     await expect(page.getByTestId("tool-runtime-error-message")).toContainText("Local QA crash probe");
@@ -273,6 +273,11 @@ test.describe("microtool functional flows", () => {
     await recovery.getByRole("button", { name: /Retry workspace/i }).click();
     await expect(page).toHaveURL(/\/tools\/all\/text-to-base64$/);
     await expect(recovery).toHaveCount(0, { timeout: toolRouteTimeoutMs });
+    await expect(page.getByTestId("tool-workspace-shell")).toBeVisible({ timeout: toolRouteTimeoutMs });
+    await expect(page.getByRole("heading", { name: "Text to Base64", exact: true })).toBeVisible({
+      timeout: toolRouteTimeoutMs,
+    });
+    await expect(page.getByTestId("tool-input")).toBeVisible({ timeout: toolRouteTimeoutMs });
     await expect(page.getByTestId("tool-output")).toBeVisible({ timeout: toolRouteTimeoutMs });
     await expect(page.locator("body")).not.toContainText("Application error");
   });
@@ -285,23 +290,11 @@ test.describe("microtool functional flows", () => {
     });
     await openTool(page, "text-to-base64", "Text to Base64");
 
-    await expect(page.getByTestId("tool-action-bar")).toBeVisible();
-    await expect(page.getByTestId("priority-tool-badge")).toContainText("Top 40 verified");
-    await expect(page.getByTestId("save-tool")).toBeVisible();
-    await expect(page.getByTestId("copy-tool-link")).toBeVisible();
-    await expect(page.getByTestId("share-tool-link")).toBeVisible();
-    await expect(page.getByTestId("reset-tool-workspace")).toBeVisible();
+    await expect(page.getByTestId("share-tool-state")).toBeVisible();
+    await expect(page.getByRole("button", { name: "Save run", exact: true })).toBeVisible();
 
-    await page.getByTestId("save-tool").click();
-    await expect(page.getByTestId("save-tool")).toContainText("Saved");
-
-    await page.getByTestId("copy-tool-link").click();
-    await expect(page.getByTestId("copy-tool-link")).toContainText("Copied");
-    await expect.poll(() => page.evaluate(() => navigator.clipboard.readText())).toContain("/tools/all/text-to-base64");
-
-    await page.getByTestId("share-tool-link").click();
-    await expect(page.getByTestId("share-tool-link")).toContainText("Shared");
-    await expect.poll(() => page.evaluate(() => navigator.clipboard.readText())).toContain("/tools/all/text-to-base64");
+    await page.getByRole("button", { name: "Save run", exact: true }).click();
+    await expect(page.getByText("Saved runs", { exact: true })).toBeVisible();
 
     await page.getByTestId("tool-input").fill("hello world");
     await expect(page.getByTestId("tool-output")).toContainText("aGVsbG8gd29ybGQ=");
@@ -310,7 +303,9 @@ test.describe("microtool functional flows", () => {
     await expect(page.getByTestId("copy-tool-output")).toContainText("Copied");
     await expect.poll(() => page.evaluate(() => navigator.clipboard.readText())).toBe("aGVsbG8gd29ybGQ=");
 
-    await page.getByTestId("reset-tool-workspace").click();
+    await page.getByRole("button", { name: "Clear", exact: true }).click();
+    await expect(page.getByTestId("tool-input")).toHaveValue("");
+    await page.getByRole("button", { name: "Short note", exact: true }).click();
     await expect(page.getByTestId("tool-input")).toHaveValue("AltFTool microtools are fast.");
 
     await page.getByTestId("tool-input").fill("hello world");
@@ -320,6 +315,8 @@ test.describe("microtool functional flows", () => {
 
     await page.getByTestId("share-tool-state").click();
     await expect(page).toHaveURL(/state=/);
+    await expect(page.getByTestId("share-tool-state")).toContainText("Copied");
+    await expect.poll(() => page.evaluate(() => navigator.clipboard.readText())).toContain("/tools/all/text-to-base64");
 
     const sharedUrl = page.url();
     await page.goto("about:blank");

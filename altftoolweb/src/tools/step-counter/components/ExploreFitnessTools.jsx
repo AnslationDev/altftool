@@ -107,7 +107,7 @@ export default function ExploreFitnessTools() {
             <li key={tool.slug}>
               {/* horizontal list card on phones; vertical premium card from lg
                   so descriptions never truncate in narrow columns */}
-              <a
+              <Link
                 href={`/tools/all/${tool.slug}`}
                 className="group relative flex h-full items-center gap-3 rounded-[20px] p-4 shadow-(--sc-shadow) transition-all duration-200 hover:-translate-y-0.5 hover:shadow-(--sc-shadow-lg) focus-visible:ring-4 focus-visible:ring-indigo-300 lg:flex-col lg:items-start lg:p-5"
                 style={{ backgroundColor: C.card }}
@@ -140,7 +140,7 @@ export default function ExploreFitnessTools() {
                 >
                   <ArrowRight size={13} />
                 </span>
-              </a>
+              </Link>
             </li>
           );
         })}

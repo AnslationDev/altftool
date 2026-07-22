@@ -1,4 +1,8 @@
 
+function singlePageRouteKeys(moduleKeys) {
+  return Object.fromEntries(moduleKeys.map((moduleKey) => [moduleKey, [""]]));
+}
+
 export const ADMIN_MODULE_ROUTE_KEYS = {
   altftool: {
     academy: [""],
@@ -29,6 +33,7 @@ export const ADMIN_MODULE_ROUTE_KEYS = {
     pranx: [""],
     sketchflow: [""],
     products: [""],
+    searchEng: [""],
     seo: [
       "",
       "dashboard",
@@ -222,7 +227,50 @@ export const ADMIN_MODULE_ROUTE_KEYS = {
     pages: [""],
     users: [""],
     arenas: [""],
+    homepage: [""],
+    walletpage: [""],
+    winners: [""],
+    quickearn: [""],
+    explorecards: [""],
+    homecategories: [""],
+    bonusladdertiers: [""],
+    khokho: [""],
   },
+  campaignastra: singlePageRouteKeys([
+    "navbar", "footer", "home", "about", "stats", "services", "team", "blog", "contact",
+  ]),
+  dailyhnt: singlePageRouteKeys([
+    "navbar", "home", "services", "team", "blog", "testimonials", "faq", "about-us",
+    "contact-us", "policy", "term-condition", "footer", "site-settings",
+  ]),
+  dealnbook: singlePageRouteKeys([
+    "site-settings", "navbar", "home", "services", "team", "blog", "testimonials", "faq",
+    "about-us", "contact-us", "policy", "term-condition", "footer",
+  ]),
+  exclusinsider: singlePageRouteKeys([
+    "site-settings", "navbar", "home", "services", "team", "blog", "testimonials", "faq",
+    "about-us", "contact-us", "policy", "term-condition", "footer",
+  ]),
+  infovasta: singlePageRouteKeys([
+    "site-settings", "navbar", "home", "services", "why-choose-us", "process", "team",
+    "testimonials", "portfolio", "blog", "faq", "about-us", "contact-us", "footer",
+  ]),
+  offerhoppr: singlePageRouteKeys([
+    "site-settings", "navbar", "home", "services", "team", "blog", "testimonials", "faq",
+    "about-us", "contact-us", "policy", "term-condition", "footer", "misc-pages",
+  ]),
+  offerris: singlePageRouteKeys([
+    "site-settings", "navbar", "home", "services", "team", "blog", "testimonials", "faq",
+    "about-us", "contact-us", "policy", "term-condition", "footer",
+  ]),
+  samvatsara: singlePageRouteKeys([
+    "site-settings", "navbar", "home", "services", "team", "blog", "testimonials", "faq",
+    "portfolio", "about-us", "contact-us", "policy", "term-condition", "footer",
+  ]),
+  shophobia: singlePageRouteKeys([
+    "site-settings", "navbar", "home", "services", "team", "blog", "testimonials", "faq",
+    "about-us", "contact-us", "policy", "term-condition", "footer",
+  ]),
 };
 
 // Route keys for modules shared by every project (SHARED_PROJECT_MODULES in

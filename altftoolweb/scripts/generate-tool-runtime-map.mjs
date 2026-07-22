@@ -3,6 +3,10 @@ import path from "path";
 
 const TOOLS_DIR = "src/tools";
 const OUTPUT = "src/platform/registry/toolRuntimeMap.js";
+const ignoredToolDirs = new Set([
+  "_shared",
+  "_toolfk-suite",
+]);
 
 const validEntryFiles = [
   "entry.js",
@@ -12,13 +16,22 @@ const validEntryFiles = [
 ];
 
 const map = {};
+const orphanToolDirs = [];
+
+function hasSourceFiles(directory) {
+  return fs.readdirSync(directory, { withFileTypes: true }).some((entry) => {
+    const entryPath = path.join(directory, entry.name);
+    if (entry.isDirectory()) return hasSourceFiles(entryPath);
+    return /\.[cm]?[jt]sx?$/.test(entry.name);
+  });
+}
 
 const toolDirs = fs.readdirSync(TOOLS_DIR, {
   withFileTypes: true,
 });
 
 for (const dir of toolDirs) {
-  if (!dir.isDirectory()) continue;
+  if (!dir.isDirectory() || ignoredToolDirs.has(dir.name)) continue;
 
   const toolName = dir.name;
   const toolPath = path.join(TOOLS_DIR, toolName);
@@ -28,13 +41,17 @@ for (const dir of toolDirs) {
   );
 
   if (!entryFile) {
-    console.warn(
-      `⚠️ Skipping "${toolName}" (no entry file)`
-    );
+    if (hasSourceFiles(toolPath)) orphanToolDirs.push(toolName);
     continue;
   }
 
   map[toolName] = `() => import("@/tools/${toolName}/entry")`;
+}
+
+if (orphanToolDirs.length) {
+  console.error("❌ Tool registry NOT generated — source folders are missing entry files:");
+  for (const toolName of orphanToolDirs.sort()) console.error(`   - ${toolName}`);
+  process.exit(1);
 }
 
 /* ---------------- WRITE FILE ---------------- */

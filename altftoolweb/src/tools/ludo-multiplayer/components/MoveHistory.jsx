@@ -1,4 +1,4 @@
-import { useMemo, useRef } from "react";
+import { useMemo } from "react";
 import { ScrollText, Clock } from "lucide-react";
 
 const PLAYER_COLORS = ["#EF4444", "#3B82F6", "#22C55E", "#F59E0B"];
@@ -18,18 +18,15 @@ function formatTime(ts) {
 }
 
 export default function MoveHistory({ moves, players }) {
-  const baseTimeRef = useRef(Date.now());
-
   const hasMoves = moves && moves.length > 0;
 
   const enrichedMoves = useMemo(() => {
     if (!hasMoves) return [];
-    const baseTime = baseTimeRef.current;
     return moves.slice(-50).reverse().map((m, i) => {
       const player = players?.[m.player];
       const targetPlayer = m.killTarget ? players?.[m.killTarget?.playerId] : null;
       let message = "";
-      const timestamp = m.timestamp || baseTime - (moves.length - i) * 1000;
+      const timestamp = m.timestamp || null;
 
       switch (m.action) {
         case "enter":

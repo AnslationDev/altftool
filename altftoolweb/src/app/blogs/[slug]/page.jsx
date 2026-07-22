@@ -88,16 +88,20 @@ export async function generateMetadata({ params }) {
   const blog = await getBlogDetailBySlug(slug);
 
   if (!blog) {
-    return {
+    return createPageMetadata({
       title: "AltFTool Blog Article",
       description: "Read practical AltFTool guides, tool tutorials, and digital productivity articles.",
-    };
+      path: `/blogs/${slug}`,
+      image: `/blogs/${slug}/opengraph-image`,
+      keywords: ["AltFTool blog", "tool guides", "digital productivity"],
+      type: "article",
+    });
   }
 
   const title = blog.seoTitle || `${blog.heading} - AltFTool Blog`;
   const description = getBlogDescription(blog);
   const tags = Array.isArray(blog.tags) ? blog.tags.filter(Boolean) : [];
-  const metadata = createPageMetadata({
+  const metadata = await createPageMetadata({
     title,
     description,
     path: `/blogs/${slug}`,

@@ -26,6 +26,45 @@ export const toolMetaMap = {
     "icon": "gamepad-2",
     "iconColor": "text-amber-600"
   },
+  "2fa-authenticator": {
+    "name": "2FA Authenticator",
+    "description": "Generate secure TOTP two-factor authentication codes in your browser. 100% client-side, works offline, RFC 6238 compatible.",
+    "category": [
+      "Security & Privacy",
+      "Developer"
+    ],
+    "topics": [
+      "Cybersecurity Tool",
+      "Utility"
+    ],
+    "icon": "shield-check",
+    "iconColor": "text-blue-600"
+  },
+  "30-day-habit-tracker": {
+    "name": "30-Day Habit Tracker",
+    "description": "Track 30-day habit details in one place with status, dates, and progress notes.",
+    "category": "Productivity",
+    "topics": [
+      "Self Improvement"
+    ],
+    "icon": "calendar-days",
+    "iconColor": "text-blue-500"
+  },
+  "aadhaar-masking-tool": {
+    "name": "Aadhaar Masking Tool",
+    "description": "Mask Aadhaar numbers locally, validate 12-digit format, run checksum checks, and export privacy-safe masked lists.",
+    "category": [
+      "Finance Calculators",
+      "Security & Privacy"
+    ],
+    "topics": [
+      "Finance",
+      "Privacy",
+      "Utility"
+    ],
+    "icon": "fingerprint",
+    "iconColor": "text-blue-600"
+  },
   "ac-tonnage-calculator": {
     "name": "AC Tonnage Calculator",
     "description": "Size your air conditioner correctly from room dimensions, sun exposure, and city climate, then estimate the monthly running cost.",
@@ -52,6 +91,27 @@ export const toolMetaMap = {
     ],
     "icon": "search",
     "iconColor": "text-teal-500"
+  },
+  "acronym-generator": {
+    "name": "Acronym Generator",
+    "description": "Create custom acronyms and abbreviations from any phrase, or generate phrase ideas from your acronym letters.",
+    "category": "Text & Writing",
+    "topics": [
+      "Text",
+      "Content Creation"
+    ],
+    "icon": "text-cursor-input",
+    "iconColor": "text-teal-500"
+  },
+  "ad-banner-size-finder-tool": {
+    "name": "Ad Banner Size Finder",
+    "description": "Find the exact standard dimensions for ad banners across all major platforms.",
+    "category": "Marketing & Social",
+    "topics": [
+      "Marketing"
+    ],
+    "icon": "wrench",
+    "iconColor": "text-muted-foreground"
   },
   "ad-copy-ab-planner": {
     "name": "Ad Copy A/B Planner",
@@ -98,6 +158,16 @@ export const toolMetaMap = {
     "icon": "scan-face",
     "iconColor": "text-teal-600"
   },
+  "age-in-days-calculator": {
+    "name": "Age in Days Calculator",
+    "description": "Calculate the age of something in days based on its creation date.",
+    "category": "Calculators",
+    "topics": [
+      "Calculator"
+    ],
+    "icon": "calendar",
+    "iconColor": "text-rose-600"
+  },
   "age-progression-generator": {
     "name": "Age Progression Generator",
     "description": "Upload your photo and use the target age slider to visualize your look, traits, and wellness projections in the future.",
@@ -121,6 +191,16 @@ export const toolMetaMap = {
     ],
     "icon": "globe",
     "iconColor": "text-gray-500"
+  },
+  "ai-ecg-report-analyzer": {
+    "name": "AI ECG Report Analyzer",
+    "description": "Analyze ECG parameters including heart rate, axis, intervals, segments, and rhythm with AI-powered interpretation and risk stratification.",
+    "category": "Health & Fitness",
+    "topics": [
+      "Medical"
+    ],
+    "icon": "activity",
+    "iconColor": "text-blue-600"
   },
   "ai-face-match": {
     "name": "AI Face Match",
@@ -149,6 +229,23 @@ export const toolMetaMap = {
       "Content Creation"
     ],
     "icon": "shield-check",
+    "iconColor": "text-violet-600"
+  },
+  "ai-jd-analyzer-tool": {
+    "name": "AI JD Analyzer",
+    "description": "Analyze Job Descriptions using AI to extract skills, calculate match scores, and get rewrites.",
+    "category": "Business",
+    "icon": "wrench",
+    "iconColor": "text-muted-foreground"
+  },
+  "ai-medical-report-analyzer": {
+    "name": "AI Medical Report Analyzer",
+    "description": "Comprehensive medical report analysis with CBC, metabolic panel, liver function, thyroid, and coagulation interpretation with AI-powered risk assessment.",
+    "category": "Health & Fitness",
+    "topics": [
+      "Medical"
+    ],
+    "icon": "file-text",
     "iconColor": "text-violet-600"
   },
   "ai-memory-capsule": {
@@ -196,6 +293,19 @@ export const toolMetaMap = {
     "icon": "id-card",
     "iconColor": "text-blue-600"
   },
+  "ai-productivity-optimizer": {
+    "name": "AI Productivity Optimizer",
+    "description": "Build a personalized focus plan from your role, energy patterns, goals, and common distractions.",
+    "category": [
+      "AI Tools",
+      "Productivity"
+    ],
+    "topics": [
+      "AI"
+    ],
+    "icon": "zap",
+    "iconColor": "text-primary"
+  },
   "ai-prompt-organizer": {
     "name": "AI Prompt Organizer",
     "description": "Organize, save, tag, and search your custom AI prompts with quick copy buttons and JSON backup options.",
@@ -206,6 +316,20 @@ export const toolMetaMap = {
     ],
     "icon": "gauge",
     "iconColor": "text-teal-500"
+  },
+  "ai-quiz-generator": {
+    "name": "AI Quiz Generator",
+    "description": "Generate interactive quizzes from any text using NLP — multiple choice, true/false, and fill-in-the-blank questions with instant grading and score tracking.",
+    "category": [
+      "AI Tools",
+      "Education & Science"
+    ],
+    "topics": [
+      "AI",
+      "Education"
+    ],
+    "icon": "brain",
+    "iconColor": "text-teal-600"
   },
   "ai-selfie-enhancer": {
     "name": "AI Selfie Enhancer",
@@ -260,6 +384,47 @@ export const toolMetaMap = {
     "icon": "wine",
     "iconColor": "text-teal-600"
   },
+  "algebra-solver": {
+    "name": "Algebra Solver",
+    "description": "Solve linear, quadratic, and system of equations step-by-step with detailed explanations and visual graphing.",
+    "category": [
+      "Calculators",
+      "Education & Science"
+    ],
+    "topics": [
+      "Math",
+      "Education"
+    ],
+    "icon": "variable",
+    "iconColor": "text-blue-600"
+  },
+  "algorithm-visualizer": {
+    "name": "Algorithm Visualizer",
+    "description": "Watch common algorithms execute step by step with animated visualizations of Binary Search, Linear Search, Bubble Sort, and more.",
+    "category": [
+      "Education & Science",
+      "Developer"
+    ],
+    "topics": [
+      "Education"
+    ],
+    "icon": "eye",
+    "iconColor": "text-teal-500"
+  },
+  "alphabet-explorer": {
+    "name": "Alphabet Explorer",
+    "description": "Browse writing systems from around the world — Latin, Greek, Cyrillic, Arabic, Hebrew, Devanagari, Japanese, Korean, Thai, Bengali, and more — with character names, pronunciation, Unicode values, and example words.",
+    "category": [
+      "Education & Science",
+      "Text & Writing"
+    ],
+    "topics": [
+      "Education",
+      "Language"
+    ],
+    "icon": "book-a",
+    "iconColor": "text-teal-600"
+  },
   "ambiguous-figure-viewer": {
     "name": "Ambiguous Figure Viewer",
     "description": "Experience and analyze classic optical illusions where the brain switches between multiple interpretations of the same image.",
@@ -274,6 +439,19 @@ export const toolMetaMap = {
     ],
     "icon": "brain",
     "iconColor": "text-purple-600"
+  },
+  "anagram-generator": {
+    "name": "Anagram Generator",
+    "description": "Rearrange any word or phrase into multiple anagram variations. Perfect for wordplay, puzzles, and creative writing.",
+    "category": [
+      "Text & Writing",
+      "Fun"
+    ],
+    "topics": [
+      "Text"
+    ],
+    "icon": "shuffle",
+    "iconColor": "text-teal-500"
   },
   "analog-clock-alarm": {
     "name": "Analog Clock & Alarm",
@@ -301,6 +479,16 @@ export const toolMetaMap = {
     ],
     "icon": "sparkle",
     "iconColor": "text-teal-500"
+  },
+  "animation-generator-tool": {
+    "name": "Animation Generator",
+    "description": "Create advanced CSS animations easily.",
+    "category": "Design & Color",
+    "topics": [
+      "Design"
+    ],
+    "icon": "wand-2",
+    "iconColor": "text-blue-500"
   },
   "api-documentation-maker": {
     "name": "API Documentation Maker",
@@ -340,6 +528,39 @@ export const toolMetaMap = {
     "icon": "search",
     "iconColor": "text-gray-500"
   },
+  "appliance-power-usage-estimator": {
+    "name": "Appliance Power Usage Estimator",
+    "description": "Estimate electricity consumption and monthly costs for your home appliances.",
+    "category": "Productivity",
+    "topics": [
+      "Utilities"
+    ],
+    "icon": "zap",
+    "iconColor": "text-muted-foreground"
+  },
+  "ascii-explorer": {
+    "name": "ASCII Explorer",
+    "description": "Explore the ASCII character table — convert text to ASCII codes and vice versa, browse the full 128-character table with binary, hex, and decimal values.",
+    "category": [
+      "Education & Science",
+      "Developer"
+    ],
+    "topics": [
+      "Education"
+    ],
+    "icon": "table",
+    "iconColor": "text-teal-500"
+  },
+  "ashtakoot-matching": {
+    "name": "Ashtakoot Matching (36 Gunas)",
+    "description": "Complete Ashta Koota Guna Milan — evaluates all 8 categories (Varna, Vashya, Tara, Yoni, Graha Maitri, Gana, Bhakoot, Nadi) out of 36 gunas. Uses real planetary calculations.",
+    "category": "Lifestyle",
+    "topics": [
+      "Astrology"
+    ],
+    "icon": "heart",
+    "iconColor": "text-rose-600"
+  },
   "aspect-ratio-calculator": {
     "name": "Aspect Ratio Calculator",
     "description": "Calculate simplified ratios and proportional dimensions for thumbnails, banners, and responsive layouts.",
@@ -353,6 +574,16 @@ export const toolMetaMap = {
     ],
     "icon": "crop",
     "iconColor": "text-blue-600"
+  },
+  "atrial-fibrillation-risk-calculator": {
+    "name": "Atrial Fibrillation Risk Calculator",
+    "description": "Assess atrial fibrillation risk using CHARGE-AF and community-based risk factors with clinical guidance and prevention strategies.",
+    "category": "Health & Fitness",
+    "topics": [
+      "Medical"
+    ],
+    "icon": "heart-pulse",
+    "iconColor": "text-red-600"
   },
   "attendance-calculator": {
     "name": "Attendance Percentage Calculator",
@@ -416,6 +647,16 @@ export const toolMetaMap = {
     "icon": "user",
     "iconColor": "text-(--primary)"
   },
+  "baby-name-generator": {
+    "name": "Baby Name Generator",
+    "description": "Discover unique, meaningful baby names with origins, meanings, and popularity trends for boys, girls, and gender-neutral options.",
+    "category": [
+      "Lifestyle",
+      "Fun"
+    ],
+    "icon": "baby",
+    "iconColor": "text-teal-500"
+  },
   "baking-pan-converter": {
     "name": "Baking Pan Size Converter",
     "description": "Scale any recipe between pan sizes with an exact ingredient multiplier, bake-time advice, and overflow warnings.",
@@ -462,6 +703,13 @@ export const toolMetaMap = {
     "icon": "binary",
     "iconColor": "text-blue-700"
   },
+  "base32-encoder": {
+    "name": "Base32 Encoder / Decoder",
+    "description": "Converts text to Base32 and vice versa.",
+    "category": "Developer",
+    "icon": "base64",
+    "iconColor": "text-rose-600"
+  },
   "base64-audio-converter": {
     "name": "Base64 Audio Converter",
     "description": "Preview and download Base64 audio data URLs.",
@@ -475,7 +723,7 @@ export const toolMetaMap = {
   },
   "base64-to-ascii": {
     "name": "Base64 to ASCII",
-    "description": "Decode Base64 and inspect ASCII-safe output.",
+    "description": "Decode Base64 encoded strings into readable ASCII text instantly.",
     "category": [
       "Developer",
       "Converters"
@@ -484,7 +732,8 @@ export const toolMetaMap = {
       "Converter"
     ],
     "icon": "binary",
-    "iconColor": "text-indigo-600"
+    "iconColor": "text-blue-600",
+    "wideWorkspace": true
   },
   "base64-to-file": {
     "name": "Base64 to File",
@@ -609,7 +858,8 @@ export const toolMetaMap = {
       "No-Code"
     ],
     "icon": "workflow",
-    "iconColor": "text-cyan-500"
+    "iconColor": "text-blue-600",
+    "wideWorkspace": true
   },
   "batch-timestamp-conversion-tool": {
     "name": "Batch Timestamp Conversion Tool",
@@ -654,6 +904,16 @@ export const toolMetaMap = {
     ],
     "icon": "user",
     "iconColor": "text-cyan-500"
+  },
+  "beautify-code-tool": {
+    "name": "Code Beautifier",
+    "description": "Instantly format, clean up, and beautify messy code snippets.",
+    "category": "Developer",
+    "topics": [
+      "Development"
+    ],
+    "icon": "wrench",
+    "iconColor": "text-muted-foreground"
   },
   "beauty-score": {
     "name": "Beauty Score Calculator",
@@ -718,6 +978,19 @@ export const toolMetaMap = {
     ],
     "icon": "calculator",
     "iconColor": "text-blue-600"
+  },
+  "binary-learning-tool": {
+    "name": "Binary Learning Tool",
+    "description": "Learn binary numbers with interactive decimal-to-binary and binary-to-decimal converters, bit position visualization, and practice quizzes.",
+    "category": [
+      "Education & Science",
+      "Developer"
+    ],
+    "topics": [
+      "Education"
+    ],
+    "icon": "binary",
+    "iconColor": "text-teal-500"
   },
   "binaural-beat-generator": {
     "name": "Binaural Beat Generator",
@@ -790,6 +1063,16 @@ export const toolMetaMap = {
     "icon": "heart-pulse",
     "iconColor": "text-rose-500"
   },
+  "blood-pressure-classification": {
+    "name": "Blood Pressure Classification Tool",
+    "description": "Classify blood pressure readings based on ACC/AHA and ESC clinical guidelines with trend tracking.",
+    "category": "Health & Fitness",
+    "topics": [
+      "Medical"
+    ],
+    "icon": "heart-pulse",
+    "iconColor": "text-red-600"
+  },
   "blood-pressure-log": {
     "name": "Blood Pressure Log & Tracker",
     "description": "Log blood pressure readings, see each one categorised by the AHA scale, and print a clean trend summary for your doctor.",
@@ -852,6 +1135,16 @@ export const toolMetaMap = {
     "icon": "activity",
     "iconColor": "text-green-600"
   },
+  "bmr-calculator": {
+    "name": "BMR Calculator",
+    "description": "Calculate your Basal Metabolic Rate (BMR) to understand how many calories your body burns at rest.",
+    "category": "Health & Fitness",
+    "topics": [
+      "Health"
+    ],
+    "icon": "calculator",
+    "iconColor": "text-rose-600"
+  },
   "body-fat-calculator": {
     "name": "Body Fat Percentage Calculator",
     "description": "Estimate body fat with the US Navy tape method or BMI formula, then see fat vs lean mass and plan a realistic goal.",
@@ -862,6 +1155,17 @@ export const toolMetaMap = {
     ],
     "icon": "person-standing",
     "iconColor": "text-teal-600"
+  },
+  "body-fat-estimator": {
+    "name": "Body Fat % Estimator",
+    "description": "A practical fitness and health tool for managing body fat percentage workflows efficiently.",
+    "category": "Health & Fitness",
+    "topics": [
+      "Fitness",
+      "Health"
+    ],
+    "icon": "activity",
+    "iconColor": "text-green-500"
   },
   "bookmark-capsule": {
     "name": "Bookmark Capsule",
@@ -901,6 +1205,32 @@ export const toolMetaMap = {
     ],
     "icon": "music",
     "iconColor": "text-teal-600"
+  },
+  "braille-learning-tool": {
+    "name": "Braille Learning Tool",
+    "description": "Learn Braille alphabet (A–Z), numbers (0–9), and common punctuation with interactive cards, quizzes, and progress tracking",
+    "category": "Education & Science",
+    "topics": [
+      "Education"
+    ],
+    "icon": "eye",
+    "iconColor": "text-teal-500"
+  },
+  "brain-processing-speed-test": {
+    "name": "Brain Processing Speed Test",
+    "description": "Measure your visual processing speed and cognitive efficiency with a clinical symbol-to-digit substitution task.",
+    "category": [
+      "Education & Science",
+      "Health & Fitness",
+      "Fun"
+    ],
+    "topics": [
+      "Neuroscience",
+      "Health",
+      "Interactive"
+    ],
+    "icon": "zap",
+    "iconColor": "text-yellow-500"
   },
   "brand-kit-manager": {
     "name": "Brand Kit Manager",
@@ -984,6 +1314,20 @@ export const toolMetaMap = {
     "icon": "share-2",
     "iconColor": "text-teal-500"
   },
+  "budget-planner": {
+    "name": "Budget Planner",
+    "description": "Create a monthly budget with income and expense categories. Track spending, set limits, and visualize your financial health.",
+    "category": [
+      "Finance Calculators",
+      "Productivity"
+    ],
+    "topics": [
+      "Finance",
+      "Planners"
+    ],
+    "icon": "pie-chart",
+    "iconColor": "text-teal-500"
+  },
   "bulk-text-replacer": {
     "name": "Bulk Text Replacer",
     "description": "Replace multiple text values instantly with smart automation.",
@@ -1010,6 +1354,29 @@ export const toolMetaMap = {
     ],
     "icon": "id-card",
     "iconColor": "text-blue-500"
+  },
+  "business-days-calculator": {
+    "name": "Business Days Calculator",
+    "description": "Calculate the number of business days between two dates.",
+    "category": "Calculators",
+    "topics": [
+      "Calculator"
+    ],
+    "icon": "calendar",
+    "iconColor": "text-indigo-600"
+  },
+  "business-name-generator": {
+    "name": "Business Name Generator",
+    "description": "Generate professional, creative business names with domain availability checks and logo style suggestions for your brand.",
+    "category": [
+      "Marketing & Social",
+      "Business"
+    ],
+    "topics": [
+      "Marketing"
+    ],
+    "icon": "building-2",
+    "iconColor": "text-teal-500"
   },
   "byte-converter": {
     "name": "Byte Converter",
@@ -1052,12 +1419,32 @@ export const toolMetaMap = {
     "icon": "coffee",
     "iconColor": "text-teal-600"
   },
+  "cagr-calculator": {
+    "name": "CAGR Calculator",
+    "description": "Calculate Compound Annual Growth Rate for investments or financial growth.",
+    "category": "Finance Calculators",
+    "topics": [
+      "Finance"
+    ],
+    "icon": "calculator",
+    "iconColor": "text-cyan-600"
+  },
   "calender-panchang": {
     "name": "Calender Panchang",
     "description": "View calendar and panchang details for dates, festivals, and daily planning.",
     "category": "Lifestyle",
     "icon": "calendar-range",
     "iconColor": "text-gray-500"
+  },
+  "calorie-calculator": {
+    "name": "Calorie & Macro Calculator",
+    "description": "Calculate your Total Daily Energy Expenditure (TDEE) and macronutrient splits based on your goals.",
+    "category": "Health & Fitness",
+    "topics": [
+      "health"
+    ],
+    "icon": "wrench",
+    "iconColor": "text-muted-foreground"
   },
   "calorie-tdee-calculator": {
     "name": "Calorie / TDEE Calculator",
@@ -1072,6 +1459,36 @@ export const toolMetaMap = {
     "icon": "activity",
     "iconColor": "text-green-600"
   },
+  "camel-case-converter": {
+    "name": "Camel Case Converter",
+    "description": "Convert text to Camel Case format.",
+    "category": "Developer",
+    "icon": "code",
+    "iconColor": "text-violet-600"
+  },
+  "campaign-budget-planner": {
+    "name": "Campaign Budget Planner",
+    "description": "Plan campaign budget tasks with organized inputs, timelines, and clear next steps.",
+    "category": "Marketing & Social",
+    "topics": [
+      "Marketing"
+    ],
+    "icon": "pie-chart",
+    "iconColor": "text-rose-500"
+  },
+  "candy-crush": {
+    "name": "Candy Crush",
+    "description": "Play a free match-3 Candy Crush game online. Swap candies, trigger combos, beat level targets, and chase your high score.",
+    "category": [
+      "Games",
+      "Lifestyle"
+    ],
+    "topics": [
+      "Game"
+    ],
+    "icon": "gift",
+    "iconColor": "text-(--primary)"
+  },
   "candy-match-3": {
     "name": "Candy Match 3",
     "description": "Play Candy Match 3 free online — a sweet match-3 puzzle game. Swap candies, trigger combos, beat level targets, and chase your high score.",
@@ -1085,12 +1502,47 @@ export const toolMetaMap = {
     "icon": "gift",
     "iconColor": "text-(--primary)"
   },
+  "capital-city-quiz": {
+    "name": "Capital City Quiz",
+    "description": "Test your knowledge of world capital cities with timed quizzes, scoring, and streak tracking across 195+ countries.",
+    "category": "Education & Science",
+    "topics": [
+      "Education"
+    ],
+    "icon": "landmark",
+    "iconColor": "text-sky-700"
+  },
+  "captcha-generator": {
+    "name": "Captcha Generator",
+    "description": "Generate and verify highly customizable captchas right in your browser. Complete with image noise, curved lines, and stylized text modes.",
+    "category": [
+      "Developer",
+      "Security & Privacy"
+    ],
+    "topics": [
+      "Developers",
+      "Security",
+      "Utilities"
+    ],
+    "icon": "shield-check",
+    "iconColor": "text-teal-500"
+  },
   "car-ownership-cost-analyzer": {
     "name": "car-cost-analyzer",
     "description": "Calculate the total cost of owning a car, including purchase price, running costs, and depreciation.",
     "category": "Other",
     "icon": "car",
     "iconColor": "text-blue-500"
+  },
+  "card-picker": {
+    "name": "Random Card Picker",
+    "description": "Pick a random playing card with a 3D flip animation.",
+    "category": "Games",
+    "topics": [
+      "Entertainment"
+    ],
+    "icon": "playing-cards",
+    "iconColor": "text-red-500"
   },
   "card-trick": {
     "name": "Card Trick",
@@ -1104,6 +1556,26 @@ export const toolMetaMap = {
     ],
     "icon": "wand-2",
     "iconColor": "text-(--primary)"
+  },
+  "cardiac-output-calculator": {
+    "name": "Cardiac Output Calculator",
+    "description": "Calculate cardiac output and cardiac index from heart rate and stroke volume with clinical reference ranges.",
+    "category": "Health & Fitness",
+    "topics": [
+      "Medical"
+    ],
+    "icon": "heart",
+    "iconColor": "text-rose-600"
+  },
+  "cart-bill-splitter": {
+    "name": "Cart Bill Splitter",
+    "description": "Split shopping bills, manage shared expenses, and handle tax/delivery charges fairly.",
+    "category": "Finance Calculators",
+    "topics": [
+      "Finance Tools"
+    ],
+    "icon": "wallet",
+    "iconColor": "text-blue-500"
   },
   "cartoon-yourself": {
     "name": "Cartoon Yourself",
@@ -1120,6 +1592,16 @@ export const toolMetaMap = {
     "icon": "paintbrush",
     "iconColor": "text-violet-600"
   },
+  "cbc-report-interpreter": {
+    "name": "CBC Report Interpreter",
+    "description": "Complete Blood Count interpretation with differential analysis, anemia classification, infection pattern recognition, and clinical recommendations.",
+    "category": "Health & Fitness",
+    "topics": [
+      "Medical"
+    ],
+    "icon": "test-tube",
+    "iconColor": "text-rose-600"
+  },
   "celebrity-look-alike": {
     "name": "Which Celebrity Do You Look Like?",
     "description": "Upload a photo and discover which celebrity shares your facial features and jawline structure.",
@@ -1129,6 +1611,28 @@ export const toolMetaMap = {
     ],
     "icon": "user",
     "iconColor": "text-amber-500"
+  },
+  "cell-explorer": {
+    "name": "Cell Explorer",
+    "description": "Interactive animal and plant cell diagram explorer with clickable organelles, metabolic functions, and cellular biology breakdowns.",
+    "category": "Education & Science",
+    "topics": [
+      "Science"
+    ],
+    "icon": "dna",
+    "iconColor": "text-teal-500"
+  },
+  "charger-wattage-calculator": {
+    "name": "Charger Wattage Calculator",
+    "description": "Calculate charger wattage, cable limits, battery charging time, USB-C PD profile fit, and safe power recommendations.",
+    "category": "Calculators",
+    "topics": [
+      "Utility",
+      "Electronics",
+      "Calculator"
+    ],
+    "icon": "gauge",
+    "iconColor": "text-blue-600"
   },
   "chatgpt-chat-export": {
     "name": "ChatGPT Chat Export",
@@ -1145,6 +1649,16 @@ export const toolMetaMap = {
     "icon": "message-square",
     "iconColor": "text-emerald-500"
   },
+  "chemical-reaction-explorer": {
+    "name": "Chemical Reaction Explorer",
+    "description": "Interactive stoichiometric chemical reaction simulator with animated molecular rearrangements, balanced equations, and enthalpy energy diagrams.",
+    "category": "Education & Science",
+    "topics": [
+      "Science"
+    ],
+    "icon": "flask-conical",
+    "iconColor": "text-teal-500"
+  },
   "chess-multiplayer": {
     "name": "Chess Multiplayer",
     "description": "Play a full multiplayer chess match locally with legal-move validation, timers, move history, captured pieces, draw offers and resign.",
@@ -1153,6 +1667,16 @@ export const toolMetaMap = {
       "Game"
     ],
     "icon": "crown",
+    "iconColor": "text-(--primary)"
+  },
+  "chess-puzzle-trainer": {
+    "name": "Chess Puzzle Trainer",
+    "description": "Sharpen your tactical skills with curated chess puzzles — forks, pins, skewers, discovered attacks, checkmates and endgames across multiple difficulty levels.",
+    "category": "Games",
+    "topics": [
+      "Game"
+    ],
+    "icon": "between-vertical-start",
     "iconColor": "text-(--primary)"
   },
   "chinese-character-generator": {
@@ -1213,6 +1737,16 @@ export const toolMetaMap = {
     "icon": "book-open",
     "iconColor": "text-blue-600"
   },
+  "cleaning-schedule-planner": {
+    "name": "Cleaning Schedule Planner",
+    "description": "Organize recurring chores by room, day, priority, owner, and duration.",
+    "category": [
+      "Productivity",
+      "Lifestyle"
+    ],
+    "icon": "sparkles",
+    "iconColor": "text-teal-500"
+  },
   "clipboard-capsule": {
     "name": "Clipboard Capsule",
     "description": "Save, manage, categorize, and retrieve your clipboard history seamlessly.",
@@ -1240,6 +1774,17 @@ export const toolMetaMap = {
     ],
     "icon": "ruler",
     "iconColor": "text-purple-600"
+  },
+  "clothing-shoe-size-converter": {
+    "name": "Clothing & Shoe Size Converter",
+    "description": "Convert clothing and shoe sizes across global standards with measurement-based fit guidance and quick comparison.",
+    "category": "Lifestyle",
+    "topics": [
+      "Shopping",
+      "Utility"
+    ],
+    "icon": "arrow-left-right",
+    "iconColor": "text-blue-600"
   },
   "code-complexity-analyzer": {
     "name": "Code Complexity Analyzer",
@@ -1275,6 +1820,21 @@ export const toolMetaMap = {
     "icon": "coffee",
     "iconColor": "text-teal-600"
   },
+  "cognitive-performance-tracker": {
+    "name": "Cognitive Performance Tracker",
+    "description": "Track your cognitive performance over time with daily check-ins, focus scores, memory trends, and interactive analytics dashboards.",
+    "category": [
+      "Education & Science",
+      "Health & Fitness",
+      "Productivity"
+    ],
+    "topics": [
+      "Neuroscience",
+      "Health"
+    ],
+    "icon": "activity",
+    "iconColor": "text-teal-600"
+  },
   "coin-flip": {
     "name": "Coin Flip",
     "description": "Flip a fair virtual coin with a 3D animation, best-of series scoring, streaks, and saved heads-tails stats.",
@@ -1287,6 +1847,13 @@ export const toolMetaMap = {
     ],
     "icon": "coins",
     "iconColor": "text-teal-600"
+  },
+  "coin-toss-streak-game": {
+    "name": "Coin Toss Streak Game",
+    "description": "Calculate the probability of getting a specific number of consecutive heads or tails in coin tosses.",
+    "category": "Fun",
+    "icon": "coin",
+    "iconColor": "text-amber-600"
   },
   "color-blindness-simulator": {
     "name": "Color Blindness Simulator",
@@ -1414,6 +1981,13 @@ export const toolMetaMap = {
     "icon": "palette",
     "iconColor": "text-fuchsia-600"
   },
+  "company-info-tool": {
+    "name": "Company Info Explorer",
+    "description": "Quickly look up key information and metrics about tech companies.",
+    "category": "Business",
+    "icon": "wrench",
+    "iconColor": "text-muted-foreground"
+  },
   "compatibility-quiz": {
     "name": "Compatibility Quiz",
     "description": "Take interactive quizzes to measure compatibility across multiple categories with dynamic scoring and attractive results.",
@@ -1444,6 +2018,19 @@ export const toolMetaMap = {
     "icon": "case-sensitive",
     "iconColor": "text-primary"
   },
+  "compound-interest-calculator": {
+    "name": "Compound Interest Calculator",
+    "description": "See how your money grows with compound interest across daily, monthly, quarterly, half-yearly, and yearly compounding frequencies.",
+    "category": [
+      "Finance Calculators",
+      "Calculators"
+    ],
+    "topics": [
+      "Finance"
+    ],
+    "icon": "bar-chart-3",
+    "iconColor": "text-emerald-500"
+  },
   "compound-interest-planner": {
     "name": "Compound Interest Planner",
     "description": "Plan lumpsum compound growth with reinvestment, yearly top-ups, tax, inflation-adjusted value, and year-wise charts.",
@@ -1457,6 +2044,49 @@ export const toolMetaMap = {
     ],
     "icon": "trending-up",
     "iconColor": "text-emerald-600"
+  },
+  "computer-parts-quiz": {
+    "name": "Computer Parts Quiz",
+    "description": "Test your knowledge of computer hardware components with interactive multiple-choice questions. Learn about CPUs, GPUs, RAM, storage, and more.",
+    "category": [
+      "Education & Science",
+      "Fun"
+    ],
+    "topics": [
+      "Education"
+    ],
+    "icon": "monitor",
+    "iconColor": "text-teal-500"
+  },
+  "constellation-finder": {
+    "name": "Constellation Finder",
+    "description": "Explore 15+ major constellations with an interactive night sky map",
+    "category": "Education & Science",
+    "topics": [
+      "Science"
+    ],
+    "icon": "stars",
+    "iconColor": "text-primary"
+  },
+  "content-calendar-planner": {
+    "name": "Content Calendar Planner",
+    "description": "Plan content calendar tasks with organized inputs, timelines, and clear next steps.",
+    "category": "Marketing & Social",
+    "topics": [
+      "Marketing"
+    ],
+    "icon": "calendar",
+    "iconColor": "text-indigo-500"
+  },
+  "continent-challenge": {
+    "name": "Continent Challenge",
+    "description": "Test your knowledge of the 7 continents — identify countries, capitals, flags, and geographic facts with timed quizzes and scoring.",
+    "category": "Education & Science",
+    "topics": [
+      "Education"
+    ],
+    "icon": "globe",
+    "iconColor": "text-violet-700"
   },
   "conways-game-of-life": {
     "name": "Conway's Game of Life",
@@ -1486,6 +2116,16 @@ export const toolMetaMap = {
     "icon": "cookie",
     "iconColor": "text-amber-600"
   },
+  "coronary-artery-disease-risk-calculator": {
+    "name": "Coronary Artery Disease Risk Calculator",
+    "description": "Estimate 10-year ASCVD and Framingham coronary heart disease risk using validated clinical risk calculators.",
+    "category": "Health & Fitness",
+    "topics": [
+      "Medical"
+    ],
+    "icon": "heart-pulse",
+    "iconColor": "text-red-700"
+  },
   "corporate-tool": {
     "name": "Corporate Tool",
     "description": "Provides information about companies, products, and services tools",
@@ -1503,6 +2143,37 @@ export const toolMetaMap = {
     "icon": "alarm-clock",
     "iconColor": "text-teal-600"
   },
+  "country-greeting-finder": {
+    "name": "Country Greeting Finder",
+    "description": "Find how to say hello in the native language of any country, with pronunciation guides, formal and informal variants, common replies, and cultural notes.",
+    "category": [
+      "Education & Science",
+      "Text & Writing",
+      "Lifestyle"
+    ],
+    "topics": [
+      "Education",
+      "Language",
+      "Travel"
+    ],
+    "icon": "globe",
+    "iconColor": "text-teal-600"
+  },
+  "country-quiz": {
+    "name": "Country Quiz",
+    "description": "Test your geography knowledge with dynamic quizzes powered by real-time country data — capitals, currencies, areas, languages, and more.",
+    "category": [
+      "Education & Science",
+      "Fun"
+    ],
+    "topics": [
+      "Education",
+      "Geography",
+      "Interactive"
+    ],
+    "icon": "globe",
+    "iconColor": "text-emerald-600"
+  },
   "cover-letter": {
     "name": "Cover Letter",
     "description": "Create a cover letter for your next job interview",
@@ -1512,6 +2183,13 @@ export const toolMetaMap = {
     ],
     "icon": "mail",
     "iconColor": "text-blue-400"
+  },
+  "crc32-calculator": {
+    "name": "CRC32 Calculator",
+    "description": "Calculate the CRC32 checksum for text or binary data.",
+    "category": "Developer",
+    "icon": "hash",
+    "iconColor": "text-indigo-600"
   },
   "credit-card-interest-calculator": {
     "name": "Credit Card Interest & Minimum Payment Trap",
@@ -1561,6 +2239,21 @@ export const toolMetaMap = {
     ],
     "icon": "bitcoin",
     "iconColor": "text-amber-600"
+  },
+  "crypto-wallet-checker": {
+    "name": "Crypto Wallet Checker",
+    "description": "Validate and identify crypto wallet addresses across 10+ major blockchains.",
+    "category": [
+      "Security & Privacy",
+      "Finance Calculators",
+      "Developer"
+    ],
+    "topics": [
+      "Security",
+      "Finance"
+    ],
+    "icon": "shield-check",
+    "iconColor": "text-blue-500"
   },
   "css-beautification-formatting-tool": {
     "name": "CSS Beautification and Formatting Tool",
@@ -1702,6 +2395,29 @@ export const toolMetaMap = {
     "icon": "wallet",
     "iconColor": "text-green-700"
   },
+  "currency-profit-loss-calculator": {
+    "name": "Currency Profit/Loss Calculator",
+    "description": "Calculate profit or loss on currency exchanges and forex trades. Track buy/sell rates, position size, and swap fees.",
+    "category": [
+      "Finance Calculators",
+      "Calculators"
+    ],
+    "topics": [
+      "Finance"
+    ],
+    "icon": "refresh-cw",
+    "iconColor": "text-cyan-500"
+  },
+  "currency-quiz": {
+    "name": "Currency Quiz",
+    "description": "Test your knowledge of world currencies — identify currencies, exchange rates, and flags with timed quizzes and scoring.",
+    "category": "Education & Science",
+    "topics": [
+      "Education"
+    ],
+    "icon": "coins",
+    "iconColor": "text-yellow-700"
+  },
   "cute-text-generator": {
     "name": "Cute Text Generator",
     "description": "Convert your text into cute Unicode styles with kaomoji, decorative symbols, and emoji combinations.",
@@ -1712,6 +2428,14 @@ export const toolMetaMap = {
     ],
     "icon": "heart",
     "iconColor": "text-pink-500"
+  },
+  "cymatics": {
+    "name": "Cymatics Simulator",
+    "description": "Explore how sound frequency and damping create Chladni-style geometric nodal patterns in a responsive browser simulation.",
+    "category": "Education & Science",
+    "icon": "waves",
+    "iconColor": "text-primary",
+    "wideWorkspace": true
   },
   "cymatics-simulator": {
     "name": "Cymatics Simulator",
@@ -1735,6 +2459,16 @@ export const toolMetaMap = {
     "icon": "laugh",
     "iconColor": "text-teal-600"
   },
+  "daily-panchang-calculator": {
+    "name": "Daily Panchang Calculator",
+    "description": "Calculate the five limbs of Panchang — Tithi, Nakshatra, Yoga, Karana, Vaar — plus Rashi, sunrise/sunset, and auspicious muhurtas for any date.",
+    "category": "Lifestyle",
+    "topics": [
+      "Astrology"
+    ],
+    "icon": "calendar-range",
+    "iconColor": "text-orange-600"
+  },
   "daily-spend-planner": {
     "name": "Safe-to-Spend Daily Planner",
     "description": "See exactly how much you can spend per day for the rest of this month after bills and savings.",
@@ -1745,6 +2479,21 @@ export const toolMetaMap = {
     ],
     "icon": "wallet-minimal",
     "iconColor": "text-teal-600"
+  },
+  "daily-word-challenge": {
+    "name": "Daily Word Challenge",
+    "description": "Test your vocabulary with a new word puzzle every day. Guess the word from its definition and synonyms to build your streak.",
+    "category": [
+      "Education & Science",
+      "Text & Writing",
+      "Fun"
+    ],
+    "topics": [
+      "Education",
+      "Language"
+    ],
+    "icon": "calendar-days",
+    "iconColor": "text-orange-600"
   },
   "daily-word-game": {
     "name": "Daily Word Game",
@@ -1786,6 +2535,19 @@ export const toolMetaMap = {
     "icon": "chart-bar",
     "iconColor": "text-blue-600"
   },
+  "data-structure-visualizer": {
+    "name": "Data Structure Visualizer",
+    "description": "Visualize arrays, linked lists, stacks, queues, binary trees, and graphs with interactive operations and real-time state updates.",
+    "category": [
+      "Education & Science",
+      "Developer"
+    ],
+    "topics": [
+      "Education"
+    ],
+    "icon": "network",
+    "iconColor": "text-teal-500"
+  },
   "date-time-conversions": {
     "name": "Date / Time Conversions",
     "description": "Convert between time units, Unix timestamps, and date formats. Calculate date differences and durations with precision.",
@@ -1799,6 +2561,16 @@ export const toolMetaMap = {
     ],
     "icon": "clock",
     "iconColor": "text-sky-600"
+  },
+  "days-between-dates-calculator": {
+    "name": "Days Between Dates Calculator",
+    "description": "Calculate the number of days between two dates.",
+    "category": "Calculators",
+    "topics": [
+      "Calculator"
+    ],
+    "icon": "calendar",
+    "iconColor": "text-amber-600"
   },
   "dca-calculator": {
     "name": "DCA Calculator",
@@ -1827,6 +2599,34 @@ export const toolMetaMap = {
     ],
     "icon": "credit-card",
     "iconColor": "text-rose-600"
+  },
+  "debt-payoff-planner": {
+    "name": "Debt Payoff Planner",
+    "description": "Compare Snowball vs Avalanche debt payoff methods. Find the fastest and most cost-effective way to become debt-free.",
+    "category": [
+      "Finance Calculators",
+      "Productivity"
+    ],
+    "topics": [
+      "Finance",
+      "Planners"
+    ],
+    "icon": "calendar-check",
+    "iconColor": "text-red-500"
+  },
+  "decimal-converter": {
+    "name": "Decimal Converter",
+    "description": "Convert between fractions, decimals, percentages, and mixed numbers with instant visual results and step-by-step explanations.",
+    "category": [
+      "Calculators",
+      "Education & Science"
+    ],
+    "topics": [
+      "Math",
+      "Education"
+    ],
+    "icon": "arrow-right-left",
+    "iconColor": "text-emerald-600"
   },
   "decision-matrix-builder": {
     "name": "Decision Matrix Builder",
@@ -1861,6 +2661,17 @@ export const toolMetaMap = {
     "icon": "pi",
     "iconColor": "text-teal-600"
   },
+  "deep-breathing-guide": {
+    "name": "Deep Breathing Guide",
+    "description": "Guided deep breathing exercises with multiple techniques — 4-7-8, Box Breathing, and Coherence Breathing — to help you relax, focus, and reduce stress.",
+    "category": "Health & Fitness",
+    "topics": [
+      "Health & Wellness",
+      "Mindfulness"
+    ],
+    "icon": "wind",
+    "iconColor": "text-cyan-500"
+  },
   "definition-of-done-generator": {
     "name": "Definition of Done Generator",
     "description": "Generate a practical Definition of Done checklist tailored to project type, tech stack, team size, and compliance needs.",
@@ -1874,6 +2685,16 @@ export const toolMetaMap = {
     "icon": "list-checks",
     "iconColor": "text-violet-500"
   },
+  "density-calculator": {
+    "name": "Density Calculator",
+    "description": "Calculate the density of a substance given its mass and volume.",
+    "category": "Education & Science",
+    "topics": [
+      "Science"
+    ],
+    "icon": "density",
+    "iconColor": "text-blue-600"
+  },
   "dependency-upgrade-impact-estimator": {
     "name": "Dependency Upgrade Impact Estimator",
     "description": "Estimate upgrade risk from package dependency version changes, release distance, and critical package signals.",
@@ -1883,6 +2704,16 @@ export const toolMetaMap = {
     ],
     "icon": "package-check",
     "iconColor": "text-primary"
+  },
+  "depth-of-field-estimator": {
+    "name": "Depth of Field Estimator",
+    "description": "A practical photography tool for managing depth of field workflows efficiently.",
+    "category": "Image & Photo",
+    "topics": [
+      "Photography"
+    ],
+    "icon": "camera",
+    "iconColor": "text-amber-500"
   },
   "design-compare": {
     "name": "Design Compare",
@@ -1921,6 +2752,16 @@ export const toolMetaMap = {
     ],
     "icon": "gauge",
     "iconColor": "text-blue-600"
+  },
+  "diabetes-dashboard": {
+    "name": "Diabetes Management Dashboard",
+    "description": "Monitor your blood glucose readings, track your lifestyle habits, and estimate your HbA1c.",
+    "category": "Health & Fitness",
+    "topics": [
+      "health"
+    ],
+    "icon": "wrench",
+    "iconColor": "text-muted-foreground"
   },
   "dice-roller": {
     "name": "Dice Roller",
@@ -1981,6 +2822,30 @@ export const toolMetaMap = {
     "icon": "hash",
     "iconColor": "text-teal-600"
   },
+  "digital-wallet-tool": {
+    "name": "Digital Wallet Manager",
+    "description": "A digital wallet interface for managing and tracking assets securely.",
+    "category": "Finance Calculators",
+    "topics": [
+      "Finance"
+    ],
+    "icon": "wrench",
+    "iconColor": "text-muted-foreground"
+  },
+  "dino-run": {
+    "name": "Dino Run Game",
+    "description": "A polished, React-native reimagining of the classic offline dinosaur endless runner game.",
+    "category": [
+      "Games",
+      "Fun"
+    ],
+    "topics": [
+      "Game",
+      "Entertainment"
+    ],
+    "icon": "play",
+    "iconColor": "text-teal-600"
+  },
   "dino-runner": {
     "name": "Dino Dash Runner",
     "description": "Endless runner game online free — jump and duck past obstacles as the speed keeps climbing.",
@@ -1991,6 +2856,21 @@ export const toolMetaMap = {
     ],
     "icon": "rabbit",
     "iconColor": "text-amber-600"
+  },
+  "dinosaur-explorer": {
+    "name": "Dinosaur Explorer",
+    "description": "Explore 20+ dinosaur species with search, filter, timeline view, size comparison, and detailed cards.",
+    "category": [
+      "Education & Science",
+      "Fun"
+    ],
+    "topics": [
+      "Education",
+      "Science",
+      "Interactive"
+    ],
+    "icon": "biceps-muscle",
+    "iconColor": "text-emerald-600"
   },
   "discount-calculator": {
     "name": "Discount Calculator",
@@ -2025,6 +2905,43 @@ export const toolMetaMap = {
     ],
     "icon": "badge-percent",
     "iconColor": "text-emerald-600"
+  },
+  "division-practice": {
+    "name": "Division Practice",
+    "description": "Master division with adaptive exercises, step-by-step solutions, and progress tracking for students of all levels.",
+    "category": [
+      "Calculators",
+      "Education & Science"
+    ],
+    "topics": [
+      "Math",
+      "Education"
+    ],
+    "icon": "divide",
+    "iconColor": "text-cyan-600"
+  },
+  "dna-double-helix-explorer": {
+    "name": "DNA Double Helix Explorer",
+    "description": "Interactive 3D rotating DNA double helix model with base pairing (A-T, G-C), hydrogen bond counting, and replication mechanics.",
+    "category": "Education & Science",
+    "topics": [
+      "Science"
+    ],
+    "icon": "dna",
+    "iconColor": "text-teal-500"
+  },
+  "document-checklist-generator": {
+    "name": "Document Checklist Generator",
+    "description": "Generate ready-to-use document checklists for visa, job, loan, rental, admission, KYC, and business workflows.",
+    "category": [
+      "Productivity",
+      "Business"
+    ],
+    "topics": [
+      "Utility"
+    ],
+    "icon": "list-checks",
+    "iconColor": "text-blue-600"
   },
   "document-version-timeline": {
     "name": "Document Version Timeline",
@@ -2133,6 +3050,26 @@ export const toolMetaMap = {
     "icon": "image",
     "iconColor": "text-rose-500"
   },
+  "ecg-qtc-calculator": {
+    "name": "ECG QTc Calculator",
+    "description": "Calculate corrected QT interval using Bazett, Fridericia, Framingham, and Hodges formulas with real-time comparison.",
+    "category": "Health & Fitness",
+    "topics": [
+      "Medical"
+    ],
+    "icon": "heart-pulse",
+    "iconColor": "text-rose-600"
+  },
+  "eclipse-simulator": {
+    "name": "Solar & Lunar Eclipse Simulator",
+    "description": "Interactive celestial optics simulator for Solar and Lunar eclipses with Umbra and Penumbra shadow cone geometry.",
+    "category": "Education & Science",
+    "topics": [
+      "Science"
+    ],
+    "icon": "sun-medium",
+    "iconColor": "text-teal-500"
+  },
   "eisenhower-matrix-tool": {
     "name": "Eisenhower Matrix Tool",
     "description": "Prioritize tasks in a real-time four-quadrant matrix with drag-and-drop workflow, live dashboard, notes, filters, and local save.",
@@ -2146,6 +3083,16 @@ export const toolMetaMap = {
     "icon": "layout-dashboard",
     "iconColor": "text-cyan-600"
   },
+  "electric-circuit-builder": {
+    "name": "Electric Circuit Builder",
+    "description": "Interactive schematic circuit simulator with live electron flow animations, component toggles, and real-time Ohm's Law calculations.",
+    "category": "Education & Science",
+    "topics": [
+      "Science"
+    ],
+    "icon": "zap",
+    "iconColor": "text-teal-500"
+  },
   "email-extractor": {
     "name": "Email Extractor",
     "description": "Extract email addresses from raw text, HTML content, or logs instantly, with domain frequency breakdowns and sorting.",
@@ -2155,6 +3102,26 @@ export const toolMetaMap = {
     ],
     "icon": "mail",
     "iconColor": "text-teal-500"
+  },
+  "email-subject-line-previewer": {
+    "name": "Email Subject Line Previewer",
+    "description": "A practical marketing tool for managing email subject line previewer workflows efficiently.",
+    "category": "Marketing & Social",
+    "topics": [
+      "Marketing"
+    ],
+    "icon": "mail",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "email-subject-line-tester": {
+    "name": "Email Subject Line Tester",
+    "description": "Score email subject lines for spam risk, readability, urgency and clickability, preview inbox truncation across Gmail, Outlook and Apple Mail, and A/B test two subject lines side by side.",
+    "category": "Marketing & Social",
+    "topics": [
+      "Email Marketing"
+    ],
+    "icon": "gauge",
+    "iconColor": "text-blue-600"
   },
   "email-thread-summarizer": {
     "name": "Email Thread Summarizer",
@@ -2246,6 +3213,19 @@ export const toolMetaMap = {
     "icon": "wand-2",
     "iconColor": "text-pink-600"
   },
+  "emoji-translator": {
+    "name": "Free Emoji Translator",
+    "description": "Discover the best free emoji translator online. Convert text to emoji symbols instantly for fun messages, bios, and social media posts.",
+    "category": [
+      "Text & Writing",
+      "Fun"
+    ],
+    "topics": [
+      "Text"
+    ],
+    "icon": "smile-plus",
+    "iconColor": "text-yellow-500"
+  },
   "emotion-detector": {
     "name": "Emotion Detector",
     "description": "Identify and analyze human facial expressions and emotions in real-time or from uploaded photos using AI.",
@@ -2277,6 +3257,16 @@ export const toolMetaMap = {
     "icon": "lock",
     "iconColor": "text-yellow-500"
   },
+  "enter-sql": {
+    "name": "Enter SQL",
+    "description": "Format, beautify, and compress SQL statement strings for easy viewing or filling.",
+    "category": "Developer",
+    "topics": [
+      "Developer Tools"
+    ],
+    "icon": "database",
+    "iconColor": "text-[var(--primary)]"
+  },
   "epf-calculator": {
     "name": "EPF Calculator",
     "description": "Project your EPF corpus at retirement with the real 12% split, EPS cap, yearly interest and EEE tax status.",
@@ -2288,12 +3278,43 @@ export const toolMetaMap = {
     "icon": "landmark",
     "iconColor": "text-teal-600"
   },
+  "equation-practice": {
+    "name": "Equation Practice",
+    "description": "Practice solving algebraic equations with randomised problems, instant feedback, hints, and performance tracking.",
+    "category": [
+      "Calculators",
+      "Education & Science"
+    ],
+    "topics": [
+      "Math",
+      "Education"
+    ],
+    "icon": "sigma",
+    "iconColor": "text-indigo-600"
+  },
   "error-log-pattern-grouper": {
     "name": "Error Log Pattern Grouper",
     "description": "Group recurring error-log patterns locally and inspect their frequency, severity, and examples.",
     "category": "Developer",
     "icon": "list-collapse",
     "iconColor": "text-primary"
+  },
+  "event-tool": {
+    "name": "Event Planner",
+    "description": "Plan, organize, and manage your events efficiently.",
+    "category": "Productivity",
+    "icon": "wrench",
+    "iconColor": "text-muted-foreground"
+  },
+  "exam-score-analyzer": {
+    "name": "Exam Score Analyzer",
+    "description": "Analyze your exam performance with grades, insights, and interactive charts.",
+    "category": "Education & Science",
+    "topics": [
+      "Education"
+    ],
+    "icon": "bar-chart-2",
+    "iconColor": "text-indigo-600"
   },
   "excel-formula": {
     "name": "Excel Formula",
@@ -2318,6 +3339,32 @@ export const toolMetaMap = {
     ],
     "icon": "bar-chart-3",
     "iconColor": "text-teal-600"
+  },
+  "excel-to-html-converter": {
+    "name": "Excel to HTML Converter",
+    "description": "Convert XLS/XLSX spreadsheets into HTML tables to easily preview and transfer.",
+    "category": [
+      "Developer",
+      "Business"
+    ],
+    "topics": [
+      "Utility"
+    ],
+    "icon": "file-spreadsheet",
+    "iconColor": "text-green-600"
+  },
+  "excel-to-pdf-converter": {
+    "name": "Excel to PDF Converter",
+    "description": "Convert Excel spreadsheets into structured PDF documents. This utility parses multiple sheets and renders them seamlessly without any watermarks.",
+    "category": [
+      "Developer",
+      "Business"
+    ],
+    "topics": [
+      "Utility"
+    ],
+    "icon": "file-text",
+    "iconColor": "text-red-600"
   },
   "excuse-generator": {
     "name": "Excuse Generator",
@@ -2370,6 +3417,22 @@ export const toolMetaMap = {
     "icon": "eye",
     "iconColor": "text-teal-600"
   },
+  "face-recognition-memory-test": {
+    "name": "Face Recognition Memory Test",
+    "description": "Test your facial memory and recognition ability by studying and identifying faces.",
+    "category": [
+      "Education & Science",
+      "Health & Fitness",
+      "Fun"
+    ],
+    "topics": [
+      "Neuroscience",
+      "Health",
+      "Interactive"
+    ],
+    "icon": "scan-face",
+    "iconColor": "text-purple-500"
+  },
   "face-shape-detector": {
     "name": "Face Shape Detector",
     "description": "Detect your face shape instantly using AI-powered facial landmark analysis. Identify oval, round, square, heart, diamond, and oblong face shapes with precision.",
@@ -2414,6 +3477,31 @@ export const toolMetaMap = {
     ],
     "icon": "scan-face",
     "iconColor": "text-teal-500"
+  },
+  "factorial-calculator": {
+    "name": "Factorial Calculator",
+    "description": "Calculate the factorial of a given number.",
+    "category": "Calculators",
+    "topics": [
+      "Math"
+    ],
+    "icon": "calculator",
+    "iconColor": "text-violet-600"
+  },
+  "fake-chat-maker": {
+    "name": "Fake Chat Maker",
+    "description": "Create clearly watermarked mock chat screenshots for social posts, UI demos, scripts, and storytelling templates.",
+    "category": [
+      "Marketing & Social",
+      "Design & Color"
+    ],
+    "topics": [
+      "Content Creation",
+      "Social Media",
+      "Design"
+    ],
+    "icon": "image",
+    "iconColor": "text-blue-600"
   },
   "fake-data": {
     "name": "Fake Data",
@@ -2529,12 +3617,59 @@ export const toolMetaMap = {
     "icon": "graduation-cap",
     "iconColor": "text-teal-600"
   },
+  "financial-goal-planner": {
+    "name": "Financial Goal Planner",
+    "description": "Plan and track multiple financial goals simultaneously. Set targets for retirement, education, travel, and more.",
+    "category": [
+      "Finance Calculators",
+      "Productivity"
+    ],
+    "topics": [
+      "Finance",
+      "Planners"
+    ],
+    "icon": "flag",
+    "iconColor": "text-teal-500"
+  },
   "financial-update": {
     "name": "Financial Update",
     "description": "Financial Update allows you to track the stock market trends and get Updates on the latest financial news.",
     "category": "Business",
     "icon": "bar-chart-3",
     "iconColor": "text-indigo-500"
+  },
+  "find-and-replace-tool": {
+    "name": "Find and Replace Tool",
+    "description": "Replace text in bulk, with optional regex and case-insensitive matching.",
+    "category": "Text & Writing",
+    "topics": [
+      "Text"
+    ],
+    "icon": "replace",
+    "iconColor": "text-orange-600"
+  },
+  "find-match": {
+    "name": "Find Match",
+    "description": "AI-Powered Matchmaking based on interests and personality.",
+    "category": "Lifestyle",
+    "topics": [
+      "Entertainment"
+    ],
+    "icon": "heart",
+    "iconColor": "text-pink-500"
+  },
+  "fire-calculator": {
+    "name": "FIRE Calculator",
+    "description": "Calculate your Financial Independence / Retire Early number using the 4% rule, SWR, and inflation-adjusted projections.",
+    "category": [
+      "Finance Calculators",
+      "Calculators"
+    ],
+    "topics": [
+      "Finance"
+    ],
+    "icon": "flame",
+    "iconColor": "text-orange-500"
   },
   "fire-number-calculator": {
     "name": "FIRE Number Calculator",
@@ -2546,6 +3681,31 @@ export const toolMetaMap = {
     ],
     "icon": "flame",
     "iconColor": "text-teal-600"
+  },
+  "flag-quiz": {
+    "name": "Flag Quiz",
+    "description": "Master world flags with dynamic quizzes — identify flags, match countries, and test your knowledge with real-time data from 200+ nations.",
+    "category": [
+      "Education & Science",
+      "Fun"
+    ],
+    "topics": [
+      "Education",
+      "Geography",
+      "Interactive"
+    ],
+    "icon": "flag",
+    "iconColor": "text-blue-600"
+  },
+  "flashcard-maker": {
+    "name": "Flashcard Maker",
+    "description": "Create, organize, and study flashcards with AI-assisted generation.",
+    "category": "Education & Science",
+    "topics": [
+      "Education"
+    ],
+    "icon": "credit-card",
+    "iconColor": "text-blue-600"
   },
   "flow-chart-maker": {
     "name": "Flow Chart Maker",
@@ -2635,6 +3795,16 @@ export const toolMetaMap = {
     "icon": "form",
     "iconColor": "text-blue-500"
   },
+  "fortune-cookie-generator": {
+    "name": "Fortune Cookie Generator",
+    "description": "Generate fun fortune cookie messages with lucky numbers, colors, and smooth card flip animations. Get your daily fortune and wisdom instantly.",
+    "category": [
+      "Fun",
+      "Lifestyle"
+    ],
+    "icon": "cookie",
+    "iconColor": "text-amber-500"
+  },
   "four-in-a-row": {
     "name": "Four in a Row",
     "description": "Drop discs and line up four in a row before the AI does — free online strategy board game.",
@@ -2660,6 +3830,16 @@ export const toolMetaMap = {
     "icon": "sparkles",
     "iconColor": "text-indigo-600"
   },
+  "fractal-generator": {
+    "name": "Fractal Generator",
+    "description": "Interactive real-time fractal generator exploring Mandelbrot, Julia sets, Koch Snowflake, Sierpinski Triangle, and Barnsley Fern with deep zoom controls.",
+    "category": "Education & Science",
+    "topics": [
+      "Science"
+    ],
+    "icon": "sparkles",
+    "iconColor": "text-teal-500"
+  },
   "fraction-calculator": {
     "name": "Fraction Calculator",
     "description": "Add, subtract, multiply, and divide fractions with step-by-step working, simplification, and decimal conversion.",
@@ -2673,6 +3853,20 @@ export const toolMetaMap = {
     ],
     "icon": "divide",
     "iconColor": "text-teal-600"
+  },
+  "fraction-visualizer": {
+    "name": "Fraction Visualizer",
+    "description": "Visually explore fraction concepts with interactive pie charts, fraction bars, number lines, and real-time calculations.",
+    "category": [
+      "Calculators",
+      "Education & Science"
+    ],
+    "topics": [
+      "Math",
+      "Education"
+    ],
+    "icon": "pie-chart",
+    "iconColor": "text-amber-600"
   },
   "frame-rate-converter": {
     "name": "Frame Rate Converter",
@@ -2735,6 +3929,19 @@ export const toolMetaMap = {
     ],
     "icon": "smile-plus",
     "iconColor": "text-yellow-600"
+  },
+  "funny-password-generator": {
+    "name": "Funny Password Generator - Memorable & Secure",
+    "description": "Generate funny, memorable passwords online with adjectives, nouns, numbers, and symbols. Secure yet hilarious password ideas you won't forget.",
+    "category": [
+      "Security & Privacy",
+      "Fun"
+    ],
+    "topics": [
+      "Cybersecurity Tool"
+    ],
+    "icon": "lock",
+    "iconColor": "text-purple-600"
   },
   "furniture-layout-planner": {
     "name": "Furniture Layout Planner",
@@ -2805,6 +4012,27 @@ export const toolMetaMap = {
     "icon": "key-round",
     "iconColor": "text-cyan-500"
   },
+  "geometry-formula-explorer": {
+    "name": "Geometry Formula Explorer",
+    "description": "Explore geometric formulas interactively — calculate area, perimeter, and volume with visual shapes and step-by-step breakdowns.",
+    "category": [
+      "Calculators",
+      "Education & Science"
+    ],
+    "topics": [
+      "Math",
+      "Education"
+    ],
+    "icon": "triangle",
+    "iconColor": "text-amber-600"
+  },
+  "gift-budget-tracker": {
+    "name": "Gift Budget Tracker",
+    "description": "Track your gift budget and expenses per person or event.",
+    "category": "Lifestyle",
+    "icon": "gift",
+    "iconColor": "text-rose-500"
+  },
   "gift-finder": {
     "name": "Gift Finder",
     "description": "find the best gift for your loved one.",
@@ -2862,6 +4090,21 @@ export const toolMetaMap = {
     "icon": "layers",
     "iconColor": "text-teal-600"
   },
+  "gmail-template-builder": {
+    "name": "Gmail Template Builder",
+    "description": "A drag-and-drop email template builder optimized for Gmail and marketing campaigns.",
+    "category": [
+      "Design & Color",
+      "Productivity",
+      "Marketing & Social"
+    ],
+    "topics": [
+      "Design",
+      "Marketing"
+    ],
+    "icon": "mail",
+    "iconColor": "text-teal-500"
+  },
   "gold-jewellery-calculator": {
     "name": "Gold Jewellery Price Calculator",
     "description": "See the real price of gold jewellery: purity rate, making charges, wastage, GST 3% and your resale loss.",
@@ -2907,6 +4150,19 @@ export const toolMetaMap = {
     "icon": "compass",
     "iconColor": "text-amber-600"
   },
+  "google-ads-description-writer": {
+    "name": "Google Ads Writer",
+    "description": "Generate highly converting Google Ads descriptions using AI.",
+    "category": [
+      "Business",
+      "AI Tools"
+    ],
+    "topics": [
+      "AI"
+    ],
+    "icon": "megaphone",
+    "iconColor": "text-green-500"
+  },
   "gpa-cgpa-calculator": {
     "name": "GPA / CGPA Calculator",
     "description": "A smart academic calculator for Semester GPA, Overall CGPA, and Percentage prediction.",
@@ -2926,6 +4182,21 @@ export const toolMetaMap = {
     ],
     "icon": "palette",
     "iconColor": "text-teal-600"
+  },
+  "grammar-quiz": {
+    "name": "Grammar Quiz",
+    "description": "Interactive grammar quizzes covering tenses, articles, prepositions, and more with instant feedback and analytics.",
+    "category": [
+      "Education & Science",
+      "Text & Writing"
+    ],
+    "topics": [
+      "Education",
+      "Language",
+      "Writing"
+    ],
+    "icon": "graduation-cap",
+    "iconColor": "text-green-600"
   },
   "grammer-checker": {
     "name": "Grammer Checker",
@@ -2947,6 +4218,16 @@ export const toolMetaMap = {
     ],
     "icon": "briefcase-business",
     "iconColor": "text-teal-600"
+  },
+  "gravity-orbit-simulator": {
+    "name": "Gravity Orbit Simulator",
+    "description": "Interactive N-body orbital mechanics simulator with velocity vectors, orbital eccentricity, escape velocity, and collision mechanics.",
+    "category": "Education & Science",
+    "topics": [
+      "Science"
+    ],
+    "icon": "orbit",
+    "iconColor": "text-teal-500"
   },
   "grocery-list-builder": {
     "name": "Smart Grocery List Builder",
@@ -2999,6 +4280,30 @@ export const toolMetaMap = {
     "icon": "file-spreadsheet",
     "iconColor": "text-green-600"
   },
+  "gstin-format-validator": {
+    "name": "GSTIN Format Validator",
+    "description": "Validate Indian GSTIN format, decode state code, extract PAN, verify checksum, mask output, and check bulk GSTIN lists locally.",
+    "category": [
+      "Finance Calculators",
+      "Business"
+    ],
+    "topics": [
+      "Finance",
+      "Utility"
+    ],
+    "icon": "file-text",
+    "iconColor": "text-blue-600"
+  },
+  "gzip-encryption": {
+    "name": "Gzip Encryption & Decryption",
+    "description": "Gzip encryption and decryption. Quickly and easily encrypt and decrypt gzip strings!",
+    "category": "Developer",
+    "topics": [
+      "Developer Tools"
+    ],
+    "icon": "zap",
+    "iconColor": "text-[var(--primary)]"
+  },
   "habbit_cost_calculator": {
     "name": "Habit Cost Calculator",
     "description": "Calculate the cost of your habits and make informed decisions.",
@@ -3008,6 +4313,16 @@ export const toolMetaMap = {
     ],
     "icon": "calculator",
     "iconColor": "text-green-600"
+  },
+  "hair-care-tool": {
+    "name": "Hair Care Guide",
+    "description": "Get personalized hair care routines.",
+    "category": "Lifestyle",
+    "topics": [
+      "Beauty"
+    ],
+    "icon": "scissors",
+    "iconColor": "text-pink-500"
   },
   "hair-color-preview": {
     "name": "Hair Color Preview",
@@ -3055,6 +4370,30 @@ export const toolMetaMap = {
     "icon": "spell-check",
     "iconColor": "text-rose-600"
   },
+  "harry-potter-pencil-writer": {
+    "name": "Harry Potter Pencil Writer",
+    "description": "Transform your ordinary words into magical enchantments with customizable spell-binding fonts and magical glow effects.",
+    "category": [
+      "Fun",
+      "Design & Color"
+    ],
+    "topics": [
+      "Creators",
+      "Design"
+    ],
+    "icon": "wand-2",
+    "iconColor": "text-teal-500"
+  },
+  "hashtag-hustle-magic-tool": {
+    "name": "Hashtag Hustle Magic",
+    "description": "Generate highly engaging and viral hashtags for your social media posts.",
+    "category": "Marketing & Social",
+    "topics": [
+      "Social Media"
+    ],
+    "icon": "wrench",
+    "iconColor": "text-muted-foreground"
+  },
   "hashtag-set-organizer": {
     "name": "Hashtag Set Organizer",
     "description": "Futuristic social media hashtag planner & marketing dashboard.",
@@ -3071,6 +4410,26 @@ export const toolMetaMap = {
     "category": "Health & Fitness",
     "icon": "stethoscope",
     "iconColor": "text-teal-500"
+  },
+  "heart-rate-calculator": {
+    "name": "Heart Rate Zones Calculator",
+    "description": "Calculate your maximum heart rate and target training zones for optimal fitness results.",
+    "category": "Health & Fitness",
+    "topics": [
+      "health"
+    ],
+    "icon": "wrench",
+    "iconColor": "text-muted-foreground"
+  },
+  "heart-rate-zone-calculator": {
+    "name": "Heart Rate Zone Calculator",
+    "description": "Calculate your target heart rate zones for optimal training intensity and fat burning.",
+    "category": "Health & Fitness",
+    "topics": [
+      "Medical"
+    ],
+    "icon": "zap",
+    "iconColor": "text-orange-600"
   },
   "heart-rate-zones": {
     "name": "Heart Rate Training Zones",
@@ -3107,6 +4466,19 @@ export const toolMetaMap = {
     "icon": "hash",
     "iconColor": "text-sky-600"
   },
+  "hexadecimal-converter": {
+    "name": "Hexadecimal Converter",
+    "description": "Convert between hexadecimal, decimal, and binary formats instantly with color-coded nibble visualization and bit-level breakdown.",
+    "category": [
+      "Developer",
+      "Education & Science"
+    ],
+    "topics": [
+      "Education"
+    ],
+    "icon": "divide",
+    "iconColor": "text-teal-500"
+  },
   "hidden-talent-finder": {
     "name": "Hidden Talent Finder",
     "description": "Discover your unique and quirky hidden talent based on your name and birth month.",
@@ -3138,6 +4510,16 @@ export const toolMetaMap = {
     "icon": "book-open",
     "iconColor": "text-rose-700"
   },
+  "hinglish-coding-tool": {
+    "name": "Hinglish Coding Dictionary",
+    "description": "Learn coding concepts translated playfully into everyday Hinglish.",
+    "category": "Developer",
+    "topics": [
+      "Development"
+    ],
+    "icon": "wrench",
+    "iconColor": "text-muted-foreground"
+  },
   "home-maintenance-scheduler": {
     "name": "Home Maintenance Scheduler",
     "description": "Plan home maintenance tasks with due dates, frequency, priorities, and monthly scheduling.",
@@ -3158,12 +4540,32 @@ export const toolMetaMap = {
     "icon": "star",
     "iconColor": "text-orange-700"
   },
+  "hourly-to-salary-calculator": {
+    "name": "Hourly to Salary Calculator",
+    "description": "Convert hourly wage to annual salary based on hours worked per year.",
+    "category": "Finance Calculators",
+    "topics": [
+      "Finance"
+    ],
+    "icon": "calculator",
+    "iconColor": "text-emerald-600"
+  },
   "household-electricity-bill": {
     "name": "Household Electricity Bill",
     "description": "Calculate your household electricity bill",
     "category": "Lifestyle",
     "icon": "plug",
     "iconColor": "text-blue-600"
+  },
+  "how-lucky-are-you": {
+    "name": "How Lucky Are You? Fortune Quiz",
+    "description": "Take our free luck quiz to find out how lucky you really are. Answer 10 fun questions and discover your luck score with this entertaining online fortune quiz.",
+    "category": "Fun",
+    "topics": [
+      "Quiz"
+    ],
+    "icon": "clover",
+    "iconColor": "text-green-600"
   },
   "hra-exemption-calculator": {
     "name": "HRA Exemption Calculator",
@@ -3196,6 +4598,61 @@ export const toolMetaMap = {
     "icon": "file-code",
     "iconColor": "text-red-600"
   },
+  "html-email-checker": {
+    "name": "HTML Email Checker",
+    "description": "Audit email HTML for client compatibility, accessibility, spam risk and performance with a live preview and deterministic rule-based scoring.",
+    "category": "Marketing & Social",
+    "topics": [
+      "Email Marketing"
+    ],
+    "icon": "file-code",
+    "iconColor": "text-indigo-600",
+    "wideWorkspace": true
+  },
+  "html-js-converter": {
+    "name": "HTML JS Converter",
+    "description": "Convert HTML to JavaScript template code and convert JavaScript markup back into clean HTML placeholders.",
+    "category": "Developer",
+    "topics": [
+      "Web",
+      "Code"
+    ],
+    "icon": "file-code",
+    "iconColor": "text-yellow-600"
+  },
+  "html-jsp-converter": {
+    "name": "HTML JSP Converter",
+    "description": "Convert HTML to JSP templates and convert JSP back to clean HTML with directives, EL placeholders, and asset path handling.",
+    "category": "Developer",
+    "topics": [
+      "Web",
+      "Code"
+    ],
+    "icon": "file-code",
+    "iconColor": "text-blue-600"
+  },
+  "html-perl-converter": {
+    "name": "HTML Perl Converter",
+    "description": "Convert HTML to Perl CGI output and convert Perl or VPerl-style templates back into clean HTML placeholders.",
+    "category": "Developer",
+    "topics": [
+      "Web",
+      "Code"
+    ],
+    "icon": "file-code",
+    "iconColor": "text-indigo-600"
+  },
+  "html-php-converter": {
+    "name": "HTML PHP Converter",
+    "description": "Convert HTML to PHP templates and convert PHP back to clean HTML with safe echo placeholders, variables, and asset path handling.",
+    "category": "Developer",
+    "topics": [
+      "Web",
+      "Code"
+    ],
+    "icon": "file-code",
+    "iconColor": "text-sky-600"
+  },
   "html-table-generator": {
     "name": "HTML Table Generator",
     "description": "Create HTML tables with custom row/column layouts. Tweak designs, edit table cells directly, and copy clean markup/CSS code.",
@@ -3214,6 +4671,17 @@ export const toolMetaMap = {
     "icon": "file-code",
     "iconColor": "text-orange-600"
   },
+  "html-vbnet-converter": {
+    "name": "HTML VB.NET Converter",
+    "description": "Convert HTML to VB.NET ASP.NET templates and convert VB.NET markup back to clean HTML placeholders.",
+    "category": "Developer",
+    "topics": [
+      "Web",
+      "Code"
+    ],
+    "icon": "file-code",
+    "iconColor": "text-violet-600"
+  },
   "http-status-code-explainer": {
     "name": "HTTP Status Code Explainer",
     "description": "Understand HTTP status codes with simple, clear explanations instantly.",
@@ -3223,6 +4691,30 @@ export const toolMetaMap = {
     ],
     "icon": "network",
     "iconColor": "text-purple-700"
+  },
+  "human-anatomy-explorer": {
+    "name": "Human Anatomy Explorer",
+    "description": "Explore the human body with an interactive diagram. Click on organs to learn about their functions, systems, and fascinating facts.",
+    "category": [
+      "Health & Fitness",
+      "Education & Science"
+    ],
+    "topics": [
+      "Health",
+      "Education"
+    ],
+    "icon": "brain",
+    "iconColor": "text-teal-600"
+  },
+  "human-heart-pump-simulator": {
+    "name": "Human Heart Pump Simulator",
+    "description": "Interactive cardiovascular heart pump simulator with cardiac cycle beating animations, 4 chambers, valves, and systemic vs pulmonary blood flow.",
+    "category": "Education & Science",
+    "topics": [
+      "Science"
+    ],
+    "icon": "heart-pulse",
+    "iconColor": "text-teal-500"
   },
   "icon-maker": {
     "name": "Icon Maker Tool",
@@ -3244,6 +4736,21 @@ export const toolMetaMap = {
     ],
     "icon": "scale",
     "iconColor": "text-teal-600"
+  },
+  "idiom-explorer": {
+    "name": "Idiom Explorer",
+    "description": "Search, explore, and learn English idioms with meanings, examples, origins, and quiz mode.",
+    "category": [
+      "Education & Science",
+      "Text & Writing"
+    ],
+    "topics": [
+      "Education",
+      "Language",
+      "Writing"
+    ],
+    "icon": "book-open-text",
+    "iconColor": "text-violet-600"
   },
   "image-collage-maker": {
     "name": "Image Collage Maker",
@@ -3457,6 +4964,21 @@ export const toolMetaMap = {
     "icon": "calculator",
     "iconColor": "text-indigo-600"
   },
+  "indian-holiday-finder": {
+    "name": "Indian Holiday Finder",
+    "description": "Find Indian public holidays, festivals, bank weekends, long weekends, and state-wise holiday planning windows.",
+    "category": [
+      "Lifestyle",
+      "Productivity"
+    ],
+    "topics": [
+      "India",
+      "Calendar",
+      "Utility"
+    ],
+    "icon": "calendar-range",
+    "iconColor": "text-blue-600"
+  },
   "inflation-calculator": {
     "name": "Inflation Impact Calculator",
     "description": "See what inflation does to your money — future costs, shrinking purchasing power, and the return you need to beat it.",
@@ -3467,6 +4989,20 @@ export const toolMetaMap = {
     ],
     "icon": "trending-up",
     "iconColor": "text-teal-600"
+  },
+  "inflation-impact-calculator": {
+    "name": "Inflation Impact Calculator",
+    "description": "Estimate future prices, purchasing power loss, lifestyle cost gap, real investment value, and inflation-adjusted planning needs.",
+    "category": [
+      "Business",
+      "Finance Calculators"
+    ],
+    "topics": [
+      "Calculator",
+      "Finance"
+    ],
+    "icon": "trending-up",
+    "iconColor": "text-rose-600"
   },
   "ingredient-substitute-finder": {
     "name": "Ingredient Substitute Finder",
@@ -3561,6 +5097,29 @@ export const toolMetaMap = {
     "icon": "battery-charging",
     "iconColor": "text-teal-600"
   },
+  "investment-fee-impact-calculator": {
+    "name": "Investment Fee Impact Calculator",
+    "description": "See how expense ratios, management fees, and transaction costs eat into your investment returns over time.",
+    "category": [
+      "Finance Calculators",
+      "Calculators"
+    ],
+    "topics": [
+      "Finance"
+    ],
+    "icon": "scissors",
+    "iconColor": "text-rose-500"
+  },
+  "investor-risk-profile-quiz": {
+    "name": "Investor Risk Profile Quiz",
+    "description": "A practical crypto / invest tool for managing investor risk profile quiz workflows efficiently.",
+    "category": "Finance Calculators",
+    "topics": [
+      "Crypto / Invest"
+    ],
+    "icon": "shield-alert",
+    "iconColor": "text-blue-500"
+  },
   "invisible-character-generator": {
     "name": "Invisible Character Generator",
     "description": "Generate invisible Unicode characters like zero-width spaces and joiners. Copy with one click for use in bios, usernames, and more.",
@@ -3597,6 +5156,26 @@ export const toolMetaMap = {
     "icon": "network",
     "iconColor": "text-blue-500"
   },
+  "ip-address-to-number": {
+    "name": "IP Address to Number",
+    "description": "Convert IP address to number. The online tool to convert IP address to number can quickly convert IP address to digital format.",
+    "category": "Developer",
+    "topics": [
+      "Developer Tools"
+    ],
+    "icon": "network",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "ip-finder": {
+    "name": "IP Address Finder",
+    "description": "Lookup IP location, ISP, ASN, timezone, map links, and network details.",
+    "category": "Developer",
+    "topics": [
+      "Web"
+    ],
+    "icon": "globe",
+    "iconColor": "text-primary"
+  },
   "ip-geolocation-lookup": {
     "name": "IP Geolocation Lookup",
     "description": "Lookup IP location, ISP, ASN, timezone, map links, and network details.",
@@ -3607,6 +5186,35 @@ export const toolMetaMap = {
     "icon": "globe",
     "iconColor": "text-blue-600"
   },
+  "ipa-to-text": {
+    "name": "IPA to Text Helper",
+    "description": "Paste IPA notation and get the most likely English word(s), with multiple candidate suggestions and validation for malformed input.",
+    "category": [
+      "Education & Science",
+      "Text & Writing"
+    ],
+    "topics": [
+      "Education",
+      "Language"
+    ],
+    "icon": "audio-lines",
+    "iconColor": "text-cyan-600"
+  },
+  "iq-style-mini-quiz": {
+    "name": "IQ Style Mini Quiz",
+    "description": "Challenge your brain with an IQ-style mini quiz featuring logical reasoning, pattern recognition, memory, and problem-solving questions across multiple difficulty levels.",
+    "category": [
+      "Education & Science",
+      "Fun"
+    ],
+    "topics": [
+      "Neuroscience",
+      "Education",
+      "Interactive"
+    ],
+    "icon": "brain",
+    "iconColor": "text-purple-600"
+  },
   "ishihara-color-blind-test": {
     "name": "Ishihara Color Blind Test",
     "description": "A professional accessibility-focused color vision deficiency screening experience.",
@@ -3615,6 +5223,19 @@ export const toolMetaMap = {
       "Medical"
     ],
     "icon": "palette",
+    "iconColor": "text-blue-600"
+  },
+  "itinerary-builder": {
+    "name": "Itinerary Builder",
+    "description": "Build a day-wise travel itinerary with time slots, activities, costs, conflicts, pace, and export-ready plans.",
+    "category": [
+      "Lifestyle",
+      "Productivity"
+    ],
+    "topics": [
+      "Travel"
+    ],
+    "icon": "calendar",
     "iconColor": "text-blue-600"
   },
   "javascript-tools": {
@@ -3699,6 +5320,16 @@ export const toolMetaMap = {
     "icon": "braces",
     "iconColor": "text-emerald-600"
   },
+  "json-formatter": {
+    "name": "JSON Formatting",
+    "description": "Regular formatted display of JSON, plus automatic formatting/conversion for API interface testing (GET, POST, POST-JSON).",
+    "category": "Developer",
+    "topics": [
+      "Developer Tools"
+    ],
+    "icon": "braces",
+    "iconColor": "text-primary"
+  },
   "json-mutual-conversion-postman-parameters-tool": {
     "name": "JSON Mutual Conversion Postman Parameters Tool",
     "description": "Convert JSON to Postman query params, form-data, x-www-form-urlencoded bodies, raw JSON, dynamic headers, and cURL with real-time two-way parsing.",
@@ -3730,6 +5361,17 @@ export const toolMetaMap = {
     ],
     "icon": "git-fork",
     "iconColor": "text-primary"
+  },
+  "json-to-excel-csv": {
+    "name": "JSON to Excel/CSV Converter",
+    "description": "Convert pasted JSON or uploaded JSON files into clean CSV and Excel-ready spreadsheet downloads.",
+    "category": "Developer",
+    "topics": [
+      "Data",
+      "Utility"
+    ],
+    "icon": "file-spreadsheet",
+    "iconColor": "text-emerald-600"
   },
   "json-to-go-struct": {
     "name": "JSON To Go Struct Generator",
@@ -3783,6 +5425,43 @@ export const toolMetaMap = {
     "icon": "lock",
     "iconColor": "text-amber-600"
   },
+  "kaal-sarp-dosha-checker": {
+    "name": "Kaal Sarp Dosha Checker",
+    "description": "Check if all 7 planets (Sun through Saturn) are positioned between Rahu and Ketu, forming Kaal Sarp Dosha. Identifies the dosha type — Anant, Kulik, Vasuki, Takshak, and 8 more — using real planetary positions.",
+    "category": "Lifestyle",
+    "topics": [
+      "Astrology"
+    ],
+    "icon": "dna",
+    "iconColor": "text-violet-600"
+  },
+  "kebab-case-converter": {
+    "name": "Kebab Case Converter",
+    "description": "Convert any phrase into kebab case.",
+    "category": "Developer",
+    "icon": "case-sensitive",
+    "iconColor": "text-violet-600"
+  },
+  "keyboard-layout-tester": {
+    "name": "Keyboard Layout Tester",
+    "description": "Test your keyboard layout interactively — see which keys register, check rollover, and diagnose stuck or ghost keys in real time.",
+    "category": "Developer",
+    "topics": [
+      "Utility"
+    ],
+    "icon": "keyboard",
+    "iconColor": "text-teal-500"
+  },
+  "keyboard-shortcut-trainer": {
+    "name": "Keyboard Shortcut Trainer",
+    "description": "Master keyboard shortcuts across platforms and apps with interactive practice and flashcard study modes.",
+    "category": "Education & Science",
+    "topics": [
+      "EdTech"
+    ],
+    "icon": "keyboard",
+    "iconColor": "text-teal-600"
+  },
   "kitchen-multi-timer": {
     "name": "Kitchen Multi-Timer",
     "description": "Run named timers for every dish at once, with real cook-time presets and a plan that gets everything ready together.",
@@ -3792,6 +5471,17 @@ export const toolMetaMap = {
     ],
     "icon": "timer-reset",
     "iconColor": "text-teal-600"
+  },
+  "kitchen-unit-converter": {
+    "name": "Kitchen Unit Converter",
+    "description": "Convert kitchen unit values or formats quickly with clear, usable results.",
+    "category": "Lifestyle",
+    "topics": [
+      "Food",
+      "Kitchen"
+    ],
+    "icon": "wrench",
+    "iconColor": "text-[var(--primary)]"
   },
   "klondike-solitaire": {
     "name": "Klondike Solitaire",
@@ -3814,6 +5504,16 @@ export const toolMetaMap = {
     "icon": "star",
     "iconColor": "text-purple-600"
   },
+  "kundli-matching": {
+    "name": "Kundli Matching (Guna Milan)",
+    "description": "Ashta Koota compatibility check — 8 categories, 36 gunas. Calculate Varna, Vashya, Tara, Yoni, Graha Maitri, Gana, Bhakoot, Nadi, and Manglik Dosha for two individuals using real astronomical calculations.",
+    "category": "Lifestyle",
+    "topics": [
+      "Astrology"
+    ],
+    "icon": "heart",
+    "iconColor": "text-rose-600"
+  },
   "land-area-converter": {
     "name": "Land Area Converter (Indian Units)",
     "description": "Convert bigha, katha, kanal, guntha, cent and acre using the exact value your state actually uses.",
@@ -3824,6 +5524,56 @@ export const toolMetaMap = {
     ],
     "icon": "land-plot",
     "iconColor": "text-teal-600"
+  },
+  "language-detector": {
+    "name": "Language Detector",
+    "description": "Detect the language of any text with a confidence score, script detection, character statistics, and support for mixed-language input.",
+    "category": [
+      "Education & Science",
+      "Text & Writing",
+      "AI Tools"
+    ],
+    "topics": [
+      "Education",
+      "Language",
+      "AI"
+    ],
+    "icon": "languages",
+    "iconColor": "text-cyan-600"
+  },
+  "language-learning-flashcards": {
+    "name": "Language Learning Flashcards",
+    "description": "Create flashcards, organize into categories, practice with spaced repetition, track progress, and import/export flashcard sets.",
+    "category": [
+      "Education & Science",
+      "Productivity"
+    ],
+    "topics": [
+      "Education"
+    ],
+    "icon": "book-open-check",
+    "iconColor": "text-teal-600"
+  },
+  "laptop-hack": {
+    "name": "Laptop Hack",
+    "description": "Simulated laptop hacking terminal for educational and entertainment purposes.",
+    "category": "Security & Privacy",
+    "topics": [
+      "Entertainment",
+      "Security"
+    ],
+    "icon": "terminal",
+    "iconColor": "text-green-500"
+  },
+  "lcm-and-gcd-calculator": {
+    "name": "LCM and GCD Calculator",
+    "description": "Calculate the Least Common Multiple (LCM) and Greatest Common Divisor (GCD) of two numbers.",
+    "category": "Calculators",
+    "topics": [
+      "Math"
+    ],
+    "icon": "calculator",
+    "iconColor": "text-rose-600"
   },
   "leftover-recipe-finder": {
     "name": "Leftover Ingredients Recipe Finder",
@@ -3845,12 +5595,62 @@ export const toolMetaMap = {
     "icon": "camera",
     "iconColor": "text-blue-500"
   },
+  "lens-mirror-simulator": {
+    "name": "Lens & Mirror Simulator",
+    "description": "Interactive geometric optics ray diagram generator for convex/concave lenses and spherical mirrors with real-time magnification and image tracking.",
+    "category": "Education & Science",
+    "topics": [
+      "Science"
+    ],
+    "icon": "glasses",
+    "iconColor": "text-teal-500"
+  },
   "life-productivity-score": {
     "name": "Life Productivity Score",
     "description": "Calculate your life productivity score",
     "category": "Lifestyle",
     "icon": "activity",
     "iconColor": "text-green-600"
+  },
+  "life-stats": {
+    "name": "Life Stats",
+    "description": "Discover your life in numbers — heartbeats, breaths, dreams, and more. Enter your birth date to reveal the hidden statistics of your existence.",
+    "category": [
+      "Fun",
+      "Lifestyle"
+    ],
+    "icon": "clock",
+    "iconColor": "text-pink-500"
+  },
+  "light-refraction-simulator": {
+    "name": "Light Refraction Simulator",
+    "description": "Interactive Snell's Law light refraction simulator with material refractive index controls, critical angle detection, and Total Internal Reflection.",
+    "category": "Education & Science",
+    "topics": [
+      "Science"
+    ],
+    "icon": "sun",
+    "iconColor": "text-teal-500"
+  },
+  "line-break-remover": {
+    "name": "Line Break Remover",
+    "description": "Remove unwanted line breaks from text.",
+    "category": "Text & Writing",
+    "topics": [
+      "Text"
+    ],
+    "icon": "type",
+    "iconColor": "text-blue-600"
+  },
+  "line-numbering-tool": {
+    "name": "Line Numbering Tool",
+    "description": "Add sequential line numbers to every line of your text.",
+    "category": "Text & Writing",
+    "topics": [
+      "Text"
+    ],
+    "icon": "list-ordered",
+    "iconColor": "text-indigo-600"
   },
   "link-organizer": {
     "name": "Link Organizer",
@@ -3900,6 +5700,26 @@ export const toolMetaMap = {
     "icon": "terminal",
     "iconColor": "text-cyan-500"
   },
+  "lipid-profile-analyzer": {
+    "name": "Lipid Profile Analyzer",
+    "description": "Complete lipid panel analysis with NCEP ATP III classification, cardiovascular risk scoring, risk factor integration, and personalized treatment recommendations.",
+    "category": "Health & Fitness",
+    "topics": [
+      "Medical"
+    ],
+    "icon": "droplet",
+    "iconColor": "text-amber-600"
+  },
+  "lipid-risk-calculator": {
+    "name": "Lipid Risk Calculator",
+    "description": "Calculate lipid panel risk assessment, LDL/HDL ratios, and cardiovascular risk from cholesterol levels with NCEP ATP III guidelines.",
+    "category": "Health & Fitness",
+    "topics": [
+      "Medical"
+    ],
+    "icon": "droplet",
+    "iconColor": "text-amber-600"
+  },
   "lissajous-pattern-generator": {
     "name": "Lissajous Pattern Generator",
     "description": "Generate elegant frequency-based mathematical curves and oscilloscope-style Lissajous patterns.",
@@ -3942,6 +5762,19 @@ export const toolMetaMap = {
     "icon": "git-compare",
     "iconColor": "text-teal-600"
   },
+  "loan-prepayment-calculator": {
+    "name": "Loan Prepayment Calculator",
+    "description": "Compare your loan with and without prepayments. See how extra payments reduce your tenure and total interest paid.",
+    "category": [
+      "Finance Calculators",
+      "Calculators"
+    ],
+    "topics": [
+      "Finance"
+    ],
+    "icon": "percent",
+    "iconColor": "text-red-500"
+  },
   "loan-prepayment-savings": {
     "name": "Loan Prepayment Savings",
     "description": "See how extra loan payments reduce interest costs and shorten tenure. Compare one-time, monthly, quarterly, half-yearly, yearly, or custom prepayment plans.",
@@ -3970,6 +5803,19 @@ export const toolMetaMap = {
     "icon": "database",
     "iconColor": "text-blue-600"
   },
+  "logic-gate-simulator": {
+    "name": "Logic Gate Simulator",
+    "description": "Interactively simulate AND, OR, NOT, NAND, NOR, XOR, and XNOR logic gates with toggle inputs, truth tables, and visual circuit diagrams.",
+    "category": [
+      "Education & Science",
+      "Developer"
+    ],
+    "topics": [
+      "Education"
+    ],
+    "icon": "git-branch",
+    "iconColor": "text-teal-500"
+  },
   "logo-similarity-checker": {
     "name": "Logo Similarity Checker",
     "description": "Compare two logos using AI-powered visual analysis. Analyze shape, color, layout, and typography similarity entirely in your browser.",
@@ -3984,6 +5830,13 @@ export const toolMetaMap = {
     ],
     "icon": "image",
     "iconColor": "text-indigo-500"
+  },
+  "logo-slogan-generator-tool": {
+    "name": "Logo & Slogan Generator",
+    "description": "Create memorable slogans and catchy logo concepts for your brand.",
+    "category": "Business",
+    "icon": "wrench",
+    "iconColor": "text-muted-foreground"
   },
   "long-weekend-planner": {
     "name": "Long Weekend Planner",
@@ -4067,6 +5920,47 @@ export const toolMetaMap = {
     "icon": "dices",
     "iconColor": "text-amber-500"
   },
+  "luggage-weight-splitter": {
+    "name": "Luggage Weight Splitter",
+    "description": "Split luggage weight across travelers and bags, check airline limits, balance items, and export a clean packing weight plan.",
+    "category": [
+      "Lifestyle",
+      "Calculators"
+    ],
+    "topics": [
+      "Travel",
+      "Calculator"
+    ],
+    "icon": "scale",
+    "iconColor": "text-blue-600"
+  },
+  "lumpsum-calculator": {
+    "name": "Lumpsum Investment Calculator",
+    "description": "Calculate the future value of your one-time lumpsum investment with compound growth projections and detailed year-by-year breakdown.",
+    "category": [
+      "Finance Calculators",
+      "Calculators"
+    ],
+    "topics": [
+      "Finance"
+    ],
+    "icon": "banknote",
+    "iconColor": "text-emerald-500"
+  },
+  "m2-blocks-game": {
+    "name": "Merge Blocks Game",
+    "description": "Merge falling blocks of matching numbers to double their value and score high combos.",
+    "category": [
+      "Games",
+      "Fun"
+    ],
+    "topics": [
+      "Game",
+      "Entertainment"
+    ],
+    "icon": "grid",
+    "iconColor": "text-purple-500"
+  },
   "macro-calculator": {
     "name": "Macro Calculator",
     "description": "Calculate your perfect daily macros for fat loss, muscle gain, or maintenance.",
@@ -4077,6 +5971,23 @@ export const toolMetaMap = {
     ],
     "icon": "utensils",
     "iconColor": "text-blue-600"
+  },
+  "magic-8-ball": {
+    "name": "Magic 8 Ball",
+    "description": "Get an answer to your yes/no question.",
+    "category": "Fun",
+    "icon": "magic-wand",
+    "iconColor": "text-violet-600"
+  },
+  "magnetic-field-visualizer": {
+    "name": "Magnetic Field Visualizer",
+    "description": "Interactive visualization of magnetic vector field lines, dipole forces, electromagnets, and flux density probes.",
+    "category": "Education & Science",
+    "topics": [
+      "Science"
+    ],
+    "icon": "magnet",
+    "iconColor": "text-teal-500"
   },
   "makeup-shade-finder": {
     "name": "Makeup Shade Finder",
@@ -4089,6 +6000,48 @@ export const toolMetaMap = {
     ],
     "icon": "palette",
     "iconColor": "text-teal-500"
+  },
+  "mandi-bhav": {
+    "name": "Mandi Bhav",
+    "description": "Check live daily crop and vegetable market rates from AGMARKNET for all Indian states.",
+    "category": "Finance Calculators",
+    "topics": [
+      "Utilities",
+      "Finance",
+      "Information"
+    ],
+    "icon": "trending-up",
+    "iconColor": "text-teal-500"
+  },
+  "manglik-dosha-checker": {
+    "name": "Manglik Dosha Checker",
+    "description": "Check if Mars is in a Manglik house (1st, 2nd, 4th, 7th, 8th, or 12th from the Moon) using real-time planetary calculations. Know your Manglik status, severity, and remedies.",
+    "category": "Lifestyle",
+    "topics": [
+      "Astrology"
+    ],
+    "icon": "flame",
+    "iconColor": "text-rose-600"
+  },
+  "map-puzzle": {
+    "name": "Map Puzzle",
+    "description": "Solve interactive geography puzzles — identify countries, capitals, flags, and landmarks on a map with scoring and difficulty levels.",
+    "category": "Education & Science",
+    "topics": [
+      "Education"
+    ],
+    "icon": "map",
+    "iconColor": "text-emerald-700"
+  },
+  "margin-calculator": {
+    "name": "Profit Margin Calculator",
+    "description": "Calculate your profit margin with ease.",
+    "category": "Finance Calculators",
+    "topics": [
+      "Finance"
+    ],
+    "icon": "calculator",
+    "iconColor": "text-teal-600"
   },
   "markdown-html-converter": {
     "name": "Markdown / HTML Converter",
@@ -4106,6 +6059,30 @@ export const toolMetaMap = {
     "category": "Developer",
     "icon": "edit",
     "iconColor": "text-blue-500"
+  },
+  "markup-calculator": {
+    "name": "Markup Calculator",
+    "description": "Calculate the total price including markup.",
+    "category": "Finance Calculators",
+    "topics": [
+      "Finance"
+    ],
+    "icon": "calculator",
+    "iconColor": "text-teal-600"
+  },
+  "math-speed-challenge": {
+    "name": "Math Speed Challenge",
+    "description": "Race against the clock with adaptive mental math challenges — operations scale in difficulty as your streak grows.",
+    "category": [
+      "Calculators",
+      "Education & Science"
+    ],
+    "topics": [
+      "Math",
+      "Education"
+    ],
+    "icon": "zap",
+    "iconColor": "text-amber-600"
   },
   "maze-muncher": {
     "name": "Maze Muncher",
@@ -4127,6 +6104,36 @@ export const toolMetaMap = {
     ],
     "icon": "hash",
     "iconColor": "text-teal-500"
+  },
+  "mean-arterial-pressure-calculator": {
+    "name": "Mean Arterial Pressure Calculator",
+    "description": "Calculate your Mean Arterial Pressure (MAP) from systolic and diastolic blood pressure readings.",
+    "category": "Health & Fitness",
+    "topics": [
+      "Medical"
+    ],
+    "icon": "heart-pulse",
+    "iconColor": "text-rose-600"
+  },
+  "mean-median-mode-calculator": {
+    "name": "Mean Median Mode Calculator",
+    "description": "Paste a list of numbers to get the mean, median, mode and range.",
+    "category": "Calculators",
+    "topics": [
+      "Math"
+    ],
+    "icon": "sigma",
+    "iconColor": "text-indigo-600"
+  },
+  "medication-reminder": {
+    "name": "Medication Reminder",
+    "description": "Keep track of your daily medications and schedule reminders.",
+    "category": "Health & Fitness",
+    "topics": [
+      "Health"
+    ],
+    "icon": "pill",
+    "iconColor": "text-blue-500"
   },
   "medicine-schedule-builder": {
     "name": "Medicine Schedule Builder",
@@ -4213,6 +6220,20 @@ export const toolMetaMap = {
     "icon": "layers",
     "iconColor": "text-blue-600"
   },
+  "memory-palace-builder": {
+    "name": "Memory Palace Builder",
+    "description": "Build virtual memory palaces using the method of loci — organize rooms and objects with associations to boost recall.",
+    "category": [
+      "Productivity",
+      "Education & Science"
+    ],
+    "topics": [
+      "Memory",
+      "Learning"
+    ],
+    "icon": "building-2",
+    "iconColor": "text-teal-600"
+  },
   "memory-span-calculator": {
     "name": "Memory Span Calculator",
     "description": "Measure your short-term memory span with digit, letter, and visual sequence tests. Track your span over time and learn the neuroscience behind it.",
@@ -4227,6 +6248,20 @@ export const toolMetaMap = {
     ],
     "icon": "brain",
     "iconColor": "text-emerald-600"
+  },
+  "mental-math-trainer": {
+    "name": "Mental Math Trainer",
+    "description": "Train your brain with real-time mental math exercises across addition, subtraction, multiplication, percentages, and more.",
+    "category": [
+      "Calculators",
+      "Education & Science"
+    ],
+    "topics": [
+      "Math",
+      "Education"
+    ],
+    "icon": "brain",
+    "iconColor": "text-violet-600"
   },
   "mental-rotation-test": {
     "name": "Mental Rotation Test",
@@ -4290,6 +6325,13 @@ export const toolMetaMap = {
     "icon": "bomb",
     "iconColor": "text-rose-600"
   },
+  "mirror-text-generator": {
+    "name": "Mirror Text Generator",
+    "description": "Reverse your text so it reads backwards, character by character.",
+    "category": "Fun",
+    "icon": "flip-horizontal",
+    "iconColor": "text-pink-600"
+  },
   "mobile-voting-app": {
     "name": "Mobile Voting App",
     "description": "Create real-time voting and polling apps for elections, team decisions, live events, and community feedback.",
@@ -4307,6 +6349,28 @@ export const toolMetaMap = {
     "icon": "cup-soda",
     "iconColor": "text-teal-600"
   },
+  "molecule-builder": {
+    "name": "Molecule Builder",
+    "description": "Interactive 2D chemical structure molecule builder with valence bonding, molecular weight calculators, and VSEPR geometry identification.",
+    "category": "Education & Science",
+    "topics": [
+      "Science"
+    ],
+    "icon": "atom",
+    "iconColor": "text-teal-500"
+  },
+  "monitor-ppi-calculator": {
+    "name": "Monitor PPI Calculator",
+    "description": "Calculate monitor ppi values quickly with a simple, structured workflow.",
+    "category": "Calculators",
+    "topics": [
+      "Utility",
+      "Electronics",
+      "Calculator"
+    ],
+    "icon": "monitor",
+    "iconColor": "text-blue-600"
+  },
   "monthly-budget-planner": {
     "name": "Monthly Budget Planner",
     "description": "Plan monthly income, expenses, savings, and category-wise spending with a visual budget breakdown.",
@@ -4320,6 +6384,16 @@ export const toolMetaMap = {
     ],
     "icon": "wallet",
     "iconColor": "text-blue-600"
+  },
+  "moon-phase-simulator": {
+    "name": "Moon Phase Simulator",
+    "description": "Interactive lunar phase simulator showing dual top-down orbital geometry and Earth-based illuminated moon phase visualization.",
+    "category": "Education & Science",
+    "topics": [
+      "Science"
+    ],
+    "icon": "moon",
+    "iconColor": "text-teal-500"
   },
   "moon-phase-viewer": {
     "name": "Moon Phase Today & Calendar",
@@ -4350,6 +6424,16 @@ export const toolMetaMap = {
     "icon": "volume-2",
     "iconColor": "text-teal-500"
   },
+  "morse-code-trainer": {
+    "name": "Morse Code Trainer",
+    "description": "Learn Morse code with interactive lessons, practice sessions, quizzes, audio playback, and progress tracking.",
+    "category": "Education & Science",
+    "topics": [
+      "Education"
+    ],
+    "icon": "ear",
+    "iconColor": "text-teal-500"
+  },
   "morse-code-translator": {
     "name": "Morse Code Translator",
     "description": "Translate plain text to Morse code and decode Morse back.",
@@ -4363,6 +6447,29 @@ export const toolMetaMap = {
     ],
     "icon": "arrow-left-right",
     "iconColor": "text-amber-600"
+  },
+  "mortgage-affordability-calculator": {
+    "name": "Mortgage Affordability Calculator",
+    "description": "Calculate your mortgage affordability based on income and loan details.",
+    "category": "Finance Calculators",
+    "topics": [
+      "Finance"
+    ],
+    "icon": "mortgage",
+    "iconColor": "text-teal-600"
+  },
+  "mortgage-calculator": {
+    "name": "Mortgage Calculator",
+    "description": "Calculate monthly mortgage payments, total interest, and amortization schedule. Compare different down payments and interest rates.",
+    "category": [
+      "Finance Calculators",
+      "Calculators"
+    ],
+    "topics": [
+      "Finance"
+    ],
+    "icon": "home",
+    "iconColor": "text-blue-500"
   },
   "motion-aftereffect-illusion": {
     "name": "Motion Aftereffect Illusion",
@@ -4378,6 +6485,39 @@ export const toolMetaMap = {
     ],
     "icon": "activity",
     "iconColor": "text-[var(--primary)]"
+  },
+  "motivation-reminder": {
+    "name": "Motivation Reminder",
+    "description": "Schedule daily motivation reminders to keep you inspired and focused on your goals.",
+    "category": [
+      "Lifestyle",
+      "Productivity"
+    ],
+    "topics": [
+      "Utilities"
+    ],
+    "icon": "sparkles",
+    "iconColor": "text-teal-500"
+  },
+  "mountain-quiz": {
+    "name": "Mountain Quiz",
+    "description": "Test your knowledge of the world's highest and most famous mountains — identify peaks, ranges, heights, and facts with timed quizzes and scoring.",
+    "category": "Education & Science",
+    "topics": [
+      "Education"
+    ],
+    "icon": "mountain",
+    "iconColor": "text-stone-700"
+  },
+  "moving-checklist": {
+    "name": "Moving Checklist Builder",
+    "description": "Build your moving checklist step by step. 40+ preset tasks across 6 timeline categories, custom items, progress tracking, and export.",
+    "category": [
+      "Lifestyle",
+      "Productivity"
+    ],
+    "icon": "clipboard-list",
+    "iconColor": "text-blue-600"
   },
   "moving-checklist-builder": {
     "name": "Moving Checklist Builder",
@@ -4442,6 +6582,19 @@ export const toolMetaMap = {
     "icon": "grid",
     "iconColor": "text-emerald-600"
   },
+  "multitasking-ability-test": {
+    "name": "Multitasking Ability Test",
+    "description": "Test your brain's ability to handle multiple tasks simultaneously with this timed cognitive challenge combining math problems and visual tracking.",
+    "category": [
+      "Education & Science",
+      "Games"
+    ],
+    "topics": [
+      "Brain & Memory"
+    ],
+    "icon": "layers",
+    "iconColor": "text-purple-500"
+  },
   "mysql-visualization-tools": {
     "name": "MySQL Visualization Tools",
     "description": "Visualize MySQL schemas, ER diagrams, relationships, query references, and export browser-generated diagrams in real time.",
@@ -4462,6 +6615,19 @@ export const toolMetaMap = {
     "icon": "heart",
     "iconColor": "text-rose-600"
   },
+  "net-worth-calculator": {
+    "name": "Net Worth Calculator",
+    "description": "Track your total assets minus liabilities. Add properties, investments, cash, loans, and credit card debt for a complete financial picture.",
+    "category": [
+      "Finance Calculators",
+      "Calculators"
+    ],
+    "topics": [
+      "Finance"
+    ],
+    "icon": "wallet",
+    "iconColor": "text-teal-500"
+  },
   "net-worth-tracker": {
     "name": "Net Worth Tracker",
     "description": "Track assets minus liabilities with monthly net worth snapshots, projections, and category breakdowns.",
@@ -4475,6 +6641,33 @@ export const toolMetaMap = {
     ],
     "icon": "scale",
     "iconColor": "text-emerald-600"
+  },
+  "networking-basics-quiz": {
+    "name": "Networking Basics Quiz",
+    "description": "Test your knowledge of computer networking fundamentals with interactive multiple-choice questions on protocols, models, devices, and addressing.",
+    "category": [
+      "Education & Science",
+      "Developer"
+    ],
+    "topics": [
+      "Education"
+    ],
+    "icon": "wifi",
+    "iconColor": "text-teal-500"
+  },
+  "neuroplasticity-habit-tracker": {
+    "name": "Neuroplasticity Habit Tracker",
+    "description": "Track daily habits scientifically proven to boost brain neuroplasticity — exercise, learning, sleep, mindfulness, social connection, and nutrition.",
+    "category": [
+      "Health & Fitness",
+      "Education & Science"
+    ],
+    "topics": [
+      "Health & Wellness",
+      "Brain & Memory"
+    ],
+    "icon": "brain-circuit",
+    "iconColor": "text-violet-500"
   },
   "never-have-i-ever": {
     "name": "Never Have I Ever",
@@ -4496,6 +6689,17 @@ export const toolMetaMap = {
     ],
     "icon": "grid-3x3",
     "iconColor": "text-sky-600"
+  },
+  "notice-period-calculator": {
+    "name": "Notice Period Calculator",
+    "description": "Calculate notice period values quickly with a simple, structured workflow.",
+    "category": "Business",
+    "topics": [
+      "Jobs",
+      "Career"
+    ],
+    "icon": "wrench",
+    "iconColor": "text-blue-500"
   },
   "nps-calculator": {
     "name": "NPS Calculator",
@@ -4545,6 +6749,27 @@ export const toolMetaMap = {
     "icon": "binary",
     "iconColor": "text-teal-600"
   },
+  "number-table-generator": {
+    "name": "Number Table Generator",
+    "description": "Generate number tables, sequences, and patterns with customizable parameters.",
+    "category": "Calculators",
+    "topics": [
+      "Math",
+      "Utility"
+    ],
+    "icon": "grid",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "number-to-roman-numeral": {
+    "name": "Number to Roman Numeral",
+    "description": "Convert any number from 1 to 3999 into Roman numerals.",
+    "category": "Converters",
+    "topics": [
+      "Converter"
+    ],
+    "icon": "hash",
+    "iconColor": "text-stone-600"
+  },
   "number-to-words-converter": {
     "name": "Number to Words Converter",
     "description": "Convert numbers into Indian or international words for cheques, invoices, and documents.",
@@ -4559,6 +6784,20 @@ export const toolMetaMap = {
     "icon": "file-text",
     "iconColor": "text-indigo-600"
   },
+  "nutrition-quality-score": {
+    "name": "Nutrition Quality Score",
+    "description": "Calculate your daily nutrition quality score based on vegetable, fruit, protein, and hydration intake to get actionable dietary feedback.",
+    "category": [
+      "Health & Fitness",
+      "Health Calculators"
+    ],
+    "topics": [
+      "Health & Wellness",
+      "Calculator"
+    ],
+    "icon": "apple",
+    "iconColor": "text-green-500"
+  },
   "occasion-reminder": {
     "name": "Occasion Reminder",
     "description": "Track important occasions with smart reminders, recurrence rules, and action-ready schedules.",
@@ -4568,6 +6807,16 @@ export const toolMetaMap = {
     ],
     "icon": "bell-ring",
     "iconColor": "text-indigo-600"
+  },
+  "ohms-law-calculator": {
+    "name": "Ohms Law Calculator",
+    "description": "Calculate voltage, current, or resistance using Ohm's Law.",
+    "category": "Education & Science",
+    "topics": [
+      "Science"
+    ],
+    "icon": "wrench",
+    "iconColor": "text-emerald-600"
   },
   "okr-generator": {
     "name": "OKR Generator",
@@ -4595,6 +6844,20 @@ export const toolMetaMap = {
     ],
     "icon": "wand-2",
     "iconColor": "text-teal-500"
+  },
+  "omega3-intake-calculator": {
+    "name": "Omega-3 Intake Calculator",
+    "description": "Calculate your daily EPA+DHA Omega-3 intake from fish, seeds, walnuts, and supplements and see if you're meeting recommended health guidelines.",
+    "category": [
+      "Health & Fitness",
+      "Health Calculators"
+    ],
+    "topics": [
+      "Health & Wellness",
+      "Calculator"
+    ],
+    "icon": "fish",
+    "iconColor": "text-blue-500"
   },
   "one-rep-max-calculator": {
     "name": "One Rep Max Calculator",
@@ -4635,6 +6898,13 @@ export const toolMetaMap = {
     "icon": "edit",
     "iconColor": "text-emerald-600"
   },
+  "online-timer-tool": {
+    "name": "Online Timer",
+    "description": "A simple, precise online timer and countdown application.",
+    "category": "Productivity",
+    "icon": "wrench",
+    "iconColor": "text-muted-foreground"
+  },
   "oven-temperature-converter": {
     "name": "Oven Temperature Converter",
     "description": "Convert oven temperatures between Celsius, Fahrenheit, gas marks and fan settings with a full reference chart.",
@@ -4658,12 +6928,35 @@ export const toolMetaMap = {
     "icon": "calendar-days",
     "iconColor": "text-teal-600"
   },
+  "oxygen-requirement-calculator": {
+    "name": "Oxygen Requirement Calculator",
+    "description": "Calculate oxygen requirements including flow rates, FiO2, and delivery device selection based on patient parameters and SpO2 targets.",
+    "category": "Health & Fitness",
+    "topics": [
+      "Medical"
+    ],
+    "icon": "wind",
+    "iconColor": "text-cyan-600"
+  },
   "package-version-checker": {
     "name": "Package Version Checker",
     "description": "Check package versions quickly and compare updates instantly.",
     "category": "Developer",
     "icon": "package-search",
     "iconColor": "text-purple-700"
+  },
+  "packing-list-generator": {
+    "name": "Packing List Generator",
+    "description": "Build smart packing lists by trip type, duration, climate, travelers, carry-on rules, and bag weight.",
+    "category": [
+      "Lifestyle",
+      "Productivity"
+    ],
+    "topics": [
+      "Travel"
+    ],
+    "icon": "package-search",
+    "iconColor": "text-blue-600"
   },
   "paddle-ball": {
     "name": "Paddle Ball Arcade",
@@ -4682,6 +6975,34 @@ export const toolMetaMap = {
     "category": "Text & Writing",
     "topics": [
       "Text"
+    ],
+    "icon": "check-circle",
+    "iconColor": "text-teal-500"
+  },
+  "pan-format-validator": {
+    "name": "PAN Format Validator",
+    "description": "Validate Indian PAN number format, normalize entries, identify holder type, mask output, and check bulk PAN lists locally.",
+    "category": [
+      "Finance Calculators",
+      "Business"
+    ],
+    "topics": [
+      "Finance",
+      "Utility"
+    ],
+    "icon": "id-card",
+    "iconColor": "text-blue-600"
+  },
+  "pangram-checker": {
+    "name": "Pangram Checker",
+    "description": "Check if any sentence uses every letter of the alphabet at least once. Learn about pangrams and see missing letters highlighted.",
+    "category": [
+      "Text & Writing",
+      "Education & Science"
+    ],
+    "topics": [
+      "Text",
+      "Education"
     ],
     "icon": "check-circle",
     "iconColor": "text-teal-500"
@@ -4751,6 +7072,31 @@ export const toolMetaMap = {
     "icon": "file-pen-line",
     "iconColor": "text-blue-600"
   },
+  "pdf-compressor": {
+    "name": "PDF Compressor",
+    "description": "Compress PDF files to reduce file size while maintaining quality.",
+    "category": "PDF & Documents",
+    "topics": [
+      "File",
+      "Utility"
+    ],
+    "icon": "file-down",
+    "iconColor": "text-[var(--success)]"
+  },
+  "pdf-delete-password": {
+    "name": "PDF Delete Password",
+    "description": "Remove password protection from PDF files securely and efficiently.",
+    "category": [
+      "Security & Privacy",
+      "PDF & Documents"
+    ],
+    "topics": [
+      "Security",
+      "File"
+    ],
+    "icon": "unlock",
+    "iconColor": "text-[var(--info)]"
+  },
   "pdf-merger": {
     "name": "PDF Merger Tool",
     "description": "Merge multiple PDF files quickly into a single document.",
@@ -4760,6 +7106,16 @@ export const toolMetaMap = {
     ],
     "icon": "files",
     "iconColor": "text-red-600"
+  },
+  "pdf-page-reorder-tool": {
+    "name": "PDF Page Reorder",
+    "description": "Easily rearrange, reorder, or delete pages from your PDF documents.",
+    "category": "PDF & Documents",
+    "topics": [
+      "PDF"
+    ],
+    "icon": "wrench",
+    "iconColor": "text-muted-foreground"
   },
   "pdf-password-remover": {
     "name": "PDF Password Remover",
@@ -4776,6 +7132,16 @@ export const toolMetaMap = {
     "icon": "file-lock",
     "iconColor": "text-teal-500"
   },
+  "pdf-preview-tool": {
+    "name": "PDF Previewer",
+    "description": "Quickly view and inspect your PDF files directly in your browser without Adobe.",
+    "category": "PDF & Documents",
+    "topics": [
+      "PDF"
+    ],
+    "icon": "wrench",
+    "iconColor": "text-muted-foreground"
+  },
   "pdf-purifier": {
     "name": "PDF Purifier Tool",
     "description": "Clean and optimize PDF files for secure sharing.",
@@ -4785,6 +7151,20 @@ export const toolMetaMap = {
     ],
     "icon": "shield-check",
     "iconColor": "text-green-600"
+  },
+  "pdf-set-password": {
+    "name": "PDF Set Password",
+    "description": "Set password protection on PDF files to secure sensitive documents.",
+    "category": [
+      "Security & Privacy",
+      "PDF & Documents"
+    ],
+    "topics": [
+      "Security",
+      "File"
+    ],
+    "icon": "lock",
+    "iconColor": "text-[var(--warning)]"
   },
   "pdf-split-tool": {
     "name": "PDF Split Tool",
@@ -4877,6 +7257,30 @@ export const toolMetaMap = {
     "icon": "calculator",
     "iconColor": "text-blue-600"
   },
+  "percentage-change-calculator": {
+    "name": "Percentage Change Calculator",
+    "description": "Find the percentage increase or decrease between two numbers.",
+    "category": "Calculators",
+    "topics": [
+      "Calculator"
+    ],
+    "icon": "percent",
+    "iconColor": "text-violet-600"
+  },
+  "percentage-practice": {
+    "name": "Percentage Practice",
+    "description": "Master percentage calculations with interactive exercises covering discounts, increases, comparisons, and real-world word problems.",
+    "category": [
+      "Calculators",
+      "Education & Science"
+    ],
+    "topics": [
+      "Math",
+      "Education"
+    ],
+    "icon": "percent",
+    "iconColor": "text-pink-600"
+  },
   "perfect-egg-timer": {
     "name": "Perfect Egg Timer",
     "description": "Time boiled eggs exactly how you like them, adjusted for egg size, fridge chill, and altitude.",
@@ -4898,6 +7302,29 @@ export const toolMetaMap = {
       "Health"
     ],
     "icon": "calendar-heart",
+    "iconColor": "text-teal-600"
+  },
+  "periodic-table-explorer": {
+    "name": "Periodic Table Explorer",
+    "description": "Interactive 118-element periodic table explorer with group filters, physical properties, electron configurations, and element applications.",
+    "category": "Education & Science",
+    "topics": [
+      "Science"
+    ],
+    "icon": "grid",
+    "iconColor": "text-teal-500"
+  },
+  "periodic-table-game": {
+    "name": "Periodic Table Game",
+    "description": "Test your chemistry knowledge with interactive periodic table quizzes. Practice element identification, symbol matching, and atomic number challenges across 3 difficulty levels.",
+    "category": [
+      "Education & Science",
+      "Games"
+    ],
+    "topics": [
+      "Education"
+    ],
+    "icon": "atom",
     "iconColor": "text-teal-600"
   },
   "periodic-table-query-tool": {
@@ -4925,6 +7352,16 @@ export const toolMetaMap = {
     "icon": "palette",
     "iconColor": "text-amber-600"
   },
+  "permutation-combination-calculator": {
+    "name": "Permutation Combination Calculator",
+    "description": "Calculate permutations and combinations for given values.",
+    "category": "Calculators",
+    "topics": [
+      "Math"
+    ],
+    "icon": "calculator",
+    "iconColor": "text-blue-600"
+  },
   "pet-age-converter": {
     "name": "Pet Age Calculator (Dog & Cat Years)",
     "description": "See your dog or cat's age in human years with vet-style size-based math, life stages, and lifespan progress.",
@@ -4934,6 +7371,29 @@ export const toolMetaMap = {
     ],
     "icon": "paw-print",
     "iconColor": "text-teal-600"
+  },
+  "pet-name-generator": {
+    "name": "Pet Name Generator",
+    "description": "Generate unique, creative names instantly for your furry, feathery, or fuzzy friends.",
+    "category": [
+      "Fun",
+      "Lifestyle"
+    ],
+    "topics": [
+      "Utilities"
+    ],
+    "icon": "dog",
+    "iconColor": "text-teal-500"
+  },
+  "ph-scale-visualizer": {
+    "name": "pH Scale Visualizer",
+    "description": "Interactive logarithmic pH scale visualizer with hydronium ion concentration, common household substances, and buffer concepts.",
+    "category": "Education & Science",
+    "topics": [
+      "Science"
+    ],
+    "icon": "droplet",
+    "iconColor": "text-teal-500"
   },
   "photo-love-compatibility": {
     "name": "Love Compatibility by Photos",
@@ -4966,6 +7426,13 @@ export const toolMetaMap = {
     "icon": "pencil",
     "iconColor": "text-(--primary)"
   },
+  "php-beautifier-studio": {
+    "name": "PHP Beautifier Studio",
+    "description": "A real-time, browser-based PHP formatting and beautification utility to clean and standardize your PHP code safely.",
+    "category": "Developer",
+    "icon": "code",
+    "iconColor": "text-indigo-500"
+  },
   "pickup-line-generator": {
     "name": "Pickup Line Generator",
     "description": "Generate smooth, cheesy, or funny pickup lines for any situation. Choose from categories like romantic, nerdy, or witty.",
@@ -4992,6 +7459,16 @@ export const toolMetaMap = {
     "icon": "sun",
     "iconColor": "text-teal-500"
   },
+  "pirate-name-generator": {
+    "name": "Pirate Name Generator",
+    "description": "Generate swashbuckling pirate names with ships, bounties, and mottos. Find your perfect pirate identity for adventures, games, and cosplay.",
+    "category": "Fun",
+    "topics": [
+      "Creators"
+    ],
+    "icon": "anchor",
+    "iconColor": "text-cyan-600"
+  },
   "pixar-style-generator": {
     "name": "Pixar Style Generator",
     "description": "Generate Pixar-style 3D characters via free AI prompts, or upload your own photo/URL to apply local 3D claymation filters and glassy animated eyes.",
@@ -5003,12 +7480,63 @@ export const toolMetaMap = {
     "icon": "sparkles",
     "iconColor": "text-teal-500"
   },
+  "plant-scanner": {
+    "name": "Plant Scanner",
+    "description": "Upload or take a photo of any plant to instantly identify it using advanced AI.",
+    "category": [
+      "Education & Science",
+      "Lifestyle"
+    ],
+    "topics": [
+      "Utilities",
+      "Education"
+    ],
+    "icon": "leaf",
+    "iconColor": "text-teal-500"
+  },
+  "plate-tectonics-simulator": {
+    "name": "Plate Tectonics Simulator",
+    "description": "Interactive lithospheric plate boundary simulator with mantle convection currents, subduction zones, continental rifting, and volcanism.",
+    "category": "Education & Science",
+    "topics": [
+      "Science"
+    ],
+    "icon": "layers",
+    "iconColor": "text-teal-500"
+  },
   "poll-maker": {
     "name": "Poll Maker",
     "description": "Create interactive polls quickly and collect real-time responses.",
     "category": "Business",
     "icon": "bar-chart-2",
     "iconColor": "text-purple-600"
+  },
+  "pomodoro-study-timer": {
+    "name": "Pomodoro Study Timer",
+    "description": "Boost focus and productivity using customizable study and break intervals.",
+    "category": "Productivity",
+    "icon": "timer",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "portfolio-allocation-visualizer": {
+    "name": "Portfolio Allocation Visualizer",
+    "description": "Visualize and optimize your investment portfolio allocation with real-time analytics, risk indicators, and smart diversification insights.",
+    "category": "Finance Calculators",
+    "topics": [
+      "Finance"
+    ],
+    "icon": "pie-chart",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "portfolio-maker-tool": {
+    "name": "Portfolio Maker",
+    "description": "Create a beautiful, customizable online portfolio in minutes.",
+    "category": "Design & Color",
+    "topics": [
+      "Design"
+    ],
+    "icon": "wrench",
+    "iconColor": "text-muted-foreground"
   },
   "portfolio-rebalancer": {
     "name": "Portfolio Rebalancing Calculator",
@@ -5020,6 +7548,17 @@ export const toolMetaMap = {
     ],
     "icon": "chart-pie",
     "iconColor": "text-teal-600"
+  },
+  "posting-schedule-planner": {
+    "name": "Posting Schedule Planner",
+    "description": "Plan, schedule, and preview social media posts with caption limits and metrics tracking.",
+    "category": "Marketing & Social",
+    "topics": [
+      "Marketing",
+      "Creators"
+    ],
+    "icon": "calendar",
+    "iconColor": "text-cyan-500"
   },
   "posture-reminder": {
     "name": "Posture & Movement Reminder",
@@ -5095,6 +7634,16 @@ export const toolMetaMap = {
     "icon": "calculator",
     "iconColor": "text-green-600"
   },
+  "prime-number-checker": {
+    "name": "Prime Number Checker",
+    "description": "Check whether a number is prime and see its factors if it isn't.",
+    "category": "Calculators",
+    "topics": [
+      "Math"
+    ],
+    "icon": "sigma",
+    "iconColor": "text-blue-600"
+  },
   "privacy-policy-generator": {
     "name": "Privacy Policy Generator",
     "description": "Generate professional GDPR/CCPA-ready privacy policies for websites, SaaS products, blogs, apps, and startups.",
@@ -5164,6 +7713,69 @@ export const toolMetaMap = {
     "icon": "user",
     "iconColor": "text-teal-500"
   },
+  "programming-terms-dictionary": {
+    "name": "Programming Terms Dictionary",
+    "description": "Browse and search a comprehensive dictionary of programming terms, concepts, and jargon with clear definitions and examples.",
+    "category": [
+      "Education & Science",
+      "Developer"
+    ],
+    "topics": [
+      "Education"
+    ],
+    "icon": "book-open",
+    "iconColor": "text-teal-500"
+  },
+  "projectile-motion-simulator": {
+    "name": "Projectile Motion Simulator",
+    "description": "Interactive physics simulator for projectile trajectories with real-time vectors, gravity presets, air resistance, and trajectory analytics.",
+    "category": "Education & Science",
+    "topics": [
+      "Science"
+    ],
+    "icon": "move-up-right",
+    "iconColor": "text-teal-500"
+  },
+  "prompt-painter-react": {
+    "name": "Prompt Painter",
+    "description": "HTML Live Preview with Tailwind CSS and interactive code editing.",
+    "category": [
+      "Developer",
+      "Design & Color"
+    ],
+    "topics": [
+      "Development",
+      "Design"
+    ],
+    "icon": "code",
+    "iconColor": "text-purple-500"
+  },
+  "pronunciation-practice": {
+    "name": "Pronunciation Practice",
+    "description": "Master English pronunciation with interactive speech recognition. Practice difficult words, tongue twisters, and common mispronunciations.",
+    "category": [
+      "Education & Science",
+      "Text & Writing",
+      "Video & Audio"
+    ],
+    "topics": [
+      "Education",
+      "Language",
+      "Voice"
+    ],
+    "icon": "mic",
+    "iconColor": "text-indigo-600"
+  },
+  "pulse-pressure-calculator": {
+    "name": "Pulse Pressure Calculator",
+    "description": "Calculate pulse pressure and assess cardiovascular health from blood pressure readings.",
+    "category": "Health & Fitness",
+    "topics": [
+      "Medical"
+    ],
+    "icon": "activity",
+    "iconColor": "text-red-600"
+  },
   "qr-generator": {
     "name": "QR Generator",
     "description": "Generate QR codes instantly for links, text, and data.",
@@ -5173,6 +7785,23 @@ export const toolMetaMap = {
     ],
     "icon": "qr-code",
     "iconColor": "text-black-600"
+  },
+  "quadratic-equation-solver": {
+    "name": "Quadratic Equation Solver",
+    "description": "Solve quadratic equations of the form ax^2 + bx + c = 0.",
+    "category": "Calculators",
+    "topics": [
+      "Math"
+    ],
+    "icon": "calculator",
+    "iconColor": "text-teal-600"
+  },
+  "query-string-parser": {
+    "name": "Query String Parser",
+    "description": "Turn a URL query string into a readable list of key/value pairs.",
+    "category": "Developer",
+    "icon": "list",
+    "iconColor": "text-emerald-600"
   },
   "quit-smoking-tracker": {
     "name": "Quit Smoking Tracker",
@@ -5220,6 +7849,16 @@ export const toolMetaMap = {
     "icon": "lightbulb",
     "iconColor": "text-amber-500"
   },
+  "random-emoji-combiner": {
+    "name": "Random Emoji Combiner",
+    "description": "Generate hilarious random emoji combinations online. Mix, lock favorites, and discover unexpected emoji pairs for fun and creativity.",
+    "category": "Fun",
+    "topics": [
+      "Creators"
+    ],
+    "icon": "shuffle",
+    "iconColor": "text-pink-500"
+  },
   "random-fun-picker": {
     "name": "Random Fun Picker",
     "description": "Pick a lunch spot, play Truth or Dare, or randomly select names — three fun tools in one.",
@@ -5229,6 +7868,16 @@ export const toolMetaMap = {
     ],
     "icon": "shuffle",
     "iconColor": "text-cyan-600"
+  },
+  "random-joke-tool": {
+    "name": "Random Joke Generator",
+    "description": "Get a random, funny joke instantly to brighten your day.",
+    "category": "Fun",
+    "topics": [
+      "Entertainment"
+    ],
+    "icon": "wrench",
+    "iconColor": "text-muted-foreground"
   },
   "random-life-challenge": {
     "name": "Random Life Challenge",
@@ -5243,6 +7892,16 @@ export const toolMetaMap = {
     "icon": "sparkles",
     "iconColor": "text-teal-500"
   },
+  "random-name-generator": {
+    "name": "Random Name Generator",
+    "description": "Generate random full names — first and last names — for characters, usernames, writing prompts, or creative projects.",
+    "category": "Fun",
+    "topics": [
+      "Content Creation"
+    ],
+    "icon": "users",
+    "iconColor": "text-teal-500"
+  },
   "random-name-picker": {
     "name": "Random Name Picker",
     "description": "Add names, eliminate duplicates, and pick a random winner with animated selection. Supports elimination mode and winner history.",
@@ -5252,6 +7911,61 @@ export const toolMetaMap = {
     ],
     "icon": "shuffle",
     "iconColor": "text-cyan-600"
+  },
+  "random-password-generator": {
+    "name": "Random Password Generator",
+    "description": "Generate random, highly secure passwords with advanced character controls, live strength scoring, and entropy estimates. Everything runs in your browser — nothing is stored.",
+    "category": "Security & Privacy",
+    "topics": [
+      "Cybersecurity Tool",
+      "Utility"
+    ],
+    "icon": "shield-check",
+    "iconColor": "text-blue-600"
+  },
+  "random-quote-tool": {
+    "name": "Random Quote Generator",
+    "description": "Get inspired instantly with random, thought-provoking quotes.",
+    "category": "Fun",
+    "topics": [
+      "Entertainment"
+    ],
+    "icon": "wrench",
+    "iconColor": "text-muted-foreground"
+  },
+  "random-si-generator-tool": {
+    "name": "Random Startup Idea Generator",
+    "description": "Generate creative startup and project ideas randomly to spark your imagination.",
+    "category": "Business",
+    "icon": "wrench",
+    "iconColor": "text-muted-foreground"
+  },
+  "random-superpower-generator": {
+    "name": "Random Superpower Generator",
+    "description": "Generate unique fictional superpowers with descriptions, weaknesses, and rarity rankings. Find your ultimate superpower for stories, games, and fun.",
+    "category": "Fun",
+    "topics": [
+      "Creators"
+    ],
+    "icon": "zap",
+    "iconColor": "text-yellow-500"
+  },
+  "random-villain-name-generator": {
+    "name": "Random Villain Name Generator",
+    "description": "Generate dramatic villain names and identities with evil titles, dark abilities, and catchphrases. Perfect for stories, games, and roleplay.",
+    "category": "Fun",
+    "topics": [
+      "Creators"
+    ],
+    "icon": "skull",
+    "iconColor": "text-red-600"
+  },
+  "random-word-generator": {
+    "name": "Random Word Generator",
+    "description": "Generate a batch of random English words for games, prompts and brainstorming.",
+    "category": "Fun",
+    "icon": "shuffle",
+    "iconColor": "text-fuchsia-600"
   },
   "rashi-finder": {
     "name": "Rashi Finder",
@@ -5274,6 +7988,20 @@ export const toolMetaMap = {
     "icon": "waves",
     "iconColor": "text-blue-600"
   },
+  "reaction-speed-test": {
+    "name": "Reaction Speed Test",
+    "description": "Measure and track your reaction time with interactive tests and progress tracking.",
+    "category": [
+      "Fun",
+      "Health & Fitness"
+    ],
+    "topics": [
+      "Testing",
+      "Fitness"
+    ],
+    "icon": "zap",
+    "iconColor": "text-[var(--danger)]"
+  },
   "reaction-time-test": {
     "name": "Reaction Time Test",
     "description": "Measure your reaction time in milliseconds with a simple click test. Track attempts, see your stats, and compare your score.",
@@ -5287,6 +8015,30 @@ export const toolMetaMap = {
     ],
     "icon": "zap",
     "iconColor": "text-emerald-600"
+  },
+  "readability-checker": {
+    "name": "Readability Checker",
+    "description": "Analyze text readability with Flesch-Kincaid, Gunning Fog, SMOG, and Coleman-Liau scores. Optimize your writing for any audience.",
+    "category": [
+      "Text & Writing",
+      "Education & Science"
+    ],
+    "topics": [
+      "Text",
+      "Education"
+    ],
+    "icon": "book-check",
+    "iconColor": "text-teal-500"
+  },
+  "reading-speed-calculator": {
+    "name": "Reading Speed Calculator",
+    "description": "Calculate reading speed, reading time, and words per minute from pasted text or a timed reading test.",
+    "category": "Education & Science",
+    "topics": [
+      "Education"
+    ],
+    "icon": "book-open",
+    "iconColor": "text-[var(--primary)]"
   },
   "reading-time-calculator": {
     "name": "Reading Time Calculator",
@@ -5352,6 +8104,30 @@ export const toolMetaMap = {
     "icon": "activity",
     "iconColor": "text-teal-500"
   },
+  "reel-bgm-tool": {
+    "name": "Reel BGM Trend Finder",
+    "description": "Find the perfect trending background music for your Reels and TikToks.",
+    "category": "Marketing & Social",
+    "topics": [
+      "Social Media"
+    ],
+    "icon": "wrench",
+    "iconColor": "text-muted-foreground"
+  },
+  "refinance-savings-calculator": {
+    "name": "Refinance Savings Calculator",
+    "description": "Compare current loan versus refinance offers with new EMI, interest savings, closing costs, break-even month, and cash-flow impact.",
+    "category": [
+      "Business",
+      "Finance Calculators"
+    ],
+    "topics": [
+      "Calculator",
+      "Finance"
+    ],
+    "icon": "refresh-cw",
+    "iconColor": "text-blue-600"
+  },
   "regex-tester": {
     "name": "Regex Tester",
     "description": "Test and validate regular expressions instantly with live results.",
@@ -5373,6 +8149,26 @@ export const toolMetaMap = {
     "icon": "heart",
     "iconColor": "text-rose-600"
   },
+  "remove-duplicate-lines": {
+    "name": "Remove Duplicate Lines",
+    "description": "Delete repeated lines and keep only the first occurrence of each.",
+    "category": "Text & Writing",
+    "topics": [
+      "Text"
+    ],
+    "icon": "list-x",
+    "iconColor": "text-rose-600"
+  },
+  "remove-extra-spaces": {
+    "name": "Remove Extra Spaces",
+    "description": "Collapse multiple spaces and trim each line down to single spacing.",
+    "category": "Text & Writing",
+    "topics": [
+      "Text"
+    ],
+    "icon": "space",
+    "iconColor": "text-emerald-600"
+  },
   "rent-receipt-generator": {
     "name": "Rent Receipt Generator",
     "description": "Create print-ready monthly or quarterly rent receipts with amount in words, PAN line, and revenue stamp note.",
@@ -5386,6 +8182,19 @@ export const toolMetaMap = {
     ],
     "icon": "receipt-text",
     "iconColor": "text-teal-600"
+  },
+  "rent-vs-buy": {
+    "name": "Rent vs Buy Calculator",
+    "description": "Compare renting vs buying a property. Calculate EMI, maintenance, rent, appreciation, and opportunity cost to make the right financial decision.",
+    "category": [
+      "Finance Calculators",
+      "Lifestyle"
+    ],
+    "topics": [
+      "Finance"
+    ],
+    "icon": "scale",
+    "iconColor": "text-blue-600"
   },
   "rent-vs-buy-calculator": {
     "name": "Rent vs Buy Home Calculator",
@@ -5457,6 +8266,20 @@ export const toolMetaMap = {
     "icon": "armchair",
     "iconColor": "text-teal-600"
   },
+  "retirement-planner": {
+    "name": "Retirement Planner",
+    "description": "Plan your retirement corpus with inflation-adjusted goals, monthly savings targets, and year-by-year withdrawal projections.",
+    "category": [
+      "Finance Calculators",
+      "Productivity"
+    ],
+    "topics": [
+      "Finance",
+      "Planners"
+    ],
+    "icon": "umbrella",
+    "iconColor": "text-blue-500"
+  },
   "return-deadline-tracker": {
     "name": "Return Deadline Tracker",
     "description": "Track shopping return windows, refund status, and deadlines with futuristic precision.",
@@ -5479,6 +8302,43 @@ export const toolMetaMap = {
     ],
     "icon": "utensils",
     "iconColor": "text-teal-600"
+  },
+  "rich-text-editor": {
+    "name": "Rich Text Editor",
+    "description": "A beautiful, fully-featured WYSIWYG editor. Format text, add media, and export clean HTML instantly.",
+    "category": "Developer",
+    "topics": [
+      "Developers",
+      "Creators",
+      "Utilities"
+    ],
+    "icon": "pen-tool",
+    "iconColor": "text-teal-500"
+  },
+  "river-quiz": {
+    "name": "River Quiz",
+    "description": "Test your knowledge of world rivers — identify rivers by length, location, continent, and facts with timed quizzes and scoring.",
+    "category": "Education & Science",
+    "topics": [
+      "Education"
+    ],
+    "icon": "droplets",
+    "iconColor": "text-blue-700"
+  },
+  "roas-calculator": {
+    "name": "ROAS Calculator",
+    "description": "Calculate Return on Ad Spend (ROAS), cost-to-revenue ratio, P&L, conversion funnel, and campaign scenarios.",
+    "category": [
+      "Marketing & Social",
+      "Finance Calculators"
+    ],
+    "topics": [
+      "Marketing",
+      "Calculator",
+      "Finance"
+    ],
+    "icon": "calculator",
+    "iconColor": "text-teal-500"
   },
   "roast-generator": {
     "name": "Roast Generator",
@@ -5509,6 +8369,16 @@ export const toolMetaMap = {
     ],
     "icon": "footprints",
     "iconColor": "text-(--primary)"
+  },
+  "roi-calculator": {
+    "name": "ROI Calculator",
+    "description": "Return on investment as a percentage from the amount invested and the amount returned.",
+    "category": "Finance Calculators",
+    "topics": [
+      "Finance"
+    ],
+    "icon": "coins",
+    "iconColor": "text-amber-600"
   },
   "roman-numeral-converter": {
     "name": "Roman Numeral Converter",
@@ -5546,6 +8416,18 @@ export const toolMetaMap = {
     "icon": "file-text",
     "iconColor": "text-green-800"
   },
+  "rti-draft-template-builder": {
+    "name": "RTI Draft Template Builder",
+    "description": "Create clean RTI application drafts with applicant details, PIO address, information points, fee mode, checklist, copy, and TXT export.",
+    "category": "Business",
+    "topics": [
+      "Government",
+      "Legal",
+      "Utility"
+    ],
+    "icon": "file-text",
+    "iconColor": "text-blue-600"
+  },
   "rto-mock-test": {
     "name": "RTO Driving Licence Mock Test",
     "description": "Practise for your Indian learner's licence with 140+ real RTO-style questions, timed mock tests and instant explanations.",
@@ -5555,6 +8437,20 @@ export const toolMetaMap = {
       "Utility"
     ],
     "icon": "car-front",
+    "iconColor": "text-teal-600"
+  },
+  "rubiks-cube-algorithm-trainer": {
+    "name": "Rubik's Cube Algorithm Trainer",
+    "description": "Learn and practice Rubik's Cube algorithms for PLL, OLL, F2L, and beginner methods with an interactive 3D cube visualization.",
+    "category": [
+      "Education & Science",
+      "Games"
+    ],
+    "topics": [
+      "Education",
+      "Puzzles"
+    ],
+    "icon": "box",
     "iconColor": "text-teal-600"
   },
   "rule-of-72-calculator": {
@@ -5570,6 +8466,16 @@ export const toolMetaMap = {
     ],
     "icon": "trending-up",
     "iconColor": "text-emerald-600"
+  },
+  "running-pace-calculator": {
+    "name": "Running Pace Calculator",
+    "description": "Work out your pace per kilometre and speed from a distance and finish time.",
+    "category": "Health & Fitness",
+    "topics": [
+      "Fitness"
+    ],
+    "icon": "timer",
+    "iconColor": "text-indigo-600"
   },
   "sacred-geometry-generator": {
     "name": "Sacred Geometry Generator",
@@ -5609,6 +8515,29 @@ export const toolMetaMap = {
     "icon": "wallet",
     "iconColor": "text-teal-600"
   },
+  "salary-tax-calculator": {
+    "name": "Salary Tax Calculator",
+    "description": "Estimate your take-home salary after income tax, professional tax, and other deductions with detailed tax breakdown.",
+    "category": [
+      "Finance Calculators",
+      "Calculators"
+    ],
+    "topics": [
+      "Finance"
+    ],
+    "icon": "receipt",
+    "iconColor": "text-purple-500"
+  },
+  "sales-tax-calculator": {
+    "name": "Sales Tax Calculator",
+    "description": "Calculate sales tax and the final total for any purchase amount.",
+    "category": "Finance Calculators",
+    "topics": [
+      "Finance"
+    ],
+    "icon": "receipt",
+    "iconColor": "text-rose-600"
+  },
   "sarcasm-generator": {
     "name": "Sarcasm Generator",
     "description": "Generate perfectly sarcastic responses for any situation. Because nothing says 'I care' like thinly veiled contempt.",
@@ -5631,6 +8560,19 @@ export const toolMetaMap = {
     ],
     "icon": "target",
     "iconColor": "text-teal-600"
+  },
+  "savings-goal-calculator": {
+    "name": "Savings Goal Calculator",
+    "description": "Calculate how much you need to save monthly to reach your financial goals. Adjust for time horizon and expected returns.",
+    "category": [
+      "Finance Calculators",
+      "Calculators"
+    ],
+    "topics": [
+      "Finance"
+    ],
+    "icon": "target",
+    "iconColor": "text-teal-500"
   },
   "scientific-calculator": {
     "name": "Scientific Calculator",
@@ -5655,6 +8597,16 @@ export const toolMetaMap = {
     ],
     "icon": "calculator",
     "iconColor": "text-violet-600"
+  },
+  "scientific-notation-converter": {
+    "name": "Scientific Notation Converter",
+    "description": "Turn a decimal number into scientific (E) notation and see its order of magnitude.",
+    "category": "Calculators",
+    "topics": [
+      "Math"
+    ],
+    "icon": "sigma",
+    "iconColor": "text-cyan-600"
   },
   "screen-recorder": {
     "name": "Screen Recorder",
@@ -5690,6 +8642,20 @@ export const toolMetaMap = {
     ],
     "icon": "image-plus",
     "iconColor": "text-teal-500"
+  },
+  "screenshot-tool-animated": {
+    "name": "Screenshot Tool",
+    "description": "Capture beautiful screenshots of any website instantly in PNG, JPG, or GIF format.",
+    "category": [
+      "Productivity",
+      "Developer"
+    ],
+    "topics": [
+      "Utilities",
+      "Web"
+    ],
+    "icon": "camera",
+    "iconColor": "text-blue-500"
   },
   "seasonal-color-analysis": {
     "name": "Seasonal Color Analysis",
@@ -5733,6 +8699,28 @@ export const toolMetaMap = {
     "icon": "gift",
     "iconColor": "text-rose-600"
   },
+  "sentence-correction-practice": {
+    "name": "Sentence Correction Practice",
+    "description": "Master English grammar by identifying and correcting errors in sentences with detailed explanations.",
+    "category": [
+      "Education & Science",
+      "Text & Writing"
+    ],
+    "topics": [
+      "Education",
+      "Language",
+      "Writing"
+    ],
+    "icon": "check-circle-2",
+    "iconColor": "text-emerald-600"
+  },
+  "sha256-hash-generator": {
+    "name": "SHA-256 Hash Generator",
+    "description": "Generate a SHA-256 hash of any text, computed securely in your browser.",
+    "category": "Developer",
+    "icon": "shield",
+    "iconColor": "text-slate-700"
+  },
   "shadow-generator": {
     "name": "Shadow Generator",
     "description": "Create smooth customizable CSS shadows for modern UI designs.",
@@ -5763,6 +8751,16 @@ export const toolMetaMap = {
     "icon": "clapperboard",
     "iconColor": "text-cyan-500"
   },
+  "sign-language-alphabet-trainer": {
+    "name": "Sign Language Alphabet Trainer",
+    "description": "Learn American Sign Language (ASL) alphabet with interactive cards, quizzes, and progress tracking",
+    "category": "Education & Science",
+    "topics": [
+      "Education"
+    ],
+    "icon": "hand",
+    "iconColor": "text-teal-500"
+  },
   "simon-says-game": {
     "name": "Simon Says Game",
     "description": "Train your memory with the classic Simon Says game featuring multiple modes, difficulty levels, sound effects, and score tracking.",
@@ -5776,6 +8774,16 @@ export const toolMetaMap = {
     ],
     "icon": "brain",
     "iconColor": "text-teal-600"
+  },
+  "simple-interest-calculator": {
+    "name": "Simple Interest Calculator",
+    "description": "Calculate simple interest and the maturity amount from principal, rate and time.",
+    "category": "Finance Calculators",
+    "topics": [
+      "Finance"
+    ],
+    "icon": "percent",
+    "iconColor": "text-green-600"
   },
   "sip-calculator": {
     "name": "SIP Calculator",
@@ -5876,6 +8884,16 @@ export const toolMetaMap = {
     "icon": "bed",
     "iconColor": "text-teal-600"
   },
+  "sleep-tracker": {
+    "name": "Sleep Tracking & Sleep Quality Analyzer",
+    "description": "Track your sleep habits, automatically calculate sleep debt and efficiency, and get personalized recommendations.",
+    "category": "Health & Fitness",
+    "topics": [
+      "health"
+    ],
+    "icon": "wrench",
+    "iconColor": "text-muted-foreground"
+  },
   "sliding-puzzle": {
     "name": "Sliding Puzzle",
     "description": "Free 15 puzzle sliding number game online — solve 3x3, 4x4 and 5x5 boards in the fewest moves.",
@@ -5886,6 +8904,13 @@ export const toolMetaMap = {
     ],
     "icon": "puzzle",
     "iconColor": "text-violet-600"
+  },
+  "small-caps-generator": {
+    "name": "Small Caps Generator",
+    "description": "Convert text into ꜱᴍᴀʟʟ ᴄᴀᴘꜱ unicode letters for bios and posts.",
+    "category": "Fun",
+    "icon": "type",
+    "iconColor": "text-purple-600"
   },
   "smart-goal-planner": {
     "name": "SMART Goal Planner",
@@ -5916,6 +8941,13 @@ export const toolMetaMap = {
     ],
     "icon": "smile",
     "iconColor": "text-yellow-500"
+  },
+  "snake-case-converter": {
+    "name": "Snake Case Converter",
+    "description": "Convert any phrase into snake_case.",
+    "category": "Developer",
+    "icon": "case-sensitive",
+    "iconColor": "text-green-600"
   },
   "snake-game": {
     "name": "Snake Game",
@@ -5959,6 +8991,51 @@ export const toolMetaMap = {
     "icon": "building-2",
     "iconColor": "text-teal-600"
   },
+  "solar-panel-output-estimator": {
+    "name": "Solar Panel Output Estimator",
+    "description": "A practical electronics tool for managing solar panel output workflows efficiently.",
+    "category": "Calculators",
+    "topics": [
+      "Utility",
+      "Electronics",
+      "Calculator"
+    ],
+    "icon": "sun",
+    "iconColor": "text-blue-600"
+  },
+  "solar-system-explorer": {
+    "name": "Solar System Explorer",
+    "description": "Interactive 2.5D solar system planetarium with real orbital periods, planetary scale toggles, and astronomical data cards.",
+    "category": "Education & Science",
+    "topics": [
+      "Science"
+    ],
+    "icon": "globe",
+    "iconColor": "text-teal-500"
+  },
+  "sort-lines-tool": {
+    "name": "Sort Lines Tool",
+    "description": "Sort lines alphabetically, ascending or descending.",
+    "category": "Text & Writing",
+    "topics": [
+      "Text"
+    ],
+    "icon": "arrow-down-up",
+    "iconColor": "text-amber-600"
+  },
+  "sorting-algorithm-animation": {
+    "name": "Sorting Algorithm Animation",
+    "description": "Watch sorting algorithms in action with animated bar chart visualizations. Compare Bubble Sort, Quick Sort, Merge Sort, Insertion Sort, Selection Sort, and Heap Sort.",
+    "category": [
+      "Education & Science",
+      "Developer"
+    ],
+    "topics": [
+      "Education"
+    ],
+    "icon": "bar-chart-3",
+    "iconColor": "text-teal-500"
+  },
   "sound-decibel-checker": {
     "name": "Sound Decibel Checker",
     "description": "Measure real-time sound levels instantly with accurate decibel detection.",
@@ -6001,6 +9078,16 @@ export const toolMetaMap = {
     ],
     "icon": "shield-alert",
     "iconColor": "text-red-600"
+  },
+  "speed-distance-time-calculator": {
+    "name": "Speed Distance Time Calculator",
+    "description": "Enter distance and time to get speed, with m/s and mph conversions.",
+    "category": "Calculators",
+    "topics": [
+      "Calculator"
+    ],
+    "icon": "gauge",
+    "iconColor": "text-blue-600"
   },
   "spelling-checker": {
     "name": "Spelling Checker",
@@ -6080,6 +9167,16 @@ export const toolMetaMap = {
     "icon": "shield-check",
     "iconColor": "text-cyan-600"
   },
+  "staking-rewards-calculator": {
+    "name": "Staking Rewards Calculator",
+    "description": "Calculate staking rewards values quickly with a simple, structured workflow.",
+    "category": "Finance Calculators",
+    "topics": [
+      "Crypto / Invest"
+    ],
+    "icon": "wrench",
+    "iconColor": "text-emerald-500"
+  },
   "stamp-duty-estimator": {
     "name": "Property Stamp Duty & Registration Estimator",
     "description": "Estimate stamp duty, registration fees, and the full one-time cost of buying property across 23 Indian states and UTs.",
@@ -6090,6 +9187,26 @@ export const toolMetaMap = {
     ],
     "icon": "file-signature",
     "iconColor": "text-teal-600"
+  },
+  "standard-deviation-calculator": {
+    "name": "Standard Deviation Calculator",
+    "description": "Calculate the standard deviation of a set of numbers.",
+    "category": "Calculators",
+    "topics": [
+      "Math"
+    ],
+    "icon": "calculator",
+    "iconColor": "text-amber-600"
+  },
+  "star-life-cycle-explorer": {
+    "name": "Star Life Cycle Explorer",
+    "description": "Interactive stellar evolution explorer charting stellar birth, main sequence hydrostatic equilibrium, nucleosynthesis, and stellar remnants.",
+    "category": "Education & Science",
+    "topics": [
+      "Science"
+    ],
+    "icon": "sparkles",
+    "iconColor": "text-teal-500"
   },
   "startup-name-generator": {
     "name": "Startup Name Generator",
@@ -6166,6 +9283,23 @@ export const toolMetaMap = {
     "icon": "monitor-play",
     "iconColor": "text-blue-600"
   },
+  "string-escape-tool": {
+    "name": "String Escape Tool",
+    "description": "Escape a string for JSON/code (quotes, backslashes, newlines) or unescape it.",
+    "category": "Developer",
+    "icon": "quote",
+    "iconColor": "text-cyan-600"
+  },
+  "stroke-risk-calculator": {
+    "name": "Stroke Risk Calculator",
+    "description": "Estimate 10-year stroke risk using CHA₂DS₂-VASc scoring for atrial fibrillation patients with clinical risk factor analysis.",
+    "category": "Health & Fitness",
+    "topics": [
+      "Medical"
+    ],
+    "icon": "brain",
+    "iconColor": "text-purple-600"
+  },
   "stroop-effect": {
     "name": "Stroop Effect Test",
     "description": "Test your cognitive control — name the color, not the word. Measure your Stroop Effect and reaction time in this classic psychology experiment.",
@@ -6176,6 +9310,16 @@ export const toolMetaMap = {
     ],
     "icon": "brain",
     "iconColor": "text-purple-600"
+  },
+  "study-timetable-planner": {
+    "name": "Study Timetable Planner",
+    "description": "Create smart study schedules with auto-balancing, productivity tracking, and analytics.",
+    "category": "Education & Science",
+    "topics": [
+      "Education"
+    ],
+    "icon": "calendar",
+    "iconColor": "text-indigo-600"
   },
   "subscript-generator": {
     "name": "Subscript Generator",
@@ -6224,6 +9368,17 @@ export const toolMetaMap = {
       "Fun"
     ],
     "icon": "grid-3x3",
+    "iconColor": "text-teal-600"
+  },
+  "sudoku-solver": {
+    "name": "Sudoku Solver",
+    "description": "Solve any Sudoku instantly or step-by-step with technique explanations. Generate new puzzles with unique solutions across four difficulty levels.",
+    "category": "Games",
+    "topics": [
+      "Puzzles",
+      "Tools"
+    ],
+    "icon": "brain-circuit",
     "iconColor": "text-teal-600"
   },
   "sukanya-samriddhi-calculator": {
@@ -6303,6 +9458,40 @@ export const toolMetaMap = {
     "icon": "calculator",
     "iconColor": "text-emerald-600"
   },
+  "symptom-checker": {
+    "name": "Symptom Checker",
+    "description": "Check your symptoms and get an initial health assessment and recommendation.",
+    "category": "Health & Fitness",
+    "topics": [
+      "Health"
+    ],
+    "icon": "activity",
+    "iconColor": "text-rose-600"
+  },
+  "symptom-diary": {
+    "name": "Symptom Diary",
+    "description": "Log symptoms, monitor severity, and detect health patterns",
+    "category": "Health & Fitness",
+    "topics": [
+      "Health"
+    ],
+    "icon": "activity",
+    "iconColor": "text-blue-600"
+  },
+  "synonym-finder": {
+    "name": "Synonym Finder",
+    "description": "Find synonyms and antonyms for any English word. Browse 200+ headwords with detailed synonym lists, part-of-speech tags, and example sentences.",
+    "category": [
+      "Education & Science",
+      "Text & Writing"
+    ],
+    "topics": [
+      "Education",
+      "Reference"
+    ],
+    "icon": "book-open-text",
+    "iconColor": "text-indigo-600"
+  },
   "tap-glider": {
     "name": "Tap Glider",
     "description": "One-tap arcade glider game — flap through the gaps, earn medals, and beat your best score online free.",
@@ -6323,6 +9512,16 @@ export const toolMetaMap = {
     ],
     "icon": "users",
     "iconColor": "text-blue-600"
+  },
+  "temperature-converter": {
+    "name": "Temperature Converter",
+    "description": "Convert between Celsius, Fahrenheit and Kelvin instantly.",
+    "category": "Converters",
+    "topics": [
+      "Converter"
+    ],
+    "icon": "thermometer",
+    "iconColor": "text-red-600"
   },
   "text-behind-image": {
     "name": "Text Behind Image",
@@ -6409,6 +9608,16 @@ export const toolMetaMap = {
     "icon": "scan-text",
     "iconColor": "text-indigo-600"
   },
+  "text-repeater": {
+    "name": "Text Repeater",
+    "description": "Repeat any text as many times as you like, with your choice of separator.",
+    "category": "Text & Writing",
+    "topics": [
+      "Text"
+    ],
+    "icon": "repeat",
+    "iconColor": "text-violet-600"
+  },
   "text-reverser": {
     "name": "Text Reverser",
     "description": "Reverse text characters, lines, or word orders with custom separation settings instantly inside your browser.",
@@ -6469,6 +9678,20 @@ export const toolMetaMap = {
     "icon": "edit-3",
     "iconColor": "text-teal-500"
   },
+  "text-to-ipa": {
+    "name": "Text to IPA Pronunciation",
+    "description": "Convert English text into International Phonetic Alphabet (IPA) transcriptions with stress marks, per-word breakdown, and audio playback.",
+    "category": [
+      "Education & Science",
+      "Text & Writing"
+    ],
+    "topics": [
+      "Education",
+      "Language"
+    ],
+    "icon": "audio-lines",
+    "iconColor": "text-teal-600"
+  },
   "text-to-nato-phonetic": {
     "name": "Text to NATO Phonetic",
     "description": "Convert text messages into the international NATO phonetic spelling (Alpha, Bravo, Charlie...) for clear verbal communication, with client-side audio pronunciation.",
@@ -6494,6 +9717,16 @@ export const toolMetaMap = {
     ],
     "icon": "qr-code",
     "iconColor": "text-teal-600"
+  },
+  "text-to-slug": {
+    "name": "Text to Slug",
+    "description": "Turn any title into a clean, URL-friendly slug.",
+    "category": "Text & Writing",
+    "topics": [
+      "Text"
+    ],
+    "icon": "link",
+    "iconColor": "text-sky-600"
   },
   "text-to-voice": {
     "name": "Text to Voice Tool",
@@ -6546,6 +9779,13 @@ export const toolMetaMap = {
     "icon": "calendar-clock",
     "iconColor": "text-cyan-500"
   },
+  "time-zone-explorer": {
+    "name": "Time Zone Explorer",
+    "description": "Explore world time zones in real-time — compare times across cities, convert between zones, and see live clocks with DST information.",
+    "category": "Productivity",
+    "icon": "clock",
+    "iconColor": "text-indigo-700"
+  },
   "timeline-builder": {
     "name": "Timeline Builder",
     "description": "Create visual timelines with milestones, dates, and descriptions for projects and events.",
@@ -6580,6 +9820,47 @@ export const toolMetaMap = {
     "icon": "check-square",
     "iconColor": "text-green-700"
   },
+  "travel-cost-per-day": {
+    "name": "Travel Cost Per Day",
+    "description": "Calculate total trip cost, daily cost, per-person/day split, category spending, payment timing, and budget signals.",
+    "category": [
+      "Lifestyle",
+      "Finance Calculators"
+    ],
+    "topics": [
+      "Travel",
+      "Finance"
+    ],
+    "icon": "calculator",
+    "iconColor": "text-blue-600"
+  },
+  "travel-document-checklist": {
+    "name": "Travel Document Checklist",
+    "description": "Build a travel-ready document checklist for passport, visa, tickets, hotel bookings, insurance, IDs, forex, and emergency copies.",
+    "category": [
+      "Lifestyle",
+      "Productivity"
+    ],
+    "topics": [
+      "Travel"
+    ],
+    "icon": "list-checks",
+    "iconColor": "text-blue-600"
+  },
+  "trip-budget-planner": {
+    "name": "Trip Budget Planner",
+    "description": "Plan travel costs by destination, days, travelers, budget style, expense categories, contingency, and per-person split.",
+    "category": [
+      "Lifestyle",
+      "Finance Calculators"
+    ],
+    "topics": [
+      "Travel",
+      "Finance"
+    ],
+    "icon": "wallet",
+    "iconColor": "text-blue-600"
+  },
   "truth-or-dare": {
     "name": "Truth or Dare",
     "description": "Play the classic party game with multiple categories, difficulty levels, and hundreds of unique challenges.",
@@ -6589,6 +9870,30 @@ export const toolMetaMap = {
     ],
     "icon": "help-circle",
     "iconColor": "text-violet-600"
+  },
+  "tv-viewing-distance-guide": {
+    "name": "TV Viewing Distance Guide",
+    "description": "Calculate ideal TV viewing distance by screen size, resolution, room depth, content style, and field-of-view comfort.",
+    "category": [
+      "Lifestyle",
+      "Calculators"
+    ],
+    "topics": [
+      "Home",
+      "Calculator"
+    ],
+    "icon": "video",
+    "iconColor": "text-blue-600"
+  },
+  "tweet-character-counter": {
+    "name": "Tweet Character Counter",
+    "description": "Count characters, words, lines and sentences in your text instantly.",
+    "category": "Marketing & Social",
+    "topics": [
+      "Social Media"
+    ],
+    "icon": "type",
+    "iconColor": "text-cyan-600"
   },
   "twin-finder": {
     "name": "Twin Finder",
@@ -6621,6 +9926,19 @@ export const toolMetaMap = {
     "icon": "keyboard",
     "iconColor": "text-emerald-600"
   },
+  "typing-tutor": {
+    "name": "Typing Tutor",
+    "description": "Structured typing lessons with live WPM, accuracy tracking, keyboard visualization, and progress charts.",
+    "category": [
+      "Education & Science",
+      "Productivity"
+    ],
+    "topics": [
+      "EdTech"
+    ],
+    "icon": "keyboard",
+    "iconColor": "text-teal-600"
+  },
   "ui-spacing-consistency-checker": {
     "name": "UI Spacing Consistency Checker",
     "description": "Audit Tailwind spacing classes and pixel values against a consistent 4px design-system rhythm.",
@@ -6633,6 +9951,13 @@ export const toolMetaMap = {
     ],
     "icon": "ruler",
     "iconColor": "text-primary"
+  },
+  "ulid-generator": {
+    "name": "ULID Generator",
+    "description": "Generate sortable, unique ULIDs as an alternative to UUIDs.",
+    "category": "Developer",
+    "icon": "fingerprint",
+    "iconColor": "text-purple-600"
   },
   "ultimate-wheel-spinner": {
     "name": "Ultimate Wheel Spin Tool",
@@ -6656,6 +9981,13 @@ export const toolMetaMap = {
     ],
     "icon": "file-text",
     "iconColor": "text-teal-600"
+  },
+  "unicode-escape-tool": {
+    "name": "Unicode Escape Tool",
+    "description": "Escape text to \\uXXXX sequences or unescape them back to characters.",
+    "category": "Developer",
+    "icon": "code",
+    "iconColor": "text-indigo-600"
   },
   "unicode-symbol-generator": {
     "name": "Unicode Symbol Generator",
@@ -6718,6 +10050,13 @@ export const toolMetaMap = {
     "icon": "link",
     "iconColor": "text-blue-600"
   },
+  "url-parser": {
+    "name": "URL Parser",
+    "description": "Break a URL into its protocol, host, path, query and hash parts.",
+    "category": "Developer",
+    "icon": "link-2",
+    "iconColor": "text-blue-600"
+  },
   "user-info-finder": {
     "name": "User Info Finder",
     "description": "Find user information quickly using smart search and filtering.",
@@ -6772,6 +10111,16 @@ export const toolMetaMap = {
     "icon": "floppy-disk",
     "iconColor": "text-fuchsia-500"
   },
+  "vat-calculator": {
+    "name": "VAT Calculator",
+    "description": "Add or remove VAT/GST from an amount at any rate.",
+    "category": "Finance Calculators",
+    "topics": [
+      "Finance"
+    ],
+    "icon": "receipt",
+    "iconColor": "text-blue-600"
+  },
   "vehicle-compare": {
     "name": "Vehicle Compare",
     "description": "Compare vehicles easily by price, features, and performance.",
@@ -6786,6 +10135,17 @@ export const toolMetaMap = {
     "icon": "car",
     "iconColor": "text-indigo-600"
   },
+  "video-bitrate-calculator": {
+    "name": "Video Bitrate Calculator",
+    "description": "Calculate optimal video bitrate requirements for different formats and quality levels.",
+    "category": "Developer",
+    "topics": [
+      "Media",
+      "Technical"
+    ],
+    "icon": "video",
+    "iconColor": "text-[var(--info)]"
+  },
   "video-compressor": {
     "name": "Video Compressor",
     "description": "Compress videos in your browser with quality presets, resolution caps, audio control, and preview export.",
@@ -6796,6 +10156,36 @@ export const toolMetaMap = {
     ],
     "icon": "video",
     "iconColor": "text-blue-600"
+  },
+  "video-script-timer": {
+    "name": "Video Script Timer",
+    "description": "Time and sync video scripts with production requirements and production notes.",
+    "category": [
+      "Video & Audio",
+      "Text & Writing"
+    ],
+    "topics": [
+      "Media",
+      "Content"
+    ],
+    "icon": "clock",
+    "iconColor": "text-[var(--warning)]"
+  },
+  "video-to-audio-converter": {
+    "name": "Video to Audio Converter",
+    "description": "Extract, trim, edit, and export audio from video files directly in your browser.",
+    "category": [
+      "Converters",
+      "Video & Audio"
+    ],
+    "topics": [
+      "Media",
+      "Converter",
+      "Audio"
+    ],
+    "icon": "music",
+    "iconColor": "text-primary",
+    "wideWorkspace": true
   },
   "video-to-gif": {
     "name": "Video to GIF Converter",
@@ -6849,6 +10239,30 @@ export const toolMetaMap = {
     "icon": "brain",
     "iconColor": "text-purple-600"
   },
+  "vitamin-intake-tracker": {
+    "name": "Vitamin Intake Tracker",
+    "description": "Track your daily vitamin and supplement intake — Vitamin D3, B-Complex, Magnesium, and more — with dosage guidance and adherence streaks.",
+    "category": "Health & Fitness",
+    "topics": [
+      "Health & Wellness"
+    ],
+    "icon": "pill",
+    "iconColor": "text-amber-500"
+  },
+  "vocabulary-builder": {
+    "name": "Vocabulary Builder",
+    "description": "Build your English vocabulary with 120 curated words across Easy, Medium, and Hard levels. Learn with flip cards and test yourself with multiple-choice quizzes.",
+    "category": [
+      "Education & Science",
+      "Text & Writing"
+    ],
+    "topics": [
+      "Education",
+      "Language"
+    ],
+    "icon": "book-open",
+    "iconColor": "text-emerald-600"
+  },
   "vocabulary-complexity-analyzer": {
     "name": "Vocabulary Complexity Analyzer",
     "description": "Analyze the complexity of vocabulary in text",
@@ -6880,6 +10294,16 @@ export const toolMetaMap = {
     "icon": "palette",
     "iconColor": "text-purple-600"
   },
+  "waist-to-height-ratio-calculator": {
+    "name": "Waist to Height Ratio Calculator",
+    "description": "A quick health screen: your waist size divided by your height, with a category.",
+    "category": "Health & Fitness",
+    "topics": [
+      "Health"
+    ],
+    "icon": "ruler",
+    "iconColor": "text-teal-600"
+  },
   "water-intake-calculator": {
     "name": "Water Intake Calculator",
     "description": "Estimate daily water intake from weight, activity, and climate.",
@@ -6903,6 +10327,20 @@ export const toolMetaMap = {
     ],
     "icon": "droplets",
     "iconColor": "text-teal-600"
+  },
+  "watercolor-game": {
+    "name": "Watercolor Sort Puzzle",
+    "description": "Mix and blend colors in an elegant, canvas-style watercolor sorting puzzle game.",
+    "category": [
+      "Games",
+      "Fun"
+    ],
+    "topics": [
+      "Game",
+      "Entertainment"
+    ],
+    "icon": "droplet",
+    "iconColor": "text-blue-500"
   },
   "watermark-remover": {
     "name": "Watermark Remover",
@@ -6943,6 +10381,16 @@ export const toolMetaMap = {
     "icon": "cloud-sun",
     "iconColor": "text-blue-600"
   },
+  "weather-front-simulator": {
+    "name": "Weather Front Simulator",
+    "description": "Interactive meteorology weather front simulator with cold/warm air mass dynamics, cloud condensation, and precipitation forecasting.",
+    "category": "Education & Science",
+    "topics": [
+      "Science"
+    ],
+    "icon": "cloud-rain",
+    "iconColor": "text-teal-500"
+  },
   "web-speed-checker": {
     "name": "Web Speed Checker",
     "description": "Check website loading speed instantly with detailed performance metrics.",
@@ -6964,6 +10412,16 @@ export const toolMetaMap = {
     ],
     "icon": "image",
     "iconColor": "text-teal-600"
+  },
+  "week-number-calculator": {
+    "name": "Week Number Calculator",
+    "description": "Find the ISO-8601 week number for any date of the year.",
+    "category": "Calculators",
+    "topics": [
+      "Calculator"
+    ],
+    "icon": "calendar-days",
+    "iconColor": "text-emerald-600"
   },
   "weekly-meal-planner": {
     "name": "Weekly Meal Planner",
@@ -7012,6 +10470,56 @@ export const toolMetaMap = {
     "icon": "hammer",
     "iconColor": "text-amber-700"
   },
+  "what-kind-of-genius": {
+    "name": "What Kind of Genius Are You?",
+    "description": "Discover your genius type with this free intelligence quiz. Answer fun questions to reveal your unique thinking style, strengths, and intellectual personality. Online quiz.",
+    "category": "Fun",
+    "topics": [
+      "Quiz"
+    ],
+    "icon": "brain",
+    "iconColor": "text-teal-600"
+  },
+  "what-type-of-traveler": {
+    "name": "What Type of Traveler Are You?",
+    "description": "Find out what type of traveler you are with our free travel personality quiz. Answer 10 questions to discover your travel style, preferences, and dream destinations.",
+    "category": "Fun",
+    "topics": [
+      "Quiz"
+    ],
+    "icon": "plane",
+    "iconColor": "text-sky-600"
+  },
+  "whats-your-hidden-talent": {
+    "name": "What's Your Hidden Talent?",
+    "description": "Uncover your hidden talent with this free personality quiz. Answer fun questions to reveal your natural abilities, unique gifts, and hidden strengths. Online talent test.",
+    "category": "Fun",
+    "topics": [
+      "Quiz"
+    ],
+    "icon": "sparkles",
+    "iconColor": "text-purple-600"
+  },
+  "whats-your-spirit-element": {
+    "name": "What's Your Spirit Element?",
+    "description": "Discover your spirit element with this free personality quiz. Answer 10 questions to find which classical element—fire, water, earth, or air—matches your inner soul.",
+    "category": "Fun",
+    "topics": [
+      "Quiz"
+    ],
+    "icon": "flame",
+    "iconColor": "text-orange-600"
+  },
+  "whats-your-superpower": {
+    "name": "What's Your Superpower? Personality Quiz",
+    "description": "Discover your hidden superpower with our free personality quiz. Answer 10 fun questions to reveal your unique superpower type and inner strengths. Fun online quiz.",
+    "category": "Fun",
+    "topics": [
+      "Quiz"
+    ],
+    "icon": "zap",
+    "iconColor": "text-yellow-500"
+  },
   "wheregoes-tool": {
     "name": "WhereGoes Tool",
     "description": "Trace URL redirects, check status codes, and analyze response headers.",
@@ -7021,6 +10529,66 @@ export const toolMetaMap = {
       "Network"
     ],
     "icon": "link",
+    "iconColor": "text-teal-600"
+  },
+  "which-animal-are-you": {
+    "name": "Which Animal Are You? - Spirit Animal Quiz",
+    "description": "Discover which animal matches your personality with this fun quiz. Find your spirit animal based on your traits and instincts instantly.",
+    "category": "Fun",
+    "topics": [
+      "Quiz"
+    ],
+    "icon": "paw-print",
+    "iconColor": "text-amber-600"
+  },
+  "which-fantasy-house": {
+    "name": "Which Fantasy House Do You Belong In?",
+    "description": "Discover which fantasy house you truly belong in with this free personality quiz. Answer fun questions to find your magical house match and inner realm. Fun online quiz.",
+    "category": "Fun",
+    "topics": [
+      "Quiz"
+    ],
+    "icon": "castle",
+    "iconColor": "text-indigo-600"
+  },
+  "which-movie-genre": {
+    "name": "Which Movie Genre Matches Your Life?",
+    "description": "Discover which movie genre best represents your life story with this free personality quiz. Answer fun questions to find your film genre match. Online movie quiz.",
+    "category": "Fun",
+    "topics": [
+      "Quiz"
+    ],
+    "icon": "film",
+    "iconColor": "text-rose-600"
+  },
+  "which-mythical-creature": {
+    "name": "Which Mythical Creature Are You?",
+    "description": "Discover which mythical creature matches your personality with this free fantasy quiz. Answer fun questions to find your magical creature spirit guide. Online quiz.",
+    "category": "Fun",
+    "topics": [
+      "Quiz"
+    ],
+    "icon": "dragon",
+    "iconColor": "text-emerald-600"
+  },
+  "which-time-period": {
+    "name": "Which Time Period Do You Belong In?",
+    "description": "Find out which historical time period you truly belong in with this free personality quiz. Answer fun questions to discover your perfect era. Online history quiz.",
+    "category": "Fun",
+    "topics": [
+      "Quiz"
+    ],
+    "icon": "clock",
+    "iconColor": "text-amber-600"
+  },
+  "whitespace-cleaner": {
+    "name": "Whitespace Cleaner",
+    "description": "Trim each line, convert tabs to spaces and drop blank lines.",
+    "category": "Text & Writing",
+    "topics": [
+      "Text"
+    ],
+    "icon": "eraser",
     "iconColor": "text-teal-600"
   },
   "who-pays-the-bill": {
@@ -7047,6 +10615,16 @@ export const toolMetaMap = {
     "icon": "wifi",
     "iconColor": "text-teal-600"
   },
+  "wizard-name-generator": {
+    "name": "Wizard Name Generator",
+    "description": "Generate mystical wizard names with magic schools, staff types, and enchanted quotes. Discover your fantasy wizard identity for RPGs and stories.",
+    "category": "Fun",
+    "topics": [
+      "Creators"
+    ],
+    "icon": "wand-2",
+    "iconColor": "text-indigo-600"
+  },
   "word-character-counter": {
     "name": "Word & Character Counter",
     "description": "Count words, characters, sentences, paragraphs, and reading time instantly.",
@@ -7056,6 +10634,16 @@ export const toolMetaMap = {
     ],
     "icon": "text",
     "iconColor": "text-blue-600"
+  },
+  "word-frequency-counter": {
+    "name": "Word Frequency Counter",
+    "description": "Count how often each word appears, sorted from most to least frequent.",
+    "category": "Text & Writing",
+    "topics": [
+      "Text"
+    ],
+    "icon": "chart-bar",
+    "iconColor": "text-fuchsia-600"
   },
   "word-ppt-excel-to-pdf": {
     "name": "Word / PPT / Excel to PDF",
@@ -7123,6 +10711,16 @@ export const toolMetaMap = {
     ],
     "icon": "dumbbell",
     "iconColor": "text-orange-600"
+  },
+  "world-facts-explorer": {
+    "name": "World Facts Explorer",
+    "description": "Explore fascinating world facts — population, area, GDP, HDI, and more with interactive comparisons and filtering across 195+ countries.",
+    "category": "Education & Science",
+    "topics": [
+      "Education"
+    ],
+    "icon": "sparkles",
+    "iconColor": "text-pink-700"
   },
   "xirr-calculator": {
     "name": "XIRR Calculator",
@@ -7221,5 +10819,15 @@ export const toolMetaMap = {
     ],
     "icon": "skull",
     "iconColor": "text-teal-500"
+  },
+  "zombie-survival-chance": {
+    "name": "Zombie Survival Chance Calculator",
+    "description": "Calculate your zombie survival chances with this fun personality quiz. Find your survival rank, skills, and apocalypse role in seconds.",
+    "category": "Fun",
+    "topics": [
+      "Quiz"
+    ],
+    "icon": "skull",
+    "iconColor": "text-green-700"
   }
 };

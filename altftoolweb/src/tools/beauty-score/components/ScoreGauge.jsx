@@ -1,30 +1,32 @@
 "use client";
 
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 
 function Sparkle({ delay }) {
-  const randomX = useRef(Math.random() * 100);
-  const randomY = useRef(Math.random() * 100);
-  const size = useRef(2 + Math.random() * 4);
+  const seed = Math.round((delay ?? 0) * 10) + 1;
+  const x = (seed * 37) % 100;
+  const y = (seed * 61) % 100;
+  const sparkleSize = 2 + (seed % 4);
+  const duration = 1.5 + ((seed * 29) % 20) / 10;
 
   return (
     <motion.div
       className="absolute rounded-full"
       style={{
-        left: `${randomX.current}%`,
-        top: `${randomY.current}%`,
-        width: size.current,
-        height: size.current,
+        left: `${x}%`,
+        top: `${y}%`,
+        width: sparkleSize,
+        height: sparkleSize,
       }}
       animate={{
         opacity: [0, 1, 0],
         scale: [0, 1.5, 0],
       }}
       transition={{
-        duration: 1.5 + Math.random() * 2,
+        duration,
         repeat: Infinity,
-        delay: delay || Math.random() * 3,
+        delay: delay ?? 0,
       }}
     >
       <div className="w-full h-full rounded-full bg-gradient-to-br from-pink-300 via-yellow-200 to-blue-300 shadow-[0_0_6px_rgba(244,114,182,0.6)]" />

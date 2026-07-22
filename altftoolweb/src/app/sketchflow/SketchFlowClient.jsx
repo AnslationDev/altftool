@@ -1206,19 +1206,44 @@ export default function SketchFlow({ config: configProp }) {
   };
 
   const commands = [
-    ...toolbar.map(([id, label]) => ({ label: `Tool: ${label}`, run: () => setTool(id) })),
-    { label: "Export PNG", run: exportPng },
-    { label: "Export SVG", run: exportSvg },
-    { label: "Save SketchFlow file", run: saveScene },
-    { label: "Toggle theme", run: () => setDark((v) => !v) },
-    { label: "Toggle grid", run: () => setGrid((g) => ({ ...g, enabled: !g.enabled })) },
-    { label: "Fit to screen", run: fitToScreen },
-    { label: "Auto layout diagram", run: autoLayoutScene },
-    { label: "Clear canvas", run: clearCanvas },
-    { label: "Search canvas text", run: searchTextOnCanvas },
-    { label: "Select all", run: () => selectElementIds(elements.map((el) => el.id)) },
+    ...toolbar.map(([id, label]) => ({ id: `tool:${id}`, label: `Tool: ${label}` })),
+    { id: "export-png", label: "Export PNG" },
+    { id: "export-svg", label: "Export SVG" },
+    { id: "save-scene", label: "Save SketchFlow file" },
+    { id: "toggle-theme", label: "Toggle theme" },
+    { id: "toggle-grid", label: "Toggle grid" },
+    { id: "fit-screen", label: "Fit to screen" },
+    { id: "auto-layout", label: "Auto layout diagram" },
+    { id: "clear-canvas", label: "Clear canvas" },
+    { id: "search-text", label: "Search canvas text" },
+    { id: "select-all", label: "Select all" },
   ];
-  const filteredCommands = commands.filter((action) => action.label.toLowerCase().includes(paletteQuery.toLowerCase()));
+  const filteredCommands = [];
+  const normalizedPaletteQuery = paletteQuery.toLowerCase();
+  for (const action of commands) {
+    if (action.label.toLowerCase().includes(normalizedPaletteQuery)) filteredCommands.push(action);
+  }
+
+  const runCommand = (action) => {
+    if (!action) return;
+    if (action.id.startsWith("tool:")) {
+      setTool(action.id.slice(5));
+      return;
+    }
+    const handlers = {
+      "export-png": exportPng,
+      "export-svg": exportSvg,
+      "save-scene": saveScene,
+      "toggle-theme": () => setDark((value) => !value),
+      "toggle-grid": () => setGrid((value) => ({ ...value, enabled: !value.enabled })),
+      "fit-screen": fitToScreen,
+      "auto-layout": autoLayoutScene,
+      "clear-canvas": clearCanvas,
+      "search-text": searchTextOnCanvas,
+      "select-all": () => selectElementIds(elements.map((element) => element.id)),
+    };
+    handlers[action.id]?.();
+  };
 
   useEffect(() => {
     const onKeyDown = (event) => {
@@ -1331,7 +1356,7 @@ export default function SketchFlow({ config: configProp }) {
       }
       if (event.key === "Enter") {
         event.preventDefault();
-        filteredCommands[paletteIndex]?.run();
+        runCommand(filteredCommands[paletteIndex]);
         setPaletteOpen(false);
       }
       if (event.key === "Escape") setPaletteOpen(false);
@@ -1483,7 +1508,7 @@ export default function SketchFlow({ config: configProp }) {
           }}
           onIndexChange={setPaletteIndex}
           onRun={(action) => {
-            action.run();
+            runCommand(action);
             setPaletteOpen(false);
           }}
           onClose={() => setPaletteOpen(false)}

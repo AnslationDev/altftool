@@ -26,7 +26,7 @@ const TOOL_CHECKS = [
   },
   { key: "icon", label: "Icon", test: (tool) => Boolean(String(tool?.icon || "").trim()) },
 ];
-const IGNORED_TOOL_DIRS = new Set(["_toolfk-suite"]);
+const IGNORED_TOOL_DIRS = new Set(["_shared", "_toolfk-suite"]);
 const VALID_ENTRY_FILES = ["entry.js", "entry.jsx", "entry.ts", "entry.tsx"];
 
 function clampScore(score) {
@@ -104,9 +104,18 @@ function hasSlugReference(source, slug) {
 
 async function buildToolQuality(toolMetaMap) {
   const toolRoot = path.join(webRoot, "src/tools");
-  const toolDirs = (await listDirectories(toolRoot)).filter(
+  const candidateToolDirs = (await listDirectories(toolRoot)).filter(
     (slug) => !IGNORED_TOOL_DIRS.has(slug) && !slug.startsWith("."),
   );
+  const toolDirs = (
+    await Promise.all(
+      candidateToolDirs.map(async (slug) => {
+        const hasEntry = await hasToolEntry(toolRoot, slug);
+        const hasConfig = await fileExists(path.join(toolRoot, slug, "tool.config.js"));
+        return hasEntry || hasConfig ? slug : null;
+      }),
+    )
+  ).filter(Boolean);
   const registrySlugs = new Set(Object.keys(toolMetaMap));
   const directorySlugs = new Set(toolDirs);
   const categorySlugs = new Set();

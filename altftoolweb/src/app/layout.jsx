@@ -6,13 +6,14 @@ import { AuthProvider } from "@/contexts/AuthContext";
 import Header from "@/platform/navigation/Header";
 import Footer from "@/platform/navigation/Footer";
 import Script from "next/script";
-import { CookieConsentProvider } from "@/platform/consentalerts/CookieConsentContext";
-import { CookieBanner } from "@/platform/consentalerts/CookieBanner";
 import { NewsletterSubscribeDialog } from "@/platform/consentalerts/NewsletterSubscribeDialog";
 import ScrollToTopButton from "@/platform/navigation/ScrollToTopButton";
 import GlobalAnimationProvider from "@/contexts/GlobalAnimationProvider";
 import { AdsProvider } from "@/ads/AdsProvider";
 import GoogleAdUnit from "@/ads/GoogleAdUnit";
+import ProductionAdSenseScript from "@/ads/ProductionAdSenseScript";
+import ProductionSkimlinksScript from "@/ads/ProductionSkimlinksScript";
+import { isAdsenseProductionDeployment } from "@/ads/adsenseConfig";
 import { Suspense } from "react";
 import { AlertProvider } from "@/shared/ui/AlertProvider";
 import JsonLd from "@/platform/seo/JsonLd";
@@ -61,15 +62,7 @@ const ibmPlexSans = IBM_Plex_Sans({
   display: "swap",
 });
 
-const ADSENSE_CLIENT = "ca-pub-5858966346488022";
-
-const isPreviewDeployment =
-  (process.env.VERCEL_ENV && process.env.VERCEL_ENV !== "production") ||
-  (process.env.AWS_BRANCH && process.env.AWS_BRANCH !== "main");
-
-const shouldLoadAdsense =
-  process.env.NODE_ENV === "production" &&
-  !isPreviewDeployment;
+const shouldLoadAdsense = isAdsenseProductionDeployment();
 
 const baseMetadata = {
   metadataBase: new URL(siteConfig.url),
@@ -172,14 +165,7 @@ export default async function RootLayout({ children }) {
         <link rel="preconnect" href="https://firebasestorage.googleapis.com" />
         <link rel="preconnect" href="https://www.googletagmanager.com" />
         <link rel="preconnect" href="https://www.clarity.ms" />
-        {shouldLoadAdsense ? (
-          <script
-            id="google-adsense-loader"
-            async
-            src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${ADSENSE_CLIENT}`}
-            crossOrigin="anonymous"
-          />
-        ) : null}
+        <ProductionAdSenseScript enabled={shouldLoadAdsense} />
         <JsonLd
           id="altftool-site-schema"
           data={[createOrganizationJsonLd(), createWebsiteJsonLd()]}
@@ -189,8 +175,11 @@ export default async function RootLayout({ children }) {
           {`
             try {
               var storedMode = localStorage.getItem("appThemeMode");
+              var legacyManual = localStorage.getItem("themeManual") === "true";
+              var legacyTheme = localStorage.getItem("appTheme");
               var validMode = storedMode === "system" || storedMode === "light" || storedMode === "dark";
-              var mode = validMode ? storedMode : "system";
+              var validLegacy = legacyTheme === "light" || legacyTheme === "dark";
+              var mode = validMode ? storedMode : (legacyManual && validLegacy ? legacyTheme : "system");
               var prefersDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
               var theme = mode === "system" ? (prefersDark ? "dark" : "light") : mode;
               document.documentElement.setAttribute("data-theme", theme);
@@ -253,15 +242,9 @@ export default async function RootLayout({ children }) {
           strategy="afterInteractive"
         />
 
-        {/* Skimlinks affiliate monetisation (pubcode 306210X1794449). The bundle
-            is domain-locked to altftool.com and self-disables elsewhere; it loads
-            after hydration and rewrites outbound commerce links. Monetisation
-            begins once the Skimlinks account is approved. */}
-        <Script
-          id="skimlinks"
-          src="https://s.skimresources.com/js/306210X1794449.skimlinks.js"
-          strategy="afterInteractive"
-        />
+        {/* Skimlinks rewrites outbound commerce links after hydration, but only
+            on the canonical production hosts. */}
+        <ProductionSkimlinksScript enabled={shouldLoadAdsense} />
 
         <Script id="ga-init" strategy="afterInteractive">
           {`
@@ -295,7 +278,6 @@ export default async function RootLayout({ children }) {
   <PerPageCode active={hasPageCode} />
   <ThemeProvider>
     <AuthProvider>
-    <CookieConsentProvider>
       <AlertProvider>
         <GlobalNavigationLoader />
         <a className="skip-to-content" href="#main-content">
@@ -324,7 +306,6 @@ export default async function RootLayout({ children }) {
 
         <GlobalChromeGate>
           <ScrollToTopButton />
-          <CookieBanner />
           <NewsletterSubscribeDialog />
         </GlobalChromeGate>
 
@@ -332,7 +313,6 @@ export default async function RootLayout({ children }) {
         <InjectedCode id="body-end" html={customCode.bodyEnd} />
 
       </AlertProvider>
-    </CookieConsentProvider>
     </AuthProvider>
   </ThemeProvider>
 </body>

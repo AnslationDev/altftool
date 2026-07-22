@@ -23,7 +23,7 @@ const brandRatingDescription =
 
 export async function generateMetadata() {
   return createPageMetadata({
-    title: "Brand Rating & Reviews – Tool Scores",
+    title: "Brand Rating & Reviews – Tool Scores | AltFTool",
     description: brandRatingDescription,
     path: "/brandrating",
   });
@@ -54,6 +54,17 @@ function Page() {
         ]}
       />
       <div className="brandrating-page route-page-shell w-full">
+        <header className="section pb-3 pt-8 sm:pt-10">
+          <p className="text-xs font-semibold uppercase tracking-wide text-(--primary)">
+            Independent comparisons
+          </p>
+          <h1 className="mt-2 text-2xl font-semibold text-(--foreground) sm:text-3xl">
+            Compare brands with confidence
+          </h1>
+          <p className="mt-2 max-w-3xl text-sm leading-6 text-(--muted-foreground)">
+            Review ratings, features, offers, and comparison signals in one clear workspace.
+          </p>
+        </header>
         <HeroSectionBrand />
 
         <Categories data={allCategory} />

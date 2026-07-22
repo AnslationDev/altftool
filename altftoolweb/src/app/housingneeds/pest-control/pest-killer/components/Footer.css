@@ -1,0 +1,261 @@
+.footer {
+  background-color: #0d1e2d;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+  background-size: 30px 30px;
+  color: #fff;
+  padding-top: 80px;
+  font-family: 'Inter', sans-serif;
+}
+
+.footer-top {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: 40px;
+  margin-bottom: 50px;
+}
+
+/* ── Left Column ── */
+.footer-about {
+  display: flex;
+  flex-direction: column;
+}
+
+.footer-logo {
+  margin-bottom: 24px;
+}
+
+.footer-about p {
+  color: #cbd5e1;
+  font-size: 14px;
+  line-height: 1.6;
+  margin-bottom: 24px;
+}
+
+.footer-about .divider {
+  height: 1px;
+  background: rgba(255, 255, 255, 0.1);
+  margin-bottom: 24px;
+}
+
+.social-heading {
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 16px;
+}
+
+.footer-social {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.footer-social a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #fff;
+  transition: all 0.3s;
+}
+
+.footer-social a:hover {
+  background: #4AAB3D;
+  border-color: #4AAB3D;
+}
+
+.footer-map {
+  width: 100%;
+}
+
+/* ── Right Box ── */
+.footer-right-box {
+  background-color: #1e293b;
+  border-radius: 16px;
+  padding: 40px 40px 50px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1.5fr;
+  gap: 30px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+}
+
+.footer-col h3 {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 24px;
+  color: #fff;
+}
+
+.footer-links ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer-links li {
+  margin-bottom: 16px;
+  position: relative;
+  padding-left: 14px;
+}
+
+.footer-links li::before {
+  content: '•';
+  color: #4AAB3D;
+  position: absolute;
+  left: 0;
+  top: -2px;
+  font-size: 16px;
+}
+
+.footer-links a {
+  color: #cbd5e1;
+  font-size: 14px;
+  transition: color 0.3s;
+}
+
+.footer-links a:hover {
+  color: #4AAB3D;
+}
+
+/* ── Consultation Form ── */
+.footer-form-col p {
+  font-size: 14px;
+  color: #cbd5e1;
+  line-height: 1.5;
+  margin-bottom: 24px;
+}
+
+.footer-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.footer-form input {
+  width: 100%;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+  padding: 10px 0;
+  color: #fff;
+  font-size: 14px;
+  font-family: inherit;
+  outline: none;
+  transition: border-color 0.3s;
+}
+
+.footer-form input::placeholder {
+  color: #94a3b8;
+}
+
+.footer-form input:focus {
+  border-bottom-color: #4AAB3D;
+}
+
+.footer-form .btn-green {
+  align-self: flex-start;
+  margin-top: 10px;
+  padding: 12px 24px;
+  border-radius: 6px;
+  background: #4AAB3D;
+  color: #fff;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.footer-form .btn-green:hover {
+  background: #3f9434;
+}
+
+.toast-msg {
+  color: #4AAB3D;
+  font-size: 13px;
+  margin-top: 10px;
+}
+
+/* ── Contact Bar ── */
+.footer-contact-bar {
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 30px 0;
+  margin-bottom: 20px;
+}
+
+.contact-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+}
+
+.contact-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.contact-item-icon {
+  width: 46px;
+  height: 46px;
+  background: #4AAB3D;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  color: #fff;
+  flex-shrink: 0;
+}
+
+.contact-item-text p {
+  font-size: 12px;
+  color: #cbd5e1;
+  margin-bottom: 4px;
+}
+
+.contact-item-text h4 {
+  font-size: 16px;
+  font-weight: 700;
+  color: #fff;
+  line-height: 1.4;
+  margin: 0;
+}
+
+/* ── Copyright ── */
+.footer-copyright {
+  text-align: center;
+  padding-bottom: 30px;
+}
+
+.footer-copyright p {
+  color: #cbd5e1;
+  font-size: 14px;
+  margin: 0;
+}
+
+/* ── Responsive ── */
+@media (max-width: 1024px) {
+  .footer-top {
+    grid-template-columns: 1fr;
+  }
+  .footer-right-box {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .footer-right-box {
+    grid-template-columns: 1fr;
+    padding: 30px 20px;
+  }
+  .contact-grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+}

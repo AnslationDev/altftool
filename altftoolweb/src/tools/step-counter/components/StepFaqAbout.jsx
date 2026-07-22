@@ -29,7 +29,7 @@ const FAQS = [
   {
     question: "Is my data private and secure?",
     answer:
-      "Absolutely. Your step data lives only in your browser for the current session — nothing is uploaded to any server, and it clears automatically when you close your browser.",
+      "Absolutely. Your step data is saved only in your own browser on this device — nothing is ever uploaded to any server. It stays there next time you visit, and you can clear it anytime with the Reset button.",
   },
 ];
 

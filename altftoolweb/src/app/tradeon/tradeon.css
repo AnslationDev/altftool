@@ -1,0 +1,365 @@
+/* ============================================================================
+   TRADEON — AI Financial Intelligence Platform
+   Design system: AltFTool semantic tokens with light + dark parity.
+   Everything is scoped under .tradeon-root so it never leaks into the host app.
+   Signature palette: Teal primary · Cyan accent · semantic market status colors
+   ============================================================================ */
+
+/* Scoped wrapper mirrors the platform theme for native controls and charts. */
+.tradeon-shell { min-height: 100vh; display: flow-root; }
+.tradeon-shell[data-tradeon-theme="dark"] { color-scheme: dark; }
+.tradeon-shell[data-tradeon-theme="light"] { color-scheme: light; }
+
+.tradeon-root {
+  --tdn-iris: var(--primary);
+  --tdn-iris-2: var(--primary);
+  --tdn-violet: var(--anslation-ds-accent);
+  --tdn-cyan: var(--secondary);
+  --tdn-up: var(--anslation-ds-success);
+  --tdn-up-soft: var(--anslation-ds-success-soft);
+  --tdn-down: var(--anslation-ds-danger);
+  --tdn-down-soft: var(--anslation-ds-danger-soft);
+  --tdn-amber: var(--anslation-ds-warning);
+
+  --tdn-brand-gradient: var(--anslation-ds-cta-gradient);
+  --tdn-brand-gradient-soft: color-mix(in srgb, var(--primary) 10%, var(--card));
+
+  --tdn-bg: var(--background);
+  --tdn-bg-2: var(--anslation-ds-canvas);
+  --tdn-surface: color-mix(in srgb, var(--card) 88%, transparent);
+  --tdn-surface-solid: var(--card);
+  --tdn-elevated: var(--card);
+  --tdn-card: color-mix(in srgb, var(--card) 94%, transparent);
+  --tdn-card-hover: var(--anslation-ds-hover);
+  --tdn-fg: var(--foreground);
+  --tdn-fg-strong: var(--foreground);
+  --tdn-muted: var(--muted-foreground);
+  --tdn-faint: color-mix(in srgb, var(--muted-foreground) 82%, transparent);
+  --tdn-border: var(--border);
+  --tdn-border-strong: var(--anslation-ds-border-strong);
+  --tdn-glass-blur: 16px;
+  --tdn-shadow-sm: var(--anslation-ds-shadow-sm);
+  --tdn-shadow: var(--anslation-ds-shadow-md);
+  --tdn-shadow-lg: var(--anslation-ds-shadow-lg);
+  --tdn-ring: inset 0 0 0 1px color-mix(in srgb, var(--foreground) 5%, transparent);
+  --tdn-grid-line: color-mix(in srgb, var(--border) 45%, transparent);
+
+  --tdn-font-display: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --tdn-font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --tdn-font-mono: var(--font-geist-mono), ui-monospace, "SF Mono", Menlo, monospace;
+
+  color: var(--tdn-fg);
+  background: var(--tdn-bg);
+  font-family: var(--tdn-font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  min-height: 100vh;
+  position: relative;
+  isolation: isolate;
+}
+
+[data-tradeon-theme="dark"] .tradeon-root {
+  --tdn-surface: color-mix(in srgb, var(--card) 88%, transparent);
+  --tdn-card: color-mix(in srgb, var(--card) 92%, transparent);
+}
+
+/* ---- Quiet terminal grid ---- */
+.tradeon-root::before {
+  content: none;
+}
+.tradeon-root::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  background-image:
+    linear-gradient(var(--tdn-grid-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--tdn-grid-line) 1px, transparent 1px);
+  background-size: 46px 46px;
+  mask-image: linear-gradient(to bottom, black, transparent 80%);
+  pointer-events: none;
+}
+
+/* ============================ Typography ============================ */
+.tradeon-root h1,
+.tradeon-root h2,
+.tradeon-root h3,
+.tradeon-root h4 {
+  font-family: var(--tdn-font-display);
+  letter-spacing: 0;
+  color: var(--tdn-fg-strong);
+  font-weight: 700;
+}
+.tdn-display {
+  font-family: var(--tdn-font-display);
+  font-weight: 720;
+  letter-spacing: 0;
+  line-height: 1.08;
+}
+.tdn-mono { font-family: var(--tdn-font-mono); font-variant-numeric: tabular-nums; }
+.tdn-eyebrow {
+  font-size: 0.72rem;
+  font-weight: 650;
+  letter-spacing: 0;
+  text-transform: uppercase;
+  color: var(--tdn-muted);
+}
+/* Gradient text is intentionally disabled platform-wide — headings use a solid
+   accent for a professional, readable financial look (kept as a class so any
+   existing emphasis markup renders as a solid accent, never a gradient). */
+.tdn-gradient-text {
+  background: none;
+  -webkit-text-fill-color: currentColor;
+  color: var(--tdn-accent-text);
+}
+.tradeon-root { --tdn-accent-text: var(--primary); --tdn-mark-bg: var(--primary); --tdn-mark-fg: var(--primary-foreground); --tdn-mark-ring: color-mix(in srgb, var(--primary-foreground) 20%, transparent); }
+
+/* ============================ Surfaces ============================ */
+.tdn-glass {
+  background: var(--tdn-surface);
+  backdrop-filter: blur(var(--tdn-glass-blur)) saturate(150%);
+  -webkit-backdrop-filter: blur(var(--tdn-glass-blur)) saturate(150%);
+  border: 1px solid var(--tdn-border);
+}
+.tdn-card {
+  background: var(--tdn-card);
+  border: 1px solid var(--tdn-border);
+  border-radius: var(--anslation-ds-radius-lg);
+  box-shadow: var(--tdn-shadow-sm);
+  backdrop-filter: blur(var(--tdn-glass-blur)) saturate(140%);
+  -webkit-backdrop-filter: blur(var(--tdn-glass-blur)) saturate(140%);
+  transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1), border-color 0.3s, box-shadow 0.35s, background 0.3s;
+}
+.tdn-card-i {
+  background: var(--tdn-card);
+  border: 1px solid var(--tdn-border);
+  border-radius: var(--anslation-ds-radius-lg);
+}
+.tdn-card-hover:hover {
+  transform: translateY(-2px);
+  border-color: var(--tdn-border-strong);
+  box-shadow: var(--tdn-shadow);
+  background: var(--tdn-card-hover);
+}
+.tdn-panel {
+  background: var(--tdn-elevated);
+  border: 1px solid var(--tdn-border);
+  border-radius: var(--anslation-ds-radius-lg);
+  box-shadow: var(--tdn-shadow);
+  backdrop-filter: blur(var(--tdn-glass-blur)) saturate(150%);
+  -webkit-backdrop-filter: blur(var(--tdn-glass-blur)) saturate(150%);
+}
+.tdn-inset {
+  background: color-mix(in srgb, var(--tdn-fg) 4%, transparent);
+  border: 1px solid var(--tdn-border);
+  border-radius: 12px;
+}
+.tdn-hairline { border-color: var(--tdn-border); }
+.tdn-glow-ring { box-shadow: var(--tdn-shadow); }
+
+/* ============================ Buttons ============================ */
+.tdn-btn {
+  --_bg: transparent;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-weight: 600;
+  font-size: 0.9rem;
+  min-height: 40px;
+  padding: 0.5rem 1rem;
+  border-radius: var(--anslation-ds-radius);
+  border: 1px solid transparent;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: transform 0.18s ease, box-shadow 0.25s, background 0.25s, border-color 0.25s, color 0.2s;
+  line-height: 1;
+}
+.tdn-btn:active { transform: translateY(1px) scale(0.99); }
+.tdn-btn-primary {
+  background: var(--primary);
+  color: var(--primary-foreground);
+  box-shadow: var(--tdn-shadow-sm);
+}
+.tdn-btn-primary:hover { background: var(--primary-hover); box-shadow: var(--tdn-shadow); transform: translateY(-1px); }
+.tdn-btn-ghost {
+  background: var(--tdn-surface);
+  border-color: var(--tdn-border);
+  color: var(--tdn-fg);
+  backdrop-filter: blur(10px);
+}
+.tdn-btn-ghost:hover { border-color: var(--tdn-border-strong); background: var(--tdn-card-hover); }
+.tdn-btn-soft {
+  background: color-mix(in srgb, var(--tdn-iris) 14%, transparent);
+  color: var(--tdn-iris-2);
+  border-color: color-mix(in srgb, var(--tdn-iris) 26%, transparent);
+}
+.tdn-btn-soft:hover { background: color-mix(in srgb, var(--tdn-iris) 22%, transparent); }
+.tdn-btn-icon {
+  width: 40px; height: 40px; padding: 0; border-radius: var(--anslation-ds-radius);
+  background: var(--tdn-surface); border: 1px solid var(--tdn-border); color: var(--tdn-fg);
+}
+.tdn-btn-icon:hover { border-color: var(--tdn-border-strong); background: var(--tdn-card-hover); color: var(--tdn-iris-2); }
+
+/* ============================ Chips / badges ============================ */
+.tdn-chip {
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  padding: 0.32rem 0.72rem; border-radius: 999px;
+  font-size: 0.76rem; font-weight: 600;
+  background: var(--tdn-surface); border: 1px solid var(--tdn-border); color: var(--tdn-muted);
+}
+.tdn-chip-brand {
+  background: var(--tdn-brand-gradient-soft);
+  border-color: color-mix(in srgb, var(--tdn-iris) 30%, transparent);
+  color: var(--tdn-iris-2);
+}
+.tdn-badge-live {
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  font-size: 0.72rem; font-weight: 650; letter-spacing: 0.02em;
+  padding: 0.28rem 0.6rem; border-radius: 999px;
+  color: var(--tdn-up);
+  background: var(--tdn-up-soft);
+  border: 1px solid color-mix(in srgb, var(--tdn-up) 32%, transparent);
+}
+
+/* ============================ Directional coloring ============================ */
+.tdn-up { color: var(--tdn-up); }
+.tdn-down { color: var(--tdn-down); }
+.tdn-flat { color: var(--tdn-muted); }
+.tdn-up-bg { background: var(--tdn-up-soft); color: var(--tdn-up); }
+.tdn-down-bg { background: var(--tdn-down-soft); color: var(--tdn-down); }
+.tdn-pill-delta {
+  display: inline-flex; align-items: center; gap: 0.2rem;
+  padding: 0.16rem 0.5rem; border-radius: 8px; font-size: 0.78rem; font-weight: 650;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Value flash when a live number moves */
+@keyframes tdn-flash-up { 0% { background: var(--tdn-up-soft); } 100% { background: transparent; } }
+@keyframes tdn-flash-down { 0% { background: var(--tdn-down-soft); } 100% { background: transparent; } }
+.tdn-flash-up { animation: tdn-flash-up 0.7s ease-out; border-radius: 6px; }
+.tdn-flash-down { animation: tdn-flash-down 0.7s ease-out; border-radius: 6px; }
+
+/* ============================ Ticker marquee ============================ */
+.tdn-marquee { overflow: hidden; -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent); mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent); }
+.tdn-marquee-track { display: inline-flex; gap: 0; white-space: nowrap; animation: tdn-scroll 46s linear infinite; will-change: transform; }
+.tdn-marquee:hover .tdn-marquee-track { animation-play-state: paused; }
+@keyframes tdn-scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+/* ============================ Animations ============================ */
+@keyframes tdn-pulse-dot { 0% { box-shadow: 0 0 0 0 currentColor; opacity: 1; } 70% { box-shadow: 0 0 0 6px transparent; opacity: 0.85; } 100% { box-shadow: 0 0 0 0 transparent; opacity: 1; } }
+.tdn-dot { width: 8px; height: 8px; border-radius: 999px; background: currentColor; animation: tdn-pulse-dot 1.8s infinite; }
+@keyframes tdn-float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+.tdn-float { animation: tdn-float 6s ease-in-out infinite; }
+@keyframes tdn-shimmer { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
+.tdn-skeleton {
+  background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--tdn-fg) 8%, transparent), transparent);
+  background-size: 200% 100%;
+  animation: tdn-shimmer 1.4s infinite;
+  border-radius: 8px;
+}
+@keyframes tdn-rise { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+.tdn-rise { animation: tdn-rise 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) both; }
+@keyframes tdn-spin-slow { to { transform: rotate(360deg); } }
+
+/* Animated gradient border for hero cards */
+@keyframes tdn-border-rotate { to { --tdn-angle: 360deg; } }
+@property --tdn-angle { syntax: "<angle>"; initial-value: 0deg; inherits: false; }
+.tdn-gradient-border {
+  position: relative;
+  border-radius: 20px;
+  background: var(--tdn-surface);
+  backdrop-filter: blur(var(--tdn-glass-blur));
+  -webkit-backdrop-filter: blur(var(--tdn-glass-blur));
+}
+.tdn-gradient-border::before {
+  content: "";
+  position: absolute; inset: 0; padding: 1px; border-radius: inherit;
+  background: conic-gradient(from var(--tdn-angle), transparent 0deg, var(--tdn-iris) 90deg, var(--tdn-cyan) 180deg, transparent 300deg);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor; mask-composite: exclude;
+  animation: tdn-border-rotate 8s linear infinite;
+  opacity: 0.9;
+}
+
+/* ============================ Tables ============================ */
+.tdn-table { width: 100%; border-collapse: separate; border-spacing: 0; font-size: 0.86rem; }
+.tdn-table thead th {
+  position: sticky; top: 0; z-index: 2;
+  text-align: left; font-weight: 600; color: var(--tdn-muted);
+  font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.06em;
+  padding: 0.7rem 0.9rem;
+  background: var(--tdn-elevated);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--tdn-border);
+}
+.tdn-table tbody td { padding: 0.72rem 0.9rem; border-bottom: 1px solid var(--tdn-border); font-variant-numeric: tabular-nums; }
+.tdn-table tbody tr { transition: background 0.2s; }
+.tdn-table tbody tr:hover { background: color-mix(in srgb, var(--tdn-iris) 6%, transparent); }
+.tdn-table .tdn-sticky-col { position: sticky; left: 0; background: var(--tdn-elevated); z-index: 1; }
+
+/* ============================ Inputs ============================ */
+.tdn-input {
+  width: 100%; background: var(--tdn-surface); border: 1px solid var(--tdn-border);
+  border-radius: 12px; padding: 0.6rem 0.9rem; color: var(--tdn-fg); font-size: 0.9rem;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.tdn-input::placeholder { color: var(--tdn-faint); }
+.tdn-input:focus { outline: none; border-color: color-mix(in srgb, var(--tdn-iris) 55%, transparent); box-shadow: 0 0 0 3px color-mix(in srgb, var(--tdn-iris) 18%, transparent); }
+
+/* ============================ Layout helpers ============================ */
+.tdn-container { width: 100%; max-width: 1240px; margin-inline: auto; padding-inline: clamp(1rem, 3vw, 1.75rem); }
+.tdn-container-wide { width: 100%; max-width: 1600px; margin-inline: auto; padding-inline: clamp(1rem, 4vw, 2rem); }
+.tdn-section { padding-block: clamp(2rem, 4vw, 3.25rem); position: relative; }
+.tdn-section-tight { padding-block: clamp(1.25rem, 3vw, 2rem); position: relative; }
+.tdn-divider { height: 1px; background: linear-gradient(90deg, transparent, var(--tdn-border-strong), transparent); border: 0; }
+
+/* Heatmap tile */
+.tdn-heat { border-radius: 10px; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 0.5rem; transition: transform 0.2s; cursor: pointer; }
+.tdn-heat:hover { transform: scale(1.04); z-index: 2; }
+
+/* Gauge */
+.tdn-gauge-track { stroke: var(--tdn-border-strong); }
+
+/* Focus visibility for accessibility */
+.tradeon-root :focus-visible { outline: 2px solid var(--tdn-iris); outline-offset: 2px; border-radius: 6px; }
+
+/* Scrollbars inside Tradeon */
+.tradeon-root ::-webkit-scrollbar { width: 10px; height: 10px; }
+.tradeon-root ::-webkit-scrollbar-thumb { background: color-mix(in srgb, var(--tdn-fg) 18%, transparent); border-radius: 999px; border: 2px solid transparent; background-clip: content-box; }
+.tradeon-root ::-webkit-scrollbar-track { background: transparent; }
+.tdn-scroll-thin { scrollbar-width: thin; }
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .tradeon-root *, .tradeon-root *::before, .tradeon-root *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ============================ Header (flat, sticky) ============================ */
+/* Solid, page-matching background (no gradient, no glass) with a hairline rule.
+   Sticky so the market tape + nav pin to the top as the page scrolls. */
+.tdn-topbar {
+  background: var(--tdn-bg);
+  border-bottom: 1px solid var(--tdn-border);
+}
+.tdn-navlink {
+  padding: 0.4rem 0.6rem;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--tdn-muted);
+  white-space: nowrap;
+  transition: color 0.15s, background 0.15s;
+}
+.tdn-navlink:hover { color: var(--tdn-fg-strong); background: color-mix(in srgb, var(--tdn-fg) 5%, transparent); }
+.tdn-navlink[data-active="true"] { color: var(--tdn-fg-strong); background: color-mix(in srgb, var(--tdn-fg) 6%, transparent); }
+.tdn-scroll-hide { scrollbar-width: none; -ms-overflow-style: none; }
+.tdn-scroll-hide::-webkit-scrollbar { display: none; }
+
+/* Hide the global site chrome while inside Tradeon */
+body.tradeon-active .altf-global-header,
+body.tradeon-active header[data-global-header] { display: none !important; }

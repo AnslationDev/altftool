@@ -622,7 +622,7 @@ export default function App() {
   const queueFillPercent = (activities.length / 9) * 100;
 
   return (
-    <div className="relative min-h-screen overflow-x-clip bg-[var(--playful-paper)] text-slate-800">
+    <div className="live-activity-root relative min-h-screen overflow-x-clip bg-[var(--playful-paper)] text-slate-800">
       <div className="pointer-events-none absolute inset-0 paper-dots opacity-70" />
       <div className="shape-confetti shape-confetti-a" />
       <div className="shape-confetti shape-confetti-b" />

@@ -28,6 +28,11 @@ export const mapRawToSearchResult = (item) => ({
 });
 
 // ─── SCORING ENGINE ───────────────────────────────────────────────────────────
+const includesSearchWord = (value, word) => {
+  if (!/^\d+$/.test(word)) return value.includes(word);
+  return new RegExp(`(^|\\D)${word}(?=\\D|$)`).test(value);
+};
+
 const calculateScore = (item, normalizedQuery) => {
   const words = normalizedQuery.split(/\s+/).filter(Boolean);
   if (!words.length) return 0;
@@ -36,28 +41,31 @@ const calculateScore = (item, normalizedQuery) => {
   const title = item.title.toLowerCase();
   const desc = item.description.toLowerCase();
   const tags = item.tags.map((t) => t.toLowerCase());
+  const category = String(item.category || '').toLowerCase();
 
   // Exact phrase in title: highest reward
   if (title.includes(normalizedQuery)) score += 60;
 
   words.forEach((word) => {
     // Title: most important
-    if (title.includes(word)) {
+    if (includesSearchWord(title, word)) {
       score += 15;
       if (title.startsWith(word)) score += 8; // prefix bonus
     }
     // Tags: high importance
     if (tags.some((t) => t === word)) score += 12;      // exact tag match
-    else if (tags.some((t) => t.includes(word))) score += 6; // partial tag
+    else if (tags.some((t) => includesSearchWord(t, word))) score += 6; // partial tag
     // Description: lower importance
-    if (desc.includes(word)) score += 3;
+    if (includesSearchWord(desc, word)) score += 3;
+    // Category/type matches help broad queries such as "extension" or "tool".
+    if (includesSearchWord(category, word)) score += 5;
   });
 
   return score;
 };
 
 // ─── SEARCH CACHE ─────────────────────────────────────────────────────────────
-const searchCache = new Map();
+const searchCache = new WeakMap();
 
 // ─── MAIN SEARCH FUNCTION ─────────────────────────────────────────────────────
 // Always returns { items: [], metadata: { total, time } }
@@ -65,16 +73,24 @@ export const performSmartSearch = (dataset, query) => {
   const EMPTY = { items: [], metadata: { total: 0, time: '0.00' } };
   if (!query || !query.trim()) return EMPTY;
 
+  const source = Array.isArray(dataset) ? dataset : [];
   const normalizedQuery = query.toLowerCase().trim();
+  let datasetCache = searchCache.get(source);
 
-  // Return from cache if available
-  if (searchCache.has(normalizedQuery)) {
-    return searchCache.get(normalizedQuery);
+  if (!datasetCache) {
+    datasetCache = new Map();
+    searchCache.set(source, datasetCache);
+  }
+
+  // Progressive sources replace the dataset as Firebase layers arrive. Cache
+  // per dataset identity so an early empty result cannot hide later records.
+  if (datasetCache.has(normalizedQuery)) {
+    return datasetCache.get(normalizedQuery);
   }
 
   const startTime = performance.now();
 
-  const items = dataset
+  const items = source
     .map((item) => {
       const mapped = mapRawToSearchResult(item);
       const score = calculateScore(mapped, normalizedQuery);
@@ -87,12 +103,29 @@ export const performSmartSearch = (dataset, query) => {
   const result = { items, metadata: { total: items.length, time } };
 
   // Cache result (limit cache to 50 entries)
-  if (searchCache.size >= 50) {
-    searchCache.delete(searchCache.keys().next().value);
+  if (datasetCache.size >= 50) {
+    datasetCache.delete(datasetCache.keys().next().value);
   }
-  searchCache.set(normalizedQuery, result);
+  datasetCache.set(normalizedQuery, result);
 
   return result;
+};
+
+export const mergeSearchResults = (localItems = [], webItems = [], maxLocalItems = 8) => {
+  const managed = localItems.filter((item) => String(item.id || "").startsWith("managed__"));
+  const native = localItems.filter((item) => !String(item.id || "").startsWith("managed__"));
+  const prioritizedLocal = [...managed, ...native].slice(0, Math.max(0, maxLocalItems));
+  const seen = new Set();
+
+  return [...prioritizedLocal, ...webItems].filter((item) => {
+    const url = String(item?.url || "").trim().toLowerCase();
+    const fallback = `${String(item?.title || "").trim().toLowerCase()}::${String(item?.id || "")}`;
+    const key = url || fallback;
+
+    if (seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
 };
 
 // ─── "DID YOU MEAN" FUZZY MATCH ───────────────────────────────────────────────

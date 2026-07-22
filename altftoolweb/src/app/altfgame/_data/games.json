@@ -1,0 +1,326 @@
+[
+  {
+    "slug": "2048",
+    "title": "2048",
+    "emoji": "\ud83d\udd22",
+    "category": "Puzzle",
+    "rating": 4.7,
+    "plays": 982000,
+    "colors": [
+      "#f7b733",
+      "#fc4a1a"
+    ],
+    "description": "Slide and merge the tiles to reach the elusive 2048.",
+    "controls": "Use the arrow keys or swipe to slide the tiles. Matching numbers merge into one \u2014 plan ahead so the board never fills up.",
+    "featured": true,
+    "isNew": false,
+    "trending": true,
+    "image": "/images/games/2048.webp"
+  },
+  {
+    "slug": "aim-trainer-pro",
+    "title": "Aim Trainer Pro",
+    "emoji": "\ud83c\udfaf",
+    "category": "Action",
+    "rating": 4.7,
+    "plays": 623000,
+    "colors": [
+      "#ff416c",
+      "#ff4b2b"
+    ],
+    "description": "Sharpen your reflexes and clicking accuracy.",
+    "controls": "Move the mouse to aim and click the targets as fast as you can before the timer runs out.",
+    "featured": false,
+    "isNew": true,
+    "trending": false,
+    "image": "/images/games/aim-trainer-pro.webp"
+  },
+  {
+    "slug": "air-shot",
+    "title": "Air Shot",
+    "emoji": "\ud83c\udf88",
+    "category": "Action",
+    "rating": 4.3,
+    "plays": 398000,
+    "colors": [
+      "#56ccf2",
+      "#2f80ed"
+    ],
+    "description": "Aim, shoot, and pop your way to a high score.",
+    "controls": "Aim with the mouse, then click or hold to shoot. Pop as many targets as possible before you run out of shots.",
+    "featured": false,
+    "isNew": true,
+    "trending": false,
+    "image": "/images/games/air-shot.webp"
+  },
+  {
+    "slug": "breakout",
+    "title": "Breakout",
+    "emoji": "\ud83e\uddf1",
+    "category": "Arcade",
+    "rating": 4.5,
+    "plays": 690000,
+    "colors": [
+      "#ff512f",
+      "#dd2476"
+    ],
+    "description": "Smash every brick with a ball and paddle.",
+    "controls": "Move the paddle with the arrow keys or your mouse. Keep the ball in play and clear every brick.",
+    "featured": false,
+    "isNew": false,
+    "trending": false,
+    "image": "/images/games/breakout.webp"
+  },
+  {
+    "slug": "bubble-shooter",
+    "title": "Bubble Shooter",
+    "emoji": "\ud83e\udee7",
+    "category": "Puzzle",
+    "rating": 4.6,
+    "plays": 940000,
+    "colors": [
+      "#2193b0",
+      "#6dd5ed"
+    ],
+    "description": "Aim and match three bubbles to clear the board.",
+    "controls": "Aim with the mouse and click to fire. Connect three or more bubbles of the same color to pop them.",
+    "featured": false,
+    "isNew": false,
+    "trending": false,
+    "image": "/images/games/bubble-shooter.webp"
+  },
+  {
+    "slug": "carrom",
+    "title": "Carrom",
+    "emoji": "\u26aa",
+    "category": "Sports",
+    "rating": 4.3,
+    "plays": 512000,
+    "colors": [
+      "#c79081",
+      "#dfa579"
+    ],
+    "description": "Flick the striker and pocket every disc.",
+    "controls": "Drag the striker to position it, pull back to set power, and release to shoot. Pocket your discs before your opponent.",
+    "featured": false,
+    "isNew": true,
+    "trending": false,
+    "image": "/images/games/carrom.webp"
+  },
+  {
+    "slug": "chess",
+    "title": "Chess",
+    "emoji": "\u265f\ufe0f",
+    "category": "Strategy",
+    "rating": 4.8,
+    "plays": 1240000,
+    "colors": [
+      "#434343",
+      "#000000"
+    ],
+    "description": "Outsmart a sharp AI in the timeless game of strategy.",
+    "controls": "Click or tap a piece to select it, then click a highlighted square to move. Checkmate the enemy king to win.",
+    "featured": true,
+    "isNew": false,
+    "trending": true,
+    "image": "/images/games/chess.webp"
+  },
+  {
+    "slug": "connect-four",
+    "title": "Connect Four",
+    "emoji": "\ud83d\udd34",
+    "category": "Strategy",
+    "rating": 4.4,
+    "plays": 833000,
+    "colors": [
+      "#ee0979",
+      "#ff6a00"
+    ],
+    "description": "Drop your discs and line up four in a row.",
+    "controls": "Click or tap a column to drop your disc. Line up four in a row \u2014 across, down, or diagonally \u2014 before the AI does.",
+    "featured": false,
+    "isNew": false,
+    "trending": false,
+    "image": "/images/games/connect-four.webp"
+  },
+  {
+    "slug": "cricket",
+    "title": "Cricket",
+    "emoji": "\ud83c\udfcf",
+    "category": "Sports",
+    "rating": 4.5,
+    "plays": 754000,
+    "colors": [
+      "#11998e",
+      "#38ef7d"
+    ],
+    "description": "Time your shots, bowl them out, and chase the total.",
+    "controls": "Click, tap, or press Space to swing exactly when the ball arrives. Perfect timing sends it to the boundary.",
+    "featured": true,
+    "isNew": false,
+    "trending": false,
+    "image": "/images/games/cricket.webp"
+  },
+  {
+    "slug": "dots-and-boxes",
+    "title": "Dots and Boxes",
+    "emoji": "\ud83d\udd37",
+    "category": "Multiplayer",
+    "rating": 4.2,
+    "plays": 405000,
+    "colors": [
+      "#396afc",
+      "#2948ff"
+    ],
+    "description": "Close the boxes and claim the bigger share.",
+    "controls": "Click or tap an edge between two dots to draw a line. Complete the fourth side of a box to claim it and move again.",
+    "featured": false,
+    "isNew": false,
+    "trending": false,
+    "image": "/images/games/dots-and-boxes.webp"
+  },
+  {
+    "slug": "flappy-bird",
+    "title": "Flappy Bird",
+    "emoji": "\ud83d\udc24",
+    "category": "Arcade",
+    "rating": 4.4,
+    "plays": 1520000,
+    "colors": [
+      "#f2994a",
+      "#f2c94c"
+    ],
+    "description": "One tap keeps you flying through the pipes.",
+    "controls": "Click, tap, or press Space to flap. Slip through the gaps between the pipes and keep your streak alive.",
+    "featured": true,
+    "isNew": false,
+    "trending": true,
+    "image": null
+  },
+  {
+    "slug": "hangman",
+    "title": "Hangman",
+    "emoji": "\ud83d\udd24",
+    "category": "Kids",
+    "rating": 4.3,
+    "plays": 588000,
+    "colors": [
+      "#8360c3",
+      "#2ebf91"
+    ],
+    "description": "Guess the hidden word before the tries run out.",
+    "controls": "Type letters on your keyboard or tap the on-screen letters to guess the hidden word one letter at a time.",
+    "featured": false,
+    "isNew": false,
+    "trending": false,
+    "image": "/images/games/hangman.webp"
+  },
+  {
+    "slug": "helix-jump",
+    "title": "Helix Jump",
+    "emoji": "\ud83c\udf00",
+    "category": "Adventure",
+    "rating": 4.6,
+    "plays": 1103000,
+    "colors": [
+      "#fc5c7d",
+      "#6a82fb"
+    ],
+    "description": "Bounce the ball down the spiral without hitting red.",
+    "controls": "Drag left and right or use the arrow keys to rotate the tower. Guide the ball through the gaps and avoid the red zones.",
+    "featured": true,
+    "isNew": false,
+    "trending": true,
+    "image": "/images/games/helix-jump.webp"
+  },
+  {
+    "slug": "knife-hit",
+    "title": "Knife Hit",
+    "emoji": "\ud83d\udd2a",
+    "category": "Action",
+    "rating": 4.4,
+    "plays": 867000,
+    "colors": [
+      "#e53935",
+      "#e35d5b"
+    ],
+    "description": "Throw knives and stick them into the spinning log.",
+    "controls": "Click, tap, or press Space to throw a knife into the spinning log. Never hit another knife.",
+    "featured": false,
+    "isNew": true,
+    "trending": true,
+    "image": "/images/games/knife-hit.webp"
+  },
+  {
+    "slug": "ludo",
+    "title": "Ludo",
+    "emoji": "\ud83c\udfb2",
+    "category": "Multiplayer",
+    "rating": 4.4,
+    "plays": 1188000,
+    "colors": [
+      "#f953c6",
+      "#b91d73"
+    ],
+    "description": "Race all four tokens home in this dice classic.",
+    "controls": "Tap the dice to roll, then tap a highlighted token to move it. Get all four tokens home before your rivals.",
+    "featured": false,
+    "isNew": false,
+    "trending": false,
+    "image": "/images/games/ludo.webp"
+  },
+  {
+    "slug": "memory-match",
+    "title": "Memory Match",
+    "emoji": "\ud83e\udde0",
+    "category": "Kids",
+    "rating": 4.5,
+    "plays": 712000,
+    "colors": [
+      "#00b09b",
+      "#96c93d"
+    ],
+    "description": "Flip the cards and find every matching pair.",
+    "controls": "Click or tap cards to flip them over. Remember what you saw and find every matching pair in as few moves as you can.",
+    "featured": false,
+    "isNew": true,
+    "trending": false,
+    "image": "/images/games/memory-match.webp"
+  },
+  {
+    "slug": "minesweeper",
+    "title": "Minesweeper",
+    "emoji": "\ud83d\udca3",
+    "category": "Puzzle",
+    "rating": 4.6,
+    "plays": 1015000,
+    "colors": [
+      "#485563",
+      "#29323c"
+    ],
+    "description": "Clear the grid without stepping on a mine.",
+    "controls": "Left-click to reveal a cell and right-click to plant a flag. The numbers tell you how many mines touch that square.",
+    "featured": false,
+    "isNew": false,
+    "trending": false,
+    "image": "/images/games/minesweeper.webp"
+  },
+  {
+    "slug": "neon-racer",
+    "title": "Neon Racer",
+    "emoji": "\ud83c\udfc1",
+    "category": "Racing",
+    "rating": 4.6,
+    "plays": 876000,
+    "colors": [
+      "#8E2DE2",
+      "#4A00E0"
+    ],
+    "description": "Weave through traffic on a glowing high-speed track.",
+    "controls": "Steer with the arrow keys or A and D. Dodge traffic, grab boosts, and chase your top speed.",
+    "featured": true,
+    "isNew": false,
+    "trending": true,
+    "image": "/images/games/neon-racer.webp"
+  }
+]

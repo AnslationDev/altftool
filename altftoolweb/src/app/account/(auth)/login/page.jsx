@@ -8,6 +8,7 @@ export const metadata = createPageMetadata({
   description:
     "Sign in to your AltFTool account to sync favorite tools, saved preferences, and personalized features across devices.",
   path: "/account/login",
+  noindex: true,
 });
 
 export default function LoginPage() {

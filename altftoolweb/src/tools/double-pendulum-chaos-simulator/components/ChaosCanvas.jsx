@@ -14,7 +14,7 @@ export default function ChaosCanvas({ params, initialAngles, paused, restartKey,
   // 1. Simulation ref – created IMMEDIATELY (before any effects)
   // ------------------------------------------------------------------
   const simRef = useRef(null);
-  if (!simRef.current) {
+  if (simRef.current == null) {
     simRef.current = {
       theta1: initialAngles.theta1,
       theta2: initialAngles.theta2,

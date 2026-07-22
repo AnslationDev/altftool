@@ -7,10 +7,10 @@ const localAdminStorageKey = "ALTFT_LOCAL_ADMIN_SESSION_V1";
 const mobileRoutes = [
   { path: "/admin-management", heading: "Admin Management" },
   { path: "/analytics", headingPattern: /Analytics|Analytics unavailable/i },
-  { path: "/health", heading: "AltFTool Health" },
+  { path: "/health", heading: "Health Overview" },
   { path: "/support", heading: "Support" },
   { path: "/tickets", heading: "Support Management" },
-  { path: "/altftool/blogs", heading: "Manage your Blogs" },
+  { path: "/altftool/blogs", heading: "Blog Management" },
   { path: "/altftool/blogs/add-blogs", text: "Save Draft" },
   { path: "/altftool/blogs/quality", heading: "Quality Center" },
 ];

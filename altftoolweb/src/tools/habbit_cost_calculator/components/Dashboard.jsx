@@ -15,7 +15,7 @@ export const Dashboard = () => {
   const { habits } = useHabits();
 
   return (
-    <div className="px-4 py-6 text-(--foreground)">
+    <div className="habit-cost-tool px-4 py-6 text-(--foreground)">
       {/* Header */}
       <div className="max-w-5xl mx-auto mb-6">
         <motion.div

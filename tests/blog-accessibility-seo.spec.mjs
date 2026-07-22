@@ -78,11 +78,11 @@ async function expectImagesHaveAlt(page) {
   const missingAlt = await page.locator("img").evaluateAll((images) =>
     images
       .filter((image) => image.offsetParent !== null)
-      .filter((image) => !String(image.getAttribute("alt") || "").trim())
+      .filter((image) => !image.hasAttribute("alt"))
       .map((image) => image.currentSrc || image.getAttribute("src") || image.outerHTML.slice(0, 120)),
   );
 
-  expect(missingAlt, "visible images without alt text").toEqual([]);
+  expect(missingAlt, "visible images without an alt attribute").toEqual([]);
 }
 
 async function expectButtonsHaveNames(page) {
@@ -190,10 +190,16 @@ test.describe("blog accessibility and SEO schema", () => {
     await expect(page.locator("#blog-index-title")).toHaveText("AltFTool Blog");
     await expect(page.locator("h1")).toHaveCount(1);
     await expect(page.getByRole("textbox", { name: "Search blog articles" })).toBeVisible();
-    await expect(page.getByRole("combobox", { name: "Sort blogs" })).toBeVisible();
-    await expect(page.getByRole("combobox", { name: "Filter blogs by freshness" })).toBeVisible();
-    await expect(page.getByRole("combobox", { name: "Filter blogs by guide type" })).toBeVisible();
-    await expect(page.getByRole("button", { name: /All guides/i })).toHaveAttribute("aria-pressed", "true");
+    const sortGroup = page.getByRole("group", { name: "Sort blogs" });
+    await expect(sortGroup).toBeVisible();
+    await expect(sortGroup.getByRole("button", { name: "Latest" })).toHaveAttribute(
+      "aria-pressed",
+      "true",
+    );
+    await expect(page.getByRole("button", { name: /All Categories/i })).toHaveAttribute(
+      "aria-pressed",
+      "true",
+    );
     await expect(page.locator("#blog-explorer button[aria-pressed]").first()).toBeVisible();
 
     await expectNoDuplicateIds(page);

@@ -1,0 +1,62 @@
+/* =========================================
+   FlowPro Design Tokens
+   ========================================= */
+:root {
+  /* ---- Brand colors ---- */
+  --fp-black:       #000000;
+  --fp-dark:        #080808;
+  --fp-darker:      #050505;
+  --fp-near-black:  #0a0a0a;
+  --fp-white:       #ffffff;
+
+  --fp-gray-50:     #f5f5f5;
+  --fp-gray-100:    #e5e5e5;
+  --fp-gray-200:    #d1d5db;
+  --fp-gray-400:    #9ca3af;
+  --fp-gray-500:    #6b7280;
+  --fp-gray-600:    #4b5563;
+
+  --fp-blue-400:    #60a5fa;
+  --fp-blue-500:    #3b82f6;
+  --fp-blue-600:    #2563eb;
+  --fp-blue-700:    #1d4ed8;
+
+  --fp-red-400:     #f87171;
+  --fp-red-500:     #ef4444;
+  --fp-red-600:     #dc2626;
+
+  --fp-yellow-400:  #facc15;
+
+  /* ---- Typography ---- */
+  --fp-font-jakarta: 'Plus Jakarta Sans', sans-serif;
+  --fp-font-inter:   'Inter', sans-serif;
+  --fp-font-serif:   Georgia, serif;
+
+  /* ---- Layout ---- */
+  --fp-max-w:     1280px;
+  --fp-max-w-md:  768px;
+  --fp-max-w-lg:  1024px;
+  --fp-px:        1.5rem;
+  --fp-px-md:     3rem;
+  --fp-px-lg:     5rem;
+  --fp-section-py:    7rem;
+  --fp-section-py-lg: 9rem;
+
+  /* ---- Radii ---- */
+  --fp-r-sm:   8px;
+  --fp-r-md:   12px;
+  --fp-r-lg:   16px;
+  --fp-r-xl:   20px;
+  --fp-r-2xl:  24px;
+  --fp-r-pill: 9999px;
+
+  /* ---- Transitions ---- */
+  --fp-ease:      cubic-bezier(0.16, 1, 0.3, 1);
+  --fp-t-fast:    150ms ease;
+  --fp-t-normal:  250ms ease;
+  --fp-t-slow:    400ms ease;
+
+  /* ---- Shadows ---- */
+  --fp-shadow-blue: 0 4px 24px rgba(37, 99, 235, 0.4);
+  --fp-shadow-xl:   0 20px 40px rgba(0,0,0,0.4);
+}

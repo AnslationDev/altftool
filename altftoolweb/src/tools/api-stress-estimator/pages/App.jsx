@@ -110,7 +110,7 @@ export const App = () => {
   };
 
   return (
-    <div className="px-4 py-6 text-(--foreground)">
+    <div className="api-stress-tool px-4 py-6 text-(--foreground)">
       {/* Header */}
       <div className="max-w-5xl mx-auto mb-6">
         <motion.div

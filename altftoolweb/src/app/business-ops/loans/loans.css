@@ -1,0 +1,171 @@
+/* Loans module — a thin layer on top of housingneeds.css.
+ *
+ * The loan verticals reuse the entire .hn-* design system (header, sections,
+ * cards, grids, buttons, factors, FAQ, footer) but are IMAGE-FREE: no
+ * per-vertical photography. This file only supplies what that difference
+ * needs — an image-free hero and an icon-driven benefit grid. Everything else
+ * comes from housingneeds.css, which every loan route imports alongside this.
+ *
+ * Load order matters: import housingneeds.css FIRST, then loans.css, so these
+ * overrides win without needing inflated specificity.
+ */
+
+/* ============================================================
+   Image-free hero
+   The photo hero is replaced by a rich, accent-tinted dark gradient. Because
+   the surface stays dark in BOTH themes, the existing light-on-dark hero type
+   (eyebrow, h1, sub, points) remains legible with zero colour overrides.
+   ============================================================ */
+.hn-app .loan-hero {
+  min-height: min(78vh, 720px);
+  background:
+    radial-gradient(90% 80% at 12% -12%, color-mix(in srgb, var(--hn-accent) 48%, transparent) 0%, transparent 60%),
+    radial-gradient(85% 78% at 110% 118%, color-mix(in srgb, var(--hn-accent-strong) 44%, transparent) 0%, transparent 55%),
+    linear-gradient(158deg, #101a2e 0%, #0a0f1a 55%, #080b14 100%);
+}
+
+/* Faint dotted grid for a considered, fintech-y texture, masked so it fades
+   out toward the edges rather than ending in a hard line. */
+.hn-app .loan-hero-grid {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.06) 1px, transparent 1px);
+  background-size: 26px 26px;
+  -webkit-mask-image: radial-gradient(72% 62% at 50% 40%, #000 0%, transparent 80%);
+  mask-image: radial-gradient(72% 62% at 50% 40%, #000 0%, transparent 80%);
+}
+
+/* Soft accent glow behind the headline block. */
+.hn-app .loan-hero-glow {
+  position: absolute;
+  z-index: 1;
+  top: -14%;
+  left: 50%;
+  width: min(72rem, 94vw);
+  height: 62%;
+  transform: translateX(-50%);
+  pointer-events: none;
+  background: radial-gradient(
+    58% 58% at 50% 42%,
+    color-mix(in srgb, var(--hn-accent) 36%, transparent) 0%,
+    transparent 70%
+  );
+  filter: blur(6px);
+  opacity: 0.7;
+}
+
+/* Trust chips under the hero points — small "$X funded", "No impact to
+   score"-style reassurances. Optional per vertical. */
+.hn-app .loan-hero-stats {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem 0.65rem;
+  margin: 1.6rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+.hn-app .loan-hero-stats li {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.4rem 0.8rem;
+  font-size: 0.8rem;
+  font-weight: 550;
+  color: #eaf0f7;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 999px;
+  backdrop-filter: blur(4px);
+}
+.hn-app .loan-hero-stats svg {
+  color: color-mix(in srgb, var(--hn-accent) 60%, #ffffff);
+}
+
+/* ============================================================
+   Feature cards (icon tile + title + copy, no photo, no CTA)
+   Uses the .hn-card base (border/surface/shadow/hover) but not
+   .hn-card--service, which would blow the icon up into a 16:10 banner.
+   ============================================================ */
+.hn-app .loan-feature h3 {
+  margin: 0.35rem 0 0;
+  font-size: 1.08rem;
+  font-weight: 650;
+  color: var(--hn-text);
+  letter-spacing: -0.01em;
+}
+.hn-app .loan-feature p {
+  margin: 0;
+  font-size: 0.92rem;
+  line-height: 1.62;
+  color: var(--hn-muted);
+}
+
+/* ============================================================
+   Benefit list (icon rows). Two columns on its own; a single column
+   when it sits beside the benefit photo inside .hn-split.
+   ============================================================ */
+.hn-app .loan-benefit-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.4rem 2.25rem;
+  margin-top: 2.75rem;
+  padding: 0;
+  list-style: none;
+}
+/* Beside the benefit photo, stack into a single column. */
+.hn-app .hn-split .loan-benefit-list {
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+  margin-top: 1.75rem;
+}
+@media (max-width: 720px) {
+  .hn-app .loan-benefit-list {
+    grid-template-columns: 1fr;
+    gap: 1.15rem;
+  }
+}
+
+.hn-app .loan-benefit {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+}
+.hn-app .loan-benefit-icon {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 2.85rem;
+  height: 2.85rem;
+  border-radius: 0.9rem;
+  color: var(--hn-accent);
+  background: var(--hn-accent-tint);
+  border: 1px solid var(--hn-accent-ring);
+}
+.hn-app .loan-benefit h3 {
+  margin: 0.15rem 0 0.35rem;
+  font-size: 1.06rem;
+  font-weight: 650;
+  color: var(--hn-text);
+  letter-spacing: -0.01em;
+}
+.hn-app .loan-benefit p {
+  margin: 0;
+  font-size: 0.92rem;
+  line-height: 1.62;
+  color: var(--hn-muted);
+}
+
+/* ============================================================
+   Small print — rate/APR disclosure line beneath the CTA band
+   ============================================================ */
+.hn-app .loan-finelegal {
+  max-width: 46rem;
+  margin: 1.5rem auto 0;
+  font-size: 0.775rem;
+  line-height: 1.6;
+  text-align: center;
+  color: var(--hn-muted);
+}

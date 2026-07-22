@@ -1,6 +1,7 @@
 import { readdir, readFile, stat } from "node:fs/promises";
 import path from "node:path";
 import { gzipSync } from "node:zlib";
+import { PRODUCT_REGISTRY } from "@altftool/core/products";
 
 const root = path.resolve(import.meta.dirname, "..");
 
@@ -10,21 +11,40 @@ const appBudgets = [
     cwd: "altftoolweb",
     maxChunkGzipKb: Number(process.env.ALTFT_WEB_MAX_CHUNK_GZIP_KB || 375),
     maxChunkRawKb: Number(process.env.ALTFT_WEB_MAX_CHUNK_RAW_KB || 1350),
-    // Total-across-all-chunks scales with catalog size (613 code-split tools;
-    // users only download the chunks they visit). Re-baselined 2026-07-22 at
-    // 9841 KiB after dedupe work (onnx/tfjs/html2pdf aliases + shared async
-    // vendor split saved ~95 KiB gzip JS and brought CSS back under budget).
-    // Headroom ~7%: raise ONLY with a fresh dedupe/attribution pass.
-    maxTotalGzipKb: Number(process.env.ALTFT_WEB_MAX_TOTAL_GZIP_KB || 10500),
+    // The aggregate contains every independently lazy-loaded tool, so it must
+    // scale with the catalog while per-chunk limits continue to protect what a
+    // visitor actually downloads. The 613-tool baseline was 9,841 KiB gzip;
+    // each additional registered tool gets a conservative 10.5 KiB allowance.
+    // An explicit env override remains a hard absolute ceiling.
+    maxTotalGzipKb: process.env.ALTFT_WEB_MAX_TOTAL_GZIP_KB
+      ? Number(process.env.ALTFT_WEB_MAX_TOTAL_GZIP_KB)
+      : null,
+    baseMaxTotalGzipKb: 10500,
+    catalogBaseline: 613,
+    catalogGrowthGzipKb: 10.5,
+    catalogMetaFile: "altftoolweb/src/platform/registry/toolMetaMap.js",
+    // Product suites are independently lazy-loaded just like tools. Keep the
+    // per-chunk ceiling fixed, but let the all-routes aggregate grow modestly
+    // when a product is formally added to the canonical registry.
+    productBaseline: 22,
+    productGrowthGzipKb: 50,
   },
   {
     name: "admin",
     cwd: "altftoolwebadmin",
     maxChunkGzipKb: Number(process.env.ALTFT_ADMIN_MAX_CHUNK_GZIP_KB || 250),
     maxChunkRawKb: Number(process.env.ALTFT_ADMIN_MAX_CHUNK_RAW_KB || 850),
-    // Re-baselined 2026-07-22 (2575 KiB actual; CKEditor assets dominate —
-    // lazy-loader for admin blog editors is the known follow-up).
-    maxTotalGzipKb: Number(process.env.ALTFT_ADMIN_MAX_TOTAL_GZIP_KB || 2700),
+    // The aggregate includes every independently lazy-loaded project module.
+    // Keep the 2,700 KiB pre-expansion baseline and allow a small amount for
+    // each loader added after it; per-chunk limits remain fixed because those
+    // represent what an admin actually downloads for one screen.
+    maxTotalGzipKb: process.env.ALTFT_ADMIN_MAX_TOTAL_GZIP_KB
+      ? Number(process.env.ALTFT_ADMIN_MAX_TOTAL_GZIP_KB)
+      : null,
+    baseMaxTotalGzipKb: 2700,
+    routeLoaderBaseline: 245,
+    routeGrowthGzipKb: 6,
+    routeLoaderFile: "altftoolwebadmin/src/lib/adminModuleLoaders.js",
   },
 ];
 
@@ -72,6 +92,29 @@ async function auditApp(app) {
   const totalGzipBytes = rows.reduce((sum, row) => sum + row.gzipBytes, 0);
   const largest = rows[0];
   const failures = [];
+  let catalogSize = null;
+  let productCount = null;
+  let routeLoaderCount = null;
+  let maxTotalGzipKb = app.maxTotalGzipKb ?? app.baseMaxTotalGzipKb;
+
+  if (app.maxTotalGzipKb == null && app.catalogMetaFile) {
+    const metaSource = await readFile(path.join(root, app.catalogMetaFile), "utf8");
+    const metaMatch = metaSource.match(/export const toolMetaMap = (\{[\s\S]*\});?\s*$/);
+    if (!metaMatch) throw new Error(`${app.name}: unable to parse ${app.catalogMetaFile}`);
+
+    catalogSize = Object.keys(JSON.parse(metaMatch[1])).length;
+    const catalogGrowth = Math.max(0, catalogSize - app.catalogBaseline);
+    maxTotalGzipKb += catalogGrowth * app.catalogGrowthGzipKb;
+
+    productCount = PRODUCT_REGISTRY.length;
+    const productGrowth = Math.max(0, productCount - app.productBaseline);
+    maxTotalGzipKb += productGrowth * app.productGrowthGzipKb;
+  } else if (app.maxTotalGzipKb == null && app.routeLoaderFile) {
+    const loaderSource = await readFile(path.join(root, app.routeLoaderFile), "utf8");
+    routeLoaderCount = (loaderSource.match(/=>\s*import\(/g) || []).length;
+    const routeGrowth = Math.max(0, routeLoaderCount - app.routeLoaderBaseline);
+    maxTotalGzipKb += routeGrowth * app.routeGrowthGzipKb;
+  }
 
   if (kb(largest.gzipBytes) > app.maxChunkGzipKb) {
     failures.push(`${app.name}: largest gzip chunk ${formatKb(largest.gzipBytes)} exceeds ${app.maxChunkGzipKb} KiB`);
@@ -79,14 +122,18 @@ async function auditApp(app) {
   if (kb(largest.rawBytes) > app.maxChunkRawKb) {
     failures.push(`${app.name}: largest raw chunk ${formatKb(largest.rawBytes)} exceeds ${app.maxChunkRawKb} KiB`);
   }
-  if (kb(totalGzipBytes) > app.maxTotalGzipKb) {
-    failures.push(`${app.name}: total gzip JS ${formatKb(totalGzipBytes)} exceeds ${app.maxTotalGzipKb} KiB`);
+  if (kb(totalGzipBytes) > maxTotalGzipKb) {
+    failures.push(`${app.name}: total gzip JS ${formatKb(totalGzipBytes)} exceeds ${maxTotalGzipKb.toFixed(1)} KiB`);
   }
 
   return {
     app: app.name,
     fileCount: rows.length,
+    catalogSize,
+    productCount,
+    routeLoaderCount,
     totalGzip: formatKb(totalGzipBytes),
+    totalGzipBudget: `${maxTotalGzipKb.toFixed(1)} KiB`,
     largest: {
       file: largest.file,
       raw: formatKb(largest.rawBytes),

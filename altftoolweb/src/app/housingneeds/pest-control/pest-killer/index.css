@@ -1,0 +1,140 @@
+/* Scope body styles under a wrapper class to avoid polluting Next.js global layout */
+.pest-killer-root {
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+  color: #74787C;
+  background: #fff;
+  overflow-x: clip;
+  position: relative;
+  min-height: 100vh;
+}
+
+/* Hide global Next.js elements on the pest-killer page */
+#main-header,
+footer:not(.footer),
+.fixed.bottom-5.right-5.z-\[9999\],
+body > iframe {
+  display: none !important;
+}
+
+a { text-decoration: none; color: inherit; }
+img { max-width: 100%; display: block; }
+ul { list-style: none; }
+
+.container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.btn-green {
+  position: relative;
+  display: inline-block;
+  background: linear-gradient(to right, #001A29 50%, #4AAB3D 49%);
+  background-size: 200% 100%;
+  background-position: right bottom;
+  background-repeat: no-repeat;
+  color: #fff;
+  font-weight: 600;
+  font-size: 15px;
+  padding: 13px 40px;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  transition: background-position 260ms ease;
+  text-align: center;
+}
+
+.btn-green:hover {
+  background-position: left bottom;
+  color: #fff;
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(28px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes softZoom {
+  from { transform: scale(1); }
+  to { transform: scale(1.08); }
+}
+
+@keyframes floatLift {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes pulseGlow {
+  0%, 100% { box-shadow: 0 6px 20px rgba(0,0,0,0.2); }
+  50% { box-shadow: 0 12px 34px rgba(74,171,61,0.35); }
+}
+
+@keyframes buttonPulse {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(74,171,61,0.35);
+  }
+  50% {
+    box-shadow: 0 0 0 8px rgba(74,171,61,0);
+  }
+}
+
+@keyframes buttonShine {
+  0%, 45% { transform: translateX(-120%); }
+  75%, 100% { transform: translateX(120%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.section-sub-title {
+  display: block;
+  color: #4AAB3D;
+  font-weight: 700;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  margin-bottom: 12px;
+}
+
+.section-title h2 {
+  font-size: 36px;
+  font-weight: 800;
+  color: #001A29;
+  line-height: 1.25;
+  margin-bottom: 16px;
+}
+
+@media (max-width: 768px) {
+  .section-title h2 { font-size: 26px; }
+}

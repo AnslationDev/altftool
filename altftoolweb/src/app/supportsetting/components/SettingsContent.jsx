@@ -1,263 +1,157 @@
 "use client";
 
-import { AlertCircle, ExternalLink, Menu } from "lucide-react";
-import { settingsData } from "../data/settingData";
-import { useState } from "react";
-import ManagedImage from "@/components/ui/ManagedImage";
+import { Menu, ChevronRight, Home, Maximize2, Minimize2 } from "lucide-react";
+import PagePreferencesPanel from "./PagePreferencesPanel";
+import SupportLandingPage from "./SupportLandingPage";
+import SettingDetailPage from "./SettingDetailPage";
+import UtilityPage, { UTILITY_TITLES } from "./UtilityPage";
+import AiToolDetailPage from "./AiToolDetailPage";
+import { getCategoryById } from "../data/categories";
 
-const SettingsContent = ({ activeId, onOpenSidebar }) => {
-  const setting = settingsData.find((s) => s.id === activeId);
+/**
+ * Slim orchestrator for the master-detail layout: exactly one of
+ * SupportLandingPage / SettingDetailPage / UtilityPage / AiToolDetailPage
+ * renders at a time, driven entirely by `activeId` (owned by SupportClient
+ * so the sidebar and this content pane can both read/react to it).
+ *
+ *   activeId === null        -> landing page
+ *   activeId starts "util-"  -> the matching Help & Tools page
+ *   activeId starts "ai-"    -> the matching AI Tool page
+ *   otherwise                -> that setting's full detail page
+ *
+ * Whenever activeId isn't the landing page, a shared breadcrumb + back-to-
+ * home + Focus Mode bar renders above the page content so navigation is
+ * identical across every support page type.
+ */
+const SettingsContent = ({
+  activeId,
+  platformState,
+  allSettings,
+  frequentlyUsed,
+  recommended,
+  recentlyUsedSettings,
+  aiTools,
+  searchQuery,
+  onSearchChange,
+  prefs,
+  togglePref,
+  updatePref,
+  resetPrefs,
+  onSelectSetting,
+  onSelectUtility,
+  onVisit,
+  onOpenSidebar,
+  onGoHome,
+  focusMode,
+  onToggleFocusMode,
+}) => {
+  const { platform, detectedPlatform } = platformState;
 
-  const [imageState, setImageState] = useState({
-    src: "",
-    loaded: false,
-    error: false,
-  });
+  const isUtility = typeof activeId === "string" && activeId.startsWith("util-");
+  const isAiTool = typeof activeId === "string" && activeId.startsWith("ai-");
+  const activeSetting =
+    !isUtility && !isAiTool && activeId ? allSettings.find((s) => s.id === activeId) : null;
+  const activeAiTool = isAiTool ? (aiTools || []).find((t) => t.id === activeId) : null;
 
-  if (!setting) return null;
-  const imageLoaded =
-    imageState.src === setting.imageUrl && imageState.loaded;
-  const imageError =
-    imageState.src === setting.imageUrl && imageState.error;
-
-  const handleRedirect = () => {
-    const isWindows = navigator.userAgent.includes("Windows");
-
-    if (setting.redirectUrl.startsWith("ms-settings:")) {
-      if (isWindows) {
-        window.location.assign(setting.redirectUrl);
-      } else {
-        alert("This settings page can only be opened on Windows devices.");
-      }
-    } else {
-      window.open(setting.redirectUrl, "_blank", "noopener,noreferrer");
-    }
-  };
+  let breadcrumb = null;
+  if (activeSetting) {
+    const category = getCategoryById(activeSetting.category);
+    breadcrumb = { section: category?.label || "Settings", title: activeSetting.title };
+  } else if (isUtility) {
+    breadcrumb = { section: "Help & Tools", title: UTILITY_TITLES[activeId] || "Help & Tools" };
+  } else if (activeAiTool) {
+    breadcrumb = { section: "AI Tools", title: activeAiTool.name };
+  }
 
   return (
-    <div className="support-settings-content h-full overflow-y-auto bg-(--background) text-(--foreground)">
-      <div className="support-settings-content-inner p-4 sm:p-8 max-w-5xl ">
-
+    <div className={`support-settings-content support-text-${prefs.textSize}`}>
+      <div className="support-settings-content-inner">
         {/* Mobile Sidebar Toggle */}
         <div className="md:hidden my-5">
-          <button
-            onClick={onOpenSidebar}
-            className="
-              support-settings-mobile-toggle
-              inline-flex items-center gap-2 px-4 py-2.5
-              bg-(--card)
-              hover:bg-(--muted)
-              text-(--foreground)
-              border border-(--border)
-              rounded-lg font-medium
-              transition active:scale-95 cursor-pointer 
-            "
-          >
+          <button onClick={onOpenSidebar} className="support-settings-mobile-toggle">
             <Menu className="h-4 w-4" />
             Explore Settings
           </button>
         </div>
 
-        {/* Breadcrumb */}
-        <div className="support-settings-breadcrumb text-xs font-medium tracking-widest text-(--muted-foreground) uppercase mb-4">
-          Settings &gt; {setting.title}
-        </div>
-
-        {/* Heading */}
-        <h1 className="support-settings-title text-3xl font-bold text-(--foreground) mb-4">
-          {setting.heading}
-        </h1>
-
-        {/* Description */}
-        <p className="support-settings-description text-base text-(--muted-foreground) leading-relaxed mb-6">
-          {setting.description}
-        </p>
-
-        {/* Details */}
-        {setting.details && (
-          <>
-            <h2 className="support-settings-section-label text-xs font-semibold tracking-widest text-(--muted-foreground) uppercase mb-3">
-              Details
-            </h2>
-
-            <hr className="support-settings-rule border-(--border) mb-4" />
-
-            <ul className="support-settings-detail-list space-y-2 mb-6">
-              {setting.details.map((detail, i) => (
-                <li
-                  key={i}
-                  className="support-settings-detail-item flex items-start gap-2 text-sm text-(--muted-foreground)"
-                >
-                  <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-(--primary)" />
-                  {detail}
-                </li>
-              ))}
-            </ul>
-          </>
-        )}
-
-        {/* Important Section */}
-        {/* {setting.important && (
-          <div
-            className="
-              bg-(--card)
-              border border-(--border)
-              rounded-lg p-4 flex gap-3 mb-8
-            "
-          >
-            <AlertCircle className="h-5 w-5 text-(--primary) mt-0.5 shrink-0" />
-
-            <div>
-              <span className="text-xs font-bold tracking-widest uppercase text-(--primary)">
-                Important
-              </span>
-
-              <p className="text-sm text-(--muted-foreground) mt-1">
-                {setting.important}
-              </p>
-            </div>
-          </div>
-        )} */}
-
-         {setting.important && (
-          <div className="support-settings-important border rounded-md p-4 flex items-start gap-3 mb-8">
-
-            <AlertCircle className="h-5 w-5 shrink-0 mt-0.5" />
-
-            <div>
-              <span className="text-xs font-bold tracking-widest uppercase">
-                Important
-              </span>
-
-              <p className="text-sm mt-1 leading-relaxed">
-                {setting.important}
-              </p>
+        {activeId !== null && (
+          <div className="support-page-nav">
+            <div className="support-page-breadcrumb">
+              <button type="button" className="support-page-breadcrumb-link" onClick={onGoHome}>
+                <Home className="h-3.5 w-3.5" />
+                Support Home
+              </button>
+              {breadcrumb && (
+                <>
+                  <ChevronRight className="h-3.5 w-3.5 support-page-breadcrumb-sep" />
+                  <span className="support-page-breadcrumb-link" style={{ cursor: "default" }}>
+                    {breadcrumb.section}
+                  </span>
+                  <ChevronRight className="h-3.5 w-3.5 support-page-breadcrumb-sep" />
+                  <span className="support-page-breadcrumb-current">{breadcrumb.title}</span>
+                </>
+              )}
             </div>
 
+            <div className="support-page-nav-actions">
+              <button type="button" className="support-page-back-btn" onClick={onGoHome}>
+                <Home className="h-3.5 w-3.5" />
+                Back to Support Home
+              </button>
+              <button
+                type="button"
+                className={`support-page-focus-btn ${focusMode ? "support-page-focus-btn-active" : ""}`}
+                onClick={onToggleFocusMode}
+                aria-pressed={focusMode}
+              >
+                {focusMode ? <Minimize2 className="h-3.5 w-3.5" /> : <Maximize2 className="h-3.5 w-3.5" />}
+                {focusMode ? "Exit Focus Mode" : "Focus Mode"}
+              </button>
+            </div>
           </div>
         )}
 
-        {/* Redirect Button */}
-        <div className="mb-8">
-          <button
-            onClick={handleRedirect}
-            className="
-              support-settings-action
-              inline-flex items-center gap-2 px-6 py-3
-              bg-(--primary)
-              text-(--primary-foreground)
-              rounded-lg font-medium
-              shadow-sm
-              hover:opacity-90
-              hover:shadow-md
-              transition active:scale-95
-              focus:ring-2 focus:ring-(--primary) cursor-pointer
-            "
-          >
-            Go to {setting.title} Settings
-            <ExternalLink className="h-4 w-4" />
-          </button>
-        </div>
+        <PagePreferencesPanel
+          prefs={prefs}
+          togglePref={togglePref}
+          updatePref={updatePref}
+          resetPrefs={resetPrefs}
+        />
 
-        {/* Image Section */}
-        {setting.imageUrl && (
-          <div
-            className="
-              support-settings-image-card
-              mb-8 rounded-lg overflow-hidden
-              border border-(--border)
-              bg-(--card)
-              shadow-sm
-            "
-          >
-            {!imageLoaded && (
-              <div className="support-settings-image-state w-full h-64 flex items-center justify-center">
-                <div className="animate-pulse text-center">
-                  <div className="h-12 w-12 rounded-full bg-(--muted) mx-auto mb-2" />
-                  <p className="text-sm text-(--muted-foreground)">
-                    Loading image...
-                  </p>
-                </div>
-              </div>
-            )}
-
-            {imageError && (
-              <div className="support-settings-image-state w-full h-64 flex items-center justify-center">
-                <div className="text-center text-(--muted-foreground)">
-                  <AlertCircle className="h-12 w-12 mx-auto mb-2" />
-                  Failed to load image
-                </div>
-              </div>
-            )}
-
-            <ManagedImage
-              key={setting.imageUrl}
-              src={setting.imageUrl}
-              alt={setting.imageAlt}
-              className={`
-                w-full object-contain max-h-96
-                transition-opacity duration-300
-                ${imageLoaded ? "opacity-100" : "opacity-0"}
-              `}
-              onLoad={() =>
-                setImageState({
-                  src: setting.imageUrl,
-                  loaded: true,
-                  error: false,
-                })
-              }
-              onError={() => {
-                setImageState({
-                  src: setting.imageUrl,
-                  loaded: true,
-                  error: true,
-                });
-              }}
-            />
-
-            {imageLoaded && (
-              <div className="support-settings-image-caption px-4 py-2 border-t border-(--border)">
-                <p className="text-xs text-(--muted-foreground)">
-                  {setting.imageAlt}
-                </p>
-              </div>
-            )}
-          </div>
+        {activeSetting ? (
+          <SettingDetailPage
+            key={activeSetting.id}
+            setting={activeSetting}
+            detectedPlatform={detectedPlatform}
+            allSettings={allSettings}
+            onSelectSetting={onSelectSetting}
+            onVisit={onVisit}
+            showImages={prefs.showStepImages}
+          />
+        ) : isUtility ? (
+          <UtilityPage id={activeId} platform={platform} detectedPlatform={detectedPlatform} />
+        ) : activeAiTool ? (
+          <AiToolDetailPage
+            key={activeAiTool.id}
+            tool={activeAiTool}
+            allTools={aiTools}
+            onSelectTool={onSelectSetting}
+          />
+        ) : (
+          <SupportLandingPage
+            platform={platform}
+            detectedPlatform={detectedPlatform}
+            allSettings={allSettings}
+            frequentlyUsed={frequentlyUsed}
+            recommended={recommended}
+            recentlyUsedSettings={recentlyUsedSettings}
+            aiTools={aiTools}
+            searchQuery={searchQuery}
+            onSearchChange={onSearchChange}
+            onSelectSetting={onSelectSetting}
+            onSelectUtility={onSelectUtility}
+          />
         )}
-
-        {/* After Image Section */}
-        {setting.afterImageContent && (
-          <div className="support-settings-after mb-12">
-
-            <hr className="support-settings-rule border-(--border) mb-6" />
-
-            <h2 className="support-settings-after-title text-xl font-semibold mb-4">
-              {setting.afterImageContent.heading}
-            </h2>
-
-            {setting.afterImageContent.paragraphs?.map((para, i) => (
-              <p key={i} className="text-(--muted-foreground) mb-4">
-                {para}
-              </p>
-            ))}
-
-            {setting.afterImageContent.steps && (
-              <>
-                <h3 className="text-sm font-semibold tracking-widest uppercase text-(--muted-foreground) mb-3">
-                  Steps
-                </h3>
-
-                <ol className="list-decimal pl-5 space-y-2 text-sm text-(--muted-foreground) marker:text-(--primary) marker:text-lg">
-                  {setting.afterImageContent.steps.map((step, i) => (
-                    <li key={i}>{step}</li>
-                  ))}
-                </ol>
-              </>
-            )}
-
-          </div>
-        )}
-
       </div>
     </div>
   );

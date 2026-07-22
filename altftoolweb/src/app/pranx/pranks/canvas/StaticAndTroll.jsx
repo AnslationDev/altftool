@@ -43,10 +43,9 @@ export function StaticTv() {
 }
 
 export function TrollFace() {
-  const [mouse, setMouse] = useState({ x: 0, y: 0 });
+  const [mouse, setMouse] = useState({ x: 0, y: 0, width: 1, height: 1 });
   const [quoteIndex, setQuoteIndex] = useState(0);
   const [isLaughing, setIsLaughing] = useState(false);
-  const ref = useRef(null);
 
   const quotes = [
     "Problem?",
@@ -59,26 +58,15 @@ export function TrollFace() {
   ];
 
   const eyeOffset = (cx, cy) => {
-    const rect = ref.current?.getBoundingClientRect();
-    if (!rect) return { x: 0, y: 0 };
-    const dx = mouse.x - (rect.left + cx);
-    const dy = mouse.y - (rect.top + cy);
+    const pointerX = (mouse.x / mouse.width) * 600;
+    const pointerY = (mouse.y / mouse.height) * 520;
+    const dx = pointerX - cx;
+    const dy = pointerY - cy;
     const len = Math.max(1, Math.hypot(dx, dy));
     return { x: (dx / len) * 12, y: (dy / len) * 8 };
   };
 
-  // Calculate distance of cursor to the center of the Troll face (approx 300, 260)
-  const getDistanceToCenter = () => {
-    const rect = ref.current?.getBoundingClientRect();
-    if (!rect) return 1000;
-    const faceCenterX = rect.left + rect.width / 2;
-    const faceCenterY = rect.top + rect.height / 2;
-    const dx = mouse.x - faceCenterX;
-    const dy = mouse.y - faceCenterY;
-    return Math.hypot(dx, dy);
-  };
-
-  const dist = getDistanceToCenter();
+  const dist = Math.hypot(mouse.x - mouse.width / 2, mouse.y - mouse.height / 2);
   const isClose = dist < 200;
 
   const left = eyeOffset(230, 220);
@@ -115,8 +103,15 @@ export function TrollFace() {
 
   return (
     <section
-      ref={ref}
-      onMouseMove={(event) => setMouse({ x: event.clientX, y: event.clientY })}
+      onMouseMove={(event) => {
+        const rect = event.currentTarget.getBoundingClientRect();
+        setMouse({
+          x: event.clientX - rect.left,
+          y: event.clientY - rect.top,
+          width: Math.max(1, rect.width),
+          height: Math.max(1, rect.height),
+        });
+      }}
       onClick={playLaugh}
       className={`${panelClass} flex flex-col items-center justify-center min-h-[650px] relative bg-slate-950 select-none overflow-hidden cursor-crosshair`}
     >
@@ -125,8 +120,8 @@ export function TrollFace() {
         <div
           className="absolute rounded-full bg-red-500 shadow-[0_0_12px_#ef4444] animate-ping pointer-events-none"
           style={{
-            left: `${mouse.x - (ref.current?.getBoundingClientRect().left || 0) - 8}px`,
-            top: `${mouse.y - (ref.current?.getBoundingClientRect().top || 0) - 8}px`,
+            left: `${mouse.x - 8}px`,
+            top: `${mouse.y - 8}px`,
             width: "16px",
             height: "16px",
           }}

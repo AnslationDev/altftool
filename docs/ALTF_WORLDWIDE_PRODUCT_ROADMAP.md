@@ -1,6 +1,18 @@
 # AltFTool Worldwide Product Roadmap
 
-Status: approved direction, incremental implementation. This document is the human-readable companion to `@altftool/core/products`, which is the machine-readable source used by the applications.
+Status: active local implementation. This document is the human-readable companion to `@altftool/core/products` and `@altftool/core/product-suites`, which are the machine-readable sources used by the applications.
+
+## Current implementation
+
+The public `/products` directory is the canonical entry point for the product layer. Each suite route is statically generated from the shared registry and uses the same status vocabulary as the admin Product Control Center.
+
+- Live local workspaces: IdeaLab, Minutes, Authenticator, NetCheck, Security, Career, Creator, and Developer.
+- Beta workspaces: DomainOps, Flow, Impact, and Campus. Beta labels are intentional where external data breadth, integrations, or country coverage still need expansion.
+- Security-gated workspace: Vault. The route explains the gate and does not accept or persist credentials.
+- Existing products such as Tools, Signals, Verdict, Learn, PDF Studio, Image Studio, and Growth Engine retain their established routes.
+- The suite catalog links only to registered working tool routes. Registry tests fail when a related tool link is unknown.
+
+Idea scoring, transcript analysis, text workflows, network calculations, and TOTP generation are shared pure utilities in `@altftool/core/product-utilities`. DomainOps and NetCheck use bounded, rate-limited server routes. Authenticator and Flow keep sensitive or transient work in the browser.
 
 ## Product principles
 
@@ -37,7 +49,7 @@ AltF Security, Authenticator, NetCheck, PDF Studio, Image Studio, Career, Creato
 
 AltF Flow, AltF Impact, AltF Campus, and AltF API & Widgets.
 
-AltF Impact uses country editions. The first edition is AltF Bharat at `/impact/in`, followed by the United States, United Kingdom, Canada, and Australia. Country editions require official local sources, localized eligibility rules, currency and unit handling, source dates, and clear disclaimers.
+AltF Impact starts with an official-source directory for India, the United States, United Kingdom, Canada, and Australia at `/products/impact`. Dedicated country routes remain a later milestone and require localized eligibility logic, currency and unit handling, source dates, and clear disclaimers before launch.
 
 ### Security gated
 
@@ -49,12 +61,24 @@ Each product should create a useful loop: discover a signal, validate the need, 
 
 Every indexable page must provide unique utility. Empty filters, duplicate category variants, generated filler, unavailable tools, and unverified data stay out of search. Metadata, canonical URLs, structured data, internal links, sitemaps, IndexNow, Core Web Vitals, accessibility, and Search Console monitoring are release requirements rather than post-launch tasks.
 
-## Immediate build order
+## Next build order
 
-1. Stabilize the product and route registry.
-2. Ship AltF Signals as the first connected discovery product.
-3. Connect Signals to IdeaLab and relevant working tools.
-4. Consolidate DomainOps and publish shareable audit reports.
-5. Upgrade Minutes and Verdict.
-6. Deliver the traffic-first tool backlog.
-7. Expand into Flow and Impact after the shared data and permissions layers are proven.
+1. Connect Signals to IdeaLab with explicit user-controlled imports.
+2. Add exportable DomainOps reports, uptime history, and security-header checks.
+3. Add reviewed external connectors, retries, and encrypted credentials to Flow.
+4. Expand Impact into verified country-specific eligibility journeys.
+5. Add authenticated project history only after retention and deletion controls are defined.
+6. Deliver the remaining traffic-first tool backlog without duplicate or thin routes.
+7. Keep Vault gated until the independent security review is complete.
+
+## Local verification
+
+Run from the repository root:
+
+```bash
+node --test tests/product-registry.test.mjs tests/route-loading-files.test.mjs
+npm --prefix altftoolweb run build -- --webpack
+npm --prefix altftoolwebadmin run build -- --webpack
+```
+
+Before release, exercise every suite workspace at `/products`, verify DomainOps and NetCheck failure limits, check both color themes and mobile widths, and run the repository release doctor. Push and deployment remain explicit release actions, not part of local feature work.

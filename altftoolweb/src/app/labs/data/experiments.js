@@ -1,169 +1,21 @@
-/**
- * AltFTool Labs — experiment registry.
- * Every entry points at a real, shipped route on altftool.com.
- * `tone` picks the gradient recipe for the card/tile art (brand tokens only).
- */
+import { EXPERIENCE_CATALOG } from "@altftool/core/experiences";
 
-export const FEATURED_EXPERIMENTS = [
-  {
-    slug: "sketchflow",
-    name: "SketchFlow",
-    tagline: "Turn rough ideas into polished visual flows on an infinite canvas.",
-    href: "/sketchflow",
-    cta: "Try it now",
-    tag: "Create",
-    tone: "teal",
-    icon: "PenTool",
-  },
-  {
-    slug: "radio-garden",
-    name: "OpenAir Garden",
-    tagline: "Spin the globe and drop into live radio from any city on Earth.",
-    href: "/radio-garden",
-    cta: "Try it now",
-    tag: "Explore",
-    tone: "cyan",
-    icon: "Radio",
-  },
-  {
-    slug: "patatap",
-    name: "Patatap",
-    tagline: "A portable animation and sound kit — every key paints and plays.",
-    href: "/patatap",
-    cta: "Try it now",
-    tag: "Play",
-    tone: "violet",
-    icon: "Music4",
-  },
-  {
-    slug: "pixel-thought",
-    name: "Pixel Thought",
-    tagline: "A 60-second mindfulness break that shrinks your worry down to a pixel.",
-    href: "/pixel-thought",
-    cta: "Try it now",
-    tag: "Focus",
-    tone: "teal",
-    icon: "Sparkles",
-  },
-];
+// Labs, navigation, the sitemap, and chrome behavior all consume this shared
+// catalog so a shipped experiment cannot silently lose its discovery route.
+export const FEATURED_EXPERIMENTS = EXPERIENCE_CATALOG.filter(
+  (experience) => experience.featured,
+);
 
-export const GRID_EXPERIMENTS = [
-  {
-    slug: "soft-murmur",
-    name: "Soft Murmur",
-    description: "Mix rain, waves and fireside into your own ambient soundscape for focus, sleep or study.",
-    href: "/soft-murmur",
-    tag: "Focus",
-    tone: "cyan",
-    icon: "Waves",
-  },
-  {
-    slug: "windowswap",
-    name: "WindowSwap",
-    description: "Open somebody else's window somewhere in the world and enjoy the view for a while.",
-    href: "/windowswap",
-    tag: "Explore",
-    tone: "teal",
-    icon: "AppWindow",
-  },
-  {
-    slug: "flightradar",
-    name: "Aero Flight Tracker",
-    description: "Watch real-time air traffic move across a live radar dashboard.",
-    href: "/flightradar",
-    tag: "Explore",
-    tone: "violet",
-    icon: "Plane",
-  },
-  {
-    slug: "fact-net",
-    name: "Fact-Net",
-    description: "Original topic guides and owned facts with clean category navigation, built for the curious.",
-    href: "/fact-net",
-    tag: "Discover",
-    tone: "teal",
-    icon: "Library",
-  },
-  {
-    slug: "bharat-virasat",
-    name: "Bharat Virasat",
-    description: "Journey through India's heritage sites, monuments and living traditions.",
-    href: "/bharat-virasat",
-    tag: "Explore",
-    tone: "cyan",
-    icon: "Landmark",
-  },
-  {
-    slug: "personality",
-    name: "Personality Lab",
-    description: "Rapid, science-flavoured tests that map your personality type in minutes.",
-    href: "/personality",
-    tag: "Play",
-    tone: "violet",
-    icon: "Brain",
-  },
-  {
-    slug: "playbuzz",
-    name: "Playbuzz",
-    description: "Fun quizzes, trivia and personality tests to share with friends.",
-    href: "/playbuzz",
-    tag: "Play",
-    tone: "teal",
-    icon: "Puzzle",
-  },
-  {
-    slug: "pranx",
-    name: "Pranx Studio",
-    description: "Harmless prank screens and simulated interfaces for good-natured mischief.",
-    href: "/pranx",
-    tag: "Play",
-    tone: "cyan",
-    icon: "Ghost",
-  },
-  {
-    slug: "live-activity-simulation",
-    name: "Live Activity Simulation",
-    description: "Simulate real-time user behaviour streams for demos, mockups and testing.",
-    href: "/live-activity-simulation",
-    tag: "Create",
-    tone: "teal",
-    icon: "Activity",
-  },
-  {
-    slug: "kym",
-    name: "Know Your Meme",
-    description: "Trending memes and internet culture, decoded and archived.",
-    href: "/kym",
-    tag: "Discover",
-    tone: "violet",
-    icon: "Laugh",
-  },
-  {
-    slug: "ancestory",
-    name: "Ancestry",
-    description: "Discover the meaning, origin and story behind your name.",
-    href: "/ancestory",
-    tag: "Discover",
-    tone: "cyan",
-    icon: "ScrollText",
-  },
-  {
-    slug: "games",
-    name: "Games Arcade",
-    description: "Quick browser games and playful tools for a five-minute break.",
-    href: "/games",
-    tag: "Play",
-    tone: "teal",
-    icon: "Gamepad2",
-  },
-];
+export const GRID_EXPERIMENTS = EXPERIENCE_CATALOG.filter(
+  (experience) => !experience.featured,
+);
 
 export const LAB_GRADUATES = [
   {
     slug: "tools",
     name: "Tools Directory",
     description:
-      "Our biggest graduate — 599+ free tools for images, PDFs, developers, text and more, all running right in your browser.",
+      "Our biggest graduate — 885+ free tools for images, PDFs, developers, text and more, all running right in your browser.",
     href: "/tools/all",
     label: "Now a core product",
     tone: "teal",

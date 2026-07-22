@@ -50,7 +50,7 @@ const Index = () => {
     // Load from localStorage on mount
     useEffect(() => {
         const savedTheme = localStorage.getItem('job-tool-theme');
-        if (savedTheme) setTheme(savedTheme);
+        setTheme(savedTheme || document.documentElement.dataset.theme || 'light');
 
         const savedOffers = localStorage.getItem('job-tool-offers');
         if (savedOffers) {

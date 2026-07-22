@@ -13,6 +13,14 @@ import {
   Coins,
   Settings,
   DatabaseZap,
+  Crown,
+  Zap,
+  Flame,
+  Gamepad2,
+  Compass,
+  TrendingUp,
+  Dices,
+  Wallet,
 } from "lucide-react";
 import AnternetLogo from "../../../public/logos/anternetlogo.png";
 
@@ -20,7 +28,7 @@ const anternetConfig = {
   id: "anternet",
   name: "Anternet",
   logo: AnternetLogo,
-  color: "#14B8A6",
+  color: "var(--primary)",
   modules: {
     banners: { label: "Home Banners", icon: Image },
     tasks: { label: "Daily Tasks", icon: ListChecks },
@@ -29,6 +37,14 @@ const anternetConfig = {
     spinprizes: { label: "Spin Prizes", icon: Disc3 },
     videosections: { label: "Video Sections", icon: Video },
     earningtasks: { label: "Earning Tasks", icon: Coins },
+    homepage: { label: "Trendy Tasks", icon: Flame },
+    walletpage: { label: "Wallet Page", icon: Wallet },
+    winners: { label: "Winners", icon: Crown },
+    quickearn: { label: "Quick Earn Cards", icon: Zap },
+    explorecards: { label: "Recommended Cards", icon: Gamepad2 },
+    homecategories: { label: "Explore Categories", icon: Compass },
+    bonusladdertiers: { label: "Bonus Ladder Tiers", icon: TrendingUp },
+    khokho: { label: "Kho Kho", icon: Dices },
     ads: { label: "Ads & Promos", icon: Megaphone },
     arenas: { label: "Featured Arenas", icon: Trophy },
     notifications: { label: "Notifications", icon: Bell },

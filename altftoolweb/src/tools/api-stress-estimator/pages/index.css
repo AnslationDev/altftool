@@ -1,14 +1,15 @@
 @import "tailwindcss";
 
-* {
+.api-stress-tool,
+.api-stress-tool * {
   box-sizing: border-box;
 }
 
-html {
+.api-stress-tool {
   scroll-behavior: smooth;
 }
 
-body {
+.api-stress-tool {
   font-family: inherit;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -20,21 +21,21 @@ body {
 }
 
 /* Custom scrollbar */
-::-webkit-scrollbar {
+.api-stress-tool ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
 }
 
-::-webkit-scrollbar-track {
+.api-stress-tool ::-webkit-scrollbar-track {
   background: transparent;
 }
 
-::-webkit-scrollbar-thumb {
+.api-stress-tool ::-webkit-scrollbar-thumb {
   background: rgba(148, 163, 184, 0.45);
   border-radius: 999px;
 }
 
-::-webkit-scrollbar-thumb:hover {
+.api-stress-tool ::-webkit-scrollbar-thumb:hover {
   background: rgba(148, 163, 184, 0.65);
 }
 

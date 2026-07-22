@@ -32,13 +32,13 @@ export default function GlassesTool() {
   const [showSlider, setShowSlider] = useState(false);
   const [downloading, setDownloading] = useState(false);
   const [selectedFace, setSelectedFace] = useState(0);
+  const [editorCanvas, setEditorCanvas] = useState(null);
   const [adjustments, setAdjustments] = useState({
     scale: 100, frameWidth: 50, height: 50, rotation: 180,
     lensTransparency: 50, bridgeWidth: 50, reflection: 50,
   });
 
   const canvasRef = useRef(null);
-  const processedCanvasRef = useRef(null);
   const { loading: faceLoading, error: faceError, faceData, faces, modelsReady, loadModels, detectFace, reset: resetFace } = useFaceDetection();
   const [processing, setProcessing] = useState(false);
   const [previewKey, setPreviewKey] = useState(0);
@@ -47,12 +47,13 @@ export default function GlassesTool() {
     setImage({ src, file, img });
     setResultCanvas(null);
     setShowSlider(false);
+    setEditorCanvas(null);
     resetFace();
     if (!modelsReady) await loadModels();
   }, [modelsReady, loadModels, resetFace]);
 
   const handleEditorApply = useCallback((editedCanvas) => {
-    processedCanvasRef.current = editedCanvas;
+    setEditorCanvas(editedCanvas);
     editedCanvas.toBlob((blob) => {
       if (!blob) return;
       const url = URL.createObjectURL(blob);
@@ -60,6 +61,17 @@ export default function GlassesTool() {
     });
     setShowEditor(false);
   }, []);
+
+  const handleOpenEditor = useCallback(async () => {
+    if (!image) return;
+    const source = await loadImage(image.src);
+    const canvas = document.createElement('canvas');
+    canvas.width = source.width;
+    canvas.height = source.height;
+    canvas.getContext('2d').drawImage(source, 0, 0);
+    setEditorCanvas(canvas);
+    setShowEditor(true);
+  }, [image]);
 
   const applyPreview = useCallback(async () => {
     if (!image || !faceData) return;
@@ -155,16 +167,16 @@ export default function GlassesTool() {
           <p className="text-sm text-muted-foreground">Try different glasses with AI-powered placement</p>
         </div>
         <div className="flex gap-2">
-          <button onClick={() => { setImage(null); setResultCanvas(null); setShowSlider(false); resetFace(); }} className="px-4 py-2 text-sm rounded-lg border border-[var(--border)] hover:bg-[var(--anslation-ds-soft)] transition-colors text-muted-foreground">New Photo</button>
-          <button onClick={() => setShowEditor(true)} className="px-4 py-2 text-sm rounded-lg border border-[var(--border)] hover:bg-[var(--anslation-ds-soft)] transition-colors text-muted-foreground">Edit Image</button>
+          <button onClick={() => { setImage(null); setResultCanvas(null); setShowSlider(false); setEditorCanvas(null); resetFace(); }} className="px-4 py-2 text-sm rounded-lg border border-[var(--border)] hover:bg-[var(--anslation-ds-soft)] transition-colors text-muted-foreground">New Photo</button>
+          <button onClick={handleOpenEditor} className="px-4 py-2 text-sm rounded-lg border border-[var(--border)] hover:bg-[var(--anslation-ds-soft)] transition-colors text-muted-foreground">Edit Image</button>
         </div>
       </div>
 
       {faceLoading && <SkeletonLoader lines={3} />}
       {faceError && <ErrorCard message={faceError} onRetry={handleDetect} />}
 
-      {showEditor && processedCanvasRef.current ? (
-        <ImageEditor canvas={processedCanvasRef.current} onApply={handleEditorApply} onCancel={() => setShowEditor(false)} />
+      {showEditor && editorCanvas ? (
+        <ImageEditor canvas={editorCanvas} onApply={handleEditorApply} onCancel={() => setShowEditor(false)} />
       ) : null}
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">

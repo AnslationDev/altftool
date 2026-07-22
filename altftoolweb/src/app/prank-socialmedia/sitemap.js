@@ -1,14 +1,15 @@
 import { TEMPLATES } from "./lib/templates";
+import { getSiteUrl } from "@/platform/seo/generateMetadata";
 
 export default function sitemap() {
-  const base = process.env.NEXT_PUBLIC_SITE_URL || "https://example.com";
+  const base = getSiteUrl();
   return [
-    { url: `${base}/`, changeFrequency: "weekly", priority: 1.0 },
-    { url: `${base}/templates`, changeFrequency: "weekly", priority: 0.9 },
+    { url: `${base}/prank-socialmedia`, changeFrequency: "weekly", priority: 0.8 },
+    { url: `${base}/prank-socialmedia/templates`, changeFrequency: "weekly", priority: 0.7 },
     ...TEMPLATES.map((t) => ({
-      url: `${base}/editor/${t.slug}`,
+      url: `${base}/prank-socialmedia/editor/${t.slug}`,
       changeFrequency: "monthly",
-      priority: 0.7,
+      priority: 0.6,
     })),
   ];
 }

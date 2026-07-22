@@ -34,23 +34,36 @@ export default function SettingsManager({ schema, defaults = {}, lookups, notify
     } finally { setBusy(false); }
   };
 
-  if (!values) return <p className="mla-muted">Loading…</p>;
-
   return (
-    <div className="mla-settings">
-      <div className="mla-form">
-        {schema.fields.map((f) => (
-          <div key={f.key} className="mla-field mla-field-full">
-            <label>{f.label}</label>
-            <Field field={f} value={values[f.key]} lookups={lookups}
-              onChange={(v) => setValues((s) => ({ ...s, [f.key]: v }))} />
-            {f.hint && <p className="mla-hint">{f.hint}</p>}
-          </div>
-        ))}
-      </div>
-      <div className="mla-modal-foot">
-        <Button kind="ghost" onClick={load} disabled={busy}>Reset</Button>
-        <Button onClick={save} disabled={busy}>{busy ? "Saving…" : "Save settings"}</Button>
+    <div>
+      <header className="mla-pagehead">
+        <div>
+          <h1>{schema.label}</h1>
+          <p>Configure <code>settings/{schema.docId}</code>.</p>
+        </div>
+      </header>
+
+      <div className="mla-settings" aria-busy={!values}>
+        {!values ? (
+          <p className="mla-muted" role="status">Loading…</p>
+        ) : (
+          <>
+            <div className="mla-form">
+              {schema.fields.map((f) => (
+                <div key={f.key} className="mla-field mla-field-full">
+                  <label>{f.label}</label>
+                  <Field field={f} value={values[f.key]} lookups={lookups}
+                    onChange={(v) => setValues((s) => ({ ...s, [f.key]: v }))} />
+                  {f.hint && <p className="mla-hint">{f.hint}</p>}
+                </div>
+              ))}
+            </div>
+            <div className="mla-modal-foot">
+              <Button kind="ghost" onClick={load} disabled={busy}>Reset</Button>
+              <Button onClick={save} disabled={busy}>{busy ? "Saving…" : "Save settings"}</Button>
+            </div>
+          </>
+        )}
       </div>
     </div>
   );

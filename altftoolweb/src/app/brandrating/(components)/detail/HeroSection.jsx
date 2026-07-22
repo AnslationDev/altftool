@@ -2,7 +2,9 @@
 
 import React from "react";
 import Image from "next/image";
+import DOMPurify from "dompurify";
 import { ThumbsUp, Star, StarHalf, Truck, ShieldCheck, Home, ArrowUpRight } from "lucide-react";
+import { getRatingLabel, formatRating } from "../../utils/rating";
 
 function getExternalLink(brand) {
   const rawLink = brand?.brandLink || brand?.weblink || brand?.url || brand?.link || "";
@@ -44,7 +46,7 @@ function HeroSection({ brand, category }) {
           {/* MAIN IMAGE */}
           <div className="relative h-[220px] sm:h-[300px] md:h-[360px] lg:h-[480px] rounded-2xl overflow-hidden shadow-lg ">
             <Image
-              src={brand.images?.[0]}
+              src={brand.images?.[0] || brand.logo || "/image-fallback.svg"}
               alt={brand.name}
               fill
               sizes="(max-width: 1024px) 100vw, 50vw"
@@ -63,7 +65,7 @@ function HeroSection({ brand, category }) {
                   className="relative w-full h-[70px] sm:h-[90px] md:h-[110px] rounded-xl overflow-hidden border border-gray-200"
                 >
                   <Image
-                    src={img || "/placeholder.jpg"}
+                    src={img || "/image-fallback.svg"}
                     alt="product"
                     fill
                     sizes="(max-width: 1024px) 33vw, 180px"
@@ -90,7 +92,9 @@ function HeroSection({ brand, category }) {
 
           <div className="flex items-center gap-2 text-(--muted-foreground) mb-4 font-semibold">
             <ThumbsUp className="w-4 h-4 text-yellow-500 fill-yellow-500" />
-            {brand?.visits ?? 4101}  People Visited This Week
+            {brand?.visits
+              ? `${brand.visits} People Visited This Week`
+              : `${getRatingLabel(safeRating)} · ${formatRating(safeRating)}/5 overall rating`}
           </div>
 
           <p className="text-(--muted-foreground) mb-6 leading-relaxed">
@@ -108,7 +112,7 @@ function HeroSection({ brand, category }) {
                     {benefit?.icon ? (
                       <span
                         className="text-(--primary) w-7 h-7"
-                        dangerouslySetInnerHTML={{ __html: benefit.icon }}
+                        dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(benefit.icon) }}
                       />
                     ) : (
                       <ShieldCheck className="text-(--primary) w-7 h-7" />
@@ -145,7 +149,9 @@ function HeroSection({ brand, category }) {
               </div>
 
               <p className="text-lg">
-                Trusted By {brand?.visits ?? 1200}+ Customers
+                {brand?.visits
+                  ? `Trusted By ${brand.visits}+ Customers`
+                  : `${getRatingLabel(safeRating)} overall rating`}
               </p>
             </div>
 

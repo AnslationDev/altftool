@@ -1,8 +1,8 @@
 "use client";
 import { Star, StarHalf, ArrowUpRight, Trophy, Check } from "lucide-react";
 import Image from "next/image";
-import mattress from "../../(assets)/Hero-2.jpg";
 import Link from "next/link";
+import { getBrandTagline } from "../../utils/rating";
 
 
 const CardContent = ({ brand, isActive, getImage, normalizedFeatures }) => {
@@ -67,7 +67,7 @@ const CardContent = ({ brand, isActive, getImage, normalizedFeatures }) => {
             </div>
 
 
-            <div className="px-4 sm:px-6 pt-4 pb-5 flex flex-col gap-2.5">
+            <div className="px-4 sm:px-6 pt-4 pb-5 flex flex-col gap-2.5 flex-1">
 
                 <div className="flex justify-between items-start gap-3">
                     <h3 className="text-[22px] sm:text-[26px] lg:text-[22px] xl:text-[24px] font-bold leading-tight flex-1 min-w-0">
@@ -79,8 +79,8 @@ const CardContent = ({ brand, isActive, getImage, normalizedFeatures }) => {
                 </div>
 
 
-                <p className="text-[13px] sm:text-[14px] text-[var(--muted-foreground)]">
-                    {brand.review || "Trusted by 27,000+ customers"}
+                <p className="text-[13px] sm:text-[14px] font-medium text-[var(--muted-foreground)]">
+                    {getBrandTagline(brand)}
                 </p>
 
                 {/* DESKTOP RATING */}
@@ -91,10 +91,17 @@ const CardContent = ({ brand, isActive, getImage, normalizedFeatures }) => {
                     </span>
                 </div>
 
+                {/* SHORT DESCRIPTION */}
+                {brand.description ? (
+                    <p className="text-[13px] sm:text-[14px] leading-relaxed text-[var(--muted-foreground)] line-clamp-2">
+                        {brand.description}
+                    </p>
+                ) : null}
+
                 {/* FEATURES */}
                 {normalizedFeatures.length > 0 ? (
                     <div className="flex flex-col gap-2 text-[13px] sm:text-[14px] text-[var(--muted-foreground)]">
-                        {normalizedFeatures.slice(0, 3).map((f, i) => {
+                        {normalizedFeatures.slice(0, 4).map((f, i) => {
                             const label =
                                 typeof f === "string"
                                     ? f
@@ -123,7 +130,7 @@ const CardContent = ({ brand, isActive, getImage, normalizedFeatures }) => {
                                 : `https://${validLink}`
                         }
                         target="_blank"
-                        className={`mt-1 w-full h-[48px] sm:h-[52px] lg:h-[48px] rounded-full flex items-center justify-center gap-2 text-[15px] sm:text-[16px] font-semibold transition-all
+                        className={`mt-auto w-full h-[48px] sm:h-[52px] lg:h-[48px] rounded-full flex items-center justify-center gap-2 text-[15px] sm:text-[16px] font-semibold transition-all
               ${isActive
                                 ? "bg-[var(--primary)] text-white"
                                 : "border border-[var(--border)] hover:border-[var(--primary)] hover:text-[var(--primary)] text-[var(--foreground)]"
@@ -133,7 +140,7 @@ const CardContent = ({ brand, isActive, getImage, normalizedFeatures }) => {
                         <ArrowUpRight className="w-4 h-4" />
                     </Link>
                 ) : (
-                    <div className="mt-1 w-full h-[48px] rounded-full flex items-center justify-center bg-(--muted-foreground)/30 text-(--muted-foreground) text-[15px] font-semibold cursor-not-allowed">
+                    <div className="mt-auto w-full h-[48px] rounded-full flex items-center justify-center bg-(--muted-foreground)/30 text-(--muted-foreground) text-[15px] font-semibold cursor-not-allowed">
                         Not Available
                     </div>
                 )}
@@ -150,14 +157,14 @@ export default function TopPickCard({ rank, isActive, brand }) {
 
     const getImage = () => {
         const img = brand?.images?.[0] || brand?.logo;
-        return typeof img === "string" && img.trim() ? img : mattress;
+        return typeof img === "string" && img.trim() ? img : "/image-fallback.svg";
     };
 
 
 
     if (isActive) {
         return (
-            <div className="w-full lg:max-w-[391px] rounded-3xl bg-gradient-to-b from-[#2563EB] via-[#3B82F6] to-white p-2 flex flex-col transition-all duration-300 hover:shadow-[0_14px_40px_rgba(37,99,235,0.22)]">
+            <div className="w-full h-full lg:max-w-[391px] rounded-3xl bg-gradient-to-b from-[#2563EB] via-[#3B82F6] to-white p-2 flex flex-col transition-all duration-300 hover:shadow-[0_14px_40px_rgba(37,99,235,0.22)]">
                 <div className="flex justify-center items-center gap-2 pb-2 pt-1 text-white font-bold text-[17px]">
                     <Trophy className="w-5 h-5 text-yellow-300" />
                     #{rank} Top Pick
@@ -175,7 +182,7 @@ export default function TopPickCard({ rank, isActive, brand }) {
     }
 
     return (
-        <div className="w-full lg:max-w-[391px] rounded-3xl border border-[var(--border)] flex flex-col group transition-all duration-300 hover:border-[var(--primary)] hover:shadow-[0_14px_40px_rgba(37,99,235,0.22)]">
+        <div className="w-full h-full lg:max-w-[391px] rounded-3xl border border-[var(--border)] flex flex-col group transition-all duration-300 hover:border-[var(--primary)] hover:shadow-[0_14px_40px_rgba(37,99,235,0.22)]">
             <div className="flex justify-center items-center gap-2 py-3 text-[var(--primary)] font-bold text-[17px]">
                 <Trophy className="w-5 h-5 text-yellow-500 group-hover:text-yellow-300 transition-colors" />
                 #{rank} Top Pick

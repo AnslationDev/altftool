@@ -4,6 +4,7 @@ import path from "node:path";
 const root = path.resolve(import.meta.dirname, "..");
 const publicRoot = path.join(root, "altftoolweb", "public");
 const sourceRoot = path.join(root, "altftoolweb", "src");
+const housingSourceRoot = path.join(sourceRoot, "app", "housingneeds");
 
 const imageExtensions = new Set([
   ".avif",
@@ -16,6 +17,7 @@ const imageExtensions = new Set([
 ]);
 
 const sourceExtensions = new Set([
+  ".css",
   ".js",
   ".jsx",
   ".ts",
@@ -23,6 +25,8 @@ const sourceExtensions = new Set([
   ".md",
   ".mdx",
 ]);
+
+const localImageReferencePattern = /["'`](\/[^"'`?#]+\.(?:avif|gif|jpe?g|png|svg|webp))(?:[?#][^"'`]*)?["'`]/gi;
 
 const maxPublicImageKiB = Number(process.env.ALTFT_MAX_PUBLIC_IMAGE_KIB || 3_000);
 
@@ -185,16 +189,49 @@ async function checkForbiddenReferences() {
   return failures;
 }
 
-const [critical, publicImages, forbiddenReferenceFailures] = await Promise.all([
+async function checkHousingPublicReferences() {
+  const sourceFiles = await walk(
+    housingSourceRoot,
+    (file) => sourceExtensions.has(path.extname(file).toLowerCase()),
+  );
+  const references = new Map();
+
+  for (const file of sourceFiles) {
+    const content = await readFile(file, "utf8");
+    for (const match of content.matchAll(localImageReferencePattern)) {
+      const reference = match[1];
+      if (reference.includes("${")) continue;
+      const files = references.get(reference) || [];
+      files.push(path.relative(root, file));
+      references.set(reference, files);
+    }
+  }
+
+  const failures = [];
+  for (const [reference, files] of references) {
+    const publicFile = path.join(publicRoot, decodeURIComponent(reference.slice(1)));
+    try {
+      await stat(publicFile);
+    } catch {
+      failures.push(`${reference} is referenced by ${files[0]} but is missing from altftoolweb/public`);
+    }
+  }
+
+  return { checked: references.size, failures };
+}
+
+const [critical, publicImages, forbiddenReferenceFailures, housingReferences] = await Promise.all([
   checkCriticalAssets(),
   checkPublicImages(),
   checkForbiddenReferences(),
+  checkHousingPublicReferences(),
 ]);
 
 const failures = [
   ...critical.failures,
   ...publicImages.failures,
   ...forbiddenReferenceFailures,
+  ...housingReferences.failures,
 ];
 
 console.log("Public media budget audit:");
@@ -202,6 +239,7 @@ console.log(JSON.stringify({
   criticalAssets: critical.rows,
   maxPublicImage: `${maxPublicImageKiB} KiB`,
   topImages: publicImages.topImages,
+  housingPublicReferencesChecked: housingReferences.checked,
 }, null, 2));
 
 if (failures.length) {

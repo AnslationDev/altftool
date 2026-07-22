@@ -1,0 +1,170 @@
+const routeImages = [
+  "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1400&q=70",
+  "https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?auto=format&fit=crop&w=1400&q=70",
+  "https://images.unsplash.com/photo-1525625293386-3f8f99389edd?auto=format&fit=crop&w=1400&q=70",
+  "https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&w=1400&q=70",
+  "https://images.unsplash.com/photo-1502602898657-3e91760cbb34?auto=format&fit=crop&w=1400&q=70",
+  "https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?auto=format&fit=crop&w=1400&q=70",
+  "https://images.unsplash.com/photo-1496442226666-8d4d0e62e6e9?auto=format&fit=crop&w=1400&q=70",
+  "https://images.unsplash.com/photo-1524231757912-21f4fe3a7200?auto=format&fit=crop&w=1400&q=70",
+  "https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=1400&q=70",
+  "https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?auto=format&fit=crop&w=1400&q=70",
+];
+
+export const sitemapSections = [
+  {
+    title: "Top Airlines",
+    items: [
+      "Spirit Airlines Flights",
+      "Frontier Airlines Flights",
+      "American Airlines Flights",
+      "United Airlines Flights",
+      "Air Canada Flights",
+      "Allegiant Airlines Flights",
+      "Alaska Airlines Flights",
+      "WestJet Airlines Flights",
+      "Copa Airlines Flights",
+      "Volaris Airlines Flights",
+      "Turkish Airlines Flights",
+      "Qatar Airways Flights",
+      "Caribbean Airlines Flights",
+      "Philippine Airlines Flights",
+      "Emirates Airlines Flights",
+      "Etihad Airways Flights",
+      "JetBlue Airways Flights",
+      "Hawaiian Airlines Flights",
+      "Japan Airlines Flights",
+      "All Nippon Airways Flights",
+      "Singapore Airlines Flights",
+      "Lufthansa Airlines Flights",
+      "British Airways Flights",
+      "Latam Airlines Group",
+      "Porter Airlines",
+      "TAP Portugal Airlines",
+    ],
+  },
+  {
+    title: "Top Cities",
+    items: [
+      "Flights to New York",
+      "Flights to Orlando",
+      "Flights to Las Vegas",
+      "Flights to Los Angeles",
+      "Flights to Chicago",
+      "Flights to Miami",
+      "Flights to London",
+      "Flights to Rome",
+      "Flights to Dubai",
+      "Flights to Bali",
+      "Flights to Paris",
+      "Flights to Tokyo",
+      "Flights to Singapore",
+      "Flights to Goa",
+      "Flights to Jaipur",
+      "Flights to Kerala",
+      "Flights to Kathmandu",
+      "Flights to Maldives",
+      "Flights to Swiss Alps",
+      "Flights to Istanbul",
+      "Flights to Seoul",
+      "Flights to Atlanta",
+      "Flights to Calgary",
+      "Flights to Charlotte",
+      "Flights to Hartford",
+      "Flights to Minneapolis",
+      "Flights to New Orleans",
+      "Flights to Oakland",
+      "Flights to Philadelphia",
+      "Flights to Salt Lake City",
+      "Flights to Seattle",
+      "Flights to Reno",
+      "Flights to San Francisco",
+      "Flights to Toronto",
+      "Flights to Washington",
+      "Flights to Portland",
+      "Flights to Santa Ana",
+      "Flights to Fort Myers",
+      "Flights to Indianapolis",
+      "Flights to Phoenix",
+      "Flights to Boston",
+      "Flights to Cincinnati",
+      "Flights to Dallas",
+      "Flights to Denver",
+      "Flights to Detroit",
+      "Flights to El Paso",
+      "Flights to Houston",
+      "Flights to Kahului",
+      "Flights to Raleigh Durham",
+      "Flights to San Diego",
+      "Flights to San Jose",
+      "Flights to Austin",
+      "Flights to Buffalo",
+      "Flights to Burbank",
+      "Flights to Charleston",
+      "Flights to Columbia",
+      "Flights to Fort Lauderdale",
+      "Flights to Honolulu",
+      "Flights to Nashville",
+      "Flights to Omaha",
+      "Flights to Tampa",
+      "Flights to Vancouver",
+      "Flights to Wilmington",
+      "Flights to Saint Louis",
+      "Flights to West Palm Beach",
+    ],
+  },
+  {
+    title: "Top Deals",
+    items: [
+      "Top Airline Deals",
+      "Last Minute Flight Deals",
+      "One Way Flight Deals",
+      "Round Trip Flight Deals",
+      "Domestic Flight Deals",
+      "International Flight Deals",
+    ],
+  },
+  {
+    title: "Quick Links",
+    items: [
+      "About Us",
+      "Contact Us",
+      "FAQs",
+      "Privacy Policy",
+      "Terms And Conditions",
+      "My Bookings",
+    ],
+  },
+  {
+    title: "Useful Links",
+    items: [
+      "Security",
+      "Baggage Fees",
+      "Cancellation Policy",
+      "Taxes And Fees",
+    ],
+  },
+];
+
+export function slugifyPageTitle(title) {
+  return title
+    .toLowerCase()
+    .replace(/&/g, "and")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+}
+
+const dedicatedStaticSlugs = new Set(["about-us", "contact-us", "privacy-policy", "terms-and-conditions"]);
+
+export const sitemapPages = sitemapSections.flatMap((section, sectionIndex) =>
+  section.items.map((title, itemIndex) => ({
+    title,
+    slug: slugifyPageTitle(title),
+    section: section.title,
+    image: routeImages[(sectionIndex * 5 + itemIndex) % routeImages.length],
+  })).filter((page) => !dedicatedStaticSlugs.has(page.slug)),
+);
+
+export function getSitemapPage(slug) {
+  return sitemapPages.find((page) => page.slug === slug);
+}

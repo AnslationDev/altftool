@@ -1,5 +1,6 @@
 import fs from "node:fs/promises";
 import path from "node:path";
+import { createRequire } from "node:module";
 import { pathToFileURL } from "node:url";
 import { resolveToolCategories } from "../altftoolweb/src/platform/registry/categoryTaxonomy.js";
 
@@ -7,7 +8,11 @@ const rootDir = process.cwd();
 const toolsDir = path.join(rootDir, "altftoolweb/src/tools");
 const metaPath = path.join(rootDir, "altftoolweb/src/platform/registry/toolMetaMap.js");
 const runtimePath = path.join(rootDir, "altftoolweb/src/platform/registry/toolRuntimeMap.js");
-const ignoredToolDirs = new Set(["_shared", "_toolfk-suite"]);
+const ignoredToolDirs = new Set([
+  "_shared",
+  "_toolfk-suite",
+]);
+const require = createRequire(import.meta.url);
 const validEntryFiles = ["entry.js", "entry.jsx", "entry.ts", "entry.tsx"];
 const iconAliases = {
   "search-icon": "search",
@@ -45,8 +50,27 @@ async function readToolMetaMap() {
 async function readToolConfig(slug) {
   const configPath = path.join(toolsDir, slug, "tool.config.js");
   const moduleUrl = `${pathToFileURL(configPath).href}?registryCheck=${Date.now()}-${slug}`;
-  const configModule = await import(moduleUrl);
-  return configModule.default ?? configModule.toolConfig ?? {};
+  try {
+    const configModule = await import(moduleUrl);
+    return configModule.default ?? configModule.toolConfig ?? {};
+  } catch (importError) {
+    // A small legacy set still uses module.exports. Match the production
+    // registry generator so the audit validates the same source contract.
+    const code = await fs.readFile(configPath, "utf8");
+    const moduleShim = { exports: {} };
+    try {
+      // eslint-disable-next-line no-new-func
+      new Function("module", "exports", "require", "console", code)(
+        moduleShim,
+        moduleShim.exports,
+        require,
+        console,
+      );
+      return moduleShim.exports ?? {};
+    } catch {
+      throw importError;
+    }
+  }
 }
 
 function formatMismatch(slug, field, expected, actual) {
@@ -67,6 +91,8 @@ async function main() {
 
   for (const slug of toolDirs) {
     const toolPath = path.join(toolsDir, slug);
+    const directoryEntries = await fs.readdir(toolPath);
+    if (directoryEntries.length === 0) continue;
     const entryFile = await Promise.all(
       validEntryFiles.map(async (file) => ((await exists(path.join(toolPath, file))) ? file : null)),
     ).then((matches) => matches.find(Boolean));
@@ -107,7 +133,10 @@ async function main() {
       continue;
     }
 
-    if (config.slug !== slug) failures.push(`${slug}: config slug must exactly match folder name`);
+    const configSlug = cleanText(config.slug || config.id);
+    if (configSlug !== slug) {
+      failures.push(`${slug}: config slug or legacy id must exactly match folder name`);
+    }
     if (name.length < 3) failures.push(`${slug}: config name is missing or too short`);
     if (description.length < 18) failures.push(`${slug}: config description is missing or too short`);
     if (!categories.length) failures.push(`${slug}: config category must contain at least one category`);

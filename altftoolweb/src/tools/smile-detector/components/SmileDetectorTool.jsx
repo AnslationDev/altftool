@@ -43,6 +43,7 @@ export default function SmileDetectorTool() {
   const [analysis, setAnalysis] = useState(null);
   const [reportGenerated, setReportGenerated] = useState(false);
   const [downloading, setDownloading] = useState(false);
+  const [previewUrl, setPreviewUrl] = useState(null);
   const canvasRef = useRef(null);
 
   const { loading: faceLoading, error: faceError, faceData, modelsReady, loadModels, detectFace, reset: resetFace } = useFaceDetection();
@@ -51,6 +52,7 @@ export default function SmileDetectorTool() {
     setImage({ src, file, img });
     setAnalysis(null);
     setReportGenerated(false);
+    setPreviewUrl(null);
     resetFace();
     if (!modelsReady) await loadModels();
     const result = await detectFace(img);
@@ -104,6 +106,7 @@ export default function SmileDetectorTool() {
     ctx.fillText(scoreText, box.x + 8, box.y - 8);
 
     canvasRef.current = canvas;
+    setPreviewUrl(canvas.toDataURL('image/png'));
   };
 
   const handleRetry = useCallback(async () => {
@@ -189,7 +192,7 @@ export default function SmileDetectorTool() {
           <h1 className="text-2xl font-bold text-foreground">Smile Detector</h1>
           <p className="text-sm text-muted-foreground">AI-powered facial expression analysis</p>
         </div>
-        <button onClick={() => { setImage(null); setAnalysis(null); setReportGenerated(false); resetFace(); }}
+        <button onClick={() => { setImage(null); setAnalysis(null); setReportGenerated(false); setPreviewUrl(null); resetFace(); }}
           className="px-4 py-2 text-sm rounded-lg border border-[var(--border)] hover:bg-[var(--anslation-ds-soft)] transition-colors text-muted-foreground">New Photo</button>
       </div>
 
@@ -199,8 +202,8 @@ export default function SmileDetectorTool() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <div className="space-y-4">
           <div className="rounded-xl overflow-hidden border border-[var(--border)] bg-black/5 dark:bg-white/5">
-            {canvasRef.current ? (
-              <img src={canvasRef.current.toDataURL()} alt="Analysis" className="w-full object-contain" />
+            {previewUrl ? (
+              <img src={previewUrl} alt="Analysis" className="w-full object-contain" />
             ) : (
               <img src={image.src} alt="Uploaded" className="w-full object-contain" />
             )}

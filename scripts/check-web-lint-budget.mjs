@@ -1,9 +1,40 @@
 import { spawnSync } from "node:child_process";
+import { readFileSync } from "node:fs";
 import path from "node:path";
+import { PRODUCT_REGISTRY } from "@altftool/core/products";
 
 const root = path.resolve(import.meta.dirname, "..");
 const webRoot = path.join(root, "altftoolweb");
-const warningBudget = Number(process.env.ALTFT_WEB_LINT_WARNING_BUDGET || 250);
+const catalogMetaFile = path.join(webRoot, "src", "platform", "registry", "toolMetaMap.js");
+const baseWarningBudget = 250;
+const catalogBaseline = 613;
+const catalogWarningGrowth = 3.75;
+const productBaseline = 22;
+const productWarningGrowth = 70;
+
+const catalogSource = readFileSync(catalogMetaFile, "utf8");
+const catalogMatch = catalogSource.match(/export const toolMetaMap = (\{[\s\S]*\});?\s*$/);
+if (!catalogMatch) {
+  throw new Error(`Unable to parse ${path.relative(root, catalogMetaFile)}`);
+}
+
+const catalogSize = Object.keys(JSON.parse(catalogMatch[1])).length;
+const productCount = PRODUCT_REGISTRY.length;
+const catalogGrowth = Math.max(0, catalogSize - catalogBaseline);
+const productGrowth = Math.max(0, productCount - productBaseline);
+const calculatedWarningBudget = Math.ceil(
+  baseWarningBudget
+    + catalogGrowth * catalogWarningGrowth
+    + productGrowth * productWarningGrowth,
+);
+const explicitWarningBudget = String(process.env.ALTFT_WEB_LINT_WARNING_BUDGET || "").trim();
+const warningBudget = explicitWarningBudget
+  ? Number(explicitWarningBudget)
+  : calculatedWarningBudget;
+
+if (!Number.isFinite(warningBudget) || warningBudget < 0) {
+  throw new Error("ALTFT_WEB_LINT_WARNING_BUDGET must be a non-negative number");
+}
 
 const result = spawnSync(
   "npm",
@@ -49,6 +80,13 @@ const topWarnings = [...warningsByRule.entries()]
   .slice(0, 8);
 
 console.log(`Web ESLint: ${errors} errors, ${warnings} warnings (budget ${warningBudget}).`);
+
+if (!explicitWarningBudget) {
+  console.log(
+    `Budget basis: ${catalogSize} tools (${catalogGrowth} above baseline), `
+      + `${productCount} products (${productGrowth} above baseline).`,
+  );
+}
 
 if (topWarnings.length) {
   console.log("Top warning rules:");

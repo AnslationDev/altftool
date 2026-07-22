@@ -9,19 +9,39 @@ import {
 } from "firebase/firestore";
 import { snapshotDocs, subscribeCached } from "@/lib/firebaseCache";
 import { getCollectionRef, getDocRef } from "./config";
+import {
+    MOCK_DATA_ENABLED,
+    MOCK_BRANDS,
+    MOCK_FAQS,
+    MOCK_HIDDEN_BRAND_NAMES,
+    MOCK_RANK_OVERRIDES,
+    MOCK_BRAND_ENRICH,
+} from "../(data)/mockBrands";
 
 const normalizeString = (v = "") => String(v).trim();
 const normalizeStatus = (v = "") => normalizeString(v).toLowerCase();
 
 const normalizeBrand = (brand = {}, fallbackCategory = "", fallbackSubcategory = "") => ({
+    ...brand,
     id: brand?.id || "",
     name: normalizeString(brand?.name),
     images: Array.isArray(brand?.images) ? brand.images.filter(Boolean) : [],
+    logo: normalizeString(brand?.logo),
+    heading: normalizeString(brand?.heading),
     category: normalizeString(brand?.category) || fallbackCategory,
     categoryId: normalizeString(brand?.categoryId),
+    subCategoryId: normalizeString(brand?.subCategoryId || brand?.subcategoryId),
     subCategory:
         normalizeString(brand?.subCategory) || normalizeString(brand?.subcategory) || fallbackSubcategory,
-    ...brand,
+    rating: Number(brand?.rating) || 0,
+    // Admin panel writes `ranking`; legacy/static data uses `rank`.
+    rank: brand?.rank ?? brand?.ranking ?? null,
+    // Admin panel writes `brandLink`; legacy data uses weblink/url/link.
+    weblink: normalizeString(brand?.weblink || brand?.brandLink || brand?.url || brand?.link),
+    // Admin panel stores singular field names; the UI reads the plural ones.
+    features: brand?.features ?? brand?.feature ?? [],
+    specifications: brand?.specifications ?? brand?.specification ?? [],
+    additionalBenefits: brand?.additionalBenefits ?? brand?.additionalBenefit ?? [],
 });
 
 const normalizeSubcategory = (doc = {}) => ({
@@ -37,12 +57,94 @@ const normalizeSubcategory = (doc = {}) => ({
         : [],
     createdAt: doc?.createdAt || null,
 });
+// Mock-data merge: mock brands only fill gaps — an admin brand with the same
+// name in the same subcategory always replaces its mock twin (see mockBrands.js).
+const brandMockKey = (brand = {}) =>
+    `${normalizeString(brand?.subCategoryId || brand?.subcategoryId || brand?.categoryId)}:${normalizeString(brand?.name).toLowerCase()}`;
+
+// Fill gaps on a real brand from its enrichment entry; every field applies
+// only while the admin value is missing or thin, so admin edits always win.
+const enrichBrand = (brand) => {
+    const enrich = MOCK_BRAND_ENRICH[brand.name.toLowerCase()];
+    if (!enrich) return brand;
+
+    const result = { ...brand };
+    const heading = normalizeString(brand.heading);
+
+    if (enrich.heading && (!heading || heading.toLowerCase() === brand.name.toLowerCase())) {
+        result.heading = enrich.heading;
+    }
+
+    if (enrich.description && !normalizeString(brand.description)) {
+        result.description = enrich.description;
+    }
+
+    if (enrich.brandLink && !normalizeString(brand.weblink)) {
+        result.weblink = enrich.brandLink;
+        result.brandLink = enrich.brandLink;
+    }
+
+    const featureCount = Array.isArray(brand.features)
+        ? brand.features.length
+        : brand.features && typeof brand.features === "object"
+            ? Object.keys(brand.features).length
+            : 0;
+
+    if (Array.isArray(enrich.features) && featureCount < 3) {
+        result.features = enrich.features;
+        result.feature = enrich.features;
+    }
+
+    return result;
+};
+
+const applyMockBrands = (realBrands = []) => {
+    if (!MOCK_DATA_ENABLED) return realBrands;
+
+    const visible = realBrands
+        .filter(
+            (brand) =>
+                !MOCK_HIDDEN_BRAND_NAMES.includes(brand.name.toLowerCase())
+        )
+        .map((brand) => {
+            const override = MOCK_RANK_OVERRIDES[brand.name.toLowerCase()];
+
+            if (override && Number(brand.ranking ?? brand.rank) === override.from) {
+                return enrichBrand({ ...brand, rank: override.to, ranking: override.to });
+            }
+
+            return enrichBrand(brand);
+        });
+
+    const taken = new Set(visible.map((brand) => brandMockKey(brand)));
+    const extras = MOCK_BRANDS
+        .map((brand) => normalizeBrand(brand))
+        .filter((brand) => brand?.name && !taken.has(brandMockKey(brand)));
+
+    return [...visible, ...extras];
+};
+
+const faqMockKey = (faq = {}) =>
+    `${normalizeString(faq?.subcategoryId)}:${normalizeString(faq?.question).toLowerCase()}`;
+
+const applyMockFaqs = (realFaqs = []) => {
+    if (!MOCK_DATA_ENABLED) return realFaqs;
+
+    const taken = new Set(realFaqs.map((faq) => faqMockKey(faq)));
+    const extras = MOCK_FAQS
+        .map((faq) => normalizeFaq(faq))
+        .filter((faq) => faq?.question && !taken.has(faqMockKey(faq)));
+
+    return [...realFaqs, ...extras];
+};
+
 const normalizeFaq = (doc = {}) => ({
     id: doc.id || "",
     question: normalizeString(doc.question),
     answer: normalizeString(doc.answer),
     categoryId: normalizeString(doc.categoryId),
-    subcategoryId: normalizeString(doc.subcategoryId),
+    // Admin panel writes `subCategoryId`; keep both spellings readable.
+    subcategoryId: normalizeString(doc.subcategoryId || doc.subCategoryId),
 });
 const normalizeCategory = (doc) => {
     const category = normalizeString(doc?.category || doc?.name);
@@ -181,7 +283,7 @@ subscribeFaqs(callback, onError) {
                     normalizeFaq({ id: doc.id, ...doc.data() })
                 );
 
-                emit(data);
+                emit(applyMockFaqs(data));
             },
             (err) => {
                 console.error("faqs subscribe error:", err);
@@ -213,9 +315,11 @@ subscribeFaqs(callback, onError) {
                             item?.categoryId,
                     );
 
-                const activeBrands = brandsSnapshot
-                    .map((item) => normalizeBrand(item))
-                    .filter((item) => item?.name);
+                const activeBrands = applyMockBrands(
+                    brandsSnapshot
+                        .map((item) => normalizeBrand(item))
+                        .filter((item) => item?.name)
+                );
 
                 const categoryMap = new Map(
                     activeCategories.map((category) => [
@@ -246,12 +350,18 @@ subscribeFaqs(callback, onError) {
 
                     if (!category) return;
                     category.brands.push(brand);
+                    // Admin panel links brands via `subCategoryId`; legacy data via name.
                     const sub = category.subcategories.find(
-                        (s) => s.name.toLowerCase() === brand.subCategory.toLowerCase()
+                        (s) =>
+                            (brand.subCategoryId && s.id === brand.subCategoryId) ||
+                            (brand.subCategory &&
+                                s.name.toLowerCase() === brand.subCategory.toLowerCase())
                     );
 
                     if (sub) {
                         if (!Array.isArray(sub.brands)) sub.brands = [];
+                        // Resolve the display name so detail pages can show it.
+                        if (!brand.subCategory) brand.subCategory = sub.name;
                         sub.brands.push(brand);
                     }
                 });

@@ -208,13 +208,13 @@ test.describe("admin API safety", () => {
     }
     expect(payload.qa).toEqual(
       expect.objectContaining({
-        total: 40,
-        routeCovered: 40,
+        total: 51,
+        routeCovered: 51,
         functionalCovered: expect.any(Number),
         tools: expect.any(Array),
       }),
     );
-    expect(payload.qa.tools).toHaveLength(40);
+    expect(payload.qa.tools).toHaveLength(51);
     expect(payload.deploy).toEqual(
       expect.objectContaining({
         score: expect.any(Number),

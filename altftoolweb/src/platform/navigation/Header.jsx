@@ -1,226 +1,193 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import {
   Check,
   ChevronDown,
+  LayoutGrid,
   Menu,
+  Monitor,
   Moon,
   Search,
   Sun,
   X,
 } from "lucide-react";
-import Link from "next/link";
 import { IconButton, Input } from "@altftool/ui";
+import ManagedImage from "@/components/ui/ManagedImage";
 import { useTheme } from "@/contexts/ThemeContext";
+import AccountMenu from "./AccountMenu";
 import {
   isPublicRouteActive,
   isPublicShellHidden,
   PUBLIC_NAV_ITEMS,
+  SITE_ROUTES,
 } from "./siteRoutes";
-import ManagedImage from "@/components/ui/ManagedImage";
-import AccountMenu from "./AccountMenu";
 
 const THEME_OPTIONS = [
+  { value: "system", label: "System theme", icon: Monitor },
   { value: "light", label: "Light mode", icon: Sun },
   { value: "dark", label: "Dark mode", icon: Moon },
 ];
 
-const HOME_NAV_ITEMS = PUBLIC_NAV_ITEMS;
+function groupNavigationOptions(options = []) {
+  const groups = new Map();
 
-const Header = () => {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [themeMenuOpen, setThemeMenuOpen] = useState(false);
-  const [searchQuery, setSearchQuery] = useState("");
-  const [searchError, setSearchError] = useState("");
-  const [themeReady, setThemeReady] = useState(false);
-  const [activeDesktopMenu, setActiveDesktopMenu] = useState(null);
-  const [collapsedDesktopMenu, setCollapsedDesktopMenu] = useState(null);
-  const themeMenuRef = useRef(null);
-  const mobileMenuButtonRef = useRef(null);
-  const mobileCloseButtonRef = useRef(null);
-  const mobileMenuPanelId = "site-mobile-navigation";
-  const router = useRouter();
-  const pathname = usePathname();
-  const { themeMode, resolvedTheme, setThemeMode } = useTheme();
-  const currentThemeOption =
-    THEME_OPTIONS.find((option) => option.value === themeMode) ??
-    THEME_OPTIONS[0];
-  const displayedThemeOption = themeReady ? currentThemeOption : THEME_OPTIONS[0];
-  const CurrentThemeIcon = displayedThemeOption.icon;
+  for (const option of options) {
+    const label = option.group || "Explore";
+    if (!groups.has(label)) groups.set(label, []);
+    groups.get(label).push(option);
+  }
 
-  const isActive = (route) => isPublicRouteActive(pathname, route);
+  return [...groups.entries()].map(([label, items]) => ({ label, items }));
+}
 
-  const prefetchRoute = (href) => {
-    if (!href?.startsWith("/")) return;
-    router.prefetch(href);
-  };
+function getDesktopMenuLayout(item) {
+  const position =
+    item.menuAlign === "left"
+      ? "left-0"
+      : item.menuAlign === "right"
+        ? "right-0"
+        : "left-1/2 -translate-x-1/2";
 
-  const routePreviewProps = (href) => ({
-    onMouseEnter: () => prefetchRoute(href),
-    onFocus: () => prefetchRoute(href),
-  });
+  if (item.menuColumns === 4) {
+    return {
+      columns: "grid-cols-4",
+      position,
+      width: "w-[min(54rem,calc(100vw-2rem))]",
+    };
+  }
 
-  useEffect(() => {
-    const readyTimer = window.setTimeout(() => setThemeReady(true), 0);
-    return () => window.clearTimeout(readyTimer);
-  }, []);
+  if (item.menuColumns === 3) {
+    return {
+      columns: "grid-cols-3",
+      position,
+      width: "w-[min(52rem,calc(100vw-2rem))]",
+    };
+  }
 
-  useEffect(() => {
-    const syncSearchQuery = setTimeout(() => {
-      const existingQuery =
-        new URLSearchParams(window.location.search).get("q") || "";
-      setSearchQuery(existingQuery);
-    }, 0);
+  if (item.menuColumns === 2) {
+    return {
+      columns: "grid-cols-2",
+      position,
+      width: "w-[min(38rem,calc(100vw-2rem))]",
+    };
+  }
 
-    return () => clearTimeout(syncSearchQuery);
-  }, [pathname]);
+  return { columns: "grid-cols-1", position, width: "w-72" };
+}
 
-  useEffect(() => {
-    const closeThemeTimer = window.setTimeout(() => setThemeMenuOpen(false), 0);
-    return () => window.clearTimeout(closeThemeTimer);
-  }, [pathname]);
+function ThemeMenu({ onSelect, open, setOpen, themeMode, themeReady }) {
+  const menuRef = useRef(null);
+  const currentOption =
+    THEME_OPTIONS.find((option) => option.value === themeMode) || THEME_OPTIONS[0];
+  const CurrentIcon = currentOption.icon;
 
   useEffect(() => {
-    const closeMenuTimer = window.setTimeout(() => setMobileMenuOpen(false), 0);
-    return () => window.clearTimeout(closeMenuTimer);
-  }, [pathname]);
-
-  useEffect(() => {
-    const closeDesktopMenuTimer = window.setTimeout(() => {
-      setActiveDesktopMenu(null);
-      setCollapsedDesktopMenu(null);
-    }, 0);
-
-    return () => window.clearTimeout(closeDesktopMenuTimer);
-  }, [pathname]);
-
-  useEffect(() => {
-    if (!themeMenuOpen) return undefined;
+    if (!open) return undefined;
 
     const handlePointerDown = (event) => {
-      if (!themeMenuRef.current?.contains(event.target)) {
-        setThemeMenuOpen(false);
-      }
+      if (!menuRef.current?.contains(event.target)) setOpen(false);
     };
-
     const handleKeyDown = (event) => {
-      if (event.key === "Escape") {
-        setThemeMenuOpen(false);
-      }
+      if (event.key === "Escape") setOpen(false);
     };
 
     document.addEventListener("pointerdown", handlePointerDown);
     document.addEventListener("keydown", handleKeyDown);
-
     return () => {
       document.removeEventListener("pointerdown", handlePointerDown);
       document.removeEventListener("keydown", handleKeyDown);
     };
-  }, [themeMenuOpen]);
+  }, [open, setOpen]);
 
-  useEffect(() => {
-    if (!mobileMenuOpen) return undefined;
+  return (
+    <div className="relative" ref={menuRef}>
+      <IconButton
+        type="button"
+        aria-label={`Theme: ${themeReady ? currentOption.label : "System theme"}`}
+        aria-haspopup="menu"
+        aria-expanded={open}
+        title="Theme"
+        onClick={() => setOpen((value) => !value)}
+      >
+        <CurrentIcon className="h-5 w-5" aria-hidden="true" />
+      </IconButton>
 
-    const originalOverflow = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
+      {open ? (
+        <div
+          role="menu"
+          aria-label="Theme mode"
+          className="absolute right-0 top-12 z-[80] flex items-center gap-1 rounded-lg border border-border bg-card p-1.5 shadow-md"
+        >
+          {THEME_OPTIONS.map((option) => {
+            const OptionIcon = option.icon;
+            const isSelected = themeReady && option.value === themeMode;
 
-    const focusCloseButton = window.setTimeout(() => {
-      const closeButton =
-        mobileCloseButtonRef.current ||
-        document.querySelector('button[aria-label="Close menu"]');
-      closeButton?.focus({ preventScroll: true });
-    }, 50);
+            return (
+              <button
+                key={option.value}
+                type="button"
+                suppressHydrationWarning
+                role="menuitemradio"
+                aria-checked={isSelected}
+                aria-label={option.label}
+                title={option.label}
+                onClick={() => onSelect(option.value)}
+                className={`relative grid h-10 w-10 place-items-center rounded-md border text-muted-foreground transition hover:border-primary hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-primary/35 ${
+                  isSelected
+                    ? "border-primary bg-muted text-primary"
+                    : "border-transparent"
+                }`}
+              >
+                <OptionIcon className="h-4 w-4" aria-hidden="true" />
+                {isSelected ? (
+                  <Check
+                    className="absolute -right-1 -top-1 h-4 w-4 rounded-full bg-primary p-0.5 text-primary-foreground"
+                    aria-hidden="true"
+                  />
+                ) : null}
+              </button>
+            );
+          })}
+        </div>
+      ) : null}
+    </div>
+  );
+}
 
-    const handleKeyDown = (event) => {
-      if (event.key === "Escape") {
-        setMobileMenuOpen(false);
-        window.setTimeout(() => {
-          mobileMenuButtonRef.current?.focus({ preventScroll: true });
-        }, 0);
-      }
-    };
+export default function Header() {
+  const pathname = usePathname() || "";
+  const router = useRouter();
+  const { resolvedTheme, setThemeMode, themeMode } = useTheme();
+  const [activeDesktopMenu, setActiveDesktopMenu] = useState(null);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [searchError, setSearchError] = useState("");
+  const [searchQuery, setSearchQuery] = useState("");
+  const [themeMenuOpen, setThemeMenuOpen] = useState(false);
+  const [themeReady, setThemeReady] = useState(false);
+  const mobileMenuButtonRef = useRef(null);
+  const mobileCloseButtonRef = useRef(null);
+  const mobilePanelRef = useRef(null);
+  const mobileMenuPanelId = "site-mobile-navigation";
 
-    document.addEventListener("keydown", handleKeyDown);
+  const logoSrc =
+    themeReady && resolvedTheme === "dark"
+      ? "/assets/altf-header-logo-dark.png"
+      : "/assets/altf-header-logo-generated.png";
 
-    return () => {
-      document.body.style.overflow = originalOverflow;
-      window.clearTimeout(focusCloseButton);
-      document.removeEventListener("keydown", handleKeyDown);
-    };
-  }, [mobileMenuOpen]);
-
-  const handleChange = (value) => {
-    setSearchQuery(value);
-    if (searchError) setSearchError("");
+  const prefetchRoute = (href) => {
+    if (href?.startsWith("/")) router.prefetch(href);
   };
 
-  const handleSearch = (event) => {
-    event?.preventDefault();
-    const trimmed = searchQuery.trim();
-
-    if (!trimmed && pathname === "/search") {
-      router.push("/");
-      setSearchError("");
-      setMobileMenuOpen(false);
-      return;
-    }
-
-    if (trimmed.length < 2) {
-      setSearchError("Type at least 2 characters.");
-      return;
-    }
-
-    router.push(`/search?q=${encodeURIComponent(trimmed)}`);
-    setSearchQuery(trimmed);
-    setSearchError("");
-    setMobileMenuOpen(false);
-  };
-
-  const handleThemeSelect = (nextThemeMode) => {
-    setThemeMode(nextThemeMode);
-    setThemeMenuOpen(false);
-  };
-
-  const collapseDesktopDropdown = (menuLabel) => {
-    setActiveDesktopMenu(null);
-    setCollapsedDesktopMenu(menuLabel);
-    if (document.activeElement instanceof HTMLElement) {
-      document.activeElement.blur();
-    }
-  };
-
-  const openDesktopDropdown = (menuLabel) => {
-    setCollapsedDesktopMenu(null);
-    setActiveDesktopMenu(menuLabel);
-  };
-
-  const toggleDesktopDropdown = (menuLabel) => {
-    setCollapsedDesktopMenu(null);
-    setActiveDesktopMenu((activeMenu) =>
-      activeMenu === menuLabel ? null : menuLabel
-    );
-  };
-
-  const closeDesktopDropdown = (menuLabel) => {
-    setActiveDesktopMenu((activeMenu) =>
-      activeMenu === menuLabel ? null : activeMenu
-    );
-  };
-
-  const closeDesktopDropdowns = () => {
-    setActiveDesktopMenu(null);
-    setCollapsedDesktopMenu(null);
-  };
-
-  const openMobileMenu = () => {
-    setMobileMenuOpen(true);
-  };
+  const routePreviewProps = (href) => ({
+    onFocus: () => prefetchRoute(href),
+    onMouseEnter: () => prefetchRoute(href),
+  });
 
   const closeMobileMenu = ({ returnFocus = false } = {}) => {
     setMobileMenuOpen(false);
-
     if (returnFocus) {
       window.setTimeout(() => {
         mobileMenuButtonRef.current?.focus({ preventScroll: true });
@@ -228,630 +195,243 @@ const Header = () => {
     }
   };
 
-  const handleMobileMenuKeyDown = (event) => {
-    if (event.key !== "Enter" && event.key !== " ") return;
+  useEffect(() => {
+    const timer = window.setTimeout(() => setThemeReady(true), 0);
+    return () => window.clearTimeout(timer);
+  }, []);
+
+  useEffect(() => {
+    const timer = window.setTimeout(() => {
+      setActiveDesktopMenu(null);
+      setMobileMenuOpen(false);
+      setSearchError("");
+      setSearchQuery(new URLSearchParams(window.location.search).get("q") || "");
+      setThemeMenuOpen(false);
+    }, 0);
+    return () => window.clearTimeout(timer);
+  }, [pathname]);
+
+  useEffect(() => {
+    if (!mobileMenuOpen) return undefined;
+
+    const originalOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    const focusTimer = window.setTimeout(() => {
+      mobileCloseButtonRef.current?.focus({ preventScroll: true });
+    }, 50);
+
+    const handleKeyDown = (event) => {
+      if (event.key === "Escape") {
+        closeMobileMenu({ returnFocus: true });
+        return;
+      }
+
+      if (event.key !== "Tab") return;
+      const focusable = mobilePanelRef.current?.querySelectorAll(
+        'a[href], button:not([disabled]), input:not([disabled]), summary, [tabindex]:not([tabindex="-1"])',
+      );
+      if (!focusable?.length) return;
+
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
+    };
+
+    document.addEventListener("keydown", handleKeyDown);
+    return () => {
+      document.body.style.overflow = originalOverflow;
+      document.removeEventListener("keydown", handleKeyDown);
+      window.clearTimeout(focusTimer);
+    };
+  }, [mobileMenuOpen]);
+
+  if (isPublicShellHidden(pathname)) return null;
+
+  const handleSearch = (event) => {
     event.preventDefault();
-    openMobileMenu();
+    const query = searchQuery.trim();
+
+    if (query.length < 2) {
+      setSearchError("Type at least 2 characters.");
+      return;
+    }
+
+    router.push(`/search?q=${encodeURIComponent(query)}`);
+    closeMobileMenu();
   };
 
-  // Hide global header on immersive routes.
-  if (isPublicShellHidden(pathname)) {
-    return null;
-  }
-
-  const usesLandingChrome = true;
-  const isHomeDark = themeReady && resolvedTheme === "dark";
-  const landingLogoSrc = isHomeDark
-    ? "/assets/altf-header-logo-dark.png"
-    : "/assets/altf-header-logo-generated.png";
-
-  if (usesLandingChrome) {
-    return (
-      <>
-        <header
-          id="main-header"
-          data-hydrated={themeReady ? "true" : "false"}
-          className={`sticky top-0 z-50 border-b px-4 backdrop-blur-xl sm:px-6 lg:px-8 ${isHomeDark
-              ? "border-[rgba(148,163,184,0.12)] bg-[#020617]/92 shadow-[0_1px_0_rgba(0,0,0,0.28)]"
-              : "border-[#E2E8F0] bg-[#F8FAFC]/92 shadow-[0_1px_0_rgba(15,23,42,0.08)]"
-            }`}
-        >
-          <div className="mx-auto grid h-16 max-w-[var(--anslation-ds-container)] grid-cols-[auto_1fr_auto] items-center gap-3 sm:h-[72px] lg:gap-4 min-[1360px]:grid-cols-[minmax(8rem,1fr)_auto_minmax(8rem,1fr)]">
-            <Link
-              href="/"
-              className="inline-flex min-w-fit items-center justify-self-start transition duration-200 hover:-translate-y-0.5"
-              {...routePreviewProps("/")}
-            >
-              <ManagedImage
-                src={landingLogoSrc}
-                className={`h-8 w-auto object-contain sm:h-9 ${isHomeDark ? "brightness-110 contrast-125 drop-shadow-[0_0_14px_rgba(45,212,191,0.24)]" : ""}`}
-                alt="AltFTool"
-              />
-            </Link>
-
-            <nav
-              className={`hidden max-w-full items-center justify-center gap-1 justify-self-center rounded-full border px-2 py-1.5 min-[1360px]:flex ${isHomeDark
-                  ? "border-transparent bg-transparent shadow-none"
-                  : "border-transparent bg-transparent shadow-none"
-                }`}
-            >
-              {HOME_NAV_ITEMS.map((item) => {
-                const isActive =
-                  isPublicRouteActive(pathname, item) ||
-                  item.options?.some((option) => isPublicRouteActive(pathname, option));
-                const hasOptions = Boolean(item.options?.length);
-                const isDesktopMenuOpen =
-                  activeDesktopMenu === item.label &&
-                  collapsedDesktopMenu !== item.label;
-                const homeNavItemClass = `relative flex h-10 appearance-none items-center gap-1.5 whitespace-nowrap rounded-full border-0 px-4 py-0 text-base font-medium leading-5 transition duration-200 [font-family:var(--font-ibm-plex-sans)] ${isActive
-                    ? isHomeDark
-                      ? "text-[#14B8A6]"
-                      : "text-[#0D9488]"
-                    : isHomeDark
-                      ? "text-[#94A3B8] hover:text-[#F8FAFC]"
-                      : "text-[#475569] hover:text-[#0F172A]"
-                  }`;
-                const activeUnderlineClass = `absolute inset-x-4 bottom-1 h-0.5 origin-left rounded-full bg-[#14B8A6] transition-transform duration-200 ${isActive ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100"
-                  }`;
-
-                return (
-                  <div
-                    key={item.label}
-                    className="group relative"
-                    onMouseEnter={() => {
-                      prefetchRoute(item.href);
-                      if (hasOptions) {
-                        openDesktopDropdown(item.label);
-                        return;
-                      }
-                      closeDesktopDropdowns();
-                    }}
-                    onFocusCapture={() => {
-                      prefetchRoute(item.href);
-                      if (hasOptions) {
-                        openDesktopDropdown(item.label);
-                        return;
-                      }
-                      closeDesktopDropdowns();
-                    }}
-                    onMouseLeave={() => closeDesktopDropdown(item.label)}
-                  >
-                    {item.href ? (
-                      <Link
-                        href={item.href}
-                        aria-current={isActive ? "page" : undefined}
-                        aria-haspopup={hasOptions ? "true" : undefined}
-                        aria-expanded={hasOptions ? isDesktopMenuOpen : undefined}
-                        onClick={() => {
-                          if (hasOptions) openDesktopDropdown(item.label);
-                        }}
-                        className={homeNavItemClass}
-                      >
-                        {item.label}
-                        {hasOptions ? (
-                          <ChevronDown className={`h-3.5 w-3.5 transition ${isDesktopMenuOpen ? "rotate-180" : ""}`} />
-                        ) : null}
-                        <span className={activeUnderlineClass} />
-                      </Link>
-                    ) : (
-                      <button
-                        type="button"
-                        suppressHydrationWarning
-                        aria-current={isActive ? "page" : undefined}
-                        aria-haspopup="true"
-                        aria-expanded={isDesktopMenuOpen}
-                        onClick={() => toggleDesktopDropdown(item.label)}
-                        className={homeNavItemClass}
-                      >
-                        {item.label}
-                        <ChevronDown className={`h-3.5 w-3.5 transition ${isDesktopMenuOpen ? "rotate-180" : ""}`} />
-                        <span className={activeUnderlineClass} />
-                      </button>
-                    )}
-
-                    {hasOptions && isDesktopMenuOpen ? (
-                      <div className="absolute left-1/2 top-full -translate-x-1/2 pt-3">
-                        <div
-                          className={`w-56 rounded-2xl border p-2 shadow-[0_22px_50px_rgba(15,23,42,0.16)] ${isHomeDark
-                              ? "border-[rgba(148,163,184,0.12)] bg-[#0F172A]"
-                              : "border-[#E2E8F0] bg-white"
-                            }`}
-                        >
-                          {item.options.map((option) => (
-                            <Link
-                              key={option.label}
-                              href={option.href}
-                              {...routePreviewProps(option.href)}
-                              onClick={() => collapseDesktopDropdown(item.label)}
-                              className={`group/sub relative block rounded-xl px-3 py-2.5 text-base font-medium transition duration-200 [font-family:var(--font-ibm-plex-sans)] ${isPublicRouteActive(pathname, option)
-                                  ? isHomeDark
-                                    ? "text-[#14B8A6]"
-                                    : "text-[#0D9488]"
-                                  : isHomeDark
-                                    ? "text-[#94A3B8] hover:text-[#F8FAFC]"
-                                    : "text-[#475569] hover:text-[#0F172A]"
-                                }`}
-                            >
-                              {option.label}
-                              <span
-                                className={`absolute inset-x-3 bottom-1 h-0.5 origin-left rounded-full bg-[#14B8A6] transition-transform duration-200 ${isPublicRouteActive(pathname, option) ? "scale-x-100" : "scale-x-0 group-hover/sub:scale-x-100"
-                                  }`}
-                              />
-                            </Link>
-                          ))}
-                        </div>
-                      </div>
-                    ) : null}
-                  </div>
-                );
-              })}
-            </nav>
-
-            <div className="flex min-w-fit items-center justify-end gap-2 justify-self-end">
-              <form
-                className="relative hidden shrink-0 items-center gap-2 2xl:flex"
-                onSubmit={handleSearch}
-              >
-                <div className="shrink-0">
-                  <Input
-                    type="text"
-                    placeholder="Search tools, extensions, deals..."
-                    value={searchQuery}
-                    onChange={(event) => handleChange(event.target.value)}
-                    aria-invalid={searchError ? "true" : "false"}
-                    suppressHydrationWarning
-                    className={`h-11 !w-[16rem] shrink-0 rounded-xl text-sm font-semibold shadow-none transition focus-visible:border-[#14B8A6] focus-visible:ring-2 focus-visible:ring-[#14B8A6]/20 min-[1800px]:!w-[24rem] ${isHomeDark
-                        ? "border-[rgba(148,163,184,0.12)] bg-[#0F172A] text-[#F8FAFC] placeholder:text-[#94A3B8]"
-                        : "border-[#E2E8F0] bg-white text-[#0F172A] placeholder:text-[#475569]"
-                      }`}
-                  />
-                </div>
-
-                <IconButton type="submit" aria-label="Search">
-                  <Search className="h-4 w-4" />
-                </IconButton>
-                {searchError ? (
-                  <p className="absolute right-0 top-full mt-2 rounded-lg border border-[var(--anslation-ds-danger)] bg-white px-2 py-1 text-xs font-semibold text-[var(--anslation-ds-danger)] shadow-[0_12px_30px_rgba(7,27,58,0.08)]">
-                    {searchError}
-                  </p>
-                ) : null}
-              </form>
-
-              <div className="relative" ref={themeMenuRef}>
-                <IconButton
-                  onClick={() =>
-                    handleThemeSelect(resolvedTheme === "dark" ? "light" : "dark")
-                  }
-                  aria-label="Toggle Theme"
-                  aria-pressed={resolvedTheme === "dark"}
-                  title={`Theme: ${displayedThemeOption.label}`}
-                >
-                  <span
-                    className="grid h-4 w-4 place-items-center"
-                    suppressHydrationWarning
-                  >
-                    <CurrentThemeIcon
-                      className={`h-4 w-4 ${themeReady && resolvedTheme === "dark" ? "text-[#14B8A6]" : "text-[#14B8A6]"
-                        }`}
-                    />
-                  </span>
-                </IconButton>
-              </div>
-
-              <AccountMenu />
-
-              <div className="min-[1360px]:hidden">
-                <IconButton
-                  ref={mobileMenuButtonRef}
-                  onClick={openMobileMenu}
-                  onKeyDown={handleMobileMenuKeyDown}
-                  aria-label="Open menu"
-                  aria-expanded={mobileMenuOpen}
-                  aria-controls={mobileMenuPanelId}
-                >
-                  <Menu className="h-5 w-5" />
-                </IconButton>
-              </div>
-            </div>
-          </div>
-        </header>
-
-        <div
-          id={mobileMenuPanelId}
-          role="dialog"
-          aria-label="Mobile navigation"
-          aria-modal={mobileMenuOpen ? "true" : undefined}
-          aria-hidden={mobileMenuOpen ? undefined : "true"}
-          inert={!mobileMenuOpen}
-          className={`fixed inset-0 z-[70] min-[1360px]:hidden ${mobileMenuOpen ? "" : "pointer-events-none"
-            }`}
-        >
-          <div
-            className={`fixed inset-0 bg-[#171B33]/45 backdrop-blur-sm transition-opacity duration-300 ${mobileMenuOpen ? "opacity-100" : "opacity-0"
-              }`}
-            onClick={() => closeMobileMenu()}
-          />
-
-          <aside
-            className={`fixed inset-y-0 left-0 flex w-[min(24rem,calc(100vw-0.75rem))] transform flex-col overflow-y-auto border-r p-5 shadow-[0_24px_60px_rgba(15,23,42,0.18)] transition-transform duration-300 ease-out ${isHomeDark
-                ? "border-[rgba(148,163,184,0.12)] bg-[#0F172A] text-[#F8FAFC]"
-                : "border-[#E2E8F0] bg-white text-[#0F172A]"
-              } ${mobileMenuOpen ? "translate-x-0" : "-translate-x-full"}`}
-          >
-            <div className="flex items-center justify-between">
-              <Link
-                href="/"
-                className="inline-flex transition duration-200 hover:-translate-y-0.5"
-                onClick={() => closeMobileMenu()}
-                {...routePreviewProps("/")}
-              >
-                <ManagedImage
-                  src={landingLogoSrc}
-                  className="h-9 w-auto object-contain"
-                  alt="AltFTool"
-                />
-              </Link>
-
-              <IconButton
-                ref={mobileCloseButtonRef}
-                onClick={() => closeMobileMenu({ returnFocus: true })}
-                variant="ghost"
-                aria-label="Close menu"
-              >
-                <X className="h-5 w-5" />
-              </IconButton>
-            </div>
-
-            <form className="mt-8 grid gap-2" onSubmit={handleSearch}>
-              <div className="flex items-center gap-2">
-                <Input
-                  type="text"
-                  placeholder="Search tools..."
-                  value={searchQuery}
-                  onChange={(event) => handleChange(event.target.value)}
-                  suppressHydrationWarning
-                  className={`min-w-0 rounded-xl ${isHomeDark
-                      ? "border-[rgba(148,163,184,0.12)] bg-[#020617] text-[#F8FAFC] placeholder:text-[#94A3B8]"
-                      : "border-[#E2E8F0]"
-                    }`}
-                />
-                <IconButton type="submit" aria-label="Search">
-                  <Search className="h-4 w-4" />
-                </IconButton>
-              </div>
-              {searchError ? (
-                <p className="text-xs font-medium text-[var(--anslation-ds-danger)]">
-                  {searchError}
-                </p>
-              ) : null}
-            </form>
-
-            <nav className="mt-8 grid gap-2 pb-6">
-              {HOME_NAV_ITEMS.map((item) => {
-                const Icon = item.icon;
-                const isCurrent = item.options
-                  ? item.options.some((option) => isActive(option))
-                  : isActive(item);
-
-                return item.options ? (
-                  <details key={item.label} className="group">
-                    <summary
-                      className={`flex cursor-pointer list-none items-center justify-between rounded-xl px-3 py-3 text-sm font-medium transition duration-200 [font-family:var(--font-ibm-plex-sans)] ${isCurrent
-                          ? isHomeDark
-                            ? "text-[#14B8A6]"
-                            : "text-[#0D9488]"
-                          : isHomeDark
-                            ? "text-[#94A3B8] hover:text-[#F8FAFC]"
-                            : "text-[#475569] hover:text-[#0F172A]"
-                        }`}
-                    >
-                      <span className="flex items-center gap-2">
-                        <Icon className="h-4 w-4" />
-                        {item.label}
-                      </span>
-                      <ChevronDown className="h-4 w-4 transition group-open:rotate-180" />
-                    </summary>
-                    <div className="mt-1 grid gap-1 pl-3">
-                      {item.options?.map((option) => {
-                        const OptionIcon = option.icon;
-                        return (
-                          <Link
-                            key={option.href}
-                            href={option.href}
-                            {...routePreviewProps(option.href)}
-                            onClick={() => closeMobileMenu()}
-                            className={`flex items-center gap-2 rounded-xl px-3 py-2.5 text-sm font-medium transition duration-200 [font-family:var(--font-ibm-plex-sans)] ${isHomeDark
-                                ? "text-[#94A3B8] hover:text-[#F8FAFC]"
-                                : "text-[#475569] hover:text-[#0F172A]"
-                              }`}
-                          >
-                            <OptionIcon className="h-4 w-4" />
-                            {option.label}
-                          </Link>
-                        );
-                      })}
-                    </div>
-                  </details>
-                ) : (
-                  <Link
-                    key={item.label}
-                    href={item.href}
-                    {...routePreviewProps(item.href)}
-                    onClick={() => closeMobileMenu()}
-                    className={`flex items-center gap-2 rounded-xl px-3 py-3 text-sm font-medium transition duration-200 [font-family:var(--font-ibm-plex-sans)] ${isCurrent
-                        ? isHomeDark
-                          ? "text-[#14B8A6]"
-                          : "text-[#0D9488]"
-                        : isHomeDark
-                          ? "text-[#94A3B8] hover:text-[#F8FAFC]"
-                          : "text-[#475569] hover:text-[#0F172A]"
-                      }`}
-                  >
-                    <Icon className="h-4 w-4" />
-                    {item.label}
-                  </Link>
-                );
-              })}
-              <div
-                className={`mt-5 rounded-2xl border p-2 ${isHomeDark
-                    ? "border-[rgba(148,163,184,0.12)] bg-[#020617]"
-                    : "border-[#E2E8F0] bg-[#F8FAFC]"
-                  }`}
-              >
-                <p
-                  className={`px-2 pb-2 text-xs font-medium uppercase tracking-normal ${isHomeDark ? "text-[#94A3B8]" : "text-[#475569]"
-                    }`}
-                >
-                  Theme
-                </p>
-                <div className="grid grid-cols-2 gap-1">
-                  {THEME_OPTIONS.map((option) => {
-                    const OptionIcon = option.icon;
-                    const isSelected = themeReady && option.value === themeMode;
-
-                    return (
-                      <button
-                        key={option.value}
-                        type="button"
-                        aria-label={option.label}
-                        onClick={() => handleThemeSelect(option.value)}
-                        className={`grid h-11 place-items-center rounded-xl border transition ${isSelected
-                            ? isHomeDark
-                              ? "border-[#14B8A6] bg-[#1E293B] text-[#38BDF8]"
-                              : "border-[#14B8A6] bg-[#F0FDFA] text-[#14B8A6]"
-                            : isHomeDark
-                              ? "border-transparent text-[#94A3B8] hover:bg-[#1E293B]"
-                              : "border-transparent text-[#475569] hover:bg-white"
-                          }`}
-                      >
-                        <OptionIcon className="h-4 w-4" />
-                      </button>
-                    );
-                  })}
-                </div>
-              </div>
-            </nav>
-          </aside>
-        </div>
-      </>
-    );
-  }
+  const handleThemeSelect = (value) => {
+    setThemeMode(value);
+    setThemeMenuOpen(false);
+  };
 
   return (
     <>
       <header
         id="main-header"
         data-hydrated={themeReady ? "true" : "false"}
-        className="sticky top-0 z-50 border-b border-(--border) bg-[color-mix(in_srgb,var(--card)_90%,transparent)] px-4 py-2 shadow-[0_1px_0_rgba(15,23,42,0.03)] backdrop-blur-xl sm:px-6 lg:px-8"
+        className="sticky top-0 z-50 border-b border-border bg-background/90 px-4 shadow-sm backdrop-blur-xl sm:px-6 lg:px-8"
       >
-        <div className="mx-auto grid h-14 max-w-[var(--anslation-ds-container)] grid-cols-[auto_1fr_auto] items-center gap-3 lg:gap-4 min-[1360px]:grid-cols-[minmax(8rem,1fr)_auto_minmax(8rem,1fr)]">
+        <div className="mx-auto grid h-16 max-w-[var(--anslation-ds-container)] grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-3">
           <Link
             href="/"
-            className="flex min-w-fit items-center justify-self-start"
+            prefetch={false}
+            aria-label="AltFTool home"
+            className="inline-flex min-w-fit items-center rounded-md focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-primary/35"
             {...routePreviewProps("/")}
           >
             <ManagedImage
-              src="/assets/logo3.png"
-              className="h-8 w-auto object-contain sm:h-9"
+              src={logoSrc}
+              className="h-8 w-auto object-contain"
               alt="AltFTool"
             />
           </Link>
 
-          <nav className="hidden max-w-full items-center gap-1 justify-self-center min-[1360px]:flex">
+          <nav
+            aria-label="Primary navigation"
+            className="hidden min-w-0 items-center justify-center gap-0.5 justify-self-center min-[1360px]:flex"
+          >
             {PUBLIC_NAV_ITEMS.map((item) => {
-              const Icon = item.icon;
-              const isCurrent = item.options
-                ? item.options.some((option) => isActive(option))
-                : isActive(item);
               const hasOptions = Boolean(item.options?.length);
-              const isDesktopMenuOpen =
-                activeDesktopMenu === item.label &&
-                collapsedDesktopMenu !== item.label;
+              const itemIsActive =
+                isPublicRouteActive(pathname, item) ||
+                item.options?.some((option) => isPublicRouteActive(pathname, option));
+              const menuIsOpen = activeDesktopMenu === item.label;
+              const groups = groupNavigationOptions(item.options);
+              const layout = getDesktopMenuLayout(item);
 
               return (
                 <div
+                  className="relative"
                   key={item.label}
-                  className="group relative"
-                  onMouseEnter={() => {
-                    prefetchRoute(item.href);
-                    if (hasOptions) {
-                      openDesktopDropdown(item.label);
-                      return;
+                  onBlurCapture={(event) => {
+                    if (!event.currentTarget.contains(event.relatedTarget)) {
+                      setActiveDesktopMenu(null);
                     }
-                    closeDesktopDropdowns();
                   }}
                   onFocusCapture={() => {
                     prefetchRoute(item.href);
-                    if (hasOptions) {
-                      openDesktopDropdown(item.label);
-                      return;
-                    }
-                    closeDesktopDropdowns();
+                    if (hasOptions) setActiveDesktopMenu(item.label);
                   }}
-                  onMouseLeave={() => closeDesktopDropdown(item.label)}
+                  onMouseEnter={() => {
+                    prefetchRoute(item.href);
+                    if (hasOptions) setActiveDesktopMenu(item.label);
+                  }}
+                  onMouseLeave={() => setActiveDesktopMenu(null)}
                 >
-                  {hasOptions ? (
-                    <>
-                      <button
-                        type="button"
-                        aria-haspopup="true"
-                        aria-expanded={isDesktopMenuOpen}
-                        onClick={() => toggleDesktopDropdown(item.label)}
-                        className={`relative flex items-center gap-2 rounded-[var(--anslation-ds-radius)] px-2.5 py-2 font-[inherit] text-sm font-medium transition ${isCurrent
-                            ? "text-(--primary)"
-                            : "text-(--muted-foreground) hover:text-(--foreground)"
-                          }`}
-                      >
-                        <Icon className="h-4 w-4" />
-                        {item.label}
-                        <ChevronDown className={`h-4 w-4 transition ${isDesktopMenuOpen ? "rotate-180" : ""}`} />
-                      </button>
+                  <Link
+                    href={item.href}
+                    prefetch={false}
+                    aria-current={itemIsActive ? "page" : undefined}
+                    aria-expanded={hasOptions ? menuIsOpen : undefined}
+                    aria-haspopup={hasOptions ? "true" : undefined}
+                    className={`relative flex h-11 items-center gap-1 rounded-md px-3 text-sm font-semibold transition focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-primary/35 ${
+                      itemIsActive
+                        ? "bg-muted text-primary"
+                        : "text-muted-foreground hover:bg-muted hover:text-foreground"
+                    }`}
+                  >
+                    {item.label}
+                    {hasOptions ? (
+                      <ChevronDown
+                        aria-hidden="true"
+                        className={`h-3.5 w-3.5 transition ${menuIsOpen ? "rotate-180" : ""}`}
+                      />
+                    ) : null}
+                  </Link>
 
-                      {isDesktopMenuOpen ? (
-                        <div className="absolute left-0 top-full pt-2">
-                        <div className="w-64 rounded-[var(--anslation-ds-radius)] border border-(--border) bg-(--card) p-1.5 shadow-[var(--anslation-ds-shadow-md)]">
-                          {item.options?.map((option) => {
-                            const OptionIcon = option.icon;
-                            const optionIsActive = isActive(option);
-                            return (
-                              <Link
-                                key={option.label}
-                                href={option.href}
-                                {...routePreviewProps(option.href)}
-                                onClick={() => collapseDesktopDropdown(item.label)}
-                                className={`group/sub relative flex items-center gap-3 rounded-[6px] px-2.5 py-2 text-sm transition ${optionIsActive
-                                    ? "text-(--primary)"
-                                    : "text-(--muted-foreground) hover:text-(--foreground)"
-                                  }`}
-                              >
-                                <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-[6px] bg-(--muted) text-(--primary)">
-                                  <OptionIcon className="h-4 w-4" />
-                                </span>
-                                <span className="font-medium">
-                                  {option.label}
-                                </span>
-                                <span
-                                  className={`absolute inset-x-2.5 bottom-0 h-0.5 origin-left rounded-full bg-(--primary) transition-transform duration-200 ${optionIsActive ? "scale-x-100" : "scale-x-0 group-hover/sub:scale-x-100"
-                                    }`}
-                                />
-                              </Link>
-                            );
-                          })}
+                  {hasOptions && menuIsOpen ? (
+                    <div className={`absolute top-full pt-2 ${layout.position}`}>
+                      <div
+                        className={`${layout.width} max-h-[70vh] overflow-y-auto rounded-lg border border-border bg-card p-3 shadow-lg`}
+                      >
+                        <div className={`grid gap-3 ${layout.columns}`}>
+                          {groups.map((group) => (
+                            <section
+                              aria-label={group.label}
+                              className="min-w-0"
+                              key={group.label}
+                            >
+                              <p className="px-2 pb-1.5 text-xs font-semibold uppercase text-muted-foreground">
+                                {group.label}
+                              </p>
+                              <div className="grid gap-1">
+                                {group.items.map((option) => {
+                                  const OptionIcon = option.icon || LayoutGrid;
+                                  const optionIsActive = isPublicRouteActive(pathname, option);
+
+                                  return (
+                                    <Link
+                                      key={option.href}
+                                      href={option.href}
+                                      prefetch={false}
+                                      {...routePreviewProps(option.href)}
+                                      onClick={() => setActiveDesktopMenu(null)}
+                                      className={`group flex min-h-11 items-center gap-2.5 rounded-md px-2 py-2 text-sm font-medium transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary ${
+                                        optionIsActive
+                                          ? "bg-muted text-primary"
+                                          : "text-muted-foreground hover:bg-muted hover:text-foreground"
+                                      }`}
+                                    >
+                                      <span className="grid h-8 w-8 shrink-0 place-items-center rounded-md bg-muted text-primary transition group-hover:bg-background">
+                                        <OptionIcon className="h-4 w-4" aria-hidden="true" />
+                                      </span>
+                                      <span className="min-w-0 leading-5">{option.label}</span>
+                                    </Link>
+                                  );
+                                })}
+                              </div>
+                            </section>
+                          ))}
                         </div>
-                        </div>
-                      ) : null}
-                    </>
-                  ) : (
-                    <Link
-                      href={item.href}
-                      {...routePreviewProps(item.href)}
-                      className={`relative flex items-center gap-2 rounded-[var(--anslation-ds-radius)] px-2.5 py-2 font-[inherit] text-sm font-medium transition ${isCurrent
-                          ? "text-(--primary)"
-                          : "text-(--muted-foreground) hover:text-(--foreground)"
-                        }`}
-                    >
-                      <Icon className="h-4 w-4" />
-                      {item.label}
-                    </Link>
-                  )}
+                      </div>
+                    </div>
+                  ) : null}
                 </div>
               );
             })}
           </nav>
 
           <div className="flex min-w-fit items-center justify-end gap-2 justify-self-end">
-            <form
-              className="relative hidden items-center gap-2 md:flex min-[1360px]:hidden 2xl:flex"
-              onSubmit={handleSearch}
+            <Link
+              href="/search"
+              prefetch={false}
+              aria-label="Search AltFTool"
+              title="Search"
+              className="inline-flex h-10 w-10 items-center justify-center rounded-md border border-border bg-card text-foreground transition hover:bg-muted focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-primary/35"
+              {...routePreviewProps("/search")}
             >
-              <Input
-                type="text"
-                placeholder="Search tools, extensions..."
-                value={searchQuery}
-                onChange={(event) => handleChange(event.target.value)}
-                aria-invalid={searchError ? "true" : "false"}
-                className="w-56 bg-[var(--background)]"
-              />
+              <Search className="h-5 w-5" aria-hidden="true" />
+            </Link>
 
-              <IconButton type="submit" aria-label="Search">
-                <Search className="h-4 w-4" />
-              </IconButton>
-              {searchError ? (
-                <p className="absolute right-0 top-full mt-2 rounded-[6px] border border-[var(--anslation-ds-danger)] bg-[var(--card)] px-2 py-1 text-xs font-semibold text-[var(--anslation-ds-danger)] shadow-[var(--anslation-ds-shadow-sm)]">
-                  {searchError}
-                </p>
-              ) : null}
-            </form>
-
-            <div className="relative" ref={themeMenuRef}>
-              <IconButton
-                onClick={() => setThemeMenuOpen((isOpen) => !isOpen)}
-                aria-label="Toggle Theme"
-                aria-haspopup="menu"
-                aria-expanded={themeMenuOpen}
-                title={`Theme: ${displayedThemeOption.label}`}
-              >
-                <span
-                  className="grid h-4 w-4 place-items-center"
-                  suppressHydrationWarning
-                >
-                  <CurrentThemeIcon
-                    className={`h-4 w-4 ${themeReady && resolvedTheme === "dark" ? "text-(--primary)" : ""
-                      }`}
-                  />
-                </span>
-              </IconButton>
-
-              {themeMenuOpen ? (
-                <div
-                  role="menu"
-                  aria-label="Theme mode"
-                  className="absolute right-0 top-full z-50 mt-2 rounded-[var(--anslation-ds-radius)] border border-(--border) bg-(--card) p-1.5 shadow-[var(--anslation-ds-shadow-md)]"
-                >
-                  <div className="flex min-w-max items-center gap-1">
-                    {THEME_OPTIONS.map((option) => {
-                      const OptionIcon = option.icon;
-                      const isSelected = themeReady && option.value === themeMode;
-
-                      return (
-                        <button
-                          key={option.value}
-                          type="button"
-                          role="menuitemradio"
-                          aria-checked={isSelected}
-                          aria-label={option.label}
-                          title={option.label}
-                          onClick={() => handleThemeSelect(option.value)}
-                          className={`relative grid h-9 w-9 place-items-center rounded-[6px] border text-(--muted-foreground) transition hover:border-(--primary) hover:bg-(--muted) hover:text-(--foreground) ${isSelected
-                              ? "border-(--primary) bg-(--muted) text-(--primary)"
-                              : "border-transparent"
-                            }`}
-                        >
-                          <OptionIcon className="h-4 w-4" />
-                          {isSelected ? (
-                            <Check className="pointer-events-none absolute -right-1 -top-1 h-3.5 w-3.5 rounded-full bg-(--primary) p-0.5 text-(--primary-foreground)" />
-                          ) : null}
-                        </button>
-                      );
-                    })}
-                  </div>
-                </div>
-              ) : null}
-            </div>
+            <ThemeMenu
+              onSelect={handleThemeSelect}
+              open={themeMenuOpen}
+              setOpen={setThemeMenuOpen}
+              themeMode={themeMode}
+              themeReady={themeReady}
+            />
 
             <AccountMenu />
 
-            <IconButton
-              ref={mobileMenuButtonRef}
-              onClick={openMobileMenu}
-              onKeyDown={handleMobileMenuKeyDown}
-              className="min-[1360px]:hidden"
-              aria-label="Open menu"
-              aria-expanded={mobileMenuOpen}
-              aria-controls={mobileMenuPanelId}
-            >
-              <Menu className="h-5 w-5" />
-            </IconButton>
+            <span className="min-[1360px]:hidden">
+              <IconButton
+                ref={mobileMenuButtonRef}
+                type="button"
+                onClick={() => setMobileMenuOpen(true)}
+                aria-label="Open menu"
+                aria-expanded={mobileMenuOpen}
+                aria-controls={mobileMenuPanelId}
+              >
+                <Menu className="h-5 w-5" aria-hidden="true" />
+              </IconButton>
+            </span>
           </div>
         </div>
       </header>
@@ -863,130 +443,193 @@ const Header = () => {
         aria-modal={mobileMenuOpen ? "true" : undefined}
         aria-hidden={mobileMenuOpen ? undefined : "true"}
         inert={!mobileMenuOpen}
-        className={`fixed inset-0 z-[70] min-[1360px]:hidden ${mobileMenuOpen ? "" : "pointer-events-none"
-          }`}
+        className={`fixed inset-0 z-[90] min-[1360px]:hidden ${
+          mobileMenuOpen ? "" : "pointer-events-none"
+        }`}
       >
-        <div
-          className={`fixed inset-0 bg-black/45 backdrop-blur-sm transition-opacity duration-300 ${mobileMenuOpen ? "opacity-100" : "opacity-0"
-            }`}
+        <button
+          type="button"
+          aria-label="Close navigation"
+          tabIndex={-1}
           onClick={() => closeMobileMenu()}
+          className={`fixed inset-0 bg-foreground/35 backdrop-blur-sm transition-opacity ${
+            mobileMenuOpen ? "opacity-100" : "opacity-0"
+          }`}
         />
 
         <aside
-          className={`fixed inset-y-0 left-0 flex w-[min(24rem,calc(100vw-0.75rem))] transform flex-col overflow-y-auto border-r border-(--border) bg-(--card) p-5 text-(--foreground) shadow-[var(--anslation-ds-shadow-lg)] transition-transform duration-300 ease-out ${mobileMenuOpen ? "translate-x-0" : "-translate-x-full"
-            }`}
+          ref={mobilePanelRef}
+          className={`fixed inset-y-0 left-0 flex w-[min(24rem,calc(100vw-0.75rem))] flex-col overflow-y-auto border-r border-border bg-card p-5 text-foreground shadow-lg transition-transform duration-200 motion-reduce:transition-none ${
+            mobileMenuOpen ? "translate-x-0" : "-translate-x-full"
+          }`}
         >
-          <div className="flex items-center justify-between">
+          <div className="flex items-center justify-between gap-3">
             <Link
               href="/"
+              prefetch={false}
+              aria-label="AltFTool home"
               onClick={() => closeMobileMenu()}
-              {...routePreviewProps("/")}
+              className="rounded-md focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-primary/35"
             >
               <ManagedImage
-                src="/assets/logo3.png"
-                className="h-9 w-auto object-contain"
+                src={logoSrc}
+                className="h-8 w-auto object-contain"
                 alt="AltFTool"
               />
             </Link>
-
             <IconButton
               ref={mobileCloseButtonRef}
+              type="button"
               onClick={() => closeMobileMenu({ returnFocus: true })}
-              variant="ghost"
               aria-label="Close menu"
             >
-              <X className="h-5 w-5" />
+              <X className="h-5 w-5" aria-hidden="true" />
             </IconButton>
           </div>
 
-          <nav className="mt-8 flex flex-col gap-4 pb-6">
-            <form className="grid gap-2" onSubmit={handleSearch}>
-              <div className="flex items-center gap-2">
-                <Input
-                  type="text"
-                  placeholder="Search tools..."
-                  value={searchQuery}
-                  onChange={(event) => handleChange(event.target.value)}
-                  className="min-w-0"
-                />
-                <IconButton type="submit" aria-label="Search">
-                  <Search className="h-4 w-4" />
-                </IconButton>
-              </div>
-              {searchError ? (
-                <p className="text-xs font-medium text-[var(--anslation-ds-danger)]">
-                  {searchError}
-                </p>
-              ) : null}
-            </form>
+          <form className="mt-6 grid gap-2" onSubmit={handleSearch}>
+            <div className="flex items-center gap-2">
+              <Input
+                type="search"
+                aria-label="Search AltFTool"
+                placeholder="Search tools, apps, and guides"
+                value={searchQuery}
+                onChange={(event) => {
+                  setSearchQuery(event.target.value);
+                  if (searchError) setSearchError("");
+                }}
+                className="min-w-0"
+              />
+              <IconButton type="submit" aria-label="Search">
+                <Search className="h-4 w-4" aria-hidden="true" />
+              </IconButton>
+            </div>
+            {searchError ? (
+              <p className="text-xs font-medium text-destructive">{searchError}</p>
+            ) : null}
+          </form>
 
-            <div className="flex flex-col gap-1">
-              {PUBLIC_NAV_ITEMS.map((item) => {
-                const Icon = item.icon;
-                const isCurrent = item.options
-                  ? item.options.some((option) => isActive(option))
-                  : isActive(item);
+          <nav aria-label="Mobile navigation" className="mt-6 grid gap-1 pb-6">
+            {PUBLIC_NAV_ITEMS.map((item) => {
+              const Icon = item.icon;
+              const groups = groupNavigationOptions(item.options);
+              const itemIsActive =
+                isPublicRouteActive(pathname, item) ||
+                item.options?.some((option) => isPublicRouteActive(pathname, option));
+
+              return (
+                <details className="group" key={item.label} open={itemIsActive || undefined}>
+                  <summary
+                    className={`flex min-h-11 cursor-pointer list-none items-center justify-between rounded-md px-3 py-2 text-sm font-semibold transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary ${
+                      itemIsActive
+                        ? "bg-muted text-primary"
+                        : "text-muted-foreground hover:bg-muted hover:text-foreground"
+                    }`}
+                  >
+                    <span className="flex items-center gap-2.5">
+                      <Icon className="h-4 w-4" aria-hidden="true" />
+                      {item.label}
+                    </span>
+                    <ChevronDown
+                      className="h-4 w-4 transition group-open:rotate-180"
+                      aria-hidden="true"
+                    />
+                  </summary>
+
+                  <div className="mt-1 grid gap-3 border-l border-border pl-3">
+                    {groups.map((group) => (
+                      <section aria-label={group.label} className="grid gap-1" key={group.label}>
+                        <p className="px-3 pt-1 text-xs font-semibold uppercase text-muted-foreground">
+                          {group.label}
+                        </p>
+                        {group.items.map((option) => {
+                          const OptionIcon = option.icon || LayoutGrid;
+                          const optionIsActive = isPublicRouteActive(pathname, option);
+
+                          return (
+                            <Link
+                              key={option.href}
+                              href={option.href}
+                              prefetch={false}
+                              {...routePreviewProps(option.href)}
+                              onClick={() => closeMobileMenu()}
+                              className={`flex min-h-11 items-center gap-2.5 rounded-md px-3 py-2 text-sm font-medium transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary ${
+                                optionIsActive
+                                  ? "bg-muted text-primary"
+                                  : "text-muted-foreground hover:bg-muted hover:text-foreground"
+                              }`}
+                            >
+                              <OptionIcon className="h-4 w-4 shrink-0" aria-hidden="true" />
+                              <span>{option.label}</span>
+                            </Link>
+                          );
+                        })}
+                      </section>
+                    ))}
+                  </div>
+                </details>
+              );
+            })}
+          </nav>
+
+          <div className="mt-auto border-t border-border pt-4">
+            <p className="text-xs font-semibold uppercase text-muted-foreground">Theme</p>
+            <div
+              role="radiogroup"
+              aria-label="Theme mode"
+              className="mt-2 grid grid-cols-3 gap-1 rounded-lg bg-muted p-1"
+            >
+              {THEME_OPTIONS.map((option) => {
+                const OptionIcon = option.icon;
+                const isSelected = themeReady && option.value === themeMode;
 
                 return (
-                  <div key={item.label}>
-                    {item.options ? (
-                      <details className="group">
-                        <summary
-                          className={`flex cursor-pointer list-none items-center justify-between rounded-[var(--anslation-ds-radius)] px-2.5 py-2.5 text-sm font-medium transition ${isCurrent
-                              ? "text-(--primary)"
-                              : "text-(--muted-foreground) hover:text-(--foreground)"
-                            }`}
-                        >
-                          <span className="flex items-center gap-2">
-                            <Icon className="h-4 w-4" />
-                            {item.label}
-                          </span>
-                          <ChevronDown className="h-4 w-4 transition group-open:rotate-180" />
-                        </summary>
-                        <div className="mt-1 flex flex-col gap-1 pl-3">
-                          {item.options?.map((option) => {
-                            const OptionIcon = option.icon;
-                            return (
-                              <Link
-                                key={option.label}
-                                href={option.href}
-                                {...routePreviewProps(option.href)}
-                                onClick={() => closeMobileMenu()}
-                                className={`flex items-center gap-2 rounded-[var(--anslation-ds-radius)] px-2.5 py-2 text-sm font-medium transition ${isActive(option)
-                                    ? "text-(--primary)"
-                                    : "text-(--muted-foreground) hover:text-(--foreground)"
-                                  }`}
-                              >
-                                <OptionIcon className="h-4 w-4" />
-                                {option.label}
-                              </Link>
-                            );
-                          })}
-                        </div>
-                      </details>
-                    ) : (
-                      <Link
-                        href={item.href}
-                        {...routePreviewProps(item.href)}
-                        onClick={() => closeMobileMenu()}
-                        className={`flex items-center gap-2 rounded-[var(--anslation-ds-radius)] px-2.5 py-2.5 text-sm font-medium transition ${isCurrent
-                            ? "text-(--primary)"
-                            : "text-(--muted-foreground) hover:text-(--foreground)"
-                          }`}
-                      >
-                        <Icon className="h-4 w-4" />
-                        {item.label}
-                      </Link>
-                    )}
-                  </div>
+                  <button
+                    key={option.value}
+                    type="button"
+                    suppressHydrationWarning
+                    role="radio"
+                    aria-checked={isSelected}
+                    aria-label={option.label}
+                    title={option.label}
+                    onClick={() => handleThemeSelect(option.value)}
+                    className={`relative grid min-h-11 place-items-center rounded-md border transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary ${
+                      isSelected
+                        ? "border-primary bg-card text-primary"
+                        : "border-transparent text-muted-foreground hover:bg-card hover:text-foreground"
+                    }`}
+                  >
+                    <OptionIcon className="h-4 w-4" aria-hidden="true" />
+                    {isSelected ? (
+                      <Check
+                        className="absolute right-2 top-2 h-3.5 w-3.5"
+                        aria-hidden="true"
+                      />
+                    ) : null}
+                  </button>
                 );
               })}
             </div>
-          </nav>
+
+            <p className="mt-4 text-xs font-semibold uppercase text-muted-foreground">
+              Quick access
+            </p>
+            <div className="mt-2 grid grid-cols-2 gap-2">
+              {[SITE_ROUTES.siteMap, SITE_ROUTES.support].map((route) => (
+                <Link
+                  key={route.href}
+                  href={route.href}
+                  prefetch={false}
+                  onClick={() => closeMobileMenu()}
+                  className="inline-flex min-h-11 items-center justify-center rounded-md border border-border px-3 text-sm font-semibold text-foreground transition hover:border-primary hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                >
+                  {route.label}
+                </Link>
+              ))}
+            </div>
+          </div>
         </aside>
       </div>
     </>
   );
-};
-
-export default Header;
+}

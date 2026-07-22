@@ -101,17 +101,10 @@ function ConsumerRating() {
             ))}
           </div>
           <div className="flex lg:hidden justify-center mt-4 gap-2">
-            {Array.from({
-              length: Math.min(
-                typeof window !== "undefined" && window.innerWidth < 640
-                  ? cards.length
-                  : cards.length - 1,
-                5
-              )
-            }, (_, i) => (
+            {cards.map((_, i) => (
               <span
                 key={i}
-                className={`w-2.5 h-2.5 rounded-full transition-all duration-300
+                className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${i === cards.length - 1 ? "sm:hidden" : ""}
       ${mobileIndex === i
                     ? "bg-[var(--primary)] scale-110"
                     : "brandrating-dot-muted"

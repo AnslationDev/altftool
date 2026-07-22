@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
+import DOMPurify from "dompurify";
 import {
   ChevronLeft, ChevronRight, MapPin, Shield, Calendar, Truck, Layers, Ruler, Leaf, Wind, ShieldCheck, Snowflake, Shirt,
   MoveVertical, Scale, BadgeCheck, Tag, PackageCheck
@@ -69,7 +70,7 @@ export default function WhyYoullLoveIt({ brand, category }) {
     setCurrent((c) => (c + 1) % total);
   }
 
-  const currentImage = images[current] || images[0] || "/placeholder.jpg";
+  const currentImage = images[current] || images[0] || brand?.logo || "/image-fallback.svg";
 
   return (
     <section className=" w-full section animate-slide-up">
@@ -92,7 +93,7 @@ export default function WhyYoullLoveIt({ brand, category }) {
                   {item?.icon ? (
                     <span
                       className="text-white w-5 h-5 flex items-center justify-center"
-                      dangerouslySetInnerHTML={{ __html: item.icon }}
+                      dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(item.icon) }}
                     />
                   ) : (
                     <Shield className="w-5 h-5 text-white" />

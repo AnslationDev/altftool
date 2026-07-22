@@ -19,7 +19,9 @@
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import admin from "firebase-admin";
+import { cert, initializeApp } from "firebase-admin/app";
+import { getAuth } from "firebase-admin/auth";
+import { getFirestore } from "firebase-admin/firestore";
 
 const appDir = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 
@@ -57,9 +59,9 @@ if (!projectId || !clientEmail || !privateKey) {
   process.exit(1);
 }
 
-admin.initializeApp({ credential: admin.credential.cert({ projectId, clientEmail, privateKey }) });
-const auth = admin.auth();
-const db = admin.firestore();
+const app = initializeApp({ credential: cert({ projectId, clientEmail, privateKey }) });
+const auth = getAuth(app);
+const db = getFirestore(app);
 
 async function main() {
   console.log(`Seeding superadmin for: ${email}\n`);

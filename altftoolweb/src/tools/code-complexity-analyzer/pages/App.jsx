@@ -75,7 +75,7 @@ export default function App() {
     const lineCount = useMemo(() => code.split('\n').length, [code]);
 
     return (
-        <div className="min-h-screen bg-(--background) text-(--foreground) pb-20 font-sans transition-colors duration-300">
+        <div className="code-complexity-tool min-h-screen bg-(--background) text-(--foreground) pb-20 font-sans transition-colors duration-300">
             <main className="max-w-7xl mx-auto px-4 sm:px-6 py-10">
 
                 {/* Hero Header */}

@@ -1,0 +1,52 @@
+@import './tokens.css';
+
+.fp-stats {
+  background: var(--fp-white);
+  padding: 5rem var(--fp-px);
+}
+
+.fp-stats__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem 0;
+  max-width: var(--fp-max-w);
+  margin: 0 auto;
+}
+
+.fp-stats__item {
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  text-align: center;
+  padding: 1.5rem 0;
+}
+
+.fp-stats__value {
+  font-family: var(--fp-font-jakarta);
+  font-weight: 700;
+  color: var(--fp-black);
+  font-size: clamp(36px, 4vw, 56px);
+  line-height: 1;
+  letter-spacing: -0.02em;
+  margin-bottom: 8px;
+  font-variant-numeric: tabular-nums;
+}
+
+.fp-stats__label {
+  font-family: var(--fp-font-inter);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--fp-gray-500);
+}
+
+@media (min-width: 768px) {
+  .fp-stats { padding: 7rem var(--fp-px-md); }
+  .fp-stats__grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+  }
+  .fp-stats__item {
+    padding: 0 1.5rem;
+    border-right: 1px solid var(--fp-gray-100);
+  }
+  .fp-stats__item:last-child { border-right: none; }
+}

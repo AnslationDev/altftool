@@ -83,6 +83,8 @@ export default function ToolHome() {
   const [stats, setStats] = useState(() => loadStats());
   const [leaderboard, setLeaderboard] = useState(() => loadLeaderboard());
   const [showSettings, setShowSettings] = useState(false);
+  const [totalAttempts, setTotalAttempts] = useState(0);
+  const [correctAttempts, setCorrectAttempts] = useState(0);
 
   const timerRef = useRef(null);
   const inputTimerRef = useRef(null);
@@ -134,6 +136,8 @@ export default function ToolHome() {
     setTimeLeft(0);
     totalAttemptsRef.current = 0;
     correctAttemptsRef.current = 0;
+    setTotalAttempts(0);
+    setCorrectAttempts(0);
     busyRef.current = false;
     pausedRef.current = false;
     gameActiveRef.current = true;
@@ -199,12 +203,15 @@ export default function ToolHome() {
     playCorrect();
     totalAttemptsRef.current += 1;
     correctAttemptsRef.current += 1;
+    setTotalAttempts((value) => value + 1);
+    setCorrectAttempts((value) => value + 1);
     setPlayerIndex((prev) => prev + 1);
   }
 
   function handleWrong() {
     playWrong();
     totalAttemptsRef.current += 1;
+    setTotalAttempts((value) => value + 1);
     stopTimers();
 
     if (mode === "practice") {
@@ -341,6 +348,10 @@ export default function ToolHome() {
     setLives(3);
     setActivePad(null);
     setTimeLeft(0);
+    totalAttemptsRef.current = 0;
+    correctAttemptsRef.current = 0;
+    setTotalAttempts(0);
+    setCorrectAttempts(0);
   }
 
   function clearStats() {
@@ -357,8 +368,8 @@ export default function ToolHome() {
     gameState === GAME_STATES.PAUSED;
 
   const accuracy =
-    totalAttemptsRef.current > 0
-      ? calculateAccuracy(totalAttemptsRef.current, correctAttemptsRef.current)
+    totalAttempts > 0
+      ? calculateAccuracy(totalAttempts, correctAttempts)
       : 0;
 
   const statusLabel =

@@ -12,6 +12,15 @@ import growvibe from "./growvibe/config";
 import apexboost from "./apexboost/config";
 import anslic from "./anslic/config";
 import infodrif from "./infodrif/config";
+import campaignastra from "./campaignastra/config";
+import dailyhnt from "./dailyhnt/config";
+import dealnbook from "./dealnbook/config";
+import exclusinsider from "./exclusinsider/config";
+import infovasta from "./infovasta/config";
+import offerhoppr from "./offerhoppr/config";
+import offerris from "./offerris/config";
+import samvatsara from "./samvatsara/config";
+import shophobia from "./shophobia/config";
 
 // Modules shared by EVERY project. The SEO Engine is a platform-wide capability:
 // each project manages its OWN SEO (its own config doc + health history, fully
@@ -46,7 +55,16 @@ const RAW_PROJECTS = {
   growvibe,
   apexboost,
   anslic,
-  infodrif
+  infodrif,
+  campaignastra,
+  dailyhnt,
+  dealnbook,
+  exclusinsider,
+  infovasta,
+  offerhoppr,
+  offerris,
+  samvatsara,
+  shophobia,
 };
 
 export const PROJECTS = Object.fromEntries(

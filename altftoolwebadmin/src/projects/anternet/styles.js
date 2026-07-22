@@ -24,7 +24,10 @@ const css = `
 .mla-btn-sm{padding:6px 11px;font-size:12px;border-radius:8px}
 
 /* ------------------------------- Toolbar ------------------------------- */
-.mla-toolbar{display:flex;gap:10px;align-items:center;justify-content:space-between;margin-bottom:14px;animation:mlaUp .35s ease both}
+.mla-pagehead{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:14px;animation:mlaUp .3s ease both}
+.mla-pagehead h1{margin:0;font-size:20px;line-height:1.25;font-weight:800;color:var(--txt)}
+.mla-pagehead p{margin:4px 0 0;font-size:12px;line-height:1.5;color:var(--mut)}
+.mla-toolbar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;margin-bottom:14px;animation:mlaUp .35s ease both}
 .mla-search{flex:1;max-width:360px;height:40px;border:1px solid var(--line);border-radius:10px;padding:0 14px;font-size:13px;background:var(--card);color:var(--txt);transition:border .15s,box-shadow .15s}
 .mla-search:focus{outline:none;border-color:var(--p);box-shadow:0 0 0 3px color-mix(in srgb,var(--p) 18%,transparent)}
 .mla-count{font-size:12px;color:var(--mut);font-weight:600;margin-right:auto;padding-left:2px}
@@ -128,6 +131,12 @@ const css = `
 .mla-objfields{flex:1;display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
 .mla-field-inline label{font-size:10px;color:var(--mut);font-weight:700}
 .mla-group{display:grid;grid-template-columns:1fr 1fr;gap:12px;border:1px solid var(--line);border-radius:11px;padding:14px;background:var(--soft)}
+.mla-color{display:flex;gap:8px;align-items:center}
+.mla-color input[type=color]{width:38px;height:38px;padding:2px;border:1.5px solid var(--line);border-radius:9px;background:var(--card);cursor:pointer;flex-shrink:0}
+.mla-color input[type=text]{flex:1}
+.mla-bgfield{display:flex;flex-direction:column;gap:0;border:1px solid var(--line);border-radius:11px;padding:14px;background:var(--soft)}
+.mla-bgfield>select{border:1.5px solid var(--line);border-radius:9px;padding:9px 11px;font-size:13px;background:var(--card);color:var(--txt)}
+.mla-field-spaced{margin-top:8px}
 
 /* ------------------------------ Settings tabs --------------------------- */
 .mla-tabs{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:16px;animation:mlaUp .35s ease both}
@@ -154,6 +163,6 @@ const css = `
 .mla-logo{width:40px;height:40px;border-radius:12px;background:linear-gradient(120deg,var(--p),var(--p2));display:flex;align-items:center;justify-content:center;font-size:18px;box-shadow:0 8px 18px -6px color-mix(in srgb,var(--p) 65%,transparent)}
 .mla-skip{margin-top:14px;text-align:center}
 
-@media(max-width:900px){.mla-form{grid-template-columns:1fr}.mla-cards{grid-template-columns:repeat(auto-fill,minmax(150px,1fr))}.mla-embed{padding:12px 12px 40px}}
+@media(max-width:900px){.mla-form{grid-template-columns:1fr}.mla-cards{grid-template-columns:repeat(auto-fill,minmax(150px,1fr))}.mla-embed{padding:12px 12px 40px}.mla-search{max-width:none;min-width:100%}.mla-count{order:3}.mla-toolbar .mla-btn{margin-left:auto}}
 `;
 export default css;

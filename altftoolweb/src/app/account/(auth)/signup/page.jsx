@@ -8,6 +8,7 @@ export const metadata = createPageMetadata({
   description:
     "Create a free AltFTool account to save favorite tools, sync preferences, and unlock personalized features across all your devices.",
   path: "/account/signup",
+  noindex: true,
 });
 
 export default function SignupPage() {

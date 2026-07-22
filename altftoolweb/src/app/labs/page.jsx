@@ -3,9 +3,9 @@ import LabsClient from "./LabsClient";
 
 export async function generateMetadata() {
   return createPageMetadata({
-    title: "AltFTool Labs – Early Experiments in Tools, Play & Discovery",
+    title: "AltFTool Labs - Interactive Experiments, Creativity & Discovery",
     description:
-      "AltFTool Labs is our home for experiments — try early ideas like SketchFlow, OpenAir Garden, Patatap and Pixel Thought, and help shape what becomes an everyday AltFTool product.",
+      "Explore every AltFTool interactive experiment from one organized hub, including SketchFlow, KeyCanvas, OpenAir Garden, Mockly, Pixel Thought, games, and discovery projects.",
     path: "/labs",
     keywords: [
       "altftool labs",

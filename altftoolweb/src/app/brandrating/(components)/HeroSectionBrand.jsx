@@ -27,7 +27,7 @@ export default function HeroSection() {
           behavior: reducedMotion ? "auto" : "smooth",
         });
       }
-  
+
 
 clearTimeout(timeoutRef.current);
 timeoutRef.current = setTimeout(() => {
@@ -68,7 +68,7 @@ useEffect(() => {
       (item) => item.status === "active"
     );
 
-    setSlides(activeSlides);  
+    setSlides(activeSlides);
     setLoading(false);
 
   });
@@ -100,7 +100,7 @@ useEffect(() => {
               priority={slide.id === 1}
               className="object-fill "
             />
-         
+
           </div>
         ))}
       </div>

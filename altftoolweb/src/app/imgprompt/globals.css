@@ -1,0 +1,296 @@
+/*
+ * Standalone Tailwind v4 instance scoped to /imgprompt only.
+ * Mirrors the self-contained pattern used by src/app/prank-socialmedia/globals.css —
+ * @source restricts the scanner to this folder, and every token is namespaced
+ * under --imgprompt-* / .imgprompt-scope so nothing here can collide with or
+ * override the site-wide design tokens defined in src/app/globals.css.
+ */
+@import "tailwindcss";
+@source "./";
+
+@theme inline {
+  --font-sans: var(--imgprompt-font-sans);
+  --font-display: var(--imgprompt-font-display);
+  --font-mono: var(--imgprompt-font-mono);
+
+  --color-border: var(--imgprompt-border);
+  --color-input: var(--imgprompt-input);
+  --color-ring: var(--imgprompt-ring);
+  --color-background: var(--imgprompt-background);
+  --color-foreground: var(--imgprompt-foreground);
+  --color-primary: var(--imgprompt-primary);
+  --color-primary-foreground: var(--imgprompt-primary-foreground);
+  --color-secondary: var(--imgprompt-secondary);
+  --color-secondary-foreground: var(--imgprompt-secondary-foreground);
+  --color-destructive: var(--imgprompt-destructive);
+  --color-destructive-foreground: var(--imgprompt-destructive-foreground);
+  --color-muted: var(--imgprompt-muted);
+  --color-muted-foreground: var(--imgprompt-muted-foreground);
+  --color-accent: var(--imgprompt-accent);
+  --color-accent-foreground: var(--imgprompt-accent-foreground);
+  --color-popover: var(--imgprompt-popover);
+  --color-popover-foreground: var(--imgprompt-popover-foreground);
+  --color-card: var(--imgprompt-card);
+  --color-card-foreground: var(--imgprompt-card-foreground);
+
+  --color-brand-violet: var(--primary);
+  --color-brand-purple: var(--primary);
+  --color-brand-indigo: var(--primary-hover);
+  --color-brand-blue: var(--secondary);
+  --color-brand-cyan: var(--secondary);
+  --color-brand-fuchsia: var(--primary);
+  --color-brand-pink: var(--secondary);
+
+  --radius-lg: var(--imgprompt-radius);
+  --radius-md: calc(var(--imgprompt-radius) - 2px);
+  --radius-sm: calc(var(--imgprompt-radius) - 4px);
+  --radius-2xl: var(--anslation-ds-radius-xl);
+  --radius-3xl: var(--anslation-ds-radius-xl);
+
+  --shadow-glow: var(--anslation-ds-shadow-md);
+  --shadow-glow-lg: var(--anslation-ds-shadow-lg);
+  --shadow-card: var(--anslation-ds-shadow-md);
+  --shadow-soft: var(--anslation-ds-shadow-sm);
+
+  --background-image-brand-gradient: none;
+  --background-image-brand-gradient-vivid: none;
+  --background-image-grid-glow: radial-gradient(circle at 1px 1px, color-mix(in srgb, var(--imgprompt-foreground) 6%, transparent) 1px, transparent 0);
+
+  --animate-float: float 7s ease-in-out infinite;
+  --animate-aurora: aurora 18s ease-in-out infinite;
+  --animate-shimmer: shimmer 2.5s linear infinite;
+  --animate-gradient-x: gradient-x 6s ease infinite;
+  --animate-pulse-glow: pulse-glow 3s ease-in-out infinite;
+  --animate-accordion-down: accordion-down 0.2s ease-out;
+  --animate-accordion-up: accordion-up 0.2s ease-out;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-18px); }
+}
+@keyframes aurora {
+  0%, 100% { transform: translate(0%, 0%) rotate(0deg); }
+  33% { transform: translate(3%, -4%) rotate(4deg); }
+  66% { transform: translate(-3%, 3%) rotate(-4deg); }
+}
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+@keyframes gradient-x {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+@keyframes pulse-glow {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 1; }
+}
+@keyframes accordion-down {
+  from { height: 0; }
+  to { height: var(--radix-accordion-content-height); }
+}
+@keyframes accordion-up {
+  from { height: var(--radix-accordion-content-height); }
+  to { height: 0; }
+}
+
+/*
+ * The studio inherits AltFTool's semantic tokens so the global
+ * light/dark/system preference controls this surface as well.
+ *
+ * Each token holds a complete hsl() color rather than a bare "H S% L%"
+ * triplet: Tailwind's @theme inline directive inlines every --color-*
+ * utility straight through to these --imgprompt-* variables (e.g.
+ * .text-primary { color: var(--imgprompt-primary) }), and an unwrapped
+ * triplet used directly as a color value is invalid CSS — the browser
+ * silently drops the declaration, which is why text-primary/bg-card/
+ * text-muted-foreground/etc previously fell through to the inherited
+ * base color everywhere. Alpha variants elsewhere in this file use
+ * color-mix() instead of hsl(var(...) / N) for the same reason.
+ */
+.imgprompt-scope {
+  --imgprompt-background: var(--background);
+  --imgprompt-foreground: var(--foreground);
+  --imgprompt-card: var(--card);
+  --imgprompt-card-foreground: var(--card-foreground);
+  --imgprompt-popover: var(--card);
+  --imgprompt-popover-foreground: var(--foreground);
+  --imgprompt-primary: var(--primary);
+  --imgprompt-primary-foreground: var(--primary-foreground);
+  --imgprompt-secondary: var(--muted);
+  --imgprompt-secondary-foreground: var(--foreground);
+  --imgprompt-muted: var(--muted);
+  --imgprompt-muted-foreground: var(--muted-foreground);
+  --imgprompt-accent: var(--anslation-ds-primary-soft);
+  --imgprompt-accent-foreground: var(--foreground);
+  --imgprompt-destructive: var(--anslation-ds-danger);
+  --imgprompt-destructive-foreground: var(--primary-foreground);
+  --imgprompt-border: var(--border);
+  --imgprompt-input: var(--anslation-ds-border-strong);
+  --imgprompt-ring: var(--primary);
+  --imgprompt-radius: var(--anslation-ds-radius-lg);
+
+  --imgprompt-font-sans: var(--anslation-ds-font-sans);
+  --imgprompt-font-display: var(--anslation-ds-font-sans);
+  --imgprompt-font-mono: var(--font-imgprompt-mono), ui-monospace, monospace;
+
+  position: relative;
+  isolation: isolate;
+  background: var(--imgprompt-background);
+  color: var(--imgprompt-foreground);
+  font-family: var(--imgprompt-font-sans);
+  font-feature-settings: "ss01", "cv01", "cv02";
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/*
+ * Dark counterpart, keyed on the same [data-theme="dark"] attribute the
+ * rest of the site's ThemeProvider already sets on <html> (see
+ * src/app/globals.css's `@custom-variant dark` and src/contexts/
+ * ThemeContext.jsx) — imgprompt is a plain nested layout with no own
+ * <html>/<body>, so it already sits inside that provider and inherits
+ * the attribute automatically. This block only needs to override the
+ * token values; every component already reads color through
+ * bg-card/text-foreground/etc, which resolve through these variables,
+ * so the whole route flips with no component-level changes.
+ */
+[data-theme="dark"] .imgprompt-scope {
+  --imgprompt-background: hsl(252 35% 7%);
+  --imgprompt-foreground: hsl(250 25% 96%);
+  --imgprompt-card: hsl(250 30% 10%);
+  --imgprompt-card-foreground: hsl(250 25% 96%);
+  --imgprompt-popover: hsl(250 30% 10%);
+  --imgprompt-popover-foreground: hsl(250 25% 96%);
+  --imgprompt-primary: hsl(262 83% 66%);
+  --imgprompt-primary-foreground: hsl(0 0% 100%);
+  --imgprompt-secondary: hsl(258 24% 15%);
+  --imgprompt-secondary-foreground: hsl(250 20% 92%);
+  --imgprompt-muted: hsl(258 20% 13%);
+  --imgprompt-muted-foreground: hsl(248 10% 62%);
+  --imgprompt-accent: hsl(258 24% 17%);
+  --imgprompt-accent-foreground: hsl(250 20% 92%);
+  --imgprompt-destructive: hsl(0 72% 58%);
+  --imgprompt-destructive-foreground: hsl(0 0% 100%);
+  --imgprompt-border: hsl(255 20% 19%);
+  --imgprompt-input: hsl(255 20% 17%);
+  --imgprompt-ring: hsl(262 83% 66%);
+}
+
+.imgprompt-scope ::selection {
+  background: color-mix(in srgb, var(--imgprompt-primary) 25%, transparent);
+  color: var(--imgprompt-foreground);
+}
+
+/* Frosted surfaces */
+.imgprompt-scope .glass {
+  border: 1px solid var(--imgprompt-border);
+  background: color-mix(in srgb, var(--imgprompt-card) 70%, transparent);
+  backdrop-filter: blur(24px);
+}
+.imgprompt-scope .glass-strong {
+  border: 1px solid var(--imgprompt-border);
+  background: color-mix(in srgb, var(--imgprompt-card) 90%, transparent);
+  backdrop-filter: blur(40px);
+}
+
+/* Gradient text */
+.imgprompt-scope .text-gradient-brand {
+  color: var(--imgprompt-primary);
+}
+
+.imgprompt-scope .bg-brand-gradient {
+  background: var(--imgprompt-primary);
+}
+
+.imgprompt-scope .bg-brand-gradient-vivid {
+  background: var(--primary-hover);
+}
+
+.imgprompt-scope .bg-brand-gradient.text-white,
+.imgprompt-scope .bg-brand-gradient-vivid.text-white {
+  color: var(--imgprompt-primary-foreground);
+}
+
+/* Animated gradient ring used for premium borders */
+.imgprompt-scope .gradient-ring {
+  position: relative;
+}
+.imgprompt-scope .gradient-ring::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: color-mix(in srgb, var(--imgprompt-primary) 42%, var(--imgprompt-border));
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+.imgprompt-scope .shimmer {
+  background: linear-gradient(
+    110deg,
+    transparent 20%,
+    color-mix(in srgb, var(--imgprompt-foreground) 6%, transparent) 40%,
+    color-mix(in srgb, var(--imgprompt-foreground) 10%, transparent) 50%,
+    color-mix(in srgb, var(--imgprompt-foreground) 6%, transparent) 60%,
+    transparent 80%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 2.5s linear infinite;
+}
+
+.imgprompt-scope .card-hover {
+  transition: all 300ms;
+}
+.imgprompt-scope .card-hover:hover {
+  transform: translateY(-4px);
+  border-color: color-mix(in srgb, var(--imgprompt-primary) 30%, transparent);
+  box-shadow: 0 0 40px -8px color-mix(in srgb, var(--imgprompt-primary) 35%, transparent);
+}
+
+.imgprompt-scope .no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.imgprompt-scope .no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.imgprompt-scope .bg-noise {
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.55'/%3E%3C/svg%3E");
+}
+.imgprompt-scope .mask-fade-b {
+  -webkit-mask-image: linear-gradient(to bottom, #000 60%, transparent 100%);
+  mask-image: linear-gradient(to bottom, #000 60%, transparent 100%);
+}
+.imgprompt-scope .mask-fade-r {
+  -webkit-mask-image: linear-gradient(to right, #000 80%, transparent 100%);
+  mask-image: linear-gradient(to right, #000 80%, transparent 100%);
+}
+.imgprompt-scope .mask-fade-lr {
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 6%, #000 94%, transparent 100%);
+  mask-image: linear-gradient(to right, transparent 0%, #000 6%, #000 94%, transparent 100%);
+}
+
+/* Custom scrollbar for the scoped app shell */
+.imgprompt-scope.app-scroll::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+.imgprompt-scope.app-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+.imgprompt-scope.app-scroll::-webkit-scrollbar-thumb {
+  background: var(--imgprompt-border);
+  border-radius: 999px;
+  border: 3px solid transparent;
+  background-clip: content-box;
+}
+.imgprompt-scope.app-scroll::-webkit-scrollbar-thumb:hover {
+  background: color-mix(in srgb, var(--imgprompt-primary) 50%, transparent);
+  background-clip: content-box;
+}

@@ -14,8 +14,10 @@ import {
   FlaskConical,
   Gamepad2,
   Ghost,
+  ImageIcon,
   Landmark,
   Laugh,
+  LayoutGrid,
   Library,
   Mail,
   MessageSquarePlus,
@@ -44,8 +46,10 @@ const ICONS = {
   Brain,
   Gamepad2,
   Ghost,
+  ImageIcon,
   Landmark,
   Laugh,
+  LayoutGrid,
   Library,
   Music4,
   Newspaper,
@@ -64,14 +68,14 @@ const TONE_GRADIENTS = {
   teal: "linear-gradient(135deg, var(--primary), color-mix(in srgb, var(--secondary) 75%, var(--primary)))",
   cyan: "linear-gradient(135deg, var(--secondary), color-mix(in srgb, var(--primary) 55%, var(--secondary)))",
   violet:
-    "linear-gradient(135deg, var(--anslation-ds-accent, #8B5CF6), color-mix(in srgb, var(--secondary) 45%, var(--anslation-ds-accent, #8B5CF6)))",
+    "linear-gradient(135deg, var(--anslation-ds-accent), color-mix(in srgb, var(--secondary) 45%, var(--anslation-ds-accent)))",
 };
 
 const TONE_TILES = {
   teal: "linear-gradient(135deg, color-mix(in srgb, var(--primary) 26%, var(--card)), color-mix(in srgb, var(--secondary) 14%, var(--card)))",
   cyan: "linear-gradient(135deg, color-mix(in srgb, var(--secondary) 24%, var(--card)), color-mix(in srgb, var(--primary) 12%, var(--card)))",
   violet:
-    "linear-gradient(135deg, color-mix(in srgb, var(--anslation-ds-accent, #8B5CF6) 22%, var(--card)), color-mix(in srgb, var(--secondary) 12%, var(--card)))",
+    "linear-gradient(135deg, color-mix(in srgb, var(--anslation-ds-accent) 22%, var(--card)), color-mix(in srgb, var(--secondary) 12%, var(--card)))",
 };
 
 function ExperimentIcon({ name, className }) {

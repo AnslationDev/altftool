@@ -3,15 +3,15 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { gzipSync } from "node:zlib";
 import { TOP_PRIORITY_TOOL_SLUGS } from "@altftool/core/toolHealth";
+import { PRODUCT_REGISTRY } from "@altftool/core/products";
 
 const workspaceRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const rawArgs = process.argv.slice(2);
 const args = new Set(rawArgs);
 
-// Totals re-baselined 2026-07-22 (catalog grew to 613 code-split tools +
-// games/labs/deals; users only download chunks they visit). Keep in sync with
-// scripts/check-bundle-budgets.mjs. Headroom ~7% — raise only after a fresh
-// dedupe/attribution pass.
+// Aggregate totals include independently lazy-loaded tools and admin modules,
+// so their ceilings grow with their registries. Per-chunk ceilings remain
+// fixed because they represent what one route can make a visitor download.
 const DEFAULT_APP_BUDGETS = [
   {
     name: "web",
@@ -20,6 +20,13 @@ const DEFAULT_APP_BUDGETS = [
     maxChunkRawKiB: 1350,
     maxTotalJsGzipKiB: 10500,
     maxTotalCssGzipKiB: 1150,
+    catalogMetaFile: "altftoolweb/src/platform/registry/toolMetaMap.js",
+    catalogBaseline: 613,
+    catalogJsGrowthKiB: 10.5,
+    catalogCssGrowthKiB: 0.8,
+    productBaseline: 22,
+    productJsGrowthKiB: 50,
+    productCssGrowthKiB: 320,
   },
   {
     name: "admin",
@@ -28,6 +35,9 @@ const DEFAULT_APP_BUDGETS = [
     maxChunkRawKiB: 850,
     maxTotalJsGzipKiB: 2700,
     maxTotalCssGzipKiB: 450,
+    routeLoaderFile: "altftoolwebadmin/src/lib/adminModuleLoaders.js",
+    routeLoaderBaseline: 245,
+    routeJsGrowthKiB: 6,
   },
 ];
 
@@ -210,6 +220,34 @@ async function checkAppBuild(app, rootDir, options) {
   const cssRows = await collectAssetRows(cssFiles, rootDir);
   const chunks = summarizeBundleRows(chunkRows);
   const css = summarizeBundleRows(cssRows);
+  let catalogSize = null;
+  let productCount = null;
+  let routeLoaderCount = null;
+  let maxTotalJsGzipKiB = app.maxTotalJsGzipKiB;
+  let maxTotalCssGzipKiB = app.maxTotalCssGzipKiB;
+
+  if (app.catalogMetaFile) {
+    const metaSource = await readFile(path.join(rootDir, app.catalogMetaFile), "utf8");
+    const metaMatch = metaSource.match(/export const toolMetaMap = (\{[\s\S]*\});?\s*$/);
+    if (!metaMatch) throw new Error(`${app.name}: unable to parse ${app.catalogMetaFile}`);
+
+    catalogSize = Object.keys(JSON.parse(metaMatch[1])).length;
+    const growth = Math.max(0, catalogSize - app.catalogBaseline);
+    if (!app.totalJsOverridden) maxTotalJsGzipKiB += growth * app.catalogJsGrowthKiB;
+    if (!app.totalCssOverridden) maxTotalCssGzipKiB += growth * app.catalogCssGrowthKiB;
+
+    productCount = PRODUCT_REGISTRY.length;
+    const productGrowth = Math.max(0, productCount - app.productBaseline);
+    if (!app.totalJsOverridden) maxTotalJsGzipKiB += productGrowth * app.productJsGrowthKiB;
+    if (!app.totalCssOverridden) maxTotalCssGzipKiB += productGrowth * app.productCssGrowthKiB;
+  }
+
+  if (app.routeLoaderFile) {
+    const loaderSource = await readFile(path.join(rootDir, app.routeLoaderFile), "utf8");
+    routeLoaderCount = (loaderSource.match(/=>\s*import\(/g) || []).length;
+    const growth = Math.max(0, routeLoaderCount - app.routeLoaderBaseline);
+    if (!app.totalJsOverridden) maxTotalJsGzipKiB += growth * app.routeJsGrowthKiB;
+  }
 
   if (!chunkRows.length) {
     issues.push(createIssue("failure", "build", `${app.name}: no JavaScript chunks found in .next/static/chunks`, { app: app.name }));
@@ -237,23 +275,23 @@ async function checkAppBuild(app, rootDir, options) {
     );
   }
 
-  if (bytesToKiB(chunks.totalGzipBytes) > app.maxTotalJsGzipKiB) {
+  if (bytesToKiB(chunks.totalGzipBytes) > maxTotalJsGzipKiB) {
     issues.push(
       createIssue(
         "failure",
         "javascript",
-        `${app.name}: total gzip JavaScript ${chunks.totalGzip} exceeds ${app.maxTotalJsGzipKiB} KiB`,
+        `${app.name}: total gzip JavaScript ${chunks.totalGzip} exceeds ${maxTotalJsGzipKiB.toFixed(1)} KiB`,
         { app: app.name },
       ),
     );
   }
 
-  if (bytesToKiB(css.totalGzipBytes) > app.maxTotalCssGzipKiB) {
+  if (bytesToKiB(css.totalGzipBytes) > maxTotalCssGzipKiB) {
     issues.push(
       createIssue(
         "failure",
         "css",
-        `${app.name}: total gzip CSS ${css.totalGzip} exceeds ${app.maxTotalCssGzipKiB} KiB`,
+        `${app.name}: total gzip CSS ${css.totalGzip} exceeds ${maxTotalCssGzipKiB.toFixed(1)} KiB`,
         { app: app.name },
       ),
     );
@@ -271,9 +309,12 @@ async function checkAppBuild(app, rootDir, options) {
     budgets: {
       maxChunkGzipKiB: app.maxChunkGzipKiB,
       maxChunkRawKiB: app.maxChunkRawKiB,
-      maxTotalJsGzipKiB: app.maxTotalJsGzipKiB,
-      maxTotalCssGzipKiB: app.maxTotalCssGzipKiB,
+      maxTotalJsGzipKiB,
+      maxTotalCssGzipKiB,
     },
+    catalogSize,
+    productCount,
+    routeLoaderCount,
     issues,
     notices,
   };
@@ -507,6 +548,7 @@ async function checkSourceGuardrails(rootDir, sourceRoot, options) {
 
 async function checkAdminSourceGuardrails(rootDir) {
   const adminLayoutFile = path.join(rootDir, "altftoolwebadmin", "src", "app", "layout.jsx");
+  const adminPackageFile = path.join(rootDir, "altftoolwebadmin", "package.json");
   const lazyEditorAssetsFile = path.join(
     rootDir,
     "altftoolwebadmin",
@@ -521,6 +563,7 @@ async function checkAdminSourceGuardrails(rootDir) {
     adminLayoutFile: path.relative(rootDir, adminLayoutFile),
     lazyEditorAssetsFile: path.relative(rootDir, lazyEditorAssetsFile),
     globalEditorCdn: false,
+    editorDependencyConfigured: false,
     lazyEditorAssets: false,
     issues,
     notices,
@@ -542,8 +585,17 @@ async function checkAdminSourceGuardrails(rootDir) {
     }
   }
 
+  if (await pathExists(adminPackageFile)) {
+    const adminPackage = JSON.parse(await readFile(adminPackageFile, "utf8"));
+    const dependencyNames = Object.keys({
+      ...(adminPackage.dependencies || {}),
+      ...(adminPackage.devDependencies || {}),
+    });
+    result.editorDependencyConfigured = dependencyNames.some((name) => /ckeditor|ckbox/i.test(name));
+  }
+
   result.lazyEditorAssets = await pathExists(lazyEditorAssetsFile);
-  if (!result.lazyEditorAssets && await pathExists(adminLayoutFile)) {
+  if (!result.lazyEditorAssets && (result.globalEditorCdn || result.editorDependencyConfigured)) {
     issues.push(
       createIssue(
         "warning",
@@ -585,25 +637,27 @@ async function checkForbiddenReferences(rootDir, sourceRoot, forbiddenReferences
 }
 
 function normalizeAppBudgets(options) {
-  return (options.appBudgets || DEFAULT_APP_BUDGETS).map((app) => ({
-    ...app,
-    maxChunkGzipKiB: budgetKiB(
-      options.env?.[`ALTFT_${app.name.toUpperCase()}_MAX_CHUNK_GZIP_KB`],
-      app.maxChunkGzipKiB,
-    ),
-    maxChunkRawKiB: budgetKiB(
-      options.env?.[`ALTFT_${app.name.toUpperCase()}_MAX_CHUNK_RAW_KB`],
-      app.maxChunkRawKiB,
-    ),
-    maxTotalJsGzipKiB: budgetKiB(
-      options.env?.[`ALTFT_${app.name.toUpperCase()}_MAX_TOTAL_GZIP_KB`],
-      app.maxTotalJsGzipKiB,
-    ),
-    maxTotalCssGzipKiB: budgetKiB(
-      options.env?.[`ALTFT_${app.name.toUpperCase()}_MAX_CSS_GZIP_KB`],
-      app.maxTotalCssGzipKiB,
-    ),
-  }));
+  return (options.appBudgets || DEFAULT_APP_BUDGETS).map((app) => {
+    const prefix = `ALTFT_${app.name.toUpperCase()}`;
+    const totalJsValue = options.env?.[`${prefix}_MAX_TOTAL_GZIP_KB`];
+    const totalCssValue = options.env?.[`${prefix}_MAX_CSS_GZIP_KB`];
+
+    return {
+      ...app,
+      totalJsOverridden: String(totalJsValue || "").trim().length > 0,
+      totalCssOverridden: String(totalCssValue || "").trim().length > 0,
+      maxChunkGzipKiB: budgetKiB(
+        options.env?.[`${prefix}_MAX_CHUNK_GZIP_KB`],
+        app.maxChunkGzipKiB,
+      ),
+      maxChunkRawKiB: budgetKiB(
+        options.env?.[`${prefix}_MAX_CHUNK_RAW_KB`],
+        app.maxChunkRawKiB,
+      ),
+      maxTotalJsGzipKiB: budgetKiB(totalJsValue, app.maxTotalJsGzipKiB),
+      maxTotalCssGzipKiB: budgetKiB(totalCssValue, app.maxTotalCssGzipKiB),
+    };
+  });
 }
 
 export async function buildPerformanceBudgetReport(options = {}) {

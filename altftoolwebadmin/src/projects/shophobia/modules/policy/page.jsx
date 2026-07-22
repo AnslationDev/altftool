@@ -1,0 +1,238 @@
+"use client";
+
+import { useEffect, useMemo, useState } from "react";
+import { ArrowDown, ArrowUp, Eye, Loader2, Plus, Save, Shield, Trash2 } from "lucide-react";
+import { emitAlert } from "@/lib/alertBus";
+import { HEX, inputClass, textareaClass } from "../_shared/AdminSectionShared";
+import { DEFAULT_POLICY, savePolicy, subscribePolicy } from "./service/policy.service";
+
+export default function ShophobiaPolicyPage() {
+  return (
+    <LegalDocPage
+      icon={Shield}
+      title="Shophobia Privacy Policy"
+      subtitle="Manage the privacy policy title, last-updated date, and sections."
+      successLabel="Privacy policy"
+      defaults={DEFAULT_POLICY}
+      subscribe={subscribePolicy}
+      save={savePolicy}
+    />
+  );
+}
+
+/**
+ * Shared editor for the two legal docs (policy + terms) — title, date, and
+ * an orderable sections repeater with a themed live preview.
+ */
+export function LegalDocPage({ icon: Icon, title, subtitle, successLabel, defaults, subscribe, save }) {
+  const [data, setData] = useState(defaults);
+  const [savedData, setSavedData] = useState(defaults);
+  const [loading, setLoading] = useState(true);
+  const [saving, setSaving] = useState(false);
+  const [errors, setErrors] = useState({});
+
+  useEffect(() => {
+    const unsub = subscribe(
+      (next) => {
+        setData(next);
+        setSavedData(next);
+        setLoading(false);
+      },
+      () => {
+        emitAlert({ type: "error", message: `Failed to load ${successLabel.toLowerCase()}.` });
+        setLoading(false);
+      },
+    );
+    return () => unsub();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const dirty = useMemo(() => JSON.stringify(data) !== JSON.stringify(savedData), [data, savedData]);
+
+  function setField(key, value) {
+    setData((prev) => ({ ...prev, [key]: value }));
+    setErrors((prev) => ({ ...prev, [key]: "" }));
+  }
+
+  function addSection() {
+    setData((prev) => ({ ...prev, sections: [...(prev.sections || []), { title: "", body: "" }] }));
+  }
+
+  function updateSection(index, key, value) {
+    setData((prev) => {
+      const next = [...(prev.sections || [])];
+      next[index] = { ...next[index], [key]: value };
+      return { ...prev, sections: next };
+    });
+  }
+
+  function removeSection(index) {
+    setData((prev) => ({ ...prev, sections: (prev.sections || []).filter((_, i) => i !== index) }));
+  }
+
+  function moveSection(index, direction) {
+    setData((prev) => {
+      const next = [...(prev.sections || [])];
+      const target = index + direction;
+      if (target < 0 || target >= next.length) return prev;
+      [next[index], next[target]] = [next[target], next[index]];
+      return { ...prev, sections: next };
+    });
+  }
+
+  async function handleSave() {
+    const nextErrors = {};
+    if (!data.title?.trim()) nextErrors.title = "Title is required.";
+    setErrors(nextErrors);
+    if (Object.keys(nextErrors).length) return;
+
+    setSaving(true);
+    try {
+      await save(data);
+      emitAlert({ type: "success", message: `${successLabel} saved.` });
+    } catch (error) {
+      emitAlert({ type: "error", message: error?.message || `Failed to save ${successLabel.toLowerCase()}.` });
+    } finally {
+      setSaving(false);
+    }
+  }
+
+  const sections = data.sections || [];
+
+  return (
+    <div className="min-h-screen bg-gray-50 p-6">
+      <div className="mx-auto flex max-w-7xl flex-col gap-5">
+        <div className="flex flex-wrap items-start justify-between gap-4">
+          <div className="flex items-center gap-3">
+            <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-gray-900 text-white shadow-sm">
+              <Icon className="h-5 w-5" />
+            </div>
+            <div>
+              <h1 className="text-xl font-bold text-gray-900">{title}</h1>
+              <p className="text-sm text-gray-500">{subtitle}</p>
+            </div>
+          </div>
+          <div className="flex items-center gap-3">
+            <span className={`rounded-lg px-2.5 py-1 text-xs font-bold ${dirty ? "bg-amber-50 text-amber-700" : "bg-emerald-50 text-emerald-700"}`}>{dirty ? "Unsaved" : "Saved"}</span>
+            <button onClick={handleSave} disabled={saving} className="inline-flex items-center gap-2 rounded-xl bg-gray-900 px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-gray-700 disabled:opacity-60">
+              {saving ? <Loader2 className="h-4 w-4 animate-spin" /> : <Save className="h-4 w-4" />}
+              Save
+            </button>
+          </div>
+        </div>
+
+        <div className="grid gap-5 xl:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
+          <div className="flex flex-col gap-5">
+            {loading ? (
+              <div className="space-y-3">{Array.from({ length: 3 }).map((_, index) => <div key={index} className="h-24 animate-pulse rounded-2xl bg-gray-100" />)}</div>
+            ) : (
+              <>
+                <Card eyebrow="Header" title="Page header">
+                  <div className="grid gap-4 sm:grid-cols-2">
+                    <Field label="Title" error={errors.title}><input value={data.title || ""} onChange={(event) => setField("title", event.target.value)} className={inputClass} /></Field>
+                    <Field label="Last Updated"><input value={data.lastUpdated || ""} onChange={(event) => setField("lastUpdated", event.target.value)} className={inputClass} placeholder="July 16, 2026" /></Field>
+                  </div>
+                </Card>
+
+                <Card eyebrow="Sections" title={`${sections.length} sections`}>
+                  <div className="space-y-3">
+                    {sections.length ? sections.map((section, index) => (
+                      <div key={index} className="rounded-xl border border-gray-200 bg-gray-50 p-3">
+                        <div className="mb-3 flex items-center justify-between gap-2">
+                          <span className="text-xs font-bold uppercase tracking-widest text-gray-400">Section {index + 1}</span>
+                          <div className="flex gap-1.5">
+                            <button onClick={() => moveSection(index, -1)} disabled={index === 0} className="rounded-lg border border-gray-200 bg-white p-1.5 text-gray-500 hover:bg-gray-50 disabled:opacity-40"><ArrowUp className="h-3.5 w-3.5" /></button>
+                            <button onClick={() => moveSection(index, 1)} disabled={index === sections.length - 1} className="rounded-lg border border-gray-200 bg-white p-1.5 text-gray-500 hover:bg-gray-50 disabled:opacity-40"><ArrowDown className="h-3.5 w-3.5" /></button>
+                            <button onClick={() => removeSection(index)} className="rounded-lg border border-red-200 bg-white p-1.5 text-red-500 hover:bg-red-50"><Trash2 className="h-3.5 w-3.5" /></button>
+                          </div>
+                        </div>
+                        <div className="space-y-3">
+                          <Field label="Title"><input value={section.title || ""} onChange={(event) => updateSection(index, "title", event.target.value)} className={inputClass} /></Field>
+                          <Field label="Body" hint="Supports {siteEmail} and {siteName} placeholders."><textarea value={section.body || ""} onChange={(event) => updateSection(index, "body", event.target.value)} rows={4} className={textareaClass} /></Field>
+                        </div>
+                      </div>
+                    )) : (
+                      <p className="rounded-xl border border-dashed border-gray-200 p-6 text-center text-sm font-semibold text-gray-400">No sections yet — the site falls back to the bundled JSON.</p>
+                    )}
+                    <button onClick={addSection} className="inline-flex items-center gap-2 rounded-xl border border-gray-200 px-3 py-2 text-sm font-semibold text-gray-600 hover:bg-gray-50">
+                      <Plus className="h-4 w-4" /> Add section
+                    </button>
+                  </div>
+                </Card>
+              </>
+            )}
+          </div>
+
+          <div className="xl:sticky xl:top-6 xl:self-start">
+            <div className="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm">
+              <div className="mb-4 flex items-center gap-2">
+                <Eye className="h-4 w-4 text-gray-400" />
+                <h2 className="text-base font-bold text-gray-900">Live preview</h2>
+              </div>
+              <LegalPreview data={data} />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function LegalPreview({ data }) {
+  const sections = data?.sections || [];
+
+  return (
+    <div className="overflow-hidden rounded-xl border" style={{ borderColor: HEX.border, background: HEX.bg }}>
+      <div className="border-b p-6" style={{ borderColor: HEX.border, background: HEX.raised }}>
+        <h3 className="text-2xl font-bold leading-tight" style={{ color: HEX.fg }}>
+          {data?.title || "Legal Document"}
+        </h3>
+        {data?.lastUpdated ? (
+          <p className="mt-2 text-xs" style={{ color: HEX.dim }}>Last updated: {data.lastUpdated}</p>
+        ) : null}
+      </div>
+
+      <div className="flex flex-col gap-6 p-6">
+        {sections.length ? (
+          sections.map((section, index) => (
+            <div key={index}>
+              <h4 className="text-base font-bold leading-snug" style={{ color: HEX.fg }}>
+                {section.title || `Section ${index + 1}`}
+              </h4>
+              <p className="mt-2 text-sm leading-relaxed" style={{ color: HEX.dim }}>
+                {section.body}
+              </p>
+            </div>
+          ))
+        ) : (
+          <p className="text-sm" style={{ color: HEX.dim }}>
+            No sections yet — the live site shows the bundled JSON fallback.
+          </p>
+        )}
+      </div>
+    </div>
+  );
+}
+
+function Card({ eyebrow, title, children }) {
+  return (
+    <div className="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm">
+      <div className="mb-5">
+        <p className="text-xs font-bold uppercase tracking-widest text-gray-400">{eyebrow}</p>
+        <h2 className="mt-1 text-base font-bold text-gray-900">{title}</h2>
+      </div>
+      {children}
+    </div>
+  );
+}
+
+function Field({ label, error, hint, children }) {
+  return (
+    <label className="block">
+      <span className="mb-1.5 block text-xs font-bold uppercase tracking-wider text-gray-500">{label}</span>
+      {children}
+      {hint ? <span className="mt-1 block text-xs text-gray-400">{hint}</span> : null}
+      {error ? <span className="mt-1 block text-xs font-medium text-red-500">{error}</span> : null}
+    </label>
+  );
+}

@@ -1,4 +1,7 @@
-import admin from "firebase-admin";
+import { cert, getApp, getApps, initializeApp } from "firebase-admin/app";
+import { getAuth } from "firebase-admin/auth";
+import { getFirestore } from "firebase-admin/firestore";
+import { getMessaging } from "firebase-admin/messaging";
 import fs from "node:fs";
 
 let cachedAuth = null;
@@ -194,33 +197,31 @@ function getFirebaseAdminConfig() {
 }
 
 function getFirebaseAdminApp() {
-  if (admin.apps.length) return admin.app();
+  if (getApps().length) return getApp();
 
   const { projectId, clientEmail, privateKey } = getFirebaseAdminConfig();
 
-  admin.initializeApp({
-    credential: admin.credential.cert({
+  return initializeApp({
+    credential: cert({
       projectId,
       clientEmail,
       privateKey,
     }),
   });
-
-  return admin.app();
 }
 
 export function getAdminAuth() {
-  if (!cachedAuth) cachedAuth = getFirebaseAdminApp().auth();
+  if (!cachedAuth) cachedAuth = getAuth(getFirebaseAdminApp());
   return cachedAuth;
 }
 
 export function getAdminDb() {
-  if (!cachedDb) cachedDb = getFirebaseAdminApp().firestore();
+  if (!cachedDb) cachedDb = getFirestore(getFirebaseAdminApp());
   return cachedDb;
 }
 
 export function getAdminMessaging() {
-  if (!cachedMessaging) cachedMessaging = getFirebaseAdminApp().messaging();
+  if (!cachedMessaging) cachedMessaging = getMessaging(getFirebaseAdminApp());
   return cachedMessaging;
 }
 

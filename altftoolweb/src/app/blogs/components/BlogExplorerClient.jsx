@@ -463,6 +463,7 @@ function CategoryBand({ categories, counts, activeCategory, onChange }) {
         <button
           type="button"
           onClick={() => onChange("All")}
+          aria-pressed={activeCategory === "All"}
           className="flex min-w-[132px] flex-1 items-center gap-3 rounded-xl px-3 py-2.5 text-left transition hover:bg-(--anslation-ds-soft)"
         >
           <span className="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-(--anslation-ds-primary-soft) text-(--primary)">
@@ -752,7 +753,7 @@ const TRUST_ITEMS = [
 
 function TrustStrip() {
   return (
-    <section aria-label="Why read the ALTFTool blog" className="grid grid-cols-1 gap-4 rounded-2xl border border-(--border) bg-(--card) p-6 shadow-sm sm:grid-cols-2 lg:grid-cols-4">
+    <section aria-label="Why read the AltFTool blog" className="grid grid-cols-1 gap-4 rounded-2xl border border-(--border) bg-(--card) p-6 shadow-sm sm:grid-cols-2 lg:grid-cols-4">
       {TRUST_ITEMS.map((item) => (
         <div key={item.title} className="flex items-start gap-3">
           <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-(--anslation-ds-primary-soft) text-(--primary)">
@@ -856,6 +857,7 @@ export default function BlogExplorerClient({
   categories: initialCategories,
   initialRemoteOffset = 0,
   totalCount = initialPosts.length,
+  heroShortcutRail,
   children,
 }) {
   const router = useRouter();
@@ -1114,6 +1116,8 @@ export default function BlogExplorerClient({
       {/* 1 — Featured hero carousel */}
       {heroPosts.length > 0 && <FeaturedHeroCarousel posts={heroPosts} />}
 
+      {heroShortcutRail}
+
       {/* 2 — Category band */}
       <CategoryBand
         categories={initialCategories}
@@ -1140,23 +1144,29 @@ export default function BlogExplorerClient({
       )}
 
       {/* 4 — Latest articles + sidebar */}
-      <div ref={articlesRef} className="grid grid-cols-1 gap-8 lg:grid-cols-3 scroll-mt-24">
+      <section
+        ref={articlesRef}
+        aria-labelledby="latest-articles-heading"
+        className="grid scroll-mt-24 grid-cols-1 gap-8 lg:grid-cols-3"
+      >
         <div className="min-w-0 lg:col-span-2">
           <div className="mb-5 flex flex-wrap items-center justify-between gap-x-4 gap-y-3">
-            <h2 className="flex items-center gap-3 text-xl font-bold tracking-tight text-(--foreground) sm:text-2xl">
+            <h2
+              id="latest-articles-heading"
+              className="flex items-center gap-3 text-xl font-bold tracking-tight text-(--foreground) sm:text-2xl"
+            >
               <span aria-hidden="true" className="h-6 w-1 rounded-full bg-(--primary)" />
               Latest Articles
             </h2>
             <div className="flex flex-wrap items-center gap-3">
-            <div className="flex items-center gap-1" role="tablist" aria-label="Sort articles">
+            <div className="flex items-center gap-1" role="group" aria-label="Sort blogs">
               {SORT_TABS.map((tab) => {
                 const active = sortMode === tab.value;
                 return (
                   <button
                     key={tab.value}
                     type="button"
-                    role="tab"
-                    aria-selected={active}
+                    aria-pressed={active}
                     onClick={() => handleSortChange(tab.value)}
                     className={cx(
                       "relative px-3 py-1.5 text-sm font-bold transition-colors",
@@ -1231,7 +1241,7 @@ export default function BlogExplorerClient({
             />
           </div>
         </div>
-      </div>
+      </section>
 
       {/* 5 — extra editorial sections from the server page, same 8-unit rhythm */}
       {children && <div className="flex flex-col gap-8">{children}</div>}

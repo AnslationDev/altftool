@@ -1,13 +1,16 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import { createStepDetector } from "./stepDetector";
 import {
   ACHIEVEMENTS,
   MAX_GOAL,
   MIN_GOAL,
+  VOICE_INTERVALS,
   createEmptyState,
   evaluateAchievements,
   getDay,
+  getLast7Series,
   getLifetimeStats,
   getMonthlyActiveDays,
   getStreak,
@@ -17,29 +20,29 @@ import {
   todayKey,
 } from "./stepStore";
 
-// Calm, natural cadence for the simulated counter: steps tick in one-by-one,
-// roughly one step every 0.8–1.2 seconds with a little random variation, so
-// the count climbs 1, 2, 3… at an easy human walking rhythm — never in a rush.
-const STEP_INTERVAL_MIN_MS = 800;
-const STEP_INTERVAL_MAX_MS = 1200;
-const MOTION_DEBOUNCE_MS = 400;
-
 /**
  * All Step Counter behaviour in one hook:
- * - session-only persistence (per-day history, goal, achievements live in
- *   sessionStorage and reset when the browser session ends)
- * - real step detection via the devicemotion sensor on mobile
- * - clearly-labelled simulated pace on devices without a motion sensor
+ * - durable persistence (per-day history, goal, achievements and voice
+ *   preferences live in localStorage and survive closing the browser);
+ *   auto-saved on every change, plus an explicit save() for the Save button
+ * - REAL step detection only: devicemotion samples run through the
+ *   stepDetector pipeline (gravity removal → smoothing → hysteresis peaks →
+ *   cadence gate → rhythm confirmation). No sensor → no steps, ever.
+ *   There is deliberately no simulated/demo counting.
  * - active-time tracking + achievement unlocks
+ * - explicit tracking state machine: idle → tracking ⇄ paused → stopped,
+ *   with reset returning to idle. `isActive` stays exported (derived) so
+ *   older consumers (StepApp.jsx) keep working unchanged.
  */
 export default function useStepCounter() {
   const [state, setState] = useState(createEmptyState);
   const [hydrated, setHydrated] = useState(false);
-  const [isActive, setIsActive] = useState(false);
-  const [sensorMode, setSensorMode] = useState(null); // "motion" | "simulated" | null
+  const [status, setStatus] = useState("idle"); // "idle" | "tracking" | "paused" | "stopped"
+  const [sensorMode, setSensorMode] = useState(null); // "motion" | "unavailable" | null
   const [errorMsg, setErrorMsg] = useState("");
   const [dayKey, setDayKey] = useState(todayKey);
-  const lastStepTime = useRef(0);
+
+  const isActive = status === "tracking";
 
   /* ------------------------------ persistence ------------------------------ */
 
@@ -51,6 +54,14 @@ export default function useStepCounter() {
   useEffect(() => {
     if (hydrated) saveState(state);
   }, [state, hydrated]);
+
+  // Explicit "Save" action for the Settings sheet. Persistence is already
+  // automatic (the effect above writes on every change), but this lets the
+  // user deliberately commit their progress and get visible confirmation.
+  const save = useCallback(() => {
+    saveState(state);
+    return true;
+  }, [state]);
 
   /* ------------------------------- mutations ------------------------------- */
 
@@ -104,8 +115,27 @@ export default function useStepCounter() {
     }));
   }, []);
 
+  const setVoiceEnabled = useCallback((enabled) => {
+    setState((prev) => ({
+      ...prev,
+      voice: { ...prev.voice, enabled: Boolean(enabled) },
+    }));
+  }, []);
+
+  const setVoiceInterval = useCallback((interval) => {
+    const parsed = Number(interval);
+    if (!VOICE_INTERVALS.includes(parsed)) return;
+    setState((prev) => ({
+      ...prev,
+      voice: { ...prev.voice, interval: parsed },
+    }));
+  }, []);
+
+  // Full reset: today's stats back to zero, session ended, sensors released.
+  // (Milestone bookkeeping lives in useVoiceCoach and follows the step count
+  // back down automatically.)
   const resetToday = useCallback(() => {
-    setIsActive(false);
+    setStatus("idle");
     setSensorMode(null);
     setErrorMsg("");
     setState((prev) => {
@@ -117,13 +147,31 @@ export default function useStepCounter() {
     });
   }, []);
 
-  /* ------------------------------ start / pause ----------------------------- */
+  /* ------------------------ start / pause / resume / stop ------------------------ */
 
   const pause = useCallback(() => {
-    setIsActive(false);
+    setStatus((prev) => (prev === "tracking" ? "paused" : prev));
+  }, []);
+
+  const resume = useCallback(() => {
+    setStatus((prev) => (prev === "paused" ? "tracking" : prev));
+  }, []);
+
+  const stop = useCallback(() => {
+    setStatus((prev) =>
+      prev === "tracking" || prev === "paused" ? "stopped" : prev,
+    );
   }, []);
 
   const start = useCallback(async () => {
+    // Never spin up a second session — Start while tracking is a no-op.
+    let alreadyTracking = false;
+    setStatus((prev) => {
+      alreadyTracking = prev === "tracking";
+      return prev;
+    });
+    if (alreadyTracking) return;
+
     setErrorMsg("");
 
     const hasMotionEvent =
@@ -141,91 +189,73 @@ export default function useStepCounter() {
         if (permission === "granted") {
           setSensorMode("motion");
         } else {
-          setErrorMsg("Motion permission denied — using demo pace instead.");
-          setSensorMode("simulated");
+          // No fake fallback: without the sensor, steps simply don't count.
+          setErrorMsg("Motion permission denied — steps can't be counted.");
+          setSensorMode("unavailable");
         }
       } catch {
-        setSensorMode(isTouchDevice ? "motion" : "simulated");
+        // No sensor → steps silently stay at zero. No banner, no fake counts.
+        setSensorMode(isTouchDevice ? "motion" : "unavailable");
       }
-      setIsActive(true);
+      setStatus("tracking");
       return;
     }
 
-    // Desktops expose DeviceMotionEvent but never fire it — require a touch device.
-    setSensorMode(hasMotionEvent && isTouchDevice ? "motion" : "simulated");
-    setIsActive(true);
+    // Desktops expose DeviceMotionEvent but never fire it — require a touch
+    // device. Without a sensor the session still runs (time/goal), steps just
+    // never increment; the UI stays clean with no warning text.
+    setSensorMode(hasMotionEvent && isTouchDevice ? "motion" : "unavailable");
+    setStatus("tracking");
   }, []);
 
   /* ----------------------------- motion detection ---------------------------- */
 
+  // Steps come ONLY from the devicemotion sensor, filtered through the
+  // stepDetector pipeline (see utils/stepDetector.js): gravity removal,
+  // smoothing, hysteresis peak detection, walking-cadence gating and a
+  // rhythm-confirmation streak. Stationary phones, taps, scrolls, tilts and
+  // one-off jolts all produce zero counts. A fresh detector per tracking
+  // session means paused/stopped sessions never leak rhythm state.
   useEffect(() => {
     if (!isActive || sensorMode !== "motion") return undefined;
 
+    const detector = createStepDetector((count) => addSteps(count));
+
     const handleMotion = (event) => {
+      const ts =
+        typeof event.timeStamp === "number" && event.timeStamp > 0
+          ? event.timeStamp
+          : Date.now();
       const acc = event.acceleration;
       const accG = event.accelerationIncludingGravity;
 
-      let magnitude = 0;
-      let threshold = 0;
-
-      if (acc && acc.x !== null) {
-        magnitude = Math.sqrt(acc.x * acc.x + acc.y * acc.y + acc.z * acc.z);
-        threshold = 4.0;
-      } else if (accG && accG.x !== null) {
-        magnitude = Math.sqrt(accG.x * accG.x + accG.y * accG.y + accG.z * accG.z);
-        threshold = 15.0;
-      }
-
-      if (magnitude > threshold) {
-        const now = Date.now();
-        if (now - lastStepTime.current > MOTION_DEBOUNCE_MS) {
-          lastStepTime.current = now;
-          addSteps(1);
-        }
+      if (acc && acc.x !== null && acc.x !== undefined) {
+        detector.process({ linear: { x: acc.x, y: acc.y, z: acc.z } }, ts);
+      } else if (accG && accG.x !== null && accG.x !== undefined) {
+        detector.process({ gravity: { x: accG.x, y: accG.y, z: accG.z } }, ts);
       }
     };
 
     window.addEventListener("devicemotion", handleMotion);
-    return () => window.removeEventListener("devicemotion", handleMotion);
-  }, [isActive, sensorMode, addSteps]);
-
-  /* ------------------------- simulated walking cadence ------------------------ */
-
-  // Steps arrive one at a time on a human rhythm (~1 step every 0.5–0.75s with
-  // natural jitter), so the counter climbs 1, 2, 3… like a real walk instead of
-  // jumping in batches.
-  useEffect(() => {
-    if (!isActive || sensorMode !== "simulated") return undefined;
-
-    let timeoutId;
-    let cancelled = false;
-
-    const scheduleNextStep = () => {
-      const delay =
-        STEP_INTERVAL_MIN_MS +
-        Math.random() * (STEP_INTERVAL_MAX_MS - STEP_INTERVAL_MIN_MS);
-      timeoutId = window.setTimeout(() => {
-        if (cancelled) return;
-        addSteps(1);
-        scheduleNextStep();
-      }, delay);
-    };
-
-    scheduleNextStep();
-
     return () => {
-      cancelled = true;
-      window.clearTimeout(timeoutId);
+      window.removeEventListener("devicemotion", handleMotion);
+      detector.reset();
     };
   }, [isActive, sensorMode, addSteps]);
 
   /* ----------------------------- active-time ticker ---------------------------- */
 
+  // Walking time accrues from real Date.now() deltas, not a fixed +1000ms per
+  // tick — setInterval drifts (and background tabs throttle it), so summing
+  // actual elapsed time keeps the stat accurate.
   useEffect(() => {
     if (!isActive) return undefined;
 
+    let last = Date.now();
     const tick = window.setInterval(() => {
-      addActiveTime(1000);
+      const now = Date.now();
+      addActiveTime(now - last);
+      last = now;
       // Refresh the day key so the UI rolls over cleanly at midnight.
       setDayKey((prev) => {
         const next = todayKey();
@@ -243,6 +273,7 @@ export default function useStepCounter() {
   const progress = goal > 0 ? Math.min((today.steps / goal) * 100, 100) : 0;
 
   const week = useMemo(() => getWeekSeries(state.history), [state.history, dayKey]);
+  const last7 = useMemo(() => getLast7Series(state.history), [state.history, dayKey]);
   const streak = useMemo(() => getStreak(state.history), [state.history, dayKey]);
   const lifetime = useMemo(() => getLifetimeStats(state.history), [state.history]);
   const monthlyActiveDays = useMemo(
@@ -264,19 +295,28 @@ export default function useStepCounter() {
     activeMs: today.activeMs || 0,
     goal,
     progress,
+    status,
     isActive,
     sensorMode,
     errorMsg,
     week,
+    last7,
     streak,
     lifetime,
     monthlyActiveDays,
     achievements: state.achievements,
     unlocked,
+    voiceEnabled: state.voice?.enabled ?? true,
+    voiceInterval: state.voice?.interval ?? 50,
     addSteps,
     setGoal,
+    setVoiceEnabled,
+    setVoiceInterval,
     start,
     pause,
+    resume,
+    stop,
+    save,
     resetToday,
   };
 }

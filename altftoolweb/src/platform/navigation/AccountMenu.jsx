@@ -17,9 +17,8 @@ function initialsOf(user) {
 }
 
 /**
- * Header account entry: "Sign in" link when signed out, avatar dropdown
- * (Account / Sign out) when signed in. Compact so it fits both header
- * variants next to the theme toggle.
+ * Compact header account entry: icon-only sign-in link when signed out,
+ * avatar dropdown (Account / Sign out) when signed in.
  */
 export function AccountMenu() {
   const { user, loading, signOutUser } = useAuth();
@@ -55,11 +54,12 @@ export function AccountMenu() {
     return (
       <Link
         href="/account/login"
+        aria-label="Sign in"
         aria-busy={loading || undefined}
-        className="inline-flex h-10 items-center gap-1.5 rounded-md border border-border bg-(--card) px-3 text-sm font-semibold text-(--foreground) transition hover:bg-(--muted) focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-primary/35"
+        title="Sign in"
+        className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-md border border-border bg-(--card) text-(--foreground) transition hover:bg-(--muted) focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-primary/35"
       >
-        <UserRound className="h-4 w-4" aria-hidden="true" />
-        <span className="hidden sm:inline">Sign in</span>
+        <UserRound className="h-5 w-5" aria-hidden="true" />
       </Link>
     );
   }

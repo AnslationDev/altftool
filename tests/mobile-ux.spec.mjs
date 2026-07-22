@@ -51,38 +51,34 @@ async function expectNoHorizontalOverflow(page, label) {
   ).toBeLessThanOrEqual(overflow.innerWidth + 2);
 }
 
-async function expectToolActionBarFits(page, label) {
-  const actionBar = page.getByTestId("tool-action-bar");
-  await expect(actionBar).toBeVisible();
-  await expect(page.getByTestId("priority-tool-badge")).toContainText("Top 40 verified");
+async function expectToolWorkspaceFits(page, label) {
+  const workspace = page.getByTestId("tool-workspace-shell");
+  await expect(workspace).toBeVisible();
+  await expect.poll(
+    () => workspace.evaluate((element) => Number(Boolean(element.querySelector(
+      "button, input, textarea, select, canvas, [role='button'], [data-testid='tool-output']",
+    )))),
+    {
+      message: `${label} workspace should finish lazy loading`,
+      timeout: 60_000,
+    },
+  ).toBe(1);
 
-  const layout = await page.evaluate(() => {
-    const items = Array.from(
-      document.querySelectorAll(
-        "[data-testid='tool-action-bar'], [data-testid='priority-tool-badge'], [data-testid='copy-tool-link'], [data-testid='share-tool-link'], [data-testid='reset-tool-workspace']",
-      ),
-    );
-
-    return items.map((element) => {
-      const rect = element.getBoundingClientRect();
-      return {
-        testId: element.getAttribute("data-testid"),
-        text: (element.textContent || "").replace(/\s+/g, " ").trim(),
-        left: Math.round(rect.left),
-        right: Math.round(rect.right),
-        width: Math.round(rect.width),
-        height: Math.round(rect.height),
-        viewportWidth: window.innerWidth,
-      };
-    });
+  const layout = await workspace.evaluate((element) => {
+    const rect = element.getBoundingClientRect();
+    return {
+      left: Math.round(rect.left),
+      right: Math.round(rect.right),
+      width: Math.round(rect.width),
+      height: Math.round(rect.height),
+      viewportWidth: window.innerWidth,
+    };
   });
 
-  for (const item of layout) {
-    expect(item.left, `${label} ${item.testId} left`).toBeGreaterThanOrEqual(0);
-    expect(item.right, `${label} ${item.testId} right`).toBeLessThanOrEqual(item.viewportWidth);
-    expect(item.width, `${label} ${item.testId} width`).toBeGreaterThan(32);
-    expect(item.height, `${label} ${item.testId} height`).toBeGreaterThanOrEqual(32);
-  }
+  expect(layout.left, `${label} workspace left`).toBeGreaterThanOrEqual(0);
+  expect(layout.right, `${label} workspace right`).toBeLessThanOrEqual(layout.viewportWidth + 2);
+  expect(layout.width, `${label} workspace width`).toBeGreaterThan(0);
+  expect(layout.height, `${label} workspace height`).toBeGreaterThan(80);
 }
 
 test.describe("mobile layout", () => {
@@ -99,18 +95,20 @@ test.describe("mobile layout", () => {
     });
   }
 
-  test("chat assistant launcher stays compact and inside mobile viewport", async ({ page }) => {
-    await page.goto("/tools/all?search=json", { waitUntil: "domcontentloaded" });
+  test("AI assistant submit control stays compact and inside mobile viewport", async ({ page }) => {
+    await page.goto("/", { waitUntil: "domcontentloaded" });
 
-    const launcher = page.getByRole("button", { name: "Open AltFTool search assistant" });
-    await expect(launcher).toBeVisible();
+    await expect(page.getByRole("heading", { name: "Ask AltF AI" })).toBeVisible();
+    const submit = page.getByRole("button", { name: "Send question" });
+    await expect(submit).toBeVisible();
+    await submit.scrollIntoViewIfNeeded();
 
-    const box = await launcher.boundingBox();
-    expect(box, "chat launcher bounding box").toBeTruthy();
-    expect(box.width, "mobile chat launcher width").toBeLessThanOrEqual(56);
-    expect(box.height, "mobile chat launcher height").toBeLessThanOrEqual(56);
-    expect(box.x + box.width, "mobile chat launcher right edge").toBeLessThanOrEqual(390);
-    expect(box.y + box.height, "mobile chat launcher bottom edge").toBeLessThanOrEqual(844);
+    const box = await submit.boundingBox();
+    expect(box, "assistant submit bounding box").toBeTruthy();
+    expect(box.width, "mobile assistant submit width").toBeLessThanOrEqual(48);
+    expect(box.height, "mobile assistant submit height").toBeLessThanOrEqual(48);
+    expect(box.x + box.width, "mobile assistant submit right edge").toBeLessThanOrEqual(390);
+    expect(box.y + box.height, "mobile assistant submit bottom edge").toBeLessThanOrEqual(844);
   });
 
   test("blog mobile controls remain reachable", async ({ page }) => {
@@ -121,8 +119,8 @@ test.describe("mobile layout", () => {
     // "Search all" entry link and category quick links in the blog hero,
     // so assert the current mobile controls instead.
     await expect(page.getByRole("link", { name: /Search all/i }).first()).toBeVisible();
-    await expect(page.getByRole("link", { name: /Explore guides/i })).toBeVisible();
-    await expect(page.getByRole("link", { name: /Topic clusters/i })).toBeVisible();
+    await expect(page.getByRole("region", { name: "Blog categories" })).toBeVisible();
+    await expect(page.getByRole("tablist", { name: "Sort articles" })).toBeVisible();
     await expectNoHorizontalOverflow(page, "mobile /blogs controls");
   });
 
@@ -152,14 +150,14 @@ test.describe("top priority tool mobile layout", () => {
       });
 
       for (const slug of TOP_PRIORITY_TOOL_SLUGS) {
-        test(`${slug} action bar fits without horizontal overflow`, async ({ page }) => {
+        test(`${slug} workspace fits without horizontal overflow`, async ({ page }) => {
           const route = `/tools/all/${slug}`;
 
           await page.goto(route, { waitUntil: "domcontentloaded" });
           await expect(page.getByRole("navigation", { name: "Tool route" })).toContainText("Tools");
           await expect(page.getByText("Preparing workspace")).toHaveCount(0);
 
-          await expectToolActionBarFits(page, `${viewport.label} ${route}`);
+          await expectToolWorkspaceFits(page, `${viewport.label} ${route}`);
           await expectNoHorizontalOverflow(page, `${viewport.label} ${route}`);
           await expect(page.locator("body")).not.toContainText("Application error");
         });

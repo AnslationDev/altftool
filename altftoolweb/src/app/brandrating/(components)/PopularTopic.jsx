@@ -2,12 +2,21 @@
 import React from "react";
 import Image from "next/image";
 import { createPortal } from "react-dom";
-import satvikImage from "../(assets)/saatvahero.webp";
 import Link from "next/link";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { ChevronDown,ArrowUpRight } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { categoryService } from "../service/service";
+import { getRatingLabel, formatRating, clampRating } from "../utils/rating";
+
+function getBrandImage(brand) {
+  const img = brand?.images?.[0] || brand?.logo;
+  // Legacy static data points at /images/products/* files that do not exist.
+  if (!img || String(img).startsWith("/images/products/") || String(img).startsWith("/images/brands/")) {
+    return "/image-fallback.svg";
+  }
+  return img;
+}
 
 function PopularTopic({ data }) {
   const fallbackCategories = useMemo(() => {
@@ -88,7 +97,14 @@ function PopularTopic({ data }) {
       )
       : [];
 
-    const merged = [...directBrands, ...subcategoryBrands].filter(Boolean);
+    // Brands can be attached to both the category and a subcategory — dedupe.
+    const seen = new Set();
+    const merged = [...directBrands, ...subcategoryBrands].filter((brand) => {
+      const key = brand?.id || brand?.name;
+      if (!key || seen.has(key)) return false;
+      seen.add(key);
+      return true;
+    });
 
     return merged.length ? merged.slice(0, 2) : [];
   }, [currentCategoryData]);
@@ -238,7 +254,7 @@ function getUrlLink(value) {
             >
               <div className="relative w-full h-[200px] sm:h-[240px] md:h-[280px] lg:h-[320px] rounded-[12px] overflow-hidden flex-shrink-0">
                 <Image
-                  src={brand?.images?.[0] || satvikImage}
+                  src={getBrandImage(brand)}
                   alt={brand?.name || "Brand"}
                   fill
                   sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 520px"
@@ -267,7 +283,11 @@ function getUrlLink(value) {
                   </span>
 
                   <span className="text-(--muted-foreground) text-sm">
-                    4,786 People Visited This Week
+                    {brand?.visits
+                      ? `${brand.visits} People Visited This Week`
+                      : clampRating(brand?.rating) > 0
+                        ? `${getRatingLabel(brand.rating)} · ${formatRating(brand.rating)}/5 rating`
+                        : "Recently added"}
                   </span>
                 </div>
                 <Link href={`/brandrating/${getUrlLink(activeCategory)}/pdetail/${getUrlLink(brand?.name)}`} className="w-full sm:w-auto"> 

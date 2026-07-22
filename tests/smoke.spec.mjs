@@ -46,20 +46,35 @@ test("public web shell loads", async ({ page }) => {
   await expect.poll(() => page.evaluate(() => document.documentElement.getAttribute("data-theme-mode"))).toBe("system");
   await expect(page.locator("#main-header")).toBeVisible();
   await expect(page.getByAltText("AltFTool").first()).toBeVisible();
+  const signInLink = page.getByRole("link", { name: "Sign in" });
+  await expect(signInLink).toBeVisible();
+  await expect(signInLink).toHaveAttribute("title", "Sign in");
+  await expect(signInLink).toHaveText("");
+  await expect(signInLink).toHaveCSS("width", "40px");
+  await expect(signInLink).toHaveCSS("height", "40px");
   // The catalog hero search uses an animated typewriter placeholder, so match
   // the input by its stable class instead of a full placeholder string.
   await expect(page.locator("input.tools-search-input")).toBeVisible();
-  // The header control is now a direct light/dark toggle (the old dropdown
-  // menu with "Dark mode" / "System default" options was removed), so assert
-  // the current toggle-and-persist behaviour instead.
-  const themeToggle = page.getByRole("button", { name: "Toggle Theme" });
+  // Theme selection is explicit so users can follow the system preference or
+  // override it. Exercise every mode and leave the test profile on System.
+  const themeToggle = page.getByRole("button", { name: /^Theme:/ });
   await expect(themeToggle).toBeVisible();
   await themeToggle.click();
+  await expect(page.getByRole("menu", { name: "Theme mode" })).toBeVisible();
+  await page.getByRole("menuitemradio", { name: "Dark mode" }).click();
   await expect.poll(() => page.evaluate(() => document.documentElement.getAttribute("data-theme"))).toBe("dark");
   await expect.poll(() => page.evaluate(() => localStorage.getItem("appThemeMode"))).toBe("dark");
+
   await themeToggle.click();
+  await page.getByRole("menuitemradio", { name: "Light mode" }).click();
   await expect.poll(() => page.evaluate(() => document.documentElement.getAttribute("data-theme"))).toBe("light");
   await expect.poll(() => page.evaluate(() => localStorage.getItem("appThemeMode"))).toBe("light");
+
+  await themeToggle.click();
+  await page.getByRole("menuitemradio", { name: "System theme" }).click();
+  await expect.poll(() => page.evaluate(() => document.documentElement.getAttribute("data-theme-mode"))).toBe("system");
+  await expect.poll(() => page.evaluate(() => localStorage.getItem("appThemeMode"))).toBe("system");
+  await expect.poll(() => page.evaluate(() => document.documentElement.getAttribute("data-theme"))).toBe("light");
   await expect(page.getByRole("link", { name: "Tools", exact: true }).first()).toHaveAttribute("href", "/tools/all");
   await expect(page.getByRole("link", { name: "Blog", exact: true }).first()).toHaveAttribute("href", "/blogs");
   await quality.expectClean("public web shell");
@@ -130,12 +145,18 @@ test("buysmart A-Z category cards load brand images", async ({ page }) => {
 
   await page.goto(`${webUrl}${detailHref}`, { waitUntil: "domcontentloaded" });
   await expect(page).toHaveURL(/\/buysmart\/stores\//);
-  await expect(page.getByTestId("buysmart-store-detail")).toBeVisible();
-  await expect(page.getByTestId("buysmart-reveal-button")).toBeEnabled();
+  // React streaming can briefly retain a duplicate route segment inside a
+  // hidden `S:*` container. Scope actions to the single user-visible surface.
+  const storeDetail = page.locator('[data-testid="buysmart-store-detail"]:visible');
+  const revealButton = storeDetail.getByTestId("buysmart-reveal-button");
+
+  await expect(storeDetail).toHaveCount(1);
+  await expect(storeDetail).toBeVisible();
+  await expect(revealButton).toBeEnabled();
   await page.waitForTimeout(500);
 
-  await page.getByTestId("buysmart-reveal-button").click();
-  await expect(page.getByTestId("buysmart-reveal-modal")).toBeVisible();
+  await revealButton.click();
+  await expect(page.locator('[data-testid="buysmart-reveal-modal"]:visible')).toBeVisible();
   await quality.expectClean("buysmart flow");
 });
 
@@ -197,7 +218,7 @@ test("admin login shell loads", async ({ page }) => {
   const localAdminButton = page.getByTestId("local-admin-login");
   if (await localAdminButton.count()) {
     await localAdminButton.click();
-    await expect(page).toHaveURL(/\/admin-management/);
+    await expect(page).toHaveURL(/\/(?:admin-management|super-admin)/);
     await expect(page.getByText("Super Admin").first()).toBeVisible();
   }
 

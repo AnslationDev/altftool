@@ -1,0 +1,157 @@
+// Single icon resolver for the HousingNeeds module.
+//
+// Icons are named as strings in _data/verticals/*.js so the content files stay
+// plain serialisable data. Only the icons listed here are bundled — importing
+// all of lucide-react would pull in thousands of components.
+//
+// Adding an icon: import it below and add it to ICONS. Anything not listed
+// falls back to Wrench (and warns in development) rather than crashing render.
+
+import {
+  AppWindow,
+  BadgeCheck,
+  Bath,
+  BatteryCharging,
+  Bird,
+  Blinds,
+  Brush,
+  Bug,
+  Cable,
+  CalendarClock,
+  CircleDollarSign,
+  CircuitBoard,
+  ClipboardCheck,
+  Construction,
+  DoorOpen,
+  Droplet,
+  Droplets,
+  Fan,
+  FileCheck,
+  Flame,
+  Frame,
+  Gauge,
+  Grid2x2,
+  Hammer,
+  HardHat,
+  Home,
+  House,
+  Layers,
+  LayoutGrid,
+  LayoutPanelTop,
+  Leaf,
+  Lightbulb,
+  Microscope,
+  PaintRoller,
+  Paintbrush,
+  PanelsTopLeft,
+  Plug,
+  Rat,
+  Recycle,
+  Refrigerator,
+  Ruler,
+  ShieldCheck,
+  ShowerHead,
+  Snail,
+  Snowflake,
+  Sofa,
+  Sparkles,
+  SprayCan,
+  Sprout,
+  Sun,
+  SunMedium,
+  Thermometer,
+  Timer,
+  Toilet,
+  TreePine,
+  TriangleAlert,
+  Utensils,
+  Volume2,
+  Waves,
+  Wind,
+  Worm,
+  Wrench,
+  Zap,
+} from "lucide-react";
+
+export const ICONS = {
+  AppWindow,
+  BadgeCheck,
+  Bath,
+  BatteryCharging,
+  Bird,
+  Blinds,
+  Brush,
+  Bug,
+  Cable,
+  CalendarClock,
+  CircleDollarSign,
+  CircuitBoard,
+  ClipboardCheck,
+  Construction,
+  DoorOpen,
+  Droplet,
+  Droplets,
+  Fan,
+  FileCheck,
+  Flame,
+  Frame,
+  Gauge,
+  Grid2x2,
+  Hammer,
+  HardHat,
+  Home,
+  House,
+  Layers,
+  LayoutGrid,
+  LayoutPanelTop,
+  Leaf,
+  Lightbulb,
+  Microscope,
+  PaintRoller,
+  Paintbrush,
+  PanelsTopLeft,
+  Plug,
+  Rat,
+  Recycle,
+  Refrigerator,
+  Ruler,
+  ShieldCheck,
+  ShowerHead,
+  Snail,
+  Snowflake,
+  Sofa,
+  Sparkles,
+  SprayCan,
+  Sprout,
+  Sun,
+  SunMedium,
+  Thermometer,
+  Timer,
+  Toilet,
+  TreePine,
+  TriangleAlert,
+  Utensils,
+  Volume2,
+  Waves,
+  Wind,
+  Worm,
+  Wrench,
+  Zap,
+};
+
+const FALLBACK = Wrench;
+
+export function getIcon(name) {
+  const Icon = ICONS[name];
+
+  if (!Icon) {
+    if (process.env.NODE_ENV !== "production" && name) {
+      console.warn(
+        `[housingneeds] Unknown icon "${name}". Add it to _lib/icons.js or use one of: ${Object.keys(ICONS).join(", ")}`,
+      );
+    }
+    return FALLBACK;
+  }
+
+  return Icon;
+}

@@ -347,49 +347,51 @@ export default function KlondikeSolitaire() {
   }, [game, status, seconds, bestTime, bestScore, submitBestTime, submitBestScore, play]);
 
   // ----- keyboard ------------------------------------------------------------
-  keyHandlerRef.current = (event) => {
-    const target = event.target;
-    if (target instanceof HTMLElement) {
-      const tag = target.tagName;
-      if (tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT" || target.isContentEditable) return;
-      if (tag === "BUTTON" && (event.key === " " || event.key === "Enter")) return;
-    }
-    const key = event.key.toLowerCase();
-    if ((event.ctrlKey || event.metaKey) && key === "z") {
-      if (interactive) {
+  useEffect(() => {
+    keyHandlerRef.current = (event) => {
+      const target = event.target;
+      if (target instanceof HTMLElement) {
+        const tag = target.tagName;
+        if (tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT" || target.isContentEditable) return;
+        if (tag === "BUTTON" && (event.key === " " || event.key === "Enter")) return;
+      }
+      const key = event.key.toLowerCase();
+      if ((event.ctrlKey || event.metaKey) && key === "z") {
+        if (interactive) {
+          event.preventDefault();
+          handleUndo();
+        }
+        return;
+      }
+      if (event.ctrlKey || event.metaKey || event.altKey) return;
+      if (status === "ready" || status === "won") {
+        if (key === "enter") {
+          event.preventDefault();
+          startGame(drawMode);
+        }
+        return;
+      }
+      if (key === "p") {
+        event.preventDefault();
+        handleTogglePause();
+        return;
+      }
+      if (!interactive) return;
+      if (key === " " || key === "d") {
+        event.preventDefault();
+        handleDraw();
+      } else if (key === "u") {
         event.preventDefault();
         handleUndo();
-      }
-      return;
-    }
-    if (event.ctrlKey || event.metaKey || event.altKey) return;
-    if (status === "ready" || status === "won") {
-      if (key === "enter") {
+      } else if (key === "a") {
         event.preventDefault();
-        startGame(drawMode);
+        startAutoComplete();
+      } else if (key === "escape") {
+        event.preventDefault();
+        setSelection(null);
       }
-      return;
-    }
-    if (key === "p") {
-      event.preventDefault();
-      handleTogglePause();
-      return;
-    }
-    if (!interactive) return;
-    if (key === " " || key === "d") {
-      event.preventDefault();
-      handleDraw();
-    } else if (key === "u") {
-      event.preventDefault();
-      handleUndo();
-    } else if (key === "a") {
-      event.preventDefault();
-      startAutoComplete();
-    } else if (key === "escape") {
-      event.preventDefault();
-      setSelection(null);
-    }
-  };
+    };
+  });
 
   useEffect(() => {
     const onKey = (event) => keyHandlerRef.current(event);

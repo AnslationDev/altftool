@@ -425,7 +425,7 @@ const CarCostCalculator = () => {
     }, [calcA, carA.monthlyKM]);
 
     return (
-        <div className="min-h-screen bg-(--background) text-(--foreground) pb-20">
+        <div className="car-cost-tool min-h-screen bg-(--background) text-(--foreground) pb-20">
             <main className="max-w-7xl mx-auto px-4 sm:px-6 py-10">
                 {/* Hero Header */}
                 <div className='bg-(--background) text-(--primary) text-center mb-12 mx-auto'>

@@ -2,8 +2,8 @@
 
 import { useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
-
-const ADSENSE_CLIENT = "ca-pub-5858966346488022";
+import { ADSENSE_CLIENT } from "./adsenseConfig";
+import { useProductionSite } from "./useProductionSite";
 
 const AD_UNITS = {
   autorelaxed: {
@@ -100,12 +100,13 @@ function resolveAdUnit(pathname) {
 
 export default function GoogleAdUnit({ enabled = false }) {
   const pathname = usePathname() || "/";
+  const isProductionSite = useProductionSite(enabled);
   const adUnit = resolveAdUnit(pathname);
   const isAdFreeRoute = AD_FREE_PREFIXES.some(
     (prefix) => pathname === prefix || pathname.startsWith(`${prefix}/`),
   );
 
-  if (!enabled || isAdFreeRoute) return null;
+  if (!isProductionSite || isAdFreeRoute) return null;
 
   return (
     <GoogleAdPlacement
@@ -118,6 +119,8 @@ export default function GoogleAdUnit({ enabled = false }) {
 function GoogleAdPlacement({ adUnit }) {
   const adRef = useRef(null);
   const [fillStatus, setFillStatus] = useState("pending");
+  const isUnfilled =
+    fillStatus === "unfilled" || fillStatus === "unfill-optimized";
 
   useEffect(() => {
     if (!adRef.current) return undefined;
@@ -127,7 +130,11 @@ function GoogleAdPlacement({ adUnit }) {
 
     const statusObserver = new MutationObserver(() => {
       const status = node.getAttribute("data-ad-status");
-      if (status === "filled" || status === "unfilled") {
+      if (
+        status === "filled" ||
+        status === "unfilled" ||
+        status === "unfill-optimized"
+      ) {
         setFillStatus(status);
       }
     });
@@ -138,7 +145,15 @@ function GoogleAdPlacement({ adUnit }) {
     });
 
     const requestAd = () => {
-      if (disposed || node.getAttribute("data-adsbygoogle-status")) return;
+      if (
+        disposed ||
+        node.dataset.altfAdRequested === "true" ||
+        node.getAttribute("data-adsbygoogle-status")
+      ) {
+        return;
+      }
+
+      node.dataset.altfAdRequested = "true";
 
       try {
         window.adsbygoogle = window.adsbygoogle || [];
@@ -178,7 +193,7 @@ function GoogleAdPlacement({ adUnit }) {
     <aside
       aria-label="Advertisement"
       className={
-        fillStatus === "unfilled"
+        isUnfilled
           ? "hidden"
           : "mx-auto w-full max-w-6xl px-4 py-4 sm:px-6"
       }

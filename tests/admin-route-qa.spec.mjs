@@ -9,12 +9,17 @@ const adminRoutes = [
     path: "/analytics",
     marker: /Analytics view|Analytics unavailable|Cross-project admin health/i,
   },
-  { path: "/altftool/blogs", marker: /Manage your Blogs/i },
+  { path: "/altftool/blogs", marker: /Blog Management/i },
   {
     path: "/altftool/buysmart",
     marker: /BuySmart Control|Loading BuySmart data|Store|Feature Brand/i,
   },
   { path: "/altftool/deals", marker: /Deals Control|Manage Deal Surfaces/i },
+  { path: "/altftool/search-directory", marker: /Search Directory/i },
+  {
+    path: "/altftool/sale-locator",
+    marker: /Manage all sales|Loading sales from Firebase/i,
+  },
   { path: "/leadtree/blogs", marker: /Manage your Blogs/i },
   { path: "/leadtree/credit-cards", marker: /Manage your Credit Cards/i },
   { path: "/leadtree/blogs/view-blogs", marker: /All Blogs|Loading blogs/i },
@@ -71,9 +76,9 @@ function createMockHealthSnapshot() {
       topIssues: [],
     },
     qa: {
-      total: 40,
-      routeCovered: 40,
-      functionalCovered: 40,
+      total: 51,
+      routeCovered: 51,
+      functionalCovered: 51,
       score: 100,
       tools: [],
       checks: [],
@@ -418,6 +423,7 @@ async function expectHealthyAdminRoute(page, route) {
   await expect(body, route.path).not.toContainText("This admin page is not available");
   await expect(body, route.path).not.toContainText("Module route unavailable");
   await expect(body, route.path).not.toContainText("NEXT_HTTP_ERROR_FALLBACK");
+  await expect(page.locator('[data-admin-hydrated="true"]'), route.path).toBeVisible();
 }
 
 async function expectNoHorizontalOverflow(page, label) {
@@ -532,41 +538,46 @@ test.describe("admin route QA guard", () => {
     }
   });
 
-  test("health dashboard exposes release doctor fix commands", async ({ page, context }) => {
+  test("Sale Locator exposes the Firebase-backed editor flow", async ({ page }) => {
     const quality = createPageQualityGate(page);
-    const vercelCommand = "npm run deploy:readiness -- --target=all";
 
-    await context.grantPermissions(["clipboard-read", "clipboard-write"], { origin: adminUrl });
-    await page.route(`${adminUrl}/api/health**`, async (route) => {
-      await route.fulfill({
-        status: 200,
-        contentType: "application/json",
-        body: JSON.stringify(createMockHealthSnapshot()),
-      });
+    await expectHealthyAdminRoute(page, {
+      path: "/altftool/sale-locator",
+      marker: /Manage all sales|Loading sales from Firebase/i,
     });
+
+    await page.getByRole("button", { name: "Add Sale" }).click();
+    await expect(page.getByRole("heading", { name: "New Sale" })).toBeVisible();
+    await expect(page.getByText("Configure sale type, content and media.")).toBeVisible();
+    await expect(page.getByRole("button", { name: "Create Sale" })).toBeVisible();
+    await page.getByRole("button", { name: "Cancel" }).click();
+    await expect(page.getByRole("heading", { name: "New Sale" })).toHaveCount(0);
+
+    await expectNoHorizontalOverflow(page, "admin Sale Locator editor");
+    await quality.expectClean("admin Sale Locator editor");
+  });
+
+  test("health dashboard exposes portfolio filters and project details", async ({ page }) => {
+    const quality = createPageQualityGate(page);
 
     await expectHealthyAdminRoute(page, {
       path: "/health",
-      marker: /AltFTool Health|Release doctor|Strict CI gate/i,
+      marker: /Health Overview|All project reports/i,
     });
 
-    const doctorSummary = page.getByTestId("release-doctor-summary");
-    await expect(doctorSummary).toContainText("Ready with warnings");
-    await expect(doctorSummary).toContainText("Strict CI gate");
+    await expect(page.getByPlaceholder("Search project, admin, environment...")).toBeVisible();
+    await expect(page.getByRole("button", { name: "All Projects", exact: true })).toBeVisible();
+    await expect(page.getByRole("button", { name: "CSV", exact: true })).toBeVisible();
+    await expect(page.getByRole("button", { name: "Excel", exact: true })).toBeVisible();
 
-    const artifactFreshness = page.getByTestId("artifact-freshness-panel");
-    await expect(artifactFreshness).toContainText("Saved reports are fresh");
-    await expect(artifactFreshness).toContainText("Route QA");
-    await expect(artifactFreshness).toContainText("npm run qa:routes:report");
+    const altfRow = page.getByRole("row").filter({ hasText: "AltFTool" }).first();
+    await expect(altfRow).toBeVisible();
+    await altfRow.getByRole("button", { name: "View details" }).click();
+    await expect(page.getByRole("dialog", { name: "AltFTool health details" })).toBeVisible();
+    await expect(page.getByRole("heading", { name: "Health breakdown" })).toBeVisible();
+    await page.getByRole("button", { name: "Close details" }).click();
 
-    const fixCommands = page.getByTestId("release-doctor-fix-commands");
-    await expect(fixCommands).toContainText("Vercel deploy readiness");
-    await expect(fixCommands).toContainText(vercelCommand);
-
-    await page.getByRole("button", { name: "Copy fix command for Vercel deploy readiness" }).click();
-    await expect.poll(() => page.evaluate(() => navigator.clipboard.readText())).toBe(vercelCommand);
-
-    await expectNoHorizontalOverflow(page, "admin health release doctor fix commands");
-    await quality.expectClean("admin health release doctor fix commands");
+    await expectNoHorizontalOverflow(page, "admin health portfolio controls");
+    await quality.expectClean("admin health portfolio controls");
   });
 });

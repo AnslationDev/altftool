@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect, useMemo, useState, useCallback } from "react";
-import { listDocs, saveDoc, removeDoc } from "../lib/firebase";
+import { useEffect, useMemo, useRef, useState, useCallback } from "react";
+import { GripVertical } from "lucide-react";
+import { listDocs, saveDoc, removeDoc, reorderDocs } from "../lib/firebase";
 import { validate, validateVideoList, videoRowType } from "../lib/schemas";
 import { Button, Modal, Field } from "./ui";
 
@@ -51,9 +52,14 @@ export default function CollectionManager({ schema, lookups, notify }) {
   const [busy, setBusy] = useState(false);
 
   const idKey = schema.fields.find((f) => f.isId)?.key || "id";
+  const hasOrder = schema.fields.some((f) => f.key === "order");
 
   const load = useCallback(async () => {
-    try { setRows(await listDocs(schema.collection)); }
+    try {
+      const docs = await listDocs(schema.collection);
+      docs.sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
+      setRows(docs);
+    }
     catch (e) { notify(`Load failed: ${e.message}`, "error"); setRows([]); }
   }, [schema.collection, notify]);
 
@@ -66,6 +72,34 @@ export default function CollectionManager({ schema, lookups, notify }) {
     if (!s) return rows;
     return rows.filter((r) => JSON.stringify(r).toLowerCase().includes(s));
   }, [rows, q]);
+
+  // Drag-and-drop reordering — only enabled with an empty search box (a
+  // filtered subset's indices don't line up with the full `rows` array, so
+  // dragging while searching would silently corrupt ordering). Reordering
+  // updates local state live on drag-enter for the sliding feel; the actual
+  // Firestore write happens once, on drag-end.
+  const dragEnabled = hasOrder && !q.trim() && rows !== null && rows.length > 1;
+  const dragFrom = useRef(-1);
+  const rowsRef = useRef(rows);
+  useEffect(() => { rowsRef.current = rows; }, [rows]);
+
+  const onRowDragStart = (e, i) => { dragFrom.current = i; e.dataTransfer.effectAllowed = "move"; };
+  const onRowDragEnter = (i) => {
+    const from = dragFrom.current;
+    if (from === -1 || from === i) return;
+    setRows((prev) => {
+      const next = prev.slice();
+      const [moved] = next.splice(from, 1);
+      next.splice(i, 0, moved);
+      return next;
+    });
+    dragFrom.current = i;
+  };
+  const onRowDragEnd = async () => {
+    dragFrom.current = -1;
+    try { await reorderDocs(schema.collection, rowsRef.current.map((r) => r.id)); }
+    catch (e) { notify(`Reorder failed: ${e.message}`, "error"); load(); }
+  };
 
   const startNew = () => {
     const values = {};
@@ -146,9 +180,22 @@ export default function CollectionManager({ schema, lookups, notify }) {
 
   return (
     <div>
+      <header className="mla-pagehead">
+        <div>
+          <h1>{schema.label}</h1>
+          <p>Manage content in <code>{schema.collection}</code>.</p>
+        </div>
+      </header>
+
       <div className="mla-toolbar">
-        <input className="mla-search" placeholder={`Search ${schema.label.toLowerCase()}…`} value={q} onChange={(e) => setQ(e.target.value)} />
-        {rows !== null && <span className="mla-count">{filtered.length} of {rows.length}</span>}
+        <input
+          aria-label={`Search ${schema.label.toLowerCase()}`}
+          className="mla-search"
+          placeholder={`Search ${schema.label.toLowerCase()}…`}
+          value={q}
+          onChange={(e) => setQ(e.target.value)}
+        />
+        {rows !== null && <span className="mla-count">{filtered.length} of {rows.length}{dragEnabled ? " · drag rows to reorder" : ""}</span>}
         <Button onClick={startNew}>+ Add {schema.label.replace(/s$/, "")}</Button>
       </div>
 
@@ -168,6 +215,7 @@ export default function CollectionManager({ schema, lookups, notify }) {
           <table className="mla-table">
             <thead>
               <tr>
+                {dragEnabled && <th style={{ width: 28 }}></th>}
                 {schema.listColumns.map((c, i) => <th key={c}>{i === 0 ? schema.label.replace(/s$/, "") : c}</th>)}
                 <th>ID</th>
                 <th></th>
@@ -175,12 +223,23 @@ export default function CollectionManager({ schema, lookups, notify }) {
             </thead>
             <tbody>
               {rows === null ? (
-                <SkeletonRows cols={schema.listColumns.length + 2} />
+                <SkeletonRows cols={schema.listColumns.length + 2 + (dragEnabled ? 1 : 0)} />
               ) : (
-                filtered.map((r) => (
-                  <tr key={r.id}>
-                    {schema.listColumns.map((c, i) => (
-                      <td key={c}>{i === 0 ? <MainCell row={r} col={c} /> : <Cell value={r[c]} />}</td>
+                filtered.map((r, i) => (
+                  <tr key={r.id}
+                    draggable={dragEnabled}
+                    onDragStart={dragEnabled ? (e) => onRowDragStart(e, i) : undefined}
+                    onDragEnter={dragEnabled ? () => onRowDragEnter(i) : undefined}
+                    onDragOver={dragEnabled ? (e) => e.preventDefault() : undefined}
+                    onDragEnd={dragEnabled ? onRowDragEnd : undefined}
+                    style={dragEnabled ? { cursor: "grab" } : undefined}>
+                    {dragEnabled && (
+                      <td style={{ width: 28, padding: "10px 4px" }}>
+                        <GripVertical size={15} style={{ color: "var(--mut)" }} />
+                      </td>
+                    )}
+                    {schema.listColumns.map((c, i2) => (
+                      <td key={c}>{i2 === 0 ? <MainCell row={r} col={c} /> : <Cell value={r[c]} />}</td>
                     ))}
                     <td><span className="mla-mono">{r.id}</span></td>
                     <td className="mla-rowactions">
@@ -199,12 +258,13 @@ export default function CollectionManager({ schema, lookups, notify }) {
         <Modal wide title={`${editing.isNew ? "Add" : "Edit"} — ${schema.label}`} onClose={() => setEditing(null)}>
           <div className="mla-form">
             {schema.fields.map((f) => (
-              <div key={f.key} className={`mla-field${["textarea", "list", "keyvalue", "image", "objectlist", "videolist", "group"].includes(f.type) ? " mla-field-full" : ""}`}>
+              <div key={f.key} className={`mla-field${["textarea", "list", "keyvalue", "image", "objectlist", "videolist", "group", "background"].includes(f.type) ? " mla-field-full" : ""}`}>
                 <label>
                   {f.label}{f.required && <em> *</em>}
                   {f.isId && !editing.isNew && <span className="mla-muted"> (immutable)</span>}
+                  {f.readOnly && <span className="mla-muted"> (reference only)</span>}
                 </label>
-                {f.isId && !editing.isNew ? (
+                {(f.isId && !editing.isNew) || f.readOnly ? (
                   <input value={editing.values[f.key] || ""} disabled />
                 ) : (
                   <Field field={f} value={editing.values[f.key]} lookups={lookups}

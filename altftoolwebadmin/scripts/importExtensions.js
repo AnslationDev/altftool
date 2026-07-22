@@ -1,18 +1,19 @@
-import admin from "firebase-admin";
+import { cert, initializeApp } from "firebase-admin/app";
+import { FieldValue, getFirestore } from "firebase-admin/firestore";
 import fs from "fs";
 import dotenv from "dotenv";
 
 dotenv.config({ path: ".env.local" });
 
-admin.initializeApp({
-  credential: admin.credential.cert({
+const app = initializeApp({
+  credential: cert({
     projectId: process.env.FIREBASE_PROJECT_ID,
     clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
     privateKey: process.env.FIREBASE_PRIVATE_KEY.replace(/\\n/g, "\n"),
   }),
 });
 
-const db = admin.firestore();
+const db = getFirestore(app);
 
 const extensions = JSON.parse(
   fs.readFileSync("./scripts/extensions-firestore-import.json")
@@ -26,8 +27,8 @@ async function importExtensions() {
 
     batch.set(ref, {
       ...ext,
-      createdAt: admin.firestore.FieldValue.serverTimestamp(),
-      updatedAt: admin.firestore.FieldValue.serverTimestamp(),
+      createdAt: FieldValue.serverTimestamp(),
+      updatedAt: FieldValue.serverTimestamp(),
     });
   });
 

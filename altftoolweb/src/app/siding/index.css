@@ -1,72 +1,65 @@
 @import "tailwindcss";
 
-@theme {
-  --color-primary: #14B8A6;
-  --color-secondary: #22D3EE;
-  --color-accent: #8B5CF6;
-  --color-light: #F7F8FB;
-  --color-dark: #070D18;
-  --color-surface: #FFFFFF;
-  --color-surface-soft: #EEF3F6;
-  --color-border: #E2E8F0;
-  --color-foreground: #111827;
-  --color-muted: #607083;
-  --color-primary-foreground: #FFFFFF;
-  --color-primary-hover: #0D9488;
-  --color-primary-active: #0F766E;
-  --color-success: #16A34A;
-  --color-warning: #F59E0B;
-  --color-danger: #EF4444;
-  --color-info: #0EA5E9;
+@theme inline {
+  --color-primary: var(--primary);
+  --color-secondary: var(--secondary);
+  --color-accent: var(--accent);
+  --color-light: var(--page);
+  --color-dark: var(--anslation-ds-footer);
+  --color-surface: var(--surface);
+  --color-surface-soft: var(--surface-soft);
+  --color-border: var(--border);
+  --color-foreground: var(--foreground);
+  --color-muted: var(--muted-foreground);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary-hover: var(--primary-hover);
+  --color-primary-active: var(--primary-active);
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-danger: var(--danger);
+  --color-info: var(--info);
   --font-display: "Geist", "Geist Fallback", ui-sans-serif, system-ui, sans-serif;
   --font-sans: "Geist", "Geist Fallback", ui-sans-serif, system-ui, sans-serif;
 }
 
 @layer base {
-  html {
+  .siding-route {
+    min-height: 100vh;
     scroll-behavior: smooth;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-  }
-  body {
     font-family: "Geist", "Geist Fallback", ui-sans-serif, system-ui, sans-serif;
-    color: var(--color-foreground, #111827);
-    background: var(--color-surface, #ffffff);
+    color: var(--foreground);
+    background: var(--background);
   }
-  h1, h2, h3, h4, h5, h6 {
+  .siding-route :is(h1, h2, h3, h4, h5, h6) {
     font-family: "Geist", "Geist Fallback", ui-sans-serif, system-ui, sans-serif;
     letter-spacing: 0;
   }
 }
 
-[data-theme="dark"] {
-  --color-surface: #101827;
-  --color-surface-soft: #142033;
-  --color-border: #1E293B;
-  --color-foreground: #F8FAFC;
-  --color-muted: #94A3B8;
-  --color-light: #070D18;
-  --color-dark: #F7F8FB;
+html[data-theme="dark"] .siding-route {
+  color-scheme: dark;
 }
 
 /* Custom scrollbar */
-::-webkit-scrollbar { width: 10px; height: 10px; }
-::-webkit-scrollbar-track { background: #EEF3F6; }
-::-webkit-scrollbar-thumb { background: #14B8A6; border-radius: 8px; }
-::-webkit-scrollbar-thumb:hover { background: #0D9488; }
+.siding-route ::-webkit-scrollbar { width: 10px; height: 10px; }
+.siding-route ::-webkit-scrollbar-track { background: var(--surface-soft); }
+.siding-route ::-webkit-scrollbar-thumb { background: var(--primary); border-radius: var(--anslation-ds-radius); }
+.siding-route ::-webkit-scrollbar-thumb:hover { background: var(--primary-hover); }
 
 /* Gradients */
-.bg-gradient-hero {
+.siding-route .bg-gradient-hero {
   background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-hover) 60%, var(--color-secondary) 100%);
 }
-.bg-gradient-soft {
+.siding-route .bg-gradient-soft {
   background: linear-gradient(180deg, var(--color-light) 0%, var(--color-surface) 100%);
 }
-.bg-gradient-radial {
+.siding-route .bg-gradient-radial {
   background: radial-gradient(ellipse at top, rgba(34,211,238,0.18), transparent 60%),
               radial-gradient(ellipse at bottom, rgba(20,184,166,0.15), transparent 60%);
 }
-.text-gradient {
+.siding-route .text-gradient {
   background: linear-gradient(90deg, #14B8A6, #22D3EE);
   -webkit-background-clip: text;
   background-clip: text;
@@ -74,13 +67,13 @@
 }
 
 /* Glassmorphism */
-.glass {
+.siding-route .glass {
   background: rgba(255, 255, 255, 0.7);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border: 1px solid rgba(255, 255, 255, 0.5);
 }
-.glass-dark {
+.siding-route .glass-dark {
   background: rgba(7, 13, 24, 0.42);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
@@ -88,18 +81,18 @@
 }
 
 /* Premium shadow */
-.shadow-premium {
+.siding-route .shadow-premium {
   box-shadow: 0 20px 60px -20px rgba(15, 23, 42, 0.12), 0 8px 20px -8px rgba(15, 23, 42, 0.08);
 }
-.shadow-glow {
+.siding-route .shadow-glow {
   box-shadow: 0 0 40px rgba(34, 211, 238, 0.28);
 }
 
 /* Animated underline */
-.link-underline {
+.siding-route .link-underline {
   position: relative;
 }
-.link-underline::after {
+.siding-route .link-underline::after {
   content: "";
   position: absolute;
   left: 0; bottom: -4px;
@@ -107,21 +100,21 @@
   background: linear-gradient(90deg, #14B8A6, #22D3EE);
   transition: width 0.3s ease;
 }
-.link-underline:hover::after { width: 100%; }
+.siding-route .link-underline:hover::after { width: 100%; }
 
 /* Marquee */
 @keyframes marquee {
   0% { transform: translateX(0); }
   100% { transform: translateX(-50%); }
 }
-.animate-marquee { animation: marquee 30s linear infinite; }
+.siding-route .animate-marquee { animation: marquee 30s linear infinite; }
 
 /* Pulse ring */
 @keyframes pulse-ring {
   0% { transform: scale(0.8); opacity: 0.7; }
   100% { transform: scale(2); opacity: 0; }
 }
-.pulse-ring::before {
+.siding-route .pulse-ring::before {
   content: "";
   position: absolute; inset: 0;
   border-radius: 9999px;
@@ -130,11 +123,11 @@
 }
 
 /* Hide scrollbar utility */
-.no-scrollbar::-webkit-scrollbar { display: none; }
-.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+.siding-route .no-scrollbar::-webkit-scrollbar { display: none; }
+.siding-route .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
 /* Section background grid */
-.bg-grid {
+.siding-route .bg-grid {
   background-image:
     linear-gradient(rgba(20,184,166,0.08) 1px, transparent 1px),
     linear-gradient(90deg, rgba(20,184,166,0.08) 1px, transparent 1px);
@@ -142,19 +135,19 @@
 }
 
 /* Aspect helpers */
-.before-after-handle {
+.siding-route .before-after-handle {
   background: var(--color-surface);
   box-shadow: 0 4px 20px rgba(15,23,42,0.12);
 }
 
-.before-aging-overlay {
+.siding-route .before-aging-overlay {
   background:
     linear-gradient(120deg, color-mix(in srgb, #607083 35%, transparent), color-mix(in srgb, #14B8A6 18%, transparent)),
     radial-gradient(circle at 20% 35%, color-mix(in srgb, #070D18 22%, transparent), transparent 16%),
     radial-gradient(circle at 70% 70%, color-mix(in srgb, #FFFFFF 18%, transparent), transparent 18%);
 }
 
-.before-stripe-overlay {
+.siding-route .before-stripe-overlay {
   background: repeating-linear-gradient(
     90deg,
     color-mix(in srgb, #111827 18%, transparent) 0,

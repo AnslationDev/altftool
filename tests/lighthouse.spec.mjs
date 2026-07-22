@@ -17,6 +17,16 @@ const DESKTOP_CONFIG = {
       disabled: false,
     },
     throttlingMethod: "simulate",
+    // Third-party monetisation and analytics are verified independently. Block
+    // them here so this gate measures first-party DOM and delivery quality.
+    blockedUrlPatterns: [
+      "*googlesyndication.com/*",
+      "*doubleclick.net/*",
+      "*google-analytics.com/*",
+      "*googletagmanager.com/*",
+      "*clarity.ms/*",
+      "*skimresources.com/*",
+    ],
     // Heavy routes (e.g. the tool workspace) on a CPU-contended CI runner can
     // exceed Lighthouse's default DevTools-protocol deadline while collecting
     // the trace (seen as "Waiting for DevTools protocol response ... DOMSnapshot.disable"),
@@ -95,7 +105,7 @@ async function collectLighthouse(pageConfig) {
       const runtimeError = result?.lhr?.runtimeError?.message || null;
       if (runtimeError) {
         lastRuntimeError = runtimeError;
-        continve;
+        continue;
       }
 
       return { lhr: result.lhr, runtimeError: null };

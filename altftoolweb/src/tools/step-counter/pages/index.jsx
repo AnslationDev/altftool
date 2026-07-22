@@ -1,7 +1,7 @@
 "use client";
 
 import useStepCounter from "../utils/useStepCounter";
-import StepApp from "../components/StepApp.jsx";
+import StepAppV2 from "../components/StepAppV2.jsx";
 import ExploreFitnessTools from "../components/ExploreFitnessTools.jsx";
 import StepFaqAbout from "../components/StepFaqAbout.jsx";
 
@@ -15,11 +15,13 @@ export default function StepCounterApp() {
       <h1 className="sr-only">Step Counter — Free Online Daily Step Tracker</h1>
 
       {/*
-        App-style experience on every breakpoint (hardcoded indigo/violet
-        theme — see StepApp.jsx). Phones get the compact app layout; desktop
-        gets the same design as a wider dashboard.
+        Redesigned app-style screen (dark / cyan reference theme — see
+        StepAppV2.jsx). Renders as a phone-sized canvas on every breakpoint;
+        the previous indigo/violet StepApp.jsx is kept for easy rollback.
       */}
-      <StepApp counter={counter} />
+      <div className="px-3 pt-4 min-[400px]:px-4">
+        <StepAppV2 counter={counter} />
+      </div>
 
       {/* Companion sections share the app theme AND the app column, so the
           whole page reads as one designed product. */}

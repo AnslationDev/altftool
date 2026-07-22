@@ -7,6 +7,10 @@ const IGNORED_CONSOLE_PATTERNS = [
   // that is simply unconfigured/unreachable in CI. They are replaced by the
   // URL-aware same-origin response check below.
   /Failed to load resource/i,
+  // Firestore logs a console error for a transient transport retry even when
+  // its local cache keeps the screen usable and the next request succeeds.
+  // Same-origin API failures and missing rendered data remain covered below.
+  /Could not reach Cloud Firestore backend[\s\S]*client will operate in offline mode/i,
 ];
 
 const DANGEROUS_WARNING_PATTERNS = [

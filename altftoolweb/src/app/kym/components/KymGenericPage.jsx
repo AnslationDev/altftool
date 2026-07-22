@@ -24,6 +24,10 @@ const contentGroups = [
   ...topMemes.map((item) => ({ ...item, category: "Meme", meta: "KYM Staff - trending" })),
 ];
 
+export function getAllKymRoutes() {
+  return [...new Set(contentGroups.map((item) => item.href || `/kym/${slugifyTitle(item.title)}`))];
+}
+
 const CATEGORY_COPY = {
   Explainer: {
     status: "Explained",

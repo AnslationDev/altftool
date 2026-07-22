@@ -10,8 +10,8 @@ export default function ProductBanner({ brand }) {
           <Image
             src={
               brand?.bannerImage ||
-              brand?.images?.[0] 
-         
+              brand?.images?.[0] ||
+              "/image-fallback.svg"
             }
             alt={`${brand?.name || "product"} banner`}
             fill

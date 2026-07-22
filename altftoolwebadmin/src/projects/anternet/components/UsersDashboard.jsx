@@ -31,15 +31,30 @@ export default function UsersDashboard() {
   // eslint-disable-next-line react-hooks/set-state-in-effect -- async fetch
   useEffect(() => { load(); }, []);
 
-  if (users === null) return <div className="mla-panelcard"><h3>Users</h3><p className="mla-muted">Loading…</p></div>;
+  if (users === null) return (
+    <div>
+      <header className="mla-pagehead">
+        <div>
+          <h1>App Users</h1>
+          <p>Review user activity and wallet totals.</p>
+        </div>
+      </header>
+      <div className="mla-panelcard"><p className="mla-muted" role="status">Loading…</p></div>
+    </div>
+  );
 
   const totalCoins = users.reduce((a, u) => a + (Number(u.coins) || 0), 0);
   const fmtDate = (ts) => (ts?.seconds ? new Date(ts.seconds * 1000).toLocaleString() : "—");
 
   return (
     <div>
+      <header className="mla-pagehead">
+        <div>
+          <h1>App Users</h1>
+          <p>Review user activity and wallet totals.</p>
+        </div>
+      </header>
       <div className="mla-panelcard" style={{ marginBottom: 12 }}>
-        <h3>App Users</h3>
         {error ? (
           <p className="mla-muted">Could not load users: <code>{error}</code></p>
         ) : users.length === 0 ? (

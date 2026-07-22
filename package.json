@@ -27,8 +27,8 @@
     "performance:budget:report": "node scripts/check-performance-budgets.mjs --strict --require-build --output=altftoolwebadmin/src/data/performanceBudgetReport.json",
     "performance:budget:strict": "node scripts/check-performance-budgets.mjs --strict --require-build",
     "audit": "npm run audit:web && npm run audit:admin",
-    "audit:web": "npm audit --audit-level=high --workspace altftoolweb",
-    "audit:admin": "npm audit --audit-level=high --workspace altftoolwebadmin",
+    "audit:web": "npm audit --omit=optional --audit-level=high --workspace altftoolweb",
+    "audit:admin": "npm audit --omit=optional --audit-level=high --workspace altftoolwebadmin",
     "routes:check": "node scripts/check-routes.mjs",
     "qa:routes": "node scripts/check-route-qa-report.mjs",
     "qa:routes:strict": "node scripts/check-route-qa-report.mjs --strict --warm",
@@ -83,6 +83,7 @@
     "test:firebase-data-integrity": "node --test tests/firebase-data-integrity.test.mjs",
     "test:firebase-live-data-report": "node --test tests/firebase-live-data-report.test.mjs",
     "test:smoke": "playwright test tests/smoke.spec.mjs",
+    "test:theme": "playwright test tests/theme-system.spec.mjs",
     "test:tools:functional": "ALTFT_SKIP_ADMIN_SERVER=true playwright test tests/tool-functional.spec.mjs",
     "test:tools:priority": "ALTFT_SKIP_ADMIN_SERVER=true playwright test tests/tool-priority.spec.mjs",
     "test:tools:all": "playwright test tests/tool-all-routes.spec.mjs",
@@ -104,18 +105,20 @@
     "test:lighthouse": "ALTFT_PLAYWRIGHT_WEB_SERVER=production ALTFT_PLAYWRIGHT_ADMIN_SERVER=dev playwright test tests/lighthouse.spec.mjs",
     "test:lighthouse:dev": "playwright test tests/lighthouse.spec.mjs",
     "test:core-cache": "node --test tests/core-cache.test.mjs",
+    "test:catalogs": "node --test tests/experience-catalog.test.mjs tests/product-registry.test.mjs tests/site-map-data.test.mjs",
     "test:live-deploy-parity": "node --test tests/live-deploy-parity.test.mjs",
     "test:performance-budget": "node --test tests/performance-budget.test.mjs",
     "test:production-surface-links": "node --test tests/production-surface-links.test.mjs",
     "test:release-doctor": "node --test tests/release-doctor.test.mjs",
     "test:release-history": "node --test tests/release-history-report.test.mjs",
     "test:route-loading": "node --test tests/route-loading-files.test.mjs",
+    "test:search-engine": "node --test tests/search-engine.test.mjs",
     "test:route-qa-report": "node --test tests/route-qa-report.test.mjs",
     "validate:admin-ux-release": "node scripts/run-admin-ux-release-validation.mjs",
     "validate:ux-release": "node scripts/run-ux-release-validation.mjs",
     "validate:ux-release:live": "node scripts/run-ux-release-validation.mjs --live-parity",
     "validate:runtime-quality": "npm run qa:routes:strict && npm run firebase:live-check:strict && npm run firebase:integrity:strict && npm run performance:budget:strict",
-    "validate": "npm run lint:web && npm run lint:web:budget && npm run routes:check && npm run test:core-cache && npm run test:route-qa-report && npm run test:performance-budget && npm run test:firebase-data-integrity && npm run test:production-surface-links && npm run test:release-doctor && npm run test:release-history && npm run test:live-deploy-parity && npm run tools:check && npm run content:blogs && npm run seo:blog-check && npm run seo:blog-links && npm run health:manifest:check && npm run env:readiness && npm run firebase:check && npm run media:check && npm run audit && npm run build && npm run bundle:audit && npm run performance:budget:strict && npm run test:smoke",
+    "validate": "npm run lint:web && npm run lint:web:budget && npm run routes:check && npm run test:core-cache && npm run test:search-engine && npm run test:route-qa-report && npm run test:performance-budget && npm run test:firebase-data-integrity && npm run test:production-surface-links && npm run test:release-doctor && npm run test:release-history && npm run test:live-deploy-parity && npm run tools:check && npm run content:blogs && npm run seo:blog-check && npm run seo:blog-links && npm run health:manifest:check && npm run env:readiness && npm run firebase:check && npm run media:check && npm run audit && npm run build && npm run bundle:audit && npm run performance:budget:strict && npm run test:smoke",
     "validate:full": "npm run validate && npm run test:routes && npm run test:tools:functional && npm run test:tools:priority && npm run test:mobile-ux && npm run test:admin-api && npm run test:firebase-admin-write-check && npm run test:firebase-live-data-report",
     "validate:release": "npm run validate:full && npm run firebase:live-check && npm run seo:blog-live-check && npm run test:firebase-public-pages && npm run test:security && npm run test:visual && npm run test:lighthouse"
   },
@@ -129,10 +132,16 @@
     "tailwindcss": "^4.2.4"
   },
   "overrides": {
+    "fast-xml-parser": "5.10.1",
+    "dompurify": "3.4.12",
+    "minimatch@3.1.5": {
+      "brace-expansion": "1.1.16"
+    },
     "postcss": "^8.5.14",
     "pdfjs-dist": "5.3.93",
-    "next": {
-      "postcss": "^8.5.14"
+    "websocket-driver": "0.7.5",
+    "@monaco-editor/react": {
+      "monaco-editor": "$monaco-editor"
     }
   },
   "dependencies": {
@@ -140,6 +149,8 @@
     "@tiptap/core": "^2.27.2",
     "@tiptap/pm": "^2.27.2",
     "heic2any": "^0.0.4",
-    "prettier": "^3.9.5"
+    "monaco-editor": "0.53.0",
+    "prettier": "^3.9.5",
+    "sharp": "0.35.3"
   }
 }

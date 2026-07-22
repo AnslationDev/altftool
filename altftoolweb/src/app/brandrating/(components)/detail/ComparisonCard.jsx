@@ -2,10 +2,11 @@
 
 import { categoryService } from "../../service/service";
 import React, { useState, useRef, useMemo, useEffect } from "react";
-import Image from "next/image";
 import Link from "next/link";
 import { Star, StarHalf, ArrowUpRight } from "lucide-react";
-import { useParams } from "next/navigation";;
+import { useParams } from "next/navigation";
+import ManagedImage from "@/components/ui/ManagedImage";
+import { getBrandTagline, clampRating, formatRating } from "../../utils/rating";
 
 
 function getUrlLink(value = "") {
@@ -17,9 +18,10 @@ function getUrlLink(value = "") {
 
 /* SINGLE CARD COMPONENT*/
 function ComparisonCard({ brand,category }) {
-    const rating = brand?.rating || 0;
-    const fullStars = Math.floor(rating / 2);
-    const hasHalf = rating % 2 >= 1;
+    // Ratings come from the admin panel on a 0–5 scale.
+    const rating = clampRating(brand?.rating);
+    const fullStars = Math.floor(rating);
+    const hasHalf = rating % 1 >= 0.5;
 
 
     return (
@@ -27,11 +29,10 @@ function ComparisonCard({ brand,category }) {
         <div className="group w-[85vw] sm:min-w-[240px] md:w-[240px]  min-h-[300px] md:h-[313px]   rounded-lg border border-(--border) p-[10px] flex flex-col gap-[10px]  hover:border-[var(--primary)] hover:shadow-md transition-all duration-300 animate-slide-up">
 
             <div className="w-full h-[116px] relative rounded-xl overflow-hidden">
-                <Image
-                    src={brand?.images?.[0] || brand?.image}
+                <ManagedImage
+                    src={brand?.images?.[0] || brand?.image || brand?.logo}
                     alt={brand?.name || "Brand"}
                     fill
-                    sizes="(max-width: 640px) 85vw, 240px"
                     className="object-cover"
                 />
             </div>
@@ -58,12 +59,12 @@ function ComparisonCard({ brand,category }) {
                     </div>
 
                     <span className="text-xs text-(--muted-foreground) font-medium">
-                        {rating}/10
+                        {formatRating(rating)}/5
                     </span>
                 </div>
 
-                <p className="text-[13px] font-medium text-(--muted-foreground) leading-snug">
-                    Trusted by 27,000+ customers
+                <p className="text-[13px] font-medium text-(--muted-foreground) leading-snug line-clamp-2">
+                    {getBrandTagline(brand)}
                 </p>
 
                 <Link

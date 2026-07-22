@@ -1,0 +1,239 @@
+/* App.css (upgraded) */
+
+.card-picker-container {
+  --bg1: #667eea;
+  --bg2: #764ba2;
+  --glass: rgba(255,255,255,0.08);
+  --accent: #48c774;
+  --card-w: 220px;
+  --card-h: 320px;
+}
+
+
+
+
+
+/* Header */
+
+
+
+/* Main container */
+.card-picker-container {
+  display: flex;
+  gap: 28px;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 20px 80px;
+  min-height: calc(100vh - 160px);
+}
+
+/* Stage to hold the card */
+.card-stage {
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  width: 100%;
+}
+
+/* Card 3D container */
+.card {
+  width: var(--card-w);
+  height: var(--card-h);
+  perspective: 1600px;
+}
+
+.card-inner {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.7s cubic-bezier(.2,.9,.3,1);
+  border-radius: 14px;
+  box-shadow: 0 18px 30px rgba(0,0,0,0.35);
+}
+
+/* flipped state */
+.card.flipped .card-inner {
+  transform: rotateY(180deg) translateZ(0);
+}
+
+/* faces */
+.card-face {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  border-radius: 12px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+/* FRONT - card face design */
+.card-front {
+  background: linear-gradient(180deg,#ffffff 0%, #f7f7f8 100%);
+  color: #222;
+  padding: 14px;
+  border: 1px solid rgba(0,0,0,0.06);
+}
+
+/* corners top-left / bottom-right */
+.card-front .corner {
+  position: absolute;
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+  gap: 4px;
+  font-weight: 700;
+}
+.card-front .corner.top-left {
+  left: 10px;
+  top: 8px;
+}
+.card-front .corner.bottom-right {
+  right: 8px;
+  bottom: 8px;
+  align-items:flex-end;
+  transform: rotate(180deg);
+}
+
+/* rank + small suit in corners */
+.card-front .rank {
+  font-size: 18px;
+  line-height: 1;
+}
+.card-front .suit.small {
+  font-size: 18px;
+}
+
+/* Big suit in center */
+.center-suit {
+  margin: auto;
+  text-align:center;
+}
+.suit-large {
+  font-size: 84px;
+  line-height: 0.9;
+  filter: drop-shadow(0 6px 12px rgba(0,0,0,0.12));
+}
+.rank-word {
+  margin-top: 6px;
+  font-weight: 700;
+  font-size: 20px;
+  color: rgba(0,0,0,0.6);
+}
+
+/* Placeholder look when no card */
+.placeholder-front {
+  width:100%;
+  height:100%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color: rgba(0,0,0,0.35);
+}
+.placeholder-text {
+  background: rgba(255,255,255,0.85);
+  padding: 10px 18px;
+  border-radius: 999px;
+  color: #333;
+  font-weight:700;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+}
+
+/* BACK - prefer an image if available, otherwise gradient pattern */
+.card-back {
+  transform: rotateY(180deg);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background: repeating-linear-gradient(45deg, rgba(255,255,255,0.03) 0 10px, rgba(255,255,255,0.02) 10px 20px), linear-gradient(180deg, #e6eefb 0%, #c6d7ff 100%);
+}
+
+/* back image - if present in public/cards/back.png it will show; else fallback remains */
+.card-back .back-graphic {
+  width:100%;
+  height:100%;
+  background-image: url('/cards/back.png');
+  background-size: cover;
+  background-position: center;
+}
+
+/* If image file missing, ru a small pattern on top */
+.card-back .back-graphic:empty {
+  background: linear-gradient(135deg,#2b2f77 0%, #5b3d99 100%);
+}
+
+/* Controls panel */
+.controls {
+  display:flex;
+  flex-direction:column;
+  gap:18px;
+  align-items:center;
+  width: 320px;
+}
+.pick-btn {
+  padding: 12px 22px;
+  font-size: 18px;
+  font-weight: 700;
+  border-radius: 30px;
+  border: none;
+  cursor: pointer;
+  background: linear-gradient(45deg, #34d058, #2ea44f);
+  color: white;
+  box-shadow: 0 12px 30px rgba(46,164,79,0.18);
+  transition: transform .18s ease, box-shadow .18s ease, opacity .18s;
+}
+.pick-btn:active { transform: translateY(1px) scale(.995); }
+.pick-btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; box-shadow: none; }
+
+/* bottom area that shows picked preview */
+.picked-info {
+  width:100%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color: rgba(255,255,255,0.9);
+  font-size: 15px;
+}
+
+/* picked preview row */
+.picked-row {
+  display:flex;
+  gap:12px;
+  align-items:center;
+}
+.picked-preview .mini-card {
+  width: 56px;
+  height: 78px;
+  background: white;
+  border-radius: 6px;
+  color: #222;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  padding:6px;
+  box-shadow: 0 6px 14px rgba(0,0,0,0.22);
+}
+.mini-top { display:flex; justify-content:space-between; font-weight:700; }
+.mini-center { font-size:22px; text-align:center; line-height:1; }
+.mini-bottom { text-align:left; font-weight:700; transform: rotate(180deg); }
+
+/* picked text */
+.picked-text { color: #0b0b12f2; font-size: 16px; }
+
+/* Footer */
+
+
+/* RESPONSIVE */
+@media (max-width: 980px) {
+  .card-picker-container { --card-w: 200px; --card-h: 288px; }
+  .card-picker-container { gap: 16px; padding: 36px 20px 64px; flex-direction: column; align-items:center; }
+  .controls { width: 100%; max-width: 360px; }
+}
+@media (max-width: 420px) {
+  .card-picker-container { --card-w: 160px; --card-h: 240px; }
+
+  .pick-btn { width: 100%; font-size: 16px; padding: 12px; }
+  .picked-text { font-size: 14px; }
+  .suit-large { font-size: 68px; }
+}

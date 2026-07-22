@@ -1,16 +1,14 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-07-22T07:19:27.027Z",
+  "generatedAt": "2026-07-22T16:13:46.648Z",
   "tools": {
-    "total": 629,
-    "healthy": 629,
+    "total": 952,
+    "healthy": 952,
     "needsAttention": 0,
     "averageScore": 100,
     "categories": 21,
-    "directories": 630,
-    "orphanToolDirs": [
-      "_shared"
-    ],
+    "directories": 952,
+    "orphanToolDirs": [],
     "registryWithoutDir": [],
     "missingEntry": 0,
     "missingConfig": 0,

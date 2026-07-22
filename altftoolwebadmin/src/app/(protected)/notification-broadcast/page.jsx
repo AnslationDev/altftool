@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useRef, useState, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/context/AuthContext";
 import {
@@ -461,18 +461,25 @@ export default function NotificationBroadcastPage() {
   const [adminsList, setAdminsList] = useState([]);
   const [loading, setLoading] = useState(true);
   const [tab, setTab] = useState("create"); // "create" | "history"
+  const fetchAbortRef = useRef(null);
 
   const fetchData = useCallback(async () => {
     if (!user) return;
+    fetchAbortRef.current?.abort();
+    const controller = new AbortController();
+    fetchAbortRef.current = controller;
+
     try {
       const token = await user.getIdToken();
+      if (controller.signal.aborted) return;
       const headers = { Authorization: `Bearer ${token}` };
 
       const [bRes, aRes] = await Promise.all([
-        fetch("/api/notifications/broadcast", { headers }),
-        fetch("/api/admin/list", { headers }),
+        fetch("/api/notifications/broadcast", { headers, signal: controller.signal }),
+        fetch("/api/admin/list", { headers, signal: controller.signal }),
       ]);
 
+      if (controller.signal.aborted) return;
       if (bRes.ok) {
         const { broadcasts: list } = await bRes.json();
         setBroadcasts(list ?? []);
@@ -483,14 +490,18 @@ export default function NotificationBroadcastPage() {
         setAdminsList(admins ?? []);
       }
     } catch (err) {
-      console.error(err);
+      if (err?.name !== "AbortError" && !controller.signal.aborted) {
+        console.error("Failed to load notification broadcasts", err);
+      }
     } finally {
-      setLoading(false);
+      if (!controller.signal.aborted) setLoading(false);
+      if (fetchAbortRef.current === controller) fetchAbortRef.current = null;
     }
   }, [user]);
 
   useEffect(() => {
     fetchData();
+    return () => fetchAbortRef.current?.abort();
   }, [fetchData]);
 
   const handleDelete = async (id) => {

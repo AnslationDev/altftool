@@ -14,6 +14,7 @@ import ComparisonCard from "@/app/brandrating/(components)/detail/ComparisonCard
 import HeroSection from "@/app/brandrating/(components)/detail/HeroSection"
 import Reviews from "../../../(components)/brandComparison/Reviews";
 import Faq from "../../../(components)/brandComparison/FAQ";
+import PromoAlert from "../../../(components)/brandComparison/PromoAlert";
 import Details from "@/app/brandrating/(components)/detail/Details";
 import { categoryService } from "../../../service/service";
 
@@ -78,19 +79,54 @@ function Page() {
       return { categoryData: null, subCategoryData: null };
     }
 
-    const foundCategory = categories.find(
+    let foundCategory = categories.find(
       (item) => getURlLink(item.category || item.name) === categoryName
     );
 
-    const foundSubCategory = foundCategory?.subcategories?.find(
+    let foundSubCategory = foundCategory?.subcategories?.find(
       (sub) => getURlLink(sub.name) === subCategoryName
     );
+
+    // Some links use static prefixes (e.g. /brandrating/categories/<subcat>/<brand>),
+    // so resolve via the subcategory slug when the category segment doesn't match.
+    if (!foundCategory) {
+      for (const item of categories) {
+        const match = item?.subcategories?.find(
+          (sub) => getURlLink(sub.name) === subCategoryName
+        );
+
+        if (match) {
+          foundCategory = item;
+          foundSubCategory = match;
+          break;
+        }
+      }
+    }
+
+    // Last resort: locate the category that contains the brand slug.
+    if (!foundCategory) {
+      const brandSlug = getURlLink(brandName);
+
+      foundCategory =
+        categories.find((item) => {
+          const pool = [
+            ...(Array.isArray(item?.brands) ? item.brands : []),
+            ...(Array.isArray(item?.subcategories)
+              ? item.subcategories.flatMap((sub) =>
+                  Array.isArray(sub?.brands) ? sub.brands : []
+                )
+              : []),
+          ];
+
+          return pool.some((b) => getURlLink(b?.name || "") === brandSlug);
+        }) || null;
+    }
 
     return {
       categoryData: foundCategory || null,
       subCategoryData: foundSubCategory || null,
     };
-  }, [categories, categoryName, subCategoryName]);
+  }, [categories, categoryName, subCategoryName, brandName]);
   const activeCategory = filters.find(
     (f) => f.id === activeCategoryId
   );
@@ -137,15 +173,27 @@ useEffect(() => {
       })
       : [];
 
+    // Brands can be attached to both the category and a subcategory — dedupe.
+    const seen = new Set();
+
     return [...directBrands, ...subcategoryBrands]
       .filter(Boolean)
+      .filter((b) => {
+        const key = b?.id || b?.name;
+        if (!key || seen.has(key)) return false;
+        seen.add(key);
+        return true;
+      })
       .map((b, index) => ({
         ...b,
         name: (b?.name || "Unnamed").trim(),
-        rank:
-          b?.rank !== undefined && b?.rank !== null && b?.rank !== ""
-            ? Number(b.rank)
-            : index + 1,
+        // Admin panel stores the position as `ranking`.
+        rank: (() => {
+          const raw = b?.rank ?? b?.ranking;
+          return raw !== undefined && raw !== null && raw !== ""
+            ? Number(raw)
+            : index + 1;
+        })(),
         features: (() => {
           if (Array.isArray(b?.features)) return b.features;
           if (b?.features && typeof b.features === "object") return Object.values(b.features);
@@ -154,7 +202,8 @@ useEffect(() => {
           return [];
         })(),
         images: Array.isArray(b?.images) ? b.images : [],
-        weblink: b?.weblink || b?.url || b?.link || "",
+        // Admin panel stores the outbound URL as `brandLink`.
+        weblink: b?.weblink || b?.brandLink || b?.url || b?.link || "",
         rating: Number(b?.rating) || 0,
       }));
   }, [categoryData]);
@@ -168,6 +217,11 @@ useEffect(() => {
       return nameSlug === urlSlug;
     }) || null;
   }, [allBrands, brandName]);
+  const displayBrandName = String(brandName || "Brand")
+    .split("-")
+    .filter(Boolean)
+    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+    .join(" ");
 
   const calcPos = useCallback((idx) => {
     const btn = buttonRefs.current[idx];
@@ -321,13 +375,24 @@ useEffect(() => {
             document.body
           )}
         <div className="flex flex-col ">
-       {isLoading ? (
-    <div className="py-10 text-center text-gray-400">
-      Loading...
-    </div>
-  ) : (
-    <>
-      {brand && <HeroSection brand={brand} category={categoryData} />}
+	       {isLoading ? (
+	    <>
+	      <h1 className="sr-only">{displayBrandName} review and rating</h1>
+	      <div className="py-10 text-center text-gray-400">
+	        Loading...
+	      </div>
+	    </>
+	  ) : (
+	    <>
+	      {brand && (
+	        <PromoAlert
+	          brand={brand}
+	          subName={brand.subCategory || subCategoryData?.name || categoryData?.category || "Pick"}
+	          storageKey={`detail-${brandName}`}
+	        />
+	      )}
+	      {brand && <HeroSection brand={brand} category={categoryData} />}
+	      {!brand ? <h1 className="section-title">{displayBrandName} review</h1> : null}
       {brand && <WhyYoullLoveIt brand={brand} category={categoryData} />}
       {brand && <ProductBanner brand={brand} />}
       {brand && <Details brand={brand} category={categoryData} />}

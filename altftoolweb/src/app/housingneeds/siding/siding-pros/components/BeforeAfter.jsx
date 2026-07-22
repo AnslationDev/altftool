@@ -1,0 +1,159 @@
+import { motion } from "framer-motion";
+import { useRef, useState, useCallback, useEffect } from "react";
+import { ChevronLeft, ChevronRight, MoveHorizontal } from "lucide-react";
+
+const pairs = [
+  {
+    title: "Coastal Color Revival",
+    location: "Charleston, SC",
+    image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1400&q=80",
+  },
+  {
+    title: "Modern Farmhouse Upgrade",
+    location: "Austin, TX",
+    image: "https://images.unsplash.com/photo-1568605114967-8130f3a36994?auto=format&fit=crop&w=1400&q=80",
+  },
+  {
+    title: "Heritage Home Restoration",
+    location: "Boston, MA",
+    image: "https://images.unsplash.com/photo-1605276373954-0c4a0dac5b12?auto=format&fit=crop&w=1400&q=80",
+  },
+];
+
+function Slider({ pair }) {
+  const [pos, setPos] = useState(50);
+  const ref = useRef(null);
+  const dragging = useRef(false);
+
+  const move = useCallback((clientX) => {
+    const rect = ref.current?.getBoundingClientRect();
+    if (!rect) return;
+    const x = ((clientX - rect.left) / rect.width) * 100;
+    setPos(Math.max(0, Math.min(100, x)));
+  }, []);
+
+  useEffect(() => {
+    const onMove = (e) => {
+      if (!dragging.current) return;
+      const cx = "touches" in e ? e.touches[0].clientX : e.clientX;
+      move(cx);
+    };
+    const onUp = () => (dragging.current = false);
+    window.addEventListener("mousemove", onMove);
+    window.addEventListener("mouseup", onUp);
+    window.addEventListener("touchmove", onMove);
+    window.addEventListener("touchend", onUp);
+    return () => {
+      window.removeEventListener("mousemove", onMove);
+      window.removeEventListener("mouseup", onUp);
+      window.removeEventListener("touchmove", onMove);
+      window.removeEventListener("touchend", onUp);
+    };
+  }, [move]);
+
+  return (
+    <div
+      ref={ref}
+      className="relative w-full aspect-[16/10] rounded-3xl overflow-hidden select-none shadow-premium cursor-ew-resize"
+      onMouseDown={(e) => { dragging.current = true; move(e.clientX); }}
+      onTouchStart={(e) => { dragging.current = true; move(e.touches[0].clientX); }}
+    >
+      {/* After uses the same home image with a polished, upgraded finish. */}
+      <img src={pair.image} alt="After siding transformation" className="absolute inset-0 w-full h-full object-cover saturate-125 contrast-110 brightness-105" />
+      <div className="absolute inset-0 bg-gradient-to-tr from-[#00AEEF]/10 via-transparent to-white/10 pointer-events-none" />
+      <span className="absolute top-4 right-4 px-3 py-1.5 rounded-full bg-[#00AEEF] text-white text-xs font-bold tracking-wider uppercase shadow-lg z-10">
+        After
+      </span>
+
+      {/* Before is the same home with muted color, age, and pre-renovation surface treatment. */}
+      <div
+        className="absolute inset-0 overflow-hidden"
+        style={{ clipPath: `inset(0 ${100 - pos}% 0 0)` }}
+      >
+        <img
+          src={pair.image}
+          alt="Before siding transformation"
+          className="absolute inset-0 h-full w-full object-cover grayscale sepia brightness-[0.72] contrast-[0.82] saturate-[0.55]"
+        />
+        <div
+          className="absolute inset-0 opacity-45 mix-blend-multiply"
+          style={{
+            background:
+              "linear-gradient(120deg, rgba(92,64,45,0.35), rgba(13,59,102,0.18)), radial-gradient(circle at 20% 35%, rgba(0,0,0,0.22), transparent 16%), radial-gradient(circle at 70% 70%, rgba(255,255,255,0.18), transparent 18%)",
+          }}
+        />
+        <div className="absolute inset-0 bg-[repeating-linear-gradient(90deg,rgba(17,24,39,0.18)_0px,rgba(17,24,39,0.18)_1px,transparent_1px,transparent_18px)] opacity-25" />
+        <span className="absolute top-4 left-4 px-3 py-1.5 rounded-full bg-[#0D3B66] text-white text-xs font-bold tracking-wider uppercase shadow-lg">
+          Before
+        </span>
+      </div>
+
+      {/* Handle */}
+      <div className="absolute top-0 bottom-0 w-1 before-after-handle z-20" style={{ left: `${pos}%`, transform: "translateX(-50%)" }}>
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-white shadow-xl flex items-center justify-center text-[#0D3B66]">
+          <MoveHorizontal className="w-5 h-5" />
+        </div>
+      </div>
+
+      {/* Title overlay */}
+      <div className="absolute bottom-0 left-0 right-0 p-5 lg:p-6 bg-gradient-to-t from-[#0D3B66]/95 to-transparent text-white">
+        <h3 className="font-display font-bold text-xl">{pair.title}</h3>
+        <div className="text-sm text-white/80">{pair.location}</div>
+      </div>
+    </div>
+  );
+}
+
+export default function BeforeAfter() {
+  const [idx, setIdx] = useState(0);
+  const next = () => setIdx((i) => (i + 1) % pairs.length);
+  const prev = () => setIdx((i) => (i - 1 + pairs.length) % pairs.length);
+
+  return (
+    <section className="pt-12 pb-4 lg:pt-16 lg:pb-6 bg-gradient-soft">
+      <div className="max-w-6xl mx-auto px-5 lg:px-8">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="text-center max-w-3xl mx-auto mb-12"
+        >
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#00AEEF]/10 text-[#0D3B66] text-xs font-bold tracking-wider uppercase mb-4">
+            Before & After
+          </div>
+          <h2 className="font-display font-extrabold text-4xl lg:text-5xl text-[#0D3B66] leading-tight">
+            Real Transformations, Real Homeowners
+          </h2>
+          <p className="mt-5 text-lg text-slate-600">Drag the slider to see the EliteShield difference.</p>
+        </motion.div>
+
+        <motion.div
+          key={idx}
+          initial={{ opacity: 0, scale: 0.97 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.5 }}
+        >
+          <Slider pair={pairs[idx]} />
+        </motion.div>
+
+        <div className="mt-6 flex items-center justify-center gap-3">
+          <button onClick={prev} className="w-11 h-11 rounded-full bg-white border border-slate-200 hover:border-[#00AEEF] text-[#0D3B66] flex items-center justify-center transition">
+            <ChevronLeft className="w-5 h-5" />
+          </button>
+          <div className="flex gap-2">
+            {pairs.map((_, i) => (
+              <button
+                key={i}
+                onClick={() => setIdx(i)}
+                className={`h-2 rounded-full transition-all ${i === idx ? "w-8 bg-[#0D3B66]" : "w-2 bg-slate-300"}`}
+              />
+            ))}
+          </div>
+          <button onClick={next} className="w-11 h-11 rounded-full bg-white border border-slate-200 hover:border-[#00AEEF] text-[#0D3B66] flex items-center justify-center transition">
+            <ChevronRight className="w-5 h-5" />
+          </button>
+        </div>
+      </div>
+    </section>
+  );
+}

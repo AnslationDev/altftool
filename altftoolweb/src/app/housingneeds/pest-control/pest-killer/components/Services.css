@@ -1,0 +1,147 @@
+.services {
+  position: relative;
+  background: #F4F8FA;
+  padding: 96px 0;
+  overflow: visible;
+}
+
+.services-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.services-bg img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.services-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(244, 248, 250, 0.01);
+  z-index: 1;
+}
+
+.services>.container {
+  position: relative;
+  z-index: 2;
+}
+
+.services-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 40px;
+  margin-bottom: 50px;
+  flex-wrap: wrap;
+}
+
+.services-header .section-title {
+  flex: 1;
+  min-width: 280px;
+}
+
+.services-desc {
+  flex: 1;
+  min-width: 260px;
+}
+
+.services-desc p {
+  color: #74787C;
+  line-height: 1.7;
+  margin-bottom: 20px;
+}
+
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px;
+}
+
+.service-card {
+  position: relative;
+  background: #fff;
+  border: 1px solid rgba(74, 171, 61, 0.18);
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+  display: flex;
+  flex-direction: column;
+  margin-top: 0;
+  margin-bottom: 0;
+  transition: margin-top 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+              margin-bottom 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+              box-shadow 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.service-card:hover {
+  margin-top: -10px;
+  margin-bottom: 10px;
+  z-index: 5;
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.18);
+}
+
+.service-card::before {
+  content: '';
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 5px;
+  background: #4AAB3D;
+  z-index: 1;
+}
+
+
+
+.service-card-img {
+  position: relative;
+  height: 200px;
+  overflow: hidden;
+}
+
+.service-card-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.service-card-body {
+  padding: 24px 22px 22px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.service-card-body h3 {
+  font-size: 18px;
+  font-weight: 700;
+  color: #001A29;
+  margin-bottom: 10px;
+}
+
+.service-card-body p {
+  color: #74787C;
+  font-size: 14px;
+  line-height: 1.65;
+  flex: 1;
+  margin-bottom: 18px;
+}
+
+.service-card-body .btn-green {
+  width: 100%;
+  font-size: 14px;
+  padding: 11px;
+}
+
+@media (max-width: 900px) {
+  .services-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 560px) {
+  .services-grid {
+    grid-template-columns: 1fr;
+  }
+}

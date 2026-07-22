@@ -1,32 +1,21 @@
-@import "tailwindcss";
-
-@theme {
-  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
-  --color-dark: #0a0a0f;
-  --color-slate-900: #0f172a;
-}
-
-:root {
+.code-complexity-tool {
   --secondary: #475569 !important; /* Darker slate for labels in light mode */
   --muted-foreground: #64748b !important;
   --border: #cbd5e1 !important; /* Darker border for visibility */
 }
 
-[data-theme="dark"] {
+html[data-theme="dark"] .code-complexity-tool {
   --secondary: #94a3b8 !important;
   --muted-foreground: #94a3b8 !important;
   --border: #334155 !important;
 }
 
-* {
+.code-complexity-tool,
+.code-complexity-tool * {
   box-sizing: border-box;
 }
 
-html {
-  scroll-behavior: smooth;
-}
-
-body {
+.code-complexity-tool {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -35,32 +24,32 @@ body {
 }
 
 /* Custom scrollbar */
-::-webkit-scrollbar {
+.code-complexity-tool ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
 }
 
-::-webkit-scrollbar-track {
+.code-complexity-tool ::-webkit-scrollbar-track {
   background: transparent;
 }
 
-::-webkit-scrollbar-thumb {
+.code-complexity-tool ::-webkit-scrollbar-thumb {
   background: rgba(0, 0, 0, 0.1);
   border-radius: 4px;
 }
 
-[data-theme="dark"] ::-webkit-scrollbar-thumb {
+html[data-theme="dark"] .code-complexity-tool ::-webkit-scrollbar-thumb {
   background: rgba(255, 255, 255, 0.1);
 }
 
 /* Glassmorphism helpers */
-.glass-effect {
+.code-complexity-tool .glass-effect {
   background: var(--card);
   backdrop-blur: 16px;
   border: 1px solid var(--border);
 }
 
-.glass-card {
+.code-complexity-tool .glass-card {
   background: var(--card);
   backdrop-blur: 20px;
   border: 1px solid var(--border);
@@ -68,13 +57,13 @@ body {
 }
 
 /* Tab Active State */
-.tab-active {
+.code-complexity-tool .tab-active {
   background: white;
   color: var(--primary);
   transform: scale(1.05);
 }
 
-[data-theme="dark"] .tab-active {
+html[data-theme="dark"] .code-complexity-tool .tab-active {
   background: rgba(255, 255, 255, 0.1);
   color: white;
 }
@@ -85,11 +74,11 @@ body {
   to { opacity: 1; transform: translateY(0); }
 }
 
-.animate-fade-up {
+.code-complexity-tool .animate-fade-up {
   animation: fadeIn 0.5s ease-out forwards;
 }
 
 /* Selection styling */
-::selection {
+.code-complexity-tool ::selection {
   background: rgba(37, 99, 235, 0.3);
 }

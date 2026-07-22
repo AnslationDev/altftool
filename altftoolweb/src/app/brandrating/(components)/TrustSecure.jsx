@@ -17,13 +17,13 @@ const cards = [
   },
   {
     title: "Data Privacy First",
-    desc: `Build confidence with every decision. We prioritize your privacy, security, and trust—so you can explore, compare, and choose products with complete peace of mind.`,
+    desc: `Your data stays yours. We never sell personal information, keep tracking to the minimum needed, and are transparent about how comparison data is collected and used.`,
     image: t2,
     icon: LockKeyhole,
   },
   {
     title: "Honest Reviews",
-    desc: `Build confidence with every decision. We prioritize your privacy, security, and trust—so you can explore, compare, and choose products with complete peace of mind.`,
+    desc: `Every rating reflects real research and side-by-side comparison. Rankings are driven by measured criteria — features, value, and reliability — not by who pays the most.`,
     image: t3,
     icon: BadgeCheck,
   },

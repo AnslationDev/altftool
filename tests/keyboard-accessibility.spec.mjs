@@ -32,11 +32,12 @@ test.describe("keyboard accessibility flows", () => {
     await seedQuietPublicSession(page);
     const quality = createPageQualityGate(page);
 
+    await page.setViewportSize({ width: 1440, height: 900 });
     await page.goto(`${webUrl}/tools`, { waitUntil: "domcontentloaded" });
     const header = page.locator("#main-header");
     await expect(header).toBeVisible();
 
-    const learnMenu = header.getByRole("button", { name: "Learn" });
+    const learnMenu = header.getByRole("link", { name: "Learn", exact: true });
     await learnMenu.focus();
     await expect(header.getByRole("link", { name: "Blog", exact: true })).toBeVisible();
     await page.keyboard.press("Tab");
@@ -85,17 +86,16 @@ test.describe("keyboard accessibility flows", () => {
 
     await page.goto(`${webUrl}/tools/all?search=json`, { waitUntil: "domcontentloaded" });
     await expect(page.getByTestId("tools-directory")).toHaveAttribute("data-hydrated", "true");
-    await expect(page.getByTestId("tools-search-input")).toHaveValue("json");
+    const searchInput = page.locator('[data-testid="tools-search-input"]:visible');
+    await expect(searchInput).toHaveValue("json");
 
-    const clearFilters = page.getByTestId("clear-tool-filters");
-    await clearFilters.focus();
-    await expect(clearFilters).toBeFocused();
-    await clearFilters.press("Enter");
+    await searchInput.focus();
+    await expect(searchInput).toBeFocused();
+    await searchInput.press("Escape");
 
     await expect(page).toHaveURL(/\/tools\/all$/);
-    await expect(page.getByTestId("tools-search-input")).toHaveValue("");
+    await expect(searchInput).toHaveValue("");
 
-    const searchInput = page.getByTestId("tools-search-input");
     await searchInput.focus();
     await page.keyboard.type("jwt decoder");
     await page.keyboard.press("Enter");
@@ -121,9 +121,11 @@ test.describe("keyboard accessibility flows", () => {
     await page.keyboard.type("pdf");
     await expect(searchInput).toHaveValue("pdf");
 
-    const sortSelect = page.getByRole("combobox", { name: "Sort blogs" });
-    await sortSelect.focus();
-    await expect(sortSelect).toBeFocused();
+    const popularSort = page.getByRole("tab", { name: "Popular" });
+    await popularSort.focus();
+    await expect(popularSort).toBeFocused();
+    await popularSort.press("Enter");
+    await expect(popularSort).toHaveAttribute("aria-selected", "true");
 
     await quality.expectClean("blog keyboard");
   });

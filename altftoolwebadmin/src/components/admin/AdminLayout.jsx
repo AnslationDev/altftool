@@ -22,7 +22,12 @@ export default function AdminLayout({ children }) {
   const [requestingAccess, setRequestingAccess] = useState(false);
   const [accessRequested, setAccessRequested] = useState(false);
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
+  const [hydrated, setHydrated] = useState(false);
   usePushNotifications(user);
+
+  useEffect(() => {
+    setHydrated(true);
+  }, []);
 
   // 🔹 Extract project + module from URL
   const parts = pathname.split("/").filter(Boolean);
@@ -172,7 +177,10 @@ export default function AdminLayout({ children }) {
 
   if (!hasAccess) {
     return (
-      <div className="flex h-screen overflow-hidden bg-[var(--background)] text-[var(--foreground)]">
+      <div
+        className="flex h-screen overflow-hidden bg-[var(--background)] text-[var(--foreground)]"
+        data-admin-hydrated={hydrated ? "true" : "false"}
+      >
         {adminData ? (
           <>
             <div
@@ -241,7 +249,10 @@ export default function AdminLayout({ children }) {
   }
 
   return (
-    <div className="flex h-screen overflow-hidden bg-[var(--background)] text-[var(--foreground)]">
+    <div
+      className="flex h-screen overflow-hidden bg-[var(--background)] text-[var(--foreground)]"
+      data-admin-hydrated={hydrated ? "true" : "false"}
+    >
       {adminData ? (
         <>
           <div

@@ -2,10 +2,10 @@
 
 /**
  * Step Counter — persistence + derived stats.
- * All data lives in the visitor's browser for the CURRENT SESSION ONLY
- * (sessionStorage — it survives reloads/navigation but clears when the
- * browser tab/session ends, so every new session starts fresh at 0 steps).
- * No network calls.
+ * All data lives in the visitor's browser and PERSISTS across visits
+ * (localStorage — it survives reloads, navigation AND closing the browser,
+ * so today's steps, goal, achievements and preferences are still there when
+ * the visitor returns). Nothing is uploaded — no network calls.
  */
 
 export const STORAGE_KEY = "ALTFT_STEP_COUNTER_V1";
@@ -17,6 +17,10 @@ export const MAX_GOAL = 100000;
 export const METERS_PER_STEP = 0.762;
 export const CALORIES_PER_STEP = 0.04;
 export const STEPS_PER_FLOOR = 650; // rough estimate used for the "floors" tile
+
+// Voice-coach milestone intervals the user can pick from (steps).
+export const VOICE_INTERVALS = [50, 100, 250, 500, 1000];
+export const DEFAULT_VOICE = { enabled: true, interval: 50 };
 
 export const ACHIEVEMENTS = [
   {
@@ -64,7 +68,12 @@ export function todayKey() {
 /* ---------------------------------- state --------------------------------- */
 
 export function createEmptyState() {
-  return { goal: DEFAULT_GOAL, history: {}, achievements: {} };
+  return {
+    goal: DEFAULT_GOAL,
+    history: {},
+    achievements: {},
+    voice: { ...DEFAULT_VOICE },
+  };
 }
 
 function sanitizeState(raw) {
@@ -98,13 +107,28 @@ function sanitizeState(raw) {
     }
   }
 
+  if (raw.voice && typeof raw.voice === "object") {
+    if (typeof raw.voice.enabled === "boolean") {
+      base.voice.enabled = raw.voice.enabled;
+    }
+    const interval = Number(raw.voice.interval);
+    if (VOICE_INTERVALS.includes(interval)) {
+      base.voice.interval = interval;
+    }
+  }
+
   return base;
 }
 
 export function loadState() {
   if (typeof window === "undefined") return createEmptyState();
   try {
-    return sanitizeState(JSON.parse(window.sessionStorage.getItem(STORAGE_KEY) || "null"));
+    // Prefer durable localStorage; fall back to any data an older build left
+    // in sessionStorage so a returning visitor keeps their in-progress day.
+    const raw =
+      window.localStorage.getItem(STORAGE_KEY) ??
+      window.sessionStorage.getItem(STORAGE_KEY);
+    return sanitizeState(JSON.parse(raw || "null"));
   } catch {
     return createEmptyState();
   }
@@ -113,7 +137,7 @@ export function loadState() {
 export function saveState(state) {
   if (typeof window === "undefined") return;
   try {
-    window.sessionStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    window.localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
   } catch {
     /* storage may be unavailable (private mode / quota) — the tool keeps working in memory */
   }
@@ -143,6 +167,26 @@ export function getWeekSeries(history, ref = new Date()) {
       isFuture: key > tk,
     };
   });
+}
+
+// Rolling last-7-days window ending today (today is always the LAST point) —
+// used by the redesigned app screen's weekly chart, where "today" sits at the
+// right edge with a highlight ring (vs. getWeekSeries' fixed Mon–Sun week).
+export function getLast7Series(history, ref = new Date()) {
+  const tk = dateKey(ref);
+  const days = [];
+  for (let i = 6; i >= 0; i -= 1) {
+    const day = new Date(ref);
+    day.setDate(ref.getDate() - i);
+    const key = dateKey(day);
+    days.push({
+      key,
+      label: day.toLocaleDateString("en-US", { weekday: "short" }),
+      steps: getDay(history, key).steps,
+      isToday: key === tk,
+    });
+  }
+  return days;
 }
 
 export function getStreak(history, ref = new Date()) {
@@ -230,6 +274,17 @@ export function caloriesBurned(steps) {
 
 export function estimateFloors(steps) {
   return Math.floor(steps / STEPS_PER_FLOOR);
+}
+
+// Walking pace in steps-per-minute. Needs ≥30s of active time before the
+// number is meaningful — below that we report 0 instead of a wild spike.
+export function paceSpm(steps, activeMs) {
+  if (!activeMs || activeMs < 30000) return 0;
+  return Math.round(steps / (activeMs / 60000));
+}
+
+export function stepsRemaining(goal, steps) {
+  return Math.max(0, (goal || 0) - (steps || 0));
 }
 
 export function formatActiveTime(activeMs) {

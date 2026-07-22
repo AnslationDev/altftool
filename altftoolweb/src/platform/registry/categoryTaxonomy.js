@@ -40,6 +40,9 @@ export const CANONICAL_CATEGORIES = [
 
 export const CANONICAL_LABELS = CANONICAL_CATEGORIES.map((entry) => entry.label);
 const CANONICAL_LABEL_SET = new Set(CANONICAL_LABELS.map((label) => label.toLowerCase()));
+const CANONICAL_LABEL_BY_LOWERCASE = new Map(
+  CANONICAL_LABELS.map((label) => [label.toLowerCase(), label]),
+);
 const CANONICAL_SLUG_TO_LABEL = new Map(
   CANONICAL_CATEGORIES.map((entry) => [entry.slug, entry.label]),
 );
@@ -57,6 +60,9 @@ export const CATEGORY_ALIASES = {
   // Developer & data
   developer: "Developer",
   developers: "Developer",
+  development: "Developer",
+  "developer tools": "Developer",
+  technical: "Developer",
   code: "Developer",
   devops: "Developer",
   api: "Developer",
@@ -96,6 +102,9 @@ export const CATEGORY_ALIASES = {
   text: "Text & Writing",
   "text tools": "Text & Writing",
   word: "Text & Writing",
+  writing: "Text & Writing",
+  reference: "Text & Writing",
+  content: { generic: true, fallback: "Text & Writing" },
   language: "Text & Writing",
 
   // Conversion / generation / calculation
@@ -110,11 +119,13 @@ export const CATEGORY_ALIASES = {
   // Finance
   finance: "Finance Calculators",
   "financial tools": "Finance Calculators",
+  "finance tools": "Finance Calculators",
 
   // Health
   health: "Health & Fitness",
   fitness: "Health & Fitness",
   medical: "Health & Fitness",
+  mindfulness: "Health & Fitness",
   "health & fitness": "Health & Fitness",
   "health & wellness": "Health & Fitness",
 
@@ -129,6 +140,7 @@ export const CATEGORY_ALIASES = {
 
   // Marketing & social
   marketing: "Marketing & Social",
+  "email marketing": "Marketing & Social",
   "social media": "Marketing & Social",
   seo: "Marketing & Social",
 
@@ -140,6 +152,8 @@ export const CATEGORY_ALIASES = {
   // Education & science
   education: "Education & Science",
   educational: "Education & Science",
+  geography: "Education & Science",
+  learning: "Education & Science",
   edtech: "Education & Science",
   science: "Education & Science",
   neuroscience: "Education & Science",
@@ -149,19 +163,28 @@ export const CATEGORY_ALIASES = {
   // Productivity & business
   productivity: "Productivity",
   planning: "Productivity",
+  planners: "Productivity",
+  "self improvement": "Productivity",
+  information: { generic: true, fallback: "Productivity" },
   utility: { generic: true, fallback: "Productivity" },
   utilities: { generic: true, fallback: "Productivity" },
+  tools: { generic: true, fallback: "Productivity" },
   business: "Business",
   startup: "Business",
   job: "Business",
+  jobs: "Business",
   career: "Business",
   "e-commerce": "Business",
   "property management": "Business",
+  government: "Business",
+  legal: "Business",
 
   // Lifestyle
   lifestyle: "Lifestyle",
   personal: "Lifestyle",
   home: "Lifestyle",
+  travel: "Lifestyle",
+  kitchen: "Lifestyle",
   "kitchen tools": "Lifestyle",
   food: "Lifestyle",
   beauty: "Lifestyle",
@@ -169,10 +192,17 @@ export const CATEGORY_ALIASES = {
   style: "Lifestyle",
   astrology: "Lifestyle",
   "shopping tools": "Lifestyle",
+  shopping: "Lifestyle",
+  india: "Lifestyle",
+  calendar: "Productivity",
+
+  // Hardware-oriented calculators and estimators.
+  electronics: "Calculators",
 
   // Fun & games
   fun: "Fun",
   interactive: "Fun",
+  quiz: "Fun",
   "optical illusions": "Fun",
   simulation: "Fun",
   "visual experiments": "Fun",
@@ -180,6 +210,16 @@ export const CATEGORY_ALIASES = {
   game: "Games",
   games: "Games",
   card: "Games",
+  puzzles: "Games",
+
+  // Legacy specialist labels retained as searchable topics while resolving
+  // into the smaller canonical taxonomy used by routes and the sitemap.
+  "crypto / invest": "Finance Calculators",
+  file: "PDF & Documents",
+  voice: "Video & Audio",
+  testing: "Fun",
+  memory: "Education & Science",
+  "brain & memory": "Education & Science",
 
   other: "Other",
 };
@@ -233,7 +273,14 @@ export function resolveToolCategories(rawCategory, slug = "") {
   const rawLower = rawList.map((value) => value.toLowerCase());
 
   for (const value of rawList) {
-    const alias = CATEGORY_ALIASES[value.toLowerCase()];
+    const lowerValue = value.toLowerCase();
+    const canonicalLabel = CANONICAL_LABEL_BY_LOWERCASE.get(lowerValue);
+    if (canonicalLabel) {
+      push(canonicalLabel);
+      continue;
+    }
+
+    const alias = CATEGORY_ALIASES[lowerValue];
     if (alias === undefined) {
       throw new Error(
         `Unknown tool category "${value}"${slug ? ` on "${slug}"` : ""}. ` +

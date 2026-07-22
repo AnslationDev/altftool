@@ -10,6 +10,7 @@ import { useSearchDataSource } from './hooks/useSearchDataSource';
 import ManagedImage from '@/components/ui/ManagedImage';
 import {
   performSmartSearch,
+  mergeSearchResults,
   normalizeQueryForURL,
   normalizeQueryFromURL,
 } from './lib/searchEngine';
@@ -17,6 +18,7 @@ import './search-eng.css';
 
 // ─── CONFIG ──────────────────────────────────────────────────────────────────
 // (Clean Google-like layout)
+const SEARCH_BACKEND_URL = (process.env.NEXT_PUBLIC_SEARCH_BACKEND_URL || '').replace(/\/$/, '');
 
 // ─── MAIN CONTENT ─────────────────────────────────────────────────────────────
 function SearchEngineContent() {
@@ -53,24 +55,42 @@ function SearchEngineContent() {
     const startTime = Date.now();
 
     const executeSearch = async () => {
-      // 1. Web Search API (Exclusive Source)
-      try {
-        const res = await fetch(`https://eng-backend-tc06.onrender.com/search?q=${encodeURIComponent(query)}&type=${searchType}`);
-        if (res.ok) {
-          const data = await res.json();
-          const webItems = data.results || [];
+      let webItems = [];
 
-          setResults(webItems);
-          setSearchMeta({
-            total: data.meta?.total || webItems.length,
-            time: ((Date.now() - startTime) / 1000).toFixed(2)
-          });
+      // Prefer live web results when the optional backend is configured.
+      try {
+        if (SEARCH_BACKEND_URL) {
+          const controller = new AbortController();
+          const timeout = window.setTimeout(() => controller.abort(), 5000);
+          const res = await fetch(
+            `${SEARCH_BACKEND_URL}/search?q=${encodeURIComponent(query)}&type=${searchType}`,
+            { signal: controller.signal },
+          );
+          window.clearTimeout(timeout);
+
+          if (!res.ok) throw new Error(`Search backend returned ${res.status}`);
+          const data = await res.json();
+          webItems = Array.isArray(data.results) ? data.results : [];
         }
       } catch (err) {
-        console.error('Web Search Error (Backend might be sleeping or CORS blocked):', err);
-      } finally {
-        setIsLoading(false);
+        if (err?.name !== 'AbortError') {
+          console.warn('[SearchEngine] Live backend unavailable; using local index.', err);
+        }
       }
+
+      const local = performSmartSearch(dataset, query).items;
+      const filteredLocal = searchType === 'all'
+        ? local
+        : local.filter((item) => item.category?.toLowerCase().includes(searchType));
+      const mergedResults = mergeSearchResults(filteredLocal, webItems);
+
+      setResults(mergedResults);
+
+      setSearchMeta({
+        total: mergedResults.length,
+        time: ((Date.now() - startTime) / 1000).toFixed(2),
+      });
+      setIsLoading(false);
     };
 
     const timer = setTimeout(() => {

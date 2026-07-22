@@ -3,7 +3,7 @@ import { useState, useCallback, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Heart, Sparkles, RotateCcw, Star, Trophy,
-  Users, MessageCircle, Camera, Music, Travel,
+  Users, MessageCircle, Camera, Music, MapPinned,
   Book, Coffee, Gamepad2, Smile,
 } from "lucide-react";
 
@@ -11,10 +11,18 @@ function generateId() {
   return Math.random().toString(36).substring(2, 9);
 }
 
+function stableQuestionOrder(value) {
+  let hash = 0;
+  for (let index = 0; index < value.length; index += 1) {
+    hash = ((hash << 5) - hash + value.charCodeAt(index)) | 0;
+  }
+  return hash;
+}
+
 const CATEGORIES = [
   { id: "memories", label: "Memories", icon: Camera, color: "text-blue-500" },
   { id: "personality", label: "Personality", icon: Smile, color: "text-pink-500" },
-  { id: "experiences", label: "Experiences", icon: Travel, color: "text-emerald-500" },
+  { id: "experiences", label: "Experiences", icon: MapPinned, color: "text-emerald-500" },
   { id: "preferences", label: "Preferences", icon: Heart, color: "text-rose-500" },
   { id: "fun", label: "Fun", icon: Gamepad2, color: "text-purple-500" },
   { id: "deep", label: "Deep Talks", icon: MessageCircle, color: "text-cyan-500" },
@@ -139,7 +147,9 @@ export default function ToolHome() {
 
   const selectedQuestions = useMemo(() => {
     const pool = QUESTIONS[category] || QUESTIONS.memories;
-    const shuffled = [...pool].sort(() => Math.random() - 0.5);
+    const shuffled = [...pool].sort(
+      (first, second) => stableQuestionOrder(`${category}:${first.q}`) - stableQuestionOrder(`${category}:${second.q}`),
+    );
     return shuffled.slice(0, 10);
   }, [category]);
 

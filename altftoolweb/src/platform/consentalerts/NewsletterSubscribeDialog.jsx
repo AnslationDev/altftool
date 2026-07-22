@@ -1,18 +1,14 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import { usePathname } from "next/navigation";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from "@/shared/ui/Dialog";
 import { Button } from "@/shared/ui/Button";
-import { Mail } from "lucide-react";
+import { Mail, X } from "lucide-react";
+import { isSelfChromePath } from "@/platform/navigation/GlobalChromeGate";
 
 const STORAGE_KEY = "NEWSLETTER_SUBSCRIBE_V1";
-const DISMISS_DAYS = 7;
+const DISMISS_DAYS = 30;
 const TRIGGER_DELAY_MS = 45000;
 const SCROLL_DEPTH = 0.55;
 
@@ -39,6 +35,7 @@ function remember(status) {
 
 export const NewsletterSubscribeDialog = () => {
   const pathname = usePathname();
+  const [mounted, setMounted] = useState(false);
   const [open, setOpen] = useState(false);
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
@@ -46,7 +43,14 @@ export const NewsletterSubscribeDialog = () => {
   const triggered = useRef(false);
 
   useEffect(() => {
-    if (pathname?.startsWith("/buysmart")) return;
+    setMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (pathname?.startsWith("/buysmart") || isSelfChromePath(pathname)) {
+      setOpen(false);
+      return;
+    }
     if (shouldSuppressPrompt()) return;
 
     const trigger = () => {
@@ -76,6 +80,17 @@ export const NewsletterSubscribeDialog = () => {
 
     return cleanup;
   }, [pathname]);
+
+  useEffect(() => {
+    if (!open) return undefined;
+
+    const onKeyDown = (event) => {
+      if (event.key === "Escape") dismiss();
+    };
+
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [open]);
 
   const dismiss = () => {
     remember("dismissed");
@@ -110,43 +125,81 @@ export const NewsletterSubscribeDialog = () => {
     setOpen(false);
   };
 
-  return (
-    <Dialog open={open} onClose={dismiss}>
-      <DialogContent className="sm:max-w-md text-(--foreground)">
-        <DialogHeader>
-          <DialogTitle className="flex flex-row items-center gap-2">
-            <Mail className="h-5 w-5 text-primary"/>
-            Subscribe to Newsletter
-          </DialogTitle>
-        </DialogHeader>
+  if (!mounted || !open || isSelfChromePath(pathname)) return null;
 
-        <p className="text-sm">
-          Get updates when new tools or features are released.
-        </p>
-
-        <input
-          type="email"
-          placeholder="you@example.com"
-          value={email}
-          onChange={(event) => {
-            setEmail(event.target.value);
-            if (message) setMessage("");
-          }}
-          className="mt-3 h-10 w-full rounded-[var(--anslation-ds-radius)] border border-(--border) bg-(--background) px-3 text-sm focus:border-(--primary) focus:outline-none focus:ring-2 focus:ring-(--primary)"
-        />
-        {message ? (
-          <p className="mt-2 text-xs font-medium text-[var(--anslation-ds-danger)]">
-            {message}
+  return createPortal(
+    <aside
+      aria-labelledby="newsletter-prompt-title"
+      className="fixed inset-x-4 bottom-4 z-50 mx-auto max-w-sm rounded-xl border border-border bg-(--card) p-4 text-(--foreground) shadow-lg sm:inset-x-auto sm:bottom-6 sm:right-6 sm:mx-0 sm:w-full"
+      data-testid="newsletter-prompt"
+    >
+      <div className="flex items-start gap-3 pr-8">
+        <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-muted text-primary">
+          <Mail aria-hidden="true" className="h-5 w-5" />
+        </span>
+        <div className="min-w-0">
+          <h2
+            className="text-base font-semibold text-(--card-foreground)"
+            id="newsletter-prompt-title"
+          >
+            Stay in the loop
+          </h2>
+          <p className="mt-1 text-sm text-(--muted-foreground)">
+            Get occasional updates about new tools and features.
           </p>
-        ) : null}
-
-        <div className="flex justify-end gap-2 mt-4">
-          <Button variant="outline" onClick={dismiss} disabled={saving}>Not now</Button>
-          <Button onClick={subscribe} disabled={saving}>
-            {saving ? "Subscribing…" : "Subscribe"}
-          </Button>
         </div>
-      </DialogContent>
-    </Dialog>
+      </div>
+
+      <button
+        aria-label="Dismiss newsletter signup"
+        className="absolute right-3 top-3 flex h-10 w-10 items-center justify-center rounded-md text-(--muted-foreground) transition hover:bg-muted hover:text-(--foreground) focus:outline-none focus:ring-2 focus:ring-primary"
+        onClick={dismiss}
+        title="Dismiss"
+        type="button"
+      >
+        <X aria-hidden="true" className="h-5 w-5" />
+      </button>
+
+      <form
+        className="mt-4 flex items-start gap-2"
+        onSubmit={(event) => {
+          event.preventDefault();
+          subscribe();
+        }}
+      >
+        <div className="min-w-0 flex-1">
+          <label className="sr-only" htmlFor="newsletter-prompt-email">
+            Email address
+          </label>
+          <input
+            aria-describedby={message ? "newsletter-prompt-error" : undefined}
+            aria-invalid={Boolean(message)}
+            autoComplete="email"
+            className="h-10 w-full rounded-md border border-(--border) bg-(--background) px-3 text-sm focus:border-(--primary) focus:outline-none focus:ring-2 focus:ring-(--primary)"
+            id="newsletter-prompt-email"
+            onChange={(event) => {
+              setEmail(event.target.value);
+              if (message) setMessage("");
+            }}
+            placeholder="you@example.com"
+            type="email"
+            value={email}
+          />
+          {message ? (
+            <p
+              className="mt-2 text-xs font-medium text-[var(--anslation-ds-danger)]"
+              id="newsletter-prompt-error"
+              role="alert"
+            >
+              {message}
+            </p>
+          ) : null}
+        </div>
+        <Button className="h-10 shrink-0 px-4" disabled={saving} type="submit">
+          {saving ? "Saving..." : "Subscribe"}
+        </Button>
+      </form>
+    </aside>,
+    document.body,
   );
 };

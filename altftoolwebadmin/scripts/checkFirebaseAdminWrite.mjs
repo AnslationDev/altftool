@@ -1,4 +1,4 @@
-import { existsSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import path from "node:path";
 import { config as loadEnv } from "dotenv";
 
@@ -63,11 +63,31 @@ function parseServiceAccount(rawValue = "") {
   }
 }
 
+function readServiceAccountFile() {
+  const filePath = envValue("FIREBASE_SERVICE_ACCOUNT_FILE") || envValue("GOOGLE_APPLICATION_CREDENTIALS");
+  if (!filePath) return { raw: "", path: "", error: null };
+
+  try {
+    return { raw: readFileSync(filePath, "utf8"), path: filePath, error: null };
+  } catch (error) {
+    return {
+      raw: "",
+      path: filePath,
+      error: `Firebase service-account file could not be read: ${error?.message || "unknown error"}.`,
+    };
+  }
+}
+
 function validateCredentials() {
   const rawValues = Object.fromEntries(FIREBASE_ADMIN_ENV.map((name) => [name, envValue(name)]));
-  const { account: serviceAccount, error: serviceAccountError } = parseServiceAccount(
+  const { account: inlineServiceAccount, error: inlineServiceAccountError } = parseServiceAccount(
     envValue("FIREBASE_SERVICE_ACCOUNT"),
   );
+  const serviceAccountFile = readServiceAccountFile();
+  const { account: fileServiceAccount, error: fileServiceAccountError } = parseServiceAccount(
+    serviceAccountFile.raw,
+  );
+  const serviceAccount = inlineServiceAccount || fileServiceAccount;
   const values = {
     FIREBASE_PROJECT_ID: rawValues.FIREBASE_PROJECT_ID || serviceAccount?.projectId || "",
     FIREBASE_CLIENT_EMAIL: rawValues.FIREBASE_CLIENT_EMAIL || serviceAccount?.clientEmail || "",
@@ -76,9 +96,19 @@ function validateCredentials() {
   const privateKey = normalizePrivateKey(values.FIREBASE_PRIVATE_KEY);
   const missing = FIREBASE_ADMIN_ENV.filter((name) => !values[name]);
   const invalid = [];
+  const credentialsResolvable =
+    missing.length === 0 &&
+    values.FIREBASE_CLIENT_EMAIL.includes("@") &&
+    privateKeyLooksUsable(privateKey);
 
-  if (serviceAccountError) {
-    invalid.push(serviceAccountError);
+  if (inlineServiceAccountError && !credentialsResolvable) {
+    invalid.push(inlineServiceAccountError);
+  }
+  if (serviceAccountFile.error && !credentialsResolvable) {
+    invalid.push(serviceAccountFile.error);
+  }
+  if (fileServiceAccountError && serviceAccountFile.path && !credentialsResolvable) {
+    invalid.push(fileServiceAccountError.replace("FIREBASE_SERVICE_ACCOUNT", "FIREBASE_SERVICE_ACCOUNT_FILE"));
   }
 
   if (values.FIREBASE_CLIENT_EMAIL && !values.FIREBASE_CLIENT_EMAIL.includes("@")) {
@@ -94,6 +124,7 @@ function validateCredentials() {
     missing,
     invalid,
     serviceAccountConfigured: Boolean(envValue("FIREBASE_SERVICE_ACCOUNT")),
+    serviceAccountFileConfigured: Boolean(serviceAccountFile.path),
     values: {
       projectId: values.FIREBASE_PROJECT_ID,
       clientEmail: values.FIREBASE_CLIENT_EMAIL,
@@ -227,6 +258,7 @@ if (useDryRun) {
     emulator: useEmulator,
     credentialReady: credentials.ok,
     serviceAccountConfigured: credentials.serviceAccountConfigured,
+    serviceAccountFileConfigured: credentials.serviceAccountFileConfigured,
     missing: credentials.missing,
     invalid: credentials.invalid,
   }, null, 2));

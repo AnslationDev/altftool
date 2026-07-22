@@ -41,8 +41,13 @@ const getStoredThemeMode = () => {
 
   try {
     const storedMode = localStorage.getItem(THEME_MODE_KEY);
+    if (VALID_THEME_MODES.has(storedMode)) return storedMode;
 
-    return VALID_THEME_MODES.has(storedMode) ? storedMode : DEFAULT_THEME_MODE;
+    const legacyManual = localStorage.getItem(LEGACY_MANUAL_KEY) === "true";
+    const legacyTheme = localStorage.getItem(LEGACY_THEME_KEY);
+    if (legacyManual && VALID_THEME_MODES.has(legacyTheme)) return legacyTheme;
+
+    return DEFAULT_THEME_MODE;
   } catch (_) {
     return DEFAULT_THEME_MODE;
   }
@@ -81,6 +86,7 @@ export const ThemeProvider = ({ children }) => {
   useEffect(() => {
     const storedThemeMode = getStoredThemeMode();
 
+    persistThemeMode(storedThemeMode);
     setThemeModeState(storedThemeMode);
     setResolvedTheme(applyThemeToDocument(storedThemeMode));
     setHydrated(true);

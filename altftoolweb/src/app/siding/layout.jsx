@@ -11,5 +11,5 @@ export async function generateMetadata() {
 }
 
 export default function SidingLayout({ children }) {
-  return children;
+  return <div className="siding-route">{children}</div>;
 }

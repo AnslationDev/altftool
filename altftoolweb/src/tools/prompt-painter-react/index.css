@@ -1,0 +1,147 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Definition of the design system. All colors, gradients, fonts, etc should be defined here.
+All colors MUST be HSL.
+*/
+
+@layer base {
+  :root {
+    /* Only Dark Theme Colors - removed light theme colors */
+    --background: 240 20% 6%;
+    --background-secondary: 240 18% 8%;
+    --foreground: 240 5% 96%;
+
+    --card: 240 15% 10%;
+    --card-foreground: 240 5% 96%;
+    --card-glass: 240 15% 10% / 0.85;
+
+    --popover: 240 15% 10%;
+    --popover-foreground: 240 5% 96%;
+
+    --primary: 262 83% 65%;
+    --primary-foreground: 0 0% 100%;
+    --primary-glow: 262 83% 75%;
+
+    --secondary: 240 12% 18%;
+    --secondary-foreground: 240 5% 96%;
+
+    --muted: 240 12% 15%;
+    --muted-foreground: 240 5% 65%;
+
+    --accent: 177 70% 55%;
+    --accent-foreground: 0 0% 100%;
+    --accent-glow: 177 70% 65%;
+
+    --destructive: 0 72% 55%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 240 12% 18%;
+    --input: 240 12% 15%;
+    --ring: 262 83% 65%;
+
+    --editor-bg: 240 15% 10%;
+    --preview-bg: 240 12% 12%;
+    --preview-border: 240 12% 20%;
+
+    /* Animated Gradients */
+    --gradient-1: 262 83% 45%;
+    --gradient-2: 282 70% 48%;
+    --gradient-3: 177 70% 35%;
+    --gradient-4: 197 80% 40%;
+  }
+
+  /* Removed the separate .dark class since we're only using dark theme */
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply text-foreground transition-colors duration-500;
+    min-height: 100vh;
+    position: relative;
+    overflow-x: hidden;
+    background: hsl(var(--background));
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    background:
+      radial-gradient(circle at 20% 50%, hsl(var(--gradient-1) / 0.15) 0%, transparent 50%),
+      radial-gradient(circle at 80% 80%, hsl(var(--gradient-2) / 0.15) 0%, transparent 50%),
+      radial-gradient(circle at 40% 20%, hsl(var(--gradient-3) / 0.1) 0%, transparent 50%),
+      radial-gradient(circle at 90% 30%, hsl(var(--gradient-4) / 0.1) 0%, transparent 50%),
+      hsl(var(--background));
+    animation: gradient-shift 15s ease infinite;
+  }
+
+  @keyframes gradient-shift {
+    0%, 100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.8;
+    }
+  }
+}
+
+@layer utilities {
+  .glass-panel {
+    background: hsl(var(--card-glass));
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border: 1px solid hsl(var(--border) / 0.7);
+    box-shadow:
+      0 8px 32px 0 hsl(var(--primary) / 0.15),
+      inset 0 1px 1px 0 hsl(0 0% 100% / 0.15);
+  }
+
+  .gradient-primary {
+    background: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--accent)));
+  }
+
+  .gradient-accent {
+    background: linear-gradient(135deg, hsl(var(--accent)), hsl(var(--primary)));
+  }
+
+  .text-gradient {
+    background: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--accent)));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .glow-effect {
+    box-shadow:
+      0 0 20px hsl(var(--primary) / 0.4),
+      0 0 40px hsl(var(--primary) / 0.3),
+      0 0 60px hsl(var(--primary) / 0.2);
+  }
+
+  .smooth-transition {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  @keyframes float {
+    0%, 100% {
+      transform: translateY(0px);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+
+  .animate-float {
+    animation: float 3s ease-in-out infinite;
+  }
+}

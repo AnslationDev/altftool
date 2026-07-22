@@ -1,0 +1,40 @@
+/* Helios Solar — scoped theme variables and base styles */
+
+.helios-solar-app {
+  --background: 0 0% 0%;
+  --foreground: 0 0% 100%;
+  --border: 0 0% 15%;
+  --input: 0 0% 15%;
+  --ring: 0 0% 100%;
+  --radius: 2px;
+
+  background-color: #000;
+  color: #fff;
+  font-family: 'Inter', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+.helios-solar-app * {
+  border-color: hsl(var(--border));
+}
+
+/* Accordion open/close animations for the FAQ section */
+@keyframes helios-accordion-down {
+  from { height: 0; }
+  to { height: var(--radix-accordion-content-height); }
+}
+
+@keyframes helios-accordion-up {
+  from { height: var(--radix-accordion-content-height); }
+  to { height: 0; }
+}
+
+.helios-solar-app [data-state="open"] > .helios-accordion-content {
+  animation: helios-accordion-down 0.2s ease-out;
+}
+
+.helios-solar-app [data-state="closed"] > .helios-accordion-content {
+  animation: helios-accordion-up 0.2s ease-out;
+}

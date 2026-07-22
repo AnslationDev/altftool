@@ -103,6 +103,7 @@ const adminRoutes = [
   "/altftool/deals",
   "/altftool/consumer-rating",
   "/altftool/extensions",
+  "/altftool/search-directory",
   "/altftool/images",
   "/altftool/academy",
   "/altftool/trending-videos",
@@ -357,7 +358,7 @@ test("admin module route surface resolves for local super admin", async ({ page 
   await expect(localAdminButton).toBeVisible();
   await localAdminButton.click();
 
-  await expect(page).toHaveURL(/\/admin-management/);
+  await expect(page).toHaveURL(/\/(?:admin-management|super-admin)/);
   await expect(page.getByText("Super Admin").first()).toBeVisible();
   failures.push(...await quality.collect("admin login"));
 
@@ -444,7 +445,8 @@ test("seo endpoints and structured data render", async ({ page, request }) => {
       }),
       tools: expect.objectContaining({
         total: expect.any(Number),
-        priorityRegistered: 40,
+        priorityRegistered: 51,
+        priorityTotal: 51,
       }),
     }),
   );

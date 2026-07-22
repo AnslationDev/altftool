@@ -28,8 +28,9 @@ if (!existsSync(runtimeMapPath)) {
 }
 
 const src = readFileSync(runtimeMapPath, "utf8");
-// Keys are the quoted object keys: `"slug": () => import(...)`
-const slugs = [...src.matchAll(/^\s*"([a-z0-9][a-z0-9-]*)"\s*:/gim)].map((m) => m[1]);
+// Keys are the quoted object keys: `"slug": () => import(...)`. Keep the
+// parser aligned with the web router, which also supports legacy underscores.
+const slugs = [...src.matchAll(/^\s*"([a-z0-9][a-z0-9_-]*)"\s*:/gim)].map((m) => m[1]);
 const unique = [...new Set(slugs)].sort((a, b) => a.localeCompare(b));
 
 if (unique.length === 0) {

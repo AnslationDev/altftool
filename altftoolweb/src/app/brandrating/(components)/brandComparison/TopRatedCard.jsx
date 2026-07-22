@@ -4,8 +4,8 @@ import Link from "next/link";
 import React from "react";
 import { usePathname } from "next/navigation";
 import { ChevronDown, Check, ArrowUpRight, Trophy, Star, StarHalf } from "lucide-react";
-import mattress from "../../(assets)/Hero-2.jpg";
 import ManagedImage from "@/components/ui/ManagedImage";
+import { getBrandTagline } from "../../utils/rating";
 
 function getURlLink(str) {
   return str
@@ -61,7 +61,7 @@ export default function TopRated({
     if (brand?.images?.length) return brand.images[0];
     if (brand?.logo) return brand.logo;
     if (brand?.img) return brand.img;
-    return mattress;
+    return "/image-fallback.svg";
   };
 
   const renderStars = (rating = 0) => {
@@ -198,11 +198,11 @@ export default function TopRated({
 
                     <div className="flex flex-col xl:flex-row items-center xl:items-stretch gap-5 sm:gap-8 xl:gap-12">
 
-                      <div className="w-full xl:w-auto xl:flex-shrink-0 min-w-0">
+                      <div className="w-full xl:w-[380px] 2xl:w-[420px] xl:flex-shrink-0 min-w-0">
                         <ManagedImage
                           src={getImage(brand)}
                           alt={brand.name}
-                          className="w-full max-w-full xl:max-w-[480px] 2xl:max-w-[560px] aspect-[4/3] sm:aspect-[16/10] object-cover rounded-[14px] sm:rounded-[20px]"
+                          className="w-full max-w-full md:max-w-[560px] mx-auto xl:mx-0 aspect-[4/3] sm:aspect-[16/10] object-cover rounded-[14px] sm:rounded-[20px]"
                         />
                       </div>
 
@@ -218,9 +218,15 @@ export default function TopRated({
                             </div>
                           </div>
 
-                          <p className="text-sm md:text-base text-(--muted-foreground) mt-2 mb-4">
-                            {brand.review || brand.trust || "Trusted by 27,000+ customers"}
+                          <p className="text-sm md:text-base font-medium text-(--muted-foreground) mt-2 mb-2">
+                            {getBrandTagline(brand)}
                           </p>
+
+                          {brand.description ? (
+                            <p className="text-sm md:text-[15px] leading-relaxed text-(--muted-foreground) mb-4 line-clamp-2">
+                              {brand.description}
+                            </p>
+                          ) : null}
 
                           <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-2 gap-x-4">
                             {normalizeFeatures(brand.features).map((feat, i) => {
@@ -267,11 +273,11 @@ export default function TopRated({
                   </div>
                 ) : (
                   <div className="flex flex-col lg:flex-row items-center lg:items-stretch gap-4 sm:gap-6 lg:gap-8 mt-6">
-                    <div className="w-full lg:w-[40%] xl:w-[38%] flex-shrink-0 min-w-0">
+                    <div className="w-full lg:w-[34%] xl:w-[30%] flex-shrink-0 min-w-0">
                       <ManagedImage
                         src={getImage(brand)}
                         alt={brand.name}
-                        className="w-full max-w-full lg:max-w-[420px] xl:max-w-[480px] aspect-[16/10] object-cover rounded-[20px]"
+                        className="w-full max-w-full md:max-w-[560px] mx-auto lg:mx-0 lg:max-w-[360px] aspect-[16/10] object-cover rounded-[20px]"
                       />
                     </div>
 
@@ -286,9 +292,15 @@ export default function TopRated({
                         </div>
                       </div>
 
-                      <p className="text-sm md:text-base text-(--muted-foreground)">
-                        {brand.review || brand.trust || "Trusted by 27,000+ customers"}
+                      <p className="text-sm md:text-base font-medium text-(--muted-foreground)">
+                        {getBrandTagline(brand)}
                       </p>
+
+                      {brand.description ? (
+                        <p className="text-sm leading-relaxed text-(--muted-foreground) line-clamp-2">
+                          {brand.description}
+                        </p>
+                      ) : null}
 
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-2 gap-x-4">
                         {normalizeFeatures(brand.features).map((feat, i) => {

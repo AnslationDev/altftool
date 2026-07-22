@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { uploadImage, uploadVideoFile, uploadThumbnail } from "../lib/firebase";
-import { videoRowType } from "../lib/schemas";
+import { GRADIENT_DIRECTIONS, videoRowType } from "../lib/schemas";
 
 /** Recognizes YouTube / Vimeo links and returns an embeddable iframe src, or null for direct file URLs. */
 function embedUrlFor(url) {
@@ -350,6 +350,82 @@ function VideoListInput({ value = [], onChange, modes, rowErrors = {} }) {
   );
 }
 
+const HEX_RE = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i;
+
+function ColorInput({ value, onChange }) {
+  const swatch = HEX_RE.test(value || "") ? value : "#000000";
+  return (
+    <div className="mla-color">
+      <input type="color" value={swatch} onChange={(event) => onChange(event.target.value)} />
+      <input
+        type="text"
+        value={value || ""}
+        placeholder="#14B8A6"
+        onChange={(event) => onChange(event.target.value)}
+      />
+      {value && <Button small kind="ghost" onClick={() => onChange("")}>Clear</Button>}
+    </div>
+  );
+}
+
+function BackgroundInput({ value, onChange, allowImage, folder }) {
+  const background = value || {};
+  const mode = background.mode || "solid";
+  const update = (patch) => onChange({ ...background, ...patch });
+
+  return (
+    <div className="mla-bgfield">
+      <select value={mode} onChange={(event) => update({ mode: event.target.value })}>
+        <option value="solid">Solid</option>
+        <option value="gradient">Gradient</option>
+        {allowImage && <option value="image">Image</option>}
+      </select>
+
+      {mode === "solid" && (
+        <div className="mla-field mla-field-spaced">
+          <label>Background Color</label>
+          <ColorInput value={background.color} onChange={(color) => update({ color })} />
+        </div>
+      )}
+
+      {mode === "gradient" && (
+        <>
+          <div className="mla-field mla-field-spaced">
+            <label>Gradient Start</label>
+            <ColorInput value={background.gradientStart} onChange={(gradientStart) => update({ gradientStart })} />
+          </div>
+          <div className="mla-field">
+            <label>Gradient End</label>
+            <ColorInput value={background.gradientEnd} onChange={(gradientEnd) => update({ gradientEnd })} />
+          </div>
+          <div className="mla-field">
+            <label>Direction</label>
+            <select
+              value={background.direction || "to-bottom-right"}
+              onChange={(event) => update({ direction: event.target.value })}
+            >
+              {GRADIENT_DIRECTIONS.map((direction) => (
+                <option key={direction.value} value={direction.value}>{direction.label}</option>
+              ))}
+            </select>
+          </div>
+        </>
+      )}
+
+      {mode === "image" && allowImage && (
+        <div className="mla-field mla-field-spaced">
+          <label>Background Image</label>
+          <ImageInput
+            value={background.imageUrl}
+            onChange={(imageUrl) => update({ imageUrl })}
+            folder={folder || "misc"}
+          />
+        </div>
+      )}
+    </div>
+  );
+}
+
 function ObjectListInput({ value = [], onChange, item, lookups }) {
   return (
     <div className="mla-objlist">
@@ -414,6 +490,8 @@ export function Field({ field, value, onChange, lookups = {}, rowErrors }) {
     case "thumbnailupload": return <ThumbnailUploadInput value={value} onChange={onChange} folder={f.folder || "misc"} />;
     case "videoupload": return <VideoUploadInput value={value} onChange={onChange} folder={f.folder || "misc"} />;
     case "videourl": return <VideoUrlInput value={value} onChange={onChange} />;
+    case "color": return <ColorInput value={value} onChange={onChange} />;
+    case "background": return <BackgroundInput value={value} onChange={onChange} allowImage={f.allowImage} folder={f.folder} />;
     case "objectlist": return <ObjectListInput value={value || []} onChange={onChange} item={f.item} lookups={lookups} />;
     case "videolist": return <VideoListInput value={value || []} onChange={onChange} modes={f.modes} rowErrors={rowErrors || {}} />;
     case "group":

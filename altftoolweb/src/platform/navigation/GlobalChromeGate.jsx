@@ -1,41 +1,42 @@
 "use client";
 
 import { usePathname } from "next/navigation";
+import { EXPERIENCE_CATALOG } from "@altftool/core/experiences";
 import { isPublicShellHidden } from "./siteRoutes";
 
 /**
  * Shows the global AltFTool header/footer on standard public routes.
  * Sections with custom chrome stay isolated.
  */
-const SELF_CHROME_PREFIXES = [
+export const SELF_CHROME_PREFIXES = [
   // microsites with their own header/footer
   "/altfloveimg",
   "/altflovepdf",
   "/apps",
   "/tripfindbox",
   "/homeserv",
-  // immersive / experiential apps (no global chrome)
+  "/business-ops",
+  "/housingneeds",
+  "/tradeon",
+  "/altfcalculators",
+  "/imgprompt/studio",
+  // The Labs hub has its own focused header.
   "/labs",
-  "/flightradar",
-  "/live-activity-simulation",
-  "/soft-murmur",
-  "/prank-socialmedia",
-  "/fact-net",
-  "/patatap",
-  "/radio-garden",
-  "/windowswap",
-  "/pixel-thought",
-  "/sketchflow",
-  "/playbuzz",
-  "/pranx",
-  "/bharat-virasat",
+  // Immersive experiences declare their chrome behavior in one catalog.
+  ...EXPERIENCE_CATALOG.filter((experience) => experience.selfChrome).map(
+    (experience) => experience.href,
+  ),
 ];
+
+export function isSelfChromePath(pathname = "") {
+  return SELF_CHROME_PREFIXES.some(
+    (prefix) => pathname === prefix || pathname.startsWith(`${prefix}/`),
+  );
+}
 
 export default function GlobalChromeGate({ children }) {
   const pathname = usePathname() || "";
-  const hasSelfChrome = SELF_CHROME_PREFIXES.some(
-    (p) => pathname === p || pathname.startsWith(`${p}/`)
-  );
+  const hasSelfChrome = isSelfChromePath(pathname);
 
   if (hasSelfChrome || isPublicShellHidden(pathname)) return null;
   return children;

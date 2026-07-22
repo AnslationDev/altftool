@@ -167,6 +167,23 @@ function buildVerification(v) {
   return Object.keys(out).length ? out : undefined;
 }
 
+function resolveDocumentTitle(title) {
+  if (typeof title !== "string") return title;
+
+  const normalizedTitle = title.trim();
+  const hasLeadingBrand = /^AltFTool(?:\b|\s*[-:|\u2013\u2014])/i.test(
+    normalizedTitle,
+  );
+  const hasTrailingBrand =
+    /(?:\||-|\u2013|\u2014|:)\s*AltFTool(?:\s+[A-Za-z][\w-]*)*\s*$/i.test(
+      normalizedTitle,
+    );
+
+  return hasLeadingBrand || hasTrailingBrand
+    ? { absolute: normalizedTitle }
+    : normalizedTitle;
+}
+
 export async function createPageMetadata(rawArgs = {}) {
   // Warm the central SEO config snapshot so per-URL admin overrides ALWAYS
   // apply, regardless of where/when this is called. Inert when engine disabled.
@@ -201,7 +218,7 @@ export async function createPageMetadata(rawArgs = {}) {
   const icons = ext.favicon ? { icon: absoluteUrl(ext.favicon) } : undefined;
 
   const metadata = {
-    title,
+    title: resolveDocumentTitle(title),
     description: cleanDescription,
     applicationName: siteConfig.name,
     authors: [{ name: siteConfig.name, url: getSiteUrl() }],

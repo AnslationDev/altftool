@@ -100,8 +100,8 @@ test.describe("public blog UX and SEO", () => {
 
     await expect(page.getByRole("heading", { name: "AltFTool Blog" })).toBeVisible();
     await expect(page.getByRole("textbox", { name: "Search blog articles" })).toBeVisible();
-    await expect(page.getByRole("heading", { name: "Pick the most complete guides first" })).toBeVisible();
-    await expect(page.getByText("Article library")).toBeVisible();
+    await expect(page.getByRole("heading", { name: "Featured Picks" })).toBeVisible();
+    await expect(page.getByRole("heading", { name: "Latest Articles" })).toBeVisible();
     await expect(page.getByText(target.title, { exact: false })).toBeVisible({
       timeout: contentTimeoutMs,
     });
@@ -109,10 +109,11 @@ test.describe("public blog UX and SEO", () => {
     const searchInput = page.getByRole("textbox", { name: "Search blog articles" });
     await searchInput.fill(target.title);
     await expect(searchInput).toHaveValue(target.title);
-    await expect(page.getByText(target.title, { exact: false })).toBeVisible({
+    const latestArticles = page.getByRole("region", { name: "Latest Articles" });
+    await expect(latestArticles.getByText(target.title, { exact: false }).first()).toBeVisible({
       timeout: contentTimeoutMs,
     });
-    await expect(page.getByRole("button", { name: /Reset/i }).first()).toBeVisible();
+    await expect(page.getByRole("button", { name: "Clear blog search" })).toBeVisible();
 
     await expectCanonicalPath(page, "/blogs");
     const description = await expectMetaContent(page, 'meta[name="description"]', /AltFTool|guides|tools/i);
@@ -143,7 +144,9 @@ test.describe("public blog UX and SEO", () => {
     await expect(page.getByRole("navigation", { name: "Article reading flow" })).toBeVisible();
     await expect(page.locator('aside[aria-label="Table of contents"]').last()).toBeVisible();
     await expect(page.getByRole("heading", { name: "What this guide covers" })).toBeVisible();
-    await expect(page.getByRole("heading", { name: "Quick answers" })).toBeVisible();
+    await expect(
+      page.getByRole("heading", { name: /Quick answers|Frequently Asked Questions/i }).first(),
+    ).toBeVisible();
     await expect(page.getByRole("heading", { name: "Sources and review notes" })).toBeVisible();
     await expect(page.getByRole("heading", { name: "Try these related microtools" })).toBeVisible();
     await expect(page.getByRole("heading", { name: "Smart related posts" })).toBeVisible();

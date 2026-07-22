@@ -23,6 +23,7 @@ const dedupeById = (arr) => {
  *  Layer 1 — Mock data      (instant, always visible locally)
  *  Layer 2 — toolMetaMap   (100+ tools, static import, no network)
  *  Layer 3 — Firebase exts  (async, same logic as useFirebaseExtensions)
+ *  Layer 4 — Admin-managed directory entries
  *
  * Dataset updates progressively as each layer loads.
  */
@@ -48,8 +49,10 @@ export function useSearchDataSource() {
           return {
             id: `tool__${slug}`,
             title: tool.name || slug.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase()),
-            url: `/tools/all/${slug}`,
-            displayUrl: `altftool.com › tools › ${slug}`,
+            url: tool.route || tool.href || `/tools/all/${slug}`,
+            displayUrl: tool.route || tool.href
+              ? `altftool.com › ${(tool.route || tool.href).replace(/^\//, "")}`
+              : `altftool.com › tools › ${slug}`,
             description: tool.description || "A free online tool by AltFTool.",
             category: cats[0] || "Tool",
             tags: [
@@ -69,6 +72,7 @@ export function useSearchDataSource() {
       }
 
       // ── Layer 3: Extensions from Firebase (same as useFirebaseExtensions) ──
+      let extResults = [];
       try {
         const extensions = await getCachedFirebaseRead("extensions:list", async () => {
           const colRef = collection(db, "projects", PROJECT_ID, "extensions");
@@ -78,7 +82,7 @@ export function useSearchDataSource() {
           return rows;
         }, 120000);
 
-        const extResults = extensions.map((ext) => {
+        extResults = extensions.map((ext) => {
           return {
             id: `ext__${ext.slug}`,
             title: ext.name || ext.slug,
@@ -97,12 +101,58 @@ export function useSearchDataSource() {
           };
         });
 
-        // Final merge: all 3 layers, deduplicated
-        setDataset(dedupeById([...mockLayer, ...toolResults, ...extResults]));
       } catch (err) {
         // Firebase unavailable locally — mock + tools still work fine
         console.warn("[SearchEngine] Firebase extensions fetch failed:", err);
       }
+
+      let managedResults = [];
+      try {
+        const managedEntries = await getCachedFirebaseRead("global-search:list", async () => {
+          const colRef = collection(db, "projects", PROJECT_ID, "GlobalSearch");
+          const snapshot = await getDocs(colRef);
+          return snapshot.docs.map((entry) => ({ id: entry.id, ...entry.data() }));
+        }, 120000);
+
+        managedResults = managedEntries
+          .filter((entry) => String(entry.status || "active").toLowerCase() === "active")
+          .map((entry) => {
+            const target = String(entry.redirect_url || "#").trim() || "#";
+            const keywords = Array.isArray(entry.searchKeywords)
+              ? entry.searchKeywords
+              : String(entry.searchKeywords || "")
+                  .split(",")
+                  .map((keyword) => keyword.trim())
+                  .filter(Boolean);
+            let hostname = "altftool.com";
+            let isExternal = false;
+
+            try {
+              const parsed = new URL(target, "https://altftool.com");
+              hostname = parsed.hostname || hostname;
+              isExternal = parsed.hostname !== "altftool.com" && parsed.hostname !== "www.altftool.com";
+            } catch {
+              // Invalid legacy targets stay visible but are never treated as external links.
+            }
+
+            return {
+              id: `managed__${entry.id}`,
+              title: entry.title || "Untitled resource",
+              url: target,
+              displayUrl: `${hostname} › ${entry.type || "resource"}`,
+              description: entry.description || "A curated resource from AltFTool.",
+              category: entry.type || "Resource",
+              tags: keywords,
+              image: entry.image_url || null,
+              price: entry.price || null,
+              isExternal,
+            };
+          });
+      } catch (err) {
+        console.warn("[SearchEngine] Managed directory fetch failed:", err);
+      }
+
+      setDataset(dedupeById([...mockLayer, ...toolResults, ...extResults, ...managedResults]));
 
       setLoading(false);
     }

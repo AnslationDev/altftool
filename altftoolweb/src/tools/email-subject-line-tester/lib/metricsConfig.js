@@ -1,0 +1,128 @@
+import { Ruler, Type, ShieldAlert, BookOpenText, UserRound, Timer, Sparkles, CaseSensitive, Hash, Smile, HelpCircle, MousePointerClick, Heart } from "lucide-react";
+
+// Drives MetricCardsGrid. Each entry knows how to pull its own value out of
+// an AnalysisResult (see scoringEngine.js), so adding a new card later is a
+// one-object change here rather than touching the grid component.
+export const METRIC_CARDS = [
+  {
+    key: "length",
+    label: "Character Length",
+    variant: "count",
+    icon: Ruler,
+    getValue: (a) => a.chars,
+    getCaption: (a) => `Ideal range: 30-50 characters · length score ${a.scores.length}/100`,
+    description: "Scored against the 30-50 character range most inbox lists show in full before truncating.",
+  },
+  {
+    key: "words",
+    label: "Word Count",
+    variant: "count",
+    icon: Type,
+    getValue: (a) => a.words,
+    getCaption: () => "Ideal range: 4-8 words",
+    description: "Shorter subjects scan faster on mobile inboxes.",
+  },
+  {
+    key: "spamRisk",
+    label: "Spam Risk",
+    variant: "score",
+    invert: true,
+    icon: ShieldAlert,
+    getScore: (a) => a.scores.spamRisk,
+    getCaption: (a) =>
+      a.detected.spamWords.length
+        ? `${a.detected.spamWords.length} spam-trigger phrase(s) detected`
+        : "No spam-trigger phrases detected",
+    description: "Higher means higher risk of landing in spam or promotions — based on trigger phrases, punctuation and capitalization.",
+  },
+  {
+    key: "readability",
+    label: "Readability",
+    variant: "score",
+    icon: BookOpenText,
+    getScore: (a) => a.scores.readability,
+    getCaption: () => "Based on the Flesch Reading Ease formula",
+    description: "How easy the subject is to read at a glance — shorter words and shorter phrasing score higher.",
+  },
+  {
+    key: "personalization",
+    label: "Personalization",
+    variant: "score",
+    icon: UserRound,
+    getScore: (a) => a.scores.personalization,
+    getCaption: (a) =>
+      a.flags.hasMergeTag ? "Merge tag detected" : `${a.detected.personalizationWords.length} personal word(s) detected`,
+    description: "Rewards merge tags ({FirstName}) and direct address ('you', 'your').",
+  },
+  {
+    key: "urgency",
+    label: "Urgency",
+    variant: "score",
+    icon: Timer,
+    getScore: (a) => a.scores.urgency,
+    getCaption: (a) => `${a.detected.urgencyWords.length} urgency phrase(s) detected`,
+    description: "Rewards one clear deadline; penalizes stacking multiple urgency phrases.",
+  },
+  {
+    key: "powerWords",
+    label: "Power Words",
+    variant: "score",
+    icon: Sparkles,
+    getScore: (a) => a.scores.powerWords,
+    getCaption: (a) => `${a.detected.powerWords.length} power word(s) detected`,
+    description: "Persuasive words like 'exclusive' or 'proven' that make the copy more compelling.",
+  },
+  {
+    key: "capitalization",
+    label: "Capitalization",
+    variant: "score",
+    icon: CaseSensitive,
+    getScore: (a) => a.scores.capitalization,
+    getCaption: (a) => (a.flags.isAllCaps ? "Entire subject is ALL CAPS" : "Natural casing"),
+    description: "Penalizes ALL-CAPS words, one of the strongest spam-filter triggers.",
+  },
+  {
+    key: "numbers",
+    label: "Number Usage",
+    variant: "score",
+    icon: Hash,
+    getScore: (a) => a.scores.numbers,
+    getCaption: (a) => (a.detected.numbers.length ? `Detected: ${a.detected.numbers.join(", ")}` : "No numbers detected"),
+    description: "A concrete number (a stat, a percentage, a count) often boosts credibility.",
+  },
+  {
+    key: "emoji",
+    label: "Emoji Usage",
+    variant: "score",
+    icon: Smile,
+    getScore: (a) => a.scores.emoji,
+    getCaption: (a) => (a.detected.emojis.length ? `${a.detected.emojis.length} emoji detected` : "No emoji used"),
+    description: "1 emoji tends to help; 3 or more usually reads as spammy.",
+  },
+  {
+    key: "question",
+    label: "Question Detection",
+    variant: "boolean",
+    icon: HelpCircle,
+    getValue: (a) => a.flags.hasQuestion,
+    description: "Questions can trigger curiosity — factored directly into the Clickability score.",
+  },
+  {
+    key: "clickability",
+    label: "Clickability Score",
+    variant: "score",
+    icon: MousePointerClick,
+    getScore: (a) => a.scores.clickability,
+    getCaption: () => "Blends power words, personalization, urgency, length and safety",
+    description: "A composite proxy for predicted click-through, weighted toward curiosity and persuasion.",
+  },
+  {
+    key: "emotionalTone",
+    label: "Emotional Tone",
+    variant: "label",
+    icon: Heart,
+    getValue: (a) => a.emotionalTone.label,
+    getCaption: (a) => `${a.emotionalTone.positive} positive · ${a.emotionalTone.negative} negative word(s)`,
+    description: "The dominant emotional register detected across power, urgency, curiosity and trust language.",
+  },
+];

@@ -50,7 +50,7 @@ const BLOG_SSR_FIREBASE_TIMEOUT_MS = Number(process.env.ALTFT_BLOGS_SSR_FIREBASE
 
 export async function generateMetadata() {
   return createPageMetadata({
-    title: "ALTFTool Blog - Tools, Savings & Digital Guides",
+    title: "AltFTool Blog - Tools, Savings & Digital Guides",
     description: blogsDescription,
     path: "/blogs",
     image: "/assets/logo3.png",
@@ -337,12 +337,12 @@ export default async function BlogsPage() {
         data={[
           createCollectionPageJsonLd({
             path: "/blogs",
-            name: "ALTFTool Blog",
+            name: "AltFTool Blog",
             description: blogsDescription,
           }),
           createItemListJsonLd({
             path: "/blogs",
-            name: "ALTFTool blog next routes",
+            name: "AltFTool blog next routes",
             items: getRouteHubJsonLdItems("blogs"),
           }),
           createBreadcrumbJsonLd([
@@ -358,7 +358,7 @@ export default async function BlogsPage() {
             id="blog-index-title"
             className="text-2xl font-bold tracking-tight text-(--foreground) sm:text-3xl"
           >
-            ALTFTool <span className="text-(--primary)">Blog</span>
+            AltFTool <span className="text-(--primary)">Blog</span>
           </h1>
           <p className="mt-1.5 max-w-2xl text-sm leading-relaxed text-(--muted-foreground) sm:text-base">
             {blogsDescription}

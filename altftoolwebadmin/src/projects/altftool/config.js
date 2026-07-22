@@ -42,6 +42,7 @@ const altftoolConfig = {
     sketchflow: { label: "Sketch Flow", icon: Sparkles, routeSegment: "sketchflow" },
     seo: { label: "SEO Engine", icon: Search, routeSegment: "seo" },
     products: { label: "Products & Signals", icon: Radar, routeSegment: "products" },
+    searchEng: { label: "Search Directory", icon: Search, routeSegment: "search-directory" },
   },
 };
 

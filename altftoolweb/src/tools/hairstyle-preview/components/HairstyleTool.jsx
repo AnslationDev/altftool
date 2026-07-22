@@ -10,8 +10,8 @@ import BeforeAfterSlider from '../../_shared/components/BeforeAfterSlider';
 import FaceSelector from '../../_shared/components/FaceSelector';
 import { useFaceDetection } from '../../_shared/hooks/useFaceDetection';
 import { shareImage } from '../../_shared/utils/download';
-import { compressImage, loadImage, getCanvasBlob } from '../../_shared/utils/imageProcessing';
-import { createHiResCanvas, exportCanvas } from '../../_shared/render/exportEngine';
+import { loadImage, getCanvasBlob } from '../../_shared/utils/imageProcessing';
+import { createHiResCanvas, pickScale } from '../../_shared/render/exportEngine';
 import { HAIR_STYLES, HAIR_COLORS, renderHairStyle } from '../utils/hairStyles';
 
 const STYLE_CATEGORIES = [
@@ -32,6 +32,7 @@ export default function HairstyleTool() {
   const [showSlider, setShowSlider] = useState(false);
   const [downloading, setDownloading] = useState(false);
   const [selectedFace, setSelectedFace] = useState(0);
+  const [editorCanvas, setEditorCanvas] = useState(null);
   const [adjustments, setAdjustments] = useState({
     scale: 100, rotation: 180, opacity: 100,
     thickness: 50, density: 50, length: 100,
@@ -40,7 +41,6 @@ export default function HairstyleTool() {
   });
 
   const canvasRef = useRef(null);
-  const processedCanvasRef = useRef(null);
   const { loading: faceLoading, error: faceError, faceData, faces, modelsReady, loadModels, detectFace, reset: resetFace } = useFaceDetection();
   const [processing, setProcessing] = useState(false);
   const [previewKey, setPreviewKey] = useState(0);
@@ -49,12 +49,13 @@ export default function HairstyleTool() {
     setImage({ src, file, img });
     setResultCanvas(null);
     setShowSlider(false);
+    setEditorCanvas(null);
     resetFace();
     if (!modelsReady) await loadModels();
   }, [modelsReady, loadModels, resetFace]);
 
   const handleEditorApply = useCallback((editedCanvas) => {
-    processedCanvasRef.current = editedCanvas;
+    setEditorCanvas(editedCanvas);
     editedCanvas.toBlob((blob) => {
       if (!blob) return;
       const url = URL.createObjectURL(blob);
@@ -62,6 +63,17 @@ export default function HairstyleTool() {
     });
     setShowEditor(false);
   }, []);
+
+  const handleOpenEditor = useCallback(async () => {
+    if (!image) return;
+    const source = await loadImage(image.src);
+    const canvas = document.createElement('canvas');
+    canvas.width = source.width;
+    canvas.height = source.height;
+    canvas.getContext('2d').drawImage(source, 0, 0);
+    setEditorCanvas(canvas);
+    setShowEditor(true);
+  }, [image]);
 
   const applyPreview = useCallback(async () => {
     if (!image || !faceData) return;
@@ -164,16 +176,16 @@ export default function HairstyleTool() {
           <p className="text-sm text-muted-foreground">Drag to adjust, click to change style</p>
         </div>
         <div className="flex gap-2">
-          <button onClick={() => { setImage(null); setResultCanvas(null); setShowSlider(false); resetFace(); }} className="px-4 py-2 text-sm rounded-lg border border-[var(--border)] hover:bg-[var(--anslation-ds-soft)] transition-colors text-muted-foreground">New Photo</button>
-          <button onClick={() => setShowEditor(true)} className="px-4 py-2 text-sm rounded-lg border border-[var(--border)] hover:bg-[var(--anslation-ds-soft)] transition-colors text-muted-foreground">Edit Image</button>
+          <button onClick={() => { setImage(null); setResultCanvas(null); setShowSlider(false); setEditorCanvas(null); resetFace(); }} className="px-4 py-2 text-sm rounded-lg border border-[var(--border)] hover:bg-[var(--anslation-ds-soft)] transition-colors text-muted-foreground">New Photo</button>
+          <button onClick={handleOpenEditor} className="px-4 py-2 text-sm rounded-lg border border-[var(--border)] hover:bg-[var(--anslation-ds-soft)] transition-colors text-muted-foreground">Edit Image</button>
         </div>
       </div>
 
       {faceLoading && <SkeletonLoader lines={3} />}
       {faceError && <ErrorCard message={faceError} onRetry={handleDetect} />}
 
-      {showEditor && processedCanvasRef.current ? (
-        <ImageEditor canvas={processedCanvasRef.current} onApply={handleEditorApply} onCancel={() => setShowEditor(false)} />
+      {showEditor && editorCanvas ? (
+        <ImageEditor canvas={editorCanvas} onApply={handleEditorApply} onCancel={() => setShowEditor(false)} />
       ) : null}
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">

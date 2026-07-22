@@ -3,22 +3,45 @@
 ================================ */
 @import "tailwindcss";
 @import "@altftool/ui/styles.css";
-@custom-variant dark (&:where([data-theme="dark"]));
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
 
 @theme inline {
   --font-sans: "Geist", "Geist Fallback", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Geist", "Geist Fallback", ui-sans-serif, system-ui, sans-serif;
   --font-mono: "Geist Mono", "Geist Mono Fallback", ui-monospace, SFMono-Regular, Menlo, monospace;
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-canvas: var(--canvas);
+  --color-surface: var(--surface);
+  --color-surface-soft: var(--surface-soft);
   --color-primary: var(--primary);
   --color-primary-foreground: var(--primary-foreground);
+  --color-primary-soft: var(--primary-soft);
+  --color-primary-hover: var(--primary-hover);
+  --color-primary-active: var(--primary-active);
   --color-secondary: var(--secondary);
   --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary-soft: var(--secondary-soft);
+  --color-accent: var(--accent);
+  --color-accent-soft: var(--accent-soft);
   --color-muted: var(--muted);
   --color-muted-foreground: var(--muted-foreground);
   --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
   --color-card: var(--card);
   --color-card-foreground: var(--card-foreground);
+  --color-destructive: var(--danger);
+  --color-destructive-foreground: var(--danger-foreground);
+  --color-danger: var(--danger);
+  --color-danger-soft: var(--danger-soft);
+  --color-success: var(--success);
+  --color-success-soft: var(--success-soft);
+  --color-warning: var(--warning);
+  --color-warning-soft: var(--warning-soft);
+  --color-info: var(--info);
+  --color-info-soft: var(--info-soft);
+  --color-light: var(--page);
+  --color-dark: var(--anslation-ds-footer);
   --radius-sm: var(--anslation-ds-radius-sm);
   --radius-md: var(--anslation-ds-radius);
   --radius-lg: var(--anslation-ds-radius-lg);
@@ -28,7 +51,8 @@
 /* ================================
    Theme + Fonts
 ================================ */
-:root {
+:root,
+html[data-theme="light"] {
   color-scheme: light;
 
   /* Anslation/Fuse design tokens */
@@ -54,29 +78,30 @@
   --anslation-ds-muted: #607083;
   --anslation-ds-muted-strong: #42526a;
 
-  --anslation-ds-primary: #14b8a6;
-  --anslation-ds-primary-hover: #0d9488;
-  --anslation-ds-primary-active: #0f766e;
+  --anslation-ds-primary: #0d9488;
+  --anslation-ds-primary-hover: #0f766e;
+  --anslation-ds-primary-active: #115e59;
   --anslation-ds-primary-soft: #ccfbf1;
-  --anslation-ds-secondary: #38bdf8;
-  --anslation-ds-secondary-soft: #e0f2fe;
+  --anslation-ds-brand-500: #14b8a6;
+  --anslation-ds-secondary: #22d3ee;
+  --anslation-ds-secondary-soft: #cffafe;
   --anslation-ds-cta-gradient: linear-gradient(135deg, var(--anslation-ds-primary), var(--anslation-ds-secondary));
   --anslation-ds-cta-gradient-hover: linear-gradient(135deg, var(--anslation-ds-primary-hover), var(--anslation-ds-secondary));
-  --anslation-ds-accent: var(--anslation-ds-secondary);
-  --anslation-ds-accent-soft: var(--anslation-ds-secondary-soft);
+  --anslation-ds-accent: #8b5cf6;
+  --anslation-ds-accent-soft: #ede9fe;
 
-  --anslation-ds-success: #14783e;
-  --anslation-ds-warning: #b7791f;
-  --anslation-ds-danger: #c93d2e;
-  --anslation-ds-info: var(--anslation-ds-secondary);
+  --anslation-ds-success: #16a34a;
+  --anslation-ds-warning: #f59e0b;
+  --anslation-ds-danger: #ef4444;
+  --anslation-ds-info: #0ea5e9;
 
   --anslation-ds-success-soft: #dcf4e3;
   --anslation-ds-warning-soft: #fdf1d6;
   --anslation-ds-danger-soft: #fde2dd;
-  --anslation-ds-info-soft: var(--anslation-ds-primary-soft);
+  --anslation-ds-info-soft: #e0f2fe;
 
   --anslation-ds-radius-xs: 6px;
-  --anslation-ds-radius-sm: 8px;
+  --anslation-ds-radius-sm: 6px;
   --anslation-ds-radius: 8px;
   --anslation-ds-radius-md: 8px;
   --anslation-ds-radius-lg: 12px;
@@ -97,13 +122,19 @@
 
   --background: var(--anslation-ds-page);
   --foreground: var(--anslation-ds-text);
+  --page: var(--anslation-ds-page);
+  --canvas: var(--anslation-ds-canvas);
+  --surface: var(--anslation-ds-surface);
+  --surface-soft: var(--anslation-ds-soft);
   --primary: var(--anslation-ds-primary);
   --primary-foreground: #ffffff;
+  --primary-soft: var(--anslation-ds-primary-soft);
   --primary-hover: var(--anslation-ds-primary-hover);
   --primary-active: var(--anslation-ds-primary-active);
 
   --secondary: var(--anslation-ds-secondary);
   --secondary-foreground: #075985;
+  --secondary-soft: var(--anslation-ds-secondary-soft);
   --secondary-bg: transparent;
   --secondary-border: var(--anslation-ds-border);
   --secondary-hover: var(--anslation-ds-soft);
@@ -113,9 +144,27 @@
   --muted-foreground: var(--anslation-ds-muted);
   --muted-gray: var(--anslation-ds-soft);
   --border: var(--anslation-ds-border);
+  --border-strong: var(--anslation-ds-border-strong);
   --card: var(--anslation-ds-surface);
   --card-foreground: var(--anslation-ds-text);
   --card-border: var(--anslation-ds-border);
+  --accent: var(--anslation-ds-accent);
+  --accent-soft: var(--anslation-ds-accent-soft);
+  --danger: var(--anslation-ds-danger);
+  --danger-foreground: #ffffff;
+  --danger-soft: var(--anslation-ds-danger-soft);
+  --destructive: var(--anslation-ds-danger);
+  --destructive-foreground: #ffffff;
+  --success: var(--anslation-ds-success);
+  --success-soft: var(--anslation-ds-success-soft);
+  --warning: var(--anslation-ds-warning);
+  --warning-soft: var(--anslation-ds-warning-soft);
+  --info: var(--anslation-ds-info);
+  --info-soft: var(--anslation-ds-info-soft);
+  --shadow-sm: var(--anslation-ds-shadow-sm);
+  --shadow-md: var(--anslation-ds-shadow-md);
+  --shadow-lg: var(--anslation-ds-shadow-lg);
+  --focus-ring: var(--anslation-ds-focus-ring);
   --search-buysmart: var(--anslation-ds-soft);
   --badge-bg: var(--anslation-ds-primary-soft);
   --bg-black: #111827;
@@ -126,7 +175,7 @@
   --dealspage-background: var(--anslation-ds-page);
 }
 
-[data-theme="dark"] {
+html[data-theme="dark"] {
   color-scheme: dark;
 
   --anslation-ds-page: #070d18;
@@ -148,26 +197,26 @@
   --anslation-ds-muted: #94a3b8;
   --anslation-ds-muted-strong: #cbd5e1;
 
-  --anslation-ds-primary: #14b8a6;
-  --anslation-ds-primary-hover: #0d9488;
-  --anslation-ds-primary-active: #0f766e;
-  --anslation-ds-primary-soft: #162d4f;
-  --anslation-ds-secondary: #38bdf8;
-  --anslation-ds-secondary-soft: #12364a;
+  --anslation-ds-primary: #2dd4bf;
+  --anslation-ds-primary-hover: #5eead4;
+  --anslation-ds-primary-active: #99f6e4;
+  --anslation-ds-primary-soft: #0c2e2b;
+  --anslation-ds-secondary: #22d3ee;
+  --anslation-ds-secondary-soft: #0a2f38;
   --anslation-ds-cta-gradient: linear-gradient(135deg, var(--anslation-ds-primary), var(--anslation-ds-secondary));
   --anslation-ds-cta-gradient-hover: linear-gradient(135deg, var(--anslation-ds-primary-hover), var(--anslation-ds-secondary));
-  --anslation-ds-accent: var(--anslation-ds-secondary);
-  --anslation-ds-accent-soft: #123b3a;
+  --anslation-ds-accent: #a78bfa;
+  --anslation-ds-accent-soft: #2e2451;
 
   --anslation-ds-success: #4ade80;
   --anslation-ds-warning: #fbbf24;
   --anslation-ds-danger: #f87171;
-  --anslation-ds-info: #38BDF8;
+  --anslation-ds-info: #38bdf8;
 
   --anslation-ds-success-soft: #0f3b21;
   --anslation-ds-warning-soft: #3b2d0b;
   --anslation-ds-danger-soft: #3b1410;
-  --anslation-ds-info-soft: var(--anslation-ds-primary-soft);
+  --anslation-ds-info-soft: #0b2a3d;
 
   --anslation-ds-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.36);
   --anslation-ds-shadow-md: 0 10px 28px rgba(0, 0, 0, 0.36);
@@ -176,12 +225,18 @@
 
   --background: var(--anslation-ds-page);
   --foreground: var(--anslation-ds-text);
+  --page: var(--anslation-ds-page);
+  --canvas: var(--anslation-ds-canvas);
+  --surface: var(--anslation-ds-surface);
+  --surface-soft: var(--anslation-ds-soft);
   --primary: var(--anslation-ds-primary);
   --primary-foreground: #07111f;
+  --primary-soft: var(--anslation-ds-primary-soft);
   --primary-hover: var(--anslation-ds-primary-hover);
   --primary-active: var(--anslation-ds-primary-active);
   --secondary: var(--anslation-ds-secondary);
-  --secondary-foreground: var(--anslation-ds-muted);
+  --secondary-foreground: #06222b;
+  --secondary-soft: var(--anslation-ds-secondary-soft);
   --secondary-border: var(--anslation-ds-border);
   --secondary-hover: var(--anslation-ds-soft);
   --secondary-active: var(--anslation-ds-hover);
@@ -189,8 +244,27 @@
   --muted-foreground: var(--anslation-ds-muted);
   --muted-gray: var(--anslation-ds-soft);
   --border: var(--anslation-ds-border);
+  --border-strong: var(--anslation-ds-border-strong);
   --card: var(--anslation-ds-surface);
   --card-foreground: var(--anslation-ds-text);
+  --card-border: var(--anslation-ds-border);
+  --accent: var(--anslation-ds-accent);
+  --accent-soft: var(--anslation-ds-accent-soft);
+  --danger: var(--anslation-ds-danger);
+  --danger-foreground: #07111f;
+  --danger-soft: var(--anslation-ds-danger-soft);
+  --destructive: var(--anslation-ds-danger);
+  --destructive-foreground: #07111f;
+  --success: var(--anslation-ds-success);
+  --success-soft: var(--anslation-ds-success-soft);
+  --warning: var(--anslation-ds-warning);
+  --warning-soft: var(--anslation-ds-warning-soft);
+  --info: var(--anslation-ds-info);
+  --info-soft: var(--anslation-ds-info-soft);
+  --shadow-sm: var(--anslation-ds-shadow-sm);
+  --shadow-md: var(--anslation-ds-shadow-md);
+  --shadow-lg: var(--anslation-ds-shadow-lg);
+  --focus-ring: var(--anslation-ds-focus-ring);
   --search-buysmart: var(--anslation-ds-soft);
   --flashsale-salelocator: var(--anslation-ds-primary-soft);
   --bg-black: #ffffff;
@@ -205,18 +279,52 @@ body {
   min-height: 100%;
 }
 
-html {
-  background: var(--background);
+html[data-theme] {
+  /* Route-level Tailwind instances must not replace the platform contract. */
+  --font-sans: var(--font-primary);
+  --font-display: var(--font-primary);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-canvas: var(--canvas);
+  --color-surface: var(--surface);
+  --color-surface-soft: var(--surface-soft);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary-soft: var(--primary-soft);
+  --color-primary-hover: var(--primary-hover);
+  --color-primary-active: var(--primary-active);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary-soft: var(--secondary-soft);
+  --color-accent: var(--accent);
+  --color-accent-soft: var(--accent-soft);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-destructive: var(--danger);
+  --color-destructive-foreground: var(--danger-foreground);
+  --color-danger: var(--danger);
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-info: var(--info);
+  --color-light: var(--page);
+  --color-dark: var(--anslation-ds-footer);
+
+  background: var(--background) !important;
+  color: var(--foreground);
   overflow-x: clip;
   text-size-adjust: 100%;
 }
 
-body {
+body.anslation-ds-public {
   min-height: 100vh;
   margin: 0;
   font-family: var(--font-primary);
-  background: var(--background);
-  color: var(--foreground);
+  background: var(--background) !important;
+  color: var(--foreground) !important;
   -webkit-font-smoothing: antialiased;
   overflow-x: clip;
   text-rendering: optimizeLegibility;
@@ -1312,11 +1420,13 @@ a {
 /* ================================
    UX utilities
 ================================ */
-.no-scrollbar::-webkit-scrollbar {
+.no-scrollbar::-webkit-scrollbar,
+.scrollbar-hide::-webkit-scrollbar {
   display: none;
 }
 
-.no-scrollbar {
+.no-scrollbar,
+.scrollbar-hide {
   -ms-overflow-style: none;
   scrollbar-width: none;
 }

@@ -22,9 +22,22 @@ import { loadSeoConfig } from "@/platform/seo/seoConfigSource";
 import { resolveSitemap } from "@altftool/core/seo/resolver";
 import newsData from "../../public/data/newsdata.json";
 import { TOOLS as altPdfTools } from "@/app/altflovepdf/toolsData";
+import { CALCULATORS as altCalculators } from "@/app/altfcalculators/toolsData";
 import { services as homeservServices } from "@/app/homeserv/services-data";
 import { apps } from "@/app/apps/data/apps";
 import { SIGNAL_CATALOG } from "@altftool/core/signals";
+import { PRODUCT_SUITE_CATALOG } from "@altftool/core/product-suites";
+import { EXPERIENCE_CATALOG } from "@altftool/core/experiences";
+import { getAllWorkflows, getAllNodes, getCategories as getN8nCategories } from "@/app/n8n/data/service";
+import { getPromptCards } from "@/app/prompts/data/service";
+import { getAllCategories as getFactNetCategories, getLatestArticles as getFactNetArticles } from "@/app/fact-net/data/factNetData";
+import { TEMPLATES as socialMockupTemplates } from "@/app/prank-socialmedia/lib/templates";
+import { getAllKymRoutes } from "@/app/kym/components/KymGenericPage";
+import { pranks as pranxExperiences } from "@/app/pranx/data/pranxData";
+import { sitemapPages as tripFindBoxPages } from "@/app/business-ops/tripfindbox/lib/sitemapPages";
+import { HN_CATEGORIES } from "@/app/housingneeds/_data/categories";
+import { INSTRUMENTS as tradeonInstruments } from "@/app/tradeon/lib/instruments";
+import { assetHref as tradeonAssetHref, chartHref as tradeonChartHref } from "@/app/tradeon/lib/format";
 
 export const revalidate = 3600;
 
@@ -32,6 +45,7 @@ const staticRoutes = [
   { path: "/", priority: 1 },
   { path: "/tools", priority: 0.95 },
   { path: "/signals", priority: 0.88 },
+  { path: "/products", priority: 0.9 },
   { path: "/blogs", priority: 0.9 },
   { path: "/blogs/topics", priority: 0.72 },
   { path: "/buysmart", priority: 0.85 },
@@ -44,14 +58,14 @@ const staticRoutes = [
   { path: "/smartlink", priority: 0.65 },
   { path: "/top11", priority: 0.7 },
   { path: "/top9", priority: 0.68 },
-  { path: "/games", priority: 0.72 },
   { path: "/labs", priority: 0.66 },
   { path: "/licenses", priority: 0.3 },
-  { path: "/account/login", priority: 0.3 },
-  { path: "/account/signup", priority: 0.3 },
-  { path: "/personality", priority: 0.66 },
-  { path: "/wattpad", priority: 0.66 },
-  { path: "/altpintrest", priority: 0.62 },
+  { path: "/ancestory/meaning", priority: 0.56 },
+  { path: "/fact-net/categories", priority: 0.62 },
+  { path: "/fact-net/listings", priority: 0.62 },
+  { path: "/pixel-thought/meditation", priority: 0.54 },
+  { path: "/prank-socialmedia/templates", priority: 0.58 },
+  { path: "/windowswap/pricing", priority: 0.45 },
   { path: "/trendingvids", priority: 0.7 },
   { path: "/news", priority: 0.7 },
   { path: "/news/headlines", priority: 0.6 },
@@ -67,11 +81,22 @@ const staticRoutes = [
   { path: "/academy", priority: 0.6 },
   { path: "/sale", priority: 0.7 },
   { path: "/status", priority: 0.45 },
+  { path: "/supportsetting", priority: 0.45 },
+  { path: "/request-a-tool", priority: 0.5 },
+  { path: "/site-map", priority: 0.5 },
+  { path: "/imgprompt", priority: 0.76 },
+  { path: "/imgprompt/studio", priority: 0.66 },
+  { path: "/n8n", priority: 0.76 },
+  { path: "/tradeon", priority: 0.76 },
+  { path: "/tradeon/dashboard", priority: 0.66 },
+  { path: "/tradeon/workspace", priority: 0.66 },
+  { path: "/prompts/seedream-5-pro", priority: 0.7 },
   { path: "/policypages/about", priority: 0.35 },
   { path: "/policypages/affiliate", priority: 0.35 },
   { path: "/policypages/contact", priority: 0.35 },
   { path: "/policypages/cookie", priority: 0.25 },
   { path: "/policypages/disclaimer", priority: 0.25 },
+  { path: "/policypages/faq", priority: 0.35 },
   { path: "/policypages/privacy", priority: 0.25 },
   { path: "/policypages/termsandconditions", priority: 0.25 },
 
@@ -94,6 +119,9 @@ const staticRoutes = [
   // --- Altf Love PDF (browser PDF tools) ---
   { path: "/altflovepdf", priority: 0.7 },
 
+  // --- AltF Calculators ---
+  { path: "/altfcalculators", priority: 0.78 },
+
   // --- QuoteNest Pros (homeserv) ---
   { path: "/homeserv", priority: 0.62 },
   { path: "/homeserv/contact-us", priority: 0.4 },
@@ -109,6 +137,28 @@ const staticRoutes = [
   { path: "/tripfindbox/privacy-policy", priority: 0.3 },
   { path: "/tripfindbox/terms-and-conditions", priority: 0.3 },
   { path: "/tripfindbox/site-map", priority: 0.4 },
+
+  // --- Business Ops ---
+  { path: "/business-ops", priority: 0.68 },
+  { path: "/business-ops/tripfindbox", priority: 0.68 },
+  { path: "/business-ops/tripfindbox/about-us", priority: 0.45 },
+  { path: "/business-ops/tripfindbox/blogs", priority: 0.6 },
+  { path: "/business-ops/tripfindbox/contact-us", priority: 0.4 },
+  { path: "/business-ops/tripfindbox/privacy-policy", priority: 0.3 },
+  { path: "/business-ops/tripfindbox/terms-and-conditions", priority: 0.3 },
+  { path: "/business-ops/tripfindbox/site-map", priority: 0.4 },
+
+  // --- HousingNeeds ---
+  { path: "/housingneeds", priority: 0.72 },
+  { path: "/housingneeds/roofing", priority: 0.8 },
+  { path: "/housingneeds/siding", priority: 0.8 },
+  { path: "/housingneeds/gutters", priority: 0.8 },
+  { path: "/housingneeds/windows", priority: 0.8 },
+  { path: "/housingneeds/solar", priority: 0.8 },
+  { path: "/housingneeds/plumbing", priority: 0.8 },
+  { path: "/housingneeds/interiors", priority: 0.8 },
+  { path: "/housingneeds/pestcontrol", priority: 0.8 },
+  { path: "/siding", priority: 0.55 },
 ];
 
 const FIREBASE_API_KEY =
@@ -133,12 +183,15 @@ function safeDate(value) {
 }
 
 function sitemapEntry(path, options = {}) {
+  const lastModified = safeDate(options.lastModified);
   const entry = {
     url: `${getSiteUrl()}${path}`,
-    lastModified: safeDate(options.lastModified) || new Date(),
     changeFrequency: options.changeFrequency || "weekly",
     priority: options.priority ?? 0.6,
   };
+  if (lastModified) {
+    entry.lastModified = lastModified;
+  }
   // Image sitemap support (Next.js MetadataRoute.Sitemap `images` field).
   if (Array.isArray(options.images) && options.images.length) {
     entry.images = options.images;
@@ -280,7 +333,7 @@ async function getLiveSitemapCollections() {
   };
 }
 
-export default async function sitemap() {
+export async function getSitemapEntries() {
   const entries = [];
   const seen = new Set();
   // ALTF Engine: load central config once per build. Returns an empty/disabled
@@ -293,6 +346,40 @@ export default async function sitemap() {
     pushUnique(entries, seen, route.path, {
       priority: route.priority,
       changeFrequency: route.path === "/" ? "daily" : "weekly",
+    });
+  }
+
+  for (const category of HN_CATEGORIES) {
+    for (const page of category.pages.filter((item) => item.tags?.includes("Guide"))) {
+      pushUnique(entries, seen, page.href, {
+        priority: 0.8,
+        changeFrequency: "monthly",
+      });
+    }
+  }
+
+  for (const instrument of tradeonInstruments) {
+    pushUnique(entries, seen, tradeonAssetHref(instrument.symbol), {
+      priority: 0.58,
+      changeFrequency: instrument.binance ? "daily" : "weekly",
+    });
+    pushUnique(entries, seen, tradeonChartHref(instrument.symbol), {
+      priority: 0.52,
+      changeFrequency: instrument.binance ? "daily" : "weekly",
+    });
+  }
+
+  for (const suite of PRODUCT_SUITE_CATALOG) {
+    pushUnique(entries, seen, `/products/${suite.slug}`, {
+      priority: suite.status === "working" ? 0.82 : 0.72,
+      changeFrequency: "weekly",
+    });
+  }
+
+  for (const experience of EXPERIENCE_CATALOG) {
+    pushUnique(entries, seen, experience.href, {
+      priority: experience.priority,
+      changeFrequency: "monthly",
     });
   }
 
@@ -557,6 +644,16 @@ export default async function sitemap() {
     }
   }
 
+  // AltF Calculators tool pages (/altfcalculators/[toolSlug])
+  for (const tool of altCalculators || []) {
+    if (tool?.slug) {
+      pushUnique(entries, seen, `/altfcalculators/${tool.slug}`, {
+        priority: 0.68,
+        changeFrequency: "monthly",
+      });
+    }
+  }
+
   // QuoteNest Pros service pages (/homeserv/services/[slug])
   for (const service of homeservServices || []) {
     if (service?.slug) {
@@ -567,5 +664,102 @@ export default async function sitemap() {
     }
   }
 
+  // FactNet category and article pages are owned, indexable content. Search
+  // result permutations stay out of the sitemap to avoid thin crawl variants.
+  for (const category of getFactNetCategories()) {
+    if (category?.href) {
+      pushUnique(entries, seen, category.href, {
+        lastModified: category.lastmod ? new Date(category.lastmod) : undefined,
+        priority: 0.58,
+        changeFrequency: "weekly",
+      });
+    }
+  }
+
+  for (const article of getFactNetArticles(1000)) {
+    if (article?.href) {
+      pushUnique(entries, seen, article.href, {
+        lastModified: article.lastmod ? new Date(article.lastmod) : undefined,
+        priority: 0.52,
+        changeFrequency: "monthly",
+      });
+    }
+  }
+
+  // Each Mockly editor is a complete client-side tool with a stable URL.
+  for (const template of socialMockupTemplates) {
+    if (template?.slug) {
+      pushUnique(entries, seen, `/prank-socialmedia/editor/${template.slug}`, {
+        priority: 0.56,
+        changeFrequency: "monthly",
+      });
+    }
+  }
+
+  for (const path of getAllKymRoutes()) {
+    pushUnique(entries, seen, path, {
+      priority: 0.52,
+      changeFrequency: "monthly",
+    });
+  }
+
+  for (const experience of pranxExperiences) {
+    if (experience?.slug) {
+      pushUnique(entries, seen, `/pranx/${experience.slug}`, {
+        priority: 0.54,
+        changeFrequency: "monthly",
+      });
+    }
+  }
+
+  for (const page of tripFindBoxPages) {
+    if (page?.slug) {
+      pushUnique(entries, seen, `/business-ops/tripfindbox/${page.slug}`, {
+        priority: page.section === "Top Cities" || page.section === "Top Airlines" ? 0.62 : 0.52,
+        changeFrequency: "monthly",
+      });
+    }
+  }
+
+  // Automation templates and their browse surfaces.
+  for (const workflow of getAllWorkflows()) {
+    if (workflow?.slug) {
+      pushUnique(entries, seen, `/n8n/${workflow.slug}`, {
+        priority: 0.62,
+        changeFrequency: "monthly",
+      });
+    }
+  }
+
+  for (const category of getN8nCategories()) {
+    if (category?.slug) {
+      pushUnique(entries, seen, `/n8n/category/${category.slug}`, {
+        priority: 0.58,
+        changeFrequency: "monthly",
+      });
+    }
+  }
+
+  for (const node of getAllNodes()) {
+    if (node?.slug) {
+      pushUnique(entries, seen, `/n8n/node/${node.slug}`, {
+        priority: 0.56,
+        changeFrequency: "monthly",
+      });
+    }
+  }
+
+  // Prompt cards open within the library page; the library itself is canonical.
+  if (getPromptCards().length) {
+    pushUnique(entries, seen, "/prompts/seedream-5-pro", {
+      priority: 0.7,
+      changeFrequency: "weekly",
+    });
+  }
+
   return entries;
+}
+
+export default async function sitemap() {
+  return getSitemapEntries();
 }

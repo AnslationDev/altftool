@@ -82,6 +82,7 @@ export function AdminThemeProvider({ children }) {
 
   useEffect(() => {
     const storedMode = getStoredThemeMode();
+    persistThemeMode(storedMode);
     setThemeModeState(storedMode);
     setResolvedTheme(applyTheme(storedMode));
     setHydrated(true);

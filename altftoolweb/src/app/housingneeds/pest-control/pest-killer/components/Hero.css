@@ -1,0 +1,201 @@
+.hero {
+  position: relative;
+  padding: 90px 0 80px;
+  color: #fff;
+  overflow: hidden;
+}
+
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.hero-bg img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  animation: softZoom 12s ease-in-out infinite alternate;
+}
+
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to right, rgba(0, 52, 82, 0.5) 20%, rgba(0, 52, 82, 0));
+
+
+  z-index: 1;
+}
+
+.hero .container {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 50px;
+  align-items: center;
+}
+
+.hero-tag {
+  display: inline-block;
+  background: rgba(74, 171, 61, 0.2);
+  border: 1px solid #4AAB3D;
+  color: #4AAB3D;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 6px 16px;
+  border-radius: 20px;
+  margin-bottom: 20px;
+  animation: fadeInUp 0.75s ease both;
+}
+
+.hero-left h1 {
+  font-size: 44px;
+  font-weight: 800;
+  line-height: 1.2;
+  color: #fff;
+  margin-bottom: 24px;
+  animation: fadeInUp 0.75s ease 0.12s both;
+}
+
+.hero-left h1 span {
+  color: #4AAB3D;
+}
+
+.hero-list {
+  margin-bottom: 32px;
+}
+
+.hero-list li {
+  padding: 6px 0 6px 28px;
+  position: relative;
+  font-size: 15px;
+  color: #cce8ff;
+  animation: fadeInUp 0.65s ease both;
+}
+
+.hero-list li:nth-child(1) {
+  animation-delay: 0.22s;
+}
+
+.hero-list li:nth-child(2) {
+  animation-delay: 0.32s;
+}
+
+.hero-list li:nth-child(3) {
+  animation-delay: 0.42s;
+}
+
+.hero-list li::before {
+  content: '✔';
+  position: absolute;
+  left: 0;
+  color: #4AAB3D;
+  font-size: 14px;
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+
+.btn-soft {
+  background: linear-gradient(to right, #001A29 50%, #4AAB3D 50%);
+  color: #fff;
+}
+
+.btn-soft:hover {
+  color: #fff;
+}
+
+.hero-form-box {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(1px);
+
+  border-radius: 20px;
+  padding: 24px 20px;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-top: 5px solid #4AAB3D;
+  color: #001A29;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.25);
+  width: 100%;
+  max-width: 380px;
+  margin: 0 auto;
+  animation: fadeInUp 0.85s ease 0.22s both;
+}
+
+.hero-form-box h3 {
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 22px;
+  color: #001A29;
+}
+
+.hero-form-box input,
+.hero-form-box textarea {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  margin-bottom: 14px;
+  outline: none;
+  background: #fff;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  color: #333;
+}
+
+.hero-form-box input:focus,
+.hero-form-box textarea:focus {
+  border-color: #4AAB3D;
+  box-shadow: 0 0 0 3px rgba(74, 171, 61, 0.18);
+}
+
+.hero-form-box textarea {
+  resize: none;
+  height: 90px;
+}
+
+.hero-form-box button {
+  width: 100%;
+  padding: 14px;
+  font-size: 16px;
+}
+
+.toast-msg {
+  background: #4AAB3D;
+  color: #fff;
+  padding: 12px 20px;
+  border-radius: 6px;
+  margin-top: 12px;
+  font-size: 14px;
+  text-align: center;
+  animation: fadeInUp 0.35s ease both;
+}
+
+.hero-left .btn-green {
+  animation:
+    fadeInUp 0.75s ease 0.52s both,
+    buttonPulse 2.4s ease-in-out 1.2s infinite;
+}
+
+.hero-left .btn-green:not(.btn-soft) {
+  padding-left: 28px;
+  padding-right: 28px;
+}
+
+@media (max-width: 900px) {
+  .hero .container {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-left h1 {
+    font-size: 30px;
+  }
+
+  .hero {
+    padding: 60px 0;
+  }
+}

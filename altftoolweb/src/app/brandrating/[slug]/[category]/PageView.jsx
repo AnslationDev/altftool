@@ -6,6 +6,7 @@ import TopPicks from "../../(components)/brandComparison/TopPicks";
 import TopRated from "../../(components)/brandComparison/TopRatedCard";
 import Faq from "../../(components)/brandComparison/FAQ";
 import Reviews from "../../(components)/brandComparison/Reviews";
+import PromoAlert from "../../(components)/brandComparison/PromoAlert";
 import { useParams } from "next/navigation";
 import { categoryService } from "../../service/service";
 import reviews from "../../(data)/reviews";
@@ -73,27 +74,38 @@ export default function Page() {
                     : [];
 
 
-            const subcategoryBrands = (parentCategory?.subcategories || []).flatMap(
-                (sub) => {
-                    if (Array.isArray(sub?.brands)) return sub.brands;
-                    if (sub?.brands && typeof sub.brands === "object")
-                        return Object.values(sub.brands);
-                    return [];
-                }
-            );
+            const subcategoryOwnBrands = Array.isArray(foundSubcategory?.brands)
+                ? foundSubcategory.brands
+                : foundSubcategory?.brands && typeof foundSubcategory.brands === "object"
+                    ? Object.values(foundSubcategory.brands)
+                    : [];
 
+            // Prefer brands the admin panel linked to this subcategory;
+            // fall back to every brand in the parent category (legacy data).
+            const pool = subcategoryOwnBrands.length
+                ? subcategoryOwnBrands
+                : directBrands;
 
-            const allBrands = [...directBrands, ...subcategoryBrands]
+            const seen = new Set();
+            const allBrands = pool
                 .filter(Boolean)
+                .filter((b) => {
+                    const key = b?.id || b?.name;
+                    if (!key || seen.has(key)) return false;
+                    seen.add(key);
+                    return true;
+                })
                 .map((b, index) => ({
                     ...b,
                     name: b?.name || "Unnamed",
 
-                  
-                    rank:
-                        b?.rank !== undefined && b?.rank !== null && b?.rank !== ""
-                            ? Number(b.rank)
-                            : index + 1,
+                    // Admin panel stores the position as `ranking`.
+                    rank: (() => {
+                        const raw = b?.rank ?? b?.ranking;
+                        return raw !== undefined && raw !== null && raw !== ""
+                            ? Number(raw)
+                            : index + 1;
+                    })(),
 
                     features: (() => {
                         if (Array.isArray(b?.features)) return b.features;
@@ -105,8 +117,8 @@ export default function Page() {
 
                     images: Array.isArray(b?.images) ? b.images : [],
 
-              
-                    weblink: b?.weblink || b?.url || b?.link || "",
+                    // Admin panel stores the outbound URL as `brandLink`.
+                    weblink: b?.weblink || b?.brandLink || b?.url || b?.link || "",
                 }));
 
 
@@ -200,8 +212,22 @@ export default function Page() {
         );
     }
 
+    // Promote the #1 ranked brand (prefer one with a working outbound link).
+    const rankedBrands = [...brands].sort(
+        (a, b) => (a.rank ?? Infinity) - (b.rank ?? Infinity)
+    );
+    const promoBrand =
+        rankedBrands.find((b) => b?.weblink || b?.brandLink) || rankedBrands[0];
+
     return (
         <div className="route-page-shell animate-slide-up">
+            {promoBrand && (
+                <PromoAlert
+                    brand={promoBrand}
+                    subName={subcategory?.name || "Pick"}
+                    storageKey={subcategorySlug}
+                />
+            )}
             <Hero title={subcategory?.name || "Category"} />
             <div className=" flex flex-col">
                 <TopPicks

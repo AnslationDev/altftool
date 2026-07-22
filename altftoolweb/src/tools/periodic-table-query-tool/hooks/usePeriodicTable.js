@@ -56,7 +56,7 @@ export const categoryOptions = [
 ];
 
 export const usePeriodicTable = () => {
-  const elements = useMemo(buildElements, []);
+  const elements = useMemo(() => buildElements(), []);
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState("all");
   const [selectedNumber, setSelectedNumber] = useState(8);

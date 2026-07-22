@@ -27,7 +27,7 @@ export default function Dashboard() {
     };
 
     return (
-        <div className="min-h-screen bg-(--background) text-(--foreground) selection:bg-blue-500/20 relative overflow-x-hidden transition-colors duration-500">
+        <div className="life-productivity-tool min-h-screen bg-(--background) text-(--foreground) selection:bg-blue-500/20 relative overflow-x-hidden transition-colors duration-500">
 
 
             <div className="max-w-5xl mx-auto px-4 py-12 md:py-16">

@@ -50,7 +50,7 @@ export default function HeroSection() {
                   <ArrowRight className="h-4 w-4" />
                 </Link>
                 <Link href="/policypages/about" className="home-ref-secondary-btn">
-                  Learn More
+                  About AltFTool
                 </Link>
               </div>
 

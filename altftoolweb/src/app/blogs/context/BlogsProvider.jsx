@@ -82,8 +82,6 @@ export function BlogsProvider({ children }) {
   const [category, setCategory] = useState("All");
 
   const cursorRef = useRef(null);
-  const categoryRef = useRef(category);
-  categoryRef.current = category;
 
   /* ───────────────────────────────────────────
      Layer 1: Fetch initial blogs (once)
@@ -167,8 +165,8 @@ export function BlogsProvider({ children }) {
   const loadMore = useCallback(() => {
     if (loading || !hasMore) return;
 
-    fetchPage(categoryRef.current, cursorRef.current);
-  }, [loading, hasMore, fetchPage]);
+    fetchPage(category, cursorRef.current);
+  }, [category, loading, hasMore, fetchPage]);
 
   /* ───────────────────────────────────────────
      Context Value
