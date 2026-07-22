@@ -44,6 +44,7 @@
     "@tanstack/react-virtual": "^3.13.18",
     "@tensorflow-models/coco-ssd": "^2.2.3",
     "@tensorflow/tfjs": "^4.22.0",
+    "@tensorflow/tfjs-backend-wasm": "4.22.0",
     "@vladmandic/face-api": "^1.7.15",
     "@xyflow/react": "^12.10.0",
     "astronomy-engine": "^2.1.19",
