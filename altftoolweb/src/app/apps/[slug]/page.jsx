@@ -7,8 +7,10 @@ import {
   createBreadcrumbJsonLd,
   createPageMetadata,
 } from "@/platform/seo/generateMetadata";
+import { shouldDeferBulkPrerendering } from "@/lib/buildPrerenderPolicy";
 
 export function generateStaticParams() {
+  if (shouldDeferBulkPrerendering()) return [];
   return apps.map((app) => ({ slug: app.slug }));
 }
 

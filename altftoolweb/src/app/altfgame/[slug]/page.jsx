@@ -7,8 +7,10 @@ import GameThumb from "@/app/altfgame/_components/GameThumb";
 import StarRating from "@/app/altfgame/_components/StarRating";
 import { GAMES, getGame, getRelated, getRecommended } from "@/app/altfgame/_data/games";
 import { GAME_COMPONENTS } from "../registry";
+import { shouldDeferBulkPrerendering } from "@/lib/buildPrerenderPolicy";
 
 export function generateStaticParams() {
+  if (shouldDeferBulkPrerendering()) return [];
   return GAMES.map((g) => ({ slug: g.slug }));
 }
 

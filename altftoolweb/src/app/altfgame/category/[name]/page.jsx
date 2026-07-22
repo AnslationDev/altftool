@@ -1,8 +1,10 @@
 import { notFound } from "next/navigation";
 import GameGrid from "@/app/altfgame/_components/GameGrid";
 import { CATEGORIES, categoryFromSlug, getByCategory } from "@/app/altfgame/_data/games";
+import { shouldDeferBulkPrerendering } from "@/lib/buildPrerenderPolicy";
 
 export function generateStaticParams() {
+  if (shouldDeferBulkPrerendering()) return [];
   return CATEGORIES.map((c) => ({ name: c.slug }));
 }
 

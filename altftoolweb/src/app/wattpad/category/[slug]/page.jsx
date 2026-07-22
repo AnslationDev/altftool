@@ -1,6 +1,7 @@
 import books from "@/app/wattpad/data/books.json";
 import categories from "@/app/wattpad/data/categories.json";
 import { createPageMetadata } from "@/platform/seo/generateMetadata";
+import { shouldDeferBulkPrerendering } from "@/lib/buildPrerenderPolicy";
 import { notFound } from "next/navigation";
 import {
   Eye,
@@ -11,6 +12,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 export function generateStaticParams() {
+  if (shouldDeferBulkPrerendering()) return [];
   return categories.map((category) => ({ slug: category.slug }));
 }
 

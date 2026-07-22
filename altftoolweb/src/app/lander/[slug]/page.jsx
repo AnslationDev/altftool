@@ -8,6 +8,7 @@ import {
 } from "@/platform/seo/generateMetadata";
 import { fetchFirebaseLanderBySlug, fetchAllPublishedLanderSlugs } from "../data/firebaseLanders";
 import LanderSections from "../components/LanderSections";
+import { shouldDeferBulkPrerendering } from "@/lib/buildPrerenderPolicy";
 
 export const revalidate = 3600;
 
@@ -27,6 +28,7 @@ function collectFaq(sections = []) {
 }
 
 export async function generateStaticParams() {
+  if (shouldDeferBulkPrerendering()) return [];
   try {
     const items = await fetchAllPublishedLanderSlugs();
     return items.map((it) => ({ slug: it.slug }));

@@ -2,8 +2,10 @@ import { notFound } from "next/navigation";
 import { getService, services } from "../../services-data";
 import { ServiceDetailClient } from "./ServiceDetailClient";
 import { createPageMetadata } from "@/platform/seo/generateMetadata";
+import { shouldDeferBulkPrerendering } from "@/lib/buildPrerenderPolicy";
 
 export function generateStaticParams() {
+  if (shouldDeferBulkPrerendering()) return [];
   return services.map((service) => ({
     slug: service.slug,
   }));

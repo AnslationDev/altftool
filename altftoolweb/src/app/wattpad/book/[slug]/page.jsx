@@ -2,6 +2,7 @@ import books from "@/app/wattpad/data/books.json";
 import chapters from "@/app/wattpad/data/chapters.json";
 import BookTabs from "@/app/wattpad/components/BookTabs";
 import { createPageMetadata } from "@/platform/seo/generateMetadata";
+import { shouldDeferBulkPrerendering } from "@/lib/buildPrerenderPolicy";
 import { notFound } from "next/navigation";
 
 import Image from "next/image";
@@ -15,6 +16,7 @@ import {
 } from "lucide-react";
 
 export function generateStaticParams() {
+  if (shouldDeferBulkPrerendering()) return [];
   return books.map((book) => ({ slug: book.slug }));
 }
 

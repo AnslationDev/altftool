@@ -3,8 +3,10 @@ import { createPageMetadata } from "@/platform/seo/generateMetadata";
 import FullChartClient from "../../components/chart/FullChartClient";
 import { chartHref } from "../../lib/format";
 import { INSTRUMENTS, instrumentBySymbol, symbolFromSlug, symbolToSlug } from "../../lib/instruments";
+import { shouldDeferBulkPrerendering } from "@/lib/buildPrerenderPolicy";
 
 export function generateStaticParams() {
+  if (shouldDeferBulkPrerendering()) return [];
   return INSTRUMENTS.map(({ symbol }) => ({ symbol: symbolToSlug(symbol) }));
 }
 

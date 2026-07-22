@@ -1,12 +1,14 @@
 import books from "@/app/wattpad/data/books.json";
 import chapters from "@/app/wattpad/data/chapters.json";
 import { createPageMetadata } from "@/platform/seo/generateMetadata";
+import { shouldDeferBulkPrerendering } from "@/lib/buildPrerenderPolicy";
 import { notFound } from "next/navigation";
 
 import Link from "next/link";
 import TextToSpeech from "@/app/wattpad/components/TextToSpeech";
 
 export function generateStaticParams() {
+  if (shouldDeferBulkPrerendering()) return [];
   return chapters.flatMap((chapter) => {
     const book = books.find((item) => item.id === chapter.bookId);
     return book
