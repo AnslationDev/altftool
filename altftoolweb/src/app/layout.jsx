@@ -15,6 +15,7 @@ import ProductionAdSenseScript from "@/ads/ProductionAdSenseScript";
 import ProductionSkimlinksScript from "@/ads/ProductionSkimlinksScript";
 import { isAdsenseProductionDeployment } from "@/ads/adsenseConfig";
 import { Suspense } from "react";
+import { connection } from "next/server";
 import { AlertProvider } from "@/shared/ui/AlertProvider";
 import JsonLd from "@/platform/seo/JsonLd";
 import { primeSeoConfig, loadSeoConfig } from "@/platform/seo/seoConfigSource";
@@ -30,6 +31,7 @@ import {
   createWebsiteJsonLd,
   siteConfig,
 } from "@/platform/seo/generateMetadata";
+import { shouldDeferBulkPrerendering } from "@/lib/buildPrerenderPolicy";
 
 const geistSans = Geist({
   subsets: ["latin"],
@@ -143,6 +145,10 @@ export async function generateMetadata() {
 }
 
 export default async function RootLayout({ children }) {
+  // Amplify has a strict build-output cap. Keep pages crawlable through SSR
+  // while avoiding hundreds of duplicate HTML/RSC artifacts in that build.
+  if (shouldDeferBulkPrerendering()) await connection();
+
   // Admin-authored custom code (raw HTML/scripts). Global is SSR-injected here;
   // per-page code is injected client-side (only when the site has any).
   const seoConfig = await loadSeoConfig().catch(() => null);
