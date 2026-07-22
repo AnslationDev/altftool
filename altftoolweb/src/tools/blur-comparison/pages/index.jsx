@@ -184,19 +184,15 @@ export default function BlurComparison() {
                   />
 
                   {/* Blurred Overlay */}
-                  <div 
+                  <div
                     className="absolute inset-0 w-full h-full overflow-hidden"
-                    style={{ width: `${sliderPosition}%` }}
+                    style={{ clipPath: `inset(0 ${100 - sliderPosition}% 0 0)` }}
                   >
                     <img
                       src={imageUrl}
                       alt="Blurred"
-                      className="absolute inset-0 w-full h-full object-contain max-w-none pointer-events-none"
-                      style={{ 
-                         width: '100%',
-                         width: containerRef.current ? `${containerRef.current.offsetWidth}px` : '100vw',
-                         filter: `blur(${blurLevel}px)` 
-                      }}
+                      className="absolute inset-0 w-full h-full object-contain pointer-events-none"
+                      style={{ filter: `blur(${blurLevel}px)` }}
                     />
                   </div>
 

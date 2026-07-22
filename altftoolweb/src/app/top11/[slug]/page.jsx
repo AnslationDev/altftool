@@ -8,8 +8,10 @@ import {
   createPageMetadata,
 } from "@/platform/seo/generateMetadata";
 import ManagedImage from "@/components/ui/ManagedImage";
+import { shouldDeferBulkPrerendering } from "@/lib/buildPrerenderPolicy";
 
 export function generateStaticParams() {
+  if (shouldDeferBulkPrerendering()) return [];
   return Object.keys(categoryData).map((slug) => ({ slug }));
 }
 

@@ -323,7 +323,7 @@ export default function ToolHome() {
                 <pre className="whitespace-pre">{getHtmlString()}</pre>
               </div>
               <div>
-                <div className="text-primary font-bold mb-1">/* CSS Styles */</div>
+                <div className="text-primary font-bold mb-1">{"/* CSS Styles */"}</div>
                 <pre className="whitespace-pre">{getThemeStyles()}</pre>
               </div>
             </div>

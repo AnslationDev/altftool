@@ -35,6 +35,8 @@ export default function ToolHome() {
   const [showHint, setShowHint] = useState(false);
   const [gameOver, setGameOver] = useState(false);
   const [answered, setAnswered] = useState(false);
+  // Mirrors usedIndices.current.size so render never reads the ref.
+  const [questionCount, setQuestionCount] = useState(0);
   const usedIndices = React.useRef(new Set());
 
   const nextQuestion = useCallback(() => {
@@ -47,6 +49,7 @@ export default function ToolHome() {
       idx = Math.floor(Math.random() * QUESTIONS.length);
     } while (usedIndices.current.has(idx));
     usedIndices.current.add(idx);
+    setQuestionCount(usedIndices.current.size);
     setCurrentIndex(idx);
     setUserAnswer("");
     setFeedback(null);
@@ -80,6 +83,7 @@ export default function ToolHome() {
 
   const restart = () => {
     usedIndices.current = new Set();
+    setQuestionCount(0);
     setScore(0);
     setStreak(0);
     setGameOver(false);
@@ -94,7 +98,7 @@ export default function ToolHome() {
             <Trophy className="mx-auto mb-3 h-12 w-12 text-(--primary)" />
             <p className="text-3xl font-black text-(--foreground)">Quiz Complete!</p>
             <p className="mt-2 text-lg font-semibold text-(--primary)">Final Score: {score}</p>
-            <p className="text-sm text-(--muted-foreground)">You answered {Math.min(usedIndices.current.size, QUESTIONS.length)} questions</p>
+            <p className="text-sm text-(--muted-foreground)">You answered {Math.min(questionCount, QUESTIONS.length)} questions</p>
             <button onClick={restart} className="mt-4 inline-flex items-center gap-2 rounded-xl bg-(--primary) px-6 py-3 text-base font-bold text-white shadow-lg transition-all hover:opacity-90 active:scale-[0.98]">
               <RefreshCw className="h-5 w-5" /> Play Again
             </button>
@@ -127,7 +131,7 @@ export default function ToolHome() {
             <p className="text-xs uppercase text-(--muted-foreground)">Streak</p>
           </div>
           <div className="rounded-xl border border-(--border) bg-(--card) p-4 text-center shadow-md">
-            <p className="text-2xl font-bold text-(--primary)">#{usedIndices.current.size + 1}</p>
+            <p className="text-2xl font-bold text-(--primary)">#{questionCount + 1}</p>
             <p className="text-xs uppercase text-(--muted-foreground)">Question</p>
           </div>
         </div>

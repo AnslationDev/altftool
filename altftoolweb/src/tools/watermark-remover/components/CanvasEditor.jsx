@@ -17,10 +17,15 @@ export default function CanvasEditor({
   const rectStart = useRef({ x: 0, y: 0 });
 
   useEffect(() => {
-    if (containerRef.current) {
-      const rect = containerRef.current.getBoundingClientRect();
-      setContainerSize({ w: rect.width, h: rect.height });
-    }
+    const measure = () => {
+      if (containerRef.current) {
+        const rect = containerRef.current.getBoundingClientRect();
+        setContainerSize({ w: rect.width, h: rect.height });
+      }
+    };
+    measure();
+    window.addEventListener("resize", measure);
+    return () => window.removeEventListener("resize", measure);
   }, []);
 
   const fitZoom = useCallback(() => {
@@ -116,8 +121,8 @@ export default function CanvasEditor({
       <div
         className="absolute border-2 border-(--primary) bg-(--primary)/10 pointer-events-none"
         style={{
-          left: (selectionRect.x * zoom + (containerRef.current?.getBoundingClientRect().width - scaledW) / 2) || 0,
-          top: (selectionRect.y * zoom + (containerRef.current?.getBoundingClientRect().height - scaledH) / 2) || 0,
+          left: (selectionRect.x * zoom + (containerSize.w - scaledW) / 2) || 0,
+          top: (selectionRect.y * zoom + (containerSize.h - scaledH) / 2) || 0,
           width: selectionRect.width * zoom,
           height: selectionRect.height * zoom,
         }}

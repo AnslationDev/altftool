@@ -1,6 +1,7 @@
 import fs from "fs";
 import path from "path";
 import { createRequire } from "module";
+import { resolveToolCategories } from "../src/platform/registry/categoryTaxonomy.js";
 
 const require = createRequire(import.meta.url);
 const TOOLS_DIR = "src/tools";
@@ -17,15 +18,8 @@ const ICON_ALIASES = {
 };
 
 const toolMeta = {};
+const categoryErrors = [];
 const cleanText = (value) => String(value ?? "").replace(/\s+/g, " ").trim();
-const cleanCategory = (category) => {
-  if (Array.isArray(category)) {
-    const values = category.map(cleanText).filter(Boolean);
-    return values.length ? values : "Other";
-  }
-
-  return cleanText(category) || "Other";
-};
 const normalizeIcon = (icon) => {
   const value = typeof icon === "string" ? icon.trim() : "";
   if (!value) return "wrench";
@@ -68,10 +62,20 @@ for (const dir of toolDirs) {
   }
   const slug = dir.toLowerCase();
 
+  let resolved;
+  try {
+    resolved = resolveToolCategories(config.category ?? "Other", slug);
+  } catch (error) {
+    categoryErrors.push(error.message);
+    continue;
+  }
+
   toolMeta[slug] = {
     name: cleanText(config.name) || dir.replace(/-/g, " "),
     description: cleanText(config.description),
-    category: cleanCategory(config.category),
+    category:
+      resolved.categories.length === 1 ? resolved.categories[0] : resolved.categories,
+    ...(resolved.topics.length ? { topics: resolved.topics } : {}),
     icon: normalizeIcon(config.icon ?? "wrench"),
     iconColor: cleanText(config.iconColor) || "text-muted-foreground",
     // Opt-in flag: tools that need the full viewport (canvas/image/PDF/code
@@ -80,6 +84,12 @@ for (const dir of toolDirs) {
     ...(config.wideWorkspace === true ? { wideWorkspace: true } : {}),
   };
 
+}
+
+if (categoryErrors.length) {
+  console.error(`❌ toolMetaMap NOT generated — ${categoryErrors.length} category error(s):`);
+  for (const message of categoryErrors) console.error(`   - ${message}`);
+  process.exit(1);
 }
 
 const file = `// ⚠️ AUTO-GENERATED FILE — DO NOT EDIT

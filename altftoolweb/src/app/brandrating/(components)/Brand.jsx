@@ -4,11 +4,11 @@ import React from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
 
-import news from "../(assets)/enews.png";
-import benz from "../(assets)/benzinga.png";
-import yahoo from "../(assets)/yahoo.png";
-import bi from "../(assets)/bi.png";
-import inc from "../(assets)/inc.png";
+import news from "../(assets)/enews.webp";
+import benz from "../(assets)/benzinga.webp";
+import yahoo from "../(assets)/yahoo.webp";
+import bi from "../(assets)/bi.webp";
+import inc from "../(assets)/inc.webp";
 
 function Brand() {
   const brandLogo = [

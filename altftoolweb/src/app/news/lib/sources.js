@@ -32,8 +32,8 @@ export const GLOBAL_FEEDS = [
     category: "business",
   },
   {
-    url: "https://feeds.reuters.com/reuters/topNews",
-    source: "Reuters",
+    url: "https://www.lemonde.fr/en/international/rss_full.xml",
+    source: "Le Monde",
     category: "world",
   },
   {

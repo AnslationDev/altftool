@@ -1,8 +1,8 @@
 "use client";
 import React from "react";
 import cr1 from "../(assets)/cr1.png";
-import cr2 from "../(assets)/cr2.png";
-import cr3 from "../(assets)/cr3.png";
+import cr2 from "../(assets)/cr2.webp";
+import cr3 from "../(assets)/cr3.webp";
 import cr4 from "../(assets)/cr4.png";
 import cr5 from "../(assets)/cr5.png";
 import { useState, useRef } from "react";

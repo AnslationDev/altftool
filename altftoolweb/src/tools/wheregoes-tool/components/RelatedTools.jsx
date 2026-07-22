@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import {
   ArrowRight,
   FileCode2,
@@ -56,14 +57,14 @@ export default function RelatedTools() {
         eyebrow="Keep going"
         title="Related SEO & Web Tools"
         aside={
-          <a
+          <Link
             href="/tools/all"
             className={`inline-flex h-9 items-center justify-center gap-1.5 rounded-[8px] px-3.5 text-xs font-bold text-white shadow-[0_6px_16px_color-mix(in_srgb,var(--primary)_30%,transparent)] transition hover:opacity-95 ${FOCUS_RING}`}
             style={{ background: "var(--anslation-ds-cta-gradient)" }}
           >
             View all tools
             <ArrowRight size={13} aria-hidden="true" />
-          </a>
+          </Link>
         }
       />
 

@@ -37,3 +37,4 @@ claude.md
 
 # Claude Code session/tooling data
 .claude/
+.tmp/

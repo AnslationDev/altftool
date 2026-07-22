@@ -8,7 +8,10 @@
     "npm": ">=11"
   },
   "scripts": {
+    "generate:registry": "node scripts/generate-tool-meta.mjs && node scripts/generate-tool-runtime-map.mjs",
+    "predev": "npm run generate:registry",
     "dev": "next dev --webpack",
+    "prebuild": "npm run generate:registry",
     "build": "next build --webpack",
     "start": "next start",
     "lint": "eslint"
@@ -138,7 +141,8 @@
     "eslint-config-next": "16.1.1",
     "lucide-static": "^0.563.0",
     "postcss": "^8.5.14",
-    "tailwindcss": "^4.2.1"
+    "tailwindcss": "^4.2.1",
+    "typescript": "^5.9.3"
   },
   "overrides": {
     "postcss": "^8.5.14",

@@ -5,7 +5,7 @@ import { getGeoCountries } from "./geoLocations.js";
 export const siteConfig = {
   name: "AltFTool",
   shortName: "AltFTool",
-  url: (process.env.NEXT_PUBLIC_SITE_URL || "https://altftool.com").replace("://www.", "://"),
+  url: process.env.NEXT_PUBLIC_SITE_URL || "https://www.altftool.com",
   description:
     "AltFTool is your online tools website with free tools, software, games, must-have Chrome extensions, and best web tools to boost productivity and fun.",
   logoPath: "/assets/logo3.png",
@@ -57,7 +57,7 @@ export function getSiteUrl() {
 
 export function absoluteUrl(path = "/") {
   if (!path) return getSiteUrl();
-  if (/^https?:\/\//i.test(path)) return path.replace("://www.", "://");
+  if (/^https?:\/\//i.test(path)) return path;
   return `${getSiteUrl()}${path.startsWith("/") ? path : `/${path}`}`;
 }
 

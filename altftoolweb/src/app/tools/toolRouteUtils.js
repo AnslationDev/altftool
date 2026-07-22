@@ -2,6 +2,11 @@ import { toolMetaMap } from "@/platform/registry/toolMetaMap";
 import { createPageMetadata } from "@/platform/seo/generateMetadata";
 import { buildToolSeoContent } from "./toolSeoContent";
 import { primeSeoConfig } from "@/platform/seo/seoConfigSource";
+import {
+  getCanonicalCategoryBySlug,
+  getLegacyCategorySlugMap,
+  slugifyCategory,
+} from "@/platform/registry/categoryTaxonomy";
 
 export function getTool(slug) {
   return toolMetaMap[slug] ?? null;
@@ -13,7 +18,21 @@ export function getToolCategories(tool) {
 }
 
 export function slugifyRouteSegment(value = "") {
-  return String(value).trim().toLowerCase().replace(/\s+/g, "-");
+  // Category labels may contain "&" (e.g. "Design & Color") — strip to a
+  // clean URL slug ("design-color") via the shared taxonomy slugifier.
+  return slugifyCategory(value);
+}
+
+/**
+ * Resolve a requested category slug to its canonical slug, following the
+ * legacy free-text taxonomy (e.g. "calculator" → "calculators",
+ * "utility" → "productivity"). Returns null when no redirect applies.
+ */
+export function getLegacyCategoryRedirect(categorySlug) {
+  if (!categorySlug || categorySlug === "all") return null;
+  if (getCanonicalCategoryBySlug(categorySlug)) return null;
+  const target = getLegacyCategorySlugMap()[categorySlug];
+  return target && target !== categorySlug ? target : null;
 }
 
 export function getToolCategorySlugs() {
@@ -31,6 +50,8 @@ export function getToolCategorySlugs() {
 
 export function formatCategoryLabel(value = "all") {
   if (value === "all") return "All Tools";
+  const canonical = getCanonicalCategoryBySlug(String(value).toLowerCase());
+  if (canonical) return canonical.label;
   return String(value)
     .replace(/-/g, " ")
     .replace(/\b\w/g, (character) => character.toUpperCase());
@@ -43,6 +64,7 @@ export function getRelatedTools(slug, limit = 6) {
   const currentCategories = getToolCategories(tool).map((item) =>
     String(item).toLowerCase(),
   );
+  const currentTopics = (tool.topics || []).map((item) => String(item).toLowerCase());
   const currentWords = new Set(
     `${slug} ${tool.name || ""} ${tool.description || ""}`
       .toLowerCase()
@@ -59,12 +81,19 @@ export function getRelatedTools(slug, limit = 6) {
       const categoryScore =
         candidateCategories.filter((item) => currentCategories.includes(item))
           .length * 12;
+      // Original free-text taxonomy survives as `topics` — a finer-grained
+      // similarity signal than the ~20 canonical categories (e.g. "Selfie").
+      const candidateTopics = (candidate.topics || []).map((item) =>
+        String(item).toLowerCase(),
+      );
+      const topicScore =
+        candidateTopics.filter((item) => currentTopics.includes(item)).length * 8;
       const wordScore = `${candidateSlug} ${candidate.name || ""} ${candidate.description || ""}`
         .toLowerCase()
         .split(/[^a-z0-9]+/)
         .filter((word) => word.length > 2)
         .reduce((score, word) => score + (currentWords.has(word) ? 2 : 0), 0);
-      return { slug: candidateSlug, name: candidate.name || candidateSlug, score: categoryScore + wordScore };
+      return { slug: candidateSlug, name: candidate.name || candidateSlug, score: categoryScore + topicScore + wordScore };
     })
     .sort((a, b) => b.score - a.score)
     .slice(0, limit)

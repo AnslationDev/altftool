@@ -20,6 +20,7 @@ import {
   PUBLIC_NAV_ITEMS,
 } from "./siteRoutes";
 import ManagedImage from "@/components/ui/ManagedImage";
+import AccountMenu from "./AccountMenu";
 
 const THEME_OPTIONS = [
   { value: "light", label: "Light mode", icon: Sun },
@@ -437,6 +438,8 @@ const Header = () => {
                 </IconButton>
               </div>
 
+              <AccountMenu />
+
               <div className="min-[1360px]:hidden">
                 <IconButton
                   ref={mobileMenuButtonRef}
@@ -835,6 +838,8 @@ const Header = () => {
                 </div>
               ) : null}
             </div>
+
+            <AccountMenu />
 
             <IconButton
               ref={mobileMenuButtonRef}

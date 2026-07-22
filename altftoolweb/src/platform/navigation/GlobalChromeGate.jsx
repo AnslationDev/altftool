@@ -15,6 +15,7 @@ const SELF_CHROME_PREFIXES = [
   "/tripfindbox",
   "/homeserv",
   // immersive / experiential apps (no global chrome)
+  "/labs",
   "/flightradar",
   "/live-activity-simulation",
   "/soft-murmur",

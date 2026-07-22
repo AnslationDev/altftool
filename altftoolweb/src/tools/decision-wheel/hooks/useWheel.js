@@ -1,4 +1,4 @@
-import { useState, useCallback, useRef } from "react";
+import { useState, useCallback } from "react";
 import { generateId, shuffleArray } from "../utils/helpers";
 import { generateColors } from "../utils/colors";
 
@@ -38,8 +38,10 @@ export function useWheel() {
   const [wheelTheme, setWheelTheme] = useState(saved?.wheelTheme || "ocean");
   const [mode, setMode] = useState("wheel");
   const [selectedEntries, setSelectedEntries] = useState([]);
-  const undoStack = useRef([]);
-  const redoStack = useRef([]);
+  // Stable mutable containers (created once). Every mutation is paired with a
+  // setEntries call, so renders always observe the fresh stack lengths.
+  const [undoStack] = useState(() => ({ current: [] }));
+  const [redoStack] = useState(() => ({ current: [] }));
 
   function save() {
     saveState({ entries, history, favorites, wheelTheme });

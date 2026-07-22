@@ -26,6 +26,24 @@ const nextConfig = {
   transpilePackages: ["@altftool/ui"],
   allowedDevOrigins: ["localhost", "127.0.0.1"],
 
+  async headers() {
+    return [
+      {
+        source: "/sw.js",
+        headers: [
+          {
+            key: "Cache-Control",
+            value: "no-store, no-cache, must-revalidate, max-age=0",
+          },
+          {
+            key: "Service-Worker-Allowed",
+            value: "/",
+          },
+        ],
+      },
+    ];
+  },
+
   async redirects() {
     const toolSlugRedirects = readToolSlugs().map((slug) => ({
       source: `/tools/${slug}`,

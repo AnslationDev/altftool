@@ -6,11 +6,11 @@ export default function BeforeAfterSlider({ beforeImage, afterCanvas, className 
   const containerRef = useRef(null);
   const [sliderPos, setSliderPos] = useState(50);
   const [isDragging, setIsDragging] = useState(false);
-  const afterDataURL = useRef(null);
+  const [afterDataURL, setAfterDataURL] = useState(null);
 
   useEffect(() => {
     if (afterCanvas) {
-      afterDataURL.current = afterCanvas.toDataURL();
+      setAfterDataURL(afterCanvas.toDataURL());
     }
   }, [afterCanvas]);
 
@@ -43,7 +43,7 @@ export default function BeforeAfterSlider({ beforeImage, afterCanvas, className 
     >
       <img src={beforeImage} alt="Before" className="w-full h-full object-contain block" />
       <div className="absolute inset-0" style={{ clipPath: `inset(0 ${100 - sliderPos}% 0 0)` }}>
-        <img src={afterDataURL.current} alt="After" className="w-full h-full object-contain block" />
+        <img src={afterDataURL} alt="After" className="w-full h-full object-contain block" />
       </div>
       <div className="absolute inset-y-0" style={{ left: `${sliderPos}%` }}>
         <div className="h-full w-0.5 bg-white shadow-lg" />

@@ -20,6 +20,7 @@ import {
   createGeoPageMetadata,
 } from "@/platform/seo/geoEntities";
 import { formatCategoryLabel, getToolCategorySlugs } from "../../tools/toolRouteUtils";
+import { shouldDeferBulkPrerendering } from "@/lib/buildPrerenderPolicy";
 
 /**
  * GEO landing page — /locations/[geo]
@@ -67,6 +68,7 @@ const POPULAR_TOOL_SLUGS = [
 ];
 
 export function generateStaticParams() {
+  if (shouldDeferBulkPrerendering()) return [];
   return getAllGeoSlugs().map((geo) => ({ geo }));
 }
 

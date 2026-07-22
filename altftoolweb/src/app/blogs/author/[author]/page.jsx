@@ -11,6 +11,7 @@ import {
   mergeBlogPosts,
 } from "../../data";
 import { getFirebaseBlogCatalog } from "../../data/firebaseBlogs";
+import { shouldDeferBulkPrerendering } from "@/lib/buildPrerenderPolicy";
 import {
   createBreadcrumbJsonLd,
   createItemListJsonLd,
@@ -21,6 +22,7 @@ import {
 export const revalidate = 3600;
 
 export function generateStaticParams() {
+  if (shouldDeferBulkPrerendering()) return [];
   return getBlogAuthors().map((author) => ({ author: author.slug }));
 }
 

@@ -10,15 +10,18 @@ import {
 } from "@/platform/seo/generateMetadata";
 import {
   formatCategoryLabel,
+  getLegacyCategoryRedirect,
   getToolCategories,
   getToolCategorySlugs,
   slugifyRouteSegment,
 } from "../toolRouteUtils";
+import { shouldDeferBulkPrerendering } from "@/lib/buildPrerenderPolicy";
 
 export const dynamic = "force-static";
 export const revalidate = 86400;
 
 export function generateStaticParams() {
+  if (shouldDeferBulkPrerendering()) return [];
   return getToolCategorySlugs().map((category) => ({ category }));
 }
 
@@ -55,6 +58,12 @@ export default async function Page({ params }) {
 
   if (toolMetaMap[category]) {
     redirect(`/tools/all/${category}`);
+  }
+
+  // Legacy free-text category slugs (pre-consolidation taxonomy) → canonical.
+  const legacyTarget = getLegacyCategoryRedirect(category);
+  if (legacyTarget) {
+    redirect(`/tools/${legacyTarget}`);
   }
 
   const label = formatCategoryLabel(category);

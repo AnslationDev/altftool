@@ -31,6 +31,9 @@ export const isFirebaseConfigured = Boolean(
 
 const app = getApps().length ? getApp() : initializeApp(firebaseConfig);
 
+// Shared app instance (used by the lazy auth loader in AuthContext).
+export const firebaseApp = app;
+
 function createFirestore(appInstance) {
   if (typeof window === "undefined") return getFirestore(appInstance);
 

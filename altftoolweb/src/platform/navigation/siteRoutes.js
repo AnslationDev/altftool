@@ -1,6 +1,8 @@
 import {
   BookOpen,
   FileText,
+  Gamepad2,
+  Gem,
   GraduationCap,
   ImageIcon,
   LayoutGrid,
@@ -19,7 +21,9 @@ import {
 export const SITE_ROUTES = {
   home: { label: "Home", href: "/" },
   tools: { label: "Tools", href: "/tools/all", match: ["/tools"] },
+  games: { label: "Games", href: "/games" },
   extensions: { label: "Extensions", href: "/extensions" },
+  altfDeals: { label: "AltF Deals", href: "/deals" },
   exclusiveDeals: { label: "Exclusive Deals", href: "/exclusivedeals" },
   buySmart: { label: "BuySmart", href: "/buysmart" },
   saleLocator: { label: "Sale Locator", href: "/sale" },
@@ -49,11 +53,13 @@ export const SITE_ROUTES = {
 
 export const PUBLIC_NAV_ITEMS = [
   { ...SITE_ROUTES.tools, icon: Wrench },
+  { ...SITE_ROUTES.games, icon: Gamepad2 },
   { ...SITE_ROUTES.extensions, icon: Puzzle },
   {
     label: "Deals",
     icon: Tags,
     options: [
+      { ...SITE_ROUTES.altfDeals, icon: Gem },
       { ...SITE_ROUTES.exclusiveDeals, icon: Tags },
       { ...SITE_ROUTES.buySmart, icon: ShoppingBag },
       { ...SITE_ROUTES.saleLocator, icon: MapPin },
@@ -91,6 +97,7 @@ export const FOOTER_ROUTE_GROUPS = [
     title: "Explore",
     links: [
       SITE_ROUTES.tools,
+      SITE_ROUTES.games,
       SITE_ROUTES.extensions,
       SITE_ROUTES.desktop,
       SITE_ROUTES.trendingVideos,

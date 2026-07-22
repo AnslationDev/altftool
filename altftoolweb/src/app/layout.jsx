@@ -2,14 +2,17 @@ import "./theme.css";
 import { Geist, Geist_Mono, IBM_Plex_Sans, Inter, Sora } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/contexts/ThemeContext";
+import { AuthProvider } from "@/contexts/AuthContext";
 import Header from "@/platform/navigation/Header";
 import Footer from "@/platform/navigation/Footer";
 import Script from "next/script";
 import { CookieConsentProvider } from "@/platform/consentalerts/CookieConsentContext";
 import { CookieBanner } from "@/platform/consentalerts/CookieBanner";
 import { NewsletterSubscribeDialog } from "@/platform/consentalerts/NewsletterSubscribeDialog";
+import ScrollToTopButton from "@/platform/navigation/ScrollToTopButton";
 import GlobalAnimationProvider from "@/contexts/GlobalAnimationProvider";
 import { AdsProvider } from "@/ads/AdsProvider";
+import GoogleAdUnit from "@/ads/GoogleAdUnit";
 import { Suspense } from "react";
 import { AlertProvider } from "@/shared/ui/AlertProvider";
 import JsonLd from "@/platform/seo/JsonLd";
@@ -58,9 +61,15 @@ const ibmPlexSans = IBM_Plex_Sans({
   display: "swap",
 });
 
+const ADSENSE_CLIENT = "ca-pub-5858966346488022";
+
+const isPreviewDeployment =
+  (process.env.VERCEL_ENV && process.env.VERCEL_ENV !== "production") ||
+  (process.env.AWS_BRANCH && process.env.AWS_BRANCH !== "main");
+
 const shouldLoadAdsense =
-  process.env.VERCEL_ENV === "production" ||
-  process.env.NEXT_PUBLIC_VERCEL_ENV === "production";
+  process.env.NODE_ENV === "production" &&
+  !isPreviewDeployment;
 
 const baseMetadata = {
   metadataBase: new URL(siteConfig.url),
@@ -155,14 +164,19 @@ export default async function RootLayout({ children }) {
   return (
     <html lang="en" data-theme-mode="system" suppressHydrationWarning className={`${geistSans.variable} ${geistMono.variable} ${sora.variable} ${inter.variable} ${ibmPlexSans.variable}`}>
       <head>
+        <meta
+          name="mitgo-verification"
+          content="6fa7b4de-9abc-4d8a-9729-8ec2eea1caa7"
+        />
         <link rel="preconnect" href="https://firestore.googleapis.com" />
         <link rel="preconnect" href="https://firebasestorage.googleapis.com" />
         <link rel="preconnect" href="https://www.googletagmanager.com" />
         <link rel="preconnect" href="https://www.clarity.ms" />
         {shouldLoadAdsense ? (
           <script
+            id="google-adsense-loader"
             async
-            src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5858966346488022"
+            src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${ADSENSE_CLIENT}`}
             crossOrigin="anonymous"
           />
         ) : null}
@@ -190,6 +204,47 @@ export default async function RootLayout({ children }) {
                 document.documentElement.style.colorScheme = fallbackTheme;
               } catch (_) {}
             }
+          `}
+        </Script>
+
+        <Script id="legacy-service-worker-cleanup" strategy="afterInteractive">
+          {`
+            (function () {
+              if (!("serviceWorker" in navigator)) return;
+
+              navigator.serviceWorker.getRegistrations().then(function (registrations) {
+                var legacyRegistrations = registrations.filter(function (registration) {
+                  return [registration.installing, registration.waiting, registration.active]
+                    .filter(Boolean)
+                    .some(function (worker) {
+                      try {
+                        return new URL(worker.scriptURL).pathname === "/sw.js";
+                      } catch (_) {
+                        return false;
+                      }
+                    });
+                });
+
+                if (!legacyRegistrations.length) return;
+
+                return Promise.all(
+                  legacyRegistrations.map(function (registration) {
+                    return registration.unregister();
+                  })
+                ).then(function () {
+                  if (!("caches" in window)) return;
+                  return caches.keys().then(function (cacheNames) {
+                    return Promise.all(
+                      cacheNames.map(function (cacheName) {
+                        return caches.delete(cacheName);
+                      })
+                    );
+                  });
+                });
+              }).catch(function () {
+                // Cleanup is best-effort and must never block page rendering.
+              });
+            })();
           `}
         </Script>
 
@@ -239,6 +294,7 @@ export default async function RootLayout({ children }) {
   <InjectedCode id="body-start" html={customCode.bodyStart} />
   <PerPageCode active={hasPageCode} />
   <ThemeProvider>
+    <AuthProvider>
     <CookieConsentProvider>
       <AlertProvider>
         <GlobalNavigationLoader />
@@ -259,13 +315,17 @@ export default async function RootLayout({ children }) {
             </div>
           </AdsProvider>
         </GlobalAnimationProvider>
-
-        <CookieBanner />
-        <NewsletterSubscribeDialog />
         {/* AltBot (chatbot) removed for now — planned for a future release.
             Its module lived at src/platform/chatbot/. */}
         <GlobalChromeGate>
+          <GoogleAdUnit enabled={shouldLoadAdsense} />
           <Footer />
+        </GlobalChromeGate>
+
+        <GlobalChromeGate>
+          <ScrollToTopButton />
+          <CookieBanner />
+          <NewsletterSubscribeDialog />
         </GlobalChromeGate>
 
         <WebVitalsReporter />
@@ -273,6 +333,7 @@ export default async function RootLayout({ children }) {
 
       </AlertProvider>
     </CookieConsentProvider>
+    </AuthProvider>
   </ThemeProvider>
 </body>
     </html>
