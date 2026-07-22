@@ -13,6 +13,57 @@
 export const TASK_ICONS = ["ArrowRightToLine", "Film", "RefreshCw", "Users", "FileQuestion", "Gift", "Star", "Trophy", "Gamepad2", "Wallet"];
 export const PRIZE_TYPES = ["coins", "coupon", "fail"];
 
+/**
+ * Video Sections — "Add Video" source modes. Existing keys (videoId, title,
+ * channel, views, duration, reward) are reused as-is across every mode for
+ * backward compatibility; only videoType/description/thumbnailUrl/
+ * uploadedVideoUrl/externalVideoUrl are new. Legacy rows saved before this
+ * feature (no videoType, just a videoId) are treated as "youtube" at render
+ * and save time — see ui.jsx VideoListInput and CollectionManager.save().
+ */
+export const VIDEO_MODES = {
+  youtube: {
+    label: "YouTube ID",
+    icon: "▶️",
+    fields: [
+      { key: "videoId", label: "YouTube ID", type: "text" },
+      { key: "title", label: "Title", type: "text" },
+      { key: "channel", label: "Channel Name", type: "text" },
+      { key: "views", label: "Views Label", type: "text" },
+      { key: "duration", label: "Duration", type: "text" },
+      { key: "reward", label: "Reward Coins", type: "text" },
+    ],
+  },
+  upload: {
+    label: "Upload Video",
+    icon: "⬆️",
+    fields: [
+      { key: "uploadedVideoUrl", label: "Upload Video (MP4, MOV, WebM)", type: "videoupload", folder: "videosections" },
+      { key: "thumbnailUrl", label: "Thumbnail Upload", type: "thumbnailupload", folder: "videosections" },
+      { key: "title", label: "Title", type: "text" },
+      { key: "description", label: "Description", type: "textarea" },
+      { key: "channel", label: "Channel Name", type: "text" },
+      { key: "views", label: "Views Label", type: "text" },
+      { key: "duration", label: "Duration", type: "text" },
+      { key: "reward", label: "Reward Coins", type: "text" },
+    ],
+  },
+  url: {
+    label: "Video URL",
+    icon: "🔗",
+    fields: [
+      { key: "externalVideoUrl", label: "Video URL", type: "videourl" },
+      { key: "thumbnailUrl", label: "Thumbnail Upload (optional)", type: "thumbnailupload", folder: "videosections" },
+      { key: "title", label: "Title", type: "text" },
+      { key: "description", label: "Description", type: "textarea" },
+      { key: "channel", label: "Channel Name", type: "text" },
+      { key: "views", label: "Views Label", type: "text" },
+      { key: "duration", label: "Duration", type: "text" },
+      { key: "reward", label: "Reward Coins", type: "text" },
+    ],
+  },
+};
+
 const idField = { key: "id", label: "ID", type: "text", required: true, isId: true, pattern: /^[a-z0-9]+(-[a-z0-9]+)*$/, hint: "kebab-case, unique, immutable after create" };
 
 export const COLLECTIONS = {
@@ -108,14 +159,7 @@ export const COLLECTIONS = {
     fields: [
       idField,
       { key: "title", label: "Section Title", type: "text", required: true, max: 60, hint: "Trendy / Educational / Travel…" },
-      { key: "videos", label: "Videos", type: "objectlist", item: [
-        { key: "videoId", label: "YouTube ID", type: "text" },
-        { key: "title", label: "Title", type: "text" },
-        { key: "channel", label: "Channel", type: "text" },
-        { key: "views", label: "Views Label", type: "text" },
-        { key: "duration", label: "Duration", type: "text" },
-        { key: "reward", label: "Reward Coins", type: "text" },
-      ] },
+      { key: "videos", label: "Videos", type: "videolist", modes: VIDEO_MODES },
       { key: "order", label: "Sort Order", type: "number", min: 0, default: 0 },
       { key: "active", label: "Active (published)", type: "boolean", default: true },
     ],
@@ -258,5 +302,37 @@ export function validate(fields, values) {
     if (f.url && typeof v === "string" && !(v.startsWith("/") || v.startsWith("https://")))
       errors[f.key] = "Must start with / or https://";
   }
+  return errors;
+}
+
+/** Resolves a video row's effective mode — legacy rows (no videoType, just a videoId) are "youtube". */
+export function videoRowType(row) {
+  return row.videoType || (row.videoId ? "youtube" : undefined);
+}
+
+// Accepts any well-formed http(s) URL — YouTube/Vimeo links, direct mp4/mov/webm
+// files, and also CDN/Drive/Dropbox/signed URLs that don't carry a recognizable
+// host or file extension. Being permissive here is intentional: an admin's real
+// video link should never get silently rejected by an over-eager regex.
+const VIDEO_URL_RE = /^https?:\/\/\S+\.\S+/i;
+
+/**
+ * Cross-field validation for videosections' per-video rows, keyed by row index.
+ * Only flags rows that are genuinely unusable (no source at all) — never blocks
+ * a save because of formatting guesses, and one bad row never poisons the rest.
+ */
+export function validateVideoList(rows = []) {
+  const errors = {};
+  rows.forEach((row, i) => {
+    const type = videoRowType(row);
+    if (!type) { errors[i] = "Select a video source (YouTube ID, Upload Video, or Video URL)"; return; }
+    if (type === "youtube" && !String(row.videoId || "").trim()) errors[i] = "YouTube ID is required";
+    if (type === "upload" && !String(row.uploadedVideoUrl || "").trim()) errors[i] = "Upload a video file";
+    if (type === "url") {
+      const url = String(row.externalVideoUrl || "").trim();
+      if (!url) errors[i] = "Video URL is required";
+      else if (!VIDEO_URL_RE.test(url)) errors[i] = "Enter a valid URL starting with http:// or https://";
+    }
+  });
   return errors;
 }

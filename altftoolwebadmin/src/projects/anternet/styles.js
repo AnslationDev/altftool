@@ -117,6 +117,12 @@ const css = `
 .mla-img-empty{display:flex;height:88px;width:88px;align-items:center;justify-content:center;border:1.5px dashed var(--line);border-radius:12px;font-size:11px;color:var(--mut);background:var(--soft)}
 .mla-img-ctl{display:flex;gap:8px;align-items:center}
 .mla-img-ctl label{white-space:nowrap;display:inline-flex;align-items:center;cursor:pointer}
+.mla-video-field{display:flex;flex-direction:column;gap:8px}
+.mla-video-box{width:100%;max-width:420px;aspect-ratio:16/9;border:1.5px solid var(--line);border-radius:12px;background:var(--soft);overflow:hidden;display:flex;align-items:center;justify-content:center}
+.mla-video-box video,.mla-video-box iframe{width:100%;height:100%;border:0;display:block}
+.mla-video-empty{display:flex;align-items:center;justify-content:center;gap:6px;font-size:11px;color:var(--mut);text-align:center;padding:10px}
+.mla-progress{height:6px;border-radius:999px;background:var(--line);overflow:hidden}
+.mla-progress>span{display:block;height:100%;background:linear-gradient(120deg,var(--p),var(--p2));transition:width .2s ease}
 .mla-objlist{display:flex;flex-direction:column;gap:10px}
 .mla-objrow{display:flex;gap:10px;border:1px solid var(--line);border-radius:11px;padding:12px;background:var(--soft)}
 .mla-objfields{flex:1;display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
