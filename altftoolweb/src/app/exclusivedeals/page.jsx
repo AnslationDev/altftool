@@ -10,7 +10,7 @@ import {
 
 export async function generateMetadata() {
   return createPageMetadata({
-    title: "Best Deals & Offers – Save on Top Products | AltFTool",
+    title: "Best Deals & Offers – Save on Top Products",
     description:
       "Discover the best deals, discounts, and special offers on AltFTool. Compare prices and find the best savings on popular products and services.",
     path: "/exclusivedeals",

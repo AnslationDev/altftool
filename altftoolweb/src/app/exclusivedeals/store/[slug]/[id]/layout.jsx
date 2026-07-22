@@ -19,7 +19,7 @@ export async function generateMetadata({ params }) {
   }
 
   return createPageMetadata({
-    title: `${brand.brandName} Store Offer & Coupon Details | AltFTool`,
+    title: `${brand.brandName} Store Offer & Coupon Details`,
     description: brand.about || `Review ${brand.brandName} store offers, coupon terms, and savings details on AltFTool.`,
     path: `/exclusivedeals/store/${category.slug}/${brand.id}`,
     image: brand.imagedeal || brand.img || brand.brandLogo,

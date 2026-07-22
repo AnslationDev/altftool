@@ -18,9 +18,31 @@ export default async function robots() {
     disallow: ["/api/", ...crawl.disallow],
   };
 
+  // Explicitly welcome AI assistant/answer-engine crawlers (AEO): they are
+  // already covered by "*", but explicit rules survive future "*" tightening
+  // and signal intent. Content stays available for AI citation/recommendation.
+  const aiCrawlerRule = {
+    userAgent: [
+      "GPTBot",
+      "OAI-SearchBot",
+      "ChatGPT-User",
+      "ClaudeBot",
+      "Claude-Web",
+      "anthropic-ai",
+      "PerplexityBot",
+      "Google-Extended",
+      "Applebot-Extended",
+      "cohere-ai",
+      "Bytespider",
+      "CCBot",
+    ],
+    allow: "/",
+    disallow: ["/api/"],
+  };
+
   const sitemap = crawl.extraSitemaps.length
     ? [`${getSiteUrl()}/sitemap.xml`, ...crawl.extraSitemaps]
     : `${getSiteUrl()}/sitemap.xml`;
 
-  return { rules: [rule], sitemap };
+  return { rules: [rule, aiCrawlerRule], sitemap };
 }

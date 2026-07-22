@@ -1,4 +1,5 @@
 import HeroSection from "./components/HeroSection";
+import AiAssistantBox from "@/platform/assistant/AiAssistantBox";
 import CuratedToolsSection from "./components/CuratedToolsSection";
 import CategoriesSection from "./components/CategoriesSection";
 import FAQSection from "./components/FAQSection";
@@ -23,6 +24,9 @@ export default function Page() {
     <div className="altf-home bg-[var(--background)]">
       <div className="bg-[var(--background)]">
         <HeroSection />
+      </div>
+      <div className="bg-[var(--background)]">
+        <AiAssistantBox />
       </div>
       <div className="bg-[var(--background)]">
         <TrendingSection />

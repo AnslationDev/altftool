@@ -79,6 +79,8 @@ const SEARCH_ALIASES = {
   decode: ["decoder", "base64", "url", "jwt"],
   dev: ["developer", "api", "code", "json"],
   encode: ["encoder", "base64", "url", "escape"],
+  game: ["games", "play", "arcade", "puzzle", "fun", "entertainment"],
+  games: ["game", "play", "arcade", "puzzle", "fun", "entertainment"],
   image: ["photo", "png", "jpg", "jpeg", "svg", "compress", "resize"],
   schedule: ["cron", "crontab", "time"],
   secure: ["password", "hash", "encrypt", "jwt"],
@@ -170,40 +172,41 @@ const TRUST_ITEMS = [
 ];
 
 const CATEGORY_ICON_MAP = {
-  ai: Sparkles,
-  calculator: Calculator,
-  converter: RefreshCw,
-  data: Layers3,
-  design: Sparkles,
+  "ai-tools": Sparkles,
+  business: BadgeCheck,
+  calculators: Calculator,
+  converters: RefreshCw,
+  "design-color": Sparkles,
   developer: Code2,
-  education: FileText,
-  finance: Calculator,
-  image: ImageIcon,
-  marketing: Tag,
-  media: Play,
-  network: Grid2X2,
-  pdf: FileText,
+  "education-science": FileText,
+  "finance-calculators": Calculator,
+  fun: Play,
+  games: Play,
+  generators: Wrench,
+  "health-calculators": Calculator,
+  "health-fitness": BadgeCheck,
+  "image-photo": ImageIcon,
+  lifestyle: Tag,
+  "marketing-social": Tag,
+  other: Grid2X2,
+  "pdf-documents": FileText,
   productivity: BadgeCheck,
-  security: LockKeyhole,
-  seo: Search,
-  startup: Sparkles,
-  text: FileText,
-  utilities: Wrench,
-  video: Play,
-  web: Code2,
+  "security-privacy": LockKeyhole,
+  "text-writing": FileText,
+  "video-audio": Play,
 };
 
 const FEATURED_CATEGORY_CARDS = [
   {
     key: "ai",
-    slug: "ai",
+    slug: "ai-tools",
     title: "AI Essentials",
     description: "Top AI tools to save time and work smarter",
     icon: Sparkles,
   },
   {
     key: "pdf",
-    slug: "pdf",
+    slug: "pdf-documents",
     title: "PDF Essentials",
     description: "All the tools you need for PDF files",
     icon: FileText,
@@ -217,23 +220,29 @@ const FEATURED_CATEGORY_CARDS = [
   },
   {
     key: "creator",
-    slug: "media",
-    fallbackSlugs: ["image", "video"],
+    slug: "image-photo",
+    fallbackSlugs: ["video-audio", "design-color"],
     title: "Content Creator",
     description: "Create, edit and publish content",
     icon: ImageIcon,
   },
   {
     key: "marketing",
-    slug: "marketing",
-    fallbackSlugs: ["seo", "web", "social"],
+    slug: "marketing-social",
+    fallbackSlugs: ["business"],
     title: "Marketing Tools",
     description: "Grow your brand and audience",
     icon: Tag,
   },
 ];
 
-const slugify = (str) => String(str).toLowerCase().replace(/\s+/g, "-");
+const slugify = (str) =>
+  String(str)
+    .trim()
+    .toLowerCase()
+    .replace(/&/g, " ")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
 const formatLabel = (str) =>
   String(str)
     .replace(/[_-]/g, " ")
@@ -277,8 +286,9 @@ const getSearchScore = (slug, tool, tokens, rawQuery) => {
   const name = tool.name?.toLowerCase() || "";
   const description = tool.description?.toLowerCase() || "";
   const categories = getToolCategories(tool);
+  const topics = (tool.topics || []).map((topic) => String(topic).toLowerCase());
   const slugText = slug.replace(/-/g, " ");
-  const haystack = `${slugText} ${name} ${description} ${categories.join(" ")}`;
+  const haystack = `${slugText} ${name} ${description} ${categories.join(" ")} ${topics.join(" ")}`;
   let score = 0;
 
   if (name === rawQuery || slugText === rawQuery) score += 150;
@@ -291,6 +301,7 @@ const getSearchScore = (slug, tool, tokens, rawQuery) => {
     else if (name.includes(token)) score += 20;
     if (slugText.includes(token)) score += 18;
     if (categories.some((cat) => cat.includes(token))) score += 14;
+    if (topics.some((topic) => topic.includes(token))) score += 10;
     if (description.includes(token)) score += 6;
     if (haystack.includes(token)) score += 2;
   });
@@ -474,9 +485,10 @@ export default function ToolsClient({
   }, [categoryFilter, categoryStats]);
   const featuredCategories = useMemo(() => {
     const used = new Set();
+    const availableSlugs = new Set(categories.map((item) => slugify(item)));
 
     return FEATURED_CATEGORY_CARDS.map((card) => {
-      const slug = [card.slug, ...(card.fallbackSlugs || [])].find((item) => categories.includes(item));
+      const slug = [card.slug, ...(card.fallbackSlugs || [])].find((item) => availableSlugs.has(item));
       if (!slug || used.has(slug)) return null;
       used.add(slug);
       return { ...card, slug };
@@ -760,7 +772,7 @@ export default function ToolsClient({
               Ready to find your perfect <span className="tp-accent-word">tool?</span>
             </h1>
             <p className="route-description">
-              Search 350+ trusted tools, utilities, and workflows built to help you work faster.
+              Search {Math.floor(slugs.length / 50) * 50}+ trusted tools, utilities, and games built to help you work faster.
             </p>
             <div className="tools-search-row">
               <Search className="pointer-events-none absolute right-5 top-1/2 h-5 w-5 -translate-y-1/2 text-[var(--tp-primary)]" />

@@ -4,7 +4,7 @@ import { createPageMetadata } from "@/platform/seo/generateMetadata";
 export async function generateMetadata({ params }) {
   const { slug, category, pdetail } = await params;
   return createPageMetadata({
-    title: "Brand Details, Ratings & Reviews | AltFTool",
+    title: "Brand Details, Ratings & Reviews",
     description:
       "Explore detailed brand ratings, features, comparisons, reviews, and FAQs on AltFTool before you choose.",
     path: `/brandrating/${slug}/${category}/${pdetail}`,

@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import {
   ArrowRight,
   Eraser,
@@ -52,14 +53,14 @@ export default function ExploreAiTools() {
           ))}
         </div>
 
-        <a
+        <Link
           href="/tools/all"
           className={`inline-flex h-10 shrink-0 items-center justify-center gap-1.5 rounded-[8px] px-4 text-sm font-bold text-white shadow-[0_6px_16px_color-mix(in_srgb,var(--primary)_30%,transparent)] transition hover:opacity-95 ${FOCUS_RING}`}
           style={{ background: "var(--anslation-ds-cta-gradient)" }}
         >
           View All Tools
           <ArrowRight size={15} aria-hidden="true" />
-        </a>
+        </Link>
       </div>
     </section>
   );

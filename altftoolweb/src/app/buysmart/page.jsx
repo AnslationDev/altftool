@@ -15,7 +15,7 @@ const buySmartDescription =
 
 export async function generateMetadata() {
   return createPageMetadata({
-    title: "BuySmart – Smart Product & Tool Deals | AltFTool",
+    title: "BuySmart – Smart Product & Tool Deals",
     description: buySmartDescription,
     path: "/buysmart",
   });

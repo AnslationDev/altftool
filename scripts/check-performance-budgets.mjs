@@ -8,21 +8,25 @@ const workspaceRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)),
 const rawArgs = process.argv.slice(2);
 const args = new Set(rawArgs);
 
+// Totals re-baselined 2026-07-22 (catalog grew to 613 code-split tools +
+// games/labs/deals; users only download chunks they visit). Keep in sync with
+// scripts/check-bundle-budgets.mjs. Headroom ~7% — raise only after a fresh
+// dedupe/attribution pass.
 const DEFAULT_APP_BUDGETS = [
   {
     name: "web",
     cwd: "altftoolweb",
     maxChunkGzipKiB: 375,
     maxChunkRawKiB: 1350,
-    maxTotalJsGzipKiB: 6000,
-    maxTotalCssGzipKiB: 950,
+    maxTotalJsGzipKiB: 10500,
+    maxTotalCssGzipKiB: 1150,
   },
   {
     name: "admin",
     cwd: "altftoolwebadmin",
     maxChunkGzipKiB: 250,
     maxChunkRawKiB: 850,
-    maxTotalJsGzipKiB: 2200,
+    maxTotalJsGzipKiB: 2700,
     maxTotalCssGzipKiB: 450,
   },
 ];

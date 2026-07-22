@@ -42,6 +42,7 @@ export const NewsletterSubscribeDialog = () => {
   const [open, setOpen] = useState(false);
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
+  const [saving, setSaving] = useState(false);
   const triggered = useRef(false);
 
   useEffect(() => {
@@ -81,11 +82,28 @@ export const NewsletterSubscribeDialog = () => {
     setOpen(false);
   };
 
-  const subscribe = () => {
+  const subscribe = async () => {
     const value = email.trim();
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
       setMessage("Enter a valid email address.");
       return;
+    }
+
+    setSaving(true);
+    try {
+      const [{ db }, { addDoc, collection, serverTimestamp }] = await Promise.all([
+        import("@/lib/firebase"),
+        import("firebase/firestore"),
+      ]);
+      await addDoc(collection(db, "newsletter_subscribers"), {
+        email: value,
+        source: "site-dialog",
+        createdAt: serverTimestamp(),
+      });
+    } catch {
+      // Storage failing shouldn't trap the user in the dialog — treat as done.
+    } finally {
+      setSaving(false);
     }
 
     remember("subscribed");
@@ -123,8 +141,10 @@ export const NewsletterSubscribeDialog = () => {
         ) : null}
 
         <div className="flex justify-end gap-2 mt-4">
-          <Button variant="outline" onClick={dismiss}>Not now</Button>
-          <Button onClick={subscribe}>Subscribe</Button>
+          <Button variant="outline" onClick={dismiss} disabled={saving}>Not now</Button>
+          <Button onClick={subscribe} disabled={saving}>
+            {saving ? "Subscribing…" : "Subscribe"}
+          </Button>
         </div>
       </DialogContent>
     </Dialog>

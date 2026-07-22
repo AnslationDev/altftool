@@ -7,7 +7,7 @@ export async function generateMetadata({ params }) {
   const decodedCountry = decodeURIComponent(country).toUpperCase();
 
   return createPageMetadata({
-    title: `${decodedSkill} Job Market Demand & Salary in ${decodedCountry} | AltFTool`,
+    title: `${decodedSkill} Job Market Demand & Salary in ${decodedCountry}`,
     description: `Analyze the real-time job market demand, average salary, and future growth trends for ${decodedSkill} in ${decodedCountry}.`,
     path: `/skill/${normalizeSlug(decodedSkill)}/${normalizeSlug(decodedCountry)}`,
     keywords: [

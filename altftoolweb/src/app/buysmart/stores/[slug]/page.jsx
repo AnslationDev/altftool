@@ -14,7 +14,7 @@ export async function generateMetadata({ params }) {
   const title = titleFromSlug(slug);
 
   return createPageMetadata({
-    title: `${title || "Store"} Deals & Coupon Codes | BuySmart | AltFTool`,
+    title: `${title || "Store"} Deals & Coupon Codes | BuySmart`,
     description:
       "Check verified BuySmart savings, coupon codes, cashback, reward offers, expiry details, and store terms before opening a merchant deal.",
     path: `/buysmart/stores/${slug}`,

@@ -10,6 +10,7 @@ import {
   sortBlogsByDate,
 } from "../../data";
 import { fetchAllFirebaseBlogs } from "../../data/firebaseBlogs";
+import { shouldDeferBulkPrerendering } from "@/lib/buildPrerenderPolicy";
 import {
   createBreadcrumbJsonLd,
   createCollectionPageJsonLd,
@@ -20,6 +21,7 @@ import {
 export const revalidate = 3600;
 
 export function generateStaticParams() {
+  if (shouldDeferBulkPrerendering()) return [];
   return getAllBlogTags().map((tag) => ({ tag: blogTaxonomySlug(tag) }));
 }
 

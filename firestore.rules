@@ -240,6 +240,19 @@ service cloud.firestore {
       allow write: if isActiveAdmin();
     }
 
+    // Public newsletter opt-in: create-only with strict shape validation.
+    // Deliberately a top-level collection — subscriber emails must NEVER live
+    // under the world-readable /projects/altftool/** wildcard above.
+    match /newsletter_subscribers/{subscriberId} {
+      allow read, update, delete: if isActiveAdmin();
+      allow create: if hasOnly(["email", "source", "createdAt"]) &&
+        nonEmptyText(request.resource.data.email, 200) &&
+        request.resource.data.email.matches('.+@.+[.].+') &&
+        request.resource.data.source is string &&
+        request.resource.data.source.size() <= 60 &&
+        request.resource.data.createdAt == request.time;
+    }
+
     match /projects/carrerbook/footer/settings {
       allow read: if true;
       allow write: if isActiveAdmin();

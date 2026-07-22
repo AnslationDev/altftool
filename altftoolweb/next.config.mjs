@@ -26,6 +26,24 @@ const nextConfig = {
   transpilePackages: ["@altftool/ui"],
   allowedDevOrigins: ["localhost", "127.0.0.1"],
 
+  async headers() {
+    return [
+      {
+        source: "/sw.js",
+        headers: [
+          {
+            key: "Cache-Control",
+            value: "no-store, no-cache, must-revalidate, max-age=0",
+          },
+          {
+            key: "Service-Worker-Allowed",
+            value: "/",
+          },
+        ],
+      },
+    ];
+  },
+
   async redirects() {
     const toolSlugRedirects = readToolSlugs().map((slug) => ({
       source: `/tools/${slug}`,
@@ -68,11 +86,6 @@ const nextConfig = {
       {
         source: "/cookie-policy",
         destination: "/policypages/cookie",
-        permanent: true,
-      },
-      {
-        source: "/deals",
-        destination: "/exclusivedeals",
         permanent: true,
       },
       {
@@ -161,7 +174,7 @@ const nextConfig = {
   reactStrictMode: true,
   reactCompiler: false,
 
-  webpack(config, { dev }) {
+  webpack(config, { dev, isServer }) {
     if (dev) {
       config.devtool = "cheap-module-source-map";
     }
@@ -187,6 +200,58 @@ const nextConfig = {
       stream: false,
       assert: false,
     };
+
+    // Bundle-dedupe aliases. Each of these libraries was shipping twice in the
+    // client bundle because a dependency embeds its own private copy:
+    // - onnxruntime-web 1.21's default bundle already contains the WebGPU/jsep
+    //   backend; the "/webgpu" subpath is a near-identical compat file, and
+    //   @imgly/background-removal dynamically imports both paths (~380 KiB raw
+    //   duplicated).
+    // - @vladmandic/face-api's default dist embeds tfjs 4.22.0; the nobundle
+    //   dist imports @tensorflow/tfjs/dist/index.js — the exact file our direct
+    //   @tensorflow/tfjs 4.22.0 imports resolve to — so tfjs ships once
+    //   (requires @tensorflow/tfjs-backend-wasm, pinned to the same version).
+    // - html2pdf.js's "main" is a UMD bundle with private jspdf + html2canvas +
+    //   dompurify copies; its src entry imports jspdf/dist/jspdf.es.min.js and
+    //   html2canvas, which dedupe with the app's own direct dependencies.
+    config.resolve.alias = {
+      ...config.resolve.alias,
+      "onnxruntime-web/webgpu$": "onnxruntime-web",
+      "@vladmandic/face-api$": "@vladmandic/face-api/dist/face-api.esm-nobundle.js",
+      "html2pdf.js$": "html2pdf.js/src/index.js",
+    };
+
+    // Many mid-size vendor modules (react-hot-toast, framer-motion internals,
+    // recharts pieces, file-saver, lucide icons, ...) were duplicated into
+    // dozens of per-tool async chunks (~1.6 MiB raw of repeated code). Split
+    // vendor modules shared by 4+ async chunks into reusable chunks. Async-only
+    // so initial/page chunks and SSR manifests are untouched.
+    if (!dev && !isServer && config.optimization?.splitChunks?.cacheGroups) {
+      // face-api (nobundle) + the wasm backend are shared by the ~9 face
+      // analysis tools; without a named group they get copied into each tool
+      // chunk (face-api is below Next's 160 KB per-module "lib" threshold).
+      config.optimization.splitChunks.cacheGroups.faceStack = {
+        test: /[\\/]node_modules[\\/](@vladmandic[\\/]face-api|@tensorflow[\\/]tfjs-backend-wasm)[\\/]/,
+        name: "face-stack",
+        chunks: "async",
+        minChunks: 1,
+        priority: 35,
+        reuseExistingChunk: true,
+        enforce: true,
+      };
+      config.optimization.splitChunks.cacheGroups.sharedAsyncVendors = {
+        test: /[\\/]node_modules[\\/]/,
+        chunks: "async",
+        minChunks: 4,
+        minSize: 20000,
+        priority: 20,
+        reuseExistingChunk: true,
+        // enforce only lifts the max-async/initial-request caps here; the
+        // explicit minChunks/minSize above still apply (webpack keeps
+        // per-cache-group values when set).
+        enforce: true,
+      };
+    }
 
     return config;
   },

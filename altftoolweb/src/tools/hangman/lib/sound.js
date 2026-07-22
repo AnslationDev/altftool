@@ -1,0 +1,75 @@
+"use client";
+
+// Tiny Web Audio synth for the hangman game. No audio files — every effect
+// is generated from oscillators. The AudioContext is created lazily on the
+// first user gesture and disposed by the owning component on unmount.
+
+export default function createSoundEngine() {
+  let ctx = null;
+
+  function ensureContext() {
+    if (typeof window === "undefined") return null;
+    if (!ctx) {
+      const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+      if (!AudioContextClass) return null;
+      try {
+        ctx = new AudioContextClass();
+      } catch {
+        return null;
+      }
+    }
+    if (ctx.state === "suspended") {
+      ctx.resume().catch(() => {});
+    }
+    return ctx;
+  }
+
+  function tone(frequency, { delay = 0, duration = 0.14, type = "sine", volume = 0.045 } = {}) {
+    const context = ensureContext();
+    if (!context) return;
+    const start = context.currentTime + delay;
+    const oscillator = context.createOscillator();
+    const gain = context.createGain();
+    oscillator.type = type;
+    oscillator.frequency.setValueAtTime(frequency, start);
+    gain.gain.setValueAtTime(0.0001, start);
+    gain.gain.exponentialRampToValueAtTime(volume, start + 0.015);
+    gain.gain.exponentialRampToValueAtTime(0.0001, start + duration);
+    oscillator.connect(gain);
+    gain.connect(context.destination);
+    oscillator.start(start);
+    oscillator.stop(start + duration + 0.05);
+  }
+
+  return {
+    correct() {
+      tone(523.25, { type: "triangle" });
+      tone(659.25, { delay: 0.07, type: "triangle" });
+    },
+    wrong() {
+      tone(196, { type: "sawtooth", duration: 0.18, volume: 0.03 });
+      tone(146.83, { delay: 0.09, type: "sawtooth", duration: 0.2, volume: 0.03 });
+    },
+    hint() {
+      tone(783.99, { type: "sine", duration: 0.1 });
+      tone(987.77, { delay: 0.06, type: "sine", duration: 0.12 });
+    },
+    win() {
+      tone(523.25, { type: "triangle" });
+      tone(659.25, { delay: 0.09, type: "triangle" });
+      tone(783.99, { delay: 0.18, type: "triangle" });
+      tone(1046.5, { delay: 0.27, type: "triangle", duration: 0.25 });
+    },
+    lose() {
+      tone(311.13, { type: "sawtooth", duration: 0.2, volume: 0.03 });
+      tone(233.08, { delay: 0.12, type: "sawtooth", duration: 0.22, volume: 0.03 });
+      tone(174.61, { delay: 0.26, type: "sawtooth", duration: 0.35, volume: 0.03 });
+    },
+    dispose() {
+      if (ctx) {
+        ctx.close().catch(() => {});
+        ctx = null;
+      }
+    },
+  };
+}

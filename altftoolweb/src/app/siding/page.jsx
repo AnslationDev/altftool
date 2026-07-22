@@ -3,7 +3,7 @@ import PageView from "./PageView";
 
 export async function generateMetadata() {
   return createPageMetadata({
-    title: "Siding & Exterior Services | AltFTool",
+    title: "Siding & Exterior Services",
     description:
       "Explore professional siding and home exterior services with project galleries, before-and-after results, customer testimonials, service areas, and free estimates.",
     path: "/siding",

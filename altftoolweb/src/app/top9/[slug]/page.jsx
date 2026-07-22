@@ -14,8 +14,10 @@ import {
   getTop9Items,
   getTop9Title,
 } from "../data/getTop9Items";
+import { shouldDeferBulkPrerendering } from "@/lib/buildPrerenderPolicy";
 
 export function generateStaticParams() {
+  if (shouldDeferBulkPrerendering()) return [];
   return getTop9Items().map((item) => ({ slug: item.slug }));
 }
 

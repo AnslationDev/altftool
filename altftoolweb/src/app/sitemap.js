@@ -1,4 +1,5 @@
 import { toolMetaMap } from "@/platform/registry/toolMetaMap";
+import { slugifyCategory } from "@/platform/registry/categoryTaxonomy";
 import {
   blogTaxonomySlug,
   getAllBlogTags,
@@ -9,6 +10,7 @@ import {
 } from "@/app/blogs/data";
 import { fetchFirebaseBlogsPage } from "@/app/blogs/data/firebaseBlogs";
 import buySmartStores from "@/app/buysmart/data/stores.json";
+import { getDeals } from "@/app/deals/data/deals";
 import dealData from "@/app/exclusivedeals/(data)/db.json";
 import top11Categories from "@/app/top11/data/categoryData";
 import { getTop9Items } from "@/app/top9/data/getTop9Items";
@@ -40,6 +42,11 @@ const staticRoutes = [
   { path: "/smartlink", priority: 0.65 },
   { path: "/top11", priority: 0.7 },
   { path: "/top9", priority: 0.68 },
+  { path: "/games", priority: 0.72 },
+  { path: "/labs", priority: 0.66 },
+  { path: "/licenses", priority: 0.3 },
+  { path: "/account/login", priority: 0.3 },
+  { path: "/account/signup", priority: 0.3 },
   { path: "/personality", priority: 0.66 },
   { path: "/wattpad", priority: 0.66 },
   { path: "/altpintrest", priority: 0.62 },
@@ -51,6 +58,7 @@ const staticRoutes = [
   { path: "/news/topics", priority: 0.6 },
   { path: "/news/trending", priority: 0.6 },
   { path: "/brandrating", priority: 0.7 },
+  { path: "/deals", priority: 0.85 },
   { path: "/exclusivedeals", priority: 0.85 },
   { path: "/exclusivedeals/all-stores", priority: 0.75 },
   { path: "/exclusivedeals/store", priority: 0.7 },
@@ -289,7 +297,9 @@ export default async function sitemap() {
   const toolCategories = new Set(["all"]);
   for (const tool of Object.values(toolMetaMap)) {
     const categories = Array.isArray(tool.category) ? tool.category : [tool.category];
-    categories.filter(Boolean).forEach((category) => toolCategories.add(normalizeSlug(category)));
+    // Must match the /tools/[category] route slugs (slugifyCategory), not
+    // normalizeSlug — the two disagree on "&" ("design-color" vs "design-and-color").
+    categories.filter(Boolean).forEach((category) => toolCategories.add(slugifyCategory(category)));
   }
 
   for (const category of [...toolCategories].sort()) {
@@ -450,6 +460,14 @@ export default async function sitemap() {
         changeFrequency: "weekly",
       });
     }
+  }
+
+  for (const deal of getDeals() || []) {
+    if (!deal?.slug) continue;
+    pushUnique(entries, seen, `/deals/${deal.slug}`, {
+      priority: 0.7,
+      changeFrequency: "weekly",
+    });
   }
 
   for (const category of dealData.categories || []) {

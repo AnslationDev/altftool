@@ -322,13 +322,12 @@ export default function ToolHome() {
                   {/* Original overlay (clipped) */}
                   <div
                     className="absolute inset-0 overflow-hidden pointer-events-none"
-                    style={{ width: `${sliderPosition}%` }}
+                    style={{ clipPath: `inset(0 ${100 - sliderPosition}% 0 0)` }}
                   >
                     <img
                       src={photo}
                       alt="Original"
-                      className="absolute inset-0 w-full h-full object-contain max-w-none pointer-events-none"
-                      style={{ width: containerRef.current?.getBoundingClientRect().width }}
+                      className="absolute inset-0 w-full h-full object-contain pointer-events-none"
                     />
                   </div>
 

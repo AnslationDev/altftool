@@ -23,7 +23,7 @@ const brandRatingDescription =
 
 export async function generateMetadata() {
   return createPageMetadata({
-    title: "Brand Rating & Reviews – Tool Scores | AltFTool",
+    title: "Brand Rating & Reviews – Tool Scores",
     description: brandRatingDescription,
     path: "/brandrating",
   });

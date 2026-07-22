@@ -6,6 +6,7 @@
  * reads as one premium product.
  */
 
+import Link from "next/link";
 import {
   ArrowRight,
   Calculator,
@@ -84,7 +85,7 @@ export default function ExploreFitnessTools() {
             Free tools that pair perfectly with your step goals.
           </p>
         </div>
-        <a
+        <Link
           href="/tools/all"
           className="group inline-flex h-10 shrink-0 items-center gap-1.5 rounded-full px-4 text-[12px] font-bold text-white transition active:opacity-90"
           style={{ background: C.grad, boxShadow: "0 8px 18px rgba(124,92,246,0.30)" }}
@@ -95,7 +96,7 @@ export default function ExploreFitnessTools() {
             aria-hidden="true"
             className="transition-transform group-hover:translate-x-0.5"
           />
-        </a>
+        </Link>
       </div>
 
       {/* tool cards */}

@@ -19,7 +19,9 @@ const HOME_FOOTER_GROUPS = [
     title: "Product",
     links: [
       { label: "Tools", href: "/tools/all" },
+      { label: "Games", href: "/games" },
       { label: "Extensions", href: "/extensions" },
+      { label: "AltF Deals", href: "/deals" },
       { label: "Deals", href: "/exclusivedeals" },
       { label: "All Categories", href: "/tools/all" },
     ],
@@ -39,6 +41,7 @@ const HOME_FOOTER_GROUPS = [
       { label: "About Us", href: "/policypages/about" },
       { label: "Privacy Policy", href: "/policypages/privacy" },
       { label: "Terms of Use", href: "/policypages/termsandconditions" },
+      { label: "Open Source Licenses", href: "/licenses" },
       { label: "Contact Us", href: "/policypages/contact" },
     ],
   },

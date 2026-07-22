@@ -1,4 +1,4 @@
-import { useState, useCallback, useMemo, useRef } from "react";
+import { useState, useCallback, useMemo } from "react";
 import { computeDiff, computeStats } from "../utils/diffEngine";
 import { generateId } from "../utils/helpers";
 
@@ -20,8 +20,10 @@ export function useDiff() {
   const [showSearch, setShowSearch] = useState(false);
   const [showAnalytics, setShowAnalytics] = useState(false);
   const [fullscreen, setFullscreen] = useState(false);
-  const undoStack = useRef([]);
-  const redoStack = useRef([]);
+  // Stable mutable containers (created once). Every mutation is paired with a
+  // setTextA/setTextB call, so renders always observe the fresh stack lengths.
+  const [undoStack] = useState(() => ({ current: [] }));
+  const [redoStack] = useState(() => ({ current: [] }));
   const [toast, setToast] = useState(null);
 
   const diffResult = useMemo(() => {

@@ -226,17 +226,14 @@ export default function ProductImageCompare() {
                   />
 
                   {/* Image B (Overlay clipped by slider) */}
-                  <div 
+                  <div
                     className="absolute inset-0 w-full h-full overflow-hidden border-r-2 border-transparent"
-                    style={{ width: `${sliderPosition}%` }}
+                    style={{ clipPath: `inset(0 ${100 - sliderPosition}% 0 0)` }}
                   >
                     <img
                       src={imageB}
                       alt="Image B"
-                      className="absolute inset-0 w-full h-full object-contain max-w-none pointer-events-none"
-                      style={{ 
-                         width: containerRef.current ? `${containerRef.current.offsetWidth}px` : '100vw'
-                      }}
+                      className="absolute inset-0 w-full h-full object-contain pointer-events-none"
                     />
                   </div>
 

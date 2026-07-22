@@ -3,7 +3,7 @@ import { createPageMetadata } from "@/platform/seo/generateMetadata";
 
 export async function generateMetadata() {
   return createPageMetadata({
-  title: "All BuySmart Stores & Verified Deals | AltFTool",
+  title: "All BuySmart Stores & Verified Deals",
   description:
     "Browse every BuySmart store on AltFTool with searchable brand pages, verified coupons, cashback, rewards, student offers, and category filters.",
   path: "/buysmart/view-all",

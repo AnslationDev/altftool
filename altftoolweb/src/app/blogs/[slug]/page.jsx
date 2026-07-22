@@ -52,6 +52,7 @@ import {
   BlogEngagementProvider,
 } from "../components/slug/BlogEngagement";
 import { isFeatureEnabled } from "@/lib/featureFlags";
+import { shouldDeferBulkPrerendering } from "@/lib/buildPrerenderPolicy";
 import "../../styles/ckeditor.css";
 
 export const revalidate = 3600;
@@ -64,6 +65,7 @@ const getBlogDetailBySlug = cache(async (slug) => (
 ));
 
 export function generateStaticParams() {
+  if (shouldDeferBulkPrerendering()) return [];
   return getAllBlogs().map((blog) => ({ slug: blog.slug }));
 }
 

@@ -3,7 +3,7 @@ import { createPageMetadata } from "@/platform/seo/generateMetadata";
 
 export async function generateMetadata() {
   return createPageMetadata({
-    title: "All Mockup Templates – Mockly Generators | AltFTool",
+    title: "All Mockup Templates – Mockly Generators",
     description:
       "Browse all 14 Mockly mockup generators and jump straight into the editor to design realistic social media and system screenshots.",
     path: "/prank-socialmedia/templates",
