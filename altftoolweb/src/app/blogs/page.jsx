@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -13,6 +14,7 @@ import {
   TrendingUp,
 } from "lucide-react";
 import BlogExplorerClient from "./components/BlogExplorerClient";
+import BlogCampaignSlot from "./components/BlogCampaignSlot";
 import JsonLd from "@/platform/seo/JsonLd";
 import RouteDiscoveryBand from "@/platform/navigation/RouteDiscoveryBand";
 import AutoScrollSlider from "./components/AutoScrollSlider";
@@ -155,7 +157,11 @@ function compactExplorerPost(post = {}) {
 }
 
 async function getFastFirebaseBlogCatalog() {
-  if (process.env.ALTFT_BLOGS_SSR_FIREBASE !== "true") {
+  // Render LIVE published blogs server-side by default so the homepage never
+  // shows unpublished/removed posts baked into the static seed (the catalog
+  // read is ISR-cached, so this doesn't amplify Firestore reads). Set
+  // ALTFT_BLOGS_SSR_FIREBASE="false" to force the static-seed fallback.
+  if (process.env.ALTFT_BLOGS_SSR_FIREBASE === "false") {
     return null;
   }
 
@@ -245,17 +251,21 @@ function MarketLaneGrid() {
         {BLOG_CONTENT_LANES.map((lane, index) => {
           const Icon = laneIcons[index] || BookOpen;
           return (
-            <article
+            <Link
               key={lane.title}
+              href={lane.href || "/blogs"}
               className="group flex flex-col rounded-2xl border border-(--border) bg-(--card) p-5 shadow-sm transition-all duration-200 ease-out hover:-translate-y-0.5 hover:border-(--anslation-ds-border-strong) hover:shadow-[var(--anslation-ds-shadow-md)]"
             >
               <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-xl bg-(--anslation-ds-primary-soft) text-(--primary) transition-colors group-hover:bg-(--primary) group-hover:text-(--primary-foreground)">
                 <Icon className="h-5 w-5" />
               </div>
               <p className="text-[10px] font-bold uppercase tracking-[0.1em] text-(--muted-foreground)">{lane.eyebrow}</p>
-              <h3 className="mt-1.5 text-base font-semibold tracking-tight text-(--foreground)">{lane.title}</h3>
+              <h3 className="mt-1.5 flex items-center gap-1 text-base font-semibold tracking-tight text-(--foreground) transition-colors group-hover:text-(--primary)">
+                {lane.title}
+                <ArrowRight className="h-4 w-4 opacity-0 -translate-x-1 transition-all group-hover:opacity-100 group-hover:translate-x-0" />
+              </h3>
               <p className="mt-2 text-sm leading-relaxed text-(--muted-foreground)">{lane.description}</p>
-            </article>
+            </Link>
           );
         })}
       </div>
@@ -355,6 +365,10 @@ export default async function BlogsPage() {
           </p>
         </section>
 
+        {/* Campaign zone — top leaderboard (filled from the Admin Ads manager). */}
+        <BlogCampaignSlot placement="blog_home_top" className="mb-6" />
+
+        <Suspense fallback={null}>
         <BlogExplorerClient
           heroShortcutRail={<HeroShortcutRail categories={categories} clusters={topicClusters} />}
           initialPosts={posts.map(compactExplorerPost)}
@@ -366,6 +380,8 @@ export default async function BlogsPage() {
           totalCount={totalCount}
         >
           <MarketLaneGrid />
+          {/* Campaign zone — mid-page banner. */}
+          <BlogCampaignSlot placement="blog_home_mid" />
           <TopicClusterBand clusters={topicClusters} />
           <section aria-labelledby="popular-paths-heading">
             <BandHeading
@@ -383,6 +399,7 @@ export default async function BlogsPage() {
             </AutoScrollSlider>
           </section>
         </BlogExplorerClient>
+        </Suspense>
       </div>
       <RouteDiscoveryBand {...blogsRouteHub} />
     </main>

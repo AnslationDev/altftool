@@ -38,3 +38,6 @@ claude.md
 # Claude Code session/tooling data
 .claude/
 .tmp/
+
+# Obsidian editor workspace folder
+.obsidian/

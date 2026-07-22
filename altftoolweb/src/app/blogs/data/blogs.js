@@ -19,21 +19,25 @@ export const BLOG_CONTENT_LANES = [
     title: "Smart savings",
     eyebrow: "Buying guides",
     description: "Practical checklists, coupon habits, and comparison-led reads for people who want the best value fast.",
+    href: "/blogs?q=savings#blog-explorer",
   },
   {
     title: "Student stack",
     eyebrow: "Campus picks",
     description: "Student-friendly tools, productivity workflows, and simple resources for study, writing, and digital life.",
+    href: "/blogs?q=student#blog-explorer",
   },
   {
     title: "Creator growth",
     eyebrow: "Monetization",
     description: "Readable playbooks for creators, link workflows, downloads, and lightweight growth systems.",
+    href: "/blogs?q=creator#blog-explorer",
   },
   {
     title: "Tool mastery",
     eyebrow: "How-to",
     description: "Short tutorials that help readers choose, use, and combine AltFTool utilities with less friction.",
+    href: "/blogs?q=tools#blog-explorer",
   },
 ];
 
@@ -718,12 +722,32 @@ export function getBlogStats(posts = blogPosts) {
   };
 }
 
+// Popularity = engagement (views / likes / comments) with a mild recency
+// boost, so "Popular"/"Trending" surfaces genuinely reflect what readers
+// engage with rather than a positional slice of the array.
+function blogPopularityScore(post = {}) {
+  const views = Number(post.views || post.viewCount || post.totalViews || 0);
+  const likes = Number(post.likesCount || post.likes || 0);
+  const comments = Number(post.commentsCount || post.comments || 0);
+  const dateMs = toBlogDate(post.createdAt || post.publishedAt || post.date)?.getTime() || 0;
+  const daysOld = dateMs ? Math.max(0, (Date.now() - dateMs) / 86_400_000) : 90;
+  const recencyBoost = Math.max(0, 45 - Math.min(daysOld, 45));
+  return views + likes * 12 + comments * 18 + recencyBoost;
+}
+
 export function getFeaturedBlogGroups(posts = blogPosts) {
+  const list = Array.isArray(posts) ? posts.filter(Boolean) : [];
+  const byRecency = sortBlogsByRecency(list); // newest first (true publish time)
+  const byPopularity = [...list].sort((a, b) => blogPopularityScore(b) - blogPopularityScore(a));
+  const hero = byRecency[0] || null;
+  const heroSlug = hero?.slug;
   return {
-    hero: posts[0] || null,
-    side: posts.slice(1, 5),
-    trending: posts.slice(5, 11),
-    latest: posts.slice(0, 12),
+    hero,
+    side: byRecency.slice(1, 5),
+    // Popular Paths — most-engaged posts, ranked (not a positional slice) and
+    // excluding the hero so it never mirrors the Latest list.
+    trending: byPopularity.filter((p) => p.slug !== heroSlug).slice(0, 6),
+    latest: byRecency.slice(0, 12),
   };
 }
 

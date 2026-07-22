@@ -8,6 +8,7 @@ import {
   fetchCategoryNames,
   fetchAllBlogs,
   createBlog,
+  updateBlog,
   updateBlogImage,
   uploadBlogImage,
   requestBlogRevalidation,
@@ -734,7 +735,10 @@ export default function AddBlog() {
           seoTitle: formData.seoTitle.trim(),
           seoDescription: formData.seoDescription || excerpt,
           image: "", imageAlt: imageAlt.trim(),
-          views: 0, likesCount: 0, commentsCount: 0, feedbackCount: 0, helpfulCount: 0, notHelpfulCount: 0, status: "published",
+          // Create as a draft first; we only flip to published AFTER the image
+          // uploads and attaches. If the upload fails the post stays a private
+          // draft instead of a public, image-less published post.
+          views: 0, likesCount: 0, commentsCount: 0, feedbackCount: 0, helpfulCount: 0, notHelpfulCount: 0, status: "draft",
           tags: parseBlogTags(formData.tags),
         });
       } catch (err) {
@@ -762,11 +766,13 @@ export default function AddBlog() {
       // Step 3: Attach image URL
       setStep("saving");
       try {
-        await updateBlogImage(blogRef.id, imageUrl);
+        // Attach the image AND go live in one write.
+        await updateBlog(blogRef.id, { image: imageUrl, status: "published" });
       } catch (err) {
-        const msg = "Blog was published but the image link failed to save. Please edit the post to re-attach the image.";
+        const msg = "Image uploaded but publishing failed — the post was saved as a draft. Open it to finish publishing.";
         setBannerError(msg); emitAlert({ type: "warning", message: msg });
-        console.error("Image URL update failed:", err);
+        console.error("Publish update failed:", err);
+        setSubmitting(false); setStep("idle"); return;
       }
 
       logAuditEvent({
@@ -1041,7 +1047,7 @@ export default function AddBlog() {
                 {errors.description && (
                   <p className="flex items-center gap-1 text-xs text-danger font-medium -mt-2"><AlertCircle className="w-3 h-3" />{errors.description}</p>
                 )}
-                <BlogEditor value={formData.description} onChange={handleEditorChange} />
+                <BlogEditor value={formData.description} onChange={handleEditorChange} draftKey="altftool-blog-new" />
               </Section>
 
               {/* SEO — collapsible */}

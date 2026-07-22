@@ -20,6 +20,7 @@ import {
   bulkDeleteBlogs,
   fetchAllBlogsCached,
   invalidateBlogsCache,
+  requestBlogRevalidation,
 } from "./services/blogsService";
 
 /* Strip HTML so descriptions are searchable as plain text. */
@@ -143,7 +144,10 @@ export default function Blogs() {
   const confirmDelete = async () => {
     if (!deleteId) return;
     try {
+      const deleted = allBlogs.find((b) => b.id === deleteId);
       await deleteBlog(deleteId);
+      // Refresh the public cache so a deleted post drops off /blogs and 404s.
+      if (deleted?.slug) requestBlogRevalidation(deleted.slug);
       setAllBlogs((prev) => prev.filter((b) => b.id !== deleteId));
       setSelectedBlogs((prev) => prev.filter((id) => id !== deleteId));
       emitAlert({ type: "success", message: "Blog deleted successfully" });
@@ -168,9 +172,12 @@ export default function Blogs() {
   const confirmBulkDelete = async () => {
     if (selectedBlogs.length === 0) return;
     try {
-      await bulkDeleteBlogs(selectedBlogs);
-      const deletedCount = selectedBlogs.length;
       const ids = new Set(selectedBlogs);
+      const deletedSlugs = allBlogs.filter((b) => ids.has(b.id)).map((b) => b.slug).filter(Boolean);
+      await bulkDeleteBlogs(selectedBlogs);
+      // Refresh the public cache for every removed post.
+      deletedSlugs.forEach((slug) => requestBlogRevalidation(slug));
+      const deletedCount = selectedBlogs.length;
       setAllBlogs((prev) => prev.filter((b) => !ids.has(b.id)));
       setSelectedBlogs([]);
       emitAlert({ type: "success", message: `${deletedCount} blog${deletedCount > 1 ? "s" : ""} deleted` });

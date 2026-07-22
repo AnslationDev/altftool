@@ -60,7 +60,7 @@ export default function ViewBlogs() {
 
   const published        = blogs.filter((b) => b.status === "published").length;
   const drafts           = blogs.filter((b) => b.status !== "published").length;
-  const uniqueCategories = new Set(blogs.map((b) => b.category).filter(Boolean)).size;
+  const uniqueCategories = new Set(blogs.map((b) => b.category?.trim()).filter(Boolean)).size;
 
   if (loading) {
     return (

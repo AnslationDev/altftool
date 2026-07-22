@@ -253,12 +253,23 @@ const nextConfig = {
       };
     }
 
+    // Keep terser single-threaded: parallel workers spike build memory on the
+    // 629-tool catalog (from landing-refactor branch).
+    if (!dev && config.optimization?.minimizer) {
+      for (const minimizer of config.optimization.minimizer) {
+        if (minimizer.options && "parallel" in minimizer.options) {
+          minimizer.options.parallel = false;
+        }
+      }
+    }
+
     return config;
   },
 
   experimental: {
     workerThreads: false,
-    cpus: 2,
+    cpus: 1,
+    webpackBuildWorker: false,
   },
 };
 

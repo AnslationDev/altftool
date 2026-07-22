@@ -7,7 +7,7 @@ if (!command.length) {
   process.exit(1);
 }
 
-const maxOldSpaceSize = process.env.ALTFT_NODE_MAX_OLD_SPACE_SIZE || "8192";
+const maxOldSpaceSize = process.env.ALTFT_NODE_MAX_OLD_SPACE_SIZE || "6144";
 const existingNodeOptions = process.env.NODE_OPTIONS || "";
 const memoryOption = `--max-old-space-size=${maxOldSpaceSize}`;
 const nodeOptions = existingNodeOptions.includes("--max-old-space-size")
