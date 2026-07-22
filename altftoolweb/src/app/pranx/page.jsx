@@ -3,7 +3,7 @@ import { createPageMetadata } from "@/platform/seo/generateMetadata";
 
 export async function generateMetadata() {
   return createPageMetadata({
-    title: "Pranx Studio | AltFTool",
+    title: "Pranx Studio",
     description:
       "Original browser prank simulators, screensavers, fake terminals, mini games, and screenshot makers.",
     path: "/pranx",

@@ -3,7 +3,7 @@ import PageView from "./PageView";
 
 export async function generateMetadata() {
   return createPageMetadata({
-    title: "Cookie Policy | AltFTool",
+    title: "Cookie Policy",
     description:
       "Read the AltF Tools Cookie Policy explaining how cookies and similar technologies are used across our website, tools, and services, and how you can manage them.",
     path: "/policypages/cookie",

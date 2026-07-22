@@ -6,7 +6,7 @@
 
 // export async function generateMetadata() {
 //   return createPageMetadata({
-//     title: "Latest News & Updates – Tech, Tools and Trends | AltFTool",
+//     title: "Latest News & Updates – Tech, Tools and Trends",
 //     description:
 //       "Stay updated with the latest news on technology, digital tools, software updates, and online trends with AltFTool News.",
 //     path: "/news",
@@ -28,7 +28,7 @@ export const revalidate = 600;
 
 export async function generateMetadata() {
   return createPageMetadata({
-    title: "Latest News & Updates – Tech, Tools and Trends | AltFTool",
+    title: "Latest News & Updates – Tech, Tools and Trends",
     description:
       "Stay updated with the latest news on technology, digital tools, software updates, and online trends with AltFTool News.",
     path: "/news",

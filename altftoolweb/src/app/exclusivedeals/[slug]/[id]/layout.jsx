@@ -24,7 +24,7 @@ export async function generateMetadata({ params }) {
   }
 
   return createPageMetadata({
-    title: `${brand.brandName} Coupons, Promo Codes & Offers | AltFTool`,
+    title: `${brand.brandName} Coupons, Promo Codes & Offers`,
     description: brand.about || `Find current ${brand.brandName} deals, coupons, and offers in ${category.categoryName}.`,
     path: `/exclusivedeals/${category.slug}/${brand.id}`,
     image: brand.imagedeal || brand.img || brand.brandLogo,

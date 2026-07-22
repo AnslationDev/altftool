@@ -42,7 +42,7 @@ export async function generateMetadata({ params }) {
   }
 
   return createPageMetadata({
-    title: `${config.slug.toUpperCase()} Deals & Special Offers | AltFTool`,
+    title: `${config.slug.toUpperCase()} Deals & Special Offers`,
     description: "Discover curated styles, fresh arrivals, and special promotions on AltFTool.",
     path: `/${slug}`,
   });

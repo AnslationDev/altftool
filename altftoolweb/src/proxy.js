@@ -15,7 +15,7 @@ const REDIRECTS_MAP = {
   "/privacy": "/policypages/privacy",
   "/terms": "/policypages/termsandconditions",
   "/cookie-policy": "/policypages/cookie",
-  "/deals": "/exclusivedeals",
+  // "/deals" now serves the AltF Deals hub (was: redirect to /exclusivedeals).
   "/exclusive-deals": "/exclusivedeals",
   "/buy-smart": "/buysmart",
   "/sales": "/sale",

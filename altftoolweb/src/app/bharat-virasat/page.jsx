@@ -3,7 +3,7 @@ import PageView from "./PageView";
 
 export async function generateMetadata() {
   return createPageMetadata({
-    title: "Bharat Virasat – India's Heritage Sites | AltFTool",
+    title: "Bharat Virasat – India's Heritage Sites",
     description:
       "Explore India's rich cultural heritage through an interactive showcase of historic sites, monuments, and landmarks with galleries and detailed information.",
     path: "/bharat-virasat",

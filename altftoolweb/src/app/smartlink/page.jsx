@@ -3,7 +3,7 @@ import PageView from "./PageView";
 
 export async function generateMetadata() {
   return createPageMetadata({
-    title: "Smart Link | AltFTool",
+    title: "Smart Link",
     description:
       "AltFTool smart link redirect handler that routes visitors to the requested destination based on the selected mode.",
     path: "/smartlink",

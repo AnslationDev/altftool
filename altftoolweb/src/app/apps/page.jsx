@@ -13,7 +13,7 @@ const appsDescription =
 
 export async function generateMetadata() {
   return createPageMetadata({
-  title: "Android Apps - Download Official APKs | AltFTool",
+  title: "Android Apps - Download Official APKs",
   description: appsDescription,
   path: "/apps",
   keywords: ["Android apps", "APK downloads", "mobile apps", "AltFTool apps"],

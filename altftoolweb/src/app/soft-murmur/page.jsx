@@ -3,7 +3,7 @@ import PageView from "./PageView";
 
 export async function generateMetadata() {
   return createPageMetadata({
-    title: "Soft Murmur – Ambient Sound Mixer | AltFTool",
+    title: "Soft Murmur – Ambient Sound Mixer",
     description:
       "Mix ambient background sounds like rain, waves, wind, and white noise to create your own calming soundscape for focus, relaxation, and sleep.",
     path: "/soft-murmur",

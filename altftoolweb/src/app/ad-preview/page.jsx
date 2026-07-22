@@ -3,7 +3,7 @@ import PageView from "./PageView";
 
 export async function generateMetadata() {
   return createPageMetadata({
-    title: "Ad Preview | AltFTool",
+    title: "Ad Preview",
     description:
       "Preview AltFTool ad layouts including tool cards, sidebars, banners, news cards, game cards, and extension cards before they go live.",
     path: "/ad-preview",

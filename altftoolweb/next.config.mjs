@@ -89,11 +89,6 @@ const nextConfig = {
         permanent: true,
       },
       {
-        source: "/deals",
-        destination: "/exclusivedeals",
-        permanent: true,
-      },
-      {
         source: "/exclusive-deals",
         destination: "/exclusivedeals",
         permanent: true,

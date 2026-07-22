@@ -6,7 +6,7 @@ export async function generateMetadata({ params }) {
   const label = String(slug || "games").replace(/-/g, " ");
 
   return {
-    title: `${label} | AltFTool`,
+    title: `${label}`,
     robots: { index: false, follow: true },
   };
 }

@@ -12,7 +12,7 @@ import "./altf-deals.css";
 
 export async function generateMetadata() {
   return createPageMetadata({
-    title: "AltF Deals — Free Lifetime Software Deals | AltFTool",
+    title: "AltF Deals — Free Lifetime Software Deals",
     description:
       "AltF Deals brings you handpicked software deals at 100% off, forever. Free lifetime alternatives to paid tools like Photoshop, Acrobat, and Camtasia — no signup, no credit card.",
     path: "/deals",

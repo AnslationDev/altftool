@@ -4,7 +4,7 @@ import "./personality.css";
 
 export async function generateMetadata() {
   return createPageMetadata({
-    title: "Personality Test – Discover Your Personality Type | AltFTool",
+    title: "Personality Test – Discover Your Personality Type",
     description:
       "Take the Personality Test on AltFTool to discover your personality type, strengths, behavior patterns, communication style, and personal growth insights.",
     path: "/personality",
