@@ -13,6 +13,7 @@ import {
   Sparkles,
   Search,
   LayoutTemplate,
+  Radar,
 } from "lucide-react";
 import AltfLogo from "../../../public/logos/altflogo.png";
 
@@ -40,6 +41,7 @@ const altftoolConfig = {
     pranx: { label: "Pranx", icon: Sparkles, routeSegment: "pranx" },
     sketchflow: { label: "Sketch Flow", icon: Sparkles, routeSegment: "sketchflow" },
     seo: { label: "SEO Engine", icon: Search, routeSegment: "seo" },
+    products: { label: "Products & Signals", icon: Radar, routeSegment: "products" },
   },
 };
 

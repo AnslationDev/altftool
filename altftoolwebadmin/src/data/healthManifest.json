@@ -1,13 +1,13 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-07-21T22:12:51.822Z",
+  "generatedAt": "2026-07-22T07:19:27.027Z",
   "tools": {
-    "total": 613,
-    "healthy": 613,
+    "total": 629,
+    "healthy": 629,
     "needsAttention": 0,
     "averageScore": 100,
     "categories": 21,
-    "directories": 614,
+    "directories": 630,
     "orphanToolDirs": [
       "_shared"
     ],

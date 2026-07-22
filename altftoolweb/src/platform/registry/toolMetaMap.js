@@ -1192,6 +1192,17 @@ export const toolMetaMap = {
     "icon": "users-round",
     "iconColor": "text-teal-600"
   },
+  "circled-text-generator": {
+    "name": "Circled Text Generator",
+    "description": "Convert letters and numbers into circled Unicode characters with multiple styles including filled, double, and parenthesized.",
+    "category": "Text & Writing",
+    "topics": [
+      "Text",
+      "Content Creation"
+    ],
+    "icon": "circle",
+    "iconColor": "text-indigo-600"
+  },
   "citation-generator": {
     "name": "Citation Generator",
     "description": "Generate accurate citations in APA, MLA, Chicago, Harvard, IEEE, and Vancouver styles instantly.",
@@ -1402,6 +1413,16 @@ export const toolMetaMap = {
     ],
     "icon": "palette",
     "iconColor": "text-fuchsia-600"
+  },
+  "compatibility-quiz": {
+    "name": "Compatibility Quiz",
+    "description": "Take interactive quizzes to measure compatibility across multiple categories with dynamic scoring and attractive results.",
+    "category": [
+      "Lifestyle",
+      "Fun"
+    ],
+    "icon": "sparkles",
+    "iconColor": "text-purple-600"
   },
   "compliment-generator": {
     "name": "Compliment Generator",
@@ -1680,6 +1701,17 @@ export const toolMetaMap = {
     "category": "Business",
     "icon": "wallet",
     "iconColor": "text-green-700"
+  },
+  "cute-text-generator": {
+    "name": "Cute Text Generator",
+    "description": "Convert your text into cute Unicode styles with kaomoji, decorative symbols, and emoji combinations.",
+    "category": "Text & Writing",
+    "topics": [
+      "Text",
+      "Content Creation"
+    ],
+    "icon": "heart",
+    "iconColor": "text-pink-500"
   },
   "cymatics-simulator": {
     "name": "Cymatics Simulator",
@@ -2053,6 +2085,16 @@ export const toolMetaMap = {
     "icon": "plane",
     "iconColor": "text-sky-500"
   },
+  "drinking-game-picker": {
+    "name": "Drinking Game Picker",
+    "description": "Pick random drinking games and challenges with categories, penalty mode, and history tracking.",
+    "category": "Games",
+    "topics": [
+      "Entertainment"
+    ],
+    "icon": "beer",
+    "iconColor": "text-amber-600"
+  },
   "duplicate-image-finder": {
     "name": "Duplicate Image Finder",
     "description": "Find exact and near-duplicate images using perceptual hashing. Supports batch upload, similarity scoring, and group management.",
@@ -2166,6 +2208,17 @@ export const toolMetaMap = {
       "Creators"
     ],
     "icon": "smile",
+    "iconColor": "text-yellow-500"
+  },
+  "emoji-letter-generator": {
+    "name": "Emoji Letter Generator",
+    "description": "Convert letters into emoji equivalents with multiple themes like regional indicators, bubble, animal, and food emojis.",
+    "category": "Text & Writing",
+    "topics": [
+      "Text",
+      "Content Creation"
+    ],
+    "icon": "smile-plus",
     "iconColor": "text-yellow-500"
   },
   "emoji-quiz": {
@@ -2648,6 +2701,16 @@ export const toolMetaMap = {
     ],
     "icon": "badge-indian-rupee",
     "iconColor": "text-teal-600"
+  },
+  "friendship-challenge": {
+    "name": "Friendship Challenge",
+    "description": "Answer fun questions about your friends, track your score, and see how well you really know each other.",
+    "category": [
+      "Games",
+      "Lifestyle"
+    ],
+    "icon": "heart-handshake",
+    "iconColor": "text-rose-500"
   },
   "friendship-meter": {
     "name": "Friendship Meter",
@@ -3497,6 +3560,17 @@ export const toolMetaMap = {
     ],
     "icon": "battery-charging",
     "iconColor": "text-teal-600"
+  },
+  "invisible-character-generator": {
+    "name": "Invisible Character Generator",
+    "description": "Generate invisible Unicode characters like zero-width spaces and joiners. Copy with one click for use in bios, usernames, and more.",
+    "category": "Text & Writing",
+    "topics": [
+      "Text",
+      "Content Creation"
+    ],
+    "icon": "eye-off",
+    "iconColor": "text-gray-600"
   },
   "invoice-generator": {
     "name": "Invoice Generator",
@@ -4402,6 +4476,16 @@ export const toolMetaMap = {
     "icon": "scale",
     "iconColor": "text-emerald-600"
   },
+  "never-have-i-ever": {
+    "name": "Never Have I Ever",
+    "description": "Hundreds of unique prompts with category selection, difficulty filters, and random mode for the ultimate party game.",
+    "category": "Games",
+    "topics": [
+      "Entertainment"
+    ],
+    "icon": "hand",
+    "iconColor": "text-pink-600"
+  },
   "nonogram": {
     "name": "Nonogram Puzzle",
     "description": "Solve nonogram picture-logic puzzles online free — 5x5, 10x10 and 15x15 grids with fill and mark modes.",
@@ -4882,13 +4966,6 @@ export const toolMetaMap = {
     "icon": "pencil",
     "iconColor": "text-(--primary)"
   },
-  "php-beautifier-studio": {
-    "name": "PHP Beautifier Studio",
-    "description": "A real-time, browser-based PHP formatting and beautification utility to clean and standardize your PHP code safely.",
-    "category": "Developer",
-    "icon": "code",
-    "iconColor": "text-indigo-500"
-  },
   "pickup-line-generator": {
     "name": "Pickup Line Generator",
     "description": "Generate smooth, cheesy, or funny pickup lines for any situation. Choose from categories like romantic, nerdy, or witty.",
@@ -5165,6 +5242,16 @@ export const toolMetaMap = {
     ],
     "icon": "sparkles",
     "iconColor": "text-teal-500"
+  },
+  "random-name-picker": {
+    "name": "Random Name Picker",
+    "description": "Add names, eliminate duplicates, and pick a random winner with animated selection. Supports elimination mode and winner history.",
+    "category": [
+      "Productivity",
+      "Fun"
+    ],
+    "icon": "shuffle",
+    "iconColor": "text-cyan-600"
   },
   "rashi-finder": {
     "name": "Rashi Finder",
@@ -5925,6 +6012,16 @@ export const toolMetaMap = {
     "icon": "spell-check",
     "iconColor": "text-blue-600"
   },
+  "spin-the-bottle": {
+    "name": "Spin the Bottle",
+    "description": "Classic spin the bottle game with realistic physics animation, multiple bottle designs, and sound effects.",
+    "category": "Games",
+    "topics": [
+      "Entertainment"
+    ],
+    "icon": "wine",
+    "iconColor": "text-rose-600"
+  },
   "spirit-animal-finder": {
     "name": "Spirit Animal Finder",
     "description": "Discover your spirit animal through personality questions and find your deep connection with nature.",
@@ -6080,6 +6177,17 @@ export const toolMetaMap = {
     "icon": "brain",
     "iconColor": "text-purple-600"
   },
+  "subscript-generator": {
+    "name": "Subscript Generator",
+    "description": "Convert text into Unicode subscript characters for chemistry formulas, math notation, and typographic flair.",
+    "category": "Text & Writing",
+    "topics": [
+      "Text",
+      "Content Creation"
+    ],
+    "icon": "subscript",
+    "iconColor": "text-teal-600"
+  },
   "subscription-cost-tracker": {
     "name": "Subscription Cost Tracker",
     "description": "Track all subscriptions with monthly and yearly cost totals, renewals, categories, and savings insights.",
@@ -6139,6 +6247,17 @@ export const toolMetaMap = {
     "icon": "zap",
     "iconColor": "text-yellow-500"
   },
+  "superscript-generator": {
+    "name": "Superscript Generator",
+    "description": "Convert supported characters into Unicode superscript for math, footnotes, and social posts.",
+    "category": "Text & Writing",
+    "topics": [
+      "Text",
+      "Content Creation"
+    ],
+    "icon": "superscript",
+    "iconColor": "text-orange-600"
+  },
   "survey-builder": {
     "name": "Survey Builder",
     "description": "Create custom surveys easily with interactive drag-and-drop fields.",
@@ -6194,6 +6313,16 @@ export const toolMetaMap = {
     ],
     "icon": "bird",
     "iconColor": "text-cyan-600"
+  },
+  "team-generator": {
+    "name": "Team Generator",
+    "description": "Generate balanced teams from a list of participants. Customize team count, size, and shuffle results.",
+    "category": [
+      "Productivity",
+      "Games"
+    ],
+    "icon": "users",
+    "iconColor": "text-blue-600"
   },
   "text-behind-image": {
     "name": "Text Behind Image",
@@ -6451,6 +6580,16 @@ export const toolMetaMap = {
     "icon": "check-square",
     "iconColor": "text-green-700"
   },
+  "truth-or-dare": {
+    "name": "Truth or Dare",
+    "description": "Play the classic party game with multiple categories, difficulty levels, and hundreds of unique challenges.",
+    "category": "Games",
+    "topics": [
+      "Entertainment"
+    ],
+    "icon": "help-circle",
+    "iconColor": "text-violet-600"
+  },
   "twin-finder": {
     "name": "Twin Finder",
     "description": "Upload two photos and discover your playful similarity score with fun visual comparisons!",
@@ -6517,6 +6656,17 @@ export const toolMetaMap = {
     ],
     "icon": "file-text",
     "iconColor": "text-teal-600"
+  },
+  "unicode-symbol-generator": {
+    "name": "Unicode Symbol Generator",
+    "description": "Browse and copy from a large categorized library of Unicode symbols including arrows, stars, hearts, math, currency, music, and more.",
+    "category": "Text & Writing",
+    "topics": [
+      "Text",
+      "Content Creation"
+    ],
+    "icon": "square-sigma",
+    "iconColor": "text-blue-600"
   },
   "unit-converter": {
     "name": "Unit Converter",
@@ -6610,6 +6760,17 @@ export const toolMetaMap = {
     "category": "Developer",
     "icon": "fingerprint",
     "iconColor": "text-purple-700"
+  },
+  "vaporwave-text-generator": {
+    "name": "Vaporwave Text Generator",
+    "description": "Convert text into full-width Unicode vaporwave aesthetic with decorative Japanese symbols and separators.",
+    "category": "Text & Writing",
+    "topics": [
+      "Text",
+      "Content Creation"
+    ],
+    "icon": "floppy-disk",
+    "iconColor": "text-fuchsia-500"
   },
   "vehicle-compare": {
     "name": "Vehicle Compare",
@@ -6861,6 +7022,16 @@ export const toolMetaMap = {
     ],
     "icon": "link",
     "iconColor": "text-teal-600"
+  },
+  "who-pays-the-bill": {
+    "name": "Who Pays the Bill?",
+    "description": "Add participants and randomly select one person to pay the bill. Perfect for group dinners and outings.",
+    "category": [
+      "Fun",
+      "Lifestyle"
+    ],
+    "icon": "wallet",
+    "iconColor": "text-emerald-600"
   },
   "wifi-qr-generator": {
     "name": "WiFi QR Code Generator",

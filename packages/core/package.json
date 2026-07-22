@@ -15,6 +15,8 @@
     "./firebasePaths": "./src/firebasePaths.js",
     "./http": "./src/http.js",
     "./next": "./src/next.js",
+    "./products": "./src/productRegistry.js",
+    "./signals": "./src/signalCatalog.js",
     "./toolHealth": "./src/toolHealth.js",
     "./services": "./src/services.js",
     "./seo": "./src/seo/index.js",

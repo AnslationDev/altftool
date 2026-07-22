@@ -1,6 +1,7 @@
 import fs from "node:fs/promises";
 import path from "node:path";
 import { pathToFileURL } from "node:url";
+import { resolveToolCategories } from "../altftoolweb/src/platform/registry/categoryTaxonomy.js";
 
 const rootDir = process.cwd();
 const toolsDir = path.join(rootDir, "altftoolweb/src/tools");
@@ -28,12 +29,6 @@ function normalizeIcon(icon) {
 
 function cleanText(value = "") {
   return String(value).replace(/\s+/g, " ").trim();
-}
-
-function normalizeCategory(category) {
-  if (Array.isArray(category)) return category.map((item) => cleanText(item)).filter(Boolean);
-  const value = cleanText(category);
-  return value ? [value] : [];
 }
 
 async function exists(filePath) {
@@ -104,7 +99,13 @@ async function main() {
 
     const name = cleanText(config.name);
     const description = cleanText(config.description);
-    const categories = normalizeCategory(config.category || "Other");
+    let categories;
+    try {
+      categories = resolveToolCategories(config.category ?? "Other", slug).categories;
+    } catch (error) {
+      failures.push(`${slug}: config category is invalid (${error.message})`);
+      continue;
+    }
 
     if (config.slug !== slug) failures.push(`${slug}: config slug must exactly match folder name`);
     if (name.length < 3) failures.push(`${slug}: config name is missing or too short`);
@@ -114,7 +115,7 @@ async function main() {
     const expectedMeta = {
       name: name || slug.replace(/-/g, " "),
       description,
-      category: Array.isArray(config.category) ? categories : categories[0],
+      category: categories.length === 1 ? categories[0] : categories,
       icon: normalizeIcon(config.icon ?? "wrench"),
       iconColor: cleanText(config.iconColor) || "text-muted-foreground",
     };

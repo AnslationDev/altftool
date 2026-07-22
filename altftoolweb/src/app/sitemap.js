@@ -24,12 +24,14 @@ import newsData from "../../public/data/newsdata.json";
 import { TOOLS as altPdfTools } from "@/app/altflovepdf/toolsData";
 import { services as homeservServices } from "@/app/homeserv/services-data";
 import { apps } from "@/app/apps/data/apps";
+import { SIGNAL_CATALOG } from "@altftool/core/signals";
 
 export const revalidate = 3600;
 
 const staticRoutes = [
   { path: "/", priority: 1 },
   { path: "/tools", priority: 0.95 },
+  { path: "/signals", priority: 0.88 },
   { path: "/blogs", priority: 0.9 },
   { path: "/blogs/topics", priority: 0.72 },
   { path: "/buysmart", priority: 0.85 },
@@ -317,6 +319,13 @@ export default async function sitemap() {
     pushUnique(entries, seen, `/tools/all/${slug}`, {
       priority: 0.78,
       changeFrequency: "monthly",
+    });
+  }
+
+  for (const signal of SIGNAL_CATALOG) {
+    pushUnique(entries, seen, `/signals/${signal.slug}`, {
+      priority: 0.74,
+      changeFrequency: "weekly",
     });
   }
 

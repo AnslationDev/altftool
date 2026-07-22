@@ -19,6 +19,7 @@ registerProject({
         extensions: { label: "Browser Extensions" },
         images: { label: "Images" },
         pintrest: { label: "Pinterest" },
+        products: { label: "Products & Signals" },
         salelocator: { label: "Sale Locator" },
         seo: { label: "SEO" },
         trendingVideos: { label: "Trending Videos" },
@@ -35,6 +36,7 @@ registerProject({
       label: "Public Website",
       modules: {
         home: { label: "Home" },
+        signals: { label: "Signals" },
         search: { label: "Search" },
         blog: { label: "Blog" },
         categories: { label: "Categories" },

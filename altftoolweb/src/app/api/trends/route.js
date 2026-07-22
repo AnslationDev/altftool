@@ -12,13 +12,17 @@ export async function GET(req) {
     if (limited) return limited;
 
     const { searchParams } = new URL(req.url);
-    const skill = (searchParams.get('skill') || '').trim();
+    const skill = (searchParams.get('skill') || searchParams.get('q') || '').trim();
     const country = (searchParams.get('country') || '').trim();
 
     if (!skill) return NextResponse.json({ error: 'Missing skill' }, { status: 400 });
+    if (skill.length > 80) return NextResponse.json({ error: 'Search term is too long.' }, { status: 400 });
+    if (country && !/^[a-z]{2}$/i.test(country)) {
+      return NextResponse.json({ error: 'Country must be a two-letter code.' }, { status: 400 });
+    }
 
     // geo param: use country code if provided, else global
-    const geo = country && country.length === 2 ? country.toUpperCase() : country || '';
+    const geo = country ? country.toUpperCase() : '';
 
     const now = new Date();
     const lastYear = new Date(now.getFullYear() - 1, now.getMonth(), now.getDate());
@@ -67,6 +71,6 @@ export async function GET(req) {
     });
   } catch (err) {
     console.error('Trends API error:', err);
-    return NextResponse.json({ error: err.message || 'Failed to fetch trends' }, { status: 500 });
+    return NextResponse.json({ error: 'Live trend data is temporarily unavailable.' }, { status: 503 });
   }
 }

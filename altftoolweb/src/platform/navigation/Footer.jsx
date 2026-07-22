@@ -19,6 +19,7 @@ const HOME_FOOTER_GROUPS = [
     title: "Product",
     links: [
       { label: "Tools", href: "/tools/all" },
+      { label: "Signals", href: "/signals" },
       { label: "Games", href: "/games" },
       { label: "Extensions", href: "/extensions" },
       { label: "AltF Deals", href: "/deals" },

@@ -75,6 +75,9 @@ const routeLoaders = {
     sketchflow: {
       "": () => import("@/projects/altftool/modules/sketchflow/page.jsx"),
     },
+    products: {
+      "": () => import("@/projects/altftool/modules/products/page.jsx"),
+    },
     seo: {
       "": () => import("@/projects/altftool/modules/seo/page.jsx"),
       dashboard: () =>

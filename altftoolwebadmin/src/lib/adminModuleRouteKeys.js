@@ -28,6 +28,7 @@ export const ADMIN_MODULE_ROUTE_KEYS = {
     pranksocialmedia: [""],
     pranx: [""],
     sketchflow: [""],
+    products: [""],
     seo: [
       "",
       "dashboard",
