@@ -7,8 +7,7 @@ import SectionHeader from "./CommonSecHeading";
 const toRecency = (b) =>
   b?.updatedAt?.seconds ??
   b?.createdAt?.seconds ??
-  (b?.updatedAt ? Date.parse(b.updatedAt) / 1000 : 0) ||
-  0;
+  ((b?.updatedAt ? Date.parse(b.updatedAt) / 1000 : 0) || 0);
 
 export default function LatestBlogs({ blogs = [], section, imageHeight }) {
   const sortedBlogs = [...blogs].sort((a, b) => toRecency(b) - toRecency(a));

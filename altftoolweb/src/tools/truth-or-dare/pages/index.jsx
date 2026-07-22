@@ -660,13 +660,16 @@ export default function ToolHome() {
                     >
                       <div className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-semibold uppercase mb-3 bg-(--primary)/10 text-(--primary)">
                         <span>{mode} • {difficulty}</span>
-                        {MODE_PACKS[pack] && (
-                          <>
-                            <span>•</span>
-                            <val.icon size="12" />
-                            <span>{MODE_PACKS[pack].label}</span>
-                          </>
-                        )}
+                        {MODE_PACKS[pack] && (() => {
+                          const PackIcon = MODE_PACKS[pack].icon;
+                          return (
+                            <>
+                              <span>•</span>
+                              <PackIcon size="12" />
+                              <span>{MODE_PACKS[pack].label}</span>
+                            </>
+                          );
+                        })()}
                       </div>
                       <p className="text-xl font-semibold text-(--foreground) mb-4 leading-relaxed px-4">
                         {current.text}
