@@ -371,10 +371,13 @@ export function createToolJsonLd({ slug, tool, category = "all" } = {}) {
     : [tool.category].filter(Boolean);
 
   const url = absoluteUrl(`/tools/${category || "all"}/${slug}`);
+  const isGame = categories.some((value) => /^games?$/i.test(String(value).trim()));
 
   return {
     "@context": "https://schema.org",
-    "@type": ["SoftwareApplication", "WebApplication"],
+    // Games get the VideoGame entity (rich results + AI answer engines);
+    // VideoGame is itself a SoftwareApplication subtype.
+    "@type": isGame ? ["VideoGame", "WebApplication"] : ["SoftwareApplication", "WebApplication"],
     "@id": `${absoluteUrl(`/tools/all/${slug}`)}#software`,
     name: tool.name || slug.replace(/-/g, " "),
     description: tool.description || siteConfig.description,

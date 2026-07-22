@@ -212,6 +212,41 @@ const FAQ_INTENTS = [
       links: [{ href: "/policypages/contact", label: "Contact support" }],
     }),
   },
+  {
+    pattern: /\b(labs?|experiments?|interactive|experience)\b/i,
+    answer: () => ({
+      text: "AltFTool Labs hosts experimental interactive experiences — playful things that don't fit a normal tool page.",
+      links: [{ href: "/labs", label: "Explore Labs" }],
+    }),
+  },
+  {
+    pattern: /\b(buysmart|buy smart|compare products?|which.*(buy|purchase)|shopping research)\b/i,
+    answer: () => ({
+      text: "BuySmart helps you research products and compare options before buying.",
+      links: [{ href: "/buysmart", label: "Open BuySmart" }],
+    }),
+  },
+  {
+    pattern: /\b(academy|learn|course|tutorial)\b/i,
+    answer: () => ({
+      text: "AltFTool Academy has learning resources and guides to level up your skills.",
+      links: [{ href: "/academy", label: "Visit Academy" }],
+    }),
+  },
+  {
+    pattern: /\b(brand.*rating|rating.*brand|review.*brand|trusted brands?)\b/i,
+    answer: () => ({
+      text: "Brand Ratings collects consumer ratings so you can check a brand before you buy.",
+      links: [{ href: "/brandrating", label: "Brand Ratings" }],
+    }),
+  },
+  {
+    pattern: /\b(licen[cs]es?|open.?source|credits?)\b/i,
+    answer: () => ({
+      text: "AltFTool is built on open-source software — the licenses page credits every project we use.",
+      links: [{ href: "/licenses", label: "Open source licenses" }],
+    }),
+  },
 ];
 
 /**
