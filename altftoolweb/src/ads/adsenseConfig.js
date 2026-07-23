@@ -22,7 +22,18 @@ export function isAdsenseProductionHost(value) {
   return PRODUCTION_HOSTS.has(normalizeHostname(value));
 }
 
-export function isAdsenseProductionDeployment(env = process.env) {
+function readDeploymentEnv() {
+  // Explicit reads let Next.js inline public build variables while preserving
+  // server runtime variables on providers such as Vercel and Amplify.
+  return {
+    NODE_ENV: process.env.NODE_ENV,
+    VERCEL_ENV: process.env.VERCEL_ENV,
+    AWS_BRANCH: process.env.AWS_BRANCH,
+    NEXT_PUBLIC_SITE_URL: process.env.NEXT_PUBLIC_SITE_URL,
+  };
+}
+
+export function isAdsenseProductionDeployment(env = readDeploymentEnv()) {
   if (env.NODE_ENV === "development" || env.NODE_ENV === "test") return false;
 
   if (env.VERCEL_ENV) {
