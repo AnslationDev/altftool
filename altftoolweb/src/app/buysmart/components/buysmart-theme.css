@@ -2,9 +2,9 @@
 
 .buy-smart-page {
   --buy-smart-section-space: clamp(2.5rem, 5vw, 4rem);
-  --buy-smart-font-display: var(--font-sora), "Sora", var(--font-primary), ui-sans-serif, system-ui, sans-serif;
-  --buy-smart-font-body: var(--font-inter), "Inter", var(--font-primary), ui-sans-serif, system-ui, sans-serif;
-  --buy-smart-font-label: var(--font-ibm-plex-sans), "IBM Plex Sans", var(--font-primary), ui-sans-serif, system-ui, sans-serif;
+  --buy-smart-font-display: var(--font-geist-sans), var(--font-primary), ui-sans-serif, system-ui, sans-serif;
+  --buy-smart-font-body: var(--font-geist-sans), var(--font-primary), ui-sans-serif, system-ui, sans-serif;
+  --buy-smart-font-label: var(--font-geist-sans), var(--font-primary), ui-sans-serif, system-ui, sans-serif;
   --home-font-display: var(--buy-smart-font-display);
   --home-font-body: var(--buy-smart-font-body);
   --home-font-label: var(--buy-smart-font-label);

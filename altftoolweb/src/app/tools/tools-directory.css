@@ -13,9 +13,9 @@
   --tp-shadow-sm: 0 12px 26px rgba(15, 27, 51, 0.06);
   --tp-radius: 18px;
   --tp-radius-sm: 12px;
-  --tp-display-font: var(--font-sora), "Sora", var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
-  --tp-body-font: var(--font-inter), "Inter", var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
-  --tp-label-font: var(--font-ibm-plex-sans), "IBM Plex Sans", var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --tp-display-font: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --tp-body-font: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --tp-label-font: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
   background: linear-gradient(180deg, #fbfefe 0%, var(--tp-bg) 42%, #f7fbfb 100%);
   color: var(--tp-ink);
   font-family: var(--tp-body-font);

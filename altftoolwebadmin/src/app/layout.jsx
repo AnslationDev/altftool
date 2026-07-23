@@ -1,10 +1,9 @@
 import GlobalAlertHost from "@/components/ui/GlobalAlertHost";
 import "./globals.css";
 import { AuthProvider } from "@/context/AuthContext";
-import SecurityGate from "@/components/security/SecurityGate";
 import { AdminThemeProvider } from "@/context/ThemeContext";
 import Script from "next/script";
-import PushToastHost from "@/components/ui/PushToastHost";
+import AdminSessionRuntime from "@/components/runtime/AdminSessionRuntime";
 import { Geist, Geist_Mono } from "next/font/google";
 
 const geistSans = Geist({
@@ -54,8 +53,7 @@ export default function RootLayout({ children }) {
         <AdminThemeProvider>
           <AuthProvider>
             <GlobalAlertHost />
-            <PushToastHost />
-            <SecurityGate />
+            <AdminSessionRuntime />
             {children}
           </AuthProvider>
         </AdminThemeProvider>

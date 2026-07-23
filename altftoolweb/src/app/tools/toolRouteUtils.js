@@ -7,6 +7,7 @@ import {
   getLegacyCategorySlugMap,
   slugifyCategory,
 } from "@/platform/registry/categoryTaxonomy";
+import { TOP_PRIORITY_TOOL_SLUGS } from "@altftool/core/toolHealth";
 
 export function getTool(slug) {
   return toolMetaMap[slug] ?? null;
@@ -48,6 +49,67 @@ export function getToolCategorySlugs() {
   return [...categories].sort();
 }
 
+function getCatalogEntries(category = "all") {
+  const normalizedCategory = slugifyRouteSegment(category || "all");
+  return Object.entries(toolMetaMap).filter(
+    ([, tool]) =>
+      normalizedCategory === "all" ||
+      getToolCategories(tool)
+        .map(slugifyRouteSegment)
+        .includes(normalizedCategory),
+  );
+}
+
+export function getToolCatalogCount(category = "all") {
+  return getCatalogEntries(category).length;
+}
+
+export function getInitialToolCatalog(category = "all", limit = 64) {
+  const selected = new Map();
+  const normalizedCategory = slugifyRouteSegment(category || "all");
+  const allEntries = Object.entries(toolMetaMap);
+  const categoryEntries = getCatalogEntries(normalizedCategory);
+  const priorityRank = new Map(
+    TOP_PRIORITY_TOOL_SLUGS.map((slug, index) => [slug, index]),
+  );
+  const byPriorityAndName = ([slugA, toolA], [slugB, toolB]) => {
+    const rankA = priorityRank.get(slugA) ?? Number.MAX_SAFE_INTEGER;
+    const rankB = priorityRank.get(slugB) ?? Number.MAX_SAFE_INTEGER;
+    return (
+      rankA - rankB ||
+      String(toolA.name || slugA).localeCompare(String(toolB.name || slugB))
+    );
+  };
+  const add = ([slug, tool]) => {
+    if (selected.size < limit) selected.set(slug, tool);
+  };
+
+  if (normalizedCategory !== "all") {
+    categoryEntries
+      .sort(byPriorityAndName)
+      .slice(0, Math.min(36, limit))
+      .forEach(add);
+  }
+
+  TOP_PRIORITY_TOOL_SLUGS.forEach((slug) => {
+    if (toolMetaMap[slug]) add([slug, toolMetaMap[slug]]);
+  });
+
+  const representedCategories = new Set();
+  allEntries.forEach((entry) => {
+    getToolCategories(entry[1])
+      .map(slugifyRouteSegment)
+      .forEach((categorySlug) => {
+        if (representedCategories.has(categorySlug)) return;
+        representedCategories.add(categorySlug);
+        add(entry);
+      });
+  });
+
+  allEntries.sort(byPriorityAndName).forEach(add);
+  return Object.fromEntries(selected);
+}
+
 export function formatCategoryLabel(value = "all") {
   if (value === "all") return "All Tools";
   const canonical = getCanonicalCategoryBySlug(String(value).toLowerCase());
@@ -64,7 +126,9 @@ export function getRelatedTools(slug, limit = 6) {
   const currentCategories = getToolCategories(tool).map((item) =>
     String(item).toLowerCase(),
   );
-  const currentTopics = (tool.topics || []).map((item) => String(item).toLowerCase());
+  const currentTopics = (tool.topics || []).map((item) =>
+    String(item).toLowerCase(),
+  );
   const currentWords = new Set(
     `${slug} ${tool.name || ""} ${tool.description || ""}`
       .toLowerCase()
@@ -87,13 +151,19 @@ export function getRelatedTools(slug, limit = 6) {
         String(item).toLowerCase(),
       );
       const topicScore =
-        candidateTopics.filter((item) => currentTopics.includes(item)).length * 8;
-      const wordScore = `${candidateSlug} ${candidate.name || ""} ${candidate.description || ""}`
-        .toLowerCase()
-        .split(/[^a-z0-9]+/)
-        .filter((word) => word.length > 2)
-        .reduce((score, word) => score + (currentWords.has(word) ? 2 : 0), 0);
-      return { slug: candidateSlug, name: candidate.name || candidateSlug, score: categoryScore + topicScore + wordScore };
+        candidateTopics.filter((item) => currentTopics.includes(item)).length *
+        8;
+      const wordScore =
+        `${candidateSlug} ${candidate.name || ""} ${candidate.description || ""}`
+          .toLowerCase()
+          .split(/[^a-z0-9]+/)
+          .filter((word) => word.length > 2)
+          .reduce((score, word) => score + (currentWords.has(word) ? 2 : 0), 0);
+      return {
+        slug: candidateSlug,
+        name: candidate.name || candidateSlug,
+        score: categoryScore + topicScore + wordScore,
+      };
     })
     .sort((a, b) => b.score - a.score)
     .slice(0, limit)

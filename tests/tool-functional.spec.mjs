@@ -433,7 +433,9 @@ test.describe("microtool functional flows", () => {
     await expect(page.locator("#qr-code")).toBeVisible({ timeout: 15_000 });
 
     await openToolShell(page, "barcode-generator", "Barcode Generator");
-    await page.getByRole("main").locator('input[type="text"]').fill("ALTFT-12345");
+    await page
+      .getByLabel("Enter text, numbers or data to encode")
+      .fill("ALTFT-12345");
     await expect(page.locator("canvas")).toBeVisible({ timeout: 15_000 });
     await expect(page.locator("body")).not.toContainText("Error generating barcode");
 

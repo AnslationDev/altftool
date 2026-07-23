@@ -89,6 +89,8 @@ export default function SecurityGate() {
 
   // 2. Track activity to reset idle timeout.
   useEffect(() => {
+    if (!user?.uid) return undefined;
+
     lastActivityRef.current = Date.now(); // Initialize activity timer to client-side mount time!
     const onActivity = () => {
       lastActivityRef.current = Date.now();
@@ -112,7 +114,7 @@ export default function SecurityGate() {
       events.forEach((e) => window.removeEventListener(e, onActivity, opts));
       document.removeEventListener("focusin", onActivity, true);
     };
-  }, []);
+  }, [user?.uid]);
 
   // 3. Heartbeat + idle / forced-logout enforcement.
   useEffect(() => {

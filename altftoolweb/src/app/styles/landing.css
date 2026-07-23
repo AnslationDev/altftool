@@ -43,9 +43,9 @@
   --home-cta-gradient-hover: linear-gradient(135deg, #0D9488, #38BDF8);
   --home-section-space: clamp(2.75rem, 4.6vw, 3.95rem);
   --home-section-space-compact: clamp(1.85rem, 3.1vw, 2.65rem);
-  --home-font-display: var(--font-sora), "Sora", var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
-  --home-font-body: var(--font-inter), "Inter", var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
-  --home-font-label: var(--font-ibm-plex-sans), "IBM Plex Sans", var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --home-font-display: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --home-font-body: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --home-font-label: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
   background: #F8FAFC;
   color: var(--foreground);
   font-family: var(--home-font-body);

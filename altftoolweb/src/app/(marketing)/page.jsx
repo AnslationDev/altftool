@@ -28,25 +28,25 @@ export default function Page() {
       <div className="bg-[var(--background)]">
         <AiAssistantBox />
       </div>
-      <div className="bg-[var(--background)]">
+      <div className="render-deferred bg-[var(--background)]">
         <TrendingSection />
       </div>
-      <div className="bg-[var(--background)]">
+      <div className="render-deferred bg-[var(--background)]">
         <MobileAppsSection />
       </div>
-      <div className="bg-[var(--background)]">
+      <div className="render-deferred bg-[var(--background)]">
         <CuratedToolsSection />
       </div>
-      <div className="bg-[var(--background)]">
+      <div className="render-deferred bg-[var(--background)]">
         <CategoriesSection />
       </div>
-      <div className="bg-[var(--background)]">
+      <div className="render-deferred bg-[var(--background)]">
         <TestimonialsSection />
       </div>
-      <div className="bg-[var(--home-accent-soft)]">
+      <div className="render-deferred bg-[var(--home-accent-soft)]">
         <FAQSection />
       </div>
-      <div className="bg-[var(--background)]">
+      <div className="render-deferred bg-[var(--background)]">
         <StatsSection />
       </div>
     </div>

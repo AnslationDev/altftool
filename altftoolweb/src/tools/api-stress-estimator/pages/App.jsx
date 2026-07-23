@@ -233,7 +233,7 @@ export const App = () => {
     : `At ${formatNumber(traffic)} requests/sec your API responds in ~${formatNumber(metrics.responseTime, 0)} ms and stays ${metrics.healthScore >= 75 ? "comfortably healthy" : "workable but stressed"}. You still have room for about ${formatNumber(headroom)} more req/s before hitting the safe limit.`;
 
   const KPI_TILES = [
-    { label: "Response Time", value: `${formatNumber(metrics.responseTime, 0)} ms`, pct: Math.min((metrics.responseTime / 2000) * 100, 100), tone: "#3b82f6", icon: Timer, hint: "How long one request takes" },
+    { label: "Estimated Response Time", value: `${formatNumber(metrics.responseTime, 0)} ms`, pct: Math.min((metrics.responseTime / 2000) * 100, 100), tone: "#3b82f6", icon: Timer, hint: "How long one request takes" },
     { label: "CPU Usage", value: `${formatNumber(metrics.cpuUsage, 1)}%`, pct: metrics.cpuUsage, tone: metrics.cpuUsage > 85 ? "#ef4444" : "#8b5cf6", icon: Cpu, hint: "Processor load at this traffic" },
     { label: "RAM Usage", value: `${formatNumber(metrics.ramUsagePercent, 1)}%`, pct: metrics.ramUsagePercent, tone: metrics.ramUsagePercent > 85 ? "#ef4444" : "#06b6d4", icon: MemoryStick, hint: "Memory pressure" },
     { label: "Error Rate", value: `${formatNumber(metrics.errorRate, 2)}%`, pct: metrics.errorRate, tone: "#ef4444", icon: AlertTriangle, hint: "Requests likely to fail" },
@@ -423,7 +423,7 @@ export const App = () => {
                   </p>
                   <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-3">
                     <div className="rounded-xl border border-(--border) p-3">
-                      <p className="text-[11px] text-(--muted-foreground)">Safe traffic limit</p>
+                      <p className="text-[11px] text-(--muted-foreground)">Safe Traffic Limit</p>
                       <p className="mt-0.5 text-lg font-bold tabular-nums text-emerald-600 dark:text-emerald-400">{formatNumber(metrics.safeTrafficLimit)} <span className="text-[11px] font-medium text-(--muted-foreground)">req/s</span></p>
                     </div>
                     <div className="rounded-xl border border-(--border) p-3">

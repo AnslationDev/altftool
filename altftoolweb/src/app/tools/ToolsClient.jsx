@@ -2,7 +2,7 @@
 
 import "./tools-directory.css";
 import Link from "next/link";
-import { useDeferredValue, useEffect, useLayoutEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
+import { startTransition, useCallback, useDeferredValue, useEffect, useLayoutEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
 import {
   ArrowRight,
   BadgeCheck,
@@ -43,6 +43,17 @@ import {
 import { prefetchToolModule } from "./toolLoaderResolver";
 
 const ITEMS_PER_PAGE = 24;
+let fullCatalogPromise;
+
+const loadFullToolCatalog = () => {
+  if (!fullCatalogPromise) {
+    fullCatalogPromise = import("@/platform/registry/toolMetaMap").then(
+      (module) => module.toolMetaMap,
+    );
+  }
+  return fullCatalogPromise;
+};
+
 const LABEL_OVERRIDES = {
   ai: "AI",
   api: "API",
@@ -358,13 +369,29 @@ function ToolsGridSkeleton() {
 }
 
 export default function ToolsClient({
-  meta = {},
+  meta: initialMeta = {},
+  catalogTotal: initialCatalogTotal,
   category,
   initialCategory = "all",
   initialSearch = "",
   initialViewMode = "all",
 }) {
+  const [fullMeta, setFullMeta] = useState(null);
+  const meta = fullMeta || initialMeta;
   const slugs = useMemo(() => Object.keys(meta), [meta]);
+  const catalogTotal = Math.max(
+    Number(initialCatalogTotal) || 0,
+    slugs.length,
+  );
+  const catalogReady = slugs.length >= catalogTotal;
+  const ensureCatalog = useCallback(() => {
+    if (catalogReady) return Promise.resolve(meta);
+
+    return loadFullToolCatalog().then((catalog) => {
+      startTransition(() => setFullMeta(catalog));
+      return catalog;
+    });
+  }, [catalogReady, meta]);
   const [search, setSearch] = useState(initialSearch);
   const [animatedPlaceholder, setAnimatedPlaceholder] = useState(SEARCH_PLACEHOLDER_PHRASES[0]);
   const deferredSearch = useDeferredValue(search);
@@ -413,6 +440,22 @@ export default function ToolsClient({
   const favoriteSet = useMemo(() => new Set(favoriteSlugs), [favoriteSlugs]);
   const recentSet = useMemo(() => new Set(recentSlugs), [recentSlugs]);
   const prioritySet = useMemo(() => new Set(TOP_PRIORITY_TOOL_SLUGS), []);
+
+  useEffect(() => {
+    if (catalogReady) return undefined;
+
+    const schedule =
+      window.requestIdleCallback ||
+      ((callback) => window.setTimeout(callback, 1200));
+    const cancel = window.cancelIdleCallback || window.clearTimeout;
+    const handle = schedule(() => {
+      ensureCatalog().catch(() => {
+        /* the initial subset remains fully usable if the chunk cannot load */
+      });
+    }, { timeout: 3000 });
+
+    return () => cancel(handle);
+  }, [catalogReady, ensureCatalog]);
 
   useClientLayoutEffect(() => {
     const nextKey = `${category || ""}:${initialCategory || ""}`;
@@ -464,7 +507,7 @@ export default function ToolsClient({
     return Array.from(set);
   }, [meta]);
   const categoryStats = useMemo(() => {
-    const counts = new Map([["all", slugs.length]]);
+    const counts = new Map([["all", catalogTotal]]);
 
     Object.values(meta).forEach((tool) => {
       getToolCategories(tool).forEach((categoryName) => {
@@ -477,7 +520,7 @@ export default function ToolsClient({
       const slug = slugify(cat);
       return { slug, label: formatLabel(cat), count: counts.get(slug) || 0 };
     });
-  }, [categories, meta, slugs]);
+  }, [catalogTotal, categories, meta]);
   const filteredCategoryStats = useMemo(() => {
     const query = categoryFilter.trim().toLowerCase();
     if (!query) return categoryStats;
@@ -512,10 +555,10 @@ export default function ToolsClient({
     [meta],
   );
   const viewModeStats = useMemo(() => ({
-    all: slugs.length,
+    all: catalogTotal,
     favorites: favoriteSlugs.filter((slug) => meta[slug]).length,
     recent: recentSlugs.filter((slug) => meta[slug]).length,
-  }), [favoriteSlugs, meta, recentSlugs, slugs.length]);
+  }), [catalogTotal, favoriteSlugs, meta, recentSlugs]);
 
   // Filter tools based on category and search
   const filteredSlugs = useMemo(() => {
@@ -624,12 +667,18 @@ export default function ToolsClient({
   };
 
   const setSearchFilter = (value) => {
+    if (value && !catalogReady) {
+      ensureCatalog().catch(() => {});
+    }
     setSearch(value);
     setVisibleCount(ITEMS_PER_PAGE);
     replaceDirectoryUrl({ nextSearch: value });
   };
 
   const setViewFilter = (mode) => {
+    if (mode !== "all" && !catalogReady) {
+      ensureCatalog().catch(() => {});
+    }
     setViewMode(mode);
     setVisibleCount(ITEMS_PER_PAGE);
     replaceDirectoryUrl({ nextViewMode: mode });
@@ -730,6 +779,9 @@ export default function ToolsClient({
 
   // Handle category click without route navigation.
   const handleCategoryClick = (cat) => {
+    if (!catalogReady) {
+      ensureCatalog().catch(() => {});
+    }
     const nextCategory = cat === "all" ? "all" : slugify(cat);
     setSelectedCategory(nextCategory);
     setVisibleCount(ITEMS_PER_PAGE);
@@ -818,7 +870,7 @@ export default function ToolsClient({
               Ready to find your perfect <span className="tp-accent-word">tool?</span>
             </h1>
             <p className="route-description">
-              Search {Math.floor(slugs.length / 50) * 50}+ trusted tools, utilities, and games built to help you work faster.
+              Search {Math.floor(catalogTotal / 50) * 50}+ trusted tools, utilities, and games built to help you work faster.
             </p>
             <div className="tools-search-row">
               <Search className="pointer-events-none absolute right-5 top-1/2 h-5 w-5 -translate-y-1/2 text-[var(--tp-primary)]" />
@@ -828,6 +880,7 @@ export default function ToolsClient({
                 type="text"
                 placeholder={animatedPlaceholder}
                 value={search}
+                onFocus={ensureCatalog}
                 onChange={(e) => setSearchFilter(e.target.value)}
                 onInput={(e) => setSearchFilter(e.currentTarget.value)}
                 onKeyDown={handleSearchKeyDown}
@@ -997,6 +1050,7 @@ export default function ToolsClient({
                   ref={categoryInputRef}
                   data-testid="tool-category-search"
                   value={categoryFilter}
+                  onFocus={ensureCatalog}
                   onChange={(e) => setCategoryFilter(e.target.value)}
                   onInput={(e) => setCategoryFilter(e.currentTarget.value)}
                   placeholder="Search categories..."

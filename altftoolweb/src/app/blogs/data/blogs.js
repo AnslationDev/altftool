@@ -2,7 +2,7 @@ import rawBlogData from "./blogs.json";
 import { withBlogSeoDefaults } from "./blogSeoDefaults";
 
 export const BLOG_CHUNK_SIZE = 12;
-export const BLOG_REMOTE_LIMIT = 72;
+export const BLOG_REMOTE_LIMIT = 24;
 
 const DEFAULT_AUTHOR = "AltFTool Editorial";
 const FALLBACK_IMAGES = [

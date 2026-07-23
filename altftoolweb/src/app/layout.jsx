@@ -1,13 +1,11 @@
 import "./theme.css";
-import { Geist, Geist_Mono, IBM_Plex_Sans, Inter, Sora } from "next/font/google";
+import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/contexts/ThemeContext";
 import { AuthProvider } from "@/contexts/AuthContext";
 import Header from "@/platform/navigation/Header";
 import Footer from "@/platform/navigation/Footer";
 import Script from "next/script";
-import { NewsletterSubscribeDialog } from "@/platform/consentalerts/NewsletterSubscribeDialog";
-import ScrollToTopButton from "@/platform/navigation/ScrollToTopButton";
 import GlobalAnimationProvider from "@/contexts/GlobalAnimationProvider";
 import { AdsProvider } from "@/ads/AdsProvider";
 import GoogleAdUnit from "@/ads/GoogleAdUnit";
@@ -22,7 +20,7 @@ import { resolveInjectedCode } from "@altftool/core/seo";
 import InjectedCode from "@/platform/seo/InjectedCode";
 import PerPageCode from "@/platform/seo/PerPageCode";
 import GlobalNavigationLoader from "@/components/ui/GlobalNavigationLoader";
-import WebVitalsReporter from "@/components/WebVitalsReporter";
+import DeferredSiteRuntime from "@/components/runtime/DeferredSiteRuntime";
 import GlobalChromeGate from "@/platform/navigation/GlobalChromeGate";
 import { HeaderLoadingSkeleton } from "@/components/ui/route-loading";
 import {
@@ -44,26 +42,10 @@ const geistMono = Geist_Mono({
   display: "swap",
 });
 
-const sora = Sora({
-  subsets: ["latin"],
-  variable: "--font-sora",
-  display: "swap",
-});
-
-const inter = Inter({
-  subsets: ["latin"],
-  variable: "--font-inter",
-  display: "swap",
-});
-
-const ibmPlexSans = IBM_Plex_Sans({
-  subsets: ["latin"],
-  weight: ["400", "500"],
-  variable: "--font-ibm-plex-sans",
-  display: "swap",
-});
-
 const shouldLoadGoogleAds = isAdsenseProductionDeployment();
+const shouldReportWebVitals = ["1", "true", "on"].includes(
+  String(process.env.NEXT_PUBLIC_ALTFT_WEB_VITALS || "").toLowerCase(),
+);
 
 const baseMetadata = {
   metadataBase: new URL(siteConfig.url),
@@ -160,7 +142,7 @@ export default async function RootLayout({ children }) {
     // raw code block.
     Object.values(seoConfig.pages).some((p) => p && (p.code || p.schema));
   return (
-    <html lang="en" data-theme-mode="system" suppressHydrationWarning className={`${geistSans.variable} ${geistMono.variable} ${sora.variable} ${inter.variable} ${ibmPlexSans.variable}`}>
+    <html lang="en" data-theme-mode="system" suppressHydrationWarning className={`${geistSans.variable} ${geistMono.variable}`}>
       <head>
         <link rel="preconnect" href="https://firestore.googleapis.com" />
         <link rel="preconnect" href="https://firebasestorage.googleapis.com" />
@@ -296,11 +278,9 @@ export default async function RootLayout({ children }) {
         </GlobalChromeGate>
 
         <GlobalChromeGate>
-          <ScrollToTopButton />
-          <NewsletterSubscribeDialog />
+          <DeferredSiteRuntime reportWebVitals={shouldReportWebVitals} />
         </GlobalChromeGate>
 
-        <WebVitalsReporter />
         <InjectedCode id="body-end" html={customCode.bodyEnd} />
 
       </AlertProvider>

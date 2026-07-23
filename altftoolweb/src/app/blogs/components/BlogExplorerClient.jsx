@@ -56,11 +56,11 @@ import {
 const INITIAL_VISIBLE_COUNT = 12;
 const PAGE_SIZE = 12;
 const BLOG_IMAGE_FALLBACK = "/assets/og-default.png";
-// 1 page (72 posts) left most of the published catalog invisible to search —
-// only the newest 72 posts were ever searchable. 12 idle-paced pages cover
-// 800+ posts; the loop still stops the moment hasMore turns false, and each
-// page is served by the ISR-cached /api/blogs route (no read amplification).
-const BACKGROUND_SYNC_PAGE_LIMIT = 12;
+// Fallback pages get one idle live-data refresh. The full catalog is fetched
+// only after a search/category interaction, keeping ordinary visits lean.
+const BACKGROUND_SYNC_PAGE_LIMIT = 1;
+const INTERACTIVE_SYNC_LIMIT = 100;
+const INTERACTIVE_SYNC_PAGE_LIMIT = 10;
 const SORT_TABS = [
   { value: "latest", label: "Latest" },
   { value: "popular", label: "Popular" },
@@ -882,10 +882,14 @@ function withTimeout(promise, timeoutMs, fallbackValue) {
   ]);
 }
 
-async function fetchRemoteBlogChunk(offset, signal) {
+async function fetchRemoteBlogChunk(
+  offset,
+  signal,
+  limit = BLOG_REMOTE_LIMIT,
+) {
   const params = new URLSearchParams({
     offset: String(offset),
-    limit: String(BLOG_REMOTE_LIMIT),
+    limit: String(limit),
   });
 
   const response = await fetch(`/api/blogs?${params.toString()}`, {
@@ -937,6 +941,13 @@ export default function BlogExplorerClient({
     initialRemoteOffset > 0 || totalCount > initialRemoteOffset,
   );
   const [remoteLoading, setRemoteLoading] = useState(false);
+  const [catalogSyncing, setCatalogSyncing] = useState(false);
+  const remoteOffsetRef = useRef(initialRemoteOffset);
+  const remoteHasMoreRef = useRef(
+    initialRemoteOffset > 0 || totalCount > initialRemoteOffset,
+  );
+  const catalogSyncPromiseRef = useRef(null);
+  const catalogSyncControllerRef = useRef(null);
   const [bookmarks, setBookmarks] = useState([]);
   const [isPending, startTransition] = useTransition();
 
@@ -994,6 +1005,8 @@ export default function BlogExplorerClient({
           nextOffset = page.nextOffset;
           hasMore = Boolean(page.hasMore);
           syncedPages += 1;
+          remoteOffsetRef.current = nextOffset;
+          remoteHasMoreRef.current = hasMore;
           setRemoteOffset(nextOffset);
           setRemoteHasMore(hasMore);
 
@@ -1001,6 +1014,7 @@ export default function BlogExplorerClient({
         }
 
         if (!cancelled) {
+          remoteHasMoreRef.current = hasMore;
           setRemoteHasMore(hasMore);
         }
       } catch (error) {
@@ -1014,6 +1028,78 @@ export default function BlogExplorerClient({
       cancel(handle);
     };
   }, [initialRemoteOffset, totalCount]);
+
+  useEffect(
+    () => () => {
+      catalogSyncControllerRef.current?.abort();
+    },
+    [],
+  );
+
+  const syncRemoteCatalog = useCallback(() => {
+    if (!remoteHasMoreRef.current) return Promise.resolve();
+    if (catalogSyncPromiseRef.current) return catalogSyncPromiseRef.current;
+
+    const controller = new AbortController();
+    catalogSyncControllerRef.current = controller;
+    setCatalogSyncing(true);
+
+    const syncPromise = (async () => {
+      let nextOffset = remoteOffsetRef.current;
+      let hasMore = remoteHasMoreRef.current;
+      let syncedPages = 0;
+
+      while (
+        hasMore &&
+        !controller.signal.aborted &&
+        syncedPages < INTERACTIVE_SYNC_PAGE_LIMIT
+      ) {
+        const page = await fetchRemoteBlogChunk(
+          nextOffset,
+          controller.signal,
+          INTERACTIVE_SYNC_LIMIT,
+        );
+
+        if (!page.posts?.length) {
+          hasMore = false;
+          break;
+        }
+
+        setPosts((currentPosts) => mergeBlogPosts(currentPosts, page.posts));
+        nextOffset = page.nextOffset;
+        hasMore = Boolean(page.hasMore);
+        syncedPages += 1;
+        remoteOffsetRef.current = nextOffset;
+        remoteHasMoreRef.current = hasMore;
+        setRemoteOffset(nextOffset);
+        setRemoteHasMore(hasMore);
+
+        if (hasMore) await waitForIdle(80);
+      }
+
+      remoteHasMoreRef.current = hasMore;
+      setRemoteHasMore(hasMore);
+    })()
+      .catch((error) => {
+        if (error?.name !== "AbortError") {
+          /* keep the already-loaded catalog usable after a transient failure */
+        }
+      })
+      .finally(() => {
+        catalogSyncPromiseRef.current = null;
+        catalogSyncControllerRef.current = null;
+        setCatalogSyncing(false);
+      });
+
+    catalogSyncPromiseRef.current = syncPromise;
+    return syncPromise;
+  }, []);
+
+  useEffect(() => {
+    if (query.trim() || activeCategory !== "All") {
+      syncRemoteCatalog();
+    }
+  }, [activeCategory, query, syncRemoteCatalog]);
 
   const counts = useMemo(() => getCategoryCounts(posts), [posts]);
 
@@ -1094,6 +1180,8 @@ export default function BlogExplorerClient({
 
       setPosts((currentPosts) => mergeBlogPosts(currentPosts, page.posts));
       setVisibleCount((current) => current + PAGE_SIZE);
+      remoteOffsetRef.current = page.nextOffset;
+      remoteHasMoreRef.current = Boolean(page.hasMore);
       setRemoteOffset(page.nextOffset);
       setRemoteHasMore(Boolean(page.hasMore));
     } finally {
@@ -1182,7 +1270,10 @@ export default function BlogExplorerClient({
 
       {/* 3 — Featured picks */}
       {featuredPicks.length > 0 && (
-        <section aria-labelledby="featured-picks-heading">
+        <section
+          aria-labelledby="featured-picks-heading"
+          className="render-deferred"
+        >
           <SectionHeading
             id="featured-picks-heading"
             title="Featured Picks"
@@ -1201,7 +1292,7 @@ export default function BlogExplorerClient({
       <section
         ref={articlesRef}
         aria-labelledby="latest-articles-heading"
-        className="grid scroll-mt-24 grid-cols-1 gap-8 lg:grid-cols-3"
+        className="render-deferred grid scroll-mt-24 grid-cols-1 gap-8 lg:grid-cols-3"
       >
         <div className="min-w-0 lg:col-span-2">
           <div className="mb-5 flex flex-wrap items-center justify-between gap-x-4 gap-y-3">
@@ -1236,7 +1327,12 @@ export default function BlogExplorerClient({
                   );
                 })}
               </div>
-              <SearchControl value={query} onChange={handleQueryChange} onClear={clearQuery} pending={isPending} />
+              <SearchControl
+                value={query}
+                onChange={handleQueryChange}
+                onClear={clearQuery}
+                pending={isPending || catalogSyncing}
+              />
             </div>
           </div>
 
@@ -1299,10 +1395,14 @@ export default function BlogExplorerClient({
       </section>
 
       {/* 5 — extra editorial sections from the server page, same 8-unit rhythm */}
-      {children && <div className="flex flex-col gap-8">{children}</div>}
+      {children && (
+        <div className="render-deferred flex flex-col gap-8">{children}</div>
+      )}
 
       {/* 6 — trust strip */}
-      <TrustStrip />
+      <div className="render-deferred">
+        <TrustStrip />
+      </div>
     </section>
   );
 }

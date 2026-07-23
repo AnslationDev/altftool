@@ -94,7 +94,7 @@ export default function AppDetailClient({ app, relatedApps }) {
               const Icon = statIcons[label];
               return (
                 <div key={label} className="min-h-[92px] rounded-[18px] border border-[var(--home-border)] bg-[var(--section-highlight)] p-4 shadow-[0_12px_28px_rgba(15,23,42,0.055)] transition duration-200 hover:-translate-y-0.5 hover:border-[color-mix(in_srgb,var(--primary)_34%,var(--home-border))] hover:shadow-[0_16px_34px_rgba(2,6,23,0.12)]">
-                  <div className="flex items-center gap-2 text-[11px] font-medium text-[var(--muted-foreground)] [font-family:var(--font-ibm-plex-sans)]">
+                  <div className="flex items-center gap-2 text-[11px] font-medium text-[var(--muted-foreground)] [font-family:var(--font-geist-sans)]">
                     <Icon size={15} className="text-[var(--primary)]" aria-hidden="true" />
                     {label}
                   </div>

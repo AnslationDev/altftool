@@ -10,7 +10,9 @@ import {
 } from "@/platform/seo/generateMetadata";
 import {
   formatCategoryLabel,
+  getInitialToolCatalog,
   getLegacyCategoryRedirect,
+  getToolCatalogCount,
   getToolCategories,
   getToolCategorySlugs,
   slugifyRouteSegment,
@@ -31,7 +33,9 @@ export async function generateMetadata({ params }) {
   const isAll = category === "all";
 
   return createPageMetadata({
-    title: isAll ? "All Online Tools - Free Browser Microtools" : `${label} Tools - Free Online Utilities`,
+    title: isAll
+      ? "All Online Tools - Free Browser Microtools"
+      : `${label} Tools - Free Online Utilities`,
     description: isAll
       ? "Browse every AltFTool microtool in one fast directory, including converters, developer helpers, PDF tools, calculators, media tools, and productivity utilities."
       : `Browse free ${label.toLowerCase()} tools on AltFTool with quick browser-based workflows, copy-ready results, and mobile-friendly utility pages.`,
@@ -46,9 +50,14 @@ function getCategoryToolItems(category) {
     .filter(
       ([, tool]) =>
         isAll ||
-        getToolCategories(tool).map(slugifyRouteSegment).includes(slugifyRouteSegment(category)),
+        getToolCategories(tool)
+          .map(slugifyRouteSegment)
+          .includes(slugifyRouteSegment(category)),
     )
-    .map(([slug, tool]) => ({ name: tool.name || slug, path: `/tools/all/${slug}` }))
+    .map(([slug, tool]) => ({
+      name: tool.name || slug,
+      path: `/tools/all/${slug}`,
+    }))
     .sort((a, b) => a.name.localeCompare(b.name))
     .slice(0, 100);
 }
@@ -97,7 +106,11 @@ export default async function Page({ params }) {
           ]),
         ]}
       />
-      <ToolsClient meta={toolMetaMap} category={category} />
+      <ToolsClient
+        meta={getInitialToolCatalog(category)}
+        catalogTotal={getToolCatalogCount("all")}
+        category={category}
+      />
     </>
   );
 }

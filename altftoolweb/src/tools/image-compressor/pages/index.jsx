@@ -176,6 +176,16 @@ export default function ImageCompressorPage() {
   const activeImage = activeIdx !== null ? images[activeIdx] : null;
   const activeResult = activeIdx !== null ? results[activeIdx] : null;
   const allDone = images.length > 0 && images.every((_, i) => results[i]);
+  const completedCount = Object.values(results).filter(Boolean).length;
+  const processingStatus = error
+    ? `Compression error: ${error}`
+    : isCompressing
+      ? "Compressing images..."
+      : completedCount > 0
+        ? `Compressed image ready. Output: ${completedCount} of ${images.length} ${images.length === 1 ? "image" : "images"}.`
+        : images.length > 0
+          ? `Ready: ${images.length} ${images.length === 1 ? "image" : "images"} selected.`
+          : "Ready: choose one or more images.";
 
   const handleDrop = useCallback((e) => {
     e.preventDefault();
@@ -252,7 +262,7 @@ export default function ImageCompressorPage() {
               </div>
               <div>
                 <div className="flex items-center gap-2 mb-0.5">
-                  <h2 className="text-xl font-black text-slate-900 tracking-tight">Image Size Reducer</h2>
+                  <h2 className="text-xl font-black text-slate-900 tracking-tight">Compression workspace</h2>
                   <span className="bg-gradient-to-r from-teal-500 to-emerald-500 text-white text-[9px] font-black uppercase tracking-widest px-2 py-0.5 rounded-full shadow-sm">
                     100% Free
                   </span>
@@ -280,6 +290,15 @@ export default function ImageCompressorPage() {
               )}
             </div>
           </div>
+
+          <p
+            className="mb-5 rounded-xl border border-border bg-surface-soft px-3 py-2 text-xs font-medium text-muted-foreground"
+            data-testid="tool-output"
+            role="status"
+            aria-live="polite"
+          >
+            {processingStatus}
+          </p>
 
           {/* ── EMPTY STATE (Squoosh-Style Landing) ── */}
           {images.length === 0 && (
@@ -419,7 +438,15 @@ export default function ImageCompressorPage() {
             </div>
           )}
 
-          <input ref={inputRef} type="file" multiple accept="image/*" style={{ display: "none" }} onChange={handleFileInput} />
+          <input
+            ref={inputRef}
+            data-testid="image-compressor-file-input"
+            type="file"
+            multiple
+            accept="image/*"
+            style={{ display: "none" }}
+            onChange={handleFileInput}
+          />
 
           {/* ── WORKSPACE ── */}
           {images.length > 0 && (
@@ -593,7 +620,7 @@ export default function ImageCompressorPage() {
                         onClick={() => compressOne(activeIdx)}
                         className="w-full py-3.5 rounded-2xl bg-teal-600 hover:bg-teal-500 text-white font-extrabold text-sm uppercase tracking-wider shadow-md hover:shadow-lg shadow-teal-600/10 hover:shadow-teal-600/20 active:scale-95 transition-all flex items-center justify-center gap-2"
                       >
-                        <Zap className="w-4 h-4" /> {isCompressing ? "Reducing size..." : "Apply settings"}
+                        <Zap className="w-4 h-4" /> {isCompressing ? "Compressing..." : "Compress Image"}
                       </button>
                     ) : (
                       <div className="flex gap-2">
