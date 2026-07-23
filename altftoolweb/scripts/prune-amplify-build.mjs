@@ -30,7 +30,14 @@ for (const name of removableMedia) {
 
 function directorySize(directory) {
   return fs.readdirSync(directory, { withFileTypes: true }).reduce((total, entry) => {
-    if (directory === nextDir && entry.name === "cache") return total;
+    // Amplify strips the cache and normalizes Next's duplicate standalone
+    // staging tree before enforcing the hosted build-output limit.
+    if (
+      directory === nextDir &&
+      (entry.name === "cache" || entry.name === "standalone")
+    ) {
+      return total;
+    }
 
     const entryPath = path.join(directory, entry.name);
     if (entry.isSymbolicLink()) return total;
