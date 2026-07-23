@@ -1,3 +1,5 @@
+"use client";
+
 import React from 'react';
 import { User, Type, Link, Calendar, Building, Hash, MapPin, Bookmark, Globe, Tv } from 'lucide-react';
 

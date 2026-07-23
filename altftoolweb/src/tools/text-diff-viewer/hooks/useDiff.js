@@ -1,3 +1,5 @@
+"use client";
+
 import { useState, useCallback, useMemo } from "react";
 import { computeDiff, computeStats } from "../utils/diffEngine";
 import { generateId } from "../utils/helpers";

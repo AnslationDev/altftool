@@ -1,3 +1,5 @@
+"use client";
+
 export function buildFilterString(adjustments, styleFilter) {
   let filter = styleFilter || "";
 

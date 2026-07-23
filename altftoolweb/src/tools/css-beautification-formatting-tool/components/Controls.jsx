@@ -1,3 +1,5 @@
+"use client";
+
 import { AlignLeft, ArrowDownAZ, Braces, Minimize2 } from "lucide-react";
 
 export default function Controls({ settings, setSettings, mode, setMode, clearAll }) {

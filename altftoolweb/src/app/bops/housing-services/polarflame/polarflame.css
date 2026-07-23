@@ -1,0 +1,268 @@
+/* PolarFlame HVAC — duotone poster lander */
+
+.polarflame-page {
+  --pf-heat1: #ff6a00;
+  --pf-heat2: #e6007e;
+  --pf-cold1: #00b7e8;
+  --pf-cold2: #2b2e83;
+  --pf-ink: #151121;
+  --pf-ink2: #1e1930;
+  --pf-paper: #f7f3ec;
+  --pf-display: "Arial Narrow", "Haettenschweiler", Impact, "Franklin Gothic Medium", sans-serif;
+  --pf-body: "Segoe UI", system-ui, -apple-system, Helvetica, Arial, sans-serif;
+  font-family: var(--pf-body);
+  background: var(--pf-ink);
+  color: var(--pf-paper);
+  line-height: 1.55;
+  overflow-x: hidden;
+}
+.polarflame-page * { box-sizing: border-box; margin: 0; }
+.polarflame-page img { display: block; max-width: 100%; }
+.polarflame-page a { color: inherit; text-decoration: none; }
+.polarflame-page a:focus-visible,
+.polarflame-page button:focus-visible {
+  outline: 3px solid var(--pf-cold1);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+.polarflame-wrap { max-width: 1180px; margin: 0 auto; padding: 0 24px; }
+
+/* ---------- Type ---------- */
+.polarflame-display {
+  font-family: var(--pf-display);
+  font-weight: 900;
+  font-stretch: condensed;
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
+  line-height: 0.94;
+}
+.polarflame-kicker {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: 0.78rem; font-weight: 700; letter-spacing: 0.28em;
+  text-transform: uppercase; color: #ffd9a8;
+}
+.polarflame-h2 { font-size: clamp(2.1rem, 5vw, 3.6rem); }
+.polarflame-lede { max-width: 56ch; color: #d8d2e6; margin-top: 14px; }
+
+/* ---------- Buttons ---------- */
+.polarflame-btn {
+  display: inline-flex; align-items: center; gap: 10px;
+  font-family: var(--pf-display); font-stretch: condensed;
+  text-transform: uppercase; letter-spacing: 0.06em;
+  font-size: 1.05rem; font-weight: 800;
+  padding: 14px 26px; border: 0; cursor: pointer;
+  color: #fff; background: linear-gradient(100deg, var(--pf-heat1), var(--pf-heat2));
+  clip-path: polygon(8px 0, 100% 0, calc(100% - 8px) 100%, 0 100%);
+  transition: transform 0.18s ease, box-shadow 0.18s ease, filter 0.18s ease;
+}
+.polarflame-btn:hover { transform: translateY(-2px) skewX(-1deg); filter: brightness(1.08); }
+.polarflame-btn:active { transform: translateY(0); }
+.polarflame-btn--cold { background: linear-gradient(100deg, var(--pf-cold1), var(--pf-cold2)); }
+.polarflame-btn--ghost {
+  background: transparent; color: var(--pf-paper);
+  box-shadow: inset 0 0 0 2px rgba(247, 243, 236, 0.55);
+  clip-path: polygon(8px 0, 100% 0, calc(100% - 8px) 100%, 0 100%);
+}
+.polarflame-btn--ghost:hover { box-shadow: inset 0 0 0 2px var(--pf-cold1); color: #bdeeff; }
+
+/* ---------- Nav ---------- */
+.polarflame-nav {
+  position: sticky; top: 0; z-index: 40;
+  background: rgba(21, 17, 33, 0.92);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid rgba(247, 243, 236, 0.12);
+}
+.polarflame-nav-inner { display: flex; align-items: center; gap: 28px; padding: 14px 24px; max-width: 1180px; margin: 0 auto; }
+.polarflame-logo { display: inline-flex; align-items: center; gap: 10px; font-size: 1.5rem; }
+.polarflame-logo-mark {
+  display: inline-grid; place-items: center; width: 38px; height: 38px; color: #fff;
+  background: linear-gradient(135deg, var(--pf-heat1) 0 50%, var(--pf-cold1) 50% 100%);
+  clip-path: polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%);
+}
+.polarflame-logo b { background: linear-gradient(90deg, #ffb26b, #ff5ea8 45%, #58d6ff); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.polarflame-nav-links { display: flex; gap: 22px; margin-left: auto; font-size: 0.92rem; font-weight: 600; }
+.polarflame-nav-links a { padding: 6px 2px; border-bottom: 2px solid transparent; transition: border-color 0.15s ease, color 0.15s ease; }
+.polarflame-nav-links a:hover { color: #58d6ff; border-color: var(--pf-heat2); }
+.polarflame-nav-phone { display: inline-flex; align-items: center; gap: 8px; font-weight: 700; color: #bdeeff; transition: color 0.15s ease; }
+.polarflame-nav-phone:hover { color: #ffb26b; }
+
+/* ---------- Hero ---------- */
+.polarflame-hero {
+  position: relative; isolation: isolate; overflow: hidden;
+  background:
+    linear-gradient(108deg, var(--pf-heat1) 0%, var(--pf-heat2) 46%, var(--pf-cold2) 46.25%, var(--pf-cold1) 118%);
+  padding: 84px 0 96px;
+}
+.polarflame-hero::after {
+  content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  background: radial-gradient(120% 90% at 50% 110%, rgba(21, 17, 33, 0.85), transparent 60%);
+}
+.polarflame-hero-grid { display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 56px; align-items: center; }
+.polarflame-h1 { font-size: clamp(3rem, 8vw, 6.2rem); color: #fff; text-shadow: 4px 4px 0 rgba(21, 17, 33, 0.35); }
+.polarflame-h1 span { display: block; }
+.polarflame-h1-cold { color: #cdf2ff; }
+.polarflame-tagline {
+  display: inline-block; margin-top: 18px; padding: 8px 16px;
+  font-family: var(--pf-display); font-stretch: condensed; text-transform: uppercase;
+  letter-spacing: 0.14em; font-size: 0.95rem; color: var(--pf-ink);
+  background: var(--pf-paper); transform: rotate(-1.5deg);
+  box-shadow: 5px 5px 0 rgba(21, 17, 33, 0.4);
+}
+.polarflame-hero-copy { margin-top: 20px; max-width: 52ch; color: rgba(255, 255, 255, 0.94); font-size: 1.06rem; }
+.polarflame-hero-ctas { display: flex; flex-wrap: wrap; gap: 16px; margin-top: 30px; }
+.polarflame-hero-chips { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 28px; padding: 0; list-style: none; }
+.polarflame-hero-chips li {
+  display: inline-flex; align-items: center; gap: 7px;
+  font-size: 0.8rem; font-weight: 700; letter-spacing: 0.04em;
+  padding: 7px 12px; background: rgba(21, 17, 33, 0.45); border: 1px solid rgba(255, 255, 255, 0.3);
+}
+.polarflame-hero-figure { position: relative; }
+.polarflame-hero-frame {
+  clip-path: polygon(10% 0, 100% 4%, 92% 100%, 0 94%);
+  box-shadow: 14px 14px 0 rgba(21, 17, 33, 0.5);
+  transform: rotate(1.2deg);
+  transition: transform 0.35s ease;
+}
+.polarflame-hero-figure:hover .polarflame-hero-frame { transform: rotate(0deg) scale(1.015); }
+.polarflame-hero-badge {
+  position: absolute; right: -14px; bottom: -22px; z-index: 2;
+  display: grid; place-items: center; text-align: center;
+  width: 128px; height: 128px; border-radius: 50%;
+  font-family: var(--pf-display); font-stretch: condensed; text-transform: uppercase;
+  font-size: 0.82rem; line-height: 1.15; letter-spacing: 0.08em; color: #fff;
+  background: conic-gradient(from 220deg, var(--pf-heat2), var(--pf-heat1), var(--pf-cold1), var(--pf-cold2), var(--pf-heat2));
+  animation: polarflame-spin 14s linear infinite;
+}
+.polarflame-hero-badge span { animation: polarflame-spin 14s linear infinite reverse; padding: 10px; }
+
+/* ---------- Duotone image treatment ---------- */
+.polarflame-duo { position: relative; overflow: hidden; }
+.polarflame-duo img {
+  width: 100%; height: 100%; object-fit: cover;
+  filter: grayscale(1) contrast(1.18) brightness(1.02);
+  mix-blend-mode: luminosity;
+  transition: transform 0.45s ease;
+}
+.polarflame-duo--heat { background: linear-gradient(135deg, var(--pf-heat1), var(--pf-heat2)); }
+.polarflame-duo--cold { background: linear-gradient(135deg, var(--pf-cold1), var(--pf-cold2)); }
+.polarflame-duo--split { background: linear-gradient(115deg, var(--pf-heat2) 0 50%, var(--pf-cold2) 50% 100%); }
+.polarflame-duo::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(180deg, transparent 55%, rgba(21, 17, 33, 0.45));
+}
+.polarflame-ratio-hero { aspect-ratio: 4 / 5; }
+.polarflame-ratio-card { aspect-ratio: 4 / 3; }
+.polarflame-ratio-wide { aspect-ratio: 16 / 9; }
+
+/* ---------- Marquee ---------- */
+.polarflame-marquee {
+  overflow: hidden; white-space: nowrap; user-select: none;
+  background: var(--pf-paper); color: var(--pf-ink);
+  border-top: 3px solid var(--pf-ink); border-bottom: 3px solid var(--pf-ink);
+  transform: rotate(-0.6deg); margin: -14px -10px 0; padding: 10px 0;
+}
+.polarflame-marquee-track { display: inline-flex; gap: 42px; align-items: center; animation: polarflame-slide 26s linear infinite; }
+.polarflame-marquee-item {
+  display: inline-flex; align-items: center; gap: 42px;
+  font-family: var(--pf-display); font-stretch: condensed; text-transform: uppercase;
+  font-size: 1.35rem; letter-spacing: 0.1em;
+}
+.polarflame-marquee-item svg { color: var(--pf-heat2); }
+.polarflame-marquee-item svg:nth-of-type(even) { color: var(--pf-cold2); }
+
+/* ---------- Sections ---------- */
+.polarflame-section { padding: 92px 0; position: relative; }
+.polarflame-section--paper { background: var(--pf-paper); color: var(--pf-ink); }
+.polarflame-section--paper .polarflame-lede { color: #4d4460; }
+.polarflame-section--paper .polarflame-kicker { color: var(--pf-heat2); }
+
+/* Services */
+.polarflame-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 26px; margin-top: 48px; }
+.polarflame-card {
+  background: var(--pf-ink2); border: 1px solid rgba(247, 243, 236, 0.12);
+  display: flex; flex-direction: column;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+.polarflame-card:hover { transform: translateY(-6px); border-color: rgba(88, 214, 255, 0.5); box-shadow: 0 18px 40px rgba(0, 0, 0, 0.45); }
+.polarflame-card:hover .polarflame-duo img { transform: scale(1.06); }
+.polarflame-card-body { padding: 24px 24px 28px; display: flex; flex-direction: column; gap: 12px; flex: 1; }
+.polarflame-card h3 { font-size: 1.65rem; display: flex; align-items: center; gap: 10px; }
+.polarflame-card h3 svg { color: var(--pf-heat1); flex: none; }
+.polarflame-card--cold h3 svg { color: var(--pf-cold1); }
+.polarflame-card p { color: #cfc8e0; font-size: 0.95rem; flex: 1; }
+.polarflame-card-link { display: inline-flex; align-items: center; gap: 8px; font-weight: 700; font-size: 0.9rem; color: #58d6ff; transition: gap 0.2s ease, color 0.2s ease; }
+.polarflame-card-link:hover { gap: 14px; color: #ffb26b; }
+
+/* ---------- Gauge ---------- */
+.polarflame-gauge-grid { display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 60px; align-items: center; margin-top: 30px; }
+.polarflame-gauge-figure { text-align: center; }
+.polarflame-gauge-svg { width: 100%; max-width: 560px; height: auto; overflow: visible; }
+.polarflame-gauge-needle { transform: rotate(var(--polarflame-needle, 0deg)); transform-origin: 200px 200px; transition: transform 0.7s cubic-bezier(0.34, 1.4, 0.4, 1); }
+.polarflame-gauge-modes { display: inline-flex; gap: 10px; margin-top: 18px; }
+.polarflame-gauge-modes button {
+  font-family: var(--pf-display); font-stretch: condensed; text-transform: uppercase;
+  letter-spacing: 0.08em; font-size: 0.95rem; font-weight: 800; cursor: pointer;
+  padding: 10px 20px; background: #fff; color: var(--pf-ink);
+  border: 2px solid var(--pf-ink); transition: transform 0.15s ease, background 0.15s ease, color 0.15s ease;
+}
+.polarflame-gauge-modes button:hover { transform: translateY(-2px); }
+.polarflame-gauge-modes button[aria-pressed="true"] { background: var(--pf-ink); color: var(--pf-paper); }
+.polarflame-gauge-readout { margin-top: 14px; font-weight: 700; color: #4d4460; min-height: 1.6em; }
+.polarflame-checklist { list-style: none; padding: 0; margin-top: 26px; display: grid; gap: 16px; }
+.polarflame-checklist li { display: flex; gap: 12px; align-items: flex-start; font-size: 1rem; color: #372f4c; }
+.polarflame-checklist svg { flex: none; margin-top: 2px; color: var(--pf-heat2); }
+.polarflame-checklist li:nth-child(even) svg { color: var(--pf-cold2); }
+.polarflame-checklist b { display: block; font-size: 1.05rem; color: var(--pf-ink); }
+
+/* ---------- CTA bands ---------- */
+.polarflame-band {
+  position: relative; overflow: hidden; padding: 64px 0;
+  background: linear-gradient(100deg, var(--pf-cold2), var(--pf-cold1) 46%, var(--pf-heat1) 46.25%, var(--pf-heat2));
+}
+.polarflame-band-inner { display: flex; flex-wrap: wrap; align-items: center; gap: 28px; justify-content: space-between; }
+.polarflame-band h2 { font-size: clamp(1.9rem, 4.5vw, 3rem); color: #fff; text-shadow: 3px 3px 0 rgba(21, 17, 33, 0.35); }
+.polarflame-band p { color: rgba(255, 255, 255, 0.92); margin-top: 8px; max-width: 46ch; }
+.polarflame-band-actions { display: flex; flex-wrap: wrap; gap: 14px; }
+.polarflame-btn--paper { background: var(--pf-paper); color: var(--pf-ink); }
+.polarflame-btn--paper:hover { filter: none; background: #fff; }
+
+/* ---------- Why / wide image ---------- */
+.polarflame-why-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center; }
+.polarflame-stats { display: grid; grid-template-columns: repeat(2, 1fr); gap: 2px; margin-top: 30px; background: rgba(247, 243, 236, 0.14); }
+.polarflame-stat { background: var(--pf-ink2); padding: 22px; transition: background 0.2s ease; }
+.polarflame-stat:hover { background: #251d3d; }
+.polarflame-stat b { font-family: var(--pf-display); font-stretch: condensed; font-size: 2rem; display: block; color: #58d6ff; }
+.polarflame-stat:nth-child(even) b { color: #ff9e5e; }
+.polarflame-stat span { font-size: 0.85rem; color: #cfc8e0; }
+
+/* ---------- Final band + footer ---------- */
+.polarflame-final { text-align: center; padding: 96px 0; }
+.polarflame-final .polarflame-tagline { transform: rotate(1.2deg); margin-bottom: 26px; }
+.polarflame-final h2 { font-size: clamp(2.4rem, 6vw, 4.6rem); color: #fff; }
+.polarflame-final-actions { display: flex; flex-wrap: wrap; gap: 16px; justify-content: center; margin-top: 34px; }
+.polarflame-footer { background: #0e0b18; padding: 40px 0 34px; border-top: 1px solid rgba(247, 243, 236, 0.1); }
+.polarflame-footer-inner { display: flex; flex-wrap: wrap; align-items: center; gap: 18px; justify-content: space-between; font-size: 0.85rem; color: #9d94b8; }
+.polarflame-footer a:hover { color: #58d6ff; }
+.polarflame-footer-note { font-size: 0.75rem; color: #6c6386; width: 100%; margin-top: 10px; }
+
+/* ---------- Keyframes ---------- */
+@keyframes polarflame-slide { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+@keyframes polarflame-spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+/* ---------- Responsive ---------- */
+@media (max-width: 880px) {
+  .polarflame-nav-links { display: none; }
+  .polarflame-nav-inner { gap: 14px; justify-content: space-between; }
+  .polarflame-hero { padding: 56px 0 72px; }
+  .polarflame-hero-grid,
+  .polarflame-gauge-grid,
+  .polarflame-why-grid { grid-template-columns: 1fr; gap: 40px; }
+  .polarflame-cards { grid-template-columns: 1fr; }
+  .polarflame-hero-badge { right: 6px; bottom: -16px; width: 104px; height: 104px; font-size: 0.72rem; }
+  .polarflame-section { padding: 64px 0; }
+  .polarflame-band-inner { flex-direction: column; align-items: flex-start; }
+  .polarflame-final { padding: 72px 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .polarflame-page *, .polarflame-page *::after { animation: none !important; transition: none !important; }
+}

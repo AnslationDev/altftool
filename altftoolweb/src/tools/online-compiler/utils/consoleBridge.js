@@ -1,3 +1,5 @@
+"use client";
+
 // Returns an IIFE script string that forwards console output and runtime
 // errors from the preview iframe to the parent window via postMessage.
 export function buildBridgeScript(token) {

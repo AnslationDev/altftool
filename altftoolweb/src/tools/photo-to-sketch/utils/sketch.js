@@ -1,3 +1,5 @@
+"use client";
+
 // Pure canvas / ImageData helpers for the pencil-sketch conversion algorithm.
 // Classic pencil-sketch pipeline:
 //   1. grayscale the source

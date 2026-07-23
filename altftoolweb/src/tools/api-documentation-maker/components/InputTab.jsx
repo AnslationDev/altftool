@@ -1,3 +1,5 @@
+"use client";
+
 import { AlertCircle } from "lucide-react";
 
 export default function InputTab({ jsonInput, setJsonInput, error, loadExample, generateSwagger }) {
@@ -16,7 +18,7 @@ export default function InputTab({ jsonInput, setJsonInput, error, loadExample, 
             Load Example
           </button>
           <button
-            onClick={generateSwagger}
+            onClick={() => generateSwagger()}
             className="w-full sm:w-auto px-6 py-2 bg-[var(--primary)] hover:opacity-90 
             text-[var(--primary-foreground)] rounded-lg transition-colors 
             font-medium shadow-md cursor-pointer"

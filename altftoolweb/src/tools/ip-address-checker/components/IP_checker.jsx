@@ -1,3 +1,4 @@
+"use client";
 import React, { useState, useRef, useEffect } from 'react';
 import axios from 'axios';
 
@@ -27,10 +28,10 @@ export default function IPChecker() {
 
   useEffect(() => {
     if (domainData && mapRef.current && mapLoaded) {
-      
+
       const lat = parseFloat(domainData.latitude);
       const lng = parseFloat(domainData.longitude);
-      
+
       if (window.google && window.google.maps) {
         if (mapInstanceRef.current) {
           mapInstanceRef.current.setCenter({ lat, lng });
@@ -90,16 +91,16 @@ export default function IPChecker() {
     setError('');
 
     try {
-    
+
       const response = await axios.get(`http://ip-api.com/json/${domain}`);
-      
+
       const data = response.data;
 
       if (data.status === "fail") {
         throw new Error(data.message || 'Invalid IP/Domain');
       }
 
-      
+
       setDomainData({
         ip: data.query,
         city: data.city,
@@ -112,7 +113,7 @@ export default function IPChecker() {
         timezone: data.timezone,
         zip: data.zip
       });
-      
+
       setIsValidDomain(true);
     } catch (err) {
       setError('IP-API blocked ya format galat hai. Make sure IP is correct.');

@@ -1,3 +1,5 @@
+"use client";
+
 // ShadowGenerator: produces soft, directionally-correct contact shadows for
 // hair-over-forehead, beard-under-lip and glasses-on-nose/cheek. Shadows are
 // drawn from a copy of the asset's alpha mask, offset toward the light-reversed

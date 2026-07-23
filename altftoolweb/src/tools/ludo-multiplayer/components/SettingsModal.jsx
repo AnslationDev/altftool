@@ -1,3 +1,5 @@
+"use client";
+
 import { Modal, Button } from "@altftool/ui";
 import ThemeSelector from "./ThemeSelector";
 

@@ -1,3 +1,5 @@
+"use client";
+
 import { useCallback, useState } from "react";
 
 // Simple zoom controller for the preview surface.

@@ -1,3 +1,7 @@
 "use client";
 
-export { default } from "./video-to-audio-converter/entry";
+import VideoToAudioConverter from "./pages";
+
+export default function ToolEntry() {
+  return <VideoToAudioConverter />;
+}

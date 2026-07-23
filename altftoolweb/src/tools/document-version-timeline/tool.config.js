@@ -1,3 +1,5 @@
+"use client";
+
 const toolConfig = {
   slug: "document-version-timeline",
   name: "Document Version Timeline",

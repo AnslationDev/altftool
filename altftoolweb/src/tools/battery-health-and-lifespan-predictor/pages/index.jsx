@@ -1,3 +1,5 @@
+"use client";
+
 import { useState, useRef } from "react";
 import BatteryForm from "../components/BatteryForm";
 import DeviceSelector from "../components/DeviceSelector";

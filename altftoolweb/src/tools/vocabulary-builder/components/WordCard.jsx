@@ -1,3 +1,5 @@
+"use client";
+
 import { useState } from "react";
 import { ChevronLeft, ChevronRight, Shuffle, RotateCcw } from "lucide-react";
 

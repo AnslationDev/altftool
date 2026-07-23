@@ -1,3 +1,5 @@
+"use client";
+
 import { useState } from "react";
 import { Volume2, BookmarkPlus, BookmarkCheck, Gauge } from "lucide-react";
 

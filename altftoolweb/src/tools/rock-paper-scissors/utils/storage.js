@@ -1,3 +1,5 @@
+"use client";
+
 // Safe localStorage helpers. All access is guarded so SSR or privacy mode
 // never throws.
 

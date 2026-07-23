@@ -1,3 +1,5 @@
+"use client";
+
 export const speakWord = (word, options = {}) => {
   if (!("speechSynthesis" in window)) return;
 

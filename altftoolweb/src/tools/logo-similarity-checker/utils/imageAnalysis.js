@@ -1,3 +1,5 @@
+"use client";
+
 export function loadImage(file) {
   return new Promise((resolve, reject) => {
     if (!file) { reject(new Error("No file")); return; }

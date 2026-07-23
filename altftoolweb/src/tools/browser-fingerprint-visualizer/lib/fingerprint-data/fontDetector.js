@@ -1,3 +1,5 @@
+"use client";
+
 
 
 import { FONT_LIST } from "../../constants/font.js";

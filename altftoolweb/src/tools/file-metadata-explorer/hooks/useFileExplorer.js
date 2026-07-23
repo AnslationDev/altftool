@@ -1,3 +1,5 @@
+"use client";
+
 import { useState, useCallback, useRef } from "react";
 import { extractMetadata } from "../utils/metadataExtractor";
 import { generateId } from "../utils/helpers";

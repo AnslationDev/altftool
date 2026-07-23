@@ -3,48 +3,31 @@ export const spec = {
   ...{
   "slug": "crc32-calculator",
   "title": "CRC32 Calculator",
-  "description": "Calculate the CRC32 checksum for text or binary data.",
+  "description": "Compute the CRC32 checksum of text as a hex value.",
   "badge": "Developer",
   "category": [
     "Developer"
   ],
   "icon": "hash",
-  "iconColor": "text-indigo-600",
+  "iconColor": "text-orange-600",
   "fields": [
     {
-      "key": "data",
-      "label": "Data",
+      "key": "text",
+      "label": "Text",
       "type": "textarea",
-      "default": ""
-    },
-    {
-      "key": "encoding",
-      "label": "Encoding",
-      "type": "select",
-      "default": "utf-8",
-      "choices": [
-        {
-          "value": "utf-8",
-          "label": "UTF-8"
-        },
-        {
-          "value": "ascii",
-          "label": "ASCII"
-        }
-      ]
+      "default": "hello world"
     }
-  ],
-  "presets": [
-    {
-      "label": "Example",
-      "values": {
-        "data": "Hello, world!"
-      }
-    }
-  ],
-  "note": "The CRC32 checksum is a cyclic redundancy check used to detect errors in data transmission or storage."
+  ]
 },
-  compute: (values, mode) => { const data = values.data; const encoding = values.encoding; if (!data) return { result: 'Please enter some data.' }; try { const encoder = new TextEncoder(); const buffer = encoder.encode(data); const crc32 = (function() { function update(crc, buf) { for (let i = 0, l = buf.length; i < l; ++i) crc = (crc >>> 8) ^ table[(crc ^ buf[i]) & 0xFF]; return crc; } const table = new Array(256); for (let n = 0; n < 256; ++n) { let c = n, k; for (k = 0; k < 8; ++k) c = (c & 1 ? 0xEDB88320 ^ (c >>> 1) : c >>> 1); table[n] = c; } return function crc32(buf) { let crc = 0xFFFFFFFF; for (let i = 0, l = buf.length; i < l; ++i) crc = update(crc, [buf[i]]); return crc ^ 0xFFFFFFFF; }; })(); const result = crc32(buffer).toString(16).padStart(8, '0'); return { result: `CRC32: ${result}` }; } catch (e) { return { result: 'Error calculating CRC32.' }; }},
+  compute: (values) => { const num=(v)=>typeof v==="number"?v:Number(v); const money=(n)=>Number.isFinite(Number(n))?Number(n).toLocaleString(undefined,{maximumFractionDigits:2}):"—";
+      const t = String(values.text);
+      let c; const table = [];
+      for (let n = 0; n < 256; n++) { c = n; for (let k = 0; k < 8; k++) c = c & 1 ? 0xedb88320 ^ (c >>> 1) : c >>> 1; table[n] = c >>> 0; }
+      let crc = 0xffffffff;
+      for (let i = 0; i < t.length; i++) crc = table[(crc ^ t.charCodeAt(i)) & 0xff] ^ (crc >>> 8);
+      crc = (crc ^ 0xffffffff) >>> 0;
+      return { result: "0x" + crc.toString(16).padStart(8, "0"), rows: [["Decimal", crc.toString()], ["Length", t.length + " chars"]] };
+    },
 };
 
 export default spec;

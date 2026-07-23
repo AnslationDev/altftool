@@ -1,3 +1,5 @@
+"use client";
+
 /**
  * Generates a set of dots for an Ishihara plate.
  * Each dot has: x, y, radius, color

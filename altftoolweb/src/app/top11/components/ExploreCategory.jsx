@@ -149,7 +149,7 @@ export default function CategorySection() {
                         className={`
               px-5 py-2.5 rounded-full text-sm font-medium whitespace-nowrap
               transition-all duration-300
-              
+
               ${active === cat
                                 ? "bg-[var(--primary)] text-[var(--primary-foreground)] shadow-md"
                                 : "bg-[var(--muted)] text-[var(--muted-foreground)] hover:bg-[var(--card-hover-bg)]"

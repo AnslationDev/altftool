@@ -1,3 +1,5 @@
+"use client";
+
 import { getPrintSheetLayout } from './templateUtils';
 
 export function calculatePhotoPositions(template, count, paperSize) {

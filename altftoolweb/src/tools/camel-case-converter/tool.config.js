@@ -2,9 +2,9 @@ const toolConfig = {
   slug: "camel-case-converter",
   name: "Camel Case Converter",
   category: ["Developer"],
-  description: "Convert text to Camel Case format.",
-  icon: "code",
-  iconColor: "text-violet-600",
+  description: "Convert any phrase to camelCase — plus PascalCase and CONSTANT_CASE.",
+  icon: "case-sensitive",
+  iconColor: "text-blue-600",
 };
 
 export default toolConfig;

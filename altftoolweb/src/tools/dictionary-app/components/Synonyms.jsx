@@ -1,3 +1,5 @@
+"use client";
+
 export default function Synonyms({ data, setWord, onSearch }) {
   return (
     <div className="p-4 sm:p-5 bg-(--background) text-(--foreground) rounded-lg shadow border border-(--border)">

@@ -1,3 +1,5 @@
+"use client";
+
 import { Braces, Settings2, Upload } from "lucide-react";
 
 export default function Controls({ settings, setSettings, clearAll, onUpload }) {

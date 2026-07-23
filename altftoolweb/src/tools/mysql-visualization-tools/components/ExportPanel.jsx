@@ -1,3 +1,5 @@
+"use client";
+
 import { Copy, Download, Save } from "lucide-react";
 import Panel from "./Panel";
 

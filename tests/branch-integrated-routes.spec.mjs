@@ -12,11 +12,24 @@ const canonicalRoutes = [
   "/housingneeds/roofing",
   "/housingneeds/plumbing",
   "/housingneeds/windows",
+  "/bops/housingneeds/cleaning",
+  "/bops/housingneeds/electrical",
+  "/bops/housingneeds/flooring",
+  "/bops/housingneeds/garage-driveway",
+  "/bops/housingneeds/landscaping",
+  "/bops/housingneeds/restoration",
+  "/bops/housing-services",
   "/tradeon",
   "/tradeon/dashboard",
   "/tradeon/workspace",
   "/tradeon/asset/EUR-USD",
   "/tradeon/chart/EUR-USD",
+  "/free-ai-tool",
+  "/sale",
+  "/tools/all/api-endpoint-usage-mapper",
+  "/tools/all/api-tester",
+  "/tools/all/base64-to-file",
+  "/tools/all/text-shadow-generator",
   "/tools/all/video-to-audio-converter",
 ];
 
@@ -36,9 +49,20 @@ const servicePreviewRoutes = [
 ];
 
 const servicePreviewAliases = new Map([
+  ["/housingneeds/roofing/roofers", "/bops/housing-services/roofers"],
+  ["/housingneeds/siding/siding-pros", "/bops/housing-services/siding-pros"],
+  ["/housingneeds/windows/window-replacement", "/bops/housing-services/window-replacement"],
+  ["/housingneeds/solar/helios-solar", "/bops/housing-services/helios-solar"],
+  ["/housingneeds/plumbing/plumber", "/bops/housing-services/plumber"],
+  ["/housingneeds/bathroom/bathroom-remodeling", "/bops/housing-services/bathroom-remodeling"],
+  ["/housingneeds/hvac/climatech", "/bops/housing-services/climatech"],
+  ["/housingneeds/hvac/climatech/blog/ac-repair-guide", "/bops/housing-services/climatech/blog/ac-repair-guide"],
+  ["/housingneeds/pest-control/pest-control", "/bops/housing-services/pest-control"],
+  ["/housingneeds/pest-control/pest-killer", "/bops/housing-services/pest-killer"],
+  ["/housingneeds/pest-control/kairos", "/bops/housing-services/kairos"],
   [
     "/housingneeds/pest-control/kairos/termites-pest-control",
-    "/housingneeds/pest-control/kairos",
+    "/bops/housing-services/kairos/termites-pest-control",
   ],
 ]);
 
@@ -46,8 +70,12 @@ const mobileRoutes = [
   "/products",
   "/site-map",
   "/housingneeds",
+  "/bops/housing-services",
+  "/bops/housingneeds/restoration",
   "/housingneeds/roofing/roofers",
   "/housingneeds/windows/window-replacement",
+  "/free-ai-tool",
+  "/sale",
   "/tradeon/dashboard",
   "/tradeon/chart/EUR-USD",
 ];

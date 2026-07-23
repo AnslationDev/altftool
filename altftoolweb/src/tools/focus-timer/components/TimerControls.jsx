@@ -1,3 +1,5 @@
+"use client";
+
 import { Play, Pause, RotateCcw, Lock, Unlock } from "lucide-react";
 
 export default function TimerControls({

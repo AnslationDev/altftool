@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState } from 'react';
 import { getRecentSearches } from '../services/cache.js';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip } from 'recharts';

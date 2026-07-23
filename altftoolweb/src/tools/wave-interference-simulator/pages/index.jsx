@@ -1,3 +1,5 @@
+"use client";
+
 import { useState, useRef, useEffect } from "react";
 import HeroSection from "../components/HeroSection";
 import ModeSelector from "../components/ModeSelector";

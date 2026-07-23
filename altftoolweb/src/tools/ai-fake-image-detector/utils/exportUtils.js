@@ -1,3 +1,5 @@
+"use client";
+
 import { safeCopyText } from "@/shared/utils/clipboard";
 
 export function exportToJSON(report) {

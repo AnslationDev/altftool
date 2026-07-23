@@ -1,3 +1,5 @@
+"use client";
+
 import { Database, RefreshCcw } from "lucide-react";
 import Panel from "./Panel";
 

@@ -1,3 +1,5 @@
+"use client";
+
 import { motion, AnimatePresence } from "framer-motion";
 import { Button, Card } from "@altftool/ui";
 import { Shuffle, Heart, Clock, Star, UtensilsCrossed } from "lucide-react";

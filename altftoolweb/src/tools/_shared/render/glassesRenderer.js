@@ -1,3 +1,5 @@
+"use client";
+
 // GlassesRenderer: snaps frames onto the eye centers + nose bridge, warps them
 // with head pose (roll/yaw/pitch) for true perspective, draws realistic lens
 // tint/reflection/transparency, frame lighting, and a soft contact shadow on

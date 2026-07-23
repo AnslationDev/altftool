@@ -1,3 +1,5 @@
+"use client";
+
 import { useState } from "react";
 import { Code, CheckCircle, AlertCircle, Copy, Check, Download, Trash2, Wand2 } from "lucide-react";
 import Features from "./Features";

@@ -1,3 +1,5 @@
+"use client";
+
 import { useState, useRef } from "react";
 import { Button, Card } from "@altftool/ui";
 import { Upload, Code, Link as LinkIcon, Clipboard, FileText } from "lucide-react";

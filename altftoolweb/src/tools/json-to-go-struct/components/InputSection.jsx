@@ -1,3 +1,5 @@
+"use client";
+
 import { motion } from "framer-motion";
 import { FileCode2, FileUp, RotateCcw, Sparkles, Trash2, WrapText } from "lucide-react";
 import ProgressTracker from "./ProgressTracker";

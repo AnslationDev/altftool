@@ -1,3 +1,5 @@
+"use client";
+
 // ExportEngine: renders the final composite at the device pixel ratio (retina)
 // and supports upscaled hi-res / 4K export without re-detecting the face.
 

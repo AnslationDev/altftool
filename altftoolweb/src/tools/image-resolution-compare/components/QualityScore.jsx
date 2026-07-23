@@ -1,3 +1,5 @@
+"use client";
+
 import { useEffect, useState } from "react";
 
 function ScoreRing({ score, label, size = 120, stroke = 6 }) {

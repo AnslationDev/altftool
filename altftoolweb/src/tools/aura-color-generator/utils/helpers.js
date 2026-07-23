@@ -1,3 +1,5 @@
+"use client";
+
 export const AURA_COLORS = {
   blue: { hex: "#3B82F6", name: "Blue", meaning: "Calm & Peaceful", traits: ["Compassionate", "Intuitive", "Honest"] },
   green: { hex: "#10B981", name: "Green", meaning: "Growth & Balance", traits: ["Healing", "Nurturing", "Grounded"] },

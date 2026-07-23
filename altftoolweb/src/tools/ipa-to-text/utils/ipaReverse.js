@@ -1,3 +1,5 @@
+"use client";
+
 // IPA -> candidate English words. Used by the IPA to Text Helper.
 // Built from a focused common-word set; the reverse lookup returns multiple
 // candidate words whose pronunciation matches the given IPA.

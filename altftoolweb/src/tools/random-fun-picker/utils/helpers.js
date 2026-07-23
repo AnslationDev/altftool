@@ -1,3 +1,5 @@
+"use client";
+
 export function shuffle(arr) {
   const a = [...arr];
   for (let i = a.length - 1; i > 0; i--) {

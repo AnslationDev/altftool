@@ -1,3 +1,5 @@
+"use client";
+
 import { buildBridgeScript } from "./consoleBridge";
 
 // Combine the three editors into a single self-contained HTML document that

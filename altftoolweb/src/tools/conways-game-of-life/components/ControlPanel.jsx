@@ -1,3 +1,5 @@
+"use client";
+
 import React from 'react';
 import { Pause, Play, Shuffle, StepForward, Trash2 } from 'lucide-react';
 

@@ -1,3 +1,5 @@
+"use client";
+
 // src/components/DiffChecker/DiffInputs.jsx
 import { Copy } from "lucide-react";
 import {useState} from "react";

@@ -1,3 +1,5 @@
+"use client";
+
 export default function HowItWorks() {
   const steps = [
     { title: "Add Room Details", text: "Enter wall dimensions, room height, and optional ceiling area for each room." },

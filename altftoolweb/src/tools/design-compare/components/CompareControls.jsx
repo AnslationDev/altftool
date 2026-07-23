@@ -1,3 +1,5 @@
+"use client";
+
 import { Download, Maximize2, Minus, Plus, RotateCcw } from "lucide-react";
 import { COMPARE_MODES } from "../constants/compareModes";
 

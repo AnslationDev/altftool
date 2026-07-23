@@ -3,48 +3,55 @@ export const spec = {
   ...{
   "slug": "mortgage-affordability-calculator",
   "title": "Mortgage Affordability Calculator",
-  "description": "Calculate your mortgage affordability based on income and loan details.",
+  "description": "How much home you can afford, using the 28/36 debt-to-income rule.",
   "badge": "Finance",
   "category": [
     "Finance"
   ],
-  "icon": "mortgage",
+  "icon": "home",
   "iconColor": "text-teal-600",
   "fields": [
     {
-      "key": "income",
-      "label": "Annual Income",
+      "key": "annual_income",
+      "label": "Gross annual income",
       "type": "number",
-      "default": "50000",
-      "suffix": "$"
+      "default": "90000"
     },
     {
-      "key": "loanamount",
-      "label": "Desired Loan Amount",
+      "key": "monthly_debts",
+      "label": "Other monthly debts",
       "type": "number",
-      "default": "300000",
-      "suffix": "$"
+      "default": "500"
     },
     {
-      "key": "interestrate",
-      "label": "Interest Rate (%)",
+      "key": "rate",
+      "label": "Interest rate (%/yr)",
       "type": "number",
-      "default": "4.5"
-    }
-  ],
-  "presets": [
+      "default": "6.5"
+    },
     {
-      "label": "Example",
-      "values": {
-        "income": "50000",
-        "loanAmount": "300000",
-        "interestRate": "4.5"
-      }
+      "key": "years",
+      "label": "Term (years)",
+      "type": "number",
+      "default": "30"
+    },
+    {
+      "key": "down",
+      "label": "Down payment",
+      "type": "number",
+      "default": "40000"
     }
-  ],
-  "note": "This calculator provides a rough estimate and does not account for all financial factors."
+  ]
 },
-  compute: (values, mode) => { const income = values.income; const loanAmount = values.loanAmount; const interestRate = values.interestRate / 100; if (income <= 0 || loanAmount <= 0 || isNaN(interestRate)) return { result: 'Invalid input', caption: 'Please enter valid numbers.' }; const monthlyIncome = income / 12; const monthlyInterestRate = interestRate / 12; const maxLoan = monthlyIncome * 36 * (1 - Math.pow(1 + monthlyInterestRate, -36)) / monthlyInterestRate; return { result: `Max Loan Amount: $${maxLoan.toFixed(0)}`, caption: 'Based on your income and interest rate.', rows: [['Desired Loan Amount', `$${loanAmount}`], ['Income', `$${income}`], ['Interest Rate', `${interestRate * 100}%`]] }; },
+  compute: (values) => { const num=(v)=>typeof v==="number"?v:Number(v); const money=(n)=>Number.isFinite(Number(n))?Number(n).toLocaleString(undefined,{maximumFractionDigits:2}):"—";
+      const monthly = num(values.annual_income) / 12;
+      if (monthly <= 0) return { result: "—", caption: "Enter your income" };
+      const maxPayment = Math.min(monthly * 0.28, monthly * 0.36 - num(values.monthly_debts));
+      if (maxPayment <= 0) return { result: "—", caption: "Existing debts exceed the 36% limit" };
+      const r = num(values.rate) / 100 / 12, n = num(values.years) * 12;
+      const loan = r === 0 ? maxPayment * n : (maxPayment * (Math.pow(1 + r, n) - 1)) / (r * Math.pow(1 + r, n));
+      return { result: "Home up to " + money(loan + num(values.down)), rows: [["Max monthly payment", money(maxPayment)], ["Max loan", money(loan)], ["+ your down payment", money(num(values.down))]] };
+    },
 };
 
 export default spec;

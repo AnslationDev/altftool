@@ -1,3 +1,5 @@
+"use client";
+
 export function downloadGO(content, filename = "struct.go") {
   const blob = new Blob([content], { type: "text/x-go;charset=utf-8" });
   const url = URL.createObjectURL(blob);

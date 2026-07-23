@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState } from 'react';
 import { ThemeProvider, createTheme, CssBaseline, Box } from '@mui/material';
 import Header from './components/Header';

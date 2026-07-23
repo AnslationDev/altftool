@@ -1,3 +1,5 @@
+"use client";
+
 import { memo, useCallback, useMemo, useRef, useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { PLAYERS, SAFE_POSITIONS, TOTAL_CELLS, BOARD_SIZE, HOME_STRETCH_SIZE } from "../engine/constants";

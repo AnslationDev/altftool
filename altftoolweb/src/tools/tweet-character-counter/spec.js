@@ -3,33 +3,28 @@ export const spec = {
   ...{
   "slug": "tweet-character-counter",
   "title": "Tweet Character Counter",
-  "description": "Count characters, words, lines and sentences in your text instantly.",
+  "description": "Count characters against the 280 limit, with words and tweets needed.",
   "badge": "Social Media",
   "category": [
     "Social Media"
   ],
   "icon": "type",
-  "iconColor": "text-cyan-600",
+  "iconColor": "text-sky-500",
   "fields": [
     {
       "key": "text",
-      "label": "Text",
+      "label": "Your tweet",
       "type": "textarea",
-      "default": "",
-      "placeholder": "Paste your text…"
+      "default": ""
     }
-  ],
-  "presets": [
-    {
-      "label": "Sample",
-      "values": {
-        "text": "The quick brown fox jumps over the lazy dog."
-      }
-    }
-  ],
-  "note": "Runs entirely in your browser — your data never leaves your device."
+  ]
 },
-  compute: (values) => { const t = values.text || ''; const words = (t.match(/\S+/g) || []).length; const lines = t ? t.split(/\n/).length : 0; const sentences = (t.match(/[.!?]+/g) || []).length; return { result: words + ' words', rows: [['Characters', t.length], ['Characters (no spaces)', t.replace(/\s/g,'').length], ['Lines', lines], ['Sentences', sentences]] }; },
+  compute: (values) => { const num=(v)=>typeof v==="number"?v:Number(v); const money=(n)=>Number.isFinite(Number(n))?Number(n).toLocaleString(undefined,{maximumFractionDigits:2}):"—";
+      const t = String(values.text);
+      const words = (t.match(/\S+/g) || []).length;
+      const left = 280 - t.length;
+      return { result: t.length + " / 280", caption: left >= 0 ? left + " characters left" : Math.abs(left) + " over the limit", rows: [["Words", words], ["Lines", t ? t.split(/\n/).length : 0], ["Tweets needed", Math.max(1, Math.ceil(t.length / 280))]] };
+    },
 };
 
 export default spec;

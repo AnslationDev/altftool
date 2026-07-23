@@ -1,3 +1,5 @@
+"use client";
+
 import { useEffect, useRef, useState } from "react";
 import { generateDots } from "../utils/generatePlate";
 import { simulateCVD } from "../utils/visionSimulation";

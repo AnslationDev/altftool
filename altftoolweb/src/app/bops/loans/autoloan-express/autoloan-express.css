@@ -1,0 +1,329 @@
+/* AutoLoan Express — racing-inspired lander styles */
+
+.autoexpress-page {
+  --ax-black: #0a0a0b; --ax-coal: #131316; --ax-panel: #1b1b20; --ax-line: #2a2a31;
+  --ax-red: #dc2626; --ax-red-hot: #ef4444; --ax-white: #fafafa; --ax-mist: #b9b9c2; --ax-dim: #8a8a94;
+  background: var(--ax-black);
+  color: var(--ax-white);
+  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  line-height: 1.6;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+.autoexpress-page * { box-sizing: border-box; }
+
+.autoexpress-wrap { max-width: 1120px; margin: 0 auto; padding: 0 24px; }
+
+/* ---------- Buttons & links ---------- */
+.autoexpress-btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 13px 26px;
+  background: var(--ax-red); color: #fff;
+  font-weight: 700; font-size: 0.95rem; letter-spacing: 0.02em;
+  text-decoration: none; border: none;
+  clip-path: polygon(10px 0, 100% 0, calc(100% - 10px) 100%, 0 100%);
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.autoexpress-btn:hover { background: var(--ax-red-hot); transform: translateX(3px); }
+
+.autoexpress-tel {
+  display: inline-flex; align-items: center; gap: 7px;
+  color: var(--ax-white); font-weight: 600; text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.autoexpress-tel:hover { color: var(--ax-red-hot); }
+
+.autoexpress-page a:focus-visible,
+.autoexpress-page button:focus-visible { outline: 3px solid var(--ax-red-hot); outline-offset: 3px; }
+
+/* ---------- Nav ---------- */
+.autoexpress-nav {
+  position: sticky; top: 0; z-index: 40;
+  background: rgba(10, 10, 11, 0.92);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--ax-line);
+}
+
+.autoexpress-nav-inner {
+  display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  padding: 14px 24px; max-width: 1120px; margin: 0 auto;
+}
+
+.autoexpress-logo {
+  display: flex; align-items: center; gap: 10px;
+  font-size: 1.15rem; font-weight: 800; font-style: italic; letter-spacing: 0.01em;
+}
+
+.autoexpress-logo-flag {
+  display: grid; grid-template-columns: repeat(2, 9px); grid-template-rows: repeat(2, 9px);
+  transform: skewX(-12deg);
+}
+
+.autoexpress-logo-flag span:nth-child(1),
+.autoexpress-logo-flag span:nth-child(4) { background: var(--ax-red); }
+.autoexpress-logo-flag span:nth-child(2),
+.autoexpress-logo-flag span:nth-child(3) { background: var(--ax-white); }
+
+.autoexpress-logo em { color: var(--ax-red-hot); font-style: inherit; }
+
+.autoexpress-nav-actions { display: flex; align-items: center; gap: 22px; }
+
+/* ---------- Checkered divider ---------- */
+.autoexpress-checker {
+  height: 14px;
+  background: repeating-conic-gradient(#e8e8ec 0% 25%, #1a1a1f 0% 50%) 0 0 / 28px 14px;
+  opacity: 0.85;
+  border-top: 1px solid var(--ax-line);
+  border-bottom: 1px solid var(--ax-line);
+}
+
+/* ---------- Hero ---------- */
+.autoexpress-hero {
+  position: relative;
+  display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 48px; align-items: center;
+  padding: 72px 24px 88px; max-width: 1120px; margin: 0 auto;
+}
+
+.autoexpress-hero::before {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background: repeating-linear-gradient(-55deg,
+    transparent 0 90px, rgba(220, 38, 38, 0.07) 90px 96px,
+    transparent 96px 200px, rgba(250, 250, 250, 0.03) 200px 204px);
+}
+
+.autoexpress-kicker {
+  display: inline-flex; align-items: center; gap: 8px;
+  color: var(--ax-red-hot);
+  font-size: 0.8rem; font-weight: 800; letter-spacing: 0.18em; text-transform: uppercase;
+  margin-bottom: 18px;
+}
+
+.autoexpress-hero h1 {
+  font-size: clamp(2.1rem, 4.5vw, 3.4rem);
+  font-weight: 900; font-style: italic; line-height: 1.08; letter-spacing: -0.01em;
+  margin: 0 0 20px;
+}
+
+.autoexpress-hero h1 em { color: var(--ax-red-hot); font-style: inherit; }
+
+.autoexpress-hero-sub { color: var(--ax-mist); font-size: 1.08rem; max-width: 46ch; margin: 0 0 30px; }
+
+.autoexpress-hero-ctas { display: flex; flex-wrap: wrap; align-items: center; gap: 20px; }
+
+.autoexpress-hero-note { margin-top: 16px; color: var(--ax-dim); font-size: 0.82rem; }
+
+/* ---------- Parallelogram photo frames ---------- */
+.autoexpress-frame {
+  position: relative;
+  clip-path: polygon(7% 0, 100% 0, 93% 100%, 0 100%);
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  background: var(--ax-panel);
+}
+
+.autoexpress-frame img {
+  width: 100%; height: 100%; object-fit: cover; display: block;
+  transition: transform 0.45s ease;
+}
+
+.autoexpress-frame:hover img { transform: scale(1.05); }
+
+.autoexpress-frame--hero { aspect-ratio: 5 / 4; }
+
+.autoexpress-frame::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(200deg, transparent 55%, rgba(10, 10, 11, 0.55));
+}
+
+.autoexpress-frame-stripe {
+  position: absolute; left: 0; right: 0; bottom: 0; height: 8px; z-index: 2;
+  background: repeating-linear-gradient(-55deg, var(--ax-red) 0 16px, var(--ax-black) 16px 26px);
+}
+
+/* ---------- Odometer stats ---------- */
+.autoexpress-stats { background: var(--ax-coal); border-top: 1px solid var(--ax-line); border-bottom: 1px solid var(--ax-line); }
+
+.autoexpress-stats-grid {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px;
+  padding: 40px 24px; max-width: 1120px; margin: 0 auto;
+}
+
+.autoexpress-stat { text-align: center; }
+
+.autoexpress-odometer { display: inline-flex; gap: 3px; margin-bottom: 8px; }
+
+.autoexpress-odometer span {
+  display: inline-block; min-width: 1.55ch; padding: 6px 4px;
+  background: var(--ax-black); border: 1px solid var(--ax-line); border-radius: 4px;
+  box-shadow: inset 0 -8px 12px rgba(0, 0, 0, 0.6);
+  font-size: 1.7rem; font-weight: 900; font-style: italic; font-variant-numeric: tabular-nums;
+  color: var(--ax-red-hot); text-align: center;
+}
+
+.autoexpress-odometer .autoexpress-odometer-unit {
+  color: var(--ax-white); font-size: 1.05rem; align-self: center;
+  background: none; border: none; box-shadow: none; min-width: 0;
+}
+
+.autoexpress-stat-label { color: var(--ax-dim); font-size: 0.82rem; letter-spacing: 0.12em; text-transform: uppercase; }
+
+/* ---------- Sections ---------- */
+.autoexpress-section { padding: 80px 0; position: relative; }
+
+.autoexpress-section--panel { background: var(--ax-coal); }
+
+.autoexpress-section-head { max-width: 62ch; margin: 0 auto 48px; text-align: center; }
+
+.autoexpress-section-head h2 {
+  font-size: clamp(1.6rem, 3vw, 2.3rem);
+  font-weight: 900; font-style: italic; margin: 0 0 12px;
+}
+
+.autoexpress-section-head h2 em { color: var(--ax-red-hot); font-style: inherit; }
+
+.autoexpress-section-head p { color: var(--ax-mist); margin: 0; }
+
+/* ---------- Lane steps ---------- */
+.autoexpress-lanes { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+
+.autoexpress-lane {
+  position: relative;
+  background: var(--ax-panel); border: 1px solid var(--ax-line);
+  padding: 30px 26px 26px;
+  clip-path: polygon(14px 0, 100% 0, calc(100% - 14px) 100%, 0 100%);
+  transition: transform 0.25s ease, border-color 0.25s ease;
+}
+
+.autoexpress-lane:hover { transform: translateY(-5px); border-color: var(--ax-red); }
+
+.autoexpress-lane-num { font-size: 2.4rem; font-weight: 900; font-style: italic; color: var(--ax-red); line-height: 1; margin: 0 0 14px; }
+
+.autoexpress-lane h3 { font-size: 1.12rem; font-weight: 800; margin: 0 0 10px; display: flex; align-items: center; gap: 9px; }
+
+.autoexpress-lane p { color: var(--ax-mist); font-size: 0.94rem; margin: 0; }
+
+.autoexpress-lane svg { color: var(--ax-red-hot); flex-shrink: 0; }
+
+/* ---------- Rate board (text-only mock) ---------- */
+.autoexpress-board { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; }
+
+.autoexpress-board-card {
+  background: var(--ax-black); border: 1px solid var(--ax-line); padding: 30px;
+  clip-path: polygon(18px 0, 100% 0, calc(100% - 18px) 100%, 0 100%);
+}
+
+.autoexpress-board-title {
+  display: flex; align-items: center; gap: 9px;
+  font-size: 0.8rem; font-weight: 800; letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--ax-red-hot); margin-bottom: 20px;
+}
+
+.autoexpress-board-row {
+  display: flex; justify-content: space-between; align-items: baseline; gap: 16px;
+  padding: 13px 4px; border-bottom: 1px dashed var(--ax-line);
+}
+
+.autoexpress-board-row:last-of-type { border-bottom: none; }
+
+.autoexpress-board-row dt { color: var(--ax-mist); font-size: 0.92rem; }
+
+.autoexpress-board-row dd {
+  margin: 0; color: var(--ax-white);
+  font-size: 1.25rem; font-weight: 900; font-style: italic; font-variant-numeric: tabular-nums;
+}
+
+.autoexpress-board-row dd small { color: var(--ax-dim); font-size: 0.72rem; font-weight: 600; font-style: normal; margin-left: 5px; }
+
+.autoexpress-board-fine { margin: 18px 4px 0; color: var(--ax-dim); font-size: 0.76rem; }
+
+.autoexpress-board-copy h2 { font-size: clamp(1.5rem, 2.8vw, 2.1rem); font-weight: 900; font-style: italic; margin: 0 0 16px; }
+
+.autoexpress-board-copy h2 em { color: var(--ax-red-hot); font-style: inherit; }
+
+.autoexpress-board-copy p { color: var(--ax-mist); margin: 0 0 22px; }
+
+.autoexpress-ticks { list-style: none; margin: 0 0 28px; padding: 0; display: grid; gap: 12px; }
+
+.autoexpress-ticks li { display: flex; align-items: flex-start; gap: 10px; color: var(--ax-mist); font-size: 0.95rem; }
+
+.autoexpress-ticks svg { color: var(--ax-red-hot); flex-shrink: 0; margin-top: 3px; }
+
+/* ---------- Gallery cards ---------- */
+.autoexpress-gallery { display: grid; grid-template-columns: repeat(3, 1fr); gap: 26px; }
+
+.autoexpress-gcard .autoexpress-frame { aspect-ratio: 3 / 2; }
+
+.autoexpress-gcard h3 { font-size: 1.05rem; font-weight: 800; margin: 16px 0 6px; }
+
+.autoexpress-gcard p { color: var(--ax-mist); font-size: 0.92rem; margin: 0; }
+
+/* ---------- Final CTA band ---------- */
+.autoexpress-cta-band {
+  position: relative; overflow: hidden; padding: 72px 0;
+  background:
+    repeating-linear-gradient(-55deg, transparent 0 70px, rgba(255, 255, 255, 0.05) 70px 74px),
+    linear-gradient(100deg, #7f1212, var(--ax-red) 55%, #991b1b);
+}
+
+.autoexpress-cta-inner { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 28px; }
+
+.autoexpress-cta-inner h2 { font-size: clamp(1.6rem, 3vw, 2.4rem); font-weight: 900; font-style: italic; margin: 0 0 8px; }
+
+.autoexpress-cta-inner p { margin: 0; color: rgba(255, 255, 255, 0.88); }
+
+.autoexpress-cta-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 22px; }
+
+.autoexpress-cta-band .autoexpress-btn { background: var(--ax-white); color: var(--ax-black); }
+
+.autoexpress-cta-band .autoexpress-btn:hover { background: #fff; }
+
+.autoexpress-cta-band .autoexpress-tel { font-size: 1.05rem; }
+
+/* ---------- Footer ---------- */
+.autoexpress-footer { background: var(--ax-black); border-top: 1px solid var(--ax-line); padding: 40px 0 48px; }
+
+.autoexpress-footer-inner { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 18px; }
+
+.autoexpress-footer p { color: var(--ax-dim); font-size: 0.85rem; margin: 0; }
+
+.autoexpress-footer-disclaimer { margin-top: 18px !important; font-size: 0.72rem !important; width: 100%; }
+
+/* ---------- Keyframes ---------- */
+@keyframes autoexpress-dash {
+  from { background-position: 0 0; }
+  to { background-position: 220px 0; }
+}
+
+.autoexpress-speedline {
+  height: 4px; width: 130px; margin-bottom: 20px;
+  background: repeating-linear-gradient(90deg, var(--ax-red) 0 26px, transparent 26px 44px);
+  animation: autoexpress-dash 2.6s linear infinite;
+}
+
+@keyframes autoexpress-rise {
+  from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.autoexpress-hero-copy { animation: autoexpress-rise 0.6s ease both; }
+.autoexpress-hero-media { animation: autoexpress-rise 0.6s ease 0.15s both; }
+
+@media (prefers-reduced-motion: reduce) {
+  .autoexpress-page *, .autoexpress-speedline { animation: none !important; transition: none !important; }
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 880px) {
+  .autoexpress-hero { grid-template-columns: 1fr; padding: 48px 24px 60px; gap: 36px; }
+  .autoexpress-board { grid-template-columns: 1fr; gap: 36px; }
+  .autoexpress-lanes { grid-template-columns: 1fr; }
+  .autoexpress-gallery { grid-template-columns: 1fr; }
+  .autoexpress-stats-grid { grid-template-columns: repeat(2, 1fr); gap: 28px 12px; }
+  .autoexpress-nav-actions .autoexpress-tel span { display: none; }
+  .autoexpress-cta-inner { flex-direction: column; text-align: center; }
+  .autoexpress-footer-inner { flex-direction: column; text-align: center; }
+  .autoexpress-section { padding: 56px 0; }
+}

@@ -1,3 +1,5 @@
+"use client";
+
 import { SlidersHorizontal, RotateCcw } from "lucide-react";
 import { adjustmentDefaults } from "../constants/styles";
 

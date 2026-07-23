@@ -1,0 +1,788 @@
+/* ============================================================
+   PeakShield Roofing — standalone lander styles
+   Palette: deep slate surfaces, copper accents (#b87333)
+   ============================================================ */
+
+.peakshield-page {
+  --ps-copper: #b87333;
+  --ps-copper-bright: #d98c45;
+  --ps-copper-soft: rgba(184, 115, 51, 0.14);
+  --ps-slate-950: #0b1118;
+  --ps-slate-900: #101823;
+  --ps-slate-800: #182333;
+  --ps-slate-700: #223145;
+  --ps-line: rgba(255, 255, 255, 0.09);
+  --ps-ink: #eef3f8;
+  --ps-ink-dim: #aebbc9;
+  --ps-radius: 14px;
+  font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  background: var(--ps-slate-950);
+  color: var(--ps-ink);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+.peakshield-page * {
+  box-sizing: border-box;
+}
+
+.peakshield-page h1,
+.peakshield-page h2,
+.peakshield-page h3 {
+  font-family: "Arial Narrow", "Segoe UI Semibold", "Helvetica Neue", Arial, sans-serif;
+  font-stretch: condensed;
+  letter-spacing: 0.01em;
+  line-height: 1.12;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.peakshield-container {
+  width: min(1160px, 92%);
+  margin: 0 auto;
+}
+
+/* ---------- Focus + links ---------- */
+.peakshield-page a:focus-visible,
+.peakshield-page button:focus-visible {
+  outline: 3px solid var(--ps-copper-bright);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+/* ---------- CTA buttons ---------- */
+.peakshield-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.85rem 1.6rem;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 1rem;
+  text-decoration: none;
+  transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+  white-space: nowrap;
+}
+
+.peakshield-btn-primary {
+  background: linear-gradient(135deg, var(--ps-copper), #9a5c24);
+  color: #fff8f1;
+  box-shadow: 0 6px 20px rgba(184, 115, 51, 0.35);
+}
+
+.peakshield-btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 26px rgba(184, 115, 51, 0.5);
+  background: linear-gradient(135deg, var(--ps-copper-bright), var(--ps-copper));
+}
+
+.peakshield-btn-ghost {
+  background: transparent;
+  color: var(--ps-ink);
+  border: 2px solid var(--ps-line);
+}
+
+.peakshield-btn-ghost:hover {
+  border-color: var(--ps-copper);
+  color: var(--ps-copper-bright);
+  transform: translateY(-2px);
+}
+
+/* ---------- Nav ---------- */
+.peakshield-nav {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: rgba(11, 17, 24, 0.92);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--ps-line);
+}
+
+.peakshield-nav-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.25rem;
+  padding: 0.85rem 0;
+}
+
+.peakshield-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  text-decoration: none;
+  color: var(--ps-ink);
+  font-weight: 800;
+  font-size: 1.2rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.peakshield-brand-mark {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: var(--ps-copper-soft);
+  color: var(--ps-copper-bright);
+  border: 1px solid rgba(184, 115, 51, 0.4);
+}
+
+.peakshield-brand em {
+  font-style: normal;
+  color: var(--ps-copper-bright);
+}
+
+.peakshield-nav-links {
+  display: flex;
+  gap: 1.5rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.peakshield-nav-links a {
+  color: var(--ps-ink-dim);
+  text-decoration: none;
+  font-size: 0.95rem;
+  font-weight: 600;
+  transition: color 0.15s ease;
+}
+
+.peakshield-nav-links a:hover {
+  color: var(--ps-copper-bright);
+}
+
+.peakshield-nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+}
+
+.peakshield-nav-phone {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  color: var(--ps-ink);
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 0.95rem;
+  transition: color 0.15s ease;
+}
+
+.peakshield-nav-phone:hover {
+  color: var(--ps-copper-bright);
+}
+
+.peakshield-nav .peakshield-btn {
+  padding: 0.6rem 1.2rem;
+  font-size: 0.9rem;
+}
+
+/* ---------- Urgency ribbon ---------- */
+.peakshield-ribbon {
+  background: linear-gradient(90deg, #7a4517, var(--ps-copper), #7a4517);
+  color: #fff6ec;
+  text-align: center;
+  padding: 0.55rem 1rem;
+  font-size: 0.92rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.peakshield-ribbon a {
+  color: #fff;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.peakshield-ribbon a:hover {
+  color: #ffe3c7;
+}
+
+/* ---------- Hero ---------- */
+.peakshield-hero {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+
+.peakshield-hero-media {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+}
+
+.peakshield-hero-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.peakshield-hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(
+    180deg,
+    rgba(9, 13, 20, 0.82) 0%,
+    rgba(12, 18, 28, 0.68) 45%,
+    rgba(11, 17, 24, 0.97) 100%
+  );
+}
+
+.peakshield-hero-inner {
+  padding: 6.5rem 0 5.5rem;
+  max-width: 720px;
+  animation: peakshield-rise 0.7s ease both;
+}
+
+.peakshield-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--ps-copper-soft);
+  border: 1px solid rgba(184, 115, 51, 0.45);
+  color: var(--ps-copper-bright);
+  font-size: 0.82rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  padding: 0.4rem 0.95rem;
+  border-radius: 999px;
+  margin-bottom: 1.4rem;
+}
+
+.peakshield-hero h1 {
+  font-size: clamp(2.4rem, 5.4vw, 4rem);
+  font-weight: 800;
+}
+
+.peakshield-hero h1 span {
+  color: var(--ps-copper-bright);
+}
+
+.peakshield-hero-sub {
+  margin: 1.3rem 0 2rem;
+  font-size: 1.13rem;
+  color: #cdd8e2;
+  max-width: 56ch;
+}
+
+.peakshield-hero-ctas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: center;
+}
+
+.peakshield-hero-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2.4rem;
+  margin-top: 3rem;
+  padding-top: 1.6rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.16);
+}
+
+.peakshield-stat strong {
+  display: block;
+  font-size: 1.7rem;
+  color: var(--ps-copper-bright);
+  font-weight: 800;
+}
+
+.peakshield-stat span {
+  font-size: 0.88rem;
+  color: var(--ps-ink-dim);
+}
+
+/* ---------- Section scaffolding ---------- */
+.peakshield-section {
+  padding: 5rem 0;
+}
+
+.peakshield-section-alt {
+  background: var(--ps-slate-900);
+  border-top: 1px solid var(--ps-line);
+  border-bottom: 1px solid var(--ps-line);
+}
+
+.peakshield-section-head {
+  max-width: 640px;
+  margin-bottom: 2.8rem;
+}
+
+.peakshield-kicker {
+  color: var(--ps-copper-bright);
+  font-size: 0.85rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  margin: 0 0 0.7rem;
+}
+
+.peakshield-section-head h2 {
+  font-size: clamp(1.7rem, 3.4vw, 2.5rem);
+  font-weight: 800;
+}
+
+.peakshield-section-head p {
+  color: var(--ps-ink-dim);
+  margin: 0.9rem 0 0;
+}
+
+/* ---------- Services grid ---------- */
+.peakshield-services-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.6rem;
+}
+
+.peakshield-service-card {
+  background: var(--ps-slate-800);
+  border: 1px solid var(--ps-line);
+  border-radius: var(--ps-radius);
+  overflow: hidden;
+  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.peakshield-service-card:hover {
+  transform: translateY(-5px);
+  border-color: rgba(184, 115, 51, 0.55);
+  box-shadow: 0 16px 34px rgba(0, 0, 0, 0.42);
+}
+
+.peakshield-card-media {
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+}
+
+.peakshield-card-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.35s ease;
+}
+
+.peakshield-service-card:hover .peakshield-card-media img {
+  transform: scale(1.06);
+}
+
+.peakshield-card-body {
+  padding: 1.5rem 1.5rem 1.7rem;
+}
+
+.peakshield-card-body h3 {
+  font-size: 1.22rem;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  color: var(--ps-ink);
+}
+
+.peakshield-card-body h3 svg {
+  color: var(--ps-copper-bright);
+  flex-shrink: 0;
+}
+
+.peakshield-card-body p {
+  color: var(--ps-ink-dim);
+  font-size: 0.96rem;
+  margin: 0.7rem 0 0;
+}
+
+/* ---------- Comparison panel ---------- */
+.peakshield-compare-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.6rem;
+}
+
+.peakshield-compare-item {
+  position: relative;
+  border-radius: var(--ps-radius);
+  overflow: hidden;
+  border: 1px solid var(--ps-line);
+}
+
+.peakshield-compare-media {
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+}
+
+.peakshield-compare-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.peakshield-compare-item:hover .peakshield-compare-media img {
+  transform: scale(1.05);
+}
+
+.peakshield-compare-tag {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.42rem 1rem;
+  border-radius: 999px;
+  font-size: 0.83rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.peakshield-tag-before {
+  background: rgba(20, 26, 36, 0.88);
+  color: #ffb4a2;
+  border: 1px solid rgba(255, 180, 162, 0.45);
+}
+
+.peakshield-tag-after {
+  background: rgba(20, 26, 36, 0.88);
+  color: #a7e8b4;
+  border: 1px solid rgba(167, 232, 180, 0.45);
+}
+
+.peakshield-compare-caption {
+  padding: 1.1rem 1.3rem;
+  background: var(--ps-slate-800);
+  border-top: 1px solid var(--ps-line);
+}
+
+.peakshield-compare-caption h3 {
+  font-size: 1.05rem;
+  font-weight: 800;
+}
+
+.peakshield-compare-caption p {
+  margin: 0.4rem 0 0;
+  color: var(--ps-ink-dim);
+  font-size: 0.92rem;
+}
+
+/* ---------- Insurance / process ---------- */
+.peakshield-process-wrap {
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+  gap: 3rem;
+  align-items: center;
+}
+
+.peakshield-process-media {
+  aspect-ratio: 4 / 5;
+  border-radius: var(--ps-radius);
+  overflow: hidden;
+  border: 1px solid var(--ps-line);
+  box-shadow: 0 24px 50px rgba(0, 0, 0, 0.45);
+}
+
+.peakshield-process-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.peakshield-steps {
+  list-style: none;
+  margin: 2rem 0 0;
+  padding: 0;
+  display: grid;
+  gap: 1.4rem;
+}
+
+.peakshield-step {
+  display: flex;
+  gap: 1.1rem;
+  align-items: flex-start;
+}
+
+.peakshield-step-num {
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--ps-copper-soft);
+  border: 1px solid rgba(184, 115, 51, 0.5);
+  color: var(--ps-copper-bright);
+  font-weight: 800;
+  font-size: 1.05rem;
+}
+
+.peakshield-step h3 {
+  font-size: 1.08rem;
+  font-weight: 800;
+}
+
+.peakshield-step p {
+  margin: 0.35rem 0 0;
+  color: var(--ps-ink-dim);
+  font-size: 0.95rem;
+}
+
+.peakshield-midcta {
+  margin-top: 2.2rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: center;
+}
+
+/* ---------- Badges ---------- */
+.peakshield-badge-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.4rem;
+}
+
+.peakshield-badge {
+  background: var(--ps-slate-800);
+  border: 1px solid var(--ps-line);
+  border-radius: var(--ps-radius);
+  padding: 1.6rem 1.3rem;
+  text-align: center;
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.peakshield-badge:hover {
+  transform: translateY(-4px);
+  border-color: rgba(184, 115, 51, 0.5);
+}
+
+.peakshield-badge svg {
+  color: var(--ps-copper-bright);
+  margin-bottom: 0.7rem;
+}
+
+.peakshield-badge h3 {
+  font-size: 1rem;
+  font-weight: 800;
+}
+
+.peakshield-badge p {
+  margin: 0.4rem 0 0;
+  font-size: 0.86rem;
+  color: var(--ps-ink-dim);
+}
+
+/* ---------- Gallery ---------- */
+.peakshield-gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.4rem;
+}
+
+.peakshield-gallery-item {
+  aspect-ratio: 4 / 3;
+  border-radius: var(--ps-radius);
+  overflow: hidden;
+  border: 1px solid var(--ps-line);
+  position: relative;
+}
+
+.peakshield-gallery-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.peakshield-gallery-item:hover img {
+  transform: scale(1.07);
+}
+
+.peakshield-gallery-label {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 0.75rem 1rem;
+  background: linear-gradient(180deg, transparent, rgba(9, 13, 20, 0.9));
+  color: #e7eef5;
+  font-size: 0.88rem;
+  font-weight: 700;
+}
+
+/* ---------- Final CTA band ---------- */
+.peakshield-cta-band {
+  background:
+    linear-gradient(120deg, rgba(122, 69, 23, 0.92), rgba(16, 24, 35, 0.94)),
+    var(--ps-slate-900);
+  border-top: 1px solid rgba(184, 115, 51, 0.4);
+  border-bottom: 1px solid rgba(184, 115, 51, 0.4);
+  padding: 4.5rem 0;
+  text-align: center;
+}
+
+.peakshield-cta-band h2 {
+  font-size: clamp(1.9rem, 4vw, 2.8rem);
+  font-weight: 800;
+}
+
+.peakshield-cta-band p {
+  color: #dbc9b8;
+  max-width: 52ch;
+  margin: 1rem auto 2rem;
+}
+
+.peakshield-cta-band-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.1rem;
+}
+
+.peakshield-cta-band .peakshield-btn-ghost {
+  border-color: rgba(255, 255, 255, 0.35);
+}
+
+/* ---------- Footer ---------- */
+.peakshield-footer {
+  padding: 3rem 0 2.4rem;
+  background: var(--ps-slate-950);
+}
+
+.peakshield-footer-inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.4rem;
+  padding-bottom: 1.6rem;
+  border-bottom: 1px solid var(--ps-line);
+}
+
+.peakshield-footer-phone {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--ps-ink);
+  text-decoration: none;
+  font-weight: 700;
+}
+
+.peakshield-footer-phone:hover {
+  color: var(--ps-copper-bright);
+}
+
+.peakshield-footer-meta {
+  margin-top: 1.4rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0.8rem;
+  color: #7a8896;
+  font-size: 0.82rem;
+}
+
+/* ---------- Animations ---------- */
+@keyframes peakshield-rise {
+  from {
+    opacity: 0;
+    transform: translateY(26px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes peakshield-pulse {
+  0%,
+  100% {
+    box-shadow: 0 6px 20px rgba(184, 115, 51, 0.35);
+  }
+  50% {
+    box-shadow: 0 6px 30px rgba(184, 115, 51, 0.62);
+  }
+}
+
+.peakshield-hero .peakshield-btn-primary {
+  animation: peakshield-pulse 2.6s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .peakshield-page *,
+  .peakshield-page *::before,
+  .peakshield-page *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 880px) {
+  .peakshield-nav-links {
+    display: none;
+  }
+
+  .peakshield-nav-phone span {
+    display: none;
+  }
+
+  .peakshield-hero-inner {
+    padding: 4.5rem 0 4rem;
+  }
+
+  .peakshield-hero-stats {
+    gap: 1.6rem;
+  }
+
+  .peakshield-services-grid,
+  .peakshield-gallery-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .peakshield-compare-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .peakshield-process-wrap {
+    grid-template-columns: 1fr;
+    gap: 2.2rem;
+  }
+
+  .peakshield-process-media {
+    aspect-ratio: 16 / 10;
+  }
+
+  .peakshield-badge-row {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .peakshield-section {
+    padding: 3.4rem 0;
+  }
+
+  .peakshield-footer-inner,
+  .peakshield-footer-meta {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+@media (max-width: 480px) {
+  .peakshield-badge-row {
+    grid-template-columns: 1fr;
+  }
+
+  .peakshield-btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .peakshield-nav .peakshield-btn {
+    width: auto;
+  }
+}

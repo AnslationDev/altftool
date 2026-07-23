@@ -3,39 +3,44 @@ export const spec = {
   ...{
   "slug": "days-between-dates-calculator",
   "title": "Days Between Dates Calculator",
-  "description": "Calculate the number of days between two dates.",
+  "description": "Count the days, weeks and months between any two dates.",
   "badge": "Calculator",
   "category": [
     "Calculator"
   ],
-  "icon": "calendar",
-  "iconColor": "text-amber-600",
+  "icon": "calendar-range",
+  "iconColor": "text-indigo-600",
   "fields": [
     {
-      "key": "startdate",
-      "label": "Start Date",
+      "key": "start",
+      "label": "Start date",
       "type": "date",
       "default": ""
     },
     {
-      "key": "enddate",
-      "label": "End Date",
+      "key": "end",
+      "label": "End date",
       "type": "date",
       "default": ""
     }
   ],
   "presets": [
     {
-      "label": "Example",
+      "label": "This year",
       "values": {
-        "startDate": "2023-01-01",
-        "endDate": "2023-01-15"
+        "start": "2026-01-01",
+        "end": "2026-12-31"
       }
     }
-  ],
-  "note": "This tool calculates the number of full days between two dates."
+  ]
 },
-  compute: (values, mode) => { let startDate = new Date(values.startDate), endDate = new Date(values.endDate); if (isNaN(startDate.getTime()) || isNaN(endDate.getTime())) return { result: 'Invalid date(s)' }; let diffTime = Math.abs(endDate - startDate); let diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); return { result: `${diffDays} days` }; },
+  compute: (values) => { const num=(v)=>typeof v==="number"?v:Number(v); const money=(n)=>Number.isFinite(Number(n))?Number(n).toLocaleString(undefined,{maximumFractionDigits:2}):"—";
+      const a = new Date(values.start), b = new Date(values.end);
+      if (isNaN(a) || isNaN(b)) return { result: "—", caption: "Pick both dates" };
+      const days = Math.round((b - a) / 86400000);
+      const abs = Math.abs(days);
+      return { result: abs.toLocaleString() + " days", caption: days < 0 ? "end is before start" : `${Math.floor(abs / 7)} weeks ${abs % 7} days`, rows: [["Weeks", (abs / 7).toFixed(1)], ["Months", (abs / 30.44).toFixed(1)], ["Years", (abs / 365.25).toFixed(2)]] };
+    },
 };
 
 export default spec;

@@ -1,3 +1,5 @@
+"use client";
+
 import { saveAs } from 'file-saver';
 import { jsPDF } from 'jspdf';
 

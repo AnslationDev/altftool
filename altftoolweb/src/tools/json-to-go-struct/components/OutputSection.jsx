@@ -1,3 +1,5 @@
+"use client";
+
 import { AnimatePresence, motion } from "framer-motion";
 import { Check, Copy, Download, FileJson2, FileText, GitBranch, Layers3, Save } from "lucide-react";
 import { copyToClipboard } from "../utils/copyToClipboard";

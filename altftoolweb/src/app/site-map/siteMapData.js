@@ -50,6 +50,7 @@ export const SITE_MAP_GROUPS = [
     title: "Business & services",
     description: "Business products, travel planning, housing services, and specialist destinations.",
     prefixes: [
+      "/bops",
       "/business-ops",
       "/housingneeds",
       "/tripfindbox",

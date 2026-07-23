@@ -1,3 +1,5 @@
+"use client";
+
 /**
  * Alarm utilities for analog-clock-alarm tool.
  */

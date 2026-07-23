@@ -1,3 +1,5 @@
+"use client";
+
 export const COLORS = ["green", "red", "yellow", "blue"];
 
 export const MODES = {

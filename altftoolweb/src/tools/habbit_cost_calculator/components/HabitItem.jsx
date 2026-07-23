@@ -1,3 +1,5 @@
+"use client";
+
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Trash2, Coffee, Utensils, ShoppingBag, Car, Film, Music, Heart, Repeat, Calendar } from 'lucide-react';

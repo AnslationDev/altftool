@@ -1,0 +1,1046 @@
+/* ================================================================
+   Business Ops dashboard
+   Scoped to /bops only. Imported by src/app/bops/page.jsx.
+
+   Every colour resolves through the global AltFTool design tokens
+   (--background, --card, --border, --primary, ...) which already flip
+   under [data-theme="dark"], so dark mode needs no extra rules here
+   beyond a handful of surface/glow adjustments.
+   ================================================================ */
+
+/* Standalone shell — used by product pages under /bops/<slug>/ that
+   render without the global AltFTool header/footer. */
+.bizops-page {
+  min-height: 100vh;
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-primary);
+  display: flex;
+  flex-direction: column;
+}
+
+/* The dashboard is standalone again (its own header + AltF brand bar), so no
+   embedded variant is needed — .bizops-page's full-viewport shell applies. */
+
+/* ---------- header ---------- */
+
+.bizops-header {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  border-bottom: 1px solid var(--border);
+  background: color-mix(in srgb, var(--card) 82%, transparent);
+  backdrop-filter: saturate(180%) blur(12px);
+  -webkit-backdrop-filter: saturate(180%) blur(12px);
+}
+
+.bizops-header-inner {
+  max-width: var(--anslation-ds-container);
+  margin-inline: auto;
+  padding: 0.75rem var(--anslation-ds-gutter);
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.bizops-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.625rem;
+  font-weight: 650;
+  font-size: 0.975rem;
+  letter-spacing: -0.01em;
+  color: var(--foreground);
+  text-decoration: none;
+}
+
+.bizops-brand-mark {
+  display: grid;
+  place-items: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: var(--anslation-ds-radius-sm);
+  background: var(--anslation-ds-cta-gradient);
+  color: #fff;
+  flex-shrink: 0;
+}
+
+/* .bizops-brand-sub removed — the "AltFTool" text label it rendered is now the
+   AltfByline logo lockup (see _shared/altf-brand.css). */
+
+.bizops-header-actions {
+  margin-left: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.bizops-ghost-link {
+  display: none;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.45rem 0.7rem;
+  border-radius: var(--anslation-ds-radius-sm);
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--muted-foreground);
+  text-decoration: none;
+  transition: background-color 0.16s ease, color 0.16s ease;
+}
+
+.bizops-ghost-link:hover {
+  background: var(--muted);
+  color: var(--foreground);
+}
+
+@media (min-width: 768px) {
+  .bizops-ghost-link {
+    display: inline-flex;
+  }
+}
+
+.bizops-icon-button {
+  display: grid;
+  place-items: center;
+  width: 2.15rem;
+  height: 2.15rem;
+  border-radius: var(--anslation-ds-radius-sm);
+  border: 1px solid var(--border);
+  background: var(--card);
+  color: var(--muted-foreground);
+  cursor: pointer;
+  transition: background-color 0.16s ease, color 0.16s ease,
+    border-color 0.16s ease;
+}
+
+.bizops-icon-button:hover {
+  background: var(--muted);
+  color: var(--foreground);
+  border-color: var(--anslation-ds-border-strong);
+}
+
+.bizops-icon-button:focus-visible {
+  outline: none;
+  box-shadow: var(--anslation-ds-focus-ring);
+}
+
+/* ---------- hero ---------- */
+
+.bizops-hero {
+  position: relative;
+  overflow: hidden;
+  border-bottom: 1px solid var(--border);
+  background:
+    radial-gradient(
+      70rem 26rem at 12% -22%,
+      color-mix(in srgb, var(--anslation-ds-primary) 16%, transparent),
+      transparent 68%
+    ),
+    radial-gradient(
+      52rem 22rem at 96% -10%,
+      color-mix(in srgb, var(--anslation-ds-secondary) 15%, transparent),
+      transparent 62%
+    );
+}
+
+[data-theme="dark"] .bizops-hero {
+  background:
+    radial-gradient(
+      70rem 26rem at 12% -22%,
+      color-mix(in srgb, var(--anslation-ds-primary) 22%, transparent),
+      transparent 68%
+    ),
+    radial-gradient(
+      52rem 22rem at 96% -10%,
+      color-mix(in srgb, var(--anslation-ds-secondary) 18%, transparent),
+      transparent 62%
+    );
+}
+
+.bizops-hero-inner {
+  max-width: var(--anslation-ds-container);
+  margin-inline: auto;
+  padding: clamp(2.5rem, 6vw, 4.5rem) var(--anslation-ds-gutter)
+    clamp(2rem, 4vw, 3rem);
+}
+
+/* Breadcrumb trail above the hero title (Business Ops > Housing Needs > …). */
+.bizops-crumbs {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.1rem;
+  margin-bottom: 1.1rem;
+  font-size: 0.8rem;
+}
+.bizops-crumb-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.1rem;
+}
+.bizops-crumb {
+  color: var(--muted-foreground);
+  text-decoration: none;
+  border-radius: 6px;
+  padding: 0.1rem 0.35rem;
+  transition: color 0.15s ease, background-color 0.15s ease;
+}
+a.bizops-crumb:hover {
+  color: var(--foreground);
+  background: color-mix(in srgb, var(--foreground) 6%, transparent);
+}
+.bizops-crumb--current {
+  color: var(--foreground);
+  font-weight: 600;
+}
+.bizops-crumb-sep {
+  color: var(--muted-foreground);
+  opacity: 0.55;
+  flex-shrink: 0;
+}
+
+/* ---- Housing Needs category tabs ------------------------------------------
+   Replaces the dedicated category pages: one tab per category, page grid
+   swaps in place. The active underline is a framer-motion shared-layout
+   element (.hn-tab-underline) that slides between tabs. */
+.hn-tabs-wrap { width: 100%; }
+
+/* The strip scrolls when tabs overflow; chevron buttons fade in over each end
+   that has more content. */
+.hn-tabs-bar { position: relative; }
+
+.hn-tabs {
+  display: flex;
+  gap: 0.15rem;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: none;
+  border-bottom: 1px solid var(--border);
+  -webkit-overflow-scrolling: touch;
+}
+.hn-tabs::-webkit-scrollbar { display: none; }
+
+.hn-tabs-scroll {
+  position: absolute;
+  top: 0;
+  bottom: 1px; /* keep the strip's bottom border visible under the chevron */
+  width: 3rem;
+  display: flex;
+  align-items: center;
+  padding: 0;
+  border: 0;
+  cursor: pointer;
+  z-index: 3;
+  color: var(--foreground);
+  transition: opacity 0.2s ease;
+}
+.hn-tabs-scroll--left {
+  left: 0;
+  justify-content: flex-start;
+  background: linear-gradient(to right, var(--background) 45%, transparent);
+}
+.hn-tabs-scroll--right {
+  right: 0;
+  justify-content: flex-end;
+  background: linear-gradient(to left, var(--background) 45%, transparent);
+}
+.hn-tabs-scroll[data-hidden="true"] {
+  opacity: 0;
+  pointer-events: none;
+}
+.hn-tabs-scroll-ico {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.9rem;
+  height: 1.9rem;
+  border-radius: 999px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.14);
+  transition: background-color 0.18s ease, color 0.18s ease;
+}
+.hn-tabs-scroll:hover .hn-tabs-scroll-ico {
+  background: var(--muted);
+  color: var(--primary);
+}
+.hn-tabs-scroll:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: -2px;
+  border-radius: 8px;
+}
+
+.hn-tab {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-shrink: 0;
+  padding: 0.7rem 0.95rem 0.8rem;
+  border: 0;
+  background: transparent;
+  color: var(--muted-foreground);
+  font: inherit;
+  font-size: 0.9rem;
+  font-weight: 550;
+  line-height: 1;
+  white-space: nowrap;
+  cursor: pointer;
+  border-radius: 10px 10px 0 0;
+  transition: color 0.18s ease, background-color 0.18s ease;
+}
+.hn-tab:hover {
+  color: var(--foreground);
+  background: color-mix(in srgb, var(--foreground) 4%, transparent);
+}
+.hn-tab[data-active="true"] {
+  color: var(--foreground);
+  font-weight: 650;
+}
+.hn-tab:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: -2px;
+}
+
+.hn-tab-icon { opacity: 0.8; }
+.hn-tab[data-active="true"] .hn-tab-icon { opacity: 1; color: var(--primary); }
+
+.hn-tab-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.15rem;
+  height: 1.15rem;
+  padding: 0 0.35rem;
+  border-radius: 999px;
+  background: var(--muted);
+  color: var(--muted-foreground);
+  font-size: 0.7rem;
+  font-weight: 650;
+}
+.hn-tab[data-active="true"] .hn-tab-count {
+  background: color-mix(in srgb, var(--primary) 16%, transparent);
+  color: var(--anslation-ds-primary-active);
+}
+[data-theme="dark"] .hn-tab[data-active="true"] .hn-tab-count {
+  color: var(--anslation-ds-primary);
+}
+
+.hn-tab-underline {
+  position: absolute;
+  left: 0.5rem;
+  right: 0.5rem;
+  bottom: -1px;
+  height: 2px;
+  border-radius: 2px 2px 0 0;
+  background: var(--primary);
+}
+
+.hn-tab-panel { margin-top: 1.75rem; }
+
+/* =========================================================================
+   Landing-page layout (bops dashboard + Housing Needs)
+   A marketing surface rather than an admin catalog: immersive centred hero,
+   CTAs, value-prop and CTA-band sections. Reuses the design tokens so it
+   still reads as AltFTool and follows the theme.
+   ========================================================================= */
+
+/* Accent used for TEXT on the page background. --primary (teal-500) is a
+   button-fill colour and only reaches ~2:1 as text on white, so text accents
+   use the darker teal-700 in light and the brighter teal-500 in dark — the
+   same pattern the kicker/eyebrow pills already use. */
+.bizops-page { --biz-accent-text: var(--anslation-ds-primary-active); }
+[data-theme="dark"] .bizops-page { --biz-accent-text: var(--anslation-ds-primary); }
+
+.biz-lp-hero {
+  position: relative;
+  text-align: center;
+  overflow: hidden;
+  padding: clamp(3.5rem, 8vw, 6rem) 1.5rem clamp(2.75rem, 5vw, 4rem);
+  border-bottom: 1px solid var(--border);
+}
+.biz-lp-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(
+    58% 52% at 50% -6%,
+    color-mix(in srgb, var(--primary) 22%, transparent),
+    transparent 72%
+  );
+}
+.biz-lp-hero-inner {
+  position: relative;
+  max-width: 54rem;
+  margin: 0 auto;
+}
+.biz-lp-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.35rem 0.85rem;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--primary) 30%, var(--border));
+  background: color-mix(in srgb, var(--primary) 10%, transparent);
+  color: var(--anslation-ds-primary-active);
+  font-size: 0.775rem;
+  font-weight: 650;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+[data-theme="dark"] .biz-lp-eyebrow { color: var(--anslation-ds-primary); }
+
+.biz-lp-title {
+  margin: 1.25rem 0 0;
+  font-size: clamp(2.4rem, 6vw, 4rem);
+  font-weight: 800;
+  line-height: 1.04;
+  letter-spacing: -0.035em;
+}
+.biz-lp-title .accent { color: var(--biz-accent-text); }
+
+.biz-lp-lede {
+  max-width: 40rem;
+  margin: 1.3rem auto 0;
+  font-size: clamp(1.02rem, 2vw, 1.2rem);
+  line-height: 1.6;
+  color: var(--muted-foreground);
+}
+
+.biz-lp-cta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  justify-content: center;
+  margin-top: 2.1rem;
+}
+
+.biz-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.85rem 1.6rem;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  font-weight: 650;
+  font-size: 0.98rem;
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform 0.15s ease, background-color 0.15s ease,
+    border-color 0.15s ease, box-shadow 0.15s ease;
+}
+.biz-btn:hover { transform: translateY(-2px); }
+.biz-btn:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
+.biz-btn--primary {
+  background: var(--anslation-ds-primary-active);
+  color: #ffffff;
+  box-shadow: 0 10px 26px -10px color-mix(in srgb, var(--anslation-ds-primary-active) 65%, transparent);
+}
+.biz-btn--ghost {
+  background: var(--card);
+  border-color: var(--border);
+  color: var(--foreground);
+}
+.biz-btn--ghost:hover { border-color: var(--foreground); }
+
+/* Sections */
+.biz-lp-section {
+  padding: clamp(3rem, 7vw, 5rem) 1.5rem;
+  scroll-margin-top: 5rem;
+}
+.biz-lp-section--tint {
+  background: color-mix(in srgb, var(--foreground) 3%, transparent);
+  border-block: 1px solid var(--border);
+}
+.biz-lp-inner { max-width: 1140px; margin: 0 auto; }
+
+.biz-lp-head { text-align: center; max-width: 42rem; margin: 0 auto clamp(2rem, 5vw, 3rem); }
+.biz-lp-head-eyebrow {
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--biz-accent-text);
+}
+.biz-lp-head-title {
+  margin: 0.55rem 0 0;
+  font-size: clamp(1.7rem, 3.5vw, 2.4rem);
+  font-weight: 770;
+  letter-spacing: -0.025em;
+}
+.biz-lp-head-sub {
+  margin: 0.9rem 0 0;
+  font-size: 1.05rem;
+  line-height: 1.6;
+  color: var(--muted-foreground);
+}
+
+/* Value-prop / feature grid */
+.biz-lp-features {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
+  gap: 1.25rem;
+}
+.biz-lp-feature {
+  padding: 1.75rem;
+  border-radius: 18px;
+  border: 1px solid var(--border);
+  background: var(--card);
+}
+.biz-lp-feature-ico {
+  display: inline-flex;
+  width: 2.9rem;
+  height: 2.9rem;
+  align-items: center;
+  justify-content: center;
+  border-radius: 13px;
+  margin-bottom: 1.1rem;
+  background: color-mix(in srgb, var(--primary) 13%, transparent);
+  color: var(--biz-accent-text);
+}
+.biz-lp-feature h3 { margin: 0 0 0.45rem; font-size: 1.12rem; font-weight: 700; }
+.biz-lp-feature p { margin: 0; font-size: 0.96rem; line-height: 1.6; color: var(--muted-foreground); }
+
+/* Product showcase (bops) — larger cards than the dashboard catalog */
+.biz-lp-showcase {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
+  gap: 1.35rem;
+}
+.biz-lp-product {
+  display: flex;
+  flex-direction: column;
+  padding: 1.85rem;
+  border-radius: 20px;
+  border: 1px solid var(--border);
+  background: var(--card);
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
+}
+.biz-lp-product:hover {
+  transform: translateY(-4px);
+  border-color: color-mix(in srgb, var(--primary) 45%, var(--border));
+  box-shadow: 0 22px 50px -28px rgba(15, 23, 42, 0.5);
+}
+.biz-lp-product-ico {
+  display: inline-flex;
+  width: 3.1rem;
+  height: 3.1rem;
+  align-items: center;
+  justify-content: center;
+  border-radius: 15px;
+  margin-bottom: 1.15rem;
+  background: color-mix(in srgb, var(--primary) 13%, transparent);
+  color: var(--biz-accent-text);
+}
+.biz-lp-product h3 { margin: 0; font-size: 1.3rem; font-weight: 740; letter-spacing: -0.01em; }
+.biz-lp-product .biz-lp-product-tag { margin: 0.2rem 0 0; font-size: 0.9rem; color: var(--biz-accent-text); font-weight: 600; }
+.biz-lp-product p { margin: 0.85rem 0 0; font-size: 0.97rem; line-height: 1.6; color: var(--muted-foreground); }
+.biz-lp-product-go {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-top: 1.5rem;
+  font-weight: 650;
+  font-size: 0.95rem;
+  color: var(--foreground);
+}
+.biz-lp-product:hover .biz-lp-product-go { color: var(--biz-accent-text); }
+
+/* Small note under a partly-filled collection, and the empty "coming soon" card */
+.biz-lp-note {
+  margin: 1.75rem 0 0;
+  text-align: center;
+  font-size: 0.92rem;
+  color: var(--muted-foreground);
+}
+.biz-lp-empty {
+  max-width: 34rem;
+  margin: 0 auto;
+  padding: clamp(2.5rem, 5vw, 3.5rem) 1.5rem;
+  text-align: center;
+  border-radius: 20px;
+  border: 1px dashed var(--border);
+  background: color-mix(in srgb, var(--foreground) 2%, transparent);
+}
+.biz-lp-empty-ico {
+  display: inline-flex;
+  width: 3.2rem;
+  height: 3.2rem;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  margin-bottom: 1rem;
+  background: color-mix(in srgb, var(--primary) 12%, transparent);
+  color: var(--biz-accent-text);
+}
+.biz-lp-empty-title { margin: 0; font-size: 1.2rem; font-weight: 720; }
+.biz-lp-empty-text { margin: 0.5rem 0 0; color: var(--muted-foreground); line-height: 1.6; }
+
+/* CTA band */
+.biz-lp-band-wrap { padding: 0 1.5rem clamp(3.5rem, 7vw, 5.5rem); }
+.biz-lp-band {
+  position: relative;
+  overflow: hidden;
+  max-width: 1140px;
+  margin: 0 auto;
+  padding: clamp(2.75rem, 5vw, 4rem) 1.5rem;
+  border-radius: 26px;
+  text-align: center;
+  background: linear-gradient(
+    135deg,
+    var(--anslation-ds-primary),
+    color-mix(in srgb, var(--anslation-ds-primary) 55%, #062b28)
+  );
+  color: #ffffff;
+}
+.biz-lp-band h2 {
+  margin: 0;
+  font-size: clamp(1.6rem, 3.5vw, 2.3rem);
+  font-weight: 780;
+  letter-spacing: -0.02em;
+}
+.biz-lp-band p {
+  max-width: 34rem;
+  margin: 0.9rem auto 0;
+  font-size: 1.05rem;
+  line-height: 1.6;
+  opacity: 0.94;
+}
+.biz-lp-band .biz-btn--primary {
+  margin-top: 1.75rem;
+  background: #ffffff;
+  color: var(--anslation-ds-primary-active);
+  box-shadow: 0 12px 30px -10px rgba(0, 0, 0, 0.35);
+}
+
+.bizops-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.3rem 0.7rem;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--primary) 30%, var(--border));
+  background: color-mix(in srgb, var(--primary) 10%, transparent);
+  color: var(--anslation-ds-primary-active);
+  font-size: 0.775rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+}
+
+[data-theme="dark"] .bizops-kicker {
+  color: var(--anslation-ds-primary);
+}
+
+.bizops-title {
+  margin-top: 1rem;
+  font-size: clamp(2rem, 4.6vw, 3.15rem);
+  font-weight: 700;
+  line-height: 1.08;
+  letter-spacing: -0.025em;
+  color: var(--foreground);
+}
+
+.bizops-title-accent {
+  background: var(--anslation-ds-cta-gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.bizops-lede {
+  margin-top: 0.95rem;
+  max-width: 44rem;
+  font-size: clamp(0.98rem, 1.4vw, 1.075rem);
+  line-height: 1.7;
+  color: var(--muted-foreground);
+}
+
+/* ---------- stats ---------- */
+
+.bizops-stats {
+  margin-top: 2rem;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
+}
+
+@media (min-width: 720px) {
+  .bizops-stats {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1rem;
+  }
+}
+
+.bizops-stat {
+  padding: 0.9rem 1.05rem;
+  border-radius: var(--anslation-ds-radius-lg);
+  border: 1px solid var(--border);
+  background: color-mix(in srgb, var(--card) 76%, transparent);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.bizops-stat-value {
+  font-size: 1.6rem;
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: var(--foreground);
+  font-variant-numeric: tabular-nums;
+}
+
+.bizops-stat-label {
+  margin-top: 0.2rem;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--muted-foreground);
+}
+
+/* ---------- toolbar ---------- */
+
+.bizops-main {
+  flex: 1;
+  max-width: var(--anslation-ds-container);
+  width: 100%;
+  margin-inline: auto;
+  padding: clamp(1.75rem, 4vw, 2.75rem) var(--anslation-ds-gutter)
+    clamp(3rem, 6vw, 4.5rem);
+}
+
+.bizops-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.bizops-filters {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.25rem;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--card);
+}
+
+.bizops-filter {
+  appearance: none;
+  border: 0;
+  cursor: pointer;
+  padding: 0.4rem 0.85rem;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--muted-foreground);
+  font-size: 0.845rem;
+  font-weight: 550;
+  font-family: inherit;
+  transition: background-color 0.16s ease, color 0.16s ease;
+}
+
+.bizops-filter:hover {
+  color: var(--foreground);
+}
+
+.bizops-filter[aria-pressed="true"] {
+  background: var(--primary);
+  color: var(--primary-foreground);
+}
+
+.bizops-filter:focus-visible {
+  outline: none;
+  box-shadow: var(--anslation-ds-focus-ring);
+}
+
+.bizops-filter-count {
+  margin-left: 0.35rem;
+  opacity: 0.72;
+  font-variant-numeric: tabular-nums;
+}
+
+.bizops-search {
+  position: relative;
+  margin-left: auto;
+  flex: 1 1 14rem;
+  max-width: 20rem;
+}
+
+.bizops-search-icon {
+  position: absolute;
+  left: 0.7rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--muted-foreground);
+  pointer-events: none;
+}
+
+.bizops-search input {
+  width: 100%;
+  padding: 0.55rem 0.8rem 0.55rem 2.1rem;
+  border-radius: var(--anslation-ds-radius-sm);
+  border: 1px solid var(--border);
+  background: var(--card);
+  color: var(--foreground);
+  font-size: 0.875rem;
+  font-family: inherit;
+  transition: border-color 0.16s ease, box-shadow 0.16s ease;
+}
+
+.bizops-search input::placeholder {
+  color: var(--input-placeholder);
+}
+
+.bizops-search input:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: var(--anslation-ds-focus-ring);
+}
+
+/* ---------- grid + cards ---------- */
+
+.bizops-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 20rem), 1fr));
+  gap: 1.15rem;
+}
+
+.bizops-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+  padding: 1.35rem;
+  border-radius: var(--anslation-ds-radius-xl);
+  border: 1px solid var(--border);
+  background: var(--card);
+  box-shadow: var(--anslation-ds-shadow-sm);
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+a.bizops-card:hover {
+  transform: translateY(-3px);
+  border-color: color-mix(in srgb, var(--primary) 42%, var(--border));
+  box-shadow: var(--anslation-ds-shadow-md);
+}
+
+a.bizops-card:focus-visible {
+  outline: none;
+  box-shadow: var(--anslation-ds-focus-ring);
+}
+
+.bizops-card--planned {
+  border-style: dashed;
+  background: color-mix(in srgb, var(--card) 62%, transparent);
+  cursor: default;
+}
+
+.bizops-card--planned .bizops-card-title,
+.bizops-card--planned .bizops-card-desc {
+  opacity: 0.82;
+}
+
+.bizops-card-top {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.85rem;
+}
+
+.bizops-card-icon {
+  display: grid;
+  place-items: center;
+  width: 2.85rem;
+  height: 2.85rem;
+  border-radius: var(--anslation-ds-radius-lg);
+  color: #fff;
+  flex-shrink: 0;
+  box-shadow: var(--anslation-ds-shadow-sm);
+}
+
+.bizops-card-icon[data-accent="sky"] {
+  background: linear-gradient(135deg, #0ea5e9, #38bdf8);
+}
+.bizops-card-icon[data-accent="amber"] {
+  background: linear-gradient(135deg, #d97706, #fbbf24);
+}
+.bizops-card-icon[data-accent="violet"] {
+  background: linear-gradient(135deg, #7c3aed, #a78bfa);
+}
+.bizops-card-icon[data-accent="emerald"] {
+  background: linear-gradient(135deg, #059669, #34d399);
+}
+.bizops-card-icon[data-accent="rose"] {
+  background: linear-gradient(135deg, #e11d48, #fb7185);
+}
+
+.bizops-card--planned .bizops-card-icon {
+  filter: grayscale(0.55);
+  opacity: 0.75;
+}
+
+.bizops-card-heading {
+  display: block;
+  min-width: 0;
+  flex: 1;
+}
+
+.bizops-card-title {
+  display: block;
+  font-size: 1.075rem;
+  font-weight: 650;
+  line-height: 1.25;
+  letter-spacing: -0.012em;
+  color: var(--foreground);
+}
+
+.bizops-card-tagline {
+  display: block;
+  margin-top: 0.15rem;
+  font-size: 0.83rem;
+  color: var(--muted-foreground);
+}
+
+.bizops-badge {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.22rem 0.55rem;
+  border-radius: 999px;
+  font-size: 0.7rem;
+  font-weight: 650;
+  letter-spacing: 0.015em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.bizops-badge[data-tone="live"] {
+  background: var(--anslation-ds-success-soft);
+  color: var(--anslation-ds-success);
+}
+
+.bizops-badge[data-tone="beta"] {
+  background: var(--anslation-ds-info-soft);
+  color: var(--anslation-ds-info);
+}
+
+.bizops-badge[data-tone="planned"] {
+  background: var(--anslation-ds-warning-soft);
+  color: var(--anslation-ds-warning);
+}
+
+.bizops-badge-dot {
+  width: 0.4rem;
+  height: 0.4rem;
+  border-radius: 999px;
+  background: currentColor;
+}
+
+.bizops-card-desc {
+  font-size: 0.885rem;
+  line-height: 1.62;
+  color: var(--muted-foreground);
+}
+
+.bizops-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.bizops-tag {
+  padding: 0.2rem 0.55rem;
+  border-radius: var(--anslation-ds-radius-xs);
+  background: var(--muted);
+  color: var(--muted-foreground);
+  font-size: 0.735rem;
+  font-weight: 500;
+}
+
+.bizops-card-foot {
+  margin-top: auto;
+  padding-top: 0.9rem;
+  border-top: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.bizops-card-meta {
+  font-size: 0.785rem;
+  color: var(--muted-foreground);
+}
+
+.bizops-card-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.83rem;
+  font-weight: 600;
+  color: var(--primary);
+}
+
+a.bizops-card:hover .bizops-card-arrow {
+  transform: translateX(3px);
+}
+
+.bizops-card-arrow {
+  transition: transform 0.2s ease;
+}
+
+.bizops-card-cta--muted {
+  color: var(--muted-foreground);
+  font-weight: 500;
+}
+
+/* ---------- empty state ---------- */
+
+.bizops-empty {
+  grid-column: 1 / -1;
+  padding: clamp(2.5rem, 6vw, 4rem) 1.5rem;
+  border-radius: var(--anslation-ds-radius-xl);
+  border: 1px dashed var(--border);
+  background: color-mix(in srgb, var(--card) 55%, transparent);
+  text-align: center;
+}
+
+.bizops-empty-icon {
+  display: grid;
+  place-items: center;
+  width: 3rem;
+  height: 3rem;
+  margin: 0 auto 0.9rem;
+  border-radius: 999px;
+  background: var(--muted);
+  color: var(--muted-foreground);
+}
+
+.bizops-empty-title {
+  font-size: 1.02rem;
+  font-weight: 600;
+  color: var(--foreground);
+}
+
+.bizops-empty-text {
+  margin-top: 0.35rem;
+  font-size: 0.875rem;
+  color: var(--muted-foreground);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bizops-card,
+  .bizops-card-arrow {
+    transition: none;
+  }
+
+  a.bizops-card:hover {
+    transform: none;
+  }
+}

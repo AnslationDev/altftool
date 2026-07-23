@@ -1,3 +1,5 @@
+"use client";
+
 import { Button } from "@altftool/ui";
 import {
   Columns2, AlignLeft, Undo2, Redo2, ArrowUpDown,

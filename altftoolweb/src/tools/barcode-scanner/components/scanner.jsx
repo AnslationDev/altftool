@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState, useRef, useEffect } from 'react';
 import { Camera, Upload, RotateCcw, Package, Barcode, Info, X, Loader2, CheckCircle, AlertCircle, Scan } from 'lucide-react';
 import ManagedImage from "@/components/ui/ManagedImage";

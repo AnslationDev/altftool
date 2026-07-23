@@ -1,10 +1,10 @@
 const toolConfig = {
   slug: "ohms-law-calculator",
-  name: "Ohms Law Calculator",
+  name: "Ohm's Law Calculator",
   category: ["Science"],
-  description: "Calculate voltage, current, or resistance using Ohm's Law.",
-  icon: "wrench",
-  iconColor: "text-emerald-600",
+  description: "Enter any two of voltage, current and resistance to find the third — plus power.",
+  icon: "zap",
+  iconColor: "text-yellow-500",
 };
 
 export default toolConfig;

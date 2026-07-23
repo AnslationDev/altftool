@@ -1,3 +1,5 @@
+"use client";
+
 export async function detectFace(image) {
   try {
     const canvas = document.createElement('canvas');

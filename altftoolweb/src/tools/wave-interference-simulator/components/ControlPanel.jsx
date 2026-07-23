@@ -1,3 +1,5 @@
+"use client";
+
 import { AmplitudeIcon, FrequencyIcon, WavelengthIcon, PhaseIcon, SpeedIcon } from "./Icons";
 
 const sliderIcons = {

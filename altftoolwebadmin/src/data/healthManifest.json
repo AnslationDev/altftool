@@ -1,13 +1,13 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-07-23T08:19:31.227Z",
+  "generatedAt": "2026-07-23T14:45:32.356Z",
   "tools": {
-    "total": 951,
-    "healthy": 951,
+    "total": 999,
+    "healthy": 999,
     "needsAttention": 0,
     "averageScore": 100,
     "categories": 21,
-    "directories": 952,
+    "directories": 1000,
     "orphanToolDirs": [
       "candy-crush"
     ],

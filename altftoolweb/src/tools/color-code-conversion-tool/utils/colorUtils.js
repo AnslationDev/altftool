@@ -1,3 +1,5 @@
+"use client";
+
 export const STORAGE_KEY = "color_code_conversion_tool_v1";
 export const HISTORY_LIMIT = 14;
 

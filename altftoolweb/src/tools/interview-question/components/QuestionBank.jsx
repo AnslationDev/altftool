@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState } from 'react';
 import { questionsData, domains } from '../data/questions';
 

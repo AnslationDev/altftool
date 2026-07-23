@@ -1,3 +1,5 @@
+"use client";
+
 import { Copy, Download, Trash2 } from "lucide-react";
 import { COMPARE_OPTIONS } from "../constants/options";
 

@@ -1,0 +1,2363 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+.kairos-page {
+  /* Premium SaaS Theme Color Palette */
+  --kairos-primary: #0A0E1A;       /* Deep Obsidian Space Blue */
+  --kairos-secondary: #121829;     /* Deep Slate Navy */
+  --kairos-accent: #6366F1;        /* Electric Indigo */
+  --kairos-highlight: #3B82F6;     /* Electric Blue */
+  --kairos-gold: #F59E0B;          /* Amber Gold */
+  --kairos-surface: #FFFFFF;       /* Surface White */
+  --kairos-bg: #FAFBFC;            /* Clean Base Canvas */
+  --kairos-text: #1E293B;          /* Slate Text */
+  --kairos-muted: #64748B;         /* Slate Muted */
+  --kairos-border: #E2E8F0;        /* Slate Border */
+  --kairos-border-dark: rgba(255, 255, 255, 0.08);
+  --kairos-red: #EF4444;           /* Coral/Red */
+  --kairos-green-soft: rgba(99, 102, 241, 0.06);
+  --kairos-green-deep: #4F46E5;
+  --kairos-green-dark: #3730A3;
+
+  /* Modern Border Radii */
+  --kairos-radius-lg: 20px;
+  --kairos-radius-md: 12px;
+  --kairos-radius-sm: 8px;
+
+  /* Premium Multi-Layer Shadows */
+  --kairos-shadow-sm: 0 1px 3px 0 rgba(10, 14, 26, 0.05), 0 1px 2px 0 rgba(10, 14, 26, 0.03);
+  --kairos-shadow-md: 0 4px 6px -1px rgba(10, 14, 26, 0.05), 0 2px 4px -1px rgba(10, 14, 26, 0.06);
+  --kairos-shadow-lg: 0 10px 15px -3px rgba(10, 14, 26, 0.05), 0 4px 6px -2px rgba(10, 14, 26, 0.03);
+  --kairos-shadow-xl: 0 20px 25px -5px rgba(10, 14, 26, 0.1), 0 10px 10px -5px rgba(10, 14, 26, 0.04);
+  --kairos-shadow-2xl: 0 25px 50px -12px rgba(10, 14, 26, 0.25);
+
+  /* Font Family */
+  --kairos-font: 'Plus Jakarta Sans', 'Inter', system-ui, sans-serif;
+  --kairos-container: min(1200px, calc(100% - 48px));
+  --kairos-section-y: clamp(64px, 7vw, 92px);
+  --kairos-section-x: clamp(18px, 4vw, 32px);
+
+  min-height: 100vh;
+  overflow-x: hidden;
+  background: var(--kairos-bg);
+  color: var(--kairos-text);
+  font-family: var(--kairos-font);
+  -webkit-font-smoothing: antialiased;
+}
+
+.kairos-page *,
+.kairos-page *::before,
+.kairos-page *::after {
+  box-sizing: border-box;
+}
+
+.kairos-page a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* 1. Sticky Glassmorphism Header */
+.kairos-header {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 80px;
+  padding: 12px max(24px, calc((100vw - 1200px) / 2));
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border-bottom: 1px solid rgba(226, 232, 240, 0.8);
+  box-shadow: 0 4px 30px rgba(10, 14, 26, 0.02);
+  transition: all 0.3s ease;
+}
+
+.kairos-logo {
+  align-items: center;
+  display: flex;
+  gap: 10px;
+  width: 200px;
+  transition: opacity 0.2s ease;
+}
+
+.kairos-logo:hover {
+  opacity: 0.9;
+}
+
+.kairos-logo-mark {
+  align-items: center;
+  background: var(--kairos-accent);
+  border-radius: var(--kairos-radius-sm);
+  color: var(--kairos-primary);
+  display: inline-flex;
+  flex: 0 0 42px;
+  height: 42px;
+  justify-content: center;
+}
+
+.kairos-logo-copy {
+  display: flex;
+  flex-direction: column;
+  line-height: 1;
+}
+
+.kairos-logo-copy strong {
+  color: var(--kairos-primary);
+  font-size: 18px;
+  letter-spacing: 0.04em;
+}
+
+.kairos-logo-copy small {
+  color: var(--kairos-muted);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  margin-top: 5px;
+  text-transform: uppercase;
+}
+
+.kairos-nav {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+
+.kairos-nav a {
+  color: var(--kairos-text);
+  font-size: 14px;
+  font-weight: 600;
+  transition: color 0.2s ease;
+  position: relative;
+  padding: 6px 0;
+}
+
+.kairos-nav a::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 0;
+  height: 2px;
+  background: var(--kairos-accent);
+  transition: width 0.2s ease;
+}
+
+.kairos-nav a:hover {
+  color: var(--kairos-accent);
+}
+
+.kairos-nav a:hover::after {
+  width: 100%;
+}
+
+.kairos-header-copy {
+  min-width: 260px;
+  text-align: right;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.kairos-header-copy p {
+  margin: 0;
+  color: var(--kairos-muted);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.kairos-header-copy strong {
+  color: var(--kairos-primary);
+  font-size: 18px;
+  font-weight: 800;
+}
+
+.kairos-header-copy a {
+  color: var(--kairos-accent);
+  transition: color 0.2s ease;
+}
+
+.kairos-header-copy a:hover {
+  color: var(--kairos-highlight);
+}
+
+/* 2. Hero Section */
+.kairos-hero {
+  position: relative;
+  min-height: clamp(640px, 82vh, 760px);
+  background:
+    linear-gradient(to right, rgba(250, 251, 252, 0.98) 0%, rgba(250, 251, 252, 0.85) 45%, rgba(250, 251, 252, 0.25) 100%),
+    url('https://images.unsplash.com/photo-1591735115730-4bf3a351cfe8?auto=format&fit=crop&w=1800&q=82') center center / cover no-repeat;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+
+.kairos-hero-inner {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: clamp(36px, 5vw, 60px);
+  width: var(--kairos-container);
+  margin: 0 auto;
+  align-items: center;
+  padding: clamp(56px, 7vw, 80px) 0;
+}
+
+.kairos-hero-copy {
+  max-width: 680px;
+  transform: none;
+  padding-top: 0;
+  text-shadow: none;
+}
+
+.kairos-badge-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  background: rgba(99, 102, 241, 0.08);
+  border: 1px solid rgba(99, 102, 241, 0.15);
+  border-radius: 100px;
+  color: var(--kairos-accent);
+  font-size: 12px;
+  font-weight: 700;
+  margin-bottom: 24px;
+}
+
+.kairos-pill-icon {
+  color: var(--kairos-accent);
+}
+
+.kairos-hero h1 {
+  margin: 0;
+  color: var(--kairos-primary);
+  font-size: 54px;
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.kairos-hero h1 span {
+  display: inline-block;
+  padding: 2px 14px;
+  border-radius: var(--kairos-radius-sm);
+  background: linear-gradient(135deg, var(--kairos-accent) 0%, var(--kairos-highlight) 100%);
+  color: #ffffff;
+  font-weight: 800;
+  white-space: nowrap;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+  box-shadow: 0 8px 24px rgba(59, 130, 246, 0.25);
+  margin-top: 8px;
+}
+
+.kairos-hero-copy p {
+  max-width: 600px;
+  margin: 24px 0 0;
+  color: var(--kairos-text);
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 1.75;
+  text-transform: none;
+}
+
+/* Hero Metrics Grid */
+.kairos-hero-metrics {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(14px, 2vw, 24px);
+  margin-top: 40px;
+  max-width: 560px;
+}
+
+.kairos-metric-box {
+  background: #ffffff;
+  border: 1px solid var(--kairos-border);
+  border-radius: var(--kairos-radius-md);
+  padding: 16px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  box-shadow: var(--kairos-shadow-sm);
+}
+
+.kairos-metric-box strong {
+  font-size: 28px;
+  font-weight: 800;
+  color: var(--kairos-primary);
+  line-height: 1.1;
+}
+
+.kairos-metric-box span {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--kairos-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.kairos-text-direct {
+  margin-top: 28px !important;
+  color: var(--kairos-text) !important;
+  font-size: 15px !important;
+  text-transform: none !important;
+}
+
+.kairos-text-direct a {
+  color: var(--kairos-primary);
+  font-weight: 700;
+  border-bottom: 2px solid var(--kairos-accent);
+  padding-bottom: 2px;
+  transition: all 0.2s ease;
+}
+
+.kairos-text-direct a:hover {
+  color: var(--kairos-accent);
+  border-color: var(--kairos-accent);
+}
+
+.kairos-mobile-actions {
+  display: none;
+}
+
+/* 3. Floating Estimate Form Card */
+.kairos-estimate-card {
+  width: 100%;
+  max-width: 460px;
+  margin-left: auto;
+  padding: clamp(32px, 4vw, 44px);
+  border-radius: var(--kairos-radius-lg);
+  background: rgba(255, 255, 255, 0.98);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  box-shadow: var(--kairos-shadow-2xl), 0 0 0 1px rgba(10, 14, 26, 0.05);
+  color: var(--kairos-text);
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
+}
+
+.kairos-estimate-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 30px 60px -15px rgba(10, 14, 26, 0.25), 0 0 0 1px rgba(10, 14, 26, 0.08);
+}
+
+.kairos-estimate-card h2 {
+  margin: 0;
+  color: var(--kairos-primary);
+  font-size: 26px;
+  font-weight: 800;
+  line-height: 1.2;
+  text-align: center;
+  letter-spacing: 0;
+}
+
+.kairos-estimate-card > p {
+  margin: 10px 0 32px;
+  color: var(--kairos-muted);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.5;
+  text-align: center;
+  text-transform: none;
+}
+
+/* 4. Enterprise Form Fields */
+.kairos-premium-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+}
+
+.kairos-form-row {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+}
+
+.kairos-form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+}
+
+.kairos-form-field label {
+  color: var(--kairos-primary);
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-style: normal;
+  text-align: left;
+}
+
+.kairos-input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.kairos-field-icon {
+  position: absolute;
+  left: 16px;
+  color: #94a3b8;
+  transition: color 0.2s ease;
+  pointer-events: none;
+}
+
+.kairos-input-wrapper input,
+.kairos-input-wrapper textarea {
+  width: 100%;
+  padding: 14px 16px 14px 44px;
+  border: 1.5px solid var(--kairos-border);
+  border-radius: var(--kairos-radius-sm);
+  background: #f8fafc;
+  color: var(--kairos-primary);
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  outline: none;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.kairos-input-wrapper textarea {
+  min-height: 90px;
+  resize: vertical;
+}
+
+.kairos-input-wrapper input::placeholder,
+.kairos-input-wrapper textarea::placeholder {
+  color: #94a3b8;
+  font-weight: 400;
+}
+
+.kairos-input-wrapper input:focus,
+.kairos-input-wrapper textarea:focus {
+  border-color: var(--kairos-accent);
+  background: #ffffff;
+  box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.12);
+}
+
+.kairos-input-wrapper:focus-within .kairos-field-icon {
+  color: var(--kairos-accent);
+}
+
+.kairos-input-wrapper.textarea-wrapper {
+  align-items: flex-start;
+}
+
+.kairos-input-wrapper.textarea-wrapper .kairos-field-icon {
+  top: 16px;
+}
+
+.kairos-form-submit-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  min-height: 56px;
+  margin-top: 10px;
+  padding: 0 24px;
+  border: 0;
+  border-radius: var(--kairos-radius-sm);
+  background: linear-gradient(135deg, var(--kairos-accent) 0%, var(--kairos-highlight) 100%);
+  color: #ffffff;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  box-shadow: 0 10px 20px -5px rgba(59, 130, 246, 0.3);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.kairos-form-submit-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 15px 30px -10px rgba(59, 130, 246, 0.45);
+}
+
+.kairos-form-submit-btn:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.kairos-form-submit-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.kairos-form-footer-trust {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 12px;
+  color: var(--kairos-muted);
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.kairos-trust-shield-icon {
+  color: var(--kairos-accent);
+}
+
+.kairos-form-success {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 32px;
+  border: 1px solid rgba(99, 102, 241, 0.2);
+  border-radius: var(--kairos-radius-md);
+  background: var(--kairos-green-soft);
+  color: var(--kairos-green-deep);
+  text-align: left;
+  animation: fadeInSuccess 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.kairos-success-close-btn {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: transparent;
+  border: none;
+  color: var(--kairos-green-dark);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px;
+  border-radius: 50%;
+  transition: all 0.2s ease;
+}
+
+.kairos-success-close-btn:hover {
+  background: rgba(99, 102, 241, 0.1);
+  color: var(--kairos-green-deep);
+}
+
+.kairos-success-icon {
+  color: var(--kairos-green-dark);
+  flex-shrink: 0;
+}
+
+.kairos-success-text h3 {
+  margin: 0 0 6px;
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--kairos-green-deep);
+}
+
+.kairos-success-text p {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--kairos-green-deep);
+  opacity: 0.9;
+}
+
+.kairos-spin {
+  animation: kairos-spin 0.8s linear infinite;
+}
+
+@keyframes kairos-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* 5. Trust Section - Grid cards instead of strip */
+.kairos-trust-strip {
+  background: #F8FAFC;
+  border-top: 1px solid var(--kairos-border);
+  border-bottom: 1px solid var(--kairos-border);
+  padding: 34px 0;
+}
+
+.kairos-trust-inner {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 24px;
+  width: var(--kairos-container);
+  margin: 0 auto;
+}
+
+.kairos-trust-card {
+  background: #ffffff;
+  border: 1px solid var(--kairos-border);
+  border-radius: var(--kairos-radius-md);
+  padding: 24px;
+  box-shadow: var(--kairos-shadow-sm);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.kairos-trust-card:hover {
+  background: #ffffff;
+  transform: translateY(-2px);
+  border-color: var(--kairos-accent);
+  box-shadow: var(--kairos-shadow-md);
+}
+
+.kairos-trust-card-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.kairos-trust-icon {
+  color: var(--kairos-accent);
+  flex-shrink: 0;
+}
+
+.kairos-trust-card h3 {
+  color: var(--kairos-primary);
+  font-size: 15px;
+  font-weight: 700;
+  margin: 0;
+}
+
+.kairos-trust-card p {
+  color: var(--kairos-muted);
+  font-size: 13px;
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* Section Tag (Small SaaS Label) */
+.kairos-section-tag {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: fit-content;
+  gap: 8px;
+  color: var(--kairos-accent);
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin: 0 auto 16px;
+  background: rgba(99, 102, 241, 0.08);
+  padding: 4px 12px;
+  border-radius: 100px;
+  max-width: 100%;
+}
+
+/* 6. Warning Section */
+.kairos-warning-section {
+  padding: var(--kairos-section-y) 0;
+  background: #ffffff;
+  border-bottom: 1px solid var(--kairos-border);
+}
+
+.kairos-warning-inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(36px, 5vw, 60px);
+  width: var(--kairos-container);
+  margin: 0 auto;
+  align-items: center;
+}
+
+.kairos-warning-visual {
+  position: relative;
+  min-height: clamp(360px, 40vw, 480px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.kairos-warning-generated-image {
+  width: 100%;
+  max-width: 540px;
+  height: clamp(300px, 34vw, 400px);
+  object-fit: cover;
+  border-radius: var(--kairos-radius-lg);
+  box-shadow: var(--kairos-shadow-2xl), 0 0 0 1px rgba(10, 14, 26, 0.05);
+  border: 6px solid #ffffff;
+  transition: transform 0.3s ease;
+}
+
+.kairos-warning-generated-image:hover {
+  transform: scale(1.02);
+}
+
+.kairos-warning-badge {
+  position: absolute;
+  right: -10px;
+  bottom: 20px;
+  width: 190px;
+  height: auto;
+  filter: drop-shadow(0 20px 25px rgba(10, 14, 26, 0.15));
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.kairos-warning-badge:hover {
+  transform: translateY(-4px) rotate(2deg);
+}
+
+.kairos-warning-copy {
+  max-width: 520px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.kairos-warning-copy h2 {
+  margin: 0 0 20px;
+  color: var(--kairos-primary);
+  font-size: 42px;
+  font-weight: 800;
+  line-height: 1.2;
+  letter-spacing: 0;
+}
+
+.kairos-warning-copy h2 span {
+  color: var(--kairos-red);
+}
+
+.kairos-warning-copy p {
+  margin: 0 0 28px;
+  color: var(--kairos-muted);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.7;
+}
+
+.kairos-warning-list {
+  list-style: none;
+  padding: 0;
+  width: fit-content;
+  max-width: 100%;
+  margin: 0 auto 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  text-align: left;
+}
+
+.kairos-warning-list li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--kairos-text);
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.kairos-warning-list li svg {
+  color: var(--kairos-accent);
+  flex-shrink: 0;
+}
+
+.kairos-warning-copy .kairos-green-button {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* 7. Why Choose Us (SaaS Feature Grid) */
+.kairos-reasons {
+  width: 100%;
+  background: #F8FAFC;
+  border-top: 1px solid var(--kairos-border);
+  border-bottom: 1px solid var(--kairos-border);
+  padding: var(--kairos-section-y) var(--kairos-section-x);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.kairos-reasons .kairos-section-tag,
+.kairos-reasons h2,
+.kairos-reasons .kairos-reason-grid,
+.kairos-reasons > .kairos-green-button {
+  width: min(100%, 1200px);
+  max-width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+
+.kairos-reasons .kairos-section-tag,
+.kairos-process .kairos-section-tag,
+.kairos-certifications .kairos-section-tag {
+  display: flex;
+  width: fit-content;
+  align-self: center;
+}
+
+.kairos-reasons h2 {
+  align-self: center;
+  margin: 0 0 16px;
+  color: var(--kairos-primary);
+  font-size: 42px;
+  font-weight: 800;
+  line-height: 1.25;
+  letter-spacing: 0;
+}
+
+.kairos-reasons h2 em {
+  display: inline-block;
+  font-style: normal;
+  color: var(--kairos-accent);
+  background: linear-gradient(120deg, rgba(99, 102, 241, 0.1) 0%, rgba(59, 130, 246, 0.1) 100%);
+  padding: 2px 12px;
+  border-radius: var(--kairos-radius-sm);
+  font-weight: 800;
+}
+
+.kairos-reason-grid {
+  align-self: center;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: stretch;
+  gap: 24px;
+  margin-top: 44px;
+  margin-bottom: 40px;
+}
+
+.kairos-reason-card {
+  flex: 0 1 calc((100% - 48px) / 3);
+  max-width: calc((100% - 48px) / 3);
+  min-height: 0;
+  height: 100%;
+  padding: clamp(32px, 4vw, 44px) clamp(24px, 3vw, 36px);
+  border-radius: var(--kairos-radius-lg);
+  background: #ffffff;
+  border: 1px solid var(--kairos-border);
+  box-shadow: var(--kairos-shadow-sm);
+  text-align: center;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.kairos-reason-card:hover {
+  transform: translateY(-8px);
+  border-color: var(--kairos-accent);
+  box-shadow: var(--kairos-shadow-xl), 0 0 0 1px rgba(99, 102, 241, 0.08);
+}
+
+.kairos-feature-icon-wrapper {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--kairos-accent) 0%, var(--kairos-highlight) 100%);
+  color: #ffffff;
+  display: grid;
+  place-items: center;
+  box-shadow: 0 8px 16px rgba(59, 130, 246, 0.2);
+  margin-bottom: 28px;
+}
+
+.kairos-reason-card h3 {
+  margin: 0 0 14px;
+  color: var(--kairos-primary);
+  font-size: 20px;
+  font-weight: 800;
+  line-height: 1.3;
+}
+
+.kairos-reason-card p {
+  margin: 0;
+  color: var(--kairos-muted);
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 1.6;
+}
+
+/* 8. Testimonials Section (Grid Layout) */
+.kairos-reviews {
+  padding: var(--kairos-section-y) var(--kairos-section-x);
+  background: #ffffff;
+  border-top: 1px solid var(--kairos-border);
+  border-bottom: 1px solid var(--kairos-border);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.kairos-reviews h2 {
+  margin: 0 0 16px;
+  color: var(--kairos-primary);
+  font-size: 42px;
+  font-weight: 800;
+  line-height: 1.25;
+  letter-spacing: 0;
+}
+
+/* Trust Rating Google Badge */
+.kairos-reviews-trust-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 16px;
+  margin: 0 auto 44px;
+  background: #F8FAFC;
+  border: 1px solid var(--kairos-border);
+  padding: 12px 24px;
+  border-radius: 100px;
+  box-shadow: var(--kairos-shadow-sm);
+}
+
+.kairos-badge-stars {
+  display: flex;
+  gap: 2px;
+}
+
+.kairos-badge-text {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--kairos-text);
+}
+
+.kairos-badge-text strong {
+  color: var(--kairos-primary);
+}
+
+.kairos-google-svg {
+  flex-shrink: 0;
+}
+
+.kairos-reviews-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: stretch;
+  gap: 24px;
+  max-width: 1200px;
+  width: 100%;
+  margin-bottom: 40px;
+}
+
+.kairos-review-card {
+  flex: 0 1 calc((100% - 48px) / 3);
+  max-width: calc((100% - 48px) / 3);
+  background: #F8FAFC;
+  border: 1px solid var(--kairos-border);
+  border-radius: var(--kairos-radius-lg);
+  padding: clamp(28px, 3vw, 36px);
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: all 0.3s ease;
+  min-height: 0;
+  box-shadow: var(--kairos-shadow-sm);
+}
+
+.kairos-review-card:hover {
+  transform: translateY(-4px);
+  background: #ffffff;
+  border-color: var(--kairos-accent);
+  box-shadow: var(--kairos-shadow-lg);
+}
+
+.kairos-review-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.kairos-review-stars {
+  display: flex;
+  gap: 4px;
+}
+
+.kairos-review-date {
+  font-size: 12px;
+  color: var(--kairos-muted);
+  font-weight: 500;
+}
+
+/* Quote Layout */
+.kairos-quote-content {
+  position: relative;
+  margin-bottom: 24px;
+  flex-grow: 1;
+}
+
+.kairos-quote-icon {
+  color: var(--kairos-accent);
+  opacity: 0.15;
+  margin-bottom: 8px;
+  display: block;
+}
+
+.kairos-quote-content p {
+  color: var(--kairos-text);
+  font-size: 15px;
+  line-height: 1.65;
+  font-style: italic;
+  margin: 0;
+}
+
+.kairos-review-card-bottom {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border-top: 1px solid var(--kairos-border);
+  padding-top: 20px;
+}
+
+/* Customer Photo Avatar Wrappers */
+.kairos-avatar-img-wrapper {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 2px solid var(--kairos-accent);
+  box-shadow: 0 4px 10px rgba(99, 102, 241, 0.15);
+  flex-shrink: 0;
+}
+
+.kairos-avatar-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.kairos-review-author {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex-grow: 1;
+}
+
+.kairos-review-author strong {
+  color: var(--kairos-primary);
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.kairos-review-author span {
+  color: var(--kairos-muted);
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.kairos-verified-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 8px;
+  background: rgba(99, 102, 241, 0.08);
+  border: 1px solid rgba(99, 102, 241, 0.15);
+  border-radius: 100px;
+  color: var(--kairos-green-deep);
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  white-space: nowrap;
+}
+
+.kairos-verified-badge svg {
+  color: var(--kairos-accent);
+}
+
+/* 9. Process Section */
+.kairos-process {
+  width: 100%;
+  background: #F8FAFC;
+  border-top: 1px solid var(--kairos-border);
+  border-bottom: 1px solid var(--kairos-border);
+  padding: var(--kairos-section-y) var(--kairos-section-x);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.kairos-process .kairos-section-tag,
+.kairos-process h2,
+.kairos-process .kairos-process-grid,
+.kairos-process > .kairos-green-button {
+  width: min(100%, 1200px);
+  max-width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+
+.kairos-process h2 {
+  align-self: center;
+  margin: 0 0 16px;
+  color: var(--kairos-primary);
+  font-size: 42px;
+  font-weight: 800;
+  line-height: 1.25;
+  letter-spacing: 0;
+}
+
+.kairos-process h2 em {
+  display: inline-block;
+  font-style: normal;
+  color: var(--kairos-accent);
+  background: linear-gradient(120deg, rgba(99, 102, 241, 0.1) 0%, rgba(59, 130, 246, 0.1) 100%);
+  padding: 2px 12px;
+  border-radius: var(--kairos-radius-sm);
+  font-weight: 800;
+}
+
+.kairos-process-grid {
+  align-self: center;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: stretch;
+  gap: 24px;
+  margin-top: 44px;
+  margin-bottom: 40px;
+  position: relative;
+}
+
+@media (min-width: 1181px) {
+  .kairos-process-grid::before {
+    content: '';
+    position: absolute;
+    top: 68px;
+    left: 15%;
+    right: 15%;
+    border-top: 2px dashed var(--kairos-border);
+    z-index: 1;
+  }
+}
+
+.kairos-process-card {
+  position: relative;
+  z-index: 2;
+  flex: 0 1 calc((100% - 48px) / 3);
+  max-width: calc((100% - 48px) / 3);
+  min-height: 0;
+  height: 100%;
+  padding: clamp(32px, 4vw, 44px) clamp(24px, 3vw, 32px);
+  border-radius: var(--kairos-radius-lg);
+  background: #ffffff;
+  border: 1px solid var(--kairos-border);
+  box-shadow: var(--kairos-shadow-sm);
+  text-align: center;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.kairos-process-card:hover {
+  transform: translateY(-8px);
+  border-color: var(--kairos-accent);
+  box-shadow: var(--kairos-shadow-xl), 0 0 0 1px rgba(99, 102, 241, 0.08);
+}
+
+.kairos-step-num {
+  display: grid;
+  place-items: center;
+  padding: 0 16px;
+  height: 38px;
+  margin: 0 auto 28px;
+  border-radius: 100px;
+  background: linear-gradient(135deg, var(--kairos-accent) 0%, var(--kairos-highlight) 100%);
+  color: var(--kairos-primary);
+  font-size: 13px;
+  font-weight: 800;
+  line-height: 1;
+  box-shadow: 0 8px 16px rgba(59, 130, 246, 0.2);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.kairos-process-card h3 {
+  margin: 0 0 14px;
+  color: var(--kairos-primary);
+  font-size: 22px;
+  font-weight: 800;
+  line-height: 1.3;
+}
+
+.kairos-process-card p {
+  margin: 0 0 24px;
+  color: var(--kairos-muted);
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 1.6;
+  flex-grow: 1;
+}
+
+.kairos-process-bullets {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  text-align: center;
+}
+
+.kairos-process-bullets li {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--kairos-text);
+}
+
+.kairos-process-bullets li svg {
+  color: var(--kairos-accent);
+  flex-shrink: 0;
+}
+
+/* 10. Certifications - Accreditation Layout */
+.kairos-certifications {
+  width: 100%;
+  background: #F8FAFC;
+  border-top: 1px solid var(--kairos-border);
+  border-bottom: 1px solid var(--kairos-border);
+  padding: var(--kairos-section-y) var(--kairos-section-x);
+}
+
+.kairos-certifications .kairos-section-tag,
+.kairos-certifications h2,
+.kairos-certifications p,
+.kairos-certifications .kairos-certification-grid {
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+
+.kairos-certifications h2 {
+  margin: 0 0 16px;
+  color: var(--kairos-primary);
+  font-size: 42px;
+  font-weight: 800;
+  line-height: 1.2;
+  letter-spacing: 0;
+}
+
+.kairos-certifications p {
+  max-width: 800px;
+  margin: 0 auto 40px;
+  color: var(--kairos-muted);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.75;
+  text-align: center;
+}
+
+.kairos-certification-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: stretch;
+  gap: 24px;
+}
+
+.kairos-certification-logo-card {
+  flex: 0 1 calc((100% - 48px) / 3);
+  max-width: calc((100% - 48px) / 3);
+  background: #ffffff;
+  border: 1px solid var(--kairos-border);
+  border-radius: var(--kairos-radius-lg);
+  padding: clamp(24px, 3vw, 32px);
+  box-shadow: var(--kairos-shadow-sm);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.kairos-certification-logo-card:hover {
+  transform: translateY(-6px);
+  border-color: rgba(59, 130, 246, 0.25);
+  box-shadow: var(--kairos-shadow-lg);
+}
+
+.kairos-certification-logo-inner {
+  height: 100px;
+  display: grid;
+  place-items: center;
+  width: 100%;
+  color: var(--kairos-primary);
+  gap: 8px;
+}
+
+.kairos-certification-logo-inner strong {
+  font-size: 24px;
+  letter-spacing: 0.08em;
+}
+
+.kairos-certification-logo-inner img {
+  display: block;
+  max-width: 100%;
+  max-height: 80px;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  opacity: 0.95;
+  transition: transform 0.3s ease;
+}
+
+.kairos-certification-logo-card:hover img {
+  transform: scale(1.05);
+}
+
+.kairos-cert-name {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--kairos-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  background: #f1f5f9;
+  padding: 4px 12px;
+  border-radius: 100px;
+  max-width: 100%;
+  text-align: center;
+}
+
+.kairos-cert-logo-aib {
+  width: min(150px, 100%);
+}
+
+.kairos-cert-logo-purdue {
+  width: min(200px, 100%);
+}
+
+.kairos-cert-logo-food {
+  width: min(200px, 100%);
+}
+
+/* 11. Lead Capture Form Block */
+.kairos-bottom-form {
+  padding: var(--kairos-section-y) var(--kairos-section-x);
+  background: linear-gradient(180deg, #FAFBFC 0%, rgba(59, 130, 246, 0.05) 100%);
+  border-top: 1px solid var(--kairos-border);
+}
+
+.kairos-bottom-container {
+  display: grid;
+  grid-template-columns: 1fr 1.05fr;
+  gap: clamp(40px, 6vw, 80px);
+  max-width: 1200px;
+  margin: 0 auto;
+  align-items: center;
+}
+
+.kairos-bottom-copy {
+  text-align: center;
+}
+
+.kairos-bottom-copy h2 {
+  margin: 0 0 18px;
+  color: var(--kairos-primary);
+  font-size: 44px;
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: 0;
+}
+
+.kairos-bottom-copy p {
+  max-width: 620px;
+  color: var(--kairos-muted);
+  font-size: 16px;
+  line-height: 1.7;
+  margin: 0 auto 40px;
+}
+
+.kairos-bottom-contact-details {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-width: 560px;
+  margin: 0 auto;
+}
+
+.kairos-detail-item {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  background: #ffffff;
+  padding: 20px 24px;
+  border-radius: var(--kairos-radius-md);
+  border: 1px solid var(--kairos-border);
+  box-shadow: var(--kairos-shadow-sm);
+  transition: all 0.3s ease;
+}
+
+.kairos-detail-item:hover {
+  transform: translateX(4px);
+  border-color: rgba(59, 130, 246, 0.2);
+}
+
+.kairos-detail-icon-wrapper {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(99, 102, 241, 0.1);
+  color: var(--kairos-accent);
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+}
+
+.kairos-detail-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.kairos-detail-text strong {
+  font-size: 14px;
+  color: var(--kairos-muted);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.kairos-detail-text span {
+  font-size: 17px;
+  color: var(--kairos-primary);
+  font-weight: 800;
+}
+
+.kairos-bottom-form-inner {
+  width: 100%;
+  padding: clamp(28px, 4vw, 48px);
+  border-radius: var(--kairos-radius-lg);
+  background: #ffffff;
+  box-shadow: var(--kairos-shadow-2xl), 0 0 0 1px rgba(10, 14, 26, 0.04);
+  border: 1px solid var(--kairos-border);
+  text-align: left;
+}
+
+/* 12. Footer */
+.kairos-footer {
+  background: var(--kairos-primary);
+  color: #ffffff;
+  padding: clamp(56px, 6vw, 80px) var(--kairos-section-x) 40px;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.kairos-footer-top {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 2fr 1fr 1.2fr 1.3fr;
+  gap: clamp(32px, 5vw, 60px);
+  padding-bottom: 60px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.kairos-footer-brand {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.kairos-footer-logo-wrapper {
+  align-items: center;
+  color: #ffffff;
+  display: flex;
+  gap: 10px;
+  max-width: 200px;
+}
+
+.kairos-footer-logo-wrapper .kairos-logo-copy strong,
+.kairos-footer-logo-wrapper .kairos-logo-copy small {
+  color: #ffffff;
+}
+
+.kairos-footer-tagline {
+  color: #94a3b8 !important;
+  font-size: 14px !important;
+  line-height: 1.6 !important;
+  margin: 0 !important;
+  font-weight: 400 !important;
+  text-transform: none !important;
+  text-align: left !important;
+  font-style: normal !important;
+  opacity: 1 !important;
+}
+
+.kairos-footer-license {
+  font-size: 13px;
+  color: var(--kairos-gold);
+  font-weight: 600;
+  letter-spacing: 0.03em;
+}
+
+.kairos-footer-top h3 {
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 700;
+  margin: 0 0 24px;
+  position: relative;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.kairos-footer-top h3::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -8px;
+  width: 24px;
+  height: 2px;
+  background: var(--kairos-accent);
+}
+
+.kairos-footer-links {
+  text-align: left;
+}
+
+.kairos-footer-links ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.kairos-footer-links a {
+  color: #94a3b8;
+  font-size: 14px;
+  transition: all 0.2s ease;
+}
+
+.kairos-footer-links a:hover {
+  color: #ffffff;
+  padding-left: 4px;
+}
+
+.kairos-footer-contact {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  font-size: 14px;
+  color: #94a3b8;
+  text-align: left;
+}
+
+.kairos-footer-contact p {
+  margin: 0 !important;
+  line-height: 1.5 !important;
+  color: #94a3b8 !important;
+  font-weight: 400 !important;
+  font-style: normal !important;
+  opacity: 1 !important;
+}
+
+.kairos-footer-contact strong {
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.kairos-footer-phone {
+  color: var(--kairos-accent) !important;
+  font-weight: 700;
+  font-size: 16px;
+  transition: color 0.2s ease;
+}
+
+.kairos-footer-phone:hover {
+  color: #ffffff !important;
+}
+
+.kairos-footer-socials {
+  display: flex;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.kairos-footer-socials a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.03);
+  color: #94a3b8;
+  transition: all 0.25s ease;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.kairos-footer-socials a:hover {
+  background: var(--kairos-accent);
+  color: var(--kairos-primary);
+  border-color: var(--kairos-accent);
+  transform: translateY(-3px);
+}
+
+.kairos-footer-contact-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.kairos-contact-icon {
+  color: var(--kairos-accent);
+  flex-shrink: 0;
+  margin-top: 3px;
+}
+
+.kairos-footer-newsletter {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  text-align: left;
+}
+
+.kairos-footer-newsletter p {
+  color: #94a3b8 !important;
+  font-size: 14px !important;
+  line-height: 1.5 !important;
+  margin: 0 !important;
+  font-weight: 400 !important;
+  font-style: normal !important;
+  opacity: 1 !important;
+}
+
+.kairos-footer-subscribe-form {
+  display: flex;
+  width: 100%;
+  position: relative;
+}
+
+.kairos-footer-subscribe-form input {
+  width: 100%;
+  padding: 14px 56px 14px 16px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--kairos-radius-sm);
+  background: rgba(255, 255, 255, 0.02);
+  color: #ffffff;
+  font-family: inherit;
+  font-size: 14px;
+  outline: none;
+  transition: all 0.25s ease;
+}
+
+.kairos-footer-subscribe-form input::placeholder {
+  color: #475569;
+}
+
+.kairos-footer-subscribe-form input:focus {
+  border-color: var(--kairos-accent);
+  background: rgba(255, 255, 255, 0.05);
+  box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.15);
+}
+
+.kairos-footer-subscribe-form button {
+  position: absolute;
+  right: 0;
+  top: 0;
+  height: 100%;
+  width: 50px;
+  background: var(--kairos-accent);
+  border: none;
+  border-radius: 0 var(--kairos-radius-sm) var(--kairos-radius-sm) 0;
+  color: var(--kairos-primary);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.kairos-footer-subscribe-form button:hover {
+  background: var(--kairos-accent);
+  color: #ffffff;
+}
+
+.kairos-footer-bottom {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding-top: 32px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.kairos-copyright {
+  color: #475569 !important;
+  font-size: 13px !important;
+  margin: 0 !important;
+  font-weight: 400 !important;
+  font-style: normal !important;
+  opacity: 1 !important;
+}
+
+.kairos-footer-legal {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.kairos-footer-legal a {
+  color: #475569;
+  font-size: 13px;
+  transition: color 0.2s ease;
+}
+
+.kairos-footer-legal a:hover {
+  color: #ffffff;
+}
+
+.kairos-divider {
+  color: #1e293b;
+}
+
+/* 13. Buttons & CTA Utilities */
+.kairos-green-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: fit-content;
+  max-width: 100%;
+  min-height: 56px;
+  padding: 0 32px;
+  border: 0;
+  border-radius: var(--kairos-radius-sm);
+  background: linear-gradient(135deg, var(--kairos-accent) 0%, var(--kairos-highlight) 100%);
+  color: #ffffff;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 800;
+  line-height: 1;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+  box-shadow: 0 10px 20px -5px rgba(59, 130, 246, 0.3);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.kairos-reasons > .kairos-green-button,
+.kairos-process > .kairos-green-button,
+.kairos-certifications > .kairos-green-button {
+  width: fit-content;
+  max-width: 100%;
+}
+
+.kairos-green-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 15px 30px -10px rgba(59, 130, 246, 0.45);
+}
+
+.kairos-green-button:active {
+  transform: translateY(0);
+}
+
+@media (max-width: 1180px) {
+  .kairos-header {
+    padding: 12px 24px;
+  }
+
+  .kairos-logo {
+    width: 176px;
+  }
+
+  .kairos-nav {
+    gap: 18px;
+  }
+
+  .kairos-header-copy {
+    min-width: 210px;
+  }
+
+  .kairos-header-copy strong {
+    font-size: 15px;
+  }
+
+  .kairos-hero h1 {
+    font-size: 46px;
+  }
+
+  .kairos-estimate-card {
+    max-width: 420px;
+    padding: 28px;
+  }
+
+  .kairos-premium-form,
+  .kairos-form-row {
+    gap: 14px;
+  }
+
+  .kairos-input-wrapper input,
+  .kairos-input-wrapper textarea {
+    padding-top: 12px;
+    padding-bottom: 12px;
+  }
+
+  .kairos-input-wrapper textarea {
+    min-height: 78px;
+  }
+
+  .kairos-form-submit-btn {
+    min-height: 50px;
+  }
+
+  .kairos-warning-copy h2,
+  .kairos-reasons h2,
+  .kairos-reviews h2,
+  .kairos-process h2,
+  .kairos-certifications h2,
+  .kairos-bottom-copy h2 {
+    font-size: 36px;
+  }
+
+  .kairos-trust-inner {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .kairos-warning-badge {
+    right: 0;
+  }
+
+  .kairos-reason-grid,
+  .kairos-reviews-grid,
+  .kairos-process-grid,
+  .kairos-certification-grid {
+    justify-content: center;
+  }
+
+  .kairos-reason-card,
+  .kairos-review-card,
+  .kairos-process-card,
+  .kairos-certification-logo-card {
+    flex-basis: calc((100% - 24px) / 2);
+    max-width: calc((100% - 24px) / 2);
+  }
+
+  .kairos-footer-top {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* 14. Responsive overrides (@media max-width: 900px) */
+@media (max-width: 900px) {
+  .kairos-header {
+    justify-content: center;
+    min-height: 100px;
+    padding: 16px 20px;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .kairos-logo {
+    width: 170px;
+  }
+
+  .kairos-nav {
+    gap: 20px;
+  }
+
+  .kairos-header-copy {
+    display: none;
+  }
+
+  .kairos-hero {
+    min-height: auto;
+    background:
+      linear-gradient(180deg, rgba(250, 251, 252, 0.98) 0%, rgba(250, 251, 252, 0.9) 100%),
+      url('https://images.unsplash.com/photo-1591735115730-4bf3a351cfe8?auto=format&fit=crop&w=1800&q=82') center center / cover no-repeat;
+    padding: 60px 0;
+  }
+
+  .kairos-hero-inner {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 600px;
+    padding: 0 20px;
+    gap: 40px;
+  }
+
+  .kairos-hero-copy {
+    text-align: center;
+  }
+
+  .kairos-hero h1 {
+    font-size: 38px;
+  }
+
+  .kairos-hero h1 span {
+    white-space: normal;
+    display: block;
+    margin-top: 12px;
+  }
+
+  .kairos-hero-copy > p {
+    font-size: 15px;
+    margin: 16px auto 0;
+  }
+
+  .kairos-hero-metrics {
+    grid-template-columns: 1fr;
+    gap: 16px;
+    margin-top: 24px;
+    width: 100%;
+  }
+
+  .kairos-text-direct {
+    margin-top: 16px !important;
+  }
+
+  .kairos-mobile-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 24px;
+    width: 100%;
+  }
+
+  .kairos-outline-button {
+    min-height: 48px;
+    border: 1.5px solid var(--kairos-accent);
+    border-radius: var(--kairos-radius-sm);
+    background: transparent;
+    color: var(--kairos-accent);
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+  }
+
+  .kairos-outline-button:hover {
+    background: rgba(99, 102, 241, 0.05);
+    border-color: var(--kairos-accent);
+  }
+
+  .kairos-call-button {
+    min-height: 48px;
+    border-radius: var(--kairos-radius-sm);
+    background: linear-gradient(135deg, var(--kairos-accent) 0%, var(--kairos-highlight) 100%);
+    color: #ffffff;
+    font-size: 11px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.2);
+    transition: all 0.2s ease;
+  }
+
+  .kairos-call-button:hover {
+    background: linear-gradient(135deg, var(--kairos-highlight) 0%, var(--kairos-accent) 100%);
+    color: #ffffff;
+  }
+
+  .kairos-hero .kairos-estimate-card {
+    display: none;
+  }
+
+  .kairos-trust-inner {
+    grid-template-columns: 1fr;
+    gap: 20px;
+    padding: 0 20px;
+    width: 100%;
+  }
+
+  .kairos-warning-section {
+    padding: 60px 0;
+  }
+
+  .kairos-warning-inner {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    padding: 0 20px;
+  }
+
+  .kairos-warning-visual {
+    width: 100%;
+    min-height: auto;
+  }
+
+  .kairos-warning-generated-image {
+    max-height: 280px;
+    border-radius: var(--kairos-radius-md);
+    border: 4px solid #ffffff;
+    box-shadow: var(--kairos-shadow-md);
+  }
+
+  .kairos-warning-badge {
+    right: 0;
+    bottom: -10px;
+    width: 130px;
+  }
+
+  .kairos-warning-copy h2 {
+    font-size: 30px;
+  }
+
+  .kairos-warning-copy p {
+    font-size: 14px;
+    margin-bottom: 24px;
+  }
+
+  .kairos-warning-copy .kairos-green-button {
+    width: 100%;
+  }
+
+  .kairos-reasons {
+    padding: 60px 20px;
+  }
+
+  .kairos-reasons h2 {
+    font-size: 30px;
+  }
+
+  .kairos-reason-grid {
+    gap: 20px;
+  }
+
+  .kairos-reason-card {
+    flex-basis: 100%;
+    max-width: 100%;
+    min-height: auto;
+    padding: 32px 24px;
+  }
+
+  .kairos-reasons > .kairos-green-button {
+    width: 100%;
+  }
+
+  .kairos-reviews {
+    padding: 60px 20px;
+  }
+
+  .kairos-reviews h2 {
+    font-size: 30px;
+  }
+
+  .kairos-reviews-trust-badge {
+    margin: 0 auto 32px;
+    flex-direction: column;
+    gap: 8px;
+    border-radius: 12px;
+    padding: 12px 20px;
+    width: calc(100% - 8px);
+    text-align: center;
+  }
+
+  .kairos-badge-text {
+    flex-direction: column;
+    text-align: center;
+    gap: 4px;
+  }
+
+  .kairos-reviews-grid {
+    gap: 20px;
+    margin-bottom: 32px;
+  }
+
+  .kairos-review-card {
+    flex-basis: 100%;
+    max-width: 100%;
+  }
+
+  .kairos-reviews .kairos-green-button {
+    width: 100%;
+  }
+
+  .kairos-process {
+    padding: 60px 20px;
+  }
+
+  .kairos-process h2 {
+    font-size: 30px;
+  }
+
+  .kairos-process-grid {
+    gap: 20px;
+  }
+
+  .kairos-process-card {
+    flex-basis: 100%;
+    max-width: 100%;
+    min-height: auto;
+    padding: 32px 24px;
+  }
+
+  .kairos-process > .kairos-green-button {
+    width: 100%;
+  }
+
+  .kairos-certifications {
+    padding: 60px 20px;
+  }
+
+  .kairos-certifications p {
+    font-size: 14px;
+    margin-bottom: 32px;
+  }
+
+  .kairos-certification-grid {
+    gap: 20px;
+  }
+
+  .kairos-certification-logo-card {
+    flex-basis: 100%;
+    max-width: 100%;
+    padding: 24px;
+  }
+
+  .kairos-bottom-form {
+    padding: 60px 20px;
+  }
+
+  .kairos-bottom-container {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  .kairos-bottom-copy h2 {
+    font-size: 30px;
+  }
+
+  .kairos-bottom-copy p {
+    margin-bottom: 24px;
+  }
+
+  .kairos-bottom-form-inner {
+    padding: 32px 20px;
+  }
+
+  .kairos-footer {
+    padding: 60px 20px 30px;
+  }
+
+  .kairos-footer-top {
+    grid-template-columns: 1fr;
+    gap: 40px;
+    padding-bottom: 40px;
+  }
+
+  .kairos-footer-bottom {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 16px;
+  }
+}
+
+@media (max-width: 640px) {
+  .kairos-page {
+    --kairos-section-x: 16px;
+    --kairos-section-y: 56px;
+    --kairos-container: min(100%, calc(100% - 32px));
+  }
+
+  .kairos-header {
+    min-height: 0;
+    padding: 14px 16px;
+    gap: 12px;
+  }
+
+  .kairos-logo {
+    width: 150px;
+  }
+
+  .kairos-nav {
+    width: 100%;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 8px 14px;
+  }
+
+  .kairos-nav a {
+    font-size: 12px;
+  }
+
+  .kairos-hero {
+    padding: 48px 0;
+  }
+
+  .kairos-hero-inner {
+    padding: 0 16px;
+    gap: 32px;
+  }
+
+  .kairos-badge-pill,
+  .kairos-section-tag {
+    font-size: 11px;
+    line-height: 1.3;
+    text-align: center;
+  }
+
+  .kairos-hero h1 {
+    font-size: 32px;
+  }
+
+  .kairos-hero-copy > p {
+    font-size: 14px;
+    line-height: 1.65;
+  }
+
+  .kairos-hero-metrics {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 8px;
+  }
+
+  .kairos-metric-box {
+    align-items: center;
+    padding: 12px 8px;
+    text-align: center;
+  }
+
+  .kairos-metric-box strong {
+    font-size: 22px;
+  }
+
+  .kairos-metric-box span {
+    font-size: 10px;
+    line-height: 1.25;
+  }
+
+  .kairos-mobile-actions {
+    grid-template-columns: 1fr;
+  }
+
+  .kairos-outline-button,
+  .kairos-call-button,
+  .kairos-green-button {
+    min-height: 52px;
+    padding: 0 18px;
+    font-size: 12px;
+    line-height: 1.25;
+    white-space: normal;
+  }
+
+  .kairos-trust-inner,
+  .kairos-warning-inner {
+    padding: 0;
+  }
+
+  .kairos-trust-strip {
+    padding: 34px 16px;
+  }
+
+  .kairos-trust-card {
+    padding: 20px;
+  }
+
+  .kairos-trust-card,
+  .kairos-reason-card,
+  .kairos-review-card,
+  .kairos-process-card,
+  .kairos-certification-logo-card {
+    border-radius: var(--kairos-radius-md);
+  }
+
+  .kairos-reason-card,
+  .kairos-review-card,
+  .kairos-process-card {
+    padding: 28px 20px;
+  }
+
+  .kairos-warning-generated-image {
+    height: 260px;
+  }
+
+  .kairos-warning-badge {
+    width: 104px;
+  }
+
+  .kairos-warning-copy h2,
+  .kairos-reasons h2,
+  .kairos-reviews h2,
+  .kairos-process h2,
+  .kairos-certifications h2,
+  .kairos-bottom-copy h2 {
+    font-size: 28px;
+  }
+
+  .kairos-reasons h2 em,
+  .kairos-process h2 em {
+    display: inline;
+    padding: 0 6px;
+  }
+
+  .kairos-reviews-trust-badge {
+    width: 100%;
+    padding: 12px 14px;
+  }
+
+  .kairos-review-card-bottom {
+    flex-wrap: wrap;
+  }
+
+  .kairos-verified-badge {
+    white-space: normal;
+  }
+
+  .kairos-cert-name {
+    border-radius: var(--kairos-radius-sm);
+    line-height: 1.35;
+  }
+
+  .kairos-detail-item {
+    align-items: flex-start;
+    gap: 14px;
+    padding: 16px;
+  }
+
+  .kairos-detail-text span {
+    font-size: 15px;
+    word-break: break-word;
+  }
+
+  .kairos-bottom-form-inner {
+    padding: 24px 16px;
+  }
+
+  .kairos-form-success {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 28px 20px;
+  }
+
+  .kairos-footer-legal {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+  }
+}
+
+nextjs-portal,
+[data-nextjs-dev-tools-button],
+[data-nextjs-toast],
+[data-next-badge-root] {
+  display: none !important;
+}

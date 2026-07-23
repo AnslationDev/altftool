@@ -1,3 +1,5 @@
+"use client";
+
 import { Sparkles, Volume2, BookOpen } from "lucide-react";
 import { useDailyWord } from "../hooks/useDailyWord.js";
 import { speakWord } from "../utils/speech.js";

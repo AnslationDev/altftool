@@ -1,3 +1,5 @@
+"use client";
+
 import React from 'react';
 import { Lock, Unlock, Eye, EyeOff, Camera } from 'lucide-react';
 import { motion } from 'framer-motion';

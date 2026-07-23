@@ -1,3 +1,5 @@
+"use client";
+
 export function extractDominantColor(img) {
   const canvas = document.createElement("canvas");
   canvas.width  = 50; // small sample size = fast

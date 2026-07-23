@@ -1,3 +1,5 @@
+"use client";
+
 import { useRef, useState } from "react";
 import { Search, BookMarked, Brain, ChevronRight } from "lucide-react";
 

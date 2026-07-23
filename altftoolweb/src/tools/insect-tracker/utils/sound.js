@@ -1,3 +1,5 @@
+"use client";
+
 // Lightweight Web Audio engine — synthesises every sound at runtime so the
 // game ships with zero audio asset files. SFX respect the mute toggle; the
 // background music is a gentle looping arpeggio driven by a scheduler.

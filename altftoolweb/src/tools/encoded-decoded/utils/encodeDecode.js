@@ -1,3 +1,5 @@
+"use client";
+
 // Base64 Encode
 export const encodeBase64 = (text) => {
     try {

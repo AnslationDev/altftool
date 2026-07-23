@@ -9,25 +9,30 @@ import { auditEmailHtml, minifyEmailHtml, SAMPLE_EMAIL_HTML } from "../lib/email
 import { exportPDF, exportJSON, downloadCleanedHtml, getRecentAnalyses, pushRecentAnalysis, clearRecentAnalyses } from "../lib/exportAndStorage";
 import { safeCopyText } from "@/shared/utils/clipboard";
 
-const HISTORY_DEBOUNCE_MS = 1200;
-
 export default function MainSection() {
   const [html, setHtml] = useState("");
+  // `checkedHtml` is the snapshot the audit runs against. It only updates when
+  // the user clicks "Check", so typing no longer triggers a live re-analysis.
+  const [checkedHtml, setCheckedHtml] = useState("");
   const [recent, setRecent] = useState([]);
 
-  const audit = useMemo(() => auditEmailHtml(html), [html]);
+  const audit = useMemo(() => auditEmailHtml(checkedHtml), [checkedHtml]);
+
+  // True when the editor has edits that haven't been re-checked yet.
+  const dirty = html.trim() !== checkedHtml.trim();
 
   useEffect(() => {
     setRecent(getRecentAnalyses());
   }, []);
 
-  useEffect(() => {
-    if (!html.trim() || html.trim().length < 30) return undefined;
-    const handle = window.setTimeout(() => {
-      setRecent(pushRecentAnalysis({ html, overallScore: audit.overallScore, grade: audit.grade, sizeKb: audit.stats.sizeKb }));
-    }, HISTORY_DEBOUNCE_MS);
-    return () => window.clearTimeout(handle);
-  }, [html, audit.overallScore, audit.grade, audit.stats.sizeKb]);
+  function handleCheck() {
+    if (!html.trim()) return;
+    setCheckedHtml(html);
+    const result = auditEmailHtml(html);
+    if (html.trim().length >= 30) {
+      setRecent(pushRecentAnalysis({ html, overallScore: result.overallScore, grade: result.grade, sizeKb: result.stats.sizeKb }));
+    }
+  }
 
   function handleFormat() {
     setHtml((prev) => jsBeautify.html(prev, { indent_size: 2, wrap_line_length: 0, preserve_newlines: true }));
@@ -39,6 +44,7 @@ export default function MainSection() {
 
   function handleClear() {
     setHtml("");
+    setCheckedHtml("");
   }
 
   function handleSample() {
@@ -69,7 +75,7 @@ export default function MainSection() {
           </p>
         </div>
 
-        <div className="grid h-[80vh] min-h-[560px] grid-cols-1 gap-5 lg:grid-cols-2">
+        <div className="grid grid-cols-1 gap-5 lg:h-[80vh] lg:min-h-[560px] lg:grid-cols-2">
           <CodeEditorPanel
             html={html}
             onChange={setHtml}
@@ -79,9 +85,12 @@ export default function MainSection() {
             onSample={handleSample}
             onCopy={handleCopy}
             onDownload={handleDownload}
+            onCheck={handleCheck}
+            dirty={dirty}
           />
           <ResultsPanel
             audit={audit}
+            dirty={dirty && Boolean(checkedHtml)}
             onExportPdf={() => exportPDF(audit)}
             onExportJson={() => exportJSON(audit)}
             recent={recent}

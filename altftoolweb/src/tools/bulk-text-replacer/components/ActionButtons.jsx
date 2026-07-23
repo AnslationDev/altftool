@@ -1,3 +1,5 @@
+"use client";
+
 export default function ActionButtons({ onReplace, onCopy }) {
   return (
     <div className="flex flex-wrap gap-3">

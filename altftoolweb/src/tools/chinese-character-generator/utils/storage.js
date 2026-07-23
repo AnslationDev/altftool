@@ -1,3 +1,5 @@
+"use client";
+
 // Safe, SSR-friendly localStorage helpers.
 
 export function loadJSON(key, fallback) {

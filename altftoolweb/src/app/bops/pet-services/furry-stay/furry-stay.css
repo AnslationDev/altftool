@@ -1,0 +1,351 @@
+/* FurryStay — cozy lodge lander styles. All classes prefixed furrystay- */
+
+.furrystay-page {
+  --fs-bark: #431407;
+  --fs-bark-deep: #2b0d05;
+  --fs-surface: #7c2d12;
+  --fs-accent: #ea580c;
+  --fs-accent-hi: #f97316;
+  --fs-cream: #fff7ed;
+  --fs-cream-2: #fef3e7;
+  --fs-sand: #fdba74;
+  --fs-ink: #3c1a09;
+  --fs-muted: #7a5c49;
+  font-family: Georgia, "Times New Roman", serif;
+  background: var(--fs-cream);
+  color: var(--fs-ink);
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+.furrystay-page *, .furrystay-page *::before, .furrystay-page *::after { box-sizing: border-box; }
+.furrystay-page a { text-decoration: none; color: inherit; }
+.furrystay-page img { display: block; max-width: 100%; }
+.furrystay-page :focus-visible { outline: 3px solid var(--fs-sand); outline-offset: 3px; border-radius: 6px; }
+
+.furrystay-wrap { max-width: 1120px; margin: 0 auto; padding: 0 24px; }
+
+/* Wood-grain suggestion: layered warm gradients */
+.furrystay-wood {
+  background:
+    repeating-linear-gradient(94deg, rgba(0, 0, 0, 0.12) 0 2px, transparent 2px 26px),
+    repeating-linear-gradient(88deg, rgba(255, 199, 138, 0.06) 0 1px, transparent 1px 14px),
+    linear-gradient(180deg, #8a3416 0%, var(--fs-surface) 45%, #5e2210 100%);
+}
+
+/* ---------- Nav ---------- */
+.furrystay-nav {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  color: var(--fs-cream);
+  border-bottom: 1px solid rgba(253, 186, 116, 0.25);
+  box-shadow: 0 4px 18px rgba(43, 13, 5, 0.35);
+}
+.furrystay-nav-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 14px 24px;
+  max-width: 1120px;
+  margin: 0 auto;
+}
+.furrystay-logo { display: inline-flex; align-items: center; gap: 10px; font-size: 1.35rem; font-weight: 700; letter-spacing: 0.5px; }
+.furrystay-logo-badge {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 13px;
+  background: var(--fs-accent);
+  color: #fff;
+  box-shadow: inset 0 -3px 0 rgba(0, 0, 0, 0.25);
+}
+.furrystay-nav-actions { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+.furrystay-nav-phone {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.98rem;
+  color: var(--fs-cream-2);
+  padding: 8px 10px;
+  border-radius: 10px;
+  transition: color 0.2s ease, background 0.2s ease;
+}
+.furrystay-nav-phone:hover { color: var(--fs-sand); background: rgba(0, 0, 0, 0.2); }
+
+/* ---------- Buttons ---------- */
+.furrystay-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 13px 24px;
+  border-radius: 999px;
+  font-size: 1rem;
+  font-weight: 700;
+  font-family: inherit;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+.furrystay-btn-solid {
+  background: var(--fs-accent);
+  color: #fff;
+  box-shadow: 0 6px 18px rgba(234, 88, 12, 0.4), inset 0 -3px 0 rgba(0, 0, 0, 0.2);
+}
+.furrystay-btn-solid:hover {
+  background: var(--fs-accent-hi);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(234, 88, 12, 0.5), inset 0 -3px 0 rgba(0, 0, 0, 0.2);
+}
+.furrystay-btn-ghost { background: rgba(255, 247, 237, 0.08); color: var(--fs-cream); border-color: rgba(253, 186, 116, 0.55); }
+.furrystay-btn-ghost:hover { background: rgba(253, 186, 116, 0.18); transform: translateY(-2px); }
+.furrystay-btn-sm { padding: 10px 18px; font-size: 0.92rem; }
+
+/* ---------- Hero ---------- */
+.furrystay-hero { position: relative; color: var(--fs-cream); background: var(--fs-bark-deep); }
+.furrystay-hero-media { position: absolute; inset: 0; overflow: hidden; }
+.furrystay-hero-media img { width: 100%; height: 100%; object-fit: cover; }
+.furrystay-hero-media::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(75deg, rgba(43, 13, 5, 0.94) 0%, rgba(124, 45, 18, 0.78) 45%, rgba(234, 88, 12, 0.28) 100%),
+    linear-gradient(0deg, rgba(43, 13, 5, 0.85) 0%, transparent 45%);
+}
+.furrystay-hero-inner {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: 1.25fr 0.75fr;
+  gap: 48px;
+  align-items: center;
+  padding: 88px 0 96px;
+}
+.furrystay-hero-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.85rem;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--fs-sand);
+  margin-bottom: 18px;
+}
+.furrystay-hero h1 { font-size: clamp(2.3rem, 5vw, 3.6rem); line-height: 1.12; margin: 0 0 18px; font-weight: 700; }
+.furrystay-hero h1 em { color: var(--fs-sand); font-style: italic; }
+.furrystay-hero-sub { font-size: 1.13rem; max-width: 34rem; color: var(--fs-cream-2); margin: 0 0 30px; }
+.furrystay-hero-ctas { display: flex; gap: 16px; flex-wrap: wrap; align-items: center; }
+.furrystay-hero-note { margin-top: 22px; font-size: 0.9rem; color: rgba(255, 247, 237, 0.75); }
+
+/* Live badge with blinking dot */
+.furrystay-live {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(43, 13, 5, 0.72);
+  border: 1px solid rgba(253, 186, 116, 0.4);
+  color: var(--fs-cream);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  padding: 7px 14px;
+  border-radius: 999px;
+}
+.furrystay-live-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #ef4444;
+  animation: furrystay-blink 1.4s ease-in-out infinite;
+}
+@keyframes furrystay-blink {
+  0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.6); }
+  50% { opacity: 0.35; box-shadow: 0 0 0 6px rgba(239, 68, 68, 0); }
+}
+
+/* Report card mock */
+.furrystay-report {
+  background: var(--fs-cream);
+  color: var(--fs-ink);
+  border-radius: 26px;
+  padding: 26px 26px 22px;
+  box-shadow: 0 26px 60px rgba(43, 13, 5, 0.55);
+  border: 1px solid rgba(124, 45, 18, 0.18);
+  transform: rotate(2deg);
+  animation: furrystay-float 6s ease-in-out infinite;
+  max-width: 360px;
+  justify-self: end;
+}
+@keyframes furrystay-float {
+  0%, 100% { translate: 0 0; }
+  50% { translate: 0 -10px; }
+}
+.furrystay-report-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  border-bottom: 2px dashed rgba(124, 45, 18, 0.25);
+  padding-bottom: 14px;
+  margin-bottom: 14px;
+}
+.furrystay-report-title { font-weight: 700; font-size: 1.05rem; }
+.furrystay-report-date { font-size: 0.8rem; color: var(--fs-muted); }
+.furrystay-report-row { display: flex; align-items: center; gap: 11px; padding: 9px 0; font-size: 0.98rem; }
+.furrystay-report-check {
+  display: grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 9px;
+  background: rgba(234, 88, 12, 0.14);
+  color: var(--fs-accent);
+  flex-shrink: 0;
+}
+.furrystay-report-foot { margin-top: 12px; font-size: 0.85rem; color: var(--fs-muted); font-style: italic; }
+
+/* ---------- Sections ---------- */
+.furrystay-section { padding: 84px 0; }
+.furrystay-section-dark { color: var(--fs-cream); }
+.furrystay-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.8rem;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--fs-accent);
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+.furrystay-section-dark .furrystay-eyebrow { color: var(--fs-sand); }
+.furrystay-h2 { font-size: clamp(1.7rem, 3.4vw, 2.4rem); line-height: 1.2; margin: 0 0 14px; }
+.furrystay-lede { font-size: 1.08rem; max-width: 40rem; margin: 0 0 42px; color: var(--fs-muted); }
+.furrystay-section-dark .furrystay-lede { color: rgba(255, 247, 237, 0.82); }
+
+/* Feature cards */
+.furrystay-grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 26px; }
+.furrystay-card {
+  background: #fff;
+  border-radius: 24px;
+  overflow: hidden;
+  border: 1px solid rgba(124, 45, 18, 0.14);
+  box-shadow: 0 8px 26px rgba(67, 20, 7, 0.1);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.furrystay-card:hover { transform: translateY(-6px); box-shadow: 0 18px 40px rgba(67, 20, 7, 0.18); }
+.furrystay-card-media { position: relative; aspect-ratio: 4 / 3; overflow: hidden; background: var(--fs-cream-2); }
+.furrystay-card-media img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
+.furrystay-card:hover .furrystay-card-media img { transform: scale(1.06); }
+.furrystay-card-badge { position: absolute; top: 14px; left: 14px; }
+.furrystay-card-body { padding: 22px 24px 26px; }
+.furrystay-card h3 { display: flex; align-items: center; gap: 10px; font-size: 1.18rem; margin: 0 0 10px; color: var(--fs-bark); }
+.furrystay-card p { margin: 0; font-size: 0.98rem; color: var(--fs-muted); }
+
+/* Amenity split */
+.furrystay-split { display: grid; grid-template-columns: 1fr 1fr; gap: 54px; align-items: center; }
+.furrystay-photo-frame {
+  aspect-ratio: 5 / 4;
+  overflow: hidden;
+  border-radius: 34px;
+  border: 6px solid rgba(253, 186, 116, 0.35);
+  box-shadow: 0 24px 55px rgba(43, 13, 5, 0.45);
+  position: relative;
+}
+.furrystay-photo-frame img { width: 100%; height: 100%; object-fit: cover; }
+.furrystay-amenities { list-style: none; margin: 0 0 34px; padding: 0; display: grid; gap: 14px; }
+.furrystay-amenities li { display: flex; gap: 13px; align-items: flex-start; font-size: 1.02rem; }
+.furrystay-amenity-icon {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 12px;
+  background: rgba(253, 186, 116, 0.16);
+  color: var(--fs-sand);
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+.furrystay-amenities strong { display: block; color: var(--fs-cream); }
+.furrystay-amenities span { color: rgba(255, 247, 237, 0.75); font-size: 0.92rem; }
+
+/* Stats strip */
+.furrystay-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  padding: 30px 0;
+  border-top: 1px solid rgba(124, 45, 18, 0.15);
+  border-bottom: 1px solid rgba(124, 45, 18, 0.15);
+}
+.furrystay-stat { text-align: center; }
+.furrystay-stat-num { font-size: 1.9rem; font-weight: 700; color: var(--fs-surface); }
+.furrystay-stat-label { font-size: 0.86rem; color: var(--fs-muted); letter-spacing: 0.5px; }
+
+/* Testimonials */
+.furrystay-quote {
+  background: #fff;
+  border-radius: 22px;
+  padding: 26px;
+  border: 1px solid rgba(124, 45, 18, 0.14);
+  box-shadow: 0 8px 26px rgba(67, 20, 7, 0.08);
+  transition: transform 0.25s ease;
+}
+.furrystay-quote:hover { transform: translateY(-5px); }
+.furrystay-quote-stars { display: flex; gap: 3px; color: var(--fs-accent); margin-bottom: 12px; }
+.furrystay-quote p { margin: 0 0 16px; font-style: italic; color: var(--fs-ink); }
+.furrystay-quote footer { font-size: 0.9rem; color: var(--fs-muted); font-weight: 700; }
+
+/* CTA band */
+.furrystay-cta-band {
+  border-radius: 30px;
+  padding: 52px 48px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 30px;
+  flex-wrap: wrap;
+  color: var(--fs-cream);
+  box-shadow: 0 24px 55px rgba(43, 13, 5, 0.35);
+}
+.furrystay-cta-band h2 { font-size: clamp(1.5rem, 3vw, 2.1rem); margin: 0 0 8px; }
+.furrystay-cta-band p { margin: 0; color: rgba(255, 247, 237, 0.85); }
+.furrystay-cta-actions { display: flex; gap: 16px; flex-wrap: wrap; align-items: center; }
+
+/* Footer */
+.furrystay-footer {
+  color: var(--fs-cream-2);
+  background: var(--fs-bark-deep);
+  padding: 40px 0 30px;
+  border-top: 1px solid rgba(253, 186, 116, 0.2);
+}
+.furrystay-footer-inner { display: flex; justify-content: space-between; align-items: center; gap: 20px; flex-wrap: wrap; }
+.furrystay-footer-links { display: flex; gap: 22px; align-items: center; flex-wrap: wrap; font-size: 0.92rem; }
+.furrystay-footer-links a:hover { color: var(--fs-sand); }
+.furrystay-fineprint {
+  margin-top: 22px;
+  padding-top: 18px;
+  border-top: 1px solid rgba(253, 186, 116, 0.15);
+  font-size: 0.78rem;
+  color: rgba(254, 243, 231, 0.55);
+  text-align: center;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 880px) {
+  .furrystay-hero-inner { grid-template-columns: 1fr; padding: 64px 0 72px; gap: 40px; }
+  .furrystay-report { justify-self: start; transform: none; }
+  .furrystay-grid-3 { grid-template-columns: 1fr; }
+  .furrystay-split { grid-template-columns: 1fr; gap: 36px; }
+  .furrystay-stats { grid-template-columns: repeat(2, 1fr); row-gap: 28px; }
+  .furrystay-cta-band { padding: 40px 28px; }
+  .furrystay-nav-inner { flex-wrap: wrap; justify-content: center; }
+  .furrystay-section { padding: 60px 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .furrystay-report, .furrystay-live-dot { animation: none; }
+  .furrystay-page * { transition-duration: 0.01ms !important; }
+}

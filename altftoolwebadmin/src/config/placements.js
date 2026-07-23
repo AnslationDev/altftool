@@ -147,14 +147,14 @@ export const PLACEMENTS = {
     description: "Injected inside Academy section.",
     layout: "academy_card",
     categories: { type: "static", values: ACADEMY_CATEGORIES },
-    minSpec: { width: 1200, height: 800, ratio: 1200 / 800 }, 
+    minSpec: { width: 1200, height: 800, ratio: 1200 / 800 },
   },
 
   settingsupport: {
     label: "Setting Support",
     description: "Shown on the support page.",
     layout: "support_card",
-    
+
     minSpec: { width: 1200, height: 800, ratio: 1200 / 800 },
   }
 };

@@ -1,3 +1,5 @@
+"use client";
+
 export async function removeBackground(image) {
   try {
     const canvas = document.createElement('canvas');

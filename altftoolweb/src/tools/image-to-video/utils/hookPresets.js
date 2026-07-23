@@ -1,3 +1,5 @@
+"use client";
+
 export const HOOK_PRESETS = [
   {
     id: "wait-for-it",

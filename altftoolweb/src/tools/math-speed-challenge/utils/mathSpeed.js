@@ -1,3 +1,5 @@
+"use client";
+
 import { STREAK_THRESHOLDS } from "../constants";
 
 function randInt(min, max) {

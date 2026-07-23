@@ -1,3 +1,5 @@
+"use client";
+
 // Real-time analysis engine hook
 import { useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import { tokenize, getTokensByLine } from '../utils/tokenizer';

@@ -1,0 +1,364 @@
+/* ── GoldenYears Living — warm elegance: cream, soft gold, graceful serif ── */
+
+.goldenyears-page {
+  --gy-gold: #b8912e;
+  --gy-gold-deep: #8f6d1a;
+  --gy-gold-dark: #6e5312;
+  --gy-cream: #fdf9f0;
+  --gy-cream-soft: #f7efdd;
+  --gy-ink: #33291a;
+  --gy-ink-soft: #5a4d38;
+  --gy-white: #fffdf8;
+  --gy-shadow: 0 14px 40px rgba(110, 83, 18, 0.14);
+  --gy-radius: 26px;
+  font-family: Georgia, "Iowan Old Style", "Palatino Linotype", "Book Antiqua", serif;
+  font-size: 18px;
+  line-height: 1.72;
+  color: var(--gy-ink);
+  background: var(--gy-cream);
+  -webkit-font-smoothing: antialiased;
+}
+
+.goldenyears-page *,
+.goldenyears-page *::before,
+.goldenyears-page *::after { box-sizing: border-box; }
+
+.goldenyears-page :focus-visible {
+  outline: 3px solid var(--gy-gold-deep);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+/* ── Typography ── */
+.goldenyears-h1 { font-size: clamp(2.3rem, 4.6vw, 3.4rem); line-height: 1.16; font-weight: 400; letter-spacing: -0.01em; margin: 0 0 1.1rem; }
+.goldenyears-h2 { font-size: clamp(1.7rem, 3vw, 2.35rem); line-height: 1.22; font-weight: 400; margin: 0 0 0.7rem; text-align: center; }
+.goldenyears-h2--light { color: var(--gy-white); }
+.goldenyears-h3 { font-size: 1.3rem; line-height: 1.3; font-weight: 700; margin: 0 0 0.5rem; }
+.goldenyears-accent { color: var(--gy-gold-deep); font-style: italic; }
+.goldenyears-eyebrow { text-transform: uppercase; letter-spacing: 0.22em; font-size: 0.82rem; font-weight: 700; color: var(--gy-gold-deep); margin: 0 0 1rem; }
+.goldenyears-section-lede { max-width: 42rem; margin: 0 auto 2.6rem; text-align: center; color: var(--gy-ink-soft); font-size: 1.1rem; }
+
+/* ── Buttons & CTAs ── */
+.goldenyears-cta-group { display: flex; flex-wrap: wrap; gap: 1rem; align-items: center; }
+.goldenyears-cta-group--mid,
+.goldenyears-cta-group--final { justify-content: center; }
+
+.goldenyears-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  min-height: 62px;
+  padding: 0.9rem 2rem;
+  border-radius: 999px;
+  font-size: 1.12rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: transform 0.22s ease, box-shadow 0.22s ease, background 0.22s ease;
+}
+.goldenyears-btn-icon { width: 22px; height: 22px; flex: none; }
+
+.goldenyears-btn--primary {
+  background: linear-gradient(135deg, var(--gy-gold) 0%, var(--gy-gold-deep) 100%);
+  color: var(--gy-white);
+  box-shadow: 0 10px 26px rgba(143, 109, 26, 0.35);
+}
+.goldenyears-btn--primary:hover { transform: translateY(-3px); box-shadow: 0 16px 34px rgba(143, 109, 26, 0.45); }
+
+.goldenyears-btn--phone {
+  background: var(--gy-white);
+  color: var(--gy-gold-dark);
+  border: 2px solid var(--gy-gold);
+  font-size: 1.22rem;
+  letter-spacing: 0.02em;
+}
+.goldenyears-btn--phone:hover { transform: translateY(-3px); background: var(--gy-cream-soft); box-shadow: 0 12px 26px rgba(110, 83, 18, 0.18); }
+.goldenyears-btn--nav { min-height: 54px; padding: 0.6rem 1.5rem; font-size: 1rem; }
+
+/* ── Navigation ── */
+.goldenyears-nav {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  background: rgba(253, 249, 240, 0.94);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid rgba(184, 145, 46, 0.28);
+}
+.goldenyears-nav-inner {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 0.85rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+.goldenyears-brand { display: inline-flex; align-items: center; gap: 0.55rem; font-size: 1.42rem; font-weight: 700; color: var(--gy-ink); }
+.goldenyears-brand em { color: var(--gy-gold-deep); font-weight: 400; }
+.goldenyears-brand-icon { width: 28px; height: 28px; color: var(--gy-gold); }
+.goldenyears-nav-actions { display: flex; align-items: center; gap: 1.2rem; }
+
+.goldenyears-nav-phone {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 54px;
+  padding: 0.4rem 0.9rem;
+  font-size: 1.24rem;
+  font-weight: 700;
+  color: var(--gy-gold-dark);
+  text-decoration: none;
+  border-radius: 12px;
+  transition: background 0.2s ease;
+}
+.goldenyears-nav-phone:hover { background: var(--gy-cream-soft); }
+.goldenyears-nav-phone-icon { width: 24px; height: 24px; flex: none; }
+
+/* ── Hero ── */
+.goldenyears-hero {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 4.2rem 1.5rem 4.6rem;
+  display: grid;
+  grid-template-columns: 1.05fr 1fr;
+  gap: 3.4rem;
+  align-items: center;
+}
+.goldenyears-hero-copy { animation: goldenyears-rise 0.8s ease both; }
+.goldenyears-lede { font-size: 1.18rem; color: var(--gy-ink-soft); margin: 0 0 2rem; max-width: 34rem; }
+
+.goldenyears-hero-points { list-style: none; margin: 2.2rem 0 0; padding: 0; display: grid; gap: 0.65rem; font-size: 1.05rem; }
+.goldenyears-hero-points li { display: flex; align-items: center; gap: 0.65rem; }
+.goldenyears-hero-points svg { width: 22px; height: 22px; color: var(--gy-gold-deep); flex: none; }
+
+.goldenyears-hero-frame {
+  position: relative;
+  margin: 0;
+  aspect-ratio: 4 / 3.2;
+  border-radius: var(--gy-radius) var(--gy-radius) 46% var(--gy-radius) / var(--gy-radius) var(--gy-radius) 30% var(--gy-radius);
+  overflow: hidden;
+  box-shadow: var(--gy-shadow);
+  border: 6px solid var(--gy-white);
+  animation: goldenyears-rise 0.8s 0.15s ease both;
+}
+.goldenyears-hero-img,
+.goldenyears-card-img,
+.goldenyears-story-img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+.goldenyears-hero-badge {
+  position: absolute;
+  left: 1rem;
+  bottom: 1rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(255, 253, 248, 0.95);
+  color: var(--gy-ink);
+  font-size: 0.95rem;
+  font-weight: 700;
+  padding: 0.6rem 1.05rem;
+  border-radius: 999px;
+  box-shadow: 0 8px 20px rgba(51, 41, 26, 0.18);
+}
+.goldenyears-badge-star,
+.goldenyears-star { width: 20px; height: 20px; color: var(--gy-gold); fill: var(--gy-gold); }
+
+/* ── Steps band ── */
+.goldenyears-steps { background: var(--gy-cream-soft); padding: 4.4rem 1.5rem; }
+.goldenyears-steps-grid {
+  list-style: none;
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.8rem;
+}
+.goldenyears-step {
+  position: relative;
+  background: var(--gy-white);
+  border-radius: var(--gy-radius);
+  padding: 2.4rem 1.9rem 2.1rem;
+  box-shadow: 0 8px 26px rgba(110, 83, 18, 0.09);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.goldenyears-step:hover { transform: translateY(-6px); box-shadow: var(--gy-shadow); }
+.goldenyears-step p { margin: 0; color: var(--gy-ink-soft); }
+
+.goldenyears-step-num {
+  position: absolute;
+  top: -1.1rem;
+  left: 1.7rem;
+  width: 2.4rem;
+  height: 2.4rem;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--gy-gold);
+  color: var(--gy-white);
+  font-weight: 700;
+  font-size: 1.15rem;
+  box-shadow: 0 6px 14px rgba(143, 109, 26, 0.4);
+}
+.goldenyears-step-icon { width: 34px; height: 34px; color: var(--gy-gold-deep); margin-bottom: 0.8rem; }
+
+/* ── Community life cards ── */
+.goldenyears-life { max-width: 1180px; margin: 0 auto; padding: 4.6rem 1.5rem; }
+.goldenyears-life-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.8rem; }
+
+.goldenyears-card {
+  background: var(--gy-white);
+  border-radius: var(--gy-radius);
+  overflow: hidden;
+  box-shadow: 0 8px 26px rgba(110, 83, 18, 0.09);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.goldenyears-card:hover { transform: translateY(-6px); box-shadow: var(--gy-shadow); }
+.goldenyears-card-frame { aspect-ratio: 3 / 2; overflow: hidden; }
+.goldenyears-card-img { transition: transform 0.5s ease; }
+.goldenyears-card:hover .goldenyears-card-img { transform: scale(1.05); }
+.goldenyears-card-body { padding: 1.6rem 1.7rem 1.9rem; }
+.goldenyears-card-body p { margin: 0; color: var(--gy-ink-soft); }
+.goldenyears-card-icon { width: 30px; height: 30px; color: var(--gy-gold-deep); margin-bottom: 0.6rem; }
+
+/* ── Mid CTA & final band ── */
+.goldenyears-midcta,
+.goldenyears-final {
+  background: linear-gradient(140deg, var(--gy-gold-dark) 0%, var(--gy-gold-deep) 55%, var(--gy-gold) 130%);
+  padding: 4.2rem 1.5rem;
+  text-align: center;
+}
+.goldenyears-midcta-inner { max-width: 760px; margin: 0 auto; }
+.goldenyears-midcta-text,
+.goldenyears-final-text { color: #f8efd8; font-size: 1.14rem; max-width: 40rem; margin: 0 auto 2.2rem; }
+
+.goldenyears-midcta .goldenyears-btn--phone,
+.goldenyears-final .goldenyears-btn--phone { background: transparent; color: var(--gy-white); border-color: rgba(255, 253, 248, 0.85); }
+.goldenyears-midcta .goldenyears-btn--phone:hover,
+.goldenyears-final .goldenyears-btn--phone:hover { background: rgba(255, 253, 248, 0.14); }
+.goldenyears-midcta .goldenyears-btn--primary,
+.goldenyears-final .goldenyears-btn--primary { background: var(--gy-white); color: var(--gy-gold-dark); }
+
+.goldenyears-final-phone-note { color: #f8efd8; margin: 2.2rem 0 0; font-size: 1.08rem; }
+.goldenyears-final-phone {
+  color: var(--gy-white);
+  font-size: 1.5rem;
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 5px;
+  white-space: nowrap;
+  padding: 0.4rem 0.3rem;
+}
+
+/* ── Testimonial ── */
+.goldenyears-story {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 4.6rem 1.5rem;
+  display: grid;
+  grid-template-columns: 0.9fr 1.1fr;
+  gap: 3.2rem;
+  align-items: center;
+}
+.goldenyears-story-frame {
+  margin: 0;
+  aspect-ratio: 4 / 4.4;
+  border-radius: 48% 48% var(--gy-radius) var(--gy-radius) / 40% 40% var(--gy-radius) var(--gy-radius);
+  overflow: hidden;
+  border: 6px solid var(--gy-white);
+  box-shadow: var(--gy-shadow);
+}
+.goldenyears-story .goldenyears-h2 { text-align: left; }
+
+.goldenyears-quote {
+  margin: 1.2rem 0 1.4rem;
+  padding-left: 1.4rem;
+  border-left: 4px solid var(--gy-gold);
+  color: var(--gy-ink-soft);
+  font-style: italic;
+  font-size: 1.12rem;
+}
+.goldenyears-quote-source { display: block; margin-top: 1.1rem; font-style: normal; }
+.goldenyears-quote-name { display: block; font-weight: 700; color: var(--gy-ink); }
+.goldenyears-quote-role { color: var(--gy-ink-soft); font-size: 0.98rem; }
+.goldenyears-stars { display: inline-flex; gap: 0.3rem; }
+
+/* ── FAQ ── */
+.goldenyears-faq { background: var(--gy-cream-soft); padding: 4.4rem 1.5rem; }
+.goldenyears-faq-list { max-width: 800px; margin: 2.4rem auto 0; display: grid; gap: 1rem; }
+.goldenyears-faq-item { background: var(--gy-white); border-radius: 18px; box-shadow: 0 6px 18px rgba(110, 83, 18, 0.08); overflow: hidden; }
+
+.goldenyears-faq-toggle {
+  width: 100%;
+  min-height: 66px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.1rem 1.5rem;
+  background: none;
+  border: 0;
+  font: inherit;
+  font-weight: 700;
+  font-size: 1.08rem;
+  color: var(--gy-ink);
+  text-align: left;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+.goldenyears-faq-toggle:hover { background: var(--gy-cream); }
+.goldenyears-faq-chevron { width: 24px; height: 24px; flex: none; color: var(--gy-gold-deep); transition: transform 0.25s ease; }
+.goldenyears-faq-chevron--open { transform: rotate(180deg); }
+.goldenyears-faq-answer { margin: 0; padding: 0 1.5rem 1.4rem; color: var(--gy-ink-soft); animation: goldenyears-fade 0.35s ease both; }
+
+/* ── Footer ── */
+.goldenyears-footer { background: #2c2313; color: #e9dfc8; padding: 3.2rem 1.5rem; }
+.goldenyears-footer-inner { max-width: 1180px; margin: 0 auto; display: grid; gap: 0.9rem; justify-items: center; text-align: center; }
+.goldenyears-brand--footer { color: #f5edd9; }
+.goldenyears-brand--footer em { color: var(--gy-gold); }
+.goldenyears-footer-disclaimer { margin: 0; font-weight: 700; font-size: 1.05rem; color: #f5edd9; }
+.goldenyears-footer-fine { margin: 0; font-size: 0.95rem; color: #c9bc9d; max-width: 46rem; }
+
+.goldenyears-footer-phone {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  min-height: 56px;
+  padding: 0.5rem 1.2rem;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--gy-gold);
+  text-decoration: none;
+  border-radius: 999px;
+  transition: background 0.2s ease;
+}
+.goldenyears-footer-phone:hover { background: rgba(184, 145, 46, 0.16); }
+.goldenyears-footer-phone svg { width: 24px; height: 24px; }
+
+/* ── Keyframes ── */
+@keyframes goldenyears-rise {
+  from { opacity: 0; transform: translateY(26px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes goldenyears-fade {
+  from { opacity: 0; transform: translateY(-6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Responsive ── */
+@media (max-width: 880px) {
+  .goldenyears-hero,
+  .goldenyears-story { grid-template-columns: 1fr; gap: 2.4rem; padding-top: 3rem; padding-bottom: 3.2rem; }
+  .goldenyears-story-frame { order: -1; aspect-ratio: 4 / 3; }
+  .goldenyears-steps-grid,
+  .goldenyears-life-grid { grid-template-columns: 1fr; gap: 2.2rem; }
+  .goldenyears-nav-phone span { display: none; }
+  .goldenyears-btn--nav { padding: 0.6rem 1.1rem; font-size: 0.95rem; }
+  .goldenyears-cta-group .goldenyears-btn { width: 100%; justify-content: center; }
+  .goldenyears-story .goldenyears-h2 { text-align: center; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .goldenyears-page *,
+  .goldenyears-page *::before,
+  .goldenyears-page *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}

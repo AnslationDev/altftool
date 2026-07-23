@@ -1,3 +1,5 @@
+"use client";
+
 function toHex(r, g, b) {
   return `#${[r, g, b]
     .map((value) => Math.min(255, Math.max(0, value)).toString(16).padStart(2, "0"))

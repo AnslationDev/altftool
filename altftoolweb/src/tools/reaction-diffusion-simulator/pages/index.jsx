@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useCallback, useMemo, useState } from 'react';
 import ControlPanel from '../components/ControlPanel';
 import ReactionCanvas from '../components/ReactionCanvas';

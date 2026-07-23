@@ -1,3 +1,5 @@
+"use client";
+
 import { computeHash, detectLanguage, estimateReadingTime } from "./helpers";
 
 export async function extractMetadata(file) {

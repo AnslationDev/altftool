@@ -62,7 +62,7 @@ function Card({ className = "", children }) {
   );
 }
 
-export default function ResultsPanel({ audit, onExportPdf, onExportJson, recent, onSelectRecent, onClearRecent }) {
+export default function ResultsPanel({ audit, dirty, onExportPdf, onExportJson, recent, onSelectRecent, onClearRecent }) {
   const [severityFilter, setSeverityFilter] = useState("all");
   const [query, setQuery] = useState("");
 
@@ -85,7 +85,7 @@ export default function ResultsPanel({ audit, onExportPdf, onExportJson, recent,
     return (
       <Card className="flex h-full min-h-[400px] flex-col items-center justify-center gap-3 p-8 text-center text-(--muted-foreground)">
         <Gauge className="h-10 w-10 opacity-50" aria-hidden="true" />
-        <p className="text-sm">Paste or load HTML on the left to see the full audit here.</p>
+        <p className="text-sm">Paste or load HTML on the left, then click <span className="font-semibold text-(--foreground)">Check</span> to run the full audit.</p>
       </Card>
     );
   }
@@ -94,6 +94,12 @@ export default function ResultsPanel({ audit, onExportPdf, onExportJson, recent,
 
   return (
     <div className="flex h-full flex-col gap-4 overflow-y-auto pr-1">
+      {dirty && (
+        <div className="flex items-center gap-2 rounded-xl border border-warning/40 bg-warning-soft px-4 py-2.5 text-xs font-medium text-warning">
+          <AlertTriangle className="h-4 w-4 shrink-0" aria-hidden="true" />
+          You&apos;ve edited the HTML since this audit — click <span className="font-bold">Check</span> to refresh the results.
+        </div>
+      )}
       <Card className="p-6">
         <div className="flex flex-col items-center gap-5 sm:flex-row">
           <div className={`flex h-24 w-24 shrink-0 flex-col items-center justify-center rounded-full ${overallTone.soft}`}>

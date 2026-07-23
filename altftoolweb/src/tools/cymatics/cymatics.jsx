@@ -332,8 +332,8 @@ export default function CymaticsSimulator() {
                     <button
                       aria-pressed={selected}
                       className={`min-h-11 rounded-md border px-3 py-2 text-left text-sm font-medium transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary ${selected
-                          ? "border-primary bg-muted text-primary"
-                          : "border-border hover:border-primary hover:text-primary"
+                        ? "border-primary bg-muted text-primary"
+                        : "border-border hover:border-primary hover:text-primary"
                         }`}
                       key={preset.name}
                       onClick={() => applyPreset(preset)}
@@ -397,8 +397,8 @@ export default function CymaticsSimulator() {
                   <button
                     aria-pressed={mode === pattern}
                     className={`min-h-11 rounded-md border px-3 text-sm font-medium capitalize transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary ${mode === pattern
-                        ? "border-primary bg-muted text-primary"
-                        : "border-border hover:border-primary hover:text-primary"
+                      ? "border-primary bg-muted text-primary"
+                      : "border-border hover:border-primary hover:text-primary"
                       }`}
                     key={pattern}
                     onClick={() => setMode(pattern)}

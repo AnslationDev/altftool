@@ -1,3 +1,5 @@
+"use client";
+
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Clock, Star, Trash2, Pencil, RotateCcw, Check, X, GitCompare } from "lucide-react";

@@ -1,3 +1,5 @@
+"use client";
+
 import { User } from "lucide-react";
 
 export default function PersonForm({ data, onChange }) {

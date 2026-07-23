@@ -1,3 +1,5 @@
+"use client";
+
 import { STORAGE_KEY, CATEGORIES_KEY, DEFAULT_CATEGORIES } from "../constants/index";
 
 export function getCapsules() {

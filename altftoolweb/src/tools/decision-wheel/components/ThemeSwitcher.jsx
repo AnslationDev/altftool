@@ -1,3 +1,5 @@
+"use client";
+
 import { Palette } from "lucide-react";
 
 const THEMES = [

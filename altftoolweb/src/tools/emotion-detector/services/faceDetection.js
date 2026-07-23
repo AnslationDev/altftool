@@ -1,3 +1,5 @@
+"use client";
+
 import { getFaceApi } from "./faceApiClient";
 
 let modelsLoaded = false;

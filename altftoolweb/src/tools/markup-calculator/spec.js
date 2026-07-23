@@ -3,40 +3,32 @@ export const spec = {
   ...{
   "slug": "markup-calculator",
   "title": "Markup Calculator",
-  "description": "Calculate the total price including markup.",
+  "description": "Add a markup percentage to a cost to get the selling price and profit.",
   "badge": "Finance",
   "category": [
     "Finance"
   ],
-  "icon": "calculator",
-  "iconColor": "text-teal-600",
+  "icon": "tag",
+  "iconColor": "text-orange-600",
   "fields": [
     {
-      "key": "amount",
-      "label": "Original Price",
+      "key": "cost",
+      "label": "Cost",
       "type": "number",
-      "default": "1000",
-      "suffix": "$"
+      "default": "60"
     },
     {
       "key": "markup",
-      "label": "Markup Percentage",
+      "label": "Markup (%)",
       "type": "number",
-      "default": "20"
+      "default": "40"
     }
-  ],
-  "presets": [
-    {
-      "label": "Example",
-      "values": {
-        "amount": "1000",
-        "markup": "20"
-      }
-    }
-  ],
-  "note": "This tool calculates the total price including a specified markup percentage."
+  ]
 },
-  compute: (values, mode) => { let result = values.amount * (1 + values.markup / 100); return { result: '$' + result.toFixed(2), caption: 'Total Price', rows: [['Original Price', '$' + values.amount], ['Markup Percentage', values.markup + '%'], ['Total Price', '$' + result.toFixed(2)]] }; },
+  compute: (values) => { const num=(v)=>typeof v==="number"?v:Number(v); const money=(n)=>Number.isFinite(Number(n))?Number(n).toLocaleString(undefined,{maximumFractionDigits:2}):"—";
+      const c = num(values.cost), price = c * (1 + num(values.markup) / 100);
+      return { result: money(price), caption: "selling price", rows: [["Profit", money(price - c)], ["Margin", price > 0 ? (((price - c) / price) * 100).toFixed(2) + "%" : "—"]] };
+    },
 };
 
 export default spec;

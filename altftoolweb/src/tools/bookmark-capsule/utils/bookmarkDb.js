@@ -1,3 +1,5 @@
+"use client";
+
 export const BOOKMARKS_KEY = "altftool_bookmark_capsule_data";
 export const CATEGORIES_KEY = "altftool_bookmark_capsule_categories";
 

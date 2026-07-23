@@ -1,3 +1,5 @@
+"use client";
+
 // BeardRenderer: renders facial hair that follows the jawline, chin, neck and
 // lip contour, blends with skin, adapts to face shape, and gets a soft under-
 // lip shadow + feathered edges so it never floats.

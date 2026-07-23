@@ -1,3 +1,5 @@
+"use client";
+
 export const STORAGE_KEY = "fileEncodingConversionStudioState";
 export const HISTORY_KEY = "fileEncodingConversionStudioHistory";
 export const HISTORY_LIMIT = 8;

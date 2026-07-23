@@ -1,3 +1,5 @@
+"use client";
+
 import { ExternalLink, Image as ImageIcon } from "lucide-react";
 import { useState } from "react";
 import ManagedImage from "@/components/ui/ManagedImage";

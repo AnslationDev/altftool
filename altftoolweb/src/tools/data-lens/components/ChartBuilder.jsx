@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useMemo, useState } from "react";
 import {
   BarChart, Bar, LineChart, Line, AreaChart, Area,

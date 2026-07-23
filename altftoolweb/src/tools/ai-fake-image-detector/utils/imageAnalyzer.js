@@ -1,3 +1,5 @@
+"use client";
+
 import { ANALYSIS_CHECKS, RISK_LEVELS } from "../constants/index.js";
 
 function clamp(value, min, max) {

@@ -1,3 +1,5 @@
+"use client";
+
 import { RotateCcw, Share2 } from "lucide-react";
 
 export default function ResultActions({ onRestart }) {

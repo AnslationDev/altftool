@@ -1,3 +1,5 @@
+"use client";
+
 import { Smartphone, Laptop, Headphones, Battery, Bike, Car, Home, Plug, Shield } from "lucide-react";
 
 const iconMap = {

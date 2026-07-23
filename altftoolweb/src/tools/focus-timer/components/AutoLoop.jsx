@@ -1,3 +1,5 @@
+"use client";
+
 import { Repeat } from "lucide-react";
 
 export default function AutoLoop({ autoLoop, setAutoLoop }) {

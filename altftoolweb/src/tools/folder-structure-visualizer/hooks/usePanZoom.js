@@ -1,3 +1,5 @@
+"use client";
+
 import { useCallback, useRef, useState } from "react";
 
 const MIN_SCALE = 0.4;

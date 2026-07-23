@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useCallback, useEffect, useLayoutEffect, useRef } from 'react';
 import {
   addChemical,

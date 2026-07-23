@@ -1,3 +1,5 @@
+"use client";
+
 import { useState, useCallback, useRef } from "react";
 import { generateQuiz, calculateScore, estimateCognitiveRating, getCategoryBreakdown } from "../utils/quizEngine";
 import { saveQuizResult } from "../utils/storage";

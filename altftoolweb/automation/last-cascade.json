@@ -1,0 +1,1194 @@
+{
+  "built": [
+    {
+      "slug": "base58-encoder",
+      "tier": "cluster:base58",
+      "level": "high",
+      "score": 70
+    },
+    {
+      "slug": "css-clamp-generator",
+      "tier": "cluster:css-extra",
+      "level": "medium",
+      "score": 55
+    },
+    {
+      "slug": "css-keyframes-generator",
+      "tier": "memory:css-clamp-generator(0.65)",
+      "level": "medium",
+      "score": 55
+    },
+    {
+      "slug": "css-scrollbar-generator",
+      "tier": "memory:css-clamp-generator(0.65)",
+      "level": "medium",
+      "score": 55
+    },
+    {
+      "slug": "css-triangle-generator",
+      "tier": "cluster:css-extra",
+      "level": "medium",
+      "score": 55
+    },
+    {
+      "slug": "css-variables-generator",
+      "tier": "memory:css-clamp-generator(0.65)",
+      "level": "medium",
+      "score": 55
+    },
+    {
+      "slug": "cursive-text-generator",
+      "tier": "cluster:fancy-text",
+      "level": "medium",
+      "score": 55
+    },
+    {
+      "slug": "domain-name-ideas-generator",
+      "tier": "cluster:name-gen",
+      "level": "medium",
+      "score": 55
+    },
+    {
+      "slug": "duration-calculator",
+      "tier": "cluster:dev-format",
+      "level": "medium",
+      "score": 55
+    },
+    {
+      "slug": "fantasy-character-name-generator",
+      "tier": "cluster:name-gen",
+      "level": "medium",
+      "score": 55
+    },
+    {
+      "slug": "ipv6-expander",
+      "tier": "cluster:dev-format",
+      "level": "medium",
+      "score": 55
+    },
+    {
+      "slug": "iso-8601-formatter",
+      "tier": "cluster:dev-format",
+      "level": "medium",
+      "score": 55
+    },
+    {
+      "slug": "media-query-generator",
+      "tier": "cluster:css-extra",
+      "level": "medium",
+      "score": 55
+    },
+    {
+      "slug": "product-description-generator",
+      "tier": "cluster:fancy-text",
+      "level": "medium",
+      "score": 55
+    },
+    {
+      "slug": "real-estate-descriptions",
+      "tier": "cluster:fancy-text",
+      "level": "medium",
+      "score": 55
+    },
+    {
+      "slug": "strikethrough-text-generator",
+      "tier": "cluster:fancy-text",
+      "level": "medium",
+      "score": 55
+    },
+    {
+      "slug": "youtube-description-generator",
+      "tier": "cluster:fancy-text",
+      "level": "medium",
+      "score": 55
+    },
+    {
+      "slug": "youtube-transcript-generator",
+      "tier": "cluster:fancy-text",
+      "level": "medium",
+      "score": 55
+    }
+  ],
+  "skipped": [
+    {
+      "slug": "ai-write",
+      "reason": "unsupported: needs an AI model / API"
+    },
+    {
+      "slug": "all-ai-write",
+      "reason": "unsupported: needs an AI model / API"
+    },
+    {
+      "slug": "all-video-tools",
+      "reason": "unsupported: needs audio/video processing"
+    },
+    {
+      "slug": "apple-touch-icon-generator",
+      "reason": "unsupported: needs image editing (canvas/libs)"
+    },
+    {
+      "slug": "ascii-table-generator",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "audio-speed-changer",
+      "reason": "unsupported: needs audio/video processing"
+    },
+    {
+      "slug": "audio-to-text",
+      "reason": "unsupported: needs audio/video processing"
+    },
+    {
+      "slug": "audio-trimmer",
+      "reason": "unsupported: needs audio/video processing"
+    },
+    {
+      "slug": "bcrypt-hash-generator",
+      "reason": "unsupported: needs a native crypto/hashing library"
+    },
+    {
+      "slug": "canonical-tag-checker",
+      "reason": "unsupported: needs live network access"
+    },
+    {
+      "slug": "change-background-of-image",
+      "reason": "unsupported: needs image editing (canvas/libs)"
+    },
+    {
+      "slug": "change-background-of-photo",
+      "reason": "unsupported: needs image editing (canvas/libs)"
+    },
+    {
+      "slug": "checklist-maker",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "cidr-calculator",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "coast-fire-calculator",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "color-from-image-extractor",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "compress-image-size",
+      "reason": "unsupported: needs image editing (canvas/libs)"
+    },
+    {
+      "slug": "compress-video",
+      "reason": "unsupported: needs audio/video processing"
+    },
+    {
+      "slug": "connect-four",
+      "reason": "unsupported: needs an interactive game/UI component (not a compute tool)"
+    },
+    {
+      "slug": "content-improver",
+      "reason": "unsupported: needs an AI model / API"
+    },
+    {
+      "slug": "content-security-policy-generator",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "convert-a-word-document-to-pdf",
+      "reason": "unsupported: needs document processing (PDF/office libs)"
+    },
+    {
+      "slug": "convert-csv-to-excel",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "convert-excel-to-pdf",
+      "reason": "unsupported: needs document processing (PDF/office libs)"
+    },
+    {
+      "slug": "convert-excel-to-xml",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "convert-from-pdf-to-xlsx",
+      "reason": "unsupported: needs document processing (PDF/office libs)"
+    },
+    {
+      "slug": "convert-mp4-to-mp3-audio",
+      "reason": "unsupported: needs audio/video processing"
+    },
+    {
+      "slug": "convert-video-to-text",
+      "reason": "unsupported: needs audio/video processing"
+    },
+    {
+      "slug": "convert-xml-to-csv",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "convert-xml-to-excel",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "convert-xml-to-json",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "converted",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "converter-tools",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "cors-config-generator",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "countdown-to-event",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "cpc-calculator",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "cpm-calculator",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "credit-utilization-calculator",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "cron-next-runs",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "cron-parser",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "crypto-tax-estimator",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "css-grid-playground",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "csv-to-excel",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "csv-to-markdown-table",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "ctc-breakup-calculator",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "customer-lifetime-value-calculator",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "daily-journal",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "deadline-calculator",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "dividend-reinvestment-calculator",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "dns-record-lookup",
+      "reason": "unsupported: needs live network access"
+    },
+    {
+      "slug": "docker-compose-validator",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "dockerfile-linter",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "down-payment-calculator",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "editorconfig-generator",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "electricity-usage-estimator",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "elevator-pitch-builder",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "email-signature-generator",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "env-file-parser",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "excel-to-pdf",
+      "reason": "unsupported: needs document processing (PDF/office libs)"
+    },
+    {
+      "slug": "excel-to-xml",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "extract-audio",
+      "reason": "unsupported: needs audio/video processing"
+    },
+    {
+      "slug": "facebook-download",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "faq-generator",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "favicon-generator",
+      "reason": "unsupported: needs image editing (canvas/libs)"
+    },
+    {
+      "slug": "favorite-group",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "fb-headline-generator",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "featured-tool",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "ffmi-calculator",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "file-tools",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "flashcard-maker",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "flexbox-playground",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "forex-lot-calculator",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "from-pdf",
+      "reason": "unsupported: needs document processing (PDF/office libs)"
+    },
+    {
+      "slug": "fuel-cost-calculator",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "gif-resizer",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "gif-to-mp4-converter",
+      "reason": "unsupported: needs audio/video processing"
+    },
+    {
+      "slug": "gitignore-generator",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "goal-tracker",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "grammar-fixer",
+      "reason": "unsupported: needs an AI model / API"
+    },
+    {
+      "slug": "graphql-query-formatter",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "gratitude-journal",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "grocery-budget-planner",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "gross-to-net-calculator",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "gzip-size-estimator",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "habit-tracker",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "hangman-game",
+      "reason": "unsupported: needs an interactive game/UI component (not a compute tool)"
+    },
+    {
+      "slug": "hashtag-generator",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "headline-analyzer",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "hmac-generator",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "hreflang-generator",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "htpasswd-generator",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "http-header-inspector",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "image-aspect-ratio-cropper",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "image-background-color-changer",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "image-blur-tool",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "image-border-adder",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "image-brightness-adjuster",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "image-color-picker",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "image-dpi-changer",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "image-grayscale-converter",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "image-pixelator",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "image-rotator",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "image-rounded-corners-tool",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "image-to-text",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "image-to-webp-converter",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "image-tools",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "image-watermark-adder",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "inflation-adjusted-return-calculator",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "ini-to-json-converter",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "instagram-caption-generator",
+      "reason": "unsupported: needs an AI model / API"
+    },
+    {
+      "slug": "instagram-download",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "instagram-grid-splitter",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "invoice-number-generator",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "irr-calculator",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "jpg-to-png-converter",
+      "reason": "unsupported: needs image editing (canvas/libs)"
+    },
+    {
+      "slug": "json-ld-generator",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "json-schema-validator",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "jsonpath-tester",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "jwt-generator",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "lean-body-mass-calculator",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "license-generator",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "linkedin-post-generator",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "m4a-to-mp3",
+      "reason": "unsupported: needs audio/video processing"
+    },
+    {
+      "slug": "mac-address-lookup",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "macro-split-planner",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "marathon-time-predictor",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "markdown-table-generator",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "matrix-calculator",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "meal-prep-calculator",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "meeting-notes-template",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "meta-preview-tool",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "mime-type-finder",
+      "reason": "sandbox: compute uses a forbidden capability (net"
+    },
+    {
+      "slug": "minesweeper",
+      "reason": "unsupported: needs an interactive game/UI component (not a compute tool)"
+    },
+    {
+      "slug": "mkv-to-mp4",
+      "reason": "unsupported: needs audio/video processing"
+    },
+    {
+      "slug": "mock-json-generator",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "molar-mass-calculator",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "mov-to-mp4",
+      "reason": "unsupported: needs audio/video processing"
+    },
+    {
+      "slug": "movie-watchlist-tracker",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "mp4-to-mp3",
+      "reason": "unsupported: needs audio/video processing"
+    },
+    {
+      "slug": "mute-video",
+      "reason": "unsupported: needs audio/video processing"
+    },
+    {
+      "slug": "mutual-fund-return-calculator",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "nap-time-calculator",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "never-have-i-ever-generator",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "npv-calculator",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "open-graph-image-preview",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "options-payoff-calculator",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "other-tools",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "our-most-popular-tools",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "overtime-pay-calculator",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "packing-list-generator",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "paint-coverage-calculator",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "paragraph-completer",
+      "reason": "unsupported: needs an AI model / API"
+    },
+    {
+      "slug": "passive-voice-detector",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "passport-photo-resizer",
+      "reason": "unsupported: needs image editing (canvas/libs)"
+    },
+    {
+      "slug": "payback-period-calculator",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "pdf-creator",
+      "reason": "unsupported: needs document processing (PDF/office libs)"
+    },
+    {
+      "slug": "pdf-to-excel",
+      "reason": "unsupported: needs document processing (PDF/office libs)"
+    },
+    {
+      "slug": "pdf-to-powerpoint",
+      "reason": "unsupported: needs document processing (PDF/office libs)"
+    },
+    {
+      "slug": "pdf-tools",
+      "reason": "unsupported: needs document processing (PDF/office libs)"
+    },
+    {
+      "slug": "per-diem-calculator",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "photo-filters-tool",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "pip-calculator",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "placeholder-image-generator",
+      "reason": "unsupported: needs an AI model / API"
+    },
+    {
+      "slug": "plant-watering-scheduler",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "png-to-jpg-converter",
+      "reason": "unsupported: needs image editing (canvas/libs)"
+    },
+    {
+      "slug": "png-to-pdf",
+      "reason": "unsupported: needs document processing (PDF/office libs)"
+    },
+    {
+      "slug": "pomodoro-timer",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "position-size-calculator",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "pregnancy-week-calculator",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "priority-matrix",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "pros-and-cons-list",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "protein-intake-calculator",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "protobuf-decoder",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "punycode-converter",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "purchase-order-generator",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "qr-menu-generator",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "quotation-generator",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "quoted-printable-decoder",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "race-pace-splits-calculator",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "random-sentence-generator",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "random-team-generator",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "random-trivia-generator",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "ratio-simplifier",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "reaction-speed-game",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "readability-score-checker",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "reading-list-tracker",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "recipe-unit-converter",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "redirect-chain-checker",
+      "reason": "unsupported: needs live network access"
+    },
+    {
+      "slug": "refinance-calculator",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "remove-bg",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "remove-objects-from-photo",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "resistor-color-code-calculator",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "resize-image-dimensions",
+      "reason": "unsupported: needs image editing (canvas/libs)"
+    },
+    {
+      "slug": "resize-video",
+      "reason": "unsupported: needs audio/video processing"
+    },
+    {
+      "slug": "retirement-withdrawal-calculator",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "rhyme-finder",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "riddle-generator",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "risk-reward-calculator",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "road-trip-cost-splitter",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "robots-txt-tester",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "rock-paper-scissors-lizard-spock",
+      "reason": "unsupported: needs an interactive game/UI component (not a compute tool)"
+    },
+    {
+      "slug": "roman-numeral-date-converter",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "romantic-compatibility-test",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "rule-of-70-calculator",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "salary-hike-calculator",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "semver-calculator",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "sitemap-validator",
+      "reason": "unsupported: needs live network access"
+    },
+    {
+      "slug": "slogan-generator",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "snowflake-id-decoder",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "solar-panel-savings-calculator",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "solve-your-file-problems",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "solve-your-image-problems",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "solve-your-pdf-problems",
+      "reason": "unsupported: needs document processing (PDF/office libs)"
+    },
+    {
+      "slug": "solve-your-text-problems",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "solve-your-video-problems",
+      "reason": "unsupported: needs audio/video processing"
+    },
+    {
+      "slug": "split-csv",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "split-excel",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "split-pdf",
+      "reason": "unsupported: needs document processing (PDF/office libs)"
+    },
+    {
+      "slug": "sql-where-builder",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "staking-reward-calculator",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "standup-notes-generator",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "steps-to-calories-converter",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "subnet-calculator",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "svg-optimizer",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "svg-path-editor",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "swim-pace-calculator",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "swot-analysis-maker",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "tab-to-spaces-converter",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "tailwind-color-generator",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "tax-bracket-calculator",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "tds-calculator",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "tetris-clone",
+      "reason": "unsupported: needs an interactive game/UI component (not a compute tool)"
+    },
+    {
+      "slug": "text-column-extractor",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "text-to-ascii-art",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "tiktok-video-downloader",
+      "reason": "unsupported: needs audio/video processing"
+    },
+    {
+      "slug": "tile-calculator",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "time-zone-meeting-planner",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "to-pdf",
+      "reason": "unsupported: needs document processing (PDF/office libs)"
+    },
+    {
+      "slug": "toml-to-json-converter",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "tournament-bracket-maker",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "transcribe-youtube-video",
+      "reason": "unsupported: needs an AI model / API"
+    },
+    {
+      "slug": "travel-budget-planner",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "trim-video",
+      "reason": "unsupported: needs audio/video processing"
+    },
+    {
+      "slug": "truth-or-dare-generator",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "twitter-card-preview",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "twitter-download",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "typing-speed-game",
+      "reason": "unsupported: needs an interactive game/UI component (not a compute tool)"
+    },
+    {
+      "slug": "unit-circle-explorer",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "unlock-pdf",
+      "reason": "unsupported: needs document processing (PDF/office libs)"
+    },
+    {
+      "slug": "upscale-image",
+      "reason": "unsupported: needs image editing (canvas/libs)"
+    },
+    {
+      "slug": "user-agent-parser",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "video-thumbnail-extractor",
+      "reason": "unsupported: needs audio/video processing"
+    },
+    {
+      "slug": "video-to-text",
+      "reason": "unsupported: needs audio/video processing"
+    },
+    {
+      "slug": "video-to-webp",
+      "reason": "unsupported: needs audio/video processing"
+    },
+    {
+      "slug": "video-tools",
+      "reason": "unsupported: needs audio/video processing"
+    },
+    {
+      "slug": "vo2-max-estimator",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "waist-to-hip-ratio-calculator",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "wallpaper-calculator",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "weekly-planner",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "whois-lookup",
+      "reason": "unsupported: needs live network access"
+    },
+    {
+      "slug": "wilks-calculator",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "word-scramble-game",
+      "reason": "unsupported: needs an interactive game/UI component (not a compute tool)"
+    },
+    {
+      "slug": "world-clock-dashboard",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "would-you-rather-generator",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "xml-to-csv",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "xml-to-excel",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "xml-to-json",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "xml-to-json-converter",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "youtube-to-text",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    },
+    {
+      "slug": "zodiac-compatibility-checker",
+      "reason": "no tier could build it (enable --allow-generate for Tier 3)"
+    }
+  ]
+}

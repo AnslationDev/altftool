@@ -1,3 +1,5 @@
+"use client";
+
 import { useState } from "react";
 import { Modal, Button } from "@altftool/ui";
 import { Download, Upload, FileJson, FileText } from "lucide-react";

@@ -1,3 +1,5 @@
+"use client";
+
 import { motion, AnimatePresence } from "framer-motion";
 import { Eye, Monitor, Smartphone, Tablet, RotateCw, Maximize2, ZoomIn, ZoomOut, RefreshCw, AlertTriangle } from "lucide-react";
 import { useEffect, useRef, useState } from "react";

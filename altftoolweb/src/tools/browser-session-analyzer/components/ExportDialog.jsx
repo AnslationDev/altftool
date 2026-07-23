@@ -1,3 +1,5 @@
+"use client";
+
 import { Modal, Button } from "@altftool/ui";
 import { FileJson, FileText, Download, Copy, Check } from "lucide-react";
 import { exportToJson, exportToCsv, exportToTxt, generateId } from "../utils/helpers";

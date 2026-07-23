@@ -1,3 +1,5 @@
+"use client";
+
 import { motion } from "framer-motion";
 import { Building2, Check, Cookie, Mail, MousePointerClick } from "lucide-react";
 import ProgressTracker from "./ProgressTracker";

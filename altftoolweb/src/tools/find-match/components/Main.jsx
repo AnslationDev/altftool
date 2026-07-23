@@ -1,3 +1,5 @@
+"use client";
+
 import { useState } from "react";
 import { Heart, Sparkles, User, Mail, MapPin, Music, Book, Utensils, Users, ArrowRight } from "lucide-react";
 

@@ -1,3 +1,5 @@
+"use client";
+
 import { useState } from "react";
 import { Modal, Button } from "@altftool/ui";
 import { Share2, Link, Download, Twitter, Facebook, Check } from "lucide-react";

@@ -1,0 +1,81 @@
+{
+  "at": "2026-07-22T07:28:56",
+  "provider": "ollama:qwen2.5-coder:7b",
+  "built": [
+    {
+      "slug": "age-in-days-calculator",
+      "via": "ollama:qwen2.5-coder:7b"
+    },
+    {
+      "slug": "break-even-units-calculator",
+      "via": "ollama:qwen2.5-coder:7b"
+    },
+    {
+      "slug": "bubble-text-generator",
+      "via": "ollama:qwen2.5-coder:7b"
+    },
+    {
+      "slug": "days-between-dates-calculator",
+      "via": "ollama:qwen2.5-coder:7b"
+    },
+    {
+      "slug": "hourly-to-salary-calculator",
+      "via": "ollama:qwen2.5-coder:7b"
+    },
+    {
+      "slug": "margin-calculator",
+      "via": "ollama:qwen2.5-coder:7b"
+    },
+    {
+      "slug": "mortgage-affordability-calculator",
+      "via": "ollama:qwen2.5-coder:7b"
+    }
+  ],
+  "failed": [
+    {
+      "slug": "base32-encoder",
+      "error": "ollama:qwen2.5-coder:7b threw: The operation was aborted due to timeout | template: no output"
+    },
+    {
+      "slug": "blood-alcohol-content-calculator",
+      "error": "ollama:qwen2.5-coder:7b threw: The operation was aborted due to timeout | template: no output"
+    },
+    {
+      "slug": "bond-yield-calculator",
+      "error": "ollama:qwen2.5-coder:7b threw: The operation was aborted due to timeout | template: no output"
+    },
+    {
+      "slug": "box-shadow-generator",
+      "error": "unsupported: needs document processing (PDF/office libs)"
+    },
+    {
+      "slug": "business-days-calculator",
+      "error": "ollama:qwen2.5-coder:7b threw: The operation was aborted due to timeout | template: no output"
+    },
+    {
+      "slug": "call-to-action-generator",
+      "error": "repair failed: compile: Invalid or unexpected token | template: no output"
+    },
+    {
+      "slug": "calorie-burn-calculator",
+      "error": "ollama:qwen2.5-coder:7b threw: The operation was aborted due to timeout | template: no output"
+    },
+    {
+      "slug": "calorie-deficit-calculator",
+      "error": "ollama:qwen2.5-coder:7b threw: The operation was aborted due to timeout | template: no output"
+    },
+    {
+      "slug": "capital-gains-calculator",
+      "error": "ollama:qwen2.5-coder:7b threw: The operation was aborted due to timeout | template: no output"
+    },
+    {
+      "slug": "car-loan-calculator",
+      "error": "ollama:qwen2.5-coder:7b threw: The operation was aborted due to timeout | template: no output"
+    },
+    {
+      "slug": "changelog-generator",
+      "error": "repair failed: runtime: format is not defined on {\"versions\":\"1.0.0 - Initial release\\n1.1.0 - Added feature A\",\"format\":\"markdown\"} | template: no output"
+    }
+  ],
+  "skippedExisting": []
+}

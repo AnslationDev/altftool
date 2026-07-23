@@ -1,3 +1,5 @@
+"use client";
+
 export function loadFromStorage(key, defaultValue) {
   try {
     const raw = localStorage.getItem(key);

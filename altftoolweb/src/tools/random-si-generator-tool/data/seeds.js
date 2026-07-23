@@ -1,3 +1,5 @@
+"use client";
+
 // Startup Idea Seeds Database
 export const seeds = {
     categories: [

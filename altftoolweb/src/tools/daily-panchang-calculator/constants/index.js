@@ -1,3 +1,5 @@
+"use client";
+
 export const NAKSHATRA_LIST = [
   { id: 0, name: "Ashwini", deity: "Ashwini Kumaras", range: "0°00' – 13°20' Aries", symbol: "Horse head", gana: "Deva" },
   { id: 1, name: "Bharani", deity: "Yama", range: "13°20' – 26°40' Aries", symbol: "Yoni", gana: "Manushya" },

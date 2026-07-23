@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState, useEffect, useRef } from "react";
 import ChartBuilder from "./ChartBuilder";
 import { generateAutoCharts } from "../utils/autoCharts";

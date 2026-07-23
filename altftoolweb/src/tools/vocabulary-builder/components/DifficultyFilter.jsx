@@ -1,3 +1,5 @@
+"use client";
+
 import { DIFFICULTIES } from "../constants";
 
 export default function DifficultyFilter({ selected, onChange }) {

@@ -1,3 +1,5 @@
+"use client";
+
 // Curated English word -> IPA (General American / Received Pronunciation hybrid,
 // General American preferred) dictionary used by the Text to IPA tool.
 // Covers the most common English words plus a rule-based fallback for the rest.

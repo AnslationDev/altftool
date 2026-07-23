@@ -1,3 +1,5 @@
+"use client";
+
 import { Handle, Position, NodeProps } from '@xyflow/react';
 import { useState, useCallback } from 'react';
 

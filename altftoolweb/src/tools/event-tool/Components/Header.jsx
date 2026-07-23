@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import { Calendar, Sun, Moon, Menu } from "lucide-react";
 

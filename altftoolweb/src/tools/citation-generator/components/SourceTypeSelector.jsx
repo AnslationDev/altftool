@@ -1,3 +1,5 @@
+"use client";
+
 import React from 'react';
 import { SOURCE_TYPES } from '../utils/citation-engine';
 import { Book, Globe, FileText, Newspaper, Tv, Mic, GraduationCap, FileSearch } from 'lucide-react';

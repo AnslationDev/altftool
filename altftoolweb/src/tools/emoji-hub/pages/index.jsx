@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState, useEffect } from "react";
 import EmojiPicker from "emoji-picker-react";
 import {

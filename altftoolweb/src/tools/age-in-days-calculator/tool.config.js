@@ -2,7 +2,7 @@ const toolConfig = {
   slug: "age-in-days-calculator",
   name: "Age in Days Calculator",
   category: ["Calculator"],
-  description: "Calculate the age of something in days based on its creation date.",
+  description: "See exactly how old you are in days, weeks, months and hours from your birth date.",
   icon: "calendar",
   iconColor: "text-rose-600",
 };

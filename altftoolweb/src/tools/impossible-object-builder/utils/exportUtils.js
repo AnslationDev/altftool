@@ -1,3 +1,5 @@
+"use client";
+
 export const exportToPNG = (gl) => {
   const dataURL = gl.domElement.toDataURL('image/png');
   const link = document.createElement('a');

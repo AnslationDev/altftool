@@ -1,0 +1,381 @@
+/* ============================================================
+   RainRight Gutters — standalone marketing lander styles
+   Palette: rain-blue #1e6fb8 on white, diagonal rain-line motif
+   ============================================================ */
+
+.rainright-page {
+  --rr-blue: #1e6fb8;
+  --rr-blue-dark: #15517f;
+  --rr-blue-deep: #0e3a5c;
+  --rr-blue-soft: #e8f2fb;
+  --rr-blue-mist: #f4f9fd;
+  --rr-ink: #16232e;
+  --rr-slate: #45586a;
+  --rr-line: #d6e4f0;
+  --rr-white: #ffffff;
+  --rr-radius: 18px;
+  --rr-shadow: 0 10px 30px rgba(14, 58, 92, 0.12);
+  font-family: "Segoe UI", system-ui, -apple-system, Arial, sans-serif;
+  color: var(--rr-ink);
+  background: var(--rr-white);
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+.rainright-page * { box-sizing: border-box; }
+
+/* Subtle diagonal rain-line background pattern */
+.rainright-rainlines {
+  background-image: repeating-linear-gradient(115deg,
+    rgba(30, 111, 184, 0.045) 0px, rgba(30, 111, 184, 0.045) 2px,
+    transparent 2px, transparent 26px);
+}
+
+.rainright-container { max-width: 1120px; margin: 0 auto; padding: 0 24px; }
+
+/* ---------------- Keyframes ---------------- */
+@keyframes rainright-fade-up {
+  from { opacity: 0; transform: translateY(22px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes rainright-drip {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(6px); }
+}
+
+/* ---------------- Nav ---------------- */
+.rainright-nav {
+  position: sticky; top: 0; z-index: 60;
+  background: rgba(255, 255, 255, 0.94);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--rr-line);
+}
+
+.rainright-nav-inner {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 18px; padding: 14px 24px; max-width: 1120px; margin: 0 auto;
+}
+
+.rainright-brand {
+  display: inline-flex; align-items: center; gap: 10px;
+  font-size: 1.2rem; font-weight: 800; letter-spacing: -0.01em;
+  color: var(--rr-blue-deep); text-decoration: none;
+}
+
+.rainright-brand-drop { color: var(--rr-blue); animation: rainright-drip 3.2s ease-in-out infinite; }
+
+.rainright-nav-links {
+  display: flex; align-items: center; gap: 26px;
+  list-style: none; margin: 0; padding: 0;
+}
+
+.rainright-nav-links a {
+  color: var(--rr-slate); text-decoration: none; font-weight: 600; font-size: 0.95rem;
+  border-bottom: 2px solid transparent; padding-bottom: 2px;
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+
+.rainright-nav-links a:hover { color: var(--rr-blue); border-color: var(--rr-blue); }
+
+.rainright-nav-actions { display: flex; align-items: center; gap: 14px; }
+
+.rainright-nav-phone {
+  display: inline-flex; align-items: center; gap: 7px;
+  color: var(--rr-blue-dark); font-weight: 700; font-size: 0.95rem;
+  text-decoration: none; transition: color 0.2s ease;
+}
+
+.rainright-nav-phone:hover { color: var(--rr-blue); }
+
+/* ---------------- Buttons ---------------- */
+.rainright-btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 9px;
+  border-radius: 999px; padding: 13px 26px; font-weight: 700; font-size: 1rem;
+  text-decoration: none; cursor: pointer; border: 2px solid transparent;
+  transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+}
+
+.rainright-btn-primary {
+  background: linear-gradient(135deg, var(--rr-blue), var(--rr-blue-dark));
+  color: var(--rr-white);
+  box-shadow: 0 6px 18px rgba(30, 111, 184, 0.35);
+}
+
+.rainright-btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 24px rgba(30, 111, 184, 0.45); }
+
+.rainright-btn-ghost { background: var(--rr-white); color: var(--rr-blue-dark); border-color: var(--rr-blue); }
+.rainright-btn-ghost:hover { background: var(--rr-blue-soft); transform: translateY(-2px); }
+
+.rainright-btn-light { background: var(--rr-white); color: var(--rr-blue-dark); box-shadow: 0 6px 18px rgba(9, 34, 54, 0.3); }
+.rainright-btn-light:hover { transform: translateY(-2px); box-shadow: 0 10px 26px rgba(9, 34, 54, 0.4); }
+
+.rainright-btn-sm { padding: 10px 20px; font-size: 0.92rem; }
+
+.rainright-page a:focus-visible,
+.rainright-page button:focus-visible {
+  outline: 3px solid var(--rr-blue); outline-offset: 3px; border-radius: 6px;
+}
+
+.rainright-btn:focus-visible { outline: 3px solid var(--rr-blue-deep); outline-offset: 3px; }
+
+/* ---------------- Hero ---------------- */
+.rainright-hero { padding: 72px 0 84px; }
+
+.rainright-hero-grid {
+  display: grid; grid-template-columns: 1.05fr 0.95fr;
+  gap: 52px; align-items: center;
+}
+
+.rainright-hero-copy { animation: rainright-fade-up 0.7s ease both; }
+
+.rainright-eyebrow {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--rr-blue-soft); color: var(--rr-blue-dark);
+  font-weight: 700; font-size: 0.82rem; letter-spacing: 0.08em; text-transform: uppercase;
+  padding: 7px 16px; border-radius: 999px; margin-bottom: 20px;
+}
+
+.rainright-hero h1 {
+  font-size: clamp(2.1rem, 4.4vw, 3.3rem); line-height: 1.12;
+  margin: 0 0 18px; letter-spacing: -0.02em; color: var(--rr-blue-deep);
+}
+
+.rainright-hero h1 em { font-style: normal; color: var(--rr-blue); }
+
+.rainright-hero-sub { font-size: 1.13rem; color: var(--rr-slate); max-width: 34rem; margin: 0 0 30px; }
+
+.rainright-hero-ctas { display: flex; flex-wrap: wrap; gap: 14px; margin-bottom: 30px; }
+
+.rainright-hero-points {
+  display: flex; flex-wrap: wrap; gap: 10px 24px;
+  list-style: none; margin: 0; padding: 0;
+  color: var(--rr-slate); font-weight: 600; font-size: 0.94rem;
+}
+
+.rainright-hero-points li { display: inline-flex; align-items: center; gap: 7px; }
+.rainright-hero-points svg { color: var(--rr-blue); flex-shrink: 0; }
+
+.rainright-hero-media { position: relative; animation: rainright-fade-up 0.7s ease 0.15s both; }
+
+.rainright-hero-frame {
+  aspect-ratio: 4 / 3; border-radius: 26px; overflow: hidden; box-shadow: var(--rr-shadow);
+}
+
+.rainright-hero-frame img,
+.rainright-photo-frame img {
+  width: 100%; height: 100%; object-fit: cover; display: block;
+}
+
+.rainright-hero-badge {
+  position: absolute; left: -16px; bottom: -18px;
+  background: var(--rr-white); border-radius: 16px; box-shadow: var(--rr-shadow);
+  padding: 14px 20px; display: flex; align-items: center; gap: 12px;
+  border: 1px solid var(--rr-line);
+}
+
+.rainright-hero-badge svg { color: var(--rr-blue); }
+.rainright-hero-badge strong { display: block; color: var(--rr-blue-deep); font-size: 1.05rem; line-height: 1.2; }
+.rainright-hero-badge span { color: var(--rr-slate); font-size: 0.82rem; }
+
+/* ---------------- Section scaffolding ---------------- */
+.rainright-section { padding: 78px 0; }
+.rainright-section-alt { background: var(--rr-blue-mist); }
+
+.rainright-section-head { max-width: 640px; margin: 0 auto 46px; text-align: center; }
+
+.rainright-section-head h2 {
+  font-size: clamp(1.7rem, 3vw, 2.35rem); color: var(--rr-blue-deep);
+  letter-spacing: -0.015em; margin: 0 0 12px;
+}
+
+.rainright-section-head p { color: var(--rr-slate); font-size: 1.05rem; margin: 0; }
+
+/* ---------------- Service cards ---------------- */
+.rainright-card-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 26px; }
+
+.rainright-card {
+  background: var(--rr-white); border: 1px solid var(--rr-line);
+  border-radius: var(--rr-radius); overflow: hidden;
+  transition: transform 0.22s ease, box-shadow 0.22s ease;
+}
+
+.rainright-card:hover { transform: translateY(-6px); box-shadow: var(--rr-shadow); }
+
+.rainright-photo-frame { aspect-ratio: 16 / 10; overflow: hidden; }
+
+.rainright-card .rainright-photo-frame img { transition: transform 0.45s ease; }
+.rainright-card:hover .rainright-photo-frame img { transform: scale(1.06); }
+
+.rainright-card-body { padding: 22px 24px 26px; }
+
+.rainright-card-body h3 {
+  display: flex; align-items: center; gap: 9px;
+  margin: 0 0 10px; font-size: 1.2rem; color: var(--rr-blue-deep);
+}
+
+.rainright-card-body h3 svg { color: var(--rr-blue); }
+.rainright-card-body p { margin: 0 0 14px; color: var(--rr-slate); font-size: 0.97rem; }
+
+.rainright-card-link {
+  display: inline-flex; align-items: center; gap: 6px;
+  color: var(--rr-blue); font-weight: 700; font-size: 0.94rem; text-decoration: none;
+}
+
+.rainright-card-link:hover { text-decoration: underline; }
+
+/* ---------------- Seasonal split ---------------- */
+.rainright-season-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 26px; }
+
+.rainright-season {
+  border-radius: var(--rr-radius); overflow: hidden;
+  border: 1px solid var(--rr-line); background: var(--rr-white);
+  display: flex; flex-direction: column;
+  transition: transform 0.22s ease, box-shadow 0.22s ease;
+}
+
+.rainright-season:hover { transform: translateY(-5px); box-shadow: var(--rr-shadow); }
+
+.rainright-season-tag {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-weight: 800; font-size: 0.8rem; letter-spacing: 0.09em; text-transform: uppercase;
+  padding: 7px 15px; border-radius: 999px; margin-bottom: 14px;
+}
+
+.rainright-season-spring .rainright-season-tag { background: #e5f5ec; color: #1c6b45; }
+.rainright-season-fall .rainright-season-tag { background: #fbeee0; color: #8a4d15; }
+
+.rainright-season-body { padding: 26px 28px 30px; flex: 1; }
+.rainright-season-body h3 { margin: 0 0 10px; font-size: 1.35rem; color: var(--rr-blue-deep); }
+.rainright-season-body > p { color: var(--rr-slate); margin: 0 0 16px; }
+
+.rainright-season-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+
+.rainright-season-list li {
+  display: flex; align-items: flex-start; gap: 9px;
+  color: var(--rr-ink); font-size: 0.96rem;
+}
+
+.rainright-season-list svg { color: var(--rr-blue); flex-shrink: 0; margin-top: 3px; }
+
+/* ---------------- CTA bands ---------------- */
+.rainright-band {
+  background: linear-gradient(120deg, var(--rr-blue-deep), var(--rr-blue-dark) 55%, var(--rr-blue));
+  color: var(--rr-white); border-radius: 24px; padding: 46px 48px;
+  display: flex; align-items: center; justify-content: space-between; gap: 30px;
+  position: relative; overflow: hidden;
+}
+
+.rainright-band::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background-image: repeating-linear-gradient(115deg,
+    rgba(255, 255, 255, 0.06) 0px, rgba(255, 255, 255, 0.06) 2px,
+    transparent 2px, transparent 22px);
+}
+
+.rainright-band h2 { margin: 0 0 8px; font-size: clamp(1.5rem, 2.6vw, 2rem); letter-spacing: -0.01em; }
+.rainright-band p { margin: 0; color: rgba(255, 255, 255, 0.85); font-size: 1.02rem; }
+
+.rainright-band-ctas {
+  display: flex; flex-wrap: wrap; gap: 14px;
+  position: relative; z-index: 1; flex-shrink: 0;
+}
+
+.rainright-band-phone {
+  display: inline-flex; align-items: center; gap: 9px;
+  color: var(--rr-white); font-weight: 800; font-size: 1.08rem; text-decoration: none;
+  padding: 13px 22px; border: 2px solid rgba(255, 255, 255, 0.65); border-radius: 999px;
+  transition: background 0.2s ease, transform 0.18s ease;
+}
+
+.rainright-band-phone:hover { background: rgba(255, 255, 255, 0.14); transform: translateY(-2px); }
+
+/* ---------------- Why us ---------------- */
+.rainright-why-grid {
+  display: grid; grid-template-columns: 0.95fr 1.05fr;
+  gap: 50px; align-items: center;
+}
+
+.rainright-why-photos { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+
+.rainright-why-photos .rainright-photo-frame {
+  border-radius: var(--rr-radius); box-shadow: var(--rr-shadow); aspect-ratio: 3 / 4;
+}
+
+.rainright-why-photos .rainright-photo-frame:last-child { margin-top: 34px; }
+
+.rainright-why-copy h2 {
+  font-size: clamp(1.7rem, 3vw, 2.3rem); color: var(--rr-blue-deep);
+  margin: 0 0 14px; letter-spacing: -0.015em;
+}
+
+.rainright-why-copy > p { color: var(--rr-slate); margin: 0 0 24px; font-size: 1.04rem; }
+
+.rainright-feature-list { list-style: none; margin: 0 0 28px; padding: 0; display: grid; gap: 18px; }
+.rainright-feature-list li { display: flex; gap: 15px; align-items: flex-start; }
+
+.rainright-feature-icon {
+  width: 44px; height: 44px; border-radius: 13px; flex-shrink: 0;
+  background: var(--rr-blue-soft); color: var(--rr-blue);
+  display: flex; align-items: center; justify-content: center;
+}
+
+.rainright-feature-list h3 { margin: 0 0 3px; font-size: 1.06rem; color: var(--rr-blue-deep); }
+.rainright-feature-list p { margin: 0; color: var(--rr-slate); font-size: 0.95rem; }
+
+/* ---------------- Stats strip ---------------- */
+.rainright-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 22px; text-align: center; }
+
+.rainright-stat {
+  background: var(--rr-white); border: 1px solid var(--rr-line);
+  border-radius: var(--rr-radius); padding: 26px 16px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.rainright-stat:hover { transform: translateY(-4px); box-shadow: var(--rr-shadow); }
+.rainright-stat strong { display: block; font-size: 1.9rem; color: var(--rr-blue); letter-spacing: -0.02em; }
+.rainright-stat span { color: var(--rr-slate); font-size: 0.92rem; font-weight: 600; }
+
+/* ---------------- Footer ---------------- */
+.rainright-footer {
+  background: var(--rr-blue-deep); color: rgba(255, 255, 255, 0.82);
+  padding: 44px 0 30px; margin-top: 78px;
+}
+
+.rainright-footer-inner {
+  display: flex; align-items: flex-start; justify-content: space-between;
+  gap: 28px; flex-wrap: wrap;
+}
+
+.rainright-footer .rainright-brand { color: var(--rr-white); }
+
+.rainright-footer-phone {
+  display: inline-flex; align-items: center; gap: 8px;
+  color: var(--rr-white); font-weight: 700; text-decoration: none;
+}
+
+.rainright-footer-phone:hover { text-decoration: underline; }
+
+.rainright-footer-note {
+  margin-top: 26px; padding-top: 18px;
+  border-top: 1px solid rgba(255, 255, 255, 0.18);
+  font-size: 0.8rem; color: rgba(255, 255, 255, 0.55);
+  display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap;
+}
+
+/* ---------------- Responsive ---------------- */
+@media (max-width: 880px) {
+  .rainright-hero { padding: 46px 0 60px; }
+  .rainright-hero-grid,
+  .rainright-why-grid,
+  .rainright-season-grid,
+  .rainright-card-grid { grid-template-columns: 1fr; }
+  .rainright-stats { grid-template-columns: repeat(2, 1fr); }
+  .rainright-nav-links { display: none; }
+  .rainright-nav-phone span { display: none; }
+  .rainright-band { flex-direction: column; text-align: center; padding: 38px 26px; }
+  .rainright-band-ctas { justify-content: center; }
+  .rainright-hero-badge { left: 12px; bottom: -14px; }
+  .rainright-why-photos .rainright-photo-frame:last-child { margin-top: 0; }
+  .rainright-section { padding: 56px 0; }
+}

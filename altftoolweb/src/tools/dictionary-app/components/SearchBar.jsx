@@ -1,3 +1,5 @@
+"use client";
+
 import { useState, useEffect, useRef } from "react";
 import { Search, Clock, X, Delete } from "lucide-react";
 

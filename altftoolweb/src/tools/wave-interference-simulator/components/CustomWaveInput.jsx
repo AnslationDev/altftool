@@ -1,3 +1,5 @@
+"use client";
+
 export default function CustomWaveInput({ waves, customFormula, setCustomFormula, setWaves }) {
   const updateFormula = (waveIdx, text) => {
     const newCustom = { ...customFormula };

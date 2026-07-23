@@ -1,3 +1,5 @@
+"use client";
+
 import {
   JPEG_QUALITY,
   MAX_OUTPUT_HEIGHT,

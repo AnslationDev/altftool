@@ -160,7 +160,7 @@ export const toolMetaMap = {
   },
   "age-in-days-calculator": {
     "name": "Age in Days Calculator",
-    "description": "Calculate the age of something in days based on its creation date.",
+    "description": "See exactly how old you are in days, weeks, months and hours from your birth date.",
     "category": "Calculators",
     "topics": [
       "Calculator"
@@ -647,6 +647,16 @@ export const toolMetaMap = {
     "icon": "user",
     "iconColor": "text-(--primary)"
   },
+  "baby-growth-percentile-calculator": {
+    "name": "Baby Growth Percentile Calculator",
+    "description": "A rough weight-for-age percentile estimate for babies 0–24 months.",
+    "category": "Health & Fitness",
+    "topics": [
+      "Health"
+    ],
+    "icon": "baby",
+    "iconColor": "text-pink-500"
+  },
   "baby-name-generator": {
     "name": "Baby Name Generator",
     "description": "Discover unique, meaningful baby names with origins, meanings, and popularity trends for boys, girls, and gender-neutral options.",
@@ -669,6 +679,13 @@ export const toolMetaMap = {
     ],
     "icon": "square",
     "iconColor": "text-teal-600"
+  },
+  "band-name-generator": {
+    "name": "Band Name Generator",
+    "description": "Generate band name ideas by genre.",
+    "category": "Fun",
+    "icon": "music",
+    "iconColor": "text-purple-600"
   },
   "barcode-generator": {
     "name": "Barcode Generator",
@@ -705,10 +722,17 @@ export const toolMetaMap = {
   },
   "base32-encoder": {
     "name": "Base32 Encoder / Decoder",
-    "description": "Converts text to Base32 and vice versa.",
+    "description": "Encode text to Base32 (RFC 4648) or decode Base32 back to text, right in your browser.",
     "category": "Developer",
-    "icon": "base64",
-    "iconColor": "text-rose-600"
+    "icon": "binary",
+    "iconColor": "text-slate-600"
+  },
+  "base58-encoder": {
+    "name": "Base58 Encoder",
+    "description": "Encode text to Base58 (Bitcoin alphabet) or decode it back.",
+    "category": "Developer",
+    "icon": "binary",
+    "iconColor": "text-amber-600"
   },
   "base64-audio-converter": {
     "name": "Base64 Audio Converter",
@@ -836,6 +860,13 @@ export const toolMetaMap = {
     ],
     "icon": "link",
     "iconColor": "text-sky-600"
+  },
+  "basic-auth-header-generator": {
+    "name": "Basic Auth Header Generator",
+    "description": "Generates a basic authentication header based on provided credentials",
+    "category": "Developer",
+    "icon": "code",
+    "iconColor": "text-emerald-600"
   },
   "basic-calculator": {
     "name": "Basic Calculator",
@@ -1056,6 +1087,46 @@ export const toolMetaMap = {
     "icon": "blocks",
     "iconColor": "text-indigo-600"
   },
+  "blog-outline-generator": {
+    "name": "Blog Outline Generator",
+    "description": "Generate a structured blog outline (intro, sections, conclusion, FAQ) for any topic.",
+    "category": "Design & Color",
+    "topics": [
+      "Content Creation"
+    ],
+    "icon": "list-tree",
+    "iconColor": "text-emerald-600"
+  },
+  "blog-post-ideas": {
+    "name": "Blog Post Idea Generator",
+    "description": "Generate fresh blog post angles for any topic.",
+    "category": "Design & Color",
+    "topics": [
+      "Content Creation"
+    ],
+    "icon": "lightbulb",
+    "iconColor": "text-amber-500"
+  },
+  "blog-title-generator": {
+    "name": "Blog Title Generator",
+    "description": "Generate catchy blog title ideas from a keyword and tone.",
+    "category": "Design & Color",
+    "topics": [
+      "Content Creation"
+    ],
+    "icon": "heading",
+    "iconColor": "text-fuchsia-600"
+  },
+  "blood-alcohol-content-calculator": {
+    "name": "Blood Alcohol Content Calculator",
+    "description": "Estimate BAC from standard drinks using the Widmark formula. For education only.",
+    "category": "Health & Fitness",
+    "topics": [
+      "Health"
+    ],
+    "icon": "wine",
+    "iconColor": "text-rose-600"
+  },
   "blood-pressure-checker": {
     "name": "Blood Pressure Checker",
     "description": "Track and monitor your blood pressure readings with charts and history.",
@@ -1137,13 +1208,13 @@ export const toolMetaMap = {
   },
   "bmr-calculator": {
     "name": "BMR Calculator",
-    "description": "Calculate your Basal Metabolic Rate (BMR) to understand how many calories your body burns at rest.",
+    "description": "Basal metabolic rate (calories at rest) via the Mifflin-St Jeor equation, plus daily needs.",
     "category": "Health & Fitness",
     "topics": [
       "Health"
     ],
-    "icon": "calculator",
-    "iconColor": "text-rose-600"
+    "icon": "flame",
+    "iconColor": "text-orange-600"
   },
   "body-fat-calculator": {
     "name": "Body Fat Percentage Calculator",
@@ -1166,6 +1237,26 @@ export const toolMetaMap = {
     ],
     "icon": "activity",
     "iconColor": "text-green-500"
+  },
+  "body-surface-area-calculator": {
+    "name": "Body Surface Area Calculator",
+    "description": "Estimate body surface area (BSA) using the Mosteller and Du Bois formulas.",
+    "category": "Health & Fitness",
+    "topics": [
+      "Health"
+    ],
+    "icon": "ruler",
+    "iconColor": "text-teal-600"
+  },
+  "bond-yield-calculator": {
+    "name": "Bond Yield Calculator",
+    "description": "Current yield and approximate yield-to-maturity for a bond.",
+    "category": "Finance Calculators",
+    "topics": [
+      "Finance"
+    ],
+    "icon": "landmark",
+    "iconColor": "text-emerald-600"
   },
   "bookmark-capsule": {
     "name": "Bookmark Capsule",
@@ -1194,6 +1285,16 @@ export const toolMetaMap = {
     ],
     "icon": "wind",
     "iconColor": "text-teal-600"
+  },
+  "box-shadow-generator": {
+    "name": "CSS Box Shadow Generator",
+    "description": "Build a CSS box-shadow and copy the ready-to-use rule.",
+    "category": "Design & Color",
+    "topics": [
+      "Design"
+    ],
+    "icon": "square",
+    "iconColor": "text-indigo-500"
   },
   "bpm-tap-counter": {
     "name": "BPM Tap Tempo Counter",
@@ -1261,6 +1362,13 @@ export const toolMetaMap = {
     "icon": "scale",
     "iconColor": "text-blue-600"
   },
+  "break-even-units-calculator": {
+    "name": "Break-Even Units Calculator",
+    "description": "How many units you must sell to cover your costs.",
+    "category": "Business",
+    "icon": "target",
+    "iconColor": "text-rose-600"
+  },
   "brick-breaker": {
     "name": "Brick Breaker",
     "description": "Smash every brick with paddle and ball in this free arcade brick breaker game with levels and power-ups.",
@@ -1314,6 +1422,20 @@ export const toolMetaMap = {
     "icon": "share-2",
     "iconColor": "text-teal-500"
   },
+  "bubble-text-generator": {
+    "name": "Bubble Text Generator",
+    "description": "Turn your text into Ⓑⓤⓑⓑⓛⓔ circled letters for bios and posts.",
+    "category": "Fun",
+    "icon": "circle",
+    "iconColor": "text-pink-600"
+  },
+  "bucket-list-maker": {
+    "name": "Bucket List Goal Planner",
+    "description": "Turn a goal and target date into a plan with a countdown and milestones.",
+    "category": "Lifestyle",
+    "icon": "map-pin",
+    "iconColor": "text-rose-500"
+  },
   "budget-planner": {
     "name": "Budget Planner",
     "description": "Create a monthly budget with income and expense categories. Track spending, set limits, and visualize your financial health.",
@@ -1357,13 +1479,13 @@ export const toolMetaMap = {
   },
   "business-days-calculator": {
     "name": "Business Days Calculator",
-    "description": "Calculate the number of business days between two dates.",
+    "description": "Count working days (Mon–Fri) between two dates, excluding weekends.",
     "category": "Calculators",
     "topics": [
       "Calculator"
     ],
-    "icon": "calendar",
-    "iconColor": "text-indigo-600"
+    "icon": "briefcase",
+    "iconColor": "text-blue-600"
   },
   "business-name-generator": {
     "name": "Business Name Generator",
@@ -1421,13 +1543,13 @@ export const toolMetaMap = {
   },
   "cagr-calculator": {
     "name": "CAGR Calculator",
-    "description": "Calculate Compound Annual Growth Rate for investments or financial growth.",
+    "description": "Compound annual growth rate from a starting value, ending value and number of years.",
     "category": "Finance Calculators",
     "topics": [
       "Finance"
     ],
-    "icon": "calculator",
-    "iconColor": "text-cyan-600"
+    "icon": "trending-up",
+    "iconColor": "text-lime-600"
   },
   "calender-panchang": {
     "name": "Calender Panchang",
@@ -1435,6 +1557,26 @@ export const toolMetaMap = {
     "category": "Lifestyle",
     "icon": "calendar-range",
     "iconColor": "text-gray-500"
+  },
+  "call-to-action-generator": {
+    "name": "Call-to-Action Generator",
+    "description": "Generate punchy CTA button and headline variations.",
+    "category": "Marketing & Social",
+    "topics": [
+      "Marketing"
+    ],
+    "icon": "megaphone",
+    "iconColor": "text-red-500"
+  },
+  "calorie-burn-calculator": {
+    "name": "Calorie Burn Calculator",
+    "description": "Estimate calories burned for an activity using MET values, weight and time.",
+    "category": "Health & Fitness",
+    "topics": [
+      "Fitness"
+    ],
+    "icon": "activity",
+    "iconColor": "text-orange-600"
   },
   "calorie-calculator": {
     "name": "Calorie & Macro Calculator",
@@ -1445,6 +1587,16 @@ export const toolMetaMap = {
     ],
     "icon": "wrench",
     "iconColor": "text-muted-foreground"
+  },
+  "calorie-deficit-calculator": {
+    "name": "Calorie Deficit Calculator",
+    "description": "The daily calorie deficit needed to reach a goal weight by a target date.",
+    "category": "Health & Fitness",
+    "topics": [
+      "Fitness"
+    ],
+    "icon": "trending-down",
+    "iconColor": "text-lime-600"
   },
   "calorie-tdee-calculator": {
     "name": "Calorie / TDEE Calculator",
@@ -1461,10 +1613,10 @@ export const toolMetaMap = {
   },
   "camel-case-converter": {
     "name": "Camel Case Converter",
-    "description": "Convert text to Camel Case format.",
+    "description": "Convert any phrase to camelCase — plus PascalCase and CONSTANT_CASE.",
     "category": "Developer",
-    "icon": "code",
-    "iconColor": "text-violet-600"
+    "icon": "case-sensitive",
+    "iconColor": "text-blue-600"
   },
   "campaign-budget-planner": {
     "name": "Campaign Budget Planner",
@@ -1499,6 +1651,16 @@ export const toolMetaMap = {
     "icon": "landmark",
     "iconColor": "text-sky-700"
   },
+  "capital-gains-calculator": {
+    "name": "Capital Gains Calculator",
+    "description": "Work out your capital gain, tax owed and net profit on an investment.",
+    "category": "Finance Calculators",
+    "topics": [
+      "Finance"
+    ],
+    "icon": "coins",
+    "iconColor": "text-amber-600"
+  },
   "captcha-generator": {
     "name": "Captcha Generator",
     "description": "Generate and verify highly customizable captchas right in your browser. Complete with image noise, curved lines, and stylized text modes.",
@@ -1513,6 +1675,16 @@ export const toolMetaMap = {
     ],
     "icon": "shield-check",
     "iconColor": "text-teal-500"
+  },
+  "car-loan-calculator": {
+    "name": "Car Loan Calculator",
+    "description": "Monthly payment, total interest and total cost for a car loan.",
+    "category": "Finance Calculators",
+    "topics": [
+      "Finance"
+    ],
+    "icon": "car",
+    "iconColor": "text-blue-600"
   },
   "car-ownership-cost-analyzer": {
     "name": "car-cost-analyzer",
@@ -1553,6 +1725,16 @@ export const toolMetaMap = {
     ],
     "icon": "heart",
     "iconColor": "text-rose-600"
+  },
+  "carpet-area-calculator": {
+    "name": "Carpet / Floor Area Calculator",
+    "description": "Calculate floor area and material needed for a room.",
+    "category": "Productivity",
+    "topics": [
+      "Utility"
+    ],
+    "icon": "ruler",
+    "iconColor": "text-teal-600"
   },
   "cart-bill-splitter": {
     "name": "Cart Bill Splitter",
@@ -1608,6 +1790,13 @@ export const toolMetaMap = {
     ],
     "icon": "dna",
     "iconColor": "text-teal-500"
+  },
+  "changelog-generator": {
+    "name": "Changelog Generator",
+    "description": "Turn a list of changes into a clean, categorised Keep-a-Changelog entry.",
+    "category": "Developer",
+    "icon": "file-text",
+    "iconColor": "text-slate-600"
   },
   "charger-wattage-calculator": {
     "name": "Charger Wattage Calculator",
@@ -1666,6 +1855,16 @@ export const toolMetaMap = {
     "icon": "between-vertical-start",
     "iconColor": "text-(--primary)"
   },
+  "child-height-predictor": {
+    "name": "Child Height Predictor",
+    "description": "Predict a child's adult height from the parents' heights (mid-parental method).",
+    "category": "Health & Fitness",
+    "topics": [
+      "Health"
+    ],
+    "icon": "ruler",
+    "iconColor": "text-indigo-500"
+  },
   "chinese-character-generator": {
     "name": "Chinese Character Generator",
     "description": "Generate authentic Chinese characters by category with meanings, pinyin, stroke counts, and Unicode. Copy, favorite, and download as PNG/SVG.",
@@ -1702,6 +1901,23 @@ export const toolMetaMap = {
     ],
     "icon": "users-round",
     "iconColor": "text-teal-600"
+  },
+  "chore-chart-maker": {
+    "name": "Chore Chart Maker",
+    "description": "Fairly assign a list of chores across people, round-robin.",
+    "category": "Productivity",
+    "icon": "list-checks",
+    "iconColor": "text-teal-600"
+  },
+  "churn-rate-calculator": {
+    "name": "Churn Rate Calculator",
+    "description": "Customer churn and retention rate for a period.",
+    "category": "Marketing & Social",
+    "topics": [
+      "Marketing"
+    ],
+    "icon": "user-minus",
+    "iconColor": "text-red-600"
   },
   "circled-text-generator": {
     "name": "Circled Text Generator",
@@ -1837,9 +2053,9 @@ export const toolMetaMap = {
   },
   "coin-toss-streak-game": {
     "name": "Coin Toss Streak Game",
-    "description": "Calculate the probability of getting a specific number of consecutive heads or tails in coin tosses.",
+    "description": "Flip 20 coins at once and see the longest run of the same side.",
     "category": "Fun",
-    "icon": "coin",
+    "icon": "circle-dollar-sign",
     "iconColor": "text-amber-600"
   },
   "color-blindness-simulator": {
@@ -2045,6 +2261,13 @@ export const toolMetaMap = {
     "icon": "monitor",
     "iconColor": "text-teal-500"
   },
+  "connection-string-builder": {
+    "name": "Database Connection String Builder",
+    "description": "Build a database connection URI for Postgres, MySQL, MongoDB, Redis and more — with the right scheme and default port.",
+    "category": "Developer",
+    "icon": "database",
+    "iconColor": "text-blue-600"
+  },
   "constellation-finder": {
     "name": "Constellation Finder",
     "description": "Explore 15+ major constellations with an interactive night sky map",
@@ -2074,6 +2297,30 @@ export const toolMetaMap = {
     ],
     "icon": "globe",
     "iconColor": "text-violet-700"
+  },
+  "contribution-margin-calculator": {
+    "name": "Contribution Margin Calculator",
+    "description": "Contribution margin per unit, ratio and total.",
+    "category": "Business",
+    "icon": "chart-column",
+    "iconColor": "text-indigo-600"
+  },
+  "conventional-commit-builder": {
+    "name": "Conventional Commit Builder",
+    "description": "A tool to help developers create conventional commits with standardized formatting",
+    "category": "Developer",
+    "icon": "code",
+    "iconColor": "text-emerald-600"
+  },
+  "conversion-rate-calculator": {
+    "name": "Conversion Rate Calculator",
+    "description": "Conversion rate from visitors and conversions, with optional revenue.",
+    "category": "Marketing & Social",
+    "topics": [
+      "Marketing"
+    ],
+    "icon": "percent",
+    "iconColor": "text-violet-600"
   },
   "conways-game-of-life": {
     "name": "Conway's Game of Life",
@@ -2173,10 +2420,10 @@ export const toolMetaMap = {
   },
   "crc32-calculator": {
     "name": "CRC32 Calculator",
-    "description": "Calculate the CRC32 checksum for text or binary data.",
+    "description": "Compute the CRC32 checksum of text as a hex value.",
     "category": "Developer",
     "icon": "hash",
-    "iconColor": "text-indigo-600"
+    "iconColor": "text-orange-600"
   },
   "credit-card-interest-calculator": {
     "name": "Credit Card Interest & Minimum Payment Trap",
@@ -2280,6 +2527,16 @@ export const toolMetaMap = {
     "icon": "mouse-pointer-click",
     "iconColor": "text-teal-600"
   },
+  "css-clamp-generator": {
+    "name": "CSS Clamp Generator",
+    "description": "Build a responsive CSS clamp() value.",
+    "category": "Design & Color",
+    "topics": [
+      "Design"
+    ],
+    "icon": "square",
+    "iconColor": "text-indigo-500"
+  },
   "css-filter-effects": {
     "name": "CSS Filter Effects",
     "description": "Apply standard CSS filter properties (blur, grayscale, sepia, invert, hue-rotate) visually with live image preview and clean CSS exports.",
@@ -2330,6 +2587,16 @@ export const toolMetaMap = {
     ],
     "icon": "palette",
     "iconColor": "text-violet-600"
+  },
+  "css-triangle-generator": {
+    "name": "CSS Triangle Generator",
+    "description": "Generate a CSS triangle using the border trick.",
+    "category": "Design & Color",
+    "topics": [
+      "Design"
+    ],
+    "icon": "square",
+    "iconColor": "text-indigo-500"
   },
   "csv-converter": {
     "name": "CSV Converter",
@@ -2405,6 +2672,13 @@ export const toolMetaMap = {
     "icon": "coins",
     "iconColor": "text-yellow-700"
   },
+  "cursive-text-generator": {
+    "name": "Cursive Text Generator",
+    "description": "Turn your text into stylish Unicode letters for bios, posts and usernames.",
+    "category": "Fun",
+    "icon": "type",
+    "iconColor": "text-pink-600"
+  },
   "cute-text-generator": {
     "name": "Cute Text Generator",
     "description": "Convert your text into cute Unicode styles with kaomoji, decorative symbols, and emoji combinations.",
@@ -2435,6 +2709,16 @@ export const toolMetaMap = {
     ],
     "icon": "activity",
     "iconColor": "text-amber-700"
+  },
+  "d-d-dice-roller": {
+    "name": "D&D Dice Roller",
+    "description": "Roll one or more virtual D&D dice, choose the number of sides, and total every result instantly.",
+    "category": "Games",
+    "topics": [
+      "Game"
+    ],
+    "icon": "shuffle",
+    "iconColor": "text-fuchsia-600"
   },
   "dad-joke-machine": {
     "name": "Dad Joke Machine",
@@ -2551,13 +2835,13 @@ export const toolMetaMap = {
   },
   "days-between-dates-calculator": {
     "name": "Days Between Dates Calculator",
-    "description": "Calculate the number of days between two dates.",
+    "description": "Count the days, weeks and months between any two dates.",
     "category": "Calculators",
     "topics": [
       "Calculator"
     ],
-    "icon": "calendar",
-    "iconColor": "text-amber-600"
+    "icon": "calendar-range",
+    "iconColor": "text-indigo-600"
   },
   "dca-calculator": {
     "name": "DCA Calculator",
@@ -2652,10 +2936,6 @@ export const toolMetaMap = {
     "name": "Deep Breathing Guide",
     "description": "Guided deep breathing exercises with multiple techniques — 4-7-8, Box Breathing, and Coherence Breathing — to help you relax, focus, and reduce stress.",
     "category": "Health & Fitness",
-    "topics": [
-      "Health & Wellness",
-      "Mindfulness"
-    ],
     "icon": "wind",
     "iconColor": "text-cyan-500"
   },
@@ -2674,13 +2954,13 @@ export const toolMetaMap = {
   },
   "density-calculator": {
     "name": "Density Calculator",
-    "description": "Calculate the density of a substance given its mass and volume.",
+    "description": "Density from mass and volume, with common unit conversions.",
     "category": "Education & Science",
     "topics": [
       "Science"
     ],
-    "icon": "density",
-    "iconColor": "text-blue-600"
+    "icon": "box",
+    "iconColor": "text-cyan-600"
   },
   "dependency-upgrade-impact-estimator": {
     "name": "Dependency Upgrade Impact Estimator",
@@ -2951,6 +3231,16 @@ export const toolMetaMap = {
     "icon": "globe",
     "iconColor": "text-gray-500"
   },
+  "domain-name-ideas-generator": {
+    "name": "Domain Name Ideas Generator",
+    "description": "Generate fresh name ideas from a keyword.",
+    "category": "Business",
+    "topics": [
+      "Startup"
+    ],
+    "icon": "shuffle",
+    "iconColor": "text-violet-600"
+  },
   "double-pendulum-chaos-simulator": {
     "name": "Double Pendulum Chaos Simulator",
     "description": "Real-time chaos theory visualization with interactive double pendulum physics and glowing motion trails.",
@@ -3037,6 +3327,13 @@ export const toolMetaMap = {
     "icon": "image",
     "iconColor": "text-rose-500"
   },
+  "duration-calculator": {
+    "name": "Duration Calculator",
+    "description": "Turn a number of seconds into a human-readable duration.",
+    "category": "Developer",
+    "icon": "code",
+    "iconColor": "text-cyan-600"
+  },
   "ecg-qtc-calculator": {
     "name": "ECG QTc Calculator",
     "description": "Calculate corrected QT interval using Bazett, Fridericia, Framingham, and Hodges formulas with real-time comparison.",
@@ -3080,6 +3377,17 @@ export const toolMetaMap = {
     "icon": "zap",
     "iconColor": "text-teal-500"
   },
+  "email-deliverability-predictor": {
+    "name": "Email Deliverability Predictor",
+    "description": "Predict how likely your email is to reach the inbox with a rule-based content audit — spam signals, subject quality, link safety, HTML structure and best practices, scored entirely in your browser.",
+    "category": "Marketing & Social",
+    "topics": [
+      "Email Marketing"
+    ],
+    "icon": "send",
+    "iconColor": "text-sky-600",
+    "wideWorkspace": true
+  },
   "email-extractor": {
     "name": "Email Extractor",
     "description": "Extract email addresses from raw text, HTML content, or logs instantly, with domain frequency breakdowns and sorting.",
@@ -3089,6 +3397,17 @@ export const toolMetaMap = {
     ],
     "icon": "mail",
     "iconColor": "text-teal-500"
+  },
+  "email-signature-builder": {
+    "name": "Email Signature Builder",
+    "description": "Design a professional, email-safe HTML signature with live preview, 25+ templates, social icons, CTA buttons, QR code and vCard — then copy or download it for Gmail, Outlook, Apple Mail and Yahoo.",
+    "category": "Marketing & Social",
+    "topics": [
+      "Email Marketing"
+    ],
+    "icon": "pen-line",
+    "iconColor": "text-teal-600",
+    "wideWorkspace": true
   },
   "email-subject-line-previewer": {
     "name": "Email Subject Line Previewer",
@@ -3407,16 +3726,7 @@ export const toolMetaMap = {
   "face-recognition-memory-test": {
     "name": "Face Recognition Memory Test",
     "description": "Test your facial memory and recognition ability by studying and identifying faces.",
-    "category": [
-      "Education & Science",
-      "Health & Fitness",
-      "Fun"
-    ],
-    "topics": [
-      "Neuroscience",
-      "Health",
-      "Interactive"
-    ],
+    "category": "Health & Fitness",
     "icon": "scan-face",
     "iconColor": "text-purple-500"
   },
@@ -3467,13 +3777,13 @@ export const toolMetaMap = {
   },
   "factorial-calculator": {
     "name": "Factorial Calculator",
-    "description": "Calculate the factorial of a given number.",
+    "description": "Exact factorial (n!) of a whole number using big integers.",
     "category": "Calculators",
     "topics": [
       "Math"
     ],
-    "icon": "calculator",
-    "iconColor": "text-violet-600"
+    "icon": "x",
+    "iconColor": "text-rose-600"
   },
   "fake-chat-maker": {
     "name": "Fake Chat Maker",
@@ -3517,6 +3827,13 @@ export const toolMetaMap = {
     ],
     "icon": "sparkle",
     "iconColor": "text-pink-600"
+  },
+  "fantasy-character-name-generator": {
+    "name": "Fantasy Character Name Generator",
+    "description": "Generate fresh fantasy character names from a keyword.",
+    "category": "Fun",
+    "icon": "shuffle",
+    "iconColor": "text-violet-600"
   },
   "fast-click-challenge": {
     "name": "Fast Click Challenge",
@@ -4077,6 +4394,13 @@ export const toolMetaMap = {
     "icon": "layers",
     "iconColor": "text-teal-600"
   },
+  "glob-pattern-tester": {
+    "name": "Glob Pattern Tester",
+    "description": "Test whether a glob pattern (with * and ?) matches a string, and see the regex it compiles to.",
+    "category": "Developer",
+    "icon": "regex",
+    "iconColor": "text-emerald-600"
+  },
   "gmail-template-builder": {
     "name": "Gmail Template Builder",
     "description": "A drag-and-drop email template builder optimized for Gmail and marketing campaigns.",
@@ -4159,6 +4483,16 @@ export const toolMetaMap = {
     ],
     "icon": "calculator",
     "iconColor": "text-blue-600"
+  },
+  "grade-percentage-calculator": {
+    "name": "Grade Percentage Calculator",
+    "description": "Common percentage calculations.",
+    "category": "Education & Science",
+    "topics": [
+      "Education"
+    ],
+    "icon": "percent",
+    "iconColor": "text-violet-600"
   },
   "gradient-generator": {
     "name": "Gradient Generator",
@@ -4529,12 +4863,12 @@ export const toolMetaMap = {
   },
   "hourly-to-salary-calculator": {
     "name": "Hourly to Salary Calculator",
-    "description": "Convert hourly wage to annual salary based on hours worked per year.",
+    "description": "Convert an hourly wage into daily, weekly, monthly and yearly pay.",
     "category": "Finance Calculators",
     "topics": [
       "Finance"
     ],
-    "icon": "calculator",
+    "icon": "banknote",
     "iconColor": "text-emerald-600"
   },
   "household-electricity-bill": {
@@ -5187,6 +5521,13 @@ export const toolMetaMap = {
     "icon": "audio-lines",
     "iconColor": "text-cyan-600"
   },
+  "ipv6-expander": {
+    "name": "IPv6 Expander",
+    "description": "Expand a shortened IPv6 address to its full form.",
+    "category": "Developer",
+    "icon": "code",
+    "iconColor": "text-cyan-600"
+  },
   "iq-style-mini-quiz": {
     "name": "IQ Style Mini Quiz",
     "description": "Challenge your brain with an IQ-style mini quiz featuring logical reasoning, pattern recognition, memory, and problem-solving questions across multiple difficulty levels.",
@@ -5211,6 +5552,13 @@ export const toolMetaMap = {
     ],
     "icon": "palette",
     "iconColor": "text-blue-600"
+  },
+  "iso-8601-formatter": {
+    "name": "ISO 8601 Formatter",
+    "description": "Convert a date/time to ISO-8601 and other formats.",
+    "category": "Developer",
+    "icon": "code",
+    "iconColor": "text-cyan-600"
   },
   "itinerary-builder": {
     "name": "Itinerary Builder",
@@ -5424,10 +5772,10 @@ export const toolMetaMap = {
   },
   "kebab-case-converter": {
     "name": "Kebab Case Converter",
-    "description": "Convert any phrase into kebab case.",
+    "description": "Convert any phrase to kebab-case — plus snake_case and a URL slug.",
     "category": "Developer",
     "icon": "case-sensitive",
-    "iconColor": "text-violet-600"
+    "iconColor": "text-amber-600"
   },
   "keyboard-layout-tester": {
     "name": "Keyboard Layout Tester",
@@ -5554,13 +5902,13 @@ export const toolMetaMap = {
   },
   "lcm-and-gcd-calculator": {
     "name": "LCM and GCD Calculator",
-    "description": "Calculate the Least Common Multiple (LCM) and Greatest Common Divisor (GCD) of two numbers.",
+    "description": "Greatest common divisor and least common multiple of two numbers.",
     "category": "Calculators",
     "topics": [
       "Math"
     ],
-    "icon": "calculator",
-    "iconColor": "text-rose-600"
+    "icon": "divide",
+    "iconColor": "text-emerald-600"
   },
   "leftover-recipe-finder": {
     "name": "Leftover Ingredients Recipe Finder",
@@ -5621,13 +5969,13 @@ export const toolMetaMap = {
   },
   "line-break-remover": {
     "name": "Line Break Remover",
-    "description": "Remove unwanted line breaks from text.",
+    "description": "Join multi-line text into one line with your chosen separator.",
     "category": "Text & Writing",
     "topics": [
       "Text"
     ],
-    "icon": "type",
-    "iconColor": "text-blue-600"
+    "icon": "wrap-text",
+    "iconColor": "text-cyan-600"
   },
   "line-numbering-tool": {
     "name": "Line Numbering Tool",
@@ -5731,6 +6079,16 @@ export const toolMetaMap = {
     "icon": "sort-asc",
     "iconColor": "text-teal-500"
   },
+  "loan-comparison-tool": {
+    "name": "Loan Comparison Tool",
+    "description": "Monthly payment, total interest and total cost of a loan.",
+    "category": "Finance Calculators",
+    "topics": [
+      "Finance"
+    ],
+    "icon": "landmark",
+    "iconColor": "text-blue-600"
+  },
   "loan-emi-calculator": {
     "name": "Loan EMI Calculator",
     "description": "Loan EMI Calculator helps you calculate the monthly EMI of a loan.",
@@ -5792,7 +6150,7 @@ export const toolMetaMap = {
   },
   "logic-gate-simulator": {
     "name": "Logic Gate Simulator",
-    "description": "Interactively simulate AND, OR, NOT, NAND, NOR, XOR, and XNOR logic gates with toggle inputs, truth tables, and visual circuit diagrams.",
+    "description": "Design and simulate interactive digital logic circuits with AND, OR, NOT, NAND, NOR, XOR, and XNOR gates. Build, test, analyze truth tables, and optimize boolean logic using Karnaugh maps.",
     "category": [
       "Education & Science",
       "Developer"
@@ -5961,10 +6319,10 @@ export const toolMetaMap = {
   },
   "magic-8-ball": {
     "name": "Magic 8 Ball",
-    "description": "Get an answer to your yes/no question.",
+    "description": "Ask a yes/no question and let the Magic 8 Ball decide.",
     "category": "Fun",
-    "icon": "magic-wand",
-    "iconColor": "text-violet-600"
+    "icon": "circle-help",
+    "iconColor": "text-slate-800"
   },
   "magnetic-field-visualizer": {
     "name": "Magnetic Field Visualizer",
@@ -6022,13 +6380,13 @@ export const toolMetaMap = {
   },
   "margin-calculator": {
     "name": "Profit Margin Calculator",
-    "description": "Calculate your profit margin with ease.",
+    "description": "Gross margin, markup and profit from cost and selling price.",
     "category": "Finance Calculators",
     "topics": [
       "Finance"
     ],
-    "icon": "calculator",
-    "iconColor": "text-teal-600"
+    "icon": "badge-percent",
+    "iconColor": "text-green-600"
   },
   "markdown-html-converter": {
     "name": "Markdown / HTML Converter",
@@ -6049,13 +6407,13 @@ export const toolMetaMap = {
   },
   "markup-calculator": {
     "name": "Markup Calculator",
-    "description": "Calculate the total price including markup.",
+    "description": "Add a markup percentage to a cost to get the selling price and profit.",
     "category": "Finance Calculators",
     "topics": [
       "Finance"
     ],
-    "icon": "calculator",
-    "iconColor": "text-teal-600"
+    "icon": "tag",
+    "iconColor": "text-orange-600"
   },
   "math-speed-challenge": {
     "name": "Math Speed Challenge",
@@ -6103,14 +6461,24 @@ export const toolMetaMap = {
     "iconColor": "text-rose-600"
   },
   "mean-median-mode-calculator": {
-    "name": "Mean Median Mode Calculator",
-    "description": "Paste a list of numbers to get the mean, median, mode and range.",
+    "name": "Mean, Median & Mode Calculator",
+    "description": "Mean, median, mode, range and standard deviation from a list of numbers.",
     "category": "Calculators",
     "topics": [
       "Math"
     ],
     "icon": "sigma",
-    "iconColor": "text-indigo-600"
+    "iconColor": "text-blue-600"
+  },
+  "media-query-generator": {
+    "name": "Media Query Generator",
+    "description": "Generate a CSS media query for a breakpoint.",
+    "category": "Design & Color",
+    "topics": [
+      "Design"
+    ],
+    "icon": "square",
+    "iconColor": "text-indigo-500"
   },
   "medication-reminder": {
     "name": "Medication Reminder",
@@ -6437,12 +6805,12 @@ export const toolMetaMap = {
   },
   "mortgage-affordability-calculator": {
     "name": "Mortgage Affordability Calculator",
-    "description": "Calculate your mortgage affordability based on income and loan details.",
+    "description": "How much home you can afford, using the 28/36 debt-to-income rule.",
     "category": "Finance Calculators",
     "topics": [
       "Finance"
     ],
-    "icon": "mortgage",
+    "icon": "home",
     "iconColor": "text-teal-600"
   },
   "mortgage-calculator": {
@@ -6796,14 +7164,14 @@ export const toolMetaMap = {
     "iconColor": "text-indigo-600"
   },
   "ohms-law-calculator": {
-    "name": "Ohms Law Calculator",
-    "description": "Calculate voltage, current, or resistance using Ohm's Law.",
+    "name": "Ohm's Law Calculator",
+    "description": "Enter any two of voltage, current and resistance to find the third — plus power.",
     "category": "Education & Science",
     "topics": [
       "Science"
     ],
-    "icon": "wrench",
-    "iconColor": "text-emerald-600"
+    "icon": "zap",
+    "iconColor": "text-yellow-500"
   },
   "okr-generator": {
     "name": "OKR Generator",
@@ -7340,14 +7708,14 @@ export const toolMetaMap = {
     "iconColor": "text-amber-600"
   },
   "permutation-combination-calculator": {
-    "name": "Permutation Combination Calculator",
-    "description": "Calculate permutations and combinations for given values.",
+    "name": "Permutation & Combination Calculator",
+    "description": "nPr and nCr for choosing r items from n.",
     "category": "Calculators",
     "topics": [
       "Math"
     ],
-    "icon": "calculator",
-    "iconColor": "text-blue-600"
+    "icon": "shuffle",
+    "iconColor": "text-violet-600"
   },
   "pet-age-converter": {
     "name": "Pet Age Calculator (Dog & Cat Years)",
@@ -7610,11 +7978,7 @@ export const toolMetaMap = {
   "pricing-calculator": {
     "name": "Pricing Calculator Tool",
     "description": "Calculate product pricing quickly with accurate profit estimates.",
-    "category": [
-      "Business",
-      "Marketing & Social",
-      "Lifestyle"
-    ],
+    "category": "Marketing & Social",
     "topics": [
       "Marketing"
     ],
@@ -7775,13 +8139,13 @@ export const toolMetaMap = {
   },
   "quadratic-equation-solver": {
     "name": "Quadratic Equation Solver",
-    "description": "Solve quadratic equations of the form ax^2 + bx + c = 0.",
+    "description": "Solve ax² + bx + c = 0 — real or complex roots, discriminant and vertex.",
     "category": "Calculators",
     "topics": [
       "Math"
     ],
-    "icon": "calculator",
-    "iconColor": "text-teal-600"
+    "icon": "sigma",
+    "iconColor": "text-indigo-600"
   },
   "query-string-parser": {
     "name": "Query String Parser",
@@ -7835,6 +8199,13 @@ export const toolMetaMap = {
     ],
     "icon": "lightbulb",
     "iconColor": "text-amber-500"
+  },
+  "random-decision-maker": {
+    "name": "Random Decision Maker",
+    "description": "Ask a yes/no question.",
+    "category": "Fun",
+    "icon": "shuffle",
+    "iconColor": "text-fuchsia-600"
   },
   "random-emoji-combiner": {
     "name": "Random Emoji Combiner",
@@ -8701,6 +9072,13 @@ export const toolMetaMap = {
     "icon": "check-circle-2",
     "iconColor": "text-emerald-600"
   },
+  "sha1-hash-generator": {
+    "name": "SHA1 Hash Generator",
+    "description": "Generate a SHA1 hash of any text, in your browser.",
+    "category": "Developer",
+    "icon": "shield",
+    "iconColor": "text-slate-700"
+  },
   "sha256-hash-generator": {
     "name": "SHA-256 Hash Generator",
     "description": "Generate a SHA-256 hash of any text, computed securely in your browser.",
@@ -8890,6 +9268,13 @@ export const toolMetaMap = {
       "Entertainment"
     ],
     "icon": "puzzle",
+    "iconColor": "text-violet-600"
+  },
+  "slug-generator": {
+    "name": "Slug Generator",
+    "description": "Turn a title into a clean URL slug.",
+    "category": "Developer",
+    "icon": "type",
     "iconColor": "text-violet-600"
   },
   "small-caps-generator": {
@@ -9177,13 +9562,13 @@ export const toolMetaMap = {
   },
   "standard-deviation-calculator": {
     "name": "Standard Deviation Calculator",
-    "description": "Calculate the standard deviation of a set of numbers.",
+    "description": "Population or sample standard deviation, variance and mean.",
     "category": "Calculators",
     "topics": [
       "Math"
     ],
-    "icon": "calculator",
-    "iconColor": "text-amber-600"
+    "icon": "sigma",
+    "iconColor": "text-cyan-600"
   },
   "star-life-cycle-explorer": {
     "name": "Star Life Cycle Explorer",
@@ -9269,6 +9654,13 @@ export const toolMetaMap = {
     ],
     "icon": "monitor-play",
     "iconColor": "text-blue-600"
+  },
+  "strikethrough-text-generator": {
+    "name": "Strikethrough Text Generator",
+    "description": "Turn your text into stylish Unicode letters for bios, posts and usernames.",
+    "category": "Fun",
+    "icon": "type",
+    "iconColor": "text-pink-600"
   },
   "string-escape-tool": {
     "name": "String Escape Tool",
@@ -9615,6 +10007,16 @@ export const toolMetaMap = {
     "icon": "arrow-left-right",
     "iconColor": "text-teal-500"
   },
+  "text-shadow-generator": {
+    "name": "Text Shadow Generator",
+    "description": "Build a CSS text-shadow.",
+    "category": "Design & Color",
+    "topics": [
+      "Design"
+    ],
+    "icon": "square",
+    "iconColor": "text-indigo-500"
+  },
   "text-summarizer": {
     "name": "Text Summarizer",
     "description": "Summarize long text instantly into clear, concise key points.",
@@ -9874,13 +10276,13 @@ export const toolMetaMap = {
   },
   "tweet-character-counter": {
     "name": "Tweet Character Counter",
-    "description": "Count characters, words, lines and sentences in your text instantly.",
+    "description": "Count characters against the 280 limit, with words and tweets needed.",
     "category": "Marketing & Social",
     "topics": [
       "Social Media"
     ],
     "icon": "type",
-    "iconColor": "text-cyan-600"
+    "iconColor": "text-sky-500"
   },
   "twin-finder": {
     "name": "Twin Finder",

@@ -1,3 +1,5 @@
+"use client";
+
 // hooks/useChessGame.js
 // Central game-state hook for Chess Multiplayer.
 //

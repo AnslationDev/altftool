@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import { Eye, Image as ImageIcon, ChevronDown } from "lucide-react";
 import ManagedImage from "@/components/ui/ManagedImage";

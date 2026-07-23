@@ -9,6 +9,7 @@ import {
   History,
   RotateCcw,
   Sparkles,
+  Upload,
   Wand2,
 } from "lucide-react";
 import { safeCopyText } from "@/shared/utils/clipboard";
@@ -335,8 +336,50 @@ function IconButton({ onClick, label, active, children }) {
   );
 }
 
+function readFile(file, readAs) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onerror = () => reject(new Error("Could not read file"));
+    reader.onload = () => {
+      const base = { name: file.name, type: file.type, size: file.size };
+      if (readAs === "text") resolve({ ...base, text: String(reader.result) });
+      else resolve({ ...base, dataUrl: String(reader.result) });
+    };
+    if (readAs === "text") reader.readAsText(file);
+    else reader.readAsDataURL(file);
+  });
+}
+
 function Field({ field, value, onChange }) {
   const common = "mt-1.5 w-full rounded-md border border-[var(--border)] bg-[var(--background)] px-3 outline-none focus:border-[var(--primary)]";
+
+  if (field.type === "file") {
+    const onPick = async (e) => {
+      const file = e.target.files?.[0];
+      if (!file) return onChange(field.key, null);
+      try {
+        onChange(field.key, await readFile(file, field.readAs || "dataUrl"));
+      } catch (err) {
+        onChange(field.key, null);
+        void err;
+      }
+    };
+    return (
+      <label className="block">
+        <span className="text-sm font-semibold">{field.label}</span>
+        {field.hint ? <span className="ml-2 text-xs text-[var(--muted-foreground)]">{field.hint}</span> : null}
+        <div className="relative mt-1.5 flex flex-col items-center justify-center gap-1 rounded-md border-2 border-dashed border-[var(--border)] bg-[var(--background)] px-3 py-6 text-center transition hover:border-[var(--primary)]">
+          <Upload className="h-5 w-5 text-[var(--muted-foreground)]" />
+          <span className="text-sm font-medium text-[var(--primary)]">
+            {value?.name ? value.name : "Choose a file or drop it here"}
+          </span>
+          {value?.size ? <span className="text-xs text-[var(--muted-foreground)]">{Math.round(value.size / 1024)} KB</span> : null}
+          <input type="file" accept={field.accept} onChange={onPick} className="absolute inset-0 h-full w-full cursor-pointer opacity-0" />
+        </div>
+      </label>
+    );
+  }
+
   return (
     <label className="block">
       <span className="text-sm font-semibold">{field.label}</span>

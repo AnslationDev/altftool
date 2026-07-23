@@ -1,3 +1,5 @@
+"use client";
+
 import { Calculator, RotateCcw } from "lucide-react";
 
 export default function OneRmForm({

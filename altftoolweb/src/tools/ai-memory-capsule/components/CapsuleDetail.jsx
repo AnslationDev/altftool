@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import { X, Calendar, Tag, Lock, Brain, BarChart3, Hash } from "lucide-react";
 import { MOODS } from "../constants/index";

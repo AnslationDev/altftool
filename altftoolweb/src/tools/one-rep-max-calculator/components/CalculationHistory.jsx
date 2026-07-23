@@ -1,3 +1,5 @@
+"use client";
+
 import React from 'react';
 import { History, Trash2 } from 'lucide-react';
 

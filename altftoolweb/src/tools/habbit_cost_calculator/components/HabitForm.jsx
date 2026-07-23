@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Plus, Coffee, Utensils, ShoppingBag, Car, Film, Music, Heart, ChevronDown } from 'lucide-react';

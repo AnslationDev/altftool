@@ -1,3 +1,5 @@
+"use client";
+
 import { ChevronLeft, ChevronRight, CheckCircle } from "lucide-react";
 
 export default function QuizCard({ question, questionIndex, totalQuestions, selectedAnswer, onSelectAnswer, onPrev, onNext, onFinish }) {

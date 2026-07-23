@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState } from "react";
 import { ThemeProvider, createTheme, CssBaseline } from "@mui/material";
 import { useTheme as useNextTheme } from 'next-themes';

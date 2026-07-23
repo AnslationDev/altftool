@@ -1,3 +1,5 @@
+"use client";
+
 import { CheckCircle2, Code2, Play, Wand2, XCircle } from "lucide-react";
 import Panel from "./Panel";
 

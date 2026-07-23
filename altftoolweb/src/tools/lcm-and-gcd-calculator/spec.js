@@ -3,39 +3,35 @@ export const spec = {
   ...{
   "slug": "lcm-and-gcd-calculator",
   "title": "LCM and GCD Calculator",
-  "description": "Calculate the Least Common Multiple (LCM) and Greatest Common Divisor (GCD) of two numbers.",
+  "description": "Greatest common divisor and least common multiple of two numbers.",
   "badge": "Math",
   "category": [
     "Math"
   ],
-  "icon": "calculator",
-  "iconColor": "text-rose-600",
+  "icon": "divide",
+  "iconColor": "text-emerald-600",
   "fields": [
     {
-      "key": "num1",
-      "label": "Number 1",
+      "key": "a",
+      "label": "First number",
       "type": "number",
-      "default": "24"
+      "default": "12"
     },
     {
-      "key": "num2",
-      "label": "Number 2",
+      "key": "b",
+      "label": "Second number",
       "type": "number",
-      "default": "36"
+      "default": "18"
     }
-  ],
-  "presets": [
-    {
-      "label": "Example",
-      "values": {
-        "num1": "24",
-        "num2": "36"
-      }
-    }
-  ],
-  "note": "This tool calculates both the Greatest Common Divisor (GCD) and the Least Common Multiple (LCM) of two numbers."
+  ]
 },
-  compute: (values, mode) => { let a = values.num1, b = values.num2; if (a === 0 || b === 0) return { result: 'One or both numbers are zero.' }; let gcd = (x, y) => y ? gcd(y, x % y) : x; let lcm = (x, y) => (x * y) / gcd(x, y); return { result: `GCD: ${gcd(a, b)}, LCM: ${lcm(a, b)}`, rows: [['GCD', gcd(a, b)], ['LCM', lcm(a, b)]], caption: 'Results for the given numbers.' }; },
+  compute: (values) => { const num=(v)=>typeof v==="number"?v:Number(v); const money=(n)=>Number.isFinite(Number(n))?Number(n).toLocaleString(undefined,{maximumFractionDigits:2}):"—";
+      let a = Math.abs(Math.floor(num(values.a))), b = Math.abs(Math.floor(num(values.b)));
+      if (!a || !b) return { result: "—", caption: "Enter two whole numbers" };
+      const gcd = (x, y) => { while (y) { [x, y] = [y, x % y]; } return x; };
+      const g = gcd(a, b);
+      return { result: `GCD ${g} · LCM ${(a / g) * b}`, rows: [["GCD (HCF)", g], ["LCM", (a / g) * b]] };
+    },
 };
 
 export default spec;

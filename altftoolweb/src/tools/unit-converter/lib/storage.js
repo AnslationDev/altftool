@@ -1,3 +1,5 @@
+"use client";
+
 const HISTORY_KEY = "uc_history";
 const ROUNDING_KEY = "uc_rounding";
 const MAX_HISTORY_ITEMS = 10;

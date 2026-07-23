@@ -2,45 +2,49 @@
 export const spec = {
   ...{
   "slug": "ohms-law-calculator",
-  "title": "Ohms Law Calculator",
-  "description": "Calculate voltage, current, or resistance using Ohm's Law.",
+  "title": "Ohm's Law Calculator",
+  "description": "Enter any two of voltage, current and resistance to find the third — plus power.",
   "badge": "Science",
   "category": [
     "Science"
   ],
-  "icon": "wrench",
-  "iconColor": "text-emerald-600",
+  "icon": "zap",
+  "iconColor": "text-yellow-500",
   "fields": [
     {
       "key": "voltage",
       "label": "Voltage (V)",
       "type": "number",
-      "default": "12"
+      "default": "12",
+      "required": false
     },
     {
       "key": "current",
       "label": "Current (A)",
       "type": "number",
-      "default": "1"
+      "default": "2",
+      "required": false
     },
     {
       "key": "resistance",
       "label": "Resistance (Ω)",
       "type": "number",
-      "default": "10"
+      "default": "",
+      "required": false
     }
   ],
-  "presets": [
-    {
-      "label": "Example",
-      "values": {
-        "voltage": "12"
-      }
-    }
-  ],
-  "note": "Ensure all values are in the correct units."
+  "note": "Leave one field blank and fill the other two."
 },
-  compute: (values) => { let {voltage, current, resistance} = values; if (!voltage && !current && !resistance) return { result: 'Please enter at least one value.' }; if (voltage && current) resistance = voltage / current; else if (voltage && resistance) current = voltage / resistance; else if (current && resistance) voltage = current * resistance; else return { result: 'Invalid input combination.' }; return { result: `${resistance.toFixed(2)} Ω`, rows: [['Voltage', `${voltage} V`], ['Current', `${current} A`]] }; },
+  compute: (values) => { const num=(v)=>typeof v==="number"?v:Number(v); const money=(n)=>Number.isFinite(Number(n))?Number(n).toLocaleString(undefined,{maximumFractionDigits:2}):"—";
+      let V = values.voltage === "" ? null : num(values.voltage);
+      let I = values.current === "" ? null : num(values.current);
+      let R = values.resistance === "" ? null : num(values.resistance);
+      const known = [V, I, R].filter((x) => x !== null).length;
+      if (known < 2) return { result: "—", caption: "Enter any two values" };
+      if (V === null) V = I * R; else if (I === null) I = R ? V / R : 0; else if (R === null) R = I ? V / I : 0;
+      const P = V * I;
+      return { result: (R).toFixed(2) + " Ω", caption: `V=${V.toFixed(2)}  I=${I.toFixed(2)}  R=${R.toFixed(2)}`, rows: [["Voltage", V.toFixed(2) + " V"], ["Current", I.toFixed(2) + " A"], ["Resistance", R.toFixed(2) + " Ω"], ["Power", P.toFixed(2) + " W"]] };
+    },
 };
 
 export default spec;

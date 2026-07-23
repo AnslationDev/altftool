@@ -2,9 +2,9 @@ const toolConfig = {
   slug: "quadratic-equation-solver",
   name: "Quadratic Equation Solver",
   category: ["Math"],
-  description: "Solve quadratic equations of the form ax^2 + bx + c = 0.",
-  icon: "calculator",
-  iconColor: "text-teal-600",
+  description: "Solve ax² + bx + c = 0 — real or complex roots, discriminant and vertex.",
+  icon: "sigma",
+  iconColor: "text-indigo-600",
 };
 
 export default toolConfig;

@@ -1,3 +1,5 @@
+"use client";
+
 import { useCallback, useEffect, useRef, useState } from "react";
 import { downscaleImage, sketchFromImageData } from "../utils/sketch";
 

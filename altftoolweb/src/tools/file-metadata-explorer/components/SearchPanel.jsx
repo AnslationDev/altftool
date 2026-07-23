@@ -1,3 +1,5 @@
+"use client";
+
 import { Search, X } from "lucide-react";
 
 export default function SearchPanel({ search, onChange }) {

@@ -1,3 +1,5 @@
+"use client";
+
 import { Download, Copy, Printer, Image } from "lucide-react";
 import { exportFormats } from "../constants/styles";
 import { downloadCanvas, copyCanvasToClipboard } from "../utils/imageFilters";

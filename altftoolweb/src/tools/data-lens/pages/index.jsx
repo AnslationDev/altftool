@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState, useMemo, useCallback, useEffect } from "react";
 import FileUpload from "../components/FileUpload";
 import ProfileReport from "../components/ProfileReport";

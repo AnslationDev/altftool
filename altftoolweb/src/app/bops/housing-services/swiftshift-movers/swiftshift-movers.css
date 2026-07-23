@@ -1,0 +1,861 @@
+/* ============================================================
+   SwiftShift Movers — standalone lander styles
+   Every selector is anchored to a "swiftshift-" prefixed class.
+   Palette: white base / safety-yellow #ffc400 / ink #111111
+   ============================================================ */
+
+.swiftshift-page {
+  --ss-yellow: #ffc400;
+  --ss-ink: #111111;
+  --ss-paper: #ffffff;
+  --ss-gray: #f4f4f2;
+  --ss-border: 3px solid var(--ss-ink);
+  --ss-shadow: 8px 8px 0 var(--ss-ink);
+  --ss-shadow-sm: 5px 5px 0 var(--ss-ink);
+  font-family: "Arial Narrow", "Helvetica Neue", Arial, sans-serif;
+  background: var(--ss-paper);
+  color: var(--ss-ink);
+  line-height: 1.5;
+  overflow-x: hidden;
+}
+
+.swiftshift-page *,
+.swiftshift-page *::before,
+.swiftshift-page *::after {
+  box-sizing: border-box;
+}
+
+.swiftshift-page a { color: inherit; text-decoration: none; }
+.swiftshift-page ul { margin: 0; padding: 0; list-style: none; }
+
+.swiftshift-page a:focus-visible,
+.swiftshift-page button:focus-visible,
+.swiftshift-page input:focus-visible {
+  outline: 3px dashed var(--ss-ink);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+.swiftshift-wrap {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* ---------- display type ---------- */
+.swiftshift-display {
+  font-family: "Arial Black", "Impact", "Arial Narrow", sans-serif;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+  line-height: 0.95;
+  margin: 0;
+}
+
+.swiftshift-kicker {
+  display: inline-block;
+  background: var(--ss-ink);
+  color: var(--ss-yellow);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-size: 0.78rem;
+  padding: 6px 14px;
+  transform: skewX(-8deg);
+  margin-bottom: 18px;
+}
+
+/* ---------- buttons ---------- */
+.swiftshift-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: inherit;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-size: 1rem;
+  padding: 14px 26px;
+  border: var(--ss-border);
+  cursor: pointer;
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+}
+
+.swiftshift-btn--yellow {
+  background: var(--ss-yellow);
+  color: var(--ss-ink);
+  box-shadow: var(--ss-shadow-sm);
+}
+
+.swiftshift-btn--ghost {
+  background: var(--ss-paper);
+  color: var(--ss-ink);
+  box-shadow: var(--ss-shadow-sm);
+}
+
+.swiftshift-btn:hover { transform: translate(-2px, -2px); box-shadow: 7px 7px 0 var(--ss-ink); }
+.swiftshift-btn:active { transform: translate(5px, 5px); box-shadow: 0 0 0 var(--ss-ink); }
+
+/* ---------- top bar ---------- */
+.swiftshift-topbar {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  background: var(--ss-ink);
+  color: var(--ss-paper);
+  border-bottom: 4px solid var(--ss-yellow);
+}
+
+.swiftshift-topbar-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 14px 24px;
+  max-width: 1120px;
+  margin: 0 auto;
+}
+
+.swiftshift-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: "Arial Black", "Impact", sans-serif;
+  font-weight: 900;
+  text-transform: uppercase;
+  font-size: 1.05rem;
+  letter-spacing: 0.02em;
+}
+
+.swiftshift-brand-mark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background: var(--ss-yellow);
+  color: var(--ss-ink);
+  border: 3px solid var(--ss-paper);
+  transform: skewX(-8deg);
+}
+
+.swiftshift-brand em { color: var(--ss-yellow); font-style: normal; }
+
+.swiftshift-nav-links {
+  display: flex;
+  align-items: center;
+  gap: 26px;
+  font-weight: 800;
+  text-transform: uppercase;
+  font-size: 0.82rem;
+  letter-spacing: 0.1em;
+}
+
+.swiftshift-nav-links a { border-bottom: 3px solid transparent; padding: 4px 0; }
+.swiftshift-nav-links a:hover { border-bottom-color: var(--ss-yellow); }
+
+.swiftshift-topbar .swiftshift-btn {
+  padding: 10px 18px;
+  font-size: 0.82rem;
+  box-shadow: 4px 4px 0 var(--ss-yellow);
+  border-color: var(--ss-yellow);
+}
+.swiftshift-topbar .swiftshift-btn:hover { box-shadow: 6px 6px 0 var(--ss-yellow); }
+.swiftshift-topbar .swiftshift-btn:active { box-shadow: 0 0 0 var(--ss-yellow); }
+
+.swiftshift-menu-toggle {
+  display: none;
+  background: none;
+  border: 3px solid var(--ss-yellow);
+  color: var(--ss-yellow);
+  padding: 7px 9px;
+  cursor: pointer;
+  line-height: 0;
+}
+
+/* ---------- hero ---------- */
+.swiftshift-hero {
+  position: relative;
+  padding: 84px 0 150px;
+  background:
+    repeating-linear-gradient(
+      -45deg,
+      transparent 0 44px,
+      rgba(17, 17, 17, 0.045) 44px 88px
+    ),
+    var(--ss-paper);
+}
+
+.swiftshift-hero::after {
+  /* skewed divider slab into the marquee strip */
+  content: "";
+  position: absolute;
+  left: -5%;
+  bottom: -36px;
+  width: 110%;
+  height: 78px;
+  background: var(--ss-ink);
+  transform: skewY(-2deg);
+}
+
+.swiftshift-hero-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+  gap: 48px;
+  align-items: center;
+}
+
+.swiftshift-hero-title {
+  font-size: clamp(2.6rem, 6.4vw, 4.8rem);
+  transform: skewX(-5deg);
+}
+
+.swiftshift-hero-title .swiftshift-slab {
+  display: inline-block;
+  background: var(--ss-ink);
+  color: var(--ss-paper);
+  padding: 2px 14px;
+}
+
+.swiftshift-hero-title .swiftshift-slab--yellow {
+  background: var(--ss-yellow);
+  color: var(--ss-ink);
+  box-shadow: var(--ss-shadow-sm);
+}
+
+.swiftshift-hero-copy {
+  max-width: 46ch;
+  font-size: 1.1rem;
+  margin: 22px 0 28px;
+  font-weight: 600;
+}
+
+.swiftshift-hero-ctas { display: flex; flex-wrap: wrap; gap: 16px; }
+
+/* stat chips */
+.swiftshift-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-top: 42px;
+}
+
+.swiftshift-stat {
+  background: var(--ss-paper);
+  border: var(--ss-border);
+  box-shadow: var(--ss-shadow-sm);
+  padding: 14px 20px;
+  transform: rotate(-1.2deg);
+}
+
+.swiftshift-stat:nth-child(2) { transform: rotate(1.4deg); }
+.swiftshift-stat:nth-child(3) { transform: rotate(-0.8deg); }
+
+.swiftshift-stat strong {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-family: "Arial Black", "Impact", sans-serif;
+  font-size: 1.5rem;
+  line-height: 1.1;
+}
+
+.swiftshift-stat span {
+  display: block;
+  font-size: 0.74rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  margin-top: 3px;
+}
+
+.swiftshift-star { color: #c79000; fill: var(--ss-yellow); }
+
+/* CSS truck motif */
+.swiftshift-truck-stage {
+  position: relative;
+  padding: 30px 0 46px;
+  overflow: hidden;
+}
+
+.swiftshift-truck {
+  display: flex;
+  align-items: flex-end;
+  animation: swiftshift-truck-in 1.1s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.swiftshift-truck-box {
+  position: relative;
+  width: 220px;
+  height: 150px;
+  background: var(--ss-yellow);
+  border: var(--ss-border);
+  box-shadow: var(--ss-shadow);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Arial Black", "Impact", sans-serif;
+  font-weight: 900;
+  text-transform: uppercase;
+  font-size: 1.35rem;
+  text-align: center;
+  line-height: 1.05;
+  padding: 10px;
+}
+
+.swiftshift-truck-box::after {
+  /* diagonal hazard tape along the bottom of the cargo box */
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 18px;
+  background: repeating-linear-gradient(
+    -45deg,
+    var(--ss-ink) 0 12px,
+    var(--ss-yellow) 12px 24px
+  );
+  border-top: 3px solid var(--ss-ink);
+}
+
+.swiftshift-truck-cab {
+  width: 92px;
+  height: 104px;
+  background: var(--ss-ink);
+  color: var(--ss-yellow);
+  border: var(--ss-border);
+  border-left: none;
+  box-shadow: var(--ss-shadow);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  clip-path: polygon(0 0, 62% 0, 100% 38%, 100% 100%, 0 100%);
+}
+
+.swiftshift-truck-wheels {
+  position: absolute;
+  left: 30px;
+  bottom: 22px;
+  display: flex;
+  gap: 130px;
+}
+
+.swiftshift-wheel {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--ss-ink);
+  border: 3px solid var(--ss-paper);
+  box-shadow: 0 0 0 3px var(--ss-ink);
+  position: relative;
+  animation: swiftshift-wheel-spin 1.1s linear both;
+}
+
+.swiftshift-wheel::after {
+  content: "";
+  position: absolute;
+  inset: 14px;
+  border-radius: 50%;
+  background: var(--ss-yellow);
+}
+
+.swiftshift-road {
+  height: 0;
+  border-bottom: 6px dashed var(--ss-ink);
+  margin-top: 14px;
+}
+
+.swiftshift-speedlines {
+  position: absolute;
+  right: 8px;
+  top: 46%;
+  display: grid;
+  gap: 10px;
+}
+
+.swiftshift-speedlines i {
+  display: block;
+  height: 6px;
+  background: var(--ss-ink);
+  animation: swiftshift-speed 1s ease-out both;
+}
+
+.swiftshift-speedlines i:nth-child(1) { width: 64px; }
+.swiftshift-speedlines i:nth-child(2) { width: 40px; animation-delay: 0.08s; }
+.swiftshift-speedlines i:nth-child(3) { width: 24px; animation-delay: 0.16s; }
+
+@keyframes swiftshift-truck-in {
+  from { transform: translateX(-120%); }
+  to { transform: translateX(0); }
+}
+
+@keyframes swiftshift-wheel-spin {
+  from { transform: rotate(-540deg); }
+  to { transform: rotate(0deg); }
+}
+
+@keyframes swiftshift-speed {
+  from { transform: translateX(-90px) scaleX(2); opacity: 0; }
+  to { transform: translateX(0) scaleX(1); opacity: 1; }
+}
+
+/* ---------- marquee strip ---------- */
+.swiftshift-marquee {
+  background: var(--ss-yellow);
+  border-top: var(--ss-border);
+  border-bottom: var(--ss-border);
+  overflow: hidden;
+  position: relative;
+  z-index: 2;
+  padding: 16px 0;
+}
+
+.swiftshift-marquee-track {
+  display: flex;
+  width: max-content;
+  animation: swiftshift-marquee-scroll 26s linear infinite;
+}
+
+.swiftshift-marquee-row {
+  display: flex;
+  align-items: center;
+  gap: 34px;
+  padding-right: 34px;
+  font-family: "Arial Black", "Impact", sans-serif;
+  font-weight: 900;
+  text-transform: uppercase;
+  font-size: 1.05rem;
+  white-space: nowrap;
+}
+
+.swiftshift-marquee-row li { display: inline-flex; align-items: center; gap: 10px; }
+
+@keyframes swiftshift-marquee-scroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+/* ---------- generic section ---------- */
+.swiftshift-section { padding: 92px 0; position: relative; }
+.swiftshift-section--gray { background: var(--ss-gray); }
+
+.swiftshift-section-head { max-width: 640px; margin-bottom: 52px; }
+.swiftshift-section-head h2 { font-size: clamp(1.9rem, 4vw, 3rem); }
+.swiftshift-section-head p { font-weight: 600; font-size: 1.02rem; margin: 14px 0 0; }
+
+/* ---------- playbook ---------- */
+.swiftshift-steps {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 26px;
+  position: relative;
+}
+
+.swiftshift-steps::before {
+  content: "";
+  position: absolute;
+  top: 31px;
+  left: 8%;
+  right: 8%;
+  border-top: 4px dashed var(--ss-ink);
+}
+
+.swiftshift-step { position: relative; padding-top: 0; }
+
+.swiftshift-step-num {
+  position: relative;
+  z-index: 1;
+  width: 62px;
+  height: 62px;
+  border-radius: 50%;
+  background: var(--ss-ink);
+  color: var(--ss-yellow);
+  border: 3px solid var(--ss-yellow);
+  box-shadow: 0 0 0 3px var(--ss-ink);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Arial Black", "Impact", sans-serif;
+  font-size: 1.5rem;
+  margin-bottom: 18px;
+}
+
+.swiftshift-step h3 {
+  font-family: "Arial Black", "Impact", sans-serif;
+  text-transform: uppercase;
+  font-size: 1.05rem;
+  margin: 0 0 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.swiftshift-step p { margin: 0; font-weight: 600; font-size: 0.95rem; }
+
+/* ---------- services grid ---------- */
+.swiftshift-services {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 30px;
+}
+
+.swiftshift-card {
+  background: var(--ss-paper);
+  border: var(--ss-border);
+  box-shadow: var(--ss-shadow);
+  padding: 28px;
+  transform: rotate(-1.6deg);
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+
+.swiftshift-card:nth-child(even) { transform: rotate(1.6deg); }
+
+.swiftshift-card:hover,
+.swiftshift-card:focus-within {
+  transform: rotate(0deg) translate(-3px, -3px);
+  box-shadow: 11px 11px 0 var(--ss-ink);
+}
+
+.swiftshift-card-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 58px;
+  height: 58px;
+  background: var(--ss-yellow);
+  border: var(--ss-border);
+  margin-bottom: 18px;
+  transform: skewX(-6deg);
+}
+
+.swiftshift-card h3 {
+  font-family: "Arial Black", "Impact", sans-serif;
+  text-transform: uppercase;
+  font-size: 1.25rem;
+  margin: 0 0 10px;
+}
+
+.swiftshift-card p { margin: 0 0 16px; font-weight: 600; }
+
+.swiftshift-card-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 900;
+  text-transform: uppercase;
+  font-size: 0.82rem;
+  letter-spacing: 0.08em;
+  border-bottom: 3px solid var(--ss-yellow);
+  padding-bottom: 2px;
+}
+
+.swiftshift-card-link:hover { background: var(--ss-yellow); }
+
+/* ---------- quote form ---------- */
+.swiftshift-quote-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  gap: 56px;
+  align-items: center;
+}
+
+.swiftshift-quote-points { display: grid; gap: 16px; margin-top: 26px; }
+
+.swiftshift-quote-points li {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  font-weight: 700;
+}
+
+.swiftshift-quote-points svg { flex-shrink: 0; margin-top: 2px; }
+
+.swiftshift-form-card {
+  background: var(--ss-paper);
+  border: var(--ss-border);
+  box-shadow: var(--ss-shadow);
+  padding: 34px;
+  position: relative;
+}
+
+.swiftshift-form-card::before {
+  content: "";
+  position: absolute;
+  top: -18px;
+  left: 26px;
+  right: 26px;
+  height: 18px;
+  background: repeating-linear-gradient(
+    -45deg,
+    var(--ss-ink) 0 12px,
+    var(--ss-yellow) 12px 24px
+  );
+  border: 3px solid var(--ss-ink);
+  border-bottom: none;
+}
+
+.swiftshift-form-card h3 {
+  font-family: "Arial Black", "Impact", sans-serif;
+  text-transform: uppercase;
+  font-size: 1.4rem;
+  margin: 0 0 22px;
+}
+
+.swiftshift-form-fields {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+  margin-bottom: 22px;
+}
+
+.swiftshift-field label {
+  display: block;
+  font-weight: 900;
+  text-transform: uppercase;
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  margin-bottom: 7px;
+}
+
+.swiftshift-field input {
+  width: 100%;
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 700;
+  padding: 12px 14px;
+  border: var(--ss-border);
+  background: var(--ss-gray);
+  color: var(--ss-ink);
+}
+
+.swiftshift-field input:hover { background: var(--ss-paper); }
+
+.swiftshift-form-card .swiftshift-btn { width: 100%; justify-content: center; font-size: 1.1rem; }
+
+.swiftshift-form-note {
+  margin: 16px 0 0;
+  font-size: 0.82rem;
+  font-weight: 700;
+  text-align: center;
+}
+
+/* ---------- testimonials ---------- */
+.swiftshift-reviews {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+}
+
+.swiftshift-review {
+  background: var(--ss-paper);
+  border: var(--ss-border);
+  box-shadow: var(--ss-shadow-sm);
+  padding: 26px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.swiftshift-review-stars { display: flex; gap: 4px; }
+
+.swiftshift-review blockquote {
+  margin: 0;
+  font-weight: 700;
+  font-size: 1.02rem;
+  line-height: 1.45;
+}
+
+.swiftshift-review figcaption {
+  margin-top: auto;
+  font-weight: 900;
+  text-transform: uppercase;
+  font-size: 0.78rem;
+  letter-spacing: 0.1em;
+  border-top: 3px solid var(--ss-yellow);
+  padding-top: 12px;
+}
+
+.swiftshift-review figcaption span {
+  display: block;
+  color: #555;
+  letter-spacing: 0.06em;
+  margin-top: 2px;
+}
+
+/* ---------- CTA band ---------- */
+.swiftshift-cta-band {
+  background: var(--ss-ink);
+  color: var(--ss-paper);
+  padding: 88px 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.swiftshift-cta-band::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 16px;
+  background: repeating-linear-gradient(
+    -45deg,
+    var(--ss-yellow) 0 22px,
+    var(--ss-ink) 22px 44px
+  );
+}
+
+.swiftshift-cta-inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 34px;
+}
+
+.swiftshift-cta-inner h2 {
+  font-size: clamp(2rem, 4.6vw, 3.4rem);
+  color: var(--ss-paper);
+  transform: skewX(-4deg);
+}
+
+.swiftshift-cta-inner h2 em { color: var(--ss-yellow); font-style: normal; }
+
+.swiftshift-cta-phone {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  background: var(--ss-yellow);
+  color: var(--ss-ink);
+  border: 3px solid var(--ss-paper);
+  box-shadow: 8px 8px 0 rgba(255, 196, 0, 0.35);
+  font-family: "Arial Black", "Impact", sans-serif;
+  font-size: clamp(1.2rem, 2.6vw, 1.7rem);
+  padding: 18px 30px;
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+}
+
+.swiftshift-cta-phone:hover { transform: translate(-2px, -2px); }
+.swiftshift-cta-phone:active { transform: translate(6px, 6px); box-shadow: none; }
+
+.swiftshift-cta-sub {
+  width: 100%;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 0.8rem;
+  color: #cfcfcf;
+  margin: 0;
+}
+
+/* ---------- footer ---------- */
+.swiftshift-footer {
+  background: var(--ss-ink);
+  color: var(--ss-paper);
+  border-top: 6px solid var(--ss-yellow);
+  padding: 56px 0 34px;
+}
+
+.swiftshift-footer-grid {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr;
+  gap: 40px;
+  margin-bottom: 40px;
+}
+
+.swiftshift-footer p { font-weight: 600; color: #cfcfcf; max-width: 34ch; }
+
+.swiftshift-footer h3 {
+  font-family: "Arial Black", "Impact", sans-serif;
+  text-transform: uppercase;
+  color: var(--ss-yellow);
+  font-size: 0.9rem;
+  letter-spacing: 0.1em;
+  margin: 0 0 16px;
+}
+
+.swiftshift-footer-links { display: grid; gap: 10px; font-weight: 700; }
+.swiftshift-footer-links a:hover { color: var(--ss-yellow); }
+
+.swiftshift-footer-bottom {
+  border-top: 3px solid #333;
+  padding-top: 22px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #999;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+/* ---------- responsive ---------- */
+@media (max-width: 880px) {
+  .swiftshift-nav-links {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: var(--ss-ink);
+    border-bottom: 4px solid var(--ss-yellow);
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    padding: 8px 24px 18px;
+    display: none;
+  }
+
+  .swiftshift-nav-links a { padding: 12px 0; border-bottom: 2px solid #333; }
+  .swiftshift-nav-links--open { display: flex; }
+  .swiftshift-menu-toggle { display: inline-flex; }
+  .swiftshift-topbar-inner > .swiftshift-btn { display: none; }
+
+  .swiftshift-hero { padding: 56px 0 120px; }
+  .swiftshift-hero-grid,
+  .swiftshift-quote-grid { grid-template-columns: 1fr; gap: 40px; }
+
+  .swiftshift-truck { transform-origin: left bottom; }
+  .swiftshift-truck-box { width: 180px; height: 128px; font-size: 1.1rem; }
+  .swiftshift-truck-cab { width: 76px; height: 90px; }
+  .swiftshift-truck-wheels { gap: 100px; }
+
+  .swiftshift-steps { grid-template-columns: 1fr; gap: 34px; }
+  .swiftshift-steps::before {
+    top: 12px;
+    bottom: 12px;
+    left: 29px;
+    right: auto;
+    border-top: none;
+    border-left: 4px dashed var(--ss-ink);
+  }
+  .swiftshift-step { display: grid; grid-template-columns: 62px 1fr; gap: 18px; }
+  .swiftshift-step-num { margin-bottom: 0; }
+
+  .swiftshift-services,
+  .swiftshift-reviews { grid-template-columns: 1fr; }
+  .swiftshift-card,
+  .swiftshift-card:nth-child(even) { transform: rotate(0deg); }
+
+  .swiftshift-form-fields { grid-template-columns: 1fr; }
+  .swiftshift-footer-grid { grid-template-columns: 1fr; gap: 30px; }
+  .swiftshift-section { padding: 64px 0; }
+}
+
+/* ---------- reduced motion ---------- */
+@media (prefers-reduced-motion: reduce) {
+  .swiftshift-truck,
+  .swiftshift-wheel,
+  .swiftshift-speedlines i,
+  .swiftshift-marquee-track {
+    animation: none;
+  }
+
+  .swiftshift-btn,
+  .swiftshift-card,
+  .swiftshift-cta-phone {
+    transition: none;
+  }
+}

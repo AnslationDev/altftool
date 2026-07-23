@@ -11,6 +11,10 @@ const IGNORED_CONSOLE_PATTERNS = [
   // its local cache keeps the screen usable and the next request succeeds.
   // Same-origin API failures and missing rendered data remain covered below.
   /Could not reach Cloud Firestore backend[\s\S]*client will operate in offline mode/i,
+  // AdSense's cross-origin iframe can probe the Storage Access API. Chromium
+  // reports the denied probe as a console error even though the page and ad
+  // fallback continue normally.
+  /requestStorageAccess:\s*Permission denied/i,
 ];
 
 const DANGEROUS_WARNING_PATTERNS = [

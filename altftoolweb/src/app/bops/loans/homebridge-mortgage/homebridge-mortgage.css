@@ -1,0 +1,914 @@
+/* HomeBridge Mortgage — standalone lander styles */
+
+.homebridge-page {
+  --hb-navy: #0f2a4a;
+  --hb-navy-deep: #0a1f38;
+  --hb-navy-soft: #1c3d63;
+  --hb-ivory: #faf6ee;
+  --hb-ivory-deep: #f3ecdd;
+  --hb-gold: #c9a24b;
+  --hb-gold-soft: #e3cf9c;
+  --hb-ink: #22303f;
+  --hb-muted: #5b6b7c;
+  --hb-white: #ffffff;
+  --hb-serif: Georgia, "Times New Roman", Times, serif;
+  --hb-sans: "Segoe UI", -apple-system, Arial, Helvetica, sans-serif;
+  font-family: var(--hb-sans);
+  color: var(--hb-ink);
+  background: var(--hb-ivory);
+  line-height: 1.6;
+}
+
+.homebridge-page h1,
+.homebridge-page h2,
+.homebridge-page h3 {
+  font-family: var(--hb-serif);
+  color: var(--hb-navy);
+  line-height: 1.2;
+  margin: 0 0 0.5rem;
+}
+
+.homebridge-page a:focus-visible,
+.homebridge-page button:focus-visible {
+  outline: 3px solid var(--hb-gold);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+.homebridge-wrap {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 0 1.25rem;
+}
+
+/* ---------- Nav ---------- */
+.homebridge-nav {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  background: var(--hb-navy);
+  border-bottom: 1px solid rgba(201, 162, 75, 0.45);
+}
+
+.homebridge-nav-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.8rem 1.25rem;
+  max-width: 1120px;
+  margin: 0 auto;
+}
+
+.homebridge-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  color: var(--hb-white);
+  text-decoration: none;
+  font-family: var(--hb-serif);
+  font-size: 1.25rem;
+  letter-spacing: 0.02em;
+}
+
+.homebridge-brand-mark {
+  width: 38px;
+  height: 26px;
+  border: 2px solid var(--hb-gold);
+  border-bottom: none;
+  border-radius: 999px 999px 0 0;
+  position: relative;
+}
+
+.homebridge-brand-mark::after {
+  content: "";
+  position: absolute;
+  left: 9px;
+  right: 9px;
+  top: 7px;
+  bottom: 0;
+  border: 2px solid var(--hb-gold);
+  border-bottom: none;
+  border-radius: 999px 999px 0 0;
+}
+
+.homebridge-nav-links {
+  display: flex;
+  gap: 1.4rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.homebridge-nav-links a {
+  color: #e8ecf2;
+  text-decoration: none;
+  font-size: 0.95rem;
+  border-bottom: 2px solid transparent;
+  padding-bottom: 2px;
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+
+.homebridge-nav-links a:hover {
+  color: var(--hb-gold-soft);
+  border-color: var(--hb-gold);
+}
+
+.homebridge-nav-cta {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+}
+
+.homebridge-nav-phone {
+  color: var(--hb-gold-soft);
+  text-decoration: none;
+  font-size: 0.95rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  white-space: nowrap;
+}
+
+.homebridge-nav-phone:hover {
+  color: var(--hb-white);
+}
+
+/* ---------- Buttons ---------- */
+.homebridge-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--hb-sans);
+  font-weight: 600;
+  font-size: 1rem;
+  padding: 0.75rem 1.4rem;
+  border-radius: 999px;
+  text-decoration: none;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+}
+
+.homebridge-btn-gold {
+  background: var(--hb-gold);
+  color: var(--hb-navy-deep);
+}
+
+.homebridge-btn-gold:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(201, 162, 75, 0.4);
+  background: #d7b360;
+}
+
+.homebridge-btn-outline {
+  background: transparent;
+  color: var(--hb-navy);
+  border-color: var(--hb-navy);
+}
+
+.homebridge-btn-outline:hover {
+  transform: translateY(-2px);
+  background: rgba(15, 42, 74, 0.06);
+}
+
+.homebridge-btn-light {
+  background: var(--hb-white);
+  color: var(--hb-navy);
+}
+
+.homebridge-btn-light:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+}
+
+.homebridge-btn-sm {
+  padding: 0.55rem 1.1rem;
+  font-size: 0.9rem;
+}
+
+/* ---------- Hero ---------- */
+.homebridge-hero {
+  background: linear-gradient(175deg, var(--hb-navy) 0%, var(--hb-navy-deep) 100%);
+  color: #e9eef5;
+  padding: 4rem 0 6.5rem;
+  position: relative;
+}
+
+.homebridge-hero-grid {
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+  gap: 3rem;
+  align-items: center;
+}
+
+.homebridge-hero-copy {
+  animation: homebridge-fade-up 0.7s ease both;
+}
+
+.homebridge-eyebrow {
+  display: inline-block;
+  color: var(--hb-gold-soft);
+  font-size: 0.85rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  border-bottom: 1px solid var(--hb-gold);
+  padding-bottom: 0.35rem;
+  margin-bottom: 1.1rem;
+}
+
+.homebridge-hero h1 {
+  color: var(--hb-white);
+  font-size: clamp(2.1rem, 4.5vw, 3.3rem);
+  margin-bottom: 1rem;
+}
+
+.homebridge-hero h1 em {
+  font-style: italic;
+  color: var(--hb-gold-soft);
+}
+
+.homebridge-hero-sub {
+  font-size: 1.1rem;
+  color: #c6d2e0;
+  max-width: 34rem;
+  margin: 0 0 1.75rem;
+}
+
+.homebridge-hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: center;
+}
+
+.homebridge-hero-phone {
+  color: var(--hb-gold-soft);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-weight: 600;
+}
+
+.homebridge-hero-phone:hover {
+  color: var(--hb-white);
+}
+
+.homebridge-hero-media {
+  position: relative;
+  animation: homebridge-fade-up 0.7s ease 0.15s both;
+}
+
+.homebridge-hero-frame {
+  border-radius: 50% 50% 18px 18px / 26% 26% 18px 18px;
+  overflow: hidden;
+  border: 3px solid var(--hb-gold);
+  aspect-ratio: 4 / 5;
+  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.35);
+}
+
+.homebridge-hero-frame img,
+.homebridge-card-media img,
+.homebridge-story-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.homebridge-rate-card {
+  position: absolute;
+  left: -1.75rem;
+  bottom: -2.25rem;
+  background: var(--hb-white);
+  color: var(--hb-ink);
+  border-radius: 14px;
+  padding: 1rem 1.25rem;
+  box-shadow: 0 16px 36px rgba(10, 31, 56, 0.3);
+  border-top: 4px solid var(--hb-gold);
+  min-width: 240px;
+  animation: homebridge-float 5s ease-in-out infinite;
+}
+
+.homebridge-rate-card h3 {
+  font-size: 0.8rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-family: var(--hb-sans);
+  color: var(--hb-muted);
+  margin-bottom: 0.5rem;
+}
+
+.homebridge-rate-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 1.5rem;
+  font-size: 0.95rem;
+  padding: 0.3rem 0;
+  border-bottom: 1px dashed var(--hb-ivory-deep);
+}
+
+.homebridge-rate-row strong {
+  color: var(--hb-navy);
+  font-family: var(--hb-serif);
+}
+
+.homebridge-rate-note {
+  font-size: 0.7rem;
+  color: var(--hb-muted);
+  margin: 0.55rem 0 0;
+}
+
+/* ---------- Arch divider motif ---------- */
+.homebridge-arch {
+  position: relative;
+  margin-top: -3rem;
+  height: 3rem;
+}
+
+.homebridge-arch::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--hb-ivory);
+  border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+  border-top: 3px solid var(--hb-gold);
+}
+
+.homebridge-arch-deep::before {
+  background: var(--hb-ivory-deep);
+}
+
+.homebridge-arch-navy::before {
+  background: var(--hb-navy);
+}
+
+/* ---------- Sections ---------- */
+.homebridge-section {
+  padding: 4.5rem 0;
+}
+
+.homebridge-section-deep {
+  background: var(--hb-ivory-deep);
+}
+
+.homebridge-section-head {
+  max-width: 46rem;
+  margin: 0 auto 3rem;
+  text-align: center;
+}
+
+.homebridge-section-head h2 {
+  font-size: clamp(1.7rem, 3.2vw, 2.4rem);
+}
+
+.homebridge-section-head p {
+  color: var(--hb-muted);
+  margin: 0.5rem 0 0;
+}
+
+.homebridge-gold-rule {
+  width: 64px;
+  height: 2px;
+  background: var(--hb-gold);
+  border: none;
+  margin: 1rem auto 0;
+}
+
+/* ---------- Stats ---------- */
+.homebridge-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.25rem;
+  text-align: center;
+}
+
+.homebridge-stat {
+  padding: 1.4rem 1rem;
+  border: 1px solid var(--hb-gold-soft);
+  border-radius: 12px;
+  background: var(--hb-white);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.homebridge-stat:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 26px rgba(15, 42, 74, 0.12);
+}
+
+.homebridge-stat strong {
+  display: block;
+  font-family: var(--hb-serif);
+  font-size: 1.9rem;
+  color: var(--hb-navy);
+}
+
+.homebridge-stat span {
+  font-size: 0.9rem;
+  color: var(--hb-muted);
+}
+
+/* ---------- Loan cards ---------- */
+.homebridge-card-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.75rem;
+}
+
+.homebridge-card {
+  background: var(--hb-white);
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid rgba(201, 162, 75, 0.35);
+  box-shadow: 0 6px 18px rgba(15, 42, 74, 0.08);
+  transition: transform 0.22s ease, box-shadow 0.22s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.homebridge-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 18px 36px rgba(15, 42, 74, 0.18);
+}
+
+.homebridge-card-media {
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  border-radius: 0 0 50% 50% / 0 0 12% 12%;
+}
+
+.homebridge-card-media img {
+  transition: transform 0.4s ease;
+}
+
+.homebridge-card:hover .homebridge-card-media img {
+  transform: scale(1.05);
+}
+
+.homebridge-card-body {
+  padding: 1.4rem 1.5rem 1.6rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  flex: 1;
+}
+
+.homebridge-card-body h3 {
+  font-size: 1.3rem;
+}
+
+.homebridge-card-body p {
+  margin: 0;
+  color: var(--hb-muted);
+  font-size: 0.95rem;
+  flex: 1;
+}
+
+.homebridge-card-points {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.4rem;
+  font-size: 0.9rem;
+}
+
+.homebridge-card-points li {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--hb-ink);
+}
+
+.homebridge-card-points svg {
+  color: var(--hb-gold);
+  flex-shrink: 0;
+}
+
+/* ---------- Bridge timeline ---------- */
+.homebridge-bridge {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+  list-style: none;
+  margin: 0;
+  padding: 3.25rem 0 0;
+}
+
+.homebridge-bridge::before {
+  content: "";
+  position: absolute;
+  top: 1.35rem;
+  left: 6%;
+  right: 6%;
+  height: 3px;
+  background: var(--hb-gold);
+  border-radius: 999px;
+}
+
+.homebridge-bridge::after {
+  content: "";
+  position: absolute;
+  top: -1.4rem;
+  left: 18%;
+  right: 18%;
+  height: 3rem;
+  border: 3px solid var(--hb-gold-soft);
+  border-bottom: none;
+  border-radius: 999px 999px 0 0;
+}
+
+.homebridge-pier {
+  background: var(--hb-white);
+  border: 1px solid var(--hb-gold-soft);
+  border-radius: 12px;
+  padding: 2.2rem 1.2rem 1.4rem;
+  text-align: center;
+  position: relative;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.homebridge-pier:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 14px 30px rgba(15, 42, 74, 0.14);
+}
+
+.homebridge-pier-num {
+  position: absolute;
+  top: -1.9rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 3.4rem;
+  height: 3.4rem;
+  border-radius: 50%;
+  background: var(--hb-navy);
+  color: var(--hb-gold-soft);
+  font-family: var(--hb-serif);
+  font-size: 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 3px solid var(--hb-gold);
+}
+
+.homebridge-pier h3 {
+  font-size: 1.15rem;
+  margin-top: 0.4rem;
+}
+
+.homebridge-pier p {
+  font-size: 0.88rem;
+  color: var(--hb-muted);
+  margin: 0;
+}
+
+/* ---------- Story split ---------- */
+.homebridge-story {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  align-items: center;
+}
+
+.homebridge-story-media {
+  aspect-ratio: 5 / 4;
+  border-radius: 50% 50% 16px 16px / 20% 20% 16px 16px;
+  overflow: hidden;
+  border: 3px solid var(--hb-gold);
+  box-shadow: 0 18px 40px rgba(15, 42, 74, 0.2);
+}
+
+.homebridge-story-copy h2 {
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
+}
+
+.homebridge-story-list {
+  list-style: none;
+  padding: 0;
+  margin: 1.25rem 0 0;
+  display: grid;
+  gap: 0.9rem;
+}
+
+.homebridge-story-list li {
+  display: flex;
+  gap: 0.75rem;
+  align-items: flex-start;
+}
+
+.homebridge-story-list svg {
+  color: var(--hb-gold);
+  flex-shrink: 0;
+  margin-top: 0.2rem;
+}
+
+.homebridge-story-list strong {
+  color: var(--hb-navy);
+}
+
+/* ---------- Advisors ---------- */
+.homebridge-advisor-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.75rem;
+}
+
+.homebridge-advisor {
+  background: var(--hb-white);
+  border-radius: 16px;
+  border: 1px solid var(--hb-gold-soft);
+  padding: 2rem 1.5rem 1.6rem;
+  text-align: center;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.homebridge-advisor:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 14px 32px rgba(15, 42, 74, 0.14);
+}
+
+.homebridge-advisor-avatar {
+  width: 4.5rem;
+  height: 4.5rem;
+  border-radius: 50%;
+  background: var(--hb-navy);
+  color: var(--hb-gold-soft);
+  font-family: var(--hb-serif);
+  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1rem;
+  border: 3px solid var(--hb-gold);
+}
+
+.homebridge-advisor h3 {
+  font-size: 1.2rem;
+  margin-bottom: 0.15rem;
+}
+
+.homebridge-advisor-role {
+  color: var(--hb-gold);
+  font-size: 0.85rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin: 0 0 0.6rem;
+}
+
+.homebridge-advisor p {
+  color: var(--hb-muted);
+  font-size: 0.92rem;
+  margin: 0;
+}
+
+/* ---------- CTA bands ---------- */
+.homebridge-band {
+  background: linear-gradient(120deg, var(--hb-navy) 0%, var(--hb-navy-soft) 100%);
+  color: var(--hb-white);
+  border-radius: 20px;
+  padding: 2.75rem 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  border: 1px solid var(--hb-gold);
+}
+
+.homebridge-band h2 {
+  color: var(--hb-white);
+  font-size: clamp(1.4rem, 2.6vw, 2rem);
+  margin: 0 0 0.35rem;
+}
+
+.homebridge-band p {
+  margin: 0;
+  color: #c6d2e0;
+}
+
+.homebridge-band-actions {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.homebridge-band-phone {
+  color: var(--hb-gold-soft);
+  text-decoration: none;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  white-space: nowrap;
+}
+
+.homebridge-band-phone:hover {
+  color: var(--hb-white);
+}
+
+/* ---------- FAQ ---------- */
+.homebridge-faq {
+  max-width: 46rem;
+  margin: 0 auto;
+  display: grid;
+  gap: 0.9rem;
+}
+
+.homebridge-faq-item {
+  background: var(--hb-white);
+  border: 1px solid var(--hb-gold-soft);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.homebridge-faq-q {
+  width: 100%;
+  background: none;
+  border: none;
+  font-family: var(--hb-serif);
+  font-size: 1.05rem;
+  color: var(--hb-navy);
+  padding: 1.1rem 1.3rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  text-align: left;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.homebridge-faq-q:hover {
+  background: var(--hb-ivory);
+}
+
+.homebridge-faq-q svg {
+  color: var(--hb-gold);
+  flex-shrink: 0;
+  transition: transform 0.25s ease;
+}
+
+.homebridge-faq-q[aria-expanded="true"] svg {
+  transform: rotate(180deg);
+}
+
+.homebridge-faq-a {
+  padding: 0 1.3rem 1.2rem;
+  color: var(--hb-muted);
+  font-size: 0.95rem;
+  margin: 0;
+  animation: homebridge-fade-up 0.3s ease both;
+}
+
+/* ---------- Footer ---------- */
+.homebridge-footer {
+  background: var(--hb-navy-deep);
+  color: #aebccd;
+  padding: 3rem 0 2rem;
+  margin-top: 4rem;
+}
+
+.homebridge-footer-grid {
+  display: flex;
+  justify-content: space-between;
+  gap: 2rem;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  border-bottom: 1px solid rgba(201, 162, 75, 0.3);
+  padding-bottom: 1.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.homebridge-footer .homebridge-brand {
+  font-size: 1.1rem;
+}
+
+.homebridge-footer-links {
+  list-style: none;
+  display: flex;
+  gap: 1.4rem;
+  margin: 0;
+  padding: 0;
+  flex-wrap: wrap;
+}
+
+.homebridge-footer-links a {
+  color: #aebccd;
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+
+.homebridge-footer-links a:hover {
+  color: var(--hb-gold-soft);
+}
+
+.homebridge-footer-phone {
+  color: var(--hb-gold-soft);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.95rem;
+}
+
+.homebridge-footer-phone:hover {
+  color: var(--hb-white);
+}
+
+.homebridge-footer-legal {
+  font-size: 0.78rem;
+  color: #7f90a4;
+  max-width: 60rem;
+  margin: 0;
+}
+
+.homebridge-footer-legal + .homebridge-footer-legal {
+  margin-top: 0.5rem;
+}
+
+/* ---------- Keyframes ---------- */
+@keyframes homebridge-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes homebridge-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 880px) {
+  .homebridge-nav-links {
+    display: none;
+  }
+
+  .homebridge-hero {
+    padding: 3rem 0 5.5rem;
+  }
+
+  .homebridge-hero-grid,
+  .homebridge-story {
+    grid-template-columns: 1fr;
+    gap: 2.25rem;
+  }
+
+  .homebridge-hero-frame {
+    aspect-ratio: 4 / 3;
+  }
+
+  .homebridge-rate-card {
+    left: 1rem;
+    right: 1rem;
+    bottom: -2.5rem;
+    min-width: 0;
+  }
+
+  .homebridge-stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .homebridge-card-grid,
+  .homebridge-advisor-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .homebridge-bridge {
+    grid-template-columns: 1fr;
+    gap: 2.6rem;
+    padding-top: 1rem;
+  }
+
+  .homebridge-bridge::before,
+  .homebridge-bridge::after {
+    display: none;
+  }
+
+  .homebridge-pier {
+    padding-top: 2.4rem;
+  }
+
+  .homebridge-band {
+    flex-direction: column;
+    text-align: center;
+    padding: 2.25rem 1.5rem;
+  }
+
+  .homebridge-band-actions {
+    justify-content: center;
+  }
+}

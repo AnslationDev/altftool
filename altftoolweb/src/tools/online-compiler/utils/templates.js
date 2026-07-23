@@ -1,3 +1,5 @@
+"use client";
+
 // Starter templates. Each provides html / css / js strings.
 export const TEMPLATES = [
   {

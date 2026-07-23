@@ -1,0 +1,252 @@
+/* CityHop Movers — metro transit visual identity */
+
+.cityhop-page {
+  --cityhop-red: #e4002b;
+  --cityhop-blue: #0057b8;
+  --cityhop-green: #007a33;
+  --cityhop-amber: #ffb400;
+  --cityhop-ink: #101418;
+  --cityhop-slate: #43505c;
+  --cityhop-paper: #ffffff;
+  --cityhop-tint: #f5f6f8;
+  --cityhop-rule: #e2e6ea;
+  --cityhop-radius: 14px;
+  font-family: "Avenir Next", Futura, "Century Gothic", "Trebuchet MS", "Segoe UI", system-ui, sans-serif;
+  color: var(--cityhop-ink);
+  background: var(--cityhop-paper);
+  line-height: 1.55;
+}
+
+.cityhop-page *, .cityhop-page *::before, .cityhop-page *::after { box-sizing: border-box; }
+
+.cityhop-page :focus-visible { outline: 3px solid var(--cityhop-blue); outline-offset: 3px; border-radius: 6px; }
+
+.cityhop-skip {
+  position: absolute; left: -999px; top: 8px; z-index: 60;
+  background: var(--cityhop-ink); color: #fff; padding: 0.6rem 1rem;
+  border-radius: 8px; font-weight: 700; text-decoration: none;
+}
+.cityhop-skip:focus-visible { left: 8px; }
+
+.cityhop-wrap { max-width: 1140px; margin: 0 auto; padding: 0 1.25rem; }
+
+/* ---------- Nav ---------- */
+.cityhop-nav { position: sticky; top: 0; z-index: 50; background: var(--cityhop-paper); border-bottom: 4px solid var(--cityhop-red); }
+.cityhop-nav-inner { display: flex; align-items: center; gap: 1.5rem; padding: 0.85rem 0; }
+.cityhop-brand { display: flex; align-items: center; gap: 0.65rem; text-decoration: none; color: var(--cityhop-ink); }
+.cityhop-roundel {
+  width: 44px; height: 44px; border-radius: 50%; background: var(--cityhop-red);
+  color: #fff; display: grid; place-items: center; font-weight: 800; font-size: 1rem;
+  letter-spacing: 0.02em; box-shadow: inset 0 0 0 3px #fff, inset 0 0 0 6px var(--cityhop-red);
+}
+.cityhop-brand-name { font-weight: 800; font-size: 1.1rem; letter-spacing: -0.01em; line-height: 1.1; }
+.cityhop-brand-tag { display: block; font-size: 0.68rem; font-weight: 600; color: var(--cityhop-slate); text-transform: uppercase; letter-spacing: 0.14em; }
+
+.cityhop-nav-links { display: flex; gap: 1.4rem; margin-left: auto; }
+.cityhop-nav-links a {
+  color: var(--cityhop-slate); text-decoration: none; font-weight: 700; font-size: 0.92rem;
+  padding: 0.3rem 0.1rem; border-bottom: 3px solid transparent; transition: color 0.18s, border-color 0.18s;
+}
+.cityhop-nav-links a:hover { color: var(--cityhop-red); border-bottom-color: var(--cityhop-red); }
+
+.cityhop-nav-cta { display: flex; align-items: center; gap: 0.9rem; }
+.cityhop-nav-phone {
+  display: inline-flex; align-items: center; gap: 0.4rem; color: var(--cityhop-blue);
+  font-weight: 800; text-decoration: none; font-size: 0.95rem; transition: opacity 0.18s;
+}
+.cityhop-nav-phone:hover { opacity: 0.75; }
+
+.cityhop-menu-btn { display: none; background: none; border: 2px solid var(--cityhop-rule); border-radius: 10px; padding: 0.45rem; color: var(--cityhop-ink); cursor: pointer; }
+.cityhop-mobile-menu { display: none; flex-direction: column; gap: 0.25rem; padding: 0.75rem 1.25rem 1.1rem; border-top: 1px solid var(--cityhop-rule); }
+.cityhop-mobile-menu a { padding: 0.6rem 0.4rem; text-decoration: none; color: var(--cityhop-ink); font-weight: 700; border-radius: 8px; }
+.cityhop-mobile-menu a:hover { background: var(--cityhop-tint); }
+
+/* ---------- Buttons ---------- */
+.cityhop-btn {
+  display: inline-flex; align-items: center; gap: 0.5rem; background: var(--cityhop-red);
+  color: #fff; font-weight: 800; font-size: 1rem; text-decoration: none;
+  padding: 0.8rem 1.4rem; border-radius: 999px; transition: transform 0.18s, box-shadow 0.18s;
+}
+.cityhop-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(228, 0, 43, 0.32); }
+.cityhop-btn .cityhop-btn-arrow { transition: transform 0.18s; }
+.cityhop-btn:hover .cityhop-btn-arrow { transform: translateX(4px); }
+.cityhop-btn--light { background: #fff; color: var(--cityhop-red); }
+.cityhop-btn--light:hover { box-shadow: 0 8px 20px rgba(16, 20, 24, 0.28); }
+.cityhop-btn--sm { padding: 0.55rem 1.1rem; font-size: 0.9rem; }
+
+/* ---------- Line stripe divider ---------- */
+.cityhop-stripes { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; height: 10px; }
+.cityhop-stripes span:nth-child(1) { background: var(--cityhop-red); }
+.cityhop-stripes span:nth-child(2) { background: var(--cityhop-blue); }
+.cityhop-stripes span:nth-child(3) { background: var(--cityhop-green); }
+.cityhop-stripes span:nth-child(4) { background: var(--cityhop-amber); }
+
+/* ---------- Hero ---------- */
+.cityhop-hero { padding: 3.5rem 0 3rem; }
+.cityhop-hero-grid { display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 3rem; align-items: center; }
+.cityhop-chip-row { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.1rem; }
+.cityhop-chip {
+  display: inline-flex; align-items: center; gap: 0.45rem; border: 2px solid var(--cityhop-rule);
+  border-radius: 999px; padding: 0.25rem 0.8rem 0.25rem 0.3rem; font-size: 0.8rem;
+  font-weight: 700; color: var(--cityhop-slate); background: #fff;
+}
+.cityhop-chip-dot { width: 26px; height: 26px; border-radius: 50%; display: grid; place-items: center; color: #fff; font-size: 0.68rem; font-weight: 800; }
+.cityhop-chip-dot--red { background: var(--cityhop-red); }
+.cityhop-chip-dot--blue { background: var(--cityhop-blue); }
+.cityhop-chip-dot--green { background: var(--cityhop-green); }
+
+.cityhop-hero h1 { font-size: clamp(2.1rem, 4.6vw, 3.4rem); line-height: 1.06; letter-spacing: -0.02em; font-weight: 800; margin: 0 0 1rem; }
+.cityhop-hero h1 em { font-style: normal; color: var(--cityhop-red); }
+.cityhop-hero-copy { color: var(--cityhop-slate); font-size: 1.08rem; max-width: 34rem; margin: 0 0 1.6rem; }
+.cityhop-hero-ctas { display: flex; flex-wrap: wrap; gap: 0.9rem; align-items: center; }
+.cityhop-hero-trust {
+  margin: 1.4rem 0 0; padding: 0; list-style: none; display: flex; flex-wrap: wrap;
+  gap: 0.4rem 1.3rem; font-size: 0.85rem; font-weight: 600; color: var(--cityhop-slate);
+}
+.cityhop-hero-trust li { display: inline-flex; align-items: center; gap: 0.4rem; }
+.cityhop-hero-trust svg { color: var(--cityhop-green); flex-shrink: 0; }
+
+.cityhop-hero-media { position: relative; animation: cityhop-fade-up 0.7s ease both; }
+.cityhop-hero-media::after {
+  content: ""; position: absolute; inset: 18px -18px -18px 18px;
+  border: 4px solid var(--cityhop-blue); border-radius: var(--cityhop-radius); z-index: -1;
+}
+.cityhop-figure { margin: 0; aspect-ratio: 4 / 3; overflow: hidden; border-radius: var(--cityhop-radius); background: var(--cityhop-tint); }
+.cityhop-figure img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.4s ease; }
+.cityhop-figure--wide { aspect-ratio: 16 / 9; }
+
+/* ---------- Wayfinding section headers ---------- */
+.cityhop-section { padding: 3.6rem 0; }
+.cityhop-section--tint { background: var(--cityhop-tint); }
+.cityhop-signhead {
+  display: inline-flex; align-items: center; gap: 0.9rem; background: var(--cityhop-ink);
+  color: #fff; border-radius: 12px; padding: 0.5rem 1.2rem 0.5rem 0.55rem; margin-bottom: 0.9rem;
+}
+.cityhop-linebadge { width: 38px; height: 38px; border-radius: 10px; display: grid; place-items: center; font-weight: 800; font-size: 0.95rem; color: #fff; flex-shrink: 0; }
+.cityhop-linebadge--red { background: var(--cityhop-red); }
+.cityhop-linebadge--blue { background: var(--cityhop-blue); }
+.cityhop-linebadge--green { background: var(--cityhop-green); }
+.cityhop-signhead-label { font-weight: 800; text-transform: uppercase; letter-spacing: 0.12em; font-size: 0.82rem; }
+.cityhop-signhead svg { color: var(--cityhop-amber); }
+.cityhop-section h2 { font-size: clamp(1.6rem, 3vw, 2.3rem); letter-spacing: -0.015em; font-weight: 800; margin: 0 0 0.6rem; }
+.cityhop-section-intro { color: var(--cityhop-slate); max-width: 42rem; margin: 0 0 2.2rem; }
+
+/* ---------- Service cards ---------- */
+.cityhop-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+.cityhop-card {
+  background: #fff; border: 1px solid var(--cityhop-rule); border-radius: var(--cityhop-radius);
+  overflow: hidden; display: flex; flex-direction: column; transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.cityhop-card:hover { transform: translateY(-5px); box-shadow: 0 14px 30px rgba(16, 20, 24, 0.12); }
+.cityhop-card:hover .cityhop-figure img { transform: scale(1.05); }
+.cityhop-card .cityhop-figure { aspect-ratio: 3 / 2; border-radius: 0; }
+.cityhop-card-body { padding: 1.25rem 1.35rem 1.5rem; border-top: 4px solid var(--cityhop-red); }
+.cityhop-card:nth-child(2) .cityhop-card-body { border-top-color: var(--cityhop-blue); }
+.cityhop-card:nth-child(3) .cityhop-card-body { border-top-color: var(--cityhop-green); }
+.cityhop-card h3 { margin: 0 0 0.5rem; font-size: 1.15rem; font-weight: 800; }
+.cityhop-card ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.45rem; color: var(--cityhop-slate); font-size: 0.92rem; }
+.cityhop-card li { display: flex; align-items: flex-start; gap: 0.5rem; }
+.cityhop-card li svg { color: var(--cityhop-green); flex-shrink: 0; margin-top: 0.15rem; }
+
+/* ---------- Metro-map timeline ---------- */
+.cityhop-metroline { list-style: none; margin: 2.6rem 0 0; padding: 0; display: flex; gap: 1rem; position: relative; }
+.cityhop-metroline::before {
+  content: ""; position: absolute; top: 13px; left: 11%; right: 11%;
+  height: 8px; border-radius: 999px; background: var(--cityhop-red);
+}
+.cityhop-station { flex: 1; text-align: center; position: relative; padding: 0 0.5rem; }
+.cityhop-station-dot {
+  width: 30px; height: 30px; margin: 0 auto 0.9rem; border-radius: 50%; background: #fff;
+  border: 8px solid var(--cityhop-red); position: relative; z-index: 1; transition: transform 0.2s ease;
+}
+.cityhop-station:hover .cityhop-station-dot { animation: cityhop-pulse 1.2s ease-out infinite; transform: scale(1.1); }
+.cityhop-station-name {
+  display: inline-block; background: var(--cityhop-ink); color: #fff; font-weight: 800;
+  font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.1em; border-radius: 8px;
+  padding: 0.3rem 0.7rem; margin-bottom: 0.6rem;
+}
+.cityhop-station h3 { margin: 0 0 0.35rem; font-size: 1.02rem; font-weight: 800; }
+.cityhop-station p { margin: 0; color: var(--cityhop-slate); font-size: 0.88rem; }
+
+/* ---------- CTA bands ---------- */
+.cityhop-band { background: var(--cityhop-red); color: #fff; padding: 3rem 0; }
+.cityhop-band--dark { background: var(--cityhop-ink); border-top: 6px solid var(--cityhop-amber); }
+.cityhop-band-inner { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1.5rem; }
+.cityhop-band h2 { margin: 0 0 0.4rem; font-size: clamp(1.5rem, 2.8vw, 2.1rem); font-weight: 800; letter-spacing: -0.015em; }
+.cityhop-band p { margin: 0; opacity: 0.92; max-width: 34rem; }
+.cityhop-band-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem; }
+.cityhop-band-phone {
+  display: inline-flex; align-items: center; gap: 0.5rem; color: #fff; font-weight: 800;
+  font-size: 1.05rem; text-decoration: none; border-bottom: 2px solid rgba(255, 255, 255, 0.55);
+  padding-bottom: 2px; transition: border-color 0.18s;
+}
+.cityhop-band-phone:hover { border-bottom-color: #fff; }
+.cityhop-band--dark .cityhop-btn { background: var(--cityhop-red); }
+
+/* ---------- Why us ---------- */
+.cityhop-why-grid { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 2.5rem; align-items: center; }
+.cityhop-feature-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 1.15rem; }
+.cityhop-feature { display: flex; gap: 0.9rem; align-items: flex-start; }
+.cityhop-feature-icon { width: 44px; height: 44px; border-radius: 12px; display: grid; place-items: center; color: #fff; flex-shrink: 0; }
+.cityhop-feature:nth-child(4n + 1) .cityhop-feature-icon { background: var(--cityhop-red); }
+.cityhop-feature:nth-child(4n + 2) .cityhop-feature-icon { background: var(--cityhop-blue); }
+.cityhop-feature:nth-child(4n + 3) .cityhop-feature-icon { background: var(--cityhop-green); }
+.cityhop-feature:nth-child(4n + 4) .cityhop-feature-icon { background: var(--cityhop-ink); }
+.cityhop-feature h3 { margin: 0 0 0.2rem; font-size: 1.02rem; font-weight: 800; }
+.cityhop-feature p { margin: 0; color: var(--cityhop-slate); font-size: 0.92rem; }
+
+.cityhop-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.2rem; margin-top: 2.6rem; }
+.cityhop-stat {
+  border: 2px solid var(--cityhop-rule); border-left: 8px solid var(--cityhop-blue);
+  border-radius: 12px; padding: 1.1rem 1.25rem; background: #fff; transition: border-color 0.2s ease;
+}
+.cityhop-stat:nth-child(1) { border-left-color: var(--cityhop-red); }
+.cityhop-stat:nth-child(3) { border-left-color: var(--cityhop-green); }
+.cityhop-stat:hover { border-color: var(--cityhop-ink); }
+.cityhop-stat strong { display: block; font-size: 1.35rem; font-weight: 800; letter-spacing: -0.01em; }
+.cityhop-stat span { color: var(--cityhop-slate); font-size: 0.88rem; }
+
+.cityhop-finenote { margin: 2.2rem 0 0; color: var(--cityhop-slate); font-size: 0.85rem; max-width: 46rem; }
+
+/* ---------- Footer ---------- */
+.cityhop-footer { background: var(--cityhop-tint); border-top: 1px solid var(--cityhop-rule); padding: 2.2rem 0; }
+.cityhop-footer-inner { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1rem; }
+.cityhop-footer-note { color: var(--cityhop-slate); font-size: 0.8rem; margin: 0; }
+.cityhop-footer-links { display: flex; gap: 1.2rem; }
+.cityhop-footer-links a { color: var(--cityhop-slate); font-size: 0.85rem; font-weight: 700; text-decoration: none; }
+.cityhop-footer-links a:hover { color: var(--cityhop-red); }
+
+/* ---------- Keyframes ---------- */
+@keyframes cityhop-pulse {
+  0% { box-shadow: 0 0 0 0 rgba(228, 0, 43, 0.35); }
+  100% { box-shadow: 0 0 0 16px rgba(228, 0, 43, 0); }
+}
+@keyframes cityhop-fade-up {
+  from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 880px) {
+  .cityhop-nav-links { display: none; }
+  .cityhop-nav-cta .cityhop-btn { display: none; }
+  .cityhop-menu-btn { display: inline-flex; margin-left: auto; }
+  .cityhop-nav-phone { margin-left: auto; }
+  .cityhop-mobile-menu.cityhop-mobile-menu--open { display: flex; }
+
+  .cityhop-hero { padding: 2.4rem 0 2.2rem; }
+  .cityhop-hero-grid, .cityhop-why-grid { grid-template-columns: 1fr; gap: 2rem; }
+  .cityhop-hero-media::after { display: none; }
+  .cityhop-cards { grid-template-columns: 1fr; }
+  .cityhop-stats { grid-template-columns: 1fr; }
+
+  .cityhop-metroline { flex-direction: column; gap: 1.8rem; }
+  .cityhop-metroline::before { top: 16px; bottom: 16px; left: 11px; right: auto; width: 8px; height: auto; }
+  .cityhop-station { display: grid; grid-template-columns: 30px 1fr; column-gap: 1rem; text-align: left; padding: 0; }
+  .cityhop-station-dot { margin: 0; grid-row: 1 / span 3; }
+  .cityhop-band-inner { flex-direction: column; align-items: flex-start; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cityhop-page *, .cityhop-page *::before, .cityhop-page *::after { animation: none !important; transition: none !important; }
+}

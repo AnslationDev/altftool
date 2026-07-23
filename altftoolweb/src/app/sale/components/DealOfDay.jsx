@@ -65,15 +65,27 @@ const CardWrapper = ({ item, children }) => {
                 : "lg:col-span-5"
             }
           >
-            <CardWrapper item={item}> 
+            <CardWrapper item={item}>
               <div className="relative overflow-hidden rounded-2xl h-[255px] md:h-[310px] lg:h-[275px] xl:h-[360px] cursor-pointer group">
                 <Image
                   src={item.image}
                   alt={item.title}
                   fill
+                  unoptimized
                   sizes="(max-width: 768px) 100vw, (max-width: 1280px) 58vw, 720px"
                   className="object-fill group-hover:scale-[1.01] transition duration-500"
                 />
+                <div className="absolute inset-x-0 bottom-0 bg-linear-to-t from-black/80 via-black/30 to-transparent p-4">
+                  <p className="text-white font-semibold text-sm md:text-base line-clamp-1">{item.title}</p>
+                  {item.price && (
+                    <div className="flex items-center gap-2 mt-1">
+                      <span className="text-white font-bold text-sm md:text-base">{item.price}</span>
+                      {item.oldPrice && (
+                        <span className="text-white/60 text-xs line-through">{item.oldPrice}</span>
+                      )}
+                    </div>
+                  )}
+                </div>
               </div>
             </CardWrapper>
           </motion.div>
@@ -100,9 +112,21 @@ const CardWrapper = ({ item, children }) => {
                   src={item.image}
                   alt={item.title}
                   fill
+                  unoptimized
                   sizes="(max-width: 768px) 100vw, (max-width: 1280px) 33vw, 420px"
                   className="object-fill group-hover:scale-[1.01] transition duration-500"
                 />
+                <div className="absolute inset-x-0 bottom-0 bg-linear-to-t from-black/80 via-black/30 to-transparent p-4">
+                  <p className="text-white font-semibold text-sm md:text-base line-clamp-1">{item.title}</p>
+                  {item.price && (
+                    <div className="flex items-center gap-2 mt-1">
+                      <span className="text-white font-bold text-sm md:text-base">{item.price}</span>
+                      {item.oldPrice && (
+                        <span className="text-white/60 text-xs line-through">{item.oldPrice}</span>
+                      )}
+                    </div>
+                  )}
+                </div>
               </div>
            </CardWrapper>
           </motion.div>

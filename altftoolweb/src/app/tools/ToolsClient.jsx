@@ -601,9 +601,26 @@ export default function ToolsClient({
     return `/tools/${normalizedCategory === "all" ? "all" : normalizedCategory}/${slug}`;
   };
 
+  const hoverTimersRef = useRef({});
+
   const prefetchDirectoryTool = (slug) => {
     if (!meta[slug]) return;
     prefetchToolModule(slug);
+  };
+
+  const handleToolMouseEnter = (slug) => {
+    if (hoverTimersRef.current[slug]) clearTimeout(hoverTimersRef.current[slug]);
+    hoverTimersRef.current[slug] = setTimeout(() => {
+      prefetchDirectoryTool(slug);
+      delete hoverTimersRef.current[slug];
+    }, 120);
+  };
+
+  const handleToolMouseLeave = (slug) => {
+    if (hoverTimersRef.current[slug]) {
+      clearTimeout(hoverTimersRef.current[slug]);
+      delete hoverTimersRef.current[slug];
+    }
   };
 
   const setSearchFilter = (value) => {
@@ -844,7 +861,8 @@ export default function ToolsClient({
                         href={href}
                         onClick={() => rememberTool(slug)}
                         onFocus={() => prefetchDirectoryTool(slug)}
-                        onMouseEnter={() => prefetchDirectoryTool(slug)}
+                        onMouseEnter={() => handleToolMouseEnter(slug)}
+                        onMouseLeave={() => handleToolMouseLeave(slug)}
                         className="tools-search-result-card"
                       >
                         <span className="tools-search-result-icon">
@@ -901,7 +919,8 @@ export default function ToolsClient({
                   href={`/tools/all/${slug}`}
                   onClick={() => rememberTool(slug)}
                   onFocus={() => prefetchDirectoryTool(slug)}
-                  onMouseEnter={() => prefetchDirectoryTool(slug)}
+                  onMouseEnter={() => handleToolMouseEnter(slug)}
+                  onMouseLeave={() => handleToolMouseLeave(slug)}
                 >
                   {tool.name}
                 </Link>
@@ -1109,7 +1128,8 @@ export default function ToolsClient({
                             href={href}
                             onClick={() => rememberTool(slug)}
                             onFocus={() => prefetchDirectoryTool(slug)}
-                            onMouseEnter={() => prefetchDirectoryTool(slug)}
+                            onMouseEnter={() => handleToolMouseEnter(slug)}
+                            onMouseLeave={() => handleToolMouseLeave(slug)}
                             className="tool-card-title"
                           >
                             <h3>{name}</h3>
@@ -1147,7 +1167,8 @@ export default function ToolsClient({
                             href={href}
                             onClick={() => rememberTool(slug)}
                             onFocus={() => prefetchDirectoryTool(slug)}
-                            onMouseEnter={() => prefetchDirectoryTool(slug)}
+                            onMouseEnter={() => handleToolMouseEnter(slug)}
+                            onMouseLeave={() => handleToolMouseLeave(slug)}
                             className="tool-open-link"
                           >
                             Open

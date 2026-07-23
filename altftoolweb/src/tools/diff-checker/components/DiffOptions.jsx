@@ -1,3 +1,5 @@
+"use client";
+
 // src/components/DiffChecker/DiffOptions.jsx
 import { RotateCcw, Download, SquareSplitHorizontal, Merge  } from "lucide-react";
 import ExplainChanges from "./ExplainChanges";

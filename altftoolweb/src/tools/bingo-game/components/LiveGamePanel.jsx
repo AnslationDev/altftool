@@ -1,10 +1,15 @@
-import { Timer, Hash, BarChart3 } from "lucide-react";
+"use client";
 
-function StatRow({ label, value }) {
+import { Timer } from "lucide-react";
+import { getLetterForNumber } from "../utils/bingoLogic";
+
+function MetricRow({ label, value, highlight }) {
   return (
-    <div className="flex items-center justify-between py-2 border-b border-[var(--border)] last:border-b-0">
-      <span className="text-sm text-[var(--muted-foreground)]">{label}</span>
-      <span className="text-sm font-semibold text-[var(--foreground)]">{value}</span>
+    <div className="flex items-center justify-between py-2 border-b border-pink-500/20 last:border-b-0 text-xs font-bold">
+      <span className="text-[var(--muted-foreground)] dark:text-pink-200">{label}</span>
+      <span className={`font-black ${highlight ? "text-amber-600 dark:text-yellow-300" : "text-[var(--foreground)] dark:text-white"}`}>
+        {value}
+      </span>
     </div>
   );
 }
@@ -27,74 +32,58 @@ export default function LiveGamePanel({
   }
 
   return (
-    <div className="rounded-lg border border-[var(--border)] bg-[var(--card)] p-5 shadow-[var(--anslation-ds-shadow-sm)]">
-      <p className="text-xs font-semibold uppercase text-[var(--primary)]">Live Game</p>
-      <h2 className="mt-1 text-xl font-semibold">Game Status</h2>
+    <div className="rounded-3xl border-4 border-pink-400/60 bg-[var(--card)] p-5 shadow-xl text-[var(--foreground)] dark:bg-gradient-to-b dark:from-[#3d134d] dark:via-[#2a0e36] dark:to-[#180521] dark:border-pink-400/80 dark:shadow-[0_0_35px_rgba(236,72,153,0.3)]">
+      <span className="text-[10px] font-black uppercase tracking-widest text-pink-600 dark:text-pink-300">
+        Live Telemetry
+      </span>
+      <h2 className="text-xl font-black text-[var(--foreground)] dark:text-white">Game Status</h2>
 
-      <div className="mt-4 rounded-lg border border-[var(--border)] bg-[var(--background)] p-4">
-        <div className="flex items-center gap-2">
-          <Timer className="h-4 w-4 text-[var(--primary)]" />
-          <span className="text-sm font-semibold text-[var(--foreground)]">
+      {/* Timer & Progress Card */}
+      <div className="mt-4 rounded-2xl border border-pink-400/30 bg-[var(--muted)]/50 dark:bg-[#250831] p-4">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <Timer className="h-4 w-4 text-amber-500 dark:text-yellow-300 animate-pulse" />
+            <span className="text-xs font-black text-[var(--muted-foreground)] dark:text-pink-200 uppercase tracking-wider">
+              Elapsed Time
+            </span>
+          </div>
+          <span className="text-base font-black text-amber-700 dark:text-yellow-300 font-mono bg-[var(--card)] dark:bg-[#14021d] px-2.5 py-1 rounded-lg border border-pink-400/30">
             {formatTime(timer)}
           </span>
         </div>
-        <div className="mt-3">
-          <div className="flex items-center justify-between text-xs text-[var(--muted-foreground)]">
-            <span>{calledNumbers.length} / {totalNumbers} called</span>
-            <span>{Math.round(progress)}%</span>
+
+        <div className="mt-4">
+          <div className="flex items-center justify-between text-[11px] font-black text-[var(--muted-foreground)] dark:text-pink-200">
+            <span>Progress ({calledNumbers.length}/{totalNumbers})</span>
+            <span className="text-amber-600 dark:text-yellow-300">{Math.round(progress)}%</span>
           </div>
-          <div className="mt-1 h-2 w-full overflow-hidden rounded-full bg-[var(--muted)]">
+          <div className="mt-1.5 h-3 w-full overflow-hidden rounded-full bg-[var(--border)] dark:bg-[#14021d] border border-pink-400/30">
             <div
-              className="h-full rounded-full bg-[var(--primary)] transition-all duration-300"
+              className="h-full rounded-full bg-gradient-to-r from-yellow-400 via-pink-500 to-purple-500 transition-all duration-300 shadow-sm"
               style={{ width: `${progress}%` }}
             />
           </div>
         </div>
       </div>
 
-      <div className="mt-4 space-y-0">
-        <StatRow label="Game Status" value={gameStarted ? "In Progress" : "Not Started"} />
-        <StatRow label="Numbers Called" value={calledNumbers.length} />
-        <StatRow label="Numbers Remaining" value={totalNumbers - calledNumbers.length} />
-        <StatRow label="Cells Marked" value={markedCount} />
-        {nextNumber && (
-          <StatRow label="Last Called" value={`${nextNumber}`} />
+      {/* Status Details */}
+      <div className="mt-4 space-y-0.5 rounded-2xl border border-pink-400/30 bg-[var(--card)] dark:bg-[#250831] p-3">
+        <MetricRow
+          label="Session Status"
+          value={gameStarted ? "Active Game" : "Awaiting Start"}
+          highlight={gameStarted}
+        />
+        <MetricRow label="Numbers Called" value={calledNumbers.length} />
+        <MetricRow label="Numbers Remaining" value={totalNumbers - calledNumbers.length} />
+        <MetricRow label="Board Tiles Marked" value={markedCount} highlight={markedCount > 0} />
+        {currentNumber && (
+          <MetricRow
+            label="Last Called Ball"
+            value={`${getLetterForNumber(currentNumber)}-${currentNumber}`}
+            highlight
+          />
         )}
       </div>
-
-      {calledNumbers.length > 0 && (
-        <div className="mt-4">
-          <p className="text-xs font-semibold uppercase text-[var(--muted-foreground)]">Recent Calls</p>
-          <div className="mt-2 flex flex-wrap gap-1.5">
-            {calledNumbers.slice(-10).reverse().map((num, i) => (
-              <span
-                key={`${num}-${i}`}
-                className="inline-flex h-8 min-w-[32px] items-center justify-center rounded-md border border-[var(--border)] bg-[var(--background)] px-2 text-xs font-semibold text-[var(--foreground)]"
-              >
-                {num}
-              </span>
-            ))}
-          </div>
-        </div>
-      )}
-
-      {calledNumbers.length > 0 && (
-        <div className="mt-4">
-          <p className="text-xs font-semibold uppercase text-[var(--muted-foreground)]">All Called Numbers</p>
-          <div className="mt-2 max-h-32 overflow-y-auto rounded-lg border border-[var(--border)] bg-[var(--background)] p-2">
-            <div className="flex flex-wrap gap-1">
-              {calledNumbers.map((num, i) => (
-                <span
-                  key={`all-${num}-${i}`}
-                  className="inline-flex h-6 min-w-[24px] items-center justify-center rounded bg-[var(--muted)] px-1.5 text-[11px] font-semibold text-[var(--foreground)]"
-                >
-                  {num}
-                </span>
-              ))}
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
 }

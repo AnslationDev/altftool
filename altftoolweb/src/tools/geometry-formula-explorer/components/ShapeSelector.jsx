@@ -1,3 +1,5 @@
+"use client";
+
 import { Circle, Square, Triangle as TriIcon } from "lucide-react";
 
 const ICON_MAP = {

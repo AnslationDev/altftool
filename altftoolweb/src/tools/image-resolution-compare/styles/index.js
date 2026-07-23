@@ -1,3 +1,5 @@
+"use client";
+
 export const toolStyles = `import { useState, useCallback } from "react";
 import UploadZone from "../components/UploadZone";
 import ComparisonTable from "../components/ComparisonTable";

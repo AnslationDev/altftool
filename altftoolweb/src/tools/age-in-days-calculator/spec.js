@@ -3,7 +3,7 @@ export const spec = {
   ...{
   "slug": "age-in-days-calculator",
   "title": "Age in Days Calculator",
-  "description": "Calculate the age of something in days based on its creation date.",
+  "description": "See exactly how old you are in days, weeks, months and hours from your birth date.",
   "badge": "Calculator",
   "category": [
     "Calculator"
@@ -12,29 +12,38 @@ export const spec = {
   "iconColor": "text-rose-600",
   "fields": [
     {
-      "key": "creationdate",
-      "label": "Creation Date",
+      "key": "birth_date",
+      "label": "Date of birth",
       "type": "date",
-      "default": "2023-01-01"
-    },
-    {
-      "key": "currentdate",
-      "label": "Current Date",
-      "type": "date",
-      "default": "today"
+      "default": ""
     }
   ],
   "presets": [
     {
-      "label": "Example",
+      "label": "Y2K baby",
       "values": {
-        "creationDate": "2023-01-01"
+        "birth_date": "2000-01-01"
       }
     }
   ],
-  "note": "Ensure both dates are valid and in the correct format."
+  "note": "Calculated against today's date, in your local time zone."
 },
-  compute: (values, mode) => { const creation = new Date(values.creationDate); const current = new Date(values.currentDate); if (isNaN(creation.getTime()) || isNaN(current.getTime())) return { result: 'Invalid date(s)' }; const diffTime = Math.abs(current - creation); const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); return { result: `${diffDays} days`, caption: `The age of the item from its creation date to the current date is ${diffDays} days.` }; },
+  compute: (values) => { const num=(v)=>typeof v==="number"?v:Number(v); const money=(n)=>Number.isFinite(Number(n))?Number(n).toLocaleString(undefined,{maximumFractionDigits:2}):"—";
+      const b = new Date(values.birth_date);
+      if (isNaN(b)) return { result: "—", caption: "Pick your date of birth" };
+      const now = new Date();
+      const days = Math.floor((now - b) / 86400000);
+      if (days < 0) return { result: "—", caption: "That date is in the future" };
+      let y = now.getFullYear() - b.getFullYear();
+      let m = now.getMonth() - b.getMonth();
+      if (now.getDate() < b.getDate()) m--;
+      if (m < 0) { y--; m += 12; }
+      return {
+        result: days.toLocaleString() + " days old",
+        caption: `${y} years, ${m} months`,
+        rows: [["Weeks", Math.floor(days / 7).toLocaleString()], ["Months", (y * 12 + m).toLocaleString()], ["Hours", (days * 24).toLocaleString()], ["Next birthday in", (() => { const n = new Date(now.getFullYear(), b.getMonth(), b.getDate()); if (n < now) n.setFullYear(now.getFullYear() + 1); return Math.ceil((n - now) / 86400000) + " days"; })()]],
+      };
+    },
 };
 
 export default spec;

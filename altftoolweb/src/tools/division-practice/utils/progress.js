@@ -1,3 +1,5 @@
+"use client";
+
 const STORAGE_KEY = "ALTFT_DIVISION_PRACTICE_V1";
 
 export function loadProgress() {

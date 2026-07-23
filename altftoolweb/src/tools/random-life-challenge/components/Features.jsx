@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import { Sparkles, Trophy, Shield, Heart, Zap, Smile } from "lucide-react";
 

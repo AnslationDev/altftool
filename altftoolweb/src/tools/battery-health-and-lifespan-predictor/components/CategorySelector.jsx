@@ -1,3 +1,5 @@
+"use client";
+
 import { deviceCatalog } from "../utils/deviceCatalog";
 
 export default function CategorySelector({ selected, onSelect }) {

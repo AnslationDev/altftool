@@ -1,3 +1,5 @@
+"use client";
+
 import { Heart, Sparkles } from "lucide-react";
 
 export default function NameInput({ name1, setName1, name2, setName2, onAnalyze, errors }) {

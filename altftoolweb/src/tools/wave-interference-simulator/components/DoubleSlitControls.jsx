@@ -1,3 +1,5 @@
+"use client";
+
 export default function DoubleSlitControls({ settings, setSettings }) {
   const update = (key, value) => setSettings({ ...settings, [key]: value });
   const fringeSpacing = settings.wavelength * settings.screenDist / settings.slitSep * 1e3;

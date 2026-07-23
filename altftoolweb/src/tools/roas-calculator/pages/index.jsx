@@ -1,688 +1,684 @@
+"use client";
+
 import { useState } from "react";
+import {
+  Calculator, Scale, Calendar, Columns, Book, Lightbulb,
+  ChevronRight, BarChart, Percent, CreditCard, PlusCircle,
+  RefreshCcw, Wand2, Shield, ArrowRight, CheckCircle2,
+  AlertTriangle, DollarSign, Target, MousePointerClick, TrendingUp, XCircle, Play
+} from "lucide-react";
 
-/* ─── utils ─── */
-const n = (v) => Number(v) || 0;
-const fmt = (v, d = 2) => (v === null || isNaN(v)) ? "—" : Number(v).toFixed(d);
-const fmtINR = (v) => (v === null || isNaN(v) || v === 0) ? "—" : `₹${Number(v).toLocaleString("en-IN", { maximumFractionDigits: 0 })}`;
-
-const roasInfo = (r) => {
-  if (!r || isNaN(r)) return null;
-  if (r < 1)  return { label: "Losing Money",    emoji: "🔴", color: "#ef4444", light: "#fef2f2", border: "#fecaca", bar: 8  };
-  if (r < 2)  return { label: "Break-Even Zone", emoji: "🟡", color: "#f59e0b", light: "#fffbeb", border: "#fde68a", bar: 25 };
-  if (r < 4)  return { label: "Profitable",      emoji: "🟢", color: "#10b981", light: "#ecfdf5", border: "#a7f3d0", bar: 55 };
-  if (r < 8)  return { label: "Strong ROAS",     emoji: "💎", color: "#3b82f6", light: "#eff6ff", border: "#bfdbfe", bar: 80 };
-  return           { label: "Excellent ROAS",    emoji: "🚀", color: "#8b5cf6", light: "#f5f3ff", border: "#ddd6fe", bar: 100 };
+// Utility helpers
+const fmt = (val, dec = 2) => (val === null || isNaN(val) ? "—" : Number(val).toFixed(dec));
+const n = (val) => Number(val) || 0;
+const fmtCurr = (val, cur = "PLN") => {
+  if (val === null || isNaN(val)) return "—";
+  return `${Number(val).toLocaleString("en-US", { maximumFractionDigits: 0 })}`;
 };
 
-/* ─── shared components ─── */
-const InputField = ({ label, prefix, suffix, value, onChange, placeholder, tip }) => (
-  <div style={{ marginBottom: "1rem" }}>
-    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "0.375rem" }}>
-      <label style={{ fontSize: "0.72rem", fontWeight: "600", color: "#64748b", letterSpacing: "0.06em", textTransform: "uppercase", fontFamily: "'DM Sans', sans-serif" }}>{label}</label>
-      {tip && <span style={{ fontSize: "0.6rem", color: "#94a3b8", fontFamily: "'DM Sans', sans-serif" }}>{tip}</span>}
-    </div>
-    <div style={{ display: "flex", alignItems: "center", background: "#f8fafc", border: "1.5px solid #e2e8f0", borderRadius: "10px", overflow: "hidden", transition: "border-color 0.2s, box-shadow 0.2s" }}
-      onFocusCapture={e => { e.currentTarget.style.borderColor = "#6366f1"; e.currentTarget.style.boxShadow = "0 0 0 3px rgba(99,102,241,0.1)"; }}
-      onBlurCapture={e => { e.currentTarget.style.borderColor = "#e2e8f0"; e.currentTarget.style.boxShadow = "none"; }}>
-      {prefix && <span style={{ padding: "0 0.75rem", color: "#94a3b8", fontFamily: "'DM Mono', monospace", fontSize: "0.85rem", borderRight: "1.5px solid #e2e8f0", lineHeight: "44px", background: "#f1f5f9" }}>{prefix}</span>}
-      <input type="number" value={value} onChange={e => onChange(e.target.value)} placeholder={placeholder || "0"}
-        style={{ flex: 1, background: "transparent", border: "none", outline: "none", padding: "0 0.875rem", height: "44px", fontSize: "0.95rem", color: "#1e293b", fontFamily: "'DM Mono', monospace" }} />
-      {suffix && <span style={{ padding: "0 0.75rem", color: "#94a3b8", fontFamily: "'DM Mono', monospace", fontSize: "0.85rem", borderLeft: "1.5px solid #e2e8f0", lineHeight: "44px", background: "#f1f5f9" }}>{suffix}</span>}
-    </div>
-  </div>
-);
-
-const MetricCard = ({ label, value, sub, color = "#6366f1", icon }) => (
-  <div style={{ background: "#fff", border: "1.5px solid #f1f5f9", borderRadius: "12px", padding: "1rem 1.125rem", boxShadow: "0 1px 4px rgba(0,0,0,0.05)" }}>
-    <div style={{ display: "flex", alignItems: "center", gap: "0.4rem", marginBottom: "0.375rem" }}>
-      {icon && <span style={{ fontSize: "0.9rem" }}>{icon}</span>}
-      <span style={{ fontSize: "0.65rem", fontWeight: "700", color: "#94a3b8", letterSpacing: "0.08em", textTransform: "uppercase", fontFamily: "'DM Sans', sans-serif" }}>{label}</span>
-    </div>
-    <div style={{ fontSize: "1.5rem", fontWeight: "800", color, fontFamily: "'DM Mono', monospace", lineHeight: 1.1 }}>{value}</div>
-    {sub && <div style={{ fontSize: "0.67rem", color: "#94a3b8", marginTop: "0.2rem", fontFamily: "'DM Sans', sans-serif" }}>{sub}</div>}
-  </div>
-);
-
-const SectionCard = ({ title, icon, children, accent = "#6366f1" }) => (
-  <div style={{ background: "#fff", borderRadius: "20px", boxShadow: "0 4px 24px rgba(0,0,0,0.07), 0 1px 4px rgba(0,0,0,0.04)", border: "1.5px solid #f1f5f9", overflow: "hidden" }}>
-    <div style={{ padding: "1.25rem 1.5rem", borderBottom: "1.5px solid #f8fafc", display: "flex", alignItems: "center", gap: "0.6rem", background: "linear-gradient(135deg, #fafbff 0%, #f8fafc 100%)" }}>
-      <div style={{ width: "32px", height: "32px", borderRadius: "9px", background: accent + "18", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "1rem" }}>{icon}</div>
-      <span style={{ fontWeight: "700", color: "#1e293b", fontSize: "0.9rem", fontFamily: "'DM Sans', sans-serif" }}>{title}</span>
-    </div>
-    <div style={{ padding: "1.5rem" }}>{children}</div>
-  </div>
-);
-
-const ResetBtn = ({ onClick }) => (
-  <button onClick={onClick} style={{ width: "100%", marginTop: "0.75rem", padding: "0.65rem", background: "#f8fafc", border: "1.5px solid #e2e8f0", borderRadius: "10px", color: "#94a3b8", fontFamily: "'DM Sans', sans-serif", fontSize: "0.75rem", fontWeight: "600", cursor: "pointer", letterSpacing: "0.04em", transition: "all .15s" }}
-    onMouseEnter={e => { e.currentTarget.style.background = "#f1f5f9"; e.currentTarget.style.color = "#64748b"; }}
-    onMouseLeave={e => { e.currentTarget.style.background = "#f8fafc"; e.currentTarget.style.color = "#94a3b8"; }}>
-    ↺ Reset
-  </button>
-);
-
-const RoasBadge = ({ roas }) => {
-  const st = roasInfo(roas);
-  if (!st) return null;
-  return (
-    <div style={{ display: "inline-flex", alignItems: "center", gap: "0.4rem", padding: "0.3rem 0.75rem", background: st.light, border: `1.5px solid ${st.border}`, borderRadius: "999px" }}>
-      <span style={{ fontSize: "0.75rem" }}>{st.emoji}</span>
-      <span style={{ fontSize: "0.7rem", fontWeight: "700", color: st.color, fontFamily: "'DM Sans', sans-serif" }}>{st.label}</span>
-    </div>
-  );
-};
-
-const RoasGauge = ({ roas }) => {
-  const st = roasInfo(roas);
-  if (!roas) return null;
-  return (
-    <div style={{ marginTop: "0.75rem" }}>
-      <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "0.35rem" }}>
-        <span style={{ fontSize: "0.62rem", color: "#94a3b8", fontFamily: "'DM Sans', sans-serif" }}>Performance</span>
-        <span style={{ fontSize: "0.62rem", color: st?.color, fontWeight: "700", fontFamily: "'DM Sans', sans-serif" }}>{st?.bar}%</span>
-      </div>
-      <div style={{ height: "6px", background: "#f1f5f9", borderRadius: "999px", overflow: "hidden" }}>
-        <div style={{ height: "100%", width: `${st?.bar || 0}%`, background: `linear-gradient(90deg, ${st?.color}88, ${st?.color})`, borderRadius: "999px", transition: "width .7s cubic-bezier(.4,0,.2,1)" }} />
-      </div>
-    </div>
-  );
-};
-
-/* ══════ MODES ══════ */
-
-function BasicMode() {
-  const [spend, setSpend] = useState("");
-  const [rev, setRev] = useState("");
-  const [log, setLog] = useState([]);
-  const roas = n(spend) && n(rev) ? n(rev) / n(spend) : null;
-  const st = roasInfo(roas);
-  const mer = roas ? (n(spend) / n(rev)) * 100 : null;
-
-  return (
-    <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
-      <SectionCard title="Campaign Inputs" icon="📥" accent="#6366f1">
-        <InputField label="Ad Spend" prefix="₹" value={spend} onChange={setSpend} placeholder="50,000" tip="Total money spent on ads" />
-        <InputField label="Revenue / Conversion Value" prefix="₹" value={rev} onChange={setRev} placeholder="2,00,000" tip="Total revenue attributed" />
-      </SectionCard>
-
-      {/* Big ROAS result */}
-      <div style={{ background: roas ? `linear-gradient(135deg, ${st.light}, #fff)` : "#fafbff", border: `2px solid ${roas ? st.border : "#f1f5f9"}`, borderRadius: "20px", padding: "2rem 1.5rem", textAlign: "center", boxShadow: roas ? `0 8px 32px ${st.color}18` : "0 2px 8px rgba(0,0,0,0.04)", transition: "all 0.4s" }}>
-        <div style={{ fontSize: "0.7rem", fontWeight: "700", color: "#94a3b8", letterSpacing: "0.12em", textTransform: "uppercase", fontFamily: "'DM Sans', sans-serif", marginBottom: "0.5rem" }}>ROAS</div>
-        <div style={{ fontSize: "5rem", fontWeight: "900", color: roas ? st.color : "#e2e8f0", fontFamily: "'DM Mono', monospace", lineHeight: 1, letterSpacing: "-0.03em" }}>
-          {roas ? `${fmt(roas)}x` : "—"}
-        </div>
-        {roas && <div style={{ marginTop: "0.75rem" }}><RoasBadge roas={roas} /></div>}
-        <RoasGauge roas={roas} />
-      </div>
-
-      {roas && (
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.75rem" }}>
-          <MetricCard label="Ad Cost Ratio" value={`${fmt(mer, 1)}%`} sub="of total revenue (MER)" color="#f59e0b" icon="📊" />
-          <MetricCard label="Return Per ₹1" value={`₹${fmt(roas, 2)}`} sub="earned per rupee spent" color="#10b981" icon="💰" />
-        </div>
-      )}
-
-      <div style={{ display: "flex", gap: "0.6rem" }}>
-        <button onClick={() => { if (roas) setLog(l => [{ spend, rev, roas: fmt(roas), color: st.color, emoji: st.emoji, time: new Date().toLocaleTimeString() }, ...l.slice(0, 4)]); }}
-          disabled={!roas}
-          style={{ flex: 1, padding: "0.75rem", background: roas ? "linear-gradient(135deg, #6366f1, #8b5cf6)" : "#f1f5f9", border: "none", borderRadius: "10px", color: roas ? "#fff" : "#cbd5e1", fontFamily: "'DM Sans', sans-serif", fontWeight: "700", fontSize: "0.8rem", cursor: roas ? "pointer" : "not-allowed", boxShadow: roas ? "0 4px 12px rgba(99,102,241,0.3)" : "none", transition: "all .2s" }}>
-          Save to Log
-        </button>
-        <button onClick={() => { setSpend(""); setRev(""); }} style={{ padding: "0.75rem 1.25rem", background: "#f8fafc", border: "1.5px solid #e2e8f0", borderRadius: "10px", color: "#64748b", fontFamily: "'DM Sans', sans-serif", fontWeight: "600", fontSize: "0.8rem", cursor: "pointer" }}>Reset</button>
-      </div>
-
-      {log.length > 0 && (
-        <SectionCard title="Calculation Log" icon="📋" accent="#64748b">
-          <div style={{ display: "flex", flexDirection: "column", gap: "0.4rem" }}>
-            {log.map((e, i) => (
-              <div key={i} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "0.6rem 0.875rem", background: "#f8fafc", border: "1.5px solid #f1f5f9", borderRadius: "8px" }}>
-                <span style={{ fontSize: "0.65rem", color: "#94a3b8", fontFamily: "'DM Mono', monospace" }}>{e.time}</span>
-                <span style={{ fontSize: "0.7rem", color: "#64748b", fontFamily: "'DM Mono', monospace" }}>{fmtINR(e.spend)} → {fmtINR(e.rev)}</span>
-                <span style={{ fontSize: "0.95rem", fontWeight: "800", color: e.color, fontFamily: "'DM Mono', monospace" }}>{e.emoji} {e.roas}x</span>
-              </div>
-            ))}
-          </div>
-          <button onClick={() => setLog([])} style={{ marginTop: "0.6rem", background: "none", border: "none", color: "#94a3b8", fontSize: "0.65rem", cursor: "pointer", fontFamily: "'DM Sans', sans-serif" }}>Clear log</button>
-        </SectionCard>
-      )}
-    </div>
-  );
-}
-
-function PLMode() {
-  const [spend, setSpend] = useState("");
-  const [rev, setRev] = useState("");
-  const [cogs, setCogs] = useState("");
-  const [over, setOver] = useState("");
-  const roas = n(spend) && n(rev) ? n(rev) / n(spend) : null;
-  const st = roasInfo(roas);
-  const gross = n(rev) - n(cogs);
-  const net = n(rev) - n(cogs) - n(spend) - n(over);
-  const mer = roas ? (n(spend) / n(rev)) * 100 : null;
-  const gm = n(rev) ? (gross / n(rev)) * 100 : null;
-  const nm = n(rev) ? (net / n(rev)) * 100 : null;
-  const beRoas = n(spend) && n(rev) && n(cogs) ? n(spend) / (n(rev) - n(cogs) - n(over)) : null;
-
-  const bars = n(rev) > 0 ? [
-    { label: "COGS",      pct: Math.min(100, (n(cogs) / n(rev)) * 100),  color: "#ef4444" },
-    { label: "Ad Spend",  pct: Math.min(100, (n(spend) / n(rev)) * 100), color: "#f59e0b" },
-    { label: "Overhead",  pct: Math.min(100, (n(over) / n(rev)) * 100),  color: "#fb923c" },
-    { label: "Net Profit",pct: Math.max(0,   (net / n(rev)) * 100),       color: "#10b981" },
-  ] : [];
-
-  return (
-    <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
-      <SectionCard title="Revenue & Cost Inputs" icon="🧾" accent="#10b981">
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0 0.75rem" }}>
-          <InputField label="Ad Spend" prefix="₹" value={spend} onChange={setSpend} placeholder="50,000" />
-          <InputField label="Revenue" prefix="₹" value={rev} onChange={setRev} placeholder="2,00,000" />
-          <InputField label="COGS" prefix="₹" value={cogs} onChange={setCogs} placeholder="80,000" />
-          <InputField label="Overhead" prefix="₹" value={over} onChange={setOver} placeholder="10,000" />
-        </div>
-      </SectionCard>
-
-      {roas ? (
-        <>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "0.75rem" }}>
-            <div style={{ gridColumn: "1/-1", background: `linear-gradient(135deg, ${st.light}, #fff)`, border: `2px solid ${st.border}`, borderRadius: "16px", padding: "1.25rem", display: "flex", justifyContent: "space-between", alignItems: "center", boxShadow: `0 4px 20px ${st.color}15` }}>
-              <div>
-                <div style={{ fontSize: "0.65rem", fontWeight: "700", color: "#94a3b8", letterSpacing: "0.1em", textTransform: "uppercase", fontFamily: "'DM Sans', sans-serif" }}>ROAS</div>
-                <div style={{ fontSize: "3.5rem", fontWeight: "900", color: st.color, fontFamily: "'DM Mono', monospace", lineHeight: 1 }}>{fmt(roas)}x</div>
-                {beRoas !== null && <div style={{ fontSize: "0.65rem", color: "#94a3b8", fontFamily: "'DM Sans', sans-serif", marginTop: "0.25rem" }}>Break-even: {fmt(beRoas)}x</div>}
-              </div>
-              <RoasBadge roas={roas} />
-            </div>
-            <MetricCard label="Gross Profit" value={fmtINR(gross)} sub={`${fmt(gm, 1)}% margin`} color={gross >= 0 ? "#10b981" : "#ef4444"} icon="📈" />
-            <MetricCard label="Net Profit"   value={fmtINR(net)}   sub={`${fmt(nm, 1)}% margin`} color={net >= 0 ? "#6366f1" : "#ef4444"} icon="💼" />
-            <MetricCard label="MER"           value={`${fmt(mer, 1)}%`} sub="marketing efficiency" color="#f59e0b" icon="📉" />
-          </div>
-
-          {n(rev) > 0 && (
-            <SectionCard title="Revenue Allocation" icon="🥧" accent="#6366f1">
-              <div style={{ display: "flex", height: "12px", borderRadius: "8px", overflow: "hidden", gap: "2px" }}>
-                {bars.filter(b => b.pct > 0).map((b, i) => (
-                  <div key={i} style={{ width: `${b.pct}%`, background: b.color, transition: "width .6s ease" }} title={`${b.label}: ${b.pct.toFixed(1)}%`} />
-                ))}
-              </div>
-              <div style={{ display: "flex", flexWrap: "wrap", gap: "0.75rem", marginTop: "0.875rem" }}>
-                {bars.filter(b => b.pct > 0).map((b, i) => (
-                  <div key={i} style={{ display: "flex", alignItems: "center", gap: "0.35rem" }}>
-                    <div style={{ width: "9px", height: "9px", borderRadius: "3px", background: b.color }} />
-                    <span style={{ fontSize: "0.68rem", color: "#64748b", fontFamily: "'DM Sans', sans-serif", fontWeight: "500" }}>{b.label}: <strong style={{ color: "#1e293b" }}>{b.pct.toFixed(1)}%</strong></span>
-                  </div>
-                ))}
-              </div>
-            </SectionCard>
-          )}
-        </>
-      ) : (
-        <div style={{ textAlign: "center", padding: "2.5rem", background: "#fafbff", border: "2px dashed #e2e8f0", borderRadius: "16px", color: "#cbd5e1", fontFamily: "'DM Sans', sans-serif", fontSize: "0.85rem" }}>
-          Fill in spend + revenue to see P&L breakdown
-        </div>
-      )}
-      <ResetBtn onClick={() => { setSpend(""); setRev(""); setCogs(""); setOver(""); }} />
-    </div>
-  );
-}
-
-function FunnelMode() {
-  const [spend, setSpend] = useState("");
-  const [clicks, setClicks] = useState("");
-  const [convs, setConvs] = useState("");
-  const [aov, setAov] = useState("");
-  const rev = n(convs) * n(aov);
-  const roas = n(spend) && rev ? rev / n(spend) : null;
-  const st = roasInfo(roas);
-  const cpc = n(spend) && n(clicks) ? n(spend) / n(clicks) : null;
-  const cvr = n(clicks) && n(convs) ? (n(convs) / n(clicks)) * 100 : null;
-  const cpa = n(spend) && n(convs) ? n(spend) / n(convs) : null;
-
-  const steps = [
-    { label: "Clicks", val: n(clicks), color: "#6366f1", icon: "👆" },
-    { label: "Conversions", val: n(convs), color: "#10b981", icon: "✅" },
-  ].filter(s => s.val > 0);
-
-  return (
-    <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
-      <SectionCard title="Funnel Inputs" icon="🔽" accent="#6366f1">
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0 0.75rem" }}>
-          <InputField label="Ad Spend" prefix="₹" value={spend} onChange={setSpend} placeholder="50,000" />
-          <InputField label="Clicks / Sessions" value={clicks} onChange={setClicks} placeholder="10,000" />
-          <InputField label="Conversions" value={convs} onChange={setConvs} placeholder="500" />
-          <InputField label="Avg Order Value" prefix="₹" value={aov} onChange={setAov} placeholder="400" />
-        </div>
-        {n(convs) > 0 && n(aov) > 0 && (
-          <div style={{ padding: "0.75rem 1rem", background: "linear-gradient(135deg, #eff6ff, #f5f3ff)", border: "1.5px solid #bfdbfe", borderRadius: "10px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-            <span style={{ fontSize: "0.7rem", fontWeight: "600", color: "#6366f1", fontFamily: "'DM Sans', sans-serif" }}>Auto Revenue ({n(convs)} × {fmtINR(n(aov))})</span>
-            <span style={{ fontSize: "1.1rem", fontWeight: "800", color: "#6366f1", fontFamily: "'DM Mono', monospace" }}>{fmtINR(rev)}</span>
-          </div>
-        )}
-      </SectionCard>
-
-      {roas && (
-        <>
-          <div style={{ background: `linear-gradient(135deg, ${st.light}, #fff)`, border: `2px solid ${st.border}`, borderRadius: "16px", padding: "1.5rem", textAlign: "center", boxShadow: `0 6px 24px ${st.color}18` }}>
-            <div style={{ fontSize: "0.65rem", fontWeight: "700", color: "#94a3b8", letterSpacing: "0.1em", textTransform: "uppercase", fontFamily: "'DM Sans', sans-serif" }}>ROAS</div>
-            <div style={{ fontSize: "4rem", fontWeight: "900", color: st.color, fontFamily: "'DM Mono', monospace", lineHeight: 1.1 }}>{fmt(roas)}x</div>
-            <div style={{ marginTop: "0.5rem" }}><RoasBadge roas={roas} /></div>
-          </div>
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.75rem" }}>
-            <MetricCard label="Cost Per Click" value={fmtINR(cpc)} sub="CPC" color="#6366f1" icon="🖱️" />
-            <MetricCard label="Conv. Rate" value={`${fmt(cvr, 2)}%`} sub="clicks → conversions" color="#10b981" icon="🎯" />
-            <MetricCard label="Cost Per Acq." value={fmtINR(cpa)} sub="CPA" color="#f59e0b" icon="🛒" />
-            <MetricCard label="Avg Order Value" value={fmtINR(n(aov))} sub="AOV" color="#8b5cf6" icon="🎁" />
-          </div>
-        </>
-      )}
-
-      {steps.length > 1 && (
-        <SectionCard title="Funnel Drop-off" icon="📉" accent="#6366f1">
-          {steps.map((s, i) => {
-            const pct = i === 0 ? 100 : (s.val / steps[0].val) * 100;
-            return (
-              <div key={i} style={{ marginBottom: "0.75rem" }}>
-                <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "0.3rem" }}>
-                  <span style={{ fontSize: "0.7rem", fontWeight: "600", color: "#475569", fontFamily: "'DM Sans', sans-serif" }}>{s.icon} {s.label}</span>
-                  <span style={{ fontSize: "0.7rem", fontWeight: "700", color: s.color, fontFamily: "'DM Mono', monospace" }}>{s.val.toLocaleString("en-IN")} ({pct.toFixed(1)}%)</span>
-                </div>
-                <div style={{ height: "8px", background: "#f1f5f9", borderRadius: "6px" }}>
-                  <div style={{ height: "100%", width: `${pct}%`, background: `linear-gradient(90deg, ${s.color}88, ${s.color})`, borderRadius: "6px", transition: "width .6s ease" }} />
-                </div>
-              </div>
-            );
-          })}
-        </SectionCard>
-      )}
-
-      {!roas && (
-        <div style={{ textAlign: "center", padding: "2rem", background: "#fafbff", border: "2px dashed #e2e8f0", borderRadius: "14px", color: "#cbd5e1", fontFamily: "'DM Sans', sans-serif", fontSize: "0.85rem" }}>
-          Fill all fields to see funnel metrics
-        </div>
-      )}
-      <ResetBtn onClick={() => { setSpend(""); setClicks(""); setConvs(""); setAov(""); }} />
-    </div>
-  );
-}
-
-function CompareMode() {
-  const COLORS = ["#6366f1", "#10b981", "#f59e0b"];
-  const [camps, setCamps] = useState([
-    { name: "Campaign A", spend: "", rev: "" },
-    { name: "Campaign B", spend: "", rev: "" },
-  ]);
-  const upd = (i, f, v) => setCamps(c => c.map((x, idx) => idx === i ? { ...x, [f]: v } : x));
-  const computed = camps.map((c, i) => ({ ...c, color: COLORS[i], roas: n(c.spend) && n(c.rev) ? n(c.rev) / n(c.spend) : null }));
-  const winner = computed.reduce((b, c) => (c.roas && (!b || c.roas > b.roas)) ? c : b, null);
-  const maxRoas = Math.max(...computed.map(c => c.roas || 0));
-
-  return (
-    <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
-      <SectionCard title="Campaign Inputs" icon="⚔️" accent="#6366f1">
-        {computed.map((c, i) => (
-          <div key={i} style={{ marginBottom: i < computed.length - 1 ? "1.25rem" : "0", paddingBottom: i < computed.length - 1 ? "1.25rem" : "0", borderBottom: i < computed.length - 1 ? "1.5px solid #f1f5f9" : "none" }}>
-            <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", marginBottom: "0.75rem" }}>
-              <div style={{ width: "10px", height: "10px", borderRadius: "50%", background: c.color, flexShrink: 0 }} />
-              <input value={c.name} onChange={e => upd(i, "name", e.target.value)} style={{ flex: 1, background: "transparent", border: "none", outline: "none", fontSize: "0.85rem", fontWeight: "700", color: "#1e293b", fontFamily: "'DM Sans', sans-serif" }} />
-              {camps.length > 2 && <button onClick={() => setCamps(c => c.filter((_, idx) => idx !== i))} style={{ background: "#fef2f2", border: "1px solid #fecaca", borderRadius: "5px", color: "#ef4444", cursor: "pointer", fontSize: "0.65rem", padding: "0.2rem 0.4rem", fontFamily: "'DM Sans', sans-serif" }}>Remove</button>}
-            </div>
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0 0.75rem" }}>
-              <InputField label="Ad Spend" prefix="₹" value={c.spend} onChange={v => upd(i, "spend", v)} placeholder="50,000" />
-              <InputField label="Revenue" prefix="₹" value={c.rev} onChange={v => upd(i, "rev", v)} placeholder="2,00,000" />
-            </div>
-          </div>
-        ))}
-        {camps.length < 3 && (
-          <button onClick={() => setCamps(c => [...c, { name: `Campaign ${["A","B","C"][c.length]}`, spend: "", rev: "" }])}
-            style={{ width: "100%", padding: "0.65rem", background: "#f8fafc", border: "2px dashed #e2e8f0", borderRadius: "10px", color: "#94a3b8", fontFamily: "'DM Sans', sans-serif", fontWeight: "600", fontSize: "0.78rem", cursor: "pointer" }}>
-            + Add Campaign
-          </button>
-        )}
-      </SectionCard>
-
-      {computed.some(c => c.roas) && (
-        <>
-          <div style={{ display: "flex", flexDirection: "column", gap: "0.6rem" }}>
-            {computed.map((c, i) => {
-              const st = roasInfo(c.roas);
-              const isWinner = winner && c.name === winner.name && c.roas;
-              return (
-                <div key={i} style={{ background: isWinner ? `linear-gradient(135deg, ${st?.light || "#fafbff"}, #fff)` : "#fff", border: `2px solid ${isWinner ? (st?.border || "#f1f5f9") : "#f1f5f9"}`, borderRadius: "14px", padding: "1rem 1.25rem", display: "flex", justifyContent: "space-between", alignItems: "center", boxShadow: isWinner ? `0 4px 20px ${c.color}20` : "0 1px 4px rgba(0,0,0,0.04)" }}>
-                  <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
-                    <div style={{ width: "10px", height: "10px", borderRadius: "50%", background: c.color }} />
-                    <div>
-                      <div style={{ fontWeight: "700", color: "#1e293b", fontSize: "0.85rem", fontFamily: "'DM Sans', sans-serif" }}>{c.name} {isWinner ? "🏆" : ""}</div>
-                      <div style={{ fontSize: "0.65rem", color: "#94a3b8", fontFamily: "'DM Sans', sans-serif" }}>{fmtINR(c.spend)} spent</div>
-                    </div>
-                  </div>
-                  <div style={{ textAlign: "right" }}>
-                    <div style={{ fontSize: "2rem", fontWeight: "900", color: c.roas ? c.color : "#e2e8f0", fontFamily: "'DM Mono', monospace", lineHeight: 1 }}>{c.roas ? `${fmt(c.roas)}x` : "—"}</div>
-                    {st && <div style={{ fontSize: "0.6rem", color: st.color, fontFamily: "'DM Sans', sans-serif", fontWeight: "600" }}>{st.label}</div>}
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-
-          <SectionCard title="ROAS Comparison" icon="📊" accent="#6366f1">
-            {computed.filter(c => c.roas).map((c, i) => (
-              <div key={i} style={{ marginBottom: "0.75rem" }}>
-                <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "0.3rem" }}>
-                  <span style={{ fontSize: "0.7rem", fontWeight: "600", color: "#475569", fontFamily: "'DM Sans', sans-serif" }}>{c.name}</span>
-                  <span style={{ fontWeight: "800", fontSize: "0.85rem", color: c.color, fontFamily: "'DM Mono', monospace" }}>{fmt(c.roas)}x</span>
-                </div>
-                <div style={{ height: "8px", background: "#f1f5f9", borderRadius: "6px" }}>
-                  <div style={{ height: "100%", width: `${maxRoas ? (c.roas / maxRoas) * 100 : 0}%`, background: `linear-gradient(90deg, ${c.color}77, ${c.color})`, borderRadius: "6px", transition: "width .6s ease" }} />
-                </div>
-              </div>
-            ))}
-          </SectionCard>
-        </>
-      )}
-      <ResetBtn onClick={() => setCamps([{ name: "Campaign A", spend: "", rev: "" }, { name: "Campaign B", spend: "", rev: "" }])} />
-    </div>
-  );
-}
-
-function SimulatorMode() {
-  const [spend, setSpend] = useState("50000");
-  const [rev, setRev] = useState("200000");
-  const [sd, setSd] = useState(0);
-  const [rd, setRd] = useState(0);
-  const base = n(spend) && n(rev) ? n(rev) / n(spend) : null;
-  const sS = n(spend) * (1 + sd / 100);
-  const sR = n(rev) * (1 + rd / 100);
-  const sim = sS && sR ? sR / sS : null;
-  const diff = base && sim ? sim - base : null;
-  const bSt = roasInfo(base);
-  const sSt = roasInfo(sim);
-
-  const Slider = ({ label, value, onChange, color }) => (
-    <div style={{ marginBottom: "1rem" }}>
-      <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "0.4rem" }}>
-        <span style={{ fontSize: "0.7rem", fontWeight: "600", color: "#64748b", fontFamily: "'DM Sans', sans-serif" }}>{label}</span>
-        <span style={{ fontSize: "0.78rem", fontWeight: "800", color: value >= 0 ? "#10b981" : "#ef4444", fontFamily: "'DM Mono', monospace" }}>{value >= 0 ? "+" : ""}{value}%</span>
-      </div>
-      <input type="range" min="-80" max="200" step="5" value={value} onChange={e => onChange(Number(e.target.value))}
-        style={{ width: "100%", accentColor: color, cursor: "pointer", height: "4px" }} />
-      <div style={{ display: "flex", justifyContent: "space-between", marginTop: "0.2rem" }}>
-        <span style={{ fontSize: "0.6rem", color: "#cbd5e1", fontFamily: "'DM Sans', sans-serif" }}>-80%</span>
-        <span style={{ fontSize: "0.6rem", color: "#cbd5e1", fontFamily: "'DM Sans', sans-serif" }}>+200%</span>
-      </div>
-    </div>
-  );
-
-  return (
-    <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
-      <SectionCard title="Base Values" icon="📌" accent="#6366f1">
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0 0.75rem" }}>
-          <InputField label="Base Spend" prefix="₹" value={spend} onChange={setSpend} placeholder="50,000" />
-          <InputField label="Base Revenue" prefix="₹" value={rev} onChange={setRev} placeholder="2,00,000" />
-        </div>
-      </SectionCard>
-
-      <SectionCard title="Adjust Scenario" icon="🎛️" accent="#8b5cf6">
-        <Slider label="Change in Ad Spend" value={sd} onChange={setSd} color="#f59e0b" />
-        <Slider label="Change in Revenue" value={rd} onChange={setRd} color="#10b981" />
-      </SectionCard>
-
-      {base && (
-        <>
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.75rem" }}>
-            <div style={{ background: "#fafbff", border: "1.5px solid #f1f5f9", borderRadius: "14px", padding: "1.25rem", textAlign: "center", boxShadow: "0 1px 4px rgba(0,0,0,0.04)" }}>
-              <div style={{ fontSize: "0.62rem", fontWeight: "700", color: "#94a3b8", letterSpacing: "0.1em", textTransform: "uppercase", fontFamily: "'DM Sans', sans-serif", marginBottom: "0.25rem" }}>BASE ROAS</div>
-              <div style={{ fontSize: "2.8rem", fontWeight: "900", color: bSt?.color || "#e2e8f0", fontFamily: "'DM Mono', monospace", lineHeight: 1 }}>{fmt(base)}x</div>
-              <div style={{ fontSize: "0.65rem", color: bSt?.color, fontFamily: "'DM Sans', sans-serif", fontWeight: "600", marginTop: "0.25rem" }}>{bSt?.label}</div>
-            </div>
-            <div style={{ background: sSt ? `linear-gradient(135deg, ${sSt.light}, #fff)` : "#fafbff", border: `2px solid ${sSt?.border || "#f1f5f9"}`, borderRadius: "14px", padding: "1.25rem", textAlign: "center", boxShadow: `0 4px 16px ${sSt?.color || "transparent"}18` }}>
-              <div style={{ fontSize: "0.62rem", fontWeight: "700", color: "#94a3b8", letterSpacing: "0.1em", textTransform: "uppercase", fontFamily: "'DM Sans', sans-serif", marginBottom: "0.25rem" }}>SIMULATED</div>
-              <div style={{ fontSize: "2.8rem", fontWeight: "900", color: sSt?.color || "#e2e8f0", fontFamily: "'DM Mono', monospace", lineHeight: 1 }}>{sim ? `${fmt(sim)}x` : "—"}</div>
-              <div style={{ fontSize: "0.65rem", color: sSt?.color, fontFamily: "'DM Sans', sans-serif", fontWeight: "600", marginTop: "0.25rem" }}>{sSt?.label}</div>
-            </div>
-          </div>
-
-          {diff !== null && (
-            <div style={{ padding: "0.875rem 1.25rem", background: diff >= 0 ? "#ecfdf5" : "#fef2f2", border: `2px solid ${diff >= 0 ? "#a7f3d0" : "#fecaca"}`, borderRadius: "12px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-              <span style={{ fontWeight: "600", color: "#64748b", fontSize: "0.8rem", fontFamily: "'DM Sans', sans-serif" }}>ROAS Change</span>
-              <span style={{ fontWeight: "900", fontSize: "1.3rem", color: diff >= 0 ? "#10b981" : "#ef4444", fontFamily: "'DM Mono', monospace" }}>{diff >= 0 ? "+" : ""}{fmt(diff)}x</span>
-            </div>
-          )}
-
-          <SectionCard title="Scenario Breakdown" icon="🔍" accent="#6366f1">
-            {[{ label: "Ad Spend", base: n(spend), sim: sS, color: "#f59e0b" }, { label: "Revenue", base: n(rev), sim: sR, color: "#10b981" }].map((r, i) => (
-              <div key={i} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "0.6rem 0", borderBottom: i < 1 ? "1.5px solid #f8fafc" : "none" }}>
-                <span style={{ fontWeight: "600", color: "#64748b", fontSize: "0.8rem", fontFamily: "'DM Sans', sans-serif" }}>{r.label}</span>
-                <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
-                  <span style={{ fontFamily: "'DM Mono', monospace", fontSize: "0.78rem", color: "#94a3b8" }}>{fmtINR(r.base)}</span>
-                  <span style={{ color: "#cbd5e1" }}>→</span>
-                  <span style={{ fontFamily: "'DM Mono', monospace", fontSize: "0.78rem", fontWeight: "700", color: r.color }}>{fmtINR(r.sim)}</span>
-                </div>
-              </div>
-            ))}
-          </SectionCard>
-        </>
-      )}
-      <ResetBtn onClick={() => { setSpend("50000"); setRev("200000"); setSd(0); setRd(0); }} />
-    </div>
-  );
-}
-
-function TargetMode() {
-  const [tRoas, setTRoas] = useState("");
-  const [spend, setSpend] = useState("");
-  const [tRev, setTRev] = useState("");
-  const neededRev = n(tRoas) && n(spend) ? n(spend) * n(tRoas) : null;
-  const maxSpend  = n(tRoas) && n(tRev) ? n(tRev) / n(tRoas) : null;
-  const impRoas   = n(spend) && n(tRev) ? n(tRev) / n(spend) : null;
-  const impSt     = roasInfo(impRoas);
-
-  const PLATFORMS = [
-    { name: "Google Search",  min: 3, max: 8,  color: "#4285f4", icon: "🔍" },
-    { name: "Meta / Facebook",min: 2, max: 5,  color: "#1877f2", icon: "📘" },
-    { name: "Instagram Ads",  min: 2, max: 6,  color: "#e1306c", icon: "📸" },
-    { name: "YouTube Ads",    min: 2, max: 4,  color: "#ef4444", icon: "▶️" },
-    { name: "Amazon Ads",     min: 3, max: 10, color: "#f59e0b", icon: "📦" },
-    { name: "Snapchat Ads",   min: 1, max: 3,  color: "#eab308", icon: "👻" },
-  ];
-
-  return (
-    <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
-      <SectionCard title="Target Settings" icon="🎯" accent="#8b5cf6">
-        <InputField label="Target ROAS" suffix="x" value={tRoas} onChange={setTRoas} placeholder="4" />
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0 0.75rem" }}>
-          <InputField label="Ad Spend Budget" prefix="₹" value={spend} onChange={setSpend} placeholder="50,000" />
-          <InputField label="Revenue Goal" prefix="₹" value={tRev} onChange={setTRev} placeholder="2,00,000" />
-        </div>
-      </SectionCard>
-
-      <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
-        {neededRev !== null && (
-          <div style={{ background: "linear-gradient(135deg, #ecfdf5, #fff)", border: "2px solid #a7f3d0", borderRadius: "14px", padding: "1.25rem", boxShadow: "0 4px 16px rgba(16,185,129,0.12)" }}>
-            <div style={{ fontSize: "0.65rem", fontWeight: "700", color: "#10b981", letterSpacing: "0.1em", textTransform: "uppercase", fontFamily: "'DM Sans', sans-serif" }}>Revenue needed for {tRoas}x ROAS</div>
-            <div style={{ fontSize: "2.5rem", fontWeight: "900", color: "#10b981", fontFamily: "'DM Mono', monospace", lineHeight: 1.1 }}>{fmtINR(neededRev)}</div>
-            <div style={{ fontSize: "0.68rem", color: "#6ee7b7", fontFamily: "'DM Sans', sans-serif", marginTop: "0.2rem" }}>from {fmtINR(n(spend))} spend</div>
-          </div>
-        )}
-        {maxSpend !== null && (
-          <div style={{ background: "linear-gradient(135deg, #f5f3ff, #fff)", border: "2px solid #ddd6fe", borderRadius: "14px", padding: "1.25rem", boxShadow: "0 4px 16px rgba(139,92,246,0.12)" }}>
-            <div style={{ fontSize: "0.65rem", fontWeight: "700", color: "#8b5cf6", letterSpacing: "0.1em", textTransform: "uppercase", fontFamily: "'DM Sans', sans-serif" }}>Max spend for {fmtINR(n(tRev))} at {tRoas}x</div>
-            <div style={{ fontSize: "2.5rem", fontWeight: "900", color: "#8b5cf6", fontFamily: "'DM Mono', monospace", lineHeight: 1.1 }}>{fmtINR(maxSpend)}</div>
-            <div style={{ fontSize: "0.68rem", color: "#c4b5fd", fontFamily: "'DM Sans', sans-serif", marginTop: "0.2rem" }}>maximum allowable budget</div>
-          </div>
-        )}
-        {impRoas !== null && (
-          <div style={{ background: `linear-gradient(135deg, ${impSt?.light || "#fafbff"}, #fff)`, border: `2px solid ${impSt?.border || "#f1f5f9"}`, borderRadius: "14px", padding: "1.25rem", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-            <div>
-              <div style={{ fontSize: "0.65rem", fontWeight: "700", color: "#94a3b8", letterSpacing: "0.1em", textTransform: "uppercase", fontFamily: "'DM Sans', sans-serif" }}>Implied ROAS</div>
-              <div style={{ fontSize: "2.2rem", fontWeight: "900", color: impSt?.color, fontFamily: "'DM Mono', monospace", lineHeight: 1 }}>{fmt(impRoas)}x</div>
-            </div>
-            <RoasBadge roas={impRoas} />
-          </div>
-        )}
-        {!tRoas && (
-          <div style={{ textAlign: "center", padding: "2rem", background: "#fafbff", border: "2px dashed #e2e8f0", borderRadius: "14px", color: "#cbd5e1", fontFamily: "'DM Sans', sans-serif", fontSize: "0.85rem" }}>
-            Set a target ROAS to begin
-          </div>
-        )}
-      </div>
-
-      <SectionCard title="Platform Benchmarks" icon="📡" accent="#3b82f6">
-        <div style={{ display: "flex", flexDirection: "column", gap: "0.4rem" }}>
-          {PLATFORMS.map((p, i) => {
-            const t = n(tRoas);
-            const inRange = t && t >= p.min && t <= p.max;
-            const above = t && t > p.max;
-            return (
-              <div key={i} style={{ display: "flex", alignItems: "center", gap: "0.75rem", padding: "0.65rem 0.875rem", background: inRange ? p.color + "0c" : "#f8fafc", border: `1.5px solid ${inRange ? p.color + "35" : "#f1f5f9"}`, borderRadius: "10px", transition: "all .2s" }}>
-                <span style={{ fontSize: "0.9rem" }}>{p.icon}</span>
-                <span style={{ flex: 1, fontWeight: "600", color: inRange ? "#1e293b" : "#64748b", fontSize: "0.78rem", fontFamily: "'DM Sans', sans-serif" }}>{p.name}</span>
-                <span style={{ fontWeight: "800", color: p.color, fontSize: "0.78rem", fontFamily: "'DM Mono', monospace" }}>{p.min}x–{p.max}x</span>
-                {t > 0 && (
-                  <span style={{ fontSize: "0.62rem", fontWeight: "700", color: inRange ? "#10b981" : above ? "#8b5cf6" : "#ef4444", background: inRange ? "#ecfdf5" : above ? "#f5f3ff" : "#fef2f2", padding: "0.15rem 0.4rem", borderRadius: "5px", fontFamily: "'DM Sans', sans-serif" }}>
-                    {inRange ? "✓" : above ? "↑" : "↓"}
-                  </span>
-                )}
-              </div>
-            );
-          })}
-        </div>
-      </SectionCard>
-      <ResetBtn onClick={() => { setTRoas(""); setSpend(""); setTRev(""); }} />
-    </div>
-  );
-}
-
-function ExportMode() {
-  const [spend, setSpend] = useState("");
-  const [rev, setRev] = useState("");
-  const [cogs, setCogs] = useState("");
-  const [label, setLabel] = useState("Q2 Meta Campaign");
-  const [copied, setCopied] = useState(false);
-  const roas = n(spend) && n(rev) ? n(rev) / n(spend) : null;
-  const st = roasInfo(roas);
-  const mer = roas ? (n(spend) / n(rev)) * 100 : null;
-  const profit = n(rev) - n(cogs) - n(spend);
-  const now = new Date().toLocaleDateString("en-IN", { day: "2-digit", month: "short", year: "numeric" });
-  const report = roas ? `━━━━━━━━━━━━━━━━━━━━━━━━
-📊 ROAS REPORT — ${now}
-${label}
-━━━━━━━━━━━━━━━━━━━━━━━━
-Ad Spend      : ${fmtINR(n(spend))}
-Revenue       : ${fmtINR(n(rev))}${cogs ? `\nCOGS          : ${fmtINR(n(cogs))}\nNet Profit    : ${fmtINR(profit)}` : ""}
-ROAS          : ${fmt(roas)}x  [${st?.label}]
-Ad Cost (MER) : ${fmt(mer, 1)}%
-━━━━━━━━━━━━━━━━━━━━━━━━
-Generated by ROAS Calculator Pro` : "";
-
-  return (
-    <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
-      <SectionCard title="Report Details" icon="📝" accent="#6366f1">
-        <InputField label="Campaign Label" value={label} onChange={setLabel} placeholder="Q2 Meta Campaign" />
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0 0.75rem" }}>
-          <InputField label="Ad Spend" prefix="₹" value={spend} onChange={setSpend} placeholder="50,000" />
-          <InputField label="Revenue" prefix="₹" value={rev} onChange={setRev} placeholder="2,00,000" />
-        </div>
-        <InputField label="COGS (optional)" prefix="₹" value={cogs} onChange={setCogs} placeholder="80,000" />
-      </SectionCard>
-
-      {roas && (
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: "0.6rem" }}>
-          <MetricCard label="ROAS" value={`${fmt(roas)}x`} sub={st?.label} color={st?.color} icon={st?.emoji} />
-          <MetricCard label="Revenue" value={fmtINR(n(rev))} sub="total" color="#6366f1" icon="💰" />
-          <MetricCard label="MER" value={`${fmt(mer, 1)}%`} sub="ad cost ratio" color="#f59e0b" icon="📊" />
-        </div>
-      )}
-
-      <SectionCard title="Report Preview" icon="📄" accent="#64748b">
-        <div style={{ background: "#f8fafc", border: "1.5px solid #e2e8f0", borderRadius: "10px", padding: "1rem" }}>
-          <pre style={{ fontFamily: "'DM Mono', monospace", fontSize: "0.7rem", color: roas ? "#475569" : "#cbd5e1", whiteSpace: "pre-wrap", lineHeight: 1.8, margin: 0, minHeight: "100px" }}>
-            {roas ? report : "Fill in spend + revenue to generate your report…"}
-          </pre>
-        </div>
-        <button onClick={() => { if (!report) return; navigator.clipboard.writeText(report).then(() => { setCopied(true); setTimeout(() => setCopied(false), 2200); }); }} disabled={!roas}
-          style={{ width: "100%", marginTop: "0.75rem", padding: "0.875rem", background: roas ? (copied ? "linear-gradient(135deg,#10b981,#059669)" : "linear-gradient(135deg,#6366f1,#8b5cf6)") : "#f1f5f9", border: "none", borderRadius: "10px", color: roas ? "#fff" : "#cbd5e1", fontFamily: "'DM Sans', sans-serif", fontWeight: "700", fontSize: "0.85rem", cursor: roas ? "pointer" : "not-allowed", boxShadow: roas ? "0 4px 14px rgba(99,102,241,0.3)" : "none", transition: "all .3s" }}>
-          {copied ? "✓ Copied to Clipboard!" : "Copy Report"}
-        </button>
-      </SectionCard>
-      <ResetBtn onClick={() => { setSpend(""); setRev(""); setCogs(""); setLabel("Q2 Meta Campaign"); }} />
-    </div>
-  );
-}
-
-/* ══════ ROOT ══════ */
 const TABS = [
-  { key: "basic",   label: "Basic",    icon: "⚡" },
-  { key: "pl",      label: "P&L",      icon: "🧾" },
-  { key: "funnel",  label: "Funnel",   icon: "🔽" },
-  { key: "compare", label: "Compare",  icon: "⚔️" },
-  { key: "sim",     label: "Simulate", icon: "🎛️" },
-  { key: "target",  label: "Target",   icon: "🎯" },
-  { key: "export",  label: "Export",   icon: "📤" },
+  { id: "calculator", label: "ROAS Calculator", icon: Calculator },
+  { id: "breakeven", label: "Break-even", icon: Scale },
+  { id: "budget", label: "Budget planner", icon: Calendar },
+  { id: "compare", label: "Compare campaigns", icon: Columns },
+  { id: "guide", label: "Guide", icon: Book },
 ];
 
-export default function App() {
-  const [mode, setMode] = useState("basic");
+export default function RoasCalculator() {
+  const [activeTab, setActiveTab] = useState("calculator");
+
+  // Tab 1: Calculator State
+  const [spend, setSpend] = useState("10000");
+  const [revenue, setRevenue] = useState("50000");
+  const [conversions, setConversions] = useState("");
+  const [clicks, setClicks] = useState("");
+  const [margin, setMargin] = useState(30);
+  const [otherCosts, setOtherCosts] = useState(0); // Using 0 for this exact UI match
+  const [currency, setCurrency] = useState("PLN");
+  const [showOptional, setShowOptional] = useState(false);
+  const [showEdu, setShowEdu] = useState(false);
+  const [showSecondary, setShowSecondary] = useState(false);
+
+  // Tab 2: Break-even State
+  const [beMargin, setBeMargin] = useState(30);
+  const [beVarCosts, setBeVarCosts] = useState(5);
+  const [beTargetProfit, setBeTargetProfit] = useState(0);
+
+  // Tab 3: Budget Planner State
+  const [bpTargetRoas, setBpTargetRoas] = useState("");
+  const [bpSpend, setBpSpend] = useState("");
+  const [bpTargetRev, setBpTargetRev] = useState("");
+
+  // Tab 4: Compare State
+  const [campaigns, setCampaigns] = useState([
+    { id: 1, name: "Campaign A", spend: "", rev: "", color: "bg-indigo-500" },
+    { id: 2, name: "Campaign B", spend: "", rev: "", color: "bg-emerald-500" }
+  ]);
+  const PALETTE = ["bg-indigo-500", "bg-emerald-500", "bg-amber-500", "bg-purple-500", "bg-pink-500"];
+
+  // ====================
+  // CALCULATOR LOGIC
+  // ====================
+  const netMarginPercent = margin - otherCosts;
+  const netMarginFrac = netMarginPercent / 100;
+
+  const calcRoas = n(spend) && n(revenue) ? n(revenue) / n(spend) : null;
+  const calcProfit = n(revenue) && n(spend) ? (n(revenue) * netMarginFrac) - n(spend) : null;
+  const calcRoi = n(spend) && calcProfit !== null ? (calcProfit / n(spend)) * 100 : null;
+  const calcBreakeven = netMarginFrac > 0 ? 1 / netMarginFrac : null;
+
+  const cpa = n(spend) && n(conversions) ? n(spend) / n(conversions) : null;
+  const cpc = n(spend) && n(clicks) ? n(spend) / n(clicks) : null;
+  const aov = n(revenue) && n(conversions) ? n(revenue) / n(conversions) : null;
+  const cr = n(conversions) && n(clicks) ? (n(conversions) / n(clicks)) * 100 : null;
+
+  const isProfitable = calcProfit !== null && calcProfit >= 0;
+
+  // Indicator Bar Positioning
+  const getIndicatorPosition = () => {
+    if (!calcRoas || !calcBreakeven) return 0;
+    const maxDisplay = calcBreakeven * 2.5;
+    return Math.min(100, Math.max(0, (calcRoas / maxDisplay) * 100));
+  };
+  const breakevenPos = 40; // 40% of the bar represents break-even visually
+
+  // ====================
+  // BREAK-EVEN LOGIC
+  // ====================
+  const beNetMarginFrac = (beMargin - beVarCosts) / 100;
+  const requiredMargin = (beMargin - beVarCosts - beTargetProfit) / 100;
+  const beRoasFinal = requiredMargin > 0 ? 1 / requiredMargin : null;
+  const canAchieveProfit = requiredMargin > 0;
+
+  // ====================
+  // BUDGET PLANNER LOGIC
+  // ====================
+  const neededRev = n(bpTargetRoas) && n(bpSpend) ? n(bpSpend) * n(bpTargetRoas) : null;
+  const maxSpend = n(bpTargetRoas) && n(bpTargetRev) ? n(bpTargetRev) / n(bpTargetRoas) : null;
+  const impliedRoas = n(bpSpend) && n(bpTargetRev) ? n(bpTargetRev) / n(bpSpend) : null;
+
 
   return (
-    <div style={{ minHeight: "100vh", background: "linear-gradient(135deg, #f0f4ff 0%, #faf5ff 40%, #f0fdf4 100%)", fontFamily: "'DM Sans', sans-serif", padding: "0" }}>
-      <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
-      <style>{`
-        *{box-sizing:border-box;margin:0;padding:0}
-        input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-spin-button{-webkit-appearance:none}
-        input[type=number]{-moz-appearance:textfield}
-        input:focus{outline:none}
-        input[type=range]{-webkit-appearance:none;appearance:none;height:4px;border-radius:4px;background:#e2e8f0;outline:none}
-        input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:16px;height:16px;border-radius:50%;cursor:pointer;border:2px solid #fff;box-shadow:0 2px 6px rgba(0,0,0,0.15)}
-        ::-webkit-scrollbar{width:4px;height:4px}
-        ::-webkit-scrollbar-track{background:transparent}
-        ::-webkit-scrollbar-thumb{background:#cbd5e1;border-radius:4px}
-      `}</style>
+    <div className="mx-auto w-full max-w-5xl my-8 font-sans text-slate-800 bg-white rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-200 relative overflow-hidden">
+      {/* Top Gradient Line */}
+      <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-amber-400 via-indigo-500 to-teal-400"></div>
 
-      {/* Top header bar */}
-      <div style={{ background: "rgba(255,255,255,0.85)", backdropFilter: "blur(12px)", borderBottom: "1.5px solid rgba(226,232,240,0.8)", padding: "1rem 1.5rem", position: "sticky", top: 0, zIndex: 100 }}>
-        <div style={{ maxWidth: "600px", margin: "0 auto", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+      <div className="p-6 md:p-10">
+        {/* Header section */}
+        <div className="flex flex-col md:flex-row justify-between items-start gap-6 mb-8">
           <div>
-            <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
-              <div style={{ width: "28px", height: "28px", borderRadius: "8px", background: "linear-gradient(135deg,#6366f1,#8b5cf6)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.85rem" }}>📈</div>
-              <span style={{ fontWeight: "800", fontSize: "1.1rem", color: "#1e293b", letterSpacing: "-0.02em" }}>ROAS Calculator</span>
-              <span style={{ fontSize: "0.6rem", fontWeight: "700", background: "linear-gradient(135deg,#6366f1,#8b5cf6)", color: "#fff", padding: "0.15rem 0.45rem", borderRadius: "999px" }}>PRO</span>
+            <div className="flex items-center gap-2 text-teal-600 mb-2 font-bold tracking-widest text-[11px] uppercase">
+              <TrendingUp className="w-4 h-4" /> Campaign Profitability
             </div>
-            <div style={{ fontSize: "0.67rem", color: "#94a3b8", marginTop: "0.1rem" }}>Return On Ad Spend · 7 Modes</div>
+            <h1 className="text-3xl md:text-4xl font-black text-slate-800 tracking-tight mb-3">
+              ROAS and ROI Calculator
+            </h1>
+            <p className="text-slate-500 text-sm md:text-base max-w-2xl">
+              Enter spend, attributed revenue and margin. You will see ROAS, the break-even threshold and the estimated result after the costs you provide.
+            </p>
+          </div>
+          <div className="bg-slate-50/80 border border-slate-200 rounded-xl p-4 max-w-[240px] flex items-start gap-3 w-full md:w-auto">
+            <Shield className="w-5 h-5 text-teal-700 shrink-0 mt-0.5" />
+            <div>
+              <div className="text-sm font-bold text-slate-800">Verified July 14, 2026</div>
+              <div className="text-xs text-slate-500 mt-1">Calculations run locally in your browser.</div>
+            </div>
           </div>
         </div>
-      </div>
 
-      <div style={{ maxWidth: "600px", margin: "0 auto", padding: "1.25rem 1rem 3rem" }}>
-        {/* Tab pills — scrollable */}
-        <div style={{ overflowX: "auto", paddingBottom: "2px", marginBottom: "1.25rem" }}>
-          <div style={{ display: "flex", gap: "0.35rem", width: "max-content", padding: "0.25rem" }}>
-            {TABS.map(t => (
-              <button key={t.key} onClick={() => setMode(t.key)} style={{
-                display: "flex", alignItems: "center", gap: "0.35rem", padding: "0.5rem 0.875rem",
-                background: mode === t.key ? "linear-gradient(135deg,#6366f1,#8b5cf6)" : "rgba(255,255,255,0.9)",
-                border: mode === t.key ? "none" : "1.5px solid #e2e8f0",
-                borderRadius: "999px", cursor: "pointer", whiteSpace: "nowrap",
-                fontFamily: "'DM Sans', sans-serif", fontWeight: "700", fontSize: "0.75rem",
-                color: mode === t.key ? "#fff" : "#64748b",
-                boxShadow: mode === t.key ? "0 4px 14px rgba(99,102,241,0.35)" : "0 1px 3px rgba(0,0,0,0.06)",
-                transition: "all .2s"
-              }}>
-                <span style={{ fontSize: "0.8rem" }}>{t.icon}</span>
-                {t.label}
+        {/* Edu Banner */}
+        <div
+          onClick={() => setShowEdu(!showEdu)}
+          className="bg-slate-50/50 border border-slate-200 rounded-xl p-4 mb-5 flex items-center justify-between cursor-pointer hover:bg-slate-50 transition-colors"
+        >
+          <div className="flex items-center gap-3">
+            <Lightbulb className="w-5 h-5 text-amber-500" />
+            <h4 className="font-bold text-slate-800 text-sm">ROAS vs ROI - what's the difference?</h4>
+          </div>
+          <ChevronRight className={`w-5 h-5 text-blue-500 transition-transform ${showEdu ? "rotate-90" : ""}`} />
+        </div>
+
+        {showEdu && (
+          <div className="bg-white border border-slate-200 rounded-xl p-5 mb-5 grid md:grid-cols-2 gap-6 text-sm text-slate-700 animate-in fade-in slide-in-from-top-2">
+            <div>
+              <h5 className="font-bold text-slate-900 mb-2 flex items-center gap-2">
+                <TrendingUp className="w-4 h-4 text-blue-600" /> ROAS (Return on Ad Spend)
+              </h5>
+              <p className="bg-blue-50 py-1 px-3 rounded text-blue-800 font-mono text-xs inline-block mb-3">ROAS = Revenue / Ad spend</p>
+              <p className="mb-2">Measures <strong>campaign efficiency</strong>: how much attributed revenue is generated by each unit of ad spend.</p>
+            </div>
+            <div>
+              <h5 className="font-bold text-slate-900 mb-2 flex items-center gap-2">
+                <DollarSign className="w-4 h-4 text-emerald-600" /> ROI (Return on Investment)
+              </h5>
+              <p className="bg-emerald-50 py-1 px-3 rounded text-emerald-800 font-mono text-xs inline-block mb-3">ROI = (Profit / Costs) × 100%</p>
+              <p className="mb-2">Estimates the <strong>return after the costs entered</strong>. The result is only as complete as the cost data you provide.</p>
+            </div>
+          </div>
+        )}
+
+        {/* Tabs */}
+        <div className="bg-slate-50/80 border border-slate-200 rounded-xl p-1.5 flex flex-wrap gap-1 mb-8">
+          {TABS.map((tab) => {
+            const Icon = tab.icon;
+            const isActive = activeTab === tab.id;
+            return (
+              <button
+                key={tab.id}
+                onClick={() => setActiveTab(tab.id)}
+                className={`flex items-center justify-center gap-2 px-5 py-3 font-bold text-[13px] transition-all rounded-lg flex-1 md:flex-none
+                  ${isActive
+                    ? "bg-white text-slate-800 shadow-sm border-b-2 border-amber-400"
+                    : "text-slate-500 hover:text-slate-700 hover:bg-slate-100/50"
+                  }`}
+              >
+                <Icon className={`w-4 h-4 ${isActive ? "text-slate-700" : "opacity-60"}`} />
+                {tab.label}
               </button>
-            ))}
-          </div>
+            )
+          })}
         </div>
 
-        {mode === "basic"   && <BasicMode />}
-        {mode === "pl"      && <PLMode />}
-        {mode === "funnel"  && <FunnelMode />}
-        {mode === "compare" && <CompareMode />}
-        {mode === "sim"     && <SimulatorMode />}
-        {mode === "target"  && <TargetMode />}
-        {mode === "export"  && <ExportMode />}
+        <div>
+          {/* TAB 1: CALCULATOR */}
+          {activeTab === "calculator" && (
+            <div className="animate-in fade-in duration-300">
+              <div className="grid lg:grid-cols-[1fr_1.3fr] gap-6">
 
-        <div style={{ textAlign: "center", marginTop: "2rem", fontSize: "0.62rem", color: "#cbd5e1", letterSpacing: "0.06em" }}>
-          ROAS = Revenue ÷ Ad Spend · MER = Spend ÷ Revenue · CPA = Spend ÷ Conversions
+                {/* Inputs Column */}
+                <div className="space-y-6">
+
+                  {/* Campaign Data */}
+                  <div className="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
+                    <h5 className="font-bold text-slate-800 mb-5 flex items-center gap-2">
+                      <CreditCard className="w-5 h-5 text-amber-500" /> Campaign data
+                    </h5>
+
+                    <div className="space-y-5">
+                      <div>
+                        <label className="block text-sm font-bold text-slate-700 mb-2">Ad spend</label>
+                        <div className="flex rounded-xl overflow-hidden border border-slate-200 focus-within:ring-2 focus-within:ring-blue-500/20 focus-within:border-blue-500 transition-all">
+                          <input
+                            type="number"
+                            className="flex-1 bg-white py-2.5 pl-4 pr-3 text-slate-800 focus:outline-none"
+                            placeholder="10000"
+                            value={spend}
+                            onChange={(e) => setSpend(e.target.value)}
+                          />
+                          <select
+                            className="bg-slate-100/80 border-l border-slate-200 text-slate-600 font-bold text-sm py-2 px-4 focus:outline-none cursor-pointer"
+                            value={currency}
+                            onChange={(e) => setCurrency(e.target.value)}
+                          >
+                            <option value="PLN">PLN</option>
+                            <option value="INR">INR</option>
+                            <option value="USD">USD</option>
+                            <option value="EUR">EUR</option>
+                          </select>
+                        </div>
+                      </div>
+
+                      <div>
+                        <label className="block text-sm font-bold text-slate-700 mb-2">Campaign revenue</label>
+                        <div className="flex rounded-xl overflow-hidden border border-slate-200 focus-within:ring-2 focus-within:ring-blue-500/20 focus-within:border-blue-500 transition-all">
+                          <input
+                            type="number"
+                            className="flex-1 bg-white py-2.5 pl-4 pr-3 text-slate-800 focus:outline-none"
+                            placeholder="50000"
+                            value={revenue}
+                            onChange={(e) => setRevenue(e.target.value)}
+                          />
+                          <div className="bg-slate-100/80 border-l border-slate-200 text-slate-600 font-bold text-sm py-2.5 px-6 flex items-center justify-center">
+                            {currency}
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="pt-2 border-b border-slate-100 pb-4">
+                        <button
+                          onClick={() => setShowOptional(!showOptional)}
+                          className="flex items-center gap-2 text-sm font-bold text-blue-700 hover:text-blue-800 transition-colors"
+                        >
+                          {showOptional ? <PlusCircle className="w-4 h-4 rotate-45 transition-transform" /> : <PlusCircle className="w-4 h-4 transition-transform" />}
+                          Add optional data: conversions and clicks
+                        </button>
+
+                        {showOptional && (
+                          <div className="mt-4 grid grid-cols-2 gap-4 animate-in slide-in-from-top-2">
+                            <div>
+                              <label className="block text-xs font-bold text-slate-600 mb-1.5">Conversions</label>
+                              <input type="number" className="w-full bg-white border border-slate-200 rounded-xl py-2 px-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500" placeholder="100" value={conversions} onChange={e=>setConversions(e.target.value)} />
+                            </div>
+                            <div>
+                              <label className="block text-xs font-bold text-slate-600 mb-1.5">Clicks</label>
+                              <input type="number" className="w-full bg-white border border-slate-200 rounded-xl py-2 px-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500" placeholder="5000" value={clicks} onChange={e=>setClicks(e.target.value)} />
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Margin & Costs */}
+                  <div className="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
+                    <h5 className="font-bold text-slate-800 mb-5 flex items-center gap-2">
+                      <Percent className="w-5 h-5 text-amber-500" /> Margin and costs
+                    </h5>
+
+                    <div>
+                      <label className="block text-sm font-bold text-slate-700 mb-3">Gross margin (%)</label>
+                      <div className="flex items-center gap-4 mb-4">
+                        <input
+                          type="number"
+                          className="w-20 bg-white border border-slate-200 rounded-lg py-2 px-3 text-center font-bold text-slate-800 focus:outline-none focus:border-blue-500"
+                          value={margin}
+                          onChange={(e) => setMargin(Number(e.target.value))}
+                        />
+                        <input
+                          type="range"
+                          min="0" max="100"
+                          className="flex-1 h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-blue-600"
+                          value={margin}
+                          onChange={(e) => setMargin(Number(e.target.value))}
+                        />
+                      </div>
+                      <div className="flex gap-2 flex-wrap">
+                        {[15, 25, 35, 50, 70].map(val => (
+                          <button
+                            key={val}
+                            onClick={() => setMargin(val)}
+                            className="text-xs px-3 py-1.5 border border-slate-200 bg-white hover:bg-slate-50 rounded-lg font-bold text-slate-500 transition-colors shadow-sm"
+                          >
+                            {val}%
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Results Column */}
+                <div className="bg-slate-50/80 rounded-2xl p-6 border border-slate-200 shadow-sm h-fit">
+                  <h4 className="font-bold text-lg text-slate-900 mb-4">
+                    Analysis results
+                  </h4>
+
+                  {/* Main Result Card */}
+                  <div className="bg-[#1e3a5f] rounded-xl p-6 mb-4 text-white shadow-sm">
+                    <div className="text-[10px] font-bold uppercase tracking-widest text-teal-400 mb-8">Campaign Result</div>
+                    <div className="text-4xl md:text-5xl font-black font-mono tracking-tighter mb-4">
+                      {calcProfit === null ? "—" : `${isProfitable ? "" : ""}${fmtCurr(calcProfit, currency)}`}
+                    </div>
+                    <div className="text-sm font-bold">Estimated result</div>
+                    <div className="text-xs text-slate-300 font-medium mt-0.5">after the costs entered</div>
+                  </div>
+
+                  {/* Top Metric Cards */}
+                  <div className="grid grid-cols-3 gap-3 mb-4">
+                    <div className="bg-white p-5 rounded-xl border border-slate-200 text-center flex flex-col items-center justify-center shadow-sm">
+                      <div className="text-2xl font-black text-slate-900 font-mono mb-2">{calcRoas ? `${fmt(calcRoas)}` : "—"}</div>
+                      <div className="text-[13px] font-bold text-slate-600">ROAS</div>
+                      <div className="text-[10px] text-slate-400 mt-1">-</div>
+                    </div>
+
+                    <div className="bg-white p-5 rounded-xl border border-slate-200 text-center flex flex-col items-center justify-center shadow-sm">
+                      <div className="text-2xl font-black text-slate-900 font-mono mb-2">{calcRoi !== null ? `${calcRoi > 0 ? "" : ""}${fmt(calcRoi)}%` : "—"}</div>
+                      <div className="text-[13px] font-bold text-slate-600">ROI</div>
+                      <div className="text-[10px] text-slate-400 mt-1">return on investment</div>
+                    </div>
+
+                    <div className="bg-white p-5 rounded-xl border border-slate-200 text-center flex flex-col items-center justify-center shadow-sm">
+                      <div className="text-2xl font-black text-slate-900 font-mono mb-2">{calcBreakeven ? `${fmt(calcBreakeven)}` : "—"}</div>
+                      <div className="text-[13px] font-bold text-slate-600">Break-even ROAS</div>
+                      <div className="text-[10px] text-slate-400 mt-1">minimum ROAS for zero profit</div>
+                    </div>
+                  </div>
+
+                  {/* Secondary Metrics Toggle */}
+                  <button
+                    onClick={() => setShowSecondary(!showSecondary)}
+                    className="flex items-center gap-1.5 text-xs font-bold text-slate-600 hover:text-slate-800 transition-colors mb-4"
+                  >
+                    <Play className={`w-3 h-3 fill-current transition-transform ${showSecondary ? "rotate-90" : ""}`} />
+                    Show supporting metrics: CPA, CPC, AOV and CR
+                  </button>
+
+                  {showSecondary && (
+                    <div className="grid grid-cols-4 gap-2 mb-4 animate-in fade-in slide-in-from-top-2">
+                      <div className="bg-white p-3 rounded-lg border border-slate-200 text-center">
+                        <div className="text-sm font-black text-slate-800 font-mono">{cpa !== null ? fmtCurr(cpa, currency) : "—"}</div>
+                        <div className="text-[9px] font-bold text-slate-500 uppercase mt-1">CPA</div>
+                      </div>
+                      <div className="bg-white p-3 rounded-lg border border-slate-200 text-center">
+                        <div className="text-sm font-black text-slate-800 font-mono">{cpc !== null ? fmtCurr(cpc, currency) : "—"}</div>
+                        <div className="text-[9px] font-bold text-slate-500 uppercase mt-1">CPC</div>
+                      </div>
+                      <div className="bg-white p-3 rounded-lg border border-slate-200 text-center">
+                        <div className="text-sm font-black text-slate-800 font-mono">{aov !== null ? fmtCurr(aov, currency) : "—"}</div>
+                        <div className="text-[9px] font-bold text-slate-500 uppercase mt-1">AOV</div>
+                      </div>
+                      <div className="bg-white p-3 rounded-lg border border-slate-200 text-center">
+                        <div className="text-sm font-black text-slate-800 font-mono">{cr !== null ? `${fmt(cr, 1)}%` : "—"}</div>
+                        <div className="text-[9px] font-bold text-slate-500 uppercase mt-1">CR%</div>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Profitability Bar */}
+                  {calcRoas && calcBreakeven && (
+                    <div className="mt-6">
+                      <div className="relative h-4 rounded-sm overflow-hidden bg-[--primary]">
+                        {/* Current ROAS marker pointing down */}
+                        <div
+                          className="absolute -top-3 w-0 h-0 border-l-[6px] border-r-[6px] border-t-[8px] border-transparent border-t-slate-800 z-20 transition-all duration-500"
+                          style={{ left: `calc(${getIndicatorPosition()}% - 6px)` }}
+                        ></div>
+                        {/* Marker Line */}
+                        <div
+                          className="absolute top-0 bottom-0 w-0.5 bg-slate-800 z-10 transition-all duration-500"
+                          style={{ left: `${getIndicatorPosition()}%` }}
+                        ></div>
+                      </div>
+                      <div className="flex justify-between text-[11px] font-semibold text-slate-500 mt-2">
+                        <span>Loss</span>
+                        <span className="text-slate-800 font-bold">Break-even: {fmt(calcBreakeven)}</span>
+                        <span>Profit</span>
+                      </div>
+                    </div>
+                  )}
+
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* TAB 2: BREAKEVEN */}
+          {activeTab === "breakeven" && (
+            <div className="animate-in fade-in duration-300">
+              <div className="bg-blue-50 text-blue-800 p-4 rounded-2xl text-sm mb-8 flex gap-3">
+                <Shield className="w-5 h-5 shrink-0 text-blue-600" />
+                <p><strong>Break-even ROAS</strong> is the threshold at which attributed revenue covers ad spend and the percentage costs entered. It does not include costs you have not provided.</p>
+              </div>
+
+              <div className="grid md:grid-cols-2 gap-8">
+                <div className="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm space-y-5">
+                  <h5 className="font-bold text-slate-800 mb-2 flex items-center gap-2">
+                    <Percent className="w-5 h-5 text-(--primary)" /> Your cost structure
+                  </h5>
+
+                  <div>
+                    <label className="block text-sm font-semibold text-slate-700 mb-1.5">Gross margin (%)</label>
+                    <input type="number" className="w-full bg-white border border-slate-200 rounded-xl py-2 px-3 focus:outline-none focus:border-(--primary)" value={beMargin} onChange={e=>setBeMargin(Number(e.target.value))} />
+                    <p className="text-xs text-slate-500 mt-1">(Selling price - product cost) / Selling price × 100</p>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-semibold text-slate-700 mb-1.5">Variable costs (% of revenue)</label>
+                    <input type="number" className="w-full bg-white border border-slate-200 rounded-xl py-2 px-3 focus:outline-none focus:border-(--primary)" value={beVarCosts} onChange={e=>setBeVarCosts(Number(e.target.value))} />
+                    <p className="text-xs text-slate-500 mt-1">Commissions, payments, packaging</p>
+                  </div>
+                  <hr className="border-slate-200" />
+                  <div>
+                    <label className="block text-sm font-semibold text-slate-700 mb-1.5">Target Profit Margin (%)</label>
+                    <input type="number" className="w-full bg-white border border-slate-200 rounded-xl py-2 px-3 focus:outline-none focus:border-(--primary)" value={beTargetProfit} onChange={e=>setBeTargetProfit(Number(e.target.value))} />
+                    <p className="text-xs text-slate-500 mt-1">Desired profit after ad spend & costs</p>
+                  </div>
+                </div>
+
+                <div>
+                  <h4 className="font-extrabold text-xl text-slate-800 mb-5 flex items-center gap-2">
+                    <Scale className="w-6 h-6 text-emerald-500" /> Results
+                  </h4>
+
+                  {canAchieveProfit ? (
+                    <div className="space-y-4">
+                      <div className="bg-emerald-50 border border-emerald-200 rounded-2xl p-6 text-center">
+                        <div className="text-sm font-bold text-emerald-800 uppercase tracking-wide mb-2">Required ROAS</div>
+                        <div className="text-5xl font-black font-mono text-emerald-600">{fmt(beRoasFinal)}x</div>
+                        <div className="text-sm text-emerald-700 mt-2">To achieve {beTargetProfit}% profit margin</div>
+                      </div>
+
+                      <div className="grid grid-cols-2 gap-4">
+                        <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+                          <div className="text-xs font-bold text-slate-500 uppercase tracking-wide mb-1">Net Margin</div>
+                          <div className="text-xl font-black text-slate-700 font-mono">{fmt(beMargin - beVarCosts, 1)}%</div>
+                        </div>
+                        <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+                          <div className="text-xs font-bold text-slate-500 uppercase tracking-wide mb-1">Break-even ROAS</div>
+                          <div className="text-xl font-black text-slate-700 font-mono">{fmt(1/beNetMarginFrac)}x</div>
+                        </div>
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="bg-red-50 border border-red-200 rounded-2xl p-6 text-red-800 text-center">
+                      <AlertTriangle className="w-8 h-8 mx-auto mb-3 text-red-500" />
+                      <h5 className="font-bold text-lg mb-2">Unachievable target</h5>
+                      <p className="text-sm">Your target profit ({beTargetProfit}%) exceeds your net margin ({fmt(beMargin - beVarCosts, 1)}%). You cannot achieve this profit margin regardless of how high your ROAS is.</p>
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* TAB 3: BUDGET PLANNER */}
+          {activeTab === "budget" && (
+            <div className="animate-in fade-in duration-300">
+              <div className="grid md:grid-cols-2 gap-8">
+                <div className="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm space-y-5">
+                  <h5 className="font-bold text-slate-800 mb-2 flex items-center gap-2">
+                    <Target className="w-5 h-5 text-(--primary)" /> Planner inputs
+                  </h5>
+
+                  <div>
+                    <label className="block text-sm font-semibold text-slate-700 mb-1.5">Target ROAS</label>
+                    <div className="relative">
+                      <input type="number" className="w-full bg-white border border-slate-200 rounded-xl py-2 px-3 pr-8 focus:outline-none focus:border-(--primary)" placeholder="4.0" value={bpTargetRoas} onChange={e=>setBpTargetRoas(e.target.value)} />
+                      <span className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 font-semibold">x</span>
+                    </div>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-semibold text-slate-700 mb-1.5">Ad Budget (Planned Spend)</label>
+                    <div className="relative">
+                      <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 font-semibold">PLN</span>
+                      <input type="number" className="w-full bg-white border border-slate-200 rounded-xl py-2 pl-12 pr-3 focus:outline-none focus:border-(--primary)" placeholder="50000" value={bpSpend} onChange={e=>setBpSpend(e.target.value)} />
+                    </div>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-semibold text-slate-700 mb-1.5">Target Revenue</label>
+                    <div className="relative">
+                      <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 font-semibold">PLN</span>
+                      <input type="number" className="w-full bg-white border border-slate-200 rounded-xl py-2 pl-12 pr-3 focus:outline-none focus:border-(--primary)" placeholder="200000" value={bpTargetRev} onChange={e=>setBpTargetRev(e.target.value)} />
+                    </div>
+                  </div>
+                </div>
+
+                <div className="space-y-4">
+                  <h4 className="font-extrabold text-xl text-slate-800 mb-3 flex items-center gap-2">
+                    <Calendar className="w-6 h-6 text-indigo-500" /> Planning Results
+                  </h4>
+
+                  {neededRev !== null && (
+                    <div className="bg-indigo-50 border border-indigo-200 p-5 rounded-2xl flex items-center justify-between">
+                      <div>
+                        <div className="text-xs font-bold text-indigo-500 uppercase tracking-wide">Revenue needed for {bpTargetRoas}x ROAS</div>
+                        <div className="text-sm text-indigo-700 mt-1">from {fmtCurr(n(bpSpend))} spend</div>
+                      </div>
+                      <div className="text-3xl font-black font-mono text-indigo-600">{fmtCurr(neededRev)}</div>
+                    </div>
+                  )}
+
+                  {maxSpend !== null && (
+                    <div className="bg-emerald-50 border border-emerald-200 p-5 rounded-2xl flex items-center justify-between">
+                      <div>
+                        <div className="text-xs font-bold text-emerald-500 uppercase tracking-wide">Max spend for {fmtCurr(n(bpTargetRev))}</div>
+                        <div className="text-sm text-emerald-700 mt-1">at {bpTargetRoas}x ROAS target</div>
+                      </div>
+                      <div className="text-3xl font-black font-mono text-emerald-600">{fmtCurr(maxSpend)}</div>
+                    </div>
+                  )}
+
+                  {impliedRoas !== null && (
+                    <div className="bg-amber-50 border border-amber-200 p-5 rounded-2xl flex items-center justify-between">
+                      <div>
+                        <div className="text-xs font-bold text-amber-500 uppercase tracking-wide">Implied ROAS</div>
+                        <div className="text-sm text-amber-700 mt-1">to hit revenue with your budget</div>
+                      </div>
+                      <div className="text-3xl font-black font-mono text-amber-600">{fmt(impliedRoas)}x</div>
+                    </div>
+                  )}
+
+                  {!bpTargetRoas && !bpSpend && !bpTargetRev && (
+                    <div className="h-full flex flex-col items-center justify-center p-8 bg-slate-50 border-2 border-dashed border-slate-200 rounded-2xl text-slate-400">
+                      <Target className="w-8 h-8 mb-3 opacity-50" />
+                      <p className="text-sm font-medium">Fill in at least two fields to see planning results.</p>
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* TAB 4: COMPARE */}
+          {activeTab === "compare" && (
+            <div className="animate-in fade-in duration-300">
+              <p className="text-sm text-slate-600 mb-6">Compare multiple campaigns or channels side by side to see which performs best.</p>
+
+              <div className="grid lg:grid-cols-[1.5fr_1fr] gap-8">
+                <div className="space-y-4">
+                  {campaigns.map((camp, i) => (
+                    <div key={camp.id} className="bg-white border border-slate-200 shadow-sm p-5 rounded-2xl">
+                      <div className="flex items-center gap-3 mb-4">
+                        <div className={`w-4 h-4 rounded-full ${camp.color}`}></div>
+                        <input
+                          type="text"
+                          className="font-bold text-slate-800 bg-transparent border-b border-transparent hover:border-slate-300 focus:border-(--primary) focus:outline-none transition-colors px-1 py-0.5"
+                          value={camp.name}
+                          onChange={(e) => {
+                            const newC = [...campaigns];
+                            newC[i].name = e.target.value;
+                            setCampaigns(newC);
+                          }}
+                        />
+                        {campaigns.length > 2 && (
+                          <button
+                            onClick={() => setCampaigns(c => c.filter(x => x.id !== camp.id))}
+                            className="ml-auto text-xs text-red-500 hover:text-red-700 font-semibold px-2 py-1 bg-red-50 rounded"
+                          >
+                            Remove
+                          </button>
+                        )}
+                      </div>
+                      <div className="grid grid-cols-2 gap-4">
+                        <div>
+                          <label className="block text-xs font-semibold text-slate-500 mb-1">Ad Spend (PLN)</label>
+                          <input type="number" className="w-full bg-white border border-slate-200 rounded-lg py-2 px-3 text-sm focus:outline-none focus:border-(--primary)" value={camp.spend} onChange={(e) => {
+                            const newC = [...campaigns];
+                            newC[i].spend = e.target.value;
+                            setCampaigns(newC);
+                          }} />
+                        </div>
+                        <div>
+                          <label className="block text-xs font-semibold text-slate-500 mb-1">Revenue (PLN)</label>
+                          <input type="number" className="w-full bg-white border border-slate-200 rounded-lg py-2 px-3 text-sm focus:outline-none focus:border-(--primary)" value={camp.rev} onChange={(e) => {
+                            const newC = [...campaigns];
+                            newC[i].rev = e.target.value;
+                            setCampaigns(newC);
+                          }} />
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+
+                  {campaigns.length < 5 && (
+                    <button
+                      onClick={() => setCampaigns([...campaigns, { id: Date.now(), name: `Campaign ${String.fromCharCode(65 + campaigns.length)}`, spend: "", rev: "", color: PALETTE[campaigns.length % PALETTE.length] }])}
+                      className="w-full py-4 border-2 border-dashed border-slate-200 bg-white rounded-2xl text-slate-500 font-bold hover:bg-slate-50 hover:text-(--primary) hover:border-(--primary)/50 transition-colors flex items-center justify-center gap-2"
+                    >
+                      <PlusCircle className="w-5 h-5" /> Add Campaign
+                    </button>
+                  )}
+                </div>
+
+                <div>
+                  <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm sticky top-6">
+                    <h4 className="font-extrabold text-lg text-slate-800 mb-5 flex items-center gap-2">
+                      <BarChart className="w-5 h-5 text-indigo-500" /> Comparison Results
+                    </h4>
+
+                    <div className="space-y-6">
+                      {campaigns.map(camp => {
+                        const roas = n(camp.spend) && n(camp.rev) ? n(camp.rev) / n(camp.spend) : 0;
+                        const maxRoas = Math.max(...campaigns.map(c => (n(c.spend) && n(c.rev) ? n(c.rev) / n(c.spend) : 0)));
+                        const isWinner = roas > 0 && roas === maxRoas;
+
+                        return (
+                          <div key={camp.id}>
+                            <div className="flex justify-between items-end mb-2">
+                              <div className="flex items-center gap-2">
+                                <div className={`w-3 h-3 rounded-full ${camp.color}`}></div>
+                                <span className={`font-bold text-sm ${isWinner ? "text-slate-900" : "text-slate-600"}`}>
+                                  {camp.name} {isWinner && "🏆"}
+                                </span>
+                              </div>
+                              <span className="font-black font-mono text-lg text-slate-800">{roas > 0 ? `${fmt(roas)}x` : "—"}</span>
+                            </div>
+                            <div className="h-2.5 bg-slate-100 rounded-full overflow-hidden">
+                              <div
+                                className={`h-full ${camp.color} rounded-full transition-all duration-500`}
+                                style={{ width: maxRoas > 0 ? `${(roas / maxRoas) * 100}%` : "0%" }}
+                              ></div>
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* TAB 5: GUIDE */}
+          {activeTab === "guide" && (
+            <div className="animate-in fade-in duration-300 max-w-3xl">
+              <h3 className="text-2xl font-bold text-slate-800 mb-6">Comprehensive Guide to ROAS</h3>
+
+              <div className="prose prose-slate max-w-none">
+                <p className="text-lg text-slate-600 mb-8">
+                  <strong>ROAS (Return on Ad Spend)</strong> is one of the most important metrics in digital marketing. It measures the gross revenue generated for every dollar spent on advertising.
+                </p>
+
+                <div className="bg-white shadow-sm border border-slate-200 rounded-2xl p-6 mb-8">
+                  <h4 className="font-bold text-slate-800 text-lg mb-3 flex items-center gap-2">
+                    <Calculator className="w-5 h-5 text-(--primary)" /> The Formula
+                  </h4>
+                  <div className="bg-slate-50 border border-slate-200 p-4 rounded-xl font-mono text-center text-lg text-slate-700 mb-4">
+                    ROAS = Total Campaign Revenue / Total Ad Spend
+                  </div>
+                  <p className="text-sm text-slate-600">
+                    If you spend PLN 10,000 on ads and generate PLN 40,000 in sales, your ROAS is 4.0x (or 400%). This means you made PLN 4 for every PLN 1 spent on ads.
+                  </p>
+                </div>
+
+                <div className="bg-amber-50 border border-amber-200 rounded-2xl p-6 mb-8">
+                  <h4 className="font-bold text-amber-900 text-lg mb-3 flex items-center gap-2">
+                    <Scale className="w-5 h-5 text-amber-600" /> Break-Even ROAS
+                  </h4>
+                  <p className="text-sm text-amber-800 mb-4">
+                    Knowing your ROAS is useless if you don't know your break-even point. A ROAS of 3.0x sounds great, but if your product margins are low, you might actually be losing money!
+                  </p>
+                  <ul className="list-disc pl-5 space-y-2 text-sm text-amber-900/80">
+                    <li><strong>Gross Margin:</strong> (Selling Price - Cost of Goods) / Selling Price</li>
+                    <li><strong>Break-Even ROAS =</strong> 1 / Gross Margin %</li>
+                  </ul>
+                  <p className="text-sm text-amber-800 mt-4 font-medium">
+                    Example: If your margin is 25%, your break-even ROAS is 4.0x (1 / 0.25). You need a ROAS higher than 4.0x to make a profit.
+                  </p>
+                </div>
+              </div>
+            </div>
+          )}
+
         </div>
       </div>
     </div>

@@ -3,47 +3,39 @@ export const spec = {
   ...{
   "slug": "hourly-to-salary-calculator",
   "title": "Hourly to Salary Calculator",
-  "description": "Convert hourly wage to annual salary based on hours worked per year.",
+  "description": "Convert an hourly wage into daily, weekly, monthly and yearly pay.",
   "badge": "Finance",
   "category": [
     "Finance"
   ],
-  "icon": "calculator",
+  "icon": "banknote",
   "iconColor": "text-emerald-600",
   "fields": [
     {
-      "key": "hourlywage",
-      "label": "Hourly Wage",
+      "key": "rate",
+      "label": "Hourly rate",
       "type": "number",
-      "default": "50",
-      "suffix": "$"
+      "default": "25"
     },
     {
-      "key": "hoursperweek",
-      "label": "Hours Per Week",
+      "key": "hours",
+      "label": "Hours per week",
       "type": "number",
       "default": "40"
     },
     {
-      "key": "weeksperyear",
-      "label": "Weeks Per Year",
+      "key": "weeks",
+      "label": "Weeks per year",
       "type": "number",
       "default": "52"
     }
-  ],
-  "presets": [
-    {
-      "label": "Example",
-      "values": {
-        "hourlyWage": "50",
-        "hoursPerWeek": "40",
-        "weeksPerYear": "52"
-      }
-    }
-  ],
-  "note": "This calculator assumes standard work hours and does not account for overtime or taxes."
+  ]
 },
-  compute: (values, mode) => { let hourlyWage = values.hourlyWage || 0; let hoursPerWeek = values.hoursPerWeek || 0; let weeksPerYear = values.weeksPerYear || 0; if (hoursPerWeek === 0 || weeksPerYear === 0) return { result: 'Please enter valid hours per week and weeks per year.' }; let annualSalary = hourlyWage * hoursPerWeek * weeksPerYear; return { result: '$' + annualSalary.toFixed(2), caption: 'Annual Salary', rows: [['Hourly Wage', values.hourlyWage + '$'], ['Hours Per Week', values.hoursPerWeek], ['Weeks Per Year', values.weeksPerYear]] }; },
+  compute: (values) => { const num=(v)=>typeof v==="number"?v:Number(v); const money=(n)=>Number.isFinite(Number(n))?Number(n).toLocaleString(undefined,{maximumFractionDigits:2}):"—";
+      const weekly = num(values.rate) * num(values.hours);
+      const annual = weekly * num(values.weeks);
+      return { result: money(annual) + " / year", rows: [["Monthly", money(annual / 12)], ["Weekly", money(weekly)], ["Daily", money(num(values.rate) * (num(values.hours) / 5))]] };
+    },
 };
 
 export default spec;

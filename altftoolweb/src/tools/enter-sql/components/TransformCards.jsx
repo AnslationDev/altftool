@@ -1,3 +1,5 @@
+"use client";
+
 import React from 'react';
 import { AlignLeft, ClipboardPaste, Minimize2, Quote } from 'lucide-react';
 

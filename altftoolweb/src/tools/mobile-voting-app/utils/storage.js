@@ -1,3 +1,5 @@
+"use client";
+
 const STORAGE_KEY = "mobile_voting_polls";
 const SESSION_KEY = "mobile_voting_session";
 

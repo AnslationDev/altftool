@@ -1,3 +1,5 @@
+"use client";
+
 import React from 'react';
 import { Box as BoxIcon, Cylinder as CylinderIcon, Plus, Shapes, Sparkles, Triangle, Layers } from 'lucide-react';
 import { generatePenroseTriangle, generateImpossibleCube, generatePenroseStairs } from '../utils/objectGenerators';

@@ -1,0 +1,304 @@
+/* CrashClaim Law — lander styles. All classes prefixed "crashclaim-". */
+
+.crashclaim-page {
+  --cc-slate: #1f2937;
+  --cc-slate-deep: #111827;
+  --cc-orange: #f97316;
+  --cc-orange-dark: #c2540a;
+  --cc-paper: #f8fafc;
+  --cc-line: #e2e8f0;
+  --cc-ink: #1f2937;
+  --cc-muted: #4b5563;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+  color: var(--cc-ink);
+  background: var(--cc-paper);
+  line-height: 1.6;
+  padding-bottom: 76px; /* room for sticky call bar */
+}
+.crashclaim-page * { box-sizing: border-box; }
+.crashclaim-page img { max-width: 100%; display: block; }
+.crashclaim-wrap { max-width: 1120px; margin: 0 auto; padding: 0 24px; }
+.crashclaim-page h1,
+.crashclaim-page h2,
+.crashclaim-page h3 {
+  font-family: "Arial Narrow", "Helvetica Neue", Arial, sans-serif;
+  font-weight: 800;
+  letter-spacing: 0.2px;
+  line-height: 1.12;
+  margin: 0;
+  text-transform: uppercase;
+}
+.crashclaim-page a:focus-visible,
+.crashclaim-page button:focus-visible {
+  outline: 3px solid var(--cc-orange);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+.crashclaim-hazard {
+  height: 10px;
+  background: repeating-linear-gradient(-45deg, var(--cc-orange) 0 14px, var(--cc-slate-deep) 14px 28px);
+}
+
+/* ---------- Buttons ---------- */
+.crashclaim-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--cc-orange);
+  color: #fff;
+  font-weight: 800;
+  font-size: 1rem;
+  text-decoration: none;
+  padding: 15px 28px;
+  border-radius: 8px;
+  border: 2px solid var(--cc-orange);
+  transition: transform 0.15s ease, background 0.15s ease, box-shadow 0.15s ease;
+}
+.crashclaim-btn:hover {
+  background: var(--cc-orange-dark);
+  border-color: var(--cc-orange-dark);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(249, 115, 22, 0.35);
+}
+.crashclaim-btn--ghost {
+  background: transparent;
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.55);
+}
+.crashclaim-btn--ghost:hover { background: rgba(255, 255, 255, 0.12); box-shadow: none; }
+.crashclaim-phone-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: inherit;
+  font-weight: 800;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: color 0.15s ease;
+}
+.crashclaim-phone-link:hover { color: var(--cc-orange); }
+
+/* ---------- Nav ---------- */
+.crashclaim-nav {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  background: var(--cc-slate-deep);
+  color: #fff;
+  border-bottom: 3px solid var(--cc-orange);
+}
+.crashclaim-nav-inner { display: flex; align-items: center; gap: 24px; padding: 14px 24px; max-width: 1120px; margin: 0 auto; }
+.crashclaim-logo { display: flex; align-items: center; gap: 10px; color: #fff; text-decoration: none; }
+.crashclaim-logo-badge {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: var(--cc-orange);
+  display: grid;
+  place-items: center;
+  color: #fff;
+}
+.crashclaim-logo-name { font-family: "Arial Narrow", Arial, sans-serif; font-weight: 800; font-size: 1.25rem; text-transform: uppercase; letter-spacing: 0.5px; }
+.crashclaim-logo-name span { color: var(--cc-orange); }
+.crashclaim-nav-links { display: flex; gap: 22px; margin-left: auto; }
+.crashclaim-nav-links a { color: #cbd5e1; text-decoration: none; font-size: 0.92rem; font-weight: 600; transition: color 0.15s ease; }
+.crashclaim-nav-links a:hover { color: var(--cc-orange); }
+.crashclaim-nav-phone { color: #fff; font-size: 1.02rem; }
+.crashclaim-nav .crashclaim-btn { padding: 10px 18px; font-size: 0.9rem; }
+
+/* ---------- Hero ---------- */
+.crashclaim-hero { background: linear-gradient(155deg, var(--cc-slate-deep) 0%, var(--cc-slate) 70%); color: #fff; }
+.crashclaim-hero-grid { display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 52px; align-items: center; padding: 72px 24px; max-width: 1120px; margin: 0 auto; }
+.crashclaim-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(249, 115, 22, 0.16);
+  border: 1px solid rgba(249, 115, 22, 0.5);
+  color: #fdba74;
+  font-weight: 700;
+  font-size: 0.82rem;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  padding: 7px 14px;
+  border-radius: 999px;
+  margin-bottom: 20px;
+}
+.crashclaim-hero h1 { font-size: clamp(2.3rem, 4.6vw, 3.6rem); }
+.crashclaim-hero h1 em { font-style: normal; color: var(--cc-orange); }
+.crashclaim-hero-sub { color: #d1d5db; font-size: 1.12rem; margin: 20px 0 26px; max-width: 34rem; }
+.crashclaim-hero-points { list-style: none; margin: 0 0 30px; padding: 0; display: grid; gap: 10px; }
+.crashclaim-hero-points li { display: flex; align-items: center; gap: 10px; color: #e5e7eb; font-weight: 600; font-size: 0.98rem; }
+.crashclaim-hero-points svg { color: var(--cc-orange); flex-shrink: 0; }
+.crashclaim-hero-ctas { display: flex; flex-wrap: wrap; gap: 14px; align-items: center; }
+.crashclaim-hero-figure { position: relative; }
+.crashclaim-hero-img { aspect-ratio: 4 / 5; border-radius: 14px; overflow: hidden; border: 3px solid rgba(255, 255, 255, 0.14); }
+.crashclaim-hero-img img { width: 100%; height: 100%; object-fit: cover; }
+.crashclaim-clock-badge {
+  position: absolute;
+  bottom: -22px;
+  left: -22px;
+  background: var(--cc-orange);
+  color: #fff;
+  border-radius: 12px;
+  padding: 14px 18px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+}
+.crashclaim-clock-badge svg { animation: crashclaim-tick 8s linear infinite; }
+.crashclaim-clock-num { font-family: "Arial Narrow", Arial, sans-serif; font-size: 1.7rem; font-weight: 800; line-height: 1; }
+.crashclaim-clock-label { font-size: 0.72rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; opacity: 0.92; }
+@keyframes crashclaim-tick {
+  0%, 96% { transform: rotate(0deg); }
+  98% { transform: rotate(12deg); }
+  100% { transform: rotate(0deg); }
+}
+
+/* ---------- Stats strip ---------- */
+.crashclaim-stats { background: #fff; border-bottom: 1px solid var(--cc-line); }
+.crashclaim-stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; padding: 34px 24px; max-width: 1120px; margin: 0 auto; }
+.crashclaim-stat { text-align: center; border-left: 3px solid var(--cc-orange); padding: 4px 12px; }
+.crashclaim-stat strong { display: block; font-family: "Arial Narrow", Arial, sans-serif; font-size: 1.9rem; font-weight: 800; color: var(--cc-slate); }
+.crashclaim-stat span { color: var(--cc-muted); font-size: 0.88rem; font-weight: 600; }
+
+/* ---------- Sections ---------- */
+.crashclaim-section { padding: 78px 0; }
+.crashclaim-section--tint { background: #fff; }
+.crashclaim-section-head { max-width: 640px; margin-bottom: 44px; }
+.crashclaim-eyebrow { color: var(--cc-orange); font-weight: 800; font-size: 0.82rem; letter-spacing: 2px; text-transform: uppercase; display: block; margin-bottom: 10px; }
+.crashclaim-section-head h2 { font-size: clamp(1.7rem, 3.2vw, 2.4rem); color: var(--cc-slate-deep); }
+.crashclaim-section-head p { color: var(--cc-muted); margin: 14px 0 0; }
+
+/* ---------- Checklist ---------- */
+.crashclaim-checklist { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; }
+.crashclaim-check-item {
+  display: flex;
+  gap: 18px;
+  background: #fff;
+  border: 1px solid var(--cc-line);
+  border-radius: 12px;
+  padding: 22px;
+  transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+}
+.crashclaim-check-item:hover { transform: translateY(-3px); border-color: var(--cc-orange); box-shadow: 0 10px 24px rgba(31, 41, 55, 0.1); }
+.crashclaim-check-num {
+  font-family: "Arial Narrow", Arial, sans-serif;
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: var(--cc-orange);
+  line-height: 1;
+  min-width: 52px;
+}
+.crashclaim-check-item h3 { font-size: 1.08rem; color: var(--cc-slate-deep); margin-bottom: 6px; }
+.crashclaim-check-item p { margin: 0; color: var(--cc-muted); font-size: 0.94rem; }
+
+/* ---------- Case cards ---------- */
+.crashclaim-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.crashclaim-card { background: #fff; border: 1px solid var(--cc-line); border-radius: 12px; overflow: hidden; transition: transform 0.15s ease, box-shadow 0.15s ease; }
+.crashclaim-card:hover { transform: translateY(-4px); box-shadow: 0 14px 30px rgba(31, 41, 55, 0.14); }
+.crashclaim-card-img { aspect-ratio: 3 / 2; overflow: hidden; }
+.crashclaim-card-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.35s ease; }
+.crashclaim-card:hover .crashclaim-card-img img { transform: scale(1.05); }
+.crashclaim-card-body { padding: 22px; border-top: 3px solid var(--cc-orange); }
+.crashclaim-card-body h3 { font-size: 1.15rem; color: var(--cc-slate-deep); margin-bottom: 8px; }
+.crashclaim-card-body p { margin: 0; color: var(--cc-muted); font-size: 0.94rem; }
+
+/* ---------- 24-hour steps ---------- */
+.crashclaim-steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; counter-reset: crashclaim-step; }
+.crashclaim-step { background: var(--cc-slate-deep); color: #fff; border-radius: 12px; padding: 26px; position: relative; overflow: hidden; }
+.crashclaim-step::after { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 6px; background: repeating-linear-gradient(-45deg, var(--cc-orange) 0 10px, transparent 10px 20px); }
+.crashclaim-step-time { color: var(--cc-orange); font-family: "Arial Narrow", Arial, sans-serif; font-weight: 800; font-size: 1.05rem; letter-spacing: 1px; text-transform: uppercase; display: flex; align-items: center; gap: 8px; margin-bottom: 12px; }
+.crashclaim-step h3 { font-size: 1.12rem; margin-bottom: 8px; }
+.crashclaim-step p { margin: 0; color: #cbd5e1; font-size: 0.93rem; }
+
+/* ---------- CTA bands ---------- */
+.crashclaim-band { background: var(--cc-slate); color: #fff; position: relative; }
+.crashclaim-band-inner { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 24px; padding: 54px 24px; max-width: 1120px; margin: 0 auto; }
+.crashclaim-band h2 { font-size: clamp(1.5rem, 2.8vw, 2.1rem); }
+.crashclaim-band p { color: #d1d5db; margin: 10px 0 0; max-width: 34rem; }
+.crashclaim-band-actions { display: flex; flex-wrap: wrap; gap: 14px; align-items: center; }
+.crashclaim-band-phone { font-size: 1.35rem; color: #fff; }
+
+/* ---------- Why / split ---------- */
+.crashclaim-split { display: grid; grid-template-columns: 0.9fr 1.1fr; gap: 52px; align-items: center; }
+.crashclaim-split-img { aspect-ratio: 4 / 3; border-radius: 14px; overflow: hidden; border: 1px solid var(--cc-line); }
+.crashclaim-split-img img { width: 100%; height: 100%; object-fit: cover; }
+.crashclaim-why-list { list-style: none; margin: 26px 0 0; padding: 0; display: grid; gap: 16px; }
+.crashclaim-why-list li { display: flex; gap: 14px; }
+.crashclaim-why-icon { width: 42px; height: 42px; border-radius: 10px; background: rgba(249, 115, 22, 0.14); color: var(--cc-orange); display: grid; place-items: center; flex-shrink: 0; }
+.crashclaim-why-list h3 { font-size: 1.02rem; color: var(--cc-slate-deep); }
+.crashclaim-why-list p { margin: 4px 0 0; color: var(--cc-muted); font-size: 0.93rem; }
+
+/* ---------- FAQ ---------- */
+.crashclaim-faq { max-width: 780px; margin: 0 auto; display: grid; gap: 12px; }
+.crashclaim-faq-item { background: #fff; border: 1px solid var(--cc-line); border-radius: 10px; overflow: hidden; }
+.crashclaim-faq-item[data-open="true"] { border-color: var(--cc-orange); }
+.crashclaim-faq-q {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  background: none;
+  border: 0;
+  padding: 18px 22px;
+  font: inherit;
+  font-weight: 700;
+  color: var(--cc-slate-deep);
+  text-align: left;
+  cursor: pointer;
+  transition: color 0.15s ease;
+}
+.crashclaim-faq-q:hover { color: var(--cc-orange); }
+.crashclaim-faq-q svg { flex-shrink: 0; color: var(--cc-orange); transition: transform 0.2s ease; }
+.crashclaim-faq-item[data-open="true"] .crashclaim-faq-q svg { transform: rotate(180deg); }
+.crashclaim-faq-a { padding: 0 22px 18px; color: var(--cc-muted); font-size: 0.95rem; animation: crashclaim-fade 0.25s ease; }
+@keyframes crashclaim-fade {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ---------- Footer ---------- */
+.crashclaim-footer { background: var(--cc-slate-deep); color: #94a3b8; padding: 46px 0 120px; font-size: 0.88rem; }
+.crashclaim-footer-top { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 24px; align-items: center; margin-bottom: 26px; }
+.crashclaim-footer a { color: #cbd5e1; }
+.crashclaim-footer a:hover { color: var(--cc-orange); }
+.crashclaim-footer-disclaimer { border-top: 1px solid #374151; padding-top: 22px; line-height: 1.7; max-width: 62rem; }
+
+/* ---------- Sticky call bar ---------- */
+.crashclaim-callbar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 50;
+  background: var(--cc-orange);
+  border-top: 4px solid var(--cc-slate-deep);
+  box-shadow: 0 -8px 24px rgba(0, 0, 0, 0.25);
+}
+.crashclaim-callbar-inner { display: flex; align-items: center; justify-content: center; gap: 22px; flex-wrap: wrap; padding: 12px 20px; max-width: 1120px; margin: 0 auto; }
+.crashclaim-callbar-label { color: #fff; font-weight: 700; font-size: 0.95rem; display: flex; align-items: center; gap: 8px; }
+.crashclaim-callbar-phone { color: #fff; font-family: "Arial Narrow", Arial, sans-serif; font-size: 1.5rem; letter-spacing: 0.5px; }
+.crashclaim-callbar-phone:hover { color: var(--cc-slate-deep); }
+.crashclaim-callbar .crashclaim-btn { background: var(--cc-slate-deep); border-color: var(--cc-slate-deep); padding: 10px 20px; font-size: 0.9rem; }
+.crashclaim-callbar .crashclaim-btn:hover { background: #000; border-color: #000; box-shadow: none; }
+
+/* ---------- Responsive ---------- */
+@media (max-width: 880px) {
+  .crashclaim-nav-links { display: none; }
+  .crashclaim-nav-inner { gap: 14px; }
+  .crashclaim-hero-grid { grid-template-columns: 1fr; padding: 52px 24px 64px; gap: 40px; }
+  .crashclaim-hero-img { aspect-ratio: 4 / 3; }
+  .crashclaim-clock-badge { left: 12px; bottom: -18px; }
+  .crashclaim-stats-grid { grid-template-columns: repeat(2, 1fr); }
+  .crashclaim-checklist { grid-template-columns: 1fr; }
+  .crashclaim-cards { grid-template-columns: 1fr; }
+  .crashclaim-steps { grid-template-columns: 1fr; }
+  .crashclaim-split { grid-template-columns: 1fr; gap: 32px; }
+  .crashclaim-section { padding: 56px 0; }
+  .crashclaim-band-inner { flex-direction: column; align-items: flex-start; }
+  .crashclaim-callbar-label { display: none; }
+  .crashclaim-page { padding-bottom: 68px; }
+}

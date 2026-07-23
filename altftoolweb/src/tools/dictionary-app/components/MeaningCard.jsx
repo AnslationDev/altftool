@@ -1,3 +1,5 @@
+"use client";
+
 import { useState } from "react";
 import { Shapes, ChevronDown, ChevronUp } from "lucide-react";
 import ExampleSentences from "./ExampleSentences.jsx";

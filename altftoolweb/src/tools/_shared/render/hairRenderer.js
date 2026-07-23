@@ -1,3 +1,5 @@
+"use client";
+
 // HairRenderer: renders hair as a naturally-grown, lighting-matched,
 // perspective-warped mass that follows the detected hairline instead of a
 // flat sticker. Edges are feathered and a soft contact shadow falls on the

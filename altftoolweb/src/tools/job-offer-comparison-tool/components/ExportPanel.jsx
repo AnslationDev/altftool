@@ -1,3 +1,5 @@
+"use client";
+
 import React from 'react';
 import { FileJson, Download, Share2 } from 'lucide-react';
 

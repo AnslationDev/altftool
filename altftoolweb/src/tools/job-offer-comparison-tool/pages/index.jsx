@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState, useEffect } from 'react';
 import '../styles/index.css';
 import Header from '../components/Header';

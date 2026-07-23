@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import { GRADE_POINTS } from "../utils/calculator-logic";
 

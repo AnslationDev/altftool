@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState, useEffect } from "react";
 import { Briefcase, FileText, Users, Calendar, ArrowRight, CheckCircle2, Info } from "lucide-react";
 

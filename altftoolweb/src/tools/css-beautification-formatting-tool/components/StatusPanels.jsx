@@ -1,3 +1,5 @@
+"use client";
+
 import { AlertCircle, CheckCircle, Info, ShieldCheck } from "lucide-react";
 
 export default function StatusPanels({ messages, stats, history, restoreHistory }) {

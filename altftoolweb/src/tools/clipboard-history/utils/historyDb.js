@@ -1,3 +1,5 @@
+"use client";
+
 export const HISTORY_KEY = "altftool_clipboard_history_data";
 export const MAX_HISTORY = 500;
 

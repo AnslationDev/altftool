@@ -1,3 +1,5 @@
+"use client";
+
 export const STORAGE_KEY = "chinese_word_segmentation_lab_v1";
 export const HISTORY_LIMIT = 12;
 export const MAX_INPUT_LENGTH = 12000;

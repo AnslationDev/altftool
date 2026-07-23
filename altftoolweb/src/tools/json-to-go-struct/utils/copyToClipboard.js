@@ -1,3 +1,5 @@
+"use client";
+
 export async function copyToClipboard(text) {
   if (!text) return false;
   await navigator.clipboard.writeText(text);

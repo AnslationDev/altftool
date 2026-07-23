@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState, useCallback, useMemo, useRef } from 'react';
 import CanvasToolbar from '../components/CanvasToolbar';
 import ChaosCanvas from '../components/ChaosCanvas';

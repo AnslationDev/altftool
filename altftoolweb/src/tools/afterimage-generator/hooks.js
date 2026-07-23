@@ -1,44 +1,52 @@
 // src/tools/afterimage-generator/hooks.js
 import { useState, useCallback, useRef, useEffect } from 'react';
-import { 
-  getComplementaryColor, 
-  loadImage, 
-  resizeImageToCanvas, 
-  generateNegativeImage, 
-  applyImageFilters,
-  createTimer 
+import {
+  getComplementaryColor,
+  loadImage,
+  resizeImageToCanvas,
+  generateNegativeImage,
+  createTimer,
+  drawShapeOnCanvas
 } from './utils';
 
 export const useAfterimage = ({
   mode,
   selectedColor,
+  selectedShape,
+  shapeSize,
+  backgroundColor,
   uploadedImage,
   intensity,
   onAfterimageGenerated,
 }) => {
   const [isStaring, setIsStaring] = useState(false);
-  const [timerDuration, setTimerDuration] = useState(20);
-  const [timeLeft, setTimeLeft] = useState(20);
+  const [stage, setStage] = useState('prepare'); // 'prepare', 'stare', 'observe'
+  const [timerDuration, setTimerDuration] = useState(10);
+  const [timeLeft, setTimeLeft] = useState(10);
   const timerRef = useRef(null);
 
   const generateAfterimage = useCallback(async () => {
+    setStage('observe');
     if (mode === 'color') {
-      const complementaryColor = getComplementaryColor(selectedColor, intensity.inversionIntensity);
+      const complementaryColor = getComplementaryColor(selectedColor, intensity.inversionIntensity || 1);
       const canvas = document.createElement('canvas');
       canvas.width = 800;
       canvas.height = 600;
       const ctx = canvas.getContext('2d');
-      ctx.fillStyle = complementaryColor;
+      ctx.fillStyle = backgroundColor || '#ffffff';
       ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      // Draw inverted shape on background
+      drawShapeOnCanvas(ctx, selectedShape, canvas.width / 2, canvas.height / 2, shapeSize * 1.8, complementaryColor);
+
       const imageData = canvas.toDataURL();
       onAfterimageGenerated(imageData);
     } else if (mode === 'image' && uploadedImage) {
       try {
         const img = await loadImage(uploadedImage);
         const imageData = await resizeImageToCanvas(img, 800, 600);
-        const adjustedImageData = applyImageFilters(imageData, intensity);
-        const negativeImageData = generateNegativeImage(adjustedImageData, intensity.inversionIntensity);
-        
+        const negativeImageData = generateNegativeImage(imageData, intensity.inversionIntensity || 1);
+
         const canvas = document.createElement('canvas');
         canvas.width = negativeImageData.width;
         canvas.height = negativeImageData.height;
@@ -50,14 +58,15 @@ export const useAfterimage = ({
         console.error('Error generating afterimage:', error);
       }
     }
-  }, [mode, selectedColor, uploadedImage, intensity, onAfterimageGenerated]);
+  }, [mode, selectedColor, selectedShape, shapeSize, backgroundColor, uploadedImage, intensity, onAfterimageGenerated]);
 
   const startStare = useCallback(() => {
     if (isStaring) return;
-    
+
     setTimeLeft(timerDuration);
     setIsStaring(true);
-    
+    setStage('stare');
+
     timerRef.current = createTimer(
       timerDuration,
       (remaining) => {
@@ -68,7 +77,7 @@ export const useAfterimage = ({
         await generateAfterimage();
       }
     );
-    
+
     timerRef.current.start();
   }, [timerDuration, isStaring, generateAfterimage]);
 
@@ -77,6 +86,7 @@ export const useAfterimage = ({
       timerRef.current.stop();
     }
     setIsStaring(false);
+    setStage('prepare');
     setTimeLeft(timerDuration);
   }, [timerDuration]);
 
@@ -85,11 +95,14 @@ export const useAfterimage = ({
       timerRef.current.stop();
     }
     setIsStaring(false);
+    setStage('prepare');
     setTimeLeft(timerDuration);
   }, [timerDuration]);
 
   return {
     isStaring,
+    stage,
+    setStage,
     timerDuration,
     setTimerDuration,
     timeLeft,
@@ -124,7 +137,7 @@ export const useFullscreen = () => {
     const handleFullscreenChange = () => {
       setIsFullscreen(!!document.fullscreenElement);
     };
-    
+
     document.addEventListener('fullscreenchange', handleFullscreenChange);
     return () => document.removeEventListener('fullscreenchange', handleFullscreenChange);
   }, []);

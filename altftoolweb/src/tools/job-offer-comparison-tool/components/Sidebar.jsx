@@ -1,3 +1,5 @@
+"use client";
+
 import React from 'react';
 import { LayoutDashboard, Clock, BarChart3, Settings, Download, HelpCircle, X } from 'lucide-react';
 

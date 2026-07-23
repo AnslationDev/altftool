@@ -1,3 +1,5 @@
+"use client";
+
 import {Circle,Square, Diamond, ArrowDownUp, Database, FileText,MessageSquare, Layers ,GripVertical,
 } from 'lucide-react';
 

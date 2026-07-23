@@ -46,11 +46,10 @@ export default function HistorySection({ history = [], onClearHistory }) {
                 animate={{ scale: 1, opacity: 1 }}
                 transition={{ duration: 0.15, delay: idx * 0.015 }}
                 whileHover={{ scale: 1.15 }}
-                className={`group relative flex h-9 w-9 items-center justify-center rounded-xl text-xs font-bold shadow-sm cursor-pointer transition border ${
-                  isHeads
+                className={`group relative flex h-9 w-9 items-center justify-center rounded-xl text-xs font-bold shadow-sm cursor-pointer transition border ${isHeads
                     ? "bg-[var(--anslation-ds-primary-soft)] text-[var(--primary)] border-[var(--primary)]/30"
                     : "bg-[var(--anslation-ds-secondary-soft)] text-[var(--secondary)] border-[var(--secondary)]/30"
-                }`}
+                  }`}
               >
                 <span>{item}</span>
 

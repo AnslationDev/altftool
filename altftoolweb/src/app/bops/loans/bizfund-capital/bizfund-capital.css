@@ -1,0 +1,207 @@
+/* BizFund Capital — growth-ledger lander */
+.bizfund-page {
+  --bf-paper: #faf7f0;
+  --bf-paper-deep: #f3eee2;
+  --bf-ink: #1d2a24;
+  --bf-muted: #4c5b53;
+  --bf-forest: #065f46;
+  --bf-forest-dark: #044334;
+  --bf-mint: #34d399;
+  --bf-rule: rgba(6, 95, 70, 0.16);
+  --bf-slab: "Rockwell", "Roboto Slab", Georgia, "Times New Roman", serif;
+  background: var(--bf-paper);
+  color: var(--bf-ink);
+  font-family: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  line-height: 1.6;
+  scroll-behavior: smooth;
+}
+.bizfund-page h1, .bizfund-page h2, .bizfund-page h3 { font-family: var(--bf-slab); font-weight: 800; line-height: 1.15; letter-spacing: -0.01em; margin: 0; }
+.bizfund-page a { text-decoration: none; color: inherit; }
+.bizfund-page a:focus-visible, .bizfund-page button:focus-visible { outline: 3px solid var(--bf-mint); outline-offset: 3px; border-radius: 4px; }
+.bizfund-wrap { max-width: 1120px; margin: 0 auto; padding: 0 24px; }
+
+/* Ledger-rule section divider: two thin horizontal lines */
+.bizfund-ledger { position: relative; padding: 72px 0; }
+.bizfund-ledger::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 7px;
+  background:
+    linear-gradient(var(--bf-rule), var(--bf-rule)) 0 0 / 100% 1px no-repeat,
+    linear-gradient(var(--bf-rule), var(--bf-rule)) 0 6px / 100% 1px no-repeat;
+}
+
+/* Nav */
+.bizfund-nav { position: sticky; top: 0; z-index: 40; background: rgba(250, 247, 240, 0.94); backdrop-filter: blur(6px); border-bottom: 2px solid var(--bf-forest); }
+.bizfund-nav-inner { max-width: 1120px; margin: 0 auto; padding: 14px 24px; display: flex; align-items: center; gap: 24px; }
+.bizfund-logo { display: inline-flex; align-items: center; gap: 9px; font-family: var(--bf-slab); font-size: 1.2rem; font-weight: 800; }
+.bizfund-logo em { font-style: normal; color: var(--bf-forest); }
+.bizfund-logo-mark { display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 32px; background: var(--bf-forest); color: var(--bf-mint); border-radius: 7px; }
+.bizfund-nav-links { display: flex; gap: 22px; margin-left: auto; font-size: 0.94rem; font-weight: 600; color: var(--bf-muted); }
+.bizfund-nav-links a { padding: 4px 2px; border-bottom: 2px solid transparent; transition: color 0.15s, border-color 0.15s; }
+.bizfund-nav-links a:hover { color: var(--bf-forest); border-bottom-color: var(--bf-mint); }
+.bizfund-nav-cta { display: flex; align-items: center; gap: 16px; }
+.bizfund-phone-link { display: inline-flex; align-items: center; gap: 7px; font-weight: 700; font-size: 0.94rem; color: var(--bf-forest); }
+.bizfund-phone-link:hover { color: var(--bf-forest-dark); }
+
+/* Buttons */
+.bizfund-btn { display: inline-flex; align-items: center; gap: 9px; padding: 13px 24px; border-radius: 8px; font-weight: 700; font-size: 0.98rem; border: 2px solid var(--bf-forest); transition: transform 0.15s, box-shadow 0.15s, background 0.15s; }
+.bizfund-btn-solid { background: var(--bf-forest); color: #fff; }
+.bizfund-btn-solid:hover { background: var(--bf-forest-dark); transform: translateY(-2px); box-shadow: 0 8px 18px rgba(6, 95, 70, 0.28); }
+.bizfund-btn-ghost { background: transparent; color: var(--bf-forest); }
+.bizfund-btn-ghost:hover { background: rgba(52, 211, 153, 0.14); transform: translateY(-2px); }
+.bizfund-btn-mint { background: var(--bf-mint); border-color: var(--bf-mint); color: var(--bf-forest-dark); }
+.bizfund-btn-mint:hover { transform: translateY(-2px); box-shadow: 0 8px 18px rgba(0, 0, 0, 0.25); }
+.bizfund-nav .bizfund-btn { padding: 10px 18px; font-size: 0.9rem; }
+
+/* Hero */
+.bizfund-hero { padding: 72px 0 84px; overflow: hidden; }
+.bizfund-hero-inner { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 56px; align-items: center; }
+.bizfund-eyebrow { display: inline-flex; align-items: center; gap: 8px; font-size: 0.8rem; font-weight: 800; letter-spacing: 0.09em; text-transform: uppercase; color: var(--bf-forest); background: rgba(52, 211, 153, 0.16); border: 1px solid var(--bf-rule); padding: 6px 14px; border-radius: 999px; margin: 0 0 20px; }
+.bizfund-hero h1 { font-size: clamp(2.2rem, 4.6vw, 3.4rem); margin-bottom: 18px; }
+.bizfund-hero h1 span { color: var(--bf-forest); }
+.bizfund-lede { font-size: 1.12rem; color: var(--bf-muted); max-width: 32em; margin: 0 0 26px; }
+.bizfund-hero-actions { display: flex; flex-wrap: wrap; gap: 14px; margin-bottom: 26px; }
+.bizfund-hero-points { list-style: none; padding: 0; margin: 0 0 34px; display: flex; flex-wrap: wrap; gap: 10px 22px; font-size: 0.92rem; font-weight: 600; color: var(--bf-muted); }
+.bizfund-hero-points li { display: inline-flex; align-items: center; gap: 7px; }
+.bizfund-hero-points svg { color: var(--bf-forest); flex-shrink: 0; }
+
+/* Ascending bar-chart motif */
+.bizfund-bars { display: flex; align-items: flex-end; gap: 10px; height: 88px; border-bottom: 2px solid var(--bf-forest); max-width: 340px; }
+.bizfund-bar { flex: 1; border-radius: 4px 4px 0 0; background: linear-gradient(180deg, var(--bf-mint), var(--bf-forest)); transform-origin: bottom; animation: bizfund-grow 0.9s cubic-bezier(0.2, 0.7, 0.3, 1) backwards; }
+.bizfund-bar:nth-child(2) { animation-delay: 0.12s; }
+.bizfund-bar:nth-child(3) { animation-delay: 0.24s; }
+.bizfund-bar:nth-child(4) { animation-delay: 0.36s; }
+.bizfund-bar:nth-child(5) { animation-delay: 0.48s; }
+.bizfund-bar:nth-child(6) { animation-delay: 0.6s; }
+@keyframes bizfund-grow { from { transform: scaleY(0); } to { transform: scaleY(1); } }
+
+/* Photo frames: square with offset green border */
+.bizfund-frame { position: relative; aspect-ratio: 1 / 1; }
+.bizfund-frame::after { content: ""; position: absolute; inset: 0; transform: translate(14px, 14px); border: 3px solid var(--bf-forest); border-radius: 10px; transition: transform 0.2s; }
+.bizfund-frame:hover::after { transform: translate(9px, 9px); }
+.bizfund-frame img { position: relative; z-index: 1; width: 100%; height: 100%; object-fit: cover; border-radius: 10px; display: block; }
+.bizfund-hero-media { position: relative; padding: 0 14px 14px 0; }
+
+/* Stamp badge */
+.bizfund-stamp {
+  position: absolute; z-index: 2; right: -6px; bottom: 26px;
+  background: var(--bf-paper); border: 3px double var(--bf-forest); border-radius: 8px; padding: 10px 16px;
+  font-family: var(--bf-slab); font-weight: 800; font-size: 1.05rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--bf-forest);
+  box-shadow: 0 6px 16px rgba(29, 42, 36, 0.18); transform: rotate(-8deg);
+  animation: bizfund-stamp-in 0.5s 0.8s cubic-bezier(0.2, 1.4, 0.4, 1) backwards;
+}
+.bizfund-stamp span { display: block; font-family: inherit; font-size: 0.68rem; letter-spacing: 0.04em; text-transform: none; color: var(--bf-muted); }
+@keyframes bizfund-stamp-in {
+  from { opacity: 0; transform: rotate(-8deg) scale(1.6); }
+  to { opacity: 1; transform: rotate(-8deg) scale(1); }
+}
+
+/* Stats strip */
+.bizfund-stats { background: var(--bf-forest); color: #fff; }
+.bizfund-stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; padding: 34px 0; }
+.bizfund-stat { text-align: center; border-left: 1px solid rgba(255, 255, 255, 0.22); }
+.bizfund-stat:first-child { border-left: 0; }
+.bizfund-stat strong { display: block; font-family: var(--bf-slab); font-size: 1.9rem; color: var(--bf-mint); }
+.bizfund-stat small { font-size: 0.85rem; opacity: 0.9; }
+
+/* Section headings */
+.bizfund-kicker { font-size: 0.78rem; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; color: var(--bf-forest); margin: 0 0 10px; }
+.bizfund-h2 { font-size: clamp(1.7rem, 3vw, 2.3rem); margin-bottom: 14px; }
+.bizfund-section-intro { color: var(--bf-muted); max-width: 44em; margin: 0 0 44px; }
+
+/* Product cards */
+.bizfund-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
+.bizfund-card { background: #fff; border: 1px solid var(--bf-rule); border-radius: 12px; overflow: hidden; display: flex; flex-direction: column; transition: transform 0.18s, box-shadow 0.18s; }
+.bizfund-card:hover { transform: translateY(-6px); box-shadow: 0 16px 32px rgba(6, 95, 70, 0.16); }
+.bizfund-card-media { aspect-ratio: 4 / 3; overflow: hidden; border-bottom: 3px solid var(--bf-mint); }
+.bizfund-card-media img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.35s; }
+.bizfund-card:hover .bizfund-card-media img { transform: scale(1.05); }
+.bizfund-card-body { padding: 24px 26px 28px; display: flex; flex-direction: column; gap: 12px; flex: 1; }
+.bizfund-card-body h3 { font-size: 1.25rem; display: flex; align-items: center; gap: 10px; }
+.bizfund-card-body h3 svg { color: var(--bf-forest); }
+.bizfund-card-body p { margin: 0; color: var(--bf-muted); font-size: 0.95rem; flex: 1; }
+.bizfund-card-range { font-family: var(--bf-slab); font-weight: 800; color: var(--bf-forest); border-top: 1px dashed var(--bf-rule); padding-top: 12px; font-size: 0.98rem; }
+
+/* Mid CTA band */
+.bizfund-midcta { background: linear-gradient(120deg, var(--bf-forest-dark), var(--bf-forest)); color: #fff; border-radius: 14px; padding: 40px 44px; display: flex; align-items: center; justify-content: space-between; gap: 28px; flex-wrap: wrap; }
+.bizfund-midcta h2 { font-size: 1.6rem; margin-bottom: 6px; }
+.bizfund-midcta p { margin: 0; opacity: 0.92; font-size: 0.98rem; }
+.bizfund-midcta-actions { display: flex; gap: 14px; flex-wrap: wrap; }
+.bizfund-midcta .bizfund-btn-ghost, .bizfund-final .bizfund-btn-ghost { border-color: var(--bf-mint); color: var(--bf-mint); }
+.bizfund-midcta .bizfund-btn-ghost:hover, .bizfund-final .bizfund-btn-ghost:hover { background: rgba(52, 211, 153, 0.18); }
+
+/* Sample-quote ledger sheet (text-only mock) */
+.bizfund-quote-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center; }
+.bizfund-ledger-sheet { background: #fff; border: 1px solid var(--bf-rule); border-top: 6px solid var(--bf-forest); border-radius: 10px; padding: 28px 30px; box-shadow: 0 14px 30px rgba(29, 42, 36, 0.1); }
+.bizfund-ledger-sheet dl { margin: 0; }
+.bizfund-ledger-sheet h3 { font-size: 1.05rem; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 16px; }
+.bizfund-ledger-row { display: flex; justify-content: space-between; gap: 16px; padding: 11px 2px; border-bottom: 1px solid var(--bf-rule); font-size: 0.95rem; }
+.bizfund-ledger-row dt { color: var(--bf-muted); }
+.bizfund-ledger-row dd { margin: 0; font-weight: 700; font-variant-numeric: tabular-nums; }
+.bizfund-ledger-row-total dd { color: var(--bf-forest); font-family: var(--bf-slab); font-size: 1.05rem; }
+.bizfund-ledger-note { font-size: 0.78rem; color: var(--bf-muted); margin: 14px 0 0; }
+
+/* Steps */
+.bizfund-steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; counter-reset: bizfund-step; }
+.bizfund-step { background: var(--bf-paper-deep); border: 1px solid var(--bf-rule); border-radius: 12px; padding: 28px 26px; transition: transform 0.18s, border-color 0.18s; }
+.bizfund-step:hover { transform: translateY(-4px); border-color: var(--bf-forest); }
+.bizfund-step::before { counter-increment: bizfund-step; content: "0" counter(bizfund-step); font-family: var(--bf-slab); font-weight: 800; font-size: 2rem; color: var(--bf-mint); display: block; margin-bottom: 10px; }
+.bizfund-step h3 { font-size: 1.15rem; margin-bottom: 8px; }
+.bizfund-step p { margin: 0; color: var(--bf-muted); font-size: 0.94rem; }
+
+/* Story */
+.bizfund-story-grid { display: grid; grid-template-columns: 0.9fr 1.1fr; gap: 56px; align-items: center; }
+.bizfund-story-media { padding: 0 14px 14px 0; }
+.bizfund-blockquote { border-left: 4px solid var(--bf-mint); padding-left: 22px; margin: 24px 0 0; font-size: 1.05rem; font-style: italic; }
+.bizfund-blockquote footer { font-style: normal; font-weight: 700; font-size: 0.9rem; color: var(--bf-forest); margin-top: 10px; }
+
+/* FAQ */
+.bizfund-faq-list { max-width: 780px; }
+.bizfund-faq-item { border-bottom: 1px solid var(--bf-rule); }
+.bizfund-faq-q {
+  width: 100%; display: flex; justify-content: space-between; align-items: center; gap: 18px;
+  background: none; border: 0; padding: 20px 4px; cursor: pointer; text-align: left;
+  font-family: var(--bf-slab); font-weight: 700; font-size: 1.05rem; color: var(--bf-ink); transition: color 0.15s;
+}
+.bizfund-faq-q:hover { color: var(--bf-forest); }
+.bizfund-faq-q svg { flex-shrink: 0; color: var(--bf-forest); transition: transform 0.2s; }
+.bizfund-faq-q[aria-expanded="true"] svg { transform: rotate(180deg); }
+.bizfund-faq-a { padding: 0 4px 22px; margin: 0; color: var(--bf-muted); font-size: 0.96rem; max-width: 60em; }
+
+/* Final CTA band */
+.bizfund-final { background: var(--bf-forest-dark); color: #fff; text-align: center; }
+.bizfund-final h2 { font-size: clamp(1.8rem, 3.4vw, 2.5rem); margin-bottom: 14px; }
+.bizfund-final p { max-width: 40em; margin: 0 auto 30px; opacity: 0.92; }
+.bizfund-final-actions { display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; }
+
+/* Footer */
+.bizfund-footer { background: var(--bf-ink); color: rgba(255, 255, 255, 0.82); padding: 40px 0 32px; font-size: 0.88rem; }
+.bizfund-footer-inner { display: flex; justify-content: space-between; gap: 24px; flex-wrap: wrap; align-items: center; }
+.bizfund-footer .bizfund-logo { color: #fff; font-size: 1.05rem; }
+.bizfund-footer a:hover { color: var(--bf-mint); }
+.bizfund-footer-meta { display: inline-flex; align-items: center; gap: 8px; }
+.bizfund-disclaimer { margin: 22px 0 0; padding-top: 18px; border-top: 1px solid rgba(255, 255, 255, 0.18); font-size: 0.76rem; color: rgba(255, 255, 255, 0.6); }
+
+/* Responsive */
+@media (max-width: 880px) {
+  .bizfund-nav-links { display: none; }
+  .bizfund-nav-inner { justify-content: space-between; }
+  .bizfund-hero { padding: 48px 0 60px; }
+  .bizfund-hero-inner, .bizfund-quote-grid, .bizfund-story-grid { grid-template-columns: 1fr; gap: 40px; }
+  .bizfund-story-media { order: -1; }
+  .bizfund-cards, .bizfund-steps { grid-template-columns: 1fr; }
+  .bizfund-stats-grid { grid-template-columns: repeat(2, 1fr); gap: 28px 12px; }
+  .bizfund-stat:nth-child(odd) { border-left: 0; }
+  .bizfund-midcta { padding: 30px 26px; }
+  .bizfund-ledger { padding: 52px 0; }
+  .bizfund-stamp { right: 4px; bottom: 12px; }
+}
+@media (max-width: 480px) {
+  .bizfund-phone-link span { display: none; }
+  .bizfund-hero-actions .bizfund-btn { width: 100%; justify-content: center; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .bizfund-bar, .bizfund-stamp { animation: none; }
+}

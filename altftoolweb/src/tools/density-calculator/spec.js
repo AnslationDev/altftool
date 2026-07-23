@@ -3,47 +3,34 @@ export const spec = {
   ...{
   "slug": "density-calculator",
   "title": "Density Calculator",
-  "description": "Calculate the density of a substance given its mass and volume.",
+  "description": "Density from mass and volume, with common unit conversions.",
   "badge": "Science",
   "category": [
     "Science"
   ],
-  "icon": "density",
-  "iconColor": "text-blue-600",
-  "modes": [
-    {
-      "id": "basic",
-      "label": "Basic"
-    }
-  ],
+  "icon": "box",
+  "iconColor": "text-cyan-600",
   "fields": [
     {
       "key": "mass",
-      "label": "Mass",
+      "label": "Mass (g)",
       "type": "number",
-      "default": "100",
-      "suffix": "g"
+      "default": "100"
     },
     {
       "key": "volume",
-      "label": "Volume",
+      "label": "Volume (cm³ / mL)",
       "type": "number",
-      "default": "50",
-      "suffix": "ml"
+      "default": "50"
     }
-  ],
-  "presets": [
-    {
-      "label": "Example",
-      "values": {
-        "mass": "100",
-        "volume": "50"
-      }
-    }
-  ],
-  "note": "This tool calculates density using the formula: Density = Mass / Volume."
+  ]
 },
-  compute: (values, mode) => { let mass = values.mass, volume = values.volume; if (volume === 0) return { result: 'Error: Volume cannot be zero.' }; let density = mass / volume; return { result: `Density: ${density.toFixed(2)} g/ml`, caption: 'Density is the mass per unit volume.', rows: [['Mass', `${mass} g`], ['Volume', `${volume} ml`]] }; },
+  compute: (values) => { const num=(v)=>typeof v==="number"?v:Number(v); const money=(n)=>Number.isFinite(Number(n))?Number(n).toLocaleString(undefined,{maximumFractionDigits:2}):"—";
+      const v = num(values.volume);
+      if (v === 0) return { result: "—", caption: "Volume can't be zero" };
+      const d = num(values.mass) / v;
+      return { result: d.toFixed(3) + " g/cm³", rows: [["kg/m³", (d * 1000).toFixed(0)], ["vs water", d > 1 ? "sinks" : "floats"]] };
+    },
 };
 
 export default spec;

@@ -1,3 +1,5 @@
+"use client";
+
 import { WaveIcon, InterferenceIcon, StandingWaveIcon, RippleIcon, DoubleSlitIcon, CustomIcon } from "./Icons";
 
 const MODES = [

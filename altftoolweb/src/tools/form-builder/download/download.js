@@ -1,3 +1,5 @@
+"use client";
+
 export const generateHTML = (formTitle, formDescription, formFields = [],theme) => {
   return `<!DOCTYPE html>
 <html lang="en">

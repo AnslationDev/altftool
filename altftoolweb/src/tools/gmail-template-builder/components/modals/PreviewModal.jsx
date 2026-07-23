@@ -1,3 +1,5 @@
+"use client";
+
 import { X } from "lucide-react";
 // --- ERROR RESOLVED: Corrected path and function name ---
 import { generateEmailHtml } from "../../utils/htmlGenerators"; // Path adjusted to go up two levels

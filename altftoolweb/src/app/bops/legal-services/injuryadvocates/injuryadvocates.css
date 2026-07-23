@@ -1,0 +1,816 @@
+/* ============================================================
+   InjuryAdvocates — standalone marketing lander
+   Palette: deep navy #122a46, gold #c9a227, ivory #f7f4ec
+   ============================================================ */
+
+.injuryadv-page {
+  --injuryadv-navy: #122a46;
+  --injuryadv-navy-deep: #0c1f36;
+  --injuryadv-gold: #c9a227;
+  --injuryadv-gold-soft: #e3c96a;
+  --injuryadv-ivory: #f7f4ec;
+  --injuryadv-ink: #1d2a3a;
+  --injuryadv-muted: #55637a;
+  --injuryadv-line: rgba(18, 42, 70, 0.14);
+  --injuryadv-serif: Georgia, "Times New Roman", Times, serif;
+  --injuryadv-sans: "Segoe UI", Tahoma, Arial, Helvetica, sans-serif;
+  font-family: var(--injuryadv-sans);
+  color: var(--injuryadv-ink);
+  background: var(--injuryadv-ivory);
+  line-height: 1.6;
+}
+
+.injuryadv-page *,
+.injuryadv-page *::before,
+.injuryadv-page *::after {
+  box-sizing: border-box;
+}
+
+.injuryadv-page img {
+  max-width: 100%;
+  display: block;
+}
+
+.injuryadv-wrap {
+  max-width: 1140px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* Faint marble-vein texture */
+.injuryadv-marble {
+  background:
+    radial-gradient(ellipse 80% 40% at 15% 10%, rgba(201, 162, 39, 0.05), transparent 60%),
+    linear-gradient(105deg, transparent 38%, rgba(18, 42, 70, 0.035) 39%, transparent 41%),
+    linear-gradient(75deg, transparent 62%, rgba(18, 42, 70, 0.03) 63%, transparent 65%),
+    linear-gradient(115deg, transparent 78%, rgba(201, 162, 39, 0.05) 79%, transparent 81%),
+    var(--injuryadv-ivory);
+}
+
+/* Gold rule line */
+.injuryadv-rule {
+  width: 72px;
+  height: 3px;
+  border: 0;
+  margin: 18px 0 22px;
+  background: linear-gradient(90deg, var(--injuryadv-gold), var(--injuryadv-gold-soft));
+}
+
+.injuryadv-rule--center {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Focus visibility (WCAG) */
+.injuryadv-page a:focus-visible,
+.injuryadv-page button:focus-visible {
+  outline: 3px solid var(--injuryadv-gold);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* ---------------- Nav ---------------- */
+.injuryadv-nav {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  background: var(--injuryadv-navy-deep);
+  border-bottom: 1px solid rgba(201, 162, 39, 0.35);
+}
+
+.injuryadv-nav-inner {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  padding: 14px 0;
+}
+
+.injuryadv-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  color: #fff;
+}
+
+.injuryadv-scale-ring {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 2px solid var(--injuryadv-gold);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--injuryadv-gold);
+  background: rgba(201, 162, 39, 0.08);
+  flex-shrink: 0;
+}
+
+.injuryadv-brand-name {
+  font-family: var(--injuryadv-serif);
+  font-size: 1.3rem;
+  letter-spacing: 0.02em;
+}
+
+.injuryadv-brand-name span {
+  color: var(--injuryadv-gold-soft);
+}
+
+.injuryadv-nav-links {
+  display: flex;
+  gap: 22px;
+  margin-left: auto;
+}
+
+.injuryadv-nav-links a {
+  color: rgba(255, 255, 255, 0.85);
+  text-decoration: none;
+  font-size: 0.92rem;
+  padding: 6px 2px;
+  border-bottom: 2px solid transparent;
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+
+.injuryadv-nav-links a:hover {
+  color: var(--injuryadv-gold-soft);
+  border-bottom-color: var(--injuryadv-gold);
+}
+
+.injuryadv-nav-phone {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--injuryadv-gold-soft);
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 1rem;
+  white-space: nowrap;
+  transition: color 0.2s ease;
+}
+
+.injuryadv-nav-phone:hover {
+  color: #fff;
+}
+
+/* Buttons */
+.injuryadv-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 13px 26px;
+  border-radius: 6px;
+  font-weight: 700;
+  font-size: 1rem;
+  text-decoration: none;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease, color 0.18s ease;
+  white-space: nowrap;
+}
+
+.injuryadv-btn--gold {
+  background: linear-gradient(180deg, var(--injuryadv-gold-soft), var(--injuryadv-gold));
+  color: var(--injuryadv-navy-deep);
+  box-shadow: 0 4px 14px rgba(201, 162, 39, 0.35);
+}
+
+.injuryadv-btn--gold:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 22px rgba(201, 162, 39, 0.45);
+}
+
+.injuryadv-btn--outline {
+  background: transparent;
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.55);
+}
+
+.injuryadv-btn--outline:hover {
+  border-color: var(--injuryadv-gold);
+  color: var(--injuryadv-gold-soft);
+  transform: translateY(-2px);
+}
+
+.injuryadv-btn--nav {
+  padding: 10px 20px;
+  font-size: 0.92rem;
+}
+
+/* ---------------- Hero ---------------- */
+.injuryadv-hero {
+  background:
+    radial-gradient(ellipse 70% 60% at 85% 15%, rgba(201, 162, 39, 0.12), transparent 60%),
+    linear-gradient(160deg, var(--injuryadv-navy) 0%, var(--injuryadv-navy-deep) 70%);
+  color: #fff;
+  overflow: hidden;
+}
+
+.injuryadv-hero-inner {
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+  gap: 56px;
+  align-items: center;
+  padding: 76px 0 84px;
+}
+
+.injuryadv-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--injuryadv-gold-soft);
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.injuryadv-hero h1 {
+  font-family: var(--injuryadv-serif);
+  font-size: clamp(2.1rem, 4.3vw, 3.3rem);
+  line-height: 1.14;
+  margin: 16px 0 0;
+  font-weight: 700;
+}
+
+.injuryadv-hero h1 em {
+  font-style: italic;
+  color: var(--injuryadv-gold-soft);
+}
+
+.injuryadv-hero-sub {
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 1.08rem;
+  max-width: 34rem;
+  margin: 0 0 30px;
+}
+
+.injuryadv-hero-ctas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  align-items: center;
+}
+
+.injuryadv-hero-phone {
+  margin-top: 22px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.injuryadv-hero-phone a {
+  color: #fff;
+  text-decoration: none;
+  font-family: var(--injuryadv-serif);
+  font-size: 1.6rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  transition: color 0.2s ease;
+}
+
+.injuryadv-hero-phone a:hover {
+  color: var(--injuryadv-gold-soft);
+}
+
+.injuryadv-hero-phone small {
+  display: block;
+  color: rgba(255, 255, 255, 0.65);
+  font-size: 0.8rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.injuryadv-hero-figure {
+  position: relative;
+  animation: injuryadv-rise 0.9s ease both;
+}
+
+.injuryadv-hero-img {
+  aspect-ratio: 4 / 5;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid rgba(201, 162, 39, 0.45);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
+}
+
+.injuryadv-hero-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* "No fee unless you win" badge */
+.injuryadv-fee-badge {
+  position: absolute;
+  left: -22px;
+  bottom: 26px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--injuryadv-ivory);
+  color: var(--injuryadv-navy);
+  border-left: 4px solid var(--injuryadv-gold);
+  border-radius: 8px;
+  padding: 14px 20px;
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.35);
+  animation: injuryadv-rise 0.9s 0.25s ease both;
+}
+
+.injuryadv-fee-badge strong {
+  display: block;
+  font-family: var(--injuryadv-serif);
+  font-size: 1.05rem;
+  line-height: 1.25;
+}
+
+.injuryadv-fee-badge small {
+  color: var(--injuryadv-muted);
+  font-size: 0.78rem;
+}
+
+.injuryadv-fee-badge svg {
+  color: var(--injuryadv-gold);
+  flex-shrink: 0;
+}
+
+/* Trust strip under hero */
+.injuryadv-trust {
+  background: var(--injuryadv-navy-deep);
+  border-top: 1px solid rgba(201, 162, 39, 0.3);
+}
+
+.injuryadv-trust-inner {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 14px 46px;
+  padding: 18px 0;
+  color: rgba(255, 255, 255, 0.82);
+  font-size: 0.9rem;
+}
+
+.injuryadv-trust-item {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.injuryadv-trust-item svg {
+  color: var(--injuryadv-gold);
+}
+
+/* ---------------- Sections ---------------- */
+.injuryadv-section {
+  padding: 84px 0;
+}
+
+.injuryadv-section-head {
+  max-width: 640px;
+  margin: 0 auto 48px;
+  text-align: center;
+}
+
+.injuryadv-section-head h2 {
+  font-family: var(--injuryadv-serif);
+  font-size: clamp(1.7rem, 3vw, 2.35rem);
+  color: var(--injuryadv-navy);
+  margin: 0;
+  line-height: 1.2;
+}
+
+.injuryadv-section-head p {
+  color: var(--injuryadv-muted);
+  margin: 0;
+}
+
+/* Practice area cards */
+.injuryadv-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 26px;
+}
+
+.injuryadv-card {
+  background: #fff;
+  border: 1px solid var(--injuryadv-line);
+  border-radius: 10px;
+  overflow: hidden;
+  transition: transform 0.22s ease, box-shadow 0.22s ease;
+}
+
+.injuryadv-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 18px 40px rgba(18, 42, 70, 0.16);
+}
+
+.injuryadv-card-img {
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  border-bottom: 3px solid var(--injuryadv-gold);
+}
+
+.injuryadv-card-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.45s ease;
+}
+
+.injuryadv-card:hover .injuryadv-card-img img {
+  transform: scale(1.05);
+}
+
+.injuryadv-card-body {
+  padding: 24px 24px 28px;
+}
+
+.injuryadv-card-body h3 {
+  font-family: var(--injuryadv-serif);
+  color: var(--injuryadv-navy);
+  font-size: 1.25rem;
+  margin: 0 0 10px;
+}
+
+.injuryadv-card-body p {
+  color: var(--injuryadv-muted);
+  font-size: 0.95rem;
+  margin: 0 0 16px;
+}
+
+.injuryadv-card-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.injuryadv-card-tags li {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.82rem;
+  color: var(--injuryadv-navy);
+  background: rgba(201, 162, 39, 0.13);
+  border: 1px solid rgba(201, 162, 39, 0.35);
+  border-radius: 999px;
+  padding: 4px 12px;
+}
+
+.injuryadv-card-tags svg {
+  color: var(--injuryadv-gold);
+}
+
+/* ---------------- Steps band ---------------- */
+.injuryadv-steps {
+  background:
+    radial-gradient(ellipse 60% 50% at 12% 0%, rgba(201, 162, 39, 0.1), transparent 55%),
+    linear-gradient(150deg, var(--injuryadv-navy) 0%, var(--injuryadv-navy-deep) 75%);
+  color: #fff;
+}
+
+.injuryadv-steps .injuryadv-section-head h2 {
+  color: #fff;
+}
+
+.injuryadv-steps .injuryadv-section-head p {
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.injuryadv-steps-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+}
+
+.injuryadv-step {
+  position: relative;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(201, 162, 39, 0.3);
+  border-radius: 10px;
+  padding: 34px 28px 30px;
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.injuryadv-step:hover {
+  transform: translateY(-4px);
+  border-color: var(--injuryadv-gold);
+}
+
+.injuryadv-step-num {
+  font-family: var(--injuryadv-serif);
+  font-size: 2.6rem;
+  color: var(--injuryadv-gold);
+  line-height: 1;
+}
+
+.injuryadv-step h3 {
+  font-family: var(--injuryadv-serif);
+  font-size: 1.25rem;
+  margin: 14px 0 10px;
+}
+
+.injuryadv-step p {
+  color: rgba(255, 255, 255, 0.78);
+  font-size: 0.95rem;
+  margin: 0;
+}
+
+.injuryadv-steps-cta {
+  margin-top: 46px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 18px;
+}
+
+/* ---------------- Why / split section ---------------- */
+.injuryadv-split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: center;
+}
+
+.injuryadv-split-img {
+  aspect-ratio: 4 / 3;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid var(--injuryadv-line);
+  box-shadow: 14px 14px 0 rgba(201, 162, 39, 0.2);
+}
+
+.injuryadv-split-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.injuryadv-split h2 {
+  font-family: var(--injuryadv-serif);
+  font-size: clamp(1.7rem, 3vw, 2.3rem);
+  color: var(--injuryadv-navy);
+  margin: 0;
+  line-height: 1.2;
+}
+
+.injuryadv-why-list {
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 18px;
+}
+
+.injuryadv-why-list li {
+  list-style: none;
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+}
+
+.injuryadv-why-list svg {
+  color: var(--injuryadv-gold);
+  margin-top: 3px;
+  flex-shrink: 0;
+}
+
+.injuryadv-why-list strong {
+  color: var(--injuryadv-navy);
+  display: block;
+}
+
+.injuryadv-why-list p {
+  margin: 2px 0 0;
+  color: var(--injuryadv-muted);
+  font-size: 0.94rem;
+}
+
+/* ---------------- FAQ ---------------- */
+.injuryadv-faq {
+  max-width: 760px;
+  margin: 0 auto;
+}
+
+.injuryadv-faq-item {
+  background: #fff;
+  border: 1px solid var(--injuryadv-line);
+  border-radius: 8px;
+  margin-bottom: 14px;
+  overflow: hidden;
+}
+
+.injuryadv-faq-q {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  background: none;
+  border: 0;
+  padding: 19px 22px;
+  font-family: var(--injuryadv-serif);
+  font-size: 1.05rem;
+  color: var(--injuryadv-navy);
+  text-align: left;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.injuryadv-faq-q:hover {
+  background: rgba(201, 162, 39, 0.07);
+}
+
+.injuryadv-faq-q svg {
+  flex-shrink: 0;
+  color: var(--injuryadv-gold);
+  transition: transform 0.25s ease;
+}
+
+.injuryadv-faq-item--open .injuryadv-faq-q svg {
+  transform: rotate(180deg);
+}
+
+.injuryadv-faq-a {
+  padding: 0 22px 20px;
+  color: var(--injuryadv-muted);
+  font-size: 0.96rem;
+  animation: injuryadv-fade 0.3s ease both;
+}
+
+.injuryadv-faq-a p {
+  margin: 0;
+}
+
+/* ---------------- Final CTA band ---------------- */
+.injuryadv-final {
+  background:
+    radial-gradient(ellipse 55% 65% at 50% 0%, rgba(201, 162, 39, 0.16), transparent 60%),
+    linear-gradient(170deg, var(--injuryadv-navy) 0%, var(--injuryadv-navy-deep) 80%);
+  color: #fff;
+  text-align: center;
+}
+
+.injuryadv-final-ring {
+  width: 68px;
+  height: 68px;
+  margin: 0 auto 22px;
+  border-radius: 50%;
+  border: 2px solid var(--injuryadv-gold);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--injuryadv-gold);
+  background: rgba(201, 162, 39, 0.1);
+}
+
+.injuryadv-final h2 {
+  font-family: var(--injuryadv-serif);
+  font-size: clamp(1.8rem, 3.4vw, 2.6rem);
+  margin: 0 0 12px;
+  line-height: 1.2;
+}
+
+.injuryadv-final p {
+  color: rgba(255, 255, 255, 0.82);
+  max-width: 34rem;
+  margin: 0 auto 30px;
+}
+
+.injuryadv-final-ctas {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 18px;
+}
+
+.injuryadv-final-phone {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: #fff;
+  text-decoration: none;
+  font-family: var(--injuryadv-serif);
+  font-size: 1.5rem;
+  font-weight: 700;
+  transition: color 0.2s ease;
+}
+
+.injuryadv-final-phone:hover {
+  color: var(--injuryadv-gold-soft);
+}
+
+.injuryadv-final-phone svg {
+  color: var(--injuryadv-gold);
+}
+
+/* ---------------- Footer ---------------- */
+.injuryadv-footer {
+  background: var(--injuryadv-navy-deep);
+  border-top: 1px solid rgba(201, 162, 39, 0.3);
+  color: rgba(255, 255, 255, 0.65);
+  padding: 40px 0 32px;
+  font-size: 0.85rem;
+}
+
+.injuryadv-footer-top {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 18px;
+  margin-bottom: 22px;
+}
+
+.injuryadv-footer a {
+  color: var(--injuryadv-gold-soft);
+  text-decoration: none;
+}
+
+.injuryadv-footer a:hover {
+  text-decoration: underline;
+}
+
+.injuryadv-footer-disclaimer {
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  padding-top: 18px;
+  line-height: 1.7;
+}
+
+/* ---------------- Animations ---------------- */
+@keyframes injuryadv-rise {
+  from {
+    opacity: 0;
+    transform: translateY(22px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes injuryadv-fade {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ---------------- Responsive ---------------- */
+@media (max-width: 880px) {
+  .injuryadv-nav-links {
+    display: none;
+  }
+
+  .injuryadv-nav-inner {
+    justify-content: space-between;
+  }
+
+  .injuryadv-hero-inner {
+    grid-template-columns: 1fr;
+    gap: 44px;
+    padding: 56px 0 64px;
+  }
+
+  .injuryadv-hero-img {
+    aspect-ratio: 16 / 11;
+  }
+
+  .injuryadv-fee-badge {
+    left: 14px;
+    bottom: 14px;
+  }
+
+  .injuryadv-cards,
+  .injuryadv-steps-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .injuryadv-split {
+    grid-template-columns: 1fr;
+    gap: 36px;
+  }
+
+  .injuryadv-section {
+    padding: 60px 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .injuryadv-brand-name {
+    font-size: 1.1rem;
+  }
+
+  .injuryadv-btn--nav {
+    padding: 9px 14px;
+    font-size: 0.85rem;
+  }
+
+  .injuryadv-nav-phone span {
+    display: none;
+  }
+}

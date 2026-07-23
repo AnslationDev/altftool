@@ -4,7 +4,7 @@ import path from "node:path";
 const root = path.resolve(import.meta.dirname, "..");
 const publicRoot = path.join(root, "altftoolweb", "public");
 const sourceRoot = path.join(root, "altftoolweb", "src");
-const housingSourceRoot = path.join(sourceRoot, "app", "housingneeds");
+const housingSourceRoot = path.join(sourceRoot, "app", "bops", "housingneeds");
 
 const imageExtensions = new Set([
   ".avif",

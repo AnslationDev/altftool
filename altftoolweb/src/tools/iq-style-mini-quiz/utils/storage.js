@@ -1,3 +1,5 @@
+"use client";
+
 import { STORAGE_KEY } from "../constants/quizConfig";
 
 function safeGet(key, fallback) {

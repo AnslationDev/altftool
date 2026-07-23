@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useRef, useEffect, useLayoutEffect, useCallback } from 'react';
 import { rk4Step } from '../utils/physics';
 

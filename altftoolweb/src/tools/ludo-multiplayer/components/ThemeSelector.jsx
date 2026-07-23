@@ -1,3 +1,5 @@
+"use client";
+
 import { BOARD_THEMES, DICE_THEMES } from "../constants/themes";
 
 export default function ThemeSelector({ settings, onUpdate }) {

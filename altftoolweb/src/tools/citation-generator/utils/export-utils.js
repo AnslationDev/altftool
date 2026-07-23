@@ -1,3 +1,5 @@
+"use client";
+
 /**
  * Export Utilities
  * Handles exporting citations to different formats.

@@ -1,3 +1,5 @@
+"use client";
+
 // scanner.jsx - Stroop Effect Test - Cognitive Interference Experiment
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { 

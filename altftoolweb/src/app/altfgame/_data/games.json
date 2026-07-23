@@ -2,7 +2,7 @@
   {
     "slug": "2048",
     "title": "2048",
-    "emoji": "\ud83d\udd22",
+    "emoji": "🔢",
     "category": "Puzzle",
     "rating": 4.7,
     "plays": 982000,
@@ -11,7 +11,7 @@
       "#fc4a1a"
     ],
     "description": "Slide and merge the tiles to reach the elusive 2048.",
-    "controls": "Use the arrow keys or swipe to slide the tiles. Matching numbers merge into one \u2014 plan ahead so the board never fills up.",
+    "controls": "Use the arrow keys or swipe to slide the tiles. Matching numbers merge into one — plan ahead so the board never fills up.",
     "featured": true,
     "isNew": false,
     "trending": true,
@@ -20,7 +20,7 @@
   {
     "slug": "aim-trainer-pro",
     "title": "Aim Trainer Pro",
-    "emoji": "\ud83c\udfaf",
+    "emoji": "🎯",
     "category": "Action",
     "rating": 4.7,
     "plays": 623000,
@@ -38,7 +38,7 @@
   {
     "slug": "air-shot",
     "title": "Air Shot",
-    "emoji": "\ud83c\udf88",
+    "emoji": "🎈",
     "category": "Action",
     "rating": 4.3,
     "plays": 398000,
@@ -56,7 +56,7 @@
   {
     "slug": "breakout",
     "title": "Breakout",
-    "emoji": "\ud83e\uddf1",
+    "emoji": "🧱",
     "category": "Arcade",
     "rating": 4.5,
     "plays": 690000,
@@ -74,7 +74,7 @@
   {
     "slug": "bubble-shooter",
     "title": "Bubble Shooter",
-    "emoji": "\ud83e\udee7",
+    "emoji": "🫧",
     "category": "Puzzle",
     "rating": 4.6,
     "plays": 940000,
@@ -92,7 +92,7 @@
   {
     "slug": "carrom",
     "title": "Carrom",
-    "emoji": "\u26aa",
+    "emoji": "⚪",
     "category": "Sports",
     "rating": 4.3,
     "plays": 512000,
@@ -110,7 +110,7 @@
   {
     "slug": "chess",
     "title": "Chess",
-    "emoji": "\u265f\ufe0f",
+    "emoji": "♟️",
     "category": "Strategy",
     "rating": 4.8,
     "plays": 1240000,
@@ -128,7 +128,7 @@
   {
     "slug": "connect-four",
     "title": "Connect Four",
-    "emoji": "\ud83d\udd34",
+    "emoji": "🔴",
     "category": "Strategy",
     "rating": 4.4,
     "plays": 833000,
@@ -137,7 +137,7 @@
       "#ff6a00"
     ],
     "description": "Drop your discs and line up four in a row.",
-    "controls": "Click or tap a column to drop your disc. Line up four in a row \u2014 across, down, or diagonally \u2014 before the AI does.",
+    "controls": "Click or tap a column to drop your disc. Line up four in a row — across, down, or diagonally — before the AI does.",
     "featured": false,
     "isNew": false,
     "trending": false,
@@ -146,7 +146,7 @@
   {
     "slug": "cricket",
     "title": "Cricket",
-    "emoji": "\ud83c\udfcf",
+    "emoji": "🏏",
     "category": "Sports",
     "rating": 4.5,
     "plays": 754000,
@@ -164,7 +164,7 @@
   {
     "slug": "dots-and-boxes",
     "title": "Dots and Boxes",
-    "emoji": "\ud83d\udd37",
+    "emoji": "🔷",
     "category": "Multiplayer",
     "rating": 4.2,
     "plays": 405000,
@@ -182,7 +182,7 @@
   {
     "slug": "flappy-bird",
     "title": "Flappy Bird",
-    "emoji": "\ud83d\udc24",
+    "emoji": "🐤",
     "category": "Arcade",
     "rating": 4.4,
     "plays": 1520000,
@@ -200,7 +200,7 @@
   {
     "slug": "hangman",
     "title": "Hangman",
-    "emoji": "\ud83d\udd24",
+    "emoji": "🔤",
     "category": "Kids",
     "rating": 4.3,
     "plays": 588000,
@@ -218,7 +218,7 @@
   {
     "slug": "helix-jump",
     "title": "Helix Jump",
-    "emoji": "\ud83c\udf00",
+    "emoji": "🌀",
     "category": "Adventure",
     "rating": 4.6,
     "plays": 1103000,
@@ -236,7 +236,7 @@
   {
     "slug": "knife-hit",
     "title": "Knife Hit",
-    "emoji": "\ud83d\udd2a",
+    "emoji": "🔪",
     "category": "Action",
     "rating": 4.4,
     "plays": 867000,
@@ -254,7 +254,7 @@
   {
     "slug": "ludo",
     "title": "Ludo",
-    "emoji": "\ud83c\udfb2",
+    "emoji": "🎲",
     "category": "Multiplayer",
     "rating": 4.4,
     "plays": 1188000,
@@ -272,7 +272,7 @@
   {
     "slug": "memory-match",
     "title": "Memory Match",
-    "emoji": "\ud83e\udde0",
+    "emoji": "🧠",
     "category": "Kids",
     "rating": 4.5,
     "plays": 712000,
@@ -290,7 +290,7 @@
   {
     "slug": "minesweeper",
     "title": "Minesweeper",
-    "emoji": "\ud83d\udca3",
+    "emoji": "💣",
     "category": "Puzzle",
     "rating": 4.6,
     "plays": 1015000,
@@ -308,7 +308,7 @@
   {
     "slug": "neon-racer",
     "title": "Neon Racer",
-    "emoji": "\ud83c\udfc1",
+    "emoji": "🏁",
     "category": "Racing",
     "rating": 4.6,
     "plays": 876000,
@@ -322,5 +322,77 @@
     "isNew": false,
     "trending": true,
     "image": "/images/games/neon-racer.webp"
+  },
+  {
+    "slug": "crossword",
+    "title": "Crossword",
+    "emoji": "📝",
+    "category": "Puzzle",
+    "rating": 4.5,
+    "plays": 412000,
+    "colors": [
+      "#c026d3",
+      "#7c3aed"
+    ],
+    "description": "Test your vocabulary and cognitive word-association skills.",
+    "controls": "Tap a cell and type letters to fill the grid. Switch between Across and Down clues and complete every word to win.",
+    "featured": false,
+    "isNew": true,
+    "trending": false,
+    "image": "/images/games/crossword.webp"
+  },
+  {
+    "slug": "find-10",
+    "title": "Find 10",
+    "emoji": "🔟",
+    "category": "Puzzle",
+    "rating": 4.3,
+    "plays": 268000,
+    "colors": [
+      "#fbbf24",
+      "#f97316"
+    ],
+    "description": "Pair numbers that add up to exactly 10 before time runs out.",
+    "controls": "Select any two numbers on the board that add up to exactly 10 to clear them. Keep pairing to build your score before the timer ends.",
+    "featured": false,
+    "isNew": true,
+    "trending": false,
+    "image": "/images/games/find-10.webp"
+  },
+  {
+    "slug": "arrows-out",
+    "title": "Arrows Out",
+    "emoji": "➡️",
+    "category": "Arcade",
+    "rating": 4.4,
+    "plays": 335000,
+    "colors": [
+      "#ec4899",
+      "#8b5cf6"
+    ],
+    "description": "Escape the impossible neon maze before time runs out.",
+    "controls": "Move with the arrow keys or the on-screen controls. Race through the neon maze and reach the exit before the 120-second timer hits zero.",
+    "featured": false,
+    "isNew": true,
+    "trending": false,
+    "image": "/images/games/arrows-out.webp"
+  },
+  {
+    "slug": "escape-puzzle",
+    "title": "Escape Puzzle",
+    "emoji": "🚪",
+    "category": "Puzzle",
+    "rating": 4.6,
+    "plays": 389000,
+    "colors": [
+      "#f97316",
+      "#dc2626"
+    ],
+    "description": "Solve clues, unlock mysteries and escape the room.",
+    "controls": "Tap objects in the room to inspect them and collect clues. Use the hints you find to crack the keypad code and unlock the door.",
+    "featured": false,
+    "isNew": true,
+    "trending": false,
+    "image": "/images/games/escape-puzzle.webp"
   }
 ]

@@ -1,3 +1,5 @@
+"use client";
+
 import { RotateCcw, Undo2 } from "lucide-react";
 import { fontFamilies, presets } from "../utils/typographyUtils";
 

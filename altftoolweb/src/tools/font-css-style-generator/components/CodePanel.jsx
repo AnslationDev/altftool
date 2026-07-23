@@ -1,3 +1,5 @@
+"use client";
+
 import { Check, Copy, Download } from "lucide-react";
 
 export default function CodePanel({ css, copied, onCopy, onDownload }) {

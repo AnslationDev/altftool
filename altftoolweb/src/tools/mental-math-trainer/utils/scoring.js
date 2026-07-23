@@ -1,3 +1,5 @@
+"use client";
+
 import { SKILL_THRESHOLDS } from "../constants";
 
 export function calculateAccuracy(correct, total) {

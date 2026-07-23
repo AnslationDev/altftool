@@ -1,3 +1,5 @@
+"use client";
+
 const STORAGE_KEY = "abhilfe-electricity-estimator";
 
 export function loadSettings() {

@@ -1,3 +1,5 @@
+"use client";
+
 const COLOR_FREQUENCIES = {
   green: 329.63,
   red: 261.63,

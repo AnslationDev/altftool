@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState } from 'react';
 import { Copy, ExternalLink, Link as LinkIcon, Check, RefreshCw, Trash2 } from 'lucide-react';
 import { Button } from '@/shared/ui/Button';

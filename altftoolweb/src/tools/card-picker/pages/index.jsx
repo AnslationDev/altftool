@@ -1,3 +1,5 @@
+"use client";
+
 // index.jsx
 import React, { useState } from "react";
 import "../CardPicker.css";const suits = [

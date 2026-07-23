@@ -1,3 +1,5 @@
+"use client";
+
 // Alphabet data for the Alphabet Explorer.
 // Each alphabet has metadata plus an array of characters with their
 // name, pronunciation (romanization/IPA), Unicode code point, and example word.

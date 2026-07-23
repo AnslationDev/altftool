@@ -15,7 +15,7 @@ export const SELF_CHROME_PREFIXES = [
   "/apps",
   "/tripfindbox",
   "/homeserv",
-  "/business-ops",
+  "/bops",
   "/housingneeds",
   "/tradeon",
   "/altfcalculators",

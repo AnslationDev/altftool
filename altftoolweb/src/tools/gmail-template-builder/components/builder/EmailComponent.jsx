@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import { Facebook, Twitter, Linkedin, Instagram, X } from "lucide-react";
 

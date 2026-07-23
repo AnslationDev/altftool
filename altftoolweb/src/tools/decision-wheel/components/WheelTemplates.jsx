@@ -1,3 +1,5 @@
+"use client";
+
 import { motion } from "framer-motion";
 import { Film, UtensilsCrossed, Gamepad2, ClipboardList, Dumbbell, Globe, Sparkles } from "lucide-react";
 

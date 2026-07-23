@@ -1,3 +1,5 @@
+"use client";
+
 import { Clock, Trash2 } from 'lucide-react';
 import { useTheme } from '@/contexts/ThemeContext';
 

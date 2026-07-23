@@ -1,3 +1,5 @@
+"use client";
+
 export const loadTasks = () => {
   try {
     const stored = localStorage.getItem("simpleTasks");

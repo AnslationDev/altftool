@@ -3,39 +3,34 @@ export const spec = {
   ...{
   "slug": "margin-calculator",
   "title": "Profit Margin Calculator",
-  "description": "Calculate your profit margin with ease.",
+  "description": "Gross margin, markup and profit from cost and selling price.",
   "badge": "Finance",
   "category": [
     "Finance"
   ],
-  "icon": "calculator",
-  "iconColor": "text-teal-600",
+  "icon": "badge-percent",
+  "iconColor": "text-green-600",
   "fields": [
     {
-      "key": "costprice",
-      "label": "Cost Price",
+      "key": "cost",
+      "label": "Cost",
       "type": "number",
-      "default": "100"
+      "default": "60"
     },
     {
-      "key": "sellingprice",
-      "label": "Selling Price",
+      "key": "price",
+      "label": "Selling price",
       "type": "number",
-      "default": "200"
+      "default": "100"
     }
-  ],
-  "presets": [
-    {
-      "label": "Example",
-      "values": {
-        "costPrice": "100",
-        "sellingPrice": "200"
-      }
-    }
-  ],
-  "note": "This tool calculates the profit margin based on cost price and selling price."
+  ]
 },
-  compute: (values) => { let cost = values.costPrice, sell = values.sellingPrice; if (cost === 0 || isNaN(cost) || isNaN(sell)) return { result: 'Invalid input', caption: 'Please enter valid numbers for both cost price and selling price.' }; let profitMargin = ((sell - cost) / cost) * 100; return { result: `${profitMargin.toFixed(2)}%`, caption: 'Profit Margin', rows: [['Cost Price', `$${cost}`], ['Selling Price', `$${sell}`]] }; },
+  compute: (values) => { const num=(v)=>typeof v==="number"?v:Number(v); const money=(n)=>Number.isFinite(Number(n))?Number(n).toLocaleString(undefined,{maximumFractionDigits:2}):"—";
+      const c = num(values.cost), p = num(values.price);
+      if (p <= 0) return { result: "—", caption: "Enter a selling price" };
+      const profit = p - c;
+      return { result: ((profit / p) * 100).toFixed(2) + "% margin", rows: [["Profit", money(profit)], ["Markup", c > 0 ? ((profit / c) * 100).toFixed(2) + "%" : "—"]] };
+    },
 };
 
 export default spec;

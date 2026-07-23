@@ -1,0 +1,493 @@
+/* ============================================================
+   ClearView Windows — airy glassmorphism lander
+   Every class is prefixed "clearview-".
+   ============================================================ */
+
+.clearview-page {
+  --cv-base: #eef3f8;
+  --cv-base-2: #f6f9fc;
+  --cv-ink: #1d2c3a;
+  --cv-muted: #51637a;
+  --cv-sky: #bfe0f6;
+  --cv-accent: #2a7db8;
+  --cv-accent-deep: #1c608f;
+  --cv-glass: rgba(255, 255, 255, 0.58);
+  --cv-glass-strong: rgba(255, 255, 255, 0.78);
+  --cv-glass-edge: rgba(255, 255, 255, 0.85);
+  --cv-shadow: 0 18px 45px rgba(48, 84, 118, 0.14);
+  --cv-radius: 22px;
+  font-family: "Segoe UI", "Helvetica Neue", Helvetica, Arial, system-ui, sans-serif;
+  font-weight: 300;
+  color: var(--cv-ink);
+  min-height: 100vh;
+  line-height: 1.6;
+  letter-spacing: 0.01em;
+  background:
+    radial-gradient(52rem 30rem at 85% -6rem, rgba(159, 208, 240, 0.5), transparent 65%),
+    radial-gradient(44rem 28rem at -10% 28rem, rgba(197, 226, 246, 0.55), transparent 60%),
+    linear-gradient(180deg, var(--cv-base-2), var(--cv-base));
+}
+
+.clearview-page a:focus-visible,
+.clearview-page button:focus-visible {
+  outline: 3px solid var(--cv-accent-deep);
+  outline-offset: 3px;
+  border-radius: 8px;
+}
+
+.clearview-shell { width: min(1120px, 92vw); margin: 0 auto; }
+
+/* ---------- frosted card primitive ---------- */
+.clearview-glass {
+  background: var(--cv-glass);
+  -webkit-backdrop-filter: blur(16px) saturate(1.2);
+  backdrop-filter: blur(16px) saturate(1.2);
+  border: 1px solid var(--cv-glass-edge);
+  border-radius: var(--cv-radius);
+  box-shadow: var(--cv-shadow);
+}
+
+/* ---------- buttons ---------- */
+.clearview-btn {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  padding: 0.78rem 1.5rem; border-radius: 999px;
+  font-size: 0.95rem; font-weight: 500; letter-spacing: 0.02em;
+  text-decoration: none; white-space: nowrap;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+}
+
+.clearview-btn-primary {
+  background: linear-gradient(135deg, var(--cv-accent), var(--cv-accent-deep));
+  color: #ffffff;
+  box-shadow: 0 10px 24px rgba(28, 96, 143, 0.32);
+}
+
+.clearview-btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 16px 30px rgba(28, 96, 143, 0.4);
+}
+
+.clearview-btn-ghost {
+  background: var(--cv-glass-strong);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(42, 125, 184, 0.35);
+  color: var(--cv-accent-deep);
+}
+
+.clearview-btn-ghost:hover {
+  transform: translateY(-2px);
+  background: #ffffff;
+  box-shadow: 0 10px 22px rgba(48, 84, 118, 0.16);
+}
+
+/* ---------- nav ---------- */
+.clearview-nav {
+  position: sticky; top: 0; z-index: 40;
+  background: rgba(246, 250, 253, 0.72);
+  -webkit-backdrop-filter: blur(14px) saturate(1.2);
+  backdrop-filter: blur(14px) saturate(1.2);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.9);
+}
+
+.clearview-nav-inner {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 1.2rem; padding: 0.85rem 0;
+}
+
+.clearview-brand {
+  display: inline-flex; align-items: center; gap: 0.55rem;
+  font-size: 1.18rem; font-weight: 600; letter-spacing: 0.02em;
+  color: var(--cv-ink); text-decoration: none;
+}
+
+.clearview-brand-mark {
+  display: grid; place-items: center;
+  width: 2.15rem; height: 2.15rem; border-radius: 10px;
+  background: linear-gradient(140deg, var(--cv-sky), var(--cv-accent));
+  color: #ffffff;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.55);
+}
+
+.clearview-nav-links {
+  display: flex; align-items: center; gap: 1.5rem;
+  list-style: none; margin: 0; padding: 0;
+}
+
+.clearview-nav-links a {
+  color: var(--cv-muted); font-size: 0.93rem; font-weight: 400;
+  text-decoration: none; transition: color 0.18s ease;
+}
+
+.clearview-nav-links a:hover { color: var(--cv-accent-deep); }
+
+.clearview-nav-cta { display: flex; align-items: center; gap: 0.75rem; }
+
+.clearview-nav-phone {
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  color: var(--cv-accent-deep); font-weight: 500; font-size: 0.93rem;
+  text-decoration: none;
+}
+
+.clearview-nav-phone:hover { text-decoration: underline; }
+
+/* ---------- hero ---------- */
+.clearview-hero { position: relative; overflow: hidden; isolation: isolate; }
+
+.clearview-hero-media { position: absolute; inset: 0; z-index: -1; }
+
+.clearview-hero-media img { width: 100%; height: 100%; object-fit: cover; }
+
+.clearview-hero-media::after {
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(100deg, rgba(240, 246, 251, 0.92) 0%, rgba(240, 246, 251, 0.72) 46%, rgba(240, 246, 251, 0.25) 100%);
+}
+
+.clearview-hero-inner {
+  display: flex; align-items: center;
+  min-height: 620px; padding: 5.5rem 0 6rem;
+}
+
+.clearview-hero-card {
+  max-width: 620px; padding: 2.6rem 2.8rem;
+  animation: clearview-fade-up 0.8s ease both;
+}
+
+.clearview-eyebrow {
+  display: inline-flex; align-items: center; gap: 0.45rem;
+  padding: 0.32rem 0.9rem; border-radius: 999px;
+  background: rgba(191, 224, 246, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  color: var(--cv-accent-deep);
+  font-size: 0.8rem; font-weight: 500;
+  letter-spacing: 0.09em; text-transform: uppercase;
+}
+
+.clearview-hero-card h1 {
+  margin: 1.1rem 0 0.9rem;
+  font-size: clamp(2.1rem, 4.4vw, 3.15rem);
+  font-weight: 250; line-height: 1.14; letter-spacing: -0.015em;
+}
+
+.clearview-hero-card h1 strong { font-weight: 550; color: var(--cv-accent-deep); }
+
+.clearview-hero-sub {
+  margin: 0 0 1.7rem; color: var(--cv-muted);
+  font-size: 1.06rem; max-width: 46ch;
+}
+
+.clearview-hero-actions { display: flex; flex-wrap: wrap; gap: 0.85rem; margin-bottom: 1.6rem; }
+
+.clearview-hero-proof {
+  display: flex; flex-wrap: wrap; gap: 1.4rem;
+  padding-top: 1.3rem; border-top: 1px solid rgba(81, 99, 122, 0.16);
+  color: var(--cv-muted); font-size: 0.88rem;
+}
+
+.clearview-hero-proof span { display: inline-flex; align-items: center; gap: 0.4rem; }
+
+.clearview-hero-proof svg { color: var(--cv-accent); }
+
+/* ---------- section scaffolding ---------- */
+.clearview-section { padding: 4.6rem 0; }
+
+.clearview-section-head { max-width: 640px; margin: 0 auto 2.8rem; text-align: center; }
+
+.clearview-section-head h2 {
+  margin: 0.4rem 0 0.7rem;
+  font-size: clamp(1.7rem, 3vw, 2.3rem);
+  font-weight: 300; letter-spacing: -0.01em;
+}
+
+.clearview-section-head p { margin: 0; color: var(--cv-muted); }
+
+/* ---------- window style cards ---------- */
+.clearview-style-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+
+.clearview-style-card {
+  overflow: hidden; display: flex; flex-direction: column;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.clearview-style-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 26px 52px rgba(48, 84, 118, 0.2);
+}
+
+.clearview-style-media { aspect-ratio: 4 / 3; overflow: hidden; }
+
+.clearview-style-media img {
+  width: 100%; height: 100%; object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.clearview-style-card:hover .clearview-style-media img { transform: scale(1.05); }
+
+.clearview-style-body {
+  padding: 1.35rem 1.5rem 1.6rem;
+  display: flex; flex-direction: column; gap: 0.55rem; flex: 1;
+}
+
+.clearview-style-body h3 { margin: 0; font-size: 1.15rem; font-weight: 500; }
+
+.clearview-style-body p { margin: 0; color: var(--cv-muted); font-size: 0.93rem; flex: 1; }
+
+.clearview-style-tag {
+  align-self: flex-start; padding: 0.22rem 0.7rem; border-radius: 999px;
+  background: rgba(191, 224, 246, 0.5); color: var(--cv-accent-deep);
+  font-size: 0.75rem; font-weight: 500; letter-spacing: 0.05em;
+}
+
+/* ---------- savings rings (pure CSS) ---------- */
+.clearview-savings-band { padding: 3rem 2.5rem; }
+
+.clearview-ring-row {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 2rem; text-align: center;
+}
+
+.clearview-ring {
+  --clearview-p: 0;
+  position: relative; width: 158px; aspect-ratio: 1;
+  margin: 0 auto 1rem; border-radius: 50%;
+  background: conic-gradient(var(--cv-accent) calc(var(--clearview-p) * 1%), rgba(120, 156, 186, 0.22) 0);
+  display: grid; place-items: center;
+  animation: clearview-fade-up 0.7s ease both;
+}
+
+.clearview-ring::after {
+  content: ""; position: absolute; inset: 13px; border-radius: 50%;
+  background: var(--cv-glass-strong);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.8);
+}
+
+.clearview-ring-value {
+  position: relative; z-index: 1;
+  font-size: 2rem; font-weight: 250; color: var(--cv-accent-deep);
+}
+
+.clearview-ring-value sup { font-size: 1rem; font-weight: 400; }
+
+.clearview-ring-label { margin: 0 auto; max-width: 22ch; color: var(--cv-muted); font-size: 0.92rem; }
+
+.clearview-ring-foot { margin: 2.4rem 0 0; text-align: center; color: var(--cv-muted); font-size: 0.8rem; }
+
+/* ---------- why / split section ---------- */
+.clearview-split {
+  display: grid; grid-template-columns: 1.05fr 1fr;
+  gap: 2.6rem; align-items: center;
+}
+
+.clearview-split-media {
+  aspect-ratio: 4 / 3; overflow: hidden;
+  border-radius: var(--cv-radius); box-shadow: var(--cv-shadow);
+  animation: clearview-float 7s ease-in-out infinite;
+}
+
+.clearview-split-media img { width: 100%; height: 100%; object-fit: cover; }
+
+.clearview-split-copy h2 {
+  margin: 0.4rem 0 1rem;
+  font-size: clamp(1.6rem, 2.8vw, 2.15rem); font-weight: 300;
+}
+
+.clearview-feature-list {
+  list-style: none; margin: 1.4rem 0 0; padding: 0;
+  display: grid; gap: 0.95rem;
+}
+
+.clearview-feature-list li {
+  display: flex; gap: 0.85rem;
+  padding: 0.95rem 1.1rem; border-radius: 16px;
+  background: var(--cv-glass);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--cv-glass-edge);
+  transition: transform 0.2s ease;
+}
+
+.clearview-feature-list li:hover { transform: translateX(6px); }
+
+.clearview-feature-list svg { flex-shrink: 0; margin-top: 0.15rem; color: var(--cv-accent); }
+
+.clearview-feature-list h3 { margin: 0 0 0.15rem; font-size: 1rem; font-weight: 500; }
+
+.clearview-feature-list p { margin: 0; color: var(--cv-muted); font-size: 0.9rem; }
+
+/* ---------- process steps ---------- */
+.clearview-step-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.3rem; }
+
+.clearview-step {
+  padding: 1.6rem 1.4rem;
+  transition: transform 0.22s ease, box-shadow 0.22s ease;
+}
+
+.clearview-step:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 24px 46px rgba(48, 84, 118, 0.18);
+}
+
+.clearview-step-num {
+  display: grid; place-items: center;
+  width: 2.4rem; height: 2.4rem; margin-bottom: 0.9rem; border-radius: 50%;
+  background: linear-gradient(140deg, var(--cv-sky), var(--cv-accent));
+  color: #ffffff; font-weight: 600; font-size: 0.95rem;
+}
+
+.clearview-step h3 { margin: 0 0 0.4rem; font-size: 1.02rem; font-weight: 500; }
+
+.clearview-step p { margin: 0; color: var(--cv-muted); font-size: 0.9rem; }
+
+/* ---------- mid CTA band ---------- */
+.clearview-midcta {
+  position: relative; overflow: hidden;
+  border-radius: var(--cv-radius); isolation: isolate;
+}
+
+.clearview-midcta-media { position: absolute; inset: 0; z-index: -1; }
+
+.clearview-midcta-media img { width: 100%; height: 100%; object-fit: cover; }
+
+.clearview-midcta-media::after {
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(90deg, rgba(238, 244, 250, 0.94), rgba(238, 244, 250, 0.55));
+}
+
+.clearview-midcta-inner {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 2rem; padding: 3rem 3.2rem;
+}
+
+.clearview-midcta-inner h2 {
+  margin: 0 0 0.5rem;
+  font-size: clamp(1.5rem, 2.6vw, 2rem); font-weight: 300;
+}
+
+.clearview-midcta-inner p { margin: 0; color: var(--cv-muted); max-width: 46ch; }
+
+.clearview-midcta-actions {
+  display: flex; flex-direction: column;
+  gap: 0.8rem; align-items: flex-end;
+}
+
+/* ---------- testimonials ---------- */
+.clearview-quote-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+
+.clearview-quote-card {
+  padding: 1.7rem 1.6rem;
+  display: flex; flex-direction: column; gap: 0.9rem;
+  transition: transform 0.22s ease;
+}
+
+.clearview-quote-card:hover { transform: translateY(-5px); }
+
+.clearview-quote-stars { display: flex; gap: 0.2rem; color: #e2a63d; }
+
+.clearview-quote-card blockquote {
+  margin: 0; font-size: 0.96rem; color: var(--cv-ink);
+  font-style: italic; flex: 1;
+}
+
+.clearview-quote-card figcaption { color: var(--cv-muted); font-size: 0.85rem; font-weight: 500; }
+
+/* ---------- FAQ ---------- */
+.clearview-faq-list { max-width: 760px; margin: 0 auto; display: grid; gap: 0.9rem; }
+
+.clearview-faq-item { overflow: hidden; }
+
+.clearview-faq-trigger {
+  display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+  width: 100%; padding: 1.15rem 1.4rem;
+  background: none; border: none; cursor: pointer;
+  font: inherit; font-size: 1rem; font-weight: 500;
+  color: var(--cv-ink); text-align: left;
+}
+
+.clearview-faq-trigger svg { flex-shrink: 0; color: var(--cv-accent); transition: transform 0.25s ease; }
+
+.clearview-faq-item[data-open="true"] .clearview-faq-trigger svg { transform: rotate(180deg); }
+
+.clearview-faq-panel { max-height: 0; overflow: hidden; transition: max-height 0.3s ease; }
+
+.clearview-faq-item[data-open="true"] .clearview-faq-panel { max-height: 260px; }
+
+.clearview-faq-panel p {
+  margin: 0; padding: 0 1.4rem 1.25rem;
+  color: var(--cv-muted); font-size: 0.94rem;
+}
+
+/* ---------- final CTA ---------- */
+.clearview-final { text-align: center; padding: 3.4rem 2rem 3.8rem; }
+
+.clearview-final h2 {
+  margin: 0 0 0.7rem;
+  font-size: clamp(1.7rem, 3vw, 2.3rem); font-weight: 300;
+}
+
+.clearview-final p { margin: 0 auto 1.8rem; max-width: 52ch; color: var(--cv-muted); }
+
+.clearview-final-actions { display: flex; justify-content: center; flex-wrap: wrap; gap: 0.9rem; }
+
+/* ---------- footer ---------- */
+.clearview-footer {
+  margin-top: 4rem; padding: 2.2rem 0 2.6rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.9);
+  background: rgba(246, 250, 253, 0.6);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+}
+
+.clearview-footer-inner {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 1.2rem; flex-wrap: wrap;
+}
+
+.clearview-footer-inner a { color: var(--cv-accent-deep); font-weight: 500; text-decoration: none; }
+
+.clearview-footer-inner a:hover { text-decoration: underline; }
+
+.clearview-footer-fine { margin: 0; color: var(--cv-muted); font-size: 0.78rem; }
+
+/* ---------- keyframes ---------- */
+@keyframes clearview-fade-up {
+  from { opacity: 0; transform: translateY(22px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes clearview-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-9px); }
+}
+
+/* ---------- responsive ---------- */
+@media (max-width: 880px) {
+  .clearview-nav-links { display: none; }
+  .clearview-hero-inner { min-height: 0; padding: 3.4rem 0 4rem; }
+  .clearview-hero-card { padding: 1.9rem 1.5rem; }
+  .clearview-style-grid,
+  .clearview-ring-row,
+  .clearview-quote-grid { grid-template-columns: 1fr; }
+  .clearview-step-grid { grid-template-columns: 1fr 1fr; }
+  .clearview-split { grid-template-columns: 1fr; }
+  .clearview-split-media { animation: none; }
+  .clearview-midcta-inner { flex-direction: column; align-items: flex-start; padding: 2.2rem 1.6rem; }
+  .clearview-midcta-actions { align-items: flex-start; }
+  .clearview-footer-inner { flex-direction: column; align-items: flex-start; }
+}
+
+@media (max-width: 560px) {
+  .clearview-step-grid { grid-template-columns: 1fr; }
+  .clearview-nav-phone span { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .clearview-page *,
+  .clearview-page *::before,
+  .clearview-page *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

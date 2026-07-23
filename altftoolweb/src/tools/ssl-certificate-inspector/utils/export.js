@@ -1,3 +1,5 @@
+"use client";
+
 function statusLabel(status = "") {
   return status
     .split("-")

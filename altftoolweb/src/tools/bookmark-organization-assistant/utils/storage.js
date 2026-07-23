@@ -1,3 +1,5 @@
+"use client";
+
 // Storage helpers for localStorage persistence.
 // All access must be guarded for SSR — only call from effects or after mount.
 

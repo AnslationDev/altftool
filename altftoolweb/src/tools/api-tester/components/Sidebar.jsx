@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState } from 'react'
 import { Plus, Trash2, ChevronDown, ChevronRight, Folder } from 'lucide-react'
 import EnvironmentManager from './EnvironmentManager'

@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import { Edit3, BookOpen, ShieldCheck, Download, Sliders, Palette } from "lucide-react";
 

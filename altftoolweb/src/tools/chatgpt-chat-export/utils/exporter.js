@@ -1,3 +1,5 @@
+"use client";
+
 import { saveAs } from "file-saver";
 import jsPDF from "jspdf";
 import { Document, Packer, Paragraph, TextRun, HeadingLevel, Table, TableRow, TableCell, WidthType, BorderStyle } from "docx";

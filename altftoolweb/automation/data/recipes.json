@@ -1,0 +1,849 @@
+[
+  {
+    "slug": "d-d-dice-roller",
+    "name": "D&D Dice Roller",
+    "category": [
+      "Game"
+    ],
+    "fields": [
+      {
+        "key": "sides",
+        "label": "Sides",
+        "type": "number",
+        "default": "6"
+      },
+      {
+        "key": "count",
+        "label": "How many",
+        "type": "number",
+        "default": "2"
+      }
+    ],
+    "computeSrc": "(values) => { const num=(v)=>typeof v===\"number\"?v:Number(v); const money=(n)=>Number.isFinite(Number(n))?Number(n).toLocaleString(undefined,{maximumFractionDigits:2}):\"—\"; const c = Math.max(1, Math.min(10, num(values.count))); const s = Math.max(2, num(values.sides)); const r = Array.from({ length: c }, () => 1 + Math.floor(Math.random() * s)); return { result: r.join(\" + \") + \" = \" + r.reduce((a, b) => a + b, 0) }; }",
+    "modes": null,
+    "presets": [],
+    "regenerate": true,
+    "icon": "shuffle",
+    "iconColor": "text-fuchsia-600",
+    "clusterId": "cluster:random",
+    "confidence": 55
+  },
+  {
+    "slug": "grade-percentage-calculator",
+    "name": "Grade Percentage Calculator",
+    "category": [
+      "Education"
+    ],
+    "fields": [
+      {
+        "key": "percent",
+        "label": "Percent (%)",
+        "type": "number",
+        "default": "15"
+      },
+      {
+        "key": "value",
+        "label": "Of value",
+        "type": "number",
+        "default": "200"
+      }
+    ],
+    "computeSrc": "(values) => { const num=(v)=>typeof v===\"number\"?v:Number(v); const money=(n)=>Number.isFinite(Number(n))?Number(n).toLocaleString(undefined,{maximumFractionDigits:2}):\"—\"; const r = (num(values.percent) / 100) * num(values.value); return { result: r.toLocaleString(), caption: `${values.percent}% of ${values.value}`, rows: [[\"Value + %\", (num(values.value) + r).toLocaleString()], [\"Value − %\", (num(values.value) - r).toLocaleString()]] }; }",
+    "modes": null,
+    "presets": [],
+    "regenerate": false,
+    "icon": "percent",
+    "iconColor": "text-violet-600",
+    "clusterId": "cluster:percentage",
+    "confidence": 55
+  },
+  {
+    "slug": "loan-comparison-tool",
+    "name": "Loan Comparison Tool",
+    "category": [
+      "Finance"
+    ],
+    "fields": [
+      {
+        "key": "amount",
+        "label": "Loan amount",
+        "type": "number",
+        "default": "200000"
+      },
+      {
+        "key": "rate",
+        "label": "Interest rate (%/yr)",
+        "type": "number",
+        "default": "7"
+      },
+      {
+        "key": "years",
+        "label": "Term (years)",
+        "type": "number",
+        "default": "20"
+      }
+    ],
+    "computeSrc": "(values) => { const num=(v)=>typeof v===\"number\"?v:Number(v); const money=(n)=>Number.isFinite(Number(n))?Number(n).toLocaleString(undefined,{maximumFractionDigits:2}):\"—\"; const P = num(values.amount), r = num(values.rate) / 100 / 12, n = num(values.years) * 12; if (P <= 0 || n <= 0) return { result: \"—\", caption: \"Enter amount and term\" }; const emi = r === 0 ? P / n : (P * r * Math.pow(1 + r, n)) / (Math.pow(1 + r, n) - 1); return { result: money(emi) + \" / month\", rows: [[\"Total interest\", money(emi * n - P)], [\"Total payable\", money(emi * n)]] }; }",
+    "modes": null,
+    "presets": [
+      {
+        "label": "200k @7% / 20y",
+        "values": {
+          "amount": "200000",
+          "rate": "7",
+          "years": "20"
+        }
+      }
+    ],
+    "regenerate": false,
+    "icon": "landmark",
+    "iconColor": "text-blue-600",
+    "clusterId": "cluster:loan",
+    "confidence": 55
+  },
+  {
+    "slug": "random-decision-maker",
+    "name": "Random Decision Maker",
+    "category": [
+      "Fun"
+    ],
+    "fields": [
+      {
+        "key": "q",
+        "label": "Question",
+        "type": "text",
+        "default": "",
+        "required": false
+      }
+    ],
+    "computeSrc": "(values) => { const num=(v)=>typeof v===\"number\"?v:Number(v); const money=(n)=>Number.isFinite(Number(n))?Number(n).toLocaleString(undefined,{maximumFractionDigits:2}):\"—\"; const a = [\"Yes, definitely\", \"It is certain\", \"Most likely\", \"Outlook good\", \"Reply hazy, try again\", \"Ask again later\", \"Don't count on it\", \"My reply is no\", \"Very doubtful\"]; return { result: \"🎱 \" + a[Math.floor(Math.random() * a.length)], caption: values.q ? '\"' + values.q + '\"' : \"Shake for an answer\" }; }",
+    "modes": null,
+    "presets": [],
+    "regenerate": true,
+    "icon": "shuffle",
+    "iconColor": "text-fuchsia-600",
+    "clusterId": "cluster:random",
+    "confidence": 55
+  },
+  {
+    "slug": "sha1-hash-generator",
+    "name": "SHA1 Hash Generator",
+    "category": [
+      "Developer"
+    ],
+    "fields": [
+      {
+        "key": "text",
+        "label": "Text",
+        "type": "textarea",
+        "default": "hello world"
+      }
+    ],
+    "computeSrc": "(values) => { const num=(v)=>typeof v===\"number\"?v:Number(v); const money=(n)=>Number.isFinite(Number(n))?Number(n).toLocaleString(undefined,{maximumFractionDigits:2}):\"—\"; const A = \"SHA-1\"; return crypto.subtle.digest(A, new TextEncoder().encode(String(values.text))).then((b) => ({ result: [...new Uint8Array(b)].map((x) => x.toString(16).padStart(2, \"0\")).join(\"\"), rows: [[\"Algorithm\", A], [\"Length\", String(values.text).length + \" chars\"]] })); }",
+    "modes": null,
+    "presets": [
+      {
+        "label": "hello world",
+        "values": {
+          "text": "hello world"
+        }
+      }
+    ],
+    "regenerate": false,
+    "icon": "shield",
+    "iconColor": "text-slate-700",
+    "clusterId": "cluster:hash",
+    "confidence": 70
+  },
+  {
+    "slug": "slug-generator",
+    "name": "Slug Generator",
+    "category": [
+      "Developer"
+    ],
+    "fields": [
+      {
+        "key": "text",
+        "label": "Text",
+        "type": "textarea",
+        "default": "hello world"
+      }
+    ],
+    "computeSrc": "(values) => ({ result: String(values.text).toLowerCase().normalize(\"NFKD\").replace(/[^\\w\\s-]/g, \"\").trim().replace(/[\\s_]+/g, \"-\").replace(/-+/g, \"-\") || \"—\" })",
+    "modes": null,
+    "presets": [
+      {
+        "label": "Sample",
+        "values": {
+          "text": "Hello World",
+          "times": "3"
+        }
+      }
+    ],
+    "regenerate": false,
+    "icon": "type",
+    "iconColor": "text-violet-600",
+    "clusterId": "cluster:text-transform",
+    "confidence": 70
+  },
+  {
+    "slug": "text-shadow-generator",
+    "name": "Text Shadow Generator",
+    "category": [
+      "Design"
+    ],
+    "fields": [
+      {
+        "key": "x",
+        "label": "X offset",
+        "type": "range",
+        "default": 2,
+        "min": -20,
+        "max": 20,
+        "step": 1
+      },
+      {
+        "key": "y",
+        "label": "Y offset",
+        "type": "range",
+        "default": 2,
+        "min": -20,
+        "max": 20,
+        "step": 1
+      },
+      {
+        "key": "blur",
+        "label": "Blur",
+        "type": "range",
+        "default": 4,
+        "min": 0,
+        "max": 40,
+        "step": 1
+      }
+    ],
+    "computeSrc": "(values) => { const num=(v)=>typeof v===\"number\"?v:Number(v); const money=(n)=>Number.isFinite(Number(n))?Number(n).toLocaleString(undefined,{maximumFractionDigits:2}):\"—\"; const css = `${num(values.x)}px ${num(values.y)}px ${num(values.blur)}px rgba(0,0,0,0.5)`; return { result: css, rows: [[\"Full rule\", \"text-shadow: \" + css + \";\"]] }; }",
+    "modes": null,
+    "presets": [],
+    "regenerate": false,
+    "icon": "square",
+    "iconColor": "text-indigo-500",
+    "clusterId": "cluster:css",
+    "confidence": 55
+  },
+  {
+    "slug": "connection-string-builder",
+    "name": "Connection String Builder",
+    "category": [
+      "Developer"
+    ],
+    "fields": [
+      {
+        "key": "database_type",
+        "label": "Database Type",
+        "type": "select",
+        "default": "postgresql",
+        "choices": [
+          {
+            "value": "postgresql",
+            "label": "PostgreSQL"
+          },
+          {
+            "value": "mongodb",
+            "label": "MongoDB"
+          }
+        ]
+      },
+      {
+        "key": "host",
+        "label": "Host",
+        "type": "text",
+        "default": "localhost"
+      },
+      {
+        "key": "port",
+        "label": "Port",
+        "type": "number",
+        "default": "5432"
+      },
+      {
+        "key": "username",
+        "label": "Username",
+        "type": "text",
+        "default": "user"
+      }
+    ],
+    "computeSrc": "(values) => { const num=(v)=>typeof v===\"number\"?v:Number(v); const money=(n)=>Number.isFinite(Number(n))?Number(n).toLocaleString(undefined,{maximumFractionDigits:2}):\"—\"; \n      const { database_type, host, port, username } = values; \n      let connectionString = ''; \n      if (database_type === 'postgresql') { \n         connectionString = `postgresql://${username}@${host}:${port}`; \n      } else if (database_type === 'mongodb') { \n         connectionString = `mongodb://${username}@${host}:${port}`; \n      } else { \n         throw new Error(`Unsupported database type: ${database_type}`); \n      } \n      return { \n         result: connectionString, \n         rows: [['Database Type', database_type], ['Host', host], ['Port', port], ['Username', username]] \n      }; \n   }",
+    "modes": null,
+    "presets": [
+      {
+        "label": "Example PostgreSQL",
+        "values": {
+          "database_type": "postgresql",
+          "host": "localhost",
+          "port": "5432",
+          "username": "user"
+        }
+      },
+      {
+        "label": "Example MongoDB",
+        "values": {
+          "database_type": "mongodb",
+          "host": "localhost",
+          "port": "27017",
+          "username": "user"
+        }
+      }
+    ],
+    "regenerate": false,
+    "icon": "code",
+    "iconColor": "text-teal-600",
+    "clusterId": "agentic+repair",
+    "confidence": 85
+  },
+  {
+    "slug": "conventional-commit-builder",
+    "name": "Conventional Commit Builder",
+    "category": [
+      "Developer"
+    ],
+    "fields": [
+      {
+        "key": "commit_type",
+        "label": "Commit Type",
+        "type": "select",
+        "default": "feat",
+        "choices": [
+          {
+            "value": "feat",
+            "label": "New Feature"
+          },
+          {
+            "value": "fix",
+            "label": "Bug Fix"
+          },
+          {
+            "value": "docs",
+            "label": "Documentation"
+          },
+          {
+            "value": "style",
+            "label": "Code Style"
+          },
+          {
+            "value": "refactor",
+            "label": "Code Refactoring"
+          },
+          {
+            "value": "perf",
+            "label": "Performance Improvement"
+          },
+          {
+            "value": "test",
+            "label": "Test Addition"
+          },
+          {
+            "value": "build",
+            "label": "Build System"
+          },
+          {
+            "value": "ci",
+            "label": "Continuous Integration"
+          },
+          {
+            "value": "chore",
+            "label": "Miscellaneous"
+          }
+        ]
+      },
+      {
+        "key": "commit_scope",
+        "label": "Commit Scope",
+        "type": "text",
+        "default": ""
+      },
+      {
+        "key": "commit_subject",
+        "label": "Commit Subject",
+        "type": "text",
+        "default": ""
+      },
+      {
+        "key": "commit_body",
+        "label": "Commit Body",
+        "type": "textarea",
+        "default": ""
+      }
+    ],
+    "computeSrc": "(values) => { const num=(v)=>typeof v===\"number\"?v:Number(v); const money=(n)=>Number.isFinite(Number(n))?Number(n).toLocaleString(undefined,{maximumFractionDigits:2}):\"—\"; \n      const type = values.commit_type; \n      const scope = values.commit_scope ? `(${values.commit_scope})` : ''; \n      const subject = values.commit_subject; \n      const body = values.commit_body ? `\n\n${values.commit_body}` : ''; \n      const commitMessage = `${type}${scope}: ${subject}${body}`; \n      return { \n         result: commitMessage, \n         rows: [['Type', type], ['Scope', values.commit_scope || ''], ['Subject', subject], ['Body', values.commit_body || '']] \n      }; \n   }",
+    "modes": null,
+    "presets": [
+      {
+        "label": "Example",
+        "values": {
+          "commit_type": "feat",
+          "commit_scope": "login",
+          "commit_subject": "add login button",
+          "commit_body": "Added a new login button to the homepage"
+        }
+      }
+    ],
+    "regenerate": false,
+    "icon": "code",
+    "iconColor": "text-emerald-600",
+    "clusterId": "agentic",
+    "confidence": 85
+  },
+  {
+    "slug": "glob-pattern-tester",
+    "name": "Glob Pattern Tester",
+    "category": [
+      "Developer"
+    ],
+    "fields": [
+      {
+        "key": "pattern",
+        "label": "Glob Pattern",
+        "type": "text",
+        "default": "*.txt"
+      },
+      {
+        "key": "input_string",
+        "label": "Input String",
+        "type": "text",
+        "default": "example.txt"
+      },
+      {
+        "key": "options",
+        "label": "Options",
+        "type": "select",
+        "default": "none",
+        "choices": [
+          {
+            "value": "none",
+            "label": "None"
+          },
+          {
+            "value": "nocase",
+            "label": "No Case"
+          },
+          {
+            "value": "dot",
+            "label": "Dot"
+          }
+        ]
+      },
+      {
+        "key": "expected_result",
+        "label": "Expected Result",
+        "type": "toggle",
+        "default": "true"
+      }
+    ],
+    "computeSrc": "(values) => { const num=(v)=>typeof v===\"number\"?v:Number(v); const money=(n)=>Number.isFinite(Number(n))?Number(n).toLocaleString(undefined,{maximumFractionDigits:2}):\"—\"; \n       const regex = new RegExp('^' + values.pattern.replace(/[-/\\^$*+?.()|[]{}]/g, '\\$&').replace(/\\*/g, '.*').replace(/\\?/g, '.') + '$'); \n       const match = regex.test(values.input_string); \n       return { \n           result: match.toString(), \n           rows: [['Match', match.toString()]] \n       }; \n   }",
+    "modes": null,
+    "presets": [
+      {
+        "label": "Example",
+        "values": {
+          "pattern": "*.txt",
+          "input_string": "example.txt",
+          "options": "none",
+          "expected_result": true
+        }
+      }
+    ],
+    "regenerate": false,
+    "icon": "code",
+    "iconColor": "text-emerald-600",
+    "clusterId": "agentic+repair",
+    "confidence": 85
+  },
+  {
+    "slug": "basic-auth-header-generator",
+    "name": "Basic Auth Header Generator",
+    "category": [
+      "Developer"
+    ],
+    "fields": [
+      {
+        "key": "username",
+        "label": "Username",
+        "type": "text",
+        "default": "admin"
+      },
+      {
+        "key": "password",
+        "label": "Password",
+        "type": "text",
+        "default": "password123"
+      },
+      {
+        "key": "realm",
+        "label": "Realm",
+        "type": "text",
+        "default": "Restricted Area"
+      }
+    ],
+    "computeSrc": "(values) => { const num=(v)=>typeof v===\"number\"?v:Number(v); const money=(n)=>Number.isFinite(Number(n))?Number(n).toLocaleString(undefined,{maximumFractionDigits:2}):\"—\"; \n      const username = values.username; \n      const password = values.password; \n      const realm = values.realm; \n      const auth = `${username}:${password}`; \n      const encodedAuth = btoa(auth); \n      const authHeader = `Basic ${encodedAuth}`; \n      return { \n         result: authHeader, \n         rows: [['Username', username], ['Password', '********'], ['Realm', realm], ['Authorization Header', authHeader]] \n      }; \n   }",
+    "modes": null,
+    "presets": [
+      {
+        "label": "Example",
+        "values": {
+          "username": "user",
+          "password": "pass",
+          "realm": "Example Realm"
+        }
+      }
+    ],
+    "regenerate": false,
+    "icon": "code",
+    "iconColor": "text-emerald-600",
+    "clusterId": "agentic",
+    "confidence": 85
+  },
+  {
+    "slug": "base58-encoder",
+    "name": "Base58 Encoder",
+    "category": [
+      "Developer"
+    ],
+    "fields": [
+      {
+        "key": "input",
+        "label": "Input",
+        "type": "textarea",
+        "default": "Hello"
+      },
+      {
+        "key": "mode",
+        "label": "Mode",
+        "type": "select",
+        "default": "encode",
+        "choices": [
+          {
+            "value": "encode",
+            "label": "Encode to Base58"
+          },
+          {
+            "value": "decode",
+            "label": "Decode from Base58"
+          }
+        ]
+      }
+    ],
+    "computeSrc": "(values) => { const num=(v)=>typeof v===\"number\"?v:Number(v); const money=(n)=>Number.isFinite(Number(n))?Number(n).toLocaleString(undefined,{maximumFractionDigits:2}):\"—\";\n          const A = \"123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz\";\n          const input = values.input || \"\";\n          if (!input) return { result: \"\", caption: \"Enter some text\" };\n          if (values.mode === \"decode\") {\n            let acc = 0n; for (const c of input) { const i = A.indexOf(c); if (i < 0) continue; acc = acc * 58n + BigInt(i); }\n            let hex = acc.toString(16); if (hex.length % 2) hex = \"0\" + hex; let out = \"\";\n            for (let i = 0; i < hex.length; i += 2) out += String.fromCharCode(parseInt(hex.substr(i, 2), 16));\n            for (const c of input) { if (c === \"1\") out = \"\\0\" + out; else break; }\n            return { result: out.replace(/^\\0+/, \"\"), caption: \"Decoded from Base58\" };\n          }\n          let acc = 0n; for (let i = 0; i < input.length; i++) acc = acc * 256n + BigInt(input.charCodeAt(i));\n          let out = \"\"; while (acc > 0n) { out = A[Number(acc % 58n)] + out; acc /= 58n; }\n          for (let i = 0; i < input.length && input[i] === \"\\0\"; i++) out = \"1\" + out;\n          return { result: out || \"1\", caption: \"Encoded to Base58\", rows: [[\"Input bytes\", input.length], [\"Output chars\", out.length]] };\n        }",
+    "modes": null,
+    "presets": [
+      {
+        "label": "Encode Hello",
+        "values": {
+          "input": "Hello",
+          "mode": "encode"
+        }
+      }
+    ],
+    "regenerate": false,
+    "icon": "binary",
+    "iconColor": "text-amber-600",
+    "clusterId": "cluster:base58",
+    "confidence": 70
+  },
+  {
+    "slug": "css-clamp-generator",
+    "name": "CSS Clamp Generator",
+    "category": [
+      "Design"
+    ],
+    "fields": [
+      {
+        "key": "min",
+        "label": "Min (px)",
+        "type": "number",
+        "default": "16"
+      },
+      {
+        "key": "max",
+        "label": "Max (px)",
+        "type": "number",
+        "default": "48"
+      },
+      {
+        "key": "vw",
+        "label": "Preferred (vw)",
+        "type": "number",
+        "default": "4"
+      }
+    ],
+    "computeSrc": "(values) => { const num=(v)=>typeof v===\"number\"?v:Number(v); const money=(n)=>Number.isFinite(Number(n))?Number(n).toLocaleString(undefined,{maximumFractionDigits:2}):\"—\"; return { result: `clamp(${num(values.min)}px, ${num(values.vw)}vw, ${num(values.max)}px)`, caption: \"responsive size\", rows: [[\"Min\", num(values.min) + \"px\"], [\"Max\", num(values.max) + \"px\"]] }; }",
+    "modes": null,
+    "presets": [],
+    "regenerate": false,
+    "icon": "square",
+    "iconColor": "text-indigo-500",
+    "clusterId": "cluster:css-extra",
+    "confidence": 55
+  },
+  {
+    "slug": "css-triangle-generator",
+    "name": "CSS Triangle Generator",
+    "category": [
+      "Design"
+    ],
+    "fields": [
+      {
+        "key": "size",
+        "label": "Size (px)",
+        "type": "range",
+        "default": 40,
+        "min": 4,
+        "max": 200,
+        "step": 2
+      },
+      {
+        "key": "direction",
+        "label": "Direction",
+        "type": "select",
+        "default": "up",
+        "choices": [
+          {
+            "value": "up",
+            "label": "up"
+          },
+          {
+            "value": "down",
+            "label": "down"
+          },
+          {
+            "value": "left",
+            "label": "left"
+          },
+          {
+            "value": "right",
+            "label": "right"
+          }
+        ]
+      },
+      {
+        "key": "color",
+        "label": "Color",
+        "type": "text",
+        "default": "#4f46e5"
+      }
+    ],
+    "computeSrc": "(values) => { const num=(v)=>typeof v===\"number\"?v:Number(v); const money=(n)=>Number.isFinite(Number(n))?Number(n).toLocaleString(undefined,{maximumFractionDigits:2}):\"—\"; const s = num(values.size), c = values.color, T = \"transparent\"; const m = { up: `border-left:${s}px solid ${T};border-right:${s}px solid ${T};border-bottom:${s}px solid ${c};`, down: `border-left:${s}px solid ${T};border-right:${s}px solid ${T};border-top:${s}px solid ${c};`, left: `border-top:${s}px solid ${T};border-bottom:${s}px solid ${T};border-right:${s}px solid ${c};`, right: `border-top:${s}px solid ${T};border-bottom:${s}px solid ${T};border-left:${s}px solid ${c};` }; return { result: \"width:0;height:0;\" + m[values.direction], rows: [[\"Direction\", values.direction]] }; }",
+    "modes": null,
+    "presets": [],
+    "regenerate": false,
+    "icon": "square",
+    "iconColor": "text-indigo-500",
+    "clusterId": "cluster:css-extra",
+    "confidence": 55
+  },
+  {
+    "slug": "cursive-text-generator",
+    "name": "Cursive Text Generator",
+    "category": [
+      "Fun"
+    ],
+    "fields": [
+      {
+        "key": "text",
+        "label": "Text",
+        "type": "textarea",
+        "default": "Hello World"
+      }
+    ],
+    "computeSrc": "(values) => { const num=(v)=>typeof v===\"number\"?v:Number(v); const money=(n)=>Number.isFinite(Number(n))?Number(n).toLocaleString(undefined,{maximumFractionDigits:2}):\"—\";\n          const style = \"script\";\n          const t = String(values.text || \"\");\n          const off = (ch, base, Base, dbase) => { const c = ch.charCodeAt(0); if (ch >= \"a\" && ch <= \"z\") return String.fromCodePoint(base + (c - 97)); if (ch >= \"A\" && ch <= \"Z\") return String.fromCodePoint(Base + (c - 65)); if (dbase && ch >= \"0\" && ch <= \"9\") return String.fromCodePoint(dbase + (c - 48)); return ch; };\n          const flip = { a: \"ɐ\", b: \"q\", c: \"ɔ\", d: \"p\", e: \"ǝ\", f: \"ɟ\", g: \"ƃ\", h: \"ɥ\", i: \"ᴉ\", j: \"ɾ\", k: \"ʞ\", l: \"l\", m: \"ɯ\", n: \"u\", o: \"o\", p: \"d\", q: \"b\", r: \"ɹ\", s: \"s\", t: \"ʇ\", u: \"n\", v: \"ʌ\", w: \"ʍ\", x: \"x\", y: \"ʎ\", z: \"z\" };\n          const scriptEx = { B: \"ℬ\", E: \"ℰ\", F: \"ℱ\", H: \"ℋ\", I: \"ℐ\", L: \"ℒ\", M: \"ℳ\", R: \"ℛ\", e: \"ℯ\", g: \"ℊ\", o: \"ℴ\" };\n          let out = \"\";\n          for (const ch of t) {\n            if (style === \"flip\") out += flip[ch.toLowerCase()] || ch;\n            else if (style === \"mono\") out += off(ch, 0x1d68a, 0x1d670, 0x1d7f6);\n            else if (style === \"wide\") { const c = ch.charCodeAt(0); out += ch > \" \" && ch <= \"~\" ? String.fromCodePoint(0xff00 + (c - 32)) : ch; }\n            else if (style === \"bold\") out += off(ch, 0x1d41a, 0x1d400, 0x1d7ce);\n            else if (style === \"italic\") out += ch === \"h\" ? \"ℎ\" : off(ch, 0x1d44e, 0x1d434, 0);\n            else if (style === \"script\") out += scriptEx[ch] || off(ch, 0x1d4b6, 0x1d49c, 0);\n            else if (style === \"strike\") out += ch + \"̶\";\n            else if (style === \"under\") out += ch + \"̲\";\n            else out += ch;\n          }\n          if (style === \"flip\") out = out.split(\"\").reverse().join(\"\");\n          return { result: out || \"—\" };\n        }",
+    "modes": null,
+    "presets": [
+      {
+        "label": "Sample",
+        "values": {
+          "text": "Hello World"
+        }
+      }
+    ],
+    "regenerate": false,
+    "icon": "type",
+    "iconColor": "text-pink-600",
+    "clusterId": "cluster:fancy-text",
+    "confidence": 55
+  },
+  {
+    "slug": "domain-name-ideas-generator",
+    "name": "Domain Name Ideas Generator",
+    "category": [
+      "Startup"
+    ],
+    "fields": [
+      {
+        "key": "keyword",
+        "label": "Keyword",
+        "type": "text",
+        "default": "cloud",
+        "required": false
+      }
+    ],
+    "computeSrc": "(values) => { const num=(v)=>typeof v===\"number\"?v:Number(v); const money=(n)=>Number.isFinite(Number(n))?Number(n).toLocaleString(undefined,{maximumFractionDigits:2}):\"—\";\n            const isFantasy = false;\n            const k = String(values.keyword || \"\").trim().toLowerCase().replace(/[^a-z0-9]/g, \"\");\n            const A = [\"Nova\", \"Lumen\", \"Vertex\", \"Quartz\", \"Harbor\", \"Ember\", \"Cascade\", \"Cobalt\", \"Nimbus\", \"Zephyr\", \"Onyx\", \"Delta\", \"Pixel\", \"Echo\", \"Aster\", \"Flux\", \"Vela\", \"Rune\"];\n            const B = [\"ly\", \"ify\", \"hub\", \"labs\", \"kit\", \"flow\", \"wave\", \"forge\", \"spark\", \"loop\", \"base\", \"grid\", \"works\", \"craft\"];\n            const fant = [\"Aeloria\", \"Thornwood\", \"Kaelith\", \"Silvarn\", \"Draven\", \"Elowen\", \"Fenrith\", \"Mirelle\", \"Zorander\", \"Ysolde\", \"Varkon\", \"Lythia\"];\n            const cap = (s) => s.charAt(0).toUpperCase() + s.slice(1);\n            const out = new Set(); let g = 0;\n            while (out.size < 6 && g++ < 60) {\n              if (isFantasy) out.add(fant[Math.floor(Math.random() * fant.length)] + \" \" + fant[Math.floor(Math.random() * fant.length)]);\n              else { const a = A[Math.floor(Math.random() * A.length)]; const b = B[Math.floor(Math.random() * B.length)]; out.add(k ? cap(k) + b : a + b); }\n            }\n            return { list: [...out] };\n          }",
+    "modes": null,
+    "presets": [],
+    "regenerate": true,
+    "icon": "shuffle",
+    "iconColor": "text-violet-600",
+    "clusterId": "cluster:name-gen",
+    "confidence": 55
+  },
+  {
+    "slug": "duration-calculator",
+    "name": "Duration Calculator",
+    "category": [
+      "Developer"
+    ],
+    "fields": [
+      {
+        "key": "seconds",
+        "label": "Seconds",
+        "type": "number",
+        "default": "90061"
+      }
+    ],
+    "computeSrc": "(values) => { const num=(v)=>typeof v===\"number\"?v:Number(v); const money=(n)=>Number.isFinite(Number(n))?Number(n).toLocaleString(undefined,{maximumFractionDigits:2}):\"—\"; let s = Math.max(0, Math.floor(num(values.seconds))); const d = Math.floor(s / 86400); s %= 86400; const h = Math.floor(s / 3600); s %= 3600; const m = Math.floor(s / 60); s %= 60; return { result: [d && d + \"d\", h && h + \"h\", m && m + \"m\", (s || (!d && !h && !m)) && s + \"s\"].filter(Boolean).join(\" \"), rows: [[\"Days\", d], [\"Hours\", h], [\"Minutes\", m], [\"Seconds\", s]] }; }",
+    "modes": null,
+    "presets": [],
+    "regenerate": false,
+    "icon": "code",
+    "iconColor": "text-cyan-600",
+    "clusterId": "cluster:dev-format",
+    "confidence": 55
+  },
+  {
+    "slug": "fantasy-character-name-generator",
+    "name": "Fantasy Character Name Generator",
+    "category": [
+      "Fun"
+    ],
+    "fields": [
+      {
+        "key": "keyword",
+        "label": "Theme (optional)",
+        "type": "text",
+        "default": "",
+        "required": false
+      }
+    ],
+    "computeSrc": "(values) => { const num=(v)=>typeof v===\"number\"?v:Number(v); const money=(n)=>Number.isFinite(Number(n))?Number(n).toLocaleString(undefined,{maximumFractionDigits:2}):\"—\";\n            const isFantasy = true;\n            const k = String(values.keyword || \"\").trim().toLowerCase().replace(/[^a-z0-9]/g, \"\");\n            const A = [\"Nova\", \"Lumen\", \"Vertex\", \"Quartz\", \"Harbor\", \"Ember\", \"Cascade\", \"Cobalt\", \"Nimbus\", \"Zephyr\", \"Onyx\", \"Delta\", \"Pixel\", \"Echo\", \"Aster\", \"Flux\", \"Vela\", \"Rune\"];\n            const B = [\"ly\", \"ify\", \"hub\", \"labs\", \"kit\", \"flow\", \"wave\", \"forge\", \"spark\", \"loop\", \"base\", \"grid\", \"works\", \"craft\"];\n            const fant = [\"Aeloria\", \"Thornwood\", \"Kaelith\", \"Silvarn\", \"Draven\", \"Elowen\", \"Fenrith\", \"Mirelle\", \"Zorander\", \"Ysolde\", \"Varkon\", \"Lythia\"];\n            const cap = (s) => s.charAt(0).toUpperCase() + s.slice(1);\n            const out = new Set(); let g = 0;\n            while (out.size < 6 && g++ < 60) {\n              if (isFantasy) out.add(fant[Math.floor(Math.random() * fant.length)] + \" \" + fant[Math.floor(Math.random() * fant.length)]);\n              else { const a = A[Math.floor(Math.random() * A.length)]; const b = B[Math.floor(Math.random() * B.length)]; out.add(k ? cap(k) + b : a + b); }\n            }\n            return { list: [...out] };\n          }",
+    "modes": null,
+    "presets": [],
+    "regenerate": true,
+    "icon": "shuffle",
+    "iconColor": "text-violet-600",
+    "clusterId": "cluster:name-gen",
+    "confidence": 55
+  },
+  {
+    "slug": "ipv6-expander",
+    "name": "IPv6 Expander",
+    "category": [
+      "Developer"
+    ],
+    "fields": [
+      {
+        "key": "addr",
+        "label": "IPv6 address",
+        "type": "text",
+        "default": "2001:db8::1"
+      }
+    ],
+    "computeSrc": "(values) => { const num=(v)=>typeof v===\"number\"?v:Number(v); const money=(n)=>Number.isFinite(Number(n))?Number(n).toLocaleString(undefined,{maximumFractionDigits:2}):\"—\"; const a = String(values.addr).trim(); if (!a.includes(\":\")) return { result: \"—\", caption: \"Enter an IPv6 address\" }; const parts = a.split(\"::\"); let head = parts[0] ? parts[0].split(\":\") : []; let tail = parts[1] !== undefined ? (parts[1] ? parts[1].split(\":\") : []) : []; const miss = 8 - head.length - tail.length; const full = [...head, ...Array(Math.max(0, miss)).fill(\"0\"), ...tail].map((h) => (h || \"0\").padStart(4, \"0\")); return { result: full.join(\":\"), caption: \"expanded\" }; }",
+    "modes": null,
+    "presets": [],
+    "regenerate": false,
+    "icon": "code",
+    "iconColor": "text-cyan-600",
+    "clusterId": "cluster:dev-format",
+    "confidence": 55
+  },
+  {
+    "slug": "iso-8601-formatter",
+    "name": "ISO 8601 Formatter",
+    "category": [
+      "Developer"
+    ],
+    "fields": [
+      {
+        "key": "input",
+        "label": "Date/time",
+        "type": "text",
+        "default": "2026-07-20 15:30"
+      }
+    ],
+    "computeSrc": "(values) => { const num=(v)=>typeof v===\"number\"?v:Number(v); const money=(n)=>Number.isFinite(Number(n))?Number(n).toLocaleString(undefined,{maximumFractionDigits:2}):\"—\"; const dt = new Date(values.input); if (isNaN(dt)) return { result: \"—\", caption: \"Enter a valid date/time\" }; return { result: dt.toISOString(), rows: [[\"Unix (s)\", Math.floor(dt.getTime() / 1000)], [\"UTC\", dt.toUTCString()], [\"Local\", dt.toString().replace(/ GMT.*/, \"\")]] }; }",
+    "modes": null,
+    "presets": [],
+    "regenerate": false,
+    "icon": "code",
+    "iconColor": "text-cyan-600",
+    "clusterId": "cluster:dev-format",
+    "confidence": 55
+  },
+  {
+    "slug": "media-query-generator",
+    "name": "Media Query Generator",
+    "category": [
+      "Design"
+    ],
+    "fields": [
+      {
+        "key": "min",
+        "label": "Min width (px, 0 = none)",
+        "type": "number",
+        "default": "768"
+      },
+      {
+        "key": "max",
+        "label": "Max width (px, 0 = none)",
+        "type": "number",
+        "default": "0"
+      }
+    ],
+    "computeSrc": "(values) => { const num=(v)=>typeof v===\"number\"?v:Number(v); const money=(n)=>Number.isFinite(Number(n))?Number(n).toLocaleString(undefined,{maximumFractionDigits:2}):\"—\"; const parts = []; if (num(values.min) > 0) parts.push(`(min-width: ${num(values.min)}px)`); if (num(values.max) > 0) parts.push(`(max-width: ${num(values.max)}px)`); const q = parts.join(\" and \") || \"all\"; return { result: `@media ${q} { /* … */ }`, rows: [[\"Query\", q]] }; }",
+    "modes": null,
+    "presets": [],
+    "regenerate": false,
+    "icon": "square",
+    "iconColor": "text-indigo-500",
+    "clusterId": "cluster:css-extra",
+    "confidence": 55
+  },
+  {
+    "slug": "strikethrough-text-generator",
+    "name": "Strikethrough Text Generator",
+    "category": [
+      "Fun"
+    ],
+    "fields": [
+      {
+        "key": "text",
+        "label": "Text",
+        "type": "textarea",
+        "default": "Hello World"
+      }
+    ],
+    "computeSrc": "(values) => { const num=(v)=>typeof v===\"number\"?v:Number(v); const money=(n)=>Number.isFinite(Number(n))?Number(n).toLocaleString(undefined,{maximumFractionDigits:2}):\"—\";\n          const style = \"strike\";\n          const t = String(values.text || \"\");\n          const off = (ch, base, Base, dbase) => { const c = ch.charCodeAt(0); if (ch >= \"a\" && ch <= \"z\") return String.fromCodePoint(base + (c - 97)); if (ch >= \"A\" && ch <= \"Z\") return String.fromCodePoint(Base + (c - 65)); if (dbase && ch >= \"0\" && ch <= \"9\") return String.fromCodePoint(dbase + (c - 48)); return ch; };\n          const flip = { a: \"ɐ\", b: \"q\", c: \"ɔ\", d: \"p\", e: \"ǝ\", f: \"ɟ\", g: \"ƃ\", h: \"ɥ\", i: \"ᴉ\", j: \"ɾ\", k: \"ʞ\", l: \"l\", m: \"ɯ\", n: \"u\", o: \"o\", p: \"d\", q: \"b\", r: \"ɹ\", s: \"s\", t: \"ʇ\", u: \"n\", v: \"ʌ\", w: \"ʍ\", x: \"x\", y: \"ʎ\", z: \"z\" };\n          const scriptEx = { B: \"ℬ\", E: \"ℰ\", F: \"ℱ\", H: \"ℋ\", I: \"ℐ\", L: \"ℒ\", M: \"ℳ\", R: \"ℛ\", e: \"ℯ\", g: \"ℊ\", o: \"ℴ\" };\n          let out = \"\";\n          for (const ch of t) {\n            if (style === \"flip\") out += flip[ch.toLowerCase()] || ch;\n            else if (style === \"mono\") out += off(ch, 0x1d68a, 0x1d670, 0x1d7f6);\n            else if (style === \"wide\") { const c = ch.charCodeAt(0); out += ch > \" \" && ch <= \"~\" ? String.fromCodePoint(0xff00 + (c - 32)) : ch; }\n            else if (style === \"bold\") out += off(ch, 0x1d41a, 0x1d400, 0x1d7ce);\n            else if (style === \"italic\") out += ch === \"h\" ? \"ℎ\" : off(ch, 0x1d44e, 0x1d434, 0);\n            else if (style === \"script\") out += scriptEx[ch] || off(ch, 0x1d4b6, 0x1d49c, 0);\n            else if (style === \"strike\") out += ch + \"̶\";\n            else if (style === \"under\") out += ch + \"̲\";\n            else out += ch;\n          }\n          if (style === \"flip\") out = out.split(\"\").reverse().join(\"\");\n          return { result: out || \"—\" };\n        }",
+    "modes": null,
+    "presets": [
+      {
+        "label": "Sample",
+        "values": {
+          "text": "Hello World"
+        }
+      }
+    ],
+    "regenerate": false,
+    "icon": "type",
+    "iconColor": "text-pink-600",
+    "clusterId": "cluster:fancy-text",
+    "confidence": 55
+  }
+]

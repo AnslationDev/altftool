@@ -1,3 +1,5 @@
+"use client";
+
 // scanner.jsx - Fixed with proper ball passing
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { 

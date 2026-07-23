@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import { MoreVertical, Star, Trash2, Copy, Edit, Pin } from "lucide-react";
 import { Badge } from "@altftool/ui";

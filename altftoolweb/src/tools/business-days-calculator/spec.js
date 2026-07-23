@@ -3,39 +3,36 @@ export const spec = {
   ...{
   "slug": "business-days-calculator",
   "title": "Business Days Calculator",
-  "description": "Calculate the number of business days between two dates.",
+  "description": "Count working days (Mon–Fri) between two dates, excluding weekends.",
   "badge": "Calculator",
   "category": [
     "Calculator"
   ],
-  "icon": "calendar",
-  "iconColor": "text-indigo-600",
+  "icon": "briefcase",
+  "iconColor": "text-blue-600",
   "fields": [
     {
-      "key": "startdate",
-      "label": "Start Date",
+      "key": "start",
+      "label": "Start date",
       "type": "date",
       "default": ""
     },
     {
-      "key": "enddate",
-      "label": "End Date",
+      "key": "end",
+      "label": "End date",
       "type": "date",
       "default": ""
     }
-  ],
-  "presets": [
-    {
-      "label": "Example",
-      "values": {
-        "startDate": "2023-10-01",
-        "endDate": "2023-10-10"
-      }
-    }
-  ],
-  "note": "Weekends (Saturday and Sunday) are excluded from the calculation."
+  ]
 },
-  compute: (values, mode) => { const startDate = new Date(values.startDate); const endDate = new Date(values.endDate); if (isNaN(startDate.getTime()) || isNaN(endDate.getTime())) return { result: 'Invalid date' }; let businessDays = 0; while (startDate <= endDate) { if (startDate.getDay() !== 6 && startDate.getDay() !== 0) businessDays++; startDate.setDate(startDate.getDate() + 1); } return { result: `${businessDays} business days` }; },
+  compute: (values) => { const num=(v)=>typeof v==="number"?v:Number(v); const money=(n)=>Number.isFinite(Number(n))?Number(n).toLocaleString(undefined,{maximumFractionDigits:2}):"—";
+      const a = new Date(values.start), b = new Date(values.end);
+      if (isNaN(a) || isNaN(b) || b < a) return { result: "—", caption: "Pick a valid date range" };
+      let count = 0; const d = new Date(a);
+      while (d <= b) { const g = d.getDay(); if (g !== 0 && g !== 6) count++; d.setDate(d.getDate() + 1); }
+      const total = Math.round((b - a) / 86400000) + 1;
+      return { result: count.toLocaleString() + " business days", rows: [["Total days", total], ["Weekend days", total - count]] };
+    },
 };
 
 export default spec;

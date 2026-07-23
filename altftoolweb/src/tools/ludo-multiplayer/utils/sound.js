@@ -1,3 +1,5 @@
+"use client";
+
 let ctx = null;
 
 function getCtx() {

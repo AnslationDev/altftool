@@ -1,3 +1,5 @@
+"use client";
+
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@altftool/ui";
 import { Trophy, RotateCcw, Home } from "lucide-react";

@@ -1,3 +1,5 @@
+"use client";
+
 import { useState, useEffect, useMemo } from "react";
 import { detectColumnTypes } from "../utils/detectColumnTypes";
 import { analyzeData } from "../utils/analyzeData";

@@ -1,3 +1,5 @@
+"use client";
+
 import { useState, useEffect } from "react";
 
 // Debounce a fast-changing value (e.g. search input).

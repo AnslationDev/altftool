@@ -1,0 +1,408 @@
+/* ============================================================
+   CladCo Exteriors — standalone marketing lander styles
+   Crisp contractor-portfolio look: white base, navy primary,
+   square corners, strong grid lines. Prefix: cladco-
+   ============================================================ */
+
+.cladco-page {
+  --cladco-navy: #12325c;
+  --cladco-navy-deep: #0c2342;
+  --cladco-ink: #1a2433;
+  --cladco-slate: #4b5768;
+  --cladco-line: #d7dde6;
+  --cladco-paper: #ffffff;
+  --cladco-wash: #f3f5f8;
+  --cladco-accent: #c8912a;
+  background: var(--cladco-paper);
+  color: var(--cladco-ink);
+  font-family: Georgia, "Times New Roman", ui-serif, serif;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+.cladco-page h1, .cladco-page h2, .cladco-page h3,
+.cladco-page button, .cladco-page .cladco-sans {
+  font-family: Verdana, Geneva, Tahoma, ui-sans-serif, sans-serif;
+}
+
+.cladco-shell { max-width: 1160px; margin: 0 auto; padding: 0 24px; }
+
+/* ---------- Keyframes ---------- */
+
+@keyframes cladco-rise {
+  from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes cladco-rule-grow {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+
+@keyframes cladco-pulse-ring {
+  0% { box-shadow: 0 0 0 0 rgba(200, 145, 42, 0.45); }
+  70% { box-shadow: 0 0 0 12px rgba(200, 145, 42, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(200, 145, 42, 0); }
+}
+
+/* ---------- Buttons & focus ---------- */
+
+.cladco-btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 14px 26px;
+  font-size: 0.85rem; font-weight: 700;
+  letter-spacing: 0.06em; text-transform: uppercase; text-decoration: none;
+  border: 2px solid var(--cladco-navy);
+  transition: background-color 0.18s ease, color 0.18s ease, transform 0.18s ease;
+}
+
+.cladco-btn-solid { background: var(--cladco-navy); color: #ffffff; }
+.cladco-btn-solid:hover {
+  background: var(--cladco-navy-deep); border-color: var(--cladco-navy-deep);
+  transform: translateY(-2px);
+}
+
+.cladco-btn-ghost { background: transparent; color: var(--cladco-navy); }
+.cladco-btn-ghost:hover { background: var(--cladco-navy); color: #ffffff; transform: translateY(-2px); }
+
+.cladco-btn-invert { background: #ffffff; color: var(--cladco-navy); border-color: #ffffff; }
+.cladco-btn-invert:hover {
+  background: var(--cladco-accent); border-color: var(--cladco-accent);
+  color: #ffffff; transform: translateY(-2px);
+}
+
+.cladco-page a:focus-visible, .cladco-page button:focus-visible {
+  outline: 3px solid var(--cladco-accent); outline-offset: 3px;
+}
+
+/* ---------- Nav ---------- */
+
+.cladco-nav {
+  position: sticky; top: 0; z-index: 40;
+  background: var(--cladco-paper);
+  border-bottom: 3px solid var(--cladco-navy);
+}
+
+.cladco-nav-inner {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 20px; min-height: 72px;
+}
+
+.cladco-brand {
+  display: flex; align-items: center; gap: 10px;
+  text-decoration: none; color: var(--cladco-navy);
+  font-weight: 700; font-size: 1.05rem; letter-spacing: 0.02em;
+  font-family: Verdana, Geneva, Tahoma, ui-sans-serif, sans-serif;
+}
+
+.cladco-brand-mark {
+  width: 34px; height: 34px; display: grid; place-items: center;
+  background: var(--cladco-navy); color: #ffffff;
+}
+
+.cladco-nav-links { display: flex; align-items: center; gap: 26px; list-style: none; margin: 0; padding: 0; }
+
+.cladco-nav-links a {
+  color: var(--cladco-slate); text-decoration: none;
+  font-size: 0.82rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+  font-family: Verdana, Geneva, Tahoma, ui-sans-serif, sans-serif;
+  border-bottom: 2px solid transparent; padding: 4px 0;
+  transition: color 0.15s ease, border-color 0.15s ease;
+}
+
+.cladco-nav-links a:hover { color: var(--cladco-navy); border-bottom-color: var(--cladco-accent); }
+
+.cladco-nav-cta { display: flex; align-items: center; gap: 14px; }
+
+.cladco-nav-phone {
+  display: inline-flex; align-items: center; gap: 7px;
+  color: var(--cladco-navy); text-decoration: none;
+  font-weight: 700; font-size: 0.9rem;
+  font-family: Verdana, Geneva, Tahoma, ui-sans-serif, sans-serif;
+}
+
+.cladco-nav-phone:hover { color: var(--cladco-accent); }
+.cladco-nav .cladco-btn { padding: 10px 18px; }
+
+/* ---------- Hero ---------- */
+
+.cladco-hero { border-bottom: 1px solid var(--cladco-line); }
+
+.cladco-hero-grid { display: grid; grid-template-columns: 1.05fr 1fr; align-items: stretch; }
+
+.cladco-hero-copy { padding: 72px 48px 72px 0; animation: cladco-rise 0.6s ease both; }
+
+.cladco-kicker {
+  display: inline-block;
+  font-size: 0.75rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--cladco-accent);
+  border: 1px solid var(--cladco-line);
+  padding: 6px 12px; margin-bottom: 22px;
+  font-family: Verdana, Geneva, Tahoma, ui-sans-serif, sans-serif;
+}
+
+.cladco-hero h1 {
+  font-size: clamp(2rem, 4.2vw, 3.1rem); line-height: 1.12;
+  margin: 0 0 18px; color: var(--cladco-navy); letter-spacing: -0.01em;
+}
+
+.cladco-hero-sub { font-size: 1.08rem; color: var(--cladco-slate); max-width: 46ch; margin: 0 0 30px; }
+
+.cladco-hero-actions { display: flex; flex-wrap: wrap; gap: 14px; margin-bottom: 36px; }
+
+.cladco-hero-stats { display: grid; grid-template-columns: repeat(3, 1fr); border: 1px solid var(--cladco-line); }
+
+.cladco-stat { padding: 16px 18px; border-right: 1px solid var(--cladco-line); }
+.cladco-stat:last-child { border-right: none; }
+
+.cladco-stat strong {
+  display: block; font-size: 1.35rem; color: var(--cladco-navy);
+  font-family: Verdana, Geneva, Tahoma, ui-sans-serif, sans-serif;
+}
+
+.cladco-stat span { font-size: 0.78rem; color: var(--cladco-slate); letter-spacing: 0.04em; text-transform: uppercase; }
+
+.cladco-hero-media { position: relative; border-left: 3px solid var(--cladco-navy); }
+
+.cladco-frame { position: relative; overflow: hidden; background: var(--cladco-wash); }
+
+.cladco-frame img {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  object-fit: cover; display: block;
+  transition: transform 0.5s ease;
+}
+
+.cladco-frame-hero { height: 100%; min-height: 460px; }
+
+.cladco-hero-tag {
+  position: absolute; left: 0; bottom: 0;
+  background: var(--cladco-navy); color: #ffffff;
+  padding: 12px 20px;
+  font-size: 0.78rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+  font-family: Verdana, Geneva, Tahoma, ui-sans-serif, sans-serif;
+}
+
+/* ---------- Section scaffolding ---------- */
+
+.cladco-section { padding: 84px 0; }
+
+.cladco-section-alt {
+  background: var(--cladco-wash);
+  border-top: 1px solid var(--cladco-line);
+  border-bottom: 1px solid var(--cladco-line);
+}
+
+.cladco-section-head { max-width: 640px; margin-bottom: 44px; }
+
+.cladco-section-head h2 { font-size: clamp(1.5rem, 2.8vw, 2.1rem); color: var(--cladco-navy); margin: 0 0 12px; }
+
+.cladco-section-head h2::after {
+  content: ""; display: block; width: 64px; height: 4px;
+  background: var(--cladco-accent); margin-top: 14px;
+  transform-origin: left;
+  animation: cladco-rule-grow 0.7s ease both;
+}
+
+.cladco-section-head p { color: var(--cladco-slate); margin: 0; }
+
+/* ---------- Materials tabs ---------- */
+
+.cladco-swatch-row { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 34px; }
+
+.cladco-swatch {
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 12px 20px;
+  background: var(--cladco-paper);
+  border: 2px solid var(--cladco-line);
+  color: var(--cladco-slate);
+  font-size: 0.82rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
+  cursor: pointer;
+  transition: border-color 0.15s ease, color 0.15s ease, transform 0.15s ease;
+}
+
+.cladco-swatch:hover { border-color: var(--cladco-navy); color: var(--cladco-navy); transform: translateY(-2px); }
+
+.cladco-swatch-chip { width: 16px; height: 16px; border: 1px solid rgba(0, 0, 0, 0.2); }
+
+.cladco-swatch.cladco-active { border-color: var(--cladco-navy); background: var(--cladco-navy); color: #ffffff; }
+
+.cladco-material-panel {
+  display: grid; grid-template-columns: 1.1fr 1fr;
+  border: 1px solid var(--cladco-line);
+  background: var(--cladco-paper);
+  animation: cladco-rise 0.4s ease both;
+}
+
+.cladco-material-copy { padding: 40px; }
+.cladco-material-copy h3 { margin: 0 0 12px; font-size: 1.25rem; color: var(--cladco-navy); }
+.cladco-material-copy p { color: var(--cladco-slate); margin: 0 0 20px; }
+
+.cladco-check-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.cladco-check-list li { display: flex; align-items: flex-start; gap: 10px; font-size: 0.95rem; color: var(--cladco-ink); }
+.cladco-check-list svg { color: var(--cladco-accent); flex-shrink: 0; margin-top: 3px; }
+
+.cladco-material-media .cladco-frame { height: 100%; min-height: 320px; }
+
+/* ---------- Portfolio mosaic ---------- */
+
+.cladco-mosaic { display: grid; grid-template-columns: repeat(3, 1fr); grid-auto-rows: 220px; gap: 4px; }
+
+.cladco-mosaic-item { position: relative; overflow: hidden; margin: 0; }
+.cladco-mosaic-item.cladco-span-2 { grid-column: span 2; grid-row: span 2; }
+.cladco-mosaic-item .cladco-frame { position: absolute; inset: 0; height: 100%; }
+.cladco-mosaic-item:hover img { transform: scale(1.05); }
+
+.cladco-mosaic-label {
+  position: absolute; left: 0; bottom: 0; z-index: 2;
+  background: rgba(12, 35, 66, 0.88); color: #ffffff;
+  padding: 8px 16px;
+  font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+  font-family: Verdana, Geneva, Tahoma, ui-sans-serif, sans-serif;
+}
+
+.cladco-mosaic-cta {
+  display: flex; flex-direction: column; align-items: flex-start; justify-content: center;
+  gap: 14px;
+  background: var(--cladco-navy); color: #ffffff;
+  padding: 26px;
+}
+
+.cladco-mosaic-cta h3 { margin: 0; font-size: 1.05rem; line-height: 1.35; }
+.cladco-mosaic-cta .cladco-btn { padding: 10px 16px; font-size: 0.75rem; }
+
+/* ---------- Process rail ---------- */
+
+.cladco-rail {
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  border-top: 3px solid var(--cladco-navy);
+  list-style: none; margin: 0; padding: 0;
+}
+
+.cladco-step {
+  padding: 30px 24px 10px;
+  border-right: 1px solid var(--cladco-line);
+  position: relative;
+  transition: background-color 0.2s ease;
+}
+
+.cladco-step:last-child { border-right: none; }
+.cladco-step:hover { background: var(--cladco-wash); }
+
+.cladco-step-num {
+  position: absolute; top: -21px; left: 24px;
+  width: 40px; height: 40px; display: grid; place-items: center;
+  background: var(--cladco-navy); color: #ffffff;
+  font-weight: 700; font-size: 1rem;
+  font-family: Verdana, Geneva, Tahoma, ui-sans-serif, sans-serif;
+}
+
+.cladco-step h3 { margin: 26px 0 8px; font-size: 1rem; color: var(--cladco-navy); }
+.cladco-step p { font-size: 0.9rem; color: var(--cladco-slate); margin: 0; }
+
+/* ---------- Mid CTA band ---------- */
+
+.cladco-band { background: var(--cladco-navy); color: #ffffff; padding: 56px 0; }
+
+.cladco-band-inner {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 28px; flex-wrap: wrap;
+}
+
+.cladco-band h2 { margin: 0 0 8px; font-size: 1.6rem; }
+.cladco-band p { margin: 0; color: #c3cfdf; max-width: 52ch; }
+
+.cladco-band-actions { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+
+.cladco-band-phone {
+  display: inline-flex; align-items: center; gap: 10px;
+  color: #ffffff; text-decoration: none;
+  font-weight: 700; font-size: 1.15rem;
+  font-family: Verdana, Geneva, Tahoma, ui-sans-serif, sans-serif;
+}
+
+.cladco-band-phone:hover { color: var(--cladco-accent); }
+
+.cladco-band-phone svg {
+  background: var(--cladco-accent); color: var(--cladco-navy-deep);
+  padding: 8px; width: 38px; height: 38px;
+  animation: cladco-pulse-ring 2.4s ease-out infinite;
+}
+
+/* ---------- Reviews ---------- */
+
+.cladco-review-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; }
+
+.cladco-review {
+  background: var(--cladco-paper);
+  border: 1px solid var(--cladco-line);
+  padding: 30px 28px; margin: 0;
+  transition: border-color 0.2s ease, transform 0.2s ease;
+}
+
+.cladco-review:hover { border-color: var(--cladco-navy); transform: translateY(-4px); }
+
+.cladco-stars { display: flex; gap: 3px; color: var(--cladco-accent); margin-bottom: 14px; }
+
+.cladco-review blockquote { margin: 0 0 18px; font-style: italic; color: var(--cladco-ink); font-size: 0.98rem; }
+
+.cladco-review figcaption {
+  font-size: 0.8rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--cladco-slate);
+  font-family: Verdana, Geneva, Tahoma, ui-sans-serif, sans-serif;
+}
+
+/* ---------- Final CTA ---------- */
+
+.cladco-final { background: var(--cladco-navy-deep); color: #ffffff; text-align: center; padding: 90px 0; }
+
+.cladco-final h2 { font-size: clamp(1.7rem, 3vw, 2.4rem); margin: 0 0 14px; }
+.cladco-final p { color: #c3cfdf; max-width: 54ch; margin: 0 auto 34px; }
+.cladco-final-actions { display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; }
+
+.cladco-btn-outline-light { background: transparent; color: #ffffff; border-color: #ffffff; }
+.cladco-btn-outline-light:hover { background: #ffffff; color: var(--cladco-navy); transform: translateY(-2px); }
+
+/* ---------- Footer ---------- */
+
+.cladco-footer { background: var(--cladco-paper); border-top: 3px solid var(--cladco-navy); padding: 34px 0; }
+
+.cladco-footer-inner {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 18px; flex-wrap: wrap;
+}
+
+.cladco-footer-note { font-size: 0.78rem; color: var(--cladco-slate); margin: 0; }
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 880px) {
+  .cladco-nav-links { display: none; }
+  .cladco-hero-grid { grid-template-columns: 1fr; }
+  .cladco-hero-copy { padding: 48px 0 40px; }
+  .cladco-hero-media { border-left: none; border-top: 3px solid var(--cladco-navy); }
+  .cladco-frame-hero { min-height: 320px; }
+  .cladco-hero-stats { grid-template-columns: 1fr; }
+  .cladco-stat { border-right: none; border-bottom: 1px solid var(--cladco-line); }
+  .cladco-stat:last-child { border-bottom: none; }
+  .cladco-material-panel { grid-template-columns: 1fr; }
+  .cladco-material-media .cladco-frame { min-height: 240px; }
+  .cladco-mosaic { grid-template-columns: 1fr 1fr; grid-auto-rows: 180px; }
+  .cladco-mosaic-item.cladco-span-2 { grid-column: span 2; grid-row: span 1; }
+  .cladco-rail { grid-template-columns: 1fr; border-top: none; border-left: 3px solid var(--cladco-navy); }
+  .cladco-step { border-right: none; border-bottom: 1px solid var(--cladco-line); padding: 30px 24px 24px 34px; }
+  .cladco-step:last-child { border-bottom: none; }
+  .cladco-step-num { top: 24px; left: -21px; }
+  .cladco-step h3 { margin-top: 0; }
+  .cladco-review-grid { grid-template-columns: 1fr; }
+  .cladco-band-inner { flex-direction: column; align-items: flex-start; }
+  .cladco-section { padding: 60px 0; }
+  .cladco-footer-inner { flex-direction: column; align-items: flex-start; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cladco-page *, .cladco-page *::before, .cladco-page *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

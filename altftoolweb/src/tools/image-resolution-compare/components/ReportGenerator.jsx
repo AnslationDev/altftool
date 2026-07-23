@@ -1,3 +1,5 @@
+"use client";
+
 import { exportPDF, exportCSV, exportJSON } from "../utils/exporter";
 
 export default function ReportGenerator({ analysisA, analysisB, qualityA, qualityB, recommendationsA, recommendationsB, imgAUrl, imgBUrl }) {

@@ -1,3 +1,5 @@
+"use client";
+
 import { useState, useCallback } from "react";
 import { TRUTHS, DARES, generateId } from "../utils/data";
 

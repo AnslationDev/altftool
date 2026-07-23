@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import FeatureCard from "./FeatureCard";
 import { Wand2, ArrowRight, SlidersHorizontal, Zap, Code } from "lucide-react";

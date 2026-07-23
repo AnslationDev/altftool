@@ -1,3 +1,5 @@
+"use client";
+
 import { useMemo } from "react";
 
 // Computes visibility, search matches, and forced-expansion for the tree.

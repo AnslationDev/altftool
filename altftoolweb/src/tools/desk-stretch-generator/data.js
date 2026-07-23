@@ -1,3 +1,5 @@
+"use client";
+
 export const AREAS = [
   { id: "neck", label: "Neck" },
   { id: "shoulders", label: "Shoulders" },

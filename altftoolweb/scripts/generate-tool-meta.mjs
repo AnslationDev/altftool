@@ -1,6 +1,7 @@
 import fs from "fs";
 import path from "path";
 import { createRequire } from "module";
+import { pathToFileURL } from "url";
 import { resolveToolCategories } from "../src/platform/registry/categoryTaxonomy.js";
 
 const require = createRequire(import.meta.url);
@@ -45,7 +46,7 @@ for (const dir of toolDirs) {
 
   let config = {};
   try {
-    const configModule = await import(path.resolve(configPath));
+    const configModule = await import(pathToFileURL(path.resolve(configPath)).href);
     config = configModule.default ?? configModule.toolConfig ?? {};
   } catch {
     // Fallback for CommonJS-style configs (module.exports) under "type": "module".

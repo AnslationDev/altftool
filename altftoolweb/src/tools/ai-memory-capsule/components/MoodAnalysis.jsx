@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useMemo } from "react";
 import { Brain, TrendingUp, TrendingDown } from "lucide-react";
 import { MOODS } from "../constants/index";

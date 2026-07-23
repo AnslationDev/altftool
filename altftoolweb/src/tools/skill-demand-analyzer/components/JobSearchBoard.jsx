@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useCallback, useEffect, useState } from 'react';
 import { Search, MapPin, Briefcase, DollarSign, Calendar, ExternalLink, Globe, Filter, X } from 'lucide-react';
 import { useJSearch } from '../hooks/useJSearch';

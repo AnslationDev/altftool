@@ -1,3 +1,5 @@
+"use client";
+
 import { useState, useEffect } from "react";
 
 const STORAGE_KEY = "vocab_list";

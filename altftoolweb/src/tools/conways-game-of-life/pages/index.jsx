@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState, useCallback, useRef } from 'react';
 import GameCanvas from '../components/GameCanvas';
 import ControlPanel from '../components/ControlPanel';

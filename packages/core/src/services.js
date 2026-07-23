@@ -4,12 +4,14 @@ export const SERVER_ENV = {
   alphaVantage: "ALPHA_VANTAGE_API_KEY",
   gemini: "GEMINI_API_KEY",
   giphy: "GIPHY_API_KEY",
+  googleMaps: "GOOGLE_MAPS_API_KEY",
   linkPreview: "LINKPREVIEW_API_KEY",
   metalPrice: "METAL_PRICE_API_KEY",
   openai: "OPENAI_API_KEY",
   pagespeed: "PAGESPEED_API_KEY",
   rapidApi: "RAPIDAPI_KEY",
   removeBg: "REMOVE_BG_API_KEY",
+  serpApi: "SERPAPI_KEY",
   youtube: "YOUTUBE_API_KEY",
 };
 

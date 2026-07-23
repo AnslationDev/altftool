@@ -1,3 +1,5 @@
+"use client";
+
 import { useState } from "react";
 import { LayoutTemplate } from "lucide-react";
 import { templates } from "./Template";

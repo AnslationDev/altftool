@@ -1,3 +1,5 @@
+"use client";
+
 import { useState, useEffect } from "react";
 
 export default function Timer({ duration, onTimeout, keyIndex }) {

@@ -1,3 +1,5 @@
+"use client";
+
 /**
  * Procedural Noise & Image Processing Utilities
  */

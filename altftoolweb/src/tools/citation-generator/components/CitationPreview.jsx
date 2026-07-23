@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState } from 'react';
 import { Copy, Download, Check, FileText, File as FileIcon, FileType } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';

@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState } from "react";
 import FAQSection from "./components/faq";
 import HowItWorks from "./components/howitworks";

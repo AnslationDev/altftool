@@ -1,3 +1,5 @@
+"use client";
+
 /**
  * Simple localStorage cache for API responses
  */

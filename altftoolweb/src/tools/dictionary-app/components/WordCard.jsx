@@ -1,3 +1,5 @@
+"use client";
+
 import { Trash2, RotateCcw, CheckCheck, BookOpen } from "lucide-react";
 
 export default function WordCard({ entry, onRemove, onStatusChange, onSearch }) {

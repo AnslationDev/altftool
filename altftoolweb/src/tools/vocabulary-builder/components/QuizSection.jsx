@@ -1,3 +1,5 @@
+"use client";
+
 import { useState, useCallback } from "react";
 import { Sparkles, CheckCircle, XCircle, ArrowRight } from "lucide-react";
 import { generateQuiz } from "../utils/vocabUtils";

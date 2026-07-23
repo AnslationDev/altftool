@@ -1,3 +1,5 @@
+"use client";
+
 export default function SessionCard({ session, index, log, onToggleComplete, onUpdateRpe }) {
   return (
     <div className={`p-4 shadow-sm wp-soft-panel`}>

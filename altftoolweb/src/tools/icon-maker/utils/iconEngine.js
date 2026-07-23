@@ -1,3 +1,5 @@
+"use client";
+
 export const ANDROID_SIZES = [48, 72, 96, 144, 192, 512];
 export const FAVICON_SIZES = [16, 32, 48];
 export const PWA_SIZES = [192, 512];

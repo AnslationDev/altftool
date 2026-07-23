@@ -27,7 +27,11 @@ export class ImageProcessor {
           // Draw image to canvas
           ctx.drawImage(img, 0, 0, width, height);
 
-          // Convert canvas to blob
+          const getMimeType = (format) => {
+            if (format === "ico") return "image/x-icon";
+            return `image/${format}`;
+          };
+
           canvas.toBlob(
             (blob) => {
               if (!blob) {
@@ -46,7 +50,7 @@ export class ImageProcessor {
 
               resolve(compressedImage);
             },
-            `image/${settings.format}`,
+            getMimeType(settings.format),
             settings.quality / 100,
           );
         } catch (error) {

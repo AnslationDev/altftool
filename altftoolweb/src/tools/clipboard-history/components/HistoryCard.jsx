@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import {
   Link, Mail, Code, Braces, Hash, Palette, Type,

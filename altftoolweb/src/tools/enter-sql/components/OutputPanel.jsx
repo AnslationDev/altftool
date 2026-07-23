@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState } from 'react';
 import { Check, Copy, Download, FileCheck2, Sparkles } from 'lucide-react';
 

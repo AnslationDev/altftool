@@ -1,3 +1,5 @@
+"use client";
+
 // Export & clipboard helpers for the avatar.
 import { toPng } from "html-to-image";
 import { saveAs } from "file-saver";

@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import { Copy, Volume2, Share2 } from "lucide-react";
 import toast from "react-hot-toast";

@@ -1,4 +1,8 @@
-import { RotateCcw, RefreshCcw, Volume2, VolumeX, Maximize, Minimize } from "lucide-react";
+"use client";
+
+import { motion } from "framer-motion";
+import { Gamepad2, RotateCcw, Volume2, VolumeX, Maximize2, Minimize2, CheckSquare, Square } from "lucide-react";
+import { soundManager } from "../utils/soundEffects";
 
 export default function GameControls({
   gameStarted,
@@ -13,83 +17,130 @@ export default function GameControls({
   fullscreen,
   onToggleFullscreen,
 }) {
-  return (
-    <div className="rounded-lg border border-[var(--border)] bg-[var(--card)] p-5 shadow-[var(--anslation-ds-shadow-sm)]">
-      <p className="text-xs font-semibold uppercase text-[var(--primary)]">Controls</p>
-      <h2 className="mt-1 text-xl font-semibold">Game Actions</h2>
+  const handleClick = (fn) => {
+    if (soundEnabled) soundManager.playClick();
+    fn();
+  };
 
-      <div className="mt-4 flex flex-col gap-2">
-        <button
+  const handleHover = () => {
+    if (soundEnabled) soundManager.playHover();
+  };
+
+  return (
+    <div className="rounded-3xl border-4 border-pink-400/60 bg-[var(--card)] p-5 shadow-xl text-[var(--foreground)] dark:bg-gradient-to-b dark:from-[#3d134d] dark:via-[#2a0e36] dark:to-[#180521] dark:border-pink-400/80 dark:shadow-[0_0_35px_rgba(236,72,153,0.3)]">
+      <span className="text-[10px] font-black uppercase tracking-widest text-pink-600 dark:text-pink-300">
+        Control Center
+      </span>
+      <h2 className="text-xl font-black text-[var(--foreground)] dark:text-white">Game Actions</h2>
+
+      {/* Main Game Reset Buttons */}
+      <div className="mt-4 flex flex-col gap-2.5">
+        <motion.button
           type="button"
-          onClick={onNewGame}
-          className="inline-flex h-11 items-center justify-center gap-2 rounded-md border border-[var(--primary)] bg-[var(--primary)] px-4 text-sm font-semibold text-[var(--primary-foreground)] transition hover:opacity-90 focus:outline-none focus:shadow-[var(--anslation-ds-focus-ring)]"
+          whileHover={{ scale: 1.03 }}
+          whileTap={{ scale: 0.96 }}
+          onMouseEnter={handleHover}
+          onClick={() => handleClick(onNewGame)}
+          className="inline-flex h-12 items-center justify-center gap-2.5 rounded-2xl border-b-4 border-emerald-800 bg-gradient-to-b from-emerald-400 to-green-600 px-4 text-xs font-black uppercase tracking-wider text-white shadow-lg transition-all cursor-pointer"
         >
-          <RefreshCcw className="h-4 w-4" />
-          New Game
-        </button>
+          <Gamepad2 className="h-4 w-4" />
+          🎮 New Game
+        </motion.button>
 
         {gameStarted && !gameOver && (
-          <button
+          <motion.button
             type="button"
-            onClick={onRestartGame}
-            className="inline-flex h-11 items-center justify-center gap-2 rounded-md border border-[var(--border)] bg-[var(--background)] px-4 text-sm font-semibold text-[var(--foreground)] transition hover:border-[var(--primary)] hover:text-[var(--primary)] focus:outline-none focus:shadow-[var(--anslation-ds-focus-ring)]"
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+            onMouseEnter={handleHover}
+            onClick={() => handleClick(onRestartGame)}
+            className="inline-flex h-11 items-center justify-center gap-2.5 rounded-2xl border-b-4 border-purple-800 bg-purple-600 px-4 text-xs font-black uppercase tracking-wider text-white hover:bg-purple-500 transition-all cursor-pointer"
           >
             <RotateCcw className="h-4 w-4" />
-            Restart Game
-          </button>
+            🔄 Restart Game
+          </motion.button>
         )}
 
-        <button
+        <motion.button
           type="button"
-          onClick={onResetBoard}
-          className="inline-flex h-11 items-center justify-center gap-2 rounded-md border border-[var(--border)] bg-[var(--background)] px-4 text-sm font-semibold text-[var(--foreground)] transition hover:border-[var(--primary)] hover:text-[var(--primary)] focus:outline-none focus:shadow-[var(--anslation-ds-focus-ring)]"
+          whileHover={{ scale: 1.02 }}
+          whileTap={{ scale: 0.98 }}
+          onMouseEnter={handleHover}
+          onClick={() => handleClick(onResetBoard)}
+          className="inline-flex h-11 items-center justify-center gap-2.5 rounded-2xl border-b-4 border-pink-800 bg-pink-600 px-4 text-xs font-black uppercase tracking-wider text-white hover:bg-pink-500 transition-all cursor-pointer"
         >
           <RotateCcw className="h-4 w-4" />
-          New Board
-        </button>
+          🎲 New Board
+        </motion.button>
       </div>
 
+      {/* Toggles */}
       <div className="mt-4 space-y-2">
-        <button
+        {/* Auto Mark Toggle */}
+        <motion.button
           type="button"
-          onClick={onToggleAutoMark}
-          aria-pressed={autoMark}
-          className={`inline-flex h-10 w-full items-center justify-center gap-2 rounded-md border px-3 text-sm font-semibold transition focus:outline-none focus:shadow-[var(--anslation-ds-focus-ring)] ${
+          whileHover={{ scale: 1.02 }}
+          whileTap={{ scale: 0.98 }}
+          onMouseEnter={handleHover}
+          onClick={() => handleClick(onToggleAutoMark)}
+          className={`inline-flex h-10 w-full items-center justify-between rounded-xl border-2 px-3.5 text-xs font-black transition-all cursor-pointer ${
             autoMark
-              ? "border-[var(--primary)] bg-[var(--primary)] text-[var(--primary-foreground)]"
-              : "border-[var(--border)] bg-[var(--background)] text-[var(--foreground)] hover:border-[var(--primary)] hover:text-[var(--primary)]"
+              ? "border-pink-400 bg-pink-500/20 text-pink-700 dark:text-yellow-300"
+              : "border-pink-500/30 bg-[var(--muted)] text-[var(--muted-foreground)] dark:bg-[#250831] dark:text-pink-200"
           }`}
         >
-          Auto Mark: {autoMark ? "On" : "Off"}
-        </button>
+          <span className="flex items-center gap-2">
+            {autoMark ? <CheckSquare className="h-4 w-4 text-amber-500 dark:text-yellow-300" /> : <Square className="h-4 w-4" />}
+            Auto Mark Numbers
+          </span>
+          <span className="rounded-full bg-pink-200 dark:bg-pink-950 px-2 py-0.5 text-[10px] uppercase font-black text-pink-900 dark:text-white">
+            {autoMark ? "ON" : "OFF"}
+          </span>
+        </motion.button>
 
-        <button
+        {/* Sound Toggle */}
+        <motion.button
           type="button"
-          onClick={onToggleSound}
-          aria-pressed={soundEnabled}
-          className={`inline-flex h-10 w-full items-center justify-center gap-2 rounded-md border px-3 text-sm font-semibold transition focus:outline-none focus:shadow-[var(--anslation-ds-focus-ring)] ${
+          whileHover={{ scale: 1.02 }}
+          whileTap={{ scale: 0.98 }}
+          onMouseEnter={handleHover}
+          onClick={() => handleClick(onToggleSound)}
+          className={`inline-flex h-10 w-full items-center justify-between rounded-xl border-2 px-3.5 text-xs font-black transition-all cursor-pointer ${
             soundEnabled
-              ? "border-[var(--primary)] bg-[var(--primary)] text-[var(--primary-foreground)]"
-              : "border-[var(--border)] bg-[var(--background)] text-[var(--foreground)] hover:border-[var(--primary)] hover:text-[var(--primary)]"
+              ? "border-indigo-400 bg-indigo-500/20 text-indigo-700 dark:text-yellow-300"
+              : "border-pink-500/30 bg-[var(--muted)] text-[var(--muted-foreground)] dark:bg-[#250831] dark:text-pink-200"
           }`}
         >
-          {soundEnabled ? <Volume2 className="h-4 w-4" /> : <VolumeX className="h-4 w-4" />}
-          Sound: {soundEnabled ? "On" : "Off"}
-        </button>
+          <span className="flex items-center gap-2">
+            {soundEnabled ? <Volume2 className="h-4 w-4 text-indigo-600 dark:text-yellow-300" /> : <VolumeX className="h-4 w-4" />}
+            Audio SFX
+          </span>
+          <span className="rounded-full bg-indigo-200 dark:bg-pink-950 px-2 py-0.5 text-[10px] uppercase font-black text-indigo-900 dark:text-white">
+            {soundEnabled ? "ON" : "OFF"}
+          </span>
+        </motion.button>
 
-        <button
+        {/* Fullscreen Toggle */}
+        <motion.button
           type="button"
-          onClick={onToggleFullscreen}
-          aria-pressed={fullscreen}
-          className={`inline-flex h-10 w-full items-center justify-center gap-2 rounded-md border px-3 text-sm font-semibold transition focus:outline-none focus:shadow-[var(--anslation-ds-focus-ring)] ${
+          whileHover={{ scale: 1.02 }}
+          whileTap={{ scale: 0.98 }}
+          onMouseEnter={handleHover}
+          onClick={() => handleClick(onToggleFullscreen)}
+          className={`inline-flex h-10 w-full items-center justify-between rounded-xl border-2 px-3.5 text-xs font-black transition-all cursor-pointer ${
             fullscreen
-              ? "border-[var(--primary)] bg-[var(--primary)] text-[var(--primary-foreground)]"
-              : "border-[var(--border)] bg-[var(--background)] text-[var(--foreground)] hover:border-[var(--primary)] hover:text-[var(--primary)]"
+              ? "border-purple-400 bg-purple-500/20 text-purple-700 dark:text-yellow-300"
+              : "border-pink-500/30 bg-[var(--muted)] text-[var(--muted-foreground)] dark:bg-[#250831] dark:text-pink-200"
           }`}
         >
-          {fullscreen ? <Minimize className="h-4 w-4" /> : <Maximize className="h-4 w-4" />}
-          {fullscreen ? "Exit Fullscreen" : "Fullscreen"}
-        </button>
+          <span className="flex items-center gap-2">
+            {fullscreen ? <Minimize2 className="h-4 w-4" /> : <Maximize2 className="h-4 w-4" />}
+            Fullscreen View
+          </span>
+          <span className="rounded-full bg-purple-200 dark:bg-pink-950 px-2 py-0.5 text-[10px] uppercase font-black text-purple-900 dark:text-white">
+            {fullscreen ? "EXIT" : "ENTER"}
+          </span>
+        </motion.button>
       </div>
     </div>
   );

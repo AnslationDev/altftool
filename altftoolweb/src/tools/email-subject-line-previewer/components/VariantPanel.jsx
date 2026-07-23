@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState } from 'react';
 import { Copy, Check, MousePointerClick, Sparkles } from 'lucide-react';
 import { analyzeSubject, createVariants, scoreLabel } from '../utils/subjectLine';

@@ -1,3 +1,5 @@
+"use client";
+
 import { useRef, useEffect } from "react";
 
 export default function EditorPanel({ label, value, onChange, placeholder = "Paste or type text here...", color = "primary" }) {

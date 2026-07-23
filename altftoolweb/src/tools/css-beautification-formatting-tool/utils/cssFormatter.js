@@ -1,3 +1,5 @@
+"use client";
+
 const DEFAULT_SETTINGS = {
   indent: "2",
   lineSpacing: "compact",

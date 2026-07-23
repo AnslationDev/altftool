@@ -1,3 +1,5 @@
+"use client";
+
 // import { Search } from "lucide-react";
 // import React, { useState, useEffect } from "react";
 // import Features from "../components/Feature";

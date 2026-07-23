@@ -697,6 +697,85 @@ const routeLoaders = {
     "term-condition": () => import("@/projects/shophobia/modules/term-condition/page.jsx"),
     footer: () => import("@/projects/shophobia/modules/footer/page.jsx"),
   }),
+    thestylelife: {
+    "site-settings": {
+      "": () => import("@/projects/thestylelife/modules/site-settings/page.jsx"),
+    },
+    navbar: {
+      "": () => import("@/projects/thestylelife/modules/navbar/page.jsx"),
+    },
+    home: {
+      "": () => import("@/projects/thestylelife/modules/home/page.jsx"),
+    },
+    services: {
+      "": () => import("@/projects/thestylelife/modules/services/page.jsx"),
+    },
+    team: {
+      "": () => import("@/projects/thestylelife/modules/team/page.jsx"),
+    },
+    blog: {
+      "": () => import("@/projects/thestylelife/modules/blog/page.jsx"),
+    },
+    testimonials: {
+      "": () => import("@/projects/thestylelife/modules/testimonials/page.jsx"),
+    },
+    faq: {
+      "": () => import("@/projects/thestylelife/modules/faq/page.jsx"),
+    },
+    "about-us": {
+      "": () => import("@/projects/thestylelife/modules/about-us/page.jsx"),
+    },
+    "contact-us": {
+      "": () => import("@/projects/thestylelife/modules/contact-us/page.jsx"),
+    },
+    policy: {
+      "": () => import("@/projects/thestylelife/modules/policy/page.jsx"),
+    },
+    "term-condition": {
+      "": () => import("@/projects/thestylelife/modules/term-condition/page.jsx"),
+    },
+    footer: {
+      "": () => import("@/projects/thestylelife/modules/footer/page.jsx"),
+    },
+  },
+  snapagee: {
+    "site-settings": {
+      "": () => import("@/projects/snapagee/modules/site-settings/page.jsx"),
+    },
+    navbar: {
+      "": () => import("@/projects/snapagee/modules/navbar/page.jsx"),
+    },
+    home: {
+      "": () => import("@/projects/snapagee/modules/home/page.jsx"),
+    },
+    services: {
+      "": () => import("@/projects/snapagee/modules/services/page.jsx"),
+    },
+    team: {
+      "": () => import("@/projects/snapagee/modules/team/page.jsx"),
+    },
+    blog: {
+      "": () => import("@/projects/snapagee/modules/blog/page.jsx"),
+    },
+    testimonials: {
+      "": () => import("@/projects/snapagee/modules/testimonials/page.jsx"),
+    },
+    faq: {
+      "": () => import("@/projects/snapagee/modules/faq/page.jsx"),
+    },
+    "contact-us": {
+      "": () => import("@/projects/snapagee/modules/contact-us/page.jsx"),
+    },
+    policy: {
+      "": () => import("@/projects/snapagee/modules/policy/page.jsx"),
+    },
+    "term-condition": {
+      "": () => import("@/projects/snapagee/modules/term-condition/page.jsx"),
+    },
+    footer: {
+      "": () => import("@/projects/snapagee/modules/footer/page.jsx"),
+    },
+  },
 };
 
 // Shared, project-agnostic module page loaders. These modules exist for EVERY

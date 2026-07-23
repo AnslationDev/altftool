@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, forwardRef, useImperativeHandle, useEffect } from "react";
 import yaml from "js-yaml";
 import TabBar from "./TabBar";
 import InputTab from "./InputTab";
@@ -7,8 +7,20 @@ import CodeSnippetTab from "./CodeSnippetTab";
 import ErrorGeneratorTab from "./ErrorGeneratorTab";
 import VersionComparisonTab from "./VersionComparisonTab";
 import VisualFlowTab from "./VisualFlowTab";
+import { saveRecentProject } from "../utils/recentProjects";
 
-export default function SwaggerDocGenerator() {
+const BLANK_INPUT = {
+  title: "",
+  version: "1.0.0",
+  description: "",
+  baseUrl: "",
+  endpoints: [],
+};
+
+const SwaggerDocGenerator = forwardRef(function SwaggerDocGenerator(
+  { onSpecChange, onProjectSaved } = {},
+  ref,
+) {
 // ✅ Fix — sessionStorage
 const [jsonInput, setJsonInput] = useState(() => {
   if (typeof window !== "undefined") {
@@ -120,10 +132,12 @@ const handleJsonInput = (value) => {
   };
 
   // Parse JSON input and convert it to OpenAPI 3.0 spec format
-  const generateSwagger = () => {
+  // `overrideInput` lets callers (e.g. drag-drop import) generate immediately
+  // without waiting on the jsonInput state to flush.
+  const generateSwagger = (overrideInput) => {
     try {
       setError("");
-      const input = JSON.parse(jsonInput);
+      const input = JSON.parse(overrideInput ?? jsonInput);
 
       // Build base OpenAPI 3.0 structure from user input
       const swagger = {
@@ -204,6 +218,7 @@ const handleJsonInput = (value) => {
       // Save generated spec and switch to preview tab
       setSwaggerSpec(swagger);
       setActiveTab("preview");
+      onProjectSaved?.(saveRecentProject(swagger));
     } catch (err) {
       // Show error message if JSON is invalid
       setError(err.message);
@@ -279,6 +294,38 @@ const handleJsonInput = (value) => {
     }
   };
 
+  // Notify the parent (Hero/CTA banner) whenever the spec changes so they can
+  // drive export/publish actions without duplicating generator state.
+  useEffect(() => {
+    onSpecChange?.(swaggerSpec);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [swaggerSpec]);
+
+  // Imperative controls used by the redesigned hero section — drag-drop
+  // import, quick-action cards and "New Documentation" all drive the
+  // generator through this handle instead of duplicating its state.
+  useImperativeHandle(ref, () => ({
+    loadAndGenerate(rawJsonString) {
+      handleJsonInput(rawJsonString);
+      generateSwagger(rawJsonString);
+    },
+    loadSpecDirectly(specObj) {
+      setError("");
+      setSwaggerSpec(specObj);
+      setActiveTab("preview");
+      onProjectSaved?.(saveRecentProject(specObj));
+    },
+    reset() {
+      setError("");
+      setSwaggerSpec(null);
+      handleJsonInput(JSON.stringify(BLANK_INPUT, null, 2));
+      setActiveTab("input");
+    },
+    focusInput() {
+      setActiveTab("input");
+    },
+  }));
+
   return (
     // Main card — uses CSS variable for background to support dark mode
     <div className="max-w-5xl mx-auto w-full px-4 sm:px-6 overflow-x-hidden max-w-[100vw]">
@@ -341,4 +388,6 @@ const handleJsonInput = (value) => {
       </div>
     </div>
   );
-}
+});
+
+export default SwaggerDocGenerator;

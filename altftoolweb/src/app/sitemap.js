@@ -34,8 +34,9 @@ import { getAllCategories as getFactNetCategories, getLatestArticles as getFactN
 import { TEMPLATES as socialMockupTemplates } from "@/app/prank-socialmedia/lib/templates";
 import { getAllKymRoutes } from "@/app/kym/components/KymGenericPage";
 import { pranks as pranxExperiences } from "@/app/pranx/data/pranxData";
-import { sitemapPages as tripFindBoxPages } from "@/app/business-ops/tripfindbox/lib/sitemapPages";
-import { HN_CATEGORIES } from "@/app/housingneeds/_data/categories";
+import { sitemapPages as tripFindBoxPages } from "@/app/bops/tripfindbox/lib/sitemapPages";
+import { HN_CATEGORIES } from "@/app/bops/housingneeds/_data/categories";
+import { BOPS_COLLECTIONS } from "@/app/bops/_data/collections";
 import { INSTRUMENTS as tradeonInstruments } from "@/app/tradeon/lib/instruments";
 import { assetHref as tradeonAssetHref, chartHref as tradeonChartHref } from "@/app/tradeon/lib/format";
 
@@ -129,24 +130,16 @@ const staticRoutes = [
   { path: "/homeserv/terms-of-use", priority: 0.3 },
 
   // --- TripFindBox (travel) ---
-  { path: "/tripfindbox", priority: 0.68 },
-  { path: "/tripfindbox/about-us", priority: 0.45 },
-  { path: "/tripfindbox/blogs", priority: 0.6 },
-  { path: "/tripfindbox/booking", priority: 0.55 },
-  { path: "/tripfindbox/contact-us", priority: 0.4 },
-  { path: "/tripfindbox/privacy-policy", priority: 0.3 },
-  { path: "/tripfindbox/terms-and-conditions", priority: 0.3 },
-  { path: "/tripfindbox/site-map", priority: 0.4 },
 
   // --- Business Ops ---
-  { path: "/business-ops", priority: 0.68 },
-  { path: "/business-ops/tripfindbox", priority: 0.68 },
-  { path: "/business-ops/tripfindbox/about-us", priority: 0.45 },
-  { path: "/business-ops/tripfindbox/blogs", priority: 0.6 },
-  { path: "/business-ops/tripfindbox/contact-us", priority: 0.4 },
-  { path: "/business-ops/tripfindbox/privacy-policy", priority: 0.3 },
-  { path: "/business-ops/tripfindbox/terms-and-conditions", priority: 0.3 },
-  { path: "/business-ops/tripfindbox/site-map", priority: 0.4 },
+  { path: "/bops", priority: 0.68 },
+  { path: "/bops/tripfindbox", priority: 0.68 },
+  { path: "/bops/tripfindbox/about-us", priority: 0.45 },
+  { path: "/bops/tripfindbox/blogs", priority: 0.6 },
+  { path: "/bops/tripfindbox/contact-us", priority: 0.4 },
+  { path: "/bops/tripfindbox/privacy-policy", priority: 0.3 },
+  { path: "/bops/tripfindbox/terms-and-conditions", priority: 0.3 },
+  { path: "/bops/tripfindbox/site-map", priority: 0.4 },
 
   // --- HousingNeeds ---
   { path: "/housingneeds", priority: 0.72 },
@@ -353,6 +346,26 @@ export async function getSitemapEntries() {
     for (const page of category.pages.filter((item) => item.tags?.includes("Guide"))) {
       pushUnique(entries, seen, page.href, {
         priority: 0.8,
+        changeFrequency: "monthly",
+      });
+    }
+  }
+
+  // Business Ops collections — the Insurance and Loans hubs and their
+  // standalone vertical landing pages (hrefs come from the registry).
+  for (const collection of Object.values(BOPS_COLLECTIONS)) {
+    pushUnique(entries, seen, `/bops/${collection.slug}`, {
+      priority: 0.7,
+      changeFrequency: "weekly",
+    });
+    // Collections flagged noindexPages hold provider-style landers whose
+    // layouts set robots:noindex — keep those out of the sitemap.
+    if (collection.noindexPages) continue;
+    for (const page of collection.pages) {
+      // Individual pages can also be noindex landers.
+      if (page.noindex) continue;
+      pushUnique(entries, seen, page.href, {
+        priority: 0.7,
         changeFrequency: "monthly",
       });
     }
@@ -714,7 +727,7 @@ export async function getSitemapEntries() {
 
   for (const page of tripFindBoxPages) {
     if (page?.slug) {
-      pushUnique(entries, seen, `/business-ops/tripfindbox/${page.slug}`, {
+      pushUnique(entries, seen, `/bops/tripfindbox/${page.slug}`, {
         priority: page.section === "Top Cities" || page.section === "Top Airlines" ? 0.62 : 0.52,
         changeFrequency: "monthly",
       });

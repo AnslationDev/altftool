@@ -160,10 +160,13 @@ export function buildToolSeoContent(slug, tool = {}) {
     metaDescription: summary,
     useCases: central.useCases?.length ? central.useCases : override?.useCases || [],
     examples,
-    steps: [
-      `Open ${name} on AltFTool — it loads instantly in your browser.`,
-      ...template.steps,
-    ],
+    // Per-tool "How to use" steps when available (admin override > hand/AI
+    // override > category template), so each tool reads uniquely.
+    steps: central.steps?.length
+      ? central.steps
+      : override?.steps?.length
+      ? [`Open ${name} on AltFTool — it loads instantly in your browser.`, ...override.steps]
+      : [`Open ${name} on AltFTool — it loads instantly in your browser.`, ...template.steps],
     faqs,
   };
 }

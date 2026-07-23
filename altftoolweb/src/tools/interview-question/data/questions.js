@@ -1,3 +1,5 @@
+"use client";
+
 // src/data/questions.js
 
 export const domains = [

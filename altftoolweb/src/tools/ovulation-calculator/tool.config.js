@@ -1,3 +1,5 @@
+"use client";
+
 const toolConfig = {
   slug: "ovulation-calculator",
   name: "Ovulation Calculator",

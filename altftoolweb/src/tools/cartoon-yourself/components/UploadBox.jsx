@@ -1,3 +1,5 @@
+"use client";
+
 import { UploadCloud, Camera, X } from "lucide-react";
 import { useRef } from "react";
 

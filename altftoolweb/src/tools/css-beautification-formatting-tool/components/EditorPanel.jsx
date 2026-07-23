@@ -1,3 +1,5 @@
+"use client";
+
 import { Copy, Download, Search } from "lucide-react";
 
 export default function EditorPanel({

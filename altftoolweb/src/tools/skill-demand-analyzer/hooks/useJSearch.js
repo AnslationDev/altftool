@@ -1,3 +1,5 @@
+"use client";
+
 import { useState, useCallback } from 'react';
 
 const JOBS_CACHE_PREFIX = 'jsearch_cache_';

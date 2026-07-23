@@ -1,3 +1,5 @@
+"use client";
+
 export const PROPERTY_TYPES = [
   { id: 'apartment', label: 'Apartment' },
   { id: 'hostel', label: 'Hostel' },

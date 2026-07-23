@@ -3,32 +3,28 @@ export const spec = {
   ...{
   "slug": "magic-8-ball",
   "title": "Magic 8 Ball",
-  "description": "Get an answer to your yes/no question.",
+  "description": "Ask a yes/no question and let the Magic 8 Ball decide.",
   "badge": "Fun",
   "category": [
     "Fun"
   ],
-  "icon": "magic-wand",
-  "iconColor": "text-violet-600",
+  "icon": "circle-help",
+  "iconColor": "text-slate-800",
   "fields": [
     {
       "key": "question",
-      "label": "Your Question",
+      "label": "Your question",
       "type": "text",
-      "default": ""
+      "default": "",
+      "required": false
     }
   ],
-  "presets": [
-    {
-      "label": "Example",
-      "values": {
-        "question": "Will I win the lottery?"
-      }
-    }
-  ],
-  "note": "This is a fun tool for getting an answer to your yes/no question."
+  "regenerate": true
 },
-  compute: (values, mode) => { return { result: Math.random() < 0.5 ? 'Yes' : 'No', caption: '', rows: [['Question', values.question]] }; },
+  compute: (values) => { const num=(v)=>typeof v==="number"?v:Number(v); const money=(n)=>Number.isFinite(Number(n))?Number(n).toLocaleString(undefined,{maximumFractionDigits:2}):"—";
+      const a = ["It is certain", "Without a doubt", "Yes — definitely", "Most likely", "Outlook good", "Signs point to yes", "Reply hazy, try again", "Ask again later", "Cannot predict now", "Don't count on it", "My reply is no", "Very doubtful", "Outlook not so good"];
+      return { result: "🎱 " + a[Math.floor(Math.random() * a.length)], caption: values.question ? `"${values.question}"` : "Ask a yes/no question, then shake" };
+    },
 };
 
 export default spec;

@@ -1,3 +1,5 @@
+"use client";
+
 export const LINKS_KEY = "altftool_link_organizer_data";
 export const LINK_GROUPS_KEY = "altftool_link_organizer_groups";
 

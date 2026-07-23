@@ -2,8 +2,8 @@ const toolConfig = {
   slug: "coin-toss-streak-game",
   name: "Coin Toss Streak Game",
   category: ["Fun"],
-  description: "Calculate the probability of getting a specific number of consecutive heads or tails in coin tosses.",
-  icon: "coin",
+  description: "Flip 20 coins at once and see the longest run of the same side.",
+  icon: "circle-dollar-sign",
   iconColor: "text-amber-600",
 };
 

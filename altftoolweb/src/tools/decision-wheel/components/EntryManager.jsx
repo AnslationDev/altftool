@@ -1,3 +1,5 @@
+"use client";
+
 import { useState } from "react";
 import { Button, Input } from "@altftool/ui";
 import { Plus, X, Pencil, Copy, Shuffle, Trash2, Upload } from "lucide-react";

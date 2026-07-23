@@ -1,3 +1,5 @@
+"use client";
+
 export const questions = [
   {
     id: 1,

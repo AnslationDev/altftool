@@ -1,3 +1,5 @@
+"use client";
+
 import { Database, FileUp } from "lucide-react";
 import Panel from "./Panel";
 

@@ -1,3 +1,5 @@
+"use client";
+
 import { motion } from "framer-motion";
 import { Check, Copy, Download, FileCode2, History, Save, Terminal } from "lucide-react";
 import { copyToClipboard } from "../utils/copyToClipboard";

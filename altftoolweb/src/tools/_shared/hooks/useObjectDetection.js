@@ -4,25 +4,53 @@ import { useState, useCallback, useRef, useEffect } from 'react';
 import * as tf from '@tensorflow/tfjs';
 
 let model = null;
-let modelLoading = false;
 let loadPromise = null;
+
+const LOAD_TIMEOUT_MS = 45000; // generous: slow networks legitimately take a while to fetch weights
+
+function withTimeout(promise, ms) {
+  return Promise.race([
+    promise,
+    new Promise((_, reject) => setTimeout(() => reject(new Error('timeout')), ms)),
+  ]);
+}
+
+async function loadCoco() {
+  const cocossd = await import('@tensorflow-models/coco-ssd');
+  return cocossd.load({ base: 'lite_mobilenet_v2' });
+}
 
 async function ensureModel() {
   if (model) return model;
   if (loadPromise) return loadPromise;
-  modelLoading = true;
+
   loadPromise = (async () => {
     try {
       await tf.ready();
-      const cocossd = await import('@tensorflow-models/coco-ssd');
-      model = await cocossd.load({ base: 'lite_mobilenet_v2' });
+
+      // Try the default (usually WebGL) backend first, but don't let a stuck
+      // GPU warmup hang forever — if it exceeds the timeout, force the CPU
+      // backend and retry. CPU is slower but always completes.
+      try {
+        model = await withTimeout(loadCoco(), LOAD_TIMEOUT_MS);
+      } catch (firstErr) {
+        try {
+          await tf.setBackend('cpu');
+          await tf.ready();
+        } catch (backendErr) {
+          /* keep whatever backend is active */
+        }
+        model = await loadCoco();
+      }
+
       return model;
     } catch (err) {
-      modelLoading = false;
+      // Reset so a later retry can attempt a fresh load.
       loadPromise = null;
       throw err;
     }
   })();
+
   return loadPromise;
 }
 

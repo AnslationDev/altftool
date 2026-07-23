@@ -1,0 +1,283 @@
+/* RoomRevive — magazine-editorial lander. Every class is roomrevive- prefixed. */
+
+.roomrevive-page {
+  --rr-cream: #faf6ee;
+  --rr-paper: #fffdf8;
+  --rr-sage: #9caf88;
+  --rr-sage-deep: #46583a;
+  --rr-sage-ink: #37452e;
+  --rr-blush: #e8c4b8;
+  --rr-blush-deep: #a9634d;
+  --rr-ink: #29251f;
+  --rr-ink-soft: #55503f;
+  --rr-rule: rgba(41, 37, 31, 0.18);
+  --rr-serif: georgia, "Times New Roman", "Iowan Old Style", serif;
+  --rr-sans: "Avenir Next", "Segoe UI", "Helvetica Neue", arial, sans-serif;
+  background: var(--rr-cream);
+  color: var(--rr-ink);
+  font-family: var(--rr-sans);
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+.roomrevive-page a:focus-visible,
+.roomrevive-page button:focus-visible {
+  outline: 3px solid var(--rr-sage-deep);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+.roomrevive-shell { max-width: 1140px; margin: 0 auto; padding: 0 24px; }
+
+/* small-caps editorial label */
+.roomrevive-label {
+  font-variant: small-caps; text-transform: lowercase; letter-spacing: 0.22em;
+  font-size: 0.8rem; font-weight: 600; color: var(--rr-sage-deep);
+  display: inline-flex; align-items: center; gap: 0.6em;
+}
+.roomrevive-label::before { content: ""; width: 34px; height: 1px; background: var(--rr-sage-deep); }
+
+.roomrevive-rule { border: 0; border-top: 1px solid var(--rr-rule); margin: 0; }
+
+/* buttons */
+.roomrevive-btn {
+  display: inline-flex; align-items: center; gap: 0.5em;
+  font-family: var(--rr-sans); font-weight: 600; font-size: 0.95rem; letter-spacing: 0.02em;
+  padding: 0.85em 1.6em; border-radius: 999px; text-decoration: none;
+  border: 1.5px solid var(--rr-sage-deep);
+  transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease, color 0.18s ease;
+}
+.roomrevive-btn--solid { background: var(--rr-sage-deep); color: #fdfcf7; }
+.roomrevive-btn--solid:hover {
+  background: var(--rr-sage-ink); transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(70, 88, 58, 0.28);
+}
+.roomrevive-btn--ghost { background: transparent; color: var(--rr-sage-deep); }
+.roomrevive-btn--ghost:hover { background: rgba(156, 175, 136, 0.16); transform: translateY(-2px); }
+.roomrevive-btn--blush { background: var(--rr-blush); border-color: var(--rr-blush); color: #4a2418; }
+.roomrevive-btn--blush:hover { transform: translateY(-2px); box-shadow: 0 10px 24px rgba(74, 36, 24, 0.25); }
+
+/* nav */
+.roomrevive-nav {
+  position: sticky; top: 0; z-index: 40;
+  background: rgba(250, 246, 238, 0.92); backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--rr-rule);
+}
+.roomrevive-nav-inner { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 14px 0; }
+.roomrevive-wordmark {
+  font-family: var(--rr-serif); font-size: 1.45rem; color: var(--rr-ink);
+  text-decoration: none; letter-spacing: 0.01em;
+}
+.roomrevive-wordmark em { color: var(--rr-sage-deep); }
+.roomrevive-nav-links { display: flex; align-items: center; gap: 26px; list-style: none; margin: 0; padding: 0; }
+.roomrevive-nav-links a {
+  font-variant: small-caps; text-transform: lowercase; letter-spacing: 0.16em;
+  font-size: 0.82rem; font-weight: 600; color: var(--rr-ink-soft); text-decoration: none;
+  border-bottom: 1px solid transparent; transition: color 0.15s ease, border-color 0.15s ease;
+}
+.roomrevive-nav-links a:hover { color: var(--rr-sage-deep); border-bottom-color: var(--rr-sage-deep); }
+.roomrevive-nav-cta { display: flex; align-items: center; gap: 12px; }
+.roomrevive-nav-phone {
+  display: inline-flex; align-items: center; gap: 0.4em;
+  color: var(--rr-ink); font-weight: 600; font-size: 0.92rem; text-decoration: none;
+}
+.roomrevive-nav-phone:hover { color: var(--rr-sage-deep); }
+.roomrevive-menu-toggle {
+  display: none; background: none; border: 1.5px solid var(--rr-rule);
+  border-radius: 8px; padding: 7px; color: var(--rr-ink); cursor: pointer;
+}
+
+/* hero */
+.roomrevive-hero { padding: 64px 0 72px; }
+.roomrevive-hero-grid { display: grid; grid-template-columns: 5fr 6fr; gap: 48px; align-items: center; }
+.roomrevive-hero-copy { animation: roomrevive-fade-up 0.7s ease both; }
+.roomrevive-h1 {
+  font-family: var(--rr-serif); font-weight: 400;
+  font-size: clamp(2.6rem, 5.4vw, 4.4rem); line-height: 1.06;
+  margin: 0.5em 0 0.4em; letter-spacing: -0.01em;
+}
+.roomrevive-h1 em, .roomrevive-h2 em { font-style: italic; color: var(--rr-sage-deep); }
+.roomrevive-lede { font-size: 1.08rem; color: var(--rr-ink-soft); max-width: 44ch; margin: 0 0 1.8em; }
+.roomrevive-hero-actions { display: flex; flex-wrap: wrap; gap: 14px; align-items: center; }
+.roomrevive-hero-art { position: relative; animation: roomrevive-fade-up 0.7s 0.15s ease both; }
+.roomrevive-hero-figure {
+  aspect-ratio: 6 / 5; overflow: hidden; border-radius: 4px 120px 4px 4px;
+  box-shadow: 24px 24px 0 0 var(--rr-blush);
+}
+.roomrevive-stamp {
+  position: absolute; top: -28px; left: -28px; width: 118px; height: 118px; z-index: 2;
+  border-radius: 50%; background: var(--rr-sage-deep); color: #fdfcf7;
+  display: grid; place-items: center; text-align: center; padding: 12px;
+  font-variant: small-caps; text-transform: lowercase; letter-spacing: 0.1em;
+  font-size: 0.72rem; line-height: 1.35;
+  animation: roomrevive-drift 6s ease-in-out infinite;
+}
+
+/* images */
+.roomrevive-figure { margin: 0; overflow: hidden; }
+.roomrevive-figure img {
+  width: 100%; height: 100%; object-fit: cover; display: block;
+  transition: transform 0.6s ease;
+}
+.roomrevive-figure:hover img { transform: scale(1.045); }
+
+/* ticker strip */
+.roomrevive-ticker { border-top: 1px solid var(--rr-rule); border-bottom: 1px solid var(--rr-rule); padding: 14px 0; }
+.roomrevive-ticker-row {
+  display: flex; flex-wrap: wrap; justify-content: center; gap: 10px 34px;
+  font-variant: small-caps; text-transform: lowercase; letter-spacing: 0.24em;
+  font-size: 0.82rem; font-weight: 600; color: var(--rr-ink-soft);
+}
+.roomrevive-ticker-row span::after { content: "·"; margin-left: 34px; color: var(--rr-sage); }
+.roomrevive-ticker-row span:last-child::after { content: ""; margin: 0; }
+
+/* split sections (60/40 asymmetric) */
+.roomrevive-split { display: grid; grid-template-columns: 6fr 4fr; gap: 56px; align-items: center; padding: 84px 0; }
+.roomrevive-split--flip { grid-template-columns: 4fr 6fr; }
+.roomrevive-split-figure { aspect-ratio: 4 / 3; border-radius: 4px; }
+.roomrevive-split--flip .roomrevive-split-figure { border-radius: 90px 4px 4px 4px; }
+.roomrevive-h2 {
+  font-family: var(--rr-serif); font-weight: 400;
+  font-size: clamp(1.9rem, 3.4vw, 2.8rem); line-height: 1.12; margin: 0.45em 0 0.5em;
+}
+.roomrevive-body { color: var(--rr-ink-soft); margin: 0 0 1.4em; }
+.roomrevive-checks { list-style: none; margin: 0 0 1.6em; padding: 0; display: grid; gap: 10px; }
+.roomrevive-checks li { display: flex; gap: 10px; align-items: flex-start; color: var(--rr-ink); font-size: 0.97rem; }
+.roomrevive-checks svg { color: var(--rr-sage-deep); flex-shrink: 0; margin-top: 3px; }
+
+/* palette chips */
+.roomrevive-chips { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 1.5em; }
+.roomrevive-chip {
+  display: inline-flex; align-items: center; gap: 8px;
+  border: 1.5px solid var(--rr-rule); border-radius: 999px; background: var(--rr-paper);
+  padding: 7px 14px; font-size: 0.85rem; font-weight: 600; color: var(--rr-ink-soft); cursor: pointer;
+  transition: border-color 0.15s ease, transform 0.15s ease, color 0.15s ease;
+}
+.roomrevive-chip:hover { transform: translateY(-2px); border-color: var(--rr-sage-deep); }
+.roomrevive-chip[aria-pressed="true"] {
+  border-color: var(--rr-sage-deep); color: var(--rr-sage-ink);
+  box-shadow: 0 4px 12px rgba(70, 88, 58, 0.16);
+}
+.roomrevive-swatches { display: inline-flex; }
+.roomrevive-swatches i {
+  width: 14px; height: 14px; border-radius: 50%;
+  border: 1px solid rgba(41, 37, 31, 0.2); margin-left: -4px;
+}
+
+/* pull quote */
+.roomrevive-pullquote { position: relative; max-width: 780px; margin: 0 auto; padding: 90px 24px; text-align: center; }
+.roomrevive-pullquote::before {
+  content: "\201C"; position: absolute; top: 8px; left: 50%; transform: translateX(-50%);
+  font-family: var(--rr-serif); font-size: 9rem; line-height: 1; color: var(--rr-blush);
+}
+.roomrevive-pullquote blockquote {
+  margin: 0; font-family: var(--rr-serif); font-style: italic;
+  font-size: clamp(1.4rem, 2.6vw, 2rem); line-height: 1.35; color: var(--rr-ink);
+}
+.roomrevive-pullquote cite { display: block; margin-top: 1.4em; font-style: normal; }
+
+/* rooms cards */
+.roomrevive-rooms { padding: 84px 0; }
+.roomrevive-rooms-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; margin-bottom: 40px; }
+.roomrevive-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
+.roomrevive-card {
+  background: var(--rr-paper); border: 1px solid var(--rr-rule); border-radius: 6px;
+  overflow: hidden; transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.roomrevive-card:hover { transform: translateY(-6px); box-shadow: 0 18px 40px rgba(41, 37, 31, 0.14); }
+.roomrevive-card-figure { aspect-ratio: 4 / 3; }
+.roomrevive-card-body { padding: 22px 24px 26px; }
+.roomrevive-h3 { font-family: var(--rr-serif); font-weight: 400; font-size: 1.35rem; margin: 0.3em 0 0.4em; }
+.roomrevive-card-note {
+  background: var(--rr-blush); border-color: var(--rr-blush); color: #3f2317;
+  display: flex; flex-direction: column; justify-content: space-between; padding: 26px 24px;
+}
+.roomrevive-card-note .roomrevive-label { color: #6e3a27; }
+.roomrevive-card-note .roomrevive-label::before { background: #6e3a27; }
+.roomrevive-card-note p {
+  color: #4a2418; font-family: var(--rr-serif); font-style: italic;
+  font-size: 1.12rem; line-height: 1.5;
+}
+
+/* process */
+.roomrevive-process { padding: 84px 0; }
+.roomrevive-steps { list-style: none; margin: 40px 0 0; padding: 0; counter-reset: rrstep; }
+.roomrevive-steps li {
+  counter-increment: rrstep;
+  display: grid; grid-template-columns: 110px 1fr 2fr; gap: 24px; align-items: baseline;
+  padding: 26px 0; border-top: 1px solid var(--rr-rule); transition: background 0.2s ease;
+}
+.roomrevive-steps li:last-child { border-bottom: 1px solid var(--rr-rule); }
+.roomrevive-steps li:hover { background: rgba(156, 175, 136, 0.1); }
+.roomrevive-steps li::before {
+  content: "No. 0" counter(rrstep);
+  font-variant: small-caps; letter-spacing: 0.18em; font-weight: 600;
+  font-size: 0.85rem; color: var(--rr-blush-deep);
+}
+.roomrevive-steps p { margin: 0; color: var(--rr-ink-soft); font-size: 0.97rem; }
+
+/* CTA bands */
+.roomrevive-band { background: var(--rr-sage-deep); color: #f4f2e8; padding: 72px 0; }
+.roomrevive-band--final { background: var(--rr-ink); }
+.roomrevive-band-inner { display: grid; grid-template-columns: 3fr 2fr; gap: 40px; align-items: center; }
+.roomrevive-band .roomrevive-label { color: var(--rr-blush); }
+.roomrevive-band .roomrevive-label::before { background: var(--rr-blush); }
+.roomrevive-band .roomrevive-h2 { color: #fdfcf7; }
+.roomrevive-band .roomrevive-h2 em { color: var(--rr-blush); }
+.roomrevive-band-copy p { color: rgba(244, 242, 232, 0.82); max-width: 52ch; }
+.roomrevive-band-actions { display: flex; flex-direction: column; align-items: flex-start; gap: 14px; }
+.roomrevive-band-phone {
+  display: inline-flex; align-items: center; gap: 0.5em;
+  color: #fdfcf7; font-family: var(--rr-serif); font-size: 1.5rem; text-decoration: none;
+  border-bottom: 1px solid rgba(253, 252, 247, 0.4); padding-bottom: 2px;
+  transition: border-color 0.15s ease, color 0.15s ease;
+}
+.roomrevive-band-phone:hover { color: var(--rr-blush); border-bottom-color: var(--rr-blush); }
+.roomrevive-band-fineprint { font-size: 0.82rem; color: rgba(244, 242, 232, 0.6); }
+
+/* footer */
+.roomrevive-footer { padding: 40px 0 48px; }
+.roomrevive-footer-inner {
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
+  gap: 18px; padding-top: 26px;
+}
+.roomrevive-footer-links { display: flex; flex-wrap: wrap; gap: 20px; list-style: none; margin: 0; padding: 0; }
+.roomrevive-footer-links a { color: var(--rr-ink-soft); font-size: 0.88rem; text-decoration: none; }
+.roomrevive-footer-links a:hover { color: var(--rr-sage-deep); text-decoration: underline; }
+.roomrevive-footnote { width: 100%; font-size: 0.76rem; color: var(--rr-ink-soft); margin: 6px 0 0; }
+
+/* keyframes */
+@keyframes roomrevive-fade-up {
+  from { opacity: 0; transform: translateY(22px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes roomrevive-drift {
+  0%, 100% { transform: translateY(0) rotate(-6deg); }
+  50% { transform: translateY(-10px) rotate(-2deg); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roomrevive-page *, .roomrevive-page *::before { animation: none !important; transition: none !important; }
+}
+
+/* responsive */
+@media (max-width: 880px) {
+  .roomrevive-nav-links, .roomrevive-nav-phone--desktop { display: none; }
+  .roomrevive-menu-toggle { display: inline-flex; }
+  .roomrevive-mobile-menu { display: grid; gap: 4px; padding: 10px 0 18px; border-top: 1px solid var(--rr-rule); }
+  .roomrevive-mobile-menu a {
+    padding: 10px 4px; color: var(--rr-ink); font-weight: 600; text-decoration: none;
+    font-variant: small-caps; text-transform: lowercase; letter-spacing: 0.14em;
+  }
+  .roomrevive-hero { padding: 40px 0 56px; }
+  .roomrevive-hero-grid, .roomrevive-split, .roomrevive-split--flip, .roomrevive-band-inner {
+    grid-template-columns: 1fr; gap: 32px;
+  }
+  .roomrevive-split { padding: 56px 0; }
+  .roomrevive-split--flip .roomrevive-split-copy { order: 2; }
+  .roomrevive-hero-figure { border-radius: 4px 70px 4px 4px; box-shadow: 14px 14px 0 0 var(--rr-blush); }
+  .roomrevive-stamp { top: -18px; left: auto; right: -10px; width: 96px; height: 96px; font-size: 0.64rem; }
+  .roomrevive-cards { grid-template-columns: 1fr; }
+  .roomrevive-rooms-head { flex-direction: column; align-items: flex-start; }
+  .roomrevive-steps li { grid-template-columns: 1fr; gap: 8px; }
+  .roomrevive-pullquote { padding: 70px 12px; }
+}

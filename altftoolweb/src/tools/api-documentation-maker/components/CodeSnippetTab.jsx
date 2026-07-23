@@ -1,3 +1,5 @@
+"use client";
+
 import { useState } from "react";
 import { Copy, Check, Search, X, Plus, Trash2 } from "lucide-react";
 

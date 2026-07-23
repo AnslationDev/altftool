@@ -1,3 +1,5 @@
+"use client";
+
 import { STORAGE_KEY } from "../constants/trackerConfig";
 
 function safeGet(key, fallback) {

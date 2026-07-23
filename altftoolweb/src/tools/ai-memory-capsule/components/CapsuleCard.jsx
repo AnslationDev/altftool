@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import { Star, Pin, Lock, Calendar, Trash2, Edit, Eye, BarChart3 } from "lucide-react";
 import { MOODS } from "../constants/index";

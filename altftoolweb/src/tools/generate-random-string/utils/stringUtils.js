@@ -1,3 +1,5 @@
+"use client";
+
 export const STORAGE_KEY = "random_string_studio_state";
 export const HISTORY_LIMIT = 12;
 

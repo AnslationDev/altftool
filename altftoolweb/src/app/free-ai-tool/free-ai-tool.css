@@ -1,0 +1,106 @@
+/* Free AI Tools landing — page-scoped styles (fat- prefix), light theme.
+   Global prefers-reduced-motion kill-switch in globals.css covers these. */
+
+/* --- Hero background: solid tinted base + layered gradient wash ---------- */
+/* A solid pale-teal base color (not plain white) with two soft gradient
+   blooms and a diagonal wash on top — deliberately colored, not just white
+   with a faint blur circle. */
+
+.fat-hero-wash {
+  background-color: #f5f3ff;
+  background-image:
+    radial-gradient(60% 55% at 88% -6%, rgba(168, 85, 247, 0.38), transparent 70%),
+    radial-gradient(48% 42% at 8% 96%, rgba(34, 211, 238, 0.32), transparent 72%),
+    linear-gradient(135deg, rgba(236, 72, 153, 0.08), rgba(139, 92, 246, 0.08) 50%, rgba(34, 211, 238, 0.08));
+}
+
+/* --- Animated gradient headline ----------------------------------------- */
+
+@keyframes fat-hue {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+.fat-gradient-text {
+  background-image: linear-gradient(100deg, #a855f7, #ec4899, #22d3ee, #a855f7);
+  background-size: 240% 240%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: fat-hue 7s ease-in-out infinite;
+}
+
+/* --- Floating hero tiles -------------------------------------------------- */
+
+@keyframes fat-bob {
+  0%, 100% { transform: translateY(0) rotate(var(--fat-tilt, 0deg)); }
+  50% { transform: translateY(-16px) rotate(var(--fat-tilt, 0deg)); }
+}
+
+.fat-float { animation: fat-bob 7s ease-in-out infinite; }
+
+/* --- toools.design-style cards --------------------------------------------- */
+
+.fat-card {
+  border: 1px solid rgba(15, 23, 42, 0.06);
+  background: #ffffff;
+  box-shadow:
+    0 1px 2px rgba(15, 23, 42, 0.04),
+    0 16px 40px -28px rgba(15, 23, 42, 0.18);
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.35s ease, border-color 0.35s ease;
+}
+
+.fat-card:hover {
+  transform: translateY(-6px);
+  border-color: rgba(124, 58, 237, 0.25);
+  box-shadow:
+    0 24px 56px -24px rgba(124, 58, 237, 0.28),
+    0 12px 32px -20px rgba(15, 23, 42, 0.16);
+}
+
+/* Logo tile inside a card: soft per-category wash + IxDF-style dot grid. */
+.fat-tile {
+  border: 1px solid rgba(15, 23, 42, 0.05);
+  background-color: #fbfbfe;
+  background-image:
+    radial-gradient(rgba(15, 23, 42, 0.09) 1px, transparent 1.4px),
+    linear-gradient(135deg, var(--fat-tile-a, rgba(124, 58, 237, 0.1)), var(--fat-tile-b, rgba(34, 211, 238, 0.07)));
+  background-size: 12px 12px, 100% 100%;
+}
+
+/* Light "glass" panels — no backdrop-filter: dozens animate at once
+   (marquee pills, chips), and per-element backdrop sampling starves paint. */
+.fat-glass {
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  background: linear-gradient(rgba(255, 255, 255, 0.92), rgba(255, 255, 255, 0.78));
+}
+
+/* --- Skeleton shimmer ------------------------------------------------------ */
+
+@keyframes fat-shimmer {
+  from { background-position: 200% 0; }
+  to { background-position: -200% 0; }
+}
+
+.fat-shimmer {
+  background: linear-gradient(
+    100deg,
+    rgba(15, 23, 42, 0.05) 40%,
+    rgba(15, 23, 42, 0.12) 50%,
+    rgba(15, 23, 42, 0.05) 60%
+  );
+  background-size: 200% 100%;
+  animation: fat-shimmer 1.4s linear infinite;
+}
+
+/* --- Sidebar scroll area ---------------------------------------------------- */
+
+.fat-scrollbar { scrollbar-width: thin; scrollbar-color: rgba(100, 116, 139, 0.4) transparent; }
+.fat-scrollbar::-webkit-scrollbar { width: 6px; }
+.fat-scrollbar::-webkit-scrollbar-thumb { background: rgba(100, 116, 139, 0.4); border-radius: 9999px; }
+.fat-scrollbar::-webkit-scrollbar-track { background: transparent; }
+
+/* --- Carousel rows (Trending, Newly Added) --------------------------------- */
+
+.fat-no-scrollbar { scrollbar-width: none; -ms-overflow-style: none; }
+.fat-no-scrollbar::-webkit-scrollbar { display: none; }

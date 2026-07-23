@@ -15,6 +15,8 @@ export function coerceValues(fields, raw) {
       out[f.key] = v === "" || v === undefined || v === null ? "" : Number(v);
     } else if (f.type === "toggle") {
       out[f.key] = !!v;
+    } else if (f.type === "file") {
+      out[f.key] = v || null; // { name, type, size, text?, dataUrl? }
     } else {
       out[f.key] = v ?? "";
     }
@@ -26,7 +28,7 @@ export function coerceValues(fields, raw) {
 export function missingRequired(fields, raw, mode) {
   const active = fieldsForMode(fields, mode);
   return active
-    .filter((f) => f.required !== false && (f.type === "number" || f.type === "range" || f.type === "text" || f.type === "textarea" || f.type === "date"))
+    .filter((f) => f.required !== false && ["number", "range", "text", "textarea", "date", "file"].includes(f.type))
     .filter((f) => {
       const v = raw[f.key];
       return v === "" || v === undefined || v === null;

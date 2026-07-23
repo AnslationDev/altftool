@@ -2,9 +2,9 @@ const toolConfig = {
   slug: "markup-calculator",
   name: "Markup Calculator",
   category: ["Finance"],
-  description: "Calculate the total price including markup.",
-  icon: "calculator",
-  iconColor: "text-teal-600",
+  description: "Add a markup percentage to a cost to get the selling price and profit.",
+  icon: "tag",
+  iconColor: "text-orange-600",
 };
 
 export default toolConfig;

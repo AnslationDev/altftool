@@ -1,3 +1,5 @@
+"use client";
+
 export function simpleImageHash(canvas) {
   const ctx = canvas.getContext("2d");
   const { width, height } = canvas;

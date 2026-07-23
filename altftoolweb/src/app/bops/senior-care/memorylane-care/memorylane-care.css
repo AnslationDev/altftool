@@ -1,0 +1,177 @@
+/* MemoryLane Care — tender remembrance: soft lilac, cream, photo-album motif */
+
+.memorylane-page {
+  --ml-lilac: #8a7ba8;
+  --ml-lilac-deep: #5c4d78;
+  --ml-lilac-deeper: #453a5e;
+  --ml-plum: #372e4a;
+  --ml-cream: #faf6ee;
+  --ml-cream-soft: #f3ecdf;
+  --ml-white: #ffffff;
+  --ml-line: #e4dccb;
+  --ml-shadow: 0 10px 30px rgba(69, 58, 94, 0.14);
+  font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+  font-size: 17.5px;
+  line-height: 1.7;
+  color: var(--ml-plum);
+  background: var(--ml-cream);
+}
+.memorylane-page * { box-sizing: border-box; }
+.memorylane-page img { max-width: 100%; display: block; }
+.memorylane-page h1, .memorylane-page h2, .memorylane-page h3 {
+  font-family: Georgia, "Times New Roman", serif;
+  line-height: 1.25;
+  color: var(--ml-lilac-deeper);
+  margin: 0 0 0.6em;
+  font-weight: 600;
+}
+.memorylane-page a:focus-visible, .memorylane-page button:focus-visible { outline: 3px solid var(--ml-lilac-deep); outline-offset: 3px; border-radius: 6px; }
+.memorylane-wrap { max-width: 1120px; margin: 0 auto; padding: 0 24px; }
+
+/* ---------- Buttons & phone links ---------- */
+.memorylane-btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+  min-height: 56px; padding: 14px 30px; border-radius: 999px;
+  font-size: 1.06rem; font-weight: 700; text-decoration: none; border: 2px solid transparent;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+.memorylane-btn-primary { background: var(--ml-lilac-deep); color: var(--ml-white); }
+.memorylane-btn-primary:hover { background: var(--ml-lilac-deeper); transform: translateY(-2px); box-shadow: var(--ml-shadow); }
+.memorylane-btn-phone { background: var(--ml-white); color: var(--ml-lilac-deeper); border-color: var(--ml-lilac); font-size: 1.15rem; }
+.memorylane-btn-phone:hover { background: var(--ml-cream-soft); transform: translateY(-2px); }
+.memorylane-btn-invert { background: var(--ml-white); color: var(--ml-lilac-deeper); }
+.memorylane-btn-invert:hover { transform: translateY(-2px); box-shadow: 0 10px 26px rgba(0, 0, 0, 0.22); }
+
+/* ---------- Nav ---------- */
+.memorylane-nav { position: sticky; top: 0; z-index: 40; background: rgba(250, 246, 238, 0.96); border-bottom: 1px solid var(--ml-line); backdrop-filter: blur(6px); }
+.memorylane-nav-inner { display: flex; align-items: center; justify-content: space-between; gap: 16px; min-height: 78px; }
+.memorylane-brand { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; color: var(--ml-lilac-deeper); font-family: Georgia, serif; font-size: 1.35rem; font-weight: 700; }
+.memorylane-brand svg { color: var(--ml-lilac); }
+.memorylane-nav-links { display: flex; align-items: center; gap: 14px; }
+.memorylane-nav-phone { display: inline-flex; align-items: center; gap: 8px; min-height: 52px; padding: 8px 16px; text-decoration: none; color: var(--ml-lilac-deeper); font-weight: 800; font-size: 1.12rem; border-radius: 10px; }
+.memorylane-nav-phone:hover { background: var(--ml-cream-soft); }
+.memorylane-nav-toggle { display: none; align-items: center; justify-content: center; min-width: 52px; min-height: 52px; border: 2px solid var(--ml-lilac); border-radius: 12px; background: var(--ml-white); color: var(--ml-lilac-deeper); cursor: pointer; }
+
+/* ---------- Hero ---------- */
+.memorylane-hero { padding: 72px 0 84px; overflow: hidden; }
+.memorylane-hero-grid { display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 56px; align-items: center; }
+.memorylane-eyebrow { display: inline-flex; align-items: center; gap: 8px; background: var(--ml-white); border: 1px solid var(--ml-line); color: var(--ml-lilac-deep); border-radius: 999px; padding: 8px 18px; font-weight: 700; font-size: 0.95rem; margin-bottom: 22px; }
+.memorylane-hero h1 { font-size: clamp(2.2rem, 4.4vw, 3.3rem); }
+.memorylane-hero-lede { font-size: 1.18rem; max-width: 34em; margin: 0 0 30px; }
+.memorylane-cta-row { display: flex; flex-wrap: wrap; gap: 16px; align-items: center; }
+.memorylane-hero-note { margin: 18px 0 0; font-size: 0.98rem; color: var(--ml-lilac-deep); font-style: italic; }
+
+/* ---------- Polaroid frames (photo-album motif) ---------- */
+.memorylane-polaroid { background: var(--ml-white); padding: 14px 14px 18px; border-radius: 6px; box-shadow: var(--ml-shadow); transition: transform 0.3s ease, box-shadow 0.3s ease; }
+.memorylane-polaroid:hover { transform: translateY(-6px) rotate(0deg); box-shadow: 0 18px 40px rgba(69, 58, 94, 0.2); }
+.memorylane-polaroid-img { aspect-ratio: 4 / 3; overflow: hidden; border-radius: 3px; }
+.memorylane-polaroid-img img { width: 100%; height: 100%; object-fit: cover; }
+.memorylane-polaroid-caption { font-family: Georgia, serif; font-style: italic; text-align: center; color: var(--ml-lilac-deep); padding: 14px 8px 4px; margin: 0; font-size: 1.02rem; }
+.memorylane-hero-photo { transform: rotate(2.2deg); }
+.memorylane-hero-photo .memorylane-polaroid-img { aspect-ratio: 5 / 4; }
+
+/* ---------- Reassure strip ---------- */
+.memorylane-reassure { background: var(--ml-white); border-block: 1px solid var(--ml-line); padding: 40px 0; }
+.memorylane-reassure-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
+.memorylane-reassure-item { display: flex; gap: 14px; align-items: flex-start; }
+.memorylane-reassure-item svg { flex-shrink: 0; color: var(--ml-lilac); margin-top: 4px; }
+.memorylane-reassure-item h3 { font-size: 1.12rem; margin-bottom: 4px; }
+.memorylane-reassure-item p { margin: 0; font-size: 1rem; }
+
+/* ---------- Sections & album ---------- */
+.memorylane-section { padding: 84px 0; }
+.memorylane-section-head { max-width: 46em; margin: 0 auto 52px; text-align: center; }
+.memorylane-section-head h2 { font-size: clamp(1.8rem, 3.2vw, 2.4rem); }
+.memorylane-section-head p { font-size: 1.12rem; margin: 0; }
+.memorylane-album-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 36px; }
+.memorylane-album-grid .memorylane-polaroid:nth-child(1) { transform: rotate(-1.8deg); }
+.memorylane-album-grid .memorylane-polaroid:nth-child(2) { transform: rotate(1.2deg) translateY(14px); }
+.memorylane-album-grid .memorylane-polaroid:nth-child(3) { transform: rotate(-1deg); }
+.memorylane-album-grid .memorylane-polaroid:hover { transform: translateY(-6px); }
+
+/* ---------- Support cards ---------- */
+.memorylane-support { background: var(--ml-cream-soft); }
+.memorylane-support-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 28px; }
+.memorylane-card { background: var(--ml-white); border: 1px solid var(--ml-line); border-radius: 18px; padding: 32px; transition: transform 0.25s ease, box-shadow 0.25s ease; }
+.memorylane-card:hover { transform: translateY(-5px); box-shadow: var(--ml-shadow); }
+.memorylane-card-icon { display: inline-flex; align-items: center; justify-content: center; width: 58px; height: 58px; border-radius: 16px; background: rgba(138, 123, 168, 0.16); color: var(--ml-lilac-deep); margin-bottom: 18px; }
+.memorylane-card h3 { font-size: 1.28rem; }
+.memorylane-card p { margin: 0; }
+
+/* ---------- CTA bands ---------- */
+.memorylane-band { background: linear-gradient(135deg, var(--ml-lilac-deep), var(--ml-lilac)); color: var(--ml-white); padding: 64px 0; }
+.memorylane-band-inner { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 28px; }
+.memorylane-band h2 { color: var(--ml-white); font-size: clamp(1.6rem, 3vw, 2.2rem); margin-bottom: 8px; }
+.memorylane-band p { margin: 0; font-size: 1.1rem; color: #f1ecfa; }
+.memorylane-band-actions { display: flex; flex-wrap: wrap; gap: 16px; align-items: center; }
+.memorylane-band-phone {
+  display: inline-flex; align-items: center; gap: 12px; min-height: 56px; padding: 8px 18px;
+  color: var(--ml-white); text-decoration: none; font-size: 1.5rem; font-weight: 800;
+  border-radius: 14px; border: 2px solid rgba(255, 255, 255, 0.55);
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+.memorylane-band-phone:hover { background: rgba(255, 255, 255, 0.14); transform: translateY(-2px); }
+
+/* ---------- Quote / feel section ---------- */
+.memorylane-feel-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center; }
+.memorylane-feel-photo { transform: rotate(-1.6deg); }
+.memorylane-quote { font-family: Georgia, serif; font-style: italic; font-size: clamp(1.5rem, 2.8vw, 2rem); line-height: 1.45; color: var(--ml-lilac-deeper); border-left: 5px solid var(--ml-lilac); padding-left: 26px; margin: 0 0 22px; }
+.memorylane-feel-text p { font-size: 1.1rem; margin-bottom: 26px; }
+
+/* ---------- Resources ---------- */
+.memorylane-resource-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
+.memorylane-resource { background: var(--ml-white); border: 1px solid var(--ml-line); border-top: 5px solid var(--ml-lilac); border-radius: 16px; padding: 30px; transition: transform 0.25s ease, box-shadow 0.25s ease; }
+.memorylane-resource:hover { transform: translateY(-5px); box-shadow: var(--ml-shadow); }
+.memorylane-resource h3 { font-size: 1.18rem; }
+.memorylane-resource p { margin: 0; font-size: 1rem; }
+
+/* ---------- Gentle questions ---------- */
+.memorylane-faq { max-width: 780px; margin: 0 auto; }
+.memorylane-faq-item { background: var(--ml-white); border: 1px solid var(--ml-line); border-radius: 14px; margin-bottom: 16px; overflow: hidden; }
+.memorylane-faq-q {
+  width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  min-height: 64px; padding: 18px 24px; background: none; border: none; cursor: pointer; text-align: left;
+  font-family: Georgia, serif; font-size: 1.15rem; font-weight: 600; color: var(--ml-lilac-deeper);
+}
+.memorylane-faq-q:hover { background: var(--ml-cream); }
+.memorylane-faq-q svg { flex-shrink: 0; transition: transform 0.25s ease; color: var(--ml-lilac); }
+.memorylane-faq-q[aria-expanded="true"] svg { transform: rotate(180deg); }
+.memorylane-faq-a { padding: 0 24px 22px; margin: 0; animation: memorylane-fade-up 0.35s ease both; }
+
+/* ---------- Footer ---------- */
+.memorylane-footer { background: var(--ml-lilac-deeper); color: #e9e3f4; padding: 56px 0 36px; }
+.memorylane-footer .memorylane-brand { color: var(--ml-white); margin-bottom: 12px; }
+.memorylane-footer-grid { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 32px; margin-bottom: 36px; }
+.memorylane-footer-phone { display: inline-flex; align-items: center; gap: 10px; color: var(--ml-white); font-size: 1.35rem; font-weight: 800; text-decoration: none; min-height: 52px; }
+.memorylane-footer-phone:hover { text-decoration: underline; }
+.memorylane-footer-legal { border-top: 1px solid rgba(255, 255, 255, 0.22); padding-top: 24px; font-size: 0.95rem; }
+.memorylane-footer-legal p { margin: 0 0 6px; }
+
+/* ---------- Motion ---------- */
+@keyframes memorylane-fade-up {
+  from { opacity: 0; transform: translateY(22px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.memorylane-reveal { opacity: 0; }
+.memorylane-reveal.memorylane-visible { animation: memorylane-fade-up 0.7s ease both; }
+@media (prefers-reduced-motion: reduce) {
+  .memorylane-page *, .memorylane-reveal { animation: none !important; transition: none !important; opacity: 1 !important; }
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 880px) {
+  .memorylane-hero { padding: 48px 0 60px; }
+  .memorylane-hero-grid, .memorylane-feel-grid { grid-template-columns: 1fr; gap: 40px; }
+  .memorylane-reassure-grid, .memorylane-support-grid, .memorylane-album-grid, .memorylane-resource-grid { grid-template-columns: 1fr; }
+  .memorylane-album-grid .memorylane-polaroid:nth-child(2) { transform: rotate(1.2deg); }
+  .memorylane-nav-toggle { display: inline-flex; }
+  .memorylane-nav-links {
+    display: none; position: absolute; top: 100%; left: 0; right: 0;
+    flex-direction: column; align-items: stretch; padding: 18px 24px 24px;
+    background: var(--ml-cream); border-bottom: 1px solid var(--ml-line); box-shadow: var(--ml-shadow);
+  }
+  .memorylane-nav-links.memorylane-nav-open { display: flex; }
+  .memorylane-nav-phone { justify-content: center; }
+  .memorylane-section { padding: 60px 0; }
+  .memorylane-band-inner { flex-direction: column; align-items: flex-start; }
+}

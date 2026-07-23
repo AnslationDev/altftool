@@ -1,3 +1,5 @@
+"use client";
+
 import { useState, useCallback, useMemo } from "react";
 import { generateId } from "../utils/data";
 import { parseCSV, removeDuplicates } from "../utils/helpers";

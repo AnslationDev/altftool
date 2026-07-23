@@ -1,0 +1,851 @@
+/* ==================================================================
+   PackNGo — standalone lander styles.
+   Every class is prefixed "packngo-" so nothing leaks app-wide.
+   Palette: pure white, ink #1f2a27, single sage-teal accent #2f7f6f,
+   1px hairlines, whisper shadows only.
+   ================================================================== */
+
+html:has(.packngo-page) {
+  scroll-behavior: smooth;
+}
+
+.packngo-page {
+  --packngo-ink: #1f2a27;
+  --packngo-muted: #5c6b66;
+  --packngo-accent: #2f7f6f;
+  --packngo-accent-deep: #246457;
+  --packngo-hairline: #e4eae7;
+  --packngo-tint: #f4f8f6;
+  --packngo-serif: Georgia, "Iowan Old Style", "Times New Roman", serif;
+  --packngo-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
+  min-height: 100vh;
+  background: #ffffff;
+  color: var(--packngo-ink);
+  font-family: var(--packngo-sans);
+  font-size: 16px;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ---- Accessibility -------------------------------------------- */
+
+.packngo-page :focus-visible {
+  outline: 2px solid var(--packngo-accent);
+  outline-offset: 3px;
+  border-radius: 3px;
+}
+
+.packngo-skip {
+  position: absolute;
+  left: 1rem;
+  top: -3.5rem;
+  z-index: 60;
+  background: var(--packngo-accent);
+  color: #ffffff;
+  padding: 0.5rem 0.95rem;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  text-decoration: none;
+  transition: top 0.2s ease;
+}
+
+.packngo-skip:focus-visible {
+  top: 1rem;
+}
+
+.packngo-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ---- Keyframes ------------------------------------------------- */
+
+@keyframes packngo-fadeup {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Scroll-reveal: hidden state only applies once JS marks the page
+   ready, so content stays visible without JavaScript. */
+.packngo-reveal {
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.packngo-ready .packngo-reveal {
+  opacity: 0;
+  transform: translateY(18px);
+}
+
+.packngo-ready .packngo-reveal.packngo-in {
+  opacity: 1;
+  transform: none;
+}
+
+/* ---- Nav ------------------------------------------------------- */
+
+.packngo-nav {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--packngo-hairline);
+}
+
+.packngo-nav-inner {
+  max-width: 68rem;
+  margin: 0 auto;
+  padding: 0.9rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.packngo-wordmark {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-family: var(--packngo-serif);
+  font-size: 1.15rem;
+  letter-spacing: 0.01em;
+  color: var(--packngo-ink);
+  text-decoration: none;
+}
+
+.packngo-wordmark svg {
+  color: var(--packngo-accent);
+}
+
+.packngo-wordmark-n {
+  color: var(--packngo-accent);
+  font-style: italic;
+}
+
+.packngo-nav-links {
+  display: flex;
+  align-items: center;
+  gap: 1.6rem;
+}
+
+/* ---- Links: underline grows on hover --------------------------- */
+
+.packngo-link {
+  color: var(--packngo-ink);
+  text-decoration: none;
+  font-size: 0.92rem;
+  letter-spacing: 0.02em;
+  padding-bottom: 2px;
+  background-image: linear-gradient(var(--packngo-accent), var(--packngo-accent));
+  background-repeat: no-repeat;
+  background-position: left bottom;
+  background-size: 0% 1px;
+  transition: background-size 0.35s ease, color 0.2s ease;
+}
+
+.packngo-link:hover {
+  background-size: 100% 1px;
+  color: var(--packngo-accent-deep);
+}
+
+.packngo-link-quiet {
+  color: var(--packngo-muted);
+}
+
+/* ---- Buttons --------------------------------------------------- */
+
+.packngo-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--packngo-sans);
+  font-size: 0.92rem;
+  letter-spacing: 0.03em;
+  text-decoration: none;
+  border-radius: 999px;
+  padding: 0.6rem 1.35rem;
+  cursor: pointer;
+  transition: background-color 0.25s ease, color 0.25s ease,
+    border-color 0.25s ease;
+}
+
+.packngo-btn-outline {
+  border: 1px solid var(--packngo-accent);
+  color: var(--packngo-accent-deep);
+  background: transparent;
+}
+
+.packngo-btn-outline:hover {
+  background: var(--packngo-tint);
+}
+
+.packngo-btn-solid {
+  border: 1px solid var(--packngo-accent);
+  background: var(--packngo-accent);
+  color: #ffffff;
+  box-shadow: 0 1px 2px rgba(31, 42, 39, 0.08);
+}
+
+.packngo-btn-solid:hover {
+  background: var(--packngo-accent-deep);
+  border-color: var(--packngo-accent-deep);
+}
+
+/* ---- Hero ------------------------------------------------------ */
+
+.packngo-hero {
+  max-width: 46rem;
+  margin: 0 auto;
+  padding: 6.5rem 1.5rem 5.5rem;
+  text-align: center;
+  background: radial-gradient(
+    circle at 50% -10%,
+    rgba(47, 127, 111, 0.06),
+    transparent 62%
+  );
+}
+
+.packngo-hero-item {
+  animation: packngo-fadeup 0.7s ease both;
+}
+
+.packngo-hero-item:nth-child(2) { animation-delay: 0.08s; }
+.packngo-hero-item:nth-child(3) { animation-delay: 0.16s; }
+.packngo-hero-item:nth-child(4) { animation-delay: 0.24s; }
+.packngo-hero-item:nth-child(5) { animation-delay: 0.32s; }
+
+.packngo-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  margin: 0 0 1.1rem;
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--packngo-accent-deep);
+}
+
+.packngo-hero-title {
+  margin: 0 0 1.4rem;
+  font-family: var(--packngo-serif);
+  font-weight: 400;
+  font-size: clamp(2.6rem, 6.5vw, 4.4rem);
+  line-height: 1.12;
+  letter-spacing: -0.01em;
+}
+
+.packngo-hero-title em {
+  font-style: italic;
+  color: var(--packngo-accent);
+}
+
+.packngo-hero-sub {
+  margin: 0 auto 2.8rem;
+  max-width: 34rem;
+  color: var(--packngo-muted);
+  font-size: 1.05rem;
+}
+
+.packngo-hero-actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.6rem;
+  flex-wrap: wrap;
+}
+
+/* ---- Estimate slider mock -------------------------------------- */
+
+.packngo-estimate {
+  max-width: 30rem;
+  margin: 0 auto 2.6rem;
+  padding: 1.4rem 1.6rem 1.2rem;
+  border: 1px solid var(--packngo-hairline);
+  border-radius: 14px;
+  background: #ffffff;
+  box-shadow: 0 1px 3px rgba(31, 42, 39, 0.04);
+  text-align: left;
+}
+
+.packngo-estimate-top {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 0.9rem;
+  flex-wrap: wrap;
+}
+
+.packngo-estimate-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--packngo-muted);
+}
+
+.packngo-estimate-label svg {
+  color: var(--packngo-accent);
+}
+
+.packngo-estimate-value {
+  font-family: var(--packngo-serif);
+  font-size: 1.5rem;
+  color: var(--packngo-ink);
+  white-space: nowrap;
+}
+
+.packngo-estimate-hint {
+  margin: 0.85rem 0 0;
+  font-size: 0.82rem;
+  color: var(--packngo-muted);
+}
+
+.packngo-range {
+  --packngo-fill: 25%;
+  width: 100%;
+  height: 22px;
+  margin: 0;
+  appearance: none;
+  -webkit-appearance: none;
+  background: transparent;
+  cursor: pointer;
+}
+
+.packngo-range::-webkit-slider-runnable-track {
+  height: 2px;
+  border-radius: 2px;
+  background: linear-gradient(
+    to right,
+    var(--packngo-accent) var(--packngo-fill),
+    var(--packngo-hairline) var(--packngo-fill)
+  );
+}
+
+.packngo-range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  margin-top: -8px;
+  border-radius: 50%;
+  background: #ffffff;
+  border: 1.5px solid var(--packngo-accent);
+  box-shadow: 0 1px 3px rgba(31, 42, 39, 0.15);
+  transition: transform 0.2s ease;
+}
+
+.packngo-range::-webkit-slider-thumb:hover {
+  transform: scale(1.12);
+}
+
+.packngo-range::-moz-range-track {
+  height: 2px;
+  border-radius: 2px;
+  background: var(--packngo-hairline);
+}
+
+.packngo-range::-moz-range-progress {
+  height: 2px;
+  border-radius: 2px;
+  background: var(--packngo-accent);
+}
+
+.packngo-range::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #ffffff;
+  border: 1.5px solid var(--packngo-accent);
+  box-shadow: 0 1px 3px rgba(31, 42, 39, 0.15);
+}
+
+/* ---- Generic section scaffolding ------------------------------- */
+
+.packngo-section {
+  max-width: 68rem;
+  margin: 0 auto;
+  padding: 5rem 1.5rem;
+  border-top: 1px solid var(--packngo-hairline);
+  scroll-margin-top: 4.5rem;
+}
+
+.packngo-section-head {
+  text-align: center;
+  max-width: 38rem;
+  margin: 0 auto 3.5rem;
+}
+
+.packngo-h2 {
+  margin: 0;
+  font-family: var(--packngo-serif);
+  font-weight: 400;
+  font-size: clamp(1.8rem, 3.6vw, 2.5rem);
+  line-height: 1.2;
+}
+
+.packngo-h3 {
+  margin: 0 0 0.4rem;
+  font-family: var(--packngo-serif);
+  font-weight: 400;
+  font-size: 1.2rem;
+}
+
+.packngo-body {
+  margin: 0;
+  color: var(--packngo-muted);
+  font-size: 0.95rem;
+}
+
+/* ---- Timeline: From shelves to settled ------------------------- */
+
+.packngo-timeline {
+  position: relative;
+  list-style: none;
+  margin: 0 auto;
+  padding: 1rem 0 0;
+  max-width: 52rem;
+}
+
+.packngo-timeline::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 1px;
+  background: var(--packngo-hairline);
+  transform: translateX(-0.5px);
+}
+
+.packngo-step {
+  position: relative;
+  width: 50%;
+  padding: 0 3rem 3.2rem 0;
+  text-align: right;
+}
+
+.packngo-step:nth-child(even) {
+  margin-left: 50%;
+  padding: 0 0 3.2rem 3rem;
+  text-align: left;
+}
+
+.packngo-step:last-child {
+  padding-bottom: 0.75rem;
+}
+
+.packngo-step-dot {
+  position: absolute;
+  top: 0.4rem;
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  border: 1.5px solid var(--packngo-accent);
+  background: #ffffff;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.packngo-step:nth-child(odd) .packngo-step-dot {
+  right: -6.5px;
+}
+
+.packngo-step:nth-child(even) .packngo-step-dot {
+  left: -6.5px;
+}
+
+.packngo-step:hover .packngo-step-dot,
+.packngo-step:focus-within .packngo-step-dot {
+  background: var(--packngo-accent);
+  box-shadow: 0 0 0 5px rgba(47, 127, 111, 0.12);
+}
+
+.packngo-step-num {
+  display: block;
+  font-family: var(--packngo-serif);
+  font-style: italic;
+  font-size: 0.95rem;
+  color: var(--packngo-accent);
+  margin-bottom: 0.45rem;
+}
+
+.packngo-step-icon {
+  color: var(--packngo-accent);
+  margin-bottom: 0.55rem;
+}
+
+/* ---- Eco materials row ----------------------------------------- */
+
+.packngo-materials {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--packngo-hairline);
+  border-top: 1px solid var(--packngo-hairline);
+  border-bottom: 1px solid var(--packngo-hairline);
+}
+
+.packngo-material {
+  background: #ffffff;
+  padding: 2.2rem 1.9rem;
+}
+
+.packngo-material-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  border: 1px solid var(--packngo-hairline);
+  background: var(--packngo-tint);
+  color: var(--packngo-accent);
+  margin-bottom: 1.1rem;
+}
+
+/* ---- Pricing table --------------------------------------------- */
+
+.packngo-table {
+  width: 100%;
+  max-width: 44rem;
+  margin: 0 auto;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+}
+
+.packngo-table th,
+.packngo-table td {
+  padding: 1.15rem 0.6rem;
+  border-bottom: 1px solid var(--packngo-hairline);
+  text-align: left;
+  vertical-align: baseline;
+}
+
+.packngo-table thead th {
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--packngo-muted);
+}
+
+.packngo-table tbody th {
+  font-family: var(--packngo-serif);
+  font-weight: 400;
+  font-size: 1.15rem;
+}
+
+.packngo-table tbody tr {
+  transition: background-color 0.25s ease;
+}
+
+.packngo-table tbody tr:hover {
+  background: var(--packngo-tint);
+}
+
+.packngo-plan-load {
+  color: var(--packngo-muted);
+}
+
+.packngo-plan-price {
+  font-family: var(--packngo-serif);
+  font-size: 1.3rem;
+  text-align: right;
+  white-space: nowrap;
+}
+
+.packngo-price-col {
+  text-align: right;
+}
+
+.packngo-fineprint {
+  max-width: 44rem;
+  margin: 1.5rem auto 0;
+  font-size: 0.82rem;
+  color: var(--packngo-muted);
+  text-align: center;
+}
+
+/* ---- Pull quote ------------------------------------------------ */
+
+.packngo-quote-block {
+  border-top: 1px solid var(--packngo-hairline);
+  padding: 5.5rem 1.5rem;
+}
+
+.packngo-pullquote {
+  max-width: 44rem;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.packngo-pullquote::before {
+  content: "\201C";
+  display: block;
+  font-family: var(--packngo-serif);
+  font-size: 3.2rem;
+  line-height: 1;
+  color: var(--packngo-accent);
+  margin-bottom: 0.6rem;
+}
+
+.packngo-pullquote p {
+  margin: 0 0 1.6rem;
+  font-family: var(--packngo-serif);
+  font-style: italic;
+  font-size: clamp(1.5rem, 3.4vw, 2.1rem);
+  line-height: 1.45;
+  color: var(--packngo-ink);
+}
+
+.packngo-pullquote-cite {
+  font-size: 0.82rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--packngo-muted);
+}
+
+/* ---- Quiet CTA ------------------------------------------------- */
+
+.packngo-cta {
+  border-top: 1px solid var(--packngo-hairline);
+  background: var(--packngo-tint);
+  scroll-margin-top: 4.5rem;
+}
+
+.packngo-cta-inner {
+  max-width: 68rem;
+  margin: 0 auto;
+  padding: 5rem 1.5rem;
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 4rem;
+  align-items: start;
+}
+
+.packngo-cta-copy .packngo-h2 {
+  margin-bottom: 1rem;
+}
+
+.packngo-phone {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-top: 1.6rem;
+  font-family: var(--packngo-serif);
+  font-size: 1.6rem;
+  color: var(--packngo-accent-deep);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.25s ease;
+}
+
+.packngo-phone:hover {
+  border-bottom-color: var(--packngo-accent-deep);
+}
+
+.packngo-phone-caption {
+  margin: 0.5rem 0 0;
+  font-size: 0.82rem;
+  color: var(--packngo-muted);
+}
+
+/* ---- Mock form ------------------------------------------------- */
+
+.packngo-form {
+  display: grid;
+  gap: 1.1rem;
+  background: #ffffff;
+  border: 1px solid var(--packngo-hairline);
+  border-radius: 14px;
+  padding: 1.8rem;
+  box-shadow: 0 1px 3px rgba(31, 42, 39, 0.05);
+}
+
+.packngo-field {
+  display: grid;
+  gap: 0.35rem;
+}
+
+.packngo-field label {
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--packngo-muted);
+}
+
+.packngo-field input,
+.packngo-field select {
+  font: inherit;
+  font-size: 0.95rem;
+  color: var(--packngo-ink);
+  background: #ffffff;
+  border: 1px solid var(--packngo-hairline);
+  border-radius: 8px;
+  padding: 0.65rem 0.85rem;
+  transition: border-color 0.25s ease;
+}
+
+.packngo-field input::placeholder {
+  color: #7b8a85;
+}
+
+.packngo-field input:hover,
+.packngo-field select:hover {
+  border-color: #c2d0cb;
+}
+
+.packngo-form-submit {
+  justify-content: center;
+  margin-top: 0.3rem;
+  border-radius: 10px;
+}
+
+.packngo-form-note {
+  margin: 0;
+  font-size: 0.75rem;
+  color: var(--packngo-muted);
+  text-align: center;
+}
+
+/* ---- Footer ---------------------------------------------------- */
+
+.packngo-footer {
+  border-top: 1px solid var(--packngo-hairline);
+}
+
+.packngo-footer-inner {
+  max-width: 68rem;
+  margin: 0 auto;
+  padding: 2.2rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.2rem;
+  flex-wrap: wrap;
+}
+
+.packngo-footer-mark {
+  margin: 0;
+  font-family: var(--packngo-serif);
+  font-size: 1.05rem;
+}
+
+.packngo-footer-links {
+  display: flex;
+  align-items: center;
+  gap: 1.4rem;
+}
+
+.packngo-footer-note {
+  margin: 0;
+  width: 100%;
+  font-size: 0.78rem;
+  color: var(--packngo-muted);
+}
+
+/* ---- Responsive: stack below ~880px ---------------------------- */
+
+@media (max-width: 880px) {
+  .packngo-hero {
+    padding: 4.5rem 1.25rem 4rem;
+  }
+
+  .packngo-section {
+    padding: 3.5rem 1.25rem;
+  }
+
+  .packngo-timeline::before {
+    left: 8px;
+  }
+
+  .packngo-step,
+  .packngo-step:nth-child(even) {
+    width: 100%;
+    margin-left: 0;
+    padding: 0 0 2.6rem 2.2rem;
+    text-align: left;
+  }
+
+  .packngo-step:nth-child(odd) .packngo-step-dot,
+  .packngo-step:nth-child(even) .packngo-step-dot {
+    left: 2px;
+    right: auto;
+  }
+
+  .packngo-materials {
+    grid-template-columns: 1fr;
+  }
+
+  .packngo-cta-inner {
+    grid-template-columns: 1fr;
+    gap: 2.6rem;
+    padding: 3.5rem 1.25rem;
+  }
+
+  .packngo-quote-block {
+    padding: 4rem 1.25rem;
+  }
+}
+
+@media (max-width: 560px) {
+  .packngo-nav-links {
+    gap: 1rem;
+  }
+
+  .packngo-nav-links .packngo-link {
+    display: none;
+  }
+
+  .packngo-estimate {
+    padding: 1.2rem 1.2rem 1rem;
+  }
+
+  .packngo-plan-load {
+    display: none;
+  }
+
+  .packngo-load-col {
+    display: none;
+  }
+}
+
+/* ---- Reduced motion -------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  html:has(.packngo-page) {
+    scroll-behavior: auto;
+  }
+
+  .packngo-page *,
+  .packngo-page *::before,
+  .packngo-page *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .packngo-ready .packngo-reveal {
+    opacity: 1;
+    transform: none;
+  }
+}

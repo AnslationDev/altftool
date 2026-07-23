@@ -1,3 +1,5 @@
+"use client";
+
 import { useState } from "react";
 import { Code, Play, Trash2, BookOpen, Sparkles } from "lucide-react";
 

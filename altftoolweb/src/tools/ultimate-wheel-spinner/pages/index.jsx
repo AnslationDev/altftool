@@ -1,3 +1,5 @@
+"use client";
+
 "use-client";
 import React, { useState, useRef, useEffect } from "react";
 import { RotateCw, Target, Trash2, Info } from "lucide-react";

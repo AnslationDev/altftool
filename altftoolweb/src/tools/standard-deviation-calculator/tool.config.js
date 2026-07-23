@@ -2,9 +2,9 @@ const toolConfig = {
   slug: "standard-deviation-calculator",
   name: "Standard Deviation Calculator",
   category: ["Math"],
-  description: "Calculate the standard deviation of a set of numbers.",
-  icon: "calculator",
-  iconColor: "text-amber-600",
+  description: "Population or sample standard deviation, variance and mean.",
+  icon: "sigma",
+  iconColor: "text-cyan-600",
 };
 
 export default toolConfig;

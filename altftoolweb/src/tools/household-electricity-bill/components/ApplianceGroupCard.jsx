@@ -1,3 +1,5 @@
+"use client";
+
 import { Minus, Plus, Trash2, Zap, MoreVertical, Layers } from "lucide-react";
 import { formatINR, formatUnits } from "../lib/calculateBill";
 

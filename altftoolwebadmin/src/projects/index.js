@@ -17,8 +17,10 @@ import dailyhnt from "./dailyhnt/config";
 import dealnbook from "./dealnbook/config";
 import exclusinsider from "./exclusinsider/config";
 import infovasta from "./infovasta/config";
-import offerhoppr from "./offerhoppr/config";
 import offerris from "./offerris/config";
+import thestylelife from "./thestylelife/config";
+import snapagee from "./snapagee/config";
+import offerhoppr from "./offerhoppr/config";
 import samvatsara from "./samvatsara/config";
 import shophobia from "./shophobia/config";
 
@@ -61,8 +63,10 @@ const RAW_PROJECTS = {
   dealnbook,
   exclusinsider,
   infovasta,
-  offerhoppr,
   offerris,
+  thestylelife,
+  snapagee,
+  offerhoppr,
   samvatsara,
   shophobia,
 };

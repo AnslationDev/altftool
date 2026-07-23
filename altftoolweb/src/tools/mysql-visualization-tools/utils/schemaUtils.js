@@ -1,3 +1,5 @@
+"use client";
+
 const STORAGE_KEY = "mysql-visualization-tools-state";
 const HISTORY_KEY = "mysql-visualization-tools-history";
 

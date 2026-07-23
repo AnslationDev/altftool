@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 
 const SmartSuggestions = ({ field, addField, updateField, formFields, setFormFields }) => {

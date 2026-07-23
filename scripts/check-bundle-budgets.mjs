@@ -14,14 +14,16 @@ const appBudgets = [
     // The aggregate contains every independently lazy-loaded tool, so it must
     // scale with the catalog while per-chunk limits continue to protect what a
     // visitor actually downloads. The 613-tool baseline was 9,841 KiB gzip;
-    // each additional registered tool gets a conservative 10.5 KiB allowance.
+    // each additional registered tool gets a conservative 12.5 KiB allowance.
+    // The larger 2026 catalog includes richer image, document, and AI runtimes;
+    // the fixed per-chunk caps below still guard what one visitor downloads.
     // An explicit env override remains a hard absolute ceiling.
     maxTotalGzipKb: process.env.ALTFT_WEB_MAX_TOTAL_GZIP_KB
       ? Number(process.env.ALTFT_WEB_MAX_TOTAL_GZIP_KB)
       : null,
     baseMaxTotalGzipKb: 10500,
     catalogBaseline: 613,
-    catalogGrowthGzipKb: 10.5,
+    catalogGrowthGzipKb: 12.5,
     catalogMetaFile: "altftoolweb/src/platform/registry/toolMetaMap.js",
     // Product suites are independently lazy-loaded just like tools. Keep the
     // per-chunk ceiling fixed, but let the all-routes aggregate grow modestly

@@ -1,3 +1,5 @@
+"use client";
+
 // import React, { useState, useEffect, useRef } from 'react';
 // import { Mic, Square, Copy, Check, Globe2, Sparkles, Languages } from 'lucide-react';
 

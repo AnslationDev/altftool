@@ -17,17 +17,14 @@ import Image from "next/image";
 import DealCard from "./DealCard";
 import MobileSearchBar from "./MobileSearchBar";
 import DesktopSearchBar from "./DesktopSearchBar";
+import {
+  CITY_OPTIONS,
+  normaliseCity,
+  getRefCoords,
+} from "@/app/sale/data/cities";
 
 const SORT_OPTIONS = ["Nearest", "Highest Discount", "Lowest Price"];
-
-// ── City options with centre coordinates
-// Used for distance calculation when the user picks a city manually (no GPS)
-const CITY_OPTIONS = [
-  { label: "Gurugram", value: "Gurugram", lat: 28.4595, lng: 77.0266 },
-  { label: "Delhi", value: "Delhi", lat: 28.6139, lng: 77.209 },
-  { label: "Noida", value: "Noida", lat: 28.5355, lng: 77.391 },
-  { label: "Bengaluru", value: "Bengaluru", lat: 12.9716, lng: 77.5946 },
-];
+const CARDS_PER_PAGE = 6;
 
 // ── Haversine — accurate great-circle distance in km
 function haversineKm(lat1, lng1, lat2, lng2) {
@@ -42,50 +39,38 @@ function haversineKm(lat1, lng1, lat2, lng2) {
   return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 }
 
-// ── Normalise any city string → canonical city key
-const CITY_MAP = {
-  gurugram: "Gurugram",
-  gurgaon: "Gurugram",
-  delhi: "Delhi",
-  "new delhi": "Delhi",
-  bengaluru: "Bengaluru",
-  bangalore: "Bengaluru",
-  noida: "Noida",
-};
-function normaliseCity(raw = "") {
-  return CITY_MAP[raw.toLowerCase().trim()] ?? null;
-}
-
-// ── Get reference coords for a city (GPS first, else city-centre)
-function getRefCoords(userCoords, cityName) {
-  if (userCoords) return userCoords;
-  const found = CITY_OPTIONS.find(
-    (c) =>
-      c.value.toLowerCase() === (normaliseCity(cityName) || "").toLowerCase(),
-  );
-  return found ? { lat: found.lat, lng: found.lng } : null;
-}
-
 export default function SalesNearYou({
   nearbyDeals,
   locationName, // string — city name
   locationStatus, // "idle"|"detecting"|"resolved"|"denied"|"error"
   onDetectLocation, // () => void  — trigger GPS
   onCitySelect, // (cityValue: string) => void — manual pick
+  onCitySearch, // (query: string) => Promise<{ok:boolean,message?:string}> — suggest-or-geocode
+  dynamicCities = [], // cities geocoded on the fly that aren't in the static list
   userCoords, // { lat, lng } | null — raw GPS
   searchQuery, // string — from hero search bar
   onSearchChange, // (v: string) => void
+  onSearchSubmit, // () => void — fetch deals for the current search immediately
+  dealsLoading, // boolean — true while API is fetching
 }) {
   const [sortBy, setSortBy] = useState("Nearest");
   const [isSortOpen, setIsSortOpen] = useState(false);
   const [isCityOpen, setIsCityOpen] = useState(false);
+  const [visibleCount, setVisibleCount] = useState(CARDS_PER_PAGE);
 
   const mobileCityRef = useRef(null);
   const desktopCityRef = useRef(null);
   const controlsCityRef = useRef(null);
   const sortDropdownRef = useRef(null);
+  const loadMoreRef = useRef(null);
 
   const [isActive, setIsActive] = useState(false);
+
+  // All city options available in the dropdown: built-in + dynamically geocoded
+  const allCityOptions = useMemo(
+    () => [...CITY_OPTIONS, ...dynamicCities],
+    [dynamicCities],
+  );
 
   // Close dropdowns on outside click
   useEffect(() => {
@@ -115,8 +100,8 @@ export default function SalesNearYou({
 
   // Reference point for distance calc: GPS coords OR city centre
   const refCoords = useMemo(
-    () => getRefCoords(userCoords, locationName),
-    [userCoords, locationName],
+    () => getRefCoords(userCoords, locationName, dynamicCities),
+    [userCoords, locationName, dynamicCities],
   );
 
   // ── Step 1: enrich every deal with a computed distance
@@ -173,6 +158,36 @@ export default function SalesNearYou({
     return deals;
   }, [enrichedDeals, sortBy, locationName, searchQuery]);
 
+  // ── Step 3: paginate — show 6 cards at a time, reveal more on scroll
+  useEffect(() => {
+    setVisibleCount(CARDS_PER_PAGE);
+  }, [locationName, searchQuery, sortBy]);
+
+  const visibleDeals = useMemo(
+    () => filtered.slice(0, visibleCount),
+    [filtered, visibleCount],
+  );
+  const hasMoreDeals = visibleCount < filtered.length;
+
+  // Infinite scroll — grow visibleCount by CARDS_PER_PAGE when the sentinel
+  // at the bottom of the grid enters the viewport.
+  useEffect(() => {
+    const sentinel = loadMoreRef.current;
+    if (!sentinel || !hasMoreDeals) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0]?.isIntersecting) {
+          setVisibleCount((prev) => Math.min(prev + CARDS_PER_PAGE, filtered.length));
+        }
+      },
+      { rootMargin: "200px" },
+    );
+
+    observer.observe(sentinel);
+    return () => observer.disconnect();
+  }, [hasMoreDeals, filtered.length]);
+
   const displayCity = locationName || "Your Location";
   const cityResolved = locationStatus === "resolved";
   const isGPS = cityResolved && !!userCoords;
@@ -182,6 +197,10 @@ export default function SalesNearYou({
     locationStatus === "error";
 
   const handleSearch = () => {
+    // Fetch deals for the current location + search text right away
+    // (bypasses the debounce so pressing Search always feels instant).
+    onSearchSubmit?.();
+
     if (!searchQuery.trim()) return;
 
     // scroll to results
@@ -247,7 +266,8 @@ export default function SalesNearYou({
              setIsCityOpen={setIsCityOpen}
              onDetectLocation={onDetectLocation}
              onCitySelect={onCitySelect}
-             CITY_OPTIONS={CITY_OPTIONS}
+             onCitySearch={onCitySearch}
+             CITY_OPTIONS={allCityOptions}
              locationName={locationName}
              mobileCityRef={mobileCityRef}
            />
@@ -263,7 +283,8 @@ export default function SalesNearYou({
              setIsCityOpen={setIsCityOpen}
              onDetectLocation={onDetectLocation}
              onCitySelect={onCitySelect}
-             CITY_OPTIONS={CITY_OPTIONS}
+             onCitySearch={onCitySearch}
+             CITY_OPTIONS={allCityOptions}
              locationName={locationName}
              desktopCityRef={desktopCityRef}
            />
@@ -366,34 +387,55 @@ export default function SalesNearYou({
           </div>
         </div>
 
-        {/* ── Deals grid ── */}
+{/* ── Deals grid ── */}
         <AnimatePresence mode="wait">
-          <motion.div
-            key={locationName + searchQuery + sortBy}
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -12 }}
-            transition={{ duration: 0.25 }}
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 [@media(min-width:1350px)]:grid-cols-4 2xl:grid-cols-4 gap-6"
-          >
-            {filtered.length === 0 ? (
-              <div className="col-span-full flex flex-col items-center py-16 gap-3 text-center">
-                <Search className="w-10 h-10 text-(--muted-foreground)/30" />
-                <p className="font-semibold text-(--foreground) font-primary">
-                  No deals found
-                </p>
-                <p className="text-sm text-(--muted-foreground) font-secondary">
-                  Try a different search or pick another city.
-                </p>
-              </div>
-            ) : (
-              filtered.map((deal, i) => (
-                 <DealCard  key={deal.id} deal={deal} index={i} isGPS={isGPS}
-                />
-              ))
-            )}
-          </motion.div>
+          {dealsLoading ? (
+            <motion.div
+              key="loading"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="flex flex-col items-center justify-center py-20 gap-4"
+            >
+              <Loader2 className="w-10 h-10 text-(--primary) animate-spin" />
+              <p className="text-(--muted-foreground) font-secondary text-sm">
+                Finding the best deals near {displayCity}...
+              </p>
+            </motion.div>
+          ) : (
+            <motion.div
+              key={locationName + searchQuery + sortBy}
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -12 }}
+              transition={{ duration: 0.25 }}
+              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 [@media(min-width:1350px)]:grid-cols-4 2xl:grid-cols-4 gap-6"
+            >
+              {filtered.length === 0 ? (
+                <div className="col-span-full flex flex-col items-center py-16 gap-3 text-center">
+                  <Search className="w-10 h-10 text-(--muted-foreground)/30" />
+                  <p className="font-semibold text-(--foreground) font-primary">
+                    No deals found
+                  </p>
+                  <p className="text-sm text-(--muted-foreground) font-secondary">
+                    Try a different search or pick another city.
+                  </p>
+                </div>
+              ) : (
+                visibleDeals.map((deal, i) => (
+                  <DealCard key={deal.id} deal={deal} index={i} isGPS={isGPS} />
+                ))
+              )}
+            </motion.div>
+          )}
         </AnimatePresence>
+
+        {/* ── Infinite scroll sentinel + "loading more" indicator ── */}
+        {!dealsLoading && hasMoreDeals && (
+          <div ref={loadMoreRef} className="flex items-center justify-center py-8">
+            <Loader2 className="w-6 h-6 text-(--primary) animate-spin" />
+          </div>
+        )}
       </div>
     </section>
   );

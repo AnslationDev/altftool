@@ -316,14 +316,17 @@ export default function ToolHome() {
                 <div className="flex items-center gap-2 text-[13px] font-semibold">
                   <ArrowRight className="w-3.5 h-3.5 rotate-180 text-(--muted-foreground)" /> Merge Sort
                 </div>
-                <p className="mt-2 text-[11px] font-medium uppercase tracking-wide text-(--muted-foreground)">Divide</p>
-                <div className="mt-2 space-y-2.5">
+                {/* Divide phase */}
+                <div className="mt-3 flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-wide text-(--muted-foreground)">
+                  <ChevronsRight className="w-3 h-3 rotate-90" /> Divide
+                </div>
+                <div className="apo-scroll mt-2 space-y-2 overflow-x-auto pb-1">
                   {TREE_LEVELS.map((level, li) => (
-                    <div key={li} className="flex items-start justify-center gap-2">
+                    <div key={li} className="flex items-center justify-center gap-2.5">
                       {level.map((group, gi) => (
-                        <div key={gi} className="flex gap-0.5 rounded-md">
+                        <div key={gi} className="flex gap-0.5 rounded-lg border border-blue-500/15 bg-blue-500/5 p-1">
                           {group.map((v, vi) => (
-                            <span key={vi} className="grid h-7 min-w-7 place-items-center rounded-md bg-blue-500/10 px-1 text-[11px] font-semibold text-blue-600 dark:text-blue-300">
+                            <span key={vi} className="grid h-6 min-w-6 place-items-center rounded-md bg-blue-500/10 px-1 text-[10.5px] font-semibold text-blue-600 dark:text-blue-300">
                               {v}
                             </span>
                           ))}
@@ -331,15 +334,27 @@ export default function ToolHome() {
                       ))}
                     </div>
                   ))}
-                  {/* merged sorted row */}
-                  <div className="flex items-center justify-center gap-1 pt-1">
+                </div>
+
+                {/* Merge phase */}
+                <div className="mt-3 flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-wide text-(--muted-foreground)">
+                  <ChevronsRight className="w-3 h-3 -rotate-90" /> Merge
+                </div>
+                <div className="apo-scroll mt-2 overflow-x-auto pb-1">
+                  <div className="flex items-center justify-center gap-1">
                     {SORTED_SAMPLE.map((v, i) => {
-                      const active = i === heroStep % SORTED_SAMPLE.length;
+                      const revealed = Math.round((heroStep / HERO_TOTAL) * SORTED_SAMPLE.length);
+                      const isCurrent = i === revealed - 1;
+                      const isMerged = i < revealed;
                       return (
                         <span
                           key={i}
-                          className={`grid h-8 min-w-8 place-items-center rounded-md px-1 text-[12px] font-bold transition-colors ${
-                            active ? "bg-amber-400 text-amber-950" : "bg-blue-600 text-white"
+                          className={`grid h-8 min-w-8 place-items-center rounded-md px-1 text-[12px] font-bold transition-all duration-200 ${
+                            isCurrent
+                              ? "scale-110 bg-amber-400 text-amber-950 shadow-md shadow-amber-400/30"
+                              : isMerged
+                                ? "bg-blue-600 text-white"
+                                : "bg-(--muted)/60 text-(--muted-foreground)"
                           }`}
                         >
                           {v}

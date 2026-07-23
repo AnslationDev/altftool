@@ -1,3 +1,5 @@
+"use client";
+
 import { Copy, Trash2, Wand2, Columns, SquareSplitHorizontal } from "lucide-react";
 import { motion } from "framer-motion";
 import { toast } from "sonner";

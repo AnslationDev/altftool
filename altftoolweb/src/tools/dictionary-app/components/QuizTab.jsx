@@ -1,3 +1,5 @@
+"use client";
+
 import { Brain, CheckCircle, XCircle, Trophy, RotateCcw, Zap } from "lucide-react";
 import { useQuiz } from "../hooks/useQuiz.js";
 

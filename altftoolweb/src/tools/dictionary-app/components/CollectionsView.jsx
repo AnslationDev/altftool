@@ -1,3 +1,5 @@
+"use client";
+
 import { useState } from "react";
 import { FolderOpen, Folder, Trash2, BookOpen, ChevronDown, ChevronUp, FolderX } from "lucide-react";
 

@@ -1,3 +1,5 @@
+"use client";
+
 import { useState, useRef, useEffect, useCallback } from "react";
 import { drawToCanvas, buildFilterString } from "../utils/imageFilters";
 import { adjustmentDefaults, cartoonStyles } from "../constants/styles";

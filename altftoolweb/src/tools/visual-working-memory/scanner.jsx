@@ -1,3 +1,5 @@
+"use client";
+
 // scanner.jsx - Clean Visual Working Memory Test with proper logic
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { 

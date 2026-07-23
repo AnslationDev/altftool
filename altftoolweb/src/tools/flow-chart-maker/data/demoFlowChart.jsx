@@ -1,3 +1,5 @@
+"use client";
+
 import { Node, Edge } from "@xyflow/react";
 
 export const demoNodes = [

@@ -1,3 +1,5 @@
+"use client";
+
 // Safe localStorage helpers (no-op on server / when storage is unavailable).
 export function loadValue(key, fallback) {
   try {

@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import Cropper from "react-easy-crop";
 import { ASPECT_RATIOS } from "../utils/aspectRatio";

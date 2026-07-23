@@ -1,3 +1,5 @@
+"use client";
+
 import { forwardRef, useRef, useEffect, useCallback, useImperativeHandle } from "react";
 import { sinWave, rippleWave, doubleSlitIntensity, TWO_PI, createCustomWaveFn, evalCustomWave } from "../utils/waveMath";
 

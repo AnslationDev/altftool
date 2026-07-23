@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState } from 'react';
 import { Inbox, Smartphone, Laptop, Search, Mail } from 'lucide-react';
 import { PREVIEW_CLIENTS, truncateText } from '../utils/subjectLine';

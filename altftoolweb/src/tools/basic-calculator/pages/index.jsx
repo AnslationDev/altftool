@@ -19,12 +19,12 @@ export default function ToolHome() {
       const ctx = new AudioContext();
       const osc = ctx.createOscillator();
       const gain = ctx.createGain();
-      
+
       osc.type = "sine";
       osc.frequency.setValueAtTime(1000, ctx.currentTime);
       gain.gain.setValueAtTime(0.02, ctx.currentTime);
       gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.04);
-      
+
       osc.connect(gain);
       gain.connect(ctx.destination);
       osc.start();
@@ -55,7 +55,7 @@ export default function ToolHome() {
   const handleOperator = (op) => {
     playClickSound();
     setShouldReset(false);
-    
+
     // Check if double operator
     const lastChar = display.trim().slice(-1);
     if (["+", "-", "*", "/"].includes(lastChar)) {
@@ -108,11 +108,11 @@ export default function ToolHome() {
     try {
       // Clean string for eval (replace spaces and sanitize chars)
       const cleanExpr = display.replace(/×/g, "*").replace(/÷/g, "/");
-      
+
       // Perform safe evaluate
       // eslint-disable-next-line no-eval
       const result = eval(cleanExpr);
-      
+
       if (result === undefined || isNaN(result) || !isFinite(result)) {
         setDisplay("Error");
         return;
@@ -122,7 +122,7 @@ export default function ToolHome() {
       const roundedResult = Number(parseFloat(result.toFixed(8)).toString());
       setEquation(`${display} =`);
       setDisplay(String(roundedResult));
-      
+
       // Append to calculation log list
       const logItem = {
         expr: display,
@@ -165,7 +165,7 @@ export default function ToolHome() {
   return (
     <div className="min-h-screen bg-background p-4 sm:p-6 lg:p-8">
       <div className="w-full max-w-7xl mx-auto space-y-8">
-        
+
         {/* Header */}
         <section className="rounded-xl border border-border bg-card p-4 sm:p-5 shadow-sm group">
           <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
@@ -187,9 +187,9 @@ export default function ToolHome() {
                 </p>
               </div>
             </div>
-            
+
             <div className="flex flex-wrap gap-3 items-center shrink-0">
-              
+
               {/* Sound toggle button */}
               <button
                 onClick={() => setSoundEnabled(!soundEnabled)}
@@ -218,13 +218,13 @@ export default function ToolHome() {
 
         {/* Workspace Layout */}
         <div className="grid grid-cols-1 md:grid-cols-12 gap-8 max-w-4xl mx-auto">
-          
+
           {/* Calculator Grid Frame - 7 Cols */}
           <div className="md:col-span-7 flex justify-center">
-            
+
             {/* Sleek Glassmorphic Frame */}
             <div className="w-full max-w-[340px] bg-card border border-border rounded-3xl p-5 shadow-lg space-y-4">
-              
+
               {/* Screen Display */}
               <div className="bg-slate-950 border border-slate-900 rounded-2xl p-4 text-right space-y-1 overflow-hidden min-h-[90px] flex flex-col justify-end">
                 <div className="text-[10px] text-primary/70 font-mono font-bold truncate h-4">
@@ -237,7 +237,7 @@ export default function ToolHome() {
 
               {/* Calculator Button Grid */}
               <div className="grid grid-cols-4 gap-2.5">
-                
+
                 {/* Row 1 */}
                 <button
                   onClick={handleClear}
@@ -371,13 +371,13 @@ export default function ToolHome() {
           {/* History Panel Sidebar - 5 Cols */}
           <div className="md:col-span-5 space-y-6">
             <div className="bg-card border border-border rounded-2xl p-6 shadow-sm space-y-4">
-              
+
               <div className="flex items-center justify-between border-b border-border pb-3">
                 <span className="text-xs font-bold text-foreground uppercase tracking-wider flex items-center gap-1.5">
                   <History size={14} className="text-primary" />
                   Calculation Log
                 </span>
-                
+
                 {history.length > 0 && (
                   <button
                     onClick={() => setHistory([])}

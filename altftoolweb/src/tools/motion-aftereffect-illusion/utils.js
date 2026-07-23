@@ -1,3 +1,5 @@
+"use client";
+
 // src/tools/motion-aftereffect-illusion/utils.js
 
 // --- Motion Math Utils ---

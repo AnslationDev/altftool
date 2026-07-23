@@ -1,3 +1,5 @@
+"use client";
+
 const safeJson = (data) => JSON.stringify(data, null, 2);
 
 const triggerDownload = (content, fileName, type) => {

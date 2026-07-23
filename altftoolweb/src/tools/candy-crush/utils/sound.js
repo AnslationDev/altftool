@@ -1,3 +1,5 @@
+"use client";
+
 // Lightweight Web Audio sound engine — no asset files required.
 // Tones are synthesised with an AudioContext oscillator so the game works
 // fully offline and respects the mute toggle.

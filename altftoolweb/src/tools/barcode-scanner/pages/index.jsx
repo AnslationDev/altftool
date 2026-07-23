@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState, useRef, useEffect } from 'react';
 import Quagga from 'quagga';
 import { Camera, Upload, X, CheckCircle, AlertCircle, Scan } from 'lucide-react';

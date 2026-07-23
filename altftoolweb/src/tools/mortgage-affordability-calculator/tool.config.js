@@ -2,8 +2,8 @@ const toolConfig = {
   slug: "mortgage-affordability-calculator",
   name: "Mortgage Affordability Calculator",
   category: ["Finance"],
-  description: "Calculate your mortgage affordability based on income and loan details.",
-  icon: "mortgage",
+  description: "How much home you can afford, using the 28/36 debt-to-income rule.",
+  icon: "home",
   iconColor: "text-teal-600",
 };
 

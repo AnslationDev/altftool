@@ -2,9 +2,9 @@ const toolConfig = {
   slug: "tweet-character-counter",
   name: "Tweet Character Counter",
   category: ["Social Media"],
-  description: "Count characters, words, lines and sentences in your text instantly.",
+  description: "Count characters against the 280 limit, with words and tweets needed.",
   icon: "type",
-  iconColor: "text-cyan-600",
+  iconColor: "text-sky-500",
 };
 
 export default toolConfig;

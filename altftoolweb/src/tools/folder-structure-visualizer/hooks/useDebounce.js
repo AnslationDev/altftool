@@ -1,3 +1,5 @@
+"use client";
+
 import { useEffect, useState } from "react";
 
 // Returns a debounced copy of `value` that updates after `delay` ms.

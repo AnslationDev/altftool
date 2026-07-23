@@ -1,3 +1,5 @@
+"use client";
+
 import { useState, useCallback } from 'react';
 import { fetchAdzunaJobs } from '../services/adzunaApi.js';
 import { fetchGoogleTrends } from '../services/googleTrendsApi.js';

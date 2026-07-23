@@ -1,3 +1,5 @@
+"use client";
+
 import { Button } from "@altftool/ui";
 import { Play, RotateCcw, Users, Gauge, Undo2, Redo2 } from "lucide-react";
 

@@ -1,3 +1,5 @@
+"use client";
+
 // Idiom data — 60 curated English idioms across categories and difficulty levels
 export const IDIOMS = [
   {

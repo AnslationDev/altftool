@@ -1,3 +1,5 @@
+"use client";
+
 import { Minus, Plus, Trash2, Zap } from "lucide-react";
 import { roomCategories } from "../data/applianceDefaults";
 

@@ -1,0 +1,267 @@
+/* ============ EcoVolt Solar — dark eco-tech lander ============ */
+
+.ecovolt-page {
+  --ev-bg: #06170f;
+  --ev-bg2: #0a2117;
+  --ev-panel: #0d2a1d;
+  --ev-line: rgba(132, 204, 22, 0.22);
+  --ev-lime: #84cc16;
+  --ev-lime-soft: #a3e635;
+  --ev-ink: #e8f5e0;
+  --ev-muted: #9db8a5;
+  --ev-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  background: var(--ev-bg);
+  color: var(--ev-ink);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  line-height: 1.6;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+.ecovolt-page * { box-sizing: border-box; }
+.ecovolt-page a { color: inherit; text-decoration: none; }
+.ecovolt-page img { max-width: 100%; display: block; }
+.ecovolt-wrap { max-width: 1160px; margin: 0 auto; padding: 0 24px; }
+
+/* ---------- energy pulse lines ---------- */
+.ecovolt-track { position: relative; height: 2px; background: var(--ev-line); overflow: hidden; border-radius: 2px; }
+.ecovolt-track::after {
+  content: "";
+  position: absolute; top: 0; left: 0; height: 100%; width: 90px;
+  background: linear-gradient(90deg, transparent, var(--ev-lime), transparent);
+  animation: ecovolt-pulse-run 3.2s linear infinite;
+}
+.ecovolt-track--slow::after { animation-duration: 5.5s; }
+@keyframes ecovolt-pulse-run {
+  from { transform: translateX(-120px); }
+  to   { transform: translateX(calc(100vw + 120px)); }
+}
+@keyframes ecovolt-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.25; }
+}
+@keyframes ecovolt-rise {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes ecovolt-band-sweep {
+  from { transform: translateX(-100%); }
+  to   { transform: translateX(100%); }
+}
+
+/* ---------- circuit nodes on section corners ---------- */
+.ecovolt-section { position: relative; padding: 88px 0; }
+.ecovolt-node {
+  position: absolute; width: 8px; height: 8px; border-radius: 50%;
+  background: var(--ev-bg); border: 2px solid var(--ev-lime);
+  box-shadow: 0 0 10px rgba(132, 204, 22, 0.55);
+  animation: ecovolt-blink 4s ease-in-out infinite;
+}
+.ecovolt-node--tl { top: 0; left: 24px; }
+.ecovolt-node--tr { top: 0; right: 24px; animation-delay: 1.3s; }
+.ecovolt-node--br { bottom: 0; right: 24px; animation-delay: 2.1s; }
+
+/* ---------- nav ---------- */
+.ecovolt-nav {
+  position: sticky; top: 0; z-index: 50;
+  background: rgba(6, 23, 15, 0.92);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--ev-line);
+}
+.ecovolt-nav-inner {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 16px; padding: 14px 24px; max-width: 1160px; margin: 0 auto;
+}
+.ecovolt-logo { display: inline-flex; align-items: center; gap: 10px; font-weight: 800; font-size: 1.15rem; letter-spacing: 0.02em; }
+.ecovolt-logo-badge { display: grid; place-items: center; width: 34px; height: 34px; border-radius: 9px; background: var(--ev-lime); color: #06170f; }
+.ecovolt-logo em { color: var(--ev-lime); font-style: normal; }
+.ecovolt-nav-links { display: flex; align-items: center; gap: 26px; }
+.ecovolt-nav-links a { font-size: 0.92rem; color: var(--ev-muted); transition: color 0.2s ease; }
+.ecovolt-nav-links a:hover { color: var(--ev-lime-soft); }
+.ecovolt-nav-actions { display: flex; align-items: center; gap: 14px; }
+.ecovolt-nav-phone { display: inline-flex; align-items: center; gap: 8px; font-family: var(--ev-mono); font-size: 0.88rem; color: var(--ev-ink); transition: color 0.2s ease; }
+.ecovolt-nav-phone:hover { color: var(--ev-lime-soft); }
+.ecovolt-menu-btn { display: none; background: none; border: 1px solid var(--ev-line); border-radius: 8px; color: var(--ev-ink); padding: 7px 9px; cursor: pointer; }
+
+/* ---------- buttons ---------- */
+.ecovolt-btn {
+  display: inline-flex; align-items: center; gap: 9px;
+  background: var(--ev-lime); color: #06170f;
+  font-weight: 700; font-size: 0.98rem;
+  padding: 13px 24px; border-radius: 10px;
+  border: 2px solid var(--ev-lime);
+  transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+}
+.ecovolt-btn:hover {
+  background: var(--ev-lime-soft); border-color: var(--ev-lime-soft);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(132, 204, 22, 0.35);
+}
+.ecovolt-btn--ghost { background: transparent; color: var(--ev-ink); border-color: rgba(132, 204, 22, 0.5); }
+.ecovolt-btn--ghost:hover { background: rgba(132, 204, 22, 0.12); color: var(--ev-lime-soft); box-shadow: none; }
+.ecovolt-btn--sm { padding: 9px 16px; font-size: 0.88rem; }
+.ecovolt-page a:focus-visible,
+.ecovolt-page button:focus-visible,
+.ecovolt-page summary:focus-visible {
+  outline: 3px solid var(--ev-lime-soft);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+/* ---------- hero ---------- */
+.ecovolt-hero { padding: 72px 0 88px; position: relative; }
+.ecovolt-hero-grid { display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 56px; align-items: center; }
+.ecovolt-kicker {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: var(--ev-mono); font-size: 0.78rem;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--ev-lime); border: 1px solid var(--ev-line);
+  padding: 6px 14px; border-radius: 999px;
+  background: rgba(132, 204, 22, 0.07);
+}
+.ecovolt-hero h1 { font-size: clamp(2.1rem, 4.6vw, 3.4rem); line-height: 1.12; font-weight: 800; margin: 20px 0 18px; letter-spacing: -0.01em; }
+.ecovolt-hero h1 span { color: var(--ev-lime); }
+.ecovolt-hero-sub { color: var(--ev-muted); font-size: 1.08rem; max-width: 34rem; margin: 0 0 30px; }
+.ecovolt-hero-ctas { display: flex; flex-wrap: wrap; gap: 14px; margin-bottom: 34px; }
+.ecovolt-hero-figure { position: relative; margin: 0; animation: ecovolt-rise 0.7s ease both; }
+.ecovolt-img-frame { position: relative; overflow: hidden; border-radius: 16px; border: 1px solid var(--ev-line); aspect-ratio: 4 / 3; background: var(--ev-bg2); }
+.ecovolt-img-frame img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
+.ecovolt-img-frame::after {
+  content: "";
+  position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(160deg, rgba(6, 23, 15, 0.42), rgba(132, 204, 22, 0.14));
+  mix-blend-mode: multiply;
+}
+.ecovolt-img-frame:hover img { transform: scale(1.04); }
+.ecovolt-readout {
+  position: absolute; left: 18px; bottom: 18px; z-index: 2;
+  background: rgba(6, 23, 15, 0.9);
+  border: 1px solid var(--ev-line); border-radius: 12px;
+  padding: 14px 18px; font-family: var(--ev-mono);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.45);
+}
+.ecovolt-readout-label { font-size: 0.68rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ev-muted); display: flex; align-items: center; gap: 7px; }
+.ecovolt-readout-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--ev-lime); animation: ecovolt-blink 1.6s ease-in-out infinite; }
+.ecovolt-readout-value { font-size: 1.5rem; color: var(--ev-lime-soft); font-weight: 700; margin-top: 4px; }
+.ecovolt-readout-value small { font-size: 0.82rem; color: var(--ev-muted); font-weight: 400; }
+
+/* ---------- stat band ---------- */
+.ecovolt-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; }
+.ecovolt-stat {
+  background: var(--ev-panel); border: 1px solid var(--ev-line);
+  border-radius: 14px; padding: 22px 20px; font-family: var(--ev-mono);
+  transition: border-color 0.2s ease, transform 0.2s ease;
+}
+.ecovolt-stat:hover { border-color: rgba(132, 204, 22, 0.55); transform: translateY(-3px); }
+.ecovolt-stat-num { font-size: 1.7rem; font-weight: 700; color: var(--ev-lime); }
+.ecovolt-stat-cap { font-size: 0.78rem; color: var(--ev-muted); margin-top: 6px; letter-spacing: 0.05em; }
+
+/* ---------- section headers ---------- */
+.ecovolt-head { max-width: 40rem; margin-bottom: 48px; }
+.ecovolt-head h2 { font-size: clamp(1.6rem, 3vw, 2.3rem); font-weight: 800; margin: 14px 0 12px; }
+.ecovolt-head p { color: var(--ev-muted); margin: 0; }
+
+/* ---------- feature cards ---------- */
+.ecovolt-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+.ecovolt-card {
+  background: var(--ev-panel); border: 1px solid var(--ev-line);
+  border-radius: 16px; overflow: hidden;
+  transition: transform 0.22s ease, border-color 0.22s ease, box-shadow 0.22s ease;
+}
+.ecovolt-card:hover { transform: translateY(-5px); border-color: rgba(132, 204, 22, 0.55); box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4); }
+.ecovolt-card-media { aspect-ratio: 16 / 10; overflow: hidden; position: relative; }
+.ecovolt-card-media img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
+.ecovolt-card-media::after {
+  content: "";
+  position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(180deg, rgba(132, 204, 22, 0.1), rgba(6, 23, 15, 0.45));
+  mix-blend-mode: multiply;
+}
+.ecovolt-card:hover .ecovolt-card-media img { transform: scale(1.06); }
+.ecovolt-card-body { padding: 22px; }
+.ecovolt-card-body h3 { display: flex; align-items: center; gap: 10px; font-size: 1.12rem; margin: 0 0 10px; color: var(--ev-ink); }
+.ecovolt-card-body h3 svg { color: var(--ev-lime); flex-shrink: 0; }
+.ecovolt-card-body p { color: var(--ev-muted); font-size: 0.94rem; margin: 0; }
+
+/* ---------- process ---------- */
+.ecovolt-steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+.ecovolt-step { position: relative; background: var(--ev-bg2); border: 1px solid var(--ev-line); border-radius: 14px; padding: 26px 20px 22px; transition: border-color 0.2s ease; }
+.ecovolt-step:hover { border-color: rgba(132, 204, 22, 0.55); }
+.ecovolt-step-idx { font-family: var(--ev-mono); font-size: 0.75rem; color: var(--ev-lime); letter-spacing: 0.16em; margin-bottom: 12px; }
+.ecovolt-step h3 { font-size: 1.02rem; margin: 0 0 8px; }
+.ecovolt-step p { font-size: 0.9rem; color: var(--ev-muted); margin: 0; }
+
+/* ---------- split (monitoring) ---------- */
+.ecovolt-split { display: grid; grid-template-columns: 1fr 1fr; gap: 52px; align-items: center; }
+.ecovolt-split-list { list-style: none; margin: 26px 0 32px; padding: 0; display: grid; gap: 14px; }
+.ecovolt-split-list li { display: flex; gap: 12px; align-items: flex-start; color: var(--ev-muted); }
+.ecovolt-split-list svg { color: var(--ev-lime); flex-shrink: 0; margin-top: 3px; }
+.ecovolt-split-list strong { color: var(--ev-ink); font-weight: 600; }
+
+/* ---------- CTA bands ---------- */
+.ecovolt-band {
+  position: relative;
+  background: linear-gradient(120deg, var(--ev-bg2), var(--ev-panel));
+  border: 1px solid var(--ev-line); border-radius: 20px;
+  padding: 48px 44px; overflow: hidden;
+  display: flex; flex-wrap: wrap; align-items: center;
+  justify-content: space-between; gap: 26px;
+}
+.ecovolt-band::before {
+  content: "";
+  position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, transparent, var(--ev-lime), transparent);
+  animation: ecovolt-band-sweep 4s linear infinite;
+}
+.ecovolt-band h2 { font-size: clamp(1.4rem, 2.6vw, 2rem); margin: 0 0 8px; }
+.ecovolt-band p { color: var(--ev-muted); margin: 0; max-width: 32rem; }
+.ecovolt-band-actions { display: flex; flex-wrap: wrap; gap: 14px; }
+
+/* ---------- FAQ ---------- */
+.ecovolt-faq { max-width: 46rem; }
+.ecovolt-faq details { border: 1px solid var(--ev-line); border-radius: 12px; background: var(--ev-bg2); margin-bottom: 12px; transition: border-color 0.2s ease; }
+.ecovolt-faq details:hover { border-color: rgba(132, 204, 22, 0.5); }
+.ecovolt-faq summary { cursor: pointer; padding: 18px 22px; font-weight: 600; list-style: none; display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+.ecovolt-faq summary::-webkit-details-marker { display: none; }
+.ecovolt-faq summary::after { content: "+"; font-family: var(--ev-mono); color: var(--ev-lime); font-size: 1.2rem; transition: transform 0.2s ease; }
+.ecovolt-faq details[open] summary::after { transform: rotate(45deg); }
+.ecovolt-faq details p { padding: 0 22px 18px; margin: 0; color: var(--ev-muted); font-size: 0.95rem; }
+
+/* ---------- footer ---------- */
+.ecovolt-footer { border-top: 1px solid var(--ev-line); padding: 44px 0 36px; background: #04110b; }
+.ecovolt-footer-grid { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 20px; margin-bottom: 26px; }
+.ecovolt-footer a { color: var(--ev-muted); transition: color 0.2s ease; }
+.ecovolt-footer a:hover { color: var(--ev-lime-soft); }
+.ecovolt-footer-note { font-family: var(--ev-mono); font-size: 0.72rem; color: #5f7a68; letter-spacing: 0.04em; }
+
+/* ---------- responsive ---------- */
+@media (max-width: 880px) {
+  .ecovolt-nav-links {
+    display: none;
+    position: absolute; top: 100%; left: 0; right: 0;
+    flex-direction: column; align-items: flex-start;
+    background: rgba(6, 23, 15, 0.98);
+    border-bottom: 1px solid var(--ev-line);
+    padding: 18px 24px; gap: 16px;
+  }
+  .ecovolt-nav-links--open { display: flex; }
+  .ecovolt-menu-btn { display: inline-flex; }
+  .ecovolt-nav-phone span { display: none; }
+  .ecovolt-hero { padding: 48px 0 64px; }
+  .ecovolt-hero-grid, .ecovolt-split { grid-template-columns: 1fr; gap: 36px; }
+  .ecovolt-stats { grid-template-columns: repeat(2, 1fr); }
+  .ecovolt-cards { grid-template-columns: 1fr; }
+  .ecovolt-steps { grid-template-columns: 1fr 1fr; }
+  .ecovolt-section { padding: 60px 0; }
+  .ecovolt-band { padding: 34px 26px; }
+}
+@media (max-width: 520px) {
+  .ecovolt-steps { grid-template-columns: 1fr; }
+  .ecovolt-stats { grid-template-columns: 1fr; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ecovolt-page *, .ecovolt-page *::before, .ecovolt-page *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

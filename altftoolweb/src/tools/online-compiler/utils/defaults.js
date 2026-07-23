@@ -1,3 +1,5 @@
+"use client";
+
 export const STORAGE_KEYS = {
   current: "oc.current",
   projects: "oc.projects",

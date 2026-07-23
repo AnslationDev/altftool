@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState, useEffect } from "react";
 import { X, Lock, Unlock } from "lucide-react";
 import { MOODS, INTENSITY_LEVELS } from "../constants/index";

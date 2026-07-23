@@ -1,3 +1,5 @@
+"use client";
+
 import { cartoonStyles } from "../constants/styles";
 import {
   Paintbrush, Sparkles, BookOpen, PenTool, Pencil,

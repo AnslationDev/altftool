@@ -1,3 +1,5 @@
+"use client";
+
 // App.jsx (The new, simplified file)
 import React, { useState, useEffect, useRef } from "react";
 import {

@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState, useRef } from "react";
 import {
   RotateCcw, Shuffle, Undo2, Trophy, Star, Settings, Gem,

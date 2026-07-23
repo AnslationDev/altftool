@@ -1,0 +1,219 @@
+/* LegacyWills — heritage parchment marketing lander. Every class is prefixed "legacywills-". */
+
+html:has(.legacywills-page) { scroll-behavior: smooth; }
+
+.legacywills-page {
+  --lw-cream: #f8f3e7; --lw-parchment: #f2ead7; --lw-paper: #fdfaf1;
+  --lw-green: #1e4634; --lw-green-deep: #142f23; --lw-green-soft: #38634d;
+  --lw-red: #a33327; --lw-red-deep: #7f2318;
+  --lw-ink: #27362e; --lw-muted: #55635a; --lw-line: rgba(30, 70, 52, 0.28);
+  font-family: Georgia, "Iowan Old Style", "Palatino Linotype", "Book Antiqua", "Times New Roman", serif;
+  background:
+    radial-gradient(circle at 10% 0%, rgba(163, 51, 39, 0.05), transparent 32%),
+    radial-gradient(circle at 92% 96%, rgba(30, 70, 52, 0.07), transparent 42%),
+    var(--lw-cream);
+  color: var(--lw-ink);
+  line-height: 1.65;
+}
+
+.legacywills-page h1, .legacywills-page h2, .legacywills-page h3 { color: var(--lw-green); line-height: 1.18; font-weight: 700; }
+.legacywills-page img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.legacywills-page a:focus-visible, .legacywills-page button:focus-visible { outline: 3px solid var(--lw-red); outline-offset: 3px; border-radius: 4px; }
+
+.legacywills-wrap { max-width: 1120px; margin: 0 auto; padding: 0 24px; }
+.legacywills-eyebrow { text-transform: uppercase; letter-spacing: 0.2em; font-size: 0.78rem; font-weight: 700; color: var(--lw-red); margin-bottom: 12px; }
+
+.legacywills-sec-head { max-width: 660px; margin: 0 auto 48px; text-align: center; padding-bottom: 22px; border-bottom: 3px double var(--lw-line); }
+.legacywills-sec-head h2 { font-size: clamp(1.7rem, 3.4vw, 2.35rem); }
+.legacywills-sec-head p:last-child { color: var(--lw-muted); margin-top: 10px; }
+
+/* Buttons */
+.legacywills-btn {
+  display: inline-flex; align-items: center; gap: 10px; padding: 14px 26px;
+  border-radius: 4px; font-family: inherit; font-size: 1rem; font-weight: 700;
+  letter-spacing: 0.02em; text-decoration: none; border: 1px solid transparent;
+  transition: transform 0.18s ease, box-shadow 0.18s ease, background-color 0.18s ease;
+}
+.legacywills-btn--primary { background: var(--lw-red); color: #fdf6ea; box-shadow: 0 2px 0 var(--lw-red-deep), 0 10px 22px rgba(163, 51, 39, 0.22); }
+.legacywills-btn--primary:hover { background: var(--lw-red-deep); transform: translateY(-2px); box-shadow: 0 4px 0 #5e1a12, 0 14px 26px rgba(163, 51, 39, 0.3); }
+.legacywills-btn--cream { background: var(--lw-paper); color: var(--lw-green); box-shadow: 0 2px 0 rgba(20, 47, 35, 0.55), 0 10px 22px rgba(0, 0, 0, 0.22); }
+.legacywills-btn--cream:hover { transform: translateY(-2px); background: #fff; }
+
+/* Nav */
+.legacywills-nav {
+  position: sticky; top: 0; z-index: 40; background: rgba(248, 243, 231, 0.92);
+  backdrop-filter: blur(8px); border-bottom: 1px solid transparent;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.legacywills-nav--scrolled { border-bottom-color: var(--lw-line); box-shadow: 0 8px 24px rgba(30, 70, 52, 0.08); }
+.legacywills-nav-inner { display: flex; align-items: center; gap: 20px; padding-top: 14px; padding-bottom: 14px; }
+.legacywills-brand { display: inline-flex; align-items: center; gap: 12px; text-decoration: none; margin-right: auto; }
+.legacywills-brand-seal {
+  width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center;
+  font-size: 0.85rem; font-weight: 700; letter-spacing: 0.04em; color: #f8e9dc;
+  background: radial-gradient(circle at 32% 28%, #c1503f, var(--lw-red) 58%, var(--lw-red-deep));
+  box-shadow: inset 0 0 0 2px rgba(248, 233, 220, 0.35), 0 3px 8px rgba(127, 35, 24, 0.35);
+  transform: rotate(-8deg);
+}
+.legacywills-brand-name { font-size: 1.3rem; font-weight: 700; color: var(--lw-green); letter-spacing: 0.01em; }
+.legacywills-nav-links { display: flex; gap: 26px; }
+.legacywills-nav-links a {
+  color: var(--lw-ink); text-decoration: none; font-size: 0.98rem; padding: 4px 0;
+  border-bottom: 2px solid transparent; transition: border-color 0.18s ease, color 0.18s ease;
+}
+.legacywills-nav-links a:hover { color: var(--lw-red); border-bottom-color: var(--lw-red); }
+.legacywills-nav-cta { display: flex; align-items: center; gap: 16px; }
+.legacywills-phone-link { display: inline-flex; align-items: center; gap: 8px; color: var(--lw-green); font-weight: 700; font-size: 1.02rem; text-decoration: none; transition: color 0.18s ease; }
+.legacywills-phone-link:hover { color: var(--lw-red); }
+
+/* Hero */
+.legacywills-hero-inner { display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 56px; align-items: center; padding-top: 72px; padding-bottom: 76px; }
+.legacywills-hero-copy { animation: legacywills-fade-up 0.7s ease both; }
+.legacywills-hero-copy h1 { font-size: clamp(2.1rem, 4.4vw, 3.2rem); margin-bottom: 20px; }
+.legacywills-hero-lede { font-size: 1.13rem; color: var(--lw-muted); max-width: 34em; margin-bottom: 30px; }
+.legacywills-hero-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 22px; margin-bottom: 28px; }
+.legacywills-hero-phone { display: inline-flex; align-items: center; gap: 12px; text-decoration: none; color: var(--lw-green); }
+.legacywills-hero-phone small { display: block; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--lw-muted); }
+.legacywills-hero-phone strong { font-size: 1.35rem; letter-spacing: 0.01em; transition: color 0.18s ease; }
+.legacywills-hero-phone:hover strong { color: var(--lw-red); }
+.legacywills-hero-points { list-style: none; margin: 0; padding: 18px 0 0; border-top: 3px double var(--lw-line); display: grid; gap: 10px; }
+.legacywills-hero-points li { display: flex; align-items: baseline; gap: 10px; }
+.legacywills-hero-points svg { color: var(--lw-red); flex: none; transform: translateY(2px); }
+.legacywills-hero-media { position: relative; animation: legacywills-fade-up 0.7s ease 0.15s both; }
+.legacywills-hero-frame { margin: 0; padding: 10px; background: var(--lw-paper); border: 3px double var(--lw-line); box-shadow: 0 24px 48px rgba(30, 70, 52, 0.16); }
+.legacywills-hero-frame > .legacywills-figure { aspect-ratio: 4 / 4.6; }
+.legacywills-figure { position: relative; overflow: hidden; }
+
+/* Wax seal */
+.legacywills-seal {
+  position: absolute; bottom: -34px; left: -30px; width: 118px; height: 118px;
+  border-radius: 50%; display: grid; place-content: center; text-align: center; gap: 2px; color: #f8e9dc;
+  background: radial-gradient(circle at 32% 26%, #c85643, var(--lw-red) 55%, var(--lw-red-deep) 92%);
+  box-shadow: inset 0 0 0 3px rgba(248, 233, 220, 0.32), inset 0 0 0 9px rgba(127, 35, 24, 0.38), 0 14px 28px rgba(127, 35, 24, 0.38);
+  animation: legacywills-seal-bob 6s ease-in-out infinite;
+}
+.legacywills-seal-mono { font-size: 1.9rem; font-weight: 700; letter-spacing: 0.06em; text-shadow: 0 1px 0 rgba(94, 26, 18, 0.6); }
+.legacywills-seal-text { font-size: 0.5rem; text-transform: uppercase; letter-spacing: 0.22em; opacity: 0.85; max-width: 82px; }
+
+/* Credibility strip */
+.legacywills-strip { background: var(--lw-green); color: #ecf2ea; padding: 34px 0; }
+.legacywills-strip-inner { display: grid; grid-template-columns: repeat(3, 1fr); gap: 34px; }
+.legacywills-strip-item { display: flex; gap: 14px; align-items: flex-start; }
+.legacywills-strip-item svg { color: #e5c07b; flex: none; margin-top: 3px; }
+.legacywills-strip-item h3 { color: #f6f1e2; font-size: 1.02rem; margin-bottom: 4px; }
+.legacywills-strip-item p { font-size: 0.92rem; color: rgba(236, 242, 234, 0.78); }
+
+/* Document checklist */
+.legacywills-docs { padding: 84px 0; }
+.legacywills-doc-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 26px; }
+.legacywills-doc-card { background: var(--lw-paper); border: 3px double var(--lw-line); padding: 30px 28px; transition: transform 0.2s ease, box-shadow 0.2s ease; }
+.legacywills-doc-card:hover { transform: translateY(-5px); box-shadow: 0 18px 36px rgba(30, 70, 52, 0.14); }
+.legacywills-doc-icon { width: 48px; height: 48px; border-radius: 50%; display: grid; place-items: center; color: var(--lw-paper); background: var(--lw-green); margin-bottom: 16px; }
+.legacywills-doc-card h3 { font-size: 1.25rem; margin-bottom: 8px; }
+.legacywills-doc-card > p { color: var(--lw-muted); margin-bottom: 16px; }
+.legacywills-doc-points { list-style: none; margin: 0; padding: 14px 0 0; border-top: 1px solid var(--lw-line); display: grid; gap: 8px; }
+.legacywills-doc-points li { display: flex; align-items: baseline; gap: 9px; font-size: 0.96rem; }
+.legacywills-doc-points svg { color: var(--lw-red); flex: none; transform: translateY(2px); }
+
+/* CTA bands */
+.legacywills-band {
+  background: linear-gradient(135deg, var(--lw-green-deep), var(--lw-green) 60%); color: #f2efe2; padding: 58px 0;
+  border-top: 3px double rgba(229, 192, 123, 0.4); border-bottom: 3px double rgba(229, 192, 123, 0.4);
+}
+.legacywills-band-inner { display: flex; align-items: center; justify-content: space-between; gap: 40px; flex-wrap: wrap; }
+.legacywills-band h2 { color: #f8f3e7; font-size: clamp(1.5rem, 3vw, 2.1rem); margin-bottom: 8px; }
+.legacywills-band p { color: rgba(242, 239, 226, 0.82); max-width: 34em; }
+.legacywills-band-cta { display: flex; flex-direction: column; align-items: flex-start; gap: 16px; }
+.legacywills-band-phone {
+  display: inline-flex; align-items: center; gap: 12px; color: #f8f3e7; text-decoration: none;
+  font-size: clamp(1.6rem, 3vw, 2.2rem); font-weight: 700; letter-spacing: 0.01em; transition: color 0.18s ease;
+}
+.legacywills-band-phone svg { color: #e5c07b; }
+.legacywills-band-phone:hover { color: #e5c07b; }
+.legacywills-band--final { text-align: center; }
+.legacywills-band--final .legacywills-band-cta { align-items: center; margin: 26px auto 0; }
+.legacywills-band--final p { margin: 0 auto; }
+.legacywills-band-note { font-size: 0.88rem; letter-spacing: 0.06em; text-transform: uppercase; color: rgba(242, 239, 226, 0.66); }
+
+/* Chapters (image cards) */
+.legacywills-chapters { padding: 84px 0; }
+.legacywills-chapter-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 26px; }
+.legacywills-chapter-card { background: var(--lw-paper); border: 3px double var(--lw-line); overflow: hidden; transition: transform 0.2s ease, box-shadow 0.2s ease; }
+.legacywills-chapter-card:hover { transform: translateY(-5px); box-shadow: 0 18px 36px rgba(30, 70, 52, 0.14); }
+.legacywills-chapter-figure { margin: 0; aspect-ratio: 4 / 3; overflow: hidden; border-bottom: 1px solid var(--lw-line); }
+.legacywills-chapter-figure img { transition: transform 0.35s ease; }
+.legacywills-chapter-card:hover .legacywills-chapter-figure img { transform: scale(1.05); }
+.legacywills-chapter-body { padding: 22px 24px 26px; }
+.legacywills-chapter-body h3 { font-size: 1.18rem; margin-bottom: 6px; }
+.legacywills-chapter-body p { color: var(--lw-muted); font-size: 0.97rem; }
+
+/* Split / process */
+.legacywills-split { padding: 10px 0 84px; }
+.legacywills-split-inner { display: grid; grid-template-columns: 0.92fr 1.08fr; gap: 56px; align-items: center; }
+.legacywills-split-media { margin: 0; padding: 10px; background: var(--lw-paper); border: 3px double var(--lw-line); box-shadow: 0 24px 48px rgba(30, 70, 52, 0.14); }
+.legacywills-split-media .legacywills-figure { aspect-ratio: 4 / 5; }
+.legacywills-split-copy h2 { font-size: clamp(1.7rem, 3.2vw, 2.3rem); margin-bottom: 24px; }
+.legacywills-steps { list-style: none; margin: 0 0 30px; padding: 0; display: grid; gap: 20px; }
+.legacywills-steps li { display: flex; gap: 18px; align-items: flex-start; padding-bottom: 20px; border-bottom: 1px solid var(--lw-line); }
+.legacywills-steps li:last-child { border-bottom: 0; padding-bottom: 0; }
+.legacywills-step-num { font-size: 1.5rem; font-weight: 700; color: var(--lw-red); line-height: 1; min-width: 2.2ch; }
+.legacywills-steps h3 { font-size: 1.12rem; margin-bottom: 4px; }
+.legacywills-steps p { color: var(--lw-muted); font-size: 0.97rem; }
+.legacywills-split-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 22px; }
+
+/* FAQ */
+.legacywills-faq { padding: 0 0 84px; }
+.legacywills-faq-list { max-width: 760px; margin: 0 auto; display: grid; gap: 14px; }
+.legacywills-faq-item { background: var(--lw-paper); border: 3px double var(--lw-line); }
+.legacywills-faq-q { margin: 0; }
+.legacywills-faq-q button {
+  width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  padding: 18px 22px; background: none; border: 0; cursor: pointer; font: inherit; font-weight: 700;
+  font-size: 1.05rem; color: var(--lw-green); text-align: left; transition: color 0.18s ease;
+}
+.legacywills-faq-q button:hover { color: var(--lw-red); }
+.legacywills-faq-q svg { flex: none; transition: transform 0.2s ease; }
+.legacywills-faq-item--open .legacywills-faq-q svg { transform: rotate(180deg); }
+.legacywills-faq-a { padding: 0 22px 20px; color: var(--lw-muted); animation: legacywills-fade-up 0.25s ease both; }
+
+/* Footer */
+.legacywills-footer { background: var(--lw-green-deep); color: rgba(236, 242, 234, 0.82); padding: 56px 0 36px; }
+.legacywills-footer-grid { display: flex; justify-content: space-between; gap: 40px; flex-wrap: wrap; padding-bottom: 30px; border-bottom: 3px double rgba(236, 242, 234, 0.25); }
+.legacywills-footer-brand { max-width: 380px; }
+.legacywills-footer-brand .legacywills-brand-name { color: #f8f3e7; }
+.legacywills-footer-brand p { margin-top: 14px; font-size: 0.95rem; }
+.legacywills-footer-contact { display: flex; flex-direction: column; align-items: flex-start; gap: 12px; }
+.legacywills-footer-contact .legacywills-phone-link { color: #f8f3e7; font-size: 1.3rem; }
+.legacywills-footer-contact .legacywills-phone-link:hover { color: #e5c07b; }
+.legacywills-footer-legal { padding-top: 24px; font-size: 0.85rem; color: rgba(236, 242, 234, 0.6); display: grid; gap: 8px; }
+
+/* Keyframes & motion */
+@keyframes legacywills-fade-up {
+  from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes legacywills-seal-bob {
+  0%, 100% { transform: rotate(-8deg) translateY(0); }
+  50% { transform: rotate(-5deg) translateY(-7px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .legacywills-page *, .legacywills-page *::before, .legacywills-page *::after {
+    animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important;
+  }
+}
+
+/* Responsive */
+@media (max-width: 880px) {
+  .legacywills-nav-links { display: none; }
+  .legacywills-hero-inner { grid-template-columns: 1fr; gap: 60px; padding-top: 48px; padding-bottom: 56px; }
+  .legacywills-seal { left: auto; right: -10px; bottom: -30px; }
+  .legacywills-strip-inner, .legacywills-doc-grid, .legacywills-chapter-grid, .legacywills-split-inner { grid-template-columns: 1fr; }
+  .legacywills-split-media .legacywills-figure { aspect-ratio: 16 / 10; }
+  .legacywills-band-inner { flex-direction: column; align-items: flex-start; }
+  .legacywills-docs, .legacywills-chapters { padding: 64px 0; }
+}
+@media (max-width: 560px) {
+  .legacywills-nav-cta .legacywills-phone-link span { display: none; }
+  .legacywills-btn { padding: 13px 20px; font-size: 0.95rem; }
+  .legacywills-hero-frame > .legacywills-figure { aspect-ratio: 4 / 4; }
+}

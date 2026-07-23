@@ -1,24 +1,18 @@
+"use client";
+
 import React, { useEffect, useRef, useState, useCallback } from 'react';
 import { Play, RotateCcw, ArrowUp, ArrowDown, Trophy, Gauge } from 'lucide-react';
 
-/**
- * DINO RUN — a polished, React-native reimagining of the classic
- * offline runner. Canvas handles the game simulation; everything
- * around it (scoreboard, overlays, controls) is real React/DOM
- * so it can be themed, animated and made accessible properly.
- */
-
 // ---- Virtual game-space constants ------------------------------------------------
-const VW = 800, VH = 300, GY = VH - 4; // ground line
+const VW = 800, VH = 300, GY = VH - 4;
 const JUMP_V = -640, GRAV = 2300, DINO_X = 80;
 
-// Desert palette — deep teal ink against a warm sand gradient, amber for hazards.
 const INK = '#0d4a4a';
 const ACCENT = '#c2660a';
 const PANEL_A = '#fbf6ea';
 const PANEL_B = '#f2e6cf';
-const CLOUD = '#cfe6e3';
-const GMARK = '#a9c7c4';
+const CLOUD_CLR = '#cfe6e3';
+const GMARK_CLR = '#a9c7c4';
 
 const CACTI = [
   [{ rx: 4, ry: 0, rw: 10, rh: 36 }, { rx: 0, ry: 10, rw: 6, rh: 8 }, { rx: 14, ry: 12, rw: 6, rh: 8 }],
@@ -36,58 +30,32 @@ export default function DinoRun() {
   const canvasRef = useRef(null);
   const rafRef = useRef(null);
   const lastTsRef = useRef(0);
-  const dprRef = useRef(1);
+  const frameCountRef = useRef(0);
 
-  // Mutable simulation state lives in refs so the game loop never depends on
-  // stale React closures or triggers a re-render every frame.
-  const phaseRef = useRef('idle'); // idle | running | dead
-  const scoreRef = useRef(0);
-  const hiScoreRef = useRef(0);
-  const speedRef = useRef(480);
-  const obstaclesRef = useRef([]);
-  const cloudsRef = useRef([]);
-  const gMarksRef = useRef([]);
-  const timersRef = useRef({ obstTimer: 0, obstInterval: 1.4, cloudTimer: 0, gMarkTimer: 0, flashAlpha: 0, lastMile: 0 });
-  const heldRef = useRef({});
-  const duckHeldRef = useRef(false);
-
-  const dinoRef = useRef({
-    y: GY, vy: 0, h: 52, duck: false, ground: true, legPhase: 0, blinkT: 0,
+  // All mutable game state in a single ref object — no stale closure issues
+  const gs = useRef({
+    phase: 'idle',       // idle | running | dead
+    score: 0,
+    hiScore: 0,
+    speed: 480,
+    obstacles: [],
+    clouds: [],
+    gMarks: [],
+    timers: { obstTimer: 0, obstInterval: 1.4, cloudTimer: 0, gMarkTimer: 0, flashAlpha: 0, lastMile: 0 },
+    dino: { y: GY, vy: 0, h: 52, duck: false, ground: true, legPhase: 0, blinkT: 0 },
   });
 
-  // Thin React state — only what the UI actually needs to re-render for.
+  // Thin React state — only for UI re-render
   const [phase, setPhase] = useState('idle');
   const [score, setScore] = useState(0);
   const [hiScore, setHiScore] = useState(0);
   const [speedMult, setSpeedMult] = useState(1);
   const [duckPressed, setDuckPressed] = useState(false);
-  const frameCountRef = useRef(0);
 
-  // ---- Dino behaviour --------------------------------------------------------
-  const doJump = useCallback(() => {
-    const d = dinoRef.current;
-    if (d.ground && !d.duck) { d.vy = JUMP_V; d.ground = false; }
-  }, []);
+  // ---- Drawing helpers (all use gs.current, canvasRef, no closure deps) ----------
 
-  const setDuck = useCallback((on) => {
-    const d = dinoRef.current;
-    d.duck = on;
-    d.h = on ? 34 : 52;
-    setDuckPressed(on);
-  }, []);
-
-  const dinoBox = () => {
-    const d = dinoRef.current;
-    return {
-      x: DINO_X + 10,
-      y: d.y - d.h + (d.duck ? 18 : 8),
-      w: 26,
-      h: d.h - (d.duck ? 22 : 18),
-    };
-  };
-
-  const drawDino = (ctx) => {
-    const d = dinoRef.current;
+  const drawDino = useCallback((ctx) => {
+    const d = gs.current.dino;
     const x = DINO_X, top = d.y - d.h;
     ctx.fillStyle = INK;
 
@@ -122,7 +90,7 @@ export default function DinoRun() {
       }
     }
 
-    if (phaseRef.current === 'dead') {
+    if (gs.current.phase === 'dead') {
       ctx.fillStyle = PANEL_A;
       ctx.fillRect(x + 27, top + 4, 9, 7);
       ctx.strokeStyle = INK; ctx.lineWidth = 2.5; ctx.lineCap = 'round';
@@ -131,25 +99,19 @@ export default function DinoRun() {
       ctx.moveTo(x + 35, top + 5); ctx.lineTo(x + 28, top + 10);
       ctx.stroke();
     }
-  };
+  }, []);
 
-  // ---- Obstacles --------------------------------------------------------------
-  const spawnObst = () => {
-    if (speedRef.current > 800 && Math.random() < 0.28) {
-      const ys = [GY - 60, GY - 110, GY - 165];
-      obstaclesRef.current.push({ type: 'bird', x: VW + 40, y: ys[Math.floor(Math.random() * 3)], wingT: 0, wingUp: true });
-      return;
-    }
-    const parts = CACTI[Math.floor(Math.random() * CACTI.length)];
-    obstaclesRef.current.push({ type: 'cactus', x: VW + 20, parts });
-  };
+  const dinoBox = useCallback(() => {
+    const d = gs.current.dino;
+    return { x: DINO_X + 10, y: d.y - d.h + (d.duck ? 18 : 8), w: 26, h: d.h - (d.duck ? 22 : 18) };
+  }, []);
 
-  const drawCactus = (ctx, o) => {
+  const drawCactus = useCallback((ctx, o) => {
     ctx.fillStyle = ACCENT;
     for (const p of o.parts) ctx.fillRect(o.x + p.rx, GY - p.rh + p.ry, p.rw, p.rh);
-  };
+  }, []);
 
-  const drawBird = (ctx, o) => {
+  const drawBird = useCallback((ctx, o) => {
     const { x, y } = o;
     ctx.fillStyle = INK;
     ctx.fillRect(x + 8, y + 8, 30, 10);
@@ -159,56 +121,97 @@ export default function DinoRun() {
     ctx.fillStyle = PANEL_A; ctx.fillRect(x + 34, y + 3, 6, 5);
     ctx.fillStyle = INK; ctx.fillRect(x + 35, y + 4, 3, 3);
     ctx.fillRect(x + 10, o.wingUp ? y - 3 : y + 18, 22, 9);
-  };
+  }, []);
 
-  const cactusHitbox = (o) => {
+  const cactusHitbox = useCallback((o) => {
     let mh = 0, mw = 0;
     for (const p of o.parts) { if (p.rh > mh) mh = p.rh; if (p.rx + p.rw > mw) mw = p.rx + p.rw; }
     return { x: o.x + 4, y: GY - mh + 4, w: mw - 8, h: mh - 4 };
-  };
-  const birdHitbox = (o) => ({ x: o.x + 8, y: o.y + 2, w: 44, h: 20 });
-
-  const spawnCloud = () => cloudsRef.current.push({ x: VW + 80, y: 20 + Math.random() * 90, w: 70 + Math.random() * 50, h: 18 + Math.random() * 12 });
-  const spawnGMark = () => gMarksRef.current.push({ x: VW, y: GY - 1 - Math.random() * 5, w: 3 + Math.random() * 14, h: 1 + Math.random() * 1.5 });
-
-  // ---- Reset / start / die ------------------------------------------------------
-  const reset = () => {
-    scoreRef.current = 0;
-    speedRef.current = 480;
-    obstaclesRef.current = [];
-    cloudsRef.current = [];
-    gMarksRef.current = [];
-    timersRef.current = { obstTimer: 0, obstInterval: 1.4, cloudTimer: 0, gMarkTimer: 0, flashAlpha: 0, lastMile: 0 };
-    const d = dinoRef.current;
-    d.y = GY; d.vy = 0; d.ground = true; d.legPhase = 0; d.blinkT = 0;
-    setDuck(false);
-    for (let i = 0; i < 3; i++) cloudsRef.current.push({ x: 60 + i * 270, y: 30 + Math.random() * 80, w: 80, h: 22 });
-    setScore(0);
-    setSpeedMult(1);
-  };
-
-  const die = useCallback(() => {
-    phaseRef.current = 'dead';
-    cancelAnimationFrame(rafRef.current);
-    const ctx = canvasRef.current.getContext('2d');
-    drawDino(ctx);
-    if (scoreRef.current > hiScoreRef.current) hiScoreRef.current = scoreRef.current;
-    setHiScore(Math.floor(hiScoreRef.current));
-    setScore(Math.floor(scoreRef.current));
-    setPhase('dead');
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const birdHitbox = useCallback((o) => ({ x: o.x + 8, y: o.y + 2, w: 44, h: 20 }), []);
+
+  const spawnObst = useCallback(() => {
+    const g = gs.current;
+    if (g.speed > 800 && Math.random() < 0.28) {
+      const ys = [GY - 60, GY - 110, GY - 165];
+      g.obstacles.push({ type: 'bird', x: VW + 40, y: ys[Math.floor(Math.random() * 3)], wingT: 0, wingUp: true });
+      return;
+    }
+    const parts = CACTI[Math.floor(Math.random() * CACTI.length)];
+    g.obstacles.push({ type: 'cactus', x: VW + 20, parts });
+  }, []);
+
+  const spawnCloud = useCallback(() => {
+    gs.current.clouds.push({ x: VW + 80, y: 20 + Math.random() * 90, w: 70 + Math.random() * 50, h: 18 + Math.random() * 12 });
+  }, []);
+
+  const spawnGMark = useCallback(() => {
+    gs.current.gMarks.push({ x: VW, y: GY - 1 - Math.random() * 5, w: 3 + Math.random() * 14, h: 1 + Math.random() * 1.5 });
+  }, []);
+
+  // ---- Dino actions --------------------------------------------------------------
+  const doJump = useCallback(() => {
+    const d = gs.current.dino;
+    if (d.ground && !d.duck) { d.vy = JUMP_V; d.ground = false; }
+  }, []);
+
+  const setDuck = useCallback((on) => {
+    const d = gs.current.dino;
+    d.duck = on;
+    d.h = on ? 34 : 52;
+    setDuckPressed(on);
+  }, []);
+
+  // ---- Die / reset / start -------------------------------------------------------
+  const die = useCallback(() => {
+    const g = gs.current;
+    g.phase = 'dead';
+    cancelAnimationFrame(rafRef.current);
+    const canvas = canvasRef.current;
+    if (canvas) {
+      const ctx = canvas.getContext('2d');
+      drawDino(ctx);
+    }
+    if (g.score > g.hiScore) g.hiScore = g.score;
+    setHiScore(Math.floor(g.hiScore));
+    setScore(Math.floor(g.score));
+    setPhase('dead');
+  }, [drawDino]);
+
+  const reset = useCallback(() => {
+    const g = gs.current;
+    g.score = 0;
+    g.speed = 480;
+    g.obstacles = [];
+    g.clouds = [];
+    g.gMarks = [];
+    g.timers = { obstTimer: 0, obstInterval: 1.4, cloudTimer: 0, gMarkTimer: 0, flashAlpha: 0, lastMile: 0 };
+    const d = g.dino;
+    d.y = GY; d.vy = 0; d.ground = true; d.legPhase = 0; d.blinkT = 0; d.duck = false; d.h = 52;
+    setDuck(false);
+    for (let i = 0; i < 3; i++) {
+      g.clouds.push({ x: 60 + i * 270, y: 30 + Math.random() * 80, w: 80, h: 22 });
+    }
+    setScore(0);
+    setSpeedMult(1);
+  }, [setDuck]);
+
+  // ---- Main game loop ------------------------------------------------------------
   const loop = useCallback((ts) => {
-    const ctx = canvasRef.current.getContext('2d');
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    const g = gs.current;
+
     const dt = Math.min((ts - lastTsRef.current) / 1000, 0.05);
     lastTsRef.current = ts;
-    const T = timersRef.current;
+    const T = g.timers;
 
-    scoreRef.current += dt * speedRef.current / 8;
-    speedRef.current = Math.min(480 + Math.floor(scoreRef.current / 180) * 28, 1200);
+    g.score += dt * g.speed / 8;
+    g.speed = Math.min(480 + Math.floor(g.score / 180) * 28, 1200);
 
-    const mile = Math.floor(scoreRef.current / 100) * 100;
+    const mile = Math.floor(g.score / 100) * 100;
     if (mile > 0 && mile !== T.lastMile) { T.lastMile = mile; T.flashAlpha = 0.6; }
     if (T.flashAlpha > 0) T.flashAlpha = Math.max(0, T.flashAlpha - dt * 2.8);
 
@@ -216,7 +219,7 @@ export default function DinoRun() {
     if (T.obstTimer >= T.obstInterval) {
       spawnObst();
       T.obstTimer = 0;
-      T.obstInterval = Math.max(0.52, 0.88 + Math.random() * 1.1 - Math.min(0.38, scoreRef.current / 5000));
+      T.obstInterval = Math.max(0.52, 0.88 + Math.random() * 1.1 - Math.min(0.38, g.score / 5000));
     }
     T.cloudTimer += dt;
     if (T.cloudTimer > 2.4) { spawnCloud(); T.cloudTimer = 0; }
@@ -231,12 +234,11 @@ export default function DinoRun() {
     ctx.fillRect(0, 0, VW, VH);
 
     // clouds
-    const clouds = cloudsRef.current;
-    for (let i = clouds.length - 1; i >= 0; i--) {
-      const cl = clouds[i];
-      cl.x -= speedRef.current * 0.24 * dt;
-      if (cl.x + cl.w < 0) { clouds.splice(i, 1); continue; }
-      ctx.fillStyle = CLOUD;
+    for (let i = g.clouds.length - 1; i >= 0; i--) {
+      const cl = g.clouds[i];
+      cl.x -= g.speed * 0.24 * dt;
+      if (cl.x + cl.w < 0) { g.clouds.splice(i, 1); continue; }
+      ctx.fillStyle = CLOUD_CLR;
       ctx.beginPath();
       ctx.ellipse(cl.x + cl.w * 0.5, cl.y, cl.w * 0.5, cl.h * 0.5, 0, 0, Math.PI * 2);
       ctx.ellipse(cl.x + cl.w * 0.3, cl.y + cl.h * 0.1, cl.w * 0.3, cl.h * 0.4, 0, 0, Math.PI * 2);
@@ -245,35 +247,33 @@ export default function DinoRun() {
     }
 
     // ground marks
-    const gMarks = gMarksRef.current;
-    for (let i = gMarks.length - 1; i >= 0; i--) {
-      gMarks[i].x -= speedRef.current * dt;
-      if (gMarks[i].x < -20) { gMarks.splice(i, 1); continue; }
-      ctx.fillStyle = GMARK;
-      ctx.fillRect(gMarks[i].x, gMarks[i].y, gMarks[i].w, gMarks[i].h);
+    for (let i = g.gMarks.length - 1; i >= 0; i--) {
+      g.gMarks[i].x -= g.speed * dt;
+      if (g.gMarks[i].x < -20) { g.gMarks.splice(i, 1); continue; }
+      ctx.fillStyle = GMARK_CLR;
+      ctx.fillRect(g.gMarks[i].x, g.gMarks[i].y, g.gMarks[i].w, g.gMarks[i].h);
     }
 
     ctx.fillStyle = INK;
     ctx.fillRect(0, GY, VW, 2);
 
     // dino physics
-    const d = dinoRef.current;
+    const d = g.dino;
     if (!d.ground) {
       d.vy += GRAV * dt;
       d.y += d.vy * dt;
       if (d.y >= GY) { d.y = GY; d.vy = 0; d.ground = true; }
     }
-    if (d.ground) d.legPhase = (d.legPhase + dt * speedRef.current / 90) % 1;
+    if (d.ground) d.legPhase = (d.legPhase + dt * g.speed / 90) % 1;
     d.blinkT += dt;
     drawDino(ctx);
 
     // obstacles
     const box = dinoBox();
-    const obstacles = obstaclesRef.current;
-    for (let i = obstacles.length - 1; i >= 0; i--) {
-      const o = obstacles[i];
-      o.x -= speedRef.current * dt;
-      if (o.x < -80) { obstacles.splice(i, 1); continue; }
+    for (let i = g.obstacles.length - 1; i >= 0; i--) {
+      const o = g.obstacles[i];
+      o.x -= g.speed * dt;
+      if (o.x < -80) { g.obstacles.splice(i, 1); continue; }
       if (o.type === 'cactus') {
         drawCactus(ctx, o);
         if (overlap(box, cactusHitbox(o))) { die(); return; }
@@ -290,41 +290,42 @@ export default function DinoRun() {
       ctx.fillRect(0, 0, VW, VH);
     }
 
-    // throttle React state sync so the DOM doesn't repaint 60x/sec
+    // Throttle React state sync
     frameCountRef.current++;
     if (frameCountRef.current % 3 === 0) {
-      setScore(Math.floor(scoreRef.current));
-      setSpeedMult(Number((speedRef.current / 480).toFixed(1)));
+      setScore(Math.floor(g.score));
+      setSpeedMult(Number((g.speed / 480).toFixed(1)));
     }
 
     rafRef.current = requestAnimationFrame(loop);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [die]);
+  }, [drawDino, dinoBox, drawCactus, drawBird, cactusHitbox, birdHitbox, spawnObst, spawnCloud, spawnGMark, die]);
 
   const startGame = useCallback(() => {
-    if (phaseRef.current === 'running') return;
+    if (gs.current.phase === 'running') return;
     reset();
-    phaseRef.current = 'running';
+    gs.current.phase = 'running';
     setPhase('running');
     lastTsRef.current = performance.now();
+    frameCountRef.current = 0;
     rafRef.current = requestAnimationFrame(loop);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [loop]);
+  }, [loop, reset]);
 
   const handlePrimary = useCallback(() => {
-    phaseRef.current !== 'running' ? startGame() : doJump();
+    gs.current.phase !== 'running' ? startGame() : doJump();
   }, [startGame, doJump]);
 
-  // ---- Canvas sizing (HiDPI) --------------------------------------------------
+  // ---- Canvas HiDPI setup -------------------------------------------------------
   useEffect(() => {
     const canvas = canvasRef.current;
+    if (!canvas) return;
     const ctx = canvas.getContext('2d');
+
     const setup = () => {
-      dprRef.current = Math.min(window.devicePixelRatio || 1, 3);
-      canvas.width = VW * dprRef.current;
-      canvas.height = VH * dprRef.current;
-      ctx.setTransform(dprRef.current, 0, 0, dprRef.current, 0, 0);
-      // idle-state static render
+      const dpr = Math.min(window.devicePixelRatio || 1, 3);
+      canvas.width = VW * dpr;
+      canvas.height = VH * dpr;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      // Draw idle frame
       const grad = ctx.createLinearGradient(0, 0, 0, VH);
       grad.addColorStop(0, PANEL_A);
       grad.addColorStop(1, PANEL_B);
@@ -334,22 +335,23 @@ export default function DinoRun() {
       ctx.fillRect(0, GY, VW, 2);
       drawDino(ctx);
     };
+
     setup();
     window.addEventListener('resize', setup);
     return () => window.removeEventListener('resize', setup);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [drawDino]);
 
   // ---- Keyboard controls --------------------------------------------------------
   useEffect(() => {
+    const held = {};
     const onKeyDown = (e) => {
-      if (heldRef.current[e.code]) return;
-      heldRef.current[e.code] = true;
+      if (held[e.code]) return;
+      held[e.code] = true;
       if (e.code === 'Space' || e.code === 'ArrowUp') { e.preventDefault(); handlePrimary(); }
-      if (e.code === 'ArrowDown') { e.preventDefault(); if (phaseRef.current === 'running') setDuck(true); }
+      if (e.code === 'ArrowDown') { e.preventDefault(); if (gs.current.phase === 'running') setDuck(true); }
     };
     const onKeyUp = (e) => {
-      heldRef.current[e.code] = false;
+      held[e.code] = false;
       if (e.code === 'ArrowDown') setDuck(false);
     };
     window.addEventListener('keydown', onKeyDown);
@@ -360,15 +362,16 @@ export default function DinoRun() {
     };
   }, [handlePrimary, setDuck]);
 
-  // ---- Canvas pointer + swipe ---------------------------------------------------
+  // ---- Canvas touch/pointer controls -------------------------------------------
   useEffect(() => {
     const canvas = canvasRef.current;
+    if (!canvas) return;
     let swipeY0 = 0;
     const onPointerDown = (e) => { e.preventDefault(); handlePrimary(); };
     const onTouchStart = (e) => { swipeY0 = e.touches[0].clientY; };
     const onTouchEnd = (e) => {
       const dy = e.changedTouches[0].clientY - swipeY0;
-      if (dy < -25 && phaseRef.current === 'running') doJump();
+      if (dy < -25 && gs.current.phase === 'running') doJump();
     };
     canvas.addEventListener('pointerdown', onPointerDown);
     canvas.addEventListener('touchstart', onTouchStart, { passive: true });
@@ -380,6 +383,7 @@ export default function DinoRun() {
     };
   }, [handlePrimary, doJump]);
 
+  // Cleanup on unmount
   useEffect(() => () => cancelAnimationFrame(rafRef.current), []);
 
   const pad5 = (n) => String(n).padStart(5, '0');
@@ -403,7 +407,7 @@ export default function DinoRun() {
         }
       `}</style>
 
-      {/* decorative sun + dunes — signature ambient motion, purely atmospheric */}
+      {/* Decorative ambient elements */}
       <div aria-hidden="true" className="pointer-events-none absolute inset-0 overflow-hidden">
         <div className="dr-sun absolute w-24 h-24 rounded-full" style={{ background: 'radial-gradient(circle, #fbbf5c 0%, #f5a623 60%, transparent 72%)', filter: 'blur(1px)' }} />
         <svg className="absolute bottom-0 left-0 w-full" viewBox="0 0 1200 140" preserveAspectRatio="none" style={{ opacity: 0.35 }}>
@@ -443,20 +447,33 @@ export default function DinoRun() {
               style={{ aspectRatio: `${VW} / ${VH}` }}
             />
             {phase !== 'running' && (
-              <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 text-center px-6" style={{ background: 'linear-gradient(180deg, rgba(251,246,234,0.9), rgba(242,230,207,0.92))' }}>
+              <div
+                className="absolute inset-0 flex flex-col items-center justify-center gap-3 text-center px-6"
+                style={{ background: 'linear-gradient(180deg, rgba(251,246,234,0.9), rgba(242,230,207,0.92))' }}
+              >
                 {phase === 'idle' ? (
                   <>
-                    <div className="dr-pulse w-16 h-16 rounded-2xl bg-teal-800 flex items-center justify-center shadow-lg shadow-teal-900/25">
+                    <button
+                      type="button"
+                      onClick={startGame}
+                      className="dr-pulse w-16 h-16 rounded-2xl bg-teal-800 flex items-center justify-center shadow-lg shadow-teal-900/25 hover:bg-teal-700 transition-colors"
+                      aria-label="Play"
+                    >
                       <Play className="w-7 h-7 text-amber-300 fill-amber-300 ml-1" />
-                    </div>
+                    </button>
                     <h2 className="text-xl sm:text-2xl font-extrabold tracking-[0.2em] text-teal-900">DINO RUN</h2>
                     <p className="text-xs tracking-[0.15em] text-teal-700/70 font-mono">SPACE / TAP TO PLAY</p>
                   </>
                 ) : (
                   <>
-                    <div className="w-16 h-16 rounded-2xl bg-amber-600 flex items-center justify-center shadow-lg shadow-amber-900/25">
+                    <button
+                      type="button"
+                      onClick={startGame}
+                      className="w-16 h-16 rounded-2xl bg-amber-600 flex items-center justify-center shadow-lg shadow-amber-900/25 hover:bg-amber-500 transition-colors"
+                      aria-label="Restart"
+                    >
                       <RotateCcw className="w-7 h-7 text-white" />
-                    </div>
+                    </button>
                     <h2 className="text-xl sm:text-2xl font-extrabold tracking-[0.2em] text-teal-900">GAME OVER</h2>
                     <p className="text-xs tracking-[0.15em] text-teal-700/70 font-mono">SPACE / TAP TO RESTART</p>
                     <div className="mt-1 px-4 py-1.5 rounded-full bg-teal-900/8 text-teal-800 font-mono text-sm font-bold">
@@ -469,7 +486,7 @@ export default function DinoRun() {
           </div>
         </div>
 
-        {/* Controls */}
+        {/* Mobile controls */}
         <div className="flex md:hidden w-full max-w-xl gap-3 mt-4">
           <button
             type="button"
@@ -480,7 +497,7 @@ export default function DinoRun() {
           </button>
           <button
             type="button"
-            onPointerDown={(e) => { e.preventDefault(); if (phaseRef.current === 'running') setDuck(true); }}
+            onPointerDown={(e) => { e.preventDefault(); if (gs.current.phase === 'running') setDuck(true); }}
             onPointerUp={() => setDuck(false)}
             onPointerLeave={() => setDuck(false)}
             onPointerCancel={() => setDuck(false)}
@@ -501,9 +518,7 @@ export default function DinoRun() {
 function StatCard({ label, value, icon, accent, highlight }) {
   const isAmber = accent === 'amber';
   return (
-    <div
-      className={`rounded-xl px-3 py-2.5 border ${highlight ? 'bg-teal-900 border-teal-900' : 'bg-white/70 border-teal-900/10'}`}
-    >
+    <div className={`rounded-xl px-3 py-2.5 border ${highlight ? 'bg-teal-900 border-teal-900' : 'bg-white/70 border-teal-900/10'}`}>
       <div className={`flex items-center gap-1.5 text-[10px] font-bold tracking-widest uppercase ${highlight ? 'text-amber-300' : isAmber ? 'text-amber-700' : 'text-teal-700'}`}>
         {icon}
         {label}

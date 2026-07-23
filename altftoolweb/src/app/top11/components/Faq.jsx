@@ -48,22 +48,22 @@ const FAQ = () => {
             {/* Question */}
             <button
               onClick={() => toggleFAQ(index)}
-              className="w-full flex justify-between items-center 
-                         px-4 sm:px-5 md:px-6 
-                        py-3 sm:py-4 md:py-5 
+              className="w-full flex justify-between items-center
+                         px-4 sm:px-5 md:px-6
+                        py-3 sm:py-4 md:py-5
                          text-left gap-3 sm:gap-4 cursor-pointer"
             >
               <span
-                className="text-sm sm:text-base md:text-lg 
-                             font-semibold text-(--foreground) 
+                className="text-sm sm:text-base md:text-lg
+                             font-semibold text-(--foreground)
                              leading-snug pr-2"
               >
                 {item.question}
               </span>
 
               <span
-                className={`flex-shrink-0 
-             text-base sm:text-lg md:text-xl 
+                className={`flex-shrink-0
+             text-base sm:text-lg md:text-xl
              font-bold transition-all duration-300
              ${
                activeIndex === index
@@ -85,8 +85,8 @@ const FAQ = () => {
             >
               <div
                 className="px-4 sm:px-5 md:px-6
-                            pb-3 sm:pb-4 md:pb-5 
-                            text-xs sm:text-sm md:text-base 
+                            pb-3 sm:pb-4 md:pb-5
+                            text-xs sm:text-sm md:text-base
                             text-(--muted-foreground) leading-relaxed"
               >
                 {item.answer}

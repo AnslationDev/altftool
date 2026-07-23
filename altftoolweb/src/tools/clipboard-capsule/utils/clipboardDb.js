@@ -1,3 +1,5 @@
+"use client";
+
 export const CLIPBOARD_KEY = "altftool_clipboard_capsule_data";
 export const CLIPBOARD_CATEGORIES_KEY = "altftool_clipboard_capsule_categories";
 

@@ -2,9 +2,9 @@ const toolConfig = {
   slug: "factorial-calculator",
   name: "Factorial Calculator",
   category: ["Math"],
-  description: "Calculate the factorial of a given number.",
-  icon: "calculator",
-  iconColor: "text-violet-600",
+  description: "Exact factorial (n!) of a whole number using big integers.",
+  icon: "x",
+  iconColor: "text-rose-600",
 };
 
 export default toolConfig;

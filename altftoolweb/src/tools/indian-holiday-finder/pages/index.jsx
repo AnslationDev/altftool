@@ -553,13 +553,12 @@ export default function IndianHolidayFinder() {
               {calendarCells.map((cell) => (
                 <div
                   key={cell.id}
-                  className={`min-h-14 rounded-lg border p-2 transition-colors sm:min-h-20 ${
-                    cell.empty
+                  className={`min-h-14 rounded-lg border p-2 transition-colors sm:min-h-20 ${cell.empty
                       ? "border-transparent"
                       : cell.markers.length
                         ? "border-blue-400/40 bg-blue-500/10 shadow-sm"
                         : "border-[var(--border)] bg-[var(--background)]"
-                  }`}
+                    }`}
                 >
                   {!cell.empty ? (
                     <>

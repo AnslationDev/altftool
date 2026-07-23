@@ -1,3 +1,5 @@
+"use client";
+
 import { ArrowDown, ArrowLeft, ArrowRight, ArrowUp } from "lucide-react";
 
 const controls = [

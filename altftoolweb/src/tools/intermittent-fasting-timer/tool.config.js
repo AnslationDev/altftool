@@ -1,3 +1,5 @@
+"use client";
+
 const toolConfig = {
   slug: "intermittent-fasting-timer",
   name: "Intermittent Fasting Timer",

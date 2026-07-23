@@ -1,3 +1,5 @@
+"use client";
+
 import { useState } from "react";
 import { Button } from "@altftool/ui";
 import { Hash, Copy, Check, RefreshCw } from "lucide-react";

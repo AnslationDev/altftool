@@ -1,3 +1,5 @@
+"use client";
+
 import { motion } from "framer-motion";
 import { Check, Code2, FileCode2, MousePointerClick, Route, ScrollText } from "lucide-react";
 import ProgressTracker from "./ProgressTracker";

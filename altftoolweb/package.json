@@ -12,13 +12,16 @@
     "predev": "npm run generate:registry",
     "dev": "next dev --webpack",
     "prebuild": "npm run generate:registry",
-    "build": "node scripts/use-patched-next-dependencies.mjs && node ../scripts/run-with-node-memory.mjs next build --webpack && node scripts/prune-amplify-build.mjs && node scripts/check-prerender-size.mjs",
+    "build": "node scripts/use-patched-next-dependencies.mjs && node scripts/run-with-node-memory.mjs next build --webpack && node scripts/prune-amplify-build.mjs && node scripts/check-prerender-size.mjs",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "test:unit": "node --test packages/core/src/seo/*.test.mjs src/platform/seo/generateMetadata.test.mjs src/platform/seo/sanitizeInjectedMarkup.test.mjs src/tools/basic-calculator/lib/evaluateArithmetic.test.mjs src/tools/ludo-multiplayer/engine/gameEngine.test.js src/tools/step-counter/utils/stepDetector.test.mjs src/tools/base64-to-ascii/utils/decodeBase64.test.mjs src/tools/batch-generation-tool/utils/batchEngine.test.mjs",
+    "qa:sitemap": "node scripts/qa-sitemap.mjs",
+    "validate": "npm run lint && npm run test:unit && npm run build"
   },
   "dependencies": {
-    "@altftool/core": "file:../packages/core",
-    "@altftool/ui": "file:../packages/ui",
+    "@altftool/core": "file:./packages/core",
+    "@altftool/ui": "file:./packages/ui",
     "@dnd-kit/core": "^6.3.1",
     "@dnd-kit/sortable": "^10.0.0",
     "@dnd-kit/utilities": "^3.2.2",

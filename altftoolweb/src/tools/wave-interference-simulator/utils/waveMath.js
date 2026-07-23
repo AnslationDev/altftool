@@ -1,3 +1,5 @@
+"use client";
+
 export const TWO_PI = Math.PI * 2;
 
 const MATH_SCOPE = {

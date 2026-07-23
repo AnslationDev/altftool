@@ -1,3 +1,5 @@
+"use client";
+
 import { CHOICE_EMOJIS, CHOICE_LABELS } from "../utils/gameLogic";
 
 export default function ChoiceButton({ choice, onClick, disabled }) {

@@ -1,3 +1,5 @@
+"use client";
+
 import { useState, useCallback, useRef, useEffect } from "react";
 import { createGame, rollDice, getValidMoves, applyMove, checkForExtraTurn, checkThreeConsecutiveSixes } from "../engine/gameEngine";
 import { evaluateMoves, getAIDelay } from "../ai/aiEngine";

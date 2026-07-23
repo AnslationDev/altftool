@@ -1,3 +1,5 @@
+"use client";
+
 export const ROOM_TYPES = [
   { id: 'bedroom', label: 'Bedroom', icon: 'Bed' },
   { id: 'living', label: 'Living Room', icon: 'Sofa' },

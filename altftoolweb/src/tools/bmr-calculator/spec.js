@@ -3,37 +3,17 @@ export const spec = {
   ...{
   "slug": "bmr-calculator",
   "title": "BMR Calculator",
-  "description": "Calculate your Basal Metabolic Rate (BMR) to understand how many calories your body burns at rest.",
+  "description": "Basal metabolic rate (calories at rest) via the Mifflin-St Jeor equation, plus daily needs.",
   "badge": "Health",
   "category": [
     "Health"
   ],
-  "icon": "calculator",
-  "iconColor": "text-rose-600",
+  "icon": "flame",
+  "iconColor": "text-orange-600",
   "fields": [
     {
-      "key": "age",
-      "label": "Age",
-      "type": "number",
-      "default": "30"
-    },
-    {
-      "key": "weight",
-      "label": "Weight",
-      "type": "number",
-      "default": "150",
-      "suffix": "lbs"
-    },
-    {
-      "key": "height",
-      "label": "Height",
-      "type": "number",
-      "default": "60",
-      "suffix": "in"
-    },
-    {
-      "key": "gender",
-      "label": "Gender",
+      "key": "sex",
+      "label": "Sex",
       "type": "select",
       "default": "male",
       "choices": [
@@ -46,22 +26,31 @@ export const spec = {
           "label": "Female"
         }
       ]
-    }
-  ],
-  "presets": [
+    },
     {
-      "label": "Example",
-      "values": {
-        "age": "30",
-        "weight": "150",
-        "height": "60",
-        "gender": "male"
-      }
+      "key": "weight",
+      "label": "Weight (kg)",
+      "type": "number",
+      "default": "70"
+    },
+    {
+      "key": "height",
+      "label": "Height (cm)",
+      "type": "number",
+      "default": "175"
+    },
+    {
+      "key": "age",
+      "label": "Age",
+      "type": "number",
+      "default": "30"
     }
-  ],
-  "note": "BMR is an estimate and can vary based on individual factors."
+  ]
 },
-  compute: (values, mode) => { const { age, weight, height, gender } = values; let bmr; if (gender === 'male') { bmr = 88.362 + (13.397 * weight) + (4.799 * height) - (5.677 * age); } else { bmr = 447.593 + (9.247 * weight) + (3.098 * height) - (4.330 * age); } return { result: `${Math.round(bmr)} calories/day`, caption: 'Your Basal Metabolic Rate (BMR) is the number of calories your body burns at rest.', rows: [['Age', age], ['Weight', weight + ' lbs'], ['Height', height + ' in'], ['Gender', gender]] }; },
+  compute: (values) => { const num=(v)=>typeof v==="number"?v:Number(v); const money=(n)=>Number.isFinite(Number(n))?Number(n).toLocaleString(undefined,{maximumFractionDigits:2}):"—";
+      const bmr = 10 * num(values.weight) + 6.25 * num(values.height) - 5 * num(values.age) + (values.sex === "female" ? -161 : 5);
+      return { result: Math.round(bmr).toLocaleString() + " kcal/day", caption: "at complete rest", rows: [["Sedentary", Math.round(bmr * 1.2).toLocaleString()], ["Lightly active", Math.round(bmr * 1.375).toLocaleString()], ["Active", Math.round(bmr * 1.55).toLocaleString()], ["Very active", Math.round(bmr * 1.725).toLocaleString()]] };
+    },
 };
 
 export default spec;

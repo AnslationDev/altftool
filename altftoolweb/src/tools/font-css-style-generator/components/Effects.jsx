@@ -1,3 +1,5 @@
+"use client";
+
 export default function Effects({ settings, update }) {
   return (
     <section className="font-css-card p-4 sm:p-5 space-y-5">

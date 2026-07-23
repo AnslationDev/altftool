@@ -1,3 +1,5 @@
+"use client";
+
 import { useState, useCallback, useMemo } from "react";
 import { parseSessionData } from "../utils/sessionParser";
 import { generateId } from "../utils/helpers";

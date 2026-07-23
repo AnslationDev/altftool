@@ -117,9 +117,9 @@ export default function FeaturedCategories() {
             <Link
               key={`${item.name}-${index}`}
               href={item.link} prefetch={false}
-              className="flex items-center justify-center shrink-0 
-              bg-white  
-              px-6 py-4 mx-3  
+              className="flex items-center justify-center shrink-0
+              bg-white
+              px-6 py-4 mx-3
              transition-all duration-300"
             >
               <div className="relative w-[120px] h-[40px]">

@@ -1,3 +1,5 @@
+"use client";
+
 const faqItems = [
   {
     question: "What is WebP and why convert it?",

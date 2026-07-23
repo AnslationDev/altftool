@@ -1,3 +1,5 @@
+"use client";
+
 import { useStreak } from "../hooks/useStreak.js";
 import { Flame, BookCheck, Target } from "lucide-react";
 

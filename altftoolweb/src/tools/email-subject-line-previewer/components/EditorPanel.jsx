@@ -1,3 +1,5 @@
+"use client";
+
 import React from 'react';
 import { RotateCcw, User, Mail, FileText, Eye } from 'lucide-react';
 import { DEFAULT_EMAIL } from '../utils/subjectLine';

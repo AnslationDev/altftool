@@ -1,3 +1,5 @@
+"use client";
+
 const STATS_KEY = "altft-ludo-stats";
 const SETTINGS_KEY = "altft-ludo-settings";
 

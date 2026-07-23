@@ -1,3 +1,5 @@
+"use client";
+
 export function downloadText(content, filename, type = "text/plain;charset=utf-8") {
   const blob = new Blob([content], { type });
   const url = URL.createObjectURL(blob);

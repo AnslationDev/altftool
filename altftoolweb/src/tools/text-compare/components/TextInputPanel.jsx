@@ -1,3 +1,5 @@
+"use client";
+
 export default function TextInputPanel({ id, label, value, onChange, metrics }) {
   return (
     <div className="rounded-lg border border-[var(--border)] bg-[var(--card)] p-4 shadow-[var(--anslation-ds-shadow-sm)]">

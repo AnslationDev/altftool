@@ -2,12 +2,12 @@
 
 import { useEffect, useRef, useState } from "react";
 import Editor from "@monaco-editor/react";
-import { Sparkles, Eraser, Minimize2, WandSparkles, Copy, Check, Code2, Eye, Download } from "lucide-react";
+import { Sparkles, Eraser, Minimize2, WandSparkles, Copy, Check, Code2, Eye, Download, ScanSearch } from "lucide-react";
 
 const TOOLBAR_BUTTON_CLASS =
-  "inline-flex cursor-pointer items-center gap-1.5 rounded-lg border border-(--border) bg-(--background) px-3 py-1.5 text-xs font-medium text-(--foreground) transition-colors hover:border-(--primary) hover:text-(--primary) disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:border-(--border) disabled:hover:text-(--foreground)";
+  "inline-flex shrink-0 cursor-pointer items-center gap-1.5 rounded-lg border border-(--border) bg-(--background) px-3 py-1.5 text-xs font-medium text-(--foreground) transition-colors hover:border-(--primary) hover:text-(--primary) disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:border-(--border) disabled:hover:text-(--foreground)";
 
-export default function CodeEditorPanel({ html, onChange, onFormat, onMinify, onClear, onSample, onCopy, onDownload }) {
+export default function CodeEditorPanel({ html, onChange, onFormat, onMinify, onClear, onSample, onCopy, onDownload, onCheck, dirty }) {
   const [mobileView, setMobileView] = useState("code");
   const [isDark, setIsDark] = useState(true);
   const [copied, setCopied] = useState(false);
@@ -61,6 +61,7 @@ export default function CodeEditorPanel({ html, onChange, onFormat, onMinify, on
       },
     });
     monaco.editor.setTheme(isDark ? "email-checker-dark" : "vs");
+    editorInstance.addCommand(monaco.KeyMod.CtrlCmd | monaco.KeyCode.Enter, () => onCheck());
     editorInstance.addCommand(monaco.KeyMod.CtrlCmd | monaco.KeyCode.KeyS, () => onFormat());
     editorInstance.addCommand(monaco.KeyMod.CtrlCmd | monaco.KeyCode.KeyK, () => onClear());
     editorInstance.addCommand(monaco.KeyMod.CtrlCmd | monaco.KeyMod.Shift | monaco.KeyCode.KeyC, () => handleCopy());
@@ -78,7 +79,18 @@ export default function CodeEditorPanel({ html, onChange, onFormat, onMinify, on
   }
 
   const toolbar = (
-    <div className="flex flex-wrap items-center gap-2 border-b border-(--border) bg-(--card)/60 p-3">
+    <div className="flex flex-nowrap items-center gap-2 overflow-x-auto border-b border-(--border) bg-(--card)/60 p-3 sm:flex-wrap sm:overflow-visible">
+      <button
+        type="button"
+        onClick={onCheck}
+        disabled={!html.trim()}
+        aria-keyshortcuts="Control+Enter Meta+Enter"
+        className="inline-flex shrink-0 cursor-pointer items-center gap-1.5 rounded-lg bg-(--primary) px-3.5 py-1.5 text-xs font-semibold text-(--primary-foreground) shadow-sm transition-all hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-40"
+      >
+        <ScanSearch className="h-3.5 w-3.5" aria-hidden="true" />
+        {dirty ? "Check" : "Re-check"}
+        <span className="hidden text-[10px] opacity-75 lg:inline">⌘↵</span>
+      </button>
       <button type="button" onClick={onSample} className={TOOLBAR_BUTTON_CLASS}>
         <Sparkles className="h-3.5 w-3.5" aria-hidden="true" /> Sample
       </button>
@@ -118,7 +130,7 @@ export default function CodeEditorPanel({ html, onChange, onFormat, onMinify, on
       <button
         type="button"
         onClick={onClear}
-        className={`${TOOLBAR_BUTTON_CLASS} ml-auto hover:border-danger hover:text-danger`}
+        className={`${TOOLBAR_BUTTON_CLASS} sm:ml-auto hover:border-danger hover:text-danger`}
         aria-keyshortcuts="Control+K Meta+K"
       >
         <Eraser className="h-3.5 w-3.5" aria-hidden="true" /> Clear
@@ -131,7 +143,7 @@ export default function CodeEditorPanel({ html, onChange, onFormat, onMinify, on
     <div className="flex h-full flex-col overflow-hidden rounded-2xl border border-(--card-border) bg-(--card)/80 shadow-lg backdrop-blur-xl">
       {toolbar}
 
-      <div className="flex gap-2 border-b border-(--border) px-3 py-2 md:hidden">
+      <div className="flex gap-2 border-b border-(--border) px-3 py-2 lg:hidden">
         <button
           type="button"
           onClick={() => setMobileView("code")}
@@ -148,8 +160,10 @@ export default function CodeEditorPanel({ html, onChange, onFormat, onMinify, on
         </button>
       </div>
 
-      <div className="grid min-h-0 flex-1 grid-cols-1 md:grid-cols-2">
-        <div className={`min-h-0 flex-col border-(--border) md:flex md:border-r ${mobileView === "code" ? "flex" : "hidden"}`}>
+      <div className="grid min-h-0 flex-1 grid-cols-1 lg:grid-cols-2">
+        <div
+          className={`min-h-[420px] flex-col border-(--border) lg:min-h-0 lg:flex lg:border-r ${mobileView === "code" ? "flex" : "hidden"}`}
+        >
           <div className="shrink-0 border-b border-(--border) px-3 py-1.5 text-xs font-semibold text-(--muted-foreground)">HTML Source</div>
           <div ref={editorContainerRef} className="min-h-0 flex-1">
             <Editor
@@ -182,7 +196,7 @@ export default function CodeEditorPanel({ html, onChange, onFormat, onMinify, on
           </div>
         </div>
 
-        <div className={`min-h-0 flex-col md:flex ${mobileView === "preview" ? "flex" : "hidden"}`}>
+        <div className={`min-h-[420px] flex-col lg:min-h-0 lg:flex ${mobileView === "preview" ? "flex" : "hidden"}`}>
           <div className="shrink-0 border-b border-(--border) px-3 py-1.5 text-xs font-semibold text-(--muted-foreground)">Live Preview</div>
           <iframe
             title="Email HTML preview"

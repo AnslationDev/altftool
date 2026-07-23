@@ -1,0 +1,592 @@
+/* GutterFlow Pros — monochrome editorial lander, single cyan accent. */
+
+.gutterflow-root {
+  --gf-ink: #0b0b0c;
+  --gf-paper: #ffffff;
+  --gf-gray: #6b7280;
+  --gf-gray-soft: #e5e7eb;
+  --gf-cyan: #06b6d4;
+  --gf-cyan-deep: #0e7490;
+  background: var(--gf-paper);
+  color: var(--gf-ink);
+  font-family: Georgia, "Times New Roman", serif;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+.gutterflow-root *,
+.gutterflow-root *::before,
+.gutterflow-root *::after {
+  box-sizing: border-box;
+}
+
+.gutterflow-root h1,
+.gutterflow-root h2,
+.gutterflow-root h3 {
+  font-family: "Arial Narrow", Arial, Helvetica, sans-serif;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.05;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.gutterflow-root a:focus-visible,
+.gutterflow-root button:focus-visible {
+  outline: 3px solid var(--gf-cyan);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+.gutterflow-shell {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 0 clamp(1.1rem, 4vw, 2.5rem);
+}
+
+/* ---------- Nav ---------- */
+.gutterflow-nav {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  background: var(--gf-ink);
+  color: var(--gf-paper);
+  border-bottom: 1px solid #26262a;
+}
+
+.gutterflow-nav-inner {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 0.85rem 0;
+}
+
+.gutterflow-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  color: var(--gf-paper);
+  text-decoration: none;
+  font-family: "Arial Narrow", Arial, sans-serif;
+  font-weight: 700;
+  font-size: 1.05rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.gutterflow-brand-dot {
+  width: 10px;
+  height: 10px;
+  background: var(--gf-cyan);
+  animation: gutterflow-pulse 2.6s ease-in-out infinite;
+}
+
+.gutterflow-nav-links {
+  display: flex;
+  gap: 1.4rem;
+  margin-left: auto;
+}
+
+.gutterflow-nav-links a {
+  color: #d1d5db;
+  text-decoration: none;
+  font-family: Arial, sans-serif;
+  font-size: 0.78rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  transition: color 0.2s ease;
+}
+
+.gutterflow-nav-links a:hover {
+  color: var(--gf-cyan);
+}
+
+.gutterflow-nav-phone {
+  color: var(--gf-paper);
+  text-decoration: none;
+  font-family: Arial, sans-serif;
+  font-size: 0.85rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  white-space: nowrap;
+}
+
+.gutterflow-nav-phone:hover {
+  color: var(--gf-cyan);
+}
+
+/* ---------- Buttons ---------- */
+.gutterflow-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--gf-cyan);
+  color: var(--gf-ink);
+  text-decoration: none;
+  font-family: "Arial Narrow", Arial, sans-serif;
+  font-weight: 700;
+  font-size: 0.9rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.8rem 1.35rem;
+  border: 2px solid var(--gf-cyan);
+  transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
+  white-space: nowrap;
+}
+
+.gutterflow-btn:hover {
+  background: transparent;
+  color: var(--gf-cyan);
+  transform: translateY(-2px);
+}
+
+.gutterflow-btn--ghost {
+  background: transparent;
+  color: var(--gf-paper);
+  border-color: #4b5563;
+}
+
+.gutterflow-btn--ghost:hover {
+  border-color: var(--gf-cyan);
+  color: var(--gf-cyan);
+  background: transparent;
+}
+
+.gutterflow-btn--small {
+  padding: 0.55rem 1rem;
+  font-size: 0.78rem;
+}
+
+/* ---------- Hero ---------- */
+.gutterflow-hero {
+  background: var(--gf-ink);
+  color: var(--gf-paper);
+  padding: clamp(3.5rem, 8vw, 6.5rem) 0 0;
+  position: relative;
+}
+
+.gutterflow-hero-grid {
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+  gap: clamp(2rem, 5vw, 4rem);
+  align-items: end;
+}
+
+.gutterflow-eyebrow {
+  font-family: Arial, sans-serif;
+  font-size: 0.75rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--gf-cyan);
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  margin: 0 0 1.3rem;
+}
+
+.gutterflow-eyebrow::before {
+  content: "";
+  width: 34px;
+  height: 2px;
+  background: var(--gf-cyan);
+}
+
+.gutterflow-hero h1 {
+  font-size: clamp(2.6rem, 6.5vw, 5rem);
+  animation: gutterflow-rise 0.7s ease-out both;
+}
+
+.gutterflow-accent {
+  color: var(--gf-cyan);
+}
+
+.gutterflow-hero-lede {
+  color: #9ca3af;
+  max-width: 34rem;
+  font-size: 1.05rem;
+  margin: 1.4rem 0 2rem;
+  animation: gutterflow-rise 0.7s 0.12s ease-out both;
+}
+
+.gutterflow-cta-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.9rem;
+  align-items: center;
+  animation: gutterflow-rise 0.7s 0.22s ease-out both;
+}
+
+.gutterflow-hero-figure {
+  margin: 0;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  border-top: 4px solid var(--gf-cyan);
+  animation: gutterflow-rise 0.8s 0.15s ease-out both;
+}
+
+.gutterflow-hero-figure img,
+.gutterflow-figure img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  filter: grayscale(1) contrast(1.06);
+  transition: transform 0.6s ease;
+}
+
+.gutterflow-figure:hover img,
+.gutterflow-hero-figure:hover img {
+  transform: scale(1.035);
+}
+
+.gutterflow-ticker {
+  border-top: 1px solid #26262a;
+  margin-top: clamp(2.5rem, 6vw, 4.5rem);
+  padding: 1rem 0;
+  overflow: hidden;
+}
+
+.gutterflow-ticker-track {
+  display: flex;
+  gap: 3rem;
+  width: max-content;
+  animation: gutterflow-slide 26s linear infinite;
+  font-family: "Arial Narrow", Arial, sans-serif;
+  font-size: 0.82rem;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: #6b7280;
+  white-space: nowrap;
+}
+
+.gutterflow-ticker-track span::after {
+  content: "◆";
+  color: var(--gf-cyan);
+  margin-left: 3rem;
+  font-size: 0.6rem;
+}
+
+/* ---------- Narrative bands ---------- */
+.gutterflow-band {
+  padding: clamp(3.5rem, 9vw, 7rem) 0;
+  position: relative;
+}
+
+.gutterflow-band--dark {
+  background: var(--gf-ink);
+  color: var(--gf-paper);
+}
+
+.gutterflow-band--dark .gutterflow-copy {
+  color: #9ca3af;
+}
+
+.gutterflow-numeral {
+  font-family: "Arial Narrow", Arial, sans-serif;
+  font-weight: 700;
+  font-size: clamp(6rem, 18vw, 13rem);
+  line-height: 0.8;
+  color: transparent;
+  -webkit-text-stroke: 1px var(--gf-cyan);
+  opacity: 0.55;
+  user-select: none;
+  position: absolute;
+  top: clamp(1rem, 4vw, 2.5rem);
+  right: clamp(0.5rem, 3vw, 2rem);
+  pointer-events: none;
+}
+
+.gutterflow-split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(2rem, 5vw, 4.5rem);
+  align-items: center;
+}
+
+.gutterflow-split--flip .gutterflow-split-media {
+  order: -1;
+}
+
+.gutterflow-band h2 {
+  font-size: clamp(1.9rem, 4vw, 3rem);
+  margin-bottom: 1.2rem;
+}
+
+.gutterflow-copy {
+  color: #4b5563;
+  max-width: 33rem;
+  margin: 0 0 1.5rem;
+}
+
+.gutterflow-figure {
+  margin: 0;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  position: relative;
+}
+
+.gutterflow-figure--tall {
+  aspect-ratio: 3 / 4;
+}
+
+.gutterflow-figure figcaption {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  background: var(--gf-ink);
+  color: var(--gf-paper);
+  font-family: Arial, sans-serif;
+  font-size: 0.72rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  padding: 0.5rem 0.9rem;
+  border-left: 3px solid var(--gf-cyan);
+}
+
+.gutterflow-checklist {
+  list-style: none;
+  margin: 0 0 1.8rem;
+  padding: 0;
+  display: grid;
+  gap: 0.75rem;
+  font-family: Arial, sans-serif;
+  font-size: 0.95rem;
+}
+
+.gutterflow-checklist li {
+  display: flex;
+  gap: 0.65rem;
+  align-items: flex-start;
+}
+
+.gutterflow-checklist svg {
+  color: var(--gf-cyan);
+  flex-shrink: 0;
+  margin-top: 0.15rem;
+}
+
+/* ---------- CTA bands ---------- */
+.gutterflow-ctaband {
+  background: var(--gf-ink);
+  color: var(--gf-paper);
+  padding: clamp(2.8rem, 7vw, 5rem) 0;
+  border-top: 4px solid var(--gf-cyan);
+  border-bottom: 4px solid var(--gf-cyan);
+}
+
+.gutterflow-ctaband-inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.6rem;
+}
+
+.gutterflow-ctaband h2 {
+  font-size: clamp(1.6rem, 3.4vw, 2.5rem);
+  max-width: 30rem;
+}
+
+.gutterflow-ctaband p {
+  color: #9ca3af;
+  font-size: 0.95rem;
+  margin: 0.7rem 0 0;
+  max-width: 28rem;
+}
+
+/* ---------- Process ---------- */
+.gutterflow-steps {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(1.4rem, 3vw, 2.5rem);
+  margin-top: clamp(2rem, 5vw, 3.5rem);
+}
+
+.gutterflow-step {
+  border-top: 2px solid #34343a;
+  padding-top: 1.1rem;
+  transition: border-color 0.25s ease, transform 0.25s ease;
+}
+
+.gutterflow-step:hover {
+  border-top-color: var(--gf-cyan);
+  transform: translateY(-4px);
+}
+
+.gutterflow-step-no {
+  font-family: "Arial Narrow", Arial, sans-serif;
+  font-weight: 700;
+  font-size: 0.8rem;
+  letter-spacing: 0.2em;
+  color: var(--gf-cyan);
+}
+
+.gutterflow-step h3 {
+  font-size: 1.15rem;
+  margin: 0.5rem 0 0.6rem;
+}
+
+.gutterflow-step p {
+  color: #9ca3af;
+  font-size: 0.92rem;
+  margin: 0;
+}
+
+.gutterflow-wide-figure {
+  margin: clamp(2.5rem, 6vw, 4rem) 0 0;
+  aspect-ratio: 21 / 9;
+  overflow: hidden;
+  position: relative;
+}
+
+.gutterflow-wide-figure img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  filter: grayscale(1) contrast(1.06);
+  transition: transform 0.6s ease;
+}
+
+.gutterflow-wide-figure:hover img {
+  transform: scale(1.03);
+}
+
+/* ---------- Honest notes ---------- */
+.gutterflow-notes {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.8rem;
+  margin-top: 2.2rem;
+}
+
+.gutterflow-note {
+  border-left: 3px solid var(--gf-gray-soft);
+  padding-left: 1rem;
+  transition: border-color 0.25s ease;
+}
+
+.gutterflow-note:hover {
+  border-left-color: var(--gf-cyan);
+}
+
+.gutterflow-note h3 {
+  font-size: 1rem;
+  margin-bottom: 0.4rem;
+}
+
+.gutterflow-note p {
+  font-size: 0.9rem;
+  color: var(--gf-gray);
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+
+/* ---------- Footer ---------- */
+.gutterflow-footer {
+  background: var(--gf-ink);
+  color: #9ca3af;
+  padding: 2.5rem 0;
+  font-family: Arial, sans-serif;
+  font-size: 0.82rem;
+}
+
+.gutterflow-footer-inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.gutterflow-footer a {
+  color: #d1d5db;
+  text-decoration: none;
+}
+
+.gutterflow-footer a:hover {
+  color: var(--gf-cyan);
+}
+
+.gutterflow-footer-note {
+  font-size: 0.72rem;
+  color: #6b7280;
+  letter-spacing: 0.06em;
+}
+
+/* ---------- Keyframes ---------- */
+@keyframes gutterflow-rise {
+  from {
+    opacity: 0;
+    transform: translateY(22px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes gutterflow-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(6, 182, 212, 0.55);
+  }
+  50% {
+    box-shadow: 0 0 0 7px rgba(6, 182, 212, 0);
+  }
+}
+
+@keyframes gutterflow-slide {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 880px) {
+  .gutterflow-nav-links {
+    display: none;
+  }
+
+  .gutterflow-hero-grid,
+  .gutterflow-split {
+    grid-template-columns: 1fr;
+  }
+
+  .gutterflow-split--flip .gutterflow-split-media {
+    order: 0;
+  }
+
+  .gutterflow-hero-figure {
+    aspect-ratio: 16 / 10;
+  }
+
+  .gutterflow-steps,
+  .gutterflow-notes {
+    grid-template-columns: 1fr;
+  }
+
+  .gutterflow-numeral {
+    font-size: 5.2rem;
+    opacity: 0.4;
+  }
+
+  .gutterflow-ctaband-inner {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gutterflow-root *,
+  .gutterflow-root *::before,
+  .gutterflow-root *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

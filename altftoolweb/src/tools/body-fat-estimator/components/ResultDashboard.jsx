@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import { Target, Save, CheckCircle2 } from "lucide-react";
 

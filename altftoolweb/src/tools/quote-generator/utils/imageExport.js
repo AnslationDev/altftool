@@ -1,3 +1,5 @@
+"use client";
+
 import html2canvas from "html2canvas";
 
 export const downloadQuoteImage = async (elementRef, filename = "quote.png") => {

@@ -1,3 +1,5 @@
+"use client";
+
 import React from 'react';
 import { Pause, Play, RotateCcw, Shuffle } from 'lucide-react';
 import { PRESETS } from '../utils/lissajous';

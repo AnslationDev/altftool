@@ -1,3 +1,5 @@
+"use client";
+
 import { useState } from "react";
 import { Plus, Minus, RefreshCw } from "lucide-react";
 import ChangelogGenerator from "./ChangelogGenerator";

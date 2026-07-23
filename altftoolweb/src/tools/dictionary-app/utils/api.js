@@ -1,3 +1,5 @@
+"use client";
+
 const CACHE_KEY = "word_cache";
 const MAX_CACHE = 50;
 

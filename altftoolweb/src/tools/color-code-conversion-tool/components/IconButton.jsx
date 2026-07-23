@@ -1,3 +1,5 @@
+"use client";
+
 export default function IconButton({ icon: Icon, label, onClick, disabled }) {
   return (
     <button

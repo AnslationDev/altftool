@@ -1,3 +1,5 @@
+"use client";
+
 import { batchGenerationConfig } from "../config/batchGenerationConfig";
 
 export const STORAGE_KEY = batchGenerationConfig.storageKey;

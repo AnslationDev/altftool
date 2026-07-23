@@ -1,3 +1,5 @@
+"use client";
+
 import { useState, useEffect, useCallback } from "react";
 import { html as beautifyHtml } from "js-beautify";
 import { CodeEditor } from "../components/CodeEditor";

@@ -1,3 +1,5 @@
+"use client";
+
 export default function Actions({ onLoadDemo, onCopyOutput, onDownload }) {
   return (
     <div className="flex flex-wrap gap-3 p-3 rounded-xl border border-(--border) bg-(--background)">

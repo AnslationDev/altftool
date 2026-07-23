@@ -1,0 +1,819 @@
+/* BugShield Pro — clinical-clean lander. White + lab green, precise sans type. */
+
+.bugshield-page {
+  --bs-green: #0e9f6e;
+  --bs-green-dark: #076a49;
+  --bs-green-deep: #04432e;
+  --bs-green-tint: #e6f7f0;
+  --bs-green-line: #bfe8d8;
+  --bs-ink: #10231c;
+  --bs-slate: #476056;
+  --bs-white: #ffffff;
+  --bs-mist: #f4faf7;
+  --bs-shadow: 0 14px 34px rgba(4, 67, 46, 0.12);
+  font-family: "Inter", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  color: var(--bs-ink);
+  background: var(--bs-white);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+.bugshield-page * {
+  box-sizing: border-box;
+}
+
+.bugshield-page img {
+  display: block;
+  max-width: 100%;
+}
+
+.bugshield-page a:focus-visible,
+.bugshield-page button:focus-visible {
+  outline: 3px solid var(--bs-green-dark);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+.bugshield-shell {
+  width: min(1160px, 100% - 2.5rem);
+  margin-inline: auto;
+}
+
+/* ---------- Nav ---------- */
+
+.bugshield-nav {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  background: rgba(255, 255, 255, 0.96);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--bs-green-line);
+}
+
+.bugshield-nav-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.85rem 0;
+}
+
+.bugshield-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  font-weight: 800;
+  font-size: 1.15rem;
+  letter-spacing: -0.02em;
+  color: var(--bs-ink);
+  text-decoration: none;
+}
+
+.bugshield-brand-mark {
+  display: grid;
+  place-items: center;
+  width: 2.35rem;
+  height: 2.35rem;
+  border-radius: 10px;
+  background: var(--bs-green);
+  color: var(--bs-white);
+  box-shadow: 0 6px 14px rgba(14, 159, 110, 0.35);
+}
+
+.bugshield-brand-pro {
+  color: var(--bs-green);
+}
+
+.bugshield-nav-links {
+  display: flex;
+  align-items: center;
+  gap: 1.4rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.bugshield-nav-links a {
+  color: var(--bs-slate);
+  text-decoration: none;
+  font-size: 0.92rem;
+  font-weight: 600;
+  padding: 0.3rem 0.1rem;
+  border-bottom: 2px solid transparent;
+  transition: color 0.18s ease, border-color 0.18s ease;
+}
+
+.bugshield-nav-links a:hover {
+  color: var(--bs-green-dark);
+  border-bottom-color: var(--bs-green);
+}
+
+.bugshield-nav-ctas {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.bugshield-menu-btn {
+  display: none;
+  border: 1px solid var(--bs-green-line);
+  background: var(--bs-white);
+  color: var(--bs-green-dark);
+  border-radius: 8px;
+  padding: 0.45rem 0.55rem;
+  cursor: pointer;
+}
+
+/* ---------- Buttons ---------- */
+
+.bugshield-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-weight: 700;
+  font-size: 0.95rem;
+  text-decoration: none;
+  border-radius: 10px;
+  padding: 0.78rem 1.35rem;
+  transition: transform 0.16s ease, box-shadow 0.16s ease, background 0.16s ease;
+}
+
+.bugshield-btn-solid {
+  background: var(--bs-green);
+  color: var(--bs-white);
+  box-shadow: 0 8px 18px rgba(14, 159, 110, 0.32);
+}
+
+.bugshield-btn-solid:hover {
+  background: var(--bs-green-dark);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 24px rgba(14, 159, 110, 0.4);
+}
+
+.bugshield-btn-ghost {
+  background: var(--bs-white);
+  color: var(--bs-green-dark);
+  border: 1.5px solid var(--bs-green);
+}
+
+.bugshield-btn-ghost:hover {
+  background: var(--bs-green-tint);
+  transform: translateY(-2px);
+}
+
+.bugshield-btn-invert {
+  background: var(--bs-white);
+  color: var(--bs-green-deep);
+  box-shadow: 0 10px 22px rgba(2, 32, 22, 0.28);
+}
+
+.bugshield-btn-invert:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 28px rgba(2, 32, 22, 0.34);
+}
+
+/* ---------- Hero ---------- */
+
+.bugshield-hero {
+  background:
+    radial-gradient(60rem 28rem at 110% -10%, var(--bs-green-tint), transparent 60%),
+    linear-gradient(180deg, var(--bs-mist), var(--bs-white));
+  padding: 3.6rem 0 4rem;
+}
+
+.bugshield-hero-grid {
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+  gap: 3rem;
+  align-items: center;
+}
+
+.bugshield-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  background: var(--bs-green-tint);
+  border: 1px solid var(--bs-green-line);
+  color: var(--bs-green-dark);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border-radius: 999px;
+  padding: 0.4rem 0.9rem;
+}
+
+.bugshield-hero h1 {
+  font-size: clamp(2.1rem, 4.2vw, 3.15rem);
+  line-height: 1.12;
+  letter-spacing: -0.03em;
+  margin: 1rem 0 1rem;
+  animation: bugshield-rise 0.6s ease both;
+}
+
+.bugshield-hero h1 em {
+  font-style: normal;
+  color: var(--bs-green);
+}
+
+.bugshield-hero-sub {
+  color: var(--bs-slate);
+  font-size: 1.08rem;
+  max-width: 34rem;
+  margin: 0 0 1.4rem;
+}
+
+.bugshield-hero-checks {
+  list-style: none;
+  margin: 0 0 1.7rem;
+  padding: 0;
+  display: grid;
+  gap: 0.6rem;
+}
+
+.bugshield-hero-checks li {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-weight: 600;
+  font-size: 0.98rem;
+}
+
+.bugshield-hero-ctas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.85rem;
+  margin-bottom: 1.8rem;
+}
+
+.bugshield-hero-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  border-top: 1px solid var(--bs-green-line);
+  padding-top: 1.4rem;
+}
+
+.bugshield-stat strong {
+  display: block;
+  font-size: 1.45rem;
+  letter-spacing: -0.02em;
+  color: var(--bs-green-dark);
+}
+
+.bugshield-stat span {
+  font-size: 0.82rem;
+  color: var(--bs-slate);
+}
+
+.bugshield-hero-visual {
+  position: relative;
+}
+
+.bugshield-badge-float {
+  position: absolute;
+  left: -1.1rem;
+  bottom: 1.6rem;
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  background: var(--bs-white);
+  border: 1.5px solid var(--bs-green);
+  border-radius: 14px;
+  padding: 0.75rem 1.05rem;
+  box-shadow: var(--bs-shadow);
+  animation: bugshield-pulse 3.2s ease-in-out infinite;
+}
+
+.bugshield-badge-float strong {
+  display: block;
+  font-size: 0.92rem;
+  line-height: 1.25;
+}
+
+.bugshield-badge-float span {
+  font-size: 0.76rem;
+  color: var(--bs-slate);
+}
+
+/* ---------- Framed media (thin green frames, fixed aspect) ---------- */
+
+.bugshield-frame {
+  border: 1.5px solid var(--bs-green);
+  border-radius: 16px;
+  padding: 0.5rem;
+  background: var(--bs-white);
+  box-shadow: var(--bs-shadow);
+}
+
+.bugshield-media {
+  position: relative;
+  overflow: hidden;
+  border-radius: 11px;
+  aspect-ratio: 4 / 3;
+  background: var(--bs-green-tint);
+}
+
+.bugshield-media--tall {
+  aspect-ratio: 4 / 5;
+}
+
+.bugshield-media--wide {
+  aspect-ratio: 16 / 10;
+}
+
+.bugshield-media img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.45s ease;
+}
+
+.bugshield-frame:hover .bugshield-media img,
+.bugshield-photo-card:hover .bugshield-media img {
+  transform: scale(1.045);
+}
+
+/* ---------- Sections ---------- */
+
+.bugshield-section {
+  padding: 4.2rem 0;
+}
+
+.bugshield-section--tint {
+  background: var(--bs-mist);
+  border-block: 1px solid var(--bs-green-line);
+}
+
+.bugshield-section-head {
+  max-width: 44rem;
+  margin: 0 auto 2.6rem;
+  text-align: center;
+}
+
+.bugshield-kicker {
+  color: var(--bs-green);
+  font-size: 0.8rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.bugshield-section-head h2 {
+  font-size: clamp(1.6rem, 3vw, 2.25rem);
+  letter-spacing: -0.025em;
+  margin: 0.45rem 0 0.7rem;
+}
+
+.bugshield-section-head p {
+  color: var(--bs-slate);
+  margin: 0;
+}
+
+/* ---------- Pest cards ---------- */
+
+.bugshield-pest-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.2rem;
+}
+
+.bugshield-pest-card {
+  background: var(--bs-white);
+  border: 1px solid var(--bs-green-line);
+  border-radius: 14px;
+  padding: 1.5rem 1.3rem;
+  transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+}
+
+.bugshield-pest-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--bs-green);
+  box-shadow: var(--bs-shadow);
+}
+
+.bugshield-pest-icon {
+  display: grid;
+  place-items: center;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 12px;
+  background: var(--bs-green-tint);
+  color: var(--bs-green-dark);
+  margin-bottom: 0.9rem;
+}
+
+.bugshield-pest-card h3 {
+  margin: 0 0 0.4rem;
+  font-size: 1.08rem;
+  letter-spacing: -0.01em;
+}
+
+.bugshield-pest-card p {
+  margin: 0;
+  color: var(--bs-slate);
+  font-size: 0.92rem;
+}
+
+/* ---------- Process ---------- */
+
+.bugshield-process-grid {
+  display: grid;
+  grid-template-columns: 0.9fr 1.1fr;
+  gap: 3rem;
+  align-items: center;
+}
+
+.bugshield-steps {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 1.3rem;
+  counter-reset: bugshield-step;
+}
+
+.bugshield-steps li {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+}
+
+.bugshield-step-num {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  background: var(--bs-green);
+  color: var(--bs-white);
+  font-weight: 800;
+  font-size: 1rem;
+  box-shadow: 0 6px 14px rgba(14, 159, 110, 0.3);
+}
+
+.bugshield-steps h3 {
+  margin: 0.15rem 0 0.25rem;
+  font-size: 1.05rem;
+}
+
+.bugshield-steps p {
+  margin: 0;
+  color: var(--bs-slate);
+  font-size: 0.93rem;
+}
+
+/* ---------- Plans ---------- */
+
+.bugshield-plan-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.3rem;
+  align-items: stretch;
+}
+
+.bugshield-plan {
+  display: flex;
+  flex-direction: column;
+  background: var(--bs-white);
+  border: 1.5px solid var(--bs-green-line);
+  border-radius: 16px;
+  padding: 1.8rem 1.5rem;
+  transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+}
+
+.bugshield-plan:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--bs-shadow);
+  border-color: var(--bs-green);
+}
+
+.bugshield-plan--featured {
+  border-color: var(--bs-green);
+  box-shadow: var(--bs-shadow);
+  position: relative;
+}
+
+.bugshield-plan-flag {
+  position: absolute;
+  top: -0.85rem;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--bs-green);
+  color: var(--bs-white);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  padding: 0.32rem 0.9rem;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+.bugshield-plan h3 {
+  margin: 0 0 0.2rem;
+  font-size: 1.2rem;
+}
+
+.bugshield-plan-price {
+  font-size: 1.9rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: var(--bs-green-dark);
+}
+
+.bugshield-plan-price small {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--bs-slate);
+}
+
+.bugshield-plan-list {
+  list-style: none;
+  margin: 1.1rem 0 1.5rem;
+  padding: 1.1rem 0 0;
+  border-top: 1px dashed var(--bs-green-line);
+  display: grid;
+  gap: 0.55rem;
+  flex: 1;
+}
+
+.bugshield-plan-list li {
+  display: flex;
+  gap: 0.55rem;
+  align-items: flex-start;
+  font-size: 0.92rem;
+}
+
+.bugshield-check {
+  flex: none;
+  color: var(--bs-green);
+  margin-top: 0.15rem;
+}
+
+/* ---------- Guarantee band ---------- */
+
+.bugshield-guarantee {
+  background: linear-gradient(120deg, var(--bs-green-deep), var(--bs-green-dark) 55%, var(--bs-green));
+  color: var(--bs-white);
+  padding: 3.6rem 0;
+}
+
+.bugshield-guarantee-grid {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 2.6rem;
+  align-items: center;
+}
+
+.bugshield-guarantee h2 {
+  font-size: clamp(1.7rem, 3.4vw, 2.5rem);
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+  margin: 0.8rem 0 0.9rem;
+}
+
+.bugshield-guarantee p {
+  color: rgba(255, 255, 255, 0.88);
+  max-width: 33rem;
+  margin: 0 0 1.5rem;
+}
+
+.bugshield-guarantee .bugshield-eyebrow {
+  background: rgba(255, 255, 255, 0.14);
+  border-color: rgba(255, 255, 255, 0.35);
+  color: var(--bs-white);
+}
+
+.bugshield-guarantee .bugshield-frame {
+  border-color: rgba(255, 255, 255, 0.65);
+  background: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.3);
+}
+
+/* ---------- Gallery ---------- */
+
+.bugshield-gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.2rem;
+}
+
+.bugshield-photo-card {
+  border: 1.5px solid var(--bs-green-line);
+  border-radius: 16px;
+  padding: 0.5rem;
+  background: var(--bs-white);
+  transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+}
+
+.bugshield-photo-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--bs-green);
+  box-shadow: var(--bs-shadow);
+}
+
+.bugshield-photo-card figcaption {
+  padding: 0.75rem 0.5rem 0.45rem;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--bs-slate);
+}
+
+/* ---------- Reviews ---------- */
+
+.bugshield-review-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.2rem;
+}
+
+.bugshield-review {
+  background: var(--bs-white);
+  border: 1px solid var(--bs-green-line);
+  border-radius: 14px;
+  padding: 1.5rem 1.4rem;
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+
+.bugshield-review:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--bs-shadow);
+}
+
+.bugshield-stars {
+  display: flex;
+  gap: 0.15rem;
+  color: var(--bs-green);
+  margin-bottom: 0.7rem;
+}
+
+.bugshield-review blockquote {
+  margin: 0 0 0.9rem;
+  font-size: 0.95rem;
+  color: var(--bs-ink);
+}
+
+.bugshield-review cite {
+  font-style: normal;
+  font-size: 0.84rem;
+  font-weight: 700;
+  color: var(--bs-green-dark);
+}
+
+/* ---------- Final CTA ---------- */
+
+.bugshield-final {
+  padding: 4.2rem 0;
+  background:
+    radial-gradient(46rem 20rem at 50% 120%, var(--bs-green-tint), transparent 65%),
+    var(--bs-white);
+  text-align: center;
+}
+
+.bugshield-final h2 {
+  font-size: clamp(1.7rem, 3.2vw, 2.4rem);
+  letter-spacing: -0.03em;
+  margin: 0.9rem 0 0.7rem;
+}
+
+.bugshield-final p {
+  color: var(--bs-slate);
+  max-width: 36rem;
+  margin: 0 auto 1.7rem;
+}
+
+.bugshield-final-ctas {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.9rem;
+}
+
+/* ---------- Footer ---------- */
+
+.bugshield-footer {
+  background: var(--bs-green-deep);
+  color: rgba(255, 255, 255, 0.85);
+  padding: 2.4rem 0;
+}
+
+.bugshield-footer-inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.2rem;
+}
+
+.bugshield-footer .bugshield-brand {
+  color: var(--bs-white);
+}
+
+.bugshield-footer a {
+  color: var(--bs-white);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.bugshield-footer a:hover {
+  text-decoration: underline;
+}
+
+.bugshield-footer-note {
+  width: 100%;
+  border-top: 1px solid rgba(255, 255, 255, 0.18);
+  padding-top: 1rem;
+  font-size: 0.78rem;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+/* ---------- Animation ---------- */
+
+@keyframes bugshield-rise {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes bugshield-pulse {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 880px) {
+  .bugshield-hero-grid,
+  .bugshield-process-grid,
+  .bugshield-guarantee-grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .bugshield-pest-grid,
+  .bugshield-plan-grid,
+  .bugshield-gallery-grid,
+  .bugshield-review-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .bugshield-nav-links {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    background: var(--bs-white);
+    border-bottom: 1px solid var(--bs-green-line);
+    padding: 0.5rem 1.25rem 1rem;
+    box-shadow: var(--bs-shadow);
+  }
+
+  .bugshield-nav-links.bugshield-nav-links--open {
+    display: flex;
+  }
+
+  .bugshield-nav-links a {
+    display: block;
+    padding: 0.7rem 0.2rem;
+    border-bottom: 1px solid var(--bs-green-tint);
+  }
+
+  .bugshield-menu-btn {
+    display: inline-flex;
+  }
+
+  .bugshield-nav-phone-label {
+    display: none;
+  }
+
+  .bugshield-badge-float {
+    left: 0.8rem;
+    bottom: 0.8rem;
+  }
+
+  .bugshield-hero {
+    padding: 2.4rem 0 3rem;
+  }
+
+  .bugshield-section {
+    padding: 3rem 0;
+  }
+}

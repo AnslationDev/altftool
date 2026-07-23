@@ -1,3 +1,5 @@
+"use client";
+
 /**
  * Pantry Expiry Tracker - Utility Helpers
  */

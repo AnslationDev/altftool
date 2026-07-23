@@ -1,3 +1,5 @@
+"use client";
+
 const toolConfig = {
   slug: "pdf-merger",
   name: "PDF Merger Tool",

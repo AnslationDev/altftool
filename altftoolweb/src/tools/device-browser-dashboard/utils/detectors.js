@@ -1,3 +1,5 @@
+"use client";
+
 const UNKNOWN = "Not available";
 
 const canUseBrowser = () => typeof window !== "undefined" && typeof navigator !== "undefined";

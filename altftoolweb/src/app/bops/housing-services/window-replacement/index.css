@@ -1,0 +1,95 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-display: "Fraunces", ui-serif, Georgia, "Times New Roman", serif;
+
+  /* Page background scale — very light lavender-grey */
+  --color-cream: #f0f1f8;
+  --color-cream-100: #e5e7f2;
+  --color-cream-200: #d5d8ec;
+
+  /* Slate-blue / periwinkle accent scale */
+  --color-bronze-50:  #f4f5fa;
+  --color-bronze-100: #e2e4f0;
+  --color-bronze-200: #c4c9e0;
+  --color-bronze-300: #a4acd1;
+  --color-bronze-400: #8a93be;
+  --color-bronze-500: #767F9E;
+  --color-bronze-600: #636b8a;
+  --color-bronze-700: #505774;
+  --color-bronze-800: #3e445d;
+  --color-bronze-900: #2c3148;
+
+  /* Dark text — deep navy-slate */
+  --color-ink: #1e2235;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    font-family: var(--font-sans);
+    background-color: var(--color-cream);
+    color: #2c3148;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    letter-spacing: -0.02em;
+  }
+  ::selection {
+    background: var(--color-bronze-200);
+    color: var(--color-bronze-900);
+  }
+}
+
+/* Refined scrollbar */
+::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+::-webkit-scrollbar-track {
+  background: #d5d8ec;
+}
+::-webkit-scrollbar-thumb {
+  background: #767F9E;
+  border-radius: 9999px;
+  border: 3px solid #d5d8ec;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-bronze-600);
+}
+
+@keyframes floaty {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-14px); }
+}
+@keyframes slowpan {
+  0% { transform: scale(1.04) translate(0, 0); }
+  100% { transform: scale(1.14) translate(-2%, -2%); }
+}
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.animate-floaty { animation: floaty 6s ease-in-out infinite; }
+.animate-pan { animation: slowpan 20s ease-in-out infinite alternate; }
+
+.text-balance { text-wrap: balance; }
+.text-pretty { text-wrap: pretty; }
+
+.bg-grid {
+  background-image:
+    linear-gradient(to right, rgba(118,127,158,0.07) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(118,127,158,0.07) 1px, transparent 1px);
+  background-size: 44px 44px;
+}
+
+/* Hide the global AltFTool footer when inside the windows app */
+body > footer.bg-\[var\(--anslation-ds-footer\)\] {
+  display: none !important;
+}

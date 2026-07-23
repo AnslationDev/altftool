@@ -3,32 +3,28 @@ export const spec = {
   ...{
   "slug": "camel-case-converter",
   "title": "Camel Case Converter",
-  "description": "Convert text to Camel Case format.",
+  "description": "Convert any phrase to camelCase — plus PascalCase and CONSTANT_CASE.",
   "badge": "Developer",
   "category": [
     "Developer"
   ],
-  "icon": "code",
-  "iconColor": "text-violet-600",
+  "icon": "case-sensitive",
+  "iconColor": "text-blue-600",
   "fields": [
     {
       "key": "text",
       "label": "Text",
       "type": "textarea",
-      "default": ""
+      "default": "my variable name here"
     }
-  ],
-  "presets": [
-    {
-      "label": "Example",
-      "values": {
-        "text": "hello world"
-      }
-    }
-  ],
-  "note": "This tool converts text to Camel Case format, removing any non-alphanumeric characters and capitalizing the first letter of each word except for the first one."
+  ]
 },
-  compute: (values, mode) => { let result = values.text.trim().replace(/[^a-zA-Z0-9 ]/g, ''); if (result === '') return { result: 'Please enter some text.' }; result = result.split(' ').map((word, index) => index === 0 ? word.toLowerCase() : word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()).join(''); return { result: result }; },
+  compute: (values) => { const num=(v)=>typeof v==="number"?v:Number(v); const money=(n)=>Number.isFinite(Number(n))?Number(n).toLocaleString(undefined,{maximumFractionDigits:2}):"—";
+      const parts = String(values.text).trim().split(/[^a-zA-Z0-9]+/).filter(Boolean);
+      if (!parts.length) return { result: "—", caption: "Enter some text" };
+      const camel = parts.map((p, i) => i === 0 ? p.toLowerCase() : p[0].toUpperCase() + p.slice(1).toLowerCase()).join("");
+      return { result: camel, rows: [["PascalCase", camel[0].toUpperCase() + camel.slice(1)], ["CONSTANT_CASE", parts.map((p) => p.toUpperCase()).join("_")]] };
+    },
 };
 
 export default spec;

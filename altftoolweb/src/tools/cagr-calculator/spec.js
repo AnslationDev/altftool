@@ -3,27 +3,25 @@ export const spec = {
   ...{
   "slug": "cagr-calculator",
   "title": "CAGR Calculator",
-  "description": "Calculate Compound Annual Growth Rate for investments or financial growth.",
+  "description": "Compound annual growth rate from a starting value, ending value and number of years.",
   "badge": "Finance",
   "category": [
     "Finance"
   ],
-  "icon": "calculator",
-  "iconColor": "text-cyan-600",
+  "icon": "trending-up",
+  "iconColor": "text-lime-600",
   "fields": [
     {
-      "key": "initialamount",
-      "label": "Initial Amount",
+      "key": "initial",
+      "label": "Initial value",
       "type": "number",
-      "default": "1000",
-      "suffix": "$"
+      "default": "10000"
     },
     {
-      "key": "finalamount",
-      "label": "Final Amount",
+      "key": "final",
+      "label": "Final value",
       "type": "number",
-      "default": "2000",
-      "suffix": "$"
+      "default": "25000"
     },
     {
       "key": "years",
@@ -31,20 +29,14 @@ export const spec = {
       "type": "number",
       "default": "5"
     }
-  ],
-  "presets": [
-    {
-      "label": "Example",
-      "values": {
-        "initialAmount": "1000",
-        "finalAmount": "2000",
-        "years": "5"
-      }
-    }
-  ],
-  "note": "CAGR is a useful measure of the average annual growth rate of an investment over a specified period."
+  ]
 },
-  compute: (values) => { let { initialAmount, finalAmount, years } = values; if (years === 0 || initialAmount === 0) return { result: 'Invalid input', caption: 'Initial amount and years must be greater than zero.' }; let cagr = Math.pow(finalAmount / initialAmount, 1 / years) - 1; return { result: `${(cagr * 100).toFixed(2)}%`, caption: 'Compound Annual Growth Rate (CAGR)' }; },
+  compute: (values) => { const num=(v)=>typeof v==="number"?v:Number(v); const money=(n)=>Number.isFinite(Number(n))?Number(n).toLocaleString(undefined,{maximumFractionDigits:2}):"—";
+      const p = num(values.initial), f = num(values.final), y = num(values.years);
+      if (p <= 0 || y <= 0) return { result: "—", caption: "Enter positive initial value and years" };
+      const cagr = (Math.pow(f / p, 1 / y) - 1) * 100;
+      return { result: cagr.toFixed(2) + "% per year", rows: [["Total growth", ((f / p - 1) * 100).toFixed(2) + "%"], ["Multiple", (f / p).toFixed(2) + "×"], ["Absolute gain", money(f - p)]] };
+    },
 };
 
 export default spec;

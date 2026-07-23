@@ -1,4 +1,6 @@
-import { useState, useCallback } from "react";
+"use client";
+
+import { useState, useCallback, useRef } from "react";
 import { generateId, shuffleArray } from "../utils/helpers";
 import { generateColors } from "../utils/colors";
 
@@ -8,14 +10,14 @@ function loadState() {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
     if (raw) return JSON.parse(raw);
-  } catch {}
+  } catch { }
   return null;
 }
 
 function saveState(state) {
   try {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-  } catch {}
+  } catch { }
 }
 
 const TEMPLATES = {

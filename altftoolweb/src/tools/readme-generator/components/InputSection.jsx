@@ -1,3 +1,5 @@
+"use client";
+
 import { FileText, History, CheckCircle, Clock, Trash2, XCircle } from "lucide-react";
 import TemplatesDropdown from "./TemplatesDropdown";
 import { useState, useEffect } from "react";

@@ -1,3 +1,5 @@
+"use client";
+
 /**
  * Solar Mathematics & Astronomical Calculations for Golden Hour Estimator
  * Implements the standard NOAA Solar Position equations to calculate solar elevation,

@@ -1,3 +1,5 @@
+"use client";
+
 import { Tag, ChevronDown, ChevronUp } from "lucide-react";
 import { useState } from "react";
 

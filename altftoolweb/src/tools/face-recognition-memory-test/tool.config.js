@@ -1,7 +1,7 @@
 const toolConfig = {
   slug: "face-recognition-memory-test",
   name: "Face Recognition Memory Test",
-  category: ["Neuroscience", "Health", "Interactive"],
+  category: "Health & Fitness",
   description:
     "Test your facial memory and recognition ability by studying and identifying faces.",
   icon: "scan-face",

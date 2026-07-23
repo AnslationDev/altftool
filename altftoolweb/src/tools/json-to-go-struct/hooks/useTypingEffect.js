@@ -1,3 +1,5 @@
+"use client";
+
 import { useEffect, useState } from "react";
 
 export function useTypingEffect(text, speed = 24) {

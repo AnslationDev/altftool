@@ -1,3 +1,5 @@
+"use client";
+
 export const EVENT_TYPES = [
   { id: 'wedding', label: 'Wedding' },
   { id: 'birthday', label: 'Birthday' },

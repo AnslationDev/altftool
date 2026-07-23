@@ -1,3 +1,5 @@
+"use client";
+
 import React from 'react';
 import { History, Trash2, RotateCcw, Copy } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';

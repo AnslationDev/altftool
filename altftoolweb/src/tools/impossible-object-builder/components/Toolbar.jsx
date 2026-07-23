@@ -1,3 +1,5 @@
+"use client";
+
 import React from 'react';
 import { MousePointer2, Move, RotateCw, Maximize2, Trash2, Copy, Layers } from 'lucide-react';
 

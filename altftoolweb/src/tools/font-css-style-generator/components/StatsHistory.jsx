@@ -1,3 +1,5 @@
+"use client";
+
 export default function StatsHistory({ stats, history, onApplyHistory }) {
   return (
     <section className="font-css-card p-4 sm:p-5 space-y-5">

@@ -1,3 +1,5 @@
+"use client";
+
 export default function HelpGuide({ onClose }) {
   return (
     <div className="absolute right-0 top-0 z-20 mr-2 mt-2 w-80 max-w-[90vw] space-y-3 rounded-lg border border-[var(--border)] bg-[var(--card)] p-5 text-sm text-[var(--foreground)] shadow-[var(--anslation-ds-shadow-md)]">
