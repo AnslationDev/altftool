@@ -34,6 +34,17 @@ for (const filePath of removableMedia) {
   fs.rmSync(filePath);
 }
 
+// These files are useful while compiling or debugging a local build, but the
+// deployed Next.js server does not read them. Removing them keeps Amplify's
+// hosted artifact focused on runtime code, manifests, and public assets.
+const buildOnlyArtifacts = ["trace", "trace-build", "types", "diagnostics"]
+  .map((name) => path.join(nextDir, name))
+  .filter((artifactPath) => fs.existsSync(artifactPath));
+
+for (const artifactPath of buildOnlyArtifacts) {
+  fs.rmSync(artifactPath, { force: true, recursive: true });
+}
+
 function directorySize(directory) {
   return fs.readdirSync(directory, { withFileTypes: true }).reduce((total, entry) => {
     // Amplify strips the cache and normalizes Next's duplicate standalone
@@ -60,7 +71,9 @@ const maxArtifactMiB = maxArtifactBytes / (1024 * 1024);
 
 console.log(
   `Amplify artifact gate: ${artifactMiB.toFixed(2)} MiB / ${maxArtifactMiB.toFixed(2)} MiB` +
-    (removableMedia.length ? `; pruned ${removableMedia.length} unused WASM asset.` : ".")
+    (removableMedia.length || buildOnlyArtifacts.length
+      ? `; pruned ${removableMedia.length} unused WASM asset and ${buildOnlyArtifacts.length} build-only artifact.`
+      : ".")
 );
 
 if (artifactBytes > maxArtifactBytes) {
