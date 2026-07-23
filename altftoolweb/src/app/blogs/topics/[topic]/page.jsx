@@ -19,6 +19,7 @@ import {
   createPageMetadata,
 } from "@/platform/seo/generateMetadata";
 
+export const dynamic = "force-static";
 export const revalidate = 3600;
 
 export function generateStaticParams() {

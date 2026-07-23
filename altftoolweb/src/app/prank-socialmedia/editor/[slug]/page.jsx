@@ -4,6 +4,8 @@ import { notFound } from "next/navigation";
 import { createPageMetadata } from "@/platform/seo/generateMetadata";
 import { shouldDeferBulkPrerendering } from "@/lib/buildPrerenderPolicy";
 
+export const dynamic = "force-static";
+
 export async function generateStaticParams() {
   if (shouldDeferBulkPrerendering()) return [];
   return TEMPLATES.map((t) => ({ slug: t.slug }));

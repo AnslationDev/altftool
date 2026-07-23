@@ -15,6 +15,8 @@ import {
   ChevronRight,
 } from "lucide-react";
 
+export const dynamic = "force-static";
+
 export function generateStaticParams() {
   if (shouldDeferBulkPrerendering()) return [];
   return books.map((book) => ({ slug: book.slug }));

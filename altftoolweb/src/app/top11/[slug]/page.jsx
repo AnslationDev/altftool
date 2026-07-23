@@ -10,6 +10,8 @@ import {
 import ManagedImage from "@/components/ui/ManagedImage";
 import { shouldDeferBulkPrerendering } from "@/lib/buildPrerenderPolicy";
 
+export const dynamic = "force-static";
+
 export function generateStaticParams() {
   if (shouldDeferBulkPrerendering()) return [];
   return Object.keys(categoryData).map((slug) => ({ slug }));

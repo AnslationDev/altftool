@@ -9,6 +9,8 @@ import {
 } from "@/platform/seo/generateMetadata";
 import { shouldDeferBulkPrerendering } from "@/lib/buildPrerenderPolicy";
 
+export const dynamic = "force-static";
+
 export function generateStaticParams() {
   if (shouldDeferBulkPrerendering()) return [];
   return apps.map((app) => ({ slug: app.slug }));

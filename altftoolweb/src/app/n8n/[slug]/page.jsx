@@ -18,6 +18,7 @@ import {
 } from "@/platform/seo/generateMetadata";
 import { shouldDeferBulkPrerendering } from "@/lib/buildPrerenderPolicy";
 
+export const dynamic = "force-static";
 export const revalidate = 3600;
 
 export function generateStaticParams() {

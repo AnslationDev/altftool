@@ -55,6 +55,7 @@ import { isFeatureEnabled } from "@/lib/featureFlags";
 import { shouldDeferBulkPrerendering } from "@/lib/buildPrerenderPolicy";
 import "../../styles/ckeditor.css";
 
+export const dynamic = "force-static";
 export const revalidate = 3600;
 
 const getBlogDetailBySlug = cache(async (slug) => (

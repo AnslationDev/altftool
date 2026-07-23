@@ -5,6 +5,8 @@ import { chartHref } from "../../lib/format";
 import { INSTRUMENTS, instrumentBySymbol, symbolFromSlug, symbolToSlug } from "../../lib/instruments";
 import { shouldDeferBulkPrerendering } from "@/lib/buildPrerenderPolicy";
 
+export const dynamic = "force-static";
+
 export function generateStaticParams() {
   if (shouldDeferBulkPrerendering()) return [];
   return INSTRUMENTS.map(({ symbol }) => ({ symbol: symbolToSlug(symbol) }));

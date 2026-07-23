@@ -7,6 +7,8 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import TextToSpeech from "@/app/wattpad/components/TextToSpeech";
 
+export const dynamic = "force-static";
+
 export function generateStaticParams() {
   if (shouldDeferBulkPrerendering()) return [];
   return chapters.flatMap((chapter) => {

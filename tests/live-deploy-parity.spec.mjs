@@ -44,6 +44,25 @@ test.describe("live deploy parity", () => {
     }
   });
 
+  test("deferred route families render successfully after deployment", async ({ request }) => {
+    const routes = [
+      "/blogs/age-calculator-guide",
+      "/altfgame/2048",
+      "/wattpad/book/love-beyond-time",
+      "/top11/management",
+      "/apps/chatgpt",
+      "/n8n/category/ai",
+      "/homeserv/services/plumbing",
+    ];
+
+    for (const route of routes) {
+      const response = await request.get(`${webUrl}${route}`, {
+        timeout: 60_000,
+      });
+      expect(response.ok(), `${route} response`).toBeTruthy();
+    }
+  });
+
   test("blog index exposes the current accessibility contract", async ({ page }) => {
     await openLivePage(page, "/blogs");
 
@@ -53,8 +72,11 @@ test.describe("live deploy parity", () => {
     await page.keyboard.press("Enter");
     await expect(page.locator("#main-content")).toBeVisible();
 
-    await expect(page.locator('main[aria-labelledby="blog-index-title"]')).toBeVisible();
-    await expect(page.locator("#blog-index-title")).toHaveText("AltFTool Blog");
+    const blogMain = page.getByRole("main", { name: "AltFTool Blog" });
+    await expect(blogMain).toBeVisible();
+    await expect(
+      blogMain.getByRole("heading", { name: "AltFTool Blog", level: 1 }),
+    ).toBeVisible();
     await expect(page.getByRole("textbox", { name: "Search blog articles" })).toBeVisible();
     const sortGroup = page.getByRole("tablist", { name: "Sort articles" });
     await expect(sortGroup).toBeVisible();

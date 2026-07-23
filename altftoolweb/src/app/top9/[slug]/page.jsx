@@ -16,6 +16,8 @@ import {
 } from "../data/getTop9Items";
 import { shouldDeferBulkPrerendering } from "@/lib/buildPrerenderPolicy";
 
+export const dynamic = "force-static";
+
 export function generateStaticParams() {
   if (shouldDeferBulkPrerendering()) return [];
   return getTop9Items().map((item) => ({ slug: item.slug }));

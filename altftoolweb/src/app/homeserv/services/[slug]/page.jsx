@@ -4,6 +4,8 @@ import { ServiceDetailClient } from "./ServiceDetailClient";
 import { createPageMetadata } from "@/platform/seo/generateMetadata";
 import { shouldDeferBulkPrerendering } from "@/lib/buildPrerenderPolicy";
 
+export const dynamic = "force-static";
+
 export function generateStaticParams() {
   if (shouldDeferBulkPrerendering()) return [];
   return services.map((service) => ({

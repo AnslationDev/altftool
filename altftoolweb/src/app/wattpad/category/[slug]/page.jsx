@@ -11,6 +11,8 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 
+export const dynamic = "force-static";
+
 export function generateStaticParams() {
   if (shouldDeferBulkPrerendering()) return [];
   return categories.map((category) => ({ slug: category.slug }));

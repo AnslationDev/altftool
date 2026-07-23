@@ -10,6 +10,7 @@ import { fetchFirebaseLanderBySlug, fetchAllPublishedLanderSlugs } from "../data
 import LanderSections from "../components/LanderSections";
 import { shouldDeferBulkPrerendering } from "@/lib/buildPrerenderPolicy";
 
+export const dynamic = "force-static";
 export const revalidate = 3600;
 
 const getLander = cache((slug) => fetchFirebaseLanderBySlug(slug));
