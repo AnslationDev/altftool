@@ -82,20 +82,43 @@ test("ads.txt authorizes the configured AdSense publisher", async () => {
   );
 });
 
-test("production partner tags retain the configured verification and pixel IDs", async () => {
+test("production layout only includes Google ad monetization", async () => {
   const source = await readFile(
-    new URL("../altftoolweb/src/ads/ProductionPartnerTags.jsx", import.meta.url),
+    new URL("../altftoolweb/src/app/layout.jsx", import.meta.url),
     "utf8",
   );
+  const forbiddenIntegrations = [
+    /monetag/i,
+    /quge5/i,
+    /auqot/i,
+    /11129459/,
+    /248425/,
+    /taboola/i,
+    /skimresources/i,
+    /skimlinks/i,
+    /mitgo-verification/i,
+  ];
 
-  assert.match(source, /1bc9daffdd035cbc7c5e6a6d1d9230cd/);
-  assert.match(source, /quge5\.com\/88\/tag\.min\.js/);
-  assert.match(source, /data-zone="248425"/);
-  assert.match(source, /TABOOLA_PIXEL_ID = 2053347/);
-  assert.match(source, /tb_tfa_script/);
+  assert.match(source, /ProductionAdSenseScript/);
+  assert.match(source, /GoogleAdUnit/);
+  assert.match(source, /AW-17780489814/);
+
+  for (const pattern of forbiddenIntegrations) {
+    assert.doesNotMatch(source, pattern);
+  }
+
+  for (const removedComponent of [
+    "../altftoolweb/src/ads/ProductionPartnerTags.jsx",
+    "../altftoolweb/src/ads/ProductionSkimlinksScript.jsx",
+  ]) {
+    await assert.rejects(
+      readFile(new URL(removedComponent, import.meta.url), "utf8"),
+      (error) => error?.code === "ENOENT",
+    );
+  }
 });
 
-test("Monetag serves its zone worker from the site root without unregistering it", async () => {
+test("legacy third-party worker retires itself without external imports", async () => {
   const [workerSource, layoutSource] = await Promise.all([
     readFile(
       new URL("../altftoolweb/public/sw.js", import.meta.url),
@@ -107,12 +130,9 @@ test("Monetag serves its zone worker from the site root without unregistering it
     ),
   ]);
 
-  assert.match(workerSource, /"domain": "auqot\.com"/);
-  assert.match(workerSource, /"zoneId": 11129459/);
-  assert.match(
-    workerSource,
-    /https:\/\/auqot\.com\/act\/files\/service-worker\.min\.js\?r=sw/,
-  );
-  assert.doesNotMatch(workerSource, /unregister/);
-  assert.doesNotMatch(layoutSource, /legacy-service-worker-cleanup/);
+  assert.match(workerSource, /registration\.unregister/);
+  assert.doesNotMatch(workerSource, /importScripts|https?:\/\//);
+  assert.doesNotMatch(workerSource, /monetag|quge5|auqot|taboola/i);
+  assert.match(layoutSource, /retire-third-party-service-worker/);
+  assert.match(layoutSource, /registration\.unregister/);
 });

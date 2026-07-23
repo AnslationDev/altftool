@@ -12,8 +12,6 @@ import GlobalAnimationProvider from "@/contexts/GlobalAnimationProvider";
 import { AdsProvider } from "@/ads/AdsProvider";
 import GoogleAdUnit from "@/ads/GoogleAdUnit";
 import ProductionAdSenseScript from "@/ads/ProductionAdSenseScript";
-import ProductionPartnerTags from "@/ads/ProductionPartnerTags";
-import ProductionSkimlinksScript from "@/ads/ProductionSkimlinksScript";
 import { isAdsenseProductionDeployment } from "@/ads/adsenseConfig";
 import { Suspense } from "react";
 import { connection } from "next/server";
@@ -65,7 +63,7 @@ const ibmPlexSans = IBM_Plex_Sans({
   display: "swap",
 });
 
-const shouldLoadProductionMonetization = isAdsenseProductionDeployment();
+const shouldLoadGoogleAds = isAdsenseProductionDeployment();
 
 const baseMetadata = {
   metadataBase: new URL(siteConfig.url),
@@ -164,16 +162,11 @@ export default async function RootLayout({ children }) {
   return (
     <html lang="en" data-theme-mode="system" suppressHydrationWarning className={`${geistSans.variable} ${geistMono.variable} ${sora.variable} ${inter.variable} ${ibmPlexSans.variable}`}>
       <head>
-        <meta
-          name="mitgo-verification"
-          content="6fa7b4de-9abc-4d8a-9729-8ec2eea1caa7"
-        />
         <link rel="preconnect" href="https://firestore.googleapis.com" />
         <link rel="preconnect" href="https://firebasestorage.googleapis.com" />
         <link rel="preconnect" href="https://www.googletagmanager.com" />
         <link rel="preconnect" href="https://www.clarity.ms" />
-        <ProductionAdSenseScript enabled={shouldLoadProductionMonetization} />
-        <ProductionPartnerTags enabled={shouldLoadProductionMonetization} />
+        <ProductionAdSenseScript enabled={shouldLoadGoogleAds} />
         <JsonLd
           id="altftool-site-schema"
           data={[createOrganizationJsonLd(), createWebsiteJsonLd()]}
@@ -204,14 +197,45 @@ export default async function RootLayout({ children }) {
           `}
         </Script>
 
+        <Script id="retire-third-party-service-worker" strategy="afterInteractive">
+          {`
+            (function () {
+              if (!("serviceWorker" in navigator)) return;
+
+              navigator.serviceWorker.getRegistrations().then(function (registrations) {
+                var legacyRegistrations = registrations.filter(function (registration) {
+                  return [registration.installing, registration.waiting, registration.active]
+                    .filter(Boolean)
+                    .some(function (worker) {
+                      try {
+                        return new URL(worker.scriptURL).pathname === "/sw.js";
+                      } catch (_) {
+                        return false;
+                      }
+                    });
+                });
+
+                if (!legacyRegistrations.length) return;
+
+                return Promise.all(legacyRegistrations.map(function (registration) {
+                  return registration.unregister();
+                })).then(function () {
+                  if (!("caches" in window)) return;
+                  return caches.keys().then(function (cacheNames) {
+                    return Promise.all(cacheNames.map(function (cacheName) {
+                      return caches.delete(cacheName);
+                    }));
+                  });
+                });
+              }).catch(function () {});
+            })();
+          `}
+        </Script>
+
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-G07GM6LKP1"
           strategy="afterInteractive"
         />
-
-        {/* Skimlinks rewrites outbound commerce links after hydration, but only
-            on the canonical production hosts. */}
-        <ProductionSkimlinksScript enabled={shouldLoadProductionMonetization} />
 
         <Script id="ga-init" strategy="afterInteractive">
           {`
@@ -267,7 +291,7 @@ export default async function RootLayout({ children }) {
         {/* AltBot (chatbot) removed for now — planned for a future release.
             Its module lived at src/platform/chatbot/. */}
         <GlobalChromeGate>
-          <GoogleAdUnit enabled={shouldLoadProductionMonetization} />
+          <GoogleAdUnit enabled={shouldLoadGoogleAds} />
           <Footer />
         </GlobalChromeGate>
 

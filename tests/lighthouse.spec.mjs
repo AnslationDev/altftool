@@ -25,7 +25,6 @@ const DESKTOP_CONFIG = {
       "*google-analytics.com/*",
       "*googletagmanager.com/*",
       "*clarity.ms/*",
-      "*skimresources.com/*",
     ],
     // Heavy routes (e.g. the tool workspace) on a CPU-contended CI runner can
     // exceed Lighthouse's default DevTools-protocol deadline while collecting
