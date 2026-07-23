@@ -1,10 +1,11 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { Search, ChevronRight, ChevronLeft } from "lucide-react";
+import { Search, ChevronRight, ChevronLeft, LoaderCircle, RefreshCcw } from "lucide-react";
 import WorkflowCard from "./WorkflowCard";
 
 const PAGE_SIZE = 12;
+const CATALOG_ENDPOINT = "/api/n8n/workflows";
 
 // Self-contained client-side filter over the workflows already passed as props.
 function filterWorkflows(list, query) {
@@ -18,14 +19,57 @@ function filterWorkflows(list, query) {
   );
 }
 
-export default function WorkflowExplorer({ workflows = [], categories = [] }) {
+export default function WorkflowExplorer({
+  workflows: initialWorkflows = [],
+  categories = [],
+  totalWorkflows = initialWorkflows.length,
+}) {
   const [query, setQuery] = useState("");
   const [activeCat, setActiveCat] = useState("all");
   const [visible, setVisible] = useState(PAGE_SIZE);
+  const [workflows, setWorkflows] = useState(initialWorkflows);
+  const [catalogStatus, setCatalogStatus] = useState("idle");
 
   const scrollerRef = useRef(null);
+  const catalogPromiseRef = useRef(null);
   const [canLeft, setCanLeft] = useState(false);
   const [canRight, setCanRight] = useState(false);
+  const catalogComplete = workflows.length >= totalWorkflows;
+
+  const ensureCatalog = useCallback(async () => {
+    if (catalogComplete) return workflows;
+    if (catalogPromiseRef.current) return catalogPromiseRef.current;
+
+    setCatalogStatus("loading");
+    const request = fetch(CATALOG_ENDPOINT, {
+      cache: "force-cache",
+      credentials: "same-origin",
+      headers: { Accept: "application/json" },
+    })
+      .then(async (response) => {
+        if (!response.ok) throw new Error(`Catalog request failed with ${response.status}`);
+        const payload = await response.json();
+        if (!Array.isArray(payload?.workflows)) {
+          throw new Error("Catalog response is invalid");
+        }
+        return payload.workflows;
+      })
+      .then((nextWorkflows) => {
+        setWorkflows(nextWorkflows);
+        setCatalogStatus("ready");
+        return nextWorkflows;
+      })
+      .catch((error) => {
+        setCatalogStatus("error");
+        throw error;
+      })
+      .finally(() => {
+        catalogPromiseRef.current = null;
+      });
+
+    catalogPromiseRef.current = request;
+    return request;
+  }, [catalogComplete, workflows]);
 
   const updateArrows = useCallback(() => {
     const el = scrollerRef.current;
@@ -51,6 +95,11 @@ export default function WorkflowExplorer({ workflows = [], categories = [] }) {
     };
   }, [updateArrows, categories.length]);
 
+  useEffect(() => {
+    if (catalogComplete || (!query.trim() && activeCat === "all")) return;
+    ensureCatalog().catch(() => {});
+  }, [activeCat, catalogComplete, ensureCatalog, query]);
+
   const scrollBy = (dir) => {
     const el = scrollerRef.current;
     if (!el) return;
@@ -66,11 +115,29 @@ export default function WorkflowExplorer({ workflows = [], categories = [] }) {
   }, [workflows, query, activeCat]);
 
   const shown = filtered.slice(0, visible);
-  const hasMore = visible < filtered.length;
+  const resolvingMatches =
+    !catalogComplete &&
+    catalogStatus !== "error" &&
+    (Boolean(query.trim()) || activeCat !== "all");
+  const hasMore =
+    visible < filtered.length ||
+    (!catalogComplete && !query.trim() && activeCat === "all");
 
   const pick = (slug) => {
     setActiveCat(slug);
     setVisible(PAGE_SIZE);
+    if (slug !== "all") ensureCatalog().catch(() => {});
+  };
+
+  const loadMore = async () => {
+    if (!catalogComplete) {
+      try {
+        await ensureCatalog();
+      } catch {
+        return;
+      }
+    }
+    setVisible((current) => current + PAGE_SIZE);
   };
 
   return (
@@ -127,8 +194,33 @@ export default function WorkflowExplorer({ workflows = [], categories = [] }) {
         </div>
       </div>
 
+      {catalogStatus === "error" ? (
+        <div
+          className="mb-6 flex flex-col gap-3 rounded-lg border border-(--color-border) bg-(--color-card) px-4 py-3 text-sm text-(--color-foreground) sm:flex-row sm:items-center sm:justify-between"
+          role="alert"
+        >
+          <span>The full workflow catalog could not be loaded.</span>
+          <button
+            type="button"
+            onClick={() => ensureCatalog().catch(() => {})}
+            className="inline-flex h-9 items-center justify-center gap-2 rounded-md border border-(--color-border) bg-(--color-card) px-3 font-semibold transition-colors hover:border-(--color-primary) hover:text-(--color-primary)"
+          >
+            <RefreshCcw size={15} aria-hidden="true" />
+            Retry
+          </button>
+        </div>
+      ) : null}
+
       {/* Grid */}
-      {shown.length === 0 ? (
+      {shown.length === 0 && resolvingMatches ? (
+        <div
+          className="flex min-h-40 items-center justify-center gap-2 text-sm text-(--color-muted-foreground)"
+          role="status"
+        >
+          <LoaderCircle size={18} className="animate-spin" aria-hidden="true" />
+          Loading matching workflows
+        </div>
+      ) : shown.length === 0 ? (
         <p className="py-16 text-center text-(--color-muted-foreground)">
           No workflows match your search.
         </p>
@@ -144,10 +236,15 @@ export default function WorkflowExplorer({ workflows = [], categories = [] }) {
       {hasMore && (
         <div className="mt-10 flex justify-center">
           <button
-            onClick={() => setVisible((v) => v + PAGE_SIZE)}
-            className="rounded-full border border-(--color-border) bg-(--color-card) px-6 py-2.5 text-sm font-semibold text-(--color-foreground) transition-colors hover:border-(--color-primary) hover:text-(--color-primary)"
+            type="button"
+            onClick={loadMore}
+            disabled={catalogStatus === "loading"}
+            className="inline-flex min-h-10 items-center justify-center gap-2 rounded-full border border-(--color-border) bg-(--color-card) px-6 py-2.5 text-sm font-semibold text-(--color-foreground) transition-colors hover:border-(--color-primary) hover:text-(--color-primary) disabled:cursor-wait disabled:opacity-70"
           >
-            Load more workflows
+            {catalogStatus === "loading" ? (
+              <LoaderCircle size={16} className="animate-spin" aria-hidden="true" />
+            ) : null}
+            {catalogStatus === "loading" ? "Loading workflows" : "Load more workflows"}
           </button>
         </div>
       )}

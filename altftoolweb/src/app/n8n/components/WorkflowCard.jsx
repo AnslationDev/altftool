@@ -10,9 +10,10 @@ function formatCount(n) {
 }
 
 export default function WorkflowCard({ workflow }) {
-  const { slug, title, description, author, categories, nodes, totalViews } = workflow;
+  const { slug, title, description, author, categories, nodes, nodeCount, totalViews } = workflow;
   const shownNodes = nodes.slice(0, 4);
-  const extra = nodes.length - shownNodes.length;
+  const totalNodeCount = nodeCount || nodes.length;
+  const extra = Math.max(0, totalNodeCount - shownNodes.length);
 
   return (
     <div className="group flex h-full flex-col rounded-2xl border border-(--color-border) bg-(--color-card) p-5 transition-all hover:border-(--color-primary) hover:shadow-lg">
@@ -67,7 +68,7 @@ export default function WorkflowCard({ workflow }) {
             <Eye size={13} /> {formatCount(totalViews)}
           </span>
           <span className="flex items-center gap-1" title="Nodes used">
-            <Workflow size={13} /> {nodes.length}
+            <Workflow size={13} /> {totalNodeCount}
           </span>
         </div>
       </div>

@@ -1,7 +1,8 @@
-import { Suspense } from "react";
 import SearchContent from "./SearchContent";
 import { createPageMetadata } from "@/platform/seo/generateMetadata";
-import { RouteLoadingShell } from "@/components/ui/route-loading";
+import { searchAltFTool } from "./searchIndex";
+
+export const revalidate = 3600;
 
 export async function generateMetadata() {
   return {
@@ -18,10 +19,10 @@ export async function generateMetadata() {
   };
 }
 
-export default function Page() {
-  return (
-    <Suspense fallback={<RouteLoadingShell variant="listing" />}>
-      <SearchContent />
-    </Suspense>
-  );
+export default async function Page({ searchParams }) {
+  const params = await searchParams;
+  const query = String(params?.q || "").trim().slice(0, 100);
+  const searchResult = query.length >= 2 ? await searchAltFTool(query) : null;
+
+  return <SearchContent query={query} searchResult={searchResult} />;
 }

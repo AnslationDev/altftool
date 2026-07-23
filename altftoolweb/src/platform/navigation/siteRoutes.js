@@ -355,7 +355,6 @@ export const PUBLIC_NAV_ITEMS = [
   {
     ...SITE_ROUTES.tools,
     icon: Wrench,
-    menuAlign: "left",
     menuColumns: 4,
     options: [
       { ...SITE_ROUTES.tools, group: "Directories & apps", icon: Wrench },

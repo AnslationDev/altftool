@@ -1,5 +1,6 @@
 import { toolMetaMap } from "@/platform/registry/toolMetaMap";
 import { slugifyCategory } from "@/platform/registry/categoryTaxonomy";
+import { unstable_cache } from "next/cache";
 import {
   blogTaxonomySlug,
   getAllBlogTags,
@@ -326,13 +327,26 @@ async function getLiveSitemapCollections() {
   };
 }
 
-export async function getSitemapEntries() {
+const EMPTY_LIVE_COLLECTIONS = Object.freeze({
+  firebaseBlogs: [],
+  extensions: [],
+  brandCategories: [],
+  brandSubcategories: [],
+  brands: [],
+});
+
+async function buildSitemapEntries({
+  includeLiveCollections = true,
+  includeSeoConfig = true,
+} = {}) {
   const entries = [];
   const seen = new Set();
   // ALTF Engine: load central config once per build. Returns an empty/disabled
   // config (inert) unless the engine is enabled, so output is unchanged by default.
-  activeSeoConfig = await loadSeoConfig().catch(() => null);
-  const liveCollections = await getLiveSitemapCollections();
+  activeSeoConfig = includeSeoConfig ? await loadSeoConfig().catch(() => null) : null;
+  const liveCollections = includeLiveCollections
+    ? await getLiveSitemapCollections()
+    : EMPTY_LIVE_COLLECTIONS;
   const sitemapBlogs = [...getAllBlogs(), ...liveCollections.firebaseBlogs];
 
   for (const route of staticRoutes) {
@@ -772,6 +786,28 @@ export async function getSitemapEntries() {
 
   return entries;
 }
+
+export const getSitemapEntries = unstable_cache(
+  buildSitemapEntries,
+  ["altftool-sitemap-entries-v1"],
+  {
+    revalidate: 3600,
+    tags: ["altftool-sitemap-entries"],
+  },
+);
+
+export const getStaticSearchSitemapEntries = unstable_cache(
+  () =>
+    buildSitemapEntries({
+      includeLiveCollections: false,
+      includeSeoConfig: false,
+    }),
+  ["altftool-static-search-sitemap-entries-v1"],
+  {
+    revalidate: 86400,
+    tags: ["altftool-static-search-sitemap-entries"],
+  },
+);
 
 export default async function sitemap() {
   return getSitemapEntries();

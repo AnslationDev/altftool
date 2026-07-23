@@ -1,335 +1,403 @@
-"use client";
-
-import { useSearchParams } from "next/navigation";
-import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
-
-import { toolMetaMap } from "@/platform/registry/toolMetaMap";
-import { useFirebaseExtensions } from "@/app/extensions/hooks/useFirebaseExtensions";
 import {
   ArrowRight,
   ArrowUpRight,
-  BadgeCheck,
-  Braces,
-  Calculator,
-  FileArchive,
-  FileCode2,
-  FileJson,
+  BookOpen,
+  BriefcaseBusiness,
+  CircleHelp,
   FileText,
   Gamepad2,
-  GraduationCap,
-  Image as ImageIcon,
-  Link2,
-  Newspaper,
+  Grid2X2,
+  LayoutGrid,
+  Package,
   Puzzle,
-  QrCode,
-  Scissors,
   Search,
   ShoppingBag,
-  Sparkles,
-  Type,
+  Smartphone,
+  TrendingUp,
+  Workflow,
   Wrench,
+  X,
 } from "lucide-react";
-import { AltftoolLoader } from "@/components/ui/route-loading";
 
-const POPULAR_SEARCHES = ["json", "pdf", "image", "base64", "regex", "coupon", "news", "academy"];
+const POPULAR_SEARCHES = [
+  "PDF",
+  "Image",
+  "Calculator",
+  "AI",
+  "JSON",
+  "Business",
+  "n8n",
+  "Deals",
+];
 
-function getSearchResultIcon(item, sectionTitle) {
-  const category = Array.isArray(item.category) ? item.category.join(" ") : item.category || "";
-  const searchable = `${item.slug || ""} ${item.name || ""} ${item.description || ""} ${category}`.toLowerCase();
+const STARTING_POINTS = [
+  {
+    title: "Tools & calculators",
+    description: "Utilities for files, text, images, finance, health, and development.",
+    href: "/tools/all",
+    icon: Wrench,
+  },
+  {
+    title: "Products",
+    description: "AltFTool workspaces for ideas, security, domains, careers, and automation.",
+    href: "/products",
+    icon: Package,
+  },
+  {
+    title: "Automation workflows",
+    description: "Production-ready n8n templates organized by use case and technology.",
+    href: "/n8n",
+    icon: Workflow,
+  },
+  {
+    title: "Business services",
+    description: "Housing, insurance, loans, travel, legal, pet, and senior-care routes.",
+    href: "/bops",
+    icon: BriefcaseBusiness,
+  },
+  {
+    title: "Guides & learning",
+    description: "Blogs, academy resources, news, prompts, and practical explainers.",
+    href: "/blogs",
+    icon: BookOpen,
+  },
+  {
+    title: "Deals & buying guides",
+    description: "Offers, product research, brand ratings, and ranked recommendations.",
+    href: "/deals",
+    icon: ShoppingBag,
+  },
+];
 
-  if (searchable.includes("base64") || searchable.includes("encode") || searchable.includes("decode")) return Braces;
-  if (searchable.includes("qr")) return QrCode;
-  if (searchable.includes("json")) return FileJson;
-  if (searchable.includes("regex")) return FileCode2;
-  if (searchable.includes("image") || searchable.includes("photo") || searchable.includes("background")) return ImageIcon;
-  if (searchable.includes("word") || searchable.includes("text") || searchable.includes("case") || searchable.includes("docx")) return Type;
-  if (searchable.includes("merge") || searchable.includes("compress") || searchable.includes("zip")) return FileArchive;
-  if (searchable.includes("split") || searchable.includes("remove") || searchable.includes("crop") || searchable.includes("trim")) return Scissors;
-  if (searchable.includes("annotation") || searchable.includes("watermark") || searchable.includes("purifier") || searchable.includes("clean")) return BadgeCheck;
-  if (searchable.includes("pdf")) return FileText;
-  if (searchable.includes("calculator") || searchable.includes("convert") || searchable.includes("currency")) return Calculator;
-  if (searchable.includes("coupon") || searchable.includes("deal") || searchable.includes("shop")) return ShoppingBag;
-  if (searchable.includes("news")) return Newspaper;
-  if (searchable.includes("academy") || searchable.includes("learn")) return GraduationCap;
-  if (searchable.includes("game")) return Gamepad2;
-  if (searchable.includes("link") || searchable.includes("url")) return Link2;
-  if (sectionTitle === "Extensions") return Puzzle;
-  return Wrench;
+const GROUP_ICONS = {
+  platform: LayoutGrid,
+  tools: Wrench,
+  learn: BookOpen,
+  commerce: ShoppingBag,
+  experiences: Gamepad2,
+  business: BriefcaseBusiness,
+  support: CircleHelp,
+  other: Grid2X2,
+};
+
+const TYPE_ICONS = {
+  Tool: Wrench,
+  "Tool category": LayoutGrid,
+  Workflow,
+  Guide: BookOpen,
+  Extension: Puzzle,
+  App: Smartphone,
+  Product: Package,
+  Signal: TrendingUp,
+  "Business service": BriefcaseBusiness,
+  Shopping: ShoppingBag,
+  Experience: Gamepad2,
+};
+
+function searchHref(term) {
+  return `/search?q=${encodeURIComponent(term)}`;
 }
 
-export default function SearchPage() {
-  const searchParams = useSearchParams();
-  const query = searchParams.get("q") || "";
-
-  const { extensions: dynamicExtensions, loading } = useFirebaseExtensions();
-
-  const trimmedQuery = query.trim().toLowerCase();
-  const isValid = trimmedQuery.length >= 2;
-
-  // Blog posts were entirely absent from site-wide search. Reuse the existing
-  // ISR-cached /api/blogs route (live Firestore posts) — fetched lazily, once,
-  // and only when there is a valid query.
-  const [blogIndex, setBlogIndex] = useState([]);
-  useEffect(() => {
-    if (!isValid || blogIndex.length) return undefined;
-
-    const controller = new AbortController();
-    fetch("/api/blogs?limit=72", {
-      headers: { accept: "application/json" },
-      signal: controller.signal,
-    })
-      .then((response) => (response.ok ? response.json() : null))
-      .then((payload) => {
-        const posts = Array.isArray(payload?.posts) ? payload.posts : [];
-        if (!posts.length) return;
-        setBlogIndex(
-          posts.map((post) => ({
-            slug: post.slug,
-            name: post.heading || post.title,
-            description: post.excerpt || post.seoDescription || "",
-            category: post.category,
-            searchable: [
-              post.heading,
-              String(post.slug || "").replace(/-/g, " "),
-              post.category,
-              post.excerpt,
-              ...(Array.isArray(post.tags) ? post.tags : []),
-            ]
-              .filter(Boolean)
-              .join(" ")
-              .toLowerCase(),
-          })),
-        );
-      })
-      .catch(() => {
-        /* search still works for tools/extensions */
-      });
-
-    return () => controller.abort();
-  }, [isValid, blogIndex.length]);
-
-  const tools = useMemo(
-    () =>
-      Object.entries(toolMetaMap).map(([slug, data]) => ({
-        slug,
-        ...data,
-      })),
-    [],
+function SearchForm({ query }) {
+  return (
+    <form action="/search" className="mt-6 flex w-full flex-col gap-2 sm:flex-row" role="search">
+      <div className="relative min-w-0 flex-1">
+        <label className="sr-only" htmlFor="global-search-input">
+          Search all AltFTool pages
+        </label>
+        <Search
+          aria-hidden="true"
+          className="pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-muted-foreground"
+        />
+        <input
+          autoComplete="off"
+          autoFocus
+          className="h-13 w-full rounded-md border border-border bg-card pl-12 pr-12 text-base text-foreground shadow-sm outline-none transition placeholder:text-muted-foreground focus:border-primary focus:ring-2 focus:ring-primary"
+          defaultValue={query}
+          id="global-search-input"
+          maxLength={100}
+          minLength={2}
+          name="q"
+          placeholder="Search tools, workflows, products, guides, services..."
+          role="searchbox"
+          spellCheck={false}
+          type="text"
+        />
+        {query ? (
+          <Link
+            aria-label="Clear global search"
+            className="absolute right-1.5 top-1/2 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-md text-muted-foreground transition hover:bg-muted hover:text-foreground focus:outline-none focus:ring-2 focus:ring-primary"
+            href="/search"
+            title="Clear search"
+          >
+            <X aria-hidden="true" className="h-4 w-4" />
+          </Link>
+        ) : null}
+      </div>
+      <button
+        className="inline-flex h-13 shrink-0 items-center justify-center gap-2 rounded-md bg-primary px-6 text-sm font-semibold text-primary-foreground transition hover:bg-[var(--primary-hover)] focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background"
+        type="submit"
+      >
+        <Search aria-hidden="true" className="h-4 w-4" />
+        Search
+      </button>
+    </form>
   );
+}
 
-  const results = useMemo(() => {
-    if (!isValid) return null;
-    const matchItem = (item) => {
-      const category = Array.isArray(item.category) ? item.category.join(" ") : item.category || "";
-      const text = `${item.slug || ""} ${item.name} ${item.description || ""} ${category}`.toLowerCase();
-      return text.includes(trimmedQuery);
-    };
-    const rankItem = (item) => {
-      const name = String(item.name || "").toLowerCase();
-      const slug = String(item.slug || "").replace(/-/g, " ");
-      if (name === trimmedQuery || slug === trimmedQuery) return 0;
-      if (name.startsWith(trimmedQuery) || slug.startsWith(trimmedQuery)) return 1;
-      return 2;
-    };
-
-    return {
-      tools: tools.filter(matchItem).sort((a, b) => rankItem(a) - rankItem(b) || a.name.localeCompare(b.name)),
-      extensions: dynamicExtensions.filter(matchItem).sort((a, b) => rankItem(a) - rankItem(b) || a.name.localeCompare(b.name)),
-      blogs: blogIndex
-        .filter((item) => item.searchable.includes(trimmedQuery))
-        .sort((a, b) => rankItem(a) - rankItem(b) || a.name.localeCompare(b.name)),
-    };
-  }, [blogIndex, dynamicExtensions, isValid, tools, trimmedQuery]);
-
-  if (!isValid) {
-    return (
-      <main className="altf-search-page">
-        <section className="altf-search-shell altf-search-empty-shell">
-          <div className="altf-search-orb altf-search-orb-left" aria-hidden="true" />
-          <div className="altf-search-orb altf-search-orb-right" aria-hidden="true" />
-          <div className="mx-auto max-w-3xl text-center">
-            <div className="altf-search-icon-badge mx-auto">
-              <Search className="h-5 w-5" />
-            </div>
-            <p className="altf-search-kicker mt-5">AltFTool Search</p>
-            <h1 className="altf-search-title mt-3">Search your productivity workspace</h1>
-            <p className="altf-search-description mx-auto mt-4">
-              Type at least 2 characters to find tools, extensions, guides, and feature routes.
-            </p>
-            <div className="mt-7 flex flex-wrap justify-center gap-2.5">
-              {POPULAR_SEARCHES.map((term) => (
-                <Link
-                  key={term}
-                  href={`/search?q=${encodeURIComponent(term)}`}
-                  className="altf-search-pill"
-                >
-                  {term}
-                </Link>
-              ))}
-            </div>
-          </div>
-        </section>
-      </main>
-    );
-  }
-
-  const hasResults =
-    results.tools.length ||
-    results.extensions.length ||
-    results.blogs.length;
-  const totalResults = results.tools.length + results.extensions.length + results.blogs.length;
+function ResultCard({ item }) {
+  const Icon = TYPE_ICONS[item.type] || FileText;
 
   return (
-    <main className="altf-search-page">
-      <section className="altf-search-shell">
-        <div className="altf-search-orb altf-search-orb-left" aria-hidden="true" />
-        <div className="altf-search-orb altf-search-orb-right" aria-hidden="true" />
+    <li>
+      <Link
+        className="group flex h-full min-h-36 gap-3 rounded-lg border border-border bg-card p-4 shadow-sm transition hover:border-primary hover:shadow-md focus:outline-none focus:ring-2 focus:ring-primary"
+        href={item.path}
+      >
+        <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-md bg-muted text-primary">
+          <Icon aria-hidden="true" className="h-5 w-5" />
+        </span>
+        <span className="min-w-0 flex-1">
+          <span className="flex items-start justify-between gap-3">
+            <span className="min-w-0 text-base font-semibold leading-6 text-foreground group-hover:text-primary">
+              {item.label}
+            </span>
+            <ArrowUpRight
+              aria-hidden="true"
+              className="mt-0.5 h-4 w-4 shrink-0 text-muted-foreground transition group-hover:text-primary"
+            />
+          </span>
+          <span className="mt-1 block line-clamp-2 text-sm leading-6 text-muted-foreground">
+            {item.description}
+          </span>
+          <span className="mt-3 flex min-w-0 items-center gap-2">
+            <span className="shrink-0 rounded-sm bg-muted px-2 py-1 text-xs font-semibold text-foreground">
+              {item.type}
+            </span>
+            <span className="min-w-0 truncate text-xs text-muted-foreground">{item.path}</span>
+          </span>
+        </span>
+      </Link>
+    </li>
+  );
+}
 
-        <div className="altf-search-hero-grid">
+function ResultGroup({ group, query }) {
+  const Icon = GROUP_ICONS[group.id] || Grid2X2;
+
+  return (
+    <section aria-labelledby={`search-group-${group.id}`} id={`search-group-${group.id}`}>
+      <div className="flex flex-wrap items-end justify-between gap-3 border-b border-border pb-3">
+        <div className="flex items-start gap-3">
+          <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-md bg-muted text-primary">
+            <Icon aria-hidden="true" className="h-5 w-5" />
+          </span>
           <div>
-            <div className="altf-search-badge">
-              <Sparkles className="h-4 w-4" />
-              Smart search results
-            </div>
-            <h1 className="altf-search-title mt-5">
-              Results for <span>&quot;{query}&quot;</span>
-            </h1>
-            <p className="altf-search-description mt-4">
-              Jump into matching tools and extensions from the same workspace experience as the homepage.
+            <h2 className="text-xl font-semibold text-foreground" id={`search-group-${group.id}`}>
+              {group.title}
+            </h2>
+            <p className="mt-1 text-sm text-muted-foreground">
+              {group.total.toLocaleString()} match{group.total === 1 ? "" : "es"}
             </p>
           </div>
         </div>
-
-        {loading ? (
-          <AltftoolLoader
-            label="Refreshing extension results"
-            detail="Tools are ready while live extensions finish loading"
-            compact
-            className="mx-auto mt-5 max-w-xl"
-          />
+        {group.hasMore ? (
+          <Link
+            className="inline-flex min-h-10 items-center gap-2 rounded-md px-3 text-sm font-semibold text-primary transition hover:bg-muted focus:outline-none focus:ring-2 focus:ring-primary"
+            href={`/site-map?q=${encodeURIComponent(query)}`}
+          >
+            Browse all
+            <ArrowRight aria-hidden="true" className="h-4 w-4" />
+          </Link>
         ) : null}
-        <div className="altf-search-actions">
-          <Link
-            href={`/tools/all?search=${encodeURIComponent(query.trim())}`}
-            className="altf-search-primary-action"
-          >
-            <Wrench className="h-3.5 w-3.5" />
-            Search tools directory
-            <ArrowRight className="h-3.5 w-3.5" />
-          </Link>
-          <Link
-            href="/extensions"
-            className="altf-search-secondary-action"
-          >
-            <Puzzle className="h-3.5 w-3.5" />
-            Browse extensions
-          </Link>
+      </div>
+
+      <ul className="mt-4 grid grid-cols-1 gap-3 md:grid-cols-2 xl:grid-cols-3">
+        {group.items.map((item) => (
+          <ResultCard item={item} key={item.path} />
+        ))}
+      </ul>
+    </section>
+  );
+}
+
+export default function SearchContent({ query = "", searchResult = null }) {
+  const trimmedQuery = query.trim();
+  const isValid = trimmedQuery.length >= 2;
+  const hasResults = Boolean(searchResult?.total);
+
+  return (
+    <main className="min-h-[calc(100vh-4rem)] bg-background text-foreground">
+      <section className="border-b border-border bg-card">
+        <div className="mx-auto w-full max-w-6xl px-4 py-8 sm:px-6 sm:py-10 lg:px-8">
+          <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-sm text-muted-foreground">
+            <Link className="transition hover:text-primary" href="/">
+              Home
+            </Link>
+            <span aria-hidden="true">/</span>
+            <span className="text-foreground">Search</span>
+          </nav>
+
+          <div className="mt-5 max-w-3xl">
+            <div className="flex h-10 w-10 items-center justify-center rounded-md bg-muted text-primary">
+              <Search aria-hidden="true" className="h-5 w-5" />
+            </div>
+            <h1 className="mt-4 text-3xl font-bold sm:text-4xl">Search all of AltFTool</h1>
+            <p className="mt-3 text-base leading-7 text-muted-foreground">
+              Find tools, workflows, products, extensions, guides, deals, services, and public pages
+              from one global search.
+            </p>
+          </div>
+
+          <SearchForm query={trimmedQuery} />
+
+          <div className="mt-4 flex flex-wrap items-center gap-2" aria-label="Popular searches">
+            <span className="mr-1 text-xs font-semibold uppercase text-muted-foreground">Popular</span>
+            {POPULAR_SEARCHES.map((term) => (
+              <Link
+                className="inline-flex min-h-9 items-center rounded-md border border-border bg-background px-3 text-sm font-medium text-muted-foreground transition hover:border-primary hover:text-primary focus:outline-none focus:ring-2 focus:ring-primary"
+                href={searchHref(term)}
+                key={term}
+              >
+                {term}
+              </Link>
+            ))}
+          </div>
         </div>
       </section>
 
-      <div className="altf-search-inline-summary" aria-label="Search result summary">
-        <span><strong>{totalResults}</strong> total matches</span>
-        <span><strong>{results.tools.length}</strong> tools</span>
-        <span><strong>{results.extensions.length}</strong> extensions</span>
-        <span><strong>{results.blogs.length}</strong> guides</span>
-      </div>
+      <div className="mx-auto w-full max-w-6xl px-4 py-8 sm:px-6 lg:px-8">
+        {!isValid ? (
+          <>
+            {trimmedQuery ? (
+              <div
+                className="mb-6 rounded-md border border-border bg-muted px-4 py-3 text-sm text-muted-foreground"
+                role="status"
+              >
+                Type at least 2 characters to search across AltFTool.
+              </div>
+            ) : null}
 
-      {!hasResults && (
-        <section className="altf-search-empty-state">
-          <div className="altf-search-icon-badge mx-auto">
-            <Search className="h-5 w-5" />
-          </div>
-          <h2 className="mt-5 text-2xl font-black text-[var(--foreground)]">No results found</h2>
-          <p className="altf-search-description mx-auto mt-3">
-            Try a shorter keyword or open the tools directory search.
-          </p>
-        </section>
-      )}
-
-      <div className="altf-search-results-wrap">
-        <ResultSection
-          title="Tools"
-          items={results.tools}
-          base="/tools/all"
-          accent="primary"
-        />
-        <ResultSection
-          title="Extensions"
-          items={results.extensions}
-          base="/extensions"
-          accent="cyan"
-        />
-        <ResultSection
-          title="Guides & Blogs"
-          items={results.blogs}
-          base="/blogs"
-          accent="primary"
-        />
-      </div>
-    </main>
-  );
-}
-
-function ResultSection({ title, items, base, accent }) {
-  if (!items.length) return null;
-
-  return (
-    <section className="altf-search-result-section">
-      <div className="altf-search-section-heading">
-        <div>
-          <p className="altf-search-kicker">Matched {title}</p>
-          <h2>{title}</h2>
-        </div>
-        <span>{items.length} result{items.length === 1 ? "" : "s"}</span>
-      </div>
-
-      <div className="altf-search-result-grid">
-        {items.map((item) => {
-          const ResultIcon = getSearchResultIcon(item, title);
-
-          return (
-            <Link
-              key={item.slug}
-              href={`${base}/${item.slug}`}
-              className={`altf-search-result-card group altf-search-result-card-${accent}`}
-            >
-              <div className="altf-search-result-card-top">
-                <span className="altf-search-result-icon">
-                  <ResultIcon className="h-5 w-5" />
-                </span>
-                <span className="altf-search-result-status">
-                  <BadgeCheck className="h-3.5 w-3.5" />
-                  Match
-                </span>
+            <section aria-labelledby="search-starting-points">
+              <div className="flex flex-wrap items-end justify-between gap-3">
+                <div>
+                  <h2 className="text-xl font-semibold" id="search-starting-points">
+                    Browse popular areas
+                  </h2>
+                  <p className="mt-1 text-sm leading-6 text-muted-foreground">
+                    Start with a directory or search for a specific task above.
+                  </p>
+                </div>
+                <Link
+                  className="inline-flex min-h-10 items-center gap-2 rounded-md px-3 text-sm font-semibold text-primary transition hover:bg-muted focus:outline-none focus:ring-2 focus:ring-primary"
+                  href="/site-map"
+                >
+                  View complete site map
+                  <ArrowRight aria-hidden="true" className="h-4 w-4" />
+                </Link>
               </div>
 
-              <h3>{item.name}</h3>
+              <ul className="mt-5 grid grid-cols-1 gap-3 md:grid-cols-2 xl:grid-cols-3">
+                {STARTING_POINTS.map((item) => {
+                  const Icon = item.icon;
+                  return (
+                    <li key={item.href}>
+                      <Link
+                        className="group flex h-full min-h-32 gap-3 rounded-lg border border-border bg-card p-4 shadow-sm transition hover:border-primary hover:shadow-md focus:outline-none focus:ring-2 focus:ring-primary"
+                        href={item.href}
+                      >
+                        <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-md bg-muted text-primary">
+                          <Icon aria-hidden="true" className="h-5 w-5" />
+                        </span>
+                        <span className="min-w-0">
+                          <span className="flex items-center gap-2 text-base font-semibold group-hover:text-primary">
+                            {item.title}
+                            <ArrowRight
+                              aria-hidden="true"
+                              className="h-4 w-4 shrink-0 transition group-hover:translate-x-0.5"
+                            />
+                          </span>
+                          <span className="mt-1 block text-sm leading-6 text-muted-foreground">
+                            {item.description}
+                          </span>
+                        </span>
+                      </Link>
+                    </li>
+                  );
+                })}
+              </ul>
+            </section>
+          </>
+        ) : (
+          <>
+            <section aria-live="polite" className="flex flex-wrap items-center justify-between gap-3">
+              <div>
+                <h2 className="text-xl font-semibold">
+                  {hasResults ? (
+                    <>
+                      {searchResult.total.toLocaleString()} result
+                      {searchResult.total === 1 ? "" : "s"} for &quot;{trimmedQuery}&quot;
+                    </>
+                  ) : (
+                    <>No results for &quot;{trimmedQuery}&quot;</>
+                  )}
+                </h2>
+                <p className="mt-1 text-sm text-muted-foreground">
+                  {searchResult
+                    ? `Searched ${searchResult.searchedRoutes.toLocaleString()} public AltFTool routes.`
+                    : "Try a shorter keyword or a related term."}
+                </p>
+              </div>
+              <Link
+                className="inline-flex min-h-10 items-center gap-2 rounded-md border border-border bg-card px-3 text-sm font-semibold transition hover:border-primary hover:text-primary focus:outline-none focus:ring-2 focus:ring-primary"
+                href="/site-map"
+              >
+                <Grid2X2 aria-hidden="true" className="h-4 w-4" />
+                Complete site map
+              </Link>
+            </section>
 
-              <p className="line-clamp-2">
-                {item.description}
-              </p>
-              {item.category ? (
-                <div className="altf-search-category-row">
-                  {(Array.isArray(item.category) ? item.category : [item.category]).slice(0, 3).map((category) => (
-                    <span
-                      key={category}
+            {hasResults ? (
+              <>
+                <nav
+                  aria-label="Search result categories"
+                  className="mt-5 flex gap-2 overflow-x-auto pb-2"
+                >
+                  {searchResult.groups.map((group) => (
+                    <a
+                      className="inline-flex min-h-10 shrink-0 items-center gap-2 rounded-md border border-border bg-card px-3 text-sm font-medium text-muted-foreground transition hover:border-primary hover:text-primary focus:outline-none focus:ring-2 focus:ring-primary"
+                      href={`#search-group-${group.id}`}
+                      key={group.id}
                     >
-                      {category}
-                    </span>
+                      {group.title}
+                      <span className="rounded-sm bg-muted px-1.5 py-0.5 text-xs font-semibold text-foreground">
+                        {group.total}
+                      </span>
+                    </a>
+                  ))}
+                </nav>
+
+                <div className="mt-8 space-y-10">
+                  {searchResult.groups.map((group) => (
+                    <ResultGroup group={group} key={group.id} query={trimmedQuery} />
                   ))}
                 </div>
-              ) : null}
-
-              <div className="altf-search-card-arrow">
-                <ArrowUpRight
-                  className="h-4 w-4"
-                />
-              </div>
-            </Link>
-          );
-        })}
+              </>
+            ) : (
+              <section className="mt-8 rounded-lg border border-border bg-card p-6 text-center shadow-sm">
+                <div className="mx-auto flex h-10 w-10 items-center justify-center rounded-md bg-muted text-primary">
+                  <Search aria-hidden="true" className="h-5 w-5" />
+                </div>
+                <h2 className="mt-4 text-xl font-semibold">Try another search</h2>
+                <p className="mx-auto mt-2 max-w-xl text-sm leading-6 text-muted-foreground">
+                  Search by task, file type, product, category, service, workflow node, or route name.
+                </p>
+              </section>
+            )}
+          </>
+        )}
       </div>
-    </section>
+    </main>
   );
 }

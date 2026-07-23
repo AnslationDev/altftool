@@ -276,7 +276,7 @@ export default function Header() {
       <header
         id="main-header"
         data-hydrated={themeReady ? "true" : "false"}
-        className="sticky top-0 z-50 border-b border-border bg-background/90 px-4 shadow-sm backdrop-blur-xl sm:px-6 lg:px-8"
+        className="sticky top-0 z-50 isolate border-b border-border bg-background/90 px-4 shadow-sm backdrop-blur-xl sm:px-6 lg:px-8"
       >
         <div className="mx-auto grid h-16 max-w-[var(--anslation-ds-container)] grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-3">
           <Link
@@ -295,7 +295,7 @@ export default function Header() {
 
           <nav
             aria-label="Primary navigation"
-            className="hidden min-w-0 items-center justify-center gap-0.5 justify-self-center min-[1360px]:flex"
+            className="hidden min-w-0 items-center justify-center gap-0.5 justify-self-center xl:flex"
           >
             {PUBLIC_NAV_ITEMS.map((item) => {
               const hasOptions = Boolean(item.options?.length);
@@ -347,9 +347,9 @@ export default function Header() {
                   </Link>
 
                   {hasOptions && menuIsOpen ? (
-                    <div className={`absolute top-full pt-2 ${layout.position}`}>
+                    <div className={`absolute top-full z-[70] pt-2 ${layout.position}`}>
                       <div
-                        className={`${layout.width} max-h-[70vh] overflow-y-auto rounded-lg border border-border bg-card p-3 shadow-lg`}
+                        className={`${layout.width} max-h-[min(32rem,calc(100vh-5rem))] overflow-y-auto overscroll-contain rounded-lg border border-border bg-[var(--anslation-ds-surface)] p-4 shadow-[var(--anslation-ds-shadow-lg)] [scrollbar-gutter:stable]`}
                       >
                         <div className={`grid gap-3 ${layout.columns}`}>
                           {groups.map((group) => (
@@ -420,7 +420,7 @@ export default function Header() {
 
             <AccountMenu />
 
-            <span className="min-[1360px]:hidden">
+            <span className="xl:hidden">
               <IconButton
                 ref={mobileMenuButtonRef}
                 type="button"
@@ -443,7 +443,7 @@ export default function Header() {
         aria-modal={mobileMenuOpen ? "true" : undefined}
         aria-hidden={mobileMenuOpen ? undefined : "true"}
         inert={!mobileMenuOpen}
-        className={`fixed inset-0 z-[90] min-[1360px]:hidden ${
+        className={`fixed inset-0 z-[90] xl:hidden ${
           mobileMenuOpen ? "" : "pointer-events-none"
         }`}
       >
