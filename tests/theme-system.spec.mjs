@@ -7,13 +7,22 @@ const themeTokens = (page) =>
   page.evaluate(() => {
     const rootStyles = getComputedStyle(document.documentElement);
     const bodyStyles = getComputedStyle(document.body);
+    const normalizeHex = (value) => {
+      const token = value.trim().toLowerCase();
+      if (!/^#[0-9a-f]{3}$/.test(token)) return token;
+      return `#${token
+        .slice(1)
+        .split("")
+        .map((character) => `${character}${character}`)
+        .join("")}`;
+    };
 
     return {
       mode: document.documentElement.dataset.themeMode,
       theme: document.documentElement.dataset.theme,
-      page: rootStyles.getPropertyValue("--anslation-ds-page").trim(),
-      surface: rootStyles.getPropertyValue("--anslation-ds-surface").trim(),
-      primary: rootStyles.getPropertyValue("--anslation-ds-primary").trim(),
+      page: normalizeHex(rootStyles.getPropertyValue("--anslation-ds-page")),
+      surface: normalizeHex(rootStyles.getPropertyValue("--anslation-ds-surface")),
+      primary: normalizeHex(rootStyles.getPropertyValue("--anslation-ds-primary")),
       bodyBackground: bodyStyles.backgroundColor,
       bodyColor: bodyStyles.color,
     };
@@ -38,7 +47,7 @@ test.describe("theme contract", () => {
       mode: "light",
       theme: "light",
       page: "#f7f8fb",
-      surface: "#fff",
+      surface: "#ffffff",
       primary: "#0d9488",
       bodyBackground: "rgb(247, 248, 251)",
       bodyColor: "rgb(17, 24, 39)",
@@ -169,7 +178,7 @@ test.describe("theme contract", () => {
     await expect.poll(() => themeTokens(lightPage)).toMatchObject({
       theme: "light",
       page: "#f7f8fb",
-      surface: "#fff",
+      surface: "#ffffff",
       primary: "#0d9488",
       bodyBackground: "rgb(247, 248, 251)",
     });

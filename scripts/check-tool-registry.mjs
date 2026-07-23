@@ -11,6 +11,7 @@ const runtimePath = path.join(rootDir, "altftoolweb/src/platform/registry/toolRu
 const ignoredToolDirs = new Set([
   "_shared",
   "_toolfk-suite",
+  "candy-crush",
 ]);
 const require = createRequire(import.meta.url);
 const validEntryFiles = ["entry.js", "entry.jsx", "entry.ts", "entry.tsx"];

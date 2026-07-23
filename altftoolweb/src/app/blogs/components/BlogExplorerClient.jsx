@@ -55,6 +55,7 @@ import {
 // reveals the next 12 (remote chunks are fetched only when local posts run out).
 const INITIAL_VISIBLE_COUNT = 12;
 const PAGE_SIZE = 12;
+const BLOG_IMAGE_FALLBACK = "/assets/og-default.png";
 // 1 page (72 posts) left most of the published catalog invisible to search —
 // only the newest 72 posts were ever searchable. 12 idle-paced pages cover
 // 800+ posts; the loop still stops the moment hasMore turns false, and each
@@ -65,6 +66,45 @@ const SORT_TABS = [
   { value: "popular", label: "Popular" },
   { value: "trending", label: "Trending" },
 ];
+
+function isFirebaseBlogImage(src) {
+  const value = String(src || "").trim();
+  if (!value || value.startsWith("/")) return false;
+
+  try {
+    const url = new URL(value);
+    return (
+      url.hostname === "firebasestorage.googleapis.com" &&
+      /\/o\/blogs(?:%2f|%252f|\/)/i.test(url.pathname)
+    );
+  } catch {
+    return false;
+  }
+}
+
+function getBlogImageSrc(src) {
+  const value = String(src || "").trim();
+  if (!value) return BLOG_IMAGE_FALLBACK;
+  if (value.startsWith("/")) return value;
+
+  try {
+    const url = new URL(value);
+    return ["http:", "https:"].includes(url.protocol)
+      ? value
+      : BLOG_IMAGE_FALLBACK;
+  } catch {
+    return BLOG_IMAGE_FALLBACK;
+  }
+}
+
+function handleBlogImageError(event) {
+  const image = event.currentTarget;
+  if (image.dataset.fallbackApplied === "true") return;
+
+  image.dataset.fallbackApplied = "true";
+  image.removeAttribute("srcset");
+  image.src = BLOG_IMAGE_FALLBACK;
+}
 
 function escapeRegExp(value = "") {
   return String(value).replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
@@ -343,11 +383,13 @@ function FeaturedHeroCarousel({ posts }) {
           className="relative hidden aspect-[16/10] overflow-hidden rounded-xl border border-white/10 lg:block"
         >
           <Image
-            src={post.image}
+            src={getBlogImageSrc(post.image)}
             alt=""
             fill
+            unoptimized={isFirebaseBlogImage(post.image)}
             priority={index === 0}
             sizes="(max-width: 1024px) 0px, 44vw"
+            onError={handleBlogImageError}
             className="object-cover"
           />
         </Link>
@@ -490,10 +532,12 @@ function FeaturedPickCard({ post }) {
     >
       <div className="relative aspect-[16/9] overflow-hidden bg-(--anslation-ds-soft)">
         <Image
-          src={post.image}
+          src={getBlogImageSrc(post.image)}
           alt={post.imageAlt || post.heading}
           fill
+          unoptimized={isFirebaseBlogImage(post.image)}
           sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+          onError={handleBlogImageError}
           className="object-cover transition-transform duration-500 group-hover:scale-[1.04]"
         />
         {post.category ? (
@@ -547,10 +591,12 @@ function ArticleRow({ post, searchTerms = [], bookmarked, onToggleBookmark, divi
         className="relative block h-20 w-28 shrink-0 overflow-hidden rounded-xl bg-(--anslation-ds-soft) sm:h-24 sm:w-36"
       >
         <Image
-          src={post.image}
+          src={getBlogImageSrc(post.image)}
           alt=""
           fill
+          unoptimized={isFirebaseBlogImage(post.image)}
           sizes="144px"
+          onError={handleBlogImageError}
           className="object-cover transition-transform duration-500 group-hover:scale-[1.05]"
         />
       </Link>
@@ -615,7 +661,15 @@ function PopularArticlesWidget({ posts, onViewAll }) {
         {posts.map((post) => (
           <Link key={post.slug} href={`/blogs/${post.slug}`} prefetch={false} className="group flex gap-3">
             <span className="relative block h-14 w-14 shrink-0 overflow-hidden rounded-lg bg-(--anslation-ds-soft)">
-              <Image src={post.image} alt="" fill sizes="56px" className="object-cover" />
+              <Image
+                src={getBlogImageSrc(post.image)}
+                alt=""
+                fill
+                unoptimized={isFirebaseBlogImage(post.image)}
+                sizes="56px"
+                onError={handleBlogImageError}
+                className="object-cover"
+              />
             </span>
             <span className="min-w-0">
               <span className="line-clamp-2 text-sm font-bold leading-tight text-(--foreground) transition-colors group-hover:text-(--primary)">
@@ -1159,29 +1213,30 @@ export default function BlogExplorerClient({
               Latest Articles
             </h2>
             <div className="flex flex-wrap items-center gap-3">
-            <div className="flex items-center gap-1" role="group" aria-label="Sort blogs">
-              {SORT_TABS.map((tab) => {
-                const active = sortMode === tab.value;
-                return (
-                  <button
-                    key={tab.value}
-                    type="button"
-                    aria-pressed={active}
-                    onClick={() => handleSortChange(tab.value)}
-                    className={cx(
-                      "relative px-3 py-1.5 text-sm font-bold transition-colors",
-                      active ? "text-(--primary)" : "text-(--muted-foreground) hover:text-(--foreground)",
-                    )}
-                  >
-                    {tab.label}
-                    {active && (
-                      <span aria-hidden="true" className="absolute inset-x-3 -bottom-0.5 h-0.5 rounded-full bg-(--primary)" />
-                    )}
-                  </button>
-                );
-              })}
-            </div>
-            <SearchControl value={query} onChange={handleQueryChange} onClear={clearQuery} pending={isPending} />
+              <div className="flex items-center gap-1" role="tablist" aria-label="Sort articles">
+                {SORT_TABS.map((tab) => {
+                  const active = sortMode === tab.value;
+                  return (
+                    <button
+                      key={tab.value}
+                      type="button"
+                      role="tab"
+                      aria-selected={active}
+                      onClick={() => handleSortChange(tab.value)}
+                      className={cx(
+                        "relative px-3 py-1.5 text-sm font-bold transition-colors",
+                        active ? "text-(--primary)" : "text-(--muted-foreground) hover:text-(--foreground)",
+                      )}
+                    >
+                      {tab.label}
+                      {active && (
+                        <span aria-hidden="true" className="absolute inset-x-3 -bottom-0.5 h-0.5 rounded-full bg-(--primary)" />
+                      )}
+                    </button>
+                  );
+                })}
+              </div>
+              <SearchControl value={query} onChange={handleQueryChange} onClear={clearQuery} pending={isPending} />
             </div>
           </div>
 

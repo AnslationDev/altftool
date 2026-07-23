@@ -129,7 +129,6 @@ export const TOOL_SLUGS = [
   "calorie-tdee-calculator",
   "camel-case-converter",
   "campaign-budget-planner",
-  "candy-crush",
   "candy-match-3",
   "capital-city-quiz",
   "captcha-generator",

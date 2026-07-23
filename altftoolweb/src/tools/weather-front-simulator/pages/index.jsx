@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import { CloudRain, RotateCcw, Play, Pause, Sliders, Info, Thermometer } from "lucide-react";
 
 const FRONTS = [
@@ -46,6 +46,7 @@ export default function WeatherFrontSimulator() {
 
   const canvasRef = useRef(null);
   const animOffsetRef = useRef(0);
+  const animationFrameRef = useRef(null);
 
   const handleReset = () => {
     setFront(FRONTS[0]);
@@ -60,13 +61,19 @@ export default function WeatherFrontSimulator() {
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+    let disposed = false;
 
     const render = () => {
       const rect = canvas.getBoundingClientRect();
       const dpr = window.devicePixelRatio || 1;
-      canvas.width = rect.width * dpr;
-      canvas.height = rect.height * dpr;
-      ctx.scale(dpr, dpr);
+      const nextWidth = Math.max(1, Math.round(rect.width * dpr));
+      const nextHeight = Math.max(1, Math.round(rect.height * dpr));
+      if (canvas.width !== nextWidth || canvas.height !== nextHeight) {
+        canvas.width = nextWidth;
+        canvas.height = nextHeight;
+      }
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
       const w = rect.width;
       const h = rect.height;
@@ -172,11 +179,19 @@ export default function WeatherFrontSimulator() {
       ctx.fillStyle = "#FCA5A5";
       ctx.fillText("Warm Air Mass", w - 120, 50);
 
-      animRef.current = requestAnimationFrame(render);
+      if (isPlaying && !disposed) {
+        animationFrameRef.current = requestAnimationFrame(render);
+      }
     };
 
     render();
-    return () => cancelAnimationFrame(animRef.current);
+    return () => {
+      disposed = true;
+      if (animationFrameRef.current !== null) {
+        cancelAnimationFrame(animationFrameRef.current);
+        animationFrameRef.current = null;
+      }
+    };
   }, [front, isPlaying, tempContrast, moisture]);
 
   return (
@@ -202,7 +217,7 @@ export default function WeatherFrontSimulator() {
           <div className="flex items-center gap-3">
             <button
               onClick={() => setIsPlaying(!isPlaying)}
-              className="flex items-center gap-2 px-5 py-2.5 rounded-xl font-semibold bg-primary text-white hover:bg-primary/90 transition shadow-md"
+              className="flex items-center gap-2 px-5 py-2.5 rounded-xl font-semibold bg-primary text-primary-foreground hover:bg-primary/90 transition shadow-md"
             >
               {isPlaying ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4" />}
               {isPlaying ? "Pause Airflow" : "Animate Front"}

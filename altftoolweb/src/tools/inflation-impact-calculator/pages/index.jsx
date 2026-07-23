@@ -49,7 +49,10 @@ const SCENARIOS = [
   { label: "Stress", rate: 12 },
 ];
 
-const PIE_COLORS = ["#2563eb", "#ef4444", "#059669", "#f59e0b"];
+const PIE_COLORS = ["var(--info)", "var(--danger)", "var(--success)", "var(--warning)"];
+const TIMELINE_CHART_INITIAL_DIMENSION = { width: 800, height: 330 };
+const SCENARIO_CHART_INITIAL_DIMENSION = { width: 720, height: 300 };
+const SAVINGS_CHART_INITIAL_DIMENSION = { width: 480, height: 250 };
 
 function clampNumber(value, min = 0, max = 1000000000) {
   const number = Number(value);
@@ -506,15 +509,21 @@ export default function InflationImpactCalculator() {
               </span>
             </div>
             <div className="h-[330px] min-w-0">
-              <ResponsiveContainer width="100%" height="100%">
+              <ResponsiveContainer
+                width="100%"
+                height="100%"
+                minWidth={0}
+                minHeight={330}
+                initialDimension={TIMELINE_CHART_INITIAL_DIMENSION}
+              >
                 <AreaChart data={metrics.rows} margin={{ top: 10, right: 12, left: 0, bottom: 0 }}>
                   <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" />
                   <XAxis dataKey="label" tick={{ fill: "var(--muted-foreground)", fontSize: 12 }} />
                   <YAxis tickFormatter={(value) => formatMoney(value, true)} tick={{ fill: "var(--muted-foreground)", fontSize: 12 }} width={64} />
                   <Tooltip content={<CustomTooltip />} />
-                  <Area type="monotone" dataKey="monthlyCost" name="Inflated cost" stroke="#ef4444" fill="#ef4444" fillOpacity={0.14} strokeWidth={3} />
-                  <Area type="monotone" dataKey="salaryLevel" name="Income benchmark" stroke="#2563eb" fill="#2563eb" fillOpacity={0.12} strokeWidth={3} />
-                  <Area type="monotone" dataKey="realPortfolio" name="Real portfolio" stroke="#059669" fill="#059669" fillOpacity={0.12} strokeWidth={3} />
+                  <Area type="monotone" dataKey="monthlyCost" name="Inflated cost" stroke="var(--danger)" fill="var(--danger)" fillOpacity={0.14} strokeWidth={3} />
+                  <Area type="monotone" dataKey="salaryLevel" name="Income benchmark" stroke="var(--info)" fill="var(--info)" fillOpacity={0.12} strokeWidth={3} />
+                  <Area type="monotone" dataKey="realPortfolio" name="Real portfolio" stroke="var(--success)" fill="var(--success)" fillOpacity={0.12} strokeWidth={3} />
                 </AreaChart>
               </ResponsiveContainer>
             </div>
@@ -559,14 +568,20 @@ export default function InflationImpactCalculator() {
               </div>
             </div>
             <div className="h-[300px] min-w-0">
-              <ResponsiveContainer width="100%" height="100%">
+              <ResponsiveContainer
+                width="100%"
+                height="100%"
+                minWidth={0}
+                minHeight={300}
+                initialDimension={SCENARIO_CHART_INITIAL_DIMENSION}
+              >
                 <BarChart data={metrics.scenarioRows} margin={{ top: 10, right: 12, left: 0, bottom: 0 }}>
                   <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" />
                   <XAxis dataKey="label" tick={{ fill: "var(--muted-foreground)", fontSize: 12 }} />
                   <YAxis tickFormatter={(value) => formatMoney(value, true)} tick={{ fill: "var(--muted-foreground)", fontSize: 12 }} width={64} />
                   <Tooltip content={<CustomTooltip />} />
-                  <Bar dataKey="futureCost" name="Future cost" fill="#2563eb" radius={[8, 8, 0, 0]} />
-                  <Bar dataKey="purchasingPower" name="Savings value" fill="#059669" radius={[8, 8, 0, 0]} />
+                  <Bar dataKey="futureCost" name="Future cost" fill="var(--info)" radius={[8, 8, 0, 0]} />
+                  <Bar dataKey="purchasingPower" name="Savings value" fill="var(--success)" radius={[8, 8, 0, 0]} />
                 </BarChart>
               </ResponsiveContainer>
             </div>
@@ -585,7 +600,13 @@ export default function InflationImpactCalculator() {
               </div>
             </div>
             <div className="h-[250px] min-w-0">
-              <ResponsiveContainer width="100%" height="100%">
+              <ResponsiveContainer
+                width="100%"
+                height="100%"
+                minWidth={0}
+                minHeight={250}
+                initialDimension={SAVINGS_CHART_INITIAL_DIMENSION}
+              >
                 <PieChart>
                   <Pie data={metrics.pieData} dataKey="value" nameKey="name" innerRadius="55%" outerRadius="82%" paddingAngle={4}>
                     {metrics.pieData.map((entry, index) => (

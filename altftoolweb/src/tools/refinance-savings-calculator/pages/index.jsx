@@ -46,7 +46,10 @@ const SAMPLE = {
   taxBenefitRate: 0,
 };
 
-const PIE_COLORS = ["#2563eb", "#059669", "#f59e0b", "#ef4444"];
+const PIE_COLORS = ["var(--info)", "var(--success)", "var(--warning)", "var(--danger)"];
+const COMPARISON_CHART_INITIAL_DIMENSION = { width: 760, height: 300 };
+const SAVINGS_CHART_INITIAL_DIMENSION = { width: 480, height: 250 };
+const COST_CHART_INITIAL_DIMENSION = { width: 720, height: 280 };
 
 function formatMoney(value, compact = false) {
   return new Intl.NumberFormat("en-IN", {
@@ -443,27 +446,39 @@ export default function RefinanceSavingsCalculator() {
 
       <section className="mt-6 grid gap-4 xl:gap-6 xl:grid-cols-[1.1fr_0.9fr]">
         <ChartBox title="Balance Comparison" subtitle="Current loan vs refinance" icon={BarChart3}>
-          <ResponsiveContainer width="100%" height="100%">
+          <ResponsiveContainer
+            width="100%"
+            height="100%"
+            minWidth={0}
+            minHeight={300}
+            initialDimension={COMPARISON_CHART_INITIAL_DIMENSION}
+          >
             <AreaChart data={metrics.compareRows}>
               <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" />
               <XAxis dataKey="label" tick={{ fill: "var(--muted-foreground)", fontSize: 12 }} />
               <YAxis tickFormatter={(value) => formatMoney(value, true)} tick={{ fill: "var(--muted-foreground)", fontSize: 12 }} width={68} />
               <Tooltip formatter={(value) => formatMoney(value)} />
-              <Area type="monotone" dataKey="currentBalance" name="Current Balance" stroke="#ef4444" fill="#ef4444" fillOpacity={0.12} />
-              <Area type="monotone" dataKey="refinanceBalance" name="Refinance Balance" stroke="#2563eb" fill="#2563eb" fillOpacity={0.16} />
+              <Area type="monotone" dataKey="currentBalance" name="Current Balance" stroke="var(--danger)" fill="var(--danger)" fillOpacity={0.12} />
+              <Area type="monotone" dataKey="refinanceBalance" name="Refinance Balance" stroke="var(--info)" fill="var(--info)" fillOpacity={0.16} />
             </AreaChart>
           </ResponsiveContainer>
         </ChartBox>
 
         <ChartBox title="Interest Tracking" subtitle="Cumulative interest paid" icon={Gauge}>
-          <ResponsiveContainer width="100%" height="100%">
+          <ResponsiveContainer
+            width="100%"
+            height="100%"
+            minWidth={0}
+            minHeight={300}
+            initialDimension={COMPARISON_CHART_INITIAL_DIMENSION}
+          >
             <AreaChart data={metrics.compareRows}>
               <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" />
               <XAxis dataKey="label" tick={{ fill: "var(--muted-foreground)", fontSize: 12 }} />
               <YAxis tickFormatter={(value) => formatMoney(value, true)} tick={{ fill: "var(--muted-foreground)", fontSize: 12 }} width={68} />
               <Tooltip formatter={(value) => formatMoney(value)} />
-              <Area type="monotone" dataKey="currentInterest" name="Current Interest" stroke="#f59e0b" fill="#f59e0b" fillOpacity={0.14} />
-              <Area type="monotone" dataKey="refinanceInterest" name="Refinance Interest" stroke="#059669" fill="#059669" fillOpacity={0.14} />
+              <Area type="monotone" dataKey="currentInterest" name="Current Interest" stroke="var(--warning)" fill="var(--warning)" fillOpacity={0.14} />
+              <Area type="monotone" dataKey="refinanceInterest" name="Refinance Interest" stroke="var(--success)" fill="var(--success)" fillOpacity={0.14} />
             </AreaChart>
           </ResponsiveContainer>
         </ChartBox>
@@ -472,7 +487,13 @@ export default function RefinanceSavingsCalculator() {
       <section className="mt-6 grid gap-4 xl:gap-6 xl:grid-cols-[0.95fr_1.05fr]">
         <Panel title="Savings Composition" eyebrow="New loan outcome" icon={ShieldCheck}>
           <div className="h-[250px] min-w-0">
-            <ResponsiveContainer width="100%" height="100%">
+            <ResponsiveContainer
+              width="100%"
+              height="100%"
+              minWidth={0}
+              minHeight={250}
+              initialDimension={SAVINGS_CHART_INITIAL_DIMENSION}
+            >
               <PieChart>
                 <Pie data={metrics.pieData} dataKey="value" nameKey="name" innerRadius="55%" outerRadius="82%" paddingAngle={3}>
                   {metrics.pieData.map((entry, index) => (
@@ -491,7 +512,13 @@ export default function RefinanceSavingsCalculator() {
 
         <Panel title="Switching Cost Breakdown" eyebrow="Fees, penalties, and waivers" icon={Zap}>
           <div className="h-[280px] min-w-0">
-            <ResponsiveContainer width="100%" height="100%">
+            <ResponsiveContainer
+              width="100%"
+              height="100%"
+              minWidth={0}
+              minHeight={280}
+              initialDimension={COST_CHART_INITIAL_DIMENSION}
+            >
               <BarChart data={metrics.costRows}>
                 <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" />
                 <XAxis dataKey="name" tick={{ fill: "var(--muted-foreground)", fontSize: 12 }} />

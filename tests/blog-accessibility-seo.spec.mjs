@@ -190,10 +190,10 @@ test.describe("blog accessibility and SEO schema", () => {
     await expect(page.locator("#blog-index-title")).toHaveText("AltFTool Blog");
     await expect(page.locator("h1")).toHaveCount(1);
     await expect(page.getByRole("textbox", { name: "Search blog articles" })).toBeVisible();
-    const sortGroup = page.getByRole("group", { name: "Sort blogs" });
+    const sortGroup = page.getByRole("tablist", { name: "Sort articles" });
     await expect(sortGroup).toBeVisible();
-    await expect(sortGroup.getByRole("button", { name: "Latest" })).toHaveAttribute(
-      "aria-pressed",
+    await expect(sortGroup.getByRole("tab", { name: "Latest" })).toHaveAttribute(
+      "aria-selected",
       "true",
     );
     await expect(page.getByRole("button", { name: /All Categories/i })).toHaveAttribute(

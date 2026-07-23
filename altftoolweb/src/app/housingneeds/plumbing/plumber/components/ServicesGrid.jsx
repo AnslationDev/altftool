@@ -9,6 +9,13 @@ import {
 import '../styles/ServicesGrid.css';
 
 const serviceImage = (query, lock) => `https://loremflickr.com/900/620/${query}?lock=${lock}`;
+const serviceImageFallback = '/assets/og-default.png';
+
+function handleServiceImageError(event) {
+  const image = event.currentTarget;
+  image.onerror = null;
+  image.src = serviceImageFallback;
+}
 
 const services = [
   { icon: Zap, title: 'Emergency Repair', desc: 'Burst pipes, floods, and active leaks handled fast with clean damage control.', detail: 'Immediate shutoff, temporary control, water removal guidance, and permanent repair options.', badge: '24/7', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRma9mP8H0y7wi5ixV6wzzHuvzaEuuw6wKsYQ&s' },
@@ -154,7 +161,12 @@ export default function ServicesGrid() {
                 {isVisible && (
                   <>
                     <div className="fp-services__image-wrap">
-                      <img src={service.image.src || service.image} alt={service.title} loading="lazy" />
+                      <img
+                        src={service.image.src || service.image}
+                        alt={service.title}
+                        loading="lazy"
+                        onError={handleServiceImageError}
+                      />
                     </div>
                     <div className="fp-services__card-copy">
                       <div className="fp-services__card-top">

@@ -1,4 +1,7 @@
 const TRUE_VALUES = new Set(["1", "true", "yes", "on", "enabled"]);
+const DEFAULT_FEATURE_FLAGS = {
+  ad_fix_viewport: true,
+};
 const PUBLIC_FEATURE_FLAGS = {
   ad_fix_viewport: process.env.NEXT_PUBLIC_AD_FIX_VIEWPORT,
   blog_export: process.env.NEXT_PUBLIC_BLOG_EXPORT,
@@ -24,5 +27,6 @@ export function isFeatureEnabled(name, env = process.env) {
   const publicFlags = readFlagSet(env.NEXT_PUBLIC_ALTFT_FEATURES);
   const serverFlags = readFlagSet(env.ALTFT_FEATURES);
 
-  return publicFlags.has(name) || serverFlags.has(name);
+  if (publicFlags.has(name) || serverFlags.has(name)) return true;
+  return DEFAULT_FEATURE_FLAGS[name] ?? false;
 }

@@ -56,7 +56,12 @@ test.describe("live deploy parity", () => {
     await expect(page.locator('main[aria-labelledby="blog-index-title"]')).toBeVisible();
     await expect(page.locator("#blog-index-title")).toHaveText("AltFTool Blog");
     await expect(page.getByRole("textbox", { name: "Search blog articles" })).toBeVisible();
-    await expect(page.getByRole("combobox", { name: "Sort blogs" })).toBeVisible();
+    const sortGroup = page.getByRole("tablist", { name: "Sort articles" });
+    await expect(sortGroup).toBeVisible();
+    await expect(sortGroup.getByRole("tab", { name: "Latest" })).toHaveAttribute(
+      "aria-selected",
+      "true",
+    );
   });
 
   test("blog detail exposes the current reader contract", async ({ page }) => {
@@ -69,21 +74,21 @@ test.describe("live deploy parity", () => {
     await expect(page.getByRole("button", { name: /Show comments/i })).toBeVisible();
   });
 
-  test("mobile tools page exposes the compact chat launcher contract", async ({ page }) => {
+  test("mobile tools page exposes the compact search launcher contract", async ({ page }) => {
     await page.setViewportSize({ width: 390, height: 844 });
     await openLivePage(page, "/tools/all?search=json");
     await expectNoHorizontalOverflow(page, "live mobile tools filtered route");
 
-    const launcher = page.getByRole("button", {
-      name: "Open AltFTool search assistant",
+    const launcher = page.getByRole("link", {
+      name: "Search AltFTool",
     });
     await expect(launcher).toBeVisible();
 
     const box = await launcher.boundingBox();
     expect(box, "chat launcher bounding box").toBeTruthy();
-    expect(box.width, "mobile chat launcher width").toBeLessThanOrEqual(56);
-    expect(box.height, "mobile chat launcher height").toBeLessThanOrEqual(56);
-    expect(box.x + box.width, "mobile chat launcher right edge").toBeLessThanOrEqual(390);
-    expect(box.y + box.height, "mobile chat launcher bottom edge").toBeLessThanOrEqual(844);
+    expect(box.width, "mobile search launcher width").toBeLessThanOrEqual(56);
+    expect(box.height, "mobile search launcher height").toBeLessThanOrEqual(56);
+    expect(box.x + box.width, "mobile search launcher right edge").toBeLessThanOrEqual(390);
+    expect(box.y + box.height, "mobile search launcher bottom edge").toBeLessThanOrEqual(844);
   });
 });

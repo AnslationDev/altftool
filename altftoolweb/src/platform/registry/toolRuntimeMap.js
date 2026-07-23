@@ -128,7 +128,6 @@ export const toolRuntimeMap = {
   "calorie-tdee-calculator": () => import("@/tools/calorie-tdee-calculator/entry"),
   "camel-case-converter": () => import("@/tools/camel-case-converter/entry"),
   "campaign-budget-planner": () => import("@/tools/campaign-budget-planner/entry"),
-  "candy-crush": () => import("@/tools/candy-crush/entry"),
   "candy-match-3": () => import("@/tools/candy-match-3/entry"),
   "capital-city-quiz": () => import("@/tools/capital-city-quiz/entry"),
   "captcha-generator": () => import("@/tools/captcha-generator/entry"),

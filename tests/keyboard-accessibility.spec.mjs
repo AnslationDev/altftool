@@ -36,6 +36,7 @@ test.describe("keyboard accessibility flows", () => {
     await page.goto(`${webUrl}/tools`, { waitUntil: "domcontentloaded" });
     const header = page.locator("#main-header");
     await expect(header).toBeVisible();
+    await expect(header).toHaveAttribute("data-hydrated", "true");
 
     const learnMenu = header.getByRole("link", { name: "Learn", exact: true });
     await learnMenu.focus();

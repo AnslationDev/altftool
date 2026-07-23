@@ -1,9 +1,17 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 import { ArrowUp } from "lucide-react";
 
 const SHOW_AFTER_PX = 600;
+const BLOG_INDEX_SEGMENTS = new Set([
+  "author",
+  "category",
+  "tag",
+  "topics",
+  "view-all",
+]);
 
 /**
  * Floating "back to top" button. Appears after the user scrolls past the
@@ -12,6 +20,12 @@ const SHOW_AFTER_PX = 600;
  */
 export function ScrollToTopButton() {
   const [visible, setVisible] = useState(false);
+  const pathname = usePathname();
+  const pathSegments = pathname?.split("/").filter(Boolean) || [];
+  const readerToolsPresent =
+    pathSegments.length === 2 &&
+    pathSegments[0] === "blogs" &&
+    !BLOG_INDEX_SEGMENTS.has(pathSegments[1]);
 
   useEffect(() => {
     let ticking = false;
@@ -35,6 +49,8 @@ export function ScrollToTopButton() {
     )?.matches;
     window.scrollTo({ top: 0, behavior: reduceMotion ? "auto" : "smooth" });
   };
+
+  if (readerToolsPresent) return null;
 
   return (
     <button

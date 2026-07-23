@@ -6,6 +6,7 @@ const OUTPUT = "src/platform/registry/toolRuntimeMap.js";
 const ignoredToolDirs = new Set([
   "_shared",
   "_toolfk-suite",
+  "candy-crush",
 ]);
 
 const validEntryFiles = [

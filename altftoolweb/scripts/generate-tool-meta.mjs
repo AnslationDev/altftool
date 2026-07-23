@@ -6,6 +6,9 @@ import { resolveToolCategories } from "../src/platform/registry/categoryTaxonomy
 const require = createRequire(import.meta.url);
 const TOOLS_DIR = "src/tools";
 const OUTPUT = "src/platform/registry/toolMetaMap.js";
+const LEGACY_REDIRECT_TOOL_DIRS = new Set([
+  "candy-crush",
+]);
 const ICON_ALIASES = {
   "search-icon": "search",
   volume2: "volume-2",
@@ -30,6 +33,8 @@ const normalizeIcon = (icon) => {
 const toolDirs = fs.readdirSync(TOOLS_DIR);
 
 for (const dir of toolDirs) {
+  if (LEGACY_REDIRECT_TOOL_DIRS.has(dir)) continue;
+
   const configPath = path.join(
     TOOLS_DIR,
     dir,

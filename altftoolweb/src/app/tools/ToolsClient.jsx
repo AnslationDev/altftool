@@ -567,8 +567,6 @@ export default function ToolsClient({
   const searchResultSlugs = useMemo(() => filteredSlugs.filter((slug) => meta[slug]).slice(0, 12), [filteredSlugs, meta]);
   const isFiltering = search !== deferredSearch;
   const hasActiveFilters = Boolean(search.trim()) || categoryname !== "all" || viewMode !== "all";
-  const firstResultSlug = filteredSlugs.find((slug) => meta[slug]);
-
   const getDirectoryHref = ({
     nextCategory = categoryname,
     nextSearch = search,
@@ -635,17 +633,48 @@ export default function ToolsClient({
     router.push("/tools/all");
   };
 
-  const openFirstSearchResult = () => {
-    if (!firstResultSlug) return;
-    rememberTool(firstResultSlug);
-    prefetchDirectoryTool(firstResultSlug);
-    router.push(getToolHref(firstResultSlug, "all"));
+  const getFirstResultForSearch = (rawSearch = search) => {
+    const query = rawSearch.toLowerCase().trim();
+    const tokens = getSearchTokens(query);
+    const baseSlugs = viewMode === "recent" ? recentSlugs.filter((slug) => meta[slug]) : slugs;
+    const ranked = [];
+
+    baseSlugs.forEach((slug, index) => {
+      const tool = meta[slug];
+      if (!tool) return;
+
+      const toolCategories = getToolCategories(tool);
+      const matchesCategory = categoryname === "all" || toolCategories.includes(categoryname);
+      const matchesCollection =
+        viewMode === "all" ||
+        (viewMode === "favorites" && favoriteSet.has(slug)) ||
+        (viewMode === "recent" && recentSet.has(slug));
+      const score = getSearchScore(slug, tool, tokens, query);
+
+      if (matchesCategory && matchesCollection && (!tokens.length || score > 0)) {
+        ranked.push({ slug, score, index });
+      }
+    });
+
+    const exactSlug = slugify(query);
+    const exactMatch = ranked.find((item) => item.slug === exactSlug);
+    if (exactMatch) return exactMatch.slug;
+
+    return ranked.sort((a, b) => b.score - a.score || a.index - b.index)[0]?.slug || null;
+  };
+
+  const openFirstSearchResult = (rawSearch = search) => {
+    const targetSlug = getFirstResultForSearch(rawSearch);
+    if (!targetSlug) return;
+    rememberTool(targetSlug);
+    prefetchDirectoryTool(targetSlug);
+    router.push(getToolHref(targetSlug, "all"));
   };
 
   const handleSearchKeyDown = (event) => {
     if (event.key === "Enter") {
       event.preventDefault();
-      openFirstSearchResult();
+      openFirstSearchResult(event.currentTarget.value);
       return;
     }
 

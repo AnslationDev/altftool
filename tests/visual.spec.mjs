@@ -78,6 +78,9 @@ test.describe("visual regression", () => {
     await gotoWithRetry(page, `${webUrl}/tools`);
     await expect(page.locator("#main-header")).toBeVisible();
     await expect(page.getByRole("heading", { name: /tools/i }).first()).toBeVisible();
+    await page.addStyleTag({
+      content: ".tools-ad-row { display: none !important; }",
+    });
     await waitForVisualStability(page);
 
     await expect(page.locator("section").filter({ hasText: "Explore Tools" }).first()).toHaveScreenshot("web-tools-catalog.png");

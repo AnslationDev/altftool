@@ -1,7 +1,7 @@
 "use client";
 
-import React, { useState } from "react";
-import { Droplet, RotateCcw, Sliders, Info, Sparkles } from "lucide-react";
+import { useState } from "react";
+import { RotateCcw, Sliders, Info } from "lucide-react";
 
 const SUBSTANCES = [
   { name: "Battery Acid", ph: 0.0, desc: "Sulfuric acid in car batteries." },
@@ -28,19 +28,19 @@ export default function PhScaleVisualizer() {
   const ohConc = Math.pow(10, -(14 - ph));
 
   let status = "Neutral";
-  let statusColor = "text-teal-400";
-  if (ph < 3) { status = "Strongly Acidic"; statusColor = "text-rose-500"; }
-  else if (ph < 6.5) { status = "Weakly Acidic"; statusColor = "text-amber-400"; }
-  else if (ph > 11) { status = "Strongly Alkaline (Basic)"; statusColor = "text-purple-400"; }
-  else if (ph > 7.5) { status = "Weakly Alkaline (Basic)"; statusColor = "text-blue-400"; }
+  let statusColor = "text-success";
+  if (ph < 3) { status = "Strongly Acidic"; statusColor = "text-danger"; }
+  else if (ph < 6.5) { status = "Weakly Acidic"; statusColor = "text-warning"; }
+  else if (ph > 11) { status = "Strongly Alkaline (Basic)"; statusColor = "text-[var(--anslation-ds-accent)]"; }
+  else if (ph > 7.5) { status = "Weakly Alkaline (Basic)"; statusColor = "text-info"; }
 
   // Custom function to compute pH color from gradient
   const getPhColor = (val) => {
-    if (val <= 3) return "#EF4444"; // Red
-    if (val <= 6) return "#F59E0B"; // Yellow/Orange
-    if (val === 7) return "#14B8A6"; // Teal Neutral
-    if (val <= 10) return "#3B82F6"; // Blue
-    return "#A855F7"; // Purple
+    if (val <= 3) return "var(--danger)";
+    if (val <= 6) return "var(--warning)";
+    if (val === 7) return "var(--primary)";
+    if (val <= 10) return "var(--info)";
+    return "var(--anslation-ds-accent)";
   };
 
   return (
@@ -111,7 +111,7 @@ export default function PhScaleVisualizer() {
                       key={s.name}
                       onClick={() => setPh(s.ph)}
                       className={`w-full px-3 py-1.5 rounded-lg text-xs font-medium border text-left flex items-center justify-between transition ${
-                        ph === s.ph ? "bg-primary text-white border-primary" : "border-border hover:bg-surface-soft"
+                        ph === s.ph ? "bg-primary text-primary-foreground border-primary" : "border-border hover:bg-surface-soft"
                       }`}
                     >
                       <span>{s.name}</span>
@@ -153,10 +153,10 @@ export default function PhScaleVisualizer() {
             <div className="rounded-2xl border border-border bg-card p-6 shadow-sm space-y-6">
               <h3 className="text-sm font-bold uppercase tracking-wider text-primary">pH Spectrum Bar</h3>
 
-              <div className="relative h-12 rounded-xl overflow-hidden shadow-inner bg-gradient-to-r from-red-600 via-amber-500 via-emerald-400 via-blue-500 to-purple-600">
+              <div className="relative h-12 overflow-hidden rounded-xl bg-[linear-gradient(90deg,var(--danger),var(--warning),var(--success),var(--info),var(--anslation-ds-accent))] shadow-inner">
                 {/* Pointer indicator */}
                 <div
-                  className="absolute top-0 bottom-0 w-2 bg-white shadow-lg border-2 border-slate-900 transition-all duration-150"
+                  className="absolute bottom-0 top-0 w-2 border-2 border-foreground bg-card shadow-lg transition-all duration-150"
                   style={{ left: `${(ph / 14) * 100}%` }}
                 />
               </div>
@@ -174,7 +174,7 @@ export default function PhScaleVisualizer() {
                 <Info className="w-4 h-4 text-primary" /> Educational Principles: Logarithmic pH Scale
               </h3>
               <p className="text-xs text-muted-foreground leading-relaxed">
-                pH is defined as $\text{pH} = -\log_{10}[H^+]$. Because it is logarithmic, a change of 1 pH unit represents a 10-fold change in hydrogen ion concentration!
+                pH is defined as <span className="font-mono text-foreground">pH = -log10[H+]</span>. Because it is logarithmic, a change of 1 pH unit represents a 10-fold change in hydrogen ion concentration!
               </p>
             </div>
           </div>

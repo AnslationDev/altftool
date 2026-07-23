@@ -4,6 +4,8 @@ import { createPageQualityGate } from "./helpers/pageQuality.mjs";
 
 const webUrl = process.env.ALTFT_WEB_URL || "http://localhost:3002";
 const routeTimeoutMs = Number(process.env.ALTFT_ALL_TOOL_ROUTE_TIMEOUT_MS || 60_000);
+const startSlug = process.env.ALTFT_TOOL_ROUTE_START_SLUG?.trim();
+const endSlug = process.env.ALTFT_TOOL_ROUTE_END_SLUG?.trim();
 
 async function readToolMetaMap() {
   const source = await readFile(
@@ -39,7 +41,13 @@ async function gotoToolRoute(page, url) {
 }
 
 const toolMetaMap = await readToolMetaMap();
-const toolEntries = Object.entries(toolMetaMap).sort(([a], [b]) => a.localeCompare(b));
+const toolEntries = Object.entries(toolMetaMap)
+  .sort(([a], [b]) => a.localeCompare(b))
+  .filter(([slug]) => {
+    if (startSlug && slug.localeCompare(startSlug) < 0) return false;
+    if (endSlug && slug.localeCompare(endSlug) > 0) return false;
+    return true;
+  });
 
 test.describe("all microtool route health", () => {
   test.describe.configure({ mode: "serial" });

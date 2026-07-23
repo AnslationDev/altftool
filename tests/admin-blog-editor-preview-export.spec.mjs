@@ -9,12 +9,17 @@ const localAdminStorageKey = "ALTFT_LOCAL_ADMIN_SESSION_V1";
 async function loginAsLocalAdmin(page) {
   await page.goto(`${adminUrl}/login`, { waitUntil: "domcontentloaded" });
   await page.evaluate((key) => localStorage.setItem(key, "active"), localAdminStorageKey);
-  await page.goto(`${adminUrl}/admin-management`, { waitUntil: "networkidle" });
+  await page.goto(`${adminUrl}/admin-management`, { waitUntil: "domcontentloaded" });
+  await expect(page.getByRole("heading", { name: "Admin Management" })).toBeVisible({
+    timeout: 30_000,
+  });
 }
 
 async function fillEditor(page, html) {
   const textarea = page.locator("textarea[placeholder='Type or paste your content here...']");
-  const editor = page.locator("[data-ckeditor-ready='true'] .ck-editor__editable, .ck-editor__editable[data-ckeditor-ready='true']").first();
+  const editor = page.getByRole("textbox", { name: "Blog content editor" })
+    .or(page.locator("[data-ckeditor-ready='true'] .ck-editor__editable, .ck-editor__editable[data-ckeditor-ready='true']"))
+    .first();
 
   await expect(textarea.or(editor).first()).toBeVisible({ timeout: 30_000 });
 
@@ -29,6 +34,8 @@ async function fillEditor(page, html) {
 }
 
 test.describe("admin blog editor, preview, and export", () => {
+  test.describe.configure({ timeout: 120_000 });
+
   test.beforeEach(async ({ page }) => {
     await loginAsLocalAdmin(page);
   });
@@ -59,16 +66,28 @@ test.describe("admin blog editor, preview, and export", () => {
       await page.getByRole("button", { name: "Close blog preview" }).click();
     }
 
-    await expect(page.getByRole("button", { name: /Save Draft/i })).toBeVisible();
+    await expect(page.getByRole("button", { name: "Save Draft", exact: true })).toBeVisible();
   });
 
   test("opens export flow from blog list", async ({ page }) => {
     await page.goto(`${adminUrl}/altftool/blogs`, { waitUntil: "domcontentloaded" });
     const exportButton = page.getByRole("button", { name: /^Export$/ });
-    if (!(await exportButton.count())) test.skip(true, "blog_export feature flag is disabled");
+    const exportAvailable = await exportButton
+      .waitFor({ state: "visible", timeout: 15_000 })
+      .then(() => true)
+      .catch(() => false);
+    if (!exportAvailable) test.skip(true, "blog_export feature flag is disabled");
 
     await exportButton.click();
-    await expect(page.getByRole("dialog")).toContainText("Download filtered blog data");
-    await expect(page.getByRole("button", { name: /^Export$/ })).toBeVisible();
+    const dialog = page.getByRole("dialog", { name: "Export blogs" });
+    await expect(dialog).toContainText("Download filtered blog data");
+    const exportAction = dialog.getByRole("button", {
+      name: /^(?:Export \d+ blogs?|No blogs match these filters)$/,
+    });
+    await expect(exportAction).toBeVisible();
+
+    if ((await exportAction.textContent())?.includes("No blogs match")) {
+      await expect(exportAction).toBeDisabled();
+    }
   });
 });

@@ -385,7 +385,7 @@ export default function ElectricCircuitBuilder() {
                 <Info className="w-4 h-4 text-primary" /> Educational Principles: Ohm's Law
               </h3>
               <p className="text-xs text-muted-foreground leading-relaxed">
-                Current ($I$) is directly proportional to voltage ($V$) and inversely proportional to total resistance ($R$). In series circuits, resistances add ($R_{eq} = R_1 + R_2$). In parallel circuits, equivalent resistance drops ($1/R_{eq} = 1/R_1 + 1/R_2$).
+                Current ($I$) is directly proportional to voltage ($V$) and inversely proportional to total resistance ($R$). In series circuits, resistances add ($R_eq = R_1 + R_2$). In parallel circuits, equivalent resistance drops ($1/R_eq = 1/R_1 + 1/R_2$).
               </p>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-2 text-[11px] text-muted-foreground font-mono">
                 <div className="p-2 rounded bg-surface-soft">Ohm's Law: V = I × R</div>

@@ -94,15 +94,24 @@ test.describe("mobile blog UX and engagement", () => {
     await openPublicPage(page, "/blogs");
 
     await expect(page.getByRole("heading", { name: "AltFTool Blog" })).toBeVisible();
-    await expect(page.getByRole("link", { name: /Explore guides/i })).toBeVisible();
+    const featuredArticle = page.getByRole("region", { name: "Featured articles" });
+    const featuredTitle = (await featuredArticle.getByRole("heading").textContent())?.trim() || "";
+    const searchTerm = featuredTitle
+      .split(/\s+/)
+      .filter((word) => word.length > 3)
+      .slice(0, 2)
+      .join(" ");
+
+    expect(searchTerm).not.toBe("");
+    await expect(featuredArticle.getByRole("link", { name: /Read Article/i })).toBeVisible();
     await expect(page.getByRole("textbox", { name: "Search blog articles" })).toBeVisible();
-    await expect(page.getByText("Find guides", { exact: true })).toBeVisible();
-    await expect(page.getByRole("heading", { name: "Pick the most complete guides first" })).toBeVisible();
+    await expect(page.getByRole("region", { name: "Blog categories" })).toBeVisible();
+    await expect(page.getByRole("heading", { name: "Featured Picks" })).toBeVisible();
 
     const searchInput = page.getByRole("textbox", { name: "Search blog articles" });
-    await searchInput.fill("age calculator");
-    await expect(page.getByRole("link", { name: new RegExp(blogTitle, "i") }).first()).toBeVisible();
-    await expect(page.getByRole("button", { name: /Reset/i }).first()).toBeVisible();
+    await searchInput.fill(searchTerm);
+    await expect(page.getByRole("link", { name: new RegExp(featuredTitle, "i") }).first()).toBeVisible();
+    await expect(page.getByRole("button", { name: "Clear blog search" })).toBeVisible();
 
     await expectNoHorizontalOverflow(page, "mobile /blogs");
     await quality.expectClean("mobile blog index");

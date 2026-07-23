@@ -508,7 +508,7 @@ function estimateIpa(word) {
       continue;
     }
 
-    if (".,!?;:\"'()[]{}"-includes(ch)) {
+    if (".,!?;:\"'()[]{}".includes(ch)) {
       i += 1;
       continue;
     }

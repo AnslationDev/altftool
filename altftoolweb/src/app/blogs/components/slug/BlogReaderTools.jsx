@@ -84,7 +84,10 @@ export default function BlogReaderTools() {
   };
 
   return (
-    <div className="fixed bottom-[calc(1rem+env(safe-area-inset-bottom))] right-3 z-40 flex flex-col gap-2 sm:bottom-5 sm:right-5">
+    <div
+      data-blog-reader-tools
+      className="fixed bottom-[calc(1rem+env(safe-area-inset-bottom))] right-3 z-40 flex flex-col gap-2 sm:bottom-5 sm:right-5"
+    >
       {copiedSection ? (
         <div className="rounded-[6px] border border-(--border) bg-(--card) px-3 py-2 text-xs font-semibold text-(--foreground) shadow-[var(--anslation-ds-shadow-md)]">
           Section link copied
