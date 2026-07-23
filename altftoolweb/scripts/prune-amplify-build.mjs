@@ -6,7 +6,6 @@ const isAmplifyBuild = process.env.ALTFT_DEFER_BULK_PRERENDER === "true";
 if (!isAmplifyBuild) process.exit(0);
 
 const nextDir = path.resolve(".next");
-const mediaDir = path.join(nextDir, "static", "media");
 const maxArtifactBytes = Number(
   process.env.ALTFT_AMPLIFY_ARTIFACT_MAX_BYTES || 205 * 1024 * 1024
 );
@@ -18,14 +17,21 @@ if (!fs.existsSync(nextDir)) {
 // @imgly/background-removal supplies explicit CDN-backed WASM paths at
 // runtime. Webpack also emits this WebGPU fallback, which none of our callers
 // use and which otherwise consumes more than 22 MiB of the Amplify artifact.
-const removableMedia = fs.existsSync(mediaDir)
-  ? fs
-      .readdirSync(mediaDir)
-      .filter((name) => /^ort-wasm-simd-threaded\.jsep\.[a-f0-9]+\.wasm$/u.test(name))
-  : [];
+const wasmMediaDirectories = [
+  path.join(nextDir, "static", "media"),
+  path.join(nextDir, "server", "chunks", "static", "media"),
+];
+const removableMedia = wasmMediaDirectories.flatMap((directory) =>
+  fs.existsSync(directory)
+    ? fs
+        .readdirSync(directory)
+        .filter((name) => /^ort-wasm-simd-threaded\.jsep\.[a-f0-9]+\.wasm$/u.test(name))
+        .map((name) => path.join(directory, name))
+    : []
+);
 
-for (const name of removableMedia) {
-  fs.rmSync(path.join(mediaDir, name));
+for (const filePath of removableMedia) {
+  fs.rmSync(filePath);
 }
 
 function directorySize(directory) {
