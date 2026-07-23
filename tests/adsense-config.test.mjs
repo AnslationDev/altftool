@@ -46,6 +46,12 @@ test("AdSense only activates for a production deployment", () => {
   );
   assert.equal(
     isAdsenseProductionDeployment({
+      NEXT_PUBLIC_SITE_URL: "https://www.altftool.com",
+    }),
+    true,
+  );
+  assert.equal(
+    isAdsenseProductionDeployment({
       NODE_ENV: "production",
       NEXT_PUBLIC_SITE_URL: "http://localhost:3002",
     }),
@@ -74,4 +80,17 @@ test("ads.txt authorizes the configured AdSense publisher", async () => {
       "m",
     ),
   );
+});
+
+test("production partner tags retain the configured verification and pixel IDs", async () => {
+  const source = await readFile(
+    new URL("../altftoolweb/src/ads/ProductionPartnerTags.jsx", import.meta.url),
+    "utf8",
+  );
+
+  assert.match(source, /1bc9daffdd035cbc7c5e6a6d1d9230cd/);
+  assert.match(source, /quge5\.com\/88\/tag\.min\.js/);
+  assert.match(source, /data-zone="248425"/);
+  assert.match(source, /TABOOLA_PIXEL_ID = 2053347/);
+  assert.match(source, /tb_tfa_script/);
 });

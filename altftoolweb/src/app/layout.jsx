@@ -12,6 +12,7 @@ import GlobalAnimationProvider from "@/contexts/GlobalAnimationProvider";
 import { AdsProvider } from "@/ads/AdsProvider";
 import GoogleAdUnit from "@/ads/GoogleAdUnit";
 import ProductionAdSenseScript from "@/ads/ProductionAdSenseScript";
+import ProductionPartnerTags from "@/ads/ProductionPartnerTags";
 import ProductionSkimlinksScript from "@/ads/ProductionSkimlinksScript";
 import { isAdsenseProductionDeployment } from "@/ads/adsenseConfig";
 import { Suspense } from "react";
@@ -64,7 +65,7 @@ const ibmPlexSans = IBM_Plex_Sans({
   display: "swap",
 });
 
-const shouldLoadAdsense = isAdsenseProductionDeployment();
+const shouldLoadProductionMonetization = isAdsenseProductionDeployment();
 
 const baseMetadata = {
   metadataBase: new URL(siteConfig.url),
@@ -171,7 +172,8 @@ export default async function RootLayout({ children }) {
         <link rel="preconnect" href="https://firebasestorage.googleapis.com" />
         <link rel="preconnect" href="https://www.googletagmanager.com" />
         <link rel="preconnect" href="https://www.clarity.ms" />
-        <ProductionAdSenseScript enabled={shouldLoadAdsense} />
+        <ProductionAdSenseScript enabled={shouldLoadProductionMonetization} />
+        <ProductionPartnerTags enabled={shouldLoadProductionMonetization} />
         <JsonLd
           id="altftool-site-schema"
           data={[createOrganizationJsonLd(), createWebsiteJsonLd()]}
@@ -250,7 +252,7 @@ export default async function RootLayout({ children }) {
 
         {/* Skimlinks rewrites outbound commerce links after hydration, but only
             on the canonical production hosts. */}
-        <ProductionSkimlinksScript enabled={shouldLoadAdsense} />
+        <ProductionSkimlinksScript enabled={shouldLoadProductionMonetization} />
 
         <Script id="ga-init" strategy="afterInteractive">
           {`
@@ -306,7 +308,7 @@ export default async function RootLayout({ children }) {
         {/* AltBot (chatbot) removed for now — planned for a future release.
             Its module lived at src/platform/chatbot/. */}
         <GlobalChromeGate>
-          <GoogleAdUnit enabled={shouldLoadAdsense} />
+          <GoogleAdUnit enabled={shouldLoadProductionMonetization} />
           <Footer />
         </GlobalChromeGate>
 

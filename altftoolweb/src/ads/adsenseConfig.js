@@ -23,7 +23,7 @@ export function isAdsenseProductionHost(value) {
 }
 
 export function isAdsenseProductionDeployment(env = process.env) {
-  if (env.NODE_ENV !== "production") return false;
+  if (env.NODE_ENV === "development" || env.NODE_ENV === "test") return false;
 
   if (env.VERCEL_ENV) {
     return env.VERCEL_ENV === "production";
