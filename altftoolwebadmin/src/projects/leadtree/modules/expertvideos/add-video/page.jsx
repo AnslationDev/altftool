@@ -1,5 +1,6 @@
 'use client'
 import { ArrowDown, ArrowLeft, ChevronDown, Clapperboard, Film, Image, List, ListCheck, Sparkle, Type } from 'lucide-react'
+import Link from 'next/link'
 import React from 'react'
 import { Field } from '../../creditcard/styles/FieldStyle'
 import { Input } from '../../creditcard/styles/InputStyle'
@@ -35,9 +36,14 @@ const AddExpertVideo = () => {
 
           <div className='flex flex-col items-start '>
             <div className='flex items-center gap-3 text-[20px] font-bold '>
-              <div className='bg-gray-200 rounded-md shadow-2xs border border-gray-300 h-8 w-8 flex items-center justify-center transition-all duration-300 cursor-pointer hover:-translate-x-1 '>
+              <Link
+                href='/leadtree/expertvideos'
+                aria-label='Back to expert videos'
+                title='Back to expert videos'
+                className='bg-gray-200 rounded-md shadow-2xs border border-gray-300 h-8 w-8 flex items-center justify-center transition-all duration-300 hover:-translate-x-1'
+              >
                 <ArrowLeft className='h-5 w-5 text-gray-600 ' />
-              </div>
+              </Link>
               <h1> Upload Expert Video</h1>
 
 
