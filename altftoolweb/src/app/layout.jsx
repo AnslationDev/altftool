@@ -204,47 +204,6 @@ export default async function RootLayout({ children }) {
           `}
         </Script>
 
-        <Script id="legacy-service-worker-cleanup" strategy="afterInteractive">
-          {`
-            (function () {
-              if (!("serviceWorker" in navigator)) return;
-
-              navigator.serviceWorker.getRegistrations().then(function (registrations) {
-                var legacyRegistrations = registrations.filter(function (registration) {
-                  return [registration.installing, registration.waiting, registration.active]
-                    .filter(Boolean)
-                    .some(function (worker) {
-                      try {
-                        return new URL(worker.scriptURL).pathname === "/sw.js";
-                      } catch (_) {
-                        return false;
-                      }
-                    });
-                });
-
-                if (!legacyRegistrations.length) return;
-
-                return Promise.all(
-                  legacyRegistrations.map(function (registration) {
-                    return registration.unregister();
-                  })
-                ).then(function () {
-                  if (!("caches" in window)) return;
-                  return caches.keys().then(function (cacheNames) {
-                    return Promise.all(
-                      cacheNames.map(function (cacheName) {
-                        return caches.delete(cacheName);
-                      })
-                    );
-                  });
-                });
-              }).catch(function () {
-                // Cleanup is best-effort and must never block page rendering.
-              });
-            })();
-          `}
-        </Script>
-
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-G07GM6LKP1"
           strategy="afterInteractive"

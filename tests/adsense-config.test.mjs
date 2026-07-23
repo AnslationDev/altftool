@@ -94,3 +94,25 @@ test("production partner tags retain the configured verification and pixel IDs",
   assert.match(source, /TABOOLA_PIXEL_ID = 2053347/);
   assert.match(source, /tb_tfa_script/);
 });
+
+test("Monetag serves its zone worker from the site root without unregistering it", async () => {
+  const [workerSource, layoutSource] = await Promise.all([
+    readFile(
+      new URL("../altftoolweb/public/sw.js", import.meta.url),
+      "utf8",
+    ),
+    readFile(
+      new URL("../altftoolweb/src/app/layout.jsx", import.meta.url),
+      "utf8",
+    ),
+  ]);
+
+  assert.match(workerSource, /"domain": "quge5\.com"/);
+  assert.match(workerSource, /"zoneId": 248425/);
+  assert.match(
+    workerSource,
+    /https:\/\/quge5\.com\/act\/files\/service-worker\.min\.js\?r=sw/,
+  );
+  assert.doesNotMatch(workerSource, /unregister/);
+  assert.doesNotMatch(layoutSource, /legacy-service-worker-cleanup/);
+});
