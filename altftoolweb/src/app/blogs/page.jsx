@@ -49,12 +49,20 @@ const blogsDescription =
 const BLOG_SSR_FIREBASE_TIMEOUT_MS = Number(process.env.ALTFT_BLOGS_SSR_FIREBASE_TIMEOUT_MS || 1200);
 
 export async function generateMetadata() {
-  return createPageMetadata({
+  const metadata = await createPageMetadata({
     title: "AltFTool Blog - Tools, Savings & Digital Guides",
     description: blogsDescription,
     path: "/blogs",
     image: "/assets/logo3.png",
   });
+
+  return {
+    ...metadata,
+    twitter: {
+      ...metadata.twitter,
+      card: "summary_large_image",
+    },
+  };
 }
 
 function HeroShortcutRail({ categories, clusters }) {

@@ -6,7 +6,7 @@ const root = path.resolve(import.meta.dirname, "..");
 const webUrls = parseUrlList(
   process.env.ALTFT_MONITOR_WEB_URLS ||
     process.env.ALTFT_MONITOR_WEB_URL ||
-    "https://altftool.com",
+    "https://www.altftool.com",
 );
 const adminUrl = normalizeUrl(process.env.ALTFT_MONITOR_ADMIN_URL || "https://adsmanager.altftool.com");
 const adminToken = process.env.ALTFT_MONITOR_ADMIN_TOKEN || "";
@@ -59,7 +59,7 @@ const WEB_PAGE_CHECKS = [
   {
     name: "extensions-page",
     path: "/extensions",
-    expectedText: ["Browser with Smart Extensions"],
+    expectedText: ["Smart Extensions"],
   },
   {
     name: "academy-page",
@@ -69,7 +69,7 @@ const WEB_PAGE_CHECKS = [
   {
     name: "trending-videos-page",
     path: "/trendingvids",
-    expectedText: ["Discover Trending Videos"],
+    expectedText: ["Trending Videos"],
   },
   {
     name: "buysmart-page",

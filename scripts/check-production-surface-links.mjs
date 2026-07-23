@@ -6,7 +6,7 @@ const workspaceRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)),
 const rawArgs = process.argv.slice(2);
 const args = new Set(rawArgs);
 
-const DEFAULT_BASE_URL = "https://altftool.com";
+const DEFAULT_BASE_URL = "https://www.altftool.com";
 const DEFAULT_CRITICAL_PATHS = [
   "/",
   "/tools/all",
