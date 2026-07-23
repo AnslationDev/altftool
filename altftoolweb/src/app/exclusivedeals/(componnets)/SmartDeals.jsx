@@ -70,7 +70,7 @@
 // }
 "use client";
 import Image from "next/image";
-import girlImg from "../(assets)/coupon image.png";
+import girlImg from "../(assets)/coupon-image.webp";
 import { useState, useEffect } from "react";
 import { SmartDealsSkeleton } from "../DealsPageSkeleton";
 

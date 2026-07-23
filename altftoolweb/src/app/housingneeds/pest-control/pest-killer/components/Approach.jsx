@@ -1,4 +1,4 @@
-import approachImg from '../assets/approach.png';
+import approachImg from '../assets/approach.webp';
 import './Approach.css';
 
 export default function Approach() {

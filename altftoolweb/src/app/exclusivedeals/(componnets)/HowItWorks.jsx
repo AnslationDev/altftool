@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
-import howWork from "../(assets)/Howitworks-banner.jpg";
-import howWork1 from "../(assets)/Howitworks-banner-mobile.jpg";
+import howWork from "../(assets)/Howitworks-banner.webp";
+import howWork1 from "../(assets)/Howitworks-banner-mobile.webp";
 import { HowItWorksSkeleton } from "../DealsPageSkeleton";
 import { useState, useEffect } from "react";
 

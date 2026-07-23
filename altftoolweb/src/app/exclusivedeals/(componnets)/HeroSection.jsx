@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
-import banner from "../(assets)/ dealapge.png";
+import banner from "../(assets)/dealpage.webp";
 import { subscribeAllHeroes } from "../service/firebaseherosection";
 import { HeroSkeleton } from "../DealsPageSkeleton";
 import Link from "next/link";

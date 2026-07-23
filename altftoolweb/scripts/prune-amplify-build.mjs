@@ -8,7 +8,7 @@ if (!isAmplifyBuild) process.exit(0);
 const nextDir = path.resolve(".next");
 const mediaDir = path.join(nextDir, "static", "media");
 const maxArtifactBytes = Number(
-  process.env.ALTFT_AMPLIFY_ARTIFACT_MAX_BYTES || 220 * 1024 * 1024
+  process.env.ALTFT_AMPLIFY_ARTIFACT_MAX_BYTES || 205 * 1024 * 1024
 );
 
 if (!fs.existsSync(nextDir)) {
@@ -31,7 +31,9 @@ for (const name of removableMedia) {
 function directorySize(directory) {
   return fs.readdirSync(directory, { withFileTypes: true }).reduce((total, entry) => {
     // Amplify strips the cache and normalizes Next's duplicate standalone
-    // staging tree before enforcing the hosted build-output limit.
+    // staging tree before enforcing the hosted build-output limit. Keep this
+    // gate below AWS's 220 MiB ceiling because the adapter adds packaging
+    // metadata after the application build completes.
     if (
       directory === nextDir &&
       (entry.name === "cache" || entry.name === "standalone")
