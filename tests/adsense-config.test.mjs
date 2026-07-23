@@ -107,11 +107,11 @@ test("Monetag serves its zone worker from the site root without unregistering it
     ),
   ]);
 
-  assert.match(workerSource, /"domain": "quge5\.com"/);
-  assert.match(workerSource, /"zoneId": 248425/);
+  assert.match(workerSource, /"domain": "auqot\.com"/);
+  assert.match(workerSource, /"zoneId": 11129459/);
   assert.match(
     workerSource,
-    /https:\/\/quge5\.com\/act\/files\/service-worker\.min\.js\?r=sw/,
+    /https:\/\/auqot\.com\/act\/files\/service-worker\.min\.js\?r=sw/,
   );
   assert.doesNotMatch(workerSource, /unregister/);
   assert.doesNotMatch(layoutSource, /legacy-service-worker-cleanup/);
