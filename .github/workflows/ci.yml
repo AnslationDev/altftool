@@ -70,8 +70,6 @@ jobs:
       # `validate:full` creates production builds before its browser suites.
       # Reuse those outputs instead of repeatedly cold-compiling the 1,300+
       # tool graph in webpack dev mode on the same runner.
-      NEXT_PUBLIC_FIREBASE_PROJECT_ID: build-placeholder
-      ALTFT_FIRESTORE_REST_TIMEOUT_MS: "500"
       ALTFT_PLAYWRIGHT_WEB_SERVER: production
       ALTFT_PLAYWRIGHT_ADMIN_SERVER: production
 
