@@ -169,3 +169,75 @@ test("production surface link report passes clean pages and renders Markdown", a
     },
   );
 });
+
+test("production surface link report accepts www and apex canonical aliases", async () => {
+  const baseUrl = "https://altftool.com";
+  const page = htmlPage({
+    canonical: "https://www.altftool.com/",
+    body: "<h1>Home</h1>",
+  });
+  const fetchImpl = async (input) => {
+    const url = new URL(input);
+    const body = url.pathname === "/sitemap.xml"
+      ? "<?xml version=\"1.0\"?><urlset></urlset>"
+      : page;
+    const contentType = url.pathname === "/sitemap.xml"
+      ? "application/xml"
+      : "text/html; charset=utf-8";
+
+    return new Response(body, {
+      status: 200,
+      headers: { "content-type": contentType },
+    });
+  };
+
+  const report = await buildProductionSurfaceLinkReport({
+    baseUrl,
+    criticalPaths: ["/"],
+    fetchImpl,
+    limit: 1,
+    strict: true,
+  });
+
+  assert.equal(report.ok, true);
+  assert.equal(report.totals.warnings, 0);
+});
+
+test("production surface link report retries one transient timeout", async () => {
+  const baseUrl = "https://www.altftool.com";
+  let slowAttempts = 0;
+  const fetchImpl = async (input) => {
+    const url = new URL(input);
+
+    if (url.pathname === "/slow" && slowAttempts++ === 0) {
+      throw new DOMException("Timed out", "AbortError");
+    }
+
+    const body = url.pathname === "/sitemap.xml"
+      ? "<?xml version=\"1.0\"?><urlset></urlset>"
+      : htmlPage({
+          canonical: url.pathname,
+          body: url.pathname === "/" ? "<a href=\"/slow\">Slow route</a>" : "<h1>Slow route</h1>",
+        });
+    const contentType = url.pathname === "/sitemap.xml"
+      ? "application/xml"
+      : "text/html; charset=utf-8";
+
+    return new Response(body, {
+      status: 200,
+      headers: { "content-type": contentType },
+    });
+  };
+
+  const report = await buildProductionSurfaceLinkReport({
+    baseUrl,
+    criticalPaths: ["/"],
+    fetchImpl,
+    limit: 1,
+    strict: true,
+  });
+
+  assert.equal(report.ok, true);
+  assert.equal(report.totals.failures, 0);
+  assert.ok(slowAttempts >= 2);
+});

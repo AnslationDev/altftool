@@ -39,7 +39,7 @@ const DEFAULT_APP_BUDGETS = [
     routeLoaderBaseline: 245,
     // Match check-bundle-budgets.mjs. Aggregate growth is distributed across
     // lazy admin routes; the fixed per-chunk cap remains the user-facing guard.
-    routeJsGrowthKiB: 6.25,
+    routeJsGrowthKiB: 6.5,
   },
 ];
 

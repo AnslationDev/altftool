@@ -42,6 +42,18 @@ function normalizeBaseUrl(value = DEFAULT_BASE_URL) {
   return normalized || DEFAULT_BASE_URL;
 }
 
+function isEquivalentProductionOrigin(candidateUrl, baseUrl) {
+  const candidate = candidateUrl instanceof URL ? candidateUrl : new URL(candidateUrl);
+  const base = baseUrl instanceof URL ? baseUrl : new URL(baseUrl);
+  const normalizeHostname = (hostname) => hostname.toLowerCase().replace(/^www\./, "");
+
+  return (
+    candidate.protocol === base.protocol &&
+    candidate.port === base.port &&
+    normalizeHostname(candidate.hostname) === normalizeHostname(base.hostname)
+  );
+}
+
 function resolveOutputPath(value) {
   if (!value) return "";
   return path.isAbsolute(value) ? value : path.join(workspaceRoot, value);
@@ -265,8 +277,23 @@ async function fetchWithTimeout(url, { fetchImpl, timeoutMs, method = "GET", hea
   }
 }
 
+async function fetchWithTimeoutRetry(url, options) {
+  let lastError;
+
+  for (let attempt = 0; attempt < 2; attempt += 1) {
+    try {
+      return await fetchWithTimeout(url, options);
+    } catch (error) {
+      lastError = error;
+      if (error?.name !== "AbortError" || attempt === 1) throw error;
+    }
+  }
+
+  throw lastError;
+}
+
 async function fetchText(url, context, headers = {}) {
-  const { response, durationMs } = await fetchWithTimeout(url, {
+  const { response, durationMs } = await fetchWithTimeoutRetry(url, {
     ...context,
     headers: {
       accept: "text/html,application/xhtml+xml,application/xml,text/xml,text/plain,*/*",
@@ -296,7 +323,7 @@ async function probeTargetUrl(url, context, { kind = "link", sourcePage = "" } =
   };
 
   try {
-    const headResult = await fetchWithTimeout(url, {
+    const headResult = await fetchWithTimeoutRetry(url, {
       ...context,
       method: "HEAD",
       headers,
@@ -306,7 +333,7 @@ async function probeTargetUrl(url, context, { kind = "link", sourcePage = "" } =
     let text = "";
 
     if ([403, 405, 501].includes(response.status) || (kind === "link" && response.status < 400)) {
-      const getResult = await fetchWithTimeout(url, {
+      const getResult = await fetchWithTimeoutRetry(url, {
         ...context,
         method: "GET",
         headers,
@@ -377,7 +404,7 @@ function buildSeoWarnings({ html, pageUrl, baseUrl }) {
     const canonicalUrl = normalizeDiscoveredUrl(canonical, pageUrl);
     if (!canonicalUrl) {
       warnings.push({ type: "seo", pageUrl, message: "invalid canonical link" });
-    } else if (canonicalUrl.origin !== new URL(baseUrl).origin) {
+    } else if (!isEquivalentProductionOrigin(canonicalUrl, baseUrl)) {
       warnings.push({ type: "seo", pageUrl, message: "canonical points outside production origin", targetUrl: canonicalUrl.toString() });
     }
   }

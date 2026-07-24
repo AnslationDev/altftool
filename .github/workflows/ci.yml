@@ -200,6 +200,10 @@ jobs:
         run: npx playwright install chromium
 
       - name: Run visual regression
+        env:
+          # The public tool registry now exceeds 1,100 routes. Next dev needs
+          # more than V8's default heap while compiling the first visual route.
+          NODE_OPTIONS: --max-old-space-size=6144
         run: npm run test:visual
 
       - name: Upload visual artifacts
