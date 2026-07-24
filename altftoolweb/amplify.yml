@@ -10,7 +10,7 @@ frontend:
       commands:
         - export ALTFT_DEFER_BULK_PRERENDER=true
         - export ALTFT_BUILD_CPUS=1
-        - export ALTFT_NODE_MAX_OLD_SPACE_SIZE=12288
+        - export ALTFT_NODE_MAX_OLD_SPACE_SIZE=10240
         - npm run build
         - rm -rf .next/cache
   artifacts:
