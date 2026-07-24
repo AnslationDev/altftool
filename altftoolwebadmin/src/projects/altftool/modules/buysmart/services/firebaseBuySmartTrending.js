@@ -7,7 +7,7 @@
 //   serverTimestamp
 
 // } from "firebase/firestore"
-// import {db} from "@/lib/firebase"
+// import { db } from "@/lib/firebaseFirestore";
 // import { dualWrite, getFirestoreRefs } from "@/lib/dualWrite"
 
 // const MODULE = "buySmart";
@@ -118,7 +118,7 @@ import {
 } from "firebase/firestore";
 
 import { buySmartDocPath } from "@altftool/core/firebasePaths";
-import { db } from "@/lib/firebase";
+import { db } from "@/lib/firebaseFirestore";
 
 export const ROOT = buySmartDocPath("trending");
 const TRENDING_REF = doc(db, ...ROOT);

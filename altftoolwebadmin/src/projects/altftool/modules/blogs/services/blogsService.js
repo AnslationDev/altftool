@@ -25,7 +25,8 @@ import {
 
 import { getAuth } from "firebase/auth";
 
-import { db, storage } from "@/lib/firebase";
+import { db } from "@/lib/firebaseFirestore";
+import { storage } from "@/lib/firebaseStorage";
 import { statusForWorkflow, WORKFLOW } from "../lib/workflow";
 import { chunk, BATCH_BLOG_LIMIT } from "../lib/bulkOps";
 import { slugify } from "../lib/slug";

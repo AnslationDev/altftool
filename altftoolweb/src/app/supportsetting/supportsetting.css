@@ -505,7 +505,7 @@
   color: var(--support-primary);
 }
 
-/* Toggle switch — the one new primitive, matching the theme's tokens */
+/* Toggle setting rows use the shared @altftool/ui switch primitive. */
 .support-toggle-row {
   display: flex;
   align-items: center;
@@ -547,46 +547,6 @@
   font-size: 0.78rem;
   color: var(--muted-foreground);
   margin: 0.1rem 0 0;
-}
-
-.support-toggle {
-  position: relative;
-  flex-shrink: 0;
-  width: 2.75rem;
-  height: 1.5rem;
-  border-radius: 999px;
-  border: none;
-  cursor: pointer;
-  background: color-mix(in srgb, var(--muted-foreground) 30%, var(--muted));
-  transition: background-color 180ms ease;
-}
-
-.support-toggle-on {
-  background: var(--support-cta-gradient);
-}
-
-.support-toggle:disabled {
-  cursor: not-allowed;
-}
-
-.support-toggle-thumb {
-  position: absolute;
-  top: 0.15rem;
-  left: 0.15rem;
-  width: 1.2rem;
-  height: 1.2rem;
-  border-radius: 50%;
-  background: white;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
-  transition: transform 180ms ease;
-}
-
-.support-toggle-on .support-toggle-thumb {
-  transform: translateX(1.25rem);
-}
-
-.support-toggle-loading {
-  opacity: 0.7;
 }
 
 /* ============================================================

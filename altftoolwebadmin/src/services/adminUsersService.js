@@ -1,5 +1,5 @@
 import { collection, getDocs, onSnapshot } from "firebase/firestore";
-import { db } from "@/lib/firebase";
+import { db } from "@/lib/firebaseFirestore";
 import { RBAC_PATHS } from "@/lib/rbacPaths";
 
 const adminUsersCollection = collection(db, ...RBAC_PATHS.adminUsers);

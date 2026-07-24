@@ -10,7 +10,7 @@ import {
   serverTimestamp,
 } from "firebase/firestore";
 
-import { db } from "@/lib/firebase";
+import { db } from "@/lib/firebaseFirestore";
 import { clearFirebaseCache, getCachedFirebaseRead } from "@/lib/firebaseCache";
 import { compactFirestoreData, normalizeExtension } from "@altftool/core/firebaseContent";
 import { ALTFT_EXTENSIONS_COLLECTION_PATH } from "@altftool/core/firebasePaths";

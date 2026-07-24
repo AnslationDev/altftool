@@ -1,20 +1,20 @@
 import AutoInsuranceClient from "./AutoInsuranceClient";
+import { createPageMetadata } from "@/platform/seo/generateMetadata";
 import "./auto-insurance.css";
 
-export const metadata = {
-  title: "Texas Auto Insurance Quotes | Save Up To $800 Per Year",
+export const metadata = createPageMetadata({
+  title: "Compare Auto Insurance Coverage and Costs",
   description:
-    "Compare auto insurance quotes from multiple top-rated carriers. Texas drivers can check potential savings in minutes with no obligation.",
-  alternates: {
-    canonical: "/Auto-Insurance",
-  },
-  openGraph: {
-    title: "Texas Drivers Could Save Up To $800 Per Year On Auto Insurance",
-    description:
-      "Fast auto insurance comparison for Texas, Florida, and California drivers. Get a free quote and compare multiple carrier options.",
-    type: "website",
-  },
-};
+    "Compare auto insurance coverage options, common discounts, cost factors, and quote considerations before choosing a policy.",
+  path: "/bops/insurance/auto-insurance",
+  keywords: [
+    "auto insurance",
+    "car insurance comparison",
+    "auto insurance coverage",
+    "car insurance costs",
+  ],
+  pageType: "business-ops-insurance",
+});
 
 export default function AutoInsurancePage() {
   return <AutoInsuranceClient />;

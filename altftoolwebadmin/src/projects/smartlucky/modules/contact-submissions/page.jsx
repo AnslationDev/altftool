@@ -5,7 +5,7 @@ import { Loader2, Mail, Phone, MapPin, MessageSquare, Eye, Download, Trash2, Cal
 import { emitAlert } from "@/lib/alertBus";
 import { getModuleDocRef } from "../shared/collectionService";
 import { getDoc, setDoc, serverTimestamp, doc } from "firebase/firestore";
-import { db } from "@/lib/firebase";
+import { db } from "@/lib/firebaseFirestore";
 import { SMARTLUCKY_PROJECT_ROOT } from "@altftool/core/firebasePaths";
 
 const SUBMISSIONS_DOC = doc(db, ...SMARTLUCKY_PROJECT_ROOT, "contact", "submissions");

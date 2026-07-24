@@ -5,6 +5,7 @@ import HnFaq from "@/app/bops/housingneeds/_components/HnFaq";
 import HnHeadline from "@/app/bops/housingneeds/_components/HnHeadline";
 import HnImage from "@/app/bops/housingneeds/_components/HnImage";
 import JsonLd from "@/platform/seo/JsonLd";
+import { absoluteUrl } from "@/platform/seo/generateMetadata";
 import AltfLauncher from "@/app/_altf/AltfLauncher";
 import InsuranceHeader from "./InsuranceHeader";
 import InsuranceFooter from "./InsuranceFooter";
@@ -13,7 +14,6 @@ import InsuranceIcon from "./InsuranceIcon";
 import { INSURANCE, getInsurance } from "../_data/insurance";
 
 const INSURANCE_BASE = "/bops/insurance";
-const SITE_ORIGIN = "https://altftool.com";
 
 /**
  * The single shared layout for every Insurance vertical.
@@ -98,9 +98,9 @@ export default function InsurancePage({ slug }) {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     itemListElement: [
-      { "@type": "ListItem", position: 1, name: "Business Ops", item: `${SITE_ORIGIN}/bops` },
-      { "@type": "ListItem", position: 2, name: "Insurance", item: `${SITE_ORIGIN}${INSURANCE_BASE}` },
-      { "@type": "ListItem", position: 3, name, item: `${SITE_ORIGIN}${INSURANCE_BASE}/${slug}` },
+      { "@type": "ListItem", position: 1, name: "Business Ops", item: absoluteUrl("/bops") },
+      { "@type": "ListItem", position: 2, name: "Insurance", item: absoluteUrl(INSURANCE_BASE) },
+      { "@type": "ListItem", position: 3, name, item: absoluteUrl(`${INSURANCE_BASE}/${slug}`) },
     ],
   };
 

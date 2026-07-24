@@ -49,16 +49,15 @@ const nextConfig = {
   async redirects() {
     return [
       {
-        // HousingNeeds moved out from under /business-ops to a shorter,
-        // topical URL for search and paid campaigns. Permanent so any link
-        // already shared transfers its equity to the new path.
+        // Keep legacy Business Ops links on a single permanent hop to the
+        // canonical Housing Needs tree.
         source: "/business-ops/housingneeds",
-        destination: "/housingneeds",
+        destination: "/bops/housingneeds",
         permanent: true,
       },
       {
         source: "/business-ops/housingneeds/:path*",
-        destination: "/housingneeds/:path*",
+        destination: "/bops/housingneeds/:path*",
         permanent: true,
       },
       {
@@ -155,12 +154,7 @@ const nextConfig = {
       { source: "/bops/housingneeds/hvac", destination: "/bops/housing-services#hvac", permanent: false },
       {
         source: "/games",
-        destination: "/tools/all?search=games",
-        permanent: true,
-      },
-      {
-        source: "/games/:slug",
-        destination: "/tools/all?search=:slug",
+        destination: "/tools/games",
         permanent: true,
       },
       {

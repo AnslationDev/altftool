@@ -1,7 +1,7 @@
 import { doc, getDoc, setDoc, serverTimestamp } from "firebase/firestore";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
-import { db } from "@/lib/firebase";
+import { db } from "@/lib/firebaseFirestore";
 
 // projects/altftool/pranx/data/home/content (single document)
 const PRANX_DOC_PATH = ["projects", "altftool", "pranx", "data", "home", "content"];

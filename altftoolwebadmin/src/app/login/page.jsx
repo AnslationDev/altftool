@@ -6,13 +6,13 @@ import {
   signInWithPopup,
   GoogleAuthProvider,
 } from "firebase/auth";
-import { auth } from "@/lib/firebase";
+import { auth } from "@/lib/firebaseAuth";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/context/AuthContext";
 import { emitAlert } from "@/lib/alertBus";
 import { getFirstAllowedRoute } from "@/lib/permissionUtils";
 import { usePathname } from "next/navigation";
-import { Button, Card, Input, Spinner } from "@altftool/ui";
+import { BrandLogo, Button, Card, Input, Spinner } from "@altftool/ui";
 
 const googleProvider = new GoogleAuthProvider();
 // Always show the Google account chooser so the user can pick the right
@@ -31,28 +31,30 @@ export default function Login() {
     localAdminLoginEnabled,
     signInLocalAdmin,
   } = useAuth();
-const pathname = usePathname();
+  const pathname = usePathname();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [googleLoading, setGoogleLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [googleError, setGoogleError] = useState(false);
-  
 
   /* ── Redirect once auth state is resolved ── */
   useEffect(() => {
     if (loading) return;
     if (googleError) return;
     if (isPendingUser && pathname !== "/access-requested") {
-  router.replace("/access-requested");
-  return;
-}
+      router.replace("/access-requested");
+      return;
+    }
     if (!user || !adminData) return;
 
     const destination = getFirstAllowedRoute(adminData);
     if (!destination) {
-      emitAlert({ type: "warning", message: "No modules assigned. Contact your super admin." });
+      emitAlert({
+        type: "warning",
+        message: "No modules assigned. Contact your super admin.",
+      });
       return;
     }
 
@@ -93,7 +95,10 @@ const pathname = usePathname();
 
     if (!res.ok) {
       setGoogleError(true);
-      emitAlert({ type: "error", message: data.error ?? "Google login failed" });
+      emitAlert({
+        type: "error",
+        message: data.error ?? "Google login failed",
+      });
       await auth.signOut();
       return;
     }
@@ -127,8 +132,14 @@ const pathname = usePathname();
         }
       }
       // User dismissed the popup — not worth surfacing.
-      if (code !== "auth/popup-closed-by-user" && code !== "auth/cancelled-popup-request") {
-        emitAlert({ type: "error", message: "Google sign-in failed. Please try again." });
+      if (
+        code !== "auth/popup-closed-by-user" &&
+        code !== "auth/cancelled-popup-request"
+      ) {
+        emitAlert({
+          type: "error",
+          message: "Google sign-in failed. Please try again.",
+        });
       }
     } finally {
       setGoogleLoading(false);
@@ -138,10 +149,12 @@ const pathname = usePathname();
   const loginWithLocalAdmin = () => {
     const started = signInLocalAdmin?.();
     if (!started) {
-      emitAlert({ type: "error", message: "Local admin access is only available on localhost." });
+      emitAlert({
+        type: "error",
+        message: "Local admin access is only available on localhost.",
+      });
       return;
     }
-
   };
 
   // Show a neutral spinner — never the sign-in form — while the session is
@@ -155,8 +168,14 @@ const pathname = usePathname();
   // out there and needs to retry).
   if (loading || (user && !googleError)) {
     return (
-      <div className="h-screen flex items-center justify-center" style={{ background: "var(--background)" }}>
-        <Card className="px-5 py-3 flex items-center gap-2.5 text-sm" style={{ color: "var(--muted)" }}>
+      <div
+        className="h-screen flex items-center justify-center"
+        style={{ background: "var(--background)" }}
+      >
+        <Card
+          className="px-5 py-3 flex items-center gap-2.5 text-sm"
+          style={{ color: "var(--muted)" }}
+        >
           <Spinner size="sm" />
           {loading ? "Checking session…" : "Signing you in…"}
         </Card>
@@ -172,33 +191,14 @@ const pathname = usePathname();
       style={{ background: "var(--background)" }}
     >
       <div className="w-full max-w-md">
-
         {/* ── Brand header ── */}
         <div className="text-center mb-8">
-          <div className="inline-flex items-center gap-2.5 mb-5">
-            <div
-              className="w-8 h-8 rounded-lg flex items-center justify-center"
-              style={{ background: "var(--primary)" }}
-            >
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="var(--primary-foreground)">
-                <rect x="2" y="2" width="5.5" height="5.5" rx="1" />
-                <rect x="8.5" y="2" width="5.5" height="5.5" rx="1" />
-                <rect x="2" y="8.5" width="5.5" height="5.5" rx="1" />
-                <rect x="8.5" y="8.5" width="5.5" height="5.5" rx="1" />
-              </svg>
-            </div>
-            <span
-              className="text-lg font-semibold tracking-tight"
-              style={{ color: "var(--foreground)" }}
-            >
-              Ads Manager - Anslation
-            </span>
-          </div>
+          <BrandLogo size="md" className="mb-5" />
           <h1
             className="text-2xl font-semibold tracking-tight mb-1.5"
             style={{ color: "var(--foreground)" }}
           >
-            Welcome Admin
+            Welcome to AltFTool Admin
           </h1>
           <p className="text-sm" style={{ color: "var(--muted)" }}>
             Sign in to access your dashboard
@@ -207,7 +207,6 @@ const pathname = usePathname();
 
         {/* ── Card ── */}
         <Card className="p-8" style={{ boxShadow: "var(--shadow-md)" }}>
-
           {/* ── Google (primary) ── */}
           <Button
             type="button"
@@ -219,10 +218,22 @@ const pathname = usePathname();
           >
             {!googleLoading ? (
               <svg width="16" height="16" viewBox="0 0 18 18" fill="none">
-                <path d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.716v2.259h2.908C16.658 14.015 17.64 11.707 17.64 9.2z" fill="#4285F4"/>
-                <path d="M9 18c2.43 0 4.467-.806 5.956-2.184l-2.908-2.259c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332C2.438 15.983 5.482 18 9 18z" fill="#34A853"/>
-                <path d="M3.964 10.706A5.41 5.41 0 0 1 3.682 9c0-.593.102-1.17.282-1.706V4.962H.957A8.996 8.996 0 0 0 0 9c0 1.452.348 2.827.957 4.038l3.007-2.332z" fill="#FBBC05"/>
-                <path d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0 5.482 0 2.438 2.017.957 4.962L3.964 7.294C4.672 5.163 6.656 3.58 9 3.58z" fill="#EA4335"/>
+                <path
+                  d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.716v2.259h2.908C16.658 14.015 17.64 11.707 17.64 9.2z"
+                  fill="#4285F4"
+                />
+                <path
+                  d="M9 18c2.43 0 4.467-.806 5.956-2.184l-2.908-2.259c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332C2.438 15.983 5.482 18 9 18z"
+                  fill="#34A853"
+                />
+                <path
+                  d="M3.964 10.706A5.41 5.41 0 0 1 3.682 9c0-.593.102-1.17.282-1.706V4.962H.957A8.996 8.996 0 0 0 0 9c0 1.452.348 2.827.957 4.038l3.007-2.332z"
+                  fill="#FBBC05"
+                />
+                <path
+                  d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0 5.482 0 2.438 2.017.957 4.962L3.964 7.294C4.672 5.163 6.656 3.58 9 3.58z"
+                  fill="#EA4335"
+                />
               </svg>
             ) : null}
             {googleLoading ? "Signing in…" : "Continue with Google"}
@@ -243,11 +254,17 @@ const pathname = usePathname();
 
           {/* ── Divider ── */}
           <div className="flex items-center gap-3 my-6">
-            <div className="flex-1 h-px" style={{ background: "var(--border)" }} />
+            <div
+              className="flex-1 h-px"
+              style={{ background: "var(--border)" }}
+            />
             <span className="text-xs" style={{ color: "var(--muted-soft)" }}>
               or continue with email
             </span>
-            <div className="flex-1 h-px" style={{ background: "var(--border)" }} />
+            <div
+              className="flex-1 h-px"
+              style={{ background: "var(--border)" }}
+            />
           </div>
 
           {/* ── Email / Password ── */}
@@ -307,10 +324,12 @@ const pathname = usePathname();
           </form>
         </Card>
 
-        <p className="text-center text-xs mt-5" style={{ color: "var(--muted-soft)" }}>
+        <p
+          className="text-center text-xs mt-5"
+          style={{ color: "var(--muted-soft)" }}
+        >
           Having trouble? Contact your super admin for help.
         </p>
-
       </div>
     </div>
   );

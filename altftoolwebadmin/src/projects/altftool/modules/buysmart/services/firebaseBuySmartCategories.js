@@ -7,7 +7,7 @@
 //   getDoc,
 //   serverTimestamp
 // } from "firebase/firestore";
-// import { db } from "@/lib/firebase";
+// import { db } from "@/lib/firebaseFirestore";
 // import { dualWrite, getFirestoreRefs } from "@/lib/dualWrite";
 
 
@@ -178,7 +178,7 @@ import {
   toBoolean,
 } from "@altftool/core/buysmart";
 import { buySmartDocPath } from "@altftool/core/firebasePaths";
-import { db } from "@/lib/firebase";
+import { db } from "@/lib/firebaseFirestore";
 
 export const ROOT = buySmartDocPath("categories");
 const CATEGORY_REF = doc(db, ...ROOT);

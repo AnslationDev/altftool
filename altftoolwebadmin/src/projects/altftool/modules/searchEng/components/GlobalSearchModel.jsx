@@ -5,7 +5,7 @@ import { getAuth } from "firebase/auth";
 import { createData, updateData } from "../service/data.service";
 import { emitAlert } from "@/lib/alertBus";
 import { logAuditEvent } from "@/lib/auditClient";
-import { storage } from "@/lib/firebase";
+import { storage } from "@/lib/firebaseStorage";
 import { ref as storageRef, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import {
   X, AlertCircle, CheckCircle2,

@@ -2,18 +2,21 @@ import GameGridSection from "@/app/altfgame/_components/GameGrid";
 import { GAMES, CATEGORIES, TRENDING, POPULAR, NEW_RELEASES } from "@/app/altfgame/_data/games";
 import { ArrowRight, Clock, Flame, TrendingUp } from "lucide-react";
 import Link from "next/link";
+import JsonLd from "@/platform/seo/JsonLd";
+import {
+  createBreadcrumbJsonLd,
+  createCollectionPageJsonLd,
+  createItemListJsonLd,
+  createPageMetadata,
+} from "@/platform/seo/generateMetadata";
 
-export const metadata = {
+export const metadata = createPageMetadata({
   title: "AltF Games - Free Browser Games",
-  description: "Play fast, free browser games with no download or account required.",
-  alternates: { canonical: "/altfgame" },
-  openGraph: {
-    title: "AltF Games - Free Browser Games",
-    description: "Play fast, free browser games with no download or account required.",
-    url: "/altfgame",
-    type: "website",
-  },
-};
+  description: "Play fast, free browser games with no download or account required, across puzzle, action, arcade, strategy, and more categories.",
+  path: "/altfgame",
+  keywords: ["free browser games", "online arcade games", "no download games", "AltF Games"],
+  pageType: "games",
+});
 
 function Section({ icon, title, subtitle, children }) {
   return (
@@ -39,8 +42,29 @@ function Section({ icon, title, subtitle, children }) {
 }
 
 export default function GamesIndex() {
+  const jsonLd = [
+    createCollectionPageJsonLd({
+      path: "/altfgame",
+      name: "AltF Games",
+      description: "Play fast, free browser games with no download or account required, across puzzle, action, arcade, strategy, and more categories.",
+    }),
+    createItemListJsonLd({
+      path: "/altfgame",
+      name: "AltF native browser games",
+      items: GAMES.map((game) => ({
+        name: game.title,
+        path: `/altfgame/${game.slug}`,
+      })),
+    }),
+    createBreadcrumbJsonLd([
+      { name: "Home", path: "/" },
+      { name: "AltF Games", path: "/altfgame" },
+    ]),
+  ];
+
   return (
     <div className="w-full">
+      <JsonLd id="altf-games-hub-schema" data={jsonLd} />
       <div className="mb-8">
         <h1 className="text-3xl font-bold tracking-tight">All Games</h1>
         <p className="mt-2 text-foreground/60">

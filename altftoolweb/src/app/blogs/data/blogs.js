@@ -808,34 +808,53 @@ export function getBlogAuthorBySlug(authorSlug, posts = blogPosts) {
 }
 
 function getClusterMatchScore(cluster = {}, post = {}) {
-  const haystack = [
+  const primaryHaystack = [
     post.heading,
     post.title,
-    post.excerpt,
-    post.description,
     post.category,
     post.tool,
     ...(Array.isArray(post.tags) ? post.tags : []),
   ].filter(Boolean).join(" ").toLowerCase();
-  const tokens = tokenizeBlogText(haystack);
+  const supportingHaystack = [post.excerpt, post.description]
+    .filter(Boolean)
+    .join(" ")
+    .toLowerCase();
+  const primaryTokens = tokenizeBlogText(primaryHaystack);
+  const supportingTokens = tokenizeBlogText(supportingHaystack);
   const postCategorySlug = blogTaxonomySlug(post.category || "");
   const genericCategorySlugs = new Set(["digital-tools", "tools", "productivity"]);
   const categoryScore = (cluster.categories || []).reduce((score, category) => {
     const categorySlug = blogTaxonomySlug(category);
     if (categorySlug !== postCategorySlug) return score;
-    return Math.max(score, genericCategorySlugs.has(categorySlug) ? 8 : 42);
+    return Math.max(score, genericCategorySlugs.has(categorySlug) ? 6 : 42);
   }, 0);
   const keywordScore = (cluster.keywords || []).reduce((score, keyword) => {
     const normalizedKeyword = String(keyword).toLowerCase();
     const keywordTokens = [...tokenizeBlogText(normalizedKeyword)];
-    const phraseMatch = normalizedKeyword.length > 2 && haystack.includes(normalizedKeyword);
-    const tokenMatch = keywordTokens.length > 0 && keywordTokens.every((token) => tokens.has(token));
-    return score + (phraseMatch || tokenMatch ? 12 : 0);
+    if (!keywordTokens.length) return score;
+
+    const primaryPhraseMatch =
+      normalizedKeyword.length > 2 &&
+      primaryHaystack.includes(normalizedKeyword);
+    const primaryTokenMatch = keywordTokens.every((token) =>
+      primaryTokens.has(token),
+    );
+    const supportingPhraseMatch =
+      keywordTokens.length > 1 &&
+      supportingHaystack.includes(normalizedKeyword);
+    const supportingTokenMatch =
+      keywordTokens.length > 1 &&
+      keywordTokens.every((token) => supportingTokens.has(token));
+
+    if (primaryPhraseMatch) return score + 18;
+    if (primaryTokenMatch) return score + 14;
+    if (supportingPhraseMatch || supportingTokenMatch) return score + 5;
+    return score;
   }, 0);
   const tagScore = (Array.isArray(post.tags) ? post.tags : []).reduce((score, tag) => {
     const tagSlug = blogTaxonomySlug(tag);
     const matches = (cluster.keywords || []).some((keyword) => blogTaxonomySlug(keyword) === tagSlug);
-    return score + (matches ? 10 : 0);
+    return score + (matches ? 16 : 0);
   }, 0);
 
   return categoryScore + keywordScore + tagScore;
@@ -849,7 +868,7 @@ export function getBlogTopicClusters(posts = blogPosts) {
         postIndex,
         score: getClusterMatchScore(cluster, post),
       }))
-      .filter((item) => item.post?.slug && item.score >= 12)
+      .filter((item) => item.post?.slug && item.score >= 14)
       .sort((a, b) => {
         if (b.score !== a.score) return b.score - a.score;
         const dateA = Date.parse(a.post.date || "") || 0;

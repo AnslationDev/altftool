@@ -1,5 +1,5 @@
 import { collection, getDocs, query, orderBy, limit, startAfter, doc, getDoc, addDoc, updateDoc, deleteDoc, where } from "firebase/firestore";
-import { db } from "@/lib/firebase";
+import { db } from "@/lib/firebaseFirestore";
 
 const PROJECT_ID = "marketys";
 const COLLECTION = "blogs";

@@ -21,7 +21,8 @@ import {
   deleteObject,
 } from "firebase/storage";
 
-import { db, storage } from "@/lib/firebase";
+import { db } from "@/lib/firebaseFirestore";
+import { storage } from "@/lib/firebaseStorage";
 
 
 

@@ -16,7 +16,7 @@ export default function manifest() {
     id: getSiteUrl(),
     icons: [
       {
-        src: "/altftool-icon.svg",
+        src: "/brand/altftool-mark.svg",
         sizes: "any",
         type: "image/svg+xml",
       },

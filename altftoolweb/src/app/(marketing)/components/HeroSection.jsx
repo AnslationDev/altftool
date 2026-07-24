@@ -2,83 +2,147 @@ import Image from "next/image";
 import Link from "next/link";
 import {
   ArrowRight,
-  LayoutGrid,
+  Boxes,
+  FlaskConical,
+  Layers3,
+  Search,
   ShieldCheck,
-  Star,
-  Users,
 } from "lucide-react";
+import { EXPERIENCE_CATALOG } from "@altftool/core/experiences";
+import { PRODUCT_SUITE_CATALOG } from "@altftool/core/product-suites";
+import { CANONICAL_CATEGORIES } from "@/platform/registry/categoryTaxonomy";
 
-const heroStats = [
-  { label: "50K+ Users", icon: Users },
-  { label: "4.9/5 Rating", icon: Star, accent: "gold" },
-  { label: "Trusted Platform", icon: ShieldCheck, accent: "green" },
+const catalogFacts = [
+  {
+    label: "Tool categories",
+    value: CANONICAL_CATEGORIES.length,
+    icon: Layers3,
+  },
+  {
+    label: "Product workspaces",
+    value: PRODUCT_SUITE_CATALOG.length,
+    icon: Boxes,
+  },
+  {
+    label: "Interactive labs",
+    value: EXPERIENCE_CATALOG.length,
+    icon: FlaskConical,
+  },
+];
+
+const quickRoutes = [
+  { label: "Browse all tools", href: "/tools/all" },
+  { label: "Build an automation", href: "/n8n" },
+  { label: "Explore business services", href: "/bops" },
 ];
 
 export default function HeroSection() {
   return (
-    <section className="section home-hero-section relative overflow-hidden">
-      <div className="home-hero-band relative overflow-hidden">
-        <div className="pointer-events-none absolute inset-0 home-subtle-grid opacity-70" />
-        <div className="pointer-events-none absolute -left-40 top-10 h-[32rem] w-[32rem] rounded-full bg-[color-mix(in_srgb,var(--primary)_10%,transparent)] blur-3xl" />
+    <section className="border-b border-border bg-background" aria-labelledby="home-title">
+      <div className="mx-auto grid w-full max-w-[var(--anslation-ds-container)] items-center gap-8 px-4 py-8 sm:px-6 sm:py-12 lg:grid-cols-[minmax(0,1fr)_minmax(22rem,0.82fr)] lg:px-8 lg:py-14">
+        <div className="max-w-3xl">
+          <p className="inline-flex min-h-8 items-center gap-2 rounded-full border border-border bg-card px-3 text-xs font-semibold text-primary shadow-sm">
+            <ShieldCheck className="h-4 w-4" aria-hidden="true" />
+            Organized tools for real work
+          </p>
 
-        <div className="home-hero-inner relative mx-auto max-w-[1280px] px-[var(--anslation-ds-gutter)]">
-          <div className="home-hero-content-grid grid items-center gap-9 lg:grid-cols-[0.96fr_1.04fr] xl:gap-14">
-            <div className="home-reveal">
-              <div className="home-reference-badge">
-                <span className="home-reference-badge-icon" aria-hidden="true">
-                  <LayoutGrid className="h-3.5 w-3.5" />
-                </span>
-                All-in-one productivity platform
-              </div>
+          <h1
+            id="home-title"
+            className="mt-5 text-4xl font-bold leading-tight text-foreground sm:text-5xl lg:text-6xl"
+          >
+            AltFTool
+          </h1>
+          <p className="mt-3 max-w-2xl text-xl font-semibold leading-8 text-foreground sm:text-2xl">
+            Find the right tool, workflow, or practical next step.
+          </p>
+          <p className="mt-4 max-w-2xl text-base leading-7 text-muted-foreground">
+            Search browser utilities, product workspaces, automations, business
+            services, guides, deals, and interactive labs from one structured
+            platform.
+          </p>
 
-              <h1 className="mt-6 max-w-[39rem] text-balance text-[clamp(2.35rem,3.9vw,3.45rem)] font-extrabold leading-[1.06] tracking-normal text-[var(--foreground)] [font-family:var(--home-font-display)]">
-                Find Tools. Extensions.{" "}
-                <span className="bg-gradient-to-r from-[var(--primary)] to-[#38BDF8] bg-clip-text text-transparent">
-                  Apps.
-                </span>
-                {" "}All In One Place.
-              </h1>
-
-              <p className="mt-6 max-w-[35rem] text-[0.98rem] font-normal leading-8 text-[var(--muted-foreground)]">
-                Discover trusted productivity tools, browser extensions, and
-                mobile apps curated to help you work smarter.
-              </p>
-
-              <div className="mt-7 flex flex-col gap-4 sm:flex-row">
-                <Link href="/tools/all" className="home-ref-primary-btn">
-                  Explore Tools
-                  <ArrowRight className="h-4 w-4" />
-                </Link>
-                <Link href="/policypages/about" className="home-ref-secondary-btn">
-                  About AltFTool
-                </Link>
-              </div>
-
-              <div className="home-hero-stat-strip mt-8">
-                {heroStats.map((item) => {
-                  const Icon = item.icon;
-
-                  return (
-                    <span key={item.label} className="home-hero-stat-item">
-                      <Icon className={`h-5 w-5 ${item.accent ? `home-hero-stat-icon-${item.accent}` : ""}`} />
-                      {item.label}
-                    </span>
-                  );
-                })}
-              </div>
-            </div>
-
-            <div className="home-reveal home-hero-visual home-hero-reference-visual relative flex min-h-[330px] items-center justify-center [animation-delay:110ms]">
-              <Image
-                src="/assets/home-hero-generated-team-transparent-v3.png"
-                alt="Creators exploring AltFTool digital tools on a laptop"
-                width={1341}
-                height={1013}
-                priority
-                className="home-hero-reference-image"
+          <form
+            action="/search"
+            className="mt-6 flex max-w-2xl flex-col gap-2 sm:flex-row"
+            role="search"
+          >
+            <label className="relative min-w-0 flex-1" htmlFor="home-global-search">
+              <span className="sr-only">Search all of AltFTool</span>
+              <Search
+                className="pointer-events-none absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-muted-foreground"
+                aria-hidden="true"
               />
-            </div>
-          </div>
+              <input
+                id="home-global-search"
+                name="q"
+                type="search"
+                minLength={2}
+                maxLength={100}
+                required
+                placeholder="Search tools, workflows, guides, deals..."
+                className="h-11 w-full rounded-md border border-border bg-card pl-10 pr-3 text-sm text-foreground shadow-sm outline-none transition placeholder:text-muted-foreground focus:border-primary focus:ring-[3px] focus:ring-primary/25"
+              />
+            </label>
+            <button
+              type="submit"
+              className="inline-flex h-11 items-center justify-center gap-2 rounded-md bg-primary px-5 text-sm font-semibold text-primary-foreground shadow-sm transition hover:bg-[var(--primary-hover)] focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-primary/35"
+            >
+              Search AltFTool
+              <ArrowRight className="h-4 w-4" aria-hidden="true" />
+            </button>
+          </form>
+
+          <nav
+            aria-label="Popular starting points"
+            className="mt-4 flex flex-wrap gap-x-5 gap-y-2"
+          >
+            {quickRoutes.map((route) => (
+              <Link
+                key={route.href}
+                href={route.href}
+                className="inline-flex min-h-10 items-center gap-1.5 text-sm font-semibold text-primary transition hover:text-[var(--primary-hover)] focus-visible:rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+              >
+                {route.label}
+                <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
+              </Link>
+            ))}
+          </nav>
+
+          <dl className="mt-5 grid max-w-2xl grid-cols-3 gap-3 border-t border-border pt-4">
+            {catalogFacts.map((fact) => {
+              const Icon = fact.icon;
+              return (
+                <div
+                  key={fact.label}
+                  className="flex min-w-0 flex-col items-start gap-2 sm:min-h-12 sm:flex-row sm:items-center sm:gap-3"
+                >
+                  <span className="grid h-9 w-9 shrink-0 place-items-center rounded-md bg-muted text-primary">
+                    <Icon className="h-4 w-4" aria-hidden="true" />
+                  </span>
+                  <div className="min-w-0">
+                    <dt className="text-xs font-medium leading-4 text-muted-foreground">
+                      {fact.label}
+                    </dt>
+                    <dd className="text-base font-semibold tabular-nums text-foreground">
+                      {fact.value.toLocaleString()}
+                    </dd>
+                  </div>
+                </div>
+              );
+            })}
+          </dl>
+        </div>
+
+        <div className="relative mx-auto hidden w-full max-w-xl items-end justify-center lg:flex lg:justify-end">
+          <Image
+            src="/assets/home-hero-team.webp"
+            alt="People using AltFTool workspaces together"
+            width={1100}
+            height={831}
+            loading="lazy"
+            sizes="(min-width: 1024px) 42vw, 1px"
+            className="h-auto w-full object-contain"
+          />
         </div>
       </div>
     </section>

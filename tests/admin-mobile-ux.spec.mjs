@@ -17,36 +17,53 @@ const mobileRoutes = [
 
 async function loginAsLocalAdmin(page) {
   await page.goto(`${adminUrl}/login`, { waitUntil: "domcontentloaded" });
-  await page.evaluate((key) => localStorage.setItem(key, "active"), localAdminStorageKey);
-  await page.goto(`${adminUrl}/admin-management`, { waitUntil: "domcontentloaded" });
-  await expect(page.getByRole("heading", { name: "Admin Management" })).toBeVisible();
+  await page.evaluate(
+    (key) => localStorage.setItem(key, "active"),
+    localAdminStorageKey,
+  );
+  await page.goto(`${adminUrl}/admin-management`, {
+    waitUntil: "domcontentloaded",
+  });
+  await expect(
+    page.getByRole("heading", { name: "Admin Management" }),
+  ).toBeVisible();
 }
 
 async function openAdminRoute(page, path) {
   await page.goto(`${adminUrl}${path}`, { waitUntil: "domcontentloaded" });
-  await expect(page.getByRole("button", { name: "Open admin navigation" })).toBeVisible({
+  await expect(
+    page.getByRole("button", { name: "Open admin navigation" }),
+  ).toBeVisible({
     timeout: 30_000,
   });
   await expect(page.locator("body")).not.toContainText("Application error");
-  await expect(page.locator("body")).not.toContainText("This page could not be found");
+  await expect(page.locator("body")).not.toContainText(
+    "This page could not be found",
+  );
 }
 
 async function expectRouteMarker(page, route) {
   if (route.heading) {
-    await expect(page.getByRole("heading", { name: route.heading })).toBeVisible({
+    await expect(
+      page.getByRole("heading", { name: route.heading }),
+    ).toBeVisible({
       timeout: 30_000,
     });
     return;
   }
 
   if (route.headingPattern) {
-    await expect(page.getByRole("heading", { name: route.headingPattern }).first()).toBeVisible({
+    await expect(
+      page.getByRole("heading", { name: route.headingPattern }).first(),
+    ).toBeVisible({
       timeout: 30_000,
     });
     return;
   }
 
-  await expect(page.getByText(route.text, { exact: false }).first()).toBeVisible({
+  await expect(
+    page.getByText(route.text, { exact: false }).first(),
+  ).toBeVisible({
     timeout: 30_000,
   });
 }
@@ -64,14 +81,21 @@ async function expectNoHorizontalOverflow(page, label) {
           tag: element.tagName.toLowerCase(),
           role: element.getAttribute("role") || "",
           ariaLabel: element.getAttribute("aria-label") || "",
-          className: typeof element.className === "string" ? element.className : "",
-          text: (element.textContent || "").replace(/\s+/g, " ").trim().slice(0, 80),
+          className:
+            typeof element.className === "string" ? element.className : "",
+          text: (element.textContent || "")
+            .replace(/\s+/g, " ")
+            .trim()
+            .slice(0, 80),
           left: Math.round(rect.left),
           right: Math.round(rect.right),
           width: Math.round(rect.width),
         };
       })
-      .filter(({ left, right }) => right > window.innerWidth + 2 || (left < -2 && right > 2))
+      .filter(
+        ({ left, right }) =>
+          right > window.innerWidth + 2 || (left < -2 && right > 2),
+      )
       .slice(0, 10);
 
     return {
@@ -109,17 +133,23 @@ test.describe("admin mobile UX release guard", () => {
     });
   }
 
-  test("mobile sidebar and theme controls remain keyboard reachable", async ({ page }) => {
+  test("mobile sidebar and theme controls remain keyboard reachable", async ({
+    page,
+  }) => {
     const quality = createPageQualityGate(page);
 
     await openAdminRoute(page, "/admin-management");
 
-    const openNavigation = page.getByRole("button", { name: "Open admin navigation" });
+    const openNavigation = page.getByRole("button", {
+      name: "Open admin navigation",
+    });
     await openNavigation.focus();
     await expect(openNavigation).toBeFocused();
     await openNavigation.press("Enter");
 
-    const closeNavigation = page.getByRole("button", { name: "Close admin navigation" });
+    const closeNavigation = page.getByRole("button", {
+      name: "Close admin navigation",
+    });
     await expect(closeNavigation).toBeVisible();
     await expect(closeNavigation).toBeFocused();
     await closeNavigation.press("Escape");
@@ -133,27 +163,46 @@ test.describe("admin mobile UX release guard", () => {
       )
       .toBeLessThan(0);
 
-    const themeButton = page.getByRole("button", { name: "Theme: System default" });
+    const themeButton = page.getByRole("button", {
+      name: "Theme: System theme",
+    });
     await themeButton.focus();
     await themeButton.press("Enter");
-    await expect(page.getByRole("menu", { name: "Theme mode" })).toBeVisible();
-    await page.getByRole("menuitemradio", { name: "Light mode" }).focus();
+    await expect(
+      page.getByRole("dialog", { name: "Theme mode" }),
+    ).toBeVisible();
+    await page.getByRole("radio", { name: "Light mode" }).focus();
     await page.keyboard.press("Enter");
     await expect
-      .poll(() => page.evaluate(() => document.documentElement.getAttribute("data-theme-mode")))
+      .poll(() =>
+        page.evaluate(() =>
+          document.documentElement.getAttribute("data-theme-mode"),
+        ),
+      )
       .toBe("light");
 
     await quality.expectClean("admin mobile keyboard controls");
   });
 
-  test("support forms expose touch-friendly controls on mobile", async ({ page }) => {
+  test("support forms expose touch-friendly controls on mobile", async ({
+    page,
+  }) => {
     const quality = createPageQualityGate(page);
 
     await openAdminRoute(page, "/support");
-    await expect(page.getByPlaceholder("Brief summary of your issue")).toBeVisible();
-    await expect(page.getByPlaceholder(/Describe your issue in detail/)).toBeVisible();
-    await expect(page.getByRole("button", { name: "Submit Ticket" })).toBeVisible();
-    await expectNoHorizontalOverflow(page, "admin support form mobile controls");
+    await expect(
+      page.getByPlaceholder("Brief summary of your issue"),
+    ).toBeVisible();
+    await expect(
+      page.getByPlaceholder(/Describe your issue in detail/),
+    ).toBeVisible();
+    await expect(
+      page.getByRole("button", { name: "Submit Ticket" }),
+    ).toBeVisible();
+    await expectNoHorizontalOverflow(
+      page,
+      "admin support form mobile controls",
+    );
 
     await quality.expectClean("admin support mobile controls");
   });

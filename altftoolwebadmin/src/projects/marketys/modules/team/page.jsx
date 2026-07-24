@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { Plus, Users, Search, Pencil, Trash2 } from "lucide-react";
 import { emitAlert } from "@/lib/alertBus";
 import { collection, getDocs, deleteDoc, doc, query, orderBy } from "firebase/firestore";
-import { db } from "@/lib/firebase";
+import { db } from "@/lib/firebaseFirestore";
 import AddTeamMemberModal from "./components/AddTeamMemberModal";
 import ResetButton from "../../components/ResetButton";
 

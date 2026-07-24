@@ -1,4 +1,5 @@
 import { getHousingService } from "../_data/services";
+import { createPageMetadata } from "@/platform/seo/generateMetadata";
 
 /**
  * Metadata for a Housing Services lander, looked up from the registry.
@@ -13,20 +14,14 @@ export function buildHousingServiceMetadata(slug) {
     throw new Error(`[housing-services] Unknown service "${slug}"`);
   }
 
-  return {
+  return createPageMetadata({
     title: `${page.name} — ${page.tagline}`,
     description: page.description,
-    robots: {
-      index: false,
-      follow: true,
-      googleBot: { index: false, follow: true },
-    },
-    alternates: { canonical: page.href },
-    openGraph: {
-      title: page.name,
-      description: page.description,
-      url: page.href,
-      type: "website",
-    },
-  };
+    path: page.href,
+    canonical: page.href,
+    noindex: true,
+    follow: true,
+    pageType: "business-ops-preview",
+    keywords: [page.name, page.category, "home services"],
+  });
 }

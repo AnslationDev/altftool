@@ -17,7 +17,7 @@ import {
   Smartphone,
 } from "lucide-react";
 import { useAuth } from "@/context/AuthContext";
-import { auth } from "@/lib/firebase";
+import { auth } from "@/lib/firebaseAuth";
 
 const TABS = [
   { key: "overview", label: "Overview", icon: ShieldCheck },

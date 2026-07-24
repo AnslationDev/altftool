@@ -1,131 +1,89 @@
-"use client";
-
 import Link from "next/link";
 import {
   ArrowRight,
-  BadgePercent,
-  BarChart3,
-  Bot,
-  FileUp,
-  GraduationCap,
-  WandSparkles,
+  BookOpen,
+  BriefcaseBusiness,
+  FlaskConical,
+  LayoutGrid,
+  ShoppingBag,
+  Workflow,
+  Wrench,
 } from "lucide-react";
+import { PUBLIC_ROUTE_FAMILIES } from "@/platform/navigation/publicRouteTaxonomy";
 
-const workflows = [
-  {
-    icon: WandSparkles,
-    title: "Create",
-    description: "Generate assets, documents, captions, and everyday outputs.",
-    href: "/tools/all",
-    size: "lg:col-span-2",
-    stats: ["AI prompts", "Templates", "Exports"],
-    tone: "home-icon-violet",
-  },
-  {
-    icon: FileUp,
-    title: "Convert",
-    description: "Switch PDFs, images, text, code, and files into the format you need.",
-    href: "/tools/all",
-    stats: ["PDF", "Images", "Text"],
-    tone: "home-icon-cyan",
-  },
-  {
-    icon: BarChart3,
-    title: "Analyze",
-    description: "Review content, data, links, rankings, and quality signals faster.",
-    href: "/tools/all",
-    stats: ["Signals", "Scores", "Reports"],
-    tone: "home-icon-emerald",
-  },
-  {
-    icon: Bot,
-    title: "Automate",
-    description: "Use utilities and extensions to reduce repetitive browser work.",
-    href: "/extensions",
-    stats: ["Extensions", "Rules", "Shortcuts"],
-    tone: "home-icon-indigo",
-  },
-  {
-    icon: BadgePercent,
-    title: "Discover Deals",
-    description: "Find useful offers, store pages, and buying signals in one place.",
-    href: "/exclusivedeals",
-    stats: ["Offers", "Stores", "Ratings"],
-    tone: "home-icon-rose",
-  },
-  {
-    icon: GraduationCap,
-    title: "Learn",
-    description: "Explore academy guides, blogs, news, and brand research.",
-    href: "/academy",
-    stats: ["Guides", "News", "Academy"],
-    size: "lg:col-span-3",
-    tone: "home-icon-amber",
-  },
-];
+const familyIcons = {
+  platform: LayoutGrid,
+  tools: Wrench,
+  automation: Workflow,
+  business: BriefcaseBusiness,
+  commerce: ShoppingBag,
+  learn: BookOpen,
+  experiences: FlaskConical,
+};
+
+const visibleFamilies = PUBLIC_ROUTE_FAMILIES.filter((family) =>
+  Object.hasOwn(familyIcons, family.id),
+);
 
 export default function IntentSelector() {
   return (
-    <section className="section">
-      <div className="mb-8 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
-        <div>
-          <p className="home-kicker">Workflows</p>
-          <h2 className="section-title text-left">
-            Start With The Workflow You Need
-          </h2>
-        </div>
-        <p className="max-w-xl text-sm leading-6 text-[var(--muted-foreground)] md:text-right">
-          AltFTool groups daily work into practical routes so you can move from
-          search to result without hunting through menus.
-        </p>
-      </div>
-
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {workflows.map(({ icon: Icon, title, description, href, size = "", stats, tone }) => (
+    <section
+      className="border-b border-border bg-surface-soft"
+      aria-labelledby="home-paths-title"
+    >
+      <div className="mx-auto w-full max-w-[var(--anslation-ds-container)] px-4 py-10 sm:px-6 sm:py-12 lg:px-8">
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+          <div className="max-w-2xl">
+            <p className="text-xs font-semibold uppercase text-primary">Start by goal</p>
+            <h2
+              id="home-paths-title"
+              className="mt-2 text-2xl font-bold text-foreground sm:text-3xl"
+            >
+              One platform, clearly organized
+            </h2>
+            <p className="mt-3 text-sm leading-6 text-muted-foreground sm:text-base">
+              Each area has a distinct purpose. Choose the result you need and
+              continue through a focused route.
+            </p>
+          </div>
           <Link
-            key={title}
-            href={href}
-            className={`group relative overflow-hidden rounded-2xl border border-[var(--home-border)] bg-white p-5 shadow-[var(--home-shadow-sm)] transition hover:-translate-y-1.5 hover:border-[var(--primary)] hover:bg-[var(--home-hover)] hover:shadow-[var(--home-shadow-md)] ${size}`}
+            href="/site-map"
+            className="inline-flex min-h-10 items-center gap-2 text-sm font-semibold text-primary transition hover:text-[var(--primary-hover)] focus-visible:rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
           >
-            <div className="absolute -right-10 -top-10 h-32 w-32 rounded-full bg-[var(--home-primary-soft)] transition group-hover:scale-125" />
-            <div className="relative z-10 flex items-start gap-4">
-              <span className={`home-premium-icon ${tone} grid h-14 w-14 shrink-0 place-items-center rounded-xl`}>
-                <Icon className="h-6 w-6" />
-              </span>
-              <span className="min-w-0">
-                <span className="flex items-center gap-2 text-base font-bold text-[var(--foreground)]">
-                  {title}
-                  <ArrowRight className="h-4 w-4 opacity-0 transition group-hover:translate-x-1 group-hover:opacity-100" />
-                </span>
-                <span className="mt-1 block text-sm leading-6 text-[var(--muted-foreground)]">
-                  {description}
-                </span>
-              </span>
-            </div>
-            <div className="relative z-10 mt-5 rounded-2xl border border-[var(--home-border)] bg-[var(--home-surface)] p-3">
-              <div className="mb-3 flex items-center gap-1.5">
-                <span className="h-2 w-2 rounded-full bg-[var(--primary)]" />
-                <span className="h-2 w-2 rounded-full bg-[var(--accent)]" />
-                <span className="h-2 w-2 rounded-full bg-[#D8CFFF]" />
-              </div>
-              <div className="grid gap-2">
-                {stats.map((item, index) => (
-                  <span
-                    key={item}
-                    className="flex items-center justify-between rounded-xl bg-white px-3 py-2 text-xs font-bold text-[var(--foreground)] shadow-sm"
-                  >
-                    {item}
-                    <span
-                      className={`h-1.5 rounded-full ${
-                        index === 1 ? "w-16 bg-[var(--accent)]" : "w-10 bg-[var(--primary)]"
-                      }`}
-                    />
-                  </span>
-                ))}
-              </div>
-            </div>
+            View complete site map
+            <ArrowRight className="h-4 w-4" aria-hidden="true" />
           </Link>
-        ))}
+        </div>
+
+        <div className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+          {visibleFamilies.map((family) => {
+            const Icon = familyIcons[family.id];
+            return (
+              <Link
+                key={family.id}
+                href={family.href}
+                className="group flex min-h-44 flex-col rounded-lg border border-border bg-card p-4 shadow-sm transition hover:-translate-y-0.5 hover:border-primary hover:shadow-md focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-primary/30 motion-reduce:transform-none"
+              >
+                <span className="grid h-10 w-10 place-items-center rounded-md bg-muted text-primary transition group-hover:bg-primary group-hover:text-primary-foreground">
+                  <Icon className="h-5 w-5" aria-hidden="true" />
+                </span>
+                <h3 className="mt-4 text-base font-semibold text-foreground">
+                  {family.shortTitle}
+                </h3>
+                <p className="mt-2 flex-1 text-sm leading-6 text-muted-foreground">
+                  {family.description}
+                </p>
+                <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-primary">
+                  Open
+                  <ArrowRight
+                    className="h-4 w-4 transition group-hover:translate-x-0.5"
+                    aria-hidden="true"
+                  />
+                </span>
+              </Link>
+            );
+          })}
+        </div>
       </div>
     </section>
   );

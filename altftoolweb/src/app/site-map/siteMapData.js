@@ -1,86 +1,11 @@
-import { EXPERIENCE_CATALOG } from "@altftool/core/experiences";
+import {
+  canonicalizePublicPath,
+  getPublicRouteFamilyId,
+  normalizePublicPath,
+  PUBLIC_ROUTE_FAMILIES,
+} from "../../platform/navigation/publicRouteTaxonomy.js";
 
-const EXPERIENCE_PREFIXES = [
-  "/labs",
-  "/altfgame",
-  ...EXPERIENCE_CATALOG.map((experience) => experience.href),
-];
-
-export const SITE_MAP_GROUPS = [
-  {
-    id: "platform",
-    title: "Platform",
-    description: "Core AltFTool products, apps, extensions, and discovery hubs.",
-    prefixes: ["/products", "/signals", "/apps", "/extensions", "/desktop", "/imgprompt", "/n8n"],
-  },
-  {
-    id: "tools",
-    title: "Tools & utilities",
-    description: "Every canonical microtool, tool category, image workflow, and PDF utility.",
-    prefixes: [
-      "/tools",
-      "/altfcalculators",
-      "/altfloveimg",
-      "/altflovepdf",
-      "/smartlink",
-      "/fullscrn",
-      "/search-eng",
-    ],
-  },
-  {
-    id: "learn",
-    title: "Learn & discover",
-    description: "Blogs, news, academy resources, facts, locations, and editorial collections.",
-    prefixes: ["/blogs", "/news", "/academy", "/prompts", "/trendingvids", "/locations"],
-  },
-  {
-    id: "commerce",
-    title: "Deals & shopping",
-    description: "Deals, stores, buying guides, brand ratings, sales, and ranked recommendations.",
-    prefixes: ["/deals", "/exclusivedeals", "/buysmart", "/brandrating", "/sale", "/top9", "/top11"],
-  },
-  {
-    id: "experiences",
-    title: "Games & experiences",
-    description: "Games, interactive experiments, creative spaces, quizzes, and entertainment.",
-    prefixes: EXPERIENCE_PREFIXES,
-  },
-  {
-    id: "business",
-    title: "Business & services",
-    description: "Business products, travel planning, housing services, and specialist destinations.",
-    prefixes: [
-      "/bops",
-      "/business-ops",
-      "/housingneeds",
-      "/tripfindbox",
-      "/homeserv",
-      "/siding",
-      "/lander",
-    ],
-  },
-  {
-    id: "support",
-    title: "Company & support",
-    description: "Company information, policies, support, status, licenses, and account resources.",
-    prefixes: [
-      "/policypages",
-      "/supportsetting",
-      "/request-a-tool",
-      "/status",
-      "/licenses",
-      "/unsubscribe",
-      "/account",
-      "/site-map",
-    ],
-  },
-  {
-    id: "other",
-    title: "More destinations",
-    description: "Additional public AltFTool pages and standalone experiences.",
-    prefixes: [],
-  },
-];
+export const SITE_MAP_GROUPS = PUBLIC_ROUTE_FAMILIES;
 
 const ACRONYMS = new Map([
   ["ai", "AI"],
@@ -110,25 +35,10 @@ const ACRONYMS = new Map([
   ["xml", "XML"],
 ]);
 
-function normalizePath(path = "/") {
-  const value = String(path || "/").split(/[?#]/, 1)[0] || "/";
-  if (value === "/") return value;
-  return `/${value.replace(/^\/+|\/+$/g, "")}`;
-}
-
-function hasPrefix(path, prefix) {
-  return path === prefix || path.startsWith(`${prefix}/`);
-}
+const normalizePath = normalizePublicPath;
 
 export function getSiteMapGroupId(path = "/") {
-  const normalized = normalizePath(path);
-  if (normalized === "/") return "platform";
-
-  return (
-    SITE_MAP_GROUPS.find(
-      (group) => group.id !== "other" && group.prefixes.some((prefix) => hasPrefix(normalized, prefix)),
-    )?.id || "other"
-  );
+  return getPublicRouteFamilyId(path);
 }
 
 export function humanizeRouteSegment(segment = "") {
@@ -170,7 +80,7 @@ export function buildSiteMapGroups(entries = [], { labels = new Map(), query = "
   for (const entry of entries) {
     let path;
     try {
-      path = normalizePath(new URL(entry?.url || entry).pathname);
+      path = canonicalizePublicPath(new URL(entry?.url || entry).pathname);
     } catch {
       continue;
     }

@@ -5,7 +5,7 @@ import { createPageMetadata } from "@/platform/seo/generateMetadata";
 export async function generateMetadata() {
   return createPageMetadata({
     title: "Terms of Use | QuoteNest Pros",
-    description: "Terms for using QuoteNest Pros home-service quote pages.",
+    description: "Read the terms for using QuoteNest Pros home-service research, provider matching, and quote-request pages.",
     path: "/homeserv/terms-of-use",
   });
 }

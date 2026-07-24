@@ -41,11 +41,21 @@ const requiredFiles = [
     ],
   },
   {
-    path: "altftoolwebadmin/src/lib/firebase.js",
+    path: "altftoolwebadmin/src/lib/firebaseApp.js",
     includes: [
       "altftool-bca36.firebaseapp.com",
       'projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID || "altftool-bca36"',
       "altftool-bca36.firebasestorage.app",
+      "export const firebaseApp",
+    ],
+  },
+  {
+    path: "altftoolwebadmin/src/lib/firebase.js",
+    includes: [
+      'export { auth } from "./firebaseAuth"',
+      'export { db } from "./firebaseFirestore"',
+      'export { storage } from "./firebaseStorage"',
+      'export { getFirebaseMessaging } from "./firebaseMessaging"',
     ],
   },
   {

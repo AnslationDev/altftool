@@ -4,6 +4,7 @@ import { ChevronRight } from "lucide-react";
 import WorkflowCard from "../../components/WorkflowCard";
 import NodeBadge from "../../components/NodeBadge";
 import { getAllNodes, getWorkflowsByNode } from "../../data/service";
+import { metaTitle } from "../../data/text";
 import { shouldDeferBulkPrerendering } from "@/lib/buildPrerenderPolicy";
 import { createPageMetadata } from "@/platform/seo/generateMetadata";
 
@@ -27,8 +28,8 @@ export async function generateMetadata({ params }) {
     });
   }
   return createPageMetadata({
-    title: `n8n Workflows using the ${node.name} node`,
-    description: `Explore free n8n workflow templates that use the ${node.name} node.`,
+    title: `n8n Workflows with ${metaTitle(node.name, 32)}`,
+    description: `Explore free n8n workflow templates that use the ${node.name} node, compare practical examples, and download reusable automation JSON on AltFTool.`,
     path: `/n8n/node/${slug}`,
   });
 }

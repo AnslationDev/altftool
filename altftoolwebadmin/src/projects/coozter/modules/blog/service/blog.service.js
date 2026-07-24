@@ -14,7 +14,8 @@ import {
   updateDoc,
 } from "firebase/firestore";
 import { getDownloadURL, ref as storageRef, uploadBytesResumable } from "firebase/storage";
-import { db, storage } from "@/lib/firebase";
+import { db } from "@/lib/firebaseFirestore";
+import { storage } from "@/lib/firebaseStorage";
 
 const PROJECT_ID = "coozter";
 const BLOG_PAGE_DOC_PATH = ["projects", PROJECT_ID, "blog", "blogPageContent"];

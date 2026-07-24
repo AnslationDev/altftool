@@ -18,7 +18,7 @@ import {
   Phone,
   Trash2,
 } from "lucide-react";
-import { db } from "@/lib/firebase";
+import { db } from "@/lib/firebaseFirestore";
 import { emitAlert } from "@/lib/alertBus";
 import DeleteConfirmModal from "@/components/ui/DeleteConfirmModal";
 

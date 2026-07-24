@@ -5,6 +5,7 @@ import HnFaq from "@/app/bops/housingneeds/_components/HnFaq";
 import HnHeadline from "@/app/bops/housingneeds/_components/HnHeadline";
 import HnImage from "@/app/bops/housingneeds/_components/HnImage";
 import JsonLd from "@/platform/seo/JsonLd";
+import { absoluteUrl } from "@/platform/seo/generateMetadata";
 import AltfLauncher from "@/app/_altf/AltfLauncher";
 import LoanHeader from "./LoanHeader";
 import LoanFooter from "./LoanFooter";
@@ -13,7 +14,6 @@ import LoanIcon from "./LoanIcon";
 import { LOANS, getLoan } from "../_data/loans";
 
 const LOANS_BASE = "/bops/loans";
-const SITE_ORIGIN = "https://altftool.com";
 
 /**
  * The single shared layout for every Loans vertical.
@@ -100,9 +100,9 @@ export default function LoanPage({ slug }) {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     itemListElement: [
-      { "@type": "ListItem", position: 1, name: "Business Ops", item: `${SITE_ORIGIN}/bops` },
-      { "@type": "ListItem", position: 2, name: "Loans", item: `${SITE_ORIGIN}${LOANS_BASE}` },
-      { "@type": "ListItem", position: 3, name, item: `${SITE_ORIGIN}${LOANS_BASE}/${slug}` },
+      { "@type": "ListItem", position: 1, name: "Business Ops", item: absoluteUrl("/bops") },
+      { "@type": "ListItem", position: 2, name: "Loans", item: absoluteUrl(LOANS_BASE) },
+      { "@type": "ListItem", position: 3, name, item: absoluteUrl(`${LOANS_BASE}/${slug}`) },
     ],
   };
 

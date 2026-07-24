@@ -1,7 +1,9 @@
+import { cache } from "react";
 import BlogArchivePage from "../../components/BlogArchivePage";
 import JsonLd from "@/platform/seo/JsonLd";
 import {
   blogTaxonomySlug,
+  compactBlogSummary,
   filterBlogsByTagSlug,
   getAllBlogs,
   getAllBlogTags,
@@ -34,7 +36,7 @@ async function getMergedPosts() {
   return mergeBlogPosts(getAllBlogs(), firebasePosts);
 }
 
-async function getTagArchive(tagSlug) {
+const getTagArchive = cache(async (tagSlug) => {
   const posts = await getMergedPosts();
   const tagLabel = getBlogTagBySlug(tagSlug, posts) || getBlogTagBySlug(tagSlug);
   const tagPosts = sortBlogsByDate(filterBlogsByTagSlug(posts, tagSlug));
@@ -44,7 +46,7 @@ async function getTagArchive(tagSlug) {
     tagLabel,
     tagPosts,
   };
-}
+});
 
 export async function generateMetadata({ params }) {
   const { tag } = await params;
@@ -64,6 +66,7 @@ export async function generateMetadata({ params }) {
 export default async function BlogTagPage({ params }) {
   const { tag } = await params;
   const { posts, tagLabel, tagPosts } = await getTagArchive(tag);
+  const archivePosts = tagPosts.map(compactBlogSummary);
   const tags = getAllBlogTags(posts);
   const path = `/blogs/tag/${tag}`;
 
@@ -96,7 +99,7 @@ export default async function BlogTagPage({ params }) {
         eyebrow="Blog tag"
         title={`${tagLabel} Articles`}
         description={`A focused AltFTool archive for ${tagLabel}. Use it to move between related guides without losing context.`}
-        posts={tagPosts}
+        posts={archivePosts}
         activeLabel={tagLabel}
         archiveType="tag"
         relatedLabels={tags}

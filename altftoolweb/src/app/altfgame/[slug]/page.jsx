@@ -8,6 +8,12 @@ import StarRating from "@/app/altfgame/_components/StarRating";
 import { GAMES, getGame, getRelated, getRecommended } from "@/app/altfgame/_data/games";
 import { GAME_COMPONENTS } from "../registry";
 import { shouldDeferBulkPrerendering } from "@/lib/buildPrerenderPolicy";
+import JsonLd from "@/platform/seo/JsonLd";
+import {
+  createBreadcrumbJsonLd,
+  createGameJsonLd,
+  createPageMetadata,
+} from "@/platform/seo/generateMetadata";
 
 export const dynamic = "force-static";
 
@@ -19,18 +25,22 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }) {
   const { slug } = await params;
   const game = getGame(slug);
-  if (!game) return { title: "Game not found" };
-  return {
+  if (!game) {
+    return createPageMetadata({
+      title: "Game not found",
+      path: `/altfgame/${slug}`,
+      noindex: true,
+      follow: false,
+    });
+  }
+  return createPageMetadata({
     title: `${game.title} - Play Online`,
-    description: game.description,
-    alternates: { canonical: `/altfgame/${slug}` },
-    openGraph: {
-      title: `${game.title} - Play Online`,
-      description: game.description,
-      url: `/altfgame/${slug}`,
-      type: "website",
-    },
-  };
+    description: `${game.description} Play ${game.title} free in your browser and discover more ${game.category.toLowerCase()} games on AltFTool.`,
+    path: `/altfgame/${slug}`,
+    image: game.image,
+    keywords: [game.title, `${game.category} game`, "free browser game"],
+    pageType: "games",
+  });
 }
 
 export default async function GamePage({ params }) {
@@ -42,9 +52,19 @@ export default async function GamePage({ params }) {
 
   const related = getRelated(slug, 8);
   const recommended = getRecommended(slug, 6);
+  const gamePath = `/altfgame/${slug}`;
+  const jsonLd = [
+    createBreadcrumbJsonLd([
+      { name: "Home", path: "/" },
+      { name: "AltF Games", path: "/altfgame" },
+      { name: game.title, path: gamePath },
+    ]),
+    createGameJsonLd({ game, path: gamePath }),
+  ];
 
   return (
     <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_300px]">
+      <JsonLd id={`altf-game-${slug}-schema`} data={jsonLd} />
       {/* Main column */}
       <div className="min-w-0">
         <GamePlayer game={game}>

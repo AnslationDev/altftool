@@ -2,6 +2,8 @@
 // the blogs reader. Reads projects/altftool/landers. Server-only; cached via the
 // fetch revalidate window + a small in-memory layer so ISR stays cheap.
 
+import { fetchJsonWithRetry } from "@/lib/server/resilientJsonFetch";
+
 const FIREBASE_API_KEY =
   process.env.NEXT_PUBLIC_FIREBASE_API_KEY ||
   "AIzaSyAYKc0SBXyY3bfKLkmcCrPf-NsPF8p_Z50";
@@ -12,17 +14,34 @@ const FIRESTORE_PARENT = `projects/${FIREBASE_PROJECT_ID}/databases/(default)/do
 const CACHE_SECONDS = 300;
 const CACHE_MS = CACHE_SECONDS * 1000;
 const NEGATIVE_CACHE_MS = 30 * 1000;
+const MAX_MEMORY_CACHE_ENTRIES = 100;
 const FIRESTORE_TIMEOUT_MS = Number(process.env.ALTFT_FIRESTORE_REST_TIMEOUT_MS || 8000);
+const FIRESTORE_MAX_ATTEMPTS = Number(
+  process.env.ALTFT_FIRESTORE_REST_MAX_ATTEMPTS || 3,
+);
 
 const memoryCache = new Map();
+const inflightRequests = new Map();
 
 function readCache(key) {
   const cached = memoryCache.get(key);
   if (!cached || cached.expiresAt <= Date.now()) return null;
   return cached.value;
 }
+function readStaleCache(key) {
+  const cached = memoryCache.get(key);
+  if (!cached || cached.value === null || cached.value === undefined) return null;
+  if (Array.isArray(cached.value) && cached.value.length === 0) return null;
+  return cached.value;
+}
 function writeCache(key, value) {
   const isEmpty = value === null || value === undefined || (Array.isArray(value) && value.length === 0);
+  if (!memoryCache.has(key) && memoryCache.size >= MAX_MEMORY_CACHE_ENTRIES) {
+    const expiredKey = [...memoryCache.entries()].find(
+      ([, entry]) => entry.expiresAt <= Date.now(),
+    )?.[0];
+    memoryCache.delete(expiredKey || memoryCache.keys().next().value);
+  }
   memoryCache.set(key, { value, expiresAt: Date.now() + (isEmpty ? NEGATIVE_CACHE_MS : CACHE_MS) });
   return value;
 }
@@ -62,28 +81,30 @@ function andFilter(filters) {
 
 async function firestorePost(endpoint, body) {
   if (!FIREBASE_API_KEY || !FIREBASE_PROJECT_ID) return [];
-  const controller = new AbortController();
-  const timeout = setTimeout(() => controller.abort(), FIRESTORE_TIMEOUT_MS);
-  let response;
-  try {
-    response = await fetch(
-      `https://firestore.googleapis.com/v1/${FIRESTORE_PARENT}:${endpoint}?key=${FIREBASE_API_KEY}`,
-      {
-        method: "POST",
-        headers: { "content-type": "application/json" },
-        body: JSON.stringify(body),
-        next: { revalidate: CACHE_SECONDS },
-        signal: controller.signal,
-      },
-    );
-  } catch (error) {
-    if (error?.name === "AbortError") throw new Error(`Firestore ${endpoint} timed out after ${FIRESTORE_TIMEOUT_MS}ms`);
-    throw error;
-  } finally {
-    clearTimeout(timeout);
-  }
-  if (!response.ok) throw new Error(`Firestore ${endpoint} failed: ${response.status}`);
-  return response.json();
+
+  const requestKey = `${endpoint}:${JSON.stringify(body)}`;
+  const inflight = inflightRequests.get(requestKey);
+  if (inflight) return inflight;
+
+  const request = fetchJsonWithRetry(
+    `https://firestore.googleapis.com/v1/${FIRESTORE_PARENT}:${endpoint}?key=${FIREBASE_API_KEY}`,
+    {
+      label: `Firestore ${endpoint}`,
+      timeoutMs: FIRESTORE_TIMEOUT_MS,
+      maxAttempts: FIRESTORE_MAX_ATTEMPTS,
+      baseDelayMs: 120,
+      maxDelayMs: 800,
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify(body),
+      next: { revalidate: CACHE_SECONDS },
+    },
+  ).finally(() => {
+    inflightRequests.delete(requestKey);
+  });
+
+  inflightRequests.set(requestKey, request);
+  return request;
 }
 
 const toMs = (v) => (typeof v === "number" ? v : v ? Date.parse(v) || null : null);
@@ -122,7 +143,7 @@ export async function fetchFirebaseLanderBySlug(slug) {
       },
     });
   } catch {
-    return null; // degrade to 404 rather than throwing the whole route
+    return readStaleCache(key);
   }
 
   const document = rows.find((row) => row.document)?.document;
@@ -147,7 +168,7 @@ export async function fetchAllPublishedLanderSlugs({ max = 500 } = {}) {
       },
     });
   } catch {
-    return [];
+    return readStaleCache(key) || [];
   }
 
   const items = rows

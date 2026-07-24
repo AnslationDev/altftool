@@ -29,9 +29,11 @@ export async function generateMetadata({ params }) {
     };
   }
 
+  const categoryDescription =
+    category.description || `${category.name} stories and related reads`;
   return createPageMetadata({
     title: `${category.name} Stories - Wattpad-Style Reads`,
-    description: category.description || `Explore trending ${category.name.toLowerCase()} stories on AltFTool.`,
+    description: `${categoryDescription}. Explore ${category.name.toLowerCase()} stories, popular chapters, and related reads in AltFTool's browser story library.`,
     path: `/wattpad/category/${category.slug}`,
     image: category.coverImage,
   });

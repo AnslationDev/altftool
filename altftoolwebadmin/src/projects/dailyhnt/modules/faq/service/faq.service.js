@@ -9,7 +9,7 @@ import {
   serverTimestamp,
   updateDoc,
 } from "firebase/firestore";
-import { db } from "@/lib/firebase";
+import { db } from "@/lib/firebaseFirestore";
 
 const PROJECT_ID = "dailyhnt";
 const FAQS_PATH = ["projects", PROJECT_ID, "faqs"];

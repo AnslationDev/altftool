@@ -1,7 +1,8 @@
 "use client";
 
 import { useState, useRef, useCallback, useEffect } from "react";
-import { db, storage } from "@/lib/firebase";
+import { db } from "@/lib/firebaseFirestore";
+import { storage } from "@/lib/firebaseStorage";
 import {
   collection, getDocs, query, orderBy, limit,
   startAfter, serverTimestamp,

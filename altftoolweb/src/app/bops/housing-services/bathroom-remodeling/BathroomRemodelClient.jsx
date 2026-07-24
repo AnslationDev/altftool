@@ -402,14 +402,9 @@ export default function BathroomRemodelClient() {
     <main className="bathroom-remodel" id="top">
       <header className="bathroom-remodel-header">
         <a className="bathroom-remodel-logoLink" href="#top" aria-label="Together Design & Build home">
-          <Image
-            src="/assets/altf-header-logo.png"
-            alt="Together Design & Build"
-            className="bathroom-remodel-logoImage"
-            width={84}
-            height={84}
-            priority
-          />
+          <span className="bathroom-remodel-logoImage" aria-hidden="true">
+            <Bath />
+          </span>
           <span className="bathroom-remodel-logoText">
             <span>TOGETHER</span>
             <span>DESIGN & BUILD</span>
@@ -853,13 +848,9 @@ export default function BathroomRemodelClient() {
         <div className="bathroom-remodel-shell bathroom-remodel-footerGrid">
           <div className="bathroom-remodel-footerBrand">
             <div className="bathroom-remodel-logoLockup">
-              <Image
-                src="/assets/altf-header-logo-dark.png"
-                alt="Together Design & Build"
-                className="bathroom-remodel-footerLogo"
-                width={84}
-                height={84}
-              />
+              <span className="bathroom-remodel-footerLogo" aria-hidden="true">
+                <Bath />
+              </span>
               <span className="bathroom-remodel-logoText bathroom-remodel-logoTextFooter">
                 <span>TOGETHER</span>
                 <span>DESIGN & BUILD</span>

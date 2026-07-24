@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { RefreshCw, Pencil, ChevronDown, ChevronRight, Eye } from "lucide-react";
 import { emitAlert } from "@/lib/alertBus";
 import { doc, getDoc, setDoc } from "firebase/firestore";
-import { db } from "@/lib/firebase";
+import { db } from "@/lib/firebaseFirestore";
 import EditAboutModal from "./components/EditAboutModal";
 import ResetButton from "../../components/ResetButton";
 

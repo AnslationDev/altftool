@@ -1,7 +1,7 @@
 import { doc, getDoc, setDoc, serverTimestamp } from "firebase/firestore";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
-import { db } from "@/lib/firebase";
+import { db } from "@/lib/firebaseFirestore";
 
 const HOME_DOC_PATH = ["projects", "altftool", "sketchflow", "data", "home", "content"];
 const homeDocRef = () => doc(db, ...HOME_DOC_PATH);

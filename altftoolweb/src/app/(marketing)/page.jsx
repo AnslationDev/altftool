@@ -1,54 +1,45 @@
 import HeroSection from "./components/HeroSection";
+import IntentSelector from "./components/IntentSelector";
 import AiAssistantBox from "@/platform/assistant/AiAssistantBox";
-import CuratedToolsSection from "./components/CuratedToolsSection";
 import CategoriesSection from "./components/CategoriesSection";
 import FAQSection from "./components/FAQSection";
-import StatsSection from "./components/StatsSection";
-import TestimonialsSection from "./components/TestimonialsSection";
 import TrendingSection from "./components/TrendingSection";
-import MobileAppsSection from "./components/MobileAppsSection";
-import "../styles/landing.css";
 import { createPageMetadata } from "@/platform/seo/generateMetadata";
 
 export async function generateMetadata() {
   return createPageMetadata({
-    title: "AltFTool – Free Online Tools, Extensions & Web Apps",
+    title: "AltFTool - Online Tools, Workflows, Apps & Practical Guides",
     description:
-      "AltFTool is your online tools hub with free tools, software, games, must-have Chrome extensions, and the best web tools to boost productivity and fun.",
+      "Search AltFTool for browser utilities, product workspaces, automation templates, apps, business services, deals, guides, and interactive labs.",
     path: "/",
+    keywords: [
+      "online tools",
+      "browser tools",
+      "workflow templates",
+      "productivity apps",
+      "business services",
+      "AltFTool",
+    ],
   });
 }
 
 export default function Page() {
   return (
-    <div className="altf-home bg-[var(--background)]">
-      <div className="bg-[var(--background)]">
-        <HeroSection />
-      </div>
-      <div className="bg-[var(--background)]">
+    <main className="bg-background text-foreground">
+      <HeroSection />
+      <IntentSelector />
+      <div className="border-b border-border bg-background pt-10 sm:pt-12">
         <AiAssistantBox />
       </div>
-      <div className="render-deferred bg-[var(--background)]">
+      <div className="render-deferred">
         <TrendingSection />
       </div>
-      <div className="render-deferred bg-[var(--background)]">
-        <MobileAppsSection />
-      </div>
-      <div className="render-deferred bg-[var(--background)]">
-        <CuratedToolsSection />
-      </div>
-      <div className="render-deferred bg-[var(--background)]">
+      <div className="render-deferred">
         <CategoriesSection />
       </div>
-      <div className="render-deferred bg-[var(--background)]">
-        <TestimonialsSection />
-      </div>
-      <div className="render-deferred bg-[var(--home-accent-soft)]">
+      <div className="render-deferred">
         <FAQSection />
       </div>
-      <div className="render-deferred bg-[var(--background)]">
-        <StatsSection />
-      </div>
-    </div>
+    </main>
   );
 }

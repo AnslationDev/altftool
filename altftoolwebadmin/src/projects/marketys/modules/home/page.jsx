@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { Home as HomeIcon, Pencil, RefreshCw } from "lucide-react";
 import { emitAlert } from "@/lib/alertBus";
 import { doc, getDoc, setDoc } from "firebase/firestore";
-import { db } from "@/lib/firebase";
+import { db } from "@/lib/firebaseFirestore";
 import EditHomeModal from "./components/EditHomeModal";
 import ResetButton from "../../components/ResetButton";
 

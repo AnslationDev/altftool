@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect, useCallback, useMemo } from "react";
-import { storage } from "@/lib/firebase";
+import { storage } from "@/lib/firebaseStorage";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { emitAlert } from "@/lib/alertBus";
 import { createVideo, updateVideo } from "../service/trendingVideos.service";

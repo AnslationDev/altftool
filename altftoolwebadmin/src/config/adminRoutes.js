@@ -5,6 +5,7 @@ import {
   FolderKanban,
   Headset,
   Layers,
+  Palette,
   ShieldAlert,
   ShieldCheck,
   ShieldIcon,
@@ -38,6 +39,12 @@ export const GLOBAL_ADMIN_MODULES = {
     label: "Health",
     icon: Activity,
     path: "/health",
+    superadminOnly: true,
+  },
+  "design-system": {
+    label: "Design System",
+    icon: Palette,
+    path: "/design-system",
     superadminOnly: true,
   },
   security: {

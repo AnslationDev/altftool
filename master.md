@@ -94,18 +94,19 @@ Glass: `backdrop-filter: blur(16px)`; focus ring: `0 0 0 3px rgba(20,184,166,.35
 ## 3. Token architecture (how theming is wired)
 
 ```
-Primitive   --anslation-ds-primary: #14B8A6        (raw brand value — one place)
+Primitive   packages/ui/src/tokens.css              (raw values — one place)
    ↓
 Semantic    --primary: var(--anslation-ds-primary) (role alias used in UI)
    ↓
-Theme map   @theme inline { --color-primary: var(--primary) }   (admin globals.css)
+Theme map   packages/ui/src/theme.css               (Tailwind utility mapping)
    ↓
 Utility     bg-primary / text-primary / border-primary          (what components use)
 ```
 
 - Light/Dark switch via `[data-theme="dark"]` overriding the **same** semantic names.
-- The admin `@theme inline` block must expose every semantic colour as a Tailwind utility (`--color-surface`, `--color-danger-soft`, etc.) — if a `bg-*`/`text-*` class doesn't render, the mapping is missing; add it, don't hardcode.
-- **Migration note:** production primitives may still hold legacy values — the canonical brand is **Teal-500 / Cyan-400**. Always code against semantic tokens so the one-time primitive swap re-themes the whole app.
+- `packages/ui/src/theme.css` must expose every semantic colour as a Tailwind utility (`--color-surface`, `--color-danger-soft`, etc.) — if a `bg-*`/`text-*` class doesn't render, add the mapping there; don't hardcode it in an app.
+- Web and admin `globals.css` files may retain compatibility aliases while legacy routes migrate, but they must not redefine raw `--anslation-ds-*` primitives.
+- Static AltFTool marks are generated from `packages/ui/src/brand/brand.js` with `npm run brand:sync`; shells use `BrandLogo` / `BrandMark`.
 
 ---
 
@@ -126,7 +127,7 @@ Utility     bg-primary / text-primary / border-primary          (what components
 These must all share the exact same tokens & components:
 `Home · Dashboard · Extensions · Tool Pages · Search · Blog · News · Pricing · Authentication · Profile · Settings · Admin Panel · Documentation · Error pages · Loading pages · every future feature.`
 
-Web app = `altftoolweb` · Admin = `altftoolwebadmin` · Shared = `packages/core` (`@altftool/core`), `packages/ui` (`@altftool/ui`). Theme lives in admin `src/app/globals.css` (`--anslation-ds-*`) and the shared UI; reuse, don't fork.
+Web app = `altftoolweb` · Admin = `altftoolwebadmin` · Shared = `packages/core` (`@altftool/core`), `packages/ui` (`@altftool/ui`). Tokens, Tailwind mappings, brand primitives, and shared component recipes live in `packages/ui`; app globals are compatibility and product-composition layers only.
 
 ---
 

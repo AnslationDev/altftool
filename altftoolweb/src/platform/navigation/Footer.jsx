@@ -1,8 +1,8 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { ShieldCheck } from "lucide-react";
+import { BrandLogo } from "@altftool/ui";
 import SocialLinks from "../SocialLinks";
 import {
   FOOTER_ROUTE_GROUPS,
@@ -28,17 +28,15 @@ export default function Footer() {
               aria-label="AltFTool home"
               className="inline-flex rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--anslation-ds-primary-hover)]/35"
             >
-              <Image
-                src="/assets/altf-header-logo-dark.png"
-                alt="AltFTool"
-                width={180}
-                height={52}
-                className="h-9 w-auto object-contain"
+              <BrandLogo
+                size="sm"
+                className="text-[var(--anslation-ds-footer-text)]"
               />
             </Link>
 
             <p className="mt-4 max-w-xs text-sm leading-6 text-[var(--anslation-ds-footer-muted)]">
-              Tools, apps, products, guides, and focused digital workflows in one organized platform.
+              Tools, apps, products, guides, and focused digital workflows in
+              one organized platform.
             </p>
 
             <div className="mt-5">
@@ -52,10 +50,13 @@ export default function Footer() {
 
           <nav
             aria-label="Footer directory"
-            className="grid grid-cols-2 gap-x-6 gap-y-8 sm:grid-cols-3 xl:grid-cols-5"
+            className="grid grid-cols-2 gap-x-6 gap-y-8 sm:grid-cols-3 xl:grid-cols-6"
           >
             {FOOTER_ROUTE_GROUPS.map((group) => (
-              <section aria-labelledby={`footer-${group.title.toLowerCase()}`} key={group.title}>
+              <section
+                aria-labelledby={`footer-${group.title.toLowerCase()}`}
+                key={group.title}
+              >
                 <h2
                   id={`footer-${group.title.toLowerCase()}`}
                   className="text-xs font-semibold uppercase text-[var(--anslation-ds-footer-text)]"
@@ -112,11 +113,17 @@ export default function Footer() {
             © {new Date().getFullYear()} AltFTool. All rights reserved.
           </p>
           <nav aria-label="Legal" className="flex flex-wrap gap-x-4 gap-y-1">
-            {[SITE_ROUTES.privacy, SITE_ROUTES.terms, ...LEGAL_ROUTE_LINKS].map((link) => (
-              <Link key={link.href} href={link.href} className={footerLinkClass}>
-                {link.label}
-              </Link>
-            ))}
+            {[SITE_ROUTES.privacy, SITE_ROUTES.terms, ...LEGAL_ROUTE_LINKS].map(
+              (link) => (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className={footerLinkClass}
+                >
+                  {link.label}
+                </Link>
+              ),
+            )}
           </nav>
         </div>
       </div>

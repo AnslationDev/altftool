@@ -28,7 +28,9 @@ async function seedQuietPublicSession(page) {
 }
 
 test.describe("keyboard accessibility flows", () => {
-  test("public header dropdowns and mobile menu work from keyboard", async ({ page }) => {
+  test("public header dropdowns and mobile menu work from keyboard", async ({
+    page,
+  }) => {
     await seedQuietPublicSession(page);
     const quality = createPageQualityGate(page);
 
@@ -40,18 +42,27 @@ test.describe("keyboard accessibility flows", () => {
 
     const learnMenu = header.getByRole("link", { name: "Learn", exact: true });
     await learnMenu.focus();
-    await expect(header.getByRole("link", { name: "Blog", exact: true })).toBeVisible();
+    await expect(
+      header.getByRole("link", { name: "Blog", exact: true }),
+    ).toBeVisible();
     await page.keyboard.press("Tab");
-    await expect(header.getByRole("link", { name: "Academy", exact: true })).toBeFocused();
+    await expect(
+      header.getByRole("link", { name: "Academy", exact: true }),
+    ).toBeFocused();
 
     await page.setViewportSize({ width: 390, height: 844 });
     await page.reload({ waitUntil: "domcontentloaded" });
-    await expect(page.locator("#main-header")).toHaveAttribute("data-hydrated", "true");
+    await expect(page.locator("#main-header")).toHaveAttribute(
+      "data-hydrated",
+      "true",
+    );
 
     const openMenu = page.getByRole("button", { name: "Open menu" });
     await openMenu.focus();
     await expect
-      .poll(() => page.evaluate(() => document.activeElement?.getAttribute("aria-label")))
+      .poll(() =>
+        page.evaluate(() => document.activeElement?.getAttribute("aria-label")),
+      )
       .toBe("Open menu");
     await openMenu.press("Enter");
 
@@ -59,20 +70,28 @@ test.describe("keyboard accessibility flows", () => {
     await expect
       .poll(() =>
         page.evaluate(() => {
-          const button = document.querySelector('button[aria-label="Close menu"]');
-          return button ? Math.round(button.getBoundingClientRect().left) : -999;
+          const button = document.querySelector(
+            'button[aria-label="Close menu"]',
+          );
+          return button
+            ? Math.round(button.getBoundingClientRect().left)
+            : -999;
         }),
       )
       .toBeGreaterThanOrEqual(0);
     await expect
-      .poll(() => page.evaluate(() => document.activeElement?.getAttribute("aria-label")))
+      .poll(() =>
+        page.evaluate(() => document.activeElement?.getAttribute("aria-label")),
+      )
       .toBe("Close menu");
 
     await closeMenu.press("Escape");
     await expect
       .poll(() =>
         page.evaluate(() => {
-          const button = document.querySelector('button[aria-label="Close menu"]');
+          const button = document.querySelector(
+            'button[aria-label="Close menu"]',
+          );
           return button ? Math.round(button.getBoundingClientRect().left) : 0;
         }),
       )
@@ -81,13 +100,22 @@ test.describe("keyboard accessibility flows", () => {
     await quality.expectClean("public header keyboard");
   });
 
-  test("tools directory filters are operable without a pointer", async ({ page }) => {
+  test("tools directory filters are operable without a pointer", async ({
+    page,
+  }) => {
     await seedQuietPublicSession(page);
     const quality = createPageQualityGate(page);
 
-    await page.goto(`${webUrl}/tools/all?search=json`, { waitUntil: "domcontentloaded" });
-    await expect(page.getByTestId("tools-directory")).toHaveAttribute("data-hydrated", "true");
-    const searchInput = page.locator('[data-testid="tools-search-input"]:visible');
+    await page.goto(`${webUrl}/tools/all?search=json`, {
+      waitUntil: "domcontentloaded",
+    });
+    await expect(page.getByTestId("tools-directory")).toHaveAttribute(
+      "data-hydrated",
+      "true",
+    );
+    const searchInput = page.locator(
+      '[data-testid="tools-search-input"]:visible',
+    );
     await expect(searchInput).toHaveValue("json");
 
     await searchInput.focus();
@@ -105,7 +133,9 @@ test.describe("keyboard accessibility flows", () => {
     await quality.expectClean("tools directory keyboard");
   });
 
-  test("blog skip link and explorer controls stay keyboard reachable", async ({ page }) => {
+  test("blog skip link and explorer controls stay keyboard reachable", async ({
+    page,
+  }) => {
     await seedQuietPublicSession(page);
     const quality = createPageQualityGate(page);
 
@@ -117,7 +147,9 @@ test.describe("keyboard accessibility flows", () => {
     await page.keyboard.press("Enter");
     await expect(page.locator("#main-content")).toBeVisible();
 
-    const searchInput = page.getByRole("textbox", { name: "Search blog articles" });
+    const searchInput = page.getByRole("textbox", {
+      name: "Search blog articles",
+    });
     await searchInput.focus();
     await page.keyboard.type("pdf");
     await expect(searchInput).toHaveValue("pdf");
@@ -131,7 +163,9 @@ test.describe("keyboard accessibility flows", () => {
     await quality.expectClean("blog keyboard");
   });
 
-  test("admin mobile navigation and theme menu are keyboard reachable", async ({ page }) => {
+  test("admin mobile navigation and theme menu are keyboard reachable", async ({
+    page,
+  }) => {
     test.skip(
       adminServerMode === "production",
       "Local admin session helper is development-only; production admin requires real auth.",
@@ -141,23 +175,40 @@ test.describe("keyboard accessibility flows", () => {
 
     await page.setViewportSize({ width: 390, height: 844 });
     await page.goto(`${adminUrl}/login`, { waitUntil: "domcontentloaded" });
-    await page.evaluate((key) => localStorage.setItem(key, "active"), localAdminStorageKey);
-    await page.goto(`${adminUrl}/admin-management`, { waitUntil: "domcontentloaded" });
+    await page.evaluate(
+      (key) => localStorage.setItem(key, "active"),
+      localAdminStorageKey,
+    );
+    await page.goto(`${adminUrl}/admin-management`, {
+      waitUntil: "domcontentloaded",
+    });
 
-    const openNavigation = page.getByRole("button", { name: "Open admin navigation" });
+    const openNavigation = page.getByRole("button", {
+      name: "Open admin navigation",
+    });
     await openNavigation.focus();
     await page.keyboard.press("Enter");
-    await expect(page.getByRole("button", { name: "Close admin navigation" })).toBeVisible();
+    await expect(
+      page.getByRole("button", { name: "Close admin navigation" }),
+    ).toBeVisible();
     await page.keyboard.press("Escape");
 
-    const themeButton = page.getByRole("button", { name: "Theme: System default" });
+    const themeButton = page.getByRole("button", {
+      name: "Theme: System theme",
+    });
     await themeButton.focus();
     await page.keyboard.press("Enter");
-    await expect(page.getByRole("menu", { name: "Theme mode" })).toBeVisible();
-    await page.getByRole("menuitemradio", { name: "Light mode" }).focus();
+    await expect(
+      page.getByRole("dialog", { name: "Theme mode" }),
+    ).toBeVisible();
+    await page.getByRole("radio", { name: "Light mode" }).focus();
     await page.keyboard.press("Enter");
     await expect
-      .poll(() => page.evaluate(() => document.documentElement.getAttribute("data-theme-mode")))
+      .poll(() =>
+        page.evaluate(() =>
+          document.documentElement.getAttribute("data-theme-mode"),
+        ),
+      )
       .toBe("light");
 
     await quality.expectClean("admin keyboard");

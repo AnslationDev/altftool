@@ -3,7 +3,10 @@ import { ArrowLeft, ArrowRight, BookOpen, CheckCircle2, Hash, Layers3, Route, Sp
 import BlogCard from "./BlogCard";
 import { blogTaxonomySlug } from "../data";
 
-const ARCHIVE_CARD_LIMIT = 48;
+// Keep the initial visual payload compact. Remaining articles stay as
+// server-rendered text links below, preserving the complete crawl graph
+// without repeating image-card markup hundreds of times.
+const ARCHIVE_CARD_LIMIT = 18;
 
 function ArchiveStat({ icon: Icon, label, value }) {
   return (

@@ -6,6 +6,8 @@ export async function generateMetadata() {
     title: "No Flights Found | TripFindBox",
     description: "No matching flights were found. Modify your search or contact TripFindBox agents for help finding the best route.",
     path: "/bops/tripfindbox/search/no-results",
+    noindex: true,
+    follow: true,
   });
 }
 

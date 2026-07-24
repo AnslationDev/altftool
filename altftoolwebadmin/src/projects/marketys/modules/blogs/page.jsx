@@ -5,7 +5,7 @@ import { Plus, Search, FileText, Pencil, Trash2, RotateCcw, ChevronDown, Image a
 import { listBlogs, deleteBlog } from "./services/blogService";
 import { emitAlert } from "@/lib/alertBus";
 import { collection, getDocs, deleteDoc, doc, getDoc, setDoc } from "firebase/firestore";
-import { db } from "@/lib/firebase";
+import { db } from "@/lib/firebaseFirestore";
 import AddBlogModal from "./components/AddBlogModal";
 import ResetButton from "../../components/ResetButton";
 import ImageUpload from "../../components/ImageUpload";

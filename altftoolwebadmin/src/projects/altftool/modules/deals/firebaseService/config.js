@@ -1,5 +1,5 @@
 import { collection, doc } from "firebase/firestore";
-import { db } from "@/lib/firebase";
+import { db } from "@/lib/firebaseFirestore";
 
 export const ROOT = ["projects", "altftool", "deals", "data"];
 

@@ -4,7 +4,7 @@ import {
   serverTimestamp,
   setDoc,
 } from "firebase/firestore";
-import { db } from "@/lib/firebase";
+import { db } from "@/lib/firebaseFirestore";
 
 const PROJECT_ID = "dailyhnt";
 const SITE_PATH = ["projects", PROJECT_ID, "settings", "site"];

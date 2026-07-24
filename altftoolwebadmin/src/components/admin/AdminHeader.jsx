@@ -6,7 +6,6 @@ import {
   Activity,
   AlertTriangle,
   Bell,
-  Check,
   ChevronDown,
   ChevronRight,
   Headset,
@@ -14,14 +13,12 @@ import {
   LogOut,
   Megaphone,
   Menu,
-  Monitor,
-  Moon,
   Search,
   Shield,
   ShieldCheck,
-  Sun,
   User,
 } from "lucide-react";
+import { ThemeModeMenu } from "@altftool/ui";
 import { useEffect, useMemo, useRef, useState } from "react";
 import {
   collection,
@@ -31,19 +28,16 @@ import {
   query,
   where,
 } from "firebase/firestore";
-import { db } from "@/lib/firebase";
+import { db } from "@/lib/firebaseFirestore";
 import { getAdminRouteInfo, buildAdminBreadcrumbs } from "@/lib/routeUtils";
 import { useAuth } from "@/context/AuthContext";
 import { useAdminTheme } from "@/context/ThemeContext";
 import { PROJECTS } from "@/projects";
-import { GLOBAL_ADMIN_MODULES, getProjectModuleRoute } from "@/config/adminRoutes";
+import {
+  GLOBAL_ADMIN_MODULES,
+  getProjectModuleRoute,
+} from "@/config/adminRoutes";
 import { hasModuleAccess } from "@/lib/permissionUtils";
-
-const THEME_OPTIONS = [
-  { value: "system", label: "System default", icon: Monitor },
-  { value: "light", label: "Light mode", icon: Sun },
-  { value: "dark", label: "Dark mode", icon: Moon },
-];
 
 const TYPE_ICON = {
   announcement: Megaphone,
@@ -57,7 +51,10 @@ function createAdminQuickRoutes({ adminData, isSuperAdmin }) {
   const routes = [];
 
   Object.entries(GLOBAL_ADMIN_MODULES).forEach(([key, config]) => {
-    const allowed = isSuperAdmin || config.allAdmins || adminData?.permissions?.[key]?.read === true;
+    const allowed =
+      isSuperAdmin ||
+      config.allAdmins ||
+      adminData?.permissions?.[key]?.read === true;
     if (!allowed) return;
 
     routes.push({
@@ -71,21 +68,23 @@ function createAdminQuickRoutes({ adminData, isSuperAdmin }) {
   });
 
   Object.entries(PROJECTS).forEach(([projectId, project]) => {
-    Object.entries(project.modules || {}).forEach(([moduleKey, moduleConfig]) => {
-      const allowed =
-        isSuperAdmin ||
-        hasModuleAccess({ adminData, projectId, moduleKey, action: "read" });
-      if (!allowed) return;
+    Object.entries(project.modules || {}).forEach(
+      ([moduleKey, moduleConfig]) => {
+        const allowed =
+          isSuperAdmin ||
+          hasModuleAccess({ adminData, projectId, moduleKey, action: "read" });
+        if (!allowed) return;
 
-      routes.push({
-        key: `${projectId}-${moduleKey}`,
-        label: moduleConfig.label,
-        helper: project.name,
-        href: getProjectModuleRoute(projectId, moduleKey),
-        icon: moduleConfig.icon,
-        keywords: `${projectId} ${project.name} ${moduleKey} ${moduleConfig.label}`,
-      });
-    });
+        routes.push({
+          key: `${projectId}-${moduleKey}`,
+          label: moduleConfig.label,
+          helper: project.name,
+          href: getProjectModuleRoute(projectId, moduleKey),
+          icon: moduleConfig.icon,
+          keywords: `${projectId} ${project.name} ${moduleKey} ${moduleConfig.label}`,
+        });
+      },
+    );
   });
 
   return routes;
@@ -108,11 +107,10 @@ export default function AdminHeader({ user, adminData, onOpenSidebar }) {
   const routeInfo = getAdminRouteInfo(pathname);
   const breadcrumbs = buildAdminBreadcrumbs(routeInfo);
   const isSuperAdmin = adminData?.roleType === "superadmin";
-  const { themeMode, resolvedTheme, setThemeMode } = useAdminTheme();
+  const { themeMode, setThemeMode } = useAdminTheme();
 
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [notifOpen, setNotifOpen] = useState(false);
-  const [themeMenuOpen, setThemeMenuOpen] = useState(false);
   const [themeReady, setThemeReady] = useState(false);
   const [notifications, setNotifications] = useState([]);
   const [markingRead, setMarkingRead] = useState(null);
@@ -121,7 +119,6 @@ export default function AdminHeader({ user, adminData, onOpenSidebar }) {
 
   const dropdownRef = useRef(null);
   const notifRef = useRef(null);
-  const themeMenuRef = useRef(null);
   const quickNavRef = useRef(null);
   const quickInputRef = useRef(null);
 
@@ -153,11 +150,6 @@ export default function AdminHeader({ user, adminData, onOpenSidebar }) {
         .toUpperCase()
         .slice(0, 2)
     : (user?.email?.[0] ?? "A").toUpperCase();
-  const currentThemeOption =
-    THEME_OPTIONS.find((option) => option.value === themeMode) || THEME_OPTIONS[0];
-  const displayedThemeOption = themeReady ? currentThemeOption : THEME_OPTIONS[0];
-  const CurrentThemeIcon = displayedThemeOption.icon;
-
   const logout = async () => {
     await logoutAuth();
     router.replace("/login");
@@ -170,7 +162,6 @@ export default function AdminHeader({ user, adminData, onOpenSidebar }) {
   useEffect(() => {
     setDropdownOpen(false);
     setNotifOpen(false);
-    setThemeMenuOpen(false);
     setQuickOpen(false);
   }, [pathname]);
 
@@ -189,10 +180,18 @@ export default function AdminHeader({ user, adminData, onOpenSidebar }) {
     return onSnapshot(
       notificationsQuery,
       (snapshot) => {
-        setNotifications(snapshot.docs.map((docSnap) => ({ id: docSnap.id, ...docSnap.data() })));
+        setNotifications(
+          snapshot.docs.map((docSnap) => ({
+            id: docSnap.id,
+            ...docSnap.data(),
+          })),
+        );
       },
       (error) => {
-        console.warn("Unable to load admin notifications:", error?.message || error);
+        console.warn(
+          "Unable to load admin notifications:",
+          error?.message || error,
+        );
         setNotifications([]);
       },
     );
@@ -206,9 +205,6 @@ export default function AdminHeader({ user, adminData, onOpenSidebar }) {
       if (notifRef.current && !notifRef.current.contains(event.target)) {
         setNotifOpen(false);
       }
-      if (themeMenuRef.current && !themeMenuRef.current.contains(event.target)) {
-        setThemeMenuOpen(false);
-      }
       if (quickNavRef.current && !quickNavRef.current.contains(event.target)) {
         setQuickOpen(false);
       }
@@ -218,7 +214,6 @@ export default function AdminHeader({ user, adminData, onOpenSidebar }) {
       if (event.key !== "Escape") return;
       setDropdownOpen(false);
       setNotifOpen(false);
-      setThemeMenuOpen(false);
       setQuickOpen(false);
     };
 
@@ -244,7 +239,9 @@ export default function AdminHeader({ user, adminData, onOpenSidebar }) {
 
     return source
       .map((item, index) => {
-        const haystack = normalizeSearchText(`${item.label} ${item.helper} ${item.keywords}`);
+        const haystack = normalizeSearchText(
+          `${item.label} ${item.helper} ${item.keywords}`,
+        );
         const label = normalizeSearchText(item.label);
         const score =
           label === query
@@ -306,7 +303,10 @@ export default function AdminHeader({ user, adminData, onOpenSidebar }) {
         setNotifOpen(false);
       }
     } catch (error) {
-      console.warn("Unable to mark notification as read:", error?.message || error);
+      console.warn(
+        "Unable to mark notification as read:",
+        error?.message || error,
+      );
     } finally {
       setMarkingRead(null);
     }
@@ -329,7 +329,10 @@ export default function AdminHeader({ user, adminData, onOpenSidebar }) {
           aria-label="Admin breadcrumbs"
         >
           {breadcrumbs.map((crumb, index) => (
-            <div key={`${crumb.label}-${index}`} className="flex shrink-0 items-center gap-2">
+            <div
+              key={`${crumb.label}-${index}`}
+              className="flex shrink-0 items-center gap-2"
+            >
               {index !== 0 ? (
                 <ChevronRight className="h-3.5 w-3.5 text-[var(--muted)]" />
               ) : null}
@@ -350,7 +353,10 @@ export default function AdminHeader({ user, adminData, onOpenSidebar }) {
         </nav>
       </div>
 
-      <div className="relative hidden min-w-[240px] max-w-md flex-1 xl:block" ref={quickNavRef}>
+      <div
+        className="relative hidden min-w-[240px] max-w-md flex-1 xl:block"
+        ref={quickNavRef}
+      >
         <Search className="pointer-events-none absolute left-3 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-[var(--muted)]" />
         <input
           ref={quickInputRef}
@@ -442,63 +448,11 @@ export default function AdminHeader({ user, adminData, onOpenSidebar }) {
           {isSuperAdmin ? "Super Admin" : "Admin"}
         </span>
 
-        <div className="relative" ref={themeMenuRef}>
-          <button
-            type="button"
-            onClick={() => setThemeMenuOpen((open) => !open)}
-            className="grid h-9 w-9 place-items-center rounded-lg text-[var(--muted)] transition hover:bg-[var(--surface-soft)] hover:text-[var(--foreground)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color-mix(in_srgb,var(--primary)_35%,transparent)]"
-            aria-label={`Theme: ${displayedThemeOption.label}`}
-            aria-haspopup="menu"
-            aria-expanded={themeMenuOpen}
-            title={`Theme: ${displayedThemeOption.label}`}
-          >
-            <CurrentThemeIcon
-              className={`h-4 w-4 ${
-                themeReady && resolvedTheme === "dark" ? "text-[var(--primary)]" : ""
-              }`}
-            />
-          </button>
-
-          {themeMenuOpen ? (
-            <div
-              role="menu"
-              aria-label="Theme mode"
-              className="absolute right-0 top-11 z-50 rounded-lg border border-[var(--border)] bg-[var(--surface)] p-1.5 shadow-[var(--shadow-lg)]"
-            >
-              <div className="flex min-w-max items-center gap-1">
-                {THEME_OPTIONS.map((option) => {
-                  const OptionIcon = option.icon;
-                  const isSelected = option.value === themeMode;
-
-                  return (
-                    <button
-                      key={option.value}
-                      type="button"
-                      role="menuitemradio"
-                      aria-checked={isSelected}
-                      aria-label={option.label}
-                      title={option.label}
-                      onClick={() => {
-                        setThemeMode(option.value);
-                        setThemeMenuOpen(false);
-                      }}
-                      className={`relative grid h-9 w-9 place-items-center rounded-lg border text-[var(--muted)] transition hover:border-[var(--primary)] hover:bg-[var(--surface-soft)] hover:text-[var(--foreground)] ${
-                        isSelected
-                          ? "border-[var(--primary)] bg-[var(--surface-soft)] text-[var(--primary)]"
-                          : "border-transparent"
-                      }`}
-                    >
-                      <OptionIcon className="h-4 w-4" />
-                      {isSelected ? (
-                        <Check className="pointer-events-none absolute -right-1 -top-1 h-3.5 w-3.5 rounded-full bg-[var(--primary)] p-0.5 text-[var(--primary-foreground)]" />
-                      ) : null}
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
-          ) : null}
-        </div>
+        <ThemeModeMenu
+          value={themeMode}
+          onChange={setThemeMode}
+          hydrated={themeReady}
+        />
 
         <div className="relative" ref={notifRef}>
           <button
@@ -520,7 +474,9 @@ export default function AdminHeader({ user, adminData, onOpenSidebar }) {
           {notifOpen ? (
             <div className="absolute right-0 top-11 z-50 w-80 max-w-[calc(100vw-1rem)] overflow-hidden rounded-lg border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow-lg)]">
               <div className="flex items-center justify-between gap-3 border-b border-[var(--border)] px-4 py-3">
-                <p className="text-sm font-semibold text-[var(--foreground)]">Notifications</p>
+                <p className="text-sm font-semibold text-[var(--foreground)]">
+                  Notifications
+                </p>
                 {unreadCount > 0 ? (
                   <span className="rounded-full bg-[var(--danger-soft)] px-2 py-0.5 text-[10px] font-bold text-[var(--danger)]">
                     {unreadCount} unread
@@ -618,7 +574,9 @@ export default function AdminHeader({ user, adminData, onOpenSidebar }) {
                     {displayName}
                   </p>
                 ) : null}
-                <p className="truncate text-xs text-[var(--muted)]">{user?.email}</p>
+                <p className="truncate text-xs text-[var(--muted)]">
+                  {user?.email}
+                </p>
               </div>
               <Link
                 href="/profile"

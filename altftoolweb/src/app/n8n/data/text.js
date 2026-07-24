@@ -6,6 +6,19 @@ export function stripEmojis(str = "") {
   return String(str).replace(EMOJI_RE, "").replace(/\s+/g, " ").trim();
 }
 
+export function metaTitle(str = "", max = 55) {
+  const text = stripEmojis(str);
+  if (text.length <= max) return text;
+
+  const clipped = text.slice(0, Math.max(1, max - 1));
+  const boundary = clipped.lastIndexOf(" ");
+  const candidate = boundary >= Math.floor(max * 0.55)
+    ? clipped.slice(0, boundary)
+    : clipped;
+
+  return `${candidate.replace(/[,:;\-\s]+$/g, "")}…`;
+}
+
 // Strip Markdown syntax + emojis down to clean plain text (card blurbs, intros).
 export function stripMarkdown(md = "") {
   const text = String(md)

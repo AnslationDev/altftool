@@ -7,6 +7,8 @@ export async function generateMetadata() {
     description:
       "Unsubscribe from AltFTool email updates. Enter your email address to stop receiving newsletters and updates — no spam and no follow-ups.",
     path: "/unsubscribe",
+    noindex: true,
+    follow: false,
   });
 }
 

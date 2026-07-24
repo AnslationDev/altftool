@@ -3,19 +3,14 @@
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
+import { ChevronDown, LayoutGrid, Menu, Search, X } from "lucide-react";
 import {
-  Check,
-  ChevronDown,
-  LayoutGrid,
-  Menu,
-  Monitor,
-  Moon,
-  Search,
-  Sun,
-  X,
-} from "lucide-react";
-import { IconButton, Input } from "@altftool/ui";
-import ManagedImage from "@/components/ui/ManagedImage";
+  BrandLogo,
+  IconButton,
+  Input,
+  ThemeModeMenu,
+  ThemeModeSelector,
+} from "@altftool/ui";
 import { useTheme } from "@/contexts/ThemeContext";
 import AccountMenu from "./AccountMenu";
 import {
@@ -24,12 +19,6 @@ import {
   PUBLIC_NAV_ITEMS,
   SITE_ROUTES,
 } from "./siteRoutes";
-
-const THEME_OPTIONS = [
-  { value: "system", label: "System theme", icon: Monitor },
-  { value: "light", label: "Light mode", icon: Sun },
-  { value: "dark", label: "Dark mode", icon: Moon },
-];
 
 function groupNavigationOptions(options = []) {
   const groups = new Map();
@@ -78,104 +67,19 @@ function getDesktopMenuLayout(item) {
   return { columns: "grid-cols-1", position, width: "w-72" };
 }
 
-function ThemeMenu({ onSelect, open, setOpen, themeMode, themeReady }) {
-  const menuRef = useRef(null);
-  const currentOption =
-    THEME_OPTIONS.find((option) => option.value === themeMode) || THEME_OPTIONS[0];
-  const CurrentIcon = currentOption.icon;
-
-  useEffect(() => {
-    if (!open) return undefined;
-
-    const handlePointerDown = (event) => {
-      if (!menuRef.current?.contains(event.target)) setOpen(false);
-    };
-    const handleKeyDown = (event) => {
-      if (event.key === "Escape") setOpen(false);
-    };
-
-    document.addEventListener("pointerdown", handlePointerDown);
-    document.addEventListener("keydown", handleKeyDown);
-    return () => {
-      document.removeEventListener("pointerdown", handlePointerDown);
-      document.removeEventListener("keydown", handleKeyDown);
-    };
-  }, [open, setOpen]);
-
-  return (
-    <div className="relative" ref={menuRef}>
-      <IconButton
-        type="button"
-        aria-label={`Theme: ${themeReady ? currentOption.label : "System theme"}`}
-        aria-haspopup="menu"
-        aria-expanded={open}
-        title="Theme"
-        onClick={() => setOpen((value) => !value)}
-      >
-        <CurrentIcon className="h-5 w-5" aria-hidden="true" />
-      </IconButton>
-
-      {open ? (
-        <div
-          role="menu"
-          aria-label="Theme mode"
-          className="absolute right-0 top-12 z-[80] flex items-center gap-1 rounded-lg border border-border bg-card p-1.5 shadow-md"
-        >
-          {THEME_OPTIONS.map((option) => {
-            const OptionIcon = option.icon;
-            const isSelected = themeReady && option.value === themeMode;
-
-            return (
-              <button
-                key={option.value}
-                type="button"
-                suppressHydrationWarning
-                role="menuitemradio"
-                aria-checked={isSelected}
-                aria-label={option.label}
-                title={option.label}
-                onClick={() => onSelect(option.value)}
-                className={`relative grid h-10 w-10 place-items-center rounded-md border text-muted-foreground transition hover:border-primary hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-primary/35 ${
-                  isSelected
-                    ? "border-primary bg-muted text-primary"
-                    : "border-transparent"
-                }`}
-              >
-                <OptionIcon className="h-4 w-4" aria-hidden="true" />
-                {isSelected ? (
-                  <Check
-                    className="absolute -right-1 -top-1 h-4 w-4 rounded-full bg-primary p-0.5 text-primary-foreground"
-                    aria-hidden="true"
-                  />
-                ) : null}
-              </button>
-            );
-          })}
-        </div>
-      ) : null}
-    </div>
-  );
-}
-
 export default function Header() {
   const pathname = usePathname() || "";
   const router = useRouter();
-  const { resolvedTheme, setThemeMode, themeMode } = useTheme();
+  const { setThemeMode, themeMode } = useTheme();
   const [activeDesktopMenu, setActiveDesktopMenu] = useState(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [searchError, setSearchError] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
-  const [themeMenuOpen, setThemeMenuOpen] = useState(false);
   const [themeReady, setThemeReady] = useState(false);
   const mobileMenuButtonRef = useRef(null);
   const mobileCloseButtonRef = useRef(null);
   const mobilePanelRef = useRef(null);
   const mobileMenuPanelId = "site-mobile-navigation";
-
-  const logoSrc =
-    themeReady && resolvedTheme === "dark"
-      ? "/assets/altf-header-logo-dark.png"
-      : "/assets/altf-header-logo-generated.png";
 
   const prefetchRoute = (href) => {
     if (href?.startsWith("/")) router.prefetch(href);
@@ -205,8 +109,9 @@ export default function Header() {
       setActiveDesktopMenu(null);
       setMobileMenuOpen(false);
       setSearchError("");
-      setSearchQuery(new URLSearchParams(window.location.search).get("q") || "");
-      setThemeMenuOpen(false);
+      setSearchQuery(
+        new URLSearchParams(window.location.search).get("q") || "",
+      );
     }, 0);
     return () => window.clearTimeout(timer);
   }, [pathname]);
@@ -268,7 +173,6 @@ export default function Header() {
 
   const handleThemeSelect = (value) => {
     setThemeMode(value);
-    setThemeMenuOpen(false);
   };
 
   return (
@@ -286,11 +190,7 @@ export default function Header() {
             className="inline-flex min-w-fit items-center rounded-md focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-primary/35"
             {...routePreviewProps("/")}
           >
-            <ManagedImage
-              src={logoSrc}
-              className="h-8 w-auto object-contain"
-              alt="AltFTool"
-            />
+            <BrandLogo size="sm" />
           </Link>
 
           <nav
@@ -301,7 +201,9 @@ export default function Header() {
               const hasOptions = Boolean(item.options?.length);
               const itemIsActive =
                 isPublicRouteActive(pathname, item) ||
-                item.options?.some((option) => isPublicRouteActive(pathname, option));
+                item.options?.some((option) =>
+                  isPublicRouteActive(pathname, option),
+                );
               const menuIsOpen = activeDesktopMenu === item.label;
               const groups = groupNavigationOptions(item.options);
               const layout = getDesktopMenuLayout(item);
@@ -347,7 +249,9 @@ export default function Header() {
                   </Link>
 
                   {hasOptions && menuIsOpen ? (
-                    <div className={`absolute top-full z-[70] pt-2 ${layout.position}`}>
+                    <div
+                      className={`absolute top-full z-[70] pt-2 ${layout.position}`}
+                    >
                       <div
                         className={`${layout.width} max-h-[min(32rem,calc(100vh-5rem))] overflow-y-auto overscroll-contain rounded-lg border border-border bg-[var(--anslation-ds-surface)] p-4 shadow-[var(--anslation-ds-shadow-lg)] [scrollbar-gutter:stable]`}
                       >
@@ -364,7 +268,10 @@ export default function Header() {
                               <div className="grid gap-1">
                                 {group.items.map((option) => {
                                   const OptionIcon = option.icon || LayoutGrid;
-                                  const optionIsActive = isPublicRouteActive(pathname, option);
+                                  const optionIsActive = isPublicRouteActive(
+                                    pathname,
+                                    option,
+                                  );
 
                                   return (
                                     <Link
@@ -380,9 +287,14 @@ export default function Header() {
                                       }`}
                                     >
                                       <span className="grid h-8 w-8 shrink-0 place-items-center rounded-md bg-muted text-primary transition group-hover:bg-background">
-                                        <OptionIcon className="h-4 w-4" aria-hidden="true" />
+                                        <OptionIcon
+                                          className="h-4 w-4"
+                                          aria-hidden="true"
+                                        />
                                       </span>
-                                      <span className="min-w-0 leading-5">{option.label}</span>
+                                      <span className="min-w-0 leading-5">
+                                        {option.label}
+                                      </span>
                                     </Link>
                                   );
                                 })}
@@ -410,12 +322,10 @@ export default function Header() {
               <Search className="h-5 w-5" aria-hidden="true" />
             </Link>
 
-            <ThemeMenu
-              onSelect={handleThemeSelect}
-              open={themeMenuOpen}
-              setOpen={setThemeMenuOpen}
-              themeMode={themeMode}
-              themeReady={themeReady}
+            <ThemeModeMenu
+              value={themeMode}
+              onChange={handleThemeSelect}
+              hydrated={themeReady}
             />
 
             <AccountMenu />
@@ -471,11 +381,7 @@ export default function Header() {
               onClick={() => closeMobileMenu()}
               className="rounded-md focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-primary/35"
             >
-              <ManagedImage
-                src={logoSrc}
-                className="h-8 w-auto object-contain"
-                alt="AltFTool"
-              />
+              <BrandLogo size="sm" />
             </Link>
             <IconButton
               ref={mobileCloseButtonRef}
@@ -505,7 +411,9 @@ export default function Header() {
               </IconButton>
             </div>
             {searchError ? (
-              <p className="text-xs font-medium text-destructive">{searchError}</p>
+              <p className="text-xs font-medium text-destructive">
+                {searchError}
+              </p>
             ) : null}
           </form>
 
@@ -515,10 +423,16 @@ export default function Header() {
               const groups = groupNavigationOptions(item.options);
               const itemIsActive =
                 isPublicRouteActive(pathname, item) ||
-                item.options?.some((option) => isPublicRouteActive(pathname, option));
+                item.options?.some((option) =>
+                  isPublicRouteActive(pathname, option),
+                );
 
               return (
-                <details className="group" key={item.label} open={itemIsActive || undefined}>
+                <details
+                  className="group"
+                  key={item.label}
+                  open={itemIsActive || undefined}
+                >
                   <summary
                     className={`flex min-h-11 cursor-pointer list-none items-center justify-between rounded-md px-3 py-2 text-sm font-semibold transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary ${
                       itemIsActive
@@ -538,13 +452,20 @@ export default function Header() {
 
                   <div className="mt-1 grid gap-3 border-l border-border pl-3">
                     {groups.map((group) => (
-                      <section aria-label={group.label} className="grid gap-1" key={group.label}>
+                      <section
+                        aria-label={group.label}
+                        className="grid gap-1"
+                        key={group.label}
+                      >
                         <p className="px-3 pt-1 text-xs font-semibold uppercase text-muted-foreground">
                           {group.label}
                         </p>
                         {group.items.map((option) => {
                           const OptionIcon = option.icon || LayoutGrid;
-                          const optionIsActive = isPublicRouteActive(pathname, option);
+                          const optionIsActive = isPublicRouteActive(
+                            pathname,
+                            option,
+                          );
 
                           return (
                             <Link
@@ -559,7 +480,10 @@ export default function Header() {
                                   : "text-muted-foreground hover:bg-muted hover:text-foreground"
                               }`}
                             >
-                              <OptionIcon className="h-4 w-4 shrink-0" aria-hidden="true" />
+                              <OptionIcon
+                                className="h-4 w-4 shrink-0"
+                                aria-hidden="true"
+                              />
                               <span>{option.label}</span>
                             </Link>
                           );
@@ -573,59 +497,32 @@ export default function Header() {
           </nav>
 
           <div className="mt-auto border-t border-border pt-4">
-            <p className="text-xs font-semibold uppercase text-muted-foreground">Theme</p>
-            <div
-              role="radiogroup"
-              aria-label="Theme mode"
-              className="mt-2 grid grid-cols-3 gap-1 rounded-lg bg-muted p-1"
-            >
-              {THEME_OPTIONS.map((option) => {
-                const OptionIcon = option.icon;
-                const isSelected = themeReady && option.value === themeMode;
-
-                return (
-                  <button
-                    key={option.value}
-                    type="button"
-                    suppressHydrationWarning
-                    role="radio"
-                    aria-checked={isSelected}
-                    aria-label={option.label}
-                    title={option.label}
-                    onClick={() => handleThemeSelect(option.value)}
-                    className={`relative grid min-h-11 place-items-center rounded-md border transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary ${
-                      isSelected
-                        ? "border-primary bg-card text-primary"
-                        : "border-transparent text-muted-foreground hover:bg-card hover:text-foreground"
-                    }`}
-                  >
-                    <OptionIcon className="h-4 w-4" aria-hidden="true" />
-                    {isSelected ? (
-                      <Check
-                        className="absolute right-2 top-2 h-3.5 w-3.5"
-                        aria-hidden="true"
-                      />
-                    ) : null}
-                  </button>
-                );
-              })}
-            </div>
+            <p className="text-xs font-semibold uppercase text-muted-foreground">
+              Theme
+            </p>
+            <ThemeModeSelector
+              className="mt-2"
+              value={themeReady ? themeMode : "system"}
+              onChange={handleThemeSelect}
+            />
 
             <p className="mt-4 text-xs font-semibold uppercase text-muted-foreground">
               Quick access
             </p>
             <div className="mt-2 grid grid-cols-2 gap-2">
-              {[SITE_ROUTES.siteMap, SITE_ROUTES.support].map((route) => (
-                <Link
-                  key={route.href}
-                  href={route.href}
-                  prefetch={false}
-                  onClick={() => closeMobileMenu()}
-                  className="inline-flex min-h-11 items-center justify-center rounded-md border border-border px-3 text-sm font-semibold text-foreground transition hover:border-primary hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
-                >
-                  {route.label}
-                </Link>
-              ))}
+              {[SITE_ROUTES.docs, SITE_ROUTES.siteMap, SITE_ROUTES.support].map(
+                (route) => (
+                  <Link
+                    key={route.href}
+                    href={route.href}
+                    prefetch={false}
+                    onClick={() => closeMobileMenu()}
+                    className="inline-flex min-h-11 items-center justify-center rounded-md border border-border px-3 text-sm font-semibold text-foreground transition hover:border-primary hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                  >
+                    {route.label}
+                  </Link>
+                ),
+              )}
             </div>
           </div>
         </aside>

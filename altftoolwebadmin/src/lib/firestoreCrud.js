@@ -10,7 +10,7 @@ import {
   setDoc,
   updateDoc,
 } from "firebase/firestore";
-import { db } from "@/lib/firebase";
+import { db } from "@/lib/firebaseFirestore";
 
 /**
  * Factory for a singleton settings-doc service (e.g. `projects/<id>/navbar/settings`).

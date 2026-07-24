@@ -37,7 +37,7 @@ const AddExpertVideo = () => {
           <div className='flex flex-col items-start '>
             <div className='flex items-center gap-3 text-[20px] font-bold '>
               <Link
-                href='/leadtree/expertvideos'
+                href='/leadtree/expert-videos'
                 aria-label='Back to expert videos'
                 title='Back to expert videos'
                 className='bg-gray-200 rounded-md shadow-2xs border border-gray-300 h-8 w-8 flex items-center justify-center transition-all duration-300 hover:-translate-x-1'

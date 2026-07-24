@@ -1,7 +1,7 @@
 "use client";
 
 import { onSnapshot, collectionGroup, query } from "firebase/firestore";
-import { db } from "@/lib/firebase";
+import { db } from "@/lib/firebaseFirestore";
 
 export const subscribeAllBrands = (callback) => {
   const q = query(collectionGroup(db, "allbrand"));

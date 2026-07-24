@@ -15,7 +15,7 @@ import {
   updateDoc,
 } from "firebase/firestore";
 
-import { db } from "@/lib/firebase";
+import { db } from "@/lib/firebaseFirestore";
 import { SMARTLUCKY_PROJECT_ROOT, SMARTLUCKY_BLOGS_COLLECTION } from "@altftool/core/firebasePaths";
 
 const blogsCol = collection(db, ...SMARTLUCKY_BLOGS_COLLECTION);

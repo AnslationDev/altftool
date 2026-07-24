@@ -222,7 +222,12 @@ export async function fetchHomeContent() {
     `/databases/(default)/documents/${docPath}?key=${FIREBASE_API_KEY}`;
 
   try {
-    const res = await fetch(url, { cache: "no-store" });
+    const res = await fetch(url, {
+      next: {
+        revalidate: 300,
+        tags: ["tripfindbox-home-content"],
+      },
+    });
     if (!res.ok) return DEFAULT_HOME_CONTENT; // 404 = not created yet
     const json = await res.json();
     if (!json.fields) return DEFAULT_HOME_CONTENT;

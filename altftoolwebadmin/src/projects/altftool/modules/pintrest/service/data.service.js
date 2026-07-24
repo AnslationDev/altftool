@@ -11,7 +11,7 @@ import {
   serverTimestamp,
 } from "firebase/firestore";
 
-import { db } from "@/lib/firebase";
+import { db } from "@/lib/firebaseFirestore";
 
 const PROJECT_ID = "altftool";
 const dataRef = collection(db, "projects", PROJECT_ID, "pintrest");

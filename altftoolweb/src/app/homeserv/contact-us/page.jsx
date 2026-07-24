@@ -6,7 +6,7 @@ import { createPageMetadata } from "@/platform/seo/generateMetadata";
 export async function generateMetadata() {
   return createPageMetadata({
     title: "Contact Us | QuoteNest Pros",
-    description: "Contact QuoteNest Pros for home-service quote support.",
+    description: "Contact QuoteNest Pros for help with home-service quote requests, project details, provider questions, and next steps.",
     path: "/homeserv/contact-us",
   });
 }

@@ -1,9 +1,9 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { Home, Puzzle, Tags, Wrench, X } from "lucide-react";
+import { BrandMark } from "@altftool/ui";
 import { ALTF_LAUNCHER_LINKS } from "./altfLinks";
 
 const ICONS = { home: Home, tools: Wrench, extensions: Puzzle, deals: Tags };
@@ -78,14 +78,7 @@ export default function AltfLauncher() {
         {open ? (
           <X size={20} strokeWidth={2.3} />
         ) : (
-          <Image
-            src="/assets/altf-mark.png"
-            alt=""
-            width={154}
-            height={173}
-            className="altfl-mark"
-            priority
-          />
+          <BrandMark decorative className="altfl-mark" />
         )}
       </button>
     </div>

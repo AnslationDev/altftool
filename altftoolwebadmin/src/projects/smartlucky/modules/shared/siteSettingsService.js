@@ -6,7 +6,7 @@ import {
   setDoc,
   serverTimestamp,
 } from "firebase/firestore";
-import { db } from "@/lib/firebase";
+import { db } from "@/lib/firebaseFirestore";
 import { SMARTLUCKY_PROJECT_ROOT } from "@altftool/core/firebasePaths";
 
 const SETTINGS_DOC = doc(db, ...SMARTLUCKY_PROJECT_ROOT, "settings", "site");

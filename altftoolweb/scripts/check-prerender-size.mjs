@@ -4,7 +4,11 @@ import { fileURLToPath } from "node:url";
 
 const appRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const prerenderRoot = path.join(appRoot, ".next", "server", "app");
-const defaultMaxBytes = 4 * 1024 * 1024;
+// A prerendered response above 1 MiB is usually a sign that a route is
+// repeating rich cards or serializing a full catalog into the RSC payload.
+// Keep the default strict; exceptional builds can still supply an explicit
+// ALTFT_MAX_PRERENDER_BYTES override.
+const defaultMaxBytes = 1024 * 1024;
 const configuredMaxBytes = Number.parseInt(process.env.ALTFT_MAX_PRERENDER_BYTES ?? "", 10);
 const maxBytes = Number.isFinite(configuredMaxBytes) && configuredMaxBytes > 0
   ? configuredMaxBytes

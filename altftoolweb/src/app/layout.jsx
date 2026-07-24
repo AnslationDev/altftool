@@ -70,6 +70,12 @@ const baseMetadata = {
   creator: "AltFTool",
   publisher: "AltFTool",
   category: "technology",
+  referrer: "origin-when-cross-origin",
+  formatDetection: {
+    email: false,
+    address: false,
+    telephone: false,
+  },
   alternates: {
     canonical: "/",
   },
@@ -115,6 +121,16 @@ const baseMetadata = {
     shortcut: "/favicon.ico",
     apple: "/favicon1.png",
   },
+  other: {
+    "mitgo-verification": "6fa7b4de-9abc-4d8a-9729-8ec2eea1caa7",
+    "google-adsense-account": "ca-pub-5858966346488022",
+  },
+};
+
+export const viewport = {
+  width: "device-width",
+  initialScale: 1,
+  colorScheme: "light dark",
 };
 
 // Warm the central SEO config snapshot for the whole render tree BEFORE any
@@ -147,7 +163,7 @@ export default async function RootLayout({ children }) {
         <link rel="preconnect" href="https://firestore.googleapis.com" />
         <link rel="preconnect" href="https://firebasestorage.googleapis.com" />
         <link rel="preconnect" href="https://www.googletagmanager.com" />
-        <link rel="preconnect" href="https://www.clarity.ms" />
+        <link rel="dns-prefetch" href="//www.clarity.ms" />
         <ProductionAdSenseScript enabled={shouldLoadGoogleAds} />
         <JsonLd
           id="altftool-site-schema"
@@ -232,7 +248,7 @@ export default async function RootLayout({ children }) {
   `}
         </Script>
 
-        <Script id="clarity-init" strategy="afterInteractive">
+        <Script id="clarity-init" strategy="lazyOnload">
           {`
     if (location.hostname !== "localhost" && location.hostname !== "127.0.0.1") {
       (function(c,l,a,r,i,t,y){

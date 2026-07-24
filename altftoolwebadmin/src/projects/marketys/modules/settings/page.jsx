@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { Settings as SettingsIcon, FileText, Search, Pencil, RefreshCw, Layout, Menu } from "lucide-react";
 import { emitAlert } from "@/lib/alertBus";
 import { collection, getDocs, doc, getDoc, deleteDoc } from "firebase/firestore";
-import { db } from "@/lib/firebase";
+import { db } from "@/lib/firebaseFirestore";
 import AddPageModal from "./components/AddPageModal";
 import EditFooterModal from "./components/EditFooterModal";
 import EditHeaderModal from "./components/EditHeaderModal";

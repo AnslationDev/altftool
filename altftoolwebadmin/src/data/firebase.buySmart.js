@@ -1,6 +1,6 @@
 import { collection, onSnapshot } from "firebase/firestore";
 import { ALTFT_BUYSMART_ROOT } from "@altftool/core/firebasePaths";
-import { db } from "@/lib/firebase";
+import { db } from "@/lib/firebaseFirestore";
 import { subscribeCached } from "@/lib/firebaseCache";
 
 

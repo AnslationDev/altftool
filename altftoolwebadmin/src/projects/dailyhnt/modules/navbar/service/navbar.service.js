@@ -10,7 +10,7 @@ import {
   setDoc,
   updateDoc,
 } from "firebase/firestore";
-import { db } from "@/lib/firebase";
+import { db } from "@/lib/firebaseFirestore";
 
 const PROJECT_ID = "dailyhnt";
 const SETTINGS_PATH = ["projects", PROJECT_ID, "navbar", "settings"];

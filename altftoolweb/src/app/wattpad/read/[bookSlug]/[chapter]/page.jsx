@@ -1,6 +1,11 @@
 import books from "@/app/wattpad/data/books.json";
 import chapters from "@/app/wattpad/data/chapters.json";
-import { createPageMetadata } from "@/platform/seo/generateMetadata";
+import JsonLd from "@/platform/seo/JsonLd";
+import {
+  createArticleJsonLd,
+  createBreadcrumbJsonLd,
+  createPageMetadata,
+} from "@/platform/seo/generateMetadata";
 import { shouldDeferBulkPrerendering } from "@/lib/buildPrerenderPolicy";
 import { notFound } from "next/navigation";
 
@@ -35,7 +40,7 @@ export async function generateMetadata({ params }) {
 
   return createPageMetadata({
     title: `${currentChapter.title} - ${book.title}`,
-    description: `${book.title}, chapter ${currentChapter.chapterNumber}: ${currentChapter.title}.`,
+    description: `${book.title}, chapter ${currentChapter.chapterNumber}: ${currentChapter.title}. Read this chapter online and continue through the available story parts on AltFTool.`,
     path: `/wattpad/read/${book.slug}/${currentChapter.chapterNumber}`,
     image: book.coverImage || book.bannerImage,
     type: "article",
@@ -62,9 +67,30 @@ export default async function ReaderPage({ params }) {
       item.bookId === book.id &&
       item.chapterNumber === nextChapter
   );
+  const chapterPath = `/wattpad/read/${book.slug}/${currentChapter.chapterNumber}`;
+  const jsonLd = [
+    createBreadcrumbJsonLd([
+      { name: "Home", path: "/" },
+      { name: "Stories", path: "/wattpad" },
+      { name: book.title, path: `/wattpad/book/${book.slug}` },
+      { name: currentChapter.title, path: chapterPath },
+    ]),
+    createArticleJsonLd({
+      path: chapterPath,
+      headline: `${currentChapter.title} - ${book.title}`,
+      description: currentChapter.content,
+      image: book.coverImage || book.bannerImage,
+      datePublished: currentChapter.createdAt || book.createdAt,
+      author: book.authorId,
+    }),
+  ];
 
   return (
     <div className="min-h-screen bg-background">
+      <JsonLd
+        id={`story-${book.slug}-chapter-${currentChapter.chapterNumber}-schema`}
+        data={jsonLd}
+      />
       <div className="wp-reader-header">
         <div className="wp-reader-header-inner">
           <div>

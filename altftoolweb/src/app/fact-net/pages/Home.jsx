@@ -16,6 +16,7 @@ import {
   getRandomFactPool,
   getSearchSuggestions,
 } from "../data/factNetData";
+import { absoluteUrl } from "@/platform/seo/generateMetadata";
 
 function jsonLd(data) {
   return { __html: JSON.stringify(data).replace(/</g, "\\u003c") };
@@ -56,11 +57,9 @@ export default function Home() {
     "@type": "CollectionPage",
     name: "Fact-Net",
     description: homepage.description,
-    url: "/fact-net",
+    url: absoluteUrl("/fact-net"),
     isPartOf: {
-      "@type": "WebSite",
-      name: "AltFTool",
-      url: "https://altftool.com",
+      "@id": `${absoluteUrl("/")}#website`,
     },
   };
 

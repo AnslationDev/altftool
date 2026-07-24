@@ -5,7 +5,7 @@ import { createPageMetadata } from "@/platform/seo/generateMetadata";
 export async function generateMetadata() {
   return createPageMetadata({
     title: "Contact Us | TripFindBox",
-    description: "Contact TripFindBox for travel search support and booking help.",
+    description: "Contact TripFindBox for help with travel searches, route or fare questions, booking details, and practical next steps.",
     path: "/bops/tripfindbox/contact-us",
   });
 }

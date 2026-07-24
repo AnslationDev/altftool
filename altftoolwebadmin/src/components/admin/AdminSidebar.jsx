@@ -3,12 +3,8 @@
 import { useState, useEffect, useRef, useMemo } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import {
-  PanelLeftClose,
-  PanelLeftOpen,
-  Search,
-  X,
-} from "lucide-react";
+import { PanelLeftClose, PanelLeftOpen, Search, X } from "lucide-react";
+import { BrandMark } from "@altftool/ui";
 import { hasModuleAccess } from "@/lib/permissionUtils";
 import { getProject } from "@/projects";
 import {
@@ -22,6 +18,16 @@ function getLogoSrc(logo) {
 }
 
 function ProjectLogo({ project, size, className = "" }) {
+  if (project?.id === "altftool" || project?.id === "super-admin") {
+    return (
+      <BrandMark
+        decorative
+        className={className}
+        style={{ height: size, width: "auto" }}
+      />
+    );
+  }
+
   const src = getLogoSrc(project?.logo);
   if (!src) return null;
 
@@ -39,7 +45,14 @@ function ProjectLogo({ project, size, className = "" }) {
 
 const normalizeModuleQuery = (value = "") => String(value).trim().toLowerCase();
 
-function SidebarNavLink({ href, label, icon: Icon, isActive, compact, onNavigate }) {
+function SidebarNavLink({
+  href,
+  label,
+  icon: Icon,
+  isActive,
+  compact,
+  onNavigate,
+}) {
   return (
     <Link
       href={href}
@@ -69,7 +82,11 @@ function SidebarSectionLabel({ children }) {
   );
 }
 
-export default function AdminSidebar({ adminData, mobileOpen = false, onCloseMobile = () => {} }) {
+export default function AdminSidebar({
+  adminData,
+  mobileOpen = false,
+  onCloseMobile = () => {},
+}) {
   const pathname = usePathname();
   const [isMobile, setIsMobile] = useState(false);
   const [moduleFilter, setModuleFilter] = useState("");
@@ -145,8 +162,12 @@ export default function AdminSidebar({ adminData, mobileOpen = false, onCloseMob
     return Object.keys(GLOBAL_ADMIN_MODULES).filter((key) => {
       const moduleConfig = GLOBAL_ADMIN_MODULES[key];
       if (moduleConfig.allAdmins) return true;
-      if (moduleConfig.superadminOnly) return adminData.roleType === "superadmin";
-      return adminData.roleType === "superadmin" || adminData.permissions?.[key]?.read;
+      if (moduleConfig.superadminOnly)
+        return adminData.roleType === "superadmin";
+      return (
+        adminData.roleType === "superadmin" ||
+        adminData.permissions?.[key]?.read
+      );
     });
   }, [adminData]);
 
@@ -161,7 +182,9 @@ export default function AdminSidebar({ adminData, mobileOpen = false, onCloseMob
     if (!normalizedModuleFilter) return allowedTabs;
     return allowedTabs.filter((key) => {
       const moduleConfig = project?.modules?.[key];
-      const haystack = normalizeModuleQuery(`${key} ${moduleConfig?.label || ""}`);
+      const haystack = normalizeModuleQuery(
+        `${key} ${moduleConfig?.label || ""}`,
+      );
       return haystack.includes(normalizedModuleFilter);
     });
   }, [allowedTabs, normalizedModuleFilter, project]);
@@ -170,7 +193,9 @@ export default function AdminSidebar({ adminData, mobileOpen = false, onCloseMob
     if (!normalizedModuleFilter) return accessibleGlobalModules;
     return accessibleGlobalModules.filter((key) => {
       const moduleConfig = GLOBAL_ADMIN_MODULES[key];
-      const haystack = normalizeModuleQuery(`${key} ${moduleConfig?.label || ""} system`);
+      const haystack = normalizeModuleQuery(
+        `${key} ${moduleConfig?.label || ""} system`,
+      );
       return haystack.includes(normalizedModuleFilter);
     });
   }, [accessibleGlobalModules, normalizedModuleFilter]);
@@ -178,7 +203,9 @@ export default function AdminSidebar({ adminData, mobileOpen = false, onCloseMob
   if (!adminData) return null;
 
   const showProjectModules = Boolean(maybeProject);
-  const hasVisibleModules = (showProjectModules && visibleTabs.length > 0) || visibleGlobalModules.length > 0;
+  const hasVisibleModules =
+    (showProjectModules && visibleTabs.length > 0) ||
+    visibleGlobalModules.length > 0;
   const isSuperAdmin = adminData.roleType === "superadmin";
 
   return (
@@ -197,11 +224,15 @@ export default function AdminSidebar({ adminData, mobileOpen = false, onCloseMob
           {!compact ? (
             <div
               className="flex w-full items-center gap-2 rounded-lg px-2 py-1.5 text-left"
-              aria-label={maybeProject ? `${project?.name} project context` : "Super admin console context"}
+              aria-label={
+                maybeProject
+                  ? `${project?.name} project context`
+                  : "Super admin console context"
+              }
             >
               <span className="flex min-w-0 items-center gap-2.5">
                 <span className="grid h-8 w-8 shrink-0 place-items-center rounded-lg border border-[var(--border)] bg-[var(--surface)]">
-                  {project?.logo ? (
+                  {project?.logo || project?.id === "super-admin" ? (
                     <ProjectLogo project={project} size={18} />
                   ) : (
                     <span className="text-xs font-bold text-[var(--foreground)]">
@@ -221,13 +252,19 @@ export default function AdminSidebar({ adminData, mobileOpen = false, onCloseMob
             </div>
           ) : (
             <div
-              aria-label={maybeProject ? `${project?.name} project context` : "Super admin console context"}
+              aria-label={
+                maybeProject
+                  ? `${project?.name} project context`
+                  : "Super admin console context"
+              }
               className="mx-auto grid h-9 w-9 place-items-center rounded-lg"
             >
-              {project?.logo ? (
+              {project?.logo || project?.id === "super-admin" ? (
                 <ProjectLogo project={project} size={20} />
               ) : (
-                <span className="text-sm font-semibold">{project?.name?.[0]}</span>
+                <span className="text-sm font-semibold">
+                  {project?.name?.[0]}
+                </span>
               )}
             </div>
           )}
@@ -294,7 +331,9 @@ export default function AdminSidebar({ adminData, mobileOpen = false, onCloseMob
       )}
 
       {/* Navigation */}
-      <div className={`admin-thin-scroll flex-1 overflow-y-auto pb-3 ${compact ? "px-2 pt-3" : "px-3"}`}>
+      <div
+        className={`admin-thin-scroll flex-1 overflow-y-auto pb-3 ${compact ? "px-2 pt-3" : "px-3"}`}
+      >
         {!hasVisibleModules && !compact ? (
           <div className="mt-3 rounded-lg border border-dashed border-[var(--border-strong,var(--border))] px-3 py-6 text-center text-xs font-medium text-[var(--muted)]">
             No modules match this filter.
@@ -303,8 +342,15 @@ export default function AdminSidebar({ adminData, mobileOpen = false, onCloseMob
 
         {showProjectModules && visibleTabs.length > 0 && (
           <>
-            {!compact && <SidebarSectionLabel>{project?.name || "Project"} modules</SidebarSectionLabel>}
-            <nav className="space-y-0.5" aria-label={`${project?.name || "Project"} modules`}>
+            {!compact && (
+              <SidebarSectionLabel>
+                {project?.name || "Project"} modules
+              </SidebarSectionLabel>
+            )}
+            <nav
+              className="space-y-0.5"
+              aria-label={`${project?.name || "Project"} modules`}
+            >
               {visibleTabs.map((key) => {
                 const moduleConfig = project.modules[key];
                 if (!moduleConfig) return null;
@@ -329,7 +375,10 @@ export default function AdminSidebar({ adminData, mobileOpen = false, onCloseMob
             {!compact ? (
               <SidebarSectionLabel>System</SidebarSectionLabel>
             ) : (
-              <div className="mx-2 my-3 border-t border-[var(--border)]" aria-hidden="true" />
+              <div
+                className="mx-2 my-3 border-t border-[var(--border)]"
+                aria-hidden="true"
+              />
             )}
             <nav className="space-y-0.5" aria-label="System modules">
               {visibleGlobalModules.map((key) => {
@@ -357,10 +406,17 @@ export default function AdminSidebar({ adminData, mobileOpen = false, onCloseMob
           compact ? "flex justify-center px-0 py-3" : "px-4 py-3"
         }`}
       >
-        <div className="flex items-center gap-2" title={adminData.isActive !== false ? "Account active" : "Account inactive"}>
+        <div
+          className="flex items-center gap-2"
+          title={
+            adminData.isActive !== false ? "Account active" : "Account inactive"
+          }
+        >
           <span
             className={`h-2 w-2 shrink-0 rounded-full ${
-              adminData.isActive !== false ? "bg-[var(--success)]" : "bg-[var(--danger)]"
+              adminData.isActive !== false
+                ? "bg-[var(--success)]"
+                : "bg-[var(--danger)]"
             }`}
           />
           {!compact && (

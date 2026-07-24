@@ -9,7 +9,7 @@ import {
   serverTimestamp
 } from "firebase/firestore";
 import { buySmartDocPath } from "@altftool/core/firebasePaths";
-import { db } from "@/lib/firebase";
+import { db } from "@/lib/firebaseFirestore";
 
 // 🔹 SINGLE SOURCE PATH
 export const ROOT = buySmartDocPath("hero");

@@ -1,8 +1,7 @@
 "use client";
 
-// The one new primitive control this redesign needed — @altftool/ui has no
-// switch/toggle component. Built to match its token language (radius,
-// shadow, color-mix) so it looks native next to Button/Badge/etc.
+import { Toggle as SharedToggle } from "@altftool/ui";
+
 const Toggle = ({
   checked,
   onChange,
@@ -13,11 +12,6 @@ const Toggle = ({
   id,
   icon: Icon,
 }) => {
-  const handleClick = () => {
-    if (disabled || loading) return;
-    onChange?.(!checked);
-  };
-
   return (
     <div
       className={`support-toggle-row ${disabled ? "support-toggle-row-disabled" : ""}`}
@@ -42,22 +36,14 @@ const Toggle = ({
         )}
       </div>
 
-      <button
+      <SharedToggle
         id={id}
-        type="button"
-        role="switch"
-        aria-checked={checked}
+        checked={checked}
+        label={label}
+        onCheckedChange={onChange}
         aria-busy={loading || undefined}
         disabled={disabled || loading}
-        onClick={handleClick}
-        className={`
-          support-toggle
-          ${checked ? "support-toggle-on" : "support-toggle-off"}
-          ${loading ? "support-toggle-loading" : ""}
-        `}
-      >
-        <span className="support-toggle-thumb" />
-      </button>
+      />
     </div>
   );
 };

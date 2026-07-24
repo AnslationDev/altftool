@@ -37,7 +37,9 @@ const DEFAULT_APP_BUDGETS = [
     maxTotalCssGzipKiB: 450,
     routeLoaderFile: "altftoolwebadmin/src/lib/adminModuleLoaders.js",
     routeLoaderBaseline: 245,
-    routeJsGrowthKiB: 6,
+    // Match check-bundle-budgets.mjs. Aggregate growth is distributed across
+    // lazy admin routes; the fixed per-chunk cap remains the user-facing guard.
+    routeJsGrowthKiB: 6.25,
   },
 ];
 

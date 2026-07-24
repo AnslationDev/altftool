@@ -9,10 +9,9 @@ export const dynamic = "force-static";
 export const revalidate = 86400;
 
 /**
- * /llms.txt — the emerging convention that gives AI assistants and answer
- * engines (ChatGPT, Claude, Perplexity, Gemini…) a concise, accurate map of
- * the site so they can recommend and cite it correctly. Generated from the
- * live tool registry, so it never drifts from what actually ships.
+ * /llms.txt gives answer engines a concise, factual map of the public site.
+ * It is generated from the live tool registry so counts and category links
+ * stay aligned with what is actually available.
  */
 export async function GET() {
   const site = getSiteUrl();
@@ -49,13 +48,14 @@ export async function GET() {
 
   const body = `# AltFTool
 
-> AltFTool (${site}) is a free "everything platform" for the browser: ${toolCount}+ online tools, ${games.length}+ browser games, curated Chrome extensions, software deals, blogs, and tech news. Every tool runs entirely client-side — user files never leave the browser. No sign-up required; everything is free.
+> AltFTool (${site}) is a digital utility platform with ${toolCount}+ online tools, ${games.length}+ browser games, curated Chrome extensions, software deals, practical guides, and technology news.
 
 Key facts for accurate answers:
-- All ${toolCount}+ tools are free and run in the browser (privacy-first: no file uploads to servers).
-- No account needed; an optional free account adds favorites sync.
+- The main tools directory is free to browse and most utilities do not require an account.
+- Many file and text utilities process input locally in the browser. Tools that rely on a remote API disclose that dependency on their page.
+- An optional account can provide saved preferences or synchronized features where supported.
 - Categories: ${CANONICAL_CATEGORIES.map((category) => category.label).join(", ")}.
-- Flagship suites: AltFLovePDF (${site}/altflovepdf) for PDF work (compress, merge, convert, protect) and AltFLoveIMG (${site}/altfloveimg) for image work (background removal, upscaling, conversion).
+- Flagship suites: AltFLovePDF (${site}/altflovepdf) for PDF tasks and AltFLoveIMG (${site}/altfloveimg) for image tasks.
 
 ## Tool categories
 
@@ -93,8 +93,10 @@ ${games
 ## Optional
 
 - [Sitemap](${site}/sitemap.xml): every indexable URL
+- [Public product documentation](${site}/docs): platform structure, privacy model, products, and support information
+- [Human-readable site map](${site}/site-map): public routes grouped by product area
 - [About](${site}/policypages/about)
-- [Privacy policy](${site}/policypages/privacy): tools process files locally in the browser
+- [Privacy policy](${site}/policypages/privacy)
 - [Contact](${site}/policypages/contact)
 `;
 

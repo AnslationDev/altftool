@@ -21,30 +21,32 @@ import {
   getNeighborArticles,
   getRelatedArticles,
 } from "../data/factNetData";
+import { absoluteUrl } from "@/platform/seo/generateMetadata";
 
 function jsonLd(data) {
   return { __html: JSON.stringify(data).replace(/</g, "\\u003c") };
 }
 
-function ShareRail({ title }) {
+function ShareRail({ path, title }) {
   const encodedTitle = encodeURIComponent(title);
-  const encodedUrl = encodeURIComponent("https://altftool.com/fact-net");
+  const encodedUrl = encodeURIComponent(absoluteUrl(path));
+  const encodedMessage = encodeURIComponent(`${title} ${absoluteUrl(path)}`);
 
   return (
     <aside className="fn-share-rail" aria-label="Share this article">
       <a className="fn-share-btn fn-share-facebook" href={`https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}`}>
         f
       </a>
-      <a className="fn-share-btn fn-share-twitter" href={`https://twitter.com/intent/tweet?text=${encodedTitle}`}>
+      <a className="fn-share-btn fn-share-twitter" href={`https://twitter.com/intent/tweet?text=${encodedTitle}&url=${encodedUrl}`}>
         x
       </a>
       <a className="fn-share-btn fn-share-pinterest" href={`https://www.pinterest.com/pin/create/button/?description=${encodedTitle}`}>
         p
       </a>
-      <a className="fn-share-btn fn-share-whatsapp" href={`https://wa.me/?text=${encodedTitle}`}>
+      <a className="fn-share-btn fn-share-whatsapp" href={`https://wa.me/?text=${encodedMessage}`}>
         <MessageCircle className="fn-icon" />
       </a>
-      <a className="fn-share-btn fn-share-mail" href={`mailto:?subject=${encodedTitle}`}>
+      <a className="fn-share-btn fn-share-mail" href={`mailto:?subject=${encodedTitle}&body=${encodedMessage}`}>
         <Mail className="fn-icon" />
       </a>
     </aside>
@@ -87,8 +89,8 @@ export default function ArticleDetail({ slug }) {
     "@type": "Article",
     headline: article.title,
     description: article.description,
-    image: article.image,
-    url: `https://altftool.com${article.href}`,
+    image: absoluteUrl(article.image),
+    url: absoluteUrl(article.href),
     datePublished: article.lastmod,
     dateModified: article.lastmod,
     author: {
@@ -98,7 +100,10 @@ export default function ArticleDetail({ slug }) {
     isPartOf: {
       "@type": "CollectionPage",
       name: "Fact-Net",
-      url: "/fact-net",
+      url: absoluteUrl("/fact-net"),
+    },
+    publisher: {
+      "@id": `${absoluteUrl("/")}#organization`,
     },
   };
 
@@ -141,7 +146,7 @@ export default function ArticleDetail({ slug }) {
       <div className="fn-detail-divider" />
 
       <div className="fn-article-layout">
-        <ShareRail title={article.title} />
+        <ShareRail path={article.href} title={article.title} />
 
         <article className="fn-article-main">
           <figure className="fn-article-featured">

@@ -2,6 +2,13 @@ import { notFound } from "next/navigation";
 import GameGrid from "@/app/altfgame/_components/GameGrid";
 import { CATEGORIES, categoryFromSlug, getByCategory } from "@/app/altfgame/_data/games";
 import { shouldDeferBulkPrerendering } from "@/lib/buildPrerenderPolicy";
+import JsonLd from "@/platform/seo/JsonLd";
+import {
+  createBreadcrumbJsonLd,
+  createCollectionPageJsonLd,
+  createItemListJsonLd,
+  createPageMetadata,
+} from "@/platform/seo/generateMetadata";
 
 export const dynamic = "force-static";
 
@@ -13,18 +20,22 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }) {
   const { name } = await params;
   const category = categoryFromSlug(name);
-  if (!category) return { title: "Category not found" };
-  return {
+  if (!category) {
+    return createPageMetadata({
+      title: "Game category not found",
+      path: `/altfgame/category/${name}`,
+      noindex: true,
+      follow: false,
+    });
+  }
+  const gameCount = getByCategory(category.name).length;
+  return createPageMetadata({
     title: `${category.name} Games`,
-    description: `Play free ${category.name.toLowerCase()} games online.`,
-    alternates: { canonical: `/altfgame/category/${name}` },
-    openGraph: {
-      title: `${category.name} Games`,
-      description: `Play free ${category.name.toLowerCase()} games online.`,
-      url: `/altfgame/category/${name}`,
-      type: "website",
-    },
-  };
+    description: `Play ${gameCount} free ${category.name.toLowerCase()} games online in your browser and explore more quick, accessible games on AltFTool.`,
+    path: `/altfgame/category/${name}`,
+    keywords: [`${category.name} games`, "free browser games", "online games"],
+    pageType: "games",
+  });
 }
 
 export default async function CategoryPage({ params }) {
@@ -33,9 +44,32 @@ export default async function CategoryPage({ params }) {
   if (!category) notFound();
 
   const games = getByCategory(category.name);
+  const path = `/altfgame/category/${name}`;
+  const description = `Play ${games.length} free ${category.name.toLowerCase()} games online in your browser and explore more quick, accessible games on AltFTool.`;
+  const jsonLd = [
+    createCollectionPageJsonLd({
+      path,
+      name: `${category.name} Games`,
+      description,
+    }),
+    createItemListJsonLd({
+      path,
+      name: `${category.name} Games`,
+      items: games.map((game) => ({
+        name: game.title,
+        path: `/altfgame/${game.slug}`,
+      })),
+    }),
+    createBreadcrumbJsonLd([
+      { name: "Home", path: "/" },
+      { name: "AltF Games", path: "/altfgame" },
+      { name: category.name, path },
+    ]),
+  ];
 
   return (
     <div className="w-full">
+      <JsonLd id={`altf-games-${name}-schema`} data={jsonLd} />
       <div className="mb-8 flex flex-wrap items-center gap-3 sm:gap-4">
         <span
           className="grid h-12 w-12 shrink-0 place-items-center rounded-2xl text-2xl sm:h-14 sm:w-14 sm:text-3xl"

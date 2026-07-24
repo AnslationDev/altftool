@@ -2,7 +2,9 @@
 
 import { useAuth } from "@/context/AuthContext";
 import { useState, useRef, useEffect } from "react";
-import { auth, db, storage } from "@/lib/firebase";
+import { auth } from "@/lib/firebaseAuth";
+import { db } from "@/lib/firebaseFirestore";
+import { storage } from "@/lib/firebaseStorage";
 import { doc, updateDoc } from "firebase/firestore";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { Camera, CheckCircle2, ChevronDown, ChevronUp, Shield, ShieldCheck, User } from "lucide-react";

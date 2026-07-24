@@ -1,11 +1,14 @@
 import "../globals.css";
 import React from "react";
+import { createPageMetadata } from "@/platform/seo/generateMetadata";
 
-export const metadata = {
+export const metadata = createPageMetadata({
   title: "AltF Code Theater | Cinematic Terminal Simulator",
   description: "Run fictional cinematic terminal interfaces for demos, streams, and harmless creative play.",
-  alternates: { canonical: "/geektyper" },
-};
+  path: "/geektyper",
+  keywords: ["terminal simulator", "cinematic code screen", "fake terminal", "creative simulator"],
+  pageType: "interactive-experience",
+});
 
 export default function CodeTheaterLayout({ children }) {
   return (

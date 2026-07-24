@@ -16,7 +16,8 @@ import {
   ref as storageRef,
   uploadBytesResumable,
 } from "firebase/storage";
-import { db, storage } from "@/lib/firebase";
+import { db } from "@/lib/firebaseFirestore";
+import { storage } from "@/lib/firebaseStorage";
 
 const PROJECT_ID = "carrerbook";
 const SECTION_PATH = (key) => ["projects", PROJECT_ID, "about-us", key];

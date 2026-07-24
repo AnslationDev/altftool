@@ -1,6 +1,6 @@
 "use client";
 
-import { auth } from "@/lib/firebase";
+import { auth } from "@/lib/firebaseAuth";
 import { createLocalAdminUser, hasLocalAdminSession } from "@/lib/localAdminSession";
 
 const MAX_CLIENT_URLS = 20;

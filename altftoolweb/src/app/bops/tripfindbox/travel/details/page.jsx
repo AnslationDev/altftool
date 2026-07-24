@@ -6,6 +6,8 @@ export async function generateMetadata() {
     title: "Travel Details | TripFindBox",
     description: "Review your selected flight route, fare, and baggage details before continuing to booking on TripFindBox.",
     path: "/bops/tripfindbox/travel/details",
+    noindex: true,
+    follow: false,
   });
 }
 

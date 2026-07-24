@@ -8,7 +8,8 @@ import {
   updateDoc,
 } from "firebase/firestore";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
-import { db, storage } from "@/lib/firebase";
+import { db } from "@/lib/firebaseFirestore";
+import { storage } from "@/lib/firebaseStorage";
 
 const PROJECT_ID = "altftool";
 const salesRef = collection(db, "projects", PROJECT_ID, "sales");

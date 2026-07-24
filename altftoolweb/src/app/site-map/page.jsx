@@ -12,6 +12,7 @@ import {
   LayoutGrid,
   Search,
   ShoppingBag,
+  Workflow,
   Wrench,
   X,
 } from "lucide-react";
@@ -48,6 +49,7 @@ const CATEGORY_SAMPLE_SIZE = 6;
 const GROUP_ICONS = {
   platform: LayoutGrid,
   tools: Wrench,
+  automation: Workflow,
   learn: BookOpen,
   commerce: ShoppingBag,
   experiences: Gamepad2,

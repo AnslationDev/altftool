@@ -165,28 +165,34 @@ const TOOL_CATEGORY_GROUPS = {
   other: "Learn & everyday",
 };
 
-export const PRODUCT_SUITE_ROUTE_OPTIONS = PRODUCT_SUITE_CATALOG.map((suite) => ({
-  label: suite.name.replace(/^AltF\s+/, ""),
-  href: `/products/${suite.slug}`,
-  group: PRODUCT_SUITE_GROUPS[suite.slug] || "Product suites",
-  icon: PRODUCT_SUITE_ICONS[suite.slug] || LayoutGrid,
-}));
+export const PRODUCT_SUITE_ROUTE_OPTIONS = PRODUCT_SUITE_CATALOG.map(
+  (suite) => ({
+    label: suite.name.replace(/^AltF\s+/, ""),
+    href: `/products/${suite.slug}`,
+    group: PRODUCT_SUITE_GROUPS[suite.slug] || "Product suites",
+    icon: PRODUCT_SUITE_ICONS[suite.slug] || LayoutGrid,
+  }),
+);
 
-export const EXPERIENCE_ROUTE_OPTIONS = EXPERIENCE_CATALOG.map((experience) => ({
-  label: experience.name,
-  href: experience.href,
-  match: [experience.href],
-  group: EXPERIENCE_GROUPS[experience.group]?.label || "Labs",
-  icon: EXPERIENCE_ICONS[experience.icon] || FlaskConical,
-}));
+export const EXPERIENCE_ROUTE_OPTIONS = EXPERIENCE_CATALOG.map(
+  (experience) => ({
+    label: experience.name,
+    href: experience.href,
+    match: [experience.href],
+    group: EXPERIENCE_GROUPS[experience.group]?.label || "Labs",
+    icon: EXPERIENCE_ICONS[experience.icon] || FlaskConical,
+  }),
+);
 
-export const TOOL_CATEGORY_ROUTE_OPTIONS = CANONICAL_CATEGORIES.map((category) => ({
-  label: category.label,
-  href: `/tools/${category.slug}`,
-  match: [`/tools/${category.slug}`],
-  group: TOOL_CATEGORY_GROUPS[category.slug] || "More tool categories",
-  icon: TOOL_CATEGORY_ICONS[category.slug] || LayoutGrid,
-}));
+export const TOOL_CATEGORY_ROUTE_OPTIONS = CANONICAL_CATEGORIES.map(
+  (category) => ({
+    label: category.label,
+    href: `/tools/${category.slug}`,
+    match: [`/tools/${category.slug}`],
+    group: TOOL_CATEGORY_GROUPS[category.slug] || "More tool categories",
+    icon: TOOL_CATEGORY_ICONS[category.slug] || LayoutGrid,
+  }),
+);
 
 export const SITE_ROUTES = {
   home: { label: "Home", href: "/" },
@@ -221,7 +227,11 @@ export const SITE_ROUTES = {
     href: "/homeserv",
     match: ["/homeserv"],
   },
-  housingNeeds: { label: "Housing Needs", href: "/bops/housingneeds", match: ["/bops/housingneeds", "/housingneeds"] },
+  housingNeeds: {
+    label: "Housing Needs",
+    href: "/bops/housingneeds",
+    match: ["/bops/housingneeds", "/housingneeds"],
+  },
   housingServices: {
     label: "Housing Services",
     href: "/bops/housing-services",
@@ -258,7 +268,7 @@ export const SITE_ROUTES = {
     match: ["/imgprompt"],
   },
   automationLibrary: {
-    label: "Automation Library",
+    label: "n8n Automation Library",
     href: "/n8n",
     match: ["/n8n"],
   },
@@ -293,7 +303,11 @@ export const SITE_ROUTES = {
     href: "/prank-socialmedia",
     match: ["/prank-socialmedia"],
   },
-  games: { label: "Games", href: "/games" },
+  games: {
+    label: "Browser Games",
+    href: "/tools/games",
+    match: ["/tools/games"],
+  },
   altfGames: { label: "AltF Games", href: "/altfgame", match: ["/altfgame"] },
   extensions: { label: "Extensions", href: "/extensions" },
   altfDeals: { label: "AltF Deals", href: "/deals" },
@@ -305,6 +319,7 @@ export const SITE_ROUTES = {
   academy: { label: "Academy", href: "/academy" },
   blogs: { label: "Blog", href: "/blogs" },
   brandRatings: { label: "Brand Ratings", href: "/brandrating" },
+  docs: { label: "Documentation", href: "/docs" },
   support: { label: "Support", href: "/supportsetting" },
   requestTool: { label: "Request a Tool", href: "/request-a-tool" },
   faq: { label: "FAQ", href: "/policypages/faq" },
@@ -340,16 +355,6 @@ export const PUBLIC_NAV_ITEMS = [
       { ...SITE_ROUTES.signals, group: "Overview", icon: Radar },
       { ...SITE_ROUTES.tradeon, group: "Overview", icon: TrendingUp },
       ...PRODUCT_SUITE_ROUTE_OPTIONS,
-      { ...SITE_ROUTES.businessOps, group: "Business operations", icon: BriefcaseBusiness },
-      { ...SITE_ROUTES.homeServices, group: "Business operations", icon: House },
-      { ...SITE_ROUTES.housingNeeds, group: "Business operations", icon: House },
-      { ...SITE_ROUTES.housingServices, group: "Business operations", icon: Wrench },
-      { ...SITE_ROUTES.tripFindBox, group: "Business operations", icon: Plane },
-      { ...SITE_ROUTES.loans, group: "Business operations", icon: Landmark },
-      { ...SITE_ROUTES.insurance, group: "Business operations", icon: ShieldCheck },
-      { ...SITE_ROUTES.petServices, group: "Business operations", icon: PawPrint },
-      { ...SITE_ROUTES.legalServices, group: "Business operations", icon: Gavel },
-      { ...SITE_ROUTES.seniorCare, group: "Business operations", icon: HandHeart },
     ],
   },
   {
@@ -358,30 +363,91 @@ export const PUBLIC_NAV_ITEMS = [
     menuColumns: 4,
     options: [
       { ...SITE_ROUTES.tools, group: "Directories & apps", icon: Wrench },
-      { ...SITE_ROUTES.calculators, group: "Directories & apps", icon: Calculator },
-      { ...SITE_ROUTES.imageTools, group: "Directories & apps", icon: ImageIcon },
+      {
+        ...SITE_ROUTES.calculators,
+        group: "Directories & apps",
+        icon: Calculator,
+      },
+      {
+        ...SITE_ROUTES.imageTools,
+        group: "Directories & apps",
+        icon: ImageIcon,
+      },
       { ...SITE_ROUTES.pdfTools, group: "Directories & apps", icon: FileText },
-      { ...SITE_ROUTES.apps, group: "Directories & apps", icon: Smartphone },
-      { ...SITE_ROUTES.desktop, group: "Directories & apps", icon: Monitor },
-      { ...SITE_ROUTES.games, group: "Directories & apps", icon: Gamepad2 },
       { ...SITE_ROUTES.altfGames, group: "Directories & apps", icon: Gamepad2 },
       ...TOOL_CATEGORY_ROUTE_OPTIONS,
-      { ...SITE_ROUTES.promptStudio, group: "Create & work", icon: Sparkles },
-      { ...SITE_ROUTES.automationLibrary, group: "Create & work", icon: Bot },
       { ...SITE_ROUTES.smartLink, group: "Build & calculate", icon: Link2 },
-      { ...SITE_ROUTES.fullScreen, group: "Build & calculate", icon: Maximize2 },
-      { ...SITE_ROUTES.webSearch, group: "Build & calculate", icon: SearchCheck },
-      { ...SITE_ROUTES.seedreamPrompts, group: "Learn & everyday", icon: Sparkles },
+      {
+        ...SITE_ROUTES.fullScreen,
+        group: "Build & calculate",
+        icon: Maximize2,
+      },
+      {
+        ...SITE_ROUTES.webSearch,
+        group: "Build & calculate",
+        icon: SearchCheck,
+      },
     ],
   },
   {
-    ...SITE_ROUTES.extensions,
-    icon: Puzzle,
-    menuColumns: 2,
+    ...SITE_ROUTES.automationLibrary,
+    label: "Automate",
+    icon: Workflow,
+    menuColumns: 3,
     options: [
-      { ...SITE_ROUTES.extensions, group: "Browser", icon: Puzzle },
+      {
+        ...SITE_ROUTES.automationLibrary,
+        group: "Workflow library",
+        icon: Bot,
+      },
+      { ...SITE_ROUTES.flow, group: "Workflow library", icon: Workflow },
+      { ...SITE_ROUTES.promptStudio, group: "Create with AI", icon: Sparkles },
+      {
+        ...SITE_ROUTES.seedreamPrompts,
+        group: "Create with AI",
+        icon: Sparkles,
+      },
+      { ...SITE_ROUTES.extensions, group: "Apps & software", icon: Puzzle },
       { ...SITE_ROUTES.apps, group: "Apps & software", icon: Smartphone },
       { ...SITE_ROUTES.desktop, group: "Apps & software", icon: Monitor },
+    ],
+  },
+  {
+    ...SITE_ROUTES.businessOps,
+    label: "Business",
+    icon: BriefcaseBusiness,
+    menuColumns: 3,
+    options: [
+      {
+        ...SITE_ROUTES.businessOps,
+        group: "Overview",
+        icon: BriefcaseBusiness,
+      },
+      { ...SITE_ROUTES.housingNeeds, group: "Home & housing", icon: House },
+      { ...SITE_ROUTES.housingServices, group: "Home & housing", icon: Wrench },
+      { ...SITE_ROUTES.homeServices, group: "Home & housing", icon: House },
+      { ...SITE_ROUTES.loans, group: "Money & protection", icon: Landmark },
+      {
+        ...SITE_ROUTES.insurance,
+        group: "Money & protection",
+        icon: ShieldCheck,
+      },
+      { ...SITE_ROUTES.tripFindBox, group: "Specialist services", icon: Plane },
+      {
+        ...SITE_ROUTES.petServices,
+        group: "Specialist services",
+        icon: PawPrint,
+      },
+      {
+        ...SITE_ROUTES.legalServices,
+        group: "Specialist services",
+        icon: Gavel,
+      },
+      {
+        ...SITE_ROUTES.seniorCare,
+        group: "Specialist services",
+        icon: HandHeart,
+      },
     ],
   },
   {
@@ -390,7 +456,12 @@ export const PUBLIC_NAV_ITEMS = [
     icon: Tags,
     menuColumns: 2,
     options: [
-      { ...SITE_ROUTES.altfDeals, label: "All Deals", group: "Find deals", icon: Gem },
+      {
+        ...SITE_ROUTES.altfDeals,
+        label: "All Deals",
+        group: "Find deals",
+        icon: Gem,
+      },
       { ...SITE_ROUTES.exclusiveDeals, group: "Find deals", icon: Tags },
       { ...SITE_ROUTES.buySmart, group: "Find deals", icon: ShoppingBag },
       { ...SITE_ROUTES.saleLocator, group: "Find deals", icon: MapPin },
@@ -408,11 +479,16 @@ export const PUBLIC_NAV_ITEMS = [
       { ...SITE_ROUTES.academy, group: "Learn & follow", icon: GraduationCap },
       { ...SITE_ROUTES.blogs, group: "Learn & follow", icon: BookOpen },
       { ...SITE_ROUTES.news, group: "Learn & follow", icon: Newspaper },
-      { ...SITE_ROUTES.trendingVideos, group: "Learn & follow", icon: Sparkles },
+      {
+        ...SITE_ROUTES.trendingVideos,
+        group: "Learn & follow",
+        icon: Sparkles,
+      },
       { ...SITE_ROUTES.locations, group: "Learn & follow", icon: MapPin },
       { ...SITE_ROUTES.factNet, group: "Knowledge", icon: Library },
       { ...SITE_ROUTES.bharatVirasat, group: "Knowledge", icon: Landmark },
       { ...SITE_ROUTES.seedreamPrompts, group: "Knowledge", icon: Sparkles },
+      { ...SITE_ROUTES.docs, group: "Help & directory", icon: BookOpen },
       { ...SITE_ROUTES.requestTool, group: "Help & directory", icon: Wrench },
       { ...SITE_ROUTES.support, group: "Help & directory", icon: ShieldCheck },
       { ...SITE_ROUTES.faq, group: "Help & directory", icon: BookOpen },
@@ -442,8 +518,6 @@ export const FOOTER_ROUTE_GROUPS = [
       SITE_ROUTES.domainOps,
       SITE_ROUTES.flow,
       SITE_ROUTES.tradeon,
-      SITE_ROUTES.businessOps,
-      SITE_ROUTES.housingNeeds,
     ],
   },
   {
@@ -457,6 +531,17 @@ export const FOOTER_ROUTE_GROUPS = [
       SITE_ROUTES.apps,
       SITE_ROUTES.desktop,
       SITE_ROUTES.automationLibrary,
+    ],
+  },
+  {
+    title: "Business",
+    links: [
+      SITE_ROUTES.businessOps,
+      SITE_ROUTES.housingNeeds,
+      SITE_ROUTES.housingServices,
+      SITE_ROUTES.loans,
+      SITE_ROUTES.insurance,
+      SITE_ROUTES.tripFindBox,
     ],
   },
   {
@@ -487,6 +572,7 @@ export const FOOTER_ROUTE_GROUPS = [
     title: "Company",
     links: [
       SITE_ROUTES.about,
+      SITE_ROUTES.docs,
       SITE_ROUTES.contact,
       SITE_ROUTES.support,
       SITE_ROUTES.requestTool,
@@ -510,7 +596,10 @@ export const POPULAR_TOOL_LINKS = [
   { label: "Image Compressor", href: "/tools/all/image-compressor" },
   { label: "Unit Converter", href: "/tools/all/unit-converter" },
   { label: "Base Converter", href: "/tools/all/base-converter" },
-  { label: "Scientific Notation Calculator", href: "/tools/all/scientific-notation-calculator" },
+  {
+    label: "Scientific Notation Calculator",
+    href: "/tools/all/scientific-notation-calculator",
+  },
   { label: "Invoice Generator", href: "/tools/all/invoice-generator" },
   { label: "Web Speed Checker", href: "/tools/all/web-speed-checker" },
   { label: "Password Generator", href: "/tools/all/password-generator" },
@@ -522,11 +611,17 @@ export const POPULAR_TOOL_LINKS = [
   { label: "Meme Generator", href: "/tools/all/meme-generator" },
   { label: "Currency Converter", href: "/tools/all/currency-converter" },
   { label: "UUID Generator", href: "/tools/all/uuid-generator" },
-  { label: "Aspect Ratio Calculator", href: "/tools/all/aspect-ratio-calculator" },
+  {
+    label: "Aspect Ratio Calculator",
+    href: "/tools/all/aspect-ratio-calculator",
+  },
   { label: "Barcode Generator", href: "/tools/all/barcode-generator" },
   { label: "Lorem Ipsum Generator", href: "/tools/all/lorem-ipsum-generator" },
   { label: "Emoji Hub", href: "/tools/all/emoji-hub" },
-  { label: "Lucky Number Generator", href: "/tools/all/lucky-number-generator" },
+  {
+    label: "Lucky Number Generator",
+    href: "/tools/all/lucky-number-generator",
+  },
   { label: "Rock Paper Scissors", href: "/tools/all/rock-paper-scissors" },
   { label: "Snake Game", href: "/tools/all/snake-game" },
   { label: "Tic Tac Toe", href: "/tools/all/tic-tac-toe-game" },
@@ -551,5 +646,7 @@ export function isPublicShellHidden(pathname = "") {
 
 export function isPublicRouteActive(pathname = "", route = {}) {
   const hrefs = [route.href, ...(route.match || [])].filter(Boolean);
-  return hrefs.some((href) => pathname === href || pathname.startsWith(`${href}/`));
+  return hrefs.some(
+    (href) => pathname === href || pathname.startsWith(`${href}/`),
+  );
 }

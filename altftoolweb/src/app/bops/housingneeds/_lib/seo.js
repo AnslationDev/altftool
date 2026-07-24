@@ -1,6 +1,10 @@
 import { getVertical } from "../_data/verticals";
 import { getHnCategory } from "@/app/bops/housingneeds/_data/categories";
 import { HN_BASE, HN_BRAND, hnVerticalUrl } from "../_data/site";
+import {
+  absoluteUrl,
+  createPageMetadata,
+} from "@/platform/seo/generateMetadata";
 
 /**
  * Per-vertical page metadata.
@@ -16,20 +20,18 @@ export function buildVerticalMetadata(slug) {
     throw new Error(`[housingneeds] buildVerticalMetadata: unknown vertical "${slug}"`);
   }
 
-  return {
+  return createPageMetadata({
     title: vertical.seo.title,
     description: vertical.seo.description,
-    // These are the canonical, indexable pages (the old module layout that set
-    // this was removed when they moved under /bops), so declare it here.
-    robots: { index: true, follow: true },
-    alternates: { canonical: hnVerticalUrl(vertical.slug) },
-    openGraph: {
-      title: `${vertical.seo.title} | ${HN_BRAND}`,
-      description: vertical.seo.description,
-      url: hnVerticalUrl(vertical.slug),
-      type: "website",
-    },
-  };
+    path: hnVerticalUrl(vertical.slug),
+    keywords: [
+      vertical.name,
+      `${vertical.name} guide`,
+      `${vertical.name} costs`,
+      "home improvement",
+    ],
+    pageType: "business-ops-guide",
+  });
 }
 
 /**
@@ -46,25 +48,18 @@ export function buildServiceMetadata(categorySlug, pageSlug) {
     );
   }
 
-  return {
+  return createPageMetadata({
     title: `${page.name} — ${page.tagline}`,
     description: page.description,
     // Imported provider landers are retained as product-flow previews. They
     // remain navigable in the directory, but must not compete with the
     // editorial HousingNeeds guides or publish unverified provider claims.
-    robots: {
-      index: false,
-      follow: true,
-      googleBot: { index: false, follow: true },
-    },
-    alternates: { canonical: page.href },
-    openGraph: {
-      title: `${page.name} | ${HN_BRAND}`,
-      description: page.description,
-      url: page.href,
-      type: "website",
-    },
-  };
+    path: page.href,
+    canonical: page.href,
+    noindex: true,
+    follow: true,
+    pageType: "business-ops-preview",
+  });
 }
 
 /**
@@ -113,6 +108,5 @@ export function buildBreadcrumbJsonLd(slug) {
 }
 
 function absolute(path) {
-  const base = (process.env.NEXT_PUBLIC_SITE_URL || "https://altftool.com").replace(/\/+$/, "");
-  return `${base}${path}`;
+  return absoluteUrl(path);
 }

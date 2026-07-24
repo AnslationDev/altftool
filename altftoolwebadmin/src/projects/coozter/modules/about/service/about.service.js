@@ -1,7 +1,7 @@
 "use client";
 
 import { doc, onSnapshot, serverTimestamp, setDoc } from "firebase/firestore";
-import { db } from "@/lib/firebase";
+import { db } from "@/lib/firebaseFirestore";
 
 const ABOUT_DOC_PATH = ["projects", "coozter", "about", "aboutPageContent"];
 

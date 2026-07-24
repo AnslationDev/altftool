@@ -24,7 +24,7 @@ import {
   uploadBytesResumable,
   getDownloadURL,
 } from "firebase/storage";
-import { storage } from "@/lib/firebase";
+import { storage } from "@/lib/firebaseStorage";
 
 import {
   subscribePins,

@@ -1,4 +1,5 @@
 import { getLoan } from "../_data/loans";
+import { createPageMetadata } from "@/platform/seo/generateMetadata";
 
 const LOANS_BASE = "/bops/loans";
 
@@ -13,18 +14,19 @@ export function buildLoanMetadata(slug) {
   const loan = getLoan(slug);
 
   if (!loan) {
-    return { title: "Loans", robots: { index: false, follow: false } };
+    return createPageMetadata({
+      title: "Loan page not found",
+      path: `${LOANS_BASE}/${slug}`,
+      noindex: true,
+      follow: false,
+    });
   }
 
-  return {
-    title: { absolute: loan.seo.title },
+  return createPageMetadata({
+    title: loan.seo.title,
     description: loan.seo.description,
-    alternates: { canonical: `${LOANS_BASE}/${slug}` },
-    openGraph: {
-      title: loan.seo.title,
-      description: loan.seo.description,
-      url: `${LOANS_BASE}/${slug}`,
-      type: "website",
-    },
-  };
+    path: `${LOANS_BASE}/${slug}`,
+    keywords: [loan.name, "loan comparison", "loan guide"],
+    pageType: "business-ops-loans",
+  });
 }

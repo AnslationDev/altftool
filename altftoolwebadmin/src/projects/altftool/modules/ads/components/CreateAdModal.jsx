@@ -3,7 +3,7 @@
 import { useState, useRef, useCallback, useEffect } from "react";
 import { PLACEMENTS } from "@/config/placements";
 import { serverTimestamp } from "firebase/firestore";
-import { storage } from "@/lib/firebase";
+import { storage } from "@/lib/firebaseStorage";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { getAuth } from "firebase/auth";
 import { emitAlert } from "@/lib/alertBus";

@@ -1,7 +1,7 @@
 // Admin client service for the OAuth-based Search Console SEO Center.
 // All calls are Bearer-authenticated against the secure /api/seo/gsc/* routes.
 
-import { auth } from "@/lib/firebase";
+import { auth } from "@/lib/firebaseAuth";
 import { readApiJson } from "@/lib/apiClient";
 
 async function authHeaders() {

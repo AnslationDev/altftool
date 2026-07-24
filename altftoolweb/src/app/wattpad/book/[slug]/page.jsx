@@ -1,7 +1,12 @@
 import books from "@/app/wattpad/data/books.json";
 import chapters from "@/app/wattpad/data/chapters.json";
 import BookTabs from "@/app/wattpad/components/BookTabs";
-import { createPageMetadata } from "@/platform/seo/generateMetadata";
+import JsonLd from "@/platform/seo/JsonLd";
+import {
+  createBookJsonLd,
+  createBreadcrumbJsonLd,
+  createPageMetadata,
+} from "@/platform/seo/generateMetadata";
 import { shouldDeferBulkPrerendering } from "@/lib/buildPrerenderPolicy";
 import { notFound } from "next/navigation";
 
@@ -33,9 +38,10 @@ export async function generateMetadata({ params }) {
     };
   }
 
+  const storyDescription = book.description || book.summary || "";
   return createPageMetadata({
     title: `${book.title} - Wattpad-Style Story`,
-    description: book.description || book.summary,
+    description: `${storyDescription} Read ${book.title} online, browse its available chapters, and discover related stories in AltFTool's browser reading library.`,
     path: `/wattpad/book/${book.slug}`,
     image: book.coverImage || book.bannerImage,
     type: "book",
@@ -59,9 +65,19 @@ export default async function BookDetailPage({ params }) {
         item.id !== book.id
     )
     .slice(0, 6);
+  const bookPath = `/wattpad/book/${book.slug}`;
+  const jsonLd = [
+    createBreadcrumbJsonLd([
+      { name: "Home", path: "/" },
+      { name: "Stories", path: "/wattpad" },
+      { name: book.title, path: bookPath },
+    ]),
+    createBookJsonLd({ book, path: bookPath }),
+  ];
 
   return (
     <div className="bg-background min-h-screen">
+      <JsonLd id={`story-${book.slug}-schema`} data={jsonLd} />
       <div className="wp-section pt-8 lg:pt-12">
         <div className="grid grid-cols-1 xl:grid-cols-[1fr_320px] gap-10 items-start">
           <div className="min-w-0">

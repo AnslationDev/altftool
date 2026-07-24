@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { Plus, Star, Search, Pencil, Trash2, Sparkles, Settings } from "lucide-react";
 import { emitAlert } from "@/lib/alertBus";
 import { collection, getDocs, deleteDoc, doc, getDoc, setDoc } from "firebase/firestore";
-import { db } from "@/lib/firebase";
+import { db } from "@/lib/firebaseFirestore";
 import AddReviewModal from "./components/AddReviewModal";
 import EditReviewsHeroModal from "./components/EditReviewsHeroModal";
 import ResetButton from "../../components/ResetButton";

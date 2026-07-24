@@ -1,5 +1,5 @@
 import { doc, onSnapshot, serverTimestamp, setDoc } from "firebase/firestore";
-import { db } from "@/lib/firebase";
+import { db } from "@/lib/firebaseFirestore";
 
 const PROJECT_ID = "carrerbook";
 const POLICY_PATH = ["projects", PROJECT_ID, "policy", "privacy-policy"];

@@ -14,7 +14,7 @@ import {
   UsersRound,
 } from "lucide-react";
 import { getAuth } from "firebase/auth";
-import { db } from "@/lib/firebase";
+import { db } from "@/lib/firebaseFirestore";
 import { emitAlert } from "@/lib/alertBus";
 import { PROJECTS } from "@/projects";
 import { RBAC_PATHS, getRbacRootLabel } from "@/lib/rbacPaths";

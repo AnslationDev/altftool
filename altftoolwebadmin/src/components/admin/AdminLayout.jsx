@@ -8,7 +8,7 @@ import AdminSidebar from "./AdminSidebar";
 import { hasModuleAccess, SUPERADMIN_ONLY_GLOBAL_MODULES } from "@/lib/permissionUtils";
 import { getProject } from "@/projects";
 import { OPEN_GLOBAL_ROUTE_KEYS, resolveProjectModule } from "@/config/adminRoutes";
-import { getAuth } from "firebase/auth";
+import { auth } from "@/lib/firebaseAuth";
 import { emitAlert } from "@/lib/alertBus";
 import { usePushNotifications } from "@/lib/usePushNotifications";
 import { LockKeyhole, RefreshCw, ShieldAlert } from "lucide-react";
@@ -62,7 +62,7 @@ export default function AdminLayout({ children }) {
       // still has a current user, the admin profile is mid-sync (or recovering
       // from a transient error) — wait instead of bouncing an active/authenticated
       // admin to the login page.
-      if (getAuth().currentUser) return;
+      if (auth.currentUser) return;
       router.replace("/login");
       return;
     }
@@ -137,7 +137,7 @@ export default function AdminLayout({ children }) {
     if (requestingAccess || accessRequested) return;
     setRequestingAccess(true);
     try {
-      const token = await getAuth().currentUser?.getIdToken();
+      const token = await auth.currentUser?.getIdToken();
       if (!token) return;
 
       const body = { type: "module" };

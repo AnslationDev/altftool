@@ -2,6 +2,7 @@ import { expect, test } from "@playwright/test";
 import { TOP_PRIORITY_TOOL_SLUGS } from "@altftool/core/toolHealth";
 
 const mobileRoutes = [
+  "/",
   "/tools/all",
   "/tools/all?search=json",
   "/blogs",
@@ -28,14 +29,21 @@ async function expectNoHorizontalOverflow(page, label) {
         return {
           tag: element.tagName.toLowerCase(),
           testId: element.getAttribute("data-testid") || "",
-          className: typeof element.className === "string" ? element.className : "",
-          text: (element.textContent || "").replace(/\s+/g, " ").trim().slice(0, 80),
+          className:
+            typeof element.className === "string" ? element.className : "",
+          text: (element.textContent || "")
+            .replace(/\s+/g, " ")
+            .trim()
+            .slice(0, 80),
           left: Math.round(rect.left),
           right: Math.round(rect.right),
           width: Math.round(rect.width),
         };
       })
-      .filter(({ left, right }) => right > window.innerWidth + 2 || (left < -2 && right > 2))
+      .filter(
+        ({ left, right }) =>
+          right > window.innerWidth + 2 || (left < -2 && right > 2),
+      )
       .slice(0, 8);
 
     return {
@@ -54,15 +62,24 @@ async function expectNoHorizontalOverflow(page, label) {
 async function expectToolWorkspaceFits(page, label) {
   const workspace = page.getByTestId("tool-workspace-shell");
   await expect(workspace).toBeVisible();
-  await expect.poll(
-    () => workspace.evaluate((element) => Number(Boolean(element.querySelector(
-      "button, input, textarea, select, canvas, [role='button'], [data-testid='tool-output']",
-    )))),
-    {
-      message: `${label} workspace should finish lazy loading`,
-      timeout: 60_000,
-    },
-  ).toBe(1);
+  await expect
+    .poll(
+      () =>
+        workspace.evaluate((element) =>
+          Number(
+            Boolean(
+              element.querySelector(
+                "button, input, textarea, select, canvas, [role='button'], [data-testid='tool-output']",
+              ),
+            ),
+          ),
+        ),
+      {
+        message: `${label} workspace should finish lazy loading`,
+        timeout: 60_000,
+      },
+    )
+    .toBe(1);
 
   const layout = await workspace.evaluate((element) => {
     const rect = element.getBoundingClientRect();
@@ -76,7 +93,9 @@ async function expectToolWorkspaceFits(page, label) {
   });
 
   expect(layout.left, `${label} workspace left`).toBeGreaterThanOrEqual(0);
-  expect(layout.right, `${label} workspace right`).toBeLessThanOrEqual(layout.viewportWidth + 2);
+  expect(layout.right, `${label} workspace right`).toBeLessThanOrEqual(
+    layout.viewportWidth + 2,
+  );
   expect(layout.width, `${label} workspace width`).toBeGreaterThan(0);
   expect(layout.height, `${label} workspace height`).toBeGreaterThan(80);
 }
@@ -95,10 +114,14 @@ test.describe("mobile layout", () => {
     });
   }
 
-  test("AI assistant submit control stays compact and inside mobile viewport", async ({ page }) => {
+  test("AI assistant submit control stays compact and inside mobile viewport", async ({
+    page,
+  }) => {
     await page.goto("/", { waitUntil: "domcontentloaded" });
 
-    await expect(page.getByRole("heading", { name: "Ask AltF AI" })).toBeVisible();
+    await expect(
+      page.getByRole("heading", { name: "Ask AltF AI" }),
+    ).toBeVisible();
     const submit = page.getByRole("button", { name: "Send question" });
     await expect(submit).toBeVisible();
     await submit.scrollIntoViewIfNeeded();
@@ -106,31 +129,80 @@ test.describe("mobile layout", () => {
     const box = await submit.boundingBox();
     expect(box, "assistant submit bounding box").toBeTruthy();
     expect(box.width, "mobile assistant submit width").toBeLessThanOrEqual(48);
-    expect(box.height, "mobile assistant submit height").toBeLessThanOrEqual(48);
-    expect(box.x + box.width, "mobile assistant submit right edge").toBeLessThanOrEqual(390);
-    expect(box.y + box.height, "mobile assistant submit bottom edge").toBeLessThanOrEqual(844);
+    expect(box.height, "mobile assistant submit height").toBeLessThanOrEqual(
+      48,
+    );
+    expect(
+      box.x + box.width,
+      "mobile assistant submit right edge",
+    ).toBeLessThanOrEqual(390);
+    expect(
+      box.y + box.height,
+      "mobile assistant submit bottom edge",
+    ).toBeLessThanOrEqual(844);
+  });
+
+  test("home keeps search and primary route families usable on mobile", async ({
+    page,
+  }) => {
+    await page.goto("/", { waitUntil: "domcontentloaded" });
+
+    await expect(
+      page.getByRole("heading", { name: "AltFTool", exact: true }),
+    ).toBeVisible();
+    await expect(page.locator("#home-global-search")).toBeVisible();
+    const discoveryRegion = page.getByRole("region", {
+      name: "One platform, clearly organized",
+    });
+    await expect(
+      discoveryRegion.getByRole("link", { name: /Use a tool/i }),
+    ).toBeVisible();
+    await expect(
+      discoveryRegion.getByRole("link", { name: /Business services/i }),
+    ).toBeVisible();
+    await expectNoHorizontalOverflow(page, "mobile home discovery");
   });
 
   test("blog mobile controls remain reachable", async ({ page }) => {
     await page.goto("/blogs", { waitUntil: "domcontentloaded" });
 
-    await expect(page.locator('main[aria-labelledby="blog-index-title"]')).toBeVisible();
+    await expect(
+      page.locator('main[aria-labelledby="blog-index-title"]'),
+    ).toBeVisible();
     // The inline search textbox + sort dropdown were replaced by a
     // "Search all" entry link and category quick links in the blog hero,
     // so assert the current mobile controls instead.
-    await expect(page.getByRole("link", { name: /Search all/i }).first()).toBeVisible();
-    await expect(page.getByRole("region", { name: "Blog categories" })).toBeVisible();
-    await expect(page.getByRole("tablist", { name: "Sort articles" })).toBeVisible();
+    await expect(
+      page.getByRole("link", { name: /Search all/i }).first(),
+    ).toBeVisible();
+    await expect(
+      page.getByRole("region", { name: "Blog categories" }),
+    ).toBeVisible();
+    await expect(
+      page.getByRole("tablist", { name: "Sort articles" }),
+    ).toBeVisible();
     await expectNoHorizontalOverflow(page, "mobile /blogs controls");
   });
 
-  test("blog detail mobile reader controls remain reachable", async ({ page }) => {
-    await page.goto("/blogs/age-calculator-guide", { waitUntil: "domcontentloaded" });
+  test("blog detail mobile reader controls remain reachable", async ({
+    page,
+  }) => {
+    await page.goto("/blogs/age-calculator-guide", {
+      waitUntil: "domcontentloaded",
+    });
 
-    await expect(page.locator('main[aria-labelledby="blog-article-title"]')).toBeVisible();
-    await expect(page.getByRole("navigation", { name: "Article reading flow" })).toBeVisible();
-    await expect(page.getByRole("button", { name: /Like this guide/i })).toBeVisible();
-    await expect(page.getByRole("button", { name: /Show comments/i })).toBeVisible();
+    await expect(
+      page.locator('main[aria-labelledby="blog-article-title"]'),
+    ).toBeVisible();
+    await expect(
+      page.getByRole("navigation", { name: "Article reading flow" }),
+    ).toBeVisible();
+    await expect(
+      page.getByRole("button", { name: /Like this guide/i }),
+    ).toBeVisible();
+    await expect(
+      page.getByRole("button", { name: /Show comments/i }),
+    ).toBeVisible();
     await expectNoHorizontalOverflow(page, "mobile blog detail controls");
   });
 });
@@ -143,23 +215,33 @@ test.describe("top priority tool mobile layout", () => {
         isMobile: true,
       });
 
-      test("/tools/all catalog has no horizontal overflow", async ({ page }) => {
+      test("/tools/all catalog has no horizontal overflow", async ({
+        page,
+      }) => {
         await page.goto("/tools/all", { waitUntil: "domcontentloaded" });
-        await expect(page.getByRole("heading", { name: "Explore Tools" })).toBeVisible();
+        await expect(
+          page.getByRole("heading", { name: "Explore Tools" }),
+        ).toBeVisible();
         await expectNoHorizontalOverflow(page, `${viewport.label} /tools/all`);
       });
 
       for (const slug of TOP_PRIORITY_TOOL_SLUGS) {
-        test(`${slug} workspace fits without horizontal overflow`, async ({ page }) => {
+        test(`${slug} workspace fits without horizontal overflow`, async ({
+          page,
+        }) => {
           const route = `/tools/all/${slug}`;
 
           await page.goto(route, { waitUntil: "domcontentloaded" });
-          await expect(page.getByRole("navigation", { name: "Tool route" })).toContainText("Tools");
+          await expect(
+            page.getByRole("navigation", { name: "Tool route" }),
+          ).toContainText("Tools");
           await expect(page.getByText("Preparing workspace")).toHaveCount(0);
 
           await expectToolWorkspaceFits(page, `${viewport.label} ${route}`);
           await expectNoHorizontalOverflow(page, `${viewport.label} ${route}`);
-          await expect(page.locator("body")).not.toContainText("Application error");
+          await expect(page.locator("body")).not.toContainText(
+            "Application error",
+          );
         });
       }
     });

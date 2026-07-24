@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { Mail, Search, Eye, Trash2, Archive, RotateCcw, Sparkles, Settings } from "lucide-react";
 import { collection, getDocs, deleteDoc, doc, getDoc, setDoc } from "firebase/firestore";
-import { db } from "@/lib/firebase";
+import { db } from "@/lib/firebaseFirestore";
 import { emitAlert } from "@/lib/alertBus";
 import ResetButton from "../../components/ResetButton";
 import EditContactHeroModal from "./components/EditContactHeroModal";

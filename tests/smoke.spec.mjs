@@ -42,10 +42,23 @@ test("public web shell loads", async ({ page }) => {
   await page.emulateMedia({ colorScheme: "light" });
   await page.goto(`${webUrl}/tools`);
 
-  await expect.poll(() => page.evaluate(() => document.documentElement.getAttribute("data-theme"))).toBe("light");
-  await expect.poll(() => page.evaluate(() => document.documentElement.getAttribute("data-theme-mode"))).toBe("system");
-  await expect(page.locator("#main-header")).toBeVisible();
-  await expect(page.getByAltText("AltFTool").first()).toBeVisible();
+  await expect
+    .poll(() =>
+      page.evaluate(() => document.documentElement.getAttribute("data-theme")),
+    )
+    .toBe("light");
+  await expect
+    .poll(() =>
+      page.evaluate(() =>
+        document.documentElement.getAttribute("data-theme-mode"),
+      ),
+    )
+    .toBe("system");
+  const mainHeader = page.locator("#main-header");
+  await expect(mainHeader).toBeVisible();
+  await expect(
+    mainHeader.getByRole("img", { name: "AltFTool" }),
+  ).toBeVisible();
   const signInLink = page.getByRole("link", { name: "Sign in" });
   await expect(signInLink).toBeVisible();
   await expect(signInLink).toHaveAttribute("title", "Sign in");
@@ -60,39 +73,79 @@ test("public web shell loads", async ({ page }) => {
   const themeToggle = page.getByRole("button", { name: /^Theme:/ });
   await expect(themeToggle).toBeVisible();
   await themeToggle.click();
-  await expect(page.getByRole("menu", { name: "Theme mode" })).toBeVisible();
-  await page.getByRole("menuitemradio", { name: "Dark mode" }).click();
-  await expect.poll(() => page.evaluate(() => document.documentElement.getAttribute("data-theme"))).toBe("dark");
-  await expect.poll(() => page.evaluate(() => localStorage.getItem("appThemeMode"))).toBe("dark");
+  await expect(page.getByRole("dialog", { name: "Theme mode" })).toBeVisible();
+  await page.getByRole("radio", { name: "Dark mode" }).click();
+  await expect
+    .poll(() =>
+      page.evaluate(() => document.documentElement.getAttribute("data-theme")),
+    )
+    .toBe("dark");
+  await expect
+    .poll(() => page.evaluate(() => localStorage.getItem("appThemeMode")))
+    .toBe("dark");
 
   await themeToggle.click();
-  await page.getByRole("menuitemradio", { name: "Light mode" }).click();
-  await expect.poll(() => page.evaluate(() => document.documentElement.getAttribute("data-theme"))).toBe("light");
-  await expect.poll(() => page.evaluate(() => localStorage.getItem("appThemeMode"))).toBe("light");
+  await page.getByRole("radio", { name: "Light mode" }).click();
+  await expect
+    .poll(() =>
+      page.evaluate(() => document.documentElement.getAttribute("data-theme")),
+    )
+    .toBe("light");
+  await expect
+    .poll(() => page.evaluate(() => localStorage.getItem("appThemeMode")))
+    .toBe("light");
 
   await themeToggle.click();
-  await page.getByRole("menuitemradio", { name: "System theme" }).click();
-  await expect.poll(() => page.evaluate(() => document.documentElement.getAttribute("data-theme-mode"))).toBe("system");
-  await expect.poll(() => page.evaluate(() => localStorage.getItem("appThemeMode"))).toBe("system");
-  await expect.poll(() => page.evaluate(() => document.documentElement.getAttribute("data-theme"))).toBe("light");
-  await expect(page.getByRole("link", { name: "Tools", exact: true }).first()).toHaveAttribute("href", "/tools/all");
-  await expect(page.getByRole("link", { name: "Blog", exact: true }).first()).toHaveAttribute("href", "/blogs");
+  await page.getByRole("radio", { name: "System theme" }).click();
+  await expect
+    .poll(() =>
+      page.evaluate(() =>
+        document.documentElement.getAttribute("data-theme-mode"),
+      ),
+    )
+    .toBe("system");
+  await expect
+    .poll(() => page.evaluate(() => localStorage.getItem("appThemeMode")))
+    .toBe("system");
+  await expect
+    .poll(() =>
+      page.evaluate(() => document.documentElement.getAttribute("data-theme")),
+    )
+    .toBe("light");
+  await expect(
+    page.getByRole("link", { name: "Tools", exact: true }).first(),
+  ).toHaveAttribute("href", "/tools/all");
+  await expect(
+    page.getByRole("link", { name: "Blog", exact: true }).first(),
+  ).toHaveAttribute("href", "/blogs");
   await quality.expectClean("public web shell");
 });
 
 test("tool detail routes use the clean workspace flow", async ({ page }) => {
   const quality = createPageQualityGate(page);
 
-  await page.goto(`${webUrl}/tools/all/api-stress-estimator`, { waitUntil: "domcontentloaded" });
+  await page.goto(`${webUrl}/tools/all/api-stress-estimator`, {
+    waitUntil: "domcontentloaded",
+  });
 
-  await expect(page.getByRole("navigation", { name: "Tool route" })).toContainText("All Tools");
-  await expect(page.getByRole("heading", { name: "API Stress Estimator", exact: true })).toBeVisible();
+  await expect(
+    page.getByRole("navigation", { name: "Tool route" }),
+  ).toContainText("All Tools");
+  await expect(
+    page.getByRole("heading", { name: "API Stress Estimator", exact: true }),
+  ).toBeVisible();
   await expect(page.getByText("Loading tool…")).toHaveCount(0);
 
-  await page.goto(`${webUrl}/tools/developer/api-stress-estimator`, { waitUntil: "domcontentloaded" });
+  await page.goto(`${webUrl}/tools/developer/api-stress-estimator`, {
+    waitUntil: "domcontentloaded",
+  });
 
-  await expect(page.getByRole("navigation", { name: "Tool route" })).toContainText("Developer");
-  await expect(page.getByRole("heading", { name: "API Stress Estimator", exact: true })).toBeVisible();
+  await expect(
+    page.getByRole("navigation", { name: "Tool route" }),
+  ).toContainText("Developer");
+  await expect(
+    page.getByRole("heading", { name: "API Stress Estimator", exact: true }),
+  ).toBeVisible();
   await quality.expectClean("tool detail routes");
 });
 
@@ -121,7 +174,9 @@ test("buysmart A-Z category cards load brand images", async ({ page }) => {
   }
 
   await expect(page.getByTestId("buysmart-savings-hub")).toBeVisible();
-  await expect(page.getByRole("heading", { name: "AltFTool Savings Hub" })).toBeVisible();
+  await expect(
+    page.getByRole("heading", { name: "AltFTool Savings Hub" }),
+  ).toBeVisible();
 
   // The old "Choose Your Brand A-Z" section (with buysmart-category-image
   // brand logos) was redesigned into letter-badge store cards under the
@@ -132,7 +187,9 @@ test("buysmart A-Z category cards load brand images", async ({ page }) => {
     await page.waitForTimeout(700);
   }
 
-  await expect(page.getByRole("heading", { name: "Top Featured Brands" })).toBeVisible();
+  await expect(
+    page.getByRole("heading", { name: "Top Featured Brands" }),
+  ).toBeVisible();
 
   const firstCard = page.getByTestId("buysmart-category-card").first();
   await firstCard.scrollIntoViewIfNeeded();
@@ -147,7 +204,9 @@ test("buysmart A-Z category cards load brand images", async ({ page }) => {
   await expect(page).toHaveURL(/\/buysmart\/stores\//);
   // React streaming can briefly retain a duplicate route segment inside a
   // hidden `S:*` container. Scope actions to the single user-visible surface.
-  const storeDetail = page.locator('[data-testid="buysmart-store-detail"]:visible');
+  const storeDetail = page.locator(
+    '[data-testid="buysmart-store-detail"]:visible',
+  );
   const revealButton = storeDetail.getByTestId("buysmart-reveal-button");
 
   await expect(storeDetail).toHaveCount(1);
@@ -156,11 +215,16 @@ test("buysmart A-Z category cards load brand images", async ({ page }) => {
   await page.waitForTimeout(500);
 
   await revealButton.click();
-  await expect(page.locator('[data-testid="buysmart-reveal-modal"]:visible')).toBeVisible();
+  await expect(
+    page.locator('[data-testid="buysmart-reveal-modal"]:visible'),
+  ).toBeVisible();
   await quality.expectClean("buysmart flow");
 });
 
-test("firebase blog catalog and detail render complete content", async ({ page, request }) => {
+test("firebase blog catalog and detail render complete content", async ({
+  page,
+  request,
+}) => {
   const quality = createPageQualityGate(page);
 
   const firstChunk = await request.get(`${webUrl}/api/blogs?offset=0&limit=5`);
@@ -178,7 +242,9 @@ test("firebase blog catalog and detail render complete content", async ({ page, 
   let lastPayload = null;
 
   for (let attempt = 0; attempt < 10; attempt += 1) {
-    const chunk = await request.get(`${webUrl}/api/blogs?offset=${offset}&limit=72`);
+    const chunk = await request.get(
+      `${webUrl}/api/blogs?offset=${offset}&limit=72`,
+    );
     expect(chunk.ok()).toBeTruthy();
 
     lastPayload = await chunk.json();
@@ -192,15 +258,25 @@ test("firebase blog catalog and detail render complete content", async ({ page, 
   expect(lastPayload.hasMore).toBeFalsy();
 
   await page.goto(`${webUrl}/blogs`, { waitUntil: "domcontentloaded" });
-  await expect(page.getByRole("heading", { name: "AltFTool Blog" })).toBeVisible();
+  await expect(
+    page.getByRole("heading", { name: "AltFTool Blog" }),
+  ).toBeVisible();
   const targetTitle = targetPost.heading || targetPost.title;
   const targetTitlePattern = new RegExp(escapeRegExp(targetTitle), "i");
   await expect(page.locator('a[href^="/blogs/"]').first()).toBeVisible();
 
-  await page.goto(`${webUrl}/blogs/${targetPost.slug}`, { waitUntil: "domcontentloaded" });
-  await expect(page.getByRole("heading", { name: targetTitlePattern })).toBeVisible();
+  await page.goto(`${webUrl}/blogs/${targetPost.slug}`, {
+    waitUntil: "domcontentloaded",
+  });
+  await expect(
+    page.getByRole("heading", { name: targetTitlePattern }),
+  ).toBeVisible();
 
-  const contentLength = await page.locator(".ckeditor-content").first().innerText().then((text) => text.length);
+  const contentLength = await page
+    .locator(".ckeditor-content")
+    .first()
+    .innerText()
+    .then((text) => text.length);
   expect(contentLength).toBeGreaterThan(100);
   await quality.expectClean("blog catalog and detail");
 });
@@ -210,9 +286,13 @@ test("admin login shell loads", async ({ page }) => {
 
   await page.goto(`${adminUrl}/login`);
 
-  await expect(page.getByRole("heading", { name: /welcome admin/i })).toBeVisible();
+  await expect(
+    page.getByRole("heading", { name: "Welcome to AltFTool Admin" }),
+  ).toBeVisible();
   await expect(page.getByPlaceholder("you@company.com")).toBeVisible();
-  await expect(page.getByRole("button", { name: /continue with google/i })).toBeVisible();
+  await expect(
+    page.getByRole("button", { name: /continue with google/i }),
+  ).toBeVisible();
   await expect(page.getByRole("button", { name: /^sign in$/i })).toBeVisible();
 
   const localAdminButton = page.getByTestId("local-admin-login");
@@ -230,15 +310,23 @@ test("legacy route names redirect to canonical routes", async ({ request }) => {
   expect(blogRedirect.status()).toBe(308);
   expect(blogRedirect.headers().location).toBe("/blogs");
 
-  const categoryRedirect = await request.get(`${webUrl}/categories/all?search=api`, {
-    maxRedirects: 0,
-  });
+  const categoryRedirect = await request.get(
+    `${webUrl}/categories/all?search=api`,
+    {
+      maxRedirects: 0,
+    },
+  );
   expect(categoryRedirect.status()).toBe(308);
   expect(categoryRedirect.headers().location).toBe("/tools/all?search=api");
 
-  const adminRedirect = await request.get(`${adminUrl}/leadtree/creditcard/add-cards`, {
-    maxRedirects: 0,
-  });
+  const adminRedirect = await request.get(
+    `${adminUrl}/leadtree/creditcard/add-cards`,
+    {
+      maxRedirects: 0,
+    },
+  );
   expect(adminRedirect.status()).toBe(308);
-  expect(adminRedirect.headers().location).toBe("/leadtree/credit-cards/add-cards");
+  expect(adminRedirect.headers().location).toBe(
+    "/leadtree/credit-cards/add-cards",
+  );
 });

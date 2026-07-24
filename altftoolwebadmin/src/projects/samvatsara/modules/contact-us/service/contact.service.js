@@ -1,5 +1,5 @@
 import { doc, onSnapshot, serverTimestamp, setDoc } from "firebase/firestore";
-import { db } from "@/lib/firebase";
+import { db } from "@/lib/firebaseFirestore";
 import { createCollectionCrudService } from "@/lib/firestoreCrud";
 
 const PROJECT_ID = "samvatsara";

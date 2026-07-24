@@ -7,6 +7,8 @@ export async function generateMetadata() {
     description:
       "Preview AltFTool ad layouts including tool cards, sidebars, banners, news cards, game cards, and extension cards before they go live.",
     path: "/ad-preview",
+    noindex: true,
+    follow: false,
   });
 }
 

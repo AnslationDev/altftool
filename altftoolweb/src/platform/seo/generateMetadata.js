@@ -1,11 +1,12 @@
 import { resolveSeo, applyResolvedSeo, resolveExtendedMeta } from "@altftool/core/seo/resolver";
 import { getSeoConfigSnapshot, loadSeoConfig } from "./seoConfigSource.js";
 import { getGeoCountries } from "./geoLocations.js";
+import { normalizeCanonicalUrl, resolveSiteUrl } from "./siteUrl.js";
 
 export const siteConfig = {
   name: "AltFTool",
   shortName: "AltFTool",
-  url: process.env.NEXT_PUBLIC_SITE_URL || "https://www.altftool.com",
+  url: resolveSiteUrl(),
   description:
     "AltFTool is your online tools website with free tools, software, games, must-have Chrome extensions, and best web tools to boost productivity and fun.",
   logoPath: "/assets/logo3.png",
@@ -198,11 +199,17 @@ export async function createPageMetadata(rawArgs = {}) {
     noindex = false,
     follow = true,
     canonical,
+    imageAlt,
+    category = "technology",
+    publishedTime,
+    modifiedTime,
+    authors,
   } = applyCentralSeo(rawArgs);
-  const url = canonical ? absoluteUrl(canonical) : absoluteUrl(path);
+  const url = normalizeCanonicalUrl(canonical || path, path, getSiteUrl());
   const imageUrl = absoluteUrl(image || siteConfig.defaultImagePath);
   const cleanDescription = trimMetaDescription(description);
   const keywordList = [...new Set([...siteConfig.keywords, ...keywords].filter(Boolean))];
+  const resolvedTitle = title || siteConfig.name;
 
   // Extended central-config overrides (inert/empty when engine disabled).
   const ext = getExtendedMeta(rawArgs.path || path, rawArgs.brandId);
@@ -218,20 +225,26 @@ export async function createPageMetadata(rawArgs = {}) {
   const icons = ext.favicon ? { icon: absoluteUrl(ext.favicon) } : undefined;
 
   const metadata = {
-    title: resolveDocumentTitle(title),
+    title: resolveDocumentTitle(resolvedTitle),
     description: cleanDescription,
     applicationName: siteConfig.name,
     authors: [{ name: siteConfig.name, url: getSiteUrl() }],
     creator: siteConfig.name,
     publisher: siteConfig.name,
-    category: "technology",
+    category,
     keywords: keywordList,
+    referrer: "origin-when-cross-origin",
+    formatDetection: {
+      email: false,
+      address: false,
+      telephone: false,
+    },
     alternates: {
       canonical: url,
       languages,
     },
     openGraph: {
-      title: ext.og?.title || title,
+      title: ext.og?.title || resolvedTitle,
       description: ext.og?.description ? trimMetaDescription(ext.og.description) : cleanDescription,
       url,
       siteName: ext.og?.siteName || siteConfig.name,
@@ -242,13 +255,13 @@ export async function createPageMetadata(rawArgs = {}) {
           url: ogImageUrl,
           width: 1200,
           height: 630,
-          alt: ext.og?.title || title || siteConfig.name,
+          alt: imageAlt || ext.og?.title || resolvedTitle,
         },
       ],
     },
     twitter: {
       card: ext.twitter?.card || "summary_large_image",
-      title: ext.twitter?.title || ext.og?.title || title,
+      title: ext.twitter?.title || ext.og?.title || resolvedTitle,
       description: ext.twitter?.description
         ? trimMetaDescription(ext.twitter.description)
         : ext.og?.description
@@ -270,6 +283,16 @@ export async function createPageMetadata(rawArgs = {}) {
       },
     },
   };
+
+  if (type === "article") {
+    if (publishedTime) metadata.openGraph.publishedTime = publishedTime;
+    if (modifiedTime) metadata.openGraph.modifiedTime = modifiedTime;
+    if (Array.isArray(authors) && authors.length) {
+      metadata.openGraph.authors = authors
+        .map((author) => (typeof author === "string" ? author : author?.url || author?.name))
+        .filter(Boolean);
+    }
+  }
 
   if (verification) metadata.verification = verification;
   if (icons) metadata.icons = icons;
@@ -423,6 +446,103 @@ export function createToolJsonLd({ slug, tool, category = "all" } = {}) {
       "@id": url,
     },
   };
+}
+
+export function createGameJsonLd({ game, path } = {}) {
+  if (!game?.title || !path) return null;
+
+  const url = absoluteUrl(path);
+  const playCount = Number(game.plays || 0);
+
+  return compactJsonLdObject({
+    "@context": "https://schema.org",
+    "@type": ["VideoGame", "WebApplication"],
+    "@id": `${url}#game`,
+    name: game.title,
+    description: game.description || siteConfig.description,
+    url,
+    image: absoluteUrl(game.image || siteConfig.defaultImagePath),
+    applicationCategory: "GameApplication",
+    applicationSubCategory: game.category || undefined,
+    genre: game.category || undefined,
+    operatingSystem: "Web",
+    gamePlatform: "Web browser",
+    playMode:
+      game.category === "Multiplayer"
+        ? "https://schema.org/MultiPlayer"
+        : "https://schema.org/SinglePlayer",
+    browserRequirements: "Requires a modern web browser with JavaScript enabled",
+    isAccessibleForFree: true,
+    inLanguage: "en",
+    offers: {
+      "@type": "Offer",
+      price: "0",
+      priceCurrency: "USD",
+      availability: "https://schema.org/InStock",
+    },
+    interactionStatistic: playCount
+      ? {
+          "@type": "InteractionCounter",
+          interactionType: { "@type": "PlayAction" },
+          userInteractionCount: playCount,
+        }
+      : undefined,
+    publisher: { "@id": `${getSiteUrl()}/#organization` },
+    isPartOf: { "@id": `${getSiteUrl()}/#website` },
+    mainEntityOfPage: { "@type": "WebPage", "@id": url },
+  });
+}
+
+export function createBookJsonLd({ book, path } = {}) {
+  if (!book?.title || !path) return null;
+
+  const url = absoluteUrl(path);
+  const reviewCount = Number(book.stats?.totalReviews || 0);
+  const ratingValue = Number(book.stats?.rating || 0);
+  const price = Number(book.price || 0);
+
+  return compactJsonLdObject({
+    "@context": "https://schema.org",
+    "@type": "Book",
+    "@id": `${url}#book`,
+    name: book.title,
+    headline: book.title,
+    description: book.description || book.summary || siteConfig.description,
+    url,
+    image: absoluteUrl(book.coverImage || book.bannerImage || siteConfig.defaultImagePath),
+    author: {
+      "@type": "Person",
+      name: book.authorId || siteConfig.name,
+    },
+    genre: [book.categoryId, ...(book.tags || [])].filter(Boolean),
+    inLanguage: book.language || "English",
+    numberOfPages: Number(book.meta?.pages || 0) || undefined,
+    datePublished: book.createdAt || undefined,
+    isAccessibleForFree: Boolean(book.isFree || price === 0),
+    aggregateRating:
+      ratingValue > 0 && reviewCount > 0
+        ? {
+            "@type": "AggregateRating",
+            ratingValue,
+            bestRating: 5,
+            worstRating: 1,
+            reviewCount,
+          }
+        : undefined,
+    offers: {
+      "@type": "Offer",
+      price: String(price),
+      priceCurrency: "INR",
+      availability: "https://schema.org/InStock",
+    },
+    publisher: { "@id": `${getSiteUrl()}/#organization` },
+    isPartOf: { "@id": `${getSiteUrl()}/#website` },
+    mainEntityOfPage: { "@type": "WebPage", "@id": url },
+    potentialAction: {
+      "@type": "ReadAction",
+      target: url,
+    },
+  });
 }
 
 export function createFaqJsonLd({ path, questions = [] } = {}) {

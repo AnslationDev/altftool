@@ -1,132 +1,122 @@
-import Image from "next/image";
 import Link from "next/link";
 import {
   ArrowRight,
-  Star,
+  FileImage,
+  Gauge,
+  ImageDown,
+  KeyRound,
+  NotebookPen,
+  ReceiptText,
+  Repeat2,
+  Scale,
   TrendingUp,
-  UsersRound,
 } from "lucide-react";
 
-const trendingTools = [
+const popularTools = [
   {
     title: "Image Compressor",
-    tag: "Image Tools",
+    category: "Image & photo",
     href: "/tools/all/image-compressor",
-    image: "/images/featured4.png",
-    description: "Compress images instantly and reduce file size efficiently.",
-    rating: "4.9",
-    reviews: "12.4K",
-    growth: "24%",
-    users: "12M+",
+    icon: ImageDown,
   },
   {
-    title: "QR Generator",
-    tag: "Web Tools",
-    href: "/tools/all/qr-generator",
-    image: "/images/featured3.png",
-    description: "Generate QR codes instantly for links, text, and data.",
-    rating: "4.8",
-    reviews: "8.7K",
-    growth: "15%",
-    users: "9M+",
+    title: "Image Resizer",
+    category: "Image & photo",
+    href: "/tools/all/image-resizer",
+    icon: FileImage,
   },
   {
-    title: "Color Palette from Image",
-    tag: "Design Tools",
-    href: "/tools/all/color-palette-from-image",
-    image: "/images/featured5.jpg",
-    description: "Extract a practical color palette from uploaded images.",
-    rating: "4.7",
-    reviews: "7.3K",
-    growth: "12%",
-    users: "7M+",
+    title: "Unit Converter",
+    category: "Converters",
+    href: "/tools/all/unit-converter",
+    icon: Repeat2,
   },
   {
-    title: "PDF to Image Converter",
-    tag: "PDF Tools",
-    href: "/tools/all/pdf-to-image-converter",
-    image: "/images/featured1.png",
-    description: "Convert PDF pages into PNG, JPG, or WebP images in your browser.",
-    rating: "4.8",
-    reviews: "5.1K",
-    growth: "9%",
-    users: "5M+",
+    title: "Password Generator",
+    category: "Security & privacy",
+    href: "/tools/all/password-generator",
+    icon: KeyRound,
+  },
+  {
+    title: "BMI Calculator",
+    category: "Health calculators",
+    href: "/tools/all/bmi-calculator",
+    icon: Scale,
+  },
+  {
+    title: "Invoice Generator",
+    category: "Business",
+    href: "/tools/all/invoice-generator",
+    icon: ReceiptText,
+  },
+  {
+    title: "Web Speed Checker",
+    category: "Developer",
+    href: "/tools/all/web-speed-checker",
+    icon: Gauge,
+  },
+  {
+    title: "Markdown Preview",
+    category: "Text & writing",
+    href: "/tools/all/markdown-preview",
+    icon: NotebookPen,
   },
 ];
 
 export default function TrendingSection() {
   return (
-    <section className="section home-trending-section">
-      <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
-        <div>
-          <p className="home-kicker">
-            <TrendingUp className="h-4 w-4 text-[#ef4444]" />
-            Trending now
-          </p>
-          <h2 className="section-title">Top tools trending this week</h2>
-        </div>
-        <Link href="/tools/all" className="home-reference-link">
-          View all trending
-          <ArrowRight className="h-4 w-4" />
-        </Link>
-      </div>
-
-      <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-4">
-        {trendingTools.map((tool) => (
-            <Link
-              key={tool.title}
-              href={tool.href}
-              className="home-trending-card group"
+    <section className="border-b border-border bg-surface-soft" aria-labelledby="popular-tools-title">
+      <div className="mx-auto w-full max-w-[var(--anslation-ds-container)] px-4 py-10 sm:px-6 sm:py-12 lg:px-8">
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+          <div>
+            <p className="inline-flex items-center gap-2 text-xs font-semibold uppercase text-primary">
+              <TrendingUp className="h-4 w-4" aria-hidden="true" />
+              Quick launch
+            </p>
+            <h2
+              id="popular-tools-title"
+              className="mt-2 text-2xl font-bold text-foreground sm:text-3xl"
             >
-              <span className="relative block">
-                <span className="home-tool-preview home-tool-preview-image">
-                  <Image
-                    src={tool.image}
-                    alt={`${tool.title} preview`}
-                    fill
-                    sizes="(min-width: 1280px) 25vw, (min-width: 768px) 50vw, 100vw"
-                    className="object-cover transition duration-500 group-hover:scale-105"
-                  />
-                  <span className="absolute inset-0 bg-[linear-gradient(180deg,rgba(255,255,255,0)_45%,rgba(255,255,255,0.55)_100%)]" />
-                </span>
-              </span>
+              Popular browser tools
+            </h2>
+          </div>
+          <Link
+            href="/tools/all"
+            className="inline-flex min-h-10 items-center gap-2 text-sm font-semibold text-primary transition hover:text-[var(--primary-hover)] focus-visible:rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+          >
+            Browse all tools
+            <ArrowRight className="h-4 w-4" aria-hidden="true" />
+          </Link>
+        </div>
 
-              <span className="home-trending-content">
-                <span className="home-trending-title-row">
-                  <span className="home-trending-title">
-                  {tool.title}
+        <div className="mt-6 grid gap-2 sm:grid-cols-2 lg:grid-cols-4">
+          {popularTools.map((tool) => {
+            const Icon = tool.icon;
+            return (
+              <Link
+                key={tool.href}
+                href={tool.href}
+                className="group flex min-h-20 items-center gap-3 rounded-lg border border-border bg-card p-3 shadow-sm transition hover:border-primary hover:shadow-md focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-primary/30"
+              >
+                <span className="grid h-10 w-10 shrink-0 place-items-center rounded-md bg-muted text-primary">
+                  <Icon className="h-5 w-5" aria-hidden="true" />
+                </span>
+                <span className="min-w-0 flex-1">
+                  <span className="block truncate text-sm font-semibold text-foreground">
+                    {tool.title}
                   </span>
-                  <span className="home-trending-tag">
-                    {tool.tag}
+                  <span className="mt-1 block truncate text-xs text-muted-foreground">
+                    {tool.category}
                   </span>
                 </span>
-
-                <span className="home-trending-description">
-                  {tool.description}
-                </span>
-
-                <span className="home-trending-rating">
-                  {Array.from({ length: 5 }).map((_, index) => (
-                    <Star key={index} className="h-3.5 w-3.5 fill-current" />
-                  ))}
-                  <span className="ml-1 text-xs font-bold text-[var(--muted-foreground)]">
-                    {tool.rating} ({tool.reviews})
-                  </span>
-                </span>
-
-                <span className="home-trending-meta">
-                  <span className="inline-flex items-center gap-1 text-[#10b981]">
-                    <TrendingUp className="h-3.5 w-3.5" />
-                    {tool.growth} this week
-                  </span>
-                  <span className="inline-flex items-center gap-1 text-[var(--muted-foreground)]">
-                    {tool.users} users
-                    <UsersRound className="h-3.5 w-3.5" />
-                  </span>
-                </span>
-              </span>
-            </Link>
-        ))}
+                <ArrowRight
+                  className="h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-primary"
+                  aria-hidden="true"
+                />
+              </Link>
+            );
+          })}
+        </div>
       </div>
     </section>
   );

@@ -7,8 +7,6 @@
 // Background/closed tab behaviour is unchanged — the SW shows the OS popup.
 
 import { useEffect, useRef } from "react";
-import { onMessage } from "firebase/messaging";
-import { getFirebaseMessaging } from "@/lib/firebase";
 import { emitPushToast } from "@/lib/pushToastBus";
 
 const VAPID_KEY = process.env.NEXT_PUBLIC_FIREBASE_VAPID_KEY;
@@ -93,17 +91,21 @@ export function usePushNotifications(user) {
     let unsubscribeForeground = null;
 
     async function setup() {
-      const messaging = await getFirebaseMessaging();
-      if (!messaging) {
-        console.warn("[push] FCM not supported in this environment");
-        return;
-      }
-
       const swReg = await registerServiceWorker();
       if (!swReg) return;
 
       const granted = await requestPermission();
       if (!granted) return;
+
+      const [{ getFirebaseMessaging }, { onMessage }] = await Promise.all([
+        import("@/lib/firebaseMessaging"),
+        import("firebase/messaging"),
+      ]);
+      const messaging = await getFirebaseMessaging();
+      if (!messaging) {
+        console.warn("[push] FCM not supported in this environment");
+        return;
+      }
 
       const token = await getFcmToken(messaging, swReg);
       if (!token) return;

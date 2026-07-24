@@ -10,7 +10,7 @@ import WorkflowCard from "../components/WorkflowCard";
 import Markdown from "../components/Markdown";
 import { getWorkflowBySlug, getRelated, getAllWorkflows } from "../data/service";
 import { deriveNodeDetails } from "../data/nodeInfo";
-import { shortIntro, cleanDescription, stripEmojis } from "../data/text";
+import { shortIntro, cleanDescription, metaTitle, stripEmojis } from "../data/text";
 import JsonLd from "@/platform/seo/JsonLd";
 import {
   createPageMetadata,
@@ -38,7 +38,7 @@ export async function generateMetadata({ params }) {
     });
   }
   return createPageMetadata({
-    title: `${stripEmojis(wf.title)} | n8n Workflow`,
+    title: `${metaTitle(wf.title, 44)} | n8n Workflow`,
     description: shortIntro(wf.description, 200),
     path: `/n8n/${slug}`,
   });

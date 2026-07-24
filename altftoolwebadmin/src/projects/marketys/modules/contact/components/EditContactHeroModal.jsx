@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { X, Save, Loader2 } from "lucide-react";
 import { emitAlert } from "@/lib/alertBus";
 import { doc, setDoc, serverTimestamp } from "firebase/firestore";
-import { db } from "@/lib/firebase";
+import { db } from "@/lib/firebaseFirestore";
 import ImageUpload from "../../../components/ImageUpload";
 
 const COLLECTION = "projects/marketys/contact-page";

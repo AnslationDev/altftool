@@ -4,7 +4,7 @@ import {
   ref as storageRef,
   uploadBytesResumable,
 } from "firebase/storage";
-import { storage } from "@/lib/firebase";
+import { storage } from "@/lib/firebaseStorage";
 
 /**
  * Factory for a direct-to-Firebase-Storage image uploader, matching the

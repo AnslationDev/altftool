@@ -4,7 +4,7 @@ import RadioGardenClient from "./RadioGardenClient";
 export async function generateMetadata() {
   return createPageMetadata({
     title: "OpenAir Garden",
-    description: "Explore live radio stations around the world on an interactive globe.",
+    description: "Explore live radio stations around the world on an interactive globe and tune in to broadcasts by location.",
     path: "/radio-garden",
   });
 }

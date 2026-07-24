@@ -12,7 +12,7 @@ import {
   orderBy,
 } from "firebase/firestore";
 
-import { db } from "@/lib/firebase";
+import { db } from "@/lib/firebaseFirestore";
 import { clearFirebaseCache, getCachedFirebaseRead } from "@/lib/firebaseCache";
 import { compactFirestoreData, normalizeAcademy } from "@altftool/core/firebaseContent";
 import { ALTFT_ACADEMY_COLLECTION_PATH } from "@altftool/core/firebasePaths";

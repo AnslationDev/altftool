@@ -5,7 +5,7 @@ import { createPageMetadata } from "@/platform/seo/generateMetadata";
 export async function generateMetadata() {
   return createPageMetadata({
     title: "Privacy Policy | QuoteNest Pros",
-    description: "Privacy practices for QuoteNest Pros home-service quote requests.",
+    description: "Review how QuoteNest Pros collects, uses, protects, and shares information submitted through home-service quote requests.",
     path: "/homeserv/privacy-policy",
   });
 }

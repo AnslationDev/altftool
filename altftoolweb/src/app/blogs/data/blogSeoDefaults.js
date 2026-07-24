@@ -1,4 +1,4 @@
-const SITE_URL = "https://altftool.com";
+import { PRODUCTION_SITE_URL as SITE_URL } from "../../../platform/seo/siteUrl.js";
 const MIN_READABLE_WORDS = 260;
 
 function cleanText(value = "") {

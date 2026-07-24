@@ -9,7 +9,7 @@ import {
   orderBy,
   query,
 } from "firebase/firestore";
-import { db } from "@/lib/firebase";
+import { db } from "@/lib/firebaseFirestore";
 import { useAuth } from "@/context/AuthContext";
 import { emitAlert } from "@/lib/alertBus";
 import {

@@ -1,10 +1,9 @@
 import { Home, Info, Sliders, Briefcase, FileText, Image, Inbox } from "lucide-react";
-import AlphobiaLogo from "../../../public/logos/altflogo.png"; // Default logo placeholder
 
 const alphobiaConfig = {
   id: "alphobia",
   name: "Alphobia",
-  logo: AlphobiaLogo,
+  logo: null,
   color: "#0f172a", // Deep Slate
   modules: {
     home: { label: "Home Page", icon: Home },

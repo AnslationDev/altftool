@@ -21,17 +21,32 @@ import AltfLauncher from "@/app/_altf/AltfLauncher";
 import Link from "next/link";
 import { ICONS } from "./_components/HnCard";
 import { HN_CATEGORIES, getHnStats } from "./_data/categories";
+import JsonLd from "@/platform/seo/JsonLd";
+import {
+  createBreadcrumbJsonLd,
+  createCollectionPageJsonLd,
+  createItemListJsonLd,
+  createPageMetadata,
+} from "@/platform/seo/generateMetadata";
 import "./housingneeds.css";
 import "@/app/_altf/altf-brand.css";
 
 // The Housing Needs front door — a standalone, USA-focused lead-gen lander.
 // Indexable: this is the brand's landing page, not an internal dashboard.
-export const metadata = {
+export const metadata = createPageMetadata({
   title: "Housing Needs — Free Home Improvement Quotes & Expert Guides",
   description:
     "America's one-stop home improvement resource. Compare roofing, plumbing, HVAC, electrical and more — read expert guides and get free quotes from licensed local pros.",
-  alternates: { canonical: "/bops/housingneeds" },
-};
+  path: "/bops/housingneeds",
+  keywords: [
+    "home improvement guides",
+    "home service quotes",
+    "roofing guide",
+    "plumbing guide",
+    "HVAC guide",
+  ],
+  pageType: "business-ops-guide",
+});
 
 const QUOTE = { mode: "cta", label: "Get a Free Quote", href: "#quote" };
 
@@ -55,9 +70,31 @@ const STEPS = [
 
 export default function HousingNeedsLanding() {
   const stats = getHnStats();
+  const jsonLd = [
+    createCollectionPageJsonLd({
+      path: "/bops/housingneeds",
+      name: "Housing Needs",
+      description:
+        "Home improvement guides and quote starting points across roofing, plumbing, HVAC, electrical, and related services.",
+    }),
+    createItemListJsonLd({
+      path: "/bops/housingneeds",
+      name: "Housing Needs home improvement guides",
+      items: HN_CATEGORIES.map((category) => ({
+        name: category.name,
+        path: category.pages[0]?.href || "/bops/housingneeds",
+      })),
+    }),
+    createBreadcrumbJsonLd([
+      { name: "Home", path: "/" },
+      { name: "Business Ops", path: "/bops" },
+      { name: "Housing Needs", path: "/bops/housingneeds" },
+    ]),
+  ];
 
   return (
     <div className="hn-app hn-shell" data-accent="teal">
+      <JsonLd id="housing-needs-hub-schema" data={jsonLd} />
       <HnHeader
         quoteAction={QUOTE}
         navItems={[

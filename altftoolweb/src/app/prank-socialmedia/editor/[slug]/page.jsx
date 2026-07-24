@@ -22,7 +22,7 @@ export async function generateMetadata({ params }) {
   }
   return createPageMetadata({
     title: `${t.name} — Mockly Editor`,
-    description: t.short,
+    description: `${t.short} Customize a realistic ${t.name.toLowerCase()} mockup in your browser for entertainment, demos, or design previews.`,
     path: `/prank-socialmedia/editor/${slug}`,
   });
 }

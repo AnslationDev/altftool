@@ -36,7 +36,7 @@ export async function generateMetadata({ params }) {
 
   return createPageMetadata({
     title: `${getTop9Title(item)} | Top9`,
-    description: getTop9Description(item),
+    description: `${getTop9Description(item)} Explore all nine ranked picks, key context, and the complete curated list on AltFTool.`,
     path: `/top9/${slug}`,
     image: getTop9Image(item),
     type: "article",

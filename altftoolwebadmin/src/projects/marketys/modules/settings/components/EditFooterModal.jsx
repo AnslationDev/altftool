@@ -6,7 +6,7 @@ import {
 } from "lucide-react";
 import { emitAlert } from "@/lib/alertBus";
 import { doc, setDoc, getDoc, serverTimestamp } from "firebase/firestore";
-import { db } from "@/lib/firebase";
+import { db } from "@/lib/firebaseFirestore";
 
 const COLLECTION = "projects/marketys/footer";
 const DOC_ID = "config";

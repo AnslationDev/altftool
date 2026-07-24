@@ -7,6 +7,8 @@ export async function generateMetadata() {
     description:
       "View your completed AltFTool personality test result, including how many questions you answered and your assessment completion rate.",
     path: "/personality/result",
+    noindex: true,
+    follow: false,
   });
 }
 

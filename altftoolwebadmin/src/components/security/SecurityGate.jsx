@@ -11,7 +11,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { ShieldCheck, Loader2 } from "lucide-react";
 import { useAuth } from "@/context/AuthContext";
-import { auth } from "@/lib/firebase";
+import { auth } from "@/lib/firebaseAuth";
 
 // Heartbeat reasons that mean the admin should actually be signed out.
 const LOGOUT_REASONS = new Set(["idle_timeout", "absolute_timeout", "forced_logout", "force_logout"]);

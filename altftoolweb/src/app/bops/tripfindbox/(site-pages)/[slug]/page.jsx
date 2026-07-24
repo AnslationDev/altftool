@@ -9,36 +9,10 @@ import { getSitemapPage, sitemapPages } from "@/app/bops/tripfindbox/lib/sitemap
 import { tfbPath } from "@/app/bops/tripfindbox/lib/tfbLink";
 import { createPageMetadata } from "@/platform/seo/generateMetadata";
 import Link from "next/link";
+import { notFound } from "next/navigation";
 
-export const dynamic = "force-dynamic";
-
-function titleFromSlug(slug) {
-  return slug
-    .split("-")
-    .filter(Boolean)
-    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-    .join(" ");
-}
-
-function fallbackSitemapPage(slug) {
-  const title = titleFromSlug(slug);
-
-  if (slug.startsWith("flights-to-")) {
-    return {
-      title,
-      slug,
-      section: "Top Cities",
-      image: "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1400&q=70",
-    };
-  }
-
-  return {
-    title,
-    slug,
-    section: "TripFindBox Routes",
-    image: "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1400&q=70",
-  };
-}
+export const revalidate = 300;
+export const dynamicParams = false;
 
 function cleanRouteName(title) {
   return title.replace(/\s+Flights$/i, "").replace(/^Flights to\s+/i, "");
@@ -1238,19 +1212,24 @@ export function generateStaticParams() {
 
 export async function generateMetadata({ params }) {
   const { slug } = await params;
-  const page = getSitemapPage(slug) ?? fallbackSitemapPage(slug);
+  const page = getSitemapPage(slug);
+
+  if (!page) notFound();
+
   const title = page.title;
 
   return createPageMetadata({
     title: `${title} | TripFindBox`,
-    description: `Search and compare TripFindBox options for ${title}.`,
+    description: `Search, compare, and review TripFindBox planning information for ${title}, including practical route, fare, booking, and travel guidance.`,
     path: `/bops/tripfindbox/${slug}`,
   });
 }
 
 export default async function SitemapRoutePage({ params }) {
   const { slug } = await params;
-  const page = getSitemapPage(slug) ?? fallbackSitemapPage(slug);
+  const page = getSitemapPage(slug);
+  if (!page) notFound();
+
   const content = pageContent(page.title, page.section);
   const category = routeCategory(page.section);
   const kind = pageKind(page.section, page.title);

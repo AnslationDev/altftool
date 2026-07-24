@@ -1,7 +1,7 @@
 import { doc, getDoc, setDoc, serverTimestamp } from "firebase/firestore";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
-import { db } from "@/lib/firebase";
+import { db } from "@/lib/firebaseFirestore";
 
 // Storage/Firestore location under altftool project path for public read permission
 const MOCKLY_DOC_PATH = ["projects", "altftool", "prank-socialmedia", "data", "home", "content"];

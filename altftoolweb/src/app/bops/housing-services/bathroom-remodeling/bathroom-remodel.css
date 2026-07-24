@@ -66,10 +66,19 @@
 
 .bathroom-remodel-logoImage,
 .bathroom-remodel-footerLogo {
-  display: block;
+  align-items: center;
+  border: 1px solid currentColor;
+  border-radius: var(--anslation-ds-radius);
+  display: inline-flex;
   height: 42px;
-  object-fit: contain;
-  width: auto;
+  justify-content: center;
+  width: 42px;
+}
+
+.bathroom-remodel-logoImage svg,
+.bathroom-remodel-footerLogo svg {
+  height: 22px;
+  width: 22px;
 }
 
 .bathroom-remodel-logoText {

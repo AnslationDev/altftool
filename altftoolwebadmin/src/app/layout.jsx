@@ -3,7 +3,6 @@ import "./globals.css";
 import { AuthProvider } from "@/context/AuthContext";
 import { AdminThemeProvider } from "@/context/ThemeContext";
 import Script from "next/script";
-import AdminSessionRuntime from "@/components/runtime/AdminSessionRuntime";
 import { Geist, Geist_Mono } from "next/font/google";
 
 const geistSans = Geist({
@@ -53,7 +52,6 @@ export default function RootLayout({ children }) {
         <AdminThemeProvider>
           <AuthProvider>
             <GlobalAlertHost />
-            <AdminSessionRuntime />
             {children}
           </AuthProvider>
         </AdminThemeProvider>

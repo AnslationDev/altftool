@@ -20,7 +20,8 @@ import {
   addDoc,
 } from "firebase/firestore";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
-import { db, storage } from "@/lib/firebase";
+import { db } from "@/lib/firebaseFirestore";
+import { storage } from "@/lib/firebaseStorage";
 import { newLanderDoc } from "../lib/schema";
 
 const PROJECT_ID = "altftool";

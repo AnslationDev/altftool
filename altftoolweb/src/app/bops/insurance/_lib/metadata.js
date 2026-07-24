@@ -1,4 +1,5 @@
 import { getInsurance } from "../_data/insurance";
+import { createPageMetadata } from "@/platform/seo/generateMetadata";
 
 const INSURANCE_BASE = "/bops/insurance";
 
@@ -12,18 +13,19 @@ export function buildInsuranceMetadata(slug) {
   const item = getInsurance(slug);
 
   if (!item) {
-    return { title: "Insurance", robots: { index: false, follow: false } };
+    return createPageMetadata({
+      title: "Insurance page not found",
+      path: `${INSURANCE_BASE}/${slug}`,
+      noindex: true,
+      follow: false,
+    });
   }
 
-  return {
-    title: { absolute: item.seo.title },
+  return createPageMetadata({
+    title: item.seo.title,
     description: item.seo.description,
-    alternates: { canonical: `${INSURANCE_BASE}/${slug}` },
-    openGraph: {
-      title: item.seo.title,
-      description: item.seo.description,
-      url: `${INSURANCE_BASE}/${slug}`,
-      type: "website",
-    },
-  };
+    path: `${INSURANCE_BASE}/${slug}`,
+    keywords: [item.name, "insurance comparison", "insurance guide"],
+    pageType: "business-ops-insurance",
+  });
 }

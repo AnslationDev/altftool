@@ -6,7 +6,12 @@
   "main": "./src/index.jsx",
   "exports": {
     ".": "./src/index.jsx",
-    "./styles.css": "./src/styles.css"
+    "./styles.css": "./src/styles.css",
+    "./theme.css": "./src/theme.css",
+    "./tokens.css": "./src/tokens.css"
+  },
+  "dependencies": {
+    "lucide-react": "^0.575.0"
   },
   "peerDependencies": {
     "react": ">=19"

@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { ImagePlus, Loader2, Plus, Trash2 } from "lucide-react";
-import { storage } from "@/lib/firebase";
+import { storage } from "@/lib/firebaseStorage";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
 const labelCls = "mb-1.5 block text-xs font-semibold tracking-wide text-[var(--muted)]";

@@ -1,5 +1,5 @@
 import { chromium } from "@playwright/test";
-import { mkdir, readFile, writeFile } from "node:fs/promises";
+import { mkdir, readFile, readdir, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { TOP_PRIORITY_TOOL_SLUGS } from "@altftool/core/toolHealth";
 
@@ -55,6 +55,10 @@ const slowRouteThresholdMs = Number(process.env.ALTFT_ROUTE_QA_SLOW_MS || 2_500)
 const routeConcurrency = Math.max(1, Number(process.env.ALTFT_ROUTE_QA_CONCURRENCY || 3));
 const browserConcurrency = Math.max(1, Number(process.env.ALTFT_ROUTE_QA_BROWSER_CONCURRENCY || 2));
 const mobileOverflowBudgetPx = Number(process.env.ALTFT_ROUTE_QA_MOBILE_OVERFLOW_PX || 8);
+const familySampleSize = Math.max(
+  1,
+  Number(process.env.ALTFT_ROUTE_QA_FAMILY_SAMPLE_SIZE || 2),
+);
 const LOCAL_ADMIN_STORAGE_KEY = "ALTFT_LOCAL_ADMIN_SESSION_V1";
 const LOCAL_ADMIN_TOKEN = "local-dev-admin-token";
 
@@ -167,6 +171,22 @@ function hasDangerousText(text = "") {
 
 function shouldKeepConsoleIssue(message) {
   if (message.type !== "error" && message.type !== "warning") return false;
+  if (
+    /Failed to load resource/i.test(message.text) &&
+    message.url &&
+    /\.(?:avif|gif|ico|jpe?g|png|svg|webp|woff2?)(?:[?#]|$)/i.test(message.url)
+  ) {
+    try {
+      const resourceOrigin = new URL(message.url).origin;
+      const firstPartyOrigins = new Set([
+        new URL(webUrl).origin,
+        new URL(adminUrl).origin,
+      ]);
+      if (!firstPartyOrigins.has(resourceOrigin)) return false;
+    } catch {
+      // Keep malformed/relative resource failures visible.
+    }
+  }
   return !IGNORED_CONSOLE_PATTERNS.some((pattern) => pattern.test(message.text));
 }
 
@@ -197,6 +217,107 @@ async function readToolMetaMap() {
   return JSON.parse(match[1]);
 }
 
+async function discoverStaticAppRoutes() {
+  const appRoot = path.join(webRoot, "src/app");
+  const routes = [];
+
+  async function walk(directory, segments = []) {
+    const entries = await readdir(directory, { withFileTypes: true });
+
+    for (const entry of entries) {
+      if (entry.isDirectory()) {
+        if (entry.name.startsWith("@") || entry.name.startsWith("_")) continue;
+        const nextSegments = /^\(.+\)$/.test(entry.name)
+          ? segments
+          : [...segments, entry.name];
+        await walk(path.join(directory, entry.name), nextSegments);
+        continue;
+      }
+
+      if (!/^page\.(?:js|jsx|ts|tsx)$/.test(entry.name)) continue;
+      if (segments.some((segment) => segment.includes("["))) continue;
+      routes.push(`/${segments.join("/")}`.replace(/\/+$/, "") || "/");
+    }
+  }
+
+  await walk(appRoot);
+  return [...new Set(routes)].sort();
+}
+
+function isPublicPrerenderRoute(route) {
+  return (
+    route === "/" ||
+    (
+      route.startsWith("/") &&
+      !route.startsWith("/_") &&
+      !route.startsWith("/api/") &&
+      !route.includes("[")
+    )
+  );
+}
+
+function prerenderFamily(route, dynamicRoutes) {
+  const dynamicMatch = dynamicRoutes.find((entry) => entry.regex.test(route));
+  if (dynamicMatch) {
+    return {
+      key: dynamicMatch.pattern,
+      group: `dynamic ${dynamicMatch.pattern}`,
+    };
+  }
+
+  const segments = route.split("/").filter(Boolean);
+  const key = segments.length <= 2
+    ? route
+    : `/${segments.slice(0, 2).join("/")}`;
+  return { key, group: `surface ${key || "/"}` };
+}
+
+function pickFamilySamples(routes) {
+  if (scope === "full" || routes.length <= familySampleSize) return routes;
+  if (familySampleSize === 1) return [routes[0]];
+
+  const samples = [routes[0], routes.at(-1)];
+  if (familySampleSize > 2) {
+    const step = (routes.length - 1) / (familySampleSize - 1);
+    for (let index = 1; index < familySampleSize - 1; index += 1) {
+      samples.push(routes[Math.round(index * step)]);
+    }
+  }
+  return [...new Set(samples)].slice(0, familySampleSize);
+}
+
+async function readPrerenderedRouteEntries() {
+  const manifest = await readJson("altftoolweb/.next/prerender-manifest.json", null);
+  if (!manifest?.routes || !manifest?.dynamicRoutes) return [];
+
+  const dynamicRoutes = Object.entries(manifest.dynamicRoutes)
+    .map(([pattern, config]) => {
+      try {
+        return { pattern, regex: new RegExp(config.routeRegex) };
+      } catch {
+        return null;
+      }
+    })
+    .filter(Boolean)
+    .sort((a, b) => b.pattern.length - a.pattern.length);
+  const families = new Map();
+
+  for (const route of Object.keys(manifest.routes).filter(isPublicPrerenderRoute).sort()) {
+    const family = prerenderFamily(route, dynamicRoutes);
+    const current = families.get(family.key) || { ...family, routes: [] };
+    current.routes.push(route);
+    families.set(family.key, current);
+  }
+
+  return [...families.values()].flatMap((family) =>
+    pickFamilySamples(family.routes).map((route) => ({
+      app: "web",
+      group: family.group,
+      route,
+    })),
+  );
+}
+
 function getToolCategories(tool) {
   if (!tool?.category) return [];
   return Array.isArray(tool.category) ? tool.category : [tool.category];
@@ -210,6 +331,12 @@ async function buildRouteInventory() {
     group: route.startsWith("/api/") ? "web api" : "web core",
     route,
   }));
+
+  for (const route of await discoverStaticAppRoutes()) {
+    routes.push({ app: "web", group: "web filesystem", route });
+  }
+
+  routes.push(...(await readPrerenderedRouteEntries()));
 
   const categorySlugs = new Set(["all"]);
   for (const tool of Object.values(toolMetaMap)) {
@@ -405,6 +532,16 @@ async function mapWithConcurrency(items, limit, handler) {
 }
 
 function browserProbeRoutes(inventory) {
+  const findConcreteRoute = (prefix, predicate = () => true) =>
+    inventory.find(
+      (entry) =>
+        entry.app === "web" &&
+        entry.route.startsWith(prefix) &&
+        entry.route !== prefix.replace(/\/$/, "") &&
+        !entry.route.includes("[") &&
+        predicate(entry.route),
+    )?.route;
+
   const webRoutes = [
     "/",
     "/tools/all",
@@ -412,6 +549,14 @@ function browserProbeRoutes(inventory) {
     "/blogs",
     inventory.find((entry) => entry.app === "web" && entry.group === "blog detail")?.route,
     "/buysmart",
+    findConcreteRoute("/altfgame/", (route) => !route.includes("/category/")),
+    findConcreteRoute("/apps/"),
+    findConcreteRoute("/n8n/", (route) => !route.includes("/category/") && !route.includes("/node/")),
+    findConcreteRoute("/locations/"),
+    findConcreteRoute("/wattpad/book/"),
+    findConcreteRoute("/bops/housing-services/"),
+    findConcreteRoute("/products/"),
+    findConcreteRoute("/lander/"),
   ].filter(Boolean);
 
   const probes = webRoutes.map((route) => ({ app: "web", group: "browser probe", route }));
@@ -470,12 +615,16 @@ async function checkBrowserProbe(pageFactory, probe) {
   const startedAt = performance.now();
 
   page.on("console", (message) => {
+    const location = message.location();
     const issue = {
       type: message.type(),
       text: message.text(),
+      url: location?.url || "",
     };
     if (shouldKeepConsoleIssue(issue)) {
-      consoleIssues.push(`${issue.type}: ${issue.text}`);
+      consoleIssues.push(
+        `${issue.type}: ${issue.text}${issue.url ? ` (${issue.url})` : ""}`,
+      );
     }
   });
 

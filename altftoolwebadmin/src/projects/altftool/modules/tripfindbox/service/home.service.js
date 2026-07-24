@@ -1,7 +1,7 @@
 import { doc, getDoc, setDoc, serverTimestamp } from "firebase/firestore";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
-import { db } from "@/lib/firebase";
+import { db } from "@/lib/firebaseFirestore";
 
 // Same Firestore location the public TripFindBox site reads from.
 // projects/altftool/tripfindbox/data/home/content  (single document)

@@ -1,7 +1,9 @@
+import { cache } from "react";
 import BlogArchivePage from "../../components/BlogArchivePage";
 import JsonLd from "@/platform/seo/JsonLd";
 import {
   blogTaxonomySlug,
+  compactBlogSummary,
   filterBlogsByCategorySlug,
   getAllBlogs,
   getBlogCategories,
@@ -38,7 +40,7 @@ async function getMergedPosts() {
   return mergeBlogPosts(getAllBlogs(), firebasePosts);
 }
 
-async function getCategoryArchive(categorySlug) {
+const getCategoryArchive = cache(async (categorySlug) => {
   const posts = await getMergedPosts();
   const categoryLabel =
     getBlogCategoryBySlug(categorySlug, posts) || getBlogCategoryBySlug(categorySlug);
@@ -51,7 +53,7 @@ async function getCategoryArchive(categorySlug) {
     categoryLabel,
     categoryPosts,
   };
-}
+});
 
 export async function generateMetadata({ params }) {
   const { category } = await params;
@@ -71,6 +73,7 @@ export async function generateMetadata({ params }) {
 export default async function BlogCategoryPage({ params }) {
   const { category } = await params;
   const { posts, categoryLabel, categoryPosts } = await getCategoryArchive(category);
+  const archivePosts = categoryPosts.map(compactBlogSummary);
   const categories = getBlogCategories(posts).filter((item) => item !== "All");
   const path = `/blogs/category/${category}`;
 
@@ -103,7 +106,7 @@ export default async function BlogCategoryPage({ params }) {
         eyebrow="Blog category"
         title={`${categoryLabel} Articles`}
         description={`Browse practical AltFTool reads in ${categoryLabel}. These articles are organized for faster discovery and stronger internal navigation.`}
-        posts={categoryPosts}
+        posts={archivePosts}
         activeLabel={categoryLabel}
         relatedLabels={categories}
       />

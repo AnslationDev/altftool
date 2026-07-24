@@ -7,7 +7,7 @@ import {
   uploadBytesResumable,
   getDownloadURL,
 } from "firebase/storage";
-import { storage } from "@/lib/firebase";
+import { storage } from "@/lib/firebaseStorage";
 import { createData, updateData } from "../service/data.service";
 import { emitAlert } from "@/lib/alertBus";
 import { logAuditEvent } from "@/lib/auditClient";

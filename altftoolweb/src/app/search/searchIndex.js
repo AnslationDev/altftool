@@ -15,6 +15,7 @@ import {
   SITE_ROUTES,
   TOOL_CATEGORY_ROUTE_OPTIONS,
 } from "@/platform/navigation/siteRoutes";
+import { canonicalizePublicPath } from "@/platform/navigation/publicRouteTaxonomy";
 import { toolMetaMap } from "@/platform/registry/toolMetaMap";
 
 import {
@@ -35,27 +36,8 @@ function normalizeText(value = "") {
     .trim();
 }
 
-function normalizePath(value = "/") {
-  try {
-    const path = new URL(String(value), "https://altftool.com").pathname;
-    if (path === "/") return path;
-    return `/${path.replace(/^\/+|\/+$/g, "")}`;
-  } catch {
-    return "/";
-  }
-}
-
-function canonicalizeSearchPath(path) {
-  if (path === "/housingneeds") return "/bops/housingneeds";
-  if (path.startsWith("/housingneeds/")) return `/bops${path}`;
-  return path;
-}
-
 function joinKeywords(...values) {
-  return values
-    .flat(Infinity)
-    .filter(Boolean)
-    .join(" ");
+  return values.flat(Infinity).filter(Boolean).join(" ");
 }
 
 function inferResultType(path) {
@@ -65,7 +47,8 @@ function inferResultType(path) {
   if (path.startsWith("/blogs/")) return "Guide";
   if (path.startsWith("/extensions/")) return "Extension";
   if (path.startsWith("/apps/")) return "App";
-  if (path.startsWith("/products/") || path.startsWith("/signals/")) return "Product";
+  if (path.startsWith("/products/") || path.startsWith("/signals/"))
+    return "Product";
   if (
     path.startsWith("/bops/") ||
     path.startsWith("/housingneeds/") ||
@@ -81,12 +64,13 @@ function inferResultType(path) {
   ) {
     return "Shopping";
   }
-  if (path.startsWith("/labs/") || path.startsWith("/altfgame/")) return "Experience";
+  if (path.startsWith("/labs/") || path.startsWith("/altfgame/"))
+    return "Experience";
   return GROUPS_BY_ID.get(getSiteMapGroupId(path))?.title || "Page";
 }
 
 function addMetadata(metadata, path, values = {}) {
-  const normalizedPath = normalizePath(path);
+  const normalizedPath = canonicalizePublicPath(path);
   const current = metadata.get(normalizedPath) || {};
   metadata.set(normalizedPath, {
     ...current,
@@ -186,11 +170,17 @@ function createSearchEntry(path, metadata = {}) {
   const group = GROUPS_BY_ID.get(groupId);
   const label = metadata.label || getDefaultRouteLabel(path);
   const description =
-    metadata.description ||
-    `Open ${label} in ${group?.title || "AltFTool"}.`;
+    metadata.description || `Open ${label} in ${group?.title || "AltFTool"}.`;
   const type = metadata.type || inferResultType(path);
   const searchable = normalizeText(
-    joinKeywords(label, description, path, type, group?.title, metadata.keywords),
+    joinKeywords(
+      label,
+      description,
+      path,
+      type,
+      group?.title,
+      metadata.keywords,
+    ),
   );
 
   return {
@@ -211,18 +201,22 @@ async function buildGlobalSearchIndex() {
   const paths = new Set(metadata.keys());
 
   for (const entry of sitemapEntries) {
-    const path = canonicalizeSearchPath(normalizePath(entry?.url || entry));
+    const path = canonicalizePublicPath(entry?.url || entry);
     if (path !== "/search") paths.add(path);
   }
 
   return [...paths]
     .map((path) => createSearchEntry(path, metadata.get(path)))
-    .sort((left, right) => left.label.localeCompare(right.label) || left.path.localeCompare(right.path));
+    .sort(
+      (left, right) =>
+        left.label.localeCompare(right.label) ||
+        left.path.localeCompare(right.path),
+    );
 }
 
 const getGlobalSearchIndex = unstable_cache(
   buildGlobalSearchIndex,
-  ["altftool-global-search-index-v3"],
+  ["altftool-global-search-index-v5"],
   {
     revalidate: 3600,
     tags: ["altftool-global-search"],
@@ -236,7 +230,11 @@ function scoreEntry(entry, normalizedQuery, tokens) {
   const pathSegments = entry.path.split("/").filter(Boolean);
   const lastSegment = normalizeText(pathSegments.at(-1) || "");
 
-  if (entry.normalizedLabel === normalizedQuery || lastSegment === normalizedQuery) score += 240;
+  if (
+    entry.normalizedLabel === normalizedQuery ||
+    lastSegment === normalizedQuery
+  )
+    score += 240;
   if (entry.normalizedLabel.startsWith(normalizedQuery)) score += 150;
   if (lastSegment.startsWith(normalizedQuery)) score += 125;
   if (entry.normalizedLabel.includes(normalizedQuery)) score += 100;

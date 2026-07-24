@@ -17,7 +17,11 @@ import top11Categories from "@/app/top11/data/categoryData";
 import { getTop9Items } from "@/app/top9/data/getTop9Items";
 import wattpadBooks from "@/app/wattpad/data/books.json";
 import wattpadCategories from "@/app/wattpad/data/categories.json";
-import { absoluteUrl, getSiteUrl, normalizeSlug } from "@/platform/seo/generateMetadata";
+import {
+  absoluteUrl,
+  getSiteUrl,
+  normalizeSlug,
+} from "@/platform/seo/generateMetadata";
 import { getAllGeoSlugs } from "@/platform/seo/geoLocations";
 import { loadSeoConfig } from "@/platform/seo/seoConfigSource";
 import { resolveSitemap } from "@altftool/core/seo/resolver";
@@ -29,9 +33,21 @@ import { apps } from "@/app/apps/data/apps";
 import { SIGNAL_CATALOG } from "@altftool/core/signals";
 import { PRODUCT_SUITE_CATALOG } from "@altftool/core/product-suites";
 import { EXPERIENCE_CATALOG } from "@altftool/core/experiences";
-import { getAllWorkflows, getAllNodes, getCategories as getN8nCategories } from "@/app/n8n/data/service";
+import {
+  getAllWorkflows,
+  getAllNodes,
+  getCategories as getN8nCategories,
+} from "@/app/n8n/data/service";
+import {
+  CATEGORIES as altfNativeGameCategories,
+  GAMES as altfNativeGames,
+} from "@/app/altfgame/_data/games";
+import { ALL_NAV_ITEMS as promptStudioItems } from "@/app/imgprompt/data/navigation";
 import { getPromptCards } from "@/app/prompts/data/service";
-import { getAllCategories as getFactNetCategories, getLatestArticles as getFactNetArticles } from "@/app/fact-net/data/factNetData";
+import {
+  getAllCategories as getFactNetCategories,
+  getLatestArticles as getFactNetArticles,
+} from "@/app/fact-net/data/factNetData";
 import { TEMPLATES as socialMockupTemplates } from "@/app/prank-socialmedia/lib/templates";
 import { getAllKymRoutes } from "@/app/kym/components/KymGenericPage";
 import { pranks as pranxExperiences } from "@/app/pranx/data/pranxData";
@@ -39,7 +55,10 @@ import { sitemapPages as tripFindBoxPages } from "@/app/bops/tripfindbox/lib/sit
 import { HN_CATEGORIES } from "@/app/bops/housingneeds/_data/categories";
 import { BOPS_COLLECTIONS } from "@/app/bops/_data/collections";
 import { INSTRUMENTS as tradeonInstruments } from "@/app/tradeon/lib/instruments";
-import { assetHref as tradeonAssetHref, chartHref as tradeonChartHref } from "@/app/tradeon/lib/format";
+import {
+  assetHref as tradeonAssetHref,
+  chartHref as tradeonChartHref,
+} from "@/app/tradeon/lib/format";
 
 export const revalidate = 3600;
 
@@ -83,6 +102,7 @@ const staticRoutes = [
   { path: "/academy", priority: 0.6 },
   { path: "/sale", priority: 0.7 },
   { path: "/status", priority: 0.45 },
+  { path: "/docs", priority: 0.58 },
   { path: "/supportsetting", priority: 0.45 },
   { path: "/request-a-tool", priority: 0.5 },
   { path: "/site-map", priority: 0.5 },
@@ -142,16 +162,10 @@ const staticRoutes = [
   { path: "/bops/tripfindbox/terms-and-conditions", priority: 0.3 },
   { path: "/bops/tripfindbox/site-map", priority: 0.4 },
 
-  // --- HousingNeeds ---
-  { path: "/housingneeds", priority: 0.72 },
-  { path: "/housingneeds/roofing", priority: 0.8 },
-  { path: "/housingneeds/siding", priority: 0.8 },
-  { path: "/housingneeds/gutters", priority: 0.8 },
-  { path: "/housingneeds/windows", priority: 0.8 },
-  { path: "/housingneeds/solar", priority: 0.8 },
-  { path: "/housingneeds/plumbing", priority: 0.8 },
-  { path: "/housingneeds/interiors", priority: 0.8 },
-  { path: "/housingneeds/pestcontrol", priority: 0.8 },
+  // --- Housing Needs ---
+  // Legacy /housingneeds/* URLs redirect permanently in next.config.mjs.
+  // Publish only the canonical Business Ops hub here.
+  { path: "/bops/housingneeds", priority: 0.72 },
   { path: "/siding", priority: 0.55 },
 ];
 
@@ -167,7 +181,8 @@ const SEO_FIRESTORE_LIST_TIMEOUT_MS = 3500;
 
 function safeDate(value) {
   if (!value) return undefined;
-  if (value instanceof Date) return Number.isNaN(value.getTime()) ? undefined : value;
+  if (value instanceof Date)
+    return Number.isNaN(value.getTime()) ? undefined : value;
   if (typeof value?.seconds === "number") {
     const date = new Date(value.seconds * 1000);
     return Number.isNaN(date.getTime()) ? undefined : date;
@@ -208,7 +223,10 @@ function pushUnique(entries, seen, path, options) {
         opts = {
           ...options,
           priority: sm.priority !== undefined ? sm.priority : options?.priority,
-          changeFrequency: sm.changeFreq !== undefined ? sm.changeFreq : options?.changeFrequency,
+          changeFrequency:
+            sm.changeFreq !== undefined
+              ? sm.changeFreq
+              : options?.changeFrequency,
         };
       }
     } catch {
@@ -265,7 +283,10 @@ function decodeFirestoreDocument(document) {
 
 async function listPublicFirestoreDocs(path, pageSize = 100) {
   const controller = new AbortController();
-  const timeout = setTimeout(() => controller.abort(), SEO_FIRESTORE_LIST_TIMEOUT_MS);
+  const timeout = setTimeout(
+    () => controller.abort(),
+    SEO_FIRESTORE_LIST_TIMEOUT_MS,
+  );
 
   try {
     const response = await fetch(firestoreCollectionUrl(path, pageSize), {
@@ -313,9 +334,18 @@ async function getLiveSitemapCollections() {
   ] = await Promise.all([
     fetchFirebaseBlogsForSeo(),
     listPublicFirestoreDocs(`${FIREBASE_PROJECT_ROOT}/extensions`, 100),
-    listPublicFirestoreDocs(`${FIREBASE_PROJECT_ROOT}/consumerrating/data/categories`, 100),
-    listPublicFirestoreDocs(`${FIREBASE_PROJECT_ROOT}/consumerrating/data/subcategories`, 100),
-    listPublicFirestoreDocs(`${FIREBASE_PROJECT_ROOT}/consumerrating/data/brands`, 100),
+    listPublicFirestoreDocs(
+      `${FIREBASE_PROJECT_ROOT}/consumerrating/data/categories`,
+      100,
+    ),
+    listPublicFirestoreDocs(
+      `${FIREBASE_PROJECT_ROOT}/consumerrating/data/subcategories`,
+      100,
+    ),
+    listPublicFirestoreDocs(
+      `${FIREBASE_PROJECT_ROOT}/consumerrating/data/brands`,
+      100,
+    ),
   ]);
 
   return {
@@ -343,7 +373,9 @@ async function buildSitemapEntries({
   const seen = new Set();
   // ALTF Engine: load central config once per build. Returns an empty/disabled
   // config (inert) unless the engine is enabled, so output is unchanged by default.
-  activeSeoConfig = includeSeoConfig ? await loadSeoConfig().catch(() => null) : null;
+  activeSeoConfig = includeSeoConfig
+    ? await loadSeoConfig().catch(() => null)
+    : null;
   const liveCollections = includeLiveCollections
     ? await getLiveSitemapCollections()
     : EMPTY_LIVE_COLLECTIONS;
@@ -357,7 +389,9 @@ async function buildSitemapEntries({
   }
 
   for (const category of HN_CATEGORIES) {
-    for (const page of category.pages.filter((item) => item.tags?.includes("Guide"))) {
+    for (const page of category.pages.filter((item) =>
+      item.tags?.includes("Guide"),
+    )) {
       pushUnique(entries, seen, page.href, {
         priority: 0.8,
         changeFrequency: "monthly",
@@ -410,12 +444,40 @@ async function buildSitemapEntries({
     });
   }
 
+  for (const category of altfNativeGameCategories) {
+    pushUnique(entries, seen, `/altfgame/category/${category.slug}`, {
+      priority: 0.58,
+      changeFrequency: "monthly",
+    });
+  }
+
+  for (const game of altfNativeGames) {
+    pushUnique(entries, seen, `/altfgame/${game.slug}`, {
+      priority: 0.62,
+      changeFrequency: "monthly",
+      images: game.image ? [absoluteUrl(game.image)] : undefined,
+    });
+  }
+
+  for (const item of promptStudioItems.filter((entry) =>
+    ["core", "model", "category"].includes(entry.kind),
+  )) {
+    pushUnique(entries, seen, `/imgprompt/studio/${item.slug}`, {
+      priority: item.kind === "core" ? 0.64 : 0.56,
+      changeFrequency: "monthly",
+    });
+  }
+
   const toolCategories = new Set(["all"]);
   for (const tool of Object.values(toolMetaMap)) {
-    const categories = Array.isArray(tool.category) ? tool.category : [tool.category];
+    const categories = Array.isArray(tool.category)
+      ? tool.category
+      : [tool.category];
     // Must match the /tools/[category] route slugs (slugifyCategory), not
     // normalizeSlug — the two disagree on "&" ("design-color" vs "design-and-color").
-    categories.filter(Boolean).forEach((category) => toolCategories.add(slugifyCategory(category)));
+    categories
+      .filter(Boolean)
+      .forEach((category) => toolCategories.add(slugifyCategory(category)));
   }
 
   for (const category of [...toolCategories].sort()) {
@@ -455,7 +517,10 @@ async function buildSitemapEntries({
   for (const blog of liveCollections.firebaseBlogs) {
     if (blog?.slug) {
       pushUnique(entries, seen, `/blogs/${blog.slug}`, {
-        lastModified: blog.updatedAt || blog.date ? new Date(blog.updatedAt || blog.date) : undefined,
+        lastModified:
+          blog.updatedAt || blog.date
+            ? new Date(blog.updatedAt || blog.date)
+            : undefined,
         priority: 0.72,
         changeFrequency: "weekly",
         images: blog.image ? [absoluteUrl(blog.image)] : undefined,
@@ -465,7 +530,10 @@ async function buildSitemapEntries({
 
   // GEO landing pages (Entity SEO) — every registry location, plus the hub.
   // Adding a location to src/platform/seo/geoLocations.js adds it here too.
-  pushUnique(entries, seen, "/locations", { priority: 0.6, changeFrequency: "weekly" });
+  pushUnique(entries, seen, "/locations", {
+    priority: 0.6,
+    changeFrequency: "weekly",
+  });
   for (const geo of getAllGeoSlugs()) {
     pushUnique(entries, seen, `/locations/${geo}`, {
       priority: 0.55,
@@ -473,7 +541,9 @@ async function buildSitemapEntries({
     });
   }
 
-  for (const category of getBlogCategories(sitemapBlogs).filter((item) => item !== "All")) {
+  for (const category of getBlogCategories(sitemapBlogs).filter(
+    (item) => item !== "All",
+  )) {
     const categorySlug = blogTaxonomySlug(category);
     if (categorySlug) {
       pushUnique(entries, seen, `/blogs/category/${categorySlug}`, {
@@ -496,14 +566,18 @@ async function buildSitemapEntries({
   for (const author of getBlogAuthors(sitemapBlogs)) {
     if (author?.slug) {
       pushUnique(entries, seen, `/blogs/author/${author.slug}`, {
-        lastModified: author.lastUpdated ? new Date(author.lastUpdated) : undefined,
+        lastModified: author.lastUpdated
+          ? new Date(author.lastUpdated)
+          : undefined,
         priority: 0.56,
         changeFrequency: "weekly",
       });
     }
   }
 
-  for (const cluster of getBlogTopicClusters(sitemapBlogs).filter((item) => item.postCount > 0)) {
+  for (const cluster of getBlogTopicClusters(sitemapBlogs).filter(
+    (item) => item.postCount > 0,
+  )) {
     pushUnique(entries, seen, `/blogs/topics/${cluster.slug}`, {
       priority: 0.62,
       changeFrequency: "weekly",
@@ -514,9 +588,10 @@ async function buildSitemapEntries({
     const slug = normalizeSlug(extension.slug || extension.id);
     if (slug) {
       pushUnique(entries, seen, `/extensions/${slug}`, {
-        lastModified: extension.updatedAt || extension.createdAt
-          ? new Date(extension.updatedAt || extension.createdAt)
-          : undefined,
+        lastModified:
+          extension.updatedAt || extension.createdAt
+            ? new Date(extension.updatedAt || extension.createdAt)
+            : undefined,
         priority: 0.62,
         changeFrequency: "weekly",
       });
@@ -550,13 +625,19 @@ async function buildSitemapEntries({
     const subcategorySlug = normalizeSlug(subcategory?.name);
 
     if (categorySlug && subcategorySlug) {
-      pushUnique(entries, seen, `/brandrating/${categorySlug}/${subcategorySlug}`, {
-        lastModified: subcategory.updatedAt || subcategory.createdAt
-          ? new Date(subcategory.updatedAt || subcategory.createdAt)
-          : undefined,
-        priority: 0.62,
-        changeFrequency: "weekly",
-      });
+      pushUnique(
+        entries,
+        seen,
+        `/brandrating/${categorySlug}/${subcategorySlug}`,
+        {
+          lastModified:
+            subcategory.updatedAt || subcategory.createdAt
+              ? new Date(subcategory.updatedAt || subcategory.createdAt)
+              : undefined,
+          priority: 0.62,
+          changeFrequency: "weekly",
+        },
+      );
     }
   }
 
@@ -568,11 +649,19 @@ async function buildSitemapEntries({
     const brandSlug = normalizeSlug(brand?.name);
 
     if (categorySlug && subcategorySlug && brandSlug) {
-      pushUnique(entries, seen, `/brandrating/${categorySlug}/${subcategorySlug}/${brandSlug}`, {
-        lastModified: brand.updatedAt || brand.createdAt ? new Date(brand.updatedAt || brand.createdAt) : undefined,
-        priority: 0.58,
-        changeFrequency: "weekly",
-      });
+      pushUnique(
+        entries,
+        seen,
+        `/brandrating/${categorySlug}/${subcategorySlug}/${brandSlug}`,
+        {
+          lastModified:
+            brand.updatedAt || brand.createdAt
+              ? new Date(brand.updatedAt || brand.createdAt)
+              : undefined,
+          priority: 0.58,
+          changeFrequency: "weekly",
+        },
+      );
     }
   }
 
@@ -603,14 +692,24 @@ async function buildSitemapEntries({
 
     for (const brand of category.brands || []) {
       if (!brand?.id) continue;
-      pushUnique(entries, seen, `/exclusivedeals/${category.slug}/${brand.id}`, {
-        priority: 0.64,
-        changeFrequency: "weekly",
-      });
-      pushUnique(entries, seen, `/exclusivedeals/store/${category.slug}/${brand.id}`, {
-        priority: 0.58,
-        changeFrequency: "weekly",
-      });
+      pushUnique(
+        entries,
+        seen,
+        `/exclusivedeals/${category.slug}/${brand.id}`,
+        {
+          priority: 0.64,
+          changeFrequency: "weekly",
+        },
+      );
+      pushUnique(
+        entries,
+        seen,
+        `/exclusivedeals/store/${category.slug}/${brand.id}`,
+        {
+          priority: 0.58,
+          changeFrequency: "weekly",
+        },
+      );
     }
   }
 
@@ -632,7 +731,9 @@ async function buildSitemapEntries({
   for (const category of wattpadCategories) {
     if (category?.slug) {
       pushUnique(entries, seen, `/wattpad/category/${category.slug}`, {
-        lastModified: category.createdAt ? new Date(category.createdAt) : undefined,
+        lastModified: category.createdAt
+          ? new Date(category.createdAt)
+          : undefined,
         priority: 0.54,
         changeFrequency: "monthly",
       });
@@ -742,7 +843,10 @@ async function buildSitemapEntries({
   for (const page of tripFindBoxPages) {
     if (page?.slug) {
       pushUnique(entries, seen, `/bops/tripfindbox/${page.slug}`, {
-        priority: page.section === "Top Cities" || page.section === "Top Airlines" ? 0.62 : 0.52,
+        priority:
+          page.section === "Top Cities" || page.section === "Top Airlines"
+            ? 0.62
+            : 0.52,
         changeFrequency: "monthly",
       });
     }
@@ -789,7 +893,7 @@ async function buildSitemapEntries({
 
 export const getSitemapEntries = unstable_cache(
   buildSitemapEntries,
-  ["altftool-sitemap-entries-v1"],
+  ["altftool-sitemap-entries-v3"],
   {
     revalidate: 3600,
     tags: ["altftool-sitemap-entries"],
@@ -802,7 +906,7 @@ export const getStaticSearchSitemapEntries = unstable_cache(
       includeLiveCollections: false,
       includeSeoConfig: false,
     }),
-  ["altftool-static-search-sitemap-entries-v1"],
+  ["altftool-static-search-sitemap-entries-v3"],
   {
     revalidate: 86400,
     tags: ["altftool-static-search-sitemap-entries"],

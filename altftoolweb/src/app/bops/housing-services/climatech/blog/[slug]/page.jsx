@@ -3,6 +3,7 @@ import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { createPageMetadata } from "@/platform/seo/generateMetadata";
 
 export async function generateStaticParams() {
   return blogArticles.map((article) => ({
@@ -13,11 +14,27 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }) {
   const { slug } = await params;
   const article = blogArticles.find((a) => a.slug === slug);
-  if (!article) return {};
-  return {
+  const path = `/bops/housing-services/climatech/blog/${slug}`;
+
+  if (!article) {
+    return createPageMetadata({
+      title: "ClimaTech guide not found",
+      path,
+      noindex: true,
+      follow: false,
+    });
+  }
+
+  return createPageMetadata({
     title: article.seoTitle,
     description: article.metaDesc,
-  };
+    path,
+    image: article.image,
+    type: "article",
+    noindex: true,
+    follow: true,
+    pageType: "business-ops-preview",
+  });
 }
 
 export default async function BlogPage({ params }) {

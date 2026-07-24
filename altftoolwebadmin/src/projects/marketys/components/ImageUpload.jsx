@@ -3,7 +3,7 @@
 import { useState, useRef } from "react";
 import { Upload, X, Loader2, ImageIcon } from "lucide-react";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
-import { storage } from "@/lib/firebase";
+import { storage } from "@/lib/firebaseStorage";
 
 export default function ImageUpload({ value, onChange, label = "Image", folder = "marketys/images" }) {
   const [uploading, setUploading] = useState(false);

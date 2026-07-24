@@ -1,7 +1,7 @@
 // ALTF Engine — admin client service for the central SEO config.
 // All writes go through the authenticated /api/seo/config route (Bearer token).
 
-import { auth } from "@/lib/firebase";
+import { auth } from "@/lib/firebaseAuth";
 import { readApiJson } from "@/lib/apiClient";
 
 async function authHeaders() {

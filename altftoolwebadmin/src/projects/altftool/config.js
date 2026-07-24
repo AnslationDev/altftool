@@ -15,13 +15,12 @@ import {
   LayoutTemplate,
   Radar,
 } from "lucide-react";
-import AltfLogo from "../../../public/logos/altflogo.png";
 
 const altftoolConfig = {
   id: "altftool",
   name: "AltFTool",
-  logo: AltfLogo,
-  color: "#6366f1",
+  logo: "/brand/altftool-mark.svg",
+  color: "var(--anslation-ds-primary)",
   modules: {
     ads: { label: "Ads", icon: Megaphone },
     buysmart: { label: "BuySmart", icon: ShoppingCart },

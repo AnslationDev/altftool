@@ -8,6 +8,8 @@ export async function generateMetadata({ params }) {
     description:
       "Answer this personality test question on AltFTool to continue your assessment and discover your personality type.",
     path: `/personality/question/${id}`,
+    noindex: true,
+    follow: true,
   });
 }
 

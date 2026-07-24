@@ -1,11 +1,12 @@
 import { notFound } from "next/navigation";
+import { cache } from "react";
 import BlogArchivePage from "../../components/BlogArchivePage";
 import JsonLd from "@/platform/seo/JsonLd";
 import {
   BLOG_TOPIC_CLUSTER_CONFIG,
   blogTaxonomySlug,
+  compactBlogSummary,
   getAllBlogs,
-  getBlogTopicClusterBySlug,
   getBlogTopicClusters,
   mergeBlogPosts,
 } from "../../data";
@@ -35,16 +36,17 @@ async function getMergedPosts() {
   return mergeBlogPosts(getAllBlogs(), firebasePosts);
 }
 
-async function getTopicArchive(topicSlug) {
+const getTopicArchive = cache(async (topicSlug) => {
   const posts = await getMergedPosts();
-  const cluster = getBlogTopicClusterBySlug(topicSlug, posts);
   const clusters = getBlogTopicClusters(posts);
+  const cluster =
+    clusters.find((item) => item.slug === topicSlug) || null;
 
   return {
     cluster,
     clusters,
   };
-}
+});
 
 function getTopicHubFaqs(cluster) {
   if (!cluster) return [];
@@ -100,6 +102,7 @@ export default async function BlogTopicClusterPage({ params }) {
   if (!cluster) notFound();
 
   const path = `/blogs/topics/${cluster.slug}`;
+  const archivePosts = cluster.posts.map(compactBlogSummary);
   const topicFaqs = getTopicHubFaqs(cluster);
   const primaryTag = cluster.relatedTags?.[0];
   const primaryCategory = cluster.relatedCategories?.[0];
@@ -171,7 +174,7 @@ export default async function BlogTopicClusterPage({ params }) {
         eyebrow={cluster.eyebrow}
         title={`${cluster.title} Guides`}
         description={`${cluster.description} This hub connects the strongest related reads so readers can continue the same workflow across multiple articles.`}
-        posts={cluster.posts}
+        posts={archivePosts}
         activeLabel={cluster.title}
         archiveType="topic"
         relatedLabels={relatedLabels}

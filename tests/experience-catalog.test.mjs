@@ -20,7 +20,10 @@ const APP_DIR = path.resolve("altftoolweb/src/app");
 const PAGE_EXTENSIONS = ["js", "jsx", "ts", "tsx"];
 
 function hasStaticPage(route) {
-  const routeDirectory = path.join(APP_DIR, ...route.replace(/^\/+/, "").split("/"));
+  const routeDirectory = path.join(
+    APP_DIR,
+    ...route.replace(/^\/+/, "").split("/"),
+  );
   return PAGE_EXTENSIONS.some((extension) =>
     existsSync(path.join(routeDirectory, `page.${extension}`)),
   );
@@ -55,7 +58,9 @@ function collectNavigationHrefs() {
       item.href,
       ...(item.options || []).map((option) => option.href),
     ]),
-    ...FOOTER_ROUTE_GROUPS.flatMap((group) => group.links.map((link) => link.href)),
+    ...FOOTER_ROUTE_GROUPS.flatMap((group) =>
+      group.links.map((link) => link.href),
+    ),
     ...LEGAL_ROUTE_LINKS.map((link) => link.href),
   ]);
 }
@@ -72,26 +77,42 @@ test("experience catalog has unique, valid, routeable entries", () => {
   );
 
   for (const experience of EXPERIENCE_CATALOG) {
-    assert.ok(EXPERIENCE_GROUPS[experience.group], `${experience.slug} has an unknown group`);
-    assert.ok(hasStaticPage(experience.href), `${experience.href} is missing a static page route`);
+    assert.ok(
+      EXPERIENCE_GROUPS[experience.group],
+      `${experience.slug} has an unknown group`,
+    );
+    assert.ok(
+      hasStaticPage(experience.href),
+      `${experience.href} is missing a static page route`,
+    );
   }
 });
 
 test("header exposes every product suite and Labs experience", () => {
-  const productsMenu = PUBLIC_NAV_ITEMS.find((item) => item.label === "Products");
+  const productsMenu = PUBLIC_NAV_ITEMS.find(
+    (item) => item.label === "Products",
+  );
   const labsMenu = PUBLIC_NAV_ITEMS.find((item) => item.label === "Labs");
   assert.ok(productsMenu, "Products menu is missing");
   assert.ok(labsMenu, "Labs menu is missing");
 
-  const productHrefs = new Set(productsMenu.options.map((option) => option.href));
+  const productHrefs = new Set(
+    productsMenu.options.map((option) => option.href),
+  );
   const labsHrefs = new Set(labsMenu.options.map((option) => option.href));
 
   for (const suite of PRODUCT_SUITE_CATALOG) {
-    assert.ok(productHrefs.has(`/products/${suite.slug}`), `${suite.slug} is missing from Products`);
+    assert.ok(
+      productHrefs.has(`/products/${suite.slug}`),
+      `${suite.slug} is missing from Products`,
+    );
   }
 
   for (const experience of EXPERIENCE_CATALOG) {
-    assert.ok(labsHrefs.has(experience.href), `${experience.slug} is missing from Labs`);
+    assert.ok(
+      labsHrefs.has(experience.href),
+      `${experience.slug} is missing from Labs`,
+    );
   }
 });
 
@@ -118,14 +139,23 @@ test("navigation groups stay routeable, unique, and scannable", () => {
     const hrefs = new Set();
     for (const option of item.options || []) {
       assert.ok(option.group, `${item.label} > ${option.label} is not grouped`);
-      assert.ok(hasRoutablePage(option.href), `${option.href} has no matching page`);
-      assert.ok(!hrefs.has(option.href), `${item.label} repeats ${option.href}`);
+      assert.ok(
+        hasRoutablePage(option.href),
+        `${option.href} has no matching page`,
+      );
+      assert.ok(
+        !hrefs.has(option.href),
+        `${item.label} repeats ${option.href}`,
+      );
       hrefs.add(option.href);
       groups.set(option.group, (groups.get(option.group) || 0) + 1);
     }
 
     for (const [group, count] of groups) {
-      assert.ok(count <= 12, `${item.label} > ${group} is too dense (${count} links)`);
+      assert.ok(
+        count <= 12,
+        `${item.label} > ${group} is too dense (${count} links)`,
+      );
     }
   }
 });
@@ -158,11 +188,15 @@ test("primary public hubs are discoverable from global navigation", () => {
     SITE_ROUTES.locations,
     SITE_ROUTES.labs,
     SITE_ROUTES.games,
+    SITE_ROUTES.docs,
     SITE_ROUTES.support,
     SITE_ROUTES.siteMap,
   ];
 
   for (const route of primaryRoutes) {
-    assert.ok(navigationHrefs.has(route.href), `${route.href} is missing from navigation`);
+    assert.ok(
+      navigationHrefs.has(route.href),
+      `${route.href} is missing from navigation`,
+    );
   }
 });

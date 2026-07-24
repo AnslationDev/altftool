@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { X, Save, Loader2, Star } from "lucide-react";
 import { emitAlert } from "@/lib/alertBus";
 import { collection, addDoc, updateDoc, doc, serverTimestamp } from "firebase/firestore";
-import { db } from "@/lib/firebase";
+import { db } from "@/lib/firebaseFirestore";
 
 const COLLECTION = "projects/marketys/reviews";
 

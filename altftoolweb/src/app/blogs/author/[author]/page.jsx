@@ -1,10 +1,12 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { cache } from "react";
 import { ArrowLeft, BadgeCheck, BookOpen, CalendarClock, Layers3, ShieldCheck, Tags, UserRound } from "lucide-react";
 import BlogCard from "../../components/BlogCard";
 import JsonLd from "@/platform/seo/JsonLd";
 import {
   blogTaxonomySlug,
+  compactBlogSummary,
   getAllBlogs,
   getBlogAuthorBySlug,
   getBlogAuthors,
@@ -35,13 +37,13 @@ async function getMergedPosts() {
   return mergeBlogPosts(getAllBlogs(), firebaseCatalog.posts);
 }
 
-async function getAuthorArchive(authorSlug) {
+const getAuthorArchive = cache(async (authorSlug) => {
   const posts = await getMergedPosts();
   const author = getBlogAuthorBySlug(authorSlug, posts);
   const authors = getBlogAuthors(posts);
 
   return { author, authors };
-}
+});
 
 function formatDate(date) {
   if (!date) return "Recently updated";
@@ -83,6 +85,7 @@ export default async function BlogAuthorPage({ params }) {
   if (!author) notFound();
 
   const path = `/blogs/author/${author.slug}`;
+  const archivePosts = author.posts.map(compactBlogSummary);
   const peerAuthors = authors.filter((item) => item.slug !== author.slug).slice(0, 6);
 
   return (
@@ -180,7 +183,7 @@ export default async function BlogAuthorPage({ params }) {
         </section>
 
         <section className="mt-8 grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-3">
-          {author.posts.map((post) => (
+          {archivePosts.map((post) => (
             <BlogCard
               key={post.slug}
               blog={post}

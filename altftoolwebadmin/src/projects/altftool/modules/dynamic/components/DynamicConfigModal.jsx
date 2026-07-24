@@ -9,7 +9,7 @@ import {
 import { emitAlert } from "@/lib/alertBus";
 import { logAuditEvent } from "@/lib/auditClient";
 import { upsertDynamicRoute } from "../service/dynamic.service";
-import { storage } from "@/lib/firebase";
+import { storage } from "@/lib/firebaseStorage";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import DynamicPreview from "./DynamicPreview";
 

@@ -30,7 +30,7 @@ export async function generateMetadata({ params }) {
 
   return createPageMetadata({
     title: data.title,
-    description: data.description,
+    description: `${data.description} Compare the complete ranked list, features, and practical selection criteria on AltFTool.`,
     path: `/top11/${slug}`,
     image: data.banner,
   });

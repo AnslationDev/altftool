@@ -11,6 +11,8 @@ export async function generateMetadata({ searchParams }) {
     title: query ? `Fact Hub Search - ${query}` : "Fact Hub Search",
     description: "Search original Fact Hub titles, descriptions, categories, and topic records.",
     path: "/fact-net/search",
+    noindex: true,
+    follow: true,
   });
 }
 

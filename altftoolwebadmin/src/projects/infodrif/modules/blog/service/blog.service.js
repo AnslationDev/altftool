@@ -1,5 +1,5 @@
 import { doc, getDoc } from "firebase/firestore";
-import { db } from "@/lib/firebase";
+import { db } from "@/lib/firebaseFirestore";
 import { createCollectionCrudService, createSingletonDocService } from "@/lib/firestoreCrud";
 import { createImageUploader } from "@/lib/storageUpload";
 

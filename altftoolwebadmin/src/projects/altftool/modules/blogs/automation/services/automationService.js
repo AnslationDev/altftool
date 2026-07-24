@@ -16,7 +16,8 @@ import {
   setDoc,
   updateDoc,
 } from "firebase/firestore";
-import { auth, db } from "@/lib/firebase";
+import { auth } from "@/lib/firebaseAuth";
+import { db } from "@/lib/firebaseFirestore";
 import {
   fetchSeoConfig,
   saveSeoConfig,

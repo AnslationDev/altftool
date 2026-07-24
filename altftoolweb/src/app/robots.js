@@ -44,5 +44,9 @@ export default async function robots() {
     ? [`${getSiteUrl()}/sitemap.xml`, ...crawl.extraSitemaps]
     : `${getSiteUrl()}/sitemap.xml`;
 
-  return { rules: [rule, aiCrawlerRule], sitemap };
+  return {
+    rules: [rule, aiCrawlerRule],
+    sitemap,
+    host: getSiteUrl(),
+  };
 }

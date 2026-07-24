@@ -29,12 +29,7 @@
   min-width: 0;
 }
 
-/* Baseline alignment is the whole trick here. The wordmark's ink fills its
-   canvas exactly (255x89 of a 256x89 file, zero padding), and "Alt F" has no
-   descender — so the bottom edge of the image IS the typographic baseline.
-   An <img> baseline-aligns on its bottom margin edge, so `align-items:
-   baseline` drops the logo onto the same baseline as the "by" text with no
-   magic offsets. Do not switch this to center. */
+/* Keep the shared lockup aligned to the module label baseline. */
 .altf-by {
   display: inline-flex;
   align-items: baseline;
@@ -64,25 +59,19 @@
   outline-offset: 3px;
 }
 
-/* Height is set from the cap height of the surrounding label rather than a
-   round number, so the lockup keeps its proportions if the header type scale
-   changes. Width auto preserves the 2.865 ink aspect. */
 .altf-by-logo {
   height: 0.8rem;
-  width: auto;
-  display: block;
   opacity: .92;
   transition: opacity .15s ease;
 }
 
+.altf-by-logo .alt-ui-brand-logo__wordmark {
+  font-size: 0.8rem;
+}
+
 .altf-by-link:hover .altf-by-logo { opacity: 1; }
 
-/* Dark mode: recolour the single teal asset to white. brightness(0) crushes
-   every opaque pixel to black, invert(1) lifts it to white; alpha is
-   untouched, so the glyph shape and padding stay pixel-identical to light
-   mode. This is why one asset can serve both themes. */
 [data-theme="dark"] .altf-by-logo {
-  filter: brightness(0) invert(1);
   opacity: .88;
 }
 

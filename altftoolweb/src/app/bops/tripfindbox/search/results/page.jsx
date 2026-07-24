@@ -6,6 +6,8 @@ export async function generateMetadata() {
     title: "Flight Search Results | TripFindBox",
     description: "Compare flight options, fares, and routes from your TripFindBox search and select the best trip.",
     path: "/bops/tripfindbox/search/results",
+    noindex: true,
+    follow: true,
   });
 }
 
