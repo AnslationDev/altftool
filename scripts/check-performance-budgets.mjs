@@ -470,7 +470,9 @@ async function checkSourceGuardrails(rootDir, sourceRoot, options) {
     ];
     runtimeToolSlugs = runtimeImportMatches.map((match) => match[1] || match[2]);
     runtimeImportMismatches = runtimeImportMatches
-      .filter((match) => (match[1] || match[2]) !== match[3])
+      // Shared runtimes intentionally serve several registry slugs from one
+      // implementation. Only dedicated runtime imports must match their key.
+      .filter((match) => !match[3].startsWith("_shared/") && (match[1] || match[2]) !== match[3])
       .map((match) => ({ mapKey: match[1] || match[2], importSlug: match[3] }));
     dynamicToolImports = runtimeImportMatches.length || [...content.matchAll(/=>\s*import\(["']@\/tools\//g)].length;
 
