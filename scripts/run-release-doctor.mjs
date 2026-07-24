@@ -534,7 +534,7 @@ async function checkProductionLinks({ offline = false, timeoutMs = 10000 } = {})
     process.env.ALTFT_LINK_CHECK_URL ||
       process.env.ALTFT_MONITOR_WEB_URL ||
       process.env.ALTFT_RELEASE_DOCTOR_WEB_URL ||
-      "https://altftool.com",
+      "https://www.altftool.com",
   ).replace(/\/+$/, "");
 
   if (offline) {
@@ -601,7 +601,7 @@ async function checkProductionFreshness({ offline = false, timeoutMs = 5000 } = 
   const baseUrl = String(
     process.env.ALTFT_MONITOR_WEB_URL ||
       process.env.ALTFT_RELEASE_DOCTOR_WEB_URL ||
-      "https://altftool.com",
+      "https://www.altftool.com",
   ).replace(/\/+$/, "");
   const healthUrl = `${baseUrl}/api/health`;
 

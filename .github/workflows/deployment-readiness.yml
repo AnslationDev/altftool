@@ -28,7 +28,7 @@ jobs:
       GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
       OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
       NEXT_PUBLIC_DEEPSEEK_API_KEY: ${{ secrets.NEXT_PUBLIC_DEEPSEEK_API_KEY }}
-      ALTFT_MONITOR_WEB_URL: ${{ vars.ALTFT_MONITOR_WEB_URL || 'https://altftool.com' }}
+      ALTFT_MONITOR_WEB_URL: ${{ vars.ALTFT_MONITOR_WEB_URL || 'https://www.altftool.com' }}
       ALTFT_MONITOR_ADMIN_URL: ${{ vars.ALTFT_MONITOR_ADMIN_URL || 'https://adsmanager.altftool.com' }}
       ALTFT_MONITOR_ADMIN_TOKEN: ${{ secrets.ALTFT_MONITOR_ADMIN_TOKEN }}
       ALTFT_MONITOR_ADMIN_EMAIL: ${{ secrets.ALTFT_MONITOR_ADMIN_EMAIL }}
@@ -74,12 +74,12 @@ jobs:
 
       - name: Verify production links and images
         env:
-          ALTFT_LINK_CHECK_URL: ${{ vars.ALTFT_MONITOR_WEB_URL || 'https://altftool.com' }}
+          ALTFT_LINK_CHECK_URL: ${{ vars.ALTFT_MONITOR_WEB_URL || 'https://www.altftool.com' }}
         run: npm run monitor:links:strict -- --limit 12 --output production-links-report.json --output-md production-links-report.md
 
       - name: Run release doctor gate
         env:
-          ALTFT_RELEASE_DOCTOR_WEB_URL: ${{ vars.ALTFT_MONITOR_WEB_URL || 'https://altftool.com' }}
+          ALTFT_RELEASE_DOCTOR_WEB_URL: ${{ vars.ALTFT_MONITOR_WEB_URL || 'https://www.altftool.com' }}
         run: npm run release:doctor:strict -- --require-vercel-token --output release-doctor-report.json --output-md release-doctor-report.md
 
       - name: Upload deployment readiness reports
