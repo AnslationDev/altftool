@@ -57,7 +57,7 @@ function GameCard({ slug, tool }) {
 export async function generateMetadata() {
   const count = getGameEntries().length;
   return createPageMetadata({
-    title: `Free Online Games – Play ${count}+ Browser Games`,
+    title: `AltFTool Games Hub – Play ${count}+ Free Browser Games`,
     description:
       "Play free online games in your browser — puzzle, arcade, word, card and board games. No downloads, no sign-up: minesweeper, solitaire, sudoku, typing test and more.",
     path: "/games",

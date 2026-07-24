@@ -180,7 +180,11 @@ jobs:
 
   visual-regression:
     runs-on: macos-latest
-    timeout-minutes: 30
+    timeout-minutes: 45
+    env:
+      NEXT_PUBLIC_FIREBASE_PROJECT_ID: build-placeholder
+      ALTFT_FIRESTORE_REST_TIMEOUT_MS: "500"
+      NEXT_PUBLIC_USE_MOCK: "true"
 
     steps:
       - name: Checkout
@@ -196,11 +200,18 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      # The 1,300+ tool graph is intentionally compiled once with the same
+      # memory-safe webpack production path used by release builds. Starting
+      # it in webpack dev mode here can spend the full visual timeout compiling
+      # route chunks and exhaust the default Node heap on macOS runners.
+      - name: Build production apps for visual regression
+        run: npm run build
+
       - name: Install Playwright browser
         run: npx playwright install chromium
 
       - name: Run visual regression
-        run: npm run test:visual
+        run: ALTFT_PLAYWRIGHT_WEB_SERVER=production ALTFT_PLAYWRIGHT_ADMIN_SERVER=production npm run test:visual
 
       - name: Upload visual artifacts
         if: failure()

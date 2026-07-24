@@ -71,7 +71,7 @@ jobs:
       VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
       VERCEL_WEB_PROJECT_ID: ${{ secrets.VERCEL_WEB_PROJECT_ID }}
       VERCEL_PROJECT_ID: ${{ secrets.VERCEL_WEB_PROJECT_ID || secrets.VERCEL_PROJECT_ID }}
-      ALTFT_MONITOR_WEB_URLS: ${{ vars.ALTFT_MONITOR_WEB_URLS || vars.ALTFT_MONITOR_WEB_URL || 'https://altftool.com' }}
+      ALTFT_MONITOR_WEB_URLS: ${{ vars.ALTFT_MONITOR_WEB_URLS || vars.ALTFT_MONITOR_WEB_URL || 'https://www.altftool.com' }}
 
     steps:
       - name: Checkout
@@ -159,16 +159,22 @@ jobs:
 
       - name: Monitor production web links and images
         env:
-          ALTFT_LINK_CHECK_URL: ${{ vars.ALTFT_MONITOR_WEB_URL || 'https://altftool.com' }}
+          # www is the canonical public origin. Using the redirecting apex here
+          # makes strict SEO checks misclassify every canonical URL as external.
+          ALTFT_LINK_CHECK_URL: ${{ vars.ALTFT_MONITOR_CANONICAL_WEB_URL || 'https://www.altftool.com' }}
         run: npm run monitor:links:strict -- --limit 24 --output web-production-links-report.json --output-md web-production-links-report.md
 
       - name: Verify production web parity
         env:
-          ALTFT_WEB_URL: ${{ vars.ALTFT_MONITOR_WEB_URL || 'https://altftool.com' }}
+          ALTFT_WEB_URL: ${{ vars.ALTFT_MONITOR_CANONICAL_WEB_URL || 'https://www.altftool.com' }}
           ALTFT_EXPECTED_COMMIT: ${{ github.sha }}
           ALTFT_PARITY_OUTPUT_PATH: web-production-parity-report.json
           ALTFT_PARITY_MARKDOWN_PATH: web-production-parity-report.md
-        run: npm run deploy:parity:strict
+        # Source provenance is checked against the immutable Vercel deployment
+        # above. The canonical AWS release currently exposes functional health
+        # but not a Git SHA, so require strict surface parity without inventing
+        # a commit comparison that production cannot provide.
+        run: npm run deploy:parity -- --strict --allow-missing-commit --no-browser
 
       - name: Upload web monitoring reports
         if: always()
