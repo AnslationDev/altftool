@@ -2558,6 +2558,17 @@ export const toolMetaMap = {
     "icon": "database",
     "iconColor": "text-blue-600"
   },
+  "consent-receipt-wallet": {
+    "name": "Consent Receipt Wallet",
+    "description": "Track what data you shared, why it was collected, and when consent expires.",
+    "category": [
+      "Security & Privacy",
+      "Productivity"
+    ],
+    "icon": "lock-keyhole",
+    "iconColor": "text-primary",
+    "wideWorkspace": true
+  },
   "constellation-finder": {
     "name": "Constellation Finder",
     "description": "Explore 15+ major constellations with an interactive night sky map",
@@ -2567,6 +2578,17 @@ export const toolMetaMap = {
     ],
     "icon": "stars",
     "iconColor": "text-primary"
+  },
+  "contact-memory-vault": {
+    "name": "Contact Memory Vault",
+    "description": "Privately organize preferences, conversations, and gift ideas.",
+    "category": [
+      "Security & Privacy",
+      "Productivity"
+    ],
+    "icon": "lock-keyhole",
+    "iconColor": "text-primary",
+    "wideWorkspace": true
   },
   "content-calendar-planner": {
     "name": "Content Calendar Planner",
@@ -3444,6 +3466,17 @@ export const toolMetaMap = {
     "iconColor": "text-primary",
     "wideWorkspace": true
   },
+  "digital-legacy-vault": {
+    "name": "Digital Legacy Vault",
+    "description": "Organize emergency instructions and important records for trusted family handoff.",
+    "category": [
+      "Security & Privacy",
+      "Productivity"
+    ],
+    "icon": "lock-keyhole",
+    "iconColor": "text-primary",
+    "wideWorkspace": true
+  },
   "digital-wallet-tool": {
     "name": "Digital Wallet Manager",
     "description": "A digital wallet interface for managing and tracking assets securely.",
@@ -3591,6 +3624,17 @@ export const toolMetaMap = {
     "icon": "list-checks",
     "iconColor": "text-blue-600"
   },
+  "document-expiry-tracker": {
+    "name": "Document Expiry Tracker",
+    "description": "Track passport, visa, certificate, and licence expiry dates.",
+    "category": [
+      "Security & Privacy",
+      "Productivity"
+    ],
+    "icon": "lock-keyhole",
+    "iconColor": "text-primary",
+    "wideWorkspace": true
+  },
   "document-version-timeline": {
     "name": "Document Version Timeline",
     "description": "Convert document changelog notes into a clean timeline of versions, owners, dates, and change themes.",
@@ -3661,6 +3705,17 @@ export const toolMetaMap = {
     ],
     "icon": "wheat",
     "iconColor": "text-teal-600"
+  },
+  "dream-pattern-journal": {
+    "name": "Dream Pattern Journal",
+    "description": "Privately tag dreams and review recurring themes over time.",
+    "category": [
+      "Security & Privacy",
+      "Productivity"
+    ],
+    "icon": "lock-keyhole",
+    "iconColor": "text-primary",
+    "wideWorkspace": true
   },
   "dream-vacation-finder": {
     "name": "Dream Vacation Finder",
@@ -3956,6 +4011,28 @@ export const toolMetaMap = {
     "icon": "lock",
     "iconColor": "text-yellow-500"
   },
+  "encrypted-local-file-vault": {
+    "name": "Encrypted Local File Vault",
+    "description": "Store personal files as an encrypted local record index.",
+    "category": [
+      "Security & Privacy",
+      "Productivity"
+    ],
+    "icon": "lock-keyhole",
+    "iconColor": "text-primary",
+    "wideWorkspace": true
+  },
+  "encrypted-private-journal": {
+    "name": "Encrypted Private Journal",
+    "description": "Keep a searchable private diary entirely in this browser.",
+    "category": [
+      "Security & Privacy",
+      "Productivity"
+    ],
+    "icon": "lock-keyhole",
+    "iconColor": "text-primary",
+    "wideWorkspace": true
+  },
   "enter-sql": {
     "name": "Enter SQL",
     "description": "Format, beautify, and compress SQL statement strings for easy viewing or filling.",
@@ -4224,6 +4301,17 @@ export const toolMetaMap = {
     ],
     "icon": "file-text",
     "iconColor": "text-blue-600"
+  },
+  "family-medical-history-tree": {
+    "name": "Family Medical History Tree",
+    "description": "Map family conditions and hereditary-history notes privately.",
+    "category": [
+      "Security & Privacy",
+      "Productivity"
+    ],
+    "icon": "lock-keyhole",
+    "iconColor": "text-primary",
+    "wideWorkspace": true
   },
   "family-safe-word-generator": {
     "name": "Family Safe-Word Generator",
@@ -5376,6 +5464,17 @@ export const toolMetaMap = {
     "icon": "wrench",
     "iconColor": "text-muted-foreground"
   },
+  "home-insurance-inventory": {
+    "name": "Home Insurance Inventory",
+    "description": "Record household assets, serial numbers, photos, and replacement values.",
+    "category": [
+      "Security & Privacy",
+      "Productivity"
+    ],
+    "icon": "lock-keyhole",
+    "iconColor": "text-primary",
+    "wideWorkspace": true
+  },
   "home-maintenance-scheduler": {
     "name": "Home Maintenance Scheduler",
     "description": "Plan home maintenance tasks with due dates, frequency, priorities, and monthly scheduling.",
@@ -6390,6 +6489,17 @@ export const toolMetaMap = {
     "icon": "keyboard",
     "iconColor": "text-teal-600"
   },
+  "kids-milestone-vaccine-vault": {
+    "name": "Kids Milestone & Vaccine Vault",
+    "description": "Securely track child milestones and vaccination records.",
+    "category": [
+      "Security & Privacy",
+      "Productivity"
+    ],
+    "icon": "lock-keyhole",
+    "iconColor": "text-primary",
+    "wideWorkspace": true
+  },
   "kitchen-multi-timer": {
     "name": "Kitchen Multi-Timer",
     "description": "Run named timers for every dish at once, with real cook-time presets and a plan that gets everything ready together.",
@@ -6441,6 +6551,17 @@ export const toolMetaMap = {
     ],
     "icon": "heart",
     "iconColor": "text-rose-600"
+  },
+  "lab-results-history-tracker": {
+    "name": "Lab Results History Tracker",
+    "description": "Compare private lab measurements over time.",
+    "category": [
+      "Security & Privacy",
+      "Productivity"
+    ],
+    "icon": "lock-keyhole",
+    "iconColor": "text-primary",
+    "wideWorkspace": true
   },
   "land-area-converter": {
     "name": "Land Area Converter (Indian Units)",
@@ -8560,6 +8681,17 @@ export const toolMetaMap = {
     "iconColor": "text-primary",
     "wideWorkspace": true
   },
+  "personal-incident-log": {
+    "name": "Personal Incident Log",
+    "description": "Maintain a timestamped private evidence log for incidents.",
+    "category": [
+      "Security & Privacy",
+      "Productivity"
+    ],
+    "icon": "lock-keyhole",
+    "iconColor": "text-primary",
+    "wideWorkspace": true
+  },
   "pet-age-converter": {
     "name": "Pet Age Calculator (Dog & Cat Years)",
     "description": "See your dog or cat's age in human years with vet-style size-based math, life stages, and lifespan progress.",
@@ -8569,6 +8701,17 @@ export const toolMetaMap = {
     ],
     "icon": "paw-print",
     "iconColor": "text-teal-600"
+  },
+  "pet-health-records-vault": {
+    "name": "Pet Health Records Vault",
+    "description": "Organize vaccines, medicines, weight, and vet visits by pet.",
+    "category": [
+      "Security & Privacy",
+      "Productivity"
+    ],
+    "icon": "lock-keyhole",
+    "iconColor": "text-primary",
+    "wideWorkspace": true
   },
   "pet-name-generator": {
     "name": "Pet Name Generator",
@@ -11192,6 +11335,17 @@ export const toolMetaMap = {
     "icon": "languages",
     "iconColor": "text-blue-700"
   },
+  "therapy-notes-tracker": {
+    "name": "Therapy Notes Tracker",
+    "description": "Keep private session takeaways, exercises, and triggers.",
+    "category": [
+      "Security & Privacy",
+      "Productivity"
+    ],
+    "icon": "lock-keyhole",
+    "iconColor": "text-primary",
+    "wideWorkspace": true
+  },
   "thumbnail-layout-planner": {
     "name": "Thumbnail Layout Planner",
     "description": "Plan YouTube thumbnail layouts with draggable visual elements, live preview, workflow tracking, branding notes, and exportable creative briefs.",
@@ -11834,6 +11988,17 @@ export const toolMetaMap = {
     ],
     "icon": "ruler",
     "iconColor": "text-teal-600"
+  },
+  "warranty-receipt-vault": {
+    "name": "Warranty & Receipt Vault",
+    "description": "Track receipts, serial numbers, warranty terms, and expiry dates.",
+    "category": [
+      "Security & Privacy",
+      "Productivity"
+    ],
+    "icon": "lock-keyhole",
+    "iconColor": "text-primary",
+    "wideWorkspace": true
   },
   "water-intake-calculator": {
     "name": "Water Intake Calculator",
