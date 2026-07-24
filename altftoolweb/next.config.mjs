@@ -19,6 +19,8 @@ function readBuildCpuCount() {
 const buildCpuCount = readBuildCpuCount();
 const parallelMinification =
   process.env.ALTFT_PARALLEL_MINIFY === "true" && buildCpuCount > 1;
+const useWebpackBuildWorker =
+  process.env.ALTFT_WEBPACK_BUILD_WORKER === "true";
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -396,7 +398,7 @@ const nextConfig = {
   experimental: {
     workerThreads: buildCpuCount > 1,
     cpus: buildCpuCount,
-    webpackBuildWorker: false,
+    webpackBuildWorker: useWebpackBuildWorker,
     webpackMemoryOptimizations: true,
   },
 };
