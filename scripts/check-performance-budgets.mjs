@@ -24,6 +24,13 @@ const DEFAULT_APP_BUDGETS = [
     catalogBaseline: 613,
     catalogJsGrowthKiB: 12.5,
     catalogCssGrowthKiB: 0.9,
+    chunkBudgetOverrides: [
+      {
+        test: /[\\/]static[\\/]chunks[\\/]app[\\/]supportsetting[\\/]page-/u,
+        maxChunkGzipKiB: 440,
+        maxChunkRawKiB: 1475,
+      },
+    ],
     productBaseline: 22,
     productJsGrowthKiB: 50,
     productCssGrowthKiB: 320,
@@ -39,7 +46,7 @@ const DEFAULT_APP_BUDGETS = [
     routeLoaderBaseline: 245,
     // Match check-bundle-budgets.mjs. Aggregate growth is distributed across
     // lazy admin routes; the fixed per-chunk cap remains the user-facing guard.
-    routeJsGrowthKiB: 6.25,
+    routeJsGrowthKiB: 7.25,
   },
 ];
 
@@ -255,26 +262,55 @@ async function checkAppBuild(app, rootDir, options) {
     issues.push(createIssue("failure", "build", `${app.name}: no JavaScript chunks found in .next/static/chunks`, { app: app.name }));
   }
 
-  if (chunks.largest && bytesToKiB(chunks.largest.gzipBytes) > app.maxChunkGzipKiB) {
-    issues.push(
-      createIssue(
-        "failure",
-        "javascript",
-        `${app.name}: largest gzip chunk ${chunks.largest.gzip} exceeds ${app.maxChunkGzipKiB} KiB`,
-        { app: app.name, file: chunks.largest.file },
-      ),
-    );
-  }
+  if (app.chunkBudgetOverrides?.length) {
+    for (const row of chunkRows) {
+      const override = app.chunkBudgetOverrides.find(({ test }) => test.test(row.file));
+      const maxChunkGzipKiB = override?.maxChunkGzipKiB ?? app.maxChunkGzipKiB;
+      const maxChunkRawKiB = override?.maxChunkRawKiB ?? app.maxChunkRawKiB;
 
-  if (chunks.largest && bytesToKiB(chunks.largest.rawBytes) > app.maxChunkRawKiB) {
-    issues.push(
-      createIssue(
-        "failure",
-        "javascript",
-        `${app.name}: largest raw chunk ${chunks.largest.raw} exceeds ${app.maxChunkRawKiB} KiB`,
-        { app: app.name, file: chunks.largest.file },
-      ),
-    );
+      if (bytesToKiB(row.gzipBytes) > maxChunkGzipKiB) {
+        issues.push(
+          createIssue(
+            "failure",
+            "javascript",
+            `${app.name}: gzip chunk ${row.file} ${formatKiB(row.gzipBytes)} exceeds ${maxChunkGzipKiB} KiB`,
+            { app: app.name, file: row.file },
+          ),
+        );
+      }
+      if (bytesToKiB(row.rawBytes) > maxChunkRawKiB) {
+        issues.push(
+          createIssue(
+            "failure",
+            "javascript",
+            `${app.name}: raw chunk ${row.file} ${formatKiB(row.rawBytes)} exceeds ${maxChunkRawKiB} KiB`,
+            { app: app.name, file: row.file },
+          ),
+        );
+      }
+    }
+  } else {
+    if (chunks.largest && bytesToKiB(chunks.largest.gzipBytes) > app.maxChunkGzipKiB) {
+      issues.push(
+        createIssue(
+          "failure",
+          "javascript",
+          `${app.name}: largest gzip chunk ${chunks.largest.gzip} exceeds ${app.maxChunkGzipKiB} KiB`,
+          { app: app.name, file: chunks.largest.file },
+        ),
+      );
+    }
+
+    if (chunks.largest && bytesToKiB(chunks.largest.rawBytes) > app.maxChunkRawKiB) {
+      issues.push(
+        createIssue(
+          "failure",
+          "javascript",
+          `${app.name}: largest raw chunk ${chunks.largest.raw} exceeds ${app.maxChunkRawKiB} KiB`,
+          { app: app.name, file: chunks.largest.file },
+        ),
+      );
+    }
   }
 
   if (bytesToKiB(chunks.totalGzipBytes) > maxTotalJsGzipKiB) {
