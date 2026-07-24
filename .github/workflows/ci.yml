@@ -180,7 +180,7 @@ jobs:
 
   visual-regression:
     runs-on: macos-latest
-    timeout-minutes: 30
+    timeout-minutes: 45
 
     steps:
       - name: Checkout
@@ -199,11 +199,18 @@ jobs:
       - name: Install Playwright browser
         run: npx playwright install chromium
 
+      - name: Build production apps for visual server
+        env:
+          NEXT_PUBLIC_FIREBASE_PROJECT_ID: build-placeholder
+          ALTFT_FIRESTORE_REST_TIMEOUT_MS: "500"
+        run: npm run build
+
       - name: Run visual regression
         env:
-          # The public tool registry now exceeds 1,100 routes. Next dev needs
-          # more than V8's default heap while compiling the first visual route.
-          NODE_OPTIONS: --max-old-space-size=6144
+          # Avoid compiling the 1,100+ route registry inside Next dev while the
+          # browser is already running; the production servers reuse the
+          # memory-optimized webpack outputs created above.
+          ALTFT_PLAYWRIGHT_SERVER: production
         run: npm run test:visual
 
       - name: Upload visual artifacts
