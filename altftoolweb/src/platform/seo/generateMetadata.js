@@ -171,7 +171,13 @@ function buildVerification(v) {
 function resolveDocumentTitle(title) {
   if (typeof title !== "string") return title;
 
-  const normalizedTitle = title.trim();
+  // Remove duplicated and orphan separators before the root title template
+  // appends its brand suffix.
+  const normalizedTitle = title
+    .trim()
+    .replace(/(?:\s*\|\s*){2,}/g, " | ")
+    .replace(/[\s|–—:-]+$/g, "")
+    .trim();
   const hasLeadingBrand = /^AltFTool(?:\b|\s*[-:|\u2013\u2014])/i.test(
     normalizedTitle,
   );

@@ -462,9 +462,17 @@ function categoryIcon(name = "") {
  * client-side filter as before.
  */
 function CategoryBand({ categories, counts, activeCategory, onChange }) {
-  // Show every category (the row scrolls horizontally) — previously capped at 6,
-  // which silently hid real categories from the frontend.
-  const items = categories.filter((category) => category !== "All");
+  // Show every non-empty category (the row scrolls horizontally), busiest
+  // first. Empty categories reappear automatically when a post is published.
+  const items = categories
+    .filter(
+      (category) =>
+        category !== "All" && (counts[blogTaxonomySlug(category)] || 0) > 0,
+    )
+    .sort(
+      (a, b) =>
+        (counts[blogTaxonomySlug(b)] || 0) - (counts[blogTaxonomySlug(a)] || 0),
+    );
 
   return (
     <section aria-label="Blog categories" className="rounded-2xl border border-(--border) bg-(--card) px-3 py-2 shadow-sm">
