@@ -193,9 +193,9 @@ async function openToolShell(page, slug, heading) {
     waitUntil: "domcontentloaded",
     timeout: toolRouteTimeoutMs,
   });
-  await expect(page.getByRole("heading", { name: heading, exact: true })).toBeVisible({
-    timeout: toolRouteTimeoutMs,
-  });
+  await expect(
+    page.getByRole("heading", { name: heading, exact: true }).first(),
+  ).toBeVisible({ timeout: toolRouteTimeoutMs });
   await expect(page.getByText("Preparing workspace")).toHaveCount(0, {
     timeout: toolRouteTimeoutMs,
   });
