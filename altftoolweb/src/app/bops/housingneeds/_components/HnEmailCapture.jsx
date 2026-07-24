@@ -1,48 +1,25 @@
 "use client";
 
 import { useState } from "react";
-import { BadgeCheck, CheckCircle2, Lock, Mail, ShieldCheck, Star, Zap } from "lucide-react";
-import { markSubscribed } from "../_lib/leadState";
+import { CheckCircle2, Mail } from "lucide-react";
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
-const DEFAULT_PERKS = [
-  "Free quotes from licensed, insured pros near you",
-  "Real cost ranges — so you never overpay a contractor",
-  "First dibs on limited-time local-pro deals & offers",
-];
-
-// Small reassurance chips shown under the field, at the point of action.
-const TRUST_BADGES = [
-  { Icon: ShieldCheck, label: "Secure & encrypted" },
-  { Icon: BadgeCheck, label: "No spam, ever" },
-  { Icon: Star, label: "4.9/5 rated" },
-];
-
 /**
- * Email capture for the Housing Needs funnel — built to convert.
- *
- * Leads with the reward (a free maintenance-calendar PDF), stacks the
- * concrete perks, then reassures on privacy and shows social proof — so the
- * reader feels a clear benefit and a safe ask before typing their email.
+ * Email capture for the Housing Needs funnel.
  *
  * Client-only for now: submission validates, then shows the success state.
  * When a real endpoint exists, POST { email, source } inside handleSubmit —
- * the idle → error → done states already model the round trip.
+ * the component's states (idle → error → done) already model the round trip.
  *
- * `compact` renders the lean single-row variant for CTA bands.
+ * `source` identifies the placement for future attribution (e.g. "hub-benefits",
+ * "vertical-roofing"). `compact` renders the single-row variant for CTA bands.
  */
 export default function HnEmailCapture({
   source = "housingneeds",
   compact = false,
-  heading = "Free quotes + your home savings kit — today",
-  subtext = "Enter your email to unlock free quotes from vetted local pros, our 12-month maintenance calendar, and exclusive limited-time offers.",
-  perks = DEFAULT_PERKS,
-  onDone,
-  // Whether a successful submit broadcasts the subscribe event to the rest of
-  // the page. The mid-page band passes announce={false} so firing it doesn't
-  // yank away its own success message.
-  announce = true,
+  heading = "Get the free 12-month home maintenance calendar",
+  subtext = "Seasonal checklists, cost guides and exclusive quote offers. No spam — unsubscribe anytime.",
 }) {
   const [email, setEmail] = useState("");
   const [state, setState] = useState("idle"); // idle | error | done
@@ -56,20 +33,17 @@ export default function HnEmailCapture({
     // TODO(leads-endpoint): POST { email, source, ts } to /api/leads once the
     // capture backend exists. Client-only success until then.
     void source;
-    markSubscribed(announce);
     setState("done");
-    onDone?.(email);
   }
 
   if (state === "done") {
     return (
       <div className={`hn-email ${compact ? "hn-email--compact" : ""} hn-email--done`}>
-        <CheckCircle2 size={26} strokeWidth={2.2} aria-hidden="true" />
+        <CheckCircle2 size={22} strokeWidth={2.2} aria-hidden="true" />
         <div>
-          <p className="hn-email-done-title">Check your inbox! 🎉</p>
+          <p className="hn-email-done-title">You&rsquo;re on the list!</p>
           <p className="hn-email-done-text">
-            Your free home maintenance calendar is on its way. Add us to your
-            contacts so it doesn&rsquo;t land in spam.
+            Watch your inbox — your maintenance calendar is on its way.
           </p>
         </div>
       </div>
@@ -84,30 +58,15 @@ export default function HnEmailCapture({
     >
       {!compact && (
         <>
-          <span className="hn-email-tag">
-            <Zap size={13} strokeWidth={2.4} aria-hidden="true" />
-            Limited-time &middot; 100% free
+          <span className="hn-email-icon" aria-hidden="true">
+            <Mail size={20} strokeWidth={2.1} />
           </span>
           <p className="hn-email-heading">{heading}</p>
           <p className="hn-email-subtext">{subtext}</p>
-
-          {perks.length > 0 && (
-            <ul className="hn-email-perks">
-              {perks.map((perk) => (
-                <li key={perk}>
-                  <CheckCircle2 size={15} strokeWidth={2.4} aria-hidden="true" />
-                  {perk}
-                </li>
-              ))}
-            </ul>
-          )}
         </>
       )}
 
       <div className="hn-email-row">
-        <span className="hn-email-field" aria-hidden="true">
-          <Mail size={16} strokeWidth={2.1} />
-        </span>
         <label className="hn-sr-only" htmlFor={`hn-email-${source}`}>
           Email address
         </label>
@@ -126,7 +85,7 @@ export default function HnEmailCapture({
           aria-describedby={state === "error" ? `hn-email-err-${source}` : undefined}
         />
         <button type="submit" className="hn-btn hn-btn--primary">
-          {compact ? "Get it free" : "Get Instant Access"}
+          {compact ? "Sign up" : "Send it to me"}
         </button>
       </div>
 
@@ -136,36 +95,8 @@ export default function HnEmailCapture({
         </p>
       )}
 
-      <ul className="hn-email-badges" aria-label="Our guarantees">
-        {TRUST_BADGES.map(({ Icon, label }) => (
-          <li key={label}>
-            <Icon size={13} strokeWidth={2.4} aria-hidden="true" />
-            {label}
-          </li>
-        ))}
-      </ul>
-
-      <p className="hn-email-trust">
-        <Lock size={13} strokeWidth={2.4} aria-hidden="true" />
-        We never sell your email. Unsubscribe in one click.
-      </p>
-
-      {!compact && (
-        <div className="hn-email-proof">
-          <span className="hn-email-avatars" aria-hidden="true">
-            {["ER", "MJ", "DS", "AL"].map((initials) => (
-              <span key={initials}>{initials}</span>
-            ))}
-          </span>
-          <span className="hn-email-proof-text">
-            <span className="hn-email-stars" aria-hidden="true">
-              {Array.from({ length: 5 }, (_, i) => (
-                <Star key={i} size={12} strokeWidth={0} fill="currentColor" />
-              ))}
-            </span>
-            Rated <strong>4.9/5</strong> by <strong>14,000+</strong> U.S. homeowners
-          </span>
-        </div>
+      {compact && (
+        <p className="hn-email-subtext">{subtext}</p>
       )}
     </form>
   );

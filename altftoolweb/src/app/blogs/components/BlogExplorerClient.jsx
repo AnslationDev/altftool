@@ -387,7 +387,8 @@ function FeaturedHeroCarousel({ posts }) {
             alt=""
             fill
             unoptimized={isFirebaseBlogImage(post.image)}
-            priority={index === 0}
+            loading="eager"
+            fetchPriority="high"
             sizes="(max-width: 1024px) 0px, 44vw"
             onError={handleBlogImageError}
             className="object-cover"
@@ -462,9 +463,18 @@ function categoryIcon(name = "") {
  * client-side filter as before.
  */
 function CategoryBand({ categories, counts, activeCategory, onChange }) {
-  // Show every category (the row scrolls horizontally) — previously capped at 6,
-  // which silently hid real categories from the frontend.
-  const items = categories.filter((category) => category !== "All");
+  // Show every non-empty category (the row scrolls horizontally), busiest
+  // first. Zero-article categories are dead-end filters — they reappear
+  // automatically as soon as a post is published in them.
+  const items = categories
+    .filter(
+      (category) =>
+        category !== "All" && (counts[blogTaxonomySlug(category)] || 0) > 0,
+    )
+    .sort(
+      (a, b) =>
+        (counts[blogTaxonomySlug(b)] || 0) - (counts[blogTaxonomySlug(a)] || 0),
+    );
 
   return (
     <section aria-label="Blog categories" className="rounded-2xl border border-(--border) bg-(--card) px-3 py-2 shadow-sm">
@@ -650,7 +660,7 @@ function ArticleRow({ post, searchTerms = [], bookmarked, onToggleBookmark, divi
   );
 }
 
-function PopularArticlesWidget({ posts, onViewAll }) {
+function PopularArticlesWidget({ posts, onViewAll, eagerImageSources }) {
   if (!posts?.length) return null;
   return (
     <div className="rounded-2xl border border-(--border) bg-(--card) p-5 shadow-sm">
@@ -667,6 +677,11 @@ function PopularArticlesWidget({ posts, onViewAll }) {
                 fill
                 unoptimized={isFirebaseBlogImage(post.image)}
                 sizes="56px"
+                loading={
+                  eagerImageSources?.has(getBlogImageSrc(post.image))
+                    ? "eager"
+                    : "lazy"
+                }
                 onError={handleBlogImageError}
                 className="object-cover"
               />
@@ -1115,6 +1130,10 @@ export default function BlogExplorerClient({
     return pool.slice(0, HERO_COUNT);
   }, [posts]);
   const heroSlugs = useMemo(() => new Set(heroPosts.map((post) => post.slug)), [heroPosts]);
+  const heroImageSources = useMemo(
+    () => new Set(heroPosts.map((post) => getBlogImageSrc(post.image))),
+    [heroPosts],
+  );
 
   const filteredPosts = useMemo(() => {
     const activeCategorySlug = blogTaxonomySlug(activeCategory);
@@ -1380,7 +1399,11 @@ export default function BlogExplorerClient({
         {/* Sidebar */}
         <div className="lg:col-span-1">
           <div className="sticky top-20 flex flex-col gap-5 pb-12">
-            <PopularArticlesWidget posts={popularSidebarPosts} onViewAll={() => jumpToArticles("popular")} />
+            <PopularArticlesWidget
+              posts={popularSidebarPosts}
+              eagerImageSources={heroImageSources}
+              onViewAll={() => jumpToArticles("popular")}
+            />
             <NewsletterWidget />
             <QuickAccessWidget
               activeQuery={query}

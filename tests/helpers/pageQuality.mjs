@@ -41,15 +41,8 @@ function isSameOriginUrl(url) {
   }
 }
 
-export function createPageQualityGate(
-  page,
-  { failOnWarnings = false, ignoreIssuePatterns = [] } = {},
-) {
+export function createPageQualityGate(page, { failOnWarnings = false } = {}) {
   let consoleIssues = [];
-
-  function shouldIgnoreIssue(issue) {
-    return ignoreIssuePatterns.some((pattern) => pattern.test(issue));
-  }
 
   // Flag failing responses served by the app itself (missing chunks, broken
   // API routes, dead asset paths). External hosts are excluded on purpose —
@@ -96,9 +89,7 @@ export function createPageQualityGate(
       const issues = [
         ...consoleIssues,
         ...brokenImages.map((image) => `broken image: ${image}`),
-      ]
-        .filter((issue) => !shouldIgnoreIssue(issue))
-        .map((issue) => `${label} -> ${issue}`);
+      ].map((issue) => `${label} -> ${issue}`);
 
       consoleIssues = [];
       return issues;

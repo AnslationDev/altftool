@@ -349,16 +349,7 @@ test("admin public and fallback routes resolve", async ({ page }) => {
 
 test("admin module route surface resolves for local super admin", async ({ page }) => {
   test.setTimeout(adminModuleAuditTimeoutMs);
-  const quality = createPageQualityGate(page, {
-    // The production-mode route audit deliberately builds without deployment
-    // credentials. These known API/auth failures must not hide a broken page,
-    // asset, or unrelated same-origin request.
-    ignoreIssuePatterns: [
-      /^http 401: .*\/api\/notifications\/broadcast(?:\?|$)/,
-      /^http 500: .*\/api\/admin\/list(?:\?|$)/,
-      /FirebaseError: Permission denied on resource project build-placeholder\./,
-    ],
-  });
+  const quality = createPageQualityGate(page);
   const failures = [];
 
   await page.goto(`${adminUrl}/login`, { waitUntil: "domcontentloaded" });
@@ -426,7 +417,7 @@ test("seo endpoints and structured data render", async ({ page, request }) => {
   expect(sitemapText).toContain("/tools/all/api-stress-estimator");
   expect(sitemapText).toContain("/blogs/age-calculator-guide");
   expect(sitemapText).toContain("/exclusivedeals/most-popular");
-  expect(sitemapText).toContain("/extensions");
+  expect(sitemapText).toContain("/extensions/");
 
   const robots = await request.get(`${webUrl}/robots.txt`);
   expect(robots.ok()).toBeTruthy();

@@ -13,18 +13,12 @@ import {
   AlertTriangle,
   Sparkles,
   Zap,
-  Gauge,
-  CalendarClock,
-  Layers,
 } from "lucide-react";
 import { Button, Badge, Alert, SectionHeader } from "@altftool/ui";
 import ManagedImage from "@/components/ui/ManagedImage";
 import { useToast } from "./ToastProvider";
 import StepTimeline from "./StepTimeline";
-import BookmarkButton from "./BookmarkButton";
-import WasThisHelpful from "./WasThisHelpful";
 import { getCategoryById } from "../data/categories";
-import { estimateDifficulty, estimateReadingTime, estimateSupportedVersions } from "../data/deviceTaxonomy";
 
 /**
  * The rich, single-setting detail page — "the biggest change" the second
@@ -38,16 +32,7 @@ import { estimateDifficulty, estimateReadingTime, estimateSupportedVersions } fr
  * nothing here is templated filler, and a section simply doesn't render if
  * the setting has no content for it.
  */
-const SettingDetailPage = ({
-  setting,
-  detectedPlatform,
-  allSettings,
-  onSelectSetting,
-  onVisit,
-  showImages = true,
-  isBookmarked = false,
-  onToggleBookmark,
-}) => {
+const SettingDetailPage = ({ setting, detectedPlatform, allSettings, onSelectSetting, onVisit, showImages = true }) => {
   const [isPending, setIsPending] = useState(false);
   const [openFaq, setOpenFaq] = useState(0);
   const notify = useToast();
@@ -116,37 +101,13 @@ const SettingDetailPage = ({
           <span className="support-detail-hero-icon" aria-hidden="true">
             <Icon className="h-7 w-7" />
           </span>
-          <div className="support-detail-hero-title-col">
+          <div>
             <h1 className="support-detail-title">{setting.title}</h1>
             <p className="support-detail-heading">{setting.heading}</p>
           </div>
-          {onToggleBookmark && (
-            <BookmarkButton active={isBookmarked} onToggle={onToggleBookmark} label={setting.title} />
-          )}
         </div>
 
         <p className="support-detail-description">{setting.description}</p>
-
-        <div className="support-detail-hero-meta">
-          <span className="support-detail-hero-meta-item">
-            <Gauge className="h-3.5 w-3.5" />
-            {estimateDifficulty(setting)}
-          </span>
-          <span className="support-detail-hero-meta-item">
-            <Clock className="h-3.5 w-3.5" />
-            {estimateReadingTime(setting)}
-          </span>
-          <span className="support-detail-hero-meta-item">
-            <Layers className="h-3.5 w-3.5" />
-            {estimateSupportedVersions(setting, setting.platform)}
-          </span>
-          {setting.lastUpdated && (
-            <span className="support-detail-hero-meta-item">
-              <CalendarClock className="h-3.5 w-3.5" />
-              Updated {setting.lastUpdated}
-            </span>
-          )}
-        </div>
 
         <div className="support-detail-hero-actions">
           <Button variant="primary" loading={isPending} onClick={handleAction} className="support-detail-action-btn">
@@ -308,8 +269,6 @@ const SettingDetailPage = ({
           </div>
         </section>
       )}
-
-      <WasThisHelpful />
     </article>
   );
 };

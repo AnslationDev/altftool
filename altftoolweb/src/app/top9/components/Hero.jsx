@@ -1,132 +1,156 @@
 "use client";
+
+import React, { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { Award, Clock3, Flame, Search, Sparkles, Users } from "lucide-react";
-import { useState } from "react";
+import { ChevronLeft, ChevronRight, Search } from "lucide-react";
+
 import { trending } from "@/app/top9/data2/trending";
-const stats = [
-  [Award, "227K+", "Top 9 Lists"],
-  [Sparkles, "150+", "Categories"],
-  [Clock3, "Updated Daily", "Fresh Rankings"],
-  [Users, "Millions", "Readers Worldwide"],
-];
-export default function Hero() {
-  const router = useRouter();
-  const [query, setQuery] = useState("");
-  const [a, b, c, d] = trending;
-  const submit = (e) => {
-    e.preventDefault();
-    const q = query.trim();
-    router.push(q ? `/top9?q=${encodeURIComponent(q)}` : "/top9");
+
+const Hero = () => {
+  const scrollRef = useRef(null);
+  const categoryRef = useRef(null);
+
+  const [canScrollLeft, setCanScrollLeft] = useState(false);
+  const [canScrollRight, setCanScrollRight] = useState(true);
+
+  const checkScroll = () => {
+    const el = scrollRef.current;
+    if (!el) return;
+
+    setCanScrollLeft(el.scrollLeft > 0);
+    setCanScrollRight(el.scrollLeft + el.clientWidth < el.scrollWidth - 5);
   };
+
+  useEffect(() => {
+    const el = scrollRef.current;
+    if (!el) return;
+
+    checkScroll();
+    el.addEventListener("scroll", checkScroll);
+
+    return () => el.removeEventListener("scroll", checkScroll);
+  }, []);
+
+  const scroll = (dir) => {
+    scrollRef.current?.scrollBy({
+      left: dir === "left" ? -400 : 400,
+      behavior: "smooth",
+    });
+  };
+
+  const scrollCategories = (dir) => {
+    categoryRef.current?.scrollBy({
+      left: dir === "left" ? -250 : 250,
+      behavior: "smooth",
+    });
+  };
+
   return (
-    <section className="top9-hero">
-      <div className="top9-shell">
-        <div className="top9-hero-box">
-          <div className="top9-hero-layout">
-            <div>
-              <span className="top9-eyebrow">
-                <Sparkles size={11} /> The world&apos;s best
-              </span>
-              <h1>
-                Discover the World&apos;s
-                <br />
-                <span className="top9-gradient-text">Top 9</span> Rankings
-              </h1>
-              <p className="top9-hero-description">
-                Explore the best Top 9 lists across movies, TV shows, food,
-                travel, technology, sports and more. Curated, ranked and updated
-                daily for you.
-              </p>
-              <form className="top9-search-form" onSubmit={submit}>
-                <input
-                  value={query}
-                  onChange={(e) => setQuery(e.target.value)}
-                  placeholder="Search any Top 9 list..."
-                  aria-label="Search Top 9 lists"
+    <section className="top9-hero py-8 overflow-hidden w-full">
+      <div className="w-full px-3 sm:px-6 lg:px-8">
+
+        {/* Heading */}
+        <h1 className="text-xl sm:text-2xl md:text-4xl font-extrabold text-center mb-10 leading-tight">
+          <span className="top9-gradient-text">227,193 top nine lists</span> for everything under (& including) the sun.
+        </h1>
+
+        {/* Trending Slider (same as before) */}
+        <div className="relative mb-10">
+          {canScrollLeft && (
+            <button
+              onClick={() => scroll("left")}
+              className="top9-primary-action hidden lg:flex absolute left-2 top-1/2 -translate-y-1/2 z-20 w-11 h-11 items-center justify-center rounded-full"
+            >
+              <ChevronLeft size={22} />
+            </button>
+          )}
+
+          <div
+            ref={scrollRef}
+            className="flex gap-5 overflow-x-auto scroll-smooth pb-4 [&::-webkit-scrollbar]:hidden"
+          >
+            {trending.map((item) => (
+              <Link
+                key={item.slug}
+                href={`/top9/${item.slug}`}
+                className="relative flex-shrink-0 w-[180px] h-[180px] sm:w-[220px] sm:h-[220px] lg:w-[240px] lg:h-[240px] overflow-hidden group"
+              >
+                <img
+                  src={item.img}
+                  alt={item.title}
+                  className="w-full h-full object-cover group-hover:scale-110 transition"
                 />
-                <button className="top9-primary-action" aria-label="Search">
-                  <Search size={20} />
-                </button>
-              </form>
-              <div className="top9-popular-searches">
-                <strong>Popular searches:</strong>
-                {[
-                  "Netflix Shows",
-                  "AI Tools",
-                  "Best Cars",
-                  "Travel Destinations",
-                ].map((x) => (
-                  <Link
-                    key={x}
-                    className="top9-query-chip"
-                    href={`/top9?q=${encodeURIComponent(x)}`}
-                  >
-                    {x}
-                  </Link>
-                ))}
-              </div>
-              <div className="top9-stats">
-                {stats.map(([I, v, l]) => (
-                  <div className="top9-stat" key={l}>
-                    <i className="top9-stat-icon">
-                      <I size={16} />
-                    </i>
-                    <p>
-                      <strong>{v}</strong>
-                      <span>{l}</span>
-                    </p>
-                  </div>
-                ))}
-              </div>
-            </div>
-            <div className="top9-hero-collage">
-              <Link
-                className="top9-feature-card top9-feature-main"
-                href={`/top9/${a.slug}`}
-              >
-                <img src={a.img} alt="Top ranked list" />
-                <span className="top9-rank">#1</span>
-                <span className="top9-feature-caption">
-                  Top 9 Sci-Fi Movies
-                  <br />
-                  of All Time<small>View List&nbsp; ?</small>
-                </span>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/90 to-transparent" />
+                <div className="absolute bottom-0 p-4">
+                  <span className="text-white/80 text-xs uppercase">
+                    {item.prefix}
+                  </span>
+                  <p className="text-white font-bold uppercase">
+                    {item.title}
+                  </p>
+                </div>
               </Link>
-              <Link
-                className="top9-feature-card top9-feature-small top9-feature-top"
-                href={`/top9/${b.slug}`}
-              >
-                <img src={b.img} alt="Top food list" />
-                <span className="top9-rank">#2</span>
-                <span className="top9-feature-caption">
-                  Top 9 Street Foods
-                  <br />
-                  Around the World
+            ))}
+          </div>
+
+          {canScrollRight && (
+            <button
+              onClick={() => scroll("right")}
+              className="top9-primary-action hidden lg:flex absolute right-2 top-1/2 -translate-y-1/2 z-20 w-11 h-11 items-center justify-center rounded-full"
+            >
+              <ChevronRight size={22} />
+            </button>
+          )}
+        </div>
+
+        {/* Search */}
+        <div className="max-w-5xl mx-auto relative mb-8 px-2">
+          <input
+            type="text"
+            placeholder="What's your passion?"
+            className="top9-search w-full py-5 pl-6 pr-16 rounded-[var(--anslation-ds-radius-lg)] outline-none focus:border-(--primary)"
+          />
+          <Search className="absolute right-7 top-1/2 -translate-y-1/2 text-(--primary)" />
+        </div>
+
+        {/* CATEGORY BAR (UPDATED LIKE IMAGE) */}
+        <div className="top9-panel flex items-center max-w-6xl mx-auto rounded-full px-2 py-2">
+
+          <button
+            onClick={() => scrollCategories("left")}
+            className="w-10 h-10 flex items-center justify-center text-(--primary)"
+          >
+            <ChevronLeft />
+          </button>
+
+          <div
+            ref={categoryRef}
+            className="flex-1 overflow-x-auto scroll-smooth [&::-webkit-scrollbar]:hidden"
+          >
+            <div className="flex gap-3 whitespace-nowrap px-2">
+              {["TV","Anime","Music","Movies","Countries","2024","Disney","Food","Football","Rap","Games","Metal","Singers","Sports"].map((tag) => (
+                <span
+                  key={tag}
+                  className="top9-pill px-4 py-2 text-sm hover:bg-(--primary)/15 transition cursor-pointer rounded-full"
+                >
+                  {tag}
                 </span>
-              </Link>
-              <Link
-                className="top9-feature-card top9-feature-small top9-feature-bottom"
-                href={`/top9/${c.slug}`}
-              >
-                <img src={c.img} alt="Top travel list" />
-                <span className="top9-rank">#3</span>
-                <span className="top9-feature-caption">
-                  Top 9 Travel Destinations
-                  <br />
-                  You Must Visit
-                </span>
-              </Link>
-              <Link className="top9-trending-note" href={`/top9/${d.slug}`}>
-                <span>
-                  <Flame size={13} /> Trending Now
-                </span>
-                <strong>Top 9 AI Tools for 2026</strong>
-              </Link>
+              ))}
             </div>
           </div>
+
+          <button
+            onClick={() => scrollCategories("right")}
+            className="w-10 h-10 flex items-center justify-center text-(--primary)"
+          >
+            <ChevronRight />
+          </button>
+
         </div>
+
       </div>
     </section>
   );
-}
+};
+
+export default Hero;

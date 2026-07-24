@@ -1,3 +1,5 @@
+"use client";
+
 export const STORAGE_KEY = 'ingredient_substitutes_favorites';
 
 export const loadFavorites = () => {

@@ -41,74 +41,42 @@ const garageDriveway = {
     {
       "icon": "DoorOpen",
       "title": "Garage Door Replacement",
-      "description": "New steel, wood, or insulated sectional doors sized and balanced to the opening, with tracks, rollers, and springs installed as a matched system rather than mixed with worn hardware.",
-      "image": {
-        "src": "https://images.unsplash.com/photo-1712409975551-cae1413218f0",
-        "alt": "Garage Door Replacement"
-      }
+      "description": "New steel, wood, or insulated sectional doors sized and balanced to the opening, with tracks, rollers, and springs installed as a matched system rather than mixed with worn hardware."
     },
     {
       "icon": "Zap",
       "title": "Garage Door Opener Installation",
-      "description": "Belt, chain, or wall-mount jackshaft openers rated for the door's weight, with safety sensors aligned, force limits set, and battery backup where storms make outages likely.",
-      "image": {
-        "src": "https://images.unsplash.com/photo-1507035159636-7a86eb324885",
-        "alt": "Garage Door Opener Installation"
-      }
+      "description": "Belt, chain, or wall-mount jackshaft openers rated for the door's weight, with safety sensors aligned, force limits set, and battery backup where storms make outages likely."
     },
     {
       "icon": "Cable",
       "title": "Spring, Cable and Track Repair",
-      "description": "Replacing broken torsion or extension springs, frayed lift cables, and bent track sections — the high-tension parts that make a door dangerous to service without the right tools.",
-      "image": {
-        "src": "https://images.unsplash.com/photo-1638128024806-588a5789fa62",
-        "alt": "Spring, Cable and Track Repair"
-      }
+      "description": "Replacing broken torsion or extension springs, frayed lift cables, and bent track sections — the high-tension parts that make a door dangerous to service without the right tools."
     },
     {
       "icon": "Construction",
       "title": "Concrete Driveway Paving",
-      "description": "Poured slabs over a compacted gravel base, with control joints sawn or tooled where the concrete will crack anyway, so the cracking happens on a straight line instead of at random.",
-      "image": {
-        "src": "https://images.unsplash.com/photo-1740858923870-52181e170df7",
-        "alt": "Concrete Driveway Paving"
-      }
+      "description": "Poured slabs over a compacted gravel base, with control joints sawn or tooled where the concrete will crack anyway, so the cracking happens on a straight line instead of at random."
     },
     {
       "icon": "Layers",
       "title": "Asphalt Driveway Paving and Resurfacing",
-      "description": "Hot-mix asphalt laid and compacted over a prepared base, or a new lift over structurally sound existing pavement, in the flexible surface that tolerates freeze-thaw movement well.",
-      "image": {
-        "src": "https://images.unsplash.com/photo-1762568742298-bdb91e2cbdd9",
-        "alt": "Asphalt Driveway Paving and Resurfacing"
-      }
+      "description": "Hot-mix asphalt laid and compacted over a prepared base, or a new lift over structurally sound existing pavement, in the flexible surface that tolerates freeze-thaw movement well."
     },
     {
       "icon": "SprayCan",
       "title": "Driveway Sealing and Crack Repair",
-      "description": "Routing and filling cracks before water reaches the base, then sealing the surface — the maintenance step that most affects how long asphalt and concrete actually last.",
-      "image": {
-        "src": "https://images.unsplash.com/photo-1638519941118-ae3f7df0c14d",
-        "alt": "Driveway Sealing and Crack Repair"
-      }
+      "description": "Routing and filling cracks before water reaches the base, then sealing the surface — the maintenance step that most affects how long asphalt and concrete actually last."
     },
     {
       "icon": "PaintRoller",
       "title": "Garage Floor Epoxy Coating",
-      "description": "Grinding the slab to open its pores, repairing spalls and joints, then applying epoxy or polyaspartic coats that resist hot tires, road salt, and oil far better than bare concrete.",
-      "image": {
-        "src": "https://images.unsplash.com/photo-1777269390561-3528b8c2cfd4",
-        "alt": "Garage Floor Epoxy Coating"
-      }
+      "description": "Grinding the slab to open its pores, repairing spalls and joints, then applying epoxy or polyaspartic coats that resist hot tires, road salt, and oil far better than bare concrete."
     },
     {
       "icon": "LayoutGrid",
       "title": "Garage Storage and Organization Systems",
-      "description": "Wall-mounted rail systems, cabinets, and overhead racks that move bikes, tools, and seasonal gear off the floor so the garage can hold a car again.",
-      "image": {
-        "src": "https://images.unsplash.com/photo-1781637202423-33ec5b47e52e",
-        "alt": "Garage Storage and Organization Systems"
-      }
+      "description": "Wall-mounted rail systems, cabinets, and overhead racks that move bikes, tools, and seasonal gear off the floor so the garage can hold a car again."
     }
   ],
   "benefits": [

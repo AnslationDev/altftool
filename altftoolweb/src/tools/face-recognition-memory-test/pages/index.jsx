@@ -352,7 +352,7 @@ export default function FaceRecognitionMemoryTest() {
                 {/* Glowing Profile Head Background */}
                 <div className="absolute inset-0 w-full h-full opacity-90 rounded-2xl overflow-hidden">
                   <img
-                    src="/tools/face-recognition-memory-test/assets/face-recon-bg.png"
+                    src="/images/face-recon-bg.png"
                     alt="Digital Head Silhouette"
                     className="w-full h-full object-cover mix-blend-lighten scale-[1.05]"
                   />
@@ -363,7 +363,7 @@ export default function FaceRecognitionMemoryTest() {
                   <div className="relative">
                     <div className="w-[124px] h-[124px] sm:w-[136px] sm:h-[136px] border-2 border-green-400/80 rounded-[28px] bg-black/45 backdrop-blur-md overflow-hidden flex items-center justify-center p-1 shadow-2xl">
                       <img
-                        src="/tools/face-recognition-memory-test/assets/face-hero-main.png"
+                        src="/images/face-hero-main.png"
                         alt="Target face challenge"
                         className="w-full h-full object-cover rounded-[22px]"
                       />

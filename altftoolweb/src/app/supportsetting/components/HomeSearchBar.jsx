@@ -1,8 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { Search, ArrowRight, Layers } from "lucide-react";
-import { searchEverything } from "../data/search";
+import { Search, ArrowRight } from "lucide-react";
 
 /**
  * The hero search bar on the landing page. It shares the exact same
@@ -10,11 +9,9 @@ import { searchEverything } from "../data/search";
  * SupportClient) — typing here filters the sidebar list too, and this bar
  * additionally shows an inline dropdown of top matches so a first-time
  * visitor can go straight from "I need help with X" to that setting's page
- * without ever touching the sidebar. Results prioritize the active
- * platform, with a compact "Other Platforms" row underneath (Universal
- * Search, item 6) rather than mixing every platform together.
+ * without ever touching the sidebar.
  */
-const HomeSearchBar = ({ settings, searchQuery, onSearchChange, onSelectSetting, platform, onSwitchPlatform }) => {
+const HomeSearchBar = ({ settings, searchQuery, onSearchChange, onSelectSetting }) => {
   const [focused, setFocused] = useState(false);
   const query = searchQuery.trim().toLowerCase();
 
@@ -30,22 +27,12 @@ const HomeSearchBar = ({ settings, searchQuery, onSearchChange, onSelectSetting,
       .slice(0, 6);
   }, [settings, query]);
 
-  const otherPlatforms = useMemo(() => {
-    if (!query || !platform) return [];
-    return searchEverything(query, { platform }).otherPlatforms;
-  }, [query, platform]);
-
   const showDropdown = focused && query.length > 0;
 
   const handleSelect = (id) => {
     onSelectSetting(id);
     onSearchChange("");
     setFocused(false);
-  };
-
-  const handleSelectOtherPlatform = (targetPlatform, id) => {
-    onSwitchPlatform?.(targetPlatform);
-    handleSelect(id);
   };
 
   return (
@@ -91,30 +78,6 @@ const HomeSearchBar = ({ settings, searchQuery, onSearchChange, onSelectSetting,
                 </button>
               );
             })
-          )}
-
-          {otherPlatforms.length > 0 && (
-            <div className="support-home-search-other-platforms">
-              <p className="support-home-search-other-platforms-label">
-                <Layers className="h-3 w-3" /> Other Platforms
-              </p>
-              {otherPlatforms.map((group) => (
-                <div key={group.platform} className="support-home-search-other-platform-row">
-                  <span className="support-home-search-other-platform-name">{group.label}</span>
-                  {group.results.slice(0, 2).map((setting) => (
-                    <button
-                      key={setting.id}
-                      type="button"
-                      className="support-home-search-other-platform-chip"
-                      onMouseDown={(e) => e.preventDefault()}
-                      onClick={() => handleSelectOtherPlatform(group.platform, setting.id)}
-                    >
-                      {setting.title}
-                    </button>
-                  ))}
-                </div>
-              ))}
-            </div>
           )}
         </div>
       )}

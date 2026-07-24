@@ -9,18 +9,14 @@ import { useCallback, useEffect, useState } from "react";
 
 const RECENTLY_USED_KEY = "altftool.supportsetting.recentlyUsed";
 const PAGE_PREFS_KEY = "altftool.supportsetting.pagePrefs";
-const BOOKMARKS_KEY = "altftool.supportsetting.bookmarks";
 const MAX_RECENTLY_USED = 6;
 
 export const DEFAULT_PAGE_PREFS = {
   showStepImages: true,
+  compactCards: false,
   rememberLastVisited: true,
   textSize: "medium", // "small" | "medium" | "large"
-  readingWidth: "comfortable", // "narrow" | "comfortable" | "wide"
-  lineSpacing: "standard", // "compact" | "standard" | "relaxed"
   focusMode: false,
-  highContrast: false,
-  reduceMotion: false,
   sponsoredCollapsed: false,
 };
 
@@ -71,43 +67,7 @@ export function useRecentlyUsed() {
     });
   }, []);
 
-  const clearHistory = useCallback(() => {
-    setIds([]);
-    writeJSON(RECENTLY_USED_KEY, []);
-  }, []);
-
-  return { recentlyUsedIds: ids, markVisited, clearHistory };
-}
-
-/** Lets a visitor star settings/AI tools/device guides worth coming back
- * to — powers both the "Bookmarks" row in Customize This Page and the
- * "Favorite Settings" section on the home dashboard. Purely local, same
- * as everything else in this file. */
-export function useBookmarks() {
-  const [ids, setIds] = useState([]);
-  const [ready, setReady] = useState(false);
-
-  useEffect(() => {
-    setIds(readJSON(BOOKMARKS_KEY, []));
-    setReady(true);
-  }, []);
-
-  const isBookmarked = useCallback((id) => ids.includes(id), [ids]);
-
-  const toggleBookmark = useCallback((id) => {
-    setIds((prev) => {
-      const next = prev.includes(id) ? prev.filter((existing) => existing !== id) : [id, ...prev];
-      writeJSON(BOOKMARKS_KEY, next);
-      return next;
-    });
-  }, []);
-
-  const clearBookmarks = useCallback(() => {
-    setIds([]);
-    writeJSON(BOOKMARKS_KEY, []);
-  }, []);
-
-  return { bookmarkedIds: ids, isBookmarked, toggleBookmark, clearBookmarks, ready };
+  return { recentlyUsedIds: ids, markVisited };
 }
 
 /** Small set of GENUINE in-page preferences — these affect how the

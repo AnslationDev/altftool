@@ -13,7 +13,6 @@ import {
   History,
   Sparkles,
   ArrowRight,
-  Star,
 } from "lucide-react";
 import { SectionHeader } from "@altftool/ui";
 import HomeSearchBar from "./HomeSearchBar";
@@ -71,25 +70,21 @@ const GUIDANCE = [
 ];
 
 /**
- * The default view before any setting is selected — a premium support
- * dashboard rather than a stack of generic cards. Every section earns its
- * place: a functional hero search (platform-aware — Universal Search
- * surfaces matches from other platforms too), a handful of genuinely
- * useful quick actions, an honest live system snapshot, concise
- * actionable guidance, real recent-activity history (with a real empty
- * state, never placeholder data), a tightly-curated popular-settings row,
- * and a support discovery block that nudges people toward help they
- * haven't found yet.
+ * The default view before any setting is selected — redesigned as a
+ * premium support dashboard rather than a stack of generic cards. Every
+ * section earns its place: a functional hero search, a handful of genuinely
+ * useful quick actions, an honest live system snapshot, concise actionable
+ * guidance, real recent-activity history (with a real empty state, never
+ * placeholder data), a tightly-curated popular-settings row, and a support
+ * discovery block that nudges people toward help they haven't found yet.
  */
 const SupportLandingPage = ({
   platform,
-  platformState,
   detectedPlatform,
   allSettings,
   frequentlyUsed,
   recommended,
   recentlyUsedSettings,
-  bookmarkedSettings,
   searchQuery,
   onSearchChange,
   onSelectSetting,
@@ -99,7 +94,6 @@ const SupportLandingPage = ({
   const platformLabel = PLATFORM_LABEL[platform];
   const popularSettings = frequentlyUsed.slice(0, 6);
   const suggestedTopics = recommended.slice(0, 3);
-  const favoriteSettings = bookmarkedSettings || [];
 
   const scrollToOverview = () => {
     document.getElementById("system-overview")?.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -153,8 +147,6 @@ const SupportLandingPage = ({
           searchQuery={searchQuery}
           onSearchChange={onSearchChange}
           onSelectSetting={onSelectSetting}
-          platform={platform}
-          onSwitchPlatform={platformState?.setOverride}
         />
       </header>
 
@@ -207,35 +199,6 @@ const SupportLandingPage = ({
           })}
         </div>
       </section>
-
-      {favoriteSettings.length > 0 && (
-        <section className="support-favorites" aria-label="Favorite settings">
-          <SectionHeader
-            title="Favorite Settings"
-            description="Settings you've starred for quick access."
-            actions={<Star className="h-4 w-4 support-favorites-star" fill="currentColor" />}
-          />
-          <div className="support-popular-grid">
-            {favoriteSettings.map((setting) => {
-              const Icon = setting.icon;
-              return (
-                <button
-                  key={setting.id}
-                  type="button"
-                  className="support-popular-card support-favorite-card"
-                  onClick={() => onSelectSetting(setting.id)}
-                >
-                  <span className="support-popular-icon" aria-hidden="true">
-                    <Icon className="h-4 w-4" />
-                  </span>
-                  <span className="support-popular-title">{setting.title}</span>
-                  <Star className="h-3.5 w-3.5 support-favorite-card-badge" fill="currentColor" aria-hidden="true" />
-                </button>
-              );
-            })}
-          </div>
-        </section>
-      )}
 
       <section className="support-recent" aria-label="Recent activity">
         <SectionHeader title="Recent Activity" description="Settings you've opened recently, for quick access." />

@@ -1,7 +1,7 @@
 import {
   ArrowRight,
   BadgeCheck,
-  ClipboardCheck,
+  CheckCircle2,
   Clock,
   MapPin,
   PhoneCall,
@@ -10,14 +10,11 @@ import {
   Star,
 } from "lucide-react";
 import HnHeader from "./_components/HnHeader";
-import HnTrustBar from "./_components/HnTrustBar";
 import HnFooter from "./_components/HnFooter";
 import HnReveal from "./_components/HnReveal";
 import HnImage from "./_components/HnImage";
 import HnHeadline from "./_components/HnHeadline";
 import HnEmailCapture from "./_components/HnEmailCapture";
-import HnHeroOffer from "./_components/HnHeroOffer";
-import HnSubscribedGate from "./_components/HnSubscribedGate";
 import HnQuoteButton from "./_components/HnQuoteButton";
 import HnQuoteForm from "./_components/HnQuoteForm";
 import AltfLauncher from "@/app/_altf/AltfLauncher";
@@ -121,12 +118,7 @@ export default function HousingNeedsLanding() {
           <span className="hn-hero-scrim" aria-hidden="true" />
           <span className="hn-hero-tint" aria-hidden="true" />
 
-          <HnHeroOffer
-            pageKey="hub"
-            source="hero-hub"
-            heading="Free quotes + your home savings kit — today"
-            subtext="Enter your email to unlock free quotes from licensed pros, our 12-month maintenance calendar, and exclusive limited-time local offers."
-          >
+          <div className="hn-hero-inner">
             <p className="hn-hero-eyebrow">America&rsquo;s home improvement HQ</p>
 
             <h1>
@@ -168,15 +160,12 @@ export default function HousingNeedsLanding() {
                 Browse {stats.categories} services
               </a>
             </div>
-          </HnHeroOffer>
+          </div>
 
           <span className="hn-hero-scroll" aria-hidden="true">
             <span />
           </span>
         </section>
-
-        {/* ---------- trust bar ---------- */}
-        <HnTrustBar />
 
         {/* ---------- how it works ---------- */}
         <section className="hn-section" id="how">
@@ -242,27 +231,33 @@ export default function HousingNeedsLanding() {
           </div>
         </section>
 
-        {/* ---------- email capture beside benefits ----------
-            Hidden once the visitor has already subscribed (band or hero offer). */}
-        <HnSubscribedGate>
-          <section className="hn-section" id="newsletter">
-            <div className="hn-wrap">
-              <HnReveal className="hn-email-band">
-                <div>
-                  <p className="hn-eyebrow">Free homeowner resource</p>
-                  <h2>Own a home? Get ahead of it.</h2>
-                  <p className="hn-lede" style={{ margin: "0.75rem 0 0" }}>
-                    The average homeowner spends thousands on repairs they could
-                    have prevented. Our free maintenance calendar tells you exactly
-                    what to check, and when — so small problems never become big
-                    bills. Grab it in seconds.
-                  </p>
-                </div>
-                <HnEmailCapture source="hub-benefits" announce={false} />
-              </HnReveal>
-            </div>
-          </section>
-        </HnSubscribedGate>
+        {/* ---------- email capture beside benefits ---------- */}
+        <section className="hn-section" id="newsletter">
+          <div className="hn-wrap">
+            <HnReveal className="hn-email-band">
+              <div>
+                <p className="hn-eyebrow">Free homeowner resource</p>
+                <h2>Own a home? Get ahead of it.</h2>
+                <ul className="hn-email-band-points">
+                  <li>
+                    <CheckCircle2 size={17} strokeWidth={2.3} />
+                    The 12-month maintenance calendar that helps you catch small
+                    problems before they become expensive ones
+                  </li>
+                  <li>
+                    <CheckCircle2 size={17} strokeWidth={2.3} />
+                    Honest cost guides for every major home project
+                  </li>
+                  <li>
+                    <CheckCircle2 size={17} strokeWidth={2.3} />
+                    Exclusive quote offers from vetted local pros
+                  </li>
+                </ul>
+              </div>
+              <HnEmailCapture source="hub-benefits" />
+            </HnReveal>
+          </div>
+        </section>
 
         {/* ---------- social proof ---------- */}
         <section className="hn-section hn-section--tint">
@@ -304,58 +299,8 @@ export default function HousingNeedsLanding() {
           </div>
         </section>
 
-        {/* ---------- vetting / trust ---------- */}
-        <section className="hn-section">
-          <div className="hn-wrap">
-            <HnReveal className="hn-head--center">
-              <p className="hn-eyebrow">Peace of mind</p>
-              <h2 className="hn-h2">Every pro, vetted before they reach you</h2>
-              <p className="hn-lede">
-                We do the background work so you don&rsquo;t have to — the pros
-                you compare have already cleared the checks that matter.
-              </p>
-            </HnReveal>
-
-            <div className="hn-vetting">
-              {[
-                {
-                  icon: ClipboardCheck,
-                  title: "License & insurance verified",
-                  text: "We confirm every pro carries a valid license and insurance before they ever reach you.",
-                },
-                {
-                  icon: ShieldCheck,
-                  title: "Reputation-screened",
-                  text: "Only established local pros with a solid track record make it into our network.",
-                },
-                {
-                  icon: Star,
-                  title: "Real homeowner reviews",
-                  text: "Ratings come from real customers — so you hire with your eyes wide open.",
-                },
-                {
-                  icon: BadgeCheck,
-                  title: "Free & no pressure",
-                  text: "Comparing quotes costs nothing, and you’re never obligated to hire anyone.",
-                },
-              ].map((v, index) => {
-                const Icon = v.icon;
-                return (
-                  <HnReveal key={v.title} className="hn-vet-card" delay={index * 60}>
-                    <span className="hn-vet-ico" aria-hidden="true">
-                      <Icon size={24} strokeWidth={2} />
-                    </span>
-                    <h3>{v.title}</h3>
-                    <p>{v.text}</p>
-                  </HnReveal>
-                );
-              })}
-            </div>
-          </div>
-        </section>
-
         {/* ---------- final cta ---------- */}
-        <section className="hn-section hn-section--tint" id="quote">
+        <section className="hn-section" id="quote">
           <div className="hn-wrap">
             <HnReveal className="hn-cta">
               <h2>Your project won&rsquo;t fix itself. Your quote is free.</h2>

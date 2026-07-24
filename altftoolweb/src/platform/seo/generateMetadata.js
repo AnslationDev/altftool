@@ -1,5 +1,5 @@
 import { resolveSeo, applyResolvedSeo, resolveExtendedMeta } from "@altftool/core/seo/resolver";
-import { getSeoConfigSnapshot, loadSeoConfig } from "./seoConfigSource.js";
+import { getSeoConfigSnapshot, primeSeoConfig } from "./seoConfigSource.js";
 import { getGeoCountries } from "./geoLocations.js";
 import { normalizeCanonicalUrl, resolveSiteUrl } from "./siteUrl.js";
 
@@ -97,6 +97,37 @@ function trimMetaDescription(value = "", maxLength = 160) {
   return /[.!?]$/.test(tidy) ? tidy : `${tidy}.`;
 }
 
+export function compactBrandedTitle(value = "", maxLength = 65) {
+  const suffix = ` | ${siteConfig.name}`;
+  const normalized = stripHtml(value)
+    .replace(
+      /(?:\s*(?:\||-|\u2013|\u2014)\s*)?AltFTool(?:\s+Blog)?\s*$/i,
+      "",
+    )
+    // Stored seoTitles sometimes end with a stray separator ("Title |") \u2014
+    // strip it so the brand suffix doesn't render as "Title | | AltFTool".
+    .replace(/[\s|\-\u2013\u2014:]+$/g, "")
+    .trim();
+  const fallback = siteConfig.name;
+  const base = normalized || fallback;
+
+  if (base === fallback) return fallback;
+  if (`${base}${suffix}`.length <= maxLength) return `${base}${suffix}`;
+
+  const available = Math.max(24, maxLength - suffix.length);
+  const clipped = base.slice(0, available + 1);
+  const wordBoundary = clipped.lastIndexOf(" ");
+  const compactBase = (
+    wordBoundary >= Math.floor(available * 0.65)
+      ? clipped.slice(0, wordBoundary)
+      : base.slice(0, available)
+  )
+    .replace(/[,:;\-\s]+$/g, "")
+    .trim();
+
+  return `${compactBase}${suffix}`;
+}
+
 function getWordCount(value = "") {
   const text = stripHtml(value);
   return text ? text.split(/\s+/).filter(Boolean).length : 0;
@@ -171,7 +202,15 @@ function buildVerification(v) {
 function resolveDocumentTitle(title) {
   if (typeof title !== "string") return title;
 
-  const normalizedTitle = title.trim();
+  // Editors sometimes save seoTitles that end mid-suffix ("Title |") or that
+  // arrive with a doubled separator from upstream config merges. Collapse
+  // repeated pipes and strip orphan trailing separators so the layout's
+  // "%s | AltFTool" template can't render "Title | | AltFTool".
+  const normalizedTitle = title
+    .trim()
+    .replace(/(?:\s*\|\s*){2,}/g, " | ")
+    .replace(/[\s|–—:-]+$/g, "")
+    .trim();
   const hasLeadingBrand = /^AltFTool(?:\b|\s*[-:|\u2013\u2014])/i.test(
     normalizedTitle,
   );
@@ -186,9 +225,10 @@ function resolveDocumentTitle(title) {
 }
 
 export async function createPageMetadata(rawArgs = {}) {
-  // Warm the central SEO config snapshot so per-URL admin overrides ALWAYS
-  // apply, regardless of where/when this is called. Inert when engine disabled.
-  await loadSeoConfig();
+  // A cold Firestore read must not hold the first page response hostage. The
+  // prime helper waits fully during builds, but uses a small runtime budget and
+  // lets the shared snapshot finish refreshing in the background.
+  await primeSeoConfig();
   const {
     title,
     description = siteConfig.description,

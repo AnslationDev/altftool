@@ -43,74 +43,42 @@ const cleaning = {
     {
       "icon": "CalendarClock",
       "title": "Recurring House Cleaning",
-      "description": "Weekly, biweekly, or monthly visits on a consistent checklist, so the same rooms get the same attention every time and buildup never gets a head start between cleans.",
-      "image": {
-        "src": "https://images.unsplash.com/photo-1740657254989-42fe9c3b8cce",
-        "alt": "Recurring House Cleaning"
-      }
+      "description": "Weekly, biweekly, or monthly visits on a consistent checklist, so the same rooms get the same attention every time and buildup never gets a head start between cleans."
     },
     {
       "icon": "Sparkles",
       "title": "Deep Cleaning",
-      "description": "A top-to-bottom reset covering what routine visits skip: baseboards, grout lines, vent covers, light fixtures, cabinet fronts, and the buildup behind and under furniture.",
-      "image": {
-        "src": "https://images.unsplash.com/photo-1585421514284-efb74c2b69ba",
-        "alt": "Deep Cleaning"
-      }
+      "description": "A top-to-bottom reset covering what routine visits skip: baseboards, grout lines, vent covers, light fixtures, cabinet fronts, and the buildup behind and under furniture."
     },
     {
       "icon": "DoorOpen",
       "title": "Move-In / Move-Out Cleaning",
-      "description": "An empty-home clean that reaches inside cabinets, closets, and appliances, typically scoped to landlord checklists and lease requirements where a deposit is on the line.",
-      "image": {
-        "src": "https://images.unsplash.com/photo-1581578731548-c64695cc6952",
-        "alt": "Move-In / Move-Out Cleaning"
-      }
+      "description": "An empty-home clean that reaches inside cabinets, closets, and appliances, typically scoped to landlord checklists and lease requirements where a deposit is on the line."
     },
     {
       "icon": "Construction",
       "title": "Post-Construction Cleanup",
-      "description": "Removing the fine dust a renovation leaves in every crevice — settled drywall powder, adhesive residue, paint overspray, and debris — usually across multiple passes as dust resettles.",
-      "image": {
-        "src": "https://images.unsplash.com/photo-1647381518264-97ff1835026f",
-        "alt": "Post-Construction Cleanup"
-      }
+      "description": "Removing the fine dust a renovation leaves in every crevice — settled drywall powder, adhesive residue, paint overspray, and debris — usually across multiple passes as dust resettles."
     },
     {
       "icon": "Sofa",
       "title": "Carpet and Upholstery Cleaning",
-      "description": "Hot water extraction or low-moisture methods for carpet, rugs, and fabric furniture, lifting embedded soil and pet odors that surface vacuuming cannot reach.",
-      "image": {
-        "src": "https://images.unsplash.com/photo-1585417238790-f6d290d6490c",
-        "alt": "Carpet and Upholstery Cleaning"
-      }
+      "description": "Hot water extraction or low-moisture methods for carpet, rugs, and fabric furniture, lifting embedded soil and pet odors that surface vacuuming cannot reach."
     },
     {
       "icon": "AppWindow",
       "title": "Window Washing",
-      "description": "Interior and exterior glass, tracks, sills, and screens cleaned without streaking, often bundled as an add-on to a deep clean or scheduled seasonally on its own.",
-      "image": {
-        "src": "https://images.unsplash.com/photo-1581578949510-fa7315c4c350",
-        "alt": "Window Washing"
-      }
+      "description": "Interior and exterior glass, tracks, sills, and screens cleaned without streaking, often bundled as an add-on to a deep clean or scheduled seasonally on its own."
     },
     {
       "icon": "Refrigerator",
       "title": "Kitchen and Appliance Detailing",
-      "description": "Inside-the-appliance work that standard visits exclude by default: oven interiors, refrigerator shelves and drawers, range hoods, and the grease film on surrounding surfaces.",
-      "image": {
-        "src": "https://images.unsplash.com/photo-1758273705627-937374bfa978",
-        "alt": "Kitchen and Appliance Detailing"
-      }
+      "description": "Inside-the-appliance work that standard visits exclude by default: oven interiors, refrigerator shelves and drawers, range hoods, and the grease film on surrounding surfaces."
     },
     {
       "icon": "Bath",
       "title": "Bathroom Deep Scrub",
-      "description": "Descaling glass and fixtures, treating grout and caulk lines, and disinfecting the surfaces where soap scum and hard-water deposits build faster than weekly wiping removes them.",
-      "image": {
-        "src": "https://images.unsplash.com/photo-1758523670739-0d26a3ee976d",
-        "alt": "Bathroom Deep Scrub"
-      }
+      "description": "Descaling glass and fixtures, treating grout and caulk lines, and disinfecting the surfaces where soap scum and hard-water deposits build faster than weekly wiping removes them."
     }
   ],
   "benefits": [

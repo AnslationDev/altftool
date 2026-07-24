@@ -3,534 +3,181 @@
 
 import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import confetti from "canvas-confetti";
 import {
-  Award,
-  BookOpen,
   Brain,
-  CheckCircle2,
   ChevronRight,
-  Compass,
-  Download,
   Eye,
-  Flame,
-  Heart,
-  HelpCircle,
-  History as HistoryIcon,
-  Info,
   Layers,
   Maximize2,
   Minimize2,
   RotateCcw,
   Search,
-  Share2,
   Sparkles,
-  Trophy,
-  Volume2,
-  VolumeX,
   X,
-  Zap,
   ZoomIn,
   ZoomOut,
 } from "lucide-react";
-import { soundFx, getIllusionGallery, ILLUSIONS } from "./utils.js";
 
-// --- Ambient Background with Floating Particles ---
 export function AmbientBackground() {
   return (
     <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
-      <div className="absolute inset-x-0 top-0 h-64 bg-gradient-to-b from-[#14b8a6]/10 via-[#38bdf8]/5 to-transparent" />
+      <div className="absolute inset-x-0 top-0 h-40 bg-[linear-gradient(180deg,var(--primary)/0.08,transparent)]" />
       <motion.div
-        className="floating-particle left-[8%] top-[12%] h-64 w-64 bg-[#14b8a6] opacity-[0.07] blur-3xl"
-        animate={{ x: [0, 30, -20, 0], y: [0, -25, 20, 0], scale: [1, 1.1, 0.95, 1] }}
-        transition={{ repeat: Infinity, duration: 18, ease: "easeInOut" }}
+        className="absolute left-[6%] top-[10%] h-56 w-56 rounded-full bg-[var(--primary)] opacity-[0.08] blur-3xl"
+        animate={{ x: [0, 24, -12, 0], y: [0, -18, 16, 0], scale: [1, 1.08, 0.96, 1] }}
+        transition={{ repeat: Infinity, duration: 16, ease: "easeInOut" }}
       />
       <motion.div
-        className="floating-particle right-[10%] top-[25%] h-80 w-80 bg-[#38bdf8] opacity-[0.06] blur-3xl"
-        animate={{ x: [0, -35, 25, 0], y: [0, 30, -20, 0], scale: [1, 0.9, 1.1, 1] }}
-        transition={{ repeat: Infinity, duration: 22, ease: "easeInOut" }}
-      />
-      <motion.div
-        className="floating-particle left-[40%] top-[60%] h-72 w-72 bg-[#a855f7] opacity-[0.05] blur-3xl"
-        animate={{ x: [0, 20, -30, 0], y: [0, -20, 25, 0] }}
-        transition={{ repeat: Infinity, duration: 25, ease: "easeInOut" }}
+        className="absolute bottom-[12%] right-[5%] h-72 w-72 rounded-full bg-[var(--primary)] opacity-[0.05] blur-3xl"
+        animate={{ x: [0, -32, 18, 0], y: [0, 18, -16, 0], scale: [1, 0.95, 1.08, 1] }}
+        transition={{ repeat: Infinity, duration: 20, ease: "easeInOut" }}
       />
     </div>
   );
 }
 
-// --- Illusion Artwork Renderer ---
-export function IllusionArtwork({ illusion, compact = false, className = "", overrideImage = null }) {
-  const [failed, setFailed] = useState(false);
-  const imgSrc = overrideImage || illusion.image;
+function FallbackArtwork({ illusion, compact = false }) {
+  const id = illusion.id;
 
   return (
-    <div className={`relative h-full w-full overflow-hidden bg-slate-900/5 ${className}`}>
+    <div className={`ambiguous-artwork ambiguous-artwork-${id} ${compact ? "is-compact" : ""}`}>
+      <div className="art-grid" />
+      <div className="art-shape art-shape-a" />
+      <div className="art-shape art-shape-b" />
+      <div className="art-shape art-shape-c" />
+      <div className="art-center">
+        <Eye className="h-5 w-5" />
+      </div>
+    </div>
+  );
+}
+
+function IllusionArtwork({ illusion, compact = false, className = "" }) {
+  const [failed, setFailed] = useState(false);
+
+  return (
+    <div className={`relative h-full w-full overflow-hidden bg-[var(--background)] ${className}`}>
       {!failed ? (
         <img
-          src={imgSrc}
+          src={illusion.image}
           alt={illusion.title}
           onError={() => setFailed(true)}
-          className="h-full w-full object-contain transition-transform duration-500 group-hover:scale-[1.03]"
-          loading="lazy"
+          className="h-full w-full bg-[var(--background)] object-contain transition duration-500 group-hover:scale-[1.03]"
         />
       ) : (
-        <div className="flex h-full w-full items-center justify-center bg-slate-100 text-slate-400">
-          <Eye className="h-8 w-8 animate-pulse" />
-        </div>
+        <FallbackArtwork illusion={illusion} compact={compact} />
       )}
-      <div className="absolute inset-0 pointer-events-none bg-gradient-to-t from-slate-900/20 via-transparent to-transparent" />
+      <div className="absolute inset-0 bg-[linear-gradient(180deg,transparent,rgba(0,0,0,0.18))]" />
     </div>
   );
 }
 
-// --- HERO FEATURED ILLUSION CARD ---
-export function HeroFeaturedCard({ illusion, onOpenViewer }) {
-  const cardRef = useRef(null);
-  const [tilt, setTilt] = useState({ x: 0, y: 0 });
-  const [showHint, setShowHint] = useState(false);
-  const [showAnswer, setShowAnswer] = useState(false);
-  const [activeInterpIdx, setActiveInterpIdx] = useState(0);
-
-  const handleMouseMove = (e) => {
-    if (!cardRef.current) return;
-    const rect = cardRef.current.getBoundingClientRect();
-    const x = (e.clientX - rect.left) / rect.width - 0.5;
-    const y = (e.clientY - rect.top) / rect.height - 0.5;
-    setTilt({ x: y * -12, y: x * 12 });
-  };
-
-  const handleMouseLeave = () => {
-    setTilt({ x: 0, y: 0 });
-  };
-
-  const currentInterp = illusion.interpretations[activeInterpIdx] || illusion.interpretations[0];
-
+export function IllusionCard({ illusion, onClick }) {
   return (
-    <motion.div
-      ref={cardRef}
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
-      style={{
-        transform: `perspective(1000px) rotateX(${tilt.x}deg) rotateY(${tilt.y}deg)`,
-        transition: "transform 0.15s ease-out",
-      }}
-      className="glow-border hero-breathing relative overflow-hidden rounded-3xl bg-white p-5 shadow-xl sm:p-6"
-    >
-      <div className="relative flex flex-col gap-4">
-        {/* Card Header Tag */}
-        <div className="flex items-center justify-between">
-          <span className="inline-flex items-center gap-1.5 rounded-full bg-gradient-to-r from-[#14b8a6] to-[#38bdf8] px-3 py-1 text-xs font-black text-white shadow-sm">
-            <Eye className="h-3.5 w-3.5" />
-            LOOK TWICE
-          </span>
-          <span className="rounded-full bg-purple-100 px-3 py-1 text-xs font-bold text-purple-700">
-            Featured Optical Illusion
-          </span>
-        </div>
-
-        {/* Card Image Container */}
-        <div
-          onClick={() => onOpenViewer(illusion)}
-          className="group relative aspect-[16/10] w-full cursor-pointer overflow-hidden rounded-2xl border border-slate-200/80 bg-slate-50 shadow-inner"
-        >
-          <IllusionArtwork illusion={illusion} />
-          <div className="absolute inset-0 flex items-center justify-center bg-slate-900/30 opacity-0 backdrop-blur-[2px] transition duration-300 group-hover:opacity-100">
-            <span className="inline-flex items-center gap-2 rounded-xl bg-white/90 px-4 py-2 text-xs font-extrabold text-slate-900 shadow-lg">
-              <Eye className="h-4 w-4 text-[#14b8a6]" /> Open Full Lab Viewer
-            </span>
-          </div>
-        </div>
-
-        {/* Title & Question */}
-        <div>
-          <h3 className="text-xl font-black text-slate-900">{illusion.title}</h3>
-          <p className="mt-1 text-xs font-bold text-slate-500">Can you find both interpretations?</p>
-        </div>
-
-        {/* Interpretation Selector & Hints */}
-        <div className="space-y-2 rounded-2xl bg-slate-50 p-3.5 border border-slate-200/60">
-          <div className="flex items-center justify-between text-xs font-bold text-slate-600">
-            <span>Interpretations:</span>
-            <div className="flex gap-1.5">
-              {illusion.interpretations.map((interp, idx) => (
-                <button
-                  key={interp.id}
-                  onClick={() => {
-                    soundFx.playClick();
-                    setActiveInterpIdx(idx);
-                  }}
-                  className={`rounded-lg px-2.5 py-1 text-[11px] font-extrabold transition ${
-                    activeInterpIdx === idx
-                      ? "bg-[#14b8a6] text-white shadow-xs"
-                      : "bg-white text-slate-600 border border-slate-200 hover:text-[#14b8a6]"
-                  }`}
-                  type="button"
-                >
-                  {interp.label}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          <AnimatePresence mode="wait">
-            {showHint && (
-              <motion.div
-                initial={{ opacity: 0, height: 0 }}
-                animate={{ opacity: 1, height: "auto" }}
-                exit={{ opacity: 0, height: 0 }}
-                className="rounded-xl bg-amber-50 p-2.5 text-xs font-medium text-amber-900 border border-amber-200/60"
-              >
-                <span className="font-bold">💡 Hint ({currentInterp.label}):</span> {currentInterp.hint}
-              </motion.div>
-            )}
-
-            {showAnswer && (
-              <motion.div
-                initial={{ opacity: 0, height: 0 }}
-                animate={{ opacity: 1, height: "auto" }}
-                exit={{ opacity: 0, height: 0 }}
-                className="rounded-xl bg-teal-50 p-2.5 text-xs font-medium text-teal-900 border border-teal-200/60"
-              >
-                <span className="font-bold">✨ Perception Unlocked:</span> This illusion switches between{" "}
-                <span className="font-bold underline">{illusion.interpretations.map((i) => i.label).join(" & ")}</span>.
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </div>
-
-        {/* Card Action Buttons */}
-        <div className="flex gap-2">
-          <button
-            onClick={() => {
-              soundFx.playClick();
-              setShowHint(!showHint);
-            }}
-            className="flex-1 rounded-xl border border-slate-200 bg-white py-2.5 text-xs font-bold text-slate-700 shadow-xs transition hover:border-[#14b8a6] hover:text-[#14b8a6]"
-            type="button"
-          >
-            {showHint ? "Hide Hint" : "Show Hint 💡"}
-          </button>
-          <button
-            onClick={() => {
-              soundFx.playClick();
-              setShowAnswer(!showAnswer);
-            }}
-            className="flex-1 rounded-xl bg-gradient-to-r from-[#14b8a6] to-[#0d9488] py-2.5 text-xs font-bold text-white shadow-sm transition hover:opacity-95"
-            type="button"
-          >
-            {showAnswer ? "Hide Answer" : "Reveal Answer ✨"}
-          </button>
-        </div>
-      </div>
-    </motion.div>
-  );
-}
-
-// --- GALLERY ILLUSION CARD ---
-export function IllusionCard({ illusion, onClick, isSolved, isFavorite, onToggleFavorite }) {
-  const diffColors = {
-    Beginner: "bg-emerald-100 text-emerald-700 border-emerald-200",
-    Intermediate: "bg-sky-100 text-sky-700 border-sky-200",
-    Advanced: "bg-purple-100 text-purple-700 border-purple-200",
-  };
-
-  return (
-    <motion.div
+    <motion.button
       layout
-      initial={{ opacity: 0, y: 16 }}
+      onClick={() => onClick(illusion)}
+      className="group min-w-0 overflow-hidden rounded-[1.35rem] border border-[var(--border)] bg-[var(--card)] text-left shadow-sm transition duration-300 hover:-translate-y-1 hover:border-[var(--primary)] hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-[var(--primary)]/35"
+      initial={{ opacity: 0, y: 14 }}
       animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, scale: 0.95 }}
-      whileHover={{ y: -6 }}
-      className="afv-card-hover group relative flex flex-col justify-between overflow-hidden rounded-2xl border border-slate-200/80 bg-white p-4 shadow-sm"
+      exit={{ opacity: 0, y: 8 }}
+      type="button"
     >
-      {/* Top Image Preview Container */}
-      <div>
-        <div className="relative aspect-[16/10] w-full overflow-hidden rounded-xl bg-slate-100">
-          <IllusionArtwork illusion={illusion} compact />
+      <div className="aspect-[16/10] w-full overflow-hidden border-b border-[var(--border)]">
+        <IllusionArtwork illusion={illusion} compact />
+      </div>
 
-          {/* Favorite & Solved Badges */}
-          <div className="absolute top-2.5 left-2.5 right-2.5 flex items-center justify-between pointer-events-none">
-            <span
-              className={`rounded-full border px-2.5 py-0.5 text-[10px] font-black uppercase tracking-wider ${
-                diffColors[illusion.difficulty] || diffColors.Beginner
-              }`}
-            >
-              {illusion.difficulty}
-            </span>
-
-            <div className="flex items-center gap-1.5 pointer-events-auto">
-              {isSolved && (
-                <span className="flex h-7 w-7 items-center justify-center rounded-full bg-emerald-500 text-white shadow-xs" title="Solved!">
-                  <CheckCircle2 className="h-4 w-4" />
-                </span>
-              )}
-
-              <button
-                onClick={(e) => {
-                  e.stopPropagation();
-                  soundFx.playClick();
-                  onToggleFavorite(illusion.id);
-                }}
-                className={`flex h-7 w-7 items-center justify-center rounded-full border transition ${
-                  isFavorite
-                    ? "border-rose-300 bg-rose-50 text-rose-500 shadow-xs"
-                    : "border-slate-200/80 bg-white/90 text-slate-400 hover:text-rose-500"
-                }`}
-                type="button"
-                aria-label="Favorite"
-              >
-                <Heart className={`h-3.5 w-3.5 ${isFavorite ? "fill-rose-500" : ""}`} />
-              </button>
-            </div>
-          </div>
-        </div>
-
-        {/* Card Info */}
-        <div className="mt-3.5 space-y-1.5">
-          <div className="flex items-center justify-between gap-2">
-            <h3 className="line-clamp-1 text-base font-black text-slate-900 group-hover:text-[#14b8a6] transition">
+      <div className="space-y-4 p-4 sm:p-5">
+        <div className="flex min-w-0 items-start justify-between gap-3">
+          <div className="min-w-0">
+            <h3 className="break-words text-lg font-black leading-snug text-[var(--foreground)] transition group-hover:text-[var(--primary)]">
               {illusion.title}
             </h3>
-            <span className="shrink-0 rounded-md bg-slate-100 px-2 py-0.5 text-[10px] font-extrabold text-slate-600">
-              {illusion.category}
-            </span>
-          </div>
-
-          <p className="line-clamp-2 text-xs leading-5 text-slate-500">
-            {illusion.description}
-          </p>
-        </div>
-      </div>
-
-      {/* Card Footer Stats & Open CTA */}
-      <div className="mt-4 flex items-center justify-between border-t border-slate-100 pt-3">
-        <div className="flex items-center gap-3 text-[11px] font-bold text-slate-400">
-          <span className="flex items-center gap-1 text-teal-600">
-            <Zap className="h-3 w-3" /> {illusion.solvePercentage}% Solved
-          </span>
-          <span className="flex items-center gap-1">
-            <Compass className="h-3 w-3" /> {illusion.avgSolveTime}
-          </span>
-        </div>
-
-        <button
-          onClick={() => {
-            soundFx.playClick();
-            onClick(illusion);
-          }}
-          className="flex h-8 w-8 items-center justify-center rounded-xl bg-slate-100 text-slate-600 transition group-hover:bg-[#14b8a6] group-hover:text-white"
-          type="button"
-          aria-label="View Details"
-        >
-          <ChevronRight className="h-4 w-4" />
-        </button>
-      </div>
-    </motion.div>
-  );
-}
-
-// --- USER PROGRESS DASHBOARD ---
-export function UserProgressDashboard({ solvedCount, totalCount, streak, brainScore, xp, favoriteCategory }) {
-  const pct = Math.round((solvedCount / (totalCount || 1)) * 100);
-  const radius = 32;
-  const circumference = 2 * Math.PI * radius;
-  const strokeDashoffset = circumference - (pct / 100) * circumference;
-
-  return (
-    <div className="afv-glass rounded-3xl border border-slate-200/80 p-5 shadow-sm sm:p-6">
-      <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
-        {/* Left: Progress Ring & Solved Metrics */}
-        <div className="flex items-center gap-5">
-          <div className="relative flex h-24 w-24 shrink-0 items-center justify-center">
-            <svg className="h-full w-full -rotate-90" viewBox="0 0 80 80">
-              <circle cx="40" cy="40" r={radius} stroke="#e2e8f0" strokeWidth="7" fill="transparent" />
-              <motion.circle
-                cx="40"
-                cy="40"
-                r={radius}
-                stroke="url(#progressGradient)"
-                strokeWidth="7"
-                strokeDasharray={circumference}
-                strokeDashoffset={strokeDashoffset}
-                strokeLinecap="round"
-                fill="transparent"
-                initial={{ strokeDashoffset: circumference }}
-                animate={{ strokeDashoffset }}
-                transition={{ duration: 1.2, ease: "easeOut" }}
-              />
-              <defs>
-                <linearGradient id="progressGradient" x1="0" y1="0" x2="1" y2="1">
-                  <stop offset="0%" stopColor="#14b8a6" />
-                  <stop offset="100%" stopColor="#38bdf8" />
-                </linearGradient>
-              </defs>
-            </svg>
-            <div className="absolute text-center">
-              <span className="text-lg font-black text-slate-900">{pct}%</span>
-              <span className="block text-[9px] font-extrabold uppercase text-slate-400">Done</span>
-            </div>
-          </div>
-
-          <div className="space-y-1">
-            <span className="inline-flex items-center gap-1 text-xs font-black uppercase tracking-wider text-[#14b8a6]">
-              <Brain className="h-3.5 w-3.5" /> Perception Lab
-            </span>
-            <h3 className="text-2xl font-black text-slate-900">
-              {solvedCount} <span className="text-base font-bold text-slate-400">/ {totalCount} Figures</span>
-            </h3>
-            <p className="text-xs font-semibold text-slate-500">
-              Master optical illusions to train cognitive flexibility.
+            <p className="mt-2 line-clamp-3 text-sm leading-6 text-[var(--muted-foreground)]">
+              {illusion.description}
             </p>
           </div>
+          <span className="mt-1 flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-[var(--border)] bg-[var(--background)] text-[var(--primary)] transition group-hover:bg-[var(--primary)] group-hover:text-white">
+            <ChevronRight className="h-4 w-4" />
+          </span>
         </div>
 
-        {/* Right Metrics Grid */}
-        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
-          <div className="rounded-2xl border border-slate-200/60 bg-white p-3.5 text-left shadow-xs">
-            <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-amber-50 text-amber-500">
-              <Flame className="h-4 w-4" />
-            </div>
-            <p className="mt-2 text-xl font-black text-slate-900">{streak} Days</p>
-            <p className="text-[10px] font-extrabold uppercase tracking-wider text-slate-400">Current Streak</p>
-          </div>
-
-          <div className="rounded-2xl border border-slate-200/60 bg-white p-3.5 text-left shadow-xs">
-            <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-purple-50 text-purple-600">
-              <Trophy className="h-4 w-4" />
-            </div>
-            <p className="mt-2 text-xl font-black text-slate-900">{brainScore}</p>
-            <p className="text-[10px] font-extrabold uppercase tracking-wider text-slate-400">Brain Score</p>
-          </div>
-
-          <div className="rounded-2xl border border-slate-200/60 bg-white p-3.5 text-left shadow-xs">
-            <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-teal-50 text-teal-600">
-              <Zap className="h-4 w-4" />
-            </div>
-            <p className="mt-2 text-xl font-black text-slate-900">{xp} XP</p>
-            <p className="text-[10px] font-extrabold uppercase tracking-wider text-slate-400">Experience</p>
-          </div>
-
-          <div className="rounded-2xl border border-slate-200/60 bg-white p-3.5 text-left shadow-xs">
-            <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-sky-50 text-sky-600">
-              <Heart className="h-4 w-4" />
-            </div>
-            <p className="mt-2 truncate text-sm font-black text-slate-900">{favoriteCategory}</p>
-            <p className="text-[10px] font-extrabold uppercase tracking-wider text-slate-400">Top Category</p>
-          </div>
+        <div className="flex flex-wrap gap-2">
+          <span className="rounded-full bg-[var(--primary)]/10 px-3 py-1 text-xs font-bold text-[var(--primary)]">
+            {illusion.difficulty}
+          </span>
+          <span className="max-w-full rounded-full border border-[var(--border)] bg-[var(--background)] px-3 py-1 text-xs font-bold text-[var(--muted-foreground)]">
+            {illusion.perceptionType}
+          </span>
         </div>
       </div>
-    </div>
+    </motion.button>
   );
 }
 
-// --- GAMIFIED ACHIEVEMENTS SECTION ---
-export function AchievementsSection({ achievements, userProgress }) {
-  const iconMap = {
-    Eye,
-    Compass,
-    Zap,
-    Flame,
-    Trophy,
-    Award,
-  };
-
-  return (
-    <div className="rounded-3xl border border-slate-200/80 bg-white p-5 shadow-sm sm:p-6">
-      <div className="flex items-center justify-between border-b border-slate-100 pb-4 mb-4">
-        <div>
-          <span className="text-xs font-black uppercase tracking-wider text-[#a855f7]">Milestones</span>
-          <h3 className="text-xl font-black text-slate-900">Perceptual Badges & XP</h3>
-        </div>
-        <span className="inline-flex items-center gap-1.5 rounded-full bg-purple-50 px-3 py-1 text-xs font-extrabold text-purple-700">
-          <Award className="h-4 w-4" /> {achievements.filter((a) => a.unlocked).length} / {achievements.length} Badges
-        </span>
-      </div>
-
-      <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
-        {achievements.map((ach) => {
-          const IconComp = iconMap[ach.iconKey] || Award;
-          return (
-            <div
-              key={ach.id}
-              className={`group relative flex flex-col items-center rounded-2xl border p-3.5 text-center transition ${
-                ach.unlocked
-                  ? "border-purple-200 bg-gradient-to-b from-purple-50/50 to-white text-slate-900 shadow-xs"
-                  : "border-slate-200/60 bg-slate-50/60 text-slate-400 opacity-60"
-              }`}
-            >
-              <div className={`flex h-10 w-10 items-center justify-center rounded-xl transition group-hover:scale-110 ${
-                ach.unlocked ? "bg-purple-100 text-purple-700" : "bg-slate-200/60 text-slate-400"
-              }`}>
-                <IconComp className="h-5 w-5" />
-              </div>
-              <h4 className="mt-2 line-clamp-1 text-xs font-black">{ach.name}</h4>
-              <p className="mt-1 line-clamp-2 text-[10px] leading-3.5 text-slate-400">{ach.description}</p>
-            </div>
-          );
-        })}
-      </div>
-    </div>
-  );
-}
-
-// --- FULL LAB ILLUSION VIEWER MODAL ---
-export function IllusionViewer({ illusion, onClose, isSolved, onToggleSolved, isFavorite, onToggleFavorite, onSelectIllusion }) {
+export function IllusionViewer({ illusion, onClose }) {
   const [zoom, setZoom] = useState(1);
+  const [activeHint, setActiveHint] = useState(null);
+  const [highlight, setHighlight] = useState(null);
   const [mode, setMode] = useState("normal");
-  const [activeInterpId, setActiveInterpId] = useState(illusion.interpretations[0]?.id);
-  const [activeGalleryIdx, setActiveGalleryIdx] = useState(0);
-  const [activeTab, setActiveTab] = useState("overview"); // overview, history, psychology
-  const [copied, setCopied] = useState(false);
+  const [stats, setStats] = useState(() => ({ firstSeen: null, switches: 0, startTime: Date.now() }));
   const [mousePos, setMousePos] = useState({ x: 50, y: 50 });
   const frameRef = useRef(null);
 
-  const gallery = getIllusionGallery(illusion);
-  const currentImageObj = gallery[activeGalleryIdx] || gallery[0];
-
   useEffect(() => {
-    setActiveGalleryIdx(0);
-  }, [illusion.id]);
-
-  useEffect(() => {
-    const handleKeyDown = (e) => {
-      if (e.key === "Escape") onClose();
-      if (e.key === "+") setZoom((v) => Math.min(v + 0.2, 2.4));
-      if (e.key === "-") setZoom((v) => Math.max(v - 0.2, 0.8));
-      if (e.key === "r") setZoom(1);
+    const handleMouseMove = (event) => {
+      if (mode !== "spotlight") return;
+      const rect = frameRef.current?.getBoundingClientRect();
+      if (!rect) return;
+      setMousePos({
+        x: ((event.clientX - rect.left) / rect.width) * 100,
+        y: ((event.clientY - rect.top) / rect.height) * 100,
+      });
     };
+
+    window.addEventListener("mousemove", handleMouseMove);
+    return () => window.removeEventListener("mousemove", handleMouseMove);
+  }, [mode]);
+
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+      if (event.key === "Escape") onClose();
+      if (event.key === "+") setZoom((value) => Math.min(value + 0.2, 2.4));
+      if (event.key === "-") setZoom((value) => Math.max(value - 0.2, 0.8));
+      if (event.key === "r") setZoom(1);
+      if (event.key === "b") setMode((value) => (value === "blur" ? "normal" : "blur"));
+      if (event.key === "s") setMode((value) => (value === "spotlight" ? "normal" : "spotlight"));
+      if (event.key === "i") setMode((value) => (value === "invert" ? "normal" : "invert"));
+    };
+
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [onClose]);
 
-  const handleMouseMove = (e) => {
-    if (!frameRef.current) return;
-    const rect = frameRef.current.getBoundingClientRect();
-    setMousePos({
-      x: ((e.clientX - rect.left) / rect.width) * 100,
-      y: ((e.clientY - rect.top) / rect.height) * 100,
-    });
-  };
+  const handlePerceptionSwitch = (id) => {
+    const interpretation = illusion.interpretations.find((item) => item.id === id);
+    if (!interpretation) return;
 
-  const currentInterp = illusion.interpretations.find((i) => i.id === activeInterpId) || illusion.interpretations[0];
-
-  const handleShare = () => {
-    soundFx.playClick();
-    if (navigator.clipboard) {
-      navigator.clipboard.writeText(window.location.href);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
+    if (!stats.firstSeen) {
+      setStats((previous) => ({
+        ...previous,
+        firstSeen: interpretation.label,
+        firstSwitchTime: (Date.now() - previous.startTime) / 1000,
+        switches: previous.switches + 1,
+      }));
+    } else {
+      setStats((previous) => ({ ...previous, switches: previous.switches + 1 }));
     }
+
+    setHighlight(id);
+    setActiveHint(interpretation.hint);
   };
 
-  const handleDownload = () => {
-    soundFx.playClick();
-    const link = document.createElement("a");
-    link.href = currentImageObj.url;
-    link.download = `${illusion.id}-${currentImageObj.id}-illusion.svg`;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+  const resetView = () => {
+    setZoom(1);
+    setMode("normal");
+    setHighlight(null);
+    setActiveHint(null);
   };
 
   return (
@@ -538,393 +185,186 @@ export function IllusionViewer({ illusion, onClose, isSolved, onToggleSolved, is
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="viewer-overlay fixed inset-0 z-50 overflow-y-auto p-3 sm:p-5"
+      className="viewer-overlay fixed inset-0 z-50 overflow-y-auto px-3 py-3 sm:px-5 sm:py-5"
     >
-      <div className="mx-auto flex min-h-full w-full max-w-6xl flex-col gap-4">
-        {/* Top Header Bar */}
-        <div className="sticky top-0 z-20 flex flex-wrap items-center justify-between gap-3 rounded-2xl bg-white/90 p-3.5 shadow-md backdrop-blur">
-          <div className="flex items-center gap-3">
-            <button
-              onClick={() => {
-                soundFx.playClick();
-                onClose();
-              }}
-              className="flex h-10 w-10 items-center justify-center rounded-xl bg-slate-100 text-slate-600 transition hover:bg-slate-200"
-              type="button"
-              aria-label="Close modal"
-            >
-              <X className="h-5 w-5" />
-            </button>
-            <div>
-              <h2 className="text-lg font-black text-slate-900">{illusion.title}</h2>
-              <p className="text-xs font-extrabold uppercase text-[#14b8a6]">{illusion.perceptionType}</p>
+      <div className="mx-auto flex min-h-full w-full max-w-7xl flex-col gap-4">
+        <div className="sticky top-0 z-20 rounded-2xl border border-[var(--border)] bg-[var(--card)]/95 p-3 shadow-sm backdrop-blur sm:p-4">
+          <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
+            <div className="flex min-w-0 items-center gap-3">
+              <button
+                onClick={onClose}
+                className="btn-secondary h-11 w-11 shrink-0 !p-0"
+                type="button"
+                aria-label="Close viewer"
+              >
+                <X className="h-4 w-4" />
+              </button>
+              <div className="min-w-0">
+                <h2 className="truncate text-lg font-black text-[var(--foreground)] sm:text-xl">
+                  {illusion.title}
+                </h2>
+                <p className="truncate text-xs font-bold uppercase tracking-[0.14em] text-[var(--muted-foreground)]">
+                  {illusion.perceptionType}
+                </p>
+              </div>
             </div>
-          </div>
 
-          {/* Action Buttons Header */}
-          <div className="flex items-center gap-2">
-            <button
-              onClick={() => {
-                soundFx.playClick();
-                onToggleSolved(illusion.id);
-              }}
-              className={`inline-flex items-center gap-1.5 rounded-xl px-3.5 py-2 text-xs font-bold transition ${
-                isSolved
-                  ? "bg-emerald-500 text-white shadow-xs"
-                  : "bg-slate-100 text-slate-700 hover:bg-emerald-100 hover:text-emerald-700"
-              }`}
-              type="button"
-            >
-              <CheckCircle2 className="h-4 w-4" /> {isSolved ? "Solved!" : "Mark Solved"}
-            </button>
-
-            <button
-              onClick={() => {
-                soundFx.playClick();
-                onToggleFavorite(illusion.id);
-              }}
-              className={`flex h-10 w-10 items-center justify-center rounded-xl border transition ${
-                isFavorite
-                  ? "border-rose-300 bg-rose-50 text-rose-500"
-                  : "border-slate-200 bg-slate-100 text-slate-600 hover:text-rose-500"
-              }`}
-              type="button"
-              title="Favorite"
-            >
-              <Heart className={`h-4 w-4 ${isFavorite ? "fill-rose-500" : ""}`} />
-            </button>
-
-            <button
-              onClick={handleShare}
-              className="flex h-10 w-10 items-center justify-center rounded-xl border border-slate-200 bg-slate-100 text-slate-600 hover:text-[#14b8a6]"
-              type="button"
-              title="Share"
-            >
-              <Share2 className="h-4 w-4" />
-            </button>
-
-            <button
-              onClick={handleDownload}
-              className="flex h-10 w-10 items-center justify-center rounded-xl border border-slate-200 bg-slate-100 text-slate-600 hover:text-[#14b8a6]"
-              type="button"
-              title="Download Image"
-            >
-              <Download className="h-4 w-4" />
-            </button>
+            <div className="flex max-w-full gap-2 overflow-x-auto pb-1 lg:flex-wrap lg:justify-end lg:overflow-visible lg:pb-0">
+              {illusion.interpretations.map((interpretation) => (
+                <button
+                  key={interpretation.id}
+                  onClick={() => handlePerceptionSwitch(interpretation.id)}
+                  className={`shrink-0 rounded-xl px-4 py-2 text-sm font-bold transition ${
+                    highlight === interpretation.id
+                      ? "bg-[var(--primary)] text-white"
+                      : "border border-[var(--border)] bg-[var(--background)] text-[var(--muted-foreground)] hover:border-[var(--primary)] hover:text-[var(--primary)]"
+                  }`}
+                  type="button"
+                >
+                  {interpretation.label}
+                </button>
+              ))}
+            </div>
           </div>
         </div>
 
-        {/* Main Grid: Viewer Left, Details Right */}
-        <div className="grid flex-1 gap-4 lg:grid-cols-[1fr_360px]">
-          {/* Main Image Lab Canvas */}
-          <div className="flex flex-col gap-3 rounded-3xl bg-white p-4 shadow-md">
-            {/* Interactive Image Frame */}
+        <div className="grid flex-1 gap-4 lg:grid-cols-[minmax(0,1fr)_320px]">
+          <section className="min-w-0 rounded-[1.5rem] border border-[var(--border)] bg-[var(--card)] p-3 shadow-sm sm:p-4">
             <div
               ref={frameRef}
-              onMouseMove={handleMouseMove}
+              className="relative flex min-h-[320px] items-center justify-center overflow-hidden rounded-[1.25rem] border border-[var(--border)] bg-[var(--background)] sm:min-h-[480px] lg:min-h-[610px]"
               style={{ "--x": `${mousePos.x}%`, "--y": `${mousePos.y}%` }}
-              className="relative flex min-h-[340px] flex-1 items-center justify-center overflow-hidden rounded-2xl bg-slate-950 sm:min-h-[440px]"
             >
               <motion.div
+                className="h-full w-full origin-center"
                 animate={{ scale: zoom }}
-                transition={{ type: "spring", stiffness: 200, damping: 25 }}
-                className="h-full w-full"
+                transition={{ type: "spring", stiffness: 190, damping: 24 }}
               >
                 <IllusionArtwork
                   illusion={illusion}
-                  overrideImage={currentImageObj?.url}
                   className={`${
                     mode === "blur"
                       ? "blur-md"
-                      : mode === "invert"
-                      ? "invert"
                       : mode === "contrast"
-                      ? "contrast-200"
-                      : mode === "spotlight"
-                      ? "spotlight-mask"
-                      : ""
+                        ? "contrast-200"
+                        : mode === "invert"
+                          ? "invert"
+                          : mode === "spotlight"
+                            ? "spotlight-mask"
+                            : ""
                   }`}
                 />
               </motion.div>
 
-              {copied && (
-                <div className="absolute top-4 left-1/2 -translate-x-1/2 rounded-full bg-slate-900/90 px-4 py-1.5 text-xs font-bold text-white shadow-lg backdrop-blur">
-                  Link copied to clipboard!
-                </div>
-              )}
-            </div>
-
-            {/* Interactive Multi-Image Gallery Selector Strip */}
-            <div className="flex flex-col gap-2 rounded-2xl bg-slate-50 p-3 border border-slate-200/80">
-              <div className="flex items-center justify-between">
-                <span className="flex items-center gap-1.5 text-xs font-black text-slate-800">
-                  <Layers className="h-4 w-4 text-[#14b8a6]" />
-                  Related Image Styles & Variations ({gallery.length})
-                </span>
-                <span className="text-[10px] font-extrabold uppercase text-slate-400">
-                  Active: {currentImageObj?.label}
-                </span>
-              </div>
-
-              <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
-                {gallery.map((item, idx) => (
-                  <button
-                    key={item.id}
-                    onClick={() => {
-                      soundFx.playClick();
-                      setActiveGalleryIdx(idx);
-                    }}
-                    type="button"
-                    className={`group relative flex flex-col overflow-hidden rounded-xl border p-2 text-left transition ${
-                      activeGalleryIdx === idx
-                        ? "border-[#14b8a6] bg-white ring-2 ring-[#14b8a6]/20 shadow-sm"
-                        : "border-slate-200 bg-white/70 hover:border-slate-300"
-                    }`}
+              <AnimatePresence>
+                {activeHint && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 12 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 12 }}
+                    className="absolute bottom-4 left-4 right-4 rounded-2xl border border-[var(--border)] bg-[var(--card)]/95 p-3 text-sm font-semibold leading-6 text-[var(--foreground)] shadow-xl backdrop-blur sm:left-1/2 sm:right-auto sm:max-w-xl sm:-translate-x-1/2 sm:px-4"
                   >
-                    <div className="aspect-[16/9] w-full overflow-hidden rounded-lg bg-slate-100">
-                      <img src={item.url} alt={item.label} className="h-full w-full object-contain transition group-hover:scale-105" />
-                    </div>
-                    <div className="mt-1.5 flex flex-col">
-                      <span className="line-clamp-1 text-[11px] font-black text-slate-900">{item.label}</span>
-                      <span className="text-[9px] font-bold text-slate-400">{item.tag}</span>
-                    </div>
-                  </button>
-                ))}
+                    {activeHint}
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+          </section>
+
+          <aside className="grid gap-4 sm:grid-cols-2 lg:grid-cols-1">
+            <Panel title="Viewing Tools" icon={Maximize2}>
+              <div className="grid grid-cols-2 gap-2">
+                <IconButton icon={<ZoomIn size={17} />} onClick={() => setZoom((value) => Math.min(value + 0.2, 2.4))} label="Zoom In" />
+                <IconButton icon={<ZoomOut size={17} />} onClick={() => setZoom((value) => Math.max(value - 0.2, 0.8))} label="Zoom Out" />
+                <IconButton active={mode === "blur"} icon={<Layers size={17} />} onClick={() => setMode((value) => (value === "blur" ? "normal" : "blur"))} label="Blur" />
+                <IconButton active={mode === "spotlight"} icon={<Search size={17} />} onClick={() => setMode((value) => (value === "spotlight" ? "normal" : "spotlight"))} label="Spotlight" />
+                <IconButton active={mode === "invert"} icon={<Minimize2 size={17} />} onClick={() => setMode((value) => (value === "invert" ? "normal" : "invert"))} label="Invert" />
+                <IconButton icon={<RotateCcw size={17} />} onClick={resetView} label="Reset" />
               </div>
-            </div>
+            </Panel>
 
-            {/* Canvas Toolbar Controls */}
-            <div className="flex flex-wrap items-center justify-between gap-2 rounded-2xl bg-slate-50 p-2.5 border border-slate-200/60">
-              <div className="flex items-center gap-1">
-                <button
-                  onClick={() => setZoom((v) => Math.min(v + 0.2, 2.4))}
-                  className="rounded-xl bg-white p-2 text-slate-700 shadow-xs hover:text-[#14b8a6]"
-                  title="Zoom In"
-                  type="button"
-                >
-                  <ZoomIn className="h-4 w-4" />
-                </button>
-                <button
-                  onClick={() => setZoom((v) => Math.max(v - 0.2, 0.8))}
-                  className="rounded-xl bg-white p-2 text-slate-700 shadow-xs hover:text-[#14b8a6]"
-                  title="Zoom Out"
-                  type="button"
-                >
-                  <ZoomOut className="h-4 w-4" />
-                </button>
-                <button
-                  onClick={() => setZoom(1)}
-                  className="rounded-xl bg-white p-2 text-slate-700 shadow-xs hover:text-[#14b8a6]"
-                  title="Reset Zoom"
-                  type="button"
-                >
-                  <RotateCcw className="h-4 w-4" />
-                </button>
-                <span className="ml-1 text-xs font-bold text-slate-500">{Math.round(zoom * 100)}%</span>
+            <Panel title="Session Stats" icon={Brain}>
+              <div className="grid grid-cols-2 gap-3">
+                <StatItem label="First Seen" value={stats.firstSeen || "..."} />
+                <StatItem label="Switch Time" value={stats.firstSwitchTime ? `${stats.firstSwitchTime.toFixed(1)}s` : "..."} />
+                <StatItem label="Switches" value={stats.switches} />
+                <StatItem label="Zoom" value={`${Math.round(zoom * 100)}%`} />
               </div>
+            </Panel>
 
-              <div className="flex items-center gap-1.5">
-                <button
-                  onClick={() => setMode(mode === "blur" ? "normal" : "blur")}
-                  className={`rounded-xl px-2.5 py-1.5 text-xs font-bold transition ${
-                    mode === "blur" ? "bg-[#14b8a6] text-white" : "bg-white text-slate-600 hover:text-[#14b8a6]"
-                  }`}
-                  type="button"
-                >
-                  Blur
-                </button>
-                <button
-                  onClick={() => setMode(mode === "spotlight" ? "normal" : "spotlight")}
-                  className={`rounded-xl px-2.5 py-1.5 text-xs font-bold transition ${
-                    mode === "spotlight" ? "bg-[#14b8a6] text-white" : "bg-white text-slate-600 hover:text-[#14b8a6]"
-                  }`}
-                  type="button"
-                >
-                  Spotlight
-                </button>
-                <button
-                  onClick={() => setMode(mode === "invert" ? "normal" : "invert")}
-                  className={`rounded-xl px-2.5 py-1.5 text-xs font-bold transition ${
-                    mode === "invert" ? "bg-[#14b8a6] text-white" : "bg-white text-slate-600 hover:text-[#14b8a6]"
-                  }`}
-                  type="button"
-                >
-                  Invert
-                </button>
-              </div>
-            </div>
-          </div>
-
-          {/* Right Tabbed Details Sidebar */}
-          <div className="flex flex-col gap-3 rounded-3xl bg-white p-4 shadow-md">
-            {/* Tab Navigation */}
-            <div className="flex rounded-xl bg-slate-100 p-1 text-xs font-bold">
-              <button
-                onClick={() => setActiveTab("overview")}
-                className={`flex-1 rounded-lg py-1.5 transition ${
-                  activeTab === "overview" ? "bg-white text-slate-900 shadow-xs" : "text-slate-500"
-                }`}
-                type="button"
-              >
-                Overview
-              </button>
-              <button
-                onClick={() => setActiveTab("history")}
-                className={`flex-1 rounded-lg py-1.5 transition ${
-                  activeTab === "history" ? "bg-white text-slate-900 shadow-xs" : "text-slate-500"
-                }`}
-                type="button"
-              >
-                History
-              </button>
-              <button
-                onClick={() => setActiveTab("psychology")}
-                className={`flex-1 rounded-lg py-1.5 transition ${
-                  activeTab === "psychology" ? "bg-white text-slate-900 shadow-xs" : "text-slate-500"
-                }`}
-                type="button"
-              >
-                Psychology
-              </button>
-            </div>
-
-            {/* Tab Content */}
-            <div className="flex-1 space-y-4">
-              {activeTab === "overview" && (
-                <div className="space-y-4">
-                  {/* Interpretations Toggle List */}
-                  <div className="space-y-2">
-                    <h4 className="text-xs font-black uppercase text-slate-400">Select Interpretation</h4>
-                    <div className="grid grid-cols-2 gap-2">
-                      {illusion.interpretations.map((interp) => (
-                        <button
-                          key={interp.id}
-                          onClick={() => {
-                            soundFx.playClick();
-                            setActiveInterpId(interp.id);
-                          }}
-                          className={`rounded-xl border p-2.5 text-left transition ${
-                            activeInterpId === interp.id
-                              ? "border-[#14b8a6] bg-teal-50/50 text-[#14b8a6] font-extrabold shadow-xs"
-                              : "border-slate-200 bg-white text-slate-600 font-bold hover:border-slate-300"
-                          }`}
-                          type="button"
-                        >
-                          <span className="text-xs">{interp.label}</span>
-                        </button>
-                      ))}
-                    </div>
-
-                    <div className="rounded-2xl bg-slate-50 p-3.5 border border-slate-200/60 text-xs leading-5 text-slate-600">
-                      <span className="font-bold text-slate-900">Perceptual Focus:</span> {currentInterp?.hint}
-                    </div>
-                  </div>
-
-                  {/* Fun Fact Callout */}
-                  <div className="rounded-2xl bg-purple-50/80 p-3.5 border border-purple-200/60 text-xs text-purple-900">
-                    <span className="font-bold flex items-center gap-1 text-purple-700 mb-1">
-                      <Sparkles className="h-3.5 w-3.5" /> Fun Fact:
-                    </span>
-                    {illusion.funFact}
-                  </div>
-
-                  {/* Quick Metrics */}
-                  <div className="grid grid-cols-2 gap-2 text-center text-xs">
-                    <div className="rounded-xl border border-slate-200/60 bg-slate-50 p-2.5">
-                      <span className="block text-[10px] font-bold uppercase text-slate-400">Solve Rate</span>
-                      <span className="text-base font-black text-slate-900">{illusion.solvePercentage}%</span>
-                    </div>
-                    <div className="rounded-xl border border-slate-200/60 bg-slate-50 p-2.5">
-                      <span className="block text-[10px] font-bold uppercase text-slate-400">Avg Time</span>
-                      <span className="text-base font-black text-slate-900">{illusion.avgSolveTime}</span>
-                    </div>
-                  </div>
-                </div>
-              )}
-
-              {activeTab === "history" && (
-                <div className="space-y-3 text-xs leading-6 text-slate-600">
-                  <div className="flex items-center gap-2 font-black text-slate-900">
-                    <HistoryIcon className="h-4 w-4 text-[#14b8a6]" /> Historical Background
-                  </div>
-                  <p>{illusion.history}</p>
-                </div>
-              )}
-
-              {activeTab === "psychology" && (
-                <div className="space-y-3 text-xs leading-6 text-slate-600">
-                  <div className="flex items-center gap-2 font-black text-slate-900">
-                    <Brain className="h-4 w-4 text-[#a855f7]" /> Visual Neuroscience
-                  </div>
-                  <p>{illusion.psychology}</p>
-                </div>
-              )}
-            </div>
-          </div>
-        </div>
-
-        {/* Pinterest-Style Related Images Board Grid */}
-        <div className="rounded-3xl bg-white p-5 shadow-md border border-slate-200/80">
-          <div className="flex items-center justify-between border-b border-slate-100 pb-3 mb-4">
-            <div>
-              <span className="inline-flex items-center gap-1 text-[10px] font-black uppercase tracking-wider text-rose-500">
-                <Sparkles className="h-3.5 w-3.5" /> Pinterest-Style Gallery Board
-              </span>
-              <h3 className="text-base font-black text-slate-900">Related Ambiguous Figures & Visual Collections</h3>
-            </div>
-            <span className="rounded-full bg-rose-50 px-3 py-1 text-xs font-black text-rose-600">
-              Browse Related
-            </span>
-          </div>
-
-          <div className="grid grid-cols-2 gap-3 sm:grid-cols-4 lg:grid-cols-6">
-            {ILLUSIONS.filter((i) => i.id !== illusion.id)
-              .slice(0, 6)
-              .map((relIllusion) => (
-                <button
-                  key={relIllusion.id}
-                  onClick={() => {
-                    soundFx.playClick();
-                    if (onSelectIllusion) onSelectIllusion(relIllusion);
-                  }}
-                  type="button"
-                  className="group relative flex flex-col overflow-hidden rounded-2xl border border-slate-200/80 bg-slate-50/50 p-2 text-left transition hover:-translate-y-1 hover:border-rose-300 hover:shadow-md"
-                >
-                  <div className="aspect-[4/3] w-full overflow-hidden rounded-xl bg-white border border-slate-200/60 shadow-xs">
-                    <IllusionArtwork illusion={relIllusion} compact />
-                  </div>
-                  <div className="mt-2 space-y-0.5 px-1">
-                    <h4 className="line-clamp-1 text-xs font-black text-slate-900 group-hover:text-rose-600 transition">
-                      {relIllusion.title}
-                    </h4>
-                    <span className="block text-[9px] font-extrabold text-slate-400">{relIllusion.category}</span>
-                  </div>
-                </button>
-              ))}
-          </div>
+            <Panel title="How to Read It" icon={Sparkles}>
+              <p className="text-sm leading-6 text-[var(--muted-foreground)]">
+                Try one interpretation button, then relax your focus and look for the second meaning. Zoom, blur, or spotlight can make hidden edges easier to notice.
+              </p>
+            </Panel>
+          </aside>
         </div>
       </div>
     </motion.div>
   );
 }
 
-// --- SCIENTIFIC EDUCATION CARDS ---
+function Panel({ title, icon: Icon, children }) {
+  return (
+    <div className="rounded-[1.25rem] border border-[var(--border)] bg-[var(--card)] p-4 shadow-sm">
+      <div className="mb-4 flex items-center gap-3">
+        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[var(--primary)]/10 text-[var(--primary)]">
+          <Icon className="h-4 w-4" />
+        </div>
+        <h3 className="min-w-0 break-words text-base font-black text-[var(--foreground)]">{title}</h3>
+      </div>
+      {children}
+    </div>
+  );
+}
+
+function IconButton({ icon, onClick, active, label }) {
+  return (
+    <button
+      onClick={onClick}
+      className={`min-w-0 rounded-xl border px-3 py-3 text-sm font-bold transition ${
+        active
+          ? "border-[var(--primary)] bg-[var(--primary)] text-white"
+          : "border-[var(--border)] bg-[var(--background)] text-[var(--muted-foreground)] hover:border-[var(--primary)] hover:text-[var(--primary)]"
+      }`}
+      title={label}
+      type="button"
+    >
+      <span className="flex items-center justify-center gap-2">
+        {icon}
+        <span className="truncate">{label}</span>
+      </span>
+    </button>
+  );
+}
+
+function StatItem({ label, value }) {
+  return (
+    <div className="min-w-0 rounded-xl border border-[var(--border)] bg-[var(--background)] p-3">
+      <p className="break-words text-[10px] font-black uppercase tracking-[0.12em] text-[var(--muted-foreground)]">
+        {label}
+      </p>
+      <p className="mt-1 truncate text-lg font-black text-[var(--foreground)]">{value}</p>
+    </div>
+  );
+}
+
 export function ScientificEducation() {
   const sections = [
     {
-      title: "Bistable Dynamics",
-      content: "When sensory input presents two equally plausible interpretations, neural clusters in the visual cortex compete for perceptual dominance.",
+      title: "How Perception Switches",
+      content: "Ambiguous figures provide two or more stable interpretations. Since the sensory input is constant, the change happens inside the brain.",
       icon: Brain,
     },
     {
-      title: "Top-Down Processing",
-      content: "Prior expectations, memories, and spatial context actively shape what your mind perceives long before conscious awareness.",
-      icon: Eye,
+      title: "Bistable Perception",
+      content: "Neural groups compete for dominance. When one representation fatigues, perception can suddenly flip to the other meaning.",
+      icon: Sparkles,
     },
     {
-      title: "Neural Fatigue",
-      content: "Prolonged focus on one meaning fatigues specific neural pathways, causing perception to spontaneously flip to the secondary meaning.",
-      icon: Sparkles,
+      title: "Top-Down Processing",
+      content: "Expectations, memories, and context influence which interpretation your visual system chooses first.",
+      icon: Eye,
     },
   ];
 
@@ -933,13 +373,13 @@ export function ScientificEducation() {
       {sections.map(({ title, content, icon: Icon }) => (
         <div
           key={title}
-          className="rounded-2xl border border-slate-200/80 bg-white p-5 shadow-xs transition hover:border-[#14b8a6]"
+          className="min-w-0 rounded-2xl border border-[var(--border)] bg-[var(--background)] p-5 transition hover:border-[var(--primary)]"
         >
-          <div className="mb-3.5 flex h-10 w-10 items-center justify-center rounded-xl bg-teal-50 text-[#14b8a6]">
+          <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-xl bg-[var(--primary)]/10 text-[var(--primary)]">
             <Icon className="h-5 w-5" />
           </div>
-          <h4 className="text-base font-black text-slate-900">{title}</h4>
-          <p className="mt-2 text-xs leading-6 text-slate-500">{content}</p>
+          <h4 className="break-words text-base font-black text-[var(--foreground)]">{title}</h4>
+          <p className="mt-2 text-sm leading-6 text-[var(--muted-foreground)]">{content}</p>
         </div>
       ))}
     </div>

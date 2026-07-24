@@ -50,55 +50,6 @@ export const toolMetaMap = {
     "icon": "calendar-days",
     "iconColor": "text-blue-500"
   },
-  "3d-mesh-repair-inspector": {
-    "name": "3D Mesh Repair Inspector",
-    "description": "Holes, non-manifold edges aur inverted normals detect kare.",
-    "category": [
-      "Image & Photo",
-      "Productivity"
-    ],
-    "icon": "wrench",
-    "iconColor": "text-primary",
-    "wideWorkspace": true
-  },
-  "3d-model-format-converter": {
-    "name": "3D Model Format Converter",
-    "description": "OBJ, STL aur GLB convert karke mesh statistics dikhaye.",
-    "category": [
-      "Image & Photo",
-      "Productivity"
-    ],
-    "icon": "wrench",
-    "iconColor": "text-primary",
-    "wideWorkspace": true
-  },
-  "a-b-test-significance-calculator": {
-    "name": "A/B Test Significance Calculator",
-    "description": "Conversion data se p-value aur confidence calculate kare.",
-    "category": [
-      "Business",
-      "Finance Calculators"
-    ],
-    "topics": [
-      "Calculator"
-    ],
-    "icon": "split",
-    "iconColor": "text-primary"
-  },
-  "aac-phrase-board": {
-    "name": "AAC Phrase Board",
-    "description": "Custom picture/text tiles ko tap karke speech output de.",
-    "category": [
-      "Developer",
-      "Productivity"
-    ],
-    "topics": [
-      "Accessibility"
-    ],
-    "icon": "accessibility",
-    "iconColor": "text-primary",
-    "wideWorkspace": true
-  },
   "aadhaar-masking-tool": {
     "name": "Aadhaar Masking Tool",
     "description": "Mask Aadhaar numbers locally, validate 12-digit format, run checksum checks, and export privacy-safe masked lists.",
@@ -113,17 +64,6 @@ export const toolMetaMap = {
     ],
     "icon": "fingerprint",
     "iconColor": "text-blue-600"
-  },
-  "aadhaar-secure-qr-verifier": {
-    "name": "Aadhaar Secure QR Verifier",
-    "description": "Supported Aadhaar QR locally decode aur signature status dikhaye.",
-    "category": [
-      "Developer",
-      "Productivity"
-    ],
-    "icon": "wrench",
-    "iconColor": "text-primary",
-    "wideWorkspace": true
   },
   "ac-tonnage-calculator": {
     "name": "AC Tonnage Calculator",
@@ -212,45 +152,6 @@ export const toolMetaMap = {
     ],
     "icon": "columns",
     "iconColor": "text-blue-500"
-  },
-  "adjustable-reading-reformatter": {
-    "name": "Adjustable Reading Reformatter",
-    "description": "Font, spacing, line width aur contrast user preference ke according tune kare.",
-    "category": [
-      "Developer",
-      "Productivity"
-    ],
-    "topics": [
-      "Accessibility"
-    ],
-    "icon": "accessibility",
-    "iconColor": "text-primary",
-    "wideWorkspace": true
-  },
-  "adjusted-winner-splitter": {
-    "name": "Adjusted-Winner Splitter",
-    "description": "Two-person point allocation se shared assets fairly divide kare.",
-    "category": [
-      "Productivity",
-      "Business"
-    ],
-    "icon": "users-round",
-    "iconColor": "text-primary"
-  },
-  "advance-tax-installment-planner": {
-    "name": "Advance Tax Installment Planner",
-    "description": "Estimated tax ko applicable installments me schedule kare.",
-    "category": [
-      "Finance Calculators",
-      "Lifestyle"
-    ],
-    "topics": [
-      "Finance",
-      "India",
-      "Calculator"
-    ],
-    "icon": "calendar-range",
-    "iconColor": "text-primary"
   },
   "afterimage-generator": {
     "name": "Afterimage Generator",
@@ -676,44 +577,12 @@ export const toolMetaMap = {
     "icon": "clock",
     "iconColor": "text-teal-600"
   },
-  "analytics-pii-checker": {
-    "name": "Analytics PII Checker",
-    "description": "Analytics payloads me accidentally transmitted personal data detect kare.",
-    "category": [
-      "Security & Privacy",
-      "Developer"
-    ],
-    "icon": "shield-alert",
-    "iconColor": "text-primary"
-  },
   "anger-test": {
     "name": "Anger Test",
     "description": "Test your anger issues",
     "category": "Lifestyle",
     "icon": "brain",
     "iconColor": "text-pink-500"
-  },
-  "animated-qr-file-beam": {
-    "name": "Animated QR File Beam",
-    "description": "Small file ko sequential QR frames se nearby device par transfer kare.",
-    "category": [
-      "Developer",
-      "Productivity"
-    ],
-    "icon": "wrench",
-    "iconColor": "text-primary",
-    "wideWorkspace": true
-  },
-  "animated-webp-apng-builder": {
-    "name": "Animated WebP/APNG Builder",
-    "description": "Image frames ko custom timing ke saath optimized animation me combine kare.",
-    "category": [
-      "Image & Photo",
-      "Productivity"
-    ],
-    "icon": "wrench",
-    "iconColor": "text-primary",
-    "wideWorkspace": true
   },
   "animation-generator": {
     "name": "Animation Generator",
@@ -773,26 +642,6 @@ export const toolMetaMap = {
     "icon": "search",
     "iconColor": "text-gray-500"
   },
-  "apple-health-export-explorer": {
-    "name": "Apple Health Export Explorer",
-    "description": "Health export ko readable local charts me convert kare.",
-    "category": [
-      "Health & Fitness",
-      "Developer"
-    ],
-    "icon": "file-heart",
-    "iconColor": "text-primary"
-  },
-  "appliance-load-shift-planner": {
-    "name": "Appliance Load-Shift Planner",
-    "description": "Flexible loads ko cheaper tariff windows me schedule kare.",
-    "category": [
-      "Lifestyle",
-      "Productivity"
-    ],
-    "icon": "clock",
-    "iconColor": "text-primary"
-  },
   "appliance-power-usage-estimator": {
     "name": "Appliance Power Usage Estimator",
     "description": "Estimate electricity consumption and monthly costs for your home appliances.",
@@ -802,28 +651,6 @@ export const toolMetaMap = {
     ],
     "icon": "zap",
     "iconColor": "text-muted-foreground"
-  },
-  "apr-to-apy-converter": {
-    "name": "APR-to-APY Converter",
-    "description": "Compounding frequency se nominal APR ko effective APY me badle.",
-    "category": "Finance Calculators",
-    "topics": [
-      "Finance",
-      "Calculator"
-    ],
-    "icon": "percent",
-    "iconColor": "text-primary"
-  },
-  "aqi-live-dashboard": {
-    "name": "AQI Live Dashboard",
-    "description": "Current AQI aur pollutant-wise breakdown dikhaye.",
-    "category": [
-      "Developer",
-      "Productivity"
-    ],
-    "icon": "wrench",
-    "iconColor": "text-primary",
-    "wideWorkspace": true
   },
   "archive-safety-inspector": {
     "name": "Archive Safety Inspector",
@@ -945,17 +772,6 @@ export const toolMetaMap = {
     "iconColor": "text-primary",
     "wideWorkspace": true
   },
-  "audio-pitch-tempo-shifter": {
-    "name": "Audio Pitch & Tempo Shifter",
-    "description": "Pitch aur tempo independently control kare.",
-    "category": [
-      "Video & Audio",
-      "Productivity"
-    ],
-    "icon": "wrench",
-    "iconColor": "text-primary",
-    "wideWorkspace": true
-  },
   "audio-to-base64": {
     "name": "Audio to Base64",
     "description": "Convert local audio files into Base64 data URLs.",
@@ -984,17 +800,6 @@ export const toolMetaMap = {
     "iconColor": "text-primary",
     "wideWorkspace": true
   },
-  "audio-video-sync-meter": {
-    "name": "Audio-Video Sync Meter",
-    "description": "Flash/clap recording se audio lead/lag milliseconds calculate kare.",
-    "category": [
-      "Video & Audio",
-      "Productivity"
-    ],
-    "icon": "wrench",
-    "iconColor": "text-primary",
-    "wideWorkspace": true
-  },
   "aura-color-generator": {
     "name": "Aura Color Generator",
     "description": "Upload a photo and discover your fictional aura color with playful descriptions!",
@@ -1004,27 +809,6 @@ export const toolMetaMap = {
     ],
     "icon": "circle",
     "iconColor": "text-purple-500"
-  },
-  "aurora-visibility-forecast": {
-    "name": "Aurora Visibility Forecast",
-    "description": "Kp index aur location se possible visibility estimate kare.",
-    "category": [
-      "Developer",
-      "Productivity"
-    ],
-    "icon": "wrench",
-    "iconColor": "text-primary",
-    "wideWorkspace": true
-  },
-  "availability-time-zone-finder": {
-    "name": "Availability & Time-Zone Finder",
-    "description": "Multiple schedules se common meeting windows dhoonde.",
-    "category": [
-      "Productivity",
-      "Business"
-    ],
-    "icon": "users-round",
-    "iconColor": "text-primary"
   },
   "avatar-generator": {
     "name": "Avatar Generator",
@@ -1071,17 +855,6 @@ export const toolMetaMap = {
     ],
     "icon": "baby",
     "iconColor": "text-teal-500"
-  },
-  "backup-restore-verifier": {
-    "name": "Backup Restore Verifier",
-    "description": "Check kare backup files actually decrypt, extract aur open ho rahe hain.",
-    "category": [
-      "Security & Privacy",
-      "Productivity"
-    ],
-    "icon": "wrench",
-    "iconColor": "text-primary",
-    "wideWorkspace": true
   },
   "baking-pan-converter": {
     "name": "Baking Pan Size Converter",
@@ -1306,17 +1079,6 @@ export const toolMetaMap = {
     "icon": "calculator",
     "iconColor": "text-teal-600"
   },
-  "batch-face-privacy-blur": {
-    "name": "Batch Face Privacy Blur",
-    "description": "Photos me detected bystander faces locally blur kare.",
-    "category": [
-      "Image & Photo",
-      "Productivity"
-    ],
-    "icon": "wrench",
-    "iconColor": "text-primary",
-    "wideWorkspace": true
-  },
   "batch-generation-tool": {
     "name": "Batch Generation Tool",
     "description": "Create dynamic batch workflows with live generation, queue tracking, reusable templates, local history, analytics, and browser exports.",
@@ -1329,28 +1091,6 @@ export const toolMetaMap = {
     ],
     "icon": "workflow",
     "iconColor": "text-blue-600",
-    "wideWorkspace": true
-  },
-  "batch-image-workflow-runner": {
-    "name": "Batch Image Workflow Runner",
-    "description": "Resize, crop, recolor aur watermark steps ko reusable pipeline banaye.",
-    "category": [
-      "Image & Photo",
-      "Productivity"
-    ],
-    "icon": "wrench",
-    "iconColor": "text-primary",
-    "wideWorkspace": true
-  },
-  "batch-metadata-scrubber": {
-    "name": "Batch Metadata Scrubber",
-    "description": "Images/documents se EXIF, GPS, author aur revision data remove kare.",
-    "category": [
-      "Image & Photo",
-      "Productivity"
-    ],
-    "icon": "wrench",
-    "iconColor": "text-primary",
     "wideWorkspace": true
   },
   "batch-timestamp-conversion-tool": {
@@ -1379,32 +1119,6 @@ export const toolMetaMap = {
     ],
     "icon": "activity",
     "iconColor": "text-green-500"
-  },
-  "bayesian-update-calculator": {
-    "name": "Bayesian Update Calculator",
-    "description": "Prior aur evidence se posterior probability calculate kare.",
-    "category": [
-      "Education & Science",
-      "Calculators"
-    ],
-    "topics": [
-      "Calculator"
-    ],
-    "icon": "brain-circuit",
-    "iconColor": "text-primary"
-  },
-  "beam-deflection-stress-calculator": {
-    "name": "Beam Deflection & Stress Calculator",
-    "description": "Standard load cases ka deflection aur bending stress nikale.",
-    "category": [
-      "Education & Science",
-      "Calculators"
-    ],
-    "topics": [
-      "Calculator"
-    ],
-    "icon": "ruler",
-    "iconColor": "text-primary"
   },
   "beard-style-preview": {
     "name": "Beard Style Preview",
@@ -1484,20 +1198,6 @@ export const toolMetaMap = {
     "icon": "wand-2",
     "iconColor": "text-indigo-600"
   },
-  "big-button-medical-info-card": {
-    "name": "Big-Button Medical Info Card",
-    "description": "Large-text medicines, allergies aur emergency-contact card banaye.",
-    "category": [
-      "Developer",
-      "Productivity"
-    ],
-    "topics": [
-      "Accessibility"
-    ],
-    "icon": "accessibility",
-    "iconColor": "text-primary",
-    "wideWorkspace": true
-  },
   "binary-hex-decimal-converter": {
     "name": "Binary / Hex / Decimal Converter",
     "description": "Convert binary, hexadecimal, decimal, and ASCII values quickly.",
@@ -1564,20 +1264,6 @@ export const toolMetaMap = {
     "icon": "link",
     "iconColor": "text-cyan-600"
   },
-  "bionic-reading-converter": {
-    "name": "Bionic Reading Converter",
-    "description": "Word beginnings ko optional visual emphasis de.",
-    "category": [
-      "Developer",
-      "Productivity"
-    ],
-    "topics": [
-      "Accessibility"
-    ],
-    "icon": "accessibility",
-    "iconColor": "text-primary",
-    "wideWorkspace": true
-  },
   "birthday-analyzer": {
     "name": "Birthday Analyzer",
     "description": "Get detailed birthday insights including zodiac signs, age analytics, milestones, and live countdowns.",
@@ -1590,17 +1276,6 @@ export const toolMetaMap = {
     ],
     "icon": "cake",
     "iconColor": "text-pink-600"
-  },
-  "black-scholes-options-pricer": {
-    "name": "Black-Scholes Options Pricer",
-    "description": "European call/put value aur five Greeks calculate kare.",
-    "category": "Finance Calculators",
-    "topics": [
-      "Finance",
-      "Calculator"
-    ],
-    "icon": "chart-candlestick",
-    "iconColor": "text-primary"
   },
   "block-stacker": {
     "name": "Block Stacker",
@@ -1774,30 +1449,6 @@ export const toolMetaMap = {
     "icon": "ruler",
     "iconColor": "text-teal-600"
   },
-  "bolt-torque-preload-calculator": {
-    "name": "Bolt Torque & Preload Calculator",
-    "description": "Bolt size aur K-factor se torque/clamp load estimate kare.",
-    "category": [
-      "Education & Science",
-      "Calculators"
-    ],
-    "topics": [
-      "Calculator"
-    ],
-    "icon": "nut",
-    "iconColor": "text-primary"
-  },
-  "bond-duration-convexity-calculator": {
-    "name": "Bond Duration & Convexity Calculator",
-    "description": "Macaulay duration, modified duration aur convexity nikale.",
-    "category": "Finance Calculators",
-    "topics": [
-      "Finance",
-      "Calculator"
-    ],
-    "icon": "landmark",
-    "iconColor": "text-primary"
-  },
   "bond-yield-calculator": {
     "name": "Bond Yield Calculator",
     "description": "Current yield and approximate yield-to-maturity for a bond.",
@@ -1821,19 +1472,6 @@ export const toolMetaMap = {
     "category": "Productivity",
     "icon": "bookmark",
     "iconColor": "text-(--primary)"
-  },
-  "bootstrap-confidence-workbench": {
-    "name": "Bootstrap Confidence Workbench",
-    "description": "Uploaded data par seeded bootstrap intervals calculate kare.",
-    "category": [
-      "Education & Science",
-      "Calculators"
-    ],
-    "topics": [
-      "Calculator"
-    ],
-    "icon": "repeat-2",
-    "iconColor": "text-primary"
   },
   "box-breathing": {
     "name": "Box Breathing Exercise",
@@ -1870,20 +1508,6 @@ export const toolMetaMap = {
     "icon": "music",
     "iconColor": "text-teal-600"
   },
-  "braille-embosser-sheet-maker": {
-    "name": "Braille Embosser Sheet Maker",
-    "description": "Text ko embosser-ready Braille/BRF layout me convert kare.",
-    "category": [
-      "Developer",
-      "Productivity"
-    ],
-    "topics": [
-      "Accessibility"
-    ],
-    "icon": "accessibility",
-    "iconColor": "text-primary",
-    "wideWorkspace": true
-  },
   "braille-learning-tool": {
     "name": "Braille Learning Tool",
     "description": "Learn Braille alphabet (A–Z), numbers (0–9), and common punctuation with interactive cards, quizzes, and progress tracking",
@@ -1910,19 +1534,6 @@ export const toolMetaMap = {
     "icon": "zap",
     "iconColor": "text-yellow-500"
   },
-  "brand-deal-rate-calculator": {
-    "name": "Brand Deal Rate Calculator",
-    "description": "Reach, CPM aur deliverables se pricing range estimate kare.",
-    "category": [
-      "Business",
-      "Marketing & Social"
-    ],
-    "topics": [
-      "Marketing"
-    ],
-    "icon": "badge-dollar-sign",
-    "iconColor": "text-primary"
-  },
   "brand-kit-manager": {
     "name": "Brand Kit Manager",
     "description": "Create, organize, preview, and export complete brand kits with logos, colors, typography, links, and guidelines.",
@@ -1937,16 +1548,6 @@ export const toolMetaMap = {
     ],
     "icon": "badge",
     "iconColor": "text-indigo-600"
-  },
-  "breach-notification-timeline-planner": {
-    "name": "Breach Notification Timeline Planner",
-    "description": "Incident discovery se required review aur notification milestones map kare.",
-    "category": [
-      "Security & Privacy",
-      "Productivity"
-    ],
-    "icon": "clock-alert",
-    "iconColor": "text-primary"
   },
   "breach-prefix-checker": {
     "name": "Breach Prefix Checker",
@@ -2072,19 +1673,6 @@ export const toolMetaMap = {
     "icon": "pie-chart",
     "iconColor": "text-teal-500"
   },
-  "buffer-ph-calculator": {
-    "name": "Buffer pH Calculator",
-    "description": "Henderson-Hasselbalch equation se buffer pH calculate kare.",
-    "category": [
-      "Education & Science",
-      "Calculators"
-    ],
-    "topics": [
-      "Calculator"
-    ],
-    "icon": "flask-conical",
-    "iconColor": "text-primary"
-  },
   "bulk-text-replacer": {
     "name": "Bulk Text Replacer",
     "description": "Replace multiple text values instantly with smart automation.",
@@ -2101,17 +1689,6 @@ export const toolMetaMap = {
     ],
     "icon": "external-link",
     "iconColor": "text-indigo-600"
-  },
-  "burn-in-subtitle-encoder": {
-    "name": "Burn-In Subtitle Encoder",
-    "description": "Styled subtitles permanently video me embed kare.",
-    "category": [
-      "Video & Audio",
-      "Productivity"
-    ],
-    "icon": "wrench",
-    "iconColor": "text-primary",
-    "wideWorkspace": true
   },
   "business-card": {
     "name": "Business Card",
@@ -2231,30 +1808,6 @@ export const toolMetaMap = {
     "icon": "calendar-range",
     "iconColor": "text-gray-500"
   },
-  "calibrated-camera-ruler": {
-    "name": "Calibrated Camera Ruler",
-    "description": "Reference card se approximate object dimensions estimate kare.",
-    "category": [
-      "Developer",
-      "Productivity"
-    ],
-    "icon": "wrench",
-    "iconColor": "text-primary",
-    "wideWorkspace": true
-  },
-  "calibration-curve-lod-loq-workbench": {
-    "name": "Calibration Curve LOD/LOQ Workbench",
-    "description": "Fit, residuals, confidence bands aur detection limits calculate kare.",
-    "category": [
-      "Education & Science",
-      "Calculators"
-    ],
-    "topics": [
-      "Calculator"
-    ],
-    "icon": "chart-scatter",
-    "iconColor": "text-primary"
-  },
   "call-to-action-generator": {
     "name": "Call-to-Action Generator",
     "description": "Generate punchy CTA button and headline variations.",
@@ -2314,17 +1867,6 @@ export const toolMetaMap = {
     "category": "Developer",
     "icon": "case-sensitive",
     "iconColor": "text-blue-600"
-  },
-  "camera-color-eyedropper": {
-    "name": "Camera Color Eyedropper",
-    "description": "Live camera object ka approximate HEX/RGB color sample kare.",
-    "category": [
-      "Developer",
-      "Productivity"
-    ],
-    "icon": "wrench",
-    "iconColor": "text-primary",
-    "wideWorkspace": true
   },
   "campaign-budget-planner": {
     "name": "Campaign Budget Planner",
@@ -2454,16 +1996,6 @@ export const toolMetaMap = {
     ],
     "icon": "ruler",
     "iconColor": "text-teal-600"
-  },
-  "carpool-rotation-scheduler": {
-    "name": "Carpool Rotation Scheduler",
-    "description": "Drivers aur passengers ka recurring fair rota banaye.",
-    "category": [
-      "Productivity",
-      "Business"
-    ],
-    "icon": "users-round",
-    "iconColor": "text-primary"
   },
   "cart-bill-splitter": {
     "name": "Cart Bill Splitter",
@@ -2671,17 +2203,6 @@ export const toolMetaMap = {
     "icon": "list-checks",
     "iconColor": "text-teal-600"
   },
-  "chromatic-instrument-tuner": {
-    "name": "Chromatic Instrument Tuner",
-    "description": "Microphone se note aur cents sharp/flat dikhaye.",
-    "category": [
-      "Developer",
-      "Productivity"
-    ],
-    "icon": "wrench",
-    "iconColor": "text-primary",
-    "wideWorkspace": true
-  },
   "churn-rate-calculator": {
     "name": "Churn Rate Calculator",
     "description": "Customer churn and retention rate for a period.",
@@ -2775,17 +2296,6 @@ export const toolMetaMap = {
     ],
     "icon": "arrow-left-right",
     "iconColor": "text-blue-600"
-  },
-  "cloud-status-board": {
-    "name": "Cloud Status Board",
-    "description": "Major cloud aur SaaS incidents ek dashboard par dikhaye.",
-    "category": [
-      "Developer",
-      "Productivity"
-    ],
-    "icon": "wrench",
-    "iconColor": "text-primary",
-    "wideWorkspace": true
   },
   "code-complexity-analyzer": {
     "name": "Code Complexity Analyzer",
@@ -2912,17 +2422,6 @@ export const toolMetaMap = {
     ],
     "icon": "palette",
     "iconColor": "text-fuchsia-600"
-  },
-  "color-grade-lut-applier": {
-    "name": "Color-Grade LUT Applier",
-    "description": ".cube LUT ko photos aur video frames par locally apply kare.",
-    "category": [
-      "Image & Photo",
-      "Productivity"
-    ],
-    "icon": "wrench",
-    "iconColor": "text-primary",
-    "wideWorkspace": true
   },
   "color-match-game": {
     "name": "Color Match Game",
@@ -3085,45 +2584,12 @@ export const toolMetaMap = {
     "icon": "monitor",
     "iconColor": "text-teal-500"
   },
-  "condorcet-election-judge": {
-    "name": "Condorcet Election Judge",
-    "description": "Pairwise comparison se winner ya voting cycle dikhaye.",
-    "category": [
-      "Productivity",
-      "Business"
-    ],
-    "icon": "users-round",
-    "iconColor": "text-primary"
-  },
-  "confidence-interval-calculator": {
-    "name": "Confidence Interval Calculator",
-    "description": "Means aur proportions ke confidence intervals nikale.",
-    "category": [
-      "Education & Science",
-      "Calculators"
-    ],
-    "topics": [
-      "Calculator"
-    ],
-    "icon": "brackets",
-    "iconColor": "text-primary"
-  },
   "connection-string-builder": {
     "name": "Database Connection String Builder",
     "description": "Build a database connection URI for Postgres, MySQL, MongoDB, Redis and more — with the right scheme and default port.",
     "category": "Developer",
     "icon": "database",
     "iconColor": "text-blue-600"
-  },
-  "consent-inventory-mapper": {
-    "name": "Consent Inventory Mapper",
-    "description": "Business ke consent collection aur withdrawal points map kare.",
-    "category": [
-      "Productivity",
-      "Business"
-    ],
-    "icon": "table-properties",
-    "iconColor": "text-primary"
   },
   "consent-receipt-wallet": {
     "name": "Consent Receipt Wallet",
@@ -3155,21 +2621,6 @@ export const toolMetaMap = {
       "Science"
     ],
     "icon": "stars",
-    "iconColor": "text-primary"
-  },
-  "consumer-complaint-draft-builder": {
-    "name": "Consumer Complaint Draft Builder",
-    "description": "Facts, relief aur evidence se complaint format banaye.",
-    "category": [
-      "Text & Writing",
-      "Lifestyle",
-      "Business"
-    ],
-    "topics": [
-      "India",
-      "Legal"
-    ],
-    "icon": "file-warning",
     "iconColor": "text-primary"
   },
   "contact-memory-vault": {
@@ -3241,16 +2692,6 @@ export const toolMetaMap = {
     "icon": "layers",
     "iconColor": "text-[var(--primary)]"
   },
-  "cookie-gpc-behavior-auditor": {
-    "name": "Cookie & GPC Behavior Auditor",
-    "description": "Reject action aur Global Privacy Control response test kare.",
-    "category": [
-      "Security & Privacy",
-      "Business"
-    ],
-    "icon": "scan-search",
-    "iconColor": "text-primary"
-  },
   "cookie-viewer": {
     "name": "Cookie Viewer",
     "description": "View, manage, add, edit, and delete browser cookies in real-time.",
@@ -3281,19 +2722,6 @@ export const toolMetaMap = {
     "category": "Business",
     "icon": "briefcase-business",
     "iconColor": "text-indigo-600"
-  },
-  "correlation-simpsons-paradox-visualizer": {
-    "name": "Correlation & Simpson's Paradox Visualizer",
-    "description": "Grouped data me misleading aggregate correlations demonstrate kare.",
-    "category": [
-      "Education & Science",
-      "Calculators"
-    ],
-    "topics": [
-      "Calculator"
-    ],
-    "icon": "chart-scatter",
-    "iconColor": "text-primary"
   },
   "cors-configuration-linter": {
     "name": "CORS Configuration Linter",
@@ -3364,29 +2792,6 @@ export const toolMetaMap = {
     "icon": "hash",
     "iconColor": "text-orange-600"
   },
-  "creator-contract-rights-timeline": {
-    "name": "Creator Contract Rights Timeline",
-    "description": "Usage, exclusivity, whitelisting aur renewal dates extract kare.",
-    "category": [
-      "Business",
-      "Text & Writing"
-    ],
-    "icon": "calendar-range",
-    "iconColor": "text-primary"
-  },
-  "creator-income-tracker": {
-    "name": "Creator Income Tracker",
-    "description": "Sponsorship, affiliate aur platform payouts locally track kare.",
-    "category": [
-      "Business",
-      "Finance Calculators"
-    ],
-    "topics": [
-      "Finance"
-    ],
-    "icon": "wallet-cards",
-    "iconColor": "text-primary"
-  },
   "credit-card-interest-calculator": {
     "name": "Credit Card Interest & Minimum Payment Trap",
     "description": "See the true cost of paying only the minimum due — months to clear, total interest with GST, and faster payoff plans.",
@@ -3435,17 +2840,6 @@ export const toolMetaMap = {
     ],
     "icon": "bitcoin",
     "iconColor": "text-amber-600"
-  },
-  "crypto-price-alarm": {
-    "name": "Crypto Price Alarm",
-    "description": "Chosen asset target cross kare toh browser notification de.",
-    "category": [
-      "Developer",
-      "Productivity"
-    ],
-    "icon": "wrench",
-    "iconColor": "text-primary",
-    "wideWorkspace": true
   },
   "crypto-wallet-checker": {
     "name": "Crypto Wallet Checker",
@@ -3581,19 +2975,6 @@ export const toolMetaMap = {
     ],
     "icon": "square",
     "iconColor": "text-indigo-500"
-  },
-  "csv-carbon-footprint-analyzer": {
-    "name": "CSV Carbon Footprint Analyzer",
-    "description": "Utility aur travel exports se estimated footprint calculate kare.",
-    "category": [
-      "Lifestyle",
-      "Calculators"
-    ],
-    "topics": [
-      "Calculator"
-    ],
-    "icon": "leaf",
-    "iconColor": "text-primary"
   },
   "csv-converter": {
     "name": "CSV Converter",
@@ -3804,26 +3185,6 @@ export const toolMetaMap = {
     "icon": "scan-face",
     "iconColor": "text-teal-500"
   },
-  "dark-pattern-self-audit": {
-    "name": "Dark-Pattern Self-Audit",
-    "description": "Manipulative consent, checkout aur cancellation UX flag kare.",
-    "category": [
-      "Security & Privacy",
-      "Business"
-    ],
-    "icon": "scan-search",
-    "iconColor": "text-primary"
-  },
-  "data-deletion-proof-log": {
-    "name": "Data Deletion Proof Log",
-    "description": "Deletion requests aur system-wise completion evidence record kare.",
-    "category": [
-      "Security & Privacy",
-      "Productivity"
-    ],
-    "icon": "file-check-2",
-    "iconColor": "text-primary"
-  },
   "data-lens": {
     "name": "Data Lens",
     "description": "Upload CSV files to analyze columns, clean data, detect patterns, and generate smart visual insights.",
@@ -3837,16 +3198,6 @@ export const toolMetaMap = {
     ],
     "icon": "chart-bar",
     "iconColor": "text-blue-600"
-  },
-  "data-retention-schedule-builder": {
-    "name": "Data Retention Schedule Builder",
-    "description": "Data categories ke review aur deletion periods define kare.",
-    "category": [
-      "Productivity",
-      "Business"
-    ],
-    "icon": "table-properties",
-    "iconColor": "text-primary"
   },
   "data-structure-visualizer": {
     "name": "Data Structure Visualizer",
@@ -3898,17 +3249,6 @@ export const toolMetaMap = {
     ],
     "icon": "trending-up",
     "iconColor": "text-emerald-600"
-  },
-  "dead-pixel-screen-test": {
-    "name": "Dead-Pixel Screen Test",
-    "description": "Full-screen patterns se dead ya stuck pixels locate kare.",
-    "category": [
-      "Developer",
-      "Productivity"
-    ],
-    "icon": "wrench",
-    "iconColor": "text-primary",
-    "wideWorkspace": true
   },
   "debt-payoff-calculator": {
     "name": "Debt Payoff Calculator",
@@ -4005,16 +3345,6 @@ export const toolMetaMap = {
     "icon": "list-checks",
     "iconColor": "text-violet-500"
   },
-  "deliverable-revision-ledger": {
-    "name": "Deliverable Revision Ledger",
-    "description": "Versions, feedback, approvals aur included revision count record kare.",
-    "category": [
-      "Business",
-      "Productivity"
-    ],
-    "icon": "history",
-    "iconColor": "text-primary"
-  },
   "density-calculator": {
     "name": "Density Calculator",
     "description": "Density from mass and volume, with common unit conversions.",
@@ -4098,19 +3428,6 @@ export const toolMetaMap = {
     "icon": "stretch-horizontal",
     "iconColor": "text-teal-600"
   },
-  "devanagari-transliteration-keyboard": {
-    "name": "Devanagari Transliteration Keyboard",
-    "description": "Roman Hindi aur Devanagari ke beech live transliteration kare.",
-    "category": [
-      "Text & Writing",
-      "Lifestyle"
-    ],
-    "topics": [
-      "India"
-    ],
-    "icon": "languages",
-    "iconColor": "text-primary"
-  },
   "device-browser-dashboard": {
     "name": "Device & Browser Dashboard",
     "description": "Advanced client-side dashboard for device, browser, privacy, permissions, GPU, storage, and API capability analysis.",
@@ -4123,17 +3440,6 @@ export const toolMetaMap = {
     ],
     "icon": "gauge",
     "iconColor": "text-blue-600"
-  },
-  "device-sensor-calibration-checker": {
-    "name": "Device Sensor Calibration Checker",
-    "description": "Accelerometer, gyroscope aur magnetometer bias sanity-check kare.",
-    "category": [
-      "Developer",
-      "Productivity"
-    ],
-    "icon": "wrench",
-    "iconColor": "text-primary",
-    "wideWorkspace": true
   },
   "diabetes-dashboard": {
     "name": "Diabetes Management Dashboard",
@@ -4226,17 +3532,6 @@ export const toolMetaMap = {
     "iconColor": "text-primary",
     "wideWorkspace": true
   },
-  "digital-compass": {
-    "name": "Digital Compass",
-    "description": "Supported magnetometer se heading aur bearing dikhaye.",
-    "category": [
-      "Developer",
-      "Productivity"
-    ],
-    "icon": "wrench",
-    "iconColor": "text-primary",
-    "wideWorkspace": true
-  },
   "digital-legacy-vault": {
     "name": "Digital Legacy Vault",
     "description": "Organize emergency instructions and important records for trusted family handoff.",
@@ -4245,17 +3540,6 @@ export const toolMetaMap = {
       "Productivity"
     ],
     "icon": "lock-keyhole",
-    "iconColor": "text-primary",
-    "wideWorkspace": true
-  },
-  "digital-level-inclinometer": {
-    "name": "Digital Level & Inclinometer",
-    "description": "Supported orientation sensor se tilt aur slope measure kare.",
-    "category": [
-      "Developer",
-      "Productivity"
-    ],
-    "icon": "wrench",
     "iconColor": "text-primary",
     "wideWorkspace": true
   },
@@ -4268,29 +3552,6 @@ export const toolMetaMap = {
     ],
     "icon": "wrench",
     "iconColor": "text-muted-foreground"
-  },
-  "dilution-molarity-calculator": {
-    "name": "Dilution & Molarity Calculator",
-    "description": "Concentration, molarity aur solution volumes calculate kare.",
-    "category": [
-      "Education & Science",
-      "Calculators"
-    ],
-    "topics": [
-      "Calculator"
-    ],
-    "icon": "beaker",
-    "iconColor": "text-primary"
-  },
-  "dimensional-consistency-checker": {
-    "name": "Dimensional Consistency Checker",
-    "description": "Equation variables ke units compare karke invalid terms detect kare.",
-    "category": [
-      "Education & Science",
-      "Developer"
-    ],
-    "icon": "brackets",
-    "iconColor": "text-primary"
   },
   "dino-run": {
     "name": "Dino Run Game",
@@ -4401,17 +3662,6 @@ export const toolMetaMap = {
     "icon": "dna",
     "iconColor": "text-teal-500"
   },
-  "dns-propagation-checker": {
-    "name": "DNS Propagation Checker",
-    "description": "Multiple global resolvers par DNS record changes compare kare.",
-    "category": [
-      "Developer",
-      "Productivity"
-    ],
-    "icon": "wrench",
-    "iconColor": "text-primary",
-    "wideWorkspace": true
-  },
   "dockerfile-security-linter": {
     "name": "Dockerfile Security Linter",
     "description": "Lint a pasted Dockerfile locally for risky build patterns, root runtime cues, floating bases, embedded secrets, broad copies, and missing health checks.",
@@ -4484,17 +3734,6 @@ export const toolMetaMap = {
     "icon": "globe",
     "iconColor": "text-gray-500"
   },
-  "domain-expiry-radar": {
-    "name": "Domain Expiry Radar",
-    "description": "RDAP data se expiry aur renewal windows track kare.",
-    "category": [
-      "Developer",
-      "Productivity"
-    ],
-    "icon": "wrench",
-    "iconColor": "text-primary",
-    "wideWorkspace": true
-  },
   "domain-name-ideas-generator": {
     "name": "Domain Name Ideas Generator",
     "description": "Generate fresh name ideas from a keyword.",
@@ -4533,26 +3772,6 @@ export const toolMetaMap = {
     "icon": "wheat",
     "iconColor": "text-teal-600"
   },
-  "dpdp-consent-notice-checker": {
-    "name": "DPDP Consent Notice Checker",
-    "description": "Versioned India DPDP checklist ke against notice completeness inspect kare.",
-    "category": [
-      "Security & Privacy",
-      "Business"
-    ],
-    "icon": "scan-search",
-    "iconColor": "text-primary"
-  },
-  "dpia-starter-wizard": {
-    "name": "DPIA Starter Wizard",
-    "description": "New feature ka initial privacy-impact assessment structure kare.",
-    "category": [
-      "Security & Privacy",
-      "Business"
-    ],
-    "icon": "clipboard-list",
-    "iconColor": "text-primary"
-  },
   "dream-pattern-journal": {
     "name": "Dream Pattern Journal",
     "description": "Privately tag dreams and review recurring themes over time.",
@@ -4583,29 +3802,6 @@ export const toolMetaMap = {
     ],
     "icon": "beer",
     "iconColor": "text-amber-600"
-  },
-  "driving-licence-number-decoder": {
-    "name": "Driving Licence Number Decoder",
-    "description": "Licence number se state, RTO aur year fields parse kare.",
-    "category": [
-      "Lifestyle",
-      "Productivity"
-    ],
-    "topics": [
-      "India"
-    ],
-    "icon": "car-front",
-    "iconColor": "text-primary"
-  },
-  "dsar-request-tracker": {
-    "name": "DSAR Request Tracker",
-    "description": "Data-access requests, deadlines, responses aur evidence manage kare.",
-    "category": [
-      "Security & Privacy",
-      "Productivity"
-    ],
-    "icon": "calendar-clock",
-    "iconColor": "text-primary"
   },
   "duplicate-image-finder": {
     "name": "Duplicate Image Finder",
@@ -4652,46 +3848,6 @@ export const toolMetaMap = {
     "icon": "code",
     "iconColor": "text-cyan-600"
   },
-  "dwell-click-keyboard": {
-    "name": "Dwell-Click Keyboard",
-    "description": "Pointer hover duration se clicking aur typing enable kare.",
-    "category": [
-      "Developer",
-      "Productivity"
-    ],
-    "topics": [
-      "Accessibility"
-    ],
-    "icon": "accessibility",
-    "iconColor": "text-primary",
-    "wideWorkspace": true
-  },
-  "e-series-component-finder": {
-    "name": "E-Series Component Finder",
-    "description": "Nearest standard resistor/capacitor value suggest kare.",
-    "category": "Calculators",
-    "topics": [
-      "Electronics",
-      "Calculator"
-    ],
-    "icon": "resistor",
-    "iconColor": "text-primary"
-  },
-  "e-way-bill-validity-calculator": {
-    "name": "E-Way Bill Validity Calculator",
-    "description": "Distance aur generation time se validity window calculate kare.",
-    "category": [
-      "Business",
-      "Lifestyle",
-      "Finance Calculators"
-    ],
-    "topics": [
-      "India",
-      "Calculator"
-    ],
-    "icon": "truck",
-    "iconColor": "text-primary"
-  },
   "ecg-qtc-calculator": {
     "name": "ECG QTc Calculator",
     "description": "Calculate corrected QT interval using Bazett, Fridericia, Framingham, and Hodges formulas with real-time comparison.",
@@ -4734,30 +3890,6 @@ export const toolMetaMap = {
     ],
     "icon": "zap",
     "iconColor": "text-teal-500"
-  },
-  "elimination-diet-correlation-log": {
-    "name": "Elimination Diet Correlation Log",
-    "description": "Foods aur reactions ke possible patterns dikhaye.",
-    "category": [
-      "Health & Fitness",
-      "Productivity"
-    ],
-    "topics": [
-      "Health & Wellness"
-    ],
-    "icon": "salad",
-    "iconColor": "text-primary"
-  },
-  "email-authentication-checker": {
-    "name": "Email Authentication Checker",
-    "description": "Check a domain's SPF, DKIM, DMARC and MX records live in your browser and get a clear pass/warn/fail verdict with fixes — the deliverability-critical checks that decide whether your email reaches the inbox.",
-    "category": "Marketing & Social",
-    "topics": [
-      "Email Marketing"
-    ],
-    "icon": "shield-check",
-    "iconColor": "text-emerald-600",
-    "wideWorkspace": true
   },
   "email-deliverability-predictor": {
     "name": "Email Deliverability Predictor",
@@ -4988,16 +4120,6 @@ export const toolMetaMap = {
     "icon": "database",
     "iconColor": "text-[var(--primary)]"
   },
-  "envy-free-rent-splitter": {
-    "name": "Envy-Free Rent Splitter",
-    "description": "Room preferences aur total rent se fair shares optimize kare.",
-    "category": [
-      "Productivity",
-      "Business"
-    ],
-    "icon": "users-round",
-    "iconColor": "text-primary"
-  },
   "epf-calculator": {
     "name": "EPF Calculator",
     "description": "Project your EPF corpus at retirement with the real 12% split, EPS cap, yearly interest and EEE tax status.",
@@ -5028,56 +4150,6 @@ export const toolMetaMap = {
     "description": "Group recurring error-log patterns locally and inspect their frequency, severity, and examples.",
     "category": "Developer",
     "icon": "list-collapse",
-    "iconColor": "text-primary"
-  },
-  "eth-gas-now": {
-    "name": "ETH Gas Now",
-    "description": "Ethereum gas fees slow, normal aur fast tiers me dikhaye.",
-    "category": [
-      "Developer",
-      "Productivity"
-    ],
-    "icon": "wrench",
-    "iconColor": "text-primary",
-    "wideWorkspace": true
-  },
-  "ev-battery-degradation-analyzer": {
-    "name": "EV Battery Degradation Analyzer",
-    "description": "Charge logs se range aur capacity trend estimate kare.",
-    "category": [
-      "Lifestyle",
-      "Calculators"
-    ],
-    "topics": [
-      "Calculator"
-    ],
-    "icon": "battery-medium",
-    "iconColor": "text-primary"
-  },
-  "ev-charging-tou-optimizer": {
-    "name": "EV Charging TOU Optimizer",
-    "description": "Tariff windows se lower-cost charging schedule calculate kare.",
-    "category": [
-      "Lifestyle",
-      "Calculators"
-    ],
-    "topics": [
-      "Calculator"
-    ],
-    "icon": "battery-charging",
-    "iconColor": "text-primary"
-  },
-  "ev-road-trip-charge-planner": {
-    "name": "EV Road-Trip Charge Planner",
-    "description": "Battery, range aur route legs se charging stops plan kare.",
-    "category": [
-      "Lifestyle",
-      "Calculators"
-    ],
-    "topics": [
-      "Calculator"
-    ],
-    "icon": "route",
     "iconColor": "text-primary"
   },
   "event-tool": {
@@ -5181,17 +4253,6 @@ export const toolMetaMap = {
     ],
     "icon": "image",
     "iconColor": "text-emerald-600"
-  },
-  "exif-timestamp-geotag-editor": {
-    "name": "EXIF Timestamp & Geotag Editor",
-    "description": "User-owned photos ke dates aur coordinates bulk-edit kare.",
-    "category": [
-      "Image & Photo",
-      "Productivity"
-    ],
-    "icon": "wrench",
-    "iconColor": "text-primary",
-    "wideWorkspace": true
   },
   "expanse-tacker": {
     "name": "Expanse Tracker",
@@ -5317,16 +4378,6 @@ export const toolMetaMap = {
     ],
     "icon": "file-text",
     "iconColor": "text-blue-600"
-  },
-  "family-emergency-contact-tree": {
-    "name": "Family Emergency Contact Tree",
-    "description": "Contact priority, responsibilities aur offline printable tree banaye.",
-    "category": [
-      "Lifestyle",
-      "Productivity"
-    ],
-    "icon": "network",
-    "iconColor": "text-primary"
   },
   "family-medical-history-tree": {
     "name": "Family Medical History Tree",
@@ -5609,20 +4660,6 @@ export const toolMetaMap = {
     "icon": "workflow",
     "iconColor": "text-gray-500"
   },
-  "focus-reading-mask": {
-    "name": "Focus Reading Mask",
-    "description": "Current line ke alawa remaining content dim kare.",
-    "category": [
-      "Developer",
-      "Productivity"
-    ],
-    "topics": [
-      "Accessibility"
-    ],
-    "icon": "accessibility",
-    "iconColor": "text-primary",
-    "wideWorkspace": true
-  },
   "focus-score-calculator": {
     "name": "Focus Score Calculator",
     "description": "Calculate your daily focus score based on lifestyle factors, sleep, screen time, and productivity metrics.",
@@ -5665,17 +4702,6 @@ export const toolMetaMap = {
     "icon": "type",
     "iconColor": "text-cyan-500"
   },
-  "font-glyph-kerning-inspector": {
-    "name": "Font Glyph & Kerning Inspector",
-    "description": "Glyph coverage, kerning pairs aur OpenType features inspect kare.",
-    "category": [
-      "Image & Photo",
-      "Productivity"
-    ],
-    "icon": "wrench",
-    "iconColor": "text-primary",
-    "wideWorkspace": true
-  },
   "font-legibility-comparator": {
     "name": "Font Legibility Comparator",
     "description": "Compare the same private text across local system font stacks, size, measure, weight, and spacing settings without declaring a universal winner.",
@@ -5688,17 +4714,6 @@ export const toolMetaMap = {
       "Design"
     ],
     "icon": "type",
-    "iconColor": "text-primary",
-    "wideWorkspace": true
-  },
-  "font-subsetter-woff2-converter": {
-    "name": "Font Subsetter & WOFF2 Converter",
-    "description": "Unused glyphs remove karke web-optimized font banaye.",
-    "category": [
-      "Image & Photo",
-      "Productivity"
-    ],
-    "icon": "wrench",
     "iconColor": "text-primary",
     "wideWorkspace": true
   },
@@ -5834,19 +4849,6 @@ export const toolMetaMap = {
     "icon": "film",
     "iconColor": "text-teal-600"
   },
-  "freelance-payment-late-fee-tracker": {
-    "name": "Freelance Payment & Late-Fee Tracker",
-    "description": "Due dates, payments aur agreed late fees track kare.",
-    "category": [
-      "Finance Calculators",
-      "Business"
-    ],
-    "topics": [
-      "Finance"
-    ],
-    "icon": "calendar-clock",
-    "iconColor": "text-primary"
-  },
   "freelance-rate-calculator": {
     "name": "Freelance Hourly Rate Calculator",
     "description": "Work backwards from the income you want to the hourly, day, and retainer rates you must actually charge.",
@@ -5859,16 +4861,6 @@ export const toolMetaMap = {
     ],
     "icon": "badge-indian-rupee",
     "iconColor": "text-teal-600"
-  },
-  "friend-elo-ladder": {
-    "name": "Friend ELO Ladder",
-    "description": "Friendly matches ka persistent ELO rating track kare.",
-    "category": [
-      "Productivity",
-      "Business"
-    ],
-    "icon": "users-round",
-    "iconColor": "text-primary"
   },
   "friendship-challenge": {
     "name": "Friendship Challenge",
@@ -5979,17 +4971,6 @@ export const toolMetaMap = {
     "icon": "trending-up",
     "iconColor": "text-emerald-500"
   },
-  "fx-rate-alerter": {
-    "name": "FX Rate Alerter",
-    "description": "Selected currency rate cross hone par alert de.",
-    "category": [
-      "Developer",
-      "Productivity"
-    ],
-    "icon": "wrench",
-    "iconColor": "text-primary",
-    "wideWorkspace": true
-  },
   "generate-random-string": {
     "name": "Generate Random String",
     "description": "Generate secure random strings, batches, patterns, QR codes, and exports in the browser.",
@@ -6011,17 +4992,6 @@ export const toolMetaMap = {
     "icon": "triangle",
     "iconColor": "text-amber-600"
   },
-  "gif-palette-optimizer": {
-    "name": "GIF Palette Optimizer",
-    "description": "Palette aur dithering tune karke GIF size reduce kare.",
-    "category": [
-      "Image & Photo",
-      "Productivity"
-    ],
-    "icon": "wrench",
-    "iconColor": "text-primary",
-    "wideWorkspace": true
-  },
   "gift-budget-tracker": {
     "name": "Gift Budget Tracker",
     "description": "Track your gift budget and expenses per person or event.",
@@ -6035,32 +5005,6 @@ export const toolMetaMap = {
     "category": "Lifestyle",
     "icon": "gift",
     "iconColor": "text-indigo-600"
-  },
-  "gig-earnings-mileage-analyzer": {
-    "name": "Gig Earnings & Mileage Analyzer",
-    "description": "Expenses ke baad effective hourly earnings calculate kare.",
-    "category": [
-      "Finance Calculators",
-      "Business"
-    ],
-    "topics": [
-      "Finance"
-    ],
-    "icon": "car",
-    "iconColor": "text-primary"
-  },
-  "gig-platform-fee-normalizer": {
-    "name": "Gig Platform Fee Normalizer",
-    "description": "Fees, travel aur admin time ke baad effective hourly pay compare kare.",
-    "category": [
-      "Finance Calculators",
-      "Business"
-    ],
-    "topics": [
-      "Finance"
-    ],
-    "icon": "scale",
-    "iconColor": "text-primary"
   },
   "git-diff-exposure-checker": {
     "name": "Git Diff Exposure Checker",
@@ -6133,17 +5077,6 @@ export const toolMetaMap = {
     "category": "Developer",
     "icon": "regex",
     "iconColor": "text-emerald-600"
-  },
-  "global-market-session-clock": {
-    "name": "Global Market Session Clock",
-    "description": "Major exchanges ka open/closed status aur countdown dikhaye.",
-    "category": [
-      "Developer",
-      "Productivity"
-    ],
-    "icon": "wrench",
-    "iconColor": "text-primary",
-    "wideWorkspace": true
   },
   "gmail-template-builder": {
     "name": "Gmail Template Builder",
@@ -6227,27 +5160,6 @@ export const toolMetaMap = {
     ],
     "icon": "calculator",
     "iconColor": "text-blue-600"
-  },
-  "gps-speedometer": {
-    "name": "GPS Speedometer",
-    "description": "GPS readings se speed aur private trip log dikhaye.",
-    "category": [
-      "Developer",
-      "Productivity"
-    ],
-    "icon": "wrench",
-    "iconColor": "text-primary",
-    "wideWorkspace": true
-  },
-  "gpx-home-zone-privacy-scrubber": {
-    "name": "GPX Home-Zone Privacy Scrubber",
-    "description": "Route ke home-area start/end points remove kare.",
-    "category": [
-      "Security & Privacy",
-      "Developer"
-    ],
-    "icon": "map-pinned",
-    "iconColor": "text-primary"
   },
   "grade-percentage-calculator": {
     "name": "Grade Percentage Calculator",
@@ -6351,16 +5263,6 @@ export const toolMetaMap = {
     ],
     "icon": "users",
     "iconColor": "text-teal-600"
-  },
-  "group-veto-picker": {
-    "name": "Group Veto Picker",
-    "description": "Member vetoes se options progressively narrow kare.",
-    "category": [
-      "Productivity",
-      "Business"
-    ],
-    "icon": "users-round",
-    "iconColor": "text-primary"
   },
   "gst-calculator": {
     "name": "GST Calculator",
@@ -6511,17 +5413,6 @@ export const toolMetaMap = {
     "icon": "hash",
     "iconColor": "text-blue-500"
   },
-  "headphone-balance-test": {
-    "name": "Headphone Balance Test",
-    "description": "Left/right, stereo placement aur polarity test tones play kare.",
-    "category": [
-      "Developer",
-      "Productivity"
-    ],
-    "icon": "wrench",
-    "iconColor": "text-primary",
-    "wideWorkspace": true
-  },
   "health-pre": {
     "name": "Health Pre",
     "description": "Predict potential health conditions based on your symptoms with our AI-powered health analysis tool.",
@@ -6559,19 +5450,6 @@ export const toolMetaMap = {
     ],
     "icon": "heart-pulse",
     "iconColor": "text-teal-600"
-  },
-  "heat-pump-vs-furnace-estimator": {
-    "name": "Heat Pump vs Furnace Estimator",
-    "description": "Climate, efficiency aur tariffs se running cost compare kare.",
-    "category": [
-      "Lifestyle",
-      "Calculators"
-    ],
-    "topics": [
-      "Calculator"
-    ],
-    "icon": "thermometer-sun",
-    "iconColor": "text-primary"
   },
   "heic-to-jpg": {
     "name": "HEIC to JPG Converter",
@@ -6643,20 +5521,6 @@ export const toolMetaMap = {
     "iconColor": "text-primary",
     "wideWorkspace": true
   },
-  "high-contrast-document-recolor": {
-    "name": "High-Contrast Document Recolor",
-    "description": "Scanned documents ko custom accessible palettes me convert kare.",
-    "category": [
-      "Developer",
-      "Productivity"
-    ],
-    "topics": [
-      "Accessibility"
-    ],
-    "icon": "accessibility",
-    "iconColor": "text-primary",
-    "wideWorkspace": true
-  },
   "hiit-timer": {
     "name": "HIIT & Tabata Timer",
     "description": "Interval timer for HIIT, Tabata, EMOM, and boxing rounds with audio cues, sets, and drift-free timing.",
@@ -6687,32 +5551,6 @@ export const toolMetaMap = {
     ],
     "icon": "wrench",
     "iconColor": "text-muted-foreground"
-  },
-  "home-battery-tou-simulator": {
-    "name": "Home Battery TOU Simulator",
-    "description": "Tariffs aur load profile se charging/discharging scenarios compare kare.",
-    "category": [
-      "Lifestyle",
-      "Calculators"
-    ],
-    "topics": [
-      "Calculator"
-    ],
-    "icon": "battery-charging",
-    "iconColor": "text-primary"
-  },
-  "home-heat-loss-retrofit-estimator": {
-    "name": "Home Heat-Loss & Retrofit Estimator",
-    "description": "Room dimensions aur insulation se improvement scenarios compare kare.",
-    "category": [
-      "Lifestyle",
-      "Calculators"
-    ],
-    "topics": [
-      "Calculator"
-    ],
-    "icon": "house",
-    "iconColor": "text-primary"
   },
   "home-insurance-inventory": {
     "name": "Home Insurance Inventory",
@@ -6782,16 +5620,6 @@ export const toolMetaMap = {
     ],
     "icon": "house",
     "iconColor": "text-teal-600"
-  },
-  "hrv-readiness-trend-tracker": {
-    "name": "HRV Readiness Trend Tracker",
-    "description": "Personal HRV baseline aur deviations track kare.",
-    "category": [
-      "Health & Fitness",
-      "Productivity"
-    ],
-    "icon": "heart-pulse",
-    "iconColor": "text-primary"
   },
   "htaccess-to-nginx": {
     "name": "HTAccess to NGINX",
@@ -6886,17 +5714,6 @@ export const toolMetaMap = {
     "icon": "file-code",
     "iconColor": "text-orange-600"
   },
-  "html-to-text-email-converter": {
-    "name": "HTML to Text Email Converter",
-    "description": "Convert HTML emails into clean, readable plain text for multipart sends — links become Text (URL), lists and tables stay readable, tracking pixels and hidden elements are stripped, all in your browser.",
-    "category": "Marketing & Social",
-    "topics": [
-      "Email Marketing"
-    ],
-    "icon": "file-text",
-    "iconColor": "text-cyan-600",
-    "wideWorkspace": true
-  },
   "html-vbnet-converter": {
     "name": "HTML VB.NET Converter",
     "description": "Convert HTML to VB.NET ASP.NET templates and convert VB.NET markup back to clean HTML placeholders.",
@@ -6952,19 +5769,6 @@ export const toolMetaMap = {
     "icon": "sparkles",
     "iconColor": "text-blue-500"
   },
-  "ideal-gas-law-calculator": {
-    "name": "Ideal Gas Law Calculator",
-    "description": "Unit-aware PV=nRT calculation me unknown solve kare.",
-    "category": [
-      "Education & Science",
-      "Calculators"
-    ],
-    "topics": [
-      "Calculator"
-    ],
-    "icon": "flask-round",
-    "iconColor": "text-primary"
-  },
   "ideal-weight-calculator": {
     "name": "Ideal Weight Calculator",
     "description": "Compare Devine, Robinson, Miller and Hamwi ideal weights, and get a healthy range tuned to your frame size and height.",
@@ -6975,16 +5779,6 @@ export const toolMetaMap = {
     ],
     "icon": "scale",
     "iconColor": "text-teal-600"
-  },
-  "identity-minimizing-dsar-planner": {
-    "name": "Identity-Minimizing DSAR Planner",
-    "description": "Privacy request verify karte waqt minimum necessary identity proof plan kare.",
-    "category": [
-      "Security & Privacy",
-      "Productivity"
-    ],
-    "icon": "badge-check",
-    "iconColor": "text-primary"
   },
   "idiom-explorer": {
     "name": "Idiom Explorer",
@@ -7000,20 +5794,6 @@ export const toolMetaMap = {
     ],
     "icon": "book-open-text",
     "iconColor": "text-violet-600"
-  },
-  "ifsc-decoder-validator": {
-    "name": "IFSC Decoder & Validator",
-    "description": "IFSC format validate karke bank, branch aur location lookup kare.",
-    "category": [
-      "Finance Calculators",
-      "Lifestyle"
-    ],
-    "topics": [
-      "Finance",
-      "India"
-    ],
-    "icon": "landmark",
-    "iconColor": "text-primary"
   },
   "image-collage-maker": {
     "name": "Image Collage Maker",
@@ -7253,19 +6033,6 @@ export const toolMetaMap = {
     "icon": "calendar-range",
     "iconColor": "text-blue-600"
   },
-  "indian-mobile-number-validator": {
-    "name": "Indian Mobile Number Validator",
-    "description": "Country code aur numbering-series sanity checks kare.",
-    "category": [
-      "Lifestyle",
-      "Productivity"
-    ],
-    "topics": [
-      "India"
-    ],
-    "icon": "smartphone",
-    "iconColor": "text-primary"
-  },
   "indirect-prompt-injection-scanner": {
     "name": "Indirect Prompt Injection Scanner",
     "description": "Scan pasted HTML, Markdown, CSV, or text locally for hidden instructions, role markers, data-exfiltration requests, and prompt-injection signals.",
@@ -7303,17 +6070,6 @@ export const toolMetaMap = {
     "icon": "trending-up",
     "iconColor": "text-rose-600"
   },
-  "influencer-media-kit-builder": {
-    "name": "Influencer Media Kit Builder",
-    "description": "Creator metrics se professional media-kit PDF banaye.",
-    "category": [
-      "Marketing & Social",
-      "Productivity"
-    ],
-    "icon": "wrench",
-    "iconColor": "text-primary",
-    "wideWorkspace": true
-  },
   "ingredient-substitute-finder": {
     "name": "Ingredient Substitute Finder",
     "description": "Find instant ingredient replacements with precise ratios and dietary filters.",
@@ -7350,19 +6106,6 @@ export const toolMetaMap = {
     ],
     "icon": "instagram",
     "iconColor": "text-pink-500"
-  },
-  "insurance-policy-comparator": {
-    "name": "Insurance Policy Comparator",
-    "description": "Coverage, exclusions, waiting periods aur limits compare kare.",
-    "category": [
-      "Finance Calculators",
-      "Lifestyle"
-    ],
-    "topics": [
-      "Finance"
-    ],
-    "icon": "shield-check",
-    "iconColor": "text-primary"
   },
   "intermittent-fasting-timer": {
     "name": "Intermittent Fasting Timer",
@@ -7480,19 +6223,6 @@ export const toolMetaMap = {
     "icon": "file-spreadsheet",
     "iconColor": "text-sky-600"
   },
-  "invoice-to-time-log-reconciler": {
-    "name": "Invoice-to-Time-Log Reconciler",
-    "description": "Billable hours aur invoice line items ke mismatches dikhaye.",
-    "category": [
-      "Finance Calculators",
-      "Business"
-    ],
-    "topics": [
-      "Finance"
-    ],
-    "icon": "clock-3",
-    "iconColor": "text-primary"
-  },
   "ip-address-checker": {
     "name": "IP Address Checker",
     "description": "Check if an IP address is valid or not",
@@ -7579,34 +6309,12 @@ export const toolMetaMap = {
     "icon": "palette",
     "iconColor": "text-blue-600"
   },
-  "isitdown-now": {
-    "name": "IsItDown Now",
-    "description": "Check kare website globally down hai ya sirf user ke network par.",
-    "category": [
-      "Developer",
-      "Productivity"
-    ],
-    "icon": "wrench",
-    "iconColor": "text-primary",
-    "wideWorkspace": true
-  },
   "iso-8601-formatter": {
     "name": "ISO 8601 Formatter",
     "description": "Convert a date/time to ISO-8601 and other formats.",
     "category": "Developer",
     "icon": "code",
     "iconColor": "text-cyan-600"
-  },
-  "iss-pass-finder": {
-    "name": "ISS Pass Finder",
-    "description": "User location ke liye next visible ISS flyover calculate kare.",
-    "category": [
-      "Developer",
-      "Productivity"
-    ],
-    "icon": "wrench",
-    "iconColor": "text-primary",
-    "wideWorkspace": true
   },
   "itinerary-builder": {
     "name": "Itinerary Builder",
@@ -8004,17 +6712,6 @@ export const toolMetaMap = {
     "icon": "divide",
     "iconColor": "text-emerald-600"
   },
-  "led-pwm-flicker-detector": {
-    "name": "LED PWM Flicker Detector",
-    "description": "Camera rolling bands se approximate flicker pattern estimate kare.",
-    "category": [
-      "Developer",
-      "Productivity"
-    ],
-    "icon": "wrench",
-    "iconColor": "text-primary",
-    "wideWorkspace": true
-  },
   "leftover-recipe-finder": {
     "name": "Leftover Ingredients Recipe Finder",
     "description": "Tick what is left in your fridge and get real dishes you can cook tonight, plus ones you are one item away from.",
@@ -8140,20 +6837,6 @@ export const toolMetaMap = {
     "icon": "terminal",
     "iconColor": "text-cyan-500"
   },
-  "lip-read-practice-mirror": {
-    "name": "Lip-Read Practice Mirror",
-    "description": "Webcam mouth zoom aur slow replay ke saath practice provide kare.",
-    "category": [
-      "Developer",
-      "Productivity"
-    ],
-    "topics": [
-      "Accessibility"
-    ],
-    "icon": "accessibility",
-    "iconColor": "text-primary",
-    "wideWorkspace": true
-  },
   "lipid-profile-analyzer": {
     "name": "Lipid Profile Analyzer",
     "description": "Complete lipid panel analysis with NCEP ATP III classification, cardiovascular risk scoring, risk factor integration, and personalized treatment recommendations.",
@@ -8198,20 +6881,6 @@ export const toolMetaMap = {
     "icon": "sort-asc",
     "iconColor": "text-teal-500"
   },
-  "live-caption-overlay": {
-    "name": "Live Caption Overlay",
-    "description": "Browser/local speech engine se adjustable live captions dikhaye.",
-    "category": [
-      "Developer",
-      "Productivity"
-    ],
-    "topics": [
-      "Accessibility"
-    ],
-    "icon": "accessibility",
-    "iconColor": "text-primary",
-    "wideWorkspace": true
-  },
   "llm-cost-privacy-analyzer": {
     "name": "LLM Cost & Privacy Analyzer",
     "description": "Analyze AI usage logs locally with user-supplied token rates, model cost summaries, and counts-only personal-data or secret signals.",
@@ -8248,19 +6917,6 @@ export const toolMetaMap = {
     "category": "Business",
     "icon": "credit-card",
     "iconColor": "text-yellow-500"
-  },
-  "loan-fee-extractor": {
-    "name": "Loan Fee Extractor",
-    "description": "Agreement se fees, penalties, reset clauses aur hidden charges extract kare.",
-    "category": [
-      "Finance Calculators",
-      "Security & Privacy"
-    ],
-    "topics": [
-      "Finance"
-    ],
-    "icon": "scan-text",
-    "iconColor": "text-primary"
   },
   "loan-prepayment-analyzer": {
     "name": "Loan Prepayment vs Investment Analyzer",
@@ -8323,17 +6979,6 @@ export const toolMetaMap = {
       "Utility"
     ],
     "icon": "cpu",
-    "iconColor": "text-primary",
-    "wideWorkspace": true
-  },
-  "local-sound-event-logger": {
-    "name": "Local Sound-Event Logger",
-    "description": "Loud audio events ko locally timestamped timeline me log kare.",
-    "category": [
-      "Developer",
-      "Productivity"
-    ],
-    "icon": "wrench",
     "iconColor": "text-primary",
     "wideWorkspace": true
   },
@@ -8415,58 +7060,12 @@ export const toolMetaMap = {
     "icon": "quote",
     "iconColor": "text-violet-600"
   },
-  "lossless-audio-transcoder": {
-    "name": "Lossless Audio Transcoder",
-    "description": "WAV, FLAC, MP3 aur OGG formats convert kare.",
-    "category": [
-      "Video & Audio",
-      "Productivity"
-    ],
-    "icon": "wrench",
-    "iconColor": "text-primary",
-    "wideWorkspace": true
-  },
-  "lost-phone-response-planner": {
-    "name": "Lost Phone Response Planner",
-    "description": "Device loss ke immediate account-security steps prioritize kare.",
-    "category": [
-      "Security & Privacy",
-      "Productivity"
-    ],
-    "icon": "smartphone-off",
-    "iconColor": "text-primary"
-  },
-  "loudness-true-peak-normalizer": {
-    "name": "Loudness & True-Peak Normalizer",
-    "description": "LUFS, peak aur clipping analysis ke saath audio normalize kare.",
-    "category": [
-      "Video & Audio",
-      "Productivity"
-    ],
-    "icon": "wrench",
-    "iconColor": "text-primary",
-    "wideWorkspace": true
-  },
   "love-calculator": {
     "name": "Love Calculator",
     "description": "Calculate compatibility and relationship potential between two names using name matching algorithms.",
     "category": "Lifestyle",
     "icon": "heart",
     "iconColor": "text-rose-500"
-  },
-  "low-vision-camera-magnifier": {
-    "name": "Low-Vision Camera Magnifier",
-    "description": "Zoom, invert, contrast aur edge-enhancement modes provide kare.",
-    "category": [
-      "Developer",
-      "Productivity"
-    ],
-    "topics": [
-      "Accessibility"
-    ],
-    "icon": "accessibility",
-    "iconColor": "text-primary",
-    "wideWorkspace": true
   },
   "lucky-color-picker": {
     "name": "Lucky Color Picker",
@@ -8754,19 +7353,6 @@ export const toolMetaMap = {
     "icon": "sigma",
     "iconColor": "text-blue-600"
   },
-  "measurement-error-budget-builder": {
-    "name": "Measurement Error-Budget Builder",
-    "description": "Error sources, distributions aur coverage factor combine kare.",
-    "category": [
-      "Education & Science",
-      "Calculators"
-    ],
-    "topics": [
-      "Calculator"
-    ],
-    "icon": "list-tree",
-    "iconColor": "text-primary"
-  },
   "media-metadata-timeline-correlator": {
     "name": "Media Metadata Timeline Correlator",
     "description": "Extract bounded date fields from local image, MP4, and WAV metadata, preserve timezone uncertainty, and compare the resulting timeline without authenticity claims.",
@@ -9002,20 +7588,6 @@ export const toolMetaMap = {
     "icon": "mic",
     "iconColor": "text-emerald-600"
   },
-  "micr-cheque-code-decoder": {
-    "name": "MICR Cheque Code Decoder",
-    "description": "MICR city, bank aur branch fields explain kare.",
-    "category": [
-      "Finance Calculators",
-      "Lifestyle"
-    ],
-    "topics": [
-      "Finance",
-      "India"
-    ],
-    "icon": "scan-line",
-    "iconColor": "text-primary"
-  },
   "minesweeper": {
     "name": "Minesweeper",
     "description": "Play classic Minesweeper online free — clear the board, flag the mines, beat your best time.",
@@ -9026,17 +7598,6 @@ export const toolMetaMap = {
     ],
     "icon": "bomb",
     "iconColor": "text-rose-600"
-  },
-  "mirr-calculator": {
-    "name": "MIRR Calculator",
-    "description": "Separate finance aur reinvestment rates se modified IRR nikale.",
-    "category": "Finance Calculators",
-    "topics": [
-      "Finance",
-      "Calculator"
-    ],
-    "icon": "chart-no-axes-combined",
-    "iconColor": "text-primary"
   },
   "mirror-text-generator": {
     "name": "Mirror Text Generator",
@@ -9094,17 +7655,6 @@ export const toolMetaMap = {
     ],
     "icon": "monitor",
     "iconColor": "text-blue-600"
-  },
-  "monte-carlo-risk-scenario-lab": {
-    "name": "Monte Carlo Risk Scenario Lab",
-    "description": "Seeded simulations se outcome distribution aur percentiles dikhaye.",
-    "category": "Finance Calculators",
-    "topics": [
-      "Finance",
-      "Calculator"
-    ],
-    "icon": "dice-5",
-    "iconColor": "text-primary"
   },
   "monthly-budget-planner": {
     "name": "Monthly Budget Planner",
@@ -9316,41 +7866,6 @@ export const toolMetaMap = {
     ],
     "icon": "clock",
     "iconColor": "text-blue-600"
-  },
-  "multi-currency-payout-reconciler": {
-    "name": "Multi-Currency Payout Reconciler",
-    "description": "Payout CSVs ko invoices, FX, fees aur withholding se match kare.",
-    "category": [
-      "Finance Calculators",
-      "Business"
-    ],
-    "topics": [
-      "Finance"
-    ],
-    "icon": "arrow-left-right",
-    "iconColor": "text-primary"
-  },
-  "multi-touch-tester": {
-    "name": "Multi-Touch Tester",
-    "description": "Simultaneous touch points aur digitizer response visualize kare.",
-    "category": [
-      "Developer",
-      "Productivity"
-    ],
-    "icon": "wrench",
-    "iconColor": "text-primary",
-    "wideWorkspace": true
-  },
-  "multichannel-audio-mapper": {
-    "name": "Multichannel Audio Mapper",
-    "description": "Stereo/surround channels inspect, reorder aur individually preview kare.",
-    "category": [
-      "Video & Audio",
-      "Productivity"
-    ],
-    "icon": "wrench",
-    "iconColor": "text-primary",
-    "wideWorkspace": true
   },
   "multiplication-table": {
     "name": "Multiplication Table",
@@ -9680,20 +8195,6 @@ export const toolMetaMap = {
     ],
     "icon": "fish",
     "iconColor": "text-blue-500"
-  },
-  "one-handed-keyboard-trainer": {
-    "name": "One-Handed Keyboard Trainer",
-    "description": "Single-hand layouts aur typing exercises provide kare.",
-    "category": [
-      "Developer",
-      "Productivity"
-    ],
-    "topics": [
-      "Accessibility"
-    ],
-    "icon": "accessibility",
-    "iconColor": "text-primary",
-    "wideWorkspace": true
   },
   "one-rep-max-calculator": {
     "name": "One Rep Max Calculator",
@@ -10290,19 +8791,6 @@ export const toolMetaMap = {
     "icon": "shuffle",
     "iconColor": "text-violet-600"
   },
-  "personal-crisis-safety-plan": {
-    "name": "Personal Crisis Safety Plan",
-    "description": "Coping steps, trusted contacts aur user-selected actions organize kare.",
-    "category": [
-      "Health & Fitness",
-      "Productivity"
-    ],
-    "topics": [
-      "Health & Wellness"
-    ],
-    "icon": "heart-handshake",
-    "iconColor": "text-primary"
-  },
   "personal-data-export-auditor": {
     "name": "Personal Data Export Auditor",
     "description": "Inventory JSON, CSV and TXT data exports locally, then map schema-only signals for location, contacts, messages, ads, searches, devices, identifiers and security data.",
@@ -10313,16 +8801,6 @@ export const toolMetaMap = {
     "icon": "file-search",
     "iconColor": "text-primary",
     "wideWorkspace": true
-  },
-  "personal-data-flow-mapper": {
-    "name": "Personal Data Flow Mapper",
-    "description": "Collection se storage, processor aur deletion tak data-flow diagram banaye.",
-    "category": [
-      "Security & Privacy",
-      "Business"
-    ],
-    "icon": "workflow",
-    "iconColor": "text-primary"
   },
   "personal-incident-log": {
     "name": "Personal Incident Log",
@@ -10454,17 +8932,6 @@ export const toolMetaMap = {
     "icon": "sun",
     "iconColor": "text-teal-500"
   },
-  "pin-code-region-lookup": {
-    "name": "PIN Code Region Lookup",
-    "description": "Six-digit PIN se postal circle, state aur district lookup kare.",
-    "category": [
-      "Developer",
-      "Productivity"
-    ],
-    "icon": "wrench",
-    "iconColor": "text-primary",
-    "wideWorkspace": true
-  },
   "pirate-name-generator": {
     "name": "Pirate Name Generator",
     "description": "Generate swashbuckling pirate names with ships, bounties, and mottos. Find your perfect pirate identity for adventures, games, and cosplay.",
@@ -10509,17 +8976,6 @@ export const toolMetaMap = {
     ],
     "icon": "layers",
     "iconColor": "text-teal-500"
-  },
-  "podcast-de-noiser-echo-reducer": {
-    "name": "Podcast De-noiser & Echo Reducer",
-    "description": "Hiss, hum aur room echo locally reduce kare.",
-    "category": [
-      "Video & Audio",
-      "Productivity"
-    ],
-    "icon": "wrench",
-    "iconColor": "text-primary",
-    "wideWorkspace": true
   },
   "poll-maker": {
     "name": "Poll Maker",
@@ -10566,21 +9022,6 @@ export const toolMetaMap = {
     "icon": "chart-pie",
     "iconColor": "text-teal-600"
   },
-  "post-office-scheme-calculator": {
-    "name": "Post Office Scheme Calculator",
-    "description": "NSC, KVP aur MIS maturity estimates compare kare.",
-    "category": [
-      "Finance Calculators",
-      "Lifestyle"
-    ],
-    "topics": [
-      "Finance",
-      "India",
-      "Calculator"
-    ],
-    "icon": "landmark",
-    "iconColor": "text-primary"
-  },
   "post-quantum-migration-inventory": {
     "name": "Post-Quantum Migration Inventory",
     "description": "Inventory observable RSA, elliptic-curve, DSA, Diffie-Hellman, TLS, and post-quantum algorithm references in pasted code, config, or certificate metadata.",
@@ -10615,16 +9056,6 @@ export const toolMetaMap = {
     ],
     "icon": "accessibility",
     "iconColor": "text-teal-600"
-  },
-  "potluck-dish-assigner": {
-    "name": "Potluck Dish Assigner",
-    "description": "Dietary constraints aur course balance ke saath dishes assign kare.",
-    "category": [
-      "Productivity",
-      "Business"
-    ],
-    "icon": "users-round",
-    "iconColor": "text-primary"
   },
   "ppf-calculator": {
     "name": "PPF Calculator",
@@ -10673,19 +9104,6 @@ export const toolMetaMap = {
     "icon": "cooking-pot",
     "iconColor": "text-teal-600"
   },
-  "price-evidence-locker": {
-    "name": "Price Evidence Locker",
-    "description": "Product price aur offer claims ka timestamped evidence save kare.",
-    "category": [
-      "Lifestyle",
-      "Security & Privacy"
-    ],
-    "topics": [
-      "Shopping"
-    ],
-    "icon": "archive-restore",
-    "iconColor": "text-primary"
-  },
   "pricing-calculator": {
     "name": "Pricing Calculator Tool",
     "description": "Calculate product pricing quickly with accurate profit estimates.",
@@ -10719,16 +9137,6 @@ export const toolMetaMap = {
     ],
     "icon": "shield-check",
     "iconColor": "text-blue-600"
-  },
-  "privacy-policy-version-diff": {
-    "name": "Privacy Policy Version Diff",
-    "description": "Policy updates ke meaningful privacy changes highlight kare.",
-    "category": [
-      "Security & Privacy",
-      "Text & Writing"
-    ],
-    "icon": "file-diff",
-    "iconColor": "text-primary"
   },
   "private-bank-statement-analyzer": {
     "name": "Private Bank Statement Analyzer",
@@ -10769,19 +9177,6 @@ export const toolMetaMap = {
     "iconColor": "text-primary",
     "wideWorkspace": true
   },
-  "probability-distribution-fitter": {
-    "name": "Probability Distribution Fitter",
-    "description": "Dataset ko common distributions ke against compare kare.",
-    "category": [
-      "Education & Science",
-      "Calculators"
-    ],
-    "topics": [
-      "Calculator"
-    ],
-    "icon": "chart-spline",
-    "iconColor": "text-primary"
-  },
   "product-image-compare": {
     "name": "Product Image Compare",
     "description": "Interactively compare two product images (e.g., Before/After or variations) side-by-side with a drag slider.",
@@ -10797,17 +9192,6 @@ export const toolMetaMap = {
     ],
     "icon": "image",
     "iconColor": "text-emerald-500"
-  },
-  "product-recall-watchlist": {
-    "name": "Product Recall Watchlist",
-    "description": "Owned products ke official recall notices monitor kare.",
-    "category": [
-      "Lifestyle",
-      "Productivity"
-    ],
-    "icon": "wrench",
-    "iconColor": "text-primary",
-    "wideWorkspace": true
   },
   "profile-pic-bg-changer": {
     "name": "Profile Picture Background Changer",
@@ -10931,17 +9315,6 @@ export const toolMetaMap = {
     "icon": "sigma",
     "iconColor": "text-indigo-600"
   },
-  "quake-near-me": {
-    "name": "Quake Near Me",
-    "description": "Recent earthquakes ko distance aur magnitude se filter kare.",
-    "category": [
-      "Developer",
-      "Productivity"
-    ],
-    "icon": "wrench",
-    "iconColor": "text-primary",
-    "wideWorkspace": true
-  },
   "query-string-parser": {
     "name": "Query String Parser",
     "description": "Turn a URL query string into a readable list of key/value pairs.",
@@ -10984,19 +9357,6 @@ export const toolMetaMap = {
     ],
     "icon": "quote",
     "iconColor": "text-purple-600"
-  },
-  "radioactive-decay-calculator": {
-    "name": "Radioactive Decay Calculator",
-    "description": "Half-life se remaining quantity, activity ya sample age calculate kare.",
-    "category": [
-      "Education & Science",
-      "Calculators"
-    ],
-    "topics": [
-      "Calculator"
-    ],
-    "icon": "atom",
-    "iconColor": "text-primary"
   },
   "rag-citation-coverage-checker": {
     "name": "RAG Citation Coverage Checker",
@@ -11157,33 +9517,12 @@ export const toolMetaMap = {
     "icon": "shuffle",
     "iconColor": "text-fuchsia-600"
   },
-  "ranked-choice-vote-tabulator": {
-    "name": "Ranked-Choice Vote Tabulator",
-    "description": "Instant-runoff rounds transparently calculate kare.",
-    "category": [
-      "Productivity",
-      "Business"
-    ],
-    "icon": "users-round",
-    "iconColor": "text-primary"
-  },
   "rashi-finder": {
     "name": "Rashi Finder",
     "description": "Find your rashi instantly based on date of birth.",
     "category": "Lifestyle",
     "icon": "star",
     "iconColor": "text-purple-600"
-  },
-  "raw-photo-developer": {
-    "name": "RAW Photo Developer",
-    "description": "RAW exposure, white balance aur JPEG export controls provide kare.",
-    "category": [
-      "Image & Photo",
-      "Productivity"
-    ],
-    "icon": "wrench",
-    "iconColor": "text-primary",
-    "wideWorkspace": true
   },
   "reaction-diffusion-simulator": {
     "name": "Reaction Diffusion Simulator",
@@ -11372,17 +9711,6 @@ export const toolMetaMap = {
     "icon": "heart",
     "iconColor": "text-rose-600"
   },
-  "release-watchtower": {
-    "name": "Release Watchtower",
-    "description": "Selected GitHub projects ke new releases monitor kare.",
-    "category": [
-      "Developer",
-      "Productivity"
-    ],
-    "icon": "wrench",
-    "iconColor": "text-primary",
-    "wideWorkspace": true
-  },
   "remove-duplicate-lines": {
     "name": "Remove Duplicate Lines",
     "description": "Delete repeated lines and keep only the first occurrence of each.",
@@ -11465,16 +9793,6 @@ export const toolMetaMap = {
     "icon": "shield-check",
     "iconColor": "text-blue-500"
   },
-  "repair-quote-comparator": {
-    "name": "Repair Quote Comparator",
-    "description": "Parts, labour, warranty aur exclusions across repair quotes compare kare.",
-    "category": [
-      "Lifestyle",
-      "Business"
-    ],
-    "icon": "wrench",
-    "iconColor": "text-primary"
-  },
   "restaurant-bill-splitter": {
     "name": "Restaurant Bill Splitter",
     "description": "Split a restaurant bill by item, share GST and tip proportionally, and get per-person totals that add up to the exact bill.",
@@ -11546,19 +9864,6 @@ export const toolMetaMap = {
     "icon": "package-check",
     "iconColor": "text-blue-500"
   },
-  "reynolds-number-pipe-flow-calculator": {
-    "name": "Reynolds Number & Pipe Flow Calculator",
-    "description": "Flow regime, Reynolds number aur head loss calculate kare.",
-    "category": [
-      "Education & Science",
-      "Calculators"
-    ],
-    "topics": [
-      "Calculator"
-    ],
-    "icon": "waves",
-    "iconColor": "text-primary"
-  },
   "rice-water-ratio": {
     "name": "Rice & Grain Water Ratio Guide",
     "description": "Exact water for any grain — basmati to millets — by pot, pressure cooker or rice cooker, with soak tips and yield.",
@@ -11593,28 +9898,6 @@ export const toolMetaMap = {
     ],
     "icon": "droplets",
     "iconColor": "text-blue-700"
-  },
-  "rlc-resonance-filter-calculator": {
-    "name": "RLC Resonance & Filter Calculator",
-    "description": "Resonant frequency, Q factor aur cutoff calculate kare.",
-    "category": "Calculators",
-    "topics": [
-      "Electronics",
-      "Calculator"
-    ],
-    "icon": "audio-waveform",
-    "iconColor": "text-primary"
-  },
-  "road-roughness-logger": {
-    "name": "Road Roughness Logger",
-    "description": "Accelerometer aur GPS data se speed-normalized road jolts record kare.",
-    "category": [
-      "Developer",
-      "Productivity"
-    ],
-    "icon": "wrench",
-    "iconColor": "text-primary",
-    "wideWorkspace": true
   },
   "roas-calculator": {
     "name": "ROAS Calculator",
@@ -11697,27 +9980,6 @@ export const toolMetaMap = {
     "icon": "paintbrush",
     "iconColor": "text-cyan-600"
   },
-  "room-rt60-echo-meter": {
-    "name": "Room RT60 Echo Meter",
-    "description": "Clap/sweep response se room reverberation estimate kare.",
-    "category": [
-      "Video & Audio",
-      "Productivity"
-    ],
-    "icon": "wrench",
-    "iconColor": "text-primary",
-    "wideWorkspace": true
-  },
-  "ropa-builder": {
-    "name": "ROPA Builder",
-    "description": "Personal-data processing activities ka structured register banaye.",
-    "category": [
-      "Productivity",
-      "Business"
-    ],
-    "icon": "table-properties",
-    "iconColor": "text-primary"
-  },
   "rot13-encoder-decoder": {
     "name": "ROT13 Encoder/Decoder",
     "description": "Encodes or decodes text using the ROT13 substitution cipher, which shifts each letter by 13 positions in the alphabet.",
@@ -11727,19 +9989,6 @@ export const toolMetaMap = {
     ],
     "icon": "file-text",
     "iconColor": "text-green-800"
-  },
-  "royalty-split-waterfall-calculator": {
-    "name": "Royalty Split Waterfall Calculator",
-    "description": "Fees, recoupment aur collaborator splits exact cents tak reconcile kare.",
-    "category": [
-      "Finance Calculators",
-      "Business"
-    ],
-    "topics": [
-      "Finance"
-    ],
-    "icon": "git-branch",
-    "iconColor": "text-primary"
   },
   "rti-draft-template-builder": {
     "name": "RTI Draft Template Builder",
@@ -11840,19 +10089,6 @@ export const toolMetaMap = {
     "icon": "wallet",
     "iconColor": "text-teal-600"
   },
-  "salary-slip-anomaly-checker": {
-    "name": "Salary Slip Anomaly Checker",
-    "description": "Totals, deductions aur month-to-month changes verify kare.",
-    "category": [
-      "Finance Calculators",
-      "Productivity"
-    ],
-    "topics": [
-      "Finance"
-    ],
-    "icon": "file-chart-column",
-    "iconColor": "text-primary"
-  },
   "salary-slip-anonymizer": {
     "name": "Salary Slip Anonymizer",
     "description": "Manually cover sensitive salary-slip details and create a flattened, rasterized PDF or PNG locally in your browser.",
@@ -11887,19 +10123,6 @@ export const toolMetaMap = {
     ],
     "icon": "receipt",
     "iconColor": "text-rose-600"
-  },
-  "sample-size-power-calculator": {
-    "name": "Sample Size & Power Calculator",
-    "description": "Effect size aur power target se required sample estimate kare.",
-    "category": [
-      "Education & Science",
-      "Calculators"
-    ],
-    "topics": [
-      "Calculator"
-    ],
-    "icon": "flask-conical",
-    "iconColor": "text-primary"
   },
   "sarcasm-generator": {
     "name": "Sarcasm Generator",
@@ -11992,16 +10215,6 @@ export const toolMetaMap = {
     ],
     "icon": "sigma",
     "iconColor": "text-cyan-600"
-  },
-  "scope-creep-change-order-builder": {
-    "name": "Scope-Creep Change-Order Builder",
-    "description": "Original scope aur new request ka price/deadline delta banaye.",
-    "category": [
-      "Business",
-      "Productivity"
-    ],
-    "icon": "file-plus-2",
-    "iconColor": "text-primary"
   },
   "screen-reader-landmark-map": {
     "name": "Screen-Reader Landmark Map",
@@ -12163,21 +10376,6 @@ export const toolMetaMap = {
     "icon": "gift",
     "iconColor": "text-rose-600"
   },
-  "section-138-notice-draft-assistant": {
-    "name": "Section 138 Notice Draft Assistant",
-    "description": "Versioned checklist ke saath cheque-bounce notice draft structure kare.",
-    "category": [
-      "Text & Writing",
-      "Lifestyle",
-      "Business"
-    ],
-    "topics": [
-      "India",
-      "Legal"
-    ],
-    "icon": "file-pen-line",
-    "iconColor": "text-primary"
-  },
   "security-headers-checker": {
     "name": "Security Headers Checker",
     "description": "Review pasted response headers for missing defensive controls.",
@@ -12188,16 +10386,6 @@ export const toolMetaMap = {
     "icon": "shield-check",
     "iconColor": "text-primary",
     "wideWorkspace": true
-  },
-  "senior-device-permission-audit": {
-    "name": "Senior Device Permission Audit",
-    "description": "Phone permissions cleanup ka senior-friendly guide provide kare.",
-    "category": [
-      "Security & Privacy",
-      "Lifestyle"
-    ],
-    "icon": "shield-question",
-    "iconColor": "text-primary"
   },
   "sentence-correction-practice": {
     "name": "Sentence Correction Practice",
@@ -12213,30 +10401,6 @@ export const toolMetaMap = {
     ],
     "icon": "check-circle-2",
     "iconColor": "text-emerald-600"
-  },
-  "severe-weather-watch": {
-    "name": "Severe Weather Watch",
-    "description": "Official nearby weather warnings aggregate kare.",
-    "category": [
-      "Developer",
-      "Productivity"
-    ],
-    "icon": "wrench",
-    "iconColor": "text-primary",
-    "wideWorkspace": true
-  },
-  "sexual-health-test-tracker": {
-    "name": "Sexual Health Test Tracker",
-    "description": "Test dates, results aur reminders privately manage kare.",
-    "category": [
-      "Health & Fitness",
-      "Productivity"
-    ],
-    "topics": [
-      "Health & Wellness"
-    ],
-    "icon": "shield-plus",
-    "iconColor": "text-primary"
   },
   "sha1-hash-generator": {
     "name": "SHA1 Hash Generator",
@@ -12262,47 +10426,6 @@ export const toolMetaMap = {
     "icon": "layers",
     "iconColor": "text-gray-600"
   },
-  "shannon-entropy-explorer": {
-    "name": "Shannon Entropy Explorer",
-    "description": "Text ya probability distribution ka entropy visualize kare.",
-    "category": [
-      "Education & Science",
-      "Developer"
-    ],
-    "icon": "binary",
-    "iconColor": "text-primary"
-  },
-  "shared-resource-conflict-resolver": {
-    "name": "Shared-Resource Conflict Resolver",
-    "description": "Rooms, vehicles ya equipment ke booking conflicts resolve kare.",
-    "category": [
-      "Productivity",
-      "Business"
-    ],
-    "icon": "users-round",
-    "iconColor": "text-primary"
-  },
-  "sharpe-sortino-calculator": {
-    "name": "Sharpe & Sortino Calculator",
-    "description": "Return series ka risk-adjusted performance compare kare.",
-    "category": "Finance Calculators",
-    "topics": [
-      "Finance",
-      "Calculator"
-    ],
-    "icon": "chart-line",
-    "iconColor": "text-primary"
-  },
-  "shift-rotation-fairness-auditor": {
-    "name": "Shift-Rotation Fairness Auditor",
-    "description": "Nights, weekends aur workload ka member-wise fairness score dikhaye.",
-    "category": [
-      "Productivity",
-      "Business"
-    ],
-    "icon": "users-round",
-    "iconColor": "text-primary"
-  },
   "shoe-size-converter": {
     "name": "Shoe Size Converter",
     "description": "Convert UK, US, EU, and Indian shoe sizes for men, women, and kids — or find your size from foot length in cm.",
@@ -12312,17 +10435,6 @@ export const toolMetaMap = {
     ],
     "icon": "footprints",
     "iconColor": "text-teal-600"
-  },
-  "short-video-hook-marker": {
-    "name": "Short-Video Hook Marker",
-    "description": "Clip timeline par hook, beat aur review timestamps mark kare.",
-    "category": [
-      "Marketing & Social",
-      "Productivity"
-    ],
-    "icon": "wrench",
-    "iconColor": "text-primary",
-    "wideWorkspace": true
   },
   "shot-list-planner": {
     "name": "Shot List Planner",
@@ -12343,17 +10455,6 @@ export const toolMetaMap = {
     ],
     "icon": "hand",
     "iconColor": "text-teal-500"
-  },
-  "silence-filler-word-cutter": {
-    "name": "Silence & Filler-Word Cutter",
-    "description": "Long silences aur selected filler segments remove kare.",
-    "category": [
-      "Video & Audio",
-      "Productivity"
-    ],
-    "icon": "wrench",
-    "iconColor": "text-primary",
-    "wideWorkspace": true
   },
   "sim-swap-recovery-pack": {
     "name": "SIM Swap Recovery Pack",
@@ -12510,20 +10611,6 @@ export const toolMetaMap = {
     "icon": "puzzle",
     "iconColor": "text-violet-600"
   },
-  "slow-speech-playback-trainer": {
-    "name": "Slow Speech Playback Trainer",
-    "description": "Pitch preserve karke speech slow, loop aur segment kare.",
-    "category": [
-      "Developer",
-      "Productivity"
-    ],
-    "topics": [
-      "Accessibility"
-    ],
-    "icon": "accessibility",
-    "iconColor": "text-primary",
-    "wideWorkspace": true
-  },
   "slug-generator": {
     "name": "Slug Generator",
     "description": "Turn a title into a clean URL slug.",
@@ -12551,30 +10638,6 @@ export const toolMetaMap = {
     "icon": "target",
     "iconColor": "text-cyan-500"
   },
-  "smart-meter-interval-analyzer": {
-    "name": "Smart-Meter Interval Analyzer",
-    "description": "Energy CSV me peaks aur time-of-use opportunities dikhaye.",
-    "category": [
-      "Lifestyle",
-      "Calculators"
-    ],
-    "topics": [
-      "Calculator"
-    ],
-    "icon": "gauge",
-    "iconColor": "text-primary"
-  },
-  "smart-vertical-video-reframer": {
-    "name": "Smart Vertical Video Reframer",
-    "description": "Landscape footage ko subject-aware 9:16 framing me convert kare.",
-    "category": [
-      "Video & Audio",
-      "Productivity"
-    ],
-    "icon": "wrench",
-    "iconColor": "text-primary",
-    "wideWorkspace": true
-  },
   "smile-detector": {
     "name": "Smile Detector",
     "description": "Analyze your smile with AI-powered facial expression detection. Get smile score, emotion analysis, confidence meter, and detailed report.",
@@ -12599,16 +10662,6 @@ export const toolMetaMap = {
     "icon": "case-sensitive",
     "iconColor": "text-green-600"
   },
-  "snake-draft-board": {
-    "name": "Snake Draft Board",
-    "description": "Serpentine pick order aur live selections manage kare.",
-    "category": [
-      "Productivity",
-      "Business"
-    ],
-    "icon": "users-round",
-    "iconColor": "text-primary"
-  },
   "snake-game": {
     "name": "Snake Game",
     "description": "Play a responsive Snake game with speed levels, collision detection, touch controls, and score statistics.",
@@ -12628,19 +10681,6 @@ export const toolMetaMap = {
     ],
     "icon": "gamepad-2",
     "iconColor": "text-teal-600"
-  },
-  "sobriety-recovery-journal": {
-    "name": "Sobriety Recovery Journal",
-    "description": "Sober days, urges, triggers aur coping wins privately track kare.",
-    "category": [
-      "Health & Fitness",
-      "Productivity"
-    ],
-    "topics": [
-      "Health & Wellness"
-    ],
-    "icon": "calendar-heart",
-    "iconColor": "text-primary"
   },
   "social-media-simulator": {
     "name": "Social Media Simulator",
@@ -12675,19 +10715,6 @@ export const toolMetaMap = {
     ],
     "icon": "sun",
     "iconColor": "text-blue-600"
-  },
-  "solar-self-consumption-optimizer": {
-    "name": "Solar Self-Consumption Optimizer",
-    "description": "Generation aur usage CSV se best appliance timing dikhaye.",
-    "category": [
-      "Lifestyle",
-      "Calculators"
-    ],
-    "topics": [
-      "Calculator"
-    ],
-    "icon": "sun",
-    "iconColor": "text-primary"
   },
   "solar-system-explorer": {
     "name": "Solar System Explorer",
@@ -12765,16 +10792,6 @@ export const toolMetaMap = {
     "icon": "shield-alert",
     "iconColor": "text-red-600"
   },
-  "speed-date-rotation-planner": {
-    "name": "Speed-Date Rotation Planner",
-    "description": "Non-repeating round-robin meeting schedule banaye.",
-    "category": [
-      "Productivity",
-      "Business"
-    ],
-    "icon": "users-round",
-    "iconColor": "text-primary"
-  },
   "speed-distance-time-calculator": {
     "name": "Speed Distance Time Calculator",
     "description": "Enter distance and time to get speed, with m/s and mph conversions.",
@@ -12825,17 +10842,6 @@ export const toolMetaMap = {
     ],
     "icon": "orbit",
     "iconColor": "text-cyan-600"
-  },
-  "sponsored-disclosure-placement-checker": {
-    "name": "Sponsored Disclosure Placement Checker",
-    "description": "Disclosure contrast, size, duration aur placement test kare.",
-    "category": [
-      "Marketing & Social",
-      "Productivity"
-    ],
-    "icon": "wrench",
-    "iconColor": "text-primary",
-    "wideWorkspace": true
   },
   "sprint-goal-generator": {
     "name": "Sprint Goal Generator",
@@ -13127,17 +11133,6 @@ export const toolMetaMap = {
     "icon": "superscript",
     "iconColor": "text-orange-600"
   },
-  "surface-vibration-recorder": {
-    "name": "Surface Vibration Recorder",
-    "description": "Accelerometer readings ka vibration timeline banaye.",
-    "category": [
-      "Developer",
-      "Productivity"
-    ],
-    "icon": "wrench",
-    "iconColor": "text-primary",
-    "wideWorkspace": true
-  },
   "survey-builder": {
     "name": "Survey Builder",
     "description": "Create custom surveys easily with interactive drag-and-drop fields.",
@@ -13155,17 +11150,6 @@ export const toolMetaMap = {
     "icon": "spline",
     "iconColor": "text-teal-600"
   },
-  "svg-optimizer-cleaner": {
-    "name": "SVG Optimizer & Cleaner",
-    "description": "Unnecessary markup, editor data aur metadata safely remove kare.",
-    "category": [
-      "Image & Photo",
-      "Productivity"
-    ],
-    "icon": "wrench",
-    "iconColor": "text-primary",
-    "wideWorkspace": true
-  },
   "svg-to-image": {
     "name": "SVG to Image",
     "description": "Render SVG markup to a downloadable PNG preview.",
@@ -13179,30 +11163,6 @@ export const toolMetaMap = {
     ],
     "icon": "image",
     "iconColor": "text-purple-600"
-  },
-  "swiss-pairing-engine": {
-    "name": "Swiss Pairing Engine",
-    "description": "Scores se pairings banaye aur rematches avoid kare.",
-    "category": [
-      "Productivity",
-      "Business"
-    ],
-    "icon": "users-round",
-    "iconColor": "text-primary"
-  },
-  "switch-scanning-communicator": {
-    "name": "Switch-Scanning Communicator",
-    "description": "Single-switch scanning se phrases select aur speak kare.",
-    "category": [
-      "Developer",
-      "Productivity"
-    ],
-    "topics": [
-      "Accessibility"
-    ],
-    "icon": "accessibility",
-    "iconColor": "text-primary",
-    "wideWorkspace": true
   },
   "swp-calculator": {
     "name": "SWP Calculator",
@@ -13262,21 +11222,6 @@ export const toolMetaMap = {
     ],
     "icon": "bird",
     "iconColor": "text-cyan-600"
-  },
-  "tds-calculator-by-section": {
-    "name": "TDS Calculator by Section",
-    "description": "Selected section, threshold aur rate se TDS calculate kare.",
-    "category": [
-      "Finance Calculators",
-      "Lifestyle"
-    ],
-    "topics": [
-      "Finance",
-      "India",
-      "Calculator"
-    ],
-    "icon": "badge-indian-rupee",
-    "iconColor": "text-primary"
   },
   "team-generator": {
     "name": "Team Generator",
@@ -13544,17 +11489,6 @@ export const toolMetaMap = {
     "iconColor": "text-primary",
     "wideWorkspace": true
   },
-  "three-phase-power-calculator": {
-    "name": "Three-Phase Power Calculator",
-    "description": "kW, kVA, amps aur power factor convert kare.",
-    "category": "Calculators",
-    "topics": [
-      "Electronics",
-      "Calculator"
-    ],
-    "icon": "zap",
-    "iconColor": "text-primary"
-  },
   "thumbnail-layout-planner": {
     "name": "Thumbnail Layout Planner",
     "description": "Plan YouTube thumbnail layouts with draggable visual elements, live preview, workflow tracking, branding notes, and exportable creative briefs.",
@@ -13661,16 +11595,6 @@ export const toolMetaMap = {
     "iconColor": "text-primary",
     "wideWorkspace": true
   },
-  "tournament-bracket-builder": {
-    "name": "Tournament Bracket Builder",
-    "description": "Single/double elimination brackets aur byes generate kare.",
-    "category": [
-      "Productivity",
-      "Business"
-    ],
-    "icon": "users-round",
-    "iconColor": "text-primary"
-  },
   "travel-cost-per-day": {
     "name": "Travel Cost Per Day",
     "description": "Calculate total trip cost, daily cost, per-person/day split, category spending, payment timing, and budget signals.",
@@ -13684,19 +11608,6 @@ export const toolMetaMap = {
     ],
     "icon": "calculator",
     "iconColor": "text-blue-600"
-  },
-  "travel-disruption-evidence-pack": {
-    "name": "Travel Disruption Evidence Pack",
-    "description": "Delays, bookings, receipts aur claim evidence organize kare.",
-    "category": [
-      "Lifestyle",
-      "Productivity"
-    ],
-    "topics": [
-      "Travel"
-    ],
-    "icon": "plane",
-    "iconColor": "text-primary"
   },
   "travel-document-checklist": {
     "name": "Travel Document Checklist",
@@ -13843,19 +11754,6 @@ export const toolMetaMap = {
     ],
     "icon": "circle-dashed",
     "iconColor": "text-pink-700"
-  },
-  "uncertainty-propagation-workbench": {
-    "name": "Uncertainty Propagation Workbench",
-    "description": "Input uncertainties se combined uncertainty aur Monte Carlo cross-check nikale.",
-    "category": [
-      "Education & Science",
-      "Calculators"
-    ],
-    "topics": [
-      "Calculator"
-    ],
-    "icon": "sigma",
-    "iconColor": "text-primary"
   },
   "unicode-ascii-converter": {
     "name": "Unicode / ASCII Converter",
@@ -14012,19 +11910,6 @@ export const toolMetaMap = {
     "icon": "user-search",
     "iconColor": "text-teal-700"
   },
-  "utility-tariff-csv-comparator": {
-    "name": "Utility Tariff CSV Comparator",
-    "description": "Same usage profile ko multiple electricity plans par compare kare.",
-    "category": [
-      "Lifestyle",
-      "Calculators"
-    ],
-    "topics": [
-      "Calculator"
-    ],
-    "icon": "scale",
-    "iconColor": "text-primary"
-  },
   "utm-link-builder": {
     "name": "UTM Link Builder",
     "description": "Build tracked UTM links easily for marketing campaigns.",
@@ -14043,17 +11928,6 @@ export const toolMetaMap = {
     "icon": "fingerprint",
     "iconColor": "text-purple-700"
   },
-  "uv-safety-window": {
-    "name": "UV Safety Window",
-    "description": "Forecast se comparatively lower-UV outdoor windows dikhaye.",
-    "category": [
-      "Developer",
-      "Productivity"
-    ],
-    "icon": "wrench",
-    "iconColor": "text-primary",
-    "wideWorkspace": true
-  },
   "vaporwave-text-generator": {
     "name": "Vaporwave Text Generator",
     "description": "Convert text into full-width Unicode vaporwave aesthetic with decorative Japanese symbols and separators.",
@@ -14064,17 +11938,6 @@ export const toolMetaMap = {
     ],
     "icon": "floppy-disk",
     "iconColor": "text-fuchsia-500"
-  },
-  "variable-font-axis-explorer": {
-    "name": "Variable Font Axis Explorer",
-    "description": "Weight, width aur optical-size axes visually inspect aur export kare.",
-    "category": [
-      "Image & Photo",
-      "Productivity"
-    ],
-    "icon": "wrench",
-    "iconColor": "text-primary",
-    "wideWorkspace": true
   },
   "vat-calculator": {
     "name": "VAT Calculator",
@@ -14099,40 +11962,6 @@ export const toolMetaMap = {
     ],
     "icon": "car",
     "iconColor": "text-indigo-600"
-  },
-  "vehicle-document-reminder": {
-    "name": "Vehicle Document Reminder",
-    "description": "RC, insurance, PUC aur licence expiry track kare.",
-    "category": [
-      "Lifestyle",
-      "Productivity"
-    ],
-    "topics": [
-      "India"
-    ],
-    "icon": "calendar-check-2",
-    "iconColor": "text-primary"
-  },
-  "vendor-data-processing-inventory": {
-    "name": "Vendor Data Processing Inventory",
-    "description": "Vendors, purposes, data categories aur retention terms track kare.",
-    "category": [
-      "Security & Privacy",
-      "Business"
-    ],
-    "icon": "table-properties",
-    "iconColor": "text-primary"
-  },
-  "vertical-video-safe-zone-previewer": {
-    "name": "Vertical Video Safe-Zone Previewer",
-    "description": "Reels, Shorts aur TikTok obstruction areas overlay kare.",
-    "category": [
-      "Marketing & Social",
-      "Productivity"
-    ],
-    "icon": "wrench",
-    "iconColor": "text-primary",
-    "wideWorkspace": true
   },
   "video-bitrate-calculator": {
     "name": "Video Bitrate Calculator",
@@ -14167,17 +11996,6 @@ export const toolMetaMap = {
     "iconColor": "text-primary",
     "wideWorkspace": true
   },
-  "video-frame-to-sprite-extractor": {
-    "name": "Video Frame-to-Sprite Extractor",
-    "description": "Selected frames ko PNG sequence ya sprite sheet me export kare.",
-    "category": [
-      "Video & Audio",
-      "Productivity"
-    ],
-    "icon": "wrench",
-    "iconColor": "text-primary",
-    "wideWorkspace": true
-  },
   "video-script-timer": {
     "name": "Video Script Timer",
     "description": "Time and sync video scripts with production requirements and production notes.",
@@ -14191,17 +12009,6 @@ export const toolMetaMap = {
     ],
     "icon": "clock",
     "iconColor": "text-[var(--warning)]"
-  },
-  "video-stabilizer": {
-    "name": "Video Stabilizer",
-    "description": "Shaky footage ko frame-motion analysis se smooth kare.",
-    "category": [
-      "Video & Audio",
-      "Productivity"
-    ],
-    "icon": "wrench",
-    "iconColor": "text-primary",
-    "wideWorkspace": true
   },
   "video-to-audio-converter": {
     "name": "Video to Audio Converter",
@@ -14305,31 +12112,6 @@ export const toolMetaMap = {
     "icon": "book-open",
     "iconColor": "text-blue-600"
   },
-  "vocal-remover-stem-splitter": {
-    "name": "Vocal Remover & Stem Splitter",
-    "description": "User-owned audio ko vocals, bass, drums aur instrumental stems me split kare.",
-    "category": [
-      "Video & Audio",
-      "Productivity"
-    ],
-    "icon": "wrench",
-    "iconColor": "text-primary",
-    "wideWorkspace": true
-  },
-  "voice-steadiness-visualizer": {
-    "name": "Voice Steadiness Visualizer",
-    "description": "Non-diagnostic pitch aur volume consistency feedback dikhaye.",
-    "category": [
-      "Developer",
-      "Productivity"
-    ],
-    "topics": [
-      "Accessibility"
-    ],
-    "icon": "accessibility",
-    "iconColor": "text-primary",
-    "wideWorkspace": true
-  },
   "voice-to-text": {
     "name": "Voice to Text",
     "description": "Convert spoken language into written text.",
@@ -14339,28 +12121,6 @@ export const toolMetaMap = {
     ],
     "icon": "mic",
     "iconColor": "text-rose-500"
-  },
-  "voiceprint-anonymizer": {
-    "name": "Voiceprint Anonymizer",
-    "description": "Speech readable rakhte hue speaker-identifying vocal cues neutralize kare.",
-    "category": [
-      "Video & Audio",
-      "Productivity"
-    ],
-    "icon": "wrench",
-    "iconColor": "text-primary",
-    "wideWorkspace": true
-  },
-  "voltage-drop-wire-gauge-calculator": {
-    "name": "Voltage Drop & Wire Gauge Calculator",
-    "description": "Length, current aur conductor se voltage loss estimate kare.",
-    "category": "Calculators",
-    "topics": [
-      "Electronics",
-      "Calculator"
-    ],
-    "icon": "cable",
-    "iconColor": "text-primary"
   },
   "voronoi-art-generator": {
     "name": "Voronoi Art Generator",
@@ -14373,34 +12133,13 @@ export const toolMetaMap = {
     "icon": "palette",
     "iconColor": "text-purple-600"
   },
-  "voter-id-format-validator": {
-    "name": "Voter ID Format Validator",
-    "description": "EPIC number pattern validate aur normalize kare.",
-    "category": [
-      "Lifestyle",
-      "Productivity"
-    ],
-    "topics": [
-      "India"
-    ],
-    "icon": "badge-check",
-    "iconColor": "text-primary"
-  },
-  "wacc-calculator": {
-    "name": "WACC Calculator",
-    "description": "Equity, debt aur tax inputs se weighted capital cost calculate kare.",
-    "category": "Finance Calculators",
-    "topics": [
-      "Finance",
-      "Calculator"
-    ],
-    "icon": "scale",
-    "iconColor": "text-primary"
-  },
   "waist-to-height-ratio-calculator": {
     "name": "Waist to Height Ratio Calculator",
     "description": "A quick health screen: your waist size divided by your height, with a category.",
     "category": "Health & Fitness",
+    "topics": [
+      "Health"
+    ],
     "icon": "ruler",
     "iconColor": "text-teal-600"
   },
@@ -14481,17 +12220,6 @@ export const toolMetaMap = {
     "iconColor": "text-primary",
     "wideWorkspace": true
   },
-  "wav-spectrogram-analyzer": {
-    "name": "WAV Spectrogram Analyzer",
-    "description": "FFT spectrogram, clipping, hum aur frequency distribution visualize kare.",
-    "category": [
-      "Video & Audio",
-      "Productivity"
-    ],
-    "icon": "wrench",
-    "iconColor": "text-primary",
-    "wideWorkspace": true
-  },
   "wave-interference-simulator": {
     "name": "Wave Interference Simulator",
     "description": "A tool that simulates wave interference patterns, allowing users to visualize how waves interact with each other. Users can adjust parameters such as wave frequency, amplitude, and phase to see how they affect the resulting interference pattern.",
@@ -14518,16 +12246,6 @@ export const toolMetaMap = {
     "icon": "scan-search",
     "iconColor": "text-primary",
     "wideWorkspace": true
-  },
-  "wearable-sleep-csv-analyzer": {
-    "name": "Wearable Sleep CSV Analyzer",
-    "description": "Oura, Whoop aur Fitbit exports ke sleep trends dikhaye.",
-    "category": [
-      "Health & Fitness",
-      "Developer"
-    ],
-    "icon": "moon-star",
-    "iconColor": "text-primary"
   },
   "weather-checker": {
     "name": "Weather Checker Tool",
@@ -15009,17 +12727,6 @@ export const toolMetaMap = {
     ],
     "icon": "skull",
     "iconColor": "text-teal-500"
-  },
-  "zip-tar-archive-surgeon": {
-    "name": "ZIP/TAR Archive Surgeon",
-    "description": "Archive entries selectively remove, reorder aur recompress kare.",
-    "category": [
-      "Image & Photo",
-      "Productivity"
-    ],
-    "icon": "wrench",
-    "iconColor": "text-primary",
-    "wideWorkspace": true
   },
   "zombie-survival-chance": {
     "name": "Zombie Survival Chance Calculator",

@@ -1,10 +1,9 @@
 "use client";
 
-import { useEffect, useMemo, useRef } from "react";
-import { X, LifeBuoy, HelpCircle, Cpu, MessageCircle, Layers } from "lucide-react";
+import { useEffect, useRef } from "react";
+import { X, LifeBuoy, HelpCircle, Cpu, MessageCircle } from "lucide-react";
 import { SearchInput } from "@altftool/ui";
 import PlatformSwitcher from "./PlatformSwitcher";
-import { searchEverything } from "../data/search";
 
 export const UTILITY_ITEMS = [
   { id: "util-troubleshooting", title: "Troubleshooting", icon: LifeBuoy },
@@ -70,23 +69,7 @@ const SettingsSidebar = ({
       )
     : aiTools || [];
 
-  // Universal Search (item 6): when there's a query, also surface matches
-  // from every other platform and from the expanded device catalog —
-  // grouped below the current platform's own results rather than mixed in
-  // above them, so the platform you're actually on always comes first.
-  const wideResults = useMemo(
-    () => (query ? searchEverything(query, { platform: platformState.platform }) : null),
-    [query, platformState.platform],
-  );
-  const otherPlatformResults = wideResults?.otherPlatforms || [];
-  const deviceResults = wideResults?.devices || [];
-
-  const noResults =
-    query &&
-    filteredSettings.length === 0 &&
-    filteredAiTools.length === 0 &&
-    otherPlatformResults.length === 0 &&
-    deviceResults.length === 0;
+  const noResults = query && filteredSettings.length === 0 && filteredAiTools.length === 0;
 
   const handleSelect = (id) => {
     onSelect(id);
@@ -110,8 +93,6 @@ const SettingsSidebar = ({
           isOverridden={platformState.isOverridden}
           onSelect={platformState.setOverride}
           onReset={platformState.clearOverride}
-          onNavigateDevice={onSelect}
-          aiTools={aiTools}
         />
       </div>
 
@@ -176,57 +157,6 @@ const SettingsSidebar = ({
                 </button>
               );
             })}
-          </>
-        )}
-
-        {query && deviceResults.length > 0 && (
-          <>
-            <p className="support-settings-nav-group-label support-settings-nav-group-label-spaced">
-              Devices
-            </p>
-            {deviceResults.slice(0, 4).map((setting) => {
-              const Icon = setting.icon;
-              return (
-                <button
-                  key={setting.id}
-                  onClick={() => handleSelect(setting.id)}
-                  className="support-settings-nav-item support-settings-nav-item-idle"
-                >
-                  <Icon className="h-4 w-4 shrink-0" />
-                  <span className="flex-1">{highlightMatch(setting.title, query)}</span>
-                </button>
-              );
-            })}
-          </>
-        )}
-
-        {query && otherPlatformResults.length > 0 && (
-          <>
-            <p className="support-settings-nav-group-label support-settings-nav-group-label-spaced">
-              <Layers className="h-3 w-3 inline mr-1" />
-              Other Platforms
-            </p>
-            {otherPlatformResults.map((group) => (
-              <div key={group.platform} className="support-sidebar-other-platform-group">
-                <p className="support-sidebar-other-platform-label">{group.label}</p>
-                {group.results.slice(0, 3).map((setting) => {
-                  const Icon = setting.icon;
-                  return (
-                    <button
-                      key={setting.id}
-                      onClick={() => {
-                        platformState.setOverride(group.platform);
-                        handleSelect(setting.id);
-                      }}
-                      className="support-settings-nav-item support-settings-nav-item-idle support-settings-nav-item-crossplatform"
-                    >
-                      <Icon className="h-4 w-4 shrink-0" />
-                      <span className="flex-1">{highlightMatch(setting.title, query)}</span>
-                    </button>
-                  );
-                })}
-              </div>
-            ))}
           </>
         )}
 

@@ -11,14 +11,6 @@ export const aiToolsPart1 = [
     officialUrl: "https://chatgpt.com",
     downloadUrl: "https://chatgpt.com/download",
     downloadLabel: "Download App",
-    docsUrl: "https://platform.openai.com/docs",
-    pricing: {
-      summary:
-        "ChatGPT offers a free tier alongside several paid plans (Plus, Pro, Team, and Enterprise). Exact limits and current prices change over time — the official pricing page always has the latest numbers.",
-      free: ["Core chat capabilities with usage limits", "Standard response speed", "Limited file uploads and image generation"],
-      paid: ["Higher and more generous usage limits", "Priority access during high-traffic periods", "Advanced voice, larger context, and extra tools on higher tiers"],
-      pricingUrl: "https://chatgpt.com",
-    },
     overview: {
       whatIsIt:
         "ChatGPT is OpenAI's conversational AI assistant, built on the GPT family of large language models. It can answer questions, write and debug code, draft documents, analyze images and files, browse the web, and generate images through DALL-E integration. It's available as a website, desktop apps for Windows and Mac, and mobile apps for iOS and Android.",
@@ -138,14 +130,6 @@ export const aiToolsPart1 = [
     officialUrl: "https://claude.ai",
     downloadUrl: "https://claude.com/download",
     downloadLabel: "Download App",
-    docsUrl: "https://docs.claude.com",
-    pricing: {
-      summary:
-        "Claude offers a free tier with daily usage limits, plus paid plans (Pro, Max, Team, and Enterprise) for higher usage and more capability. The official pricing page has current details.",
-      free: ["Daily usage limits on chat", "Standard response speed", "Access to file and image uploads"],
-      paid: ["Significantly higher usage limits", "Priority access during peak demand", "Extended context and project features on higher tiers"],
-      pricingUrl: "https://www.anthropic.com/pricing",
-    },
     overview: {
       whatIsIt:
         "Claude is Anthropic's family of AI models, accessible through claude.ai as a chat assistant with desktop and mobile apps. It's known for strong long-context understanding, careful reasoning, and high-quality writing and coding assistance. Claude can read large documents, work inside 'Projects' with persistent context, and produce interactive 'Artifacts' like code, documents, or diagrams alongside the conversation.",
@@ -265,14 +249,6 @@ export const aiToolsPart1 = [
     officialUrl: "https://gemini.google.com",
     downloadUrl: null,
     downloadLabel: "Open Gemini",
-    docsUrl: "https://ai.google.dev/docs",
-    pricing: {
-      summary:
-        "Gemini is free to use with a Google account, with paid Google AI subscription tiers unlocking higher usage limits and more advanced models. Check the official page for current tiers and pricing.",
-      free: ["Chat access with a Google account", "Standard model access with usage limits"],
-      paid: ["Higher usage limits and access to more advanced models", "Deeper integration with other Google Workspace apps"],
-      pricingUrl: "https://gemini.google.com",
-    },
     overview: {
       whatIsIt:
         "Google Gemini is Google's AI assistant and model family, accessible at gemini.google.com, built into the Gemini app on Android/iOS, and embedded directly across Gmail, Docs, Sheets, and Search. It's natively multimodal, handling text, images, audio, and video in the same conversation, and it can pull in live information via Google Search grounding.",
@@ -392,14 +368,6 @@ export const aiToolsPart1 = [
     officialUrl: "https://copilot.microsoft.com",
     downloadUrl: null,
     downloadLabel: "Open Copilot",
-    docsUrl: "https://learn.microsoft.com/copilot",
-    pricing: {
-      summary:
-        "Microsoft Copilot is free for basic chat with a Microsoft account, with a paid Copilot Pro (and Microsoft 365 Copilot for organizations) tier adding deeper integration and higher limits.",
-      free: ["Chat access with a Microsoft account", "Basic web search grounding"],
-      paid: ["Priority access and higher usage limits", "Deeper integration with Microsoft 365 apps on paid tiers"],
-      pricingUrl: "https://copilot.microsoft.com",
-    },
     overview: {
       whatIsIt:
         "Microsoft Copilot is Microsoft's AI assistant, available at copilot.microsoft.com, built into Windows via a taskbar shortcut, integrated into Edge, and embedded across Microsoft 365 apps like Word, Excel, Outlook, and Teams (as Microsoft 365 Copilot for licensed users). It combines conversational chat with the ability to act inside the documents and apps you're already using.",

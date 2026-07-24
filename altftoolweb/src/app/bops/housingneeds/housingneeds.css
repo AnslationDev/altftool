@@ -538,25 +538,6 @@
   max-width: 60rem;
   margin-inline: auto;
   padding-inline: var(--hn-gutter);
-  /* Flex so the offer column can be revealed beside the text. In the normal
-     (single-column) state the text block is the only visible child and stays
-     centred exactly as before. */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0;
-  transition: max-width .8s cubic-bezier(.65, 0, .35, 1),
-              gap .8s cubic-bezier(.65, 0, .35, 1);
-}
-
-/* Animatable basis (a length, not `auto`) + a matched transition, so the text
-   column shrinks in perfect lockstep with the card opening — the single
-   biggest smoothness win. Alignment stays centred in both states, so the text
-   just glides inward with no jarring re-align. */
-.hn-hero-text {
-  flex: 0 1 60rem;
-  min-width: 0;
-  transition: flex-basis .8s cubic-bezier(.65, 0, .35, 1);
 }
 
 .hn-hero-eyebrow {
@@ -750,111 +731,6 @@
 @keyframes hn-scroll-cue {
   0%, 100% { transform: translateY(-4px); opacity: .35; }
   50%      { transform: translateY(5px);  opacity: 1; }
-}
-
-/* ---- hero email offer (two-column reveal) ----
-   HnHeroOffer wraps the hero content in .hn-hero-text and, on a first visit,
-   adds .hn-hero-inner--offer ~2s after load to split the hero and slide the
-   card in. Every property animates off that single class, and reverses when the
-   card is dismissed or a submit collapses it. The card content sits in a
-   fixed-width inner, so it's revealed by the clip rather than reflowing. */
-.hn-hero-offer {
-  flex: 0 0 0;
-  width: 0;
-  opacity: 0;
-  overflow: hidden;
-  text-align: left;
-  transition: width .8s cubic-bezier(.65, 0, .35, 1),
-              opacity .55s cubic-bezier(.65, 0, .35, 1);
-}
-
-.hn-hero-inner--offer {
-  max-width: 76rem;
-  gap: 2.5rem;
-}
-/* Text stays centred — only its width animates, so it glides in without a
-   text-align snap. */
-.hn-hero-inner--offer .hn-hero-text {
-  flex: 0 1 40rem;
-}
-
-.hn-hero-inner--offer .hn-hero-offer {
-  flex: 0 0 auto;
-  width: min(28rem, 42vw);
-  opacity: 1;
-}
-
-/* Card content eases in (fade + slight rise) once the column is opening, so it
-   doesn't just pop at full opacity behind the clip. */
-.hn-hero-offer-inner {
-  position: relative;
-  width: min(28rem, 42vw);
-  transform: translateY(8px);
-  transition: transform .6s cubic-bezier(.65, 0, .35, 1) .12s;
-}
-.hn-hero-inner--offer .hn-hero-offer-inner {
-  transform: none;
-}
-
-/* lift the card off the hero photo */
-.hn-hero-offer .hn-email {
-  box-shadow: var(--hn-shadow-lg);
-  border-color: var(--hn-border);
-}
-
-.hn-hero-offer-close {
-  position: absolute;
-  top: 0.7rem;
-  right: 0.7rem;
-  z-index: 2;
-  display: grid;
-  place-items: center;
-  width: 1.9rem;
-  height: 1.9rem;
-  border-radius: 50%;
-  border: 1px solid var(--hn-border);
-  background: var(--hn-surface-2);
-  color: var(--hn-muted);
-  cursor: pointer;
-  transition: color .15s ease, border-color .15s ease, background .15s ease;
-}
-.hn-hero-offer-close:hover { color: var(--hn-text); border-color: var(--hn-accent-ring); }
-.hn-hero-offer-close:focus-visible { outline: none; box-shadow: 0 0 0 3px var(--hn-accent-ring); }
-
-/* Below the desktop range there's no room for two columns: stack the card
-   below the hero text as an inline (non-blocking) reveal — a height/opacity
-   animation instead of width — which also keeps us clear of Google's
-   intrusive-interstitial guideline on mobile. */
-@media (max-width: 1024px) {
-  .hn-hero-inner { flex-direction: column; }
-  /* Column layout: reset the length basis (it would otherwise be read as a
-     60rem HEIGHT) back to content-sized, and let the text span the width. */
-  .hn-hero-text { flex: 0 0 auto; width: 100%; transition: none; }
-  .hn-hero-inner--offer { max-width: 40rem; gap: 0; }
-
-  .hn-hero-offer {
-    width: 100%;
-    max-width: 30rem;
-    flex: 0 0 auto;
-    max-height: 0;
-    margin-top: 0;
-    transition: max-height .7s cubic-bezier(.65, 0, .35, 1),
-                opacity .5s ease, margin-top .7s cubic-bezier(.65, 0, .35, 1);
-  }
-  .hn-hero-inner--offer .hn-hero-offer {
-    width: 100%;
-    max-height: 62rem;
-    margin-top: 1.9rem;
-    opacity: 1;
-  }
-  .hn-hero-offer-inner { width: 100%; }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .hn-hero-inner,
-  .hn-hero-text,
-  .hn-hero-offer,
-  .hn-hero-offer-inner { transition-duration: .01ms; }
 }
 
 /* ---------------------------------------------------------------
@@ -1054,17 +930,10 @@
 .hn-grid--3 { grid-template-columns: repeat(auto-fit, minmax(min(100%, 19rem), 1fr)); }
 .hn-grid--4 { grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr)); }
 
-/* Options run 3–5 items. Fixed columns (not auto-fit) so an odd count never
-   strands a lone card stretched to full width — cards keep a uniform width and
-   wrap cleanly. Four across on desktop, stepping down to one on mobile; a
-   slightly tighter gap keeps the four-up row from feeling cramped. */
-.hn-grid--options {
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 0.9rem;
-}
-@media (max-width: 1120px) { .hn-grid--options { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
-@media (max-width: 840px)  { .hn-grid--options { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-@media (max-width: 560px)  { .hn-grid--options { grid-template-columns: 1fr; } }
+/* Options run 3 or 4 items. A 19rem minimum caps the row at 3, stranding a
+   lone 4th card in a half-empty row; 15.5rem lets all four sit on one row at
+   desktop and fall to 2x2 on tablet. */
+.hn-grid--options { grid-template-columns: repeat(auto-fit, minmax(min(100%, 15.5rem), 1fr)); }
 
 /* HnReveal wraps each card, so the card is a grandchild of the grid and can
    never inherit the row height on its own. Without this, `margin-top: auto`
@@ -1203,8 +1072,8 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  gap: 0.9rem;
-  padding: 1.5rem 1.25rem 1.4rem;
+  gap: 0.85rem;
+  padding: 1.6rem 1.5rem 1.5rem;
   border-radius: var(--hn-radius-lg);
   border: 1px solid var(--hn-border);
   background: var(--hn-surface);
@@ -1227,80 +1096,32 @@
   box-shadow: var(--hn-shadow);
 }
 
-/* Header block: title + summary. Both are clamped to a fixed number of lines
-   (with a matching min-height) so every card's spec panel starts at the same
-   vertical position — the row reads as a true side-by-side comparison. The
-   clamp is CSS-only, so the full text stays in the DOM for search engines. */
-.hn-option-head { display: flex; flex-direction: column; gap: 0.35rem; }
 .hn-option h3 {
-  margin: 0;
-  font-size: 1.05rem;
+  font-size: 1.1rem;
   font-weight: 700;
-  line-height: 1.3;
   letter-spacing: -0.015em;
   color: var(--hn-text);
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
-  line-clamp: 2;
-  overflow: hidden;
-  min-height: calc(1.3em * 2); /* 2 lines: short and long names align */
-}
-.hn-option-summary {
-  margin: 0;
-  font-size: 0.855rem;
-  line-height: 1.55;
-  color: var(--hn-muted);
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 6;
-  line-clamp: 6;
-  overflow: hidden;
-  min-height: calc(1.55em * 6); /* 6 lines: panels line up across the row */
 }
 
-/* Spec panel: stacked label/value pairs (label above value) so each value gets
-   the full card width instead of being squeezed into a narrow right column —
-   the layout that reads cleanly in the four-up cards. */
+.hn-option-summary { font-size: 0.9rem; line-height: 1.65; color: var(--hn-muted); }
+
 .hn-option-meta {
-  margin: 0;
-  padding: 0.85rem 0.95rem;
-  border-radius: 12px;
-  background: var(--hn-accent-tint);
-  border: 1px solid var(--hn-accent-ring);
+  display: grid;
+  gap: 0.5rem;
+  padding: 0.85rem 0;
+  border-block: 1px solid var(--hn-border);
 }
-.hn-option-meta dt {
-  margin: 0 0 0.15rem;
-  font-size: 0.66rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  color: var(--hn-accent);
-}
-.hn-option-meta dd {
-  margin: 0 0 0.7rem;
-  font-size: 0.85rem;
-  font-weight: 600;
-  line-height: 1.4;
-  color: var(--hn-text);
-}
-.hn-option-meta dd:last-of-type { margin-bottom: 0; }
 
-.hn-option-consider-label {
-  margin: 0 0 0.55rem;
-  font-size: 0.68rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  color: var(--hn-muted);
-}
+.hn-option-meta div { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; }
+.hn-option-meta dt { font-size: 0.775rem; font-weight: 600; text-transform: uppercase; letter-spacing: .04em; color: var(--hn-muted); }
+.hn-option-meta dd { font-size: 0.875rem; font-weight: 600; color: var(--hn-text); text-align: right; }
 
 .hn-option ul { display: grid; gap: 0.45rem; padding: 0; margin: 0; list-style: none; }
 .hn-option ul li {
   position: relative;
-  padding-left: 1.1rem;
-  font-size: 0.83rem;
-  line-height: 1.55;
+  padding-left: 1.15rem;
+  font-size: 0.855rem;
+  line-height: 1.6;
   color: var(--hn-muted);
 }
 .hn-option ul li::before {
@@ -1508,11 +1329,7 @@
 }
 
 .hn-xlink strong { display: block; font-size: 0.94rem; font-weight: 650; color: var(--hn-text); }
-/* Scope to the eyebrow only (the span right after <strong>). A bare
-   `.hn-xlink span` also matched .hn-xlink-icon and, at higher specificity,
-   forced it to display:block — killing place-items:center (icon stuck to the
-   top) and overriding its accent colour. */
-.hn-xlink strong + span { display: block; margin-top: 0.1rem; font-size: 0.815rem; color: var(--hn-muted); }
+.hn-xlink span { display: block; margin-top: 0.1rem; font-size: 0.815rem; color: var(--hn-muted); }
 .hn-xlink-arrow { margin-left: auto; color: var(--hn-muted); flex-shrink: 0; }
 
 .hn-footer { margin-top: auto; border-top: 1px solid var(--hn-border); background: var(--hn-surface-2); }
@@ -1983,215 +1800,3 @@
 .hn-cta .hn-email-subtext { margin-top: 0.1rem; }
 .hn-quoteform--done svg { flex-shrink: 0; margin-top: 1px; }
 .hn-email--done svg { flex-shrink: 0; margin-top: 1px; }
-
-/* ============================================================
-   Trust bar — slim strip of honest trust signals under the hero.
-   ============================================================ */
-.hn-trustbar {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-  gap: 0.5rem 1.6rem;
-  margin: 0;
-  padding: 1rem var(--hn-gutter);
-  list-style: none;
-  border-block: 1px solid var(--hn-border);
-  background: var(--hn-surface);
-}
-.hn-trustbar li {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.45rem;
-  font-size: 0.82rem;
-  font-weight: 600;
-  color: var(--hn-text-soft);
-}
-.hn-trustbar svg { color: var(--hn-accent); flex-shrink: 0; }
-
-/* ============================================================
-   Email capture enhancements — reward tag, perks, secure input,
-   privacy line and social proof.
-   ============================================================ */
-.hn-email-tag {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.4rem;
-  align-self: flex-start;
-  padding: 0.3rem 0.7rem;
-  font-size: 0.72rem;
-  font-weight: 700;
-  letter-spacing: 0.03em;
-  text-transform: uppercase;
-  color: var(--hn-accent);
-  background: var(--hn-accent-tint);
-  border: 1px solid var(--hn-accent-ring);
-  border-radius: 999px;
-}
-.hn-email-perks {
-  margin: 0.35rem 0 0.2rem;
-  padding: 0;
-  list-style: none;
-  display: grid;
-  gap: 0.5rem;
-}
-.hn-email-perks li {
-  display: flex;
-  gap: 0.55rem;
-  align-items: flex-start;
-  font-size: 0.875rem;
-  line-height: 1.5;
-  font-weight: 550;
-  color: var(--hn-text-soft);
-}
-.hn-email-perks svg { color: var(--hn-accent); flex-shrink: 0; margin-top: 0.12rem; }
-
-.hn-email-row { position: relative; }
-.hn-email-field {
-  position: absolute;
-  left: 0.85rem;
-  top: 0.78rem;
-  z-index: 1;
-  pointer-events: none;
-  color: var(--hn-muted);
-}
-.hn-email-row input { padding-left: 2.4rem; }
-
-.hn-email-trust {
-  display: flex;
-  align-items: center;
-  gap: 0.4rem;
-  margin: 0.55rem 0 0;
-  font-size: 0.78rem;
-  color: var(--hn-muted);
-}
-.hn-email-trust svg { color: var(--hn-accent); flex-shrink: 0; }
-
-.hn-email-proof {
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
-  margin-top: 0.75rem;
-  padding-top: 0.75rem;
-  border-top: 1px solid var(--hn-border);
-}
-.hn-email-avatars { display: inline-flex; }
-.hn-email-avatars span {
-  display: grid;
-  place-items: center;
-  width: 1.8rem;
-  height: 1.8rem;
-  margin-left: -0.5rem;
-  border-radius: 999px;
-  border: 2px solid var(--hn-surface);
-  background: linear-gradient(140deg, var(--hn-accent), var(--hn-accent-strong));
-  color: var(--hn-accent-contrast);
-  font-size: 0.62rem;
-  font-weight: 700;
-}
-.hn-email-avatars span:first-child { margin-left: 0; }
-.hn-email-proof-text { font-size: 0.82rem; color: var(--hn-text-soft); }
-.hn-email-proof-text strong { color: var(--hn-text); }
-
-/* Trust-badge chips under the field — reassurance at the point of action. */
-.hn-email-badges {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.4rem 0.5rem;
-  margin: 0.6rem 0 0;
-  padding: 0;
-  list-style: none;
-}
-.hn-email-badges li {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.35rem;
-  padding: 0.3rem 0.62rem;
-  border-radius: 999px;
-  border: 1px solid var(--hn-border);
-  background: var(--hn-surface-2);
-  font-size: 0.72rem;
-  font-weight: 650;
-  color: var(--hn-text);
-}
-.hn-email-badges svg { color: var(--hn-accent); flex-shrink: 0; }
-
-/* Gold star rating in the social-proof line. */
-.hn-email-stars {
-  display: inline-flex;
-  gap: 1px;
-  margin-right: 0.35rem;
-  color: #f59e0b;
-  vertical-align: -2px;
-}
-
-/* ============================================================
-   Quote form — benefit line above, trust row below.
-   ============================================================ */
-.hn-quoteform-benefit {
-  margin: 0 auto;
-  max-width: 34rem;
-  font-size: 0.98rem;
-  line-height: 1.55;
-  text-align: center;
-  color: var(--hn-text-soft);
-}
-.hn-quoteform-benefit strong { color: var(--hn-text); }
-.hn-quoteform-trust {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 0.5rem 1.4rem;
-  margin: 0.9rem 0 0;
-  padding: 0;
-  list-style: none;
-}
-.hn-quoteform-trust li {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.4rem;
-  font-size: 0.8rem;
-  font-weight: 600;
-  color: var(--hn-muted);
-}
-.hn-quoteform-trust svg { color: var(--hn-accent); flex-shrink: 0; }
-
-/* ============================================================
-   Vetting / trust section — the "why homeowners trust us" cards.
-   ============================================================ */
-.hn-vetting {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
-  gap: 1.1rem;
-  margin-top: 2.4rem;
-}
-.hn-vet-card {
-  padding: 1.5rem 1.4rem;
-  border-radius: var(--hn-radius-lg);
-  border: 1px solid var(--hn-border);
-  background: var(--hn-surface);
-  box-shadow: var(--hn-shadow-sm);
-  text-align: center;
-}
-.hn-vet-ico {
-  display: grid;
-  place-items: center;
-  width: 3rem;
-  height: 3rem;
-  margin: 0 auto 0.85rem;
-  border-radius: 14px;
-  background: var(--hn-accent-tint);
-  color: var(--hn-accent);
-}
-.hn-vet-card h3 {
-  margin: 0 0 0.35rem;
-  font-size: 1.02rem;
-  font-weight: 700;
-  color: var(--hn-text);
-}
-.hn-vet-card p {
-  margin: 0;
-  font-size: 0.87rem;
-  line-height: 1.55;
-  color: var(--hn-muted);
-}

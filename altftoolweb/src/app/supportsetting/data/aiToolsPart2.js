@@ -11,14 +11,6 @@ export const aiToolsPart2 = [
     officialUrl: "https://www.perplexity.ai",
     downloadUrl: "https://www.perplexity.ai/download",
     downloadLabel: "Download App",
-    docsUrl: "https://docs.perplexity.ai",
-    pricing: {
-      summary:
-        "Perplexity is free to use with daily limits on advanced search modes, with a paid Pro tier unlocking higher limits and more powerful research modes.",
-      free: ["Web-search-grounded answers with citations", "Limited daily advanced/Pro searches"],
-      paid: ["Higher daily limits on advanced research modes", "Access to more model choices and file uploads"],
-      pricingUrl: "https://www.perplexity.ai",
-    },
     overview: {
       whatIsIt:
         "Perplexity AI is a conversational search engine that answers questions in natural language by reading current web pages and summarizing them with inline citations. Instead of returning a list of links like a traditional search engine, it synthesizes a direct answer and shows exactly which sources it drew from. It's available as a website, mobile apps, a desktop app, and browser extensions.",
@@ -139,13 +131,6 @@ export const aiToolsPart2 = [
     officialUrl: "https://www.midjourney.com",
     downloadUrl: null,
     downloadLabel: "Visit Website",
-    docsUrl: "https://docs.midjourney.com",
-    pricing: {
-      summary:
-        "Midjourney is subscription-only (no free tier) — image generation is billed through monthly or annual plans with different amounts of fast GPU time and usage rights. The official site has current plan details.",
-      paid: ["A set amount of fast image-generation time per month", "Commercial usage rights on paid plans", "Higher tiers add more generation time and features like stealth mode"],
-      pricingUrl: "https://www.midjourney.com",
-    },
     overview: {
       whatIsIt:
         "Midjourney is an AI image generation tool that turns text prompts into original artwork, illustrations, and photorealistic images. It has no traditional installable app — it runs through its web app (alpha.midjourney.com) and, historically, through Discord bot commands inside the Midjourney Discord server. It's especially known for a strong, painterly default aesthetic that many designers and artists favor over more literal image models.",
@@ -265,14 +250,6 @@ export const aiToolsPart2 = [
     officialUrl: "https://www.cursor.com",
     downloadUrl: "https://www.cursor.com/download",
     downloadLabel: "Download for Your OS",
-    docsUrl: "https://docs.cursor.com",
-    pricing: {
-      summary:
-        "Cursor offers a free tier with limited AI usage, plus paid plans (Pro and Business/Team) for higher limits and more model access. See the official pricing page for current numbers.",
-      free: ["The full editor with limited AI completions/requests", "Access to a subset of AI models"],
-      paid: ["Much higher AI usage limits", "Access to more/premium AI models", "Team management features on Business plans"],
-      pricingUrl: "https://www.cursor.com",
-    },
     overview: {
       whatIsIt:
         "Cursor is a standalone code editor forked from VS Code that has AI assistance built into its core rather than bolted on as an extension. It can read and reason across an entire codebase, make multi-file edits, and run an autonomous 'Agent' that plans and executes coding tasks. Because it's a full editor (not just a plugin), it keeps your existing VS Code keybindings, themes, and most extensions while adding AI-native features on top.",
@@ -392,14 +369,6 @@ export const aiToolsPart2 = [
     officialUrl: "https://github.com/features/copilot",
     downloadUrl: "https://github.com/copilot",
     downloadLabel: "Get Started",
-    docsUrl: "https://docs.github.com/copilot",
-    pricing: {
-      summary:
-        "GitHub Copilot offers a limited free tier for individuals, plus paid Pro, Pro+, Business, and Enterprise plans with higher usage limits and more model choice. GitHub's official pricing page has current details.",
-      free: ["A limited number of completions and chat requests per month", "Access to a base model"],
-      paid: ["Higher or unlimited completions depending on plan", "Access to more/premium models", "Organization-wide policy controls on Business/Enterprise"],
-      pricingUrl: "https://github.com/features/copilot/plans",
-    },
     overview: {
       whatIsIt:
         "GitHub Copilot is an AI coding assistant that integrates directly into editors like VS Code, Visual Studio, JetBrains IDEs, and Neovim, as well as into GitHub.com itself. It suggests inline code completions as you type, powers a chat interface for asking questions about your code, and can take on larger autonomous tasks through Copilot Workspace and coding agent features. It's built and maintained by GitHub (Microsoft) in partnership with multiple AI model providers.",

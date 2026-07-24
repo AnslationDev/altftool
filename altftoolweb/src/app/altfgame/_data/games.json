@@ -394,59 +394,5 @@
     "isNew": true,
     "trending": false,
     "image": "/images/games/escape-puzzle.webp"
-  },
-  {
-    "slug": "level-devil",
-    "title": "Level Devil",
-    "emoji": "😈",
-    "category": "Action",
-    "rating": 4.5,
-    "plays": 455000,
-    "colors": [
-      "#ff5e3a",
-      "#ffb347"
-    ],
-    "description": "A trick-filled cartoon platformer where the level trolls you at every step — nothing stays where you left it.",
-    "controls": "Move with arrow keys or A/D, jump with Space/Up/W. Reach the door without getting caught by disappearing platforms, hidden spikes and reversed controls.",
-    "featured": false,
-    "isNew": true,
-    "trending": false,
-    "image": "/images/games/level-devil.webp"
-  },
-  {
-    "slug": "who-is",
-    "title": "Who Is?",
-    "emoji": "🕵️",
-    "category": "Puzzle",
-    "rating": 4.4,
-    "plays": 310000,
-    "colors": [
-      "#c9a06a",
-      "#ff8a3d"
-    ],
-    "description": "Investigate quirky mysteries, pin down clues around the scene, and accuse the right suspect before you run out of lives.",
-    "controls": "Click glowing clue pins to reveal evidence, then click a suspect card to make your accusation.",
-    "featured": false,
-    "isNew": true,
-    "trending": false,
-    "image": "/images/games/who-is.webp"
-  },
-  {
-    "slug": "number-guess",
-    "title": "Number Guess",
-    "emoji": "🎯",
-    "category": "Puzzle",
-    "rating": 4.3,
-    "plays": 275000,
-    "colors": [
-      "#ff9f5a",
-      "#b06aff"
-    ],
-    "description": "Classic higher-or-lower number guessing with three difficulty levels and a live narrowing range meter.",
-    "controls": "Type a number and press Guess. Use the Higher/Lower feedback to narrow down the secret number before you run out of guesses.",
-    "featured": false,
-    "isNew": true,
-    "trending": false,
-    "image": "/images/games/number-guess.webp"
   }
 ]

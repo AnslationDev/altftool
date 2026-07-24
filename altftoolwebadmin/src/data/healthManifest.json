@@ -1,13 +1,13 @@
 {
-  "schemaVersion": 1,
-  "generatedAt": "2026-07-24T15:23:30.685Z",
+  "schemaVersion": 2,
+  "generatedAt": "2026-07-24T14:58:07.602Z",
   "tools": {
-    "total": 1321,
-    "healthy": 1321,
+    "total": 1124,
+    "healthy": 1124,
     "needsAttention": 0,
     "averageScore": 100,
     "categories": 21,
-    "directories": 1322,
+    "directories": 1125,
     "orphanToolDirs": [
       "candy-crush"
     ],
@@ -15,14 +15,862 @@
     "missingEntry": 0,
     "missingConfig": 0,
     "missingMetadata": 0,
-    "topIssues": []
+    "topIssues": [],
+    "readiness": {
+      "methodology": "static-readiness-v2",
+      "description": "Build-time evidence grades route structure, entry imports, interaction signals, automated coverage, placeholders, and external API dependencies. It complements browser QA; it does not claim a live third-party API is available.",
+      "total": 1124,
+      "score": 94,
+      "counts": {
+        "working": 1064,
+        "api-required": 60,
+        "partial": 0,
+        "broken": 0
+      },
+      "automatedTests": 158,
+      "automatedCoverage": 14,
+      "networkDependent": 60,
+      "envDependent": 1,
+      "api": {
+        "tools": 60,
+        "counts": {
+          "configured": 1,
+          "missing-config": 0,
+          "runtime-check": 59
+        },
+        "providerCount": 17,
+        "requiredEnvKeys": [
+          "NEXT_PUBLIC_WHEREGOES_API_URL"
+        ],
+        "configuredEnvKeys": [
+          "NEXT_PUBLIC_WHEREGOES_API_URL"
+        ],
+        "missingEnvKeys": [],
+        "providers": [
+          {
+            "name": "Runtime-provided endpoint",
+            "tools": 45,
+            "requiredEnvKeys": [],
+            "missingEnvKeys": [],
+            "statuses": [
+              "runtime-check"
+            ]
+          },
+          {
+            "name": "AltFTool API",
+            "tools": 9,
+            "requiredEnvKeys": [],
+            "missingEnvKeys": [],
+            "statuses": [
+              "runtime-check"
+            ]
+          },
+          {
+            "name": "api.languagetool.org",
+            "tools": 2,
+            "requiredEnvKeys": [],
+            "missingEnvKeys": [],
+            "statuses": [
+              "runtime-check"
+            ]
+          },
+          {
+            "name": "api.adviceslip.com",
+            "tools": 1,
+            "requiredEnvKeys": [],
+            "missingEnvKeys": [],
+            "statuses": [
+              "runtime-check"
+            ]
+          },
+          {
+            "name": "api.datamuse.com",
+            "tools": 1,
+            "requiredEnvKeys": [],
+            "missingEnvKeys": [],
+            "statuses": [
+              "runtime-check"
+            ]
+          },
+          {
+            "name": "api.dictionaryapi.dev",
+            "tools": 1,
+            "requiredEnvKeys": [],
+            "missingEnvKeys": [],
+            "statuses": [
+              "runtime-check"
+            ]
+          },
+          {
+            "name": "api.github.com",
+            "tools": 1,
+            "requiredEnvKeys": [],
+            "missingEnvKeys": [],
+            "statuses": [
+              "runtime-check"
+            ]
+          },
+          {
+            "name": "api.upcitemdb.com",
+            "tools": 1,
+            "requiredEnvKeys": [],
+            "missingEnvKeys": [],
+            "statuses": [
+              "runtime-check"
+            ]
+          },
+          {
+            "name": "aztro.sameerkumar.website",
+            "tools": 1,
+            "requiredEnvKeys": [],
+            "missingEnvKeys": [],
+            "statuses": [
+              "runtime-check"
+            ]
+          },
+          {
+            "name": "cleanuri.com",
+            "tools": 1,
+            "requiredEnvKeys": [],
+            "missingEnvKeys": [],
+            "statuses": [
+              "runtime-check"
+            ]
+          },
+          {
+            "name": "Google",
+            "tools": 1,
+            "requiredEnvKeys": [],
+            "missingEnvKeys": [],
+            "statuses": [
+              "runtime-check"
+            ]
+          },
+          {
+            "name": "httpbin.org",
+            "tools": 1,
+            "requiredEnvKeys": [],
+            "missingEnvKeys": [],
+            "statuses": [
+              "runtime-check"
+            ]
+          },
+          {
+            "name": "ipapi.co",
+            "tools": 1,
+            "requiredEnvKeys": [],
+            "missingEnvKeys": [],
+            "statuses": [
+              "runtime-check"
+            ]
+          },
+          {
+            "name": "timeapi.io",
+            "tools": 1,
+            "requiredEnvKeys": [],
+            "missingEnvKeys": [],
+            "statuses": [
+              "runtime-check"
+            ]
+          },
+          {
+            "name": "v2.jokeapi.dev",
+            "tools": 1,
+            "requiredEnvKeys": [],
+            "missingEnvKeys": [],
+            "statuses": [
+              "runtime-check"
+            ]
+          },
+          {
+            "name": "WhereGoes",
+            "tools": 1,
+            "requiredEnvKeys": [
+              "NEXT_PUBLIC_WHEREGOES_API_URL"
+            ],
+            "missingEnvKeys": [],
+            "statuses": [
+              "configured"
+            ]
+          },
+          {
+            "name": "world.openfoodfacts.org",
+            "tools": 1,
+            "requiredEnvKeys": [],
+            "missingEnvKeys": [],
+            "statuses": [
+              "runtime-check"
+            ]
+          }
+        ]
+      },
+      "placeholderSignals": 0,
+      "unresolvedImports": 0,
+      "priority": {
+        "total": 51,
+        "verified": 51,
+        "needsAttention": 0
+      },
+      "topRisks": [
+        {
+          "slug": "ai-passport-photo-maker",
+          "name": "AI Passport Photo Maker",
+          "category": "Image & Photo, Productivity",
+          "route": "/tools/all/ai-passport-photo-maker",
+          "status": "api-required",
+          "score": 86,
+          "priority": true,
+          "issues": [],
+          "recommendations": [
+            "Verify provider latency, timeout, fallback, and error states at runtime."
+          ],
+          "evidence": {
+            "automatedTest": true,
+            "networkDependent": true,
+            "envKeys": [],
+            "unresolvedImports": []
+          },
+          "apiReadiness": {
+            "status": "runtime-check",
+            "providers": [
+              "Runtime-provided endpoint"
+            ],
+            "missingEnvKeys": []
+          }
+        },
+        {
+          "slug": "image-compressor",
+          "name": "Image Compressor",
+          "category": "Marketing & Social, Design & Color",
+          "route": "/tools/all/image-compressor",
+          "status": "api-required",
+          "score": 86,
+          "priority": true,
+          "issues": [],
+          "recommendations": [
+            "Verify provider latency, timeout, fallback, and error states at runtime."
+          ],
+          "evidence": {
+            "automatedTest": true,
+            "networkDependent": true,
+            "envKeys": [],
+            "unresolvedImports": []
+          },
+          "apiReadiness": {
+            "status": "runtime-check",
+            "providers": [
+              "Runtime-provided endpoint"
+            ],
+            "missingEnvKeys": []
+          }
+        },
+        {
+          "slug": "image-cropper",
+          "name": "Image Cropper",
+          "category": "Design & Color",
+          "route": "/tools/all/image-cropper",
+          "status": "api-required",
+          "score": 86,
+          "priority": true,
+          "issues": [],
+          "recommendations": [
+            "Verify provider latency, timeout, fallback, and error states at runtime."
+          ],
+          "evidence": {
+            "automatedTest": true,
+            "networkDependent": true,
+            "envKeys": [],
+            "unresolvedImports": []
+          },
+          "apiReadiness": {
+            "status": "runtime-check",
+            "providers": [
+              "Runtime-provided endpoint"
+            ],
+            "missingEnvKeys": []
+          }
+        },
+        {
+          "slug": "ai-domain-generator",
+          "name": "AI Domain Generator",
+          "category": "AI Tools",
+          "route": "/tools/all/ai-domain-generator",
+          "status": "api-required",
+          "score": 80,
+          "priority": false,
+          "issues": [],
+          "recommendations": [
+            "Verify provider latency, timeout, fallback, and error states at runtime.",
+            "Add one deterministic functional or unit regression test."
+          ],
+          "evidence": {
+            "automatedTest": false,
+            "networkDependent": true,
+            "envKeys": [],
+            "unresolvedImports": []
+          },
+          "apiReadiness": {
+            "status": "runtime-check",
+            "providers": [
+              "AltFTool API",
+              "Runtime-provided endpoint"
+            ],
+            "missingEnvKeys": []
+          }
+        },
+        {
+          "slug": "ai-jd-analyzer-tool",
+          "name": "AI JD Analyzer",
+          "category": "Business",
+          "route": "/tools/all/ai-jd-analyzer-tool",
+          "status": "api-required",
+          "score": 80,
+          "priority": false,
+          "issues": [],
+          "recommendations": [
+            "Verify provider latency, timeout, fallback, and error states at runtime.",
+            "Add one deterministic functional or unit regression test."
+          ],
+          "evidence": {
+            "automatedTest": false,
+            "networkDependent": true,
+            "envKeys": [],
+            "unresolvedImports": []
+          },
+          "apiReadiness": {
+            "status": "runtime-check",
+            "providers": [
+              "Runtime-provided endpoint"
+            ],
+            "missingEnvKeys": []
+          }
+        },
+        {
+          "slug": "api-documentation-maker",
+          "name": "API Documentation Maker",
+          "category": "Developer",
+          "route": "/tools/all/api-documentation-maker",
+          "status": "api-required",
+          "score": 80,
+          "priority": false,
+          "issues": [],
+          "recommendations": [
+            "Verify provider latency, timeout, fallback, and error states at runtime.",
+            "Add one deterministic functional or unit regression test."
+          ],
+          "evidence": {
+            "automatedTest": false,
+            "networkDependent": true,
+            "envKeys": [],
+            "unresolvedImports": []
+          },
+          "apiReadiness": {
+            "status": "runtime-check",
+            "providers": [
+              "Runtime-provided endpoint"
+            ],
+            "missingEnvKeys": []
+          }
+        },
+        {
+          "slug": "api-endpoint-usage-mapper",
+          "name": "API Endpoint Usage Mapper",
+          "category": "Developer",
+          "route": "/tools/all/api-endpoint-usage-mapper",
+          "status": "api-required",
+          "score": 80,
+          "priority": false,
+          "issues": [],
+          "recommendations": [
+            "Verify provider latency, timeout, fallback, and error states at runtime.",
+            "Add one deterministic functional or unit regression test."
+          ],
+          "evidence": {
+            "automatedTest": false,
+            "networkDependent": true,
+            "envKeys": [],
+            "unresolvedImports": []
+          },
+          "apiReadiness": {
+            "status": "runtime-check",
+            "providers": [
+              "AltFTool API"
+            ],
+            "missingEnvKeys": []
+          }
+        },
+        {
+          "slug": "api-tester",
+          "name": "API TESTER",
+          "category": "Developer",
+          "route": "/tools/all/api-tester",
+          "status": "api-required",
+          "score": 80,
+          "priority": false,
+          "issues": [],
+          "recommendations": [
+            "Verify provider latency, timeout, fallback, and error states at runtime.",
+            "Add one deterministic functional or unit regression test."
+          ],
+          "evidence": {
+            "automatedTest": false,
+            "networkDependent": true,
+            "envKeys": [],
+            "unresolvedImports": []
+          },
+          "apiReadiness": {
+            "status": "runtime-check",
+            "providers": [
+              "Runtime-provided endpoint"
+            ],
+            "missingEnvKeys": []
+          }
+        },
+        {
+          "slug": "app-finder",
+          "name": "App Finder",
+          "category": "Business",
+          "route": "/tools/all/app-finder",
+          "status": "api-required",
+          "score": 80,
+          "priority": false,
+          "issues": [],
+          "recommendations": [
+            "Verify provider latency, timeout, fallback, and error states at runtime.",
+            "Add one deterministic functional or unit regression test."
+          ],
+          "evidence": {
+            "automatedTest": false,
+            "networkDependent": true,
+            "envKeys": [],
+            "unresolvedImports": []
+          },
+          "apiReadiness": {
+            "status": "runtime-check",
+            "providers": [
+              "Runtime-provided endpoint"
+            ],
+            "missingEnvKeys": []
+          }
+        },
+        {
+          "slug": "barcode-scanner",
+          "name": "Barcode Scanner",
+          "category": "Developer",
+          "route": "/tools/all/barcode-scanner",
+          "status": "api-required",
+          "score": 80,
+          "priority": false,
+          "issues": [],
+          "recommendations": [
+            "Verify provider latency, timeout, fallback, and error states at runtime.",
+            "Add one deterministic functional or unit regression test."
+          ],
+          "evidence": {
+            "automatedTest": false,
+            "networkDependent": true,
+            "envKeys": [],
+            "unresolvedImports": []
+          },
+          "apiReadiness": {
+            "status": "runtime-check",
+            "providers": [
+              "api.upcitemdb.com",
+              "world.openfoodfacts.org"
+            ],
+            "missingEnvKeys": []
+          }
+        },
+        {
+          "slug": "bg-remover",
+          "name": "Background Remover",
+          "category": "AI Tools",
+          "route": "/tools/all/bg-remover",
+          "status": "api-required",
+          "score": 80,
+          "priority": false,
+          "issues": [],
+          "recommendations": [
+            "Verify provider latency, timeout, fallback, and error states at runtime.",
+            "Add one deterministic functional or unit regression test."
+          ],
+          "evidence": {
+            "automatedTest": false,
+            "networkDependent": true,
+            "envKeys": [],
+            "unresolvedImports": []
+          },
+          "apiReadiness": {
+            "status": "runtime-check",
+            "providers": [
+              "Runtime-provided endpoint"
+            ],
+            "missingEnvKeys": []
+          }
+        },
+        {
+          "slug": "calender-panchang",
+          "name": "Calender Panchang",
+          "category": "Lifestyle",
+          "route": "/tools/all/calender-panchang",
+          "status": "api-required",
+          "score": 80,
+          "priority": false,
+          "issues": [],
+          "recommendations": [
+            "Verify provider latency, timeout, fallback, and error states at runtime.",
+            "Add one deterministic functional or unit regression test."
+          ],
+          "evidence": {
+            "automatedTest": false,
+            "networkDependent": true,
+            "envKeys": [],
+            "unresolvedImports": []
+          },
+          "apiReadiness": {
+            "status": "runtime-check",
+            "providers": [
+              "Runtime-provided endpoint"
+            ],
+            "missingEnvKeys": []
+          }
+        },
+        {
+          "slug": "company-info-tool",
+          "name": "Company Info Explorer",
+          "category": "Business",
+          "route": "/tools/all/company-info-tool",
+          "status": "api-required",
+          "score": 80,
+          "priority": false,
+          "issues": [],
+          "recommendations": [
+            "Verify provider latency, timeout, fallback, and error states at runtime.",
+            "Add one deterministic functional or unit regression test."
+          ],
+          "evidence": {
+            "automatedTest": false,
+            "networkDependent": true,
+            "envKeys": [],
+            "unresolvedImports": []
+          },
+          "apiReadiness": {
+            "status": "runtime-check",
+            "providers": [
+              "Runtime-provided endpoint"
+            ],
+            "missingEnvKeys": []
+          }
+        },
+        {
+          "slug": "country-quiz",
+          "name": "Country Quiz",
+          "category": "Education & Science, Fun",
+          "route": "/tools/all/country-quiz",
+          "status": "api-required",
+          "score": 80,
+          "priority": false,
+          "issues": [],
+          "recommendations": [
+            "Verify provider latency, timeout, fallback, and error states at runtime.",
+            "Add one deterministic functional or unit regression test."
+          ],
+          "evidence": {
+            "automatedTest": false,
+            "networkDependent": true,
+            "envKeys": [],
+            "unresolvedImports": []
+          },
+          "apiReadiness": {
+            "status": "runtime-check",
+            "providers": [
+              "Runtime-provided endpoint"
+            ],
+            "missingEnvKeys": []
+          }
+        },
+        {
+          "slug": "currency-converter",
+          "name": "Currency Converter",
+          "category": "Business",
+          "route": "/tools/all/currency-converter",
+          "status": "api-required",
+          "score": 80,
+          "priority": false,
+          "issues": [],
+          "recommendations": [
+            "Verify provider latency, timeout, fallback, and error states at runtime.",
+            "Add one deterministic functional or unit regression test."
+          ],
+          "evidence": {
+            "automatedTest": false,
+            "networkDependent": true,
+            "envKeys": [],
+            "unresolvedImports": []
+          },
+          "apiReadiness": {
+            "status": "runtime-check",
+            "providers": [
+              "Runtime-provided endpoint"
+            ],
+            "missingEnvKeys": []
+          }
+        },
+        {
+          "slug": "dictionary-app",
+          "name": "Dictionary App",
+          "category": "Education & Science",
+          "route": "/tools/all/dictionary-app",
+          "status": "api-required",
+          "score": 80,
+          "priority": false,
+          "issues": [],
+          "recommendations": [
+            "Verify provider latency, timeout, fallback, and error states at runtime.",
+            "Add one deterministic functional or unit regression test."
+          ],
+          "evidence": {
+            "automatedTest": false,
+            "networkDependent": true,
+            "envKeys": [],
+            "unresolvedImports": []
+          },
+          "apiReadiness": {
+            "status": "runtime-check",
+            "providers": [
+              "api.datamuse.com",
+              "api.dictionaryapi.dev",
+              "Runtime-provided endpoint"
+            ],
+            "missingEnvKeys": []
+          }
+        },
+        {
+          "slug": "domain-checker",
+          "name": "Domain Checker",
+          "category": "Business",
+          "route": "/tools/all/domain-checker",
+          "status": "api-required",
+          "score": 80,
+          "priority": false,
+          "issues": [],
+          "recommendations": [
+            "Verify provider latency, timeout, fallback, and error states at runtime.",
+            "Add one deterministic functional or unit regression test."
+          ],
+          "evidence": {
+            "automatedTest": false,
+            "networkDependent": true,
+            "envKeys": [],
+            "unresolvedImports": []
+          },
+          "apiReadiness": {
+            "status": "runtime-check",
+            "providers": [
+              "Runtime-provided endpoint"
+            ],
+            "missingEnvKeys": []
+          }
+        },
+        {
+          "slug": "email-validator",
+          "name": "Email Validator",
+          "category": "Developer, Business",
+          "route": "/tools/all/email-validator",
+          "status": "api-required",
+          "score": 80,
+          "priority": false,
+          "issues": [],
+          "recommendations": [
+            "Verify provider latency, timeout, fallback, and error states at runtime.",
+            "Add one deterministic functional or unit regression test."
+          ],
+          "evidence": {
+            "automatedTest": false,
+            "networkDependent": true,
+            "envKeys": [],
+            "unresolvedImports": []
+          },
+          "apiReadiness": {
+            "status": "runtime-check",
+            "providers": [
+              "Runtime-provided endpoint"
+            ],
+            "missingEnvKeys": []
+          }
+        },
+        {
+          "slug": "emoji-hub",
+          "name": "Emoji Hub",
+          "category": "Design & Color",
+          "route": "/tools/all/emoji-hub",
+          "status": "api-required",
+          "score": 80,
+          "priority": false,
+          "issues": [],
+          "recommendations": [
+            "Verify provider latency, timeout, fallback, and error states at runtime.",
+            "Add one deterministic functional or unit regression test."
+          ],
+          "evidence": {
+            "automatedTest": false,
+            "networkDependent": true,
+            "envKeys": [],
+            "unresolvedImports": []
+          },
+          "apiReadiness": {
+            "status": "runtime-check",
+            "providers": [
+              "Runtime-provided endpoint"
+            ],
+            "missingEnvKeys": []
+          }
+        },
+        {
+          "slug": "event-tool",
+          "name": "Event Planner",
+          "category": "Productivity",
+          "route": "/tools/all/event-tool",
+          "status": "api-required",
+          "score": 80,
+          "priority": false,
+          "issues": [],
+          "recommendations": [
+            "Verify provider latency, timeout, fallback, and error states at runtime.",
+            "Add one deterministic functional or unit regression test."
+          ],
+          "evidence": {
+            "automatedTest": false,
+            "networkDependent": true,
+            "envKeys": [],
+            "unresolvedImports": []
+          },
+          "apiReadiness": {
+            "status": "runtime-check",
+            "providers": [
+              "Runtime-provided endpoint"
+            ],
+            "missingEnvKeys": []
+          }
+        },
+        {
+          "slug": "financial-update",
+          "name": "Financial Update",
+          "category": "Business",
+          "route": "/tools/all/financial-update",
+          "status": "api-required",
+          "score": 80,
+          "priority": false,
+          "issues": [],
+          "recommendations": [
+            "Verify provider latency, timeout, fallback, and error states at runtime.",
+            "Add one deterministic functional or unit regression test."
+          ],
+          "evidence": {
+            "automatedTest": false,
+            "networkDependent": true,
+            "envKeys": [],
+            "unresolvedImports": []
+          },
+          "apiReadiness": {
+            "status": "runtime-check",
+            "providers": [
+              "AltFTool API",
+              "Runtime-provided endpoint"
+            ],
+            "missingEnvKeys": []
+          }
+        },
+        {
+          "slug": "flag-quiz",
+          "name": "Flag Quiz",
+          "category": "Education & Science, Fun",
+          "route": "/tools/all/flag-quiz",
+          "status": "api-required",
+          "score": 80,
+          "priority": false,
+          "issues": [],
+          "recommendations": [
+            "Verify provider latency, timeout, fallback, and error states at runtime.",
+            "Add one deterministic functional or unit regression test."
+          ],
+          "evidence": {
+            "automatedTest": false,
+            "networkDependent": true,
+            "envKeys": [],
+            "unresolvedImports": []
+          },
+          "apiReadiness": {
+            "status": "runtime-check",
+            "providers": [
+              "Runtime-provided endpoint"
+            ],
+            "missingEnvKeys": []
+          }
+        },
+        {
+          "slug": "github-profile-finder",
+          "name": "GitHub Profile Finder",
+          "category": "Developer",
+          "route": "/tools/all/github-profile-finder",
+          "status": "api-required",
+          "score": 80,
+          "priority": false,
+          "issues": [],
+          "recommendations": [
+            "Verify provider latency, timeout, fallback, and error states at runtime.",
+            "Add one deterministic functional or unit regression test."
+          ],
+          "evidence": {
+            "automatedTest": false,
+            "networkDependent": true,
+            "envKeys": [],
+            "unresolvedImports": []
+          },
+          "apiReadiness": {
+            "status": "runtime-check",
+            "providers": [
+              "api.github.com"
+            ],
+            "missingEnvKeys": []
+          }
+        },
+        {
+          "slug": "gold-price-checker",
+          "name": "Gold Price Checker",
+          "category": "Business",
+          "route": "/tools/all/gold-price-checker",
+          "status": "api-required",
+          "score": 80,
+          "priority": false,
+          "issues": [],
+          "recommendations": [
+            "Verify provider latency, timeout, fallback, and error states at runtime.",
+            "Add one deterministic functional or unit regression test."
+          ],
+          "evidence": {
+            "automatedTest": false,
+            "networkDependent": true,
+            "envKeys": [],
+            "unresolvedImports": []
+          },
+          "apiReadiness": {
+            "status": "runtime-check",
+            "providers": [
+              "Runtime-provided endpoint"
+            ],
+            "missingEnvKeys": []
+          }
+        }
+      ]
+    }
   },
   "qa": {
     "score": 100,
     "total": 51,
     "registered": 51,
     "routeCovered": 51,
-    "functionalCovered": 40,
+    "functionalCovered": 51,
     "checks": [
       {
         "key": "priorityList",
@@ -470,7 +1318,7 @@
         "route": "/tools/all/decision-wheel",
         "registered": true,
         "routeCovered": true,
-        "functionalCovered": false
+        "functionalCovered": true
       },
       {
         "rank": 42,
@@ -480,7 +1328,7 @@
         "route": "/tools/all/random-fun-picker",
         "registered": true,
         "routeCovered": true,
-        "functionalCovered": false
+        "functionalCovered": true
       },
       {
         "rank": 43,
@@ -490,7 +1338,7 @@
         "route": "/tools/all/text-diff-viewer",
         "registered": true,
         "routeCovered": true,
-        "functionalCovered": false
+        "functionalCovered": true
       },
       {
         "rank": 44,
@@ -500,7 +1348,7 @@
         "route": "/tools/all/ludo-multiplayer",
         "registered": true,
         "routeCovered": true,
-        "functionalCovered": false
+        "functionalCovered": true
       },
       {
         "rank": 45,
@@ -510,7 +1358,7 @@
         "route": "/tools/all/file-metadata-explorer",
         "registered": true,
         "routeCovered": true,
-        "functionalCovered": false
+        "functionalCovered": true
       },
       {
         "rank": 46,
@@ -520,7 +1368,7 @@
         "route": "/tools/all/browser-session-analyzer",
         "registered": true,
         "routeCovered": true,
-        "functionalCovered": false
+        "functionalCovered": true
       },
       {
         "rank": 47,
@@ -530,7 +1378,7 @@
         "route": "/tools/all/twin-finder",
         "registered": true,
         "routeCovered": true,
-        "functionalCovered": false
+        "functionalCovered": true
       },
       {
         "rank": 48,
@@ -540,7 +1388,7 @@
         "route": "/tools/all/aura-color-generator",
         "registered": true,
         "routeCovered": true,
-        "functionalCovered": false
+        "functionalCovered": true
       },
       {
         "rank": 49,
@@ -550,7 +1398,7 @@
         "route": "/tools/all/lucky-face-score",
         "registered": true,
         "routeCovered": true,
-        "functionalCovered": false
+        "functionalCovered": true
       },
       {
         "rank": 50,
@@ -560,7 +1408,7 @@
         "route": "/tools/all/beauty-score",
         "registered": true,
         "routeCovered": true,
-        "functionalCovered": false
+        "functionalCovered": true
       },
       {
         "rank": 51,
@@ -570,7 +1418,7 @@
         "route": "/tools/all/ai-passport-photo-maker",
         "registered": true,
         "routeCovered": true,
-        "functionalCovered": false
+        "functionalCovered": true
       }
     ],
     "needsAttention": []

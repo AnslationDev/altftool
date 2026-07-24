@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState } from "react";
 
 // --- 1. DATA STRUCTURE ---
