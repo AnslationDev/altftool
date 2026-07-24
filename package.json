@@ -97,7 +97,7 @@
     "test:tools:all": "playwright test tests/tool-all-routes.spec.mjs",
     "test:routes": "ALTFT_PLAYWRIGHT_WEB_SERVER=production ALTFT_PLAYWRIGHT_ADMIN_SERVER=production playwright test tests/route-audit.spec.mjs",
     "test:routes:dev": "playwright test tests/route-audit.spec.mjs",
-    "test:admin-api": "playwright test tests/admin-api.spec.mjs",
+    "test:admin-api": "ALTFT_SKIP_WEB_SERVER=true ALTFT_PLAYWRIGHT_ADMIN_SERVER=dev playwright test tests/admin-api.spec.mjs",
     "test:admin-blog-ux": "playwright test tests/admin-blog-ux.spec.mjs",
     "test:admin-mobile-ux": "ALTFT_ADMIN_URL=http://localhost:3011 playwright test tests/admin-mobile-ux.spec.mjs",
     "test:admin-routes": "ALTFT_SKIP_WEB_SERVER=true ALTFT_ADMIN_URL=http://localhost:3011 playwright test tests/admin-route-qa.spec.mjs",
