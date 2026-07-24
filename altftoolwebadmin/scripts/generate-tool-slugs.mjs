@@ -48,3 +48,46 @@ const body =
 
 writeFileSync(outPath, body);
 console.log(`[generate-tool-slugs] Wrote ${unique.length} tool slugs to ${path.relative(process.cwd(), outPath)}`);
+
+// ── Tool Catalog (name/category/description per slug) for the admin
+// Tool Catalog module. Sourced from the web app's toolMetaMap; build-safe
+// like the slug list above (keeps the committed file when source missing).
+const metaMapPath = path.resolve(
+  here,
+  "../../altftoolweb/src/platform/registry/toolMetaMap.js",
+);
+const catalogOutPath = path.resolve(here, "../src/config/toolCatalog.generated.js");
+
+if (existsSync(metaMapPath)) {
+  try {
+    const { toolMetaMap } = await import(metaMapPath);
+    const entries = Object.entries(toolMetaMap).map(([slug, meta]) => ({
+      slug,
+      name: meta.name || slug,
+      categories: Array.isArray(meta.category)
+        ? meta.category
+        : [meta.category].filter(Boolean),
+      description: String(meta.description || "").slice(0, 160),
+    }));
+    entries.sort((a, b) => a.slug.localeCompare(b.slug));
+
+    const catalogBody =
+      "// ⚠️ AUTO-GENERATED — DO NOT EDIT.\n" +
+      "// Source: altftoolweb/src/platform/registry/toolMetaMap.js\n" +
+      "// Regenerate: node scripts/generate-tool-slugs.mjs\n\n" +
+      `export const TOOL_CATALOG = ${JSON.stringify(entries, null, 2)};\n`;
+
+    writeFileSync(catalogOutPath, catalogBody);
+    console.log(
+      `[generate-tool-slugs] Wrote ${entries.length} catalog entries to ${path.relative(process.cwd(), catalogOutPath)}`,
+    );
+  } catch (error) {
+    console.warn(
+      `[generate-tool-slugs] Could not build tool catalog (${error.message}); keeping existing toolCatalog.generated.js.`,
+    );
+  }
+} else {
+  console.warn(
+    "[generate-tool-slugs] toolMetaMap not found; keeping existing toolCatalog.generated.js.",
+  );
+}

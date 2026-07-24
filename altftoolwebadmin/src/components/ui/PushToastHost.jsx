@@ -60,7 +60,7 @@ function PushToastCard({ toast, onDismiss }) {
         alignItems: "center",
         background: "transparent",
         border: 0,
-        color: "var(--anslation-ds-primary)",
+        color: "var(--primary)",
         cursor: "pointer",
         display: "inline-flex",
         fontSize: 12,

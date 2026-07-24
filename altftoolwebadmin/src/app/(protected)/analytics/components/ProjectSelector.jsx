@@ -13,13 +13,13 @@ export default function ProjectSelector({
   ];
 
   return (
-    <section className="border border-gray-200 bg-white p-4 shadow-sm rounded-md">
+    <section className="border border-[var(--border)] bg-[var(--surface)] p-4 shadow-sm rounded-md">
       <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
         <div>
-          <p className="text-xs font-semibold uppercase tracking-[0.18em] text-gray-400">
+          <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[var(--muted)]">
             Project Scope
           </p>
-          <p className="mt-1 text-sm text-gray-500">
+          <p className="mt-1 text-sm text-[var(--muted)]">
             Switch between a single project view and the combined global summary.
           </p>
         </div>
@@ -30,7 +30,7 @@ export default function ProjectSelector({
           <select
             value={selectedProjectId}
             onChange={(event) => onSelect(event.target.value)}
-            className="border border-gray-200 bg-gray-50 px-4 py-2.5 text-sm font-medium text-gray-700 outline-none transition focus:border-gray-300"
+            className="border border-[var(--border)] bg-[var(--surface-soft)] px-4 py-2.5 text-sm font-medium text-[var(--foreground)] outline-none transition focus-visible:[box-shadow:var(--focus-ring)]"
           >
             {options.map((option) => (
               <option key={option.projectId} value={option.projectId}>
@@ -45,11 +45,12 @@ export default function ProjectSelector({
               return (
                 <button
                   key={option.projectId}
+                  type="button"
                   onClick={() => onSelect(option.projectId)}
-                  className={`px-4 py-2 text-sm font-medium transition ${
+                  className={`px-4 py-2 text-sm font-medium transition focus-visible:outline-none focus-visible:[box-shadow:var(--focus-ring)] ${
                     active
-                      ? "bg-gray-900 text-white shadow-sm"
-                      : "bg-gray-100 text-gray-600 hover:bg-gray-200"
+                      ? "bg-[var(--primary)] text-[var(--primary-foreground)] shadow-sm hover:bg-[var(--primary-hover)]"
+                      : "bg-[var(--surface-soft)] text-[var(--muted)] hover:bg-[var(--primary-soft)]"
                   }`}
                 >
                   {option.projectName}

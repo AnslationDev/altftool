@@ -94,7 +94,7 @@ export default function ExplorerTree({ selectedPath, onSelect, authFetch }) {
         role="button"
         tabIndex={0}
         onClick={() => onSelect("")}
-        onKeyDown={(e) => { if (e.key === "Enter") onSelect(""); }}
+        onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); onSelect(""); } }}
         className={`flex items-center gap-2 rounded-lg px-2.5 py-1.5 text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color-mix(in_srgb,var(--primary)_35%,transparent)] ${
           selectedPath === ""
             ? "bg-[var(--primary)] text-[var(--primary-foreground)]"

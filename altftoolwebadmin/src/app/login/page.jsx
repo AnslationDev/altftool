@@ -168,25 +168,28 @@ export default function Login() {
   // out there and needs to retry).
   if (loading || (user && !googleError)) {
     return (
-      <div
+      <main
         className="h-screen flex items-center justify-center"
         style={{ background: "var(--background)" }}
+        aria-busy="true"
       >
         <Card
           className="px-5 py-3 flex items-center gap-2.5 text-sm"
           style={{ color: "var(--muted)" }}
         >
           <Spinner size="sm" />
-          {loading ? "Checking session…" : "Signing you in…"}
+          {loading
+            ? "Checking your admin session…"
+            : "Opening your admin workspace…"}
         </Card>
-      </div>
+      </main>
     );
   }
 
   const busy = submitting || googleLoading;
 
   return (
-    <div
+    <main
       className="h-screen flex items-center justify-center px-4"
       style={{ background: "var(--background)" }}
     >
@@ -331,6 +334,6 @@ export default function Login() {
           Having trouble? Contact your super admin for help.
         </p>
       </div>
-    </div>
+    </main>
   );
 }

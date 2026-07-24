@@ -8,16 +8,16 @@ const ACTIONS = [
     label: "Read",
     desc: "View data and lists",
     icon: <Eye className="w-3.5 h-3.5" />,
-    checked: "bg-blue-50 border-blue-300 text-blue-700",
-    unchecked: "hover:bg-gray-50",
+    checked: "bg-[var(--primary-soft)] border-[var(--primary)]/40 text-[var(--primary)]",
+    unchecked: "hover:bg-[var(--surface-soft)]",
   },
   {
     key: "write",
     label: "Write",
     desc: "Create or update items",
     icon: <Pencil className="w-3.5 h-3.5" />,
-    checked: "bg-indigo-50 border-indigo-300 text-indigo-700",
-    unchecked: "hover:bg-gray-50",
+    checked: "bg-[var(--primary-soft)] border-[var(--primary)]/40 text-[var(--primary)]",
+    unchecked: "hover:bg-[var(--surface-soft)]",
   },
   {
     key: "delete",
@@ -25,8 +25,8 @@ const ACTIONS = [
     desc: "Permanently remove items",
     icon: <Trash2 className="w-3.5 h-3.5" />,
     danger: true,
-    checked: "bg-red-50 border-red-300 text-red-700",
-    unchecked: "hover:bg-red-50/50",
+    checked: "bg-[var(--danger-soft)] border-[var(--danger)]/40 text-[var(--danger)]",
+    unchecked: "hover:bg-[var(--danger-soft)]/50",
   },
 ];
 
@@ -65,22 +65,22 @@ export default function PermissionMatrix({ modules = {}, permissions = {}, setPe
   const moduleKeys = Object.keys(modules);
 
   if (!moduleKeys.length) {
-    return <p className="text-xs text-gray-400 italic py-2">No modules defined for this project.</p>;
+    return <p className="text-xs text-[var(--muted)] italic py-2">No modules defined for this project.</p>;
   }
 
   return (
     <div className="space-y-3">
       <div className="flex items-center justify-between py-1">
-        <span className="text-xs font-bold text-gray-400 uppercase tracking-wider">
+        <span className="text-xs font-bold text-[var(--muted)] uppercase tracking-wider">
           {moduleKeys.length} module{moduleKeys.length !== 1 ? "s" : ""}
         </span>
         <div className="flex gap-1.5">
           <button type="button" onClick={grantAll}
-            className="flex items-center gap-1 text-xs font-semibold px-2.5 py-1 rounded-lg border border-gray-200 text-gray-600 hover:bg-gray-50 transition">
+            className="flex items-center gap-1 text-xs font-semibold px-2.5 py-1 rounded-lg border border-[var(--border)] text-[var(--muted)] hover:bg-[var(--surface-soft)] transition">
             <CheckSquare className="w-3 h-3" />Grant All
           </button>
           <button type="button" onClick={clearAll}
-            className="flex items-center gap-1 text-xs font-semibold px-2.5 py-1 rounded-lg border border-gray-200 text-gray-600 hover:bg-gray-50 transition">
+            className="flex items-center gap-1 text-xs font-semibold px-2.5 py-1 rounded-lg border border-[var(--border)] text-[var(--muted)] hover:bg-[var(--surface-soft)] transition">
             <Square className="w-3 h-3" />Clear All
           </button>
         </div>
@@ -95,7 +95,7 @@ export default function PermissionMatrix({ modules = {}, permissions = {}, setPe
 
           return (
             <div key={key} className={`rounded-xl border transition-all ${
-              p.delete ? "border-red-200 bg-red-50/20" : someEnabled ? "border-indigo-100 bg-indigo-50/10" : "border-gray-100 bg-white"
+              p.delete ? "border-[var(--danger)]/30 bg-[var(--danger-soft)]/20" : someEnabled ? "border-[var(--primary)]/20 bg-[var(--primary-soft)]/10" : "border-[var(--border)] bg-[var(--surface)]"
             }`}>
               <div className="flex items-center justify-between px-4 py-2.5">
                 <div className="flex items-center gap-2">
@@ -104,20 +104,20 @@ export default function PermissionMatrix({ modules = {}, permissions = {}, setPe
                     checked={allEnabled}
                     ref={(el) => { if (el) el.indeterminate = someEnabled && !allEnabled; }}
                     onChange={() => setAll(key, !allEnabled)}
-                    className="w-3.5 h-3.5 accent-gray-800 cursor-pointer"
+                    className="w-3.5 h-3.5 accent-[var(--primary)] cursor-pointer"
                   />
-                  <span className="text-sm font-semibold text-gray-800">{label}</span>
+                  <span className="text-sm font-semibold text-[var(--foreground)]">{label}</span>
                   {p.delete && (
-                    <span className="flex items-center gap-0.5 text-[10px] font-bold text-red-600 bg-red-100 px-1.5 py-0.5 rounded">
+                    <span className="flex items-center gap-0.5 text-[10px] font-bold text-[var(--danger)] bg-[var(--danger-soft)] px-1.5 py-0.5 rounded">
                       <AlertTriangle className="w-2.5 h-2.5" />DELETE
                     </span>
                   )}
                 </div>
                 <div className="flex gap-1">
                   <button type="button" onClick={() => setAll(key, true)}
-                    className="text-[10px] font-bold px-2 py-0.5 rounded border border-gray-200 text-gray-500 hover:bg-gray-100 transition">All</button>
+                    className="text-[10px] font-bold px-2 py-0.5 rounded border border-[var(--border)] text-[var(--muted)] hover:bg-[var(--surface-soft)] transition">All</button>
                   <button type="button" onClick={() => setAll(key, false)}
-                    className="text-[10px] font-bold px-2 py-0.5 rounded border border-gray-200 text-gray-500 hover:bg-gray-100 transition">None</button>
+                    className="text-[10px] font-bold px-2 py-0.5 rounded border border-[var(--border)] text-[var(--muted)] hover:bg-[var(--surface-soft)] transition">None</button>
                 </div>
               </div>
 
@@ -127,20 +127,20 @@ export default function PermissionMatrix({ modules = {}, permissions = {}, setPe
                   return (
                     <label key={action}
                       className={`flex items-center gap-2 p-2.5 rounded-lg border cursor-pointer transition select-none ${
-                        isChecked ? checked : `border-gray-100 ${unchecked}`
+                        isChecked ? checked : `border-[var(--border)] ${unchecked}`
                       }`}>
                       <input
                         type="checkbox"
                         checked={isChecked}
                         onChange={() => toggle(key, action)}
-                        className={`w-3.5 h-3.5 cursor-pointer ${danger ? "accent-red-600" : "accent-indigo-600"}`}
+                        className={`w-3.5 h-3.5 cursor-pointer ${danger ? "accent-[var(--danger)]" : "accent-[var(--primary)]"}`}
                       />
                       <div className="min-w-0">
-                        <div className={`flex items-center gap-1 text-xs font-bold ${isChecked ? (danger ? "text-red-700" : "text-gray-800") : "text-gray-500"}`}>
-                          <span className={isChecked ? "" : "text-gray-300"}>{icon}</span>
+                        <div className={`flex items-center gap-1 text-xs font-bold ${isChecked ? (danger ? "text-[var(--danger)]" : "text-[var(--foreground)]") : "text-[var(--muted)]"}`}>
+                          <span className={isChecked ? "" : "text-[var(--border-strong)]"}>{icon}</span>
                           {label}
                         </div>
-                        <div className="text-[10px] text-gray-400 leading-tight mt-0.5 truncate">{desc}</div>
+                        <div className="text-[10px] text-[var(--muted)] leading-tight mt-0.5 truncate">{desc}</div>
                       </div>
                     </label>
                   );
@@ -148,7 +148,7 @@ export default function PermissionMatrix({ modules = {}, permissions = {}, setPe
               </div>
 
               {p.delete && (
-                <div className="mx-4 mb-3 flex items-center gap-1.5 text-xs text-red-600 bg-red-50 border border-red-200 rounded-lg px-3 py-2">
+                <div className="mx-4 mb-3 flex items-center gap-1.5 text-xs text-[var(--danger)] bg-[var(--danger-soft)] border border-[var(--danger)]/30 rounded-lg px-3 py-2">
                   <AlertTriangle className="w-3.5 h-3.5 shrink-0" />
                   Delete permission grants irreversible access to this module.
                 </div>

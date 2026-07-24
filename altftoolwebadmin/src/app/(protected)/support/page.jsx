@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import {
   collection,
@@ -13,14 +13,10 @@ import { db } from "@/lib/firebaseFirestore";
 import { useAuth } from "@/context/AuthContext";
 import { emitAlert } from "@/lib/alertBus";
 import {
-  Search,
-  ChevronDown,
-  ChevronUp,
   Send,
   Loader2,
   TicketIcon,
   Users,
-  HelpCircle,
   PlusCircle,
   AlertCircle,
 } from "lucide-react";
@@ -28,10 +24,10 @@ import {
 // ─── Helpers ─────────────────────────────────────────────────────────────────
 
 const STATUS_BADGE = {
-  open: "bg-blue-50 text-blue-700 border-blue-100",
-  in_progress: "bg-yellow-50 text-yellow-700 border-yellow-100",
-  resolved: "bg-green-50 text-green-700 border-green-100",
-  closed: "bg-gray-100 text-gray-500 border-gray-200",
+  open: "bg-[var(--info-soft)] text-[var(--info)] border-[var(--border)]",
+  in_progress: "bg-[var(--warning-soft)] text-[var(--warning)] border-[var(--border)]",
+  resolved: "bg-[var(--success-soft)] text-[var(--success)] border-[var(--border)]",
+  closed: "bg-[var(--surface-soft)] text-[var(--muted)] border-[var(--border)]",
 };
 
 const STATUS_LABEL = {
@@ -42,9 +38,9 @@ const STATUS_LABEL = {
 };
 
 const PRIORITY_BADGE = {
-  low: "bg-gray-50 text-gray-500 border-gray-200",
-  medium: "bg-orange-50 text-orange-600 border-orange-100",
-  high: "bg-red-50 text-red-600 border-red-100",
+  low: "bg-[var(--surface-soft)] text-[var(--muted)] border-[var(--border)]",
+  medium: "bg-[var(--warning-soft)] text-[var(--warning)] border-[var(--border)]",
+  high: "bg-[var(--danger-soft)] text-[var(--danger)] border-[var(--border)]",
 };
 
 function fmtDate(ts) {
@@ -61,82 +57,20 @@ function fmtDate(ts) {
 function SectionHeader({ icon: Icon, title, subtitle }) {
   return (
     <div className="flex items-center gap-3 mb-6">
-      <div className="w-9 h-9 rounded-xl bg-gray-900 flex items-center justify-center shrink-0">
-        <Icon className="w-4 h-4 text-white" />
+      <div className="w-9 h-9 rounded-xl bg-[var(--primary)] flex items-center justify-center shrink-0">
+        <Icon className="w-4 h-4 text-[var(--primary-foreground)]" />
       </div>
       <div>
-        <h2 className="text-base font-bold text-gray-900">{title}</h2>
-        {subtitle && <p className="text-xs text-gray-400 mt-0.5">{subtitle}</p>}
+        <h2 className="text-base font-bold text-[var(--foreground)]">{title}</h2>
+        {subtitle && <p className="text-xs text-[var(--muted)] mt-0.5">{subtitle}</p>}
       </div>
     </div>
   );
 }
 
-function FaqSection({ faqs }) {
-  const [search, setSearch] = useState("");
-  const [openId, setOpenId] = useState(null);
-
-  const filtered = faqs.filter(
-    (f) =>
-      f.question.toLowerCase().includes(search.toLowerCase()) ||
-      f.answer.toLowerCase().includes(search.toLowerCase())
-  );
-
-  return (
-    <section className="bg-white rounded-2xl border border-gray-100 p-6">
-      <SectionHeader
-        icon={HelpCircle}
-        title="FAQs"
-        subtitle="Find quick answers to common questions"
-      />
-
-      <div className="relative mb-4">
-        <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" />
-        <input
-          type="text"
-          placeholder="Search FAQs…"
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          className="w-full pl-9 pr-4 py-2.5 text-sm rounded-xl border border-gray-200 bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-400/30 focus:border-blue-400 placeholder:text-gray-400"
-        />
-      </div>
-
-      {filtered.length === 0 ? (
-        <p className="text-sm text-gray-400 text-center py-6">No results found.</p>
-      ) : (
-        <div className="space-y-2">
-          {filtered.map((faq) => (
-            <div
-              key={faq.id}
-              className="border border-gray-100 rounded-xl overflow-hidden"
-            >
-              <button
-                onClick={() => setOpenId(openId === faq.id ? null : faq.id)}
-                className="w-full flex items-center justify-between px-4 py-3 text-left text-sm font-medium text-gray-800 hover:bg-gray-50 transition"
-              >
-                <span>{faq.question}</span>
-                {openId === faq.id ? (
-                  <ChevronUp className="w-4 h-4 text-gray-400 shrink-0 ml-3" />
-                ) : (
-                  <ChevronDown className="w-4 h-4 text-gray-400 shrink-0 ml-3" />
-                )}
-              </button>
-              {openId === faq.id && (
-                <div className="px-4 pb-4 text-sm text-gray-600 leading-relaxed border-t border-gray-100 pt-3 bg-gray-50/50">
-                  {faq.answer}
-                </div>
-              )}
-            </div>
-          ))}
-        </div>
-      )}
-    </section>
-  );
-}
-
 function SuperAdminsSection({ admins }) {
   return (
-    <section className="bg-white rounded-2xl border border-gray-100 p-6">
+    <section className="bg-[var(--surface)] rounded-2xl border border-[var(--border)] p-6">
       <SectionHeader
         icon={Users}
         title="Super Admins"
@@ -144,7 +78,7 @@ function SuperAdminsSection({ admins }) {
       />
 
       {admins.length === 0 ? (
-        <p className="text-sm text-gray-400 text-center py-4">No super admins found.</p>
+        <p className="text-sm text-[var(--muted)] text-center py-4">No super admins found.</p>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           {admins.map((a) => {
@@ -157,24 +91,24 @@ function SuperAdminsSection({ admins }) {
             return (
               <div
                 key={a.id}
-                className="flex items-center gap-3 p-3 rounded-xl border border-gray-100 bg-gray-50/50"
+                className="flex items-center gap-3 p-3 rounded-xl border border-[var(--border)] bg-[var(--surface-soft)]"
               >
                 {a.photoURL ? (
                   <img
                     src={a.photoURL}
                     alt={a.fullName}
-                    className="w-9 h-9 rounded-xl object-cover border border-gray-200 shrink-0"
+                    className="w-9 h-9 rounded-xl object-cover border border-[var(--border)] shrink-0"
                   />
                 ) : (
-                  <div className="w-9 h-9 rounded-xl bg-gray-900 text-white flex items-center justify-center text-xs font-bold shrink-0">
+                  <div className="w-9 h-9 rounded-xl bg-[var(--primary)] text-[var(--primary-foreground)] flex items-center justify-center text-xs font-bold shrink-0">
                     {initials}
                   </div>
                 )}
                 <div className="min-w-0">
-                  <p className="text-sm font-semibold text-gray-800 truncate">
+                  <p className="text-sm font-semibold text-[var(--foreground)] truncate">
                     {a.fullName || `${a.firstName ?? ""} ${a.lastName ?? ""}`.trim() || "Super Admin"}
                   </p>
-                  <p className="text-xs text-gray-400 truncate">{a.email}</p>
+                  <p className="text-xs text-[var(--muted)] truncate">{a.email}</p>
                 </div>
               </div>
             );
@@ -234,7 +168,7 @@ function RaiseTicketSection({ user, onTicketCreated }) {
   });
 
   return (
-    <section className="bg-white rounded-2xl border border-gray-100 p-6">
+    <section className="bg-[var(--surface)] rounded-2xl border border-[var(--border)] p-6">
       <SectionHeader
         icon={PlusCircle}
         title="Raise a Ticket"
@@ -244,19 +178,19 @@ function RaiseTicketSection({ user, onTicketCreated }) {
       <div className="space-y-4">
         {/* Title */}
         <div className="space-y-1.5">
-          <label className="text-xs font-bold text-gray-600 uppercase tracking-wider">Title</label>
+          <label className="text-xs font-bold text-[var(--muted)] uppercase tracking-wider">Title</label>
           <input
             type="text"
             placeholder="Brief summary of your issue"
             {...field("title")}
-            className={`w-full text-sm px-3 py-2.5 rounded-xl border bg-white placeholder:text-gray-400 focus:outline-none focus:ring-2 transition ${
+            className={`w-full text-sm px-3 py-2.5 rounded-xl border bg-[var(--surface)] placeholder:text-[var(--muted)] focus:outline-none focus:[box-shadow:var(--focus-ring)] transition ${
               errors.title
-                ? "border-red-300 focus:ring-red-400/30"
-                : "border-gray-200 focus:ring-blue-400/30 focus:border-blue-400"
+                ? "border-[var(--danger)]"
+                : "border-[var(--border)] focus:border-[var(--border-strong)]"
             }`}
           />
           {errors.title && (
-            <p className="flex items-center gap-1 text-xs text-red-500 font-medium">
+            <p className="flex items-center gap-1 text-xs text-[var(--danger)] font-medium">
               <AlertCircle className="w-3 h-3" /> {errors.title}
             </p>
           )}
@@ -264,19 +198,19 @@ function RaiseTicketSection({ user, onTicketCreated }) {
 
         {/* Description */}
         <div className="space-y-1.5">
-          <label className="text-xs font-bold text-gray-600 uppercase tracking-wider">Description</label>
+          <label className="text-xs font-bold text-[var(--muted)] uppercase tracking-wider">Description</label>
           <textarea
             rows={4}
             placeholder="Describe your issue in detail…"
             {...field("description")}
-            className={`w-full text-sm px-3 py-2.5 rounded-xl border bg-white placeholder:text-gray-400 focus:outline-none focus:ring-2 transition resize-none ${
+            className={`w-full text-sm px-3 py-2.5 rounded-xl border bg-[var(--surface)] placeholder:text-[var(--muted)] focus:outline-none focus:[box-shadow:var(--focus-ring)] transition resize-none ${
               errors.description
-                ? "border-red-300 focus:ring-red-400/30"
-                : "border-gray-200 focus:ring-blue-400/30 focus:border-blue-400"
+                ? "border-[var(--danger)]"
+                : "border-[var(--border)] focus:border-[var(--border-strong)]"
             }`}
           />
           {errors.description && (
-            <p className="flex items-center gap-1 text-xs text-red-500 font-medium">
+            <p className="flex items-center gap-1 text-xs text-[var(--danger)] font-medium">
               <AlertCircle className="w-3 h-3" /> {errors.description}
             </p>
           )}
@@ -285,10 +219,10 @@ function RaiseTicketSection({ user, onTicketCreated }) {
         {/* Type + Priority */}
         <div className="grid grid-cols-2 gap-3">
           <div className="space-y-1.5">
-            <label className="text-xs font-bold text-gray-600 uppercase tracking-wider">Type</label>
+            <label className="text-xs font-bold text-[var(--muted)] uppercase tracking-wider">Type</label>
             <select
               {...field("type")}
-              className="w-full text-sm px-3 py-2.5 rounded-xl border border-gray-200 bg-white focus:outline-none focus:ring-2 focus:ring-blue-400/30 focus:border-blue-400 transition"
+              className="w-full text-sm px-3 py-2.5 rounded-xl border border-[var(--border)] bg-[var(--surface)] focus:outline-none focus:[box-shadow:var(--focus-ring)] focus:border-[var(--border-strong)] transition"
             >
               <option value="query">Query</option>
               <option value="bug">Bug</option>
@@ -296,10 +230,10 @@ function RaiseTicketSection({ user, onTicketCreated }) {
             </select>
           </div>
           <div className="space-y-1.5">
-            <label className="text-xs font-bold text-gray-600 uppercase tracking-wider">Priority</label>
+            <label className="text-xs font-bold text-[var(--muted)] uppercase tracking-wider">Priority</label>
             <select
               {...field("priority")}
-              className="w-full text-sm px-3 py-2.5 rounded-xl border border-gray-200 bg-white focus:outline-none focus:ring-2 focus:ring-blue-400/30 focus:border-blue-400 transition"
+              className="w-full text-sm px-3 py-2.5 rounded-xl border border-[var(--border)] bg-[var(--surface)] focus:outline-none focus:[box-shadow:var(--focus-ring)] focus:border-[var(--border-strong)] transition"
             >
               <option value="low">Low</option>
               <option value="medium">Medium</option>
@@ -311,7 +245,7 @@ function RaiseTicketSection({ user, onTicketCreated }) {
         <button
           onClick={submit}
           disabled={loading}
-          className="flex items-center justify-center gap-2 w-full py-2.5 bg-gray-900 hover:bg-gray-700 disabled:opacity-60 text-white text-sm font-semibold rounded-xl transition"
+          className="flex items-center justify-center gap-2 w-full py-2.5 bg-[var(--primary)] hover:bg-[var(--primary-hover)] disabled:opacity-60 text-[var(--primary-foreground)] text-sm font-semibold rounded-xl transition"
         >
           {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Send className="w-4 h-4" />}
           {loading ? "Submitting…" : "Submit Ticket"}
@@ -325,7 +259,7 @@ function MyTicketsSection({ tickets, loading }) {
   const router = useRouter();
 
   return (
-    <section className="bg-white rounded-2xl border border-gray-100 p-6">
+    <section className="bg-[var(--surface)] rounded-2xl border border-[var(--border)] p-6">
       <SectionHeader
         icon={TicketIcon}
         title="My Tickets"
@@ -334,12 +268,12 @@ function MyTicketsSection({ tickets, loading }) {
 
       {loading ? (
         <div className="flex items-center justify-center py-10">
-          <Loader2 className="w-5 h-5 animate-spin text-gray-400" />
+          <Loader2 className="w-5 h-5 animate-spin text-[var(--muted)]" />
         </div>
       ) : tickets.length === 0 ? (
         <div className="text-center py-8">
-          <TicketIcon className="w-8 h-8 text-gray-200 mx-auto mb-2" />
-          <p className="text-sm text-gray-400">No tickets yet. Raise one above!</p>
+          <TicketIcon className="w-8 h-8 text-[var(--muted)] mx-auto mb-2" />
+          <p className="text-sm text-[var(--muted)]">No tickets yet. Raise one above!</p>
         </div>
       ) : (
         <div className="space-y-2">
@@ -347,13 +281,13 @@ function MyTicketsSection({ tickets, loading }) {
             <button
               key={t.id}
               onClick={() => router.push(`/support/${t.id}`)}
-              className="w-full text-left flex items-center justify-between gap-3 p-3.5 rounded-xl border border-gray-100 hover:border-gray-200 hover:bg-gray-50/50 transition group"
+              className="w-full text-left flex items-center justify-between gap-3 p-3.5 rounded-xl border border-[var(--border)] hover:border-[var(--border-strong)] hover:bg-[var(--surface-soft)] transition group"
             >
               <div className="min-w-0">
-                <p className="text-sm font-semibold text-gray-800 truncate group-hover:text-gray-900">
+                <p className="text-sm font-semibold text-[var(--foreground)] truncate">
                   {t.title}
                 </p>
-                <p className="text-xs text-gray-400 mt-0.5">{fmtDate(t.createdAt)}</p>
+                <p className="text-xs text-[var(--muted)] mt-0.5">{fmtDate(t.createdAt)}</p>
               </div>
               <div className="flex items-center gap-2 shrink-0">
                 <span
@@ -379,20 +313,10 @@ function MyTicketsSection({ tickets, loading }) {
 
 export default function SupportPage() {
   const { user } = useAuth();
-  const [faqs, setFaqs] = useState([]);
   const [superAdmins, setSuperAdmins] = useState([]);
   const [tickets, setTickets] = useState([]);
   const [ticketsLoading, setTicketsLoading] = useState(true);
   const [refreshKey, setRefreshKey] = useState(0);
-
-  // Load FAQs (static, one-time)
-  useEffect(() => {
-    if (!user) return;
-    const unsub = onSnapshot(collection(db, "support_faqs"), (snap) => {
-      setFaqs(snap.docs.map((d) => ({ id: d.id, ...d.data() })));
-    });
-    return () => unsub();
-  }, [user]);
 
   // Load super admins (static, one-time via API)
   useEffect(() => {
@@ -428,14 +352,13 @@ export default function SupportPage() {
   return (
     <div className="max-w-7xl mx-auto px-4 py-8 space-y-6">
       <div>
-        <h1 className="text-xl font-bold text-gray-900">Support</h1>
-        <p className="text-sm text-gray-400 mt-1">
+        <h1 className="text-xl font-bold text-[var(--foreground)]">Support</h1>
+        <p className="text-sm text-[var(--muted)] mt-1">
           Get help, browse FAQs, or raise a support ticket.
         </p>
       </div>
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
 
-      {/* <FaqSection faqs={faqs} /> */}
       <SuperAdminsSection admins={superAdmins} />
       <RaiseTicketSection user={user} onTicketCreated={() => setRefreshKey((k) => k + 1)} />
       <MyTicketsSection tickets={tickets} loading={ticketsLoading} />

@@ -10,7 +10,11 @@ function isLocalHost() {
 }
 
 export function isLocalAdminLoginEnabled() {
-  return isLocalHost();
+  return (
+    process.env.NODE_ENV !== "production" &&
+    process.env.NEXT_PUBLIC_DISABLE_LOCAL_ADMIN !== "true" &&
+    isLocalHost()
+  );
 }
 
 export function createLocalAdminUser() {

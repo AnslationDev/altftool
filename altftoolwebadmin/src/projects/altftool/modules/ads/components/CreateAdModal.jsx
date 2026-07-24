@@ -125,14 +125,14 @@ function CategorySelect({ availableCategories, value, onChange, error, disabled 
             {value.map((cat) => (
               <span
                 key={cat}
-                className="inline-flex items-center gap-1 bg-indigo-50 text-indigo-700 border border-indigo-100 text-xs font-semibold px-2 py-0.5 rounded-lg"
+                className="inline-flex items-center gap-1 bg-[var(--primary-soft)] text-[var(--primary)] border border-[var(--border)] text-xs font-semibold px-2 py-0.5 rounded-lg"
               >
                 {cat}
                 <button
                   type="button"
                   onClick={(e) => removeTag(cat, e)}
                   disabled={disabled}
-                  className="text-indigo-400 hover:text-indigo-700 transition disabled:pointer-events-none"
+                  className="text-[var(--primary)] hover:text-[var(--primary-hover)] transition disabled:pointer-events-none"
                   tabIndex={-1}
                 >
                   <X className="w-2.5 h-2.5" />
@@ -167,11 +167,11 @@ function CategorySelect({ availableCategories, value, onChange, error, disabled 
                   type="button"
                   onClick={() => toggle("All")}
                   className={`w-full flex items-center gap-2.5 px-3 py-2 text-sm text-left transition-colors
-                    ${value.includes("All") ? "bg-indigo-50 text-indigo-700" : "text-gray-700 hover:bg-gray-50"}`}
+                    ${value.includes("All") ? "bg-[var(--primary-soft)] text-[var(--primary)]" : "text-gray-700 hover:bg-gray-50"}`}
                 >
                   <span className={`w-4 h-4 rounded flex items-center justify-center shrink-0 border transition-colors
-                    ${value.includes("All") ? "bg-indigo-600 border-indigo-600" : "border-gray-300 bg-white"}`}>
-                    {value.includes("All") && <Check className="w-2.5 h-2.5 text-white" strokeWidth={3} />}
+                    ${value.includes("All") ? "bg-[var(--primary)] border-[var(--primary)]" : "border-gray-300 bg-white"}`}>
+                    {value.includes("All") && <Check className="w-2.5 h-2.5 text-[var(--primary-foreground)]" strokeWidth={3} />}
                   </span>
                   <span className="font-medium">All</span>
                 </button>
@@ -191,11 +191,11 @@ function CategorySelect({ availableCategories, value, onChange, error, disabled 
                       type="button"
                       onClick={() => toggle(cat)}
                       className={`w-full flex items-center gap-2.5 px-3 py-2 text-sm text-left transition-colors
-                        ${isSelected ? "bg-indigo-50 text-indigo-700" : "text-gray-700 hover:bg-gray-50"}`}
+                        ${isSelected ? "bg-[var(--primary-soft)] text-[var(--primary)]" : "text-gray-700 hover:bg-gray-50"}`}
                     >
                       <span className={`w-4 h-4 rounded flex items-center justify-center shrink-0 border transition-colors
-                        ${isSelected ? "bg-indigo-600 border-indigo-600" : "border-gray-300 bg-white"}`}>
-                        {isSelected && <Check className="w-2.5 h-2.5 text-white" strokeWidth={3} />}
+                        ${isSelected ? "bg-[var(--primary)] border-[var(--primary)]" : "border-gray-300 bg-white"}`}>
+                        {isSelected && <Check className="w-2.5 h-2.5 text-[var(--primary-foreground)]" strokeWidth={3} />}
                       </span>
                       <span className="font-medium">{cat}</span>
                     </button>
@@ -208,7 +208,7 @@ function CategorySelect({ availableCategories, value, onChange, error, disabled 
           {value.length > 0 && (
             <div className="px-3 py-2 border-t border-gray-100 flex items-center justify-between">
               <span className="text-xs text-gray-500">
-                <span className="font-semibold text-indigo-600">{value.length}</span> selected
+                <span className="font-semibold text-[var(--primary)]">{value.length}</span> selected
               </span>
               <button
                 type="button"
@@ -278,7 +278,7 @@ function TargetSelect({ availableTargets, value, onChange, disabled, isLoading }
           </span>
         ) : displayValue ? (
           <span className="flex items-center gap-2 flex-1 min-w-0">
-            <span className="text-xs font-mono bg-indigo-50 text-indigo-700 border border-indigo-100 px-2 py-0.5 rounded-lg truncate max-w-full">
+            <span className="text-xs font-mono bg-[var(--primary-soft)] text-[var(--primary)] border border-[var(--border)] px-2 py-0.5 rounded-lg truncate max-w-full">
               {displayValue}
             </span>
             <button
@@ -344,11 +344,11 @@ function TargetSelect({ availableTargets, value, onChange, disabled, isLoading }
                       type="button"
                       onClick={() => { onChange(slug); setOpen(false); setSearch(""); }}
                       className={`w-full flex items-center gap-2.5 px-3 py-2 text-sm text-left transition-colors
-                        ${isSelected ? "bg-indigo-50 text-indigo-700" : "text-gray-700 hover:bg-gray-50"}`}
+                        ${isSelected ? "bg-[var(--primary-soft)] text-[var(--primary)]" : "text-gray-700 hover:bg-gray-50"}`}
                     >
                       <span className={`w-4 h-4 rounded-full flex items-center justify-center shrink-0 border transition-colors
-                        ${isSelected ? "bg-indigo-600 border-indigo-600" : "border-gray-300 bg-white"}`}>
-                        {isSelected && <Check className="w-2.5 h-2.5 text-white" strokeWidth={3} />}
+                        ${isSelected ? "bg-[var(--primary)] border-[var(--primary)]" : "border-gray-300 bg-white"}`}>
+                        {isSelected && <Check className="w-2.5 h-2.5 text-[var(--primary-foreground)]" strokeWidth={3} />}
                       </span>
                       <span className="font-mono text-xs truncate">{slug}</span>
                     </button>
@@ -576,20 +576,25 @@ export default function CreateAdModal({
     : `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
 
   return (
-    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-      <div className="bg-white rounded-2xl shadow-2xl w-full max-w-[600px] max-h-[90vh] flex flex-col overflow-hidden">
+    <div
+      className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="create-ad-modal-title"
+    >
+      <div className="bg-[var(--surface)] rounded-2xl shadow-lg w-full max-w-[600px] max-h-[90vh] flex flex-col overflow-hidden">
 
         {/* Header */}
-        <div className="flex items-start justify-between px-6 py-5 border-b border-gray-100 shrink-0">
+        <div className="flex items-start justify-between px-6 py-5 border-b border-[var(--border)] shrink-0">
           <div>
-            <h2 className="text-base font-bold text-gray-900">Create New Ad</h2>
-            <p className="text-xs text-gray-400 mt-0.5">
-              Placement: <span className="font-semibold text-indigo-600 capitalize">{placementKey?.replaceAll("_", " ")}</span>
+            <h2 id="create-ad-modal-title" className="text-base font-bold text-[var(--foreground)]">Create New Ad</h2>
+            <p className="text-xs text-[var(--muted)] mt-0.5">
+              Placement: <span className="font-semibold text-[var(--primary)] capitalize">{placementKey?.replaceAll("_", " ")}</span>
               {placement?.label && <> · {placement.label}</>}
             </p>
           </div>
-          <button onClick={onClose} disabled={loading}
-            className="p-1.5 rounded-lg text-gray-400 hover:bg-gray-100 hover:text-gray-600 transition disabled:opacity-40">
+          <button onClick={onClose} disabled={loading} aria-label="Close"
+            className="p-1.5 rounded-lg text-[var(--muted)] hover:bg-[var(--surface-soft)] hover:text-[var(--foreground)] transition disabled:opacity-40">
             <X className="w-4 h-4" />
           </button>
         </div>
@@ -753,8 +758,8 @@ export default function CreateAdModal({
                     </div>
                     <div className="flex items-center justify-between px-4 py-2.5 border-t border-gray-200 bg-white">
                       <div className="flex items-center gap-2 min-w-0">
-                        <div className="w-7 h-7 rounded-lg bg-indigo-50 flex items-center justify-center shrink-0">
-                          <ImageIcon className="w-3.5 h-3.5 text-indigo-500" />
+                        <div className="w-7 h-7 rounded-lg bg-[var(--primary-soft)] flex items-center justify-center shrink-0">
+                          <ImageIcon className="w-3.5 h-3.5 text-[var(--primary)]" />
                         </div>
                         <div className="min-w-0">
                           <p className="text-xs font-medium text-gray-700 truncate">{file.name}</p>
@@ -880,11 +885,11 @@ export default function CreateAdModal({
         </div>
 
         {/* Footer */}
-        <div className="px-6 py-4 border-t border-gray-100 flex items-center justify-between gap-3 shrink-0 bg-gray-50">
-          <p className="text-xs text-gray-400">Ad will be set to <span className="font-semibold text-green-600">Active</span> immediately after creation.</p>
+        <div className="px-6 py-4 border-t border-[var(--border)] flex items-center justify-between gap-3 shrink-0 bg-[var(--surface-soft)]">
+          <p className="text-xs text-[var(--muted)]">Ad will be set to <span className="font-semibold text-green-600">Active</span> immediately after creation.</p>
           <div className="flex items-center gap-2 shrink-0">
             <button onClick={onClose} disabled={loading}
-              className="px-4 py-2 text-sm border border-gray-200 rounded-xl text-gray-600 hover:bg-white transition disabled:opacity-40">
+              className="px-4 py-2 text-sm border border-[var(--border)] rounded-xl text-[var(--muted)] hover:bg-[var(--surface)] transition disabled:opacity-40">
               Cancel
             </button>
             <button onClick={createAd} disabled={loading || step === "done"}

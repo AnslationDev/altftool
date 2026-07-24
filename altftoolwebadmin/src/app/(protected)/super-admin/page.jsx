@@ -30,32 +30,32 @@ import { hasProjectAccess } from "@/lib/permissionUtils";
 const PROJECT_META = {
   leadtree: {
     description: "Manage blogs, categories, teams, credit cards, videos, and LeadTree content.",
-    accent: "#16a34a",
+    accent: "var(--success)",
     icon: FolderKanban,
   },
   carrerbook: {
     description: "Manage navbar, footer, pages, blogs, clients, policy, teams, and request forms.",
-    accent: "#2563eb",
+    accent: "var(--info)",
     icon: BriefcaseBusiness,
   },
   altftool: {
     description: "Manage ads, BuySmart, blogs, deals, extensions, media, SEO, and rules.",
-    accent: "#7c3aed",
+    accent: "var(--accent)",
     icon: Wrench,
   },
   anternet: {
     description: "Manage d Anternet project modules, pages, and website content.",
-    accent: "#0891b2",
+    accent: "var(--secondary)",
     icon: Globe2,
   },
   myluckydeal: {
     description: "Manage stores, offers, categories, banners, coupons, and deal content.",
-    accent: "#f59e0b",
+    accent: "var(--warning)",
     icon: Grid2X2,
   },
   growvibe: {
     description: "Manage growth marketing content, insights, services, and team sections.",
-    accent: "#0d9488",
+    accent: "var(--primary)",
     icon: BarChart3,
   },
 };
@@ -73,7 +73,7 @@ function ProjectLogo({ project, Icon, accent }) {
 
   return (
     <span
-      className="grid h-12 w-12 shrink-0 place-items-center rounded-xl border bg-white shadow-sm"
+      className="grid h-12 w-12 shrink-0 place-items-center rounded-xl border bg-[var(--surface)] shadow-sm"
       style={{
         borderColor: `color-mix(in srgb, ${accent} 30%, var(--border))`,
         color: accent,
@@ -96,9 +96,6 @@ function ProjectCard({ project, href, accessible, projectSummary }) {
   const status = projectSummary?.status || "active";
   const moduleCount = projectSummary?.moduleCount || modules.length;
   const description = projectSummary?.description || meta.description || `Manage ${project.name} modules and admin content.`;
-
-
-  console.log(href , "href" );
 
   return (
     <Link
@@ -165,14 +162,6 @@ export default function SuperAdminDashboardPage() {
     (summary?.projects || []).forEach((project) => map.set(project.projectId, project));
     return map;
   }, [summary]);
-
-
-
-  console.log("summry",summary)
-
-
-
-
 
   const fallbackModules = activeProjects.reduce(
     (count, project) => count + Object.keys(project.modules || {}).length,
@@ -326,32 +315,82 @@ export default function SuperAdminDashboardPage() {
           </div>
 
           <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-             { summary?.projects?.map((summaryProject) => {
-              // The summary API returns { projectId, projectName, adminRoute, ... }
-              // (NOT { id, modules }). Merge it with the local project registry so
-              // the card has both the registry meta (id, modules, logo, name) and
-              // the server-computed route. Reading project.id / project.modules
-              // straight off the API object left them undefined, which made the
-              // href fall through to `/undefined`.
-              const projectId = summaryProject.projectId;
-              const registry = PROJECTS[projectId];
-              const firstModuleKey = Object.keys(registry?.modules || {})[0];
-              const href =
-                summaryProject.adminRoute ||
-                (registry && firstModuleKey
-                  ? getProjectModuleRoute(projectId, firstModuleKey)
-                  : `/${projectId}`);
-              const accessible = isSuperAdmin || hasProjectAccess({ adminData, projectId });
-              return (
-                <ProjectCard
-                  key={projectId}
-                  project={{ ...registry, ...summaryProject, id: projectId }}
-                  href={href}
-                  accessible={accessible}
-                  projectSummary={summaryProjectsById.get(projectId)}
-                />
-              );
-            })}
+            {loadingSummary && !summary?.projects?.length ? (
+              Array.from({ length: activeProjects.length || 3 }).map((_, index) => (
+                <div
+                  key={`project-skeleton-${index}`}
+                  className="min-h-[220px] animate-pulse rounded-xl border border-[var(--border)] bg-[var(--surface)] p-5 shadow-sm"
+                  aria-hidden="true"
+                >
+                  <div className="flex items-start justify-between gap-4">
+                    <span className="h-12 w-12 rounded-xl bg-[var(--surface-soft)]" />
+                    <span className="h-6 w-20 rounded-full bg-[var(--surface-soft)]" />
+                  </div>
+                  <div className="mt-5 space-y-2">
+                    <div className="h-5 w-1/2 rounded bg-[var(--surface-soft)]" />
+                    <div className="h-4 w-full rounded bg-[var(--surface-soft)]" />
+                    <div className="h-4 w-2/3 rounded bg-[var(--surface-soft)]" />
+                  </div>
+                  <div className="mt-8 h-10 rounded bg-[var(--surface-soft)]" />
+                </div>
+              ))
+            ) : summary?.projects?.length ? (
+              summary.projects.map((summaryProject) => {
+                // The summary API returns { projectId, projectName, adminRoute, ... }
+                // (NOT { id, modules }). Merge it with the local project registry so
+                // the card has both the registry meta (id, modules, logo, name) and
+                // the server-computed route. Reading project.id / project.modules
+                // straight off the API object left them undefined, which made the
+                // href fall through to `/undefined`.
+                const projectId = summaryProject.projectId;
+                const registry = PROJECTS[projectId];
+                const firstModuleKey = Object.keys(registry?.modules || {})[0];
+                const href =
+                  summaryProject.adminRoute ||
+                  (registry && firstModuleKey
+                    ? getProjectModuleRoute(projectId, firstModuleKey)
+                    : `/${projectId}`);
+                const accessible = isSuperAdmin || hasProjectAccess({ adminData, projectId });
+                return (
+                  <ProjectCard
+                    key={projectId}
+                    project={{ ...registry, ...summaryProject, id: projectId }}
+                    href={href}
+                    accessible={accessible}
+                    projectSummary={summaryProjectsById.get(projectId)}
+                  />
+                );
+              })
+            ) : activeProjects.length ? (
+              // Summary failed or came back empty — fall back to the local
+              // project registry so the console stays usable.
+              activeProjects.map((project) => {
+                const firstModuleKey = Object.keys(project.modules || {})[0];
+                const href = firstModuleKey
+                  ? getProjectModuleRoute(project.id, firstModuleKey)
+                  : `/${project.id}`;
+                return (
+                  <ProjectCard
+                    key={project.id}
+                    project={{
+                      ...project,
+                      projectName: project.projectName || project.name,
+                      moduleCount: Object.keys(project.modules || {}).length,
+                    }}
+                    href={href}
+                    accessible
+                    projectSummary={summaryProjectsById.get(project.id)}
+                  />
+                );
+              })
+            ) : (
+              <div className="col-span-full rounded-xl border border-[var(--border)] bg-[var(--surface)] p-8 text-center">
+                <p className="text-sm font-bold text-[var(--foreground)]">No projects available</p>
+                <p className="mt-1 text-sm text-[var(--muted)]">
+                  {summaryError || "You do not have access to any project yet."}
+                </p>
+              </div>
+            )}
           </div>
         </section>
 
@@ -375,7 +414,7 @@ export default function SuperAdminDashboardPage() {
             </p>
           </div>
           <div className="rounded-xl border border-[var(--border)] bg-[var(--surface)] p-5 shadow-sm">
-            <Clock3 className="h-6 w-6 text-[var(--warning,#f59e0b)]" />
+            <Clock3 className="h-6 w-6 text-[var(--warning)]" />
             <h3 className="mt-3 text-sm font-black uppercase tracking-[0.08em] text-[var(--foreground)]">
               Operational Flow
             </h3>

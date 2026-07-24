@@ -11,36 +11,36 @@ import {
 } from "@/lib/analytics/analytics.utils";
 
 const TONE_STYLES = {
-  success: "bg-emerald-50 text-emerald-700 border-emerald-200",
-  warning: "bg-amber-50 text-amber-700 border-amber-200",
-  danger: "bg-rose-50 text-rose-700 border-rose-200",
-  idle: "bg-gray-100 text-gray-600 border-gray-200",
+  success: "bg-[var(--success-soft)] text-[var(--success)] border-[var(--success)]/30",
+  warning: "bg-[var(--warning-soft)] text-[var(--warning)] border-[var(--warning)]/30",
+  danger: "bg-[var(--danger-soft)] text-[var(--danger)] border-[var(--danger)]/30",
+  idle: "bg-[var(--surface-soft)] text-[var(--muted)] border-[var(--border)]",
 };
 
 const STATUS_META = {
   all: {
     label: "All",
-    tone: "bg-white text-gray-700 border-gray-200",
+    tone: "bg-[var(--surface)] text-[var(--foreground)] border-[var(--border)]",
     description: "Show every tracked module regardless of freshness.",
   },
   success: {
     label: "Healthy",
-    tone: "bg-emerald-50 text-emerald-700 border-emerald-200",
+    tone: "bg-[var(--success-soft)] text-[var(--success)] border-[var(--success)]/30",
     description: "Updated recently and within the freshness threshold.",
   },
   warning: {
     label: "Watch",
-    tone: "bg-amber-50 text-amber-700 border-amber-200",
+    tone: "bg-[var(--warning-soft)] text-[var(--warning)] border-[var(--warning)]/30",
     description: "Approaching stale status and should be monitored soon.",
   },
   danger: {
     label: "Stale",
-    tone: "bg-rose-50 text-rose-700 border-rose-200",
+    tone: "bg-[var(--danger-soft)] text-[var(--danger)] border-[var(--danger)]/30",
     description: "No recent update detected within the stale threshold.",
   },
   idle: {
     label: "No Data",
-    tone: "bg-gray-100 text-gray-600 border-gray-200",
+    tone: "bg-[var(--surface-soft)] text-[var(--muted)] border-[var(--border)]",
     description: "No valid freshness signal is available yet for this module.",
   },
 };
@@ -54,15 +54,15 @@ export default function ProjectHealthGrid({ projects, staleDaysThreshold }) {
   );
 
   return (
-    <section className="border rounded-md border-gray-200 bg-white p-6 shadow-sm">
+    <section className="border rounded-md border-[var(--border)] bg-[var(--surface)] p-6 shadow-sm">
       <div className="flex flex-col gap-4 xl:flex-row xl:items-start xl:justify-between">
         <div className="flex items-center gap-3">
-          <div className="border border-gray-200 bg-gray-100 p-2 text-gray-600">
+          <div className="border border-[var(--border)] bg-[var(--surface-soft)] p-2 text-[var(--muted)]">
             <FolderOpen className="h-4 w-4" />
           </div>
           <div>
-            <h2 className="text-lg font-semibold text-gray-900">Project health</h2>
-            <p className="text-sm text-gray-500">
+            <h2 className="text-lg font-semibold text-[var(--foreground)]">Project health</h2>
+            <p className="text-sm text-[var(--muted)]">
               Freshness, record volume, and module coverage across all tracked projects.
             </p>
           </div>
@@ -77,7 +77,7 @@ export default function ProjectHealthGrid({ projects, staleDaysThreshold }) {
                 type="button"
                 title={item.description}
                 onClick={() => setStatusFilter(item.key)}
-                className={`border px-3 py-1.5 text-xs font-semibold transition ${item.tone} ${active ? "ring-1 ring-gray-300" : "opacity-80 hover:opacity-100"}`}
+                className={`border px-3 py-1.5 text-xs font-semibold transition focus-visible:outline-none focus-visible:[box-shadow:var(--focus-ring)] ${item.tone} ${active ? "ring-1 ring-[var(--border-strong)]" : "opacity-80 hover:opacity-100"}`}
               >
                 {item.label}
               </button>
@@ -90,52 +90,52 @@ export default function ProjectHealthGrid({ projects, staleDaysThreshold }) {
         {projects.map((project) => (
           <div
             key={project.projectId}
-            className="border border-gray-200 bg-gray-50 p-5 rounded-md"
+            className="border border-[var(--border)] bg-[var(--surface-soft)] p-5 rounded-md"
           >
             <div className="flex flex-wrap items-start justify-between gap-3">
               <div>
-                <p className="text-xs font-semibold uppercase tracking-[0.18em] text-gray-400">
+                <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[var(--muted)]">
                   Project
                 </p>
-                <h3 className="mt-1 text-xl font-semibold text-gray-900">
+                <h3 className="mt-1 text-xl font-semibold text-[var(--foreground)]">
                   {project.projectName}
                 </h3>
               </div>
-              <div className="border border-gray-200 bg-white px-4 py-3 text-sm text-gray-600 rounded-md">
-                <p className="text-xs font-semibold uppercase tracking-[0.18em] text-gray-400">
+              <div className="border border-[var(--border)] bg-[var(--surface)] px-4 py-3 text-sm text-[var(--muted)] rounded-md">
+                <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[var(--muted)]">
                   Last activity
                 </p>
-                <p className="mt-1 font-medium text-gray-800">
+                <p className="mt-1 font-medium text-[var(--foreground)]">
                   {formatDateTime(project.lastActivityAtMs)}
                 </p>
               </div>
             </div>
 
             <div className="mt-5 grid gap-3 sm:grid-cols-3">
-              <div className="border border-gray-200 bg-white p-4 rounded-md">
-                <div className="flex items-center gap-2 text-gray-500">
+              <div className="border border-[var(--border)] bg-[var(--surface)] p-4 rounded-md">
+                <div className="flex items-center gap-2 text-[var(--muted)]">
                   <Layers3 className="h-4 w-4" />
                   <span className="text-sm">Tracked modules</span>
                 </div>
-                <p className="mt-3 text-2xl font-semibold text-gray-900">
+                <p className="mt-3 text-2xl font-semibold text-[var(--foreground)]">
                   {formatNumber(project.totalModules)}
                 </p>
               </div>
-              <div className="border border-gray-200 bg-white p-4 rounded-md">
-                <div className="flex items-center gap-2 text-gray-500">
+              <div className="border border-[var(--border)] bg-[var(--surface)] p-4 rounded-md">
+                <div className="flex items-center gap-2 text-[var(--muted)]">
                   <Activity className="h-4 w-4" />
                   <span className="text-sm">Records</span>
                 </div>
-                <p className="mt-3 text-2xl font-semibold text-gray-900">
+                <p className="mt-3 text-2xl font-semibold text-[var(--foreground)]">
                   {formatNumber(project.totalRecords)}
                 </p>
               </div>
-              <div className="border border-gray-200 bg-white p-4 rounded-md">
-                <div className="flex items-center gap-2 text-gray-500">
+              <div className="border border-[var(--border)] bg-[var(--surface)] p-4 rounded-md">
+                <div className="flex items-center gap-2 text-[var(--muted)]">
                   <FolderOpen className="h-4 w-4" />
                   <span className="text-sm">Stale modules</span>
                 </div>
-                <p className="mt-3 text-2xl font-semibold text-gray-900">
+                <p className="mt-3 text-2xl font-semibold text-[var(--foreground)]">
                   {formatNumber(project.staleModules)}
                 </p>
               </div>
@@ -159,14 +159,14 @@ export default function ProjectHealthGrid({ projects, staleDaysThreshold }) {
                   return (
                     <div
                       key={`${project.projectId}-${module.moduleKey}`}
-                      className="border border-gray-200 bg-white p-4 rounded-md"
+                      className="border border-[var(--border)] bg-[var(--surface)] p-4 rounded-md"
                     >
                       <div className="flex flex-wrap items-center justify-between gap-3">
                         <div>
-                          <p className="text-sm font-semibold text-gray-900">
+                          <p className="text-sm font-semibold text-[var(--foreground)]">
                             {module.moduleLabel}
                           </p>
-                          <p className="mt-1 text-sm text-gray-500">
+                          <p className="mt-1 text-sm text-[var(--muted)]">
                             {formatNumber(module.totalRecords)} records tracked
                           </p>
                         </div>
@@ -177,7 +177,7 @@ export default function ProjectHealthGrid({ projects, staleDaysThreshold }) {
                           {freshness.label}
                         </span>
                       </div>
-                      <div className="mt-3 flex flex-wrap items-center gap-4 text-sm text-gray-500">
+                      <div className="mt-3 flex flex-wrap items-center gap-4 text-sm text-[var(--muted)]">
                         <span>Last update: {formatDateTime(module.lastActivityAtMs)}</span>
                         <span>
                           {module.daysSinceUpdate == null
@@ -195,7 +195,7 @@ export default function ProjectHealthGrid({ projects, staleDaysThreshold }) {
                   statusFilter
                 );
               }).length === 0 ? (
-                <div className="border border-dashed border-gray-200 bg-white p-4 text-sm text-gray-500">
+                <div className="border border-dashed border-[var(--border)] bg-[var(--surface)] p-4 text-sm text-[var(--muted)]">
                   No modules match the selected status filter in this project.
                 </div>
               ) : null}

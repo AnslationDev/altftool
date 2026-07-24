@@ -3,7 +3,7 @@ import { createPageQualityGate } from "./helpers/pageQuality.mjs";
 
 const webUrl = process.env.ALTFT_WEB_URL || "http://localhost:3002";
 const adminUrl = process.env.ALTFT_ADMIN_URL || "http://localhost:3001";
-const retryableNavigationError = /ERR_ABORTED|ERR_CONNECTION_REFUSED|frame was detached|Timeout|interrupted by another navigation/i;
+const retryableNavigationError = /ERR_ABORTED|frame was detached|Timeout|interrupted by another navigation/i;
 const warmupRoutes = [`${webUrl}/tools`, `${webUrl}/tools/all/api-stress-estimator`];
 
 async function gotoWithRetry(page, url) {
@@ -106,7 +106,7 @@ test.describe("visual regression", () => {
     const quality = createPageQualityGate(page);
 
     await gotoWithRetry(page, `${adminUrl}/login`);
-    await expect(page.getByRole("heading", { name: /welcome.*admin/i })).toBeVisible();
+    await expect(page.getByRole("heading", { name: /welcome admin/i })).toBeVisible();
     await waitForVisualStability(page);
 
     await expect(page).toHaveScreenshot("admin-login.png");

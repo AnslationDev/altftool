@@ -55,7 +55,7 @@ function Tooltip({ label, children, direction = "top" }) {
     pos && typeof document !== "undefined"
       ? createPortal(
           <div
-            className="pointer-events-none fixed z-[9999] px-2 py-1 rounded-md text-[11px] font-medium whitespace-nowrap bg-gray-800 text-white shadow-lg"
+            className="pointer-events-none fixed z-[9999] px-2 py-1 rounded-md text-[11px] font-medium whitespace-nowrap bg-[var(--foreground)] text-[var(--background)] shadow-lg"
             style={
               direction === "bottom"
                 ? {
@@ -72,9 +72,9 @@ function Tooltip({ label, children, direction = "top" }) {
           >
             {label}
             {direction === "bottom" ? (
-              <span className="absolute bottom-full left-1/2 -translate-x-1/2 border-4 border-transparent border-b-gray-800" />
+              <span className="absolute bottom-full left-1/2 -translate-x-1/2 border-4 border-transparent border-b-[var(--foreground)]" />
             ) : (
-              <span className="absolute top-full left-1/2 -translate-x-1/2 border-4 border-transparent border-t-gray-800" />
+              <span className="absolute top-full left-1/2 -translate-x-1/2 border-4 border-transparent border-t-[var(--foreground)]" />
             )}
           </div>,
           document.body,
@@ -97,10 +97,10 @@ function Tooltip({ label, children, direction = "top" }) {
 
 function SortIcon({ sorted }) {
   if (sorted === "asc")
-    return <ChevronUp className="w-3.5 h-3.5 text-blue-500" />;
+    return <ChevronUp className="w-3.5 h-3.5 text-[var(--primary)]" />;
   if (sorted === "desc")
-    return <ChevronDown className="w-3.5 h-3.5 text-blue-500" />;
-  return <ChevronsUpDown className="w-3.5 h-3.5 text-gray-300" />;
+    return <ChevronDown className="w-3.5 h-3.5 text-[var(--primary)]" />;
+  return <ChevronsUpDown className="w-3.5 h-3.5 text-[var(--border-strong)]" />;
 }
 
 /* ── Avatar — photo if available, else initials ── */
@@ -121,12 +121,12 @@ function AdminAvatar({ admin }) {
       <img
         src={admin.photoURL}
         alt={initials}
-        className="w-8 h-8 rounded-xl object-cover border border-gray-200 shrink-0"
+        className="w-8 h-8 rounded-xl object-cover border border-[var(--border)] shrink-0"
       />
     );
   }
   return (
-    <div className="w-8 h-8 rounded-xl bg-gray-100 flex items-center justify-center text-xs font-bold text-gray-600 shrink-0">
+    <div className="w-8 h-8 rounded-xl bg-[var(--surface-soft)] flex items-center justify-center text-xs font-bold text-[var(--muted)] shrink-0">
       {initials}
     </div>
   );
@@ -136,7 +136,7 @@ function AdminAvatar({ admin }) {
 function PermissionSummary({ admin }) {
   if (admin.roleType === "superadmin") {
     return (
-      <span className="text-xs font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full">
+      <span className="text-xs font-bold text-[var(--success)] bg-[var(--success-soft)] px-2 py-0.5 rounded-full">
         Full Access
       </span>
     );
@@ -174,21 +174,21 @@ function PermissionSummary({ admin }) {
   }
 
   if (!pills.length)
-    return <span className="text-xs text-gray-400">No access</span>;
+    return <span className="text-xs text-[var(--muted)]">No access</span>;
 
   return (
     <div className="flex flex-wrap gap-1 max-w-[260px]">
       {pills.slice(0, 3).map(({ key, label, projectName, acts }) => (
         <span
           key={key}
-          className="text-[10px] font-bold bg-indigo-50 text-indigo-600 px-1.5 py-0.5 rounded capitalize"
+          className="text-[10px] font-bold bg-[var(--primary-soft)] text-[var(--primary)] px-1.5 py-0.5 rounded capitalize"
         >
           {projectName ? `${projectName} · ${label}` : label}{" "}
-          <span className="text-indigo-400">{acts.join("/")}</span>
+          <span className="text-[var(--primary)]/70">{acts.join("/")}</span>
         </span>
       ))}
       {pills.length > 3 && (
-        <span className="text-[10px] text-gray-400">
+        <span className="text-[10px] text-[var(--muted)]">
           +{pills.length - 3} more
         </span>
       )}
@@ -355,21 +355,21 @@ export default function AdminManagement() {
               <div className="min-w-0">
                 <div className="flex items-center gap-1.5">
                   {displayName ? (
-                    <span className="text-sm font-semibold text-gray-800 truncate">
+                    <span className="text-sm font-semibold text-[var(--foreground)] truncate">
                       {displayName}
                     </span>
                   ) : (
-                    <span className="text-sm font-semibold text-gray-800 truncate">
+                    <span className="text-sm font-semibold text-[var(--foreground)] truncate">
                       {admin.email}
                     </span>
                   )}
                   {isSelf && (
-                    <span className="text-[10px] font-bold bg-blue-100 text-blue-600 px-1.5 py-0.5 rounded-full shrink-0">
+                    <span className="text-[10px] font-bold bg-[var(--primary-soft)] text-[var(--primary)] px-1.5 py-0.5 rounded-full shrink-0">
                       You
                     </span>
                   )}
                 </div>
-                <span className="text-[11px] text-gray-400 truncate block">
+                <span className="text-[11px] text-[var(--muted)] truncate block">
                   {displayName ? admin.email : admin.id?.slice(0, 12) + "…"}
                 </span>
               </div>
@@ -386,7 +386,7 @@ export default function AdminManagement() {
           const role = getValue();
           return (
             <span
-              className={`inline-flex items-center gap-1.5 text-xs font-bold px-2.5 py-1 rounded-full ${role === "superadmin" ? "bg-gray-900 text-white" : "bg-gray-100 text-gray-700"}`}
+              className={`inline-flex items-center gap-1.5 text-xs font-bold px-2.5 py-1 rounded-full ${role === "superadmin" ? "bg-[var(--primary)] text-[var(--primary-foreground)]" : "bg-[var(--surface-soft)] text-[var(--foreground)]"}`}
             >
               {role === "superadmin" ? (
                 <ShieldCheck className="w-3 h-3" />
@@ -415,10 +415,10 @@ export default function AdminManagement() {
           const active = getValue();
           return (
             <span
-              className={`inline-flex items-center gap-1.5 text-xs font-semibold px-2.5 py-0.5 rounded-full ${active ? "bg-green-100 text-green-700" : "bg-red-100 text-red-700"}`}
+              className={`inline-flex items-center gap-1.5 text-xs font-semibold px-2.5 py-0.5 rounded-full ${active ? "bg-[var(--success-soft)] text-[var(--success)]" : "bg-[var(--danger-soft)] text-[var(--danger)]"}`}
             >
               <span
-                className={`w-1.5 h-1.5 rounded-full ${active ? "bg-green-500" : "bg-red-500"}`}
+                className={`w-1.5 h-1.5 rounded-full ${active ? "bg-[var(--success)]" : "bg-[var(--danger)]"}`}
               />
               {active ? "Active" : "Inactive"}
             </span>
@@ -444,7 +444,8 @@ export default function AdminManagement() {
               <Tooltip label="Edit admin">
                 <button
                   onClick={() => setSelectedAdmin(admin)}
-                  className="p-1.5 rounded-md text-blue-500 hover:bg-blue-50 transition"
+                  aria-label="Edit admin"
+                  className="p-1.5 rounded-md text-[var(--primary)] hover:bg-[var(--primary-soft)] transition"
                 >
                   <Pencil className="w-3.5 h-3.5" />
                 </button>
@@ -453,7 +454,8 @@ export default function AdminManagement() {
                 <button
                   onClick={() => toggleStatus(admin)}
                   disabled={isSelf || busy}
-                  className={`p-1.5 rounded-md transition disabled:opacity-30 ${admin.isActive ? "text-red-400 hover:bg-red-50" : "text-green-500 hover:bg-green-50"}`}
+                  aria-label={admin.isActive ? "Deactivate admin" : "Activate admin"}
+                  className={`p-1.5 rounded-md transition disabled:opacity-30 ${admin.isActive ? "text-[var(--danger)] hover:bg-[var(--danger-soft)]" : "text-[var(--success)] hover:bg-[var(--success-soft)]"}`}
                 >
                   {admin.isActive ? (
                     <UserX className="w-3.5 h-3.5" />
@@ -481,22 +483,22 @@ export default function AdminManagement() {
   });
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-[var(--background)]">
       <div className="w-full max-w-7xl mx-auto px-6 py-7 space-y-5">
         {/* Header */}
         <div className="flex flex-wrap items-start justify-between gap-4">
           <div>
-            <h1 className="text-xl font-bold text-gray-900">
+            <h1 className="text-xl font-bold text-[var(--foreground)]">
               Admin Management
             </h1>
-            <p className="text-sm text-gray-500 mt-0.5">
+            <p className="text-sm text-[var(--muted)] mt-0.5">
               Manage administrator access and permissions.
             </p>
           </div>
           <div className="flex items-center gap-2">
             <Link
               href="/admin-management/audit"
-              className="flex items-center gap-1.5 px-3 py-2 text-sm border border-gray-200 rounded-xl text-gray-700 hover:bg-white bg-white transition"
+              className="flex items-center gap-1.5 px-3 py-2 text-sm border border-[var(--border)] rounded-xl text-[var(--foreground)] bg-[var(--surface)] hover:bg-[var(--surface-soft)] transition"
             >
               Audit Log
             </Link>
@@ -505,7 +507,7 @@ export default function AdminManagement() {
                 <button
                   onClick={() => fetchAdmins(true)}
                   disabled={refreshing}
-                  className="flex items-center gap-1.5 px-3 py-2 text-sm border border-gray-200 rounded-xl text-gray-600 hover:bg-white bg-white transition disabled:opacity-50"
+                  className="flex items-center gap-1.5 px-3 py-2 text-sm border border-[var(--border)] rounded-xl text-[var(--muted)] bg-[var(--surface)] hover:bg-[var(--surface-soft)] transition disabled:opacity-50"
                 >
                   <RefreshCw
                     className={`w-3.5 h-3.5 ${refreshing ? "animate-spin" : ""}`}
@@ -514,7 +516,7 @@ export default function AdminManagement() {
                 </button>
                 <button
                   onClick={() => setShowCreateModal(true)}
-                  className="flex items-center gap-1.5 px-4 py-2 text-sm bg-gray-900 hover:bg-gray-700 text-white font-semibold rounded-xl transition shadow-sm"
+                  className="flex items-center gap-1.5 px-4 py-2 text-sm bg-[var(--primary)] hover:opacity-90 text-[var(--primary-foreground)] font-semibold rounded-xl transition shadow-sm"
                 >
                   <Plus className="w-4 h-4" />
                   Create Admin
@@ -525,7 +527,7 @@ export default function AdminManagement() {
         </div>
 
         {/* Tabs */}
-        <div className="flex gap-0 border-b border-gray-200">
+        <div className="flex gap-0 border-b border-[var(--border)]">
           {TABS.map((tab) => {
             const isActive = activeTab === tab;
             return (
@@ -534,13 +536,13 @@ export default function AdminManagement() {
                 onClick={() => setActiveTab(tab)}
                 className={`flex items-center gap-2 px-5 py-2.5 text-sm font-semibold border-b-2 -mb-px transition ${
                   isActive
-                    ? "border-gray-900 text-gray-900"
-                    : "border-transparent text-gray-400 hover:text-gray-600"
+                    ? "border-[var(--primary)] text-[var(--foreground)]"
+                    : "border-transparent text-[var(--muted)] hover:text-[var(--foreground)]"
                 }`}
               >
                 {tab}
                 {tab === "Access Requests" && pendingCount > 0 && (
-                  <span className="min-w-[18px] h-[18px] px-1 rounded-full bg-amber-500 text-white text-[10px] font-bold flex items-center justify-center">
+                  <span className="min-w-[18px] h-[18px] px-1 rounded-full bg-[var(--warning)] text-white text-[10px] font-bold flex items-center justify-center">
                     {pendingCount}
                   </span>
                 )}
@@ -558,32 +560,32 @@ export default function AdminManagement() {
                 {
                   label: "Total Admins",
                   value: admins.length,
-                  color: "text-gray-800",
+                  color: "text-[var(--foreground)]",
                 },
                 {
                   label: "Active",
                   value: totalActive,
-                  color: "text-green-600",
+                  color: "text-[var(--success)]",
                 },
                 {
                   label: "Inactive",
                   value: admins.length - totalActive,
                   color:
                     admins.length - totalActive > 0
-                      ? "text-red-500"
-                      : "text-gray-800",
+                      ? "text-[var(--danger)]"
+                      : "text-[var(--foreground)]",
                 },
                 {
                   label: "Super Admins",
                   value: totalSuper,
-                  color: "text-gray-900",
+                  color: "text-[var(--foreground)]",
                 },
               ].map((stat) => (
                 <div
                   key={stat.label}
-                  className="bg-white rounded-2xl border border-gray-100 shadow-sm px-4 py-3.5"
+                  className="bg-[var(--surface)] rounded-2xl border border-[var(--border)] shadow-sm px-4 py-3.5"
                 >
-                  <p className="text-[10px] font-bold text-gray-400 uppercase tracking-wider">
+                  <p className="text-[10px] font-bold text-[var(--muted)] uppercase tracking-wider">
                     {stat.label}
                   </p>
                   <p
@@ -596,20 +598,21 @@ export default function AdminManagement() {
             </div>
 
             {/* Filters */}
-            <div className="bg-white rounded-2xl border border-gray-100 shadow-sm px-4 py-3 flex flex-wrap items-center gap-3">
+            <div className="bg-[var(--surface)] rounded-2xl border border-[var(--border)] shadow-sm px-4 py-3 flex flex-wrap items-center gap-3">
               <div className="relative w-full sm:w-72">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-gray-400 pointer-events-none" />
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-[var(--muted)] pointer-events-none" />
                 <input
                   value={search}
                   onChange={(e) => setSearch(e.target.value)}
                   placeholder="Search by name or email…"
                   autoComplete="off"
-                  className="w-full pl-8 pr-8 py-1.5 text-sm bg-white border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400/30 focus:border-blue-400 placeholder:text-gray-400 transition"
+                  className="w-full pl-8 pr-8 py-1.5 text-sm bg-[var(--surface)] border border-[var(--border)] rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--primary)]/30 focus:border-[var(--primary)] placeholder:text-[var(--muted)] transition"
                 />
                 {search && (
                   <button
                     onClick={() => setSearch("")}
-                    className="absolute right-2.5 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                    aria-label="Clear search"
+                    className="absolute right-2.5 top-1/2 -translate-y-1/2 text-[var(--muted)] hover:text-[var(--foreground)]"
                   >
                     <X className="w-3.5 h-3.5" />
                   </button>
@@ -639,7 +642,7 @@ export default function AdminManagement() {
                   key={i}
                   value={sel.value}
                   onChange={(e) => sel.setter(e.target.value)}
-                  className="text-sm border border-gray-200 rounded-lg px-3 py-1.5 bg-white text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-400/30 focus:border-blue-400 cursor-pointer transition min-w-[140px]"
+                  className="text-sm border border-[var(--border)] rounded-lg px-3 py-1.5 bg-[var(--surface)] text-[var(--foreground)] focus:outline-none focus:ring-2 focus:ring-[var(--primary)]/30 focus:border-[var(--primary)] cursor-pointer transition min-w-[140px]"
                 >
                   {sel.options.map(([v, l]) => (
                     <option key={v} value={v}>
@@ -648,16 +651,16 @@ export default function AdminManagement() {
                   ))}
                 </select>
               ))}
-              <span className="ml-auto text-xs text-gray-400 whitespace-nowrap">
+              <span className="ml-auto text-xs text-[var(--muted)] whitespace-nowrap">
                 {filtered.length} of {admins.length} admins
               </span>
             </div>
 
             {/* Table */}
-            <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
+            <div className="bg-[var(--surface)] rounded-2xl border border-[var(--border)] shadow-sm overflow-hidden">
               {loading ? (
-                <div className="flex items-center justify-center py-16 gap-3 text-gray-400">
-                  <div className="w-6 h-6 border-2 border-gray-200 border-t-blue-500 rounded-full animate-spin" />
+                <div className="flex items-center justify-center py-16 gap-3 text-[var(--muted)]">
+                  <div className="w-6 h-6 border-2 border-[var(--border)] border-t-[var(--primary)] rounded-full animate-spin" />
                   <span className="text-sm">Loading admins…</span>
                 </div>
               ) : (
@@ -667,16 +670,16 @@ export default function AdminManagement() {
                       {table.getHeaderGroups().map((hg) => (
                         <tr
                           key={hg.id}
-                          className="bg-gray-50 border-b border-gray-100"
+                          className="bg-[var(--surface-soft)] border-b border-[var(--border)]"
                         >
                           {hg.headers.map((header) => (
                             <th
                               key={header.id}
                               style={{ width: header.getSize() }}
-                              className="px-4 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider select-none"
+                              className="px-4 py-3 text-left text-xs font-bold text-[var(--muted)] uppercase tracking-wider select-none"
                             >
                               <div
-                                className={`flex items-center gap-1 ${header.column.getCanSort() ? "cursor-pointer hover:text-gray-700" : ""}`}
+                                className={`flex items-center gap-1 ${header.column.getCanSort() ? "cursor-pointer hover:text-[var(--foreground)]" : ""}`}
                                 onClick={header.column.getToggleSortingHandler()}
                               >
                                 {flexRender(
@@ -694,12 +697,12 @@ export default function AdminManagement() {
                         </tr>
                       ))}
                     </thead>
-                    <tbody className="divide-y divide-gray-50">
+                    <tbody className="divide-y divide-[var(--border)]">
                       {table.getRowModel().rows.length === 0 ? (
                         <tr>
                           <td
                             colSpan={columns.length}
-                            className="py-16 text-center text-gray-400 text-sm"
+                            className="py-16 text-center text-[var(--muted)] text-sm"
                           >
                             No admins match your filters.
                           </td>
@@ -709,7 +712,7 @@ export default function AdminManagement() {
                           <tr
                             key={row.id}
                             onClick={() => setSelectedAdmin(row.original)}
-                            className="hover:bg-gray-50 cursor-pointer transition-colors"
+                            className="hover:bg-[var(--surface-soft)] cursor-pointer transition-colors"
                           >
                             {row.getVisibleCells().map((cell) => (
                               <td
@@ -740,12 +743,12 @@ export default function AdminManagement() {
                 {Array.from({ length: 8 }).map((_, i) => (
                   <div
                     key={i}
-                    className="bg-white rounded-2xl border border-gray-100 shadow-sm h-52 animate-pulse"
+                    className="bg-[var(--surface)] rounded-2xl border border-[var(--border)] shadow-sm h-52 animate-pulse"
                   />
                 ))}
               </div>
             ) : filtered.length === 0 ? (
-              <div className="bg-white rounded-2xl border border-gray-100 shadow-sm py-16 text-center text-gray-400 text-sm">
+              <div className="bg-[var(--surface)] rounded-2xl border border-[var(--border)] shadow-sm py-16 text-center text-[var(--muted)] text-sm">
                 No admins match your filters.
               </div>
             ) : (

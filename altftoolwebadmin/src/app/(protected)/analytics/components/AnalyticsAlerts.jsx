@@ -4,24 +4,24 @@ function AlertCard({ tone, title, message }) {
   const toneMap = {
     danger: {
       icon: Siren,
-      wrapper: "border-rose-200 bg-rose-50/70",
-      iconWrap: "bg-rose-100 text-rose-600",
-      text: "text-rose-900",
-      subtext: "text-rose-700",
+      wrapper: "border-[var(--danger)]/30 bg-[var(--danger-soft)]",
+      iconWrap: "bg-[var(--danger)]/15 text-[var(--danger)]",
+      text: "text-[var(--foreground)]",
+      subtext: "text-[var(--danger)]",
     },
     warning: {
       icon: TriangleAlert,
-      wrapper: "border-amber-200 bg-amber-50/70",
-      iconWrap: "bg-amber-100 text-amber-700",
-      text: "text-amber-900",
-      subtext: "text-amber-700",
+      wrapper: "border-[var(--warning)]/30 bg-[var(--warning-soft)]",
+      iconWrap: "bg-[var(--warning)]/15 text-[var(--warning)]",
+      text: "text-[var(--foreground)]",
+      subtext: "text-[var(--warning)]",
     },
     info: {
       icon: Info,
-      wrapper: "border-blue-200 bg-blue-50/70",
-      iconWrap: "bg-blue-100 text-blue-700",
-      text: "text-blue-900",
-      subtext: "text-blue-700",
+      wrapper: "border-[var(--info)]/30 bg-[var(--info-soft)]",
+      iconWrap: "bg-[var(--info)]/15 text-[var(--info)]",
+      text: "text-[var(--foreground)]",
+      subtext: "text-[var(--info)]",
     },
   };
 
@@ -45,14 +45,14 @@ function AlertCard({ tone, title, message }) {
 
 export default function AnalyticsAlerts({ alerts, staleDaysThreshold }) {
   return (
-    <section className="border border-gray-200 bg-white p-6 shadow-sm rounded-md">
+    <section className="border border-[var(--border)] bg-[var(--surface)] p-6 shadow-sm rounded-md">
         <div className="flex items-center gap-3">
-          <div className="border border-gray-200 bg-gray-100 p-2 text-gray-600">
+          <div className="border border-[var(--border)] bg-[var(--surface-soft)] p-2 text-[var(--muted)]">
             <AlertTriangle className="h-4 w-4" />
           </div>
           <div>
-            <h2 className="text-lg font-semibold text-gray-900">Attention center</h2>
-            <p className="text-sm text-gray-500">
+            <h2 className="text-lg font-semibold text-[var(--foreground)]">Attention center</h2>
+            <p className="text-sm text-[var(--muted)]">
               Modules with no detectable update in the last {staleDaysThreshold} days are surfaced here first.
             </p>
           </div>
@@ -69,7 +69,7 @@ export default function AnalyticsAlerts({ alerts, staleDaysThreshold }) {
               />
             ))
           ) : (
-            <div className="border border-emerald-200 bg-emerald-50 p-4 text-sm text-emerald-700">
+            <div className="border border-[var(--success)]/30 bg-[var(--success-soft)] p-4 text-sm text-[var(--success)]">
               All tracked modules have recorded activity within the freshness window.
             </div>
           )}

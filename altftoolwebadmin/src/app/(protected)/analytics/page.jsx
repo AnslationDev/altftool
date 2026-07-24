@@ -9,7 +9,6 @@ import AnalyticsAlerts from "./components/AnalyticsAlerts";
 import ProjectHealthGrid from "./components/ProjectHealthGrid";
 import ModuleUsageChart from "./components/ModuleUsageChart";
 import RecentUpdatesFeed from "./components/RecentUpdatesFeed";
-// import RecentDataTable from "./components/RecentDataTable";
 import AnalyticsEmptyState from "./components/AnalyticsEmptyState";
 import ProjectSelector from "./components/ProjectSelector";
 import { sortByTimestampDesc } from "@/lib/analytics/analytics.utils";
@@ -49,23 +48,23 @@ function readCachedProjectSelection() {
 
 function LoadingCard({ message = "Loading analytics snapshot..." }) {
   return (
-    <div className="border border-gray-200 bg-white p-6 shadow-sm rounded-md">
+    <div className="border border-[var(--border)] bg-[var(--surface)] p-6 shadow-sm rounded-md">
       <div className="flex items-start justify-between gap-6">
         <div>
-          <p className="text-sm font-semibold text-gray-900">{message}</p>
-          <p className="mt-1 text-sm leading-6 text-gray-500">
+          <p className="text-sm font-semibold text-[var(--foreground)]">{message}</p>
+          <p className="mt-1 text-sm leading-6 text-[var(--muted)]">
             Analytics combines project records across modules, so the first fetch can take a little longer.
           </p>
         </div>
-        <div className="h-8 w-8 animate-spin rounded-full border-2 border-gray-200 border-t-gray-800" />
+        <div className="h-8 w-8 animate-spin rounded-full border-2 border-[var(--border)] border-t-[var(--primary)]" />
       </div>
-      <div className="mt-6 h-4 w-32 rounded bg-gray-200" />
-      <div className="mt-4 h-8 w-64 rounded bg-gray-200" />
+      <div className="mt-6 h-4 w-32 rounded bg-[var(--surface-soft)]" />
+      <div className="mt-4 h-8 w-64 rounded bg-[var(--surface-soft)]" />
       <div className="mt-6 grid gap-4 md:grid-cols-4 xl:grid-cols-5">
         {[...Array(4)].map((_, index) => (
-          <div key={index} className="border border-gray-200 bg-gray-50 p-4">
-            <div className="h-3 w-20 rounded bg-gray-200" />
-            <div className="mt-4 h-8 w-16 rounded bg-gray-200" />
+          <div key={index} className="border border-[var(--border)] bg-[var(--surface-soft)] p-4">
+            <div className="h-3 w-20 rounded bg-[var(--border)]" />
+            <div className="mt-4 h-8 w-16 rounded bg-[var(--border)]" />
           </div>
         ))}
       </div>
@@ -75,29 +74,29 @@ function LoadingCard({ message = "Loading analytics snapshot..." }) {
 
 function AnalyticsChartsFallback() {
   return (
-    <section className="border border-gray-200 bg-white p-6 shadow-sm rounded-md">
+    <section className="border border-[var(--border)] bg-[var(--surface)] p-6 shadow-sm rounded-md">
       <div className="flex flex-col gap-4 xl:flex-row xl:items-start xl:justify-between">
         <div className="flex items-center gap-3">
-          <div className="h-9 w-9 animate-pulse rounded bg-gray-100" />
+          <div className="h-9 w-9 animate-pulse rounded bg-[var(--surface-soft)]" />
           <div>
-            <div className="h-4 w-32 animate-pulse rounded bg-gray-200" />
-            <div className="mt-2 h-3 w-64 max-w-full animate-pulse rounded bg-gray-100" />
+            <div className="h-4 w-32 animate-pulse rounded bg-[var(--surface-soft)]" />
+            <div className="mt-2 h-3 w-64 max-w-full animate-pulse rounded bg-[var(--surface-soft)]" />
           </div>
         </div>
         <div className="flex flex-wrap gap-2">
-          <div className="h-9 w-20 animate-pulse rounded bg-gray-100" />
-          <div className="h-9 w-20 animate-pulse rounded bg-gray-100" />
+          <div className="h-9 w-20 animate-pulse rounded bg-[var(--surface-soft)]" />
+          <div className="h-9 w-20 animate-pulse rounded bg-[var(--surface-soft)]" />
         </div>
       </div>
       <div className="mt-6 grid gap-6 xl:grid-cols-[1.4fr_0.8fr]">
-        <div className="h-[320px] rounded-md border border-gray-200 bg-gray-50 p-4">
-          <div className="h-full animate-pulse rounded bg-white" />
+        <div className="h-[320px] rounded-md border border-[var(--border)] bg-[var(--surface-soft)] p-4">
+          <div className="h-full animate-pulse rounded bg-[var(--surface)]" />
         </div>
-        <div className="h-[320px] rounded-md border border-gray-200 bg-gray-50 p-4">
-          <div className="mx-auto h-48 w-48 animate-pulse rounded-full bg-white" />
+        <div className="h-[320px] rounded-md border border-[var(--border)] bg-[var(--surface-soft)] p-4">
+          <div className="mx-auto h-48 w-48 animate-pulse rounded-full bg-[var(--surface)]" />
           <div className="mt-6 space-y-2">
-            <div className="h-3 animate-pulse rounded bg-white" />
-            <div className="h-3 w-4/5 animate-pulse rounded bg-white" />
+            <div className="h-3 animate-pulse rounded bg-[var(--surface)]" />
+            <div className="h-3 w-4/5 animate-pulse rounded bg-[var(--surface)]" />
           </div>
         </div>
       </div>
@@ -107,9 +106,9 @@ function AnalyticsChartsFallback() {
 
 function RefreshProgress({ progress }) {
   return (
-    <div className="mt-3 h-1.5 w-full overflow-hidden bg-blue-100">
+    <div className="mt-3 h-1.5 w-full overflow-hidden bg-[var(--primary-soft)]">
       <div
-        className="h-full bg-blue-600 transition-[width] duration-300 ease-out"
+        className="h-full bg-[var(--primary)] transition-[width] duration-300 ease-out"
         style={{ width: `${progress}%` }}
       />
     </div>
@@ -426,7 +425,7 @@ export default function AnalyticsPage() {
   }, [dashboard, selectedProjectId]);
 
   return (
-    <div className="min-h-full bg-gray-50">
+    <div className="min-h-full bg-[var(--background)] text-[var(--foreground)]">
       <div className="mx-auto flex max-w-7xl flex-col gap-6 px-6 py-8">
         {loading ? (
           <>
@@ -434,9 +433,9 @@ export default function AnalyticsPage() {
             <LoadingCard message="Collecting module activity and recent updates..." />
           </>
         ) : error && !dashboard ? (
-          <div className="border border-rose-200 bg-white p-8 shadow-sm">
-            <h1 className="text-2xl font-semibold text-gray-900">Analytics unavailable</h1>
-            <p className="mt-3 max-w-2xl text-sm leading-6 text-gray-500">{error}</p>
+          <div className="border border-[var(--danger)]/30 bg-[var(--surface)] p-8 shadow-sm">
+            <h1 className="text-2xl font-semibold text-[var(--foreground)]">Analytics unavailable</h1>
+            <p className="mt-3 max-w-2xl text-sm leading-6 text-[var(--muted)]">{error}</p>
           </div>
         ) : !dashboard ? (
           <AnalyticsEmptyState />
@@ -450,7 +449,7 @@ export default function AnalyticsPage() {
                 <button
                   onClick={handleRefresh}
                   disabled={refreshing}
-                  className="inline-flex items-center gap-2 border border-gray-200 bg-white px-4 py-2.5 text-sm font-medium text-gray-700 transition hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-60"
+                  className="inline-flex items-center gap-2 border border-[var(--border)] bg-[var(--surface)] px-4 py-2.5 text-sm font-medium text-[var(--foreground)] transition hover:bg-[var(--surface-soft)] focus-visible:outline-none focus-visible:[box-shadow:var(--focus-ring)] disabled:cursor-not-allowed disabled:opacity-60"
                 >
                   <RefreshCw className={`h-4 w-4 ${refreshing ? "animate-spin" : ""}`} />
                   {refreshing ? "Refreshing..." : "Refresh Analytics"}
@@ -458,7 +457,7 @@ export default function AnalyticsPage() {
               )}
             />
             {refreshing && (
-              <div className="border border-blue-200 bg-blue-50 px-4 py-3 text-sm text-blue-700 shadow-sm">
+              <div className="border border-[var(--info)]/40 bg-[var(--info-soft)] px-4 py-3 text-sm text-[var(--info)] shadow-sm">
                 <p>
                   Refreshing analytics. Existing data stays visible until the new snapshot is ready.
                 </p>
@@ -466,7 +465,7 @@ export default function AnalyticsPage() {
               </div>
             )}
             {!refreshing && error ? (
-              <div className="border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-700 shadow-sm">
+              <div className="border border-[var(--warning)]/40 bg-[var(--warning-soft)] px-4 py-3 text-sm text-[var(--warning)] shadow-sm">
                 {error}
               </div>
             ) : null}
@@ -476,13 +475,10 @@ export default function AnalyticsPage() {
               title={filteredData.title}
               description={filteredData.description}
             />
-            {/* <div className="grid gap-6 xl:grid-cols-[1.35fr_0.65fr]"> */}
-              <AnalyticsChartsPanel
-                projectData={filteredData.projectChartData}
-                moduleData={filteredData.moduleChartData}
-              />
-              
-            {/* </div> */}
+            <AnalyticsChartsPanel
+              projectData={filteredData.projectChartData}
+              moduleData={filteredData.moduleChartData}
+            />
             <ProjectHealthGrid
                 projects={filteredData.projects}
                 staleDaysThreshold={dashboard.staleDaysThreshold}
@@ -500,10 +496,6 @@ export default function AnalyticsPage() {
                 items={filteredData.recentUpdates}
                 moduleOptions={filteredData.moduleOptions}
               />
-              {/* <RecentDataTable
-                entries={filteredData.recentEntries}
-                moduleOptions={filteredData.moduleOptions}
-              /> */}
             </div>
           </>
         )}

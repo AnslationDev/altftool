@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { enforceRateLimit } from "@altftool/core/http";
 import { verifySuperAdminRequest } from "@/lib/adminAccess";
 import { getAdminDb, getFirebaseAdminConfigStatus } from "@/lib/firebaseAdmin";
 import { createFirebaseDataIntegrityReport } from "@altftool/core/firebaseDataIntegrity";
@@ -6,6 +7,7 @@ import { createFirebaseLiveDataReport } from "@altftool/core/firebaseLiveData";
 import { createVercelDeployReadinessReport } from "@altftool/core/deployReadiness";
 import healthManifest from "@/data/healthManifest.json";
 import routeQaReport from "@/data/routeQaReport.json";
+import routeQualityReport from "@/data/routeQualityReport.json";
 import blogContentHealthReport from "@/data/blogContentHealthReport.json";
 import performanceBudgetReport from "@/data/performanceBudgetReport.json";
 import productionLinksReport from "@/data/productionLinksReport.json";
@@ -15,6 +17,9 @@ import releaseHistoryReport from "@/data/releaseHistoryReport.json";
 export const dynamic = "force-dynamic";
 
 const HEALTH_CACHE_MS = Number(process.env.ALTFT_ADMIN_HEALTH_CACHE_MS || 30_000);
+const HEALTH_RATE_LIMIT = Number(
+  process.env.ALTFT_ADMIN_HEALTH_RATE_LIMIT || 30,
+);
 const cachedHealthSnapshots = {
   lite: null,
   live: null,
@@ -23,10 +28,56 @@ const pendingHealthSnapshots = {
   lite: null,
   live: null,
 };
+const PRODUCTION_MONITOR_TIMEOUT_MS = Number(
+  process.env.ALTFT_PRODUCTION_MONITOR_TIMEOUT_MS || 6000,
+);
+const PRODUCTION_MONITOR_SLOW_MS = Number(
+  process.env.ALTFT_PRODUCTION_MONITOR_SLOW_MS || 2500,
+);
+const PRODUCTION_ROUTE_PROBES = [
+  { key: "home", label: "Home", path: "/", type: "html" },
+  { key: "tools", label: "Tools catalog", path: "/tools/all", type: "html" },
+  { key: "blogs", label: "Blog catalog", path: "/blogs", type: "html" },
+  { key: "automation", label: "Automation library", path: "/n8n", type: "html" },
+  { key: "docs", label: "Documentation", path: "/docs", type: "html" },
+  { key: "sitemap", label: "XML sitemap", path: "/sitemap.xml", type: "xml" },
+  { key: "robots", label: "Robots policy", path: "/robots.txt", type: "text" },
+  { key: "health", label: "Public health API", path: "/api/health", type: "health" },
+];
+const PRODUCTION_ERROR_PATTERNS = [
+  /Application error/i,
+  /Unhandled Runtime Error/i,
+  /NEXT_HTTP_ERROR_FALLBACK/i,
+  /This page could not be found/i,
+];
+
+function healthJson(payload, init = {}) {
+  const headers = new Headers(init.headers);
+  headers.set("Cache-Control", "private, no-store, max-age=0");
+  headers.set("Vary", "Authorization");
+  return NextResponse.json(payload, { ...init, headers });
+}
 
 function clampScore(score) {
   if (!Number.isFinite(score)) return 0;
   return Math.max(0, Math.min(100, Math.round(score)));
+}
+
+function weightedScore(signals = []) {
+  const active = signals.filter(
+    ([score, weight]) => Number.isFinite(Number(score)) && Number(weight) > 0,
+  );
+  const totalWeight = active.reduce(
+    (sum, [, weight]) => sum + Number(weight),
+    0,
+  );
+  if (!totalWeight) return 0;
+  return clampScore(
+    active.reduce(
+      (sum, [score, weight]) => sum + Number(score) * Number(weight),
+      0,
+    ) / totalWeight,
+  );
 }
 
 function normalizeUrl(value = "") {
@@ -320,6 +371,66 @@ function buildPerformanceBudgetReadiness() {
     checks,
     command: "npm run performance:budget:strict",
     artifactCommand: "npm run performance:budget:strict -- --output performance-budget.json --output-md performance-budget.md",
+  };
+}
+
+function buildRouteQualityReadiness() {
+  const report = routeQualityReport || {};
+  const totals = report.totals || {};
+  const hasReport = Boolean(report.generatedAt);
+  const checks = [
+    {
+      key: "savedReport",
+      label: "Rendered route-quality report",
+      detail: hasReport
+        ? `Generated ${report.generatedAt}.`
+        : "Run npm run seo:route-quality:report after the web build.",
+      ok: hasReport,
+    },
+    {
+      key: "indexConflicts",
+      label: "Noindex and sitemap alignment",
+      detail: `${totals.indexConflicts || 0} noindex route${totals.indexConflicts === 1 ? "" : "s"} listed in sitemap.`,
+      ok: Number(totals.indexConflicts || 0) === 0,
+    },
+    {
+      key: "canonicalCoverage",
+      label: "Canonical sitemap coverage",
+      detail: `${totals.sitemapCovered || 0}/${totals.indexable || 0} indexable canonical targets covered.`,
+      ok: Number(totals.missingCanonicalTargets || 0) === 0,
+    },
+    {
+      key: "routeMetadata",
+      label: "Rendered metadata quality",
+      detail: `${totals.routesWithIssues || 0} routes with blocking metadata or index-control issues.`,
+      ok: Number(totals.routesWithIssues || 0) === 0,
+    },
+    {
+      key: "routeAdvisories",
+      label: "Rendered content quality",
+      detail: `${totals.routesWithAdvisories || 0} route${totals.routesWithAdvisories === 1 ? "" : "s"} with title, description, H1, or structured-data advisories.`,
+      ok: Number(totals.routesWithAdvisories || 0) === 0,
+    },
+  ];
+  const score = hasReport
+    ? clampScore(report.score || 0)
+    : 0;
+
+  return {
+    ...report,
+    ok: hasReport && checks.every((check) => check.ok),
+    status: !hasReport
+      ? "not-run"
+      : checks.some((check) => !check.ok)
+        ? "attention"
+        : Number(totals.routesWithAdvisories || 0) > 0
+          ? "watch"
+          : "healthy",
+    score,
+    checks,
+    command: "npm run seo:route-quality:report",
+    strictCommand: "npm run seo:route-quality:strict",
+    indexControlCommand: "npm run seo:index-control",
   };
 }
 
@@ -886,6 +997,215 @@ async function buildProductionFreshness({ lite = false } = {}) {
   }
 }
 
+function productionProbeBodyOk(probe, body, contentType) {
+  if (probe.type === "html") {
+    return (
+      contentType.includes("text/html") &&
+      /<html[\s>]/i.test(body) &&
+      !PRODUCTION_ERROR_PATTERNS.some((pattern) => pattern.test(body))
+    );
+  }
+  if (probe.type === "xml") {
+    return (
+      /(?:application|text)\/xml/i.test(contentType) &&
+      /<(?:urlset|sitemapindex)\b/i.test(body)
+    );
+  }
+  if (probe.type === "text") {
+    return contentType.includes("text/plain") && /user-agent:/i.test(body);
+  }
+  if (probe.type === "health") {
+    try {
+      const payload = JSON.parse(body);
+      return ["healthy", "watch"].includes(payload?.overall?.status);
+    } catch {
+      return false;
+    }
+  }
+  return body.length > 0;
+}
+
+async function probeProductionRoute(baseUrl, probe) {
+  const controller = new AbortController();
+  const timeout = setTimeout(
+    () => controller.abort(),
+    PRODUCTION_MONITOR_TIMEOUT_MS,
+  );
+  const startedAt = performance.now();
+  const url = appendPath(baseUrl, probe.path);
+
+  try {
+    const response = await fetch(url, {
+      cache: "no-store",
+      redirect: "follow",
+      signal: controller.signal,
+    });
+    const body = await response.text();
+    const durationMs = Math.round(performance.now() - startedAt);
+    const contentType = response.headers.get("content-type") || "";
+    const contentOk = productionProbeBodyOk(
+      probe,
+      body,
+      contentType.toLowerCase(),
+    );
+    const state = !response.ok || !contentOk
+      ? "fail"
+      : durationMs > PRODUCTION_MONITOR_SLOW_MS
+        ? "slow"
+        : "pass";
+
+    return {
+      ...probe,
+      url,
+      finalUrl: response.url,
+      status: response.status,
+      durationMs,
+      contentType: contentType.split(";")[0],
+      state,
+      ok: state !== "fail",
+      detail: !response.ok
+        ? `HTTP ${response.status}`
+        : !contentOk
+          ? `Unexpected ${contentType || "response"}`
+          : durationMs > PRODUCTION_MONITOR_SLOW_MS
+            ? `Slower than ${PRODUCTION_MONITOR_SLOW_MS}ms`
+            : "Healthy",
+    };
+  } catch (error) {
+    return {
+      ...probe,
+      url,
+      finalUrl: null,
+      status: 0,
+      durationMs: Math.round(performance.now() - startedAt),
+      contentType: "",
+      state: "fail",
+      ok: false,
+      detail:
+        error?.name === "AbortError"
+          ? `Timed out after ${PRODUCTION_MONITOR_TIMEOUT_MS}ms`
+          : error?.message || "Request failed",
+    };
+  } finally {
+    clearTimeout(timeout);
+  }
+}
+
+async function buildProductionMonitoring({ lite = false } = {}) {
+  const baseUrl = normalizeUrl(
+    process.env.ALTFT_MONITOR_WEB_URL ||
+      process.env.NEXT_PUBLIC_SITE_URL ||
+      "https://altftool.com",
+  );
+
+  if (!baseUrl) {
+    return {
+      ok: false,
+      score: 0,
+      status: "not-configured",
+      baseUrl: null,
+      checkedAt: new Date().toISOString(),
+      probes: [],
+      totals: { probes: 0, passing: 0, slow: 0, failing: 0 },
+    };
+  }
+
+  if (lite) {
+    const savedPages = Array.isArray(productionLinksReport?.pages)
+      ? productionLinksReport.pages
+      : [];
+    const savedFailures = Array.isArray(productionLinksReport?.failures)
+      ? productionLinksReport.failures
+      : [];
+    const savedWarnings = Array.isArray(productionLinksReport?.warnings)
+      ? productionLinksReport.warnings
+      : [];
+    const hasSnapshot = Boolean(productionLinksReport?.generatedAt);
+
+    return {
+      ok: hasSnapshot && savedFailures.length === 0,
+      score: hasSnapshot
+        ? clampScore(productionLinksReport?.score || 0)
+        : 0,
+      status: !hasSnapshot
+        ? "not-run"
+        : savedFailures.length
+          ? "attention"
+          : savedWarnings.length
+            ? "watch"
+            : "healthy",
+      lite: true,
+      skipped: true,
+      baseUrl,
+      checkedAt: productionLinksReport?.generatedAt || null,
+      probes: [],
+      totals: {
+        probes: savedPages.length,
+        passing: Math.max(0, savedPages.length - savedFailures.length),
+        slow: 0,
+        failing: savedFailures.length,
+      },
+      detail: hasSnapshot
+        ? "Using the saved production surface report. Refresh live to probe current routes."
+        : "No saved production surface report is available.",
+    };
+  }
+
+  const probes = await Promise.all(
+    PRODUCTION_ROUTE_PROBES.map((probe) =>
+      probeProductionRoute(baseUrl, probe),
+    ),
+  );
+  const passing = probes.filter((probe) => probe.state === "pass").length;
+  const slow = probes.filter((probe) => probe.state === "slow").length;
+  const failing = probes.filter((probe) => probe.state === "fail").length;
+  const durations = probes
+    .filter((probe) => probe.status > 0)
+    .map((probe) => probe.durationMs)
+    .sort((a, b) => a - b);
+  const p95Index = durations.length
+    ? Math.min(durations.length - 1, Math.ceil(durations.length * 0.95) - 1)
+    : 0;
+  const score = clampScore(
+    ((passing + slow * 0.7) / Math.max(1, probes.length)) * 100,
+  );
+
+  return {
+    ok: failing === 0,
+    score,
+    status: failing
+      ? "attention"
+      : slow
+        ? "watch"
+        : "healthy",
+    lite: false,
+    skipped: false,
+    baseUrl,
+    checkedAt: new Date().toISOString(),
+    thresholds: {
+      timeoutMs: PRODUCTION_MONITOR_TIMEOUT_MS,
+      slowMs: PRODUCTION_MONITOR_SLOW_MS,
+    },
+    performance: {
+      averageMs: durations.length
+        ? Math.round(
+            durations.reduce((sum, value) => sum + value, 0) /
+              durations.length,
+          )
+        : 0,
+      p95Ms: durations[p95Index] || 0,
+      maxMs: durations.at(-1) || 0,
+    },
+    totals: {
+      probes: probes.length,
+      passing,
+      slow,
+      failing,
+    },
+    probes,
+  };
+}
+
 function createReleaseGate({ key, label, status, score, detail, action, source }) {
   return {
     key,
@@ -1201,12 +1521,14 @@ function buildRuntimeQualityReadiness({ routeQa, firebaseLiveData, firebaseDataI
 function buildReleaseGates({
   qa,
   routeQa,
+  routeQuality,
   blogContent,
   firebaseAdmin,
   firebaseLiveData,
   firebaseDataIntegrity,
   performanceBudget,
   productionLinks,
+  productionMonitoring,
   deploy,
   production,
 }) {
@@ -1214,6 +1536,15 @@ function buildReleaseGates({
   const routeFailures = Number(routeQa?.totals?.failures || 0);
   const routeWarnings = Number(routeQa?.totals?.warnings || 0);
   const routeSlow = Number(routeQa?.totals?.slowRoutes || 0);
+  const routeQualityConflicts = Number(
+    routeQuality?.totals?.indexConflicts || 0,
+  );
+  const routeQualityMissing = Number(
+    routeQuality?.totals?.missingCanonicalTargets || 0,
+  );
+  const routeQualityIssues = Number(
+    routeQuality?.totals?.routesWithIssues || 0,
+  );
   const priorityTotal = Number(qa?.total || 0);
   const priorityRoutesCovered = Number(qa?.routeCovered || 0);
   const priorityFunctionalCovered = Number(qa?.functionalCovered || 0);
@@ -1262,6 +1593,25 @@ function buildReleaseGates({
       source: "routeQaReport",
     }),
     createReleaseGate({
+      key: "seo-index-control",
+      label: "SEO index control",
+      status:
+        !routeQuality?.generatedAt ||
+        routeQualityConflicts > 0 ||
+        routeQualityMissing > 0 ||
+        routeQualityIssues > 0
+          ? "block"
+          : routeQuality?.totals?.routesWithAdvisories
+            ? "warn"
+            : "pass",
+      score: routeQuality?.score || 0,
+      detail: routeQuality?.generatedAt
+        ? `${routeQuality?.totals?.indexable || 0} indexable, ${routeQuality?.totals?.noindex || 0} noindex, ${routeQualityConflicts} sitemap conflicts, ${routeQualityMissing} missing canonical targets, ${routeQualityIssues} blocking metadata issues.`
+        : "No rendered route-quality report is available.",
+      action: "Run npm run seo:route-quality:report and npm run seo:index-control.",
+      source: "routeQualityReport",
+    }),
+    createReleaseGate({
       key: "firebase-admin",
       label: "Firebase Admin SDK",
       status: firebaseAdmin?.adminSdkReady && firebaseAdmin?.firestoreReadable ? "pass" : "block",
@@ -1307,6 +1657,20 @@ function buildReleaseGates({
       detail: `${productionLinks?.totals?.pages || 0} pages, ${productionLinks?.totals?.linksChecked || 0} links, ${productionLinks?.totals?.imagesChecked || 0} images checked.`,
       action: "Run npm run monitor:links:report before release and fix broken production links/images.",
       source: "productionLinksReport",
+    }),
+    createReleaseGate({
+      key: "production-monitoring",
+      label: "Critical production routes",
+      status: productionMonitoring?.totals?.failing
+        ? "block"
+        : productionMonitoring?.totals?.slow ||
+            productionMonitoring?.status === "not-run"
+          ? "warn"
+          : "pass",
+      score: productionMonitoring?.score || 0,
+      detail: `${productionMonitoring?.totals?.passing || 0}/${productionMonitoring?.totals?.probes || 0} passing, ${productionMonitoring?.totals?.slow || 0} slow, ${productionMonitoring?.totals?.failing || 0} failing.`,
+      action: "Refresh live health and fix any failing or slow critical route.",
+      source: "productionMonitoring",
     }),
     createReleaseGate({
       key: "blog-content-health",
@@ -1675,12 +2039,14 @@ function buildRecommendations({
   content,
   automation,
   routeQa,
+  routeQuality,
   blogContent,
   firebaseAdmin,
   firebaseLiveData,
   firebaseDataIntegrity,
   performanceBudget,
   productionLinks,
+  productionMonitoring,
   releaseDoctorArtifact,
   runtimeQuality,
   deploy,
@@ -1703,6 +2069,24 @@ function buildRecommendations({
   if (tools.registryWithoutDir.length) {
     recommendations.push(
       `${tools.registryWithoutDir.length} registered tools do not have source folders.`,
+    );
+  }
+
+  if (tools.readiness?.counts?.broken > 0) {
+    recommendations.push(
+      `Repair ${tools.readiness.counts.broken} structurally broken tools before release.`,
+    );
+  }
+
+  if (tools.readiness?.priority?.needsAttention > 0) {
+    recommendations.push(
+      `Complete implementation evidence for ${tools.readiness.priority.needsAttention} priority tools.`,
+    );
+  }
+
+  if (tools.readiness?.automatedCoverage < 80) {
+    recommendations.push(
+      `Raise deterministic tool coverage from ${tools.readiness.automatedCoverage}% toward the 80% release target.`,
     );
   }
 
@@ -1732,6 +2116,18 @@ function buildRecommendations({
     recommendations.push(`Review ${routeQa.totals.slowRoutes} slow routes from the latest route QA report.`);
   }
 
+  if (routeQuality?.totals?.indexConflicts > 0) {
+    recommendations.push(
+      `Remove ${routeQuality.totals.indexConflicts} noindex routes from the XML sitemap.`,
+    );
+  }
+
+  if (routeQuality?.totals?.missingCanonicalTargets > 0) {
+    recommendations.push(
+      `Add ${routeQuality.totals.missingCanonicalTargets} indexable canonical targets to the sitemap or intentionally noindex them.`,
+    );
+  }
+
   if (blogContent?.score < 72) {
     recommendations.push("Improve blog content depth, source coverage, FAQs, and internal links from the saved blog content health report.");
   }
@@ -1754,6 +2150,16 @@ function buildRecommendations({
 
   if (productionLinks?.score < 100) {
     recommendations.push("Refresh the production link report and fix broken public routes, images, or strict SEO warnings.");
+  }
+
+  if (productionMonitoring?.totals?.failing > 0) {
+    recommendations.push(
+      `Fix ${productionMonitoring.totals.failing} failing critical production route probes.`,
+    );
+  } else if (productionMonitoring?.totals?.slow > 0) {
+    recommendations.push(
+      `Optimize ${productionMonitoring.totals.slow} slow critical production routes.`,
+    );
   }
 
   if (releaseDoctorArtifact?.status && releaseDoctorArtifact.status !== "ready") {
@@ -1781,14 +2187,22 @@ function buildRecommendations({
 
 async function buildHealthAuditSnapshot({ lite = false } = {}) {
   const { tools, qa, seo, content, automation } = healthManifest;
-  const [firebaseAdmin, firebaseLiveData, firebaseDataIntegrity, production] = await Promise.all([
+  const [
+    firebaseAdmin,
+    firebaseLiveData,
+    firebaseDataIntegrity,
+    production,
+    productionMonitoring,
+  ] = await Promise.all([
     buildFirebaseAdminReadiness({ lite }),
     buildFirebaseLiveDataReadiness({ lite }),
     buildFirebaseDataIntegrityReadiness({ lite }),
     buildProductionFreshness({ lite }),
+    buildProductionMonitoring({ lite }),
   ]);
   const deploy = buildVercelDeployReadiness();
   const performanceBudget = buildPerformanceBudgetReadiness();
+  const routeQuality = buildRouteQualityReadiness();
   const productionLinks = buildProductionLinksReadiness();
   const releaseDoctorArtifact = buildReleaseDoctorArtifactReadiness();
   const runtimeQuality = buildRuntimeQualityReadiness({
@@ -1802,12 +2216,14 @@ async function buildHealthAuditSnapshot({ lite = false } = {}) {
   const releaseGates = buildReleaseGates({
     qa,
     routeQa: routeQaReport,
+    routeQuality,
     blogContent: blogContentHealthReport,
     firebaseAdmin,
     firebaseLiveData,
     firebaseDataIntegrity,
     performanceBudget,
     productionLinks,
+    productionMonitoring,
     deploy,
     production,
   });
@@ -1819,24 +2235,26 @@ async function buildHealthAuditSnapshot({ lite = false } = {}) {
   });
 
   const snapshotGeneratedAt = new Date().toISOString();
-  const overallScore = clampScore(
-    tools.averageScore * 0.16 +
-      qa.score * 0.11 +
-      routeQaScore * 0.09 +
-      seo.score * 0.08 +
-      content.score * 0.07 +
-      blogContentScore * 0.09 +
-      automation.score * 0.07 +
-      firebaseAdmin.score * 0.1 +
-      firebaseLiveData.score * 0.08 +
-      firebaseDataIntegrity.score * 0.08 +
-      runtimeQuality.score * 0.05 +
-      performanceBudget.score * 0.06 +
-      productionLinks.score * 0.04 +
-      releaseDoctorArtifact.score * 0.03 +
-      deploy.score * 0.05 +
-      production.score * 0.01,
-  );
+  const overallScore = weightedScore([
+    [tools.readiness?.score ?? tools.averageScore, 10],
+    [qa.score, 6],
+    [routeQaScore, 8],
+    [routeQuality.score, 10],
+    [seo.score, 8],
+    [content.score, 4],
+    [blogContentScore, 6],
+    [automation.score, 4],
+    [firebaseAdmin.score, 8],
+    [firebaseLiveData.score, 7],
+    [firebaseDataIntegrity.score, 7],
+    [runtimeQuality.score, 8],
+    [performanceBudget.score, 6],
+    [productionLinks.score, 3],
+    [releaseDoctorArtifact.score, 2],
+    [deploy.score, 2],
+    [production.score, 2],
+    [productionMonitoring.score, 4],
+  ]);
   const status = overallScore >= 90 ? "healthy" : overallScore >= 75 ? "watch" : "attention";
   const releaseHistory = buildReleaseHistoryReadiness(
     createCurrentReleaseHistoryEntry({
@@ -1888,12 +2306,14 @@ async function buildHealthAuditSnapshot({ lite = false } = {}) {
     blogContent: blogContentHealthReport,
     automation,
     routeQa: routeQaReport,
+    routeQuality,
     firebaseAdmin,
     firebaseLiveData,
     firebaseDataIntegrity,
     runtimeQuality,
     performanceBudget,
     productionLinks,
+    productionMonitoring,
     releaseDoctorArtifact,
     releaseHistory,
     fixCenter,
@@ -1908,12 +2328,14 @@ async function buildHealthAuditSnapshot({ lite = false } = {}) {
       content,
       automation,
       routeQa: routeQaReport,
+      routeQuality,
       blogContent: blogContentHealthReport,
       firebaseAdmin,
       firebaseLiveData,
       firebaseDataIntegrity,
       performanceBudget,
       productionLinks,
+      productionMonitoring,
       releaseDoctorArtifact,
       runtimeQuality,
       deploy,
@@ -1926,6 +2348,13 @@ export async function GET(request) {
   let cacheKey = "live";
 
   try {
+    const limited = enforceRateLimit(NextResponse, request, {
+      limit: HEALTH_RATE_LIMIT,
+      windowMs: 60_000,
+      scope: "admin:health",
+    });
+    if (limited) return limited;
+
     await verifySuperAdminRequest(request);
 
     const url = new URL(request.url);
@@ -1935,7 +2364,7 @@ export async function GET(request) {
     const now = Date.now();
 
     if (!forceRefresh && cachedHealthSnapshots[cacheKey]?.expiresAt > now) {
-      return NextResponse.json({
+      return healthJson({
         ...cachedHealthSnapshots[cacheKey].payload,
         cached: true,
         generatedAt: new Date().toISOString(),
@@ -1944,7 +2373,7 @@ export async function GET(request) {
 
     if (!forceRefresh && pendingHealthSnapshots[cacheKey]) {
       const payload = await pendingHealthSnapshots[cacheKey];
-      return NextResponse.json({
+      return healthJson({
         ...payload,
         cached: true,
         generatedAt: new Date().toISOString(),
@@ -1959,13 +2388,15 @@ export async function GET(request) {
       expiresAt: Date.now() + HEALTH_CACHE_MS,
     };
 
-    return NextResponse.json(payload);
+    return healthJson(payload);
   } catch (error) {
     const message = error?.message || "Health audit failed.";
     const status = message === "Unauthorized" ? 401 : 500;
-    console.error("Health audit failed:", error);
+    if (status >= 500) {
+      console.error("Health audit failed:", error);
+    }
 
-    return NextResponse.json({ error: message }, { status });
+    return healthJson({ error: message }, { status });
   } finally {
     pendingHealthSnapshots[cacheKey] = null;
   }

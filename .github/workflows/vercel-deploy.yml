@@ -168,10 +168,7 @@ jobs:
           ALTFT_EXPECTED_COMMIT: ${{ github.sha }}
           ALTFT_PARITY_OUTPUT_PATH: web-production-parity-report.json
           ALTFT_PARITY_MARKDOWN_PATH: web-production-parity-report.md
-        # The public domain is served by the separately managed AWS Amplify
-        # release and does not expose this monorepo SHA. The immutable Vercel
-        # URL is already commit-verified above; keep strict content parity here.
-        run: npm run deploy:parity:strict -- --skip-commit
+        run: npm run deploy:parity:strict
 
       - name: Upload web monitoring reports
         if: always()

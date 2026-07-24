@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
   Bar,
   BarChart,
@@ -20,23 +20,61 @@ import {
 } from "lucide-react";
 import { formatNumber } from "@/lib/analytics/analytics.utils";
 
-const COLORS = [
-  "#2563eb",
-  "#ef4444",
-  "#10b981",
-  "#f59e0b",
-  "#8b5cf6",
-  "#06b6d4",
+// Brand chart palette per master.md (teal + cyan + violet first), resolved from
+// the semantic CSS tokens at runtime so charts follow the active theme.
+// Fallbacks mirror the light-theme token values.
+const CHART_TOKENS = [
+  ["--primary", "#0d9488"],
+  ["--secondary", "#22d3ee"],
+  ["--accent", "#8b5cf6"],
+  ["--success", "#16a34a"],
+  ["--warning", "#f59e0b"],
+  ["--info", "#0ea5e9"],
 ];
-const UPDATE_COLOR = "#2563eb";
-const CREATE_COLOR = "#f97316";
+const GRID_TOKEN = ["--border", "#e2e8f0"];
+const TICK_TOKEN = ["--muted", "#607083"];
+
+function readToken([name, fallback]) {
+  if (typeof window === "undefined") return fallback;
+  const value = getComputedStyle(document.documentElement)
+    .getPropertyValue(name)
+    .trim();
+  return value || fallback;
+}
+
+function useChartTheme() {
+  const [themeVersion, setThemeVersion] = useState(0);
+
+  useEffect(() => {
+    // Re-resolve token values when the admin theme toggles (data-theme flips).
+    const observer = new MutationObserver(() => setThemeVersion((v) => v + 1));
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["data-theme"],
+    });
+    return () => observer.disconnect();
+  }, []);
+
+  return useMemo(
+    () => ({
+      colors: CHART_TOKENS.map(readToken),
+      grid: readToken(GRID_TOKEN),
+      tick: readToken(TICK_TOKEN),
+    }),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [themeVersion],
+  );
+}
 
 function ChartToggle({ label, active, onClick }) {
   return (
     <button
+      type="button"
       onClick={onClick}
-      className={`px-3 py-2 text-sm font-medium transition ${
-        active ? "bg-gray-900 text-white" : "bg-gray-100 text-gray-600 hover:bg-gray-200"
+      className={`rounded-md px-3 py-2 text-sm font-medium transition focus-visible:outline-none focus-visible:[box-shadow:var(--focus-ring)] ${
+        active
+          ? "bg-[var(--primary)] text-[var(--primary-foreground)]"
+          : "bg-[var(--surface-soft)] text-[var(--muted)] hover:text-[var(--foreground)]"
       }`}
     >
       {label}
@@ -47,11 +85,12 @@ function ChartToggle({ label, active, onClick }) {
 function MetricButton({ label, active, onClick }) {
   return (
     <button
+      type="button"
       onClick={onClick}
-      className={`border px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.18em] transition ${
+      className={`rounded-md border px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.18em] transition focus-visible:outline-none focus-visible:[box-shadow:var(--focus-ring)] ${
         active
-          ? "border-gray-900 bg-gray-900 text-white"
-          : "border-gray-200 bg-white text-gray-500 hover:border-gray-300 hover:text-gray-700"
+          ? "border-[var(--primary)] bg-[var(--primary)] text-[var(--primary-foreground)]"
+          : "border-[var(--border)] bg-[var(--surface)] text-[var(--muted)] hover:border-[var(--border-strong)] hover:text-[var(--foreground)]"
       }`}
     >
       {label}
@@ -63,10 +102,10 @@ function CustomTooltip({ active, payload, label }) {
   if (!active || !payload?.length) return null;
 
   return (
-    <div className="border border-gray-200 bg-white px-3 py-2 text-sm shadow-lg">
-      <p className="font-semibold text-gray-900">{label}</p>
+    <div className="border border-[var(--border)] bg-[var(--surface)] px-3 py-2 text-sm shadow-lg">
+      <p className="font-semibold text-[var(--foreground)]">{label}</p>
       {payload.map((entry) => (
-        <p key={entry.dataKey} className="mt-1 text-gray-600">
+        <p key={entry.dataKey} className="mt-1 text-[var(--muted)]">
           {entry.name}: {formatNumber(entry.value)}
         </p>
       ))}
@@ -77,6 +116,8 @@ function CustomTooltip({ active, payload, label }) {
 export default function AnalyticsCharts({ projectData, moduleData }) {
   const [view, setView] = useState("projects");
   const [metric, setMetric] = useState("records");
+  const chartTheme = useChartTheme();
+  const chartColors = chartTheme.colors;
 
   const currentData = view === "projects" ? projectData : moduleData;
 
@@ -110,16 +151,16 @@ export default function AnalyticsCharts({ projectData, moduleData }) {
   const barChartLabel = view === "projects" ? "Project-wise comparison" : "Module-wise comparison";
 
   return (
-    <section className="border border-gray-200 bg-white p-6 shadow-sm rounded-md">
+    <section className="border border-[var(--border)] bg-[var(--surface)] p-6 shadow-sm rounded-md">
       <div className="flex flex-col gap-4 xl:flex-row xl:items-start xl:justify-between">
         <div>
           <div className="flex items-center gap-3">
-            <div className="border border-gray-200 bg-gray-100 p-2 text-gray-600">
+            <div className="border border-[var(--border)] bg-[var(--surface-soft)] p-2 text-[var(--muted)]">
               <BarChart3 className="h-4 w-4" />
             </div>
             <div>
-              <h2 className="text-lg font-semibold text-gray-900">Analytics view</h2>
-              <p className="text-sm text-gray-500">
+              <h2 className="text-lg font-semibold text-[var(--foreground)]">Analytics view</h2>
+              <p className="text-sm text-[var(--muted)]">
                 Compare activity by project or by module with switchable metrics.
               </p>
             </div>
@@ -141,41 +182,41 @@ export default function AnalyticsCharts({ projectData, moduleData }) {
       </div>
 
       <div className="mt-6 grid gap-6 xl:grid-cols-[1.4fr_0.8fr] ">
-        <div className="border border-gray-200 bg-gray-50 p-4 rounded-md">
+        <div className="border border-[var(--border)] bg-[var(--surface-soft)] p-4 rounded-md">
           <div className="mb-4 flex items-center justify-between gap-3">
             <div>
-              <p className="text-sm font-semibold text-gray-900">{metricLabelMap[metric]}</p>
-              <p className="text-xs text-gray-500">{barChartLabel}</p>
+              <p className="text-sm font-semibold text-[var(--foreground)]">{metricLabelMap[metric]}</p>
+              <p className="text-xs text-[var(--muted)]">{barChartLabel}</p>
             </div>
-            <div className="border border-gray-200 bg-white p-2 text-gray-500">
+            <div className="border border-[var(--border)] bg-[var(--surface)] p-2 text-[var(--muted)]">
               <ChartColumnBig className="h-4 w-4" />
             </div>
           </div>
           <div className="h-[320px]">
             <ResponsiveContainer width="100%" height="100%" minWidth={1} minHeight={1}>
               <BarChart data={chartData} margin={{ top: 10, right: 16, left: -8, bottom: 10 }}>
-                <CartesianGrid stroke="#dbe4f0" vertical={false} />
+                <CartesianGrid stroke={chartTheme.grid} vertical={false} />
                 <XAxis
                   dataKey="name"
                   interval={0}
                   height={56}
                   tickLine={false}
                   axisLine={false}
-                  tick={{ fontSize: 11, fill: "#475569" }}
+                  tick={{ fontSize: 11, fill: chartTheme.tick }}
                   angle={-18}
                   textAnchor="end"
                 />
                 <YAxis
                   tickLine={false}
                   axisLine={false}
-                  tick={{ fontSize: 12, fill: "#475569" }}
+                  tick={{ fontSize: 12, fill: chartTheme.tick }}
                 />
                 <Tooltip content={<CustomTooltip />} />
                 <Bar dataKey={metric} name={metricLabelMap[metric]} radius={[4, 4, 0, 0]}>
                   {chartData.map((entry, index) => (
                     <Cell
                       key={`${entry.name}-${index}`}
-                      fill={COLORS[index % COLORS.length]}
+                      fill={chartColors[index % chartColors.length]}
                     />
                   ))}
                 </Bar>
@@ -184,14 +225,14 @@ export default function AnalyticsCharts({ projectData, moduleData }) {
           </div>
         </div>
 
-        <div className="border border-gray-200 bg-gray-50 p-4 rounded-md">
+        <div className="border border-[var(--border)] bg-[var(--surface-soft)] p-4 rounded-md">
           <div className="mb-4 flex items-center gap-3">
-            <div className="border border-gray-200 bg-white p-2 text-gray-500">
+            <div className="border border-[var(--border)] bg-[var(--surface)] p-2 text-[var(--muted)]">
               <PieChartIcon className="h-4 w-4" />
             </div>
             <div>
-              <p className="text-sm font-semibold text-gray-900">Record share</p>
-              <p className="text-xs text-gray-500">Top slices in current view</p>
+              <p className="text-sm font-semibold text-[var(--foreground)]">Record share</p>
+              <p className="text-xs text-[var(--muted)]">Top slices in current view</p>
             </div>
           </div>
           <div className="h-[320px]">
@@ -210,7 +251,7 @@ export default function AnalyticsCharts({ projectData, moduleData }) {
                   }
                 >
                   {pieData.map((entry, index) => (
-                    <Cell key={entry.name} fill={COLORS[index % COLORS.length]} />
+                    <Cell key={entry.name} fill={chartColors[index % chartColors.length]} />
                   ))}
                 </Pie>
                 <Tooltip content={<CustomTooltip />} />
@@ -223,11 +264,11 @@ export default function AnalyticsCharts({ projectData, moduleData }) {
                 <div className="flex items-center gap-2">
                   <span
                     className="h-2.5 w-2.5"
-                    style={{ backgroundColor: COLORS[index % COLORS.length] }}
+                    style={{ backgroundColor: chartColors[index % chartColors.length] }}
                   />
-                  <span className="text-gray-700">{item.name}</span>
+                  <span className="text-[var(--muted)]">{item.name}</span>
                 </div>
-                <span className="font-medium text-gray-900">{formatNumber(item.value)}</span>
+                <span className="font-medium text-[var(--foreground)]">{formatNumber(item.value)}</span>
               </div>
             ))}
           </div>
