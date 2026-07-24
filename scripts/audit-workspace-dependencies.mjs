@@ -1,6 +1,6 @@
 import { spawnSync } from "node:child_process";
 import { createRequire } from "node:module";
-import { existsSync, readFileSync } from "node:fs";
+import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
 import path from "node:path";
 
 const require = createRequire(import.meta.url);
@@ -39,6 +39,31 @@ function run(command, args) {
   });
 }
 
+function collectSourceFiles(directory) {
+  if (!existsSync(directory)) return [];
+
+  return readdirSync(directory, { withFileTypes: true }).flatMap((entry) => {
+    const entryPath = path.join(directory, entry.name);
+    if (entry.isDirectory()) return collectSourceFiles(entryPath);
+    if (!/\.(?:[cm]?[jt]sx?)$/u.test(entry.name)) return [];
+    return statSync(entryPath).size <= 1024 * 1024 ? [entryPath] : [];
+  });
+}
+
+function usesReactRouterRscApis(directory) {
+  const rscEntryPoint =
+    /(?:from\s*|import\s*\(\s*|require\s*\(\s*)["']react-router(?:-dom)?\/(?:rsc(?:\/[^"']*)?|dom\/server|server)["']/u;
+  const rscApi =
+    /\b(?:(?:unstable_|UNSAFE_)?[A-Za-z0-9]*RSC[A-Za-z0-9_]*|unstable_(?:createCallServer|getRequest))\b/u;
+
+  return collectSourceFiles(directory).some((file) => {
+    const source = readFileSync(file, "utf8")
+      .replace(/^\s*\/\/.*$/gmu, "")
+      .replace(/\/\*[\s\S]*?\*\//gu, "");
+    return rscEntryPoint.test(source) || rscApi.test(source);
+  });
+}
+
 const workspacePackage = JSON.parse(readFileSync(path.join(workspace, "package.json"), "utf8"));
 if (!String(workspacePackage.scripts?.build || "").includes("use-patched-next-dependencies.mjs")) {
   console.error(`${workspace} build does not apply the patched Next.js dependencies.`);
@@ -58,7 +83,7 @@ const resolvedPostcss = require.resolve("postcss/package.json", { paths: [nextRo
 const resolvedPostcssVersion = JSON.parse(readFileSync(resolvedPostcss, "utf8")).version;
 const runtimePatchReady =
   !existsSync(nestedPostcss) &&
-  isAtLeast(resolvedPostcssVersion, [8, 5, 12]) &&
+  isAtLeast(resolvedPostcssVersion, [8, 5, 18]) &&
   !resolvedPostcss.startsWith(nestedPostcss);
 
 const npmCommand = process.platform === "win32" ? "npm.cmd" : "npm";
@@ -85,6 +110,7 @@ const nextFinding = vulnerabilities.next;
 const knownPostcssAdvisories = new Set([
   "https://github.com/advisories/GHSA-qx2v-qp2m-jg93",
   "https://github.com/advisories/GHSA-6g55-p6wh-862q",
+  "https://github.com/advisories/GHSA-r28c-9q8g-f849",
 ]);
 const postcssAdvisories = (postcssFinding?.via || [])
   .filter((finding) => finding && typeof finding === "object")
@@ -104,12 +130,56 @@ if (knownLockfileFinding) {
   );
 }
 
+const reactRouterFinding = vulnerabilities["react-router"];
+const reactRouterDomFinding = vulnerabilities["react-router-dom"];
+const reactRouterAdvisories = (reactRouterFinding?.via || [])
+  .filter((finding) => finding && typeof finding === "object")
+  .map((finding) => finding.url);
+const reactRouterVersionPath =
+  workspace === "altftoolweb"
+    ? require.resolve("react-router/package.json", { paths: [path.join(process.cwd(), workspace)] })
+    : null;
+const reactRouterDomVersionPath =
+  workspace === "altftoolweb"
+    ? require.resolve("react-router-dom/package.json", { paths: [path.join(process.cwd(), workspace)] })
+    : null;
+const reactRouterVersion = reactRouterVersionPath
+  ? JSON.parse(readFileSync(reactRouterVersionPath, "utf8")).version
+  : null;
+const reactRouterDomVersion = reactRouterDomVersionPath
+  ? JSON.parse(readFileSync(reactRouterDomVersionPath, "utf8")).version
+  : null;
+// GHSA-qwww-vcr4-c8h2 only affects unstable RSC APIs. Keep this exception
+// version- and advisory-specific, and fail it closed if those APIs enter src/.
+const knownClientOnlyReactRouterFinding =
+  workspace === "altftoolweb" &&
+  reactRouterVersion === "7.18.1" &&
+  reactRouterDomVersion === "7.18.1" &&
+  reactRouterAdvisories.length === 1 &&
+  reactRouterAdvisories[0] === "https://github.com/advisories/GHSA-qwww-vcr4-c8h2" &&
+  (reactRouterFinding?.nodes || []).every((node) => node === "node_modules/react-router") &&
+  (reactRouterDomFinding?.via || []).length === 1 &&
+  reactRouterDomFinding.via[0] === "react-router" &&
+  (reactRouterDomFinding?.nodes || []).every((node) => node === "node_modules/react-router-dom") &&
+  !usesReactRouterRscApis(path.join(workspace, "src"));
+
+if (knownClientOnlyReactRouterFinding) {
+  delete vulnerabilities["react-router"];
+  delete vulnerabilities["react-router-dom"];
+  console.log(
+    "Accepted React Router RSC-only advisory: this client-router app does not import unstable RSC APIs.",
+  );
+}
+
 const severityRank = { info: 0, low: 1, moderate: 2, high: 3, critical: 4 };
 const blockers = Object.values(vulnerabilities).filter(
   (finding) => (severityRank[finding?.severity] || 0) >= severityRank.high,
 );
 
-if (blockers.length > 0 || (!knownLockfileFinding && auditResult.status !== 0)) {
+if (
+  blockers.length > 0 ||
+  (!knownLockfileFinding && !knownClientOnlyReactRouterFinding && auditResult.status !== 0)
+) {
   process.stdout.write(`${JSON.stringify(report, null, 2)}\n`);
   process.exit(1);
 }
