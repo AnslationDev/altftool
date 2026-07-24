@@ -32,6 +32,26 @@ export async function generateMetadata({ params }) {
   const label = formatCategoryLabel(category);
   const isAll = category === "all";
 
+  // Games is a search vertical of its own ("free online games") — generic
+  // "<label> Tools" metadata undersells it badly. /games 301s here, so this
+  // page carries the games-hub SEO.
+  if (category === "games") {
+    const gameCount = getCategoryToolItems("games").length;
+    return createPageMetadata({
+      title: `Free Online Games – Play ${gameCount}+ Browser Games`,
+      description: `Play ${gameCount}+ free games right in your browser — puzzle, arcade, word, card and board games. No downloads, no sign-up: 2048, sudoku, minesweeper, solitaire, typing test and more.`,
+      path: "/tools/games",
+      keywords: [
+        "free online games",
+        "browser games",
+        "puzzle games",
+        "arcade games",
+        "play games online free",
+        "no download games",
+      ],
+    });
+  }
+
   return createPageMetadata({
     title: isAll
       ? "All Online Tools - Free Browser Microtools"
