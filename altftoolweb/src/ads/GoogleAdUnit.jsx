@@ -127,11 +127,18 @@ function GoogleAdPlacement({ adUnit }) {
 
     const node = adRef.current;
     let disposed = false;
+    let creativeFailed = false;
+
+    const handleCreativeError = (event) => {
+      if (!(event.target instanceof HTMLImageElement)) return;
+      creativeFailed = true;
+      setFillStatus("unfilled");
+    };
 
     const statusObserver = new MutationObserver(() => {
       const status = node.getAttribute("data-ad-status");
       if (
-        status === "filled" ||
+        (!creativeFailed && status === "filled") ||
         status === "unfilled" ||
         status === "unfill-optimized"
       ) {
@@ -143,6 +150,7 @@ function GoogleAdPlacement({ adUnit }) {
       attributes: true,
       attributeFilter: ["data-ad-status"],
     });
+    node.addEventListener("error", handleCreativeError, true);
 
     const requestAd = () => {
       if (
@@ -168,6 +176,7 @@ function GoogleAdPlacement({ adUnit }) {
       return () => {
         disposed = true;
         statusObserver.disconnect();
+        node.removeEventListener("error", handleCreativeError, true);
       };
     }
 
@@ -186,6 +195,7 @@ function GoogleAdPlacement({ adUnit }) {
       disposed = true;
       viewportObserver.disconnect();
       statusObserver.disconnect();
+      node.removeEventListener("error", handleCreativeError, true);
     };
   }, [adUnit.slot]);
 

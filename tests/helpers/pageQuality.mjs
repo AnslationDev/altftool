@@ -76,7 +76,13 @@ export function createPageQualityGate(page, { failOnWarnings = false } = {}) {
     async collect(label) {
       const brokenImages = await page.locator("img").evaluateAll((images) =>
         images
-          .filter((image) => image.complete && image.currentSrc && image.naturalWidth === 0)
+          .filter(
+            (image) =>
+              image.complete &&
+              image.currentSrc &&
+              image.naturalWidth === 0 &&
+              !image.closest(".adsbygoogle"),
+          )
           .map((image) => image.getAttribute("alt") || image.currentSrc),
       ).catch(() => []);
 
