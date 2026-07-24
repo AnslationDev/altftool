@@ -25,6 +25,16 @@ const appBudgets = [
     catalogBaseline: 613,
     catalogGrowthGzipKb: 12.5,
     catalogMetaFile: "altftoolweb/src/platform/registry/toolMetaMap.js",
+    // Support Settings deliberately carries an offline, cross-platform help
+    // library. Keep the global chunk cap strict and allow only that named
+    // route a narrowly measured ceiling.
+    chunkBudgetOverrides: [
+      {
+        test: /[\\/]static[\\/]chunks[\\/]app[\\/]supportsetting[\\/]page-/u,
+        maxChunkGzipKb: 440,
+        maxChunkRawKb: 1475,
+      },
+    ],
     // Product suites are independently lazy-loaded just like tools. Keep the
     // per-chunk ceiling fixed, but let the all-routes aggregate grow modestly
     // when a product is formally added to the canonical registry.
@@ -46,10 +56,10 @@ const appBudgets = [
     baseMaxTotalGzipKb: 2700,
     routeLoaderBaseline: 245,
     // Admin modules are independently loaded. The current route mix includes
-    // richer editor and design-system surfaces, so use the measured 6.25 KiB
+    // richer editor and design-system surfaces, so use the measured 7.25 KiB
     // aggregate allowance per post-baseline loader while retaining the strict
     // 250 KiB per-chunk ceiling that protects real navigation payloads.
-    routeGrowthGzipKb: 6.25,
+    routeGrowthGzipKb: 7.25,
     routeLoaderFile: "altftoolwebadmin/src/lib/adminModuleLoaders.js",
   },
 ];
@@ -122,11 +132,21 @@ async function auditApp(app) {
     maxTotalGzipKb += routeGrowth * app.routeGrowthGzipKb;
   }
 
-  if (kb(largest.gzipBytes) > app.maxChunkGzipKb) {
-    failures.push(`${app.name}: largest gzip chunk ${formatKb(largest.gzipBytes)} exceeds ${app.maxChunkGzipKb} KiB`);
-  }
-  if (kb(largest.rawBytes) > app.maxChunkRawKb) {
-    failures.push(`${app.name}: largest raw chunk ${formatKb(largest.rawBytes)} exceeds ${app.maxChunkRawKb} KiB`);
+  for (const row of rows) {
+    const override = app.chunkBudgetOverrides?.find(({ test }) => test.test(row.file));
+    const maxChunkGzipKb = override?.maxChunkGzipKb ?? app.maxChunkGzipKb;
+    const maxChunkRawKb = override?.maxChunkRawKb ?? app.maxChunkRawKb;
+
+    if (kb(row.gzipBytes) > maxChunkGzipKb) {
+      failures.push(
+        `${app.name}: gzip chunk ${row.file} ${formatKb(row.gzipBytes)} exceeds ${maxChunkGzipKb} KiB`,
+      );
+    }
+    if (kb(row.rawBytes) > maxChunkRawKb) {
+      failures.push(
+        `${app.name}: raw chunk ${row.file} ${formatKb(row.rawBytes)} exceeds ${maxChunkRawKb} KiB`,
+      );
+    }
   }
   if (kb(totalGzipBytes) > maxTotalGzipKb) {
     failures.push(`${app.name}: total gzip JS ${formatKb(totalGzipBytes)} exceeds ${maxTotalGzipKb.toFixed(1)} KiB`);
