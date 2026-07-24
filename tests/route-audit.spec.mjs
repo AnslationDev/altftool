@@ -6,6 +6,7 @@ const webUrl = process.env.ALTFT_WEB_URL || "http://localhost:3002";
 const adminUrl = process.env.ALTFT_ADMIN_URL || "http://localhost:3001";
 const adminModuleAuditTimeoutMs = Number(process.env.ALTFT_ADMIN_MODULE_ROUTE_AUDIT_TIMEOUT_MS || 480_000);
 const adminModuleRouteTimeoutMs = Number(process.env.ALTFT_ADMIN_MODULE_ROUTE_TIMEOUT_MS || 60_000);
+const skipAuthenticatedAdminRouteAudit = process.env.ALTFT_SKIP_AUTHENTICATED_ADMIN_ROUTE_AUDIT === "true";
 
 const staticWebRoutes = [
   "/",
@@ -348,6 +349,10 @@ test("admin public and fallback routes resolve", async ({ page }) => {
 });
 
 test("admin module route surface resolves for local super admin", async ({ page }) => {
+  test.skip(
+    skipAuthenticatedAdminRouteAudit,
+    "Hosted CI audits the production admin surface; local functional validation covers dev-only super-admin routes.",
+  );
   test.setTimeout(adminModuleAuditTimeoutMs);
   const quality = createPageQualityGate(page, {
     // The production-mode route audit deliberately builds without deployment

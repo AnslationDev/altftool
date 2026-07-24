@@ -96,6 +96,7 @@
     "test:tools:priority": "ALTFT_SKIP_ADMIN_SERVER=true playwright test tests/tool-priority.spec.mjs",
     "test:tools:all": "playwright test tests/tool-all-routes.spec.mjs",
     "test:routes": "ALTFT_PLAYWRIGHT_WEB_SERVER=production ALTFT_PLAYWRIGHT_ADMIN_SERVER=dev playwright test tests/route-audit.spec.mjs",
+    "test:routes:ci": "ALTFT_SKIP_AUTHENTICATED_ADMIN_ROUTE_AUDIT=true ALTFT_PLAYWRIGHT_WEB_SERVER=production ALTFT_PLAYWRIGHT_ADMIN_SERVER=production playwright test tests/route-audit.spec.mjs",
     "test:routes:dev": "playwright test tests/route-audit.spec.mjs",
     "test:admin-api": "ALTFT_SKIP_WEB_SERVER=true ALTFT_PLAYWRIGHT_ADMIN_SERVER=dev playwright test tests/admin-api.spec.mjs",
     "test:admin-blog-ux": "playwright test tests/admin-blog-ux.spec.mjs",
@@ -129,6 +130,7 @@
     "validate:runtime-quality": "npm run qa:routes:strict && npm run firebase:live-check:strict && npm run firebase:integrity:strict && npm run performance:budget:strict",
     "validate": "npm run design:check && npm run lint:web && npm run lint:web:budget && npm run routes:check && npm run seo:routes && npm run test:seo-site-url && npm run test:core-cache && npm run test:search-engine && npm run test:route-qa-report && npm run test:performance-budget && npm run test:firebase-data-integrity && npm run test:resilient-fetch && npm run test:production-surface-links && npm run test:release-doctor && npm run test:release-history && npm run test:live-deploy-parity && npm run tools:check && npm run content:blogs && npm run seo:blog-check && npm run seo:blog-links && npm run health:manifest:check && npm run env:readiness && npm run firebase:check && npm run media:check && npm run audit && npm run build && npm run seo:schema && npm run seo:rendered && npm run bundle:audit && npm run performance:budget:strict && npm run test:smoke",
     "validate:functional": "npm run test:routes && npm run test:tools:functional && npm run test:tools:priority && npm run test:mobile-ux && npm run test:admin-api && npm run test:firebase-admin-write-check && npm run test:firebase-live-data-report",
+    "validate:functional:ci": "npm run test:routes:ci && npm run test:tools:functional && npm run test:tools:priority && npm run test:mobile-ux && npm run test:admin-api && npm run test:firebase-admin-write-check && npm run test:firebase-live-data-report",
     "validate:full": "npm run validate && npm run validate:functional",
     "validate:release": "npm run validate:full && npm run firebase:live-check && npm run seo:blog-live-check && npm run test:firebase-public-pages && npm run test:security && npm run test:visual && npm run test:lighthouse"
   },

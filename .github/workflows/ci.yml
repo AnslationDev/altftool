@@ -178,7 +178,7 @@ jobs:
         run: npm run build
 
       - name: Validate route, tool, mobile, and admin behavior
-        run: npm run validate:functional
+        run: npm run validate:functional:ci
 
       - name: Upload functional Playwright artifacts
         if: failure()
