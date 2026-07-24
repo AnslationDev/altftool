@@ -161,8 +161,10 @@ async function main() {
       }
     }
 
-    const runtimeLine = `"${slug}": () => import("@/tools/${slug}/entry")`;
-    if (entryFile && runtimeMapSource && !runtimeMapSource.includes(runtimeLine)) {
+    const runtimeKeyPattern = new RegExp(
+      `${JSON.stringify(slug).replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}:\\s*\\(\\)\\s*=>\\s*import\\(`,
+    );
+    if (entryFile && runtimeMapSource && !runtimeKeyPattern.test(runtimeMapSource)) {
       failures.push(`${slug}: missing from generated toolRuntimeMap.js`);
     }
   }
