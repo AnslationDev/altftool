@@ -5,12 +5,14 @@ import {
   FolderKanban,
   Headset,
   Layers,
+  Mail,
   Palette,
   ShieldAlert,
   ShieldCheck,
   ShieldIcon,
   SlidersHorizontal,
   UserCircle,
+  Wrench,
 } from "lucide-react";
 import { getProject } from "@/projects";
 
@@ -69,6 +71,18 @@ export const GLOBAL_ADMIN_MODULES = {
     label: "RBAC Foundation",
     icon: SlidersHorizontal,
     path: "/rbac",
+    superadminOnly: true,
+  },
+  "tool-catalog": {
+    label: "Tool Catalog",
+    icon: Wrench,
+    path: "/tool-catalog",
+    superadminOnly: true,
+  },
+  newsletter: {
+    label: "Newsletter",
+    icon: Mail,
+    path: "/newsletter",
     superadminOnly: true,
   },
   "notification-broadcast": {

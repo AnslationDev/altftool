@@ -121,24 +121,6 @@ test("production parity strict mode blocks stale live commits", async () => {
   assert.match(commitCheck?.detail || "", /does not match expected/);
 });
 
-test("production parity can skip commit freshness for a separately managed production domain", async () => {
-  const snapshot = liveSnapshot();
-  snapshot.health.payload.release.commitSha = "";
-  const report = await buildParityReport({
-    localSnapshot: localSnapshot(),
-    liveSnapshot: snapshot,
-    expectedCommit: "abcdef1234567890",
-    dirtyFiles: [],
-    strict: true,
-    requireCommit: true,
-    skipCommit: true,
-  });
-
-  assert.equal(report.status, "ready");
-  assert.equal(report.skipCommit, true);
-  assert.equal(report.checks.some((check) => check.key === "release-commit"), false);
-});
-
 test("production parity markdown summarizes checks without secrets", async () => {
   const report = await buildParityReport({
     localSnapshot: localSnapshot(),

@@ -465,7 +465,7 @@ export default function AdminHeader({ user, adminData, onOpenSidebar }) {
           >
             <Bell className="h-4 w-4" />
             {unreadCount > 0 ? (
-              <span className="absolute -right-0.5 -top-0.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-[var(--danger)] px-1 text-[9px] font-bold leading-none text-white">
+              <span className="absolute -right-0.5 -top-0.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-[var(--danger)] px-1 text-[9px] font-bold leading-none text-[var(--danger-foreground)]">
                 {unreadCount > 99 ? "99+" : unreadCount}
               </span>
             ) : null}

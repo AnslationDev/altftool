@@ -1,7 +1,7 @@
 "use client";
 
-import AllProjectsHealthDashboard from "./components/AllProjectsHealthDashboard";
+import QualityProductionHealthDashboard from "./components/QualityProductionHealthDashboard";
 
 export default function HealthPage() {
-  return <AllProjectsHealthDashboard />;
+  return <QualityProductionHealthDashboard />;
 }

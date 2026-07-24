@@ -27,6 +27,8 @@ export default function SecurityGate() {
   const lastActivityRef = useRef(Date.now());
   const activeSinceBeatRef = useRef(false);
   const startedForUidRef = useRef(null);
+  const dialogRef = useRef(null);
+  const acceptButtonRef = useRef(null);
 
   // Stable token fetch from the auth singleton (does not change identity on
   // token refresh, so it never re-triggers session-start in a loop).
@@ -164,6 +166,47 @@ export default function SecurityGate() {
     }
   }, [logout]);
 
+  // A11y for the consent modal: move focus into the dialog on open, trap Tab
+  // focus inside it, and treat Escape as decline (sign out) — mirrors the
+  // role="dialog" + Escape pattern used by the editor dialogs.
+  useEffect(() => {
+    if (!consent?.required) return undefined;
+    const focusTimer = window.setTimeout(() => acceptButtonRef.current?.focus(), 30);
+    const onKeyDown = (event) => {
+      if (event.key === "Escape") {
+        event.preventDefault();
+        forceSignOut();
+        return;
+      }
+      if (event.key !== "Tab") return;
+      const dialog = dialogRef.current;
+      if (!dialog) return;
+      const focusables = Array.from(
+        dialog.querySelectorAll(
+          'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+        )
+      ).filter((el) => !el.disabled);
+      if (!focusables.length) return;
+      const first = focusables[0];
+      const last = focusables[focusables.length - 1];
+      if (!dialog.contains(document.activeElement)) {
+        event.preventDefault();
+        first.focus();
+      } else if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
+    };
+    window.addEventListener("keydown", onKeyDown, true);
+    return () => {
+      window.clearTimeout(focusTimer);
+      window.removeEventListener("keydown", onKeyDown, true);
+    };
+  }, [consent?.required, forceSignOut]);
+
   const acceptConsent = async () => {
     setAccepting(true);
     try {
@@ -180,13 +223,19 @@ export default function SecurityGate() {
 
   return (
     <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/60 p-4 backdrop-blur-sm">
-      <div className="w-full max-w-lg rounded-2xl border border-border bg-surface p-6 shadow-lg">
+      <div
+        ref={dialogRef}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="security-consent-title"
+        className="w-full max-w-lg rounded-2xl border border-border bg-surface p-6 shadow-lg"
+      >
         <div className="flex items-center gap-3">
           <span className="grid h-10 w-10 place-items-center rounded-xl bg-primary-soft text-primary">
             <ShieldCheck className="h-5 w-5" />
           </span>
           <div>
-            <h2 className="text-base font-bold text-foreground">Privacy &amp; Security notice</h2>
+            <h2 id="security-consent-title" className="text-base font-bold text-foreground">Privacy &amp; Security notice</h2>
             <p className="text-xs text-muted">Policy version {consent.currentVersion}</p>
           </div>
         </div>
@@ -211,6 +260,7 @@ export default function SecurityGate() {
             Decline &amp; sign out
           </button>
           <button
+            ref={acceptButtonRef}
             type="button"
             onClick={acceptConsent}
             disabled={accepting}

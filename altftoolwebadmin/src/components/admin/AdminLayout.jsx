@@ -15,6 +15,24 @@ import { LockKeyhole, RefreshCw, ShieldAlert } from "lucide-react";
 
 const DEV_BYPASS_AUTH = process.env.NEXT_PUBLIC_DEV_BYPASS_AUTH === "true";
 
+function AdminGuardState({ title, detail }) {
+  return (
+    <main
+      className="flex h-screen items-center justify-center bg-[var(--background)] px-4"
+      aria-busy="true"
+    >
+      <div
+        className="flex w-full max-w-sm flex-col items-center gap-3 rounded-lg border border-[var(--border)] bg-[var(--surface)] p-6 text-center text-[var(--muted)] shadow-sm"
+        role="status"
+      >
+        <RefreshCw className="h-8 w-8 animate-spin text-[var(--primary)] motion-reduce:animate-none" />
+        <span className="text-sm font-medium">{title}</span>
+        <span className="text-xs leading-5 text-[var(--muted)]">{detail}</span>
+      </div>
+    </main>
+  );
+}
+
 export default function AdminLayout({ children }) {
   const { user, adminData, loading, isSuperAdmin, isPendingUser, isDenied } = useAuth();
   const router = useRouter();
@@ -96,21 +114,37 @@ export default function AdminLayout({ children }) {
   /* ── Loading ── */
   if (!DEV_BYPASS_AUTH && loading) {
     return (
-      <div className="flex h-screen items-center justify-center bg-[var(--background)] px-4">
-        <div className="flex w-full max-w-sm flex-col items-center gap-3 rounded-lg border border-[var(--border)] bg-[var(--surface)] p-6 text-center text-[var(--muted)] shadow-sm">
-          <RefreshCw className="h-8 w-8 animate-spin text-[var(--primary)]" />
-          <span className="text-sm font-medium">Loading dashboard</span>
-          <span className="text-xs leading-5 text-[var(--muted)]">
-            Checking your admin session and module permissions.
-          </span>
-        </div>
-      </div>
+      <AdminGuardState
+        title="Loading dashboard"
+        detail="Checking your admin session and module permissions."
+      />
     );
   }
 
-  if (!DEV_BYPASS_AUTH && !user) return null;
-  if (!DEV_BYPASS_AUTH && isPendingUser) return null;
-  if (!DEV_BYPASS_AUTH && isDenied) return null;
+  if (!DEV_BYPASS_AUTH && !user) {
+    return (
+      <AdminGuardState
+        title="Opening sign in"
+        detail="No active admin session was found. Redirecting securely."
+      />
+    );
+  }
+  if (!DEV_BYPASS_AUTH && isPendingUser) {
+    return (
+      <AdminGuardState
+        title="Opening access status"
+        detail="Your admin access request is still pending."
+      />
+    );
+  }
+  if (!DEV_BYPASS_AUTH && isDenied) {
+    return (
+      <AdminGuardState
+        title="Opening access notice"
+        detail="This account does not currently have admin access."
+      />
+    );
+  }
 
   const effectiveUser = DEV_BYPASS_AUTH ? { email: "dev@local" } : user;
 

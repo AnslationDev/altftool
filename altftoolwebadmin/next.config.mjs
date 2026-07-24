@@ -3,6 +3,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 const workspaceRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
+const isProduction = process.env.NODE_ENV === "production";
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -33,6 +34,7 @@ const nextConfig = {
       "recharts",
       "react-select",
     ],
+    ...(isProduction ? { webpackMemoryOptimizations: true } : {}),
   },
 
   async redirects() {

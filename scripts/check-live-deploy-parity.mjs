@@ -202,7 +202,7 @@ async function collectLiveSnapshot({ webUrl = DEFAULT_WEB_URL, timeoutMs = 12000
   };
 }
 
-function analyzeParity({ local, live, expectedCommit = "", strict = false, requireCommit = false, skipCommit = false }) {
+function analyzeParity({ local, live, expectedCommit = "", strict = false, requireCommit = false }) {
   const health = live.health.payload || {};
   const liveCommit = String(health.release?.commitSha || "");
   const expectedShort = String(expectedCommit || "").slice(0, 8);
@@ -231,24 +231,20 @@ function analyzeParity({ local, live, expectedCommit = "", strict = false, requi
       expected: { service: "altftool-web", minScore: strict ? 95 : 90 },
       actual: { service: health.service, score: liveHealthScore, status: health.overall?.status || null },
     }),
-    ...(!skipCommit
-      ? [
-          createCheck({
-            key: "release-commit",
-            label: "Release commit freshness",
-            status: commitMatches ? "pass" : requireCommit || (!commitMissing && strict) ? "block" : "warn",
-            score: commitMatches ? 100 : commitMissing ? 70 : 45,
-            detail: commitMatches
-              ? `Live commit ${liveShort} matches expected ${expectedShort}.`
-              : commitMissing
-                ? `Commit comparison incomplete; expected ${expectedShort || "not available"}, live ${liveShort || "not exposed"}.`
-                : `Live commit ${liveShort} does not match expected ${expectedShort}.`,
-            nextAction: "Deploy the current main commit or rerun with ALTFT_EXPECTED_COMMIT set to the intended release SHA.",
-            expected: { commit: expectedShort || null },
-            actual: { commit: liveShort || null },
-          }),
-        ]
-      : []),
+    createCheck({
+      key: "release-commit",
+      label: "Release commit freshness",
+      status: commitMatches ? "pass" : requireCommit || (!commitMissing && strict) ? "block" : "warn",
+      score: commitMatches ? 100 : commitMissing ? 70 : 45,
+      detail: commitMatches
+        ? `Live commit ${liveShort} matches expected ${expectedShort}.`
+        : commitMissing
+          ? `Commit comparison incomplete; expected ${expectedShort || "not available"}, live ${liveShort || "not exposed"}.`
+          : `Live commit ${liveShort} does not match expected ${expectedShort}.`,
+      nextAction: "Deploy the current main commit or rerun with ALTFT_EXPECTED_COMMIT set to the intended release SHA.",
+      expected: { commit: expectedShort || null },
+      actual: { commit: liveShort || null },
+    }),
     createCheck({
       key: "tool-registry",
       label: "Tool registry parity",
@@ -309,7 +305,6 @@ function analyzeParity({ local, live, expectedCommit = "", strict = false, requi
     status,
     strict,
     requireCommit,
-    skipCommit,
     score,
     counts,
     blockingChecks: checks.filter((check) => check.status === "block").map((check) => check.label),
@@ -370,12 +365,11 @@ export async function buildParityReport(options = {}) {
   const strict = Boolean(options.strict);
   const expectedCommit = options.expectedCommit ?? getExpectedCommit();
   const requireCommit = Boolean(options.requireCommit);
-  const skipCommit = Boolean(options.skipCommit);
   const [local, live] = await Promise.all([
     options.localSnapshot ? Promise.resolve(options.localSnapshot) : loadLocalParitySnapshot(),
     options.liveSnapshot ? Promise.resolve(options.liveSnapshot) : collectLiveSnapshot({ webUrl, timeoutMs, fetchImpl: options.fetchImpl || fetch }),
   ]);
-  const analysis = analyzeParity({ local, live, expectedCommit, strict, requireCommit, skipCommit });
+  const analysis = analyzeParity({ local, live, expectedCommit, strict, requireCommit });
   const liveCommit = String(live.health?.payload?.release?.commitSha || "");
   const dirtyFiles = options.dirtyFiles || getDirtyFiles();
 
@@ -476,14 +470,13 @@ async function main() {
   const json = hasFlag("--json", args);
   const strict = hasFlag("--strict", args) || envFlag("ALTFT_PARITY_STRICT");
   const requireCommit = hasFlag("--require-commit", args) || envFlag("ALTFT_PARITY_REQUIRE_COMMIT");
-  const skipCommit = hasFlag("--skip-commit", args) || envFlag("ALTFT_PARITY_SKIP_COMMIT");
   const noBrowser = hasFlag("--no-browser", args) || json;
   const outputPath = argValue("--output", process.env.ALTFT_PARITY_OUTPUT_PATH || "", args);
   const markdownPath = argValue("--output-md", argValue("--output-markdown", process.env.ALTFT_PARITY_MARKDOWN_PATH || "", args), args);
   const webUrl = normalizeUrl(argValue("--url", process.env.ALTFT_WEB_URL || process.env.ALTFT_LIVE_URL || DEFAULT_WEB_URL, args));
   const timeoutMs = Number(argValue("--timeout-ms", process.env.ALTFT_PARITY_TIMEOUT_MS || "12000", args));
   const valueFlags = new Set(["--output", "--output-md", "--output-markdown", "--url", "--timeout-ms"]);
-  const ignoredFlags = new Set(["--json", "--strict", "--require-commit", "--skip-commit", "--no-browser"]);
+  const ignoredFlags = new Set(["--json", "--strict", "--require-commit", "--no-browser"]);
   const browserArgs = [];
   for (let index = 0; index < args.length; index += 1) {
     const arg = args[index];
@@ -497,7 +490,7 @@ async function main() {
     browserArgs.push(arg);
   }
 
-  const report = await buildParityReport({ webUrl, strict, requireCommit, skipCommit, timeoutMs });
+  const report = await buildParityReport({ webUrl, strict, requireCommit, timeoutMs });
   await writeReportFiles(report, { outputPath, markdownPath });
 
   if (json) console.log(JSON.stringify(report, null, 2));

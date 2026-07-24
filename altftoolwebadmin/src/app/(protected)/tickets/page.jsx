@@ -10,7 +10,6 @@ import {
   Loader2,
   Search,
   ChevronRight,
-  MessageCircle,
   Clock,
   UserCheck,
   X,
@@ -25,43 +24,43 @@ import {
 
 const STATUS_CONFIG = {
   open: {
-    badge: "bg-sky-50 text-sky-700 ring-1 ring-sky-200",
-    stat: "bg-sky-50 border-sky-200 text-sky-700",
-    activeStat: "bg-sky-600 text-white border-sky-600",
-    dot: "bg-sky-400",
+    badge: "bg-[var(--info-soft)] text-[var(--info)] ring-1 ring-[var(--border)]",
+    stat: "bg-[var(--info-soft)] border-[var(--border)] text-[var(--info)]",
+    activeStat: "bg-[var(--info)] text-[var(--primary-foreground)] border-[var(--info)]",
+    dot: "bg-[var(--info)]",
     label: "Open",
     icon: Circle,
   },
   in_progress: {
-    badge: "bg-amber-50 text-amber-700 ring-1 ring-amber-200",
-    stat: "bg-amber-50 border-amber-200 text-amber-700",
-    activeStat: "bg-amber-500 text-white border-amber-500",
-    dot: "bg-amber-400",
+    badge: "bg-[var(--warning-soft)] text-[var(--warning)] ring-1 ring-[var(--border)]",
+    stat: "bg-[var(--warning-soft)] border-[var(--border)] text-[var(--warning)]",
+    activeStat: "bg-[var(--warning)] text-[var(--primary-foreground)] border-[var(--warning)]",
+    dot: "bg-[var(--warning)]",
     label: "In Progress",
     icon: TrendingUp,
   },
   resolved: {
-    badge: "bg-emerald-50 text-emerald-700 ring-1 ring-emerald-200",
-    stat: "bg-emerald-50 border-emerald-200 text-emerald-700",
-    activeStat: "bg-emerald-600 text-white border-emerald-600",
-    dot: "bg-emerald-400",
+    badge: "bg-[var(--success-soft)] text-[var(--success)] ring-1 ring-[var(--border)]",
+    stat: "bg-[var(--success-soft)] border-[var(--border)] text-[var(--success)]",
+    activeStat: "bg-[var(--success)] text-[var(--primary-foreground)] border-[var(--success)]",
+    dot: "bg-[var(--success)]",
     label: "Resolved",
     icon: CheckCircle2,
   },
   closed: {
-    badge: "bg-gray-100 text-gray-500 ring-1 ring-gray-200",
-    stat: "bg-gray-50 border-gray-200 text-gray-500",
-    activeStat: "bg-gray-700 text-white border-gray-700",
-    dot: "bg-gray-400",
+    badge: "bg-[var(--surface-soft)] text-[var(--muted)] ring-1 ring-[var(--border)]",
+    stat: "bg-[var(--surface-soft)] border-[var(--border)] text-[var(--muted)]",
+    activeStat: "bg-[var(--primary)] text-[var(--primary-foreground)] border-[var(--primary)]",
+    dot: "bg-[var(--muted)]",
     label: "Closed",
     icon: AlertCircle,
   },
 };
 
 const PRIORITY_CONFIG = {
-  low: { badge: "bg-gray-50 text-gray-500 ring-1 ring-gray-200", label: "Low" },
-  medium: { badge: "bg-amber-50 text-amber-600 ring-1 ring-amber-200", label: "Medium" },
-  high: { badge: "bg-rose-50 text-rose-600 ring-1 ring-rose-200", label: "High" },
+  low: { badge: "bg-[var(--surface-soft)] text-[var(--muted)] ring-1 ring-[var(--border)]", label: "Low" },
+  medium: { badge: "bg-[var(--warning-soft)] text-[var(--warning)] ring-1 ring-[var(--border)]", label: "Medium" },
+  high: { badge: "bg-[var(--danger-soft)] text-[var(--danger)] ring-1 ring-[var(--border)]", label: "High" },
 };
 
 const TYPE_LABEL = { bug: "🐛 Bug", feature: "✨ Feature", query: "💬 Query" };
@@ -109,12 +108,12 @@ function StatCard({ status, count, active, onClick }) {
 function EmptyState({ hasFilters }) {
   return (
     <div className="flex flex-col items-center justify-center py-20 gap-4">
-      <div className="w-16 h-16 rounded-3xl bg-gray-100 flex items-center justify-center">
-        <TicketIcon className="w-7 h-7 text-gray-300" />
+      <div className="w-16 h-16 rounded-3xl bg-[var(--surface-soft)] flex items-center justify-center">
+        <TicketIcon className="w-7 h-7 text-[var(--muted)]" />
       </div>
       <div className="text-center">
-        <p className="text-sm font-semibold text-gray-600">No tickets found</p>
-        <p className="text-xs text-gray-400 mt-1">
+        <p className="text-sm font-semibold text-[var(--muted)]">No tickets found</p>
+        <p className="text-xs text-[var(--muted)] mt-1">
           {hasFilters ? "Try adjusting your filters" : "All caught up!"}
         </p>
       </div>
@@ -131,12 +130,12 @@ function TicketRow({ ticket, onClick }) {
   return (
     <button
       onClick={onClick}
-      className="w-full text-left px-5 py-4 hover:bg-gray-50/70 transition-colors group"
+      className="w-full text-left px-5 py-4 hover:bg-[var(--surface-soft)] transition-colors group"
     >
       {/* Mobile layout */}
       <div className="sm:hidden flex items-start justify-between gap-3">
         <div className="min-w-0 flex-1">
-          <p className="text-sm font-semibold text-gray-800 truncate group-hover:text-gray-900 transition-colors">
+          <p className="text-sm font-semibold text-[var(--foreground)] truncate transition-colors">
             {ticket.title}
           </p>
           <div className="flex items-center gap-2 mt-1.5 flex-wrap">
@@ -146,27 +145,27 @@ function TicketRow({ ticket, onClick }) {
             <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${statusCfg.badge}`}>
               {statusCfg.label}
             </span>
-            <span className="text-[10px] text-gray-400 flex items-center gap-0.5">
+            <span className="text-[10px] text-[var(--muted)] flex items-center gap-0.5">
               <Clock className="w-2.5 h-2.5" /> {fmtDate(ticket.createdAt)}
             </span>
           </div>
         </div>
-        <ChevronRight className="w-4 h-4 text-gray-300 group-hover:text-gray-500 shrink-0 mt-1 transition-colors" />
+        <ChevronRight className="w-4 h-4 text-[var(--muted)] shrink-0 mt-1 transition-colors" />
       </div>
 
       {/* Desktop layout */}
       <div className="hidden sm:grid grid-cols-[1fr_120px_80px_100px_90px_32px] gap-4 items-center">
         <div className="min-w-0">
-          <p className="text-sm font-semibold text-gray-800 truncate group-hover:text-gray-900 transition-colors">
+          <p className="text-sm font-semibold text-[var(--foreground)] truncate transition-colors">
             {ticket.title}
           </p>
           {ticket.assignedTo && (
-            <span className="inline-flex items-center gap-1 text-[10px] text-gray-400 mt-0.5">
+            <span className="inline-flex items-center gap-1 text-[10px] text-[var(--muted)] mt-0.5">
               <UserCheck className="w-2.5 h-2.5" /> Assigned
             </span>
           )}
         </div>
-        <span className="text-[10px] font-bold px-2.5 py-1 rounded-full bg-violet-50 text-violet-700 ring-1 ring-violet-200 w-fit">
+        <span className="text-[10px] font-bold px-2.5 py-1 rounded-full bg-[var(--accent-soft)] text-[var(--accent)] ring-1 ring-[var(--border)] w-fit">
           {TYPE_LABEL[ticket.type] ?? ticket.type}
         </span>
         <span className={`text-[10px] font-bold px-2.5 py-1 rounded-full w-fit ${priorityCfg.badge}`}>
@@ -178,8 +177,8 @@ function TicketRow({ ticket, onClick }) {
             {statusCfg.label}
           </span>
         </div>
-        <span className="text-xs text-gray-400 whitespace-nowrap">{fmtDate(ticket.createdAt)}</span>
-        <ChevronRight className="w-3.5 h-3.5 text-gray-300 group-hover:text-gray-500 transition-colors" />
+        <span className="text-xs text-[var(--muted)] whitespace-nowrap">{fmtDate(ticket.createdAt)}</span>
+        <ChevronRight className="w-3.5 h-3.5 text-[var(--muted)] transition-colors" />
       </div>
     </button>
   );
@@ -237,14 +236,14 @@ export default function SupportManagementPage() {
   };
 
   return (
-    <div className="min-h-screen bg-(--background)">
+    <div className="min-h-screen bg-[var(--background)] text-[var(--foreground)]">
       {/* Page header */}
-      <div className="bg-white border-b border-gray-100">
+      <div className="bg-[var(--surface)] border-b border-[var(--border)]">
         <div className="max-w-7xl mx-auto px-5 py-6">
           <div className="flex items-start justify-between gap-4">
             <div>
-              <h1 className="text-xl font-bold text-gray-900">Support Management</h1>
-              <p className="text-sm text-gray-400 mt-0.5">
+              <h1 className="text-xl font-bold text-[var(--foreground)]">Support Management</h1>
+              <p className="text-sm text-[var(--muted)] mt-0.5">
                 {loading ? "Loading…" : `${tickets.length} total ticket${tickets.length !== 1 ? "s" : ""}`}
               </p>
             </div>
@@ -269,21 +268,22 @@ export default function SupportManagementPage() {
       <div className="max-w-7xl mx-auto px-5 py-5 space-y-4">
 
         {/* Search + filters bar */}
-        <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-3 flex flex-col sm:flex-row gap-3">
+        <div className="bg-[var(--surface)] rounded-2xl border border-[var(--border)] shadow-sm p-3 flex flex-col sm:flex-row gap-3">
           {/* Search */}
           <div className="relative flex-1">
-            <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" />
+            <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--muted)] pointer-events-none" />
             <input
               type="text"
               placeholder="Search tickets by title…"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="w-full pl-10 pr-4 py-2.5 text-sm rounded-xl border border-gray-200 bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gray-900/10 focus:border-gray-400 placeholder:text-gray-400 transition"
+              className="w-full pl-10 pr-4 py-2.5 text-sm rounded-xl border border-[var(--border)] bg-[var(--surface-soft)] focus:outline-none focus:[box-shadow:var(--focus-ring)] focus:border-[var(--border-strong)] placeholder:text-[var(--muted)] transition"
             />
             {search && (
               <button
                 onClick={() => setSearch("")}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition"
+                aria-label="Clear search"
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-[var(--muted)] hover:text-[var(--foreground)] transition"
               >
                 <X className="w-3.5 h-3.5" />
               </button>
@@ -296,14 +296,14 @@ export default function SupportManagementPage() {
               onClick={() => setShowFilters((v) => !v)}
               className={`flex items-center gap-1.5 px-3.5 py-2.5 text-sm font-medium rounded-xl border transition ${
                 showFilters || priorityFilter
-                  ? "border-gray-900 bg-gray-900 text-white"
-                  : "border-gray-200 text-gray-600 hover:bg-gray-50"
+                  ? "border-[var(--primary)] bg-[var(--primary)] text-[var(--primary-foreground)]"
+                  : "border-[var(--border)] text-[var(--muted)] hover:bg-[var(--surface-soft)]"
               }`}
             >
               <SlidersHorizontal className="w-3.5 h-3.5" />
               Filters
               {activeFilterCount > 0 && (
-                <span className="w-4 h-4 rounded-full bg-white/20 text-[9px] font-black flex items-center justify-center">
+                <span className="w-4 h-4 rounded-full bg-[var(--primary-foreground)]/20 text-[9px] font-black flex items-center justify-center">
                   {activeFilterCount}
                 </span>
               )}
@@ -312,7 +312,7 @@ export default function SupportManagementPage() {
             {hasFilters && (
               <button
                 onClick={clearFilters}
-                className="px-3.5 py-2.5 text-sm font-medium text-gray-500 hover:text-gray-800 border border-gray-200 rounded-xl hover:bg-gray-50 transition"
+                className="px-3.5 py-2.5 text-sm font-medium text-[var(--muted)] hover:text-[var(--foreground)] border border-[var(--border)] rounded-xl hover:bg-[var(--surface-soft)] transition"
               >
                 Clear
               </button>
@@ -322,13 +322,13 @@ export default function SupportManagementPage() {
 
         {/* Expanded filters */}
         {showFilters && (
-          <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-4 flex flex-wrap gap-3">
+          <div className="bg-[var(--surface)] rounded-2xl border border-[var(--border)] shadow-sm p-4 flex flex-wrap gap-3">
             <div className="flex flex-col gap-1">
-              <label className="text-[10px] font-bold text-gray-400 uppercase tracking-wider">Status</label>
+              <label className="text-[10px] font-bold text-[var(--muted)] uppercase tracking-wider">Status</label>
               <select
                 value={statusFilter}
                 onChange={(e) => setStatusFilter(e.target.value)}
-                className="text-sm px-3 py-2 rounded-xl border border-gray-200 bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gray-900/10 text-gray-700 min-w-[140px]"
+                className="text-sm px-3 py-2 rounded-xl border border-[var(--border)] bg-[var(--surface-soft)] focus:outline-none focus:[box-shadow:var(--focus-ring)] text-[var(--foreground)] min-w-[140px]"
               >
                 <option value="">All Status</option>
                 <option value="open">Open</option>
@@ -339,11 +339,11 @@ export default function SupportManagementPage() {
             </div>
 
             <div className="flex flex-col gap-1">
-              <label className="text-[10px] font-bold text-gray-400 uppercase tracking-wider">Priority</label>
+              <label className="text-[10px] font-bold text-[var(--muted)] uppercase tracking-wider">Priority</label>
               <select
                 value={priorityFilter}
                 onChange={(e) => setPriorityFilter(e.target.value)}
-                className="text-sm px-3 py-2 rounded-xl border border-gray-200 bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gray-900/10 text-gray-700 min-w-[140px]"
+                className="text-sm px-3 py-2 rounded-xl border border-[var(--border)] bg-[var(--surface-soft)] focus:outline-none focus:[box-shadow:var(--focus-ring)] text-[var(--foreground)] min-w-[140px]"
               >
                 <option value="">All Priority</option>
                 <option value="low">Low</option>
@@ -357,26 +357,26 @@ export default function SupportManagementPage() {
         {/* Results summary */}
         {hasFilters && !loading && (
           <div className="flex items-center gap-2 px-1">
-            <span className="text-xs text-gray-500">
-              Showing <span className="font-bold text-gray-700">{filtered.length}</span> of{" "}
-              <span className="font-bold text-gray-700">{tickets.length}</span> tickets
+            <span className="text-xs text-[var(--muted)]">
+              Showing <span className="font-bold text-[var(--foreground)]">{filtered.length}</span> of{" "}
+              <span className="font-bold text-[var(--foreground)]">{tickets.length}</span> tickets
             </span>
           </div>
         )}
 
         {/* Ticket table */}
-        <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
+        <div className="bg-[var(--surface)] rounded-2xl border border-[var(--border)] shadow-sm overflow-hidden">
           {loading ? (
             <div className="flex flex-col items-center justify-center py-20 gap-3">
-              <Loader2 className="w-6 h-6 animate-spin text-gray-400" />
-              <p className="text-sm text-gray-400">Loading tickets…</p>
+              <Loader2 className="w-6 h-6 animate-spin text-[var(--muted)]" />
+              <p className="text-sm text-[var(--muted)]">Loading tickets…</p>
             </div>
           ) : filtered.length === 0 ? (
             <EmptyState hasFilters={hasFilters} />
           ) : (
             <>
               {/* Table header (desktop only) */}
-              <div className="hidden sm:grid grid-cols-[1fr_120px_80px_100px_90px_32px] gap-4 px-5 py-3 bg-(--surface-soft) border-b border-(--border) text-[11px] font-semibold text-(--muted) uppercase tracking-wider">
+              <div className="hidden sm:grid grid-cols-[1fr_120px_80px_100px_90px_32px] gap-4 px-5 py-3 bg-[var(--surface-soft)] border-b border-[var(--border)] text-[11px] font-semibold text-[var(--muted)] uppercase tracking-wider">
                 <span>Ticket</span>
                 <span>Type</span>
                 <span>Priority</span>
@@ -385,7 +385,7 @@ export default function SupportManagementPage() {
                 <span />
               </div>
 
-              <div className="divide-y divide-gray-50">
+              <div className="divide-y divide-[var(--border)]">
                 {filtered.map((t) => (
                   <TicketRow
                     key={t.id}
@@ -396,8 +396,8 @@ export default function SupportManagementPage() {
               </div>
 
               {/* Footer */}
-              <div className="px-5 py-3 bg-gray-50/50 border-t border-gray-100">
-                <p className="text-[11px] text-gray-400">
+              <div className="px-5 py-3 bg-[var(--surface-soft)] border-t border-[var(--border)]">
+                <p className="text-[11px] text-[var(--muted)]">
                   {filtered.length} ticket{filtered.length !== 1 ? "s" : ""}
                   {hasFilters ? " matching filters" : " total"}
                 </p>

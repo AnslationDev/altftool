@@ -169,7 +169,7 @@ function EditorShell({ error, onEmitFromSource }) {
               }}
               spellCheck={false}
               aria-label="Blog HTML source editor"
-              className="h-full min-h-[440px] w-full resize-none border-0 bg-[#0b1220] p-6 font-mono text-[13px] leading-6 text-slate-100 outline-none"
+              className="h-full min-h-[440px] w-full resize-none border-0 bg-[var(--surface-soft)] p-6 font-mono text-[13px] leading-6 text-[var(--foreground)] outline-none"
             />
           )}
         </div>

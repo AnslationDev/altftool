@@ -13,17 +13,17 @@ import {
 
 const PROJECT_LIST = Object.values(PROJECTS);
 
-function Field({ label, hint, error, icon, children }) {
+function Field({ label, hint, error, icon, htmlFor, children }) {
   return (
     <div className="space-y-1.5">
-      <label className="flex items-center gap-1.5 text-xs font-bold text-gray-600 uppercase tracking-wider">
-        {icon && <span className="text-gray-400">{icon}</span>}
+      <label htmlFor={htmlFor} className="flex items-center gap-1.5 text-xs font-bold text-[var(--muted)] uppercase tracking-wider">
+        {icon && <span className="text-[var(--muted)]">{icon}</span>}
         {label}
       </label>
       {children}
-      {hint && !error && <p className="text-xs text-gray-400">{hint}</p>}
+      {hint && !error && <p className="text-xs text-[var(--muted)]">{hint}</p>}
       {error && (
-        <p className="flex items-center gap-1 text-xs text-red-500 font-medium">
+        <p className="flex items-center gap-1 text-xs text-[var(--danger)] font-medium">
           <AlertCircle className="w-3 h-3 shrink-0" />{error}
         </p>
       )}
@@ -35,8 +35,8 @@ function Section({ title, children }) {
   return (
     <div className="space-y-4">
       <div className="flex items-center gap-3">
-        <span className="text-[10px] font-black text-gray-400 uppercase tracking-[0.15em] whitespace-nowrap">{title}</span>
-        <div className="flex-1 h-px bg-gray-100" />
+        <span className="text-[10px] font-black text-[var(--muted)] uppercase tracking-[0.15em] whitespace-nowrap">{title}</span>
+        <div className="flex-1 h-px bg-[var(--border)]" />
       </div>
       {children}
     </div>
@@ -172,18 +172,18 @@ export default function EditAdminModal({ admin, onClose, refresh }) {
 
   return (
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-      <div className="bg-white rounded-2xl shadow-2xl w-full max-w-[700px] max-h-[92vh] flex flex-col overflow-hidden">
+      <div role="dialog" aria-modal="true" aria-labelledby="edit-admin-modal-title" className="bg-[var(--surface)] rounded-2xl shadow-2xl w-full max-w-[700px] max-h-[92vh] flex flex-col overflow-hidden">
 
         {/* Header */}
-        <div className="flex items-start justify-between px-6 py-5 border-b border-gray-100 shrink-0">
+        <div className="flex items-start justify-between px-6 py-5 border-b border-[var(--border)] shrink-0">
           <div>
-            <h2 className="text-base font-bold text-gray-900">Edit Admin</h2>
-            <p className="text-xs text-gray-400 mt-0.5">
-              Editing <span className="font-semibold text-gray-700">{admin.email}</span>
-              {isSelf && <span className="ml-1.5 text-[10px] font-bold bg-blue-100 text-blue-600 px-1.5 py-0.5 rounded-full">You</span>}
+            <h2 id="edit-admin-modal-title" className="text-base font-bold text-[var(--foreground)]">Edit Admin</h2>
+            <p className="text-xs text-[var(--muted)] mt-0.5">
+              Editing <span className="font-semibold text-[var(--foreground)]">{admin.email}</span>
+              {isSelf && <span className="ml-1.5 text-[10px] font-bold bg-[var(--primary-soft)] text-[var(--primary)] px-1.5 py-0.5 rounded-full">You</span>}
             </p>
           </div>
-          <button onClick={onClose} disabled={loading} className="p-1.5 rounded-lg text-gray-400 hover:bg-gray-100 transition disabled:opacity-40">
+          <button onClick={onClose} disabled={loading} aria-label="Close" className="p-1.5 rounded-lg text-[var(--muted)] hover:bg-[var(--surface-soft)] transition disabled:opacity-40">
             <X className="w-4 h-4" />
           </button>
         </div>
@@ -192,49 +192,52 @@ export default function EditAdminModal({ admin, onClose, refresh }) {
         <div className="flex-1 overflow-y-auto px-6 py-5 space-y-7">
 
           <Section title="Account">
-            <div className="flex items-center gap-3 px-4 py-3 bg-gray-50 rounded-xl border border-gray-200">
-              <div className="w-9 h-9 rounded-xl bg-gray-200 flex items-center justify-center text-sm font-bold text-gray-600 shrink-0">
+            <div className="flex items-center gap-3 px-4 py-3 bg-[var(--surface-soft)] rounded-xl border border-[var(--border)]">
+              <div className="w-9 h-9 rounded-xl bg-[var(--border)] flex items-center justify-center text-sm font-bold text-[var(--muted)] shrink-0">
                 {admin.email?.[0]?.toUpperCase()}
               </div>
               <div className="min-w-0">
-                <p className="text-sm font-semibold text-gray-800 truncate">{admin.email}</p>
-                <p className="text-xs text-gray-400">UID: <span className="font-mono">{admin.id}</span></p>
+                <p className="text-sm font-semibold text-[var(--foreground)] truncate">{admin.email}</p>
+                <p className="text-xs text-[var(--muted)]">UID: <span className="font-mono">{admin.id}</span></p>
               </div>
               <div className="ml-auto shrink-0">
-                <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${admin.isActive ? "bg-green-100 text-green-700" : "bg-red-100 text-red-700"}`}>
+                <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${admin.isActive ? "bg-[var(--success-soft)] text-[var(--success)]" : "bg-[var(--danger-soft)] text-[var(--danger)]"}`}>
                   {admin.isActive ? "Active" : "Inactive"}
                 </span>
               </div>
             </div>
-            <Field label="Login Email" icon={<Mail className="w-3.5 h-3.5" />} hint="Used to sign in to the admin panel.">
+            <Field label="Login Email" htmlFor="edit-admin-email" icon={<Mail className="w-3.5 h-3.5" />} hint="Used to sign in to the admin panel.">
               <input
+                id="edit-admin-email"
                 type="email"
                 value={email}
                 onChange={(event) => setEmail(event.target.value)}
                 disabled={loading}
                 autoComplete="email"
-                className="w-full text-sm px-3 py-2.5 rounded-xl border border-gray-200 bg-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-400/30 focus:border-blue-400 transition"
+                className="w-full text-sm px-3 py-2.5 rounded-xl border border-[var(--border)] bg-[var(--surface)] placeholder:text-[var(--muted)] focus:outline-none focus:ring-2 focus:ring-[var(--primary)]/30 focus:border-[var(--primary)] transition"
               />
             </Field>
             <div className="grid gap-4 sm:grid-cols-2">
-              <Field label="Full Name" icon={<Users className="w-3.5 h-3.5" />} hint="Shown on the admin card.">
+              <Field label="Full Name" htmlFor="edit-admin-full-name" icon={<Users className="w-3.5 h-3.5" />} hint="Shown on the admin card.">
                 <input
+                  id="edit-admin-full-name"
                   type="text"
                   value={fullName}
                   onChange={(event) => setFullName(event.target.value)}
                   disabled={loading}
                   autoComplete="name"
-                  className="w-full text-sm px-3 py-2.5 rounded-xl border border-gray-200 bg-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-400/30 focus:border-blue-400 transition"
+                  className="w-full text-sm px-3 py-2.5 rounded-xl border border-[var(--border)] bg-[var(--surface)] placeholder:text-[var(--muted)] focus:outline-none focus:ring-2 focus:ring-[var(--primary)]/30 focus:border-[var(--primary)] transition"
                 />
               </Field>
-              <Field label="Team" icon={<Users className="w-3.5 h-3.5" />} hint="Optional team or department.">
+              <Field label="Team" htmlFor="edit-admin-team" icon={<Users className="w-3.5 h-3.5" />} hint="Optional team or department.">
                 <input
+                  id="edit-admin-team"
                   type="text"
                   value={team}
                   onChange={(event) => setTeam(event.target.value)}
                   disabled={loading}
                   placeholder="e.g. Operations"
-                  className="w-full text-sm px-3 py-2.5 rounded-xl border border-gray-200 bg-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-400/30 focus:border-blue-400 transition"
+                  className="w-full text-sm px-3 py-2.5 rounded-xl border border-[var(--border)] bg-[var(--surface)] placeholder:text-[var(--muted)] focus:outline-none focus:ring-2 focus:ring-[var(--primary)]/30 focus:border-[var(--primary)] transition"
                 />
               </Field>
             </div>
@@ -242,24 +245,25 @@ export default function EditAdminModal({ admin, onClose, refresh }) {
 
           <Section title="Reset Password">
             {isSelf && (
-              <div className="flex items-start gap-2 bg-amber-50 border border-amber-200 rounded-xl px-4 py-3">
-                <AlertTriangle className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
-                <p className="text-xs text-amber-700">Changing your own password may require you to log in again.</p>
+              <div className="flex items-start gap-2 bg-[var(--warning-soft)] border border-[var(--warning)]/30 rounded-xl px-4 py-3">
+                <AlertTriangle className="w-4 h-4 text-[var(--warning)] shrink-0 mt-0.5" />
+                <p className="text-xs text-[var(--warning)]">Changing your own password may require you to log in again.</p>
               </div>
             )}
-            <Field label="New Password" icon={<Lock className="w-3.5 h-3.5" />}
+            <Field label="New Password" htmlFor="edit-admin-new-password" icon={<Lock className="w-3.5 h-3.5" />}
               hint="Passwords cannot be viewed. Enter a new password to reset it." error={passwordError}>
               <div className="relative">
-                <input type={showPassword ? "text" : "password"} name="edit-admin-new-password"
+                <input type={showPassword ? "text" : "password"} id="edit-admin-new-password" name="edit-admin-new-password"
                   autoComplete="new-password" placeholder="Leave blank to keep current password"
                   value={newPassword}
                   onChange={(e) => { setNewPassword(e.target.value); setPasswordError(""); }}
                   disabled={loading}
-                  className={`w-full text-sm px-3 py-2.5 pr-10 rounded-xl border bg-white placeholder:text-gray-400 focus:outline-none focus:ring-2 transition ${
-                    passwordError ? "border-red-300 focus:ring-red-400/30" : "border-gray-200 focus:ring-blue-400/30 focus:border-blue-400"
+                  className={`w-full text-sm px-3 py-2.5 pr-10 rounded-xl border bg-[var(--surface)] placeholder:text-[var(--muted)] focus:outline-none focus:ring-2 transition ${
+                    passwordError ? "border-[var(--danger)]/40 focus:ring-[var(--danger)]/30" : "border-[var(--border)] focus:ring-[var(--primary)]/30 focus:border-[var(--primary)]"
                   }`} />
                 <button type="button" onClick={() => setShowPassword((v) => !v)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition">
+                  aria-label={showPassword ? "Hide password" : "Show password"}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-[var(--muted)] hover:text-[var(--foreground)] transition">
                   {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                 </button>
               </div>
@@ -275,37 +279,38 @@ export default function EditAdminModal({ admin, onClose, refresh }) {
                 <label key={role.value}
                   className={`flex items-start gap-3 p-4 rounded-xl border cursor-pointer transition select-none ${isSelf ? "opacity-50 cursor-not-allowed" : ""} ${
                     roleType === role.value
-                      ? role.value === "superadmin" ? "border-gray-900 bg-gray-900" : "border-blue-300 bg-blue-50"
-                      : "border-gray-200 hover:bg-gray-50"
+                      ? role.value === "superadmin" ? "border-[var(--primary)] bg-[var(--primary)]" : "border-[var(--primary)]/40 bg-[var(--primary-soft)]"
+                      : "border-[var(--border)] hover:bg-[var(--surface-soft)]"
                   }`}>
                   <input type="radio" name="roleType" value={role.value} checked={roleType === role.value}
                     onChange={() => !isSelf && setRoleType(role.value)}
-                    disabled={isSelf} className="mt-0.5 accent-gray-800" />
+                    disabled={isSelf} className="mt-0.5 accent-[var(--primary)]" />
                   <div>
-                    <div className={`flex items-center gap-1.5 text-sm font-bold ${roleType === role.value && role.value === "superadmin" ? "text-white" : "text-gray-800"}`}>
-                      <span className={roleType === role.value && role.value === "superadmin" ? "text-white" : "text-gray-500"}>{role.icon}</span>
+                    <div className={`flex items-center gap-1.5 text-sm font-bold ${roleType === role.value && role.value === "superadmin" ? "text-[var(--primary-foreground)]" : "text-[var(--foreground)]"}`}>
+                      <span className={roleType === role.value && role.value === "superadmin" ? "text-[var(--primary-foreground)]" : "text-[var(--muted)]"}>{role.icon}</span>
                       {role.label}
                     </div>
-                    <p className={`text-xs mt-0.5 ${roleType === role.value && role.value === "superadmin" ? "text-gray-300" : "text-gray-500"}`}>{role.desc}</p>
+                    <p className={`text-xs mt-0.5 ${roleType === role.value && role.value === "superadmin" ? "text-[var(--primary-foreground)]/70" : "text-[var(--muted)]"}`}>{role.desc}</p>
                   </div>
                 </label>
               ))}
             </div>
-            {isSelf && <p className="text-xs text-gray-400 flex items-center gap-1"><AlertCircle className="w-3 h-3" />You cannot change your own role.</p>}
+            {isSelf && <p className="text-xs text-[var(--muted)] flex items-center gap-1"><AlertCircle className="w-3 h-3" />You cannot change your own role.</p>}
 
             {!isSelf && (
-              <div className={`flex items-center justify-between p-4 rounded-xl border transition ${isActive ? "border-green-200 bg-green-50/40" : "border-red-200 bg-red-50/40"}`}>
+              <div className={`flex items-center justify-between p-4 rounded-xl border transition ${isActive ? "border-[var(--success)]/30 bg-[var(--success-soft)]/40" : "border-[var(--danger)]/30 bg-[var(--danger-soft)]/40"}`}>
                 <div className="flex items-center gap-3">
-                  <div className={`w-9 h-9 rounded-xl flex items-center justify-center ${isActive ? "bg-green-100" : "bg-red-100"}`}>
-                    {isActive ? <UserCheck className="w-4 h-4 text-green-600" /> : <UserX className="w-4 h-4 text-red-600" />}
+                  <div className={`w-9 h-9 rounded-xl flex items-center justify-center ${isActive ? "bg-[var(--success-soft)]" : "bg-[var(--danger-soft)]"}`}>
+                    {isActive ? <UserCheck className="w-4 h-4 text-[var(--success)]" /> : <UserX className="w-4 h-4 text-[var(--danger)]" />}
                   </div>
                   <div>
-                    <p className="text-sm font-semibold text-gray-800">Account Status</p>
-                    <p className="text-xs text-gray-500">{isActive ? "Account is active — admin can log in." : "Account is inactive — access revoked immediately."}</p>
+                    <p className="text-sm font-semibold text-[var(--foreground)]">Account Status</p>
+                    <p className="text-xs text-[var(--muted)]">{isActive ? "Account is active — admin can log in." : "Account is inactive — access revoked immediately."}</p>
                   </div>
                 </div>
                 <button type="button" onClick={() => setIsActive((v) => !v)}
-                  className={`relative w-11 h-6 rounded-full transition-colors ${isActive ? "bg-green-500" : "bg-gray-300"}`}>
+                  role="switch" aria-checked={isActive} aria-label="Account active"
+                  className={`relative w-11 h-6 rounded-full transition-colors ${isActive ? "bg-[var(--success)]" : "bg-[var(--border-strong)]"}`}>
                   <span className={`absolute top-1 w-4 h-4 bg-white rounded-full shadow transition-transform ${isActive ? "translate-x-6" : "translate-x-1"}`} />
                 </button>
               </div>
@@ -314,7 +319,7 @@ export default function EditAdminModal({ admin, onClose, refresh }) {
 
           {roleType === "admin" && (
             <Section title="Module Permissions">
-              <div className="flex gap-0 border-b border-gray-100">
+              <div className="flex gap-0 border-b border-[var(--border)]">
                 {PROJECT_LIST.map((proj) => {
                   const isActive = proj.id === activeProjectId;
                   const hasAny = Object.values(projectAccess[proj.id]?.permissions ?? {})
@@ -322,10 +327,10 @@ export default function EditAdminModal({ admin, onClose, refresh }) {
                   return (
                     <button key={proj.id} type="button" onClick={() => setActiveProjectId(proj.id)}
                       className={`flex items-center gap-1.5 px-4 py-2.5 text-xs font-bold transition border-b-2 -mb-px ${
-                        isActive ? "border-gray-900 text-gray-900" : "border-transparent text-gray-400 hover:text-gray-600"
+                        isActive ? "border-[var(--primary)] text-[var(--foreground)]" : "border-transparent text-[var(--muted)] hover:text-[var(--foreground)]"
                       }`}>
                       {proj.name}
-                      {hasAny && <span className="w-1.5 h-1.5 rounded-full bg-indigo-500" />}
+                      {hasAny && <span className="w-1.5 h-1.5 rounded-full bg-[var(--primary)]" />}
                     </button>
                   );
                 })}
@@ -340,31 +345,31 @@ export default function EditAdminModal({ admin, onClose, refresh }) {
           )}
 
           {step === "done" && (
-            <div className="flex items-center gap-2 text-xs text-green-600 font-medium">
+            <div className="flex items-center gap-2 text-xs text-[var(--success)] font-medium">
               <CheckCircle2 className="w-4 h-4" />Changes saved successfully.
             </div>
           )}
         </div>
 
         {/* Footer */}
-        <div className="px-6 py-4 border-t border-gray-100 flex items-center justify-between gap-3 shrink-0 bg-gray-50">
+        <div className="px-6 py-4 border-t border-[var(--border)] flex items-center justify-between gap-3 shrink-0 bg-[var(--surface-soft)]">
           {showDeleteConfirm ? (
             <>
-              <p className="text-xs font-semibold text-red-600 flex items-center gap-1.5">
+              <p className="text-xs font-semibold text-[var(--danger)] flex items-center gap-1.5">
                 <AlertTriangle className="w-4 h-4" /> Are you sure? This cannot be undone.
               </p>
               <div className="flex items-center gap-2">
                 <button
                   onClick={() => setShowDeleteConfirm(false)}
                   disabled={loading}
-                  className="px-4 py-2 text-sm border border-gray-200 rounded-xl text-gray-600 hover:bg-white bg-white transition disabled:opacity-40"
+                  className="px-4 py-2 text-sm border border-[var(--border)] rounded-xl text-[var(--foreground)] bg-[var(--surface)] hover:bg-[var(--surface-soft)] transition disabled:opacity-40"
                 >
                   Cancel
                 </button>
                 <button
                   onClick={deleteAdmin}
                   disabled={loading}
-                  className="flex items-center gap-2 px-5 py-2 text-sm bg-red-600 hover:bg-red-700 text-white font-semibold rounded-xl transition shadow-sm"
+                  className="flex items-center gap-2 px-5 py-2 text-sm bg-[var(--danger)] hover:opacity-90 text-[var(--danger-foreground)] font-semibold rounded-xl transition shadow-sm"
                 >
                   {deleting && <Loader2 className="w-3.5 h-3.5 animate-spin" />}
                   Confirm Delete
@@ -378,17 +383,17 @@ export default function EditAdminModal({ admin, onClose, refresh }) {
                   type="button"
                   onClick={() => setShowDeleteConfirm(true)}
                   disabled={loading}
-                  className="px-4 py-2 text-sm border border-red-200 rounded-xl text-red-600 hover:bg-red-50 bg-white font-semibold transition disabled:opacity-40"
+                  className="px-4 py-2 text-sm border border-[var(--danger)]/30 rounded-xl text-[var(--danger)] hover:bg-[var(--danger-soft)] bg-[var(--surface)] font-semibold transition disabled:opacity-40"
                 >
                   Delete Admin
                 </button>
               ) : (
-                <p className="text-xs text-gray-400">Changes take effect immediately on next login check.</p>
+                <p className="text-xs text-[var(--muted)]">Changes take effect immediately on next login check.</p>
               )}
               <div className="flex items-center gap-2">
-                <button onClick={onClose} disabled={loading} className="px-4 py-2 text-sm border border-gray-200 rounded-xl text-gray-600 hover:bg-white bg-white transition disabled:opacity-40">Cancel</button>
+                <button onClick={onClose} disabled={loading} className="px-4 py-2 text-sm border border-[var(--border)] rounded-xl text-[var(--foreground)] bg-[var(--surface)] hover:bg-[var(--surface-soft)] transition disabled:opacity-40">Cancel</button>
                 <button onClick={updateAdmin} disabled={loading || step === "done"}
-                  className="flex items-center gap-2 px-5 py-2 text-sm bg-gray-900 hover:bg-gray-700 disabled:opacity-60 text-white font-semibold rounded-xl transition shadow-sm">
+                  className="flex items-center gap-2 px-5 py-2 text-sm bg-[var(--primary)] hover:opacity-90 disabled:opacity-60 text-[var(--primary-foreground)] font-semibold rounded-xl transition shadow-sm">
                   {loading && step === "saving" && <Loader2 className="w-3.5 h-3.5 animate-spin" />}
                   {step === "done" && <CheckCircle2 className="w-3.5 h-3.5" />}
                   {stepLabel}

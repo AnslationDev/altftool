@@ -47,30 +47,30 @@ const CARDS = [
 
 export default function AnalyticsHero({ summary, generatedAt, title, description }) {
   return (
-    <section className="overflow-hidden border border-gray-200 bg-white shadow-sm rounded-md">
-      <div className="bg-[linear-gradient(180deg,_#ffffff_0%,_#f8fafc_100%)] p-6 md:p-8">
+    <section className="overflow-hidden border border-[var(--border)] bg-[var(--surface)] shadow-sm rounded-md">
+      <div className="bg-[linear-gradient(180deg,var(--surface),var(--background))] p-6 md:p-8">
         <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
           <div className="max-w-3xl space-y-4">
-            <span className="inline-flex items-center gap-2 border border-gray-200 bg-gray-100 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-gray-600">
+            <span className="inline-flex items-center gap-2 border border-[var(--border)] bg-[var(--surface-soft)] px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-[var(--muted)]">
               <FolderKanban className="h-3.5 w-3.5" />
               Global analytics
             </span>
             <div className="space-y-2">
-              <h1 className="text-3xl font-semibold tracking-tight text-gray-900">
+              <h1 className="text-3xl font-semibold tracking-tight text-[var(--foreground)]">
                 {title}
               </h1>
-              <p className="max-w-2xl text-sm leading-6 text-gray-500">
+              <p className="max-w-2xl text-sm leading-6 text-[var(--muted)]">
                 {description}
               </p>
             </div>
           </div>
 
-          <div className="border border-gray-200 bg-gray-50 px-4 py-3 text-sm text-gray-600 rounded-md">
-            <div className="flex items-center gap-2 font-medium text-gray-800">
+          <div className="border border-[var(--border)] bg-[var(--surface-soft)] px-4 py-3 text-sm text-[var(--muted)] rounded-md">
+            <div className="flex items-center gap-2 font-medium text-[var(--foreground)]">
               <ShieldAlert className="h-4 w-4" />
               Last refreshed
             </div>
-            <p className="mt-1 text-sm text-gray-500">{formatDateTime(generatedAt)}</p>
+            <p className="mt-1 text-sm text-[var(--muted)]">{formatDateTime(generatedAt)}</p>
           </div>
         </div>
 
@@ -80,20 +80,20 @@ export default function AnalyticsHero({ summary, generatedAt, title, description
             return (
               <div
                 key={card.key}
-                className="border border-gray-200 bg-gray-50 p-4  rounded-md"
+                className="border border-[var(--border)] bg-[var(--surface-soft)] p-4  rounded-md"
               >
                 <div className="flex items-center justify-between">
-                  <span className="text-xs font-semibold uppercase tracking-[0.18em] text-gray-400">
+                  <span className="text-xs font-semibold uppercase tracking-[0.18em] text-[var(--muted)]">
                     {card.label}
                   </span>
-                  <div className="border border-gray-200 bg-white p-2 text-gray-500">
+                  <div className="border border-[var(--border)] bg-[var(--surface)] p-2 text-[var(--muted)]">
                     <Icon className="h-4 w-4" />
                   </div>
                 </div>
-                <p className="mt-4 text-3xl font-semibold tracking-tight text-gray-900">
+                <p className="mt-4 text-3xl font-semibold tracking-tight text-[var(--foreground)]">
                   {formatNumber(summary?.[card.key] ?? 0)}
                 </p>
-                <p className="mt-2 text-sm text-gray-500">{card.hint}</p>
+                <p className="mt-2 text-sm text-[var(--muted)]">{card.hint}</p>
               </div>
             );
           })}

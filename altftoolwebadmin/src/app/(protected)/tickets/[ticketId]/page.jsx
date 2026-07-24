@@ -37,22 +37,22 @@ function Avatar({ name, photoURL }) {
       <img
         src={photoURL}
         alt={name}
-        className="w-7 h-7 rounded-full object-cover border border-gray-200 shrink-0"
+        className="w-7 h-7 rounded-full object-cover border border-[var(--border)] shrink-0"
       />
     );
   }
   return (
-    <div className="w-7 h-7 rounded-full bg-gray-200 text-gray-600 font-bold text-[10px] flex items-center justify-center shrink-0">
+    <div className="w-7 h-7 rounded-full bg-[var(--surface-soft)] text-[var(--muted)] font-bold text-[10px] flex items-center justify-center shrink-0">
       {getInitials(name)}
     </div>
   );
 }
 
 const STATUS_BADGE = {
-  open: "bg-blue-50 text-blue-700 border-blue-100",
-  in_progress: "bg-yellow-50 text-yellow-700 border-yellow-100",
-  resolved: "bg-green-50 text-green-700 border-green-100",
-  closed: "bg-gray-100 text-gray-500 border-gray-200",
+  open: "bg-[var(--info-soft)] text-[var(--info)] border-[var(--border)]",
+  in_progress: "bg-[var(--warning-soft)] text-[var(--warning)] border-[var(--border)]",
+  resolved: "bg-[var(--success-soft)] text-[var(--success)] border-[var(--border)]",
+  closed: "bg-[var(--surface-soft)] text-[var(--muted)] border-[var(--border)]",
 };
 
 const STATUS_LABEL = {
@@ -65,9 +65,9 @@ const STATUS_LABEL = {
 const STATUS_FLOW = ["open", "in_progress", "resolved", "closed"];
 
 const PRIORITY_BADGE = {
-  low: "bg-gray-50 text-gray-500 border-gray-200",
-  medium: "bg-orange-50 text-orange-600 border-orange-100",
-  high: "bg-red-50 text-red-600 border-red-100",
+  low: "bg-[var(--surface-soft)] text-[var(--muted)] border-[var(--border)]",
+  medium: "bg-[var(--warning-soft)] text-[var(--warning)] border-[var(--border)]",
+  high: "bg-[var(--danger-soft)] text-[var(--danger)] border-[var(--border)]",
 };
 
 const TYPE_LABEL = { bug: "Bug", feature: "Feature Request", query: "Query" };
@@ -103,7 +103,7 @@ export default function AdminTicketDetailPage() {
   const [senderProfiles, setSenderProfiles] = useState({}); // uid → { name, photoURL, isAdmin }
   const [reply, setReply] = useState("");
   const [sending, setSending] = useState(false);
-  const [updatingStatus, setUpdatingStatus] = useState(false);
+  const [updatingStatus, setUpdatingStatus] = useState(null); // status value in flight, or null
   const [assigning, setAssigning] = useState(false);
   const [reopening, setReopening] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -201,7 +201,7 @@ export default function AdminTicketDetailPage() {
   };
 
   const updateStatus = async (status) => {
-    setUpdatingStatus(true);
+    setUpdatingStatus(status);
     try {
       const res = await authPatch("/api/support/update-status", { ticketId, status });
       if (!res.ok) throw new Error("Failed");
@@ -209,7 +209,7 @@ export default function AdminTicketDetailPage() {
     } catch {
       emitAlert({ type: "error", message: "Failed to update status." });
     } finally {
-      setUpdatingStatus(false);
+      setUpdatingStatus(null);
     }
   };
 
@@ -246,7 +246,7 @@ export default function AdminTicketDetailPage() {
   if (loading) {
     return (
       <div className="flex items-center justify-center h-64">
-        <Loader2 className="w-5 h-5 animate-spin text-gray-400" />
+        <Loader2 className="w-5 h-5 animate-spin text-[var(--muted)]" />
       </div>
     );
   }
@@ -254,8 +254,8 @@ export default function AdminTicketDetailPage() {
   if (!ticket) {
     return (
       <div className="max-w-3xl mx-auto px-4 py-12 text-center">
-        <p className="text-gray-500">Ticket not found.</p>
-        <button onClick={() => router.push("/tickets")} className="mt-4 text-sm text-blue-600 hover:underline">
+        <p className="text-[var(--muted)]">Ticket not found.</p>
+        <button onClick={() => router.push("/tickets")} className="mt-4 text-sm text-[var(--primary)] hover:underline">
           Back to Support Management
         </button>
       </div>
@@ -271,14 +271,14 @@ export default function AdminTicketDetailPage() {
       {/* Back */}
       <button
         onClick={() => router.push("/tickets")}
-        className="flex items-center gap-1.5 text-sm text-gray-500 hover:text-gray-800 transition mb-6"
+        className="flex items-center gap-1.5 text-sm text-[var(--muted)] hover:text-[var(--foreground)] transition mb-6"
       >
         <ArrowLeft className="w-4 h-4" /> Back to Support Management
       </button>
 {/* Ticket info */}
-          <div className="bg-white rounded-2xl border border-gray-100 p-5 mb-5">
+          <div className="bg-[var(--surface)] rounded-2xl border border-[var(--border)] p-5 mb-5">
             <div className="flex items-start justify-between gap-3 mb-3">
-              <h1 className="text-base font-bold text-gray-900 leading-snug">{ticket.title}</h1>
+              <h1 className="text-base font-bold text-[var(--foreground)] leading-snug">{ticket.title}</h1>
               <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full border shrink-0 ${STATUS_BADGE[ticket.status]}`}>
                 {STATUS_LABEL[ticket.status]}
               </span>
@@ -288,19 +288,19 @@ export default function AdminTicketDetailPage() {
               <span className={`px-2 py-0.5 rounded-full border ${PRIORITY_BADGE[ticket.priority]}`}>
                 {ticket.priority} priority
               </span>
-              <span className="px-2 py-0.5 rounded-full border bg-indigo-50 text-indigo-600 border-indigo-100">
+              <span className="px-2 py-0.5 rounded-full border bg-[var(--accent-soft)] text-[var(--accent)] border-[var(--border)]">
                 {TYPE_LABEL[ticket.type] ?? ticket.type}
               </span>
-              <span className="px-2 py-0.5 rounded-full border bg-gray-50 text-gray-500 border-gray-200 flex items-center gap-1">
+              <span className="px-2 py-0.5 rounded-full border bg-[var(--surface-soft)] text-[var(--muted)] border-[var(--border)] flex items-center gap-1">
                 <Clock className="w-2.5 h-2.5" />
                 {fmtDateTime(ticket.createdAt)}
               </span>
             </div>
 
             {isClosed && ticket.autoDeleteAt && (
-              <div className="mt-4 flex items-start gap-2.5 bg-amber-50 border border-amber-100 rounded-xl p-3">
-                <AlertTriangle className="w-4 h-4 text-amber-500 shrink-0 mt-0.5" />
-                <p className="text-xs font-semibold text-amber-700">
+              <div className="mt-4 flex items-start gap-2.5 bg-[var(--warning-soft)] border border-[var(--border)] rounded-xl p-3">
+                <AlertTriangle className="w-4 h-4 text-[var(--warning)] shrink-0 mt-0.5" />
+                <p className="text-xs font-semibold text-[var(--warning)]">
                   Auto-deletes in {timeUntilDelete(ticket.autoDeleteAt)}
                 </p>
               </div>
@@ -309,16 +309,16 @@ export default function AdminTicketDetailPage() {
       <div className="grid grid-cols-1 md:grid-cols-[1fr_500px] gap-4">
         {/* Left: conversation */}
         <div className="space-y-4">
-          
+
 
           {/* Messages */}
-          <div className="bg-white rounded-2xl border border-gray-100 flex flex-col overflow-hidden">
-            <div className="px-5 py-3 border-b border-gray-100">
-              <p className="text-xs font-bold text-gray-500 uppercase tracking-wider">Conversation</p>
+          <div className="bg-[var(--surface)] rounded-2xl border border-[var(--border)] flex flex-col overflow-hidden">
+            <div className="px-5 py-3 border-b border-[var(--border)]">
+              <p className="text-xs font-bold text-[var(--muted)] uppercase tracking-wider">Conversation</p>
             </div>
             <div className="flex-1 overflow-y-auto p-5 space-y-4 max-h-[420px]">
               {messages.length === 0 ? (
-                <p className="text-sm text-gray-400 text-center py-8">No messages yet.</p>
+                <p className="text-sm text-[var(--muted)] text-center py-8">No messages yet.</p>
               ) : (
                 messages.map((m, i) => {
                   const isMe = m.senderId === user?.uid;
@@ -343,17 +343,17 @@ export default function AdminTicketDetailPage() {
                         {/* Name + role badge on first bubble in group */}
                         {isFirstInGroup && (
                           <div className={`flex items-center gap-1.5 px-1 ${isMe ? "flex-row-reverse" : ""}`}>
-                            <span className="text-[11px] font-semibold text-gray-600">
+                            <span className="text-[11px] font-semibold text-[var(--muted)]">
                               {isMe ? "You" : name}
                             </span>
                             {!isMe && !isAdminSender && (
-                              <span className="inline-flex items-center gap-0.5 text-[9px] font-bold px-1.5 py-0.5 bg-blue-50 text-blue-600 border border-blue-100 rounded-full">
+                              <span className="inline-flex items-center gap-0.5 text-[9px] font-bold px-1.5 py-0.5 bg-[var(--info-soft)] text-[var(--info)] border border-[var(--border)] rounded-full">
                                 <User className="w-2.5 h-2.5" />
                                 Reporter
                               </span>
                             )}
                             {!isMe && isAdminSender && (
-                              <span className="inline-flex items-center gap-0.5 text-[9px] font-bold px-1.5 py-0.5 bg-gray-100 text-gray-600 rounded-full">
+                              <span className="inline-flex items-center gap-0.5 text-[9px] font-bold px-1.5 py-0.5 bg-[var(--surface-soft)] text-[var(--muted)] rounded-full">
                                 Admin
                               </span>
                             )}
@@ -364,8 +364,8 @@ export default function AdminTicketDetailPage() {
                         <div
                           className={`px-4 py-2.5 text-sm leading-relaxed ${
                             isMe
-                              ? "bg-gray-900 text-white rounded-2xl rounded-br-sm"
-                              : "bg-gray-100 text-gray-800 rounded-2xl rounded-bl-sm"
+                              ? "bg-[var(--primary)] text-[var(--primary-foreground)] rounded-2xl rounded-br-sm"
+                              : "bg-[var(--surface-soft)] text-[var(--foreground)] rounded-2xl rounded-bl-sm"
                           }`}
                         >
                           <p>{m.message}</p>
@@ -373,7 +373,7 @@ export default function AdminTicketDetailPage() {
 
                         {/* Timestamp on last bubble in group */}
                         {isLastInGroup && (
-                          <p className="text-[10px] text-gray-400 px-1">{fmtDateTime(m.createdAt)}</p>
+                          <p className="text-[10px] text-[var(--muted)] px-1">{fmtDateTime(m.createdAt)}</p>
                         )}
                       </div>
                     </div>
@@ -384,7 +384,7 @@ export default function AdminTicketDetailPage() {
             </div>
 
             {!isClosed && (
-              <div className="border-t border-gray-100 p-3 flex items-end gap-2">
+              <div className="border-t border-[var(--border)] p-3 flex items-end gap-2">
                 <textarea
                   rows={2}
                   value={reply}
@@ -393,12 +393,13 @@ export default function AdminTicketDetailPage() {
                   onKeyDown={(e) => {
                     if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); sendReply(); }
                   }}
-                  className="flex-1 resize-none text-sm px-3 py-2.5 rounded-xl border border-gray-200 bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-400/30 focus:border-blue-400 placeholder:text-gray-400 transition"
+                  className="flex-1 resize-none text-sm px-3 py-2.5 rounded-xl border border-[var(--border)] bg-[var(--surface-soft)] focus:outline-none focus:[box-shadow:var(--focus-ring)] focus:border-[var(--border-strong)] placeholder:text-[var(--muted)] transition"
                 />
                 <button
                   onClick={sendReply}
                   disabled={!reply.trim() || sending}
-                  className="p-2.5 bg-gray-900 hover:bg-gray-700 disabled:opacity-40 text-white rounded-xl transition shrink-0"
+                  aria-label="Send reply"
+                  className="p-2.5 bg-[var(--primary)] hover:bg-[var(--primary-hover)] disabled:opacity-40 text-[var(--primary-foreground)] rounded-xl transition shrink-0"
                 >
                   {sending ? <Loader2 className="w-4 h-4 animate-spin" /> : <Send className="w-4 h-4" />}
                 </button>
@@ -410,13 +411,13 @@ export default function AdminTicketDetailPage() {
         {/* Right: actions panel */}
         <div className="space-y-3">
           {/* Status */}
-          <div className="bg-white rounded-2xl border border-gray-100 p-4">
-            <p className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-3">Update Status</p>
+          <div className="bg-[var(--surface)] rounded-2xl border border-[var(--border)] p-4">
+            <p className="text-xs font-bold text-[var(--muted)] uppercase tracking-wider mb-3">Update Status</p>
             {isClosed ? (
               <button
                 onClick={reopen}
                 disabled={reopening}
-                className="w-full flex items-center justify-center gap-2 py-2 text-sm font-semibold bg-amber-50 text-amber-700 border border-amber-100 rounded-xl hover:bg-amber-100 transition disabled:opacity-50"
+                className="w-full flex items-center justify-center gap-2 py-2 text-sm font-semibold bg-[var(--warning-soft)] text-[var(--warning)] border border-[var(--border)] rounded-xl hover:opacity-80 transition disabled:opacity-50"
               >
                 {reopening ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <RefreshCw className="w-3.5 h-3.5" />}
                 Reopen Ticket
@@ -427,11 +428,11 @@ export default function AdminTicketDetailPage() {
                   <button
                     key={s}
                     onClick={() => updateStatus(s)}
-                    disabled={updatingStatus}
+                    disabled={Boolean(updatingStatus)}
                     className={`w-full flex items-center justify-between px-3 py-2 text-sm font-semibold rounded-xl border transition disabled:opacity-50 ${STATUS_BADGE[s]} hover:opacity-80`}
                   >
                     {STATUS_LABEL[s]}
-                    {updatingStatus && <Loader2 className="w-3.5 h-3.5 animate-spin" />}
+                    {updatingStatus === s && <Loader2 className="w-3.5 h-3.5 animate-spin" />}
                   </button>
                 ))}
               </div>
@@ -439,40 +440,40 @@ export default function AdminTicketDetailPage() {
           </div>
 
           {/* Assign */}
-          <div className="bg-white rounded-2xl border border-gray-100 p-4">
-            <p className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-3">Assign To</p>
+          <div className="bg-[var(--surface)] rounded-2xl border border-[var(--border)] p-4">
+            <p className="text-xs font-bold text-[var(--muted)] uppercase tracking-wider mb-3">Assign To</p>
             {assignedAdmin ? (
-              <div className="flex items-center gap-2 mb-3 p-2.5 bg-gray-50 rounded-xl border border-gray-100">
-                <div className="w-7 h-7 rounded-lg bg-gray-900 text-white flex items-center justify-center text-[10px] font-bold shrink-0">
+              <div className="flex items-center gap-2 mb-3 p-2.5 bg-[var(--surface-soft)] rounded-xl border border-[var(--border)]">
+                <div className="w-7 h-7 rounded-lg bg-[var(--primary)] text-[var(--primary-foreground)] flex items-center justify-center text-[10px] font-bold shrink-0">
                   {(assignedAdmin.fullName || assignedAdmin.email || "A")[0].toUpperCase()}
                 </div>
                 <div className="min-w-0">
-                  <p className="text-xs font-semibold text-gray-800 truncate">
+                  <p className="text-xs font-semibold text-[var(--foreground)] truncate">
                     {assignedAdmin.fullName || assignedAdmin.email}
                   </p>
-                  <p className="text-[10px] text-gray-400">Assigned</p>
+                  <p className="text-[10px] text-[var(--muted)]">Assigned</p>
                 </div>
               </div>
             ) : (
-              <p className="text-xs text-gray-400 mb-2">Unassigned</p>
+              <p className="text-xs text-[var(--muted)] mb-2">Unassigned</p>
             )}
             <div className="relative">
               <button
                 onClick={() => setShowAssign((v) => !v)}
-                className="w-full flex items-center justify-between px-3 py-2 text-sm border border-gray-200 rounded-xl hover:bg-gray-50 transition text-gray-700"
+                className="w-full flex items-center justify-between px-3 py-2 text-sm border border-[var(--border)] rounded-xl hover:bg-[var(--surface-soft)] transition text-[var(--foreground)]"
               >
                 <span className="flex items-center gap-1.5">
-                  <UserCheck className="w-3.5 h-3.5 text-gray-400" />
+                  <UserCheck className="w-3.5 h-3.5 text-[var(--muted)]" />
                   {showAssign ? "Close" : "Change Assignment"}
                 </span>
-                <ChevronDown className={`w-3.5 h-3.5 text-gray-400 transition-transform ${showAssign ? "rotate-180" : ""}`} />
+                <ChevronDown className={`w-3.5 h-3.5 text-[var(--muted)] transition-transform ${showAssign ? "rotate-180" : ""}`} />
               </button>
               {showAssign && (
-                <div className="absolute top-10 left-0 right-0 bg-white border border-gray-200 rounded-xl shadow-lg z-20 overflow-hidden max-h-48 overflow-y-auto">
+                <div className="absolute top-10 left-0 right-0 bg-[var(--surface)] border border-[var(--border)] rounded-xl shadow-lg z-20 overflow-hidden max-h-48 overflow-y-auto">
                   <button
                     onClick={() => assignTicket("")}
                     disabled={assigning}
-                    className="w-full text-left px-3 py-2 text-sm text-gray-500 hover:bg-gray-50 transition"
+                    className="w-full text-left px-3 py-2 text-sm text-[var(--muted)] hover:bg-[var(--surface-soft)] transition"
                   >
                     Unassign
                   </button>
@@ -481,7 +482,7 @@ export default function AdminTicketDetailPage() {
                       key={a.id}
                       onClick={() => assignTicket(a.id)}
                       disabled={assigning}
-                      className={`w-full text-left px-3 py-2 text-sm hover:bg-gray-50 transition ${a.id === ticket.assignedTo ? "font-semibold text-gray-900" : "text-gray-700"}`}
+                      className={`w-full text-left px-3 py-2 text-sm hover:bg-[var(--surface-soft)] transition ${a.id === ticket.assignedTo ? "font-semibold text-[var(--foreground)]" : "text-[var(--foreground)]"}`}
                     >
                       {a.fullName || a.email}
                       {a.id === ticket.assignedTo && " ✓"}
@@ -493,20 +494,20 @@ export default function AdminTicketDetailPage() {
           </div>
 
           {/* Meta */}
-          <div className="bg-white rounded-2xl border border-gray-100 p-4 space-y-2">
-            <p className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-1">Details</p>
+          <div className="bg-[var(--surface)] rounded-2xl border border-[var(--border)] p-4 space-y-2">
+            <p className="text-xs font-bold text-[var(--muted)] uppercase tracking-wider mb-1">Details</p>
             <div className="flex justify-between text-xs">
-              <span className="text-gray-400">Created</span>
-              <span className="text-gray-700 font-medium">{fmtDateTime(ticket.createdAt)}</span>
+              <span className="text-[var(--muted)]">Created</span>
+              <span className="text-[var(--foreground)] font-medium">{fmtDateTime(ticket.createdAt)}</span>
             </div>
             <div className="flex justify-between text-xs">
-              <span className="text-gray-400">Updated</span>
-              <span className="text-gray-700 font-medium">{fmtDateTime(ticket.updatedAt)}</span>
+              <span className="text-[var(--muted)]">Updated</span>
+              <span className="text-[var(--foreground)] font-medium">{fmtDateTime(ticket.updatedAt)}</span>
             </div>
             {ticket.closedAt && (
               <div className="flex justify-between text-xs">
-                <span className="text-gray-400">Closed</span>
-                <span className="text-gray-700 font-medium">{fmtDateTime(ticket.closedAt)}</span>
+                <span className="text-[var(--muted)]">Closed</span>
+                <span className="text-[var(--foreground)] font-medium">{fmtDateTime(ticket.closedAt)}</span>
               </div>
             )}
           </div>

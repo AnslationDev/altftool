@@ -1,13 +1,13 @@
 export function getScoreTone(score = 0) {
-  if (score >= 90) return "text-emerald-700 bg-emerald-50 border-emerald-200";
-  if (score >= 75) return "text-amber-700 bg-amber-50 border-amber-200";
-  return "text-rose-700 bg-rose-50 border-rose-200";
+  if (score >= 90) return "text-[var(--success)] bg-[var(--success-soft)] border-[var(--success)]/30";
+  if (score >= 75) return "text-[var(--warning)] bg-[var(--warning-soft)] border-[var(--warning)]/30";
+  return "text-[var(--danger)] bg-[var(--danger-soft)] border-[var(--danger)]/30";
 }
 
 export function getScoreColor(score = 0) {
-  if (score >= 90) return "#059669";
-  if (score >= 75) return "#d97706";
-  return "#e11d48";
+  if (score >= 90) return "var(--success)";
+  if (score >= 75) return "var(--warning)";
+  return "var(--danger)";
 }
 
 export function formatNumber(value) {
@@ -44,27 +44,27 @@ export function shortSha(value) {
 
 export function getSignalTone(ok) {
   return ok
-    ? "border-emerald-200 bg-emerald-50 text-emerald-700"
-    : "border-rose-200 bg-rose-50 text-rose-700";
+    ? "border-[var(--success)]/30 bg-[var(--success-soft)] text-[var(--success)]"
+    : "border-[var(--danger)]/30 bg-[var(--danger-soft)] text-[var(--danger)]";
 }
 
 export function getQualityTone(quality) {
-  if (quality === "fail") return "border-rose-200 bg-rose-50 text-rose-700";
-  if (quality === "warn") return "border-amber-200 bg-amber-50 text-amber-800";
-  if (quality === "slow") return "border-sky-200 bg-sky-50 text-sky-700";
-  return "border-emerald-200 bg-emerald-50 text-emerald-700";
+  if (quality === "fail") return "border-[var(--danger)]/30 bg-[var(--danger-soft)] text-[var(--danger)]";
+  if (quality === "warn") return "border-[var(--warning)]/30 bg-[var(--warning-soft)] text-[var(--warning)]";
+  if (quality === "slow") return "border-[var(--info)]/30 bg-[var(--info-soft)] text-[var(--info)]";
+  return "border-[var(--success)]/30 bg-[var(--success-soft)] text-[var(--success)]";
 }
 
 export function getGateTone(status) {
-  if (status === "block" || status === "blocked") return "border-rose-200 bg-rose-50 text-rose-700";
-  if (status === "warn" || status === "watch") return "border-amber-200 bg-amber-50 text-amber-800";
-  return "border-emerald-200 bg-emerald-50 text-emerald-700";
+  if (status === "block" || status === "blocked") return "border-[var(--danger)]/30 bg-[var(--danger-soft)] text-[var(--danger)]";
+  if (status === "warn" || status === "watch") return "border-[var(--warning)]/30 bg-[var(--warning-soft)] text-[var(--warning)]";
+  return "border-[var(--success)]/30 bg-[var(--success-soft)] text-[var(--success)]";
 }
 
 export function getGateSurface(status) {
-  if (status === "block" || status === "blocked") return "border-rose-100 bg-rose-50";
-  if (status === "warn" || status === "watch") return "border-amber-100 bg-amber-50";
-  return "border-emerald-100 bg-emerald-50";
+  if (status === "block" || status === "blocked") return "border-[var(--danger)]/20 bg-[var(--danger-soft)]";
+  if (status === "warn" || status === "watch") return "border-[var(--warning)]/20 bg-[var(--warning-soft)]";
+  return "border-[var(--success)]/20 bg-[var(--success-soft)]";
 }
 
 export function formatGateStatus(status) {
@@ -84,9 +84,9 @@ export function formatQualityLabel(quality) {
 }
 
 export function getTrendTone(delta = 0) {
-  if (delta > 0) return "border-emerald-200 bg-emerald-50 text-emerald-700";
-  if (delta < 0) return "border-rose-200 bg-rose-50 text-rose-700";
-  return "border-gray-200 bg-gray-50 text-gray-700";
+  if (delta > 0) return "border-[var(--success)]/30 bg-[var(--success-soft)] text-[var(--success)]";
+  if (delta < 0) return "border-[var(--danger)]/30 bg-[var(--danger-soft)] text-[var(--danger)]";
+  return "border-[var(--border)] bg-[var(--surface-soft)] text-[var(--muted)]";
 }
 
 export function formatDelta(delta = 0) {

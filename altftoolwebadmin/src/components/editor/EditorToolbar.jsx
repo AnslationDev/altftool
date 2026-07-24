@@ -47,6 +47,12 @@ import { LINE_HEIGHTS } from "./extensions/LineHeight";
 
 /* ------------------------------ shared pieces ------------------------------ */
 
+// NOTE: These hex values intentionally mirror the master.md brand palette
+// (Teal/Cyan primaries plus supporting hues). They must remain literal hex —
+// the editor serializes them into saved blog content, so CSS variables cannot
+// be used here — and no importable central palette constant exists in the repo
+// (packages/ui exposes only CSS token primitives and the brand name/mark).
+// Keep these in sync with master.md if the brand palette ever changes.
 export const TEXT_COLORS = [
   { name: "Teal", value: "#0d9488" },
   { name: "Cyan", value: "#0891b2" },

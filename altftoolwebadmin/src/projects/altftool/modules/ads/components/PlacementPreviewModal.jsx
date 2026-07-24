@@ -1,18 +1,37 @@
 "use client";
 
+import { useEffect, useRef } from "react";
+import { X } from "lucide-react";
+
 export default function PlacementPreviewModal({
   placementKey,
   placement,
   onClose,
 }) {
+  const closeButtonRef = useRef(null);
+
+  useEffect(() => {
+    closeButtonRef.current?.focus();
+    const handleKeyDown = (e) => {
+      if (e.key === "Escape") onClose();
+    };
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, [onClose]);
+
   return (
-    <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
-      <div className="bg-white w-[720px] max-h-[90vh] overflow-y-auto rounded-xl p-8 space-y-6 shadow-lg">
+    <div
+      className="fixed inset-0 bg-black/40 flex items-center justify-center z-50"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="placement-preview-title"
+    >
+      <div className="bg-[var(--surface)] w-[720px] max-h-[90vh] overflow-y-auto rounded-xl p-8 space-y-6 shadow-lg">
 
         {/* Header */}
         <div className="flex justify-between items-start">
           <div className="space-y-1">
-            <h2 className="text-xl font-semibold">
+            <h2 id="placement-preview-title" className="text-xl font-semibold">
               Placement Preview
             </h2>
             <p className="text-sm text-muted">
@@ -21,10 +40,12 @@ export default function PlacementPreviewModal({
           </div>
 
           <button
+            ref={closeButtonRef}
             onClick={onClose}
+            aria-label="Close"
             className="text-sm text-muted hover:text-foreground"
           >
-            ✕
+            <X className="h-4 w-4" />
           </button>
         </div>
 

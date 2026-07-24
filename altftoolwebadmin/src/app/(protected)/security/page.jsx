@@ -862,13 +862,14 @@ function ToggleRow({ label, checked, onChange }) {
   return (
     <button
       type="button"
+      role="switch"
+      aria-checked={checked}
       onClick={() => onChange(!checked)}
       className="flex w-full items-center justify-between rounded-lg border border-border bg-surface-soft px-3 py-2.5 text-left"
     >
       <span className="text-sm font-medium text-foreground">{label}</span>
       <span
         className={`relative h-5 w-9 rounded-full transition-colors ${checked ? "bg-primary" : "bg-border-strong"}`}
-        style={{ backgroundColor: checked ? "var(--primary)" : "var(--anslation-ds-border-strong)" }}
       >
         <span
           className={`absolute top-0.5 h-4 w-4 rounded-full bg-white transition-all ${checked ? "left-[18px]" : "left-0.5"}`}

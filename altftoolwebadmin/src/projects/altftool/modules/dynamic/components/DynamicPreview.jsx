@@ -47,7 +47,7 @@ export default function DynamicPreview({ hero, sections }) {
       </div>
 
       {/* Device frame */}
-      <div className="rounded-2xl overflow-hidden border border-slate-200 shadow-[0_2px_20px_rgba(0,0,0,0.06)] bg-white">
+      <div className="rounded-2xl overflow-hidden border border-[var(--border)] shadow-sm bg-[var(--surface)]">
 
         {/* Browser chrome */}
         <div className="flex items-center gap-2 px-3 py-2.5 bg-slate-50 border-b border-slate-100">

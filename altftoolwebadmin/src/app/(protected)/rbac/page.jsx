@@ -81,25 +81,25 @@ export default function RbacFoundationPage() {
     <div className="min-h-screen bg-[var(--background)] p-6 text-[var(--foreground)]">
       <div className="mx-auto flex max-w-7xl flex-col gap-5">
         <section className="overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-sm">
-          <div className="relative bg-[linear-gradient(120deg,#09090b,#172554_48%,#0f766e)] p-6 text-white">
-            <div className="pointer-events-none absolute inset-0 opacity-10 [background-image:linear-gradient(rgba(255,255,255,.28)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,.28)_1px,transparent_1px)] [background-size:68px_68px]" />
+          <div className="relative bg-[linear-gradient(120deg,var(--primary-active),var(--primary-hover)_48%,var(--primary))] p-6 text-[var(--primary-foreground)]">
+            <div className="pointer-events-none absolute inset-0 opacity-10 [background-image:linear-gradient(var(--primary-foreground)_1px,transparent_1px),linear-gradient(90deg,var(--primary-foreground)_1px,transparent_1px)] [background-size:68px_68px]" />
             <div className="relative z-10 flex flex-wrap items-center justify-between gap-4">
               <div>
-                <p className="text-xs font-black uppercase tracking-widest text-emerald-200">Super Admin Console</p>
+                <p className="text-xs font-black uppercase tracking-widest text-[var(--primary-foreground)]/70">Super Admin Console</p>
                 <h1 className="mt-2 text-2xl font-black">RBAC Foundation</h1>
-                <p className="mt-2 max-w-3xl text-sm font-medium leading-6 text-white/75">
+                <p className="mt-2 max-w-3xl text-sm font-medium leading-6 text-[var(--primary-foreground)]/75">
                   Central permission layer for project access, module access, route protection, security events, and audit-ready admin control.
                 </p>
               </div>
-              <div className="rounded-2xl border border-white/15 bg-white/10 px-5 py-4">
-                <p className="text-xs font-bold uppercase tracking-widest text-white/60">Firebase Root</p>
+              <div className="rounded-2xl border border-[var(--primary-foreground)]/15 bg-[var(--primary-foreground)]/10 px-5 py-4">
+                <p className="text-xs font-bold uppercase tracking-widest text-[var(--primary-foreground)]/60">Firebase Root</p>
                 <p className="mt-1 font-mono text-sm font-black">{getRbacRootLabel()}</p>
               </div>
               <button
                 type="button"
                 onClick={bootstrapRbac}
                 disabled={bootstrapping}
-                className="inline-flex items-center gap-2 rounded-xl bg-white px-4 py-2.5 text-sm font-black text-slate-950 shadow-sm transition hover:bg-emerald-50 disabled:opacity-60"
+                className="inline-flex items-center gap-2 rounded-xl bg-[var(--surface)] px-4 py-2.5 text-sm font-black text-[var(--foreground)] shadow-sm transition hover:bg-[var(--surface-soft)] disabled:opacity-60"
               >
                 {bootstrapping ? <Loader2 className="h-4 w-4 animate-spin" /> : <ShieldCheck className="h-4 w-4" />}
                 Initialize RBAC
@@ -177,7 +177,7 @@ export default function RbacFoundationPage() {
                 <div key={label} className="flex items-center justify-between gap-3 rounded-xl border border-[var(--border)] px-3 py-3">
                   <span className="text-sm font-semibold">{label}</span>
                   <span className={`rounded-full px-2.5 py-1 text-[10px] font-black uppercase tracking-wide ${
-                    status === "Ready" ? "bg-emerald-50 text-emerald-700" : "bg-amber-50 text-amber-700"
+                    status === "Ready" ? "bg-[var(--success-soft)] text-[var(--success)]" : "bg-[var(--warning-soft)] text-[var(--warning)]"
                   }`}>
                     {status}
                   </span>
