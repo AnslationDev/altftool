@@ -399,6 +399,7 @@ const nextConfig = {
     workerThreads: buildCpuCount > 1,
     cpus: buildCpuCount,
     webpackBuildWorker: false,
+    webpackMemoryOptimizations: true,
   },
 };
 
