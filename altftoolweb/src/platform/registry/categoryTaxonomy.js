@@ -65,6 +65,7 @@ export const CATEGORY_ALIASES = {
   technical: "Developer",
   code: "Developer",
   devops: "Developer",
+  cloud: "Developer",
   api: "Developer",
   "no-code": "Developer",
   data: "Developer",
@@ -84,6 +85,7 @@ export const CATEGORY_ALIASES = {
   pdf: "PDF & Documents",
   document: "PDF & Documents",
   documents: "PDF & Documents",
+  "document & pdf": "PDF & Documents",
 
   // Image
   image: "Image & Photo",
@@ -100,6 +102,7 @@ export const CATEGORY_ALIASES = {
 
   // Text
   text: "Text & Writing",
+  "text tool": "Text & Writing",
   "text tools": "Text & Writing",
   word: "Text & Writing",
   writing: "Text & Writing",
@@ -148,6 +151,7 @@ export const CATEGORY_ALIASES = {
   security: "Security & Privacy",
   "cybersecurity tool": "Security & Privacy",
   privacy: "Security & Privacy",
+  "privacy tool": "Security & Privacy",
 
   // Education & science
   education: "Education & Science",

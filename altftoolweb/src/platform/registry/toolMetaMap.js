@@ -76,6 +76,36 @@ export const toolMetaMap = {
     "icon": "air-vent",
     "iconColor": "text-teal-600"
   },
+  "accessible-authentication-auditor": {
+    "name": "Accessible Authentication Auditor",
+    "description": "Review pasted authentication HTML and observed flow behavior locally for cognitive, paste, autofill, timeout, and error-recovery accessibility risks.",
+    "category": [
+      "Developer",
+      "Security & Privacy"
+    ],
+    "topics": [
+      "Accessibility",
+      "Security"
+    ],
+    "icon": "key-round",
+    "iconColor": "text-primary",
+    "wideWorkspace": true
+  },
+  "accessible-document-checker": {
+    "name": "Accessible Document Checker",
+    "description": "Inspect PDF and modern Office documents locally for observable title, language, structure, table, and image-description accessibility cues.",
+    "category": [
+      "Developer",
+      "PDF & Documents"
+    ],
+    "topics": [
+      "Accessibility",
+      "Document & PDF"
+    ],
+    "icon": "accessibility",
+    "iconColor": "text-primary",
+    "wideWorkspace": true
+  },
   "acne-severity-analyzer": {
     "name": "Acne Severity Analyzer",
     "description": "Analyze acne severity with AI-powered skin analysis. Detect blemishes, inflammation, and breakouts with detailed scoring and coverage metrics.",
@@ -181,6 +211,78 @@ export const toolMetaMap = {
     ],
     "icon": "hourglass",
     "iconColor": "text-purple-500"
+  },
+  "agent-action-dry-run-simulator": {
+    "name": "Agent Action Dry-Run Simulator",
+    "description": "Preview proposed AI agent tool calls locally and flag likely side effects, irreversible actions, targets, and missing safeguards without executing anything.",
+    "category": [
+      "Security & Privacy",
+      "Developer",
+      "Productivity"
+    ],
+    "icon": "scan-search",
+    "iconColor": "text-primary",
+    "wideWorkspace": true
+  },
+  "agent-audit-log-integrity-verifier": {
+    "name": "Agent Audit Log Integrity Verifier",
+    "description": "Check JSON or JSONL agent audit logs locally for structural continuity and optionally recompute an explicitly configured SHA-256 canonical hash chain.",
+    "category": [
+      "Security & Privacy",
+      "Developer",
+      "AI Tools"
+    ],
+    "icon": "shield-check",
+    "iconColor": "text-primary",
+    "wideWorkspace": true
+  },
+  "agent-memory-poisoning-inspector": {
+    "name": "Agent Memory Poisoning Inspector",
+    "description": "Compare two AI-memory exports locally and flag newly added instruction overrides, identity changes, permissions, hidden controls, and persistence cues.",
+    "category": [
+      "AI Tools",
+      "Security & Privacy",
+      "Developer"
+    ],
+    "icon": "brain-circuit",
+    "iconColor": "text-primary",
+    "wideWorkspace": true
+  },
+  "agent-permission-policy-builder": {
+    "name": "Agent Permission Policy Builder",
+    "description": "Build a local JSON allow-and-deny policy for agent tool names, paths, domains, recipients, numeric limits, and confirmation flags.",
+    "category": [
+      "Security & Privacy",
+      "Developer",
+      "AI Tools"
+    ],
+    "icon": "list-checks",
+    "iconColor": "text-primary",
+    "wideWorkspace": true
+  },
+  "agent-undo-plan-validator": {
+    "name": "Agent Undo Plan Validator",
+    "description": "Review an AI agent action plan locally for irreversible steps, external side effects, and missing backup, approval, checkpoint, or rollback details.",
+    "category": [
+      "Security & Privacy",
+      "Developer",
+      "Productivity"
+    ],
+    "icon": "undo",
+    "iconColor": "text-primary",
+    "wideWorkspace": true
+  },
+  "ai-conversation-privacy-scanner": {
+    "name": "AI Conversation Privacy Scanner",
+    "description": "Scan pasted or exported AI conversations locally for personal data and secrets, then create a redacted transcript and counts-only report.",
+    "category": [
+      "Security & Privacy",
+      "AI Tools",
+      "Text & Writing"
+    ],
+    "icon": "messages-square",
+    "iconColor": "text-primary",
+    "wideWorkspace": true
   },
   "ai-domain-generator": {
     "name": "AI Domain Generator",
@@ -425,6 +527,18 @@ export const toolMetaMap = {
     "icon": "book-a",
     "iconColor": "text-teal-600"
   },
+  "alt-text-quality-assistant": {
+    "name": "Alt-Text Quality Assistant",
+    "description": "Review an image's intended purpose, alt state, nearby text, and longer alternative with calibrated W3C-aligned writing cues.",
+    "category": "Developer",
+    "topics": [
+      "Accessibility",
+      "Content Creation"
+    ],
+    "icon": "image",
+    "iconColor": "text-primary",
+    "wideWorkspace": true
+  },
   "ambiguous-figure-viewer": {
     "name": "Ambiguous Figure Viewer",
     "description": "Experience and analyze classic optical illusions where the brain switches between multiple interpretations of the same image.",
@@ -538,6 +652,20 @@ export const toolMetaMap = {
     "icon": "zap",
     "iconColor": "text-muted-foreground"
   },
+  "archive-safety-inspector": {
+    "name": "Archive Safety Inspector",
+    "description": "Preflight a local ZIP central directory for risky paths, symlinks, encryption, compression pressure, and suspicious file types without extracting anything.",
+    "category": [
+      "Security & Privacy",
+      "Developer"
+    ],
+    "topics": [
+      "Utility"
+    ],
+    "icon": "package-search",
+    "iconColor": "text-primary",
+    "wideWorkspace": true
+  },
   "ascii-explorer": {
     "name": "ASCII Explorer",
     "description": "Explore the ASCII character table — convert text to ASCII codes and vice versa, browse the full 128-character table with binary, hex, and decimal values.",
@@ -615,6 +743,35 @@ export const toolMetaMap = {
     "icon": "target",
     "iconColor": "text-red-500"
   },
+  "audio-description-gap-finder": {
+    "name": "Audio-Description Gap Finder",
+    "description": "Find quiet timing candidates around dialogue for human audio-description planning, entirely in your browser.",
+    "category": [
+      "Video & Audio",
+      "Developer"
+    ],
+    "topics": [
+      "Accessibility"
+    ],
+    "icon": "captions",
+    "iconColor": "text-primary",
+    "wideWorkspace": true
+  },
+  "audio-edit-boundary-visualizer": {
+    "name": "Audio Edit Boundary Visualizer",
+    "description": "Visualize a local audio waveform and screen for abrupt sample or DC-offset changes that may deserve manual edit-boundary review.",
+    "category": [
+      "Video & Audio",
+      "Developer"
+    ],
+    "topics": [
+      "Audio",
+      "Developer Tools"
+    ],
+    "icon": "audio-lines",
+    "iconColor": "text-primary",
+    "wideWorkspace": true
+  },
   "audio-to-base64": {
     "name": "Audio to Base64",
     "description": "Convert local audio files into Base64 data URLs.",
@@ -625,6 +782,23 @@ export const toolMetaMap = {
     ],
     "icon": "music",
     "iconColor": "text-pink-700"
+  },
+  "audio-transcript-alignment-checker": {
+    "name": "Audio-Transcript Alignment Checker",
+    "description": "Compare timed transcript cues with local audio activity and optionally diff them against a reference timed transcript.",
+    "category": [
+      "Developer",
+      "Video & Audio",
+      "Text & Writing"
+    ],
+    "topics": [
+      "Accessibility",
+      "Audio",
+      "Text"
+    ],
+    "icon": "captions",
+    "iconColor": "text-primary",
+    "wideWorkspace": true
   },
   "aura-color-generator": {
     "name": "Aura Color Generator",
@@ -646,6 +820,21 @@ export const toolMetaMap = {
     ],
     "icon": "user",
     "iconColor": "text-(--primary)"
+  },
+  "aws-iam-policy-validator": {
+    "name": "AWS IAM Policy Validator",
+    "description": "Review pasted AWS IAM policy JSON locally for structural mistakes, broad Allow patterns, PassRole, and privilege-management risk cues.",
+    "category": [
+      "Developer",
+      "Security & Privacy"
+    ],
+    "topics": [
+      "Security",
+      "Cloud"
+    ],
+    "icon": "shield-check",
+    "iconColor": "text-primary",
+    "wideWorkspace": true
   },
   "baby-growth-percentile-calculator": {
     "name": "Baby Growth Percentile Calculator",
@@ -686,6 +875,18 @@ export const toolMetaMap = {
     "category": "Fun",
     "icon": "music",
     "iconColor": "text-purple-600"
+  },
+  "bank-statement-redactor": {
+    "name": "Bank Statement Redactor",
+    "description": "Manually cover sensitive bank-statement details and export a flattened PDF or PNG entirely in your browser.",
+    "category": [
+      "Security & Privacy",
+      "PDF & Documents",
+      "Business"
+    ],
+    "icon": "landmark",
+    "iconColor": "text-primary",
+    "wideWorkspace": true
   },
   "barcode-generator": {
     "name": "Barcode Generator",
@@ -1513,6 +1714,22 @@ export const toolMetaMap = {
     "icon": "binary",
     "iconColor": "text-blue-700"
   },
+  "c2pa-content-credentials-verifier": {
+    "name": "C2PA Content Credentials Structure Inspector",
+    "description": "Inspect bounded local JPEG, PNG, BMFF, and standalone JUMBF files for observable C2PA container structure without claiming cryptographic verification or authenticity.",
+    "category": [
+      "Security & Privacy",
+      "Image & Photo",
+      "Video & Audio"
+    ],
+    "topics": [
+      "Image",
+      "Video"
+    ],
+    "icon": "file-search",
+    "iconColor": "text-primary",
+    "wideWorkspace": true
+  },
   "cac-calculator": {
     "name": "CAC Calculator",
     "description": "Calculate Customer Acquisition Cost across marketing channels, compare channel efficiency, and track LTV:CAC ratio in real time.",
@@ -1550,6 +1767,17 @@ export const toolMetaMap = {
     ],
     "icon": "trending-up",
     "iconColor": "text-lime-600"
+  },
+  "calendar-privacy-scrubber": {
+    "name": "Calendar Privacy Scrubber",
+    "description": "Scrub names, emails, locations, notes, meeting links, alarms and identifiers from ICS calendars locally before sharing.",
+    "category": [
+      "Security & Privacy",
+      "Productivity"
+    ],
+    "icon": "calendar",
+    "iconColor": "text-primary",
+    "wideWorkspace": true
   },
   "calender-panchang": {
     "name": "Calender Panchang",
@@ -1675,6 +1903,17 @@ export const toolMetaMap = {
     ],
     "icon": "shield-check",
     "iconColor": "text-teal-500"
+  },
+  "caption-speed-collision-checker": {
+    "name": "Caption Speed & Collision Checker",
+    "description": "Audit SRT and WebVTT cue timing, overlaps, reading-speed signals, and line limits locally with configurable editorial thresholds.",
+    "category": [
+      "Video & Audio",
+      "Productivity"
+    ],
+    "icon": "captions",
+    "iconColor": "text-primary",
+    "wideWorkspace": true
   },
   "car-loan-calculator": {
     "name": "Car Loan Calculator",
@@ -1810,6 +2049,17 @@ export const toolMetaMap = {
     "icon": "gauge",
     "iconColor": "text-blue-600"
   },
+  "chat-export-anonymizer": {
+    "name": "Chat Export Anonymizer",
+    "description": "Anonymize participant labels, contact details, links, identifiers, and optional timestamps in TXT, JSON, or CSV chat exports entirely in your browser.",
+    "category": [
+      "Security & Privacy",
+      "Text & Writing"
+    ],
+    "icon": "messages-square",
+    "iconColor": "text-primary",
+    "wideWorkspace": true
+  },
   "chatgpt-chat-export": {
     "name": "ChatGPT Chat Export",
     "description": "Convert exported ChatGPT conversations into beautiful documents. Parse, view, search, and export to PDF, DOCX, Markdown, HTML, and more.",
@@ -1864,6 +2114,17 @@ export const toolMetaMap = {
     ],
     "icon": "ruler",
     "iconColor": "text-indigo-500"
+  },
+  "child-photo-privacy-checker": {
+    "name": "Child Photo Privacy Checker",
+    "description": "Manually review and mask privacy-sensitive details in a photo you own, then export a flattened copy with metadata removed locally.",
+    "category": [
+      "Security & Privacy",
+      "Image & Photo"
+    ],
+    "icon": "shield-check",
+    "iconColor": "text-primary",
+    "wideWorkspace": true
   },
   "chinese-character-generator": {
     "name": "Chinese Character Generator",
@@ -1963,6 +2224,20 @@ export const toolMetaMap = {
     "category": "Productivity",
     "icon": "clock",
     "iconColor": "text-violet-600"
+  },
+  "clipboard-secret-expiry-guard": {
+    "name": "Clipboard Secret Expiry Guard",
+    "description": "Copy a temporary secret with a local expiry timer and make a best-effort clipboard clear only if the same value is still present.",
+    "category": [
+      "Security & Privacy",
+      "Productivity"
+    ],
+    "topics": [
+      "Utility"
+    ],
+    "icon": "timer-reset",
+    "iconColor": "text-primary",
+    "wideWorkspace": true
   },
   "clothing-body-measurements": {
     "name": "Clothing / Body Measurement Conversions",
@@ -2183,6 +2458,21 @@ export const toolMetaMap = {
     ],
     "icon": "palette",
     "iconColor": "text-fuchsia-600"
+  },
+  "colorblind-safe-palette-fixer": {
+    "name": "Colorblind-Safe Palette Fixer",
+    "description": "Screen a local color palette with fixed color-vision simulations, pair-distance cues, role-based text contrast, and bounded alternatives.",
+    "category": [
+      "Developer",
+      "Design & Color"
+    ],
+    "topics": [
+      "Accessibility",
+      "Design"
+    ],
+    "icon": "palette",
+    "iconColor": "text-primary",
+    "wideWorkspace": true
   },
   "company-info-tool": {
     "name": "Company Info Explorer",
@@ -2690,6 +2980,21 @@ export const toolMetaMap = {
     "icon": "heart",
     "iconColor": "text-pink-500"
   },
+  "cybercrime-evidence-pack-builder": {
+    "name": "Cybercrime Evidence Pack Builder",
+    "description": "Organize an incident timeline and locally hash evidence copies into a structured, user-controlled evidence manifest and counts-only summary.",
+    "category": [
+      "Security & Privacy",
+      "PDF & Documents"
+    ],
+    "topics": [
+      "Utility",
+      "Documents"
+    ],
+    "icon": "archive",
+    "iconColor": "text-primary",
+    "wideWorkspace": true
+  },
   "cymatics": {
     "name": "Cymatics Simulator",
     "description": "Explore how sound frequency and damping create Chladni-style geometric nodal patterns in a responsive browser simulation.",
@@ -2962,6 +3267,20 @@ export const toolMetaMap = {
     "icon": "box",
     "iconColor": "text-cyan-600"
   },
+  "dependency-license-scanner": {
+    "name": "Dependency License Scanner",
+    "description": "Review license metadata declared in a local package.json or package-lock.json, including missing fields and cautious text-based review cues.",
+    "category": [
+      "Developer",
+      "Security & Privacy"
+    ],
+    "topics": [
+      "Security"
+    ],
+    "icon": "scale",
+    "iconColor": "text-primary",
+    "wideWorkspace": true
+  },
   "dependency-upgrade-impact-estimator": {
     "name": "Dependency Upgrade Impact Estimator",
     "description": "Estimate upgrade risk from package dependency version changes, release distance, and critical package signals.",
@@ -2971,6 +3290,20 @@ export const toolMetaMap = {
     ],
     "icon": "package-check",
     "iconColor": "text-primary"
+  },
+  "dependency-vulnerability-lookup": {
+    "name": "Dependency Vulnerability Lookup",
+    "description": "Query exact package versions against the official OSV API through a bounded same-origin endpoint with explicit network and coverage limitations.",
+    "category": [
+      "Security & Privacy",
+      "Developer"
+    ],
+    "topics": [
+      "Security"
+    ],
+    "icon": "package-search",
+    "iconColor": "text-primary",
+    "wideWorkspace": true
   },
   "depth-of-field-estimator": {
     "name": "Depth of Field Estimator",
@@ -3074,6 +3407,17 @@ export const toolMetaMap = {
     "icon": "text",
     "iconColor": "text-blue-500"
   },
+  "digilocker-consent-scope-translator": {
+    "name": "DigiLocker Consent Scope Translator",
+    "description": "Translate explicitly labeled requester, document, field, purpose, duration, frequency, retention and revocation details from pasted consent JSON or text without accessing an account.",
+    "category": [
+      "Security & Privacy",
+      "Productivity"
+    ],
+    "icon": "list-checks",
+    "iconColor": "text-primary",
+    "wideWorkspace": true
+  },
   "digit-span-test": {
     "name": "Digit Span Test",
     "description": "Measure your short-term working memory capacity with standard forward and reverse digit span tests.",
@@ -3088,6 +3432,17 @@ export const toolMetaMap = {
     ],
     "icon": "hash",
     "iconColor": "text-teal-600"
+  },
+  "digital-arrest-emergency-assistant": {
+    "name": "Digital Arrest Emergency Assistant",
+    "description": "Follow a calm, official-guidance checklist and prepare a local evidence-preservation pack for a suspected digital-arrest incident without uploads, calls, or payments.",
+    "category": [
+      "Security & Privacy",
+      "Productivity"
+    ],
+    "icon": "shield-alert",
+    "iconColor": "text-primary",
+    "wideWorkspace": true
   },
   "digital-wallet-tool": {
     "name": "Digital Wallet Manager",
@@ -3187,6 +3542,17 @@ export const toolMetaMap = {
     "icon": "divide",
     "iconColor": "text-cyan-600"
   },
+  "dlt-sms-sender-id-explainer": {
+    "name": "DLT SMS Sender ID Explainer",
+    "description": "Explain documented Indian commercial SMS header, prefix and category-suffix formats locally without claiming sender authenticity or live DLT registration.",
+    "category": [
+      "Security & Privacy",
+      "Text & Writing"
+    ],
+    "icon": "message-square-text",
+    "iconColor": "text-primary",
+    "wideWorkspace": true
+  },
   "dna-double-helix-explorer": {
     "name": "DNA Double Helix Explorer",
     "description": "Interactive 3D rotating DNA double helix model with base pairing (A-T, G-C), hydrogen bond counting, and replication mechanics.",
@@ -3196,6 +3562,21 @@ export const toolMetaMap = {
     ],
     "icon": "dna",
     "iconColor": "text-teal-500"
+  },
+  "dockerfile-security-linter": {
+    "name": "Dockerfile Security Linter",
+    "description": "Lint a pasted Dockerfile locally for risky build patterns, root runtime cues, floating bases, embedded secrets, broad copies, and missing health checks.",
+    "category": [
+      "Developer",
+      "Security & Privacy"
+    ],
+    "topics": [
+      "Security",
+      "DevOps"
+    ],
+    "icon": "shield-alert",
+    "iconColor": "text-primary",
+    "wideWorkspace": true
   },
   "document-checklist-generator": {
     "name": "Document Checklist Generator",
@@ -3219,6 +3600,18 @@ export const toolMetaMap = {
     ],
     "icon": "history",
     "iconColor": "text-primary"
+  },
+  "document-version-verifier": {
+    "name": "Document Version Verifier",
+    "description": "Compare two local TXT, Markdown, JSON, CSV, or text-based PDF versions with bounded structural and line-level evidence.",
+    "category": [
+      "Text & Writing",
+      "Developer",
+      "Productivity"
+    ],
+    "icon": "file-diff",
+    "iconColor": "text-primary",
+    "wideWorkspace": true
   },
   "domain-checker": {
     "name": "Domain Checker",
@@ -3612,6 +4005,21 @@ export const toolMetaMap = {
     "icon": "wrench",
     "iconColor": "text-muted-foreground"
   },
+  "evidence-chain-organizer": {
+    "name": "Evidence Chain Organizer",
+    "description": "Organize evidence identifiers, recorded digests, and chronological custody events locally, with reference checks, canonical JSON, and an optional SHA-256 event hash chain.",
+    "category": [
+      "Security & Privacy",
+      "Productivity",
+      "Business"
+    ],
+    "topics": [
+      "Legal"
+    ],
+    "icon": "git-branch",
+    "iconColor": "text-primary",
+    "wideWorkspace": true
+  },
   "exam-score-analyzer": {
     "name": "Exam Score Analyzer",
     "description": "Analyze your exam performance with grades, insights, and interactive charts.",
@@ -3817,6 +4225,17 @@ export const toolMetaMap = {
     "icon": "file-text",
     "iconColor": "text-blue-600"
   },
+  "family-safe-word-generator": {
+    "name": "Family Safe-Word Generator",
+    "description": "Create a memorable, high-entropy family verification phrase locally for voice-clone, impersonation, and emergency-message scams.",
+    "category": "Security & Privacy",
+    "topics": [
+      "Utility"
+    ],
+    "icon": "key-round",
+    "iconColor": "text-primary",
+    "wideWorkspace": true
+  },
   "fancy-text-generator": {
     "name": "Fancy Text Generator",
     "description": "Generate stylish Unicode text variants for bios, posts, and names.",
@@ -3873,6 +4292,20 @@ export const toolMetaMap = {
     "icon": "messages-square",
     "iconColor": "text-primary"
   },
+  "file-checksum-comparator": {
+    "name": "File Checksum Comparator",
+    "description": "Hash a local file with SHA-256, SHA-384, or SHA-512 and compare it with a publisher-provided checksum without uploading the file.",
+    "category": [
+      "Security & Privacy",
+      "Developer"
+    ],
+    "topics": [
+      "Utility"
+    ],
+    "icon": "fingerprint",
+    "iconColor": "text-primary",
+    "wideWorkspace": true
+  },
   "file-encoding-conversion-tool": {
     "name": "File Encoding Conversion Tool",
     "description": "Detect, validate, repair, preview, compare, copy, and download real browser-based file encoding conversions.",
@@ -3884,6 +4317,18 @@ export const toolMetaMap = {
     "icon": "file-code",
     "iconColor": "text-cyan-500"
   },
+  "file-integrity-manifest-builder": {
+    "name": "File Integrity Manifest Builder",
+    "description": "Create a deterministic local SHA-256 manifest for bounded file sets, compare it with a previous manifest, and review byte changes and duplicate digests without uploading files.",
+    "category": [
+      "Security & Privacy",
+      "Developer",
+      "Productivity"
+    ],
+    "icon": "files",
+    "iconColor": "text-primary",
+    "wideWorkspace": true
+  },
   "file-metadata-explorer": {
     "name": "File Metadata Explorer",
     "description": "Extract and explore detailed metadata from files — images, documents, audio, video, and more. All processing stays in your browser.",
@@ -3893,6 +4338,21 @@ export const toolMetaMap = {
     ],
     "icon": "file-search",
     "iconColor": "text-violet-600"
+  },
+  "file-signature-verifier": {
+    "name": "File Signature Verifier",
+    "description": "Compare a local file's leading magic bytes with its extension and browser-reported MIME type without uploading the file.",
+    "category": [
+      "Security & Privacy",
+      "Developer",
+      "PDF & Documents"
+    ],
+    "topics": [
+      "File"
+    ],
+    "icon": "file-search",
+    "iconColor": "text-primary",
+    "wideWorkspace": true
   },
   "file-to-base64": {
     "name": "File to Base64",
@@ -4001,6 +4461,20 @@ export const toolMetaMap = {
     "icon": "flag",
     "iconColor": "text-blue-600"
   },
+  "flash-motion-safety-analyzer": {
+    "name": "Flash & Motion Safety Analyzer",
+    "description": "Screen bounded, paused samples from a local video for flash-pair and large frame-change cues without uploading the media.",
+    "category": [
+      "Video & Audio",
+      "Developer"
+    ],
+    "topics": [
+      "Accessibility"
+    ],
+    "icon": "scan-eye",
+    "iconColor": "text-primary",
+    "wideWorkspace": true
+  },
   "flashcard-maker": {
     "name": "Flashcard Maker",
     "description": "Create, organize, and study flashcards with AI-assisted generation.",
@@ -4063,6 +4537,21 @@ export const toolMetaMap = {
     "icon": "type",
     "iconColor": "text-cyan-500"
   },
+  "font-legibility-comparator": {
+    "name": "Font Legibility Comparator",
+    "description": "Compare the same private text across local system font stacks, size, measure, weight, and spacing settings without declaring a universal winner.",
+    "category": [
+      "Developer",
+      "Design & Color"
+    ],
+    "topics": [
+      "Accessibility",
+      "Design"
+    ],
+    "icon": "type",
+    "iconColor": "text-primary",
+    "wideWorkspace": true
+  },
   "food-shelf-life-guide": {
     "name": "Food Shelf Life Guide",
     "description": "Look up how long any food keeps in the pantry, fridge or freezer, and check whether leftovers are still safe to eat.",
@@ -4098,6 +4587,14 @@ export const toolMetaMap = {
     ],
     "icon": "form",
     "iconColor": "text-blue-500"
+  },
+  "form-label-auditor": {
+    "name": "Form Label Auditor",
+    "description": "Inspect pasted HTML locally for common form-control naming, label association, group legend, duplicate ID, and reference issues without executing the source.",
+    "category": "Developer",
+    "icon": "text-cursor-input",
+    "iconColor": "text-primary",
+    "wideWorkspace": true
   },
   "fortune-cookie-generator": {
     "name": "Fortune Cookie Generator",
@@ -4343,6 +4840,21 @@ export const toolMetaMap = {
     "category": "Lifestyle",
     "icon": "gift",
     "iconColor": "text-indigo-600"
+  },
+  "git-diff-exposure-checker": {
+    "name": "Git Diff Exposure Checker",
+    "description": "Inspect a pasted unified Git diff locally for added secret-like values, private-key material, contact PII, and sensitive filenames with redacted findings.",
+    "category": [
+      "Developer",
+      "Security & Privacy"
+    ],
+    "topics": [
+      "Security",
+      "Privacy"
+    ],
+    "icon": "git-compare",
+    "iconColor": "text-primary",
+    "wideWorkspace": true
   },
   "github-profile-finder": {
     "name": "GitHub Profile Finder",
@@ -4691,6 +5203,17 @@ export const toolMetaMap = {
     "icon": "spell-check",
     "iconColor": "text-rose-600"
   },
+  "har-privacy-sanitizer": {
+    "name": "HAR Privacy Sanitizer",
+    "description": "Remove sensitive headers, cookies, query parameters, and request or response bodies from a HAR file locally before sharing it.",
+    "category": [
+      "Security & Privacy",
+      "Developer"
+    ],
+    "icon": "file-lock",
+    "iconColor": "text-primary",
+    "wideWorkspace": true
+  },
   "harry-potter-pencil-writer": {
     "name": "Harry Potter Pencil Writer",
     "description": "Transform your ordinary words into magical enchantments with customizable spell-binding fonts and magical glow effects.",
@@ -4799,6 +5322,18 @@ export const toolMetaMap = {
     ],
     "icon": "divide",
     "iconColor": "text-teal-500"
+  },
+  "hidden-revision-inspector": {
+    "name": "Hidden Revision Inspector",
+    "description": "Inspect local OOXML packages for generic revision, comment, metadata, hidden-structure, macro, embedded-file, and external-link evidence.",
+    "category": [
+      "Security & Privacy",
+      "Productivity",
+      "Developer"
+    ],
+    "icon": "history",
+    "iconColor": "text-primary",
+    "wideWorkspace": true
   },
   "hidden-talent-finder": {
     "name": "Hidden Talent Finder",
@@ -5124,6 +5659,17 @@ export const toolMetaMap = {
     "icon": "image",
     "iconColor": "text-blue-600"
   },
+  "image-ela-forensics-viewer": {
+    "name": "Image ELA Forensics Viewer",
+    "description": "Explore local JPEG re-encoding residuals with a gain-adjusted heatmap, bounded statistics, and regional measurements without uploading the image or producing an authenticity verdict.",
+    "category": [
+      "Image & Photo",
+      "Security & Privacy"
+    ],
+    "icon": "scan-search",
+    "iconColor": "text-primary",
+    "wideWorkspace": true
+  },
   "image-flip-rotate-tool": {
     "name": "Image Flip & Rotate Tool",
     "description": "Flip, mirror, rotate, straighten, preview, and export images in browser with batch ZIP downloads.",
@@ -5300,6 +5846,18 @@ export const toolMetaMap = {
     "icon": "calendar-range",
     "iconColor": "text-blue-600"
   },
+  "indirect-prompt-injection-scanner": {
+    "name": "Indirect Prompt Injection Scanner",
+    "description": "Scan pasted HTML, Markdown, CSV, or text locally for hidden instructions, role markers, data-exfiltration requests, and prompt-injection signals.",
+    "category": [
+      "Security & Privacy",
+      "AI Tools",
+      "Developer"
+    ],
+    "icon": "shield-alert",
+    "iconColor": "text-primary",
+    "wideWorkspace": true
+  },
   "inflation-calculator": {
     "name": "Inflation Impact Calculator",
     "description": "See what inflation does to your money — future costs, shrinking purchasing power, and the return you need to beat it.",
@@ -5452,6 +6010,17 @@ export const toolMetaMap = {
     "icon": "eye-off",
     "iconColor": "text-gray-600"
   },
+  "invoice-fraud-change-inspector": {
+    "name": "Invoice Fraud Change Inspector",
+    "description": "Compare observable invoice fields and payment details locally, confirm extracted values manually, and review changes without treating them as proof of fraud.",
+    "category": [
+      "Security & Privacy",
+      "Business"
+    ],
+    "icon": "scan-search",
+    "iconColor": "text-primary",
+    "wideWorkspace": true
+  },
   "invoice-generator": {
     "name": "Invoice Generator",
     "description": "Create clean invoices with line items, tax, discount, totals, and print-ready output.",
@@ -5594,6 +6163,22 @@ export const toolMetaMap = {
     ],
     "icon": "briefcase",
     "iconColor": "text-blue-600"
+  },
+  "job-scam-deposit-checker": {
+    "name": "Job Scam Deposit Checker",
+    "description": "Review a job offer locally for candidate-payment, money-mule, contact mismatch, compensation, urgency, and identity-pressure signals.",
+    "category": [
+      "Security & Privacy",
+      "Business",
+      "Finance Calculators"
+    ],
+    "topics": [
+      "Career",
+      "Finance"
+    ],
+    "icon": "briefcase-business",
+    "iconColor": "text-primary",
+    "wideWorkspace": true
   },
   "join-photo-and-signature": {
     "name": "Join Photo & Signature",
@@ -5776,6 +6361,14 @@ export const toolMetaMap = {
     "category": "Developer",
     "icon": "case-sensitive",
     "iconColor": "text-amber-600"
+  },
+  "keyboard-focus-order-replay": {
+    "name": "Keyboard Focus-Order Replay",
+    "description": "Estimate sequential keyboard focus order from pasted static HTML and replay the resulting tab stops locally with calibrated structural cues.",
+    "category": "Developer",
+    "icon": "keyboard",
+    "iconColor": "text-primary",
+    "wideWorkspace": true
   },
   "keyboard-layout-tester": {
     "name": "Keyboard Layout Tester",
@@ -6079,6 +6672,26 @@ export const toolMetaMap = {
     "icon": "sort-asc",
     "iconColor": "text-teal-500"
   },
+  "llm-cost-privacy-analyzer": {
+    "name": "LLM Cost & Privacy Analyzer",
+    "description": "Analyze AI usage logs locally with user-supplied token rates, model cost summaries, and counts-only personal-data or secret signals.",
+    "category": [
+      "AI Tools",
+      "Business",
+      "Security & Privacy"
+    ],
+    "icon": "coins",
+    "iconColor": "text-primary",
+    "wideWorkspace": true
+  },
+  "loan-app-permission-risk-auditor": {
+    "name": "Loan App Permission Risk Auditor",
+    "description": "Review an Android manifest or permission list locally and understand sensitive access patterns often relevant to abusive loan-app behavior.",
+    "category": "Security & Privacy",
+    "icon": "shield-alert",
+    "iconColor": "text-primary",
+    "wideWorkspace": true
+  },
   "loan-comparison-tool": {
     "name": "Loan Comparison Tool",
     "description": "Monthly payment, total interest and total cost of a loan.",
@@ -6134,6 +6747,32 @@ export const toolMetaMap = {
     "icon": "landmark",
     "iconColor": "text-emerald-600"
   },
+  "local-ai-data-egress-monitor": {
+    "name": "Local AI Data-Egress Monitor",
+    "description": "Review a HAR network trace locally to see which hosts an AI app contacted and where outbound bodies, credential headers, or sensitive query names appeared.",
+    "category": [
+      "Security & Privacy",
+      "Developer",
+      "AI Tools"
+    ],
+    "icon": "network",
+    "iconColor": "text-primary",
+    "wideWorkspace": true
+  },
+  "local-ai-readiness-checker": {
+    "name": "Local AI Readiness Checker",
+    "description": "Compare manually entered computer specifications with transparent local-AI workload thresholds without scanning the device or recommending a specific model.",
+    "category": [
+      "AI Tools",
+      "Developer"
+    ],
+    "topics": [
+      "Utility"
+    ],
+    "icon": "cpu",
+    "iconColor": "text-primary",
+    "wideWorkspace": true
+  },
   "localstorage-explorer": {
     "name": "LocalStorage Explorer",
     "description": "View, manage, add, edit, and delete browser LocalStorage keys and values in real-time.",
@@ -6147,6 +6786,14 @@ export const toolMetaMap = {
     ],
     "icon": "database",
     "iconColor": "text-blue-600"
+  },
+  "location-history-cleaner": {
+    "name": "Location History Cleaner",
+    "description": "Remove or coarsen sensitive places and timestamps in JSON, CSV and GeoJSON location history entirely in your browser.",
+    "category": "Security & Privacy",
+    "icon": "map-pin",
+    "iconColor": "text-primary",
+    "wideWorkspace": true
   },
   "logic-gate-simulator": {
     "name": "Logic Gate Simulator",
@@ -6405,6 +7052,22 @@ export const toolMetaMap = {
     "icon": "edit",
     "iconColor": "text-blue-500"
   },
+  "marketplace-scam-checker": {
+    "name": "Marketplace Scam Checker",
+    "description": "Review marketplace messages locally for off-platform payment, fake escrow, overpayment, OTP, remote-access, shipping, fee, and account-takeover signals.",
+    "category": [
+      "Security & Privacy",
+      "Lifestyle",
+      "Finance Calculators"
+    ],
+    "topics": [
+      "Shopping",
+      "Finance"
+    ],
+    "icon": "package-search",
+    "iconColor": "text-primary",
+    "wideWorkspace": true
+  },
   "markup-calculator": {
     "name": "Markup Calculator",
     "description": "Add a markup percentage to a cost to get the selling price and profit.",
@@ -6440,6 +7103,17 @@ export const toolMetaMap = {
     "icon": "ghost",
     "iconColor": "text-yellow-600"
   },
+  "mcp-permission-diff-auditor": {
+    "name": "MCP Permission Diff Auditor",
+    "description": "Compare MCP tool manifests locally and highlight added capabilities, changed schemas, and risky permission patterns before upgrading.",
+    "category": [
+      "Security & Privacy",
+      "Developer"
+    ],
+    "icon": "shield-check",
+    "iconColor": "text-primary",
+    "wideWorkspace": true
+  },
   "md5-hash-generator": {
     "name": "MD5 Hash Generator",
     "description": "Generate secure, cryptographic MD5 hash values (checksums) from any input text instantly, with real-time outputs.",
@@ -6470,6 +7144,18 @@ export const toolMetaMap = {
     "icon": "sigma",
     "iconColor": "text-blue-600"
   },
+  "media-metadata-timeline-correlator": {
+    "name": "Media Metadata Timeline Correlator",
+    "description": "Extract bounded date fields from local image, MP4, and WAV metadata, preserve timezone uncertainty, and compare the resulting timeline without authenticity claims.",
+    "category": [
+      "Image & Photo",
+      "Developer",
+      "Security & Privacy"
+    ],
+    "icon": "clock",
+    "iconColor": "text-primary",
+    "wideWorkspace": true
+  },
   "media-query-generator": {
     "name": "Media Query Generator",
     "description": "Generate a CSS media query for a breakpoint.",
@@ -6479,6 +7165,18 @@ export const toolMetaMap = {
     ],
     "icon": "square",
     "iconColor": "text-indigo-500"
+  },
+  "medical-report-de-identifier": {
+    "name": "Medical Report De-identifier",
+    "description": "Replace common patient, clinician, and facility identifiers in pasted text, TXT, DOCX, or text-based PDF files locally in your browser.",
+    "category": [
+      "Security & Privacy",
+      "PDF & Documents",
+      "Health & Fitness"
+    ],
+    "icon": "stethoscope",
+    "iconColor": "text-primary",
+    "wideWorkspace": true
   },
   "medication-reminder": {
     "name": "Medication Reminder",
@@ -6632,6 +7330,18 @@ export const toolMetaMap = {
     ],
     "icon": "box",
     "iconColor": "text-blue-500"
+  },
+  "merchant-qr-tamper-comparator": {
+    "name": "Merchant QR Tamper Comparator",
+    "description": "Compare a trusted merchant UPI QR payload with a current one locally, highlighting deterministic field differences without opening or initiating payment.",
+    "category": [
+      "Security & Privacy",
+      "Finance Calculators",
+      "Image & Photo"
+    ],
+    "icon": "qr-code",
+    "iconColor": "text-primary",
+    "wideWorkspace": true
   },
   "meta-tag-generator": {
     "name": "Meta Tag Generator",
@@ -6840,6 +7550,21 @@ export const toolMetaMap = {
     ],
     "icon": "activity",
     "iconColor": "text-[var(--primary)]"
+  },
+  "motion-reduced-media-preview": {
+    "name": "Motion-Reduced Media Preview",
+    "description": "Preview an uploaded GIF or video without autoplay, capture a still fallback locally, and review reduced-motion delivery choices.",
+    "category": [
+      "Developer",
+      "Video & Audio",
+      "Image & Photo"
+    ],
+    "topics": [
+      "Accessibility"
+    ],
+    "icon": "film",
+    "iconColor": "text-primary",
+    "wideWorkspace": true
   },
   "motivation-reminder": {
     "name": "Motivation Reminder",
@@ -7163,6 +7888,32 @@ export const toolMetaMap = {
     "icon": "bell-ring",
     "iconColor": "text-indigo-600"
   },
+  "office-macro-inspector": {
+    "name": "Office Macro Inspector",
+    "description": "Inspect bounded local Office packages for VBA part, relationship, content-type, and legacy-container cues without opening or executing macros.",
+    "category": [
+      "Security & Privacy",
+      "PDF & Documents",
+      "Productivity"
+    ],
+    "topics": [
+      "Document & PDF"
+    ],
+    "icon": "file-search",
+    "iconColor": "text-primary",
+    "wideWorkspace": true
+  },
+  "official-contact-verifier": {
+    "name": "Official Contact Verifier",
+    "description": "Compare a contact from a message with an independently obtained official reference, locally and without claiming live registration or authenticity.",
+    "category": [
+      "Security & Privacy",
+      "Productivity"
+    ],
+    "icon": "contact-round-check",
+    "iconColor": "text-primary",
+    "wideWorkspace": true
+  },
   "ohms-law-calculator": {
     "name": "Ohm's Law Calculator",
     "description": "Enter any two of voltage, current and resistance to find the third — plus power.",
@@ -7293,6 +8044,20 @@ export const toolMetaMap = {
     "icon": "wind",
     "iconColor": "text-cyan-600"
   },
+  "package-install-script-inspector": {
+    "name": "Package Install-Script Inspector",
+    "description": "Inspect package.json lifecycle commands as inert text for network, file, shell, process, environment, and native-build review cues.",
+    "category": [
+      "Developer",
+      "Security & Privacy"
+    ],
+    "topics": [
+      "Security"
+    ],
+    "icon": "package-check",
+    "iconColor": "text-primary",
+    "wideWorkspace": true
+  },
   "package-version-checker": {
     "name": "Package Version Checker",
     "description": "Check package versions quickly and compare updates instantly.",
@@ -7395,6 +8160,18 @@ export const toolMetaMap = {
     "icon": "party-popper",
     "iconColor": "text-teal-600"
   },
+  "passport-mrz-masker": {
+    "name": "Passport & MRZ Masker",
+    "description": "Cover passport MRZ, passport-number, face, or custom image regions locally, then export a flattened PNG or JPEG.",
+    "category": [
+      "Security & Privacy",
+      "Image & Photo",
+      "Lifestyle"
+    ],
+    "icon": "scan-eye",
+    "iconColor": "text-primary",
+    "wideWorkspace": true
+  },
   "password-generator": {
     "name": "Password Generator",
     "description": "Generate strong random passwords with flexible character controls.",
@@ -7416,6 +8193,20 @@ export const toolMetaMap = {
     ],
     "icon": "shield-check",
     "iconColor": "text-teal-600"
+  },
+  "pdf-active-content-inspector": {
+    "name": "PDF Active Content Inspector",
+    "description": "Perform a bounded local lexical inspection for PDF JavaScript, actions, launch cues, attachments, forms, rich media, and external references without executing them.",
+    "category": [
+      "Security & Privacy",
+      "PDF & Documents"
+    ],
+    "topics": [
+      "Document & PDF"
+    ],
+    "icon": "shield-alert",
+    "iconColor": "text-primary",
+    "wideWorkspace": true
   },
   "pdf-annotation": {
     "name": "PDF Annotation Tool",
@@ -7451,6 +8242,20 @@ export const toolMetaMap = {
     ],
     "icon": "unlock",
     "iconColor": "text-[var(--info)]"
+  },
+  "pdf-digital-signature-validator": {
+    "name": "PDF Digital Signature Validator",
+    "description": "Inspect local PDF signature dictionaries, validate bounded ByteRange coverage, and hash the exact signed bytes without claiming certificate or CMS trust.",
+    "category": [
+      "Security & Privacy",
+      "PDF & Documents"
+    ],
+    "topics": [
+      "Document & PDF"
+    ],
+    "icon": "shield-check",
+    "iconColor": "text-primary",
+    "wideWorkspace": true
   },
   "pdf-merger": {
     "name": "PDF Merger Tool",
@@ -7506,6 +8311,21 @@ export const toolMetaMap = {
     ],
     "icon": "shield-check",
     "iconColor": "text-green-600"
+  },
+  "pdf-reading-order-preview": {
+    "name": "PDF Reading-Order Preview",
+    "description": "Compare a local PDF text layer's extracted sequence with a bounded Y-then-X visual-order estimate for manual review.",
+    "category": [
+      "Developer",
+      "PDF & Documents",
+      "Productivity"
+    ],
+    "topics": [
+      "Accessibility"
+    ],
+    "icon": "list-ordered",
+    "iconColor": "text-primary",
+    "wideWorkspace": true
   },
   "pdf-set-password": {
     "name": "PDF Set Password",
@@ -7707,6 +8527,18 @@ export const toolMetaMap = {
     "icon": "palette",
     "iconColor": "text-amber-600"
   },
+  "permanent-pdf-image-redactor": {
+    "name": "Permanent PDF & Image Redactor",
+    "description": "Cover sensitive areas and export a new rasterized PDF or PNG locally, without retaining selectable source text or original PDF objects.",
+    "category": [
+      "PDF & Documents",
+      "Image & Photo",
+      "Security & Privacy"
+    ],
+    "icon": "file-lock",
+    "iconColor": "text-primary",
+    "wideWorkspace": true
+  },
   "permutation-combination-calculator": {
     "name": "Permutation & Combination Calculator",
     "description": "nPr and nCr for choosing r items from n.",
@@ -7716,6 +8548,17 @@ export const toolMetaMap = {
     ],
     "icon": "shuffle",
     "iconColor": "text-violet-600"
+  },
+  "personal-data-export-auditor": {
+    "name": "Personal Data Export Auditor",
+    "description": "Inventory JSON, CSV and TXT data exports locally, then map schema-only signals for location, contacts, messages, ads, searches, devices, identifiers and security data.",
+    "category": [
+      "Security & Privacy",
+      "Developer"
+    ],
+    "icon": "file-search",
+    "iconColor": "text-primary",
+    "wideWorkspace": true
   },
   "pet-age-converter": {
     "name": "Pet Age Calculator (Dog & Cat Years)",
@@ -7904,6 +8747,17 @@ export const toolMetaMap = {
     "icon": "chart-pie",
     "iconColor": "text-teal-600"
   },
+  "post-quantum-migration-inventory": {
+    "name": "Post-Quantum Migration Inventory",
+    "description": "Inventory observable RSA, elliptic-curve, DSA, Diffie-Hellman, TLS, and post-quantum algorithm references in pasted code, config, or certificate metadata.",
+    "category": [
+      "Developer",
+      "Security & Privacy"
+    ],
+    "icon": "binary",
+    "iconColor": "text-primary",
+    "wideWorkspace": true
+  },
   "posting-schedule-planner": {
     "name": "Posting Schedule Planner",
     "description": "Plan, schedule, and preview social media posts with caption limits and metrics tracking.",
@@ -8008,6 +8862,45 @@ export const toolMetaMap = {
     ],
     "icon": "shield-check",
     "iconColor": "text-blue-600"
+  },
+  "private-bank-statement-analyzer": {
+    "name": "Private Bank Statement Analyzer",
+    "description": "Map and analyse CSV bank-statement transactions locally with deterministic categories, aggregate summaries, and cautious review signals.",
+    "category": [
+      "Finance Calculators",
+      "Security & Privacy",
+      "Business"
+    ],
+    "icon": "landmark",
+    "iconColor": "text-primary",
+    "wideWorkspace": true
+  },
+  "private-document-chat": {
+    "name": "Private Document Chat",
+    "description": "Ask local documents questions and receive deterministic matching excerpts with source citations—without a cloud model or upload.",
+    "category": [
+      "AI Tools",
+      "PDF & Documents",
+      "Security & Privacy"
+    ],
+    "topics": [
+      "Document & PDF"
+    ],
+    "icon": "messages-square",
+    "iconColor": "text-primary",
+    "wideWorkspace": true
+  },
+  "private-document-scanner-cleanup": {
+    "name": "Private Document Scanner & Cleanup",
+    "description": "Crop, straighten, clean up, and export a document photo entirely in your browser without uploading it.",
+    "category": [
+      "PDF & Documents",
+      "Image & Photo",
+      "Security & Privacy"
+    ],
+    "icon": "scan-text",
+    "iconColor": "text-primary",
+    "wideWorkspace": true
   },
   "product-image-compare": {
     "name": "Product Image Compare",
@@ -8189,6 +9082,30 @@ export const toolMetaMap = {
     ],
     "icon": "quote",
     "iconColor": "text-purple-600"
+  },
+  "rag-citation-coverage-checker": {
+    "name": "RAG Citation Coverage Checker",
+    "description": "Check locally whether answer claims carry recognizable citations to the supplied retrieval set, without claiming that a source proves the claim.",
+    "category": [
+      "AI Tools",
+      "Developer",
+      "Text & Writing"
+    ],
+    "icon": "book-open-check",
+    "iconColor": "text-primary",
+    "wideWorkspace": true
+  },
+  "rag-corpus-quarantine-scanner": {
+    "name": "RAG Corpus Quarantine Scanner",
+    "description": "Review text-based RAG files locally for prompt-injection, hidden-content, suspicious-link, and duplicate signals before indexing.",
+    "category": [
+      "Security & Privacy",
+      "AI Tools",
+      "Developer"
+    ],
+    "icon": "database-zap",
+    "iconColor": "text-primary",
+    "wideWorkspace": true
   },
   "random-business-idea": {
     "name": "Random Business Idea",
@@ -8446,6 +9363,18 @@ export const toolMetaMap = {
     "icon": "chef-hat",
     "iconColor": "text-teal-600"
   },
+  "redaction-proof-checker": {
+    "name": "Redaction Proof Checker",
+    "description": "Inspect redacted PDFs and images locally for exposed text, risky annotations, metadata, and visual warning signs before sharing.",
+    "category": [
+      "Security & Privacy",
+      "PDF & Documents",
+      "Image & Photo"
+    ],
+    "icon": "scan-search",
+    "iconColor": "text-primary",
+    "wideWorkspace": true
+  },
   "redness-analyzer": {
     "name": "Redness Analyzer",
     "description": "Analyze facial redness with AI-powered color analysis. Detect inflammation, sensitivity, and vascular activity with precise scoring and severity assessment.",
@@ -8612,6 +9541,18 @@ export const toolMetaMap = {
     ],
     "icon": "book-open",
     "iconColor": "text-blue-500"
+  },
+  "resume-pii-stripper": {
+    "name": "Resume PII Stripper",
+    "description": "Anonymize resumes locally for blind hiring by replacing names, contact details, addresses, dates of birth, links, handles, and identifiers.",
+    "category": [
+      "Security & Privacy",
+      "Business",
+      "PDF & Documents"
+    ],
+    "icon": "briefcase-business",
+    "iconColor": "text-primary",
+    "wideWorkspace": true
   },
   "retirement-corpus-calculator": {
     "name": "Retirement Corpus Calculator",
@@ -8873,6 +9814,18 @@ export const toolMetaMap = {
     "icon": "wallet",
     "iconColor": "text-teal-600"
   },
+  "salary-slip-anonymizer": {
+    "name": "Salary Slip Anonymizer",
+    "description": "Manually cover sensitive salary-slip details and create a flattened, rasterized PDF or PNG locally in your browser.",
+    "category": [
+      "PDF & Documents",
+      "Security & Privacy",
+      "Business"
+    ],
+    "icon": "file-lock",
+    "iconColor": "text-primary",
+    "wideWorkspace": true
+  },
   "salary-tax-calculator": {
     "name": "Salary Tax Calculator",
     "description": "Estimate your take-home salary after income tax, professional tax, and other deductions with detailed tax breakdown.",
@@ -8932,6 +9885,28 @@ export const toolMetaMap = {
     "icon": "target",
     "iconColor": "text-teal-500"
   },
+  "sbom-generator": {
+    "name": "SBOM Generator",
+    "description": "Generate a local CycloneDX JSON SBOM from bounded npm manifest or lockfile data with explicit incomplete-inventory and metadata policies.",
+    "category": [
+      "Developer",
+      "Security & Privacy"
+    ],
+    "topics": [
+      "Security"
+    ],
+    "icon": "list-tree",
+    "iconColor": "text-primary",
+    "wideWorkspace": true
+  },
+  "scam-message-triage": {
+    "name": "Scam Message Triage",
+    "description": "Review SMS, WhatsApp, and email text locally for common scam warning patterns and get safer next steps without sending the message anywhere.",
+    "category": "Security & Privacy",
+    "icon": "shield-alert",
+    "iconColor": "text-primary",
+    "wideWorkspace": true
+  },
   "scientific-calculator": {
     "name": "Scientific Calculator",
     "description": "Advanced scientific calculator. Features algebraic entry, trigonometrics (sin, cos, tan), logarithms (log, ln), brackets, powers, and logs.",
@@ -8966,6 +9941,17 @@ export const toolMetaMap = {
     "icon": "sigma",
     "iconColor": "text-cyan-600"
   },
+  "screen-reader-landmark-map": {
+    "name": "Screen-Reader Landmark Map",
+    "description": "Turn pasted HTML into a local landmark and heading outline with structural review cues, without executing or rendering the source.",
+    "category": [
+      "Developer",
+      "Security & Privacy"
+    ],
+    "icon": "landmark",
+    "iconColor": "text-primary",
+    "wideWorkspace": true
+  },
   "screen-recorder": {
     "name": "Screen Recorder",
     "description": "Record your screen and share it with your friends.",
@@ -8975,6 +9961,29 @@ export const toolMetaMap = {
     ],
     "icon": "video",
     "iconColor": "text-blue--500"
+  },
+  "screen-recording-redactor": {
+    "name": "Screen Recording Redactor",
+    "description": "Hide sensitive areas in a screen recording with timed solid, blur, or pixelated regions, then export a flattened WebM locally.",
+    "category": [
+      "Security & Privacy",
+      "Video & Audio",
+      "Productivity"
+    ],
+    "icon": "scan-eye",
+    "iconColor": "text-primary",
+    "wideWorkspace": true
+  },
+  "screen-share-privacy-guard": {
+    "name": "Screen Share Privacy Guard",
+    "description": "Privately preview a selected screen or window, place rehearsal covers, and complete a local privacy checklist before sharing.",
+    "category": "Security & Privacy",
+    "topics": [
+      "Utility"
+    ],
+    "icon": "monitor",
+    "iconColor": "text-primary",
+    "wideWorkspace": true
   },
   "screenshot-change-detector": {
     "name": "Screenshot Change Detector",
@@ -9000,6 +10009,30 @@ export const toolMetaMap = {
     ],
     "icon": "image-plus",
     "iconColor": "text-teal-500"
+  },
+  "screenshot-ocr-change-comparator": {
+    "name": "Screenshot OCR Change Comparator",
+    "description": "Compare two local screenshot previews through reviewed OCR transcripts with deterministic line and word change counts.",
+    "category": "Developer",
+    "topics": [
+      "Accessibility",
+      "Utility",
+      "Web"
+    ],
+    "icon": "scan-search",
+    "iconColor": "text-primary",
+    "wideWorkspace": true
+  },
+  "screenshot-privacy-masker": {
+    "name": "Screenshot Privacy Masker",
+    "description": "Hide sensitive screenshot regions locally with solid masks, blur, or pixelation, then export a flattened image.",
+    "category": [
+      "Security & Privacy",
+      "Image & Photo"
+    ],
+    "icon": "scan-eye",
+    "iconColor": "text-primary",
+    "wideWorkspace": true
   },
   "screenshot-tool-animated": {
     "name": "Screenshot Tool",
@@ -9033,6 +10066,17 @@ export const toolMetaMap = {
     "category": "Lifestyle",
     "icon": "users",
     "iconColor": "text-blue-500"
+  },
+  "secret-credential-leak-scanner": {
+    "name": "Secret & Credential Leak Scanner",
+    "description": "Scan pasted text, local source files, logs, and bounded ZIP archives for likely exposed credentials without uploading their contents.",
+    "category": [
+      "Security & Privacy",
+      "Developer"
+    ],
+    "icon": "shield-alert",
+    "iconColor": "text-primary",
+    "wideWorkspace": true
   },
   "secret-message-encoder": {
     "name": "Secret Message Encoder",
@@ -9125,6 +10169,17 @@ export const toolMetaMap = {
     ],
     "icon": "hand",
     "iconColor": "text-teal-500"
+  },
+  "sim-swap-recovery-pack": {
+    "name": "SIM Swap Recovery Pack",
+    "description": "Build a local, prioritised recovery checklist for possible SIM-control loss across carrier, banking, email, sessions, and evidence without entering secrets or account identifiers.",
+    "category": [
+      "Security & Privacy",
+      "Productivity"
+    ],
+    "icon": "smartphone",
+    "iconColor": "text-primary",
+    "wideWorkspace": true
   },
   "simon-says-game": {
     "name": "Simon Says Game",
@@ -10209,6 +11264,29 @@ export const toolMetaMap = {
     "icon": "check-square",
     "iconColor": "text-green-700"
   },
+  "tool-call-argument-policy-linter": {
+    "name": "Tool-Call Argument Policy Linter",
+    "description": "Lint AI tool-call JSON or JSONL locally against explicit name, path, domain, recipient, numeric-limit and confirmation policies without executing anything.",
+    "category": [
+      "Security & Privacy",
+      "Developer",
+      "AI Tools"
+    ],
+    "icon": "shield-check",
+    "iconColor": "text-primary",
+    "wideWorkspace": true
+  },
+  "touch-target-thumb-reach-map": {
+    "name": "Touch-Target Thumb-Reach Map",
+    "description": "Review supplied target rectangles against transparent WCAG size and spacing geometry, then map approximate one-handed reach zones locally.",
+    "category": [
+      "Developer",
+      "Design & Color"
+    ],
+    "icon": "target",
+    "iconColor": "text-primary",
+    "wideWorkspace": true
+  },
   "travel-cost-per-day": {
     "name": "Travel Cost Per Day",
     "description": "Calculate total trip cost, daily cost, per-person/day split, category spending, payment timing, and budget signals.",
@@ -10249,6 +11327,17 @@ export const toolMetaMap = {
     ],
     "icon": "wallet",
     "iconColor": "text-blue-600"
+  },
+  "trojan-source-detector": {
+    "name": "Trojan Source Detector",
+    "description": "Inspect source text for bidirectional controls, invisible characters, and mixed-script identifier tricks without executing the code.",
+    "category": [
+      "Security & Privacy",
+      "Developer"
+    ],
+    "icon": "scan-search",
+    "iconColor": "text-primary",
+    "wideWorkspace": true
   },
   "truth-or-dare": {
     "name": "Truth or Dare",
@@ -10402,12 +11491,54 @@ export const toolMetaMap = {
     "icon": "scale",
     "iconColor": "text-orange-700"
   },
+  "universal-pii-ai-redactor": {
+    "name": "Universal PII & AI Input Redactor",
+    "description": "Detect and redact personal data, financial identifiers, and secrets locally before sharing text with AI or another person.",
+    "category": [
+      "Security & Privacy",
+      "AI Tools",
+      "Text & Writing"
+    ],
+    "icon": "scan-text",
+    "iconColor": "text-primary",
+    "wideWorkspace": true
+  },
   "unix-timestamp-converter": {
     "name": "Unix Timestamp Converter",
     "description": "Convert Unix timestamps to readable local, UTC, and ISO dates.",
     "category": "Developer",
     "icon": "clock",
     "iconColor": "text-sky-600"
+  },
+  "upi-autopay-mandate-calendar": {
+    "name": "UPI AutoPay Mandate Calendar",
+    "description": "Plan estimated recurring mandate dates locally, add pause or revoke review reminders, and export a non-authoritative ICS calendar.",
+    "category": [
+      "Finance Calculators",
+      "Productivity",
+      "Security & Privacy"
+    ],
+    "topics": [
+      "Finance"
+    ],
+    "icon": "calendar-clock",
+    "iconColor": "text-primary",
+    "wideWorkspace": true
+  },
+  "upi-collect-request-decoder": {
+    "name": "UPI Collect Request Decoder",
+    "description": "Decode pasted UPI payment and collect-request payloads locally to inspect the payee, amount, reference fields, and debit warnings without opening a payment app.",
+    "category": [
+      "Finance Calculators",
+      "Security & Privacy"
+    ],
+    "topics": [
+      "Finance",
+      "Security",
+      "Utility"
+    ],
+    "icon": "shield-alert",
+    "iconColor": "text-primary"
   },
   "upside-down-text": {
     "name": "Upside Down Text",
@@ -10545,6 +11676,17 @@ export const toolMetaMap = {
     ],
     "icon": "video",
     "iconColor": "text-blue-600"
+  },
+  "video-frame-continuity-inspector": {
+    "name": "Video Frame Continuity Inspector",
+    "description": "Sample bounded frames from a local video and review near-duplicate runs or high visual changes without uploading the media or making an authenticity claim.",
+    "category": [
+      "Video & Audio",
+      "Security & Privacy"
+    ],
+    "icon": "film",
+    "iconColor": "text-primary",
+    "wideWorkspace": true
   },
   "video-script-timer": {
     "name": "Video Script Timer",
@@ -10748,6 +11890,17 @@ export const toolMetaMap = {
     "icon": "wand-2",
     "iconColor": "text-teal-500"
   },
+  "watermark-visibility-tester": {
+    "name": "Watermark Visibility Tester",
+    "description": "Mark a watermark area and locally stress-test its pixel signal after resize, JPEG compression, grayscale, and centered crop transformations.",
+    "category": [
+      "Image & Photo",
+      "Security & Privacy"
+    ],
+    "icon": "scan-eye",
+    "iconColor": "text-primary",
+    "wideWorkspace": true
+  },
   "wave-interference-simulator": {
     "name": "Wave Interference Simulator",
     "description": "A tool that simulates wave interference patterns, allowing users to visualize how waves interact with each other. Users can adjust parameters such as wave frequency, amplitude, and phase to see how they affect the resulting interference pattern.",
@@ -10762,6 +11915,18 @@ export const toolMetaMap = {
     ],
     "icon": "activity",
     "iconColor": "text-blue-700"
+  },
+  "wcag-quick-auditor": {
+    "name": "WCAG Quick Auditor",
+    "description": "Run a local inert structural audit of pasted HTML for common accessibility markup issues without rendering or fetching the page.",
+    "category": "Developer",
+    "topics": [
+      "Accessibility",
+      "Web"
+    ],
+    "icon": "scan-search",
+    "iconColor": "text-primary",
+    "wideWorkspace": true
   },
   "weather-checker": {
     "name": "Weather Checker Tool",
@@ -10780,6 +11945,18 @@ export const toolMetaMap = {
     "icon": "cloud-rain",
     "iconColor": "text-teal-500"
   },
+  "web-evidence-snapshot-certificate": {
+    "name": "Web Evidence Snapshot Certificate",
+    "description": "Hash a local web screenshot and create a deterministic, self-recorded metadata manifest without fetching the source URL.",
+    "category": "Security & Privacy",
+    "topics": [
+      "Web",
+      "Utility"
+    ],
+    "icon": "fingerprint",
+    "iconColor": "text-primary",
+    "wideWorkspace": true
+  },
   "web-speed-checker": {
     "name": "Web Speed Checker",
     "description": "Check website loading speed instantly with detailed performance metrics.",
@@ -10789,6 +11966,18 @@ export const toolMetaMap = {
     ],
     "icon": "gauge",
     "iconColor": "text-blue-600"
+  },
+  "webcam-background-privacy-scanner": {
+    "name": "Webcam Background Privacy Scanner",
+    "description": "Freeze a webcam frame, review it locally, mark sensitive background areas, and export a covered copy without uploading the image.",
+    "category": [
+      "Security & Privacy",
+      "Image & Photo",
+      "Productivity"
+    ],
+    "icon": "camera",
+    "iconColor": "text-primary",
+    "wideWorkspace": true
   },
   "webp-to-png-jpg": {
     "name": "WebP to PNG / JPG Converter",
