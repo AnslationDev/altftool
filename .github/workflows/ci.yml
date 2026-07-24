@@ -20,6 +20,9 @@ env:
   CI: true
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
   NEXT_TELEMETRY_DISABLED: 1
+  # Keep the 1,300+ tool webpack graph in an isolated process. This is the
+  # same memory-safe path verified by the production Amplify build.
+  ALTFT_WEBPACK_BUILD_WORKER: "true"
 
 jobs:
   # Deterministic gate: install, lint, build, and fast unit tests only.
