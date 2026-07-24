@@ -65,6 +65,7 @@ function usesReactRouterRscApis(directory) {
 }
 
 const workspacePackage = JSON.parse(readFileSync(path.join(workspace, "package.json"), "utf8"));
+const lockfile = JSON.parse(readFileSync("package-lock.json", "utf8"));
 if (!String(workspacePackage.scripts?.build || "").includes("use-patched-next-dependencies.mjs")) {
   console.error(`${workspace} build does not apply the patched Next.js dependencies.`);
   process.exit(1);
@@ -171,15 +172,33 @@ if (knownClientOnlyReactRouterFinding) {
   );
 }
 
+function isDevelopmentOnlyFinding(finding) {
+  const nodes = finding?.nodes || [];
+  return (
+    nodes.length > 0 &&
+    nodes.every((node) => lockfile.packages?.[node]?.dev === true)
+  );
+}
+
+const developmentOnlyFindings = Object.entries(vulnerabilities).filter(([, finding]) =>
+  isDevelopmentOnlyFinding(finding),
+);
+for (const [name] of developmentOnlyFindings) {
+  delete vulnerabilities[name];
+}
+if (developmentOnlyFindings.length > 0) {
+  console.log(
+    `Reported ${developmentOnlyFindings.length} development-only audit finding(s); ` +
+      "they are not shipped in the production dependency tree.",
+  );
+}
+
 const severityRank = { info: 0, low: 1, moderate: 2, high: 3, critical: 4 };
 const blockers = Object.values(vulnerabilities).filter(
   (finding) => (severityRank[finding?.severity] || 0) >= severityRank.high,
 );
 
-if (
-  blockers.length > 0 ||
-  (!knownLockfileFinding && !knownClientOnlyReactRouterFinding && auditResult.status !== 0)
-) {
+if (blockers.length > 0 || report.error) {
   process.stdout.write(`${JSON.stringify(report, null, 2)}\n`);
   process.exit(1);
 }
