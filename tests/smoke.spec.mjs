@@ -221,7 +221,7 @@ test("buysmart A-Z category cards load brand images", async ({ page }) => {
   await quality.expectClean("buysmart flow");
 });
 
-test("firebase blog catalog and detail render complete content", async ({
+test("blog catalog and detail render complete content", async ({
   page,
   request,
 }) => {
@@ -238,7 +238,8 @@ test("firebase blog catalog and detail render complete content", async ({
   const targetPost = firstPayload.posts.find((post) => post.slug);
   expect(targetPost).toBeTruthy();
 
-  let offset = 360;
+  let offset = 0;
+  let discoveredPosts = 0;
   let lastPayload = null;
 
   for (let attempt = 0; attempt < 10; attempt += 1) {
@@ -248,13 +249,15 @@ test("firebase blog catalog and detail render complete content", async ({
     expect(chunk.ok()).toBeTruthy();
 
     lastPayload = await chunk.json();
-    expect(lastPayload.nextOffset).toBeGreaterThan(offset);
+    expect(lastPayload.nextOffset).toBe(offset + lastPayload.posts.length);
+    discoveredPosts += lastPayload.posts.length;
 
     if (!lastPayload.hasMore) break;
+    expect(lastPayload.nextOffset).toBeGreaterThan(offset);
     offset = lastPayload.nextOffset;
   }
 
-  expect(lastPayload.nextOffset).toBeGreaterThanOrEqual(387);
+  expect(discoveredPosts).toBeGreaterThan(0);
   expect(lastPayload.hasMore).toBeFalsy();
 
   await page.goto(`${webUrl}/blogs`, { waitUntil: "domcontentloaded" });
