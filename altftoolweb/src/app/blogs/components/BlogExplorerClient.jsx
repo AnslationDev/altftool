@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import {
   ArrowRight,
+  ArrowUpRight,
   BarChart3,
   Bookmark,
   BookOpen,
@@ -267,24 +268,47 @@ function AuthorAvatar({ name, className = "" }) {
   );
 }
 
-function SectionHeading({ title, action, actionHref, onAction, id }) {
+function SectionHeading({ title, kicker, action, actionHref, onAction, id }) {
+  const actionClass =
+    "group inline-flex min-h-11 items-center gap-1.5 text-sm font-bold text-(--primary) transition-colors duration-200 hover:underline motion-reduce:transition-none";
+  const actionArrow = (
+    <ArrowRight
+      aria-hidden="true"
+      className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5 motion-reduce:transition-none"
+    />
+  );
   return (
-    <div className="mb-5 flex flex-wrap items-center justify-between gap-3">
-      <h2 id={id} className="flex items-center gap-3 text-xl font-bold tracking-tight text-(--foreground) sm:text-2xl">
-        <span aria-hidden="true" className="h-6 w-1 rounded-full bg-(--primary)" />
-        {title}
-      </h2>
-      {action ? (
-        actionHref ? (
-          <Link href={actionHref} className="inline-flex items-center gap-1.5 text-sm font-bold text-(--primary) hover:underline">
-            {action} <ArrowRight className="h-4 w-4" />
-          </Link>
-        ) : (
-          <button type="button" onClick={onAction} className="inline-flex items-center gap-1.5 text-sm font-bold text-(--primary) hover:underline">
-            {action} <ArrowRight className="h-4 w-4" />
-          </button>
-        )
-      ) : null}
+    <div className="mb-6">
+      <div className="flex flex-wrap items-end justify-between gap-x-4 gap-y-1">
+        <div className="min-w-0">
+          {kicker ? (
+            <p className="mb-1.5 text-[11px] font-bold uppercase tracking-widest text-(--primary)">
+              {kicker}
+            </p>
+          ) : null}
+          <h2
+            id={id}
+            className="text-xl font-black tracking-tight text-(--foreground) sm:text-2xl lg:text-3xl"
+          >
+            {title}
+          </h2>
+        </div>
+        {action ? (
+          actionHref ? (
+            <Link href={actionHref} className={actionClass}>
+              {action} {actionArrow}
+            </Link>
+          ) : (
+            <button type="button" onClick={onAction} className={actionClass}>
+              {action} {actionArrow}
+            </button>
+          )
+        ) : null}
+      </div>
+      <div
+        aria-hidden="true"
+        className="mt-3 h-px w-full bg-gradient-to-r from-(--border) via-(--border) to-transparent"
+      />
     </div>
   );
 }
@@ -329,16 +353,51 @@ function FeaturedHeroCarousel({ posts }) {
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
     >
+      {/* soft radial brand accents (same color-mix pattern as the home hero panel) */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0"
+        style={{
+          background:
+            "radial-gradient(52% 68% at 84% 10%, color-mix(in srgb, var(--primary) 32%, transparent), transparent 72%), radial-gradient(42% 55% at 6% 94%, color-mix(in srgb, var(--secondary) 18%, transparent), transparent 70%)",
+        }}
+      />
       {/* decorative dots */}
-      <span aria-hidden="true" className="absolute left-[46%] top-8 h-2 w-2 rounded-full bg-white/25" />
-      <span aria-hidden="true" className="absolute bottom-10 left-10 h-1.5 w-1.5 rounded-full" style={{ background: "var(--secondary)", opacity: 0.6 }} />
+      <span aria-hidden="true" className="absolute left-[46%] top-8 hidden h-2 w-2 rounded-full bg-white/25 lg:block" />
+      <span aria-hidden="true" className="absolute bottom-10 left-10 hidden h-1.5 w-1.5 rounded-full lg:block" style={{ background: "var(--secondary)", opacity: 0.6 }} />
 
-      <div className="grid items-center gap-6 p-6 sm:p-8 lg:grid-cols-[1.05fr_0.95fr] lg:p-10">
-        <div className="min-w-0 sm:px-8 lg:px-10">
+      <div className="relative grid lg:grid-cols-[1.05fr_0.95fr] lg:items-center lg:gap-8 lg:p-10">
+        {/* Cover — full-bleed on mobile, framed panel on desktop */}
+        <Link
+          href={`/blogs/${post.slug}`}
+          prefetch={false}
+          tabIndex={-1}
+          aria-hidden="true"
+          className="relative block aspect-[16/9] overflow-hidden sm:aspect-[21/9] lg:order-2 lg:aspect-[16/10] lg:rounded-xl lg:border lg:border-white/10"
+        >
+          <Image
+            src={getBlogImageSrc(post.image)}
+            alt=""
+            fill
+            unoptimized={isFirebaseBlogImage(post.image)}
+            loading="eager"
+            fetchPriority="high"
+            sizes="(max-width: 1024px) 100vw, 44vw"
+            onError={handleBlogImageError}
+            className="object-cover"
+          />
+          {/* bottom fade so the image melts into the panel on small screens */}
+          <span
+            aria-hidden="true"
+            className="absolute inset-0 bg-gradient-to-t from-black/55 via-black/10 to-transparent lg:hidden"
+          />
+        </Link>
+
+        <div className="min-w-0 px-4 pb-6 pt-5 sm:px-8 sm:pb-8 lg:order-1 lg:p-0">
           <span className="inline-flex items-center gap-1.5 rounded-full bg-(--primary) px-3 py-1 text-[10px] font-bold uppercase tracking-widest text-(--primary-foreground)">
-            <Sparkles className="h-3 w-3" /> Featured
+            <Sparkles className="h-3 w-3" aria-hidden="true" /> Featured
           </span>
-          <h2 className="mt-4 line-clamp-3 text-2xl font-bold leading-[1.15] text-white sm:text-3xl lg:text-4xl">
+          <h2 className="mt-4 line-clamp-3 text-2xl font-black leading-[1.12] tracking-tight text-white sm:text-3xl lg:text-4xl xl:text-[2.75rem]">
             {post.heading}
           </h2>
           {stripHtml(post.excerpt) ? (
@@ -346,9 +405,10 @@ function FeaturedHeroCarousel({ posts }) {
               {stripHtml(post.excerpt)}
             </p>
           ) : null}
-          <div className="mt-4 flex flex-wrap items-center gap-2 text-xs font-semibold text-white/70">
+          {/* glass meta bar */}
+          <div className="mt-5 inline-flex max-w-full flex-wrap items-center gap-x-3 gap-y-1.5 rounded-2xl border border-white/15 bg-white/10 px-4 py-2 text-xs font-semibold text-white/80 backdrop-blur-md">
             {post.author ? (
-              <span className="inline-flex items-center gap-2 text-white/85">
+              <span className="inline-flex items-center gap-2 text-white/90">
                 <AuthorAvatar name={post.author} className="h-6 w-6 text-[11px]" />
                 {post.author}
               </span>
@@ -369,30 +429,15 @@ function FeaturedHeroCarousel({ posts }) {
           <Link
             href={`/blogs/${post.slug}`}
             prefetch={false}
-            className="mt-6 inline-flex h-11 items-center gap-2 rounded-xl bg-(--primary) px-6 text-sm font-bold text-(--primary-foreground) shadow-sm transition hover:bg-(--primary-hover)"
+            className="group mt-6 inline-flex h-11 items-center gap-2 rounded-xl bg-(--primary) px-6 text-sm font-bold text-(--primary-foreground) shadow-sm transition-all duration-200 hover:bg-(--primary-hover) motion-reduce:transition-none"
           >
-            Read Article <ArrowRight className="h-4 w-4" />
+            Read Article{" "}
+            <ArrowRight
+              aria-hidden="true"
+              className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5 motion-reduce:transition-none"
+            />
           </Link>
         </div>
-
-        <Link
-          href={`/blogs/${post.slug}`}
-          prefetch={false}
-          tabIndex={-1}
-          aria-hidden="true"
-          className="relative hidden aspect-[16/10] overflow-hidden rounded-xl border border-white/10 lg:block"
-        >
-          <Image
-            src={getBlogImageSrc(post.image)}
-            alt=""
-            fill
-            unoptimized={isFirebaseBlogImage(post.image)}
-            priority={index === 0}
-            sizes="(max-width: 1024px) 0px, 44vw"
-            onError={handleBlogImageError}
-            className="object-cover"
-          />
-        </Link>
       </div>
 
       {count > 1 ? (
@@ -401,19 +446,19 @@ function FeaturedHeroCarousel({ posts }) {
             type="button"
             onClick={() => go(-1)}
             aria-label="Previous featured article"
-            className="absolute left-3 top-1/2 hidden h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-white/20 bg-white/10 text-white backdrop-blur transition hover:bg-white/20 sm:flex"
+            className="absolute left-3 top-1/2 hidden h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-white/20 bg-white/10 text-white backdrop-blur transition-colors duration-200 hover:bg-white/20 motion-reduce:transition-none lg:flex"
           >
-            <ChevronLeft className="h-5 w-5" />
+            <ChevronLeft className="h-5 w-5" aria-hidden="true" />
           </button>
           <button
             type="button"
             onClick={() => go(1)}
             aria-label="Next featured article"
-            className="absolute right-3 top-1/2 hidden h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-white/20 bg-white/10 text-white backdrop-blur transition hover:bg-white/20 sm:flex"
+            className="absolute right-3 top-1/2 hidden h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-white/20 bg-white/10 text-white backdrop-blur transition-colors duration-200 hover:bg-white/20 motion-reduce:transition-none lg:flex"
           >
-            <ChevronRight className="h-5 w-5" />
+            <ChevronRight className="h-5 w-5" aria-hidden="true" />
           </button>
-          <div className="flex items-center justify-center gap-2 pb-5">
+          <div className="relative flex items-center justify-center gap-1 pb-3">
             {posts.map((item, dotIndex) => (
               <button
                 key={item.slug}
@@ -421,11 +466,16 @@ function FeaturedHeroCarousel({ posts }) {
                 onClick={() => setIndex(dotIndex)}
                 aria-label={`Go to featured article ${dotIndex + 1}`}
                 aria-current={dotIndex === index}
-                className={cx(
-                  "h-1.5 rounded-full transition-all",
-                  dotIndex === index ? "w-6 bg-(--primary)" : "w-1.5 bg-white/30 hover:bg-white/50",
-                )}
-              />
+                className="group/dot flex h-8 items-center px-1"
+              >
+                <span
+                  aria-hidden="true"
+                  className={cx(
+                    "h-1.5 rounded-full transition-all duration-200 motion-reduce:transition-none",
+                    dotIndex === index ? "w-6 bg-(--primary)" : "w-1.5 bg-white/30 group-hover/dot:bg-white/50",
+                  )}
+                />
+              </button>
             ))}
           </div>
         </>
@@ -463,7 +513,8 @@ function categoryIcon(name = "") {
  */
 function CategoryBand({ categories, counts, activeCategory, onChange }) {
   // Show every non-empty category (the row scrolls horizontally), busiest
-  // first. Empty categories reappear automatically when a post is published.
+  // first. Zero-article categories are dead-end filters — they reappear
+  // automatically as soon as a post is published in them.
   const items = categories
     .filter(
       (category) =>
@@ -476,7 +527,7 @@ function CategoryBand({ categories, counts, activeCategory, onChange }) {
 
   return (
     <section aria-label="Blog categories" className="rounded-2xl border border-(--border) bg-(--card) px-3 py-2 shadow-sm">
-      <div className="flex items-stretch gap-1 overflow-x-auto scrollbar-hide">
+      <div className="flex snap-x snap-mandatory items-stretch gap-1 overflow-x-auto scroll-px-3 scrollbar-hide">
         {items.map((category) => {
           const Icon = categoryIcon(category);
           const active = category === activeCategory;
@@ -487,7 +538,7 @@ function CategoryBand({ categories, counts, activeCategory, onChange }) {
               onClick={() => onChange(active ? "All" : category)}
               aria-pressed={active}
               className={cx(
-                "flex min-w-[132px] flex-1 items-center gap-3 rounded-xl px-3 py-2.5 text-left transition",
+                "flex min-w-[132px] flex-1 snap-start items-center gap-3 rounded-xl px-3 py-2.5 text-left transition-colors duration-200 motion-reduce:transition-none",
                 active ? "bg-(--anslation-ds-primary-soft)" : "hover:bg-(--anslation-ds-soft)",
               )}
             >
@@ -514,7 +565,7 @@ function CategoryBand({ categories, counts, activeCategory, onChange }) {
           type="button"
           onClick={() => onChange("All")}
           aria-pressed={activeCategory === "All"}
-          className="flex min-w-[132px] flex-1 items-center gap-3 rounded-xl px-3 py-2.5 text-left transition hover:bg-(--anslation-ds-soft)"
+          className="flex min-w-[132px] flex-1 snap-start items-center gap-3 rounded-xl px-3 py-2.5 text-left transition-colors duration-200 hover:bg-(--anslation-ds-soft) motion-reduce:transition-none"
         >
           <span className="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-(--anslation-ds-primary-soft) text-(--primary)">
             <LayoutGrid className="h-4 w-4" strokeWidth={1.9} />
@@ -531,37 +582,58 @@ function CategoryBand({ categories, counts, activeCategory, onChange }) {
   );
 }
 
-function FeaturedPickCard({ post }) {
+function FeaturedPickCard({ post, featured = false }) {
   return (
     <Link
       href={`/blogs/${post.slug}`}
       prefetch={false}
-      className="group flex h-full flex-col overflow-hidden rounded-2xl border border-(--border) bg-(--card) shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-(--anslation-ds-border-strong) hover:shadow-[var(--anslation-ds-shadow-md)]"
+      className="group flex h-full flex-col overflow-hidden rounded-2xl border border-(--border) bg-(--card) shadow-sm transition-all duration-200 hover:-translate-y-1 hover:border-(--anslation-ds-border-strong) hover:shadow-[var(--anslation-ds-shadow-lg)] motion-reduce:transition-none"
     >
-      <div className="relative aspect-[16/9] overflow-hidden bg-(--anslation-ds-soft)">
+      <div
+        className={cx(
+          "relative aspect-[16/9] overflow-hidden bg-(--anslation-ds-soft)",
+          featured && "lg:aspect-auto lg:min-h-72 lg:flex-1",
+        )}
+      >
         <Image
           src={getBlogImageSrc(post.image)}
           alt={post.imageAlt || post.heading}
           fill
           unoptimized={isFirebaseBlogImage(post.image)}
-          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+          sizes={
+            featured
+              ? "(max-width: 1024px) 100vw, 66vw"
+              : "(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+          }
           onError={handleBlogImageError}
-          className="object-cover transition-transform duration-500 group-hover:scale-[1.04]"
+          className="object-cover transition-transform duration-500 group-hover:scale-105 motion-reduce:transition-none"
         />
         {post.category ? (
-          <span className="absolute left-4 top-4 rounded-full bg-(--primary) px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-(--primary-foreground) shadow-sm">
+          <span className="absolute left-4 top-4 rounded-full border border-white/20 bg-black/40 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.12em] text-white backdrop-blur-sm">
             {post.category}
           </span>
         ) : null}
       </div>
       <div className="flex flex-1 flex-col p-5">
-        <h3 className="line-clamp-2 text-lg font-bold leading-snug text-(--foreground) transition-colors group-hover:text-(--primary)">
+        <h3
+          className={cx(
+            "line-clamp-2 font-bold leading-snug tracking-tight text-(--foreground) transition-colors duration-200 group-hover:text-(--primary) motion-reduce:transition-none",
+            featured ? "text-lg sm:text-xl lg:text-2xl" : "text-lg",
+          )}
+        >
           {post.heading}
         </h3>
         {stripHtml(post.excerpt) ? (
-          <p className="mt-2 line-clamp-2 text-sm leading-relaxed text-(--muted-foreground)">{stripHtml(post.excerpt)}</p>
+          <p
+            className={cx(
+              "mt-2 text-sm leading-relaxed text-(--muted-foreground)",
+              featured ? "line-clamp-3" : "line-clamp-2",
+            )}
+          >
+            {stripHtml(post.excerpt)}
+          </p>
         ) : null}
-        <div className="mt-auto flex items-center justify-between pt-4 text-xs font-semibold text-(--muted-foreground)">
+        <div className="mt-auto flex items-center justify-between gap-3 pt-4 text-xs font-semibold text-(--muted-foreground)">
           {post.author ? (
             <span className="inline-flex min-w-0 items-center gap-2">
               <AuthorAvatar name={post.author} />
@@ -570,7 +642,13 @@ function FeaturedPickCard({ post }) {
           ) : (
             <span />
           )}
-          {post.readTime ? <span className="shrink-0">{post.readTime}</span> : null}
+          <span className="inline-flex shrink-0 items-center gap-3">
+            {post.readTime ? <span>{post.readTime}</span> : null}
+            <span className="inline-flex items-center gap-1 font-bold text-(--primary) opacity-0 -translate-x-1 transition-all duration-200 group-hover:translate-x-0 group-hover:opacity-100 motion-reduce:transition-none motion-reduce:opacity-100 motion-reduce:translate-x-0">
+              Read
+              <ArrowUpRight aria-hidden="true" className="h-3.5 w-3.5" />
+            </span>
+          </span>
         </div>
       </div>
     </Link>
@@ -605,12 +683,12 @@ function ArticleRow({ post, searchTerms = [], bookmarked, onToggleBookmark, divi
           unoptimized={isFirebaseBlogImage(post.image)}
           sizes="144px"
           onError={handleBlogImageError}
-          className="object-cover transition-transform duration-500 group-hover:scale-[1.05]"
+          className="object-cover transition-transform duration-500 group-hover:scale-105 motion-reduce:transition-none"
         />
       </Link>
       <div className="min-w-0 flex-1">
-        <h3 className="line-clamp-2 pr-8 text-base font-bold leading-snug text-(--foreground) sm:text-lg">
-          <Link href={`/blogs/${post.slug}`} prefetch={false} className="transition-colors hover:text-(--primary)">
+        <h3 className="line-clamp-2 pr-10 text-base font-bold leading-snug tracking-tight text-(--foreground) sm:text-lg">
+          <Link href={`/blogs/${post.slug}`} prefetch={false} className="transition-colors duration-200 hover:text-(--primary) motion-reduce:transition-none">
             <HighlightedText text={post.heading} terms={searchTerms} />
           </Link>
         </h3>
@@ -646,19 +724,19 @@ function ArticleRow({ post, searchTerms = [], bookmarked, onToggleBookmark, divi
         aria-label={bookmarked ? "Remove bookmark" : "Bookmark this article"}
         aria-pressed={bookmarked}
         className={cx(
-          "absolute right-0 top-4 inline-flex h-8 w-8 items-center justify-center rounded-lg transition",
+          "absolute -right-1.5 top-2 inline-flex h-11 w-11 items-center justify-center rounded-lg transition-colors duration-200 motion-reduce:transition-none",
           bookmarked
             ? "text-(--primary)"
             : "text-(--muted-foreground) hover:bg-(--anslation-ds-soft) hover:text-(--primary)",
         )}
       >
-        <Bookmark className={cx("h-4 w-4", bookmarked && "fill-current")} />
+        <Bookmark aria-hidden="true" className={cx("h-4 w-4", bookmarked && "fill-current")} />
       </button>
     </article>
   );
 }
 
-function PopularArticlesWidget({ posts, onViewAll }) {
+function PopularArticlesWidget({ posts, onViewAll, eagerImageSources }) {
   if (!posts?.length) return null;
   return (
     <div className="rounded-2xl border border-(--border) bg-(--card) p-5 shadow-sm">
@@ -675,6 +753,11 @@ function PopularArticlesWidget({ posts, onViewAll }) {
                 fill
                 unoptimized={isFirebaseBlogImage(post.image)}
                 sizes="56px"
+                loading={
+                  eagerImageSources?.has(getBlogImageSrc(post.image))
+                    ? "eager"
+                    : "lazy"
+                }
                 onError={handleBlogImageError}
                 className="object-cover"
               />
@@ -1123,6 +1206,10 @@ export default function BlogExplorerClient({
     return pool.slice(0, HERO_COUNT);
   }, [posts]);
   const heroSlugs = useMemo(() => new Set(heroPosts.map((post) => post.slug)), [heroPosts]);
+  const heroImageSources = useMemo(
+    () => new Set(heroPosts.map((post) => getBlogImageSrc(post.image))),
+    [heroPosts],
+  );
 
   const filteredPosts = useMemo(() => {
     const activeCategorySlug = blogTaxonomySlug(activeCategory);
@@ -1284,13 +1371,23 @@ export default function BlogExplorerClient({
         >
           <SectionHeading
             id="featured-picks-heading"
+            kicker="Editor's selection"
             title="Featured Picks"
             action="View all featured"
             onAction={() => jumpToArticles("trending")}
           />
-          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {featuredPicks.map((post) => (
-              <FeaturedPickCard key={post.slug} post={post} />
+          {/* Bento: first pick spans 2 cols/rows on desktop, stacks on mobile */}
+          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3 lg:grid-rows-2">
+            {featuredPicks.map((post, index) => (
+              <div
+                key={post.slug}
+                className={cx(
+                  "min-w-0",
+                  index === 0 && "sm:col-span-2 lg:row-span-2",
+                )}
+              >
+                <FeaturedPickCard post={post} featured={index === 0} />
+              </div>
             ))}
           </div>
         </section>
@@ -1303,45 +1400,55 @@ export default function BlogExplorerClient({
         className="render-deferred grid scroll-mt-24 grid-cols-1 gap-8 lg:grid-cols-3"
       >
         <div className="min-w-0 lg:col-span-2">
-          <div className="mb-5 flex flex-wrap items-center justify-between gap-x-4 gap-y-3">
-            <h2
-              id="latest-articles-heading"
-              className="flex items-center gap-3 text-xl font-bold tracking-tight text-(--foreground) sm:text-2xl"
-            >
-              <span aria-hidden="true" className="h-6 w-1 rounded-full bg-(--primary)" />
-              Latest Articles
-            </h2>
-            <div className="flex flex-wrap items-center gap-3">
-              <div className="flex items-center gap-1" role="tablist" aria-label="Sort articles">
-                {SORT_TABS.map((tab) => {
-                  const active = sortMode === tab.value;
-                  return (
-                    <button
-                      key={tab.value}
-                      type="button"
-                      role="tab"
-                      aria-selected={active}
-                      onClick={() => handleSortChange(tab.value)}
-                      className={cx(
-                        "relative px-3 py-1.5 text-sm font-bold transition-colors",
-                        active ? "text-(--primary)" : "text-(--muted-foreground) hover:text-(--foreground)",
-                      )}
-                    >
-                      {tab.label}
-                      {active && (
-                        <span aria-hidden="true" className="absolute inset-x-3 -bottom-0.5 h-0.5 rounded-full bg-(--primary)" />
-                      )}
-                    </button>
-                  );
-                })}
+          <div className="mb-5">
+            <div className="flex flex-wrap items-end justify-between gap-x-4 gap-y-3">
+              <div className="min-w-0">
+                <p className="mb-1.5 text-[11px] font-bold uppercase tracking-widest text-(--primary)">
+                  Fresh off the press
+                </p>
+                <h2
+                  id="latest-articles-heading"
+                  className="text-xl font-black tracking-tight text-(--foreground) sm:text-2xl lg:text-3xl"
+                >
+                  Latest Articles
+                </h2>
               </div>
-              <SearchControl
-                value={query}
-                onChange={handleQueryChange}
-                onClear={clearQuery}
-                pending={isPending || catalogSyncing}
-              />
+              <div className="flex flex-wrap items-center gap-3">
+                <div className="flex items-center gap-1" role="tablist" aria-label="Sort articles">
+                  {SORT_TABS.map((tab) => {
+                    const active = sortMode === tab.value;
+                    return (
+                      <button
+                        key={tab.value}
+                        type="button"
+                        role="tab"
+                        aria-selected={active}
+                        onClick={() => handleSortChange(tab.value)}
+                        className={cx(
+                          "relative min-h-10 px-3 py-1.5 text-sm font-bold transition-colors duration-200 motion-reduce:transition-none",
+                          active ? "text-(--primary)" : "text-(--muted-foreground) hover:text-(--foreground)",
+                        )}
+                      >
+                        {tab.label}
+                        {active && (
+                          <span aria-hidden="true" className="absolute inset-x-3 bottom-0.5 h-0.5 rounded-full bg-(--primary)" />
+                        )}
+                      </button>
+                    );
+                  })}
+                </div>
+                <SearchControl
+                  value={query}
+                  onChange={handleQueryChange}
+                  onClear={clearQuery}
+                  pending={isPending || catalogSyncing}
+                />
+              </div>
             </div>
+            <div
+              aria-hidden="true"
+              className="mt-3 h-px w-full bg-gradient-to-r from-(--border) via-(--border) to-transparent"
+            />
           </div>
 
           {filteredPosts.length === 0 ? (
@@ -1367,7 +1474,7 @@ export default function BlogExplorerClient({
                 type="button"
                 onClick={loadNextChunk}
                 disabled={remoteLoading}
-                className="inline-flex h-11 items-center gap-2 rounded-xl border border-(--border) bg-(--card) px-6 text-sm font-bold text-(--foreground) shadow-sm transition hover:border-(--primary) hover:text-(--primary)"
+                className="inline-flex h-11 items-center gap-2 rounded-xl border border-(--border) bg-(--card) px-6 text-sm font-bold text-(--foreground) shadow-sm transition-all duration-200 hover:border-(--primary) hover:text-(--primary) hover:shadow-[var(--anslation-ds-shadow-md)] motion-reduce:transition-none"
               >
                 {remoteLoading ? (
                   <>
@@ -1388,7 +1495,11 @@ export default function BlogExplorerClient({
         {/* Sidebar */}
         <div className="lg:col-span-1">
           <div className="sticky top-20 flex flex-col gap-5 pb-12">
-            <PopularArticlesWidget posts={popularSidebarPosts} onViewAll={() => jumpToArticles("popular")} />
+            <PopularArticlesWidget
+              posts={popularSidebarPosts}
+              eagerImageSources={heroImageSources}
+              onViewAll={() => jumpToArticles("popular")}
+            />
             <NewsletterWidget />
             <QuickAccessWidget
               activeQuery={query}
