@@ -106,7 +106,7 @@ jobs:
       - name: Deploy web prebuilt output
         id: deploy
         run: |
-          deployment_output="$(vercel deploy --prebuilt --prod --cwd "$VERCEL_CWD" --token="$VERCEL_TOKEN" \
+          deployment_output="$(vercel deploy --prebuilt --prod --archive=tgz --cwd "$VERCEL_CWD" --token="$VERCEL_TOKEN" \
             --meta altftSourceRepo="$ALTFT_EXPECTED_GITHUB_REPO" \
             --meta altftProject=web \
             --meta githubOrg=AnslationDev \
@@ -238,7 +238,7 @@ jobs:
       - name: Deploy admin prebuilt output
         id: deploy
         run: |
-          deployment_output="$(vercel deploy --prebuilt --prod --cwd "$VERCEL_CWD" --token="$VERCEL_TOKEN" \
+          deployment_output="$(vercel deploy --prebuilt --prod --archive=tgz --cwd "$VERCEL_CWD" --token="$VERCEL_TOKEN" \
             --meta altftSourceRepo="$ALTFT_EXPECTED_GITHUB_REPO" \
             --meta altftProject=admin \
             --meta githubOrg=AnslationDev \
