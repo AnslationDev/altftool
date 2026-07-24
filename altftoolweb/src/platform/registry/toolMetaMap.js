@@ -1549,6 +1549,17 @@ export const toolMetaMap = {
     "icon": "badge",
     "iconColor": "text-indigo-600"
   },
+  "breach-prefix-checker": {
+    "name": "Breach Prefix Checker",
+    "description": "Prepare a privacy-preserving password-prefix lookup without uploading the full password.",
+    "category": [
+      "Security & Privacy",
+      "Developer"
+    ],
+    "icon": "shield-check",
+    "iconColor": "text-primary",
+    "wideWorkspace": true
+  },
   "break-even-calculator": {
     "name": "Break-Even Calculator",
     "description": "Calculate zero-profit break-even units, revenue, margin of safety, profit targets, and cost-volume scenarios.",
@@ -1591,6 +1602,17 @@ export const toolMetaMap = {
     ],
     "icon": "receipt-indian-rupee",
     "iconColor": "text-teal-600"
+  },
+  "browser-extension-permission-analyzer": {
+    "name": "Browser Extension Permission Analyzer",
+    "description": "Highlight risky extension permissions and combinations in a manifest.",
+    "category": [
+      "Security & Privacy",
+      "Developer"
+    ],
+    "icon": "shield-check",
+    "iconColor": "text-primary",
+    "wideWorkspace": true
   },
   "browser-fingerprint-visualizer": {
     "name": "Browser FingerPrint",
@@ -2029,6 +2051,17 @@ export const toolMetaMap = {
     ],
     "icon": "dna",
     "iconColor": "text-teal-500"
+  },
+  "certificate-transparency-watchlist": {
+    "name": "Certificate Transparency Watchlist",
+    "description": "Prepare a domain watchlist and identify suspicious certificate names.",
+    "category": [
+      "Security & Privacy",
+      "Developer"
+    ],
+    "icon": "shield-check",
+    "iconColor": "text-primary",
+    "wideWorkspace": true
   },
   "changelog-generator": {
     "name": "Changelog Generator",
@@ -2569,6 +2602,17 @@ export const toolMetaMap = {
     "iconColor": "text-primary",
     "wideWorkspace": true
   },
+  "consent-string-decoder": {
+    "name": "Consent String Decoder",
+    "description": "Decode consent strings into understandable vendor and purpose permissions.",
+    "category": [
+      "Security & Privacy",
+      "Developer"
+    ],
+    "icon": "shield-check",
+    "iconColor": "text-primary",
+    "wideWorkspace": true
+  },
   "constellation-finder": {
     "name": "Constellation Finder",
     "description": "Explore 15+ major constellations with an interactive night sky map",
@@ -2678,6 +2722,17 @@ export const toolMetaMap = {
     "category": "Business",
     "icon": "briefcase-business",
     "iconColor": "text-indigo-600"
+  },
+  "cors-configuration-linter": {
+    "name": "CORS Configuration Linter",
+    "description": "Flag wildcard, credential, and unsafe-origin combinations.",
+    "category": [
+      "Security & Privacy",
+      "Developer"
+    ],
+    "icon": "shield-check",
+    "iconColor": "text-primary",
+    "wideWorkspace": true
   },
   "countdown-timer": {
     "name": "Countdown Timer",
@@ -2800,6 +2855,17 @@ export const toolMetaMap = {
     ],
     "icon": "shield-check",
     "iconColor": "text-blue-500"
+  },
+  "csp-auditor": {
+    "name": "CSP Auditor",
+    "description": "Find weak or unsafe Content Security Policy directives.",
+    "category": [
+      "Security & Privacy",
+      "Developer"
+    ],
+    "icon": "shield-check",
+    "iconColor": "text-primary",
+    "wideWorkspace": true
   },
   "css-beautification-formatting-tool": {
     "name": "CSS Beautification and Formatting Tool",
@@ -3845,6 +3911,17 @@ export const toolMetaMap = {
     ],
     "icon": "mail",
     "iconColor": "text-teal-500"
+  },
+  "email-header-analyzer": {
+    "name": "Email Header Analyzer",
+    "description": "Explain sender authentication and suspicious routing signals from pasted headers.",
+    "category": [
+      "Security & Privacy",
+      "Developer"
+    ],
+    "icon": "shield-check",
+    "iconColor": "text-primary",
+    "wideWorkspace": true
   },
   "email-signature-builder": {
     "name": "Email Signature Builder",
@@ -5432,6 +5509,17 @@ export const toolMetaMap = {
     ],
     "icon": "sparkles",
     "iconColor": "text-purple-500"
+  },
+  "hidden-unicode-homograph-scanner": {
+    "name": "Hidden Unicode & Homograph Scanner",
+    "description": "Detect invisible controls and deceptive look-alike characters.",
+    "category": [
+      "Security & Privacy",
+      "Developer"
+    ],
+    "icon": "shield-check",
+    "iconColor": "text-primary",
+    "wideWorkspace": true
   },
   "hiit-timer": {
     "name": "HIIT & Tabata Timer",
@@ -7518,6 +7606,17 @@ export const toolMetaMap = {
     "icon": "flip-horizontal",
     "iconColor": "text-pink-600"
   },
+  "mobile-deep-link-safety-inspector": {
+    "name": "Mobile Deep-Link Safety Inspector",
+    "description": "Inspect intent URLs, custom schemes, and fallback redirect risks.",
+    "category": [
+      "Security & Privacy",
+      "Developer"
+    ],
+    "icon": "shield-check",
+    "iconColor": "text-primary",
+    "wideWorkspace": true
+  },
   "mobile-voting-app": {
     "name": "Mobile Voting App",
     "description": "Create real-time voting and polling apps for elections, team decisions, live events, and community feedback.",
@@ -7999,6 +8098,17 @@ export const toolMetaMap = {
     "icon": "apple",
     "iconColor": "text-green-500"
   },
+  "oauth-scope-explainer": {
+    "name": "OAuth Scope Explainer",
+    "description": "Translate requested OAuth permissions into plain-language risk levels.",
+    "category": [
+      "Security & Privacy",
+      "Developer"
+    ],
+    "icon": "shield-check",
+    "iconColor": "text-primary",
+    "wideWorkspace": true
+  },
   "occasion-reminder": {
     "name": "Occasion Reminder",
     "description": "Track important occasions with smart reminders, recurrence rules, and action-ready schedules.",
@@ -8280,6 +8390,17 @@ export const toolMetaMap = {
     ],
     "icon": "party-popper",
     "iconColor": "text-teal-600"
+  },
+  "passkey-readiness-tester": {
+    "name": "Passkey Readiness Tester",
+    "description": "Review browser-flow configuration for passkey compatibility and fallback UX.",
+    "category": [
+      "Security & Privacy",
+      "Developer"
+    ],
+    "icon": "shield-check",
+    "iconColor": "text-primary",
+    "wideWorkspace": true
   },
   "passport-mrz-masker": {
     "name": "Passport & MRZ Masker",
@@ -8735,6 +8856,17 @@ export const toolMetaMap = {
     ],
     "icon": "droplet",
     "iconColor": "text-teal-500"
+  },
+  "phishing-url-x-ray": {
+    "name": "Phishing URL X-Ray",
+    "description": "Expose punycode, deceptive subdomains, redirects, and lookalike-domain signals.",
+    "category": [
+      "Security & Privacy",
+      "Developer"
+    ],
+    "icon": "shield-check",
+    "iconColor": "text-primary",
+    "wideWorkspace": true
   },
   "photo-love-compatibility": {
     "name": "Love Compatibility by Photos",
@@ -10244,6 +10376,17 @@ export const toolMetaMap = {
     "icon": "gift",
     "iconColor": "text-rose-600"
   },
+  "security-headers-checker": {
+    "name": "Security Headers Checker",
+    "description": "Review pasted response headers for missing defensive controls.",
+    "category": [
+      "Security & Privacy",
+      "Developer"
+    ],
+    "icon": "shield-check",
+    "iconColor": "text-primary",
+    "wideWorkspace": true
+  },
   "sentence-correction-practice": {
     "name": "Sentence Correction Practice",
     "description": "Master English grammar by identifying and correcting errors in sentences with detailed explanations.",
@@ -11408,6 +11551,17 @@ export const toolMetaMap = {
     "icon": "hand-coins",
     "iconColor": "text-teal-600"
   },
+  "tls-configuration-auditor": {
+    "name": "TLS Configuration Auditor",
+    "description": "Inspect pasted TLS/certificate output for weak protocol signals.",
+    "category": [
+      "Security & Privacy",
+      "Developer"
+    ],
+    "icon": "shield-check",
+    "iconColor": "text-primary",
+    "wideWorkspace": true
+  },
   "to-do-list": {
     "name": "To Do List",
     "description": "Manage daily tasks effortlessly with a smart checklist.",
@@ -12131,6 +12285,17 @@ export const toolMetaMap = {
     ],
     "icon": "gauge",
     "iconColor": "text-blue-600"
+  },
+  "webauthn-ceremony-debugger": {
+    "name": "WebAuthn Ceremony Debugger",
+    "description": "Decode registration and assertion JSON flags, algorithms, and errors.",
+    "category": [
+      "Security & Privacy",
+      "Developer"
+    ],
+    "icon": "shield-check",
+    "iconColor": "text-primary",
+    "wideWorkspace": true
   },
   "webcam-background-privacy-scanner": {
     "name": "Webcam Background Privacy Scanner",
