@@ -149,11 +149,10 @@ test("tool detail routes use the clean workspace flow", async ({ page }) => {
   await quality.expectClean("tool detail routes");
 });
 
-test("buysmart A-Z category cards load brand images", async ({ page }) => {
+test("buysmart featured brand cards and detail flow work", async ({ page }) => {
   const quality = createPageQualityGate(page);
 
   await page.goto(`${webUrl}/buysmart`, { waitUntil: "domcontentloaded" });
-  await page.waitForLoadState("load");
   await expect(page.getByTestId("buysmart-page")).toBeVisible();
   await expect(page.getByTestId("buysmart-hero-section")).toBeVisible();
 
