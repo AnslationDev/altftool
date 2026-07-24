@@ -95,7 +95,7 @@
     "test:tools:functional": "ALTFT_SKIP_ADMIN_SERVER=true playwright test tests/tool-functional.spec.mjs",
     "test:tools:priority": "ALTFT_SKIP_ADMIN_SERVER=true playwright test tests/tool-priority.spec.mjs",
     "test:tools:all": "playwright test tests/tool-all-routes.spec.mjs",
-    "test:routes": "ALTFT_PLAYWRIGHT_WEB_SERVER=production ALTFT_PLAYWRIGHT_ADMIN_SERVER=dev playwright test tests/route-audit.spec.mjs",
+    "test:routes": "ALTFT_PLAYWRIGHT_WEB_SERVER=production ALTFT_PLAYWRIGHT_ADMIN_SERVER=production playwright test tests/route-audit.spec.mjs",
     "test:routes:dev": "playwright test tests/route-audit.spec.mjs",
     "test:admin-api": "playwright test tests/admin-api.spec.mjs",
     "test:admin-blog-ux": "playwright test tests/admin-blog-ux.spec.mjs",

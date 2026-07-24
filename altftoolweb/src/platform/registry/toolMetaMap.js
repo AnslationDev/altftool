@@ -3891,6 +3891,17 @@ export const toolMetaMap = {
     "icon": "zap",
     "iconColor": "text-teal-500"
   },
+  "email-authentication-checker": {
+    "name": "Email Authentication Checker",
+    "description": "Check a domain's SPF, DKIM, DMARC and MX records live in your browser and get a clear pass/warn/fail verdict with fixes — the deliverability-critical checks that decide whether your email reaches the inbox.",
+    "category": "Marketing & Social",
+    "topics": [
+      "Email Marketing"
+    ],
+    "icon": "shield-check",
+    "iconColor": "text-emerald-600",
+    "wideWorkspace": true
+  },
   "email-deliverability-predictor": {
     "name": "Email Deliverability Predictor",
     "description": "Predict how likely your email is to reach the inbox with a rule-based content audit — spam signals, subject quality, link safety, HTML structure and best practices, scored entirely in your browser.",
@@ -5713,6 +5724,17 @@ export const toolMetaMap = {
     ],
     "icon": "file-code",
     "iconColor": "text-orange-600"
+  },
+  "html-to-text-email-converter": {
+    "name": "HTML to Text Email Converter",
+    "description": "Convert HTML emails into clean, readable plain text for multipart sends — links become Text (URL), lists and tables stay readable, tracking pixels and hidden elements are stripped, all in your browser.",
+    "category": "Marketing & Social",
+    "topics": [
+      "Email Marketing"
+    ],
+    "icon": "file-text",
+    "iconColor": "text-cyan-600",
+    "wideWorkspace": true
   },
   "html-vbnet-converter": {
     "name": "HTML VB.NET Converter",
@@ -12137,9 +12159,6 @@ export const toolMetaMap = {
     "name": "Waist to Height Ratio Calculator",
     "description": "A quick health screen: your waist size divided by your height, with a category.",
     "category": "Health & Fitness",
-    "topics": [
-      "Health"
-    ],
     "icon": "ruler",
     "iconColor": "text-teal-600"
   },

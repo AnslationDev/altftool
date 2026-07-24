@@ -41,42 +41,74 @@ const flooring = {
     {
       "icon": "TreePine",
       "title": "Hardwood Floor Installation",
-      "description": "Solid and engineered hardwood installed after on-site acclimation, with expansion gaps, fastening schedule, and layout planned so boards stay tight through seasonal humidity swings."
+      "description": "Solid and engineered hardwood installed after on-site acclimation, with expansion gaps, fastening schedule, and layout planned so boards stay tight through seasonal humidity swings.",
+      "image": {
+        "src": "https://images.unsplash.com/photo-1585128792020-803d29415281",
+        "alt": "Hardwood Floor Installation"
+      }
     },
     {
       "icon": "Sparkles",
       "title": "Hardwood Sanding and Refinishing",
-      "description": "Sanding worn boards back to bare wood, then staining and sealing with modern finishes — often a fraction of replacement cost when the wear layer still has life left."
+      "description": "Sanding worn boards back to bare wood, then staining and sealing with modern finishes — often a fraction of replacement cost when the wear layer still has life left.",
+      "image": {
+        "src": "https://images.unsplash.com/photo-1613621792067-8e28d16b735c",
+        "alt": "Hardwood Sanding and Refinishing"
+      }
     },
     {
       "icon": "Droplets",
       "title": "Luxury Vinyl Plank (LVP) Installation",
-      "description": "Waterproof click-lock or glue-down plank rated for kitchens, baths, and basements, floated over a properly flattened subfloor so seams stay locked underfoot."
+      "description": "Waterproof click-lock or glue-down plank rated for kitchens, baths, and basements, floated over a properly flattened subfloor so seams stay locked underfoot.",
+      "image": {
+        "src": "https://images.unsplash.com/photo-1560185008-b033106af5c3",
+        "alt": "Luxury Vinyl Plank (LVP) Installation"
+      }
     },
     {
       "icon": "LayoutPanelTop",
       "title": "Laminate Flooring Installation",
-      "description": "Wood-look laminate with the right underlayment beneath it, delivering strong scratch resistance for busy rooms at a lower cost than hardwood."
+      "description": "Wood-look laminate with the right underlayment beneath it, delivering strong scratch resistance for busy rooms at a lower cost than hardwood.",
+      "image": {
+        "src": "https://images.unsplash.com/photo-1624574470112-46944be68409",
+        "alt": "Laminate Flooring Installation"
+      }
     },
     {
       "icon": "Grid2x2",
       "title": "Tile and Stone Flooring",
-      "description": "Porcelain, ceramic, and natural stone set over the correct backer and membrane, with layout, lippage control, and grout selection handled before the first tile goes down."
+      "description": "Porcelain, ceramic, and natural stone set over the correct backer and membrane, with layout, lippage control, and grout selection handled before the first tile goes down.",
+      "image": {
+        "src": "https://images.unsplash.com/photo-1731185752376-a4cf3e8556fa",
+        "alt": "Tile and Stone Flooring"
+      }
     },
     {
       "icon": "Sofa",
       "title": "Carpet Installation",
-      "description": "Stretch-in carpet over cushion matched to traffic level, with seams placed away from sight lines and doorways wherever the room allows."
+      "description": "Stretch-in carpet over cushion matched to traffic level, with seams placed away from sight lines and doorways wherever the room allows.",
+      "image": {
+        "src": "https://images.unsplash.com/photo-1560185007-cde436f6a4d0",
+        "alt": "Carpet Installation"
+      }
     },
     {
       "icon": "Ruler",
       "title": "Subfloor Repair and Leveling",
-      "description": "Correcting squeaks, soft spots, and out-of-flat areas with refastening, patching, or self-leveling compound, since every finished floor telegraphs what is underneath it."
+      "description": "Correcting squeaks, soft spots, and out-of-flat areas with refastening, patching, or self-leveling compound, since every finished floor telegraphs what is underneath it.",
+      "image": {
+        "src": "https://images.unsplash.com/photo-1603220730136-83510fcffa4e",
+        "alt": "Subfloor Repair and Leveling"
+      }
     },
     {
       "icon": "Recycle",
       "title": "Old Floor Removal and Haul-Away",
-      "description": "Tearing out existing flooring, adhesives, and tack strips, then disposing of the debris properly so the new installation starts on a clean, sound substrate."
+      "description": "Tearing out existing flooring, adhesives, and tack strips, then disposing of the debris properly so the new installation starts on a clean, sound substrate.",
+      "image": {
+        "src": "https://images.unsplash.com/photo-1771996514597-2ac63ef05615",
+        "alt": "Old Floor Removal and Haul-Away"
+      }
     }
   ],
   "benefits": [

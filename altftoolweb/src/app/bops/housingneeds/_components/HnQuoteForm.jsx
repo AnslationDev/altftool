@@ -1,7 +1,14 @@
 "use client";
 
 import { useState } from "react";
-import { ArrowRight, CheckCircle2, ChevronDown } from "lucide-react";
+import {
+  ArrowRight,
+  BadgeCheck,
+  CheckCircle2,
+  ChevronDown,
+  Lock,
+  Users,
+} from "lucide-react";
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
@@ -55,6 +62,11 @@ export default function HnQuoteForm({ services = [], source = "hub-cta" }) {
 
   return (
     <form className="hn-quoteform" onSubmit={handleSubmit} noValidate>
+      <p className="hn-quoteform-benefit">
+        Compare quotes from up to <strong>4 vetted local pros</strong> — free,
+        with zero obligation to hire.
+      </p>
+
       <div className="hn-quoteform-row">
         <span className="hn-quoteform-select">
           <label className="hn-sr-only" htmlFor={`hn-qf-service-${source}`}>
@@ -112,9 +124,20 @@ export default function HnQuoteForm({ services = [], source = "hub-cta" }) {
         </p>
       )}
 
-      <p className="hn-quoteform-fine">
-        Free &middot; No obligation &middot; Licensed &amp; insured pros &middot; No spam, ever
-      </p>
+      <ul className="hn-quoteform-trust" aria-label="Your request is safe">
+        <li>
+          <Lock size={14} strokeWidth={2.3} aria-hidden="true" />
+          Secure &amp; private
+        </li>
+        <li>
+          <BadgeCheck size={14} strokeWidth={2.3} aria-hidden="true" />
+          Licensed &amp; insured pros
+        </li>
+        <li>
+          <Users size={14} strokeWidth={2.3} aria-hidden="true" />
+          14,000+ homeowners served
+        </li>
+      </ul>
     </form>
   );
 }

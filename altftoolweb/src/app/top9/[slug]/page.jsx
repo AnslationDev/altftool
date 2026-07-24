@@ -81,7 +81,11 @@ export default async function Page({ params }) {
 
       <div className="top9-image-frame max-w-5xl mx-auto overflow-hidden rounded-3xl">
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={image} alt={title} className="w-full h-[260px] sm:h-[380px] md:h-[520px] object-cover" />
+        <img
+          src={image}
+          alt={title}
+          className="w-full h-[260px] sm:h-[380px] md:h-[520px] object-cover"
+        />
       </div>
 
       <div className="max-w-5xl mx-auto mt-8">
@@ -94,9 +98,7 @@ export default async function Page({ params }) {
         </h1>
 
         {item.date && (
-          <p className="top9-muted-text text-sm mt-4">
-            {item.date}
-          </p>
+          <p className="top9-muted-text text-sm mt-4">{item.date}</p>
         )}
 
         <p className="top9-muted-text text-[17px] leading-8 mt-8">
@@ -122,7 +124,6 @@ export default async function Page({ params }) {
                   <p className="text-lg font-medium text-(--foreground)">
                     {el}
                   </p>
-
                 </div>
               ))}
             </div>

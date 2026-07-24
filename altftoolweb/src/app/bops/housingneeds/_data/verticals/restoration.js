@@ -41,42 +41,74 @@ const restoration = {
     {
       "icon": "Droplets",
       "title": "24/7 Emergency Water Extraction",
-      "description": "Standing water removed with pumps and truck-mounted extractors as soon as the source is controlled, because every hour of contact lets water wick deeper into drywall, framing, and subfloor."
+      "description": "Standing water removed with pumps and truck-mounted extractors as soon as the source is controlled, because every hour of contact lets water wick deeper into drywall, framing, and subfloor.",
+      "image": {
+        "src": "https://images.unsplash.com/photo-1657069345471-c54f2432b79c",
+        "alt": "24/7 Emergency Water Extraction"
+      }
     },
     {
       "icon": "Fan",
       "title": "Structural Drying and Dehumidification",
-      "description": "Air movers and commercial dehumidifiers positioned from a moisture map of the affected area, then adjusted against daily meter readings until materials return to documented dry-standard levels."
+      "description": "Air movers and commercial dehumidifiers positioned from a moisture map of the affected area, then adjusted against daily meter readings until materials return to documented dry-standard levels.",
+      "image": {
+        "src": "https://images.unsplash.com/photo-1609520778163-a16fb3862581",
+        "alt": "Structural Drying and Dehumidification"
+      }
     },
     {
       "icon": "Microscope",
       "title": "Mold Remediation",
-      "description": "Containment, negative air pressure, and HEPA filtration around the work area, with colonized porous materials removed and remaining surfaces cleaned rather than simply painted over."
+      "description": "Containment, negative air pressure, and HEPA filtration around the work area, with colonized porous materials removed and remaining surfaces cleaned rather than simply painted over.",
+      "image": {
+        "src": "https://images.unsplash.com/photo-1657069343999-39722b95f1d8",
+        "alt": "Mold Remediation"
+      }
     },
     {
       "icon": "Flame",
       "title": "Fire and Smoke Damage Cleanup",
-      "description": "Soot and smoke residue removed with methods matched to the surface, odor treated at its source, and the water left behind by firefighting extracted and dried like any other loss."
+      "description": "Soot and smoke residue removed with methods matched to the surface, odor treated at its source, and the water left behind by firefighting extracted and dried like any other loss.",
+      "image": {
+        "src": "https://images.unsplash.com/photo-1657069343971-1276c3b175e1",
+        "alt": "Fire and Smoke Damage Cleanup"
+      }
     },
     {
       "icon": "Wind",
       "title": "Storm Damage Repair",
-      "description": "Emergency tarping and board-up to stop active intrusion, then drying and repair of the areas wind-driven rain reached — often wall cavities and ceilings well away from the visible breach."
+      "description": "Emergency tarping and board-up to stop active intrusion, then drying and repair of the areas wind-driven rain reached — often wall cavities and ceilings well away from the visible breach.",
+      "image": {
+        "src": "https://images.unsplash.com/photo-1544257750-572358f5da22",
+        "alt": "Storm Damage Repair"
+      }
     },
     {
       "icon": "TriangleAlert",
       "title": "Sewage and Contaminated Water Cleanup",
-      "description": "Category 3 losses handled under strict protocols: protective equipment, containment, disposal of porous materials that contacted the water, and disinfection of what remains."
+      "description": "Category 3 losses handled under strict protocols: protective equipment, containment, disposal of porous materials that contacted the water, and disinfection of what remains.",
+      "image": {
+        "src": "https://images.unsplash.com/photo-1657069344364-db3781b8dcf1",
+        "alt": "Sewage and Contaminated Water Cleanup"
+      }
     },
     {
       "icon": "FileCheck",
       "title": "Insurance Claim Documentation",
-      "description": "Dated photos, moisture logs, drying records, and an itemized scope of work assembled as the job progresses, giving the adjuster the evidence a claim typically needs."
+      "description": "Dated photos, moisture logs, drying records, and an itemized scope of work assembled as the job progresses, giving the adjuster the evidence a claim typically needs.",
+      "image": {
+        "src": "https://images.unsplash.com/photo-1581578731548-c64695cc6952",
+        "alt": "Insurance Claim Documentation"
+      }
     },
     {
       "icon": "Hammer",
       "title": "Repairs and Build-Back",
-      "description": "Drywall, insulation, flooring, trim, and paint restored after drying is verified by meter readings — never before, since sealing moisture inside a wall is how hidden mold problems start."
+      "description": "Drywall, insulation, flooring, trim, and paint restored after drying is verified by meter readings — never before, since sealing moisture inside a wall is how hidden mold problems start.",
+      "image": {
+        "src": "https://images.unsplash.com/photo-1742483359033-13315b247c74",
+        "alt": "Repairs and Build-Back"
+      }
     }
   ],
   "benefits": [

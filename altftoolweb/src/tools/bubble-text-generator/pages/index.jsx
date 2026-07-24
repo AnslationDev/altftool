@@ -1,8 +1,7 @@
 "use client";
 
-import ToolRuntime from "@/tools/_shared/toolkit/ToolRuntime";
-import { spec } from "../spec";
+import ToolEntry from "../entry";
 
 export default function Page() {
-  return <ToolRuntime spec={spec} />;
+  return <ToolEntry />;
 }

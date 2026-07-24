@@ -254,6 +254,145 @@ HN_CATEGORIES.push(
   },
 );
 
+HN_CATEGORIES.push(
+  {
+    slug: "home-security",
+    name: "Home Security",
+    icon: "shield",
+    accent: "violet",
+    description: "Cameras, alarms, smart locks and 24/7 monitoring.",
+    pages: [
+      {
+        slug: "home-security",
+        name: "Home Security Guide",
+        tagline: "Cameras, alarms & monitoring",
+        description:
+          "Security cameras, smart locks, alarms and professional monitoring — how each piece works and what it costs.",
+        tags: ["Guide", "SEO"],
+      },
+    ],
+  },
+  {
+    slug: "moving",
+    name: "Moving & Storage",
+    icon: "truck",
+    accent: "amber",
+    description: "Local & long-distance moving, packing and storage.",
+    pages: [
+      {
+        slug: "moving",
+        name: "Moving & Storage Guide",
+        tagline: "Movers, packing & storage",
+        description:
+          "Local vs long-distance movers, full-service packing, storage and how to avoid rogue movers — with real cost drivers.",
+        tags: ["Guide", "SEO"],
+      },
+    ],
+  },
+  {
+    slug: "hvac",
+    name: "Heating & Cooling",
+    icon: "thermometer",
+    accent: "emerald",
+    description: "AC, furnaces, heat pumps and seasonal service.",
+    pages: [
+      {
+        slug: "hvac",
+        name: "HVAC Guide",
+        tagline: "AC, furnaces & heat pumps",
+        description:
+          "Central AC, furnaces, heat pumps and mini-splits — sizing, efficiency, rebates and what drives installation cost.",
+        tags: ["Guide", "SEO"],
+      },
+    ],
+  },
+  {
+    slug: "bathroom",
+    name: "Bathroom Remodeling",
+    icon: "bath",
+    accent: "sky",
+    description: "Showers, tubs, vanities, tile and accessibility.",
+    pages: [
+      {
+        slug: "bathroom",
+        name: "Bathroom Remodeling Guide",
+        tagline: "Showers, tubs & tile",
+        description:
+          "Walk-in showers, tub conversions, vanities and tile — scope levels, waterproofing and what a remodel really costs.",
+        tags: ["Guide", "SEO"],
+      },
+    ],
+  },
+  {
+    slug: "kitchen",
+    name: "Kitchen Remodeling",
+    icon: "utensils",
+    accent: "rose",
+    description: "Cabinets, countertops, islands and appliances.",
+    pages: [
+      {
+        slug: "kitchen",
+        name: "Kitchen Remodeling Guide",
+        tagline: "Cabinets, counters & layout",
+        description:
+          "Cabinets, countertops, islands and appliances — material choices, layout changes and the cost drivers that matter.",
+        tags: ["Guide", "SEO"],
+      },
+    ],
+  },
+  {
+    slug: "fencing",
+    name: "Fencing",
+    icon: "fence",
+    accent: "lime",
+    description: "Wood, vinyl, chain-link and aluminum fences.",
+    pages: [
+      {
+        slug: "fencing",
+        name: "Fencing Guide",
+        tagline: "Materials, costs & options",
+        description:
+          "Wood vs vinyl vs chain-link vs aluminum fencing — durability, privacy, permits and what drives the price.",
+        tags: ["Guide", "SEO"],
+      },
+    ],
+  },
+  {
+    slug: "tree-service",
+    name: "Tree Service",
+    icon: "tree",
+    accent: "emerald",
+    description: "Removal, trimming, stump grinding and storm cleanup.",
+    pages: [
+      {
+        slug: "tree-service",
+        name: "Tree Service Guide",
+        tagline: "Removal, trimming & stumps",
+        description:
+          "Tree removal, pruning, stump grinding and storm cleanup — when to remove vs save a tree, and what it costs.",
+        tags: ["Guide", "SEO"],
+      },
+    ],
+  },
+  {
+    slug: "foundation",
+    name: "Foundation Repair",
+    icon: "building",
+    accent: "violet",
+    description: "Cracks, settling, piering and waterproofing.",
+    pages: [
+      {
+        slug: "foundation",
+        name: "Foundation Repair Guide",
+        tagline: "Cracks, settling & piers",
+        description:
+          "Foundation cracks, settling, piering and waterproofing — warning signs, repair methods and what to expect on cost.",
+        tags: ["Guide", "SEO"],
+      },
+    ],
+  },
+);
+
 // Attach the resolved href to every category and page once. Guide pages live
 // flat at /bops/housingneeds/<slug>; a category is a tab on the dashboard.
 for (const category of HN_CATEGORIES) {

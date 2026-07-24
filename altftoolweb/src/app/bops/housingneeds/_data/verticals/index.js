@@ -15,6 +15,14 @@ import electrical from "./electrical";
 import flooring from "./flooring";
 import garageDriveway from "./garage-driveway";
 import restoration from "./restoration";
+import homeSecurity from "./home-security";
+import moving from "./moving";
+import hvac from "./hvac";
+import bathroom from "./bathroom";
+import kitchen from "./kitchen";
+import fencing from "./fencing";
+import treeService from "./tree-service";
+import foundation from "./foundation";
 
 export const VERTICALS = [
   roofing,
@@ -31,6 +39,14 @@ export const VERTICALS = [
   flooring,
   garageDriveway,
   restoration,
+  homeSecurity,
+  moving,
+  hvac,
+  bathroom,
+  kitchen,
+  fencing,
+  treeService,
+  foundation,
 ];
 
 export const VERTICAL_MAP = Object.fromEntries(

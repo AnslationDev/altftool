@@ -19,6 +19,10 @@ import {
   Grid2x2,
   DoorOpen,
   Wrench,
+  Utensils,
+  Fence,
+  TreePine,
+  Building2,
 } from "lucide-react";
 
 // Icon keys mirror _data/categories.js. Kept local so a card renders without
@@ -44,6 +48,10 @@ export const ICONS = {
   grid: Grid2x2,
   door: DoorOpen,
   droplets: Droplets,
+  utensils: Utensils,
+  fence: Fence,
+  tree: TreePine,
+  building: Building2,
 };
 
 /**

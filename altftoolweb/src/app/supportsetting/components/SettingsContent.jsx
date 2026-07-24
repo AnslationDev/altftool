@@ -6,22 +6,30 @@ import SupportLandingPage from "./SupportLandingPage";
 import SettingDetailPage from "./SettingDetailPage";
 import UtilityPage, { UTILITY_TITLES } from "./UtilityPage";
 import AiToolDetailPage from "./AiToolDetailPage";
+import DeviceLandingPage from "./DeviceLandingPage";
+import CompatibilityBanner from "./CompatibilityBanner";
 import { getCategoryById } from "../data/categories";
+import { getDeviceById } from "../data/deviceTaxonomy";
+import { getSettingsForDevice, ALL_DEVICE_SETTINGS } from "../data/devices";
+
+const PLATFORM_LABEL = { windows: "Windows", macos: "macOS", android: "Android", ios: "iOS" };
 
 /**
- * Slim orchestrator for the master-detail layout: exactly one of
- * SupportLandingPage / SettingDetailPage / UtilityPage / AiToolDetailPage
- * renders at a time, driven entirely by `activeId` (owned by SupportClient
- * so the sidebar and this content pane can both read/react to it).
+ * Slim orchestrator for the master-detail layout: exactly one "page" type
+ * renders at a time, driven entirely by `activeId`:
  *
- *   activeId === null        -> landing page
- *   activeId starts "util-"  -> the matching Help & Tools page
- *   activeId starts "ai-"    -> the matching AI Tool page
- *   otherwise                -> that setting's full detail page
+ *   activeId === null            -> landing page
+ *   activeId starts "util-"      -> the matching Help & Tools page
+ *   activeId starts "ai-"        -> the matching AI Tool page
+ *   activeId starts "device-"    -> that device's landing/coming-soon page
+ *   matches a device setting id  -> that device's guide (SettingDetailPage,
+ *                                    reused as-is — same schema)
+ *   otherwise                    -> that OS setting's full detail page
  *
  * Whenever activeId isn't the landing page, a shared breadcrumb + back-to-
- * home + Focus Mode bar renders above the page content so navigation is
- * identical across every support page type.
+ * home + Focus Mode bar renders above the page content, plus a
+ * compatibility banner whenever the open guide doesn't match the platform
+ * actually in use (item 3 — the "wrong platform" experience).
  */
 const SettingsContent = ({
   activeId,
@@ -44,27 +52,66 @@ const SettingsContent = ({
   onGoHome,
   focusMode,
   onToggleFocusMode,
+  isBookmarked,
+  toggleBookmark,
+  bookmarkedIds,
+  bookmarkedSettings,
+  onClearBookmarks,
+  onClearHistory,
 }) => {
   const { platform, detectedPlatform } = platformState;
 
   const isUtility = typeof activeId === "string" && activeId.startsWith("util-");
   const isAiTool = typeof activeId === "string" && activeId.startsWith("ai-");
-  const activeSetting =
-    !isUtility && !isAiTool && activeId ? allSettings.find((s) => s.id === activeId) : null;
+  const isDeviceLanding = typeof activeId === "string" && activeId.startsWith("device-");
+  const activeDeviceLanding = isDeviceLanding ? getDeviceById(activeId.slice("device-".length)) : null;
+
+  const activeOsSetting =
+    !isUtility && !isAiTool && !isDeviceLanding && activeId ? allSettings.find((s) => s.id === activeId) : null;
+  const activeDeviceSetting =
+    !isUtility && !isAiTool && !isDeviceLanding && activeId && !activeOsSetting
+      ? ALL_DEVICE_SETTINGS.find((s) => s.id === activeId)
+      : null;
+  const activeSetting = activeOsSetting || activeDeviceSetting;
   const activeAiTool = isAiTool ? (aiTools || []).find((t) => t.id === activeId) : null;
 
+  // Related-setting chips on a device guide should resolve against that
+  // device's own catalog, not the current OS platform's.
+  const relatedLookup = activeDeviceSetting ? ALL_DEVICE_SETTINGS : allSettings;
+
   let breadcrumb = null;
-  if (activeSetting) {
-    const category = getCategoryById(activeSetting.category);
-    breadcrumb = { section: category?.label || "Settings", title: activeSetting.title };
+  if (activeOsSetting) {
+    const category = getCategoryById(activeOsSetting.category);
+    breadcrumb = { section: category?.label || "Settings", title: activeOsSetting.title };
+  } else if (activeDeviceSetting) {
+    const device = getDeviceById(activeDeviceSetting.platform);
+    breadcrumb = { section: device?.name || "Devices", title: activeDeviceSetting.title };
   } else if (isUtility) {
     breadcrumb = { section: "Help & Tools", title: UTILITY_TITLES[activeId] || "Help & Tools" };
   } else if (activeAiTool) {
     breadcrumb = { section: "AI Tools", title: activeAiTool.name };
+  } else if (activeDeviceLanding) {
+    breadcrumb = { section: "Devices", title: activeDeviceLanding.name };
   }
 
+  // Compatibility check (item 3): does the guide currently open match the
+  // device actually in use? Only fires for content that's genuinely
+  // platform-specific — device guides without a `requiresPlatform` list
+  // (e.g. PlayStation, Android TV) work regardless of what OS you're on.
+  let compatibility = null;
+  if (activeOsSetting && activeOsSetting.platform !== detectedPlatform) {
+    compatibility = { targetId: activeOsSetting.platform, targetLabel: PLATFORM_LABEL[activeOsSetting.platform] };
+  } else if (activeDeviceSetting?.requiresPlatform && !activeDeviceSetting.requiresPlatform.includes(detectedPlatform)) {
+    const preferred = activeDeviceSetting.requiresPlatform[0];
+    compatibility = { targetId: preferred, targetLabel: PLATFORM_LABEL[preferred] || preferred };
+  }
+
+  const activeDeviceMeta = activeDeviceSetting ? getDeviceById(activeDeviceSetting.platform) : null;
+
   return (
-    <div className={`support-settings-content support-text-${prefs.textSize}`}>
+    <div
+      className={`support-settings-content support-text-${prefs.textSize} support-width-${prefs.readingWidth} support-linespacing-${prefs.lineSpacing}`}
+    >
       <div className="support-settings-content-inner">
         {/* Mobile Sidebar Toggle */}
         <div className="md:hidden my-5">
@@ -111,11 +158,22 @@ const SettingsContent = ({
           </div>
         )}
 
+        {compatibility && (
+          <CompatibilityBanner
+            targetLabel={compatibility.targetLabel}
+            currentLabel={PLATFORM_LABEL[detectedPlatform] || detectedPlatform}
+            officialDocsUrl={activeDeviceMeta?.officialDocsUrl || getDeviceById(compatibility.targetId)?.officialDocsUrl}
+          />
+        )}
+
         <PagePreferencesPanel
           prefs={prefs}
           togglePref={togglePref}
           updatePref={updatePref}
           resetPrefs={resetPrefs}
+          bookmarkedCount={bookmarkedIds?.length || 0}
+          onClearBookmarks={onClearBookmarks}
+          onClearHistory={onClearHistory}
         />
 
         {activeSetting ? (
@@ -123,10 +181,12 @@ const SettingsContent = ({
             key={activeSetting.id}
             setting={activeSetting}
             detectedPlatform={detectedPlatform}
-            allSettings={allSettings}
+            allSettings={relatedLookup}
             onSelectSetting={onSelectSetting}
             onVisit={onVisit}
             showImages={prefs.showStepImages}
+            isBookmarked={isBookmarked?.(activeSetting.id)}
+            onToggleBookmark={() => toggleBookmark?.(activeSetting.id)}
           />
         ) : isUtility ? (
           <UtilityPage id={activeId} platform={platform} detectedPlatform={detectedPlatform} />
@@ -137,14 +197,24 @@ const SettingsContent = ({
             allTools={aiTools}
             onSelectTool={onSelectSetting}
           />
+        ) : activeDeviceLanding ? (
+          <DeviceLandingPage
+            device={activeDeviceLanding}
+            settings={getSettingsForDevice(activeDeviceLanding.id)}
+            onSelectSetting={onSelectSetting}
+            platformState={platformState}
+            onGoHome={onGoHome}
+          />
         ) : (
           <SupportLandingPage
             platform={platform}
+            platformState={platformState}
             detectedPlatform={detectedPlatform}
             allSettings={allSettings}
             frequentlyUsed={frequentlyUsed}
             recommended={recommended}
             recentlyUsedSettings={recentlyUsedSettings}
+            bookmarkedSettings={bookmarkedSettings}
             aiTools={aiTools}
             searchQuery={searchQuery}
             onSearchChange={onSearchChange}

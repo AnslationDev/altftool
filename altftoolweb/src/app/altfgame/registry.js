@@ -21,8 +21,11 @@ export const GAME_COMPONENTS = {
   'hangman': dynamic(() => import('./hangman/Game')),
   'helix-jump': dynamic(() => import('./helix-jump/Game')),
   'knife-hit': dynamic(() => import('./knife-hit/Game')),
+  'level-devil': dynamic(() => import('./level-devil/Game')),
   'ludo': dynamic(() => import('./ludo/Game')),
   'memory-match': dynamic(() => import('./memory-match/Game')),
   'minesweeper': dynamic(() => import('./minesweeper/Game')),
   'neon-racer': dynamic(() => import('./neon-racer/Game')),
+  'number-guess': dynamic(() => import('./number-guess/Game')),
+  'who-is': dynamic(() => import('./who-is/Game')),
 };

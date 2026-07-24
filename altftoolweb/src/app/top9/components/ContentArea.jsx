@@ -1,217 +1,205 @@
 "use client";
-
-import React, { useState } from "react";
 import Link from "next/link";
-
 import {
-  tabData,
-  autoLists,
-  newList,
-  secondList,
-  thirdList,
-} from "../data3/content";
-
-const ContentArea = () => {
-  const [activeTab, setActiveTab] = useState("featured");
-
-  // ALL FEATURED BLOCKS
-  const featuredSections = [
-    {
-      ...newList,
-      image: newList.img,
-    },
-
-    {
-      ...secondList,
-      image: secondList.img,
-    },
-
-    {
-      ...thirdList,
-      image: thirdList.img,
-    },
-  ];
+  Flame,
+  Gift,
+  Heart,
+  Monitor,
+  Plane,
+  Utensils,
+  Gamepad2,
+  PlayCircle,
+} from "lucide-react";
+import { blogs } from "../data/blogs";
+import { trending } from "../data2/trending";
+const titles = [
+  "Top 9 Superhero Movies of All Time",
+  "Top 9 Football Players in the World (2026)",
+  "Top 9 Places to Visit Before You Die",
+  "Top 9 Laptops for Developers",
+];
+const latest = [
+  "Top 9 Most Beautiful Islands in the World",
+  "Top 9 Open World Games You Must Play",
+  "Top 9 Desserts Around the World",
+  "Top 9 Home Workouts for Muscle Building",
+];
+const icons = [Gift, Plane, Utensils, Monitor, Heart];
+export default function ContentArea({ searchQuery = "", sidebarOnly = false }) {
+  const q = searchQuery.toLowerCase().trim();
+  const popular = trending
+    .slice(0, 4)
+    .filter((x) => !q || x.title.toLowerCase().includes(q));
+  const news = blogs
+    .concat(trending)
+    .slice(0, 4)
+    .filter((x) => !q || x.title.toLowerCase().includes(q));
+  if (sidebarOnly) {
+    return (
+      <aside className="top9-sidebar">
+        <Sidebar />
+      </aside>
+    );
+  }
 
   return (
-    <div className="max-w-7xl mx-auto px-4 py-8 grid grid-cols-1 lg:grid-cols-12 gap-8">
-
-      {/* LEFT SIDE */}
-      <div className="lg:col-span-8">
-
-        <div className="space-y-8">
-
-          {featuredSections.map((item, index) => (
-
-            <div
-              key={index}
-              className="top9-card p-5 md:p-6 flex flex-col sm:flex-row gap-6 rounded-[var(--anslation-ds-radius-lg)]"
-            >
-
-              {/* IMAGE */}
-              <div className="top9-image-frame w-full sm:w-[230px] h-[230px] shrink-0 overflow-hidden rounded-[var(--anslation-ds-radius)]">
-
-                <img
-                  src={item.image}
-                  alt={item.title}
-                  className="w-full h-full object-cover hover:scale-105 transition-all duration-500"
-                />
-
-              </div>
-
-              {/* CONTENT */}
-              <div className="flex-1 flex flex-col justify-center">
-
-                <span className="top9-muted-text text-[13px] uppercase tracking-wide mb-2">
-                  New List
-                </span>
-
-                <Link href={`/top9/${item.slug}`}>
-
-                  <h2 className="top9-link text-[24px] md:text-[30px] font-bold leading-tight hover:underline mb-5">
-                    {item.title}
-                  </h2>
-
-                </Link>
-
-                <ol className="space-y-2 text-[15px] top9-muted-text">
-
-                  {item.top.map((name, idx) => (
-
-                    <li
-                      key={idx}
-                      className="border-b border-(--border) pb-2"
-                    >
-                      <span className="font-semibold mr-2">
-                        {idx + 1}.
-                      </span>
-
-                      {name}
-                    </li>
-
-                  ))}
-
-                </ol>
-
-              </div>
-
-            </div>
-
-          ))}
-
-        </div>
-
-      </div>
-
-      {/* RIGHT SIDE */}
-      <aside className="lg:col-span-4 space-y-8">
-
-        {/* TABS */}
-        <div className="top9-panel rounded-[var(--anslation-ds-radius-lg)] overflow-hidden">
-
-          {/* TAB HEADINGS */}
-          <div className="grid grid-cols-3 text-center">
-
-            {["featured", "popular", "latest"].map((tab) => (
-
-              <button
-                key={tab}
-                onClick={() => setActiveTab(tab)}
-                className={`py-3 text-[14px] capitalize transition-all border-b border-(--border) ${
-                  activeTab === tab
-                    ? "bg-(--card) font-semibold text-(--foreground)"
-                    : "top9-muted-text hover:bg-(--primary)/5"
-                }`}
-              >
-                {tab}
-              </button>
-
-            ))}
-
+    <>
+      <div>
+        <section className="top9-section">
+          <div className="top9-section-heading">
+            <h2>Most Popular Top 9 Lists</h2>
+            <Link className="top9-link" href="/top9">
+              View all popular&nbsp; ?
+            </Link>
           </div>
-
-          {/* TAB CONTENT */}
-          <div className="bg-(--card) p-4">
-
-            <div className="space-y-4">
-
-              {tabData[activeTab].map((item, i) => (
-
-                <div
-                  key={i}
-                  className="border-b border-(--border) pb-3 last:border-b-0"
+          {popular.length ? (
+            <div className="top9-popular-grid">
+              {popular.map((x, i) => (
+                <Link
+                  className="top9-card top9-popular-card"
+                  href={`/top9/${x.slug}`}
+                  key={x.slug}
                 >
-
-                  <Link
-                    href={`/top9/${item.slug}`}
-                    className="top9-link text-[14px] leading-relaxed hover:underline"
-                  >
-                    {item.title}
-                  </Link>
-
-                </div>
-
+                  <div className="top9-popular-media">
+                    <img src={x.img} alt={x.title} />
+                    <span className="top9-popular-rank">{i + 1}</span>
+                  </div>
+                  <div className="top9-popular-copy">
+                    <em>{["Movies", "Sports", "Travel", "Technology"][i]}</em>
+                    <strong>{titles[i]}</strong>
+                    <div className="top9-meta">
+                      <span className="top9-rating">? {4.8 - i / 10}</span>
+                      <span>�</span>
+                      <span>{25.6 - i * 3.6}K views</span>
+                    </div>
+                    <div className="top9-meta">5 min read</div>
+                  </div>
+                </Link>
               ))}
-
             </div>
-
+          ) : (
+            <p className="top9-empty">No popular lists match your search.</p>
+          )}
+        </section>
+        <section className="top9-section">
+          <div className="top9-section-heading">
+            <h2>Newly Published</h2>
+            <Link className="top9-link" href="/top9">
+              View all latest&nbsp; ?
+            </Link>
           </div>
-
-        </div>
-
-        {/* AUTO LISTS */}
-        <div>
-
-          <h3 className="top9-muted-text text-[14px] uppercase tracking-wider mb-5">
-            Auto-Updating Lists
-          </h3>
-
-          <div className="space-y-5">
-
-            {autoLists.map((item, i) => (
-
-              <div
-                key={i}
-                className="flex items-start gap-3"
+          <div className="top9-latest-grid">
+            {news.map((x, i) => (
+              <Link
+                href={`/top9/${x.slug}`}
+                className="top9-latest-item"
+                key={`${x.slug}-${i}`}
               >
-
-                <div className="top9-image-frame w-11 h-11 rounded-full overflow-hidden shrink-0">
-
-                  <img
-                    src={item.img}
-                    alt={item.title}
-                    className="w-full h-full object-cover"
-                  />
-
-                </div>
-
+                <img src={x.img} alt={x.title} />
                 <div>
-
-                  <Link href={`/top9/${item.slug}`}>
-
-                    <p className="top9-link text-[14px] font-semibold hover:underline leading-snug">
-                      {item.title}
-                    </p>
-
-                  </Link>
-
-                  <p className="top9-muted-text text-[12px] mt-1">
-                    Auto Updated
-                  </p>
-
+                  <strong>{latest[i]}</strong>
+                  <small>
+                    {["TRAVEL", "GAMING", "FOOD", "FITNESS"][i]} &nbsp;�&nbsp;{" "}
+                    {i * 2 + 2} hours ago
+                  </small>
+                  <span>? {842 + i * 90} views</span>
                 </div>
-
-              </div>
-
+              </Link>
             ))}
-
           </div>
-
-        </div>
-
-      </aside>
-
-    </div>
+        </section>
+      </div>
+    </>
   );
-};
-
-export default ContentArea;
+}
+function Sidebar() {
+  return (
+    <>
+      <section className="top9-panel top9-sidebar-panel">
+        <div className="top9-section-heading">
+          <h2>
+            <Flame size={18} color="#ff5c1d" /> Trending on Top9
+          </h2>
+          <Link className="top9-link" href="/top9">
+            View all&nbsp; ?
+          </Link>
+        </div>
+        <div className="top9-sidebar-list">
+          {trending.slice(0, 9).map((x, i) => (
+            <Link
+              href={`/top9/${x.slug}`}
+              className="top9-sidebar-row"
+              key={x.slug}
+            >
+              <b>{i + 1}</b>
+              <img src={x.img} alt="" />
+              <span>
+                <strong>
+                  {
+                    [
+                      "Top 9 AI Tools for 2026",
+                      "Top 9 Netflix Shows",
+                      "Top 9 Smartphones of 2026",
+                      "Top 9 Beaches in the World",
+                      "Top 9 Healthy Foods",
+                      "Top 9 Luxury Cars",
+                      "Top 9 Horror Movies",
+                      "Top 9 Coding Languages",
+                      "Top 9 Travel Destinations",
+                    ][i]
+                  }
+                </strong>
+                <small>{(2.3 - i * 0.18).toFixed(1)}K views</small>
+              </span>
+            </Link>
+          ))}
+        </div>
+      </section>
+      <section className="top9-panel top9-sidebar-panel">
+        <div className="top9-section-heading">
+          <h2>Featured Collections</h2>
+          <Link className="top9-link" href="/top9">
+            View all&nbsp; ?
+          </Link>
+        </div>
+        {[
+          "Best of Movies",
+          "Travel Bucket List",
+          "Foodie&apos;s Paradise",
+          "Tech & Gadgets",
+          "Fitness & Health",
+        ].map((t, i) => {
+          const I = icons[i];
+          return (
+            <Link href="/top9" className="top9-collection-mini" key={t}>
+              <i>
+                <I size={18} />
+              </i>
+              <span>
+                <strong>{t}</strong>
+                <small>{25 - i * 3} lists</small>
+              </span>
+            </Link>
+          );
+        })}
+      </section>
+      <section className="top9-panel top9-sidebar-panel">
+        <div className="top9-section-heading">
+          <h2>Editor&apos;s Picks</h2>
+          <Link className="top9-link" href="/top9">
+            View all&nbsp; ?
+          </Link>
+        </div>
+        <Link className="top9-editor" href={`/top9/${trending[3].slug}`}>
+          <img src={trending[3].img} alt="Editor's pick" />
+          <span className="top9-editor-copy">
+            <PlayCircle size={34} />
+            <br />
+            Top 9 Documentaries That Will Change Your Mind
+            <small>? 4.9 &nbsp; ? 10.2K views</small>
+          </span>
+        </Link>
+      </section>
+    </>
+  );
+}

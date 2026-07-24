@@ -44,42 +44,74 @@ const electrical = {
     {
       "icon": "CircuitBoard",
       "title": "Electrical Panel Upgrades",
-      "description": "Replacing an undersized or obsolete load center — commonly a 100-amp panel — with 200-amp service, new breakers, and a labeled directory, sized from an actual NEC load calculation rather than guesswork."
+      "description": "Replacing an undersized or obsolete load center — commonly a 100-amp panel — with 200-amp service, new breakers, and a labeled directory, sized from an actual NEC load calculation rather than guesswork.",
+      "image": {
+        "src": "https://images.unsplash.com/photo-1544724569-5f546fd6f2b5",
+        "alt": "Electrical Panel Upgrades"
+      }
     },
     {
       "icon": "Cable",
       "title": "Whole-Home Rewiring",
-      "description": "Replacing knob-and-tube, cloth-insulated, or aluminum branch wiring with grounded copper circuits, routed to minimize wall damage and staged room by room so the house stays livable during the work."
+      "description": "Replacing knob-and-tube, cloth-insulated, or aluminum branch wiring with grounded copper circuits, routed to minimize wall damage and staged room by room so the house stays livable during the work.",
+      "image": {
+        "src": "https://images.unsplash.com/photo-1635335874521-7987db781153",
+        "alt": "Whole-Home Rewiring"
+      }
     },
     {
       "icon": "Plug",
       "title": "Outlet and Switch Installation",
-      "description": "Adding grounded receptacles, GFCI and AFCI protection where code requires them, dimmers, and smart switches — with each device properly terminated and tested rather than simply made to work."
+      "description": "Adding grounded receptacles, GFCI and AFCI protection where code requires them, dimmers, and smart switches — with each device properly terminated and tested rather than simply made to work.",
+      "image": {
+        "src": "https://images.unsplash.com/photo-1660330589693-99889d60181e",
+        "alt": "Outlet and Switch Installation"
+      }
     },
     {
       "icon": "BatteryCharging",
       "title": "EV Charger Installation",
-      "description": "Running a dedicated 240-volt circuit for Level 2 charging, with the load calculation, breaker sizing, and permit that keep the installation safe, inspectable, and consistent with insurance expectations."
+      "description": "Running a dedicated 240-volt circuit for Level 2 charging, with the load calculation, breaker sizing, and permit that keep the installation safe, inspectable, and consistent with insurance expectations.",
+      "image": {
+        "src": "https://images.unsplash.com/photo-1621905251918-48416bd8575a",
+        "alt": "EV Charger Installation"
+      }
     },
     {
       "icon": "Lightbulb",
       "title": "Recessed Lighting Installation",
-      "description": "Laying out and installing IC-rated recessed fixtures with attention to spacing, insulation contact, and dimmer compatibility, so rooms are lit evenly instead of spotted with hot circles."
+      "description": "Laying out and installing IC-rated recessed fixtures with attention to spacing, insulation contact, and dimmer compatibility, so rooms are lit evenly instead of spotted with hot circles.",
+      "image": {
+        "src": "https://images.unsplash.com/photo-1758101755915-462eddc23f57",
+        "alt": "Recessed Lighting Installation"
+      }
     },
     {
       "icon": "Fan",
       "title": "Ceiling Fan Installation",
-      "description": "Mounting fans on fan-rated boxes anchored to structure — not the light-duty boxes many builders leave behind — with balanced blades and separate light and fan control where the wiring allows."
+      "description": "Mounting fans on fan-rated boxes anchored to structure — not the light-duty boxes many builders leave behind — with balanced blades and separate light and fan control where the wiring allows.",
+      "image": {
+        "src": "https://images.unsplash.com/photo-1601462904263-f2fa0c851cb9",
+        "alt": "Ceiling Fan Installation"
+      }
     },
     {
       "icon": "Zap",
       "title": "Generator Hookups and Transfer Switches",
-      "description": "Installing an interlock kit or transfer switch so a portable or standby generator can power selected circuits without backfeeding the grid, which is both a code violation and a hazard to utility line workers."
+      "description": "Installing an interlock kit or transfer switch so a portable or standby generator can power selected circuits without backfeeding the grid, which is both a code violation and a hazard to utility line workers.",
+      "image": {
+        "src": "https://images.unsplash.com/photo-1609519479841-5fd3b2884e17",
+        "alt": "Generator Hookups and Transfer Switches"
+      }
     },
     {
       "icon": "ClipboardCheck",
       "title": "Code Corrections and Inspections",
-      "description": "Correcting double-tapped breakers, open splices, missing GFCI protection, and other common home-inspection findings, documented so a sale, refinance, or insurance renewal can move forward."
+      "description": "Correcting double-tapped breakers, open splices, missing GFCI protection, and other common home-inspection findings, documented so a sale, refinance, or insurance renewal can move forward.",
+      "image": {
+        "src": "https://images.unsplash.com/photo-1555470100-1728256970aa",
+        "alt": "Code Corrections and Inspections"
+      }
     }
   ],
   "benefits": [

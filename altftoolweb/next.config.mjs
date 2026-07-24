@@ -150,8 +150,6 @@ const nextConfig = {
       { source: "/bops/housingneeds/cityhop-movers/:path*", destination: "/bops/housing-services/cityhop-movers/:path*", permanent: true },
       // Former bathroom/hvac dashboard tabs — those categories now live only
       // in Housing Services, so deep-link to their hub sections.
-      { source: "/bops/housingneeds/bathroom", destination: "/bops/housing-services#bathroom", permanent: false },
-      { source: "/bops/housingneeds/hvac", destination: "/bops/housing-services#hvac", permanent: false },
       {
         source: "/games",
         destination: "/tools/games",

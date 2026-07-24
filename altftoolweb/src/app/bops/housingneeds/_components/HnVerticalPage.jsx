@@ -1,7 +1,10 @@
 import Link from "next/link";
 import { ArrowRight, CheckCircle2, CircleDollarSign, Star } from "lucide-react";
 import HnHeader from "./HnHeader";
+import HnTrustBar from "./HnTrustBar";
 import HnEmailCapture from "./HnEmailCapture";
+import HnHeroOffer from "./HnHeroOffer";
+import HnSubscribedGate from "./HnSubscribedGate";
 import HnFaq from "./HnFaq";
 import HnReveal from "./HnReveal";
 import HnFooter from "./HnFooter";
@@ -103,7 +106,12 @@ export default async function HnVerticalPage({ slug }) {
           <span className="hn-hero-scrim" aria-hidden="true" />
           <span className="hn-hero-tint" aria-hidden="true" />
 
-          <div className="hn-hero-inner">
+          <HnHeroOffer
+            pageKey={`vertical:${slug}`}
+            source={`hero-${slug}`}
+            heading={`Free ${name.toLowerCase()} quotes + savings kit — today`}
+            subtext={`Enter your email for free ${name.toLowerCase()} quotes from vetted local pros, our home maintenance calendar, and limited-time offers — before you pay a cent.`}
+          >
             <p className="hn-hero-eyebrow">{eyebrow}</p>
 
             <h1>
@@ -134,12 +142,15 @@ export default async function HnVerticalPage({ slug }) {
                 What this covers
               </a>
             </div>
-          </div>
+          </HnHeroOffer>
 
           <span className="hn-hero-scroll" aria-hidden="true">
             <span />
           </span>
         </section>
+
+        {/* ---------- trust bar ---------- */}
+        <HnTrustBar />
 
         {/* ---------- services ---------- */}
         {services.length > 0 && (
@@ -209,27 +220,30 @@ export default async function HnVerticalPage({ slug }) {
               </HnReveal>
 
               <div className="hn-grid hn-grid--options">
-                {options.items.map((item, index) => (
+                {options.items.slice(0, 4).map((item, index) => (
                   <HnReveal key={item.name} className="hn-option" delay={index * 70}>
-                    <h3>{item.name}</h3>
-                    <p className="hn-option-summary">{item.summary}</p>
+                    <div className="hn-option-head">
+                      <h3>{item.name}</h3>
+                      <p className="hn-option-summary">{item.summary}</p>
+                    </div>
 
                     <dl className="hn-option-meta">
-                      <div>
-                        <dt>Best for</dt>
-                        <dd>{item.bestFor}</dd>
-                      </div>
-                      <div>
-                        <dt>Typical life</dt>
-                        <dd>{item.lifespan}</dd>
-                      </div>
+                      <dt>Best for</dt>
+                      <dd>{item.bestFor}</dd>
+                      <dt>Typical life</dt>
+                      <dd>{item.lifespan}</dd>
                     </dl>
 
-                    <ul>
-                      {item.considerations.map((consideration) => (
-                        <li key={consideration}>{consideration}</li>
-                      ))}
-                    </ul>
+                    {item.considerations?.length > 0 && (
+                      <div className="hn-option-consider">
+                        <p className="hn-option-consider-label">Good to know</p>
+                        <ul>
+                          {item.considerations.map((consideration) => (
+                            <li key={consideration}>{consideration}</li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
                   </HnReveal>
                 ))}
               </div>
@@ -272,32 +286,30 @@ export default async function HnVerticalPage({ slug }) {
           </section>
         )}
 
-        {/* ---------- email capture: lead magnet beside the payoff ---------- */}
-        <section className="hn-section" id="newsletter">
-          <div className="hn-wrap">
-            <HnReveal className="hn-email-band">
-              <div>
-                <p className="hn-eyebrow">Free homeowner resource</p>
-                <h2>Planning a {name.toLowerCase()} project? Don&rsquo;t overpay.</h2>
-                <ul className="hn-email-band-points">
-                  <li>
-                    <CheckCircle2 size={17} strokeWidth={2.3} />
-                    Seasonal maintenance reminders that help prevent expensive repairs
-                  </li>
-                  <li>
-                    <CheckCircle2 size={17} strokeWidth={2.3} />
-                    Real cost guides to read before you accept any quote
-                  </li>
-                  <li>
-                    <CheckCircle2 size={17} strokeWidth={2.3} />
-                    Exclusive offers from vetted local pros in your area
-                  </li>
-                </ul>
-              </div>
-              <HnEmailCapture source={`vertical-${slug}`} />
-            </HnReveal>
-          </div>
-        </section>
+        {/* ---------- email capture: lead magnet beside the payoff ----------
+            Wrapped so it disappears once the visitor has already given us their
+            email (via this band or the hero offer) — no double ask. */}
+        <HnSubscribedGate>
+          <section className="hn-section" id="newsletter">
+            <div className="hn-wrap">
+              <HnReveal className="hn-email-band">
+                <div>
+                  <p className="hn-eyebrow">Free homeowner resource</p>
+                  <h2>Planning a {name.toLowerCase()} project? Don&rsquo;t overpay.</h2>
+                  <p className="hn-lede" style={{ margin: "0.75rem 0 0" }}>
+                    Before you accept a single {name.toLowerCase()} quote, know
+                    what fair really looks like. Our free maintenance calendar and
+                    honest cost guides land straight in your inbox — so you spend
+                    smart and never get talked into work you don&rsquo;t need.
+                  </p>
+                </div>
+                {/* announce=false: this band showing its own success shouldn't
+                    fire the event that would remove it mid-confirmation. */}
+                <HnEmailCapture source={`vertical-${slug}`} announce={false} />
+              </HnReveal>
+            </div>
+          </section>
+        </HnSubscribedGate>
 
         {/* ---------- process ---------- */}
         {process.length > 0 && (

@@ -44,42 +44,74 @@ const landscaping = {
     {
       "icon": "Leaf",
       "title": "Lawn Care and Maintenance",
-      "description": "Mowing, edging, fertilization, aeration, and overseeding on a schedule matched to your grass type and region, since cool-season and warm-season lawns peak at different times of year."
+      "description": "Mowing, edging, fertilization, aeration, and overseeding on a schedule matched to your grass type and region, since cool-season and warm-season lawns peak at different times of year.",
+      "image": {
+        "src": "https://images.unsplash.com/photo-1458245201577-fc8a130b8829",
+        "alt": "Lawn Care and Maintenance"
+      }
     },
     {
       "icon": "Sprout",
       "title": "Garden Design and Planting",
-      "description": "Bed layouts and plant palettes chosen for your USDA hardiness zone, sun exposure, and soil, so plantings establish and fill in rather than fighting the site from day one."
+      "description": "Bed layouts and plant palettes chosen for your USDA hardiness zone, sun exposure, and soil, so plantings establish and fill in rather than fighting the site from day one.",
+      "image": {
+        "src": "https://images.unsplash.com/photo-1734303023491-db8037a21f09",
+        "alt": "Garden Design and Planting"
+      }
     },
     {
       "icon": "Layers",
       "title": "Patios, Walkways and Retaining Walls",
-      "description": "Hardscape built on properly compacted base material with drainage behind every wall, because most paver and wall failures trace back to the base and the water, not the surface product."
+      "description": "Hardscape built on properly compacted base material with drainage behind every wall, because most paver and wall failures trace back to the base and the water, not the surface product.",
+      "image": {
+        "src": "https://images.unsplash.com/photo-1558904541-efa843a96f01",
+        "alt": "Patios, Walkways and Retaining Walls"
+      }
     },
     {
       "icon": "Droplets",
       "title": "Irrigation and Sprinkler Systems",
-      "description": "Zoned systems that separate turf from beds and sun from shade, with head placement designed for even coverage and smart controllers that adjust run times to weather."
+      "description": "Zoned systems that separate turf from beds and sun from shade, with head placement designed for even coverage and smart controllers that adjust run times to weather.",
+      "image": {
+        "src": "https://images.unsplash.com/photo-1605117882932-f9e32b03fea9",
+        "alt": "Irrigation and Sprinkler Systems"
+      }
     },
     {
       "icon": "TreePine",
       "title": "Tree and Shrub Planting",
-      "description": "Species selected for mature size and placement, planted at the correct depth with root flare exposed — the single detail that most often decides whether a tree thrives or declines."
+      "description": "Species selected for mature size and placement, planted at the correct depth with root flare exposed — the single detail that most often decides whether a tree thrives or declines.",
+      "image": {
+        "src": "https://images.unsplash.com/photo-1597201278257-3687be27d954",
+        "alt": "Tree and Shrub Planting"
+      }
     },
     {
       "icon": "CalendarClock",
       "title": "Seasonal Cleanups",
-      "description": "Spring bed preparation, fall leaf removal, pruning at the right point in each plant's cycle, and winterization of irrigation lines before the first hard freeze."
+      "description": "Spring bed preparation, fall leaf removal, pruning at the right point in each plant's cycle, and winterization of irrigation lines before the first hard freeze.",
+      "image": {
+        "src": "https://images.unsplash.com/photo-1734079692079-aae7e24a7035",
+        "alt": "Seasonal Cleanups"
+      }
     },
     {
       "icon": "Grid2x2",
       "title": "Sod and Artificial Turf Installation",
-      "description": "Soil grading and amendment before natural sod goes down, or engineered base and infill work for synthetic turf, since both products live or die on what is underneath them."
+      "description": "Soil grading and amendment before natural sod goes down, or engineered base and infill work for synthetic turf, since both products live or die on what is underneath them.",
+      "image": {
+        "src": "https://images.unsplash.com/photo-1634316888962-75074307f81c",
+        "alt": "Sod and Artificial Turf Installation"
+      }
     },
     {
       "icon": "Waves",
       "title": "Grading and Drainage Correction",
-      "description": "Regrading, French drains, dry creek beds, and downspout extensions that move water away from the foundation instead of letting the yard direct it toward the house."
+      "description": "Regrading, French drains, dry creek beds, and downspout extensions that move water away from the foundation instead of letting the yard direct it toward the house.",
+      "image": {
+        "src": "https://images.unsplash.com/photo-1719324923613-ff0884b031ed",
+        "alt": "Grading and Drainage Correction"
+      }
     }
   ],
   "benefits": [

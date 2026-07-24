@@ -1,8 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import { ExternalLink, Download, ChevronDown, Sparkles, Rocket, Wand2, Wrench, CircleQuestionMark, ListChecks, Lightbulb, Link2 } from "lucide-react";
+import { ExternalLink, Download, ChevronDown, Sparkles, Rocket, Wand2, Wrench, CircleQuestionMark, ListChecks, Lightbulb, Link2, DollarSign, BookOpen, PlayCircle, Check } from "lucide-react";
 import { Button } from "@altftool/ui";
+import WasThisHelpful from "./WasThisHelpful";
 
 /**
  * Dedicated detail page for an AI tool entry (data/aiTools.js). Distinct
@@ -131,6 +132,47 @@ const AiToolDetailPage = ({ tool, allTools, onSelectTool }) => {
         </section>
       )}
 
+      {tool.pricing && (
+        <section className="support-detail-section">
+          <h2 className="support-detail-section-title">
+            <DollarSign className="h-4 w-4" /> Pricing &amp; Free vs. Paid
+          </h2>
+          {tool.pricing.summary && <p className="support-detail-prose">{tool.pricing.summary}</p>}
+          <div className="support-pricing-grid">
+            {tool.pricing.free?.length > 0 && (
+              <div className="support-pricing-col">
+                <p className="support-card-steps-label">Free Tier Includes</p>
+                <ul className="support-detail-list support-detail-list-check">
+                  {tool.pricing.free.map((item, i) => (
+                    <li key={i}>
+                      <Check className="h-3.5 w-3.5 support-pricing-check" /> {item}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+            {tool.pricing.paid?.length > 0 && (
+              <div className="support-pricing-col">
+                <p className="support-card-steps-label">Paid Plans Add</p>
+                <ul className="support-detail-list support-detail-list-check">
+                  {tool.pricing.paid.map((item, i) => (
+                    <li key={i}>
+                      <Check className="h-3.5 w-3.5 support-pricing-check" /> {item}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+          </div>
+          {tool.pricing.pricingUrl && (
+            <a href={tool.pricing.pricingUrl} target="_blank" rel="noopener noreferrer" className="support-utility-link">
+              See current pricing on the official site
+              <ExternalLink className="h-3.5 w-3.5" />
+            </a>
+          )}
+        </section>
+      )}
+
       {tool.usage && (
         <section className="support-detail-section">
           <h2 className="support-detail-section-title">
@@ -221,6 +263,26 @@ const AiToolDetailPage = ({ tool, allTools, onSelectTool }) => {
         </section>
       )}
 
+      {(tool.docsUrl || tool.videosUrl) && (
+        <section className="support-detail-section">
+          <h2 className="support-detail-section-title">
+            <BookOpen className="h-4 w-4" /> Official Documentation &amp; Videos
+          </h2>
+          <div className="support-detail-related-chips">
+            {tool.docsUrl && (
+              <a href={tool.docsUrl} target="_blank" rel="noopener noreferrer" className="support-detail-related-chip">
+                <BookOpen className="h-4 w-4" /> Official Documentation
+              </a>
+            )}
+            {tool.videosUrl && (
+              <a href={tool.videosUrl} target="_blank" rel="noopener noreferrer" className="support-detail-related-chip">
+                <PlayCircle className="h-4 w-4" /> Video Tutorials
+              </a>
+            )}
+          </div>
+        </section>
+      )}
+
       {relatedTools.length > 0 && (
         <section className="support-detail-section">
           <h2 className="support-detail-section-title">
@@ -244,6 +306,8 @@ const AiToolDetailPage = ({ tool, allTools, onSelectTool }) => {
           </div>
         </section>
       )}
+
+      <WasThisHelpful />
     </article>
   );
 };
