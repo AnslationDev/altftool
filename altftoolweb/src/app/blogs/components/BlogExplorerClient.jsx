@@ -548,7 +548,10 @@ function CategoryBand({ categories, counts, activeCategory, onChange }) {
       "linear-gradient(90deg, var(--primary), color-mix(in srgb, var(--secondary) 45%, var(--primary)))",
   };
   const pillBase =
-    "inline-flex h-11 shrink-0 snap-start items-center gap-2 rounded-full px-4 text-sm font-bold transition-all duration-150 motion-reduce:transition-none motion-reduce:transform-none";
+    // relative: keeps the sr-only (absolutely positioned) label anchored to
+    // the pill inside the scroll rail — otherwise it escapes the rail's clip
+    // and inflates the page's horizontal scroll width on mobile.
+    "relative inline-flex h-11 shrink-0 snap-start items-center gap-2 rounded-full px-4 text-sm font-bold transition-all duration-150 motion-reduce:transition-none motion-reduce:transform-none";
   const pillGhost =
     "bg-(--card) text-(--foreground) ring-1 ring-(--border) hover:-translate-y-0.5 hover:text-(--primary) hover:shadow-[var(--anslation-ds-shadow-md)] hover:ring-(--primary)";
   const pillActive = "text-(--primary-foreground) shadow-sm";
@@ -1552,7 +1555,12 @@ export default function BlogExplorerClient({
 
       {/* 5 — extra editorial sections from the server page, same 8-unit rhythm */}
       {children && (
-        <div className="render-deferred flex flex-col gap-10 sm:gap-14">{children}</div>
+        // min-w-0 keeps horizontal sliders inside this column from inflating
+        // the page's scroll width (flex-item min-width:auto would otherwise
+        // size the column to the slider's full track width on mobile).
+        <div className="render-deferred flex min-w-0 max-w-full flex-col gap-10 overflow-x-clip sm:gap-14">
+          {children}
+        </div>
       )}
 
       {/* 6 — trust strip */}
