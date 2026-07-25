@@ -6,14 +6,18 @@
 // widget-style tools are allowlisted — categories whose tools work without
 // site context (calculators, generators, converters).
 
+import "server-only";
 import { toolMetaMap } from "@/platform/registry/toolMetaMap";
 import { PRODUCTION_SITE_URL } from "@/platform/seo/siteUrl";
+import { buildSnippet } from "./embedSnippet";
 
+// NOTE: "Generators" is a canonical taxonomy category but currently matches
+// zero tools in toolMetaMap (generator tools carry other canonical
+// categories), so it is intentionally not listed here.
 export const EMBEDDABLE_CATEGORIES = [
   "Calculators",
   "Finance Calculators",
   "Health Calculators",
-  "Generators",
   "Converters",
 ];
 
@@ -61,18 +65,11 @@ export function getEmbedAttributionUrl(slug) {
   return `${PRODUCTION_SITE_URL}/tools/all/${slug}?utm_source=embed&utm_medium=widget`;
 }
 
-/**
- * The copy-paste iframe snippet third-party sites use.
- * NOTE: EmbedPicker.jsx (client) carries a parallel buildSnippet — it cannot
- * import this file (toolMetaMap must stay server-side). Keep both in sync.
- */
+/** The copy-paste iframe snippet third-party sites use. */
 export function buildEmbedSnippet(slug, name = "") {
-  const title = String(name || toolMetaMap[slug]?.name || "AltFTool widget").replace(/"/g, "'");
-  return [
-    `<iframe src="${getEmbedUrl(slug)}"`,
-    `  title="${title} — free AltFTool widget"`,
-    `  width="100%" height="640" style="border:0;border-radius:12px;overflow:hidden"`,
-    `  loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>`,
-    `<p style="font-size:12px;margin:4px 0 0">Widget by <a href="${getEmbedAttributionUrl(slug)}">AltFTool — free online tools</a></p>`,
-  ].join("\n");
+  return buildSnippet(
+    PRODUCTION_SITE_URL,
+    slug,
+    name || toolMetaMap[slug]?.name || "AltFTool widget",
+  );
 }

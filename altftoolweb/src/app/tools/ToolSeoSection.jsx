@@ -176,10 +176,10 @@ export default function ToolSeoSection({ slug, tool, category = "all" }) {
               style={{ backgroundColor: T.tile }}
               open={index === 0}
             >
-              <summary className="flex cursor-pointer list-none items-center justify-between gap-3 text-sm font-bold text-(--sc-ink) transition-colors hover:text-(--sc-indigo) group-open:text-(--sc-indigo) [&::-webkit-details-marker]:hidden">
+              <summary className="flex cursor-pointer list-none items-center justify-between gap-3 rounded-lg text-sm font-bold text-(--sc-ink) transition-colors duration-150 hover:text-(--sc-indigo) focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--sc-indigo)]/35 group-open:text-(--sc-indigo) motion-reduce:transition-none [&::-webkit-details-marker]:hidden">
                 {faq.question}
                 <span
-                  className="grid h-6 w-6 shrink-0 place-items-center rounded-full transition-transform duration-150 group-open:rotate-45"
+                  className="grid h-6 w-6 shrink-0 place-items-center rounded-full transition-transform duration-200 group-open:rotate-45 motion-reduce:transition-none"
                   style={{ backgroundColor: T.card, color: T.indigo }}
                   aria-hidden="true"
                 >
@@ -203,11 +203,11 @@ export default function ToolSeoSection({ slug, tool, category = "all" }) {
               <li key={item.slug}>
                 <Link
                   href={`/tools/all/${item.slug}`}
-                  className="group inline-flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-sm font-bold text-(--sc-ink) transition-all duration-150 hover:-translate-y-0.5 hover:text-(--sc-indigo) hover:shadow-(--sc-shadow-lg)"
+                  className="group inline-flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-sm font-bold text-(--sc-ink) transition-all duration-150 hover:-translate-y-0.5 hover:text-(--sc-indigo) hover:shadow-(--sc-shadow-lg) focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--sc-indigo)]/35 motion-reduce:transform-none motion-reduce:transition-none"
                   style={{ backgroundColor: T.tile }}
                 >
                   {item.name}
-                  <ArrowUpRight className="h-3.5 w-3.5 text-(--sc-indigo) transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                  <ArrowUpRight className="h-3.5 w-3.5 text-(--sc-indigo) transition-transform duration-150 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 motion-reduce:transform-none motion-reduce:transition-none" />
                 </Link>
               </li>
             ))}
@@ -224,10 +224,21 @@ export default function ToolSeoSection({ slug, tool, category = "all" }) {
             no signup. Just keep the &ldquo;Widget by AltFTool&rdquo; credit link visible.
           </p>
           <div className="mt-4">
-            <EmbedCodeCopy snippet={buildEmbedSnippet(slug, tool?.name || seo.name)} />
+            <EmbedCodeCopy
+              snippet={buildEmbedSnippet(slug, tool?.name || seo.name)}
+              containerClassName="rounded-xl"
+              preClassName="max-h-44 overflow-auto rounded-xl p-3 text-xs leading-5 bg-[var(--sc-tile)] text-[var(--sc-ink)]"
+              dividerClassName="pt-2"
+              buttonClassName="inline-flex h-9 items-center gap-2 rounded-full px-4 text-sm font-bold transition-all duration-150 hover:-translate-y-0.5 hover:shadow-(--sc-shadow-lg) focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--sc-indigo)] motion-reduce:transform-none"
+              buttonStyle={{ backgroundColor: T.tile, color: T.indigo }}
+            />
           </div>
           <p className="mt-3 text-xs" style={{ color: T.muted }}>
-            <Link href="/embed" className="font-semibold underline underline-offset-2" style={{ color: T.indigo }}>
+            <Link
+              href="/embed"
+              className="rounded-[4px] font-semibold underline underline-offset-2 transition-colors duration-150 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--sc-indigo)]/35 motion-reduce:transition-none"
+              style={{ color: T.indigo }}
+            >
               Browse all embeddable widgets →
             </Link>
           </p>

@@ -3,19 +3,7 @@
 import { useMemo, useState } from "react";
 import { Search } from "lucide-react";
 import EmbedCodeCopy from "./EmbedCodeCopy";
-
-// Parallel of buildEmbedSnippet in embedRegistry.js (server-only module this
-// client component cannot import). Keep both in sync.
-function buildSnippet(baseUrl, slug, name) {
-  const title = String(name).replace(/"/g, "'");
-  return [
-    `<iframe src="${baseUrl}/embed/widget/${slug}"`,
-    `  title="${title} — free AltFTool widget"`,
-    `  width="100%" height="640" style="border:0;border-radius:12px;overflow:hidden"`,
-    `  loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>`,
-    `<p style="font-size:12px;margin:4px 0 0">Widget by <a href="${baseUrl}/tools/all/${slug}?utm_source=embed&utm_medium=widget">AltFTool — free online tools</a></p>`,
-  ].join("\n");
-}
+import { buildSnippet } from "./embedSnippet";
 
 /**
  * Interactive widget chooser for the /embed hub: search + category filter,
@@ -35,7 +23,10 @@ export default function EmbedPicker({ tools = [], categories = [], baseUrl }) {
     );
   }, [tools, query, category]);
 
-  const active = tools.find((tool) => tool.slug === selected) || filtered[0] || tools[0];
+  // Derive from the FILTERED list so the preview/snippet always matches a
+  // visible row; when the selection is filtered out, advance to the first
+  // visible tool instead of showing a stale preview.
+  const active = filtered.find((tool) => tool.slug === selected) || filtered[0];
 
   return (
     <div className="grid gap-5 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)]">
@@ -85,7 +76,7 @@ export default function EmbedPicker({ tools = [], categories = [], baseUrl }) {
                   aria-pressed={tool.slug === active?.slug}
                   className={`block w-full px-4 py-2.5 text-left transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[var(--anslation-ds-primary-hover)]/35 ${
                     tool.slug === active?.slug
-                      ? "bg-(--primary) text-(--primary-foreground)"
+                      ? "border-l-2 border-(--primary) bg-(--primary-soft) text-(--primary-text)"
                       : "hover:bg-(--muted)"
                   }`}
                 >
@@ -93,7 +84,7 @@ export default function EmbedPicker({ tools = [], categories = [], baseUrl }) {
                   <span
                     className={`block text-xs ${
                       tool.slug === active?.slug
-                        ? "text-(--primary-foreground)"
+                        ? "text-(--primary-text)"
                         : "text-(--muted-foreground)"
                     }`}
                   >

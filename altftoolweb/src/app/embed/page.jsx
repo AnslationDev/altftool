@@ -6,9 +6,9 @@ import EmbedPicker from "./EmbedPicker";
 
 export async function generateMetadata() {
   return createPageMetadata({
-    title: "Free Embeddable Widgets — Calculators, Generators & Converters",
+    title: "Free Embeddable Widgets — Calculators & Converters",
     description:
-      "Add free calculators, generators, and converters to your website with one copy-paste snippet. 190+ AltFTool widgets — no signup, no API key, fully responsive.",
+      "Add free calculators and converters to your website with one copy-paste snippet. 190+ AltFTool widgets — no signup, no API key, fully responsive.",
     path: "/embed",
     keywords: [
       "free embeddable calculator",
@@ -20,7 +20,7 @@ export async function generateMetadata() {
 }
 
 const STEPS = [
-  { title: "Pick a widget", text: "Search 190+ calculators, generators, and converters below." },
+  { title: "Pick a widget", text: "Search 190+ calculators and converters below." },
   { title: "Copy the snippet", text: "One iframe tag — no account, no API key, no build step." },
   { title: "Paste it anywhere", text: "Works in WordPress, Ghost, Webflow, plain HTML — anywhere an iframe works." },
 ];
@@ -43,7 +43,7 @@ export default function EmbedHubPage() {
             Free widgets for your website
           </h1>
           <p className="mt-3 text-base leading-7 text-(--muted-foreground)">
-            {`Embed any of ${tools.length} AltFTool calculators, generators, and converters with a
+            {`Embed any of ${tools.length} AltFTool calculators and converters with a
             single copy-paste snippet. Free forever, responsive, light & dark themes, and no
             signup — just keep the small "Widget by AltFTool" credit link.`}
           </p>
@@ -55,7 +55,7 @@ export default function EmbedHubPage() {
               key={step.title}
               className="rounded-[12px] border border-(--border) bg-(--surface) p-4"
             >
-              <span className="grid h-8 w-8 place-items-center rounded-full bg-(--primary) text-sm font-bold text-(--primary-foreground)">
+              <span className="grid h-8 w-8 place-items-center rounded-full bg-(--primary-soft) text-sm font-bold text-(--primary-text)">
                 {index + 1}
               </span>
               <h2 className="mt-3 text-sm font-semibold">{step.title}</h2>
@@ -78,6 +78,18 @@ export default function EmbedHubPage() {
             Widgets are free for personal and commercial sites. The attribution link inside the
             widget (and the credit line in the snippet) must stay visible — that&rsquo;s the whole
             deal. Widgets run in your visitor&rsquo;s browser; we never see the data they enter.
+          </p>
+          <p className="mt-3 text-sm leading-6 text-(--muted-foreground)">
+            <strong className="font-semibold text-(--foreground)">Tip:</strong> widgets follow the
+            visitor&rsquo;s system theme by default. To pin one, append{" "}
+            <code className="rounded-[6px] border border-(--border) bg-(--surface) px-1.5 py-0.5 text-xs">
+              ?theme=dark
+            </code>{" "}
+            or{" "}
+            <code className="rounded-[6px] border border-(--border) bg-(--surface) px-1.5 py-0.5 text-xs">
+              ?theme=light
+            </code>{" "}
+            to the iframe URL.
           </p>
         </section>
       </div>
