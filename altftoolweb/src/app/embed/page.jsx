@@ -20,7 +20,7 @@ export async function generateMetadata() {
 }
 
 const STEPS = [
-  { title: "Pick a widget", text: "Search 190+ calculators and converters below." },
+  { title: "Pick a widget", text: "Search every AltFTool calculator and converter below." },
   { title: "Copy the snippet", text: "One iframe tag — no account, no API key, no build step." },
   { title: "Paste it anywhere", text: "Works in WordPress, Ghost, Webflow, plain HTML — anywhere an iframe works." },
 ];

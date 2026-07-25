@@ -1,10 +1,21 @@
 // Embeddable-widget registry.
 //
 // Third-party sites can embed selected AltFTool utilities via
-// /embed/[slug] iframes; every embed carries a visible "Powered by AltFTool"
-// attribution link back to the canonical tool page. Only self-contained
-// widget-style tools are allowlisted — categories whose tools work without
-// site context (calculators, generators, converters).
+// /embed/widget/[slug] iframes; every embed carries a visible
+// "Widget by AltFTool" attribution link back to the canonical tool page.
+// Only self-contained widget-style tools qualify: they must work without any
+// site context and compute in the visitor's browser.
+//
+// Two ways in — a tool qualifies if EITHER matches:
+//   1. its canonical category is one of EMBEDDABLE_CATEGORIES, or
+//   2. its slug is calculator/converter-shaped (`*-calculator` / `*-converter`).
+// Rule 2 exists because the canonical taxonomy is coarse: the single most
+// embeddable widgets we have — loan-emi-calculator ("Business"),
+// bmi-calculator and the calorie set ("Health & Fitness"),
+// currency-converter ("Business") — carry categories that say nothing about
+// widget shape. AI-backed tools are excluded from rule 2: they call an API,
+// which would break the "computes in your browser, nothing is sent" promise
+// the embed program is built on.
 
 import "server-only";
 import { toolMetaMap } from "@/platform/registry/toolMetaMap";
@@ -23,6 +34,12 @@ export const EMBEDDABLE_CATEGORIES = [
 
 const EMBEDDABLE_CATEGORY_SET = new Set(EMBEDDABLE_CATEGORIES);
 
+/** Widget-shaped slugs: "…-calculator" / "…-converter" (or exactly that word). */
+const WIDGET_SLUG_PATTERN = /(^|-)(calculator|converter)$/;
+
+/** API-backed tools can't honour the "nothing leaves your browser" promise. */
+const NON_CLIENT_SIDE_CATEGORY = "AI Tools";
+
 function toolCategories(tool = {}) {
   return (Array.isArray(tool.category) ? tool.category : [tool.category]).filter(Boolean);
 }
@@ -30,7 +47,21 @@ function toolCategories(tool = {}) {
 export function isEmbeddable(slug) {
   const tool = toolMetaMap[slug];
   if (!tool) return false;
-  return toolCategories(tool).some((category) => EMBEDDABLE_CATEGORY_SET.has(category));
+
+  const categories = toolCategories(tool);
+  if (categories.includes(NON_CLIENT_SIDE_CATEGORY)) return false;
+
+  return (
+    categories.some((category) => EMBEDDABLE_CATEGORY_SET.has(category)) ||
+    WIDGET_SLUG_PATTERN.test(slug)
+  );
+}
+
+/** Picker bucket for a tool — falls back to slug shape for coarse categories. */
+function embedCategoryOf(slug, tool) {
+  const named = toolCategories(tool).find((category) => EMBEDDABLE_CATEGORY_SET.has(category));
+  if (named) return named;
+  return slug.endsWith("converter") ? "Converters" : "Calculators";
 }
 
 let cachedList = null;
@@ -46,9 +77,7 @@ export function getEmbeddableTools() {
       .map(([slug, tool]) => ({
         slug,
         name: tool.name || slug.replace(/-/g, " "),
-        category:
-          toolCategories(tool).find((category) => EMBEDDABLE_CATEGORY_SET.has(category)) ||
-          "Calculators",
+        category: embedCategoryOf(slug, tool),
       }))
       .sort((a, b) => a.name.localeCompare(b.name));
   }

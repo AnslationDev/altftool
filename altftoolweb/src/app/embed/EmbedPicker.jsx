@@ -42,7 +42,7 @@ export default function EmbedPicker({ tools = [], categories = [], baseUrl }) {
               type="search"
               value={query}
               onChange={(event) => setQuery(event.target.value)}
-              placeholder="Search 190+ widgets…"
+              placeholder={`Search ${tools.length} widgets…`}
               className="h-10 w-full rounded-[8px] border border-(--border) bg-(--surface) pl-9 pr-3 text-sm text-(--foreground) placeholder:text-(--muted-foreground) focus-visible:border-(--primary) focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--anslation-ds-primary-hover)]/35"
             />
           </label>
