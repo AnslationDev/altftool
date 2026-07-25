@@ -7,12 +7,21 @@ import {
   Layers3,
   Search,
   ShieldCheck,
+  Wrench,
 } from "lucide-react";
 import { EXPERIENCE_CATALOG } from "@altftool/core/experiences";
 import { PRODUCT_SUITE_CATALOG } from "@altftool/core/product-suites";
 import { CANONICAL_CATEGORIES } from "@/platform/registry/categoryTaxonomy";
+import { toolMetaMap } from "@/platform/registry/toolMetaMap";
+import CountUpNumber from "./CountUpNumber";
 
 const catalogFacts = [
+  {
+    label: "Free tools",
+    value: Object.keys(toolMetaMap).length,
+    suffix: "+",
+    icon: Wrench,
+  },
   {
     label: "Tool categories",
     value: CANONICAL_CATEGORIES.length,
@@ -38,10 +47,24 @@ const quickRoutes = [
 
 export default function HeroSection() {
   return (
-    <section className="border-b border-border bg-background" aria-labelledby="home-title">
-      <div className="mx-auto grid w-full max-w-[var(--anslation-ds-container)] items-center gap-8 px-4 py-14 sm:px-6 sm:py-20 lg:grid-cols-[minmax(0,1fr)_minmax(22rem,0.82fr)] lg:px-8">
+    <section
+      className="relative overflow-hidden border-b border-border bg-background"
+      aria-labelledby="home-title"
+    >
+      {/* Ambient brand glow + dot grid — pure decoration, token-driven. */}
+      <div aria-hidden="true" className="pointer-events-none absolute inset-0">
+        <div className="absolute -left-32 -top-32 h-96 w-96 rounded-full bg-[radial-gradient(circle_at_center,color-mix(in_srgb,var(--primary)_18%,transparent),transparent_70%)] blur-2xl" />
+        <div className="absolute -right-24 top-1/3 h-80 w-80 rounded-full bg-[radial-gradient(circle_at_center,color-mix(in_srgb,var(--secondary)_14%,transparent),transparent_70%)] blur-2xl" />
+        <div className="absolute inset-0 bg-[radial-gradient(color-mix(in_srgb,var(--border)_70%,transparent)_1px,transparent_1px)] bg-[size:26px_26px] [mask-image:radial-gradient(ellipse_60%_60%_at_30%_35%,black,transparent)]" />
+      </div>
+
+      <div className="relative mx-auto grid w-full max-w-[var(--anslation-ds-container)] items-center gap-8 px-4 py-14 sm:px-6 sm:py-20 lg:grid-cols-[minmax(0,1fr)_minmax(22rem,0.82fr)] lg:px-8">
         <div className="max-w-3xl">
           <p className="inline-flex min-h-8 items-center gap-2 rounded-full border border-border bg-card px-3 text-xs font-semibold text-primary shadow-sm">
+            <span className="relative flex h-2 w-2" aria-hidden="true">
+              <span className="absolute inline-flex h-full w-full rounded-full bg-[var(--success)] opacity-60 motion-safe:animate-ping" />
+              <span className="relative inline-flex h-2 w-2 rounded-full bg-[var(--success)]" />
+            </span>
             <ShieldCheck className="h-4 w-4" aria-hidden="true" />
             Organized tools for real work
           </p>
@@ -50,7 +73,7 @@ export default function HeroSection() {
             id="home-title"
             className="mt-5 text-4xl font-bold leading-tight text-foreground sm:text-5xl lg:text-6xl"
           >
-            AltFTool
+            Alt<span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">F</span>Tool
           </h1>
           <span
             className="mt-4 block h-1 w-16 rounded-full bg-gradient-to-r from-primary to-secondary"
@@ -115,23 +138,23 @@ export default function HeroSection() {
             ))}
           </nav>
 
-          <dl className="mt-5 grid max-w-2xl grid-cols-3 gap-3 border-t border-border pt-4">
+          <dl className="mt-5 grid max-w-2xl grid-cols-2 gap-3 border-t border-border pt-4 sm:grid-cols-4">
             {catalogFacts.map((fact) => {
               const Icon = fact.icon;
               return (
                 <div
                   key={fact.label}
-                  className="flex min-w-0 flex-col items-start gap-2 sm:min-h-12 sm:flex-row sm:items-center sm:gap-3"
+                  className="flex min-w-0 flex-col items-start gap-2 sm:min-h-12"
                 >
                   <span className="grid h-9 w-9 shrink-0 place-items-center rounded-md bg-muted text-primary">
                     <Icon className="h-4 w-4" aria-hidden="true" />
                   </span>
-                  <div className="min-w-0">
+                  <div className="flex min-w-0 flex-col-reverse">
                     <dt className="text-xs font-medium leading-4 text-muted-foreground">
                       {fact.label}
                     </dt>
-                    <dd className="text-base font-semibold tabular-nums text-foreground">
-                      {fact.value.toLocaleString()}
+                    <dd className="text-lg font-bold tabular-nums text-foreground">
+                      <CountUpNumber value={fact.value} suffix={fact.suffix || ""} />
                     </dd>
                   </div>
                 </div>

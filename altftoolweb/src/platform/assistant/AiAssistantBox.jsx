@@ -94,7 +94,8 @@ export function AiAssistantBox() {
           </h2>
         </div>
 
-        <div className="overflow-hidden rounded-lg border border-border bg-card shadow-md">
+        <div className="rounded-[calc(var(--anslation-ds-radius,0.75rem)+1px)] bg-gradient-to-r from-primary/50 via-secondary/50 to-primary/50 p-px shadow-[0_8px_32px_color-mix(in_srgb,var(--primary)_12%,transparent)]">
+        <div className="overflow-hidden rounded-lg bg-card">
           {messages.length > 0 ? (
             <div
               ref={scrollRef}
@@ -207,6 +208,7 @@ export function AiAssistantBox() {
               ))}
             </div>
           ) : null}
+        </div>
         </div>
 
         <p className="mt-3 text-center text-xs text-[var(--muted-foreground)]">
