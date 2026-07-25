@@ -22,5 +22,10 @@ export async function generateMetadata() {
 }
 
 export default function PatatapPage() {
-  return <PatatapClient />;
+  return (
+    <>
+      <h1 className="sr-only">Patatap portable animation and sound kit</h1>
+      <PatatapClient />
+    </>
+  );
 }

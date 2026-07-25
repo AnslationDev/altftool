@@ -12,7 +12,7 @@ import {
   getBlogAuthors,
   mergeBlogPosts,
 } from "../../data";
-import { getFirebaseBlogCatalog } from "../../data/firebaseBlogs";
+import { fetchAllFirebaseBlogs } from "../../data/firebaseBlogs";
 import { shouldDeferBulkPrerendering } from "@/lib/buildPrerenderPolicy";
 import {
   createBreadcrumbJsonLd,
@@ -30,11 +30,9 @@ export function generateStaticParams() {
 }
 
 async function getMergedPosts() {
-  const firebaseCatalog = await getFirebaseBlogCatalog().catch(() => ({
-    posts: [],
-  }));
+  const firebasePosts = await fetchAllFirebaseBlogs().catch(() => []);
 
-  return mergeBlogPosts(getAllBlogs(), firebaseCatalog.posts);
+  return mergeBlogPosts(getAllBlogs(), firebasePosts);
 }
 
 const getAuthorArchive = cache(async (authorSlug) => {

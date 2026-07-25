@@ -10,7 +10,7 @@ export const blogs = [
 
     cat: "Digital Tools",
 
-    date: "May 11, 2026",
+    date: "May 11, 2026"
   },
 
   {
@@ -24,7 +24,7 @@ export const blogs = [
 
     cat: "Gaming",
 
-    date: "May 11, 2026",
+    date: "May 11, 2026"
   },
 
   {
@@ -38,7 +38,7 @@ export const blogs = [
 
     cat: "Pets",
 
-    date: "May 11, 2026",
+    date: "May 11, 2026"
   },
 
   {
@@ -52,34 +52,34 @@ export const blogs = [
 
     cat: "Movies",
 
-    date: "May 11, 2026",
+    date: "May 11, 2026"
   },
 
   {
-    title: "Best Clothing Brands",
+  title: "Best Clothing Brands",
 
-    slug: "best-clothing-brands",
+  slug: "best-clothing-brands",
 
-    img: "https://images.unsplash.com/photo-1441986300917-64674bd600d8",
+  img: "https://images.unsplash.com/photo-1441986300917-64674bd600d8",
 
-    desc: "Fashion trends continue to evolve in 2026, and the world’s best clothing brands are combining style, comfort, sustainability, and innovation like never before. From luxury labels and streetwear giants to affordable everyday fashion companies, these brands influence global fashion culture and consumer preferences. They are recognized for quality fabrics, modern designs, brand reputation, and strong customer loyalty worldwide. Many brands are also focusing heavily on eco-friendly production and sustainable fashion practices. Their collections continue to inspire millions of fashion enthusiasts across different age groups and lifestyles. Fashion brands today are also expanding into smart fabrics, gender-neutral collections, and influencer-driven collaborations that dominate social media trends worldwide. With global online shopping growth increasing rapidly, these companies continue to shape the future of fashion through creativity, premium craftsmanship, and digital-first experiences for modern consumers.",
+  desc: "Fashion trends continue to evolve in 2026, and the world’s best clothing brands are combining style, comfort, sustainability, and innovation like never before. From luxury labels and streetwear giants to affordable everyday fashion companies, these brands influence global fashion culture and consumer preferences. They are recognized for quality fabrics, modern designs, brand reputation, and strong customer loyalty worldwide. Many brands are also focusing heavily on eco-friendly production and sustainable fashion practices. Their collections continue to inspire millions of fashion enthusiasts across different age groups and lifestyles. Fashion brands today are also expanding into smart fabrics, gender-neutral collections, and influencer-driven collaborations that dominate social media trends worldwide. With global online shopping growth increasing rapidly, these companies continue to shape the future of fashion through creativity, premium craftsmanship, and digital-first experiences for modern consumers.",
 
-    cat: "Fashion",
+  cat: "Fashion",
 
-    date: "May 11, 2026",
-  },
+  date: "May 11, 2026"
+},
 
-  {
-    title: "Best Workout Songs",
+{
+  title: "Best Workout Songs",
 
-    slug: "best-workout-songs",
+  slug: "best-workout-songs",
 
-    img: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48",
+  img: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48",
 
-    desc: "Music plays a huge role in boosting workout motivation, focus, and energy during gym sessions, running, cardio, and strength training. The best workout songs feature powerful beats, motivating lyrics, and high-energy rhythms that help maintain momentum and improve performance. From hip-hop and EDM to rock and pop anthems, these tracks create the perfect fitness playlist for intense training sessions. A strong workout playlist can improve consistency, mood, and overall exercise performance for fitness enthusiasts. High-tempo tracks also help people stay mentally engaged and push harder during difficult workouts. Many popular workout songs are designed with energetic drops, fast BPMs, and uplifting hooks that naturally increase endurance and excitement during exercise routines. Whether someone is lifting weights, training for a marathon, or simply staying active at home, the right music playlist can completely transform the workout experience and keep motivation levels consistently high.",
+  desc: "Music plays a huge role in boosting workout motivation, focus, and energy during gym sessions, running, cardio, and strength training. The best workout songs feature powerful beats, motivating lyrics, and high-energy rhythms that help maintain momentum and improve performance. From hip-hop and EDM to rock and pop anthems, these tracks create the perfect fitness playlist for intense training sessions. A strong workout playlist can improve consistency, mood, and overall exercise performance for fitness enthusiasts. High-tempo tracks also help people stay mentally engaged and push harder during difficult workouts. Many popular workout songs are designed with energetic drops, fast BPMs, and uplifting hooks that naturally increase endurance and excitement during exercise routines. Whether someone is lifting weights, training for a marathon, or simply staying active at home, the right music playlist can completely transform the workout experience and keep motivation levels consistently high.",
 
-    cat: "Fitness",
+  cat: "Fitness",
 
-    date: "May 11, 2026",
-  },
+  date: "May 11, 2026"
+}
 ];

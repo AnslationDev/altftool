@@ -18,6 +18,7 @@ import {
 } from "../data/firebaseBlogs";
 import JsonLd from "@/platform/seo/JsonLd";
 import { getRelatedToolsForBlog } from "../utils/relatedTools";
+import { getRelatedContent, RelatedContentSection } from "@/platform/linking";
 import { getMissingBlogRedirect } from "../utils/missingBlogRedirect";
 import {
   createBlogPostingJsonLd,
@@ -26,6 +27,7 @@ import {
   createHowToJsonLd,
   createItemListJsonLd,
   createPageMetadata,
+  compactBrandedTitle,
 } from "@/platform/seo/generateMetadata";
 import {
   deriveBlogFaqItems,
@@ -99,7 +101,9 @@ export async function generateMetadata({ params }) {
     });
   }
 
-  const title = blog.seoTitle || `${blog.heading} - AltFTool Blog`;
+  const title = compactBrandedTitle(
+    blog.seoTitle || `${blog.heading} - AltFTool Blog`,
+  );
   const description = getBlogDescription(blog);
   const tags = Array.isArray(blog.tags) ? blog.tags.filter(Boolean) : [];
   const metadata = await createPageMetadata({
@@ -336,6 +340,35 @@ export default async function BlogDetailPage({ params }) {
                 </div>
               </section>
             )}
+
+            {/* Cross-section discovery beyond blogs/tools (which the sections
+                above already cover): calculators, listicles, experiences… */}
+            <RelatedContentSection
+              embedded
+              className="mt-10"
+              title="More across AltFTool"
+              items={getRelatedContent({
+                source: {
+                  href: `/blogs/${slug}`,
+                  title: initialBlog.heading || initialBlog.title,
+                  description: initialBlog.seoDescription || initialBlog.excerpt,
+                  tags: [
+                    initialBlog.category,
+                    ...(Array.isArray(initialBlog.tags) ? initialBlog.tags : []),
+                    initialBlog.topic,
+                    initialBlog.tool,
+                  ].filter(Boolean),
+                  section: "blogs",
+                },
+                slots: [
+                  { sections: ["calculators", "top9", "top11", "deals"], limit: 3 },
+                  { sections: ["experiences", "games", "products", "n8n"], limit: 3, minScore: 0 },
+                ],
+                excludeHrefs: initialRelatedTools.map((tool) => tool.href),
+              })}
+              path={`/blogs/${slug}`}
+              jsonLdName={`More across AltFTool for ${initialBlog.heading || initialBlog.title}`}
+            />
           </BlogEngagementProvider>
         </div>
       </main>

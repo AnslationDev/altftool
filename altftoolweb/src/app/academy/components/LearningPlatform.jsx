@@ -34,13 +34,13 @@ export default function LearningPlatform({ loading = false }) {
 
       <div className=" grid lg:grid-cols-2  gap-8 sm:gap-10 md:gap-12 lg:gap-16 xl:gap-28 items-center">
         <div className="animate-slide-right">
-          <h1 className="section-title ">
+          <h2 className="section-title ">
             {/* <span className="flex flex-wrap items-center  gap-x-[0.5em]"> */}
 
             Find The Best Learning
             <br />
             Platforms All In One Place
-          </h1>
+          </h2>
 
 
           {/* <p className="academy-subheading max-w-[620px] "> */}

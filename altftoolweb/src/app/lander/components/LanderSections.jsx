@@ -59,9 +59,16 @@ function Hero({ props, width }) {
           ) : null}
         </div>
         {props.image ? (
-          <div className="overflow-hidden rounded-[var(--lander-radius)] border border-(--border) bg-(--card) shadow-lg">
+          <div className="aspect-[4/3] overflow-hidden rounded-[var(--lander-radius)] border border-(--border) bg-(--card) shadow-lg">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={props.image} alt={props.heading || ""} className="h-full w-full object-cover" />
+            <img
+              src={props.image}
+              alt={props.heading || ""}
+              className="h-full w-full object-cover"
+              decoding="async"
+              fetchPriority="low"
+              loading="lazy"
+            />
           </div>
         ) : null}
       </div>
@@ -181,7 +188,13 @@ function Gallery({ props, width }) {
         {items.map((it, i) => (
           <figure key={i} className="overflow-hidden rounded-[var(--lander-radius)] border border-(--border) bg-(--card)">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={it.image} alt={it.caption || ""} className="h-48 w-full object-cover" />
+            <img
+              src={it.image}
+              alt={it.caption || ""}
+              className="h-48 w-full object-cover"
+              decoding="async"
+              loading="lazy"
+            />
             {it.caption ? <figcaption className="px-3 py-2 text-xs text-(--muted-foreground)">{it.caption}</figcaption> : null}
           </figure>
         ))}
@@ -209,8 +222,13 @@ function Video({ props, width }) {
             <iframe src={embed} title="Video" className="absolute inset-0 h-full w-full" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen loading="lazy" />
           </div>
         ) : (
-          // eslint-disable-next-line jsx-a11y/media-has-caption
-          <video src={props.url} poster={props.poster || undefined} controls className="aspect-video w-full" />
+          <video
+            src={props.url}
+            poster={props.poster || undefined}
+            controls
+            preload="none"
+            className="aspect-video w-full"
+          />
         )}
       </div>
     </Container>
@@ -230,7 +248,13 @@ function Testimonials({ props, width }) {
             <footer className="mt-4 flex items-center gap-3">
               {it.avatar ? (
                 // eslint-disable-next-line @next/next/no-img-element
-                <img src={it.avatar} alt="" className="h-9 w-9 rounded-full object-cover" />
+                <img
+                  src={it.avatar}
+                  alt=""
+                  className="h-9 w-9 rounded-full object-cover"
+                  decoding="async"
+                  loading="lazy"
+                />
               ) : (
                 <span className="grid h-9 w-9 place-items-center rounded-full bg-[var(--lander-brand)] text-xs font-black text-white">{(it.author || "?").charAt(0)}</span>
               )}
@@ -320,7 +344,13 @@ function ImageBlock({ props, width }) {
   return (
     <Container width={width} className="py-8">
       {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src={props.url} alt={props.alt || ""} className="mx-auto rounded-[var(--lander-radius)] border border-(--border)" />
+      <img
+        src={props.url}
+        alt={props.alt || ""}
+        className="mx-auto rounded-[var(--lander-radius)] border border-(--border)"
+        decoding="async"
+        loading="lazy"
+      />
     </Container>
   );
 }

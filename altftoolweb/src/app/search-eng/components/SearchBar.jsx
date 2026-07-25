@@ -260,7 +260,7 @@ export default function SearchBar({ initialValue = "", onSearch, onImageResults,
               title="Voice Search" 
               aria-label="Voice search"
             >
-              <Mic size={16} color={isListening ? "#ea4335" : "currentColor"} />
+              <Mic size={16} />
             </button>
             <button 
               type="button" 

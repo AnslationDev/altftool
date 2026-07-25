@@ -80,12 +80,23 @@ export async function calculateBeautyScore(imageElement) {
   if (finalScore < 65) finalScore = 65 + (Math.random() * 10);
   if (finalScore > 99) finalScore = 99;
 
+  const box = detection.detection.box;
+  const imageWidth = imageElement.naturalWidth || imageElement.width;
+  const imageHeight = imageElement.naturalHeight || imageElement.height;
+
   return {
     score: Math.round(finalScore),
     breakdown: {
       symmetry: Math.round(symmetryScore),
       goldenRatio: Math.round(goldenScore),
     },
-    box: detection.detection.box
+    box: {
+      x: box.x,
+      y: box.y,
+      width: box.width,
+      height: box.height,
+      imageWidth,
+      imageHeight,
+    },
   };
 }

@@ -51,6 +51,9 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Scan repository for credentials
+        run: npm run security:secrets
+
       - name: Lint (web)
         run: npm run lint:web
 
@@ -60,8 +63,14 @@ jobs:
       - name: Core unit tests
         run: npm run test:core-cache
 
+      - name: Verify tool readiness analyzer
+        run: npm run test:tool-readiness
+
       - name: Production build (web + admin)
         run: npm run build
+
+      - name: Enforce generated tool readiness
+        run: node scripts/check-tool-readiness.mjs --strict
 
   verify:
     runs-on: ubuntu-latest

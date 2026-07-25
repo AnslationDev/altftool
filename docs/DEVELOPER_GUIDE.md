@@ -102,11 +102,77 @@ This checks the standard public/admin route inventory, route error markup, basic
 
 Use `npm run qa:routes:strict` when the local web/admin servers are running and you want the route quality gate to fail on route failures, warnings, or slow routes. Add `--output-md route-qa-report.md` when you need a readable artifact for a release note or CI summary.
 
+For the complete catalog, split the deterministic route inventory across
+workers instead of making one browser process carry every tool:
+
+```bash
+# Run one CI worker out of four.
+npm run qa:routes:runtime-full:shard -- --shard=1/4
+
+# Run four workers concurrently against the already-running web/admin apps.
+npm run qa:routes:runtime-full:sharded -- --shards=4
+```
+
+Shard assignment is stable by app and route, uses one-based `index/total`
+syntax, and never overlaps. The concurrent command writes one JSON/Markdown
+report per shard plus `test-results/route-qa-shards/summary.json`.
+
 Every route QA report now includes a dashboard-ready matrix:
 
 - `matrix` lists each route/probe with pass, slow, warning, or failure status.
 - `groupMatrix` rolls those rows up by app surface, route group, score, p95, max duration, failures, warnings, and slow-route count.
 - `npm run test:route-qa-report` verifies the matrix shape without starting local servers, so release validation catches report regressions early.
+
+Rendered route quality and index control run after the web production build:
+
+```bash
+npm run build:web
+npm run seo:route-quality
+npm run seo:route-quality:report
+npm run seo:index-control
+npm run seo:route-quality:strict
+```
+
+`seo:route-quality:report` reconciles every prerendered HTML page with its title, description, canonical, robots directive, H1, structured-data presence, and sitemap membership. It writes the bounded dashboard artifact to `altftoolwebadmin/src/data/routeQualityReport.json`. `seo:index-control` rejects sitemap/noindex conflicts and missing indexable canonical targets. `seo:route-quality:strict` is the release gate for both blocking issues and advisory content quality, including missing H1s and weak title or description lengths. The root `npm run build` refreshes this artifact between the web and admin builds so the admin dashboard always bundles evidence from the same render.
+
+Credential hygiene and visual regressions have dedicated gates:
+
+```bash
+npm run security:secrets
+npm --prefix altftoolweb run test:unit
+npm run test:security
+npm run test:visual
+```
+
+The credential scan inspects tracked and unignored text files for high-confidence private keys and provider tokens without printing secret values. Visual coverage protects the public global search and admin login in desktop/mobile and light/dark variants, alongside the tools catalog and tool workspace baselines. Run `npm run test:visual:update` only after intentionally reviewing a UI change.
+
+The web unit runner recursively discovers `*.test.js`, `*.test.mjs`, and
+`*.spec.mjs` files under shared SEO, platform SEO, and every microtool
+directory. Add a deterministic local test beside new tool logic; do not append
+its filename to `package.json`.
+
+Credentials pasted into chat or shared outside the secret store must still be
+rotated even when this scan passes. Follow
+[`SECURITY_CREDENTIAL_ROTATION.md`](./SECURITY_CREDENTIAL_ROTATION.md) for the
+create, cut over, verify, and revoke sequence.
+
+Microtool readiness has a separate static-evidence report:
+
+```bash
+npm run test:tool-readiness
+npm run tools:readiness
+npm run tools:readiness:strict
+```
+
+The report classifies every registered tool as `working`, `api-required`,
+`partial`, or `broken` using entry/config integrity, relative import targets,
+interaction and output signals, placeholder markers, external API dependencies,
+and deterministic test coverage. It is intentionally labeled as build-time
+evidence; browser QA remains the runtime gate. The authenticated admin
+`/health/tools` route exposes a paginated, searchable inventory without shipping
+the full report to every health-dashboard visitor.
+
+The authenticated admin `/health` workspace opens in lite mode using saved artifacts. **Run live checks** performs a cache-aware, parallel probe of the critical public routes, sitemap, robots policy, and public health API. This is intentionally on demand rather than a continuous poll, keeping monitoring traffic and hosting cost bounded.
 
 For Firebase production confidence, use:
 

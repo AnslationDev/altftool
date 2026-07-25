@@ -154,9 +154,9 @@ const CATEGORY_META = [
 ];
 
 const COLLECTIONS = [
-  { title: "Content Creation", count: 24, description: "Blog posts, social media, and content templates.", icon: PenTool, accent: "text-blue-500 bg-blue-500/10" },
-  { title: "Developer Toolkit", count: 18, description: "Code snippets, debugging and documentation.", icon: Code, accent: "text-emerald-500 bg-emerald-500/10" },
-  { title: "Marketing Playbook", count: 32, description: "Campaigns, copywriting and growth strategies.", icon: Megaphone, accent: "text-orange-500 bg-orange-500/10" },
+  { title: "Content Creation", category: "Writing", description: "Blog posts, explainers, and reusable content templates.", icon: PenTool, accent: "text-info bg-info/10" },
+  { title: "Developer Toolkit", category: "Coding", description: "Code reviews, debugging, and documentation prompts.", icon: Code, accent: "text-success bg-success/10" },
+  { title: "Marketing Playbook", category: "Marketing", description: "Campaign, copywriting, and product launch prompts.", icon: Megaphone, accent: "text-warning bg-warning/10" },
 ];
 
 const MODELS = ["GPT-5", "Claude 3.5", "Gemini", "Llama 3"];
@@ -303,6 +303,25 @@ export default function MainComponent() {
     setMenuOpenId(null);
     setSelectedPrompt(item);
     setIsShareSheetOpen(true);
+  };
+
+  const handleEmailShare = (item) => {
+    const subject = encodeURIComponent(`AltFTool prompt: ${item.title}`);
+    const body = encodeURIComponent(`${item.title}\n\n${item.content}\n\nShared from AltFTool`);
+    window.location.href = `mailto:?subject=${subject}&body=${body}`;
+    setIsShareSheetOpen(false);
+  };
+
+  const handleSocialShare = (item) => {
+    const text = encodeURIComponent(`Useful AI prompt: ${item.title}`);
+    const url = encodeURIComponent(window.location.href);
+    const popup = window.open(
+      `https://twitter.com/intent/tweet?text=${text}&url=${url}`,
+      "_blank",
+      "noopener,noreferrer",
+    );
+    if (popup) popup.opener = null;
+    setIsShareSheetOpen(false);
   };
 
   const handleOpenEdit = (item, e) => {
@@ -596,6 +615,19 @@ export default function MainComponent() {
     prompts.forEach((p) => (map[p.category] = (map[p.category] || 0) + 1));
     return map;
   }, [prompts]);
+
+  const handleCollectionSelect = (collection) => {
+    setSelectedCategory(collection.category);
+    setFilterChip("All");
+    setSearchQuery("");
+    showToast(`Showing ${categoryCounts[collection.category] || 0} ${collection.category} prompts`);
+    window.requestAnimationFrame(() => {
+      document.getElementById("prompt-library")?.scrollIntoView({
+        behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth",
+        block: "start",
+      });
+    });
+  };
 
   const assistantSuggestions = ["Improve my SEO prompt", "Refactor a React hook", "Add dynamic variables"];
   const inputCls =
@@ -999,7 +1031,7 @@ export default function MainComponent() {
         </div>
 
         {/* Content */}
-        <div className="mt-8 space-y-10">
+        <div id="prompt-library" className="mt-8 scroll-mt-24 space-y-10">
           {filteredPrompts.length === 0 ? (
             <div className="flex flex-col items-center justify-center rounded-2xl border border-dashed border-(--border) bg-(--card) py-20 text-center">
               <span className="inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-(--muted)/60 text-(--muted-foreground)">
@@ -1026,7 +1058,12 @@ export default function MainComponent() {
             </div>
             <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
               {COLLECTIONS.map((col) => (
-                <button key={col.title} onClick={() => showToast("Collections are coming soon")} className="group flex flex-col rounded-2xl border border-(--border) bg-(--card) p-5 text-left transition-all hover:-translate-y-0.5 hover:shadow-lg hover:shadow-black/5 hover:border-(--primary)/40">
+                <button
+                  key={col.title}
+                  type="button"
+                  onClick={() => handleCollectionSelect(col)}
+                  className="group flex flex-col rounded-2xl border border-(--border) bg-(--card) p-5 text-left transition-all hover:-translate-y-0.5 hover:border-(--primary)/40 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-(--primary)/40 motion-reduce:hover:translate-y-0"
+                >
                   <div className="flex items-center justify-between">
                     <span className={`inline-flex h-10 w-10 items-center justify-center rounded-xl ${col.accent}`}>
                       <col.icon className="w-5 h-5" />
@@ -1035,7 +1072,7 @@ export default function MainComponent() {
                   </div>
                   <h3 className="mt-4 text-[15px] font-semibold text-(--foreground)">{col.title}</h3>
                   <p className="mt-1 text-[13px] text-(--muted-foreground)">{col.description}</p>
-                  <span className="mt-3 text-[12px] font-medium text-(--muted-foreground)">{col.count} prompts</span>
+                  <span className="mt-3 text-[12px] font-medium text-(--muted-foreground)">{categoryCounts[col.category] || 0} prompts</span>
                 </button>
               ))}
             </div>
@@ -1073,8 +1110,8 @@ export default function MainComponent() {
               { label: "Copy prompt content", icon: Copy, fn: () => { handleCopy(selectedPrompt); setIsShareSheetOpen(false); } },
               { label: "Download as .md", icon: FileDown, fn: () => { exportMarkdown(null, selectedPrompt); setIsShareSheetOpen(false); } },
               { label: "Copy shareable link", icon: Link2, fn: () => { navigator.clipboard?.writeText(`${typeof window !== "undefined" ? window.location.href : ""}`); showToast("Link copied"); setIsShareSheetOpen(false); } },
-              { label: "Share via email", icon: Mail, fn: () => showToast("Email sharing coming soon") },
-              { label: "Share to X / Twitter", icon: Twitter, fn: () => showToast("Social sharing coming soon") },
+              { label: "Share via email", icon: Mail, fn: () => handleEmailShare(selectedPrompt) },
+              { label: "Share to X / Twitter", icon: Twitter, fn: () => handleSocialShare(selectedPrompt) },
             ].map(({ label, icon: I, fn }) => (
               <button key={label} onClick={fn} className="flex w-full items-center gap-3 rounded-xl border border-(--border) px-4 py-3 text-[14px] font-medium text-(--foreground) hover:bg-(--muted)/60 transition-colors">
                 <span className="inline-flex h-9 w-9 items-center justify-center rounded-lg bg-(--muted)/60 text-(--muted-foreground)">

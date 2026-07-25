@@ -1,276 +1,374 @@
 "use client";
-import React, { useState, useRef, useEffect } from 'react';
-import axios from 'axios';
 
+import { useMemo, useState } from "react";
+import {
+  CircleAlert,
+  Clock3,
+  Copy,
+  ExternalLink,
+  Globe2,
+  Loader2,
+  MapPin,
+  Network,
+  RotateCcw,
+  Search,
+} from "lucide-react";
 
-const CustomButton = ({ onClick, disabled, children, className }) => (
-  <button
-    onClick={onClick}
-    disabled={disabled}
-    className={className}
-  >
-    {children}
-  </button>
-);
+const LOOKUP_TIMEOUT_MS = 12_000;
+
+function isIpv4(value) {
+  const parts = value.split(".");
+  return (
+    parts.length === 4 &&
+    parts.every(
+      (part) =>
+        /^\d{1,3}$/.test(part) &&
+        Number(part) >= 0 &&
+        Number(part) <= 255,
+    )
+  );
+}
+
+function isIpv6(value) {
+  return (
+    value.includes(":") &&
+    /^[0-9a-f:.]+$/i.test(value) &&
+    value.split(":").length >= 3
+  );
+}
+
+function isValidIp(value) {
+  return !value || isIpv4(value) || isIpv6(value);
+}
+
+function mapDetails(data) {
+  return {
+    ip: data.ip || "",
+    type: data.type || "",
+    city: data.city || "",
+    region: data.region || "",
+    country: data.country || "",
+    countryCode: data.country_code || "",
+    latitude: Number(data.latitude),
+    longitude: Number(data.longitude),
+    postal: data.postal || "",
+    timezone: data.timezone?.id || "",
+    currency: data.currency?.code || "",
+    callingCode: data.calling_code || "",
+    asn: data.connection?.asn || "",
+    isp: data.connection?.isp || data.connection?.org || "",
+    domain: data.connection?.domain || "",
+  };
+}
+
+function DetailRow({ label, value, mono = false }) {
+  return (
+    <div className="flex items-start justify-between gap-4 border-b border-(--border) py-3 last:border-b-0">
+      <dt className="text-sm text-(--muted-foreground)">{label}</dt>
+      <dd
+        className={`max-w-[65%] break-words text-right text-sm font-semibold text-(--foreground) ${
+          mono ? "font-mono" : ""
+        }`}
+      >
+        {value || "Not available"}
+      </dd>
+    </div>
+  );
+}
+
+function SummaryCard({ icon: Icon, title, children }) {
+  return (
+    <section className="border border-(--border) bg-(--card) p-5">
+      <div className="mb-3 flex items-center gap-2">
+        <Icon aria-hidden="true" className="h-5 w-5 text-(--primary)" />
+        <h2 className="text-base font-bold text-(--foreground)">{title}</h2>
+      </div>
+      <dl>{children}</dl>
+    </section>
+  );
+}
 
 export default function IPChecker() {
-  const [domain, setDomain] = useState('');
-  const [domainData, setDomainData] = useState(null);
+  const [query, setQuery] = useState("");
+  const [data, setData] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
-  const [isValidDomain, setIsValidDomain] = useState(null);
-  const [mapLoaded, setMapLoaded] = useState(false);
-  const mapRef = useRef(null);
-  const mapInstanceRef = useRef(null);
+  const [error, setError] = useState("");
+  const [copied, setCopied] = useState(false);
 
-
-  const GOOGLE_MAPS_API_KEY = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || "";
-
-  useEffect(() => {
-    if (domainData && mapRef.current && mapLoaded) {
-
-      const lat = parseFloat(domainData.latitude);
-      const lng = parseFloat(domainData.longitude);
-
-      if (window.google && window.google.maps) {
-        if (mapInstanceRef.current) {
-          mapInstanceRef.current.setCenter({ lat, lng });
-        } else {
-          mapInstanceRef.current = new window.google.maps.Map(mapRef.current, {
-            center: { lat, lng },
-            zoom: 12,
-            styles: [
-              { featureType: 'poi', elementType: 'all', stylers: [{ visibility: 'off' }] },
-              { featureType: 'road', elementType: 'all', stylers: [{ saturation: -100 }] }
-            ]
-          });
-        }
-
-        new window.google.maps.Marker({
-          position: { lat, lng },
-          map: mapInstanceRef.current,
-          title: domainData.ip,
-          animation: window.google.maps.Animation.DROP
-        });
-      }
-    }
-  }, [domainData, mapLoaded]);
-
-  useEffect(() => {
-    if (!GOOGLE_MAPS_API_KEY) {
-      setError('Google Maps key is not configured');
-      return;
+  const normalizedQuery = query.trim();
+  const valid = isValidIp(normalizedQuery);
+  const mapUrl = useMemo(() => {
+    if (
+      !data ||
+      !Number.isFinite(data.latitude) ||
+      !Number.isFinite(data.longitude)
+    ) {
+      return "";
     }
 
-    if (!window.google) {
-      const script = document.createElement('script');
-      script.src = `https://maps.googleapis.com/maps/api/js?key=${GOOGLE_MAPS_API_KEY}`;
-      script.async = true;
-      script.defer = true;
-      script.onload = () => setMapLoaded(true);
-      script.onerror = () => setError('Failed to load Google Maps');
-      document.head.appendChild(script);
-    } else {
-      setMapLoaded(true);
-    }
-  }, [GOOGLE_MAPS_API_KEY]);
+    const latitudeDelta = 0.08;
+    const longitudeDelta = 0.12;
+    const bbox = [
+      data.longitude - longitudeDelta,
+      data.latitude - latitudeDelta,
+      data.longitude + longitudeDelta,
+      data.latitude + latitudeDelta,
+    ].join(",");
+    const params = new URLSearchParams({
+      bbox,
+      layer: "mapnik",
+      marker: `${data.latitude},${data.longitude}`,
+    });
+    return `https://www.openstreetmap.org/export/embed.html?${params}`;
+  }, [data]);
 
-  const isValidDomainFormat = (input) => {
-    const domainRegex = /^(?!:\/\/)([a-zA-Z0-9-]+\.)?[a-zA-Z0-9][a-zA-Z0-9-]+\.[a-zA-Z]{2,6}$/;
-    const ipRegex = /^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/;
-    return domainRegex.test(input) || ipRegex.test(input);
-  };
-
-  const checkDomain = async () => {
-    if (!domain.trim()) {
-      setError('Please enter a domain or IP address');
+  async function checkIp() {
+    if (!valid) {
+      setError("Enter a valid IPv4 or IPv6 address.");
       return;
     }
 
     setLoading(true);
-    setError('');
+    setError("");
+    setCopied(false);
+
+    const controller = new AbortController();
+    const timeout = window.setTimeout(
+      () => controller.abort(),
+      LOOKUP_TIMEOUT_MS,
+    );
 
     try {
+      const target = normalizedQuery
+        ? `/${encodeURIComponent(normalizedQuery)}`
+        : "/";
+      const response = await fetch(`https://ipwho.is${target}`, {
+        headers: { accept: "application/json" },
+        signal: controller.signal,
+      });
+      const payload = await response.json().catch(() => ({}));
 
-      const response = await axios.get(`http://ip-api.com/json/${domain}`);
-
-      const data = response.data;
-
-      if (data.status === "fail") {
-        throw new Error(data.message || 'Invalid IP/Domain');
+      if (!response.ok || payload.success === false) {
+        throw new Error(payload.message || "The IP address could not be found.");
       }
 
-
-      setDomainData({
-        ip: data.query,
-        city: data.city,
-        region: data.regionName,
-        country_name: data.country,
-        country_code: data.countryCode,
-        latitude: parseFloat(data.lat),
-        longitude: parseFloat(data.lon),
-        org: data.isp,
-        timezone: data.timezone,
-        zip: data.zip
-      });
-
-      setIsValidDomain(true);
-    } catch (err) {
-      setError('IP-API blocked ya format galat hai. Make sure IP is correct.');
-      setDomainData(null);
+      setData(mapDetails(payload));
+    } catch (lookupError) {
+      setData(null);
+      setError(
+        lookupError?.name === "AbortError"
+          ? "The lookup took too long. Please try again."
+          : lookupError?.message || "The lookup service is temporarily unavailable.",
+      );
     } finally {
+      window.clearTimeout(timeout);
       setLoading(false);
     }
-  };
+  }
 
-  const resetForm = () => {
-    setDomain('');
-    setDomainData(null);
-    setError('');
-    setIsValidDomain(null);
-    mapInstanceRef.current = null;
-  };
+  function reset() {
+    setQuery("");
+    setData(null);
+    setError("");
+    setCopied(false);
+  }
 
-  const handleKeyPress = (e) => {
-    if (e.key === 'Enter') checkDomain();
-  };
-
-  const calculateSecurityRisk = () => {
-    if (!domainData) return { level: 'Unknown', score: 0, details: [] };
-    const details = [];
-    let score = 0;
-
-    if (domainData.org && domainData.org.toLowerCase().includes('hosting')) {
-      score += 30;
-      details.push('Hosting provider detected - Potential for malicious content');
-    }
-    if (domainData.timezone && (domainData.timezone.includes('Asia') || domainData.timezone.includes('Africa'))) {
-      score += 20;
-      details.push('High risk region for cyber threats');
-    }
-    if (!domainData.org) {
-      score += 15;
-      details.push('Organization information not available');
-    }
-
-    if (score < 20) return { level: 'Low', score, color: 'text-green-600', bg: 'bg-green-100', details: ['No significant risks detected'] };
-    if (score < 40) return { level: 'Medium', score, color: 'text-yellow-600', bg: 'bg-yellow-100', details };
-    return { level: 'High', score, color: 'text-red-600', bg: 'bg-red-100', details };
-  };
-
-  const securityRisk = calculateSecurityRisk();
+  async function copyIp() {
+    if (!data?.ip) return;
+    await navigator.clipboard.writeText(data.ip);
+    setCopied(true);
+    window.setTimeout(() => setCopied(false), 1600);
+  }
 
   return (
-    <div className="min-h-screen p-4 md:p-8 ">
-      <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-8">
-          <h1 className=" block text-(--primary) text-7xl font-bold mb-3 ">IP Checker</h1>
-          <p className="description opacity-90 mt-3 text-(--secondary) text-2xl">Check IP information, location, and security risks</p>
-        </div>
+    <div className="min-h-screen bg-(--background) px-4 py-10 sm:px-6">
+      <div className="mx-auto w-full max-w-5xl">
+        <header className="mx-auto mb-8 max-w-2xl text-center">
+          <div className="mx-auto mb-4 grid h-12 w-12 place-items-center border border-(--border) bg-(--card)">
+            <Globe2 aria-hidden="true" className="h-6 w-6 text-(--primary)" />
+          </div>
+          <h1 className="text-3xl font-black tracking-tight text-(--foreground) sm:text-4xl">
+            IP Address Checker
+          </h1>
+          <p className="mt-3 text-base text-(--muted-foreground)">
+            Inspect an IPv4 or IPv6 address, or leave the field empty to check
+            your current public IP.
+          </p>
+        </header>
 
-        {/* Search Section */}
-        <div className="bg-white rounded-xl p-4 md:p-6 mb-6 shadow-lg border border-slate-200">
-          <div className="flex flex-col md:flex-row gap-4">
-            <div className="flex-1 relative">
+        <section
+          aria-labelledby="ip-lookup-title"
+          className="border border-(--border) bg-(--card) p-4 sm:p-6"
+        >
+          <h2 id="ip-lookup-title" className="sr-only">
+            IP lookup
+          </h2>
+          <form
+            className="flex flex-col gap-3 sm:flex-row"
+            onSubmit={(event) => {
+              event.preventDefault();
+              checkIp();
+            }}
+          >
+            <label className="min-w-0 flex-1">
+              <span className="sr-only">IP address</span>
               <input
                 type="text"
-                value={domain}
-                onChange={(e) => {
-                  setDomain(e.target.value);
-                  setIsValidDomain(null);
-                  setError('');
+                inputMode="text"
+                autoComplete="off"
+                value={query}
+                onChange={(event) => {
+                  setQuery(event.target.value);
+                  setError("");
                 }}
-                onKeyPress={handleKeyPress}
-                placeholder="Enter IP address (e.g. 8.8.8.8)"
-                className=" text-(--primary) w-full px-4 py-4 rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-500 outline-none"
+                placeholder="Example: 8.8.8.8"
+                aria-invalid={!valid}
+                aria-describedby={error ? "ip-lookup-error" : undefined}
+                className="h-11 w-full border border-(--input) bg-(--background) px-3 text-sm text-(--foreground) outline-none transition focus:border-(--ring) focus:ring-2 focus:ring-(--ring)/20"
               />
-              {domain && isValidDomain !== null && (
-                <div className={`absolute right-4 top-1/2 -translate-y-1/2 px-2 py-1 rounded-full text-xs font-medium ${isValidDomain ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`}>
-                  {isValidDomain ? '✓ Valid' : '✗ Invalid'}
-                </div>
-              )}
-            </div>
-            <div className="flex gap-3">
-              <CustomButton
-                onClick={checkDomain}
-                disabled={loading}
-                className="px-8 py-4 bg-blue-600 text-white font-bold rounded-xl hover:bg-blue-700 disabled:opacity-50 transition-all"
+            </label>
+            <div className="flex gap-2">
+              <button
+                type="submit"
+                disabled={loading || !valid}
+                className="inline-flex h-11 flex-1 items-center justify-center gap-2 bg-(--primary) px-5 text-sm font-bold text-(--primary-foreground) transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-50 sm:flex-none"
               >
-                {loading ? 'Checking...' : 'Check'}
-              </CustomButton>
-              <button onClick={resetForm} className="px-6 py-4 bg-blue-600 text-white font-bold rounded-xl hover:bg-blue-600">
-                ↺ Reset
+                {loading ? (
+                  <Loader2 aria-hidden="true" className="h-4 w-4 animate-spin" />
+                ) : (
+                  <Search aria-hidden="true" className="h-4 w-4" />
+                )}
+                {loading ? "Checking" : "Check IP"}
+              </button>
+              <button
+                type="button"
+                onClick={reset}
+                title="Reset lookup"
+                aria-label="Reset lookup"
+                className="grid h-11 w-11 place-items-center border border-(--border) bg-(--background) text-(--foreground) transition hover:bg-(--muted)"
+              >
+                <RotateCcw aria-hidden="true" className="h-4 w-4" />
               </button>
             </div>
+          </form>
+
+          <div aria-live="polite">
+            {error ? (
+              <div
+                id="ip-lookup-error"
+                role="alert"
+                className="mt-4 flex items-start gap-2 border border-(--destructive)/30 bg-(--destructive)/10 p-3 text-sm text-(--destructive)"
+              >
+                <CircleAlert aria-hidden="true" className="mt-0.5 h-4 w-4 shrink-0" />
+                <span>{error}</span>
+              </div>
+            ) : null}
           </div>
-          {error && <div className="mt-4 p-3 bg-red-100 text-red-700 rounded-lg text-sm text-center">{error}</div>}
-        </div>
+        </section>
 
-        {/* Results Section */}
-        {domainData && (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {/* Card 1: IP Details */}
-            <div className="bg-white border border-slate-200 rounded-xl shadow-md overflow-hidden">
-              <div className="bg-blue-600 px-6 py-4"><h2 className="text-white font-bold">📍 IP Details</h2></div>
-              <div className="p-6 space-y-3">
-                <div className="flex justify-between border-b pb-2 font-bold text-(--primary)"><span>IP Address</span><span className="font-mono font-bold text-blue-600">{domainData.ip}</span></div>
-                <div className="flex justify-between border-b pb-2 font-bold text-(--primary)"><span>Country</span><span>{domainData.country_name || domainData.country}</span></div>
-                <div className="flex justify-between border-b pb-2 font-bold text-(--primary)"><span>City</span><span>{domainData.city || 'N/A'}</span></div>
-                <div className="flex justify-between border-b pb-2 font-bold text-(--primary)"><span>ISP</span><span className="text-xs truncate max-w-[150px]">{domainData.org || 'N/A'}</span></div>
-              </div>
+        {data ? (
+          <div className="mt-6 space-y-6">
+            <div className="grid gap-4 md:grid-cols-3">
+              <SummaryCard icon={MapPin} title="Location">
+                <DetailRow label="Country" value={data.country} />
+                <DetailRow label="Region" value={data.region} />
+                <DetailRow label="City" value={data.city} />
+                <DetailRow label="Postal code" value={data.postal} />
+              </SummaryCard>
+
+              <SummaryCard icon={Network} title="Network">
+                <DetailRow label="IP address" value={data.ip} mono />
+                <DetailRow label="Address type" value={data.type} />
+                <DetailRow label="ISP" value={data.isp} />
+                <DetailRow label="ASN" value={data.asn} mono />
+              </SummaryCard>
+
+              <SummaryCard icon={Clock3} title="Regional details">
+                <DetailRow label="Timezone" value={data.timezone} />
+                <DetailRow label="Currency" value={data.currency} />
+                <DetailRow
+                  label="Calling code"
+                  value={data.callingCode ? `+${data.callingCode}` : ""}
+                />
+                <DetailRow
+                  label="Coordinates"
+                  value={
+                    Number.isFinite(data.latitude) &&
+                    Number.isFinite(data.longitude)
+                      ? `${data.latitude.toFixed(4)}, ${data.longitude.toFixed(4)}`
+                      : ""
+                  }
+                  mono
+                />
+              </SummaryCard>
             </div>
 
-            {/* Card 2: Security */}
-            <div className="bg-white border border-slate-200 rounded-xl shadow-md overflow-hidden">
-              <div className="bg-orange-500 px-6 py-4"><h2 className="text-white font-bold">🔒 Risk Assessment</h2></div>
-              <div className="p-6">
-                <div className={`${securityRisk.bg} rounded-xl p-4 text-center mb-4`}>
-                  <div className={`text-3xl font-bold ${securityRisk.color}`}>{securityRisk.level}</div>
-                  <div className="text-slate-500 font-bold">{securityRisk.score}/100</div>
+            <div className="grid gap-4 border border-(--border) bg-(--card) p-4 lg:grid-cols-[minmax(0,1fr)_15rem]">
+              <div className="min-h-72 overflow-hidden bg-(--muted)">
+                {mapUrl ? (
+                  <iframe
+                    src={mapUrl}
+                    title={`Approximate location for ${data.ip}`}
+                    className="h-72 w-full border-0"
+                    loading="lazy"
+                    referrerPolicy="no-referrer"
+                  />
+                ) : (
+                  <div className="grid h-72 place-items-center px-6 text-center text-sm text-(--muted-foreground)">
+                    Map coordinates are unavailable for this address.
+                  </div>
+                )}
+              </div>
+
+              <div className="flex flex-col justify-between gap-5 p-2">
+                <div>
+                  <p className="text-xs font-bold uppercase tracking-wide text-(--muted-foreground)">
+                    Lookup result
+                  </p>
+                  <p className="mt-2 break-all font-mono text-lg font-bold text-(--foreground)">
+                    {data.ip}
+                  </p>
+                  <p className="mt-2 text-sm text-(--muted-foreground)">
+                    IP geolocation is approximate and should not be used as a
+                    precise physical address.
+                  </p>
                 </div>
-                <div className="space-y-2">
-                  {securityRisk.details.map((d, i) => <div key={i} className="text-xl font-bold text-(--primary)">⚠️ {d}</div>)}
+                <div className="flex flex-col gap-2">
+                  <button
+                    type="button"
+                    onClick={copyIp}
+                    className="inline-flex h-10 items-center justify-center gap-2 border border-(--border) bg-(--background) px-3 text-sm font-semibold text-(--foreground) transition hover:bg-(--muted)"
+                  >
+                    <Copy aria-hidden="true" className="h-4 w-4" />
+                    {copied ? "Copied" : "Copy IP"}
+                  </button>
+                  {mapUrl ? (
+                    <a
+                      href={`https://www.openstreetmap.org/?mlat=${data.latitude}&mlon=${data.longitude}#map=10/${data.latitude}/${data.longitude}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex h-10 items-center justify-center gap-2 bg-(--primary) px-3 text-sm font-semibold text-(--primary-foreground) transition hover:opacity-90"
+                    >
+                      Open map
+                      <ExternalLink aria-hidden="true" className="h-4 w-4" />
+                    </a>
+                  ) : null}
                 </div>
-              </div>
-            </div>
-
-            {/* Card 3: Network Info */}
-            <div className="bg-white border border-slate-200 rounded-xl shadow-md overflow-hidden">
-              <div className="bg-teal-500 px-6 py-4"><h2 className="text-white font-bold">ℹ️ IP Info</h2></div>
-              <div className="p-6 space-y-3">
-                <div className="flex justify-between border-b pb-2 font-bold text-(--primary)"><span>Timezone</span><span className="text-xs">{domainData.timezone}</span></div>
-                <div className="flex justify-between border-b pb-2 font-bold text-(--primary)"><span>Currency</span><span>{domainData.currency}</span></div>
-                <div className="flex justify-between border-b pb-2 font-bold text-(--primary)"><span>Calling Code</span><span>+{domainData.country_calling_code}</span></div>
-              </div>
-            </div>
-
-            {/* Card 4: Map */}
-            <div className="md:col-span-2 bg-white rounded-xl shadow-md overflow-hidden border border-slate-200">
-              <div className="bg-green-600 px-6 py-4 text-white font-bold">🗺️ Google Maps Location</div>
-              <div className="p-4">
-                <div ref={mapRef} className="w-full h-80 rounded-lg bg-slate-100 flex items-center justify-center">
-                  {!mapLoaded && <p>Loading Map...</p>}
-                </div>
-              </div>
-            </div>
-
-            {/* Card 5: Device Info */}
-            <div className="bg-white border border-slate-200 rounded-xl shadow-md overflow-hidden">
-              <div className="bg-purple-600 px-6 py-4 text-white font-bold">💻 Device Details</div>
-              <div className="p-6 space-y-3 text-sm">
-                <div className="flex justify-between border-b pb-2 font-bold text-(--primary)"><span>Browser</span><span>{navigator.userAgent.includes('Chrome') ? 'Chrome' : 'Browser'}</span></div>
-                <div className="flex justify-between border-b pb-2 font-bold text-(--primary)"><span>Platform</span><span>{navigator.platform}</span></div>
-                <div className="flex justify-between border-b pb-2 font-bold text-(--primary)"><span>Screen</span><span>{window.screen.width}x{window.screen.height}</span></div>
               </div>
             </div>
           </div>
-        )}
-
-        {/* Empty State */}
-        {!domainData && !loading && (
-          <div className="text-center py-20">
-            <div className="text-7xl mb-4">🌐</div>
-            <h2 className="text-xl font-semibold text-slate-400">Enter an IP to see magic</h2>
+        ) : (
+          <div className="mt-6 border border-dashed border-(--border) bg-(--card) px-6 py-12 text-center">
+            <Globe2
+              aria-hidden="true"
+              className="mx-auto h-7 w-7 text-(--muted-foreground)"
+            />
+            <p className="mt-3 text-sm font-semibold text-(--foreground)">
+              Lookup results will appear here
+            </p>
+            <p className="mt-1 text-sm text-(--muted-foreground)">
+              No account or API key is required.
+            </p>
           </div>
         )}
       </div>

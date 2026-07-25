@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Upload,
   Camera,
@@ -12,19 +12,42 @@ import {
   Loader2,
 } from "lucide-react";
 
-const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB
+const MAX_FILE_SIZE = 4 * 1024 * 1024;
 
 export default function PlantScanner() {
   const [loading, setLoading] = useState(false);
   const [plantData, setPlantData] = useState(null);
   const [error, setError] = useState(null);
+  const [providerStatus, setProviderStatus] = useState("checking");
 
   // Image Upload State
   const [preview, setPreview] = useState(null);
   const [fileName, setFileName] = useState("");
   const [fileError, setFileError] = useState("");
 
+  useEffect(() => {
+    const controller = new AbortController();
+
+    fetch("/api/tools/plant-identify", {
+      headers: { accept: "application/json" },
+      signal: controller.signal,
+    })
+      .then((response) => response.json())
+      .then((payload) => {
+        setProviderStatus(payload?.available ? "available" : "unavailable");
+      })
+      .catch((statusError) => {
+        if (statusError?.name !== "AbortError") {
+          setProviderStatus("unavailable");
+        }
+      });
+
+    return () => controller.abort();
+  }, []);
+
   const handleFileChange = (event) => {
+    if (providerStatus !== "available") return;
+
     const file = event.target.files[0];
     setFileError("");
     setError(null);
@@ -37,7 +60,7 @@ export default function PlantScanner() {
     }
 
     if (file.size > MAX_FILE_SIZE) {
-      setFileError("Image size must be less than 10MB");
+      setFileError("Image size must be less than 4 MB");
       return;
     }
 
@@ -58,7 +81,7 @@ export default function PlantScanner() {
   };
 
   const identifyPlant = async () => {
-    if (!preview) return;
+    if (!preview || providerStatus !== "available") return;
 
     setLoading(true);
     setError(null);
@@ -68,41 +91,21 @@ export default function PlantScanner() {
       // Get base64 string without data URL prefix
       const base64 = preview.split(",")[1];
 
-      const apiKey = process.env.NEXT_PUBLIC_PLANT_ID_API_KEY || "";
-
-      if (!apiKey || apiKey === "DEMO_KEY") {
-        throw new Error(
-          "API key not configured. Please add NEXT_PUBLIC_PLANT_ID_API_KEY to your .env.local file."
-        );
-      }
-
-      const apiUrl = new URL("https://api.plant.id/v3/identification");
-      apiUrl.searchParams.append(
-        "details",
-        "common_names,url,description,taxonomy,rank,gbif_id,inaturalist_id,image,synonyms,edible_parts,watering,propagation_methods"
-      );
-
-      const response = await fetch(apiUrl.toString(), {
+      const response = await fetch("/api/tools/plant-identify", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "Api-Key": apiKey,
         },
         body: JSON.stringify({
-          images: [base64],
-          similar_images: true,
+          image: base64,
         }),
       });
 
+      const data = await response.json().catch(() => ({}));
       if (!response.ok) {
-        const errorData = await response.json().catch(() => ({}));
-        throw new Error(
-          errorData.message ||
-            "Failed to identify plant. Please check your API key."
-        );
+        if (response.status === 503) setProviderStatus("unavailable");
+        throw new Error(data.error || "The plant could not be identified right now.");
       }
-
-      const data = await response.json();
 
       if (data.result?.is_plant?.binary) {
         const suggestions = data.result.classification?.suggestions || [];
@@ -145,19 +148,42 @@ export default function PlantScanner() {
         {/* Main Content Area */}
         <div className="bg-(--card) border border-(--border) rounded-3xl p-6 md:p-10 shadow-sm max-w-3xl mx-auto">
 
-          {/* Global Error Banner */}
-          {error && (
-            <div className="mb-6 p-4 bg-red-500/10 border border-red-500/20 rounded-xl flex items-start gap-3">
-              <AlertCircle className="w-5 h-5 text-red-500 shrink-0 mt-0.5" />
-              <p className="text-red-600 dark:text-red-400 font-medium text-sm">{error}</p>
-            </div>
-          )}
+          <div aria-live="polite">
+            {providerStatus === "checking" ? (
+              <div className="mb-6 flex items-center gap-3 border border-(--border) bg-(--muted) p-4 text-sm text-(--muted-foreground)">
+                <Loader2 className="h-5 w-5 shrink-0 animate-spin" aria-hidden="true" />
+                Checking plant identification availability...
+              </div>
+            ) : null}
+
+            {providerStatus === "unavailable" ? (
+              <div className="mb-6 flex items-start gap-3 border border-(--border) bg-(--muted) p-4">
+                <AlertCircle className="mt-0.5 h-5 w-5 shrink-0 text-(--muted-foreground)" aria-hidden="true" />
+                <div>
+                  <p className="text-sm font-semibold text-(--foreground)">
+                    Plant identification is temporarily unavailable
+                  </p>
+                  <p className="mt-1 text-sm text-(--muted-foreground)">
+                    Selected images are not sent while the service is
+                    unavailable. Please try again later.
+                  </p>
+                </div>
+              </div>
+            ) : null}
+
+            {error && (
+              <div role="alert" className="mb-6 flex items-start gap-3 border border-(--destructive)/30 bg-(--destructive)/10 p-4">
+                <AlertCircle className="mt-0.5 h-5 w-5 shrink-0 text-(--destructive)" aria-hidden="true" />
+                <p className="text-sm font-medium text-(--destructive)">{error}</p>
+              </div>
+            )}
+          </div>
 
           {/* Upload Area */}
           <div className="space-y-6 text-center">
 
             {fileError && (
-              <p className="text-sm font-medium text-red-500 bg-red-500/10 py-2 px-4 rounded-lg inline-block">
+              <p className="inline-block bg-(--destructive)/10 px-4 py-2 text-sm font-medium text-(--destructive)">
                 {fileError}
               </p>
             )}
@@ -167,10 +193,13 @@ export default function PlantScanner() {
             }`}>
               {preview ? (
                 <div className="space-y-4">
+                  {/* The object URL is browser-local and cannot use the Next image optimizer. */}
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     src={preview}
                     alt="Plant preview"
                     className="max-h-64 mx-auto rounded-xl object-contain shadow-sm"
+                    decoding="async"
                   />
                   <p className="text-sm font-medium text-(--muted-foreground) truncate max-w-xs mx-auto">
                     {fileName}
@@ -195,27 +224,43 @@ export default function PlantScanner() {
             <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
               {!preview ? (
                 <>
-                  <label className="w-full sm:w-auto flex-1 cursor-pointer">
+                  <label
+                    aria-disabled={providerStatus !== "available"}
+                    className={`w-full flex-1 sm:w-auto ${
+                      providerStatus === "available"
+                        ? "cursor-pointer"
+                        : "cursor-not-allowed opacity-50"
+                    }`}
+                  >
                     <input
                       type="file"
                       hidden
+                      disabled={providerStatus !== "available"}
                       accept="image/*"
                       capture="environment"
                       onChange={handleFileChange}
                     />
-                    <div className="flex items-center justify-center gap-2 h-12 px-6 rounded-xl bg-(--background) border border-(--border) text-(--foreground) hover:bg-(--muted) transition-all font-medium sm:hidden">
+                    <div className="flex h-12 items-center justify-center gap-2 border border-(--border) bg-(--background) px-6 font-medium text-(--foreground) transition hover:bg-(--muted) sm:hidden">
                       <Camera className="w-5 h-5" />
                       Take Photo
                     </div>
                   </label>
-                  <label className="w-full sm:w-auto flex-1 cursor-pointer">
+                  <label
+                    aria-disabled={providerStatus !== "available"}
+                    className={`w-full flex-1 sm:w-auto ${
+                      providerStatus === "available"
+                        ? "cursor-pointer"
+                        : "cursor-not-allowed opacity-50"
+                    }`}
+                  >
                     <input
                       type="file"
                       hidden
+                      disabled={providerStatus !== "available"}
                       accept="image/*"
                       onChange={handleFileChange}
                     />
-                    <div className="flex items-center justify-center gap-2 h-12 px-8 rounded-xl bg-(--primary) text-white hover:bg-(--primary)/90 transition-all font-medium shadow-sm active:scale-[0.98]">
+                    <div className="flex h-12 items-center justify-center gap-2 bg-(--primary) px-8 font-medium text-(--primary-foreground) transition hover:opacity-90 active:scale-[0.98]">
                       <Upload className="w-5 h-5" />
                       Choose Image
                     </div>
@@ -225,7 +270,7 @@ export default function PlantScanner() {
                 <>
                   <button
                     onClick={identifyPlant}
-                    disabled={loading}
+                    disabled={loading || providerStatus !== "available"}
                     className="w-full sm:w-auto flex-1 h-12 px-8 rounded-xl bg-(--primary) text-white font-medium hover:bg-(--primary)/90 transition-all flex items-center justify-center gap-2 active:scale-[0.98] disabled:opacity-70"
                   >
                     {loading ? (
@@ -282,7 +327,7 @@ export default function PlantScanner() {
 
                       {commonNames.length > 0 && (
                         <p className="text-sm font-medium text-(--muted-foreground) mb-4">
-                          "{commonNames[0]}"
+                          &ldquo;{commonNames[0]}&rdquo;
                         </p>
                       )}
 

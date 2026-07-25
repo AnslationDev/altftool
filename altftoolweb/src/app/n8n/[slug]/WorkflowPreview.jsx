@@ -4,6 +4,9 @@ import { useEffect, useState } from "react";
 import ReactFlow, { Background, Controls } from "reactflow";
 import "reactflow/dist/style.css";
 
+const NODE_TYPES = {};
+const EDGE_TYPES = {};
+
 function toGraph(wf) {
   const rawNodes = (wf?.nodes || []).filter(
     (n) => !/stickyNote/i.test(n.type || "")
@@ -90,6 +93,8 @@ export default function WorkflowPreview({ jsonPath }) {
         <ReactFlow
           nodes={graph.nodes}
           edges={graph.edges}
+          nodeTypes={NODE_TYPES}
+          edgeTypes={EDGE_TYPES}
           fitView
           proOptions={{ hideAttribution: true }}
           nodesDraggable={false}

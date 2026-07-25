@@ -18,12 +18,10 @@ export async function generateMetadata() {
 }
 
 export default function Page() {
-  const featuredItems = getTop9Items()
-    .slice(0, 24)
-    .map((item) => ({
-      name: getTop9Title(item),
-      path: `/top9/${item.slug}`,
-    }));
+  const featuredItems = getTop9Items().slice(0, 24).map((item) => ({
+    name: getTop9Title(item),
+    path: `/top9/${item.slug}`,
+  }));
 
   return (
     <main>

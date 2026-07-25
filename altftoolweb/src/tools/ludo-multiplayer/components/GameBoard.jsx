@@ -478,6 +478,7 @@ function GameBoard({
                   stroke="#FFFFFF"
                   strokeWidth="0.06"
                   filter="url(#tokenShadow)"
+                  initial={{ cx, cy }}
                   animate={isAnimating ? {} : { cx, cy }}
                   transition={isAnimating ? undefined : { duration: moveDuration, ease: "easeInOut" }}
                 />

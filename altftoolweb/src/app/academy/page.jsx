@@ -44,6 +44,9 @@ export default function Page() {
           ]),
         ]}
       />
+      <h1 className="sr-only">
+        AltFTool Academy: tools, technology and digital skills
+      </h1>
       <AcademyClient />
       <RouteDiscoveryBand {...academyRouteHub} />
     </>

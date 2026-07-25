@@ -17,6 +17,7 @@ export default function ContactUsPage() {
       <SiteHeader />
       <section className="hs-plain hs-contact-page">
         <span className="hs-eyebrow">Contact Us</span>
+        <h1>Contact QuoteNest Pros</h1>
         <ContactForm />
       </section>
       <Footer />

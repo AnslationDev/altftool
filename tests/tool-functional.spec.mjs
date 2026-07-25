@@ -1,12 +1,19 @@
 import { expect, test } from "@playwright/test";
 import { readFile, writeFile } from "node:fs/promises";
 import { createRequire } from "node:module";
+import { fileURLToPath } from "node:url";
 import { deflateSync } from "node:zlib";
 import { createPageQualityGate } from "./helpers/pageQuality.mjs";
 
 const webUrl = process.env.ALTFT_WEB_URL || "http://localhost:3002";
 const webOrigin = new URL(webUrl).origin;
 const toolRouteTimeoutMs = Number(process.env.ALTFT_TOOL_FUNCTIONAL_ROUTE_TIMEOUT_MS || 60_000);
+const portraitFixturePath = fileURLToPath(
+  new URL(
+    "../altftoolweb/public/images/beautymakee.jpg",
+    import.meta.url,
+  ),
+);
 const webRequire = createRequire(new URL("../altftoolweb/package.json", import.meta.url));
 const { PDFDocument, StandardFonts, rgb } = webRequire("pdf-lib");
 const { Document, HeadingLevel, Packer, Paragraph, TextRun } = webRequire("docx");
@@ -215,6 +222,99 @@ async function openTool(page, slug, heading) {
 
 test.describe("microtool functional flows", () => {
   test.describe.configure({ mode: "serial", timeout: 120_000 });
+
+  test("AI prompt organizer collections and social sharing work", async ({
+    page,
+  }) => {
+    await page.addInitScript(() => {
+      window.__altfSharedUrls = [];
+      window.open = (url) => {
+        window.__altfSharedUrls.push(String(url));
+        return null;
+      };
+    });
+    await openToolShell(
+      page,
+      "ai-prompt-organizer",
+      "AI Prompt Organizer",
+    );
+
+    await page.getByRole("button", { name: /Content Creation/ }).click();
+    await expect(
+      page.getByText("Explain Quantum Computing", { exact: true }),
+    ).toBeVisible();
+    await expect(
+      page.getByText("Write a Product Launch Email", { exact: true }),
+    ).toHaveCount(0);
+    await expect(page.getByText(/Showing 1 Writing prompts/)).toBeVisible();
+
+    const promptCard = page
+      .getByText("Explain Quantum Computing", { exact: true })
+      .locator("xpath=ancestor::div[contains(@class,'group')][1]");
+    await promptCard.getByRole("button", { name: "More actions" }).click();
+    await page.getByRole("button", { name: "Share", exact: true }).click();
+    await page
+      .getByRole("button", { name: "Share to X / Twitter" })
+      .click();
+
+    await expect
+      .poll(() => page.evaluate(() => window.__altfSharedUrls?.[0] || ""))
+      .toContain("twitter.com/intent/tweet");
+  });
+
+  test("ChatGPT export merges, splits, and renames conversations", async ({
+    page,
+  }, testInfo) => {
+    const mergeFixture = await writeTextFixture(
+      testInfo,
+      "merge-chat.json",
+      JSON.stringify({
+        title: "Second conversation",
+        messages: [
+          { id: "merge-user", role: "user", content: "Second question" },
+          {
+            id: "merge-assistant",
+            role: "assistant",
+            content: "Second answer",
+          },
+        ],
+      }),
+    );
+
+    await openToolShell(page, "chatgpt-chat-export", "ChatGPT Chat Export");
+    await page
+      .getByRole("button", { name: "Paste your chat conversation" })
+      .click();
+    await page
+      .getByPlaceholder(/Paste your ChatGPT conversation/)
+      .fill("User: First question\nAssistant: First answer");
+    await page.getByRole("button", { name: "Parse Conversation" }).click();
+    await page.getByRole("button", { name: "Tools", exact: true }).click();
+
+    await page.locator('input[type="file"][multiple]').setInputFiles(mergeFixture);
+    await expect(page.getByText("Merged 2 messages")).toBeVisible();
+
+    const downloads = [];
+    page.on("download", (download) => downloads.push(download));
+    await page.getByRole("button", { name: "Split Chat" }).click();
+    await expect(
+      page.getByText("Downloaded two balanced chat files"),
+    ).toBeVisible();
+    await expect.poll(() => downloads.length).toBe(2);
+    expect(downloads.map((download) => download.suggestedFilename())).toEqual([
+      "chatgpt-conversation-part-1.json",
+      "chatgpt-conversation-part-2.json",
+    ]);
+
+    await page.getByRole("button", { name: "Rename" }).click();
+    await page
+      .getByRole("textbox", { name: "Conversation name", exact: true })
+      .fill("Release notes chat");
+    await page
+      .getByRole("button", { name: "Save conversation name" })
+      .click();
+    await expect(page.getByText("Conversation renamed")).toBeVisible();
+  });
 
   test("tools directory search and filters stay shareable", async ({ page }) => {
     const quality = createPageQualityGate(page);
@@ -501,6 +601,270 @@ test.describe("microtool functional flows", () => {
     await expect(page.locator("body")).toContainText("Normal");
 
     await quality.expectClean("priority calculator utilities");
+  });
+
+  test("decision, name, and text comparison tools preserve useful state", async ({
+    page,
+  }) => {
+    const quality = createPageQualityGate(page);
+
+    await openToolShell(page, "decision-wheel", "Decision Wheel");
+    const clearEntries = page.getByTitle("Clear all");
+    if (await clearEntries.isVisible()) await clearEntries.click();
+    await page.getByTitle("Bulk add").click();
+    await page
+      .getByPlaceholder("Paste entries (one per line)...")
+      .fill("Research\nDesign\nShip");
+    await page.getByRole("button", { name: "Add All", exact: true }).click();
+    await expect(page.getByText("Entries (3)", { exact: true })).toBeVisible();
+    await page.getByPlaceholder("Add entry...").fill("Measure");
+    await page.getByPlaceholder("Add entry...").press("Enter");
+    await expect(page.getByText("Entries (4)", { exact: true })).toBeVisible();
+    await expect(page.getByText("Measure", { exact: true })).toBeVisible();
+
+    await page.addInitScript(() => {
+      localStorage.removeItem("altft-names");
+      localStorage.removeItem("altft-name-history");
+    });
+    await openToolShell(page, "random-fun-picker", "Random Fun Picker");
+    await page.getByRole("button", { name: "Name Selector", exact: true }).click();
+    const nameInput = page.getByPlaceholder("Add name...");
+    await nameInput.fill("Ada");
+    await nameInput.press("Enter");
+    await nameInput.fill("Grace");
+    await nameInput.press("Enter");
+    await expect(page.getByText("Names (2)", { exact: true })).toBeVisible();
+    await page.getByRole("button", { name: "Pick One", exact: true }).click();
+    await expect(page.getByText("1 selected", { exact: true })).toBeVisible({
+      timeout: 10_000,
+    });
+    await expect(
+      page.getByText(/^(Ada|Grace)$/, { exact: true }).last(),
+    ).toBeVisible();
+
+    await openToolShell(page, "text-diff-viewer", "Text Diff Viewer");
+    await page
+      .getByPlaceholder("Paste original text...")
+      .fill("alpha\nbeta\ngamma");
+    await page
+      .getByPlaceholder("Paste modified text...")
+      .fill("alpha\nbeta changed\ngamma\ndelta");
+    await expect(page.getByText(/% similar$/)).not.toContainText("100%");
+    await expect(page.getByText("Modified (4 lines)", { exact: true })).toBeVisible();
+    await page.getByTitle("Inline").click();
+    await expect(page.getByText("Inline Diff", { exact: true })).toBeVisible();
+    await expect(page.locator("body")).toContainText("delta");
+
+    await quality.expectClean("decision and comparison workflows");
+  });
+
+  test("local Ludo and browser session analysis complete real interactions", async ({
+    page,
+  }) => {
+    const quality = createPageQualityGate(page);
+
+    await openToolShell(page, "ludo-multiplayer", "Ludo Multiplayer");
+    await page.getByRole("button", { name: /Local$/ }).click();
+    await page.getByRole("button", { name: "4", exact: true }).click();
+    await expect(page.getByText("4 in game", { exact: true })).toBeVisible();
+    await expect(page.getByText(/Local Multiplayer/)).toBeVisible();
+    const rollDice = page.getByRole("button", { name: "Roll dice" });
+    await expect(rollDice).toBeEnabled();
+    await rollDice.click();
+    await expect(page.getByText("Current Turn", { exact: true })).toBeVisible();
+    await expect(page.locator("body")).toContainText(/Rolled: [1-6]|Select a token|Roll the dice/);
+    await page.getByRole("button", { name: /New Game/ }).click();
+    await expect(page.getByText("Turn 0 · Local Multiplayer", { exact: true })).toBeVisible();
+
+    await openToolShell(
+      page,
+      "browser-session-analyzer",
+      "Browser Session Analyzer",
+    );
+    await page
+      .getByPlaceholder(
+        "Paste JSON session data, CSV URLs, or bookmark exports...",
+      )
+      .fill(
+        JSON.stringify([
+          "https://example.com/docs",
+          "https://example.com/docs",
+          "http://github.com/openai",
+        ]),
+      );
+    await page.getByRole("button", { name: "Analyze", exact: true }).click();
+    await expect(page.getByText("3 of 3 tabs", { exact: true })).toBeVisible();
+    await expect(page.getByText("Total Tabs", { exact: true })).toBeVisible();
+    await expect(page.getByText("Duplicates", { exact: true })).toBeVisible();
+    await page
+      .getByPlaceholder("Search URLs, domains, categories...")
+      .fill("github");
+    await expect(page.getByText("1 of 3 tabs", { exact: true })).toBeVisible();
+    await expect(page.locator("body")).toContainText("github.com");
+
+    await quality.expectClean("game and session workflows");
+  });
+
+  test("file metadata explorer derives file and text hashes", async ({
+    page,
+  }, testInfo) => {
+    const quality = createPageQualityGate(page);
+    const textPath = await writeTextFixture(
+      testInfo,
+      "metadata-fixture.txt",
+      "AltFTool metadata fixture",
+    );
+
+    await openToolShell(
+      page,
+      "file-metadata-explorer",
+      "File Metadata Explorer",
+    );
+    await page.locator('input[type="file"][multiple]').setInputFiles(textPath);
+    await expect(
+      page.getByText("metadata-fixture.txt", { exact: true }),
+    ).toBeVisible();
+    await page.getByText("metadata-fixture.txt", { exact: true }).click();
+    await expect(page.getByText("Details", { exact: true })).toBeVisible();
+    await expect(page.getByText("File Hash", { exact: true }).first()).toBeVisible();
+
+    await page.getByPlaceholder("Type or paste text...").fill("hash me");
+    await page.getByPlaceholder("Type or paste text...").press("Enter");
+    const hashes = page.locator("code");
+    await expect(hashes).toHaveCount(2);
+    await expect(hashes.nth(1)).not.toHaveText("");
+
+    const search = page.getByPlaceholder(
+      "Search files by name, type, or extension...",
+    );
+    await search.fill("missing-file");
+    await expect(
+      page.getByText("No files match your search", { exact: true }),
+    ).toBeVisible();
+    await search.fill("metadata");
+    await expect(
+      page.getByText("metadata-fixture.txt", { exact: true }).first(),
+    ).toBeVisible();
+
+    await quality.expectClean("file metadata workflow");
+  });
+
+  test("photo comparison and aura tools produce local results", async ({
+    page,
+  }, testInfo) => {
+    const quality = createPageQualityGate(page);
+    const imagePath = await writePngFixture(testInfo, "photo-workflow.png");
+
+    await openToolShell(page, "twin-finder", "Twin Finder");
+    await page
+      .getByRole("button", { name: "Upload Image A" })
+      .locator('input[type="file"]')
+      .setInputFiles(imagePath);
+    await page
+      .getByRole("button", { name: "Upload Image B" })
+      .locator('input[type="file"]')
+      .setInputFiles(imagePath);
+    await page.getByRole("button", { name: "Compare Photos" }).click();
+    await expect(
+      page.getByRole("heading", { name: "Comparison Result", exact: true }),
+    ).toBeVisible({ timeout: 10_000 });
+    await expect(page.locator("body")).toContainText(/\d+%/);
+    await page.getByRole("button", { name: "Try Again" }).click();
+    await expect(
+      page.getByText("Ready to find your twin?", { exact: true }),
+    ).toBeVisible();
+
+    await openToolShell(page, "aura-color-generator", "Discover Your Aura");
+    await page
+      .locator('input[type="file"][accept="image/*"]')
+      .setInputFiles(imagePath);
+    await page.getByRole("button", { name: "Generate My Aura" }).click();
+    await expect(page.getByRole("button", { name: "Save" })).toBeVisible({
+      timeout: 10_000,
+    });
+    await expect(page.getByRole("button", { name: "Download" })).toBeVisible();
+    await expect(page.getByText(/Daily Mood:/)).toBeVisible();
+
+    await quality.expectClean("photo comparison and aura workflows");
+  });
+
+  test("face score tools process a real portrait and expose recovery", async ({
+    page,
+  }) => {
+    test.setTimeout(180_000);
+    const quality = createPageQualityGate(page);
+
+    await openToolShell(page, "lucky-face-score", "Lucky Face Score");
+    await page
+      .locator('input[type="file"][accept="image/*"]')
+      .first()
+      .setInputFiles(portraitFixturePath);
+    await page.getByRole("button", { name: "Reveal My Luck" }).click();
+    await expect(page.getByText("Your Lucky Score", { exact: true })).toBeVisible({
+      timeout: 15_000,
+    });
+    await expect(page.locator("body")).toContainText(/\/100/);
+    await page.getByRole("button", { name: "Reset Everything" }).click();
+    await expect(
+      page.getByText("Your Lucky Score", { exact: true }),
+    ).toBeHidden();
+    await expect(
+      page.getByText("Drop your photo here or click to browse", {
+        exact: true,
+      }).first(),
+    ).toBeVisible();
+
+    await openToolShell(
+      page,
+      "beauty-score",
+      "Beauty Score Calculator",
+    );
+    await page
+      .locator('input[type="file"][accept="image/*"]')
+      .setInputFiles(portraitFixturePath);
+    await expect(
+      page.getByText("Final Beauty Score", { exact: true }),
+    ).toBeVisible({ timeout: 45_000 });
+    await expect(page.getByText("Face Detected", { exact: true })).toBeVisible();
+    await expect(
+      page.getByRole("button", { name: "Start Over", exact: true }),
+    ).toBeVisible();
+    await page.getByRole("button", { name: "Start Over", exact: true }).click();
+    await expect(
+      page.getByRole("button", { name: "Upload Photo", exact: true }),
+    ).toBeVisible();
+
+    await quality.expectClean("face score workflows");
+  });
+
+  test("passport photo maker uploads, processes, and previews locally", async ({
+    page,
+  }) => {
+    test.setTimeout(180_000);
+    const quality = createPageQualityGate(page);
+
+    await openToolShell(
+      page,
+      "ai-passport-photo-maker",
+      "AI Passport Photo Maker",
+    );
+    await page
+      .getByRole("button", {
+        name: "Upload your photo by clicking or dragging a file",
+      })
+      .locator('input[type="file"]')
+      .setInputFiles(portraitFixturePath);
+    await expect(
+      page.getByRole("heading", { name: "Passport Photo Maker", exact: true }),
+    ).toBeVisible({ timeout: 60_000 });
+    await expect(page.getByText("India Passport", { exact: true }).first()).toBeVisible();
+    await page.getByRole("button", { name: "Generate Preview" }).click();
+    await expect(
+      page.getByRole("button", { name: "Show Original" }),
+    ).toBeVisible({ timeout: 30_000 });
+    await expect(page.getByText("Privacy Notice", { exact: true })).toBeVisible();
+
+    await quality.expectClean("passport photo workflow");
   });
 
   test("image tools process real uploaded image files", async ({ page }, testInfo) => {

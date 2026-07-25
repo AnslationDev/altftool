@@ -1,13 +1,25 @@
 "use client";
 
-import React, { useState, useEffect, useRef, Suspense } from 'react';
+import React, { useState, useEffect, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
+import {
+  Search,
+  Image as ImageIcon,
+  Newspaper,
+  PlayCircle,
+  Sparkles,
+  FileText,
+  Wand2,
+  Puzzle,
+  Calculator,
+  Gamepad2,
+} from 'lucide-react';
+import { BrandLogo } from '@altftool/ui';
 import SearchBar from './components/SearchBar';
 import { SearchResults } from './components/SearchResults';
 import { useSearchDataSource } from './hooks/useSearchDataSource';
-import ManagedImage from '@/components/ui/ManagedImage';
 import {
   performSmartSearch,
   mergeSearchResults,
@@ -17,8 +29,22 @@ import {
 import './search-eng.css';
 
 // ─── CONFIG ──────────────────────────────────────────────────────────────────
-// (Clean Google-like layout)
 const SEARCH_BACKEND_URL = (process.env.NEXT_PUBLIC_SEARCH_BACKEND_URL || '').replace(/\/$/, '');
+
+const RESULT_TABS = [
+  { label: 'All', value: 'all', Icon: Search },
+  { label: 'Images', value: 'images', Icon: ImageIcon },
+  { label: 'News', value: 'news', Icon: Newspaper },
+  { label: 'Videos', value: 'videos', Icon: PlayCircle },
+];
+
+const QUICK_TOPICS = [
+  { label: 'PDF Tools', query: 'pdf tools', Icon: FileText },
+  { label: 'AI Generators', query: 'ai generator', Icon: Wand2 },
+  { label: 'Extensions', query: 'chrome extension', Icon: Puzzle },
+  { label: 'Calculators', query: 'calculator', Icon: Calculator },
+  { label: 'Games', query: 'games', Icon: Gamepad2 },
+];
 
 // ─── MAIN CONTENT ─────────────────────────────────────────────────────────────
 function SearchEngineContent() {
@@ -106,8 +132,7 @@ function SearchEngineContent() {
       : 'AltFTool Search – Premium Digital Toolkit';
   }, [query]);
 
-  // ── Navigation handler ──
-  // ── Trending uses dataset titles when loaded ──
+  // ── "Surprise me" pulls a random entry from the live dataset ──
   const handleLucky = () => {
     if (!dataset.length) return;
     const r = dataset[Math.floor(Math.random() * dataset.length)];
@@ -144,26 +169,29 @@ function SearchEngineContent() {
           >
             <header className="se-results-header">
               <div className="se-results-header-inner">
+                <Link href="/search-eng" className="se-header-brand" aria-label="AltFTool Search home">
+                  <BrandLogo decorative />
+                </Link>
                 <div className="se-header-bar-wrap">
                   <SearchBar initialValue={query} onSearch={handleSearch} onImageResults={handleImageResults} isResultPage dataset={dataset} />
                 </div>
               </div>
 
-              {/* Google-style Tabs */}
+              {/* Category tabs */}
               <div className="se-results-tabs">
-                <div className="se-results-tabs-inner">
-                  {['All', 'Images', 'News', 'Videos'].map((tab) => {
-                    const value = tab.toLowerCase();
-                    return (
-                      <button
-                        key={tab}
-                        onClick={() => setSearchType(value)}
-                        className={`se-tab ${searchType === value ? 'active' : ''}`}
-                      >
-                        {tab}
-                      </button>
-                    );
-                  })}
+                <div className="se-results-tabs-inner" role="tablist" aria-label="Result categories">
+                  {RESULT_TABS.map(({ label, value, Icon }) => (
+                    <button
+                      key={value}
+                      role="tab"
+                      aria-selected={searchType === value}
+                      onClick={() => setSearchType(value)}
+                      className={`se-tab ${searchType === value ? 'active' : ''}`}
+                    >
+                      <Icon size={15} aria-hidden="true" />
+                      {label}
+                    </button>
+                  ))}
                 </div>
               </div>
             </header>
@@ -171,6 +199,11 @@ function SearchEngineContent() {
             {/* Main results area */}
             <main className="se-results-main">
               <div className="se-results-inner">
+                {!isLoading && results.length > 0 && (
+                  <p className="se-results-meta">
+                    About {searchMeta.total} results ({searchMeta.time} seconds)
+                  </p>
+                )}
                 <SearchResults
                   results={results}
                   query={query}
@@ -194,15 +227,36 @@ function SearchEngineContent() {
             transition={{ duration: 0.2 }}
             className="se-landing"
           >
-            {/* Hero */}
+            {/* Eyebrow */}
+            <motion.span
+              initial={{ y: -12, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ duration: 0.4 }}
+              className="se-eyebrow"
+            >
+              <span className="se-eyebrow-dot" aria-hidden="true" />
+              AltFTool Search
+            </motion.span>
+
+            {/* Hero brand */}
             <motion.div
               initial={{ scale: 0.94, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               transition={{ duration: 0.5, type: 'spring', stiffness: 180 }}
               className="se-hero"
             >
-              <ManagedImage src="/assets/logo3.png" alt="AltFTool" loading="eager" className="se-hero-logo" />
+              <BrandLogo className="se-hero-logo" label="AltFTool Search" />
             </motion.div>
+
+            <motion.p
+              initial={{ y: 12, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ delay: 0.1, duration: 0.4 }}
+              className="se-tagline"
+            >
+              One search across <strong>tools, docs, extensions</strong> and the web —
+              fast, focused, distraction-free.
+            </motion.p>
 
             {/* Search bar section */}
             <motion.div
@@ -213,7 +267,47 @@ function SearchEngineContent() {
             >
               <SearchBar onSearch={handleSearch} onImageResults={handleImageResults} isResultPage={false} dataset={dataset} />
 
+              <div className="se-cta-group">
+                <button
+                  type="button"
+                  className="se-cta-btn se-cta-btn--primary"
+                  onClick={handleLucky}
+                  disabled={!dataset.length}
+                >
+                  <Sparkles size={15} aria-hidden="true" />
+                  Surprise Me
+                </button>
+                <Link href="/tools" className="se-cta-btn">
+                  Explore All Tools
+                </Link>
+              </div>
             </motion.div>
+
+            {/* Quick topics */}
+            <motion.div
+              initial={{ y: 20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ delay: 0.3, duration: 0.45 }}
+              className="se-chip-row"
+            >
+              <span className="se-chip-label">Trending on AltFTool</span>
+              {QUICK_TOPICS.map(({ label, query: topicQuery, Icon }) => (
+                <button
+                  key={label}
+                  type="button"
+                  className="se-chip"
+                  onClick={() => handleSearch(topicQuery)}
+                >
+                  <Icon size={14} aria-hidden="true" />
+                  {label}
+                </button>
+              ))}
+            </motion.div>
+
+            <p className="se-landing-hint">
+              Instant answers from the AltFTool universe ·{' '}
+              <Link href="/">Back to AltFTool</Link>
+            </p>
           </motion.div>
         )}
       </AnimatePresence>

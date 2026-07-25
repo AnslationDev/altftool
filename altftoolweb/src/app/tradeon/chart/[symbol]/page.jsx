@@ -26,6 +26,18 @@ export async function generateMetadata({ params }) {
   });
 }
 
-export default function TradeonFullChartPage() {
-  return <FullChartClient />;
+export default async function TradeonFullChartPage({ params }) {
+  const { symbol: raw } = await params;
+  const symbol = symbolFromSlug(raw);
+  const instrument = instrumentBySymbol(symbol);
+  const name = instrument?.name || symbol;
+
+  return (
+    <>
+      <h1 className="sr-only">
+        {name} ({symbol}) interactive market chart
+      </h1>
+      <FullChartClient />
+    </>
+  );
 }

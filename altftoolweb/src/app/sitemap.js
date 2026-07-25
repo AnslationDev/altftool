@@ -3,6 +3,8 @@ import { slugifyCategory } from "@/platform/registry/categoryTaxonomy";
 import { unstable_cache } from "next/cache";
 import {
   blogTaxonomySlug,
+  filterBlogsByCategorySlug,
+  filterBlogsByTagSlug,
   getAllBlogTags,
   getAllBlogs,
   getBlogAuthors,
@@ -17,6 +19,8 @@ import top11Categories from "@/app/top11/data/categoryData";
 import { getTop9Items } from "@/app/top9/data/getTop9Items";
 import wattpadBooks from "@/app/wattpad/data/books.json";
 import wattpadCategories from "@/app/wattpad/data/categories.json";
+import wattpadChapters from "@/app/wattpad/data/chapters.json";
+import { fetchAllPublishedLanderSlugs } from "@/app/lander/data/firebaseLanders";
 import {
   absoluteUrl,
   getSiteUrl,
@@ -72,6 +76,7 @@ const staticRoutes = [
   { path: "/buysmart", priority: 0.85 },
   { path: "/buysmart/view-all", priority: 0.75 },
   { path: "/extensions", priority: 0.8 },
+  { path: "/embed", priority: 0.75 },
   { path: "/apps", priority: 0.78 },
   { path: "/desktop", priority: 0.7 },
   { path: "/fullscrn", priority: 0.65 },
@@ -103,6 +108,7 @@ const staticRoutes = [
   { path: "/sale", priority: 0.7 },
   { path: "/status", priority: 0.45 },
   { path: "/docs", priority: 0.58 },
+  { path: "/free-ai-tool", priority: 0.66 },
   { path: "/supportsetting", priority: 0.45 },
   { path: "/request-a-tool", priority: 0.5 },
   { path: "/site-map", priority: 0.5 },
@@ -153,7 +159,7 @@ const staticRoutes = [
   // --- TripFindBox (travel) ---
 
   // --- Business Ops ---
-  { path: "/bops", priority: 0.68 },
+  { path: "/bops/housing-services", priority: 0.68 },
   { path: "/bops/tripfindbox", priority: 0.68 },
   { path: "/bops/tripfindbox/about-us", priority: 0.45 },
   { path: "/bops/tripfindbox/blogs", priority: 0.6 },
@@ -331,6 +337,7 @@ async function getLiveSitemapCollections() {
     brandCategories,
     brandSubcategories,
     brands,
+    landers,
   ] = await Promise.all([
     fetchFirebaseBlogsForSeo(),
     listPublicFirestoreDocs(`${FIREBASE_PROJECT_ROOT}/extensions`, 100),
@@ -346,6 +353,7 @@ async function getLiveSitemapCollections() {
       `${FIREBASE_PROJECT_ROOT}/consumerrating/data/brands`,
       100,
     ),
+    fetchAllPublishedLanderSlugs(),
   ]);
 
   return {
@@ -354,6 +362,7 @@ async function getLiveSitemapCollections() {
     brandCategories,
     brandSubcategories,
     brands,
+    landers,
   };
 }
 
@@ -363,6 +372,7 @@ const EMPTY_LIVE_COLLECTIONS = Object.freeze({
   brandCategories: [],
   brandSubcategories: [],
   brands: [],
+  landers: [],
 });
 
 async function buildSitemapEntries({
@@ -528,6 +538,17 @@ async function buildSitemapEntries({
     }
   }
 
+  for (const lander of liveCollections.landers) {
+    if (!lander?.slug || lander.noIndex) continue;
+    pushUnique(entries, seen, `/lander/${normalizeSlug(lander.slug)}`, {
+      lastModified: lander.updatedAt
+        ? new Date(lander.updatedAt)
+        : undefined,
+      priority: 0.62,
+      changeFrequency: "monthly",
+    });
+  }
+
   // GEO landing pages (Entity SEO) — every registry location, plus the hub.
   // Adding a location to src/platform/seo/geoLocations.js adds it here too.
   pushUnique(entries, seen, "/locations", {
@@ -545,7 +566,10 @@ async function buildSitemapEntries({
     (item) => item !== "All",
   )) {
     const categorySlug = blogTaxonomySlug(category);
-    if (categorySlug) {
+    if (
+      categorySlug &&
+      filterBlogsByCategorySlug(sitemapBlogs, categorySlug).length >= 2
+    ) {
       pushUnique(entries, seen, `/blogs/category/${categorySlug}`, {
         priority: 0.66,
         changeFrequency: "weekly",
@@ -555,7 +579,10 @@ async function buildSitemapEntries({
 
   for (const tag of getAllBlogTags(sitemapBlogs)) {
     const tagSlug = blogTaxonomySlug(tag);
-    if (tagSlug) {
+    if (
+      tagSlug &&
+      filterBlogsByTagSlug(sitemapBlogs, tagSlug).length >= 2
+    ) {
       pushUnique(entries, seen, `/blogs/tag/${tagSlug}`, {
         priority: 0.54,
         changeFrequency: "weekly",
@@ -564,7 +591,7 @@ async function buildSitemapEntries({
   }
 
   for (const author of getBlogAuthors(sitemapBlogs)) {
-    if (author?.slug) {
+    if (author?.slug && Number(author.postCount || author.posts?.length) >= 2) {
       pushUnique(entries, seen, `/blogs/author/${author.slug}`, {
         lastModified: author.lastUpdated
           ? new Date(author.lastUpdated)
@@ -748,6 +775,26 @@ async function buildSitemapEntries({
         changeFrequency: "monthly",
       });
     }
+  }
+
+  const wattpadBooksById = new Map(
+    wattpadBooks.map((book) => [book.id, book]),
+  );
+  for (const chapter of wattpadChapters) {
+    const book = wattpadBooksById.get(chapter?.bookId);
+    if (!book?.slug || !chapter?.chapterNumber) continue;
+    pushUnique(
+      entries,
+      seen,
+      `/wattpad/read/${book.slug}/${chapter.chapterNumber}`,
+      {
+        lastModified: chapter.createdAt
+          ? new Date(chapter.createdAt)
+          : undefined,
+        priority: 0.5,
+        changeFrequency: "monthly",
+      },
+    );
   }
 
   for (const article of newsData.news || []) {

@@ -1,16 +1,33 @@
 import { promises as fs } from "node:fs";
 import path from "node:path";
-import { TOP_PRIORITY_TOOL_SLUGS, normalizeToolCategory } from "@altftool/core/toolHealth";
+import {
+  TOP_PRIORITY_TOOL_SLUGS,
+  normalizeToolCategory,
+} from "@altftool/core/toolHealth";
+import {
+  configuredEnvironmentKeys,
+  loadEnvironmentSnapshot,
+} from "./lib/environment-snapshot.mjs";
+import { buildToolReadinessReport } from "./lib/tool-readiness.mjs";
 
 const workspaceRoot = path.resolve(import.meta.dirname, "..");
 const webRoot = path.join(workspaceRoot, "altftoolweb");
+const adminRoot = path.join(workspaceRoot, "altftoolwebadmin");
 const manifestPath = path.join(
   workspaceRoot,
   "altftoolwebadmin/src/data/healthManifest.json",
 );
+const toolReadinessPath = path.join(
+  workspaceRoot,
+  "altftoolwebadmin/src/data/toolReadinessReport.json",
+);
 
 const TOOL_CHECKS = [
-  { key: "name", label: "Name", test: (tool) => Boolean(String(tool?.name || "").trim()) },
+  {
+    key: "name",
+    label: "Name",
+    test: (tool) => Boolean(String(tool?.name || "").trim()),
+  },
   {
     key: "description",
     label: "Description",
@@ -24,7 +41,11 @@ const TOOL_CHECKS = [
         ? tool.category.some((category) => String(category || "").trim())
         : Boolean(String(tool?.category || "").trim()),
   },
-  { key: "icon", label: "Icon", test: (tool) => Boolean(String(tool?.icon || "").trim()) },
+  {
+    key: "icon",
+    label: "Icon",
+    test: (tool) => Boolean(String(tool?.icon || "").trim()),
+  },
 ];
 const IGNORED_TOOL_DIRS = new Set(["_shared", "_toolfk-suite"]);
 const VALID_ENTRY_FILES = ["entry.js", "entry.jsx", "entry.ts", "entry.tsx"];
@@ -77,13 +98,17 @@ async function listDirectories(dirPath) {
 
 async function hasToolEntry(toolRoot, slug) {
   const checks = await Promise.all(
-    VALID_ENTRY_FILES.map((file) => fileExists(path.join(toolRoot, slug, file))),
+    VALID_ENTRY_FILES.map((file) =>
+      fileExists(path.join(toolRoot, slug, file)),
+    ),
   );
   return checks.some(Boolean);
 }
 
 async function readToolMetaMap() {
-  const source = await readText(path.join(webRoot, "src/platform/registry/toolMetaMap.js"));
+  const source = await readText(
+    path.join(webRoot, "src/platform/registry/toolMetaMap.js"),
+  );
   const match = source.match(/export const toolMetaMap = (\{[\s\S]*\});?\s*$/);
 
   if (!match) {
@@ -111,7 +136,9 @@ async function buildToolQuality(toolMetaMap) {
     await Promise.all(
       candidateToolDirs.map(async (slug) => {
         const hasEntry = await hasToolEntry(toolRoot, slug);
-        const hasConfig = await fileExists(path.join(toolRoot, slug, "tool.config.js"));
+        const hasConfig = await fileExists(
+          path.join(toolRoot, slug, "tool.config.js"),
+        );
         return hasEntry || hasConfig ? slug : null;
       }),
     )
@@ -140,11 +167,13 @@ async function buildToolQuality(toolMetaMap) {
             label: "Entry component",
             ok,
           })),
-          fileExists(path.join(toolRoot, slug, "tool.config.js")).then((ok) => ({
-            key: "config",
-            label: "Tool config",
-            ok,
-          })),
+          fileExists(path.join(toolRoot, slug, "tool.config.js")).then(
+            (ok) => ({
+              key: "config",
+              label: "Tool config",
+              ok,
+            }),
+          ),
         ]);
 
         const issues = checks
@@ -155,14 +184,18 @@ async function buildToolQuality(toolMetaMap) {
           slug,
           name: tool?.name || slug,
           category: normalizeToolCategory(tool?.category),
-          score: clampScore((checks.filter((check) => check.ok).length / checks.length) * 100),
+          score: clampScore(
+            (checks.filter((check) => check.ok).length / checks.length) * 100,
+          ),
           issues,
         };
       }),
   );
 
   const orphanToolDirs = toolDirs.filter((slug) => !registrySlugs.has(slug));
-  const registryWithoutDir = [...registrySlugs].filter((slug) => !directorySlugs.has(slug)).sort();
+  const registryWithoutDir = [...registrySlugs]
+    .filter((slug) => !directorySlugs.has(slug))
+    .sort();
   const total = items.length;
   const healthy = items.filter((item) => item.issues.length === 0).length;
   const averageScore = clampScore(
@@ -186,7 +219,9 @@ async function buildToolQuality(toolMetaMap) {
     ).length,
     missingMetadata: items.filter((item) =>
       item.issues.some((issue) =>
-        ["Name", "Description", "Category", "Icon"].some((label) => issue.startsWith(label)),
+        ["Name", "Description", "Category", "Icon"].some((label) =>
+          issue.startsWith(label),
+        ),
       ),
     ).length,
     topIssues: items
@@ -197,24 +232,41 @@ async function buildToolQuality(toolMetaMap) {
 }
 
 async function buildPriorityQaReadiness(toolMetaMap) {
-  const packageJson = await readJson(path.join(workspaceRoot, "package.json"), {});
+  const packageJson = await readJson(
+    path.join(workspaceRoot, "package.json"),
+    {},
+  );
   const scripts = packageJson.scripts || {};
-  const prioritySpecPath = path.join(workspaceRoot, "tests/tool-priority.spec.mjs");
-  const functionalSpecPath = path.join(workspaceRoot, "tests/tool-functional.spec.mjs");
-  const [prioritySpecExists, functionalSpecExists, prioritySpecSource, functionalSpecSource] =
-    await Promise.all([
-      fileExists(prioritySpecPath),
-      fileExists(functionalSpecPath),
-      readText(prioritySpecPath),
-      readText(functionalSpecPath),
-    ]);
-  const usesSharedPriorityList = prioritySpecSource.includes("TOP_PRIORITY_TOOL_SLUGS");
+  const prioritySpecPath = path.join(
+    workspaceRoot,
+    "tests/tool-priority.spec.mjs",
+  );
+  const functionalSpecPath = path.join(
+    workspaceRoot,
+    "tests/tool-functional.spec.mjs",
+  );
+  const [
+    prioritySpecExists,
+    functionalSpecExists,
+    prioritySpecSource,
+    functionalSpecSource,
+  ] = await Promise.all([
+    fileExists(prioritySpecPath),
+    fileExists(functionalSpecPath),
+    readText(prioritySpecPath),
+    readText(functionalSpecPath),
+  ]);
+  const usesSharedPriorityList = prioritySpecSource.includes(
+    "TOP_PRIORITY_TOOL_SLUGS",
+  );
 
   const tools = TOP_PRIORITY_TOOL_SLUGS.map((slug, index) => {
     const tool = toolMetaMap[slug];
     const registered = Boolean(tool);
     const routeCovered =
-      prioritySpecExists && registered && (usesSharedPriorityList || hasSlugReference(prioritySpecSource, slug));
+      prioritySpecExists &&
+      registered &&
+      (usesSharedPriorityList || hasSlugReference(prioritySpecSource, slug));
 
     return {
       rank: index + 1,
@@ -224,14 +276,17 @@ async function buildPriorityQaReadiness(toolMetaMap) {
       route: `/tools/all/${slug}`,
       registered,
       routeCovered,
-      functionalCovered: functionalSpecExists && hasSlugReference(functionalSpecSource, slug),
+      functionalCovered:
+        functionalSpecExists && hasSlugReference(functionalSpecSource, slug),
     };
   });
 
   const total = tools.length;
   const registered = tools.filter((tool) => tool.registered).length;
   const routeCovered = tools.filter((tool) => tool.routeCovered).length;
-  const functionalCovered = tools.filter((tool) => tool.functionalCovered).length;
+  const functionalCovered = tools.filter(
+    (tool) => tool.functionalCovered,
+  ).length;
   const routeScriptReady = Boolean(scripts["test:tools:priority"]);
 
   const checks = [
@@ -274,19 +329,26 @@ async function buildPriorityQaReadiness(toolMetaMap) {
   ];
 
   return {
-    score: clampScore((checks.filter((check) => check.ok).length / checks.length) * 100),
+    score: clampScore(
+      (checks.filter((check) => check.ok).length / checks.length) * 100,
+    ),
     total,
     registered,
     routeCovered,
     functionalCovered,
     checks,
     tools,
-    needsAttention: tools.filter((tool) => !tool.registered || !tool.routeCovered),
+    needsAttention: tools.filter(
+      (tool) => !tool.registered || !tool.routeCovered,
+    ),
   };
 }
 
 async function buildSeoReadiness() {
-  const packageJson = await readJson(path.join(workspaceRoot, "package.json"), {});
+  const packageJson = await readJson(
+    path.join(workspaceRoot, "package.json"),
+    {},
+  );
   const scripts = packageJson.scripts || {};
   const checks = [
     {
@@ -311,7 +373,9 @@ async function buildSeoReadiness() {
       key: "metadata",
       label: "Metadata helpers",
       detail: "Canonical, Open Graph, Twitter",
-      ok: await fileExists(path.join(webRoot, "src/platform/seo/generateMetadata.js")),
+      ok: await fileExists(
+        path.join(webRoot, "src/platform/seo/generateMetadata.js"),
+      ),
     },
     {
       key: "blogSeoAudit",
@@ -319,51 +383,102 @@ async function buildSeoReadiness() {
       detail: "npm run seo:blog-check",
       ok:
         Boolean(scripts["seo:blog-check"]) &&
-        (await fileExists(path.join(workspaceRoot, "scripts/check-blog-seo-readiness.mjs"))),
+        (await fileExists(
+          path.join(workspaceRoot, "scripts/check-blog-seo-readiness.mjs"),
+        )),
     },
   ];
 
   return {
-    score: clampScore((checks.filter((check) => check.ok).length / checks.length) * 100),
+    score: clampScore(
+      (checks.filter((check) => check.ok).length / checks.length) * 100,
+    ),
     checks,
   };
 }
 
 async function buildContentReadiness() {
-  const blogsData = await readJson(path.join(webRoot, "src/app/blogs/data/blogs.json"), {});
-  const buySmartStores = await readJson(path.join(webRoot, "src/app/buysmart/data/stores.json"), []);
-  const dealData = await readJson(path.join(webRoot, "src/app/exclusivedeals/(data)/db.json"), {});
-  const newsData = await readJson(path.join(webRoot, "public/data/newsdata.json"), {});
+  const blogsData = await readJson(
+    path.join(webRoot, "src/app/blogs/data/blogs.json"),
+    {},
+  );
+  const buySmartStores = await readJson(
+    path.join(webRoot, "src/app/buysmart/data/stores.json"),
+    [],
+  );
+  const dealData = await readJson(
+    path.join(webRoot, "src/app/exclusivedeals/(data)/db.json"),
+    {},
+  );
+  const newsData = await readJson(
+    path.join(webRoot, "public/data/newsdata.json"),
+    {},
+  );
 
-  const dealCategories = Array.isArray(dealData.categories) ? dealData.categories : [];
+  const dealCategories = Array.isArray(dealData.categories)
+    ? dealData.categories
+    : [];
   const dealBrands = dealCategories.reduce(
-    (sum, category) => sum + (Array.isArray(category.brands) ? category.brands.length : 0),
+    (sum, category) =>
+      sum + (Array.isArray(category.brands) ? category.brands.length : 0),
     0,
   );
 
   const metrics = [
-    { key: "blogs", label: "Blog posts", value: blogsData.blogs?.length || 0, ok: (blogsData.blogs?.length || 0) > 0 },
-    { key: "buySmartStores", label: "BuySmart stores", value: buySmartStores.length || 0, ok: buySmartStores.length > 0 },
-    { key: "dealCategories", label: "Deal categories", value: dealCategories.length, ok: dealCategories.length > 0 },
-    { key: "dealBrands", label: "Deal brands", value: dealBrands, ok: dealBrands > 0 },
-    { key: "news", label: "News items", value: newsData.news?.length || 0, ok: (newsData.news?.length || 0) > 0 },
+    {
+      key: "blogs",
+      label: "Blog posts",
+      value: blogsData.blogs?.length || 0,
+      ok: (blogsData.blogs?.length || 0) > 0,
+    },
+    {
+      key: "buySmartStores",
+      label: "BuySmart stores",
+      value: buySmartStores.length || 0,
+      ok: buySmartStores.length > 0,
+    },
+    {
+      key: "dealCategories",
+      label: "Deal categories",
+      value: dealCategories.length,
+      ok: dealCategories.length > 0,
+    },
+    {
+      key: "dealBrands",
+      label: "Deal brands",
+      value: dealBrands,
+      ok: dealBrands > 0,
+    },
+    {
+      key: "news",
+      label: "News items",
+      value: newsData.news?.length || 0,
+      ok: (newsData.news?.length || 0) > 0,
+    },
   ];
 
   return {
-    score: clampScore((metrics.filter((metric) => metric.ok).length / metrics.length) * 100),
+    score: clampScore(
+      (metrics.filter((metric) => metric.ok).length / metrics.length) * 100,
+    ),
     metrics,
   };
 }
 
 async function buildAutomationReadiness() {
-  const packageJson = await readJson(path.join(workspaceRoot, "package.json"), {});
+  const packageJson = await readJson(
+    path.join(workspaceRoot, "package.json"),
+    {},
+  );
   const scripts = packageJson.scripts || {};
   const checks = [
     {
       key: "routeAudit",
       label: "Route audit spec",
       detail: "tests/route-audit.spec.mjs",
-      ok: await fileExists(path.join(workspaceRoot, "tests/route-audit.spec.mjs")),
+      ok: await fileExists(
+        path.join(workspaceRoot, "tests/route-audit.spec.mjs"),
+      ),
     },
     {
       key: "smokeSpec",
@@ -383,7 +498,9 @@ async function buildAutomationReadiness() {
       detail: "npm run qa:routes",
       ok:
         Boolean(scripts["qa:routes"]) &&
-        await fileExists(path.join(workspaceRoot, "scripts/check-route-qa-report.mjs")),
+        (await fileExists(
+          path.join(workspaceRoot, "scripts/check-route-qa-report.mjs"),
+        )),
     },
     {
       key: "fullValidation",
@@ -400,40 +517,78 @@ async function buildAutomationReadiness() {
   ];
 
   return {
-    score: clampScore((checks.filter((check) => check.ok).length / checks.length) * 100),
+    score: clampScore(
+      (checks.filter((check) => check.ok).length / checks.length) * 100,
+    ),
     checks,
   };
 }
 
 async function buildManifest() {
   const toolMetaMap = await readToolMetaMap();
-  const [tools, qa, seo, content, automation] = await Promise.all([
-    buildToolQuality(toolMetaMap),
-    buildPriorityQaReadiness(toolMetaMap),
-    buildSeoReadiness(),
-    buildContentReadiness(),
-    buildAutomationReadiness(),
-  ]);
+  const functionalSpecSource = await readText(
+    path.join(workspaceRoot, "tests/tool-functional.spec.mjs"),
+  );
+  const environmentSnapshot = await loadEnvironmentSnapshot({
+    workspaceRoot,
+    roots: [workspaceRoot, webRoot, adminRoot],
+  });
+  const configuredEnvKeys = configuredEnvironmentKeys(
+    environmentSnapshot.values,
+  );
+  const generatedAt = new Date().toISOString();
+  const [tools, qa, seo, content, automation, toolReadinessReport] =
+    await Promise.all([
+      buildToolQuality(toolMetaMap),
+      buildPriorityQaReadiness(toolMetaMap),
+      buildSeoReadiness(),
+      buildContentReadiness(),
+      buildAutomationReadiness(),
+      buildToolReadinessReport({
+        webRoot,
+        toolMetaMap,
+        functionalSpecSource,
+        prioritySlugs: new Set(TOP_PRIORITY_TOOL_SLUGS),
+        configuredEnvKeys,
+        generatedAt,
+      }),
+    ]);
 
   return {
-    schemaVersion: 1,
-    generatedAt: new Date().toISOString(),
-    tools,
-    qa,
-    seo,
-    content,
-    automation,
+    manifest: {
+      schemaVersion: 2,
+      generatedAt,
+      tools: {
+        ...tools,
+        readiness: toolReadinessReport.summary,
+      },
+      qa,
+      seo,
+      content,
+      automation,
+    },
+    toolReadinessReport,
   };
 }
 
-const manifest = await buildManifest();
+const { manifest, toolReadinessReport } = await buildManifest();
 const previousContent = await readText(manifestPath);
+const previousToolReadinessContent = await readText(toolReadinessPath);
 let previousManifest = null;
+let previousToolReadinessReport = null;
 
 try {
   previousManifest = previousContent ? JSON.parse(previousContent) : null;
 } catch {
   previousManifest = null;
+}
+
+try {
+  previousToolReadinessReport = previousToolReadinessContent
+    ? JSON.parse(previousToolReadinessContent)
+    : null;
+} catch {
+  previousToolReadinessReport = null;
 }
 
 function comparableManifest(value) {
@@ -444,18 +599,34 @@ function comparableManifest(value) {
 
 if (
   previousManifest &&
-  JSON.stringify(comparableManifest(previousManifest)) === JSON.stringify(comparableManifest(manifest))
+  JSON.stringify(comparableManifest(previousManifest)) ===
+    JSON.stringify(comparableManifest(manifest))
 ) {
   manifest.generatedAt = previousManifest.generatedAt || manifest.generatedAt;
 }
 
+if (
+  previousToolReadinessReport &&
+  JSON.stringify(comparableManifest(previousToolReadinessReport)) ===
+    JSON.stringify(comparableManifest(toolReadinessReport))
+) {
+  toolReadinessReport.generatedAt =
+    previousToolReadinessReport.generatedAt || toolReadinessReport.generatedAt;
+}
+
 const nextContent = `${JSON.stringify(manifest, null, 2)}\n`;
+const nextToolReadinessContent = `${JSON.stringify(toolReadinessReport, null, 2)}\n`;
 
 if (previousContent !== nextContent) {
   await fs.mkdir(path.dirname(manifestPath), { recursive: true });
   await fs.writeFile(manifestPath, nextContent, "utf8");
 }
 
+if (previousToolReadinessContent !== nextToolReadinessContent) {
+  await fs.mkdir(path.dirname(toolReadinessPath), { recursive: true });
+  await fs.writeFile(toolReadinessPath, nextToolReadinessContent, "utf8");
+}
+
 console.log(
-  `Admin health manifest ready: ${manifest.tools.total} tools, ${manifest.qa.functionalCovered}/${manifest.qa.total} priority functional flows.`,
+  `Admin health manifest ready: ${manifest.tools.total} tools; readiness ${manifest.tools.readiness.score}/100 (${manifest.tools.readiness.counts.working} working, ${manifest.tools.readiness.counts["api-required"]} API-required, ${manifest.tools.readiness.counts.partial} partial, ${manifest.tools.readiness.counts.broken} broken); ${manifest.qa.functionalCovered}/${manifest.qa.total} priority tools have explicit browser specs.`,
 );

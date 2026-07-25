@@ -13,6 +13,7 @@ import {
   formatSearchVolume,
   getSignalBySlug,
 } from "@altftool/core/signals";
+import { getRelatedContentForPreset, RelatedContentSection } from "@/platform/linking";
 import LiveTrendPanel from "./LiveTrendPanel";
 
 export const dynamicParams = false;
@@ -43,6 +44,16 @@ export default async function SignalDetailPage({ params }) {
   const signal = getSignalBySlug(slug);
   if (!signal) notFound();
   const path = `/signals/${signal.slug}`;
+  const moreFromAltftool = getRelatedContentForPreset(
+    {
+      href: path,
+      title: signal.name,
+      description: signal.summary,
+      tags: [signal.category],
+      section: "signals",
+    },
+    "utility",
+  );
 
   return (
     <>
@@ -119,6 +130,13 @@ export default async function SignalDetailPage({ params }) {
             </section>
           </aside>
         </div>
+
+        <RelatedContentSection
+          title="More from AltFTool"
+          items={moreFromAltftool}
+          path={path}
+          jsonLdName={`More from AltFTool for ${signal.name}`}
+        />
       </main>
     </>
   );

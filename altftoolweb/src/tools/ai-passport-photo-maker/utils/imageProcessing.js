@@ -93,7 +93,20 @@ export function compositeImage(canvas, image, adjustments, background, template)
   }
 }
 
-export function detectFaceRegion(imageData) {
+export function detectFaceRegion(input) {
+  let imageData = input;
+
+  if (!input?.data && input?.width && input?.height) {
+    const canvas = document.createElement('canvas');
+    canvas.width = input.naturalWidth || input.width;
+    canvas.height = input.naturalHeight || input.height;
+    const context = canvas.getContext('2d', { willReadFrequently: true });
+    context.drawImage(input, 0, 0, canvas.width, canvas.height);
+    imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+  }
+
+  if (!imageData?.data || !imageData.width || !imageData.height) return null;
+
   const data = imageData.data;
   const w = imageData.width;
   const h = imageData.height;

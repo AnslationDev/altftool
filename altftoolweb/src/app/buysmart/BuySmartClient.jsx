@@ -60,7 +60,7 @@ export default function Page() {
   }, []);
 
   return (
-    <div
+    <main
       data-testid="buysmart-page"
       className="buy-smart-page route-page-shell mx-auto"
     >
@@ -147,7 +147,7 @@ export default function Page() {
           <DiscoverBrands />
         </section>
       </RouteLazySection>
-    </div>
+    </main>
   );
 }
 

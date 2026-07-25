@@ -1414,7 +1414,7 @@ export default function RadioGardenClient() {
   const renderSearch = () => (
     <>
       <header className="rg-tab-header">
-        <h1>Search</h1>
+        <h2>Search</h2>
       </header>
       <div className="rg-search-box">
         <Search size={21} />
@@ -1536,7 +1536,7 @@ export default function RadioGardenClient() {
   const renderFavorites = () => (
     <>
       <header className="rg-tab-header">
-        <h1>Favorites</h1>
+        <h2>Favorites</h2>
       </header>
       <div className="rg-drawer-scroll">
         {favorites.length ? (
@@ -1573,7 +1573,7 @@ export default function RadioGardenClient() {
   const renderBrowse = () => (
     <>
       <header className="rg-tab-header">
-        <h1>Browse</h1>
+        <h2>Browse</h2>
       </header>
       <div className="rg-drawer-scroll">
         <section className="rg-balloon-card">
@@ -1628,7 +1628,7 @@ export default function RadioGardenClient() {
   const renderSettings = () => (
     <>
       <header className="rg-tab-header">
-        <h1>Settings</h1>
+        <h2>Settings</h2>
       </header>
       <div className="rg-drawer-scroll">
         <section className="rg-app-card">

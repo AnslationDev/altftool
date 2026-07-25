@@ -36,6 +36,7 @@ export default function WattpadPage() {
 
   return (
     <div>
+    <h1 className="sr-only">Trending stories and fanfiction</h1>
     <JsonLd
       id="wattpad-collection-schema"
       data={[

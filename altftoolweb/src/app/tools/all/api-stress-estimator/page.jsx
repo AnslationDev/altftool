@@ -39,6 +39,7 @@ export default function Page() {
           ]),
         ]}
       />
+      <h1 className="sr-only">API Stress Estimator</h1>
       <ApiStressToolClient category="all" />
     </>
   );

@@ -1,25 +1,28 @@
-import React, { useCallback, useMemo, useState } from "react";
+"use client";
+
+import React, { useState, useMemo, useCallback } from "react";
 import {
-  ArrowRight,
-  BadgeCheck,
-  Bookmark,
-  CheckCircle2,
   ChevronDown,
   ChevronUp,
-  FileText,
-  Grid2X2,
-  Layers3,
-  Linkedin,
   Maximize2,
   Minimize2,
-  RotateCcw,
-  Smartphone,
   Square,
-  Star,
-  Target,
+  LayoutGrid,
+  FileText,
   UploadCloud,
-  Youtube,
+  Info, // For How It Works
+  HelpCircle, // For FAQs
+  Shield, // For Privacy Policy
+  MousePointerClick, // For step 1
+  ListFilter, // For step 2
+  Eye, // For step 3
+  CheckCircle, // General Check Icon
+  Layers, // Used for Ad Size Card Name
+  Send, // For Footer feedback
+  Code, // For Footer development
 } from "lucide-react";
+
+// --- Static Data ---
 
 const AD_DATA = {
   "Google Display Network (GDN)": [
@@ -30,7 +33,6 @@ const AD_DATA = {
       notes: "Most common size. Excellent for general targeting.",
       maxFileSizeKB: 150,
       fileFormats: "JPG, PNG, GIF",
-      color: "violet",
     },
     {
       size: "336x280",
@@ -39,7 +41,6 @@ const AD_DATA = {
       notes: "Similar to 300x250, often performs slightly better.",
       maxFileSizeKB: 150,
       fileFormats: "JPG, PNG, GIF",
-      color: "blue",
     },
     {
       size: "728x90",
@@ -48,7 +49,6 @@ const AD_DATA = {
       notes: "Often used above content on desktop. High visibility.",
       maxFileSizeKB: 150,
       fileFormats: "JPG, PNG, GIF",
-      color: "sky",
     },
     {
       size: "300x600",
@@ -57,7 +57,6 @@ const AD_DATA = {
       notes: "High visibility, large format, great for branding.",
       maxFileSizeKB: 150,
       fileFormats: "JPG, PNG, GIF",
-      color: "emerald",
     },
     {
       size: "160x600",
@@ -66,7 +65,6 @@ const AD_DATA = {
       notes: "Common sidebar ad placement.",
       maxFileSizeKB: 150,
       fileFormats: "JPG, PNG, GIF",
-      color: "rose",
     },
     {
       size: "970x90",
@@ -75,7 +73,6 @@ const AD_DATA = {
       notes: "Premium desktop placement for maximum reach.",
       maxFileSizeKB: 150,
       fileFormats: "JPG, PNG, GIF",
-      color: "amber",
     },
     {
       size: "320x100",
@@ -84,7 +81,6 @@ const AD_DATA = {
       notes: "Mobile-specific banner size for high CTR.",
       maxFileSizeKB: 150,
       fileFormats: "JPG, PNG, GIF",
-      color: "teal",
     },
   ],
   "Facebook / Instagram Feeds": [
@@ -92,37 +88,33 @@ const AD_DATA = {
       size: "1080x1080",
       name: "Square Feed Image/Video",
       orientation: "Square",
-      notes: "Recommended for feeds and reliable cross-platform visibility.",
+      notes: "Highly recommended for feeds. Ensures cross-platform visibility.",
       maxFileSizeKB: 4096,
       fileFormats: "JPG, PNG, MP4, MOV",
-      color: "blue",
     },
     {
       size: "1200x628",
-      name: "Landscape Link Ad",
+      name: "Landscape Link Ad (1.91:1)",
       orientation: "Horizontal",
       notes: "Good for link clicks when showing a wide image.",
       maxFileSizeKB: 4096,
       fileFormats: "JPG, PNG, MP4, MOV",
-      color: "sky",
     },
     {
       size: "600x900",
-      name: "Portrait Feed Image",
+      name: "Portrait Feed Image (2:3)",
       orientation: "Vertical",
-      notes: "Maximizes mobile feed space for stronger impact.",
+      notes: "Maximizes screen space on mobile for impact.",
       maxFileSizeKB: 4096,
       fileFormats: "JPG, PNG, MP4, MOV",
-      color: "rose",
     },
     {
       size: "900x1600",
-      name: "Full Screen Story/Reel",
+      name: "Full Screen Story/Reel (9:16)",
       orientation: "Vertical",
       notes: "Used for Stories and Reels. Captures full attention.",
       maxFileSizeKB: 4096,
       fileFormats: "JPG, PNG, MP4, MOV",
-      color: "violet",
     },
   ],
   "YouTube Video Ads": [
@@ -133,7 +125,6 @@ const AD_DATA = {
       notes: "Appears next to player on desktop for continued visibility.",
       maxFileSizeKB: 150,
       fileFormats: "JPG, PNG, GIF",
-      color: "rose",
     },
     {
       size: "480x70",
@@ -142,17 +133,15 @@ const AD_DATA = {
       notes: "Appears on the lower 20% of the video content.",
       maxFileSizeKB: 150,
       fileFormats: "JPG, PNG, GIF",
-      color: "amber",
     },
     {
       size: "1280x720",
-      name: "Video Resolution",
+      name: "Video Resolution (Standard HD)",
       orientation: "Horizontal",
-      notes: "Recommended minimum resolution for quality video content.",
+      notes: "Recommended minimum resolution for high-quality video content.",
       maxFileSizeKB: 100000,
       fileFormats: "MP4, MOV, AVI",
-      color: "blue",
-    },
+    }, // Large file size for video content
   ],
   "LinkedIn Ads": [
     {
@@ -162,7 +151,6 @@ const AD_DATA = {
       notes: "Used in sidebar and feed for quick visual connection.",
       maxFileSizeKB: 2048,
       fileFormats: "JPG, PNG, GIF",
-      color: "blue",
     },
     {
       size: "728x90",
@@ -171,536 +159,606 @@ const AD_DATA = {
       notes: "Standard desktop banner for awareness campaigns.",
       maxFileSizeKB: 2048,
       fileFormats: "JPG, PNG, GIF",
-      color: "sky",
     },
     {
       size: "1200x627",
-      name: "Sponsored Content Image",
+      name: "Sponsored Content Image (1.91:1)",
       orientation: "Horizontal",
       notes: "Standard feed post size, optimal for native appearance.",
       maxFileSizeKB: 2048,
       fileFormats: "JPG, PNG",
-      color: "emerald",
     },
   ],
 };
 
 const platforms = Object.keys(AD_DATA);
-const orientations = ["All", "Horizontal", "Vertical", "Square"];
-
-const platformMeta = {
-  "Google Display Network (GDN)": {
-    label: "Google",
-    icon: "G",
-    brand: "text-[#4285f4]",
-  },
-  "Facebook / Instagram Feeds": {
-    label: "Facebook",
-    icon: "f",
-    brand: "text-[#1877f2]",
-  },
-  "YouTube Video Ads": {
-    label: "YouTube",
-    icon: Youtube,
-    brand: "text-[#ff0000]",
-  },
-  "LinkedIn Ads": {
-    label: "LinkedIn",
-    icon: Linkedin,
-    brand: "text-[#0a66c2]",
-  },
+const allOrientations = ["All", "Horizontal", "Vertical", "Square"];
+const views = {
+  DIRECTORY: "directory",
+  HOW_IT_WORKS: "howItWorks",
+  FAQS: "faqs",
+  PRIVACY_POLICY: "privacyPolicy",
 };
 
-const colorStyles = {
-  violet: {
-    text: "text-violet-600",
-    panel: "from-violet-100 via-fuchsia-50 to-indigo-100",
-    block: "from-violet-500 to-indigo-500 border-violet-700",
-    pill: "bg-violet-50 text-violet-700",
-  },
-  blue: {
-    text: "text-blue-600",
-    panel: "from-sky-100 via-cyan-50 to-blue-100",
-    block: "from-sky-500 to-blue-600 border-blue-700",
-    pill: "bg-blue-50 text-blue-700",
-  },
-  sky: {
-    text: "text-sky-600",
-    panel: "from-cyan-100 via-sky-50 to-blue-100",
-    block: "from-cyan-400 to-sky-500 border-sky-700",
-    pill: "bg-sky-50 text-sky-700",
-  },
-  emerald: {
-    text: "text-emerald-600",
-    panel: "from-emerald-100 via-teal-50 to-green-100",
-    block: "from-emerald-400 to-teal-600 border-emerald-700",
-    pill: "bg-emerald-50 text-emerald-700",
-  },
-  rose: {
-    text: "text-pink-500",
-    panel: "from-rose-100 via-pink-50 to-fuchsia-100",
-    block: "from-pink-400 to-rose-500 border-pink-700",
-    pill: "bg-pink-50 text-pink-700",
-  },
-  amber: {
-    text: "text-orange-500",
-    panel: "from-amber-100 via-yellow-50 to-orange-100",
-    block: "from-orange-400 to-amber-400 border-orange-600",
-    pill: "bg-orange-50 text-orange-700",
-  },
-  teal: {
-    text: "text-teal-600",
-    panel: "from-teal-100 via-cyan-50 to-emerald-100",
-    block: "from-teal-400 to-emerald-500 border-teal-700",
-    pill: "bg-teal-50 text-teal-700",
-  },
-};
+// --- Utility Functions (Omitted for brevity, kept for functionality) ---
 
-function parseSize(size) {
+// Parses 'WxH' string to get dimensions
+const parseSize = (size) => {
   const [width, height] = size.split("x").map(Number);
   return { width: width || 0, height: height || 0 };
-}
+};
 
-function formatFileSize(kb) {
-  return kb >= 1024 ? `${(kb / 1024).toFixed(kb >= 10000 ? 0 : 1)} MB` : `${kb} KB`;
-}
+// Sort function factory
+const getComparator = (sortBy, sortDirection) => (a, b) => {
+  const sizeA = parseSize(a.size);
+  const sizeB = parseSize(b.size);
 
-function sortAds(ads, sortBy, direction) {
-  return [...ads].sort((a, b) => {
-    const aSize = parseSize(a.size);
-    const bSize = parseSize(b.size);
-    const aValue = sortBy === "area" ? aSize.width * aSize.height : aSize[sortBy];
-    const bValue = sortBy === "area" ? bSize.width * bSize.height : bSize[sortBy];
-    return direction === "asc" ? aValue - bValue : bValue - aValue;
-  });
-}
-
-function AdPreview({ ad }) {
-  const { width, height } = parseSize(ad.size);
-  const ratio = width / height;
-  const max = 122;
-  const previewWidth = ratio >= 1 ? max : Math.max(30, max * ratio);
-  const previewHeight = ratio >= 1 ? Math.max(18, max / ratio) : max;
-  const colors = colorStyles[ad.color];
-
-  return (
-    <div className={`relative flex h-[128px] items-center justify-center overflow-hidden rounded-lg bg-gradient-to-br ${colors.panel}`}>
-      <Bookmark className="absolute right-4 top-3 h-6 w-6 text-blue-600" strokeWidth={2.2} />
-      <div
-        className={`flex items-center justify-center rounded border-2 bg-gradient-to-br ${colors.block} shadow-[0_12px_22px_rgba(15,23,42,0.18)]`}
-        style={{ width: `${previewWidth}px`, height: `${previewHeight}px` }}
-      >
-        <span className="select-none text-[11px] font-extrabold text-white drop-shadow-sm">
-          {ad.size}
-        </span>
-      </div>
-    </div>
-  );
-}
-
-function OrientationIcon({ orientation, className = "h-4 w-4" }) {
-  if (orientation === "Horizontal") return <Minimize2 className={className} />;
-  if (orientation === "Vertical") return <Maximize2 className={className} />;
-  if (orientation === "Square") return <Square className={className} />;
-  return <Grid2X2 className={className} />;
-}
-
-function PlatformIcon({ platform }) {
-  const meta = platformMeta[platform];
-  const Icon = meta.icon;
-  if (typeof Icon === "string") {
-    return (
-      <span
-        className={`flex h-6 w-6 items-center justify-center rounded-md text-base font-black leading-none ${meta.brand}`}
-      >
-        {Icon}
-      </span>
-    );
-  }
-  return (
-    <span className="flex h-6 w-6 items-center justify-center rounded-md">
-      <Icon className={`h-5 w-5 ${meta.brand}`} fill="currentColor" strokeWidth={0} />
-    </span>
-  );
-}
-
-function AdCard({ ad }) {
-  const colors = colorStyles[ad.color];
-
-  return (
-    <article className="flex min-h-[308px] flex-col rounded-xl border border-slate-200 bg-white p-4 shadow-[0_12px_35px_rgba(17,24,39,0.06)] transition duration-200 hover:-translate-y-1 hover:shadow-[0_18px_40px_rgba(17,24,39,0.12)]">
-      <AdPreview ad={ad} />
-      <div className="mt-4 flex items-start justify-between gap-3">
-        <div>
-          <h3 className={`text-2xl font-black leading-none ${colors.text}`}>{ad.size}</h3>
-          <p className="mt-1 text-sm font-semibold text-[#25366f]">{ad.size} pixels</p>
-        </div>
-        <span className={`inline-flex min-w-[74px] items-center justify-center gap-1 rounded-lg px-2 py-2 text-[11px] font-bold ${colors.pill}`}>
-          <OrientationIcon orientation={ad.orientation} />
-          {ad.orientation}
-        </span>
-      </div>
-      <div className="mt-3 flex flex-wrap gap-2">
-        <span className="inline-flex items-center gap-1 rounded-full bg-rose-50 px-2.5 py-1 text-[11px] font-bold text-rose-700">
-          <UploadCloud className="h-3.5 w-3.5" />
-          {formatFileSize(ad.maxFileSizeKB)}
-        </span>
-        <span className="inline-flex items-center gap-1 rounded-full bg-teal-50 px-2.5 py-1 text-[11px] font-bold text-teal-700">
-          <FileText className="h-3.5 w-3.5" />
-          {ad.fileFormats}
-        </span>
-      </div>
-      <div className="mt-4 flex grow flex-col">
-        <h4 className="flex items-center gap-2 text-base font-black text-[#10184a]">
-          <Layers3 className="h-4 w-4 text-violet-600" />
-          {ad.name}
-        </h4>
-        <p className="mt-2 text-sm font-medium leading-6 text-[#415083]">{ad.notes}</p>
-      </div>
-    </article>
-  );
-}
-
-function CustomBannerPreview({ width, height, area }) {
-  const resolvedWidth = width || (area ? Math.round(Math.sqrt(area)) : 0);
-  const resolvedHeight = height || (area && resolvedWidth ? Math.round(area / resolvedWidth) : 0);
-  const canPreview = resolvedWidth > 0 && resolvedHeight > 0;
-  const ratio = canPreview ? resolvedWidth / resolvedHeight : 1;
-  const maxWidth = 420;
-  const maxHeight = 210;
-  let previewWidth = maxWidth;
-  let previewHeight = maxWidth / ratio;
-
-  if (previewHeight > maxHeight) {
-    previewHeight = maxHeight;
-    previewWidth = maxHeight * ratio;
+  let comparison = 0;
+  if (sortBy === "width") {
+    comparison = sizeA.width - sizeB.width;
+  } else if (sortBy === "height") {
+    comparison = sizeA.height - sizeB.height;
+  } else if (sortBy === "area") {
+    comparison = sizeA.width * sizeA.height - sizeB.width * sizeB.height;
   }
 
+  return sortDirection === "asc" ? comparison : -comparison;
+};
+
+// --- Component: AdSizeCard (Highly Detailed and Impressive Visual) ---
+
+const AdSizeCard = ({ ad }) => {
+  const { size, name, orientation, notes, maxFileSizeKB, fileFormats } = ad;
+  const { width, height } = parseSize(size);
+
+  const Icon =
+    orientation === "Horizontal"
+      ? Minimize2
+      : orientation === "Vertical"
+      ? Maximize2
+      : Square;
+
+  // Logic for Aspect Ratio Visualization
+  const maxVisualizationSize = 100; // Max width/height of the container
+  const aspectRatio = width / height;
+
+  let visualWidth = maxVisualizationSize;
+  let visualHeight = maxVisualizationSize;
+
+  if (width > height) {
+    visualHeight = visualWidth / aspectRatio;
+  } else if (height > width) {
+    visualWidth = visualHeight * aspectRatio;
+  }
+
+  // Format file size nicely
+  const formattedFileSize =
+    maxFileSizeKB >= 1024
+      ? `${(maxFileSizeKB / 1024).toFixed(1)} MB`
+      : `${maxFileSizeKB} KB`;
+
   return (
-    <div className="rounded-xl border border-slate-200 bg-gradient-to-br from-slate-50 via-sky-50 to-violet-50 p-6 text-center sm:col-span-2 lg:col-span-3">
-      <p className="text-sm font-black text-[#25366f]">
-        No exact database match found, but here is your custom banner preview.
-      </p>
-      <div className="mt-6 flex min-h-[250px] items-center justify-center rounded-xl border border-dashed border-slate-300 bg-white/70 p-6">
-        {canPreview ? (
-          <div
-            className="relative flex items-center justify-center rounded-lg border-2 border-teal-700 bg-gradient-to-br from-teal-400 via-sky-500 to-violet-600 shadow-[0_18px_45px_rgba(15,23,42,0.22)]"
-            style={{
-              width: `${Math.max(42, previewWidth)}px`,
-              height: `${Math.max(28, previewHeight)}px`,
-            }}
-          >
-            <div className="absolute inset-2 rounded-md border border-white/35" />
-            <span className="px-3 text-center text-sm font-black text-white drop-shadow">
-              {resolvedWidth}x{resolvedHeight}
-            </span>
-          </div>
-        ) : (
-          <p className="text-sm font-bold text-[#66709a]">
-            Fill width and height to generate a banner preview.
-          </p>
-        )}
-      </div>
-      <div className="mt-4 flex flex-wrap justify-center gap-2 text-xs font-black">
-        {resolvedWidth ? <span className="rounded-full bg-teal-100 px-3 py-1 text-teal-700">Width {resolvedWidth}px</span> : null}
-        {resolvedHeight ? <span className="rounded-full bg-blue-100 px-3 py-1 text-blue-700">Height {resolvedHeight}px</span> : null}
-        {resolvedWidth && resolvedHeight ? (
-          <span className="rounded-full bg-violet-100 px-3 py-1 text-violet-700">
-            Area {resolvedWidth * resolvedHeight}px
+    <div className="bg-(--background) p-4 border border-gray-100 rounded-xl shadow-xl transition duration-300 hover:shadow-2xl hover:-translate-y-0.5 flex flex-col h-full">
+      {/* Visual Aspect Ratio Block */}
+      <div className="flex justify-center items-center h-[120px] mb-4 bg-indigo-50 border border-indigo-200 rounded-lg shadow-inner p-3">
+        <div
+          style={{ width: `${visualWidth}px`, height: `${visualHeight}px` }}
+          className="bg-indigo-600 border-2 border-indigo-700 rounded-md shadow-md transition-all duration-300 flex items-center justify-center relative"
+        >
+          <span className="text-[10px] text-(--foreground) font-bold opacity-80 select-none pointer-events-none">
+            {size}
           </span>
-        ) : null}
+        </div>
+      </div>
+
+      {/* Primary Size & Orientation */}
+      <div className="flex justify-between items-start mb-3 border-b pb-2 border-gray-100">
+        <div>
+          <div className="text-3xl font-extrabold text-indigo-700">{size}</div>
+          <p className="text-sm text-(--muted-foreground) font-medium">
+            {width}x{height} pixels
+          </p>
+        </div>
+        <div className="flex flex-col items-center p-2 rounded-lg bg-(--muted) border border-gray-100">
+          <Icon className="w-5 h-5 text-indigo-500" aria-hidden="true" />
+          <span className="text-xs font-semibold text-indigo-600 mt-1">
+            {orientation}
+          </span>
+        </div>
+      </div>
+
+      {/* File Specs Badges */}
+      <div className="flex space-x-2 mb-3">
+        <div className="flex items-center text-xs font-semibold px-2.5 py-1 rounded-full bg-red-100 text-red-700">
+          <UploadCloud className="w-3 h-3 mr-1" />
+          {formattedFileSize}
+        </div>
+        <div className="flex items-center text-xs font-semibold px-2.5 py-1 rounded-full bg-green-100 text-gray-900">
+          <FileText className="w-3 h-3 mr-1" />
+          {fileFormats.split(",")[0].trim()}...
+        </div>
+      </div>
+
+      {/* Name and Notes */}
+      <h3 className="text-lg font-bold text-(--foreground) mb-1 flex items-center">
+        <Layers className="w-4 h-4 mr-2 text-indigo-500" />
+        {name}
+      </h3>
+      <p className="text-sm text-(--muted-foreground) grow">{notes}</p>
+    </div>
+  );
+};
+
+// --- Component: How It Works ---
+
+const HowItWorks = () => {
+  const steps = [
+    {
+      icon: MousePointerClick,
+      title: "Select Your Platform",
+      description:
+        "Choose the digital advertising platform you are designing for (e.g., Google, Facebook, LinkedIn). This narrows down the relevant specifications.",
+    },
+    {
+      icon: ListFilter,
+      title: "Filter and Sort",
+      description:
+        "Use the filter controls to show only horizontal, vertical, or square orientations. Optionally, sort the results by width, height, or total area to find the largest or smallest sizes.",
+    },
+    {
+      icon: Eye,
+      title: "View Specs and Visualize",
+      description:
+        "Each card displays the exact dimensions (WxH), the name, crucial notes, file formats, and the maximum file size. The colored block provides an instant visual reference for the aspect ratio.",
+    },
+  ];
+
+  return (
+    <div className="bg-(--background) p-6 md:p-10 rounded-xl shadow-2xl ring-1 ring-gray-100">
+      <h2 className="text-3xl font-extrabold text-indigo-700 mb-6 border-b pb-3">
+        <Info className="w-8 h-8 inline mr-3 align-text-bottom" /> How It Works
+      </h2>
+      <p className="text-(--muted-foreground) mb-8 max-w-3xl">
+        The Ad Size Directory is designed for speed and clarity. Follow these
+        simple steps to find the exact creative specifications you need.
+      </p>
+
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        {steps.map((step, index) => (
+          <div
+            key={index}
+            className="flex flex-col items-start p-6 bg-(--muted) rounded-xl border border-gray-100 transition-all duration-300 hover:shadow-lg"
+          >
+            <div className="flex items-center justify-center w-14 h-14 bg-indigo-500 text-(--foreground) rounded-full mb-4 shadow-xl">
+              <step.icon className="w-7 h-7" />
+            </div>
+            <span className="text-sm font-bold text-indigo-600 mb-1">
+              STEP {index + 1}
+            </span>
+            <h3 className="text-xl font-bold text-(--foreground) mb-2">
+              {step.title}
+            </h3>
+            <p className="text-(--muted-foreground) text-sm">{step.description}</p>
+          </div>
+        ))}
+      </div>
+
+      {/* Premium Image Placeholder */}
+      <div className="mt-12 p-8 bg-indigo-50 border border-indigo-200 rounded-xl text-center shadow-lg">
+        <div className="flex items-center justify-center space-x-6 text-indigo-700">
+          <LayoutGrid className="w-10 h-10" />
+          <Square className="w-10 h-10" />
+          <Minimize2 className="w-10 h-10" />
+        </div>
+        <p className="mt-4 text-xl font-semibold text-indigo-800">
+          Visualize Dimensions, Not Guesswork. Get the specs right, every time.
+        </p>
       </div>
     </div>
   );
-}
+};
 
-export default function App() {
+// --- Component: FAQ Section (Accordion) ---
+
+const FAQItem = ({ question, answer, isOpen, onClick }) => (
+  <div className="border-b border border-(--border)">
+    <button
+      className="flex justify-between items-center w-full py-4 text-left font-semibold text-(--foreground) hover:text-indigo-600 transition-colors"
+      onClick={onClick}
+      aria-expanded={isOpen}
+    >
+      <span>{question}</span>
+      {isOpen ? (
+        <ChevronUp className="w-5 h-5 text-indigo-500" />
+      ) : (
+        <ChevronDown className="w-5 h-5 text-(--muted-foreground)" />
+      )}
+    </button>
+    <div
+      className={`overflow-hidden transition-all duration-500 ease-in-out ${
+        isOpen ? "max-h-96 opacity-100 py-3" : "max-h-0 opacity-0"
+      }`}
+    >
+      <p className="text-(--muted-foreground) text-sm pr-4">{answer}</p>
+    </div>
+  </div>
+);
+
+const FAQSection = () => {
+  const [openIndex, setOpenIndex] = useState(null);
+
+  const faqs = [
+    {
+      q: "Are these dimensions the absolute minimum/maximum required?",
+      a: "The dimensions listed are the standard, most widely accepted and recommended sizes by each respective platform. Always double-check the platform's official documentation for campaigns with highly specific or unusual creative types.",
+    },
+    {
+      q: "Why are file size limits different across platforms?",
+      a: "File size limits depend on the platform's user experience goals and rendering requirements. For instance, high-traffic display networks (like GDN) enforce smaller limits (around 150KB) for faster page load times, while social feeds (like Facebook) allow larger files (up to 4MB) to support higher-quality imagery and video in native posts.",
+    },
+    {
+      q: "How is 'area' calculated for sorting?",
+      a: "The 'area' sorting option calculates the total number of pixels (Width x Height) for each ad size, allowing you to quickly find the largest or smallest ad formats regardless of their orientation.",
+    },
+    {
+      q: "What does the visualization block represent?",
+      a: "The small colored block is a proportional representation of the ad's aspect ratio (width to height). It helps you instantly visualize the shape without needing to imagine the pixel dimensions.",
+    },
+  ];
+
+  return (
+    <div className="bg-(--background) p-6 md:p-10 rounded-xl shadow-2xl ring-1 ring-gray-100">
+      <h2 className="text-3xl font-extrabold text-indigo-700 mb-8 border-b pb-3">
+        <HelpCircle className="w-8 h-8 inline mr-3 align-text-bottom" />{" "}
+        Frequently Asked Questions
+      </h2>
+      <div
+  className="plain-button-override  ">
+        {faqs.map((faq, index) => (
+          <FAQItem
+            key={index}
+            question={faq.q}
+            answer={faq.a}
+            isOpen={openIndex === index}
+            onClick={() => setOpenIndex(openIndex === index ? null : index)}
+          />
+        ))}
+      </div>
+    </div>
+  );
+};
+
+// --- Component: Privacy Policy ---
+
+const PrivacyPolicy = () => (
+  <div className="bg-(--background) p-6 md:p-10 rounded-xl shadow-2xl ring-1 ring-gray-100">
+    <h2 className="text-3xl font-extrabold text-indigo-700 mb-6 border-b pb-3">
+      <Shield className="w-8 h-8 inline mr-3 align-text-bottom" /> Privacy
+      Policy
+    </h2>
+    <div className="space-y-6 text-(--muted-foreground)">
+      <p className="text-sm italic">Effective Date: November 20, 2025</p>
+
+      <h3 className="text-xl font-bold text-(--foreground) flex items-center">
+        <CheckCircle className="w-5 h-5 mr-2 text-green-500" />
+        1. Information We Collect
+      </h3>
+      <p>
+        This Ad Size Directory application is designed to be a static reference
+        tool. **We collect absolutely no personal data** from our users. We do
+        not use cookies, tracking pixels, or any form of persistent user
+        identification. All filtering and sorting operations are performed
+        locally within your browser.
+      </p>
+
+      <h3 className="text-xl font-bold text-(--foreground) flex items-center">
+        <CheckCircle className="w-5 h-5 mr-2 text-green-500" />
+        2. Data Storage and Processing
+      </h3>
+      <p>
+        The ad size data is static and embedded directly within the
+        application's code. No data is stored on external servers, and no user
+        input (search, filter, or sort preferences) is logged or transmitted
+        externally.
+      </p>
+
+      <h3 className="text-xl font-bold text-(--foreground) flex items-center">
+        <CheckCircle className="w-5 h-5 mr-2 text-green-500" />
+        3. External Links
+      </h3>
+      <p>
+        While this app does not contain active external links, the
+        specifications themselves are based on third-party platforms (Google,
+        Facebook, etc.). We encourage users to consult the official privacy
+        policies of those external platforms when engaging in advertising
+        activities.
+      </p>
+
+      <p className="text-sm font-medium pt-4 border-t border-gray-100">
+        **Commitment:** Our goal is to provide a useful tool with the highest
+        standard of user privacy. Your usage is anonymous and untracked.
+      </p>
+    </div>
+  </div>
+);
+
+// --- Component: Footer (New Impressive Section with Gradient) ---
+
+// --- Main Application Component ---
+
+const App = () => {
+  // State for Directory filtering and sorting
   const [selectedPlatform, setSelectedPlatform] = useState(platforms[0]);
   const [filterOrientation, setFilterOrientation] = useState("All");
-  const [sortBy, setSortBy] = useState("area");
-  const [sortDirection, setSortDirection] = useState("asc");
-  const [dimensionFilters, setDimensionFilters] = useState({
-    width: "",
-    height: "",
-    area: "",
-  });
+  const [sortBy, setSortBy] = useState("area"); // 'width', 'height', 'area'
+  const [sortDirection, setSortDirection] = useState("asc"); // 'asc', 'desc'
 
-  const filteredAds = useMemo(() => {
-    const platformAds = AD_DATA[selectedPlatform] || [];
-    const orientationFiltered =
-      filterOrientation === "All"
-        ? platformAds
-        : platformAds.filter((ad) => ad.orientation === filterOrientation);
+  // State for Navigation
+  const [currentView, setCurrentView] = useState(views.DIRECTORY);
 
-    const dimensionFiltered = orientationFiltered.filter((ad) => {
-      const { width, height } = parseSize(ad.size);
-      const area = width * height;
-      const widthValue = Number(dimensionFilters.width);
-      const heightValue = Number(dimensionFilters.height);
-      const areaValue = Number(dimensionFilters.area);
-
-      if (dimensionFilters.width && width !== widthValue) return false;
-      if (dimensionFilters.height && height !== heightValue) return false;
-      if (dimensionFilters.area && area !== areaValue) return false;
-      return true;
-    });
-
-    return sortAds(dimensionFiltered, sortBy, sortDirection);
-  }, [dimensionFilters, filterOrientation, selectedPlatform, sortBy, sortDirection]);
-
+  // Toggle sort direction
   const toggleSort = useCallback(
     (key) => {
-      if (key === sortBy) {
-        setSortDirection((value) => (value === "asc" ? "desc" : "asc"));
-        return;
+      if (sortBy === key) {
+        setSortDirection(sortDirection === "asc" ? "desc" : "asc");
+      } else {
+        setSortBy(key);
+        setSortDirection("asc");
       }
-      setSortBy(key);
-      setSortDirection("asc");
     },
-    [sortBy]
+    [sortBy, sortDirection]
   );
 
-  const hasDimensionFilter =
-    dimensionFilters.width || dimensionFilters.height || dimensionFilters.area;
-  const customPreview = {
-    width: Number(dimensionFilters.width) || 0,
-    height: Number(dimensionFilters.height) || 0,
-    area: Number(dimensionFilters.area) || 0,
+  // Memoize the filtered and sorted list of ads
+  const filteredAndSortedAds = useMemo(() => {
+    const data = AD_DATA[selectedPlatform] || [];
+
+    // 1. Filter
+    const filtered =
+      filterOrientation === "All"
+        ? data
+        : data.filter((ad) => ad.orientation === filterOrientation);
+
+    // 2. Sort
+    const comparator = getComparator(sortBy, sortDirection);
+    return [...filtered].sort(comparator);
+  }, [selectedPlatform, filterOrientation, sortBy, sortDirection]);
+
+  // Helper for sorting buttons
+  const getSortIcon = (key) => {
+    if (sortBy !== key) return <ChevronDown className="w-4 h-4 opacity-50" />;
+    return sortDirection === "asc" ? (
+      <ChevronUp className="w-4 h-4 text-indigo-500" />
+    ) : (
+      <ChevronDown className="w-4 h-4 text-indigo-500" />
+    );
   };
 
-  const updateDimensionFilter = (key, value) => {
-    setDimensionFilters((filters) => ({
-      ...filters,
-      [key]: value.replace(/\D/g, ""),
-    }));
-  };
+  // Tab data for navigation
+  const tabs = [
+    { id: views.DIRECTORY, name: "Directory", icon: LayoutGrid },
+    { id: views.HOW_IT_WORKS, name: "How It Works", icon: Info },
+    { id: views.FAQS, name: "FAQs", icon: HelpCircle },
+    { id: views.PRIVACY_POLICY, name: "Policy", icon: Shield },
+  ];
 
-  const resetDimensionFilters = () => {
-    setDimensionFilters({ width: "", height: "", area: "" });
+  // --- Render Functions for Directory View ---
+
+  const platformsPanel = (
+    <div className="bg-(--background) p-4 rounded-xl shadow-lg ring-1 ring-gray-200 mb-6">
+      <h2 className="text-lg font-semibold mb-3 text-(--foreground)">
+        Select Platform
+      </h2>
+      <div className="flex flex-wrap gap-2">
+        {platforms.map((platform) => (
+          <button
+            key={platform}
+            onClick={() => setSelectedPlatform(platform)}
+            className={`
+              px-4 py-2 text-sm font-medium rounded-full transition-all duration-200
+              ${
+                selectedPlatform === platform
+                  ? "bg-indigo-600 text-(--foreground) shadow-md hover:bg-indigo-700 ring-4 ring-indigo-300"
+                  : "bg-(--background) text-(--foreground) ring-1 ring-gray-200 hover:bg-(--muted)"
+              }
+            `}
+            aria-pressed={selectedPlatform === platform}
+          >
+            {platform.split(" ")[0]}
+          </button>
+        ))}
+      </div>
+    </div>
+  );
+
+  const filterAndSortPanel = (
+    <div className="bg-(--background) p-4 rounded-xl shadow-lg ring-1 ring-gray-200 mb-6">
+      <h2 className="text-lg font-semibold mb-3 text-(--foreground)">
+        Filter & Sort
+      </h2>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        {/* Orientation Filter */}
+        <div>
+          <label className="block text-sm font-medium text-(--foreground) mb-1">
+            Filter by Orientation
+          </label>
+          <div className="flex space-x-2">
+            {allOrientations.map((orientation) => (
+              <button
+                key={orientation}
+                onClick={() => setFilterOrientation(orientation)}
+                className={`flex-1 py-2 text-sm font-medium rounded-lg transition duration-150
+                  ${
+                    filterOrientation === orientation
+                      ? "bg-indigo-500 text-(--foreground) shadow-sm"
+                      : "bg-(--background) text-(--foreground) ring-1 ring-gray-200 hover:bg-(--muted)"
+                  }
+                `}
+                aria-label={`Filter by ${orientation}`}
+              >
+                {orientation === "Horizontal" && (
+                  <Minimize2 className="w-4 h-4 inline mr-1" />
+                )}
+                {orientation === "Vertical" && (
+                  <Maximize2 className="w-4 h-4 inline mr-1" />
+                )}
+                {orientation === "Square" && (
+                  <Square className="w-4 h-4 inline mr-1" />
+                )}
+                {orientation === "All" && (
+                  <LayoutGrid className="w-4 h-4 inline mr-1" />
+                )}
+                {orientation}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Sorting Controls */}
+        <div className="md:col-span-2 lg:col-span-2">
+          <label className="block text-sm font-medium text-(--foreground) mb-1">
+            Sort by Dimension
+          </label>
+          <div className="flex space-x-2">
+            {["width", "height", "area"].map((key) => (
+              <button
+                key={key}
+                onClick={() => toggleSort(key)}
+                className={`flex-1 flex items-center justify-center py-2 text-sm font-medium rounded-lg transition duration-150
+                  ${
+                    sortBy === key
+                      ? "bg-indigo-100 text-indigo-700 shadow-sm"
+                      : "bg-(--background) text-(--foreground) ring-1 ring-gray-200 hover:bg-(--muted)"
+                  }
+                `}
+                aria-label={`Sort by ${key} ${
+                  sortBy === key
+                    ? sortDirection === "asc"
+                      ? "ascending"
+                      : "descending"
+                    : ""
+                }`}
+              >
+                <span className="capitalize">{key}</span>
+                {getSortIcon(key)}
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+
+  const directoryView = (
+    <>
+      <p className="text-(--muted-foreground) mb-6 max-w-3xl">
+        A premium, filterable, and sortable database of the most common and
+        effective digital ad creative sizes across major platforms.
+      </p>
+
+      {platformsPanel}
+      {filterAndSortPanel}
+
+      {/* Results Header */}
+      <div className="flex justify-between items-center mb-4 pb-2 border-b border border-(--border)">
+        <h3 className="text-xl font-bold text-(--foreground)">
+          Sizes for: <span className="text-indigo-600">{selectedPlatform}</span>
+        </h3>
+        <span className="text-sm font-medium text-(--muted-foreground)">
+          Showing {filteredAndSortedAds.length} ad
+          {filteredAndSortedAds.length !== 1 ? "s" : ""}
+        </span>
+      </div>
+
+      {/* Ad Size Grid */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        {filteredAndSortedAds.length > 0 ? (
+          filteredAndSortedAds.map((ad, index) => (
+            <AdSizeCard key={index} ad={ad} />
+          ))
+        ) : (
+          <div className="lg:col-span-4 p-8 text-center bg-(--background) rounded-xl shadow-lg">
+            <p className="text-xl text-(--muted-foreground)">
+              No ad sizes found for the current filters. Try selecting 'All'
+              orientation.
+            </p>
+          </div>
+        )}
+      </div>
+    </>
+  );
+
+  // --- Conditional Main Content Rendering ---
+  const renderMainContent = () => {
+    switch (currentView) {
+      case views.HOW_IT_WORKS:
+        return <HowItWorks />;
+      case views.FAQS:
+        return <FAQSection />;
+      case views.PRIVACY_POLICY:
+        return <PrivacyPolicy />;
+      case views.DIRECTORY:
+      default:
+        return directoryView;
+    }
   };
 
   return (
-    <div className="min-h-screen bg-[#f6f9ff] text-[#10184a]">
-      <section
-        className="relative overflow-hidden bg-[#071044] bg-cover bg-center px-4 pb-14 pt-7 text-white sm:px-8"
-        style={{ backgroundImage: "url('/ad-banner-size-finder-bg.svg')" }}
-      >
-        <div className="absolute inset-0 bg-gradient-to-r from-[#071044] via-[#071044]/88 to-[#071044]/12" />
-        <div className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-[#071044] to-transparent" />
-        <div className="relative mx-auto flex min-h-[142px] max-w-6xl items-center justify-between gap-8">
-          <div className="flex items-center gap-4 sm:gap-6">
-            <div className="flex h-16 w-16 items-center justify-center rounded-xl bg-gradient-to-br from-indigo-500 via-sky-500 to-teal-400 shadow-2xl shadow-cyan-500/20 sm:h-[72px] sm:w-[72px]">
-              <BadgeCheck className="h-9 w-9 sm:h-10 sm:w-10" />
-            </div>
-            <div>
-              <h1 className="text-3xl font-black leading-tight sm:text-4xl lg:text-[42px]">
-                Ad Banner <span className="text-teal-300">Size Finder</span>
-              </h1>
-              <p className="mt-2 text-sm font-semibold text-indigo-100 sm:text-base">
-                Find the perfect ad banner size for every platform
-              </p>
-            </div>
-          </div>
-          <div className="hidden h-28 w-[330px] lg:block" aria-hidden="true" />
+    <div
+      className={`min-h-screen font-[Inter] bg-(--muted) text-(--foreground) transition-colors duration-300`}
+    >
+      <header className="py-4 shadow-md bg-(--background) sticky top-0 z-10">
+        <div className="container mx-auto px-4">
+          <h1 className="text-3xl font-extrabold text-indigo-600 mb-3">
+            Ad-Banner-Size-Finder
+          </h1>
+          {/* Navigation Tabs */}
+          <nav className="flex space-x-1 sm:space-x-2 border-b border border-(--border)">
+            {tabs.map((tab) => (
+              <button
+                key={tab.id}
+                onClick={() => setCurrentView(tab.id)}
+                className={`
+                  flex items-center px-3 py-2 text-sm font-medium rounded-t-lg transition-all duration-200
+                  ${
+                    currentView === tab.id
+                      ? "text-indigo-600 border-b-2 border-indigo-600 bg-(--muted)"
+                      : "text-(--muted-foreground) hover:text-(--foreground) hover:bg-(--muted)"
+                  }
+                `}
+                aria-current={currentView === tab.id ? "page" : undefined}
+              >
+                <tab.icon className="w-4 h-4 mr-1" />
+                <span className="hidden sm:inline">{tab.name}</span>
+                <span className="inline sm:hidden">
+                  {tab.name.split(" ")[0]}
+                </span>
+              </button>
+            ))}
+          </nav>
         </div>
-      </section>
+      </header>
 
-      <main className="relative mx-auto -mt-10 max-w-6xl px-2 pb-10 sm:px-6">
-        <div className="overflow-hidden rounded-t-2xl bg-white shadow-[0_22px_70px_rgba(15,23,42,0.16)]">
-          <div className="space-y-5 p-4 sm:p-6">
-            <section className="flex items-center justify-between gap-5 rounded-xl bg-gradient-to-r from-sky-50 via-indigo-50 to-violet-50 p-5">
-                  <div className="flex items-center gap-5">
-                    <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-full bg-white shadow-lg">
-                      <div className="flex h-11 w-11 items-center justify-center rounded-full bg-gradient-to-br from-teal-400 to-cyan-500 text-white">
-                        <Star className="h-6 w-6 fill-white" />
-                      </div>
-                    </div>
-                    <p className="max-w-2xl text-sm font-semibold leading-6 text-[#25366f] sm:text-base">
-                      A premium, filterable, and sortable database of the most common and
-                      effective digital ad creative sizes across major platforms.
-                    </p>
-                  </div>
-                  <div className="hidden items-end gap-1.5 md:flex">
-                    {[20, 32, 44, 58, 78].map((height) => (
-                      <span
-                        key={height}
-                        className="w-3 rounded-t bg-gradient-to-t from-violet-500 to-cyan-400"
-                        style={{ height: `${height}px` }}
-                      />
-                    ))}
-                    <Target className="h-12 w-12 text-violet-600" />
-                  </div>
-                </section>
-
-                <section className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
-                  <h2 className="text-base font-black">Select Platform</h2>
-                  <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-                    {platforms.map((platform) => (
-                      <button
-                        key={platform}
-                        type="button"
-                        onClick={() => {
-                          setSelectedPlatform(platform);
-                          setFilterOrientation("All");
-                          resetDimensionFilters();
-                        }}
-                        className={`flex h-12 items-center justify-center gap-3 rounded-lg border px-4 text-sm font-black transition ${
-                          selectedPlatform === platform
-                            ? "border-teal-500 bg-teal-50 text-teal-700 shadow-[0_10px_24px_rgba(20,184,166,0.16)]"
-                            : "border-slate-200 bg-white text-[#10184a] hover:border-indigo-200 hover:bg-slate-50"
-                        }`}
-                        aria-pressed={selectedPlatform === platform}
-                      >
-                        <PlatformIcon platform={platform} />
-                        {platformMeta[platform].label}
-                      </button>
-                    ))}
-                  </div>
-                </section>
-
-                <section className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
-                  <h2 className="text-xl font-black">Filter & Sort</h2>
-                  <div className="mt-5 grid gap-5 lg:grid-cols-[1fr_1.25fr]">
-                    <div>
-                      <p className="mb-3 text-sm font-bold text-[#25366f]">Filter by Orientation</p>
-                      <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
-                        {orientations.map((orientation) => (
-                          <button
-                            key={orientation}
-                            type="button"
-                            onClick={() => setFilterOrientation(orientation)}
-                            className={`flex h-14 items-center justify-center gap-2 rounded-lg border px-3 text-sm font-black transition ${
-                              filterOrientation === orientation
-                                ? "border-teal-500 bg-gradient-to-br from-teal-500 to-emerald-500 text-white shadow-lg shadow-teal-500/20"
-                                : "border-slate-200 bg-white text-[#10184a] hover:bg-slate-50"
-                            }`}
-                          >
-                            <OrientationIcon orientation={orientation} />
-                            {orientation}
-                          </button>
-                        ))}
-                      </div>
-                    </div>
-                    <div>
-                      <div className="mb-3 flex items-center justify-between gap-3">
-                        <p className="text-sm font-bold text-[#25366f]">Filter by Size & Sort</p>
-                        {hasDimensionFilter ? (
-                          <button
-                            type="button"
-                            onClick={resetDimensionFilters}
-                            className="inline-flex items-center gap-1 text-xs font-black text-teal-700 hover:text-teal-900"
-                          >
-                            <RotateCcw className="h-3.5 w-3.5" />
-                            Reset
-                          </button>
-                        ) : null}
-                      </div>
-                      <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
-                        {["width", "height", "area"].map((key) => (
-                          <label
-                            key={key}
-                            className={`flex h-14 items-center rounded-lg border bg-white pl-4 pr-2 transition ${
-                              sortBy === key
-                                ? "border-teal-200 bg-teal-50 text-teal-700"
-                                : "border-slate-200 bg-white text-[#25366f] hover:bg-slate-50"
-                            }`}
-                          >
-                            <input
-                              type="text"
-                              inputMode="numeric"
-                              value={dimensionFilters[key]}
-                              onChange={(event) => updateDimensionFilter(key, event.target.value)}
-                              placeholder={key === "area" ? "Area" : key === "width" ? "Width" : "Height"}
-                              aria-label={`Filter by ${key}`}
-                              className="min-w-0 flex-1 bg-transparent text-sm font-black capitalize text-[#25366f] outline-none placeholder:text-[#25366f]"
-                            />
-                            <button
-                              type="button"
-                              onClick={() => toggleSort(key)}
-                              className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md text-teal-700 hover:bg-white"
-                              aria-label={`Sort by ${key}`}
-                            >
-                              {sortBy === key && sortDirection === "asc" ? (
-                                <ChevronUp className="h-4 w-4" />
-                              ) : (
-                                <ChevronDown className="h-4 w-4" />
-                              )}
-                            </button>
-                          </label>
-                        ))}
-                      </div>
-                      <p className="mt-2 text-xs font-semibold text-[#66709a]">
-                        Example: width 300, height 600, or area 180000.
-                      </p>
-                    </div>
-                  </div>
-                </section>
-
-                <div className="flex flex-wrap items-center justify-between gap-4 pt-2">
-                  <h2 className="flex items-center gap-3 text-xl font-black">
-                    <PlatformIcon platform={selectedPlatform} />
-                    Sizes for:
-                    <span className="text-teal-600">{selectedPlatform}</span>
-                  </h2>
-                  <span className="text-sm font-bold text-[#66709a]">Showing {filteredAds.length} ads</span>
-                </div>
-
-                <section className="grid gap-4 lg:grid-cols-4">
-                  <div className="grid gap-4 sm:grid-cols-2 lg:col-span-3 lg:grid-cols-3">
-                    {filteredAds.map((ad) => (
-                      <AdCard key={`${selectedPlatform}-${ad.size}-${ad.name}`} ad={ad} />
-                    ))}
-                    {filteredAds.length === 0 && (
-                      <CustomBannerPreview
-                        width={customPreview.width}
-                        height={customPreview.height}
-                        area={customPreview.area}
-                      />
-                    )}
-                  </div>
-
-                  <aside className="flex min-h-[308px] flex-col justify-between rounded-xl bg-gradient-to-br from-violet-100 via-indigo-100 to-blue-200 p-6">
-                    <div>
-                      <h3 className="text-xl font-black leading-7 text-violet-800">
-                        Not sure <br /> which size <br /> to use?
-                      </h3>
-                      <p className="mt-4 text-sm font-semibold leading-6 text-[#25366f]">
-                        Use multiple sizes to maximise performance across placements.
-                      </p>
-                    </div>
-                    <div className="my-6 flex items-end justify-center gap-4">
-                      <div className="h-24 w-24 rounded-full bg-gradient-to-br from-teal-400 to-blue-600 shadow-lg" />
-                      <div className="rounded-xl border-4 border-violet-600 bg-white p-4 shadow-xl">
-                        <Target className="h-16 w-16 text-violet-600" />
-                      </div>
-                    </div>
-                    <button className="flex h-14 items-center justify-center gap-3 rounded-lg bg-gradient-to-br from-violet-600 to-indigo-600 px-4 text-sm font-black text-white shadow-xl">
-                      Learn Best Practices
-                      <ArrowRight className="h-5 w-5" />
-                    </button>
-                  </aside>
-                </section>
-
-                <section className="grid gap-4 rounded-xl bg-gradient-to-r from-indigo-50 via-white to-violet-50 p-5 md:grid-cols-3">
-                  {[
-                    [Smartphone, "Better Performance", "Different sizes perform better on different placements.", "text-blue-600"],
-                    [CheckCircle2, "Fast Loading", "Keep creatives under platform limits for faster loading.", "text-teal-600"],
-                    [Target, "Smart Targeting", "Test multiple sizes to find what works best.", "text-orange-500"],
-                  ].map(([Icon, title, text, color]) => (
-                    <div key={title} className="flex items-center gap-5 md:border-r md:border-slate-200 md:last:border-r-0">
-                      <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-xl bg-white shadow-sm">
-                        <Icon className={`h-9 w-9 ${color}`} />
-                      </div>
-                      <div>
-                        <h3 className={`font-black ${color}`}>{title}</h3>
-                        <p className="mt-1 text-sm font-semibold leading-5 text-[#25366f]">{text}</p>
-                      </div>
-                    </div>
-                  ))}
-                </section>
-          </div>
-        </div>
+      <main className="container mx-auto p-4 pt-6">
+        {/* Render content based on selected tab */}
+        <div className="min-h-[60vh]">{renderMainContent()}</div>
       </main>
+
+      {/* Impressive Footer - Removed as per user request */}
     </div>
   );
-}
+};
+
+export default App;
+// import React from "react";
+// import AdSizeFinder from "./adSizeFinder";
+
+// const App = () => {
+//   return (
+//     <div className="App">
+//       <AdSizeFinder />
+//     </div>
+//   );
+// };
+
+// export default App;

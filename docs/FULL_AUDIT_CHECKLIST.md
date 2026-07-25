@@ -26,9 +26,10 @@ Public/admin route -> thin App Router page -> registry or feature module -> shar
 | Public Firebase | Blogs, BuySmart, extensions, academy, videos, ratings can be read safely | `npm run firebase:live-check`, `npm run firebase:integrity` |
 | Admin Firebase | Admin write path validates credentials and write contract | `npm run firebase:admin-write-check:dry-run` |
 | API routes | Health, blogs, currency, metals, RSS, sitemap, ads.txt, service worker | targeted fetch smoke or `npm run test:smoke` |
-| Security | Headers, protected admin APIs, dependency audit, secret exposure | `npm run test:security`, `npm run test:admin-api`, `npm run audit` |
+| Security | Headers, protected admin APIs, dependency audit, secret exposure and credential rotation | `npm run security:secrets`, `npm run test:security`, `npm run test:admin-api`, `npm run audit` |
+| Tool readiness | Structure, entry imports, interactions, placeholders, API dependencies, deterministic evidence | `npm run test:tool-readiness`, `npm run tools:readiness:strict` |
 | Performance | JS/CSS chunks, image budgets, lazy tool imports, Lighthouse budgets | `npm run bundle:audit`, `npm run performance:budget:strict`, `npm run test:lighthouse:dev` |
-| UX | Mobile overflow, keyboard/focus basics, blog reader controls, priority tools | `npm run test:mobile-ux`, `npm run test:blogs-a11y-seo`, `npm run test:tools:priority` |
+| UX | Mobile overflow, keyboard/focus basics, light/dark visual regressions, blog reader controls, priority tools | `npm run test:visual`, `npm run test:mobile-ux`, `npm run test:blogs-a11y-seo`, `npm run test:tools:priority` |
 | Release | Env readiness, Vercel readiness, production parity and monitoring | `npm run env:readiness`, `npm run deploy:readiness`, `npm run release:doctor` |
 
 ## Current Audit Baseline
@@ -58,7 +59,7 @@ These are not product-code failures, but they block some local release checks un
 - Full Admin SDK write verification needs server-only Firebase Admin credentials through `FIREBASE_SERVICE_ACCOUNT`, `FIREBASE_SERVICE_ACCOUNT_FILE`, or split `FIREBASE_PROJECT_ID`, `FIREBASE_CLIENT_EMAIL`, and `FIREBASE_PRIVATE_KEY`.
 - Optional integrations such as maps, AI providers, VAPID, and monitoring webhooks should stay optional unless a route requires them for a release.
 
-Never commit real tokens, service account JSON, private keys, or production passwords. Keep only examples and variable names in docs.
+Never commit real tokens, service account JSON, private keys, or production passwords. Keep only examples and variable names in docs. Any credential shared outside the secret store must still be rotated using `docs/SECURITY_CREDENTIAL_ROTATION.md`, even when the repository scan passes.
 
 ## Fast Local Audit
 
@@ -82,6 +83,9 @@ Use this before a release-style handoff:
 npm run env:readiness
 npm run routes:check
 npm run qa:routes:inventory
+npm run security:secrets
+npm run test:tool-readiness
+npm run tools:readiness:strict
 npm run firebase:check
 npm run firebase:live-check
 npm run firebase:integrity
@@ -95,6 +99,7 @@ npm run test:core-cache
 npm run test:route-loading
 npm run lint:web
 npm run build:web
+npm run seo:route-quality:strict
 npm run build:admin
 npm run audit
 npm run bundle:audit
@@ -114,6 +119,7 @@ With the servers running:
 npm run qa:routes:strict
 ALTFT_REUSE_SERVER=true npm run test:smoke
 ALTFT_REUSE_SERVER=true npm run test:security
+ALTFT_REUSE_SERVER=true npm run test:visual
 ALTFT_REUSE_SERVER=true npm run test:admin-api
 ALTFT_REUSE_SERVER=true npm run test:tools:priority
 ALTFT_REUSE_SERVER=true npm run test:mobile-ux
@@ -158,4 +164,5 @@ High-value next improvements:
 2. Add a provider-health panel for optional third-party API keys so missing optional integrations are visible but not scary.
 3. Add more focused Playwright flows for BuySmart search/filter, blog reader controls, and admin blog create/edit using emulator data.
 4. Add bundle attribution for the largest web/admin chunks so heavy dependencies can be moved behind feature-level dynamic imports.
-5. Add a production monitor schedule that stores the last successful `/api/health`, route QA, Firebase live, and link-check snapshots.
+5. Persist the new on-demand critical-route monitor results and add an optional low-frequency schedule for release-history trends; keep continuous polling disabled by default.
+6. Raise deterministic microtool evidence while keeping zero structurally broken tools and every priority tool beyond `partial`.

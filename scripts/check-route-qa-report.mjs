@@ -2,6 +2,10 @@ import { chromium } from "@playwright/test";
 import { mkdir, readFile, readdir, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { TOP_PRIORITY_TOOL_SLUGS } from "@altftool/core/toolHealth";
+import {
+  parseRouteQaShard,
+  selectRouteQaShard,
+} from "./lib/route-qa-sharding.mjs";
 
 const workspaceRoot = path.resolve(import.meta.dirname, "..");
 const webRoot = path.join(workspaceRoot, "altftoolweb");
@@ -14,6 +18,19 @@ const argValue = (name, fallback) => {
 };
 
 const scope = argValue("--scope", process.env.ALTFT_ROUTE_QA_SCOPE || "standard");
+const shard = parseRouteQaShard(
+  argValue("--shard", process.env.ALTFT_ROUTE_QA_SHARD || ""),
+);
+const browserScope = argValue(
+  "--browser-scope",
+  args.has("--full-browser")
+    ? "full"
+    : process.env.ALTFT_ROUTE_QA_BROWSER_SCOPE || "selected",
+);
+const mobileBrowserScope = argValue(
+  "--mobile-scope",
+  process.env.ALTFT_ROUTE_QA_MOBILE_SCOPE || "selected",
+);
 const dryRun = args.has("--dry-run") || process.env.ALTFT_ROUTE_QA_DRY_RUN === "true";
 const jsonOnly = args.has("--json");
 const outputPath = argValue("--output", process.env.ALTFT_ROUTE_QA_OUTPUT || "");
@@ -23,6 +40,7 @@ const markdownOutputPath = argValue(
 );
 const includeWarmPass = args.has("--warm") || process.env.ALTFT_ROUTE_QA_WARM_PASS === "true";
 const includeBrowser = !args.has("--no-browser") && process.env.ALTFT_ROUTE_QA_BROWSER !== "false";
+const includeHttp = !args.has("--browser-only") && process.env.ALTFT_ROUTE_QA_HTTP !== "false";
 const includeMobileBrowser = !args.has("--no-mobile") && process.env.ALTFT_ROUTE_QA_MOBILE !== "false";
 const includeAdmin = !args.has("--no-admin") && process.env.ALTFT_ROUTE_QA_ADMIN !== "false";
 const strictMode = args.has("--strict") || process.env.ALTFT_ROUTE_QA_STRICT === "true";
@@ -51,10 +69,25 @@ const allowLocalAdminToken = process.env.ALTFT_ROUTE_QA_ALLOW_LOCAL_ADMIN_TOKEN 
 const requestTimeoutMs = Number(process.env.ALTFT_ROUTE_QA_REQUEST_TIMEOUT_MS || 30_000);
 const browserTimeoutMs = Number(process.env.ALTFT_ROUTE_QA_BROWSER_TIMEOUT_MS || 35_000);
 const browserNetworkIdleTimeoutMs = Number(process.env.ALTFT_ROUTE_QA_BROWSER_IDLE_TIMEOUT_MS || 1_200);
+const browserSettleTimeoutMs = Number(
+  process.env.ALTFT_ROUTE_QA_BROWSER_SETTLE_MS || 250,
+);
 const slowRouteThresholdMs = Number(process.env.ALTFT_ROUTE_QA_SLOW_MS || 2_500);
 const routeConcurrency = Math.max(1, Number(process.env.ALTFT_ROUTE_QA_CONCURRENCY || 3));
 const browserConcurrency = Math.max(1, Number(process.env.ALTFT_ROUTE_QA_BROWSER_CONCURRENCY || 2));
 const mobileOverflowBudgetPx = Number(process.env.ALTFT_ROUTE_QA_MOBILE_OVERFLOW_PX || 8);
+const discoveredLinkBudget = Math.max(
+  0,
+  Number(process.env.ALTFT_ROUTE_QA_DISCOVERED_LINK_BUDGET || 5_000),
+);
+const linksPerPage = Math.max(
+  0,
+  Number(process.env.ALTFT_ROUTE_QA_LINKS_PER_PAGE || 80),
+);
+const screenshotDirectory = argValue(
+  "--screenshot-dir",
+  process.env.ALTFT_ROUTE_QA_SCREENSHOT_DIR || "",
+);
 const familySampleSize = Math.max(
   1,
   Number(process.env.ALTFT_ROUTE_QA_FAMILY_SAMPLE_SIZE || 2),
@@ -126,7 +159,33 @@ const DANGEROUS_TEXT_PATTERNS = [
 const IGNORED_CONSOLE_PATTERNS = [
   /Download the React DevTools/i,
   /The resource .* was preloaded using link preload/i,
+  /\[React Flow\]: It looks like you've created a new nodeTypes or edgeTypes object/i,
 ];
+
+const DISCOVERED_LINK_ASSET_PATTERN =
+  /\.(?:7z|avif|css|csv|docx?|eot|gif|gz|ico|jpe?g|js|json|map|mp3|mp4|pdf|png|rar|svg|tar|tgz|txt|webm|webp|woff2?|xlsx?|xml|zip)(?:$|[?#])/i;
+const DISCOVERED_LINK_EXCLUDED_PREFIXES = [
+  "/_next/",
+  "/api/",
+  "/cdn-cgi/",
+  "/logout",
+  "/account/logout",
+  "/admin/logout",
+];
+const TRACKING_QUERY_PARAMETERS = new Set([
+  "fbclid",
+  "gclid",
+  "mc_cid",
+  "mc_eid",
+  "ref",
+  "referrer",
+  "source",
+  "utm_campaign",
+  "utm_content",
+  "utm_medium",
+  "utm_source",
+  "utm_term",
+]);
 
 function slugify(value = "") {
   return String(value).trim().toLowerCase().replace(/\s+/g, "-");
@@ -154,6 +213,33 @@ function uniqueProbeRoutes(entries) {
 
 function routeUrl(baseUrl, route) {
   return `${baseUrl}${route}`;
+}
+
+function normalizeDiscoveredRoute(value) {
+  try {
+    const url = new URL(value, "https://altftool.local");
+    const pathname = url.pathname.replace(/\/{2,}/g, "/") || "/";
+
+    if (
+      DISCOVERED_LINK_ASSET_PATTERN.test(`${pathname}${url.search}`) ||
+      DISCOVERED_LINK_EXCLUDED_PREFIXES.some(
+        (prefix) => pathname === prefix || pathname.startsWith(prefix),
+      )
+    ) {
+      return "";
+    }
+
+    for (const key of [...url.searchParams.keys()]) {
+      if (TRACKING_QUERY_PARAMETERS.has(key.toLowerCase())) {
+        url.searchParams.delete(key);
+      }
+    }
+    url.searchParams.sort();
+
+    return `${pathname}${url.search}`;
+  } catch {
+    return "";
+  }
 }
 
 function isLocalAdminBaseUrl() {
@@ -531,7 +617,34 @@ async function mapWithConcurrency(items, limit, handler) {
   return results;
 }
 
-function browserProbeRoutes(inventory) {
+function isBrowserEligibleRoute(entry) {
+  if (!entry?.route || entry.route.includes("[")) return false;
+  if (entry.route.startsWith("/api/")) return false;
+  if (/\.(?:json|txt|xml)(?:[?#]|$)/i.test(entry.route)) return false;
+  if (entry.app === "admin" && entry.group !== "admin public") return false;
+  return true;
+}
+
+function fullBrowserProbeRoutes(inventory) {
+  const seen = new Set();
+  const routes = [];
+
+  for (const entry of inventory) {
+    if (!isBrowserEligibleRoute(entry)) continue;
+    const key = `${entry.app}:${entry.route}`;
+    if (seen.has(key)) continue;
+    seen.add(key);
+    routes.push({
+      app: entry.app,
+      group: "full browser probe",
+      route: entry.route,
+    });
+  }
+
+  return routes;
+}
+
+function selectedBrowserProbeRoutes(inventory) {
   const findConcreteRoute = (prefix, predicate = () => true) =>
     inventory.find(
       (entry) =>
@@ -559,25 +672,122 @@ function browserProbeRoutes(inventory) {
     findConcreteRoute("/lander/"),
   ].filter(Boolean);
 
-  const probes = webRoutes.map((route) => ({ app: "web", group: "browser probe", route }));
+  const probes = webRoutes.map((route) => ({
+    app: "web",
+    group: "browser probe",
+    route,
+  }));
+  if (includeAdmin) probes.push({ app: "admin", group: "browser probe", route: "/login" });
+  return probes;
+}
+
+function browserProbeRoutes(inventory) {
+  const desktopProbes =
+    browserScope === "full"
+      ? fullBrowserProbeRoutes(inventory)
+      : selectedBrowserProbeRoutes(inventory);
+  const probes = [...desktopProbes];
+
   if (includeMobileBrowser) {
-    for (const route of webRoutes.slice(0, 5)) {
+    const mobileSources =
+      mobileBrowserScope === "full"
+        ? desktopProbes.filter((probe) => probe.app === "web")
+        : desktopProbes.filter((probe) => probe.app === "web").slice(0, 5);
+    for (const probe of mobileSources) {
       probes.push({
-        app: "web",
-        group: "mobile browser probe",
-        route,
+        ...probe,
+        group:
+          mobileBrowserScope === "full"
+            ? "full mobile browser probe"
+            : "mobile browser probe",
         viewport: { width: 390, height: 844 },
         viewportName: "mobile",
       });
     }
   }
-  if (includeAdmin) probes.push({ app: "admin", group: "browser probe", route: "/login" });
+
   return uniqueProbeRoutes(probes);
 }
 
+function discoverInternalLinkRoutes(browserResults, inventory, routeShard = null) {
+  const inventoried = new Set(
+    inventory
+      .map((entry) => {
+        const route = normalizeDiscoveredRoute(entry.route);
+        return route ? `${entry.app}:${route}` : "";
+      })
+      .filter(Boolean),
+  );
+  const alreadyInventoried = new Set();
+  const excluded = new Set();
+  const discovered = new Map();
+  let observed = 0;
+
+  for (const result of browserResults) {
+    for (const link of result.internalLinks || []) {
+      observed += 1;
+      const route = normalizeDiscoveredRoute(link);
+      if (!route) {
+        excluded.add(`${result.app}:${link}`);
+        continue;
+      }
+
+      const key = `${result.app}:${route}`;
+      if (inventoried.has(key)) {
+        alreadyInventoried.add(key);
+        continue;
+      }
+      if (discovered.has(key)) continue;
+
+      discovered.set(key, {
+        app: result.app,
+        group: "discovered internal link",
+        route,
+        sourceRoute: result.route,
+      });
+    }
+  }
+
+  const candidates = [...discovered.values()];
+  const shardCandidates = selectRouteQaShard(candidates, routeShard);
+  const entries = shardCandidates.slice(0, discoveredLinkBudget);
+
+  return {
+    entries,
+    audit: {
+      observed,
+      uniqueDiscovered: candidates.length,
+      ...(routeShard ? { shardEligible: shardCandidates.length } : {}),
+      alreadyInventoried: alreadyInventoried.size,
+      excluded: excluded.size,
+      checked: entries.length,
+      truncated: Math.max(0, shardCandidates.length - entries.length),
+      budget: discoveredLinkBudget,
+      linksPerPage,
+    },
+  };
+}
+
+function emptyLinkAudit() {
+  return {
+    observed: 0,
+    uniqueDiscovered: 0,
+    ...(shard ? { shardEligible: 0 } : {}),
+    alreadyInventoried: 0,
+    excluded: 0,
+    checked: 0,
+    truncated: 0,
+    budget: discoveredLinkBudget,
+    linksPerPage,
+  };
+}
+
 async function collectPageState(page) {
-  return page.evaluate(() => {
+  return page.evaluate(({ linkLimit, overflowBudget }) => {
     const bodyText = document.body?.innerText || "";
+    const main =
+      document.querySelector("main") || document.querySelector('[role="main"]');
+    const mainText = main?.innerText || "";
     const h1 = document.querySelector("h1")?.textContent?.trim() || "";
     const title = document.title || "";
     const description =
@@ -587,24 +797,125 @@ async function collectPageState(page) {
       .filter((image) => image.complete && image.currentSrc && image.naturalWidth === 0)
       .map((image) => image.alt || image.currentSrc)
       .slice(0, 8);
+    const brokenMedia = [
+      ...document.querySelectorAll("video, audio"),
+    ]
+      .filter((media) => media.error)
+      .map((media) => media.currentSrc || media.getAttribute("src") || media.tagName.toLowerCase())
+      .slice(0, 8);
     const documentWidth = Math.max(
       document.documentElement?.scrollWidth || 0,
       document.body?.scrollWidth || 0,
     );
     const viewportWidth = window.innerWidth || document.documentElement?.clientWidth || 0;
     const horizontalOverflowPx = Math.max(0, documentWidth - viewportWidth);
+    const overflowElements =
+      horizontalOverflowPx > overflowBudget
+        ? [...document.body.querySelectorAll("*")]
+            .map((element) => {
+              const rect = element.getBoundingClientRect();
+              if (
+                rect.width <= 0 ||
+                (rect.right <= viewportWidth + overflowBudget &&
+                  rect.left >= -overflowBudget)
+              ) {
+                return null;
+              }
+              const className =
+                typeof element.className === "string"
+                  ? element.className
+                      .split(/\s+/)
+                      .filter(Boolean)
+                      .slice(0, 2)
+                      .join(".")
+                  : "";
+              return {
+                element: `${element.tagName.toLowerCase()}${element.id ? `#${element.id}` : ""}${className ? `.${className}` : ""}`,
+                left: Math.round(rect.left),
+                right: Math.round(rect.right),
+                width: Math.round(rect.width),
+              };
+            })
+            .filter(Boolean)
+            .slice(0, 8)
+        : [];
+    const currentUrl = new URL(window.location.href);
+    const internalLinks = [
+      ...new Set(
+        [...document.querySelectorAll("a[href]")]
+          .map((link) => {
+            try {
+              const target = new URL(link.href, currentUrl);
+              if (
+                target.origin !== currentUrl.origin ||
+                !["http:", "https:"].includes(target.protocol)
+              ) {
+                return null;
+              }
+              return `${target.pathname}${target.search}` || "/";
+            } catch {
+              return null;
+            }
+          })
+          .filter(Boolean),
+      ),
+    ].slice(0, linkLimit);
+    const stuckLoading = [
+      "Preparing workspace",
+      "Loading tool workspace",
+      "Loading application",
+    ].filter((message) => bodyText.includes(message));
 
     return {
       bodyLength: bodyText.trim().length,
+      hasMain: Boolean(main),
+      mainLength: mainText.trim().length,
       h1,
       title,
       descriptionLength: description.trim().length,
       canonical,
       brokenImages,
+      brokenMedia,
       horizontalOverflowPx,
+      overflowElements,
+      internalLinks,
+      stuckLoading,
       routeError: /Application error|Unhandled Runtime Error|This page could not be found/i.test(bodyText),
     };
+  }, {
+    linkLimit: linksPerPage,
+    overflowBudget: mobileOverflowBudgetPx,
   });
+}
+
+async function captureFailureScreenshot(page, probe) {
+  if (!screenshotDirectory) return "";
+
+  const absoluteDirectory = path.isAbsolute(screenshotDirectory)
+    ? screenshotDirectory
+    : path.join(workspaceRoot, screenshotDirectory);
+  const routeName = probe.route === "/"
+    ? "home"
+    : probe.route
+        .replace(/[?#].*$/, "")
+        .replace(/^\/+|\/+$/g, "")
+        .replace(/[^a-z0-9]+/gi, "-")
+        .replace(/^-+|-+$/g, "") || "route";
+  const fileName = [
+    probe.app,
+    probe.viewportName || "desktop",
+    routeName,
+  ].join("-");
+  const absolutePath = path.join(absoluteDirectory, `${fileName}.png`);
+
+  await mkdir(absoluteDirectory, { recursive: true });
+  await page.screenshot({
+    path: absolutePath,
+    fullPage: true,
+    animations: "disabled",
+  });
+
+  return path.relative(workspaceRoot, absolutePath) || absolutePath;
 }
 
 async function checkBrowserProbe(pageFactory, probe) {
@@ -639,22 +950,44 @@ async function checkBrowserProbe(pageFactory, probe) {
     });
     await page.waitForLoadState("load", { timeout: Math.min(browserTimeoutMs, 5_000) }).catch(() => {});
     await page.waitForLoadState("networkidle", { timeout: browserNetworkIdleTimeoutMs }).catch(() => {});
+    if (browserSettleTimeoutMs > 0) {
+      await page.waitForTimeout(browserSettleTimeoutMs);
+    }
     const state = await collectPageState(page);
     const issues = [];
     const warnings = [];
 
     if ((response?.status() || 0) >= 400) issues.push(`HTTP ${response.status()}`);
     if (state.bodyLength === 0) issues.push("empty rendered body");
+    if (!state.hasMain) issues.push("missing main content landmark");
+    if (state.hasMain && state.mainLength < 20) issues.push("blank or very short main content");
     if (state.routeError) issues.push("rendered route error");
+    if (state.stuckLoading.length) {
+      issues.push(...state.stuckLoading.map((message) => `stuck loading state: ${message}`));
+    }
     if (consoleIssues.length) issues.push(...consoleIssues);
     if (state.brokenImages.length) {
       issues.push(...state.brokenImages.map((image) => `broken image: ${image}`));
+    }
+    if (state.brokenMedia.length) {
+      issues.push(...state.brokenMedia.map((media) => `broken media: ${media}`));
     }
     if (probe.app === "web" && state.descriptionLength < 20) warnings.push("short meta description");
     if (probe.app === "web" && !state.canonical) warnings.push("missing canonical link");
     if (probe.viewportName === "mobile" && state.horizontalOverflowPx > mobileOverflowBudgetPx) {
       issues.push(`mobile horizontal overflow ${state.horizontalOverflowPx}px`);
+      issues.push(
+        ...state.overflowElements
+          .slice(0, 4)
+          .map(
+            (element) =>
+              `overflow element ${element.element} (${element.left}px..${element.right}px, width ${element.width}px)`,
+          ),
+      );
     }
+    const screenshot = issues.length
+      ? await captureFailureScreenshot(page, probe).catch(() => "")
+      : "";
 
     return {
       ...probe,
@@ -665,10 +998,16 @@ async function checkBrowserProbe(pageFactory, probe) {
       h1: state.h1,
       title: state.title,
       viewportName: probe.viewportName || "desktop",
+      mainLength: state.mainLength,
+      horizontalOverflowPx: state.horizontalOverflowPx,
+      overflowElements: state.overflowElements,
+      internalLinks: state.internalLinks,
+      screenshot,
       issues,
       warnings,
     };
   } catch (error) {
+    const screenshot = await captureFailureScreenshot(page, probe).catch(() => "");
     return {
       ...probe,
       url,
@@ -677,6 +1016,7 @@ async function checkBrowserProbe(pageFactory, probe) {
       ok: false,
       issues: [error.message],
       warnings: [],
+      screenshot,
     };
   } finally {
     await page.close().catch(() => {});
@@ -685,6 +1025,7 @@ async function checkBrowserProbe(pageFactory, probe) {
 
 async function checkAdminProtectedProbes(browser) {
   if (!includeAdmin) return [];
+  if (shard && shard.index !== 1) return [];
 
   if (!isLocalAdminBaseUrl()) {
     return ADMIN_PROTECTED_ROUTES.map((route) => ({
@@ -885,7 +1226,16 @@ function buildGroupMatrix(matrix) {
     });
 }
 
-function buildSummary(routeResults, browserResults, { warmRouteResults = null, warmBrowserResults = null } = {}) {
+function buildSummary(
+  routeResults,
+  browserResults,
+  {
+    linkAudit = emptyLinkAudit(),
+    warmRouteResults = null,
+    warmBrowserResults = null,
+    warmLinkAudit = null,
+  } = {},
+) {
   const coldPass = buildPassReport("cold", routeResults, browserResults);
   coldPass.score = scoreForPass(coldPass);
 
@@ -902,12 +1252,40 @@ function buildSummary(routeResults, browserResults, { warmRouteResults = null, w
     ok: activePass.ok,
     score: activePass.score,
     scope,
+    shard: shard
+      ? {
+          ...shard,
+          selectedRoutes: inventory.length,
+          inventoryRoutes: fullInventory.length,
+        }
+      : null,
     webUrl,
     adminUrl: includeAdmin ? adminUrl : null,
     dryRun,
     checkedAt: new Date().toISOString(),
     activePass: activePass.label,
     profileMode: warmPass ? "cold-warm" : "single",
+    crawler: {
+      browserScope,
+      mobileBrowserScope: includeMobileBrowser ? mobileBrowserScope : "disabled",
+      httpEnabled: includeHttp,
+      browserConcurrency,
+      routeConcurrency,
+      checks: [
+        "HTTP status and response body",
+        "rendered main content",
+        "stuck loading states",
+        "console and page errors",
+        "broken images and media",
+        "mobile horizontal overflow",
+        "same-origin internal links",
+      ],
+      linkAudit: warmLinkAudit || linkAudit,
+      passes: {
+        cold: linkAudit,
+        warm: warmLinkAudit,
+      },
+    },
     totals: activePass.totals,
     performance: activePass.performance,
     routeGroups: activePass.routeGroups,
@@ -979,12 +1357,17 @@ function renderMarkdownReport(summary) {
     "# Route QA Report",
     "",
     `- Scope: ${summary.scope}`,
+    `- Shard: ${summary.shard?.label || "none"}`,
     `- Profile: ${summary.profileMode}`,
     `- Active pass: ${summary.activePass}`,
     `- Score: ${summary.score}/100`,
     `- Gate: ${summary.qualityGates?.pass ? "PASS" : "FAIL"}`,
+    `- Browser scope: ${summary.crawler.browserScope}`,
+    `- Mobile scope: ${summary.crawler.mobileBrowserScope}`,
     `- HTTP routes: ${summary.totals.routes}`,
     `- Browser probes: ${summary.totals.browserProbes}`,
+    `- Discovered links checked: ${summary.crawler.linkAudit.checked}`,
+    `- Discovered links truncated: ${summary.crawler.linkAudit.truncated}`,
     `- Failures: ${summary.totals.failures}`,
     `- Warnings: ${summary.totals.warnings}`,
     `- Slow routes: ${summary.totals.slowRoutes}`,
@@ -1033,11 +1416,22 @@ function printReport(summary) {
 
   console.log("Route QA report");
   console.log(`Scope: ${summary.scope}`);
+  if (summary.shard) {
+    console.log(
+      `Shard: ${summary.shard.label} (${summary.shard.selectedRoutes}/${summary.shard.inventoryRoutes} routes)`,
+    );
+  }
   console.log(`Profile: ${summary.profileMode}${summary.activePass ? ` (${summary.activePass} active)` : ""}`);
   console.log(`Web: ${summary.webUrl}`);
   if (summary.adminUrl) console.log(`Admin: ${summary.adminUrl}`);
+  console.log(
+    `Browser scope: ${summary.crawler.browserScope}; mobile: ${summary.crawler.mobileBrowserScope}`,
+  );
   console.log(`HTTP routes checked: ${summary.totals.routes}`);
   console.log(`Browser probes checked: ${summary.totals.browserProbes}`);
+  console.log(
+    `Internal links: ${summary.crawler.linkAudit.checked} checked, ${summary.crawler.linkAudit.truncated} truncated`,
+  );
   console.log(`Failures: ${summary.totals.failures}`);
   console.log(`Warnings: ${summary.totals.warnings}`);
   if (summary.qualityGates) {
@@ -1092,7 +1486,8 @@ function printReport(summary) {
   }
 }
 
-const inventory = await buildRouteInventory();
+const fullInventory = await buildRouteInventory();
+const inventory = selectRouteQaShard(fullInventory, shard);
 
 if (dryRun) {
   const summary = applyQualityGates(
@@ -1133,17 +1528,34 @@ async function runBrowserPass() {
   }
 }
 
-const routeResults = await mapWithConcurrency(inventory, routeConcurrency, checkRoute);
-const browserResults = await runBrowserPass();
-const warmRouteResults = includeWarmPass
-  ? await mapWithConcurrency(inventory, routeConcurrency, checkRoute)
-  : null;
-const warmBrowserResults = includeWarmPass ? await runBrowserPass() : null;
+async function runRuntimePass() {
+  const inventoriedRouteResults = includeHttp
+    ? await mapWithConcurrency(inventory, routeConcurrency, checkRoute)
+    : [];
+  const browserResults = await runBrowserPass();
+  const discovered = discoverInternalLinkRoutes(browserResults, fullInventory, shard);
+  const discoveredRouteResults = await mapWithConcurrency(
+    discovered.entries,
+    routeConcurrency,
+    checkRoute,
+  );
+
+  return {
+    routeResults: [...inventoriedRouteResults, ...discoveredRouteResults],
+    browserResults,
+    linkAudit: discovered.audit,
+  };
+}
+
+const coldPass = await runRuntimePass();
+const warmPass = includeWarmPass ? await runRuntimePass() : null;
 
 const summary = applyQualityGates(
-  buildSummary(routeResults, browserResults, {
-    warmRouteResults,
-    warmBrowserResults,
+  buildSummary(coldPass.routeResults, coldPass.browserResults, {
+    linkAudit: coldPass.linkAudit,
+    warmRouteResults: warmPass?.routeResults || null,
+    warmBrowserResults: warmPass?.browserResults || null,
+    warmLinkAudit: warmPass?.linkAudit || null,
   }),
 );
 await writeReport(summary);

@@ -22,6 +22,7 @@ import {
   getRelatedArticles,
 } from "../data/factNetData";
 import { absoluteUrl } from "@/platform/seo/generateMetadata";
+import { getRelatedContentForPreset, RelatedContentSection } from "@/platform/linking";
 
 function jsonLd(data) {
   return { __html: JSON.stringify(data).replace(/</g, "\\u003c") };
@@ -83,6 +84,17 @@ export default function ArticleDetail({ slug }) {
   const related = getRelatedArticles(article, 5);
   const neighbors = getNeighborArticles(article);
   const featuredSidebar = getFeaturedHomepageArticles(8).filter((item) => item.slug !== article.slug).slice(0, 6);
+
+  const relatedContentItems = getRelatedContentForPreset(
+    {
+      href: article.href,
+      title: article.title,
+      description: article.description,
+      tags: [article.primaryCategory, category?.name].filter(Boolean),
+      section: "news",
+    },
+    "editorial",
+  );
 
   const schema = {
     "@context": "https://schema.org",
@@ -221,6 +233,13 @@ export default function ArticleDetail({ slug }) {
           )}
         </div>
       </div>
+
+      <RelatedContentSection
+        title="More from AltFTool"
+        items={relatedContentItems}
+        path={article.href}
+        jsonLdName="More from AltFTool"
+      />
     </main>
   );
 }

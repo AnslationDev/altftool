@@ -26,6 +26,18 @@ export async function generateMetadata({ params }) {
   });
 }
 
-export default function TradeonAssetPage() {
-  return <AssetDetailClient />;
+export default async function TradeonAssetPage({ params }) {
+  const { symbol: raw } = await params;
+  const symbol = symbolFromSlug(raw);
+  const instrument = instrumentBySymbol(symbol);
+  const name = instrument?.name || symbol;
+
+  return (
+    <>
+      <h1 className="sr-only">
+        {name} ({symbol}) price, chart, prediction and analysis
+      </h1>
+      <AssetDetailClient />
+    </>
+  );
 }

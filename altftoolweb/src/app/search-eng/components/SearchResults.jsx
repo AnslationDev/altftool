@@ -55,7 +55,7 @@ export function ResultCard({ result, index, query, onTagSearch }) {
           href={result.url}
           target={isExternal ? '_blank' : '_self'}
           rel={isExternal ? 'noopener noreferrer' : ''}
-          style={{ fontSize: '20px', color: 'var(--google-blue)', textDecoration: 'none', lineHeight: '1.3', fontWeight: '400', display: 'inline-block' }}
+          style={{ fontSize: '19px', color: 'var(--google-blue)', textDecoration: 'none', lineHeight: '1.35', fontWeight: '600', display: 'inline-block' }}
           className="result-title-link hover-underline"
         >
           {result.title}

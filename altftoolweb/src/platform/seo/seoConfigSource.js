@@ -32,6 +32,11 @@ const CACHE_SECONDS = Number(process.env.ALTFT_SEO_CONFIG_TTL_SECONDS || 300);
 // tag) is invalidated globally on save via /api/revalidate.
 const SNAPSHOT_TTL_MS = Number(process.env.ALTFT_SEO_SNAPSHOT_TTL_SECONDS || 20) * 1000;
 const TIMEOUT_MS = Number(process.env.ALTFT_FIRESTORE_REST_TIMEOUT_MS || 3500);
+const FAILURE_TTL_MS = Number(process.env.ALTFT_SEO_FAILURE_TTL_SECONDS || 15) * 1000;
+const PRIME_BUDGET_MS = Math.max(
+  0,
+  Number(process.env.ALTFT_SEO_PRIME_BUDGET_MS || 350),
+);
 export const SEO_CONFIG_REVALIDATE_TAG = "seo-config";
 
 function engineEnabled() {
@@ -73,10 +78,22 @@ function decodeDocument(document) {
 let cachedConfig = null;
 let cachedExpiry = 0;
 let inflight = null;
+let inflightStartedAt = 0;
 
 function freshFromCache() {
   if (cachedConfig && cachedExpiry > Date.now()) return cachedConfig;
   return null;
+}
+
+function staleFromCache() {
+  return cachedConfig;
+}
+
+function isProductionBuild() {
+  return (
+    process.env.NEXT_PHASE === "phase-production-build" ||
+    process.env.npm_lifecycle_event === "build"
+  );
 }
 
 async function fetchSeoConfig() {
@@ -114,16 +131,21 @@ export async function loadSeoConfig() {
   if (cached) return cached;
 
   if (!inflight) {
+    inflightStartedAt = Date.now();
     inflight = fetchSeoConfig()
       .then((config) => {
         if (config) {
           cachedConfig = config;
           cachedExpiry = Date.now() + SNAPSHOT_TTL_MS;
+        } else {
+          cachedConfig = staleFromCache() || emptySeoConfig();
+          cachedExpiry = Date.now() + FAILURE_TTL_MS;
         }
-        return cachedConfig || emptySeoConfig();
+        return cachedConfig;
       })
       .finally(() => {
         inflight = null;
+        inflightStartedAt = 0;
       });
   }
   return inflight;
@@ -138,7 +160,7 @@ export async function loadSeoConfig() {
  */
 export function getSeoConfigSnapshot() {
   if (!engineEnabled()) return null;
-  const cached = freshFromCache();
+  const cached = freshFromCache() || staleFromCache();
   if (!cached || cached.enabled === false) return null;
   return cached;
 }
@@ -147,12 +169,39 @@ export function getSeoConfigSnapshot() {
  * Warm the snapshot cache for the current render tree. Call from a server
  * layout/page `generateMetadata` before metadata resolution. Never throws.
  */
-export async function primeSeoConfig() {
+export async function primeSeoConfig({ waitForFresh = isProductionBuild() } = {}) {
   try {
-    await loadSeoConfig();
+    if (!engineEnabled() || freshFromCache()) return;
+
+    const pending = loadSeoConfig();
+    if (waitForFresh) {
+      await pending;
+      return;
+    }
+    if (PRIME_BUDGET_MS === 0) return;
+
+    const elapsedMs = inflightStartedAt
+      ? Math.max(0, Date.now() - inflightStartedAt)
+      : 0;
+    const remainingBudgetMs = Math.max(0, PRIME_BUDGET_MS - elapsedMs);
+    if (remainingBudgetMs === 0) return;
+
+    let timeout;
+    await Promise.race([
+      pending,
+      new Promise((resolve) => {
+        timeout = setTimeout(resolve, remainingBudgetMs);
+      }),
+    ]);
+    if (timeout) clearTimeout(timeout);
   } catch {
     /* inert on failure */
   }
+}
+
+/** Mark the snapshot stale while retaining it until the refreshed config lands. */
+export function __expireSeoConfigCache() {
+  cachedExpiry = 0;
 }
 
 /** Test/diagnostics helper. */
@@ -160,4 +209,5 @@ export function __resetSeoConfigCache() {
   cachedConfig = null;
   cachedExpiry = 0;
   inflight = null;
+  inflightStartedAt = 0;
 }

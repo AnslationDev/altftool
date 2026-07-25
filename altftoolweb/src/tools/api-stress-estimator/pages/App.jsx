@@ -252,7 +252,7 @@ export const App = () => {
             </span>
             <div>
               <div className="flex flex-wrap items-center gap-2">
-                <h1 className="text-xl font-bold tracking-tight sm:text-2xl">API Stress Estimator</h1>
+                <h2 className="text-xl font-bold tracking-tight sm:text-2xl">API Stress Estimator</h2>
                 <span className="inline-flex items-center gap-1 rounded-full border border-(--border) bg-(--card) px-2.5 py-0.5 text-[11px] font-semibold text-emerald-600 dark:text-emerald-400">
                   <ShieldCheck className="h-3 w-3" /> Instant · no real traffic sent
                 </span>

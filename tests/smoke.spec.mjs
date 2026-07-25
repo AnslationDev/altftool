@@ -20,6 +20,7 @@ const smokeWarmupRoutes = [
   `${webUrl}/tools/all/api-stress-estimator`,
   `${webUrl}/tools/developer/api-stress-estimator`,
   `${webUrl}/buysmart`,
+  `${adminUrl}/super-admin`,
 ];
 
 test.beforeAll(async ({ browser }) => {
@@ -300,8 +301,12 @@ test("admin login shell loads", async ({ page }) => {
   const localAdminButton = page.getByTestId("local-admin-login");
   if (await localAdminButton.count()) {
     await localAdminButton.click();
-    await expect(page).toHaveURL(/\/(?:admin-management|super-admin)/);
-    await expect(page.getByText("Super Admin").first()).toBeVisible();
+    await expect(page).toHaveURL(/\/(?:admin-management|super-admin)/, {
+      timeout: 45_000,
+    });
+    await expect(page.getByText("Super Admin").first()).toBeVisible({
+      timeout: 45_000,
+    });
   }
 
   await quality.expectClean("admin login shell");

@@ -12,6 +12,9 @@ test.describe("admin API safety", () => {
     });
 
     expect(response.ok()).toBeTruthy();
+    expect(response.headers()["cache-control"]).toContain("private");
+    expect(response.headers()["cache-control"]).toContain("no-store");
+    expect(response.headers().vary).toContain("Authorization");
 
     const payload = await response.json();
     expect(payload.admins).toEqual(
@@ -85,6 +88,8 @@ test.describe("admin API safety", () => {
     });
 
     expect(response.ok()).toBeTruthy();
+    expect(response.headers()["cache-control"]).toContain("no-store");
+    expect(response.headers().vary).toContain("Authorization");
 
     const payload = await response.json();
     expect(payload.mode).toBe("live");
@@ -124,6 +129,39 @@ test.describe("admin API safety", () => {
         totals: expect.objectContaining({
           publicImages: expect.any(Number),
           dynamicToolImports: expect.any(Number),
+        }),
+      }),
+    );
+    expect(payload.routeQuality).toEqual(
+      expect.objectContaining({
+        checks: expect.any(Array),
+        groups: expect.any(Array),
+        watchlist: expect.any(Array),
+        score: expect.any(Number),
+        status: expect.any(String),
+        totals: expect.objectContaining({
+          routes: expect.any(Number),
+          indexable: expect.any(Number),
+          noindex: expect.any(Number),
+          sitemapCoverage: expect.any(Number),
+          indexConflicts: expect.any(Number),
+          missingCanonicalTargets: expect.any(Number),
+        }),
+        command: "npm run seo:route-quality:report",
+        strictCommand: "npm run seo:route-quality:strict",
+        indexControlCommand: "npm run seo:index-control",
+      }),
+    );
+    expect(payload.productionMonitoring).toEqual(
+      expect.objectContaining({
+        probes: expect.any(Array),
+        score: expect.any(Number),
+        status: expect.any(String),
+        totals: expect.objectContaining({
+          probes: expect.any(Number),
+          passing: expect.any(Number),
+          slow: expect.any(Number),
+          failing: expect.any(Number),
         }),
       }),
     );
@@ -294,7 +332,9 @@ test.describe("admin API safety", () => {
     expect(JSON.stringify(payload.firebaseDataIntegrity)).not.toContain("PRIVATE KEY-----");
     expect(JSON.stringify(payload.runtimeQuality)).not.toContain("PRIVATE KEY-----");
     expect(JSON.stringify(payload.performanceBudget)).not.toContain("PRIVATE KEY-----");
+    expect(JSON.stringify(payload.routeQuality)).not.toContain("PRIVATE KEY-----");
     expect(JSON.stringify(payload.productionLinks)).not.toContain("PRIVATE KEY-----");
+    expect(JSON.stringify(payload.productionMonitoring)).not.toContain("PRIVATE KEY-----");
     expect(JSON.stringify(payload.releaseDoctorArtifact)).not.toContain("PRIVATE KEY-----");
     expect(JSON.stringify(payload.releaseHistory)).not.toContain("PRIVATE KEY-----");
     expect(JSON.stringify(payload.fixCenter)).not.toContain("PRIVATE KEY-----");
@@ -308,6 +348,9 @@ test.describe("admin API safety", () => {
     });
 
     expect(response.ok()).toBeTruthy();
+    expect(response.headers()["cache-control"]).toContain("private");
+    expect(response.headers()["cache-control"]).toContain("no-store");
+    expect(response.headers().vary).toContain("Authorization");
 
     const payload = await response.json();
     expect(payload.mode).toBe("lite");
@@ -336,6 +379,26 @@ test.describe("admin API safety", () => {
         status: expect.any(String),
       }),
     );
+    expect(payload.productionMonitoring).toEqual(
+      expect.objectContaining({
+        lite: true,
+        skipped: true,
+        probes: [],
+        totals: expect.objectContaining({
+          probes: expect.any(Number),
+          passing: expect.any(Number),
+          slow: 0,
+          failing: expect.any(Number),
+        }),
+      }),
+    );
+    expect(payload.routeQuality).toEqual(
+      expect.objectContaining({
+        checks: expect.any(Array),
+        groups: expect.any(Array),
+        watchlist: expect.any(Array),
+      }),
+    );
     expect(payload.fixCenter).toEqual(
       expect.objectContaining({
         items: expect.any(Array),
@@ -351,6 +414,68 @@ test.describe("admin API safety", () => {
           }),
         ]),
       );
+    }
+    expect(JSON.stringify(payload)).not.toContain("PRIVATE KEY-----");
+  });
+
+  test("tool readiness endpoint is authenticated, private, filtered, and paginated", async ({ request }) => {
+    const response = await request.get(
+      `${adminUrl}/api/health/tools?status=working&page=1&pageSize=10&q=json`,
+      { headers: localAdminHeaders },
+    );
+
+    expect(response.ok()).toBeTruthy();
+    expect(response.headers()["cache-control"]).toContain("private");
+    expect(response.headers()["cache-control"]).toContain("no-store");
+    expect(response.headers().vary).toContain("Authorization");
+
+    const payload = await response.json();
+    expect(payload.summary).toEqual(
+      expect.objectContaining({
+        methodology: "static-readiness-v2",
+        total: expect.any(Number),
+        counts: expect.objectContaining({
+          working: expect.any(Number),
+          "api-required": expect.any(Number),
+          partial: expect.any(Number),
+          broken: expect.any(Number),
+        }),
+        api: expect.objectContaining({
+          tools: expect.any(Number),
+          counts: expect.objectContaining({
+            configured: expect.any(Number),
+            "missing-config": expect.any(Number),
+            "runtime-check": expect.any(Number),
+          }),
+        }),
+      }),
+    );
+    expect(payload.filters).toEqual({
+      query: "json",
+      status: "working",
+      apiStatus: "all",
+    });
+    expect(payload.pagination).toEqual(
+      expect.objectContaining({
+        page: 1,
+        pageSize: 10,
+        pages: expect.any(Number),
+        total: expect.any(Number),
+      }),
+    );
+    expect(payload.items.length).toBeLessThanOrEqual(10);
+    for (const item of payload.items) {
+      expect(item.status).toBe("working");
+      expect(item.apiReadiness).toEqual(
+        expect.objectContaining({
+          status: expect.any(String),
+          providers: expect.any(Array),
+          environment: expect.any(Array),
+        }),
+      );
+      expect(
+        `${item.slug} ${item.name} ${item.category}`.toLowerCase(),
+      ).toContain("json");
     }
     expect(JSON.stringify(payload)).not.toContain("PRIVATE KEY-----");
   });

@@ -17,6 +17,7 @@ function readBuildCpuCount() {
 }
 
 const buildCpuCount = readBuildCpuCount();
+const isDevelopment = process.env.NODE_ENV === "development";
 const parallelMinification =
   process.env.ALTFT_PARALLEL_MINIFY === "true" && buildCpuCount > 1;
 const useWebpackBuildWorker =
@@ -32,6 +33,24 @@ const nextConfig = {
 
   async headers() {
     return [
+      {
+        // Widget iframes are meant to be embedded on third-party sites.
+        // The enforced frame-ancestors CSP governs framing in modern browsers
+        // (it supersedes X-Frame-Options per CSP2); SAMEORIGIN replaces the
+        // site-wide DENY so the /embed hub's same-origin preview also works in
+        // legacy XFO-only browsers.
+        source: "/embed/widget/:path+",
+        headers: [
+          {
+            key: "Content-Security-Policy",
+            value: "frame-ancestors *",
+          },
+          {
+            key: "X-Frame-Options",
+            value: "SAMEORIGIN",
+          },
+        ],
+      },
       {
         source: "/sw.js",
         headers: [
@@ -152,6 +171,8 @@ const nextConfig = {
       { source: "/bops/housingneeds/cityhop-movers/:path*", destination: "/bops/housing-services/cityhop-movers/:path*", permanent: true },
       // Former bathroom/hvac dashboard tabs — those categories now live only
       // in Housing Services, so deep-link to their hub sections.
+      { source: "/bops/housingneeds/bathroom", destination: "/bops/housing-services#bathroom", permanent: false },
+      { source: "/bops/housingneeds/hvac", destination: "/bops/housing-services#hvac", permanent: false },
       {
         source: "/games",
         destination: "/tools/games",
@@ -302,9 +323,6 @@ const nextConfig = {
   reactCompiler: false,
 
   webpack(config, { dev, isServer }) {
-    if (dev) {
-      config.devtool = "cheap-module-source-map";
-    }
     config.ignoreWarnings = [
       ...(config.ignoreWarnings || []),
       {
@@ -396,10 +414,14 @@ const nextConfig = {
   },
 
   experimental: {
-    workerThreads: buildCpuCount > 1,
-    cpus: buildCpuCount,
-    webpackBuildWorker: useWebpackBuildWorker,
-    webpackMemoryOptimizations: true,
+    ...(!isDevelopment
+      ? {
+          workerThreads: buildCpuCount > 1,
+          cpus: buildCpuCount,
+          webpackBuildWorker: useWebpackBuildWorker,
+          webpackMemoryOptimizations: true,
+        }
+      : {}),
   },
 };
 

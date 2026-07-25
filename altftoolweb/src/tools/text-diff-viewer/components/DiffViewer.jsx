@@ -1,11 +1,9 @@
 "use client";
 
-import { useMemo, useRef, useEffect } from "react";
+import { useMemo } from "react";
 import { motion } from "framer-motion";
 
 export default function DiffViewer({ diffResult, viewMode, stats, searchQuery }) {
-  const scrollRef = useRef(null);
-
   if (viewMode === "side-by-side") {
     return <SideBySideView diff={diffResult} stats={stats} searchQuery={searchQuery} />;
   }
@@ -13,41 +11,44 @@ export default function DiffViewer({ diffResult, viewMode, stats, searchQuery })
 }
 
 function SideBySideView({ diff, stats, searchQuery }) {
-  const leftLines = useMemo(() => {
-    const lines = [];
-    let lineNum = 1;
-    diff.forEach((part) => {
-      const valLines = part.value.split("\n");
-      valLines.forEach((line, i) => {
-        if (part.removed) {
-          lines.push({ type: "removed", content: line, lineNum: lineNum++ });
-        } else if (!part.added) {
-          lines.push({ type: "unchanged", content: line, lineNum: lineNum++ });
-        }
-      });
-      if (part.removed) lineNum += valLines.length - 1;
-    });
-    return lines;
-  }, [diff]);
+  const { leftLines, rightLines } = useMemo(() => {
+    const original = diff
+      .filter((part) => !part.added)
+      .map((part) => part.value)
+      .join("")
+      .split("\n");
+    const modified = diff
+      .filter((part) => !part.removed)
+      .map((part) => part.value)
+      .join("")
+      .split("\n");
+    const maxLines = Math.max(original.length, modified.length);
 
-  const rightLines = useMemo(() => {
-    const lines = [];
-    let lineNum = 1;
-    diff.forEach((part) => {
-      const valLines = part.value.split("\n");
-      valLines.forEach((line) => {
-        if (part.added) {
-          lines.push({ type: "added", content: line, lineNum: lineNum++ });
-        } else if (!part.removed) {
-          lines.push({ type: "unchanged", content: line, lineNum: lineNum++ });
-        }
-      });
-      if (part.added) lineNum += valLines.length - 1;
-    });
-    return lines;
+    return {
+      leftLines: Array.from({ length: maxLines }, (_, index) => {
+        const content = original[index];
+        return {
+          type:
+            content !== undefined && content === modified[index]
+              ? "unchanged"
+              : "removed",
+          content: content ?? "",
+          lineNum: content === undefined ? null : index + 1,
+        };
+      }),
+      rightLines: Array.from({ length: maxLines }, (_, index) => {
+        const content = modified[index];
+        return {
+          type:
+            content !== undefined && content === original[index]
+              ? "unchanged"
+              : "added",
+          content: content ?? "",
+          lineNum: content === undefined ? null : index + 1,
+        };
+      }),
+    };
   }, [diff]);
-
-  const maxLines = Math.max(leftLines.length, rightLines.length);
 
   return (
     <div className="grid grid-cols-2 gap-0 border border-(--border) rounded-xl overflow-hidden">
@@ -66,7 +67,7 @@ function SideBySideView({ diff, stats, searchQuery }) {
               }`}
             >
               <span className="w-10 shrink-0 text-right pr-2 text-[10px] text-(--muted-foreground) select-none border-r border-(--border) py-0.5">
-                {line.lineNum}
+                {line.lineNum ?? ""}
               </span>
               <span className="px-2 py-0.5 flex-1 whitespace-pre-wrap break-all">{line.content}</span>
             </div>
@@ -88,7 +89,7 @@ function SideBySideView({ diff, stats, searchQuery }) {
               }`}
             >
               <span className="w-10 shrink-0 text-right pr-2 text-[10px] text-(--muted-foreground) select-none border-r border-(--border) py-0.5">
-                {line.lineNum}
+                {line.lineNum ?? ""}
               </span>
               <span className="px-2 py-0.5 flex-1 whitespace-pre-wrap break-all">{line.content}</span>
             </div>

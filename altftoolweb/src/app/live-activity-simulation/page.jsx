@@ -4,7 +4,7 @@ import ClientLoader from "./components/ClientLoader";
 
 export async function generateMetadata() {
   return createPageMetadata({
-    title: "Live Activity Simulation – Real-Time User Behavior Simulator",
+    title: "Live Activity & User Behavior Simulator | AltFTool",
     description:
       "Observe real-time simulated user actions including food orders, search surges, coupon wins, and mystery drops on our neo-brutalist interactive dashboard.",
     path: "/live-activity-simulation",
@@ -20,5 +20,10 @@ export async function generateMetadata() {
 }
 
 export default function LiveActivitySimulationPage() {
-  return <ClientLoader />;
+  return (
+    <>
+      <h1 className="sr-only">Live activity and user behavior simulation</h1>
+      <ClientLoader />
+    </>
+  );
 }

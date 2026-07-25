@@ -14,5 +14,10 @@ export async function generateMetadata() {
 }
 
 export default function TradeonWorkspacePage() {
-  return <WorkspaceClient />;
+  return (
+    <>
+      <h1 className="sr-only">Multi-screen trading workspace</h1>
+      <WorkspaceClient />
+    </>
+  );
 }

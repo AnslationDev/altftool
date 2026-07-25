@@ -38,5 +38,10 @@ export async function generateMetadata() {
 
 export default async function Page() {
   const newsData = await getNewsDataServer();
-  return <NewsHome initialNewsData={newsData} />;
+  return (
+    <>
+      <h1 className="sr-only">Latest technology, tools and trends news</h1>
+      <NewsHome initialNewsData={newsData} />
+    </>
+  );
 }

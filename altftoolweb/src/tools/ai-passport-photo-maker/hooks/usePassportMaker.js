@@ -220,7 +220,8 @@ export default function usePassportMaker() {
       setFaceDetecting(true);
       setLoadingMessage('Detecting face...');
       try {
-        const detected = await detectFace(img);
+        const detection = await detectFace(img);
+        const detected = detection?.bounds || detection;
         if (detected && detected.x !== undefined) {
           setFaceBounds(detected);
           const faceCropX = (detected.x / img.width) * 100;
@@ -253,7 +254,10 @@ export default function usePassportMaker() {
       setEditorStep('crop');
       setLoadingMessage(null);
     } catch (err) {
-      setError(err.message || 'Failed to upload image');
+      if (process.env.NODE_ENV !== 'production') {
+        console.warn('[passport-photo] Image processing failed.', err);
+      }
+      setError('We could not process this image. Try a JPG, PNG, or WebP file.');
       setLoadingMessage(null);
     } finally {
       setProcessing(false);
@@ -330,6 +334,7 @@ export default function usePassportMaker() {
       const dataUrl = resultCanvas.toDataURL('image/png');
 
       setProcessedImage(dataUrl);
+      setViewMode('result');
 
       setCompliance(null);
       try {

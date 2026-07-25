@@ -9,6 +9,9 @@ import { isPublicShellHidden } from "./siteRoutes";
  * Sections with custom chrome stay isolated.
  */
 export const SELF_CHROME_PREFIXES = [
+  // Chrome-free iframe widget shells for third-party sites (the /embed hub
+  // itself keeps the normal site chrome).
+  "/embed/widget",
   // microsites with their own header/footer
   "/altfloveimg",
   "/altflovepdf",

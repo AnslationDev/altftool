@@ -6,7 +6,10 @@
 
 import { NextResponse } from "next/server";
 import { revalidateTag, revalidatePath } from "next/cache";
-import { SEO_CONFIG_REVALIDATE_TAG, __resetSeoConfigCache } from "@/platform/seo/seoConfigSource";
+import {
+  SEO_CONFIG_REVALIDATE_TAG,
+  __expireSeoConfigCache,
+} from "@/platform/seo/seoConfigSource";
 
 export const dynamic = "force-dynamic";
 
@@ -29,10 +32,11 @@ export async function POST(request) {
 
   try {
     revalidateTag(tag);
-    // Clear the in-memory config snapshot so this instance serves fresh config
-    // immediately (the fetch cache above is invalidated globally by the tag).
+    // Retain the last known-good snapshot while this instance refreshes it.
+    // That keeps the first request after an admin edit fast and avoids a
+    // metadata/custom-code gap when Firestore is briefly slow.
     if (tag === SEO_CONFIG_REVALIDATE_TAG) {
-      try { __resetSeoConfigCache(); } catch { /* best effort */ }
+      try { __expireSeoConfigCache(); } catch { /* best effort */ }
     }
     // Revalidate specific page path(s) so SSG/ISR pages regenerate now.
     const paths = [];

@@ -1,7 +1,7 @@
 "use client";
 
-import Base64UrlConverterPage from "./pages";
+import ToolFkUtilityTool from "@/tools/_toolfk-suite/ToolFkUtilityTool";
 
 export default function ToolEntry() {
-  return <Base64UrlConverterPage />;
+  return <ToolFkUtilityTool />;
 }

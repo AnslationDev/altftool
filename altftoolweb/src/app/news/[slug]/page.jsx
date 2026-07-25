@@ -9,6 +9,7 @@ import {
 } from "@/platform/seo/generateMetadata";
 import { getNewsDataServer } from "../lib/getNewsDataServer";
 import { getDummyNewsData } from "../lib/dummyNewsData";
+import { getRelatedContentForPreset, RelatedContentSection } from "@/platform/linking";
 
 export const revalidate = 600;
 
@@ -123,6 +124,17 @@ export default async function NewsDetailPage({ params }) {
     .sort((a, b) => (b.likes + b.comments + b.shares) - (a.likes + a.comments + a.shares))
     .slice(0, 5);
 
+  const relatedContentItems = getRelatedContentForPreset(
+    {
+      href: `/news/${slug}`,
+      title: article.headline || article.title,
+      description: article.summary,
+      tags: [article.source, article.location, ...(article.tags || [])].filter(Boolean),
+      section: "news",
+    },
+    "editorial"
+  );
+
   return (
     <>
       <JsonLd
@@ -151,6 +163,12 @@ export default async function NewsDetailPage({ params }) {
         article={article}
         relatedNews={relatedNews}
         trendingArticles={trendingArticles}
+      />
+      <RelatedContentSection
+        title="Tools & guides from AltFTool"
+        items={relatedContentItems}
+        path={`/news/${article.slug}`}
+        jsonLdName="Tools & guides from AltFTool"
       />
     </>
   );

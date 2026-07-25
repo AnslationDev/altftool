@@ -675,10 +675,10 @@ export default function App() {
           <div className="relative isolate">
             <div className="hero-sun hidden sm:block" />
             <SectionEyebrow>Live activity simulation engine</SectionEyebrow>
-            <h1 className="relative mt-5 max-w-3xl font-heading text-5xl font-extrabold tracking-[-0.04em] text-slate-800 sm:text-6xl lg:text-7xl">
+            <h2 className="relative mt-5 max-w-3xl font-heading text-5xl font-extrabold tracking-[-0.04em] text-slate-800 sm:text-6xl lg:text-7xl">
               People Are Doing This{" "}
               <span className="squiggle-underline text-[var(--playful-violet)]">Right Now</span>
-            </h1>
+            </h2>
             <p className="relative mt-6 max-w-2xl text-lg leading-8 text-slate-600 sm:text-xl">
               A playful live-feed interface that turns behavior into bright, sticky, animated
               proof: pizza orders, breakup quote searches, coupon wins, and mystery box unlocks.

@@ -1,5 +1,6 @@
 import { createPageMetadata } from "@/platform/seo/generateMetadata";
 import CompressClient from "./CompressClient";
+import RelatedToolsBand from "../components/RelatedToolsBand";
 
 export async function generateMetadata() {
   return createPageMetadata({
@@ -11,5 +12,10 @@ export async function generateMetadata() {
 }
 
 export default function Page() {
-  return <CompressClient />;
+  return (
+    <>
+      <CompressClient />
+      <RelatedToolsBand slug="compress" />
+    </>
+  );
 }

@@ -10,5 +10,10 @@ export async function generateMetadata() {
 }
 
 export default function RadioGardenPage() {
-  return <RadioGardenClient />;
+  return (
+    <>
+      <h1 className="sr-only">OpenAir Garden live global radio explorer</h1>
+      <RadioGardenClient />
+    </>
+  );
 }

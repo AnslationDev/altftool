@@ -9,6 +9,7 @@ export const SERVER_ENV = {
   metalPrice: "METAL_PRICE_API_KEY",
   openai: "OPENAI_API_KEY",
   pagespeed: "PAGESPEED_API_KEY",
+  plantId: "PLANT_ID_API_KEY",
   rapidApi: "RAPIDAPI_KEY",
   removeBg: "REMOVE_BG_API_KEY",
   serpApi: "SERPAPI_KEY",

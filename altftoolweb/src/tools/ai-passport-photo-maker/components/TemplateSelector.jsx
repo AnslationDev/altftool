@@ -1,8 +1,7 @@
 "use client";
 import { useState, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Search, Globe, Bookmark, Star, Grid3X3 } from "lucide-react";
-import { Input } from "@altftool/ui";
+import { Search, Globe, Star } from "lucide-react";
 import { PASSPORT_TEMPLATES, PASSPORT_COUNTRIES } from "../constants/templates";
 
 const categories = [
@@ -117,45 +116,51 @@ export default function TemplateSelector({
               const isSelected = selected === template.id;
               const isFav = favorites.includes(template.id);
               return (
-                <motion.button
+                <motion.div
                   key={template.id}
                   layout
                   initial={{ opacity: 0, scale: 0.95 }}
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.95 }}
                   transition={{ duration: 0.15 }}
-                  onClick={() => onSelect(template.id)}
-                  className={`relative flex flex-col items-center gap-2 p-4 rounded-xl border-2 text-left transition-all duration-150
-                    focus:outline-none focus:ring-2 focus:ring-(--primary)/40 cursor-pointer
-                    ${isSelected
-                      ? "border-(--primary) bg-(--primary-soft)/10 shadow-sm"
-                      : "border-(--border) bg-(--card) hover:border-(--border-strong) hover:shadow-sm"}`}
-                  aria-pressed={isSelected}
-                  aria-label={template.name}
+                  className="group relative"
                 >
-                  <span className="text-2xl" role="img" aria-label={template.country}>
-                    {countryFlagMap[template.country] || "🌐"}
-                  </span>
-                  <div className="flex flex-col items-center gap-0.5">
-                    <span className="text-xs font-semibold text-(--foreground) text-center leading-tight">{template.name}</span>
-                    <span className="text-[10px] text-(--muted-foreground)">{template.label}</span>
-                  </div>
-                  <span className={`px-2 py-0.5 rounded-full text-[10px] font-semibold uppercase tracking-wider
-                    ${template.type === "passport" ? "bg-(--primary-soft)/20 text-(--primary)" : ""}
-                    ${template.type === "visa" ? "bg-amber-500/10 text-amber-600" : ""}
-                    ${template.type === "custom" ? "bg-blue-500/10 text-blue-600" : ""}`}
-                  >
-                    {template.type}
-                  </span>
                   <button
-                    onClick={(e) => { e.stopPropagation(); onToggleFavorite(template); }}
+                    type="button"
+                    onClick={() => onSelect(template.id)}
+                    className={`flex h-full w-full flex-col items-center gap-2 rounded-xl border-2 p-4 text-left transition-all duration-150
+                      focus:outline-none focus:ring-2 focus:ring-(--primary)/40 cursor-pointer
+                      ${isSelected
+                        ? "border-(--primary) bg-(--primary-soft)/10 shadow-sm"
+                        : "border-(--border) bg-(--card) hover:border-(--border-strong) hover:shadow-sm"}`}
+                    aria-pressed={isSelected}
+                    aria-label={template.name}
+                  >
+                    <span className="text-2xl" role="img" aria-label={template.country}>
+                      {countryFlagMap[template.country] || "🌐"}
+                    </span>
+                    <div className="flex flex-col items-center gap-0.5">
+                      <span className="text-xs font-semibold text-(--foreground) text-center leading-tight">{template.name}</span>
+                      <span className="text-[10px] text-(--muted-foreground)">{template.label}</span>
+                    </div>
+                    <span className={`px-2 py-0.5 rounded-full text-[10px] font-semibold uppercase tracking-wider
+                      ${template.type === "passport" ? "bg-(--primary-soft)/20 text-(--primary)" : ""}
+                      ${template.type === "visa" ? "bg-amber-500/10 text-amber-600" : ""}
+                      ${template.type === "custom" ? "bg-blue-500/10 text-blue-600" : ""}`}
+                    >
+                      {template.type}
+                    </span>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => onToggleFavorite(template)}
                     className={`absolute top-2 right-2 p-1 rounded-full transition-colors
                       ${isFav ? "text-amber-500" : "text-(--muted-foreground) opacity-0 group-hover:opacity-100 hover:opacity-100"}`}
                     aria-label={isFav ? "Remove from favorites" : "Add to favorites"}
                   >
                     <Star size={14} fill={isFav ? "currentColor" : "none"} />
                   </button>
-                </motion.button>
+                </motion.div>
               );
             })}
           </motion.div>

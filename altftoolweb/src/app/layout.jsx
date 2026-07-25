@@ -15,7 +15,10 @@ import { Suspense } from "react";
 import { connection } from "next/server";
 import { AlertProvider } from "@/shared/ui/AlertProvider";
 import JsonLd from "@/platform/seo/JsonLd";
-import { primeSeoConfig, loadSeoConfig } from "@/platform/seo/seoConfigSource";
+import {
+  getSeoConfigSnapshot,
+  primeSeoConfig,
+} from "@/platform/seo/seoConfigSource";
 import { resolveInjectedCode } from "@altftool/core/seo";
 import InjectedCode from "@/platform/seo/InjectedCode";
 import PerPageCode from "@/platform/seo/PerPageCode";
@@ -148,7 +151,7 @@ export default async function RootLayout({ children }) {
 
   // Admin-authored custom code (raw HTML/scripts). Global is SSR-injected here;
   // per-page code is injected client-side (only when the site has any).
-  const seoConfig = await loadSeoConfig().catch(() => null);
+  const seoConfig = getSeoConfigSnapshot();
   const { global: customCode } = resolveInjectedCode(seoConfig, null);
   const hasPageCode =
     seoConfig?.enabled !== false &&

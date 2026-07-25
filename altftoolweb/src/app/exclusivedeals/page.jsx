@@ -43,6 +43,7 @@ export default function Page() {
           }),
         ]}
       />
+      <h1 className="sr-only">Best deals, discounts and product offers</h1>
       <DealsClient />
     </>
   );

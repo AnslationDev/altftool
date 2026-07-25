@@ -224,7 +224,14 @@ export default function ToolSeoSection({ slug, tool, category = "all" }) {
             no signup. Just keep the &ldquo;Widget by AltFTool&rdquo; credit link visible.
           </p>
           <div className="mt-4">
-            <EmbedCodeCopy snippet={buildEmbedSnippet(slug, tool?.name || seo.name)} />
+            <EmbedCodeCopy
+              snippet={buildEmbedSnippet(slug, tool?.name || seo.name)}
+              containerClassName="rounded-xl"
+              preClassName="max-h-44 overflow-auto rounded-xl p-3 text-xs leading-5 bg-[var(--sc-tile)] text-[var(--sc-ink)]"
+              dividerClassName="pt-2"
+              buttonClassName="inline-flex h-9 items-center gap-2 rounded-full px-4 text-sm font-bold transition-all duration-150 hover:-translate-y-0.5 hover:shadow-(--sc-shadow-lg) focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--sc-indigo)] motion-reduce:transform-none"
+              buttonStyle={{ backgroundColor: T.tile, color: T.indigo }}
+            />
           </div>
           <p className="mt-3 text-xs" style={{ color: T.muted }}>
             <Link

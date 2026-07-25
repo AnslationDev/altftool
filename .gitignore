@@ -32,6 +32,15 @@ claude.md
 !.env.example
 !**/.env.example
 
+# Private credentials must stay in the deployment secret store. Keep provider
+# exports and key material out of the workspace even when their filenames vary.
+**/*firebase-adminsdk*.json
+**/*service-account*.json
+**/*service_account*.json
+**/*credentials*.json
+**/*.pem
+**/*.key
+
 # temp local assets (not for the repo)
 /pppd.png
 

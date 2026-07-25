@@ -20,6 +20,7 @@
   --color-primary-soft: var(--anslation-ds-primary-soft);
   --color-primary-hover: var(--anslation-ds-primary-hover);
   --color-primary-active: var(--anslation-ds-primary-active);
+  --color-primary-text: var(--anslation-ds-primary-text);
   --color-secondary: var(--anslation-ds-secondary);
   --color-secondary-foreground: var(--anslation-ds-secondary-foreground);
   --color-secondary-soft: var(--anslation-ds-secondary-soft);

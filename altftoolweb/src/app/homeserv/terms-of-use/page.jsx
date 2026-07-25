@@ -16,6 +16,7 @@ export default function TermsOfUsePage() {
       <SiteHeader />
       <section className="hs-plain">
         <span className="hs-eyebrow">Terms of Use</span>
+        <h1>QuoteNest Pros Terms of Use</h1>
 
         <h2>Acceptance Of Terms</h2>
         <p>

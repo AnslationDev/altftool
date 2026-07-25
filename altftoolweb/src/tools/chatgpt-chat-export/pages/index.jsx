@@ -22,7 +22,7 @@ import Statistics from "../components/Statistics";
 import ToolsPanel from "../components/ToolsPanel";
 import Features from "../components/Features";
 import { parseChatFile, parsePastedContent } from "../utils/parser";
-import toast from "react-hot-toast";
+import toast, { Toaster } from "react-hot-toast";
 
 const TABS = [
   { id: "upload", label: "Upload", icon: Upload },
@@ -173,6 +173,14 @@ export default function ChatGPTExportPro() {
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+      <Toaster
+        position="top-right"
+        toastOptions={{
+          duration: 3000,
+          className:
+            "!rounded-lg !border !border-[--border] !bg-[--surface] !text-[--foreground] !shadow-md",
+        }}
+      />
       <div className="mb-6 text-center">
         <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-primary/10">
           <MessageSquare className="h-7 w-7 text-primary" />

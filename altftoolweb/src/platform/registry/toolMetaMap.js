@@ -14401,6 +14401,9 @@ export const toolMetaMap = {
     "name": "Waist to Height Ratio Calculator",
     "description": "A quick health screen: your waist size divided by your height, with a category.",
     "category": "Health & Fitness",
+    "topics": [
+      "Health"
+    ],
     "icon": "ruler",
     "iconColor": "text-teal-600"
   },

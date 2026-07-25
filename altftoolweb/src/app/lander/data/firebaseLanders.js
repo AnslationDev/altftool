@@ -151,7 +151,7 @@ export async function fetchFirebaseLanderBySlug(slug) {
   return writeCache(key, isLanderLive(doc) ? doc : null);
 }
 
-// All published slugs (+ updatedAt) — for generateStaticParams and sitemaps.
+// All published slugs (+ lightweight SEO state) for static params and sitemaps.
 export async function fetchAllPublishedLanderSlugs({ max = 500 } = {}) {
   const key = "landerSlugs";
   const cached = readCache(key);
@@ -161,7 +161,16 @@ export async function fetchAllPublishedLanderSlugs({ max = 500 } = {}) {
   try {
     rows = await firestorePost("runQuery", {
       structuredQuery: {
-        select: { fields: ["slug", "updatedAt", "status", "publishAt", "expireAt"].map((fieldPath) => ({ fieldPath })) },
+        select: {
+          fields: [
+            "slug",
+            "updatedAt",
+            "status",
+            "publishAt",
+            "expireAt",
+            "seo",
+          ].map((fieldPath) => ({ fieldPath })),
+        },
         from: [{ collectionId: "landers" }],
         where: fieldFilter("status", "IN", { arrayValue: { values: [{ stringValue: "published" }, { stringValue: "scheduled" }] } }),
         limit: Math.min(max, 500),
@@ -175,7 +184,11 @@ export async function fetchAllPublishedLanderSlugs({ max = 500 } = {}) {
     .filter((row) => row.document)
     .map((row) => decodeDocument(row.document))
     .filter((d) => d.slug && isLanderLive(d))
-    .map((d) => ({ slug: d.slug, updatedAt: d.updatedAt || null }));
+    .map((d) => ({
+      slug: d.slug,
+      updatedAt: d.updatedAt || null,
+      noIndex: d.seo?.noIndex === true,
+    }));
 
   return writeCache(key, items);
 }

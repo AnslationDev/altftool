@@ -9,6 +9,7 @@ const BASE_HEADERS = {
   "x-permitted-cross-domain-policies": "none",
   "x-download-options": "noopen",
   "origin-agent-cluster": "?1",
+  "cross-origin-resource-policy": "same-site",
   "cross-origin-opener-policy": "same-origin-allow-popups",
   "referrer-policy": "strict-origin-when-cross-origin",
 };
@@ -32,6 +33,7 @@ test("public web security headers are applied", async ({ request }) => {
   expectBaseSecurityHeaders(headers);
   expect(headers["permissions-policy"]).toContain("camera=(self)");
   expect(headers["permissions-policy"]).toContain("microphone=(self)");
+  expect(headers["x-robots-tag"]).toBeUndefined();
 });
 
 test("admin security headers are applied with tighter device permissions", async ({ request }) => {
@@ -42,4 +44,5 @@ test("admin security headers are applied with tighter device permissions", async
   expectBaseSecurityHeaders(headers);
   expect(headers["permissions-policy"]).toContain("camera=()");
   expect(headers["permissions-policy"]).toContain("microphone=()");
+  expect(headers["x-robots-tag"]).toBe("noindex, nofollow, noarchive");
 });

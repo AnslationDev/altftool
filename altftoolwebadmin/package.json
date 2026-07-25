@@ -8,6 +8,7 @@
   },
   "scripts": {
     "dev": "node scripts/generate-tool-slugs.mjs && next dev --webpack",
+    "dev:admin": "npm run dev -- -p 3007",
     "build": "node scripts/generate-tool-slugs.mjs && node ../scripts/generate-admin-health-manifest.mjs && node scripts/use-patched-next-dependencies.mjs && next build --webpack",
     "start": "next start",
     "firebase:admin-write-check": "node scripts/checkFirebaseAdminWrite.mjs",

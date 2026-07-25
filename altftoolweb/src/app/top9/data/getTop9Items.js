@@ -45,3 +45,11 @@ export function getTop9Image(item) {
 export function getTop9Category(item) {
   return item?.cat || item?.prefix || "Top 9 List";
 }
+
+export function getTop9PublishedDate(item) {
+  const value = String(item?.date || "").trim();
+  if (!value) return null;
+
+  const timestamp = Date.parse(value);
+  return Number.isFinite(timestamp) ? new Date(timestamp).toISOString() : null;
+}

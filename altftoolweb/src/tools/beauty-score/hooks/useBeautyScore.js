@@ -26,6 +26,9 @@ export default function useBeautyScore() {
             setResult(data);
           }
         } catch (err) {
+          if (process.env.NODE_ENV !== "production") {
+            console.warn("[beauty-score] Analysis failed during calculation.", err);
+          }
           setError("Analysis failed during calculation.");
         } finally {
           setAnalyzing(false);

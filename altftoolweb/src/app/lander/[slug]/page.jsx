@@ -9,6 +9,7 @@ import {
 import { fetchFirebaseLanderBySlug, fetchAllPublishedLanderSlugs } from "../data/firebaseLanders";
 import LanderSections from "../components/LanderSections";
 import { shouldDeferBulkPrerendering } from "@/lib/buildPrerenderPolicy";
+import { getRelatedContentForPreset, RelatedContentSection } from "@/platform/linking";
 
 export const dynamic = "force-static";
 export const revalidate = 3600;
@@ -65,6 +66,12 @@ export default async function LanderPage({ params }) {
   const path = `/lander/${lander.slug}`;
   const schema = lander.schema || {};
   const jsonLd = [];
+  const hasHeroHeading = (lander.sections || []).some(
+    (section) =>
+      section?.type === "hero" &&
+      !section.hidden &&
+      Boolean(section.props?.heading),
+  );
 
   if (schema.breadcrumbs !== false) {
     jsonLd.push(createBreadcrumbJsonLd([
@@ -77,10 +84,27 @@ export default async function LanderPage({ params }) {
     if (faq.length) jsonLd.push(createFaqJsonLd({ path, questions: faq }));
   }
 
+  const seo = lander.seo || {};
+  const relatedItems = getRelatedContentForPreset(
+    {
+      href: path,
+      title: lander.title || "",
+      description: seo.metaDescription || "",
+      tags: Array.isArray(seo.keywords) ? seo.keywords : [],
+      section: "hubs",
+    },
+    "discovery",
+  );
+
   return (
     <main className="min-h-screen bg-(--background)">
       <JsonLd data={jsonLd.filter(Boolean)} id="lander-jsonld" />
+      {!hasHeroHeading ? (
+        <h1 className="sr-only">{lander.title || "AltFTool landing page"}</h1>
+      ) : null}
       <LanderSections sections={lander.sections} theme={lander.theme || {}} />
+      {/* Cross-section discovery band (site-wide internal linking engine) */}
+      <RelatedContentSection title="Explore AltFTool" items={relatedItems} />
     </main>
   );
 }

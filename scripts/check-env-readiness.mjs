@@ -307,6 +307,7 @@ const checks = [
       { name: "NEXT_PUBLIC_DEEPSEEK_API_KEY", required: "optional-api" },
       { name: "NEXT_PUBLIC_GOOGLE_MAPS_API_KEY", required: "optional-api" },
       { name: "NEXT_PUBLIC_FIREBASE_VAPID_KEY", required: "optional-api" },
+      { name: "PLANT_ID_API_KEY", required: "optional-api" },
     ],
   },
 ];

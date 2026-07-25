@@ -135,6 +135,53 @@ function createMockHealthSnapshot() {
       groupMatrix: [],
       matrix: [],
     },
+    routeQuality: {
+      ok: true,
+      status: "watch",
+      score: 100,
+      generatedAt,
+      totals: {
+        routes: 953,
+        indexable: 840,
+        noindex: 113,
+        sitemapUrls: 2850,
+        sitemapCovered: 840,
+        sitemapCoverage: 100,
+        indexConflicts: 0,
+        missingCanonicalTargets: 0,
+        routesWithIssues: 0,
+        routesWithAdvisories: 1,
+      },
+      checks: [
+        {
+          key: "indexConflicts",
+          label: "Noindex and sitemap alignment",
+          detail: "0 noindex routes listed in sitemap.",
+          ok: true,
+        },
+      ],
+      groups: [
+        {
+          group: "Tools",
+          routes: 500,
+          indexable: 500,
+          noindex: 0,
+          sitemapCoverage: 100,
+          issues: 0,
+          advisories: 1,
+          score: 100,
+        },
+      ],
+      watchlist: [
+        {
+          route: "/tools/all/example",
+          group: "Tools",
+          indexState: "index",
+          issues: [],
+          advisories: ["Non-ideal description (68)"],
+        },
+      ],
+    },
     firebaseAdmin: {
       score: 100,
       status: "ready",
@@ -221,6 +268,51 @@ function createMockHealthSnapshot() {
       warnings: [],
       notices: [],
       checks: [],
+    },
+    productionMonitoring: {
+      ok: true,
+      status: "healthy",
+      score: 100,
+      checkedAt: generatedAt,
+      thresholds: {
+        timeoutMs: 6000,
+        slowMs: 2500,
+      },
+      performance: {
+        averageMs: 180,
+        p95Ms: 240,
+        maxMs: 240,
+      },
+      totals: {
+        probes: 2,
+        passing: 2,
+        slow: 0,
+        failing: 0,
+      },
+      probes: [
+        {
+          key: "home",
+          label: "Home",
+          path: "/",
+          url: "https://www.altftool.com/",
+          finalUrl: "https://www.altftool.com/",
+          status: 200,
+          durationMs: 120,
+          state: "pass",
+          detail: "Healthy",
+        },
+        {
+          key: "sitemap",
+          label: "XML sitemap",
+          path: "/sitemap.xml",
+          url: "https://www.altftool.com/sitemap.xml",
+          finalUrl: "https://www.altftool.com/sitemap.xml",
+          status: 200,
+          durationMs: 240,
+          state: "pass",
+          detail: "Healthy",
+        },
+      ],
     },
     releaseDoctorArtifact: {
       ok: false,
@@ -557,27 +649,23 @@ test.describe("admin route QA guard", () => {
     await quality.expectClean("admin Sale Locator editor");
   });
 
-  test("health dashboard exposes portfolio filters and project details", async ({ page }) => {
+  test("health dashboard exposes route quality and production controls", async ({ page }) => {
     const quality = createPageQualityGate(page);
 
     await expectHealthyAdminRoute(page, {
       path: "/health",
-      marker: /Health Overview|All project reports/i,
+      marker: /Quality and production health/i,
     });
 
-    await expect(page.getByPlaceholder("Search project, admin, environment...")).toBeVisible();
-    await expect(page.getByRole("button", { name: "All Projects", exact: true })).toBeVisible();
-    await expect(page.getByRole("button", { name: "CSV", exact: true })).toBeVisible();
-    await expect(page.getByRole("button", { name: "Excel", exact: true })).toBeVisible();
+    await expect(page.getByTestId("health-dashboard")).toBeVisible();
+    await expect(page.getByRole("heading", { name: "Route quality" })).toBeVisible();
+    await expect(page.getByRole("heading", { name: "Critical route monitor" })).toBeVisible();
+    await expect(page.getByRole("heading", { name: "SEO index control" })).toBeVisible();
+    await expect(page.getByPlaceholder("Search route or issue")).toBeVisible();
+    await expect(page.getByRole("button", { name: "Run live checks" })).toBeVisible();
+    await expect(page.getByRole("link", { name: /Manage index rules/i })).toBeVisible();
 
-    const altfRow = page.getByRole("row").filter({ hasText: "AltFTool" }).first();
-    await expect(altfRow).toBeVisible();
-    await altfRow.getByRole("button", { name: "View details" }).click();
-    await expect(page.getByRole("dialog", { name: "AltFTool health details" })).toBeVisible();
-    await expect(page.getByRole("heading", { name: "Health breakdown" })).toBeVisible();
-    await page.getByRole("button", { name: "Close details" }).click();
-
-    await expectNoHorizontalOverflow(page, "admin health portfolio controls");
-    await quality.expectClean("admin health portfolio controls");
+    await expectNoHorizontalOverflow(page, "admin health quality controls");
+    await quality.expectClean("admin health quality controls");
   });
 });

@@ -1,0 +1,100 @@
+import { promises as fs } from "node:fs";
+import path from "node:path";
+
+const DEFAULT_ENV_FILES = [
+  ".env",
+  ".env.local",
+  ".env.production",
+  ".env.production.local",
+];
+
+function stripOuterQuotes(value) {
+  const trimmed = String(value || "").trim();
+  if (
+    (trimmed.startsWith('"') && trimmed.endsWith('"')) ||
+    (trimmed.startsWith("'") && trimmed.endsWith("'"))
+  ) {
+    return trimmed.slice(1, -1);
+  }
+  return trimmed;
+}
+
+export function parseEnvironmentSource(content = "") {
+  const values = {};
+
+  for (const rawLine of content.split(/\r?\n/)) {
+    const line = rawLine.trim();
+    if (!line || line.startsWith("#")) continue;
+
+    const normalized = line.startsWith("export ")
+      ? line.slice("export ".length).trim()
+      : line;
+    const separatorIndex = normalized.indexOf("=");
+    if (separatorIndex <= 0) continue;
+
+    const key = normalized.slice(0, separatorIndex).trim();
+    if (!/^[A-Z0-9_]+$/i.test(key)) continue;
+
+    const rawValue = normalized.slice(separatorIndex + 1);
+    let value = stripOuterQuotes(rawValue);
+    if (rawValue.trim().startsWith('"')) {
+      value = value
+        .replace(/\\n/g, "\n")
+        .replace(/\\r/g, "\r")
+        .replace(/\\t/g, "\t")
+        .replace(/\\"/g, '"');
+    }
+    values[key] = value.trim();
+  }
+
+  return values;
+}
+
+export function isConfiguredEnvironmentValue(value) {
+  const normalized = String(value || "").trim();
+  if (!normalized) return false;
+
+  return !/^(?:undefined|null|false|changeme|replace[-_ ]?me|your[-_ ].*|<.*>)$/i.test(
+    normalized,
+  );
+}
+
+export function configuredEnvironmentKeys(values = {}) {
+  return new Set(
+    Object.entries(values)
+      .filter(([, value]) => isConfiguredEnvironmentValue(value))
+      .map(([key]) => key),
+  );
+}
+
+export async function loadEnvironmentSnapshot({
+  workspaceRoot,
+  roots = [workspaceRoot],
+  filenames = DEFAULT_ENV_FILES,
+  processEnvironment = process.env,
+}) {
+  const values = {};
+  const filesLoaded = [];
+
+  for (const root of roots) {
+    for (const filename of filenames) {
+      const filePath = path.join(root, filename);
+      let source = "";
+      try {
+        source = await fs.readFile(filePath, "utf8");
+      } catch {
+        continue;
+      }
+      Object.assign(values, parseEnvironmentSource(source));
+      filesLoaded.push(path.relative(workspaceRoot, filePath) || filename);
+    }
+  }
+
+  return {
+    filesLoaded,
+    values: {
+      ...values,
+      ...processEnvironment,
+    },
+  };
+}
