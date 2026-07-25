@@ -17,6 +17,7 @@ import {
   createBreadcrumbJsonLd,
 } from "@/platform/seo/generateMetadata";
 import { shouldDeferBulkPrerendering } from "@/lib/buildPrerenderPolicy";
+import { getRelatedContent, RelatedContentSection } from "@/platform/linking";
 
 export const dynamic = "force-static";
 export const revalidate = 3600;
@@ -62,6 +63,19 @@ export default async function Page({ params }) {
   const related = getRelated(slug, 4);
   const wfJson = await readWorkflowJson(slug);
   const nodeDetails = wfJson ? deriveNodeDetails(wfJson) : [];
+  const relatedItems = getRelatedContent({
+    source: {
+      href: `/n8n/${slug}`,
+      title: wf.title,
+      description: shortIntro(wf.description, 200),
+      tags: wf.categories.map((c) => c.name),
+      section: "n8n",
+    },
+    slots: [
+      { sections: ["tools", "blogs"], limit: 3 },
+      { sections: ["products", "experiences", "hubs"], limit: 3, minScore: 0 },
+    ],
+  });
 
   return (
     <>
@@ -176,6 +190,14 @@ export default async function Page({ params }) {
             </section>
           )}
         </div>
+
+        {/* Cross-section discovery band (site-wide internal linking engine) */}
+        <RelatedContentSection
+          title="More from AltFTool"
+          items={relatedItems}
+          path={`/n8n/${slug}`}
+          jsonLdName="More from AltFTool"
+        />
       </main>
     </>
   );

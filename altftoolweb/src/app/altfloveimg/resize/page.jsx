@@ -1,5 +1,6 @@
 import { createPageMetadata } from "@/platform/seo/generateMetadata";
 import ResizeClient from "./ResizeClient";
+import RelatedToolsBand from "../components/RelatedToolsBand";
 
 export async function generateMetadata() {
   return createPageMetadata({
@@ -11,5 +12,10 @@ export async function generateMetadata() {
 }
 
 export default function Page() {
-  return <ResizeClient />;
+  return (
+    <>
+      <ResizeClient />
+      <RelatedToolsBand slug="resize" />
+    </>
+  );
 }

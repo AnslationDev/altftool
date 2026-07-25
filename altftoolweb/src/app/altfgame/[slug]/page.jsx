@@ -8,6 +8,7 @@ import StarRating from "@/app/altfgame/_components/StarRating";
 import { GAMES, getGame, getRelated, getRecommended } from "@/app/altfgame/_data/games";
 import { GAME_COMPONENTS } from "../registry";
 import { shouldDeferBulkPrerendering } from "@/lib/buildPrerenderPolicy";
+import { getRelatedContent, RelatedContentSection } from "@/platform/linking";
 import JsonLd from "@/platform/seo/JsonLd";
 import {
   createBreadcrumbJsonLd,
@@ -53,6 +54,19 @@ export default async function GamePage({ params }) {
   const related = getRelated(slug, 8);
   const recommended = getRecommended(slug, 6);
   const gamePath = `/altfgame/${slug}`;
+  const beyondGames = getRelatedContent({
+    source: {
+      href: gamePath,
+      title: game.title,
+      description: game.description,
+      tags: [game.category, `${game.category} game`, "free browser game"],
+      section: "games",
+    },
+    slots: [
+      { sections: ["tools", "experiences"], limit: 3 },
+      { sections: ["blogs", "top9", "hubs"], limit: 3, minScore: 0 },
+    ],
+  });
   const jsonLd = [
     createBreadcrumbJsonLd([
       { name: "Home", path: "/" },
@@ -63,7 +77,7 @@ export default async function GamePage({ params }) {
   ];
 
   return (
-    <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_300px]">
+    <main className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_300px]">
       <JsonLd id={`altf-game-${slug}-schema`} data={jsonLd} />
       {/* Main column */}
       <div className="min-w-0">
@@ -106,6 +120,14 @@ export default async function GamePage({ params }) {
           </div>
         </div>
       </aside>
-    </div>
+
+      <RelatedContentSection
+        title="Beyond games"
+        items={beyondGames}
+        path={gamePath}
+        jsonLdName={`Beyond games: related picks for ${game.title}`}
+        className="lg:col-span-2"
+      />
+    </main>
   );
 }

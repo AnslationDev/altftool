@@ -9,6 +9,7 @@ import {
 } from "@/platform/seo/generateMetadata";
 import ManagedImage from "@/components/ui/ManagedImage";
 import { shouldDeferBulkPrerendering } from "@/lib/buildPrerenderPolicy";
+import { getRelatedContentForPreset, RelatedContentSection } from "@/platform/linking";
 
 export const dynamic = "force-static";
 
@@ -41,6 +42,20 @@ export default async function CategoryPage({ params }) {
   const data = categoryData[slug];
 
   if (!data) notFound();
+
+  const relatedItems = getRelatedContentForPreset(
+    {
+      href: `/top11/${slug}`,
+      title: data.title,
+      description: data.description,
+      tags: [
+        ...slug.split("-"),
+        ...data.tools.slice(0, 5).map((tool) => tool.name),
+      ],
+      section: "top11",
+    },
+    "editorial"
+  );
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#f8fafc] to-[#eef2ff]">
@@ -190,6 +205,14 @@ export default async function CategoryPage({ params }) {
         </div>
 
       </div>
+
+      <RelatedContentSection
+        className="mt-12"
+        title="Keep exploring AltFTool"
+        items={relatedItems}
+        path={`/top11/${slug}`}
+        jsonLdName={`Related to ${data.title}`}
+      />
     </div>
   );
 }

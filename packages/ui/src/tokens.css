@@ -49,6 +49,8 @@ html[data-theme="light"] {
   --anslation-ds-primary: var(--anslation-ds-brand-600);
   --anslation-ds-primary-hover: var(--anslation-ds-brand-700);
   --anslation-ds-primary-active: var(--anslation-ds-brand-800);
+  /* Brand-coloured TEXT at small sizes: brand-700 keeps ≥4.5:1 on page/surface. */
+  --anslation-ds-primary-text: var(--anslation-ds-brand-700);
   --anslation-ds-primary-soft: var(--anslation-ds-brand-100);
   --anslation-ds-primary-foreground: #ffffff;
   --anslation-ds-secondary: #22d3ee;
@@ -145,6 +147,7 @@ html[data-theme="dark"] {
   --anslation-ds-primary: var(--anslation-ds-brand-400);
   --anslation-ds-primary-hover: var(--anslation-ds-brand-300);
   --anslation-ds-primary-active: var(--anslation-ds-brand-200);
+  --anslation-ds-primary-text: var(--anslation-ds-brand-400);
   --anslation-ds-primary-soft: #0c2e2b;
   --anslation-ds-primary-foreground: #07111f;
   --anslation-ds-secondary: #22d3ee;

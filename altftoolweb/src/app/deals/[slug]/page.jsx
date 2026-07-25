@@ -20,6 +20,7 @@ import {
   createPageMetadata,
 } from "@/platform/seo/generateMetadata";
 import { shouldDeferBulkPrerendering } from "@/lib/buildPrerenderPolicy";
+import { getRelatedContentForPreset, RelatedContentSection } from "@/platform/linking";
 
 import DealCard from "../components/DealCard";
 import GemRating from "../components/GemRating";
@@ -81,6 +82,16 @@ export default async function DealDetailPage({ params }) {
   const related = getRelatedDeals(deal);
   const toolHref = getDealToolHref(deal);
   const maxGemCount = Math.max(...Object.values(deal.gems || { 0: 1 }), 1);
+  const moreFromAltftool = getRelatedContentForPreset(
+    {
+      href: `/deals/${slug}`,
+      title: deal.name,
+      description: deal.tagline,
+      tags: [deal.category, ...(deal.alternativeTo || []), ...(deal.bestFor || [])],
+      section: "deals",
+    },
+    "utility",
+  );
 
   return (
     <>
@@ -403,6 +414,15 @@ export default async function DealDetailPage({ params }) {
               </div>
             </aside>
           </div>
+
+          <RelatedContentSection
+            embedded
+            title="More from AltFTool"
+            items={moreFromAltftool}
+            path={`/deals/${slug}`}
+            jsonLdName={`More from AltFTool for ${deal.name}`}
+            className="mt-14"
+          />
 
           {related.length ? (
             <section aria-labelledby="related-heading" className="mt-14">

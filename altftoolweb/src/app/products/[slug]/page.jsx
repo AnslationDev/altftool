@@ -9,6 +9,7 @@ import {
   createCollectionPageJsonLd,
   createPageMetadata,
 } from "@/platform/seo/generateMetadata";
+import { getRelatedContentForPreset, RelatedContentSection } from "@/platform/linking";
 
 const ProductWorkspace = dynamic(() => import("./ProductWorkspace"), {
   loading: () => <WorkspaceSkeleton />,
@@ -37,6 +38,16 @@ export default async function ProductSuitePage({ params }) {
   const suite = getProductSuiteBySlug(slug);
   if (!suite) notFound();
   const statusTone = suite.status === "working" ? "success" : suite.status === "beta" ? "info" : "neutral";
+  const moreFromAltftool = getRelatedContentForPreset(
+    {
+      href: `/products/${suite.slug}`,
+      title: suite.name,
+      description: suite.description,
+      tags: suite.capabilities,
+      section: "products",
+    },
+    "utility",
+  );
 
   return (
     <>
@@ -101,6 +112,13 @@ export default async function ProductSuitePage({ params }) {
             </aside>
           </div>
         </section>
+
+        <RelatedContentSection
+          title="More from AltFTool"
+          items={moreFromAltftool}
+          path={`/products/${suite.slug}`}
+          jsonLdName={`More from AltFTool for ${suite.name}`}
+        />
       </main>
     </>
   );

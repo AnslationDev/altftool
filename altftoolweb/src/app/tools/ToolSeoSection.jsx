@@ -1,7 +1,10 @@
 import Link from "next/link";
-import { ArrowUpRight, BookOpen, HelpCircle, LayoutGrid, ListChecks, Plus, Sparkles } from "lucide-react";
+import { ArrowUpRight, BookOpen, Code2, HelpCircle, LayoutGrid, ListChecks, Plus, Sparkles } from "lucide-react";
 import { buildToolSeoContent } from "./toolSeoContent";
-import { getRelatedTools } from "./toolRouteUtils";
+import { getRelatedTools, getToolCategories } from "./toolRouteUtils";
+import { getRelatedContent, RelatedContentSection } from "@/platform/linking";
+import { buildEmbedSnippet, isEmbeddable } from "@/app/embed/embedRegistry";
+import EmbedCodeCopy from "@/app/embed/EmbedCodeCopy";
 
 /**
  * Server-rendered SEO content for tool pages.
@@ -57,6 +60,23 @@ function SectionHeading({ icon: Icon, children }) {
 export default function ToolSeoSection({ slug, tool, category = "all" }) {
   const seo = buildToolSeoContent(slug, tool);
   const related = getRelatedTools(slug, 6);
+  const toolPath = `/tools/all/${slug}`;
+  // Cross-site "keep exploring" links (tools deliberately excluded — the page
+  // already has its own "Related tools" nav above).
+  const crossSiteItems = getRelatedContent({
+    source: {
+      href: toolPath,
+      title: tool?.name || seo.name,
+      description: tool?.description || "",
+      tags: [...getToolCategories(tool), ...(tool?.topics || [])],
+      section: "tools",
+    },
+    slots: [
+      { sections: ["blogs", "top9", "top11"], limit: 2 },
+      { sections: ["calculators", "pdfTools", "imageTools", "deals"], limit: 2 },
+      { sections: ["experiences", "games", "products"], limit: 2, minScore: 0 },
+    ],
+  });
 
   return (
     <section
@@ -194,6 +214,34 @@ export default function ToolSeoSection({ slug, tool, category = "all" }) {
           </ul>
         </nav>
       )}
+
+      {/* Embed-on-your-site snippet (allowlisted widget categories only) */}
+      {isEmbeddable(slug) && (
+        <section aria-label={`Embed ${tool?.name || seo.name}`} className="rounded-[24px] p-5 sm:p-7" style={CARD}>
+          <SectionHeading icon={Code2}>Embed this tool on your site</SectionHeading>
+          <p className="mt-3 max-w-2xl text-sm leading-6" style={{ color: T.muted }}>
+            Add the {tool?.name || seo.name} widget to your blog or website — free, responsive,
+            no signup. Just keep the &ldquo;Widget by AltFTool&rdquo; credit link visible.
+          </p>
+          <div className="mt-4">
+            <EmbedCodeCopy snippet={buildEmbedSnippet(slug, tool?.name || seo.name)} />
+          </div>
+          <p className="mt-3 text-xs" style={{ color: T.muted }}>
+            <Link href="/embed" className="font-semibold underline underline-offset-2" style={{ color: T.indigo }}>
+              Browse all embeddable widgets →
+            </Link>
+          </p>
+        </section>
+      )}
+
+      {/* Cross-site related content (guides, calculators, experiences, ...) */}
+      <RelatedContentSection
+        embedded
+        title="Guides & more from AltFTool"
+        items={crossSiteItems}
+        path={toolPath}
+        jsonLdName={`Content related to ${tool?.name || seo.name}`}
+      />
     </section>
   );
 }

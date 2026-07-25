@@ -21,6 +21,7 @@ import {
 } from "@/platform/seo/geoEntities";
 import { formatCategoryLabel, getToolCategorySlugs } from "../../tools/toolRouteUtils";
 import { shouldDeferBulkPrerendering } from "@/lib/buildPrerenderPolicy";
+import { getRelatedContentForPreset, RelatedContentSection } from "@/platform/linking";
 
 /**
  * GEO landing page — /locations/[geo]
@@ -141,9 +142,20 @@ export default async function GeoPage({ params }) {
   const modules = getToolCategorySlugs()
     .filter((slug) => slug !== "all")
     .slice(0, 14);
+  const relatedItems = getRelatedContentForPreset(
+    {
+      href: path,
+      title: `${siteConfig.name} in ${location.name}`,
+      description: buildIntro(location, chain),
+      tags: [location.name, location.type, location.containedIn].filter(Boolean),
+      section: "locations",
+    },
+    "discovery",
+    { excludeHrefs: popularTools.map(([slug]) => `/tools/all/${slug}`) },
+  );
 
   return (
-    <div
+    <main
       className="mx-auto w-full max-w-6xl space-y-5 px-4 pb-14 pt-6 sm:px-6 lg:px-8"
       style={{ color: T.ink }}
     >
@@ -316,6 +328,11 @@ export default async function GeoPage({ params }) {
           </ul>
         </nav>
       )}
-    </div>
+
+      {/* Cross-section discovery band (site-wide internal linking engine).
+          No ItemList JSON-LD here: the page already emits its own ItemList
+          (popular tools) whose @id would collide. */}
+      <RelatedContentSection embedded title="Explore AltFTool" items={relatedItems} />
+    </main>
   );
 }

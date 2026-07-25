@@ -8,6 +8,7 @@ import {
   createPageMetadata,
 } from "@/platform/seo/generateMetadata";
 import { shouldDeferBulkPrerendering } from "@/lib/buildPrerenderPolicy";
+import { getRelatedContentForPreset, RelatedContentSection } from "@/platform/linking";
 
 export const dynamic = "force-static";
 
@@ -91,6 +92,17 @@ export default async function AppDetailPage({ params }) {
     notFound();
   }
 
+  const moreFromAltftool = getRelatedContentForPreset(
+    {
+      href: `/apps/${app.slug}`,
+      title: app.name,
+      description: app.shortDescription,
+      tags: [app.category],
+      section: "apps",
+    },
+    "utility",
+  );
+
   return (
     <>
       <JsonLd
@@ -105,6 +117,12 @@ export default async function AppDetailPage({ params }) {
         ]}
       />
       <AppDetailClient app={app} relatedApps={getRelatedApps(slug)} />
+      <RelatedContentSection
+        title="More from AltFTool"
+        items={moreFromAltftool}
+        path={`/apps/${app.slug}`}
+        jsonLdName={`More from AltFTool for ${app.name}`}
+      />
     </>
   );
 }

@@ -27,6 +27,7 @@ html[data-theme="light"] {
   --primary-soft: var(--anslation-ds-primary-soft);
   --primary-hover: var(--anslation-ds-primary-hover);
   --primary-active: var(--anslation-ds-primary-active);
+  --primary-text: var(--anslation-ds-primary-text);
 
   --secondary: var(--anslation-ds-secondary);
   --secondary-foreground: var(--anslation-ds-secondary-foreground);
@@ -83,6 +84,7 @@ html[data-theme="dark"] {
   --primary-soft: var(--anslation-ds-primary-soft);
   --primary-hover: var(--anslation-ds-primary-hover);
   --primary-active: var(--anslation-ds-primary-active);
+  --primary-text: var(--anslation-ds-primary-text);
   --secondary: var(--anslation-ds-secondary);
   --secondary-foreground: var(--anslation-ds-secondary-foreground);
   --secondary-soft: var(--anslation-ds-secondary-soft);

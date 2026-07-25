@@ -1,4 +1,5 @@
 import { createPageMetadata } from "@/platform/seo/generateMetadata";
+import { getRelatedContent, RelatedContentSection } from "@/platform/linking";
 import { CALCULATORS } from "../toolsData";
 import PageView from "./PageView";
 
@@ -24,6 +25,35 @@ export async function generateMetadata({ params }) {
   });
 }
 
-export default function Page(props) {
-  return <PageView {...props} />;
+export default async function Page(props) {
+  const { toolSlug } = await props.params;
+  const tool = CALCULATORS.find((item) => item.slug === toolSlug);
+  const relatedItems = tool
+    ? getRelatedContent({
+        source: {
+          href: `/altfcalculators/${toolSlug}`,
+          title: tool.name,
+          description: tool.desc,
+          tags: [tool.category, tool.sidebarCategory].filter(Boolean),
+          section: "calculators",
+        },
+        slots: [
+          { sections: ["blogs", "top9"], limit: 2 },
+          { sections: ["tools", "pdfTools", "imageTools"], limit: 2 },
+          { sections: ["experiences", "hubs"], limit: 2, minScore: 0 },
+        ],
+      })
+    : [];
+
+  return (
+    <>
+      <PageView {...props} />
+      <RelatedContentSection
+        title="Related tools & guides"
+        items={relatedItems}
+        path={`/altfcalculators/${toolSlug}`}
+        jsonLdName="Related tools & guides"
+      />
+    </>
+  );
 }

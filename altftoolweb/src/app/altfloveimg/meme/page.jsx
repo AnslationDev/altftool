@@ -1,5 +1,6 @@
 import { createPageMetadata } from "@/platform/seo/generateMetadata";
 import MemeClient from "./MemeClient";
+import RelatedToolsBand from "../components/RelatedToolsBand";
 
 export async function generateMetadata() {
   return createPageMetadata({
@@ -11,5 +12,10 @@ export async function generateMetadata() {
 }
 
 export default function Page() {
-  return <MemeClient />;
+  return (
+    <>
+      <MemeClient />
+      <RelatedToolsBand slug="meme" />
+    </>
+  );
 }

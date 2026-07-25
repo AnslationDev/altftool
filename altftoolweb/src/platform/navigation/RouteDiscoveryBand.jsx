@@ -18,7 +18,7 @@ export default function RouteDiscoveryBand({
     >
       <div className="mx-auto grid w-full max-w-[1500px] gap-5 px-4 py-7 sm:px-5 sm:py-8 lg:grid-cols-[minmax(0,0.78fr)_minmax(0,1.22fr)] lg:px-8">
         <div className="max-w-2xl">
-          <div className="mb-3 inline-flex h-8 items-center gap-2 rounded-[7px] border border-(--border) bg-(--background) px-3 text-xs font-semibold text-(--primary)">
+          <div className="mb-3 inline-flex h-8 items-center gap-2 rounded-[7px] border border-(--border) bg-(--background) px-3 text-xs font-semibold text-(--primary-text)">
             <Compass className="h-3.5 w-3.5" />
             {eyebrow}
           </div>
@@ -52,7 +52,7 @@ export default function RouteDiscoveryBand({
                   </p>
                 ) : null}
               </div>
-              <span className="mt-4 inline-flex items-center gap-1 text-xs font-semibold text-(--primary)">
+              <span className="mt-4 inline-flex items-center gap-1 text-xs font-semibold text-(--primary-text)">
                 Open
                 <ArrowRight className="h-3.5 w-3.5 transition group-hover:translate-x-0.5" />
               </span>
