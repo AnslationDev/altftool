@@ -282,7 +282,7 @@ function SectionHeading({ title, kicker, action, actionHref, onAction, id }) {
       <div className="flex flex-wrap items-end justify-between gap-x-4 gap-y-1">
         <div className="min-w-0">
           {kicker ? (
-            <p className="mb-1.5 text-[11px] font-bold uppercase tracking-widest text-(--primary)">
+            <p className="mb-1.5 text-xs font-bold uppercase tracking-widest text-(--primary)">
               {kicker}
             </p>
           ) : null}
@@ -307,7 +307,7 @@ function SectionHeading({ title, kicker, action, actionHref, onAction, id }) {
       </div>
       <div
         aria-hidden="true"
-        className="mt-3 h-px w-full bg-gradient-to-r from-(--border) via-(--border) to-transparent"
+        className="mt-3 h-1 w-12 rounded-full bg-gradient-to-r from-(--primary) to-(--secondary)"
       />
     </div>
   );
@@ -345,7 +345,7 @@ function FeaturedHeroCarousel({ posts }) {
     <section
       aria-roledescription="carousel"
       aria-label="Featured articles"
-      className="relative overflow-hidden rounded-2xl shadow-md"
+      className="relative overflow-hidden rounded-2xl shadow-md ring-1 ring-(--border)"
       style={{
         background:
           "linear-gradient(140deg, var(--anslation-ds-footer, #0F172A) 35%, color-mix(in srgb, var(--primary) 40%, var(--anslation-ds-footer, #0F172A)))",
@@ -373,7 +373,7 @@ function FeaturedHeroCarousel({ posts }) {
           prefetch={false}
           tabIndex={-1}
           aria-hidden="true"
-          className="relative block aspect-[16/9] overflow-hidden sm:aspect-[21/9] lg:order-2 lg:aspect-[16/10] lg:rounded-xl lg:border lg:border-white/10"
+          className="relative block aspect-[16/9] overflow-hidden sm:aspect-[21/9] lg:order-2 lg:aspect-[16/10] lg:rounded-xl lg:ring-1 lg:ring-white/15"
         >
           <Image
             src={getBlogImageSrc(post.image)}
@@ -391,13 +391,29 @@ function FeaturedHeroCarousel({ posts }) {
             aria-hidden="true"
             className="absolute inset-0 bg-gradient-to-t from-black/55 via-black/10 to-transparent lg:hidden"
           />
+          {/* soft glass strip along the bottom edge on desktop */}
+          <span
+            aria-hidden="true"
+            className="absolute inset-x-0 bottom-0 hidden h-14 bg-gradient-to-t from-black/35 to-transparent backdrop-blur-[2px] lg:block"
+          />
         </Link>
 
         <div className="min-w-0 px-4 pb-6 pt-5 sm:px-8 sm:pb-8 lg:order-1 lg:p-0">
-          <span className="inline-flex items-center gap-1.5 rounded-full bg-(--primary) px-3 py-1 text-[10px] font-bold uppercase tracking-widest text-(--primary-foreground)">
-            <Sparkles className="h-3 w-3" aria-hidden="true" /> Featured
+          <span className="inline-flex items-center gap-2">
+            <span
+              className="inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-[10px] font-bold uppercase tracking-widest text-(--primary-foreground) shadow-sm"
+              style={{
+                background:
+                  "linear-gradient(90deg, var(--primary), color-mix(in srgb, var(--secondary) 45%, var(--primary)))",
+              }}
+            >
+              <Sparkles className="h-3 w-3" aria-hidden="true" /> Featured
+            </span>
+            <span className="bg-gradient-to-r from-(--anslation-ds-brand-400) to-(--secondary) bg-clip-text text-[10px] font-bold uppercase tracking-widest text-transparent">
+              Editorial spotlight
+            </span>
           </span>
-          <h2 className="mt-4 line-clamp-3 text-2xl font-black leading-[1.12] tracking-tight text-white sm:text-3xl lg:text-4xl xl:text-[2.75rem]">
+          <h2 className="mt-4 line-clamp-3 text-[clamp(1.75rem,1.05rem+2.6vw,2.9rem)] font-extrabold leading-[1.08] tracking-tight text-white">
             {post.heading}
           </h2>
           {stripHtml(post.excerpt) ? (
@@ -429,7 +445,7 @@ function FeaturedHeroCarousel({ posts }) {
           <Link
             href={`/blogs/${post.slug}`}
             prefetch={false}
-            className="group mt-6 inline-flex h-11 items-center gap-2 rounded-xl bg-(--primary) px-6 text-sm font-bold text-(--primary-foreground) shadow-sm transition-all duration-200 hover:bg-(--primary-hover) motion-reduce:transition-none"
+            className="group mt-6 inline-flex h-11 items-center gap-2 rounded-full bg-(--primary) px-6 text-sm font-bold text-(--primary-foreground) shadow-sm transition-all duration-200 hover:bg-(--primary-hover) motion-reduce:transition-none"
           >
             Read Article{" "}
             <ArrowRight
@@ -472,7 +488,9 @@ function FeaturedHeroCarousel({ posts }) {
                   aria-hidden="true"
                   className={cx(
                     "h-1.5 rounded-full transition-all duration-200 motion-reduce:transition-none",
-                    dotIndex === index ? "w-6 bg-(--primary)" : "w-1.5 bg-white/30 group-hover/dot:bg-white/50",
+                    dotIndex === index
+                      ? "w-6 bg-gradient-to-r from-(--primary) to-(--secondary)"
+                      : "w-1.5 bg-white/30 group-hover/dot:bg-white/50",
                   )}
                 />
               </button>
@@ -525,38 +543,44 @@ function CategoryBand({ categories, counts, activeCategory, onChange }) {
         (counts[blogTaxonomySlug(b)] || 0) - (counts[blogTaxonomySlug(a)] || 0),
     );
 
+  const activeGradient = {
+    background:
+      "linear-gradient(90deg, var(--primary), color-mix(in srgb, var(--secondary) 45%, var(--primary)))",
+  };
+  const pillBase =
+    "inline-flex h-11 shrink-0 snap-start items-center gap-2 rounded-full px-4 text-sm font-bold transition-all duration-150 motion-reduce:transition-none motion-reduce:transform-none";
+  const pillGhost =
+    "bg-(--card) text-(--foreground) ring-1 ring-(--border) hover:-translate-y-0.5 hover:text-(--primary) hover:shadow-[var(--anslation-ds-shadow-md)] hover:ring-(--primary)";
+  const pillActive = "text-(--primary-foreground) shadow-sm";
+
   return (
-    <section aria-label="Blog categories" className="rounded-2xl border border-(--border) bg-(--card) px-3 py-2 shadow-sm">
-      <div className="flex snap-x snap-mandatory items-stretch gap-1 overflow-x-auto scroll-px-3 scrollbar-hide">
+    <section aria-label="Blog categories">
+      <div className="flex snap-x snap-mandatory items-center gap-2.5 overflow-x-auto scroll-px-3 px-1 py-1.5 scrollbar-hide">
         {items.map((category) => {
           const Icon = categoryIcon(category);
           const active = category === activeCategory;
+          const count = counts[blogTaxonomySlug(category)] || 0;
           return (
             <button
               key={category}
               type="button"
               onClick={() => onChange(active ? "All" : category)}
               aria-pressed={active}
-              className={cx(
-                "flex min-w-[132px] flex-1 snap-start items-center gap-3 rounded-xl px-3 py-2.5 text-left transition-colors duration-200 motion-reduce:transition-none",
-                active ? "bg-(--anslation-ds-primary-soft)" : "hover:bg-(--anslation-ds-soft)",
-              )}
+              className={cx(pillBase, active ? pillActive : pillGhost)}
+              style={active ? activeGradient : undefined}
             >
+              <Icon className="h-4 w-4 shrink-0" strokeWidth={1.9} aria-hidden="true" />
+              <span className="whitespace-nowrap">{category}</span>
               <span
                 className={cx(
-                  "grid h-9 w-9 shrink-0 place-items-center rounded-lg",
-                  active ? "bg-(--primary) text-(--primary-foreground)" : "bg-(--anslation-ds-primary-soft) text-(--primary)",
+                  "inline-flex h-5 min-w-5 items-center justify-center rounded-full px-1.5 text-[11px] font-bold tabular-nums",
+                  active
+                    ? "bg-white/20 text-(--primary-foreground)"
+                    : "bg-(--anslation-ds-primary-soft) text-(--primary)",
                 )}
               >
-                <Icon className="h-4 w-4" strokeWidth={1.9} />
-              </span>
-              <span className="min-w-0">
-                <span className="block truncate text-sm font-bold text-(--foreground)">{category}</span>
-                <span className="block text-xs font-medium text-(--muted-foreground)">
-                  {(counts[blogTaxonomySlug(category)] || 0) === 1
-                    ? "1 Article"
-                    : `${counts[blogTaxonomySlug(category)] || 0} Articles`}
-                </span>
+                {count}
+                <span className="sr-only">{count === 1 ? " article" : " articles"}</span>
               </span>
             </button>
           );
@@ -565,17 +589,18 @@ function CategoryBand({ categories, counts, activeCategory, onChange }) {
           type="button"
           onClick={() => onChange("All")}
           aria-pressed={activeCategory === "All"}
-          className="flex min-w-[132px] flex-1 snap-start items-center gap-3 rounded-xl px-3 py-2.5 text-left transition-colors duration-200 hover:bg-(--anslation-ds-soft) motion-reduce:transition-none"
+          className={cx(pillBase, activeCategory === "All" ? pillActive : pillGhost)}
+          style={activeCategory === "All" ? activeGradient : undefined}
         >
-          <span className="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-(--anslation-ds-primary-soft) text-(--primary)">
-            <LayoutGrid className="h-4 w-4" strokeWidth={1.9} />
-          </span>
-          <span className="min-w-0">
-            <span className="block truncate text-sm font-bold text-(--foreground)">All Categories</span>
-            <span className="inline-flex items-center gap-1 text-xs font-bold text-(--primary)">
-              View all <ArrowRight className="h-3 w-3" />
-            </span>
-          </span>
+          <LayoutGrid className="h-4 w-4 shrink-0" strokeWidth={1.9} aria-hidden="true" />
+          <span className="whitespace-nowrap">All Categories</span>
+          <ArrowRight
+            aria-hidden="true"
+            className={cx(
+              "h-3.5 w-3.5 shrink-0",
+              activeCategory === "All" ? "text-(--primary-foreground)" : "text-(--primary)",
+            )}
+          />
         </button>
       </div>
     </section>
@@ -587,7 +612,7 @@ function FeaturedPickCard({ post, featured = false }) {
     <Link
       href={`/blogs/${post.slug}`}
       prefetch={false}
-      className="group flex h-full flex-col overflow-hidden rounded-2xl border border-(--border) bg-(--card) shadow-sm transition-all duration-200 hover:-translate-y-1 hover:border-(--anslation-ds-border-strong) hover:shadow-[var(--anslation-ds-shadow-lg)] motion-reduce:transition-none"
+      className="group flex h-full flex-col overflow-hidden rounded-2xl bg-(--card) shadow-sm ring-1 ring-(--border) transition-all duration-150 hover:-translate-y-0.5 hover:shadow-[var(--anslation-ds-shadow-md)] hover:ring-(--anslation-ds-border-strong) motion-reduce:transition-none motion-reduce:transform-none"
     >
       <div
         className={cx(
@@ -606,7 +631,7 @@ function FeaturedPickCard({ post, featured = false }) {
               : "(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
           }
           onError={handleBlogImageError}
-          className="object-cover transition-transform duration-500 group-hover:scale-105 motion-reduce:transition-none"
+          className="object-cover transition-transform duration-300 group-hover:scale-105 motion-reduce:transition-none motion-reduce:transform-none"
         />
         {post.category ? (
           <span className="absolute left-4 top-4 rounded-full border border-white/20 bg-black/40 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.12em] text-white backdrop-blur-sm">
@@ -683,7 +708,7 @@ function ArticleRow({ post, searchTerms = [], bookmarked, onToggleBookmark, divi
           unoptimized={isFirebaseBlogImage(post.image)}
           sizes="144px"
           onError={handleBlogImageError}
-          className="object-cover transition-transform duration-500 group-hover:scale-105 motion-reduce:transition-none"
+          className="object-cover transition-transform duration-300 group-hover:scale-105 motion-reduce:transition-none motion-reduce:transform-none"
         />
       </Link>
       <div className="min-w-0 flex-1">
@@ -739,13 +764,19 @@ function ArticleRow({ post, searchTerms = [], bookmarked, onToggleBookmark, divi
 function PopularArticlesWidget({ posts, onViewAll, eagerImageSources }) {
   if (!posts?.length) return null;
   return (
-    <div className="rounded-2xl border border-(--border) bg-(--card) p-5 shadow-sm">
+    <div className="rounded-2xl bg-(--card) p-5 shadow-sm ring-1 ring-(--border)">
       <h3 className="mb-4 flex items-center gap-2 text-base font-bold text-(--foreground)">
         <BarChart3 className="h-4 w-4 text-(--primary)" /> Popular Articles
       </h3>
       <div className="flex flex-col gap-4">
-        {posts.map((post) => (
+        {posts.map((post, rankIndex) => (
           <Link key={post.slug} href={`/blogs/${post.slug}`} prefetch={false} className="group flex gap-3">
+            <span
+              aria-hidden="true"
+              className="w-5 shrink-0 pt-1 text-right text-sm font-black tabular-nums leading-none text-(--primary)"
+            >
+              {rankIndex + 1}
+            </span>
             <span className="relative block h-14 w-14 shrink-0 overflow-hidden rounded-lg bg-(--anslation-ds-soft)">
               <Image
                 src={getBlogImageSrc(post.image)}
@@ -805,17 +836,18 @@ function NewsletterWidget() {
   };
 
   return (
-    <div
-      className="relative overflow-hidden rounded-2xl border border-(--border) p-5 shadow-sm"
-      style={{
-        background:
-          "linear-gradient(150deg, color-mix(in srgb, var(--primary) 10%, var(--card)), color-mix(in srgb, var(--secondary) 12%, var(--card)))",
-      }}
-    >
+    <div className="rounded-2xl bg-gradient-to-r from-(--primary) to-(--secondary) p-px shadow-sm">
+      <div
+        className="relative overflow-hidden rounded-[calc(1rem_-_1px)] p-5"
+        style={{
+          background:
+            "linear-gradient(150deg, color-mix(in srgb, var(--primary) 10%, var(--card)), color-mix(in srgb, var(--secondary) 12%, var(--card))), var(--card)",
+        }}
+      >
       <span className="pointer-events-none absolute -right-2 top-4 rotate-12 text-(--primary) opacity-70" aria-hidden="true">
         <Send className="h-10 w-10" strokeWidth={1.5} />
       </span>
-      <h3 className="text-lg font-bold text-(--foreground)">Stay Updated</h3>
+      <h3 className="text-xl font-extrabold tracking-tight text-(--foreground)">Stay Updated</h3>
       <p className="mt-1.5 max-w-[85%] text-sm leading-relaxed text-(--muted-foreground)">
         Get the latest articles, tools, and productivity tips straight to your inbox.
       </p>
@@ -844,6 +876,7 @@ function NewsletterWidget() {
         </form>
       )}
       <p className="mt-2.5 text-xs text-(--muted-foreground)">No spam. Unsubscribe anytime.</p>
+      </div>
     </div>
   );
 }
@@ -863,7 +896,7 @@ function QuickAccessWidget({ activeQuery, onChangeQuery, categories = [] }) {
   const options = (categories.filter((c) => c && c !== "All").slice(0, 8));
   const list = options.length ? options : QUICK_ACCESS_FALLBACK;
   return (
-    <div className="rounded-2xl border border-(--border) bg-(--card) p-5 shadow-sm">
+    <div className="rounded-2xl bg-(--card) p-5 shadow-sm ring-1 ring-(--border)">
       <h3 className="mb-3 text-base font-bold text-(--foreground)">Quick Access</h3>
       <div className="flex flex-wrap gap-2">
         {list.map((option) => {
@@ -874,10 +907,10 @@ function QuickAccessWidget({ activeQuery, onChangeQuery, categories = [] }) {
               type="button"
               onClick={() => onChangeQuery(isActive ? "" : option)}
               className={cx(
-                "inline-flex h-8 items-center justify-center rounded-lg border px-3 text-xs font-semibold transition-colors",
+                "inline-flex h-8 items-center justify-center rounded-full px-3.5 text-xs font-semibold transition-all duration-150 motion-reduce:transition-none motion-reduce:transform-none",
                 isActive
-                  ? "border-(--primary) bg-(--primary) text-(--primary-foreground)"
-                  : "border-(--border) bg-(--background) text-(--foreground) hover:border-(--primary) hover:text-(--primary)",
+                  ? "bg-(--primary) text-(--primary-foreground) shadow-sm"
+                  : "bg-(--background) text-(--foreground) ring-1 ring-(--border) hover:-translate-y-0.5 hover:text-(--primary) hover:ring-(--primary)",
               )}
             >
               {option}
@@ -898,7 +931,7 @@ const TRUST_ITEMS = [
 
 function TrustStrip() {
   return (
-    <section aria-label="Why read the AltFTool blog" className="grid grid-cols-1 gap-4 rounded-2xl border border-(--border) bg-(--card) p-6 shadow-sm sm:grid-cols-2 lg:grid-cols-4">
+    <section aria-label="Why read the AltFTool blog" className="grid grid-cols-1 gap-4 rounded-2xl bg-(--card) p-6 shadow-sm ring-1 ring-(--border) sm:grid-cols-2 lg:grid-cols-4">
       {TRUST_ITEMS.map((item) => (
         <div key={item.title} className="flex items-start gap-3">
           <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-(--anslation-ds-primary-soft) text-(--primary)">
@@ -923,7 +956,7 @@ function SearchControl({ value, onChange, onClear, pending }) {
         value={value}
         onChange={(event) => onChange(event.target.value)}
         placeholder="Search articles..."
-        className="h-10 w-full rounded-lg border border-(--border) bg-(--card) px-10 text-sm font-medium text-(--foreground) shadow-sm outline-none transition placeholder:text-(--muted-foreground) focus:border-(--primary) focus:ring-1 focus:ring-(--primary)"
+        className="h-10 w-full rounded-full border border-(--border) bg-(--card) px-10 text-sm font-medium text-(--foreground) shadow-sm outline-none transition placeholder:text-(--muted-foreground) focus:border-(--primary) focus:ring-1 focus:ring-(--primary)"
       />
       {pending ? (
         <Loader2 className="absolute right-3.5 top-1/2 h-4 w-4 -translate-y-1/2 animate-spin text-(--primary)" />
@@ -1349,11 +1382,12 @@ export default function BlogExplorerClient({
   };
 
   return (
-    <section id="blog-explorer" className="mt-2 flex flex-col gap-8">
-      {/* 1 — Featured hero carousel */}
-      {heroPosts.length > 0 && <FeaturedHeroCarousel posts={heroPosts} />}
-
-      {heroShortcutRail}
+    <section id="blog-explorer" className="mt-2 flex flex-col gap-10 sm:gap-14">
+      {/* 1 — Featured hero carousel (+ its quick-search rail, kept as one unit) */}
+      <div className="flex flex-col">
+        {heroPosts.length > 0 && <FeaturedHeroCarousel posts={heroPosts} />}
+        {heroShortcutRail}
+      </div>
 
       {/* 2 — Category band */}
       <CategoryBand
@@ -1403,7 +1437,7 @@ export default function BlogExplorerClient({
           <div className="mb-5">
             <div className="flex flex-wrap items-end justify-between gap-x-4 gap-y-3">
               <div className="min-w-0">
-                <p className="mb-1.5 text-[11px] font-bold uppercase tracking-widest text-(--primary)">
+                <p className="mb-1.5 text-xs font-bold uppercase tracking-widest text-(--primary)">
                   Fresh off the press
                 </p>
                 <h2
@@ -1414,7 +1448,11 @@ export default function BlogExplorerClient({
                 </h2>
               </div>
               <div className="flex flex-wrap items-center gap-3">
-                <div className="flex items-center gap-1" role="tablist" aria-label="Sort articles">
+                <div
+                  className="flex items-center gap-1 rounded-full bg-(--anslation-ds-soft) p-1"
+                  role="tablist"
+                  aria-label="Sort articles"
+                >
                   {SORT_TABS.map((tab) => {
                     const active = sortMode === tab.value;
                     return (
@@ -1425,14 +1463,13 @@ export default function BlogExplorerClient({
                         aria-selected={active}
                         onClick={() => handleSortChange(tab.value)}
                         className={cx(
-                          "relative min-h-10 px-3 py-1.5 text-sm font-bold transition-colors duration-200 motion-reduce:transition-none",
-                          active ? "text-(--primary)" : "text-(--muted-foreground) hover:text-(--foreground)",
+                          "min-h-10 rounded-full px-3.5 py-1.5 text-sm font-bold transition-colors duration-200 motion-reduce:transition-none",
+                          active
+                            ? "bg-(--card) text-(--primary) shadow-sm"
+                            : "text-(--muted-foreground) hover:text-(--foreground)",
                         )}
                       >
                         {tab.label}
-                        {active && (
-                          <span aria-hidden="true" className="absolute inset-x-3 bottom-0.5 h-0.5 rounded-full bg-(--primary)" />
-                        )}
                       </button>
                     );
                   })}
@@ -1454,7 +1491,7 @@ export default function BlogExplorerClient({
           {filteredPosts.length === 0 ? (
             <EmptyState query={query} onReset={resetFilters} />
           ) : (
-            <div className="rounded-2xl border border-(--border) bg-(--card) px-5 shadow-sm">
+            <div className="rounded-2xl bg-(--card) px-5 shadow-sm ring-1 ring-(--border)">
               {visiblePosts.map((post, index) => (
                 <ArticleRow
                   key={post.slug}
@@ -1474,7 +1511,7 @@ export default function BlogExplorerClient({
                 type="button"
                 onClick={loadNextChunk}
                 disabled={remoteLoading}
-                className="inline-flex h-11 items-center gap-2 rounded-xl border border-(--border) bg-(--card) px-6 text-sm font-bold text-(--foreground) shadow-sm transition-all duration-200 hover:border-(--primary) hover:text-(--primary) hover:shadow-[var(--anslation-ds-shadow-md)] motion-reduce:transition-none"
+                className="inline-flex h-11 items-center gap-2 rounded-full border border-(--border) bg-(--card) px-6 text-sm font-bold text-(--foreground) shadow-sm transition-all duration-200 hover:border-(--primary) hover:text-(--primary) hover:shadow-[var(--anslation-ds-shadow-md)] motion-reduce:transition-none"
               >
                 {remoteLoading ? (
                   <>
@@ -1515,7 +1552,7 @@ export default function BlogExplorerClient({
 
       {/* 5 — extra editorial sections from the server page, same 8-unit rhythm */}
       {children && (
-        <div className="render-deferred flex flex-col gap-8">{children}</div>
+        <div className="render-deferred flex flex-col gap-10 sm:gap-14">{children}</div>
       )}
 
       {/* 6 — trust strip */}
