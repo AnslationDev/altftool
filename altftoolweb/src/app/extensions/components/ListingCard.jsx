@@ -30,10 +30,10 @@ export default function ListingCard({ extension, slug }) {
               src={extension.image}
               alt={extension.name || "extension"}
               fill
-              className="object-cover hover:scale-[1.04] transition-transform duration-300"
+              className="object-cover transition-transform duration-300 group-hover:scale-105 motion-reduce:transform-none"
             />
           ) : (
-            <div className="w-full h-full flex items-center justify-center text-slate-400 text-sm">
+            <div className="w-full h-full flex items-center justify-center text-[var(--muted-foreground)] text-sm">
               No image
             </div>
           )}
@@ -51,7 +51,7 @@ export default function ListingCard({ extension, slug }) {
           <span className="text-(--muted-foreground) font-medium">
             {extension.rating}
           </span>
-          <Star className="w-4 h-4 fill-amber-400 text-amber-400" />
+          <Star className="w-4 h-4 fill-[var(--primary)] text-[var(--primary)]" aria-hidden="true" />
         </div>
 
         {/* Description */}

@@ -66,17 +66,25 @@ export default function ToolDetailChrome({ slug, category = "all", seoContent, c
         <main className="min-w-0 flex-1">
           <nav
             aria-label="Tool route"
-            className="mx-auto mb-4 flex w-full max-w-6xl flex-wrap items-center gap-2 text-xs font-medium text-(--muted-foreground)"
+            className="mx-auto mb-4 flex w-full max-w-6xl flex-wrap items-center gap-1.5 text-xs font-medium text-(--muted-foreground)"
           >
-            <Link href="/tools/all" className="hover:text-(--primary)">
+            <Link
+              href="/tools/all"
+              className="inline-flex items-center rounded-full bg-(--card) px-2.5 py-1 font-semibold ring-1 ring-(--border) transition-colors duration-150 hover:text-(--primary) hover:ring-(--primary) focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35 motion-reduce:transition-none"
+            >
               Tools
             </Link>
-            <ChevronRight className="h-3.5 w-3.5" />
-            <Link href={categoryHref} className="hover:text-(--primary)">
+            <ChevronRight className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
+            <Link
+              href={categoryHref}
+              className="inline-flex items-center rounded-full bg-(--card) px-2.5 py-1 font-semibold ring-1 ring-(--border) transition-colors duration-150 hover:text-(--primary) hover:ring-(--primary) focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35 motion-reduce:transition-none"
+            >
               {categoryLabel}
             </Link>
-            <ChevronRight className="h-3.5 w-3.5" />
-            <span className="text-(--foreground)">{toolName}</span>
+            <ChevronRight className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
+            <span className="px-1 font-semibold text-(--foreground)" aria-current="page">
+              {toolName}
+            </span>
           </nav>
 
           <div

@@ -1,7 +1,10 @@
 import Link from "next/link";
-import { ArrowUpRight, BookOpen, HelpCircle, LayoutGrid, ListChecks, Plus, Sparkles } from "lucide-react";
+import { ArrowUpRight, BookOpen, Code2, HelpCircle, LayoutGrid, ListChecks, Plus, Sparkles } from "lucide-react";
 import { buildToolSeoContent } from "./toolSeoContent";
-import { getRelatedTools } from "./toolRouteUtils";
+import { getRelatedTools, getToolCategories } from "./toolRouteUtils";
+import { getRelatedContent, RelatedContentSection } from "@/platform/linking";
+import { buildEmbedSnippet, isEmbeddable } from "@/app/embed/embedRegistry";
+import EmbedCodeCopy from "@/app/embed/EmbedCodeCopy";
 
 /**
  * Server-rendered SEO content for tool pages.
@@ -57,6 +60,23 @@ function SectionHeading({ icon: Icon, children }) {
 export default function ToolSeoSection({ slug, tool, category = "all" }) {
   const seo = buildToolSeoContent(slug, tool);
   const related = getRelatedTools(slug, 6);
+  const toolPath = `/tools/all/${slug}`;
+  // Cross-site "keep exploring" links (tools deliberately excluded — the page
+  // already has its own "Related tools" nav above).
+  const crossSiteItems = getRelatedContent({
+    source: {
+      href: toolPath,
+      title: tool?.name || seo.name,
+      description: tool?.description || "",
+      tags: [...getToolCategories(tool), ...(tool?.topics || [])],
+      section: "tools",
+    },
+    slots: [
+      { sections: ["blogs", "top9", "top11"], limit: 2 },
+      { sections: ["calculators", "pdfTools", "imageTools", "deals"], limit: 2 },
+      { sections: ["experiences", "games", "products"], limit: 2, minScore: 0 },
+    ],
+  });
 
   return (
     <section
@@ -156,10 +176,10 @@ export default function ToolSeoSection({ slug, tool, category = "all" }) {
               style={{ backgroundColor: T.tile }}
               open={index === 0}
             >
-              <summary className="flex cursor-pointer list-none items-center justify-between gap-3 text-sm font-bold text-(--sc-ink) transition-colors hover:text-(--sc-indigo) group-open:text-(--sc-indigo) [&::-webkit-details-marker]:hidden">
+              <summary className="flex cursor-pointer list-none items-center justify-between gap-3 rounded-lg text-sm font-bold text-(--sc-ink) transition-colors duration-150 hover:text-(--sc-indigo) focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--sc-indigo)]/35 group-open:text-(--sc-indigo) motion-reduce:transition-none [&::-webkit-details-marker]:hidden">
                 {faq.question}
                 <span
-                  className="grid h-6 w-6 shrink-0 place-items-center rounded-full transition-transform duration-150 group-open:rotate-45"
+                  className="grid h-6 w-6 shrink-0 place-items-center rounded-full transition-transform duration-200 group-open:rotate-45 motion-reduce:transition-none"
                   style={{ backgroundColor: T.card, color: T.indigo }}
                   aria-hidden="true"
                 >
@@ -183,17 +203,49 @@ export default function ToolSeoSection({ slug, tool, category = "all" }) {
               <li key={item.slug}>
                 <Link
                   href={`/tools/all/${item.slug}`}
-                  className="group inline-flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-sm font-bold text-(--sc-ink) transition-all duration-150 hover:-translate-y-0.5 hover:text-(--sc-indigo) hover:shadow-(--sc-shadow-lg)"
+                  className="group inline-flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-sm font-bold text-(--sc-ink) transition-all duration-150 hover:-translate-y-0.5 hover:text-(--sc-indigo) hover:shadow-(--sc-shadow-lg) focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--sc-indigo)]/35 motion-reduce:transform-none motion-reduce:transition-none"
                   style={{ backgroundColor: T.tile }}
                 >
                   {item.name}
-                  <ArrowUpRight className="h-3.5 w-3.5 text-(--sc-indigo) transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                  <ArrowUpRight className="h-3.5 w-3.5 text-(--sc-indigo) transition-transform duration-150 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 motion-reduce:transform-none motion-reduce:transition-none" />
                 </Link>
               </li>
             ))}
           </ul>
         </nav>
       )}
+
+      {/* Embed-on-your-site snippet (allowlisted widget categories only) */}
+      {isEmbeddable(slug) && (
+        <section aria-label={`Embed ${tool?.name || seo.name}`} className="rounded-[24px] p-5 sm:p-7" style={CARD}>
+          <SectionHeading icon={Code2}>Embed this tool on your site</SectionHeading>
+          <p className="mt-3 max-w-2xl text-sm leading-6" style={{ color: T.muted }}>
+            Add the {tool?.name || seo.name} widget to your blog or website — free, responsive,
+            no signup. Just keep the &ldquo;Widget by AltFTool&rdquo; credit link visible.
+          </p>
+          <div className="mt-4">
+            <EmbedCodeCopy snippet={buildEmbedSnippet(slug, tool?.name || seo.name)} />
+          </div>
+          <p className="mt-3 text-xs" style={{ color: T.muted }}>
+            <Link
+              href="/embed"
+              className="rounded-[4px] font-semibold underline underline-offset-2 transition-colors duration-150 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--sc-indigo)]/35 motion-reduce:transition-none"
+              style={{ color: T.indigo }}
+            >
+              Browse all embeddable widgets →
+            </Link>
+          </p>
+        </section>
+      )}
+
+      {/* Cross-site related content (guides, calculators, experiences, ...) */}
+      <RelatedContentSection
+        embedded
+        title="Guides & more from AltFTool"
+        items={crossSiteItems}
+        path={toolPath}
+        jsonLdName={`Content related to ${tool?.name || seo.name}`}
+      />
     </section>
   );
 }

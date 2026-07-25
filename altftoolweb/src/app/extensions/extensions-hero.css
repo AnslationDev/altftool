@@ -230,6 +230,10 @@
   box-shadow: inset var(--extensions-focus-ring);
 }
 
+.extensions-hero-search-button:active {
+  transform: scale(0.98);
+}
+
 .extensions-hero-stats {
   display: grid;
   width: min(100%, 37.5rem);
@@ -1037,6 +1041,7 @@
   }
 
   .extensions-hero-search:focus-within,
+  .extensions-hero-search-button:active,
   .extensions-category-card:hover,
   .extensions-category-card:focus-visible,
   .extension-listing-card:hover,

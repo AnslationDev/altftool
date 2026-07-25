@@ -52,6 +52,7 @@ export default function ProductsDirectory({ phases, products, suites }) {
           <div className="max-w-3xl">
             <Badge tone="info" className="mb-4"><Blocks className="h-4 w-4" /> Product suite</Badge>
             <h1 className="text-3xl font-bold sm:text-4xl">One platform, focused workspaces</h1>
+            <span className="mt-3 block h-1 w-12 rounded-full bg-gradient-to-r from-primary to-secondary" aria-hidden="true" />
             <p className="mt-4 text-base leading-7 text-muted-foreground sm:text-lg">
               Start with a purpose-built workspace, then move into the exact AltFTool utility you need. Product states are shown honestly so beta and security-gated work is never mistaken for finished software.
             </p>
@@ -65,6 +66,14 @@ export default function ProductsDirectory({ phases, products, suites }) {
       </section>
 
       <section className="section mx-auto py-8 sm:py-10">
+        <div className="mb-6">
+          <p className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wide text-primary">
+            <Blocks className="h-4 w-4" aria-hidden="true" />
+            Workspace directory
+          </p>
+          <h2 className="mt-2 text-2xl font-bold text-foreground sm:text-3xl">Pick your workspace</h2>
+          <span className="mt-3 block h-1 w-12 rounded-full bg-gradient-to-r from-primary to-secondary" aria-hidden="true" />
+        </div>
         <div className="flex flex-col gap-4 border-b border-border pb-6 lg:flex-row lg:items-center lg:justify-between">
           <label className="relative block w-full lg:max-w-xl">
             <span className="sr-only">Search products</span>
@@ -73,7 +82,7 @@ export default function ProductsDirectory({ phases, products, suites }) {
               value={query}
               onChange={(event) => setQuery(event.target.value)}
               placeholder="Search products by task or outcome"
-              className="w-full !pl-10"
+              className="w-full !pl-10 transition duration-150 focus:border-primary focus:ring-[3px] focus:ring-primary/25 motion-reduce:transition-none"
             />
           </label>
           <div className="flex items-center gap-2 overflow-x-auto pb-1" aria-label="Filter products by phase">
@@ -95,9 +104,9 @@ export default function ProductsDirectory({ phases, products, suites }) {
             {visibleProducts.map((product) => {
               const href = suitePaths.get(product.id) || product.publicPath;
               return (
-                <Card key={product.id} className="flex min-h-64 flex-col border-border bg-card p-5 shadow-sm transition hover:shadow-md">
+                <Card key={product.id} className="group flex min-h-64 flex-col border-transparent bg-card p-5 shadow-sm ring-1 ring-border transition duration-200 hover:-translate-y-0.5 hover:shadow-md hover:ring-primary/40 motion-reduce:transform-none motion-reduce:transition-none">
                   <div className="flex items-start justify-between gap-3">
-                    <span className="flex h-10 w-10 items-center justify-center rounded-lg bg-muted text-primary">
+                    <span className="flex h-10 w-10 items-center justify-center rounded-lg bg-muted text-primary transition-transform duration-300 group-hover:scale-110 motion-reduce:transform-none motion-reduce:transition-none">
                       <Blocks className="h-5 w-5" aria-hidden="true" />
                     </span>
                     <Badge tone={STATUS_TONES[product.status] || "neutral"}>{STATUS_LABELS[product.status] || product.status}</Badge>
@@ -107,8 +116,8 @@ export default function ProductsDirectory({ phases, products, suites }) {
                   <div className="mt-5 flex items-center justify-between border-t border-border pt-4">
                     <span className="text-xs font-semibold uppercase text-muted-foreground">{product.priority} · {product.phase}</span>
                     {href ? (
-                      <Link href={href} className="inline-flex min-h-11 items-center gap-2 rounded-md px-3 text-sm font-semibold text-primary outline-none transition hover:bg-muted focus-visible:ring-2 focus-visible:ring-primary">
-                        Open <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                      <Link href={href} className="inline-flex min-h-11 items-center gap-2 rounded-md px-3 text-sm font-semibold text-primary outline-none transition duration-150 hover:bg-muted active:scale-[0.98] focus-visible:ring-[3px] focus-visible:ring-primary/35 motion-reduce:transform-none motion-reduce:transition-none">
+                        Open <ArrowRight className="h-4 w-4 transition-transform duration-150 group-hover:translate-x-0.5 motion-reduce:transform-none motion-reduce:transition-none" aria-hidden="true" />
                       </Link>
                     ) : null}
                   </div>

@@ -23,12 +23,12 @@ import {
 const pad3 = (n) => String(Math.max(0, Math.min(999, n))).padStart(3, "0");
 
 const PILL_BUTTON =
-  "inline-flex h-11 min-w-11 items-center justify-center gap-1.5 rounded-md border px-3 text-sm font-medium transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary motion-reduce:transition-none";
+  "inline-flex h-11 min-w-11 items-center justify-center gap-1.5 rounded-md border px-3 text-sm font-medium transition duration-150 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-primary/35 motion-reduce:transition-none";
 const PILL_ACTIVE = "border-transparent bg-primary text-primary-foreground";
 const PILL_IDLE =
   "border-border bg-card text-muted-foreground hover:bg-muted hover:text-foreground";
 const PRIMARY_BUTTON =
-  "inline-flex h-11 items-center justify-center gap-1.5 rounded-md bg-primary px-4 text-sm font-semibold text-primary-foreground transition-opacity hover:opacity-90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary motion-reduce:transition-none";
+  "inline-flex h-11 items-center justify-center gap-1.5 rounded-md bg-primary px-4 text-sm font-semibold text-primary-foreground transition duration-150 hover:opacity-90 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-primary/35 motion-reduce:transition-none";
 
 export default function MinesweeperGame() {
   const [difficulty, setDifficulty] = useState("beginner");
@@ -253,7 +253,7 @@ export default function MinesweeperGame() {
 
   const pauseOverlay =
     status === "playing" && paused ? (
-      <div className="absolute inset-0 z-10 flex flex-col items-center justify-center gap-3 rounded-lg bg-card/95 backdrop-blur-sm">
+      <div className="absolute inset-0 z-10 flex flex-col items-center justify-center gap-3 rounded-lg bg-card/95 backdrop-blur-sm motion-safe:animate-[altft-menu-in_200ms_ease-out]">
         <p className="text-sm font-semibold text-foreground">Paused</p>
         <button
           type="button"
@@ -318,7 +318,7 @@ export default function MinesweeperGame() {
         {(status === "won" || status === "lost") && (
           <div
             role="status"
-            className="flex flex-wrap items-center justify-between gap-2 rounded-lg border border-border bg-muted px-3 py-2"
+            className="flex flex-wrap items-center justify-between gap-2 rounded-lg bg-muted px-3 py-2 ring-1 ring-[var(--border)] motion-safe:animate-[altft-menu-in_200ms_ease-out]"
           >
             <p className="text-sm font-medium text-foreground">
               {status === "won" ? (

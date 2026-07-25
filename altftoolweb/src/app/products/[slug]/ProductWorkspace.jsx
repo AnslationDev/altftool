@@ -37,7 +37,7 @@ import {
   runTextWorkflow,
 } from "@altftool/core/product-utilities";
 
-const fieldClass = "w-full rounded-md border border-border bg-background px-3 py-2 text-sm text-foreground outline-none transition placeholder:text-muted-foreground focus:border-primary focus:ring-2 focus:ring-primary";
+const fieldClass = "w-full rounded-md border border-border bg-background px-3 py-2 text-sm text-foreground outline-none transition duration-150 placeholder:text-muted-foreground focus:border-primary focus:ring-[3px] focus:ring-primary/25 motion-reduce:transition-none";
 const panelClass = "border-border bg-card p-5 shadow-sm";
 
 export default function ProductWorkspace({ suite }) {
@@ -346,7 +346,7 @@ function ImpactWorkspace() {
       <WorkspaceTitle icon={Globe2} title="Official support directory" description="Select an edition, then continue on the official source. AltFTool does not determine eligibility or collect identity details." />
       <SelectField id="impact-country" label="Country edition" value={country} onChange={(event) => setCountry(event.target.value)} options={IMPACT_EDITIONS.map((item) => [item.country, `${item.name} · ${item.country}`])} />
       <div className="mt-5 space-y-3">
-        {edition.sources.map(([name, href, description]) => <a key={href} href={href} target="_blank" rel="noopener noreferrer" className="flex min-h-20 items-center gap-4 rounded-lg border border-border bg-background p-4 outline-none transition hover:border-primary focus-visible:ring-2 focus-visible:ring-primary"><span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-muted text-primary"><ExternalLink className="h-5 w-5" /></span><span className="flex-1"><strong className="block">{name}</strong><span className="mt-1 block text-sm text-muted-foreground">{description} · Official source verified July 2026</span></span><ExternalLink className="h-4 w-4 text-primary" /></a>)}
+        {edition.sources.map(([name, href, description]) => <a key={href} href={href} target="_blank" rel="noopener noreferrer" className="group flex min-h-20 items-center gap-4 rounded-lg border border-border bg-background p-4 outline-none transition duration-200 hover:-translate-y-0.5 hover:border-primary hover:shadow-md focus-visible:ring-[3px] focus-visible:ring-primary/35 motion-reduce:transform-none motion-reduce:transition-none"><span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-muted text-primary transition-transform duration-300 group-hover:scale-110 motion-reduce:transform-none motion-reduce:transition-none"><ExternalLink className="h-5 w-5" /></span><span className="flex-1"><strong className="block">{name}</strong><span className="mt-1 block text-sm text-muted-foreground">{description} · Official source verified July 2026</span></span><ExternalLink className="h-4 w-4 text-primary" /></a>)}
       </div>
       <p className="mt-5 rounded-md border border-border bg-muted p-3 text-sm text-muted-foreground">Programs and eligibility can change. Always rely on the destination authority for current rules and application decisions.</p>
     </Card>
@@ -386,7 +386,7 @@ function HubWorkspace({ suite }) {
       <WorkspaceTitle icon={ListChecks} title={`${suite.name} task path`} description="Choose the outcome you need and continue directly into the matching working utility." />
       <ol className="space-y-3">
         {suite.relatedTools.map(([label, href], index) => (
-          <li key={href}><Link href={href} className="flex min-h-16 items-center gap-4 rounded-lg border border-border bg-background p-4 outline-none transition hover:border-primary focus-visible:ring-2 focus-visible:ring-primary"><span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-muted text-sm font-bold text-primary">{index + 1}</span><span className="flex-1"><strong className="block">{label}</strong><span className="mt-1 block text-sm text-muted-foreground">Open the focused tool and keep your work moving.</span></span><ExternalLink className="h-4 w-4 text-primary" /></Link></li>
+          <li key={href}><Link href={href} className="group flex min-h-16 items-center gap-4 rounded-lg border border-border bg-background p-4 outline-none transition duration-200 hover:-translate-y-0.5 hover:border-primary hover:shadow-md focus-visible:ring-[3px] focus-visible:ring-primary/35 motion-reduce:transform-none motion-reduce:transition-none"><span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-muted text-sm font-bold text-primary transition-transform duration-300 group-hover:scale-110 motion-reduce:transform-none motion-reduce:transition-none">{index + 1}</span><span className="flex-1"><strong className="block">{label}</strong><span className="mt-1 block text-sm text-muted-foreground">Open the focused tool and keep your work moving.</span></span><ExternalLink className="h-4 w-4 text-primary" /></Link></li>
         ))}
       </ol>
     </Card>

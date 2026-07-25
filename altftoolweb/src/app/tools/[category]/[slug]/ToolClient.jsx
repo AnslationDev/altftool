@@ -91,12 +91,12 @@ function ToolRecoveryAction({ children, icon: IconComponent, onClick, href, copi
     </>
   );
 
+  const baseClasses =
+    "inline-flex h-10 min-w-0 items-center justify-center gap-2 rounded-[7px] border px-3 text-sm font-semibold transition duration-150 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35 motion-reduce:transform-none motion-reduce:transition-none";
+
   if (href) {
     return (
-      <Link
-        href={href}
-        className={`inline-flex h-10 min-w-0 items-center justify-center gap-2 rounded-[7px] border px-3 text-sm font-semibold transition ${classes}`}
-      >
+      <Link href={href} className={`${baseClasses} ${classes}`}>
         {content}
       </Link>
     );
@@ -106,7 +106,7 @@ function ToolRecoveryAction({ children, icon: IconComponent, onClick, href, copi
     <button
       type="button"
       onClick={onClick}
-      className={`inline-flex h-10 min-w-0 items-center justify-center gap-2 rounded-[7px] border px-3 text-sm font-semibold transition ${classes}`}
+      className={`${baseClasses} ${classes}`}
     >
       {content}
     </button>
@@ -190,10 +190,10 @@ function ToolRuntimeRecoveryFallback({ slug, category, error, retryCount, onRetr
               <Link
                 key={relatedSlug}
                 href={`/tools/all/${relatedSlug}`}
-                className="group flex min-h-[112px] flex-col justify-between rounded-[8px] border border-(--border) bg-(--background) p-3 transition hover:border-(--primary)"
+                className="group flex min-h-[112px] flex-col justify-between rounded-[8px] border border-(--border) bg-(--background) p-3 transition duration-200 hover:-translate-y-0.5 hover:border-(--primary) hover:shadow-md focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35 motion-reduce:transform-none motion-reduce:transition-none"
               >
                 <div className="flex gap-3">
-                  <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-[7px] bg-(--muted)">
+                  <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-[7px] bg-(--muted) transition-transform duration-300 group-hover:scale-105 motion-reduce:transform-none motion-reduce:transition-none">
                     <Icon
                       name={relatedTool.icon ?? "wrench"}
                       className={`h-5 w-5 ${relatedTool.iconColor ?? "text-(--muted-foreground)"}`}
@@ -208,8 +208,8 @@ function ToolRuntimeRecoveryFallback({ slug, category, error, retryCount, onRetr
                     </p>
                   </div>
                 </div>
-                <span className="mt-3 inline-flex items-center gap-1 text-xs font-semibold text-(--muted-foreground) group-hover:text-(--primary)">
-                  Open <ArrowRight className="h-3.5 w-3.5" />
+                <span className="mt-3 inline-flex items-center gap-1 text-xs font-semibold text-(--muted-foreground) transition-colors duration-150 group-hover:text-(--primary) motion-reduce:transition-none">
+                  Open <ArrowRight className="h-3.5 w-3.5 transition-transform duration-150 group-hover:translate-x-0.5 motion-reduce:transform-none motion-reduce:transition-none" />
                 </span>
               </Link>
             ))}

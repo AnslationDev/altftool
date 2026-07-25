@@ -9,6 +9,7 @@ import {
   createCollectionPageJsonLd,
   createPageMetadata,
 } from "@/platform/seo/generateMetadata";
+import { getRelatedContentForPreset, RelatedContentSection } from "@/platform/linking";
 
 const ProductWorkspace = dynamic(() => import("./ProductWorkspace"), {
   loading: () => <WorkspaceSkeleton />,
@@ -37,6 +38,16 @@ export default async function ProductSuitePage({ params }) {
   const suite = getProductSuiteBySlug(slug);
   if (!suite) notFound();
   const statusTone = suite.status === "working" ? "success" : suite.status === "beta" ? "info" : "neutral";
+  const moreFromAltftool = getRelatedContentForPreset(
+    {
+      href: `/products/${suite.slug}`,
+      title: suite.name,
+      description: suite.description,
+      tags: suite.capabilities,
+      section: "products",
+    },
+    "utility",
+  );
 
   return (
     <>
@@ -54,7 +65,7 @@ export default async function ProductSuitePage({ params }) {
       <main className="min-h-screen bg-background text-foreground">
         <section className="border-b border-border bg-card">
           <div className="section mx-auto py-10 sm:py-12">
-            <Link href="/products" className="inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-muted-foreground outline-none hover:text-primary focus-visible:ring-2 focus-visible:ring-primary">
+            <Link href="/products" className="inline-flex min-h-11 items-center gap-2 rounded-md text-sm font-semibold text-muted-foreground outline-none transition-colors duration-150 hover:text-primary focus-visible:ring-[3px] focus-visible:ring-primary/35 motion-reduce:transition-none">
               <ArrowLeft className="h-4 w-4" /> All products
             </Link>
             <div className="mt-4 flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
@@ -64,6 +75,7 @@ export default async function ProductSuitePage({ params }) {
                   <span className="text-sm font-medium text-primary">{suite.eyebrow}</span>
                 </div>
                 <h1 className="mt-4 text-3xl font-bold sm:text-4xl">{suite.name}</h1>
+                <span className="mt-3 block h-1 w-12 rounded-full bg-gradient-to-r from-primary to-secondary" aria-hidden="true" />
                 <p className="mt-3 max-w-2xl text-base leading-7 text-muted-foreground">{suite.description}</p>
               </div>
               <div className="flex items-center gap-2 text-sm text-muted-foreground">
@@ -92,8 +104,8 @@ export default async function ProductSuitePage({ params }) {
                 <h2 className="text-base font-semibold">Focused tools</h2>
                 <div className="mt-3 divide-y divide-border">
                   {suite.relatedTools.map(([label, href]) => (
-                    <Link key={href} href={href} className="flex min-h-12 items-center justify-between gap-3 py-3 text-sm font-medium outline-none hover:text-primary focus-visible:ring-2 focus-visible:ring-primary">
-                      {label}<ArrowRight className="h-4 w-4 shrink-0 text-primary" />
+                    <Link key={href} href={href} className="group flex min-h-12 items-center justify-between gap-3 rounded-md py-3 text-sm font-medium outline-none transition-colors duration-150 hover:text-primary focus-visible:ring-[3px] focus-visible:ring-primary/35 motion-reduce:transition-none">
+                      {label}<ArrowRight className="h-4 w-4 shrink-0 text-primary transition-transform duration-150 group-hover:translate-x-0.5 motion-reduce:transform-none motion-reduce:transition-none" />
                     </Link>
                   ))}
                 </div>
@@ -101,6 +113,13 @@ export default async function ProductSuitePage({ params }) {
             </aside>
           </div>
         </section>
+
+        <RelatedContentSection
+          title="More from AltFTool"
+          items={moreFromAltftool}
+          path={`/products/${suite.slug}`}
+          jsonLdName={`More from AltFTool for ${suite.name}`}
+        />
       </main>
     </>
   );

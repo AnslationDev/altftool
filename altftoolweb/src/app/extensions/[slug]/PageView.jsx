@@ -98,10 +98,10 @@ export default function ExtensionDetailsPage({ params }) {
           <div className="container mx-auto flex h-16 max-w-6xl items-center px-4">
             <Link
               href="/extensions"
-              className="group inline-flex items-center text-sm font-medium text-[var(--muted-foreground)] transition-colors hover:text-[var(--foreground)]"
+              className="group inline-flex min-h-11 items-center rounded-md text-sm font-medium text-[var(--muted-foreground)] transition-colors duration-150 hover:text-[var(--foreground)] focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35 motion-reduce:transition-none"
             >
-              <div className="mr-2 rounded-full p-1.5 transition-colors group-hover:bg-[var(--muted)]">
-                <ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-0.5" />
+              <div className="mr-2 rounded-full p-1.5 transition-colors duration-150 group-hover:bg-[var(--muted)] motion-reduce:transition-none">
+                <ArrowLeft className="h-4 w-4 transition-transform duration-150 group-hover:-translate-x-0.5 motion-reduce:transform-none motion-reduce:transition-none" />
               </div>
               Back to Extensions
             </Link>
@@ -142,10 +142,10 @@ export default function ExtensionDetailsPage({ params }) {
         <div className="container mx-auto max-w-6xl px-4 h-16 flex items-center">
           <Link
             href="/extensions"
-            className="group inline-flex items-center text-sm font-medium text-[var(--muted-foreground)] hover:text-[var(--foreground)] transition-colors"
+            className="group inline-flex min-h-11 items-center rounded-md text-sm font-medium text-[var(--muted-foreground)] hover:text-[var(--foreground)] transition-colors duration-150 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35 motion-reduce:transition-none"
           >
-            <div className="p-1.5 rounded-full group-hover:bg-[var(--muted)] transition-colors mr-2">
-              <ArrowLeft className="w-4 h-4 transition-transform group-hover:-translate-x-0.5" />
+            <div className="p-1.5 rounded-full group-hover:bg-[var(--muted)] transition-colors duration-150 mr-2 motion-reduce:transition-none">
+              <ArrowLeft className="w-4 h-4 transition-transform duration-150 group-hover:-translate-x-0.5 motion-reduce:transform-none motion-reduce:transition-none" />
             </div>
             Back to Extensions
           </Link>
@@ -158,8 +158,8 @@ export default function ExtensionDetailsPage({ params }) {
         <div className="flex flex-col lg:flex-row gap-12 items-center mb-20">
 
           <div className="relative group shrink-0">
-            <div className="relative w-32 h-32 md:w-40 md:h-40 flex items-center justify-center rounded-[2rem] bg-gradient-to-br from-[var(--card)] to-[var(--muted)] border border-[var(--border)] shadow-2xl">
-              <Icon strokeWidth={1.5} className="w-16 h-16 md:w-20 md:h-20 text-[var(--foreground)]" />
+            <div className="relative w-32 h-32 md:w-40 md:h-40 flex items-center justify-center rounded-[2rem] bg-gradient-to-br from-[var(--card)] to-[var(--muted)] ring-1 ring-[var(--border)] shadow-lg transition-shadow duration-300 group-hover:shadow-xl group-hover:ring-[var(--primary)]/30 motion-reduce:transition-none">
+              <Icon strokeWidth={1.5} className="w-16 h-16 md:w-20 md:h-20 text-[var(--foreground)] transition-transform duration-300 group-hover:scale-105 motion-reduce:transform-none motion-reduce:transition-none" />
             </div>
           </div>
 
@@ -170,7 +170,7 @@ export default function ExtensionDetailsPage({ params }) {
                   {extension.category}
                 </span>
                 <div className="flex items-center gap-1 bg-[var(--muted)] px-2 py-0.5 rounded-md border border-[var(--border)]">
-                  <Star className="w-3.5 h-3.5 text-amber-400 fill-current" />
+                  <Star className="w-3.5 h-3.5 text-[var(--primary)] fill-current" aria-hidden="true" />
                   <span className="text-xs font-semibold text-[var(--foreground)]">
                     {extension.rating ?? "5.0"}
                   </span>
@@ -192,14 +192,14 @@ export default function ExtensionDetailsPage({ params }) {
                   href={extension.chromeUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center px-8 py-4 text-base font-bold text-[var(--primary-foreground)] transition-all duration-300 bg-[var(--primary)] rounded-2xl hover:brightness-110 shadow-lg shadow-[var(--primary)]/20 hover:shadow-[var(--primary)]/40 hover:-translate-y-1"
+                  className="inline-flex items-center justify-center px-8 py-4 text-base font-bold text-[var(--primary-foreground)] transition-all duration-300 bg-[var(--primary)] rounded-2xl hover:brightness-110 shadow-lg shadow-[var(--primary)]/20 hover:shadow-[var(--primary)]/40 hover:-translate-y-0.5 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35 motion-reduce:transform-none motion-reduce:transition-none"
                 >
                   <Chrome className="w-5 h-5 mr-2.5" />
                   Add to Chrome
                 </a>
               )}
 
-              <button className="inline-flex items-center justify-center px-6 py-4 text-base font-semibold text-[var(--foreground)] bg-[var(--card)] border border-[var(--border)] rounded-2xl hover:bg-[var(--muted)]">
+              <button className="inline-flex items-center justify-center px-6 py-4 text-base font-semibold text-[var(--foreground)] bg-[var(--card)] border border-[var(--border)] rounded-2xl transition-colors duration-150 hover:bg-[var(--muted)] active:scale-[0.98] focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35 motion-reduce:transform-none motion-reduce:transition-none">
                 <BookOpen className="w-5 h-5 mr-2.5 text-[var(--muted-foreground)]" />
                 Documentation
               </button>
@@ -226,9 +226,9 @@ export default function ExtensionDetailsPage({ params }) {
                                 {extension.features?.map((feature, index) => (
                                     <div
                                         key={index}
-                                        className="group flex flex-col p-5 rounded-2xl bg-[var(--card)] border border-[var(--border)] hover:border-[var(--primary)]/30 hover:shadow-lg hover:shadow-[var(--primary)]/5 transition-all duration-300"
+                                        className="group flex flex-col p-5 rounded-2xl bg-[var(--card)] ring-1 ring-[var(--border)] hover:ring-[var(--primary)]/30 hover:-translate-y-0.5 hover:shadow-md transition-all duration-200 motion-reduce:transform-none motion-reduce:transition-none"
                                     >
-                                        <div className="w-8 h-8 rounded-full bg-[var(--primary)]/10 flex items-center justify-center text-[var(--primary)] mb-3 group-hover:scale-110 transition-transform">
+                                        <div className="w-8 h-8 rounded-full bg-[var(--primary)]/10 flex items-center justify-center text-[var(--primary)] mb-3 group-hover:scale-110 transition-transform duration-300 motion-reduce:transform-none motion-reduce:transition-none">
                                             <Check className="w-4 h-4" />
                                         </div>
                                         <span className="text-[var(--foreground)] font-medium leading-snug">

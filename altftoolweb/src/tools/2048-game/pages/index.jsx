@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useState } from "react";
 import { ArrowDown, ArrowLeft, ArrowRight, ArrowUp, Gamepad2, RefreshCw, RotateCcw, Timer, Trophy, Play, Pause, Zap } from "lucide-react";
+import { Kbd } from "@/tools/_shared/game/GameShell";
 
 const SIZE = 4;
 const WIN_VALUE = 2048;
@@ -343,7 +344,7 @@ const TIME_LIMIT = gameMode === "classic" ? null : 60;
                 setGameOver(false);
                 setWon(false);
               }}
-              className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-semibold transition-all ${
+              className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-semibold transition duration-150 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-primary/35 motion-reduce:transition-none ${
                 gameMode === mode.key
                   ? "bg-[var(--primary)] text-white shadow-sm"
                   : "border border-[var(--border)] bg-[var(--card)] text-[var(--muted-foreground)] hover:border-[var(--primary)] hover:text-[var(--primary)]"
@@ -369,23 +370,24 @@ const TIME_LIMIT = gameMode === "classic" ? null : 60;
           </div>
         </div>
 
-        <div className="rounded-xl border border-[var(--border)] bg-[var(--card)] p-5 shadow-[var(--anslation-ds-shadow-sm)]">
+        <div className="rounded-2xl bg-[var(--card)] p-5 shadow-[var(--anslation-ds-shadow-sm)] ring-1 ring-[var(--border)]">
           <div className="mb-4 flex items-center justify-between gap-4">
             <div className="flex gap-3">
-              <div className="rounded-lg bg-[var(--muted)] px-4 py-2 text-center">
-                <p className="text-[10px] font-bold uppercase text-[var(--muted-foreground)]">Score</p>
-                <p className="text-lg font-black text-[var(--foreground)]">{score.toLocaleString()}</p>
+              <div className="rounded-lg bg-primary/10 px-4 py-2 text-center ring-1 ring-inset ring-primary/20">
+                <p className="text-[10px] font-bold uppercase text-primary">Score</p>
+                <p className="text-lg font-black tabular-nums text-[var(--foreground)]">{score.toLocaleString()}</p>
               </div>
-              <div className="rounded-lg bg-[var(--muted)] px-4 py-2 text-center">
-                <p className="text-[10px] font-bold uppercase text-[var(--muted-foreground)]">Best</p>
-                <p className="text-lg font-black text-[var(--foreground)]">{bestScore.toLocaleString()}</p>
+              <div className="rounded-lg bg-primary/10 px-4 py-2 text-center ring-1 ring-inset ring-primary/20">
+                <p className="text-[10px] font-bold uppercase text-primary">Best</p>
+                <p className="text-lg font-black tabular-nums text-[var(--foreground)]">{bestScore.toLocaleString()}</p>
               </div>
             </div>
             <button
               type="button"
               onClick={newGame}
-              className="btn-primary flex items-center gap-1.5 px-3 py-2 text-sm"
+              className="btn-primary flex min-h-11 items-center gap-1.5 px-3 py-2 text-sm transition duration-150 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-primary/35 motion-reduce:transition-none"
               title="New Game"
+              aria-label="Start a new game"
             >
               <RefreshCw className="h-4 w-4" />
               New
@@ -405,13 +407,13 @@ const TIME_LIMIT = gameMode === "classic" ? null : 60;
             </div>
 
             {gameOver && (
-              <div className="absolute inset-0 z-10 flex flex-col items-center justify-center rounded-xl bg-black/60">
+              <div className="absolute inset-0 z-10 flex flex-col items-center justify-center rounded-xl bg-black/60 backdrop-blur-[2px] motion-safe:animate-[altft-menu-in_200ms_ease-out]">
                 <p className="text-3xl font-black text-white">Game Over!</p>
                 <p className="mt-2 text-sm text-white/70">Score: {score.toLocaleString()}</p>
                 <button
                   type="button"
                   onClick={newGame}
-                  className="btn-primary mt-4 flex items-center gap-2 px-6 py-3 text-sm"
+                  className="btn-primary mt-4 flex min-h-11 items-center gap-2 px-6 py-3 text-sm transition duration-150 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-primary/35 motion-reduce:transition-none"
                 >
                   <RefreshCw className="h-4 w-4" />
                   Try Again
@@ -420,21 +422,21 @@ const TIME_LIMIT = gameMode === "classic" ? null : 60;
             )}
 
             {won && (
-              <div className="absolute inset-0 z-10 flex flex-col items-center justify-center rounded-xl bg-black/60">
+              <div className="absolute inset-0 z-10 flex flex-col items-center justify-center rounded-xl bg-black/60 backdrop-blur-[2px] motion-safe:animate-[altft-menu-in_200ms_ease-out]">
                 <p className="text-3xl font-black text-amber-400">You Win!</p>
                 <p className="mt-2 text-sm text-white/70">Score: {score.toLocaleString()}</p>
                 <div className="mt-4 flex gap-3">
                   <button
                     type="button"
                     onClick={keepPlaying}
-                    className="btn-secondary flex items-center gap-2 px-4 py-2.5 text-sm"
+                    className="btn-secondary flex min-h-11 items-center gap-2 px-4 py-2.5 text-sm transition duration-150 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-primary/35 motion-reduce:transition-none"
                   >
                     Keep Going
                   </button>
                   <button
                     type="button"
                     onClick={newGame}
-                    className="btn-primary flex items-center gap-2 px-4 py-2.5 text-sm"
+                    className="btn-primary flex min-h-11 items-center gap-2 px-4 py-2.5 text-sm transition duration-150 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-primary/35 motion-reduce:transition-none"
                   >
                     <RefreshCw className="h-4 w-4" />
                     New Game
@@ -445,15 +447,20 @@ const TIME_LIMIT = gameMode === "classic" ? null : 60;
           </div>
 
           <div className="mt-5">
-            <p className="mb-2 text-center text-xs font-semibold text-[var(--muted-foreground)]">
-              Use arrow keys or tap the buttons
+            <p className="mb-2 flex flex-wrap items-center justify-center gap-1.5 text-center text-xs font-semibold text-[var(--muted-foreground)]">
+              Use
+              <Kbd>↑</Kbd>
+              <Kbd>↓</Kbd>
+              <Kbd>←</Kbd>
+              <Kbd>→</Kbd>
+              or tap the buttons
             </p>
             <div className="mx-auto grid w-48 grid-cols-3 gap-2">
               <div />
               <button
                 type="button"
                 onClick={() => move("up")}
-                className="flex h-12 items-center justify-center rounded-lg border border-[var(--border)] bg-[var(--background)] text-[var(--foreground)] transition-all active:scale-95 active:bg-[var(--primary)]/10"
+                className="flex h-12 items-center justify-center rounded-lg bg-[var(--background)] text-[var(--foreground)] ring-1 ring-[var(--border)] transition duration-150 hover:bg-primary/10 hover:text-[var(--primary)] active:scale-[0.98] active:bg-primary/10 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-primary/35 motion-reduce:transition-none"
                 aria-label="Move up"
               >
                 <ArrowUp className="h-5 w-5" />
@@ -462,7 +469,7 @@ const TIME_LIMIT = gameMode === "classic" ? null : 60;
               <button
                 type="button"
                 onClick={() => move("left")}
-                className="flex h-12 items-center justify-center rounded-lg border border-[var(--border)] bg-[var(--background)] text-[var(--foreground)] transition-all active:scale-95 active:bg-[var(--primary)]/10"
+                className="flex h-12 items-center justify-center rounded-lg bg-[var(--background)] text-[var(--foreground)] ring-1 ring-[var(--border)] transition duration-150 hover:bg-primary/10 hover:text-[var(--primary)] active:scale-[0.98] active:bg-primary/10 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-primary/35 motion-reduce:transition-none"
                 aria-label="Move left"
               >
                 <ArrowLeft className="h-5 w-5" />
@@ -470,7 +477,7 @@ const TIME_LIMIT = gameMode === "classic" ? null : 60;
               <button
                 type="button"
                 onClick={() => move("down")}
-                className="flex h-12 items-center justify-center rounded-lg border border-[var(--border)] bg-[var(--background)] text-[var(--foreground)] transition-all active:scale-95 active:bg-[var(--primary)]/10"
+                className="flex h-12 items-center justify-center rounded-lg bg-[var(--background)] text-[var(--foreground)] ring-1 ring-[var(--border)] transition duration-150 hover:bg-primary/10 hover:text-[var(--primary)] active:scale-[0.98] active:bg-primary/10 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-primary/35 motion-reduce:transition-none"
                 aria-label="Move down"
               >
                 <ArrowDown className="h-5 w-5" />
@@ -478,7 +485,7 @@ const TIME_LIMIT = gameMode === "classic" ? null : 60;
               <button
                 type="button"
                 onClick={() => move("right")}
-                className="flex h-12 items-center justify-center rounded-lg border border-[var(--border)] bg-[var(--background)] text-[var(--foreground)] transition-all active:scale-95 active:bg-[var(--primary)]/10"
+                className="flex h-12 items-center justify-center rounded-lg bg-[var(--background)] text-[var(--foreground)] ring-1 ring-[var(--border)] transition duration-150 hover:bg-primary/10 hover:text-[var(--primary)] active:scale-[0.98] active:bg-primary/10 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-primary/35 motion-reduce:transition-none"
                 aria-label="Move right"
               >
                 <ArrowRight className="h-5 w-5" />

@@ -138,7 +138,7 @@ export default function ExtensionsPage() {
                     onChange={(e) => setSearchQuery(e.target.value)}
                     className="extensions-hero-search-input"
                   />
-                  <button type="submit" className="extensions-hero-search-button">
+                  <button type="submit" className="extensions-hero-search-button active:scale-[0.98] motion-reduce:transform-none">
                     Search
                   </button>
                 </form>
@@ -180,19 +180,27 @@ export default function ExtensionsPage() {
 
         {/* TOP CATEGORIES */}
         <div ref={categorySectionRef} className="section extensions-category-section">
+          <div className="mb-5">
+            <p className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wide text-[var(--primary)]">
+              <LayoutGrid className="h-4 w-4" aria-hidden="true" />
+              Browse
+            </p>
+            <h2 className="mt-2 text-2xl font-bold text-[var(--foreground)] sm:text-3xl">Top categories</h2>
+            <span className="mt-3 block h-1 w-12 rounded-full bg-gradient-to-r from-primary to-secondary" aria-hidden="true" />
+          </div>
           <div className="extensions-category-grid grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 ">
             {topCategories.map((cat) => (
               <button
                 type="button"
                 key={cat.label}
                 onClick={() => handleCategorySelect(cat.realCat)}
-                className={`extensions-category-card flex h-[50px] items-center gap-3 rounded-[8px] border px-3 text-left transition sm:h-[56px] sm:px-4 ${
+                className={`extensions-category-card group flex h-[50px] items-center gap-3 rounded-[8px] border px-3 text-left transition active:scale-[0.98] motion-reduce:transform-none motion-reduce:transition-none sm:h-[56px] sm:px-4 ${
                   selectedCategory === cat.realCat
                     ? "extensions-category-card-active border-[var(--primary)] bg-[var(--primary)]/10 text-[var(--primary)]"
                     : "border-[var(--border)] bg-[var(--card)]"
                 }`}
               >
-                <span className="extensions-category-icon">
+                <span className="extensions-category-icon transition-transform duration-300 group-hover:scale-110 motion-reduce:transform-none motion-reduce:transition-none">
                   <cat.icon className="h-5 w-5 shrink-0" />
                 </span>
                 <span className="min-w-0 flex-1 text-sm font-semibold leading-5">{cat.label}</span>
@@ -206,6 +214,14 @@ export default function ExtensionsPage() {
 
         {/* GRID */}
         <div className="section extensions-results-section">
+          <div className="mb-6">
+            <p className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wide text-[var(--primary)]">
+              <Star className="h-4 w-4" aria-hidden="true" />
+              Extension library
+            </p>
+            <h2 className="mt-2 text-2xl font-bold text-[var(--foreground)] sm:text-3xl">All extensions</h2>
+            <span className="mt-3 block h-1 w-12 rounded-full bg-gradient-to-r from-primary to-secondary" aria-hidden="true" />
+          </div>
           {error ? (
             <DataStateNotice
               className="mb-6"
@@ -251,7 +267,7 @@ export default function ExtensionsPage() {
                 <div className="mt-12 flex justify-center">
                   <button
                     onClick={() => setVisibleCount((prev) => prev + 12)}
-                    className="extensions-load-more-button rounded-[8px] border border-[var(--border)] px-8 py-3 font-semibold transition hover:border-[var(--primary)] hover:text-[var(--primary)]"
+                    className="extensions-load-more-button rounded-[8px] border border-[var(--border)] px-8 py-3 font-semibold transition hover:border-[var(--primary)] hover:text-[var(--primary)] active:scale-[0.98] focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35 motion-reduce:transform-none motion-reduce:transition-none"
                   >
                     Load More
                   </button>

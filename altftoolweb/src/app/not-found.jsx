@@ -31,10 +31,10 @@ export default function NotFound() {
             <Link
               key={href}
               href={href}
-              className="group flex items-center gap-3 rounded-[var(--anslation-ds-radius)] border border-(--border) bg-(--card) p-4 shadow-[var(--anslation-ds-shadow-sm)] transition hover:border-(--primary) hover:bg-(--muted) hover:shadow-[var(--anslation-ds-shadow-md)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-(--primary)"
+              className="group flex items-center gap-3 rounded-[var(--anslation-ds-radius)] border border-(--border) bg-(--card) p-4 shadow-[var(--anslation-ds-shadow-sm)] transition duration-200 hover:-translate-y-0.5 hover:border-(--primary) hover:bg-(--muted) hover:shadow-[var(--anslation-ds-shadow-md)] active:scale-[0.98] focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35 motion-reduce:transition-none motion-reduce:transform-none motion-reduce:hover:translate-y-0"
             >
               <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-[var(--anslation-ds-radius-sm)] bg-(--muted) text-(--primary)">
-                <Icon className="h-5 w-5" />
+                <Icon className="h-5 w-5 transition-transform duration-300 group-hover:scale-110 motion-reduce:transition-none motion-reduce:transform-none" />
               </span>
               <span>
                 <span className="block text-sm font-semibold text-(--foreground)">
@@ -50,7 +50,7 @@ export default function NotFound() {
 
         <Link
           href="/"
-          className="mt-8 inline-flex h-10 items-center gap-2 rounded-[var(--anslation-ds-radius)] bg-(--primary) px-4 text-sm font-semibold text-(--primary-foreground) shadow-[var(--anslation-ds-shadow-sm)] transition hover:bg-(--primary-active) focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-(--primary)"
+          className="mt-8 inline-flex h-10 items-center gap-2 rounded-[var(--anslation-ds-radius)] bg-(--primary) px-4 text-sm font-semibold text-(--primary-foreground) shadow-[var(--anslation-ds-shadow-sm)] transition duration-200 hover:bg-(--primary-active) hover:shadow-[var(--anslation-ds-shadow-md)] active:scale-[0.98] focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35 motion-reduce:transition-none motion-reduce:transform-none"
         >
           <Home className="h-4 w-4" />
           Go Home
