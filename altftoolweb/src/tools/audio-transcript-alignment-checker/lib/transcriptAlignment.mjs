@@ -619,9 +619,11 @@ export function analyzeAudioTranscriptCoverage(
 }
 
 export function buildTranscriptAlignmentReport(
-  { media, candidateParse, referenceParse, coverage, comparison } = {},
+  result = {},
   createdAt = new Date().toISOString(),
 ) {
+  const { media, candidateParse, referenceParse, coverage, comparison } =
+    result || {};
   if (!media || !candidateParse || !coverage) return null;
   return {
     schema: "altftool.audio-transcript-alignment-screen.v1",

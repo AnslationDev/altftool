@@ -665,7 +665,7 @@ test.describe("microtool functional flows", () => {
 
     await openToolShell(page, "ludo-multiplayer", "Ludo Multiplayer");
     await page.getByRole("button", { name: /Local$/ }).click();
-    await page.getByRole("button", { name: "4", exact: true }).click();
+    await page.getByRole("button", { name: "4 players", exact: true }).click();
     await expect(page.getByText("4 in game", { exact: true })).toBeVisible();
     await expect(page.getByText(/Local Multiplayer/)).toBeVisible();
     const rollDice = page.getByRole("button", { name: "Roll dice" });

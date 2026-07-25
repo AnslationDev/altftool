@@ -204,6 +204,11 @@ test("normalizes settings into bounded finite values", () => {
   });
 });
 
+test("privacy-safe report ignores empty initial state", () => {
+  assert.equal(buildTranscriptAlignmentReport(null), null);
+  assert.equal(buildTranscriptAlignmentReport(), null);
+});
+
 test("privacy-safe report omits transcript text, audio, and file name", () => {
   const candidateParse = parseTimedTranscript(`1
 00:00:00,000 --> 00:00:01,000

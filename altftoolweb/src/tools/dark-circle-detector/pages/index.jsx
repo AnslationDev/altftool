@@ -3,10 +3,10 @@ import { useState, useRef, useCallback, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Eye, RefreshCw, AlertCircle, CheckCircle2, Loader2 } from "lucide-react";
 import { toast } from "sonner";
-import * as faceapi from "@vladmandic/face-api";
 import { analyzeDarkCircles } from "@/tools/_shared/beauty/utils/skinAnalysis";
 import { getEyeRegions } from "@/tools/_shared/beauty/utils/faceAnalysis";
 import { initImageSegmenter } from "@/tools/_shared/beauty/utils/hairPreview";
+import { getFaceApi } from "../../age-gender-detector/services/faceApiClient";
 import BeautyUploader from "@/tools/_shared/beauty/components/BeautyUploader";
 import { ScoreBar, ConfidenceBadge, MetricGrid, DetailRow } from "@/tools/_shared/beauty/components/ResultCard";
 
@@ -39,6 +39,7 @@ export default function DarkCircleDetector() {
   const canvasRef = useRef(null);
   const overlayCanvasRef = useRef(null);
   const mountedRef = useRef(true);
+  const faceApiRef = useRef(null);
 
   useEffect(() => {
     mountedRef.current = true;
@@ -50,6 +51,8 @@ export default function DarkCircleDetector() {
     async function loadModels() {
       try {
         setModelsLoading(true);
+        const faceapi = await getFaceApi();
+        faceApiRef.current = faceapi;
         await faceapi.nets.tinyFaceDetector.loadFromUri("/models");
         await faceapi.nets.faceLandmark68Net.loadFromUri("/models");
         if (!cancelled) setModelsLoaded(true);
@@ -130,6 +133,8 @@ export default function DarkCircleDetector() {
       if (!mountedRef.current) return;
       setLoadingMessage("Detecting face...");
       setDetectionStage("detecting");
+      const faceapi = faceApiRef.current || (await getFaceApi());
+      faceApiRef.current = faceapi;
 
       const detections = await faceapi
         .detectAllFaces(canvas, new faceapi.TinyFaceDetectorOptions({ inputSize: 320 }))

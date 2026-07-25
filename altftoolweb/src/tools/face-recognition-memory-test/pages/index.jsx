@@ -1,6 +1,8 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
+import faceHeroMain from "../assets/face-hero-main.png";
+import faceReconBg from "../assets/face-recon-bg.png";
 import {
   ScanFace,
   Eye,
@@ -352,7 +354,7 @@ export default function FaceRecognitionMemoryTest() {
                 {/* Glowing Profile Head Background */}
                 <div className="absolute inset-0 w-full h-full opacity-90 rounded-2xl overflow-hidden">
                   <img
-                    src="/images/face-recon-bg.png"
+                    src={faceReconBg.src}
                     alt="Digital Head Silhouette"
                     className="w-full h-full object-cover mix-blend-lighten scale-[1.05]"
                   />
@@ -363,7 +365,7 @@ export default function FaceRecognitionMemoryTest() {
                   <div className="relative">
                     <div className="w-[124px] h-[124px] sm:w-[136px] sm:h-[136px] border-2 border-green-400/80 rounded-[28px] bg-black/45 backdrop-blur-md overflow-hidden flex items-center justify-center p-1 shadow-2xl">
                       <img
-                        src="/images/face-hero-main.png"
+                        src={faceHeroMain.src}
                         alt="Target face challenge"
                         className="w-full h-full object-cover rounded-[22px]"
                       />
@@ -378,7 +380,7 @@ export default function FaceRecognitionMemoryTest() {
                 {/* Left Card */}
                 <div className="absolute top-[22%] left-[4%] w-[68px] h-[68px] sm:w-[74px] sm:h-[74px] border-2 border-green-500/20 rounded-[20px] bg-black/55 backdrop-blur-sm overflow-hidden flex items-center justify-center p-0.5 shadow-lg">
                   <img
-                    src="/images/face-hero-side1.png"
+                    src={faceHeroMain.src}
                     alt="Sample face 1"
                     className="w-full h-full object-cover rounded-[16px]"
                   />
@@ -387,7 +389,7 @@ export default function FaceRecognitionMemoryTest() {
                 {/* Top Right Card */}
                 <div className="absolute top-[18%] right-[4%] w-[68px] h-[68px] sm:w-[74px] sm:h-[74px] border-2 border-green-500/20 rounded-[20px] bg-black/55 backdrop-blur-sm overflow-hidden flex items-center justify-center p-0.5 shadow-lg">
                   <img
-                    src="/images/face-hero-side2.png"
+                    src={faceHeroMain.src}
                     alt="Sample face 2"
                     className="w-full h-full object-cover rounded-[16px]"
                   />
@@ -396,7 +398,7 @@ export default function FaceRecognitionMemoryTest() {
                 {/* Bottom Right Card */}
                 <div className="absolute bottom-[10%] right-[8%] w-[68px] h-[68px] sm:w-[74px] sm:h-[74px] border-2 border-green-500/20 rounded-[20px] bg-black/55 backdrop-blur-sm overflow-hidden flex items-center justify-center p-0.5 shadow-lg">
                   <img
-                    src="/images/face-hero-side3.png"
+                    src={faceHeroMain.src}
                     alt="Sample face 3"
                     className="w-full h-full object-cover rounded-[16px]"
                   />
