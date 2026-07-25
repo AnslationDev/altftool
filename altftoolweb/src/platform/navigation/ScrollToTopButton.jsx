@@ -59,7 +59,7 @@ export function ScrollToTopButton() {
       aria-label="Scroll back to top"
       aria-hidden={!visible}
       tabIndex={visible ? 0 : -1}
-      className={`fixed bottom-24 right-4 z-40 flex h-11 w-11 items-center justify-center rounded-full border border-border bg-(--card) text-(--foreground) shadow-md transition-all duration-200 ease-out hover:bg-(--muted) hover:shadow-lg focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-primary/35 motion-reduce:transition-none sm:bottom-6 sm:right-6 ${
+      className={`fixed bottom-24 right-4 z-40 flex h-11 w-11 items-center justify-center rounded-full border border-border bg-(--card) text-(--foreground) shadow-md transition-all duration-200 ease-out hover:bg-(--muted) hover:shadow-lg active:scale-95 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-primary/35 motion-reduce:transform-none motion-reduce:transition-none sm:bottom-6 sm:right-6 ${
         visible
           ? "translate-y-0 opacity-100"
           : "pointer-events-none translate-y-3 opacity-0"

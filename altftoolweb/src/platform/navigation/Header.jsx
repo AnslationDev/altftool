@@ -233,10 +233,10 @@ export default function Header() {
                     aria-current={itemIsActive ? "page" : undefined}
                     aria-expanded={hasOptions ? menuIsOpen : undefined}
                     aria-haspopup={hasOptions ? "true" : undefined}
-                    className={`relative flex h-11 items-center gap-1 rounded-md px-3 text-sm font-semibold transition focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-primary/35 ${
+                    className={`relative flex h-11 items-center gap-1 rounded-md px-3 text-sm font-semibold transition after:pointer-events-none after:absolute after:inset-x-3 after:bottom-1 after:h-0.5 after:rounded-full after:bg-primary after:transition-transform after:duration-200 after:ease-out focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-primary/35 motion-reduce:after:transition-none ${
                       itemIsActive
-                        ? "bg-muted text-primary"
-                        : "text-muted-foreground hover:bg-muted hover:text-foreground"
+                        ? "bg-muted text-primary after:scale-x-100"
+                        : "text-muted-foreground after:origin-left after:scale-x-0 hover:bg-muted hover:text-foreground hover:after:scale-x-100"
                     }`}
                   >
                     {item.label}
@@ -253,7 +253,7 @@ export default function Header() {
                       className={`absolute top-full z-[70] pt-2 ${layout.position}`}
                     >
                       <div
-                        className={`${layout.width} max-h-[min(32rem,calc(100vh-5rem))] overflow-y-auto overscroll-contain rounded-lg border border-border bg-[var(--anslation-ds-surface)] p-4 shadow-[var(--anslation-ds-shadow-lg)] [scrollbar-gutter:stable]`}
+                        className={`${layout.width} max-h-[min(32rem,calc(100vh-5rem))] origin-top animate-[altft-menu-in_150ms_ease-out] overflow-y-auto overscroll-contain rounded-lg border border-border bg-[var(--anslation-ds-surface)] p-4 shadow-[var(--anslation-ds-shadow-lg)] [scrollbar-gutter:stable] motion-reduce:animate-none`}
                       >
                         <div className={`grid gap-3 ${layout.columns}`}>
                           {groups.map((group) => (
@@ -316,7 +316,7 @@ export default function Header() {
               prefetch={false}
               aria-label="Search AltFTool"
               title="Search"
-              className="inline-flex h-10 w-10 items-center justify-center rounded-md border border-border bg-card text-foreground transition hover:bg-muted focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-primary/35"
+              className="inline-flex h-10 w-10 items-center justify-center rounded-md border border-border bg-card text-foreground transition hover:bg-muted active:scale-[0.98] focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-primary/35 motion-reduce:transform-none"
               {...routePreviewProps("/search")}
             >
               <Search className="h-5 w-5" aria-hidden="true" />
@@ -362,14 +362,14 @@ export default function Header() {
           aria-label="Close navigation"
           tabIndex={-1}
           onClick={() => closeMobileMenu()}
-          className={`fixed inset-0 bg-foreground/35 backdrop-blur-sm transition-opacity ${
+          className={`fixed inset-0 bg-foreground/35 backdrop-blur-sm transition-opacity duration-200 ease-out motion-reduce:transition-none ${
             mobileMenuOpen ? "opacity-100" : "opacity-0"
           }`}
         />
 
         <aside
           ref={mobilePanelRef}
-          className={`fixed inset-y-0 left-0 flex w-[min(24rem,calc(100vw-0.75rem))] flex-col overflow-y-auto border-r border-border bg-card p-5 text-foreground shadow-lg transition-transform duration-200 motion-reduce:transition-none ${
+          className={`fixed inset-y-0 left-0 flex w-[min(24rem,calc(100vw-0.75rem))] flex-col overflow-y-auto border-r border-border bg-card p-5 text-foreground shadow-lg transition-transform duration-[250ms] ease-[cubic-bezier(0.4,0,0.2,1)] motion-reduce:transition-none ${
             mobileMenuOpen ? "translate-x-0" : "-translate-x-full"
           }`}
         >
@@ -517,7 +517,7 @@ export default function Header() {
                     href={route.href}
                     prefetch={false}
                     onClick={() => closeMobileMenu()}
-                    className="inline-flex min-h-11 items-center justify-center rounded-md border border-border px-3 text-sm font-semibold text-foreground transition hover:border-primary hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                    className="inline-flex min-h-11 items-center justify-center rounded-md border border-border px-3 text-sm font-semibold text-foreground transition duration-150 hover:border-primary hover:text-primary active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary motion-reduce:transform-none"
                   >
                     {route.label}
                   </Link>

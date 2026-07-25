@@ -91,9 +91,12 @@ export function AccountClient() {
             <Link
               key={href}
               href={href}
-              className="flex items-center gap-3 rounded-lg border border-border bg-(--card) p-4 text-sm font-medium text-(--foreground) transition hover:border-primary/40 hover:shadow-md focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-primary/35"
+              className="group flex items-center gap-3 rounded-lg border border-border bg-(--card) p-4 text-sm font-medium text-(--foreground) transition duration-200 hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-md active:scale-[0.98] motion-reduce:transform-none focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-primary/35"
             >
-              <Icon className="h-5 w-5 text-primary" aria-hidden="true" />
+              <Icon
+                className="h-5 w-5 text-primary transition-transform duration-200 group-hover:scale-110 motion-reduce:transform-none"
+                aria-hidden="true"
+              />
               {label}
             </Link>
           ))}

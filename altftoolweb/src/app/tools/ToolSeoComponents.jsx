@@ -122,7 +122,7 @@ export function RelatedToolsServer({ slug, tool }) {
           <p className="text-xs font-bold uppercase tracking-wide text-(--primary)">Explore More</p>
           <h2 className="text-lg font-semibold text-(--foreground)">Related Tools & Utilities</h2>
         </div>
-        <Link href="/tools/all" className="text-sm font-semibold text-(--muted-foreground) hover:text-(--primary)">
+        <Link href="/tools/all" className="rounded-[6px] text-sm font-semibold text-(--muted-foreground) transition-colors duration-150 hover:text-(--primary) focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35">
           Explore all tools
         </Link>
       </div>
@@ -131,10 +131,10 @@ export function RelatedToolsServer({ slug, tool }) {
           <Link
             key={relatedSlug}
             href={`/tools/all/${relatedSlug}`}
-            className="group flex min-h-[112px] flex-col justify-between rounded-[8px] border border-(--border) bg-(--background) p-3 transition hover:border-(--primary) hover:shadow-sm"
+            className="group flex min-h-[112px] flex-col justify-between rounded-[8px] border border-(--border) bg-(--background) p-3 transition duration-200 hover:-translate-y-0.5 hover:border-(--primary) hover:shadow-md motion-reduce:transform-none focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35"
           >
             <div className="flex gap-3">
-              <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-[7px] bg-(--muted)">
+              <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-[7px] bg-(--muted) transition-transform duration-200 group-hover:scale-105 motion-reduce:transform-none">
                 <Icon
                   name={relatedTool.icon ?? "wrench"}
                   className={`h-5 w-5 ${relatedTool.iconColor ?? "text-(--muted-foreground)"}`}
@@ -149,8 +149,8 @@ export function RelatedToolsServer({ slug, tool }) {
                 </p>
               </div>
             </div>
-            <span className="mt-3 inline-flex items-center gap-1 text-xs font-semibold text-(--muted-foreground) group-hover:text-(--primary)">
-              Open <ArrowRight className="h-3.5 w-3.5" />
+            <span className="mt-3 inline-flex items-center gap-1 text-xs font-semibold text-(--muted-foreground) transition-colors duration-150 group-hover:text-(--primary)">
+              Open <ArrowRight className="h-3.5 w-3.5 transition-transform duration-150 group-hover:translate-x-0.5 motion-reduce:transform-none" />
             </span>
           </Link>
         ))}

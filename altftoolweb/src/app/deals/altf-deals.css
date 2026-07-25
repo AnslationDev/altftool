@@ -53,7 +53,15 @@
 
 @media (prefers-reduced-motion: reduce) {
   .afd-card,
-  .afd-card:hover {
+  .afd-card:hover,
+  .afd-icon-tile,
+  .afd-card:hover .afd-icon-tile,
+  .afd-cta,
+  .afd-cta:active,
+  .afd-cta-secondary,
+  .afd-cta-secondary:active,
+  .afd-filter-button,
+  .afd-filter-button:active {
     transition: none;
     transform: none;
   }
@@ -77,6 +85,11 @@
   border-radius: var(--anslation-ds-radius, 8px);
   border: 1px solid var(--afd-line);
   background: var(--afd-soft);
+  transition: transform 200ms ease;
+}
+
+.afd-card:hover .afd-icon-tile {
+  transform: scale(1.05);
 }
 
 /* --- Badges & pills ----------------------------------------------------- */
@@ -209,11 +222,16 @@
   color: var(--primary-foreground, #ffffff);
   font-weight: 700;
   font-size: 14px;
-  transition: background-color 150ms ease;
+  transition: background-color 150ms ease, transform 150ms ease;
 }
 
 .afd-cta:hover {
   background: var(--primary-hover, var(--primary));
+}
+
+.afd-cta:active {
+  background: var(--primary-active, var(--primary-hover, var(--primary)));
+  transform: scale(0.98);
 }
 
 .afd-cta:focus-visible {
@@ -234,12 +252,16 @@
   color: var(--foreground);
   font-weight: 600;
   font-size: 13px;
-  transition: border-color 150ms ease, background-color 150ms ease;
+  transition: border-color 150ms ease, background-color 150ms ease, transform 150ms ease;
 }
 
 .afd-cta-secondary:hover {
   border-color: color-mix(in srgb, var(--primary) 45%, var(--border));
   background: var(--afd-soft);
+}
+
+.afd-cta-secondary:active {
+  transform: scale(0.98);
 }
 
 .afd-cta-secondary:focus-visible {
@@ -277,7 +299,11 @@
   font-size: 13px;
   font-weight: 600;
   text-align: left;
-  transition: background-color 150ms ease, color 150ms ease;
+  transition: background-color 150ms ease, color 150ms ease, transform 150ms ease;
+}
+
+.afd-filter-button:active {
+  transform: scale(0.98);
 }
 
 .afd-filter-button:hover {
@@ -310,6 +336,11 @@
   color: var(--muted-foreground);
 }
 
+.afd-input {
+  transition: border-color 150ms ease, box-shadow 150ms ease;
+}
+
+.afd-input:focus,
 .afd-input:focus-visible {
   outline: none;
   border-color: var(--primary);

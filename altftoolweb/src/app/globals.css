@@ -27,6 +27,7 @@ html[data-theme="light"] {
   --primary-soft: var(--anslation-ds-primary-soft);
   --primary-hover: var(--anslation-ds-primary-hover);
   --primary-active: var(--anslation-ds-primary-active);
+  --primary-text: var(--anslation-ds-primary-text);
 
   --secondary: var(--anslation-ds-secondary);
   --secondary-foreground: var(--anslation-ds-secondary-foreground);
@@ -83,6 +84,7 @@ html[data-theme="dark"] {
   --primary-soft: var(--anslation-ds-primary-soft);
   --primary-hover: var(--anslation-ds-primary-hover);
   --primary-active: var(--anslation-ds-primary-active);
+  --primary-text: var(--anslation-ds-primary-text);
   --secondary: var(--anslation-ds-secondary);
   --secondary-foreground: var(--anslation-ds-secondary-foreground);
   --secondary-soft: var(--anslation-ds-secondary-soft);
@@ -1373,6 +1375,32 @@ a {
 
   .animate-pulse-soft {
     animation: pulse-glow 6s ease-in-out infinite;
+  }
+
+  /* Entrance keyframes for dropdown menus / chat messages (guard usage with
+     motion-reduce:animate-none or motion-safe: variants). */
+  @keyframes altft-menu-in {
+    from {
+      opacity: 0;
+      transform: translateY(-4px) scale(0.97);
+    }
+
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  @keyframes altft-msg-in {
+    from {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+
+    to {
+      opacity: 1;
+      transform: none;
+    }
   }
 
 }

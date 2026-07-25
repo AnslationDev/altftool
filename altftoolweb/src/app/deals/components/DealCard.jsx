@@ -58,7 +58,7 @@ export default function DealCard({ deal, rank = null }) {
           <Link
             href={`/deals/${deal.slug}`}
             aria-label={`View deal: ${deal.name}`}
-            className="inline-flex min-h-[36px] items-center gap-1 rounded-lg px-3 text-sm font-semibold text-(--primary) transition-colors hover:bg-(--primary)/10 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35"
+            className="inline-flex min-h-[36px] items-center gap-1 rounded-lg px-3 text-sm font-semibold text-(--primary) transition hover:bg-(--primary)/10 active:scale-[0.98] motion-reduce:transform-none focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35"
           >
             View deal
             <ArrowRight className="h-4 w-4" aria-hidden="true" />

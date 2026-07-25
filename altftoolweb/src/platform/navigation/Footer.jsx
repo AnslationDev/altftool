@@ -12,7 +12,7 @@ import {
 } from "./siteRoutes";
 
 const footerLinkClass =
-  "inline-flex min-h-8 items-center text-sm font-medium leading-5 text-[var(--anslation-ds-footer-muted)] transition hover:text-[var(--anslation-ds-primary-hover)] focus-visible:rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--anslation-ds-primary-hover)]/35";
+  "inline-flex min-h-8 items-center text-sm font-medium leading-5 text-[var(--anslation-ds-footer-muted)] underline-offset-4 transition-colors duration-150 hover:text-[var(--anslation-ds-primary-hover)] hover:underline focus-visible:rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--anslation-ds-primary-hover)]/35 motion-reduce:transition-none";
 
 export default function Footer() {
   return (
@@ -20,8 +20,8 @@ export default function Footer() {
       aria-label="AltFTool footer"
       className="border-t border-[var(--anslation-ds-footer-border)] bg-[var(--anslation-ds-footer)] text-[var(--anslation-ds-footer-text)]"
     >
-      <div className="section mx-auto py-10 lg:py-12">
-        <div className="grid gap-10 xl:grid-cols-[minmax(14rem,1fr)_minmax(0,3fr)] xl:gap-12">
+      <div className="section mx-auto py-8 sm:py-10 lg:py-12">
+        <div className="grid gap-8 sm:gap-10 xl:grid-cols-[minmax(14rem,1fr)_minmax(0,3fr)] xl:gap-12">
           <div className="max-w-sm">
             <Link
               href="/"
@@ -50,7 +50,7 @@ export default function Footer() {
 
           <nav
             aria-label="Footer directory"
-            className="grid grid-cols-2 gap-x-6 gap-y-8 sm:grid-cols-3 xl:grid-cols-6"
+            className="grid grid-cols-2 gap-x-5 gap-y-6 sm:grid-cols-3 sm:gap-x-6 sm:gap-y-8 xl:grid-cols-6"
           >
             {FOOTER_ROUTE_GROUPS.map((group) => (
               <section
@@ -82,7 +82,7 @@ export default function Footer() {
         aria-label="Popular tools"
         className="border-t border-[var(--anslation-ds-footer-border)]"
       >
-        <div className="section mx-auto py-6">
+        <div className="section mx-auto py-5 sm:py-6">
           <div className="flex flex-wrap items-center justify-between gap-3">
             <h2 className="text-xs font-semibold uppercase text-[var(--anslation-ds-footer-text)]">
               Popular tools

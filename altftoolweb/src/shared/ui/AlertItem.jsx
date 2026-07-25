@@ -13,8 +13,10 @@ export default function AlertItem({ id, text, variant, onClose }) {
     <div className={`${base} ${variants[variant] || variants.success}`}>
       <span>{text}</span>
       <button
+        type="button"
         onClick={() => onClose(id)}
-        className="ml-3 text-xs opacity-70 hover:opacity-100"
+        aria-label="Dismiss alert"
+        className="ml-1 -my-2 -mr-1.5 inline-flex items-center justify-center rounded-lg p-2.5 text-xs opacity-70 transition-opacity duration-150 hover:opacity-100 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35 motion-reduce:transition-none"
       >
         ✕
       </button>

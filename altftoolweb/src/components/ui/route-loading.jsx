@@ -44,9 +44,14 @@ export function LoadingBone({ className = "" }) {
   return (
     <div
       aria-hidden="true"
-      className={cx("relative overflow-hidden rounded-[var(--anslation-ds-radius)] bg-(--muted)", className)}
+      className={cx(
+        "relative overflow-hidden rounded-[var(--anslation-ds-radius)]",
+        "bg-[color-mix(in_srgb,var(--border)_55%,var(--card))]",
+        className,
+      )}
     >
-      <div className="absolute inset-y-0 left-0 w-1/2 translate-x-[-120%] animate-skeleton-shimmer bg-gradient-to-r from-transparent via-white/45 to-transparent dark:via-white/15" />
+      {/* Elegant token-based shimmer sweep — hidden entirely for reduced-motion users. */}
+      <div className="absolute inset-y-0 left-0 w-1/2 translate-x-[-120%] animate-skeleton-shimmer bg-gradient-to-r from-transparent via-[color-mix(in_srgb,var(--border)_90%,var(--card))] to-transparent motion-reduce:hidden motion-reduce:animate-none" />
     </div>
   );
 }

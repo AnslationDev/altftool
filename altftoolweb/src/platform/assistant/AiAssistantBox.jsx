@@ -103,13 +103,19 @@ export function AiAssistantBox() {
             >
               {messages.map((message, index) =>
                 message.role === "user" ? (
-                  <div key={index} className="flex justify-end">
+                  <div
+                    key={index}
+                    className="flex justify-end motion-safe:animate-[altft-msg-in_200ms_ease-out]"
+                  >
                     <p className="max-w-[85%] rounded-lg rounded-br-sm bg-primary px-4 py-2.5 text-sm font-medium text-primary-foreground">
                       {message.text}
                     </p>
                   </div>
                 ) : (
-                  <div key={index} className="flex items-start gap-2.5">
+                  <div
+                    key={index}
+                    className="flex items-start gap-2.5 motion-safe:animate-[altft-msg-in_200ms_ease-out]"
+                  >
                     <span
                       aria-hidden="true"
                       className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-muted"
@@ -126,7 +132,7 @@ export function AiAssistantBox() {
                             <Link
                               key={`${link.href}-${link.label}`}
                               href={link.href}
-                              className="inline-flex min-h-9 items-center rounded-full border border-border bg-background px-3.5 py-1.5 text-sm font-medium text-primary transition-colors hover:border-primary hover:bg-muted focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+                              className="inline-flex min-h-9 items-center rounded-full border border-border bg-background px-3.5 py-1.5 text-sm font-medium text-primary transition duration-150 hover:-translate-y-0.5 hover:border-primary hover:bg-muted active:scale-[0.98] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary motion-reduce:transform-none motion-reduce:transition-none"
                               title={link.description || undefined}
                             >
                               {link.label}
@@ -140,7 +146,10 @@ export function AiAssistantBox() {
               )}
 
               {thinking ? (
-                <div className="flex items-center gap-2.5" aria-label="Assistant is thinking">
+                <div
+                  className="flex items-center gap-2.5 motion-safe:animate-[altft-msg-in_200ms_ease-out]"
+                  aria-label="Assistant is thinking"
+                >
                   <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-muted">
                     <Bot className="h-4 w-4 text-[var(--primary)]" />
                   </span>
@@ -178,7 +187,7 @@ export function AiAssistantBox() {
               type="submit"
               disabled={!input.trim() || thinking}
               aria-label="Send question"
-              className="flex h-11 w-11 shrink-0 items-center justify-center rounded-md bg-primary text-primary-foreground transition hover:bg-[var(--primary-hover)] disabled:opacity-40"
+              className="flex h-11 w-11 shrink-0 items-center justify-center rounded-md bg-primary text-primary-foreground transition hover:bg-[var(--primary-hover)] active:scale-[0.98] focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-primary/35 disabled:opacity-40 motion-reduce:transform-none"
             >
               <ArrowUp className="h-5 w-5" aria-hidden="true" />
             </button>
@@ -191,7 +200,7 @@ export function AiAssistantBox() {
                   key={suggestion}
                   type="button"
                   onClick={() => ask(suggestion)}
-                  className="inline-flex min-h-9 items-center rounded-full border border-border bg-background px-3.5 py-1.5 text-sm text-muted-foreground transition-colors hover:border-primary hover:text-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+                  className="inline-flex min-h-9 items-center rounded-full border border-border bg-background px-3.5 py-1.5 text-sm text-muted-foreground transition duration-150 hover:-translate-y-0.5 hover:border-primary hover:text-primary active:scale-[0.98] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary motion-reduce:transform-none motion-reduce:transition-none"
                 >
                   {suggestion}
                 </button>

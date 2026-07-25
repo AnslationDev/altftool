@@ -39,7 +39,7 @@ const quickRoutes = [
 export default function HeroSection() {
   return (
     <section className="border-b border-border bg-background" aria-labelledby="home-title">
-      <div className="mx-auto grid w-full max-w-[var(--anslation-ds-container)] items-center gap-8 px-4 py-8 sm:px-6 sm:py-12 lg:grid-cols-[minmax(0,1fr)_minmax(22rem,0.82fr)] lg:px-8 lg:py-14">
+      <div className="mx-auto grid w-full max-w-[var(--anslation-ds-container)] items-center gap-8 px-4 py-14 sm:px-6 sm:py-20 lg:grid-cols-[minmax(0,1fr)_minmax(22rem,0.82fr)] lg:px-8">
         <div className="max-w-3xl">
           <p className="inline-flex min-h-8 items-center gap-2 rounded-full border border-border bg-card px-3 text-xs font-semibold text-primary shadow-sm">
             <ShieldCheck className="h-4 w-4" aria-hidden="true" />
@@ -52,6 +52,10 @@ export default function HeroSection() {
           >
             AltFTool
           </h1>
+          <span
+            className="mt-4 block h-1 w-16 rounded-full bg-gradient-to-r from-primary to-secondary"
+            aria-hidden="true"
+          />
           <p className="mt-3 max-w-2xl text-xl font-semibold leading-8 text-foreground sm:text-2xl">
             Find the right tool, workflow, or practical next step.
           </p>
@@ -85,7 +89,7 @@ export default function HeroSection() {
             </label>
             <button
               type="submit"
-              className="inline-flex h-11 items-center justify-center gap-2 rounded-md bg-primary px-5 text-sm font-semibold text-primary-foreground shadow-sm transition hover:bg-[var(--primary-hover)] focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-primary/35"
+              className="inline-flex h-11 items-center justify-center gap-2 rounded-md bg-primary px-5 text-sm font-semibold text-primary-foreground shadow-sm transition hover:bg-[var(--primary-hover)] active:scale-[0.98] motion-reduce:transform-none focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-primary/35"
             >
               Search AltFTool
               <ArrowRight className="h-4 w-4" aria-hidden="true" />
@@ -100,10 +104,13 @@ export default function HeroSection() {
               <Link
                 key={route.href}
                 href={route.href}
-                className="inline-flex min-h-10 items-center gap-1.5 text-sm font-semibold text-primary transition hover:text-[var(--primary-hover)] focus-visible:rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                className="group inline-flex min-h-10 items-center gap-1.5 text-sm font-semibold text-primary transition-colors duration-150 hover:text-[var(--primary-hover)] focus-visible:rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
               >
                 {route.label}
-                <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
+                <ArrowRight
+                  className="h-3.5 w-3.5 transition-transform duration-150 group-hover:translate-x-0.5 motion-reduce:transform-none"
+                  aria-hidden="true"
+                />
               </Link>
             ))}
           </nav>
@@ -139,7 +146,8 @@ export default function HeroSection() {
             alt="People using AltFTool workspaces together"
             width={1100}
             height={831}
-            loading="lazy"
+            loading="eager"
+            fetchPriority="high"
             sizes="(min-width: 1024px) 42vw, 1px"
             className="h-auto w-full object-contain"
           />

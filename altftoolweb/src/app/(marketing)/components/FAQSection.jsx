@@ -32,22 +32,26 @@ const faqs = [
 export default function FAQSection() {
   return (
     <section className="bg-background" aria-labelledby="home-faq-title">
-      <div className="mx-auto grid w-full max-w-[var(--anslation-ds-container)] gap-6 px-4 py-10 sm:px-6 sm:py-12 lg:grid-cols-[minmax(16rem,0.65fr)_minmax(0,1fr)] lg:px-8">
+      <div className="mx-auto grid w-full max-w-[var(--anslation-ds-container)] gap-6 px-4 py-14 sm:px-6 sm:py-20 lg:grid-cols-[minmax(16rem,0.65fr)_minmax(0,1fr)] lg:px-8">
         <div className="max-w-md">
-          <p className="inline-flex items-center gap-2 text-xs font-semibold uppercase text-primary">
+          <p className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wide text-primary">
             <HelpCircle className="h-4 w-4" aria-hidden="true" />
             Common questions
           </p>
           <h2 id="home-faq-title" className="mt-2 text-2xl font-bold text-foreground sm:text-3xl">
             Understand the platform before you start
           </h2>
+          <span
+            className="mt-3 block h-1 w-12 rounded-full bg-gradient-to-r from-primary to-secondary"
+            aria-hidden="true"
+          />
           <p className="mt-3 text-sm leading-6 text-muted-foreground sm:text-base">
             AltFTool separates quick utilities, larger workspaces, automation
             templates, and editorial routes so each flow stays focused.
           </p>
           <Link
             href="/policypages/faq"
-            className="mt-5 inline-flex min-h-10 items-center gap-2 text-sm font-semibold text-primary transition hover:text-[var(--primary-hover)] focus-visible:rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+            className="mt-5 inline-flex min-h-10 items-center gap-2 text-sm font-semibold text-primary transition-colors duration-150 hover:text-[var(--primary-hover)] focus-visible:rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
           >
             Read all FAQs
             <ArrowRight className="h-4 w-4" aria-hidden="true" />
@@ -57,14 +61,14 @@ export default function FAQSection() {
         <div className="divide-y divide-border border-y border-border">
           {faqs.map((faq, index) => (
             <details className="group" key={faq.question} open={index === 0}>
-              <summary className="flex min-h-14 cursor-pointer list-none items-center justify-between gap-4 py-4 text-left text-sm font-semibold text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary sm:text-base">
+              <summary className="flex min-h-14 cursor-pointer list-none items-center justify-between gap-4 py-4 text-left text-sm font-semibold text-foreground transition-colors duration-150 hover:text-primary focus-visible:rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary sm:text-base">
                 {faq.question}
                 <ChevronDown
-                  className="h-4 w-4 shrink-0 text-primary transition group-open:rotate-180"
+                  className="h-4 w-4 shrink-0 text-primary transition-transform duration-200 group-open:rotate-180 motion-reduce:transform-none"
                   aria-hidden="true"
                 />
               </summary>
-              <p className="max-w-3xl pb-4 pr-8 text-sm leading-6 text-muted-foreground">
+              <p className="max-w-3xl translate-y-0 pb-4 pr-8 text-sm leading-6 text-muted-foreground opacity-100 motion-safe:transition-[opacity,translate] motion-safe:duration-300 motion-safe:ease-out starting:-translate-y-1 starting:opacity-0">
                 {faq.answer}
               </p>
             </details>

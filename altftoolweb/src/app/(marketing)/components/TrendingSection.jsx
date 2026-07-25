@@ -66,10 +66,10 @@ const popularTools = [
 export default function TrendingSection() {
   return (
     <section className="border-b border-border bg-surface-soft" aria-labelledby="popular-tools-title">
-      <div className="mx-auto w-full max-w-[var(--anslation-ds-container)] px-4 py-10 sm:px-6 sm:py-12 lg:px-8">
+      <div className="mx-auto w-full max-w-[var(--anslation-ds-container)] px-4 py-14 sm:px-6 sm:py-20 lg:px-8">
         <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
           <div>
-            <p className="inline-flex items-center gap-2 text-xs font-semibold uppercase text-primary">
+            <p className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wide text-primary">
               <TrendingUp className="h-4 w-4" aria-hidden="true" />
               Quick launch
             </p>
@@ -79,10 +79,14 @@ export default function TrendingSection() {
             >
               Popular browser tools
             </h2>
+            <span
+              className="mt-3 block h-1 w-12 rounded-full bg-gradient-to-r from-primary to-secondary"
+              aria-hidden="true"
+            />
           </div>
           <Link
             href="/tools/all"
-            className="inline-flex min-h-10 items-center gap-2 text-sm font-semibold text-primary transition hover:text-[var(--primary-hover)] focus-visible:rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+            className="inline-flex min-h-10 items-center gap-2 text-sm font-semibold text-primary transition-colors duration-150 hover:text-[var(--primary-hover)] focus-visible:rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
           >
             Browse all tools
             <ArrowRight className="h-4 w-4" aria-hidden="true" />
@@ -96,9 +100,9 @@ export default function TrendingSection() {
               <Link
                 key={tool.href}
                 href={tool.href}
-                className="group flex min-h-20 items-center gap-3 rounded-lg border border-border bg-card p-3 shadow-sm transition hover:border-primary hover:shadow-md focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-primary/30"
+                className="group flex min-h-20 items-center gap-3 rounded-lg border border-border bg-card p-3 shadow-sm transition duration-200 hover:-translate-y-0.5 hover:border-primary hover:shadow-md motion-reduce:transform-none focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-primary/30"
               >
-                <span className="grid h-10 w-10 shrink-0 place-items-center rounded-md bg-muted text-primary">
+                <span className="grid h-10 w-10 shrink-0 place-items-center rounded-md bg-muted text-primary transition duration-200 group-hover:bg-primary group-hover:text-primary-foreground">
                   <Icon className="h-5 w-5" aria-hidden="true" />
                 </span>
                 <span className="min-w-0 flex-1">
@@ -110,7 +114,7 @@ export default function TrendingSection() {
                   </span>
                 </span>
                 <ArrowRight
-                  className="h-4 w-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-primary"
+                  className="h-4 w-4 shrink-0 text-muted-foreground transition duration-150 group-hover:translate-x-0.5 group-hover:text-primary motion-reduce:transform-none"
                   aria-hidden="true"
                 />
               </Link>

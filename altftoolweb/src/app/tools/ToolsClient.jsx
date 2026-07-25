@@ -341,7 +341,7 @@ const subscribeToDevice = (callback) => {
 
 function Skeleton({ className = "" }) {
   return (
-    <div className={`animate-pulse rounded-md bg-[var(--color-muted)] ${className}`} />
+    <div className={`tools-skeleton animate-pulse motion-reduce:animate-none rounded-md bg-[var(--color-muted)] ${className}`} />
   );
 }
 
@@ -858,7 +858,7 @@ export default function ToolsClient({
 
 
   return (
-    <div
+    <main
       data-testid="tools-directory"
       data-hydrated={hydrated ? "true" : "false"}
       className="route-page-shell tools-premium"
@@ -1263,6 +1263,6 @@ export default function ToolsClient({
         </section>
         ) : null}
       </div>
-    </div>
+    </main>
   );
 }

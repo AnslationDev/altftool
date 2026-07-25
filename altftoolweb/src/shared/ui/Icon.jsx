@@ -1,7 +1,12 @@
 export default function Icon({ name, className }) {
   return (
     <svg
-      className={className}
+      className={[
+        "transition-colors duration-150 motion-reduce:transition-none",
+        className,
+      ]
+        .filter(Boolean)
+        .join(" ")}
       width="24"
       height="24"
       fill="none"

@@ -1,11 +1,20 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 
 export const Dialog = ({ open, onClose, children }) => {
+  // Drives the motion-safe entrance: mounted at "closed", flipped to "open"
+  // on the next frame so the backdrop fades and the panel scales in.
+  const [entered, setEntered] = useState(false);
+
   useEffect(() => {
-    if (!open) return;
+    if (!open) {
+      setEntered(false);
+      return;
+    }
+
+    const frame = requestAnimationFrame(() => setEntered(true));
 
     const onKeyDown = (event) => {
       if (event.key === "Escape") onClose?.();
@@ -15,6 +24,8 @@ export const Dialog = ({ open, onClose, children }) => {
     window.addEventListener("keydown", onKeyDown);
 
     return () => {
+      cancelAnimationFrame(frame);
+      setEntered(false);
       document.body.style.overflow = "";
       window.removeEventListener("keydown", onKeyDown);
     };
@@ -23,13 +34,30 @@ export const Dialog = ({ open, onClose, children }) => {
   if (!open) return null;
 
   return createPortal(
-    <div className="fixed inset-0 z-50 flex items-center justify-center px-4">
+    <div
+      data-state={entered ? "open" : "closed"}
+      className="fixed inset-0 z-50 flex items-center justify-center px-4"
+    >
       <div
-        className="absolute inset-0 bg-[rgba(15,23,42,0.22)] backdrop-blur-[2px]"
+        aria-hidden="true"
+        className={[
+          "absolute inset-0 bg-[var(--anslation-ds-overlay)] backdrop-blur-[2px]",
+          "transition-opacity duration-200 ease-out motion-reduce:transition-none",
+          entered ? "opacity-100" : "opacity-0",
+        ].join(" ")}
         onClick={onClose}
       />
 
-      {children}
+      <div
+        className={[
+          "relative z-50 flex w-full items-center justify-center",
+          "transition-[opacity,scale] duration-200 ease-out",
+          "motion-reduce:transition-none motion-reduce:scale-100",
+          entered ? "scale-100 opacity-100" : "scale-95 opacity-0",
+        ].join(" ")}
+      >
+        {children}
+      </div>
     </div>,
     document.body,
   );

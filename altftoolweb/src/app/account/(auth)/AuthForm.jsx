@@ -114,10 +114,19 @@ export function AuthForm({ mode }) {
     }
   };
 
+  const entranceStyles = (
+    <style>{`
+      @keyframes auth-card-enter { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+      .auth-card-enter { animation: auth-card-enter 0.4s ease-out both; }
+      @media (prefers-reduced-motion: reduce) { .auth-card-enter { animation: none; } }
+    `}</style>
+  );
+
   // Already signed in? Offer the account page instead of a dead form.
   if (user && mode !== "reset") {
     return (
-      <Card className="mx-auto w-full max-w-md p-6 text-center">
+      <Card className="auth-card-enter mx-auto w-full max-w-md p-6 text-center">
+        {entranceStyles}
         <p className="text-sm text-(--muted-foreground)">
           You&apos;re already signed in as{" "}
           <span className="font-semibold text-(--foreground)">
@@ -144,7 +153,8 @@ export function AuthForm({ mode }) {
   };
 
   return (
-    <Card className="mx-auto w-full max-w-md p-6 sm:p-8">
+    <Card className="auth-card-enter mx-auto w-full max-w-md p-6 sm:p-8">
+      {entranceStyles}
       <h1 className="text-2xl font-bold text-(--foreground)">{titles[mode]}</h1>
       <p className="mt-1 text-sm text-(--muted-foreground)">{subtitles[mode]}</p>
 
@@ -234,13 +244,13 @@ export function AuthForm({ mode }) {
         {mode === "login" ? (
           <>
             <p>
-              <Link href="/account/forgot-password" className="font-medium text-primary hover:underline">
+              <Link href="/account/forgot-password" className="rounded-sm font-medium text-primary transition-colors duration-150 hover:underline focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-primary/35">
                 Forgot password?
               </Link>
             </p>
             <p>
               New here?{" "}
-              <Link href="/account/signup" className="font-medium text-primary hover:underline">
+              <Link href="/account/signup" className="rounded-sm font-medium text-primary transition-colors duration-150 hover:underline focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-primary/35">
                 Create an account
               </Link>
             </p>
@@ -249,7 +259,7 @@ export function AuthForm({ mode }) {
         {mode === "signup" ? (
           <p>
             Already have an account?{" "}
-            <Link href="/account/login" className="font-medium text-primary hover:underline">
+            <Link href="/account/login" className="rounded-sm font-medium text-primary transition-colors duration-150 hover:underline focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-primary/35">
               Sign in
             </Link>
           </p>
@@ -257,7 +267,7 @@ export function AuthForm({ mode }) {
         {mode === "reset" ? (
           <p>
             Remembered it?{" "}
-            <Link href="/account/login" className="font-medium text-primary hover:underline">
+            <Link href="/account/login" className="rounded-sm font-medium text-primary transition-colors duration-150 hover:underline focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-primary/35">
               Back to sign in
             </Link>
           </p>

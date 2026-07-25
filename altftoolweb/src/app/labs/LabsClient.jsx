@@ -88,7 +88,7 @@ function ToneChip({ tone, icon, size = "md" }) {
   const iconDims = size === "lg" ? "h-6 w-6" : "h-5 w-5";
   return (
     <span
-      className={`inline-flex shrink-0 items-center justify-center text-white ${dims}`}
+      className={`inline-flex shrink-0 items-center justify-center text-white transition-transform duration-300 group-hover:scale-105 motion-reduce:transform-none ${dims}`}
       style={{ backgroundImage: TONE_GRADIENTS[tone] || TONE_GRADIENTS.teal }}
     >
       <ExperimentIcon name={icon} className={iconDims} />
@@ -141,7 +141,7 @@ function LabsHeader() {
             <a
               key={item.href}
               href={item.href}
-              className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+              className="rounded-md text-sm font-medium text-muted-foreground transition-colors duration-150 hover:text-foreground focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-primary/35"
             >
               {item.label}
             </a>
@@ -150,7 +150,7 @@ function LabsHeader() {
 
         <Link
           href="/"
-          className="inline-flex items-center gap-1.5 rounded-full border border-border px-4 py-2 text-sm font-semibold text-foreground transition-colors hover:border-primary hover:text-primary"
+          className="inline-flex items-center gap-1.5 rounded-full border border-border px-4 py-2 text-sm font-semibold text-foreground transition hover:border-primary hover:text-primary active:scale-[0.98] motion-reduce:transform-none focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-primary/35"
         >
           altftool.com
           <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
@@ -235,7 +235,7 @@ function HeroCarousel() {
         <div className="mt-8 flex items-center justify-center">
           <Link
             href={active.href}
-            className="inline-flex items-center gap-2 rounded-full bg-primary px-7 py-3 text-sm font-bold text-primary-foreground shadow-md transition-colors hover:bg-[var(--primary-hover)] active:bg-[var(--primary-active)]"
+            className="inline-flex items-center gap-2 rounded-full bg-primary px-7 py-3 text-sm font-bold text-primary-foreground shadow-md transition hover:bg-[var(--primary-hover)] active:bg-[var(--primary-active)] active:scale-[0.98] motion-reduce:transform-none focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-primary/35"
           >
             {active.cta}
             <ArrowRight className="h-4 w-4" aria-hidden="true" />
@@ -248,7 +248,7 @@ function HeroCarousel() {
           type="button"
           onClick={() => go(-1)}
           aria-label="Previous experiment"
-          className="flex h-9 w-9 items-center justify-center rounded-full border border-border bg-card text-foreground transition-colors hover:border-primary hover:text-primary"
+          className="flex h-11 w-11 items-center justify-center rounded-full border border-border bg-card text-foreground transition hover:border-primary hover:text-primary active:scale-[0.98] motion-reduce:transform-none focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-primary/35"
         >
           <ChevronLeft className="h-4 w-4" aria-hidden="true" />
         </button>
@@ -261,7 +261,7 @@ function HeroCarousel() {
               aria-selected={i === index}
               aria-label={`Show ${item.name}`}
               onClick={() => setIndex(i)}
-              className="h-2.5 rounded-full transition-all"
+              className="h-2.5 rounded-full transition-all motion-reduce:transition-none focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-primary/35"
               style={{
                 width: i === index ? "1.75rem" : "0.625rem",
                 backgroundColor:
@@ -274,7 +274,7 @@ function HeroCarousel() {
           type="button"
           onClick={() => go(1)}
           aria-label="Next experiment"
-          className="flex h-9 w-9 items-center justify-center rounded-full border border-border bg-card text-foreground transition-colors hover:border-primary hover:text-primary"
+          className="flex h-11 w-11 items-center justify-center rounded-full border border-border bg-card text-foreground transition hover:border-primary hover:text-primary active:scale-[0.98] motion-reduce:transform-none focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-primary/35"
         >
           <ChevronRight className="h-4 w-4" aria-hidden="true" />
         </button>
@@ -303,7 +303,7 @@ function ExperimentsGrid() {
             <Link
               key={exp.slug}
               href={exp.href}
-              className="group flex flex-col rounded-xl border border-border bg-card p-5 shadow-sm transition-all hover:-translate-y-0.5 hover:border-primary/60 hover:shadow-md motion-reduce:transition-none motion-reduce:hover:translate-y-0"
+              className="group flex flex-col rounded-xl border border-border bg-card p-5 shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:border-primary/60 hover:shadow-md motion-reduce:transition-none motion-reduce:transform-none focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-primary/35"
             >
               <div className="flex items-start justify-between gap-3">
                 <ToneChip tone={exp.tone} icon={exp.icon} />
@@ -371,7 +371,7 @@ function BeyondTheLab() {
             <Link
               key={item.slug}
               href={item.href}
-              className="group flex items-start gap-4 rounded-xl border border-border bg-card p-6 shadow-sm transition-all hover:-translate-y-0.5 hover:border-primary/60 hover:shadow-md motion-reduce:transition-none motion-reduce:hover:translate-y-0"
+              className="group flex items-start gap-4 rounded-xl border border-border bg-card p-6 shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:border-primary/60 hover:shadow-md motion-reduce:transition-none motion-reduce:transform-none focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-primary/35"
             >
               <ToneChip tone={item.tone} icon={item.icon} size="lg" />
               <div className="min-w-0">
@@ -443,7 +443,7 @@ function StayConnected() {
               </p>
               <Link
                 href={card.href}
-                className="mt-5 inline-flex items-center gap-2 rounded-full border border-border px-5 py-2.5 text-sm font-semibold text-foreground transition-colors hover:border-primary hover:text-primary"
+                className="mt-5 inline-flex items-center gap-2 rounded-full border border-border px-5 py-2.5 text-sm font-semibold text-foreground transition hover:border-primary hover:text-primary active:scale-[0.98] motion-reduce:transform-none focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-primary/35"
               >
                 {card.cta}
                 <ArrowRight className="h-4 w-4" aria-hidden="true" />
@@ -480,7 +480,7 @@ function LabsFooter() {
               <li key={link.href}>
                 <Link
                   href={link.href}
-                  className="text-sm text-muted-foreground transition-colors hover:text-foreground"
+                  className="rounded-sm text-sm text-muted-foreground transition-colors duration-150 hover:text-foreground focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-primary/35"
                 >
                   {link.label}
                 </Link>
