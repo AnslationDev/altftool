@@ -1,4 +1,3 @@
-import { color } from "chart.js/helpers";
 const toolConfig = {
   slug:"fake-data",
   name:"Fake Data",
